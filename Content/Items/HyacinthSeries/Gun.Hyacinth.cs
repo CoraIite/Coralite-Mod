@@ -49,9 +49,9 @@ namespace Coralite.Content.Items.HyacinthSeries
 
                 for (int i = 0; i < 3; i++)     //生成环绕的幻影枪弹幕
                 {
-                    float angle = shootAngle + i * MathHelper.TwoPi / 3;
+                    float angle = shootAngle + (i * MathHelper.TwoPi / 3);
                     int textureType = Main.rand.NextFromList(textureList.ToArray());
-                    Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center + angle.ToRotationVector2() * 40, Vector2.Zero, ProjectileType<HyacinthPhantomGun>()
+                    Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center + (angle.ToRotationVector2() * 40), Vector2.Zero, ProjectileType<HyacinthPhantomGun>()
                         , (int)(damage * 0.75f), knockback, player.whoAmI, CoraliteWorld.chaosWorld ? Main.rand.Next(ItemLoader.ItemCount) : textureType, i);
                     textureList.Remove(textureType);
                 }

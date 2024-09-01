@@ -70,8 +70,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Color c = color * alpha;
             for (int i = 0; i < 6; i++)
             {
-                float rot = Rotation + MathHelper.TwoPi / 6 * i;
-                Vector2 pos = Center + rot.ToRotationVector2() * distance - Main.screenPosition;
+                float rot = Rotation + (MathHelper.TwoPi / 6 * i);
+                Vector2 pos = Center + (rot.ToRotationVector2() * distance) - Main.screenPosition;
                 spriteBatch.Draw(tex, pos, null, c * 0.75f, rot
                     , origin, Scale, SpriteEffects.None, 0f);
                 spriteBatch.Draw(tex, pos, null, c, rot
@@ -86,8 +86,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Color c = color * alpha;
             for (int i = 0; i < 6; i++)
             {
-                float rot = Rotation + MathHelper.TwoPi / 6 * i;
-                Vector2 pos = Center + rot.ToRotationVector2() * distance;
+                float rot = Rotation + (MathHelper.TwoPi / 6 * i);
+                Vector2 pos = Center + (rot.ToRotationVector2() * distance);
                 spriteBatch.Draw(tex, pos, null, c, rot
                     , origin, Scale, SpriteEffects.None, 0f);
                 spriteBatch.Draw(tex, pos, null, c, rot

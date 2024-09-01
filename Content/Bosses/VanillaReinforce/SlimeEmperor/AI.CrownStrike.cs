@@ -171,7 +171,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             NPC.velocity *= 0.96f;
 
             int height = GetCrownBottom();
-            float groundHeight = NPC.Bottom.Y - Scale.Y * height;
+            float groundHeight = NPC.Bottom.Y - (Scale.Y * height);
 
             crown.Bottom.Y = groundHeight;
 

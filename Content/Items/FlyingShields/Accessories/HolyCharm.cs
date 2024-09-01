@@ -54,13 +54,13 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
                     Owner.immune = true;
                 }
 
-                int damage = (int)(projectile.Owner.GetWeaponDamage(Item) * (1.35f - 0.35f * cp.parryTime / 280f));
+                int damage = (int)(projectile.Owner.GetWeaponDamage(Item) * (1.35f - (0.35f * cp.parryTime / 280f)));
 
                 SoundEngine.PlaySound(CoraliteSoundID.Ding_Item4, projectile.Projectile.Center);
                 Helper.PlayPitched("Misc/ShieldGuard", 0.4f, 0f, projectile.Projectile.Center);
 
                 Vector2 dir = projectile.Projectile.rotation.ToRotationVector2();
-                int index = projectile.Projectile.NewProjectileFromThis<HolyCharmProj>(Owner.Center - dir * 64, dir * 12,
+                int index = projectile.Projectile.NewProjectileFromThis<HolyCharmProj>(Owner.Center - (dir * 64), dir * 12,
                      damage, projectile.Projectile.knockBack, Owner.whoAmI);
                 Main.projectile[index].scale = projectile.Projectile.scale;
 
@@ -127,24 +127,24 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
             Projectile.velocity *= 0.9f;
             Projectile.rotation = Projectile.velocity.ToRotation();
 
-            float num8 = Projectile.rotation + Main.rand.NextFloatDirection() * MathHelper.PiOver2 * 0.7f;
-            Vector2 vector2 = Projectile.Center + num8.ToRotationVector2() * 74f * Projectile.scale * scale;
+            float num8 = Projectile.rotation + (Main.rand.NextFloatDirection() * MathHelper.PiOver2 * 0.7f);
+            Vector2 vector2 = Projectile.Center + (num8.ToRotationVector2() * 74f * Projectile.scale * scale);
             Vector2 vector3 = num8.ToRotationVector2();
             if (Main.rand.NextFloat() * 2f < Projectile.Opacity)
             {
-                Dust dust2 = Dust.NewDustPerfect(Projectile.Center + num8.ToRotationVector2() * (Main.rand.NextFloat() * 80f * Projectile.scale + 20f * Projectile.scale)
+                Dust dust2 = Dust.NewDustPerfect(Projectile.Center + (num8.ToRotationVector2() * ((Main.rand.NextFloat() * 80f * Projectile.scale) + (20f * Projectile.scale)))
                     , 278, vector3 * 1f, 100, Color.Lerp(Color.Gold, Color.White, Main.rand.NextFloat() * 0.3f), 0.4f);
-                dust2.fadeIn = 0.4f + Main.rand.NextFloat() * 0.15f;
+                dust2.fadeIn = 0.4f + (Main.rand.NextFloat() * 0.15f);
                 dust2.noGravity = true;
             }
 
             if (Main.rand.NextFloat() * 1.5f < Projectile.Opacity)
                 Dust.NewDustPerfect(vector2, 43, vector3 * 1f, 100, Color.White * Projectile.Opacity, 1.2f * Projectile.Opacity);
             Vector2 dir = (Projectile.rotation + 1.57f).ToRotationVector2();
-            Vector2 pos = Projectile.Center + Projectile.rotation.ToRotationVector2() * 32;
+            Vector2 pos = Projectile.Center + (Projectile.rotation.ToRotationVector2() * 32);
 
-            top = pos + dir * 70 * Projectile.scale * scale;
-            bottom = pos - dir * 70 * Projectile.scale * scale;
+            top = pos + (dir * 70 * Projectile.scale * scale);
+            bottom = pos - (dir * 70 * Projectile.scale * scale);
             Timer++;
             Timer2 += 0.085f;
             if (Timer > MaxTime)
@@ -176,33 +176,33 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
             float rot = Projectile.rotation;
 
             Main.spriteBatch.Draw(extraTex, pos, frameBox, color * fromValue * num3, rot
-                + Timer2 * MathHelper.PiOver4 * -1f * (1f - num2), extraOrigin, num, 0, 0f);
+                + (Timer2 * MathHelper.PiOver4 * -1f * (1f - num2)), extraOrigin, num, 0, 0f);
             Color color2 = new(255, 240, 150);
             Color color3 = new(255, 255, 80);
             Color color4 = Color.White * num3 * 0.5f;
             color4.A = (byte)(color4.A * (1f - fromValue));
             Color color5 = color4 * fromValue * 0.5f;
             color5.G = (byte)(color5.G * fromValue);
-            color5.B = (byte)(color5.R * (0.25f + fromValue * 0.75f));
-            Main.spriteBatch.Draw(extraTex, pos, frameBox, color5 * 0.15f, rot + Timer2 * 0.04f, extraOrigin, num, effects, 0f);
+            color5.B = (byte)(color5.R * (0.25f + (fromValue * 0.75f)));
+            Main.spriteBatch.Draw(extraTex, pos, frameBox, color5 * 0.15f, rot + (Timer2 * 0.04f), extraOrigin, num, effects, 0f);
             Main.spriteBatch.Draw(extraTex, pos, frameBox, color3 * fromValue * num3 * 0.3f, rot, extraOrigin, num, effects, 0f);
             Main.spriteBatch.Draw(extraTex, pos, frameBox, color2 * fromValue * num3 * 0.5f, rot, extraOrigin, num * num4, effects, 0f);
-            Main.spriteBatch.Draw(extraTex, pos, extraTex.Frame(1, 4, 0, 3), Color.White * 0.6f * num3, rot + Timer2 * 0.02f, extraOrigin, num, effects, 0f);
-            Main.spriteBatch.Draw(extraTex, pos, extraTex.Frame(1, 4, 0, 3), Color.White * 0.5f * num3, rot + Timer2 * -0.1f, extraOrigin, num * 0.8f, effects, 0f);
-            Main.spriteBatch.Draw(extraTex, pos, extraTex.Frame(1, 4, 0, 3), Color.White * 0.4f * num3, rot + Timer2 * -0.2f, extraOrigin, num * 0.6f, effects, 0f);
+            Main.spriteBatch.Draw(extraTex, pos, extraTex.Frame(1, 4, 0, 3), Color.White * 0.6f * num3, rot + (Timer2 * 0.02f), extraOrigin, num, effects, 0f);
+            Main.spriteBatch.Draw(extraTex, pos, extraTex.Frame(1, 4, 0, 3), Color.White * 0.5f * num3, rot + (Timer2 * -0.1f), extraOrigin, num * 0.8f, effects, 0f);
+            Main.spriteBatch.Draw(extraTex, pos, extraTex.Frame(1, 4, 0, 3), Color.White * 0.4f * num3, rot + (Timer2 * -0.2f), extraOrigin, num * 0.6f, effects, 0f);
             //绘制盾牌
             Color shieldColor = color3 * num3;
             for (int i = 0; i < 3; i++)
             {
-                Main.spriteBatch.Draw(mainTex, pos + Projectile.rotation.ToRotationVector2() * (extraTex.Width * (0.25f + i * 0.1f) - 6f) * num, null
-                    , shieldColor * (0.4f + i * 0.2f), Projectile.rotation, mainOrigin, new Vector2(0.8f - num2 * 0.6f, 1) * Projectile.scale * scale * (1f + i * 0.9f), effects, 0f);
+                Main.spriteBatch.Draw(mainTex, pos + (Projectile.rotation.ToRotationVector2() * ((extraTex.Width * (0.25f + (i * 0.1f))) - 6f) * num), null
+                    , shieldColor * (0.4f + (i * 0.2f)), Projectile.rotation, mainOrigin, new Vector2(0.8f - (num2 * 0.6f), 1) * Projectile.scale * scale * (1f + (i * 0.9f)), effects, 0f);
             }
 
             //绘制闪光
             for (float num5 = 0f; num5 < 8f; num5 += 1f)
             {
-                float num6 = Projectile.rotation + Timer2 * num5 * (MathHelper.Pi * -2.1f) * 0.025f + Utils.Remap(num2, 0f, 1f, 0f, MathHelper.PiOver4 * Timer2);
-                Vector2 drawpos = pos + num6.ToRotationVector2() * (extraTex.Width * 0.5f - 6f) * num;
+                float num6 = Projectile.rotation + (Timer2 * num5 * (MathHelper.Pi * -2.1f) * 0.025f) + Utils.Remap(num2, 0f, 1f, 0f, MathHelper.PiOver4 * Timer2);
+                Vector2 drawpos = pos + (num6.ToRotationVector2() * ((extraTex.Width * 0.5f) - 6f) * num);
                 float num7 = num5 / 9f;
                 Helper.DrawPrettyStarSparkle(Projectile.Opacity, SpriteEffects.None
                     , drawpos, new Color(255, 255, 255, 0) * num3 * num7, color3, num2, 0f, 0.5f, 0.5f, 1f, num6, new Vector2(0f, Utils.Remap(num2, 0f, 1f, 3f, 0f)) * num, Vector2.One * num);
@@ -211,12 +211,12 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
             //绘制星星
             for (int i = 0; i < 3; i++)
             {
-                Vector2 drawpos2 = pos + (Projectile.rotation + Timer2 * (-0.4f + i * 0.4f)).ToRotationVector2() * (extraTex.Width * 0.5f - 4f) * num;
+                Vector2 drawpos2 = pos + ((Projectile.rotation + (Timer2 * (-0.4f + (i * 0.4f)))).ToRotationVector2() * ((extraTex.Width * 0.5f) - 4f) * num);
 
                 Helper.DrawPrettyStarSparkle(Projectile.Opacity, SpriteEffects.None
                     , drawpos2, new Color(255, 255, 255, 0) * num3 * 0.5f, color3, num2
                     , 0f, 0.5f, 0.5f, 1f, 0f
-                    , new Vector2(2f, Utils.Remap(num2, 0f, 1f, 3f + i * 0.5f, 1f)) * num
+                    , new Vector2(2f, Utils.Remap(num2, 0f, 1f, 3f + (i * 0.5f), 1f)) * num
                     , Vector2.One * num);
             }
             return false;

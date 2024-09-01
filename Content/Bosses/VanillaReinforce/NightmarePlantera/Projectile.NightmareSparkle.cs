@@ -140,7 +140,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         mainSparkleScale = Vector2.Lerp(Vector2.Zero, new Vector2(1f, 2f), factor);
                         circleSparkleScale = MathHelper.Lerp(0, 0.4f, factor);
 
-                        Projectile.Center = Owner.Center + Angle.ToRotationVector2() * MathHelper.Lerp(length, TargetLenght, factor);
+                        Projectile.Center = Owner.Center + (Angle.ToRotationVector2() * MathHelper.Lerp(length, TargetLenght, factor));
                         Projectile.rotation = Angle;
 
                         if ((int)CanExchange == 1)

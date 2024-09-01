@@ -171,18 +171,18 @@ namespace Coralite.Content.Items.FlyingShields
             Vector2 origin2 = frameBox.Size() / 2;
 
             //绘制基底
-            Main.spriteBatch.Draw(mainTex, pos - dir * 4, frameBox, c, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos - (dir * 4), frameBox, c, rotation, origin2, scale, effect, 0);
             Main.spriteBatch.Draw(mainTex, pos, frameBox, lightColor, rotation, origin2, scale, effect, 0);
 
             //绘制上部
             frameBox = mainTex.Frame(3, 1, 1, 0);
-            Main.spriteBatch.Draw(mainTex, pos + dir * 5, frameBox, c, rotation, origin2, scale, effect, 0);
-            Main.spriteBatch.Draw(mainTex, pos + dir * 10, frameBox, lightColor, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos + (dir * 5), frameBox, c, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos + (dir * 10), frameBox, lightColor, rotation, origin2, scale, effect, 0);
 
             //绘制上上部
             frameBox = mainTex.Frame(3, 1, 2, 0);
-            Main.spriteBatch.Draw(mainTex, pos + dir * 12, frameBox, c, rotation, origin2, scale, effect, 0);
-            Main.spriteBatch.Draw(mainTex, pos + dir * 17, frameBox, lightColor, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos + (dir * 12), frameBox, c, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos + (dir * 17), frameBox, lightColor, rotation, origin2, scale, effect, 0);
         }
     }
 
@@ -383,7 +383,7 @@ namespace Coralite.Content.Items.FlyingShields
             const int trailCacheLength = 6;
             Color shadowColor = Color.Red;
             shadowColor.A = 50;
-            shadowColor *= (Projectile.alpha / 255f);
+            shadowColor *= Projectile.alpha / 255f;
             if (oldFrame != null && oldDirection != null)
             {
                 for (int i = 0; i < trailCacheLength; i++)
@@ -395,7 +395,7 @@ namespace Coralite.Content.Items.FlyingShields
 
                     SpriteEffects oldEffect = oldDirection[i] > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically;
                     Main.spriteBatch.Draw(mainTex, oldPos, frameOld, shadowColor * factor, oldrot, origin
-                         , Projectile.scale * (1 - (1 - factor) * 0.3f), oldEffect, 0);
+                         , Projectile.scale * (1 - ((1 - factor) * 0.3f)), oldEffect, 0);
                 }
             }
 

@@ -82,11 +82,11 @@ namespace Coralite.Content.Particles
                 Vector2 Center = oldCenter[i];
                 Vector2 normal = (oldRot[i] + 1.57f).ToRotationVector2();
 
-                Vector2 Top = Center - Main.screenPosition + normal * height;
-                Vector2 Bottom = Center - Main.screenPosition - normal * height;
+                Vector2 Top = Center - Main.screenPosition + (normal * height);
+                Vector2 Bottom = Center - Main.screenPosition - (normal * height);
 
-                Vector2 Top2 = Center - Main.screenPosition + normal * height * 1.5f;
-                Vector2 Bottom2 = Center - Main.screenPosition - normal * height * 1.5f;
+                Vector2 Top2 = Center - Main.screenPosition + (normal * height * 1.5f);
+                Vector2 Bottom2 = Center - Main.screenPosition - (normal * height * 1.5f);
 
                 var Color2 = color;//Color.Lerp(color, Color.DarkBlue, factor);
                 bars.Add(new(Top, Color2, new Vector3(factor, 0, 1)));

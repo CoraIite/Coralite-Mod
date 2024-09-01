@@ -28,13 +28,13 @@ namespace Coralite.Content.Items.MagikeSeries1
         public override bool CanUseItem(Player player)
         {
             Point16 pos = Main.MouseWorld.ToTileCoordinates16();
-            string text ;
+            string text;
 
             if (MagikeHelper.TryGetEntityWithComponent(pos.X, pos.Y, MagikeComponentID.MagikeFactory, out MagikeTileEntity entity))
             {
                 MagikeFactory factory = entity.GetSingleComponent<MagikeFactory>(MagikeComponentID.MagikeFactory);
 
-               if( factory.Activation(out text))
+                if (factory.Activation(out text))
                     Helper.PlayPitched("UI/Activation", 0.4f, 0, player.Center);
             }
             else //没找到
@@ -49,7 +49,7 @@ namespace Coralite.Content.Items.MagikeSeries1
                 Text = text,
                 DurationInFrames = 60,
                 Velocity = -Vector2.UnitY
-            }, Main.MouseWorld - Vector2.UnitY * 32);
+            }, Main.MouseWorld - (Vector2.UnitY * 32));
 
             return true;
         }

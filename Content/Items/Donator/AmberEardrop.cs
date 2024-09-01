@@ -164,7 +164,7 @@ namespace Coralite.Content.Items.Donator
 
             if (AttackTime > 0)
             {
-                Vector2 dir = (Main.MouseWorld - Projectile.Center);
+                Vector2 dir = Main.MouseWorld - Projectile.Center;
                 if (dir.Length() < 48)
                     idlePos += dir;
                 else
@@ -222,7 +222,7 @@ namespace Coralite.Content.Items.Donator
                     for (int i = 0; i < 2; i++)
                     {
                         Vector2 dir = Helper.NextVec2Dir();
-                        AmberProj.SpawnTriangleParticle(Projectile.Center + new Vector2(0, 12) + dir * Main.rand.NextFloat(6, 12), dir * Main.rand.NextFloat(1f, 3f));
+                        AmberProj.SpawnTriangleParticle(Projectile.Center + new Vector2(0, 12) + (dir * Main.rand.NextFloat(6, 12)), dir * Main.rand.NextFloat(1f, 3f));
                     }
                 }
 
@@ -256,7 +256,7 @@ namespace Coralite.Content.Items.Donator
 
             for (int i = 0; i < 4; i++)
                 Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] + toCenter - Main.screenPosition, frame,
-                   AmberProj.brightC * (0.3f - i * 0.3f / 4), Projectile.oldRot[i] + 0, origin, Projectile.scale, 0, 0);
+                   AmberProj.brightC * (0.3f - (i * 0.3f / 4)), Projectile.oldRot[i] + 0, origin, Projectile.scale, 0, 0);
 
             Main.spriteBatch.Draw(mainTex, Projectile.Top - Main.screenPosition, frame, lightColor, Projectile.rotation,
                 origin, Projectile.scale, 0, 0);
@@ -340,7 +340,7 @@ namespace Coralite.Content.Items.Donator
                 for (int i = 0; i < 3; i++)
                 {
                     Vector2 dir = Helper.NextVec2Dir();
-                    SpawnTriangleParticle(Projectile.Center + dir * Main.rand.NextFloat(6, 12), dir * Main.rand.NextFloat(1f, 3f));
+                    SpawnTriangleParticle(Projectile.Center + (dir * Main.rand.NextFloat(6, 12)), dir * Main.rand.NextFloat(1f, 3f));
                 }
         }
 
@@ -413,7 +413,7 @@ namespace Coralite.Content.Items.Donator
                 for (int i = 0; i < 6; i++)
                 {
                     Vector2 dir = Helper.NextVec2Dir();
-                    SpawnTriangleParticle(Projectile.Center + dir * Main.rand.NextFloat(6, 12), dir * Main.rand.NextFloat(1f, 5f));
+                    SpawnTriangleParticle(Projectile.Center + (dir * Main.rand.NextFloat(6, 12)), dir * Main.rand.NextFloat(1f, 5f));
                 }
         }
 

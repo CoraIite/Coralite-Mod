@@ -54,7 +54,7 @@ namespace Coralite.Content.Items.CoreKeeper
 
             if (rightClickDelay == 0)
             {
-                CombatText.NewText(new Rectangle(i * 16, j * 16 - 32, 16, 1), Color.Cyan, this.GetLocalization("HowToOpen", () => "需要手持一朵蓝色发光花朵以打开").Value);
+                CombatText.NewText(new Rectangle(i * 16, (j * 16) - 32, 16, 1), Color.Cyan, this.GetLocalization("HowToOpen", () => "需要手持一朵蓝色发光花朵以打开").Value);
                 rightClickDelay = 120;
             }
             return false;

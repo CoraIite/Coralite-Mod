@@ -125,20 +125,20 @@ namespace Coralite.Content.Items.FlyingShields
             Vector2 origin2 = frameBox.Size() / 2;
 
             //绘制基底
-            Main.spriteBatch.Draw(mainTex, pos - dir * 5, frameBox, c, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos - (dir * 5), frameBox, c, rotation, origin2, scale, effect, 0);
             Main.spriteBatch.Draw(mainTex, pos, frameBox, lightColor, rotation, origin2, scale, effect, 0);
 
             //绘制上部
             frameBox = mainTex.Frame(3, 1, 1, 0);
-            Main.spriteBatch.Draw(mainTex, pos + dir * 8, frameBox, c2, rotation, origin2, scale, effect, 0);
-            Main.spriteBatch.Draw(mainTex, pos + dir * 12, frameBox, c, rotation, origin2, scale, effect, 0);
-            Main.spriteBatch.Draw(mainTex, pos + dir * 17, frameBox, lightColor, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos + (dir * 8), frameBox, c2, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos + (dir * 12), frameBox, c, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos + (dir * 17), frameBox, lightColor, rotation, origin2, scale, effect, 0);
 
             //绘制上上部
             frameBox = mainTex.Frame(3, 1, 2, 0);
-            Main.spriteBatch.Draw(mainTex, pos + dir * 22, frameBox, c2, rotation, origin2, scale, effect, 0);
-            Main.spriteBatch.Draw(mainTex, pos + dir * 30, frameBox, c, rotation, origin2, scale, effect, 0);
-            Main.spriteBatch.Draw(mainTex, pos + dir * 38, frameBox, lightColor, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos + (dir * 22), frameBox, c2, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos + (dir * 30), frameBox, c, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos + (dir * 38), frameBox, lightColor, rotation, origin2, scale, effect, 0);
         }
     }
 }

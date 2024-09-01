@@ -122,7 +122,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             if (AttackTime != 0)
             {
-                Vector2 dir = (Main.MouseWorld - Projectile.Center);
+                Vector2 dir = Main.MouseWorld - Projectile.Center;
 
                 if (dir.Length() < 48)
                     idlePos += dir;
@@ -140,7 +140,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             if (AttackTime > 0)
             {
-                float factor = 1 - AttackTime / Owner.itemTimeMax;
+                float factor = 1 - (AttackTime / Owner.itemTimeMax);
                 if (factor < 0.8f)
                     scale = Vector2.SmoothStep(Vector2.One, new Vector2(0.4f, 0.85f), factor / 0.8f);
                 else
@@ -162,7 +162,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     for (int i = 0; i < 5; i++)
                     {
                         Vector2 dir = Helper.NextVec2Dir();
-                        PyropeProj.SpawnTriangleParticle(Projectile.Center + dir * Main.rand.NextFloat(6, 12), dir * Main.rand.NextFloat(1f, 3f));
+                        PyropeProj.SpawnTriangleParticle(Projectile.Center + (dir * Main.rand.NextFloat(6, 12)), dir * Main.rand.NextFloat(1f, 3f));
                     }
                 }
 
@@ -255,7 +255,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 for (int i = 0; i < 3; i++)
                 {
                     Vector2 dir = Helper.NextVec2Dir();
-                    SpawnTriangleParticle(Projectile.Center + dir * Main.rand.NextFloat(6, 12), dir * Main.rand.NextFloat(1f, 3f));
+                    SpawnTriangleParticle(Projectile.Center + (dir * Main.rand.NextFloat(6, 12)), dir * Main.rand.NextFloat(1f, 3f));
                 }
 
             var style = CoraliteSoundID.Ding_Item4;
@@ -302,7 +302,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             rand.X += 0.15f;
 
             Helper.DrawCrystal(spriteBatch, Projectile.frame, Projectile.Center + rand, Vector2.One
-                , (float)(Main.timeForVisualEffects + Projectile.timeLeft) * (Main.gamePaused ? 0.02f : 0.01f) + Projectile.whoAmI / 3f
+                , ((float)(Main.timeForVisualEffects + Projectile.timeLeft) * (Main.gamePaused ? 0.02f : 0.01f)) + (Projectile.whoAmI / 3f)
                 , highlightC, brightC, darkC, () =>
                 {
                     Texture2D mainTex = Projectile.GetTexture();

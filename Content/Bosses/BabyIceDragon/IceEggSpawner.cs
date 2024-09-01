@@ -51,7 +51,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
         public static void TrySpawning(int x, int y)
         {
             if (!WorldGen.PlayerLOS(x - 6, y) && !WorldGen.PlayerLOS(x + 6, y) && CheckEgg(x, y))
-                NPC.NewNPC(new EntitySource_WorldEvent(), x * 16 + 8, (y - 4) * 16 - 8, ModContent.NPCType<IceDragonEgg>());
+                NPC.NewNPC(new EntitySource_WorldEvent(), (x * 16) + 8, ((y - 4) * 16) - 8, ModContent.NPCType<IceDragonEgg>());
         }
 
         private static bool CheckEgg(int x, int y)
@@ -65,7 +65,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             if (NPC.AnyNPCs(ModContent.NPCType<IceDragonEgg>()))
                 return false;
 
-            Vector2 center = new(x * 16 + 8, y * 16 - 8);
+            Vector2 center = new((x * 16) + 8, (y * 16) - 8);
             if (!CheckFloor(center))
                 return false;
 

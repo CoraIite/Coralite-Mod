@@ -166,7 +166,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
         public virtual void Chasing()
         {
             if (canChase)
-                if (Helper.TryFindClosestEnemy(Projectile.Center, Timer * shootSpeed + Projectile.width * 4,
+                if (Helper.TryFindClosestEnemy(Projectile.Center, (Timer * shootSpeed) + (Projectile.width * 4),
                     n => n.CanBeChasedBy() && Projectile.localNPCImmunity.IndexInRange(n.whoAmI)
                         && Projectile.localNPCImmunity[n.whoAmI] == 0
                         && Collision.CanHit(Projectile, n), out NPC target))
@@ -174,7 +174,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                     float selfAngle = Projectile.velocity.ToRotation();
                     float targetAngle = (target.Center - Projectile.Center).ToRotation();
 
-                    Projectile.velocity = selfAngle.AngleLerp(targetAngle, 1 - Timer / flyingTime).ToRotationVector2() * shootSpeed;
+                    Projectile.velocity = selfAngle.AngleLerp(targetAngle, 1 - (Timer / flyingTime)).ToRotationVector2() * shootSpeed;
                 }
         }
 
@@ -315,8 +315,8 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                 float factor = (float)i / trailCachesLength;
                 Vector2 Center = Projectile.oldPos[i];
                 Vector2 normal = (Projectile.oldRot[i] + MathHelper.PiOver2).ToRotationVector2();
-                Vector2 Top = Center - Main.screenPosition + normal * trailWidth;
-                Vector2 Bottom = Center - Main.screenPosition - normal * trailWidth;
+                Vector2 Top = Center - Main.screenPosition + (normal * trailWidth);
+                Vector2 Bottom = Center - Main.screenPosition - (normal * trailWidth);
 
                 var Color = GetColor(factor);//.MultiplyRGB(lightColor);
                 bars.Add(new(Top, Color, new Vector3(factor, 0, 1)));

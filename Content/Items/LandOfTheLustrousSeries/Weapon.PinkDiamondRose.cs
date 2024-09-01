@@ -100,7 +100,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     _ => new Color(193, 89, 138, 100),
                 };
                 Vector2 pos = Projectile.Center +
-                    (Projectile.rotation - 1.57f).ToRotationVector2() * Main.rand.NextFloat(8, 16);
+                    ((Projectile.rotation - 1.57f).ToRotationVector2() * Main.rand.NextFloat(8, 16));
                 group.Add(Particle.NewPawticleInstance<Fog>(pos
                     , Vector2.UnitY.RotateByRandom(MathHelper.Pi - 0.4f, MathHelper.Pi + 0.4f)
                     , c, Main.rand.NextFloat(0.5f, 0.6f)));
@@ -114,7 +114,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 float length = Main.rand.NextFloat(16, 24);
                 Color c2 = Main.rand.NextFromList(Color.White, PinkDiamondProj.brightC, PinkDiamondProj.darkC);
                 var cs = CrystalShine.New(
-                    Projectile.Center + (Projectile.rotation - 1.57f).ToRotationVector2() * 12 + Main.rand.NextVector2CircularEdge(length, length)
+                    Projectile.Center + ((Projectile.rotation - 1.57f).ToRotationVector2() * 12) + Main.rand.NextVector2CircularEdge(length, length)
                      , Helper.NextVec2Dir(0.1f, 0.2f), 5, new Vector2(0.5f, 0.03f) * Main.rand.NextFloat(0.5f, 1f), c2);
                 cs.follow = () => Projectile.position - Projectile.oldPos[1];
                 cs.TrailCount = 3;
@@ -172,7 +172,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                         Vector2 dir = (Projectile.rotation - 1.57f).ToRotationVector2();
                         offset = -dir * 128;
 
-                        Projectile.NewProjectileFromThis<PinkDiamondProj>(Projectile.Center + dir * 12, dir * 12
+                        Projectile.NewProjectileFromThis<PinkDiamondProj>(Projectile.Center + (dir * 12), dir * 12
                             , Owner.GetWeaponDamage(Owner.HeldItem), Projectile.knockBack);
 
                         Helper.PlayPitched("Crystal/GemShoot", 0.4f, 0, Projectile.Center);
@@ -184,7 +184,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                         }
 
                         for (int i = 0; i < 5; i++)
-                            PinkDiamondProj.SpawnTriangleParticle(Projectile.Center + dir.RotateByRandom(-0.5f, 0.5f) * Main.rand.NextFloat(6, 12), dir * Main.rand.NextFloat(1f, 3f));
+                            PinkDiamondProj.SpawnTriangleParticle(Projectile.Center + (dir.RotateByRandom(-0.5f, 0.5f) * Main.rand.NextFloat(6, 12)), dir * Main.rand.NextFloat(1f, 3f));
                     }
                 }
 
@@ -297,7 +297,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     for (int i = 0; i < 3; i++)
                     {
                         Vector2 dir = Helper.NextVec2Dir();
-                        SpawnTriangleParticle(Projectile.Center + dir * Main.rand.NextFloat(6, 12), dir * Main.rand.NextFloat(1f, 3f));
+                        SpawnTriangleParticle(Projectile.Center + (dir * Main.rand.NextFloat(6, 12)), dir * Main.rand.NextFloat(1f, 3f));
                     }
                 }
             }
@@ -310,7 +310,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             rand.X += 0.15f;
 
             Helper.DrawCrystal(spriteBatch, Projectile.frame, Projectile.Center + rand, new Vector2(1.7f)
-                , (float)(Main.timeForVisualEffects + Projectile.timeLeft) * (Main.gamePaused ? 0.02f : 0.01f) + Projectile.whoAmI / 3f
+                , ((float)(Main.timeForVisualEffects + Projectile.timeLeft) * (Main.gamePaused ? 0.02f : 0.01f)) + (Projectile.whoAmI / 3f)
                 , highlightC, brightC, darkC, () =>
                 {
                     Texture2D mainTex = Projectile.GetTexture();
@@ -421,7 +421,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             {
                 Color c = Color.White * alpha;
                 //spriteBatch.Draw(mainTex, Center, null, c * 0.5f, rotation + 1.57f, origin, scale * 1.2f, 0, 0);
-                spriteBatch.Draw(mainTex, Center - velocity * 3, null, c * 0.3f, rotation + 1.57f, origin, scale * 0.8f, 0, 0);
+                spriteBatch.Draw(mainTex, Center - (velocity * 3), null, c * 0.3f, rotation + 1.57f, origin, scale * 0.8f, 0, 0);
                 spriteBatch.Draw(mainTex, Center, null, c, rotation + 1.57f, origin, scale, 0, 0);
             }
         }
@@ -453,11 +453,11 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                         float factor = Timer / 20;
                         factor = Coralite.Instance.X2Smoother.Smoother(factor);
 
-                        float rot = BaseRot + Timer * (MathHelper.TwoPi / 5 - factor * 0.3f);
+                        float rot = BaseRot + (Timer * ((MathHelper.TwoPi / 5) - (factor * 0.3f)));
                         Vector2 dir = rot.ToRotationVector2();
-                        float length = 8 + factor * 70;
+                        float length = 8 + (factor * 70);
 
-                        var data = new PinkDiamondExplosionData(Projectile.Center + dir * length, 30, 30, 0.5f + factor * 0.4f)
+                        var data = new PinkDiamondExplosionData(Projectile.Center + (dir * length), 30, 30, 0.5f + (factor * 0.4f))
                         {
                             rotation = rot,
                         };
@@ -503,7 +503,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             SpriteBatch spriteBatch = Main.spriteBatch;
             Helper.DrawCrystal(spriteBatch, Projectile.frame, Projectile.Center + rand, new Vector2(1.7f)
-                , (float)(Main.timeForVisualEffects + Projectile.timeLeft) * (Main.gamePaused ? 0.02f : 0.01f) + Projectile.whoAmI / 3f
+                , ((float)(Main.timeForVisualEffects + Projectile.timeLeft) * (Main.gamePaused ? 0.02f : 0.01f)) + (Projectile.whoAmI / 3f)
                 , PinkDiamondProj.highlightC, PinkDiamondProj.brightC, PinkDiamondProj.darkC, () =>
                 {
                     Texture2D mainTex = Projectile.GetTexture();

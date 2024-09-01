@@ -22,7 +22,7 @@ namespace Coralite.Content.WorldGeneration
                 for (int i = 0; i < 20000; i++)
                 {
                     //随机选取点
-                    int tabletCenter_x = Main.maxTilesX / 2 + WorldGen.genRand.NextFromList(-1, 1) * Main.maxTilesX / 3;
+                    int tabletCenter_x = (Main.maxTilesX / 2) + (WorldGen.genRand.NextFromList(-1, 1) * Main.maxTilesX / 3);
                     tabletCenter_x += WorldGen.genRand.Next(-Main.maxTilesX / 7, Main.maxTilesX / 7);
                     int tabletCenter_y = (int)(Main.worldSurface * 0.4f);
 
@@ -62,7 +62,7 @@ namespace Coralite.Content.WorldGeneration
                 bool spawned = true;
                 while (spawned)
                 {
-                    int tabletCenter_x = Main.maxTilesX / 2 + WorldGen.genRand.NextFromList(-1, 1) * Main.maxTilesX / 3;
+                    int tabletCenter_x = (Main.maxTilesX / 2) + (WorldGen.genRand.NextFromList(-1, 1) * Main.maxTilesX / 3);
                     tabletCenter_x += WorldGen.genRand.Next(-Main.maxTilesX / 7, Main.maxTilesX / 7);
                     int tabletCenter_y = (int)(Main.worldSurface * 0.4f);
 

@@ -63,7 +63,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
             {
                 ParticleOrchestrator.RequestParticleSpawn(clientOnly: true, ParticleOrchestraType.ChlorophyteLeafCrystalShot, new ParticleOrchestraSettings
                 {
-                    PositionInWorld = pos + (projectile.Projectile.rotation + i * 1.57f).ToRotationVector2() * 17,
+                    PositionInWorld = pos + ((projectile.Projectile.rotation + (i * 1.57f)).ToRotationVector2() * 17),
                     MovementVector = velocity.RotatedBy(-i * direction * projectile.Owner.direction * 0.2f) * 6,
                     UniqueInfoPiece = hue
                 });
@@ -79,7 +79,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
         {
             hit = true;
 
-            if (projectile.parryTime > 0 && projectile.Timer > projectile.dashTime - projectile.parryTime * 1.5f)
+            if (projectile.parryTime > 0 && projectile.Timer > projectile.dashTime - (projectile.parryTime * 1.5f))
             {
                 projectile.OnParry();
                 projectile.UpdateShieldAccessory(accessory => accessory.OnParry(projectile));
@@ -239,7 +239,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
             Projectile.velocity *= 0f;
             if (Owner.whoAmI == Main.myPlayer)
             {
-                _Rotation = startAngle = GetStartAngle() - Projectile.ai[2] * startAngle;//设定起始角度
+                _Rotation = startAngle = GetStartAngle() - (Projectile.ai[2] * startAngle);//设定起始角度
                 totalAngle *= Projectile.ai[2];
             }
 
@@ -305,7 +305,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
             if (alpha > 20)
                 alpha -= 5;
             Slasher();
-            if (Timer < maxTime + delay / 2)
+            if (Timer < maxTime + (delay / 2))
                 scale = Vector2.Lerp(scale, new Vector2(2f, 2f), 0.05f);
             else if (Timer < maxTime + delay)
                 scale = Vector2.Lerp(scale, Vector2.Zero, 0.1f);
@@ -326,8 +326,8 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
                 return;
 
             Dust dust;
-            float offset = Projectile.localAI[1] + Main.rand.NextFloat(0, Projectile.width * Projectile.scale - Projectile.localAI[1]);
-            Vector2 pos = Bottom + RotateVec2 * offset;
+            float offset = Projectile.localAI[1] + Main.rand.NextFloat(0, (Projectile.width * Projectile.scale) - Projectile.localAI[1]);
+            Vector2 pos = Bottom + (RotateVec2 * offset);
             if (VisualEffectSystem.HitEffect_Lightning)
             {
                 byte hue = (byte)(0.4f * 255f);
@@ -366,7 +366,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
 
             for (int i = -2; i < 2; i++)
             {
-                spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition + RotateVec2 * i * 12, mainTex.Frame(),
+                spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition + (RotateVec2 * i * 12), mainTex.Frame(),
                   new Color(176, 203, 146, 200),
                    Projectile.rotation, origin, scale2 * 1.5f, 0, 0f);
             }
@@ -388,10 +388,10 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
                 if (oldRotate[i] == 100f)
                     continue;
 
-                float factor = 1f - i / count;
+                float factor = 1f - (i / count);
                 Vector2 Center = GetCenter(i);
-                Vector2 Top = Center + oldRotate[i].ToRotationVector2() * (oldLength[i] + trailTopWidth + oldDistanceToOwner[i]);
-                Vector2 Bottom = Center + oldRotate[i].ToRotationVector2() * (oldLength[i] - ControlTrailBottomWidth(factor) + oldDistanceToOwner[i]);
+                Vector2 Top = Center + (oldRotate[i].ToRotationVector2() * (oldLength[i] + trailTopWidth + oldDistanceToOwner[i]));
+                Vector2 Bottom = Center + (oldRotate[i].ToRotationVector2() * (oldLength[i] - ControlTrailBottomWidth(factor) + oldDistanceToOwner[i]));
 
                 var topColor = Color.Lerp(new Color(238, 218, 130, alpha), new Color(167, 127, 95, 0), 1 - factor);
                 var bottomColor = Color.Lerp(new Color(109, 73, 86, alpha), new Color(83, 16, 85, 0), 1 - factor);

@@ -151,20 +151,20 @@ namespace Coralite.Content.Items.Mushroom
             int Lenth_85 = 85;
 
             // 判断弹幕在人物左还是右
-            if (owner.Center.X - owner.direction * offset < Projectile.Center.X - Lenth_85)
+            if (owner.Center.X - (owner.direction * offset) < Projectile.Center.X - Lenth_85)
             {
                 projInRight = true;
             }
-            else if (owner.Center.X - owner.direction * offset > Projectile.Center.X + Lenth_85)
+            else if (owner.Center.X - (owner.direction * offset) > Projectile.Center.X + Lenth_85)
             {
                 projInLeft = true;
             }
 
             Vector2 Center = Projectile.Center;
 
-            float DistanceToOwner_X = owner.Center.X - owner.direction * offset - Center.X;
+            float DistanceToOwner_X = owner.Center.X - (owner.direction * offset) - Center.X;
             float DistanceToOwner_Y = owner.Center.Y - Center.Y;
-            float DistanceToOwner = (float)Math.Sqrt(DistanceToOwner_X * DistanceToOwner_X + DistanceToOwner_Y * DistanceToOwner_Y);
+            float DistanceToOwner = (float)Math.Sqrt((DistanceToOwner_X * DistanceToOwner_X) + (DistanceToOwner_Y * DistanceToOwner_Y));
 
             if (DistanceToOwner > 2000f)//距离太远直接传送
                 Projectile.Center = owner.Center;
@@ -276,7 +276,7 @@ namespace Coralite.Content.Items.Mushroom
                 if (!LowerToOwner && (Projectile.velocity.X < 0f || Projectile.velocity.X > 0f))
                 {
                     int ProjToTile_X = (int)Projectile.Center.X / 16;
-                    int ProjToTile_YPlus1 = (int)Projectile.Center.Y / 16 + 1;
+                    int ProjToTile_YPlus1 = ((int)Projectile.Center.Y / 16) + 1;
                     if (projInRight)
                         ProjToTile_X--;
 
@@ -329,7 +329,7 @@ namespace Coralite.Content.Items.Mushroom
                     Projectile.velocity.Y -= 0.61f;
 
                     int ProjToTile_X = (int)Projectile.Top.X / 16;
-                    int ProjToTilePlus1_Y = (int)Projectile.Top.Y / 16 - 1;
+                    int ProjToTilePlus1_Y = ((int)Projectile.Top.Y / 16) - 1;
                     if (WorldGen.SolidTile(ProjToTile_X, ProjToTilePlus1_Y))
                         Projectile.tileCollide = false;
                     else
@@ -371,7 +371,7 @@ namespace Coralite.Content.Items.Mushroom
             else if (Timer == 30)//瞄准
             {
                 int targetDirection = Math.Sign(target.Center.X - Projectile.Center.X);
-                targetLocation_X = target.Center.X + targetDirection * distance;
+                targetLocation_X = target.Center.X + (targetDirection * distance);
                 Projectile.direction = Projectile.spriteDirection = -targetDirection;
                 Projectile.rotation = 0f;
                 if (Projectile.velocity.Y == 0)
@@ -413,7 +413,7 @@ namespace Coralite.Content.Items.Mushroom
             else if (Timer == 60)
             {
                 int targetDirection = Math.Sign(target.Center.X - Projectile.Center.X);
-                targetLocation_X = target.Center.X + targetDirection * distance;
+                targetLocation_X = target.Center.X + (targetDirection * distance);
                 Projectile.direction = Projectile.spriteDirection = -targetDirection;
                 Projectile.rotation = 0f;
                 if (Projectile.velocity.Y == 0)
@@ -549,7 +549,7 @@ namespace Coralite.Content.Items.Mushroom
 
                 for (int i = oldPosi.Length - 1; i > 0; i--)
                     if (oldPosi[i] != Vector2.Zero)
-                        Main.spriteBatch.Draw(mainTex, oldPosi[i] - Main.screenPosition, frameBox, lightColor * 1 * (1 - 0.1f * i), Projectile.rotation, origin, 1 * (0.5f - 0.05f * i), effects, 0);
+                        Main.spriteBatch.Draw(mainTex, oldPosi[i] - Main.screenPosition, frameBox, lightColor * 1 * (1 - (0.1f * i)), Projectile.rotation, origin, 1 * (0.5f - (0.05f * i)), effects, 0);
 
             }
 

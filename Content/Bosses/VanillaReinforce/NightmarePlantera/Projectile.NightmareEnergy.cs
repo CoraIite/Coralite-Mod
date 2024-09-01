@@ -217,7 +217,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             rot += 0.1f;
                             DistanceToNiP -= 10;
 
-                            Projectile.Center = np.Center + rot.ToRotationVector2() * DistanceToNiP;
+                            Projectile.Center = np.Center + (rot.ToRotationVector2() * DistanceToNiP);
                             Projectile.rotation = (Projectile.oldPos[TrailLength - 2] - Projectile.Center).ToRotation();
                         }
                         else
@@ -278,9 +278,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             scale2 = 0.1f;
             for (int i = 0; i < 7; i++)
             {
-                float rot2 = (Main.GlobalTimeWrappedHourly * 2 + i * MathHelper.TwoPi / 7);
+                float rot2 = (Main.GlobalTimeWrappedHourly * 2) + (i * MathHelper.TwoPi / 7);
                 Vector2 dir = rot2.ToRotationVector2();
-                dir = pos + dir * (18 + factor * 2);
+                dir = pos + (dir * (18 + (factor * 2)));
                 rot2 += 1.57f;
                 spriteBatch.Draw(lightTex, dir, null, shineC, rot2, origin, scale2, 0, 0);
             }

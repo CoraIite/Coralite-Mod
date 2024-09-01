@@ -1,8 +1,4 @@
-﻿using Coralite.Helpers;
-using Terraria;
-using Terraria.DataStructures;
-
-namespace Coralite.Core.Systems.MagikeSystem
+﻿namespace Coralite.Core.Systems.MagikeSystem
 {
     public class MagikeGlobalProjectile : GlobalProjectile
     {

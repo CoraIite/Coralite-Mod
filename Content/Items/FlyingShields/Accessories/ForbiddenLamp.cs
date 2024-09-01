@@ -68,7 +68,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
                     for (int i = 0; i < 3; i++)
                         projectile.Projectile.NewProjectileFromThis<ForbiddenDroplet>(projectile.Projectile.Center
                             , (-1.57f + Main.rand.NextFloat(-0.3f, 0.3f)).ToRotationVector2() * Main.rand.NextFloat(10, 13)
-                            , damage2, 0, 35 + i * 10);
+                            , damage2, 0, 35 + (i * 10));
                 }
                 else
                 {
@@ -287,7 +287,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
             //残影
             for (int i = 1; i < 10; i++)
                 Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] + toCenter - Main.screenPosition, null,
-                    baseColor * (0.5f - i * 0.5f / 10), Projectile.oldRot[i], mainTex.Size() / 2, Projectile.scale, 0, 0);
+                    baseColor * (0.5f - (i * 0.5f / 10)), Projectile.oldRot[i], mainTex.Size() / 2, Projectile.scale, 0, 0);
 
             //额外星星
             Helper.DrawPrettyStarSparkle(Projectile.Opacity, 0, center, Color.Orange, Color.OrangeRed, 0.5f, 0, 0.5f, 0.5f, 1, Projectile.rotation, new Vector2(0.6f, 1.2f), Vector2.One);

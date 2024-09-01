@@ -126,7 +126,7 @@ namespace Coralite.Content.Items.Nightmare
             {
                 Helper.GetMyGroupIndexAndFillBlackList(Projectile, out var index, out var totalIndexesInGroup);
 
-                Vector2 idleSpot = CircleMovement(48 + totalIndexesInGroup * 4, 28, accelFactor: 0.4f, angleFactor: 0.2f, baseRot: index * MathHelper.TwoPi / totalIndexesInGroup);
+                Vector2 idleSpot = CircleMovement(48 + (totalIndexesInGroup * 4), 28, accelFactor: 0.4f, angleFactor: 0.2f, baseRot: index * MathHelper.TwoPi / totalIndexesInGroup);
                 if (Projectile.Distance(idleSpot) < 2f)
                 {
                     Timer = 0f;
@@ -140,7 +140,7 @@ namespace Coralite.Content.Items.Nightmare
             if (Projectile.ai[0] == 0f)
             {
                 Helper.GetMyGroupIndexAndFillBlackList(Projectile, out var index2, out var totalIndexesInGroup2);
-                CircleMovement(48 + totalIndexesInGroup2 * 4, 28, accelFactor: 0.4f, angleFactor: 0.2f, baseRot: index2 * MathHelper.TwoPi / totalIndexesInGroup2);
+                CircleMovement(48 + (totalIndexesInGroup2 * 4), 28, accelFactor: 0.4f, angleFactor: 0.2f, baseRot: index2 * MathHelper.TwoPi / totalIndexesInGroup2);
                 if (Main.rand.NextBool(20))
                 {
                     int num6 = AI_156_TryAttackingNPCs(Projectile);
@@ -203,12 +203,12 @@ namespace Coralite.Content.Items.Nightmare
                         Vector2 center = nPC.Center;
                         float num9 = (center - vector).ToRotation();
                         float num10 = (center.X > vector.X) ? (-(float)Math.PI) : ((float)Math.PI);
-                        float num11 = num10 + (0f - num10) * lerpValue * 2f;
+                        float num11 = num10 + ((0f - num10) * lerpValue * 2f);
                         Vector2 spinningPoint = num11.ToRotationVector2();
                         spinningPoint.Y *= (float)Math.Sin(Projectile.identity * 2.3f) * 0.5f;
                         spinningPoint = spinningPoint.RotatedBy(num9);
                         float num12 = (center - vector).Length() / 2f;
-                        Vector2 center2 = Vector2.Lerp(vector, center, 0.5f) + spinningPoint * num12;
+                        Vector2 center2 = Vector2.Lerp(vector, center, 0.5f) + (spinningPoint * num12);
                         Projectile.Center = center2;
                         Vector2 vector2 = MathHelper.WrapAngle(num9 + num11 + 0f).ToRotationVector2() * 10f;
                         Projectile.velocity = vector2;
@@ -238,12 +238,12 @@ namespace Coralite.Content.Items.Nightmare
                         Vector2 center = nPC.Center + exVec2;
                         float num9 = (center - vector).ToRotation();
                         float num10 = (center.X > vector.X) ? (-(float)Math.PI) : ((float)Math.PI);
-                        float num11 = num10 + (0f - num10) * lerpValue * 2f;
+                        float num11 = num10 + ((0f - num10) * lerpValue * 2f);
                         Vector2 spinningPoint = num11.ToRotationVector2();
                         spinningPoint.Y *= (float)Math.Sin(Projectile.identity * 2.3f) * 0.5f;
                         spinningPoint = spinningPoint.RotatedBy(num9);
                         float num12 = (center - vector).Length() / 2f;
-                        Vector2 center2 = Vector2.Lerp(vector, center, 0.5f) + spinningPoint * num12;
+                        Vector2 center2 = Vector2.Lerp(vector, center, 0.5f) + (spinningPoint * num12);
                         Projectile.Center = center2;
                         Vector2 vector2 = MathHelper.WrapAngle(num9 + num11 + 0f).ToRotationVector2() * 10f;
                         Projectile.velocity = vector2;
@@ -360,7 +360,7 @@ namespace Coralite.Content.Items.Nightmare
             Player player = Main.player[Projectile.owner];
 
             float num2 = (totalIndexes - 1f) / 2f;
-            idleSpot = player.Center + -Vector2.UnitY.RotatedBy(4.3982296f / totalIndexes * (stackedIndex - num2)) * 40f;
+            idleSpot = player.Center + (-Vector2.UnitY.RotatedBy(4.3982296f / totalIndexes * (stackedIndex - num2)) * 40f);
             idleRotation = 0f;
         }
 
@@ -380,7 +380,7 @@ namespace Coralite.Content.Items.Nightmare
 
         public Vector2 CircleMovement(float distance, float speedMax, float accelFactor = 0.25f, float rollingFactor = 5f, float angleFactor = 0.08f, float baseRot = 0f)
         {
-            Vector2 center = Owner.Center + (baseRot + Main.GlobalTimeWrappedHourly / rollingFactor * MathHelper.TwoPi).ToRotationVector2() * distance;
+            Vector2 center = Owner.Center + ((baseRot + (Main.GlobalTimeWrappedHourly / rollingFactor * MathHelper.TwoPi)).ToRotationVector2() * distance);
             Vector2 dir = center - Projectile.Center;
 
             float velRot = Projectile.velocity.ToRotation();
@@ -426,12 +426,12 @@ namespace Coralite.Content.Items.Nightmare
 
             for (int i = 0; i < 7; i += 1)
                 Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] + toCenter - Main.screenPosition, frameBox,
-                    drawColor * (0.5f - i * 0.5f / 7), Projectile.oldRot[i], frameBox.Size() / 2, 0.7f, effect, 0);
+                    drawColor * (0.5f - (i * 0.5f / 7)), Projectile.oldRot[i], frameBox.Size() / 2, 0.7f, effect, 0);
 
             //向上下左右四个方向绘制一遍
             for (int i = 0; i < 4; i++)
             {
-                Main.spriteBatch.Draw(mainTex, pos + (i * MathHelper.PiOver2).ToRotationVector2() * 4, frameBox, drawColor, Projectile.rotation, origin, 0.7f,
+                Main.spriteBatch.Draw(mainTex, pos + ((i * MathHelper.PiOver2).ToRotationVector2() * 4), frameBox, drawColor, Projectile.rotation, origin, 0.7f,
                    effect, 0);
             }
 
@@ -527,12 +527,12 @@ namespace Coralite.Content.Items.Nightmare
 
             for (int i = 0; i < 10; i++)
                 Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] + toCenter - Main.screenPosition, null,
-                    drawColor * (0.5f - i * 0.5f / 10), Projectile.oldRot[i], origin, 1, 0, 0);
+                    drawColor * (0.5f - (i * 0.5f / 10)), Projectile.oldRot[i], origin, 1, 0, 0);
 
             //向上下左右四个方向绘制一遍
             for (int i = 0; i < 4; i++)
             {
-                Main.spriteBatch.Draw(mainTex, pos + (i * MathHelper.PiOver2).ToRotationVector2() * 2, null, drawColor, Projectile.rotation, origin, 1,
+                Main.spriteBatch.Draw(mainTex, pos + ((i * MathHelper.PiOver2).ToRotationVector2() * 2), null, drawColor, Projectile.rotation, origin, 1,
                    0, 0);
             }
 

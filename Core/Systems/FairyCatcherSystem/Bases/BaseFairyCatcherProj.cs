@@ -139,7 +139,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
                 for (int i = 0; i < checkCount; i++)
                 {
-                    currentPos = selfPos + dir * i * 8;
+                    currentPos = selfPos + (dir * i * 8);
                     if (!WorldGen.InWorld((int)currentPos.X / 16, (int)currentPos.Y / 16))
                     {
                         TrunToBacking();
@@ -321,7 +321,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             //限制指针不能出圈
             Vector2 webCenter = this.webCenter.ToWorldCoordinates();
             if (Vector2.Distance(cursorCenter, webCenter) > webRadius)
-                cursorCenter = webCenter + (cursorCenter - webCenter).SafeNormalize(Vector2.Zero) * webRadius;
+                cursorCenter = webCenter + ((cursorCenter - webCenter).SafeNormalize(Vector2.Zero) * webRadius);
         }
 
         /// <summary>
@@ -373,7 +373,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 cursorHeight = (int)fcp.cursorSizeBonus.ApplyTo(cursorHeight);
             }
 
-            return new Rectangle((int)cursorCenter.X - cursorWidth / 2, (int)cursorCenter.Y - cursorHeight / 2, cursorWidth, cursorHeight);
+            return new Rectangle((int)cursorCenter.X - (cursorWidth / 2), (int)cursorCenter.Y - (cursorHeight / 2), cursorWidth, cursorHeight);
         }
 
         #region 子类可用方法
@@ -389,7 +389,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             //限制不能出圈
             Vector2 webCenter = this.webCenter.ToWorldCoordinates();
             if (Vector2.Distance(cursorCenter, webCenter) > webRadius)
-                cursorCenter = webCenter + (cursorCenter - webCenter).SafeNormalize(Vector2.Zero) * webRadius;
+                cursorCenter = webCenter + ((cursorCenter - webCenter).SafeNormalize(Vector2.Zero) * webRadius);
         }
 
         public virtual FairyAttempt.Rarity SetFairyAttemptRarity()
@@ -462,7 +462,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             }
             else
             {
-                float distance = (float)Math.Sqrt(distanceX * distanceX + distanceY * distanceY);
+                float distance = (float)Math.Sqrt((distanceX * distanceX) + (distanceY * distanceY));
                 distance = stringTex.Height / distance;
                 distanceX *= distance;
                 distanceY *= distance;
@@ -475,7 +475,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             while (flag)
             {
                 float sourceHeight = stringTex.Height;
-                float distance1 = (float)Math.Sqrt(distanceX * distanceX + distanceY * distanceY);
+                float distance1 = (float)Math.Sqrt((distanceX * distanceX) + (distanceY * distanceY));
                 float distance2 = distance1;
                 if (float.IsNaN(distance1) || float.IsNaN(distance2))
                 {
@@ -511,7 +511,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                     if (num10 > 16f)
                         num10 = 16f;
 
-                    num10 = 1f - num10 / 16f;
+                    num10 = 1f - (num10 / 16f);
                     num9 *= num10;
                     num10 = distance2 / 80f;
                     if (num10 > 1f)
@@ -635,8 +635,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         {
             int howMany = (int)(webRadius * 2 / 16);
 
-            int baseX = webCenter.X - howMany / 2;
-            int baseY = webCenter.Y - howMany / 2;
+            int baseX = webCenter.X - (howMany / 2);
+            int baseY = webCenter.Y - (howMany / 2);
 
             Texture2D tex = TileTexture.Value;
             Color c = Color.IndianRed * 0.3f;
@@ -648,7 +648,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
                     if (!tile.HasUnactuatedTile)
                         continue;
-                    Vector2 worldPos = new Vector2(baseX + i, baseY + j) * 16 - Main.screenPosition;
+                    Vector2 worldPos = (new Vector2(baseX + i, baseY + j) * 16) - Main.screenPosition;
                     if (Vector2.Distance(worldPos, center) > webRadius)
                         continue;
 

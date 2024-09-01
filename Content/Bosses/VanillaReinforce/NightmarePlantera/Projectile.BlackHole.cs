@@ -76,13 +76,13 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         }
 
                         Vector2 targetCenter = Owner.Center +
-                            ((TimeFactor + Timer) / 360 * MathHelper.TwoPi).ToRotationVector2() * (450 + 100 * MathF.Sin(TimeFactor / 100));
+                            (((TimeFactor + Timer) / 360 * MathHelper.TwoPi).ToRotationVector2() * (450 + (100 * MathF.Sin(TimeFactor / 100))));
 
                         float velRot = Projectile.velocity.ToRotation();
                         float targetRot = (targetCenter - Projectile.Center).ToRotation();
 
                         float speed = Projectile.velocity.Length();
-                        float aimSpeed = Math.Clamp(Vector2.Distance(Projectile.Center, targetCenter) / 800f, 0, 1) * (10 + Timer / (RollingTime / 3) * 12);
+                        float aimSpeed = Math.Clamp(Vector2.Distance(Projectile.Center, targetCenter) / 800f, 0, 1) * (10 + (Timer / (RollingTime / 3) * 12));
 
                         Projectile.velocity = velRot.AngleTowards(targetRot, 0.08f).ToRotationVector2() * Helper.Lerp(speed, aimSpeed, 0.65f);
                         Projectile.rotation += 0.1f;
@@ -98,8 +98,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             Projectile.velocity *= 0;
                             for (int i = 0; i < 7; i++) //生成噩梦尖刺弹幕
                             {
-                                Vector2 dir = (Projectile.rotation + i * 1 / 7f * MathHelper.TwoPi).ToRotationVector2();
-                                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center + dir * 48, dir, ModContent.ProjectileType<NightmareSpike>(), Projectile.damage, 0, ai0: 40, ai1: Main.zenithWorld ? Main.rand.NextFloat(0, 1) : -1, ai2: 750);
+                                Vector2 dir = (Projectile.rotation + (i * 1 / 7f * MathHelper.TwoPi)).ToRotationVector2();
+                                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center + (dir * 48), dir, ModContent.ProjectileType<NightmareSpike>(), Projectile.damage, 0, ai0: 40, ai1: Main.zenithWorld ? Main.rand.NextFloat(0, 1) : -1, ai2: 750);
                             }
                         }
 
@@ -148,7 +148,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         {
             Texture2D warpTex = WarpTex.Value;
             Main.spriteBatch.Draw(warpTex, Projectile.Center - Main.screenPosition, null, Color.White * 0.3f,
-                Main.GlobalTimeWrappedHourly * 5, warpTex.Size() / 2, scale + MathF.Sin(Main.GlobalTimeWrappedHourly * 3) * 0.1f, 0, 0);
+                Main.GlobalTimeWrappedHourly * 5, warpTex.Size() / 2, scale + (MathF.Sin(Main.GlobalTimeWrappedHourly * 3) * 0.1f), 0, 0);
         }
     }
 }

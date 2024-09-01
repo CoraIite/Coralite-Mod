@@ -59,7 +59,7 @@ namespace Coralite.Content.Items.Icicle
                 Vector2 targetDir = (Projectile.rotation - 1.57f).ToRotationVector2();
                 for (int i = 0; i < 2; i++)
                 {
-                    if (Framing.GetTileSafely(Projectile.Center + targetDir * i * 16).HasSolidTile())
+                    if (Framing.GetTileSafely(Projectile.Center + (targetDir * i * 16)).HasSolidTile())
                     {
                         Projectile.timeLeft = 10;
                         canDamage = false;

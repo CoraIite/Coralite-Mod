@@ -58,7 +58,7 @@ namespace Coralite.Content.Items.Misc_Shoot
             {
                 Vector2 velocity2 = dir.RotatedBy(-i * 0.5f) * speed;
                 Projectile.NewProjectile(new EntitySource_ItemUse(player, Item)
-                    , position + dir.RotatedBy(i * 1f) * 48 - velocity * 2, velocity2, ModContent.ProjectileType<TremblingElectric>()
+                    , position + (dir.RotatedBy(i * 1f) * 48) - (velocity * 2), velocity2, ModContent.ProjectileType<TremblingElectric>()
                     , damage2, knockback, player.whoAmI, i);
             }
 
@@ -101,7 +101,7 @@ namespace Coralite.Content.Items.Misc_Shoot
 
         public virtual Color ThunderColorFunc(float factor)
         {
-            return new Color(103, 255, 255) ;
+            return new Color(103, 255, 255);
         }
 
         public virtual float GetAlpha(float factor)
@@ -123,7 +123,7 @@ namespace Coralite.Content.Items.Misc_Shoot
                     {
                         CanDraw = i == 0,
                         UseNonOrAdd = true,
-                        BasePositions = 
+                        BasePositions =
                         [
                             Projectile.Center,Projectile.Center,Projectile.Center
                         ]

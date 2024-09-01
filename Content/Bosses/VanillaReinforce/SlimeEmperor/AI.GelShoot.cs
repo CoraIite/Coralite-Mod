@@ -29,7 +29,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                                 SoundEngine.PlaySound(CoraliteSoundID.QueenSlime2_Bubble_Item155, NPC.Center);
                                 for (int i = 0; i < directlyHowMany; i++)
                                 {
-                                    Vector2 vel = (Target.Center - NPC.Center).SafeNormalize(Vector2.UnitY).RotatedBy(sign * (1f + i * 0.3f)) * 12;
+                                    Vector2 vel = (Target.Center - NPC.Center).SafeNormalize(Vector2.UnitY).RotatedBy(sign * (1f + (i * 0.3f))) * 12;
                                     Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center + Main.rand.NextVector2Circular(NPC.width / 3, NPC.height / 3), vel, ModContent.ProjectileType<GelBall>(),
                                         damage, 4f, NPC.target);
                                 }

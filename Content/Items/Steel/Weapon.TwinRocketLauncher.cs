@@ -54,7 +54,7 @@ namespace Coralite.Content.Items.Steel
                 int sign = Main.rand.NextFromList(-1, 1);
                 int howMany = Main.rand.Next(3, 6);
                 float perAngle = Main.rand.NextFloat(0.25f, 0.4f);
-                float baseAngle = velocity.ToRotation() + sign * perAngle * howMany / 2;
+                float baseAngle = velocity.ToRotation() + (sign * perAngle * howMany / 2);
                 float speed = velocity.Length() * 0.8f;
 
                 for (int i = 0; i < howMany; i++)
@@ -128,13 +128,13 @@ namespace Coralite.Content.Items.Steel
                         num24 = Projectile.velocity.Y * 0.5f;
                     }
 
-                    int num25 = Dust.NewDust(new Vector2(Projectile.position.X + 3f + num23, Projectile.position.Y + 3f + num24) - Projectile.velocity * 0.5f, Projectile.width - 8, Projectile.height - 8, DustID.BlueTorch, 0f, 0f, 100);
-                    Main.dust[num25].scale *= 2f + Main.rand.Next(10) * 0.1f;
+                    int num25 = Dust.NewDust(new Vector2(Projectile.position.X + 3f + num23, Projectile.position.Y + 3f + num24) - (Projectile.velocity * 0.5f), Projectile.width - 8, Projectile.height - 8, DustID.BlueTorch, 0f, 0f, 100);
+                    Main.dust[num25].scale *= 2f + (Main.rand.Next(10) * 0.1f);
                     Main.dust[num25].velocity *= 0.2f;
                     Main.dust[num25].noGravity = true;
 
-                    num25 = Dust.NewDust(new Vector2(Projectile.position.X + 3f + num23, Projectile.position.Y + 3f + num24) - Projectile.velocity * 0.5f, Projectile.width - 8, Projectile.height - 8, DustID.Smoke, 0f, 0f, 100, default, 0.5f);
-                    Main.dust[num25].fadeIn = 1f + Main.rand.Next(5) * 0.1f;
+                    num25 = Dust.NewDust(new Vector2(Projectile.position.X + 3f + num23, Projectile.position.Y + 3f + num24) - (Projectile.velocity * 0.5f), Projectile.width - 8, Projectile.height - 8, DustID.Smoke, 0f, 0f, 100, default, 0.5f);
+                    Main.dust[num25].fadeIn = 1f + (Main.rand.Next(5) * 0.1f);
                     Main.dust[num25].velocity *= 0.05f;
                 }
             }
@@ -162,7 +162,7 @@ namespace Coralite.Content.Items.Steel
                 if (Main.rand.NextBool(2))
                 {
                     Main.dust[num911].scale = 0.5f;
-                    Main.dust[num911].fadeIn = 1f + Main.rand.Next(10) * 0.1f;
+                    Main.dust[num911].fadeIn = 1f + (Main.rand.Next(10) * 0.1f);
                 }
             }
 
@@ -187,22 +187,22 @@ namespace Coralite.Content.Items.Steel
                 if (i == 2)
                     num915 = 1f;
 
-                int num916 = Gore.NewGore(source, new Vector2(Projectile.position.X + Projectile.width / 2 - 24f, Projectile.position.Y + Projectile.height / 2 - 24f), default, Main.rand.Next(61, 64));
+                int num916 = Gore.NewGore(source, new Vector2(Projectile.position.X + (Projectile.width / 2) - 24f, Projectile.position.Y + (Projectile.height / 2) - 24f), default, Main.rand.Next(61, 64));
                 Gore gore2 = Main.gore[num916];
                 gore2.velocity *= num915;
                 Main.gore[num916].velocity.X += 1f;
                 Main.gore[num916].velocity.Y += 1f;
-                num916 = Gore.NewGore(source, new Vector2(Projectile.position.X + Projectile.width / 2 - 24f, Projectile.position.Y + Projectile.height / 2 - 24f), default, Main.rand.Next(61, 64));
+                num916 = Gore.NewGore(source, new Vector2(Projectile.position.X + (Projectile.width / 2) - 24f, Projectile.position.Y + (Projectile.height / 2) - 24f), default, Main.rand.Next(61, 64));
                 gore2 = Main.gore[num916];
                 gore2.velocity *= num915;
                 Main.gore[num916].velocity.X -= 1f;
                 Main.gore[num916].velocity.Y += 1f;
-                num916 = Gore.NewGore(source, new Vector2(Projectile.position.X + Projectile.width / 2 - 24f, Projectile.position.Y + Projectile.height / 2 - 24f), default, Main.rand.Next(61, 64));
+                num916 = Gore.NewGore(source, new Vector2(Projectile.position.X + (Projectile.width / 2) - 24f, Projectile.position.Y + (Projectile.height / 2) - 24f), default, Main.rand.Next(61, 64));
                 gore2 = Main.gore[num916];
                 gore2.velocity *= num915;
                 Main.gore[num916].velocity.X += 1f;
                 Main.gore[num916].velocity.Y -= 1f;
-                num916 = Gore.NewGore(source, new Vector2(Projectile.position.X + Projectile.width / 2 - 24f, Projectile.position.Y + Projectile.height / 2 - 24f), default, Main.rand.Next(61, 64));
+                num916 = Gore.NewGore(source, new Vector2(Projectile.position.X + (Projectile.width / 2) - 24f, Projectile.position.Y + (Projectile.height / 2) - 24f), default, Main.rand.Next(61, 64));
                 gore2 = Main.gore[num916];
                 gore2.velocity *= num915;
                 Main.gore[num916].velocity.X -= 1f;
@@ -252,8 +252,8 @@ namespace Coralite.Content.Items.Steel
                 float factor = (float)i / trailCachesLength;
                 Vector2 Center = Projectile.oldPos[i];
                 Vector2 normal = (Projectile.oldRot[i] + MathHelper.PiOver2).ToRotationVector2();
-                Vector2 Top = Center - Main.screenPosition + normal * 6 * factor;
-                Vector2 Bottom = Center - Main.screenPosition - normal * 6 * factor;
+                Vector2 Top = Center - Main.screenPosition + (normal * 6 * factor);
+                Vector2 Bottom = Center - Main.screenPosition - (normal * 6 * factor);
 
                 var Color = new Color(20, 255, 199, 0) * factor;
                 bars.Add(new(Top, Color, new Vector3(factor, 0, 1)));
@@ -369,14 +369,14 @@ namespace Coralite.Content.Items.Steel
                     Vector2 center = Projectile.Center;
                     float num198 = num186 - center.X;
                     float num199 = num187 - center.Y;
-                    float dis2Target = MathF.Sqrt(num198 * num198 + num199 * num199);
+                    float dis2Target = MathF.Sqrt((num198 * num198) + (num199 * num199));
                     dis2Target = num197 / dis2Target;
                     num198 *= dis2Target;
                     num199 *= dis2Target;
                     int chase = 16;
 
-                    Projectile.velocity.X = (Projectile.velocity.X * (chase - 1) + num198) / chase;
-                    Projectile.velocity.Y = (Projectile.velocity.Y * (chase - 1) + num199) / chase;
+                    Projectile.velocity.X = ((Projectile.velocity.X * (chase - 1)) + num198) / chase;
+                    Projectile.velocity.Y = ((Projectile.velocity.Y * (chase - 1)) + num199) / chase;
                 }
 
                 #endregion
@@ -401,7 +401,7 @@ namespace Coralite.Content.Items.Steel
                 if (Main.rand.NextBool(2))
                 {
                     Main.dust[num911].scale = 0.5f;
-                    Main.dust[num911].fadeIn = 1f + Main.rand.Next(10) * 0.1f;
+                    Main.dust[num911].fadeIn = 1f + (Main.rand.Next(10) * 0.1f);
                 }
             }
 
@@ -435,8 +435,8 @@ namespace Coralite.Content.Items.Steel
                 float factor = (float)i / trailCachesLength;
                 Vector2 Center = Projectile.oldPos[i];
                 Vector2 normal = (Projectile.oldRot[i] + MathHelper.PiOver2).ToRotationVector2();
-                Vector2 Top = Center - Main.screenPosition + normal * 3 * factor;
-                Vector2 Bottom = Center - Main.screenPosition - normal * 3 * factor;
+                Vector2 Top = Center - Main.screenPosition + (normal * 3 * factor);
+                Vector2 Bottom = Center - Main.screenPosition - (normal * 3 * factor);
 
                 var Color = new Color(20, 255, 199, 0) * factor;
                 bars.Add(new(Top, Color, new Vector3(factor, 0, 1)));

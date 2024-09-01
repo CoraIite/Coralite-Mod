@@ -113,14 +113,14 @@ namespace Coralite.Content.Bosses.ShadowBalls
             {
                 if (nPCStrengthHelper.IsExpertMode)
                 {
-                    NPC.lifeMax = (int)((3820 + numPlayers * 1750) / journeyScale);
+                    NPC.lifeMax = (int)((3820 + (numPlayers * 1750)) / journeyScale);
                     NPC.damage = 35;
                     NPC.defense = 12;
                 }
 
                 if (nPCStrengthHelper.IsMasterMode)
                 {
-                    NPC.lifeMax = (int)((4720 + numPlayers * 2100) / journeyScale);
+                    NPC.lifeMax = (int)((4720 + (numPlayers * 2100)) / journeyScale);
                     NPC.damage = 60;
                     NPC.defense = 15;
                 }
@@ -139,20 +139,20 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 return;
             }
 
-            NPC.lifeMax = 3820 + numPlayers * 1750;
+            NPC.lifeMax = 3820 + (numPlayers * 1750);
             NPC.damage = 35;
             NPC.defense = 12;
 
             if (Main.masterMode)
             {
-                NPC.lifeMax = 4720 + numPlayers * 2100;
+                NPC.lifeMax = 4720 + (numPlayers * 2100);
                 NPC.damage = 60;
                 NPC.defense = 15;
             }
 
             if (Main.getGoodWorld)
             {
-                NPC.lifeMax = 5320 + numPlayers * 2200;
+                NPC.lifeMax = 5320 + (numPlayers * 2200);
                 NPC.damage = 80;
                 NPC.defense = 15;
             }
@@ -292,7 +292,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 } while (false);
             }
 
-            StarsBackSky sky = ((StarsBackSky)SkyManager.Instance["StarsBackSky"]);
+            StarsBackSky sky = (StarsBackSky)SkyManager.Instance["StarsBackSky"];
             if (sky.Timeleft < 100)
                 sky.Timeleft += 3;
             if (sky.Timeleft > 100)
@@ -754,7 +754,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             for (int i = 0; i < ShadowCount / 2; i++)
             {
-                spriteBatch.Draw(mainTex, NPC.oldPos[i] - screenPos, frameBox, drawColor * alpha * (1 - (float)i / (ShadowCount / 2))
+                spriteBatch.Draw(mainTex, NPC.oldPos[i] - screenPos, frameBox, drawColor * alpha * (1 - ((float)i / (ShadowCount / 2)))
                     , 0, origin, NPC.scale, 0, 0);
             }
 
@@ -765,7 +765,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public Rectangle GetClippingRectangle(SpriteBatch spriteBatch, Vector2 center, Rectangle frameBox)
         {
             float height = SpawnOverflowHeight * frameBox.Height;
-            Vector2 position = center + new Vector2(-frameBox.Width / 2, frameBox.Height / 2 - height);
+            Vector2 position = center + new Vector2(-frameBox.Width / 2, (frameBox.Height / 2) - height);
             Vector2 size = new(frameBox.Width, height);
 
             position = Vector2.Transform(position, Main.Transform);

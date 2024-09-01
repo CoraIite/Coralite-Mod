@@ -75,7 +75,7 @@ namespace Coralite.Content.Bosses.Rediancie
                 if (Timer == 158)
                 {
                     int damage = Helper.GetProjDamage(20, 25, 30);
-                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + NPC.velocity * 9, Vector2.Zero, ModContent.ProjectileType<Rediancie_Explosion>(), damage, 5f);
+                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + (NPC.velocity * 9), Vector2.Zero, ModContent.ProjectileType<Rediancie_Explosion>(), damage, 5f);
                 }
 
                 if (Timer < 150)
@@ -107,7 +107,7 @@ namespace Coralite.Content.Bosses.Rediancie
             Vector2 origin = mainTex.Size() / 2;
 
             if (Timer < 101)
-                spriteBatch.Draw(mainTex, drawPos, null, new Color(248, 40, 24, (int)alpha), NPC.rotation, origin, NPC.scale + 0.5f * (alpha / 255), SpriteEffects.None, 0f);
+                spriteBatch.Draw(mainTex, drawPos, null, new Color(248, 40, 24, (int)alpha), NPC.rotation, origin, NPC.scale + (0.5f * (alpha / 255)), SpriteEffects.None, 0f);
             else
             {
                 Texture2D extraTex = ModContent.Request<Texture2D>(AssetDirectory.RedJadeProjectiles + "RedBinkRush").Value;

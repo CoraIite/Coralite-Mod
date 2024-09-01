@@ -80,11 +80,11 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         public virtual void ApplyRecoil(float factor)
         {
-            Projectile.rotation = TargetRot - OwnerDirection * factor * recoilAngle;
-            HeldPositionX = heldPositionX + factor * recoilLength;
+            Projectile.rotation = TargetRot - (OwnerDirection * factor * recoilAngle);
+            HeldPositionX = heldPositionX + (factor * recoilLength);
             Projectile.Center = Owner.Center
-                + OwnerDirection * Projectile.rotation.ToRotationVector2() * HeldPositionX
-                + (Projectile.rotation + 1.57f).ToRotationVector2() * HeldPositionY;
+                + (OwnerDirection * Projectile.rotation.ToRotationVector2() * HeldPositionX)
+                + ((Projectile.rotation + 1.57f).ToRotationVector2() * HeldPositionY);
         }
 
         public virtual void ModifyAI(float factor) { }
@@ -92,7 +92,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         public virtual void AfterAI(float factor)
         {
             Owner.heldProj = Projectile.whoAmI;
-            Owner.itemRotation = Projectile.rotation + (Owner.gravDir > 0 ? 0f : MathHelper.Pi) + OwnerDirection * 0.3f;
+            Owner.itemRotation = Projectile.rotation + (Owner.gravDir > 0 ? 0f : MathHelper.Pi) + (OwnerDirection * 0.3f);
         }
 
         public override bool PreDraw(ref Color lightColor)

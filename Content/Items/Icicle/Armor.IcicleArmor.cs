@@ -85,7 +85,7 @@ namespace Coralite.Content.Items.Icicle
                 for (int i = -1; i < 1; i++)
                 {
                     int damage = 25;
-                    int index = Projectile.NewProjectile(player.GetSource_FromThis(), pos, targetDir.RotatedBy(i * 0.05f) * (6f + j * 2), ProjectileType<IceBreath>(), damage, 5f);
+                    int index = Projectile.NewProjectile(player.GetSource_FromThis(), pos, targetDir.RotatedBy(i * 0.05f) * (6f + (j * 2)), ProjectileType<IceBreath>(), damage, 5f);
                     Projectile p = Main.projectile[index];
                     p.DamageType = DamageClass.Magic;
                     p.hostile = false;
@@ -128,14 +128,14 @@ namespace Coralite.Content.Items.Icicle
 
         private bool TryMakingSpike(Player player, ref Point sourceTileCoords, int dir, int howMany, int whichOne, int xOffset, float scaleOffset)
         {
-            int position_X = sourceTileCoords.X + xOffset * dir;
+            int position_X = sourceTileCoords.X + (xOffset * dir);
             int position_Y = TryMakingSpike_FindBestY(player.Bottom, ref sourceTileCoords, position_X);
             if (WorldGen.ActiveAndWalkableTile(position_X, position_Y))
             {
-                Vector2 position = new(position_X * 16 + 8, position_Y * 16 - 8);
+                Vector2 position = new((position_X * 16) + 8, (position_Y * 16) - 8);
                 Vector2 velocity = new Vector2(0f, -1f).RotatedBy(whichOne * dir * 0.7f * ((float)Math.PI / 4f / howMany));
                 int damage = 35;
-                int index = Projectile.NewProjectile(player.GetSource_FromAI(), position, velocity, ProjectileID.DeerclopsIceSpike, damage, 0f, player.whoAmI, 0f, 0.4f + scaleOffset + xOffset * 1.1f / howMany);
+                int index = Projectile.NewProjectile(player.GetSource_FromAI(), position, velocity, ProjectileID.DeerclopsIceSpike, damage, 0f, player.whoAmI, 0f, 0.4f + scaleOffset + (xOffset * 1.1f / howMany));
                 Projectile p = Main.projectile[index];
                 p.DamageType = DamageClass.Melee;
                 p.hostile = false;
@@ -154,7 +154,7 @@ namespace Coralite.Content.Items.Icicle
             int position_Y = sourceTileCoords.Y;
             int num2 = (int)(vector.Y / 16f);
             int num3 = Math.Sign(num2 - position_Y);
-            int num4 = num2 + num3 * 15;
+            int num4 = num2 + (num3 * 15);
             int? num5 = null;
             float num6 = float.PositiveInfinity;
             for (int i = position_Y; i != num4; i += num3)

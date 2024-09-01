@@ -76,7 +76,7 @@ namespace Coralite.Content.Particles
         }
 
 
-        public static FlowLine Spawn(Vector2 center, Vector2 velocity, float trailWidth, int spawnTime, float rotate, Color color = (default))
+        public static FlowLine Spawn(Vector2 center, Vector2 velocity, float trailWidth, int spawnTime, float rotate, Color color = default)
         {
             FlowLine particle = NewParticle<FlowLine>(center, velocity, color, 1f);
             particle.fadeIn = spawnTime;

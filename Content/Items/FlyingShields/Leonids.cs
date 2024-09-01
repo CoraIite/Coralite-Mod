@@ -103,13 +103,13 @@ namespace Coralite.Content.Items.FlyingShields
             Vector2 origin2 = frameBox.Size() / 2;
 
             //绘制基底
-            Main.spriteBatch.Draw(mainTex, pos - dir * 5, frameBox, c, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos - (dir * 5), frameBox, c, rotation, origin2, scale, effect, 0);
             Main.spriteBatch.Draw(mainTex, pos, frameBox, lightColor, rotation, origin2, scale, effect, 0);
 
             //绘制上部
             frameBox = mainTex.Frame(2, 1, 1, 0);
-            Main.spriteBatch.Draw(mainTex, pos + dir * 3, frameBox, c, rotation, origin2, scale, effect, 0);
-            Main.spriteBatch.Draw(mainTex, pos + dir * 7, frameBox, lightColor, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos + (dir * 3), frameBox, c, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos + (dir * 7), frameBox, lightColor, rotation, origin2, scale, effect, 0);
         }
     }
 
@@ -157,7 +157,7 @@ namespace Coralite.Content.Items.FlyingShields
                 Vector2 dir = (i * MathHelper.PiOver2).ToRotationVector2();
                 for (int j = 0; j < 6; j++)
                 {
-                    Dust d = Dust.NewDustPerfect(Projectile.Center, DustID.Clentaminator_Cyan, dir * (1 + j * 0.8f), Scale: 1.6f - j * 0.15f);
+                    Dust d = Dust.NewDustPerfect(Projectile.Center, DustID.Clentaminator_Cyan, dir * (1 + (j * 0.8f)), Scale: 1.6f - (j * 0.15f));
                     d.noGravity = true;
                 }
             }
@@ -191,8 +191,8 @@ namespace Coralite.Content.Items.FlyingShields
                 float factor = (float)i / trailCachesLength;
                 Vector2 Center = Projectile.oldPos[i];
                 Vector2 normal = (Projectile.oldRot[i] + MathHelper.PiOver2).ToRotationVector2();
-                Vector2 Top = Center - Main.screenPosition + normal * 5 * factor;
-                Vector2 Bottom = Center - Main.screenPosition - normal * 5 * factor;
+                Vector2 Top = Center - Main.screenPosition + (normal * 5 * factor);
+                Vector2 Bottom = Center - Main.screenPosition - (normal * 5 * factor);
 
                 var Color = new Color(20, 255, 199, 0) * factor;
                 bars.Add(new(Top, Color, new Vector3(factor, 0, 1)));

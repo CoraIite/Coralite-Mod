@@ -102,7 +102,7 @@ namespace Coralite.Content.Items.Gels
 
             Vector2 vector = player.Center;
             if (player.direction > 0)
-                vector.X -= (40) * player.direction;
+                vector.X -= 40 * player.direction;
             else
                 vector.X -= (45 + player.width) * player.direction;
 
@@ -117,7 +117,7 @@ namespace Coralite.Content.Items.Gels
                         Vector2 vector7 = player.Center - Projectile.Center;
                         if (vector7.Length() > 2000f)
                         {
-                            Projectile.position = player.Center - new Vector2(Projectile.width, Projectile.height) / 2f;
+                            Projectile.position = player.Center - (new Vector2(Projectile.width, Projectile.height) / 2f);
                         }
                         else if (vector7.Length() > num2 || Math.Abs(vector7.Y) > num3)
                         {
@@ -143,8 +143,8 @@ namespace Coralite.Content.Items.Gels
                             vector.Y += 16f;
                         }
 
-                        Vector2 vector8 = Collision.TileCollision(player.Center - Projectile.Size / 2f, vector - player.Center, Projectile.width, Projectile.height);
-                        vector = player.Center - Projectile.Size / 2f + vector8;
+                        Vector2 vector8 = Collision.TileCollision(player.Center - (Projectile.Size / 2f), vector - player.Center, Projectile.width, Projectile.height);
+                        vector = player.Center - (Projectile.Size / 2f) + vector8;
                         if (Projectile.Distance(vector) < 32f)
                         {
                             float num32 = player.Center.Distance(vector);
@@ -160,14 +160,14 @@ namespace Coralite.Content.Items.Gels
                             Vector2 vector11 = r2.TopLeft();
                             for (float num33 = 0f; num33 < 1f; num33 += 0.05f)
                             {
-                                Vector2 vector12 = r2.TopLeft() + vector10 * num33;
-                                if (Collision.SolidCollision(r2.TopLeft() + vector10 * num33, r.Width, r.Height))
+                                Vector2 vector12 = r2.TopLeft() + (vector10 * num33);
+                                if (Collision.SolidCollision(r2.TopLeft() + (vector10 * num33), r.Width, r.Height))
                                     break;
 
                                 vector11 = vector12;
                             }
 
-                            vector = vector11 + Projectile.Size / 2f;
+                            vector = vector11 + (Projectile.Size / 2f);
                         }
 
                         Projectile.tileCollide = true;
@@ -219,7 +219,7 @@ namespace Coralite.Content.Items.Gels
                             int num42 = (int)Projectile.position.Y / 16;
                             num41 += num39;
                             num41 += (int)Projectile.velocity.X;
-                            for (int j = num42; j < num42 + Projectile.height / 16 + 1; j++)
+                            for (int j = num42; j < num42 + (Projectile.height / 16) + 1; j++)
                             {
                                 if (WorldGen.SolidTile(num41, j))
                                     flag13 = true;
@@ -314,7 +314,7 @@ namespace Coralite.Content.Items.Gels
                             Projectile.direction = 1;
 
                         if (Projectile.velocity.X == 0f)
-                            Projectile.direction = ((player.Center.X > Projectile.Center.X) ? 1 : (-1));
+                            Projectile.direction = (player.Center.X > Projectile.Center.X) ? 1 : (-1);
 
                         if (Projectile.velocity.X > num34 && num39 == 1)
                             Projectile.direction = 1;
@@ -370,7 +370,7 @@ namespace Coralite.Content.Items.Gels
                         else
                         {
                             Projectile.rotation = 0f;
-                            Projectile.frameCounter += (int)Math.Abs(Projectile.velocity.X) / 3 + 1;
+                            Projectile.frameCounter += ((int)Math.Abs(Projectile.velocity.X) / 3) + 1;
                             if (++Projectile.frameCounter > 14)
                             {
                                 Projectile.frame++;
@@ -383,7 +383,7 @@ namespace Coralite.Content.Items.Gels
                         }
 
 
-                        Projectile.velocity.Y += 0.4f + num43 * 1f;
+                        Projectile.velocity.Y += 0.4f + (num43 * 1f);
                         if (Projectile.velocity.Y > 10f)
                             Projectile.velocity.Y = 10f;
 
@@ -401,7 +401,7 @@ namespace Coralite.Content.Items.Gels
                         Vector2 vector6 = player.Center - Projectile.Center;
                         float num20 = vector6.Length();
                         if (num20 > 2000f)
-                            Projectile.position = player.Center - new Vector2(Projectile.width, Projectile.height) / 2f;
+                            Projectile.position = player.Center - (new Vector2(Projectile.width, Projectile.height) / 2f);
 
                         if (num20 < num19 && player.velocity.Y == 0f && Projectile.position.Y + Projectile.height <= player.position.Y + player.height && !Collision.SolidCollision(Projectile.position, Projectile.width, Projectile.height))
                         {

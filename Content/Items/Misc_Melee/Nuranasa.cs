@@ -117,13 +117,13 @@ namespace Coralite.Content.Items.Misc_Melee
 
             // Keep locked onto the player, but extend further based on the given velocity (Requires ShouldUpdatePosition returning false to work)
             Vector2 playerCenter = player.RotatedRelativePoint(player.MountedCenter, reverseRotation: false, addGfxOffY: false);
-            Projectile.Center = playerCenter + Projectile.velocity * (Timer - 1f);
+            Projectile.Center = playerCenter + (Projectile.velocity * (Timer - 1f));
 
             // Set spriteDirection based on moving left or right. Left -1, right 1
             Projectile.spriteDirection = (Vector2.Dot(Projectile.velocity, Vector2.UnitX) >= 0f).ToDirectionInt();
 
             // Point towards where it is moving, applied offset for top right of the sprite respecting spriteDirection
-            Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2 - MathHelper.PiOver4 * Projectile.spriteDirection;
+            Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2 - (MathHelper.PiOver4 * Projectile.spriteDirection);
 
             // The code in this method is important to align the sprite with the hitbox how we want it to
             SetVisualOffsets();
@@ -167,7 +167,7 @@ namespace Coralite.Content.Items.Misc_Melee
             // "cutting tiles" refers to breaking pots, grass, queen bee larva, etc.
             DelegateMethods.tilecut_0 = TileCuttingContext.AttackProjectile;
             Vector2 start = Projectile.Center;
-            Vector2 end = start + Projectile.velocity.SafeNormalize(-Vector2.UnitY) * 10f;
+            Vector2 end = start + (Projectile.velocity.SafeNormalize(-Vector2.UnitY) * 10f);
             Utils.PlotTileLine(start, end, CollisionWidth, DelegateMethods.CutTiles);
         }
 
@@ -176,7 +176,7 @@ namespace Coralite.Content.Items.Misc_Melee
             // "Hit anything between the player and the tip of the sword"
             // shootSpeed is 2.1f for reference, so this is basically plotting 12 pixels ahead from the center
             Vector2 start = Projectile.Center;
-            Vector2 end = start + Projectile.velocity * 6f;
+            Vector2 end = start + (Projectile.velocity * 6f);
             float collisionPoint = 0f; // Don't need that variable, but required as parameter
             return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), start, end, CollisionWidth, ref collisionPoint);
         }
@@ -198,7 +198,7 @@ namespace Coralite.Content.Items.Misc_Melee
                     Vector2 vector4 = hitbox.Center.ToVector2();
                     Vector2 spinningpoint = (vector4 - vector3).SafeNormalize(new Vector2(p.direction, p.gravDir)) * 8f;
                     Main.rand.NextFloat();
-                    float num6 = (Main.rand.Next(2) * 2 - 1) * ((float)Math.PI / 5f + (float)Math.PI * 4f / 5f * Main.rand.NextFloat());
+                    float num6 = ((Main.rand.Next(2) * 2) - 1) * (((float)Math.PI / 5f) + ((float)Math.PI * 4f / 5f * Main.rand.NextFloat()));
                     num6 *= 0.5f;
                     spinningpoint = spinningpoint.RotatedBy(0.7853981852531433);
                     int num7 = 3;

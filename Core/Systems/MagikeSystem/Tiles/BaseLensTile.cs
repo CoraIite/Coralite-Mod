@@ -22,11 +22,11 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
             if (producer.CanProduce())
             {
                 const float TwoPi = (float)Math.PI * 2f;
-                float offset2 = (float)Math.Sin((Main.GlobalTimeWrappedHourly+tileRect.X+tileRect.Y) * TwoPi / 5f);
+                float offset2 = (float)Math.Sin((Main.GlobalTimeWrappedHourly + tileRect.X + tileRect.Y) * TwoPi / 5f);
                 drawPos += new Vector2(0f, offset2 * 4f);
             }
             else
-                drawPos -= rotation.ToRotationVector2() * (halfHeight - (tileRect.Width > tileRect.Height ? tex.Width : tex.Height) / 2 - 4);
+                drawPos -= rotation.ToRotationVector2() * (halfHeight - ((tileRect.Width > tileRect.Height ? tex.Width : tex.Height) / 2) - 4);
 
             // 绘制主帖图
             DrawTopTex(spriteBatch, tex, drawPos, lightColor, level);

@@ -74,8 +74,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             {
                 float length = Projectile.width + distanceToOwner;
                 float a = 0f;
-                return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, Projectile.Center + (Projectile.rotation + mouseAngle).ToRotationVector2() * length, 40, ref a)
-                    || Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, Projectile.Center + (Projectile.rotation - mouseAngle).ToRotationVector2() * length, 40, ref a);
+                return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, Projectile.Center + ((Projectile.rotation + mouseAngle).ToRotationVector2() * length), 40, ref a)
+                    || Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, Projectile.Center + ((Projectile.rotation - mouseAngle).ToRotationVector2() * length), 40, ref a);
             }
 
             return false;
@@ -178,7 +178,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                                 Vector2 velDir = dir.RotatedBy(MathHelper.PiOver2);
                                 for (int i = (int)distanceToOwner; i < length; i += 6)
                                 {
-                                    Vector2 pos = Projectile.Center + dir * i;
+                                    Vector2 pos = Projectile.Center + (dir * i);
                                     for (int j = -3; j < 4; j += 2)
                                     {
                                         Dust dust = Dust.NewDustPerfect(pos + Main.rand.NextVector2Circular(6, 6), DustID.VilePowder,
@@ -257,7 +257,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                                 Vector2 velDir = dir.RotatedBy(MathHelper.PiOver2);
                                 for (int i = (int)distanceToOwner; i < length; i += 6)
                                 {
-                                    Vector2 pos = Projectile.Center + dir * i;
+                                    Vector2 pos = Projectile.Center + (dir * i);
                                     for (int j = -3; j < 4; j += 2)
                                     {
                                         Dust dust = Dust.NewDustPerfect(pos + Main.rand.NextVector2Circular(6, 6), DustID.VilePowder,
@@ -361,12 +361,12 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             float rot = Projectile.rotation - mouseAngle;
             Vector2 dir = rot.ToRotationVector2();
-            Main.spriteBatch.Draw(mainTex, pos + dir * distanceToOwner, frameBox, c, rot, origin, Projectile.scale, 0, 0);
+            Main.spriteBatch.Draw(mainTex, pos + (dir * distanceToOwner), frameBox, c, rot, origin, Projectile.scale, 0, 0);
 
             rot = Projectile.rotation + mouseAngle;
             dir = rot.ToRotationVector2();
             frameBox = mainTex.Frame(1, 2, 0, 1);
-            Main.spriteBatch.Draw(mainTex, pos + dir * distanceToOwner, frameBox, c, rot, Vector2.Zero, Projectile.scale, 0, 0);
+            Main.spriteBatch.Draw(mainTex, pos + (dir * distanceToOwner), frameBox, c, rot, Vector2.Zero, Projectile.scale, 0, 0);
 
             return false;
         }
@@ -382,12 +382,12 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             float rot = Projectile.rotation - mouseAngle;
             Vector2 dir = rot.ToRotationVector2();
-            spriteBatch.Draw(mainTex, pos + dir * distanceToOwner, frameBox, c, rot, origin, Projectile.scale, 0, 0);
+            spriteBatch.Draw(mainTex, pos + (dir * distanceToOwner), frameBox, c, rot, origin, Projectile.scale, 0, 0);
 
             rot = Projectile.rotation + mouseAngle;
             dir = rot.ToRotationVector2();
             frameBox = mainTex.Frame(1, 2, 0, 1);
-            spriteBatch.Draw(mainTex, pos + dir * distanceToOwner, frameBox, c, rot, Vector2.Zero, Projectile.scale, 0, 0);
+            spriteBatch.Draw(mainTex, pos + (dir * distanceToOwner), frameBox, c, rot, Vector2.Zero, Projectile.scale, 0, 0);
         }
     }
 }

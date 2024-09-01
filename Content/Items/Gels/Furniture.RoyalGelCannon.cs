@@ -116,7 +116,7 @@ namespace Coralite.Content.Items.Gels
             int Xoffset = tile.TileFrameX % (18 * 3) / 18;
             int Yoffset = tile.TileFrameY % (18 * 3) / 18;
 
-            Vector2 pos = new Vector2(i - Xoffset, j - Yoffset) * 16 + new Vector2(16 * 3 / 2, 8);
+            Vector2 pos = (new Vector2(i - Xoffset, j - Yoffset) * 16) + new Vector2(16 * 3 / 2, 8);
 
             if (Main.netMode != NetmodeID.MultiplayerClient)
                 Projectile.NewProjectile(new EntitySource_TileUpdate(i, j), pos, vel.RotatedBy(Main.rand.NextFloat(-0.2f, 0.2f)), ModContent.ProjectileType<SlimeEruptionBall>(), damage, 2, Main.myPlayer);

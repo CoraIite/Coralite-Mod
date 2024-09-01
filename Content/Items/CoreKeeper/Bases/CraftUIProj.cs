@@ -171,7 +171,7 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
                 return Color.Lerp(color, Color.White, (factor.X - 0.7f) / 0.3f);
             });
             float length = Helper.EllipticalEase(Rotation, 0.3f, out float overrideAngle) * Velocity.X;
-            Vector2 center = this.Center + overrideAngle.ToRotationVector2() * length;
+            Vector2 center = this.Center + (overrideAngle.ToRotationVector2() * length);
             oldCenter = new Vector2[16];
             for (int i = 0; i < 16; i++)
                 oldCenter[i] = center;
@@ -190,7 +190,7 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
                 for (int i = 0; i < 16 - 1; i++)
                     oldCenter[i] = oldCenter[i + 1];
 
-                oldCenter[16 - 1] = Center + overrideAngle.ToRotationVector2() * length;
+                oldCenter[16 - 1] = Center + (overrideAngle.ToRotationVector2() * length);
             }
             else if (fadeIn < Velocity.Y + 16)
             {

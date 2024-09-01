@@ -112,8 +112,8 @@ namespace Coralite.Content.Items.Misc_Shoot
                     Vector2 dir = (i * MathHelper.PiOver2).ToRotationVector2();
                     for (int j = 0; j < 3; j++)
                     {
-                        Dust d = Dust.NewDustPerfect(Projectile.Center, DustID.Clentaminator_Cyan, dir * (1 + j * (0.55f + 0.25f * range))
-                            , Scale: 0.8f + range * 0.4f - j * 0.15f);
+                        Dust d = Dust.NewDustPerfect(Projectile.Center, DustID.Clentaminator_Cyan, dir * (1 + (j * (0.55f + (0.25f * range))))
+                            , Scale: 0.8f + (range * 0.4f) - (j * 0.15f));
                         d.noGravity = true;
                     }
                 }
@@ -130,7 +130,7 @@ namespace Coralite.Content.Items.Misc_Shoot
                 Vector2 dir2 = (i * MathHelper.PiOver2).ToRotationVector2();
                 for (int j = 0; j < 6; j++)
                 {
-                    Dust d = Dust.NewDustPerfect(Projectile.Center, DustID.Clentaminator_Cyan, dir2 * (1 + j * 0.8f), Scale: 1.6f - j * 0.15f);
+                    Dust d = Dust.NewDustPerfect(Projectile.Center, DustID.Clentaminator_Cyan, dir2 * (1 + (j * 0.8f)), Scale: 1.6f - (j * 0.15f));
                     d.noGravity = true;
                 }
             }

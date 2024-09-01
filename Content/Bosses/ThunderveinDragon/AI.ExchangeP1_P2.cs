@@ -92,7 +92,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             float factor = Timer / RoaringTime;
                             shadowScale = Helper.Lerp(1f, 2.5f, factor);
                             shadowAlpha = Helper.Lerp(1f, 0f, factor);
-                            Vector2 pos = NPC.Center + (NPC.rotation).ToRotationVector2() * 60;
+                            Vector2 pos = NPC.Center + (NPC.rotation.ToRotationVector2() * 60);
                             if ((int)Timer % 10 == 0)
                                 Particle.NewParticle(pos, Vector2.Zero, CoraliteContent.ParticleType<RoaringWave>(), Coralite.ThunderveinYellow, 0.2f);
                             if ((int)Timer % 20 == 0)

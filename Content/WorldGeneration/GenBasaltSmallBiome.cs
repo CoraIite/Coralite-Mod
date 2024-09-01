@@ -55,7 +55,7 @@ namespace Coralite.Content.WorldGeneration
                 for (int k = 0; k < spawns; k++)
                 {
                     double value4 = k / spawns;
-                    progress.Set(value4 * 0.6f + 0.4f);
+                    progress.Set((value4 * 0.6f) + 0.4f);
                     int tryCount = 0;
                     int x9 = WorldGen.genRand.Next(200, Main.maxTilesX - 200);
                     int y7 = WorldGen.genRand.Next(Main.maxTilesY / 2, Main.maxTilesY - 300);

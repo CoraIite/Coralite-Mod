@@ -64,9 +64,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             const float RollingTime = 120f;
             if (Timer < RollingTime)
             {
-                float currentRot = BaseRot + RotDir * Timer / RollingTime * MathHelper.TwoPi;
+                float currentRot = BaseRot + (RotDir * Timer / RollingTime * MathHelper.TwoPi);
 
-                Vector2 center = Target.Center + currentRot.ToRotationVector2() * 800;
+                Vector2 center = Target.Center + (currentRot.ToRotationVector2() * 800);
                 Vector2 dir = center - Projectile.Center;
 
                 float velRot = Projectile.velocity.ToRotation();
@@ -81,7 +81,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 if (Timer % 5 == 0)
                 {
                     Vector2 dir2 = (Target.Center - Projectile.Center).SafeNormalize(Vector2.Zero);
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center - dir2 * 150, dir2,
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center - (dir2 * 150), dir2,
                         ModContent.ProjectileType<ConfusionHole>(), Projectile.damage, 0, Projectile.owner, 35, Main.zenithWorld ? Main.rand.NextFloat(0, 1) : -2, 555);
                 }
             }
@@ -93,14 +93,14 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     Projectile.Kill();
             }
 
-            Vector2 center2 = Projectile.Center - Projectile.velocity * 2;
+            Vector2 center2 = Projectile.Center - (Projectile.velocity * 2);
             for (int i = 0; i < 3; i++)
             {
                 RotateTentacle tentacle = rotateTentacles[i];
-                float factor = MathF.Sin((float)Main.timeForVisualEffects / 12 + i * 1.5f);
-                float targetRot = tentacle.rotation.AngleLerp(Projectile.rotation + factor * 1.3f, 0.4f);
+                float factor = MathF.Sin(((float)Main.timeForVisualEffects / 12) + (i * 1.5f));
+                float targetRot = tentacle.rotation.AngleLerp(Projectile.rotation + (factor * 1.3f), 0.4f);
                 Vector2 selfPos = Vector2.Lerp(tentacle.pos,
-                    center2 + (i * 30 + 140) * (Projectile.rotation + factor * 0.65f + MathHelper.Pi).ToRotationVector2(), 0.2f);
+                    center2 + (((i * 30) + 140) * (Projectile.rotation + (factor * 0.65f) + MathHelper.Pi).ToRotationVector2()), 0.2f);
                 tentacle.SetValue(selfPos, Projectile.Center, targetRot);
             }
 

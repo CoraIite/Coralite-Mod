@@ -150,14 +150,14 @@ namespace Coralite.Content.Items.HyacinthSeries
                 Vector2 center = Projectile.Center;
                 float num198 = num186 - center.X;
                 float num199 = num187 - center.Y;
-                float dis2Target = MathF.Sqrt(num198 * num198 + num199 * num199);
+                float dis2Target = MathF.Sqrt((num198 * num198) + (num199 * num199));
                 dis2Target = num197 / dis2Target;
                 num198 *= dis2Target;
                 num199 *= dis2Target;
                 int chase = 16;
 
-                Projectile.velocity.X = (Projectile.velocity.X * (chase - 1) + num198) / chase;
-                Projectile.velocity.Y = (Projectile.velocity.Y * (chase - 1) + num199) / chase;
+                Projectile.velocity.X = ((Projectile.velocity.X * (chase - 1)) + num198) / chase;
+                Projectile.velocity.Y = ((Projectile.velocity.Y * (chase - 1)) + num199) / chase;
             }
 
             #endregion
@@ -182,7 +182,7 @@ namespace Coralite.Content.Items.HyacinthSeries
                     Projectile.netUpdate = true;
                 }
                 for (int i = 0; i < 4; i++)
-                    Dust.NewDustPerfect(Projectile.Center - i * Projectile.velocity / 4, ModContent.DustType<WhiteDust>(), newColor: color, Scale: Main.rand.NextFloat(0.8f, 1f));
+                    Dust.NewDustPerfect(Projectile.Center - (i * Projectile.velocity / 4), ModContent.DustType<WhiteDust>(), newColor: color, Scale: Main.rand.NextFloat(0.8f, 1f));
 
             }
             else
@@ -203,7 +203,7 @@ namespace Coralite.Content.Items.HyacinthSeries
 
             Color shineColor = Color.Lerp(GetColor((int)-Projectile.ai[0]), Color.Red, factor);
             Helper.DrawPrettyLine(Projectile.Opacity, SpriteEffects.None, center, new Color(204, 204, 204, 0) * Projectile.ai[1], shineColor, Projectile.localAI[1], 0f, 0.5f, 0.5f, 1f, Projectile.rotation, 1.75f, Vector2.One);
-            Helper.DrawPrettyStarSparkle(Projectile.Opacity, SpriteEffects.None, center, new Color(100, 100, 100, 0) * Projectile.ai[1], shineColor * 0.8f, Projectile.localAI[1], 0f, 0.5f, 0.5f, 1f, Projectile.rotation + Projectile.timeLeft * 0.08f, new Vector2(0.7f, 0.7f), Vector2.One);
+            Helper.DrawPrettyStarSparkle(Projectile.Opacity, SpriteEffects.None, center, new Color(100, 100, 100, 0) * Projectile.ai[1], shineColor * 0.8f, Projectile.localAI[1], 0f, 0.5f, 0.5f, 1f, Projectile.rotation + (Projectile.timeLeft * 0.08f), new Vector2(0.7f, 0.7f), Vector2.One);
             //ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, SpriteEffects.None,center, new Color(153, 153, 153, 0), shineColor, Projectile.localAI[1], 0f, 0.5f, 0.5f, 1f, Projectile.rotation+0.785f, new Vector2(0.25f, 0.25f), Vector2.One);
 
             return false;
@@ -386,7 +386,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             else
                 length -= 1.4f;
 
-            Projectile.Center = Owner.Center + rotation.ToRotationVector2() * length;
+            Projectile.Center = Owner.Center + (rotation.ToRotationVector2() * length);
 
             if (fadeIn)
             {
@@ -402,7 +402,7 @@ namespace Coralite.Content.Items.HyacinthSeries
                 Projectile.spriteDirection = Main.MouseWorld.X > Main.player[Projectile.owner].Center.X ? 0 : 1;
             else
                 Projectile.spriteDirection = Main.player[Projectile.owner].direction > 0 ? 0 : 1;
-            float targetRot = (Main.MouseWorld - Owner.Center).ToRotation() + Projectile.spriteDirection * 3.141f;
+            float targetRot = (Main.MouseWorld - Owner.Center).ToRotation() + (Projectile.spriteDirection * 3.141f);
             do
             {
                 if (Timer < 60)
@@ -413,7 +413,7 @@ namespace Coralite.Content.Items.HyacinthSeries
                         if (Main.myPlayer == Projectile.owner)
                         {
                             float count = Timer / 20;
-                            float alpha = 1.3f - count * 0.3f;
+                            float alpha = 1.3f - (count * 0.3f);
                             int projType = Main.rand.Next(3) switch
                             {
                                 0 => ModContent.ProjectileType<HyacinthBullet2>(),
@@ -441,7 +441,7 @@ namespace Coralite.Content.Items.HyacinthSeries
 
                     if (Main.myPlayer == Projectile.owner)
                     {
-                        float x = 1.465f * (20 - Timer % 20) / 20;
+                        float x = 1.465f * (20 - (Timer % 20)) / 20;
                         float factor = x * MathF.Sin(x * x * x) / 1.186f;
                         float recoilAngle = -Owner.direction * factor * 0.4f;
                         Projectile.rotation = targetRot + recoilAngle;
@@ -478,7 +478,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             {
                 float factor = Timer / 30;
                 Color shineColor = GetColor((int)-Projectile.ai[0]) * 0.8f;
-                Helper.DrawPrettyStarSparkle(Projectile.Opacity, SpriteEffects.None, center + Projectile.rotation.ToRotationVector2() * 8, new Color(204, 204, 204, 0), shineColor * 0.8f, factor, 0f, 0.5f, 0.5f, 1f, Timer * 0.04f, new Vector2(3f, 3f), Vector2.One);
+                Helper.DrawPrettyStarSparkle(Projectile.Opacity, SpriteEffects.None, center + (Projectile.rotation.ToRotationVector2() * 8), new Color(204, 204, 204, 0), shineColor * 0.8f, factor, 0f, 0.5f, 0.5f, 1f, Timer * 0.04f, new Vector2(3f, 3f), Vector2.One);
             }
             return false;
         }
@@ -691,7 +691,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             {
                 Vector2 dir = rot.ToRotationVector2();
                 Vector2 vel = dir.RotatedBy(1.57f) * Main.rand.NextFloat(2.3f, 3.5f);
-                Dust dust = Dust.NewDustPerfect(Projectile.Center + dir * Main.rand.Next(10, 110), DustID.Granite, vel, Scale: Main.rand.NextFloat(1.4f, 1.6f));
+                Dust dust = Dust.NewDustPerfect(Projectile.Center + (dir * Main.rand.Next(10, 110)), DustID.Granite, vel, Scale: Main.rand.NextFloat(1.4f, 1.6f));
                 dust.noGravity = true;
 
                 rot = Main.rand.NextFloat(MathHelper.TwoPi);
@@ -702,7 +702,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             {
                 Vector2 dir2 = rot.ToRotationVector2();
                 Vector2 vel2 = dir2.RotatedBy(1.57f) * Main.rand.NextFloat(1.5f, 2.5f);
-                Dust dust2 = Dust.NewDustPerfect(Projectile.Center + dir2 * Main.rand.Next(10, 110), DustID.DesertTorch, vel2, Scale: Main.rand.NextFloat(1f, 1.2f));
+                Dust dust2 = Dust.NewDustPerfect(Projectile.Center + (dir2 * Main.rand.Next(10, 110)), DustID.DesertTorch, vel2, Scale: Main.rand.NextFloat(1f, 1.2f));
                 dust2.noGravity = true;
 
                 rot += 2f;
@@ -724,7 +724,7 @@ namespace Coralite.Content.Items.HyacinthSeries
 
             for (int i = 0; i < 3; i++)
             {
-                spriteBatch.Draw(haloTex, center, null, black, Projectile.ai[0] + i * 2f, haloOrigin, Projectile.localAI[0], SpriteEffects.None, 0f);
+                spriteBatch.Draw(haloTex, center, null, black, Projectile.ai[0] + (i * 2f), haloOrigin, Projectile.localAI[0], SpriteEffects.None, 0f);
             }
 
             spriteBatch.Draw(haloTex, center, null, red * 0.5f, Projectile.ai[0] - 3f, haloOrigin, Projectile.localAI[0], SpriteEffects.None, 0f);
@@ -746,7 +746,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             Color warpColor = new Color(45, 45, 45) * Projectile.ai[1];
             for (int i = 0; i < 3; i++)
             {
-                Main.spriteBatch.Draw(warpTex, Projectile.Center - Main.screenPosition, null, warpColor, Projectile.ai[0] + i * 2f, warpTex.Size() / 2, Projectile.localAI[0], SpriteEffects.None, 0f);
+                Main.spriteBatch.Draw(warpTex, Projectile.Center - Main.screenPosition, null, warpColor, Projectile.ai[0] + (i * 2f), warpTex.Size() / 2, Projectile.localAI[0], SpriteEffects.None, 0f);
             }
         }
     }

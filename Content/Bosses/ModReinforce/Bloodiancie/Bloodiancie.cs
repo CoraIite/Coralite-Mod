@@ -82,14 +82,14 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
             {
                 if (nPCStrengthHelper.IsExpertMode)
                 {
-                    NPC.lifeMax = (int)((21000 + numPlayers * 9500) / journeyScale);
+                    NPC.lifeMax = (int)((21000 + (numPlayers * 9500)) / journeyScale);
                     NPC.damage = 90;
                     NPC.defense = 18;
                 }
 
                 if (nPCStrengthHelper.IsMasterMode)
                 {
-                    NPC.lifeMax = (int)((25500 + numPlayers * 11500) / journeyScale);
+                    NPC.lifeMax = (int)((25500 + (numPlayers * 11500)) / journeyScale);
                     NPC.damage = 115;
                     NPC.defense = 20;
                 }
@@ -102,20 +102,20 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
                 return;
             }
 
-            NPC.lifeMax = 21000 + numPlayers * 9500;
+            NPC.lifeMax = 21000 + (numPlayers * 9500);
             NPC.damage = 90;
             NPC.defense = 18;
 
             if (Main.masterMode)
             {
-                NPC.lifeMax = 25500 + numPlayers * 11500;
+                NPC.lifeMax = 25500 + (numPlayers * 11500);
                 NPC.damage = 115;
                 NPC.defense = 20;
             }
 
             if (Main.getGoodWorld)
             {
-                NPC.lifeMax = 30000 + numPlayers * 14500;
+                NPC.lifeMax = 30000 + (numPlayers * 14500);
                 NPC.damage = 115;
                 NPC.defense = 14;//因为FTW种能够拥有非常多的弹药所以就降低一下基础防御了
             }

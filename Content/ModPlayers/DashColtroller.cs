@@ -182,7 +182,7 @@ namespace Coralite.Content.ModPlayers
             float rot = Main.rand.NextFloat(6.282f);
             for (int i = 0; i < 8; i++)
             {
-                Dust dust = Dust.NewDustPerfect(Player.Center, DustID.YellowTorch, (rot + i * MathHelper.TwoPi / 8).ToRotationVector2() * 3,
+                Dust dust = Dust.NewDustPerfect(Player.Center, DustID.YellowTorch, (rot + (i * MathHelper.TwoPi / 8)).ToRotationVector2() * 3,
                     255, Scale: Main.rand.Next(20, 26) * 0.15f);
                 dust.noLight = true;
                 dust.noGravity = true;

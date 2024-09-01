@@ -22,8 +22,8 @@ namespace Coralite.Content.Particles
 
             float factor = fadeIn / 14;
 
-            shader.UseOpacity(0.5f + factor * 0.4f);
-            shader.UseSaturation(2.3f - factor * 0.8f);
+            shader.UseOpacity(0.5f + (factor * 0.4f));
+            shader.UseSaturation(2.3f - (factor * 0.8f));
 
             fadeIn++;
 

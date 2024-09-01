@@ -107,14 +107,14 @@ namespace Coralite.Content.Bosses.Rediancie
             {
                 if (nPCStrengthHelper.IsExpertMode)
                 {
-                    NPC.lifeMax = (int)((1800 + numPlayers * 450) / journeyScale);
+                    NPC.lifeMax = (int)((1800 + (numPlayers * 450)) / journeyScale);
                     NPC.damage = 30;
                     NPC.defense = 6;
                 }
 
                 if (nPCStrengthHelper.IsMasterMode)
                 {
-                    NPC.lifeMax = (int)((2000 + numPlayers * 550) / journeyScale);
+                    NPC.lifeMax = (int)((2000 + (numPlayers * 550)) / journeyScale);
                     NPC.damage = 45;
                     NPC.defense = 6;
                 }
@@ -127,19 +127,19 @@ namespace Coralite.Content.Bosses.Rediancie
                 return;
             }
 
-            NPC.lifeMax = 1800 + numPlayers * 450;
+            NPC.lifeMax = 1800 + (numPlayers * 450);
             NPC.damage = 30;
             NPC.defense = 6;
 
             if (Main.masterMode)
             {
-                NPC.lifeMax = 2000 + numPlayers * 550;
+                NPC.lifeMax = 2000 + (numPlayers * 550);
                 NPC.damage = 45;
             }
 
             if (Main.getGoodWorld)
             {
-                NPC.lifeMax = 2300 + numPlayers * 600;
+                NPC.lifeMax = 2300 + (numPlayers * 600);
                 NPC.damage = 45;
                 NPC.defense = 4;//因为FTW种能够拥有非常多的弹药所以就降低一下基础防御了
             }
@@ -407,7 +407,7 @@ namespace Coralite.Content.Bosses.Rediancie
                 int count = Timer / 25;
                 for (int i = 0; i < count; i++)
                 {
-                    Dust dust = Dust.NewDustPerfect(NPC.Center + new Vector2(0, -16) + Main.rand.NextVector2Circular(count * 3, count * 3), DustID.GemRuby, Vector2.Zero, 0, default, 1f + count * 0.2f);
+                    Dust dust = Dust.NewDustPerfect(NPC.Center + new Vector2(0, -16) + Main.rand.NextVector2Circular(count * 3, count * 3), DustID.GemRuby, Vector2.Zero, 0, default, 1f + (count * 0.2f));
                     dust.noGravity = true;
                 }
             }
@@ -449,14 +449,14 @@ namespace Coralite.Content.Bosses.Rediancie
             Vector2 targetVec = Target.Center - NPC.Center;
             float factor = Math.Clamp(targetVec.Length() / 150f, 0f, 1f);
             Vector2 targetDir = targetVec.SafeNormalize(Vector2.One);
-            Vector2 targetCenter = NPC.Center + targetDir * (32 + factor * 32);
+            Vector2 targetCenter = NPC.Center + (targetDir * (32 + (factor * 32)));
             int realTime = Timer - 60;
 
             ChangeRotationNormally();
 
             if (Timer < 125)
             {
-                UpdateFollower_Pulse(targetCenter, targetDir, factor, -1, 0.1f + 0.5f * Timer / 60);
+                UpdateFollower_Pulse(targetCenter, targetDir, factor, -1, 0.1f + (0.5f * Timer / 60));
                 for (int i = 0; i < 2; i++)
                     Helper.SpawnTrailDust(targetCenter + Main.rand.NextVector2Circular(7, 7), DustID.GemRuby, (d) => -targetDir * 6f, Scale: 1.1f);
                 return;
@@ -464,7 +464,7 @@ namespace Coralite.Content.Bosses.Rediancie
             else if (Timer < 255)
             {
                 UpdateFollower_Pulse(targetCenter, targetDir, factor, realTime % 65);
-                Helper.SpawnTrailDust(targetCenter + Main.rand.NextVector2Circular(7, 7), DustID.GemRuby, (d) => -targetDir * 6f, Scale: 1.1f + 2f * (realTime % 65) / 65f);
+                Helper.SpawnTrailDust(targetCenter + Main.rand.NextVector2Circular(7, 7), DustID.GemRuby, (d) => -targetDir * 6f, Scale: 1.1f + (2f * (realTime % 65) / 65f));
             }
             else
                 UpdateFollower_Idle(0.08f);
@@ -534,7 +534,7 @@ namespace Coralite.Content.Bosses.Rediancie
                 int howMany = Main.getGoodWorld ? 4 : 3;    //FTW能射出4个，其他模式只射3个
                 for (int i = 0; i < howMany; i++)
                 {
-                    Projectile.NewProjectile(NPC.GetSource_FromThis(), followers[^1].center, rot.ToRotationVector2() * 12, ProjectileType<RedFirework>(), damage, 5f, NPC.target, 0, timeleft + i * 10);
+                    Projectile.NewProjectile(NPC.GetSource_FromThis(), followers[^1].center, rot.ToRotationVector2() * 12, ProjectileType<RedFirework>(), damage, 5f, NPC.target, 0, timeleft + (i * 10));
                     rot += MathHelper.TwoPi / howMany;
                 }
 
@@ -569,7 +569,7 @@ namespace Coralite.Content.Bosses.Rediancie
                     int count = Timer / 25;
                     for (int i = 0; i < count; i++)
                     {
-                        Dust dust = Dust.NewDustPerfect(NPC.Center + new Vector2(0, -16) + Main.rand.NextVector2Circular(count * 3, count * 3), DustID.GemRuby, Vector2.Zero, 0, default, 1f + count * 0.2f);
+                        Dust dust = Dust.NewDustPerfect(NPC.Center + new Vector2(0, -16) + Main.rand.NextVector2Circular(count * 3, count * 3), DustID.GemRuby, Vector2.Zero, 0, default, 1f + (count * 0.2f));
                         dust.noGravity = true;
                     }
                 }
@@ -581,7 +581,7 @@ namespace Coralite.Content.Bosses.Rediancie
             {
                 int damage = Helper.GetProjDamage(30, 45, 70);
 
-                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + NPC.velocity * 9, Vector2.Zero, ProjectileType<Rediancie_BigBoom>(), damage, 8f);
+                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + (NPC.velocity * 9), Vector2.Zero, ProjectileType<Rediancie_BigBoom>(), damage, 8f);
                 if (Main.netMode != NetmodeID.Server)
                 {
                     var modifier = new PunchCameraModifier(NPC.Center, Main.rand.NextVector2CircularEdge(1, 1), 10, 6f, 20, 1000f);
@@ -634,7 +634,7 @@ namespace Coralite.Content.Bosses.Rediancie
                     if (realTime % 10 == 0 && Main.netMode != NetmodeID.MultiplayerClient)
                     {
                         int damage = Helper.GetProjDamage(20, 25, 30);
-                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + NPC.velocity * 9, Vector2.Zero, ProjectileType<Rediancie_Explosion>(), damage, 5f);
+                        Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + (NPC.velocity * 9), Vector2.Zero, ProjectileType<Rediancie_Explosion>(), damage, 5f);
                     }
 
                     break;
@@ -666,10 +666,10 @@ namespace Coralite.Content.Bosses.Rediancie
 
             if (Timer % 3 == 0 && Main.netMode != NetmodeID.Server)
             {
-                int count = (Timer % 80) / 10;
+                int count = Timer % 80 / 10;
                 for (int i = 0; i < count; i++)
                 {
-                    Dust dust = Dust.NewDustPerfect(NPC.Center + new Vector2(0, -16) + Main.rand.NextVector2Circular(count * 3, count * 3), DustID.GemRuby, Vector2.Zero, 0, default, 1f + count * 0.1f);
+                    Dust dust = Dust.NewDustPerfect(NPC.Center + new Vector2(0, -16) + Main.rand.NextVector2Circular(count * 3, count * 3), DustID.GemRuby, Vector2.Zero, 0, default, 1f + (count * 0.1f));
                     dust.noGravity = true;
                 }
             }
@@ -677,7 +677,7 @@ namespace Coralite.Content.Bosses.Rediancie
             if (Timer % 80 == 0)//生成弹幕
             {
                 int damage = Helper.GetProjDamage(20, 25, 40);
-                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + NPC.velocity * 9, Vector2.Zero, ProjectileType<Rediancie_Explosion>(), damage, 5f);
+                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + (NPC.velocity * 9), Vector2.Zero, ProjectileType<Rediancie_Explosion>(), damage, 5f);
                 SpawnFollowers(1);
             }
             if (Timer > 250)
@@ -739,7 +739,7 @@ namespace Coralite.Content.Bosses.Rediancie
             Vector2 targetVec = Target.Center - NPC.Center;
             float factor = Math.Clamp(targetVec.Length() / 150f, 0f, 1f);
             Vector2 targetDir = targetVec.SafeNormalize(Vector2.One);
-            Vector2 targetCenter = NPC.Center + targetDir * (32 + factor * 32);
+            Vector2 targetCenter = NPC.Center + (targetDir * (32 + (factor * 32)));
 
             if (Timer % 3 == 0)
                 for (int i = 0; i < 6; i++)
@@ -750,7 +750,7 @@ namespace Coralite.Content.Bosses.Rediancie
 
             if (Timer < 60)     //其实这里写70也没问题，只是为了避免不必要的麻烦所以填的小一点
             {
-                UpdateFollower_MagicShoot(targetCenter, targetDir, factor, 0.1f + 0.5f * Timer / 60);
+                UpdateFollower_MagicShoot(targetCenter, targetDir, factor, 0.1f + (0.5f * Timer / 60));
                 return;
             }
             else if (Timer < 140)
@@ -1081,10 +1081,10 @@ namespace Coralite.Content.Bosses.Rediancie
         public void UpdateFollower_Idle(float centerLerpSpeed = 0.6f)
         {
             float velLength = NPC.velocity.Length();
-            float baseRot = Timer * 0.08f + velLength * 0.15f;
-            float length = 38 + velLength / 2;
+            float baseRot = (Timer * 0.08f) + (velLength * 0.15f);
+            float length = 38 + (velLength / 2);
             ///额...总之是非常复杂的立体解析几何，用于计算当前这个圆以X轴为轴的旋转角度，根据玩家位置来的
-            float CircleRot = 1.57f - Math.Clamp((Target.Center.Y - NPC.Center.Y) / 200, -1f, 1f) * 0.4f;
+            float CircleRot = 1.57f - (Math.Clamp((Target.Center.Y - NPC.Center.Y) / 200, -1f, 1f) * 0.4f);
             for (int i = 0; i < followers.Count; i++)
             {
                 FollowersAI_Idle(followers[i], i, baseRot, length, CircleRot, centerLerpSpeed);
@@ -1094,8 +1094,8 @@ namespace Coralite.Content.Bosses.Rediancie
         public void UpdateFollower_UpShoot(float centerLerpSpeed = 0.6f)
         {
             float baseRot = Timer * 0.1f;
-            float length = 38 + Timer * 0.5f;
-            float CircleRot = 1.57f - Math.Clamp((Target.Center.Y - NPC.Center.Y) / 200, -1f, 1f) * 0.4f;
+            float length = 38 + (Timer * 0.5f);
+            float CircleRot = 1.57f - (Math.Clamp((Target.Center.Y - NPC.Center.Y) / 200, -1f, 1f) * 0.4f);
             for (int i = 0; i < followers.Count; i++)
             {
                 FollowersAI_UpShoot(followers[i], i, baseRot, length, CircleRot, centerLerpSpeed);
@@ -1123,14 +1123,14 @@ namespace Coralite.Content.Bosses.Rediancie
                 lengthFactor = 0f;
             else
             {
-                float timeFactor = 1 - Timer % 35 / 35;
+                float timeFactor = 1 - (Timer % 35 / 35);
                 float x = 1.465f * timeFactor;
                 lengthFactor = x * MathF.Sin(x * x * x) / 1.186f;
             }
 
-            float length = 36 + lengthFactor * 60;
-            Matrix XRot = Matrix.CreateRotationX(0.2f + targetDir.Y * factor * 1.1f);
-            Matrix YRot = Matrix.CreateRotationY(-(0.2f + targetDir.X * factor * 1.1f));
+            float length = 36 + (lengthFactor * 60);
+            Matrix XRot = Matrix.CreateRotationX(0.2f + (targetDir.Y * factor * 1.1f));
+            Matrix YRot = Matrix.CreateRotationY(-(0.2f + (targetDir.X * factor * 1.1f)));
             for (int i = 0; i < followers.Count - 1; i++)
             {
                 FollowerAI_MagicShoot(followers[i], i, baseRot, length, targetCenter, XRot, YRot, centerLerpSpeed);
@@ -1141,7 +1141,7 @@ namespace Coralite.Content.Bosses.Rediancie
         {
             float baseRot = Timer * 0.06f;
             float length = 38 + Math.Clamp(Timer * 30, 0, 30);
-            float CircleRot = 1.57f - Math.Clamp((Target.Center.Y - NPC.Center.Y) / 200, -1f, 1f) * 0.4f;
+            float CircleRot = 1.57f - (Math.Clamp((Target.Center.Y - NPC.Center.Y) / 200, -1f, 1f) * 0.4f);
 
             for (int i = 0; i < followers.Count; i++)
             {
@@ -1158,8 +1158,8 @@ namespace Coralite.Content.Bosses.Rediancie
             {
                 RediancieFollower follower = followers[i];
 
-                float rot = baseRot + (i / (float)followers.Count) * MathHelper.TwoPi;
-                follower.center = Vector2.Lerp(follower.center, NPC.Center + rot.ToRotationVector2() * length, 0.1f + 0.5f * Math.Clamp(Timer / 60, 0, 1));
+                float rot = baseRot + (i / (float)followers.Count * MathHelper.TwoPi);
+                follower.center = Vector2.Lerp(follower.center, NPC.Center + (rot.ToRotationVector2() * length), 0.1f + (0.5f * Math.Clamp(Timer / 60, 0, 1)));
                 follower.rotation = follower.rotation.AngleLerp(NPC.rotation, 0.6f);
                 follower.drawBehind = false;
                 follower.scale = 1f;
@@ -1175,7 +1175,7 @@ namespace Coralite.Content.Bosses.Rediancie
             }
 
             RediancieFollower lastFollower = followers[^1];
-            lastFollower.center = Vector2.Lerp(lastFollower.center, targetCenter + targetDir * 16, 0.6f);
+            lastFollower.center = Vector2.Lerp(lastFollower.center, targetCenter + (targetDir * 16), 0.6f);
             lastFollower.rotation = lastFollower.rotation.AngleLerp(targetDir.ToRotation() + 1.57f, 0.2f);
             lastFollower.drawBehind = false;
             lastFollower.scale = 1.3f;
@@ -1187,14 +1187,14 @@ namespace Coralite.Content.Bosses.Rediancie
                 lengthFactor = 0f;
             else
             {
-                float timeFactor = 1 - timer / 65;
+                float timeFactor = 1 - (timer / 65);
                 float x = 1.465f * timeFactor;
                 lengthFactor = x * MathF.Sin(x * x * x) / 1.186f;
             }
 
-            float length = 26 + lengthFactor * 86;
-            Matrix XRot = Matrix.CreateRotationX(0.2f + targetDir.Y * factor * 1.1f);
-            Matrix YRot = Matrix.CreateRotationY(-(0.2f + targetDir.X * factor * 1.1f));
+            float length = 26 + (lengthFactor * 86);
+            Matrix XRot = Matrix.CreateRotationX(0.2f + (targetDir.Y * factor * 1.1f));
+            Matrix YRot = Matrix.CreateRotationY(-(0.2f + (targetDir.X * factor * 1.1f)));
             for (int i = 0; i < followers.Count - 1; i++)
             {
                 FollowerAI_MagicShoot(followers[i], i, baseRot, length, targetCenter, XRot, YRot, centerLerpSpeed);
@@ -1208,7 +1208,7 @@ namespace Coralite.Content.Bosses.Rediancie
         /// <param name="follower"></param>
         public void FollowersAI_Idle(RediancieFollower follower, int whoamI, float baseRot, float length, float CircleRot, float centerLerpSpeed)
         {
-            float rot = baseRot + (whoamI / (float)followers.Count) * MathHelper.TwoPi;
+            float rot = baseRot + (whoamI / (float)followers.Count * MathHelper.TwoPi);
 
             Vector2 vector2D = rot.ToRotationVector2();
             Vector3 vector3D = Vector3.Transform(vector2D.Vec3(), Matrix.CreateRotationX(CircleRot));///将二维的向量转为3维的并绕着X轴旋转一下
@@ -1217,16 +1217,16 @@ namespace Coralite.Content.Bosses.Rediancie
             //将3维向量投影到二维
             float k1 = -1000 / (vector3D.Z - 1000);
             Vector2 targetDir = k1 * new Vector2(vector3D.X, vector3D.Y);
-            Vector2 targetCenter = NPC.Center + targetDir * length + new Vector2(0, MathF.Sin(whoamI * 1.2f) * 6);
+            Vector2 targetCenter = NPC.Center + (targetDir * length) + new Vector2(0, MathF.Sin(whoamI * 1.2f) * 6);
             follower.center = Vector2.Lerp(follower.center, targetCenter, centerLerpSpeed);
             follower.rotation = follower.rotation.AngleLerp(NPC.rotation, 0.2f);
             follower.drawBehind = vector3D.Z > 0;
-            follower.scale = 0.9f - vector3D.Z * 0.2f;
+            follower.scale = 0.9f - (vector3D.Z * 0.2f);
         }
 
         public void FollowersAI_UpShoot(RediancieFollower follower, int whoamI, float baseRot, float length, float CircleRot, float centerLerpSpeed)
         {
-            float rot = baseRot + (whoamI / (float)followers.Count) * MathHelper.TwoPi;
+            float rot = baseRot + (whoamI / (float)followers.Count * MathHelper.TwoPi);
 
             Vector2 vector2D = rot.ToRotationVector2();
             Vector3 vector3D = Vector3.Transform(vector2D.Vec3(), Matrix.CreateRotationX(CircleRot));///将二维的向量转为3维的并绕着X轴旋转一下
@@ -1235,17 +1235,17 @@ namespace Coralite.Content.Bosses.Rediancie
             //将3维向量投影到二维
             float k1 = -1000 / (vector3D.Z - 1000);
             Vector2 targetDir = k1 * new Vector2(vector3D.X, vector3D.Y);
-            Vector2 targetCenter = NPC.Center + targetDir * length + new Vector2(0, MathF.Sin(whoamI * 1.2f) * 6);
+            Vector2 targetCenter = NPC.Center + (targetDir * length) + new Vector2(0, MathF.Sin(whoamI * 1.2f) * 6);
             follower.center = Vector2.Lerp(follower.center, targetCenter, centerLerpSpeed);
             follower.rotation = follower.rotation.AngleLerp(NPC.rotation, 0.2f);
             follower.drawBehind = vector3D.Z > 0;
-            follower.scale = 1f - vector3D.Z * (0.2f + 0.4f * Math.Clamp(length / 168f, 0, 1));
+            follower.scale = 1f - (vector3D.Z * (0.2f + (0.4f * Math.Clamp(length / 168f, 0, 1))));
         }
 
         public void FollowerAI_MagicShoot(RediancieFollower follower, int whoamI, float baseRot, float length, Vector2 center, Matrix XRot, Matrix YRot, float centerLerpSpeed)
         {
             float totalCount = ((followers.Count - 1) == 0) ? 1 : (followers.Count - 1);  //分母不能为0
-            float rot = baseRot + MathHelper.TwoPi * whoamI / totalCount;
+            float rot = baseRot + (MathHelper.TwoPi * whoamI / totalCount);
 
             Vector2 vector2D = rot.ToRotationVector2();
             ///在XY平面的圆，先以X轴为轴旋转，再以Y轴为轴旋转，最后达到大概瞄准玩家的圆圈的效果
@@ -1254,12 +1254,12 @@ namespace Coralite.Content.Bosses.Rediancie
 
             float k1 = -1000 / (vector3D.Z - 1000);
             Vector2 CircleDir = k1 * new Vector2(vector3D.X, vector3D.Y);
-            Vector2 targetCenter = center + CircleDir * length;
+            Vector2 targetCenter = center + (CircleDir * length);
 
             follower.center = Vector2.Lerp(follower.center, targetCenter, centerLerpSpeed);
             follower.rotation = follower.rotation.AngleLerp(CircleDir.ToRotation() + 1.57f, 0.4f);
             follower.drawBehind = vector3D.Z > 0;
-            follower.scale = 0.9f - vector3D.Z * 0.3f;
+            follower.scale = 0.9f - (vector3D.Z * 0.3f);
         }
 
         #endregion

@@ -30,7 +30,7 @@ namespace Coralite.Content.CustomHooks
 
             int num = self.width / 2;
             int num2 = self.height / 2;
-            new Vector2(self.Center.X - num / 2, self.Center.Y - num2 / 2);
+            new Vector2(self.Center.X - (num / 2), self.Center.Y - (num2 / 2));
             Vector2 vector = StickyTiles(self.position, self.velocity, self.width, self.height);
             if (vector.Y != -1f && vector.X != -1f)
             {
@@ -97,7 +97,7 @@ namespace Coralite.Content.CustomHooks
                 if (type != TileID.HoneyBlock || !Main.rand.NextBool(5) || (!(self.velocity.Y > 0.15) && !(self.velocity.Y < 0f)))
                     return;
 
-                if (num3 * 16 < self.position.X + self.width / 2)
+                if (num3 * 16 < self.position.X + (self.width / 2))
                 {
                     int num5 = Dust.NewDust(new Vector2(self.position.X - 4f, num4 * 16), 4, 16, DustID.Honey2, 0f, 0f, 50);
                     Main.dust[num5].scale += Main.rand.Next(0, 6) * 0.1f;
@@ -114,16 +114,16 @@ namespace Coralite.Content.CustomHooks
 
                 if (Main.tile[num3, num4 + 1] != null && Main.tile[num3, num4 + 1].TileType == TileID.HoneyBlock && self.position.Y + self.height > (num4 + 1) * 16)
                 {
-                    if (num3 * 16 < self.position.X + self.width / 2)
+                    if (num3 * 16 < self.position.X + (self.width / 2))
                     {
-                        int num7 = Dust.NewDust(new Vector2(self.position.X - 4f, num4 * 16 + 16), 4, 16, DustID.Honey2, 0f, 0f, 50);
+                        int num7 = Dust.NewDust(new Vector2(self.position.X - 4f, (num4 * 16) + 16), 4, 16, DustID.Honey2, 0f, 0f, 50);
                         Main.dust[num7].scale += Main.rand.Next(0, 6) * 0.1f;
                         Main.dust[num7].velocity *= 0.1f;
                         Main.dust[num7].noGravity = true;
                     }
                     else
                     {
-                        int num8 = Dust.NewDust(new Vector2(self.position.X + self.width - 2f, num4 * 16 + 16), 4, 16, DustID.Honey2, 0f, 0f, 50);
+                        int num8 = Dust.NewDust(new Vector2(self.position.X + self.width - 2f, (num4 * 16) + 16), 4, 16, DustID.Honey2, 0f, 0f, 50);
                         Main.dust[num8].scale += Main.rand.Next(0, 6) * 0.1f;
                         Main.dust[num8].velocity *= 0.1f;
                         Main.dust[num8].noGravity = true;
@@ -132,16 +132,16 @@ namespace Coralite.Content.CustomHooks
 
                 if (Main.tile[num3, num4 + 2] != null && Main.tile[num3, num4 + 2].TileType == TileID.HoneyBlock && self.position.Y + self.height > (num4 + 2) * 16)
                 {
-                    if (num3 * 16 < self.position.X + self.width / 2)
+                    if (num3 * 16 < self.position.X + (self.width / 2))
                     {
-                        int num9 = Dust.NewDust(new Vector2(self.position.X - 4f, num4 * 16 + 32), 4, 16, DustID.Honey2, 0f, 0f, 50);
+                        int num9 = Dust.NewDust(new Vector2(self.position.X - 4f, (num4 * 16) + 32), 4, 16, DustID.Honey2, 0f, 0f, 50);
                         Main.dust[num9].scale += Main.rand.Next(0, 6) * 0.1f;
                         Main.dust[num9].velocity *= 0.1f;
                         Main.dust[num9].noGravity = true;
                     }
                     else
                     {
-                        int num10 = Dust.NewDust(new Vector2(self.position.X + self.width - 2f, num4 * 16 + 32), 4, 16, DustID.Honey2, 0f, 0f, 50);
+                        int num10 = Dust.NewDust(new Vector2(self.position.X + self.width - 2f, (num4 * 16) + 32), 4, 16, DustID.Honey2, 0f, 0f, 50);
                         Main.dust[num10].scale += Main.rand.Next(0, 6) * 0.1f;
                         Main.dust[num10].velocity *= 0.1f;
                         Main.dust[num10].noGravity = true;

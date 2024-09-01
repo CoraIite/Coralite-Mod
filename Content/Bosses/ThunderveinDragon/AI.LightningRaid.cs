@@ -105,7 +105,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         UpdateAllOldCaches();
 
                         Timer++;
-                        if (Timer > smallDashTime * 3 - 2)
+                        if (Timer > (smallDashTime * 3) - 2)
                         {
                             SonState++;
                             Timer = 0;
@@ -288,7 +288,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         UpdateAllOldCaches();
 
                         Timer++;
-                        if (Timer > smallDashTime * 3 - 2)
+                        if (Timer > (smallDashTime * 3) - 2)
                         {
                             SonState++;
                             Timer = 0;
@@ -352,7 +352,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             {
                                 int damage = Helper.GetProjDamage(60, 70, 140);
                                 NPC.NewProjectileDirectInAI<StrongerCrossLightingBall>(NPC.Center, Vector2.Zero, damage, 0
-                                    , NPC.target, NPC.whoAmI, NPC.rotation + MathHelper.PiOver4 + Timer / 20 * MathHelper.PiOver2 + 0.001f);
+                                    , NPC.target, NPC.whoAmI, NPC.rotation + MathHelper.PiOver4 + (Timer / 20 * MathHelper.PiOver2) + 0.001f);
                             }
                         }
                         if (Timer == bigDashTime)

@@ -22,7 +22,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         const int ReadyTime = 45;
 
                         Vector2 pos = GetMousePos();
-                        float edge = 240 - 140 * Math.Clamp(Timer / ReadyTime, 0, 1);
+                        float edge = 240 - (140 * Math.Clamp(Timer / ReadyTime, 0, 1));
                         edge /= 2;
                         Vector2 center = pos + Helper.NextVec2Dir(edge - 1, edge);
                         Dust d = Dust.NewDustPerfect(pos, DustID.PortalBoltTrail,

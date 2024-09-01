@@ -131,7 +131,7 @@ namespace Coralite.Core.Prefabs.Tiles
         {
             Player player = Main.LocalPlayer;
             Tile tile = Main.tile[i, j];
-            int spawnX = (i - (tile.TileFrameX / 18)) + (tile.TileFrameX >= 72 ? 5 : 2);
+            int spawnX = i - (tile.TileFrameX / 18) + (tile.TileFrameX >= 72 ? 5 : 2);
             int spawnY = j + 2;
 
             if (tile.TileFrameY % 38 != 0)
@@ -702,7 +702,7 @@ namespace Coralite.Core.Prefabs.Tiles
             }
 
             // Divide by seconds in a day * 24
-            time = (time / 86400.0) * 24.0;
+            time = time / 86400.0 * 24.0;
             // Dunno why we're taking 19.5. Something about hour formatting
             time = time - 7.5 - 12.0;
             // Format in readable time
@@ -849,7 +849,7 @@ namespace Coralite.Core.Prefabs.Tiles
             int left = Main.tile[i, j].TileFrameX / 18;
             left %= 3;
             left = i - left;
-            int top = j - Main.tile[i, j].TileFrameY / 18;
+            int top = j - (Main.tile[i, j].TileFrameY / 18);
             if (Main.tile[i, j].TileFrameY == 0)
             {
                 Main.CancelClothesWindow(true);
@@ -1189,13 +1189,13 @@ namespace Coralite.Core.Prefabs.Tiles
         {
             Tile tile = Framing.GetTileSafely(i, j);
 
-            int offX = tile.TileFrameX % (18) / 18;
+            int offX = tile.TileFrameX % 18 / 18;
             int offY = tile.TileFrameY % (18 * 2) / 18;
 
             for (int k = 0; k < 1; k++)
                 for (int m = 0; m < 2; m++)
                 {
-                    if (Main.tile[i - offX + k, j - offY + m].TileFrameX >= (18))
+                    if (Main.tile[i - offX + k, j - offY + m].TileFrameX >= 18)
                         Main.tile[i - offX + k, j - offY + m].TileFrameX -= 18;
                     else
                         Main.tile[i - offX + k, j - offY + m].TileFrameX += 18;
@@ -1216,13 +1216,13 @@ namespace Coralite.Core.Prefabs.Tiles
         {
             Tile tile = Framing.GetTileSafely(i, j);
 
-            int offX = tile.TileFrameX % (18) / 18;
+            int offX = tile.TileFrameX % 18 / 18;
             int offY = tile.TileFrameY % (18 * 2) / 18;
 
             for (int k = 0; k < 1; k++)
                 for (int m = 0; m < 2; m++)
                 {
-                    if (Main.tile[i - offX + k, j - offY + m].TileFrameX >= (18))
+                    if (Main.tile[i - offX + k, j - offY + m].TileFrameX >= 18)
                         Main.tile[i - offX + k, j - offY + m].TileFrameX -= 18;
                     else
                         Main.tile[i - offX + k, j - offY + m].TileFrameX += 18;
@@ -1377,13 +1377,13 @@ namespace Coralite.Core.Prefabs.Tiles
         {
             Tile tile = Framing.GetTileSafely(i, j);
 
-            int offX = tile.TileFrameX % (18) / 18;
-            int offY = tile.TileFrameY % (18) / 18;
+            int offX = tile.TileFrameX % 18 / 18;
+            int offY = tile.TileFrameY % 18 / 18;
 
             for (int k = 0; k < 1; k++)
                 for (int m = 0; m < 1; m++)
                 {
-                    if (Main.tile[i - offX + k, j - offY + m].TileFrameX >= (18))
+                    if (Main.tile[i - offX + k, j - offY + m].TileFrameX >= 18)
                         Main.tile[i - offX + k, j - offY + m].TileFrameX -= 18;
                     else
                         Main.tile[i - offX + k, j - offY + m].TileFrameX += 18;
@@ -1404,13 +1404,13 @@ namespace Coralite.Core.Prefabs.Tiles
         {
             Tile tile = Framing.GetTileSafely(i, j);
 
-            int offX = tile.TileFrameX % (18) / 18;
-            int offY = tile.TileFrameY % (18) / 18;
+            int offX = tile.TileFrameX % 18 / 18;
+            int offY = tile.TileFrameY % 18 / 18;
 
             for (int k = 0; k < 1; k++)
                 for (int m = 0; m < 1; m++)
                 {
-                    if (Main.tile[i - offX + k, j - offY + m].TileFrameX >= (18))
+                    if (Main.tile[i - offX + k, j - offY + m].TileFrameX >= 18)
                         Main.tile[i - offX + k, j - offY + m].TileFrameX -= 18;
                     else
                         Main.tile[i - offX + k, j - offY + m].TileFrameX += 18;
@@ -1472,13 +1472,13 @@ namespace Coralite.Core.Prefabs.Tiles
         {
             Tile tile = Framing.GetTileSafely(i, j);
 
-            int offX = tile.TileFrameX % (18) / 18;
+            int offX = tile.TileFrameX % 18 / 18;
             int offY = tile.TileFrameY % (18 * 3) / 18;
 
             for (int k = 0; k < 1; k++)
                 for (int m = 0; m < 3; m++)
                 {
-                    if (Main.tile[i - offX + k, j - offY + m].TileFrameX >= (18))
+                    if (Main.tile[i - offX + k, j - offY + m].TileFrameX >= 18)
                         Main.tile[i - offX + k, j - offY + m].TileFrameX -= 18;
                     else
                         Main.tile[i - offX + k, j - offY + m].TileFrameX += 18;
@@ -1499,13 +1499,13 @@ namespace Coralite.Core.Prefabs.Tiles
         {
             Tile tile = Framing.GetTileSafely(i, j);
 
-            int offX = tile.TileFrameX % (18) / 18;
+            int offX = tile.TileFrameX % 18 / 18;
             int offY = tile.TileFrameY % (18 * 3) / 18;
 
             for (int k = 0; k < 1; k++)
                 for (int m = 0; m < 3; m++)
                 {
-                    if (Main.tile[i - offX + k, j - offY + m].TileFrameX >= (18))
+                    if (Main.tile[i - offX + k, j - offY + m].TileFrameX >= 18)
                         Main.tile[i - offX + k, j - offY + m].TileFrameX -= 18;
                     else
                         Main.tile[i - offX + k, j - offY + m].TileFrameX += 18;

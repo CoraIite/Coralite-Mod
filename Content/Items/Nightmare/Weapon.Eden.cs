@@ -109,7 +109,7 @@ namespace Coralite.Content.Items.Nightmare
             Player owner = Main.player[Projectile.owner];
             Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2; // Without PiOver2, the rotation would be off by 90 degrees counterclockwise.
 
-            Projectile.Center = Main.GetPlayerArmPosition(Projectile) + Projectile.velocity * Timer;
+            Projectile.Center = Main.GetPlayerArmPosition(Projectile) + (Projectile.velocity * Timer);
             Lighting.AddLight(Projectile.Center, NightmarePlantera.nightmareRed.ToVector3());
             Projectile.spriteDirection = Projectile.velocity.X >= 0f ? 1 : -1;
 
@@ -351,7 +351,7 @@ namespace Coralite.Content.Items.Nightmare
             Projectile.oldRot[0] = FinalRotationOffset;
 
             for (int i = 1; i < CACHE_LENGTH; i++)
-                Projectile.oldPos[i] = Projectile.oldPos[i - 1] + Projectile.velocity.RotatedBy(Projectile.oldRot[i - 1]) * PerPartLength;
+                Projectile.oldPos[i] = Projectile.oldPos[i - 1] + (Projectile.velocity.RotatedBy(Projectile.oldRot[i - 1]) * PerPartLength);
 
 
             Projectile.Center = Owner.Center;
@@ -380,7 +380,7 @@ namespace Coralite.Content.Items.Nightmare
                 effect = SpriteEffects.None;
             }
             Vector2 originCenter = Projectile.oldPos[0] - Main.screenPosition;
-            Main.spriteBatch.Draw(mainTex, originCenter + Projectile.velocity * 14, frame, lightColor, rot, frame.Size() / 2, Projectile.scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, originCenter + (Projectile.velocity * 14), frame, lightColor, rot, frame.Size() / 2, Projectile.scale, effect, 0);
 
             //绘制中断
             for (int i = 1; i < CACHE_LENGTH - 1; i++)

@@ -60,7 +60,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
                     Owner.immune = true;
                 }
 
-                int damage = (int)(projectile.Owner.GetWeaponDamage(Item) * (1.1f - 0.15f * cp.parryTime / 280f));
+                int damage = (int)(projectile.Owner.GetWeaponDamage(Item) * (1.1f - (0.15f * cp.parryTime / 280f)));
 
                 SoundEngine.PlaySound(CoraliteSoundID.IceMagic_Item28, projectile.Projectile.Center);
                 Helper.PlayPitched("Misc/ShieldGuard", 0.4f, 0f, projectile.Projectile.Center);
@@ -123,7 +123,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
                             Projectile.scale = 0.3f;
                         }
 
-                        Projectile.rotation += (1 - Timer / 50) * 0.3f;
+                        Projectile.rotation += (1 - (Timer / 50)) * 0.3f;
                         Projectile.scale += 0.7f / 50;
                         Projectile.velocity *= 0.98f;
 
@@ -147,7 +147,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
                         {
                             for (int i = 0; i < 6; i++)
                             {
-                                Vector2 velocity = (Projectile.rotation + 1.57f + i * MathHelper.TwoPi / 6).ToRotationVector2();
+                                Vector2 velocity = (Projectile.rotation + 1.57f + (i * MathHelper.TwoPi / 6)).ToRotationVector2();
                                 Projectile.NewProjectileFromThis<SnowflakeSpike>(Projectile.Center
                                     , velocity * Main.rand.NextFloat(5, 6f),
                                      (int)(Projectile.damage * 0.9f), Projectile.knockBack, Projectile.owner, ai1: Main.rand.NextFloat(8, 10));
@@ -165,7 +165,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
             Color c = new Color(255, 255, 255, 0) * 0.1f;
             for (int i = 0; i < 3; i++)
             {
-                Main.spriteBatch.Draw(tex, Projectile.Center - Main.screenPosition + (Main.GlobalTimeWrappedHourly + i * MathHelper.TwoPi / 3).ToRotationVector2() * 3, null,
+                Main.spriteBatch.Draw(tex, Projectile.Center - Main.screenPosition + ((Main.GlobalTimeWrappedHourly + (i * MathHelper.TwoPi / 3)).ToRotationVector2() * 3), null,
                     c, Projectile.rotation, tex.Size() / 2, Projectile.scale * 1.05f, 0, 0);
             }
             Projectile.QuickDraw(lightColor, 0f);
@@ -231,7 +231,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
 
             if (Timer < ShootTime)
             {
-                Dust dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(TrailWidth, TrailWidth) / 2, DustID.ApprenticeStorm,
+                Dust dust = Dust.NewDustPerfect(Projectile.Center + (Main.rand.NextVector2Circular(TrailWidth, TrailWidth) / 2), DustID.ApprenticeStorm,
                     Projectile.rotation.ToRotationVector2() * Main.rand.NextFloat(0.5f, 2f), Scale: Main.rand.NextFloat(1f, 1.2f));
                 if (Main.rand.NextBool())
                     dust.noGravity = true;

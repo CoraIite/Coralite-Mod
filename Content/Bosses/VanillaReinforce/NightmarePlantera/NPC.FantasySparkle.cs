@@ -84,7 +84,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             float rot = Main.rand.NextFloat(MathHelper.TwoPi);
             for (int i = 0; i < 7; i++)
             {
-                Particle.NewParticle(NPC.Center, (rot + i * MathHelper.TwoPi / 7).ToRotationVector2() * 5, CoraliteContent.ParticleType<HorizontalStar>(), NightmarePlantera.phantomColors[i], 0.3f);
+                Particle.NewParticle(NPC.Center, (rot + (i * MathHelper.TwoPi / 7)).ToRotationVector2() * 5, CoraliteContent.ParticleType<HorizontalStar>(), NightmarePlantera.phantomColors[i], 0.3f);
             }
 
             SoundEngine.PlaySound(CoraliteSoundID.ManaCrystal_Item29, NPC.Center);
@@ -139,8 +139,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             }
                         }
 
-                        float angle = Main.GlobalTimeWrappedHourly + index * (MathHelper.TwoPi / total);
-                        NPC.Center = Vector2.Lerp(NPC.Center, Target.Center + angle.ToRotationVector2() * 96, 0.25f);
+                        float angle = Main.GlobalTimeWrappedHourly + (index * (MathHelper.TwoPi / total));
+                        NPC.Center = Vector2.Lerp(NPC.Center, Target.Center + (angle.ToRotationVector2() * 96), 0.25f);
 
                         NPC.dontTakeDamage = true;
 
@@ -323,8 +323,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             Vector2 secondScale = scale * 0.4f;
             for (int i = -1; i < 2; i += 2)
             {
-                Vector2 offsetPos = pos + rot.ToRotationVector2() * i * 22;
-                float rot3 = rot + i * 0.3f;
+                Vector2 offsetPos = pos + (rot.ToRotationVector2() * i * 22);
+                float rot3 = rot + (i * 0.3f);
                 spriteBatch.Draw(lightTex, offsetPos, null, c, rot3, origin, secondScale, 0, 0);
                 //spriteBatch.Draw(lightTex, offsetPos, null, c, rot3, origin, secondScale, 0, 0);
 
@@ -335,9 +335,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             //周围一圈小星星
             for (int i = 0; i < 7; i++)
             {
-                float rot2 = (Main.GlobalTimeWrappedHourly * 2 + i * MathHelper.TwoPi / 7);
+                float rot2 = (Main.GlobalTimeWrappedHourly * 2) + (i * MathHelper.TwoPi / 7);
                 Vector2 dir = rot2.ToRotationVector2();
-                dir = pos + dir * (36 + factor * 4);
+                dir = pos + (dir * (36 + (factor * 4)));
                 rot2 += 1.57f;
                 Color phantomC = NightmarePlantera.phantomColors[i];
                 phantomC.A = 0;

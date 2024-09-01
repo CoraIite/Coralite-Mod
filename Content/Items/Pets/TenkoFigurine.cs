@@ -56,12 +56,12 @@ namespace Coralite.Content.Items.Pets
                 Vector2 origin = new(0, mainTex.Height / 2);
                 Color c = Color.SkyBlue;
                 c.A = 0;
-                c *= 0.25f + MathF.Sin(Main.GlobalTimeWrappedHourly) * 0.2f;
+                c *= 0.25f + (MathF.Sin(Main.GlobalTimeWrappedHourly) * 0.2f);
 
                 for (int i = 0; i < 5; i++)
                 {
                     Main.spriteBatch.Draw(mainTex, new Vector2(line.X - 10, line.Y), null, c,
-                        i * 0.22f, origin, 0.7f - i * 0.17f, 0, 0);
+                        i * 0.22f, origin, 0.7f - (i * 0.17f), 0, 0);
                 }
             }
 
@@ -170,7 +170,7 @@ namespace Coralite.Content.Items.Pets
 
             Vector2 vector = player.Center;
             if (player.direction > 0)
-                vector.X -= (40) * player.direction;
+                vector.X -= 40 * player.direction;
             else
                 vector.X -= (45 + player.width) * player.direction;
 
@@ -184,7 +184,7 @@ namespace Coralite.Content.Items.Pets
                     {
                         Vector2 vector7 = player.Center - Projectile.Center;
                         if (vector7.Length() > 2000f)
-                            Projectile.position = player.Center - new Vector2(Projectile.width, Projectile.height) / 2f;
+                            Projectile.position = player.Center - (new Vector2(Projectile.width, Projectile.height) / 2f);
                         else if (vector7.Length() > num2 || Math.Abs(vector7.Y) > num3)
                         {
                             State = 1f;
@@ -209,8 +209,8 @@ namespace Coralite.Content.Items.Pets
                             vector.Y += 16f;
                         }
 
-                        Vector2 vector8 = Collision.TileCollision(player.Center - Projectile.Size / 2f, vector - player.Center, Projectile.width, Projectile.height);
-                        vector = player.Center - Projectile.Size / 2f + vector8;
+                        Vector2 vector8 = Collision.TileCollision(player.Center - (Projectile.Size / 2f), vector - player.Center, Projectile.width, Projectile.height);
+                        vector = player.Center - (Projectile.Size / 2f) + vector8;
                         if (Projectile.Distance(vector) < 32f)
                         {
                             float num32 = player.Center.Distance(vector);
@@ -226,14 +226,14 @@ namespace Coralite.Content.Items.Pets
                             Vector2 vector11 = r2.TopLeft();
                             for (float num33 = 0f; num33 < 1f; num33 += 0.05f)
                             {
-                                Vector2 vector12 = r2.TopLeft() + vector10 * num33;
-                                if (Collision.SolidCollision(r2.TopLeft() + vector10 * num33, r.Width, r.Height))
+                                Vector2 vector12 = r2.TopLeft() + (vector10 * num33);
+                                if (Collision.SolidCollision(r2.TopLeft() + (vector10 * num33), r.Width, r.Height))
                                     break;
 
                                 vector11 = vector12;
                             }
 
-                            vector = vector11 + Projectile.Size / 2f;
+                            vector = vector11 + (Projectile.Size / 2f);
                         }
 
                         Projectile.tileCollide = true;
@@ -286,7 +286,7 @@ namespace Coralite.Content.Items.Pets
                             int num42 = (int)Projectile.position.Y / 16;
                             num41 += num39;
                             num41 += (int)Projectile.velocity.X;
-                            for (int j = num42; j < num42 + Projectile.height / 16 + 1; j++)
+                            for (int j = num42; j < num42 + (Projectile.height / 16) + 1; j++)
                             {
                                 if (WorldGen.SolidTile(num41, j))
                                     flag13 = true;
@@ -380,7 +380,7 @@ namespace Coralite.Content.Items.Pets
                         Projectile.direction = MathF.Sign(Projectile.velocity.X);
 
                         if (Projectile.velocity.X == 0f)
-                            Projectile.direction = ((player.Center.X > Projectile.Center.X) ? 1 : (-1));
+                            Projectile.direction = (player.Center.X > Projectile.Center.X) ? 1 : (-1);
 
                         if (Projectile.velocity.X > num34 && num39 == 1)
                             Projectile.direction = 1;
@@ -394,7 +394,7 @@ namespace Coralite.Content.Items.Pets
                             Projectile.frame = 14;
                         else if (Math.Abs(Projectile.velocity.X) != 0)
                         {
-                            Projectile.frameCounter += (int)Math.Abs(Projectile.velocity.X) / 3 + 1;
+                            Projectile.frameCounter += ((int)Math.Abs(Projectile.velocity.X) / 3) + 1;
 
                             if (Projectile.frameCounter > 7)
                             {
@@ -411,7 +411,7 @@ namespace Coralite.Content.Items.Pets
                             Projectile.frame = 0;
                         }
 
-                        Projectile.velocity.Y += 0.4f + num43 * 1f;
+                        Projectile.velocity.Y += 0.4f + (num43 * 1f);
                         if (Projectile.velocity.Y > 10f)
                             Projectile.velocity.Y = 10f;
                     }
@@ -428,7 +428,7 @@ namespace Coralite.Content.Items.Pets
                         Vector2 vector6 = player.Center - Projectile.Center;
                         float num20 = vector6.Length();
                         if (num20 > 2000f)
-                            Projectile.position = player.Center - new Vector2(Projectile.width, Projectile.height) / 2f;
+                            Projectile.position = player.Center - (new Vector2(Projectile.width, Projectile.height) / 2f);
 
                         if (num20 < num19 && player.velocity.Y == 0f && Projectile.position.Y + Projectile.height <= player.position.Y + player.height && !Collision.SolidCollision(Projectile.position, Projectile.width, Projectile.height))
                         {
@@ -525,19 +525,19 @@ namespace Coralite.Content.Items.Pets
                         {
                             for (int i = 0; i < 5; i++)
                             {
-                                Vector2 baseDir = (Timer * 0.02f + i * MathHelper.TwoPi / 5).ToRotationVector2();
+                                Vector2 baseDir = ((Timer * 0.02f) + (i * MathHelper.TwoPi / 5)).ToRotationVector2();
 
                                 for (int j = -1; j < 2; j += 2)
                                 {
                                     Vector2 velocity = baseDir.RotatedBy(j * 0.6f);
-                                    Vector2 pos = Projectile.Center + baseDir * 32;
+                                    Vector2 pos = Projectile.Center + (baseDir * 32);
                                     for (int k = 0; k < 5; k++)
                                     {
                                         ParticleOrchestrator.RequestParticleSpawn(clientOnly: true, ParticleOrchestraType.ChlorophyteLeafCrystalShot, new ParticleOrchestraSettings
                                         {
                                             PositionInWorld = pos,
                                             MovementVector = velocity * 2,
-                                            UniqueInfoPiece = (int)((0.75f - 0.2f / 5 * k) * 255)
+                                            UniqueInfoPiece = (int)((0.75f - (0.2f / 5 * k)) * 255)
                                         });
 
                                         pos += velocity * 16;
@@ -550,7 +550,7 @@ namespace Coralite.Content.Items.Pets
                                     Vector2 velocity = baseDir.RotatedBy(l * 0.95f);
                                     ParticleOrchestrator.RequestParticleSpawn(clientOnly: true, ParticleOrchestraType.ChlorophyteLeafCrystalShot, new ParticleOrchestraSettings
                                     {
-                                        PositionInWorld = Projectile.Center + baseDir * (32 + 16 * 4 + 6) + velocity * 16,
+                                        PositionInWorld = Projectile.Center + (baseDir * (32 + (16 * 4) + 6)) + (velocity * 16),
                                         MovementVector = velocity * 3,
                                         UniqueInfoPiece = (int)(0.55f * 255)
                                     });
@@ -572,8 +572,8 @@ namespace Coralite.Content.Items.Pets
                             float rot = Timer * 0.02f;
                             for (int i = 0; i < 9; i++)
                             {
-                                Vector2 pos = Projectile.Center + (rot + i * MathHelper.TwoPi / 9).ToRotationVector2() * AttackLength;
-                                Vector2 vel = (rot + 1.57f + i * MathHelper.TwoPi / 9).ToRotationVector2();
+                                Vector2 pos = Projectile.Center + ((rot + (i * MathHelper.TwoPi / 9)).ToRotationVector2() * AttackLength);
+                                Vector2 vel = (rot + 1.57f + (i * MathHelper.TwoPi / 9)).ToRotationVector2();
                                 ParticleOrchestrator.RequestParticleSpawn(clientOnly: true, ParticleOrchestraType.ChlorophyteLeafCrystalShot, new ParticleOrchestraSettings
                                 {
                                     PositionInWorld = pos,
@@ -589,7 +589,7 @@ namespace Coralite.Content.Items.Pets
 
                             float num43 = Utils.GetLerpValue(0f, 100f, vector13.Y, clamped: true) * Utils.GetLerpValue(-2f, -6f, Projectile.velocity.Y, clamped: true);
 
-                            Projectile.velocity.Y += 0.4f + num43 * 1f;
+                            Projectile.velocity.Y += 0.4f + (num43 * 1f);
                             if (Projectile.velocity.Y > 10f)
                                 Projectile.velocity.Y = 10f;
                             if (++Projectile.frameCounter > 5)

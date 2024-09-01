@@ -325,7 +325,7 @@ namespace Coralite.Helpers
         }
 
         public static bool GetNPCOwner(this float index, out NPC owner, Action notExistAction = null)
-           =>  GetNPCOwner((int)index, out owner, notExistAction);
+           => GetNPCOwner((int)index, out owner, notExistAction);
 
         public static bool GetNPCOwner<T>(this float index, out NPC owner, Action notExistAction = null) where T : ModNPC
         {
@@ -349,7 +349,7 @@ namespace Coralite.Helpers
         }
 
         public static bool GetNPCOwner<T>(this int index, out NPC owner, Action notExistAction = null) where T : ModNPC
-           =>  GetNPCOwner<T>((float)index, out owner, notExistAction);
+           => GetNPCOwner<T>((float)index, out owner, notExistAction);
 
 
 
@@ -514,7 +514,7 @@ namespace Coralite.Helpers
 
             for (int i = start; i < howMany; i += step)
                 Main.spriteBatch.Draw(mainTex, projectile.oldPos[i] + toCenter - Main.screenPosition, null,
-                    drawColor * (maxAlpha - i * alphaStep), projectile.oldRot[i] + extraRot, mainTex.Size() / 2, scale == -1 ? projectile.scale : scale, 0, 0);
+                    drawColor * (maxAlpha - (i * alphaStep)), projectile.oldRot[i] + extraRot, mainTex.Size() / 2, scale == -1 ? projectile.scale : scale, 0, 0);
         }
 
         public static void DrawShadowTrails(this Projectile projectile, Color drawColor, float maxAlpha, float alphaStep, int start, int howMany, int step, float scaleStep, float extraRot = 0, float scale = -1)
@@ -524,7 +524,7 @@ namespace Coralite.Helpers
 
             for (int i = start; i < howMany; i += step)
                 Main.spriteBatch.Draw(mainTex, projectile.oldPos[i] + toCenter - Main.screenPosition, null,
-                    drawColor * (maxAlpha - i * alphaStep), projectile.oldRot[i] + extraRot, mainTex.Size() / 2, (scale == -1 ? projectile.scale : scale) * (1 - i * scaleStep), 0, 0);
+                    drawColor * (maxAlpha - (i * alphaStep)), projectile.oldRot[i] + extraRot, mainTex.Size() / 2, (scale == -1 ? projectile.scale : scale) * (1 - (i * scaleStep)), 0, 0);
         }
 
         public static void DrawShadowTrails(this Projectile projectile, Color drawColor, float maxAlpha, float alphaStep, int start, int howMany, int step, float scaleStep, Rectangle frameBox, float extraRot = 0, float scale = -1)
@@ -535,7 +535,7 @@ namespace Coralite.Helpers
 
             for (int i = start; i < howMany; i += step)
                 Main.spriteBatch.Draw(mainTex, projectile.oldPos[i] + toCenter - Main.screenPosition, frameBox,
-                    drawColor * (maxAlpha - i * alphaStep), projectile.oldRot[i] + extraRot, origin, (scale == -1 ? projectile.scale : scale) * (1 - i * scaleStep), 0, 0);
+                    drawColor * (maxAlpha - (i * alphaStep)), projectile.oldRot[i] + extraRot, origin, (scale == -1 ? projectile.scale : scale) * (1 - (i * scaleStep)), 0, 0);
         }
 
         public static void DrawShadowTrails(this Projectile projectile, Color drawColor, float maxAlpha, float alphaStep, int start, int howMany, int step, Vector2 scale, float extraRot = 0)
@@ -545,7 +545,7 @@ namespace Coralite.Helpers
 
             for (int i = start; i < howMany; i += step)
                 Main.spriteBatch.Draw(mainTex, projectile.oldPos[i] + toCenter - Main.screenPosition, null,
-                    drawColor * (maxAlpha - i * alphaStep), projectile.oldRot[i] + extraRot, mainTex.Size() / 2, scale, 0, 0);
+                    drawColor * (maxAlpha - (i * alphaStep)), projectile.oldRot[i] + extraRot, mainTex.Size() / 2, scale, 0, 0);
         }
 
         public static void DrawShadowTrails(this Projectile projectile, Color drawColor, float maxAlpha, float alphaStep, int start, int howMany, int step, Vector2 scale, float scaleStep, float extraRot = 0)
@@ -555,7 +555,7 @@ namespace Coralite.Helpers
 
             for (int i = start; i < howMany; i += step)
                 Main.spriteBatch.Draw(mainTex, projectile.oldPos[i] + toCenter - Main.screenPosition, null,
-                    drawColor * (maxAlpha - i * alphaStep), projectile.oldRot[i] + extraRot, mainTex.Size() / 2, scale * (1 - i * scaleStep), 0, 0);
+                    drawColor * (maxAlpha - (i * alphaStep)), projectile.oldRot[i] + extraRot, mainTex.Size() / 2, scale * (1 - (i * scaleStep)), 0, 0);
         }
 
         public static void DrawShadowTrails(this Projectile projectile, Color drawColor, float maxAlpha, float alphaStep, int start, int howMany, int step, float scale, Rectangle frameBox, float extraRot)
@@ -565,7 +565,7 @@ namespace Coralite.Helpers
 
             for (int i = start; i < howMany; i += step)
                 Main.spriteBatch.Draw(mainTex, projectile.oldPos[i] + toCenter - Main.screenPosition, frameBox,
-                    drawColor * (maxAlpha - i * alphaStep), projectile.oldRot[i] + extraRot, frameBox.Size() / 2, scale, 0, 0);
+                    drawColor * (maxAlpha - (i * alphaStep)), projectile.oldRot[i] + extraRot, frameBox.Size() / 2, scale, 0, 0);
         }
 
         public static void DrawShadowTrailsSacleStep(this Projectile projectile, Color drawColor, float maxAlpha, float alphaStep, int start, int howMany, int step, float scaleStep, Rectangle frameBox, float extraRot = 0, float scale = -1)
@@ -575,7 +575,7 @@ namespace Coralite.Helpers
 
             for (int i = start; i < howMany; i += step)
                 Main.spriteBatch.Draw(mainTex, projectile.oldPos[i] + toCenter - Main.screenPosition, frameBox,
-                    drawColor * (maxAlpha - i * alphaStep), projectile.oldRot[i] + extraRot, frameBox.Size() / 2, (scale == -1 ? projectile.scale : scale) * (1 - i * scaleStep), 0, 0);
+                    drawColor * (maxAlpha - (i * alphaStep)), projectile.oldRot[i] + extraRot, frameBox.Size() / 2, (scale == -1 ? projectile.scale : scale) * (1 - (i * scaleStep)), 0, 0);
         }
 
 
@@ -586,7 +586,7 @@ namespace Coralite.Helpers
 
             for (int i = start; i < howMany; i += step)
                 Main.spriteBatch.Draw(mainTex, projectile.oldPos[i] + toCenter - Main.screenPosition, frameBox,
-                    drawColor * (maxAlpha - i * alphaStep), projectile.oldRot[i] + extraRot, frameBox.Size() / 2, scale, 0, 0);
+                    drawColor * (maxAlpha - (i * alphaStep)), projectile.oldRot[i] + extraRot, frameBox.Size() / 2, scale, 0, 0);
         }
 
         public static void DrawLine(List<Vector2> list, Color originColor)
@@ -671,9 +671,9 @@ namespace Coralite.Helpers
             Vector2 vector2 = new Vector2(fatness.Y * 0.5f, scale.Y) * num;
             color *= num;
             color2 *= num;
-            Main.EntitySpriteDraw(value, drawPos, null, color, (float)Math.PI / 2f + rotation, origin, vector, dir, 0);
+            Main.EntitySpriteDraw(value, drawPos, null, color, ((float)Math.PI / 2f) + rotation, origin, vector, dir, 0);
             Main.EntitySpriteDraw(value, drawPos, null, color, 0f + rotation, origin, vector2, dir, 0);
-            Main.EntitySpriteDraw(value, drawPos, null, color2, (float)Math.PI / 2f + rotation, origin, vector * 0.6f, dir, 0);
+            Main.EntitySpriteDraw(value, drawPos, null, color2, ((float)Math.PI / 2f) + rotation, origin, vector * 0.6f, dir, 0);
             Main.EntitySpriteDraw(value, drawPos, null, color2, 0f + rotation, origin, vector2 * 0.6f, dir, 0);
         }
 
@@ -688,8 +688,8 @@ namespace Coralite.Helpers
             Vector2 vector = new Vector2(fatness.X * 0.5f, scale) * num;
             color *= num;
             color2 *= num;
-            Main.EntitySpriteDraw(value, drawPos, null, color, (float)Math.PI / 2f + rotation, origin, vector, dir, 0);
-            Main.EntitySpriteDraw(value, drawPos, null, color2, (float)Math.PI / 2f + rotation, origin, vector * 0.6f, dir, 0);
+            Main.EntitySpriteDraw(value, drawPos, null, color, ((float)Math.PI / 2f) + rotation, origin, vector, dir, 0);
+            Main.EntitySpriteDraw(value, drawPos, null, color2, ((float)Math.PI / 2f) + rotation, origin, vector * 0.6f, dir, 0);
         }
 
         /// <summary>

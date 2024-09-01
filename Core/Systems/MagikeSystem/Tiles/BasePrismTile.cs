@@ -1,5 +1,4 @@
-﻿using Coralite.Core.Systems.CoraliteActorComponent;
-using Coralite.Core.Systems.MagikeSystem.Components;
+﻿using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -31,7 +30,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
             else
             {
                 drawPos += rotation.ToRotationVector2() * (halfHeight - 6);
-                int frame = (tileRect.X / 10 + tileRect.Y + (int)Main.timeForVisualEffects / 4) % frameCount;
+                int frame = ((tileRect.X / 10) + tileRect.Y + ((int)Main.timeForVisualEffects / 4)) % frameCount;
                 frameBox = tex.Frame(1, frameCount, 0, frame);
             }
 

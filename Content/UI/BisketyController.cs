@@ -99,7 +99,7 @@ namespace Coralite.Content.UI
                 c = Color.LightSeaGreen;
 
             Utils.DrawBorderString(spriteBatch, GetText(type),
-                dimensions.Position() + new Vector2(dimensions.Width + 10, dimensions.Height / 2 + 4), c, anchory: 0.5f);
+                dimensions.Position() + new Vector2(dimensions.Width + 10, (dimensions.Height / 2) + 4), c, anchory: 0.5f);
         }
 
         public static string GetText(int i)

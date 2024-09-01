@@ -97,7 +97,7 @@ namespace Coralite.Content.Tiles.ShadowCastle
             float distance = Vector2.Distance(Main.LocalPlayer.Center, center);
             Vector2 dir = (Main.LocalPlayer.Center - center).SafeNormalize(Vector2.Zero);
 
-            Vector2 drawPos = worldPos + offScreen - Main.screenPosition + dir * Helpers.Helper.Lerp(0, 6, Math.Clamp(distance / 400, 0, 1));
+            Vector2 drawPos = worldPos + offScreen - Main.screenPosition + (dir * Helpers.Helper.Lerp(0, 6, Math.Clamp(distance / 400, 0, 1)));
 
             // 绘制主帖图
             spriteBatch.Draw(texture, drawPos, null, color);

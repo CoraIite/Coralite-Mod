@@ -75,7 +75,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
                 .RegisterNew<IcicleBreath>(225, 10)
                 .RegisterNew<BabyIceDragonMask>(150)
                 .RegisterNew<BabyIceDragonTrophy>(150)
-                .RegisterNew<IcicleSoulStone>( 150)
+                .RegisterNew<IcicleSoulStone>(150)
                 .AddCondition(Condition.InMasterMode)
                 .Register();
             #endregion
@@ -90,7 +90,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
                 .RegisterNew(ItemID.HoneyComb, 200)
                 .RegisterNew(ItemID.Nectar, 450)
                 .RegisterNew(ItemID.HoneyedGoggles, 450)
-                .RegisterNew(ItemID.Beenade, 300,80)
+                .RegisterNew(ItemID.Beenade, 300, 80)
                 .RegisterNew(ItemID.BeeMask, 200)
                 .RegisterNew(ItemID.QueenBeeTrophy, 300)
                 .RegisterNew(ItemID.QueenBeePetItem, 100)
@@ -142,7 +142,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             #endregion
 
             #region 史莱姆皇后
-            MagikeCraftRecipe.CreateRecipe(ItemID.QueenSlimeBossBag, ItemID.GelBalloon, 1500,resultItemStack: 100)
+            MagikeCraftRecipe.CreateRecipe(ItemID.QueenSlimeBossBag, ItemID.GelBalloon, 1500, resultItemStack: 100)
                 .RegisterNew(ItemID.Smolstar, 3000)
                 .RegisterNew(ItemID.QueenSlimeHook, 3000)
                 .RegisterNew(ItemID.QueenSlimeMountSaddle, 3500)
@@ -164,7 +164,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
                 .RegisterNew(ItemID.SpazmatismTrophy, 2500)
                 .RegisterNew(ItemID.TwinsPetItem, 500)
                 .AddCondition(Condition.InMasterMode)
-                .RegisterNew<SoulOfDeveloper>( 1500, 3)
+                .RegisterNew<SoulOfDeveloper>(1500, 3)
                 .Register();
             #endregion
 
@@ -222,7 +222,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             #endregion
 
             #region 石巨人宝藏袋
-            MagikeCraftRecipe.CreateRecipe(ItemID.GolemBossBag, ItemID.BeetleHusk, 3000, resultItemStack:35)
+            MagikeCraftRecipe.CreateRecipe(ItemID.GolemBossBag, ItemID.BeetleHusk, 3000, resultItemStack: 35)
                 .RegisterNew(ItemID.Picksaw, 5000)
                 .RegisterNew(ItemID.Stynger, 4500)
                 .RegisterNew(ItemID.PossessedHatchet, 4500)
@@ -262,7 +262,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
                 .RegisterNew(ItemID.RainbowWings, 6000)
                 .RegisterNew(ItemID.SparkleGuitar, 7000)
                 .RegisterNew(ItemID.RainbowCursor, 7000)
-                .RegisterNew(ItemID.HallowBossDye, 6000,3)
+                .RegisterNew(ItemID.HallowBossDye, 6000, 3)
                 .RegisterNew(ItemID.FairyQueenMask, 3000)
                 .RegisterNew(ItemID.FairyQueenTrophy, 4000)
                 .RegisterNew(ItemID.FairyQueenPetItem, 1000)
@@ -280,9 +280,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
                 .RegisterNew(ItemID.LunarFlareBook, 7000)
                 .RegisterNew(ItemID.RainbowCrystalStaff, 7000)
                 .RegisterNew(ItemID.MoonlordTurretStaff, 7000)
-                .RegisterNew<ConquerorOfTheSeas>( 7000)
+                .RegisterNew<ConquerorOfTheSeas>(7000)
                 .RegisterNew(ItemID.Celeb2, 7000)
-                .RegisterNew(ItemID.LunarOre, 7000,170)
+                .RegisterNew(ItemID.LunarOre, 7000, 170)
                 .RegisterNew(ItemID.MeowmereMinecart, 7000)
                 .RegisterNew(ItemID.BossMaskMoonlord, 4000)
                 .RegisterNew(ItemID.MoonLordTrophy, 6000)

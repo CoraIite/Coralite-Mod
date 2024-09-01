@@ -135,7 +135,7 @@ namespace Coralite.Content.Items.Nightmare
                 float num2 = (float)Math.PI * 2f / totalIndexesInGroup;
                 float num3 = totalIndexesInGroup * 0.66f;
                 Vector2 vector2 = new Vector2(50f, 8f) / 3f * (totalIndexesInGroup - 1);
-                Vector2 vector3 = Vector2.UnitY.RotatedBy(num2 * index + Main.GlobalTimeWrappedHourly % num3 / num3 * ((float)Math.PI * 2f));
+                Vector2 vector3 = Vector2.UnitY.RotatedBy((num2 * index) + (Main.GlobalTimeWrappedHourly % num3 / num3 * ((float)Math.PI * 2f)));
                 vector += vector3 * vector2;
                 vector.Y += player.gfxOffY;
                 vector = vector.Floor();
@@ -187,7 +187,7 @@ namespace Coralite.Content.Items.Nightmare
 
                 Projectile.UpdateFrameNormally(4, Main.projFrames[Projectile.type] - 1);
                 Target += 1f;
-                Projectile.rotation += Projectile.velocity.X * 0.1f + Projectile.velocity.Y * 0.05f;
+                Projectile.rotation += (Projectile.velocity.X * 0.1f) + (Projectile.velocity.Y * 0.05f);
                 Projectile.velocity *= 0.92f;
                 if (Target >= 9f)
                 {
@@ -222,7 +222,7 @@ namespace Coralite.Content.Items.Nightmare
                 if (Timer < -1)
                 {
                     Vector2 dir = (target.Center - Owner.Center).SafeNormalize(Vector2.Zero);
-                    Vector2 idlePos = Owner.Center + dir * 64;
+                    Vector2 idlePos = Owner.Center + (dir * 64);
                     Projectile.Center = Projectile.Center.MoveTowards(idlePos, 36);
 
                     Projectile.rotation = Projectile.rotation.AngleTowards(dir.ToRotation(), (float)Math.PI / 5f);

@@ -87,9 +87,9 @@ namespace Coralite.Content.Items.Nightmare
 
             for (int i = 0; i < howMany; i++)
             {
-                Vector2 dir = (Projectile.rotation + i * MathHelper.TwoPi / howMany).ToRotationVector2();
-                Vector2 position = pos + dir * (40 + factor * 2);
-                float factor2 = 0.5f + factor * 0.1f;
+                Vector2 dir = (Projectile.rotation + (i * MathHelper.TwoPi / howMany)).ToRotationVector2();
+                Vector2 position = pos + (dir * (40 + (factor * 2)));
+                float factor2 = 0.5f + (factor * 0.1f);
                 Helpers.Helper.DrawPrettyStarSparkle(Projectile.Opacity, 0, position, Color.White * 0.7f, NightmarePlantera.nightmareRed,
                    factor2, 0f, 0.5f, 0.5f, 1f, Projectile.rotation + rot, new Vector2(0.9f, 0.9f), Vector2.One * 1.2f);
                 if (nightmareHeart)
@@ -137,14 +137,14 @@ namespace Coralite.Content.Items.Nightmare
 
             for (int j = 0; j < 3; j++)
             {
-                float num4 = scale + halfScaleRange * j;
+                float num4 = scale + (halfScaleRange * j);
                 if (num4 > 0.5f)
                     num4 -= halfScaleRange * 2f;
 
                 float num5 = MathHelper.Lerp(0.8f, 0f, Math.Abs(num4 - half) * 10f);
                 Color c = NightmarePlantera.nightmareRed;
                 c.A = (byte)(num5 * 255 / 2f);
-                spriteBatch.Draw(ringTex.Value, Owner.Center - Main.screenPosition, null, c, Rot + MathHelper.Pi / 3f * j, ringTex.Size() / 2, num4, SpriteEffects.None, 0f);
+                spriteBatch.Draw(ringTex.Value, Owner.Center - Main.screenPosition, null, c, Rot + (MathHelper.Pi / 3f * j), ringTex.Size() / 2, num4, SpriteEffects.None, 0f);
             }
         }
     }

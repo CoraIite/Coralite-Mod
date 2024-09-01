@@ -93,7 +93,7 @@ namespace Coralite.Content.Items.Icicle
                         SoundEngine.PlaySound(CoraliteSoundID.IceMagic_Item28, player.Center);
                         for (int i = 0; i < 4; i++)//生成冰晶粒子
                         {
-                            Vector2 center = player.Center + (-1.57f + i * 1.57f).ToRotationVector2() * 64;
+                            Vector2 center = player.Center + ((-1.57f + (i * 1.57f)).ToRotationVector2() * 64);
                             Vector2 vel = (i * 1.57f).ToRotationVector2() * 4;
                             IceStarLight.Spawn(center, vel, 1f, () => player.Center, 16);
                         }
@@ -173,7 +173,7 @@ namespace Coralite.Content.Items.Icicle
         {
             float a = 0;
             return Collision.CanHitLine(Owner.Center, 1, 1, targetHitbox.Center.ToVector2(), 1, 1)
-                && Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Owner.Center, Owner.Center + Projectile.velocity * (Distance2Owner + 36), 30, ref a);
+                && Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Owner.Center, Owner.Center + (Projectile.velocity * (Distance2Owner + 36)), 30, ref a);
         }
 
         public override void AI()
@@ -200,7 +200,7 @@ namespace Coralite.Content.Items.Icicle
                 Distance2Owner -= 50 / (TimeMax / 2);
 
             Lighting.AddLight(Projectile.Center, new Vector3(0.4f, 0.75f, 0.75f));
-            Projectile.Center = Owner.Center + (Projectile.rotation + RotOffset).ToRotationVector2() * Distance2Owner;
+            Projectile.Center = Owner.Center + ((Projectile.rotation + RotOffset).ToRotationVector2() * Distance2Owner);
             Owner.heldProj = Projectile.whoAmI;
             Owner.itemRotation = Projectile.rotation + (OwnerDirection > 0 ? 0 : MathHelper.Pi);
         }
@@ -211,7 +211,7 @@ namespace Coralite.Content.Items.Icicle
             Vector2 origin = mainTex.Size() / 2f;
 
             //绘制本体
-            float rot = Projectile.rotation + RotOffset + (float)Math.PI / 4f;
+            float rot = Projectile.rotation + RotOffset + ((float)Math.PI / 4f);
             SpriteEffects spriteEffects = SpriteEffects.None;
             if (Projectile.rotation < -(float)Math.PI / 2f || Projectile.rotation > (float)Math.PI / 2f)
             {
@@ -231,14 +231,14 @@ namespace Coralite.Content.Items.Icicle
             color2.A = (byte)(color2.A * 0.5f);
 
             float currentRot = Projectile.rotation + RotOffset;
-            float rot2 = currentRot + OwnerDirection * 0.1f;
-            Vector2 dir = currentRot.ToRotationVector2() * (Distance2Owner);
+            float rot2 = currentRot + (OwnerDirection * 0.1f);
+            Vector2 dir = currentRot.ToRotationVector2() * Distance2Owner;
 
             for (int j = -1; j < 2; j += 2)
             {
                 float scale = Main.rand.NextFloat(0.5f, 0.7f);
                 float randomPos = (Math.Abs(Projectile.timeLeft - (TimeMax / 2)) + 1f) * 1f;
-                Vector2 position2 = Owner.Center + currentRot.ToRotationVector2().RotatedBy(j * 1.57f) * randomPos + Main.rand.NextVector2Circular(randomPos, randomPos) + dir - Main.screenPosition;
+                Vector2 position2 = Owner.Center + (currentRot.ToRotationVector2().RotatedBy(j * 1.57f) * randomPos) + Main.rand.NextVector2Circular(randomPos, randomPos) + dir - Main.screenPosition;
                 Main.spriteBatch.Draw(extraTex, position2, null, color2, rot2 + 0.785f, origin, scale, SpriteEffects.None, 0f);
             }
         }
@@ -341,7 +341,7 @@ namespace Coralite.Content.Items.Icicle
             {
                 float rot = Helper.Lerp(0, FinalRotationOffset, (i - 1) / (float)CACHE_LENGTH);
                 Projectile.oldRot[i] = Projectile.rotation + rot;
-                Projectile.oldPos[i] = Projectile.oldPos[i - 1] + Projectile.velocity.RotatedBy(rot) * PerPartLength;
+                Projectile.oldPos[i] = Projectile.oldPos[i - 1] + (Projectile.velocity.RotatedBy(rot) * PerPartLength);
             }
 
             Lighting.AddLight(Projectile.oldPos[2], new Vector3(0.4f, 0.75f, 0.75f));
@@ -376,7 +376,7 @@ namespace Coralite.Content.Items.Icicle
                 effect = SpriteEffects.FlipVertically;
             }
             Vector2 originCenter = Owner.Center - Main.screenPosition;
-            Main.spriteBatch.Draw(handleTex.Value, originCenter + Projectile.velocity * 14, null, lightColor, rot, handleTex.Size() / 2, Projectile.scale, effect, 0);
+            Main.spriteBatch.Draw(handleTex.Value, originCenter + (Projectile.velocity * 14), null, lightColor, rot, handleTex.Size() / 2, Projectile.scale, effect, 0);
 
             return false;
         }
@@ -499,7 +499,7 @@ namespace Coralite.Content.Items.Icicle
                 {
                     for (int j = -1; j < 2; j++)
                     {
-                        Vector2 position = targetCenter + j * 16 * dashDir.RotatedBy(1.57f);
+                        Vector2 position = targetCenter + (j * 16 * dashDir.RotatedBy(1.57f));
                         Tile tile = Framing.GetTileSafely(position);
                         if (tile.HasSolidTile())
                         {
@@ -513,7 +513,7 @@ namespace Coralite.Content.Items.Icicle
             checkEnd:
                 for (int j = -1; j < 2; j++)    //避免在最后判定之后穿墙
                 {
-                    Vector2 position = targetCenter + dashDir * 16 + j * 16 * dashDir.RotatedBy(1.57f);
+                    Vector2 position = targetCenter + (dashDir * 16) + (j * 16 * dashDir.RotatedBy(1.57f));
                     Tile tile = Framing.GetTileSafely(position);
                     if (tile.HasSolidTile())
                         targetCenter -= dashDir * 32;
@@ -559,7 +559,7 @@ namespace Coralite.Content.Items.Icicle
             Texture2D mainTex = Projectile.GetTexture();
             Vector2 origin = mainTex.Size() / 2f;
 
-            float rot = Projectile.rotation + (float)Math.PI / 4f;
+            float rot = Projectile.rotation + ((float)Math.PI / 4f);
             SpriteEffects spriteEffects = SpriteEffects.None;
             if (Projectile.rotation < -(float)Math.PI / 2f || Projectile.rotation > (float)Math.PI / 2f)
             {
@@ -567,7 +567,7 @@ namespace Coralite.Content.Items.Icicle
                 spriteEffects |= SpriteEffects.FlipHorizontally;
             }
 
-            Main.spriteBatch.Draw(mainTex, Owner.Center + Projectile.rotation.ToRotationVector2() * 28 - Main.screenPosition, null, lightColor, rot, origin, 1f, spriteEffects, 0f);
+            Main.spriteBatch.Draw(mainTex, Owner.Center + (Projectile.rotation.ToRotationVector2() * 28) - Main.screenPosition, null, lightColor, rot, origin, 1f, spriteEffects, 0f);
 
             return false;
         }

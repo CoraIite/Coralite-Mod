@@ -47,7 +47,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         }
 
                         SetRotationNormally();
-                        float edge = 400 + 220 * Math.Clamp(Timer / ReadyTime, 0, 1);
+                        float edge = 400 + (220 * Math.Clamp(Timer / ReadyTime, 0, 1));
                         edge /= 2;
                         for (int i = 0; i < 4; i++)
                         {

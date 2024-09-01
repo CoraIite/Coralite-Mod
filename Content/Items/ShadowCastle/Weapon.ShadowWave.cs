@@ -88,7 +88,7 @@ namespace Coralite.Content.Items.ShadowCastle
             base.Initialize();
             float rotation = TargetRot + (OwnerDirection > 0 ? 0 : MathHelper.Pi);
             Vector2 dir = rotation.ToRotationVector2();
-            Vector2 center = Projectile.Center + dir * 24;
+            Vector2 center = Projectile.Center + (dir * 24);
             for (int i = 0; i < 8; i++)
             {
                 Dust dust = Dust.NewDustPerfect(center + Main.rand.NextVector2Circular(8, 8),
@@ -125,8 +125,8 @@ namespace Coralite.Content.Items.ShadowCastle
         {
             LockOwnerItemTime();
             SetHeldProj();
-            Owner.itemRotation = MouseTargetAngle + (OwnerDirection > 0 ? 0f : MathHelper.Pi) + (Owner.gravDir > 0 ? 0f : MathHelper.Pi) + OwnerDirection * 0.3f;
-            Projectile.Center = Owner.Center + MouseTargetVector2 * 20;
+            Owner.itemRotation = MouseTargetAngle + (OwnerDirection > 0 ? 0f : MathHelper.Pi) + (Owner.gravDir > 0 ? 0f : MathHelper.Pi) + (OwnerDirection * 0.3f);
+            Projectile.Center = Owner.Center + (MouseTargetVector2 * 20);
             Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
 
             switch (State)

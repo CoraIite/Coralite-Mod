@@ -71,17 +71,17 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
                         NPC.rotation += Main.rand.NextFloat(-0.2f, 0.3f);
                         Vector2 dir = Helper.NextVec2Dir();
-                        Dust dust = Dust.NewDustPerfect(NPC.Center + dir * Main.rand.NextFloat(64f), ModContent.DustType<NightmareDust>(), dir * Main.rand.NextFloat(2f, 4f), Scale: Main.rand.NextFloat(1f, 2f));
+                        Dust dust = Dust.NewDustPerfect(NPC.Center + (dir * Main.rand.NextFloat(64f)), ModContent.DustType<NightmareDust>(), dir * Main.rand.NextFloat(2f, 4f), Scale: Main.rand.NextFloat(1f, 2f));
                         dust.noGravity = true;
 
                         if (Timer % 3 == 0)
                         {
                             dir = Helper.NextVec2Dir();
-                            dust = Dust.NewDustPerfect(NPC.Center + dir * Main.rand.NextFloat(64f), ModContent.DustType<NightmareStar>(), dir * Main.rand.NextFloat(8f, 16f), newColor: new Color(153, 88, 156, 230), Scale: Main.rand.NextFloat(1f, 4f));
+                            dust = Dust.NewDustPerfect(NPC.Center + (dir * Main.rand.NextFloat(64f)), ModContent.DustType<NightmareStar>(), dir * Main.rand.NextFloat(8f, 16f), newColor: new Color(153, 88, 156, 230), Scale: Main.rand.NextFloat(1f, 4f));
                             dust.rotation = dir.ToRotation() + MathHelper.PiOver2;
 
                             dir = Helper.NextVec2Dir();
-                            dust = Dust.NewDustPerfect(NPC.Center + dir * Main.rand.NextFloat(64f), DustID.VilePowder, dir * Main.rand.NextFloat(8f, 16f), newColor: new Color(153, 88, 156, 230), Scale: Main.rand.NextFloat(1f, 1.3f));
+                            dust = Dust.NewDustPerfect(NPC.Center + (dir * Main.rand.NextFloat(64f)), DustID.VilePowder, dir * Main.rand.NextFloat(8f, 16f), newColor: new Color(153, 88, 156, 230), Scale: Main.rand.NextFloat(1f, 1.3f));
                         }
 
                         if (Timer > 140)

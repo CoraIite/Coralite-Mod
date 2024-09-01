@@ -130,8 +130,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         protected override void AIAfter()
         {
-            Top = Projectile.Center + RotateVec2 * (Projectile.scale * Projectile.height / 2 + trailTopWidth);
-            Bottom = Projectile.Center - RotateVec2 * (Projectile.scale * Projectile.height / 2);//弹幕的底端和顶端计算，用于检测碰撞以及绘制
+            Top = Projectile.Center + (RotateVec2 * ((Projectile.scale * Projectile.height / 2) + trailTopWidth));
+            Bottom = Projectile.Center - (RotateVec2 * (Projectile.scale * Projectile.height / 2));//弹幕的底端和顶端计算，用于检测碰撞以及绘制
 
             if (useShadowTrail || useSlashTrail)
                 UpdateCaches();
@@ -178,7 +178,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     startAngle = 0f;
                     totalAngle = 0.02f;
                     minTime = 33 * 5;
-                    maxTime = minTime + 25 * 5;
+                    maxTime = minTime + (25 * 5);
                     Smoother = Coralite.Instance.BezierEaseSmoother;
                     extraScaleAngle = 0f;
                     minScale = 1f;
@@ -192,7 +192,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     totalAngle = 4.5f;
                     Projectile.extraUpdates = 6;
                     minTime = 28 * 7;
-                    maxTime = minTime + 18 * 7;
+                    maxTime = minTime + (18 * 7);
                     Smoother = Coralite.Instance.BezierEaseSmoother;
                     extraScaleAngle = 0f;
                     minScale = 0.8f;
@@ -204,7 +204,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     startAngle = 2.2f;
                     totalAngle = 36f;
                     minTime = 33 * 5;
-                    maxTime = minTime + 80 * 5;
+                    maxTime = minTime + (80 * 5);
                     Smoother = Coralite.Instance.NoSmootherInstance;
                     minScale = 0.8f;
                     maxScale = 1.4f;
@@ -217,7 +217,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         startAngle = rand * (2.2f + Main.rand.NextFloat(-0.2f, 0.2f));
                         totalAngle = rand * (4.6f + Main.rand.NextFloat(-0.2f, 0.2f));
                         minTime = 30 * 5;
-                        maxTime = minTime + 14 * 5;
+                        maxTime = minTime + (14 * 5);
                         delay = 30;
                         Smoother = Coralite.Instance.BezierEaseSmoother;
                         extraScaleAngle = Main.rand.NextFloat(-0.4f, 0.4f);
@@ -231,7 +231,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         startAngle = 0f;
                         totalAngle = 0.02f;
                         minTime = 30 * 5;
-                        maxTime = minTime + 20 * 5;
+                        maxTime = minTime + (20 * 5);
                         Smoother = Coralite.Instance.BezierEaseSmoother;
                         extraScaleAngle = 0f;
                         minScale = 1f;
@@ -245,7 +245,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         startAngle = 2.4f;
                         totalAngle = 4.8f + MathHelper.TwoPi;
                         minTime = 28 * 5;
-                        maxTime = minTime + 30 * 5;
+                        maxTime = minTime + (30 * 5);
                         Smoother = Coralite.Instance.NoSmootherInstance;
                         minScale = 0.8f;
                         maxScale = 1.4f;
@@ -259,7 +259,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             recordStartAngle = Math.Abs(startAngle);
             recordTotalAngle = Math.Abs(totalAngle);
             if (setScale)
-                Projectile.scale = Helper.EllipticalEase(recordStartAngle + extraScaleAngle - recordTotalAngle * Smoother.Smoother(0, maxTime - minTime), minScale, maxScale);
+                Projectile.scale = Helper.EllipticalEase(recordStartAngle + extraScaleAngle - (recordTotalAngle * Smoother.Smoother(0, maxTime - minTime)), minScale, maxScale);
             else
                 Projectile.scale = 0.01f;
             base.Initializer();
@@ -278,7 +278,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 case (int)ComboType.SmashDown_SmashDown:
                     {
                         spriteRotation += MathHelper.TwoPi * 3 / minTime;
-                        distanceToOwner = Helper.Lerp(-40, 8, (Timer / minTime));
+                        distanceToOwner = Helper.Lerp(-40, 8, Timer / minTime);
                         if ((int)Timer == minTime)
                         {
                             spriteRotation = new Vector2(66, 70).ToRotation();
@@ -310,7 +310,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 case (int)ComboType.SkyJump_JumpUp:
                     {
                         spriteRotation += MathHelper.TwoPi * 3 / minTime;
-                        distanceToOwner = Helper.Lerp(-40, 8, (Timer / minTime));
+                        distanceToOwner = Helper.Lerp(-40, 8, Timer / minTime);
                         if ((int)Timer == minTime)
                         {
                             spriteRotation = new Vector2(66, 70).ToRotation();
@@ -347,7 +347,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             int timer = (int)Timer - minTime;
 
-            Projectile.scale = Helper.EllipticalEase(recordStartAngle + extraScaleAngle - recordTotalAngle * Smoother.Smoother(timer, maxTime - minTime), minScale, maxScale);
+            Projectile.scale = Helper.EllipticalEase(recordStartAngle + extraScaleAngle - (recordTotalAngle * Smoother.Smoother(timer, maxTime - minTime)), minScale, maxScale);
 
             switch (Combo)
             {
@@ -395,10 +395,10 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 if (oldRotate[i] == 100f)
                     continue;
 
-                float factor = 1f - i / count;
+                float factor = 1f - (i / count);
                 Vector2 Center = GetCenter(i);
-                Vector2 Top = Center + oldRotate[i].ToRotationVector2() * (oldLength[i] + trailTopWidth + oldDistanceToOwner[i]);
-                Vector2 Bottom = Center + oldRotate[i].ToRotationVector2() * (oldLength[i] - ControlTrailBottomWidth(factor) + oldDistanceToOwner[i]);
+                Vector2 Top = Center + (oldRotate[i].ToRotationVector2() * (oldLength[i] + trailTopWidth + oldDistanceToOwner[i]));
+                Vector2 Bottom = Center + (oldRotate[i].ToRotationVector2() * (oldLength[i] - ControlTrailBottomWidth(factor) + oldDistanceToOwner[i]));
 
                 var topColor = Color.Lerp(new Color(238, 218, 130, alpha), new Color(167, 127, 95, 0), 1 - factor);
                 var bottomColor = Color.Lerp(new Color(109, 73, 86, alpha), new Color(83, 16, 85, 0), 1 - factor);
@@ -422,7 +422,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 effect.Parameters["gradientTexture"].SetValue(GradientTexture.Value);
                 effect.Parameters["worldSize"].SetValue(new Vector2(Main.screenWidth, Main.screenHeight));
                 effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly / 5);
-                effect.Parameters["uExchange"].SetValue(0.87f + 0.05f * MathF.Sin(Main.GlobalTimeWrappedHourly));
+                effect.Parameters["uExchange"].SetValue(0.87f + (0.05f * MathF.Sin(Main.GlobalTimeWrappedHourly)));
 
                 Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointWrap;
                 foreach (EffectPass pass in effect.CurrentTechnique.Passes) //应用shader，并绘制顶点
@@ -453,7 +453,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             startAngle = 0f;
             totalAngle = 38.5f;
             minTime = 20 * 4;
-            maxTime = minTime + 90 * 4;
+            maxTime = minTime + (90 * 4);
             Smoother = Coralite.Instance.BezierEaseSmoother;
             delay = 20 * 4;
             Projectile.localNPCHitCooldown = 60;
@@ -462,7 +462,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             Projectile.velocity *= 0f;
             if (Owner.whoAmI == Main.myPlayer)
             {
-                _Rotation = startAngle = GetStartAngle() - OwnerDirection * startAngle;//设定起始角度
+                _Rotation = startAngle = GetStartAngle() - (OwnerDirection * startAngle);//设定起始角度
                 totalAngle *= OwnerDirection;
             }
 
@@ -510,7 +510,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             if (Timer % 60 == 0)
                 Helper.PlayPitched("Misc/SwingFlow", 0.4f, 0f, Owner.Center);
 
-            _Rotation = startAngle + totalAngle * Smoother.Smoother((int)Timer - minTime, maxTime - minTime);
+            _Rotation = startAngle + (totalAngle * Smoother.Smoother((int)Timer - minTime, maxTime - minTime));
             Slasher();
         }
 
@@ -538,10 +538,10 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 if (oldRotate[i] == 100f)
                     continue;
 
-                float factor = 1f - i / count;
+                float factor = 1f - (i / count);
                 Vector2 Center = GetCenter(i);
-                Vector2 Top = Center + oldRotate[i].ToRotationVector2() * (oldLength[i] + trailTopWidth + oldDistanceToOwner[i]);
-                Vector2 Bottom = Center + oldRotate[i].ToRotationVector2() * (oldLength[i] - ControlTrailBottomWidth(factor) + oldDistanceToOwner[i]);
+                Vector2 Top = Center + (oldRotate[i].ToRotationVector2() * (oldLength[i] + trailTopWidth + oldDistanceToOwner[i]));
+                Vector2 Bottom = Center + (oldRotate[i].ToRotationVector2() * (oldLength[i] - ControlTrailBottomWidth(factor) + oldDistanceToOwner[i]));
 
                 var topColor = Color.Lerp(new Color(238, 218, 130, alpha), new Color(167, 127, 95, 0), 1 - factor);
                 var bottomColor = Color.Lerp(new Color(109, 73, 86, alpha), new Color(83, 16, 85, 0), 1 - factor);

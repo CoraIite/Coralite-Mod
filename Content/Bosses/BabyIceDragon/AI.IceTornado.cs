@@ -105,7 +105,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             if ((int)Timer % 8 == 0 && Main.netMode != NetmodeID.MultiplayerClient)     //生成透明弹幕
                             {
                                 int damage = Helper.GetProjDamage(40, 65, 100);
-                                Projectile projectile = Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), NPC.Center + NPC.velocity * 6, NPC.velocity * 0.2f, ModContent.ProjectileType<IceTornado>(), damage, 10f);
+                                Projectile projectile = Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), NPC.Center + (NPC.velocity * 6), NPC.velocity * 0.2f, ModContent.ProjectileType<IceTornado>(), damage, 10f);
                                 projectile.timeLeft = 40;
                                 projectile.netUpdate = true;
                             }
@@ -123,7 +123,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                                 1 => new Color(120, 211, 231, 200),
                                 _ => new Color(252, 255, 255, 200)
                             };
-                            Tornado.Spawn(NPC.Center + NPC.velocity * 8, NPC.velocity * 0.05f, tornadoColor, 60, NPC.velocity.ToRotation(), Main.rand.NextFloat(0.5f, 0.6f));
+                            Tornado.Spawn(NPC.Center + (NPC.velocity * 8), NPC.velocity * 0.05f, tornadoColor, 60, NPC.velocity.ToRotation(), Main.rand.NextFloat(0.5f, 0.6f));
 
                             break;
                         }

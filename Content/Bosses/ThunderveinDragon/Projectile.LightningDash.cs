@@ -39,7 +39,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public override bool? CanDamage()
         {
-            if (Timer > DashTime + DelayTime / 2)
+            if (Timer > DashTime + (DelayTime / 2))
                 return false;
 
             return null;
@@ -142,14 +142,14 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             {
                 SpawnDusts();
 
-                float factor = (Timer - DashTime) / (DelayTime);
+                float factor = (Timer - DashTime) / DelayTime;
                 float sinFactor = MathF.Sin(factor * MathHelper.Pi);
-                ThunderWidth = 20 + sinFactor * 30;
+                ThunderWidth = 20 + (sinFactor * 30);
                 ThunderAlpha = 1 - Coralite.Instance.X2Smoother.Smoother(factor);
 
                 foreach (var trail in thunderTrails)
                 {
-                    trail.SetRange((0, 12 + sinFactor * PointDistance / 2));
+                    trail.SetRange((0, 12 + (sinFactor * PointDistance / 2)));
                     trail.SetExpandWidth((1 - factor) * PointDistance / 3);
 
                     if (Timer % 6 == 0)

@@ -98,7 +98,7 @@ namespace Coralite.Content.Items.Donator
                 , velocity, ModContent.ProjectileType<MiniDynamite>(), damage, knockback, player.whoAmI);
 
             Vector2 dir = velocity.SafeNormalize(Vector2.Zero);
-            Vector2 pos = player.Center + dir * 66;
+            Vector2 pos = player.Center + (dir * 66);
 
             Dust d2 = Dust.NewDustPerfect(pos,
                 Main.rand.NextFromList(
@@ -143,7 +143,7 @@ namespace Coralite.Content.Items.Donator
                 float factor = Math.Abs(MathF.Sin(Main.GlobalTimeWrappedHourly / 2)) * 2;
                 if (factor < 1)
                     return Color.Lerp(new Color(186, 30, 30), new Color(255, 103, 65), factor);
-                return Color.Lerp(new Color(255, 103, 65), new Color(255, 168, 115), (factor - 1));
+                return Color.Lerp(new Color(255, 103, 65), new Color(255, 168, 115), factor - 1);
             }
         }
     }
@@ -180,7 +180,7 @@ namespace Coralite.Content.Items.Donator
 
         public override void ModifyAI(float factor)
         {
-            Projectile.frame = (int)((1 - Projectile.timeLeft / MaxTime) * 6);
+            Projectile.frame = (int)((1 - (Projectile.timeLeft / MaxTime)) * 6);
         }
 
         public override void GetFrame(Texture2D mainTex, out Rectangle? frame, out Vector2 origin)
@@ -261,13 +261,13 @@ namespace Coralite.Content.Items.Donator
                         {
                             Vector2 dir = (Projectile.rotation + MathHelper.Pi).ToRotationVector2();
                             Gore.NewGoreDirect(Projectile.GetSource_FromAI()
-                                , Projectile.Top + dir * 12
+                                , Projectile.Top + (dir * 12)
                                 , dir * 4, Mod.Find<ModGore>("PerishMetrorBucket").Type);
 
                             SoundEngine.PlaySound(CoraliteSoundID.NoUse_BlowgunPlus_Item65, Projectile.Center);
                         }
 
-                        Vector2 pos = Projectile.Center + (Projectile.rotation + (OwnerDirection > 0 ? 0 : 3.141f)).ToRotationVector2() * 10 - Vector2.UnitY * 30;
+                        Vector2 pos = Projectile.Center + ((Projectile.rotation + (OwnerDirection > 0 ? 0 : 3.141f)).ToRotationVector2() * 10) - (Vector2.UnitY * 30);
 
                         for (int i = 0; i < 2; i++)
                         {
@@ -330,7 +330,7 @@ namespace Coralite.Content.Items.Donator
             if (Timer % 6 == 0)
             {
                 Vector2 pos = Projectile.Center;
-                float rot = OwnerDirection * Projectile.rotation + (OwnerDirection > 0 ? 0 : MathHelper.Pi);
+                float rot = (OwnerDirection * Projectile.rotation) + (OwnerDirection > 0 ? 0 : MathHelper.Pi);
                 Vector2 dir = rot.ToRotationVector2();
                 pos -= Vector2.UnitY * 14;
                 pos += dir * 40;
@@ -338,12 +338,12 @@ namespace Coralite.Content.Items.Donator
                 Projectile.NewProjectileFromThis<PerishMissile>(pos, dir.RotateByRandom(-0.2f, 0.2f) * 4, (int)(Owner.GetWeaponDamage(Owner.HeldItem) * 0.75f),
                     Projectile.knockBack);
 
-                Dust d = Dust.NewDustPerfect(pos + dir * 30, ModContent.DustType<MissileShootDust>(), Vector2.Zero, Scale: Main.rand.NextFloat(1.5f, 2f));
+                Dust d = Dust.NewDustPerfect(pos + (dir * 30), ModContent.DustType<MissileShootDust>(), Vector2.Zero, Scale: Main.rand.NextFloat(1.5f, 2f));
                 d.rotation = rot + 1.57f;
 
                 for (int i = 0; i < 2; i++)
                 {
-                    Dust d2 = Dust.NewDustPerfect(pos + dir * 30 + Main.rand.NextVector2Circular(30, 12), ModContent.DustType<StarFireSmokeDust>()
+                    Dust d2 = Dust.NewDustPerfect(pos + (dir * 30) + Main.rand.NextVector2Circular(30, 12), ModContent.DustType<StarFireSmokeDust>()
                          , dir.RotateByRandom(-0.3f, 0.3f) * Main.rand.NextFloat(2, 6), Scale: Main.rand.NextFloat(0.7f, 1.4f));
                     d2.noGravity = true;
                 }
@@ -391,7 +391,7 @@ namespace Coralite.Content.Items.Donator
             Texture2D mainTex = Projectile.GetTexture();
 
             var frame = mainTex.Frame(2, 11, frameX, Projectile.frame);
-            var origin = new Vector2(frame.Width / 2 - OwnerDirection * frame.Width * 2 / 5, frame.Height * 3 / 4);
+            var origin = new Vector2((frame.Width / 2) - (OwnerDirection * frame.Width * 2 / 5), frame.Height * 3 / 4);
 
             Main.spriteBatch.Draw(mainTex, pos, frame, lightColor, Projectile.rotation * OwnerDirection, origin, Projectile.scale, eff, 0);
             drawed = true;
@@ -536,8 +536,8 @@ namespace Coralite.Content.Items.Donator
                 Projectile.velocity *= 1.06f;
             }
 
-            Projectile.velocity.X = (Projectile.velocity.X * slowTime + dir.X) / (slowTime + 1);
-            Projectile.velocity.Y = (Projectile.velocity.Y * slowTime + dir.Y) / (slowTime + 1);
+            Projectile.velocity.X = ((Projectile.velocity.X * slowTime) + dir.X) / (slowTime + 1);
+            Projectile.velocity.Y = ((Projectile.velocity.Y * slowTime) + dir.Y) / (slowTime + 1);
 
             Timer++;
         }
@@ -565,7 +565,7 @@ namespace Coralite.Content.Items.Donator
                 ModContent.DustType<PerishMissileFog6>()
                 );
 
-            Dust d = Dust.NewDustPerfect(Projectile.Center + Projectile.velocity * Main.rand.NextFloat(1f, 3), dustType, Vector2.Zero, Scale: Main.rand.NextFloat(0.8f, 1.2f));
+            Dust d = Dust.NewDustPerfect(Projectile.Center + (Projectile.velocity * Main.rand.NextFloat(1f, 3)), dustType, Vector2.Zero, Scale: Main.rand.NextFloat(0.8f, 1.2f));
             d.rotation = Projectile.rotation;
         }
 
@@ -651,7 +651,7 @@ namespace Coralite.Content.Items.Donator
                         if (!Target.GetNPCOwner(out NPC owner, Projectile.Kill))
                             return;
 
-                        Projectile.Center += (owner.position - owner.oldPosition);
+                        Projectile.Center += owner.position - owner.oldPosition;
                         Projectile.velocity = Vector2.Zero;
                         SpawnFlameDust(false);
                         if (Projectile.timeLeft == 2)
@@ -682,7 +682,7 @@ namespace Coralite.Content.Items.Donator
                 speed = Main.rand.NextFloat(1, 3);
             }
 
-            Dust d = Dust.NewDustPerfect(Projectile.Center + dir * 10, ModContent.DustType<StarFireDust>()
+            Dust d = Dust.NewDustPerfect(Projectile.Center + (dir * 10), ModContent.DustType<StarFireDust>()
                 , dir.RotateByRandom(-0.2f, 0.2f) * speed, Scale: scale);
             d.noGravity = noGravity;
         }
@@ -702,7 +702,7 @@ namespace Coralite.Content.Items.Donator
                 if (Main.rand.NextBool(2))
                 {
                     Main.dust[num911].scale = 0.5f;
-                    Main.dust[num911].fadeIn = 1f + Main.rand.Next(10) * 0.1f;
+                    Main.dust[num911].fadeIn = 1f + (Main.rand.Next(10) * 0.1f);
                 }
             }
 
@@ -735,7 +735,7 @@ namespace Coralite.Content.Items.Donator
                 if (Main.rand.NextBool(2))
                 {
                     Main.dust[num911].scale = 0.5f;
-                    Main.dust[num911].fadeIn = 1f + Main.rand.Next(10) * 0.1f;
+                    Main.dust[num911].fadeIn = 1f + (Main.rand.Next(10) * 0.1f);
                 }
             }
 
@@ -761,7 +761,7 @@ namespace Coralite.Content.Items.Donator
                 ModContent.DustType<PerishMissileBigFog6>()
                 );
             Vector2 dir = Projectile.rotation.ToRotationVector2();
-            Dust d = Dust.NewDustPerfect(Projectile.Center + dir * 12, dustType, Vector2.Zero);
+            Dust d = Dust.NewDustPerfect(Projectile.Center + (dir * 12), dustType, Vector2.Zero);
             d.rotation = Projectile.rotation;
         }
 

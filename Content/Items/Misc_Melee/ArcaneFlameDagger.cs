@@ -99,7 +99,7 @@ namespace Coralite.Content.Items.Misc_Melee
                 float factor = Math.Abs(MathF.Sin(Main.GlobalTimeWrappedHourly)) * 2;
                 if (factor < 1)
                     return Color.Lerp(ArcaneFlameDagger.Green, ArcaneFlameDagger.Gray, factor);
-                return Color.Lerp(ArcaneFlameDagger.Gray, ArcaneFlameDagger.Purple, (factor - 1));
+                return Color.Lerp(ArcaneFlameDagger.Gray, ArcaneFlameDagger.Purple, factor - 1);
             }
         }
     }
@@ -168,7 +168,7 @@ namespace Coralite.Content.Items.Misc_Melee
             if (hit.Crit)//生成额外斩击弹幕
             {
                 Vector2 dir = Helper.NextVec2Dir();
-                Projectile.NewProjectileFromThis<ArcaneFlameDaggerSlash>(target.Center + dir * 8 * 24
+                Projectile.NewProjectileFromThis<ArcaneFlameDaggerSlash>(target.Center + (dir * 8 * 24)
                     , -dir * 24, Projectile.damage, 0, ai1: 24);
             }
         }
@@ -342,13 +342,13 @@ namespace Coralite.Content.Items.Misc_Melee
             Vector2 down = (Projectile.rotation - MathHelper.PiOver2).ToRotationVector2();
             for (int i = 0; i < Projectile.oldPos.Length; i++)
             {
-                float factor = 1f - i / 23f;
+                float factor = 1f - (i / 23f);
                 Vector2 Center = Projectile.oldPos[i];
                 float r = Projectile.rotation % 6.18f;
                 float dir = (r >= 3.14f ? r - 3.14f : r + 3.14f) / MathHelper.TwoPi;
                 float width = WidthFunction(factor) * 0.75f;
-                Vector2 Top = Center + up * width;
-                Vector2 Bottom = Center + down * width;
+                Vector2 Top = Center + (up * width);
+                Vector2 Bottom = Center + (down * width);
 
                 bars.Add(new CustomVertexInfo(Top, new Color(dir, w, 0f, 1f), new Vector3(factor, 0f, w)));
                 bars.Add(new CustomVertexInfo(Bottom, new Color(dir, w, 0f, 1f), new Vector3(factor, 1f, w)));

@@ -64,10 +64,10 @@ namespace Coralite.Content.Items.Gels
             {
                 Vector2 center = Item.Center + new Vector2(0f, Item.height * -0.1f);
                 Vector2 direction = Main.rand.NextVector2CircularEdge(Item.width * 0.6f, Item.height * 0.6f);
-                float distance = 0.3f + Main.rand.NextFloat() * 0.5f;
-                Vector2 velocity = new(0f, -Main.rand.NextFloat() * 0.3f - 1.5f);
+                float distance = 0.3f + (Main.rand.NextFloat() * 0.5f);
+                Vector2 velocity = new(0f, (-Main.rand.NextFloat() * 0.3f) - 1.5f);
 
-                Dust dust = Dust.NewDustPerfect(center + direction * distance, DustID.SilverFlame, velocity);
+                Dust dust = Dust.NewDustPerfect(center + (direction * distance), DustID.SilverFlame, velocity);
                 dust.scale = 0.5f;
                 dust.fadeIn = 1.1f;
                 dust.noGravity = true;
@@ -87,11 +87,11 @@ namespace Coralite.Content.Items.Gels
                 frame = texture.Frame();
 
             Vector2 frameOrigin = frame.Size() / 2f;
-            Vector2 offset = new(Item.width / 2 - frameOrigin.X, Item.height - frame.Height);
+            Vector2 offset = new((Item.width / 2) - frameOrigin.X, Item.height - frame.Height);
             Vector2 drawPos = Item.position - Main.screenPosition + frameOrigin + offset;
 
             float time = Main.GlobalTimeWrappedHourly;
-            float timer = Item.timeSinceItemSpawned / 240f + time * 0.04f;
+            float timer = (Item.timeSinceItemSpawned / 240f) + (time * 0.04f);
 
             time %= 4f;
             time /= 2f;
@@ -99,20 +99,20 @@ namespace Coralite.Content.Items.Gels
             if (time >= 1f)
                 time = 2f - time;
 
-            time = time * 0.5f + 0.5f;
+            time = (time * 0.5f) + 0.5f;
 
             Helper.DrawPrettyStarSparkle(1, 0, drawPos, new Color(38, 104, 185) * 0.7f, new Color(158, 222, 255),
                 time, 0, 0.3f, 0.7f, 1, timer * MathHelper.TwoPi, (timer * MathHelper.TwoPi).ToRotationVector2() * 4, Vector2.One);
             Helper.DrawPrettyStarSparkle(1, 0, drawPos, new Color(38, 104, 185) * 0.7f, new Color(158, 222, 255),
-                0.4f + time * 0.2f, 0, 0.3f, 0.7f, 1, -timer * MathHelper.Pi, new Vector2(2, 2), Vector2.One * 2);
+                0.4f + (time * 0.2f), 0, 0.3f, 0.7f, 1, -timer * MathHelper.Pi, new Vector2(2, 2), Vector2.One * 2);
 
             Helper.DrawPrettyStarSparkle(1, 0, drawPos, new Color(38, 104, 185) * 0.7f, new Color(50, 152, 225),
-                0.4f + time * 0.2f, 0, 0.5f, 0.5f, 1, 0, Vector2.One * 3, Vector2.One * 1.5f);
+                0.4f + (time * 0.2f), 0, 0.5f, 0.5f, 1, 0, Vector2.One * 3, Vector2.One * 1.5f);
 
             for (float i = 0f; i < 1f; i += 0.25f)
             {
                 float radians = (i + timer) * MathHelper.TwoPi;
-                spriteBatch.Draw(texture, drawPos + new Vector2(0f, 8f).RotatedBy(radians) * time, frame, new Color(50, 152, 225, 50), rotation, frameOrigin, scale, SpriteEffects.None, 0);
+                spriteBatch.Draw(texture, drawPos + (new Vector2(0f, 8f).RotatedBy(radians) * time), frame, new Color(50, 152, 225, 50), rotation, frameOrigin, scale, SpriteEffects.None, 0);
             }
 
             return true;

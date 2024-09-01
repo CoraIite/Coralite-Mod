@@ -19,7 +19,7 @@ namespace Coralite.Content.Biomes
         {
             bool b1 = ModContent.GetInstance<MagicCrystalCaveTileCount>().BasaltTileCount >= 500;
 
-            bool b2 = Math.Abs(player.position.ToTileCoordinates().X - Main.maxTilesX / 2) < Main.maxTilesX / 4;
+            bool b2 = Math.Abs(player.position.ToTileCoordinates().X - (Main.maxTilesX / 2)) < Main.maxTilesX / 4;
 
             bool b3 = player.ZoneDirtLayerHeight || player.ZoneRockLayerHeight;
 
@@ -39,7 +39,7 @@ namespace Coralite.Content.Biomes
         {
             bool b1 = ModContent.GetInstance<MagicCrystalCaveTileCount>().BasaltTileCount >= 400;
 
-            bool b2 = Math.Abs(player.position.ToTileCoordinates().X - Main.maxTilesX / 2) < Main.maxTilesX / 4;
+            bool b2 = Math.Abs(player.position.ToTileCoordinates().X - (Main.maxTilesX / 2)) < Main.maxTilesX / 4;
 
             bool b3 = player.ZoneDirtLayerHeight || player.ZoneRockLayerHeight;
 

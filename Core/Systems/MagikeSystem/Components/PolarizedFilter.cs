@@ -124,7 +124,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 {
                     Tile t = Framing.GetTileSafely(topLeft + new Point16(i, j));
 
-                    t.TileFrameX = (short)(frameX + i * (data.CoordinateWidth + data.CoordinatePadding));
+                    t.TileFrameX = (short)(frameX + (i * (data.CoordinateWidth + data.CoordinatePadding)));
                 }
         }
 
@@ -148,7 +148,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         {
             UIElement title = this.AddTitle(MagikeSystem.UITextID.MagikePolarizedFilterName, parent);
 
-            UIList list = 
+            UIList list =
             [
                 //等级
                 this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.PolarizedFilterLevel), parent),
@@ -171,7 +171,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
     public class PolarizedFilterText(Func<PolarizedFilter, string> text, PolarizedFilter component, UIElement parent, Vector2? scale = null) : ComponentUIElementText<PolarizedFilter>(text, component, parent, scale)
     {
-        private Item item = new (component.ItemType);
+        private Item item = new(component.ItemType);
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
@@ -184,4 +184,3 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         }
     }
 }
-    

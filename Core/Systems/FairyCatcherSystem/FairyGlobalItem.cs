@@ -152,7 +152,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                 {
                     TooltipLine catchPowerLine =
                         new(Mod, "CatchPower",
-                        FairySystem.CatchPowerMult.Format((Main.LocalPlayer.GetModPlayer<FairyCatcherPlayer>().GetBonusedCatchPower(CatchPower, CatchPowerMult)).ToString() + " "));
+                        FairySystem.CatchPowerMult.Format(Main.LocalPlayer.GetModPlayer<FairyCatcherPlayer>().GetBonusedCatchPower(CatchPower, CatchPowerMult).ToString() + " "));
 
                     tooltips.Insert(index + 1, catchPowerLine);
                 }

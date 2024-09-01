@@ -232,7 +232,7 @@ namespace Coralite.Content.Items.Thunder
         protected override void BeforeSlash()
         {
             Slasher();
-            Projectile.scale = Helper.Lerp(Projectile.scale, Helper.EllipticalEase(recordStartAngle + extraScaleAngle - recordTotalAngle * Smoother.Smoother(0, maxTime - minTime), 1f, 1.2f), 0.1f);
+            Projectile.scale = Helper.Lerp(Projectile.scale, Helper.EllipticalEase(recordStartAngle + extraScaleAngle - (recordTotalAngle * Smoother.Smoother(0, maxTime - minTime)), 1f, 1.2f), 0.1f);
             if ((int)Timer == minTime)
             {
                 switch (Combo)
@@ -262,7 +262,7 @@ namespace Coralite.Content.Items.Thunder
 
             if (timer % 5 == 0 && timer < maxTime * 0.7f)
             {
-                Vector2 pos = Projectile.Center + RotateVec2 * Main.rand.NextFloat(20, 70) * Projectile.scale;
+                Vector2 pos = Projectile.Center + (RotateVec2 * Main.rand.NextFloat(20, 70) * Projectile.scale);
                 if (Main.rand.NextBool())
                 {
                     Particle.NewParticle(pos, Vector2.Zero, CoraliteContent.ParticleType<ElectricParticle>(), Scale: Main.rand.NextFloat(0.5f, 0.7f));
@@ -278,21 +278,21 @@ namespace Coralite.Content.Items.Thunder
                 default:
                 case 0:
                     Projectile.scale = scale * Helper.EllipticalEase(
-                        recordStartAngle + extraScaleAngle - recordTotalAngle
-                        * Smoother.Smoother(timer, maxTime - minTime), 1.1f, 1.3f);
-                    distanceToOwner = -68 + 40 * Coralite.Instance.SinSmoother.Smoother(timer, maxTime - minTime);
+                        recordStartAngle + extraScaleAngle - (recordTotalAngle
+                        * Smoother.Smoother(timer, maxTime - minTime)), 1.1f, 1.3f);
+                    distanceToOwner = -68 + (40 * Coralite.Instance.SinSmoother.Smoother(timer, maxTime - minTime));
 
                     break;
                 case 1:
                     Projectile.scale = scale * Helper.EllipticalEase(
-                        recordStartAngle + extraScaleAngle - recordTotalAngle
-                        * Smoother.Smoother(timer, maxTime - minTime), 1.2f, 1.5f);
-                    distanceToOwner = -68 + 40 * Coralite.Instance.SinSmoother.Smoother(timer, maxTime - minTime);
+                        recordStartAngle + extraScaleAngle - (recordTotalAngle
+                        * Smoother.Smoother(timer, maxTime - minTime)), 1.2f, 1.5f);
+                    distanceToOwner = -68 + (40 * Coralite.Instance.SinSmoother.Smoother(timer, maxTime - minTime));
 
                     break;
                 case 2:
                     Projectile.scale = scale * 1.3f;
-                    distanceToOwner = -68 + 40 * Coralite.Instance.SinSmoother.Smoother(timer, maxTime - minTime);
+                    distanceToOwner = -68 + (40 * Coralite.Instance.SinSmoother.Smoother(timer, maxTime - minTime));
                     break;
             }
             alpha = (int)(Coralite.Instance.X2Smoother.Smoother(timer, maxTime - minTime) * 100) + 150;
@@ -327,8 +327,8 @@ namespace Coralite.Content.Items.Thunder
                 }
 
                 Dust dust;
-                float offset = Projectile.localAI[1] + Main.rand.NextFloat(0, Projectile.width * Projectile.scale - Projectile.localAI[1]);
-                Vector2 pos = Bottom + RotateVec2 * offset;
+                float offset = Projectile.localAI[1] + Main.rand.NextFloat(0, (Projectile.width * Projectile.scale) - Projectile.localAI[1]);
+                Vector2 pos = Bottom + (RotateVec2 * offset);
 
                 if (VisualEffectSystem.HitEffect_Dusts)
                 {
@@ -364,10 +364,10 @@ namespace Coralite.Content.Items.Thunder
                 if (oldRotate[i] == 100f)
                     continue;
 
-                float factor = 1f - i / count;
+                float factor = 1f - (i / count);
                 Vector2 Center = GetCenter(i);
-                Vector2 Top = Center + oldRotate[i].ToRotationVector2() * (oldLength[i] + trailTopWidth + oldDistanceToOwner[i]);
-                Vector2 Bottom = Center + oldRotate[i].ToRotationVector2() * (oldLength[i] - ControlTrailBottomWidth(factor) + oldDistanceToOwner[i]);
+                Vector2 Top = Center + (oldRotate[i].ToRotationVector2() * (oldLength[i] + trailTopWidth + oldDistanceToOwner[i]));
+                Vector2 Bottom = Center + (oldRotate[i].ToRotationVector2() * (oldLength[i] - ControlTrailBottomWidth(factor) + oldDistanceToOwner[i]));
 
                 var topColor = Color.Lerp(new Color(238, 218, 130, alpha), new Color(167, 127, 95, 0), 1 - factor);
                 var bottomColor = Color.Lerp(new Color(109, 73, 86, alpha), new Color(83, 16, 85, 0), 1 - factor);
@@ -455,7 +455,7 @@ namespace Coralite.Content.Items.Thunder
             float factor = Timer / maxTime;
             if (Timer % 6 == 0)
             {
-                Vector2 pos = Projectile.Center + RotateVec2 * Main.rand.NextFloat(20, 70) * Projectile.scale;
+                Vector2 pos = Projectile.Center + (RotateVec2 * Main.rand.NextFloat(20, 70) * Projectile.scale);
                 if (Main.rand.NextBool())
                 {
                     Particle.NewParticle(pos, Vector2.Zero, CoraliteContent.ParticleType<ElectricParticle>(), Scale: Main.rand.NextFloat(0.5f, 0.7f));
@@ -467,9 +467,9 @@ namespace Coralite.Content.Items.Thunder
             }
 
             if (factor < 0.5f)
-                distanceToOwner = -68 + 100 * Smoother.Smoother(factor * 2);
+                distanceToOwner = -68 + (100 * Smoother.Smoother(factor * 2));
             else
-                distanceToOwner = -68 + 100 * Smoother.Smoother((1 - factor) * 2);
+                distanceToOwner = -68 + (100 * Smoother.Smoother((1 - factor) * 2));
 
             base.OnSlash();
         }
@@ -492,8 +492,8 @@ namespace Coralite.Content.Items.Thunder
                 }
 
                 Dust dust;
-                float offset = Projectile.localAI[1] + Main.rand.NextFloat(0, Projectile.width * Projectile.scale - Projectile.localAI[1]);
-                Vector2 pos = Bottom + RotateVec2 * offset;
+                float offset = Projectile.localAI[1] + Main.rand.NextFloat(0, (Projectile.width * Projectile.scale) - Projectile.localAI[1]);
+                Vector2 pos = Bottom + (RotateVec2 * offset);
 
                 if (VisualEffectSystem.HitEffect_Dusts)
                 {
@@ -521,7 +521,7 @@ namespace Coralite.Content.Items.Thunder
             SpriteEffects effect = CheckEffect();
             for (int i = 1; i < 10; i += 1)
                 Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] + toCenter - Main.screenPosition, null,
-                ThunderveinDragon.ThunderveinYellowAlpha * (0.5f - i * 0.5f / 10), Projectile.oldRot[i] + extraRot, origin, Projectile.scale * 1.1f, effect, 0);
+                ThunderveinDragon.ThunderveinYellowAlpha * (0.5f - (i * 0.5f / 10)), Projectile.oldRot[i] + extraRot, origin, Projectile.scale * 1.1f, effect, 0);
         }
     }
 
@@ -550,7 +550,7 @@ namespace Coralite.Content.Items.Thunder
         public override void RollingInHand()
         {
             Vector2 dir = (Main.MouseWorld - Owner.Center).SafeNormalize(Vector2.Zero);
-            Projectile.Center = Owner.Center + dir * 64;
+            Projectile.Center = Owner.Center + (dir * 64);
             Projectile.velocity = dir * shootSpeed;
             Projectile.rotation = dir.ToRotation();
             HookState = (int)AIStates.shoot;

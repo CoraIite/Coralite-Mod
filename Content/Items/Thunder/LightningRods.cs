@@ -54,9 +54,9 @@ namespace Coralite.Content.Items.Thunder
                 for (int i = 0; i < 3; i++)
                 {
                     if (i == 0)
-                        thunderTrails[i] = new ThunderTrail(trailTex, ThunderWidthFunc, ThunderColorFunc2_Orange,GetAlpha);
+                        thunderTrails[i] = new ThunderTrail(trailTex, ThunderWidthFunc, ThunderColorFunc2_Orange, GetAlpha);
                     else
-                        thunderTrails[i] = new ThunderTrail(trailTex, ThunderWidthFunc, ThunderColorFunc_Yellow,GetAlpha);
+                        thunderTrails[i] = new ThunderTrail(trailTex, ThunderWidthFunc, ThunderColorFunc_Yellow, GetAlpha);
                     thunderTrails[i].CanDraw = false;
                     thunderTrails[i].UseNonOrAdd = true;
                     thunderTrails[i].SetRange((0, 15));
@@ -73,14 +73,14 @@ namespace Coralite.Content.Items.Thunder
                 for (int j = 0; j < thunderTrails.Length; j++)
                 {
                     var trail = thunderTrails[j];
-                    Vector2 targetPos =  Vector2.Lerp(Projectile.Center, Projectile.velocity, factor);
+                    Vector2 targetPos = Vector2.Lerp(Projectile.Center, Projectile.velocity, factor);
                     Vector2 pos2 = targetPos;
 
                     List<Vector2> pos = new()
                     {
                         targetPos
                     };
-                        if (Vector2.Distance(targetPos, Projectile.Center) < PointDistance)
+                    if (Vector2.Distance(targetPos, Projectile.Center) < PointDistance)
                         pos.Add(Projectile.Center);
                     else
                         for (int i = 0; i < 40; i++)
@@ -109,7 +109,7 @@ namespace Coralite.Content.Items.Thunder
                     }
                 }
 
-                ThunderWidth = 30 + 40 * factor;
+                ThunderWidth = 30 + (40 * factor);
                 ThunderAlpha = factor;
             }
             else if ((int)Timer == (int)LightingTime)
@@ -129,14 +129,14 @@ namespace Coralite.Content.Items.Thunder
             }
             else
             {
-                float factor = (Timer - LightingTime) / (DelayTime);
+                float factor = (Timer - LightingTime) / DelayTime;
                 float sinFactor = MathF.Sin(factor * MathHelper.Pi);
-                ThunderWidth = 20 + (1 - factor) * 60;
+                ThunderWidth = 20 + ((1 - factor) * 60);
                 ThunderAlpha = 1 - Coralite.Instance.X2Smoother.Smoother(factor);
 
                 foreach (var trail in thunderTrails)
                 {
-                    trail.SetRange((0, 10 + (1 - factor) * PointDistance / 2));
+                    trail.SetRange((0, 10 + ((1 - factor) * PointDistance / 2)));
                     trail.SetExpandWidth((1 - factor) * PointDistance / 3);
 
                     if (Timer % 6 == 0)

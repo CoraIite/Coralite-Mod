@@ -128,7 +128,7 @@ namespace Coralite.Content.Items.Shadow
 
             for (int i = 1; i < 7; i++)
             {
-                Main.PlayerRenderer.DrawPlayer(Main.Camera, owner, Projectile.oldPos[i], 0f, owner.fullRotationOrigin, 0.5f + i * 0.5f / 7);
+                Main.PlayerRenderer.DrawPlayer(Main.Camera, owner, Projectile.oldPos[i], 0f, owner.fullRotationOrigin, 0.5f + (i * 0.5f / 7));
             }
 
             triangles?.DrawParticles(Main.spriteBatch);

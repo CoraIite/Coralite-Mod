@@ -21,7 +21,7 @@ namespace Coralite.Content.WorldGeneration
             int OceanHeight = WorldGen.genRand.Next((int)(Main.worldSurface * 0.1f), (int)(Main.worldSurface * 0.35f));
             if (OceanHeight < 80)
                 OceanHeight = 80;
-            int maxDepth = (int)(Main.rockLayer);
+            int maxDepth = (int)Main.rockLayer;
 
             for (int i = 0; i < 41; i++)
             {
@@ -57,7 +57,7 @@ namespace Coralite.Content.WorldGeneration
                         Main.tile[i, j].ResetToType(TileID.Sandstone);
                     }
 
-                    if (tile.HasTile && Main.tileSolid[tile.TileType] && (tile.LiquidType != 0 && tile.LiquidAmount != 0))
+                    if (tile.HasTile && Main.tileSolid[tile.TileType] && tile.LiquidType != 0 && tile.LiquidAmount != 0)
                         continue;
 
                     WorldGen.PlaceLiquid(i, j, (byte)LiquidID.Water, 255);//没水就放水
@@ -68,13 +68,13 @@ namespace Coralite.Content.WorldGeneration
 
             if (GenVars.dungeonSide > 0)
             {
-                shimmerLeft = Main.maxTilesX / 2 + Main.maxTilesX / 6;
+                shimmerLeft = (Main.maxTilesX / 2) + (Main.maxTilesX / 6);
                 shimmerRight = Main.maxTilesX - 42;
             }
             else
             {
                 shimmerLeft = 41;
-                shimmerRight = Main.maxTilesX / 2 - Main.maxTilesX / 6;
+                shimmerRight = (Main.maxTilesX / 2) - (Main.maxTilesX / 6);
             }
 
             //修改物块类型
@@ -263,8 +263,8 @@ namespace Coralite.Content.WorldGeneration
                                 break;
                             case TileID.Stone:
                                 {
-                                    if (i < Main.maxTilesX / 4 + WorldGen.genRand.Next(-4, 4)
-                                        || i > Main.maxTilesX * 3 / 4 + WorldGen.genRand.Next(-4, 4))
+                                    if (i < (Main.maxTilesX / 4) + WorldGen.genRand.Next(-4, 4)
+                                        || i > (Main.maxTilesX * 3 / 4) + WorldGen.genRand.Next(-4, 4))
                                     {
                                         Main.tile[i, j].ResetToType(TileID.Coralstone);
                                     }
@@ -497,7 +497,7 @@ namespace Coralite.Content.WorldGeneration
                         }
 
                         WorldGen.KillTile(x + m, y - n, noItem: true);
-                        if (Math.Abs(roomWidth / 2f - m) > (roomWidth / 4f) || Math.Abs(roomHeight / 2f - n) > roomHeight / 4f)
+                        if (Math.Abs((roomWidth / 2f) - m) > (roomWidth / 4f) || Math.Abs((roomHeight / 2f) - n) > roomHeight / 4f)
                         {
                             WorldGen.PlaceWall(x + m, y - n, WallID.GrayBrick);
                         }
@@ -550,7 +550,7 @@ namespace Coralite.Content.WorldGeneration
 
             for (int j = 0; j < 5; j++)
             {
-                for (int i = 0; i < 2 + j * 2; i++)
+                for (int i = 0; i < 2 + (j * 2); i++)
                     Main.tile[Main.spawnTileX - (1 + j) + i, spawnY + 5 - j].ResetToType(TileID.Sandstone);
             }
 

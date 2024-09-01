@@ -156,7 +156,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             //限制不能出圈
             Vector2 webCenter = catcher.webCenter.ToWorldCoordinates();
             if (Vector2.Distance(Center, webCenter) > catcher.webRadius)
-                Center = webCenter + (Center - webCenter).SafeNormalize(Vector2.Zero) * catcher.webRadius;
+                Center = webCenter + ((Center - webCenter).SafeNormalize(Vector2.Zero) * catcher.webRadius);
 
             switch (State)
             {
@@ -262,7 +262,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             if (Timer < 1)
                 State = AIState.FreeMoving;
 
-            alpha = 1 - Timer / 60f;
+            alpha = 1 - (Timer / 60f);
         }
 
         /// <summary>
@@ -439,7 +439,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                 0f, FairySystem.ProgressBarOuter.Size() / 2, scale, SpriteEffects.None, 0f);
 
             Texture2D innerTex = FairySystem.ProgressBarInner.Value;
-            var topLeft = new Vector2(center.X - innerTex.Width * scale / 2, center.Y - innerTex.Height * scale / 2);
+            var topLeft = new Vector2(center.X - (innerTex.Width * scale / 2), center.Y - (innerTex.Height * scale / 2));
 
             var source = new Rectangle(0, 0, (int)(innerTex.Width * factor), innerTex.Height);
 

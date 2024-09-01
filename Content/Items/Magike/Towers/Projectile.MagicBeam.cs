@@ -94,7 +94,7 @@ namespace Coralite.Content.Items.Magike.Towers
             miscShaderData.UseSaturation(-1.8f);
             miscShaderData.UseOpacity(2f);
             miscShaderData.Apply();
-            _vertexStrip.PrepareStripWithProceduralPadding(Projectile.oldPos, Projectile.oldRot, StripColors, StripWidth, -Main.screenPosition + Projectile.Size / 2f);
+            _vertexStrip.PrepareStripWithProceduralPadding(Projectile.oldPos, Projectile.oldRot, StripColors, StripWidth, -Main.screenPosition + (Projectile.Size / 2f));
             _vertexStrip.DrawTrail();
             Main.pixelShader.CurrentTechnique.Passes[0].Apply();
 

@@ -7,7 +7,7 @@ using Terraria.UI;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components
 {
-    public class MagikeExtractProducer : MagikeCostItemProducer,IUIShowable
+    public class MagikeExtractProducer : MagikeCostItemProducer, IUIShowable
     {
         public override string GetCanProduceText => MagikeSystem.GetUIText(MagikeSystem.UITextID.ItemWithMagike);
 

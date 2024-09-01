@@ -51,7 +51,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                             {
                                 Vector2 dir = Helper.NextVec2Dir();
                                 Vector2 vel = dir.RotatedBy(MathHelper.PiOver2) * Main.rand.NextFloat(0.3f, 2f);
-                                Dust dust = Dust.NewDustPerfect(NPC.Center + dir * (200 - factor * 180) + Main.rand.NextVector2Circular(30, 30), DustID.t_Slime
+                                Dust dust = Dust.NewDustPerfect(NPC.Center + (dir * (200 - (factor * 180))) + Main.rand.NextVector2Circular(30, 30), DustID.t_Slime
                                     , vel, 150, new Color(78, 136, 255, 80), 2f);
                                 dust.noGravity = true;
                             }
@@ -60,7 +60,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                             {
                                 Vector2 dir = Helper.NextVec2Dir();
                                 Vector2 vel = -dir * Main.rand.NextFloat(4f, 8f);
-                                Dust dust = Dust.NewDustPerfect(NPC.Center + dir * (300 - factor * 240), DustID.LastPrism
+                                Dust dust = Dust.NewDustPerfect(NPC.Center + (dir * (300 - (factor * 240))), DustID.LastPrism
                                     , vel, 150, new Color(78, 136, 255, 80), 1.2f);
                                 dust.noGravity = true;
                             }
@@ -82,7 +82,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                             Vector2 dir = (NPC.Center - npc.Center).SafeNormalize(Vector2.Zero);
                             for (int i = 0; i < 8; i++)
                             {
-                                Dust dust = Dust.NewDustPerfect(npc.Center + dir * Main.rand.Next(70) + Main.rand.NextVector2Circular(48, 48),
+                                Dust dust = Dust.NewDustPerfect(npc.Center + (dir * Main.rand.Next(70)) + Main.rand.NextVector2Circular(48, 48),
                                       DustID.t_Slime, dir * Main.rand.NextFloat(2f, 6.5f), 150, new Color(78, 136, 255, 80), 1.2f);
                                 dust.noGravity = true;
                             }

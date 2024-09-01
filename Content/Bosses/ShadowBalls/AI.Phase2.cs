@@ -34,11 +34,11 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         for (int j = 0; j < 3; j++)
                         {
                             float speedDir = NPC.velocity.ToRotation();
-                            float factor2 = MathF.Sin((Timer - j / 3f) * 0.3f);
+                            float factor2 = MathF.Sin((Timer - (j / 3f)) * 0.3f);
 
                             for (int i = -1; i < 2; i += 2)
                             {
-                                Dust d = Dust.NewDustPerfect(Vector2.Lerp(NPC.Center, NPC.oldPos[0], j / 3f) + (speedDir + 1.57f * i).ToRotationVector2() * factor2 * 16,
+                                Dust d = Dust.NewDustPerfect(Vector2.Lerp(NPC.Center, NPC.oldPos[0], j / 3f) + ((speedDir + (1.57f * i)).ToRotationVector2() * factor2 * 16),
                                      DustID.Clentaminator_Purple, -NPC.velocity * 0.05f);
                                 d.noGravity = true;
                             }
@@ -62,8 +62,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
                             {
                                 if (NPC.velocity.Y > -20)//向上加速度逐渐递减
                                 {
-                                    float factor = MathHelper.Clamp(1 - Timer / 15, 0, 1);
-                                    NPC.velocity.Y -= 0.2f + factor * 1.8f;
+                                    float factor = MathHelper.Clamp(1 - (Timer / 15), 0, 1);
+                                    NPC.velocity.Y -= 0.2f + (factor * 1.8f);
                                 }
                             }
                             else
@@ -149,7 +149,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                             if (Timer == 2)
                             {
                                 float xLength = Target.Center.X - NPC.Center.X;
-                                float velocityX = MathHelper.Clamp((xLength / 30), -5.5f, 5.5f);
+                                float velocityX = MathHelper.Clamp(xLength / 30, -5.5f, 5.5f);
 
                                 Vector2 velocity = new(velocityX, -30);
 
@@ -162,7 +162,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         {
                             //向上冲刺并生成弹幕，让地面逐渐消失并生成爆炸弹幕
                             float xLength = Target.Center.X - NPC.Center.X;
-                            float velocityX = MathHelper.Clamp((xLength / 30), -5.5f, 5.5f);
+                            float velocityX = MathHelper.Clamp(xLength / 30, -5.5f, 5.5f);
 
                             NPC.velocity = new Vector2(velocityX, -30);
                             CanDamage = true;
@@ -372,7 +372,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                             }
 
                             float factor = Timer / ReadyTime;
-                            UpdateCacheRandom(factor * 64, (int)(80 - factor * 70));
+                            UpdateCacheRandom(factor * 64, (int)(80 - (factor * 70)));
                             alpha = 1 - factor;
                         }
                         else if (Timer == ReadyTime)
@@ -402,7 +402,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                             //聚集重组回来
                             float factor = (Timer - SlashTime) / (DelayTime - SlashTime);
                             factor = 1 - factor;
-                            UpdateCacheRandom(factor * 64, (int)(80 - factor * 70));
+                            UpdateCacheRandom(factor * 64, (int)(80 - (factor * 70)));
                             alpha = 1 - factor;
                         }
                         else
@@ -782,7 +782,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         if (Timer < FadeTime)//消散
                         {
                             float factor = Timer / FadeTime;
-                            UpdateCacheRandom(factor * 80, (int)(80 - factor * 70));
+                            UpdateCacheRandom(factor * 80, (int)(80 - (factor * 70)));
                             alpha = 1 - factor;
                         }
                         else if (Timer < WaitTime) { }
@@ -794,7 +794,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         {
                             float factor = (Timer - WaitTime) / (ReTime - WaitTime);
                             factor = 1 - factor;
-                            UpdateCacheRandom(factor * 80, (int)(80 - factor * 70));
+                            UpdateCacheRandom(factor * 80, (int)(80 - (factor * 70)));
                             alpha = 1 - factor;
                         }
                         else

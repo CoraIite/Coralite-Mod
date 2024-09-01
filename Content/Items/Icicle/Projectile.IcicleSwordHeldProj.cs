@@ -71,11 +71,11 @@ namespace Coralite.Content.Items.Icicle
             if (Timer < 3 * maxTime / 4f)
             {
                 Vector2 dir = RotateVec2.RotatedBy(1.57f * Math.Sign(totalAngle));
-                Dust dust = Dust.NewDustPerfect(Top - 24 * RotateVec2 + Main.rand.NextVector2Circular(30, 30), DustID.ApprenticeStorm,
+                Dust dust = Dust.NewDustPerfect(Top - (24 * RotateVec2) + Main.rand.NextVector2Circular(30, 30), DustID.ApprenticeStorm,
                        dir * Main.rand.NextFloat(0.5f, 2f), Scale: Main.rand.NextFloat(1f, 1.5f));
                 dust.noGravity = true;
 
-                dust = Dust.NewDustPerfect(Top - 14 * RotateVec2 + Main.rand.NextVector2Circular(10, 10), DustID.ApprenticeStorm,
+                dust = Dust.NewDustPerfect(Top - (14 * RotateVec2) + Main.rand.NextVector2Circular(10, 10), DustID.ApprenticeStorm,
                        dir * Main.rand.NextFloat(0.5f, 2f), Scale: Main.rand.NextFloat(1f, 1.5f));
                 dust.noGravity = true;
             }

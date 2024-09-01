@@ -81,12 +81,12 @@ namespace Coralite.Content.Items.RedJades
                     Projectile.rotation = MouseTargetAngle + (Owner.direction > 1 ? 0 : 3.141f);
 
                     Vector2 dir = MouseTargetVector2;
-                    Projectile.Center = Owner.Center + dir * DistanceToOwner;
+                    Projectile.Center = Owner.Center + (dir * DistanceToOwner);
 
                     float count = Timer / 30;
                     for (int i = 0; i < count; i++)
                     {
-                        Dust dust = Dust.NewDustPerfect(Projectile.Center - dir * 24 + Main.rand.NextVector2Circular(count * 4, count * 4), DustID.GemRuby, Vector2.Zero, 0, default, 1f + count * 0.06f);
+                        Dust dust = Dust.NewDustPerfect(Projectile.Center - (dir * 24) + Main.rand.NextVector2Circular(count * 4, count * 4), DustID.GemRuby, Vector2.Zero, 0, default, 1f + (count * 0.06f));
                         dust.noGravity = true;
                     }
 
@@ -117,7 +117,7 @@ namespace Coralite.Content.Items.RedJades
                         if (Owner.channel)
                         {
                             Owner.itemAnimation = Owner.itemTime = 2;
-                            Owner.Center = Projectile.Center - Projectile.velocity.SafeNormalize(Vector2.Zero) * DistanceToOwner;
+                            Owner.Center = Projectile.Center - (Projectile.velocity.SafeNormalize(Vector2.Zero) * DistanceToOwner);
                             if (Projectile.velocity.Y < 10)
                             {
                                 Projectile.velocity.Y += 0.16f;
@@ -169,7 +169,7 @@ namespace Coralite.Content.Items.RedJades
                     for (int i = 0; i < howMany; i++)
                     {
                         p = Projectile.NewProjectileDirect(source, Projectile.Center, rot.ToRotationVector2() * 12, ProjectileType<RedFirework>(),
-                             Projectile.damage / 4, 5f, ai1: timeleft + j * 8);
+                             Projectile.damage / 4, 5f, ai1: timeleft + (j * 8));
                         p.friendly = true;
                         rot += MathHelper.TwoPi / howMany;
                     }

@@ -93,7 +93,7 @@ namespace Coralite.Content.Items.FlyingShields
                 canShootSpider = false;
                 Projectile.NewProjectileFromThis<ArachnopyreSpider>(Owner.Center
                     , (target.Center - Owner.Center).SafeNormalize(Vector2.Zero).RotateByRandom(-0.5f, 0.5f) * 6, (int)(Projectile.damage * 0.8f)
-                    , Projectile.knockBack, ai2: Main.rand.Next(0, 6) * 20 + 10);
+                    , Projectile.knockBack, ai2: (Main.rand.Next(0, 6) * 20) + 10);
 
             }
             base.OnHitNPC(target, hit, damageDone);
@@ -134,18 +134,18 @@ namespace Coralite.Content.Items.FlyingShields
             Vector2 origin2 = frameBox.Size() / 2;
 
             //绘制基底
-            Main.spriteBatch.Draw(mainTex, pos - dir * 4, frameBox, c, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos - (dir * 4), frameBox, c, rotation, origin2, scale, effect, 0);
             Main.spriteBatch.Draw(mainTex, pos, frameBox, lightColor, rotation, origin2, scale, effect, 0);
 
             //绘制上部
             frameBox = mainTex.Frame(3, 1, 1, 0);
-            Main.spriteBatch.Draw(mainTex, pos + dir * 3, frameBox, c, rotation, origin2, scale, effect, 0);
-            Main.spriteBatch.Draw(mainTex, pos + dir * 7, frameBox, lightColor, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos + (dir * 3), frameBox, c, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos + (dir * 7), frameBox, lightColor, rotation, origin2, scale, effect, 0);
 
             //绘制上上部
             frameBox = mainTex.Frame(3, 1, 2, 0);
-            Main.spriteBatch.Draw(mainTex, pos + dir * 9, frameBox, c, rotation, origin2, scale, effect, 0);
-            Main.spriteBatch.Draw(mainTex, pos + dir * 12, frameBox, lightColor, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos + (dir * 9), frameBox, c, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos + (dir * 12), frameBox, lightColor, rotation, origin2, scale, effect, 0);
         }
     }
 
@@ -196,15 +196,15 @@ namespace Coralite.Content.Items.FlyingShields
                 case 0://直线运动
                     {
                         float factor = Timer * 0.35f;
-                        scale.X = Projectile.scale + 0.3f * MathF.Sin(factor);
-                        scale.Y = Projectile.scale + 0.3f * MathF.Cos(factor);
+                        scale.X = Projectile.scale + (0.3f * MathF.Sin(factor));
+                        scale.Y = Projectile.scale + (0.3f * MathF.Cos(factor));
                         Timer--;
                         if (Helper.TryFindClosestEnemy(Projectile.Center, 800, n => n.CanBeChasedBy() && Projectile.localNPCImmunity.IndexInRange(n.whoAmI) && Projectile.localNPCImmunity[n.whoAmI] == 0, out NPC target))
                         {
                             float selfAngle = Projectile.velocity.ToRotation();
                             float targetAngle = (target.Center - Projectile.Center).ToRotation();
 
-                            Projectile.velocity = selfAngle.AngleLerp(targetAngle, 1 - Timer / 120).ToRotationVector2() * Projectile.velocity.Length();
+                            Projectile.velocity = selfAngle.AngleLerp(targetAngle, 1 - (Timer / 120)).ToRotationVector2() * Projectile.velocity.Length();
                         }
 
                         Projectile.rotation = Projectile.velocity.ToRotation();
@@ -219,7 +219,7 @@ namespace Coralite.Content.Items.FlyingShields
                 case 3:
                     {
                         float factor = Timer / 8;
-                        scale = new Vector2(Projectile.scale + MathF.Sin(factor * MathHelper.Pi) * 0.2f);
+                        scale = new Vector2(Projectile.scale + (MathF.Sin(factor * MathHelper.Pi) * 0.2f));
                         exAlpha = 1 - factor;
                         Timer++;
                         if (Timer > 8)
@@ -230,7 +230,7 @@ namespace Coralite.Content.Items.FlyingShields
                             {
                                 canDamage = true;
                                 Projectile.ResetLocalNPCHitImmunity();
-                                int width = 100 - (int)SpiderType * 50;
+                                int width = 100 - ((int)SpiderType * 50);
                                 Projectile.Resize(width, width);
                                 if (SpiderType == 0)
                                 {
@@ -240,7 +240,7 @@ namespace Coralite.Content.Items.FlyingShields
                                         for (int i = 0; i < 3; i++)
                                         {
                                             Projectile.NewProjectileFromThis<ArachnopyreSpider>(Projectile.Center
-                                                , (angle + i * MathHelper.TwoPi / 3).ToRotationVector2() * 6, (int)(Projectile.damage * 0.4f), Projectile.knockBack / 4, 1, ai2: 120);
+                                                , (angle + (i * MathHelper.TwoPi / 3)).ToRotationVector2() * 6, (int)(Projectile.damage * 0.4f), Projectile.knockBack / 4, 1, ai2: 120);
                                         }
                                     }
                                     SoundEngine.PlaySound(CoraliteSoundID.Boom_Item14, Projectile.Center);
@@ -283,7 +283,7 @@ namespace Coralite.Content.Items.FlyingShields
 
             for (int i = 0; i < 26; i++)
             {
-                d = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(Projectile.width, Projectile.height) / 3, DustID.Smoke, Helper.NextVec2Dir(0f, 1f), 50, Color.Gray, Main.rand.NextFloat(1.5f, 2f));
+                d = Dust.NewDustPerfect(Projectile.Center + (Main.rand.NextVector2Circular(Projectile.width, Projectile.height) / 3), DustID.Smoke, Helper.NextVec2Dir(0f, 1f), 50, Color.Gray, Main.rand.NextFloat(1.5f, 2f));
                 d.noGravity = true;
             }
         }

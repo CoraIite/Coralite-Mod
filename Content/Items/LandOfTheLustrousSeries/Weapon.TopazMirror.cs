@@ -303,7 +303,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     break;
             }
 
-            float factor = 1 - Timer / RecodeTime;
+            float factor = 1 - (Timer / RecodeTime);
 
             do
             {
@@ -329,7 +329,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             if ((int)Timer % (Owner.itemTimeMax * 3 / 8) == 0)
             {
                 int count = (int)Timer / (Owner.itemTimeMax * 3 / 8);
-                Vector2 pos = Projectile.Center + (count * MathHelper.PiOver2).ToRotationVector2() * 48;
+                Vector2 pos = Projectile.Center + ((count * MathHelper.PiOver2).ToRotationVector2() * 48);
                 Vector2 dir = (Main.MouseWorld - pos).SafeNormalize(Vector2.Zero);
                 int index = Projectile.NewProjectileFromThis<TopazFlySword>(pos, dir * 15
                      , Owner.GetWeaponDamage(Owner.HeldItem), Projectile.knockBack);
@@ -362,7 +362,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
                 Vector2 dir = (Main.MouseWorld - pos).SafeNormalize(Vector2.Zero);
                 int index = Projectile.NewProjectileFromThis<TopazSpike>(pos, dir
-                      , Owner.GetWeaponDamage(Owner.HeldItem), Projectile.knockBack, 0, Main.rand.NextFloat() * 0.5f + 0.6f);
+                      , Owner.GetWeaponDamage(Owner.HeldItem), Projectile.knockBack, 0, (Main.rand.NextFloat() * 0.5f) + 0.6f);
                 Main.projectile[index].rotation = dir.ToRotation();
                 Main.projectile[index].scale = 0.01f;
             }
@@ -548,7 +548,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             for (int i = 0; i < 12; i++)
             {
                 r += MathHelper.TwoPi / 12;
-                Vector2 dir = r.ToRotationVector2() * Helper.EllipticalEase(2.1f + MathHelper.TwoPi / 12 * i, 1f, 3f) * 0.5f;
+                Vector2 dir = r.ToRotationVector2() * Helper.EllipticalEase(2.1f + (MathHelper.TwoPi / 12 * i), 1f, 3f) * 0.5f;
 
                 Dust dust = Dust.NewDustPerfect(Projectile.Center, DustID.YellowTorch, dir * widthDarker, 0, default, 1.8f);
                 dust.noGravity = true;
@@ -566,7 +566,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             for (int i = 0; i < 4; i++)     //这里是绘制类似于影子拖尾的东西，简单讲就是随机位置画几个透明度低的自己
             {
                 Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] + toCenter - Main.screenPosition, null,
-                      TopazProj.highlightC * (0.5f - i * 0.5f / 4), Projectile.oldRot[i], origin, Projectile.scale + i * 0.2f, SpriteEffects.None, 0);
+                      TopazProj.highlightC * (0.5f - (i * 0.5f / 4)), Projectile.oldRot[i], origin, Projectile.scale + (i * 0.2f), SpriteEffects.None, 0);
             }
 
             rand -= Projectile.velocity / 20;
@@ -598,7 +598,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 for (int i = 0; i < 3; i++)
                 {
                     Vector2 dir = Helper.NextVec2Dir();
-                    TopazProj.SpawnTriangleParticle(Projectile.Center + dir * Main.rand.NextFloat(6, 12), dir * Main.rand.NextFloat(1f, 3f));
+                    TopazProj.SpawnTriangleParticle(Projectile.Center + (dir * Main.rand.NextFloat(6, 12)), dir * Main.rand.NextFloat(1f, 3f));
                 }
 
             if (Projectile.ai[0] != 1)
@@ -630,7 +630,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
             float collisionPoint16 = 0f;
-            if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, Projectile.Center + Projectile.velocity.SafeNormalize(-Vector2.UnitY) * 200f * Projectile.scale, 22f * Projectile.scale, ref collisionPoint16))
+            if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, Projectile.Center + (Projectile.velocity.SafeNormalize(-Vector2.UnitY) * 200f * Projectile.scale), 22f * Projectile.scale, ref collisionPoint16))
                 return true;
 
             return false;
@@ -651,7 +651,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     Vector2 velocity = Projectile.velocity * MathHelper.Lerp(0.2f, 0.7f, Main.rand.NextFloat());
                     Dust dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(24f, 24f), DustID.YellowTorch, velocity);
                     dust.velocity += Main.rand.NextVector2Circular(0.5f, 0.5f);
-                    dust.scale = 0.8f + Main.rand.NextFloat() * 0.5f;
+                    dust.scale = 0.8f + (Main.rand.NextFloat() * 0.5f);
                     dust.noGravity = true;
 
                     TopazProj.SpawnTriangleParticle(Projectile.Center + Main.rand.NextVector2Circular(24f, 24f), velocity);
@@ -659,9 +659,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
                 for (int j = 0; j < 6; j++)
                 {
-                    Dust dust2 = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(24f, 24f), DustID.YellowTorch, Main.rand.NextVector2Circular(2f, 2f) + Projectile.velocity * MathHelper.Lerp(0.2f, 0.5f, Main.rand.NextFloat()));
+                    Dust dust2 = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(24f, 24f), DustID.YellowTorch, Main.rand.NextVector2Circular(2f, 2f) + (Projectile.velocity * MathHelper.Lerp(0.2f, 0.5f, Main.rand.NextFloat())));
                     dust2.velocity += Main.rand.NextVector2Circular(0.5f, 0.5f);
-                    dust2.scale = 0.8f + Main.rand.NextFloat() * 0.5f;
+                    dust2.scale = 0.8f + (Main.rand.NextFloat() * 0.5f);
                     dust2.fadeIn = 1f;
                     dust2.noGravity = true;
                 }
@@ -678,7 +678,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     Dust dust3 = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(16f, 16f), DustID.YellowTorch, Projectile.velocity * MathHelper.Lerp(0.2f, 0.5f, Main.rand.NextFloat()));
                     dust3.velocity += Main.rand.NextVector2Circular(0.5f, 0.5f);
                     dust3.velocity *= 0.5f;
-                    dust3.scale = 0.8f + Main.rand.NextFloat() * 0.5f;
+                    dust3.scale = 0.8f + (Main.rand.NextFloat() * 0.5f);
                     dust3.noGravity = true;
                 }
             }
@@ -693,7 +693,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     Dust dust4 = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(16f, 16f), DustID.YellowTorch, velocity);
                     dust4.velocity += Main.rand.NextVector2Circular(0.5f, 0.5f);
                     dust4.velocity *= 0.5f;
-                    dust4.scale = 0.8f + Main.rand.NextFloat() * 0.5f;
+                    dust4.scale = 0.8f + (Main.rand.NextFloat() * 0.5f);
                     dust4.noGravity = true;
 
                     TopazProj.SpawnTriangleParticle(Projectile.Center + Main.rand.NextVector2Circular(24f, 24f), velocity);
@@ -710,7 +710,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             for (float i = 0f; i < 1f; i += 0.075f)
             {
-                Dust dust8 = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(16f, 16f) * Projectile.scale + Projectile.velocity.SafeNormalize(Vector2.UnitY) * i * 200f * Projectile.scale, DustID.OrangeTorch, Main.rand.NextVector2Circular(3f, 3f));
+                Dust dust8 = Dust.NewDustPerfect(Projectile.Center + (Main.rand.NextVector2Circular(16f, 16f) * Projectile.scale) + (Projectile.velocity.SafeNormalize(Vector2.UnitY) * i * 200f * Projectile.scale), DustID.OrangeTorch, Main.rand.NextVector2Circular(3f, 3f));
                 dust8.velocity.Y += -0.3f;
                 dust8.velocity += Projectile.velocity * 0.2f;
                 dust8.scale = 1f;
@@ -788,7 +788,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             for (int i = -1; i < 2; i += 2)
             {
-                Dust d = Dust.NewDustPerfect(Projectile.Center + normal * i * factor * 20, DustID.Firework_Yellow, dir.RotatedBy(i * 0.2f) * -6, Scale: Main.rand.NextFloat(0.2f, 0.6f));
+                Dust d = Dust.NewDustPerfect(Projectile.Center + (normal * i * factor * 20), DustID.Firework_Yellow, dir.RotatedBy(i * 0.2f) * -6, Scale: Main.rand.NextFloat(0.2f, 0.6f));
                 d.noGravity = true;
             }
 
@@ -819,7 +819,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 for (int i = 0; i < 10; i++)
                 {
                     Vector2 dir2 = Helper.NextVec2Dir();
-                    TopazProj.SpawnTriangleParticle(Projectile.Center + dir2 * Main.rand.NextFloat(6, 12), dir2 * Main.rand.NextFloat(0.5f, 3f));
+                    TopazProj.SpawnTriangleParticle(Projectile.Center + (dir2 * Main.rand.NextFloat(6, 12)), dir2 * Main.rand.NextFloat(0.5f, 3f));
                 }
 
             if (!VisualEffectSystem.HitEffect_Dusts)
@@ -850,7 +850,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 for (int j = 0; j < 6; j++)
                 {
                     Dust d = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(24, 24),
-                        DustID.Firework_Yellow, Helper.NextVec2Dir(1 + i * 2, 2 + i * 2),
+                        DustID.Firework_Yellow, Helper.NextVec2Dir(1 + (i * 2), 2 + (i * 2)),
                         Scale: Main.rand.NextFloat(0.3f, 0.7f));
                     d.noGravity = true;
                 }
@@ -940,7 +940,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 for (int i = 0; i < 3; i++)
                 {
                     Vector2 dir = Helper.NextVec2Dir();
-                    TopazProj.SpawnTriangleParticle(Projectile.Center + dir * Main.rand.NextFloat(6, 12), dir * Main.rand.NextFloat(1f, 3f));
+                    TopazProj.SpawnTriangleParticle(Projectile.Center + (dir * Main.rand.NextFloat(6, 12)), dir * Main.rand.NextFloat(1f, 3f));
                 }
 
             SoundEngine.PlaySound(CoraliteSoundID.StoneBurst_Item70, Projectile.Center);
@@ -1014,7 +1014,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 for (int i = 0; i < 3; i++)
                 {
                     Vector2 dir = Helper.NextVec2Dir();
-                    TopazProj.SpawnTriangleParticle(Projectile.Center + dir * Main.rand.NextFloat(6, 12), dir * Main.rand.NextFloat(1f, 3f));
+                    TopazProj.SpawnTriangleParticle(Projectile.Center + (dir * Main.rand.NextFloat(6, 12)), dir * Main.rand.NextFloat(1f, 3f));
                 }
         }
 
@@ -1026,8 +1026,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
                 for (int i = 0; i < 12; i++)
                 {
-                    Dust d = Dust.NewDustPerfect(Projectile.Center + dir2 * i * 8, DustID.Firework_Yellow
-                        , dir2 * 4, Scale: 1f - i * 0.9f / 12);
+                    Dust d = Dust.NewDustPerfect(Projectile.Center + (dir2 * i * 8), DustID.Firework_Yellow
+                        , dir2 * 4, Scale: 1f - (i * 0.9f / 12));
                     d.noGravity = true;
                 }
 
@@ -1037,8 +1037,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                         Vector2 v = dir2.RotatedBy(j * i * 0.6f);
                         for (int k = 0; k < 8; k++)
                         {
-                            Dust d = Dust.NewDustPerfect(Projectile.Center + v * (3 - i) * k * 4, DustID.Firework_Yellow
-                                 , v * 3, Scale: 0.8f - k * 0.7f / 8);
+                            Dust d = Dust.NewDustPerfect(Projectile.Center + (v * (3 - i) * k * 4), DustID.Firework_Yellow
+                                 , v * 3, Scale: 0.8f - (k * 0.7f / 8));
                             d.noGravity = true;
                         }
 

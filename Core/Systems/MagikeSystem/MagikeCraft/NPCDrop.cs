@@ -11,7 +11,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
         public void AddMagikeCraftRecipe()
         {
             //蝙蝠
-            AddRemodelRecipe( ItemID.BatBanner, ItemType<BatfangShield>(),100, mainStack: 2);
+            AddRemodelRecipe(ItemID.BatBanner, ItemType<BatfangShield>(), 100, mainStack: 2);
         }
     }
 }

@@ -88,7 +88,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         NPC.velocity *= 0.996f;
                         NPC.rotation = NPC.velocity.ToRotation();
 
-                        shadowAlpha = selfAlpha = 1 - Timer / rollingTime;
+                        shadowAlpha = selfAlpha = 1 - (Timer / rollingTime);
 
                         Timer++;
                         if (Timer > rollingTime)

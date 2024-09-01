@@ -47,7 +47,7 @@ namespace Coralite.Helpers
                 highestWindGridPushComplex = CoraliteTileDrawing.GetHighestWindGridPushComplex(Main.instance.TilesRenderer, i, j, sizeX, sizeY, totalPushTime, pushForcePerFrame, 3, true);
 
             windCycle += highestWindGridPushComplex;
-            Vector2 vector = new(i * 16 - (int)screenPosition.X + sizeX * 16f * 0.5f, j * 16 - (int)screenPosition.Y);
+            Vector2 vector = new((i * 16) - (int)screenPosition.X + (sizeX * 16f * 0.5f), (j * 16) - (int)screenPosition.Y);
             float num2 = 0.15f;
             Tile tile = Main.tile[i, j];
             int type = tile.TileType;
@@ -95,7 +95,7 @@ namespace Coralite.Helpers
                     Color tileLight = Lighting.GetColor(m, n);
                     tileLight = tile2.IsTileFullbright ? Color.White : tileLight;
 
-                    Vector2 vector3 = new(m * 16 - (int)screenPosition.X, n * 16 - (int)screenPosition.Y + tileTop);
+                    Vector2 vector3 = new((m * 16) - (int)screenPosition.X, (n * 16) - (int)screenPosition.Y + tileTop);
                     vector3 += vector2;
                     Vector2 vector4 = new(windCycle * num4, Math.Abs(windCycle) * num5 * num7);
                     Vector2 vector5 = vector - vector3;

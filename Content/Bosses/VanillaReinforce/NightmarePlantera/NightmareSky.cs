@@ -27,7 +27,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 {
                     Effect e = Filters.Scene["GlowingMarblingBlack2"].GetShader().Shader;
                     e.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly / 8);
-                    e.Parameters["viewRange"].SetValue(0.7f + MathF.Sin(Main.GlobalTimeWrappedHourly / 2) * 0.2f);
+                    e.Parameters["viewRange"].SetValue(0.7f + (MathF.Sin(Main.GlobalTimeWrappedHourly / 2) * 0.2f));
                     e.Parameters["uC1"].SetValue((color * (Timeleft / 100f)).ToVector3());
 
                     spriteBatch.End();
@@ -95,7 +95,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                                 flower.frameY += 1;
                         }
 
-                        flower.Scale = Main.rand.NextFloat(0.5f, 1f) * (1f + flower.Depth * 0.75f);
+                        flower.Scale = Main.rand.NextFloat(0.5f, 1f) * (1f + (flower.Depth * 0.75f));
 
                         flower.Rotation = Main.rand.NextFloat(-MathHelper.TwoPi, MathHelper.TwoPi);
                         flower.timeleft = 0;
@@ -117,13 +117,13 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     particleTimer = 0;
                 }
 
-                float speed = 0.007f + Main.LocalPlayer.velocity.Length() / 450;
+                float speed = 0.007f + (Main.LocalPlayer.velocity.Length() / 450);
                 for (int i = 0; i < flowers.Length; i++)
                 {
                     FlowerParticle flower = flowers[i];
                     if (flower.active)
                     {
-                        Vector2 velocity = Main.LocalPlayer.oldPosition + new Vector2(Main.LocalPlayer.width, Main.LocalPlayer.height) / 2 - Main.LocalPlayer.Center;
+                        Vector2 velocity = Main.LocalPlayer.oldPosition + (new Vector2(Main.LocalPlayer.width, Main.LocalPlayer.height) / 2) - Main.LocalPlayer.Center;
                         flower.onScreenPosition += velocity / (flower.Depth * 0.75f);
                         flower.Update();
                         flower.Rotation += Math.Sign(flower.Rotation) * speed * (15 - flower.Depth) / 15;
@@ -175,7 +175,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             {
                 if (timeleft < 60)
                 {
-                    alpha += (1 / 60f) * Depth / 20f;
+                    alpha += 1 / 60f * Depth / 20f;
                     break;
                 }
 
@@ -188,7 +188,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
                 if (alpha > 0)
                 {
-                    alpha -= (1 / 60f) * Depth / 20f;
+                    alpha -= 1 / 60f * Depth / 20f;
                     if (alpha < 0)
                         alpha = 0;
                 }

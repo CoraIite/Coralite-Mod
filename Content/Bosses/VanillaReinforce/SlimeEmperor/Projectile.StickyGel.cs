@@ -117,7 +117,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             {
                 for (int j = num6; j < num7; j++)
                 {
-                    if (!Main.tile[i, j].HasTile && !Main.rand.NextBool(5) && Math.Abs(i - num2) * Math.Abs(i - num2) + Math.Abs(j - num3) * Math.Abs(j - num3) < num * num)
+                    if (!Main.tile[i, j].HasTile && !Main.rand.NextBool(5) && (Math.Abs(i - num2) * Math.Abs(i - num2)) + (Math.Abs(j - num3) * Math.Abs(j - num3)) < num * num)
                     {
                         WorldGen.PlaceTile(i, j, ModContent.TileType<StickyGelTile>());
                         if (Main.zenithWorld)

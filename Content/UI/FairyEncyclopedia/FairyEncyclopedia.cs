@@ -210,7 +210,7 @@ namespace Coralite.Content.UI.FairyEncyclopedia
             //SelectButtonsPanel.VAlign = 1;
             SelectButtonsPanel.Top.Set(40, 0);
             SelectButtonsPanel.Left.Set(SelectButton.Left.Pixels, 0);
-            SelectButtonsPanel.Width.Set(circleButtonTex.Width() * 6 + 10, 0);
+            SelectButtonsPanel.Width.Set((circleButtonTex.Width() * 6) + 10, 0);
             SelectButtonsPanel.Height.Set(BackGround.Height.Pixels / 3, 0);
 
             UIGrid buttonsGrid = new();
@@ -410,7 +410,7 @@ namespace Coralite.Content.UI.FairyEncyclopedia
             Timer = 0;
             for (int i = 0; i < FairySlot.XCount * FairySlot.YCount; i++)
             {
-                int index = PageIndex * FairySlot.XCount * FairySlot.YCount + i;
+                int index = (PageIndex * FairySlot.XCount * FairySlot.YCount) + i;
 
                 if (index < fairies.Count)
                 {

@@ -106,7 +106,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 },parent),
                 //生产量
                 this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.ProduceAmount), parent),
-                this.NewTextBar(c => 
+                this.NewTextBar(c =>
                     $"  ▶ {c.Throughput} ({c.ThroughputBase} * {c.ProductionDelayBonus})", parent),
                 //生产条件
                 this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.ProduceCondition), parent),

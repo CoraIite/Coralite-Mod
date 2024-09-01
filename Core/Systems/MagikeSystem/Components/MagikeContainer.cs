@@ -274,10 +274,10 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             for (int i = 0; i < frameBox.Width / 2; i++)
             {
                 int currentHeight = Math.Clamp(
-                   (int)(tex.Height * (percent + 0.04f * MathF.Sin(((float)Main.timeForVisualEffects) * 0.1f + i * 0.3f)))
+                   (int)(tex.Height * (percent + (0.04f * MathF.Sin((((float)Main.timeForVisualEffects) * 0.1f) + (i * 0.3f)))))
                     , 0, tex.Height);
 
-                Rectangle frameBox2 = new(frameBox.Width + i * 2, tex.Height - currentHeight, 2, currentHeight);
+                Rectangle frameBox2 = new(frameBox.Width + (i * 2), tex.Height - currentHeight, 2, currentHeight);
                 var origin = new Vector2(0, frameBox2.Height);
                 spriteBatch.Draw(tex, drawPos + new Vector2(i * 2, 0), frameBox2, Color.White, 0, origin, 1f, 0, 0f);
             }
@@ -313,7 +313,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             for (int i = 0; i < frameBox.Width / 2; i++)
             {
                 int currentHeight = Math.Clamp(
-                   (int)(tex.Height * (percent + 0.04f * MathF.Sin(((float)Main.timeForVisualEffects) * 0.1f + i * 0.3f)))
+                   (int)(tex.Height * (percent + (0.04f * MathF.Sin((((float)Main.timeForVisualEffects) * 0.1f) + (i * 0.3f)))))
                     , 0, tex.Height);
 
                 Rectangle frameBox2 = new(i * 2, tex.Height - currentHeight, 2, currentHeight);

@@ -607,12 +607,12 @@ namespace Coralite.Content.Items.ShieldPlus
                 var origin = new Vector2(0, mainTex.Height);
                 var pos = Projectile.Center - Main.screenPosition + new Vector2(-Owner.direction * 20, -8);
                 int howMany = terranascence.energy;
-                float rotation = -0.785f - Owner.direction * 0.5f;
+                float rotation = -0.785f - (Owner.direction * 0.5f);
                 float scale = 1;
                 for (int i = 0; i < howMany; i++)
                 {
                     float scale2 = scales[i] * scale;
-                    Vector2 offset = (i * MathHelper.TwoPi / 3 + Main.GlobalTimeWrappedHourly).ToRotationVector2() * 4;
+                    Vector2 offset = ((i * MathHelper.TwoPi / 3) + Main.GlobalTimeWrappedHourly).ToRotationVector2() * 4;
                     Main.spriteBatch.Draw(mainTex, pos + offset, null, lightColor * alphas[i], rotation, origin, scale2, 0, 0);
                     Main.spriteBatch.Draw(mainTex, pos + offset, null, Color.White * 0.3f * alphas[i], rotation, origin, scale2, 0, 0);
 
@@ -694,7 +694,7 @@ namespace Coralite.Content.Items.ShieldPlus
                     delay = 14;
                     extraScaleAngle = -0.3f;
                     ExtraInit();
-                    Projectile.scale = Helper.EllipticalEase(recordStartAngle + extraScaleAngle - recordTotalAngle * Smoother.Smoother(0, maxTime - minTime), 1f, 1.5f);
+                    Projectile.scale = Helper.EllipticalEase(recordStartAngle + extraScaleAngle - (recordTotalAngle * Smoother.Smoother(0, maxTime - minTime)), 1f, 1.5f);
                     SoundEngine.PlaySound(CoraliteSoundID.Swing_Item1, Projectile.Center);
                     break;
                 case 1:
@@ -705,7 +705,7 @@ namespace Coralite.Content.Items.ShieldPlus
                     delay = 18;
                     extraScaleAngle = 0.3f;
                     ExtraInit();
-                    Projectile.scale = Helper.EllipticalEase(recordStartAngle + extraScaleAngle - recordTotalAngle * Smoother.Smoother(0, maxTime - minTime), 1f, 1.5f);
+                    Projectile.scale = Helper.EllipticalEase(recordStartAngle + extraScaleAngle - (recordTotalAngle * Smoother.Smoother(0, maxTime - minTime)), 1f, 1.5f);
                     SoundEngine.PlaySound(CoraliteSoundID.Swing_Item1, Projectile.Center);
 
                     break;
@@ -718,7 +718,7 @@ namespace Coralite.Content.Items.ShieldPlus
                     extraScaleAngle = 0.3f;
                     ExtraInit();
                     useSlashTrail = true;
-                    Projectile.scale = Helper.EllipticalEase(recordStartAngle + extraScaleAngle - recordTotalAngle * Smoother.Smoother(0, maxTime - minTime), 1.3f, 1.7f);
+                    Projectile.scale = Helper.EllipticalEase(recordStartAngle + extraScaleAngle - (recordTotalAngle * Smoother.Smoother(0, maxTime - minTime)), 1.3f, 1.7f);
                     Helper.PlayPitched("Misc/LongSwordSwing2", 0.3f, 0, Projectile.Center);
                     onHitFreeze = 16;
                     break;
@@ -749,7 +749,7 @@ namespace Coralite.Content.Items.ShieldPlus
 
             if (Main.rand.NextBool(3) || timer % 3 == 0)
             {
-                Dust d = Dust.NewDustPerfect(Projectile.Center + RotateVec2 * Projectile.height * 0.4f + Main.rand.NextVector2Circular(12, 12)
+                Dust d = Dust.NewDustPerfect(Projectile.Center + (RotateVec2 * Projectile.height * 0.4f) + Main.rand.NextVector2Circular(12, 12)
                     , DustID.PureSpray, RotateVec2.RotatedBy(1.57f) * Main.rand.NextFloat(1, 2f)
                     , Scale: Main.rand.NextFloat(0.5f, 1f));
 
@@ -764,7 +764,7 @@ namespace Coralite.Content.Items.ShieldPlus
             else
                 Projectile.Kill();
 
-            float angle = recordStartAngle + extraScaleAngle - recordTotalAngle * Smoother.Smoother(timer, maxTime - minTime);
+            float angle = recordStartAngle + extraScaleAngle - (recordTotalAngle * Smoother.Smoother(timer, maxTime - minTime));
 
             Projectile.scale = Combo switch
             {
@@ -794,7 +794,7 @@ namespace Coralite.Content.Items.ShieldPlus
 
         public override bool? CanHitNPC(NPC target)
         {
-            if (Timer < minTime || Timer > maxTime && Combo < 3)
+            if (Timer < minTime || (Timer > maxTime && Combo < 3))
                 return false;
 
             if (target.noTileCollide || target.friendly || Projectile.hostile)
@@ -813,8 +813,8 @@ namespace Coralite.Content.Items.ShieldPlus
             if (onHitTimer != 1 || !VisualEffectSystem.HitEffect_SpecialParticles)
                 return;
 
-            float offset = Projectile.localAI[1] + Main.rand.NextFloat(0, Projectile.width * Projectile.scale - Projectile.localAI[1]);
-            Vector2 pos = Bottom + RotateVec2 * offset;
+            float offset = Projectile.localAI[1] + Main.rand.NextFloat(0, (Projectile.width * Projectile.scale) - Projectile.localAI[1]);
+            Vector2 pos = Bottom + (RotateVec2 * offset);
             pos = Vector2.SmoothStep(pos, target.Center, 0.4f);
 
             float rot;
@@ -822,7 +822,7 @@ namespace Coralite.Content.Items.ShieldPlus
             Color c = new(50, 200, 150, 150);
             for (int i = -1; i < 2; i += 2)
             {
-                rot = _Rotation + Main.rand.NextFloat(0.7f, 1.4f) * i;
+                rot = _Rotation + (Main.rand.NextFloat(0.7f, 1.4f) * i);
 
                 for (int j = 0; j < 2; j++)
                 {
@@ -865,10 +865,10 @@ namespace Coralite.Content.Items.ShieldPlus
                 if (oldRotate[i] == 100f)
                     continue;
 
-                float factor = 1f - i / count;
+                float factor = 1f - (i / count);
                 Vector2 Center = GetCenter(i);
-                Vector2 Top = Center + oldRotate[i].ToRotationVector2() * (oldLength[i] + trailTopWidth + oldDistanceToOwner[i]);
-                Vector2 Bottom = Center + oldRotate[i].ToRotationVector2() * (oldLength[i] - ControlTrailBottomWidth(factor) + oldDistanceToOwner[i]);
+                Vector2 Top = Center + (oldRotate[i].ToRotationVector2() * (oldLength[i] + trailTopWidth + oldDistanceToOwner[i]));
+                Vector2 Bottom = Center + (oldRotate[i].ToRotationVector2() * (oldLength[i] - ControlTrailBottomWidth(factor) + oldDistanceToOwner[i]));
 
                 var c = new Color(255, 255, 255, Helper.Lerp(alpha, 0, 1 - factor));
                 bars.Add(new(Top.Vec3(), c, new Vector2(factor, 0)));
@@ -995,10 +995,10 @@ namespace Coralite.Content.Items.ShieldPlus
             float angle = GetStartAngle();
             Vector2 dir = angle.ToRotationVector2();
             Color c1 = Color.LightSeaGreen;
-            WindCircle.Spawn(Projectile.Center + dir * 60, -dir * 4, angle, c1, 0.75f, 0.95f, new Vector2(1.5f, 0.8f));
-            WindCircle.Spawn(Projectile.Center + dir * 70, -dir * 3, angle, c1, 0.75f, 0.5f, new Vector2(1.5f, 0.8f));
+            WindCircle.Spawn(Projectile.Center + (dir * 60), -dir * 4, angle, c1, 0.75f, 0.95f, new Vector2(1.5f, 0.8f));
+            WindCircle.Spawn(Projectile.Center + (dir * 70), -dir * 3, angle, c1, 0.75f, 0.5f, new Vector2(1.5f, 0.8f));
             c1 = Color.DarkSeaGreen;
-            WindCircle.Spawn(Projectile.Center + dir * 50, -dir * 3, angle, c1, 0.5f, 1.4f, new Vector2(2, 1f));
+            WindCircle.Spawn(Projectile.Center + (dir * 50), -dir * 3, angle, c1, 0.5f, 1.4f, new Vector2(2, 1f));
         }
 
         protected override void AIBefore()
@@ -1009,8 +1009,8 @@ namespace Coralite.Content.Items.ShieldPlus
 
         protected override void OnSlash()
         {
-            distanceToOwner = -45 + Smoother.Smoother((int)Timer, maxTime) * 58;
-            distanceToOwner2 = -15 + Coralite.Instance.SqrtSmoother.Smoother((int)Timer, maxTime) * 60;
+            distanceToOwner = -45 + (Smoother.Smoother((int)Timer, maxTime) * 58);
+            distanceToOwner2 = -15 + (Coralite.Instance.SqrtSmoother.Smoother((int)Timer, maxTime) * 60);
             yScale = Coralite.Instance.SqrtSmoother.Smoother((int)Timer, maxTime);
 
             if (alpha < 1)
@@ -1024,7 +1024,7 @@ namespace Coralite.Content.Items.ShieldPlus
             {
                 for (int i = 0; i < 2; i++)
                 {
-                    Dust d2 = Dust.NewDustPerfect(Projectile.Center + RotateVec2 * Projectile.height / 2 + Main.rand.NextVector2Circular(6, 6)
+                    Dust d2 = Dust.NewDustPerfect(Projectile.Center + (RotateVec2 * Projectile.height / 2) + Main.rand.NextVector2Circular(6, 6)
                         , DustID.PureSpray, RotateVec2.RotatedBy(1.57f) * Main.rand.NextFloat(1, 2f)
                         , Scale: Main.rand.NextFloat(0.5f, 1f));
 
@@ -1090,12 +1090,12 @@ namespace Coralite.Content.Items.ShieldPlus
             base.OnHitNPC(target, hit, damageDone);
 
             if (VisualEffectSystem.HitEffect_Lightning)
-                Particle.NewParticle<SpeedLine>(Projectile.Center + RotateVec2 * Projectile.height / 2, RotateVec2 * 5, Color.LightSeaGreen, 0.6f);
+                Particle.NewParticle<SpeedLine>(Projectile.Center + (RotateVec2 * Projectile.height / 2), RotateVec2 * 5, Color.LightSeaGreen, 0.6f);
 
             if (VisualEffectSystem.HitEffect_Dusts)
                 for (int i = 0; i < 8; i++)
                 {
-                    Dust d = Dust.NewDustPerfect(Projectile.Center + RotateVec2 * Main.rand.NextFloat(0, Projectile.height),
+                    Dust d = Dust.NewDustPerfect(Projectile.Center + (RotateVec2 * Main.rand.NextFloat(0, Projectile.height)),
                         DustID.GreenTorch, RotateVec2.RotateByRandom(-0.3f, 0.3f) * Main.rand.NextFloat(4f, 8f)
                         , Scale: Main.rand.NextFloat(1, 1.5f));
                     d.noGravity = true;
@@ -1104,7 +1104,7 @@ namespace Coralite.Content.Items.ShieldPlus
             if (Powerful)
             {
                 if (VisualEffectSystem.HitEffect_SpecialParticles)
-                    WindCircle.Spawn(Owner.Center - RotateVec2 * 20, -Owner.velocity * 0.4f, RotateVec2.ToRotation(), Color.DarkSeaGreen, 0.75f, 1f, new Vector2(1.75f, 0.7f));
+                    WindCircle.Spawn(Owner.Center - (RotateVec2 * 20), -Owner.velocity * 0.4f, RotateVec2.ToRotation(), Color.DarkSeaGreen, 0.75f, 1f, new Vector2(1.75f, 0.7f));
                 if (!Powerful2)
                     if (VisualEffectSystem.HitEffect_ScreenShaking)
                         Main.instance.CameraModifiers.Add(new PunchCameraModifier(Projectile.Center, RotateVec2, 12, 8, 8, 1000));
@@ -1114,13 +1114,13 @@ namespace Coralite.Content.Items.ShieldPlus
 
                 if (VisualEffectSystem.HitEffect_Lightning)
                     for (int i = 0; i < 4; i++)
-                        Particle.NewParticle<SpeedLine>(Projectile.Center + i * RotateVec2 * 24, RotateVec2 * 5, Color.LightSeaGreen, 0.6f - i * 0.1f);
+                        Particle.NewParticle<SpeedLine>(Projectile.Center + (i * RotateVec2 * 24), RotateVec2 * 5, Color.LightSeaGreen, 0.6f - (i * 0.1f));
             }
         }
 
         protected override void AfterSlash()
         {
-            distanceToOwner = 13 - 23 * Smoother.Smoother((int)Timer - maxTime, delay);
+            distanceToOwner = 13 - (23 * Smoother.Smoother((int)Timer - maxTime, delay));
             yScale = 1 - Smoother.Smoother((int)Timer - maxTime, delay);
             alpha = 1 - Smoother.Smoother((int)Timer - maxTime, delay);
             distanceToOwner2 += 7;
@@ -1153,7 +1153,7 @@ namespace Coralite.Content.Items.ShieldPlus
             c3 *= 0.75f;
             c3 *= alpha;
 
-            Vector2 pos = OwnerCenter() - Main.screenPosition + RotateVec2 * distanceToOwner2;
+            Vector2 pos = OwnerCenter() - Main.screenPosition + (RotateVec2 * distanceToOwner2);
             if (canDrawBaseEffect)
             {
                 Main.spriteBatch.Draw(ex, pos, null,
@@ -1172,9 +1172,9 @@ namespace Coralite.Content.Items.ShieldPlus
                 c2 *= alpha;
                 Main.spriteBatch.Draw(ex, pos, null,
                                         c3, Projectile.rotation, ex.Size() / 2, new Vector2(0.7f, 0.6f * yScale), 0, 0f);
-                Main.spriteBatch.Draw(ex, pos - RotateVec2 * distanceToOwner2 * 1.5f, null,
+                Main.spriteBatch.Draw(ex, pos - (RotateVec2 * distanceToOwner2 * 1.5f), null,
                                         c, Projectile.rotation, ex.Size() / 2, new Vector2(1f, 0.6f * yScale), 0, 0f);
-                Main.spriteBatch.Draw(ex, pos - RotateVec2 * distanceToOwner2 / 2, null,
+                Main.spriteBatch.Draw(ex, pos - (RotateVec2 * distanceToOwner2 / 2), null,
                                         c2 * 0.5f, Projectile.rotation, ex.Size() / 2, 0.9f * new Vector2(1f, 0.5f * yScale), 0, 0f);
             }
         }

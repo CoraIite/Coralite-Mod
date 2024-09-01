@@ -116,7 +116,7 @@ namespace Coralite.Content.Items.Icicle
             if (yujianProj.Timer == firstPhaseTime)     //转为突刺阶段
             {
                 int spurtTime = firstPhaseTime - SecondPhaseTime;
-                float speed = (Vector2.Distance(targetCenter, Projectile.Center) + distanceToKeep * 0.3f) / spurtTime;
+                float speed = (Vector2.Distance(targetCenter, Projectile.Center) + (distanceToKeep * 0.3f)) / spurtTime;
                 Projectile.velocity = (targetCenter - Projectile.Center).SafeNormalize(Vector2.One) * speed;
                 Projectile.rotation = (targetCenter - Projectile.Center).ToRotation() + 1.57f;
                 Projectile.tileCollide = false;
@@ -171,16 +171,16 @@ namespace Coralite.Content.Items.Icicle
             Texture2D mainTex = Projectile.GetTexture();
             Rectangle source = mainTex.Frame();
             Vector2 origin = new(mainTex.Width / 2, mainTex.Height / 2);
-            float scale = 1.4f + yujianProj.trailCacheLength * 0.015f;
+            float scale = 1.4f + (yujianProj.trailCacheLength * 0.015f);
 
             for (int i = yujianProj.trailCacheLength - 1; i > 0; i -= 3)
             {
                 Color shadowColor = Color.Lerp(yujianProj.color1, yujianProj.color2, (float)i / yujianProj.trailCacheLength);
-                int a = 20 + i * 4;
+                int a = 20 + (i * 4);
                 if (a > 255)
                     a = 255;
                 shadowColor.A = (byte)a;
-                spriteBatch.Draw(mainTex, Projectile.oldPos[i] - Main.screenPosition, source, shadowColor, Projectile.oldRot[i], origin, scale - i * 0.015f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(mainTex, Projectile.oldPos[i] - Main.screenPosition, source, shadowColor, Projectile.oldRot[i], origin, scale - (i * 0.015f), SpriteEffects.None, 0f);
             }
         }
 
@@ -215,14 +215,14 @@ namespace Coralite.Content.Items.Icicle
 
         private void TryMakingSpike(ref Point sourceTileCoords, Projectile projectile, int dir, int howMany, int whichOne, int xOffset, float scaleOffset)
         {
-            int position_X = sourceTileCoords.X + xOffset * dir;
+            int position_X = sourceTileCoords.X + (xOffset * dir);
             int position_Y = TryMakingSpike_FindBestY(ref sourceTileCoords, position_X);
             if (WorldGen.ActiveAndWalkableTile(position_X, position_Y))
             {
-                Vector2 position = new(position_X * 16 + 8, position_Y * 16 - 8);
+                Vector2 position = new((position_X * 16) + 8, (position_Y * 16) - 8);
                 Vector2 velocity = new Vector2(0f, -1f).RotatedBy(whichOne * dir * 0.7f * ((float)Math.PI / 4f / howMany));
                 Projectile.NewProjectile(projectile.GetSource_FromAI(), position, velocity, ModContent.ProjectileType<IceThorn>(),
-                    projectile.damage, 0f, projectile.owner, 0f, 0.4f + scaleOffset + xOffset * 1.1f / howMany);
+                    projectile.damage, 0f, projectile.owner, 0f, 0.4f + scaleOffset + (xOffset * 1.1f / howMany));
             }
         }
 
@@ -354,9 +354,9 @@ namespace Coralite.Content.Items.Icicle
                 float length = targetVector.Length();
 
                 if (length > distanceToKeep + 20)
-                    Projectile.velocity = (Projectile.velocity * 20f + targetDirection * 2) / 21f;
+                    Projectile.velocity = ((Projectile.velocity * 20f) + (targetDirection * 2)) / 21f;
                 else if (length < distanceToKeep - 20)
-                    Projectile.velocity = (Projectile.velocity * 20f + targetDirection * -2) / 21f;
+                    Projectile.velocity = ((Projectile.velocity * 20f) + (targetDirection * -2)) / 21f;
                 else
                     Projectile.velocity *= slowdownFactor;
 
@@ -373,7 +373,7 @@ namespace Coralite.Content.Items.Icicle
             {
                 targetCenter = yujianProj.GetTargetCenter(IsAimingMouse);
                 int spurtTime = firstPhaseTime - SecondPhaseTime;
-                float speed = (Vector2.Distance(targetCenter, Projectile.Center) + distanceToKeep * 0.3f) / spurtTime;
+                float speed = (Vector2.Distance(targetCenter, Projectile.Center) + (distanceToKeep * 0.3f)) / spurtTime;
                 Projectile.velocity = (targetCenter - Projectile.Center).SafeNormalize(Vector2.One) * speed;
                 Projectile.rotation = (targetCenter - Projectile.Center).ToRotation() + 1.57f;
                 Projectile.tileCollide = false;
@@ -412,16 +412,16 @@ namespace Coralite.Content.Items.Icicle
             Texture2D mainTex = Projectile.GetTexture();
             Rectangle source = mainTex.Frame();
             Vector2 origin = new(mainTex.Width / 2, mainTex.Height / 2);
-            float scale = 1.6f + yujianProj.trailCacheLength * 0.015f;
+            float scale = 1.6f + (yujianProj.trailCacheLength * 0.015f);
 
             for (int i = yujianProj.trailCacheLength - 1; i > 0; i -= 3)
             {
                 Color shadowColor = Color.Lerp(yujianProj.color1, yujianProj.color2, (float)i / yujianProj.trailCacheLength);
-                int a = 20 + i * 4;
+                int a = 20 + (i * 4);
                 if (a > 255)
                     a = 255;
                 shadowColor.A = (byte)a;
-                spriteBatch.Draw(mainTex, Projectile.oldPos[i] - Main.screenPosition, source, shadowColor, Projectile.oldRot[i], origin, scale - i * 0.015f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(mainTex, Projectile.oldPos[i] - Main.screenPosition, source, shadowColor, Projectile.oldRot[i], origin, scale - (i * 0.015f), SpriteEffects.None, 0f);
             }
         }
     }

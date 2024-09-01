@@ -32,7 +32,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             if (!GetOwner(out NPC owner))
                 return;
 
-            Projectile.position.X = owner.Center.X - Projectile.width / 2;
+            Projectile.position.X = owner.Center.X - (Projectile.width / 2);
 
             if (Timer < 8)
             {

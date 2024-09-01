@@ -116,7 +116,7 @@ namespace Coralite.Content.Items.ShadowCastle
                         float num133 = Projectile.velocity.X / 3f * j;
                         float num134 = Projectile.velocity.Y / 3f * j;
                         int offset = 4;
-                        int index = Dust.NewDust(new Vector2(Projectile.position.X + offset, Projectile.position.Y + offset), Projectile.width - offset * 2, Projectile.height - offset * 2
+                        int index = Dust.NewDust(new Vector2(Projectile.position.X + offset, Projectile.position.Y + offset), Projectile.width - (offset * 2), Projectile.height - (offset * 2)
                             , Main.rand.NextBool(1, 5) ? DustID.GemDiamond : DustID.SilverCoin, 0f, 0f, 100, default, 1.3f);
                         Dust dust = Main.dust[index];
                         dust.noGravity = true;
@@ -129,7 +129,7 @@ namespace Coralite.Content.Items.ShadowCastle
                     if (Main.rand.NextBool(8))
                     {
                         int offset = 6;
-                        int index = Dust.NewDust(new Vector2(Projectile.position.X + offset, Projectile.position.Y + offset), Projectile.width - offset * 2, Projectile.height - offset * 2
+                        int index = Dust.NewDust(new Vector2(Projectile.position.X + offset, Projectile.position.Y + offset), Projectile.width - (offset * 2), Projectile.height - (offset * 2)
                             , Main.rand.NextBool(1, 5) ? DustID.GemDiamond : DustID.SilverCoin, 0f, 0f, 100, default, 0.75f);
                         Dust dust2 = Main.dust[index];
                         dust2.velocity *= 0.5f;

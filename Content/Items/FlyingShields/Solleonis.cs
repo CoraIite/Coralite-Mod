@@ -89,7 +89,7 @@ namespace Coralite.Content.Items.FlyingShields
 
             for (int i = trailCachesLength - 1; i > 4; i--)
                 Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] - Main.screenPosition, null,
-                c * 0.6f * (i * 1 / 10f), Projectile.oldRot[i] - 1.57f + extraRotation, origin, Projectile.scale * (1 - i * 0.05f), 0, 0);
+                c * 0.6f * (i * 1 / 10f), Projectile.oldRot[i] - 1.57f + extraRotation, origin, Projectile.scale * (1 - (i * 0.05f)), 0, 0);
 
             Main.spriteBatch.Draw(mainTex, pos, null, Color.White, Projectile.rotation - 1.57f + extraRotation, origin, Projectile.scale, 0, 0);
             Main.spriteBatch.Draw(mainTex, pos, null, c * 0.3f, Projectile.rotation - 1.57f + extraRotation, origin, Projectile.scale * 1.15f, 0, 0);
@@ -208,7 +208,7 @@ namespace Coralite.Content.Items.FlyingShields
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Projectile.NewProjectileFromThis(target.Center, Vector2.Zero, ProjectileID.SolarWhipSwordExplosion
-                , (int)(Projectile.damage * 0.5f), 10f, 0f, 0.85f + Main.rand.NextFloat() * 1.15f);
+                , (int)(Projectile.damage * 0.5f), 10f, 0f, 0.85f + (Main.rand.NextFloat() * 1.15f));
 
             for (int i = 0; i < 3; i++)
             {
@@ -229,7 +229,7 @@ namespace Coralite.Content.Items.FlyingShields
                 for (int j = 0; j < 6; j++)
                 {
                     Dust d = Dust.NewDustPerfect(Projectile.Center, DustID.SolarFlare
-                        , dir * (i % 2 == 0 ? 1 : 0.5f) * (2.5f + j * 1f), Scale: 1.6f - j * 0.15f);
+                        , dir * (i % 2 == 0 ? 1 : 0.5f) * (2.5f + (j * 1f)), Scale: 1.6f - (j * 0.15f));
                     d.noGravity = true;
                 }
             }
@@ -267,11 +267,11 @@ namespace Coralite.Content.Items.FlyingShields
                 float factor = (float)i / trailCachesLength;
                 Vector2 Center = Projectile.oldPos[i] - Main.screenPosition;
                 Vector2 normal = (Projectile.oldRot[i] + MathHelper.PiOver2).ToRotationVector2();
-                Vector2 Top = Center + normal * 14 * (factor / 2 + 0.5f);
-                Vector2 Bottom = Center - normal * 14 * (factor / 2 + 0.5f);
+                Vector2 Top = Center + (normal * 14 * ((factor / 2) + 0.5f));
+                Vector2 Bottom = Center - (normal * 14 * ((factor / 2) + 0.5f));
 
-                Vector2 Top2 = Center + normal * 6;
-                Vector2 Bottom2 = Center - normal * 6;
+                Vector2 Top2 = Center + (normal * 6);
+                Vector2 Bottom2 = Center - (normal * 6);
 
                 var Color = c * factor;
 

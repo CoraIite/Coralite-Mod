@@ -63,11 +63,11 @@ namespace Coralite.Core.Systems.YujianSystem.YujianAIs
         public override void UpdateVelocityWhenTracking(Projectile Projectile, float distance, Vector2 targetDirection)
         {
             if (distance > canSlashLength)
-                Projectile.velocity = (Projectile.velocity * (20f + roughlyVelocity) + targetDirection * turnSpeed) / 21f;
+                Projectile.velocity = ((Projectile.velocity * (20f + roughlyVelocity)) + (targetDirection * turnSpeed)) / 21f;
             else if (distance < canSlashLength * 0.8f)
-                Projectile.velocity = (Projectile.velocity * (20f + roughlyVelocity) - targetDirection * turnSpeed) / 21f;
+                Projectile.velocity = ((Projectile.velocity * (20f + roughlyVelocity)) - (targetDirection * turnSpeed)) / 21f;
             else if (Projectile.velocity == Vector2.Zero)
-                Projectile.velocity = (Projectile.velocity * (20f + roughlyVelocity) + targetDirection * turnSpeed) / 21f;
+                Projectile.velocity = ((Projectile.velocity * (20f + roughlyVelocity)) + (targetDirection * turnSpeed)) / 21f;
         }
 
         protected override void OnStartAttack(BaseYujianProj yujianProj)

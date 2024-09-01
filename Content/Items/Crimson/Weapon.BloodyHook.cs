@@ -329,7 +329,7 @@ namespace Coralite.Content.Items.Crimson
                 float length = (Owner.Center - Projectile.Center).Length();
                 for (int i = 0; i < length; i += 4)
                 {
-                    Dust.NewDustPerfect(Projectile.Center + direction * i + Main.rand.NextVector2Circular(4, 4), DustID.Blood, Scale: Main.rand.NextFloat(1f, 2f));
+                    Dust.NewDustPerfect(Projectile.Center + (direction * i) + Main.rand.NextVector2Circular(4, 4), DustID.Blood, Scale: Main.rand.NextFloat(1f, 2f));
                 }
             }
         }

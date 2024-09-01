@@ -20,7 +20,7 @@
         /// <returns></returns>
         public static bool IsSingleton(int ID)
         {
-            return ID !=MagikeFilter;
+            return ID != MagikeFilter;
         }
     }
 }

@@ -49,7 +49,7 @@ namespace Coralite.Core.Systems.YujianSystem.YujianAIs
                         //重设中心点以及角度和拖尾数组
                         Vector2 slashCenter = new(Projectile.localAI[0], Projectile.localAI[1]);
                         Projectile.rotation = targetRotation + StartAngle;
-                        Projectile.Center = slashCenter + Projectile.rotation.ToRotationVector2() * SlashWidth;
+                        Projectile.Center = slashCenter + (Projectile.rotation.ToRotationVector2() * SlashWidth);
                         Projectile.rotation += 1.57f;
 
                         yujianProj.InitTrailCaches();
@@ -81,11 +81,11 @@ namespace Coralite.Core.Systems.YujianSystem.YujianAIs
         public override void UpdateVelocityWhenTracking(Projectile Projectile, float distance, Vector2 targetDirection)
         {
             if (distance > canSlashLength)
-                Projectile.velocity = (Projectile.velocity * (20f + roughlyVelocity) + targetDirection * turnSpeed) / 21f;
+                Projectile.velocity = ((Projectile.velocity * (20f + roughlyVelocity)) + (targetDirection * turnSpeed)) / 21f;
             else if (distance < canSlashLength * 0.8f)
-                Projectile.velocity = (Projectile.velocity * (20f + roughlyVelocity) - targetDirection * turnSpeed) / 21f;
+                Projectile.velocity = ((Projectile.velocity * (20f + roughlyVelocity)) - (targetDirection * turnSpeed)) / 21f;
             else if (Projectile.velocity == Vector2.Zero)
-                Projectile.velocity = (Projectile.velocity * (20f + roughlyVelocity) + targetDirection * turnSpeed) / 21f;
+                Projectile.velocity = ((Projectile.velocity * (20f + roughlyVelocity)) + (targetDirection * turnSpeed)) / 21f;
         }
 
         protected override void OnStartAttack(BaseYujianProj yujianProj)

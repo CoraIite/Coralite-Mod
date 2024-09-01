@@ -63,7 +63,7 @@ namespace Coralite.Content.Items.Donator
     public class ChocomintIceRarity : ModRarity
     {
         public override Color RarityColor => Color.Lerp(new Color(141, 255, 202), new Color(77, 180, 149)
-            , MathF.Sin(Main.GlobalTimeWrappedHourly) / 2 + 0.5f);
+            , (MathF.Sin(Main.GlobalTimeWrappedHourly) / 2) + 0.5f);
     }
 
     public class ChocomintIceBuff : ModBuff
@@ -221,8 +221,8 @@ namespace Coralite.Content.Items.Donator
 
                                 num484 = num481 / num484;
                                 dir *= num484;
-                                Projectile.velocity.X = (Projectile.velocity.X * 14f + dir.X) / 15f;
-                                Projectile.velocity.Y = (Projectile.velocity.Y * 14f + dir.Y) / 15f;
+                                Projectile.velocity.X = ((Projectile.velocity.X * 14f) + dir.X) / 15f;
+                                Projectile.velocity.Y = ((Projectile.velocity.Y * 14f) + dir.Y) / 15f;
                             }
                             else
                             {
@@ -260,7 +260,7 @@ namespace Coralite.Content.Items.Donator
         public void CircleMovement(int stackedIndex, int totalIndexes, out Vector2 idleSpot)
         {
             float num2 = (totalIndexes - 1f) / 2f;
-            idleSpot = Owner.Center + -Vector2.UnitY.RotatedBy(4.3982296f / totalIndexes * (stackedIndex - num2)) * 50f;
+            idleSpot = Owner.Center + (-Vector2.UnitY.RotatedBy(4.3982296f / totalIndexes * (stackedIndex - num2)) * 50f);
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)

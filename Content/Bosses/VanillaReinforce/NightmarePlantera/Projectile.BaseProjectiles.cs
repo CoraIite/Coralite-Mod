@@ -73,9 +73,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             scale2 = circleSparkleScale * 0.2f;
             for (int i = 0; i < 7; i++)
             {
-                float rot2 = (Main.GlobalTimeWrappedHourly * 2 + i * MathHelper.TwoPi / 7);
+                float rot2 = (Main.GlobalTimeWrappedHourly * 2) + (i * MathHelper.TwoPi / 7);
                 Vector2 dir = rot2.ToRotationVector2();
-                dir = pos + dir * (18 + factor * 2);
+                dir = pos + (dir * (18 + (factor * 2)));
                 rot2 += 1.57f;
                 Main.spriteBatch.Draw(lightTex, dir, null, shineC, rot2, origin, scale2, 0, 0);
                 //Main.spriteBatch.Draw(lightTex, dir, null, shineC*0.5f, rot2, origin, scale2, 0, 0);

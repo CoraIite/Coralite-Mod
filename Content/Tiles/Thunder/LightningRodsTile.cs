@@ -63,7 +63,7 @@ namespace Coralite.Content.Tiles.Thunder
                 Point p = new(i - x, j - y);
 
                 Projectile.NewProjectile(new EntitySource_TileInteraction(Main.LocalPlayer, i, j),
-                     p.ToVector2() * 16, p.ToVector2() * 16 + new Vector2(0, -2000), ModContent.ProjectileType<ThunderSpawn>(), 1, 0, Main.myPlayer, 80, ai2: 70);
+                     p.ToVector2() * 16, (p.ToVector2() * 16) + new Vector2(0, -2000), ModContent.ProjectileType<ThunderSpawn>(), 1, 0, Main.myPlayer, 80, ai2: 70);
 
                 //if (Main.netMode != NetmodeID.MultiplayerClient)
                 //    NPC.SpawnOnPlayer(Main.LocalPlayer.whoAmI, type);

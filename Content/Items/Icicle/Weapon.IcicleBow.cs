@@ -85,7 +85,7 @@ namespace Coralite.Content.Items.Icicle
                 SoundEngine.PlaySound(CoraliteSoundID.IceMagic_Item28, Player.Center);
                 for (int i = 0; i < 4; i++)//生成冰晶粒子
                 {
-                    Vector2 center = Player.Center + (-1.57f + i * 1.57f).ToRotationVector2() * 64;
+                    Vector2 center = Player.Center + ((-1.57f + (i * 1.57f)).ToRotationVector2() * 64);
                     Vector2 velocity = (i * 1.57f).ToRotationVector2() * 4;
                     IceStarLight.Spawn(center, velocity, 1f, () => Player.Center, 16);
                 }

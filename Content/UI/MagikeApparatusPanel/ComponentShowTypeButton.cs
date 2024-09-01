@@ -16,7 +16,7 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
         {
             Asset<Texture2D> buttonTex = MagikeSystem.GetUIShowTypeButton();
             Vector2 size = buttonTex.Frame(2, 1, 0, 0).Size();
-            Width.Set(size.X+10, 0);
+            Width.Set(size.X + 10, 0);
             Height.Set(size.Y, 0);
 
             PaddingLeft = 2;

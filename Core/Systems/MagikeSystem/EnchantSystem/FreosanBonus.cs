@@ -18,7 +18,7 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
             if (player.TryGetModPlayer(out MagikePlayer mp) && mp.SpecialEnchantCD <= 0)
             {
                 float rot = Main.rand.NextFloat(3.141f, 6.282f);
-                Projectile.NewProjectile(source, player.Center + rot.ToRotationVector2() * 48, Vector2.Zero, ModContent.ProjectileType<FreosanProj>()
+                Projectile.NewProjectile(source, player.Center + (rot.ToRotationVector2() * 48), Vector2.Zero, ModContent.ProjectileType<FreosanProj>()
                     , (int)(damage * 0.2f), 2, player.whoAmI);
                 mp.SpecialEnchantCD = 30;
             }

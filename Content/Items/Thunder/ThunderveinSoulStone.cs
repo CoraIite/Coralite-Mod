@@ -99,7 +99,7 @@ namespace Coralite.Content.Items.Thunder
                 Vector2 center = Projectile.Center;
                 const int RollingTime = 130;
 
-                Vector2 center2 = Owner.Center + (Timer / RollingTime * MathHelper.TwoPi * 2).ToRotationVector2() * 350;
+                Vector2 center2 = Owner.Center + ((Timer / RollingTime * MathHelper.TwoPi * 2).ToRotationVector2() * 350);
                 Vector2 dir3 = center2 - center;
 
                 float velRot = Projectile.velocity.ToRotation();
@@ -163,7 +163,7 @@ namespace Coralite.Content.Items.Thunder
                 DistanceToOwner = DistanceToOwner.SafeNormalize(Vector2.Zero);
                 DistanceToOwner *= _10;
                 DistanceToOwner *= new Vector2(1.2f, 0.8f);
-                Projectile.velocity = (Projectile.velocity * 15f + DistanceToOwner) / 16f;
+                Projectile.velocity = ((Projectile.velocity * 15f) + DistanceToOwner) / 16f;
                 Projectile.direction = Projectile.spriteDirection = Math.Sign(Projectile.velocity.X);
             }
             else

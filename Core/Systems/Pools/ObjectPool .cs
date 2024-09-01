@@ -17,7 +17,7 @@ namespace Coralite.Core.Systems.Pools
         {
             if (init_size < 0 || capacity < 1 || init_size > capacity)
             {
-                throw (new Exception("Invalid parameter!"));
+                throw new Exception("Invalid parameter!");
             }
 
             NCapacity = capacity;
@@ -29,7 +29,7 @@ namespace Coralite.Core.Systems.Pools
 
             for (int i = 0; i < init_size; i++)
             {
-                PoolItem pitem = new (type, create_param);
+                PoolItem pitem = new(type, create_param);
                 ListObjects.Add(pitem.InnerObjectHashcode, pitem);
                 ListFreeIndex.Add(pitem.InnerObjectHashcode);
             }
@@ -79,7 +79,7 @@ namespace Coralite.Core.Systems.Pools
                     {
                         return null;
                     }
-                    PoolItem pnewitem = new (TypeObject, ObjCreateParam);
+                    PoolItem pnewitem = new(TypeObject, ObjCreateParam);
                     ListObjects.Add(pnewitem.InnerObjectHashcode, pnewitem);
                     ListFreeIndex.Add(pnewitem.InnerObjectHashcode);
                     NCurrentSize++;

@@ -19,7 +19,7 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
             if (player.TryGetModPlayer(out MagikePlayer mp) && mp.SpecialEnchantCD <= 0)
             {
                 float rot = Main.rand.NextFloat(6.282f);
-                Projectile.NewProjectile(source, player.Center + rot.ToRotationVector2() * 32, Vector2.Zero, ModContent.ProjectileType<LeafShield>()
+                Projectile.NewProjectile(source, player.Center + (rot.ToRotationVector2() * 32), Vector2.Zero, ModContent.ProjectileType<LeafShield>()
                     , (int)(damage * 0.4f), 4, player.whoAmI, rot);
                 mp.SpecialEnchantCD = 60;
             }
@@ -55,12 +55,12 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
         {
             Player owner = Main.player[Projectile.owner];
 
-            float factor = (5 * 60f - Projectile.timeLeft) / (5 * 60f);
+            float factor = ((5 * 60f) - Projectile.timeLeft) / (5 * 60f);
 
-            Distance = 32 + MathF.Sin(factor * MathHelper.Pi) * 100;
+            Distance = 32 + (MathF.Sin(factor * MathHelper.Pi) * 100);
             Rot += MathHelper.TwoPi / (2 * 60);
 
-            Projectile.Center = owner.Center + Rot.ToRotationVector2() * Distance;
+            Projectile.Center = owner.Center + (Rot.ToRotationVector2() * Distance);
             Projectile.rotation += 0.15f;
 
             Dust d = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height,
@@ -86,7 +86,7 @@ namespace Coralite.Core.Systems.MagikeSystem.EnchantSystem
             Vector2 pos = Projectile.Center - Main.screenPosition;
             for (int i = 0; i < 3; i++)
             {
-                Main.spriteBatch.Draw(mainTex, pos, frameBox, lightColor, Projectile.rotation + i * MathHelper.TwoPi / 3,
+                Main.spriteBatch.Draw(mainTex, pos, frameBox, lightColor, Projectile.rotation + (i * MathHelper.TwoPi / 3),
                     origin, 1, 0, 0);
             }
             return false;

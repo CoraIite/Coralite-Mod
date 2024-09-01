@@ -64,7 +64,7 @@ namespace Coralite.Content.Items.Gels
         {
             if (Main.myPlayer == player.whoAmI)
             {
-                Projectile.NewProjectile(source, player.Center + (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero) * 32,
+                Projectile.NewProjectile(source, player.Center + ((Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero) * 32),
                     (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero) * Item.shootSpeed, type, damage, knockback, player.whoAmI);
             }
             return false;
@@ -120,7 +120,7 @@ namespace Coralite.Content.Items.Gels
                 case 1:
                     Projectile.velocity *= 0.99f;
                     Projectile.ai[1]++;
-                    Projectile.ai[2] = Projectile.scale + MathF.Sin(Main.GlobalTimeWrappedHourly * 2) * 0.1f;
+                    Projectile.ai[2] = Projectile.scale + (MathF.Sin(Main.GlobalTimeWrappedHourly * 2) * 0.1f);
                     if (Vector2.Distance(Projectile.Center, Owner.Center) < 64)//玩家在附近，md跟你爆了
                     {
                         State = 2;

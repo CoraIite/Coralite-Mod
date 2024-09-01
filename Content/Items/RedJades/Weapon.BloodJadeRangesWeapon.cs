@@ -189,7 +189,7 @@ namespace Coralite.Content.Items.RedJades
                 {
                     float baseScale = 0.1f;
                     float _Rotation = (target.Center - Projectile.Center).ToRotation();
-                    Vector2 pos = Projectile.Center + _Rotation.ToRotationVector2() * (Projectile.width / 2f);
+                    Vector2 pos = Projectile.Center + (_Rotation.ToRotationVector2() * (Projectile.width / 2f));
                     Dust dust = Dust.NewDustPerfect(pos, DustType<BloodJadeStrikeDust>(),
                         Scale: Main.rand.NextFloat(baseScale, baseScale * 1.3f));
                     dust.rotation = _Rotation + MathHelper.PiOver2 + Main.rand.NextFloat(-0.2f, 0.2f);
@@ -260,14 +260,14 @@ namespace Coralite.Content.Items.RedJades
             c2 *= 0.6f;
             for (int i = 0; i < 3; i++)
             {
-                Vector2 offset = (Main.GlobalTimeWrappedHourly + i * MathHelper.TwoPi / 3).ToRotationVector2();
-                Main.spriteBatch.Draw(mainTex, Projectile.Center + offset * 4 - Main.screenPosition, null, c2, Projectile.rotation,
+                Vector2 offset = (Main.GlobalTimeWrappedHourly + (i * MathHelper.TwoPi / 3)).ToRotationVector2();
+                Main.spriteBatch.Draw(mainTex, Projectile.Center + (offset * 4) - Main.screenPosition, null, c2, Projectile.rotation,
                     mainTex.Size() / 2, Projectile.scale * 1.1f, 0, 0);
             }
 
             for (int i = 12; i > 8; i--)
                 Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] - Main.screenPosition, null,
-                c2 * (1f - (12 - i) * 1 / 5f), Projectile.rotation, mainTex.Size() / 2, Projectile.scale, 0, 0);
+                c2 * (1f - ((12 - i) * 1 / 5f)), Projectile.rotation, mainTex.Size() / 2, Projectile.scale, 0, 0);
             Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, null, c, Projectile.rotation,
                 mainTex.Size() / 2, Projectile.scale, 0, 0);
 
@@ -327,7 +327,7 @@ namespace Coralite.Content.Items.RedJades
             {
                 if (Timer == 0)
                 {
-                    Angle = MouseTargetAngle - Owner.direction * 1f;
+                    Angle = MouseTargetAngle - (Owner.direction * 1f);
                 }
                 if (Timer < 12)
                 {
@@ -391,7 +391,7 @@ namespace Coralite.Content.Items.RedJades
 
             } while (false);
 
-            Projectile.Center = Owner.Center + Angle.ToRotationVector2() * distanceToOwner;
+            Projectile.Center = Owner.Center + (Angle.ToRotationVector2() * distanceToOwner);
             Timer++;
         }
 
@@ -433,8 +433,8 @@ namespace Coralite.Content.Items.RedJades
             c2 *= 0.6f * alpha;
             for (int i = 0; i < 3; i++)
             {
-                Vector2 offset = (Main.GlobalTimeWrappedHourly + i * MathHelper.TwoPi / 3).ToRotationVector2();
-                Main.spriteBatch.Draw(mainTex, Projectile.Center + offset * 4 - Main.screenPosition, null, c2, Projectile.rotation,
+                Vector2 offset = (Main.GlobalTimeWrappedHourly + (i * MathHelper.TwoPi / 3)).ToRotationVector2();
+                Main.spriteBatch.Draw(mainTex, Projectile.Center + (offset * 4) - Main.screenPosition, null, c2, Projectile.rotation,
                     mainTex.Size() / 2, Projectile.scale, 0, 0);
             }
 

@@ -158,7 +158,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     for (int i = 0; i < 3; i++)
                     {
                         Vector2 dir = Helper.NextVec2Dir();
-                        PeridotProj.SpawnTriangleParticle(Projectile.Center + dir * Main.rand.NextFloat(6, 12), dir * Main.rand.NextFloat(1f, 3f));
+                        PeridotProj.SpawnTriangleParticle(Projectile.Center + (dir * Main.rand.NextFloat(6, 12)), dir * Main.rand.NextFloat(1f, 3f));
                     }
                 }
 
@@ -255,8 +255,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
                 length = num481 / length;
                 dir *= length;
-                Projectile.velocity.X = (Projectile.velocity.X * 19f + dir.X) / 20f;
-                Projectile.velocity.Y = (Projectile.velocity.Y * 19f + dir.Y) / 20f;
+                Projectile.velocity.X = ((Projectile.velocity.X * 19f) + dir.X) / 20f;
+                Projectile.velocity.Y = ((Projectile.velocity.Y * 19f) + dir.Y) / 20f;
                 Projectile.rotation = Projectile.velocity.ToRotation();
 
                 if (Vector2.Distance(Projectile.Center, TargetPos) < 24)
@@ -292,7 +292,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                             Projectile.damage, Projectile.knockBack, 1);
                     }
 
-                    angle += Main.rand.NextFloat(MathHelper.TwoPi / 3 - 0.3f, MathHelper.TwoPi / 3 + 0.3f);
+                    angle += Main.rand.NextFloat((MathHelper.TwoPi / 3) - 0.3f, (MathHelper.TwoPi / 3) + 0.3f);
                 }
 
                 Helper.PlayPitched(CoraliteSoundID.Crystal_Item101, Projectile.Center, pitch: -0.4f);
@@ -316,7 +316,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 for (int i = 0; i < 6; i++)
                 {
                     Vector2 dir = Helper.NextVec2Dir();
-                    SpawnTriangleParticle(Projectile.Center + dir * Main.rand.NextFloat(6, 12), dir * Main.rand.NextFloat(1f, 6f));
+                    SpawnTriangleParticle(Projectile.Center + (dir * Main.rand.NextFloat(6, 12)), dir * Main.rand.NextFloat(1f, 6f));
                 }
         }
 
@@ -329,7 +329,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             for (int i = 0; i < 12; i++)
                 Main.spriteBatch.Draw(exTex, Projectile.oldPos[i] + toCenter - Main.screenPosition, null,
-                    Color.Lerp(brightC, darkC, i / 12f) * (0.4f - i * 0.4f / 12), Projectile.oldRot[i] + 1.57f, origin, 1, 0, 0);
+                    Color.Lerp(brightC, darkC, i / 12f) * (0.4f - (i * 0.4f / 12)), Projectile.oldRot[i] + 1.57f, origin, 1, 0, 0);
 
             Projectile.QuickDraw(lightColor, 0);
             return false;
@@ -462,8 +462,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
                         length = num481 / length;
                         dir *= length;
-                        Projectile.velocity.X = (Projectile.velocity.X * 19f + dir.X) / 20f;
-                        Projectile.velocity.Y = (Projectile.velocity.Y * 19f + dir.Y) / 20f;
+                        Projectile.velocity.X = ((Projectile.velocity.X * 19f) + dir.X) / 20f;
+                        Projectile.velocity.Y = ((Projectile.velocity.Y * 19f) + dir.Y) / 20f;
                     }
                     break;
                 case 3:
@@ -497,7 +497,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 for (int i = 0; i < 3; i++)
                 {
                     Vector2 dir = Helper.NextVec2Dir();
-                    PeridotProj.SpawnTriangleParticle(Projectile.Center + dir * Main.rand.NextFloat(6, 12), dir * Main.rand.NextFloat(1f, 3f));
+                    PeridotProj.SpawnTriangleParticle(Projectile.Center + (dir * Main.rand.NextFloat(6, 12)), dir * Main.rand.NextFloat(1f, 3f));
                 }
         }
 
@@ -511,15 +511,15 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             for (int i = 1; i < 6; i++)
             {
-                Color c = PeridotProj.brightC * (Alpha / 2f - i * Alpha / 2f / 6f);
+                Color c = PeridotProj.brightC * ((Alpha / 2f) - (i * Alpha / 2f / 6f));
                 Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] + toCenter - Main.screenPosition, frame,
-                    c, Projectile.oldRot[i] + exrot, frame.Size() / 2, 1 * (1 + i * 0.1f), 0, 0);
+                    c, Projectile.oldRot[i] + exrot, frame.Size() / 2, 1 * (1 + (i * 0.1f)), 0, 0);
             }
 
             rand -= Projectile.velocity / 10;
 
             Helper.DrawCrystal(Main.spriteBatch, Projectile.frame, Projectile.Center + rand, new Vector2(0.7f)
-                , (float)Main.timeForVisualEffects * 0.02f + Projectile.whoAmI / 3f
+                , ((float)Main.timeForVisualEffects * 0.02f) + (Projectile.whoAmI / 3f)
                 , PeridotProj.highlightC, PeridotProj.brightC, PeridotProj.darkC, () =>
                 {
                     Main.spriteBatch.Draw(mainTex, Projectile.Center, frame, Color.White * Alpha, Projectile.rotation + exrot, frame.Size() / 2, Projectile.scale, 0, 0);

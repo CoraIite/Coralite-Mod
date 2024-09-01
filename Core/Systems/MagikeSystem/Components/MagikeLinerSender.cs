@@ -248,7 +248,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             [
                 //发送时间
                 this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.MagikeSendTime), parent),
-                this.NewTextBar(c => 
+                this.NewTextBar(c =>
                 {
                     float timer= MathF.Round(c.Timer/60f,1);
                     float delay= MathF.Round(c.SendDelay/60f,1);
@@ -266,7 +266,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 this.NewTextBar(c =>{
                     float length= MathF.Round(c.ConnectLength/16f,1);
                     float lengthBase= MathF.Round(c.ConnectLengthBase/16f,1);
-                    string sign= (c.ConnectLengthExtra >= 0 ? "+" : "- ");
+                    string sign= c.ConnectLengthExtra >= 0 ? "+" : "- ";
                     float lengthExtra= MathF.Round(c.ConnectLengthExtra/16f,1);
 
                     return $"  ▶ {length} ({lengthBase} {sign} {lengthExtra})";
@@ -365,7 +365,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             Texture2D tex = MagikeSystem.ConnectUI[(int)MagikeSystem.ConnectUIAssetID.Botton].Value;
 
             var style = GetDimensions();
-            Vector2 pos = style.Position() + new Vector2(style.Width - tex.Width / 2, style.Height / 2);
+            Vector2 pos = style.Position() + new Vector2(style.Width - (tex.Width / 2), style.Height / 2);
             Vector2 origin = tex.Size() / 2;
 
             bool ishover = IsMouseHovering;
@@ -388,7 +388,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                     spriteBatch.End();
                     spriteBatch.Begin(default, BlendState.AlphaBlend, SamplerState.PointWrap, default, default, null, Main.GameViewMatrix.TransformationMatrix);
 
-                    Color drawColor = Color.Lerp(Color.White, Color.Coral, MathF.Sin((int)Main.timeForVisualEffects * 0.1f) / 2 + 0.5f);
+                    Color drawColor = Color.Lerp(Color.White, Color.Coral, (MathF.Sin((int)Main.timeForVisualEffects * 0.1f) / 2) + 0.5f);
 
                     Vector2 selfPos = Helper.GetMagikeTileCenter(MagikeApparatusPanel.CurrentEntity.Position);
                     Vector2 aimPos = Helper.GetMagikeTileCenter(_sender.Receivers[_index]);

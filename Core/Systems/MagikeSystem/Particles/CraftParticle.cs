@@ -18,9 +18,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
     /// 绘制本体圆圈中间的法阵
     /// 绘制连接点位的圆圈与本体之间的连接线
     /// </summary>
-    public class CraftParticle:Particle,IDrawParticlePrimitive
+    public class CraftParticle : Particle, IDrawParticlePrimitive
     {
-        public override string Texture => AssetDirectory.OtherProjectiles+ "Circle3";
+        public override string Texture => AssetDirectory.OtherProjectiles + "Circle3";
 
         private Point16 _pos;
         private int _totalTime;
@@ -51,13 +51,13 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
 
         public override void Update()
         {
-            if (!TryGetEntity(_pos,out MagikeTileEntity entity))
+            if (!TryGetEntity(_pos, out MagikeTileEntity entity))
             {
-                active=false; 
+                active = false;
                 return;
             }
 
-            if (alpha<1)
+            if (alpha < 1)
             {
                 alpha += 0.2f;
             }
@@ -77,12 +77,12 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
 
             //获取alt对应的偏转量
             GetMagikeAlternateData(pos.X, pos.Y, out TileObjectData data, out MagikeAlternateStyle alternate);
-            
-            Vector2 position = Helper.GetMagikeTileCenter(pos)+cat.GetFloatingOffset(alternate);
-            CraftParticle p = NewParticle<CraftParticle>(position,Vector2.Zero,Coralite.MagicCrystalPink);
+
+            Vector2 position = Helper.GetMagikeTileCenter(pos) + cat.GetFloatingOffset(alternate);
+            CraftParticle p = NewParticle<CraftParticle>(position, Vector2.Zero, Coralite.MagicCrystalPink);
 
             p._pos = pos;
-            p.fadeIn =p._totalTime= craftTime;
+            p.fadeIn = p._totalTime = craftTime;
             p._trails = new List<Trail>();
 
             //foreach (var pos2 in )
@@ -95,7 +95,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            
+
         }
 
         public void DrawPrimitives()

@@ -161,7 +161,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             if (AttackTime > 0)
             {
-                Vector2 dir = (Main.MouseWorld - Projectile.Center);
+                Vector2 dir = Main.MouseWorld - Projectile.Center;
                 if (dir.Length() < 48)
                     idlePos += dir;
                 else
@@ -181,19 +181,19 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 if (AttackTime % 7 == 0)
                 {
                     Color c = Main.rand.NextFromList(AquamarineProj.brightC, AquamarineProj.highlightC, Main.DiscoColor);
-                    LightLine ll = LightLine.Spwan(Projectile.Center + (Projectile.rotation + MathHelper.PiOver2).ToRotationVector2() * 10, Vector2.Zero, c,
+                    LightLine ll = LightLine.Spwan(Projectile.Center + ((Projectile.rotation + MathHelper.PiOver2).ToRotationVector2() * 10), Vector2.Zero, c,
                        null, Main.rand.NextFloat(0.1f, 0.4f), Main.rand.NextFloat(0.1f, 0.4f));
                     ll.fadeTime = Main.rand.Next(15, 25);
-                    ll.center = () => Projectile.Center + (Projectile.rotation + MathHelper.PiOver2).ToRotationVector2() * 10;
+                    ll.center = () => Projectile.Center + ((Projectile.rotation + MathHelper.PiOver2).ToRotationVector2() * 10);
                     ll.scaleY = Main.rand.NextFloat(0.2f, 0.6f);
                 }
 
-                Projectile.rotation = MathF.Sin((1 - AttackTime / Owner.itemTimeMax) * MathHelper.TwoPi) * 0.5f;
+                Projectile.rotation = MathF.Sin((1 - (AttackTime / Owner.itemTimeMax)) * MathHelper.TwoPi) * 0.5f;
                 if ((int)AttackTime % (Owner.itemTimeMax / 3) == 0 && Owner.CheckMana(Owner.HeldItem.mana, true))
                 {
                     Owner.manaRegenDelay = 40;
 
-                    float angle = Main.rand.NextFromList(-1, 1) * 0.35f + Main.rand.NextFloat(-0.5f, 0.5f);
+                    float angle = (Main.rand.NextFromList(-1, 1) * 0.35f) + Main.rand.NextFloat(-0.5f, 0.5f);
                     Projectile.NewProjectileFromThis<AquamarineProj>(Projectile.Center
                         , Vector2.UnitY.RotatedBy(angle) * 8, Owner.GetWeaponDamage(Owner.HeldItem), Projectile.knockBack);
 
@@ -206,7 +206,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     for (int i = 0; i < 2; i++)
                     {
                         Vector2 dir = Helper.NextVec2Dir();
-                        AquamarineProj.SpawnTriangleParticle(Projectile.Center + dir * Main.rand.NextFloat(6, 12), dir * Main.rand.NextFloat(1f, 3f));
+                        AquamarineProj.SpawnTriangleParticle(Projectile.Center + (dir * Main.rand.NextFloat(6, 12)), dir * Main.rand.NextFloat(1f, 3f));
                     }
                 }
 
@@ -228,7 +228,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             for (int i = 0; i < 4; i++)
                 Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] + toCenter - Main.screenPosition, null,
-                    new Color(251, 100, 152) * (0.3f - i * 0.3f / 4), Projectile.oldRot[i] + 0, origin, Projectile.scale, 0, 0);
+                    new Color(251, 100, 152) * (0.3f - (i * 0.3f / 4)), Projectile.oldRot[i] + 0, origin, Projectile.scale, 0, 0);
 
             Main.spriteBatch.Draw(mainTex, Projectile.Top - Main.screenPosition, null, lightColor, Projectile.rotation,
                 origin, Projectile.scale, 0, 0);
@@ -351,8 +351,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             length = num481 / length;
             dir *= length;
-            Projectile.velocity.X = (Projectile.velocity.X * 19f + dir.X) / 20f;
-            Projectile.velocity.Y = (Projectile.velocity.Y * 19f + dir.Y) / 20f;
+            Projectile.velocity.X = ((Projectile.velocity.X * 19f) + dir.X) / 20f;
+            Projectile.velocity.Y = ((Projectile.velocity.Y * 19f) + dir.Y) / 20f;
             Projectile.rotation = Projectile.velocity.ToRotation();
         }
 
@@ -381,7 +381,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 for (int i = 0; i < 3; i++)
                 {
                     Vector2 dir = Helper.NextVec2Dir();
-                    SpawnTriangleParticle(Projectile.Center + dir * Main.rand.NextFloat(6, 12), dir * Main.rand.NextFloat(1f, 3f));
+                    SpawnTriangleParticle(Projectile.Center + (dir * Main.rand.NextFloat(6, 12)), dir * Main.rand.NextFloat(1f, 3f));
                 }
         }
 
@@ -431,7 +431,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             rand.X += 0.15f;
 
             Helper.DrawCrystal(spriteBatch, Projectile.frame, Projectile.Center + rand, new Vector2(0.7f)
-                , (float)(Main.timeForVisualEffects + Projectile.timeLeft) * (Main.gamePaused ? 0.02f : 0.01f) + Projectile.whoAmI / 3f
+                , ((float)(Main.timeForVisualEffects + Projectile.timeLeft) * (Main.gamePaused ? 0.02f : 0.01f)) + (Projectile.whoAmI / 3f)
                 , highlightC, brightC, darkC, () =>
                 {
                     Texture2D mainTex = Projectile.GetTexture();

@@ -100,7 +100,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                                     float factor = Timer / (60 * 2);
                                     float length = dir.Length() * factor;
 
-                                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), originCenter + dir.SafeNormalize(Vector2.Zero) * length,
+                                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), originCenter + (dir.SafeNormalize(Vector2.Zero) * length),
                                         new Vector2(Timer % 20 == 0 ? -1 : 1, 0) * 14, ModContent.ProjectileType<GhostHand>(), Projectile.damage, 0, Projectile.owner, Main.zenithWorld ? Main.rand.NextFloat(0, 1) : Projectile.ai[1]);
                                     SoundEngine.PlaySound(CoraliteSoundID.NoUse_BlowgunPlus_Item65, Projectile.Center);
                                 }
@@ -140,7 +140,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
                 for (int i = 0; i < maxLength; i += 8)
                 {
-                    Vector2 pos = targetCenter + dir * i;
+                    Vector2 pos = targetCenter + (dir * i);
                     for (int j = -1; j < 2; j += 2)
                     {
                         Dust dust = Dust.NewDustPerfect(pos + Main.rand.NextVector2Circular(16, 16), DustID.SpookyWood,

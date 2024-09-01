@@ -46,7 +46,7 @@ namespace Coralite.Content.Items.RedJades
                     if (!initialized)
                         Initialize_Normal();
 
-                    Projectile.Center = Owner.Center + Owner.direction * Projectile.rotation.ToRotationVector2() * 20;
+                    Projectile.Center = Owner.Center + (Owner.direction * Projectile.rotation.ToRotationVector2() * 20);
 
                     break;
                 case 1: //强化
@@ -73,12 +73,12 @@ namespace Coralite.Content.Items.RedJades
                         for (int i = 0; i < 20; i++)
                         {
                             r += 0.314f;
-                            Vector2 dir = r.ToRotationVector2() * Helper.EllipticalEase(1.85f + 0.314f * i, 1f, 3f);
+                            Vector2 dir = r.ToRotationVector2() * Helper.EllipticalEase(1.85f + (0.314f * i), 1f, 3f);
 
                             //Vector2 dir = new Vector2((float)Math.Cos(1.57f + 0.314f*i ), (float)Math.Sin(1.57f + 0.314f*i +0.5f));       //<--这样不行  : (
-                            Dust dust = Dust.NewDustPerfect(center, DustID.GemRuby, dir * 1.4f + targetDir * 6, Scale: 1.8f);
+                            Dust dust = Dust.NewDustPerfect(center, DustID.GemRuby, (dir * 1.4f) + (targetDir * 6), Scale: 1.8f);
                             dust.noGravity = true;
-                            Dust dust2 = Dust.NewDustPerfect(center, DustID.GemRuby, dir * 0.8f + targetDir * 3, Scale: 1.5f);
+                            Dust dust2 = Dust.NewDustPerfect(center, DustID.GemRuby, (dir * 0.8f) + (targetDir * 3), Scale: 1.5f);
                             dust2.noGravity = true;
                         }
                     }
@@ -88,8 +88,8 @@ namespace Coralite.Content.Items.RedJades
 
                     Projectile.rotation = TargetRot + (Owner.direction > 0 ? 0f : MathHelper.Pi);
                     Projectile.velocity = TargetRot.ToRotationVector2() * 32;
-                    Projectile.Center = Owner.Center + Owner.direction * Projectile.rotation.ToRotationVector2() * 20;
-                    Owner.itemRotation = Projectile.rotation + Owner.direction * 0.3f;
+                    Projectile.Center = Owner.Center + (Owner.direction * Projectile.rotation.ToRotationVector2() * 20);
+                    Owner.itemRotation = Projectile.rotation + (Owner.direction * 0.3f);
                     Projectile.netUpdate = true;
                     break;
             }
@@ -102,7 +102,7 @@ namespace Coralite.Content.Items.RedJades
                 TargetRot = (Main.MouseWorld - Owner.Center).ToRotation() + (Owner.direction > 0 ? 0f : 3.141f);
 
             Projectile.rotation = TargetRot;
-            Owner.itemRotation = Projectile.rotation + Owner.direction * 0.3f;
+            Owner.itemRotation = Projectile.rotation + (Owner.direction * 0.3f);
             Projectile.netUpdate = true;
             initialized = true;
         }
@@ -122,13 +122,13 @@ namespace Coralite.Content.Items.RedJades
             Vector2 center = Projectile.Center - Main.screenPosition;
 
             SpriteEffects effects = Owner.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            Main.spriteBatch.Draw(mainTex, center, null, lightColor, Projectile.rotation + Owner.direction * 0.785f, mainTex.Size() / 2, Projectile.scale, effects, 0f);
+            Main.spriteBatch.Draw(mainTex, center, null, lightColor, Projectile.rotation + (Owner.direction * 0.785f), mainTex.Size() / 2, Projectile.scale, effects, 0f);
 
             if (Projectile.ai[0] == 1)
             {
                 if (Projectile.timeLeft > 22)
                 {
-                    float factor = 1 - (36 - Projectile.timeLeft) / 14f;
+                    float factor = 1 - ((36 - Projectile.timeLeft) / 14f);
                     Helper.DrawPrettyStarSparkle(1, SpriteEffects.None, center + Projectile.velocity, new Color(255, 255, 255, 0) * 0.8f,
                         Coralite.RedJadeRed, factor, 0f, 0.4f, 0.6f, 1f, 0f, new Vector2(6, 3f) * factor, Vector2.One);
                 }
@@ -144,7 +144,7 @@ namespace Coralite.Content.Items.RedJades
                 if (Projectile.timeLeft > 22)
                 {
                     Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.Rediancie + "RedShield").Value;
-                    float factor = 1 - (36 - Projectile.timeLeft) / 14f;
+                    float factor = 1 - ((36 - Projectile.timeLeft) / 14f);
                     spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition + Projectile.velocity, null, Coralite.RedJadeRed * (Projectile.alpha / 255f), Projectile.timeLeft * 0.25f, mainTex.Size() / 2, MathF.Sin(factor * 3.141f) * 0.3f, SpriteEffects.None, 0f);
                 }
             }

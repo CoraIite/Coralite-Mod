@@ -131,7 +131,7 @@ namespace Coralite.Content.Items.Misc
                     if (BisketyController.ShowFlags[i])
                         howMany++;
 
-                Vector2 position = pos - new Vector2(0, 40 + howMany * 20);
+                Vector2 position = pos - new Vector2(0, 40 + (howMany * 20));
                 int totalDamage = NPC.lifeMax - NPC.life;
                 if (BisketyController.ShowFlags[(int)BisketyController.ShowType.ShowTotalDamage])
                     Utils.DrawBorderString(spriteBatch, $"总伤害：{totalDamage}", position, Color.White, anchorx: 0.5f, anchory: 0.5f);

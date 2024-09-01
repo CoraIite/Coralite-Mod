@@ -39,7 +39,7 @@ namespace Coralite.Content.Items.Misc_Melee
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            Vector2 vector55 = player.MountedCenter + new Vector2(70f, -40f) * player.Directions;
+            Vector2 vector55 = player.MountedCenter + (new Vector2(70f, -40f) * player.Directions);
             int npcTargetIndex3;
             bool zenithTarget2 = GetZenithTarget(vector55, 150f, out npcTargetIndex3);
             if (zenithTarget2)
@@ -52,9 +52,9 @@ namespace Coralite.Content.Items.Misc_Melee
                 vector55 += Main.rand.NextVector2Circular(20f, 20f);
             }
 
-            Vector2 vector56 = player.Center + new Vector2(Main.rand.NextFloatDirection() * player.width / 2f, player.height / 2) * player.Directions;
+            Vector2 vector56 = player.Center + (new Vector2(Main.rand.NextFloatDirection() * player.width / 2f, player.height / 2) * player.Directions);
             Vector2 v6 = vector55 - vector56;
-            float num175 = ((float)Math.PI + (float)Math.PI * 2f * Main.rand.NextFloat() * 1.5f) * (-player.direction * player.gravDir);
+            float num175 = ((float)Math.PI + ((float)Math.PI * 2f * Main.rand.NextFloat() * 1.5f)) * (-player.direction * player.gravDir);
             int num176 = 60;
             float num177 = num175 / num176;
             float num178 = 16f;
@@ -202,16 +202,16 @@ namespace Coralite.Content.Items.Misc_Melee
 
             // Keep locked onto the player, but extend further based on the given velocity (Requires ShouldUpdatePosition returning false to work)
             Vector2 playerCenter = player.RotatedRelativePoint(player.MountedCenter, reverseRotation: false, addGfxOffY: false);
-            Projectile.Center = playerCenter + Projectile.velocity * (Timer - 1f);
+            Projectile.Center = playerCenter + (Projectile.velocity * (Timer - 1f));
 
             // Set spriteDirection based on moving left or right. Left -1, right 1
             Projectile.spriteDirection = (Vector2.Dot(Projectile.velocity, Vector2.UnitX) >= 0f).ToDirectionInt();
 
             // Point towards where it is moving, applied offset for top right of the sprite respecting spriteDirection
-            Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2 - MathHelper.PiOver4 * Projectile.spriteDirection;
+            Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2 - (MathHelper.PiOver4 * Projectile.spriteDirection);
 
             int num7 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height
-                , DustID.JunglePlants, Projectile.velocity.X * 0.2f + Main.player[Projectile.owner].direction * 3,
+                , DustID.JunglePlants, (Projectile.velocity.X * 0.2f) + (Main.player[Projectile.owner].direction * 3),
                 Projectile.velocity.Y * 0.2f, 0, default, 1.2f);
             Main.dust[num7].noGravity = true;
 
@@ -257,7 +257,7 @@ namespace Coralite.Content.Items.Misc_Melee
             // "cutting tiles" refers to breaking pots, grass, queen bee larva, etc.
             DelegateMethods.tilecut_0 = TileCuttingContext.AttackProjectile;
             Vector2 start = Projectile.Center;
-            Vector2 end = start + Projectile.velocity.SafeNormalize(-Vector2.UnitY) * 10f;
+            Vector2 end = start + (Projectile.velocity.SafeNormalize(-Vector2.UnitY) * 10f);
             Utils.PlotTileLine(start, end, CollisionWidth, DelegateMethods.CutTiles);
         }
 
@@ -266,7 +266,7 @@ namespace Coralite.Content.Items.Misc_Melee
             // "Hit anything between the player and the tip of the sword"
             // shootSpeed is 2.1f for reference, so this is basically plotting 12 pixels ahead from the center
             Vector2 start = Projectile.Center;
-            Vector2 end = start + Projectile.velocity * 6f;
+            Vector2 end = start + (Projectile.velocity * 6f);
             float collisionPoint = 0f; // Don't need that variable, but required as parameter
             return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), start, end, CollisionWidth, ref collisionPoint);
         }

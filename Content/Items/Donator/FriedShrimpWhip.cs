@@ -62,7 +62,7 @@ namespace Coralite.Content.Items.Donator
     public class FriedShrimpRarity : ModRarity
     {
         public override Color RarityColor => Color.Lerp(new Color(252, 213, 108), new Color(231, 150, 48)
-            , MathF.Sin(Main.GlobalTimeWrappedHourly) / 2 + 0.5f);
+            , (MathF.Sin(Main.GlobalTimeWrappedHourly) / 2) + 0.5f);
     }
 
     public class FriedShrimpProj : ModProjectile
@@ -93,7 +93,7 @@ namespace Coralite.Content.Items.Donator
             Player owner = Main.player[Projectile.owner];
             Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2; // Without PiOver2, the rotation would be off by 90 degrees counterclockwise.
 
-            Projectile.Center = Main.GetPlayerArmPosition(Projectile) + Projectile.velocity * Timer;
+            Projectile.Center = Main.GetPlayerArmPosition(Projectile) + (Projectile.velocity * Timer);
             Projectile.spriteDirection = Projectile.velocity.X >= 0f ? 1 : -1;
 
             Timer++;
@@ -202,7 +202,7 @@ namespace Coralite.Content.Items.Donator
                 }
                 else if (i > 0)
                 {
-                    frame.Y = 24 + ((i - 1) / 2) * 10;
+                    frame.Y = 24 + ((i - 1) / 2 * 10);
                     frame.Height = 16;
 
                     if (i % 2 == 0)

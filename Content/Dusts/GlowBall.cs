@@ -29,10 +29,10 @@ namespace Coralite.Content.Dusts
                 dust.customData = true;
             }
 
-            Vector2 currentCenter = dust.position + Vector2.One.RotatedBy(dust.rotation) * 32 * dust.scale;
+            Vector2 currentCenter = dust.position + (Vector2.One.RotatedBy(dust.rotation) * 32 * dust.scale);
 
             dust.scale *= 0.95f;
-            Vector2 nextCenter = dust.position + Vector2.One.RotatedBy(dust.rotation + 0.06f) * 32 * dust.scale;
+            Vector2 nextCenter = dust.position + (Vector2.One.RotatedBy(dust.rotation + 0.06f) * 32 * dust.scale);
 
             dust.rotation += 0.06f;
             dust.position += currentCenter - nextCenter;

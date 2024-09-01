@@ -79,8 +79,8 @@ namespace Coralite.Content.Bosses.Rediancie
             Texture2D mainTex = GetTexture().Value;
             spriteBatch.Draw(mainTex, center, null, color, Rotation, mainTex.Size() / 2, Scale, SpriteEffects.None, 0);
 
-            float extraRot1 = Rotation + fadeIn * 0.1f;
-            float extraRot2 = Rotation + fadeIn * 0.05f;
+            float extraRot1 = Rotation + (fadeIn * 0.1f);
+            float extraRot2 = Rotation + (fadeIn * 0.05f);
             Vector2 flowOrigin = flowTex.Size() / 2;
 
             spriteBatch.Draw(flowTex.Value, center, null, color, extraRot1, flowOrigin, Scale - 0.1f, SpriteEffects.None, 0);

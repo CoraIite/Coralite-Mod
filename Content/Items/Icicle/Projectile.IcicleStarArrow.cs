@@ -94,7 +94,7 @@ namespace Coralite.Content.Items.Icicle
             {
                 float rot = Main.rand.NextFloat(6.282f);
                 for (int i = 0; i < 3; i++)
-                    Particle.NewParticle(Projectile.Center, (rot + i * 2.094f).ToRotationVector2(), CoraliteContent.ParticleType<HorizontalStar>(), Coralite.IcicleCyan, Main.rand.NextFloat(0.2f, 0.3f));
+                    Particle.NewParticle(Projectile.Center, (rot + (i * 2.094f)).ToRotationVector2(), CoraliteContent.ParticleType<HorizontalStar>(), Coralite.IcicleCyan, Main.rand.NextFloat(0.2f, 0.3f));
             }
         }
 

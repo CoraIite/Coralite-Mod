@@ -27,8 +27,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
                 return;
 
             if (!container.Items[0].IsAir)
-                DrawItem(spriteBatch, container.Items[0], drawPos + rotation.ToRotationVector2()
-                    * (18 + ItemSize / 2 + MathF.Sin(Main.GlobalTimeWrappedHourly + (tileRect.X + tileRect.Y) * 0.1f) * 6));
+                DrawItem(spriteBatch, container.Items[0], drawPos + (rotation.ToRotationVector2()
+                    * (18 + (ItemSize / 2) + (MathF.Sin(Main.GlobalTimeWrappedHourly + ((tileRect.X + tileRect.Y) * 0.1f)) * 6))));
         }
 
         public static void DrawItem(SpriteBatch spriteBatch, Item i, Vector2 pos)

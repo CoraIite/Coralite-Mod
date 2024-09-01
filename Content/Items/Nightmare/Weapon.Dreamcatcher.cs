@@ -58,8 +58,8 @@ namespace Coralite.Content.Items.Nightmare
                 rot = Math.Sign(rot) * 0.6f;
 
             player.itemRotation = rot;
-            Vector2 offset = ((player.itemRotation - MathHelper.PiOver2).ToRotationVector2() * 68);
-            player.itemLocation += new Vector2(player.direction * -6 - offset.X, 44 - (68 + offset.Y) * 2);
+            Vector2 offset = (player.itemRotation - MathHelper.PiOver2).ToRotationVector2() * 68;
+            player.itemLocation += new Vector2((player.direction * -6) - offset.X, 44 - ((68 + offset.Y) * 2));
         }
 
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)

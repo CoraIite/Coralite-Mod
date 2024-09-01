@@ -151,7 +151,7 @@ namespace Coralite.Content.Items.Nightmare
             Projectile.velocity *= 0f;
             if (Owner.whoAmI == Main.myPlayer)
             {
-                _Rotation = GetStartAngle() - OwnerDirection * startAngle;//设定起始角度
+                _Rotation = GetStartAngle() - (OwnerDirection * startAngle);//设定起始角度
             }
 
             Slasher();
@@ -180,11 +180,11 @@ namespace Coralite.Content.Items.Nightmare
 
             if (Timer < 30)
                 startAngle += Math.Sign(startAngle) * 0.05f;
-            _Rotation = GetStartAngle() - OwnerDirection * startAngle;
+            _Rotation = GetStartAngle() - (OwnerDirection * startAngle);
             Slasher();
             if ((int)Timer == minTime)
             {
-                _Rotation = startAngle = GetStartAngle() - OwnerDirection * startAngle;//设定起始角度
+                _Rotation = startAngle = GetStartAngle() - (OwnerDirection * startAngle);//设定起始角度
                 totalAngle *= OwnerDirection;
 
                 //Helper.PlayPitched("Misc/Slash", 0.4f, 0f, Owner.Center);
@@ -204,11 +204,11 @@ namespace Coralite.Content.Items.Nightmare
             {
                 default:
                 case 0:
-                    Projectile.scale = Helper.EllipticalEase(2.8f - 5.6f * Smoother.Smoother(timer, maxTime - minTime), 1f, 1.2f);
+                    Projectile.scale = Helper.EllipticalEase(2.8f - (5.6f * Smoother.Smoother(timer, maxTime - minTime)), 1f, 1.2f);
 
                     break;
                 case 1:
-                    Projectile.scale = Helper.EllipticalEase(2.8f - 4.6f * Smoother.Smoother(timer, maxTime - minTime), 1f, 1.2f);
+                    Projectile.scale = Helper.EllipticalEase(2.8f - (4.6f * Smoother.Smoother(timer, maxTime - minTime)), 1f, 1.2f);
 
                     break;
             }
@@ -243,10 +243,10 @@ namespace Coralite.Content.Items.Nightmare
                 if (oldRotate[i] == 100f)
                     continue;
 
-                float factor = 1f - i / count;
+                float factor = 1f - (i / count);
                 Vector2 Center = GetCenter(i);
-                Vector2 Top = Center + oldRotate[i].ToRotationVector2() * (oldLength[i] + trailTopWidth + oldDistanceToOwner[i]);
-                Vector2 Bottom = Center + oldRotate[i].ToRotationVector2() * (oldLength[i] - ControlTrailBottomWidth(factor) + oldDistanceToOwner[i]);
+                Vector2 Top = Center + (oldRotate[i].ToRotationVector2() * (oldLength[i] + trailTopWidth + oldDistanceToOwner[i]));
+                Vector2 Bottom = Center + (oldRotate[i].ToRotationVector2() * (oldLength[i] - ControlTrailBottomWidth(factor) + oldDistanceToOwner[i]));
 
                 var topColor = Color.Lerp(new Color(238, 218, 130, alpha), new Color(167, 127, 95, 0), 1 - factor);
                 var bottomColor = Color.Lerp(new Color(109, 73, 86, alpha), new Color(83, 16, 85, 0), 1 - factor);
@@ -391,10 +391,10 @@ namespace Coralite.Content.Items.Nightmare
                 if (oldRotate[i] == 100f)
                     continue;
 
-                float factor = 1f - i / count;
+                float factor = 1f - (i / count);
                 Vector2 Center = GetCenter(i);
-                Vector2 Top = Center + oldRotate[i].ToRotationVector2() * (oldLength[i] + trailTopWidth + oldDistanceToOwner[i]);
-                Vector2 Bottom = Center + oldRotate[i].ToRotationVector2() * (oldLength[i] - ControlTrailBottomWidth(factor) + oldDistanceToOwner[i]);
+                Vector2 Top = Center + (oldRotate[i].ToRotationVector2() * (oldLength[i] + trailTopWidth + oldDistanceToOwner[i]));
+                Vector2 Bottom = Center + (oldRotate[i].ToRotationVector2() * (oldLength[i] - ControlTrailBottomWidth(factor) + oldDistanceToOwner[i]));
 
                 var topColor = Color.Lerp(new Color(238, 218, 130, alpha), new Color(167, 127, 95, 0), 1 - factor);
                 var bottomColor = Color.Lerp(new Color(109, 73, 86, alpha), new Color(83, 16, 85, 0), 1 - factor);
@@ -531,7 +531,7 @@ namespace Coralite.Content.Items.Nightmare
             }
 
             Projectile.rotation += 0.25f;
-            Projectile.rotation = Projectile.velocity.ToRotation() + (float)Math.PI / 2f;
+            Projectile.rotation = Projectile.velocity.ToRotation() + ((float)Math.PI / 2f);
 
             if (Projectile.timeLeft > 894)
             {
@@ -590,7 +590,7 @@ namespace Coralite.Content.Items.Nightmare
                         Dust dust = Dust.NewDustPerfect(pos + Main.rand.NextVector2Circular(32, 32), DustID.RainbowMk2, null, 0, color);
                         dust.velocity *= Main.rand.NextFloat();
                         dust.noGravity = true;
-                        dust.scale = 0.9f + Main.rand.NextFloat() * 1.2f;
+                        dust.scale = 0.9f + (Main.rand.NextFloat() * 1.2f);
                         dust.fadeIn = Main.rand.NextFloat() * 1.2f * num28;
                         dust.scale *= num28;
                     }
@@ -689,8 +689,8 @@ namespace Coralite.Content.Items.Nightmare
             Vector2 secondScale = scale * 0.4f;
             for (int i = -1; i < 2; i += 2)
             {
-                Vector2 offsetPos = pos + rot.ToRotationVector2() * i * 12;
-                float rot3 = rot - i * 0.3f;
+                Vector2 offsetPos = pos + (rot.ToRotationVector2() * i * 12);
+                float rot3 = rot - (i * 0.3f);
                 Main.spriteBatch.Draw(lightTex, offsetPos, null, c, rot3, origin, secondScale, 0, 0);
                 //spriteBatch.Draw(lightTex, offsetPos, null, c, rot3, origin, secondScale, 0, 0);
 
@@ -701,9 +701,9 @@ namespace Coralite.Content.Items.Nightmare
             //周围一圈小星星
             for (int i = 0; i < 7; i++)
             {
-                float rot2 = (Main.GlobalTimeWrappedHourly * 2 + i * MathHelper.TwoPi / 7);
+                float rot2 = (Main.GlobalTimeWrappedHourly * 2) + (i * MathHelper.TwoPi / 7);
                 Vector2 dir = rot2.ToRotationVector2();
-                dir = pos + dir * (18 + factor * 4);
+                dir = pos + (dir * (18 + (factor * 4)));
                 rot2 += 1.57f;
                 Color phantomC = DrawColor;
                 //phantomC.A = 0;

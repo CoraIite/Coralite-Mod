@@ -47,7 +47,7 @@ namespace Coralite.Content.CustomHooks
                 {
                     MagikeTileEntity sender = TileEntity.ByPosition[point] as MagikeTileEntity;
 
-                    if (!sender .HasComponent(MagikeComponentID.MagikeSender))
+                    if (!sender.HasComponent(MagikeComponentID.MagikeSender))
                         continue;
 
                     Component senderComponent = (Component)sender.Components[MagikeComponentID.MagikeSender];

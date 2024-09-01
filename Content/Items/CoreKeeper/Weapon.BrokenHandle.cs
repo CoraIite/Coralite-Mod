@@ -187,7 +187,7 @@ namespace Coralite.Content.Items.CoreKeeper
 
             recordStartAngle = Math.Abs(startAngle);
             recordTotalAngle = Math.Abs(totalAngle);
-            Projectile.scale = Helper.EllipticalEase(recordStartAngle - recordTotalAngle * Smoother.Smoother(0, maxTime - minTime), 1.2f, 1.6f);
+            Projectile.scale = Helper.EllipticalEase(recordStartAngle - (recordTotalAngle * Smoother.Smoother(0, maxTime - minTime)), 1.2f, 1.6f);
 
             base.Initializer();
         }
@@ -205,7 +205,7 @@ namespace Coralite.Content.Items.CoreKeeper
             float scale = 1f;
             if (Owner.HeldItem.type == ItemType<RuneSong>())
                 scale = Owner.GetAdjustedItemScale(Owner.HeldItem);
-            Projectile.scale = scale * Helper.EllipticalEase(recordStartAngle - recordTotalAngle * Smoother.Smoother(timer, maxTime - minTime), 1.2f, 1.6f);
+            Projectile.scale = scale * Helper.EllipticalEase(recordStartAngle - (recordTotalAngle * Smoother.Smoother(timer, maxTime - minTime)), 1.2f, 1.6f);
             base.OnSlash();
         }
 
@@ -242,8 +242,8 @@ namespace Coralite.Content.Items.CoreKeeper
                 }
 
                 Dust dust;
-                float offset = Projectile.localAI[1] + Main.rand.NextFloat(0, Projectile.width * Projectile.scale - Projectile.localAI[1]);
-                Vector2 pos = Bottom + RotateVec2 * offset;
+                float offset = Projectile.localAI[1] + Main.rand.NextFloat(0, (Projectile.width * Projectile.scale) - Projectile.localAI[1]);
+                Vector2 pos = Bottom + (RotateVec2 * offset);
 
                 if (VisualEffectSystem.HitEffect_Dusts)
                 {
@@ -281,10 +281,10 @@ namespace Coralite.Content.Items.CoreKeeper
                 if (oldRotate[i] == 100f)
                     continue;
 
-                float factor = 1f - i / count;
+                float factor = 1f - (i / count);
                 Vector2 Center = GetCenter(i);
-                Vector2 Top = Center + oldRotate[i].ToRotationVector2() * (oldLength[i] + trailTopWidth + oldDistanceToOwner[i]);
-                Vector2 Bottom = Center + oldRotate[i].ToRotationVector2() * (oldLength[i] - ControlTrailBottomWidth(factor) + oldDistanceToOwner[i]);
+                Vector2 Top = Center + (oldRotate[i].ToRotationVector2() * (oldLength[i] + trailTopWidth + oldDistanceToOwner[i]));
+                Vector2 Bottom = Center + (oldRotate[i].ToRotationVector2() * (oldLength[i] - ControlTrailBottomWidth(factor) + oldDistanceToOwner[i]));
 
                 var topColor = Color.Lerp(new Color(238, 218, 130, alpha), new Color(167, 127, 95, 0), 1 - factor);
                 var bottomColor = Color.Lerp(new Color(109, 73, 86, alpha), new Color(83, 16, 85, 0), 1 - factor);

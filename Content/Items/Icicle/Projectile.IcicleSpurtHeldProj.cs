@@ -38,7 +38,7 @@ namespace Coralite.Content.Items.Icicle
             Owner.heldProj = Projectile.whoAmI;
             Owner.itemRotation = _Rotation + (Owner.direction > 0 ? 0 : MathHelper.Pi);
             Owner.itemTime = 2;
-            Projectile.Center = Owner.Center + _Rotation.ToRotationVector2() * DistanceToOwner;
+            Projectile.Center = Owner.Center + (_Rotation.ToRotationVector2() * DistanceToOwner);
 
             if (fadeIn)
             {
@@ -72,7 +72,7 @@ namespace Coralite.Content.Items.Icicle
             if (Collision.CanHitLine(Owner.MountedCenter, 1, 1, targetHitbox.Center.ToVector2(), 1, 1))
             {
                 float a = 0f;
-                return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center + _Rotation.ToRotationVector2() * Projectile.height / 2, Owner.MountedCenter, Projectile.width / 2, ref a);
+                return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center + (_Rotation.ToRotationVector2() * Projectile.height / 2), Owner.MountedCenter, Projectile.width / 2, ref a);
             }
             return false;
         }

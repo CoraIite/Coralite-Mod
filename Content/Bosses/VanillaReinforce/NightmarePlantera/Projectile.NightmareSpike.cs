@@ -147,7 +147,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         {
                             float currentLength = Vector2.Distance(SpikeTop, Projectile.Center);
                             currentLength = Helper.Lerp(currentLength, SpurtLength, 0.7f);
-                            SpikeTop = Projectile.Center + Projectile.rotation.ToRotationVector2() * currentLength;
+                            SpikeTop = Projectile.Center + (Projectile.rotation.ToRotationVector2() * currentLength);
                             spikeWidth += 4f;
                         }
 
@@ -293,7 +293,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         {
                             float currentLength = Vector2.Distance(SpikeTop, Projectile.Center);
                             currentLength = Helper.Lerp(currentLength, SpurtLength, 0.7f);
-                            SpikeTop = Projectile.Center + Projectile.rotation.ToRotationVector2() * currentLength;
+                            SpikeTop = Projectile.Center + (Projectile.rotation.ToRotationVector2() * currentLength);
                             spikeWidth += 4f;
                         }
 

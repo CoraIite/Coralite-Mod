@@ -127,7 +127,7 @@ namespace Coralite.Content.Items.Icicle
                 DistanceToOwner = DistanceToOwner.SafeNormalize(Vector2.Zero);
                 DistanceToOwner *= _10;
                 DistanceToOwner *= new Vector2(1.1f, 0.8f);
-                Projectile.velocity = (Projectile.velocity * 19f + DistanceToOwner) / 20f;
+                Projectile.velocity = ((Projectile.velocity * 19f) + DistanceToOwner) / 20f;
                 Projectile.direction = Projectile.spriteDirection = Math.Sign(Projectile.velocity.X);
             }
             else

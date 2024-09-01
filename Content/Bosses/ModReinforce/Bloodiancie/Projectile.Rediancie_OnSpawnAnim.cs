@@ -57,7 +57,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
                     r = 0.157f;     //Pi/20
                 else
                     r = 0.314f;       //Pi/10
-                float cosProgress = -MathF.Cos((timer - 120) * r) * 0.5f + 0.5f;
+                float cosProgress = (-MathF.Cos((timer - 120) * r) * 0.5f) + 0.5f;
                 drawCharColor = Color.Lerp(Coralite.RedJadeRed, Color.White, cosProgress);
             }
 

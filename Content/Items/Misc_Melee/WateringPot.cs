@@ -90,7 +90,7 @@ namespace Coralite.Content.Items.Misc_Melee
                     if (Main.netMode != NetmodeID.Server)
                     {
                         Vector2 dir = (Projectile.rotation - 0.3f).ToRotationVector2();
-                        Dust dust = Dust.NewDustPerfect(Projectile.Center + dir * 8, DustID.Water, dir * 2f, 0, default, Main.rand.NextFloat(1.5f, 2f));
+                        Dust dust = Dust.NewDustPerfect(Projectile.Center + (dir * 8), DustID.Water, dir * 2f, 0, default, Main.rand.NextFloat(1.5f, 2f));
                         dust.noGravity = true;
 
                         if (Timer % 15 == 0)
@@ -153,7 +153,7 @@ namespace Coralite.Content.Items.Misc_Melee
             if (State == 1)
             {
                 float _ = 1;
-                return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, Projectile.Center + (Projectile.rotation - 0.3f).ToRotationVector2() * 30, 12, ref _);
+                return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, Projectile.Center + ((Projectile.rotation - 0.3f).ToRotationVector2() * 30), 12, ref _);
             }
 
             return null;

@@ -90,7 +90,7 @@ namespace Coralite.Content.NPCs.Elemental
                     NPC.direction = 1;
             }
 
-            int num299 = (int)((NPC.position.X + (NPC.width / 2)) / 16f) + NPC.direction * 2;
+            int num299 = (int)((NPC.position.X + (NPC.width / 2)) / 16f) + (NPC.direction * 2);
             int num300 = (int)((NPC.position.Y + NPC.height) / 16f);
             bool flag20 = true;
             bool flag21 = false;
@@ -119,7 +119,7 @@ namespace Coralite.Content.NPCs.Elemental
                 Vector2 center = NPC.Center;
                 float num314 = Main.player[NPC.target].Center.X - center.X;
                 float num315 = Main.player[NPC.target].Center.Y - center.Y;
-                float num316 = (float)Math.Sqrt(num314 * num314 + num315 * num315);
+                float num316 = (float)Math.Sqrt((num314 * num314) + (num315 * num315));
                 num316 = num313 / num316;
                 num314 *= num316;
                 num315 *= num316;
@@ -276,7 +276,7 @@ namespace Coralite.Content.NPCs.Elemental
             for (int i = 0; i < 8; i++)
             {
                 Vector2 dir = Helpers.Helper.NextVec2Dir();
-                Dust d = Dust.NewDustPerfect(NPC.Center + dir * Main.rand.NextFloat(20), DustID.ShadowbeamStaff, dir * Main.rand.NextFloat(1, 4),
+                Dust d = Dust.NewDustPerfect(NPC.Center + (dir * Main.rand.NextFloat(20)), DustID.ShadowbeamStaff, dir * Main.rand.NextFloat(1, 4),
                     Scale: Main.rand.NextFloat(1, 1.4f));
                 d.noGravity = true;
             }

@@ -27,7 +27,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             base.Initialize();
             float rotation = TargetRot + (OwnerDirection > 0 ? 0 : MathHelper.Pi);
             Vector2 dir = rotation.ToRotationVector2();
-            Vector2 center = Projectile.Center + dir * 32;
+            Vector2 center = Projectile.Center + (dir * 32);
             for (int i = 0; i < 16; i++)
             {
                 Dust dust = Dust.NewDustPerfect(center + Main.rand.NextVector2Circular(8, 8), DustID.Snow, dir.RotatedBy(Main.rand.NextFloat(-0.8f, 0.8f)) * Main.rand.NextFloat(4f, 8f), Scale: Main.rand.NextFloat(0.8f, 1.2f));
@@ -136,7 +136,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             {
                 if (Main.myPlayer == Projectile.owner && Helper.FindClosestEnemy(Projectile.Center, 600, npc => npc.active && !npc.friendly && npc.CanBeChasedBy()) is not null)
                 {
-                    Vector2 center = Projectile.Top + (Projectile.rotation + 1.57f).ToRotationVector2() * 40;
+                    Vector2 center = Projectile.Top + ((Projectile.rotation + 1.57f).ToRotationVector2() * 40);
                     Vector2 dir = (center - Projectile.Top).SafeNormalize(Vector2.Zero);
 
                     Projectile.NewProjectile(Projectile.GetSource_FromAI(), center, dir * 7, ModContent.ProjectileType<SnowSpirit>(), (int)(Projectile.damage * 0.8f), Projectile.knockBack, Projectile.owner);
@@ -341,14 +341,14 @@ namespace Coralite.Content.Items.HyacinthSeries
                 Vector2 center = Projectile.Center;
                 float num198 = num186 - center.X;
                 float num199 = num187 - center.Y;
-                float dis2Target = MathF.Sqrt(num198 * num198 + num199 * num199);
+                float dis2Target = MathF.Sqrt((num198 * num198) + (num199 * num199));
                 dis2Target = num197 / dis2Target;
                 num198 *= dis2Target;
                 num199 *= dis2Target;
                 int chase = 24;
 
-                Projectile.velocity.X = (Projectile.velocity.X * (chase - 1) + num198) / chase;
-                Projectile.velocity.Y = (Projectile.velocity.Y * (chase - 1) + num199) / chase;
+                Projectile.velocity.X = ((Projectile.velocity.X * (chase - 1)) + num198) / chase;
+                Projectile.velocity.Y = ((Projectile.velocity.Y * (chase - 1)) + num199) / chase;
             }
 
 

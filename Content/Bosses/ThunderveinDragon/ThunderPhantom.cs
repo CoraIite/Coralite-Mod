@@ -42,14 +42,14 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             {
                 if (nPCStrengthHelper.IsExpertMode)
                 {
-                    NPC.lifeMax = (int)((2200 + numPlayers * 700) / journeyScale);
+                    NPC.lifeMax = (int)((2200 + (numPlayers * 700)) / journeyScale);
                     NPC.damage = 66;
                     NPC.defense = 35;
                 }
 
                 if (nPCStrengthHelper.IsMasterMode)
                 {
-                    NPC.lifeMax = (int)((2200 + numPlayers * 1400) / journeyScale);
+                    NPC.lifeMax = (int)((2200 + (numPlayers * 1400)) / journeyScale);
                     NPC.damage = 72;
                     NPC.defense = 35;
                 }
@@ -68,20 +68,20 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 return;
             }
 
-            NPC.lifeMax = 2200 + numPlayers * 700;
+            NPC.lifeMax = 2200 + (numPlayers * 700);
             NPC.damage = 66;
             NPC.defense = 35;
 
             if (Main.masterMode)
             {
-                NPC.lifeMax = 2200 + numPlayers * 1400;
+                NPC.lifeMax = 2200 + (numPlayers * 1400);
                 NPC.damage = 72;
                 NPC.defense = 35;
             }
 
             if (Main.getGoodWorld)
             {
-                NPC.lifeMax = 2500 + numPlayers * 1600;
+                NPC.lifeMax = 2500 + (numPlayers * 1600);
                 NPC.damage = 80;
                 NPC.defense = 35;
             }
@@ -94,7 +94,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ElectrificationWing>(), 1,1,2));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<ElectrificationWing>(), 1, 1, 2));
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
@@ -119,7 +119,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         {
                             State++;
                             Timer = 0;
-                            NPC.Center += new Vector2(Main.rand.NextFromList(-1, 1) * 200 + Main.rand.Next(-250, 250), 0);
+                            NPC.Center += new Vector2((Main.rand.NextFromList(-1, 1) * 200) + Main.rand.Next(-250, 250), 0);
                             ThunderveinDragon.SetBackgroundLight(0.9f, 50, 18);
                             SoundEngine.PlaySound(CoraliteSoundID.Thunder, NPC.Center);
                             NPC.dontTakeDamage = false;

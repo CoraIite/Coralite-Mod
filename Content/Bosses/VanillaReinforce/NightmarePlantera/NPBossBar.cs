@@ -51,7 +51,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             tentacle.pos = barCenter - new Vector2(460, 0);
             tentacle.rotation = 0f;
-            tentacle.UpdateTentacle(920 / 180f, (i) => 2 * MathF.Sin(i / 6f * (0.75f + 0.5f * MathF.Sin(Main.GlobalTimeWrappedHourly))));
+            tentacle.UpdateTentacle(920 / 180f, (i) => 2 * MathF.Sin(i / 6f * (0.75f + (0.5f * MathF.Sin(Main.GlobalTimeWrappedHourly)))));
 
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, default, Main.GameViewMatrix.ZoomMatrix);

@@ -109,7 +109,7 @@ namespace Coralite.Core
                         if (rightSim == Similarity.MergeLink)
                         {
                             mergedRight = true;
-                            SetFrameAt(x, y, 234 + 18 * randomFrame, 36);
+                            SetFrameAt(x, y, 234 + (18 * randomFrame), 36);
                             return;
                         }
                         SetFrameAt(x, y, 90, 18 * randomFrame);
@@ -120,16 +120,16 @@ namespace Coralite.Core
                         if (rightSim == Similarity.Same)
                         {
                             mergedDown = true;
-                            SetFrameAt(x, y, 72, 90 + 18 * randomFrame);
+                            SetFrameAt(x, y, 72, 90 + (18 * randomFrame));
                             return;
                         }
                         if (rightSim == Similarity.MergeLink)
                         {
-                            SetFrameAt(x, y, 108 + 18 * randomFrame, 54);
+                            SetFrameAt(x, y, 108 + (18 * randomFrame), 54);
                             return;
                         }
                         mergedDown = true;
-                        SetFrameAt(x, y, 126, 90 + 18 * randomFrame);
+                        SetFrameAt(x, y, 126, 90 + (18 * randomFrame));
                         return;
                     }
                     else
@@ -139,7 +139,7 @@ namespace Coralite.Core
                             SetFrameAt(x, y, 36 * randomFrame, 72);
                             return;
                         }
-                        SetFrameAt(x, y, 108 + 18 * randomFrame, 54);
+                        SetFrameAt(x, y, 108 + (18 * randomFrame), 54);
                         return;
                     }
                 }
@@ -150,16 +150,16 @@ namespace Coralite.Core
                         if (rightSim == Similarity.Same)
                         {
                             mergedUp = true;
-                            SetFrameAt(x, y, 72, 144 + 18 * randomFrame);
+                            SetFrameAt(x, y, 72, 144 + (18 * randomFrame));
                             return;
                         }
                         if (rightSim == Similarity.MergeLink)
                         {
-                            SetFrameAt(x, y, 108 + 18 * randomFrame, 0);
+                            SetFrameAt(x, y, 108 + (18 * randomFrame), 0);
                             return;
                         }
                         mergedUp = true;
-                        SetFrameAt(x, y, 126, 144 + 18 * randomFrame);
+                        SetFrameAt(x, y, 126, 144 + (18 * randomFrame));
                         return;
                     }
                     else if (downSim == Similarity.MergeLink)
@@ -171,12 +171,12 @@ namespace Coralite.Core
                         }
                         if (rightSim == Similarity.MergeLink)
                         {
-                            SetFrameAt(x, y, 162 + 18 * randomFrame, 54);
+                            SetFrameAt(x, y, 162 + (18 * randomFrame), 54);
                             return;
                         }
                         mergedUp = true;
                         mergedDown = true;
-                        SetFrameAt(x, y, 108, 216 + 18 * randomFrame);
+                        SetFrameAt(x, y, 108, 216 + (18 * randomFrame));
                         return;
                     }
                     else
@@ -188,11 +188,11 @@ namespace Coralite.Core
                         }
                         if (rightSim == Similarity.MergeLink)
                         {
-                            SetFrameAt(x, y, 162 + 18 * randomFrame, 54);
+                            SetFrameAt(x, y, 162 + (18 * randomFrame), 54);
                             return;
                         }
                         mergedUp = true;
-                        SetFrameAt(x, y, 108, 144 + 18 * randomFrame);
+                        SetFrameAt(x, y, 108, 144 + (18 * randomFrame));
                         return;
                     }
                 }
@@ -203,7 +203,7 @@ namespace Coralite.Core
                         SetFrameAt(x, y, 36 * randomFrame, 54);
                         return;
                     }
-                    SetFrameAt(x, y, 108 + 18 * randomFrame, 0);
+                    SetFrameAt(x, y, 108 + (18 * randomFrame), 0);
                     return;
                 }
                 else if (downSim == Similarity.MergeLink)
@@ -215,11 +215,11 @@ namespace Coralite.Core
                     }
                     if (rightSim == Similarity.MergeLink)
                     {
-                        SetFrameAt(x, y, 162 + 18 * randomFrame, 54);
+                        SetFrameAt(x, y, 162 + (18 * randomFrame), 54);
                         return;
                     }
                     mergedDown = true;
-                    SetFrameAt(x, y, 108, 90 + 18 * randomFrame);
+                    SetFrameAt(x, y, 108, 90 + (18 * randomFrame));
                     return;
                 }
                 else
@@ -232,10 +232,10 @@ namespace Coralite.Core
                     if (rightSim == Similarity.MergeLink)
                     {
                         mergedRight = true;
-                        SetFrameAt(x, y, 54 + 18 * randomFrame, 234);
+                        SetFrameAt(x, y, 54 + (18 * randomFrame), 234);
                         return;
                     }
-                    SetFrameAt(x, y, 162 + 18 * randomFrame, 54);
+                    SetFrameAt(x, y, 162 + (18 * randomFrame), 54);
                     return;
                 }
             }
@@ -248,35 +248,35 @@ namespace Coralite.Core
                         if (rightSim == Similarity.Same)
                         {
                             mergedLeft = true;
-                            SetFrameAt(x, y, 162, 126 + 18 * randomFrame);
+                            SetFrameAt(x, y, 162, 126 + (18 * randomFrame));
                             return;
                         }
                         if (rightSim == Similarity.MergeLink)
                         {
                             mergedLeft = true;
                             mergedRight = true;
-                            SetFrameAt(x, y, 180, 126 + 18 * randomFrame);
+                            SetFrameAt(x, y, 180, 126 + (18 * randomFrame));
                             return;
                         }
                         mergedLeft = true;
-                        SetFrameAt(x, y, 234 + 18 * randomFrame, 54);
+                        SetFrameAt(x, y, 234 + (18 * randomFrame), 54);
                         return;
                     }
                     else if (downSim == Similarity.MergeLink)
                     {
                         if (rightSim == Similarity.Same)
                         {
-                            mergedLeft = (mergedDown = true);
-                            SetFrameAt(x, y, 36, 108 + 36 * randomFrame);
+                            mergedLeft = mergedDown = true;
+                            SetFrameAt(x, y, 36, 108 + (36 * randomFrame));
                             return;
                         }
                         if (rightSim == Similarity.MergeLink)
                         {
-                            mergedLeft = (mergedRight = (mergedDown = true));
-                            SetFrameAt(x, y, 198, 144 + 18 * randomFrame);
+                            mergedLeft = mergedRight = mergedDown = true;
+                            SetFrameAt(x, y, 198, 144 + (18 * randomFrame));
                             return;
                         }
-                        SetFrameAt(x, y, 108 + 18 * randomFrame, 54);
+                        SetFrameAt(x, y, 108 + (18 * randomFrame), 54);
                         return;
                     }
                     else
@@ -287,7 +287,7 @@ namespace Coralite.Core
                             SetFrameAt(x, y, 18 * randomFrame, 216);
                             return;
                         }
-                        SetFrameAt(x, y, 108 + 18 * randomFrame, 54);
+                        SetFrameAt(x, y, 108 + (18 * randomFrame), 54);
                         return;
                     }
                 }
@@ -297,34 +297,34 @@ namespace Coralite.Core
                     {
                         if (rightSim == Similarity.Same)
                         {
-                            mergedUp = (mergedLeft = true);
-                            SetFrameAt(x, y, 36, 90 + 36 * randomFrame);
+                            mergedUp = mergedLeft = true;
+                            SetFrameAt(x, y, 36, 90 + (36 * randomFrame));
                             return;
                         }
                         if (rightSim == Similarity.MergeLink)
                         {
-                            mergedLeft = (mergedRight = (mergedUp = true));
-                            SetFrameAt(x, y, 198, 90 + 18 * randomFrame);
+                            mergedLeft = mergedRight = mergedUp = true;
+                            SetFrameAt(x, y, 198, 90 + (18 * randomFrame));
                             return;
                         }
-                        SetFrameAt(x, y, 108 + 18 * randomFrame, 0);
+                        SetFrameAt(x, y, 108 + (18 * randomFrame), 0);
                         return;
                     }
                     else if (downSim == Similarity.MergeLink)
                     {
                         if (rightSim == Similarity.Same)
                         {
-                            mergedUp = (mergedLeft = (mergedDown = true));
-                            SetFrameAt(x, y, 216, 90 + 18 * randomFrame);
+                            mergedUp = mergedLeft = mergedDown = true;
+                            SetFrameAt(x, y, 216, 90 + (18 * randomFrame));
                             return;
                         }
                         if (rightSim == Similarity.MergeLink)
                         {
-                            mergedDown = (mergedLeft = (mergedRight = (mergedUp = true)));
-                            SetFrameAt(x, y, 108 + 18 * randomFrame, 198);
+                            mergedDown = mergedLeft = mergedRight = mergedUp = true;
+                            SetFrameAt(x, y, 108 + (18 * randomFrame), 198);
                             return;
                         }
-                        SetFrameAt(x, y, 162 + 18 * randomFrame, 54);
+                        SetFrameAt(x, y, 162 + (18 * randomFrame), 54);
                         return;
                     }
                     else
@@ -334,7 +334,7 @@ namespace Coralite.Core
                             SetFrameAt(x, y, 162, 18 * randomFrame);
                             return;
                         }
-                        SetFrameAt(x, y, 162 + 18 * randomFrame, 54);
+                        SetFrameAt(x, y, 162 + (18 * randomFrame), 54);
                         return;
                     }
                 }
@@ -346,7 +346,7 @@ namespace Coralite.Core
                         SetFrameAt(x, y, 18 * randomFrame, 198);
                         return;
                     }
-                    SetFrameAt(x, y, 108 + 18 * randomFrame, 0);
+                    SetFrameAt(x, y, 108 + (18 * randomFrame), 0);
                     return;
                 }
                 else if (downSim == Similarity.MergeLink)
@@ -356,7 +356,7 @@ namespace Coralite.Core
                         SetFrameAt(x, y, 162, 18 * randomFrame);
                         return;
                     }
-                    SetFrameAt(x, y, 162 + 18 * randomFrame, 54);
+                    SetFrameAt(x, y, 162 + (18 * randomFrame), 54);
                     return;
                 }
                 else
@@ -369,8 +369,8 @@ namespace Coralite.Core
                     }
                     if (rightSim == Similarity.MergeLink)
                     {
-                        mergedRight = (mergedLeft = true);
-                        SetFrameAt(x, y, 162 + 18 * randomFrame, 198);
+                        mergedRight = mergedLeft = true;
+                        SetFrameAt(x, y, 162 + (18 * randomFrame), 198);
                         return;
                     }
                     mergedLeft = true;
@@ -392,15 +392,15 @@ namespace Coralite.Core
                                 {
                                     if (bottomLeftSim == Similarity.Same)
                                     {
-                                        SetFrameAt(x, y, 18 + 18 * randomFrame, 18);
+                                        SetFrameAt(x, y, 18 + (18 * randomFrame), 18);
                                         return;
                                     }
                                     if (bottomRightSim == Similarity.Same)
                                     {
-                                        SetFrameAt(x, y, 18 + 18 * randomFrame, 18);
+                                        SetFrameAt(x, y, 18 + (18 * randomFrame), 18);
                                         return;
                                     }
-                                    SetFrameAt(x, y, 108 + 18 * randomFrame, 36);
+                                    SetFrameAt(x, y, 108 + (18 * randomFrame), 36);
                                     return;
                                 }
                                 else if (bottomLeftSim == Similarity.Same)
@@ -412,10 +412,10 @@ namespace Coralite.Core
                                     }
                                     if (topRightSim == Similarity.MergeLink)
                                     {
-                                        SetFrameAt(x, y, 0, 108 + 36 * randomFrame);
+                                        SetFrameAt(x, y, 0, 108 + (36 * randomFrame));
                                         return;
                                     }
-                                    SetFrameAt(x, y, 18 + 18 * randomFrame, 18);
+                                    SetFrameAt(x, y, 18 + (18 * randomFrame), 18);
                                     return;
                                 }
                             }
@@ -423,36 +423,36 @@ namespace Coralite.Core
                             {
                                 if (topRightSim != Similarity.Same)
                                 {
-                                    SetFrameAt(x, y, 18 + 18 * randomFrame, 18);
+                                    SetFrameAt(x, y, 18 + (18 * randomFrame), 18);
                                     return;
                                 }
                                 if (bottomRightSim == Similarity.Same)
                                 {
-                                    SetFrameAt(x, y, 18 + 18 * randomFrame, 18);
+                                    SetFrameAt(x, y, 18 + (18 * randomFrame), 18);
                                     return;
                                 }
-                                SetFrameAt(x, y, 18 + 18 * randomFrame, 18);
+                                SetFrameAt(x, y, 18 + (18 * randomFrame), 18);
                                 return;
                             }
-                            SetFrameAt(x, y, 18 + 18 * randomFrame, 18);
+                            SetFrameAt(x, y, 18 + (18 * randomFrame), 18);
                             return;
                         }
                         if (bottomRightSim == Similarity.MergeLink)
                         {
-                            SetFrameAt(x, y, 0, 90 + 36 * randomFrame);
+                            SetFrameAt(x, y, 0, 90 + (36 * randomFrame));
                             return;
                         }
                         if (bottomLeftSim == Similarity.MergeLink)
                         {
-                            SetFrameAt(x, y, 18, 90 + 36 * randomFrame);
+                            SetFrameAt(x, y, 18, 90 + (36 * randomFrame));
                             return;
                         }
                         if (topRightSim == Similarity.MergeLink)
                         {
-                            SetFrameAt(x, y, 0, 108 + 36 * randomFrame);
+                            SetFrameAt(x, y, 0, 108 + (36 * randomFrame));
                             return;
                         }
-                        SetFrameAt(x, y, 18, 108 + 36 * randomFrame);
+                        SetFrameAt(x, y, 18, 108 + (36 * randomFrame));
                         return;
                     }
                     else
@@ -460,7 +460,7 @@ namespace Coralite.Core
                         if (rightSim == Similarity.MergeLink)
                         {
                             mergedRight = true;
-                            SetFrameAt(x, y, 144, 126 + 18 * randomFrame);
+                            SetFrameAt(x, y, 144, 126 + (18 * randomFrame));
                             return;
                         }
                         SetFrameAt(x, y, 72, 18 * randomFrame);
@@ -472,33 +472,33 @@ namespace Coralite.Core
                     if (rightSim == Similarity.Same)
                     {
                         mergedDown = true;
-                        SetFrameAt(x, y, 144 + 18 * randomFrame, 90);
+                        SetFrameAt(x, y, 144 + (18 * randomFrame), 90);
                         return;
                     }
                     if (rightSim == Similarity.MergeLink)
                     {
-                        mergedDown = (mergedRight = true);
-                        SetFrameAt(x, y, 54, 108 + 36 * randomFrame);
+                        mergedDown = mergedRight = true;
+                        SetFrameAt(x, y, 54, 108 + (36 * randomFrame));
                         return;
                     }
                     mergedDown = true;
-                    SetFrameAt(x, y, 90, 90 + 18 * randomFrame);
+                    SetFrameAt(x, y, 90, 90 + (18 * randomFrame));
                     return;
                 }
                 else
                 {
                     if (rightSim == Similarity.Same)
                     {
-                        SetFrameAt(x, y, 18 + 18 * randomFrame, 36);
+                        SetFrameAt(x, y, 18 + (18 * randomFrame), 36);
                         return;
                     }
                     if (rightSim == Similarity.MergeLink)
                     {
                         mergedRight = true;
-                        SetFrameAt(x, y, 54 + 18 * randomFrame, 216);
+                        SetFrameAt(x, y, 54 + (18 * randomFrame), 216);
                         return;
                     }
-                    SetFrameAt(x, y, 18 + 36 * randomFrame, 72);
+                    SetFrameAt(x, y, 18 + (36 * randomFrame), 72);
                     return;
                 }
             }
@@ -509,31 +509,31 @@ namespace Coralite.Core
                     if (rightSim == Similarity.Same)
                     {
                         mergedUp = true;
-                        SetFrameAt(x, y, 144 + 18 * randomFrame, 108);
+                        SetFrameAt(x, y, 144 + (18 * randomFrame), 108);
                         return;
                     }
                     if (rightSim == Similarity.MergeLink)
                     {
-                        mergedRight = (mergedUp = true);
-                        SetFrameAt(x, y, 54, 90 + 36 * randomFrame);
+                        mergedRight = mergedUp = true;
+                        SetFrameAt(x, y, 54, 90 + (36 * randomFrame));
                         return;
                     }
                     mergedUp = true;
-                    SetFrameAt(x, y, 90, 144 + 18 * randomFrame);
+                    SetFrameAt(x, y, 90, 144 + (18 * randomFrame));
                     return;
                 }
                 else if (downSim == Similarity.MergeLink)
                 {
                     if (rightSim == Similarity.Same)
                     {
-                        mergedUp = (mergedDown = true);
-                        SetFrameAt(x, y, 144 + 18 * randomFrame, 180);
+                        mergedUp = mergedDown = true;
+                        SetFrameAt(x, y, 144 + (18 * randomFrame), 180);
                         return;
                     }
                     if (rightSim == Similarity.MergeLink)
                     {
-                        mergedUp = (mergedRight = (mergedDown = true));
-                        SetFrameAt(x, y, 216, 144 + 18 * randomFrame);
+                        mergedUp = mergedRight = mergedDown = true;
+                        SetFrameAt(x, y, 216, 144 + (18 * randomFrame));
                         return;
                     }
                     SetFrameAt(x, y, 216, 18 * randomFrame);
@@ -544,7 +544,7 @@ namespace Coralite.Core
                     if (rightSim == Similarity.Same)
                     {
                         mergedUp = true;
-                        SetFrameAt(x, y, 234 + 18 * randomFrame, 18);
+                        SetFrameAt(x, y, 234 + (18 * randomFrame), 18);
                         return;
                     }
                     SetFrameAt(x, y, 216, 18 * randomFrame);
@@ -555,16 +555,16 @@ namespace Coralite.Core
             {
                 if (rightSim == Similarity.Same)
                 {
-                    SetFrameAt(x, y, 18 + 18 * randomFrame, 0);
+                    SetFrameAt(x, y, 18 + (18 * randomFrame), 0);
                     return;
                 }
                 if (rightSim == Similarity.MergeLink)
                 {
                     mergedRight = true;
-                    SetFrameAt(x, y, 54 + 18 * randomFrame, 198);
+                    SetFrameAt(x, y, 54 + (18 * randomFrame), 198);
                     return;
                 }
-                SetFrameAt(x, y, 18 + 36 * randomFrame, 54);
+                SetFrameAt(x, y, 18 + (36 * randomFrame), 54);
                 return;
             }
             else if (downSim == Similarity.MergeLink)
@@ -572,7 +572,7 @@ namespace Coralite.Core
                 if (rightSim == Similarity.Same)
                 {
                     mergedDown = true;
-                    SetFrameAt(x, y, 234 + 18 * randomFrame, 0);
+                    SetFrameAt(x, y, 234 + (18 * randomFrame), 0);
                     return;
                 }
                 SetFrameAt(x, y, 216, 18 * randomFrame);
@@ -582,13 +582,13 @@ namespace Coralite.Core
             {
                 if (rightSim == Similarity.Same)
                 {
-                    SetFrameAt(x, y, 108 + 18 * randomFrame, 72);
+                    SetFrameAt(x, y, 108 + (18 * randomFrame), 72);
                     return;
                 }
                 if (rightSim == Similarity.MergeLink)
                 {
                     mergedRight = true;
-                    SetFrameAt(x, y, 54 + 18 * randomFrame, 252);
+                    SetFrameAt(x, y, 54 + (18 * randomFrame), 252);
                     return;
                 }
                 SetFrameAt(x, y, 216, 18 * randomFrame);
@@ -600,7 +600,7 @@ namespace Coralite.Core
         {
             if (x < 0 || x >= Main.maxTilesX || y < 0 || y >= Main.maxTilesY)
             {
-                mergedUp = (mergedLeft = (mergedRight = (mergedDown = false)));
+                mergedUp = mergedLeft = mergedRight = mergedDown = false;
                 return;
             }
             Main.tileMerge[myType][mergeType] = false;
@@ -666,7 +666,7 @@ namespace Coralite.Core
             {
                 randomFrame = Main.tile[x, y].TileFrameNumber;
             }
-            mergedDown = (mergedLeft = (mergedRight = (mergedUp = false)));
+            mergedDown = mergedLeft = mergedRight = mergedUp = false;
             if (myTypeBrimFrame && !overrideBrimStates && !BrimstoneFraming(x, y, resetFrame, forceSameDown, forceSameUp, forceSameRight, forceSameLeft, false, false, false, false))
             {
                 return;
@@ -695,14 +695,14 @@ namespace Coralite.Core
                 return true;
 
             GetAdjacentTiles(x, y, out bool up, out bool down, out bool left, out bool right, out bool upLeft, out bool upRight, out bool downLeft, out bool downRight);
-            up = (forceSameUp || up);
-            down = (forceSameDown || down);
-            left = (forceSameLeft || left);
-            right = (forceSameRight || right);
-            upLeft = (forceSameUL || upLeft);
-            upRight = (forceSameUR || upRight);
-            downLeft = (forceSameDL || downLeft);
-            downRight = (forceSameDR || downRight);
+            up = forceSameUp || up;
+            down = forceSameDown || down;
+            left = forceSameLeft || left;
+            right = forceSameRight || right;
+            upLeft = forceSameUL || upLeft;
+            upRight = forceSameUR || upRight;
+            downLeft = forceSameDL || downLeft;
+            downRight = forceSameDR || downRight;
             int randomFrame;
             if (resetFrame)
             {
@@ -721,31 +721,31 @@ namespace Coralite.Core
             }
             if (!up && down && left && !right && !downLeft)
             {
-                Main.tile[x, y].TileFrameX = (short)(18 + randomFrame * 36);
+                Main.tile[x, y].TileFrameX = (short)(18 + (randomFrame * 36));
                 Main.tile[x, y].TileFrameY = 54;
                 return false;
             }
             if (up && !down && !left && right && !upRight)
             {
-                Main.tile[x, y].TileFrameX = (short)(0 + randomFrame * 36);
+                Main.tile[x, y].TileFrameX = (short)(0 + (randomFrame * 36));
                 Main.tile[x, y].TileFrameY = 72;
                 return false;
             }
             if (up && !down && left && !right && !upLeft)
             {
-                Main.tile[x, y].TileFrameX = (short)(18 + randomFrame * 36);
+                Main.tile[x, y].TileFrameX = (short)(18 + (randomFrame * 36));
                 Main.tile[x, y].TileFrameY = 72;
                 return false;
             }
             if (!up && down && left && right && !downLeft && !downRight)
             {
-                Main.tile[x, y].TileFrameX = (short)(18 + randomFrame * 18);
+                Main.tile[x, y].TileFrameX = (short)(18 + (randomFrame * 18));
                 Main.tile[x, y].TileFrameY = 0;
                 return false;
             }
             if (up && !down && left && right && !upLeft && !upRight)
             {
-                Main.tile[x, y].TileFrameX = (short)(18 + randomFrame * 18);
+                Main.tile[x, y].TileFrameX = (short)(18 + (randomFrame * 18));
                 Main.tile[x, y].TileFrameY = 36;
                 return false;
             }
@@ -763,43 +763,43 @@ namespace Coralite.Core
             }
             if (up && down && left && right && !downLeft && !downRight && !upLeft && !upRight)
             {
-                Main.tile[x, y].TileFrameX = (short)(18 + randomFrame * 18);
+                Main.tile[x, y].TileFrameX = (short)(18 + (randomFrame * 18));
                 Main.tile[x, y].TileFrameY = 18;
                 return false;
             }
             if (up && down && left && right && !downLeft && downRight && upLeft && upRight)
             {
-                Main.tile[x, y].TileFrameX = (short)(108 + randomFrame * 18);
+                Main.tile[x, y].TileFrameX = (short)(108 + (randomFrame * 18));
                 Main.tile[x, y].TileFrameY = 36;
                 return false;
             }
             if (up && down && left && right && downLeft && !downRight && upLeft && upRight)
             {
-                Main.tile[x, y].TileFrameX = (short)(108 + randomFrame * 18);
+                Main.tile[x, y].TileFrameX = (short)(108 + (randomFrame * 18));
                 Main.tile[x, y].TileFrameY = 36;
                 return false;
             }
             if (up && down && left && right && downLeft && downRight && !upLeft && upRight)
             {
-                Main.tile[x, y].TileFrameX = (short)(108 + randomFrame * 18);
+                Main.tile[x, y].TileFrameX = (short)(108 + (randomFrame * 18));
                 Main.tile[x, y].TileFrameY = 18;
                 return false;
             }
             if (up && down && left && right && downLeft && downRight && upLeft && !upRight)
             {
-                Main.tile[x, y].TileFrameX = (short)(108 + randomFrame * 18);
+                Main.tile[x, y].TileFrameX = (short)(108 + (randomFrame * 18));
                 Main.tile[x, y].TileFrameY = 18;
                 return false;
             }
             if (up && down && left && right && !downLeft && !downRight && upLeft && upRight)
             {
-                Main.tile[x, y].TileFrameX = (short)(108 + randomFrame * 18);
+                Main.tile[x, y].TileFrameX = (short)(108 + (randomFrame * 18));
                 Main.tile[x, y].TileFrameY = 36;
                 return false;
             }
             if (up && down && left && right && downLeft && downRight && !upLeft && !upRight)
             {
-                Main.tile[x, y].TileFrameX = (short)(108 + randomFrame * 18);
+                Main.tile[x, y].TileFrameX = (short)(108 + (randomFrame * 18));
                 Main.tile[x, y].TileFrameY = 18;
                 return false;
             }
@@ -829,49 +829,49 @@ namespace Coralite.Core
             }
             if (up && down && left && right && !downLeft && !downRight && !upLeft && upRight)
             {
-                Main.tile[x, y].TileFrameX = (short)(108 + randomFrame * 18);
+                Main.tile[x, y].TileFrameX = (short)(108 + (randomFrame * 18));
                 Main.tile[x, y].TileFrameY = 36;
                 return false;
             }
             if (up && down && left && right && !downLeft && downRight && !upLeft && !upRight)
             {
-                Main.tile[x, y].TileFrameX = (short)(108 + randomFrame * 18);
+                Main.tile[x, y].TileFrameX = (short)(108 + (randomFrame * 18));
                 Main.tile[x, y].TileFrameY = 18;
                 return false;
             }
             if (up && down && left && right && !downLeft && !downRight && upLeft && !upRight)
             {
-                Main.tile[x, y].TileFrameX = (short)(108 + randomFrame * 18);
+                Main.tile[x, y].TileFrameX = (short)(108 + (randomFrame * 18));
                 Main.tile[x, y].TileFrameY = 18;
                 return false;
             }
             if (up && down && left && right && downLeft && !downRight && !upLeft && !upRight)
             {
-                Main.tile[x, y].TileFrameX = (short)(108 + randomFrame * 18);
+                Main.tile[x, y].TileFrameX = (short)(108 + (randomFrame * 18));
                 Main.tile[x, y].TileFrameY = 36;
                 return false;
             }
             if (!up && down && left && right && !downLeft && downRight && !upLeft && !upRight)
             {
-                Main.tile[x, y].TileFrameX = (short)(18 + randomFrame * 18);
+                Main.tile[x, y].TileFrameX = (short)(18 + (randomFrame * 18));
                 Main.tile[x, y].TileFrameY = 0;
                 return false;
             }
             if (!up && down && left && right && downLeft && !downRight && !upLeft && !upRight)
             {
-                Main.tile[x, y].TileFrameX = (short)(18 + randomFrame * 18);
+                Main.tile[x, y].TileFrameX = (short)(18 + (randomFrame * 18));
                 Main.tile[x, y].TileFrameY = 0;
                 return false;
             }
             if (up && !down && left && right && !downLeft && !downRight && !upLeft && upRight)
             {
-                Main.tile[x, y].TileFrameX = (short)(18 + randomFrame * 18);
+                Main.tile[x, y].TileFrameX = (short)(18 + (randomFrame * 18));
                 Main.tile[x, y].TileFrameY = 36;
                 return false;
             }
             if (up && !down && left && right && !downLeft && !downRight && upLeft && !upRight)
             {
-                Main.tile[x, y].TileFrameX = (short)(18 + randomFrame * 18);
+                Main.tile[x, y].TileFrameX = (short)(18 + (randomFrame * 18));
                 Main.tile[x, y].TileFrameY = 36;
                 return false;
             }

@@ -151,7 +151,7 @@ namespace Coralite.Content.NPCs.Shadow
                 for (int i = 1; i < 6; i++)
                 {
                     if (WorldGen.SolidTile(Position2Tile_X, Bottom2Tile_Y - i))
-                        jumpAccel = -MathF.Sqrt(i) * 3.3f - 0.1f;
+                        jumpAccel = (-MathF.Sqrt(i) * 3.3f) - 0.1f;
                 }
 
                 NPC.velocity.Y = jumpAccel;
@@ -175,7 +175,7 @@ namespace Coralite.Content.NPCs.Shadow
             c.A = 0;
             c *= 0.5f;
             for (int i = 0; i < 3; i++)
-                spriteBatch.Draw(mainTex, pos + (Main.GlobalTimeWrappedHourly + i * MathHelper.TwoPi / 3).ToRotationVector2() * 4
+                spriteBatch.Draw(mainTex, pos + ((Main.GlobalTimeWrappedHourly + (i * MathHelper.TwoPi / 3)).ToRotationVector2() * 4)
                     , frameBox, c, NPC.rotation, origin, NPC.scale, effects, 0f);
 
             spriteBatch.Draw(mainTex, pos, frameBox, drawColor, NPC.rotation, origin, NPC.scale, effects, 0f);

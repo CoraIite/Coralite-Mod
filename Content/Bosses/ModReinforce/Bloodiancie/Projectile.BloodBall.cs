@@ -68,7 +68,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
                 {
                     Projectile.velocity *= 0;
                     shootDir = (Owner.Center - Projectile.Center).SafeNormalize(Vector2.Zero);
-                    particles.NewParticle<RedArrow>(Projectile.Center + shootDir * 20, shootDir * 8,
+                    particles.NewParticle<RedArrow>(Projectile.Center + (shootDir * 20), shootDir * 8,
                         Scale: 2f);
 
                     SoundEngine.PlaySound(CoraliteSoundID.AngryNimbus_NPCDeath33, Projectile.Center);

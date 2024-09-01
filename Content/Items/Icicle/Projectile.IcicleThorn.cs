@@ -92,7 +92,7 @@ namespace Coralite.Content.Items.Icicle
                 case (int)AIStates.idle:    //回到玩家身边
                     Timer = 0;
                     Helper.GetMyProjIndexWithSameType(Type, Projectile.whoAmI, Projectile.owner, out int index, out int totalIndexes);
-                    Vector2 idlePosition = Owner.Center + new Vector2(0, -16 - totalIndexes * 2).RotatedBy(6.282f * index / totalIndexes);
+                    Vector2 idlePosition = Owner.Center + new Vector2(0, -16 - (totalIndexes * 2)).RotatedBy(6.282f * index / totalIndexes);
 
                     if (Vector2.Distance(idlePosition, Projectile.position) > 2000)
                         Projectile.Center = idlePosition;
@@ -117,7 +117,7 @@ namespace Coralite.Content.Items.Icicle
                         Projectile.localAI[1] += 0.01f;
                     }
 
-                    Projectile.rotation += Projectile.velocity.Length() * 0.05f + 0.02f;
+                    Projectile.rotation += (Projectile.velocity.Length() * 0.05f) + 0.02f;
                     return;
                 case (int)AIStates.normalAttack:    //普通攻击：不断冲向敌人位置
 
@@ -127,7 +127,7 @@ namespace Coralite.Content.Items.Icicle
                         return;
                     }
 
-                    Projectile.rotation += Projectile.velocity.Length() * 0.05f + 0.05f;
+                    Projectile.rotation += (Projectile.velocity.Length() * 0.05f) + 0.05f;
 
                     if (Timer == 0)
                     {

@@ -42,7 +42,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public override bool? CanDamage()
         {
-            if (Timer > LightingTime + DelayTime / 2)
+            if (Timer > LightingTime + (DelayTime / 2))
                 return false;
 
             return null;
@@ -123,7 +123,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 }
 
                 SpawnDusts();
-                ThunderWidth = 50 + 70 * factor;
+                ThunderWidth = 50 + (70 * factor);
                 ThunderAlpha = factor;
             }
             else if ((int)Timer == (int)LightingTime)
@@ -136,14 +136,14 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             }
             else
             {
-                float factor = (Timer - LightingTime) / (DelayTime);
+                float factor = (Timer - LightingTime) / DelayTime;
                 float sinFactor = MathF.Sin(factor * MathHelper.Pi);
-                ThunderWidth = 20 + (1 - factor) * 100;
+                ThunderWidth = 20 + ((1 - factor) * 100);
                 ThunderAlpha = 1 - Coralite.Instance.X2Smoother.Smoother(factor);
 
                 foreach (var trail in thunderTrails)
                 {
-                    trail.SetRange((0, 10 + (1 - factor) * PointDistance / 2));
+                    trail.SetRange((0, 10 + ((1 - factor) * PointDistance / 2)));
                     trail.SetExpandWidth((1 - factor) * PointDistance / 3);
 
                     if (Timer % 6 == 0)
@@ -317,7 +317,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
                 SpawnDusts();
 
-                ThunderWidth = 70 + 70 * factor;
+                ThunderWidth = 70 + (70 * factor);
                 ThunderAlpha = factor;
             }
             else if ((int)Timer == (int)LightingTime)
@@ -332,14 +332,14 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             {
                 SpawnDusts();
 
-                float factor = (Timer - LightingTime) / (DelayTime);
+                float factor = (Timer - LightingTime) / DelayTime;
                 float sinFactor = MathF.Sin(factor * MathHelper.Pi);
-                ThunderWidth = 20 + (1 - factor) * 120;
+                ThunderWidth = 20 + ((1 - factor) * 120);
                 ThunderAlpha = 1 - Coralite.Instance.X2Smoother.Smoother(factor);
 
                 foreach (var trail in thunderTrails)
                 {
-                    trail.SetRange((0, 10 + (1 - factor) * PointDistance / 2));
+                    trail.SetRange((0, 10 + ((1 - factor) * PointDistance / 2)));
                     trail.SetExpandWidth((1 - factor) * PointDistance / 3);
 
                     if (Timer % 6 == 0)

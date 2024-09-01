@@ -127,7 +127,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                     break;
 
                 case (int)JumpStates.Jumping:  //跳跃
-                    float targetScaleX = Math.Clamp(1 - jumpYVelocity / 15, 0.75f, 1f);
+                    float targetScaleX = Math.Clamp(1 - (jumpYVelocity / 15), 0.75f, 1f);
                     Scale = Vector2.Lerp(Scale, new Vector2(targetScaleX, 1.2f), 0.15f);
 
                     if (NPC.frame.Y < 5)

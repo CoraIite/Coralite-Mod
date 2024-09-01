@@ -41,7 +41,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)/* tModPorter Note: bossLifeScale -> balance (bossAdjustment is different, see the docs for details) */
         {
-            NPC.lifeMax = (int)(175 * bossAdjustment) + numPlayers * 100;
+            NPC.lifeMax = (int)(175 * bossAdjustment) + (numPlayers * 100);
             NPC.defense = 6;
             if (Main.masterMode)
                 NPC.defense = 8;

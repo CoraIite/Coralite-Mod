@@ -41,7 +41,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
         public void OnDashing(BaseFlyingShieldGuard projectile)
         {
             projectile.Owner.noKnockback = true;
-            Dust d = Dust.NewDustPerfect(projectile.Projectile.Center + Main.rand.NextVector2Circular(projectile.Projectile.width, projectile.Projectile.height) / 2, DustID.Electric,
+            Dust d = Dust.NewDustPerfect(projectile.Projectile.Center + (Main.rand.NextVector2Circular(projectile.Projectile.width, projectile.Projectile.height) / 2), DustID.Electric,
                 projectile.Owner.velocity * Main.rand.NextFloat(0.1f, 0.6f), Scale: Main.rand.NextFloat(1f, 1.4f));
             d.noGravity = true;
             if (projectile.Timer > projectile.dashTime / 3)

@@ -35,7 +35,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 this.NewTextBar(c =>{
                     float length= MathF.Round(c.ConnectLength/16f,1);
                     float lengthBase= MathF.Round(c.ConnectLengthBase/16f,1);
-                    string sign= (c.ConnectLengthExtra >= 0 ? "+" : "- ");
+                    string sign= c.ConnectLengthExtra >= 0 ? "+" : "- ";
                     float lengthExtra= MathF.Round(c.ConnectLengthExtra/16f,1);
 
                     return $"  ▶ {length} ({lengthBase} {sign} {lengthExtra})";

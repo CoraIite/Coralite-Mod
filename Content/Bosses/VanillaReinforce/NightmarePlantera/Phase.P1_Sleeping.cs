@@ -92,7 +92,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             float num781 = Target.Center.X - targetPos.X;
             float num782 = Target.Center.Y - targetPos.Y;
 
-            float posToTargetLength = (float)Math.Sqrt(num781 * num781 + num782 * num782);
+            float posToTargetLength = (float)Math.Sqrt((num781 * num781) + (num782 * num782));
             int maxLength = 800;    //大概是最大延申距离
 
             if (Main.expertMode)
@@ -110,7 +110,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             targetPos = new Vector2(NPC.Center.X, NPC.Center.Y);
             num781 = targetX - targetPos.X;
             num782 = targetY - targetPos.Y;
-            posToTargetLength = (float)Math.Sqrt(num781 * num781 + num782 * num782);
+            posToTargetLength = (float)Math.Sqrt((num781 * num781) + (num782 * num782));
             if (posToTargetLength < num779)
             {
                 num781 = NPC.velocity.X;
@@ -180,13 +180,13 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 {
                     Vector2 pos = GetPhase1MousePos();
                     float factor = Timer / 160f;
-                    float width = 60 - factor * 50;
+                    float width = 60 - (factor * 50);
 
                     Dust dust;
                     for (int i = 0; i < 2; i++)
                     {
                         dust = Dust.NewDustPerfect(pos + Main.rand.NextVector2CircularEdge(width, width), ModContent.DustType<NightmareDust>(), Scale: Main.rand.NextFloat(1f, 1.4f));
-                        dust.velocity = (pos - dust.position).SafeNormalize(Vector2.Zero) * (3 - factor * 3) + NPC.velocity * factor;
+                        dust.velocity = ((pos - dust.position).SafeNormalize(Vector2.Zero) * (3 - (factor * 3))) + (NPC.velocity * factor);
                         dust.noGravity = true;
                     }
 

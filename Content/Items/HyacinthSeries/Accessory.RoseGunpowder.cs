@@ -80,7 +80,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             Projectile.SpawnTrailDust(DustID.PurpleTorch, Main.rand.NextFloat(-0.1f, 0.1f), noGravity: !Main.rand.NextBool(3));
             for (int i = 0; i < 3; i++)
             {
-                Dust dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(4, 4) - Projectile.velocity / 3 * i
+                Dust dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(4, 4) - (Projectile.velocity / 3 * i)
                     , DustID.RedTorch, Vector2.Zero, Scale: Main.rand.NextFloat(0.6f, 0.8f));
                 dust.noGravity = Main.rand.NextBool(5);
                 dust.velocity = -Projectile.velocity * Main.rand.NextFloat(-0.05f, 0.05f);

@@ -102,7 +102,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                 case 1:
                     NPC.velocity *= 0.99f;
                     NPC.ai[3]++;
-                    NPC.ai[2] = NPC.scale + MathF.Sin(Main.GlobalTimeWrappedHourly * 2) * 0.1f;
+                    NPC.ai[2] = NPC.scale + (MathF.Sin(Main.GlobalTimeWrappedHourly * 2) * 0.1f);
                     if (Vector2.Distance(NPC.Center, Target.Center) < NPC.width)
                     {
                         State = 2;

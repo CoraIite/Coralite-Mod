@@ -43,7 +43,7 @@ namespace Coralite.Content.UI.MagikeGuideBook.Introduce
                 var element = Elements[i];
                 element.Width.Set(widdth, 0);
                 element.Height.Set(50, 0);
-                element.Top.Set(80 + i * 50, 0);
+                element.Top.Set(80 + (i * 50), 0);
                 element.Left.Set(10, 0);
             }
 

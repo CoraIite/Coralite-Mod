@@ -1,5 +1,4 @@
-﻿using Coralite.Core.Systems.CoraliteActorComponent;
-using Coralite.Core.Systems.MagikeSystem.TileEntities;
+﻿using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
 using System;
 using System.Collections.Frozen;
@@ -11,7 +10,7 @@ using Terraria.UI;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components
 {
-    public abstract class CraftAltar : MagikeFactory, IUpgradeable,IUIShowable
+    public abstract class CraftAltar : MagikeFactory, IUpgradeable, IUIShowable
     {
         public MagikeCraftRecipe ChosenResipe { get; set; }
 
@@ -39,7 +38,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                     Text = text,
                     DurationInFrames = 60,
                     Velocity = -Vector2.UnitY
-                }, Helper.GetMagikeTileCenter((Entity as MagikeTileEntity).Position) - Vector2.UnitY * 32);
+                }, Helper.GetMagikeTileCenter((Entity as MagikeTileEntity).Position) - (Vector2.UnitY * 32));
                 return;
             }
 
@@ -118,7 +117,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                     if (receiverEntity.TryGetComponent(MagikeComponentID.ItemContainer, out ItemContainer container2))
                         tempItems = container2.Items;
 
-                    if (receiverEntity .TryGetComponent(MagikeComponentID.ItemGetOnlyContainer, out GetOnlyItemContainer container3))
+                    if (receiverEntity.TryGetComponent(MagikeComponentID.ItemGetOnlyContainer, out GetOnlyItemContainer container3))
                         tempItems = container3.Items;
 
                     foreach (var tempitem in tempItems)
@@ -161,10 +160,10 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
                 Item[] tempItems = null;
 
-                if (entity .TryGetComponent(MagikeComponentID.ItemContainer, out ItemContainer container2))
+                if (entity.TryGetComponent(MagikeComponentID.ItemContainer, out ItemContainer container2))
                     tempItems = container2.Items;
 
-                if (entity .TryGetComponent(MagikeComponentID.ItemGetOnlyContainer, out GetOnlyItemContainer container3))
+                if (entity.TryGetComponent(MagikeComponentID.ItemGetOnlyContainer, out GetOnlyItemContainer container3))
                     tempItems = container3.Items;
 
                 if (tempItems == null)
@@ -173,7 +172,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 //添加物品
                 foreach (var tempitem in tempItems)
                     if (!tempitem.IsAir)
-                            otherItems.Add(tempitem);
+                        otherItems.Add(tempitem);
             }
 
             return otherItems;
@@ -184,7 +183,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public override bool CanActivated_SpecialCheck(out string text)
         {
             //获取物品容器
-            if (!Entity.TryGetComponent(MagikeComponentID.ItemContainer,out ItemContainer container)
+            if (!Entity.TryGetComponent(MagikeComponentID.ItemContainer, out ItemContainer container)
                 || Entity.TryGetComponent(MagikeComponentID.MagikeSender, out MagikeLinerSender linerSender))
             {
                 text = MagikeSystem.Error.Value;
@@ -212,9 +211,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// </summary>
         /// <param name="linerSender"></param>
         /// <returns></returns>
-        private static FrozenDictionary<int,int> FillOtherItemDict(MagikeLinerSender linerSender) 
+        private static FrozenDictionary<int, int> FillOtherItemDict(MagikeLinerSender linerSender)
         {
-            Dictionary<int,int> otherItems = [];
+            Dictionary<int, int> otherItems = [];
 
             foreach (var pos in linerSender.Receivers)
             {
@@ -318,7 +317,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             bool mainItemIncorrect = false;//主物品不对
             bool mainItemNotEnough = false;//主物品数量不够
             bool conditionNotMet = false;//条件不满足
-            string conditionFillText="";
+            string conditionFillText = "";
             bool otherItemNotEnough = false;//其他物品不足
             Item lackItem = null;//缺失的物品
             int lackAmount = 0; //缺失的数量
@@ -427,7 +426,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             Point16 pos = (Entity as MagikeTileEntity).Position;
 
-            if (Helper.OnScreen(pos.ToWorldCoordinates(),new Vector2(16*20)))
+            if (Helper.OnScreen(pos.ToWorldCoordinates(), new Vector2(16 * 20)))
             {
                 //在视野内生成特殊合成粒子
 

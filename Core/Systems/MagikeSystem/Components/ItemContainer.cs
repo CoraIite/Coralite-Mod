@@ -133,7 +133,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 }
             }
 
-            for (int i = 0;i < Items.Length; i++)
+            for (int i = 0; i < Items.Length; i++)
                 if (Items[i].IsAir)
                 {
                     Items[i] = item.Clone();
@@ -149,7 +149,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// 向容器内加入物品，注意在结束后会使传入的item消失
         /// </summary>
         /// <param name="item"></param>
-        public virtual void AddItem(int itemType,int stack)
+        public virtual void AddItem(int itemType, int stack)
         {
             foreach (var i in Items.Where(i => !i.IsAir && i.type == itemType && i.stack < i.maxStack))
             {
@@ -160,14 +160,14 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                     return;
             }
 
-            for (int i = 0;i < Items.Length; i++)
+            for (int i = 0; i < Items.Length; i++)
                 if (Items[i].IsAir)
                 {
-                    Items[i] = new Item(itemType,stack);
+                    Items[i] = new Item(itemType, stack);
                     return;
                 }
 
-            Item.NewItem(new EntitySource_DropAsItem(Main.LocalPlayer), Helper.GetMagikeTileCenter((Entity as MagikeTileEntity).Position), itemType,stack);
+            Item.NewItem(new EntitySource_DropAsItem(Main.LocalPlayer), Helper.GetMagikeTileCenter((Entity as MagikeTileEntity).Position), itemType, stack);
         }
 
         #region UI部分
@@ -235,11 +235,11 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         #endregion
     }
 
-    public class ItemContainerSlot:UIElement 
+    public class ItemContainerSlot : UIElement
     {
         private readonly ItemContainer _container;
         private readonly int _index;
-        private float _scale=1f;
+        private float _scale = 1f;
 
         public ItemContainerSlot(ItemContainer container, int index)
         {
@@ -292,8 +292,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             float scale = Main.inventoryScale;
             Main.inventoryScale = _scale;
 
-            Vector2 position = GetDimensions().Center() + new Vector2(52f, 52f) * -0.5f * Main.inventoryScale;
-            ItemSlot.Draw(spriteBatch, ref inv, ItemSlot.Context.VoidItem, position,Coralite.MagicCrystalPink);
+            Vector2 position = GetDimensions().Center() + (new Vector2(52f, 52f) * -0.5f * Main.inventoryScale);
+            ItemSlot.Draw(spriteBatch, ref inv, ItemSlot.Context.VoidItem, position, Coralite.MagicCrystalPink);
 
             Main.inventoryScale = scale;
         }

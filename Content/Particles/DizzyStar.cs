@@ -50,9 +50,9 @@ namespace Coralite.Content.Particles
             if (centerFunc != null)
             {
                 Vector2 center = centerFunc.Invoke();
-                Center = center + Rotation.ToRotationVector2() * length * Helper.EllipticalEase(Rotation, 1, 2.4f);
+                Center = center + (Rotation.ToRotationVector2() * length * Helper.EllipticalEase(Rotation, 1, 2.4f));
                 Rotation += 0.12f;
-                Scale = 0.6f + MathF.Sin(Rotation) * 0.2f;
+                Scale = 0.6f + (MathF.Sin(Rotation) * 0.2f);
 
                 //更新拖尾数组
                 for (int i = 0; i < 11; i++)
@@ -60,7 +60,7 @@ namespace Coralite.Content.Particles
 
                 oldRot[11] = Rotation;
                 for (int i = 0; i < 12; i++)
-                    oldCenter[i] = center + oldRot[i].ToRotationVector2() * length * Helper.EllipticalEase(oldRot[i], 1, 2.4f);
+                    oldCenter[i] = center + (oldRot[i].ToRotationVector2() * length * Helper.EllipticalEase(oldRot[i], 1, 2.4f));
                 trail.Positions = oldCenter;
 
                 //使用oldRot充当改变帧图的 frameCounter

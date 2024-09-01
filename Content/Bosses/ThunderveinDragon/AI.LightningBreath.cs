@@ -98,11 +98,11 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             Recorder = (Target.Center - NPC.Center).ToRotation();
                         }
 
-                        Vector2 pos2 = NPC.Center + (NPC.rotation - NPC.direction * 0.25f).ToRotationVector2() * 60;
+                        Vector2 pos2 = NPC.Center + ((NPC.rotation - (NPC.direction * 0.25f)).ToRotationVector2() * 60);
                         Vector2 dir2 = Recorder.ToRotationVector2();
                         for (int i = 0; i < 3; i++)
                         {
-                            Dust d = Dust.NewDustPerfect(pos2 + dir2 * Main.rand.NextFloat(20f, 1220f), DustID.PortalBoltTrail
+                            Dust d = Dust.NewDustPerfect(pos2 + (dir2 * Main.rand.NextFloat(20f, 1220f)), DustID.PortalBoltTrail
                                 , dir2.RotateByRandom(-0.3f, 0.3f) * Main.rand.NextFloat(2f, 6f), newColor: new Color(255, 202, 101),
                                 Scale: Main.rand.NextFloat(1f, 1.5f));
                             d.noGravity = true;
@@ -123,7 +123,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                                 NPC.TargetClosest();
                                 Vector2 pos = GetMousePos();
                                 int damage = Helper.GetProjDamage(70, 80, 90);
-                                NPC.NewProjectileDirectInAI<LightingBreath>(pos + Recorder.ToRotationVector2() * 1800, pos, damage, 0, NPC.target
+                                NPC.NewProjectileDirectInAI<LightingBreath>(pos + (Recorder.ToRotationVector2() * 1800), pos, damage, 0, NPC.target
                                     , burstTime, NPC.whoAmI, 85);
 
                                 SoundEngine.PlaySound(CoraliteSoundID.NoUse_Electric_Item93, NPC.Center);
@@ -196,7 +196,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                     break;
                 case 0://与玩家拉近距离
                     {
-                        const int chasingTime = 60 * 2 + 30;
+                        const int chasingTime = (60 * 2) + 30;
 
                         Vector2 targetPos = Target.Center + new Vector2(0, -300);
 
@@ -276,11 +276,11 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             Recorder = (Target.Center - NPC.Center).ToRotation();
                         }
 
-                        Vector2 pos2 = NPC.Center + (NPC.rotation - NPC.direction * 0.25f).ToRotationVector2() * 60;
+                        Vector2 pos2 = NPC.Center + ((NPC.rotation - (NPC.direction * 0.25f)).ToRotationVector2() * 60);
                         Vector2 dir2 = Recorder.ToRotationVector2();
                         for (int i = 0; i < 3; i++)
                         {
-                            Dust d = Dust.NewDustPerfect(pos2 + dir2 * Main.rand.NextFloat(20f, 1220f), DustID.PortalBoltTrail
+                            Dust d = Dust.NewDustPerfect(pos2 + (dir2 * Main.rand.NextFloat(20f, 1220f)), DustID.PortalBoltTrail
                                 , dir2.RotateByRandom(-0.3f, 0.3f) * Main.rand.NextFloat(2f, 6f), newColor: new Color(255, 202, 101),
                                 Scale: Main.rand.NextFloat(1f, 1.5f));
                             d.noGravity = true;
@@ -301,7 +301,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                                 NPC.TargetClosest();
                                 Vector2 pos = GetMousePos();
                                 int damage = Helper.GetProjDamage(100, 130, 180);
-                                NPC.NewProjectileDirectInAI<ElectromagneticCannon>(pos + Recorder.ToRotationVector2() * 2000, pos, damage, 0, NPC.target
+                                NPC.NewProjectileDirectInAI<ElectromagneticCannon>(pos + (Recorder.ToRotationVector2() * 2000), pos, damage, 0, NPC.target
                                     , burstTime, NPC.whoAmI, 85);
 
                                 SoundEngine.PlaySound(CoraliteSoundID.NoUse_Electric_Item93, NPC.Center);

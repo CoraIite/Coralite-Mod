@@ -70,7 +70,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             GetMouseCenter(out Vector2 targetDir, out Vector2 mouseCenter);
                             for (int i = -1; i < 2; i++)
                             {
-                                Vector2 position = mouseCenter + i * 16 * targetDir.RotatedBy(1.57f);
+                                Vector2 position = mouseCenter + (i * 16 * targetDir.RotatedBy(1.57f));
                                 Tile tile = Framing.GetTileSafely(position);
                                 if (tile.HasSolidTile())
                                 {

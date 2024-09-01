@@ -201,7 +201,7 @@ namespace Coralite.Content.Evevts.ShadowCastle
 
                         if (Timer < 60 * 30)
                         {
-                            scale = 0.5f + 3.5f * Timer / (60 * 30f);
+                            scale = 0.5f + (3.5f * Timer / (60 * 30f));
 
                             int width = (int)(108 * scale);
                             Projectile.Resize(width, width);
@@ -424,7 +424,7 @@ namespace Coralite.Content.Evevts.ShadowCastle
                                 angle += Projectile.velocity.Y * 0.005f;
 
                                 Projectile.velocity.X -= Projectile.velocity.Y;
-                                Projectile.Center = owner.Center + angle.ToRotationVector2() * Projectile.velocity.X;
+                                Projectile.Center = owner.Center + (angle.ToRotationVector2() * Projectile.velocity.X);
                                 if (Vector2.Distance(owner.Center, Projectile.Center) < 16)
                                     Projectile.Kill();
                             }

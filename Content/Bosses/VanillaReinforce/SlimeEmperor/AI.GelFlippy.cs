@@ -9,7 +9,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
     {
         public void GelFlippy()
         {
-            switch ((SonState))
+            switch (SonState)
             {
                 case 0: //保证自己在地上
                     Jump(2, 8, onLanding: () => SonState++);

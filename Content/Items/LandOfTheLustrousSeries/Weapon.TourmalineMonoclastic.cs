@@ -125,7 +125,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             if (AttackTime > 0)
             {
-                Vector2 dir = (Main.MouseWorld - Projectile.Center);
+                Vector2 dir = Main.MouseWorld - Projectile.Center;
                 if (dir.Length() < 48)
                     idlePos += dir;
                 else
@@ -142,7 +142,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             if (AttackTime > 0)
             {
-                scale.Y = Helper.Lerp(0.2f, 1f, Coralite.Instance.SqrtSmoother.Smoother(1 - AttackTime / Owner.itemTimeMax));
+                scale.Y = Helper.Lerp(0.2f, 1f, Coralite.Instance.SqrtSmoother.Smoother(1 - (AttackTime / Owner.itemTimeMax)));
                 AttackTime--;
             }
         }
@@ -180,7 +180,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             for (int i = 0; i < 2; i++)
             {
                 Vector2 dir = Helper.NextVec2Dir();
-                TourmalineProj.SpawnTriangleParticle(Projectile.Center + dir * Main.rand.NextFloat(6, 12), dir * Main.rand.NextFloat(1f, 3f));
+                TourmalineProj.SpawnTriangleParticle(Projectile.Center + (dir * Main.rand.NextFloat(6, 12)), dir * Main.rand.NextFloat(1f, 3f));
             }
 
             Helper.PlayPitched("Crystal/CrystalShoot", 0.4f, 0, Projectile.Center);
@@ -194,7 +194,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             for (int i = 0; i < 4; i++)
                 Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] + toCenter - Main.screenPosition, null,
-                    new Color(251, 100, 152) * (0.3f - i * 0.3f / 4), Projectile.oldRot[i] + 0, origin, Projectile.scale, 0, 0);
+                    new Color(251, 100, 152) * (0.3f - (i * 0.3f / 4)), Projectile.oldRot[i] + 0, origin, Projectile.scale, 0, 0);
 
             Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, null, lightColor, Projectile.rotation,
                 origin, Projectile.scale * scale, 0, 0);
@@ -239,13 +239,13 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             if (Timer < 0)
             {
                 //生成斩击弹幕
-                Projectile.NewProjectileFromThis<TourmalineSlash>(target.Center + Vector2.UnitY * (10 * 15 + 20 * Main.rand.Next(-4, 4)), -Vector2.UnitY * 15,
+                Projectile.NewProjectileFromThis<TourmalineSlash>(target.Center + (Vector2.UnitY * ((10 * 15) + (20 * Main.rand.Next(-4, 4)))), -Vector2.UnitY * 15,
                     Projectile.damage, Projectile.knockBack);
 
                 Projectile.Kill();
             }
 
-            float factor = 1 - Timer / RecordTimer;
+            float factor = 1 - (Timer / RecordTimer);
             float length = Vector2.Distance(owner.Center, target.Center);
             Dust d = Dust.NewDustPerfect(Vector2.Lerp(owner.Center, target.Center, Main.rand.NextFloat(factor / 5, factor / 2))
                 , DustID.CrimsonTorch, (target.Center - owner.Center).SafeNormalize(Vector2.Zero).RotateByRandom(-0.3f, 0.3f) * Main.rand.NextFloat(2, 4)
@@ -287,7 +287,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             distance = Math.Clamp(distance, 0, 350);
             float factor = distance / mainTex.Width;
-            float factor2 = 1 - Timer / RecordTimer;
+            float factor2 = 1 - (Timer / RecordTimer);
 
             Vector2 scale = new Vector2(0.1f * factor, factor) * Coralite.Instance.SqrtSmoother.Smoother(factor2);
 
@@ -346,14 +346,14 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             float factor = Timer / 20;
 
-            Vector2 fatness = new(0.5f + factor * 1.5f, 0.8f + MathF.Sin(factor * MathHelper.Pi) * 0.2f);
-            float scale = 2f + 8f * factor;
+            Vector2 fatness = new(0.5f + (factor * 1.5f), 0.8f + (MathF.Sin(factor * MathHelper.Pi) * 0.2f));
+            float scale = 2f + (8f * factor);
             var pos = Projectile.Center - Main.screenPosition;
             //两侧
             Helper.DrawPrettyLine(1, 0, pos, TourmalineProj.brightC, TourmalineProj.darkC,
-                factor, 0, 0.4f, 0.6f, 1, MathHelper.Pi / 6 + MathHelper.PiOver2, 4.5f, fatness);
+                factor, 0, 0.4f, 0.6f, 1, (MathHelper.Pi / 6) + MathHelper.PiOver2, 4.5f, fatness);
             Helper.DrawPrettyLine(1, 0, pos, TourmalineProj.brightC, TourmalineProj.darkC,
-                factor, 0, 0.4f, 0.6f, 1, -MathHelper.Pi / 6 + MathHelper.PiOver2, 4.5f, fatness);
+                factor, 0, 0.4f, 0.6f, 1, (-MathHelper.Pi / 6) + MathHelper.PiOver2, 4.5f, fatness);
             //竖直
             Helper.DrawPrettyLine(1, 0, pos, TourmalineProj.brightC, TourmalineProj.darkC,
                 factor, 0, 0.4f, 0.6f, 1, MathHelper.PiOver2, scale, fatness);

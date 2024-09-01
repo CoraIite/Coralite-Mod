@@ -60,7 +60,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override Color GetColor(float factor)
         {
-            float x = Main.GlobalTimeWrappedHourly * 0.5f + factor;
+            float x = (Main.GlobalTimeWrappedHourly * 0.5f) + factor;
             float f = MathF.Truncate(x);
             x -= f;
             Color c = Main.hslToRgb(x, 1, 0.8f) * factor;

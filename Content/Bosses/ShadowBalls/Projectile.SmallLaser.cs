@@ -84,7 +84,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             Projectile.rotation = owner.rotation;
             Vector2 dir = owner.rotation.ToRotationVector2();
-            Projectile.Center = owner.Center + dir * owner.width / 2;
+            Projectile.Center = owner.Center + (dir * owner.width / 2);
 
 
             if (timer < 8)
@@ -139,7 +139,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
                 for (int i = 0; i < 200; i++)
                 {
-                    Vector2 currentPos = Projectile.Center + dir * i * 12 + offset * MathF.Sin(Random + i * 0.1f + timer / 4);
+                    Vector2 currentPos = Projectile.Center + (dir * i * 12) + (offset * MathF.Sin(Random + (i * 0.1f) + (timer / 4)));
                     if (!CoraliteWorld.shadowBallsFightArea.Contains(currentPos.ToPoint()))
                         break;
 
@@ -156,7 +156,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             for (int i = 0; i < 200; i++)
             {
-                Vector2 currentPos = originPos + dir * i * 12;
+                Vector2 currentPos = originPos + (dir * i * 12);
                 if (!CoraliteWorld.shadowBallsFightArea.Contains(currentPos.ToPoint()))
                 {
                     for (int j = 0; j < 12; j++)
@@ -231,7 +231,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             Vector2 dir = (Projectile.rotation + 1.57f).ToRotationVector2();
             for (int i = 0; i < count; i++)
             {
-                float factor = 1f - i / count;
+                float factor = 1f - (i / count);
                 Vector2 Center = laserTrailPoints[i];
                 Vector2 width = GetWidh(1f - factor) * dir;
                 Vector2 Top = Center + width;
@@ -331,12 +331,12 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             Projectile.rotation = owner.rotation;
             Vector2 dir = owner.rotation.ToRotationVector2();
-            Vector2 originPos = owner.Center + dir * owner.width / 2;
+            Vector2 originPos = owner.Center + (dir * owner.width / 2);
             laserTrailPoints.Add(originPos);
 
             for (int i = 0; i < 300; i++)
             {
-                Vector2 currentPos = originPos + dir * i * 8;
+                Vector2 currentPos = originPos + (dir * i * 8);
                 if (!CoraliteWorld.shadowBallsFightArea.Contains(currentPos.ToPoint()))
                 {
                     currentPos.X = MathHelper.Clamp(currentPos.X,
@@ -367,7 +367,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             Vector2 dir = (Projectile.rotation + 1.57f).ToRotationVector2();
             for (int i = 0; i < count; i++)
             {
-                float factor = 1f - i / count;
+                float factor = 1f - (i / count);
                 Vector2 Center = laserTrailPoints[i];
                 Vector2 width = GetWidh(1f - factor) * dir;
                 Vector2 Top = Center + width;
@@ -386,7 +386,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 Matrix view = Main.GameViewMatrix.TransformationMatrix;
                 Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
-                effect.Parameters["uTime"].SetValue(Random + Main.GlobalTimeWrappedHourly / 5);
+                effect.Parameters["uTime"].SetValue(Random + (Main.GlobalTimeWrappedHourly / 5));
                 effect.Parameters["transformMatrix"].SetValue(world * view * projection);
                 effect.Parameters["sampleTexture"].SetValue(Projectile.GetTexture());
                 effect.Parameters["gradientTexture"].SetValue(gradientTex2.Value);

@@ -217,10 +217,10 @@ namespace Coralite.Content.Items.BossSummons
         public override void AI()
         {
             Owner.itemAnimation = Owner.itemTime = 2;
-            Owner.itemRotation = Owner.direction * (1f + 0.2f * MathF.Sin(Timer * 0.2f));
+            Owner.itemRotation = Owner.direction * (1f + (0.2f * MathF.Sin(Timer * 0.2f)));
 
             Owner.heldProj = Projectile.whoAmI;
-            Projectile.rotation = Owner.direction * (0.3f + 0.3f * MathF.Sin(Timer * 0.02f));
+            Projectile.rotation = Owner.direction * (0.3f + (0.3f * MathF.Sin(Timer * 0.02f)));
 
             Projectile.Center = Owner.Center + new Vector2(Owner.direction * 8, 0);
 
@@ -238,39 +238,39 @@ namespace Coralite.Content.Items.BossSummons
                 SpawnNote(0, 1);
                 PlaySound(So);
             }
-            else if (Timer == 10 + part * 2)
+            else if (Timer == 10 + (part * 2))
             {
                 SpawnNote(0, 2);
                 PlaySound(Rai);
             }
-            else if (Timer == 10 + part * 3)
+            else if (Timer == 10 + (part * 3))
             {
                 SpawnNote(1, 3);
                 PlaySound(Mi);
             }
-            else if (Timer == 10 + part * 3 + part / 2)
+            else if (Timer == 10 + (part * 3) + (part / 2))
                 PlaySound(Fa);
 
-            else if (Timer == 10 + part * 4)
+            else if (Timer == 10 + (part * 4))
             {
                 SpawnNote(0, 4);
                 PlaySound(Mi);
             }
-            else if (Timer == 10 + part * 5)
+            else if (Timer == 10 + (part * 5))
             {
                 SpawnNote(0, 5);
                 PlaySound(Mi);
             }
-            else if (Timer == 10 + part * 6)
+            else if (Timer == 10 + (part * 6))
             {
                 SpawnNote(1, 6);
                 PlaySound(Rai);
             }
-            else if (Timer == 10 + part * 6 + part / 2)
+            else if (Timer == 10 + (part * 6) + (part / 2))
                 PlaySound(Do);
-            else if (Timer == 10 + part * 7)
+            else if (Timer == 10 + (part * 7))
                 PlaySound(Si1);
-            else if (Timer == 10 + part * 7 + part / 2)
+            else if (Timer == 10 + (part * 7) + (part / 2))
             {
                 PlaySound(Do);
 
@@ -284,11 +284,11 @@ namespace Coralite.Content.Items.BossSummons
                 }
             }
 
-            else if (Timer == 10 + part * 8)
+            else if (Timer == 10 + (part * 8))
                 PlaySound(Rai);
-            else if (Timer == 10 + part * 9)
+            else if (Timer == 10 + (part * 9))
                 PlaySound(So1);
-            else if (Timer > 10 + part * 10 + 20)
+            else if (Timer > 10 + (part * 10) + 20)
             {
                 SoundEngine.PlaySound(CoraliteSoundID.IceMagic_Item28);
                 if (Main.myPlayer == Projectile.owner)
@@ -388,7 +388,7 @@ namespace Coralite.Content.Items.BossSummons
             Projectile.localAI[0]++;
 
             float factor2 = Math.Clamp(Projectile.localAI[0] / 140, 0, 1);
-            Vector2 pos = Owner.Center + (Main.GlobalTimeWrappedHourly + MathHelper.TwoPi * Which / 7).ToRotationVector2() * (96 + factor * 16);
+            Vector2 pos = Owner.Center + ((Main.GlobalTimeWrappedHourly + (MathHelper.TwoPi * Which / 7)).ToRotationVector2() * (96 + (factor * 16)));
             float length = Vector2.Distance(pos, Projectile.Center);
             Projectile.velocity = (pos - Projectile.Center).SafeNormalize(Vector2.Zero) * factor2 * (length < 16 ? length : 16);
 

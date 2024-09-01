@@ -27,7 +27,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             base.Initialize();
             float rotation = TargetRot + (OwnerDirection > 0 ? 0 : MathHelper.Pi);
             Vector2 dir = rotation.ToRotationVector2();
-            Vector2 center = Projectile.Center + dir * 54;
+            Vector2 center = Projectile.Center + (dir * 54);
             for (int i = 0; i < 3; i++)
             {
                 Color color = Main.rand.Next(3) switch
@@ -74,7 +74,7 @@ namespace Coralite.Content.Items.HyacinthSeries
                 if (Projectile.timeLeft % 10 == 0 && Main.myPlayer == Projectile.owner)
                 {
                     float factor = (30 - Projectile.timeLeft) / 10;
-                    float scale = 0.4f + 0.1f * factor;
+                    float scale = 0.4f + (0.1f * factor);
                     Vector2 center = Projectile.Center + Main.rand.NextVector2CircularEdge(8, 8);
 
                     Projectile.NewProjectile(Projectile.GetSource_FromAI(), center, Vector2.Zero, ModContent.ProjectileType<StarsBreathExplosion>(), (int)(Projectile.damage * 0.5f), Projectile.knockBack, Projectile.owner, scale);
@@ -138,11 +138,11 @@ namespace Coralite.Content.Items.HyacinthSeries
                 , new Color(255, 255, 255, 0) * 0.7f, shineColor,
                 0.5f, 0f, 0.5f, 0.5f, 1f,
                 Projectile.rotation, new Vector2(3.3f, 1f), Vector2.One * 1.7f);
-            Helper.DrawPrettyStarSparkle(Projectile.Opacity, SpriteEffects.None, center + (Projectile.rotation + 1.57f + 0.785f).ToRotationVector2() * 8
+            Helper.DrawPrettyStarSparkle(Projectile.Opacity, SpriteEffects.None, center + ((Projectile.rotation + 1.57f + 0.785f).ToRotationVector2() * 8)
                 , new Color(255, 255, 255, 0) * 0.7f, shineColor,
                 0.5f, 0f, 0.5f, 0.5f, 1f,
                 Projectile.rotation, new Vector2(1f, 0.3f), Vector2.One);
-            Helper.DrawPrettyStarSparkle(Projectile.Opacity, SpriteEffects.None, center - (Projectile.rotation + 1.57f + 0.785f).ToRotationVector2() * 8
+            Helper.DrawPrettyStarSparkle(Projectile.Opacity, SpriteEffects.None, center - ((Projectile.rotation + 1.57f + 0.785f).ToRotationVector2() * 8)
                 , new Color(255, 255, 255, 0) * 0.7f, shineColor,
                 0.5f, 0f, 0.5f, 0.5f, 1f,
                 Projectile.rotation, new Vector2(1f, 0.3f), Vector2.One);

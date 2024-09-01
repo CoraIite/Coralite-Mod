@@ -104,7 +104,7 @@ namespace Coralite.Content.Tiles.ShadowCastle
             if (!BlackHoleTrials.DownedBlackHoleTrails && !Main.projectile.Any(p => p.active && p.type == ModContent.ProjectileType<BlackHoleMainProj>()))
             {
                 //开启试炼
-                Vector2 pos = new Vector2(i - tile.TileFrameX / 18 + 1, j - tile.TileFrameY / 18 + 1) * 16;
+                Vector2 pos = new Vector2(i - (tile.TileFrameX / 18) + 1, j - (tile.TileFrameY / 18) + 1) * 16;
                 Projectile.NewProjectile(new EntitySource_TileInteraction(Main.LocalPlayer, i, j), pos,
                     Vector2.Zero, ModContent.ProjectileType<BlackHoleMainProj>(), 100, 0, Main.myPlayer);
                 return false;

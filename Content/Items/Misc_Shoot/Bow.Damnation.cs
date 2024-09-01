@@ -69,7 +69,7 @@ namespace Coralite.Content.Items.Misc_Shoot
         {
             Owner.heldProj = Projectile.whoAmI;
 
-            Projectile.Center = Owner.Center + Projectile.rotation.ToRotationVector2() * 16;
+            Projectile.Center = Owner.Center + (Projectile.rotation.ToRotationVector2() * 16);
             Projectile.rotation = -1.57f + Math.Clamp((Main.MouseWorld.X - Owner.Center.X) / 400f * 0.3f, -0.4f, 0.4f);
         }
 

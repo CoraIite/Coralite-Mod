@@ -101,9 +101,9 @@ namespace Coralite.Content.Items.YujianHulu
                 float length = targetVector.Length();
 
                 if (length > distanceToKeep + 20)
-                    Projectile.velocity = (Projectile.velocity * 20f + targetDirection * 2) / 21f;
+                    Projectile.velocity = ((Projectile.velocity * 20f) + (targetDirection * 2)) / 21f;
                 else if (length < distanceToKeep - 20)
-                    Projectile.velocity = (Projectile.velocity * 20f + targetDirection * -2) / 21f;
+                    Projectile.velocity = ((Projectile.velocity * 20f) + (targetDirection * -2)) / 21f;
                 else
                     Projectile.velocity *= slowdownFactor;
 
@@ -116,7 +116,7 @@ namespace Coralite.Content.Items.YujianHulu
             {
                 targetCenter = yujianProj.GetTargetCenter(IsAimingMouse);
                 int spurtTime = firstPhaseTime - SecondPhaseTime;
-                float speed = (Vector2.Distance(targetCenter, Projectile.Center) + distanceToKeep * 0.3f) / spurtTime;
+                float speed = (Vector2.Distance(targetCenter, Projectile.Center) + (distanceToKeep * 0.3f)) / spurtTime;
                 Projectile.velocity = (targetCenter - Projectile.Center).SafeNormalize(Vector2.One) * speed;
 
                 Projectile.rotation = (targetCenter - Projectile.Center).ToRotation() + 1.57f;
@@ -154,16 +154,16 @@ namespace Coralite.Content.Items.YujianHulu
             Texture2D mainTex = Projectile.GetTexture();
             Rectangle source = mainTex.Frame();
             Vector2 origin = new(mainTex.Width / 2, mainTex.Height / 2);
-            float scale = 1.6f + yujianProj.trailCacheLength * 0.015f;
+            float scale = 1.6f + (yujianProj.trailCacheLength * 0.015f);
 
             for (int i = yujianProj.trailCacheLength - 1; i > 0; i -= 3)
             {
                 Color shadowColor = Color.Lerp(yujianProj.color1, yujianProj.color2, (float)i / yujianProj.trailCacheLength);
-                int a = 20 + i * 4;
+                int a = 20 + (i * 4);
                 if (a > 255)
                     a = 255;
                 shadowColor.A = (byte)a;
-                spriteBatch.Draw(mainTex, Projectile.oldPos[i] - Main.screenPosition, source, shadowColor, Projectile.oldRot[i], origin, scale - i * 0.015f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(mainTex, Projectile.oldPos[i] - Main.screenPosition, source, shadowColor, Projectile.oldRot[i], origin, scale - (i * 0.015f), SpriteEffects.None, 0f);
             }
         }
     }
@@ -211,7 +211,7 @@ namespace Coralite.Content.Items.YujianHulu
             {
                 for (int i = 0; i < 2; i++)
                 {
-                    Particle particle = Particle.NewParticle(Projectile.Center + Main.rand.NextVector2CircularEdge(16, 16) + i * Projectile.velocity, Vector2.Zero, CoraliteContent.ParticleType<HorizontalStar>(), Color.Gold, Main.rand.NextFloat(0.1f, 0.15f));
+                    Particle particle = Particle.NewParticle(Projectile.Center + Main.rand.NextVector2CircularEdge(16, 16) + (i * Projectile.velocity), Vector2.Zero, CoraliteContent.ParticleType<HorizontalStar>(), Color.Gold, Main.rand.NextFloat(0.1f, 0.15f));
                     particle.Rotation = 1.57f;
                 }
             }

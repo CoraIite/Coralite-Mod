@@ -53,7 +53,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
 
             for (int i = 0; i < 4; i++)
             {
-                Dust d = Dust.NewDustPerfect(Projectile.Center + Helper.NextVec2Dir() * factor * 128, DustID.GemRuby, Vector2.Zero);
+                Dust d = Dust.NewDustPerfect(Projectile.Center + (Helper.NextVec2Dir() * factor * 128), DustID.GemRuby, Vector2.Zero);
                 d.noGravity = true;
             }
 

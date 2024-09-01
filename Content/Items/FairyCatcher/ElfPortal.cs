@@ -109,7 +109,7 @@ namespace Coralite.Content.Items.FairyCatcher
                 if (item == null || item.IsAir || item.timeSinceItemSpawned < 60)
                     continue;
 
-                Vector2 pos = new Vector2(i, j) * 16 + new Vector2(16 * 6 + 4, 16 * 6 + 2);
+                Vector2 pos = (new Vector2(i, j) * 16) + new Vector2((16 * 6) + 4, (16 * 6) + 2);
 
                 if (Vector2.Distance(pos, item.Center) > 16 * 20)
                     continue;
@@ -266,7 +266,7 @@ namespace Coralite.Content.Items.FairyCatcher
             Vector2 vector = Projectile.Center - Main.screenPosition;
             int num = 5;
             int horizontalFrames = 4;
-            float num2 = (Projectile.whoAmI * 0.11f + (float)Main.timeForVisualEffects / 360f) % 1f;
+            float num2 = ((Projectile.whoAmI * 0.11f) + ((float)Main.timeForVisualEffects / 360f)) % 1f;
             Color color = Main.hslToRgb(num2, 1f, 0.65f);
             color.A /= 2;
             float rotation = Projectile.rotation;
@@ -296,9 +296,9 @@ namespace Coralite.Content.Items.FairyCatcher
                 Vector2 vector2 = Projectile.oldPos[i] - Projectile.position;
                 float num14 = Utils.Remap(i, 0f, num3, 1f, 0f);
                 float num15 = 1f - num14;
-                Vector2 spinningpoint = new Vector2((float)Math.Sin((double)(Projectile.whoAmI / 17f) + Main.timeForVisualEffects / (double)num10 + (double)(num14 * 2f * ((float)Math.PI * 2f))) * num8, 0f - num7) * num15;
+                Vector2 spinningpoint = new Vector2((float)Math.Sin((double)(Projectile.whoAmI / 17f) + (Main.timeForVisualEffects / (double)num10) + (double)(num14 * 2f * ((float)Math.PI * 2f))) * num8, 0f - num7) * num15;
                 vector2 += spinningpoint.RotatedBy(num12);
-                Color color3 = Main.hslToRgb((num2 + num15 * num11) % 1f, 1f, 0.5f);
+                Color color3 = Main.hslToRgb((num2 + (num15 * num11)) % 1f, 1f, 0.5f);
                 color3.A = 0;
                 Main.spriteBatch.Draw(mainTex, vector + vector2, value2, color3 * num14 * 0.16f, rotation, origin, scale * Utils.Remap(num14 * num14, 0f, 1f, 0f, 2.5f), 0, 0f);
             }
@@ -309,8 +309,8 @@ namespace Coralite.Content.Items.FairyCatcher
             white.A /= 2;
             Main.spriteBatch.Draw(mainTex, vector, value3, white, rotation, origin, scale, 0, 0f);
             Main.spriteBatch.Draw(mainTex, vector, rectangle, color, rotation, origin, scale, 0, 0f);
-            float num16 = MathHelper.Clamp((float)Math.Sin(Main.timeForVisualEffects / 60.0) * 0.3f + 0.3f, 0f, 1f);
-            float num17 = 0.8f + (float)Math.Sin(Main.timeForVisualEffects / 15.0 * 6.2831854820251465) * 0.3f;
+            float num16 = MathHelper.Clamp(((float)Math.Sin(Main.timeForVisualEffects / 60.0) * 0.3f) + 0.3f, 0f, 1f);
+            float num17 = 0.8f + ((float)Math.Sin(Main.timeForVisualEffects / 15.0 * 6.2831854820251465) * 0.3f);
             Rectangle value4 = mainTex.Frame(horizontalFrames, num, 3, Projectile.whoAmI % num);
             Color color4 = Color.Lerp(color, new Color(255, 255, 255, 0), 0.5f) * num16;
             Main.spriteBatch.Draw(mainTex, vector, value4, color4, rotation, origin, scale * num17, SpriteEffects.None, 0f);

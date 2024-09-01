@@ -122,12 +122,12 @@ namespace Coralite.Content.Items.Misc_Magic
                 if (Main.netMode != NetmodeID.Server)
                 {
                     SoundStyle buLing = SoundID.Item9;
-                    buLing.Volume = 0.2f + (timer / 20 - 1) * 0.05f;
+                    buLing.Volume = 0.2f + (((timer / 20) - 1) * 0.05f);
                     buLing.PitchRange = (0f, 0f);
                     SoundEngine.PlaySound(buLing, Owner.Center);
                 }
                 if (timer < 210)
-                    Helper.PlayPitched("Weapons_Magic/MagicAcc", 0.4f, (timer / 20 - 1) * 0.2f, Projectile.Center);
+                    Helper.PlayPitched("Weapons_Magic/MagicAcc", 0.4f, ((timer / 20) - 1) * 0.2f, Projectile.Center);
                 else if (timer == 210)
                 {
                     SoundEngine.PlaySound(SoundID.Item4, Owner.Center);
@@ -151,7 +151,7 @@ namespace Coralite.Content.Items.Misc_Magic
             {
                 TargetDirection = Vector2.Normalize(Main.MouseWorld - Owner.Center);
                 if (Main.myPlayer == Owner.whoAmI)
-                    Center = Projectile.Center + (Main.MouseWorld - Projectile.Center).SafeNormalize(Vector2.UnitY) * 80f;
+                    Center = Projectile.Center + ((Main.MouseWorld - Projectile.Center).SafeNormalize(Vector2.UnitY) * 80f);
 
                 OnChannelComplete(76, 40);
             }
@@ -202,11 +202,11 @@ namespace Coralite.Content.Items.Misc_Magic
                 TargetDirection = Vector2.Normalize(Main.MouseWorld - Owner.Center);
                 Projectile.Center = Owner.Center;
                 if (Main.myPlayer == Owner.whoAmI)
-                    Center = Projectile.Center + (Main.MouseWorld - Projectile.Center).SafeNormalize(Vector2.UnitY) * 80f;
+                    Center = Projectile.Center + ((Main.MouseWorld - Projectile.Center).SafeNormalize(Vector2.UnitY) * 80f);
 
                 float factor = (float)timer / 20;
                 float x_1 = factor - 1;
-                _Rotation = -1.57f + Owner.direction * (1 + 2.6f * x_1 * x_1 * x_1 + 1.6f * x_1 * x_1) * 4f;        //控制挥舞曲线
+                _Rotation = -1.57f + (Owner.direction * (1 + (2.6f * x_1 * x_1 * x_1) + (1.6f * x_1 * x_1)) * 4f);        //控制挥舞曲线
                 if (timer == 10)
                 {
                     if (Main.netMode != NetmodeID.Server)
@@ -263,7 +263,7 @@ namespace Coralite.Content.Items.Misc_Magic
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
             if (completeAndRelease)
-                return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, Projectile.Center + TargetDirection * (Projectile.height + 20), Projectile.width, ref Projectile.localAI[0]);
+                return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, Projectile.Center + (TargetDirection * (Projectile.height + 20)), Projectile.width, ref Projectile.localAI[0]);
 
             return false;
         }
@@ -311,8 +311,8 @@ namespace Coralite.Content.Items.Misc_Magic
             }
 
             float cosProgress = MathF.Cos(timer * 0.1f);      //<---别问我这是什么神秘数字，问就是乱写的
-            int r = (int)(174.5f - cosProgress * 42.5);
-            int b = (int)(245 + cosProgress * 10);
+            int r = (int)(174.5f - (cosProgress * 42.5));
+            int b = (int)(245 + (cosProgress * 10));
             alpha *= 200;
             //绘制中心
             Rectangle source = new(0, 0, 256, 256);       //<---因为知道贴图多大所以就暴力填数字了
@@ -327,9 +327,9 @@ namespace Coralite.Content.Items.Misc_Magic
 
             //绘制外层圈圈
             float scale = timer < 100 ? 0.8f * timer / 100 : 0.8f;
-            rotation = -0.785f + cosProgress * 0.05f;
-            r = (int)(174.5f + cosProgress * 42.5);
-            b = (int)(245 - cosProgress * 10);
+            rotation = -0.785f + (cosProgress * 0.05f);
+            r = (int)(174.5f + (cosProgress * 42.5));
+            b = (int)(245 - (cosProgress * 10));
             source = new Rectangle(0, 256, 256, 256);
             Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, source,
                                             new Color(r, 233, b, alpha), rotation, origin, scale, SpriteEffects.None, 0f);
@@ -339,7 +339,7 @@ namespace Coralite.Content.Items.Misc_Magic
         protected void DrawSelf(SpriteBatch sb)
         {
             Texture2D mainTex = Request<Texture2D>(AssetDirectory.Misc_Magic + "CosmosFracture").Value;
-            sb.Draw(mainTex, Owner.Center + _Rotation.ToRotationVector2() * 64 - Main.screenPosition, mainTex.Frame(), Color.White, _Rotation + 0.785f, new Vector2(mainTex.Width / 2, mainTex.Height / 2), 1, SpriteEffects.None, 0);
+            sb.Draw(mainTex, Owner.Center + (_Rotation.ToRotationVector2() * 64) - Main.screenPosition, mainTex.Frame(), Color.White, _Rotation + 0.785f, new Vector2(mainTex.Width / 2, mainTex.Height / 2), 1, SpriteEffects.None, 0);
         }
 
         protected void DrawFracture2(SpriteBatch sb)
@@ -351,7 +351,7 @@ namespace Coralite.Content.Items.Misc_Magic
 
             float rotation;
             if (fractureFrameY == 2)//&& fractureFrameX == 1
-                rotation = TargetDirection.ToRotation() + 1.57f + timer * 0.008f;
+                rotation = TargetDirection.ToRotation() + 1.57f + (timer * 0.008f);
             else
                 rotation = TargetDirection.ToRotation() + 1.57f;
             sb.Draw(mainTex, Projectile.Center - Main.screenPosition, source, Color.White, rotation,
@@ -362,7 +362,7 @@ namespace Coralite.Content.Items.Misc_Magic
         {
             Texture2D mainTex = Projectile.GetTexture();
 
-            sb.Draw(mainTex, Projectile.Center + TargetDirection * (Projectile.height / 2) - Main.screenPosition, mainTex.Frame(), Color.White, TargetDirection.ToRotation() + 0.785f,
+            sb.Draw(mainTex, Projectile.Center + (TargetDirection * (Projectile.height / 2)) - Main.screenPosition, mainTex.Frame(), Color.White, TargetDirection.ToRotation() + 0.785f,
                           new Vector2(mainTex.Width / 2, mainTex.Height / 2), Projectile.height / 96, SpriteEffects.None, 0);
         }
 
@@ -503,7 +503,7 @@ namespace Coralite.Content.Items.Misc_Magic
                 Projectile.velocity *= 0;
                 Projectile.rotation += 0.524f;
                 length += 5f;
-                Projectile.Center = Target + Projectile.ai[1].ToRotationVector2() * length;
+                Projectile.Center = Target + (Projectile.ai[1].ToRotationVector2() * length);
 
                 return;
             }
@@ -513,7 +513,7 @@ namespace Coralite.Content.Items.Misc_Magic
             {
                 Projectile.friendly = true;
                 length -= 10f;
-                Projectile.Center = Target + (Projectile.rotation + 2.357f).ToRotationVector2() * length;
+                Projectile.Center = Target + ((Projectile.rotation + 2.357f).ToRotationVector2() * length);
 
                 return;
             }
@@ -545,7 +545,7 @@ namespace Coralite.Content.Items.Misc_Magic
                 Projectile.ai[1] += 0.05f;       //<---这个是围绕玩家旋转的具体角度，懒得再拿一个变量来描述了
                 Projectile.netUpdate = true;
 
-                Projectile.Center = Target + Projectile.ai[1].ToRotationVector2() * 50;
+                Projectile.Center = Target + (Projectile.ai[1].ToRotationVector2() * 50);
                 return;
             }
 
@@ -567,7 +567,7 @@ namespace Coralite.Content.Items.Misc_Magic
             for (int i = 0; i < 20; i++)
             {
                 r += 0.314f;
-                Vector2 dir = r.ToRotationVector2() * Helper.EllipticalEase(1.85f + 0.314f * i, 1f, 3f) * 0.5f;
+                Vector2 dir = r.ToRotationVector2() * Helper.EllipticalEase(1.85f + (0.314f * i), 1f, 3f) * 0.5f;
 
                 //Vector2 dir = new Vector2((float)Math.Cos(1.57f + 0.314f*i ), (float)Math.Sin(1.57f + 0.314f*i +0.5f));       //<--这样不行  : (
                 Dust dust = Dust.NewDustPerfect(Projectile.Center, DustID.Skyware, dir * widthDarker, 0, default, 1.2f);
@@ -620,12 +620,12 @@ namespace Coralite.Content.Items.Misc_Magic
             if (Projectile.ai[0] != 0 || timer > 32)
             {
                 sinProgress = (float)Math.Sin(timer * 0.05f);      //<---别问我这是什么神秘数字，问就是乱写的
-                r = (int)(128 - sinProgress * 128);
-                g = (int)(150 + sinProgress * 60);
+                r = (int)(128 - (sinProgress * 128));
+                g = (int)(150 + (sinProgress * 60));
                 for (int i = 0; i < 3; i++)     //这里是绘制类似于影子拖尾的东西，简单讲就是随机位置画几个透明度低的自己
                 {
-                    spriteBatch.Draw(mainTex, Projectile.oldPos[i] + origin * Projectile.scale - Main.screenPosition, source,
-                                                        new Color(r, g, 255, 160 - i * 30), Projectile.oldRot[i], origin, Projectile.scale + i * 0.3f, SpriteEffects.None, 0);
+                    spriteBatch.Draw(mainTex, Projectile.oldPos[i] + (origin * Projectile.scale) - Main.screenPosition, source,
+                                                        new Color(r, g, 255, 160 - (i * 30)), Projectile.oldRot[i], origin, Projectile.scale + (i * 0.3f), SpriteEffects.None, 0);
                 }
             }
 

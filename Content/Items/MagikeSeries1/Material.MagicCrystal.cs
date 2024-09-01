@@ -1,5 +1,4 @@
-﻿using Coralite.Content.Items.MagikeSeries2;
-using Coralite.Content.Raritys;
+﻿using Coralite.Content.Raritys;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.MagikeSystem;

@@ -33,7 +33,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public override bool? CanDamage()
         {
             const int SlowTime = 40 * 5;
-            const int StayTime = SlowTime + 10 * 5;
+            const int StayTime = SlowTime + (10 * 5);
 
             if (Projectile.ai[0] < StayTime)
                 return false;
@@ -43,8 +43,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public override void AI()
         {
             const int SlowTime = 40 * 5;
-            const int StayTime = SlowTime + 10 * 5;
-            const int AccTime = StayTime + 20 * 5;
+            const int StayTime = SlowTime + (10 * 5);
+            const int AccTime = StayTime + (20 * 5);
 
             Lighting.AddLight(Projectile.Center, new Vector3(0.6f, 0.1f, 0.85f));
             if (Projectile.ai[0] < SlowTime)

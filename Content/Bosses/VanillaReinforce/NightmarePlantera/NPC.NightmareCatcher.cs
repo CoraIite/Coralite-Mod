@@ -206,12 +206,12 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             float scale = NPC.scale * 1.1f;
             float rot = NPC.rotation - MouseAngle;
             Vector2 dir = rot.ToRotationVector2();
-            Main.spriteBatch.Draw(mainTex, pos + dir * 4, frameBox, c, rot, origin, scale, 0, 0);
+            Main.spriteBatch.Draw(mainTex, pos + (dir * 4), frameBox, c, rot, origin, scale, 0, 0);
 
             rot = NPC.rotation + MouseAngle;
             dir = rot.ToRotationVector2();
             frameBox = mainTex.Frame(1, 2, 0, 1);
-            Main.spriteBatch.Draw(mainTex, pos + dir * 4, frameBox, c, rot, new Vector2(2, 2), scale, 0, 0);
+            Main.spriteBatch.Draw(mainTex, pos + (dir * 4), frameBox, c, rot, new Vector2(2, 2), scale, 0, 0);
 
             Texture2D vineTex = VineTex.Value;
 

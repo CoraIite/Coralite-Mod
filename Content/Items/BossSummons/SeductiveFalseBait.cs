@@ -47,7 +47,7 @@ namespace Coralite.Content.Items.BossSummons
 
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
-                    int num = NPC.NewNPC(NPC.GetBossSpawnSource(player.whoAmI), (int)player.Center.X + player.direction * 200, (int)player.Center.Y + 100, type);
+                    int num = NPC.NewNPC(NPC.GetBossSpawnSource(player.whoAmI), (int)player.Center.X + (player.direction * 200), (int)player.Center.Y + 100, type);
                     string typeName = Main.npc[num].TypeName;
                     if (Main.netMode == NetmodeID.SinglePlayer)
                         Main.NewText(Language.GetTextValue("Announcement.HasAwoken", typeName), 175, 75);

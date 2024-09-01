@@ -60,7 +60,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             for (int i = 0; i < howMany; i++)
                             {
                                 float distance = Main.rand.Next(400, 600);
-                                NPC.NewProjectileInAI<NightmareSpawnEnergy>(NPC.Center + (angle + i * MathHelper.TwoPi / howMany).ToRotationVector2() * distance
+                                NPC.NewProjectileInAI<NightmareSpawnEnergy>(NPC.Center + ((angle + (i * MathHelper.TwoPi / howMany)).ToRotationVector2() * distance)
                                     , Vector2.Zero, 1, 1, -1, -1, distance, 1);
                             }
                         }
@@ -95,7 +95,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                                 for (int i = 0; i < howMany; i++)
                                 {
                                     float distance = Main.rand.Next(200, 300);
-                                    NPC.NewProjectileInAI<NightmareSpawnEnergy>(NPC.Center + (angle + i * MathHelper.TwoPi / howMany).ToRotationVector2() * distance
+                                    NPC.NewProjectileInAI<NightmareSpawnEnergy>(NPC.Center + ((angle + (i * MathHelper.TwoPi / howMany)).ToRotationVector2() * distance)
                                         , Vector2.Zero, 1, 1, -1, -1, distance, 1);
                                 }
                             }
@@ -124,13 +124,13 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         }
 
                         Vector2 dir = Helper.NextVec2Dir();
-                        Dust dust = Dust.NewDustPerfect(NPC.Center + dir * Main.rand.NextFloat(128f), ModContent.DustType<NightmareDust>(), dir * Main.rand.NextFloat(2f, 4f), Scale: Main.rand.NextFloat(1f, 2f));
+                        Dust dust = Dust.NewDustPerfect(NPC.Center + (dir * Main.rand.NextFloat(128f)), ModContent.DustType<NightmareDust>(), dir * Main.rand.NextFloat(2f, 4f), Scale: Main.rand.NextFloat(1f, 2f));
                         dust.noGravity = true;
 
                         if (Timer % 2 == 0)
                         {
                             dir = Helper.NextVec2Dir();
-                            Dust.NewDustPerfect(NPC.Center + dir * Main.rand.NextFloat(128f), DustID.VilePowder, dir * Main.rand.NextFloat(8f, 16f), newColor: new Color(153, 88, 156, 230), Scale: Main.rand.NextFloat(1f, 1.3f));
+                            Dust.NewDustPerfect(NPC.Center + (dir * Main.rand.NextFloat(128f)), DustID.VilePowder, dir * Main.rand.NextFloat(8f, 16f), newColor: new Color(153, 88, 156, 230), Scale: Main.rand.NextFloat(1f, 1.3f));
                         }
 
                         if (Timer < 140)

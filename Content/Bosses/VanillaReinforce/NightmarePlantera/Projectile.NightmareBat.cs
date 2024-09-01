@@ -110,12 +110,12 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             for (int i = 0; i < 10; i += 1)
                 Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] + toCenter - Main.screenPosition, frameBox,
-                    drawColor * (0.5f - i * 0.05f), Projectile.oldRot[i], frameBox.Size() / 2, 1, effect, 0);
+                    drawColor * (0.5f - (i * 0.05f)), Projectile.oldRot[i], frameBox.Size() / 2, 1, effect, 0);
 
             //向上下左右四个方向绘制一遍
             for (int i = 0; i < 4; i++)
             {
-                Main.spriteBatch.Draw(mainTex, pos + (i * MathHelper.PiOver2).ToRotationVector2() * 4, frameBox, drawColor, Projectile.rotation, origin, 1,
+                Main.spriteBatch.Draw(mainTex, pos + ((i * MathHelper.PiOver2).ToRotationVector2() * 4), frameBox, drawColor, Projectile.rotation, origin, 1,
                    effect, 0);
             }
 

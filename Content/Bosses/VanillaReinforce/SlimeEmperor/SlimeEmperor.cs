@@ -121,14 +121,14 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             {
                 if (nPCStrengthHelper.IsExpertMode)
                 {
-                    NPC.lifeMax = (int)((5600 + numPlayers * 1460) / journeyScale);
+                    NPC.lifeMax = (int)((5600 + (numPlayers * 1460)) / journeyScale);
                     NPC.damage = 75;
                     NPC.defense = 10;
                 }
 
                 if (nPCStrengthHelper.IsMasterMode)
                 {
-                    NPC.lifeMax = (int)((6200 + numPlayers * 3030) / journeyScale);
+                    NPC.lifeMax = (int)((6200 + (numPlayers * 3030)) / journeyScale);
                     NPC.scale *= 1.25f;
                     NPC.defense = 14;
                     NPC.damage = 100;
@@ -144,13 +144,13 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                 return;
             }
 
-            NPC.lifeMax = 5600 + numPlayers * 1460;
+            NPC.lifeMax = 5600 + (numPlayers * 1460);
             NPC.damage = 75;
             NPC.defense = 10;
 
             if (Main.masterMode)
             {
-                NPC.lifeMax = 6200 + numPlayers * 3030;
+                NPC.lifeMax = 6200 + (numPlayers * 3030);
                 NPC.scale *= 1.25f;
                 NPC.defense = 14;
                 NPC.damage = 100;
@@ -158,7 +158,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 
             if (Main.getGoodWorld)
             {
-                NPC.lifeMax = 6800 + numPlayers * 4060;
+                NPC.lifeMax = 6800 + (numPlayers * 4060);
                 NPC.damage = 140;
                 NPC.scale *= 1.25f;
                 NPC.defense = 16;
@@ -408,7 +408,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                         }
 
                         int height = GetCrownBottom();
-                        float groundHeight = NPC.Bottom.Y - Scale.Y * height;
+                        float groundHeight = NPC.Bottom.Y - (Scale.Y * height);
                         crown.Bottom.X = MathHelper.Lerp(crown.Bottom.X, NPC.Center.X, 0.5f);
 
                         if (crown.Bottom.Y < groundHeight - 2) //重力
@@ -748,7 +748,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             NPC.defense = NPC.defDefense;
 
             crown.Velocity_Y *= 0;
-            crown.Rotation = Main.rand.NextFloat(MathHelper.Pi + MathHelper.Pi / 4, MathHelper.TwoPi - MathHelper.Pi / 4) + MathHelper.Pi / 2;
+            crown.Rotation = Main.rand.NextFloat(MathHelper.Pi + (MathHelper.Pi / 4), MathHelper.TwoPi - (MathHelper.Pi / 4)) + (MathHelper.Pi / 2);
             crown.Bottom = NPC.Top;
         }
 
@@ -806,7 +806,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                         Vector2 toBottom = new(NPC.width / 2, NPC.height);
                         for (int i = 1; i < 12; i += 2)
                         {
-                            spriteBatch.Draw(mainTex, NPC.oldPos[i] + toBottom + offset, frameBox, drawColor * (0.4f - i * 0.04f), NPC.rotation, origin, scale, 0, 0f);
+                            spriteBatch.Draw(mainTex, NPC.oldPos[i] + toBottom + offset, frameBox, drawColor * (0.4f - (i * 0.04f)), NPC.rotation, origin, scale, 0, 0f);
                         }
                     }
 

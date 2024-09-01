@@ -129,7 +129,7 @@ namespace Coralite.Content.CustomHooks
             if (player.gravDir == -1f)
                 num3 = Main.screenPosition.Y + Main.screenHeight - Main.mouseY - pointPoisition.Y;
 
-            float num4 = (float)Math.Sqrt(num2 * num2 + num3 * num3);
+            float num4 = (float)Math.Sqrt((num2 * num2) + (num3 * num3));
             float num5 = num4;
             if ((float.IsNaN(num2) && float.IsNaN(num3)) || (num2 == 0f && num3 == 0f))
             {

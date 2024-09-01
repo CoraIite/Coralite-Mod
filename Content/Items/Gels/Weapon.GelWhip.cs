@@ -69,7 +69,7 @@ namespace Coralite.Content.Items.Gels
             Player owner = Main.player[Projectile.owner];
             Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2; // Without PiOver2, the rotation would be off by 90 degrees counterclockwise.
 
-            Projectile.Center = Main.GetPlayerArmPosition(Projectile) + Projectile.velocity * Timer;
+            Projectile.Center = Main.GetPlayerArmPosition(Projectile) + (Projectile.velocity * Timer);
             // Vanilla uses Vector2.Dot(Projectile.velocity, Vector2.UnitX) here. Dot Product returns the difference between two vectors, 0 meaning they are perpendicular.
             // However, the use of UnitX basically turns it into a more complicated way of checking if the projectile's velocity is above or equal to zero on the X axis.
             Projectile.spriteDirection = Projectile.velocity.X >= 0f ? 1 : -1;
@@ -213,7 +213,7 @@ namespace Coralite.Content.Items.Gels
                 else if (i > 0)
                 {
                     // 根据i循环帧图
-                    frame.Y = 38 + (i % 3) * 16;
+                    frame.Y = 38 + (i % 3 * 16);
                     frame.Height = 16;
                 }
 

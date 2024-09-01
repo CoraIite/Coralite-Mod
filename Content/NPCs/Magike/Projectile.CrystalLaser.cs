@@ -86,7 +86,7 @@ namespace Coralite.Content.NPCs.Magike
         {
             for (int k = 0; k < 80; k++)
             {
-                Vector2 posCheck = Projectile.Center + Vector2.UnitX.RotatedBy(LaserRotation) * k * 8;
+                Vector2 posCheck = Projectile.Center + (Vector2.UnitX.RotatedBy(LaserRotation) * k * 8);
 
                 if (Helper.PointInTile(posCheck) || k == 79)
                 {
@@ -123,7 +123,7 @@ namespace Coralite.Content.NPCs.Magike
                 {
                     for (int i = 0; i < width - 128; i += 24)
                     {
-                        Dust.NewDustPerfect(Projectile.Center + dir * i + Main.rand.NextVector2Circular(8, 8), ModContent.DustType<GlowBall>(),
+                        Dust.NewDustPerfect(Projectile.Center + (dir * i) + Main.rand.NextVector2Circular(8, 8), ModContent.DustType<GlowBall>(),
                             dir * Main.rand.NextFloat(width / 160f), 0, color, 0.35f);
                     }
                 }
@@ -140,10 +140,10 @@ namespace Coralite.Content.NPCs.Magike
 
                 for (int i = 0; i < width; i += 16)
                 {
-                    Lighting.AddLight(Projectile.position + Vector2.UnitX.RotatedBy(LaserRotation) * i, color.ToVector3() * height * 0.030f);
+                    Lighting.AddLight(Projectile.position + (Vector2.UnitX.RotatedBy(LaserRotation) * i), color.ToVector3() * height * 0.030f);
                     if (Main.rand.NextBool(20))
                     {
-                        Dust.NewDustPerfect(Projectile.Center + dir * i + Main.rand.NextVector2Circular(8, 8), ModContent.DustType<GlowBall>(),
+                        Dust.NewDustPerfect(Projectile.Center + (dir * i) + Main.rand.NextVector2Circular(8, 8), ModContent.DustType<GlowBall>(),
                             dir * Main.rand.NextFloat(min, max), 0, color, 0.25f);
                     }
                 }

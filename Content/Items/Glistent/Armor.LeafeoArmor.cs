@@ -3,7 +3,6 @@ using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -132,7 +131,7 @@ namespace Coralite.Content.Items.Glistent
 
         public override void AI()
         {
-            if (Owner.armor[1].type!=ItemType<LeafeoLightArmor>()
+            if (Owner.armor[1].type != ItemType<LeafeoLightArmor>()
                 || !Owner.armor[1].ModItem.IsArmorSet(Owner.armor[0], Owner.armor[1], Owner.armor[2]))
             {
                 Projectile.Kill();
@@ -140,7 +139,7 @@ namespace Coralite.Content.Items.Glistent
             }
 
             Projectile.timeLeft = 2;
-            Projectile.Center = Owner.MountedCenter + new Vector2(0, -8+Owner.gfxOffY);
+            Projectile.Center = Owner.MountedCenter + new Vector2(0, -8 + Owner.gfxOffY);
             Lighting.AddLight(Projectile.Center, (new Color(119, 133, 34) * 0.5f).ToVector3());
 
             if (Projectile.localAI[0] < 1)
@@ -199,15 +198,15 @@ namespace Coralite.Content.Items.Glistent
                 || Owner.armor[1].ModItem.IsArmorSet(Owner.armor[0], Owner.armor[1], Owner.armor[2]))
             {
                 SoundEngine.PlaySound(CoraliteSoundID.Grass, Projectile.Center);
-                Helper.PlayPitched(CoraliteSoundID.Derpling_NPCDeath25, Projectile.Center,pitch:-0.5f);
+                Helper.PlayPitched(CoraliteSoundID.Derpling_NPCDeath25, Projectile.Center, pitch: -0.5f);
                 Owner.AddBuff(BuffType<LeafeoShieldCD>(), 60 * 30);
             }
         }
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Color c = new Color(119, 133, 34, 0) * 0.75f* Projectile.localAI[0];
-            Color c2 = new Color(87, 74, 36, 0) * 0.75f* Projectile.localAI[0];
+            Color c = new Color(119, 133, 34, 0) * 0.75f * Projectile.localAI[0];
+            Color c2 = new Color(87, 74, 36, 0) * 0.75f * Projectile.localAI[0];
 
             Projectile.QuickDraw(c, 0.3f, 0f);
             Projectile.QuickDraw(c2, 0.25f, 0f);
@@ -256,8 +255,8 @@ namespace Coralite.Content.Items.Glistent
                         if (alpha < 1)
                             alpha += 0.05f;
 
-                        Center = owner.Center + (fadeIn+start).ToRotationVector2() * length;
-                        Rotation = fadeIn +start - 1.57f + (LeafType == 0 ? 1.57f : 0);
+                        Center = owner.Center + ((fadeIn + start).ToRotationVector2() * length);
+                        Rotation = fadeIn + start - 1.57f + (LeafType == 0 ? 1.57f : 0);
 
                         if (fadeIn < 0.5f)
                             color *= 0.93f;
@@ -271,9 +270,9 @@ namespace Coralite.Content.Items.Glistent
                         if (Velocity.Y < 8)
                             Velocity.Y += 0.25f;
 
-                        if (Collision.SolidCollision(Center - Vector2.One * 5f, 10, 10))
+                        if (Collision.SolidCollision(Center - (Vector2.One * 5f), 10, 10))
                         {
-                            if (fadeIn>0.5f)
+                            if (fadeIn > 0.5f)
                                 fadeIn = 0.5f;
                             Velocity *= 0.25f;
                         }

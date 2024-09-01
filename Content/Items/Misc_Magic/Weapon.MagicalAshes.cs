@@ -43,7 +43,7 @@ namespace Coralite.Content.Items.Misc_Magic
         {
             for (int i = -1; i < 2; i++)
             {
-                Projectile.NewProjectile(source, player.Center + player.direction * Vector2.UnitX * 16f, (Main.MouseWorld - player.Center).SafeNormalize(Vector2.UnitX).RotatedBy(i * MathHelper.PiOver4 / 2) * 8f, type, damage, knockback, player.whoAmI);
+                Projectile.NewProjectile(source, player.Center + (player.direction * Vector2.UnitX * 16f), (Main.MouseWorld - player.Center).SafeNormalize(Vector2.UnitX).RotatedBy(i * MathHelper.PiOver4 / 2) * 8f, type, damage, knockback, player.whoAmI);
             }
             return false;
         }

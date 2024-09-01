@@ -128,11 +128,11 @@ namespace Coralite.Content.Items.YujianHulu
         public override void UpdateVelocityWhenTracking(Projectile Projectile, float distance, Vector2 targetDirection)
         {
             if (distance > canSlashLength)
-                Projectile.velocity = (Projectile.velocity * (20f + roughlyVelocity) + targetDirection * turnSpeed) / 21f;
+                Projectile.velocity = ((Projectile.velocity * (20f + roughlyVelocity)) + (targetDirection * turnSpeed)) / 21f;
             else if (distance < canSlashLength * 0.8f)
-                Projectile.velocity = (Projectile.velocity * (20f + roughlyVelocity) - targetDirection * turnSpeed) / 21f;
+                Projectile.velocity = ((Projectile.velocity * (20f + roughlyVelocity)) - (targetDirection * turnSpeed)) / 21f;
             else if (Projectile.velocity == Vector2.Zero)
-                Projectile.velocity = (Projectile.velocity * (20f + roughlyVelocity) + targetDirection * turnSpeed) / 21f;
+                Projectile.velocity = ((Projectile.velocity * (20f + roughlyVelocity)) + (targetDirection * turnSpeed)) / 21f;
         }
 
         protected override void OnStartAttack(BaseYujianProj yujianProj)
@@ -224,7 +224,7 @@ namespace Coralite.Content.Items.YujianHulu
                 Vector2 targetDir = Projectile.rotation.ToRotationVector2();
                 for (int i = 0; i < 4; i++)
                 {
-                    if (Framing.GetTileSafely(Projectile.Center + targetDir * i * 16).HasSolidTile())
+                    if (Framing.GetTileSafely(Projectile.Center + (targetDir * i * 16)).HasSolidTile())
                     {
                         Projectile.timeLeft = 10;
                         canDamage = false;
@@ -277,11 +277,11 @@ namespace Coralite.Content.Items.YujianHulu
 
             Main.spriteBatch.Draw(mainTex.Value, center, null, Color.White * 0.8f * Alpha, Projectile.rotation, mainTex.Size() / 2, Projectile.scale, effects, 0f);
 
-            float rotation = Projectile.rotation - OwnerDirection * 0.4f;
+            float rotation = Projectile.rotation - (OwnerDirection * 0.4f);
             for (int i = -1; i < 2; i++)
             {
                 float scale = 2 - Math.Abs(i);
-                Vector2 drawPos = center + (rotation + i * 0.6f + Utils.Remap(factor, 0f, 2f, 0f, (float)Math.PI / 2f) * OwnerDirection).ToRotationVector2() * (mainTex.Width() * 0.5f - 4f) * Projectile.scale;
+                Vector2 drawPos = center + ((rotation + (i * 0.6f) + (Utils.Remap(factor, 0f, 2f, 0f, (float)Math.PI / 2f) * OwnerDirection)).ToRotationVector2() * ((mainTex.Width() * 0.5f) - 4f) * Projectile.scale);
                 Helper.DrawPrettyStarSparkle(Projectile.Opacity, SpriteEffects.None, drawPos, new Color(255, 255, 255, 0) * num3 * 0.5f, Color.White, factor, 0f, 0.5f, 0.5f, 1f, (float)Math.PI / 4f, new Vector2(scale, scale), Vector2.One);
             }
 

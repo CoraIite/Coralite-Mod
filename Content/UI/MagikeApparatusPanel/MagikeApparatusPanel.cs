@@ -27,9 +27,9 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
 
         #region 各类记录用字段
 
-        private static Color BackgroundColor = new (56, 50, 53, 200);
-        private static Color BackgroundColor2 = new (75, 69, 71, 150);
-        private static Color EdgeColor = new (250, 217, 241, 150);
+        private static Color BackgroundColor = new(56, 50, 53, 200);
+        private static Color BackgroundColor2 = new(75, 69, 71, 150);
+        private static Color EdgeColor = new(250, 217, 241, 150);
 
         /// <summary> 当前的魔能物块实体 </summary>
         public static MagikeTileEntity CurrentEntity;
@@ -226,22 +226,22 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
         public void InitComponentGird()
         {
             ComponentGrid ??= new UIGrid();
-            if (ComponentList==null)
+            if (ComponentList == null)
             {
-                ComponentList = new ();
+                ComponentList = new();
                 ComponentList.QuickInvisibleScrollbar();
-            }  
+            }
 
             ComponentGrid.Top.Set(ComponentControllerPanel.Height.Pixels + ComponentControllerPanel.Top.Pixels + 12, 0);
             ComponentList.Top.Set(ComponentControllerPanel.Height.Pixels + ComponentControllerPanel.Top.Pixels + 12, 0);
 
             //宽度和物品按钮相同，高度填满剩余的
             ComponentGrid.Width.Set(ComponentControllerPanel.Width.Pixels, 0);
-            ComponentGrid.Height.Set(-ComponentControllerPanel.Height.Pixels - ComponentControllerPanel.Top.Pixels-12, 1);
+            ComponentGrid.Height.Set(-ComponentControllerPanel.Height.Pixels - ComponentControllerPanel.Top.Pixels - 12, 1);
             ComponentGrid.OverflowHidden = true;
 
             ComponentList.Width.Set(ComponentControllerPanel.Width.Pixels, 0);
-            ComponentList.Height.Set(-ComponentControllerPanel.Height.Pixels - ComponentControllerPanel.Top.Pixels-12, 1);
+            ComponentList.Height.Set(-ComponentControllerPanel.Height.Pixels - ComponentControllerPanel.Top.Pixels - 12, 1);
             ComponentList.OverflowHidden = true;
 
             if (ComponentButtonsVisible)
@@ -399,7 +399,7 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
 
             Point16 bottomRight = CurrentEntity.Position + new Point16(data.Width - 1, data.Height - 1);
 
-            Color drawColor = Color.Lerp(Coralite.MagicCrystalPink, Color.Coral, MathF.Sin((int)Main.timeForVisualEffects * 0.1f) / 2 + 0.5f);
+            Color drawColor = Color.Lerp(Coralite.MagicCrystalPink, Color.Coral, (MathF.Sin((int)Main.timeForVisualEffects * 0.1f) / 2) + 0.5f);
             MagikeHelper.DrawRectangleFrame(spriteBatch, topLeft, bottomRight, drawColor);
 
             spriteBatch.End();

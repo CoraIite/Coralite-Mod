@@ -64,7 +64,7 @@ namespace Coralite.Content.Items.FlyingShields
             {
                 Helper.SpawnDirDustJet(Projectile.Center,
                     () => Main.rand.NextFloat(-1.57f - 1f, -1.57f + 1f).ToRotationVector2()
-                    , 2, 4, i => Main.rand.NextFloat(1, 1.5f) + i * 0.5f,
+                    , 2, 4, i => Main.rand.NextFloat(1, 1.5f) + (i * 0.5f),
                     DustID.Poop, Scale: Main.rand.NextFloat(1f, 1.5f), noGravity: false);
             }
         }
@@ -105,7 +105,7 @@ namespace Coralite.Content.Items.FlyingShields
             {
                 Helper.SpawnDirDustJet(Projectile.Center,
                     () => Projectile.rotation.ToRotationVector2().RotatedBy(Main.rand.NextFloat(-0.8f, 0.8f))
-                    , 2, 4, i => Main.rand.NextFloat(1f, 1.5f) + i * 0.6f,
+                    , 2, 4, i => Main.rand.NextFloat(1f, 1.5f) + (i * 0.6f),
                     DustID.Poop, noGravity: false);
             }
         }

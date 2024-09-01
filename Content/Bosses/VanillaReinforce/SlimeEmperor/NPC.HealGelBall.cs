@@ -29,7 +29,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.lifeMax = 25 + numPlayers * 25;
+            NPC.lifeMax = 25 + (numPlayers * 25);
         }
 
         public override void AI()

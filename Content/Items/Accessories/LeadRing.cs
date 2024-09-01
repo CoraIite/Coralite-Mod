@@ -1,5 +1,4 @@
 ﻿using Coralite.Core.Prefabs.Items;
-using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Terraria;
 using Terraria.ID;

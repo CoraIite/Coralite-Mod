@@ -1,5 +1,4 @@
-﻿using Coralite.Content.CustomHooks;
-using Coralite.Content.Items.Magike;
+﻿using Coralite.Content.Items.Magike;
 using Coralite.Content.Items.MagikeSeries1;
 using Coralite.Content.ModPlayers;
 using Coralite.Content.UI.MagikeApparatusPanel;
@@ -57,7 +56,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
         /// 返回所有可以有的魔能等级
         /// </summary>
         /// <returns></returns>
-        public virtual MagikeApparatusLevel[] GetAllLevels()  => null; 
+        public virtual MagikeApparatusLevel[] GetAllLevels() => null;
 
         /// <summary>
         /// 获取可放置的物块类型
@@ -146,7 +145,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
                 TileObjectData.newAlternate.Origin = new Point16(height - 1, width / 2);
                 TileObjectData.newAlternate.CoordinateHeights = new int[width];
                 Array.Fill(TileObjectData.newAlternate.CoordinateHeights, 16);
-                TileObjectData.addAlternate(height * 2 / width + 1);
+                TileObjectData.addAlternate((height * 2 / width) + 1);
             }
 
             TileObjectData.addTile(Type);
@@ -395,7 +394,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
             if (!TryGetEntity(p, out MagikeTileEntity entity))
                 return;
 
-            DrawExtra(spriteBatch, tileRect, offScreen,lightColor, rotation,entity);
+            DrawExtra(spriteBatch, tileRect, offScreen, lightColor, rotation, entity);
 
             var level = MagikeSystem.FrameToLevel(tile.TileType, tile.TileFrameX / data.CoordinateFullWidth);
             if (!level.HasValue)
@@ -414,7 +413,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
         /// <summary>
         /// 额外绘制一层，这一层在绘制特定的贴图之前，没有额外贴图的话也会调用到
         /// </summary>
-        public virtual void DrawExtra(SpriteBatch spriteBatch,Rectangle tileRect, Vector2 offset, Color lightColor, float rotation, MagikeTileEntity entity)
+        public virtual void DrawExtra(SpriteBatch spriteBatch, Rectangle tileRect, Vector2 offset, Color lightColor, float rotation, MagikeTileEntity entity)
         {
 
         }

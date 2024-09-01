@@ -64,7 +64,7 @@ namespace Coralite.Content.Items.Shadow
             else
                 DrawPlayerOffsetY = 0;
 
-            Shadow.position = new Vector2(Owner.position.X + Owner.width, Owner.position.Y + Owner.height * 2 + DrawPlayerOffsetY);
+            Shadow.position = new Vector2(Owner.position.X + Owner.width, Owner.position.Y + (Owner.height * 2) + DrawPlayerOffsetY);
             Vector2 shadowCenter = Shadow.position - new Vector2(Shadow.width / 2, Shadow.height / 2);
             Projectile.NewProjectile(Projectile.GetSource_FromAI(), shadowCenter, (Main.MouseWorld - shadowCenter).SafeNormalize(Vector2.UnitX) * 15f, ProjectileType<InvertedShadowBullet>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
 
@@ -81,12 +81,12 @@ namespace Coralite.Content.Items.Shadow
             Shadow.itemTime = Shadow.itemAnimation = 2;
             Shadow.direction = -Owner.direction;
             Shadow.itemRotation = Owner.itemRotation;
-            Shadow.position = new Vector2(Owner.position.X + Owner.width, Owner.position.Y + Owner.height * 2 + DrawPlayerOffsetY);
+            Shadow.position = new Vector2(Owner.position.X + Owner.width, Owner.position.Y + (Owner.height * 2) + DrawPlayerOffsetY);
 
             //控制透明度
             if (Projectile.timeLeft < 19)
             {
-                float factor = 1 - Projectile.timeLeft / 18f;
+                float factor = 1 - (Projectile.timeLeft / 18f);
                 shadow = Helper.BezierEase(factor);
                 if (shadow > 1)
                     shadow = 1;
@@ -119,7 +119,7 @@ namespace Coralite.Content.Items.Shadow
             SpriteEffects effects = Owner.direction > 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
             lightColor.A = (byte)((1 - shadow) * 255);
 
-            sb.Draw(mainTex, shadowCenter - Main.screenPosition - Projectile.rotation.ToRotationVector2() * Owner.direction * 18f, mainTex.Frame(), lightColor, Projectile.rotation, mainTex.Size() / 2, 1f, effects, 0);
+            sb.Draw(mainTex, shadowCenter - Main.screenPosition - (Projectile.rotation.ToRotationVector2() * Owner.direction * 18f), mainTex.Frame(), lightColor, Projectile.rotation, mainTex.Size() / 2, 1f, effects, 0);
             return false;
         }
     }

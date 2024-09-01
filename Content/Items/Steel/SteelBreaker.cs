@@ -113,9 +113,9 @@ namespace Coralite.Content.Items.Steel
                 float num63 = 18f;
                 float num64 = 1.2f;
                 Vector2 vector6 = Projectile.Center;
-                float num65 = Main.player[Projectile.owner].position.X + Main.player[Projectile.owner].width / 2 - vector6.X;
-                float num66 = Main.player[Projectile.owner].position.Y + Main.player[Projectile.owner].height / 2 - vector6.Y;
-                float num67 = (float)Math.Sqrt(num65 * num65 + num66 * num66);
+                float num65 = Main.player[Projectile.owner].position.X + (Main.player[Projectile.owner].width / 2) - vector6.X;
+                float num66 = Main.player[Projectile.owner].position.Y + (Main.player[Projectile.owner].height / 2) - vector6.Y;
+                float num67 = (float)Math.Sqrt((num65 * num65) + (num66 * num66));
                 if (num67 > 3000f)
                     Projectile.Kill();
 
@@ -173,10 +173,10 @@ namespace Coralite.Content.Items.Steel
                         Vector2 center = Vector2.Lerp(Projectile.Center, target.Center, 0.2f);
                         for (int i = 0; i < 4; i++)
                         {
-                            Vector2 direction = (MathHelper.PiOver4 + i * MathHelper.PiOver2).ToRotationVector2();
+                            Vector2 direction = (MathHelper.PiOver4 + (i * MathHelper.PiOver2)).ToRotationVector2();
                             for (int j = 1; j < 3; j++)
                             {
-                                Particle.NewParticle<SpeedLine>(center + direction * i * 8, -direction * 2, Color.Cyan, 0.4f);
+                                Particle.NewParticle<SpeedLine>(center + (direction * i * 8), -direction * 2, Color.Cyan, 0.4f);
                             }
                         }
 
@@ -199,7 +199,7 @@ namespace Coralite.Content.Items.Steel
 
                     float baseAngle = Main.rand.NextFloat(6.282f);
                     for (int i = 0; i < howMany; i++)
-                        Projectile.NewProjectileFromThis<SteelBreakerProj>(Projectile.Center, (baseAngle + i * MathHelper.Pi * 1.2f).ToRotationVector2() * Main.rand.NextFloat(14, 16), (int)(Projectile.damage * 0.75f), Projectile.knockBack, 1);
+                        Projectile.NewProjectileFromThis<SteelBreakerProj>(Projectile.Center, (baseAngle + (i * MathHelper.Pi * 1.2f)).ToRotationVector2() * Main.rand.NextFloat(14, 16), (int)(Projectile.damage * 0.75f), Projectile.knockBack, 1);
                 }
             }
 

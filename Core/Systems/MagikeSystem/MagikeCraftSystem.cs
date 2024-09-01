@@ -22,11 +22,11 @@ namespace Coralite.Core.Systems.MagikeSystem
             magikeCraftRecipes = [];
 
             foreach (var magCraft in from mod in ModLoader.Mods
-                                          where mod is ICoralite or Coralite
-                                          from Type t in AssemblyManager.GetLoadableTypes(mod.Code)//添加魔能合成表
-                                          where !t.IsAbstract && t.GetInterfaces().Contains(typeof(IMagikeCraftable))
-                                          let magCraft = Activator.CreateInstance(t) as IMagikeCraftable
-                                          select magCraft)
+                                     where mod is ICoralite or Coralite
+                                     from Type t in AssemblyManager.GetLoadableTypes(mod.Code)//添加魔能合成表
+                                     where !t.IsAbstract && t.GetInterfaces().Contains(typeof(IMagikeCraftable))
+                                     let magCraft = Activator.CreateInstance(t) as IMagikeCraftable
+                                     select magCraft)
             {
                 magCraft.AddMagikeCraftRecipe();
             }
@@ -244,7 +244,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         public MagikeCraftRecipe RegisterNew(int resultItemType, int magikeCost, int resultItemStack = 1)
         {
             Register();
-            return CreateRecipe(MainItem.type,resultItemType, magikeCost,MainItem.stack,resultItemStack);
+            return CreateRecipe(MainItem.type, resultItemType, magikeCost, MainItem.stack, resultItemStack);
         }
 
         /// <summary>

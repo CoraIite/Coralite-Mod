@@ -59,17 +59,17 @@ namespace Coralite.Content.CustomHooks
                     style = 1;
                     alternateData = TileObjectData.GetTileData(type, 0, style + 1);// ((List<TileObjectData>)_alternateInfo.GetValue(tileData))[style];
                 }
-                else if (y1 < height * 2 + width)
+                else if (y1 < (height * 2) + width)
                 {
                     style = 2;
                     alternateData = TileObjectData.GetTileData(type, 0, style + 1);// ((List<TileObjectData>)_alternateInfo.GetValue(tileData))[style];
-                    partFrameY = (t.TileFrameY - alternateData.CoordinateFullWidth * 2) % alternateData.CoordinateFullHeight;
+                    partFrameY = (t.TileFrameY - (alternateData.CoordinateFullWidth * 2)) % alternateData.CoordinateFullHeight;
                 }
                 else
                 {
                     style = 3;
                     alternateData = TileObjectData.GetTileData(type, 0, style + 1);// ((List<TileObjectData>)_alternateInfo.GetValue(tileData))[style];
-                    partFrameY = (t.TileFrameY - alternateData.CoordinateFullWidth * 2) % alternateData.CoordinateFullHeight;
+                    partFrameY = (t.TileFrameY - (alternateData.CoordinateFullWidth * 2)) % alternateData.CoordinateFullHeight;
                 }
 
                 //因为放下来的时候就是0所以不管他
@@ -644,7 +644,7 @@ namespace Coralite.Content.CustomHooks
                 int randomStyleRange = tileData.RandomStyleRange;
                 int num40 = Main.rand.Next(tileData.RandomStyleRange);
 
-                num35 = ((!flag9) ? TileObjectPreviewData.randomCache.Random : num40);
+                num35 = (!flag9) ? TileObjectPreviewData.randomCache.Random : num40;
             }
 
             if (tileData.SpecificRandomStyles != null)
@@ -671,7 +671,7 @@ namespace Coralite.Content.CustomHooks
                 int num45 = tileData.SpecificRandomStyles.Length;
                 int num46 = Main.rand.Next(num45);
 
-                num35 = (!flag10 ? TileObjectPreviewData.randomCache.Random : (tileData.SpecificRandomStyles[num46]));
+                num35 = !flag10 ? TileObjectPreviewData.randomCache.Random : tileData.SpecificRandomStyles[num46];
             }
 
             if (num4 != 1f || num5 != 1f)

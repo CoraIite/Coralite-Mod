@@ -45,7 +45,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
 
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.lifeMax = 250 + numPlayers * 50;
+            NPC.lifeMax = 250 + (numPlayers * 50);
         }
 
         public override void AI()
@@ -96,7 +96,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
                             NPC.rotation = NPC.velocity.ToRotation() + 1.57f;
 
                             int damage = NPC.GetAttackDamage_ForProjectiles(15, 25);
-                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + NPC.velocity * 9, Vector2.Zero, ModContent.ProjectileType<Rediancie_Explosion>(), damage, 5f);
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + (NPC.velocity * 9), Vector2.Zero, ModContent.ProjectileType<Rediancie_Explosion>(), damage, 5f);
                         }
 
                         if (Timer < 160)
@@ -105,7 +105,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
                         if (Timer == 160)
                         {
                             int damage = NPC.GetAttackDamage_ForProjectiles(15, 25);
-                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + NPC.velocity * 9, Vector2.Zero, ModContent.ProjectileType<Rediancie_BigBoom>(), damage, 5f);
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + (NPC.velocity * 9), Vector2.Zero, ModContent.ProjectileType<Rediancie_BigBoom>(), damage, 5f);
                         }
 
                         if (Timer < 200)
@@ -144,7 +144,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
                         if (Timer == 60)
                         {
                             int damage = NPC.GetAttackDamage_ForProjectiles(15, 25);
-                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + NPC.velocity * 9, Vector2.Zero, ModContent.ProjectileType<Rediancie_BigBoom>(), damage, 5f);
+                            Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center + (NPC.velocity * 9), Vector2.Zero, ModContent.ProjectileType<Rediancie_BigBoom>(), damage, 5f);
                         }
 
                         if (Timer < 100)
@@ -195,7 +195,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
             Vector2 origin = mainTex.Size() / 2;
 
             if (State == 0)
-                spriteBatch.Draw(mainTex, drawPos, null, new Color(248, 40, 24, NPC.alpha), NPC.rotation, origin, NPC.scale + 0.5f * (NPC.alpha / 255f), SpriteEffects.None, 0f);
+                spriteBatch.Draw(mainTex, drawPos, null, new Color(248, 40, 24, NPC.alpha), NPC.rotation, origin, NPC.scale + (0.5f * (NPC.alpha / 255f)), SpriteEffects.None, 0f);
             else if (State != 3)
             {
                 Texture2D extraTex = ModContent.Request<Texture2D>(AssetDirectory.RedJadeProjectiles + "RedBinkRush").Value;

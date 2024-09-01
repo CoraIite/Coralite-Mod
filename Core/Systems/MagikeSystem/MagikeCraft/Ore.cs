@@ -138,7 +138,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             AddRemodelRecipe(ItemID.GoldBar, ItemID.MeteoriteBar, 15);
             AddRemodelRecipe(ItemID.GoldBar, ItemID.AncientGoldHelmet, 150, mainStack: 10);
             AddRemodelRecipe(ItemID.GoldBar, ItemID.GoldChest, 100, mainStack: 15);
-            AddRemodelRecipe(ItemID.GoldBar, ItemID.GoldenKey, 400, mainStack: 20, conditions:Condition.DownedSkeletron);
+            AddRemodelRecipe(ItemID.GoldBar, ItemID.GoldenKey, 400, mainStack: 20, conditions: Condition.DownedSkeletron);
             AddRemodelRecipe(ItemID.PlatinumBar, ItemID.CrimtaneBar, 15);
             AddRemodelRecipe(ItemID.PlatinumBar, ItemID.DemoniteBar, 15);
             AddRemodelRecipe(ItemID.PlatinumBar, ItemID.MeteoriteBar, 15);
@@ -147,12 +147,12 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
 
             //猩红矿和魔矿
             AddRemodelRecipe(ItemID.CrimtaneOre, ItemID.TissueSample, 15, mainStack: 3, conditions: Condition.DownedEowOrBoc);
-            AddRemodelRecipe(ItemID.CrimtaneOre, ItemID.ShadowScale, 15, mainStack: 3, conditions: Condition.DownedEowOrBoc );
+            AddRemodelRecipe(ItemID.CrimtaneOre, ItemID.ShadowScale, 15, mainStack: 3, conditions: Condition.DownedEowOrBoc);
             AddRemodelRecipe(ItemID.CrimtaneOre, ItemID.Hellstone, 15);
             AddRemodelRecipe(ItemID.CrimtaneOre, ItemID.CrimtaneBar, 20);
             AddRemodelRecipe(ItemID.CrimtaneOre, ItemID.DemoniteBar, 20);
 
-            AddRemodelRecipe(ItemID.DemoniteOre, ItemID.TissueSample, 15, mainStack: 3, conditions: Condition.DownedEowOrBoc );
+            AddRemodelRecipe(ItemID.DemoniteOre, ItemID.TissueSample, 15, mainStack: 3, conditions: Condition.DownedEowOrBoc);
             AddRemodelRecipe(ItemID.DemoniteOre, ItemID.ShadowScale, 15, mainStack: 3, conditions: Condition.DownedEowOrBoc);
             AddRemodelRecipe(ItemID.DemoniteOre, ItemID.Hellstone, 15);
             AddRemodelRecipe(ItemID.DemoniteOre, ItemID.CrimtaneBar, 20);
@@ -225,7 +225,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             AddRemodelRecipe(ItemID.AdamantiteBar, ItemID.HallowedBar, 180, conditions: Condition.DownedMechBossAny);
 
             //神圣锭
-            AddRemodelRecipe(ItemID.HallowedBar, ItemID.ChlorophyteBar, 230, conditions: Condition.DownedMechBossAll );
+            AddRemodelRecipe(ItemID.HallowedBar, ItemID.ChlorophyteBar, 230, conditions: Condition.DownedMechBossAll);
 
             //叶绿矿
             AddRemodelRecipe(ItemID.ChlorophyteOre, ItemID.LunarOre, 500, conditions: Condition.DownedMoonLord);

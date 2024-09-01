@@ -51,7 +51,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
         {
             hit = true;
 
-            if (projectile.parryTime > 0 && projectile.Timer > projectile.dashTime - projectile.parryTime * 1.5f)
+            if (projectile.parryTime > 0 && projectile.Timer > projectile.dashTime - (projectile.parryTime * 1.5f))
             {
                 projectile.OnParry();
                 projectile.UpdateShieldAccessory(accessory => accessory.OnParry(projectile));
@@ -103,7 +103,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
                 int damage = Player.GetWeaponDamage(Item);
                 for (int i = -1; i < 2; i++)
                 {
-                    int index = Projectile.NewProjectile(Player.GetSource_ItemUse(Item), Player.Center, (dashDirection + i * 0.2f).ToRotationVector2() * 10,
+                    int index = Projectile.NewProjectile(Player.GetSource_ItemUse(Item), Player.Center, (dashDirection + (i * 0.2f)).ToRotationVector2() * 10,
                          ProjectileID.BoneGloveProj, damage, 0, Player.whoAmI);
                     Main.projectile[index].usesLocalNPCImmunity = true;
                     Main.projectile[index].localNPCHitCooldown = 30;

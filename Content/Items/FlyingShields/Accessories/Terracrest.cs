@@ -65,7 +65,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
                     Owner.immune = true;
                 }
 
-                int damage = (int)(projectile.Owner.GetWeaponDamage(Item) * (1.35f - 0.3f * cp.parryTime / 280f));
+                int damage = (int)(projectile.Owner.GetWeaponDamage(Item) * (1.35f - (0.3f * cp.parryTime / 280f)));
 
                 SoundEngine.PlaySound(CoraliteSoundID.TerraBlade_Item60, projectile.Projectile.Center);
                 Helper.PlayPitched("Misc/ShieldGuard", 0.4f, 0f, projectile.Projectile.Center);
@@ -81,7 +81,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
 
                     Vector2 aimDir = dir.RotatedBy(Main.rand.NextFloat(exRot - 0.25f, exRot + 0.25f));
 
-                    p.NewProjectileFromThis<TerracrestSpike>(p.Center + Owner.direction * i * (p.rotation + 1.57f).ToRotationVector2() * Main.rand.NextFloat(8, 16)
+                    p.NewProjectileFromThis<TerracrestSpike>(p.Center + (Owner.direction * i * (p.rotation + 1.57f).ToRotationVector2() * Main.rand.NextFloat(8, 16))
                         , aimDir * Main.rand.NextFloat(10f, 14f) * p.scale,
                          (int)(damage * 0.95f), p.knockBack, Owner.whoAmI, ai1: Main.rand.NextFloat(12, 14));
                 }
@@ -174,7 +174,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
 
             if (Timer < ShootTime)
             {
-                Dust dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(TrailWidth, TrailWidth) / 2, DustID.TerraBlade,
+                Dust dust = Dust.NewDustPerfect(Projectile.Center + (Main.rand.NextVector2Circular(TrailWidth, TrailWidth) / 2), DustID.TerraBlade,
                     Projectile.rotation.ToRotationVector2() * Main.rand.NextFloat(1f, 4f), Scale: Main.rand.NextFloat(0.5f, 1f));
                 if (Main.rand.NextBool())
                     dust.noGravity = true;
@@ -263,13 +263,13 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
             Vector2 down = (Projectile.rotation - MathHelper.PiOver2).ToRotationVector2();
             for (int i = 0; i < Projectile.oldPos.Length; i++)
             {
-                float factor = 1f - i / 15f;
+                float factor = 1f - (i / 15f);
                 Vector2 Center = Projectile.oldPos[i];
                 float r = Projectile.rotation % 6.18f;
                 float dir = (r >= 3.14f ? r - 3.14f : r + 3.14f) / MathHelper.TwoPi;
                 float width = WidthFunction(factor) * 0.75f;
-                Vector2 Top = Center + up * width;
-                Vector2 Bottom = Center + down * width;
+                Vector2 Top = Center + (up * width);
+                Vector2 Bottom = Center + (down * width);
 
                 bars.Add(new CustomVertexInfo(Top, new Color(dir, w, 0f, 1f), new Vector3(factor, 0f, w)));
                 bars.Add(new CustomVertexInfo(Bottom, new Color(dir, w, 0f, 1f), new Vector3(factor, 1f, w)));

@@ -1,13 +1,8 @@
 ﻿using Coralite.Core;
-using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
-using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
-using Terraria.GameInput;
-using Terraria.ID;
 using Terraria.UI;
 
 namespace Coralite.Content.UI

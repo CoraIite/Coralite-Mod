@@ -150,7 +150,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
         {
             if (SkyManager.Instance["ThunderveinSky"].IsActive())
             {
-                ThunderveinSky sky = ((ThunderveinSky)SkyManager.Instance["ThunderveinSky"]);
+                ThunderveinSky sky = (ThunderveinSky)SkyManager.Instance["ThunderveinSky"];
                 Color c = backgroundColor;
                 Color c2 = tileColor;
                 backgroundColor = Color.Lerp(new Color(10, 10, 10, 255), new Color(255, 202, 101), sky.light);

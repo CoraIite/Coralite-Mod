@@ -45,12 +45,12 @@ namespace Coralite.Core.Systems.YujianSystem.YujianAIs
             float targetAngle = targetDirection.ToRotation();
 
             if (distance > SpurtsLength * 2)
-                Projectile.velocity = (Projectile.velocity * (20f + roughlyVelocity) + targetDirection * turnSpeed) / 21f;
+                Projectile.velocity = ((Projectile.velocity * (20f + roughlyVelocity)) + (targetDirection * turnSpeed)) / 21f;
             else if (distance < SpurtsLength * 1.8f)
-                Projectile.velocity = (Projectile.velocity * (20f + roughlyVelocity) - targetDirection * turnSpeed) / 21f;
+                Projectile.velocity = ((Projectile.velocity * (20f + roughlyVelocity)) - (targetDirection * turnSpeed)) / 21f;
 
             //控制旋转，接近时逐渐转到对应的角度
-            float factor = 0.008f * turnSpeed + 0.01f * roughlyVelocity;
+            float factor = (0.008f * turnSpeed) + (0.01f * roughlyVelocity);
             Projectile.rotation = Projectile.rotation.AngleLerp(targetAngle + 1.57f, factor);
 
             if (distance < SpurtsLength * 2 && distance > SpurtsLength * 1.8f)
@@ -88,16 +88,16 @@ namespace Coralite.Core.Systems.YujianSystem.YujianAIs
             Texture2D mainTex = Projectile.GetTexture();
             Rectangle source = mainTex.Frame();
             Vector2 origin = new(mainTex.Width / 2, mainTex.Height / 2);
-            float scale = 1.6f + yujianProj.trailCacheLength * 0.015f;
+            float scale = 1.6f + (yujianProj.trailCacheLength * 0.015f);
 
             for (int i = yujianProj.trailCacheLength - 1; i > 0; i -= 4)
             {
                 Color shadowColor = Color.Lerp(yujianProj.color1, yujianProj.color2, (float)i / yujianProj.trailCacheLength);
-                int a = 20 + i * 6;
+                int a = 20 + (i * 6);
                 if (a > 255)
                     a = 255;
                 shadowColor.A = (byte)a;
-                spriteBatch.Draw(mainTex, Projectile.oldPos[i] - Main.screenPosition, source, shadowColor, Projectile.oldRot[i], origin, scale - i * 0.015f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(mainTex, Projectile.oldPos[i] - Main.screenPosition, source, shadowColor, Projectile.oldRot[i], origin, scale - (i * 0.015f), SpriteEffects.None, 0f);
             }
         }
     }

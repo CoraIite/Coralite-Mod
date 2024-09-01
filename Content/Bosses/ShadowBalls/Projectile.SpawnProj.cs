@@ -53,7 +53,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
                 Vector2 targetPos = CoraliteWorld.shadowBallsFightArea.Center.ToVector2();
 
-                float x = targetPos.X + MathF.Sin(factor * MathHelper.TwoPi * 2) * (factor * 60);
+                float x = targetPos.X + (MathF.Sin(factor * MathHelper.TwoPi * 2) * (factor * 60));
                 float y = Helper.Lerp(OriginY, targetPos.Y, factor);
 
                 Projectile.Center = new Vector2(x, y);
@@ -70,7 +70,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 Projectile.velocity = Vector2.Zero;
                 Projectile.scale -= 0.3f / 20f;
 
-                if (Timer > 60 * 3 + 20)
+                if (Timer > (60 * 3) + 20)
                 {
                     int npcType = ModContent.NPCType<ShadowBall>();
 

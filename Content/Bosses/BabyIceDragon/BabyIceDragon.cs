@@ -104,14 +104,14 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             {
                 if (nPCStrengthHelper.IsExpertMode)
                 {
-                    NPC.lifeMax = (int)((3820 + numPlayers * 1750) / journeyScale);
+                    NPC.lifeMax = (int)((3820 + (numPlayers * 1750)) / journeyScale);
                     NPC.damage = 55;
                     NPC.defense = 15;
                 }
 
                 if (nPCStrengthHelper.IsMasterMode)
                 {
-                    NPC.lifeMax = (int)((4720 + numPlayers * 2100) / journeyScale);
+                    NPC.lifeMax = (int)((4720 + (numPlayers * 2100)) / journeyScale);
                     NPC.damage = 60;
                     NPC.defense = 18;
                 }
@@ -130,20 +130,20 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                 return;
             }
 
-            NPC.lifeMax = 3820 + numPlayers * 1750;
+            NPC.lifeMax = 3820 + (numPlayers * 1750);
             NPC.damage = 55;
             NPC.defense = 15;
 
             if (Main.masterMode)
             {
-                NPC.lifeMax = 4720 + numPlayers * 2100;
+                NPC.lifeMax = 4720 + (numPlayers * 2100);
                 NPC.damage = 60;
                 NPC.defense = 18;
             }
 
             if (Main.getGoodWorld)
             {
-                NPC.lifeMax = 5320 + numPlayers * 2200;
+                NPC.lifeMax = 5320 + (numPlayers * 2200);
                 NPC.damage = 70;
                 NPC.defense = 20;
             }
@@ -232,7 +232,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
         {
             int width = (int)(86 * NPC.scale);
             int height = (int)(58 * NPC.scale);
-            npcHitbox = new Rectangle((int)(NPC.Center.X - width / 2), (int)(NPC.Center.Y - height / 2), width, height);
+            npcHitbox = new Rectangle((int)(NPC.Center.X - (width / 2)), (int)(NPC.Center.Y - (height / 2)), width, height);
             return true;
         }
 
@@ -556,7 +556,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                                 for (int i = 0; i < 4; i++)
                                     IceStarLight.Spawn(NPC.Center + Main.rand.NextVector2CircularEdge(100, 100), Main.rand.NextVector2CircularEdge(3, 3), 1f, () =>
                                     {
-                                        return NPC.Center + (NPC.rotation + (NPC.direction > 0 ? 0f : 3.141f)).ToRotationVector2() * 30;
+                                        return NPC.Center + ((NPC.rotation + (NPC.direction > 0 ? 0f : 3.141f)).ToRotationVector2() * 30);
                                     }, 16);
                             }
 
@@ -570,7 +570,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             //生成冰块NPC
                             if ((int)Timer == 80 && Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                movePhase = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X + NPC.direction * 170, (int)NPC.Center.Y + 20, NPCType<IceCube>());
+                                movePhase = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X + (NPC.direction * 170), (int)NPC.Center.Y + 20, NPCType<IceCube>());
                                 NPC.netUpdate = true;
                                 NPC.noTileCollide = true;
                                 NPC.noGravity = true;
@@ -668,7 +668,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
         public void GetMouseCenter(out Vector2 targetDir, out Vector2 mouseCenter)
         {
             targetDir = (NPC.rotation + (NPC.direction > 0 ? 0f : 3.141f)).ToRotationVector2();
-            mouseCenter = NPC.Center + targetDir * 40 * NPC.scale;
+            mouseCenter = NPC.Center + (targetDir * 40 * NPC.scale);
         }
 
         public void SetDirection()
@@ -723,14 +723,14 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
         private void TryMakingSpike(ref Point sourceTileCoords, int dir, int howMany, int whichOne, int xOffset, float scaleOffset)
         {
-            int position_X = sourceTileCoords.X + xOffset * dir;
+            int position_X = sourceTileCoords.X + (xOffset * dir);
             int position_Y = TryMakingSpike_FindBestY(ref sourceTileCoords, position_X);
             if (WorldGen.ActiveAndWalkableTile(position_X, position_Y))
             {
-                Vector2 position = new(position_X * 16 + 8, position_Y * 16 - 8);
+                Vector2 position = new((position_X * 16) + 8, (position_Y * 16) - 8);
                 Vector2 velocity = new Vector2(0f, -1f).RotatedBy(whichOne * dir * 0.7f * ((float)Math.PI / 4f / howMany));
                 int damage = Helper.GetProjDamage(40, 45, 60);
-                Projectile.NewProjectile(NPC.GetSource_FromAI(), position, velocity, ProjectileID.DeerclopsIceSpike, damage, 0f, Main.myPlayer, 0f, 0.4f + scaleOffset + xOffset * 1.1f / howMany);
+                Projectile.NewProjectile(NPC.GetSource_FromAI(), position, velocity, ProjectileID.DeerclopsIceSpike, damage, 0f, Main.myPlayer, 0f, 0.4f + scaleOffset + (xOffset * 1.1f / howMany));
             }
         }
 
@@ -744,7 +744,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                 Vector2 vector = new(hitbox.Center.X, hitbox.Bottom);
                 int num2 = (int)(vector.Y / 16f);
                 int num3 = Math.Sign(num2 - position_Y);
-                int num4 = num2 + num3 * 15;
+                int num4 = num2 + (num3 * 15);
                 int? num5 = null;
                 float num6 = float.PositiveInfinity;
                 for (int i = position_Y; i != num4; i += num3)

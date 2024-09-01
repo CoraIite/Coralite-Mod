@@ -63,7 +63,7 @@ namespace Coralite.Content.Items.Thunder
                 if (shootCount > 14)
                 {
                     Vector2 targetDir = (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero);
-                    Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center + targetDir * 1026, player.Center + targetDir * 26, ProjectileType<ElectromagneticCannon_Friendly>(),
+                    Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center + (targetDir * 1026), player.Center + (targetDir * 26), ProjectileType<ElectromagneticCannon_Friendly>(),
                         (int)(damage * 0.9f), knockback, player.whoAmI, 30, ai2: 70);
 
                     var modifyer = new PunchCameraModifier(player.Center, targetDir * 1.8f, 10, 10, 20);
@@ -174,7 +174,7 @@ namespace Coralite.Content.Items.Thunder
             owner.itemTime = owner.itemAnimation = 2;
             owner.direction = Main.MouseWorld.X > owner.Center.X ? 1 : -1;
             Vector2 dir = (Main.MouseWorld - owner.Center).SafeNormalize(Vector2.Zero);
-            Projectile.velocity = owner.Center + dir * 26;
+            Projectile.velocity = owner.Center + (dir * 26);
             Vector2 endPoint = Projectile.velocity;
             laserTrailPoints.Clear();
 
@@ -182,7 +182,7 @@ namespace Coralite.Content.Items.Thunder
 
             for (int k = 0; k < 140; k++)
             {
-                Vector2 posCheck = Projectile.velocity + dir * k * 8;
+                Vector2 posCheck = Projectile.velocity + (dir * k * 8);
                 Tile tile = Framing.GetTileSafely(posCheck);
                 laserTrailPoints.Add(posCheck);
 
@@ -242,7 +242,7 @@ namespace Coralite.Content.Items.Thunder
                 float factor = Timer / DashTime;
                 float sinFactor = MathF.Sin(factor * MathHelper.Pi);
 
-                ThunderWidth = 30 + sinFactor * 30;
+                ThunderWidth = 30 + (sinFactor * 30);
                 if (ThunderAlpha < 1)
                 {
                     ThunderAlpha += 1 / 10f;
@@ -301,7 +301,7 @@ namespace Coralite.Content.Items.Thunder
 
                 laserWidth -= 50f / DelayTime;
 
-                float factor = (Timer - DashTime) / (DelayTime);
+                float factor = (Timer - DashTime) / DelayTime;
                 ThunderWidth = 30 * (1 - factor);
                 ThunderAlpha = 1 - Coralite.Instance.X2Smoother.Smoother(factor);
 
@@ -354,8 +354,8 @@ namespace Coralite.Content.Items.Thunder
                 thunderTrails = new ThunderTrail[3];
                 for (int i = 0; i < 3; i++)
                 {
-                    thunderTrails[i] = new (Request<Texture2D>(AssetDirectory.OtherProjectiles + "ThunderTrail2")
-                        , ThunderWidthFunc_Sin, ThunderColorFunc_Yellow,GetAlpha);
+                    thunderTrails[i] = new(Request<Texture2D>(AssetDirectory.OtherProjectiles + "ThunderTrail2")
+                        , ThunderWidthFunc_Sin, ThunderColorFunc_Yellow, GetAlpha);
                     thunderTrails[i].CanDraw = false;
                     thunderTrails[i].UseNonOrAdd = true;
                     thunderTrails[i].SetRange((5, 20));
@@ -372,7 +372,7 @@ namespace Coralite.Content.Items.Thunder
             Vector2 dir = Projectile.rotation.ToRotationVector2();
             for (int i = 0; i < 100; i++)
             {
-                Vector2 currentPos = Projectile.velocity + dir * i * 20;
+                Vector2 currentPos = Projectile.velocity + (dir * i * 20);
 
             }
         }
@@ -398,7 +398,7 @@ namespace Coralite.Content.Items.Thunder
         {
             float sinFactor = MathF.Sin(factor * MathHelper.Pi);
 
-            return (5, 10 + sinFactor * PointDistance / 2);
+            return (5, 10 + (sinFactor * PointDistance / 2));
         }
 
         public virtual float GetExpandWidth(float factor)
@@ -430,7 +430,7 @@ namespace Coralite.Content.Items.Thunder
             Player owner = Main.player[Projectile.owner];
 
             SpriteEffects effects = owner.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically;
-            Main.spriteBatch.Draw(mainTex, owner.Center + Projectile.rotation.ToRotationVector2() * 12 - Main.screenPosition, frameBox, Lighting.GetColor(Projectile.velocity.ToTileCoordinates()), Projectile.rotation + (owner.gravDir > 0 ? 0f : MathHelper.Pi), origin, Projectile.scale, effects, 0f);
+            Main.spriteBatch.Draw(mainTex, owner.Center + (Projectile.rotation.ToRotationVector2() * 12) - Main.screenPosition, frameBox, Lighting.GetColor(Projectile.velocity.ToTileCoordinates()), Projectile.rotation + (owner.gravDir > 0 ? 0f : MathHelper.Pi), origin, Projectile.scale, effects, 0f);
 
             base.PreDraw(ref lightColor);
             return false;
@@ -447,7 +447,7 @@ namespace Coralite.Content.Items.Thunder
             Vector2 dir = (Projectile.rotation + 1.57f).ToRotationVector2();
             for (int i = 0; i < count; i++)
             {
-                float factor = 1f - i / count;
+                float factor = 1f - (i / count);
                 Vector2 Center = laserTrailPoints[i];
                 Vector2 width = GetWidh(1f - factor) * dir;
                 Vector2 Top = Center + width;
@@ -465,7 +465,7 @@ namespace Coralite.Content.Items.Thunder
                 Matrix view = Main.GameViewMatrix.TransformationMatrix;
                 Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
-                effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly*2 );
+                effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly * 2);
                 effect.Parameters["exAdd"].SetValue(0.2f);
                 effect.Parameters["transformMatrix"].SetValue(world * view * projection);
                 effect.Parameters["sampleTexture"].SetValue(laserTex.Value);

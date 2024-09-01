@@ -33,7 +33,7 @@ namespace Coralite.Content.Items.FlyingShields
             {
                 for (int i = 0; i < 2; i++)
                 {
-                    Dust d = Dust.NewDustPerfect(player.Center + (5 * Main.GlobalTimeWrappedHourly + i * MathHelper.Pi).ToRotationVector2() * 32,
+                    Dust d = Dust.NewDustPerfect(player.Center + (((5 * Main.GlobalTimeWrappedHourly) + (i * MathHelper.Pi)).ToRotationVector2() * 32),
                         DustID.Water, Vector2.Zero);
                     d.noGravity = true;
                 }
@@ -94,7 +94,7 @@ namespace Coralite.Content.Items.FlyingShields
                 for (int j = 0; j < 3; j++)
                     for (int i = -1; i < 2; i += 2)
                     {
-                        Dust d = Dust.NewDustPerfect(Projectile.Center + (j / 3f) * Projectile.velocity + dir * 8 * Projectile.scale + i * dir2 * Projectile.scale * Projectile.width / 2,
+                        Dust d = Dust.NewDustPerfect(Projectile.Center + (j / 3f * Projectile.velocity) + (dir * 8 * Projectile.scale) + (i * dir2 * Projectile.scale * Projectile.width / 2),
                             DustID.Water, -Projectile.velocity * Main.rand.NextFloat(0f, 0.5f), newColor: Color.White);
                         d.noGravity = true;
                     }
@@ -110,7 +110,7 @@ namespace Coralite.Content.Items.FlyingShields
                     pr.PowerfulAttack = true;
                 Vector2 dir = Helper.NextVec2Dir();
 
-                Projectile.NewProjectileFromThis<HorseshoeCrabEXProj>(target.Center + dir * 16 * 10, -dir * 10, Projectile.damage, Projectile.knockBack);
+                Projectile.NewProjectileFromThis<HorseshoeCrabEXProj>(target.Center + (dir * 16 * 10), -dir * 10, Projectile.damage, Projectile.knockBack);
             }
         }
 
@@ -163,18 +163,18 @@ namespace Coralite.Content.Items.FlyingShields
             Vector2 origin2 = frameBox.Size() / 2;
 
             //绘制基底
-            Main.spriteBatch.Draw(mainTex, pos - dir * 4, frameBox, c, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos - (dir * 4), frameBox, c, rotation, origin2, scale, effect, 0);
             Main.spriteBatch.Draw(mainTex, pos, frameBox, lightColor, rotation, origin2, scale, effect, 0);
 
             //绘制上部
             frameBox = mainTex.Frame(3, 1, 1, 0);
-            Main.spriteBatch.Draw(mainTex, pos + dir * 5, frameBox, c, rotation, origin2, scale, effect, 0);
-            Main.spriteBatch.Draw(mainTex, pos + dir * 10, frameBox, lightColor, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos + (dir * 5), frameBox, c, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos + (dir * 10), frameBox, lightColor, rotation, origin2, scale, effect, 0);
 
             //绘制上上部
             frameBox = mainTex.Frame(3, 1, 2, 0);
-            Main.spriteBatch.Draw(mainTex, pos + dir * 12, frameBox, c, rotation, origin2, scale, effect, 0);
-            Main.spriteBatch.Draw(mainTex, pos + dir * 17, frameBox, lightColor, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos + (dir * 12), frameBox, c, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos + (dir * 17), frameBox, lightColor, rotation, origin2, scale, effect, 0);
         }
     }
 

@@ -33,7 +33,7 @@ namespace Coralite.Core.Systems.YujianSystem.YujianAIs
 
             float lerpValue3 = Utils.GetLerpValue(0.4f, 0.6f, factor, clamped: true);
             float lerpValue4 = Utils.GetLerpValue(0.6f, 1f, factor, clamped: true);
-            float targetAngle = v.SafeNormalize(Vector2.Zero).ToRotation() + (float)Math.PI / 2f;
+            float targetAngle = v.SafeNormalize(Vector2.Zero).ToRotation() + ((float)Math.PI / 2f);
 
             Projectile.rotation = Projectile.rotation.AngleTowards(targetAngle, (float)Math.PI / 5f);
             Projectile.Center = Vector2.Lerp(originCenter, targetCenter, lerpValue3);

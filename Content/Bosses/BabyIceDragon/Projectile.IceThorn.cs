@@ -47,14 +47,14 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                 {
                     Dust dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(24f, 24f), DustID.Cloud, Projectile.velocity * 0.75f * MathHelper.Lerp(0.2f, 0.7f, Main.rand.NextFloat()));
                     dust.velocity += Main.rand.NextVector2Circular(0.5f, 0.5f);
-                    dust.scale = 0.8f + Main.rand.NextFloat() * 0.5f;
+                    dust.scale = 0.8f + (Main.rand.NextFloat() * 0.5f);
                 }
 
                 for (int j = 0; j < 5; j++)
                 {
-                    Dust dust2 = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(24f, 24f), DustID.Cloud, Main.rand.NextVector2Circular(2f, 2f) + Projectile.velocity * 0.75f * MathHelper.Lerp(0.2f, 0.5f, Main.rand.NextFloat()));
+                    Dust dust2 = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(24f, 24f), DustID.Cloud, Main.rand.NextVector2Circular(2f, 2f) + (Projectile.velocity * 0.75f * MathHelper.Lerp(0.2f, 0.5f, Main.rand.NextFloat())));
                     dust2.velocity += Main.rand.NextVector2Circular(0.5f, 0.5f);
-                    dust2.scale = 0.8f + Main.rand.NextFloat() * 0.5f;
+                    dust2.scale = 0.8f + (Main.rand.NextFloat() * 0.5f);
                     dust2.fadeIn = 1f;
                 }
 
@@ -81,7 +81,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
             float collisionPoint16 = 0f;
-            if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, Projectile.Center + Projectile.velocity.SafeNormalize(-Vector2.UnitY) * 200f * Projectile.scale, 22f * Projectile.scale, ref collisionPoint16))
+            if (Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, Projectile.Center + (Projectile.velocity.SafeNormalize(-Vector2.UnitY) * 200f * Projectile.scale), 22f * Projectile.scale, ref collisionPoint16))
                 return true;
 
             return false;
@@ -91,7 +91,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
         {
             for (float i = 0f; i < 1f; i += 0.25f)
             {
-                Dust dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(16f, 16f) * Projectile.scale + Projectile.velocity.SafeNormalize(Vector2.UnitY) * i * 200f * Projectile.scale, 16, Main.rand.NextVector2Circular(3f, 3f));
+                Dust dust = Dust.NewDustPerfect(Projectile.Center + (Main.rand.NextVector2Circular(16f, 16f) * Projectile.scale) + (Projectile.velocity.SafeNormalize(Vector2.UnitY) * i * 200f * Projectile.scale), 16, Main.rand.NextVector2Circular(3f, 3f));
                 dust.velocity.Y += -0.3f;
                 dust.velocity += Projectile.velocity * 0.2f;
                 dust.scale = 1f;
@@ -119,12 +119,12 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             Vector4 color_2 = new Color(67, 17, 17).ToVector4();
             color_2 *= color_1;
 
-            Main.EntitySpriteDraw(TextureAssets.Extra[98].Value, Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY) - Projectile.velocity * Projectile.scale * 0.5f, null,
-                Projectile.GetAlpha(new Color(color_2.X, color_2.Y, color_2.Z, color_2.W)) * 1f, Projectile.rotation + (float)Math.PI / 2f, TextureAssets.Extra[98].Value.Size() / 2f, Projectile.scale * 0.9f, effects, 0);
+            Main.EntitySpriteDraw(TextureAssets.Extra[98].Value, Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY) - (Projectile.velocity * Projectile.scale * 0.5f), null,
+                Projectile.GetAlpha(new Color(color_2.X, color_2.Y, color_2.Z, color_2.W)) * 1f, Projectile.rotation + ((float)Math.PI / 2f), TextureAssets.Extra[98].Value.Size() / 2f, Projectile.scale * 0.9f, effects, 0);
             Color color_3 = Projectile.GetAlpha(Color.White) * Utils.Remap(Timer, 0f, 20f, 0.5f, 0f);
             color_3.A = 0;
             for (int i = 0; i < 4; i++)
-                Main.EntitySpriteDraw(mainTex, Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY) + Projectile.rotation.ToRotationVector2().RotatedBy((float)Math.PI / 2f * i) * 2f * scale, frame, color_3, Projectile.rotation, origin, scale, effects, 0);
+                Main.EntitySpriteDraw(mainTex, Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY) + (Projectile.rotation.ToRotationVector2().RotatedBy((float)Math.PI / 2f * i) * 2f * scale), frame, color_3, Projectile.rotation, origin, scale, effects, 0);
 
             Main.EntitySpriteDraw(mainTex, Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY), frame, Color, Projectile.rotation, origin, scale, effects, 0);
             return false;

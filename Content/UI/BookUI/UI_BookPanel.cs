@@ -331,7 +331,7 @@ namespace Coralite.Content.UI.UILib
         /// <returns></returns>
         public Vector2 GetPageSize()
         {
-            return new Vector2((PanelTex.Width() * scale / 2) - leftPageMargins, PanelTex.Height() * scale - (2 * topPageMargins));
+            return new Vector2((PanelTex.Width() * scale / 2) - leftPageMargins, (PanelTex.Height() * scale) - (2 * topPageMargins));
         }
     }
 }

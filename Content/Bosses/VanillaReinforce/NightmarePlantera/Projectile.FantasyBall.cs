@@ -59,14 +59,14 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 Vector2 center = Projectile.Center;
                 float num198 = np.Center.X - center.X;
                 float num199 = np.Center.Y - center.Y;
-                float dis2Target = MathF.Sqrt(num198 * num198 + num199 * num199);
+                float dis2Target = MathF.Sqrt((num198 * num198) + (num199 * num199));
                 dis2Target = num197 / dis2Target;
                 num198 *= dis2Target;
                 num199 *= dis2Target;
                 int chase = 8;
 
-                Projectile.velocity.X = (Projectile.velocity.X * (chase - 1) + num198) / chase;
-                Projectile.velocity.Y = (Projectile.velocity.Y * (chase - 1) + num199) / chase;
+                Projectile.velocity.X = ((Projectile.velocity.X * (chase - 1)) + num198) / chase;
+                Projectile.velocity.Y = ((Projectile.velocity.Y * (chase - 1)) + num199) / chase;
 
                 #endregion
             }
@@ -126,7 +126,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             for (int i = 0; i < 4; i++)
             {
-                Helper.DrawPrettyStarSparkle(Projectile.Opacity, 0, pos + (Projectile.rotation + i * MathHelper.PiOver2).ToRotationVector2() * 16, Color.White, FantasyGod.shineColor * 0.6f,
+                Helper.DrawPrettyStarSparkle(Projectile.Opacity, 0, pos + ((Projectile.rotation + (i * MathHelper.PiOver2)).ToRotationVector2() * 16), Color.White, FantasyGod.shineColor * 0.6f,
                     0.5f, 0f, 0.5f, 0.5f, 1f, Projectile.rotation, scale, Vector2.One * 2);
             }
             return false;

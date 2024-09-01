@@ -90,7 +90,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                                     Vector2 targetDirection = dir.SafeNormalize(Vector2.Zero);
                                     for (int i = -1; i < 2; i += 2)
                                     {
-                                        Vector2 position = originCenter + targetDirection * length;
+                                        Vector2 position = originCenter + (targetDirection * length);
                                         Vector2 velDir = targetDirection.RotatedBy(i * MathHelper.PiOver2);
                                         Projectile.NewProjectile(Projectile.GetSource_FromAI(), position,
                                            velDir * 13, ModContent.ProjectileType<DarkLeaf>(), Projectile.damage, 0);
@@ -107,7 +107,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                                     float angle = factor * MathHelper.TwoPi;
                                     for (int i = 0; i < 2; i++)
                                     {
-                                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), slitCenter, (angle + i * MathHelper.Pi).ToRotationVector2() * 12,
+                                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), slitCenter, (angle + (i * MathHelper.Pi)).ToRotationVector2() * 12,
                                              ModContent.ProjectileType<DarkLeaf>(), Projectile.damage, 0, ai0: 1);
                                     }
 
@@ -153,7 +153,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
                 for (int i = 0; i < maxLength; i += 8)
                 {
-                    Vector2 pos = targetCenter + dir * i;
+                    Vector2 pos = targetCenter + (dir * i);
                     for (int j = -1; j < 2; j += 2)
                     {
                         Dust dust = Dust.NewDustPerfect(pos + Main.rand.NextVector2Circular(16, 16), DustID.SpookyWood,

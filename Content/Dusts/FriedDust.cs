@@ -27,7 +27,7 @@ namespace Coralite.Content.Dusts
                 dust.velocity.Y += 0.1f;
             }
 
-            if (Collision.SolidCollision(dust.position - Vector2.One * 5f, 10, 10))
+            if (Collision.SolidCollision(dust.position - (Vector2.One * 5f), 10, 10))
             {
                 if (dust.fadeIn < FadeTime / 2)
                     dust.fadeIn = FadeTime / 2;

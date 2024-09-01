@@ -72,8 +72,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 default:
                 case 0: //跟踪梦魇花
                     {
-                        float angle = Angle + 0.2f * MathF.Sin(Timer * 0.0314f);
-                        Vector2 center = np.Center + angle.ToRotationVector2() * 650;
+                        float angle = Angle + (0.2f * MathF.Sin(Timer * 0.0314f));
+                        Vector2 center = np.Center + (angle.ToRotationVector2() * 650);
                         Vector2 dir = center - Projectile.Center;
 
                         float velRot = Projectile.velocity.ToRotation();
@@ -104,7 +104,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         float length = dir.Length() + 800;
                         float rot = dir.ToRotation();
                         Projectile.rotation = Projectile.rotation.AngleLerp(rot, 0.4f);
-                        Projectile.Center = Vector2.Lerp(Projectile.Center, fg.Center + dir.SafeNormalize(Vector2.Zero) * length, 0.4f);
+                        Projectile.Center = Vector2.Lerp(Projectile.Center, fg.Center + (dir.SafeNormalize(Vector2.Zero) * length), 0.4f);
 
 
                         if (Timer > 32)

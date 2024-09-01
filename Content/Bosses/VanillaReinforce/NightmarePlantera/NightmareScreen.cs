@@ -34,7 +34,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 //Main.LocalPlayer.ManageSpecialBiomeVisuals("NightmareScreen", isActive);
                 if (Main.LocalPlayer.TryGetModPlayer(out CoralitePlayer cp))
                 {
-                    size = MathHelper.Lerp(size, 1 - cp.nightmareCount * (0.8f / 28) + MathF.Sin(Main.GlobalTimeWrappedHourly) * 0.04f, 0.1f);
+                    size = MathHelper.Lerp(size, 1 - (cp.nightmareCount * (0.8f / 28)) + (MathF.Sin(Main.GlobalTimeWrappedHourly) * 0.04f), 0.1f);
                 }
             }
             else

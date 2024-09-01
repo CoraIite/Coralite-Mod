@@ -99,9 +99,9 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         else
                             NPC.velocity.Y *= 0.95f;
 
-                        const int maxTime = 7 * 4 + 20;
+                        const int maxTime = (7 * 4) + 20;
                         Timer++;
-                        float edge = 200 + 420 * Math.Clamp(Timer / maxTime, 0, 1);
+                        float edge = 200 + (420 * Math.Clamp(Timer / maxTime, 0, 1));
                         edge /= 2;
                         for (int i = 0; i < 4; i++)
                         {

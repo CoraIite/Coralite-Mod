@@ -45,7 +45,7 @@ namespace Coralite.Content.Tiles.RedJades
             int frameYOffset = Main.tileFrame[Type] * AnimationFrameHeight;
 
             spriteBatch.Draw(glowTexture,
-                    new Vector2(i * 16 - (int)Main.screenPosition.X, j * 16 - (int)Main.screenPosition.Y) + zero,
+                    new Vector2((i * 16) - (int)Main.screenPosition.X, (j * 16) - (int)Main.screenPosition.Y) + zero,
                     new Rectangle(tile.TileFrameX, tile.TileFrameY + frameYOffset, 16, 16),
                     Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
         }

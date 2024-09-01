@@ -19,7 +19,7 @@ namespace Coralite.Core.Systems.IKSystem
             angle = (angle + Helper.SignedAngle(end - StartPos, target - StartPos)) % 360f;
             if (float.IsNaN(angle))
                 angle = 0;
-            if (limt && angleLimt.X != -180 || angleLimt.Y != 180)
+            if ((limt && angleLimt.X != -180) || angleLimt.Y != 180)
             {
                 angle = Helper.Clamp(angle, angleLimt.X, angleLimt.Y);
             }
@@ -28,12 +28,12 @@ namespace Coralite.Core.Systems.IKSystem
         public void CalculateStartAndEnd(Vector2 origin, Vector2 right)
         {
             StartPos = origin;
-            EndPos = StartPos + Rotate(right, angle) * len;
+            EndPos = StartPos + (Rotate(right, angle) * len);
         }
 
         private Vector2 Rotate(Vector2 v, float a)
         {
-            a = a * Helper.Deg2Rad + MathF.Atan2(v.Y, v.X);
+            a = (a * Helper.Deg2Rad) + MathF.Atan2(v.Y, v.X);
             return new Vector2(MathF.Cos(a), MathF.Sin(a));
         }
     }

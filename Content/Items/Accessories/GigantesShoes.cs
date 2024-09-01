@@ -34,7 +34,7 @@ namespace Coralite.Content.Items.Accessories
                 Vector2 oldVelocity = player.GetModPlayer<CoralitePlayer>().oldOldVelocity;
                 if (oldVelocity.Y != 0 && player.velocity.Y == 0)
                 {
-                    Collision.HitTiles(player.BottomLeft + new Vector2(-64, 0), -Vector2.UnitY * 16, player.width + 64 * 2, 32);
+                    Collision.HitTiles(player.BottomLeft + new Vector2(-64, 0), -Vector2.UnitY * 16, player.width + (64 * 2), 32);
                     SoundEngine.PlaySound(CoraliteSoundID.StaffOfEarth_Item69, player.Center);
                     var modifyer = new PunchCameraModifier(player.Center, -Vector2.UnitY, 4, 6, 6, 1000);
                     Main.instance.CameraModifiers.Add(modifyer);

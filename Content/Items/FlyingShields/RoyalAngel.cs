@@ -75,7 +75,7 @@ namespace Coralite.Content.Items.FlyingShields
             if (State != (int)FlyingShieldStates.Backing)
                 if (!target.friendly && target.CanBeChasedBy())
                 {
-                    Projectile.NewProjectileFromThis<RoyalAngelStrike>(target.Center + Main.rand.NextFloat(-1.57f - 0.5f, -1.57f + 0.5f).ToRotationVector2() * 20,
+                    Projectile.NewProjectileFromThis<RoyalAngelStrike>(target.Center + (Main.rand.NextFloat(-1.57f - 0.5f, -1.57f + 0.5f).ToRotationVector2() * 20),
                         Vector2.Zero, Projectile.damage, 4, target.whoAmI);
                 }
         }
@@ -138,28 +138,28 @@ namespace Coralite.Content.Items.FlyingShields
             Color c = lightColor * 0.6f;
             c.A = lightColor.A;
 
-            float exRot = rotation - Owner.direction * (0.2f + 0.3f * MathF.Sin(wing));
-            float exRot2 = rotation + Owner.direction * (0.2f + 0.3f * MathF.Sin(wing));
+            float exRot = rotation - (Owner.direction * (0.2f + (0.3f * MathF.Sin(wing))));
+            float exRot2 = rotation + (Owner.direction * (0.2f + (0.3f * MathF.Sin(wing))));
 
             frameBox = mainTex.Frame(4, 1, 0, 0);
             Vector2 origin2 = frameBox.Size() / 2;
             //绘制基底
-            Main.spriteBatch.Draw(mainTex, pos - dir * 5, frameBox, c, exRot, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos - (dir * 5), frameBox, c, exRot, origin2, scale, effect, 0);
             Main.spriteBatch.Draw(mainTex, pos, frameBox, lightColor, exRot, origin2, scale, effect, 0);
 
             frameBox = mainTex.Frame(4, 1, 1, 0);
-            Main.spriteBatch.Draw(mainTex, pos - dir * 5, frameBox, c, exRot2, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos - (dir * 5), frameBox, c, exRot2, origin2, scale, effect, 0);
             Main.spriteBatch.Draw(mainTex, pos, frameBox, lightColor, exRot2, origin2, scale, effect, 0);
 
             //绘制上部
             frameBox = mainTex.Frame(4, 1, 2, 0);
-            Main.spriteBatch.Draw(mainTex, pos + dir * 3, frameBox, c, rotation, origin2, scale, effect, 0);
-            Main.spriteBatch.Draw(mainTex, pos + dir * 8, frameBox, lightColor, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos + (dir * 3), frameBox, c, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos + (dir * 8), frameBox, lightColor, rotation, origin2, scale, effect, 0);
 
             //绘制上上部
             frameBox = mainTex.Frame(4, 1, 3, 0);
-            Main.spriteBatch.Draw(mainTex, pos + dir * 11, frameBox, c, rotation, origin2, scale, effect, 0);
-            Main.spriteBatch.Draw(mainTex, pos + dir * 16, frameBox, lightColor, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos + (dir * 11), frameBox, c, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos + (dir * 16), frameBox, lightColor, rotation, origin2, scale, effect, 0);
         }
     }
 
@@ -248,9 +248,9 @@ namespace Coralite.Content.Items.FlyingShields
                         distanceToTarget = Helper.Lerp(-20, -270, sqrtFactor);
                         alpha = Helper.Lerp(0.4f, 1f, sqrtFactor);
                         Projectile.rotation = Helper.Lerp(2.5f, 0, sqrtFactor);
-                        selfRotation = Helper.Lerp(angle, angle + Projectile.velocity.X * MathHelper.TwoPi, sqrtFactor);
+                        selfRotation = Helper.Lerp(angle, angle + (Projectile.velocity.X * MathHelper.TwoPi), sqrtFactor);
                         Projectile.scale = Helper.Lerp(0.01f, 1f, sqrtFactor);
-                        Projectile.Center = owner.Center + angle.ToRotationVector2() * distanceToTarget;
+                        Projectile.Center = owner.Center + (angle.ToRotationVector2() * distanceToTarget);
                         Timer++;
                         if (Timer > FlowTime)
                         {
@@ -306,7 +306,7 @@ namespace Coralite.Content.Items.FlyingShields
                 for (int i = 13; i > 1; i--)
                 {
                     Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] - Main.screenPosition, frameBox2, lightColor * (i * 0.5f / 14), rot
-                        , origin, Projectile.scale * (0.5f + i * 0.5f / 14), 0, 0);
+                        , origin, Projectile.scale * (0.5f + (i * 0.5f / 14)), 0, 0);
                 }
             }
 

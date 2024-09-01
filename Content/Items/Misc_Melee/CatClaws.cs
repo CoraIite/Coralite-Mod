@@ -362,7 +362,7 @@ namespace Coralite.Content.Items.Misc_Melee
                     Projectile.velocity = Vector2.Normalize(Main.MouseWorld - Main.player[Projectile.owner].Center) * 15f;
                 }
                 float factor = timer / 30;
-                Projectile.velocity *= (1 - factor * factor);
+                Projectile.velocity *= 1 - (factor * factor);
                 if (timer == 30)
                     proj.SetState<BackState>();
             }

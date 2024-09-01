@@ -142,9 +142,9 @@ namespace Coralite.Content.Bosses.ShadowBalls
             effect.Parameters["exTexture"].SetValue(ModContent.Request<Texture2D>(AssetDirectory.ShadowBalls + "BallBack").Value);
             effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly / 3);
             effect.Parameters["uSourceRect"].SetValue(new Vector4(frameBox.X, frameBox.Y, frameBox.Width, frameBox.Height));
-            effect.Parameters["uExchange"].SetValue(0.15f + 0.05f * MathF.Sin(Main.GlobalTimeWrappedHourly));
+            effect.Parameters["uExchange"].SetValue(0.15f + (0.05f * MathF.Sin(Main.GlobalTimeWrappedHourly)));
             effect.Parameters["uImageSize0"].SetValue(mainTex.Size());
-            effect.Parameters["uLerp"].SetValue(0.1f + 0.02f * MathF.Sin(Main.GlobalTimeWrappedHourly));
+            effect.Parameters["uLerp"].SetValue(0.1f + (0.02f * MathF.Sin(Main.GlobalTimeWrappedHourly)));
 
             Main.spriteBatch.End();
             Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend
@@ -167,25 +167,25 @@ namespace Coralite.Content.Bosses.ShadowBalls
             var frameBox = mainTex.Frame(1, 2, 0, 1);
 
             int num2 = sceneArea.bgTopY;
-            int num3 = (int)(Main.time / 54000.0 * (double)(sceneArea.totalWidth + mainTex.Width * 2)) - mainTex.Width;
+            int num3 = (int)(Main.time / 54000.0 * (double)(sceneArea.totalWidth + (mainTex.Width * 2))) - mainTex.Width;
             int num4 = 0;
             float scale = 1f;
-            float rotation = (float)(Main.time / 54000.0) * 2f - 7.3f;
+            float rotation = ((float)(Main.time / 54000.0) * 2f) - 7.3f;
             if (dayTime)
             {
                 double num10;
                 if (Main.time < 27000.0)
                 {
-                    num10 = Math.Pow(1.0 - Main.time / 54000.0 * 2.0, 2.0);
-                    num4 = (int)(num2 + num10 * 250.0 + 180.0);
+                    num10 = Math.Pow(1.0 - (Main.time / 54000.0 * 2.0), 2.0);
+                    num4 = (int)(num2 + (num10 * 250.0) + 180.0);
                 }
                 else
                 {
-                    num10 = Math.Pow((Main.time / 54000.0 - 0.5) * 2.0, 2.0);
-                    num4 = (int)(num2 + num10 * 250.0 + 180.0);
+                    num10 = Math.Pow(((Main.time / 54000.0) - 0.5) * 2.0, 2.0);
+                    num4 = (int)(num2 + (num10 * 250.0) + 180.0);
                 }
 
-                scale = (float)(1.2 - num10 * 0.4);
+                scale = (float)(1.2 - (num10 * 0.4));
             }
 
             scale *= ForcedMinimumZoom;
@@ -270,7 +270,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         {
             if (SkyManager.Instance["StarsBackSky"].IsActive())
             {
-                StarsBackSky sky = ((StarsBackSky)SkyManager.Instance["StarsBackSky"]);
+                StarsBackSky sky = (StarsBackSky)SkyManager.Instance["StarsBackSky"];
                 backgroundColor = Color.Lerp(backgroundColor, new Color(68, 0, 96), 0.7f * sky.Timeleft / 100f);
                 tileColor = Color.Lerp(tileColor, new Color(88, 20, 146), 0.5f * sky.Timeleft / 100f);
             }

@@ -50,7 +50,7 @@ namespace Coralite.Content.Items.RedJades
                     break;
                 case 3: //强化挥舞
                     minTime = 14;
-                    maxTime = 18 + Owner.itemTimeMax * 2;
+                    maxTime = 18 + (Owner.itemTimeMax * 2);
                     startAngle = 2.2f;
                     totalAngle = 4.8f;
                     Smoother = Coralite.Instance.HeavySmootherInstance;
@@ -73,7 +73,7 @@ namespace Coralite.Content.Items.RedJades
         {
             if (Main.myPlayer == Projectile.owner && Timer == maxTime / 2 && Combo == 3)
             {
-                Projectile.NewProjectile(Projectile.GetSource_FromThis(), Owner.Center + (Main.MouseWorld - Owner.Center).SafeNormalize(Vector2.Zero) * 64, Vector2.Zero,
+                Projectile.NewProjectile(Projectile.GetSource_FromThis(), Owner.Center + ((Main.MouseWorld - Owner.Center).SafeNormalize(Vector2.Zero) * 64), Vector2.Zero,
                     ModContent.ProjectileType<RedJadeBigBoom>(), Projectile.damage * 2, Projectile.knockBack, Projectile.owner);
             }
         }
@@ -91,7 +91,7 @@ namespace Coralite.Content.Items.RedJades
             if (Timer < minTime)
             {
                 float factor = Timer / minTime;
-                Helper.DrawPrettyStarSparkle(1, SpriteEffects.None, Projectile.Center - Main.screenPosition + RotateVec2 * 20, new Color(255, 255, 255, 0) * 0.8f,
+                Helper.DrawPrettyStarSparkle(1, SpriteEffects.None, Projectile.Center - Main.screenPosition + (RotateVec2 * 20), new Color(255, 255, 255, 0) * 0.8f,
                     Coralite.RedJadeRed, factor, 0, 0.4f, 0.6f, 1f, -Owner.direction * factor * 1f, new Vector2(2, 1f), Vector2.One);
             }
         }

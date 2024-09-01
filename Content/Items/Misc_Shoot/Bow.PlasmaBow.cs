@@ -12,7 +12,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Misc_Shoot
 {
-    public class PlasmaBow:ModItem
+    public class PlasmaBow : ModItem
     {
         public override string Texture => AssetDirectory.Misc_Shoot + Name;
 
@@ -55,11 +55,11 @@ namespace Coralite.Content.Items.Misc_Shoot
             Vector2 dir = velocity.SafeNormalize(Vector2.Zero);
             float speed = 8f;
             int damage2 = (int)(damage * 0.5f);
-            for (int i = -1; i < 2; i ++)
+            for (int i = -1; i < 2; i++)
             {
                 Vector2 velocity2 = dir.RotatedBy(i * 0.5f) * speed;
                 Projectile.NewProjectile(new EntitySource_ItemUse(player, Item)
-                    , position + dir.RotatedBy(i * 0.5f) * 18 - velocity * 2, velocity2, ModContent.ProjectileType<PlasmaBall>()
+                    , position + (dir.RotatedBy(i * 0.5f) * 18) - (velocity * 2), velocity2, ModContent.ProjectileType<PlasmaBall>()
                     , damage2, knockback, player.whoAmI);
             }
 
@@ -167,7 +167,7 @@ namespace Coralite.Content.Items.Misc_Shoot
                                 NPCIndex = target.whoAmI;
 
                                 TargetCenter = Projectile.Center +
-                                    (Projectile.Center - Main.player[Projectile.owner].Center).SafeNormalize(Vector2.Zero) * 125;
+                                    ((Projectile.Center - Main.player[Projectile.owner].Center).SafeNormalize(Vector2.Zero) * 125);
 
                                 StartAttack();
                             }
@@ -177,7 +177,7 @@ namespace Coralite.Content.Items.Misc_Shoot
                     }
                     break;
                 case 1://找到敌人，以极快的速度追踪
-                        Chase();
+                    Chase();
                     break;
                 case 2://后摇，闪电逐渐消失
                     {
@@ -246,8 +246,8 @@ namespace Coralite.Content.Items.Misc_Shoot
                         if (length2 > 100)
                             length2 = 100;
                         dir2 = dir2.SafeNormalize(Vector2.Zero);
-                        Vector2 center2 = Projectile.Center +dir2*length2;
-                        Vector2 pos = center2 + dir2.RotatedBy(Main.rand.NextFromList(1.57f, -1.57f))*length2;// Main.rand.NextVector2Circular(length2,length2);
+                        Vector2 center2 = Projectile.Center + (dir2 * length2);
+                        Vector2 pos = center2 + (dir2.RotatedBy(Main.rand.NextFromList(1.57f, -1.57f)) * length2);// Main.rand.NextVector2Circular(length2,length2);
 
                         targetCenter = pos;
                         TargetCenter = pos;
@@ -266,7 +266,7 @@ namespace Coralite.Content.Items.Misc_Shoot
 
             float factor = 1 - Math.Clamp(Vector2.Distance(targetCenter, Projectile.Center) / 500, 0, 1);
 
-            Projectile.velocity = selfAngle.AngleLerp(targetAngle, 0.5f + 0.5f * factor).ToRotationVector2() * 24f;
+            Projectile.velocity = selfAngle.AngleLerp(targetAngle, 0.5f + (0.5f * factor)).ToRotationVector2() * 24f;
 
             if (Main.rand.NextBool(8))
                 Projectile.SpawnTrailDust(DustID.Electric, Main.rand.NextFloat(0.1f, 0.3f), Scale: Main.rand.NextFloat(0.4f, 0.8f));
@@ -319,14 +319,14 @@ namespace Coralite.Content.Items.Misc_Shoot
         {
             for (int i = 0; i < 5; i++)
             {
-               Dust d= Dust.NewDustPerfect(Projectile.Center, DustID.Electric, Helper.NextVec2Dir(2f, 5f));
+                Dust d = Dust.NewDustPerfect(Projectile.Center, DustID.Electric, Helper.NextVec2Dir(2f, 5f));
                 d.noGravity = true;
             }
         }
 
         public override bool PreDraw(ref Color lightColor)
         {
-            if (Hited==0)//没碰到任何东西就绘制本体
+            if (Hited == 0)//没碰到任何东西就绘制本体
             {
                 Texture2D mainTex = Projectile.GetTexture();
 

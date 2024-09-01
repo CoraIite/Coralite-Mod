@@ -4,7 +4,6 @@ using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Terraria;
 using Terraria.ID;
-using static Coralite.Core.Systems.MagikeSystem.MagikeSystem;
 
 namespace Coralite.Content.Items.Materials
 {
@@ -165,7 +164,7 @@ namespace Coralite.Content.Items.Materials
                 .RegisterNew(ItemID.Gi, 450)
                 .SetMainStack(4 * 2)
                 .RegisterNew(ItemID.GypsyRobe, 150)
-                .SetMainStack(4 * 3 + 2)
+                .SetMainStack((4 * 3) + 2)
                 .RegisterNew(ItemID.Fez, 150)
                 .RegisterNew(ItemID.MagicHat, 150)
                 .SetMainStack(4 * 3)

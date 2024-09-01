@@ -96,15 +96,15 @@ namespace Coralite.Content.Items.Nightmare
 
                     for (int i = -3; i < 4; i++)
                     {
-                        float rot = dashDirection + MathHelper.Pi + i * 0.35f;
-                        Dust dust = Dust.NewDustPerfect(Player.Center + rot.ToRotationVector2() * 12, DustType<NightmareStar>(),
-                            rot.ToRotationVector2() * (4f - Math.Abs(i) * 1f), newColor: NightmarePlantera.nightPurple, Scale: 1.8f - Math.Abs(i) * 0.3f);
+                        float rot = dashDirection + MathHelper.Pi + (i * 0.35f);
+                        Dust dust = Dust.NewDustPerfect(Player.Center + (rot.ToRotationVector2() * 12), DustType<NightmareStar>(),
+                            rot.ToRotationVector2() * (4f - (Math.Abs(i) * 1f)), newColor: NightmarePlantera.nightPurple, Scale: 1.8f - (Math.Abs(i) * 0.3f));
                         dust.rotation = rot + MathHelper.PiOver2;
                     }
 
                     for (int i = 0; i < 5; i++)
                     {
-                        Particle.NewParticle(Player.Center + Main.rand.NextVector2Circular(24, 24) + i * newVelocity, -newVelocity * 0.75f, CoraliteContent.ParticleType<SpeedLine>(), NightmarePlantera.nightmareSparkleColor,
+                        Particle.NewParticle(Player.Center + Main.rand.NextVector2Circular(24, 24) + (i * newVelocity), -newVelocity * 0.75f, CoraliteContent.ParticleType<SpeedLine>(), NightmarePlantera.nightmareSparkleColor,
                             Main.rand.NextFloat(0.2f, 0.6f));
                     }
 
@@ -128,15 +128,15 @@ namespace Coralite.Content.Items.Nightmare
 
                         for (int i = -3; i < 4; i++)
                         {
-                            float rot = dashDir + MathHelper.Pi + i * 0.35f;
-                            Dust dust = Dust.NewDustPerfect(Player.Center + rot.ToRotationVector2() * 12, DustType<NightmareStar>(),
-                                rot.ToRotationVector2() * (4f - Math.Abs(i) * 1f), newColor: NightmarePlantera.nightPurple, Scale: 1.8f - Math.Abs(i) * 0.3f);
+                            float rot = dashDir + MathHelper.Pi + (i * 0.35f);
+                            Dust dust = Dust.NewDustPerfect(Player.Center + (rot.ToRotationVector2() * 12), DustType<NightmareStar>(),
+                                rot.ToRotationVector2() * (4f - (Math.Abs(i) * 1f)), newColor: NightmarePlantera.nightPurple, Scale: 1.8f - (Math.Abs(i) * 0.3f));
                             dust.rotation = rot + MathHelper.PiOver2;
                         }
 
                         for (int i = 0; i < 5; i++)
                         {
-                            Particle.NewParticle(Player.Center + Main.rand.NextVector2Circular(24, 24) + i * newVelocity, -newVelocity * 0.75f, CoraliteContent.ParticleType<SpeedLine>(), NightmarePlantera.nightmareSparkleColor,
+                            Particle.NewParticle(Player.Center + Main.rand.NextVector2Circular(24, 24) + (i * newVelocity), -newVelocity * 0.75f, CoraliteContent.ParticleType<SpeedLine>(), NightmarePlantera.nightmareSparkleColor,
                                 Main.rand.NextFloat(0.2f, 0.6f));
                         }
                     }
@@ -171,15 +171,15 @@ namespace Coralite.Content.Items.Nightmare
 
                         for (int i = -3; i < 4; i++)
                         {
-                            float rot = dashDir + MathHelper.Pi + i * 0.35f;
-                            Dust dust = Dust.NewDustPerfect(Player.Center + rot.ToRotationVector2() * 12, DustType<NightmareStar>(),
-                                rot.ToRotationVector2() * (4f - Math.Abs(i) * 1f), newColor: NightmarePlantera.nightPurple, Scale: 1.8f - Math.Abs(i) * 0.3f);
+                            float rot = dashDir + MathHelper.Pi + (i * 0.35f);
+                            Dust dust = Dust.NewDustPerfect(Player.Center + (rot.ToRotationVector2() * 12), DustType<NightmareStar>(),
+                                rot.ToRotationVector2() * (4f - (Math.Abs(i) * 1f)), newColor: NightmarePlantera.nightPurple, Scale: 1.8f - (Math.Abs(i) * 0.3f));
                             dust.rotation = rot + MathHelper.PiOver2;
                         }
 
                         for (int i = 0; i < 5; i++)
                         {
-                            Particle.NewParticle(Player.Center + Main.rand.NextVector2Circular(24, 24) + i * newVelocity, -newVelocity * 0.75f, CoraliteContent.ParticleType<SpeedLine>(), NightmarePlantera.nightmareSparkleColor,
+                            Particle.NewParticle(Player.Center + Main.rand.NextVector2Circular(24, 24) + (i * newVelocity), -newVelocity * 0.75f, CoraliteContent.ParticleType<SpeedLine>(), NightmarePlantera.nightmareSparkleColor,
                                 Main.rand.NextFloat(0.2f, 0.6f));
                         }
                     }
@@ -293,7 +293,7 @@ namespace Coralite.Content.Items.Nightmare
                 default: Projectile.Kill(); break;
                 case 0: //普普通通的射箭
                     {
-                        Projectile.Center = Owner.Center + Projectile.rotation.ToRotationVector2() * 16;
+                        Projectile.Center = Owner.Center + (Projectile.rotation.ToRotationVector2() * 16);
                         Owner.itemRotation = Projectile.rotation + (OwnerDirection > 0 ? 0 : 3.141f);
 
                         //如果满足条件且没有右键过 那么就再次射击
@@ -325,7 +325,7 @@ namespace Coralite.Content.Items.Nightmare
                     break;
                 case 1: //射出能够获得梦魇光能的
                     {
-                        Projectile.Center = Owner.Center + Projectile.rotation.ToRotationVector2() * 16;
+                        Projectile.Center = Owner.Center + (Projectile.rotation.ToRotationVector2() * 16);
                         Owner.itemRotation = Projectile.rotation + (OwnerDirection > 0 ? 0 : 3.141f);
 
                         //如果满足条件且没有右键过 那么就再次射击
@@ -367,13 +367,13 @@ namespace Coralite.Content.Items.Nightmare
                             {
                                 Owner.velocity = dashDir.ToRotationVector2() * 14;
 
-                                Projectile.rotation = Projectile.rotation.AngleLerp(-1.57f - Owner.direction * 0.3f, 0.09f);
-                                Projectile.Center = Owner.Center + Projectile.rotation.ToRotationVector2() * Helper.Lerp(4, 24, Timer / 14f);
+                                Projectile.rotation = Projectile.rotation.AngleLerp(-1.57f - (Owner.direction * 0.3f), 0.09f);
+                                Projectile.Center = Owner.Center + (Projectile.rotation.ToRotationVector2() * Helper.Lerp(4, 24, Timer / 14f));
                             }
                             else
                             {
                                 Projectile.rotation = Projectile.rotation.AngleLerp((Main.MouseWorld - Owner.Center).ToRotation(), 0.15f);
-                                Projectile.Center = Owner.Center + Projectile.rotation.ToRotationVector2() * Helper.Lerp(24, 16, (Timer - 14) / 6f);
+                                Projectile.Center = Owner.Center + (Projectile.rotation.ToRotationVector2() * Helper.Lerp(24, 16, (Timer - 14) / 6f));
                             }
 
                             CheckDashHited();
@@ -389,7 +389,7 @@ namespace Coralite.Content.Items.Nightmare
                             break;
                         }
 
-                        Projectile.Center = Owner.Center + Projectile.rotation.ToRotationVector2() * 16;
+                        Projectile.Center = Owner.Center + (Projectile.rotation.ToRotationVector2() * 16);
                         Projectile.rotation = Projectile.rotation.AngleLerp((Main.MouseWorld - Owner.MountedCenter).ToRotation(), 0.25f);
 
                         if (!shooted)
@@ -405,7 +405,7 @@ namespace Coralite.Content.Items.Nightmare
                                     if (Main.rand.NextBool(20))
                                     {
                                         Vector2 dir = Rotation.ToRotationVector2();
-                                        Particle.NewParticle(Owner.Center + dir * 16 + Main.rand.NextVector2Circular(8, 8), dir * 1.2f, CoraliteContent.ParticleType<HorizontalStar>(), NightmarePlantera.nightmareRed, Main.rand.NextFloat(0.1f, 0.15f));
+                                        Particle.NewParticle(Owner.Center + (dir * 16) + Main.rand.NextVector2Circular(8, 8), dir * 1.2f, CoraliteContent.ParticleType<HorizontalStar>(), NightmarePlantera.nightmareRed, Main.rand.NextFloat(0.1f, 0.15f));
                                     }
                                 }
 
@@ -499,10 +499,10 @@ namespace Coralite.Content.Items.Nightmare
                             if (Timer < 14)
                             {
                                 Owner.velocity = dashDir.ToRotationVector2() * 11;
-                                Projectile.Center = Owner.Center + Projectile.rotation.ToRotationVector2() * Helper.Lerp(4, 24, Timer / 14f);
+                                Projectile.Center = Owner.Center + (Projectile.rotation.ToRotationVector2() * Helper.Lerp(4, 24, Timer / 14f));
                             }
                             else
-                                Projectile.Center = Owner.Center + Projectile.rotation.ToRotationVector2() * Helper.Lerp(24, 16, (Timer - 14) / 6f);
+                                Projectile.Center = Owner.Center + (Projectile.rotation.ToRotationVector2() * Helper.Lerp(24, 16, (Timer - 14) / 6f));
 
                             //特效部分
                             for (int i = 0; i < 2; i++)
@@ -516,8 +516,8 @@ namespace Coralite.Content.Items.Nightmare
                             break;
                         }
 
-                        Projectile.Center = Owner.Center + Projectile.rotation.ToRotationVector2() * 16;
-                        Projectile.rotation = -1.57f + Math.Clamp(((Main.MouseWorld.X - Owner.Center.X) / 400f) * 0.3f, -0.4f, 0.4f);
+                        Projectile.Center = Owner.Center + (Projectile.rotation.ToRotationVector2() * 16);
+                        Projectile.rotation = -1.57f + Math.Clamp((Main.MouseWorld.X - Owner.Center.X) / 400f * 0.3f, -0.4f, 0.4f);
 
                         if (!shooted)
                         {
@@ -532,7 +532,7 @@ namespace Coralite.Content.Items.Nightmare
                                     if (Main.rand.NextBool(20))
                                     {
                                         Vector2 dir = Rotation.ToRotationVector2();
-                                        Particle.NewParticle(Owner.Center + dir * 16 + Main.rand.NextVector2Circular(8, 8), dir * 1.2f, CoraliteContent.ParticleType<HorizontalStar>(), NightmarePlantera.nightmareRed, Main.rand.NextFloat(0.1f, 0.15f));
+                                        Particle.NewParticle(Owner.Center + (dir * 16) + Main.rand.NextVector2Circular(8, 8), dir * 1.2f, CoraliteContent.ParticleType<HorizontalStar>(), NightmarePlantera.nightmareRed, Main.rand.NextFloat(0.1f, 0.15f));
                                     }
                                 }
 
@@ -597,7 +597,7 @@ namespace Coralite.Content.Items.Nightmare
                                 if (Timer < 15)
                                     Owner.velocity = dashDir.ToRotationVector2() * 16;
 
-                                Projectile.Center = Owner.Center + Projectile.rotation.ToRotationVector2() * 16;
+                                Projectile.Center = Owner.Center + (Projectile.rotation.ToRotationVector2() * 16);
 
                                 CheckDashHited(npc => npc.SimpleStrikeNPC(Owner.GetWeaponDamage(Owner.HeldItem), Math.Sign(Owner.Center.X - npc.Center.X),
                                     damageType: DamageClass.Ranged));
@@ -623,7 +623,7 @@ namespace Coralite.Content.Items.Nightmare
                                 break;
                             }
 
-                            Projectile.Center = Owner.Center + Projectile.rotation.ToRotationVector2() * 16;
+                            Projectile.Center = Owner.Center + (Projectile.rotation.ToRotationVector2() * 16);
 
                             if (shooted)
                             {
@@ -758,7 +758,7 @@ namespace Coralite.Content.Items.Nightmare
                                     if (Main.rand.NextBool(20))
                                     {
                                         Vector2 dir = Rotation.ToRotationVector2();
-                                        Particle.NewParticle(Owner.Center + dir * 16 + Main.rand.NextVector2Circular(8, 8), dir * 1.2f, CoraliteContent.ParticleType<HorizontalStar>(), NightmarePlantera.nightmareRed, Main.rand.NextFloat(0.1f, 0.15f));
+                                        Particle.NewParticle(Owner.Center + (dir * 16) + Main.rand.NextVector2Circular(8, 8), dir * 1.2f, CoraliteContent.ParticleType<HorizontalStar>(), NightmarePlantera.nightmareRed, Main.rand.NextFloat(0.1f, 0.15f));
                                     }
                                 }
 
@@ -935,7 +935,7 @@ namespace Coralite.Content.Items.Nightmare
             {
                 if (State == 1)
                     for (int i = 0; i < 6; i++)
-                        Dust.NewDustPerfect(Projectile.Center, DustType<NightmareStar>(), Vector2.Zero, newColor: Color.Pink, Scale: 0.6f + i * 0.2f);
+                        Dust.NewDustPerfect(Projectile.Center, DustType<NightmareStar>(), Vector2.Zero, newColor: Color.Pink, Scale: 0.6f + (i * 0.2f));
                 Projectile.localAI[0] = 1;
             }
 
@@ -956,7 +956,7 @@ namespace Coralite.Content.Items.Nightmare
                     Vector2 dir = (Projectile.rotation + 1.57f).ToRotationVector2();
                     for (int i = -1; i < 2; i += 2)
                     {
-                        Dust d = Dust.NewDustPerfect(Projectile.Center + dir * i * 6, DustID.ViciousPowder, Vector2.Zero, newColor: NightmarePlantera.lightPurple, Scale: 1.2f);
+                        Dust d = Dust.NewDustPerfect(Projectile.Center + (dir * i * 6), DustID.ViciousPowder, Vector2.Zero, newColor: NightmarePlantera.lightPurple, Scale: 1.2f);
                         d.noGravity = true;
 
                     }
@@ -967,13 +967,13 @@ namespace Coralite.Content.Items.Nightmare
                 if (Projectile.timeLeft % 8 > 3)//生成一条粒子
                 {
                     Vector2 dir = (Projectile.rotation + 1.57f).ToRotationVector2();
-                    Dust d = Dust.NewDustPerfect(Projectile.Center + dir * 4, DustID.ViciousPowder, Vector2.Zero, newColor: NightmarePlantera.lightPurple, Scale: 1.2f);
+                    Dust d = Dust.NewDustPerfect(Projectile.Center + (dir * 4), DustID.ViciousPowder, Vector2.Zero, newColor: NightmarePlantera.lightPurple, Scale: 1.2f);
                     d.noGravity = true;
                 }
                 else//生成2条粒子
                 {
                     Vector2 dir = (Projectile.rotation + 1.57f).ToRotationVector2();
-                    Dust d = Dust.NewDustPerfect(Projectile.Center + dir * -4, DustID.ViciousPowder, Vector2.Zero, newColor: NightmarePlantera.lightPurple, Scale: 1.2f);
+                    Dust d = Dust.NewDustPerfect(Projectile.Center + (dir * -4), DustID.ViciousPowder, Vector2.Zero, newColor: NightmarePlantera.lightPurple, Scale: 1.2f);
                     d.noGravity = true;
                 }
             }
@@ -1004,12 +1004,12 @@ namespace Coralite.Content.Items.Nightmare
 
             for (int i = 2; i < 14; i += 1)
                 Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] + toCenter - Main.screenPosition, frameBox,
-                    Color.Pink * (0.75f - i * 0.75f / 14), Projectile.oldRot[i], frameBox.Size() / 2, 1f - i * 0.4f / 14, 0, 0);
+                    Color.Pink * (0.75f - (i * 0.75f / 14)), Projectile.oldRot[i], frameBox.Size() / 2, 1f - (i * 0.4f / 14), 0, 0);
 
             //向上下左右四个方向绘制一遍
             for (int i = 0; i < 4; i++)
             {
-                Main.spriteBatch.Draw(mainTex, pos + (i * MathHelper.PiOver2).ToRotationVector2() * 2, frameBox, Color.Pink, Projectile.rotation, origin, 1,
+                Main.spriteBatch.Draw(mainTex, pos + ((i * MathHelper.PiOver2).ToRotationVector2() * 2), frameBox, Color.Pink, Projectile.rotation, origin, 1,
                    0, 0);
             }
 

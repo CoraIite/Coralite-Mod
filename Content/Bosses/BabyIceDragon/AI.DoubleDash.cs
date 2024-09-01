@@ -126,7 +126,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             for (int i = 0; i < 4; i++)
                                 IceStarLight.Spawn(NPC.Center + Main.rand.NextVector2CircularEdge(100, 100), Main.rand.NextVector2CircularEdge(3, 3), 1f, () =>
                                 {
-                                    return NPC.Center + (NPC.rotation + (NPC.direction > 0 ? 0f : 3.141f)).ToRotationVector2() * 30;
+                                    return NPC.Center + ((NPC.rotation + (NPC.direction > 0 ? 0f : 3.141f)).ToRotationVector2() * 30);
                                 }, 16);
                             Particle.NewParticle<IceBurstHalo_Reverse>(mouseCenter2, Vector2.Zero, Scale: 0.8f);
                             Particle.NewParticle<IceBurstHalo_Reverse>(mouseCenter2, Vector2.Zero, Scale: 1.2f);
@@ -178,7 +178,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             for (int i = 0; i < 4; i++)
                                 IceStarLight.Spawn(NPC.Center + Main.rand.NextVector2CircularEdge(100, 100), Main.rand.NextVector2CircularEdge(3, 3), 1f, () =>
                                 {
-                                    return NPC.Center + (NPC.rotation + (NPC.direction > 0 ? 0f : 3.141f)).ToRotationVector2() * 30;
+                                    return NPC.Center + ((NPC.rotation + (NPC.direction > 0 ? 0f : 3.141f)).ToRotationVector2() * 30);
                                 }, 16);
                             Particle.NewParticle(mouseCenter2, Vector2.Zero, CoraliteContent.ParticleType<IceBurstHalo_Reverse>(), Scale: 0.8f);
                             Particle.NewParticle(mouseCenter2, Vector2.Zero, CoraliteContent.ParticleType<IceBurstHalo_Reverse>(), Scale: 1.2f);

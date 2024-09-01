@@ -44,7 +44,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
         {
             hit = true;
 
-            if (projectile.parryTime > 0 && projectile.Timer > projectile.dashTime - projectile.parryTime * 1.5f)
+            if (projectile.parryTime > 0 && projectile.Timer > projectile.dashTime - (projectile.parryTime * 1.5f))
             {
                 projectile.OnParry();
                 projectile.UpdateShieldAccessory(accessory => accessory.OnParry(projectile));

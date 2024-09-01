@@ -100,18 +100,18 @@ namespace Coralite.Content.Items.FlyingShields
             Vector2 origin2 = frameBox.Size() / 2;
 
             //绘制基底
-            Main.spriteBatch.Draw(mainTex, pos - dir * 5, frameBox, c, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos - (dir * 5), frameBox, c, rotation, origin2, scale, effect, 0);
             Main.spriteBatch.Draw(mainTex, pos, frameBox, lightColor, rotation, origin2, scale, effect, 0);
 
             //绘制上部
             frameBox = mainTex.Frame(3, 1, 1, 0);
-            Main.spriteBatch.Draw(mainTex, pos + dir * 3, frameBox, c, rotation, origin2, scale, effect, 0);
-            Main.spriteBatch.Draw(mainTex, pos + dir * 7, frameBox, lightColor, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos + (dir * 3), frameBox, c, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos + (dir * 7), frameBox, lightColor, rotation, origin2, scale, effect, 0);
 
             //绘制上上部
             frameBox = mainTex.Frame(3, 1, 2, 0);
-            Main.spriteBatch.Draw(mainTex, pos + dir * 11, frameBox, c, rotation, origin2, scale, effect, 0);
-            Main.spriteBatch.Draw(mainTex, pos + dir * 15, frameBox, lightColor, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos + (dir * 11), frameBox, c, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos + (dir * 15), frameBox, lightColor, rotation, origin2, scale, effect, 0);
         }
 
         public override float GetWidth()
@@ -153,8 +153,8 @@ namespace Coralite.Content.Items.FlyingShields
             Collision.ExpandVertically(point7.X, point7.Y, out var topY, out var bottomY, (int)num1043, (int)num1044);
             topY++;
             bottomY--;
-            Vector2 value20 = new Vector2(point7.X, topY) * 16f + new Vector2(8f);
-            Vector2 value21 = new Vector2(point7.X, bottomY) * 16f + new Vector2(8f);
+            Vector2 value20 = (new Vector2(point7.X, topY) * 16f) + new Vector2(8f);
+            Vector2 value21 = (new Vector2(point7.X, bottomY) * 16f) + new Vector2(8f);
             Vector2 vector164 = Vector2.Lerp(value20, value21, 0.5f);
             Vector2 vector165 = new(0f, value21.Y - value20.Y);
             vector165.X = vector165.Y * 0.2f;
@@ -211,8 +211,8 @@ namespace Coralite.Content.Items.FlyingShields
             topY++;
             bottomY--;
             float num295 = 0.2f;
-            Vector2 value77 = new Vector2(point5.X, topY) * 16f + new Vector2(8f);
-            Vector2 value78 = new Vector2(point5.X, bottomY) * 16f + new Vector2(8f);
+            Vector2 value77 = (new Vector2(point5.X, topY) * 16f) + new Vector2(8f);
+            Vector2 value78 = (new Vector2(point5.X, bottomY) * 16f) + new Vector2(8f);
             Vector2.Lerp(value77, value78, 0.5f);
             Vector2 vector69 = new(0f, value78.Y - value77.Y);
             vector69.X = vector69.Y * num295;
@@ -237,7 +237,7 @@ namespace Coralite.Content.Items.FlyingShields
                 vector70.X = vector70.Y * num295;
                 Color color77 = Color.Lerp(Color.Transparent, value80, num300 * 2f);
                 if (num300 > 0.5f)
-                    color77 = Color.Lerp(Color.Transparent, value80, 2f - num300 * 2f);
+                    color77 = Color.Lerp(Color.Transparent, value80, 2f - (num300 * 2f));
 
                 color77.A = (byte)(color77.A * 0.5f);
                 color77 *= num294;

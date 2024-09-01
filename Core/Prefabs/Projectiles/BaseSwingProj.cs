@@ -97,9 +97,9 @@ namespace Coralite.Core.Prefabs.Projectiles
 
             if (onHitTimer != 0 && VisualEffectSystem.HitEffect_HitFreeze && onHitTimer < onHitFreeze)//轻微的卡肉效果
             {
-                Projectile.Center = OwnerCenter() + RotateVec2 * (Projectile.scale * Projectile.height / 2 + distanceToOwner);
-                Top = Projectile.Center + RotateVec2 * (Projectile.scale * Projectile.height / 2 + trailTopWidth);
-                Bottom = Projectile.Center - RotateVec2 * (Projectile.scale * Projectile.height / 2);//弹幕的底端和顶端计算，用于检测碰撞以及绘制
+                Projectile.Center = OwnerCenter() + (RotateVec2 * ((Projectile.scale * Projectile.height / 2) + distanceToOwner));
+                Top = Projectile.Center + (RotateVec2 * ((Projectile.scale * Projectile.height / 2) + trailTopWidth));
+                Bottom = Projectile.Center - (RotateVec2 * (Projectile.scale * Projectile.height / 2));//弹幕的底端和顶端计算，用于检测碰撞以及绘制
                 onHitTimer++;
                 return;
             }
@@ -143,8 +143,8 @@ namespace Coralite.Core.Prefabs.Projectiles
         /// </summary>
         protected virtual void AIAfter()
         {
-            Top = Projectile.Center + RotateVec2 * (Projectile.scale * Projectile.height / 2 + trailTopWidth);
-            Bottom = Projectile.Center - RotateVec2 * (Projectile.scale * Projectile.height / 2);//弹幕的底端和顶端计算，用于检测碰撞以及绘制
+            Top = Projectile.Center + (RotateVec2 * ((Projectile.scale * Projectile.height / 2) + trailTopWidth));
+            Bottom = Projectile.Center - (RotateVec2 * (Projectile.scale * Projectile.height / 2));//弹幕的底端和顶端计算，用于检测碰撞以及绘制
             Owner.itemRotation = _Rotation + (Owner.direction > 0 ? 0 : MathHelper.Pi);
 
             if (useShadowTrail || useSlashTrail)
@@ -159,7 +159,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             Projectile.velocity *= 0f;
             if (Owner.whoAmI == Main.myPlayer)
             {
-                _Rotation = startAngle = GetStartAngle() - OwnerDirection * startAngle;//设定起始角度
+                _Rotation = startAngle = GetStartAngle() - (OwnerDirection * startAngle);//设定起始角度
                 totalAngle *= OwnerDirection;
             }
 
@@ -215,7 +215,7 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         protected virtual void OnSlash()
         {
-            _Rotation = startAngle + totalAngle * Smoother.Smoother((int)Timer - minTime, maxTime - minTime);
+            _Rotation = startAngle + (totalAngle * Smoother.Smoother((int)Timer - minTime, maxTime - minTime));
             Slasher();
         }
 
@@ -235,7 +235,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         protected virtual void Slasher()
         {
             RotateVec2 = _Rotation.ToRotationVector2();
-            Projectile.Center = OwnerCenter() + RotateVec2 * (Projectile.scale * Projectile.height / 2 + distanceToOwner);
+            Projectile.Center = OwnerCenter() + (RotateVec2 * ((Projectile.scale * Projectile.height / 2) + distanceToOwner));
             Projectile.rotation = _Rotation;
         }
 
@@ -372,8 +372,8 @@ namespace Coralite.Core.Prefabs.Projectiles
 
                 float factor = i / length;
                 Vector2 Center = GetCenter(i);
-                Vector2 Top = Center + oldRotate[i].ToRotationVector2() * (Projectile.height + trailTopWidth + oldDistanceToOwner[i]);
-                Vector2 Bottom = Center + oldRotate[i].ToRotationVector2() * (Projectile.height - ControlTrailBottomWidth(factor) + oldDistanceToOwner[i]);
+                Vector2 Top = Center + (oldRotate[i].ToRotationVector2() * (Projectile.height + trailTopWidth + oldDistanceToOwner[i]));
+                Vector2 Bottom = Center + (oldRotate[i].ToRotationVector2() * (Projectile.height - ControlTrailBottomWidth(factor) + oldDistanceToOwner[i]));
 
                 var color = GetTrailColor(factor);
                 var w = Helper.Lerp(0.5f, 0.05f, factor);
@@ -403,8 +403,8 @@ namespace Coralite.Core.Prefabs.Projectiles
                 for (int i = shadowCount; i > 0; i--)
                 {
                     if (oldRotate[i] != 100f)
-                        Main.spriteBatch.Draw(mainTex, Owner.Center + oldRotate[i].ToRotationVector2() * oldDistanceToOwner[i] - Main.screenPosition, mainTex.Frame(),
-                                                            lightColor * (0.1f + i * 0.01f), oldRotate[i] + extraRot, origin, Projectile.scale * (1f - i * 0.1f), CheckEffect(), 0);
+                        Main.spriteBatch.Draw(mainTex, Owner.Center + (oldRotate[i].ToRotationVector2() * oldDistanceToOwner[i]) - Main.screenPosition, mainTex.Frame(),
+                                                            lightColor * (0.1f + (i * 0.01f)), oldRotate[i] + extraRot, origin, Projectile.scale * (1f - (i * 0.1f)), CheckEffect(), 0);
                 }
             }
         }
@@ -488,12 +488,12 @@ namespace Coralite.Core.Prefabs.Projectiles
                 if (oldRotate[i] == 100f)
                     continue;
 
-                float factor = 1f - i / count;
+                float factor = 1f - (i / count);
                 Vector2 Center = GetCenter(i);
                 float r = oldRotate[i] % 6.18f;
                 float dir = (r >= 3.14f ? r - 3.14f : r + 3.14f) / MathHelper.TwoPi;
-                Vector2 Top = Center + oldRotate[i].ToRotationVector2() * (oldLength[i] + trailTopWidth + oldDistanceToOwner[i]);
-                Vector2 Bottom = Center + oldRotate[i].ToRotationVector2() * (oldLength[i] - ControlTrailBottomWidth(factor) * trailBottomExtraMult + oldDistanceToOwner[i]);
+                Vector2 Top = Center + (oldRotate[i].ToRotationVector2() * (oldLength[i] + trailTopWidth + oldDistanceToOwner[i]));
+                Vector2 Bottom = Center + (oldRotate[i].ToRotationVector2() * (oldLength[i] - (ControlTrailBottomWidth(factor) * trailBottomExtraMult) + oldDistanceToOwner[i]));
 
                 bars.Add(new CustomVertexInfo(Top, new Color(dir, w, 0f, alpha), new Vector3(factor, 0f, w)));
                 bars.Add(new CustomVertexInfo(Bottom, new Color(dir, w, 0f, alpha), new Vector3(factor, 1f, w)));

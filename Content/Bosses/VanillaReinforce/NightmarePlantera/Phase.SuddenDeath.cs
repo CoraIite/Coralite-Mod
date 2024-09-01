@@ -24,9 +24,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         Phase2Fade(() =>
                         {
                             if (Math.Abs(Target.velocity.X) < 0.1f && Math.Abs(Target.velocity.Y) < 0.1f)
-                                return Target.Center + new Vector2(Target.direction, 0) * Main.rand.NextFloat(450, 600);
+                                return Target.Center + (new Vector2(Target.direction, 0) * Main.rand.NextFloat(450, 600));
                             else
-                                return Target.Center + Target.velocity.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(450, 600);
+                                return Target.Center + (Target.velocity.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(450, 600));
                         }, () =>
                         {
                             useMeleeDamage = true;

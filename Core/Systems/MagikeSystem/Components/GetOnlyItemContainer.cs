@@ -9,7 +9,7 @@ using Terraria.UI;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components
 {
-    public class GetOnlyItemContainer: ItemContainer
+    public class GetOnlyItemContainer : ItemContainer
     {
         public override int ID => MagikeComponentID.ItemGetOnlyContainer;
 
@@ -41,7 +41,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         }
     }
 
-    public class GetOnlyItemSlot:UIElement
+    public class GetOnlyItemSlot : UIElement
     {
         private readonly GetOnlyItemContainer _container;
         private readonly int _index;
@@ -93,7 +93,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 ItemSlot.OverrideHover(ref inv, ItemSlot.Context.VoidItem);
                 ItemSlot.RightClick(ref inv, ItemSlot.Context.VoidItem);
                 ItemSlot.MouseHover(ref inv, ItemSlot.Context.VoidItem);
-                 _container[_index]= inv2 ;
+                _container[_index] = inv2;
                 _scale = Helper.Lerp(_scale, 1.1f, 0.2f);
             }
             else
@@ -102,7 +102,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             float scale = Main.inventoryScale;
             Main.inventoryScale = _scale;
 
-            Vector2 position = GetDimensions().Center() + new Vector2(52f, 52f) * -0.5f * Main.inventoryScale;
+            Vector2 position = GetDimensions().Center() + (new Vector2(52f, 52f) * -0.5f * Main.inventoryScale);
             ItemSlot.Draw(spriteBatch, ref inv, ItemSlot.Context.VoidItem, position, Coralite.MagicCrystalPink);
 
             Main.inventoryScale = scale;

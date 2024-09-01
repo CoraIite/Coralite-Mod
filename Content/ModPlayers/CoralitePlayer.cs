@@ -148,7 +148,7 @@ namespace Coralite.Content.ModPlayers
                     float rot = Main.rand.NextFloat(6.282f);
                     for (int i = 0; i < 8; i++)
                     {
-                        Dust dust = Dust.NewDustPerfect(Player.Center, DustID.Clentaminator_Red, (rot + i * MathHelper.TwoPi / 8).ToRotationVector2() * 3,
+                        Dust dust = Dust.NewDustPerfect(Player.Center, DustID.Clentaminator_Red, (rot + (i * MathHelper.TwoPi / 8)).ToRotationVector2() * 3,
                             255, Scale: Main.rand.Next(20, 26) * 0.1f);
                         dust.noLight = true;
                         dust.noGravity = true;
@@ -321,7 +321,7 @@ namespace Coralite.Content.ModPlayers
                     Player.lifeRegen = 0;
 
                 Player.lifeRegenTime = 0;
-                int damage = (int)(3 + Player.velocity.Length() * 1.5f);
+                int damage = (int)(3 + (Player.velocity.Length() * 1.5f));
 
                 if (damage > 15)
                     damage = 15;
@@ -429,7 +429,7 @@ namespace Coralite.Content.ModPlayers
             if (HasEffect(nameof(Items.RedJades.RedJadePendant)) && Main.myPlayer == Player.whoAmI
                 && hurtInfo.Damage > 5 && Main.rand.NextBool(3))
                 Projectile.NewProjectile(Player.GetSource_Accessory(Player.armor.First((item) => item.type == ItemType<Items.RedJades.RedJadePendant>())),
-                    Player.Center + (proj.Center - Player.Center).SafeNormalize(Vector2.One) * 16, Vector2.Zero, ProjectileType<Items.RedJades.RedJadeBoom>(), 80, 8f, Player.whoAmI);
+                    Player.Center + ((proj.Center - Player.Center).SafeNormalize(Vector2.One) * 16), Vector2.Zero, ProjectileType<Items.RedJades.RedJadeBoom>(), 80, 8f, Player.whoAmI);
         }
 
         public override void OnHitByNPC(NPC npc, Player.HurtInfo hurtInfo)
@@ -437,7 +437,7 @@ namespace Coralite.Content.ModPlayers
             if (HasEffect(nameof(Items.RedJades.RedJadePendant)) && Main.myPlayer == Player.whoAmI
                 && hurtInfo.Damage > 5 && Main.rand.NextBool(3))
                 Projectile.NewProjectile(Player.GetSource_Accessory(Player.armor.First((item) => item.type == ItemType<Items.RedJades.RedJadePendant>())),
-                    Player.Center + (npc.Center - Player.Center).SafeNormalize(Vector2.One) * 16, Vector2.Zero, ProjectileType<Items.RedJades.RedJadeBoom>(), 80, 8f, Player.whoAmI);
+                    Player.Center + ((npc.Center - Player.Center).SafeNormalize(Vector2.One) * 16), Vector2.Zero, ProjectileType<Items.RedJades.RedJadeBoom>(), 80, 8f, Player.whoAmI);
         }
 
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
@@ -483,7 +483,7 @@ namespace Coralite.Content.ModPlayers
                     for (int i = 0; i < 3; i++)//爆金币粒子
                     {
                         int num36 = Gore.NewGore(new EntitySource_OnHit(Player, target), new Vector2(target.position.X, target.Center.Y - 10f), Vector2.Zero, 1218);
-                        Main.gore[num36].velocity = new Vector2(Main.rand.Next(1, 10) * 0.3f * 2f * modifiers.HitDirection, 0f - (2.5f + Main.rand.Next(4) * 0.3f));
+                        Main.gore[num36].velocity = new Vector2(Main.rand.Next(1, 10) * 0.3f * 2f * modifiers.HitDirection, 0f - (2.5f + (Main.rand.Next(4) * 0.3f)));
                     }
 
                     if (target.CanBeChasedBy() && !target.SpawnedFromStatue)//别想刷钱

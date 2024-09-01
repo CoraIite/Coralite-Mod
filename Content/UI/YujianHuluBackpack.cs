@@ -46,7 +46,7 @@ namespace Coralite.Content.UI
             {
                 huluBackpackSlots[i].Top.Set(basePos.Y + 12, 0f);
                 //(- 318 / 2) + 10 = -149 就是最左边一个的位置
-                huluBackpackSlots[i].Left.Set(basePos.X + 10 + 30 * i, 0f);
+                huluBackpackSlots[i].Left.Set(basePos.X + 10 + (30 * i), 0f);
                 Append(huluBackpackSlots[i]);
             }
 
@@ -198,8 +198,8 @@ namespace Coralite.Content.UI
                             itemScale = pixelHeight / rectangle2.Height;
                     }
 
-                    position.X += 14 - rectangle2.Width * itemScale / 2f;
-                    position.Y += 36 - rectangle2.Height * itemScale / 2f;      //魔法数字，是物品栏宽和高的一半
+                    position.X += 14 - (rectangle2.Width * itemScale / 2f);
+                    position.Y += 36 - (rectangle2.Height * itemScale / 2f);      //魔法数字，是物品栏宽和高的一半
 
                     spriteBatch.Draw(mainTex, position, new Rectangle?(rectangle2), Item.GetAlpha(Color.White), 0f, Vector2.Zero, itemScale, 0, 0f);
                     if (Item.color != default)

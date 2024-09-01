@@ -31,7 +31,7 @@ namespace Coralite.Helpers
             Vector4 P = (rgb.Y < rgb.Z) ? new Vector4(rgb.Z, rgb.Y, -1.0f, 2 / 3f) : new Vector4(rgb.Y, rgb.Z, 0f, -1 / 3f);
             Vector4 Q = (rgb.X < P.X) ? new Vector4(P.X, P.Y, P.W, rgb.X) : new Vector4(rgb.X, P.Y, P.Z, P.X);
             float C = Q.X - Math.Min(Q.W, Q.Y);
-            float H = Math.Abs((Q.W - Q.Y) / (6 * C + Epsilon + Q.Z));
+            float H = Math.Abs((Q.W - Q.Y) / ((6 * C) + Epsilon + Q.Z));
 
             return new Vector3(H, C, Q.X);
         }
@@ -41,13 +41,13 @@ namespace Coralite.Helpers
         public static float SignedAngle(Vector2 from, Vector2 to)
         {
             float num = Angle(from, to);
-            float num2 = Math.Sign(from.X * to.Y - from.Y * to.X);
+            float num2 = Math.Sign((from.X * to.Y) - (from.Y * to.X));
             return num * num2;
         }
 
         public static float SqrMagnitude(this Vector2 vector2)
         {
-            return vector2.X * vector2.X + vector2.Y + vector2.Y;
+            return (vector2.X * vector2.X) + vector2.Y + vector2.Y;
         }
 
         public static float Angle(Vector2 from, Vector2 to)
@@ -103,7 +103,7 @@ namespace Coralite.Helpers
 
         public static float Dot(Vector2 lhs, Vector2 rhs)
         {
-            return lhs.X * rhs.X + lhs.Y * rhs.Y;
+            return (lhs.X * rhs.X) + (lhs.Y * rhs.Y);
         }
 
         /// <summary>
@@ -186,10 +186,10 @@ namespace Coralite.Helpers
         {
             intersectPoint = Vector2.Zero;
 
-            var denominator = (point4.Y - point3.Y) * (point2.X - point1.X) - (point4.X - point3.X) * (point2.Y - point1.Y);
+            var denominator = ((point4.Y - point3.Y) * (point2.X - point1.X)) - ((point4.X - point3.X) * (point2.Y - point1.Y));
 
-            var a = (point4.X - point3.X) * (point1.Y - point3.Y) - (point4.Y - point3.Y) * (point1.X - point3.X);
-            var b = (point2.X - point1.X) * (point1.Y - point3.Y) - (point2.Y - point1.Y) * (point1.X - point3.X);
+            var a = ((point4.X - point3.X) * (point1.Y - point3.Y)) - ((point4.Y - point3.Y) * (point1.X - point3.X));
+            var b = ((point2.X - point1.X) * (point1.Y - point3.Y)) - ((point2.Y - point1.Y) * (point1.X - point3.X));
 
             if (denominator == 0)
             {
@@ -207,7 +207,7 @@ namespace Coralite.Helpers
 
             if (ua > 0 && ua < 1 && ub > 0 && ub < 1)
             {
-                intersectPoint = new Vector2(point1.X + ua * (point2.X - point1.X), point1.Y + ua * (point2.Y - point1.Y));
+                intersectPoint = new Vector2(point1.X + (ua * (point2.X - point1.X)), point1.Y + (ua * (point2.Y - point1.Y)));
                 return true;
             }
 
@@ -223,12 +223,12 @@ namespace Coralite.Helpers
         /// <returns></returns>
         public static float BezierEase(float time)
         {
-            return time * time / (2f * (time * time - time) + 1f);
+            return time * time / ((2f * ((time * time) - time)) + 1f);
         }
 
         public static float SwoopEase(float time)
         {
-            return 3.75f * (float)Math.Pow(time, 3) - 8.5f * (float)Math.Pow(time, 2) + 5.75f * time;
+            return (3.75f * (float)Math.Pow(time, 3)) - (8.5f * (float)Math.Pow(time, 2)) + (5.75f * time);
         }
 
         /// <summary>
@@ -253,7 +253,7 @@ namespace Coralite.Helpers
         {
             float halfFocalLength2 = (halfLongAxis * halfLongAxis) - (halfShortAxis * halfShortAxis);
             float cosX = MathF.Cos(rotation);
-            return (halfLongAxis * halfShortAxis) / MathF.Sqrt(halfLongAxis * halfLongAxis - halfFocalLength2 * cosX * cosX);
+            return halfLongAxis * halfShortAxis / MathF.Sqrt((halfLongAxis * halfLongAxis) - (halfFocalLength2 * cosX * cosX));
         }
 
         /// <summary>

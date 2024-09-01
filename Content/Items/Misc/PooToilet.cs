@@ -31,7 +31,7 @@ namespace Coralite.Content.Items.Misc
         {
             for (int k = 0; k < 8; k++)
             {
-                Dust d = Dust.NewDustPerfect(new Vector2(i, j) * 16 + new Vector2(Main.rand.NextFloat(0, 16), Main.rand.NextFloat(0, 16))
+                Dust d = Dust.NewDustPerfect((new Vector2(i, j) * 16) + new Vector2(Main.rand.NextFloat(0, 16), Main.rand.NextFloat(0, 16))
                     , DustID.Poop, -Vector2.UnitY * Main.rand.NextFloat(0, 3));
             }
         }

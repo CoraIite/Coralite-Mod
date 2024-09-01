@@ -239,15 +239,15 @@ namespace Coralite.Content.Items.Icicle
                 default:
                 case 0:
                     alpha = (int)(Coralite.Instance.X2Smoother.Smoother(timer, maxTime - minTime) * 140) + 100;
-                    Projectile.scale = Helper.EllipticalEase(2.3f - 4.6f * Smoother.Smoother(timer, maxTime - minTime), 0.8f, 1.2f);
+                    Projectile.scale = Helper.EllipticalEase(2.3f - (4.6f * Smoother.Smoother(timer, maxTime - minTime)), 0.8f, 1.2f);
                     break;
                 case 2:
                     alpha = (int)(Coralite.Instance.SqrtSmoother.Smoother(timer, maxTime - minTime) * 80) + 160;
-                    Projectile.scale = Helper.EllipticalEase(3f - 5.6f * Smoother.Smoother(timer, maxTime - minTime), 1.1f, 1.6f);
+                    Projectile.scale = Helper.EllipticalEase(3f - (5.6f * Smoother.Smoother(timer, maxTime - minTime)), 1.1f, 1.6f);
                     break;
                 case 3:
                     alpha = (int)(Coralite.Instance.SqrtSmoother.Smoother(timer, maxTime - minTime) * 140) + 100;
-                    Projectile.scale = Helper.EllipticalEase(1.6f - 4.6f * Smoother.Smoother(timer, maxTime - minTime), 1.1f, 1.6f);
+                    Projectile.scale = Helper.EllipticalEase(1.6f - (4.6f * Smoother.Smoother(timer, maxTime - minTime)), 1.1f, 1.6f);
                     break;
             }
             base.OnSlash();
@@ -286,7 +286,7 @@ namespace Coralite.Content.Items.Icicle
                     if (fs.leftHitCount < FrostySword.LeftHitMax && target.type != NPCID.TargetDummy)
                     {
                         fs.leftHitCount++;
-                        IceStarLight.Spawn(Top + RotateVec2 * 70, RotateVec2.RotatedBy(Main.rand.NextFromList(1, -1) * MathHelper.PiOver2) * Main.rand.Next(10, 14), Main.rand.NextFloat(0.6f, 1f), () => Owner.Center, 14);
+                        IceStarLight.Spawn(Top + (RotateVec2 * 70), RotateVec2.RotatedBy(Main.rand.NextFromList(1, -1) * MathHelper.PiOver2) * Main.rand.Next(10, 14), Main.rand.NextFloat(0.6f, 1f), () => Owner.Center, 14);
                         if (fs.leftHitCount >= FrostySword.LeftHitMax)
                             SoundEngine.PlaySound(CoraliteSoundID.Ding_Item4, Owner.Center);
                     }
@@ -310,10 +310,10 @@ namespace Coralite.Content.Items.Icicle
                 if (oldRotate[i] == 100f)
                     continue;
 
-                float factor = 1f - i / count;
+                float factor = 1f - (i / count);
                 Vector2 Center = GetCenter(i);
-                Vector2 Top = Center + oldRotate[i].ToRotationVector2() * (oldLength[i] + trailTopWidth + oldDistanceToOwner[i]);
-                Vector2 Bottom = Center + oldRotate[i].ToRotationVector2() * (oldLength[i] - ControlTrailBottomWidth(factor) + oldDistanceToOwner[i]);
+                Vector2 Top = Center + (oldRotate[i].ToRotationVector2() * (oldLength[i] + trailTopWidth + oldDistanceToOwner[i]));
+                Vector2 Bottom = Center + (oldRotate[i].ToRotationVector2() * (oldLength[i] - ControlTrailBottomWidth(factor) + oldDistanceToOwner[i]));
 
                 var topColor = Color.Lerp(new Color(0, 0, 0, alpha), new Color(0, 0, 0, 0), 1 - factor);
                 var bottomColor = Color.Lerp(new Color(0, 0, 0, alpha), new Color(0, 0, 0, 0), 1 - factor);
@@ -328,20 +328,20 @@ namespace Coralite.Content.Items.Icicle
         public static void FrostDustsOnSlash(Vector2 Top, Vector2 RotateVec2, float totalAngle)
         {
             Vector2 dir = RotateVec2.RotatedBy(1.57f * Math.Sign(totalAngle));
-            Dust dust = Dust.NewDustPerfect(Top - 24 * RotateVec2 + Main.rand.NextVector2Circular(30, 30), DustID.ApprenticeStorm,
+            Dust dust = Dust.NewDustPerfect(Top - (24 * RotateVec2) + Main.rand.NextVector2Circular(30, 30), DustID.ApprenticeStorm,
                    dir * Main.rand.NextFloat(0.5f, 2f), Scale: Main.rand.NextFloat(1f, 1.5f));
             dust.noGravity = true;
 
             if (Main.rand.NextBool(4))
             {
-                dust = Dust.NewDustPerfect(Top - 14 * RotateVec2 + Main.rand.NextVector2Circular(10, 10), DustID.ApprenticeStorm,
+                dust = Dust.NewDustPerfect(Top - (14 * RotateVec2) + Main.rand.NextVector2Circular(10, 10), DustID.ApprenticeStorm,
                        dir * Main.rand.NextFloat(0.5f, 2f), Scale: Main.rand.NextFloat(1f, 1.5f));
                 dust.noGravity = true;
             }
 
             if (Main.rand.NextBool(5))
             {
-                Particle.NewParticle(Top - RotateVec2 * 16 + Main.rand.NextVector2Circular(32, 32), dir.RotatedBy(Main.rand.NextFloat(-0.4f, 0.4f)) * Main.rand.NextFloat(1f, 2f),
+                Particle.NewParticle(Top - (RotateVec2 * 16) + Main.rand.NextVector2Circular(32, 32), dir.RotatedBy(Main.rand.NextFloat(-0.4f, 0.4f)) * Main.rand.NextFloat(1f, 2f),
                     CoraliteContent.ParticleType<SnowFlower>(), Color.White, Main.rand.NextFloat(0.15f, 0.4f));
             }
 
@@ -356,8 +356,8 @@ namespace Coralite.Content.Items.Icicle
             }
 
             Dust dust;
-            float offset = Projectile.localAI[1] + Main.rand.NextFloat(0, Projectile.width * Projectile.scale - Projectile.localAI[1]);
-            Vector2 pos = Bottom + RotateVec2 * offset;
+            float offset = Projectile.localAI[1] + Main.rand.NextFloat(0, (Projectile.width * Projectile.scale) - Projectile.localAI[1]);
+            Vector2 pos = Bottom + (RotateVec2 * offset);
             if (VisualEffectSystem.HitEffect_Lightning)
             {
                 float Rot = _Rotation + MathHelper.PiOver2 + Main.rand.NextFloat(-0.2f, 0.2f);
@@ -369,7 +369,7 @@ namespace Coralite.Content.Items.Icicle
                 {
                     dust = Dust.NewDustPerfect(pos, DustType<FrostStrikeDust>(),
                              Scale: Main.rand.NextFloat(baseScale * 0.3f, baseScale * 0.4f));
-                    dust.rotation = Rot + i * 0.5f;
+                    dust.rotation = Rot + (i * 0.5f);
                 }
             }
 
@@ -507,12 +507,12 @@ namespace Coralite.Content.Items.Icicle
                 default:
                 case 1:
                     alpha = (int)(Coralite.Instance.X2Smoother.Smoother(timer, maxTime - minTime) * 200) + 50;
-                    Projectile.scale = Helper.EllipticalEase(-1.4f + 4.3f * Smoother.Smoother(timer, maxTime - minTime), 0.6f, 1.5f);
+                    Projectile.scale = Helper.EllipticalEase(-1.4f + (4.3f * Smoother.Smoother(timer, maxTime - minTime)), 0.6f, 1.5f);
                     //Main.NewText(Projectile.scale);
                     break;
                 case 4:
                     alpha = (int)(Coralite.Instance.X2Smoother.Smoother(timer, maxTime - minTime) * 200) + 50;
-                    Projectile.scale = Helper.EllipticalEase(2.8f - 5.6f * Smoother.Smoother(timer, maxTime - minTime), 0.8f, 2.5f);
+                    Projectile.scale = Helper.EllipticalEase(2.8f - (5.6f * Smoother.Smoother(timer, maxTime - minTime)), 0.8f, 2.5f);
                     break;
             }
 
@@ -560,7 +560,7 @@ namespace Coralite.Content.Items.Icicle
                     if (fs.leftHitCount < FrostySword.LeftHitMax && target.type != NPCID.TargetDummy)
                     {
                         fs.leftHitCount++;
-                        IceStarLight.Spawn(Top + RotateVec2 * 70, RotateVec2.RotatedBy(Main.rand.NextFromList(1, -1) * MathHelper.PiOver2) * Main.rand.Next(10, 14), Main.rand.NextFloat(0.6f, 1f), () => Owner.Center, 14);
+                        IceStarLight.Spawn(Top + (RotateVec2 * 70), RotateVec2.RotatedBy(Main.rand.NextFromList(1, -1) * MathHelper.PiOver2) * Main.rand.Next(10, 14), Main.rand.NextFloat(0.6f, 1f), () => Owner.Center, 14);
                         if (fs.leftHitCount >= FrostySword.LeftHitMax)
                             SoundEngine.PlaySound(CoraliteSoundID.Ding_Item4, Owner.Center);
                     }
@@ -584,10 +584,10 @@ namespace Coralite.Content.Items.Icicle
                 if (oldRotate[i] == 100f)
                     continue;
 
-                float factor = 1f - i / count;
+                float factor = 1f - (i / count);
                 Vector2 Center = GetCenter(i);
-                Vector2 Top = Center + oldRotate[i].ToRotationVector2() * (oldLength[i] + trailTopWidth + oldDistanceToOwner[i]);
-                Vector2 Bottom = Center + oldRotate[i].ToRotationVector2() * (oldLength[i] * 0.3f + oldDistanceToOwner[i]);
+                Vector2 Top = Center + (oldRotate[i].ToRotationVector2() * (oldLength[i] + trailTopWidth + oldDistanceToOwner[i]));
+                Vector2 Bottom = Center + (oldRotate[i].ToRotationVector2() * ((oldLength[i] * 0.3f) + oldDistanceToOwner[i]));
 
                 var topColor = Color.Lerp(new Color(238, 218, 130, alpha), new Color(167, 127, 95, 0), 1 - factor);
                 var bottomColor = Color.Lerp(new Color(109, 73, 86, alpha), new Color(83, 16, 85, 0), 1 - factor);
@@ -644,7 +644,7 @@ namespace Coralite.Content.Items.Icicle
             Projectile.velocity *= 0f;
             if (Owner.whoAmI == Main.myPlayer)
             {
-                _Rotation = GetStartAngle() - OwnerDirection * startAngle;//设定起始角度
+                _Rotation = GetStartAngle() - (OwnerDirection * startAngle);//设定起始角度
             }
 
             Slasher();
@@ -679,11 +679,11 @@ namespace Coralite.Content.Items.Icicle
 
             if (Timer < 30)
                 startAngle += 0.05f;
-            _Rotation = GetStartAngle() - OwnerDirection * startAngle;
+            _Rotation = GetStartAngle() - (OwnerDirection * startAngle);
             Slasher();
             if ((int)Timer == minTime)
             {
-                _Rotation = startAngle = GetStartAngle() - OwnerDirection * startAngle;//设定起始角度
+                _Rotation = startAngle = GetStartAngle() - (OwnerDirection * startAngle);//设定起始角度
                 totalAngle *= OwnerDirection;
 
                 //Helper.PlayPitched("Misc/Slash", 0.4f, 0f, Owner.Center);
@@ -700,7 +700,7 @@ namespace Coralite.Content.Items.Icicle
             FrostySwordSlash.FrostDustsOnSlash(Top, RotateVec2, totalAngle);
 
             alpha = (int)(Coralite.Instance.SqrtSmoother.Smoother(timer, maxTime - minTime) * 80) + 160;
-            Projectile.scale = Helper.EllipticalEase(2.8f - 5.6f * Smoother.Smoother(timer, maxTime - minTime), 0.8f, 1f);
+            Projectile.scale = Helper.EllipticalEase(2.8f - (5.6f * Smoother.Smoother(timer, maxTime - minTime)), 0.8f, 1f);
             base.OnSlash();
         }
 
@@ -743,10 +743,10 @@ namespace Coralite.Content.Items.Icicle
                 if (oldRotate[i] == 100f)
                     continue;
 
-                float factor = 1f - i / count;
+                float factor = 1f - (i / count);
                 Vector2 Center = GetCenter(i);
-                Vector2 Top = Center + oldRotate[i].ToRotationVector2() * (oldLength[i] + trailTopWidth + oldDistanceToOwner[i]);
-                Vector2 Bottom = Center + oldRotate[i].ToRotationVector2() * (oldLength[i] * 0.3f + oldDistanceToOwner[i]);
+                Vector2 Top = Center + (oldRotate[i].ToRotationVector2() * (oldLength[i] + trailTopWidth + oldDistanceToOwner[i]));
+                Vector2 Bottom = Center + (oldRotate[i].ToRotationVector2() * ((oldLength[i] * 0.3f) + oldDistanceToOwner[i]));
 
                 var topColor = Color.Lerp(new Color(238, 218, 130, alpha), new Color(167, 127, 95, 0), 1 - factor);
                 var bottomColor = Color.Lerp(new Color(109, 73, 86, alpha), new Color(83, 16, 85, 0), 1 - factor);
@@ -973,7 +973,7 @@ namespace Coralite.Content.Items.Icicle
 
             Dust d = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(8, 8), DustType<FrostStar>(),
                   Projectile.velocity * Main.rand.NextFloat(0.4f, 0.6f), newColor: c, Scale: Main.rand.NextFloat(1, 2));
-            d.rotation = Projectile.rotation + Main.rand.Next(-3, 4) * MathHelper.Pi / 4;
+            d.rotation = Projectile.rotation + (Main.rand.Next(-3, 4) * MathHelper.Pi / 4);
             if (Timer > 10)
             {
                 Alpha -= 0.02f;

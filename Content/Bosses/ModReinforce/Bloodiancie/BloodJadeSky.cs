@@ -44,21 +44,21 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
             _slimes = new Slime[Main.maxTilesY / 6];
             for (int i = 0; i < _slimes.Length; i++)
             {
-                int num = (int)(Main.screenPosition.Y * 0.7 - Main.screenHeight);
-                int minValue = (int)(num - Main.worldSurface * 16.0);
+                int num = (int)((Main.screenPosition.Y * 0.7) - Main.screenHeight);
+                int minValue = (int)(num - (Main.worldSurface * 16.0));
                 _slimes[i].Position = new Vector2(_random.Next(0, Main.maxTilesX) * 16, _random.Next(minValue, num));
                 _slimes[i].rotation = Main.rand.NextFloat(6.282f);
-                _slimes[i].Speed = 5f + 3f * (float)_random.NextDouble();
-                _slimes[i].Depth = (float)i / _slimes.Length * 1.75f + 1.6f;
+                _slimes[i].Speed = 5f + (3f * (float)_random.NextDouble());
+                _slimes[i].Depth = ((float)i / _slimes.Length * 1.75f) + 1.6f;
                 _slimes[i].Texture = _textures[_random.Next(3)].Value;
                 if (_random.NextBool(60))
                 {
-                    _slimes[i].Speed = 6f + 3f * (float)_random.NextDouble();
+                    _slimes[i].Speed = 6f + (3f * (float)_random.NextDouble());
                     _slimes[i].Depth += 0.5f;
                 }
                 else if (_random.NextBool(30))
                 {
-                    _slimes[i].Speed = 6f + 2f * (float)_random.NextDouble();
+                    _slimes[i].Speed = 6f + (2f * (float)_random.NextDouble());
                 }
 
                 _slimes[i].Active = true;
@@ -84,19 +84,19 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
 
                 if (!_isLeaving)
                 {
-                    _slimes[i].Depth = i / (float)_slimes.Length * 1.75f + 1.6f;
+                    _slimes[i].Depth = (i / (float)_slimes.Length * 1.75f) + 1.6f;
                     _slimes[i].Position = new Vector2(_random.Next(0, Main.maxTilesX) * 16, -100f);
                     _slimes[i].rotation = Main.rand.NextFloat(6.282f);
                     _slimes[i].Texture = _textures[_random.Next(2)].Value;
-                    _slimes[i].Speed = 5f + 3f * (float)_random.NextDouble();
+                    _slimes[i].Speed = 5f + (3f * (float)_random.NextDouble());
                     if (_random.NextBool(60))
                     {
-                        _slimes[i].Speed = 6f + 3f * (float)_random.NextDouble();
+                        _slimes[i].Speed = 6f + (3f * (float)_random.NextDouble());
                         _slimes[i].Depth += 0.5f;
                     }
                     else if (_random.NextBool(30))
                     {
-                        _slimes[i].Speed = 6f + 2f * (float)_random.NextDouble();
+                        _slimes[i].Speed = 6f + (2f * (float)_random.NextDouble());
                     }
                 }
                 else
@@ -145,7 +145,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
             {
                 if (_slimes[j].Active)
                 {
-                    Color color = new Color(Main.ColorOfTheSkies.ToVector4() * 0.9f + new Vector4(0.1f)) * 0.8f;
+                    Color color = new Color((Main.ColorOfTheSkies.ToVector4() * 0.9f) + new Vector4(0.1f)) * 0.8f;
                     float num3 = 1f;
                     if (_slimes[j].Depth > 3f)
                         num3 = 0.6f;
@@ -160,7 +160,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
                     color = new Color((int)(color.R * num3), (int)(color.G * num3), (int)(color.B * num3), (int)(color.A * num3));
                     Vector2 vector2 = new(1f / _slimes[j].Depth, 0.9f / _slimes[j].Depth);
                     Vector2 position = _slimes[j].Position;
-                    position = (position - vector) * vector2 + vector - Main.screenPosition;
+                    position = ((position - vector) * vector2) + vector - Main.screenPosition;
                     position.X = (position.X + 500f) % 4000f;
                     if (position.X < 0f)
                         position.X += 4000f;
@@ -170,7 +170,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
                     {
                         Vector2 origin = _slimes[j].Texture.Size() / 2;
                         for (int i = 1; i < 8; i += 2)
-                            spriteBatch.Draw(_slimes[j].Texture, position - new Vector2(0, i * _slimes[j].Speed), null, color * (0.5f - 0.5f * i / 8), _slimes[j].rotation, origin, vector2.X * 2f, SpriteEffects.None, 0f);
+                            spriteBatch.Draw(_slimes[j].Texture, position - new Vector2(0, i * _slimes[j].Speed), null, color * (0.5f - (0.5f * i / 8)), _slimes[j].rotation, origin, vector2.X * 2f, SpriteEffects.None, 0f);
                         spriteBatch.Draw(_slimes[j].Texture, position, null, color, _slimes[j].rotation, origin, vector2.X * 2f, SpriteEffects.None, 0f);
                     }
                 }

@@ -124,7 +124,7 @@ namespace Coralite.Content.Items.Phantom
 
             for (int i = 1; i < 7; i++)
             {
-                Main.PlayerRenderer.DrawPlayer(Main.Camera, owner, Projectile.oldPos[i], 0f, owner.fullRotationOrigin, 0.5f + i * 0.5f / 7);
+                Main.PlayerRenderer.DrawPlayer(Main.Camera, owner, Projectile.oldPos[i], 0f, owner.fullRotationOrigin, 0.5f + (i * 0.5f / 7));
             }
 
             Helper.DrawPrettyStarSparkle(1, 0, Projectile.position + new Vector2(8, 8) - Main.screenPosition, Color.White, Color.Red, 0.5f, 0, 0.5f

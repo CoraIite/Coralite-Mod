@@ -53,7 +53,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             //由原点加上旋转方向
             for (int i = 0; i < pointCount; i++)
             {
-                points[i] = pos + dir * i * tentaclePerLength + normal * curve(i);
+                points[i] = pos + (dir * i * tentaclePerLength) + (normal * curve(i));
             }
 
             this.flowAlpha = flowAlpha;
@@ -77,11 +77,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             for (int i = 0; i < pointCount; i++)
             {
-                float factor = 1f - i / (float)pointCount;
+                float factor = 1f - (i / (float)pointCount);
                 float width = widthFunc.Invoke(factor);
                 Vector2 Center = points[i];
-                Vector2 Top = Center + normal * width;
-                Vector2 Bottom = Center - normal * width;
+                Vector2 Top = Center + (normal * width);
+                Vector2 Bottom = Center - (normal * width);
 
                 var color = colorFunc.Invoke(1 - factor);
                 bars.Add(new(Top.Vec3(), color, new Vector2(factor, 0)));
@@ -100,7 +100,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
                 effect.Parameters["transformMatrix"].SetValue(world * view * projection);
-                effect.Parameters["uTime"].SetValue(startOffset + Main.GlobalTimeWrappedHourly / 2);
+                effect.Parameters["uTime"].SetValue(startOffset + (Main.GlobalTimeWrappedHourly / 2));
                 effect.Parameters["sampleTexture"].SetValue(_sampleTexture.Value);
                 effect.Parameters["extraTexture"].SetValue(_extraTexture.Value);
                 effect.Parameters["flowAlpha"].SetValue(flowAlpha);
@@ -137,11 +137,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             for (int i = 0; i < pointCount; i++)
             {
-                float factor = 1f - i / (float)pointCount;
+                float factor = 1f - (i / (float)pointCount);
                 float width = widthFunc.Invoke(factor);
                 Vector2 Center = points[i];
-                Vector2 Top = Center + normal * width;
-                Vector2 Bottom = Center - normal * width;
+                Vector2 Top = Center + (normal * width);
+                Vector2 Bottom = Center - (normal * width);
 
                 var color = colorFunc.Invoke(1 - factor);
                 bars.Add(new(Top.Vec3(), color, new Vector2(factor, 0)));
@@ -157,7 +157,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
                 effect.Parameters["transformMatrix"].SetValue(world * view * projection);
-                effect.Parameters["uTime"].SetValue(startOffset + Main.GlobalTimeWrappedHourly / 2);
+                effect.Parameters["uTime"].SetValue(startOffset + (Main.GlobalTimeWrappedHourly / 2));
                 effect.Parameters["sampleTexture"].SetValue(_sampleTexture.Value);
                 effect.Parameters["extraTexture"].SetValue(_extraTexture.Value);
                 effect.Parameters["flowAlpha"].SetValue(flowAlpha);
@@ -191,11 +191,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             for (int i = 0; i < pointCount; i++)
             {
-                float factor = 1f - i / (float)pointCount;
+                float factor = 1f - (i / (float)pointCount);
                 float width = widthFunc.Invoke(factor);
                 Vector2 Center = points[i];
-                Vector2 Top = Center + normal * width;
-                Vector2 Bottom = Center - normal * width;
+                Vector2 Top = Center + (normal * width);
+                Vector2 Bottom = Center - (normal * width);
 
                 var color = colorFunc.Invoke(1 - factor);
                 bars.Add(new(Top.Vec3(), color, new Vector2(factor, 0)));
@@ -210,7 +210,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
                 effect.Parameters["transformMatrix"].SetValue(view * projection);
-                effect.Parameters["uTime"].SetValue(startOffset + Main.GlobalTimeWrappedHourly / 2);
+                effect.Parameters["uTime"].SetValue(startOffset + (Main.GlobalTimeWrappedHourly / 2));
                 effect.Parameters["sampleTexture"].SetValue(_sampleTexture.Value);
                 effect.Parameters["extraTexture"].SetValue(_extraTexture.Value);
                 effect.Parameters["flowAlpha"].SetValue(flowAlpha);
@@ -291,7 +291,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
                 float angle = rot.AngleLerp(targetAngle, i / (float)pointCount);
                 Vector2 dir = angle.ToRotationVector2();
-                points[i] = position + dir * tentaclePerLength;
+                points[i] = position + (dir * tentaclePerLength);
                 rotates[i] = angle;
 
                 position = points[i];
@@ -313,9 +313,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 float targetAngle = (targetPos - position).ToRotation();
 
                 float angle = rot.AngleLerp(targetAngle, i / (float)pointCount);
-                float factor = 0.45f + (1 - (float)i / pointCount) * 0.45f;
+                float factor = 0.45f + ((1 - ((float)i / pointCount)) * 0.45f);
                 Vector2 dir = angle.ToRotationVector2();
-                points[i] = Vector2.Lerp(points[i], position + dir * tentaclePerLength, factor);
+                points[i] = Vector2.Lerp(points[i], position + (dir * tentaclePerLength), factor);
                 rotates[i] = Helper.Lerp(rotates[i], angle, factor);
 
                 position = points[i];
@@ -341,13 +341,13 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             for (int i = 0; i < pointCount; i++)
             {
-                float factor = 1f - i / (float)pointCount;
+                float factor = 1f - (i / (float)pointCount);
                 float width = widthFunc.Invoke(factor);
                 Vector2 normal = (rotates[i] + MathHelper.PiOver2).ToRotationVector2();
-                Vector2 Center = points[i] + normal * curve(i);
+                Vector2 Center = points[i] + (normal * curve(i));
 
-                Vector2 Top = Center + normal * width;
-                Vector2 Bottom = Center - normal * width;
+                Vector2 Top = Center + (normal * width);
+                Vector2 Bottom = Center - (normal * width);
 
                 var color = colorFunc.Invoke(1 - factor);
                 bars.Add(new(Top.Vec3(), color, new Vector2(factor, 0)));
@@ -366,7 +366,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
                 effect.Parameters["transformMatrix"].SetValue(world * view * projection);
-                effect.Parameters["uTime"].SetValue(startOffset + Main.GlobalTimeWrappedHourly / 2);
+                effect.Parameters["uTime"].SetValue(startOffset + (Main.GlobalTimeWrappedHourly / 2));
                 effect.Parameters["sampleTexture"].SetValue(_sampleTexture.Value);
                 effect.Parameters["extraTexture"].SetValue(_extraTexture.Value);
                 effect.Parameters["flowAlpha"].SetValue(flowAlpha);
@@ -400,13 +400,13 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             for (int i = 0; i < pointCount; i++)
             {
-                float factor = 1f - i / (float)pointCount;
+                float factor = 1f - (i / (float)pointCount);
                 float width = widthFunc.Invoke(factor);
                 Vector2 normal = (rotates[i] + MathHelper.PiOver2).ToRotationVector2();
-                Vector2 Center = points[i] + normal * curve(i);
+                Vector2 Center = points[i] + (normal * curve(i));
 
-                Vector2 Top = Center + normal * width;
-                Vector2 Bottom = Center - normal * width;
+                Vector2 Top = Center + (normal * width);
+                Vector2 Bottom = Center - (normal * width);
 
                 var color = colorFunc.Invoke(1 - factor);
                 bars.Add(new(Top.Vec3(), color, new Vector2(factor, 0)));
@@ -422,7 +422,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
                 effect.Parameters["transformMatrix"].SetValue(world * view * projection);
-                effect.Parameters["uTime"].SetValue(startOffset + Main.GlobalTimeWrappedHourly / 2);
+                effect.Parameters["uTime"].SetValue(startOffset + (Main.GlobalTimeWrappedHourly / 2));
                 effect.Parameters["sampleTexture"].SetValue(_sampleTexture.Value);
                 effect.Parameters["extraTexture"].SetValue(_extraTexture.Value);
                 effect.Parameters["flowAlpha"].SetValue(flowAlpha);
@@ -503,7 +503,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
                 float angle = rot.AngleLerp(targetAngle, i / (float)pointCount);
                 Vector2 dir = angle.ToRotationVector2();
-                points[i] = position + dir * tentaclePerLength;
+                points[i] = position + (dir * tentaclePerLength);
                 rotates[i] = angle;
 
                 position = points[i];
@@ -529,13 +529,13 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             for (int i = 0; i < pointCount; i++)
             {
-                float factor = 1f - i / (float)pointCount;
+                float factor = 1f - (i / (float)pointCount);
                 float width = widthFunc.Invoke(factor);
                 Vector2 normal = (rotates[i] + MathHelper.PiOver2).ToRotationVector2();
-                Vector2 Center = points[i] + normal * curve(i);
+                Vector2 Center = points[i] + (normal * curve(i));
 
-                Vector2 Top = Center + normal * width;
-                Vector2 Bottom = Center - normal * width;
+                Vector2 Top = Center + (normal * width);
+                Vector2 Bottom = Center - (normal * width);
 
                 var color = colorFunc.Invoke(1 - factor);
                 bars.Add(new(Top.Vec3(), color, new Vector2(factor, 0)));
@@ -629,13 +629,13 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             for (int i = 0; i < pointCount; i++)
             {
-                float factor = 1f - i / count;
+                float factor = 1f - (i / count);
                 float width = widthFunc(factor);
                 Vector2 normal = arrows[i].Forward.RotatedBy(MathHelper.PiOver2);
-                Vector2 Center = arrows[i].StartPos + normal * curve(i);
+                Vector2 Center = arrows[i].StartPos + (normal * curve(i));
 
-                Vector2 Top = Center + normal * width;
-                Vector2 Bottom = Center - normal * width;
+                Vector2 Top = Center + (normal * width);
+                Vector2 Bottom = Center - (normal * width);
 
                 var color = colorFunc(1 - factor);
                 bars.Add(new(Top.Vec3(), color, new Vector2(factor, 0)));
@@ -647,8 +647,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             Vector2 Center2 = arrows[^1].EndPos;
             Vector2 normal2 = arrows[^1].Forward.RotatedBy(MathHelper.PiOver2);
 
-            Vector2 Top2 = Center2 + normal2 * width2;
-            Vector2 Bottom2 = Center2 - normal2 * width2;
+            Vector2 Top2 = Center2 + (normal2 * width2);
+            Vector2 Bottom2 = Center2 - (normal2 * width2);
 
             var color2 = colorFunc.Invoke(0);
             bars.Add(new(Top2.Vec3(), color2, new Vector2(1, 0)));

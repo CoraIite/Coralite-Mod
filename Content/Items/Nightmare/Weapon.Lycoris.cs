@@ -87,7 +87,7 @@ namespace Coralite.Content.Items.Nightmare
             base.Initialize();
             float rotation = TargetRot + (OwnerDirection > 0 ? 0 : MathHelper.Pi);
             Vector2 dir = rotation.ToRotationVector2();
-            Vector2 center = Projectile.Center + dir * 32;
+            Vector2 center = Projectile.Center + (dir * 32);
             for (int i = 0; i < 6; i++)
             {
                 Dust dust = Dust.NewDustPerfect(center + Main.rand.NextVector2Circular(8, 8), DustType<NightmareStar>(), dir.RotatedBy(Main.rand.NextFloat(-0.45f, 0.45f)) * Main.rand.NextFloat(1f, 6f),
@@ -312,7 +312,7 @@ namespace Coralite.Content.Items.Nightmare
                 Projectile.alpha = num5;
                 for (int i = 0; i < 3; i++)
                 {
-                    Dust dust = Dust.NewDustPerfect(Projectile.Center, 267, Main.rand.NextVector2CircularEdge(3f, 3f) * (Main.rand.NextFloat() * 0.5f + 0.5f), 0, C);
+                    Dust dust = Dust.NewDustPerfect(Projectile.Center, 267, Main.rand.NextVector2CircularEdge(3f, 3f) * ((Main.rand.NextFloat() * 0.5f) + 0.5f), 0, C);
                     dust.scale *= 1.2f;
                     dust.noGravity = true;
                 }
@@ -325,7 +325,7 @@ namespace Coralite.Content.Items.Nightmare
 
             if (readyState)
             {
-                float num6 = (float)Math.Cos(Projectile.whoAmI % 6f / 6f + Projectile.position.X / 320f + Projectile.position.Y / 160f);
+                float num6 = (float)Math.Cos((Projectile.whoAmI % 6f / 6f) + (Projectile.position.X / 320f) + (Projectile.position.Y / 160f));
                 Projectile.velocity *= num3;
                 Projectile.velocity = Projectile.velocity.RotatedBy(num6 * ((float)Math.PI * 2f) * 0.125f * 1f / 60f);
             }
@@ -372,7 +372,7 @@ namespace Coralite.Content.Items.Nightmare
             }
 
             Projectile.Opacity = Utils.GetLerpValue(240f, 220f, Projectile.timeLeft, clamped: true);
-            Projectile.rotation = Projectile.velocity.ToRotation() + (float)Math.PI / 2f;
+            Projectile.rotation = Projectile.velocity.ToRotation() + ((float)Math.PI / 2f);
         }
 
         public override void OnKill(int timeLeft)
@@ -403,7 +403,7 @@ namespace Coralite.Content.Items.Nightmare
                     Dust dust2 = Main.dust[index];
                     dust2.velocity *= Main.rand.NextFloat() * 0.8f;
                     Main.dust[index].noGravity = true;
-                    Main.dust[index].scale = 0.9f + Main.rand.NextFloat() * 1.2f;
+                    Main.dust[index].scale = 0.9f + (Main.rand.NextFloat() * 1.2f);
                     Main.dust[index].fadeIn = Main.rand.NextFloat() * 1.2f * num28;
                     dust2 = Main.dust[index];
                     dust2.scale *= num28;
@@ -461,13 +461,13 @@ namespace Coralite.Content.Items.Nightmare
             Vector2 extraOrigin = extraTex.Size() / 2f;
 
             Vector2 origin7 = extraTex.Size() / 2f;
-            float num165 = Utils.GetLerpValue(15f, 30f, Projectile.timeLeft, clamped: true) * Utils.GetLerpValue(240f, 200f, Projectile.timeLeft, clamped: true) * (1f + 0.2f * (float)Math.Cos(Main.GlobalTimeWrappedHourly % 30f / 0.5f * ((float)Math.PI * 2f) * 3f)) * 0.8f;
+            float num165 = Utils.GetLerpValue(15f, 30f, Projectile.timeLeft, clamped: true) * Utils.GetLerpValue(240f, 200f, Projectile.timeLeft, clamped: true) * (1f + (0.2f * (float)Math.Cos(Main.GlobalTimeWrappedHourly % 30f / 0.5f * ((float)Math.PI * 2f) * 3f))) * 0.8f;
             Vector2 vector31 = new Vector2(0.5f, 5f) * num165;
             Vector2 vector32 = new Vector2(0.5f, 2f) * num165;
             OtherColor *= num165;
             color37 *= num165;
             int num166 = 0;
-            Vector2 position4 = center + Projectile.velocity.SafeNormalize(Vector2.Zero) * 0.5f * num166;
+            Vector2 position4 = center + (Projectile.velocity.SafeNormalize(Vector2.Zero) * 0.5f * num166);
             vector31 *= 0.4f;
             vector32 *= 0.4f;
 
@@ -476,7 +476,7 @@ namespace Coralite.Content.Items.Nightmare
             //残影
             for (int i = 1; i < 12; i++)
                 Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] + toCenter - Main.screenPosition, null,
-                    baseColor * (0.5f - i * 0.5f / 12), Projectile.oldRot[i], mainTex.Size() / 2, Projectile.scale, 0, 0);
+                    baseColor * (0.5f - (i * 0.5f / 12)), Projectile.oldRot[i], mainTex.Size() / 2, Projectile.scale, 0, 0);
 
             //一闪一闪的光
             Main.EntitySpriteDraw(extraTex, position4, null, OtherColor, (float)Math.PI / 2f, origin7, vector31, 0);

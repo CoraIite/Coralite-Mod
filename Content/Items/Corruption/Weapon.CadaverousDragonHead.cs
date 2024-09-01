@@ -167,7 +167,7 @@ namespace Coralite.Content.Items.Corruption
 
             Projectile.Center = Vector2.Lerp(Projectile.Center, pos, 0.25f);
 
-            Vector2 neckPos = Projectile.Center - (Projectile.rotation + (Projectile.spriteDirection > 0 ? 0 : 3.141f) - Projectile.spriteDirection * 0.6f).ToRotationVector2() * 10;
+            Vector2 neckPos = Projectile.Center - ((Projectile.rotation + (Projectile.spriteDirection > 0 ? 0 : 3.141f) - (Projectile.spriteDirection * 0.6f)).ToRotationVector2() * 10);
             //在尾部生成粒子
             Dust d = Dust.NewDustPerfect(neckPos + Main.rand.NextVector2Circular(6, 6), DustID.Shadowflame, Helpers.Helper.NextVec2Dir(0.5f, 1f));
             d.noGravity = true;
@@ -193,10 +193,10 @@ namespace Coralite.Content.Items.Corruption
                 origin = new Vector2(frameBox.Width * 0.7f, frameBox.Height / 2);
             }
 
-            float rot = Projectile.rotation + Projectile.spriteDirection * mouseAngle + exRot;
+            float rot = Projectile.rotation + (Projectile.spriteDirection * mouseAngle) + exRot;
             Main.spriteBatch.Draw(mainTex, pos, frameBox, c, rot, origin, Projectile.scale, effects, 0);
 
-            rot = Projectile.rotation - Projectile.spriteDirection * mouseAngle + exRot;
+            rot = Projectile.rotation - (Projectile.spriteDirection * mouseAngle) + exRot;
             frameBox = mainTex.Frame(1, 2, 0, 0);
             Main.spriteBatch.Draw(mainTex, pos, frameBox, c, rot, origin, Projectile.scale, effects, 0);
 
@@ -249,7 +249,7 @@ namespace Coralite.Content.Items.Corruption
             if (Projectile.localAI[0] < shootTime && Main.rand.NextFloat() < 0.25f)
             {
                 short type = Main.rand.NextBool() ? DustID.ShadowbeamStaff : DustID.Shadowflame;
-                Dust dust = Dust.NewDustDirect(Projectile.Center + Main.rand.NextVector2Circular(60f, 60f) * Utils.Remap(Projectile.localAI[0], 0f, 72f, 0.5f, 1f), 4, 4, type, Projectile.velocity.X * 0.2f, Projectile.velocity.Y * 0.2f, 100);
+                Dust dust = Dust.NewDustDirect(Projectile.Center + (Main.rand.NextVector2Circular(60f, 60f) * Utils.Remap(Projectile.localAI[0], 0f, 72f, 0.5f, 1f)), 4, 4, type, Projectile.velocity.X * 0.2f, Projectile.velocity.Y * 0.2f, 100);
                 if (Main.rand.NextBool(4))
                 {
                     dust.noGravity = true;
@@ -271,11 +271,11 @@ namespace Coralite.Content.Items.Corruption
                 Vector2 center = Main.player[Projectile.owner].Center;
                 Vector2 vector = (Projectile.Center - center).SafeNormalize(Vector2.Zero).RotatedByRandom(0.19634954631328583) * 7f;
                 short num7 = DustID.Smoke;
-                Dust dust2 = Dust.NewDustDirect(Projectile.Center + Main.rand.NextVector2Circular(50f, 50f) - vector * 2f, 4, 4, num7, 0f, 0f, 150, new Color(80, 80, 80));
+                Dust dust2 = Dust.NewDustDirect(Projectile.Center + Main.rand.NextVector2Circular(50f, 50f) - (vector * 2f), 4, 4, num7, 0f, 0f, 150, new Color(80, 80, 80));
                 dust2.noGravity = true;
                 dust2.velocity = vector;
-                dust2.scale *= 1.1f + Main.rand.NextFloat() * 0.2f;
-                dust2.customData = -0.3f - 0.15f * Main.rand.NextFloat();
+                dust2.scale *= 1.1f + (Main.rand.NextFloat() * 0.2f);
+                dust2.customData = -0.3f - (0.15f * Main.rand.NextFloat());
             }
 
             Projectile.frameCounter++;
@@ -353,26 +353,26 @@ namespace Coralite.Content.Items.Corruption
                                         Color.Lerp(color3, color4, Utils.GetLerpValue(num4, num5, num11, clamped: true)) :
                                         ((!(num11 < 1f)) ? Color.Transparent : Color.Lerp(color4, Color.Transparent, Utils.GetLerpValue(num5, 1f, num11, clamped: true)))))));
                     float num14 = (1f - j) * Utils.Remap(num11, 0f, 0.2f, 0f, 1f);
-                    Vector2 vector = Projectile.Center - Main.screenPosition + Projectile.velocity * (0f - num10) * j;
+                    Vector2 vector = Projectile.Center - Main.screenPosition + (Projectile.velocity * (0f - num10) * j);
                     Color color5 = transparent * num14;
                     Color color6 = color5;
                     color6.G /= 2;
                     color6.B /= 2;
-                    color6.A = (byte)Math.Min(color5.A + 80f * num14, 255f);
+                    color6.A = (byte)Math.Min(color5.A + (80f * num14), 255f);
                     Utils.Remap(Projectile.localAI[0], 20f, totalTime, 0f, 1f);
 
                     float factor = 1f / num6 * (j + 1f);
-                    float num16 = Projectile.rotation + j * MathHelper.PiOver2 + Main.GlobalTimeWrappedHourly * factor * 2f;
-                    float num17 = Projectile.rotation - j * MathHelper.PiOver2 - Main.GlobalTimeWrappedHourly * factor * 2f;
+                    float num16 = Projectile.rotation + (j * MathHelper.PiOver2) + (Main.GlobalTimeWrappedHourly * factor * 2f);
+                    float num17 = Projectile.rotation - (j * MathHelper.PiOver2) - (Main.GlobalTimeWrappedHourly * factor * 2f);
                     switch (i)
                     {
                         case 0:
-                            Main.EntitySpriteDraw(mainTex, vector + Projectile.velocity * (0f - num10) * num6 * 0.5f, frameBox, color6 * num9 * 0.25f, num16 + (float)Math.PI / 4f, frameBox.Size() / 2f, num12, SpriteEffects.None);
+                            Main.EntitySpriteDraw(mainTex, vector + (Projectile.velocity * (0f - num10) * num6 * 0.5f), frameBox, color6 * num9 * 0.25f, num16 + ((float)Math.PI / 4f), frameBox.Size() / 2f, num12, SpriteEffects.None);
                             Main.EntitySpriteDraw(mainTex, vector, frameBox, color6 * num9, num17, frameBox.Size() / 2f, num12, SpriteEffects.None);
                             break;
                         case 1:
-                            Main.EntitySpriteDraw(mainTex, vector + Projectile.velocity * (0f - num10) * num6 * 0.2f, frameBox, color5 * num9 * 0.25f, num16 + (float)Math.PI / 2f, frameBox.Size() / 2f, num12 * 0.75f, SpriteEffects.None);
-                            Main.EntitySpriteDraw(mainTex, vector, frameBox, color5 * num9, num17 + (float)Math.PI / 2f, frameBox.Size() / 2f, num12 * 0.75f, SpriteEffects.None);
+                            Main.EntitySpriteDraw(mainTex, vector + (Projectile.velocity * (0f - num10) * num6 * 0.2f), frameBox, color5 * num9 * 0.25f, num16 + ((float)Math.PI / 2f), frameBox.Size() / 2f, num12 * 0.75f, SpriteEffects.None);
+                            Main.EntitySpriteDraw(mainTex, vector, frameBox, color5 * num9, num17 + ((float)Math.PI / 2f), frameBox.Size() / 2f, num12 * 0.75f, SpriteEffects.None);
                             break;
                     }
                 }

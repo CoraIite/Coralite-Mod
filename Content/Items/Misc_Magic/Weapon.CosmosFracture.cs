@@ -71,7 +71,7 @@ namespace Coralite.Content.Items.Misc_Magic
                     coralitePlayer.rightClickReuseDelay = 200;
 
                     for (int i = 0; i < 6; i++)
-                        Projectile.NewProjectile(source, player.Center + (-1.57f + i * 1.047f).ToRotationVector2() * 120, Vector2.Zero, ProjectileType<CosmosFractureProj2>(), (int)(damage * 0.2f), knockback, player.whoAmI, 2, (5.712f + i * 1.047f));
+                        Projectile.NewProjectile(source, player.Center + ((-1.57f + (i * 1.047f)).ToRotationVector2() * 120), Vector2.Zero, ProjectileType<CosmosFractureProj2>(), (int)(damage * 0.2f), knockback, player.whoAmI, 2, 5.712f + (i * 1.047f));
 
                     SoundEngine.PlaySound(SoundID.Item71, player.Center);
                     player.statMana -= 25;

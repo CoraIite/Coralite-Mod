@@ -81,8 +81,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     {
                         Projectile.UpdateFrameNormally(10, 3);
 
-                        float angle = Angle + 0.2f * MathF.Sin(Timer * 0.0314f);
-                        Vector2 center = Owner.Center + angle.ToRotationVector2() * 600;
+                        float angle = Angle + (0.2f * MathF.Sin(Timer * 0.0314f));
+                        Vector2 center = Owner.Center + (angle.ToRotationVector2() * 600);
                         Vector2 dir = center - Projectile.Center;
 
                         float velRot = Projectile.velocity.ToRotation();
@@ -138,7 +138,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                                 damage = Helper.ScaleValueForDiffMode(20, 10, 5, 5);
                                 for (int i = 0; i < 4; i++)
                                 {
-                                    Vector2 dir = (Projectile.rotation + i * 1 / 4f * MathHelper.TwoPi).ToRotationVector2();
+                                    Vector2 dir = (Projectile.rotation + (i * 1 / 4f * MathHelper.TwoPi)).ToRotationVector2();
 
                                     Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, dir, ModContent.ProjectileType<NightmareSparkle_Normal>(),
                                         Projectile.damage, 0);
@@ -149,7 +149,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                                 damage = Helper.ScaleValueForDiffMode(30, 15, 10, 10);
                                 for (int i = 0; i < 5; i++)
                                 {
-                                    Vector2 dir = (Projectile.rotation + i * 1 / 5f * MathHelper.TwoPi).ToRotationVector2();
+                                    Vector2 dir = (Projectile.rotation + (i * 1 / 5f * MathHelper.TwoPi)).ToRotationVector2();
 
                                     Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, dir, ModContent.ProjectileType<NightmareSparkle_Red>(),
                                         Projectile.damage, 0);

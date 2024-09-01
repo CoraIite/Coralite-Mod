@@ -1,11 +1,9 @@
 ﻿using Coralite.Core.Configs;
 using Coralite.Core.Loaders;
-using Coralite.Core.Systems.Pools;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.Graphics.Renderers;
 using Terraria.ID;
 
 namespace Coralite.Core.Systems.ParticleSystem

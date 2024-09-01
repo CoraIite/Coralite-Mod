@@ -62,7 +62,7 @@ namespace Coralite.Content.Items.FlyingShields
             {
                 for (int i = 0; i < 3; i++)
                 {
-                    Dust d = Dust.NewDustPerfect(Projectile.Center + Projectile.velocity * (i / 3f),
+                    Dust d = Dust.NewDustPerfect(Projectile.Center + (Projectile.velocity * (i / 3f)),
                         DustID.TheDestroyer, -Projectile.velocity * 0.2f);
                     d.noGravity = true;
                 }
@@ -97,7 +97,7 @@ namespace Coralite.Content.Items.FlyingShields
 
                 Projectile.NewProjectileFromThis<SmallMechRioter>(target.Center, Helper.NextVec2Dir() * 12, (int)(Projectile.damage * 0.9f), Projectile.knockBack);
                 Vector2 offset = Helper.NextVec2Dir();
-                Projectile.NewProjectileFromThis<SmallMechRioter>(target.Center + offset * 16, offset * 2, (int)(Projectile.damage * 0.9f), Projectile.knockBack, 1);
+                Projectile.NewProjectileFromThis<SmallMechRioter>(target.Center + (offset * 16), offset * 2, (int)(Projectile.damage * 0.9f), Projectile.knockBack, 1);
                 hited = true;
             }
 
@@ -163,18 +163,18 @@ namespace Coralite.Content.Items.FlyingShields
             Vector2 origin2 = frameBox.Size() / 2;
 
             //绘制基底
-            Main.spriteBatch.Draw(mainTex, pos - dir * 4, frameBox, c, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos - (dir * 4), frameBox, c, rotation, origin2, scale, effect, 0);
             Main.spriteBatch.Draw(mainTex, pos, frameBox, lightColor, rotation, origin2, scale, effect, 0);
 
             //绘制上部
             frameBox = mainTex.Frame(3, 1, 1, 0);
-            Main.spriteBatch.Draw(mainTex, pos + dir * 5, frameBox, c, rotation, origin2, scale, effect, 0);
-            Main.spriteBatch.Draw(mainTex, pos + dir * 10, frameBox, lightColor, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos + (dir * 5), frameBox, c, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos + (dir * 10), frameBox, lightColor, rotation, origin2, scale, effect, 0);
 
             //绘制上上部
             frameBox = mainTex.Frame(3, 1, 2, 0);
-            Main.spriteBatch.Draw(mainTex, pos + dir * 12, frameBox, c, rotation, origin2, scale, effect, 0);
-            Main.spriteBatch.Draw(mainTex, pos + dir * 17, frameBox, lightColor, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos + (dir * 12), frameBox, c, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos + (dir * 17), frameBox, lightColor, rotation, origin2, scale, effect, 0);
         }
     }
 
@@ -281,7 +281,7 @@ namespace Coralite.Content.Items.FlyingShields
                                 {
                                     for (int i = -1; i < 2; i += 2)
                                     {
-                                        int index = Projectile.NewProjectileFromThis(Projectile.Center + (Projectile.rotation + 1.57f * i).ToRotationVector2() * 12
+                                        int index = Projectile.NewProjectileFromThis(Projectile.Center + ((Projectile.rotation + (1.57f * i)).ToRotationVector2() * 12)
                                             , (target.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * 12,
                                             ProjectileID.EyeLaser, (int)(Projectile.damage * 0.8f), Projectile.knockBack, ai1: i + 1);
                                         Main.projectile[index].hostile = false;
@@ -303,7 +303,7 @@ namespace Coralite.Content.Items.FlyingShields
                             Vector2 dustVel = (Projectile.rotation + MathHelper.Pi).ToRotationVector2() * 2;
                             for (int i = -1; i < 2; i += 2)
                             {
-                                Dust d = Dust.NewDustPerfect(Projectile.Center + (Projectile.rotation + 1.57f * i).ToRotationVector2() * 12,
+                                Dust d = Dust.NewDustPerfect(Projectile.Center + ((Projectile.rotation + (1.57f * i)).ToRotationVector2() * 12),
                                     DustID.TheDestroyer, dustVel);
                                 d.noGravity = true;
                             }
@@ -327,7 +327,7 @@ namespace Coralite.Content.Items.FlyingShields
 
                             for (int i = -1; i < 2; i += 2)
                             {
-                                Dust d = Dust.NewDustPerfect(Projectile.Center + (Projectile.rotation + 1.57f * i).ToRotationVector2() * 12,
+                                Dust d = Dust.NewDustPerfect(Projectile.Center + ((Projectile.rotation + (1.57f * i)).ToRotationVector2() * 12),
                                     DustID.TheDestroyer, dustVel);
                                 d.noGravity = true;
                             }

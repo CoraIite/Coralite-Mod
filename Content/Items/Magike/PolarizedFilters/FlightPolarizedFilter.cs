@@ -20,7 +20,7 @@ namespace Coralite.Content.Items.Magike.PolarizedFilters
         {
             CreateRecipe()
                 .AddIngredient<EiderdownPolarizedFilter>()
-                .AddIngredient(ItemID.SoulofFlight,12)
+                .AddIngredient(ItemID.SoulofFlight, 12)
                 .AddTile(TileID.WorkBenches)
                 .Register();
         }

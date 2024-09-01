@@ -342,8 +342,8 @@ namespace Coralite.Content.WorldGeneration
             Texture2D clearTex = ModContent.Request<Texture2D>(AssetDirectory.Shrines + "MagicCrystalShrineClear" + whichOne.ToString(), AssetRequestMode.ImmediateLoad).Value;
             Texture2D wallTex = ModContent.Request<Texture2D>(AssetDirectory.Shrines + "MagicCrystalWall" + whichOne.ToString(), AssetRequestMode.ImmediateLoad).Value;
 
-            int genOrigin_x = origin.X - clearTex.Width / 2;
-            int genOrigin_y = origin.Y - clearTex.Height / 2;
+            int genOrigin_x = origin.X - (clearTex.Width / 2);
+            int genOrigin_y = origin.Y - (clearTex.Height / 2);
 
             Point chestPos = new(genOrigin_x + 13, genOrigin_y + 13);
             Point lightPoint1 = new(genOrigin_x + 7, genOrigin_y + 14);

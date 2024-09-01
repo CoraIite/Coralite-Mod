@@ -40,7 +40,7 @@ namespace Coralite.Content.Tiles.ShadowCastle
 
         public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY)
         {
-            int whoamI = 1 + tileFrameY / 18;
+            int whoamI = 1 + (tileFrameY / 18);
             Tile tile = Main.tile[i, j - whoamI];
             if (TileID.Sets.Platforms[tile.TileType])
                 offsetY = -10;

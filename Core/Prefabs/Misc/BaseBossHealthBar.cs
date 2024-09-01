@@ -183,7 +183,7 @@ namespace Coralite.Core.Prefabs.Misc
             #region 图标的绘制
             Vector2 iconOffset = new(34f, 14f);     //应该在哪绘制图标
             Vector2 iconSize = iconTexture.Size();   //这个要跟着贴图变化
-            Vector2 iconPos = iconOffset + iconSize / 2f;
+            Vector2 iconPos = iconOffset + (iconSize / 2f);
             DrawIcon(spriteBatch, iconTexture, topLeft + iconPos, iconFrame, iconColor, iconScale);
             #endregion
 

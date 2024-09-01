@@ -196,9 +196,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         if (targetDead)
                             num820 *= 2f;
 
-                        float num821 = NPC.ai[0] * 16f - 8f - NPC.Center.X;
-                        float num822 = NPC.ai[1] * 16f - 8f - NPC.Center.Y;
-                        float num823 = (float)Math.Sqrt(num821 * num821 + num822 * num822);
+                        float num821 = (NPC.ai[0] * 16f) - 8f - NPC.Center.X;
+                        float num822 = (NPC.ai[1] * 16f) - 8f - NPC.Center.Y;
+                        float num823 = (float)Math.Sqrt((num821 * num821) + (num822 * num822));
                         if (num823 < 12f + num820)
                         {
                             if (Main.netMode != NetmodeID.MultiplayerClient && Main.getGoodWorld && NPC.localAI[3] == 1f)

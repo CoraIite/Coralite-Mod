@@ -141,7 +141,7 @@ namespace Coralite.Content.Items.Thunder
             {
                 for (int i = 0; i < 10; i++)
                 {
-                    Dust d = Dust.NewDustPerfect(Projectile.oldPos[i] + new Vector2(Projectile.width, Projectile.height) / 2, DustID.PortalBoltTrail, Projectile.velocity.RotateByRandom(-0.4f, 0.4f) * Main.rand.NextFloat(0.2f, 0.6f)
+                    Dust d = Dust.NewDustPerfect(Projectile.oldPos[i] + (new Vector2(Projectile.width, Projectile.height) / 2), DustID.PortalBoltTrail, Projectile.velocity.RotateByRandom(-0.4f, 0.4f) * Main.rand.NextFloat(0.2f, 0.6f)
                         , newColor: Coralite.ThunderveinYellow, Scale: Main.rand.NextFloat(1f, 1.5f));
                     d.noGravity = true;
                 }

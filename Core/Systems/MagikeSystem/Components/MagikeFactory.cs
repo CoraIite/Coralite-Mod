@@ -12,7 +12,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public bool IsWorking { get; set; }
 
         /// <summary> 基础工作时间 </summary>
-        public int WorkTimeBase  { get => DelayBase; set => DelayBase = value; }
+        public int WorkTimeBase { get => DelayBase; set => DelayBase = value; }
         /// <summary> 工作时间增幅 </summary>
         public float WorkTimeBonus { get => DelayBonus; set => DelayBonus = value; }
 
@@ -21,7 +21,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public int DelayBase { get; set; }
         public float DelayBonus { get; set; }
-        public int Timer { get; set ; }
+        public int Timer { get; set; }
 
         public bool UpdateTime()
         {

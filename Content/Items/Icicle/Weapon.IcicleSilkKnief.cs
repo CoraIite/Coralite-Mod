@@ -111,7 +111,7 @@ namespace Coralite.Content.Items.Icicle
                 if (Projectile.velocity.Y > 12)
                     Projectile.velocity.Y = 12;
 
-                Projectile.rotation += 0.3f + (Projectile.timeLeft / 560) * 0.5f;
+                Projectile.rotation += 0.3f + (Projectile.timeLeft / 560 * 0.5f);
             }
             else
             {
@@ -229,7 +229,7 @@ namespace Coralite.Content.Items.Icicle
                 float length = (Owner.Center - Projectile.Center).Length();
                 for (int i = 0; i < length; i += 8)
                 {
-                    Dust.NewDustPerfect(Projectile.Center + direction * i + Main.rand.NextVector2Circular(4, 4), DustID.Ice, Scale: Main.rand.NextFloat(1f, 1.2f));
+                    Dust.NewDustPerfect(Projectile.Center + (direction * i) + Main.rand.NextVector2Circular(4, 4), DustID.Ice, Scale: Main.rand.NextFloat(1f, 1.2f));
                 }
             }
         }
@@ -259,12 +259,12 @@ namespace Coralite.Content.Items.Icicle
             {
                 Texture2D snowTex = Request<Texture2D>(AssetDirectory.IcicleItems + "SnowFlower").Value;
                 Texture2D bigSnowTex = Request<Texture2D>(AssetDirectory.IcicleItems + "BigSnowFlower").Value;
-                Main.spriteBatch.Draw(bigSnowTex, endPos, null, lightColor * 0.75f, Projectile.rotation + Main.GlobalTimeWrappedHourly * 2, bigSnowTex.Size() / 2, Projectile.scale, 0, 0);
+                Main.spriteBatch.Draw(bigSnowTex, endPos, null, lightColor * 0.75f, Projectile.rotation + (Main.GlobalTimeWrappedHourly * 2), bigSnowTex.Size() / 2, Projectile.scale, 0, 0);
 
                 for (int i = 0; i < Count; i++)
                 {
                     float rot = i * MathHelper.TwoPi / 6;
-                    Main.spriteBatch.Draw(snowTex, endPos + rot.ToRotationVector2() * 32, null, lightColor * 0.6f, rot + Main.GlobalTimeWrappedHourly * 2, snowTex.Size() / 2, Projectile.scale, 0, 0);
+                    Main.spriteBatch.Draw(snowTex, endPos + (rot.ToRotationVector2() * 32), null, lightColor * 0.6f, rot + (Main.GlobalTimeWrappedHourly * 2), snowTex.Size() / 2, Projectile.scale, 0, 0);
                 }
             }
 

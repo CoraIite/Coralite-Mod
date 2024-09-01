@@ -84,15 +84,15 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             for (int i = 0; i < 3; i++)
             {
-                float angle = -MathHelper.PiOver2 - 0.25f - i * 0.35f;
-                Vector2 targetPos = (angle + sin * (i + 1) * 0.25f).ToRotationVector2() * length;
+                float angle = -MathHelper.PiOver2 - 0.25f - (i * 0.35f);
+                Vector2 targetPos = (angle + (sin * (i + 1) * 0.25f)).ToRotationVector2() * length;
                 leftTentacles[i].SetValue(NPC.Center, NPC.Center + targetPos, angle);
-                leftTentacles[i].UpdateTentacle(perLength * (1 - i * 0.15f), lightScale);
+                leftTentacles[i].UpdateTentacle(perLength * (1 - (i * 0.15f)), lightScale);
 
-                angle = -MathHelper.PiOver2 + 0.25f + i * 0.35f;
-                targetPos = (angle - sin * (i + 1) * 0.25f).ToRotationVector2() * length;
+                angle = -MathHelper.PiOver2 + 0.25f + (i * 0.35f);
+                targetPos = (angle - (sin * (i + 1) * 0.25f)).ToRotationVector2() * length;
                 rightTentacles[i].SetValue(NPC.Center, NPC.Center + targetPos, angle);
-                rightTentacles[i].UpdateTentacle(perLength * (1 - i * 0.15f), lightScale);
+                rightTentacles[i].UpdateTentacle(perLength * (1 - (i * 0.15f)), lightScale);
             }
 
             Lighting.AddLight(NPC.Center, new Vector3(4, 4, 4));
@@ -145,7 +145,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     {
                         np.rotation = np.rotation.AngleTowards((NPC.Center - np.Center).ToRotation(), 0.3f);
 
-                        Vector2 center = np.Center + (Angle + Timer / 460 * MathHelper.TwoPi).ToRotationVector2() * 450;
+                        Vector2 center = np.Center + ((Angle + (Timer / 460 * MathHelper.TwoPi)).ToRotationVector2() * 450);
                         Vector2 dir2 = center - NPC.Center;
 
                         float velRot = NPC.velocity.ToRotation();
@@ -159,7 +159,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         for (int i = 0; i < 4; i++)
                         {
                             Vector2 v = Helper.NextVec2Dir();
-                            Particle.NewParticle(NPC.Center + v * Main.rand.Next(80, 100), v * Main.rand.NextFloat(6, 24f),
+                            Particle.NewParticle(NPC.Center + (v * Main.rand.Next(80, 100)), v * Main.rand.NextFloat(6, 24f),
                                 CoraliteContent.ParticleType<BigFog>(), shineColor, Scale: Main.rand.NextFloat(0.5f, 1.25f));
                         }
 
@@ -197,10 +197,10 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             NPC.velocity *= 0.5f;
                             State++;
                             Timer = 0;
-                            float angle = (NPC.Center - np.Center).ToRotation() - 2 * 0.3f;
+                            float angle = (NPC.Center - np.Center).ToRotation() - (2 * 0.3f);
                             for (int i = 0; i < 4; i++)
                             {
-                                NPC.NewProjectileInAI<FantasySpike>(NPC.Center, Vector2.Zero, 3000, 0, ai1: angle + i * 0.3f, ai2: 60 + i * 15);
+                                NPC.NewProjectileInAI<FantasySpike>(NPC.Center, Vector2.Zero, 3000, 0, ai1: angle + (i * 0.3f), ai2: 60 + (i * 15));
                             }
                         }
                     }
@@ -329,8 +329,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             for (int i = 0; i < 7; i++)
             {
-                Vector2 dir = (Main.GlobalTimeWrappedHourly * 2 + i * MathHelper.TwoPi / 7).ToRotationVector2();
-                Helper.DrawPrettyStarSparkle(NPC.Opacity, 0, pos + dir * 48, Color.White, NightmarePlantera.phantomColors[i],
+                Vector2 dir = ((Main.GlobalTimeWrappedHourly * 2) + (i * MathHelper.TwoPi / 7)).ToRotationVector2();
+                Helper.DrawPrettyStarSparkle(NPC.Opacity, 0, pos + (dir * 48), Color.White, NightmarePlantera.phantomColors[i],
                     0.5f, 0f, 0.5f, 0.5f, 1f, 0, new Vector2(1, 3), Vector2.One);
             }
 

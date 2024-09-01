@@ -65,7 +65,7 @@ namespace Coralite.Content.NPCs.Icicle
             {
                 NPC.frameCounter = 0;
                 NPC.frame.Y += NPC.frame.Height;
-                if (NPC.frame.Y > NPC.frame.Height * (Main.npcFrameCount[Type]) - 1)
+                if (NPC.frame.Y > (NPC.frame.Height * Main.npcFrameCount[Type]) - 1)
                     NPC.frame.Y = 0;
             }
 

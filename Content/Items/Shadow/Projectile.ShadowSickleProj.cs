@@ -57,7 +57,7 @@ namespace Coralite.Content.Items.Shadow
 
         protected override void AIMiddle()
         {
-            Projectile.Center = Owner.MountedCenter + _Rotation.ToRotationVector2() * 40;
+            Projectile.Center = Owner.MountedCenter + (_Rotation.ToRotationVector2() * 40);
             Owner.itemRotation = Owner.direction > 0 ? _Rotation : _Rotation + 3.141f;
         }
 
@@ -66,12 +66,12 @@ namespace Coralite.Content.Items.Shadow
             //最大蓄力时间：4秒
             float attackSpeed = Math.Clamp(Owner.itemTimeMax, 15, 40) - 15;
 
-            float factor = timer / (210f - 90f * (1 - (attackSpeed / 25f)));
+            float factor = timer / (210f - (90f * (1 - (attackSpeed / 25f))));
             if (factor > 1)
                 factor = 1;
 
-            _Rotation += Owner.direction * (0.15f + 0.2f * factor);
-            Projectile.rotation = _Rotation + Owner.direction * 0.65f;
+            _Rotation += Owner.direction * (0.15f + (0.2f * factor));
+            Projectile.rotation = _Rotation + (Owner.direction * 0.65f);
             if (_Rotation > 6.282f || _Rotation < -6.282f)
             {
                 _Rotation = _Rotation % 6.282f;
@@ -85,7 +85,7 @@ namespace Coralite.Content.Items.Shadow
         {
             float attackSpeed = Math.Clamp(Owner.itemTimeMax, 15, 40) - 15;
 
-            float factor = timer / (210f - 90f * (1 - (attackSpeed / 25f)));
+            float factor = timer / (210f - (90f * (1 - (attackSpeed / 25f))));
             if (factor > 1)
                 factor = 1f;
             if (factor < 0.5f)
@@ -95,8 +95,8 @@ namespace Coralite.Content.Items.Shadow
             }
 
             OnChannelComplete(45, 45);
-            Scale = 0.2f + 0.8f * factor;
-            Projectile.damage = (int)(Projectile.damage * (1f + factor * 3f));
+            Scale = 0.2f + (0.8f * factor);
+            Projectile.damage = (int)(Projectile.damage * (1f + (factor * 3f)));
             PunchCameraModifier modifier = new(Projectile.Center, _Rotation.ToRotationVector2(), Scale * 6f, 8f, 10, 1000f, "ShadowSickle");
             Main.instance.CameraModifiers.Add(modifier);
 
@@ -116,8 +116,8 @@ namespace Coralite.Content.Items.Shadow
             }
 
             _Rotation += Owner.direction * 0.4f;
-            Projectile.rotation = _Rotation + Owner.direction * 0.65f;
-            Projectile.Center = Owner.MountedCenter + _Rotation.ToRotationVector2() * 30;
+            Projectile.rotation = _Rotation + (Owner.direction * 0.65f);
+            Projectile.Center = Owner.MountedCenter + (_Rotation.ToRotationVector2() * 30);
             Owner.itemRotation = Owner.direction > 0 ? _Rotation : _Rotation + 3.141f;
 
             Vector2 rotateDir = _Rotation.ToRotationVector2();
@@ -133,11 +133,11 @@ namespace Coralite.Content.Items.Shadow
             int width = 20 + (int)(Scale * 80);
             for (int i = 0; i < 2; i++)
             {
-                Dust dust = Dust.NewDustPerfect(Projectile.Center + rotateDir * Main.rand.Next(-20, width), DustID.Granite, dir * Main.rand.NextFloat(1f, 2f));
+                Dust dust = Dust.NewDustPerfect(Projectile.Center + (rotateDir * Main.rand.Next(-20, width)), DustID.Granite, dir * Main.rand.NextFloat(1f, 2f));
                 dust.noGravity = true;
             }
 
-            Dust dust2 = Dust.NewDustPerfect(Projectile.Center + rotateDir * Main.rand.Next(-20, width), DustID.Shadowflame, dir * Main.rand.NextFloat(1f, 2f));
+            Dust dust2 = Dust.NewDustPerfect(Projectile.Center + (rotateDir * Main.rand.Next(-20, width)), DustID.Shadowflame, dir * Main.rand.NextFloat(1f, 2f));
             dust2.noGravity = true;
 
             if (Projectile.timeLeft < 16)
@@ -155,9 +155,9 @@ namespace Coralite.Content.Items.Shadow
             {
                 float a = 0f;
                 if (completeAndRelease)
-                    return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Owner.Center, Owner.Center + _Rotation.ToRotationVector2() * Scale * 120, 100, ref a);
+                    return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Owner.Center, Owner.Center + (_Rotation.ToRotationVector2() * Scale * 120), 100, ref a);
 
-                return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Owner.Center, Owner.Center + _Rotation.ToRotationVector2() * 55, Projectile.width, ref a);
+                return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Owner.Center, Owner.Center + (_Rotation.ToRotationVector2() * 55), Projectile.width, ref a);
             }
 
             return false;
@@ -182,19 +182,19 @@ namespace Coralite.Content.Items.Shadow
                 float fromValue = lightColor.ToVector3().Length() / MathF.Sqrt(3f);
                 fromValue = Utils.Remap(fromValue, 0.2f, 1f, 0f, 1f);
                 Color color = new(40, 20, 60);
-                spriteBatch.Draw(slashTex.Value, center, rectangle, color * fromValue * num3, _Rotation + Owner.direction * ((float)Math.PI / 4f) * -1f * (1f - num2), origin, num * num4, effects, 0f);
+                spriteBatch.Draw(slashTex.Value, center, rectangle, color * fromValue * num3, _Rotation + (Owner.direction * ((float)Math.PI / 4f) * -1f * (1f - num2)), origin, num * num4, effects, 0f);
                 Color color2 = new(80, 40, 180);
                 Color color3 = Color.White * num3 * 0.5f;
                 color3.A = (byte)(color3.A * (1f - fromValue));
                 Color color4 = color3 * fromValue * 0.5f;
                 color4.G = (byte)(color4.G * fromValue);
-                color4.R = (byte)(color4.R * (0.25f + fromValue * 0.75f));
-                spriteBatch.Draw(slashTex.Value, center, rectangle, color4 * 0.15f, _Rotation + Owner.direction * 0.01f, origin, num, effects, 0f);
+                color4.R = (byte)(color4.R * (0.25f + (fromValue * 0.75f)));
+                spriteBatch.Draw(slashTex.Value, center, rectangle, color4 * 0.15f, _Rotation + (Owner.direction * 0.01f), origin, num, effects, 0f);
                 spriteBatch.Draw(slashTex.Value, center, rectangle, new Color(80, 30, 160) * fromValue * Alpha * 0.3f, _Rotation, origin, num * 0.8f, effects, 0f);
                 spriteBatch.Draw(slashTex.Value, center, rectangle, color2 * fromValue * Alpha * 0.7f, _Rotation, origin, num * num4, effects, 0f);
 
-                spriteBatch.Draw(slashTex.Value, center, slashTex.Frame(1, 4, 0, 3), Color.White * 0.3f * Alpha * (1f - fromValue * 0.7f), _Rotation + Owner.direction * 0.01f, origin, num, effects, 0f);
-                Vector2 drawPos = center + (_Rotation + Utils.Remap(num2, 0f, 1.4f, 0f, (float)Math.PI / 2f) * Owner.direction).ToRotationVector2() * (slashTex.Width() * 0.5f - 4f) * num;
+                spriteBatch.Draw(slashTex.Value, center, slashTex.Frame(1, 4, 0, 3), Color.White * 0.3f * Alpha * (1f - (fromValue * 0.7f)), _Rotation + (Owner.direction * 0.01f), origin, num, effects, 0f);
+                Vector2 drawPos = center + ((_Rotation + (Utils.Remap(num2, 0f, 1.4f, 0f, (float)Math.PI / 2f) * Owner.direction)).ToRotationVector2() * ((slashTex.Width() * 0.5f) - 4f) * num);
                 Helper.DrawPrettyStarSparkle(Projectile.Opacity, SpriteEffects.None, drawPos, new Color(255, 255, 255, 0) * num3 * 0.5f, color2, num2, 0f, 0.5f, 0.5f, 1f, (float)Math.PI / 4f, new Vector2(2f, 2f), Vector2.One);
             }
 

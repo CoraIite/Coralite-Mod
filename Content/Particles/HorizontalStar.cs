@@ -31,8 +31,8 @@ namespace Coralite.Content.Particles
                 {
                     Scale *= 1.14f;
                     float factor = fadeIn / phase_1;
-                    shader.UseOpacity(0.65f - factor * 0.25f);
-                    shader.UseSaturation(1.5f + factor * 0.6f);
+                    shader.UseOpacity(0.65f - (factor * 0.25f));
+                    shader.UseSaturation(1.5f + (factor * 0.6f));
                     break;
                 }
 
@@ -40,8 +40,8 @@ namespace Coralite.Content.Particles
                 {
                     Scale *= 0.86f;
                     float factor = (fadeIn - phase_1) / phase_1;
-                    shader.UseOpacity(0.4f + factor * 0.4f);
-                    shader.UseSaturation(2.3f - factor * 0.8f);
+                    shader.UseOpacity(0.4f + (factor * 0.4f));
+                    shader.UseSaturation(2.3f - (factor * 0.8f));
                     break;
                 }
 
@@ -52,15 +52,15 @@ namespace Coralite.Content.Particles
                 {
                     Scale *= 1.1f;
                     float factor = (fadeIn - phase_2) / phase_1;
-                    shader.UseOpacity(0.65f - factor * 0.25f);
-                    shader.UseSaturation(1.5f + factor * 0.6f);
+                    shader.UseOpacity(0.65f - (factor * 0.25f));
+                    shader.UseSaturation(1.5f + (factor * 0.6f));
                     break;
                 }
 
                 Scale *= 0.84f;
                 float factor2 = (fadeIn - phase_3) / phase_1;
-                shader.UseOpacity(0.4f + factor2 * 0.4f);
-                shader.UseSaturation(2.3f - factor2 * 0.8f);
+                shader.UseOpacity(0.4f + (factor2 * 0.4f));
+                shader.UseSaturation(2.3f - (factor2 * 0.8f));
 
             } while (false);
 

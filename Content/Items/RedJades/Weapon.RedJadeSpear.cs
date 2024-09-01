@@ -124,7 +124,7 @@ namespace Coralite.Content.Items.RedJades
 
                 for (int i = 0; i < 2; i++)
                 {
-                    Vector2 pos = Projectile.Center + Helper.NextVec2Dir(44 - factor * 30, 46 - factor * 30);
+                    Vector2 pos = Projectile.Center + Helper.NextVec2Dir(44 - (factor * 30), 46 - (factor * 30));
                     Dust d = Dust.NewDustPerfect(pos, DustID.GemRuby, (Projectile.Center - pos) / 25);
                     d.noGravity = true;
                 }
@@ -143,7 +143,7 @@ namespace Coralite.Content.Items.RedJades
             float factor = (Timer - minTime) / (maxTime - minTime);
             if (Timer % 3 == 0)
             {
-                Vector2 pos = Projectile.Center + RotateVec2 * Main.rand.NextFloat(20, 70) * Projectile.scale
+                Vector2 pos = Projectile.Center + (RotateVec2 * Main.rand.NextFloat(20, 70) * Projectile.scale)
                     + Main.rand.NextVector2Circular(16, 16);
                 if (Main.rand.NextBool())
                 {
@@ -153,16 +153,16 @@ namespace Coralite.Content.Items.RedJades
             }
 
             if (factor < 0.5f)
-                distanceToOwner = -47 + 70 * Smoother.Smoother(factor * 2);
+                distanceToOwner = -47 + (70 * Smoother.Smoother(factor * 2));
             else
-                distanceToOwner = -47 + 70 * Smoother.Smoother((1 - factor) * 2);
+                distanceToOwner = -47 + (70 * Smoother.Smoother((1 - factor) * 2));
 
             if (Combo == 1)
             {
                 if ((Timer - minTime) % ((maxTime - minTime) / 4) == 0)
                 {
                     float x = (Timer - minTime) / ((maxTime - minTime) / 4);
-                    Vector2 pos = Owner.Center + RotateVec2 * 64 * x + Main.rand.NextVector2Circular(16, 16);
+                    Vector2 pos = Owner.Center + (RotateVec2 * 64 * x) + Main.rand.NextVector2Circular(16, 16);
 
                     int type = ProjectileType<RedJadeBoom>();
                     if (x > 3)
@@ -193,8 +193,8 @@ namespace Coralite.Content.Items.RedJades
                 }
 
                 Dust dust;
-                float offset = Projectile.localAI[1] + Main.rand.NextFloat(0, Projectile.width * Projectile.scale - Projectile.localAI[1]);
-                Vector2 pos = Bottom + RotateVec2 * offset;
+                float offset = Projectile.localAI[1] + Main.rand.NextFloat(0, (Projectile.width * Projectile.scale) - Projectile.localAI[1]);
+                Vector2 pos = Bottom + (RotateVec2 * offset);
 
                 if (VisualEffectSystem.HitEffect_Dusts)
                 {
@@ -217,9 +217,9 @@ namespace Coralite.Content.Items.RedJades
             for (int i = 1; i < 6; i += 1)
             {
                 Vector2 Center = GetCenter(i);
-                Center += oldRotate[i].ToRotationVector2() * (oldLength[i] / 2 + oldDistanceToOwner[i]);
+                Center += oldRotate[i].ToRotationVector2() * ((oldLength[i] / 2) + oldDistanceToOwner[i]);
                 Main.spriteBatch.Draw(mainTex, Center - Main.screenPosition, null,
-                    Coralite.RedJadeRed * (0.3f - i * 0.3f / 6), oldRotate[i] + extraRot, origin, Projectile.scale, effect, 0);
+                    Coralite.RedJadeRed * (0.3f - (i * 0.3f / 6)), oldRotate[i] + extraRot, origin, Projectile.scale, effect, 0);
             }
         }
     }

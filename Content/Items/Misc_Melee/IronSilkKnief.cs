@@ -129,7 +129,7 @@ namespace Coralite.Content.Items.Misc_Melee
             }
             else
             {
-                distanceToOwner = MathHelper.Lerp(60, 30, (Timer - maxTime / 2f) / (maxTime / 2f));
+                distanceToOwner = MathHelper.Lerp(60, 30, (Timer - (maxTime / 2f)) / (maxTime / 2f));
             }
 
             base.OnSlash();
@@ -236,7 +236,7 @@ namespace Coralite.Content.Items.Misc_Melee
                 float length = (Owner.Center - Projectile.Center).Length();
                 for (int i = 0; i < length; i += 8)
                 {
-                    Dust.NewDustPerfect(Projectile.Center + direction * i + Main.rand.NextVector2Circular(4, 4), DustID.Iron, Scale: Main.rand.NextFloat(1f, 1.2f));
+                    Dust.NewDustPerfect(Projectile.Center + (direction * i) + Main.rand.NextVector2Circular(4, 4), DustID.Iron, Scale: Main.rand.NextFloat(1f, 1.2f));
                 }
             }
         }

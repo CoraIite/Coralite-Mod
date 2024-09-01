@@ -76,7 +76,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             float randRot = Main.rand.NextFloat(6.282f);
             for (int i = 0; i < shotCount - 1; i++)
             {
-                cs._shotRotation.Add(randRot + i / (float)shotCount * MathHelper.TwoPi);
+                cs._shotRotation.Add(randRot + (i / (float)shotCount * MathHelper.TwoPi));
                 cs._shotScale.Add(Main.rand.NextFloat(0.2f, 1.1f));
             }
 
@@ -107,7 +107,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             float randRot = Main.rand.NextFloat(6.282f);
             for (int i = 0; i < shotCount - 1; i++)
             {
-                cs._shotRotation.Add(randRot + i / (float)shotCount * MathHelper.TwoPi);
+                cs._shotRotation.Add(randRot + (i / (float)shotCount * MathHelper.TwoPi));
                 cs._shotScale.Add(Main.rand.NextFloat(0.2f, 1.1f));
             }
 
@@ -174,13 +174,13 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             for (int i = 0; i < TrailCount; i++)
             {
                 float factor = i / TrailCount;
-                Vector2 Center = center + i * dir * width;
-                Vector2 Top = Center + normal * height * (1 - factor);
-                Vector2 Bottom = Center - normal * height * (1 - factor);
+                Vector2 Center = center + (i * dir * width);
+                Vector2 Top = Center + (normal * height * (1 - factor));
+                Vector2 Bottom = Center - (normal * height * (1 - factor));
 
-                Vector2 Center2 = center + i * dir * width * 1.2f;
-                Vector2 Top2 = Center2 + normal * height * shineRange * (1 - factor);
-                Vector2 Bottom2 = Center2 - normal * height * shineRange * (1 - factor);
+                Vector2 Center2 = center + (i * dir * width * 1.2f);
+                Vector2 Top2 = Center2 + (normal * height * shineRange * (1 - factor));
+                Vector2 Bottom2 = Center2 - (normal * height * shineRange * (1 - factor));
 
                 bars.Add(new(Top, c, new Vector3(factor, 0, 1)));
                 bars.Add(new(Bottom, c, new Vector3(factor, 1, 1)));

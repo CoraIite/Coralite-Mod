@@ -173,13 +173,13 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             if (AttackTime > 0)
             {
-                Projectile.rotation = MathF.Sin((1 - AttackTime / Owner.itemTimeMax) * MathHelper.TwoPi) * 0.3f;
+                Projectile.rotation = MathF.Sin((1 - (AttackTime / Owner.itemTimeMax)) * MathHelper.TwoPi) * 0.3f;
                 if ((int)AttackTime == 1)
                 {
                     ShootAngle++;
                     float factor = MathF.Sin(ShootAngle * 0.7f);
-                    float angle = factor * 0.6f - 1.57f;
-                    float speed = 7f + Math.Abs(factor) * 7f;
+                    float angle = (factor * 0.6f) - 1.57f;
+                    float speed = 7f + (Math.Abs(factor) * 7f);
 
                     Projectile.NewProjectileFromThis<PearlProj>(Projectile.Center
                         , angle.ToRotationVector2() * speed, Owner.GetWeaponDamage(Owner.HeldItem), Projectile.knockBack, Main.rand.Next(4));
@@ -195,7 +195,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     for (int i = 0; i < 5; i++)
                     {
                         Vector2 dir = Helper.NextVec2Dir();
-                        PearlProj.SpawnTriangleParticle(Projectile.Center + dir * Main.rand.NextFloat(6, 12), dir * Main.rand.NextFloat(1f, 3f));
+                        PearlProj.SpawnTriangleParticle(Projectile.Center + (dir * Main.rand.NextFloat(6, 12)), dir * Main.rand.NextFloat(1f, 3f));
                     }
                 }
 
@@ -210,7 +210,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             for (int i = 0; i < 5; i++)
                 Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] + toCenter - Main.screenPosition, null,
-                    Main.hslToRgb(Main.GlobalTimeWrappedHourly + i * 0.1f, 0.9f, 0.9f) * (0.5f - i * 0.5f / 5), Projectile.oldRot[i], mainTex.Size() / 2, Projectile.scale, 0, 0);
+                    Main.hslToRgb(Main.GlobalTimeWrappedHourly + (i * 0.1f), 0.9f, 0.9f) * (0.5f - (i * 0.5f / 5)), Projectile.oldRot[i], mainTex.Size() / 2, Projectile.scale, 0, 0);
 
             Projectile.QuickDraw(lightColor, 0);
             return false;
@@ -347,13 +347,13 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 for (int i = 0; i < 4; i++)
                 {
                     Vector2 dir2 = dir.RotateByRandom(-0.6f, 0.6f);
-                    SpawnTriangleParticle(Projectile.Center + dir2 * Main.rand.NextFloat(6, 12), dir2 * Main.rand.NextFloat(3f, 6f));
+                    SpawnTriangleParticle(Projectile.Center + (dir2 * Main.rand.NextFloat(6, 12)), dir2 * Main.rand.NextFloat(3f, 6f));
                 }
 
                 for (int i = 0; i < Projectile.oldPos.Length - 5; i++)
                 {
                     Vector2 dir2 = (Projectile.oldPos[i + 1] - Projectile.oldPos[i]).SafeNormalize(Vector2.Zero).RotateByRandom(-0.2f, 0.2f);
-                    SpawnTriangleParticle(Projectile.oldPos[i] + toCenter + dir2 * Main.rand.NextFloat(6), dir2 * Main.rand.NextFloat(1f, 6f));
+                    SpawnTriangleParticle(Projectile.oldPos[i] + toCenter + (dir2 * Main.rand.NextFloat(6)), dir2 * Main.rand.NextFloat(1f, 6f));
                 }
             }
         }
@@ -368,7 +368,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         private Color StripColors(float progressOnStrip)
         {
-            Color result = Color.Lerp(Color.White, Color.Lerp(brightC, darkC, MathF.Sin(Main.GlobalTimeWrappedHourly) / 2 + 0.5f), Utils.GetLerpValue(-0.2f, 0.5f, progressOnStrip, clamped: true)) * (1f - Utils.GetLerpValue(0f, 0.98f, progressOnStrip));
+            Color result = Color.Lerp(Color.White, Color.Lerp(brightC, darkC, (MathF.Sin(Main.GlobalTimeWrappedHourly) / 2) + 0.5f), Utils.GetLerpValue(-0.2f, 0.5f, progressOnStrip, clamped: true)) * (1f - Utils.GetLerpValue(0f, 0.98f, progressOnStrip));
             result.A = 64;
             return result;
         }
@@ -383,7 +383,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             miscShaderData.UseSaturation(-1.8f);
             miscShaderData.UseOpacity(2f);
             miscShaderData.Apply();
-            _vertexStrip.PrepareStripWithProceduralPadding(Projectile.oldPos, Projectile.oldRot, StripColors, StripWidth, -Main.screenPosition + Projectile.Size / 2f);
+            _vertexStrip.PrepareStripWithProceduralPadding(Projectile.oldPos, Projectile.oldRot, StripColors, StripWidth, -Main.screenPosition + (Projectile.Size / 2f));
             _vertexStrip.DrawTrail();
         }
     }

@@ -73,7 +73,7 @@ namespace Coralite.Content.Items.MagikeSeries1
 
             for (int i = 0; i < 6; i++)
             {
-                Dust d = Dust.NewDustPerfect(Projectile.Center + (Projectile.rotation + i * MathHelper.TwoPi / 6).ToRotationVector2() * length,
+                Dust d = Dust.NewDustPerfect(Projectile.Center + ((Projectile.rotation + (i * MathHelper.TwoPi / 6)).ToRotationVector2() * length),
                     DustID.CrystalSerpent_Pink, Vector2.Zero, Scale: 1.2f);
                 d.noGravity = true;
             }
@@ -104,7 +104,7 @@ namespace Coralite.Content.Items.MagikeSeries1
             Vector2 drawPos = Projectile.Center - Main.screenPosition;
 
             float time = Main.GlobalTimeWrappedHourly;
-            float timer = Projectile.timeLeft / 240f + time * 0.04f;
+            float timer = (Projectile.timeLeft / 240f) + (time * 0.04f);
 
             for (float i = 0f; i < 1f; i += 0.25f)
             {

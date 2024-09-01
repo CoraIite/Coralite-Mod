@@ -63,7 +63,7 @@ namespace Coralite.Content.Items.MagikeSeries1
                     Text = MagikeSystem.GetConnectStaffText(MagikeSystem.StaffTextID.ChooseSender_Found),
                     DurationInFrames = 60,
                     Velocity = -Vector2.UnitY
-                }, Main.MouseWorld - Vector2.UnitY * 32);
+                }, Main.MouseWorld - (Vector2.UnitY * 32));
 
                 Point16 topLeft = entity.Position;
                 Projectile.NewProjectile(new EntitySource_ItemUse(Main.LocalPlayer, Main.LocalPlayer.HeldItem), topLeft.ToWorldCoordinates(8, 8),
@@ -81,7 +81,7 @@ namespace Coralite.Content.Items.MagikeSeries1
                     Text = MagikeSystem.GetConnectStaffText(MagikeSystem.StaffTextID.ChooseSender_NotFound),
                     DurationInFrames = 60,
                     Velocity = -Vector2.UnitY
-                }, Main.MouseWorld - Vector2.UnitY * 32);
+                }, Main.MouseWorld - (Vector2.UnitY * 32));
             }
 
             return true;
@@ -165,7 +165,7 @@ namespace Coralite.Content.Items.MagikeSeries1
                             Text = MagikeSystem.GetConnectStaffText(MagikeSystem.StaffTextID.ChooseReceiver_NotFound),
                             DurationInFrames = 60,
                             Velocity = -Vector2.UnitY
-                        }, Main.MouseWorld - Vector2.UnitY * 32);
+                        }, Main.MouseWorld - (Vector2.UnitY * 32));
 
                         break;
                     }
@@ -180,7 +180,7 @@ namespace Coralite.Content.Items.MagikeSeries1
                             Text = failText,
                             DurationInFrames = 60,
                             Velocity = -Vector2.UnitY
-                        }, Main.MouseWorld - Vector2.UnitY * 32);
+                        }, Main.MouseWorld - (Vector2.UnitY * 32));
 
                         break;
                     }
@@ -192,7 +192,7 @@ namespace Coralite.Content.Items.MagikeSeries1
                         Text = MagikeSystem.GetConnectStaffText(MagikeSystem.StaffTextID.Connect_Success),
                         DurationInFrames = 60,
                         Velocity = -Vector2.UnitY
-                    }, Main.MouseWorld - Vector2.UnitY * 32);
+                    }, Main.MouseWorld - (Vector2.UnitY * 32));
 
                     MagikeHelper.SpawnLozengeParticle_WithTopLeft(sender.Position);
                     MagikeHelper.SpawnLozengeParticle_WithTopLeft(receiver.Position);

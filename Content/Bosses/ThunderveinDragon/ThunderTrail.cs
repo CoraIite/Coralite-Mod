@@ -7,7 +7,7 @@ using Terraria;
 
 namespace Coralite.Content.Bosses.ThunderveinDragon
 {
-    public class ThunderTrail(Asset<Texture2D> thunderTex, Func<float, float> widthFunc, Func<float, Color> colorFunc,Func<float ,float> alphaFunc)
+    public class ThunderTrail(Asset<Texture2D> thunderTex, Func<float, float> widthFunc, Func<float, Color> colorFunc, Func<float, float> alphaFunc)
     {
         /// <summary>
         /// 数组元素必须得给我大于2喽
@@ -98,7 +98,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 float length = Main.rand.NextFromList(-1, 1) * Main.rand.NextFloat(thunderRandomOffsetRange.Item1, thunderRandomOffsetRange.Item2);
 
                 //最后赋值
-                RandomlyPositions[i] = BasePositions[i] + normal * length + Main.rand.NextVector2Circular(randomExpandWidth, randomExpandWidth);
+                RandomlyPositions[i] = BasePositions[i] + (normal * length) + Main.rand.NextVector2Circular(randomExpandWidth, randomExpandWidth);
             }
 
             RandomlyPositions[^1] = BasePositions[^1];
@@ -106,12 +106,12 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public void DrawThunder(GraphicsDevice graphicsDevice)
         {
-            if (!CanDraw|| RandomlyPositions==null)
+            if (!CanDraw || RandomlyPositions == null)
                 return;
 
             Texture2D Texture = ThunderTex.Value;
 
-            int texWidth=Texture.Width;
+            int texWidth = Texture.Width;
             float length = 0;
 
             List<CustomVertexInfo> barsTop = new();
@@ -158,17 +158,17 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 length += dirToBack.Length();
                 float lengthFactor = length / texWidth;//当前闪电长度相对于图片长度的值，总之是用于拉伸闪电贴图的
 
-                float y = (RandomlyPositions[i].X - RandomlyPositions[i - 1].X)
+                float y = ((RandomlyPositions[i].X - RandomlyPositions[i - 1].X)
                     / (RandomlyPositions[i + 1].X - RandomlyPositions[i - 1].X)
-                    * (RandomlyPositions[i + 1].Y - RandomlyPositions[i - 1].Y)
+                    * (RandomlyPositions[i + 1].Y - RandomlyPositions[i - 1].Y))
                     + RandomlyPositions[i - 1].Y;
 
 
-                float angle = MathF.Acos((Vector2.Dot( dirToBack , dirToTront) /(dirToTront.Length()*dirToBack.Length())));//Helpers.Helper.AngleRad(dirToBack, dirToTront);
+                float angle = MathF.Acos(Vector2.Dot(dirToBack, dirToTront) / (dirToTront.Length() * dirToBack.Length()));//Helpers.Helper.AngleRad(dirToBack, dirToTront);
 
                 //normal = (RandomlyPositions[i - 1].SafeNormalize(Vector2.One) + RandomlyPositions[i + 1].SafeNormalize(Vector2.One)).SafeNormalize(Vector2.One);
                 normal = (RandomlyPositions[i - 1] - RandomlyPositions[i + 1]).RotatedBy(-MathHelper.PiOver2).SafeNormalize(Vector2.One);
-                
+
                 if (angle < PartitionLimit)
                 {
                     bool PartitionBottom = RandomlyPositions[i].Y < y;//分割底部的点
@@ -193,13 +193,13 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         Vector2 Bottom;
                         if (PartitionBottom)
                         {
-                            Top = Center + normal * width;
-                            Bottom = Center - exNormal2 * width;
+                            Top = Center + (normal * width);
+                            Bottom = Center - (exNormal2 * width);
                         }
                         else
                         {
-                            Top = Center + exNormal2 * width;
-                            Bottom = Center - normal * width;
+                            Top = Center + (exNormal2 * width);
+                            Bottom = Center - (normal * width);
                         }
 
                         AddVertexInfo(barsTop, barsBottom, Top, Bottom, thunderColor, lengthFactor);
@@ -354,9 +354,9 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             }
         }
 
-        public void AddVertexInfo(List<CustomVertexInfo> topList, List<CustomVertexInfo> bottomList, Vector2 top,Vector2 bottom,Color color,float factor)
+        public void AddVertexInfo(List<CustomVertexInfo> topList, List<CustomVertexInfo> bottomList, Vector2 top, Vector2 bottom, Color color, float factor)
         {
-            Vector2 center = (top + bottom)/2;
+            Vector2 center = (top + bottom) / 2;
 
             topList.Add(new(top, color, new Vector3(factor, 0, 0)));
             topList.Add(new(center, color, new Vector3(factor, 0.5f, 0)));
@@ -365,13 +365,13 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             bottomList.Add(new(bottom, color, new Vector3(factor, 1, 0)));
         }
 
-        public void AddVertexInfo2(List<CustomVertexInfo> topList, List<CustomVertexInfo> bottomList, Vector2 center,Vector2 dir,Color color,float factor)
+        public void AddVertexInfo2(List<CustomVertexInfo> topList, List<CustomVertexInfo> bottomList, Vector2 center, Vector2 dir, Color color, float factor)
         {
-            topList.Add(new(center+dir, color, new Vector3(factor, 0, 0)));
+            topList.Add(new(center + dir, color, new Vector3(factor, 0, 0)));
             topList.Add(new(center, color, new Vector3(factor, 0.5f, 0)));
 
             bottomList.Add(new(center, color, new Vector3(factor, 0.5f, 0)));
-            bottomList.Add(new(center-dir, color, new Vector3(factor, 1, 0)));
+            bottomList.Add(new(center - dir, color, new Vector3(factor, 1, 0)));
         }
 
         /// <summary>

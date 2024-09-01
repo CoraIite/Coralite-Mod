@@ -153,28 +153,28 @@ namespace Coralite.Content.Items.FlyingShields
             Color c = lightColor * 0.6f;
             c.A = lightColor.A;
 
-            float exRot = rotation - Owner.direction * (0.2f + 0.3f * MathF.Sin(wing));
-            float exRot2 = rotation + Owner.direction * (0.2f + 0.3f * MathF.Sin(wing));
+            float exRot = rotation - (Owner.direction * (0.2f + (0.3f * MathF.Sin(wing))));
+            float exRot2 = rotation + (Owner.direction * (0.2f + (0.3f * MathF.Sin(wing))));
 
             frameBox = mainTex.Frame(4, 1, 0, 0);
             Vector2 origin2 = frameBox.Size() / 2;
             //绘制基底
-            Main.spriteBatch.Draw(mainTex, pos - dir * 5, frameBox, c, exRot, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos - (dir * 5), frameBox, c, exRot, origin2, scale, effect, 0);
             Main.spriteBatch.Draw(mainTex, pos, frameBox, lightColor, exRot, origin2, scale, effect, 0);
 
             frameBox = mainTex.Frame(4, 1, 1, 0);
-            Main.spriteBatch.Draw(mainTex, pos - dir * 5, frameBox, c, exRot2, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos - (dir * 5), frameBox, c, exRot2, origin2, scale, effect, 0);
             Main.spriteBatch.Draw(mainTex, pos, frameBox, lightColor, exRot2, origin2, scale, effect, 0);
 
             //绘制上部
             frameBox = mainTex.Frame(4, 1, 2, 0);
-            Main.spriteBatch.Draw(mainTex, pos + dir * 3, frameBox, c, rotation, origin2, scale, effect, 0);
-            Main.spriteBatch.Draw(mainTex, pos + dir * 8, frameBox, lightColor, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos + (dir * 3), frameBox, c, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos + (dir * 8), frameBox, lightColor, rotation, origin2, scale, effect, 0);
 
             //绘制上上部
             frameBox = mainTex.Frame(4, 1, 3, 0);
-            Main.spriteBatch.Draw(mainTex, pos + dir * 11, frameBox, c, rotation, origin2, scale, effect, 0);
-            Main.spriteBatch.Draw(mainTex, pos + dir * 16, frameBox, lightColor, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos + (dir * 11), frameBox, c, rotation, origin2, scale, effect, 0);
+            Main.spriteBatch.Draw(mainTex, pos + (dir * 16), frameBox, lightColor, rotation, origin2, scale, effect, 0);
         }
     }
 

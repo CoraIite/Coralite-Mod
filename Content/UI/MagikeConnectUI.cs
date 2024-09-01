@@ -128,8 +128,8 @@ namespace Coralite.Content.UI
             Vector2 targetPos = Vector2.Zero;
 
             //首先加上时间偏移
-            float perAngle = (MathHelper.TwoPi / MagikeConnectUI.RecordConnectorCount);
-            float angle = Helper.Lerp(perAngle * index, perAngle * index + MathHelper.PiOver2, MagikeConnectUI.Timer / 20f);
+            float perAngle = MathHelper.TwoPi / MagikeConnectUI.RecordConnectorCount;
+            float angle = Helper.Lerp(perAngle * index, (perAngle * index) + MathHelper.PiOver2, MagikeConnectUI.Timer / 20f);
             float length = Helper.Lerp(Width.Pixels * 1.5f, 0, MagikeConnectUI.Timer / 20f);
 
             targetPos += angle.ToRotationVector2() * length;
@@ -155,7 +155,7 @@ namespace Coralite.Content.UI
                 spriteBatch.End();
                 spriteBatch.Begin(default, BlendState.AlphaBlend, SamplerState.PointWrap, default, default, null, Main.GameViewMatrix.TransformationMatrix);
 
-                Color drawColor = Color.Lerp(Color.White, Color.Coral, MathF.Sin((int)Main.timeForVisualEffects * 0.1f) / 2 + 0.5f);
+                Color drawColor = Color.Lerp(Color.White, Color.Coral, (MathF.Sin((int)Main.timeForVisualEffects * 0.1f) / 2) + 0.5f);
 
                 Vector2 selfPos = Helper.GetMagikeTileCenter((MagikeConnectUI.sender.Entity as MagikeTileEntity).Position);
                 Vector2 aimPos = Helper.GetMagikeTileCenter(p);

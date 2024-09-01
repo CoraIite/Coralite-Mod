@@ -55,9 +55,9 @@ namespace Coralite.Content.WorldGeneration
                 try
                 {
                     int offset = GenVars.dungeonSide;
-                    int origin = GenVars.jungleOriginX - offset * 350;
+                    int origin = GenVars.jungleOriginX - (offset * 350);
                     int junglePos = Main.rand.Next(origin - 60, origin + 60);//(GenVars.jungleMaxX + GenVars.jungleMinX) / 2;
-                    float r = Math.Abs(junglePos - Main.maxTilesX / 2);
+                    float r = Math.Abs(junglePos - (Main.maxTilesX / 2));
 
                     Vector2 pos = new(Main.maxTilesX / 2, (float)Main.worldSurface);
                     float angle = Main.rand.NextFloat(0, MathHelper.Pi);

@@ -190,7 +190,7 @@ namespace Coralite.Content.Items.Nightmare
 
             for (int i = 1; i < 6; i++)
                 Main.spriteBatch.Draw(highlightTex, Projectile.oldPos[i] + toCenter - Main.screenPosition, highlightFrameBox,
-                    color * (0.4f - i * 0.4f / 6), Projectile.oldRot[i], hightlightOrigin, (Projectile.scale - i * 0.05f), 0, 0);
+                    color * (0.4f - (i * 0.4f / 6)), Projectile.oldRot[i], hightlightOrigin, Projectile.scale - (i * 0.05f), 0, 0);
 
             //绘制自己
             Main.spriteBatch.Draw(mainTex, pos, mainFrameBox, Color.MediumPurple, Projectile.rotation, mainFrameBox.Size() / 2, Projectile.scale, 0, 0);

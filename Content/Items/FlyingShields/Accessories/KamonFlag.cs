@@ -53,7 +53,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
         {
             hit = true;
 
-            if (projectile.parryTime > 0 && projectile.Timer > projectile.dashTime - projectile.parryTime * 1.5f)
+            if (projectile.parryTime > 0 && projectile.Timer > projectile.dashTime - (projectile.parryTime * 1.5f))
             {
                 projectile.OnParry();
                 projectile.UpdateShieldAccessory(accessory => accessory.OnParry(projectile));
@@ -106,7 +106,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
                 for (int i = -1; i < 2; i++)
                 {
                     Projectile.NewProjectile(Player.GetSource_ItemUse(Item), Player.Center,
-                        (dashDirection + i * 0.4f).ToRotationVector2().RotateByRandom(-0.2f, 0.2f) * 4,
+                        (dashDirection + (i * 0.4f)).ToRotationVector2().RotateByRandom(-0.2f, 0.2f) * 4,
                          ModContent.ProjectileType<BlackSpirit>(), damage, 0, Player.whoAmI);
                 }
 

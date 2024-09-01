@@ -101,7 +101,7 @@ namespace Coralite.Content.NPCs.GlobalNPC
                 if (npc.lifeRegen > 0)
                     npc.lifeRegen = 0;
 
-                int damageCount = (int)(10 + npc.velocity.Length() * 1.5f);
+                int damageCount = (int)(10 + (npc.velocity.Length() * 1.5f));
                 if (damageCount > 30)
                     damageCount = 30;
                 npc.lifeRegen -= damageCount * 8;
@@ -237,7 +237,7 @@ namespace Coralite.Content.NPCs.GlobalNPC
                 {
                     Vector2 direction = (npc.Center - projectile.Center).SafeNormalize(-Vector2.UnitY);
 
-                    Helper.SpawnDirDustJet(projectile.Center + npc.Center / 2, () => direction.RotatedBy(Main.rand.NextFloat(-0.6f, 0.6f)), 2, 2,
+                    Helper.SpawnDirDustJet(projectile.Center + (npc.Center / 2), () => direction.RotatedBy(Main.rand.NextFloat(-0.6f, 0.6f)), 2, 2,
                         (i) => i * 0.7f * Main.rand.NextFloat(0.7f, 1.1f), DustType<NightmarePetal>(), newColor: NightmarePlantera.nightmareRed, Scale: Main.rand.NextFloat(0.6f, 0.8f), noGravity: false, extraRandRot: 0.2f);
                 }
             }

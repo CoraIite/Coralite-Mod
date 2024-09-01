@@ -36,7 +36,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             else if (timer > 200)
             {
-                RectScale = 1 - (timer - 240) / 60f;
+                RectScale = 1 - ((timer - 240) / 60f);
             }
         }
 
@@ -66,7 +66,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             var barPos = Main.LocalPlayer.Center - new Vector2(0, 225) - screenPosition;
             for (int i = 0; i < 8; i++)
-                spriteBatch.Draw(mainTex, barPos + (i * MathHelper.PiOver4).ToRotationVector2() * 2, null
+                spriteBatch.Draw(mainTex, barPos + ((i * MathHelper.PiOver4).ToRotationVector2() * 2), null
                     , Color.Purple * 0.5f, 0f, origin, 1.7f, SpriteEffects.None, 0f);
             spriteBatch.Draw(mainTex, barPos, null, Color.White, 0f, origin, 1.7f, SpriteEffects.None, 0f);
 

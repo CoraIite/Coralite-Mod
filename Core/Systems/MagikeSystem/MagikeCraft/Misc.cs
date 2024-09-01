@@ -18,7 +18,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             AddRemodelRecipe(ItemID.Acorn, ItemID.RichMahogany, 25, 6);
             AddRemodelRecipe(ItemID.Acorn, ItemID.Ebonwood, 25, 6);
             AddRemodelRecipe(ItemID.Acorn, ItemID.Shadewood, 25, 6);
-            AddRemodelRecipe(ItemID.Acorn, ItemID.Pearlwood, 150, 6, conditions:Condition.Hardmode );
+            AddRemodelRecipe(ItemID.Acorn, ItemID.Pearlwood, 150, 6, conditions: Condition.Hardmode);
             AddRemodelRecipe(ItemID.Acorn, ItemID.BorealWood, 25, 6);
             AddRemodelRecipe(ItemID.Acorn, ItemID.PalmWood, 25, 6);
 

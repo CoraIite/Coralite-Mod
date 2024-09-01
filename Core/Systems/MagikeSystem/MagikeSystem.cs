@@ -1,6 +1,4 @@
-﻿using Coralite.Content.Items.Magike;
-using Coralite.Content.Items.Magike.PolarizedFilters;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader.IO;
 using Terraria.ModLoader.UI;
@@ -19,7 +17,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         {
             Instance = this;
         }
-         
+
         /// <summary> 是否学习过 书页：魔能基础 </summary>
         public static bool learnedMagikeBase;
         /// <summary> 是否学习过卷轴：强化魔能提炼 </summary>
@@ -47,7 +45,7 @@ namespace Coralite.Core.Systems.MagikeSystem
 
             UnloadLocalization();
             UnloadAssets();
-            UnLoadPolarizeFilter() ;
+            UnLoadPolarizeFilter();
 
             magikeCraftRecipes = null;
             MagikeCraftRecipes = null;

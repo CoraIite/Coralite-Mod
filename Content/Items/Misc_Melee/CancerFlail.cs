@@ -127,8 +127,8 @@ namespace Coralite.Content.Items.Misc_Melee
                     Vector2 dir = (i * MathHelper.PiOver2).ToRotationVector2();
                     for (int j = 0; j < 3; j++)
                     {
-                        Dust d = Dust.NewDustPerfect(Projectile.Center, DustID.Clentaminator_Cyan, dir * (1 + j * (0.55f + 0.25f * range))
-                            , Scale: 0.8f + range * 0.4f - j * 0.15f);
+                        Dust d = Dust.NewDustPerfect(Projectile.Center, DustID.Clentaminator_Cyan, dir * (1 + (j * (0.55f + (0.25f * range))))
+                            , Scale: 0.8f + (range * 0.4f) - (j * 0.15f));
                         d.noGravity = true;
                     }
                 }
@@ -144,13 +144,13 @@ namespace Coralite.Content.Items.Misc_Melee
                 Projectile.rotation += Owner.direction * MathHelper.TwoPi * 2 / Owner.itemTimeMax;
 
                 Owner.itemRotation = Projectile.rotation + (OwnerDirection > 0 ? 0 : MathHelper.Pi);
-                Projectile.Center = Owner.Center + Projectile.rotation.ToRotationVector2() * rollingLength;
+                Projectile.Center = Owner.Center + (Projectile.rotation.ToRotationVector2() * rollingLength);
             }
             else
             {
                 SoundEngine.PlaySound(CoraliteSoundID.WhipSwing_Item152, Projectile.Center);
                 Vector2 dir = (Main.MouseWorld - Owner.Center).SafeNormalize(Vector2.Zero);
-                Projectile.Center = Owner.Center + dir * 64;
+                Projectile.Center = Owner.Center + (dir * 64);
                 Projectile.velocity = dir * shootSpeed;
                 Projectile.rotation = dir.ToRotation();
                 HookState = (int)AIStates.shoot;
@@ -177,7 +177,7 @@ namespace Coralite.Content.Items.Misc_Melee
             for (int i = 0; i < 6; i++)
             {
                 Vector2 offset = dir.RotateByRandom(-0.5f, 0.5f);
-                Dust d = Dust.NewDustPerfect(Projectile.Center + offset * Main.rand.Next(16, 32), DustID.GoldFlame, offset * Main.rand.NextFloat(2f, 4f)
+                Dust d = Dust.NewDustPerfect(Projectile.Center + (offset * Main.rand.Next(16, 32)), DustID.GoldFlame, offset * Main.rand.NextFloat(2f, 4f)
                     , Scale: Main.rand.NextFloat(2.5f, 3f));
                 d.noGravity = true;
             }
@@ -187,7 +187,7 @@ namespace Coralite.Content.Items.Misc_Melee
                 Vector2 dir2 = (i * MathHelper.PiOver2).ToRotationVector2();
                 for (int j = 0; j < 6; j++)
                 {
-                    Dust d = Dust.NewDustPerfect(Projectile.Center, DustID.Clentaminator_Cyan, dir2 * (1 + j * 0.8f), Scale: 1.6f - j * 0.15f);
+                    Dust d = Dust.NewDustPerfect(Projectile.Center, DustID.Clentaminator_Cyan, dir2 * (1 + (j * 0.8f)), Scale: 1.6f - (j * 0.15f));
                     d.noGravity = true;
                 }
             }
@@ -229,7 +229,7 @@ namespace Coralite.Content.Items.Misc_Melee
                 Texture2D handleTex = HandleTex.Value;
 
                 Main.spriteBatch.Draw(mainTex, endPos, frameBox, lightColor, Projectile.rotation, frameBox.Size() / 2, Projectile.scale, effect, 0);
-                Main.spriteBatch.Draw(handleTex, Owner.Center + (Owner.itemRotation + (Owner.direction > 0 ? 0 : 3.141f)).ToRotationVector2() * 16 - Main.screenPosition
+                Main.spriteBatch.Draw(handleTex, Owner.Center + ((Owner.itemRotation + (Owner.direction > 0 ? 0 : 3.141f)).ToRotationVector2() * 16) - Main.screenPosition
                     , null, lightColor, Projectile.rotation, handleTex.Size() / 2, Projectile.scale, effect, 0);
 
                 return false;

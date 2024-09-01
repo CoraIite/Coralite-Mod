@@ -45,8 +45,8 @@ namespace Coralite.Content.UI.FairyEncyclopedia
 
         public void SetSize(UIElement parent)
         {
-            Width.Set(parent.Width.Pixels / XCount - 6, 0);
-            Height.Set(parent.Height.Pixels / YCount - 6, 0);
+            Width.Set((parent.Width.Pixels / XCount) - 6, 0);
+            Height.Set((parent.Height.Pixels / YCount) - 6, 0);
         }
 
         public override void Update(GameTime gameTime)
@@ -56,7 +56,7 @@ namespace Coralite.Content.UI.FairyEncyclopedia
                 if (FairyEncyclopedia.Timer >= index)
                 {
                     alpha = FairyEncyclopedia.Timer - index;
-                    offset = 60 - alpha * 60;
+                    offset = 60 - (alpha * 60);
                 }
 
                 if (alpha > 1)

@@ -47,7 +47,7 @@ namespace Coralite.Content.Items.Stars
         {
             if (Main.myPlayer == Projectile.owner)
             {
-                _Rotation = Main.rand.Next(8) * 0.785f - 1.57f;
+                _Rotation = (Main.rand.Next(8) * 0.785f) - 1.57f;
                 Projectile.netUpdate = true;
             }
         }
@@ -117,8 +117,8 @@ namespace Coralite.Content.Items.Stars
             if (timer < 22 && timer % 3 == 0)
             {
                 //发射小符文
-                float rotate = _Rotation + 0.785f * (timer / 3);
-                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center + rotate.ToRotationVector2() * 120f, Vector2.Zero, ProjectileType<StarBookProj2>(), (int)(Projectile.damage * 0.7f * (timer / 3 + 1) / 8), Projectile.knockBack, Projectile.owner);
+                float rotate = _Rotation + (0.785f * (timer / 3));
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center + (rotate.ToRotationVector2() * 120f), Vector2.Zero, ProjectileType<StarBookProj2>(), (int)(Projectile.damage * 0.7f * ((timer / 3) + 1) / 8), Projectile.knockBack, Projectile.owner);
             }
 
             Projectile.Center = Owner.Center;
@@ -167,16 +167,16 @@ namespace Coralite.Content.Items.Stars
             List<CustomVertexInfo> bars = new();
 
             Vector2 dir = Vector2.Normalize(Projectile.velocity.RotatedBy(1.57f));
-            Vector2 Top = Projectile.oldPos[0] + dir * 30;
-            Vector2 Bottom = Projectile.oldPos[0] - dir * 30;
+            Vector2 Top = Projectile.oldPos[0] + (dir * 30);
+            Vector2 Bottom = Projectile.oldPos[0] - (dir * 30);
 
-            Color starYellow = new(255, 254, 191, (int)(150 + MathF.Cos(timer * 0.1f) * 100));
+            Color starYellow = new(255, 254, 191, (int)(150 + (MathF.Cos(timer * 0.1f) * 100)));
             var w = 1f;
             bars.Add(new(Top - Main.screenPosition, starYellow, new Vector3(1, 1, w)));
             bars.Add(new(Bottom - Main.screenPosition, starYellow, new Vector3(1, 0, w)));
 
-            Top = Projectile.oldPos[19] + dir * 40;
-            Bottom = Projectile.oldPos[19] - dir * 40;
+            Top = Projectile.oldPos[19] + (dir * 40);
+            Bottom = Projectile.oldPos[19] - (dir * 40);
             w = 1f;
             bars.Add(new(Top - Main.screenPosition, starYellow, new Vector3(0, 1, w)));
             bars.Add(new(Bottom - Main.screenPosition, starYellow, new Vector3(0, 0, w)));
@@ -211,8 +211,8 @@ namespace Coralite.Content.Items.Stars
             Vector2 origin = new(128, 128);
 
             float cosProgress = MathF.Cos(timer * 0.1f);
-            float currentScale = LightScale * (1f + cosProgress * 0.1f);
-            int a = (int)(160 - cosProgress * 40);
+            float currentScale = LightScale * (1f + (cosProgress * 0.1f));
+            int a = (int)(160 - (cosProgress * 40));
             //绘制圈圈
             Rectangle source = new(0, 0, 256, 256);
 
@@ -221,10 +221,10 @@ namespace Coralite.Content.Items.Stars
 
             //绘制光球
             source = new Rectangle(0, 256, 256, 256);
-            currentScale = LightScale * (1.5f + cosProgress * 0.3f);
+            currentScale = LightScale * (1.5f + (cosProgress * 0.3f));
             spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, source,
                                     Color.White, timer * 0.15f, origin, currentScale, SpriteEffects.None, 0f);
-            a = (int)(140 + cosProgress * 40);
+            a = (int)(140 + (cosProgress * 40));
             spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, source,
                         new Color(255, 255, 255, a), -timer * 0.17f, origin, currentScale, SpriteEffects.FlipVertically, 0f);
 

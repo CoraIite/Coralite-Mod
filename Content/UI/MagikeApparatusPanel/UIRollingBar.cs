@@ -64,7 +64,7 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
                     continue;
 
                 float sub = _indexForVisual - index;
-                float alpha = 1 - Math.Abs(sub) / 3f;
+                float alpha = 1 - (Math.Abs(sub) / 3f);
                 Vector2 center = selfCenter + new Vector2(0, sub * perLength);
 
                 if (Elements[i] is UIAlphaDrawElement special)

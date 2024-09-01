@@ -59,7 +59,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                         if (Timer < 60) //生成粒子，准备瞬移
                         {
                             float factor = Timer / 60f;
-                            float width = 80 - factor * 60;
+                            float width = 80 - (factor * 60);
 
                             for (int i = 0; i < 6; i++)
                             {
@@ -87,7 +87,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                                     0 => DustID.Teleporter,
                                     _ => DustID.TintableDust
                                 };
-                                Dust dust = Dust.NewDustPerfect(oldCenter + dir * i + Main.rand.NextVector2Circular(48, 48), type,
+                                Dust dust = Dust.NewDustPerfect(oldCenter + (dir * i) + Main.rand.NextVector2Circular(48, 48), type,
                                     dir * Main.rand.NextFloat(0.2f, 3f), 150, new Color(78, 136, 255, 80), Main.rand.NextFloat(1.5f, 2f));
                                 dust.noGravity = true;
                             }
@@ -194,7 +194,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                                             {
                                                 int index = Dust.NewDust(NPC.Bottom - new Vector2(width / 2, 30f), width, 30, DustID.Smoke, NPC.velocity.X, NPC.velocity.Y, 40, new Color(78, 136, 255, 80));
                                                 Main.dust[index].noGravity = true;
-                                                Main.dust[index].velocity.Y = -5f + Main.rand.NextFloat() * -3f;
+                                                Main.dust[index].velocity.Y = -5f + (Main.rand.NextFloat() * -3f);
                                                 Main.dust[index].velocity.X *= 7f;
                                             }
 

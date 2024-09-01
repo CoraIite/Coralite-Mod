@@ -49,7 +49,7 @@ namespace Coralite.Content.Tiles.ShadowCastle
 
             float num = 1f;
 
-            num = (num * 2f + 1f) / 3f;
+            num = ((num * 2f) + 1f) / 3f;
             int range = (int)(500f / ((num + 1f) / 2f));
             if (WorldGen.gen)
                 return;
@@ -57,7 +57,7 @@ namespace Coralite.Content.Tiles.ShadowCastle
             if (Player.GetClosestRollLuck(i, j, range) == 0f)
             {
                 if (Main.netMode != NetmodeID.MultiplayerClient)
-                    Projectile.NewProjectile(GetProjectileSource_TileBreak(i, j), i * 16 + 16, j * 16 + 16, 0f, -12f, 518, 0, 0f, Main.myPlayer);
+                    Projectile.NewProjectile(GetProjectileSource_TileBreak(i, j), (i * 16) + 16, (j * 16) + 16, 0f, -12f, 518, 0, 0f, Main.myPlayer);
 
                 return;
             }
@@ -70,7 +70,7 @@ namespace Coralite.Content.Tiles.ShadowCastle
 
             if (Main.getGoodWorld && WorldGen.genRand.NextBool(6))
             {
-                Projectile.NewProjectile(GetProjectileSource_TileBreak(i, j), i * 16 + 16, j * 16 + 8, Main.rand.Next(-100, 101) * 0.002f, 0f, 28, 0, 0f, Main.myPlayer, 16f, 16f);
+                Projectile.NewProjectile(GetProjectileSource_TileBreak(i, j), (i * 16) + 16, (j * 16) + 8, Main.rand.Next(-100, 101) * 0.002f, 0f, 28, 0, 0f, Main.myPlayer, 16f, 16f);
                 return;
             }
 
@@ -297,12 +297,12 @@ namespace Coralite.Content.Tiles.ShadowCastle
                         int stack2 = Main.rand.Next(10, 21);
                         int type4 = 40;
                         if (rockLayer && WorldGen.genRand.NextBool(2))
-                            type4 = ((!Main.hardMode) ? 42 : 168);
+                            type4 = (!Main.hardMode) ? 42 : 168;
 
                         if (j > Main.UnderworldLayer)
                             type4 = 265;
                         else if (Main.hardMode)
-                            type4 = ((!Main.rand.NextBool(2)) ? 47 : ((WorldGen.SavedOreTiers.Silver != 168) ? 278 : 4915));
+                            type4 = (!Main.rand.NextBool(2)) ? 47 : ((WorldGen.SavedOreTiers.Silver != 168) ? 278 : 4915);
 
                         Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, type4, stack2);
                         return;
@@ -350,21 +350,21 @@ namespace Coralite.Content.Tiles.ShadowCastle
             else if (j > Main.maxTilesY - 250)
                 num15 *= 1.25f;
 
-            num15 *= 1f + Main.rand.Next(-20, 21) * 0.01f;
+            num15 *= 1f + (Main.rand.Next(-20, 21) * 0.01f);
             if (Main.rand.NextBool(4))
-                num15 *= 1f + Main.rand.Next(5, 11) * 0.01f;
+                num15 *= 1f + (Main.rand.Next(5, 11) * 0.01f);
 
             if (Main.rand.NextBool(8))
-                num15 *= 1f + Main.rand.Next(10, 21) * 0.01f;
+                num15 *= 1f + (Main.rand.Next(10, 21) * 0.01f);
 
             if (Main.rand.NextBool(12))
-                num15 *= 1f + Main.rand.Next(20, 41) * 0.01f;
+                num15 *= 1f + (Main.rand.Next(20, 41) * 0.01f);
 
             if (Main.rand.NextBool(16))
-                num15 *= 1f + Main.rand.Next(40, 81) * 0.01f;
+                num15 *= 1f + (Main.rand.Next(40, 81) * 0.01f);
 
             if (Main.rand.NextBool(20))
-                num15 *= 1f + Main.rand.Next(50, 101) * 0.01f;
+                num15 *= 1f + (Main.rand.Next(50, 101) * 0.01f);
 
             if (Main.expertMode)
                 num15 *= 2.5f;

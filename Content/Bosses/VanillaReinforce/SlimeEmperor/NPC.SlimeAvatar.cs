@@ -53,7 +53,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.lifeMax = 75 + numPlayers * 75;
+            NPC.lifeMax = 75 + (numPlayers * 75);
             if (Main.getGoodWorld)
             {
                 NPC.damage = 60;
@@ -231,7 +231,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                     break;
 
                 case (int)JumpStates.Jumping:  //跳跃
-                    float targetScaleX = Math.Clamp(1 - jumpYVelocity / 15, 0.75f, 1f);
+                    float targetScaleX = Math.Clamp(1 - (jumpYVelocity / 15), 0.75f, 1f);
                     Scale = Vector2.Lerp(Scale, new Vector2(targetScaleX, 1.2f), 0.15f);
 
                     if (JumpTimer > 8)

@@ -75,7 +75,7 @@ namespace Coralite.Content.Items.Nightmare
                 Vector2 center = Item.Center + new Vector2(0f, Item.height * -0.1f);
                 Vector2 direction = Main.rand.NextVector2CircularEdge(Item.width * 0.6f, Item.height * 0.6f);
                 //float distance = 0.8f + Main.rand.NextFloat() * 0.2f;
-                Vector2 velocity = new(0f, -Main.rand.NextFloat() * 0.3f - 1.5f);
+                Vector2 velocity = new(0f, (-Main.rand.NextFloat() * 0.3f) - 1.5f);
 
                 Dust dust = Dust.NewDustPerfect(center + direction, DustID.SilverFlame, velocity, newColor: new Color(150, 150, 150));
                 dust.scale = 0.5f;
@@ -97,11 +97,11 @@ namespace Coralite.Content.Items.Nightmare
                 frame = texture.Frame();
 
             Vector2 frameOrigin = frame.Size() / 2f;
-            Vector2 offset = new(Item.width / 2 - frameOrigin.X, Item.height - frame.Height);
+            Vector2 offset = new((Item.width / 2) - frameOrigin.X, Item.height - frame.Height);
             Vector2 drawPos = Item.position - Main.screenPosition + frameOrigin + offset;
             Vector2 effectDrawPos = drawPos + new Vector2(0, -4);
             float time = Main.GlobalTimeWrappedHourly;
-            float timer = Item.timeSinceItemSpawned / 240f + time * 0.04f;
+            float timer = (Item.timeSinceItemSpawned / 240f) + (time * 0.04f);
 
             time %= 4f;
             time /= 2f;
@@ -109,7 +109,7 @@ namespace Coralite.Content.Items.Nightmare
             if (time >= 1f)
                 time = 2f - time;
 
-            time = time * 0.5f + 0.5f;
+            time = (time * 0.5f) + 0.5f;
 
             Vector2 mainSparkleScale = new(2f, 5f);
             //中心的闪光
@@ -140,8 +140,8 @@ namespace Coralite.Content.Items.Nightmare
 
             var scale2 = scale1.X * 0.65f;
             float exScale = scale1.X * 0.1f;
-            Main.spriteBatch.Draw(flowTex, pos, null, shineC, 1.57f + Main.GlobalTimeWrappedHourly, origin, scale2 + factor * exScale, 0, 0);
-            Main.spriteBatch.Draw(flowTex, pos, null, c * 0.5f, -Main.GlobalTimeWrappedHourly, origin, scale2 - factor * exScale, 0, 0);
+            Main.spriteBatch.Draw(flowTex, pos, null, shineC, 1.57f + Main.GlobalTimeWrappedHourly, origin, scale2 + (factor * exScale), 0, 0);
+            Main.spriteBatch.Draw(flowTex, pos, null, c * 0.5f, -Main.GlobalTimeWrappedHourly, origin, scale2 - (factor * exScale), 0, 0);
 
             //float rot2 = timer * 10f;
             //周围一圈小星星
@@ -168,7 +168,7 @@ namespace Coralite.Content.Items.Nightmare
             for (float i = 0f; i < 1f; i += 0.25f)
             {
                 float radians = (i + timer) * MathHelper.TwoPi;
-                spriteBatch.Draw(texture, drawPos + new Vector2(0f, 8f).RotatedBy(radians) * time, frame, new Color(150, 150, 150, 100), rot, frameOrigin, scale, SpriteEffects.None, 0);
+                spriteBatch.Draw(texture, drawPos + (new Vector2(0f, 8f).RotatedBy(radians) * time), frame, new Color(150, 150, 150, 100), rot, frameOrigin, scale, SpriteEffects.None, 0);
             }
             //Main.NewText(time);
             spriteBatch.Draw(texture, drawPos, frame, lightColor, rot, frameOrigin, scale, SpriteEffects.None, 0);

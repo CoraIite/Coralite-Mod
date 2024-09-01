@@ -8,7 +8,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
     {
         private int _index;
 
-        public abstract string GetCanProduceText {  get; }
+        public abstract string GetCanProduceText { get; }
 
         /// <summary>
         /// 是否能消耗物品

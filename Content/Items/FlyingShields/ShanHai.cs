@@ -119,7 +119,7 @@ namespace Coralite.Content.Items.FlyingShields
         public override void AI()
         {
             alpha = 0.3f * MathF.Sin(MathHelper.Pi * Projectile.timeLeft / 32f);
-            Projectile.rotation += 0.02f + 0.45f * Projectile.timeLeft / 32f;
+            Projectile.rotation += 0.02f + (0.45f * Projectile.timeLeft / 32f);
 
             if (Projectile.timeLeft > 16)
             {

@@ -1,6 +1,4 @@
-﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
@@ -13,8 +11,8 @@ namespace Coralite.Helpers
     {
         public static void SetCenter(this UIElement element, Vector2 center)
         {
-            element.Left.Set(center.X - element.Width.Pixels / 2, 0);
-            element.Top.Set(center.Y - element.Height.Pixels / 2, 0);
+            element.Left.Set(center.X - (element.Width.Pixels / 2), 0);
+            element.Top.Set(center.Y - (element.Height.Pixels / 2), 0);
         }
 
         /// <summary>
@@ -33,13 +31,13 @@ namespace Coralite.Helpers
         public static float OutsideHeight(this UIElement element)
             => element.Height.Pixels + element.PaddingTop + element.PaddingBottom;
 
-        public static void SetSize(this UIElement element,float widthPixel,float heightPixel,float widthPercent=0,float heightPercent = 0)
+        public static void SetSize(this UIElement element, float widthPixel, float heightPixel, float widthPercent = 0, float heightPercent = 0)
         {
             element.Width.Set(widthPixel, widthPercent);
             element.Height.Set(heightPixel, heightPercent);
         }
 
-        public static void SetTopLeft(this UIElement element,float topPixel,float leftPixel,float topPercent = 0,float leftPercent = 0)
+        public static void SetTopLeft(this UIElement element, float topPixel, float leftPixel, float topPercent = 0, float leftPercent = 0)
         {
             element.Top.Set(topPixel, topPercent);
             element.Left.Set(leftPixel, leftPercent);
@@ -64,7 +62,7 @@ namespace Coralite.Helpers
         /// <param name="itemType"></param>
         /// <param name="tex"></param>
         /// <param name="frameBox"></param>
-        public static void GetItemTexAndFrame(int itemType,out Texture2D tex,out Rectangle frameBox)
+        public static void GetItemTexAndFrame(int itemType, out Texture2D tex, out Rectangle frameBox)
         {
             Main.instance.LoadItem(itemType);
             tex = TextureAssets.Item[itemType].Value;

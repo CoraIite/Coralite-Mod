@@ -60,7 +60,7 @@ namespace Coralite.Content.Items.CoreKeeper
                 Vector2 center = player.Center + new Vector2(0f, player.height * -0.1f);
                 Vector2 direction = Main.rand.NextVector2CircularEdge(Item.width * 0.6f, Item.height * 0.6f);
                 //float distance = 0.8f + Main.rand.NextFloat() * 0.2f;
-                Vector2 velocity = new(0f, -Main.rand.NextFloat() * 0.3f - 1.5f);
+                Vector2 velocity = new(0f, (-Main.rand.NextFloat() * 0.3f) - 1.5f);
 
                 Dust dust = Dust.NewDustPerfect(center + direction, DustID.SilverFlame, velocity, newColor: new Color(150, 150, 150));
                 dust.scale = 0.5f;
@@ -302,7 +302,7 @@ namespace Coralite.Content.Items.CoreKeeper
             Projectile.velocity *= 0f;
             if (Owner.whoAmI == Main.myPlayer)
             {
-                _Rotation = GetStartAngle() - OwnerDirection * startAngle;//设定起始角度
+                _Rotation = GetStartAngle() - (OwnerDirection * startAngle);//设定起始角度
                 //totalAngle *= OwnerDirection;
             }
 
@@ -326,7 +326,7 @@ namespace Coralite.Content.Items.CoreKeeper
             extraScaleAngle = Main.rand.NextFloat(-0.4f, 0.4f);
             recordStartAngle = Math.Abs(startAngle);
             recordTotalAngle = Math.Abs(totalAngle);
-            Projectile.scale = Helper.EllipticalEase(recordStartAngle + extraScaleAngle - recordTotalAngle * Smoother.Smoother(0, maxTime - minTime), 1.2f, 1.7f);
+            Projectile.scale = Helper.EllipticalEase(recordStartAngle + extraScaleAngle - (recordTotalAngle * Smoother.Smoother(0, maxTime - minTime)), 1.2f, 1.7f);
         }
 
         protected override void AIBefore()
@@ -345,7 +345,7 @@ namespace Coralite.Content.Items.CoreKeeper
             {
                 channelCount++;
                 Timer = 1;
-                _Rotation = GetStartAngle() - OwnerDirection * startAngle;
+                _Rotation = GetStartAngle() - (OwnerDirection * startAngle);
                 Slasher();
                 if (channelTimer < ChannelTimeMax)
                 {
@@ -375,7 +375,7 @@ namespace Coralite.Content.Items.CoreKeeper
                 {
                     Timer = minTime + 1;
 
-                    _Rotation = startAngle = GetStartAngle() - OwnerDirection * startAngle;//设定起始角度
+                    _Rotation = startAngle = GetStartAngle() - (OwnerDirection * startAngle);//设定起始角度
                     totalAngle *= OwnerDirection;
 
                     //Helper.PlayPitched("Misc/Slash", 0.4f, 0f, Owner.Center);
@@ -432,7 +432,7 @@ namespace Coralite.Content.Items.CoreKeeper
                         _ => 1.1f
                     };
 
-                    Dust dust = Dust.NewDustPerfect(Top + RotateVec2 * Main.rand.Next(-45, 5), type,
+                    Dust dust = Dust.NewDustPerfect(Top + (RotateVec2 * Main.rand.Next(-45, 5)), type,
                            dir * Main.rand.NextFloat(0.5f, 3f), Scale: scale2);
                     dust.noGravity = true;
                 }
@@ -444,7 +444,7 @@ namespace Coralite.Content.Items.CoreKeeper
             if (Owner.HeldItem.type == ItemType<RuneSong>())
             {
                 scale = Owner.GetAdjustedItemScale(Owner.HeldItem);
-                scale = 1.5f * scale - 0.5f;
+                scale = (1.5f * scale) - 0.5f;
                 if (scale > 3f)
                     scale = 3f;
             }
@@ -452,7 +452,7 @@ namespace Coralite.Content.Items.CoreKeeper
                 Projectile.Kill();
 
             if (Combo < 3)
-                Projectile.scale = scale * Helper.EllipticalEase(recordStartAngle + extraScaleAngle - recordTotalAngle * Smoother.Smoother(timer, maxTime - minTime), 1.2f, 1.7f);
+                Projectile.scale = scale * Helper.EllipticalEase(recordStartAngle + extraScaleAngle - (recordTotalAngle * Smoother.Smoother(timer, maxTime - minTime)), 1.2f, 1.7f);
             base.OnSlash();
         }
 
@@ -475,8 +475,8 @@ namespace Coralite.Content.Items.CoreKeeper
                 base.AIAfter();
             else
             {
-                Top = Projectile.Center + RotateVec2 * (Projectile.scale * Projectile.height / 2 + trailTopWidth);
-                Bottom = Projectile.Center - RotateVec2 * (Projectile.scale * Projectile.height / 2);//弹幕的底端和顶端计算，用于检测碰撞以及绘制
+                Top = Projectile.Center + (RotateVec2 * ((Projectile.scale * Projectile.height / 2) + trailTopWidth));
+                Bottom = Projectile.Center - (RotateVec2 * (Projectile.scale * Projectile.height / 2));//弹幕的底端和顶端计算，用于检测碰撞以及绘制
 
                 if (useShadowTrail || useSlashTrail)
                     UpdateCaches();
@@ -529,8 +529,8 @@ namespace Coralite.Content.Items.CoreKeeper
                 }
 
                 Dust dust;
-                float offset = Projectile.localAI[1] + Main.rand.NextFloat(0, Projectile.width * Projectile.scale - Projectile.localAI[1]);
-                Vector2 pos = Bottom + RotateVec2 * offset;
+                float offset = Projectile.localAI[1] + Main.rand.NextFloat(0, (Projectile.width * Projectile.scale) - Projectile.localAI[1]);
+                Vector2 pos = Bottom + (RotateVec2 * offset);
                 //if (VisualEffectSystem.HitEffect_Lightning)
                 //{
                 //    dust = Dust.NewDustPerfect(pos, DustType<EmperorSabreStrikeDust>(),
@@ -565,14 +565,14 @@ namespace Coralite.Content.Items.CoreKeeper
                     int start = Main.rand.Next(6);
                     for (int i = 0; i < 6; i++)
                     {
-                        float rot = ((start + i) % 6) * 0.2f - 0.2f * 3;
+                        float rot = ((start + i) % 6 * 0.2f) - (0.2f * 3);
                         byte hue = (byte)(Main.rand.NextFloat(0.45f, 0.65f) * 255f);
-                        Vector2 vel = RotateVec2.RotatedBy(Main.rand.NextFloat(rot - 0.15f, rot + 0.15f)) * Main.rand.NextFloat(4f * i, 5 + i * 0.9f);
+                        Vector2 vel = RotateVec2.RotatedBy(Main.rand.NextFloat(rot - 0.15f, rot + 0.15f)) * Main.rand.NextFloat(4f * i, 5 + (i * 0.9f));
                         for (int j = 0; j < 4; j++)
                             ParticleOrchestrator.RequestParticleSpawn(clientOnly: true, ParticleOrchestraType.ChlorophyteLeafCrystalShot, new ParticleOrchestraSettings
                             {
                                 PositionInWorld = pos,
-                                MovementVector = vel * (1 - 0.1f * j),
+                                MovementVector = vel * (1 - (0.1f * j)),
                                 UniqueInfoPiece = hue
                             });
                     }
@@ -619,10 +619,10 @@ namespace Coralite.Content.Items.CoreKeeper
                 if (oldRotate[i] == 100f)
                     continue;
 
-                float factor = 1f - i / count;
+                float factor = 1f - (i / count);
                 Vector2 Center = GetCenter(i);
-                Vector2 Top = Center + oldRotate[i].ToRotationVector2() * (oldLength[i] + trailTopWidth + oldDistanceToOwner[i]);
-                Vector2 Bottom = Center + oldRotate[i].ToRotationVector2() * (oldLength[i] - ControlTrailBottomWidth(factor) + oldDistanceToOwner[i]);
+                Vector2 Top = Center + (oldRotate[i].ToRotationVector2() * (oldLength[i] + trailTopWidth + oldDistanceToOwner[i]));
+                Vector2 Bottom = Center + (oldRotate[i].ToRotationVector2() * (oldLength[i] - ControlTrailBottomWidth(factor) + oldDistanceToOwner[i]));
 
                 var topColor = Color.Lerp(new Color(238, 218, 130, alpha), new Color(167, 127, 95, 0), 1 - factor);
                 var bottomColor = Color.Lerp(new Color(109, 73, 86, alpha), new Color(83, 16, 85, 0), 1 - factor);
@@ -803,7 +803,7 @@ namespace Coralite.Content.Items.CoreKeeper
             float r = MathHelper.PiOver4;
             for (int i = 0; i < 4; i++)
             {
-                Main.EntitySpriteDraw(mainTex, pos + r.ToRotationVector2() * 2, frameBox, c, 0, origin, dust.scale, 0, 0);
+                Main.EntitySpriteDraw(mainTex, pos + (r.ToRotationVector2() * 2), frameBox, c, 0, origin, dust.scale, 0, 0);
                 r += MathHelper.PiOver2;
             }
             Main.EntitySpriteDraw(mainTex, pos, frameBox, dust.color, 0, origin, dust.scale, 0, 0);

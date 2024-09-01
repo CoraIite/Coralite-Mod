@@ -64,7 +64,7 @@ namespace Coralite.Content.Items.Magike.Tools
                     Text = text,
                     DurationInFrames = 60,
                     Velocity = -Vector2.UnitY
-                }, Main.MouseWorld - Vector2.UnitY * 32);
+                }, Main.MouseWorld - (Vector2.UnitY * 32));
 
                 return false;
             }

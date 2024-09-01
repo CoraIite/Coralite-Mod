@@ -55,9 +55,9 @@ namespace Coralite.Core.Systems.YujianSystem.YujianAIs
                 float length = targetVector.Length();
 
                 if (length > distanceToKeep + 20)
-                    Projectile.velocity = (Projectile.velocity * 20f + targetDirection * 2) / 21f;
+                    Projectile.velocity = ((Projectile.velocity * 20f) + (targetDirection * 2)) / 21f;
                 else if (length < distanceToKeep - 20)
-                    Projectile.velocity = (Projectile.velocity * 20f + targetDirection * -2) / 21f;
+                    Projectile.velocity = ((Projectile.velocity * 20f) + (targetDirection * -2)) / 21f;
                 else
                     Projectile.velocity *= slowdownFactor;
 
@@ -69,7 +69,7 @@ namespace Coralite.Core.Systems.YujianSystem.YujianAIs
             {
                 targetCenter = yujianProj.GetTargetCenter(IsAimingMouse);
                 int spurtTime = firstPhaseTime - SecondPhaseTime;
-                float speed = (Vector2.Distance(targetCenter, Projectile.Center) + distanceToKeep * 0.3f) / spurtTime;
+                float speed = (Vector2.Distance(targetCenter, Projectile.Center) + (distanceToKeep * 0.3f)) / spurtTime;
                 for (float i = 0; i < speed * spurtTime; i += 8)
                 {
                     float factor = i / (speed * spurtTime);
@@ -81,7 +81,7 @@ namespace Coralite.Core.Systems.YujianSystem.YujianAIs
                     }
                 }
                 Vector2 vel = (targetCenter - Projectile.Center).SafeNormalize(Vector2.One);
-                speed = (Vector2.Distance(targetCenter, Projectile.Center) + distanceToKeep * 0.3f) / spurtTime;
+                speed = (Vector2.Distance(targetCenter, Projectile.Center) + (distanceToKeep * 0.3f)) / spurtTime;
                 Projectile.velocity = vel * speed;
                 Projectile.rotation = vel.ToRotation() + 1.57f;
 
@@ -120,16 +120,16 @@ namespace Coralite.Core.Systems.YujianSystem.YujianAIs
             Texture2D mainTex = Projectile.GetTexture();
             Rectangle source = mainTex.Frame();
             Vector2 origin = new(mainTex.Width / 2, mainTex.Height / 2);
-            float scale = 1.6f + yujianProj.trailCacheLength * 0.015f;
+            float scale = 1.6f + (yujianProj.trailCacheLength * 0.015f);
 
             for (int i = yujianProj.trailCacheLength - 1; i > 0; i -= 3)
             {
                 Color shadowColor = Color.Lerp(yujianProj.color1, yujianProj.color2, (float)i / yujianProj.trailCacheLength);
-                int a = 20 + i * 4;
+                int a = 20 + (i * 4);
                 if (a > 255)
                     a = 255;
                 shadowColor.A = (byte)a;
-                spriteBatch.Draw(mainTex, Projectile.oldPos[i] - Main.screenPosition, source, shadowColor, Projectile.oldRot[i], origin, scale - i * 0.015f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(mainTex, Projectile.oldPos[i] - Main.screenPosition, source, shadowColor, Projectile.oldRot[i], origin, scale - (i * 0.015f), SpriteEffects.None, 0f);
             }
         }
 

@@ -49,24 +49,24 @@ namespace Coralite.Core.Systems.YujianSystem.YujianAIs
             UpdateVelocityWhenTracking(Projectile, distance, targetDirection);
 
             //控制旋转，接近时逐渐转到对应的角度
-            float factor = 0.008f * turnSpeed + 0.01f * roughlyVelocity;
+            float factor = (0.008f * turnSpeed) + (0.01f * roughlyVelocity);
             Projectile.rotation = Projectile.rotation.AngleLerp(targetAngle + 1.57f + StartAngle, factor);
         }
 
         public virtual void UpdateVelocityWhenTracking(Projectile Projectile, float distance, Vector2 targetDirection)
         {
             if (distance > SlashWidth * 2)
-                Projectile.velocity = (Projectile.velocity * (20f + roughlyVelocity) + targetDirection * turnSpeed) / 21f;
+                Projectile.velocity = ((Projectile.velocity * (20f + roughlyVelocity)) + (targetDirection * turnSpeed)) / 21f;
             else if (distance < SlashWidth * 1.8f)
-                Projectile.velocity = (Projectile.velocity * (20f + roughlyVelocity) - targetDirection * turnSpeed) / 21f;
+                Projectile.velocity = ((Projectile.velocity * (20f + roughlyVelocity)) - (targetDirection * turnSpeed)) / 21f;
             else if (Projectile.velocity == Vector2.Zero)
-                Projectile.velocity = (Projectile.velocity * (20f + roughlyVelocity) + targetDirection * turnSpeed) / 21f;
+                Projectile.velocity = ((Projectile.velocity * (20f + roughlyVelocity)) + (targetDirection * turnSpeed)) / 21f;
         }
 
         public virtual void StartSlash(Projectile Projectile, float targetAngle)
         {
             Projectile.rotation = targetAngle + 1.57f + StartAngle;
-            Vector2 slashCenter = Projectile.Center - (Projectile.rotation - 1.57f).ToRotationVector2() * SlashWidth;
+            Vector2 slashCenter = Projectile.Center - ((Projectile.rotation - 1.57f).ToRotationVector2() * SlashWidth);
             Projectile.localAI[0] = slashCenter.X;
             Projectile.localAI[1] = slashCenter.Y;
             targetRotation = targetAngle;
@@ -84,7 +84,7 @@ namespace Coralite.Core.Systems.YujianSystem.YujianAIs
 
             float current = Helper.EllipticalEase(changeAngle, halfShortAxis, halfLongAxis);
             float Width = current * SlashWidth / startElliptical;
-            Projectile.Center = slashCenter + Projectile.rotation.ToRotationVector2() * Width;
+            Projectile.Center = slashCenter + (Projectile.rotation.ToRotationVector2() * Width);
 
             Projectile.rotation += 1.57f;
         }

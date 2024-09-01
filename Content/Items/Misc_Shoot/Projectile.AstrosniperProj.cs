@@ -44,15 +44,15 @@ namespace Coralite.Content.Items.Misc_Shoot
 
         public override void ApplyRecoil(float factor)
         {
-            Projectile.rotation = TargetRot - dir * factor * recoilAngle;
-            HeldPositionX = heldPositionX + factor * recoilLength;
-            Projectile.Center = Owner.Center + dir * Projectile.rotation.ToRotationVector2() * HeldPositionX;
+            Projectile.rotation = TargetRot - (dir * factor * recoilAngle);
+            HeldPositionX = heldPositionX + (factor * recoilLength);
+            Projectile.Center = Owner.Center + (dir * Projectile.rotation.ToRotationVector2() * HeldPositionX);
         }
 
         public override void AfterAI(float factor)
         {
             Owner.heldProj = Projectile.whoAmI;
-            Owner.itemRotation = Projectile.rotation + dir * 0.3f;
+            Owner.itemRotation = Projectile.rotation + (dir * 0.3f);
         }
 
         public override bool PreDraw(ref Color lightColor)

@@ -135,14 +135,14 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             {
                 if (nPCStrengthHelper.IsExpertMode)
                 {
-                    NPC.lifeMax = (int)((23_5000 + numPlayers * 5_4000) / journeyScale);
+                    NPC.lifeMax = (int)((23_5000 + (numPlayers * 5_4000)) / journeyScale);
                     NPC.damage = 100;
                     NPC.defense = 35;
                 }
 
                 if (nPCStrengthHelper.IsMasterMode)
                 {
-                    NPC.lifeMax = (int)((32_8000 + numPlayers * 7_8000) / journeyScale);
+                    NPC.lifeMax = (int)((32_8000 + (numPlayers * 7_8000)) / journeyScale);
                     NPC.defense = 65;
                     NPC.damage = 120;
                 }
@@ -156,20 +156,20 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 return;
             }
 
-            NPC.lifeMax = 23_5000 + numPlayers * 5_4000;
+            NPC.lifeMax = 23_5000 + (numPlayers * 5_4000);
             NPC.damage = 100;
             NPC.defense = 55;
 
             if (Main.masterMode)
             {
-                NPC.lifeMax = 32_8000 + numPlayers * 7_8000;
+                NPC.lifeMax = 32_8000 + (numPlayers * 7_8000);
                 NPC.defense = 65;
                 NPC.damage = 120;
             }
 
             if (Main.getGoodWorld)
             {
-                NPC.lifeMax = 43_2000 + numPlayers * 10_0000;
+                NPC.lifeMax = 43_2000 + (numPlayers * 10_0000);
                 NPC.damage = 140;
                 NPC.defense = 70;
             }
@@ -239,7 +239,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         private void Modifiers_ModifyHitInfo(ref NPC.HitInfo info)
         {
-            if ((Phase == (int)AIPhases.Dream_P2 && NPC.life < NPC.lifeMax / 5))
+            if (Phase == (int)AIPhases.Dream_P2 && NPC.life < NPC.lifeMax / 5)
             {
                 info.Damage = 1;
             }
@@ -374,7 +374,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 return;
             }
 
-            if (Phase == (int)AIPhases.Nightemare_P3 || phase2HeadSlot == (int)AIPhases.WakeUp_P4 && phase3HeadSlot != -1)
+            if (Phase == (int)AIPhases.Nightemare_P3 || (phase2HeadSlot == (int)AIPhases.WakeUp_P4 && phase3HeadSlot != -1))
             {
                 index = phase3HeadSlot;
                 return;
@@ -669,7 +669,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public Vector2 GetPhase1MousePos()
         {
-            return NPC.Center + NPC.rotation.ToRotationVector2() * 100;
+            return NPC.Center + (NPC.rotation.ToRotationVector2() * 100);
         }
 
         public void DoRotation(float maxChange)
@@ -692,14 +692,14 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public void NormallySetTentacle()
         {
-            Vector2 center = NPC.Center - NPC.velocity * 2;
+            Vector2 center = NPC.Center - (NPC.velocity * 2);
             for (int i = 0; i < 3; i++)
             {
                 RotateTentacle tentacle = rotateTentacles[i];
-                float factor = MathF.Sin((float)Main.timeForVisualEffects / 12 + i * 1.5f);
-                float targetRot = tentacle.rotation.AngleLerp(NPC.rotation + factor * 1.3f, 0.4f);
+                float factor = MathF.Sin(((float)Main.timeForVisualEffects / 12) + (i * 1.5f));
+                float targetRot = tentacle.rotation.AngleLerp(NPC.rotation + (factor * 1.3f), 0.4f);
                 Vector2 selfPos = Vector2.Lerp(tentacle.pos,
-                    center + (i * 30 + 140) * (NPC.rotation + factor * 0.65f + MathHelper.Pi).ToRotationVector2(), 0.2f);
+                    center + (((i * 30) + 140) * (NPC.rotation + (factor * 0.65f) + MathHelper.Pi).ToRotationVector2()), 0.2f);
                 tentacle.SetValue(selfPos, NPC.Center, targetRot);
             }
         }
@@ -761,7 +761,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 for (int i = 0; i < 7; i++)
                 {
                     Color c = phantomColors[i] * alpha;
-                    spriteBatch.Draw(mainTex, pos + (i * 1 / 7f * MathHelper.TwoPi + angle).ToRotationVector2() * distance, frameBox, c * alpha, selfRot, origin, NPC.scale, 0, 0);
+                    spriteBatch.Draw(mainTex, pos + (((i * 1 / 7f * MathHelper.TwoPi) + angle).ToRotationVector2() * distance), frameBox, c * alpha, selfRot, origin, NPC.scale, 0, 0);
                 }
             }
 

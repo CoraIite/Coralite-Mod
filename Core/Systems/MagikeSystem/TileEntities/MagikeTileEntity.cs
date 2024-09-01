@@ -153,7 +153,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
                 if (!Components.Contains(component.ID))
                     Components.Add(component.ID, new List<Component>());
 
-                ((List<Component>)(Components[component.ID])).Add(component);
+                ((List<Component>)Components[component.ID]).Add(component);
             }
 
             ComponentsCache.Add(component);
@@ -181,7 +181,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
             if (MagikeComponentID.IsSingleton(id))//该组件为单例形态
                 Components.Remove(id);
             else//该组件需要多重存在
-                ((List<Component>)(Components[id])).Remove(currentComponent);
+                ((List<Component>)Components[id]).Remove(currentComponent);
 
             ComponentsCache.Remove(currentComponent);
         }

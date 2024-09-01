@@ -62,7 +62,7 @@ namespace Coralite.Content.Items.Icicle
             {
                 default: break;
                 case 0: //普普通通的弹幕
-                    Projectile.Center = Owner.Center + Projectile.ai[0].ToRotationVector2() * 12;
+                    Projectile.Center = Owner.Center + (Projectile.ai[0].ToRotationVector2() * 12);
                     break;
                 case 1: //旋转一圈后并判断玩家是否按下左键，是的话就射
                     do
@@ -101,7 +101,7 @@ namespace Coralite.Content.Items.Icicle
                                 if (Main.rand.NextBool(20))
                                 {
                                     Vector2 dir = Rotation.ToRotationVector2();
-                                    Particle.NewParticle(Owner.Center + dir * 16 + Main.rand.NextVector2Circular(8, 8), dir * 1.2f, CoraliteContent.ParticleType<HorizontalStar>(), Coralite.IcicleCyan, Main.rand.NextFloat(0.1f, 0.15f));
+                                    Particle.NewParticle(Owner.Center + (dir * 16) + Main.rand.NextVector2Circular(8, 8), dir * 1.2f, CoraliteContent.ParticleType<HorizontalStar>(), Coralite.IcicleCyan, Main.rand.NextFloat(0.1f, 0.15f));
                                 }
                             }
                             Projectile.timeLeft = 2;
@@ -122,7 +122,7 @@ namespace Coralite.Content.Items.Icicle
                     } while (false);
 
                     Projectile.rotation = Rotation;
-                    Projectile.Center = Owner.Center + Rotation.ToRotationVector2() * 12;
+                    Projectile.Center = Owner.Center + (Rotation.ToRotationVector2() * 12);
                     Timer += 1f;
                     break;
             }
@@ -143,9 +143,9 @@ namespace Coralite.Content.Items.Icicle
                 float factor = Timer % 80 / 80;
                 float num3 = Utils.Remap(factor, 0f, 0.6f, 0f, 1f) * Utils.Remap(factor, 0.6f, 1f, 1f, 0f);
                 Vector2 dir = Rotation.ToRotationVector2();
-                Main.spriteBatch.Draw(starTex, center + dir * 6, null, Color.White * Alpha, Projectile.rotation + 1.57f, starTex.Size() / 2, 1.4f, SpriteEffects.None, 0f);
+                Main.spriteBatch.Draw(starTex, center + (dir * 6), null, Color.White * Alpha, Projectile.rotation + 1.57f, starTex.Size() / 2, 1.4f, SpriteEffects.None, 0f);
 
-                Helpers.Helper.DrawPrettyStarSparkle(Projectile.Opacity, SpriteEffects.None, center + dir * 18, new Color(255, 255, 255, 0) * num3 * 0.5f, Coralite.IcicleCyan,
+                Helpers.Helper.DrawPrettyStarSparkle(Projectile.Opacity, SpriteEffects.None, center + (dir * 18), new Color(255, 255, 255, 0) * num3 * 0.5f, Coralite.IcicleCyan,
                     factor, 0f, 0.5f, 0.5f, 1f, 0f, new Vector2(1.3f, 1.3f), Vector2.One);
             }
 

@@ -89,11 +89,11 @@ namespace Coralite.Content.Items.Crimson
 
                 float speed = velocity.Length();
 
-                Vector2 pos = player.Center + f.ToRotationVector2() * MathHelper.Lerp(min, max, Main.rand.NextFloat());
+                Vector2 pos = player.Center + (f.ToRotationVector2() * MathHelper.Lerp(min, max, Main.rand.NextFloat()));
                 for (int i = 0; i < 50; i++)
                 {
-                    pos = position + f.ToRotationVector2() * MathHelper.Lerp(min, max, Main.rand.NextFloat());
-                    if (Collision.CanHit(position, 0, 0, pos + (pos - position).SafeNormalize(Vector2.UnitX) * 8f, 0, 0))
+                    pos = position + (f.ToRotationVector2() * MathHelper.Lerp(min, max, Main.rand.NextFloat()));
+                    if (Collision.CanHit(position, 0, 0, pos + ((pos - position).SafeNormalize(Vector2.UnitX) * 8f), 0, 0))
                         break;
 
                     f = Main.rand.NextFloat() * ((float)Math.PI * 2f);
@@ -229,7 +229,7 @@ namespace Coralite.Content.Items.Crimson
 
             for (int i = 1; i < 6; i++)
                 Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] + toCenter - Main.screenPosition, frameBox,
-                    Color.DarkRed * (0.5f - i * 0.5f / 6), Projectile.oldRot[i], origin, Projectile.scale * (1 - i * 0.06f), 0, 0);
+                    Color.DarkRed * (0.5f - (i * 0.5f / 6)), Projectile.oldRot[i], origin, Projectile.scale * (1 - (i * 0.06f)), 0, 0);
 
             Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, frameBox, lightColor, Projectile.rotation, origin, Projectile.scale, 0, 0);
 
@@ -307,7 +307,7 @@ namespace Coralite.Content.Items.Crimson
 
                                 for (int j = 0; j < length; j += 4)
                                 {
-                                    Dust d = Dust.NewDustPerfect(Projectile.Center + dir * j, DustID.RedTorch, Vector2.Zero);
+                                    Dust d = Dust.NewDustPerfect(Projectile.Center + (dir * j), DustID.RedTorch, Vector2.Zero);
                                     d.noGravity = true;
                                 }
                             }

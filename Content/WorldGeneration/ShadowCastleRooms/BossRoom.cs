@@ -63,8 +63,8 @@ namespace Coralite.Content.WorldGeneration.ShadowCastleRooms
                                 startPoint += new Point(0, -1);
 
                             //把中心点挪到最左边
-                            startPoint -= new Point(CorridorHeight / 2 + WallWidth, 0);
-                            endPoint -= new Point(CorridorHeight / 2 + WallWidth, 0);
+                            startPoint -= new Point((CorridorHeight / 2) + WallWidth, 0);
+                            endPoint -= new Point((CorridorHeight / 2) + WallWidth, 0);
 
                             int offset = 0;
                             int targetOffset = 0;
@@ -76,7 +76,7 @@ namespace Coralite.Content.WorldGeneration.ShadowCastleRooms
                             for (int y = 0; y < count; y++)
                             {
                                 //当前的y位置
-                                int currentY = startPoint.Y + y * dir2;
+                                int currentY = startPoint.Y + (y * dir2);
                                 int baseX = (int)Math.Round(Helper.Lerp(startPoint.X, endPoint.X, y / (float)(count - 1)));
 
                                 if (Math.Abs(offset) > (count - y))
@@ -128,7 +128,7 @@ namespace Coralite.Content.WorldGeneration.ShadowCastleRooms
                                 else if (placePlatformChance > 2)
                                     placePlatformChance--;
 
-                                for (int x = 0; x < CorridorHeight + WallWidth * 2 + 1; x++)
+                                for (int x = 0; x < CorridorHeight + (WallWidth * 2) + 1; x++)
                                 {
                                     int currentX = baseX + x;
 
@@ -140,7 +140,7 @@ namespace Coralite.Content.WorldGeneration.ShadowCastleRooms
                                         Main.tile[currentX, currentY].ClearEverything();
                                         WorldGen.PlaceTile(currentX, currentY, shadowBrick);
                                         //放墙
-                                        if (x > 0 && x < CorridorHeight + WallWidth * 2 - 1)
+                                        if (x > 0 && x < CorridorHeight + (WallWidth * 2) - 1)
                                             WorldGen.PlaceWall(currentX, currentY, shadowWall);
                                     }
                                     else//清空中间范围

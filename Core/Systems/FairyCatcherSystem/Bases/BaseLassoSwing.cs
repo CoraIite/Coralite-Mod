@@ -64,8 +64,8 @@ namespace Coralite.Core.Prefabs.Projectiles
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
 
             Projectile.extraUpdates = 2;
-            delayTime *= (Projectile.extraUpdates + 1);
-            shootTime *= (Projectile.extraUpdates + 1);
+            delayTime *= Projectile.extraUpdates + 1;
+            shootTime *= Projectile.extraUpdates + 1;
             startAngle = 1.57f;
             minTime = Owner.itemTimeMax * (Projectile.extraUpdates + 1);
             maxTime = minTime + shootTime;
@@ -74,7 +74,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             Projectile.velocity *= 0f;
             if (Owner.whoAmI == Main.myPlayer)
             {
-                _Rotation = GetStartAngle() - OwnerDirection * startAngle;//设定起始角度
+                _Rotation = GetStartAngle() - (OwnerDirection * startAngle);//设定起始角度
             }
 
             Smoother.ReCalculate(maxTime - minTime);
@@ -109,7 +109,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         protected override void BeforeSlash()
         {
             //Projectile.Kill();
-            _Rotation = GetStartAngle() - OwnerDirection * (startAngle + MathF.Sin(Timer / minTime * 2.5f * MathHelper.Pi) * 0.55f);
+            _Rotation = GetStartAngle() - (OwnerDirection * (startAngle + (MathF.Sin(Timer / minTime * 2.5f * MathHelper.Pi) * 0.55f)));
             distanceToOwner = Helper.Lerp(minDistance / 2, minDistance, Timer / minTime);
             Slasher();
 
@@ -146,10 +146,10 @@ namespace Coralite.Core.Prefabs.Projectiles
         protected override void Slasher()
         {
             RotateVec2 = _Rotation.ToRotationVector2();
-            Projectile.Center = OwnerCenter() + oldRotate[^1].ToRotationVector2() * oldDistanceToOwner[^1];
+            Projectile.Center = OwnerCenter() + (oldRotate[^1].ToRotationVector2() * oldDistanceToOwner[^1]);
             Projectile.rotation = _Rotation;
             cursorRotation = oldRotate[^1];
-            Owner.itemLocation = Owner.Center + RotateVec2 * 15;
+            Owner.itemLocation = Owner.Center + (RotateVec2 * 15);
         }
 
         protected virtual void ShootFairy()
@@ -213,7 +213,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         /// <returns></returns>
         public virtual Vector2 GetHandlePos(Texture2D handleTex)
         {
-            return Owner.itemLocation + RotateVec2 * DrawOriginOffsetX;
+            return Owner.itemLocation + (RotateVec2 * DrawOriginOffsetX);
         }
 
         /// <summary>
@@ -250,7 +250,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             }
             else
             {
-                float distance = (float)Math.Sqrt(distanceX * distanceX + distanceY * distanceY);
+                float distance = (float)Math.Sqrt((distanceX * distanceX) + (distanceY * distanceY));
                 distance = stringTex.Height / distance;
                 distanceX *= distance;
                 distanceY *= distance;
@@ -263,7 +263,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             while (flag)
             {
                 float sourceHeight = stringTex.Height;
-                float distance1 = (float)Math.Sqrt(distanceX * distanceX + distanceY * distanceY);
+                float distance1 = (float)Math.Sqrt((distanceX * distanceX) + (distanceY * distanceY));
                 float distance2 = distance1;
                 if (float.IsNaN(distance1) || float.IsNaN(distance2))
                 {
@@ -299,7 +299,7 @@ namespace Coralite.Core.Prefabs.Projectiles
                     if (num10 > 16f)
                         num10 = 16f;
 
-                    num10 = 1f - num10 / 16f;
+                    num10 = 1f - (num10 / 16f);
                     num9 *= num10;
                     num10 = distance2 / 80f;
                     if (num10 > 1f)
@@ -352,7 +352,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         public virtual void DrawHandle(Texture2D HandleTex)
         {
             Main.spriteBatch.Draw(HandleTex, Owner.itemLocation - Main.screenPosition, null,
-                Lighting.GetColor(Owner.Center.ToTileCoordinates()), _Rotation + OwnerDirection * spriteRotation, HandleTex.Size() / 2, 1f, Owner.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
+                Lighting.GetColor(Owner.Center.ToTileCoordinates()), _Rotation + (OwnerDirection * spriteRotation), HandleTex.Size() / 2, 1f, Owner.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
         }
 
         public virtual Color GetStringColor(Vector2 pos)

@@ -20,39 +20,39 @@ namespace Coralite.Content.Items.Magike.PolarizedFilters
         {
             CreateRecipe()
                 .AddIngredient<BasicFilter>()
-                .AddIngredient(ItemID.Coral,5)
+                .AddIngredient(ItemID.Coral, 5)
                 .DisableDecraft()
                 .AddTile(TileID.WorkBenches)
                 .Register();
 
             CreateRecipe()
                 .AddIngredient<BasicFilter>()
-                .AddIngredient(ItemID.Seashell,4)
+                .AddIngredient(ItemID.Seashell, 4)
                 .DisableDecraft()
                 .AddTile(TileID.WorkBenches)
                 .Register();
 
             CreateRecipe()
                 .AddIngredient<BasicFilter>()
-                .AddIngredient(ItemID.Starfish,3)
+                .AddIngredient(ItemID.Starfish, 3)
                 .DisableDecraft()
                 .AddTile(TileID.WorkBenches)
                 .Register();
 
             CreateRecipe()
                 .AddIngredient<BasicFilter>()
-                .AddIngredient(ItemID.TulipShell,2)
+                .AddIngredient(ItemID.TulipShell, 2)
                 .DisableDecraft()
                 .AddTile(TileID.WorkBenches)
                 .Register();
 
             CreateRecipe()
                 .AddIngredient<BasicFilter>()
-                .AddIngredient(ItemID.LightningWhelkShell,2)
+                .AddIngredient(ItemID.LightningWhelkShell, 2)
                 .DisableDecraft()
                 .AddTile(TileID.WorkBenches)
                 .Register();
-            
+
             CreateRecipe()
                 .AddIngredient<BasicFilter>()
                 .AddIngredient(ItemID.JunoniaShell)

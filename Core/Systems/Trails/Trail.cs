@@ -95,7 +95,7 @@ namespace Coralite.Core.Systems.Trails
         {
             VertexPositionColorTexture[] verticesTemp = new VertexPositionColorTexture[maxPointCount * 2];
 
-            short[] indicesTemp = new short[maxPointCount * 6 - 6];
+            short[] indicesTemp = new short[(maxPointCount * 6) - 6];
 
             // k = 0 indicates starting at the end of the trail (furthest from the origin of it).
             //k = 0 表示从路径的末端开始（离原点最远）。
@@ -112,7 +112,7 @@ namespace Coralite.Core.Systems.Trails
                 float width = trailWidthFunction?.Invoke(factorAlongTrail) ?? defaultWidth;
 
                 Vector2 current = Positions[k];
-                Vector2 next = (k == Positions.Length - 1 ? Positions[Positions.Length - 1] + (Positions[Positions.Length - 1] - Positions[Positions.Length - 2]) : Positions[k + 1]);
+                Vector2 next = k == Positions.Length - 1 ? Positions[Positions.Length - 1] + (Positions[Positions.Length - 1] - Positions[Positions.Length - 2]) : Positions[k + 1];
 
                 Vector2 normalToNext = (next - current).SafeNormalize(Vector2.Zero);
                 Vector2 normalPerp = normalToNext.RotatedBy(MathHelper.PiOver2);
@@ -190,11 +190,11 @@ namespace Coralite.Core.Systems.Trails
                  */
 
                 indicesTemp[k * 6] = (short)(k + maxPointCount);
-                indicesTemp[k * 6 + 1] = (short)(k + maxPointCount + 1);
-                indicesTemp[k * 6 + 2] = (short)(k + 1);
-                indicesTemp[k * 6 + 3] = (short)(k + 1);
-                indicesTemp[k * 6 + 4] = k;
-                indicesTemp[k * 6 + 5] = (short)(k + maxPointCount);
+                indicesTemp[(k * 6) + 1] = (short)(k + maxPointCount + 1);
+                indicesTemp[(k * 6) + 2] = (short)(k + 1);
+                indicesTemp[(k * 6) + 3] = (short)(k + 1);
+                indicesTemp[(k * 6) + 4] = k;
+                indicesTemp[(k * 6) + 5] = (short)(k + maxPointCount);
             }
 
             // The next available index will be the next value after the count of points (starting at 0).

@@ -1,9 +1,7 @@
-﻿using Coralite.Content.Items.FlyingShields.Accessories;
-using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
+﻿using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Terraria;
 using Terraria.ID;
 using static Coralite.Core.Systems.MagikeSystem.MagikeSystem;
-using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Core.Systems.MagikeSystem.Remodels
 {
@@ -12,7 +10,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
         public void AddMagikeCraftRecipe()
         {
             //火焰花
-            AddRemodelRecipe(ItemID.Fireblossom, ItemID.LivingFireBlock, 25,  5);
+            AddRemodelRecipe(ItemID.Fireblossom, ItemID.LivingFireBlock, 25, 5);
 
             //凝胶
             AddRemodelRecipe(ItemID.Gel, ItemID.PinkGel, 25);
@@ -22,7 +20,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             AddRemodelRecipe(ItemID.DirtBlock, ItemID.DirtiestBlock, 450, mainStack: 9999);
 
             //骨头
-            AddRemodelRecipe(ItemID.Bone, ItemID.BoneFeather, 5000, mainStack: 99, conditions:Condition.DownedPlantera);
+            AddRemodelRecipe(ItemID.Bone, ItemID.BoneFeather, 5000, mainStack: 99, conditions: Condition.DownedPlantera);
             AddRemodelRecipe(ItemID.Bone, ItemID.BoneKey, 1000, mainStack: 999, conditions: Condition.Hardmode);
             AddRemodelRecipe(ItemID.Bone, ItemID.BonePickaxe, 150, mainStack: 20);
             AddRemodelRecipe(ItemID.Bone, ItemID.BoneSword, 150, mainStack: 20);
@@ -31,7 +29,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             AddRemodelRecipe(ItemID.Amber, ItemID.AmberMosquito, 300, mainStack: 99);
 
             //黑曜石
-            AddRemodelRecipe(ItemID.Obsidian, ItemID.ShadowKey, 400, mainStack: 99, conditions: Condition.DownedSkeletron );
+            AddRemodelRecipe(ItemID.Obsidian, ItemID.ShadowKey, 400, mainStack: 99, conditions: Condition.DownedSkeletron);
 
             //青蛙
             AddRemodelRecipe(ItemID.Frog, ItemID.FrogLeg, 400, mainStack: 10);

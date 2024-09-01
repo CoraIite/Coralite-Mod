@@ -19,7 +19,7 @@ namespace Coralite.Core.Systems.MagikeSystem
             LearnedMagikeBase = this.GetLocalization("learnedMagikeBase");
             LearnedMagikeAdvanced = this.GetLocalization("learnedMagikeAdvanced");
             NewKnowledgeUnlocked = this.GetLocalization("NewKnowledgeUnlocked", () => "魔能辞典中解锁了新的知识");
-            Error= this.GetLocalization("Error");
+            Error = this.GetLocalization("Error");
 
             this.GetLocalization("PolarizedFilterTooltip");
 
@@ -58,7 +58,7 @@ namespace Coralite.Core.Systems.MagikeSystem
              *  - 右键点击为打开连接面板，左键单击面板和选择发送器一样，右键单击取消连接
              */
             ChooseSender_Found = 0,
-            ChooseSender_NotFound ,
+            ChooseSender_NotFound,
 
             ChooseReceiver_NotFound,
             ConnectFail_TooFar,
@@ -144,11 +144,11 @@ namespace Coralite.Core.Systems.MagikeSystem
              * 连接数量
              * 
              */
-             MagikeAmount = 0,
-             ConnectAmount = 1,
-             IsWorking = 2,
+            MagikeAmount = 0,
+            ConnectAmount = 1,
+            IsWorking = 2,
 
-             Count = 3,
+            Count = 3,
         }
 
         public void LoadApparatusDescription()
@@ -324,7 +324,7 @@ namespace Coralite.Core.Systems.MagikeSystem
 
             for (int i = 0; i < (int)UITextID.Count; i++)
             {
-                UIText[i] = this.GetLocalization(nameof(UIText)+"." + Enum.GetName((UITextID)i));
+                UIText[i] = this.GetLocalization(nameof(UIText) + "." + Enum.GetName((UITextID)i));
             }
         }
 

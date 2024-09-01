@@ -155,7 +155,7 @@ namespace Coralite.Content.NPCs.Magike
 
                     Vector2 center = GetHeadPos();
                     float factor = MoveTime / 180;
-                    float width = 2 + factor * 44;
+                    float width = 2 + (factor * 44);
 
                     if (MoveTime % 5 == 0)
                     {

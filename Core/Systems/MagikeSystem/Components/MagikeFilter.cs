@@ -129,7 +129,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public override void LeftClick(UIMouseEvent evt)
         {
-            _entity.RemoveComponent( _filter);
+            _entity.RemoveComponent(_filter);
             UILoader.GetUIState<MagikeApparatusPanel>().Recalculate();
             base.LeftClick(evt);
         }

@@ -45,11 +45,11 @@ namespace Coralite.Content.Tiles.Magike
             {
                 frame = (frameCounter - restTime) / 6;
             }
-            else if (frameCounter > restTime * 2 + frameTime && frameCounter <= restTime * 2 + frameTime * 2)
+            else if (frameCounter > (restTime * 2) + frameTime && frameCounter <= (restTime * 2) + (frameTime * 2))
             {
-                frame = 4 - (frameCounter - restTime * 2 - frameTime) / 6;
+                frame = 4 - ((frameCounter - (restTime * 2) - frameTime) / 6);
             }
-            else if (frameCounter > restTime * 2 + frameTime * 2)
+            else if (frameCounter > (restTime * 2) + (frameTime * 2))
             {
                 frameCounter = 0;
                 frame = 0;

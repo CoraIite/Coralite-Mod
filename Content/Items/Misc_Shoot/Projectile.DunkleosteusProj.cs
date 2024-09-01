@@ -57,24 +57,24 @@ namespace Coralite.Content.Items.Misc_Shoot
             {
                 default:
                 case 0:
-                    Projectile.rotation = TargetRot - Owner.gravDir * Owner.direction * factor * 0.06f;
-                    HeldPositionX = HELD_LENGTH + factor * -4;
+                    Projectile.rotation = TargetRot - (Owner.gravDir * Owner.direction * factor * 0.06f);
+                    HeldPositionX = HELD_LENGTH + (factor * -4);
                     break;
                 case 1:
-                    Projectile.rotation = TargetRot - Owner.gravDir * Owner.direction * factor * 0.3f;
-                    HeldPositionX = HELD_LENGTH + factor * -16;
+                    Projectile.rotation = TargetRot - (Owner.gravDir * Owner.direction * factor * 0.3f);
+                    HeldPositionX = HELD_LENGTH + (factor * -16);
 
                     float rotation = Projectile.rotation + (Owner.gravDir * Owner.direction > 0 ? 0 : MathHelper.Pi);
-                    Vector2 center = Projectile.Center + rotation.ToRotationVector2() * 48 + Main.rand.NextVector2Circular(6, 6);
+                    Vector2 center = Projectile.Center + (rotation.ToRotationVector2() * 48) + Main.rand.NextVector2Circular(6, 6);
                     Dust dust = Dust.NewDustPerfect(center, DustID.Smoke, -Vector2.UnitY.RotatedByRandom(0.1f) * 2f, newColor: Color.Black, Scale: Main.rand.NextFloat(1.4f, 1.8f));
                     dust.noGravity = true;
                     break;
             }
 
-            Projectile.Center = Owner.Center + Owner.gravDir * Owner.direction * Projectile.rotation.ToRotationVector2() * HeldPositionX;
+            Projectile.Center = Owner.Center + (Owner.gravDir * Owner.direction * Projectile.rotation.ToRotationVector2() * HeldPositionX);
 
             Owner.heldProj = Projectile.whoAmI;
-            Owner.itemRotation = Projectile.rotation + Owner.direction * 0.3f;
+            Owner.itemRotation = Projectile.rotation + (Owner.direction * 0.3f);
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -91,7 +91,7 @@ namespace Coralite.Content.Items.Misc_Shoot
             {
                 float factor = Projectile.timeLeft / (float)Owner.itemTimeMax;
                 float rotation = Projectile.rotation + (ownerDir ? -0.4f : 3.541f); //额...魔法数字，3.141f+0.36f
-                Helper.DrawPrettyStarSparkle(Projectile.Opacity, SpriteEffects.None, center + rotation.ToRotationVector2() * 22, new Color(255, 255, 255, 0) * 0.8f, Color.Red, factor, 0f, 0.5f, 0.5f, 1f, 0f, new Vector2(3, 1.5f), Vector2.One);
+                Helper.DrawPrettyStarSparkle(Projectile.Opacity, SpriteEffects.None, center + (rotation.ToRotationVector2() * 22), new Color(255, 255, 255, 0) * 0.8f, Color.Red, factor, 0f, 0.5f, 0.5f, 1f, 0f, new Vector2(3, 1.5f), Vector2.One);
             }
 
             return false;

@@ -74,7 +74,7 @@ namespace Coralite.Content.Items.RedJades
                 DistanceToOwner = DistanceToOwner.SafeNormalize(Vector2.Zero);
                 DistanceToOwner *= _10;
                 DistanceToOwner *= new Vector2(1.2f, 0.8f);
-                Projectile.velocity = (Projectile.velocity * 15f + DistanceToOwner) / 16f;
+                Projectile.velocity = ((Projectile.velocity * 15f) + DistanceToOwner) / 16f;
             }
             else if (Projectile.velocity.Length() > 2)//距离玩家近时候
             {

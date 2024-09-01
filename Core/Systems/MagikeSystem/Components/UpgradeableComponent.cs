@@ -67,7 +67,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             => Entity.CheckUpgrageable(incomeLevel);
     }
 
-    public class UpgradeableItemContainer:ItemContainer, IUpgradeable
+    public class UpgradeableItemContainer : ItemContainer, IUpgradeable
     {
         public override void Initialize()
         {

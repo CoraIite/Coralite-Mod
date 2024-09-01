@@ -213,7 +213,7 @@ namespace Coralite.Helpers
                 alternate = MagikeAlternateStyle.Top;
                 alternateData = TileObjectData.GetTileData(t.TileType, 0, (int)alternate + 1);
             }
-            else if (y1 < height * 2 + width)
+            else if (y1 < (height * 2) + width)
             {
                 alternate = MagikeAlternateStyle.Left;
                 alternateData = TileObjectData.GetTileData(t.TileType, 0, (int)alternate + 1);
@@ -266,7 +266,7 @@ namespace Coralite.Helpers
         /// <param name="Entity"></param>
         /// <param name="incomeLevel"></param>
         /// <returns></returns>
-        public static bool CheckUpgrageable(this IEntity Entity,MagikeApparatusLevel incomeLevel)
+        public static bool CheckUpgrageable(this IEntity Entity, MagikeApparatusLevel incomeLevel)
         {
             int tileType = (Entity as MagikeTileEntity).TileType;
 
@@ -336,7 +336,7 @@ namespace Coralite.Helpers
                     Texture2D mainTex = MagikeSystem.SelectFrame.Value;
                     Rectangle frame = mainTex.Frame(4, 4, framePoint.X, framePoint.Y);
 
-                    Vector2 pos = new Vector2(rect.X + i, rect.Y + j) * 16 - Main.screenPosition;
+                    Vector2 pos = (new Vector2(rect.X + i, rect.Y + j) * 16) - Main.screenPosition;
 
                     spriteBatch.Draw(mainTex, pos, frame, color);
                 }
@@ -449,7 +449,7 @@ namespace Coralite.Helpers
 
             while (length > 0)
             {
-                Dust dust = Dust.NewDustPerfect(selfCenter + dir * length, dustType, dir * 0.2f, newColor: dustColor);
+                Dust dust = Dust.NewDustPerfect(selfCenter + (dir * length), dustType, dir * 0.2f, newColor: dustColor);
                 dust.noGravity = true;
                 length -= 8;
             }
@@ -479,7 +479,7 @@ namespace Coralite.Helpers
         /// <param name="id"></param>
         /// <param name="parent"></param>
         /// <returns></returns>
-        public static UIElement AddTitle<TComponent>(this TComponent component, MagikeSystem.UITextID id,UIElement parent)
+        public static UIElement AddTitle<TComponent>(this TComponent component, MagikeSystem.UITextID id, UIElement parent)
             where TComponent : Component
         {
             UIElement title = new ComponentUIElementText<TComponent>(c =>
@@ -542,7 +542,7 @@ namespace Coralite.Helpers
 
             while (length > 0)
             {
-                Dust dust = Dust.NewDustPerfect(selfPos + dir * length, dustType, dir * 0.2f, newColor: dustColor);
+                Dust dust = Dust.NewDustPerfect(selfPos + (dir * length), dustType, dir * 0.2f, newColor: dustColor);
                 dust.noGravity = true;
                 length -= 8;
             }

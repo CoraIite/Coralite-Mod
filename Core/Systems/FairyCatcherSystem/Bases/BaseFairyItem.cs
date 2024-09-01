@@ -316,7 +316,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
                 Texture2D backgroundTex = ModContent.Request<Texture2D>(AssetDirectory.Misc + "FairyRaderBack").Value;
 
-                Vector2 center = topLeft + size / 2;
+                Vector2 center = topLeft + (size / 2);
                 //绘制底层
                 DrawRaderBack(center, factor, backgroundTex);
                 //绘制雷达图
@@ -324,13 +324,13 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
                 //绘制上层图标
                 //生命值
-                DrawRaderIcon(center, center + new Vector2(0, -backgroundTex.Height / 2 - 12), factor, "[i:58]");
+                DrawRaderIcon(center, center + new Vector2(0, (-backgroundTex.Height / 2) - 12), factor, "[i:58]");
                 //攻击力
-                DrawRaderIcon(center, center + new Vector2(-backgroundTex.Width / 2 - 12, 0), factor, "[i:3507]");
+                DrawRaderIcon(center, center + new Vector2((-backgroundTex.Width / 2) - 12, 0), factor, "[i:3507]");
                 //防御
-                DrawRaderIcon(center, center + new Vector2(backgroundTex.Width / 2 + 12, 0), factor, "[i:3811]");
+                DrawRaderIcon(center, center + new Vector2((backgroundTex.Width / 2) + 12, 0), factor, "[i:3811]");
                 //大小
-                DrawRaderIcon(center, center + new Vector2(0, backgroundTex.Height / 2 + 12), factor, "[i:486]");
+                DrawRaderIcon(center, center + new Vector2(0, (backgroundTex.Height / 2) + 12), factor, "[i:486]");
             }
         }
 
@@ -401,7 +401,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
              * 当基础值为1到最大值时为0.3-1
              * 当基础值大于最大值时为1以上
              */
-            baseValue = 0.3f + 0.7f * (baseValue - 1) / (maxValue - 1);
+            baseValue = 0.3f + (0.7f * (baseValue - 1) / (maxValue - 1));
         }
 
         public static Color GetScaledColor(float factor, float alphaFactor)

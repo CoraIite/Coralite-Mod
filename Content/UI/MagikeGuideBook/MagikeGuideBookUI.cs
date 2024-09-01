@@ -196,7 +196,7 @@ namespace Coralite.Content.UI.MagikeGuideBook
             //初始化特效
             particles.Clear();
             Vector2 position = BookPanel.GetDimensions().Position();
-            magicCircle = new MagicCircle(bookSize.X + 50, bookSize.Y / 2 + 40)
+            magicCircle = new MagicCircle(bookSize.X + 50, (bookSize.Y / 2) + 40)
             {
                 center = position + new Vector2(25, bookSize.Y / 2),
                 color = Color.White,
@@ -254,7 +254,7 @@ namespace Coralite.Content.UI.MagikeGuideBook
                 for (int i = 0; i < 180; i++)
                 {
                     //先画个圆
-                    vector2D[i] = (new Vector2(0, 1).RotatedBy(i * (MathHelper.TwoPi / 180)));
+                    vector2D[i] = new Vector2(0, 1).RotatedBy(i * (MathHelper.TwoPi / 180));
                 }
             }
 
@@ -334,16 +334,16 @@ namespace Coralite.Content.UI.MagikeGuideBook
             for (int i = start; i < end; ++i)
             {
                 //一些数据
-                float factor = (float)i * 4 / end + rotation2;
+                float factor = ((float)i * 4 / end) + rotation2;
                 var w = 1;//暂时无用
                 float a = vector3s[i].Z + 1.3f;
 
-                bars.Add(new CustomVertexInfo(center + vector2s[i] * radius + normalDir * width, color * a, new Vector3(factor, 1, w)));
-                bars.Add(new CustomVertexInfo(center + vector2s[i] * radius + normalDir * -width, color * a, new Vector3(factor, 0, w)));
+                bars.Add(new CustomVertexInfo(center + (vector2s[i] * radius) + (normalDir * width), color * a, new Vector3(factor, 1, w)));
+                bars.Add(new CustomVertexInfo(center + (vector2s[i] * radius) + (normalDir * -width), color * a, new Vector3(factor, 0, w)));
                 if (i == vector2s.Length - 1)
                 {
-                    bars.Add(new CustomVertexInfo(center + vector2s[0] * radius + normalDir * width, color * a, new Vector3(factor, 1, w)));
-                    bars.Add(new CustomVertexInfo(center + vector2s[0] * radius + normalDir * -width, color * a, new Vector3(factor, 0, w)));
+                    bars.Add(new CustomVertexInfo(center + (vector2s[0] * radius) + (normalDir * width), color * a, new Vector3(factor, 1, w)));
+                    bars.Add(new CustomVertexInfo(center + (vector2s[0] * radius) + (normalDir * -width), color * a, new Vector3(factor, 0, w)));
                 }
             }
 

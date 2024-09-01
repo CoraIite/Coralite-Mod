@@ -1,5 +1,4 @@
-﻿using Coralite.Core.Systems.CoraliteActorComponent;
-using Coralite.Core.Systems.MagikeSystem.Components;
+﻿using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -24,7 +23,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
             for (int i = 0; i < tileRect.Width / 2; i++)
             {
                 int currentHeight = Math.Clamp(
-                   (int)(tex.Height * (percent + 0.04f * MathF.Sin(((float)Main.timeForVisualEffects + tileRect.X + tileRect.Y) * 0.1f + i * 0.3f)))
+                   (int)(tex.Height * (percent + (0.04f * MathF.Sin((((float)Main.timeForVisualEffects + tileRect.X + tileRect.Y) * 0.1f) + (i * 0.3f)))))
                     , 0, tex.Height);
 
                 Rectangle frameBox = new(i * 2, tex.Height - currentHeight, 2, currentHeight);

@@ -25,7 +25,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public override bool? CanDamage()
         {
-            if (Timer > DashTime + DelayTime / 2)
+            if (Timer > DashTime + (DelayTime / 2))
                 return false;
 
             return null;
@@ -44,7 +44,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 for (int i = 0; i < 3; i++)
                 {
                     thunderTrails[i] = new ThunderTrail(ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "ThunderTrailB2")
-                        , ThunderWidthFunc_Sin, ThunderColorFunc_Yellow,GetAlpha);
+                        , ThunderWidthFunc_Sin, ThunderColorFunc_Yellow, GetAlpha);
                     thunderTrails[i].CanDraw = false;
                     thunderTrails[i].SetRange((5, 20));
                     thunderTrails[i].BasePositions =
@@ -79,8 +79,8 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         {
                             float f1 = (float)Main.timeForVisualEffects * 0.5f;
                             float f2 = i * 0.4f;
-                            float factor2 = MathF.Sin(f1 + f2) + MathF.Cos(f2 + f1 / 2);
-                            pos.Add(pos2 + normal * factor2 * 8);
+                            float factor2 = MathF.Sin(f1 + f2) + MathF.Cos(f2 + (f1 / 2));
+                            pos.Add(pos2 + (normal * factor2 * 8));
                         }
                     }
 
@@ -102,7 +102,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 float factor = Timer / DashTime;
                 float sinFactor = MathF.Sin(factor * MathHelper.Pi);
 
-                ThunderWidth = 30 + sinFactor * 30;
+                ThunderWidth = 30 + (sinFactor * 30);
                 ThunderAlpha = Timer / DashTime;
             }
             else if ((int)Timer == (int)DashTime)
@@ -115,7 +115,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             }
             else
             {
-                float factor = (Timer - DashTime) / (DelayTime);
+                float factor = (Timer - DashTime) / DelayTime;
                 ThunderWidth = 30 * (1 - factor);
                 ThunderAlpha = 1 - Coralite.Instance.X2Smoother.Smoother(factor);
 
@@ -159,7 +159,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
         {
             float sinFactor = MathF.Sin(factor * MathHelper.Pi);
 
-            return (5, 20 + sinFactor * PointDistance / 2);
+            return (5, 20 + (sinFactor * PointDistance / 2));
         }
 
         public virtual float GetExpandWidth(float factor)
@@ -187,7 +187,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public override (float, float) GetRange(float factor)
         {
-            return (0, 5 + (1 - factor) * PointDistance / 3);
+            return (0, 5 + ((1 - factor) * PointDistance / 3));
         }
 
         public override float GetExpandWidth(float factor)

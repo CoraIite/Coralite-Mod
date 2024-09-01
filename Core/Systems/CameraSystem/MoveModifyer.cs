@@ -47,7 +47,7 @@ namespace Coralite.Core.Systems.CameraSystem
                 var offset = new Vector2(-Main.screenWidth / 2f, -Main.screenHeight / 2f);
 
                 Timer--;
-                cameraPosition.CameraPosition = EaseFunction(originCenter + offset, TargetCenter() + offset, 1 - Timer / (float)MovementDuration);
+                cameraPosition.CameraPosition = EaseFunction(originCenter + offset, TargetCenter() + offset, 1 - (Timer / (float)MovementDuration));
             }
         }
     }

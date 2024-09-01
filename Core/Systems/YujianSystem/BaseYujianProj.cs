@@ -217,7 +217,7 @@ namespace Coralite.Core.Systems.YujianSystem
                     Helper.GetMyProjIndexWithModProj<BaseYujianProj>(Projectile, out var index2, out var totalIndexesInGroup2);
                     GetIdlePosition(index2, totalIndexesInGroup2, out var idleSpot2, out var idleRotation2);
                     Projectile.velocity = Vector2.UnitY.RotatedBy((MathHelper.PiOver2 * 1.5f * Owner.direction) + (0.2 * index2 * totalIndexesInGroup2 * Owner.direction));
-                    Projectile.Center = idleSpot2 + Projectile.velocity * 10;
+                    Projectile.Center = idleSpot2 + (Projectile.velocity * 10);
                     Projectile.rotation = idleRotation2;
                     Projectile.tileCollide = false;
 
@@ -260,7 +260,7 @@ namespace Coralite.Core.Systems.YujianSystem
                     }
                     else
                     {
-                        Projectile.Center = Owner.Center + Projectile.velocity * (MathHelper.SmoothStep(1, 100, Timer / 60f) + 10);
+                        Projectile.Center = Owner.Center + (Projectile.velocity * (MathHelper.SmoothStep(1, 100, Timer / 60f) + 10));
                     }
                     return false;
             }
@@ -357,7 +357,7 @@ namespace Coralite.Core.Systems.YujianSystem
         /// <param name="idleRotation"></param>
         public void GetIdlePosition(int stackedIndex, int totalIndexes, out Vector2 idleSpot, out float idleRotation)
         {
-            idleRotation = MathHelper.PiOver2 * 1.5f * Owner.direction + Owner.direction * 0.2f * totalIndexes * stackedIndex;
+            idleRotation = (MathHelper.PiOver2 * 1.5f * Owner.direction) + (Owner.direction * 0.2f * totalIndexes * stackedIndex);
             //idleRotation = (-Vector2.UnitX).RotatedBy(stackedIndex * 0.1f * totalIndexes * Owner.direction).ToRotation();
             //float num2 = (totalIndexes - 1f) / 2f;
             //idleSpot = Owner.Center - Vector2.UnitY.RotatedBy(4.3982296f / totalIndexes * (stackedIndex - num2)) * 33f - new Vector2(Owner.direction * 16, 8);

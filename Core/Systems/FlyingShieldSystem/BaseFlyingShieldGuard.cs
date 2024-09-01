@@ -265,7 +265,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
             float baseAngle = Owner.direction > 0 ? 0 : MathHelper.Pi;
             Projectile.rotation = baseAngle.AngleLerp((Main.MouseWorld - Owner.Center).ToRotation(), 0.4f);
 
-            Projectile.Center = Owner.Center + Projectile.rotation.ToRotationVector2() * DistanceToOwner;
+            Projectile.Center = Owner.Center + (Projectile.rotation.ToRotationVector2() * DistanceToOwner);
         }
 
         /// <summary>
@@ -521,7 +521,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
             Texture2D mainTex = Projectile.GetTexture();
             var pos = Projectile.Center - Main.screenPosition;
 
-            Vector2 scale = new(1 - DistanceToOwner / (Projectile.width * scalePercent), 1);
+            Vector2 scale = new(1 - (DistanceToOwner / (Projectile.width * scalePercent)), 1);
             scale *= Projectile.scale;
             var effect = Owner.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically;
             float rotation = Projectile.rotation + extraRotation;
@@ -532,13 +532,13 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
             {
                 float factor = Timer / parryTime;
                 lightColor.A = 0;
-                DrawSelf(mainTex, pos, rotation, lightColor * factor, scale * (1f + factor * 0.4f), effect);
+                DrawSelf(mainTex, pos, rotation, lightColor * factor, scale * (1f + (factor * 0.4f)), effect);
             }
             else if (State == (int)GuardState.Dashing)
             {
                 float factor = Timer / dashTime;
                 lightColor.A = 0;
-                DrawSelf(mainTex, pos, rotation, lightColor * factor, scale * (1f + factor * 0.4f), effect);
+                DrawSelf(mainTex, pos, rotation, lightColor * factor, scale * (1f + (factor * 0.4f)), effect);
             }
 
             return false;
@@ -550,12 +550,12 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
             Vector2 dir = Projectile.rotation.ToRotationVector2() * (DistanceToOwner / (Projectile.width * scalePercent));
             Color c = lightColor * 0.7f;
             c.A = lightColor.A;
-            Main.spriteBatch.Draw(mainTex, pos - dir * 5, null, c, rotation
+            Main.spriteBatch.Draw(mainTex, pos - (dir * 5), null, c, rotation
                 , origin, scale, effect, 0);
 
             c = lightColor * 0.5f;
             c.A = lightColor.A;
-            Main.spriteBatch.Draw(mainTex, pos - dir * 10, null, c, rotation
+            Main.spriteBatch.Draw(mainTex, pos - (dir * 10), null, c, rotation
                 , origin, scale, effect, 0);
 
             Main.spriteBatch.Draw(mainTex, pos, null, lightColor, rotation

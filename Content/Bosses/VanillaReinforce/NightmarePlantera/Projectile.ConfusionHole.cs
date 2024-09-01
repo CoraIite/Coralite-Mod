@@ -147,7 +147,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         {
                             float currentLength = Vector2.Distance(SpikeTop, Projectile.Center);
                             currentLength = Helper.Lerp(currentLength, SpurtLength, 0.7f);
-                            SpikeTop = Projectile.Center + Projectile.rotation.ToRotationVector2() * currentLength;
+                            SpikeTop = Projectile.Center + (Projectile.rotation.ToRotationVector2() * currentLength);
                             spikeWidth += 4f;
                         }
 
@@ -201,7 +201,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             var sparkleFrame = sparkleTex.Frame(1, 2, 0, Projectile.ai[1] == -1 ? 0 : 1);
             var sparkleOrigin = sparkleFrame.Size() / 2;
-            spriteBatch.Draw(sparkleTex, pos, sparkleFrame, c, Main.GlobalTimeWrappedHourly * 0.5f, sparkleOrigin, SelfScale / 3 + Main.rand.NextFloat(0, 0.02f), 0, 0);
+            spriteBatch.Draw(sparkleTex, pos, sparkleFrame, c, Main.GlobalTimeWrappedHourly * 0.5f, sparkleOrigin, (SelfScale / 3) + Main.rand.NextFloat(0, 0.02f), 0, 0);
 
             //Effect e = Filters.Scene["HurricaneTwistReverse"].GetShader().Shader;
             //e.Parameters["uColor"].SetValue(drawColor.ToVector3());

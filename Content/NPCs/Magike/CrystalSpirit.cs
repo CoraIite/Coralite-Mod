@@ -60,7 +60,7 @@ namespace Coralite.Content.NPCs.Magike
         {
             if (spawnInfo.Player.townNPCs > 2f)
                 return 0;
-            if ((!Main.dayTime && spawnInfo.Player.ZoneForest))
+            if (!Main.dayTime && spawnInfo.Player.ZoneForest)
                 return 0.08f;
             if (spawnInfo.Player.InModBiome<MagicCrystalCave>())
                 return 0.04f;
