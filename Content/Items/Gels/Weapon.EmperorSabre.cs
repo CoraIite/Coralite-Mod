@@ -99,7 +99,6 @@ namespace Coralite.Content.Items.Gels
 
         public ref float Combo => ref Projectile.ai[0];
 
-        public static Asset<Texture2D> trailTexture;
         public static Asset<Texture2D> WarpTexture;
         public static Asset<Texture2D> GradientTexture;
 
@@ -113,7 +112,6 @@ namespace Coralite.Content.Items.Gels
             if (Main.dedServ)
                 return;
 
-            trailTexture = Request<Texture2D>(AssetDirectory.OtherProjectiles + "NormalSlashTrail3");
             WarpTexture = Request<Texture2D>(AssetDirectory.OtherProjectiles + "WarpTex");
             GradientTexture = Request<Texture2D>(AssetDirectory.GelItems + "EmperorSabreGradient");
         }
@@ -123,7 +121,6 @@ namespace Coralite.Content.Items.Gels
             if (Main.dedServ)
                 return;
 
-            trailTexture = null;
             WarpTexture = null;
             GradientTexture = null;
         }
@@ -366,7 +363,7 @@ namespace Coralite.Content.Items.Gels
                     Effect effect = Filters.Scene["SimpleGradientTrail"].GetShader().Shader;
 
                     effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMaxrix());
-                    effect.Parameters["sampleTexture"].SetValue(trailTexture.Value);
+                    effect.Parameters["sampleTexture"].SetValue(CoraliteAssets.Trail.SlashFlatFade.Value);
                     effect.Parameters["gradientTexture"].SetValue(GradientTexture.Value);
 
                     foreach (EffectPass pass in effect.CurrentTechnique.Passes) //应用shader，并绘制顶点
@@ -586,7 +583,7 @@ namespace Coralite.Content.Items.Gels
                     Effect effect = Filters.Scene["SimpleGradientTrail"].GetShader().Shader;
 
                     effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMaxrix());
-                    effect.Parameters["sampleTexture"].SetValue(EmperorSabreSlash.trailTexture.Value);
+                    effect.Parameters["sampleTexture"].SetValue(CoraliteAssets.Trail.SlashFlatFade.Value);
                     effect.Parameters["gradientTexture"].SetValue(EmperorSabreSlash.GradientTexture.Value);
 
                     foreach (EffectPass pass in effect.CurrentTechnique.Passes) //应用shader，并绘制顶点

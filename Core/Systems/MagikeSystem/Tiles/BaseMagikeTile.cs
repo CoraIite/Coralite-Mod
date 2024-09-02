@@ -379,13 +379,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
             //得判断自身现在处于一个什么样的放置情况，然后获取对应的data
             GetMagikeAlternateData(i, j, out TileObjectData data, out MagikeAlternateStyle alternate);
 
-            float rotation = alternate switch
-            {
-                MagikeAlternateStyle.Top => MathHelper.PiOver2,//在顶部，正方向朝下
-                MagikeAlternateStyle.Left => 0,//头朝向右
-                MagikeAlternateStyle.Right => MathHelper.Pi,//头朝向左
-                _ => -MathHelper.PiOver2
-            };
+            float rotation = alternate.GetAlternateRotation();
 
             Rectangle tileRect = new(i * 16, j * 16, data == null ? 16 : data.Width * 16, data == null ? 16 : data.Height * 16);
             Vector2 offset = offScreen - Main.screenPosition;
@@ -405,7 +399,6 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
                 return;
 
             Texture2D texture = asset.Value;
-
 
             DrawExtraTex(spriteBatch, texture, tileRect, offset, lightColor, rotation, entity, level.Value);
         }

@@ -175,7 +175,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
 
     public class SnowflakeSpike : ModProjectile, IDrawPrimitive
     {
-        public override string Texture => AssetDirectory.OtherProjectiles + "SpurtTrail3";
+        public override string Texture => AssetDirectory.Trails + "SlashFlatBlurHVMirror";
 
         public ref float Timer => ref Projectile.ai[0];
         public ref float TrailWidth => ref Projectile.ai[1];

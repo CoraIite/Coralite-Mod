@@ -1,6 +1,8 @@
 ﻿using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
+using Terraria;
+using static Coralite.Helpers.MagikeHelper;
 
 namespace Coralite.Core.Systems.MagikeSystem.Tiles
 {
@@ -12,7 +14,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
         /// </summary>
         /// <param name="alternate"></param>
         /// <returns></returns>
-        public virtual Vector2 GetFloatingOffset(MagikeHelper.MagikeAlternateStyle alternate)
+        public virtual Vector2 GetFloatingOffset(float rotation, MagikeApparatusLevel level)
         {
             return Vector2.Zero;
         }
@@ -22,7 +24,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
         /// </summary>
         /// <param name="alternate"></param>
         /// <returns></returns>
-        public virtual Vector2 GetRestOffset(MagikeHelper.MagikeAlternateStyle alternate)
+        public virtual Vector2 GetRestOffset(float rotation, MagikeApparatusLevel level)
         {
             return Vector2.Zero;
         }

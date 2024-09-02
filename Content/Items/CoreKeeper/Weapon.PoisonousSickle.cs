@@ -128,7 +128,6 @@ namespace Coralite.Content.Items.CoreKeeper
 
         public ref float Combo => ref Projectile.ai[0];
 
-        public static Asset<Texture2D> trailTexture;
         public static Asset<Texture2D> WarpTexture;
         public static Asset<Texture2D> GradientTexture;
 
@@ -154,7 +153,6 @@ namespace Coralite.Content.Items.CoreKeeper
             if (Main.dedServ)
                 return;
 
-            trailTexture = Request<Texture2D>(AssetDirectory.OtherProjectiles + "NormalSlashTrail2s");
             WarpTexture = Request<Texture2D>(AssetDirectory.OtherProjectiles + "WarpTex");
             GradientTexture = Request<Texture2D>(AssetDirectory.CoreKeeperItems + "PoisonousSickleGradient");
         }
@@ -164,7 +162,6 @@ namespace Coralite.Content.Items.CoreKeeper
             if (Main.dedServ)
                 return;
 
-            trailTexture = null;
             WarpTexture = null;
             GradientTexture = null;
         }
@@ -476,7 +473,7 @@ namespace Coralite.Content.Items.CoreKeeper
                     Effect effect = Filters.Scene["NoHLGradientTrail"].GetShader().Shader;
 
                     effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMaxrix());
-                    effect.Parameters["sampleTexture"].SetValue(trailTexture.Value);
+                    effect.Parameters["sampleTexture"].SetValue(CoraliteAssets.Trail.SlashFlatBlurSmall.Value);
                     effect.Parameters["gradientTexture"].SetValue(GradientTexture.Value);
 
                     foreach (EffectPass pass in effect.CurrentTechnique.Passes) //应用shader，并绘制顶点

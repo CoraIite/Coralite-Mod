@@ -197,7 +197,7 @@ namespace Coralite.Content.Items.Misc_Melee
 
     public class ArcaneFlameDaggerSlash : ModProjectile, IDrawPrimitive, IDrawWarp
     {
-        public override string Texture => AssetDirectory.OtherProjectiles + "SpurtTrail2";
+        public override string Texture => AssetDirectory.Trails + "SlashFlatBlurVMirror";
 
         public ref float Alpha => ref Projectile.localAI[0];
         public ref float Timer => ref Projectile.ai[0];

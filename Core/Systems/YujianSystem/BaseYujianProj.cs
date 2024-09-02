@@ -58,7 +58,7 @@ namespace Coralite.Core.Systems.YujianSystem
         public ref float Timer => ref Projectile.ai[1];
         public Player Owner => Main.player[Projectile.owner];
 
-        public virtual string SlashTexture => AssetDirectory.OtherProjectiles + "NormalSlashTrail";
+        public virtual string SlashTexture => AssetDirectory.Trails + "Slash";
 
         public override string Texture => string.IsNullOrEmpty(TexturePath) ? base.Texture : TexturePath + (PathHasName ? string.Empty : Name.Replace("Proj", ""));
 

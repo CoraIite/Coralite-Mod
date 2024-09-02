@@ -447,4 +447,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         #endregion
     }
+
+    public class CraftArrow:UIElement
+    {
+
+    }
 }

@@ -78,19 +78,19 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
             //获取alt对应的偏转量
             GetMagikeAlternateData(pos.X, pos.Y, out TileObjectData data, out MagikeAlternateStyle alternate);
 
-            Vector2 position = Helper.GetMagikeTileCenter(pos) + cat.GetFloatingOffset(alternate);
-            CraftParticle p = NewParticle<CraftParticle>(position, Vector2.Zero, Coralite.MagicCrystalPink);
+            //Vector2 position = Helper.GetMagikeTileCenter(pos) + cat.GetFloatingOffset(alternate);
+            //CraftParticle p = NewParticle<CraftParticle>(position, Vector2.Zero, Coralite.MagicCrystalPink);
 
-            p._pos = pos;
-            p.fadeIn = p._totalTime = craftTime;
-            p._trails = new List<Trail>();
+            //p._pos = pos;
+            //p.fadeIn = p._totalTime = craftTime;
+            //p._trails = new List<Trail>();
 
             //foreach (var pos2 in )
             //{
 
             //}
 
-            return p;
+            return null;//p;
         }
 
         public override void Draw(SpriteBatch spriteBatch)

@@ -21,7 +21,7 @@ namespace Coralite.Content.Items.YujianHulu
 
     public class WoodenYujianProj : BaseYujianProj
     {
-        public override string SlashTexture => AssetDirectory.OtherProjectiles + "LiteSlash";
+        public override string SlashTexture => AssetDirectory.Trails + "LiteSlash";
 
         public WoodenYujianProj() : base(
             new YujianAI[]

@@ -217,6 +217,15 @@ namespace Coralite.Core
 
         #endregion
 
+        #region 特效贴图部分！
+
+        public const string VFX = Assets + "VFX/";
+
+        public const string Trails = VFX + "Trail/";
+        public const string Lasers = VFX + "Laser/";
+
+        #endregion
+
         public const string Backgrounds = Assets + "Backgrounds/";
 
         public const string Misc = Assets + "Misc/";

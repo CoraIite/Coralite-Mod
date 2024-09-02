@@ -660,7 +660,7 @@ namespace Coralite.Content.Items.FlyingShields
     public class HephaesthSmeltingResults : BaseFlyingShield
     {
         public override string Texture => AssetDirectory.Blank;
-        public override string TrailTexture => AssetDirectory.OtherProjectiles + "SpurtTrail";
+        public override string TrailTexture => AssetDirectory.Trails + "SlashFlatVMirror";
 
         ref float ShieldType => ref Projectile.ai[2];
 

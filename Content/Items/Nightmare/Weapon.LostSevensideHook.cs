@@ -96,7 +96,6 @@ namespace Coralite.Content.Items.Nightmare
         public override string Texture => AssetDirectory.NightmareItems + "LostSevensideHookProj";
 
         public static Asset<Texture2D> ChainTex;
-        public static Asset<Texture2D> trailTexture;
         public static Asset<Texture2D> WarpTexture;
         public static Asset<Texture2D> GradientTexture;
 
@@ -110,7 +109,6 @@ namespace Coralite.Content.Items.Nightmare
                 return;
 
             ChainTex = Request<Texture2D>(AssetDirectory.NightmareItems + "LostSevensideChain");
-            trailTexture = Request<Texture2D>(AssetDirectory.OtherProjectiles + "NormalSlashTrail3");
             WarpTexture = Request<Texture2D>(AssetDirectory.OtherProjectiles + "WarpTex");
             GradientTexture = Request<Texture2D>(AssetDirectory.NightmareItems + "LostSevensideGradient");
         }
@@ -121,7 +119,6 @@ namespace Coralite.Content.Items.Nightmare
                 return;
 
             ChainTex = null;
-            trailTexture = null;
             WarpTexture = null;
             GradientTexture = null;
         }
@@ -368,7 +365,7 @@ namespace Coralite.Content.Items.Nightmare
                     Effect effect = Filters.Scene["SimpleGradientTrail"].GetShader().Shader;
 
                     effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMaxrix());
-                    effect.Parameters["sampleTexture"].SetValue(trailTexture.Value);
+                    effect.Parameters["sampleTexture"].SetValue(CoraliteAssets.Trail.SlashFlatFade.Value);
                     effect.Parameters["gradientTexture"].SetValue(GradientTexture.Value);
 
                     foreach (EffectPass pass in effect.CurrentTechnique.Passes) //应用shader，并绘制顶点
@@ -517,7 +514,7 @@ namespace Coralite.Content.Items.Nightmare
     /// </summary>
     public class LostSevensideSpurt : ModProjectile, IDrawPrimitive, IDrawWarp
     {
-        public override string Texture => AssetDirectory.OtherProjectiles + "SpurtTrail2";
+        public override string Texture => AssetDirectory.Trails + "SlashFlatBlurVMirror";
 
         public ref float State => ref Projectile.ai[0];
         public ref float Alpha => ref Projectile.localAI[0];

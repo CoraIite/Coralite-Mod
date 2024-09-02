@@ -109,7 +109,6 @@ namespace Coralite.Content.Items.Nightmare
 
         public ref float Combo => ref Projectile.ai[0];
 
-        public static Asset<Texture2D> trailTexture;
         public static Asset<Texture2D> GradientTexture;
 
         public DreamShearsSlash() : base(0.785f, trailCount: 26) { }
@@ -122,7 +121,6 @@ namespace Coralite.Content.Items.Nightmare
             if (Main.dedServ)
                 return;
 
-            trailTexture = Request<Texture2D>(AssetDirectory.OtherProjectiles + "NormalSlashTrail2a");
             GradientTexture = Request<Texture2D>(AssetDirectory.NightmareItems + "DreamShearsGradient");
         }
 
@@ -131,7 +129,6 @@ namespace Coralite.Content.Items.Nightmare
             if (Main.dedServ)
                 return;
 
-            trailTexture = null;
             GradientTexture = null;
         }
 
@@ -309,7 +306,7 @@ namespace Coralite.Content.Items.Nightmare
                     Effect effect = Filters.Scene["NoHLGradientTrail"].GetShader().Shader;
 
                     effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMaxrix());
-                    effect.Parameters["sampleTexture"].SetValue(trailTexture.Value);
+                    effect.Parameters["sampleTexture"].SetValue(CoraliteAssets.Trail.SlashFlatBlur.Value);
                     effect.Parameters["gradientTexture"].SetValue(GradientTexture.Value);
 
                     foreach (EffectPass pass in effect.CurrentTechnique.Passes) //应用shader，并绘制顶点
@@ -618,7 +615,7 @@ namespace Coralite.Content.Items.Nightmare
     /// </summary>
     public class DreamShearsSpurt : ModProjectile, IDrawPrimitive, IDrawWarp
     {
-        public override string Texture => AssetDirectory.OtherProjectiles + "SpurtTrail3";
+        public override string Texture => AssetDirectory.Trails + "SlashFlatBlurHVMirror";
 
         public ref float State => ref Projectile.ai[0];
         public ref float Timer => ref Projectile.ai[1];

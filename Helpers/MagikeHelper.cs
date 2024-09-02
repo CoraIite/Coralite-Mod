@@ -28,8 +28,8 @@ namespace Coralite.Helpers
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public static Core.Systems.MagikeSystem.Components.MagikeContainer GetMagikeContainer(this IEntity entity)
-            => entity.GetSingleComponent(MagikeComponentID.MagikeContainer) as Core.Systems.MagikeSystem.Components.MagikeContainer;
+        public static MagikeContainer GetMagikeContainer(this IEntity entity)
+            => entity.GetSingleComponent(MagikeComponentID.MagikeContainer) as MagikeContainer;
 
         /// <summary>
         /// 检测实体是否是一个魔能容器
@@ -232,6 +232,22 @@ namespace Coralite.Helpers
             Top,
             Left,
             Right,
+        }
+
+        /// <summary>
+        /// 根据alternate获取对应的方向
+        /// </summary>
+        /// <param name="alternate"></param>
+        /// <returns></returns>
+        public static float GetAlternateRotation(this MagikeAlternateStyle alternate)
+        {
+            return alternate switch
+            {
+                MagikeAlternateStyle.Top => MathHelper.PiOver2,//在顶部，正方向朝下
+                MagikeAlternateStyle.Left => 0,//头朝向右
+                MagikeAlternateStyle.Right => MathHelper.Pi,//头朝向左
+                _ => -MathHelper.PiOver2
+            };
         }
 
         /// <summary>

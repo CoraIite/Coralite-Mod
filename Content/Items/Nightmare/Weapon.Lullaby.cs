@@ -79,7 +79,6 @@ namespace Coralite.Content.Items.Nightmare
 
         public LullabySlash() : base(MathF.Atan(46f / 52f), trailCount: 34) { }
 
-        public static Asset<Texture2D> trailTexture;
         public static Asset<Texture2D> WarpTexture;
         public static Asset<Texture2D> GradientTexture;
 
@@ -88,7 +87,6 @@ namespace Coralite.Content.Items.Nightmare
             if (Main.dedServ)
                 return;
 
-            trailTexture = Request<Texture2D>(AssetDirectory.OtherProjectiles + "NormalSlashTrail3");
             WarpTexture = Request<Texture2D>(AssetDirectory.OtherProjectiles + "WarpTex");
             GradientTexture = Request<Texture2D>(AssetDirectory.NightmareItems + "LullabyGradient");
         }
@@ -98,7 +96,6 @@ namespace Coralite.Content.Items.Nightmare
             if (Main.dedServ)
                 return;
 
-            trailTexture = null;
             WarpTexture = null;
             GradientTexture = null;
         }
@@ -266,7 +263,7 @@ namespace Coralite.Content.Items.Nightmare
                 Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
                 effect.Parameters["transformMatrix"].SetValue(world * view * projection);
-                effect.Parameters["sampleTexture"].SetValue(trailTexture.Value);
+                effect.Parameters["sampleTexture"].SetValue(CoraliteAssets.Trail.SlashFlatFade.Value);
                 effect.Parameters["gradientTexture"].SetValue(GradientTexture.Value);
 
                 Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointWrap;
@@ -414,7 +411,7 @@ namespace Coralite.Content.Items.Nightmare
                 Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
                 effect.Parameters["transformMatrix"].SetValue(world * view * projection);
-                effect.Parameters["sampleTexture"].SetValue(LullabySlash.trailTexture.Value);
+                effect.Parameters["sampleTexture"].SetValue(CoraliteAssets.Trail.SlashFlatFade.Value);
                 effect.Parameters["gradientTexture"].SetValue(LullabySlash.GradientTexture.Value);
 
                 Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointWrap;

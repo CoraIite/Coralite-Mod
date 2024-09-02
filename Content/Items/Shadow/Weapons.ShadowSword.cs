@@ -76,7 +76,6 @@ namespace Coralite.Content.Items.Shadow
 
         public ref float Combo => ref Projectile.ai[0];
 
-        public static Asset<Texture2D> trailTexture;
         public static Asset<Texture2D> GradientTexture;
         public int alpha;
 
@@ -98,7 +97,6 @@ namespace Coralite.Content.Items.Shadow
             if (Main.dedServ)
                 return;
 
-            trailTexture = Request<Texture2D>(AssetDirectory.OtherProjectiles + "NormalSlashTrail3");
             GradientTexture = Request<Texture2D>(AssetDirectory.ShadowItems + "ShadowSwordGradient");
         }
 
@@ -107,7 +105,6 @@ namespace Coralite.Content.Items.Shadow
             if (Main.dedServ)
                 return;
 
-            trailTexture = null;
             GradientTexture = null;
         }
 
@@ -210,7 +207,7 @@ namespace Coralite.Content.Items.Shadow
                 Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
                 effect.Parameters["transformMatrix"].SetValue(world * view * projection);
-                effect.Parameters["sampleTexture"].SetValue(trailTexture.Value);
+                effect.Parameters["sampleTexture"].SetValue(CoraliteAssets.Trail.SlashFlatFade.Value);
                 effect.Parameters["gradientTexture"].SetValue(GradientTexture.Value);
 
                 Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointWrap;

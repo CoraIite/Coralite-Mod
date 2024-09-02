@@ -172,7 +172,6 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
 
         public ChronoHeartSlash() : base(0f, 12) { }
 
-        public static Asset<Texture2D> trailTexture;
         public static Asset<Texture2D> WarpTexture;
         public static Asset<Texture2D> GradientTexture;
 
@@ -187,7 +186,6 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
             if (Main.dedServ)
                 return;
 
-            trailTexture = Request<Texture2D>(AssetDirectory.OtherProjectiles + "SpurtTrail");
             WarpTexture = Request<Texture2D>(AssetDirectory.OtherProjectiles + "WarpTex");
             GradientTexture = Request<Texture2D>(AssetDirectory.FlyingShieldAccessories + "ChronoHeartGradient");
         }
@@ -411,7 +409,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
                 Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
                 effect.Parameters["transformMatrix"].SetValue(world * view * projection);
-                effect.Parameters["sampleTexture"].SetValue(trailTexture.Value);
+                effect.Parameters["sampleTexture"].SetValue(CoraliteAssets.Trail.SlashFlatVMirror.Value);
                 effect.Parameters["gradientTexture"].SetValue(GradientTexture.Value);
 
                 Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointWrap;

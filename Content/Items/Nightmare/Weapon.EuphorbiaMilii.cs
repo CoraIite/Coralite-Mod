@@ -103,7 +103,6 @@ namespace Coralite.Content.Items.Nightmare
         public ref float Combo => ref Projectile.ai[0];
         public ref float ColorState => ref Projectile.ai[1];
 
-        public static Asset<Texture2D> trailTexture;
         public static Asset<Texture2D> GradientTexture;
 
         public EuphorbiaMiliiProj() : base(0.785f, trailCount: 36) { }
@@ -120,7 +119,6 @@ namespace Coralite.Content.Items.Nightmare
             if (Main.dedServ)
                 return;
 
-            trailTexture = Request<Texture2D>(AssetDirectory.OtherProjectiles + "NormalSlashTrail2");
             GradientTexture = Request<Texture2D>(AssetDirectory.NightmareItems + "EuphorbiaMiliiGradient");
         }
 
@@ -129,7 +127,6 @@ namespace Coralite.Content.Items.Nightmare
             if (Main.dedServ)
                 return;
 
-            trailTexture = null;
             GradientTexture = null;
         }
 
@@ -752,7 +749,7 @@ namespace Coralite.Content.Items.Nightmare
                     Effect effect = Filters.Scene["NoHLGradientTrail"].GetShader().Shader;
 
                     effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMaxrix());
-                    effect.Parameters["sampleTexture"].SetValue(trailTexture.Value);
+                    effect.Parameters["sampleTexture"].SetValue(CoraliteAssets.Trail.SlashFlat.Value);
                     effect.Parameters["gradientTexture"].SetValue(GradientTexture.Value);
 
                     foreach (EffectPass pass in effect.CurrentTechnique.Passes) //应用shader，并绘制顶点
@@ -1196,7 +1193,7 @@ namespace Coralite.Content.Items.Nightmare
 
     public class EuphorbiaSpurt : ModProjectile, IDrawPrimitive, IDrawWarp
     {
-        public override string Texture => AssetDirectory.OtherProjectiles + "SpurtTrail2";
+        public override string Texture => AssetDirectory.Trails + "SlashFlatBlurVMirror";
 
         public ref float Alpha => ref Projectile.localAI[0];
         public ref float Timer => ref Projectile.ai[0];

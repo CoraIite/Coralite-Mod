@@ -196,7 +196,6 @@ namespace Coralite.Content.Items.FlyingShields
         public int delay;
         public int alpha;
 
-        public static Asset<Texture2D> trailTexture;
         public static Asset<Texture2D> GradientTexture;
 
         public override void Load()
@@ -204,7 +203,6 @@ namespace Coralite.Content.Items.FlyingShields
             if (Main.dedServ)
                 return;
 
-            trailTexture = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "NormalSlashTrail3");
             GradientTexture = ModContent.Request<Texture2D>(AssetDirectory.FlyingShieldItems + "ConquerorGradient");
         }
 
@@ -213,7 +211,6 @@ namespace Coralite.Content.Items.FlyingShields
             if (Main.dedServ)
                 return;
 
-            trailTexture = null;
             GradientTexture = null;
         }
 
@@ -366,7 +363,7 @@ namespace Coralite.Content.Items.FlyingShields
                 Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
                 effect.Parameters["transformMatrix"].SetValue(world * view * projection);
-                effect.Parameters["sampleTexture"].SetValue(trailTexture.Value);
+                effect.Parameters["sampleTexture"].SetValue(CoraliteAssets.Trail.SlashFlatFade.Value);
                 effect.Parameters["gradientTexture"].SetValue(GradientTexture.Value);
 
                 Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointWrap;

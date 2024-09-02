@@ -18,7 +18,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         protected float[] oldDistanceToOwner;
         public float[] oldLength;
 
-        protected string TrailTexture = AssetDirectory.OtherProjectiles + "NormalSlashTrail";
+        protected string TrailTexture = AssetDirectory.Trails + "Slash";
 
         protected bool onStart = true;
         protected bool canDrawSelf = true;
