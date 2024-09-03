@@ -97,6 +97,55 @@ namespace Coralite.Core
 
             #endregion
 
+            #region 爪形刀光
+
+            /// <summary> 
+            /// 有2小一大3个抓痕的刀光<br></br>
+            /// 透明底
+            /// </summary>
+            public static ATex ClawSlash3A { get; private set; }
+
+            /// <summary> 
+            /// 有2小一大3个抓痕的刀光<br></br>
+            /// 透明底<br></br>
+            /// 黄色
+            /// </summary>
+            public static ATex ClawSlash3AYellow { get; private set; }
+
+            /// <summary> 
+            /// 有4个抓痕的刀光
+            /// </summary>
+            public static ATex ClawSlash4 { get; private set; }
+
+            #endregion
+
+            #region 其他特殊造型
+
+            /// <summary> 
+            /// 从右向左的由窄到宽，看上去像是流星的尾迹一样
+            /// </summary>
+            public static ATex Meteor { get; private set; }
+
+            /// <summary> 
+            /// 从右向左的由窄到宽，看上去像是流星的尾迹一样<br></br>
+            /// 透明底
+            /// </summary>
+            public static ATex MeteorA { get; private set; }
+
+            /// <summary> 
+            /// 一个被拉伸的亮光圆球，大概类似推进器火焰的形状<br></br>
+            /// 透明底
+            /// </summary>
+            public static ATex CircleA { get; private set; }
+
+            /// <summary> 
+            /// 从右向左由白色渐变为透明，同时上下两侧有线条<br></br>
+            /// 透明底
+            /// </summary>
+            public static ATex EdgeA { get; private set; }
+
+            #endregion
+
             internal static void Load()
             {
                 Slash = Get(Trails + nameof(Slash));
@@ -111,6 +160,15 @@ namespace Coralite.Core
                 LiteSlash = Get(Trails + nameof(LiteSlash));
                 LiteSlashBright = Get(Trails + nameof(LiteSlashBright));
                 LiteSlashBrightHMirror = Get(Trails + nameof(LiteSlashBrightHMirror));
+
+                ClawSlash3A = Get(Trails + nameof(ClawSlash3A));
+                ClawSlash3AYellow = Get(Trails + nameof(ClawSlash3AYellow));
+                ClawSlash4 = Get(Trails + nameof(ClawSlash4));
+
+                Meteor = Get(Trails + nameof(Meteor));
+                MeteorA = Get(Trails + nameof(MeteorA));
+                CircleA = Get(Trails + nameof(CircleA));
+                EdgeA = Get(Trails + nameof(EdgeA));
             }
 
             internal static void Unload()
@@ -127,6 +185,15 @@ namespace Coralite.Core
                 LiteSlash = null;
                 LiteSlashBright = null;
                 LiteSlashBrightHMirror = null;
+
+                ClawSlash3A = null;
+                ClawSlash3AYellow = null;
+                ClawSlash4 = null;
+
+                Meteor = null;
+                MeteorA = null;
+                CircleA = null;
+                EdgeA = null;
             }
         }
 

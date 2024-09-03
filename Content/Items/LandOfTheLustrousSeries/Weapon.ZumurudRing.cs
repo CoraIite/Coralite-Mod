@@ -191,27 +191,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public ref float Timer => ref Projectile.ai[1];
         public ref float Rot2 => ref Projectile.ai[2];
 
-        public static Asset<Texture2D> trailTex;
-
         public static Color highlightC = new(206, 248, 239);
         public static Color brightC = new(49, 230, 127);
         public static Color darkC = new(19, 112, 60);
-
-        public override void Load()
-        {
-            if (Main.dedServ)
-                return;
-
-            trailTex = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "EdgeTrail");
-        }
-
-        public override void Unload()
-        {
-            if (Main.dedServ)
-                return;
-
-            trailTex = null;
-        }
 
         public override void SetDefaults()
         {
@@ -319,7 +301,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             if (Projectile.oldPos.Length < 16)
                 return false;
 
-            Texture2D Texture = trailTex.Value;
+            Texture2D Texture = CoraliteAssets.Trail.EdgeA.Value;
             List<CustomVertexInfo> bars = new();
 
             for (int i = 0; i < 16; i++)

@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.ModPlayers;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -19,8 +20,6 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
 
         public ref float State => ref Projectile.ai[0];
         public ref float Timer => ref Projectile.ai[1];
-
-        public virtual string TrailTexture { get => AssetDirectory.OtherProjectiles + "EdgeTrail"; }
 
         /// <summary>
         /// 是否能追踪
@@ -304,11 +303,20 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
             Main.spriteBatch.Draw(mainTex, pos, null, lightColor, Projectile.rotation - 1.57f + extraRotation, mainTex.Size() / 2, Projectile.scale, 0, 0);
         }
 
+        /// <summary>
+        /// 获取拖尾贴图
+        /// </summary>
+        /// <returns></returns>
+        public virtual Asset<Texture2D> GetTrailTex()
+        {
+            return CoraliteAssets.Trail.EdgeA;
+        }
+
         public virtual void DrawTrails(Color lightColor)
         {
-            Texture2D Texture = ModContent.Request<Texture2D>(TrailTexture).Value;
+            Texture2D Texture = GetTrailTex().Value;
 
-            List<CustomVertexInfo> bars = new();
+            List<CustomVertexInfo> bars = [];
 
             for (int i = 0; i < trailCachesLength; i++)
             {

@@ -21,6 +21,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         public static Asset<Texture2D>[] ComponentRollingBar { get; private set; }
 
         public static Asset<Texture2D> MagikeContainerBar { get; private set; }
+        public static Asset<Texture2D> CraftArrow { get; private set; }
         public static Asset<Texture2D> FilterRemoveButton { get; private set; }
 
         public enum ConnectLineType
@@ -59,6 +60,7 @@ namespace Coralite.Core.Systems.MagikeSystem
 
             SelectFrame = Request<Texture2D>(AssetDirectory.Misc + "SelectFrame");
             MagikeContainerBar = Request<Texture2D>(AssetDirectory.MagikeUI + "MagikeContainerBar");
+            CraftArrow = Request<Texture2D>(AssetDirectory.MagikeUI + "CraftArrow");
             FilterRemoveButton = Request<Texture2D>(AssetDirectory.MagikeUI + "FilterRemoveButton");
         }
 

@@ -1,5 +1,6 @@
 ﻿using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
@@ -439,8 +440,10 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public void ShowInUI(UIElement parent)
         {
-            //显示所有物品格子 
-            //显示选择的合成表
+            //添加显示在最上面的组件名称
+            UIElement title = this.AddTitle(MagikeSystem.UITextID.CraftAltarName, parent);
+
+            //显示所有物品格子与选择的合成表
             //显示所有的合成表
             //展开与关闭的按钮
         }
@@ -450,6 +453,113 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
     public class CraftArrow:UIElement
     {
+        private CraftAltar _altar;
+        private static Item _voidItem = new();
 
+        public CraftArrow(CraftAltar altar)
+        {
+            Texture2D tex = MagikeSystem.MagikeContainerBar.Value;
+            Vector2 size = tex.Frame(1, 2).Size();
+
+            Width.Set(size.X + 10, 0);
+            Height.Set(size.Y, 0);
+
+            _altar = altar;
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+        }
+
+        protected override void DrawSelf(SpriteBatch spriteBatch)
+        {
+            Texture2D tex = MagikeSystem.MagikeContainerBar.Value;
+
+            CalculatedStyle Dimensions = GetDimensions();
+
+            Rectangle frame = tex.Frame(1, 2);
+
+            var pos = Dimensions.Position();
+            var center = Dimensions.Center();
+
+            spriteBatch.Draw(tex, center, frame,  Color.White, 0, frame.Size() / 2,1, 0, 0);
+
+            if (_altar.IsWorking)//工作中就只显示百分比，不然就显示合成表
+            {
+                float percent =1- (float)_altar.Timer / _altar.WorkTime;
+                string percentText = MathF.Round(100 * percent, 1) + "%";
+
+                frame = new Rectangle(0, tex.Height / 2, tex.Width, (int)(tex.Height / 2 * percent));
+
+                spriteBatch.Draw(tex, pos, frame, Color.White, 0, Vector2.Zero, 1, 0, 0);
+
+                Utils.DrawBorderString(spriteBatch, percentText, center, Color.White, 0.75f, anchorx: 0.5f, anchory: 0.5f);
+            }
+            else
+            {
+                Item i = _voidItem;
+                if (_altar.ChosenResipe != null)
+                {
+                    i = _altar.ChosenResipe.ResultItem;
+                }
+
+                Vector2 position = pos + new Vector2(0,12) * Main.inventoryScale;
+                ItemSlot.Draw(spriteBatch, ref i, ItemSlot.Context.ShopItem, position, Coralite.MagicCrystalPink);
+            }
+        }
+    }
+
+    public class CraftSelectButton:UIElement
+    {
+        public static SelectStyle CurrentSelectStyle;
+
+        /// <summary>
+        /// 魔能合成UI的显示合成表的筛选
+        /// </summary>
+        public enum SelectStyle
+        {
+            All,
+            CanCraft
+        }
+    }
+
+    public class CraftShowButton:UIElement
+    {
+        public static ShowStyle CurrentSelectStyle;
+
+        /// <summary>
+        /// 魔能合成表UI的显示方式
+        /// </summary>
+        public enum ShowStyle
+        {
+            VerticleLine,
+            Grid
+        }
+    }
+
+    /// <summary>
+    /// 魔能合成UI的中控类，兼任绘制水平横条的任务
+    /// </summary>
+    public class CraftController:UIElement
+    {
+        /// <summary>
+        /// 当前显示的所有合成表
+        /// </summary>
+        public static List<MagikeCraftRecipe> Recipes = [];
+        /// <summary>
+        /// 当前的主要物品类型
+        /// </summary>
+        public static List<int> CurrentItemTypes = [];
+
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+        }
+
+        protected override void DrawSelf(SpriteBatch spriteBatch)
+        {
+            base.DrawSelf(spriteBatch);
+        }
     }
 }

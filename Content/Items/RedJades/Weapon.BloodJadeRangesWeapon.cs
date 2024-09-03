@@ -283,7 +283,7 @@ namespace Coralite.Content.Items.RedJades
             Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
             effect.Parameters["transformMatrix"].SetValue(world * view * projection);
-            effect.Parameters["sampleTexture"].SetValue(Request<Texture2D>(AssetDirectory.OtherProjectiles + "EdgeTrail", AssetRequestMode.ImmediateLoad).Value);
+            effect.Parameters["sampleTexture"].SetValue(CoraliteAssets.Trail.EdgeA.Value);
 
             trail?.Render(effect);
             //trail2?.Render(effect);

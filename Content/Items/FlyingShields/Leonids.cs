@@ -182,7 +182,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public virtual void DrawTrails()
         {
-            Texture2D Texture = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "CircleTrail").Value;
+            Texture2D Texture = CoraliteAssets.Trail.CircleA.Value;
 
             List<CustomVertexInfo> bars = new();
 

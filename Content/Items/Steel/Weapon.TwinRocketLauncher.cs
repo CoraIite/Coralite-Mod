@@ -243,7 +243,7 @@ namespace Coralite.Content.Items.Steel
 
         public virtual void DrawTrails()
         {
-            Texture2D Texture = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "CircleTrail").Value;
+            Texture2D Texture = CoraliteAssets.Trail.CircleA.Value;
 
             List<CustomVertexInfo> bars = new();
 
@@ -426,7 +426,7 @@ namespace Coralite.Content.Items.Steel
 
         public virtual void DrawTrails()
         {
-            Texture2D Texture = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "CircleTrail").Value;
+            Texture2D Texture = CoraliteAssets.Trail.CircleA.Value;
 
             List<CustomVertexInfo> bars = new();
 

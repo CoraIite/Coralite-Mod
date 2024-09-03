@@ -8,6 +8,7 @@ using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Core.Systems.Trails;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -660,7 +661,6 @@ namespace Coralite.Content.Items.FlyingShields
     public class HephaesthSmeltingResults : BaseFlyingShield
     {
         public override string Texture => AssetDirectory.Blank;
-        public override string TrailTexture => AssetDirectory.Trails + "SlashFlatVMirror";
 
         ref float ShieldType => ref Projectile.ai[2];
 
@@ -840,6 +840,9 @@ namespace Coralite.Content.Items.FlyingShields
             return Main.hslToRgb(x, 1, 0.8f);
         }
 
+        public override Asset<Texture2D> GetTrailTex()
+            => CoraliteAssets.Trail.SlashFlatVMirror;
+
         public override void DrawSelf(Color lightColor)
         {
             int textureType = GetTextureType((int)ShieldType);
@@ -862,7 +865,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void DrawTrails(Color lightColor)
         {
-            Texture2D Texture = ModContent.Request<Texture2D>(TrailTexture).Value;
+            Texture2D Texture = GetTrailTex().Value;
 
             List<CustomVertexInfo> bars = new();
             List<CustomVertexInfo> bars2 = new();

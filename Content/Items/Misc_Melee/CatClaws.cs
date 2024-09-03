@@ -209,7 +209,7 @@ namespace Coralite.Content.Items.Misc_Melee
             Projectile.height = 62;
             distanceToOwner = 10;
             minTime = 0;
-            TrailTexture = AssetDirectory.OtherProjectiles + "CatClawsTrail3";
+            TrailTexture = AssetDirectory.VFX + "ClawSlash3aYellow";
             onHitFreeze = 20;
         }
 

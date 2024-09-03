@@ -245,6 +245,7 @@ namespace Coralite.Core.Systems.MagikeSystem
             ContainerAntiMagikeAmount,
             ContainerAntiMagikeMax,
             MagikeContainerName,
+            CraftAltarName,
 
             /*
              * 魔能线性发送器

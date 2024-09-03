@@ -439,20 +439,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public ref float Timer => ref Projectile.ai[1];
         public ref float State => ref Projectile.ai[2];
 
-        public static Asset<Texture2D> TrailTex;
-
         private Vector2[] oldPos2;
-
-        public override void Load()
-        {
-            if (!Main.dedServ)
-                TrailTex = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "FadeTrail");
-        }
-
-        public override void Unload()
-        {
-            TrailTex = null;
-        }
 
         public override void SetStaticDefaults()
         {
@@ -636,7 +623,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             Main.graphics.GraphicsDevice.BlendState = BlendState.Additive;
             effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMaxrix());
-            effect.Parameters["sampleTexture"].SetValue(TrailTex.Value);
+            effect.Parameters["sampleTexture"].SetValue(CoraliteAssets.Trail.Meteor.Value);
             trail?.Render(effect);
 
             Main.graphics.GraphicsDevice.BlendState = BlendState.AlphaBlend;

@@ -288,12 +288,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         }
     }
 
-    public class AntiContainerBar : ContainerBar
+    public class AntiContainerBar(MagikeContainer container) : ContainerBar(container)
     {
-        public AntiContainerBar(MagikeContainer container) : base(container)
-        {
-        }
-
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
             Texture2D tex = MagikeSystem.MagikeContainerBar.Value;
