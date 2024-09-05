@@ -61,6 +61,7 @@ MagikeSystem: {
 		CheckOnlyLinerSenderName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.CheckOnlyLinerSenderName
 		GlowingMushroomLensName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.GlowingMushroomLensName
 		GlowingMushroomCondition: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.GlowingMushroomCondition
+		CraftAltarName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.CraftAltarName
 	}
 
 	Error: Mods.Coralite.MagikeSystem.MagikeSystem.Error

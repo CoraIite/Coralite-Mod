@@ -259,7 +259,7 @@ namespace Coralite.Content.Items.Nightmare
     /// </summary>
     public class BoneClaw : ModProjectile, IDrawPrimitive
     {
-        public override string Texture => AssetDirectory.VFX + "ClawSlash4";
+        public override string Texture => AssetDirectory.Trails + "ClawSlash4";
 
         public ref float State => ref Projectile.ai[0];
         public ref float ColorState => ref Projectile.ai[1];

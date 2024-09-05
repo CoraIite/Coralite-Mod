@@ -31,6 +31,8 @@ namespace Coralite.Content.Items.Gels
             Item.noUseGraphic = false;
             Item.noMelee = true;
             Item.autoReuse = true;
+
+            Item.UseSound = CoraliteSoundID.Bow_Item5;
         }
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)

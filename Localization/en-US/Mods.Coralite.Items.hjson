@@ -4259,3 +4259,19 @@ BasicPedestal: {
 	DisplayName: Basic Pedestal
 	Tooltip: ""
 }
+
+GelFiberBreastplate: {
+	ArmorBonus: Mods.Coralite.Items.GelFiberBreastplate.ArmorBonus
+	DisplayName: Gel Fiber Breastplate
+	Tooltip: ""
+}
+
+GelFiberBoots: {
+	DisplayName: Gel Fiber Boots
+	Tooltip: ""
+}
+
+GelFiberHelmet: {
+	DisplayName: Gel Fiber Helmet
+	Tooltip: ""
+}

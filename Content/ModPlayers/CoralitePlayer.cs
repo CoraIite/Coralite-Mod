@@ -86,6 +86,8 @@ namespace Coralite.Content.ModPlayers
 
         public Vector2 oldOldVelocity;
         public Vector2 oldVelocity;
+        public Vector2 oldOldCenter;
+        public Vector2 oldCenter;
 
         /// <summary> 冷系伤害加成 </summary>
         public StatModifier coldDamageBonus;
@@ -362,6 +364,9 @@ namespace Coralite.Content.ModPlayers
             nianli = Math.Clamp(nianli, 0f, nianliMax);  //只是防止意外发生
             oldOldVelocity = oldVelocity;
             oldVelocity = Player.velocity;
+
+            oldOldCenter = oldCenter;
+            oldCenter = Player.Center;
         }
 
         public override void UpdateDead()

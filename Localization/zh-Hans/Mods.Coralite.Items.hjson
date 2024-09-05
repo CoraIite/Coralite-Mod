@@ -4366,3 +4366,19 @@ BasicPedestal: {
 	DisplayName: 基础置物台
 	Tooltip: 可以在内部放入物品拱展示或魔能合成
 }
+
+GelFiberBreastplate: {
+	ArmorBonus: 静止时增加伤害减免与近战伤害
+	DisplayName: 凝胶纤维盔甲
+	Tooltip: ""
+}
+
+GelFiberBoots: {
+	DisplayName: 凝胶纤维鞋
+	Tooltip: ""
+}
+
+GelFiberHelmet: {
+	DisplayName: 凝胶纤维头盔
+	Tooltip: ""
+}

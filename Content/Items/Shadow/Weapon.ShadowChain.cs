@@ -98,7 +98,6 @@ namespace Coralite.Content.Items.Shadow
 
         public static Asset<Texture2D> handleTex;
         public static Asset<Texture2D> ChainTex;
-        public static Asset<Texture2D> trailTexture;
         public static Asset<Texture2D> WarpTexture;
         public static Asset<Texture2D> GradientTexture;
 
@@ -123,7 +122,6 @@ namespace Coralite.Content.Items.Shadow
 
             handleTex = Request<Texture2D>(AssetDirectory.ShadowItems + "ShadowChainHandle");
             ChainTex = Request<Texture2D>(AssetDirectory.ShadowItems + "ShadowChainChain");
-            trailTexture = Request<Texture2D>(AssetDirectory.OtherProjectiles + "HLightSlashTrail");
             WarpTexture = Request<Texture2D>(AssetDirectory.OtherProjectiles + "WarpTex");
             GradientTexture = Request<Texture2D>(AssetDirectory.ShadowItems + "ShadowChainGradient");
         }
@@ -458,7 +456,7 @@ namespace Coralite.Content.Items.Shadow
                     Effect effect = Filters.Scene["StarsTrail"].GetShader().Shader;
 
                     effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMaxrix());
-                    effect.Parameters["sampleTexture"].SetValue(trailTexture.Value);
+                    effect.Parameters["sampleTexture"].SetValue(CoraliteAssets.Trail.SlashFlatBright.Value);
                     effect.Parameters["gradientTexture"].SetValue(GradientTexture.Value);
                     effect.Parameters["worldSize"].SetValue(new Vector2(Main.screenWidth, Main.screenHeight));
                     effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly / 5);

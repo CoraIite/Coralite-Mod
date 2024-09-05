@@ -31,6 +31,13 @@ namespace Coralite.Core
             /// <summary> 
             /// 最初始的刀光贴图，是一堆线条<br></br>
             /// 与原本的区别是这个的高度只有之前的一半，被压缩了<br></br>
+            /// 更亮
+            /// </summary>
+            public static ATex SlashFlatBright { get; private set; }
+
+            /// <summary> 
+            /// 最初始的刀光贴图，是一堆线条<br></br>
+            /// 与原本的区别是这个的高度只有之前的一半，被压缩了<br></br>
             /// 镜像叠加，变成了两侧短中间长的类似于推进器尾焰的形状
             /// </summary>
             public static ATex SlashFlatVMirror { get; private set; }
@@ -144,12 +151,18 @@ namespace Coralite.Core
             /// </summary>
             public static ATex EdgeA { get; private set; }
 
+            /// <summary> 
+            /// 刺很多的拖尾
+            /// </summary>
+            public static ATex Spike { get; private set; }
+
             #endregion
 
             internal static void Load()
             {
                 Slash = Get(Trails + nameof(Slash));
                 SlashFlat = Get(Trails + nameof(SlashFlat));
+                SlashFlatBright = Get(Trails + nameof(SlashFlatBright));
                 SlashFlatVMirror = Get(Trails + nameof(SlashFlatVMirror));
                 SlashFlatBlur = Get(Trails + nameof(SlashFlatBlur));
                 SlashFlatBlurVMirror = Get(Trails + nameof(SlashFlatBlurVMirror));
@@ -169,12 +182,14 @@ namespace Coralite.Core
                 MeteorA = Get(Trails + nameof(MeteorA));
                 CircleA = Get(Trails + nameof(CircleA));
                 EdgeA = Get(Trails + nameof(EdgeA));
+                Spike = Get(Trails + nameof(Spike));
             }
 
             internal static void Unload()
             {
                 Slash = null;
                 SlashFlat = null;
+                SlashFlatBright = null;
                 SlashFlatVMirror = null;
                 SlashFlatBlur = null;
                 SlashFlatBlurVMirror = null;
@@ -194,6 +209,7 @@ namespace Coralite.Core
                 MeteorA = null;
                 CircleA = null;
                 EdgeA = null;
+                Spike = null;
             }
         }
 

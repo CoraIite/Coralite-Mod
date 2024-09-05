@@ -195,7 +195,7 @@ namespace Coralite.Content.Items.Glistent
             }
 
             if (Owner.armor[1].type == ItemType<LeafeoLightArmor>()
-                || Owner.armor[1].ModItem.IsArmorSet(Owner.armor[0], Owner.armor[1], Owner.armor[2]))
+                && Owner.armor[1].ModItem.IsArmorSet(Owner.armor[0], Owner.armor[1], Owner.armor[2]))
             {
                 SoundEngine.PlaySound(CoraliteSoundID.Grass, Projectile.Center);
                 Helper.PlayPitched(CoraliteSoundID.Derpling_NPCDeath25, Projectile.Center, pitch: -0.5f);
