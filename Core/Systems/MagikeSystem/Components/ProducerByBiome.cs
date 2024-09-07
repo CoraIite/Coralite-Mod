@@ -10,7 +10,7 @@ using static Coralite.Helpers.MagikeHelper;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components
 {
-    public abstract class BiomeProducer : MagikeActiveProducer, IUIShowable
+    public abstract class ProducerByBiome : MagikeActiveProducer, IUIShowable
     {
         /// <summary>
         /// 名称

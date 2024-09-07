@@ -9,8 +9,8 @@ namespace Coralite.Core.Systems.MagikeSystem
 
         public static LocalizedText NewKnowledgeUnlocked { get; private set; }
 
-        public LocalizedText LearnedMagikeBase { get; private set; }
-        public LocalizedText LearnedMagikeAdvanced { get; private set; }
+        public static LocalizedText LearnedMagikeBase { get; private set; }
+        public static LocalizedText LearnedMagikeAdvanced { get; private set; }
 
         public static LocalizedText Error { get; private set; }
 
@@ -301,6 +301,8 @@ namespace Coralite.Core.Systems.MagikeSystem
             DesertCondition,
             GlowingMushroomLensName,
             GlowingMushroomCondition,
+            SunlightLensName,
+            SunlightCondition,
 
             /*
              * 物品容器

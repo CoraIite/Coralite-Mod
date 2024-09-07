@@ -35,7 +35,7 @@
 //                .AddIngredient<MagicCrystal>(2)
 //                .AddIngredient(ItemID.Moonglow, 5)
 //                .AddIngredient(ItemID.CrimtaneBar, 5)
-//                .AddCondition(MagikeSystem.Instance.LearnedMagikeBase, () => MagikeSystem.learnedMagikeBase)
+//                .AddCondition(CoraliteConditions.LearnedMagikeBase)
 //                .AddTile(TileID.Anvils)
 //                .Register();
 
@@ -43,7 +43,7 @@
 //                .AddIngredient<MagicCrystal>(2)
 //                .AddIngredient(ItemID.Moonglow, 5)
 //                .AddIngredient(ItemID.DemoniteBar, 5)
-//                .AddCondition(MagikeSystem.Instance.LearnedMagikeBase, () => MagikeSystem.learnedMagikeBase)
+//                .AddCondition(CoraliteConditions.LearnedMagikeBase)
 //                .AddTile(TileID.Anvils)
 //                .Register();
 //        }

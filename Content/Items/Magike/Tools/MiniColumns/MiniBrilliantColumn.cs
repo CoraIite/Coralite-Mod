@@ -26,14 +26,14 @@ namespace Coralite.Content.Items.Magike.Tools.MiniColumns
             CreateRecipe()
                 .AddIngredient<MiniDemoniteColumn>()
                 .AddIngredient<CrystallineMagike>(4)
-                .AddCondition(MagikeSystem.Instance.LearnedMagikeAdvanced, () => MagikeSystem.learnedMagikeAdvanced)
+                .AddCondition(MagikeSystem.LearnedMagikeAdvanced, () => MagikeSystem.learnedMagikeAdvanced)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
 
             CreateRecipe()
                 .AddIngredient<MiniCrimtaneColumn>()
                 .AddIngredient<CrystallineMagike>(4)
-                .AddCondition(MagikeSystem.Instance.LearnedMagikeAdvanced, () => MagikeSystem.learnedMagikeAdvanced)
+                .AddCondition(MagikeSystem.LearnedMagikeAdvanced, () => MagikeSystem.learnedMagikeAdvanced)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
         }

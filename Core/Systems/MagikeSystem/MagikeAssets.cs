@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Coralite.Core.Systems.MagikeSystem.Components;
+using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria;
 using static Terraria.ModLoader.ModContent;
@@ -23,6 +24,9 @@ namespace Coralite.Core.Systems.MagikeSystem
         public static Asset<Texture2D> MagikeContainerBar { get; private set; }
         public static Asset<Texture2D> CraftArrow { get; private set; }
         public static Asset<Texture2D> FilterRemoveButton { get; private set; }
+
+        public static Asset<Texture2D> CraftSelectButton { get; private set; }
+        public static Asset<Texture2D> CraftShowButton { get; private set; }
 
         public enum ConnectLineType
         {
@@ -62,6 +66,8 @@ namespace Coralite.Core.Systems.MagikeSystem
             MagikeContainerBar = Request<Texture2D>(AssetDirectory.MagikeUI + "MagikeContainerBar");
             CraftArrow = Request<Texture2D>(AssetDirectory.MagikeUI + "CraftArrow");
             FilterRemoveButton = Request<Texture2D>(AssetDirectory.MagikeUI + "FilterRemoveButton");
+            CraftSelectButton = Request<Texture2D>(AssetDirectory.MagikeUI + "CraftSelectButton");
+            CraftShowButton = Request<Texture2D>(AssetDirectory.MagikeUI + "CraftShowButton");
         }
 
         public static void LoadConnectLine()

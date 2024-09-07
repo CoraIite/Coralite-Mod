@@ -26,7 +26,7 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
             CreateRecipe()
                 .AddIngredient<Basalt>(10)
                 .AddIngredient(ItemID.SandBlock, 5)
-                .AddCondition(MagikeSystem.Instance.LearnedMagikeBase, () => MagikeSystem.learnedMagikeBase)
+                .AddCondition(CoraliteConditions.LearnedMagikeBase)
                 .AddTile(TileID.Anvils)
                 .Register();
         }

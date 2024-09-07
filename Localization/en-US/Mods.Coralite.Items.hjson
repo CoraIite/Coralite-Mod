@@ -967,11 +967,6 @@ MagicCrystalHook: {
 	Tooltip: ""
 }
 
-MagikeSymbol: {
-	DisplayName: Magike
-	Tooltip: This recipe needs to be remodeled by magike!
-}
-
 GelThrone: {
 	DisplayName: Gel Throne
 	Tooltip: Right-click to sit upon it
@@ -1048,16 +1043,6 @@ LeafStone: {
 MagicalPowder: {
 	DisplayName: Magical Powder
 	Tooltip: Contains a faint magic power
-}
-
-MagikePolySymbol: {
-	DisplayName: Magike Polysymbol
-	Tooltip:
-		'''
-		This crafting table needs to be done through magike polymerize!
-		The first item other than magike is the primary item, which needs to be placed in the polymerization Altar
-		The rest of the items are secondary items and need to be placed in the pedestal
-		'''
 }
 
 CrystalCrate: {
@@ -4273,5 +4258,10 @@ GelFiberBoots: {
 
 GelFiberHelmet: {
 	DisplayName: Gel Fiber Helmet
+	Tooltip: ""
+}
+
+SymbolOfMagike: {
+	DisplayName: Symbol Of Magike
 	Tooltip: ""
 }

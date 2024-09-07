@@ -370,9 +370,9 @@ namespace Coralite.Content.Items.GlobalItems
 
         public void AddVarient()
         {
-            ItemVariants.AddVariant(ItemID.Meowmere, ItemVariants.WeakerVariant, CoraliteConditions.CoraliteConditions.CoralCatCondition);
-            ItemVariants.AddVariant(ItemID.MeowmereMinecart, ItemVariants.StrongerVariant, CoraliteConditions.CoraliteConditions.CoralCatCondition);
-            ItemVariants.AddVariant(ItemID.TerraFartMinecart, ItemVariants.StrongerVariant, CoraliteConditions.CoraliteConditions.CoralCatCondition);
+            ItemVariants.AddVariant(ItemID.Meowmere, ItemVariants.WeakerVariant, CoraliteConditions.CoralCat);
+            ItemVariants.AddVariant(ItemID.MeowmereMinecart, ItemVariants.StrongerVariant, CoraliteConditions.CoralCat);
+            ItemVariants.AddVariant(ItemID.TerraFartMinecart, ItemVariants.StrongerVariant, CoraliteConditions.CoralCat);
         }
     }
 }

@@ -19,7 +19,7 @@ namespace Coralite.Content.Items.Magike.Refractors
         {
             CreateRecipe()
                 .AddIngredient<Basalt>(20)
-                .AddCondition(MagikeSystem.Instance.LearnedMagikeBase, () => MagikeSystem.learnedMagikeBase)
+                .AddCondition(CoraliteConditions.LearnedMagikeBase)
                 .AddTile(TileID.Anvils)
                 .Register();
         }

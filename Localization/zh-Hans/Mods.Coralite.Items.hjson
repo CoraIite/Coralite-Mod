@@ -980,16 +980,6 @@ MagicCrystalHook: {
 	Tooltip: ""
 }
 
-MagikeSymbol: {
-	DisplayName: ！该合成表只能通过魔能重塑进行！
-	Tooltip:
-		'''
-		合成表仅供参考，该合成表需要通过魔能重塑进行
-		使用任意的魔能重塑池放入物品后选择重塑表，之后激活以合成
-		需要足够的魔能和物品数量才能成功激活
-		'''
-}
-
 GelThrone: {
 	DisplayName: 史莱姆王座
 	Tooltip: 右键坐上去
@@ -4381,4 +4371,13 @@ GelFiberBoots: {
 GelFiberHelmet: {
 	DisplayName: 凝胶纤维头盔
 	Tooltip: ""
+}
+
+SymbolOfMagike: {
+	DisplayName: 魔能徽记
+	Tooltip: 
+	'''
+	该合成表仅供查看，该物品无法获得
+	请使用魔能合成台进行魔能合成
+	'''
 }

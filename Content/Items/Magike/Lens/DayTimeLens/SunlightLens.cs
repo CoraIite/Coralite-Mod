@@ -1,158 +1,176 @@
-﻿//using Coralite.Content.Items.MagikeSeries1;
-//using Coralite.Content.Raritys;
-//using Coralite.Core;
-//using Coralite.Core.Systems.MagikeSystem;
-//using Coralite.Core.Systems.MagikeSystem.BaseItems;
-//using Coralite.Core.Systems.MagikeSystem.TileEntities;
-//using Coralite.Core.Systems.MagikeSystem.Tiles;
-//using Coralite.Helpers;
-//using Microsoft.Xna.Framework.Graphics;
-//using System;
-//using Terraria;
-//using Terraria.DataStructures;
-//using Terraria.ID;
-//using Terraria.ObjectData;
-//using static Terraria.ModLoader.ModContent;
+﻿using Coralite.Content.Items.MagikeSeries1;
+using Coralite.Content.Raritys;
+using Coralite.Core;
+using Coralite.Core.Systems.MagikeSystem;
+using Coralite.Core.Systems.MagikeSystem.BaseItems;
+using Coralite.Core.Systems.MagikeSystem.Components;
+using Coralite.Core.Systems.MagikeSystem.TileEntities;
+using Coralite.Core.Systems.MagikeSystem.Tiles;
+using Terraria;
+using Terraria.ID;
+using static Terraria.ModLoader.ModContent;
 
-//namespace Coralite.Content.Items.Magike.DayTimeLens
-//{
-//    public class SunlightLens : BaseMagikePlaceableItem, IMagikeGeneratorItem, IMagikeSenderItem
-//    {
-//        public SunlightLens() : base(TileType<SunlightLensTile>(), Item.sellPrice(0, 0, 10, 0)
-//            , RarityType<MagicCrystalRarity>(), 50, AssetDirectory.MagikeLens)
-//        { }
+namespace Coralite.Content.Items.Magike.Lens.DayTimeLens
+{
+    public class SunlightLens() : MagikeApparatusItem(TileType<SunlightLensTile>(), Item.sellPrice(silver: 5)
+        , RarityType<MagicCrystalRarity>(), AssetDirectory.MagikeLens)
+    {
+        public override bool CanUseItem(Player player)
+        {
+            return player.ZoneBeach;
+        }
 
-//        public override int MagikeMax => 20;
-//        public string SendDelay => "10";
-//        public int HowManyPerSend => 2;
-//        public int ConnectLengthMax => 5;
-//        public int HowManyToGenerate => 1;
-//        public string GenerateDelay => "12";
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient<Basalt>(10)
+                .AddIngredient(ItemID.Sunflower)
+                .AddCondition(CoraliteConditions.LearnedMagikeBase)
+                .AddTile(TileID.Anvils)
+                .Register();
+        }
+    }
 
-//        public override void AddRecipes()
-//        {
-//            CreateRecipe()
-//                .AddIngredient<MagicCrystal>(2)
-//                .AddIngredient(ItemID.Sunflower, 5)
-//                .AddCondition(MagikeSystem.Instance.LearnedMagikeBase, () => MagikeSystem.learnedMagikeBase)
-//                .AddTile(TileID.Anvils)
-//                .Register();
-//        }
-//    }
+    public class SunlightLensTile() : BaseLensTile
+        (2, 3, Color.SandyBrown, DustID.Sand)
+    {
+        public override string Texture => AssetDirectory.MagikeLensTiles + Name;
+        public override int DropItemType => ItemType<SunlightLens>();
 
-//    public class SunlightLensTile : OldBaseLensTile
-//    {
-//        public override void SetStaticDefaults()
-//        {
-//            Main.tileShine[Type] = 400;
-//            Main.tileFrameImportant[Type] = true;
-//            Main.tileNoFail[Type] = true; //不会出现挖掘失败的情况
-//            TileID.Sets.IgnoredInHouseScore[Type] = true;
+        public override int[] GetAnchorValidTiles()
+        {
+            return
+            [
+                TileID.Sand,TileID.Sandstone,TileID.SandstoneBrick
+            ];
+        }
 
-//            TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);
-//            TileObjectData.newTile.Height = 3;
-//            TileObjectData.newTile.CoordinateHeights = new int[3] {
-//                16,
-//                16,
-//                16
-//            };
-//            TileObjectData.newTile.DrawYOffset = 2;
-//            TileObjectData.newTile.LavaDeath = false;
-//            TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(GetInstance<SunlightLensEntity>().Hook_AfterPlacement, -1, 0, true);
+        public override MagikeTileEntity GetEntityInstance() => GetInstance<SunlightLensTileEntity>();
 
-//            TileObjectData.addTile(Type);
+        public override MagikeApparatusLevel[] GetAllLevels()
+        {
+            return
+            [
+                MagikeApparatusLevel.None,
+                MagikeApparatusLevel.Glistent,
+                MagikeApparatusLevel.Hallow,
+                MagikeApparatusLevel.HolyLight,
+            ];
+        }
+    }
 
-//            AddMapEntry(Color.Orange);
-//            DustType = DustID.OrangeTorch;
-//        }
+    public class SunlightLensTileEntity : BaseActiveProducerTileEntity<SunlightLensTile>
+    {
+        public override MagikeContainer GetStartContainer()
+            => new SunlightLensContainer();
 
-//        public override void SpecialDraw(int i, int j, SpriteBatch spriteBatch)
-//        {
-//            //这是特定于照明模式的，如果您手动绘制瓷砖，请始终包含此内容
-//            Vector2 offScreen = new(Main.offScreenRange);
-//            if (Main.drawToScreen)
-//                offScreen = Vector2.Zero;
+        public override MagikeLinerSender GetStartSender()
+            => new SunlightLensSender();
 
-//            //检查物块它是否真的存在
-//            Point p = new(i, j);
-//            Tile tile = Main.tile[p.X, p.Y];
-//            if (tile == null || !tile.HasTile)
-//                return;
+        public override MagikeActiveProducer GetStartProducer()
+            => new SunlightProducer();
+    }
 
-//            //获取初始绘制参数
-//            Texture2D texture = TopTexture.Value;
+    public class SunlightLensContainer : UpgradeableContainer
+    {
+        public override void Upgrade(MagikeApparatusLevel incomeLevel)
+        {
+            switch (incomeLevel)
+            {
+                default:
+                    MagikeMaxBase = 0;
+                    AntiMagikeMaxBase = 0;
+                    break;
+                case MagikeApparatusLevel.Glistent:
+                    MagikeMaxBase = 9;
+                    AntiMagikeMaxBase = MagikeMaxBase * 3;
+                    break;
+                case MagikeApparatusLevel.Hallow:
+                    MagikeMaxBase = 562;
+                    AntiMagikeMaxBase = MagikeMaxBase * 2;
+                    break;
+                case MagikeApparatusLevel.HolyLight:
+                    MagikeMaxBase = 562;
+                    AntiMagikeMaxBase = MagikeMaxBase * 2;
+                    break;
+            }
 
-//            // 根据项目的地点样式拾取图纸上的框架
-//            Rectangle frame = texture.Frame(2, 10, 1, 0);
+            LimitMagikeAmount();
+            LimitAntiMagikeAmount();
+        }
+    }
 
-//            Vector2 origin = frame.Size() / 2f;
-//            Vector2 worldPos = p.ToWorldCoordinates(halfWidth, halfHeight);
+    public class SunlightLensSender : UpgradeableLinerSender
+    {
+        public override void Upgrade(MagikeApparatusLevel incomeLevel)
+        {
+            MaxConnectBase = 1;
+            ConnectLengthBase = 4 * 16;
 
-//            Color color = Lighting.GetColor(p.X, p.Y);
+            switch (incomeLevel)
+            {
+                default:
+                    MaxConnectBase = 0;
+                    UnitDeliveryBase = 0;
+                    SendDelayBase = 1_0000_0000 / 60;//随便填个大数
+                    ConnectLengthBase = 0;
+                    break;
+                case MagikeApparatusLevel.Glistent:
+                    UnitDeliveryBase = 3;
+                    SendDelayBase = 10;
+                    break;
+                case MagikeApparatusLevel.Hallow:
+                    UnitDeliveryBase = 150;
+                    SendDelayBase = 8;
+                    break;
+                case MagikeApparatusLevel.HolyLight:
+                    UnitDeliveryBase = 150;
+                    SendDelayBase = 8;
+                    break;
+            }
 
-//            //这与我们之前注册的备用磁贴数据有关
-//            bool direction = tile.TileFrameY / FrameHeight != 0;
-//            SpriteEffects effects = direction ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+            SendDelayBase *= 60;
+            RecheckConnect();
+        }
+    }
 
-//            // 一些数学魔法，使其随着时间的推移平稳地上下移动
-//            Vector2 drawPos = worldPos + offScreen - Main.screenPosition;
-//            if (MagikeHelper.TryGetEntityWithTopLeft(i, j, out IMagikeContainer container))
-//            {
-//                if (container.Active)   //如果处于活动状态那么就会上下移动，否则就落在底座上
-//                {
-//                    const float TwoPi = (float)Math.PI * 2f;
-//                    float offset = (float)Math.Sin(Main.GlobalTimeWrappedHourly * TwoPi / 5f);
-//                    drawPos += new Vector2(0f, offset * 4f);
-//                    int yframe = (int)(5 * Main.GlobalTimeWrappedHourly % 10);
-//                    frame = texture.Frame(2, 10, 0, yframe);
-//                }
-//                else
-//                    drawPos += new Vector2(0, halfHeight - 16);
-//            }
+    public class SunlightProducer : UpgradeableTimeProducer
+    {
+        public override MagikeSystem.UITextID ApparatusName()
+            => MagikeSystem.UITextID.SunlightLensName;
 
-//            // 绘制主帖图
-//            spriteBatch.Draw(texture, drawPos, frame, color, 0f, origin, 1f, effects, 0f);
-//        }
-//    }
+        public override MagikeSystem.UITextID ProduceCondition()
+            => MagikeSystem.UITextID.SunlightCondition;
 
-//    public class SunlightLensEntity : MagikeGenerator_Normal
-//    {
-//        public const int sendDelay = 10 * 60;
-//        public int sendTimer;
-//        public SunlightLensEntity() : base(20, 5 * 16, 12 * 60) { }
+        public override bool CheckDayTime()
+        {
+            return Main.dayTime && !Main.raining && !Main.eclipse;
+        }
 
-//        public override ushort TileType => (ushort)TileType<SunlightLensTile>();
+        public override void Upgrade(MagikeApparatusLevel incomeLevel)
+        {
+            switch (incomeLevel)
+            {
+                default:
+                    ProductionDelayBase = 1_0000_0000 / 60;//随便填个大数
+                    ThroughputBase = 1;
+                    break;
+                case MagikeApparatusLevel.Glistent:
+                    ProductionDelayBase = 10;
+                    ThroughputBase = 1;
+                    break;
+                case MagikeApparatusLevel.Hallow:
+                    ProductionDelayBase = 8;
+                    ThroughputBase = 50;
+                    break;
+                case MagikeApparatusLevel.HolyLight:
+                    ProductionDelayBase = 8;
+                    ThroughputBase = 50;
+                    break;
+            }
 
-//        public override int HowManyPerSend => 2;
-//        public override int HowManyToGenerate => 1;
-
-//        public override bool CanSend()
-//        {
-//            sendTimer++;
-//            if (sendTimer > sendDelay)
-//            {
-//                sendTimer = 0;
-//                return true;
-//            }
-
-//            return false;
-//        }
-
-//        public override void OnGenerate(int howMany)
-//        {
-//            GenerateAndChargeSelf(howMany);
-//        }
-
-//        public override bool CanGenerate() => Main.dayTime;
-
-//        public override void SendVisualEffect(IMagikeContainer container)
-//        {
-//            MagikeHelper.SpawnDustOnSend(2, 3, Position, container, Color.Orange);
-//        }
-
-//        public override void OnReceiveVisualEffect()
-//        {
-//            MagikeHelper.SpawnDustOnGenerate(2, 3, Position, Color.Orange, DustID.FireworksRGB);
-//        }
-//    }
-//}
+            ProductionDelayBase *= 60;
+            Timer = ProductionDelayBase;
+        }
+    }
+}

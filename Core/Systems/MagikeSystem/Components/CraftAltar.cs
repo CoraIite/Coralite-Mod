@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent.UI.Elements;
 using Terraria.UI;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components
@@ -443,15 +444,59 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             //添加显示在最上面的组件名称
             UIElement title = this.AddTitle(MagikeSystem.UITextID.CraftAltarName, parent);
 
+            float top = title.Height.Pixels + 8;
+
             //显示所有物品格子与选择的合成表
-            //显示所有的合成表
-            //展开与关闭的按钮
+            if (!Entity.TryGetComponent(MagikeComponentID.ItemContainer, out ItemContainer container))
+                return;
+
+            if (!Entity.TryGetComponent(MagikeComponentID.ItemGetOnlyContainer, out GetOnlyItemContainer getOnlyContainer))
+                return;
+
+            UIList list = [];
+
+            for (int i = 0; i < container.Items.Length; i++)
+            {
+                ItemContainerSlot slot = new(container, i);
+                list.Add(slot);
+            }
+
+            list.Add(new CraftArrow(this));
+
+            for (int i = 0; i < getOnlyContainer.Items.Length; i++)
+            {
+                GetOnlyItemSlot slot = new(getOnlyContainer, i);
+                list.Add(slot);
+            }
+
+            list.QuickInvisibleScrollbar();
+            list.SetTopLeft(top, 0);
+
+            parent.Append(list);
+
+            float left = 60f;
+            AddButtons(parent, left, top); //展开与关闭的按钮
+
+
+
+        }
+
+        public static void AddButtons(UIElement parent,float left,float top)
+        {
+            CraftSelectButton selectButton = new();
+            CraftShowButton showButton = new CraftShowButton();
+
+            selectButton.SetTopLeft(left, top);
+            showButton.SetTopLeft(left + selectButton.Width.Pixels, top);
+
+            parent.Append(selectButton);
+            parent.Append(showButton);
         }
 
         #endregion
     }
 
-    public class CraftArrow:UIElement
+    public class CraftArrow : UIElement
     {
         private CraftAltar _altar;
         private static Item _voidItem = new();
@@ -483,11 +528,11 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             var pos = Dimensions.Position();
             var center = Dimensions.Center();
 
-            spriteBatch.Draw(tex, center, frame,  Color.White, 0, frame.Size() / 2,1, 0, 0);
+            spriteBatch.Draw(tex, center, frame, Color.White, 0, frame.Size() / 2, 1, 0, 0);
 
             if (_altar.IsWorking)//工作中就只显示百分比，不然就显示合成表
             {
-                float percent =1- (float)_altar.Timer / _altar.WorkTime;
+                float percent = 1 - (float)_altar.Timer / _altar.WorkTime;
                 string percentText = MathF.Round(100 * percent, 1) + "%";
 
                 frame = new Rectangle(0, tex.Height / 2, tex.Width, (int)(tex.Height / 2 * percent));
@@ -504,15 +549,25 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                     i = _altar.ChosenResipe.ResultItem;
                 }
 
-                Vector2 position = pos + new Vector2(0,12) * Main.inventoryScale;
+                Vector2 position = pos + new Vector2(0, 12) * Main.inventoryScale;
                 ItemSlot.Draw(spriteBatch, ref i, ItemSlot.Context.ShopItem, position, Coralite.MagicCrystalPink);
             }
         }
     }
 
-    public class CraftSelectButton:UIElement
+    public class CraftSelectButton : UIElement
     {
         public static SelectStyle CurrentSelectStyle;
+
+        private float _scale = 1f;
+
+        public CraftSelectButton()
+        {
+            Texture2D mainTex = MagikeSystem.CraftSelectButton.Value;
+
+            var frameBox = mainTex.Frame(2, 1);
+            this.SetSize(frameBox.Width+6, frameBox.Height+6);
+        }
 
         /// <summary>
         /// 魔能合成UI的显示合成表的筛选
@@ -522,11 +577,57 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             All,
             CanCraft
         }
+
+        public override void MouseOver(UIMouseEvent evt)
+        {
+            base.MouseOver(evt);
+            Helper.PlayPitched("Fairy/FairyBottleClick", 0.3f, 0.4f);
+        }
+
+        public override void LeftClick(UIMouseEvent evt)
+        {
+            base.LeftClick(evt);
+
+            CurrentSelectStyle = CurrentSelectStyle switch
+            {
+                SelectStyle.CanCraft => SelectStyle.All,
+                _ => SelectStyle.CanCraft
+            };
+
+            Helper.PlayPitched("UI/Tick", 0.4f, 0);
+        }
+
+        protected override void DrawSelf(SpriteBatch spriteBatch)
+        {
+            Texture2D mainTex = MagikeSystem.CraftSelectButton.Value;
+
+            var dimensions = GetDimensions();
+
+            if (IsMouseHovering)
+            {
+                _scale = Helper.Lerp(_scale, 1.2f, 0.2f);
+            }
+            else
+                _scale = Helper.Lerp(_scale, 1f, 0.2f);
+
+            var framebox = mainTex.Frame(2, 1, (int)CurrentSelectStyle);
+            spriteBatch.Draw(mainTex, dimensions.Center(), framebox, Color.White, 0, framebox.Size() / 2,_scale, 0, 0);
+        }
     }
 
-    public class CraftShowButton:UIElement
+    public class CraftShowButton : UIElement
     {
-        public static ShowStyle CurrentSelectStyle;
+        public static ShowStyle CurrentShowStyle;
+
+        private float _scale = 1f;
+
+        public CraftShowButton()
+        {
+            Texture2D mainTex = MagikeSystem.CraftShowButton.Value;
+
+            var frameBox = mainTex.Frame(2, 1);
+            this.SetSize(frameBox.Width + 6, frameBox.Height + 6);
+        }
 
         /// <summary>
         /// 魔能合成表UI的显示方式
@@ -535,6 +636,41 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         {
             VerticleLine,
             Grid
+        }
+
+        public override void MouseOver(UIMouseEvent evt)
+        {
+            base.MouseOver(evt);
+            Helper.PlayPitched("Fairy/FairyBottleClick", 0.3f, 0.4f);
+        }
+
+        public override void LeftClick(UIMouseEvent evt)
+        {
+            base.LeftClick(evt);
+
+            CurrentShowStyle = CurrentShowStyle switch
+            {
+                ShowStyle.VerticleLine => ShowStyle.Grid,
+                _ => ShowStyle.VerticleLine
+            };
+
+            Helper.PlayPitched("UI/Tick", 0.4f, 0);
+        }
+
+        protected override void DrawSelf(SpriteBatch spriteBatch)
+        {
+            Texture2D mainTex = MagikeSystem.CraftShowButton.Value;
+            var dimensions = GetDimensions();
+
+            if (IsMouseHovering)
+            {
+                _scale = Helper.Lerp(_scale, 1.2f, 0.2f);
+            }
+            else
+                _scale = Helper.Lerp(_scale, 1f, 0.2f);
+
+            var framebox = mainTex.Frame(2, 1, (int)CurrentShowStyle);
+            spriteBatch.Draw(mainTex, dimensions.Center(), framebox, Color.White, 0, framebox.Size() / 2, _scale, 0, 0);
         }
     }
 
@@ -561,5 +697,18 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         {
             base.DrawSelf(spriteBatch);
         }
+    }
+
+    /// <summary>
+    /// 魔能合成表的条形界面
+    /// </summary>
+    public class CraftBar()
+    {
+
+    }
+
+    public class CraftSlot()
+    {
+
     }
 }

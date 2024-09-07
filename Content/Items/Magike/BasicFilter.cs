@@ -13,7 +13,7 @@ namespace Coralite.Content.Items.Magike
             CreateRecipe()
                 .AddIngredient(ItemID.Glass, 4)
                 .AddIngredient(ItemID.Lens)
-                .AddCondition(MagikeSystem.Instance.LearnedMagikeBase, () => MagikeSystem.learnedMagikeBase)
+                .AddCondition(CoraliteConditions.LearnedMagikeBase)
                 .Register();
         }
     }

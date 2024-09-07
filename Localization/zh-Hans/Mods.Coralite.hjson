@@ -1,2 +1,9 @@
 DamageClasses.FairyDamage.DisplayName: 仙灵伤害
 Players.CoralitePlayer.ThunderElectrifiedDeath: 被雷劈死了
+
+Conditions: {
+	CoraliteConditions: {
+		// LearnedMagikeBase: Mods.Coralite.Conditions.CoraliteConditions.LearnedMagikeBase
+		// CoralCat: Mods.Coralite.Conditions.CoraliteConditions.CoralCat
+	}
+}

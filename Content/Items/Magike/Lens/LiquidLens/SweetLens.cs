@@ -32,7 +32,7 @@
 //            CreateRecipe()
 //                .AddIngredient<MagicCrystal>(2)
 //                .AddIngredient(ItemID.BeeWax, 8)
-//                .AddCondition(MagikeSystem.Instance.LearnedMagikeBase, () => MagikeSystem.learnedMagikeBase)
+//                .AddCondition(CoraliteConditions.LearnedMagikeBase)
 //                .AddTile(TileID.Anvils)
 //                .Register();
 //        }

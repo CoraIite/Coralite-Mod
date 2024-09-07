@@ -27,7 +27,7 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                 .AddIngredient<Basalt>(10)
                 .AddIngredient<GlistentBar>(3)
                 .AddIngredient(ItemID.GrassSeeds)
-                .AddCondition(MagikeSystem.Instance.LearnedMagikeBase, () => MagikeSystem.learnedMagikeBase)
+                .AddCondition(CoraliteConditions.LearnedMagikeBase)
                 .AddTile(TileID.Anvils)
                 .Register();
         }

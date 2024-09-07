@@ -30,7 +30,7 @@
 //            CreateRecipe()
 //                .AddIngredient<MagicCrystal>(2)
 //                .AddIngredient<RedJades.RedJade>(5)
-//                .AddCondition(MagikeSystem.Instance.LearnedMagikeBase, () => MagikeSystem.learnedMagikeBase)
+//                .AddCondition(CoraliteConditions.LearnedMagikeBase)
 //                .AddTile<Tiles.RedJades.MagicCraftStation>()
 //                .Register();
 //        }

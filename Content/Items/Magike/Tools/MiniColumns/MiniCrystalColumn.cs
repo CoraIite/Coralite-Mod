@@ -26,7 +26,7 @@ namespace Coralite.Content.Items.Magike.Tools.MiniColumns
             CreateRecipe()
                 .AddIngredient<MagicCrystal>(10)
                 .AddTile(TileID.Anvils)
-                .AddCondition(MagikeSystem.Instance.LearnedMagikeBase, () => MagikeSystem.learnedMagikeBase)
+                .AddCondition(CoraliteConditions.LearnedMagikeBase)
                 .Register();
         }
     }

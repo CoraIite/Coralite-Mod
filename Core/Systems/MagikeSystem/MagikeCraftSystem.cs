@@ -265,7 +265,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         {
             Recipe recipe = Recipe.Create(ResultItem.type, ResultItem.stack);
             if (magikeCost > 0)
-                recipe.AddIngredient<MagikeSymbol>(magikeCost);
+                recipe.AddIngredient<SymbolOfMagike>(magikeCost);
 
             recipe.AddIngredient(MainItem.type, MainItem.stack);
 
@@ -280,7 +280,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         }
     }
 
-    public class MagikeSymbol : ModItem
+    public class SymbolOfMagike : ModItem
     {
         public override string Texture => AssetDirectory.MagikeItems + Name;
 

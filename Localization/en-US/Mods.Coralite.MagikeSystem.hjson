@@ -1,97 +1,3 @@
-MagikeSystem: {
-	learnedMagikeAdvanced: After learning "Scroll: Enhanced Magike Refining"
-	learnedMagikeBase: After learning "Pages: Basic Magike".
-	DecraftCondition: Mods.Coralite.MagikeSystem.MagikeSystem.DecraftCondition
-	NewKnowledgeUnlocked: New knowledge unlocked
-	ApparatusNotFound: No Magike Apparatus found!
-	FilterFillUp: The filter is full!
-	InsertSuccess: The filter was successfully inserted
-	UpgradeableNotFound: No upgradeable apparatus found!
-	CantUpgrade: Unable to upgrade!
-	PolarizedFilterTooltip:
-		'''
-		Left-click to select the area
-		release it to insert a filter into the Magike Apparatus in the area and polarize it to the filter level
-		Right-click to deselect
-		'''
-	ItemDescriptionPolarizedFilter: Insertable Polarization Filter:
-	ApparatusDescriptionMagikeAmount: Mods.Coralite.MagikeSystem.MagikeSystem.ApparatusDescriptionMagikeAmount
-	ApparatusDescriptionConnectAmount: Mods.Coralite.MagikeSystem.MagikeSystem.ApparatusDescriptionConnectAmount
-
-	ApparatusDescription: {
-		MagikeAmount: Mods.Coralite.MagikeSystem.MagikeSystem.ApparatusDescription.MagikeAmount
-		ConnectAmount: Mods.Coralite.MagikeSystem.MagikeSystem.ApparatusDescription.ConnectAmount
-		IsWorking: Mods.Coralite.MagikeSystem.MagikeSystem.ApparatusDescription.IsWorking
-	}
-
-	NeedPolarizedFilter: Mods.Coralite.MagikeSystem.MagikeSystem.ApparatusDescriptionConnectAmount
-
-	UIText: {
-		ContainerMagikeAmount: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ContainerMagikeAmount
-		ContainerMagikeMax: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ContainerMagikeMax
-		ContainerAntiMagikeAmount: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ContainerAntiMagikeAmount
-		ContainerAntiMagikeMax: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ContainerAntiMagikeMax
-		MagikeContainerName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.MagikeContainerName
-		CurrentConnect: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.CurrentConnect
-		MagikeSendTime: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.MagikeSendTime
-		MagikeSendAmount: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.MagikeSendAmount
-		MagikeConnectLength: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.MagikeConnectLength
-		MagikeLinerSenderName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.MagikeLinerSenderName
-		PolarizedFilterLevel: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.PolarizedFilterLevel
-		ClickToRemove: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ClickToRemove
-		MagikePolarizedFilterName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.MagikePolarizedFilterName
-		ExtractProducerName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ExtractProducerName
-		ProduceTime: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ProduceTime
-		ProduceAmount: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ProduceAmount
-		ProduceCondition: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ProduceCondition
-		ItemWithMagike: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ItemWithMagike
-		ForestLensName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ForestLensName
-		ForestCondition: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ForestCondition
-		ItemMax: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ItemMax
-		OutPutAll: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.OutPutAll
-		FastStack: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.FastStack
-		ItemContainerName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ItemContainerName
-		OceanLensName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.OceanLensName
-		OceanCondition: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.OceanCondition
-		SkyLensName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.SkyLensName
-		SkyCondition: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.SkyCondition
-		DesertLensName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.DesertLensName
-		DesertCondition: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.DesertCondition
-		GetOnlyItemContainerName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.GetOnlyItemContainerName
-		CheckOnlyLinerSenderName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.CheckOnlyLinerSenderName
-		GlowingMushroomLensName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.GlowingMushroomLensName
-		GlowingMushroomCondition: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.GlowingMushroomCondition
-		CraftAltarName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.CraftAltarName
-	}
-
-	Error: Mods.Coralite.MagikeSystem.MagikeSystem.Error
-
-	Staffs: {
-		ChooseSender_Found: Mods.Coralite.MagikeSystem.MagikeSystem.Staffs.ChooseSender_Found
-		ChooseSender_NotFound: Mods.Coralite.MagikeSystem.MagikeSystem.Staffs.ChooseSender_NotFound
-		ChooseReceiver_NotFound: Mods.Coralite.MagikeSystem.MagikeSystem.Staffs.ChooseReceiver_NotFound
-		ConnectFail_TooFar: Mods.Coralite.MagikeSystem.MagikeSystem.Staffs.ConnectFail_TooFar
-		ConnectFail_CantBeSelf: Mods.Coralite.MagikeSystem.MagikeSystem.Staffs.ConnectFail_CantBeSelf
-		ConnectFail_ConnectorFillUp: Mods.Coralite.MagikeSystem.MagikeSystem.Staffs.ConnectFail_ConnectorFillUp
-		Connect_Success: Mods.Coralite.MagikeSystem.MagikeSystem.Staffs.Connect_Success
-		Deconnect: Mods.Coralite.MagikeSystem.MagikeSystem.Staffs.Deconnect
-		BrilliantConnect: Mods.Coralite.MagikeSystem.MagikeSystem.Staffs.BrilliantConnect
-		ChargeNotFound: Mods.Coralite.MagikeSystem.MagikeSystem.Staffs.ChargeNotFound
-		FactoryNotFound: Mods.Coralite.MagikeSystem.MagikeSystem.Staffs.FactoryNotFound
-	}
-
-	CraftText: {
-		NoMainItem: Mods.Coralite.MagikeSystem.MagikeSystem.CraftText.NoMainItem
-		MainItemIncorrect: Mods.Coralite.MagikeSystem.MagikeSystem.CraftText.MainItemIncorrect
-		MainItemNotEnough: Mods.Coralite.MagikeSystem.MagikeSystem.CraftText.MainItemNotEnough
-		ConditionNotMet: Mods.Coralite.MagikeSystem.MagikeSystem.CraftText.ConditionNotMet
-		OtherItemNotEnough: Mods.Coralite.MagikeSystem.MagikeSystem.CraftText.OtherItemNotEnough
-		OtherItemLack: Mods.Coralite.MagikeSystem.MagikeSystem.CraftText.OtherItemLack
-		MagikeNotEnough: Mods.Coralite.MagikeSystem.MagikeSystem.CraftText.MagikeNotEnough
-		NoCraftRecipe: Mods.Coralite.MagikeSystem.MagikeSystem.CraftText.NoCraftRecipe
-	}
-}
-
 C0_P1_BookName: {
 	BookName: Magike Guide
 	Author: Author: Coral
@@ -274,4 +180,110 @@ C4_ConnectStaff: {
 	TitleName: Magike Link Device
 	ConnectStaff1: "    Connections between magike instruments need to be manually established, and the magike link device is born for this purpose. Left-click on a magike instrument with sending functionality to bring up a panel, the empty slot on the panel is the connection slot for that instrument. Clicking the slot begins the connection process. Most instruments have a transmission distance limit, beyond which the connection line turns red."
 	ConnectStaff2: "    Clicking on another magike instrument within range establishes a connection between the two, magike will automatically be sent from the transmitter to the receiver."
+}
+
+MagikeSystem: {
+	learnedMagikeBase: 学习“书页：魔能基础”后可合成
+	learnedMagikeAdvanced: 学习“卷轴：强化魔能提炼”后可合成
+	NewKnowledgeUnlocked: 魔能辞典中解锁了新的知识
+	Error: 发生致命错误！请重新摆放该物块！
+	PolarizedFilterTooltip:
+		'''
+		左键选择区域，松手后为区域内的魔能仪器插入滤镜并将其偏振至滤镜等级
+		右键取消选择
+		'''
+
+	Staffs: {
+		ChooseSender_Found: 已选择魔能发送器
+		ChooseSender_NotFound: 未找到魔能发送器！
+		ChooseReceiver_NotFound: 未找到魔能接收器！
+		ConnectFail_TooFar: 接收器距离太远！
+		ConnectFail_CantBeSelf: 不能连接自己！
+		ConnectFail_ConnectorFillUp: 魔能发送器容量已满！
+		Connect_Success: 成功建立连接
+		Deconnect: 成功取消连接
+		BrilliantConnect: 成功连接{0}个仪器，未成功连接{1}个仪器
+		ChargeNotFound: 未找到魔能容器！
+		FactoryNotFound: 未找到魔能工作站！
+	}
+
+	ApparatusNotFound: 未找到魔能仪器！
+	FilterFillUp: 仪器内滤镜已满！
+	InsertSuccess: 成功插入滤镜
+	UpgradeableNotFound: 未找到可升级仪器！
+	CantUpgrade: 无法升级！
+	ItemDescriptionPolarizedFilter: 可插入的偏振滤镜：
+
+	ApparatusDescription: {
+		MagikeAmount: "魔能容量 "
+		ConnectAmount: "连接情况 "
+		IsWorking: 正在工作中...
+	}
+
+	UIText: {
+		ContainerMagikeAmount: ◇ 魔能量
+		ContainerMagikeMax: ◇ 魔能上限
+		ContainerAntiMagikeAmount: ▽ 反魔能量
+		ContainerAntiMagikeMax: ▽ 反魔能上限
+		MagikeContainerName: 魔能存储单元
+		CraftAltarName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.CraftAltarName
+		CurrentConnect: ◇ 当前连接
+		MagikeSendTime:
+			'''
+			◇ 发送冷却（单位：秒）
+			  ▶ 计时器归零后执行一次发送
+			'''
+		MagikeSendAmount: ◇ 单次发送量
+		MagikeConnectLength: ◇ 连接距离（单位：格）
+		MagikeLinerSenderName: 线性魔能发送器
+		CheckOnlyLinerSenderName: 线性连接器
+		PolarizedFilterLevel: ◇ 偏振等级
+		ClickToRemove: 点击以取出滤镜
+		MagikePolarizedFilterName: 偏振滤镜
+		ExtractProducerName: 魔能提取透镜
+		ProduceTime:
+			'''
+			◇ 生产冷却（单位：秒）
+			  ▶ 计时器归零后执行一次生产
+			'''
+		ProduceAmount: ◇ 单次生产量
+		ProduceCondition: ◇ 生产条件
+		ItemWithMagike: 需要放入含有魔能的物品
+		ForestLensName: 森林透镜
+		ForestCondition:
+			'''
+			  ▶ 需要将底座放置在草方块上
+			  ▶ 需要在草墙或花墙前
+			'''
+		OceanLensName: 海洋透镜
+		OceanCondition: "  ▶ 需要将底座放置在沙块上"
+		SkyLensName: 天空透镜
+		SkyCondition: "  ▶ 需要将底座放置在任意云块上"
+		DesertLensName: 沙漠透镜
+		DesertCondition:
+			'''
+			  ▶ 需要将底座放置在沙块上
+			  ▶ 发生沙尘暴时产量增加
+			'''
+		GlowingMushroomLensName: 蘑菇透镜
+		GlowingMushroomCondition: "  ▶ 需要将底座放置在蘑菇草块上"
+		SunlightLensName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.SunlightLensName
+		SunlightCondition: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.SunlightCondition
+		ItemMax: ◇ 当前物品容量
+		OutPutAll: 强夺全部
+		FastStack: 快速堆叠
+		ItemContainerName: 物品容器
+		GetOnlyItemContainerName: 仅取出的物品容器
+	}
+
+	CraftText: {
+		NoMainItem: 未找到主要物品！
+		MainItemIncorrect: 主要物品类型错误！
+		MainItemNotEnough: 主要物品数量不足！
+		ConditionNotMet: 未达成合成条件！
+		OtherItemNotEnough: 次要物品数量不足！
+		OtherItemLack: 缺失次要物品！
+		MagikeNotEnough: 魔能不足！
+		NoCraftRecipe: 没有可合成的合成表！
+	}
 }

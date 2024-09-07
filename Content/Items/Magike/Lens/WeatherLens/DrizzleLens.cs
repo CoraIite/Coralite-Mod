@@ -33,7 +33,7 @@
 //                .AddIngredient<MagicCrystal>(2)
 //                .AddIngredient(ItemID.TissueSample, 8)
 //                .AddIngredient(ItemID.RainCloud, 8)
-//                .AddCondition(MagikeSystem.Instance.LearnedMagikeBase, () => MagikeSystem.learnedMagikeBase)
+//                .AddCondition(CoraliteConditions.LearnedMagikeBase)
 //                .AddTile(TileID.Anvils)
 //                .Register();
 
@@ -41,7 +41,7 @@
 //                .AddIngredient<MagicCrystal>(2)
 //                .AddIngredient(ItemID.ShadowScale, 8)
 //                .AddIngredient(ItemID.RainCloud, 8)
-//                .AddCondition(MagikeSystem.Instance.LearnedMagikeBase, () => MagikeSystem.learnedMagikeBase)
+//                .AddCondition(CoraliteConditions.LearnedMagikeBase)
 //                .AddTile(TileID.Anvils)
 //                .Register();
 //        }

@@ -19,7 +19,7 @@ namespace Coralite.Content.Items.Magike.Lens.ExtractLens
         {
             CreateRecipe()
                 .AddIngredient<Basalt>(12)
-                .AddCondition(MagikeSystem.Instance.LearnedMagikeBase, () => MagikeSystem.learnedMagikeBase)
+                .AddCondition(CoraliteConditions.LearnedMagikeBase)
                 .AddTile(TileID.Anvils)
                 .Register();
         }
