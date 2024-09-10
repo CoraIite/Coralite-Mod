@@ -1,6 +1,7 @@
 using Coralite.Content.Items.GlobalItems;
 using Coralite.Content.ModPlayers;
 using Coralite.Core;
+using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -15,36 +16,25 @@ namespace Coralite.Content.Items.Icicle
 
         public override void SetDefaults()
         {
-            Item.width = Item.height = 40;
-            Item.damage = 23;
-            Item.useTime = Item.useAnimation = 26;
-            Item.knockBack = 3f;
-
+            Item.SetWeaponValues(23, 3f);
+            Item.DefaultToRangedWeapon(10, AmmoID.Arrow, 26, 9f, true);
             Item.useStyle = ItemUseStyleID.Rapier;
-            Item.DamageType = DamageClass.Ranged;
-            Item.useAmmo = AmmoID.Arrow;
             Item.value = Item.sellPrice(0, 1);
             Item.rare = ItemRarityID.Green;
-            Item.shoot = ProjectileType<IcicleBowHeldProj>();
             Item.UseSound = CoraliteSoundID.Bow_Item5;
 
             Item.useTurn = false;
             Item.noUseGraphic = true;
-            Item.noMelee = true;
-            Item.autoReuse = true;
             Item.channel = true;
             CoraliteGlobalItem.SetColdDamage(Item);
         }
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (Main.myPlayer == player.whoAmI)
-            {
-                Vector2 dir = (Main.MouseWorld - player.Center).SafeNormalize(Vector2.One);
-                float rot = dir.ToRotation();
-                Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, Vector2.Zero, ProjectileType<IcicleBowHeldProj>(), damage, knockback, player.whoAmI, rot, 0);
-                Projectile.NewProjectile(source, player.Center, dir * 13, ProjectileType<IcicleArrow>(), damage, knockback, player.whoAmI);
-            }
+            Vector2 dir = (Main.MouseWorld - player.Center).SafeNormalize(Vector2.One);
+            float rot = dir.ToRotation();
+            Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, Vector2.Zero, ProjectileType<IcicleBowHeldProj>(), damage, knockback, player.whoAmI, rot, 0);
+            Projectile.NewProjectile(source, player.Center, dir * 13, ProjectileType<IcicleArrow>(), damage, knockback, player.whoAmI);
 
             return false;
         }
@@ -90,14 +80,12 @@ namespace Coralite.Content.Items.Icicle
                     IceStarLight.Spawn(center, velocity, 1f, () => Player.Center, 16);
                 }
 
-                for (int i = 0; i < 1000; i++)
+                foreach (var proj in from proj in Main.projectile
+                                     where proj.active && proj.friendly && proj.owner == Player.whoAmI && proj.type == ProjectileType<IcicleBowHeldProj>()
+                                     select proj)
                 {
-                    Projectile proj = Main.projectile[i];
-                    if (proj.active && proj.friendly && proj.owner == Player.whoAmI && proj.ModProjectile is IcicleBowHeldProj)
-                    {
-                        proj.Kill();
-                        break;
-                    }
+                    proj.Kill();
+                    break;
                 }
 
                 //生成手持弹幕

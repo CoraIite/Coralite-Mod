@@ -3,7 +3,7 @@ using Coralite.Helpers;
 using System;
 using Terraria.ModLoader.IO;
 
-namespace Coralite.Core.Systems.MagikeSystem.Components
+namespace Coralite.Core.Systems.MagikeSystem.Components.Producers
 {
     /*
      * 再次稍微探讨一下魔能生产器的大致分类

@@ -4,6 +4,7 @@ using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
+using Coralite.Core.Systems.MagikeSystem.Components.Producers;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Core.Systems.MagikeSystem.Tiles;
 using Terraria;
@@ -15,11 +16,6 @@ namespace Coralite.Content.Items.Magike.Lens.DayTimeLens
     public class SunlightLens() : MagikeApparatusItem(TileType<SunlightLensTile>(), Item.sellPrice(silver: 5)
         , RarityType<MagicCrystalRarity>(), AssetDirectory.MagikeLens)
     {
-        public override bool CanUseItem(Player player)
-        {
-            return player.ZoneBeach;
-        }
-
         public override void AddRecipes()
         {
             CreateRecipe()
@@ -34,17 +30,7 @@ namespace Coralite.Content.Items.Magike.Lens.DayTimeLens
     public class SunlightLensTile() : BaseLensTile
         (2, 3, Color.SandyBrown, DustID.Sand)
     {
-        public override string Texture => AssetDirectory.MagikeLensTiles + Name;
         public override int DropItemType => ItemType<SunlightLens>();
-
-        public override int[] GetAnchorValidTiles()
-        {
-            return
-            [
-                TileID.Sand,TileID.Sandstone,TileID.SandstoneBrick
-            ];
-        }
-
         public override MagikeTileEntity GetEntityInstance() => GetInstance<SunlightLensTileEntity>();
 
         public override MagikeApparatusLevel[] GetAllLevels()

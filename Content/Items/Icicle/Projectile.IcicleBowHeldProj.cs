@@ -1,3 +1,4 @@
+using Coralite.Content.ModPlayers;
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
@@ -12,36 +13,22 @@ namespace Coralite.Content.Items.Icicle
     /// <summary>
     /// ai0用于判断玩家的手持方向,ai1用于控制是否是特殊的弹幕
     /// </summary>
-    public class IcicleBowHeldProj : BaseHeldProj
+    public class IcicleBowHeldProj : BaseDashBow
     {
         public override string Texture => AssetDirectory.IcicleItems + "IcicleBow";
 
-        public ref float Rotation => ref Projectile.ai[0];
         public ref float Alpha => ref Projectile.localAI[0];
         public ref float Timer => ref Projectile.localAI[1];
+        public ref float DashTime => ref Projectile.localAI[2];
 
         public bool fadeIn = true;
         public bool canShoot;
-        public override void SetDefaults()
+
+        public override int GetItemType()
+            => ModContent.ItemType<IcicleBow>();
+
+        public override void AIBefore()
         {
-            Projectile.friendly = true;
-            Projectile.tileCollide = false;
-            Projectile.ignoreWater = true;
-            Projectile.aiStyle = -1;
-            Projectile.penetrate = -1;
-        }
-
-        public override bool? CanDamage() => false;
-
-        public override void AI()
-        {
-            Owner.heldProj = Projectile.whoAmI;
-            if (Owner.HeldItem.type != ModContent.ItemType<IcicleBow>())
-            {
-                Projectile.Kill();
-                return;
-            }
-
             if (Alpha == 0)
             {
                 if (Main.myPlayer == Projectile.owner)
@@ -55,80 +42,80 @@ namespace Coralite.Content.Items.Icicle
                     Projectile.timeLeft = Owner.itemTime;
                 else
                 {
-                    Projectile.timeLeft = 22;
+                    Projectile.timeLeft = Owner.itemTimeMax;
+                }
+
+                if (Owner.TryGetModPlayer(out  CoralitePlayer cp))
+                {
+                    DashTime=cp.DashTimer;
                 }
             }
-            switch (Projectile.ai[1])
+        }
+
+        public override void DashAttackAI()
+        {
+            if (fadeIn)
             {
-                default: break;
-                case 0: //普普通通的弹幕
-                    Projectile.Center = Owner.Center + (Projectile.ai[0].ToRotationVector2() * 12);
-                    break;
-                case 1: //旋转一圈后并判断玩家是否按下左键，是的话就射
-                    do
-                    {
-                        if (fadeIn)
-                        {
-                            Alpha += 0.02f;
-                            if (Alpha > 1)
-                            {
-                                Alpha = 1;
-                                fadeIn = false;
-                            }
-                        }
-
-                        Lighting.AddLight(Owner.Center, Coralite.IcicleCyan.ToVector3() * Alpha);
-
-                        if (Timer < 21)
-                        {
-                            Rotation += 0.3141f; //1/10 Pi
-                            if (Owner.controlUseItem)
-                                canShoot = true;
-
-                            Owner.itemTime = Owner.itemAnimation = 2;
-                            break;
-                        }
-
-                        if (Owner.controlUseItem)
-                        {
-                            canShoot = true;
-                            if (Main.myPlayer == Projectile.owner)
-                            {
-                                Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
-                                Rotation = Rotation.AngleLerp((Main.MouseWorld - Owner.MountedCenter).ToRotation(), 0.25f);
-                                Projectile.netUpdate = true;
-
-                                if (Main.rand.NextBool(20))
-                                {
-                                    Vector2 dir = Rotation.ToRotationVector2();
-                                    Particle.NewParticle(Owner.Center + (dir * 16) + Main.rand.NextVector2Circular(8, 8), dir * 1.2f, CoraliteContent.ParticleType<HorizontalStar>(), Coralite.IcicleCyan, Main.rand.NextFloat(0.1f, 0.15f));
-                                }
-                            }
-                            Projectile.timeLeft = 2;
-                            Owner.itemTime = Owner.itemAnimation = 2;
-                        }
-                        else
-                        {
-                            if (canShoot && Main.myPlayer == Projectile.owner)
-                            {
-                                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, (Main.MouseWorld - Owner.MountedCenter).SafeNormalize(Vector2.One) * 9.5f
-                                    , ModContent.ProjectileType<IcicleStarArrow>(), (int)(Owner.GetWeaponDamage(Owner.HeldItem) * 2f), Projectile.knockBack, Projectile.owner);
-                                SoundEngine.PlaySound(CoraliteSoundID.Bow_Item5, Owner.Center);
-                            }
-
-                            Projectile.Kill();
-                        }
-
-                    } while (false);
-
-                    Projectile.rotation = Rotation;
-                    Projectile.Center = Owner.Center + (Rotation.ToRotationVector2() * 12);
-                    Timer += 1f;
-                    break;
+                Alpha += 0.02f;
+                if (Alpha > 1)
+                {
+                    Alpha = 1;
+                    fadeIn = false;
+                }
             }
 
-            Owner.itemRotation = Rotation + (OwnerDirection > 0 ? 0 : 3.141f);
+            Lighting.AddLight(Owner.Center, Coralite.IcicleCyan.ToVector3() * Alpha);
+
+            do
+            {
+                if (Timer < DashTime+2)
+                {
+                    Rotation += 0.3141f; //1/10 Pi
+                    if (Owner.controlUseItem)
+                        canShoot = true;
+
+                    Owner.itemTime = Owner.itemAnimation = 2;
+                    break;
+                }
+
+                if (Owner.controlUseItem)
+                {
+                    canShoot = true;
+                    if (Main.myPlayer == Projectile.owner)
+                    {
+                        Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
+                        Rotation = Rotation.AngleLerp((Main.MouseWorld - Owner.MountedCenter).ToRotation(), 0.25f);
+                        Projectile.netUpdate = true;
+
+                        if (Main.rand.NextBool(20))
+                        {
+                            Vector2 dir = Rotation.ToRotationVector2();
+                            Particle.NewParticle(Owner.Center + (dir * 16) + Main.rand.NextVector2Circular(8, 8), dir * 1.2f, CoraliteContent.ParticleType<HorizontalStar>(), Coralite.IcicleCyan, Main.rand.NextFloat(0.1f, 0.15f));
+                        }
+                    }
+                    Projectile.timeLeft = 2;
+                    Owner.itemTime = Owner.itemAnimation = 2;
+                }
+                else
+                {
+                    if (canShoot && Main.myPlayer == Projectile.owner)
+                    {
+                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, (Main.MouseWorld - Owner.MountedCenter).SafeNormalize(Vector2.One) * 9.5f
+                            , ModContent.ProjectileType<IcicleStarArrow>(), (int)(Owner.GetWeaponDamage(Owner.HeldItem) * 2f), Projectile.knockBack, Projectile.owner);
+                        SoundEngine.PlaySound(CoraliteSoundID.Bow_Item5, Owner.Center);
+                    }
+
+                    Projectile.Kill();
+                }
+
+            } while (false);
+
+            Projectile.rotation = Rotation;
+            Timer++;
         }
+
+        public override Vector2 GetOffset()
+            => new (12, 0);
 
         public override bool PreDraw(ref Color lightColor)
         {
@@ -145,7 +132,7 @@ namespace Coralite.Content.Items.Icicle
                 Vector2 dir = Rotation.ToRotationVector2();
                 Main.spriteBatch.Draw(starTex, center + (dir * 6), null, Color.White * Alpha, Projectile.rotation + 1.57f, starTex.Size() / 2, 1.4f, SpriteEffects.None, 0f);
 
-                Helpers.Helper.DrawPrettyStarSparkle(Projectile.Opacity, SpriteEffects.None, center + (dir * 18), new Color(255, 255, 255, 0) * num3 * 0.5f, Coralite.IcicleCyan,
+                Helper.DrawPrettyStarSparkle(Projectile.Opacity, SpriteEffects.None, center + (dir * 18), new Color(255, 255, 255, 0) * num3 * 0.5f, Coralite.IcicleCyan,
                     factor, 0f, 0.5f, 0.5f, 1f, 0f, new Vector2(1.3f, 1.3f), Vector2.One);
             }
 

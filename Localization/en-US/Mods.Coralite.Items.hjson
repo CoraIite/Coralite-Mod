@@ -4265,3 +4265,18 @@ SymbolOfMagike: {
 	DisplayName: Symbol Of Magike
 	Tooltip: ""
 }
+
+SnowfieldLens: {
+	DisplayName: Snowfield Lens
+	Tooltip: ""
+}
+
+SunlightLens: {
+	DisplayName: Sunlight Lens
+	Tooltip: ""
+}
+
+FarAwaySky: {
+	DisplayName: Far Away Sky
+	Tooltip: ""
+}

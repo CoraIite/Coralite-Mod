@@ -203,3 +203,8 @@ LeafeoShieldCD: {
 	DisplayName: Leafeo Shield C D
 	Description: Mods.Coralite.Buffs.LeafeoShieldCD.Description
 }
+
+CloudBonus: {
+	DisplayName: Cloud Bonus
+	Description: Mods.Coralite.Buffs.CloudBonus.Description
+}

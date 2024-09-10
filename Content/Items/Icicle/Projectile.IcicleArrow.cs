@@ -1,5 +1,6 @@
 using Coralite.Core;
 using Coralite.Core.Configs;
+using Coralite.Helpers;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -23,9 +24,14 @@ namespace Coralite.Content.Items.Icicle
         {
             Projectile.rotation = Projectile.velocity.ToRotation() + 1.57f;
 
-            Projectile.velocity.Y += 0.2f;
+            Projectile.velocity.Y += 0.05f;
             if (Projectile.velocity.Y > 12)
                 Projectile.velocity.Y = 12;
+
+            if (Main.rand.NextBool())
+            {
+                Projectile.SpawnTrailDust(DustID.IceTorch, Main.rand.NextFloat(0.1f, 0.2f), Scale: Main.rand.NextFloat(1f, 1.4f));
+            }
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)

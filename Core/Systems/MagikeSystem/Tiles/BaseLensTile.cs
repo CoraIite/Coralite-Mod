@@ -1,4 +1,4 @@
-﻿using Coralite.Core.Systems.MagikeSystem.Components;
+﻿using Coralite.Core.Systems.MagikeSystem.Components.Producers;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -9,6 +9,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
     public abstract class BaseLensTile(int width, int height, Color mapColor, int dustType, int minPick = 0)
         : BaseMagikeTile(width, height, mapColor, dustType, minPick)
     {
+        public override string Texture => AssetDirectory.MagikeLensTiles + Name;
+
         public override void DrawExtraTex(SpriteBatch spriteBatch, Texture2D tex, Rectangle tileRect, Vector2 offset, Color lightColor, float rotation, MagikeTileEntity entity, MagikeApparatusLevel level)
         {
             Vector2 selfCenter = tileRect.Center();

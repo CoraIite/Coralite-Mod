@@ -5,7 +5,7 @@ using Terraria.ModLoader.IO;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
 
-namespace Coralite.Core.Systems.MagikeSystem.Components
+namespace Coralite.Core.Systems.MagikeSystem.Components.Producers
 {
     public class MagikeExtractProducer : MagikeCostItemProducer, IUIShowable
     {

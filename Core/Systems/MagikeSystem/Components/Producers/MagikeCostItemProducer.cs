@@ -2,7 +2,7 @@
 using Terraria;
 using Terraria.ModLoader.UI.Elements;
 
-namespace Coralite.Core.Systems.MagikeSystem.Components
+namespace Coralite.Core.Systems.MagikeSystem.Components.Producers
 {
     public abstract class MagikeCostItemProducer : MagikeActiveProducer
     {

@@ -1,4 +1,5 @@
-﻿using Coralite.Helpers;
+﻿using Coralite.Core.Systems.MagikeSystem.Components.Producers;
+using Coralite.Helpers;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components
 {

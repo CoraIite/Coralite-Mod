@@ -25,13 +25,13 @@ namespace Coralite.Core.Systems
                     info.SetValue(null, newEntrys);
 
                     Mod Mod = Coralite.Instance;
-
-                    foreach (Type t2 in AssemblyManager.GetLoadableTypes(Mod.Code))
-                        if (t2.GetInterfaces().Contains(typeof(IVariantItem)) && !t2.IsAbstract)
-                        {
-                            var item = (IVariantItem)Activator.CreateInstance(t2, null);
-                            item.AddVarient();
-                        }
+                    foreach (var item in from Type t2 in AssemblyManager.GetLoadableTypes(Mod.Code)
+                                         where t2.GetInterfaces().Contains(typeof(IVariantItem)) && !t2.IsAbstract
+                                         let item = (IVariantItem)Activator.CreateInstance(t2, null)
+                                         select item)
+                    {
+                        item.AddVarient();
+                    }
                 }
             }
         }

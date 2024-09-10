@@ -1,6 +1,6 @@
 ﻿using Coralite.Core.Systems.CoraliteActorComponent;
 
-namespace Coralite.Core.Systems.MagikeSystem.Components
+namespace Coralite.Core.Systems.MagikeSystem.Components.Producers
 {
     public abstract class MagikeInactiveProducer : MagikeProducer
     {

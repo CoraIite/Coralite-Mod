@@ -280,7 +280,7 @@ IcicleBow: {
 	Tooltip:
 		'''
 		将箭矢转化为冰晶箭
-		双击A/D进行滑步
+		双击方向键进行滑步，滑步期间短暂无敌
 		滑步时按住鼠标左键汇聚冰魔法，之后松开左键射出冰光箭
 		'''
 }
@@ -1056,17 +1056,6 @@ LeafStone: {
 MagicalPowder: {
 	DisplayName: 魔尘
 	Tooltip: 含有微弱的魔力
-}
-
-MagikePolySymbol: {
-	DisplayName: ！该合成表只能通过魔能聚合进行！
-	Tooltip:
-		'''
-		该合成表需要通过魔能聚合进行！
-		除魔能外的第一个物品为主要物品，需要放置在聚合坛中
-		其余物品为次要物品，需要放置在台座中
-		之后激活聚合坛以进行合成，需要足够的物品数量和魔能量才能成功激活
-		'''
 }
 
 CrystalCrate: {
@@ -3828,7 +3817,11 @@ BigMacHamburger: {
 
 Afterglow: {
 	DisplayName: 晚霞
-	Tooltip: 点燃木箭
+	Tooltip:
+		'''
+		双击方向键进行冲刺，期间摩擦地面引燃木箭
+		冰块能擦出霜火
+		'''
 }
 
 SurviveAndPerish: {
@@ -4264,7 +4257,7 @@ SeashorePolarizedFilter: {
 }
 
 SkyLens: {
-	DisplayName: 天空滤镜
+	DisplayName: 天空透镜
 	Tooltip:
 		'''
 		在天空生产魔能，只能放置在任意云块上
@@ -4375,9 +4368,24 @@ GelFiberHelmet: {
 
 SymbolOfMagike: {
 	DisplayName: 魔能徽记
-	Tooltip: 
-	'''
-	该合成表仅供查看，该物品无法获得
-	请使用魔能合成台进行魔能合成
-	'''
+	Tooltip:
+		'''
+		该合成表仅供查看，该物品无法获得
+		请使用魔能合成台进行魔能合成
+		'''
+}
+
+SnowfieldLens: {
+	DisplayName: 雪原透镜
+	Tooltip: ""
+}
+
+SunlightLens: {
+	DisplayName: 日光透镜
+	Tooltip: ""
+}
+
+FarAwaySky: {
+	// DisplayName: Far Away Sky
+	// Tooltip: ""
 }

@@ -274,6 +274,8 @@ MagikeSystem: {
 		FastStack: 快速堆叠
 		ItemContainerName: 物品容器
 		GetOnlyItemContainerName: 仅取出的物品容器
+		SnowfieldLensName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.SnowfieldLensName
+		SnowfieldCondition: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.SnowfieldCondition
 	}
 
 	CraftText: {

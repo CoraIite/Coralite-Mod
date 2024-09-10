@@ -1,4 +1,6 @@
-﻿using Coralite.Core.Systems.MagikeSystem.TileEntities;
+﻿using Coralite.Content.UI.MagikeApparatusPanel;
+using Coralite.Core.Loaders;
+using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -595,6 +597,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             };
 
             Helper.PlayPitched("UI/Tick", 0.4f, 0);
+            UILoader.GetUIState<MagikeApparatusPanel>().ComponentPanel.Recalculate();
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
@@ -655,6 +658,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             };
 
             Helper.PlayPitched("UI/Tick", 0.4f, 0);
+            UILoader.GetUIState<MagikeApparatusPanel>().ComponentPanel.Recalculate();
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
@@ -677,7 +681,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
     /// <summary>
     /// 魔能合成UI的中控类，兼任绘制水平横条的任务
     /// </summary>
-    public class CraftController:UIElement
+    public class CraftController : UIElement
     {
         /// <summary>
         /// 当前显示的所有合成表
@@ -688,9 +692,54 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// </summary>
         public static List<int> CurrentItemTypes = [];
 
+        private CraftAltar _altar;
+
+        public CraftController(CraftAltar altar)
+        {
+            _altar= altar;
+
+        }
+
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+
+            if (!_altar.Entity.TryGetComponent(MagikeComponentID.ItemContainer,out ItemContainer container))
+            {
+                return;
+            }
+
+            Item[] items = container.Items;
+
+            List<int> record = [];
+
+            foreach (var item in items)
+            {
+                if (!record.Contains(item.type))
+                    record.Add(item.type);
+
+                if (CurrentItemTypes.Contains(item.type))
+                    continue;
+
+                Reset();
+                return;
+            }
+
+            if (record.Count != CurrentItemTypes.Count)
+                Reset();
+        }
+
+        public void Reset()
+        {
+            if (!_altar.Entity.TryGetComponent(MagikeComponentID.ItemContainer, out ItemContainer container))
+                return;
+
+            Recipes.Clear();
+
+            foreach (var item in container.Items)
+                if (MagikeSystem.TryGetMagikeCraftRecipes(item.type, out List<MagikeCraftRecipe> recipes))
+                    foreach (var recipe in recipes)
+                        Recipes.Add(recipe);
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
@@ -702,12 +751,12 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
     /// <summary>
     /// 魔能合成表的条形界面
     /// </summary>
-    public class CraftBar()
+    public class CraftBar
     {
 
     }
 
-    public class CraftSlot()
+    public class CraftSlot
     {
 
     }

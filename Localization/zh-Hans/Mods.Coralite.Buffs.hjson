@@ -211,3 +211,8 @@ LeafeoShieldCD: {
 	DisplayName: 叶子护盾冷却
 	Description: 正在进行光合作用以生产叶子护盾...
 }
+
+CloudBonus: {
+	// DisplayName: Cloud Bonus
+	// Description: Mods.Coralite.Buffs.CloudBonus.Description
+}

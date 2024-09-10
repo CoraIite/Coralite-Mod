@@ -4,6 +4,7 @@ using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
+using Coralite.Core.Systems.MagikeSystem.Components.Producers;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Core.Systems.MagikeSystem.Tiles;
 using Terraria;
@@ -35,7 +36,6 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
     public class DesertLensTile() : BaseLensTile
         (2, 3, Color.SandyBrown, DustID.Sand)
     {
-        public override string Texture => AssetDirectory.MagikeLensTiles + Name;
         public override int DropItemType => ItemType<DesertLens>();
 
         public override int[] GetAnchorValidTiles()

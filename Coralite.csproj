@@ -43,6 +43,8 @@
     <Folder Include="Content\Projectiles\Projectiles_Summon\" />
     <Folder Include="Content\UI\MagikeGuideBook\Chapter5\" />
     <Folder Include="Core\Systems\AstronomySystem\" />
+    <Folder Include="Core\Systems\SwingWeapon\" />
+    <Folder Include="Core\Systems\SilkKniefSystem\" />
     <Folder Include="Sounds\Shadows\" />
   </ItemGroup>
   <ItemGroup>

@@ -4,6 +4,7 @@ using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
+using Coralite.Core.Systems.MagikeSystem.Components.Producers;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Core.Systems.MagikeSystem.Tiles;
 using Terraria;
@@ -28,7 +29,6 @@ namespace Coralite.Content.Items.Magike.Lens.ExtractLens
     public class BasicExtractLensTile() : BaseLensTile
         (2, 3, Coralite.MagicCrystalPink, DustID.CorruptionThorns)
     {
-        public override string Texture => AssetDirectory.MagikeLensTiles + Name;
         public override int DropItemType => ItemType<BasicExtractLens>();
 
         public override MagikeTileEntity GetEntityInstance() => GetInstance<BasicExtractLensTileEntity>();

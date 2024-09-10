@@ -3,7 +3,7 @@ using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
 using Terraria.ModLoader.IO;
 
-namespace Coralite.Core.Systems.MagikeSystem.Components
+namespace Coralite.Core.Systems.MagikeSystem.Components.Producers
 {
     public abstract class MagikeActiveProducer : MagikeProducer, ITimerTriggerComponent
     {

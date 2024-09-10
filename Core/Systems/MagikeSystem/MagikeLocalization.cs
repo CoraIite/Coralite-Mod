@@ -303,6 +303,8 @@ namespace Coralite.Core.Systems.MagikeSystem
             GlowingMushroomCondition,
             SunlightLensName,
             SunlightCondition,
+            SnowfieldLensName,
+            SnowfieldCondition,
 
             /*
              * 物品容器

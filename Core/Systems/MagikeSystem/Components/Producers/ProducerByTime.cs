@@ -4,7 +4,7 @@ using Terraria.GameContent.UI.Elements;
 using Terraria.UI;
 using static Coralite.Helpers.MagikeHelper;
 
-namespace Coralite.Core.Systems.MagikeSystem.Components
+namespace Coralite.Core.Systems.MagikeSystem.Components.Producers
 {
     public abstract class ProducerByTime : MagikeActiveProducer, IUIShowable
     {

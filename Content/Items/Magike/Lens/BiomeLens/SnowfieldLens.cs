@@ -13,64 +13,64 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.Lens.BiomeLens
 {
-    public class GlowingMushroomLens() : MagikeApparatusItem(TileType<GlowingMushroomLensTile>(), Item.sellPrice(silver: 5)
+    public class SnowfieldLens() : MagikeApparatusItem(TileType<SnowfieldLensTile>(), Item.sellPrice(silver: 5)
         , RarityType<MagicCrystalRarity>(), AssetDirectory.MagikeLens)
     {
         public override bool CanUseItem(Player player)
         {
-            return player.ZoneGlowshroom;
+            return player.ZoneSnow;
         }
 
         public override void AddRecipes()
         {
             CreateRecipe()
                 .AddIngredient<Basalt>(10)
-                .AddIngredient(ItemID.GlowingMushroom, 10)
+                .AddIngredient(ItemID.IceBlock, 5)
                 .AddCondition(CoraliteConditions.LearnedMagikeBase)
                 .AddTile(TileID.Anvils)
                 .Register();
         }
     }
 
-    public class GlowingMushroomLensTile() : BaseLensTile
-        (2, 3, Color.DarkBlue, DustID.GlowingMushroom)
+    public class SnowfieldLensTile() : BaseLensTile
+        (2, 3, Coralite.IcicleCyan, DustID.Frost)
     {
-        public override int DropItemType => ItemType<GlowingMushroomLens>();
+        public override int DropItemType => ItemType<SnowfieldLens>();
 
         public override int[] GetAnchorValidTiles()
         {
             return
             [
-                TileID.MushroomGrass
+                TileID.SnowBlock,TileID.SnowBrick,TileID.IceBlock,TileID.IceBrick
             ];
         }
 
-        public override MagikeTileEntity GetEntityInstance() => GetInstance<GlowingMushroomLensTileEntity>();
+        public override MagikeTileEntity GetEntityInstance() => GetInstance<SnowfieldLensTileEntity>();
 
         public override MagikeApparatusLevel[] GetAllLevels()
         {
             return
             [
                 MagikeApparatusLevel.None,
-                MagikeApparatusLevel.Emperor,
-                MagikeApparatusLevel.Shroomite,
+                MagikeApparatusLevel.Icicle,
+                MagikeApparatusLevel.Frost,
             ];
         }
     }
 
-    public class GlowingMushroomLensTileEntity : BaseActiveProducerTileEntity<GlowingMushroomLensTile>
+    public class SnowfieldLensTileEntity : BaseActiveProducerTileEntity<SnowfieldLensTile>
     {
         public override MagikeContainer GetStartContainer()
-            => new GlowingMushroomLensContainer();
+            => new SnowfieldLensContainer();
 
         public override MagikeLinerSender GetStartSender()
-            => new GlowingMushroomLensSender();
+            => new SnowfieldLensSender();
 
         public override MagikeActiveProducer GetStartProducer()
-            => new GlowingMushroomProducer();
+            => new SnowfieldProducer();
     }
 
-    public class GlowingMushroomLensContainer : UpgradeableContainer
+    public class SnowfieldLensContainer : UpgradeableContainer
     {
         public override void Upgrade(MagikeApparatusLevel incomeLevel)
         {
@@ -80,11 +80,11 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     MagikeMaxBase = 0;
                     AntiMagikeMaxBase = 0;
                     break;
-                case MagikeApparatusLevel.Emperor:
+                case MagikeApparatusLevel.Icicle:
                     MagikeMaxBase = 9;
                     AntiMagikeMaxBase = MagikeMaxBase * 3;
                     break;
-                case MagikeApparatusLevel.Shroomite:
+                case MagikeApparatusLevel.Frost:
                     MagikeMaxBase = 562;
                     AntiMagikeMaxBase = MagikeMaxBase * 2;
                     break;
@@ -95,7 +95,7 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
         }
     }
 
-    public class GlowingMushroomLensSender : UpgradeableLinerSender
+    public class SnowfieldLensSender : UpgradeableLinerSender
     {
         public override void Upgrade(MagikeApparatusLevel incomeLevel)
         {
@@ -110,11 +110,11 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     SendDelayBase = 1_0000_0000 / 60;//随便填个大数
                     ConnectLengthBase = 0;
                     break;
-                case MagikeApparatusLevel.Emperor:
+                case MagikeApparatusLevel.Icicle:
                     UnitDeliveryBase = 3;
                     SendDelayBase = 10;
                     break;
-                case MagikeApparatusLevel.Shroomite:
+                case MagikeApparatusLevel.Frost:
                     UnitDeliveryBase = 150;
                     SendDelayBase = 8;
                     break;
@@ -125,19 +125,19 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
         }
     }
 
-    public class GlowingMushroomProducer : UpgradeableBiomeProducer
+    public class SnowfieldProducer : UpgradeableBiomeProducer
     {
         public override MagikeSystem.UITextID ApparatusName()
-            => MagikeSystem.UITextID.GlowingMushroomLensName;
+            => MagikeSystem.UITextID.SnowfieldLensName;
 
         public override MagikeSystem.UITextID ProduceCondition()
-            => MagikeSystem.UITextID.GlowingMushroomCondition;
+            => MagikeSystem.UITextID.SnowfieldCondition;
 
         public override bool CheckTile(Tile tile)
-            => tile.TileType == TileID.MushroomGrass;
+            => tile.TileType is TileID.SnowBlock or TileID.SnowBrick or TileID.IceBrick or TileID.IceBlock;
 
         public override bool CheckWall(Tile tile)
-            => true;
+            => tile.WallType is WallID.SnowBrick or WallID.SnowWallEcho or WallID.SnowWallUnsafe;
 
         public override void Upgrade(MagikeApparatusLevel incomeLevel)
         {
@@ -147,11 +147,11 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     ProductionDelayBase = 1_0000_0000 / 60;//随便填个大数
                     ThroughputBase = 1;
                     break;
-                case MagikeApparatusLevel.Emperor:
+                case MagikeApparatusLevel.Icicle:
                     ProductionDelayBase = 10;
                     ThroughputBase = 1;
                     break;
-                case MagikeApparatusLevel.Shroomite:
+                case MagikeApparatusLevel.Frost:
                     ProductionDelayBase = 8;
                     ThroughputBase = 50;
                     break;
