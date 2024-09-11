@@ -4386,6 +4386,10 @@ SunlightLens: {
 }
 
 FarAwaySky: {
-	// DisplayName: Far Away Sky
-	// Tooltip: ""
+	DisplayName: 遥远青空
+	Tooltip: 
+	'''
+	“雨过天晴”
+	双击方向键冲刺，之后射出云箭为自身增加攻击和移动速度
+	'''
 }

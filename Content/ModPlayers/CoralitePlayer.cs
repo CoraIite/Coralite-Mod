@@ -191,7 +191,6 @@ namespace Coralite.Content.ModPlayers
             nianliMax = BaseNianliMax;
         }
 
-
         public override void PreUpdateMovement()
         {
             SetStartDash();

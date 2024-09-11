@@ -213,6 +213,10 @@ LeafeoShieldCD: {
 }
 
 CloudBonus: {
-	// DisplayName: Cloud Bonus
-	// Description: Mods.Coralite.Buffs.CloudBonus.Description
+	DisplayName: 穿云
+	Description: 
+	'''
+	+15% 移动速度
+	+15% 远程伤害
+	'''
 }

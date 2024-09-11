@@ -12,7 +12,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         public override void SetDefaults()
         {
             Item.useAmmo = AmmoID.Arrow;
-            Item.damage = 235;
+            Item.damage = 1000;
             Item.shootSpeed = 7f;
             Item.knockBack = 0;
             Item.shoot = ProjectileID.PurificationPowder;
@@ -21,7 +21,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             Item.rare = ItemRarityID.Red;
             Item.useTime = Item.useAnimation = 27;
             Item.useStyle = ItemUseStyleID.Shoot;
-            Item.value = Item.sellPrice(0, 0, 10);
+            Item.value = Item.sellPrice(0, 35);
 
             Item.useTurn = false;
             Item.noMelee = true;
@@ -56,8 +56,10 @@ namespace Coralite.Content.Items.ThyphionSeries
     {
         public enum BowType
         {
+            /// <summary> 木弓 </summary>
+            BorealWoodBow = 0,
             /// <summary> 晚霞 </summary>
-            AfterGlow = 0,
+            AfterGlow,
 
             End
         }

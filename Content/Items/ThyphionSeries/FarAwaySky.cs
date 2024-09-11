@@ -1,12 +1,11 @@
 ﻿using Coralite.Content.ModPlayers;
+using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.ParticleSystem;
-using Coralite.Core.Systems.Trails;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
-using System.ComponentModel.Design;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
@@ -22,8 +21,8 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public override void SetDefaults()
         {
-            Item.SetWeaponValues(20, 1f);
-            Item.DefaultToRangedWeapon(10, AmmoID.Arrow, 27, 7.5f);
+            Item.SetWeaponValues(18, 1f);
+            Item.DefaultToRangedWeapon(10, AmmoID.Arrow, 27, 8f);
 
             Item.rare = ItemRarityID.Green;
             Item.useStyle = ItemUseStyleID.Rapier;
@@ -48,13 +47,13 @@ namespace Coralite.Content.Items.ThyphionSeries
         {
             CreateRecipe()
                 .AddIngredient(ItemID.Cloud, 14)
-                .AddIngredient(ItemID.ShadowScale, 12)
+                .AddIngredient(ItemID.DemoniteBar, 18)
                 .AddTile(TileID.SkyMill)
                 .Register();
 
             CreateRecipe()
                 .AddIngredient(ItemID.Cloud, 14)
-                .AddIngredient(ItemID.TissueSample, 12)
+                .AddIngredient(ItemID.CrimtaneBar, 18)
                 .AddTile(TileID.SkyMill)
                 .Register();
         }
@@ -69,15 +68,16 @@ namespace Coralite.Content.Items.ThyphionSeries
                 case CoralitePlayer.DashRight:
                     {
                         dashDirection = DashDir == CoralitePlayer.DashRight ? 1 : -1;
-                        newVelocity.X = dashDirection * 7;
+                        newVelocity.X = dashDirection * 8;
                         break;
                     }
                 default:
                     return false;
             }
 
-            Player.GetModPlayer<CoralitePlayer>().DashDelay = 80;
+            Player.GetModPlayer<CoralitePlayer>().DashDelay = 100;
             Player.GetModPlayer<CoralitePlayer>().DashTimer = 20;
+
             Player.velocity = newVelocity;
             Player.direction = (int)dashDirection;
 
@@ -95,7 +95,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
                 //生成手持弹幕
                 Projectile.NewProjectile(Player.GetSource_ItemUse(Player.HeldItem), Player.Center, Vector2.Zero, ProjectileType<FarAwaySkyHeldProj>(),
-                    Player.HeldItem.damage, Player.HeldItem.knockBack, Player.whoAmI, 1.57f - dashDirection * 1, 1, 20);
+                    Player.HeldItem.damage, Player.HeldItem.knockBack, Player.whoAmI, 1.57f - dashDirection * 0.3f, 1, 20);
             }
 
             return true;
@@ -110,7 +110,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         private static Asset<Texture2D> ArrowTex;
 
-        public ref float ArrowRotation => ref Projectile.localAI[0];
+        public ref float ArrowLength => ref Projectile.localAI[0];
         public ref float Timer => ref Projectile.localAI[1];
         public ref float RecordAngle => ref Projectile.localAI[2];
 
@@ -154,13 +154,11 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public void DashState()
         {
-            arrowPos = Projectile.Center;
-
             if (Timer < DashTime + 2)
             {
                 Owner.itemTime = Owner.itemAnimation = 2;
 
-                Rotation = Helper.Lerp(RecordAngle, OwnerDirection > 0 ? -1f : 4.141f, Timer / DashTime);
+                Rotation = Helper.Lerp(RecordAngle, OwnerDirection > 0 ? -1.2f : (3.141f+1.2f), Coralite.Instance.BezierEaseSmoother.Smoother( Timer / DashTime));
                 return;
             }
 
@@ -187,13 +185,63 @@ namespace Coralite.Content.Items.ThyphionSeries
                     State = 1;
                     Timer = 0;
                     Projectile.timeLeft = 100;
-   }
+                    Owner.AddBuff(BuffType<CloudBonus>(), 60 * 8);
+                    Vector2 dir = Rotation.ToRotationVector2();
+                    WindCircle.Spawn(Projectile.Center + (dir * 30), -dir, Rotation, Color.White, 0.75f, 0.95f, new Vector2(1.5f, 0.8f));
+                    WindCircle.Spawn(Projectile.Center + (dir * 20), -dir, Rotation, Color.SkyBlue, 0.55f, 1.55f, new Vector2(1.5f, 0.8f));
+                }
             }
         }
 
         public void ShootState()
         {
+            ArrowLength += 19;
 
+            Vector2 dir = (arrowPos - (Owner.Center + Owner.velocity * 12)).SafeNormalize(Vector2.Zero);
+            Vector2 dir2 = Rotation.ToRotationVector2();
+
+            for (int i = 0; i < 4; i++)
+            {
+                Dust d = Dust.NewDustPerfect(arrowPos, DustID.Cloud, (-dir).RotateByRandom(-0.6f, 0.6f) * Main.rand.NextFloat(3, 6),
+                    50, Scale: Main.rand.NextFloat(0.8f, 1f));
+
+                //d.noGravity = true;
+            }
+
+            if (Timer%2==0)
+            {
+                Color c = Main.rand.NextFromList(Color.White, Color.SkyBlue, Color.DeepSkyBlue);
+                c.A = 100;
+
+                Particle.NewParticle<SpeedLine>(arrowPos, (-dir2).RotateByRandom(-0.3f, 0.3f) * Main.rand.NextFloat(3, 7),
+                    c, Scale: Main.rand.NextFloat(0.2f, 0.4f));
+            }
+
+            for (int i = 0; i < 5; i++)
+            {
+                Color c = Main.rand.NextFromList(Color.White, Color.SkyBlue, Color.LightSkyBlue);
+                c.A = 100;
+                Particle.NewParticle<Fog>(arrowPos, (-dir).RotateByRandom(-0.8f, 0.8f) * Main.rand.NextFloat(3, 6),
+                   c , Scale: Main.rand.NextFloat(0.6f, 1f));
+            }
+
+            if (Timer > 7)
+                Projectile.Kill();
+        }
+
+        public override void SetCenter()
+        {
+            base.SetCenter();
+            if (Special == 1)
+            {
+                if (State == 0)
+                    arrowPos = Projectile.Center;
+                else
+                {
+                    Vector2 dir = Rotation.ToRotationVector2();
+                    arrowPos = Projectile.Center + dir * ArrowLength;
+                }
+            }
         }
 
         public override void Initialize()
@@ -228,6 +276,14 @@ namespace Coralite.Content.Items.ThyphionSeries
         {
             if (player.TryGetModPlayer(out CoralitePlayer cp))
                 cp.AddEffect(nameof(CloudBonus));
+
+            player.moveSpeed += 0.15f;
+            player.GetDamage(DamageClass.Ranged) += 0.15f;
+
+            if (Main.rand.NextBool())
+                Dust.NewDustPerfect(player.Bottom + new Vector2(Main.rand.NextFloat(-16, 16), Main.rand.NextFloat(-6, 0))
+                   , DustID.Cloud, -player.velocity.RotateByRandom(-0.2f, 0.2f) * Main.rand.NextFloat(0.1f, 0.2f),
+                    50, Scale: Main.rand.NextFloat(0.8f, 1.4f));
         }
     }
 }
