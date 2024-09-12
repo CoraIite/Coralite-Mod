@@ -1,4 +1,4 @@
-﻿using Coralite.Content.Items.MagikeSeries1;
+﻿using Coralite.Content.CoraliteNotes.MagikeChapter1;
 using Coralite.Content.Tiles.MagikeSeries1;
 using Coralite.Content.WorldGeneration.Generators;
 using Coralite.Core;
@@ -7,8 +7,10 @@ using ReLogic.Content;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.IO;
+using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
 using Terraria.WorldBuilding;
 
@@ -16,6 +18,8 @@ namespace Coralite.Content.WorldGeneration
 {
     public partial class CoraliteWorld
     {
+        public static List<Point16> MagicCrystalCaveCenters = [];
+
         public void GenMagicCrystalCave(GenerationProgress progress, GameConfiguration configuration)
         {
             progress.Message = "正在生成魔力水晶洞";
@@ -384,7 +388,7 @@ namespace Coralite.Content.WorldGeneration
             //放置箱子
             ushort chestTileType = (ushort)ModContent.TileType<BasaltChestTile>();
             WorldGen.AddBuriedChest(chestPos.X, chestPos.Y,
-                ModContent.ItemType<Page_MagikeBase>(), notNearOtherChests: false, 0, trySlope: false, chestTileType);
+                ModContent.ItemType<MagikeBasePage>(), notNearOtherChests: false, 0, trySlope: false, chestTileType);
 
             #endregion
 
@@ -500,6 +504,8 @@ namespace Coralite.Content.WorldGeneration
             #endregion
 
             GenVars.structures.AddProtectedStructure(new Rectangle(origin.X - width, origin.Y - height, width * 2, height * 2), 10);
+
+            MagicCrystalCaveCenters.Add(new Point16(origin.X, origin.Y));
             return true;
         }
 
@@ -534,6 +540,28 @@ namespace Coralite.Content.WorldGeneration
             }
 
             return Task.CompletedTask;
+        }
+
+        public void LoadCrystalCave(TagCompound tag)
+        {
+            MagicCrystalCaveCenters.Clear();
+
+            int i = 0;
+            while (tag.TryGet("CrystalCave" + i, out Point16 pos))
+            {
+                MagicCrystalCaveCenters.Add(pos);
+                i++;
+            }
+        }
+
+        public void SaveCrystalCave(TagCompound tag)
+        {
+            int i = 0;
+            foreach (var pos in MagicCrystalCaveCenters)
+            {
+                tag.Add("CrystalCave" + i, pos);
+                i++;
+            }
         }
     }
 }

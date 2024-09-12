@@ -23,6 +23,7 @@ namespace Coralite.Content.Items.MagikeSeries1
             CreateRecipe(4)
                 .AddIngredient<MagicCrystal>()
                 .AddTile(TileID.Anvils)
+                .DisableDecraft()
                 .Register();
         }
     }

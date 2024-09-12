@@ -10,9 +10,9 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 
-namespace Coralite.Content.Items.MagikeSeries1
+namespace Coralite.Content.CoraliteNotes.MagikeChapter1
 {
-    public class Page_MagikeBase : ModItem
+    public class MagikeBasePage : ModItem
     {
         public override string Texture => AssetDirectory.MagikeSeries1Item + Name;
 
@@ -23,7 +23,6 @@ namespace Coralite.Content.Items.MagikeSeries1
             Item.useStyle = ItemUseStyleID.Swing;
             Item.noUseGraphic = true;
             Item.UseSound = CoraliteSoundID.IceMagic_Item28;
-            //Item.consumable = true;
         }
 
         public override bool CanUseItem(Player player)
@@ -45,7 +44,7 @@ namespace Coralite.Content.Items.MagikeSeries1
 
     public class Page_MagikeBaseProj : ModProjectile
     {
-        public override string Texture => AssetDirectory.MagikeSeries1Item + "Page_MagikeBase";
+        public override string Texture => AssetDirectory.MagikeSeries1Item + "MagikeBasePage";
 
         public override void SetDefaults()
         {
@@ -73,7 +72,7 @@ namespace Coralite.Content.Items.MagikeSeries1
 
             for (int i = 0; i < 6; i++)
             {
-                Dust d = Dust.NewDustPerfect(Projectile.Center + ((Projectile.rotation + (i * MathHelper.TwoPi / 6)).ToRotationVector2() * length),
+                Dust d = Dust.NewDustPerfect(Projectile.Center + (Projectile.rotation + i * MathHelper.TwoPi / 6).ToRotationVector2() * length,
                     DustID.CrystalSerpent_Pink, Vector2.Zero, Scale: 1.2f);
                 d.noGravity = true;
             }
@@ -104,7 +103,7 @@ namespace Coralite.Content.Items.MagikeSeries1
             Vector2 drawPos = Projectile.Center - Main.screenPosition;
 
             float time = Main.GlobalTimeWrappedHourly;
-            float timer = (Projectile.timeLeft / 240f) + (time * 0.04f);
+            float timer = Projectile.timeLeft / 240f + time * 0.04f;
 
             for (float i = 0f; i < 1f; i += 0.25f)
             {

@@ -10,6 +10,7 @@ using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.UI.Elements;
+using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components
@@ -34,12 +35,14 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 return;
 
             //检测魔能量是否足够
-            if (!CheckCanCraft_MagickCheck(out string text))
+            MagikeCraftAttempt attempt = new MagikeCraftAttempt();
+            ChosenResipe.CanCraft_CheckMagike(Entity.GetMagikeContainer().Magike, ref attempt);
+            if (!attempt.Success)
             {
                 PopupText.NewText(new AdvancedPopupRequest()
                 {
                     Color = Coralite.MagicCrystalPink,
-                    Text = text,
+                    Text = attempt.OutputText(),
                     DurationInFrames = 60,
                     Velocity = -Vector2.UnitY
                 }, Helper.GetMagikeTileCenter((Entity as MagikeTileEntity).Position) - (Vector2.UnitY * 32));
@@ -187,25 +190,43 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public override bool CanActivated_SpecialCheck(out string text)
         {
             //获取物品容器
-            if (!Entity.TryGetComponent(MagikeComponentID.ItemContainer, out ItemContainer container)
-                || Entity.TryGetComponent(MagikeComponentID.MagikeSender, out MagikeLinerSender linerSender))
+            if (!GetItems(out Item[] items, out Dictionary<int, int> otherItems))
             {
                 text = MagikeSystem.Error.Value;
                 return false;
             }
 
-            Item[] items = container.Items;
-            FrozenDictionary<int, int> otherItems = FillOtherItemDict(linerSender);
+            FrozenDictionary<int, int> otherItems2 = otherItems.ToFrozenDictionary();
 
-            if (ChosenResipe != null && !CheckCanCraft_FindRecipe(items, otherItems, out text))//寻找合成表
+            if (ChosenResipe != null && !CheckCanCraft_FindRecipe(items, otherItems2, out text))//寻找合成表
                 return false;
 
             //检测物品是否能够合成
-            if (!CheckCanCraft_ItemCheck(items, otherItems, out text))
+            if (!ChosenResipe.CanCraft(items, otherItems2, Entity.GetMagikeContainer().Magike, out text))
                 return false;
 
-            if (!CheckCanCraft_MagickCheck(out text))
+            return true;
+        }
+
+        /// <summary>
+        /// 获取所有的物品
+        /// </summary>
+        /// <param name="mainItems"></param>
+        /// <param name="otherItems"></param>
+        /// <returns></returns>
+        public bool GetItems(out Item[] mainItems, out Dictionary<int, int> otherItems)
+        {
+            mainItems = null;
+            otherItems = null;
+
+            if (!Entity.TryGetComponent(MagikeComponentID.ItemContainer, out ItemContainer container)
+                || Entity.TryGetComponent(MagikeComponentID.MagikeSender, out MagikeLinerSender linerSender))
+            {
                 return false;
+            }
+
+            mainItems = container.Items;
+            otherItems = FillOtherItemDict(linerSender);
 
             return true;
         }
@@ -215,7 +236,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// </summary>
         /// <param name="linerSender"></param>
         /// <returns></returns>
-        private static FrozenDictionary<int, int> FillOtherItemDict(MagikeLinerSender linerSender)
+        public static Dictionary<int, int> FillOtherItemDict(MagikeLinerSender linerSender)
         {
             Dictionary<int, int> otherItems = [];
 
@@ -246,7 +267,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                     }
             }
 
-            return otherItems.ToFrozenDictionary();
+            return otherItems;
         }
 
         /// <summary>
@@ -254,7 +275,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// </summary>
         /// <param name="text"></param>
         /// <returns></returns>
-        private bool CheckCanCraft_FindRecipe(Item[] mainItems, FrozenDictionary<int, int> otherItems, out string text)
+        private bool CheckCanCraft_FindRecipe(Item[] mainItems, IDictionary<int, int> otherItems, out string text)
         {
             text = "";
             List<MagikeCraftRecipe> remodelRecipes = [];
@@ -304,120 +325,6 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             text = MagikeSystem.GetCraftText(MagikeSystem.CraftTextID.NoCraftRecipe);
             return false;
-        }
-
-        /// <summary>
-        /// 对于当前选择的合成表检测是否能够合成，是具体的检测
-        /// </summary>
-        /// <param name="mainItems"></param>
-        /// <param name="otherItems"></param>
-        /// <param name="text"></param>
-        /// <returns></returns>
-        private bool CheckCanCraft_ItemCheck(Item[] mainItems, FrozenDictionary<int, int> otherItems, out string text)
-        {
-            text = "";
-
-            bool noMainItem = false;//没有主物品
-            bool mainItemIncorrect = false;//主物品不对
-            bool mainItemNotEnough = false;//主物品数量不够
-            bool conditionNotMet = false;//条件不满足
-            string conditionFillText = "";
-            bool otherItemNotEnough = false;//其他物品不足
-            Item lackItem = null;//缺失的物品
-            int lackAmount = 0; //缺失的数量
-
-            foreach (var item in mainItems)
-            {
-                if (item is null || item.IsAir)
-                {
-                    noMainItem = true;
-                    continue;
-                }
-
-                if (item.type != ChosenResipe.MainItem.type)
-                {
-                    mainItemIncorrect = true;
-                    continue;
-                }
-
-                if (item.stack < ChosenResipe.MainItem.stack)
-                {
-                    mainItemNotEnough = true;
-                    continue;
-                }
-
-                if (!ChosenResipe.CanCraft(out conditionFillText))
-                {
-                    conditionNotMet = true;
-                    continue;
-                }
-
-                foreach (var requireItem in ChosenResipe.RequiredItems)
-                {
-                    if (otherItems.TryGetValue(requireItem.type, out int currentStack) && currentStack >= requireItem.stack)
-                        continue;
-                    else
-                    {
-                        otherItemNotEnough = true;
-                        lackItem = requireItem;
-                        lackAmount = requireItem.stack - currentStack;
-                        break;
-                    }
-                }
-            }
-
-            #region 未成功的描述部分
-
-            if (noMainItem)
-            {
-                text = MagikeSystem.GetCraftText(MagikeSystem.CraftTextID.NoMainItem);
-                return false;
-            }
-
-            if (mainItemIncorrect)
-            {
-                text = MagikeSystem.GetCraftText(MagikeSystem.CraftTextID.MainItemIncorrect);
-                return false;
-            }
-
-            if (mainItemNotEnough)
-            {
-                text = MagikeSystem.GetCraftText(MagikeSystem.CraftTextID.MainItemNotEnough);
-                return false;
-            }
-
-            if (conditionNotMet)
-            {
-                text = MagikeSystem.GetCraftText(MagikeSystem.CraftTextID.ConditionNotMet) + conditionFillText;
-                return false;
-            }
-
-            if (otherItemNotEnough)
-            {
-                text = MagikeSystem.CraftText[(int)MagikeSystem.CraftTextID.OtherItemNotEnough].Format(lackItem.Name, lackAmount);
-                return false;
-            }
-
-            #endregion
-
-            return true;
-        }
-
-        /// <summary>
-        /// 检测当前的魔能是否满足合成表的需要
-        /// </summary>
-        /// <param name="text"></param>
-        /// <returns></returns>
-        private bool CheckCanCraft_MagickCheck(out string text)
-        {
-            if (Entity.GetMagikeContainer().Magike < ChosenResipe.magikeCost)
-            {
-                text = MagikeSystem.GetCraftText(MagikeSystem.CraftTextID.MagikeNotEnough);
-                return false;
-            }
-
-            text = "";
-            return true;
         }
 
         #endregion
@@ -692,19 +599,21 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// </summary>
         public static List<int> CurrentItemTypes = [];
 
-        private CraftAltar _altar;
+        public static Dictionary<int, int> OtherItemTypes;
+
+        public static CraftAltar altar;
 
         public CraftController(CraftAltar altar)
         {
-            _altar= altar;
-
+            CraftController.altar= altar;
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
 
-            if (!_altar.Entity.TryGetComponent(MagikeComponentID.ItemContainer,out ItemContainer container))
+            if (!altar.Entity.TryGetComponent(MagikeComponentID.ItemContainer,out ItemContainer container)
+                || !altar.Entity.TryGetComponent(MagikeComponentID.MagikeSender, out MagikeLinerSender sender))
             {
                 return;
             }
@@ -727,11 +636,13 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             if (record.Count != CurrentItemTypes.Count)
                 Reset();
+
+            OtherItemTypes = CraftAltar.FillOtherItemDict(sender);
         }
 
         public void Reset()
         {
-            if (!_altar.Entity.TryGetComponent(MagikeComponentID.ItemContainer, out ItemContainer container))
+            if (!altar.Entity.TryGetComponent(MagikeComponentID.ItemContainer, out ItemContainer container))
                 return;
 
             Recipes.Clear();
@@ -748,11 +659,47 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         }
     }
 
+    public class CanCraftShow:UIElement
+    {
+        private MagikeCraftRecipe recipe;
+        private bool canCraft;
+        private string FailText;
+
+        public CanCraftShow(MagikeCraftRecipe recipe)
+        {
+            this.recipe = recipe;
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+
+            if (CraftController.altar != null
+                && CraftController.altar.GetItems(out Item[] items, out Dictionary<int, int> otherItems))
+            {
+                canCraft = recipe.CanCraft(items, otherItems, CraftController.altar.Entity.GetMagikeContainer().Magike, out FailText);
+            }
+        }
+
+        protected override void DrawSelf(SpriteBatch spriteBatch)
+        {
+            base.DrawSelf(spriteBatch);
+        }
+    }
+
     /// <summary>
     /// 魔能合成表的条形界面
     /// </summary>
-    public class CraftBar
+    public class CraftBar:UIPanel
     {
+        private UIGrid grid=new UIGrid();
+
+        public CraftBar(MagikeCraftRecipe recipe)
+        {
+            grid.SetSize(0, 0, 1, 1);
+
+            grid.Add(new CanCraftShow(recipe));
+        }
 
     }
 

@@ -40,8 +40,10 @@
     <Folder Include="Content\Items\Magike\Armors\" />
     <Folder Include="Content\Items\Magike\Accessorys\" />
     <Folder Include="Content\Items\Misc_Summon\" />
+    <Folder Include="Content\Items\KeyItems\" />
     <Folder Include="Content\Projectiles\Projectiles_Summon\" />
     <Folder Include="Content\UI\MagikeGuideBook\Chapter5\" />
+    <Folder Include="Content\UI\CoraliteNote\" />
     <Folder Include="Core\Systems\AstronomySystem\" />
     <Folder Include="Core\Systems\SwingWeapon\" />
     <Folder Include="Core\Systems\SilkKniefSystem\" />

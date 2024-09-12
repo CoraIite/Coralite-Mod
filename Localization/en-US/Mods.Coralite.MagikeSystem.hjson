@@ -287,5 +287,6 @@ MagikeSystem: {
 		OtherItemLack: 缺失次要物品！
 		MagikeNotEnough: 魔能不足！
 		NoCraftRecipe: 没有可合成的合成表！
+		AntimagikeNotEnough: Mods.Coralite.MagikeSystem.MagikeSystem.CraftText.AntimagikeNotEnough
 	}
 }

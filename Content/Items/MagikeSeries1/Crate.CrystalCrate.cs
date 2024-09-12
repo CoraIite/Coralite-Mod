@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Items.MagikeSeries1;
+﻿using Coralite.Content.CoraliteNotes.MagikeChapter1;
+using Coralite.Content.Items.MagikeSeries1;
 using Coralite.Core;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
@@ -41,7 +42,7 @@ namespace Coralite.Content.Items.Magike
         public override void ModifyItemLoot(ItemLoot itemLoot)
         {
             //必掉书页，作为空岛中获取书页的方法
-            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<Page_MagikeBase>(), 1, 1, 1));
+            itemLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<MagikeBasePage>(), 1, 1, 1));
             // 掉玄武岩
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Basalt>(), 3, 10, 35));
             // 掉魔力晶体

@@ -88,6 +88,8 @@ namespace Coralite.Content.WorldGeneration
             tag.Add("shadowBallsFightAreaY", shadowBallsFightArea.Y);
             tag.Add("chaosWorld", chaosWorld);
             tag.Add("coralCat", coralCatWorld);
+
+            SaveCrystalCave(tag);
         }
 
         public override void LoadWorldData(TagCompound tag)
@@ -95,13 +97,14 @@ namespace Coralite.Content.WorldGeneration
             NestCenter.X = tag.Get<int>("IceNestCenterX");
             NestCenter.Y = tag.Get<int>("IceNestCenterY");
 
-
             shadowBallsFightArea = new Rectangle(
                 tag.Get<int>("shadowBallsFightAreaX"),
                 tag.Get<int>("shadowBallsFightAreaY"), 74 * 16, 59 * 16);
 
             chaosWorld = tag.Get<bool>("chaosWorld");
             coralCatWorld = tag.Get<bool>("coralCat");
+
+            LoadCrystalCave(tag);
         }
     }
 }

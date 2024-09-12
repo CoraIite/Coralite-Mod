@@ -1,11 +1,13 @@
 ﻿using Coralite.Content.Raritys;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
+using Microsoft.Build.Utilities;
 using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.ModLoader.Core;
+using static System.Net.Mime.MediaTypeNames;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Core.Systems.MagikeSystem
@@ -131,25 +133,108 @@ namespace Coralite.Core.Systems.MagikeSystem
         public bool IsAnnihilation => magikeCost == 0 && antiMagikeCost != 0;
 
         /// <summary>
-        /// 检测是否能合成
+        /// 检测是否能够合成
+        /// </summary>
+        /// <param name="mainItems"></param>
+        /// <param name="otherItems"></param>
+        /// <param name="magikeAmount"></param>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        public bool CanCraft(IList<Item> mainItems, IDictionary<int, int> otherItems, int magikeAmount, out string text)
+        {
+            text = "";
+            MagikeCraftAttempt attempt = new MagikeCraftAttempt();
+
+            CanCraft_CheckCondition(ref attempt);
+            CanCraft_ItemsCheck(mainItems, otherItems, ref attempt);
+            CanCraft_CheckMagike(magikeAmount, ref attempt);
+
+            if (attempt.Success)
+                return true;
+
+            text = attempt.OutputText();
+            return false;
+        }
+
+        /// <summary>
+        /// 检测合成条件
         /// </summary>
         /// <returns></returns>
-        public bool CanCraft(out string fillText)
+        public void CanCraft_CheckCondition(ref MagikeCraftAttempt attempt)
         {
-            fillText = "";
-
             if (_conditions == null)
-                return true;
+                return;
 
             foreach (var condition in Conditions)
                 if (!condition.Predicate())
                 {
-                    fillText = condition.Description.Value;
-                    return false;
+                    attempt.conditionNotMet = true;
+                    attempt.conditionFailText = condition.Description.Value;
+                }
+        }
+
+        public void CanCraft_ItemsCheck(IList<Item> mainItems, IDictionary<int, int> otherItems, ref MagikeCraftAttempt attempt)
+        {
+            foreach (var item in mainItems)
+            {
+                if (item is null || item.IsAir)
+                {
+                    attempt.noMainItem = true;
+                    continue;
                 }
 
-            return true;
+                if (item.type != MainItem.type)
+                {
+                    attempt.mainItemIncorrect = true;
+                    continue;
+                }
+
+                if (item.stack < MainItem.stack)
+                {
+                    attempt.mainItemNotEnough = true;
+                    continue;
+                }
+
+                foreach (var requireItem in RequiredItems)
+                {
+                    if (otherItems.TryGetValue(requireItem.type, out int currentStack) && currentStack >= requireItem.stack)
+                        continue;
+                    else
+                    {
+                        attempt.otherItemNotEnough = true;
+                        attempt.lackItem = requireItem;
+                        attempt.lackAmount = requireItem.stack - currentStack;
+                        break;
+                    }
+                }
+            }
         }
+
+        public void CanCraft_CheckMagike(int magikeAmount, ref MagikeCraftAttempt attempt)
+        {
+            if (magikeAmount < 0)//反魔能
+            {
+                if (antiMagikeCost == 0 && magikeCost != 0)
+                    attempt.magikeNotEnough = true;
+
+                if (magikeAmount > antiMagikeCost)//反魔能需要反一下
+                {
+                    attempt.antimagikeNotEnough = true;
+                }
+
+                return;
+            }
+
+            if (magikeAmount == 0 && antiMagikeCost != 0)
+                attempt.antimagikeNotEnough = true;
+
+            if (magikeAmount < magikeCost)
+            {
+                attempt.magikeNotEnough = true;
+            }
+        }
+
+        #region 新建合成表部分
 
         /// <summary>
         /// </summary>
@@ -261,6 +346,8 @@ namespace Coralite.Core.Systems.MagikeSystem
             return CreateRecipe(MainItem.type, ItemType<TResultItem>(), magikeCost, MainItem.stack, resultItemStack);
         }
 
+        #endregion
+
         private void AddVanillaRecipe()
         {
             Recipe recipe = Recipe.Create(ResultItem.type, ResultItem.stack);
@@ -277,6 +364,92 @@ namespace Coralite.Core.Systems.MagikeSystem
 
             recipe.DisableDecraft();
             recipe.Register();
+        }
+    }
+
+    public struct MagikeCraftAttempt()
+    {
+        /// <summary>
+        /// 没有主物品
+        /// </summary>
+        public bool noMainItem = false;
+        /// <summary>
+        /// 主物品不对
+        /// </summary>
+        public bool mainItemIncorrect = false;
+        /// <summary>
+        /// 主物品数量不够
+        /// </summary>
+        public bool mainItemNotEnough = false;
+        /// <summary>
+        /// 条件不满足
+        /// </summary>
+        public bool conditionNotMet = false;
+        public string conditionFailText = "";
+
+        /// <summary>
+        /// 魔能不够
+        /// </summary>
+        public bool magikeNotEnough = false;
+        /// <summary>
+        /// 魔能不够
+        /// </summary>
+        public bool antimagikeNotEnough = false;
+        /// <summary>
+        /// 其他物品不足
+        /// </summary>
+        public bool otherItemNotEnough = false;
+        /// <summary>
+        /// 缺失的物品
+        /// </summary>
+        public Item lackItem = null;
+        /// <summary>
+        /// 缺失的数量
+        /// </summary>
+        public int lackAmount = 0;
+
+        public string OutputText()
+        {
+            string text = "";
+            if (noMainItem)
+                ConcatText(text, MagikeSystem.GetCraftText(MagikeSystem.CraftTextID.NoMainItem));
+
+            if (mainItemIncorrect)
+                ConcatText(text, MagikeSystem.GetCraftText(MagikeSystem.CraftTextID.MainItemIncorrect));
+
+            if (mainItemNotEnough)
+                ConcatText(text, MagikeSystem.GetCraftText(MagikeSystem.CraftTextID.MainItemNotEnough));
+
+            if (conditionNotMet)
+                ConcatText(text, MagikeSystem.GetCraftText(MagikeSystem.CraftTextID.ConditionNotMet) + conditionFailText);
+
+            if (otherItemNotEnough)
+                ConcatText(text, MagikeSystem.CraftText[(int)MagikeSystem.CraftTextID.OtherItemNotEnough].Format(lackItem.Name, lackAmount));
+
+            if (magikeNotEnough)
+                ConcatText(text, MagikeSystem.GetCraftText(MagikeSystem.CraftTextID.MagikeNotEnough));
+
+            if (antimagikeNotEnough)
+                ConcatText(text, MagikeSystem.GetCraftText(MagikeSystem.CraftTextID.AntimagikeNotEnough));
+
+            return text;
+        }
+
+        private static string ConcatText(string text, string newText)
+        {
+            if (string.IsNullOrEmpty(text))
+                return newText;
+
+            return text + "\n" + newText;
+        }
+
+        public readonly bool Success
+        {
+            get
+            {
+                return !(noMainItem || mainItemIncorrect || mainItemNotEnough
+                    || conditionNotMet || magikeNotEnough || otherItemNotEnough);
+            }
         }
     }
 

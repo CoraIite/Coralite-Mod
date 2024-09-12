@@ -214,9 +214,9 @@ LeafeoShieldCD: {
 
 CloudBonus: {
 	DisplayName: 穿云
-	Description: 
-	'''
-	+15% 移动速度
-	+15% 远程伤害
-	'''
+	Description:
+		'''
+		+15% 移动速度
+		+15% 远程伤害
+		'''
 }

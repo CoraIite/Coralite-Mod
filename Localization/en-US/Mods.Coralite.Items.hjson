@@ -4280,3 +4280,13 @@ FarAwaySky: {
 	DisplayName: Far Away Sky
 	Tooltip: ""
 }
+
+MagikeBasePage: {
+	DisplayName: Magike Base Page
+	Tooltip: ""
+}
+
+LeprechaunBait: {
+	DisplayName: Leprechaun Bait
+	Tooltip: ""
+}

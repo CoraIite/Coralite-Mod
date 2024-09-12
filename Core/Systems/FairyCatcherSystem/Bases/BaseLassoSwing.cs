@@ -39,8 +39,8 @@ namespace Coralite.Core.Prefabs.Projectiles
         {
             Projectile.DamageType = FairyDamage.Instance;
             Projectile.localNPCHitCooldown = -1;
-            Projectile.width = 24;
-            Projectile.height = 24;
+            Projectile.width = 30;
+            Projectile.height = 30;
             Projectile.hide = true;
             distanceToOwner = minDistance / 2;
             minTime = 0;
@@ -48,10 +48,10 @@ namespace Coralite.Core.Prefabs.Projectiles
             onHitFreeze = 0;
         }
 
-        public override bool? CanDamage()
+        public override bool? CanHitNPC(NPC target)
         {
             if (Timer > minTime)
-                return base.CanDamage();
+                return null;
 
             return false;
         }

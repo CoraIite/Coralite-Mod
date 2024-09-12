@@ -178,6 +178,7 @@ namespace Coralite.Core.Systems.MagikeSystem
             OtherItemLack,
 
             MagikeNotEnough,
+            AntimagikeNotEnough,
             NoCraftRecipe,
             Count
         }
