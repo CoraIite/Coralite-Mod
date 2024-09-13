@@ -605,14 +605,14 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public CraftController(CraftAltar altar)
         {
-            CraftController.altar= altar;
+            CraftController.altar = altar;
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
 
-            if (!altar.Entity.TryGetComponent(MagikeComponentID.ItemContainer,out ItemContainer container)
+            if (!altar.Entity.TryGetComponent(MagikeComponentID.ItemContainer, out ItemContainer container)
                 || !altar.Entity.TryGetComponent(MagikeComponentID.MagikeSender, out MagikeLinerSender sender))
             {
                 return;
@@ -659,15 +659,101 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         }
     }
 
-    public class CanCraftShow:UIElement
+    //public class CanCraftShow : UIElement
+    //{
+    //    private MagikeCraftRecipe recipe;
+    //    private bool canCraft;
+    //    private string FailText;
+
+    //    public CanCraftShow(MagikeCraftRecipe recipe)
+    //    {
+    //        this.recipe = recipe;
+
+    //        this.SetSize(44, 52);
+    //    }
+
+    //    public override void Update(GameTime gameTime)
+    //    {
+    //        base.Update(gameTime);
+
+    //        if (CraftController.altar != null
+    //            && CraftController.altar.GetItems(out Item[] items, out Dictionary<int, int> otherItems))
+    //        {
+    //            canCraft = recipe.CanCraft(items, otherItems, CraftController.altar.Entity.GetMagikeContainer().Magike, out FailText);
+    //        }
+    //    }
+
+    //    protected override void DrawSelf(SpriteBatch spriteBatch)
+    //    {
+    //        Texture2D mainTex = MagikeSystem.CanCraftShow.Value;
+
+    //        float scale = 1;
+
+    //        if (IsMouseHovering)
+    //        {
+    //            scale = 1.2f;
+    //            if (canCraft)//显示鼠标信息
+    //            {
+
+    //            }
+    //            else
+    //            {
+
+    //            }
+    //        }
+
+    //        Vector2 center = GetDimensions().Center();
+    //        var frameBox = mainTex.Frame(2, 1, canCraft ? 0 : 1);
+    //        spriteBatch.Draw(mainTex, center, frameBox, Color.White, 0, frameBox.Size() / 2, scale, 0, 0);
+    //    }
+    //}
+
+    /// <summary>
+    /// 魔能合成表的条形界面
+    /// </summary>
+    public class CraftBar : UIPanel
     {
+        private UIGrid grid = new UIGrid();
+
+        public CraftBar(MagikeCraftRecipe recipe)
+        {
+            this.SetSize(0, 52, 1);
+
+            grid.SetSize(1000, 0, 0, 1);
+            //grid.Add(new CanCraftShow(recipe));
+
+        }
+    }
+
+    public class CraftSlot:UIElement
+    {
+        private Item showItem;
         private MagikeCraftRecipe recipe;
         private bool canCraft;
         private string FailText;
+        private SlotType slotType;
 
-        public CanCraftShow(MagikeCraftRecipe recipe)
+        public enum SlotType
         {
-            this.recipe = recipe;
+            ResultItem,
+            requiredItem
+        }
+
+        public CraftSlot(MagikeCraftRecipe recipe,SlotType slotType,int requiredIndex=0)
+        {
+            this.recipe= recipe;
+            this.slotType= slotType;
+
+            switch (slotType)
+            {
+                default:
+                case SlotType.ResultItem:
+                    showItem = recipe.ResultItem.Clone();
+                    break;
+                case SlotType.requiredItem:
+                    showItem = recipe.RequiredItems[requiredIndex].Clone();
+                    break;
+            }
         }
 
         public override void Update(GameTime gameTime)
@@ -683,28 +769,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            base.DrawSelf(spriteBatch);
+
         }
-    }
-
-    /// <summary>
-    /// 魔能合成表的条形界面
-    /// </summary>
-    public class CraftBar:UIPanel
-    {
-        private UIGrid grid=new UIGrid();
-
-        public CraftBar(MagikeCraftRecipe recipe)
-        {
-            grid.SetSize(0, 0, 1, 1);
-
-            grid.Add(new CanCraftShow(recipe));
-        }
-
-    }
-
-    public class CraftSlot
-    {
-
     }
 }
