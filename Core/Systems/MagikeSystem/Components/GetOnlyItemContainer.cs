@@ -81,6 +81,12 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             }
         }
 
+        public override void MouseOver(UIMouseEvent evt)
+        {
+            base.MouseOver(evt);
+            Helper.PlayPitched("Fairy/FairyBottleClick", 0.3f, 0.4f);
+        }
+
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
             if (!TryGetItem(out Item inv))
@@ -107,6 +113,5 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             Main.inventoryScale = scale;
         }
-
     }
 }

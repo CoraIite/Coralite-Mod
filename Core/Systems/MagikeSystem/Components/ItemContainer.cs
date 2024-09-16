@@ -260,6 +260,12 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             return true;
         }
 
+        public override void MouseOver(UIMouseEvent evt)
+        {
+            base.MouseOver(evt);
+            Helper.PlayPitched("Fairy/FairyBottleClick", 0.3f, 0.4f);
+        }
+
         //public void GrabSound()
         //{
         //    Helper.PlayPitched("Fairy/FairyBottleClick", 0.4f, 0);

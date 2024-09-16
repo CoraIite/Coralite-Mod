@@ -38,9 +38,16 @@ namespace Coralite.Core.Systems.SwingWeapon
         public float HandlePercent { get; set; }
 
         /// <summary>
+        /// 
+        /// </summary>
+        public SwingController Swing { get; protected set; } 
+        /// <summary>
         /// 甜点攻击
         /// </summary>
         public SweetController Sweet {  get; protected set; }
+        /// <summary>
+        /// 拖尾控制器
+        /// </summary>
         public TrailController Trail {  get; protected set; }
 
         public ref float Combo => ref Projectile.ai[0];
@@ -192,6 +199,8 @@ namespace Coralite.Core.Systems.SwingWeapon
 
         }
 
+        public abstract SwingController GetSwingController();
+
 
         #region 绘制部分
 
@@ -216,11 +225,13 @@ namespace Coralite.Core.Systems.SwingWeapon
          *  包含起始角度，总旋转角度，可以使用GetAimAngle获取瞄准的角度
          *  在生成时传入角度基础角度控制器，进入准备阶段时会改变一次角度，之后进入挥舞阶段时会再次改变角度
          *  
-         *  2.缩放控制
+         * 2.缩放控制
          *  使用一些委托控制缩放
-         *  3.距离控制
          *  
-         *  4.自转控制
+         * 3.距离控制
+         *  
+         *  
+         * 4.自转控制
          *  
          */
 

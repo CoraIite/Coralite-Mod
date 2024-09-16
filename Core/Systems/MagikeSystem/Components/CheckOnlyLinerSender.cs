@@ -14,7 +14,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
     /// <summary>
     /// 仅用于检测连接，不提供任何发送魔能功能的发送器
     /// </summary>
-    public abstract class CheckOnlyLinerSender() : MagikeLinerSender()
+    public class CheckOnlyLinerSender() : MagikeLinerSender()
     {
         public override void Update(IEntity entity)
         {

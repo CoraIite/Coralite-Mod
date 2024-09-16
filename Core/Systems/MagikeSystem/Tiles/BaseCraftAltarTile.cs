@@ -1,8 +1,6 @@
-﻿using Coralite.Core.Systems.MagikeSystem.TileEntities;
-using Coralite.Helpers;
+﻿using Coralite.Core.Systems.MagikeSystem.Components;
+using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria;
-using static Coralite.Helpers.MagikeHelper;
 
 namespace Coralite.Core.Systems.MagikeSystem.Tiles
 {
@@ -31,6 +29,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
 
         public override void DrawExtraTex(SpriteBatch spriteBatch, Texture2D tex, Rectangle tileRect, Vector2 offset, Color lightColor, float rotation, MagikeTileEntity entity, MagikeApparatusLevel level)
         {
+            if (!entity.TryGetComponent(MagikeComponentID.ItemContainer, out ItemContainer container))
+                return;
+
 
         }
     }

@@ -9,7 +9,9 @@ using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
+using Terraria.ModLoader.UI;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
 
@@ -384,22 +386,68 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             parent.Append(list);
 
             float left = 60f;
-            AddButtons(parent, left, top); //展开与关闭的按钮
-
-
-
+            AddButtons(parent, left, ref top); //展开与关闭的按钮
+            AddController(parent, this, left, ref top);
+            AddRecipeShow(parent, left, top);
         }
 
-        public static void AddButtons(UIElement parent,float left,float top)
+        public static void AddButtons(UIElement parent, float left, ref float top)
         {
-            CraftSelectButton selectButton = new();
+            //CraftSelectButton selectButton = new();
             CraftShowButton showButton = new CraftShowButton();
 
-            selectButton.SetTopLeft(left, top);
-            showButton.SetTopLeft(left + selectButton.Width.Pixels, top);
+            //selectButton.SetTopLeft(left, top);
+            showButton.SetTopLeft(left /*+ selectButton.Width.Pixels*/, top);
 
-            parent.Append(selectButton);
+            //parent.Append(selectButton);
             parent.Append(showButton);
+
+            top += showButton.Height.Pixels;
+        }
+
+        public static void AddController(UIElement parent,CraftAltar altar,float left,ref float top)
+        {
+            CraftController controller = new CraftController(altar);
+            controller.SetSize(-left, 12, 1, 0);
+            controller.SetTopLeft(top, left);
+
+            CraftController.Reset();
+            parent.Append(controller);
+
+            top += controller.Height.Pixels;
+        }
+
+        public static void AddRecipeShow(UIElement parent ,float left ,float top)
+        {
+            switch (CraftShowButton.CurrentShowStyle)
+            {
+                case CraftShowButton.ShowStyle.VerticleLine:
+                    {
+                        UIList list = new UIList();
+                        list.SetTopLeft(top, left);
+                        list.SetSize(-left, -top, 1, 1);
+                        list.QuickInvisibleScrollbar();
+
+                        foreach (var recipe in CraftController.Recipes)
+                            list.Add(new CraftBar(recipe));
+
+                        parent.Append(list);
+                    }
+                    break;
+                default:
+                case CraftShowButton.ShowStyle.Grid:
+                    {
+                        UIGrid grid= new UIGrid();
+                        grid.SetTopLeft(top,left );
+                        grid.SetSize(-left, -top, 1, 1);
+
+                        foreach (var recipe in CraftController.Recipes)
+                            grid.Add(new CraftSlot(recipe, CraftSlot.SlotType.ResultItem));
+
+                        parent.Append(grid);
+                    }
+                    break;
+            }
         }
 
         #endregion
@@ -464,66 +512,66 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         }
     }
 
-    public class CraftSelectButton : UIElement
-    {
-        public static SelectStyle CurrentSelectStyle;
+    //public class CraftSelectButton : UIElement
+    //{
+    //    public static SelectStyle CurrentSelectStyle;
 
-        private float _scale = 1f;
+    //    private float _scale = 1f;
 
-        public CraftSelectButton()
-        {
-            Texture2D mainTex = MagikeSystem.CraftSelectButton.Value;
+    //    public CraftSelectButton()
+    //    {
+    //        Texture2D mainTex = MagikeSystem.CraftSelectButton.Value;
 
-            var frameBox = mainTex.Frame(2, 1);
-            this.SetSize(frameBox.Width+6, frameBox.Height+6);
-        }
+    //        var frameBox = mainTex.Frame(2, 1);
+    //        this.SetSize(frameBox.Width+6, frameBox.Height+6);
+    //    }
 
-        /// <summary>
-        /// 魔能合成UI的显示合成表的筛选
-        /// </summary>
-        public enum SelectStyle
-        {
-            All,
-            CanCraft
-        }
+    //    /// <summary>
+    //    /// 魔能合成UI的显示合成表的筛选
+    //    /// </summary>
+    //    public enum SelectStyle
+    //    {
+    //        All,
+    //        CanCraft
+    //    }
 
-        public override void MouseOver(UIMouseEvent evt)
-        {
-            base.MouseOver(evt);
-            Helper.PlayPitched("Fairy/FairyBottleClick", 0.3f, 0.4f);
-        }
+    //    public override void MouseOver(UIMouseEvent evt)
+    //    {
+    //        base.MouseOver(evt);
+    //        Helper.PlayPitched("Fairy/FairyBottleClick", 0.3f, 0.4f);
+    //    }
 
-        public override void LeftClick(UIMouseEvent evt)
-        {
-            base.LeftClick(evt);
+    //    public override void LeftClick(UIMouseEvent evt)
+    //    {
+    //        base.LeftClick(evt);
 
-            CurrentSelectStyle = CurrentSelectStyle switch
-            {
-                SelectStyle.CanCraft => SelectStyle.All,
-                _ => SelectStyle.CanCraft
-            };
+    //        CurrentSelectStyle = CurrentSelectStyle switch
+    //        {
+    //            SelectStyle.CanCraft => SelectStyle.All,
+    //            _ => SelectStyle.CanCraft
+    //        };
 
-            Helper.PlayPitched("UI/Tick", 0.4f, 0);
-            UILoader.GetUIState<MagikeApparatusPanel>().ComponentPanel.Recalculate();
-        }
+    //        Helper.PlayPitched("UI/Tick", 0.4f, 0);
+    //        UILoader.GetUIState<MagikeApparatusPanel>().ComponentPanel.Recalculate();
+    //    }
 
-        protected override void DrawSelf(SpriteBatch spriteBatch)
-        {
-            Texture2D mainTex = MagikeSystem.CraftSelectButton.Value;
+    //    protected override void DrawSelf(SpriteBatch spriteBatch)
+    //    {
+    //        Texture2D mainTex = MagikeSystem.CraftSelectButton.Value;
 
-            var dimensions = GetDimensions();
+    //        var dimensions = GetDimensions();
 
-            if (IsMouseHovering)
-            {
-                _scale = Helper.Lerp(_scale, 1.2f, 0.2f);
-            }
-            else
-                _scale = Helper.Lerp(_scale, 1f, 0.2f);
+    //        if (IsMouseHovering)
+    //        {
+    //            _scale = Helper.Lerp(_scale, 1.2f, 0.2f);
+    //        }
+    //        else
+    //            _scale = Helper.Lerp(_scale, 1f, 0.2f);
 
-            var framebox = mainTex.Frame(2, 1, (int)CurrentSelectStyle);
-            spriteBatch.Draw(mainTex, dimensions.Center(), framebox, Color.White, 0, framebox.Size() / 2,_scale, 0, 0);
-        }
-    }
+    //        var framebox = mainTex.Frame(2, 1, (int)CurrentSelectStyle);
+    //        spriteBatch.Draw(mainTex, dimensions.Center(), framebox, Color.White, 0, framebox.Size() / 2,_scale, 0, 0);
+    //    }
+    //}
 
     public class CraftShowButton : UIElement
     {
@@ -630,17 +678,20 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 if (CurrentItemTypes.Contains(item.type))
                     continue;
 
-                Reset();
+              UILoader.GetUIState<MagikeApparatusPanel>().Recalculate();
                 return;
             }
 
             if (record.Count != CurrentItemTypes.Count)
-                Reset();
+                UILoader.GetUIState<MagikeApparatusPanel>().Recalculate();
 
             OtherItemTypes = CraftAltar.FillOtherItemDict(sender);
         }
 
-        public void Reset()
+        /// <summary>
+        /// 刷新现有的合成表
+        /// </summary>
+        public static void Reset()
         {
             if (!altar.Entity.TryGetComponent(MagikeComponentID.ItemContainer, out ItemContainer container))
                 return;
@@ -655,7 +706,12 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            base.DrawSelf(spriteBatch);
+            Texture2D line = TextureAssets.FishingLine.Value;
+
+            var style = GetDimensions();
+            Rectangle frame = new(0, 0, line.Width, (int)style.Width);
+
+            spriteBatch.Draw(line, style.Center(), frame, Color.White, 1.57f, frame.Size() / 2, 1, 0, 0);
         }
     }
 
@@ -722,6 +778,13 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             grid.SetSize(1000, 0, 0, 1);
             //grid.Add(new CanCraftShow(recipe));
 
+            grid.Add(new CraftSlot(recipe, CraftSlot.SlotType.ResultItem));
+            grid.Add(new UIVerticalLine());
+            if (recipe.RequiredItems.Count > 0)
+                for (int i = 0; i < recipe.RequiredItems.Count; i++)
+                {
+                    grid.Add(new CraftSlot(recipe, CraftSlot.SlotType.RequiredItem, i));
+                }
         }
     }
 
@@ -733,43 +796,93 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         private string FailText;
         private SlotType slotType;
 
+        private float _scale;
+
         public enum SlotType
         {
             ResultItem,
-            requiredItem
+            RequiredItem
         }
 
         public CraftSlot(MagikeCraftRecipe recipe,SlotType slotType,int requiredIndex=0)
         {
             this.recipe= recipe;
             this.slotType= slotType;
+            this.SetSize(60, 60);
 
-            switch (slotType)
+            showItem = slotType switch
             {
-                default:
-                case SlotType.ResultItem:
-                    showItem = recipe.ResultItem.Clone();
-                    break;
-                case SlotType.requiredItem:
-                    showItem = recipe.RequiredItems[requiredIndex].Clone();
-                    break;
-            }
+                SlotType.RequiredItem => recipe.RequiredItems[requiredIndex].Clone(),
+                _ => recipe.ResultItem.Clone(),
+            };
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
 
-            if (CraftController.altar != null
-                && CraftController.altar.GetItems(out Item[] items, out Dictionary<int, int> otherItems))
+            switch (slotType)
             {
-                canCraft = recipe.CanCraft(items, otherItems, CraftController.altar.Entity.GetMagikeContainer().Magike, out FailText);
+                case SlotType.ResultItem://对于最后的物品直接计算是否能合成
+                    if (CraftController.altar != null
+                        && CraftController.altar.GetItems(out Item[] items, out Dictionary<int, int> otherItems))
+                    {
+                        canCraft = recipe.CanCraft(items, otherItems, CraftController.altar.Entity.GetMagikeContainer().Magike, out FailText);
+                    }
+                    break;
+                case SlotType.RequiredItem://其他物品只需要判断一下有没有足够的就行
+                    if (CraftController.OtherItemTypes.TryGetValue(showItem.type,out int stack))
+                        canCraft = stack >= showItem.stack;
+                    else
+                    {
+                        canCraft = false;
+                        FailText = MagikeSystem.CraftText[(int)MagikeSystem.CraftTextID.OtherItemNotEnough].Format(showItem.Name, showItem.stack-stack);
+                    }
+
+                    break;
+                default:
+                    break;
             }
+        }
+
+        public override void MouseOver(UIMouseEvent evt)
+        {
+            base.MouseOver(evt);
+
+            Helper.PlayPitched("Fairy/FairyBottleClick", 0.3f, 0.4f);
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
+            Item inv2 = showItem;
 
+            int context = canCraft ? ItemSlot.Context.InventoryItem : ItemSlot.Context.TrashItem;
+
+            if (IsMouseHovering)
+            {
+                if (canCraft)
+                {
+                    Main.LocalPlayer.mouseInterface = true;
+                    ItemSlot.OverrideHover(ref inv2, context);
+                    ItemSlot.MouseHover(ref inv2, context);
+                }
+                else
+                {
+                    UICommon.TooltipMouseText(FailText);
+                }
+
+                _scale = Helper.Lerp(_scale, 1.1f, 0.2f);
+            }
+            else
+                _scale = Helper.Lerp(_scale, 1f, 0.2f);
+
+            float scale = Main.inventoryScale;
+            Main.inventoryScale = _scale;
+
+            Vector2 position = GetDimensions().Center() + (new Vector2(52f, 52f) * -0.5f * Main.inventoryScale);
+            ItemSlot.Draw(spriteBatch, ref inv2, context, position, Coralite.MagicCrystalPink);
+
+            Main.inventoryScale = scale;
         }
     }
 }
