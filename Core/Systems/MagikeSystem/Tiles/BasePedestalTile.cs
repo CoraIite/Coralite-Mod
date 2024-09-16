@@ -1,5 +1,6 @@
 ﻿using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -27,37 +28,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
                 return;
 
             if (!container.Items[0].IsAir)
-                DrawItem(spriteBatch, container.Items[0], drawPos + (rotation.ToRotationVector2()
-                    * (18 + (ItemSize / 2) + (MathF.Sin(Main.GlobalTimeWrappedHourly + ((tileRect.X + tileRect.Y) * 0.1f)) * 6))));
-        }
-
-        public static void DrawItem(SpriteBatch spriteBatch, Item i, Vector2 pos)
-        {
-            int type = i.type;
-
-            Main.instance.LoadItem(type);
-            Texture2D itemTex = TextureAssets.Item[type].Value;
-            Rectangle rectangle2;
-
-            if (Main.itemAnimations[type] != null)
-                rectangle2 = Main.itemAnimations[type].GetFrame(itemTex, -1);
-            else
-                rectangle2 = itemTex.Frame();
-
-            Vector2 origin = rectangle2.Size() / 2;
-            float itemScale = 1f;
-
-            if (rectangle2.Width > ItemSize || rectangle2.Height > ItemSize)
-            {
-                if (rectangle2.Width > ItemSize)
-                    itemScale = ItemSize / rectangle2.Width;
-                else
-                    itemScale = ItemSize / rectangle2.Height;
-            }
-
-            spriteBatch.Draw(itemTex, pos, new Rectangle?(rectangle2), i.GetAlpha(Color.White), 0f, origin, itemScale, 0, 0f);
-            if (i.color != default)
-                spriteBatch.Draw(itemTex, pos, new Rectangle?(rectangle2), i.GetColor(Color.White), 0f, origin, itemScale, 0, 0f);
+                MagikeHelper.DrawItem(spriteBatch, container.Items[0], drawPos + (rotation.ToRotationVector2()
+                    * (18 + (ItemSize / 2) + (MathF.Sin(Main.GlobalTimeWrappedHourly + ((tileRect.X + tileRect.Y) * 0.1f)) * 6))), ItemSize);
         }
 
         /// <summary>
