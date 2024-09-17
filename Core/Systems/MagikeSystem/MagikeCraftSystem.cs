@@ -231,6 +231,8 @@ namespace Coralite.Core.Systems.MagikeSystem
             if (magikeAmount < magikeCost)
             {
                 attempt.magikeNotEnough = true;
+                attempt.targetMagike = magikeCost;
+                attempt.selfMagike = magikeAmount;
             }
         }
 
@@ -391,6 +393,9 @@ namespace Coralite.Core.Systems.MagikeSystem
         /// 魔能不够
         /// </summary>
         public bool magikeNotEnough = false;
+        public int targetMagike;
+        public int selfMagike;
+
         /// <summary>
         /// 魔能不够
         /// </summary>
@@ -412,25 +417,25 @@ namespace Coralite.Core.Systems.MagikeSystem
         {
             string text = "";
             if (noMainItem)
-                ConcatText(text, MagikeSystem.GetCraftText(MagikeSystem.CraftTextID.NoMainItem));
+                text= ConcatText(text, MagikeSystem.GetCraftText(MagikeSystem.CraftTextID.NoMainItem));
 
             if (mainItemIncorrect)
-                ConcatText(text, MagikeSystem.GetCraftText(MagikeSystem.CraftTextID.MainItemIncorrect));
+                text = ConcatText(text, MagikeSystem.GetCraftText(MagikeSystem.CraftTextID.MainItemIncorrect));
 
             if (mainItemNotEnough)
-                ConcatText(text, MagikeSystem.GetCraftText(MagikeSystem.CraftTextID.MainItemNotEnough));
+                text = ConcatText(text, MagikeSystem.GetCraftText(MagikeSystem.CraftTextID.MainItemNotEnough));
 
             if (conditionNotMet)
-                ConcatText(text, MagikeSystem.GetCraftText(MagikeSystem.CraftTextID.ConditionNotMet) + conditionFailText);
+                text = ConcatText(text, MagikeSystem.GetCraftText(MagikeSystem.CraftTextID.ConditionNotMet) + conditionFailText);
 
             if (otherItemNotEnough)
-                ConcatText(text, MagikeSystem.CraftText[(int)MagikeSystem.CraftTextID.OtherItemNotEnough].Format(lackItem.Name, lackAmount));
+                text = ConcatText(text, MagikeSystem.CraftText[(int)MagikeSystem.CraftTextID.OtherItemNotEnough].Format(lackItem.Name, lackAmount));
 
             if (magikeNotEnough)
-                ConcatText(text, MagikeSystem.GetCraftText(MagikeSystem.CraftTextID.MagikeNotEnough));
+                text = ConcatText(text, MagikeSystem.CraftText[(int)MagikeSystem.CraftTextID.MagikeNotEnough].Format(selfMagike,targetMagike));
 
             if (antimagikeNotEnough)
-                ConcatText(text, MagikeSystem.GetCraftText(MagikeSystem.CraftTextID.AntimagikeNotEnough));
+                text = ConcatText(text, MagikeSystem.GetCraftText(MagikeSystem.CraftTextID.AntimagikeNotEnough));
 
             return text;
         }

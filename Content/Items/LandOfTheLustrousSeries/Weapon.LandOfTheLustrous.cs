@@ -4,6 +4,7 @@ using Coralite.Content.Items.MagikeSeries2;
 using Coralite.Content.WorldGeneration;
 using Coralite.Core;
 using Coralite.Core.Configs;
+using Coralite.Core.SmoothFunctions;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Core.Systems.Trails;
 using Coralite.Helpers;
@@ -111,7 +112,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public static Asset<Texture2D> HaloTex;
         public ref float Scale => ref Projectile.localAI[2];
-
+        public SecondOrderDynamics_Vec2 positionSmoother;
+        public SecondOrderDynamics_Float rotationSmoother;
         private float selfRot;
 
         private List<LandOfTheLustrousData> Draws = new();
@@ -167,19 +169,30 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void BeforeMove()
         {
-            if ((int)Main.timeForVisualEffects % 30 == 0 && Main.rand.NextBool(2))
+            positionSmoother ??= new SecondOrderDynamics_Vec2(1f, 0.5f, 0,Projectile.Center);
+            rotationSmoother ??= new SecondOrderDynamics_Float(1f, 0.75f, 0,0);
+
+            if ((int)Main.timeForVisualEffects % 20 == 0 && Main.rand.NextBool(2))
             {
                 float length = Main.rand.NextFloat(32, 64);
                 Color c = Main.rand.NextFromList(Color.White, Main.DiscoColor * 1.5f);
                 var p = Particle.NewParticle<HexagramParticle>(Projectile.Center + Main.rand.NextVector2CircularEdge(length, length),
-                     Vector2.UnitX, c, Scale: Main.rand.NextFloat(0.1f, 0.12f));
+                     Vector2.UnitX, c, Scale: Main.rand.NextFloat(0.1f, 0.15f));
                 p.follow = () => Projectile.position - Projectile.oldPos[1];
                 p.Rotation = -1.57f;
             }
 
             Lighting.AddLight(Projectile.Center, new Vector3(1.2f));
 
-            Projectile.UpdateFrameNormally(3, Main.projFrames[Projectile.type] - 1);
+            int frameTime = 5;
+            if (AttackTime == 0)
+            {
+                frameTime -= (int)(Owner.velocity.Length() /4);
+                if (frameTime < 1)
+                    frameTime = 1;
+            }
+
+            Projectile.UpdateFrameNormally(frameTime, Main.projFrames[Projectile.type] - 1);
         }
 
         public override void Move()
@@ -196,17 +209,28 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
                 idlePos += new Vector2(a * cos / sin2Plus1, a * sin * cos / sin2Plus1);
 
-                float factor2 = Math.Clamp(MathF.Abs(Owner.velocity.X) / 3, 0, 1);
-                float targetRotation = Helper.Lerp(0, (OwnerDirection * 0.6f) + (MathF.Sin(Main.GlobalTimeWrappedHourly * 4) * 0.2f), factor2);
+                float factor2 =  Math.Clamp(Owner.velocity.Length() / 16, 0, 1);
+                float targetRotation =
+                    Helper.Lerp(
+                        0,
+                        (Owner.velocity.ToRotation()
+                            + (OwnerDirection > 0 ? 0 : (-Math.Sign(Owner.velocity.Y + 0.01f) * MathHelper.Pi)))
+                            + (OwnerDirection * Helper.Lerp(0, 0.6f, factor2))
+                            + (MathF.Sin((float)Main.timeForVisualEffects * Helper.Lerp(0.05f, 0.15f, factor2)) * Helper.Lerp(0, 0.4f, factor2))
+                        , factor2);
 
-                idlePos += Owner.velocity * 4 * factor2;
-                selfRot = selfRot.AngleLerp(targetRotation, 0.1f);
+                idlePos += Owner.velocity * 7 * factor2;
+                selfRot = rotationSmoother.Update(1 / 60f, targetRotation);
+                //selfRot = selfRot.AngleLerp(targetRotation, 0.1f);
             }
             else
+            {
                 selfRot = selfRot.AngleLerp(0, 0.2f);
+                idlePos += (Main.MouseWorld - Owner.Center).SafeNormalize(Vector2.Zero) * 16;
+            }
 
-            TargetPos = Vector2.Lerp(TargetPos, idlePos, 0.4f);
-            Projectile.Center = Vector2.Lerp(Projectile.Center, TargetPos, 0.4f);
+            TargetPos = Vector2.Lerp(TargetPos, idlePos, 0.3f);
+            Projectile.Center = positionSmoother.Update(1 / 60f, idlePos);// Vector2.Lerp(Projectile.Center, TargetPos, 0.4f);
             Projectile.rotation += 0.01f;
 
             if (Draws.Count > 0)
@@ -427,6 +451,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Projectile.localNPCHitCooldown = 30;
             Projectile.width = Projectile.height = 22;
             Projectile.tileCollide = false;
+
+            Projectile.scale = 1.1f;
         }
 
         public override bool ShouldUpdatePosition() => State > 0;
@@ -482,9 +508,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                         if (Timer < 0)
                         {
                             State++;
-                            Projectile.velocity = (Projectile.Center - owner.Center).RotatedBy(-1.57f).SafeNormalize(Vector2.Zero) * 12;
-                            Projectile.extraUpdates = 1;
-                            Projectile.timeLeft = 110 * Projectile.extraUpdates;
+                            Projectile.velocity = (Projectile.Center - owner.Center)/*.RotatedBy(-1.57f)*/.SafeNormalize(Vector2.Zero) * 3;
+                            Projectile.extraUpdates = 2;
+                            Projectile.timeLeft = 55 * Projectile.MaxUpdates;
                             Projectile.tileCollide = true;
                             FlyTime = 0;
                             Timer = 0;
@@ -494,12 +520,12 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 case 1://追踪鼠标位置
                     {
                         Timer++;
-                        if (Timer % 20 == 0 && Target < 0)
+                        if (Timer % 30 == 0 && Target < 0)
                         {
                             if (Helper.TryFindClosestEnemy(Projectile.Center, 1200, n => n.CanBeChasedBy(), out NPC t))
                             {
                                 Target = t.whoAmI;
-                                Projectile.timeLeft += 10 * Projectile.MaxUpdates;
+                                Projectile.timeLeft += 25 * Projectile.MaxUpdates;
                             }
                         }
 
@@ -507,29 +533,47 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
                         if (Target.GetNPCOwner(out NPC target))
                         {
-                            targetCenter = Vector2.SmoothStep(targetCenter, target.Center, Math.Clamp(Timer / 120, 0, 1));
+                            targetCenter = Vector2.SmoothStep(targetCenter, target.Center
+                                , Math.Clamp(Coralite.Instance.BezierEaseSmoother.Smoother( Timer / (Projectile.MaxUpdates * 55)), 0, 1));
                         }
                         else
                             Target = -1;
 
-                        float slowTime = Timer < 15 ? Coralite.Instance.X2Smoother.Smoother(Timer / 15) : 1;
+                        float slowTime = 1;
+
+                        if (Timer < 8 * Projectile.MaxUpdates)
+                            targetCenter = Projectile.Center + Projectile.velocity.RotatedBy(1f) * 4;
+                        else if (Timer < 15 * Projectile.MaxUpdates)
+                            slowTime = Coralite.Instance.X2Smoother.Smoother(Timer / (15 * Projectile.MaxUpdates));
+
                         slowTime = Helper.Lerp(130, 28, slowTime);
 
-                        float num481 = 24f;
+                        float num481 = 20f;
                         Vector2 center = Projectile.Center;
                         Vector2 dir = targetCenter - center;
                         float length = dir.Length();
+
+                        Vector2 oldVelocity = Projectile.velocity;
+
                         if (length < 100f)
-                            num481 = 16f;
+                            num481 = 16;
 
                         length = num481 / length;
                         dir *= length;
                         Projectile.velocity.X = ((Projectile.velocity.X * slowTime) + dir.X) / (slowTime + 1);
                         Projectile.velocity.Y = ((Projectile.velocity.Y * slowTime) + dir.Y) / (slowTime + 1);
 
-                        if (Projectile.timeLeft % 12 == 0)
+                        //if (Timer > 20 * Projectile.MaxUpdates && length < 300f)
+                        //{
+                        //    float selfAngle = oldVelocity.ToRotation();
+                        //    float targetAngle = (targetCenter - Projectile.Center).ToRotation();
+
+                        //    Projectile.velocity = selfAngle.AngleLerp(targetAngle,0.05f * (1 - length / 300)).ToRotationVector2() * Projectile.velocity.Length();
+                        //}
+
+                        if (Projectile.timeLeft % 16 == 0)
                             SpawnTriangleParticle(Projectile.Center + Main.rand.NextVector2Circular(12, 12), Projectile.velocity * Main.rand.NextFloat(0.2f, 0.4f));
-                        if (Main.rand.NextBool(15))
+                        if (Main.rand.NextBool(20))
                             Projectile.SpawnTrailDust(8f, DustID.PortalBoltTrail, Main.rand.NextFloat(0.6f, 1.4f), newColor: data.brightC);
 
                         if (Vector2.Distance(Projectile.Center, targetCenter) < 60 && Timer > 90)
@@ -561,7 +605,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             if (init)
             {
-                int maxPoint = Shiny ? 10 : 5;
+                int maxPoint = Shiny ? 16 : 6;
 
                 Target = -1;
                 data = GetDrawData();
@@ -782,7 +826,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             if (Shiny)
                 SoundEngine.PlaySound(CoraliteSoundID.CrushedIce_Item27, Projectile.Center);
             if (VisualEffectSystem.HitEffect_Dusts)
-                for (int i = 0; i < 3; i++)
+                for (int i = 0; i < 6; i++)
                 {
                     Dust d = Dust.NewDustPerfect(Projectile.Center, DustID.PortalBoltTrail, Helper.NextVec2Dir(4, 8), newColor: data.brightC, Scale: Main.rand.NextFloat(1f, 1.5f));
                     d.noGravity = true;
@@ -791,12 +835,12 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             if (VisualEffectSystem.HitEffect_SpecialParticles)
             {
                 float length = Main.rand.NextFloat(0, 6);
-                Color c = Main.rand.NextFromList(Color.White, Main.DiscoColor);
+                Color c = Main.rand.NextFromList(Color.White, data.brightC);
                 var p = Particle.NewParticle<HexagramParticle>(Projectile.Center + Main.rand.NextVector2CircularEdge(length, length),
-                     Vector2.UnitX * Main.rand.NextFloat(1, 2), c, Scale: Main.rand.NextFloat(0.1f, 0.14f));
+                     Vector2.UnitX * Main.rand.NextFloat(1f, 2f), c, Scale: Main.rand.NextFloat(0.1f, 0.14f));
                 p.Rotation = -1.57f;
 
-                for (int i = 0; i < 2; i++)
+                for (int i = 0; i < 4; i++)
                 {
                     Vector2 dir = Helper.NextVec2Dir();
                     SpawnTriangleParticleSelf(Projectile.Center + (dir * Main.rand.NextFloat(6, 12)), dir * Main.rand.NextFloat(1f, 3f));
@@ -859,12 +903,13 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             {
                 if (State > 0)
                 {
-                    for (int i = 0; i < 5; i++)
+                    int count = Projectile.oldRot.Length;
+                    for (int i = 0; i < count; i++)
                     {
                         Color c1 = data.brightC;
-                        c1.A = (byte)(i * 0.5f / 5 * 255);
+                        c1.A = (byte)(i * 0.5f / count * 255);
                         spriteBatch.Draw(mainTex, Projectile.oldPos[i] - Main.screenPosition, null,
-                            c1, Projectile.oldRot[i], origin, Projectile.scale * (0.75f + (i * 0.25f / 5)), 0, 0);
+                            c1, Projectile.oldRot[i], origin, Projectile.scale * (0.75f + (i * 0.25f / count)), 0, 0);
                     }
                 }
             }

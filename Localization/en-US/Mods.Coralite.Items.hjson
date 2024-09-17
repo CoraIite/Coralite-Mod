@@ -4290,3 +4290,13 @@ LeprechaunBait: {
 	DisplayName: Leprechaun Bait
 	Tooltip: ""
 }
+
+EternalVengeance: {
+	Tooltip: ""
+	DisplayName: Eternal Vengeance
+}
+
+BasicAltar: {
+	Tooltip: ""
+	DisplayName: Basic Altar
+}

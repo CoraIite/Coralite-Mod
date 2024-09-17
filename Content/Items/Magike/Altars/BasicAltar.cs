@@ -31,9 +31,9 @@ namespace Coralite.Content.Items.Magike.Altars
     }
 
     public class BasicAltarTile() : BaseCraftAltarTile
-        (1, 2, Coralite.MagicCrystalPink, DustID.CorruptionThorns)
+        (4, 5, Coralite.MagicCrystalPink, DustID.CorruptionThorns)
     {
-        public override string Texture => AssetDirectory.MagikeAltars + Name;
+        public override string Texture => AssetDirectory.MagikeAltarTiles + Name;
         public override int DropItemType => ItemType<BasicAltar>();
 
         public override MagikeTileEntity GetEntityInstance() => GetInstance<BasicAltarTileEntity>();

@@ -299,7 +299,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             Main.inventoryScale = _scale;
 
             Vector2 position = GetDimensions().Center() + (new Vector2(52f, 52f) * -0.5f * Main.inventoryScale);
-            ItemSlot.Draw(spriteBatch, ref inv, ItemSlot.Context.VoidItem, position, Coralite.MagicCrystalPink);
+            ItemSlot.Draw(spriteBatch, ref inv, ItemSlot.Context.VoidItem, position, Color.White);
 
             Main.inventoryScale = scale;
         }

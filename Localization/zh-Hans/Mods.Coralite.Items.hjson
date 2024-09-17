@@ -4395,11 +4395,21 @@ FarAwaySky: {
 }
 
 MagikeBasePage: {
-	// DisplayName: Magike Base Page
-	// Tooltip: ""
+	DisplayName: 魔能基础残页
+	Tooltip: 放入珊瑚手册内以了解相关知识
 }
 
 LeprechaunBait: {
-	// DisplayName: Leprechaun Bait
-	// Tooltip: ""
+	DisplayName: 魔力诱饵
+	Tooltip: ""
+}
+
+EternalVengeance: {
+	Tooltip: ""
+	DisplayName: 龙蚀剑盾
+}
+
+BasicAltar: {
+	Tooltip: ""
+	DisplayName: 基础合成坛
 }

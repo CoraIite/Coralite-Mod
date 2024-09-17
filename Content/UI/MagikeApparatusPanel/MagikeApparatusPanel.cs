@@ -1,4 +1,5 @@
 ﻿using Coralite.Core;
+using Coralite.Core.Loaders;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
@@ -27,9 +28,11 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
 
         #region 各类记录用字段
 
-        private static Color BackgroundColor = new(56, 50, 53, 200);
-        private static Color BackgroundColor2 = new(75, 69, 71, 150);
-        private static Color EdgeColor = new(250, 217, 241, 150);
+        public static Color BackgroundColor = new(56, 50, 53, 200);
+        public static Color BackgroundColor2 = new(75, 69, 71, 150);
+        public static Color EdgeColor = new(250, 217, 241, 150);
+
+        public static bool ShouldResetComponentPanel;
 
         /// <summary> 当前的魔能物块实体 </summary>
         public static MagikeTileEntity CurrentEntity;
@@ -358,6 +361,8 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
 
         public override void Update(GameTime gameTime)
         {
+            base.Update(gameTime);
+
             Vector2 pos = Helper.GetMagikeTileCenter(CurrentEntity.Position);
             //一些情况下的关闭
             if (!Main.playerInventory || CurrentEntity == null
@@ -379,6 +384,13 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
                 visible = false;
                 CurrentEntity = null;
                 return;
+            }
+
+            if (ShouldResetComponentPanel)
+            {
+                ShouldResetComponentPanel = false;
+                ResetComponentPanel();
+                RecalculateChildren();
             }
         }
 
