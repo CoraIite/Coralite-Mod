@@ -1,4 +1,5 @@
-﻿using Coralite.Content.UI.MagikeApparatusPanel;
+﻿using Coralite.Content.UI;
+using Coralite.Content.UI.MagikeApparatusPanel;
 using Coralite.Core.Loaders;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
@@ -14,7 +15,6 @@ using Terraria.GameContent.UI.Elements;
 using Terraria.ModLoader.UI;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
-using static Terraria.GameContent.Animations.IL_Actions.Sprites;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components
 {
@@ -444,11 +444,12 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 default:
                 case CraftShowButton.ShowStyle.Grid:
                     {
-                        UIGrid grid= new UIGrid();
-                        grid.SetTopLeft(top,left );
-                        grid.SetSize(-left, -top, 1, 1);
+                        FixedUIGrid grid = new FixedUIGrid();
+                        grid.SetTopLeft(top,left);
+                        grid.SetSize(-left-20, -top, 1, 1);
+
                         var scrollbar = new UIScrollbar();
-                        scrollbar.SetTopLeft(-left, -top);
+                        scrollbar.SetTopLeft(5000,5000);
                         grid.SetScrollbar(scrollbar);
 
                         foreach (var recipe in CraftController.Recipes)
@@ -527,6 +528,61 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 ItemSlot.Draw(spriteBatch, ref i, ItemSlot.Context.ShopItem, position, Color.White);
                 Main.inventoryScale = scale;
             }
+        }
+    }
+
+    public class CraftMaagikeBar : UIElement
+    {
+        private int magikeCount;
+
+        public CraftMaagikeBar(MagikeCraftRecipe recipe)
+        {
+            Texture2D tex = MagikeSystem.CraftMagikeBar.Value;
+            Vector2 size = tex.Frame(2, 1).Size();
+
+            this.SetSize(size.X + 8, 0,0,1);
+
+            magikeCount = recipe.magikeCost;
+        }
+
+        protected override void DrawSelf(SpriteBatch spriteBatch)
+        {
+            Texture2D tex = MagikeSystem.CraftMagikeBar.Value;
+
+            var frameBox = tex.Frame(2, 1);
+
+            var dimensions = GetDimensions();
+            Vector2 pos = dimensions.Position() + new Vector2((dimensions.Width - frameBox.Width) / 2, 0);
+            Vector2 center = dimensions.Center();
+
+            //绘制底层
+            spriteBatch.Draw(tex, pos, frameBox, Color.White);
+            float magike = CraftController.altar.Entity.GetMagikeContainer().Magike;
+            float percent = Math.Clamp( magike / magikeCount,0,1);
+
+            if (IsMouseHovering)
+            {
+                if (magike >= magikeCount)
+                    UICommon.TooltipMouseText(MagikeSystem.CraftText[(int)MagikeSystem.CraftTextID.MagikeEnough].Format(magikeCount));
+                else
+                    UICommon.TooltipMouseText(MagikeSystem.CraftText[(int)MagikeSystem.CraftTextID.MagikeNotEnough].Format(magike, magikeCount));
+            }
+
+            Vector2 drawPos = pos + new Vector2(0, frameBox.Height);
+            for (int i = 0; i < frameBox.Width / 2; i++)
+            {
+                int currentHeight = Math.Clamp(
+                   (int)(tex.Height * (percent + (0.04f * MathF.Sin((((float)Main.timeForVisualEffects) * 0.1f) + (i * 0.3f)))))
+                    , 0, tex.Height);
+
+                Rectangle frameBox2 = new(frameBox.Width + (i * 2), tex.Height - currentHeight, 2, currentHeight);
+                var origin = new Vector2(0, frameBox2.Height);
+                spriteBatch.Draw(tex, drawPos + new Vector2(i * 2, 0), frameBox2, Color.White, 0, origin, 1f, 0, 0f);
+            }
+
+            string percentText = MathF.Round(100 * percent, 1) + "%";
+
+            Utils.DrawBorderString(spriteBatch, percentText, center, Color.White, 0.75f, anchorx: 0.5f, anchory: 0.5f);
         }
     }
 
@@ -725,7 +781,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
                 if (MagikeSystem.TryGetMagikeCraftRecipes(item.type, out List<MagikeCraftRecipe> recipes))
                     foreach (var recipe in recipes)
-                        Recipes.Add(recipe);
+                        if (recipe.magikeCost > 0)
+                            Recipes.Add(recipe);
             }
         }
 
@@ -794,7 +851,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
     /// </summary>
     public class CraftBar : UIElement
     {
-        private UIGrid grid = new UIGrid();
+        private readonly UIGrid grid = new();
 
         public CraftBar(MagikeCraftRecipe recipe)
         {
@@ -807,7 +864,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             var slot = new CraftSlot(recipe, CraftSlot.SlotType.ResultItem);
             slot.SetSize(46, 0, 0, 1);
             grid.Add(slot);
-            grid.Add(new UIVerticalLine());
+            grid.Add(new CraftMaagikeBar(recipe));
 
             if (recipe.RequiredItems.Count > 0)
                 for (int i = 0; i < recipe.RequiredItems.Count; i++)
@@ -893,7 +950,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         {
             base.MouseOver(evt);
 
-            Helper.PlayPitched("Fairy/FairyBottleClick", 0.3f, 0.4f);
+            //Helper.PlayPitched("Fairy/FairyBottleClick", 0.3f, 0.4f);
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)

@@ -100,8 +100,7 @@ namespace Coralite.Helpers
         public static void QuickInvisibleScrollbar(this UIList list)
         {
             var scrollbar = new UIScrollbar();
-            scrollbar.Left.Set(5000, 0);
-            scrollbar.Top.Set(5000, 0);
+            scrollbar.SetTopLeft(5000, 5000);
             list.SetScrollbar(scrollbar);
         }
     }

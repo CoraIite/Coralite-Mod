@@ -29,6 +29,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         public static Asset<Texture2D> CraftShowButton { get; private set; }
         public static Asset<Texture2D> CanCraftShow { get; private set; }
         public static Asset<Texture2D> AlphaBar { get; private set; }
+        public static Asset<Texture2D> CraftMagikeBar { get; private set; }
 
         public enum ConnectLineType
         {
@@ -72,6 +73,7 @@ namespace Coralite.Core.Systems.MagikeSystem
             CraftShowButton = Request<Texture2D>(AssetDirectory.MagikeUI + "CraftShowButton");
             CanCraftShow = Request<Texture2D>(AssetDirectory.MagikeUI + "CanCraftShow");
             AlphaBar = Request<Texture2D>(AssetDirectory.UI + "AlphaBar");
+            CraftMagikeBar = Request<Texture2D>(AssetDirectory.MagikeUI + "CraftMagikeBar");
         }
 
         public static void LoadConnectLine()

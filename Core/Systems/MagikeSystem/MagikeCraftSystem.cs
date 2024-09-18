@@ -192,6 +192,8 @@ namespace Coralite.Core.Systems.MagikeSystem
                 if (item.stack < MainItem.stack)
                 {
                     attempt.mainItemNotEnough = true;
+                    attempt.lackMainItem = MainItem.Clone();
+                    attempt.lackMainAmount = MainItem.stack - item.stack;
                     continue;
                 }
 
@@ -383,6 +385,9 @@ namespace Coralite.Core.Systems.MagikeSystem
         /// 主物品数量不够
         /// </summary>
         public bool mainItemNotEnough = false;
+        public Item lackMainItem = null;
+        public int lackMainAmount = 0;
+
         /// <summary>
         /// 条件不满足
         /// </summary>
@@ -423,7 +428,7 @@ namespace Coralite.Core.Systems.MagikeSystem
                 text = ConcatText(text, MagikeSystem.GetCraftText(MagikeSystem.CraftTextID.MainItemIncorrect));
 
             if (mainItemNotEnough)
-                text = ConcatText(text, MagikeSystem.GetCraftText(MagikeSystem.CraftTextID.MainItemNotEnough));
+                text = ConcatText(text, MagikeSystem.CraftText[(int)MagikeSystem.CraftTextID.MainItemNotEnough].Format(lackMainItem.Name, lackMainAmount));
 
             if (conditionNotMet)
                 text = ConcatText(text, MagikeSystem.GetCraftText(MagikeSystem.CraftTextID.ConditionNotMet) + conditionFailText);
