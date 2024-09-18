@@ -13,6 +13,7 @@ using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -53,9 +54,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 if (p != null)
                 {
                     (p.ModProjectile as LandOfTheLustrousProj).StartAttack();
-                    Helper.PlayPitched("Crystal/CrystalShoot", 0.1f, 0f, player.Center);
-                    Helper.PlayPitched("Crystal/GemShoot", 0.3f, 0f, player.Center);
-                    Helper.PlayPitched("Crystal/CrystalStrike", 0.2f, 0f, player.Center);
+                    Helper.PlayPitched("Crystal/CrystalShoot", 0.3f, -0.3f, player.Center);
+                    Helper.PlayPitched("Crystal/GemShoot", 0.4f, 0.3f, player.Center);
+                    Helper.PlayPitched("Crystal/CrystalStrike", 0.2f, 0.5f, player.Center);
                 }
             }
 
@@ -115,6 +116,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public SecondOrderDynamics_Vec2 positionSmoother;
         public SecondOrderDynamics_Float rotationSmoother;
         private float selfRot;
+        private int direction = 1;
+        private int[] oldDirections;
 
         private List<LandOfTheLustrousData> Draws = new();
 
@@ -171,6 +174,11 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             positionSmoother ??= new SecondOrderDynamics_Vec2(1f, 0.5f, 0,Projectile.Center);
             rotationSmoother ??= new SecondOrderDynamics_Float(1f, 0.75f, 0,0);
+            if (oldDirections == null)
+            {
+                oldDirections = new int[30];
+                Array.Fill(oldDirections, 1);
+            }
 
             if ((int)Main.timeForVisualEffects % 20 == 0 && Main.rand.NextBool(2))
             {
@@ -221,12 +229,31 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
                 idlePos += Owner.velocity * 7 * factor2;
                 selfRot = rotationSmoother.Update(1 / 60f, targetRotation);
-                //selfRot = selfRot.AngleLerp(targetRotation, 0.1f);
+
+                for (int i = 0; i < oldDirections.Length - 1; i++)
+                    oldDirections[i] = oldDirections[i + 1];
+                oldDirections[^1] = OwnerDirection;
+
+                int count = 0;
+                int old = oldDirections[0];
+                for (int i = 1; i < oldDirections.Length - 1; i++)
+                {
+                    if (old != oldDirections[i])
+                        count++;
+
+                    old = oldDirections[i];
+                }
+
+                if (count > 1)
+                    direction = Math.Sign(Owner.Center.X - Projectile.Center.X);
+                else
+                    direction = oldDirections[^1];
             }
             else
             {
                 selfRot = selfRot.AngleLerp(0, 0.2f);
                 idlePos += (Main.MouseWorld - Owner.Center).SafeNormalize(Vector2.Zero) * 16;
+                direction = Math.Sign(Main.MouseWorld.X - Projectile.Center.X);
             }
 
             TargetPos = Vector2.Lerp(TargetPos, idlePos, 0.3f);
@@ -310,7 +337,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             var frame = mainTex.Frame(1, Main.projFrames[Projectile.type], 0, Projectile.frame);
             var origin = frame.Size() / 2;
 
-            SpriteEffects eff = OwnerDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            SpriteEffects eff = direction > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
             for (int i = 0; i < 5; i++)
                 Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] + toCenter - Main.screenPosition, frame,

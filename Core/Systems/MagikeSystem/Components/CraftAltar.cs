@@ -12,6 +12,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
+using Terraria.ModLoader.IO;
 using Terraria.ModLoader.UI;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
@@ -365,6 +366,20 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             if (!Entity.TryGetComponent(MagikeComponentID.ItemGetOnlyContainer, out GetOnlyItemContainer getOnlyContainer))
                 return;
 
+
+            float left = 58f;
+
+            AddContainerList(parent, container, getOnlyContainer, left, top);//添加左侧的物品格
+
+            left += 8;
+
+            AddButtons(parent, left, ref top); //切换显示样式的按钮
+            AddController(parent, this, left, ref top);//控制器
+            AddRecipeShow(parent, left, top);//添加合成条
+        }
+
+        public void AddContainerList(UIElement parent, ItemContainer container, GetOnlyItemContainer getOnlyContainer, float left,float top)
+        {
             UIList list = [];
 
             for (int i = 0; i < container.Items.Length; i++)
@@ -383,19 +398,11 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 list.Add(slot);
             }
 
-            float left = 58f;
-
             list.QuickInvisibleScrollbar();
             list.SetTopLeft(top, 4);
             list.SetSize(left, -top, 0, 1);
 
-            left += 8;
-
             parent.Append(list);
-
-            AddButtons(parent, left, ref top); //展开与关闭的按钮
-            AddController(parent, this, left, ref top);
-            AddRecipeShow(parent, left, top);
         }
 
         public static void AddButtons(UIElement parent, float left, ref float top)
@@ -466,12 +473,36 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         }
 
         #endregion
+
+        public override void SaveData(string preName, TagCompound tag)
+        {
+            base.SaveData(preName, tag);
+
+            if (ChosenResipe!=null)
+            {
+                tag.Add("ResultItem", ChosenResipe.ResultItem);
+                tag.Add("MainItem", ChosenResipe.MainItem);
+            }
+        }
+
+        public override void LoadData(string preName, TagCompound tag)
+        {
+            base.LoadData(preName, tag);
+
+            if (tag.TryGet("ResultItem", out Item resultItem) && tag.TryGet("MainItem", out Item mainItem)
+                && MagikeSystem.TryGetMagikeCraftRecipes(mainItem.type, out List<MagikeCraftRecipe> recipes))
+            {
+                ChosenResipe = recipes.FirstOrDefault(r => r.ResultItem.type == resultItem.type, null);
+            }
+        }
     }
 
     public class CraftArrow : UIElement
     {
         private CraftAltar _altar;
         private static Item _voidItem = new();
+        private bool canCraft;
+        private string FailText;
 
         public CraftArrow(CraftAltar altar)
         {
@@ -487,6 +518,20 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+
+            if (_altar != null && _altar.ChosenResipe != null
+                && _altar.GetItems(out Item[] items, out Dictionary<int, int> otherItems))
+            {
+                canCraft = _altar.ChosenResipe.CanCraft(items, otherItems, _altar.Entity.GetMagikeContainer().Magike, out FailText);
+            }
+        }
+
+        public override void LeftClick(UIMouseEvent evt)
+        {
+            base.LeftClick(evt);
+
+            Helper.PlayPitched("UI/Tick", 0.4f, 0);
+            _altar.ChosenResipe = null;
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
@@ -521,10 +566,24 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                     i = _altar.ChosenResipe.ResultItem;
                 }
 
+                if (IsMouseHovering)
+                {
+                    if (canCraft)
+                    {
+                        Main.LocalPlayer.mouseInterface = true;
+                        ItemSlot.OverrideHover(ref i, ItemSlot.Context.InventoryItem);
+                        ItemSlot.MouseHover(ref i, ItemSlot.Context.InventoryItem);
+                    }
+                    else
+                    {
+                        UICommon.TooltipMouseText(FailText);
+                    }
+                }
+
                 float scale = Main.inventoryScale;
                 Main.inventoryScale = 1f;
 
-                Vector2 position = center + new Vector2(-52/2, -40) * Main.inventoryScale;
+                Vector2 position = center + new Vector2(-52 / 2, -40) * Main.inventoryScale;
                 ItemSlot.Draw(spriteBatch, ref i, ItemSlot.Context.ShopItem, position, Color.White);
                 Main.inventoryScale = scale;
             }
@@ -540,7 +599,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             Texture2D tex = MagikeSystem.CraftMagikeBar.Value;
             Vector2 size = tex.Frame(2, 1).Size();
 
-            this.SetSize(size.X + 8, 0,0,1);
+            this.SetSize(size.X + 8, 0, 0, 1);
 
             magikeCount = recipe.magikeCost;
         }
@@ -558,7 +617,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             //绘制底层
             spriteBatch.Draw(tex, pos, frameBox, Color.White);
             float magike = CraftController.altar.Entity.GetMagikeContainer().Magike;
-            float percent = Math.Clamp( magike / magikeCount,0,1);
+            float percent = Math.Clamp(magike / magikeCount, 0, 1);
 
             if (IsMouseHovering)
             {
@@ -951,6 +1010,14 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             base.MouseOver(evt);
 
             //Helper.PlayPitched("Fairy/FairyBottleClick", 0.3f, 0.4f);
+        }
+
+        public override void LeftClick(UIMouseEvent evt)
+        {
+            base.LeftClick(evt);
+
+            Helper.PlayPitched("UI/Tick", 0.4f, 0);
+            CraftController.altar.ChosenResipe = recipe;
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)

@@ -678,8 +678,6 @@ namespace Coralite.Core
             }
         }
 
-
-
         internal static bool BrimstoneFraming(int x, int y, bool resetFrame, bool forceSameDown, bool forceSameUp, bool forceSameRight, bool forceSameLeft, bool forceSameDR, bool forceSameDL, bool forceSameUR, bool forceSameUL)
         {
             if (x < 0 || x >= Main.maxTilesX)

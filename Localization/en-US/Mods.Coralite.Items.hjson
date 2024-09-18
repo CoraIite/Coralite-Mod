@@ -4300,3 +4300,8 @@ BasicAltar: {
 	Tooltip: ""
 	DisplayName: Basic Altar
 }
+
+RadiantSun: {
+	DisplayName: Radiant Sun
+	Tooltip: ""
+}

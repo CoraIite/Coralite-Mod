@@ -3821,6 +3821,7 @@ Afterglow: {
 		'''
 		双击方向键进行冲刺，期间摩擦地面引燃木箭
 		冰块能擦出霜火
+		[c/c2370d:"落日余晖"]
 		'''
 }
 
@@ -4389,8 +4390,8 @@ FarAwaySky: {
 	DisplayName: 遥远青空
 	Tooltip:
 		'''
-		“雨过天晴”
 		双击方向键冲刺，之后射出云箭为自身增加攻击和移动速度
+		[c/61c3e7:“雨过天晴”]
 		'''
 }
 
@@ -4412,4 +4413,12 @@ EternalVengeance: {
 BasicAltar: {
 	Tooltip: ""
 	DisplayName: 基础合成坛
+}
+
+RadiantSun: {
+	DisplayName: 旭日
+	Tooltip: 
+	'''
+	[c/ffe021:“银白的巨狮在天空中奔跑，为世间带来阳光”]
+	'''
 }

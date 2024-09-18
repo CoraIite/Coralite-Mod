@@ -15,18 +15,18 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.ThyphionSeries
 {
-    public class FarAwaySky : ModItem, IDashable
+    public class RadiantSun : ModItem, IDashable
     {
         public override string Texture => AssetDirectory.ThyphionSeriesItems + Name;
 
         public override void SetDefaults()
         {
-            Item.SetWeaponValues(18, 1f);
-            Item.DefaultToRangedWeapon(10, AmmoID.Arrow, 27, 8f);
+            Item.SetWeaponValues(35, 1f);
+            Item.DefaultToRangedWeapon(10, AmmoID.Arrow, 25, 10f);
 
-            Item.rare = ItemRarityID.Green;
+            Item.rare = ItemRarityID.LightRed;
             Item.useStyle = ItemUseStyleID.Rapier;
-            Item.value = Item.sellPrice(0, 0, 80);
+            Item.value = Item.sellPrice(0, 2);
 
             Item.noUseGraphic = true;
 
@@ -37,7 +37,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         {
             Vector2 dir = (Main.MouseWorld - player.Center).SafeNormalize(Vector2.One);
             float rot = dir.ToRotation();
-            Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, Vector2.Zero, ProjectileType<FarAwaySkyHeldProj>(), damage, knockback, player.whoAmI, rot, 0);
+            Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, Vector2.Zero, ProjectileType<RadiantSunHeldProj>(), damage, knockback, player.whoAmI, rot, 0);
             Projectile.NewProjectile(source, player.Center, velocity, type, damage, knockback, player.whoAmI);
 
             return false;
@@ -46,15 +46,11 @@ namespace Coralite.Content.Items.ThyphionSeries
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ItemID.Cloud, 14)
-                .AddIngredient(ItemID.DemoniteBar, 18)
-                .AddTile(TileID.SkyMill)
-                .Register();
-
-            CreateRecipe()
-                .AddIngredient(ItemID.Cloud, 14)
-                .AddIngredient(ItemID.CrimtaneBar, 18)
-                .AddTile(TileID.SkyMill)
+                .AddIngredient(ItemID.SoulofLight, 10)
+                .AddIngredient(ItemID.HellwingBow)
+                .AddIngredient(ItemID.MoltenFury)
+                .AddIngredient<Afterglow>()
+                .AddTile(TileID.Anvils)
                 .Register();
         }
 
@@ -102,12 +98,13 @@ namespace Coralite.Content.Items.ThyphionSeries
         }
     }
 
-    public class FarAwaySkyHeldProj : BaseDashBow
+    public class RadiantSunHeldProj : BaseDashBow,IDrawAdditive
     {
-        public override string Texture => AssetDirectory.ThyphionSeriesItems + "FarAwaySky";
+        public override string Texture => AssetDirectory.ThyphionSeriesItems + "RadiantSun";
 
         private Vector2 arrowPos;
 
+        private static Asset<Texture2D> GlowTex;
         private static Asset<Texture2D> ArrowTex;
 
         public ref float ArrowLength => ref Projectile.localAI[0];
@@ -121,7 +118,8 @@ namespace Coralite.Content.Items.ThyphionSeries
             if (Main.dedServ)
                 return;
 
-            ArrowTex = Request<Texture2D>(AssetDirectory.ThyphionSeriesItems + "FarAwaySkyArrow");
+            GlowTex = Request<Texture2D>(AssetDirectory.ThyphionSeriesItems + "RadiantSun_Glow");
+            ArrowTex = Request<Texture2D>(AssetDirectory.ThyphionSeriesItems + "RadiantSunArrow");
         }
 
         public override void Unload()
@@ -130,10 +128,15 @@ namespace Coralite.Content.Items.ThyphionSeries
         }
 
         public override int GetItemType()
-            => ItemType<FarAwaySky>();
+            => ItemType<RadiantSun>();
 
         public override Vector2 GetOffset()
-            => new(10, 0);
+            => new(14, 0);
+
+        public override void AIAfter()
+        {
+            Lighting.AddLight(Projectile.Center, Color.LightGoldenrodYellow.ToVector3()/2);
+        }
 
         public override void DashAttackAI()
         {
@@ -158,7 +161,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             {
                 Owner.itemTime = Owner.itemAnimation = 2;
 
-                Rotation = Helper.Lerp(RecordAngle, OwnerDirection > 0 ? -1f : (3.141f+1f), Coralite.Instance.HeavySmootherInstance.Smoother( Timer / DashTime));
+                Rotation = Helper.Lerp(RecordAngle, OwnerDirection > 0 ? -1.53f : (3.141f + 1.53f), Coralite.Instance.HeavySmootherInstance.Smoother(Timer / DashTime));
                 return;
             }
 
@@ -187,8 +190,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                     Projectile.timeLeft = 100;
                     Owner.AddBuff(BuffType<CloudBonus>(), 60 * 8);
                     Vector2 dir = Rotation.ToRotationVector2();
-                    WindCircle.Spawn(Projectile.Center + (dir * 30), -dir, Rotation, Color.White, 0.75f, 0.95f, new Vector2(1.5f, 0.8f));
-                    WindCircle.Spawn(Projectile.Center + (dir * 20), -dir, Rotation, Color.SkyBlue, 0.55f, 1.55f, new Vector2(1.5f, 0.8f));
+                    WindCircle.Spawn(Projectile.Center + (dir * 30), -dir, Rotation, Color.Yellow, 0.75f, 0.95f, new Vector2(1.5f, 0.8f));
                 }
             }
         }
@@ -208,7 +210,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 //d.noGravity = true;
             }
 
-            if (Timer%2==0)
+            if (Timer % 2 == 0)
             {
                 Color c = Main.rand.NextFromList(Color.White, Color.SkyBlue, Color.DeepSkyBlue);
                 c.A = 100;
@@ -222,7 +224,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 Color c = Main.rand.NextFromList(Color.White, Color.SkyBlue, Color.LightSkyBlue);
                 c.A = 100;
                 Particle.NewParticle<Fog>(arrowPos, (-dir).RotateByRandom(-0.8f, 0.8f) * Main.rand.NextFloat(3, 6),
-                   c , Scale: Main.rand.NextFloat(0.6f, 1f));
+                   c, Scale: Main.rand.NextFloat(0.6f, 1f));
             }
 
             if (Timer > 7)
@@ -253,8 +255,11 @@ namespace Coralite.Content.Items.ThyphionSeries
         {
             Texture2D mainTex = Projectile.GetTexture();
             Vector2 center = Projectile.Center - Main.screenPosition;
+            var effect = OwnerDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically;
+            var origin = mainTex.Size() / 2;
 
-            Main.spriteBatch.Draw(mainTex, center, null, lightColor, Projectile.rotation, mainTex.Size() / 2, 1, OwnerDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0f);
+            Main.spriteBatch.Draw(mainTex, center, null, lightColor, Projectile.rotation, origin, 1,effect , 0f);
+            Main.spriteBatch.Draw(GlowTex.Value, center, null, Color.White, Projectile.rotation, origin, 1, effect, 0f);
 
             if (Special == 0)
                 return false;
@@ -266,24 +271,19 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             return false;
         }
+
+        public void DrawAdditive(SpriteBatch spriteBatch)
+        {
+        }
     }
 
-    public class CloudBonus : ModBuff
+    public class RadiantSunBall
     {
-        public override string Texture => AssetDirectory.ThyphionSeriesItems + Name;
 
-        public override void Update(Player player, ref int buffIndex)
-        {
-            if (player.TryGetModPlayer(out CoralitePlayer cp))
-                cp.AddEffect(nameof(CloudBonus));
+    }
 
-            player.moveSpeed += 0.15f;
-            player.GetDamage(DamageClass.Ranged) += 0.15f;
-
-            if (Main.rand.NextBool())
-                Dust.NewDustPerfect(player.Bottom + new Vector2(Main.rand.NextFloat(-16, 16), Main.rand.NextFloat(-6, 0))
-                   , DustID.Cloud, -player.velocity.RotateByRandom(-0.2f, 0.2f) * Main.rand.NextFloat(0.1f, 0.2f),
-                    50, Scale: Main.rand.NextFloat(0.8f, 1.4f));
-        }
+    public class RadiantSunFlow:Particle
+    {
+        public override string Texture => AssetDirectory.ThyphionSeriesItems + "RadiantSunFlow";
     }
 }

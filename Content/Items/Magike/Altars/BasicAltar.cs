@@ -46,6 +46,22 @@ namespace Coralite.Content.Items.Magike.Altars
                 MagikeApparatusLevel.MagicCrystal,
             ];
         }
+
+        public override Vector2 GetFloatingOffset(float rotation, MagikeApparatusLevel level)
+        {
+            return level switch
+            {
+                _ => Vector2.Zero
+            };
+        }
+
+        public override Vector2 GetRestOffset(float rotation, MagikeApparatusLevel level)
+        {
+            return level switch
+            {
+                _ => Vector2.Zero
+            };
+        }
     }
 
     public class BasicAltarTileEntity : BaseCraftAltar<BasicAltarTile>

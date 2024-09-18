@@ -1,13 +1,11 @@
 ﻿using Coralite.Content.Raritys;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
-using Microsoft.Build.Utilities;
 using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.ModLoader.Core;
-using static System.Net.Mime.MediaTypeNames;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Core.Systems.MagikeSystem
