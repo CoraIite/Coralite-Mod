@@ -272,20 +272,18 @@ namespace Coralite.Content.Bosses.ShadowBalls
     /// </summary>
     public class SmallLaserPredictionLine : SmallLaser
     {
-        public override string Texture => AssetDirectory.OtherProjectiles + "LaserBody";
+        public override string Texture => AssetDirectory.Lasers + "Body";
 
         float alpha;
         ref float ChannelTime => ref Projectile.ai[1];
 
         public static Asset<Texture2D> gradientTex2;
-        public static Asset<Texture2D> extraTex2;
 
         public override void Load()
         {
             if (!Main.dedServ)
             {
                 gradientTex2 = ModContent.Request<Texture2D>(AssetDirectory.ShadowBalls + "PredictionGradient");
-                extraTex2 = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "LaserTrail");
             }
         }
 
@@ -294,7 +292,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
             if (!Main.dedServ)
             {
                 gradientTex2 = null;
-                extraTex2 = null;
             }
         }
 
@@ -390,7 +387,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 effect.Parameters["transformMatrix"].SetValue(world * view * projection);
                 effect.Parameters["sampleTexture"].SetValue(Projectile.GetTexture());
                 effect.Parameters["gradientTexture"].SetValue(gradientTex2.Value);
-                effect.Parameters["extTexture"].SetValue(extraTex2.Value);
+                effect.Parameters["extTexture"].SetValue(CoraliteAssets.Laser.VanillaFlowA.Value);
 
                 Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointWrap;
                 foreach (EffectPass pass in effect.CurrentTechnique.Passes) //应用shader，并绘制顶点

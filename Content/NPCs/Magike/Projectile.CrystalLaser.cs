@@ -15,12 +15,10 @@ namespace Coralite.Content.NPCs.Magike
     /// </summary>
     public class CrystalLaser : ModProjectile, IDrawAdditive
     {
-        public override string Texture => AssetDirectory.OtherProjectiles + "LaserCore";
+        public override string Texture => AssetDirectory.Lasers + "VanillaCoreA";
 
-        public static Asset<Texture2D> FlowTex;
         public static Asset<Texture2D> GlowTex;
         public static Asset<Texture2D> StarTex;
-        public static Asset<Texture2D> LaserBodyTex;
         public static Asset<Texture2D> BlackTex;
 
         public Vector2 endPoint;
@@ -44,10 +42,8 @@ namespace Coralite.Content.NPCs.Magike
             if (Main.dedServ)
                 return;
 
-            FlowTex = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "LaserTrail");
             GlowTex = ModContent.Request<Texture2D>(AssetDirectory.Dusts + "GlowBall");
             StarTex = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "Hexagram2");
-            LaserBodyTex = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "LaserBody");
             BlackTex = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "GradientBlack");
         }
 
@@ -56,10 +52,8 @@ namespace Coralite.Content.NPCs.Magike
             if (Main.dedServ)
                 return;
 
-            FlowTex = null;
             GlowTex = null;
             StarTex = null;
-            LaserBodyTex = null;
             BlackTex = null;
         }
 
@@ -172,7 +166,7 @@ namespace Coralite.Content.NPCs.Magike
         public void DrawAdditive(SpriteBatch spriteBatch)
         {
             Texture2D laserTex = Projectile.GetTexture();
-            Texture2D flowTex = FlowTex.Value;
+            Texture2D flowTex = CoraliteAssets.Laser.VanillaFlowA.Value;
 
             Color color = new(162, 42, 131);
 
@@ -216,7 +210,7 @@ namespace Coralite.Content.NPCs.Magike
             spriteBatch.Begin(default, BlendState.Additive, default, default, default, default, Main.GameViewMatrix.TransformationMatrix);
 
             //绘制主体光束
-            Texture2D bodyTex = LaserBodyTex.Value;
+            Texture2D bodyTex = CoraliteAssets.Laser.Body.Value;
 
             color = new Color(211, 103, 156);
 

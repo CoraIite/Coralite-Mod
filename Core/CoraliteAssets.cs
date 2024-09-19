@@ -1,4 +1,7 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
+using System;
+using System.Reflection;
 using Terraria;
 using static Coralite.Core.AssetDirectory;
 using static Terraria.ModLoader.ModContent;
@@ -120,6 +123,13 @@ namespace Coralite.Core
             public static ATex ClawSlash3AYellow { get; private set; }
 
             /// <summary> 
+            /// 有2小一大3个抓痕的刀光<br></br>
+            /// 透明底<br></br>
+            /// 紫色
+            /// </summary>
+            public static ATex ClawSlash3APurple { get; private set; }
+
+            /// <summary> 
             /// 有4个抓痕的刀光
             /// </summary>
             public static ATex ClawSlash4 { get; private set; }
@@ -156,60 +166,51 @@ namespace Coralite.Core
             /// </summary>
             public static ATex Spike { get; private set; }
 
+            /// <summary> 
+            /// 边缘非常硬的拖尾
+            /// </summary>
+            public static ATex Hard { get; private set; }
+
+            /// <summary> 
+            /// 火焰拖尾
+            /// </summary>
+            public static ATex Fire { get; private set; }
+
+            /// <summary> 
+            /// 很亮，尾部像气流一样的拖尾
+            /// </summary>
+            public static ATex Highlight { get; private set; }
+
+            /// <summary> 
+            /// 原版泰拉棱镜使用的刀光贴图
+            /// </summary>
+            public static ATex Vanilla { get; private set; }
+
+            /// <summary> 
+            /// 顶部一条横线，整个刀光透明度较低，由主要几条横线组成
+            /// </summary>
+            public static ATex Split { get; private set; }
+
             #endregion
 
             internal static void Load()
             {
-                Slash = Get(Trails + nameof(Slash));
-                SlashFlat = Get(Trails + nameof(SlashFlat));
-                SlashFlatBright = Get(Trails + nameof(SlashFlatBright));
-                SlashFlatVMirror = Get(Trails + nameof(SlashFlatVMirror));
-                SlashFlatBlur = Get(Trails + nameof(SlashFlatBlur));
-                SlashFlatBlurVMirror = Get(Trails + nameof(SlashFlatBlurVMirror));
-                SlashFlatBlurHVMirror = Get(Trails + nameof(SlashFlatBlurHVMirror));
-                SlashFlatBlurSmall = Get(Trails + nameof(SlashFlatBlurSmall));
-                SlashFlatFade = Get(Trails + nameof(SlashFlatFade));
+                Type t = typeof(Trail);
 
-                LiteSlash = Get(Trails + nameof(LiteSlash));
-                LiteSlashBright = Get(Trails + nameof(LiteSlashBright));
-                LiteSlashBrightHMirror = Get(Trails + nameof(LiteSlashBrightHMirror));
+                var infos = t.GetProperties(BindingFlags.Public | BindingFlags.Static);
 
-                ClawSlash3A = Get(Trails + nameof(ClawSlash3A));
-                ClawSlash3AYellow = Get(Trails + nameof(ClawSlash3AYellow));
-                ClawSlash4 = Get(Trails + nameof(ClawSlash4));
-
-                Meteor = Get(Trails + nameof(Meteor));
-                MeteorA = Get(Trails + nameof(MeteorA));
-                CircleA = Get(Trails + nameof(CircleA));
-                EdgeA = Get(Trails + nameof(EdgeA));
-                Spike = Get(Trails + nameof(Spike));
+                foreach (var info in infos)
+                    info.SetValue(null, Get(Trails + info.Name));
             }
 
             internal static void Unload()
             {
-                Slash = null;
-                SlashFlat = null;
-                SlashFlatBright = null;
-                SlashFlatVMirror = null;
-                SlashFlatBlur = null;
-                SlashFlatBlurVMirror = null;
-                SlashFlatBlurHVMirror = null;
-                SlashFlatBlurSmall = null;
-                SlashFlatFade = null;
+                Type t = typeof(Trail);
 
-                LiteSlash = null;
-                LiteSlashBright = null;
-                LiteSlashBrightHMirror = null;
+                var infos = t.GetProperties(BindingFlags.Public | BindingFlags.Static);
 
-                ClawSlash3A = null;
-                ClawSlash3AYellow = null;
-                ClawSlash4 = null;
-
-                Meteor = null;
-                MeteorA = null;
-                CircleA = null;
-                EdgeA = null;
-                Spike = null;
+                foreach (var info in infos)
+                    info.SetValue(null, null);
             }
         }
 
@@ -218,7 +219,47 @@ namespace Coralite.Core
         /// </summary>
         public static class Laser
         {
+            /// <summary> 
+            /// 激光主体，一条发光横线
+            /// </summary>
+            public static ATex Body { get; private set; }
 
+            /// <summary> 
+            /// 激光主体，一条发光横线，更细
+            /// </summary>
+            public static ATex BodyThin { get; private set; }
+
+            /// <summary> 
+            /// 激光核心，左右连读的流动贴图<br></br>
+            /// 原版使用，透明底
+            /// </summary>
+            public static ATex VanillaCoreA { get; private set; }
+
+            /// <summary> 
+            /// 激光外层的流动部分，左右连读的流动贴图<br></br>
+            /// 原版使用，透明底
+            /// </summary>
+            public static ATex VanillaFlowA { get; private set; }
+
+            internal static void Load()
+            {
+                Type t = typeof(Laser);
+
+                var infos = t.GetProperties(BindingFlags.Public | BindingFlags.Static);
+
+                foreach (var info in infos)
+                    info.SetValue(null, Get(Lasers + info.Name));
+            }
+
+            internal static void Unload()
+            {
+                Type t = typeof(Laser);
+
+                var infos = t.GetProperties(BindingFlags.Public | BindingFlags.Static);
+
+                foreach (var info in infos)
+                    info.SetValue(null, null);
+            }
         }
 
         /// <summary>
@@ -226,6 +267,31 @@ namespace Coralite.Core
         /// </summary>
         public static class Sparkle
         {
+            /// <summary> 
+            /// 标准十字闪光<br></br>
+            /// 横竖纵向
+            /// </summary>
+            public static ATex Cross { get; private set; }
+
+            internal static void Load()
+            {
+                Type t = typeof(Sparkle);
+
+                var infos = t.GetProperties(BindingFlags.Public | BindingFlags.Static);
+
+                foreach (var info in infos)
+                    info.SetValue(null, Get(Sparkles + info.Name));
+            }
+
+            internal static void Unload()
+            {
+                Type t = typeof(Sparkle);
+
+                var infos = t.GetProperties(BindingFlags.Public | BindingFlags.Static);
+
+                foreach (var info in infos)
+                    info.SetValue(null, null);
+            }
 
         }
 
@@ -242,7 +308,31 @@ namespace Coralite.Core
         /// </summary>
         public static class LightBall
         {
+            /// <summary> 
+            /// 圆形亮光球
+            /// </summary>
+            public static ATex Ball { get; private set; }
 
+
+            internal static void Load()
+            {
+                Type t = typeof(LightBall);
+
+                var infos = t.GetProperties(BindingFlags.Public | BindingFlags.Static);
+
+                foreach (var info in infos)
+                    info.SetValue(null, Get(LightBalls + info.Name));
+            }
+
+            internal static void Unload()
+            {
+                Type t = typeof(LightBall);
+
+                var infos = t.GetProperties(BindingFlags.Public | BindingFlags.Static);
+
+                foreach (var info in infos)
+                    info.SetValue(null, null);
+            }
         }
 
         public void Load()
@@ -251,6 +341,9 @@ namespace Coralite.Core
                 return;
             
             Trail.Load();
+            Laser.Load();
+            Sparkle.Load();
+            LightBall.Load();
         }
 
         public void Unload()
@@ -259,9 +352,12 @@ namespace Coralite.Core
                 return;
 
             Trail.Unload();
+            Laser.Unload();
+            Sparkle.Unload();
+            LightBall.Unload();
         }
 
         private static ATex Get(string path)
-            => Request<Texture2D>(path);
+            => Request<Texture2D>(path,AssetRequestMode.ImmediateLoad);
     }
 }

@@ -417,7 +417,7 @@ namespace Coralite.Content.Items.Shadow
     /// </summary>
     public class ShadowCircle_MeleeClaw : ModProjectile, IDrawNonPremultiplied
     {
-        public override string Texture => AssetDirectory.OtherProjectiles + "ShadowClaw";
+        public override string Texture => AssetDirectory.Trails + "ClawSlash3APurple";
 
         public ref float PosFactor => ref Projectile.ai[0];
         public ref float ScaleFactor => ref Projectile.ai[1];

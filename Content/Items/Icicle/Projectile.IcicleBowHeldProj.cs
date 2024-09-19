@@ -19,7 +19,6 @@ namespace Coralite.Content.Items.Icicle
 
         public ref float Alpha => ref Projectile.localAI[0];
         public ref float Timer => ref Projectile.localAI[1];
-        public ref float DashTime => ref Projectile.localAI[2];
 
         public bool fadeIn = true;
         public bool canShoot;
@@ -45,9 +44,9 @@ namespace Coralite.Content.Items.Icicle
                     Projectile.timeLeft = Owner.itemTimeMax;
                 }
 
-                if (Owner.TryGetModPlayer(out  CoralitePlayer cp))
+                if (Owner.TryGetModPlayer(out CoralitePlayer cp))
                 {
-                    DashTime=cp.DashTimer;
+                    DashTime = cp.DashTimer;
                 }
             }
         }

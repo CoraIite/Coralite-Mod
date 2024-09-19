@@ -23,7 +23,7 @@ namespace Coralite.Content.Items.YujianHulu
 
     public class HellStoneYujianProj : BaseYujianProj
     {
-        public override string SlashTexture => AssetDirectory.OtherProjectiles + "FireTrail";
+        public override string SlashTexture => AssetDirectory.Trails + "Fire";
 
         public HellStoneYujianProj() : base(
             new YujianAI[]

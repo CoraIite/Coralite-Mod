@@ -31,7 +31,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
             }
         }
 
-        public static Asset<Texture2D> trailTexture;
         public static Asset<Texture2D> GradientTexture;
 
         public ShadowBallSlash() : base(new Vector2(66, 70).ToRotation(), trailCount: 48) { }
@@ -103,7 +102,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
             if (Main.dedServ)
                 return;
 
-            trailTexture = Request<Texture2D>(AssetDirectory.OtherProjectiles + "HTrail");
             GradientTexture = Request<Texture2D>(AssetDirectory.ShadowCastleItems + "ShaduraGradient");
         }
 
@@ -112,7 +110,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
             if (Main.dedServ)
                 return;
 
-            trailTexture = null;
             GradientTexture = null;
         }
 
@@ -418,7 +415,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
                 effect.Parameters["transformMatrix"].SetValue(world * view * projection);
-                effect.Parameters["sampleTexture"].SetValue(trailTexture.Value);
+                effect.Parameters["sampleTexture"].SetValue(CoraliteAssets.Trail.Highlight.Value);
                 effect.Parameters["gradientTexture"].SetValue(GradientTexture.Value);
                 effect.Parameters["worldSize"].SetValue(new Vector2(Main.screenWidth, Main.screenHeight));
                 effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly / 5);

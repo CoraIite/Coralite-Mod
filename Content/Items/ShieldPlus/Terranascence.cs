@@ -640,7 +640,6 @@ namespace Coralite.Content.Items.ShieldPlus
         public int alpha;
 
         public static Asset<Texture2D> GradientTexture;
-        public static Asset<Texture2D> EXTrailTexture;
 
         public TerranascenceSwing() : base(0.785f, 16) { }
 
@@ -650,13 +649,11 @@ namespace Coralite.Content.Items.ShieldPlus
                 return;
 
             GradientTexture = ModContent.Request<Texture2D>(AssetDirectory.ShieldPlusItems + "TerranascenceGradient");
-            EXTrailTexture = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "SplitTrail");
         }
 
         public override void Unload()
         {
             GradientTexture = null;
-            EXTrailTexture = null;
         }
 
         public override void SetDefs()
@@ -882,7 +879,7 @@ namespace Coralite.Content.Items.ShieldPlus
                     Effect effect = Filters.Scene["NoHLGradientTrail"].GetShader().Shader;
 
                     effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMaxrix());
-                    effect.Parameters["sampleTexture"].SetValue(EXTrailTexture.Value);
+                    effect.Parameters["sampleTexture"].SetValue(CoraliteAssets.Trail.Split.Value);
                     effect.Parameters["gradientTexture"].SetValue(GradientTexture.Value);
 
                     foreach (EffectPass pass in effect.CurrentTechnique.Passes) //应用shader，并绘制顶点

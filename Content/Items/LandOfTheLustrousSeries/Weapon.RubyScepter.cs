@@ -347,7 +347,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public virtual void DrawAdditive(SpriteBatch spriteBatch)
         {
             Texture2D laserTex = Projectile.GetTexture();
-            Texture2D flowTex = CrystalLaser.LaserBodyTex.Value;
+            Texture2D flowTex = CoraliteAssets.Laser.Body.Value;
 
             rand += LaserRotation.ToRotationVector2() * 3;
             Color color = RubyProj.darkC;
@@ -381,7 +381,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 }, 0.1f, 0.35f, 0f);
 
             //绘制主体光束
-            Texture2D bodyTex = CrystalLaser.LaserBodyTex.Value;
+            Texture2D bodyTex = CoraliteAssets.Laser.Body.Value;
 
             color = RubyProj.brightC;
 

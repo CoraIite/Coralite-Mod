@@ -127,7 +127,6 @@ namespace Coralite.Content.Items.Thunder
 
         public static Asset<Texture2D> gradientTex;
         public static Asset<Texture2D> laserTex;
-        public static Asset<Texture2D> extraTex;
 
         public override void Load()
         {
@@ -135,7 +134,6 @@ namespace Coralite.Content.Items.Thunder
             {
                 gradientTex = Request<Texture2D>(AssetDirectory.ThunderveinDragon + "LaserGradient");
                 laserTex = Request<Texture2D>(AssetDirectory.OtherProjectiles + "ThunderTrailB");
-                extraTex = Request<Texture2D>(AssetDirectory.OtherProjectiles + "LaserTrail");
             }
         }
 
@@ -145,7 +143,6 @@ namespace Coralite.Content.Items.Thunder
             {
                 gradientTex = null;
                 laserTex = null;
-                extraTex = null;
             }
         }
 
@@ -470,7 +467,7 @@ namespace Coralite.Content.Items.Thunder
                 effect.Parameters["transformMatrix"].SetValue(world * view * projection);
                 effect.Parameters["sampleTexture"].SetValue(laserTex.Value);
                 effect.Parameters["gradientTexture"].SetValue(gradientTex.Value);
-                effect.Parameters["extTexture"].SetValue(extraTex.Value);
+                effect.Parameters["extTexture"].SetValue(CoraliteAssets.Laser.VanillaFlowA.Value);
 
                 Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointWrap;
                 foreach (EffectPass pass in effect.CurrentTechnique.Passes) //应用shader，并绘制顶点

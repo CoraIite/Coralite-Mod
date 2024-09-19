@@ -308,7 +308,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
     public class AmethystLaser : ModProjectile, IDrawAdditive
     {
-        public override string Texture => AssetDirectory.OtherProjectiles + "LaserCore";
+        public override string Texture => AssetDirectory.Lasers + "VanillaCoreA";
 
         public const int PerManaCostTime = 30;
         public const int TotalAttackTime = PerManaCostTime * 10;
@@ -510,7 +510,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public void DrawAdditive(SpriteBatch spriteBatch)
         {
             Texture2D laserTex = Projectile.GetTexture();
-            Texture2D flowTex = CrystalLaser.FlowTex.Value;
+            Texture2D flowTex = CoraliteAssets.Laser.VanillaFlowA.Value;
 
             rand += LaserRotation.ToRotationVector2() * 3;
             Color color = darkC;
@@ -556,7 +556,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 }, 0.1f, 0.35f, 0f);
 
             //绘制主体光束
-            Texture2D bodyTex = CrystalLaser.LaserBodyTex.Value;
+            Texture2D bodyTex = CoraliteAssets.Laser.Body.Value;
 
             color = brightC;
 

@@ -1086,7 +1086,7 @@ namespace Coralite.Content.Items.FlyingShields
 
     public class HephaesthBurst : ModProjectile, IDrawAdditive
     {
-        public override string Texture => AssetDirectory.OtherProjectiles + "Star2";
+        public override string Texture => AssetDirectory.Sparkles + "Cross";
 
         ref float State => ref Projectile.ai[0];
         ref float Timer => ref Projectile.ai[1];
