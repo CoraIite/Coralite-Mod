@@ -84,3 +84,5 @@ FlyingShieldSystem: {
 		可以通过举盾来取消部分左键攻击的后摇
 		'''
 }
+
+WoodenBowGroup.Name: 任意 木弓

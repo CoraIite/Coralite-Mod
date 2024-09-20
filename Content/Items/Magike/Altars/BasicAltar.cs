@@ -51,6 +51,7 @@ namespace Coralite.Content.Items.Magike.Altars
         {
             return level switch
             {
+                MagikeApparatusLevel.MagicCrystal => rotation.ToRotationVector2() * 8,
                 _ => Vector2.Zero
             };
         }
@@ -59,6 +60,7 @@ namespace Coralite.Content.Items.Magike.Altars
         {
             return level switch
             {
+                MagikeApparatusLevel.MagicCrystal => Vector2.Zero,
                 _ => Vector2.Zero
             };
         }

@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.ModPlayers;
+using Coralite.Content.RecipeGroups;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
@@ -19,7 +20,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public override void SetDefaults()
         {
-            Item.SetWeaponValues(11, 1f);
+            Item.SetWeaponValues(13, 2f);
             Item.DefaultToRangedWeapon(10, AmmoID.Arrow, 27, 7f);
 
             Item.rare = ItemRarityID.Blue;
@@ -44,7 +45,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ItemID.BorealWoodBow)
+                .AddRecipeGroup(WoodenBowGroup.GroupName)
                 .AddIngredient(ItemID.Torch, 49)
                 .AddIngredient(ItemID.Ruby)
                 .AddTile(TileID.WorkBenches)

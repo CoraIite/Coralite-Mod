@@ -84,3 +84,5 @@ FlyingShieldSystem: {
 		The backswing of some left-click attacks can be canceled by raising the shield
 		'''
 }
+
+WoodenBowGroup.Name: Mods.Coralite.Systems.WoodenBowGroup.Name

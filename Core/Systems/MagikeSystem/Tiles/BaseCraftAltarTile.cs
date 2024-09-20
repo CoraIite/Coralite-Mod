@@ -3,6 +3,7 @@ using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.ComponentModel;
 using Terraria;
 
 namespace Coralite.Core.Systems.MagikeSystem.Tiles
@@ -55,11 +56,14 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
             //有物品直接悬浮
             Vector2 floatingOffset = GetFloatingOffset(rotation, level);
 
+            Color c = lightColor;
+
             //正在合成时就转动
             if (altar.IsWorking)
             {
                 frameBox = tex.Frame(3, 1, 2);
                 rotation += Coralite.Instance.BezierEaseSmoother.Smoother(altar.Timer, altar.WorkTime) * MathHelper.TwoPi * 30;
+                c *= (float)altar.Timer / altar.WorkTime;
             }
             else
             {
@@ -69,7 +73,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
             spriteBatch.Draw(tex, center + floatingOffset, frameBox, lightColor, rotation + 1.57f, frameBox.Size() / 2, 1, 0, 0);
 
             //绘制物品
-            MagikeHelper.DrawItem(spriteBatch, item, center + floatingOffset, Math.Min(tileRect.Width, tileRect.Height));
+            MagikeHelper.DrawItem(spriteBatch, item, center + floatingOffset, Math.Min(tileRect.Width, tileRect.Height),c);
         }
 
         private static Item GetFirstItem(ItemContainer container)

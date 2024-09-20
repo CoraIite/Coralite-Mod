@@ -61,6 +61,7 @@ namespace Coralite.Core.Systems.MagikeSystem
             ChooseSender_NotFound,
 
             ChooseReceiver_NotFound,
+            ChooseReceiver_AlreadyConnect,
             ConnectFail_TooFar,
             ConnectFail_CantBeSelf,
             ConnectFail_ConnectorFillUp,

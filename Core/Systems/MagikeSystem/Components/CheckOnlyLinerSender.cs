@@ -16,6 +16,17 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
     /// </summary>
     public class CheckOnlyLinerSender() : MagikeLinerSender()
     {
+        public override bool CanConnect_CheckHasEntity(Point16 receiverPoint, ref string failSource)
+        {
+            if (!MagikeHelper.TryGetEntity(receiverPoint.X, receiverPoint.Y, out _))
+            {
+                failSource = MagikeSystem.GetConnectStaffText(MagikeSystem.StaffTextID.ChooseReceiver_NotFound);
+                return false;
+            }
+
+            return true;
+        }
+
         public override void Update(IEntity entity)
         {
             Point16 p = (entity as MagikeTileEntity).Position;

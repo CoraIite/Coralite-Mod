@@ -95,6 +95,7 @@ namespace Coralite.Content.Items.MagikeSeries1
         private Vector2 selfPos;
         private Vector2 aimPos;
         private Color c;
+        private bool start = true;
 
         public override void SetDefaults()
         {
@@ -125,7 +126,6 @@ namespace Coralite.Content.Items.MagikeSeries1
             Point16 currentPoint = new((int)Main.MouseWorld.X / 16, (int)Main.MouseWorld.Y / 16);
             aimPos = currentPoint.ToWorldCoordinates();
 
-
             if (!MagikeHelper.TryGetEntityWithComponent<MagikeLinerSender>(position.X, position.Y, MagikeComponentID.MagikeSender
                 , out MagikeTileEntity sender))
             {
@@ -133,10 +133,9 @@ namespace Coralite.Content.Items.MagikeSeries1
                 return;
             }
 
-            bool hasReceiver = MagikeHelper.TryGetEntityWithComponent(currentPoint.X, currentPoint.Y, MagikeComponentID.MagikeContainer
-                    , out MagikeTileEntity receiver);
+            MagikeHelper.TryGetEntity(currentPoint.X, currentPoint.Y, out MagikeTileEntity receiver);
 
-            if (hasReceiver)
+            if (receiver != null)
             {
                 currentPoint = receiver.Position;
                 aimPos = Helper.GetMagikeTileCenter(currentPoint);
@@ -145,32 +144,26 @@ namespace Coralite.Content.Items.MagikeSeries1
             if (sender == receiver)
                 return;
 
-            MagikeLinerSender senderComponent = ((IEntity)sender).GetSingleComponent<MagikeLinerSender>(MagikeComponentID.MagikeSender);
+            MagikeLinerSender senderComponent  = sender.GetSingleComponent<MagikeLinerSender>(MagikeComponentID.MagikeSender);
 
             bool canConnect = senderComponent.CanConnect(currentPoint, out string failText);
-            c = hasReceiver && canConnect ? Color.GreenYellow : Color.MediumVioletRed;
+            c = canConnect ? Color.GreenYellow : Color.MediumVioletRed;
+
+            if (start)
+            {
+                if (!Owner.controlUseItem)
+                {
+                    start = false;
+                }
+
+                return;
+            }
 
             if (Owner.controlUseItem)
             {
                 do
                 {
-                    //检测是否有接收者
-                    if (!hasReceiver)
-                    {
-                        Helper.PlayPitched("UI/Error", 0.4f, 0, Owner.Center);
-
-                        PopupText.NewText(new AdvancedPopupRequest()
-                        {
-                            Color = Coralite.MagicCrystalPink,
-                            Text = MagikeSystem.GetConnectStaffText(MagikeSystem.StaffTextID.ChooseReceiver_NotFound),
-                            DurationInFrames = 60,
-                            Velocity = -Vector2.UnitY
-                        }, Main.MouseWorld - (Vector2.UnitY * 32));
-
-                        break;
-                    }
-
-                    if (!canConnect)//无法连接，并写明原因
+                    if (receiver == null || !canConnect)//无法连接，并写明原因
                     {
                         Helper.PlayPitched("UI/Error", 0.4f, 0, Owner.Center);
 

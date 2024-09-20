@@ -292,7 +292,6 @@ namespace Coralite.Core
                 foreach (var info in infos)
                     info.SetValue(null, null);
             }
-
         }
 
         /// <summary>
@@ -300,7 +299,30 @@ namespace Coralite.Core
         /// </summary>
         public static class Halo
         {
+            /// <summary> 
+            /// 看上去像是一圈符文
+            /// </summary>
+            public static ATex Rune { get; private set; }
 
+            internal static void Load()
+            {
+                Type t = typeof(Halo);
+
+                var infos = t.GetProperties(BindingFlags.Public | BindingFlags.Static);
+
+                foreach (var info in infos)
+                    info.SetValue(null, Get(Halos + info.Name));
+            }
+
+            internal static void Unload()
+            {
+                Type t = typeof(Halo);
+
+                var infos = t.GetProperties(BindingFlags.Public | BindingFlags.Static);
+
+                foreach (var info in infos)
+                    info.SetValue(null, null);
+            }
         }
 
         /// <summary>
@@ -343,6 +365,7 @@ namespace Coralite.Core
             Trail.Load();
             Laser.Load();
             Sparkle.Load();
+            Halo.Load();
             LightBall.Load();
         }
 
@@ -354,6 +377,7 @@ namespace Coralite.Core
             Trail.Unload();
             Laser.Unload();
             Sparkle.Unload();
+            Halo.Unload();
             LightBall.Unload();
         }
 

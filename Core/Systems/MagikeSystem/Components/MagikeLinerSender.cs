@@ -152,15 +152,61 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         {
             failSource = "";
 
-            //检测容量
+            if (!CanConnect_CheckHasEntity(receiverPoint,ref failSource))
+                return false;
+
+            if (!CanConnect_CheckConnected(receiverPoint,ref failSource))
+                return false;
+
+            if (!CanConnect_CheckCapacity(ref failSource))
+                return false;
+
+            Point16 selfPoint = (Entity as MagikeTileEntity).Position;
+
+            if (!CanConnect_CheckSelf(selfPoint, receiverPoint, ref failSource))
+                return false;
+
+            if (!CanConnect_CheckLength(selfPoint, receiverPoint, ref failSource))
+                return false;
+
+            return true;
+        }
+
+        public virtual bool CanConnect_CheckHasEntity(Point16 receiverPoint, ref string failSource)
+        {
+            if (!MagikeHelper.TryGetEntityWithComponent(receiverPoint.X, receiverPoint.Y, MagikeComponentID.MagikeContainer, out _))
+            {
+                failSource = MagikeSystem.GetConnectStaffText(MagikeSystem.StaffTextID.ChooseReceiver_NotFound);
+                return false;
+            }
+
+            return true;
+        }
+
+        public virtual bool CanConnect_CheckConnected(Point16 receiverPoint, ref string failSource)
+        {
+            if (Receivers.Contains(receiverPoint))
+            {
+                failSource = MagikeSystem.GetConnectStaffText(MagikeSystem.StaffTextID.ChooseReceiver_NotFound);
+                return false;
+            }
+
+            return true;
+        }
+
+        public virtual bool CanConnect_CheckCapacity(ref string failSource)
+        {
             if (FillUp())
             {
                 failSource = MagikeSystem.GetConnectStaffText(MagikeSystem.StaffTextID.ConnectFail_ConnectorFillUp);
                 return false;
             }
 
-            Point16 selfPoint = (Entity as MagikeTileEntity).Position;
+            return true;
+        }
 
+        public virtual bool CanConnect_CheckSelf(Point16 selfPoint, Point16 receiverPoint,ref string failSource)
+        {
             //检测是否是自己
             if (receiverPoint == selfPoint)
             {
@@ -168,6 +214,11 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 return false;
             }
 
+            return true;
+        }
+
+        public virtual bool CanConnect_CheckLength(Point16 selfPoint, Point16 receiverPoint, ref string failSource)
+        {
             Vector2 selfCenter = Helper.GetMagikeTileCenter(selfPoint);
             Vector2 targetCenter = Helper.GetMagikeTileCenter(receiverPoint);
 
