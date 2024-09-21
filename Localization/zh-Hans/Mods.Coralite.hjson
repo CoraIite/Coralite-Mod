@@ -3,7 +3,7 @@ Players.CoralitePlayer.ThunderElectrifiedDeath: 被雷劈死了
 
 Conditions: {
 	CoraliteConditions: {
-		// LearnedMagikeBase: Mods.Coralite.Conditions.CoraliteConditions.LearnedMagikeBase
-		// CoralCat: Mods.Coralite.Conditions.CoraliteConditions.CoralCat
+		LearnedMagikeBase: 需要学习魔能基础
+		CoralCat: 需要在彩虹猫的世界（CoralCat）
 	}
 }

@@ -4305,3 +4305,8 @@ RadiantSun: {
 	DisplayName: Radiant Sun
 	Tooltip: ""
 }
+
+MagicCrystalClusters: {
+	DisplayName: Magic Crystal Clusters
+	Tooltip: ""
+}

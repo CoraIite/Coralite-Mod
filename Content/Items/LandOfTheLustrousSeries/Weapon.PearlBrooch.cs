@@ -390,7 +390,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
     public class PearlExplosion : ModProjectile
     {
-        public override string Texture => AssetDirectory.OtherProjectiles + "Circle3b";
+        public override string Texture => AssetDirectory.Halos + "HighlightCircleA";
 
         public Vector2 rand = Main.rand.NextVector2CircularEdge(64, 64);
 

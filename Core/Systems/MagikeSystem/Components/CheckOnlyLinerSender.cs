@@ -20,7 +20,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         {
             if (!MagikeHelper.TryGetEntity(receiverPoint.X, receiverPoint.Y, out _))
             {
-                failSource = MagikeSystem.GetConnectStaffText(MagikeSystem.StaffTextID.ChooseReceiver_NotFound);
+                failSource = MagikeSystem.GetConnectStaffText(MagikeSystem.StaffTextID.ChooseReceiver_AlreadyConnect);
                 return false;
             }
 

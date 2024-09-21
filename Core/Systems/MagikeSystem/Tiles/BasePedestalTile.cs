@@ -29,7 +29,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
 
             if (!container.Items[0].IsAir)
                 MagikeHelper.DrawItem(spriteBatch, container.Items[0], drawPos + (rotation.ToRotationVector2()
-                    * (18 + (ItemSize / 2) + (MathF.Sin(Main.GlobalTimeWrappedHourly + ((tileRect.X + tileRect.Y) * 0.1f)) * 6))), ItemSize);
+                    * (18 + (ItemSize / 2) + (MathF.Sin(Main.GlobalTimeWrappedHourly + ((tileRect.X + tileRect.Y) * 0.1f)) * 6))), ItemSize, lightColor);
         }
 
         /// <summary>

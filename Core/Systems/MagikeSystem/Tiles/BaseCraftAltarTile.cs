@@ -3,7 +3,6 @@ using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.ComponentModel;
 using Terraria;
 
 namespace Coralite.Core.Systems.MagikeSystem.Tiles
@@ -62,7 +61,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
             if (altar.IsWorking)
             {
                 frameBox = tex.Frame(3, 1, 2);
-                rotation += Coralite.Instance.BezierEaseSmoother.Smoother(altar.Timer, altar.WorkTime) * MathHelper.TwoPi * 30;
+                rotation += Coralite.Instance.BezierEaseSmoother.Smoother(altar.Timer, altar.WorkTime) * MathHelper.TwoPi * 15;
                 c *= (float)altar.Timer / altar.WorkTime;
             }
             else

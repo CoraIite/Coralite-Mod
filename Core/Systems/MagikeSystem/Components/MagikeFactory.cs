@@ -20,7 +20,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public int WorkTime { get => Math.Clamp((int)(WorkTimeBase * WorkTimeBonus), 1, int.MaxValue); }
 
         public int DelayBase { get; set; }
-        public float DelayBonus { get; set; }
+        public float DelayBonus { get; set; } = 1f;
         public int Timer { get; set; }
 
         public bool UpdateTime()
@@ -77,7 +77,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// 开始工作，基方法内包含对<see cref="Timer"/>的赋值
         /// </summary>
         public virtual void StarkWork()
-        {
+         {
             IsWorking = true;
             Timer = WorkTime;
         }

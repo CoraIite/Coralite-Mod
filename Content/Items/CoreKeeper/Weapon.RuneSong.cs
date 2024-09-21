@@ -430,7 +430,7 @@ namespace Coralite.Content.Items.CoreKeeper
                     };
 
                     Dust dust = Dust.NewDustPerfect(Top + (RotateVec2 * Main.rand.Next(-45, 5)), type,
-                           dir * Main.rand.NextFloat(0.5f, 3f), Scale: scale2);
+                           dir * Main.rand.NextFloat(0.5f, 3f), newColor: Coralite.IcicleCyan, Scale: scale2);
                     dust.noGravity = true;
                 }
             }
@@ -759,19 +759,15 @@ namespace Coralite.Content.Items.CoreKeeper
         public override void OnSpawn(Dust dust)
         {
             dust.frame = Texture2D.Frame(6, 1, Main.rand.Next(6), 0);
-            dust.color = Color.Transparent;
-
         }
 
         public override bool Update(Dust dust)
         {
             if (dust.fadeIn < 8)
-            {
-                dust.color = Color.White * (dust.fadeIn / 8f);
-            }
+                dust.rotation = dust.fadeIn / 8f;
             else
             {
-                dust.color = Color.White * ((16 - dust.fadeIn) / 8f);
+                dust.rotation = (16 - dust.fadeIn) / 8f;
                 if (dust.fadeIn > 16)
                 {
                     dust.active = false;
@@ -794,8 +790,7 @@ namespace Coralite.Content.Items.CoreKeeper
             var frameBox = dust.frame;
             var origin = frameBox.Size() / 2;
             Vector2 pos = dust.position - Main.screenPosition;
-            Color c = Coralite.IcicleCyan * (dust.color.R / 255f) * 0.3f;
-
+            Color c = dust.color * dust.rotation * 0.3f;
 
             float r = MathHelper.PiOver4;
             for (int i = 0; i < 4; i++)
@@ -803,7 +798,7 @@ namespace Coralite.Content.Items.CoreKeeper
                 Main.EntitySpriteDraw(mainTex, pos + (r.ToRotationVector2() * 2), frameBox, c, 0, origin, dust.scale, 0, 0);
                 r += MathHelper.PiOver2;
             }
-            Main.EntitySpriteDraw(mainTex, pos, frameBox, dust.color, 0, origin, dust.scale, 0, 0);
+            Main.EntitySpriteDraw(mainTex, pos, frameBox,Color.White * dust.rotation, 0, origin, dust.scale, 0, 0);
 
             return false;
         }

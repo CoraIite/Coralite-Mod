@@ -30,6 +30,8 @@
     <None Remove="effects\ShadowStars.fx" />
     <None Remove="Effects\SimpleTrailNoHL.fx" />
     <None Remove="effects\StarsTrail.fx" />
+    <None Remove="localization\en-us\Mods.Coralite.Conditions.hjson" />
+    <None Remove="Localization\zh-Hans\Mods.Coralite.Conditions.hjson" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\Bosses\SlimeEmperor\" />

@@ -116,7 +116,7 @@ namespace Coralite.Content.Items.Glistent
 
     public class LeafeoShield : BaseHeldProj
     {
-        public override string Texture => AssetDirectory.OtherProjectiles + "Circle";
+        public override string Texture => AssetDirectory.Halos + "Circle";
 
         private ParticleGroup particles = [];
 

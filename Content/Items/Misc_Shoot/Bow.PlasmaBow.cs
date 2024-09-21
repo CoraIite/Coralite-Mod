@@ -83,7 +83,7 @@ namespace Coralite.Content.Items.Misc_Shoot
 
     public class PlasmaBall : BaseThunderProj
     {
-        public override string Texture => AssetDirectory.OtherProjectiles + "Circle";
+        public override string Texture => AssetDirectory.Halos + "Circle";
 
         public ref float State => ref Projectile.ai[0];
         public ref float Hited => ref Projectile.ai[1];

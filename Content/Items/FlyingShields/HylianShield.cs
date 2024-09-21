@@ -557,7 +557,7 @@ namespace Coralite.Content.Items.FlyingShields
 
     public class LightCiecleParticle : Particle
     {
-        public override string Texture => AssetDirectory.OtherProjectiles + "Circle3";
+        public override string Texture => AssetDirectory.Halos + "HighlightCircle";
 
         public override void Update()
         {
@@ -599,7 +599,7 @@ namespace Coralite.Content.Items.FlyingShields
             spriteBatch.Draw(mainTex, pos
                 , null, c, Rotation, origin, scale, SpriteEffects.None, 0f);
 
-            Texture2D exTex = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "Circle2").Value;
+            Texture2D exTex = CoraliteAssets.Halo.FadeCircle.Value;
             origin = exTex.Size() / 2;
             scale *= 0.6f;
 

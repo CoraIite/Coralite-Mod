@@ -205,6 +205,7 @@ MagikeSystem: {
 		BrilliantConnect: 成功连接{0}个仪器，未成功连接{1}个仪器
 		ChargeNotFound: 未找到魔能容器！
 		FactoryNotFound: 未找到魔能工作站！
+		ChooseReceiver_AlreadyConnect: 这个仪器已经连接了！
 	}
 
 	ApparatusNotFound: 未找到魔能仪器！
@@ -213,6 +214,7 @@ MagikeSystem: {
 	UpgradeableNotFound: 未找到可升级仪器！
 	CantUpgrade: 无法升级！
 	ItemDescriptionPolarizedFilter: 可插入的偏振滤镜：
+	NeedPolarizedFilter: 需要插入可插入的偏振滤镜后才能工作
 
 	ApparatusDescription: {
 		MagikeAmount: "魔能容量 "
@@ -274,8 +276,8 @@ MagikeSystem: {
 		FastStack: 快速堆叠
 		ItemContainerName: 物品容器
 		GetOnlyItemContainerName: 仅取出的物品容器
-		// SnowfieldLensName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.SnowfieldLensName
-		// SnowfieldCondition: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.SnowfieldCondition
+		SnowfieldLensName: 雪原透镜
+		SnowfieldCondition: "  ▶ 需要将底座放置在冰雪块上"
 	}
 
 	CraftText: {

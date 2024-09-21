@@ -4378,12 +4378,20 @@ SymbolOfMagike: {
 
 SnowfieldLens: {
 	DisplayName: 雪原透镜
-	Tooltip: ""
+	Tooltip:
+		'''
+		在雪原生产魔能，只能放置在冰雪块上
+		{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}
+		'''
 }
 
 SunlightLens: {
 	DisplayName: 日光透镜
-	Tooltip: ""
+	Tooltip:
+		'''
+		在日光照射时生产魔能
+		{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}
+		'''
 }
 
 FarAwaySky: {
@@ -4422,4 +4430,9 @@ RadiantSun: {
 		双击方向键滑步，之后射出旭日箭对鼠标位置发动流星闪击
 		[c/ffe021:“银白的巨狮在天空中奔跑，为世间带来阳光”]
 		'''
+}
+
+MagicCrystalClusters: {
+	DisplayName: 魔力水晶簇
+	Tooltip: 可以使用同等级的光束采集器采挖魔力晶体
 }

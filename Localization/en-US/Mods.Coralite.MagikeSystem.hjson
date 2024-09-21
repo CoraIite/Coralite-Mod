@@ -205,6 +205,7 @@ MagikeSystem: {
 		BrilliantConnect: 成功连接{0}个仪器，未成功连接{1}个仪器
 		ChargeNotFound: 未找到魔能容器！
 		FactoryNotFound: 未找到魔能工作站！
+		ChooseReceiver_AlreadyConnect: Mods.Coralite.MagikeSystem.MagikeSystem.Staffs.ChooseReceiver_AlreadyConnect
 	}
 
 	ApparatusNotFound: 未找到魔能仪器！
@@ -213,6 +214,7 @@ MagikeSystem: {
 	UpgradeableNotFound: 未找到可升级仪器！
 	CantUpgrade: 无法升级！
 	ItemDescriptionPolarizedFilter: 可插入的偏振滤镜：
+	NeedPolarizedFilter: ""
 
 	ApparatusDescription: {
 		MagikeAmount: "魔能容量 "

@@ -187,7 +187,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         {
             if (Receivers.Contains(receiverPoint))
             {
-                failSource = MagikeSystem.GetConnectStaffText(MagikeSystem.StaffTextID.ChooseReceiver_NotFound);
+                failSource = MagikeSystem.GetConnectStaffText(MagikeSystem.StaffTextID.ChooseReceiver_AlreadyConnect);
                 return false;
             }
 

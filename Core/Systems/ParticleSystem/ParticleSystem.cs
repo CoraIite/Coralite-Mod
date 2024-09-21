@@ -82,8 +82,6 @@ namespace Coralite.Core.Systems.ParticleSystem
                     if (particle.Scale < 0.001f)
                         particle.active = false;
 
-                    if (particle.fadeIn > 1000)
-                        particle.active = false;
                 }
                 catch (System.Exception)
                 {

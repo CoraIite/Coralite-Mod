@@ -28,7 +28,7 @@ namespace Coralite.Content.Items.BossSummons
             Item.useAnimation = 30;
             Item.useTime = 30;
             Item.useStyle = ItemUseStyleID.HoldUp;
-            Item.rare = ItemRarityID.Green;
+            Item.rare = ItemRarityID.Red;
         }
 
         public override bool CanUseItem(Player player)

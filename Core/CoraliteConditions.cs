@@ -4,16 +4,16 @@ using Terraria;
 
 namespace Coralite.Core
 {
-    public class CoraliteConditions : ModSystem,ILocalizedModType
+    public class CoraliteConditions : ModSystem, ILocalizedModType
     {
-        public static  Condition LearnedMagikeBase {  get; private set; }
+        public static Condition LearnedMagikeBase { get; private set; }
         public static Condition CoralCat { get; private set; }
 
         public string LocalizationCategory => "Conditions";
 
         public override void Load()
         {
-            LearnedMagikeBase= new(this.GetLocalization(nameof(LearnedMagikeBase))
+            LearnedMagikeBase = new(this.GetLocalization(nameof(LearnedMagikeBase))
                 , () => MagikeSystem.learnedMagikeBase);
             CoralCat = new(this.GetLocalization(nameof(CoralCat))
                 , () => CoraliteWorld.coralCatWorld);

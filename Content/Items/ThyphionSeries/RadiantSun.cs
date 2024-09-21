@@ -24,7 +24,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public override void SetDefaults()
         {
-            Item.SetWeaponValues(35, 6f);
+            Item.SetWeaponValues(39, 6f);
             Item.DefaultToRangedWeapon(10, AmmoID.Arrow, 25, 10f);
 
             Item.rare = ItemRarityID.LightRed;
@@ -222,6 +222,10 @@ namespace Coralite.Content.Items.ThyphionSeries
                 Projectile.Kill();
 
             ExAlpha = Helper.Lerp(1, 0, Math.Clamp(Timer / 10, 0, 1));
+            if (Timer < 3)
+                handOffset -= 8;
+            else
+                handOffset += 3;
         }
 
         public override void SetCenter()
@@ -411,21 +415,25 @@ namespace Coralite.Content.Items.ThyphionSeries
 
                 if (Timer == ReadyTime)
                 {
-                    Helper.PlayPitched("Misc/GoodCast", 0.4f, 0, Main.player[Projectile.owner].Center);
+                    Helper.PlayPitched("Misc/GoodCast", 0.3f,-0.1f, Main.player[Projectile.owner].Center);
                 }
 
                 if (Timer % 5 == 0)
                     SpawnSpeedLine(endPoint, Main.rand.Next(6) * MathHelper.PiOver2 / 7);
 
+                const int height = 3;
+
                 if (Timer < ReadyTime + 5)
                 {
-                    LaserHeight = Helper.Lerp(LaserHeight, 5, 0.1f);
+                    float factor = Coralite.Instance.SqrtSmoother.Smoother((Timer - ReadyTime) / 5);
+                    LaserHeight = Helper.Lerp(0.5f, height, factor);
                     break;
                 }
 
                 if (Timer < ReadyTime + 16)
                 {
-                    LaserHeight = Helper.Lerp(LaserHeight, 0, 0.2f);
+                    float factor = Coralite.Instance.SqrtSmoother.Smoother((Timer - ReadyTime - 5) / 11);
+                    LaserHeight = Helper.Lerp(height, 0, factor);
                     break;
                 }
 
@@ -495,8 +503,8 @@ namespace Coralite.Content.Items.ThyphionSeries
                     var laserTarget = new Rectangle((int)startPos.X, (int)startPos.Y, width, (int)(height * 2f));
                     var flowTarget = new Rectangle((int)startPos.X, (int)startPos.Y, width, (int)(height * 0.9f));
 
-                    var laserSource = new Rectangle((int)(Projectile.timeLeft / 30f * laserTex.Width), 0, laserTex.Width, laserTex.Height);
-                    var flowSource = new Rectangle((int)(Projectile.timeLeft / 45f * flowTex.Width), 0, flowTex.Width, flowTex.Height);
+                    var laserSource = new Rectangle((int)(-Main.timeForVisualEffects + Projectile.timeLeft / 30f * laserTex.Width), 0, laserTex.Width, laserTex.Height);
+                    var flowSource = new Rectangle((int)(-2*Main.timeForVisualEffects+Projectile.timeLeft / 35f * flowTex.Width), 0, flowTex.Width, flowTex.Height);
 
                     var origin = new Vector2(0, laserTex.Height / 2);
                     var origin2 = new Vector2(0, flowTex.Height / 2);
@@ -524,13 +532,15 @@ namespace Coralite.Content.Items.ThyphionSeries
                     Texture2D glowTex = CoraliteAssets.LightBall.Ball.Value;
                     Texture2D starTex = CoraliteAssets.Sparkle.Cross.Value;
 
-                    spriteBatch.Draw(glowTex, endPos, null, color * (height * 0.012f), 0, glowTex.Size() / 2, 0.5f, 0, 0);
-                    spriteBatch.Draw(starTex, endPos, null, color * (height * 0.07f), Main.GlobalTimeWrappedHourly*3, starTex.Size() / 2, new Vector2(0.75f, 1f) * 0.14f, 0, 0);
-                    spriteBatch.Draw(starTex, endPos, null, color * (height * 0.07f), Projectile.rotation, starTex.Size() / 2, 0.16f, 0, 0);
+                    float f1 = 0.6f + height * 0.004f;
 
-                    spriteBatch.Draw(glowTex, startPos, null, color * (height * 0.02f), 0, glowTex.Size() / 2, 0.5f, 0, 0);
-                    spriteBatch.Draw(starTex, startPos, null, color * (height * 0.05f), Main.GlobalTimeWrappedHourly * 3, starTex.Size() / 2, new Vector2(0.75f, 1f)*0.1f, 0, 0);
-                    spriteBatch.Draw(starTex, startPos, null, color * (height * 0.05f), Projectile.rotation , starTex.Size() / 2, 0.14f, 0, 0);
+                    spriteBatch.Draw(glowTex, endPos, null, color * (height * 0.012f), 0, glowTex.Size() / 2, 0.5f * f1, 0, 0);
+                    spriteBatch.Draw(starTex, endPos, null, color * (height * 0.07f), Main.GlobalTimeWrappedHourly * 3, starTex.Size() / 2, new Vector2(0.75f, 1f) * 0.14f * f1, 0, 0);
+                    spriteBatch.Draw(starTex, endPos, null, color * (height * 0.07f), Projectile.rotation, starTex.Size() / 2, 0.16f * f1, 0, 0);
+
+                    spriteBatch.Draw(glowTex, startPos, null, color * (height * 0.02f), 0, glowTex.Size() / 2, 0.5f * f1, 0, 0);
+                    spriteBatch.Draw(starTex, startPos, null, color * (height * 0.05f), Main.GlobalTimeWrappedHourly * 3, starTex.Size() / 2, new Vector2(0.75f, 1f) * 0.1f * f1, 0, 0);
+                    spriteBatch.Draw(starTex, startPos, null, color * (height * 0.05f), Projectile.rotation, starTex.Size() / 2, 0.14f * f1, 0, 0);
 
                     break;
             }

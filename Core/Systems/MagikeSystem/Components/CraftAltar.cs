@@ -1,7 +1,9 @@
 ﻿using Coralite.Content.UI;
 using Coralite.Content.UI.MagikeApparatusPanel;
 using Coralite.Core.Loaders;
+using Coralite.Core.Systems.MagikeSystem.Particles;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
+using Coralite.Core.Systems.MagikeSystem.Tiles;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -15,7 +17,9 @@ using Terraria.GameContent.UI.Elements;
 using Terraria.ModLoader.IO;
 using Terraria.ModLoader.UI;
 using Terraria.ModLoader.UI.Elements;
+using Terraria.ObjectData;
 using Terraria.UI;
+using static Coralite.Helpers.MagikeHelper;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components
 {
@@ -193,6 +197,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public override bool CanActivated_SpecialCheck(out string text)
         {
+            text = "";
+
             //获取物品容器
             if (!GetItems(out Item[] items, out Dictionary<int, int> otherItems))
             {
@@ -202,8 +208,11 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             FrozenDictionary<int, int> otherItems2 = otherItems.ToFrozenDictionary();
 
-            if (ChosenResipe != null && !CheckCanCraft_FindRecipe(items, otherItems2, out text))//寻找合成表
-                return false;
+            if (ChosenResipe == null)
+            {
+                if (!CheckCanCraft_FindRecipe(items, otherItems2, out text))//寻找合成表
+                    return false;
+            }
 
             //检测物品是否能够合成
             if (!ChosenResipe.CanCraft(items, otherItems2, Entity.GetMagikeContainer().Magike, out text))
@@ -339,12 +348,27 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         {
             base.StarkWork();
 
-            Point16 pos = (Entity as MagikeTileEntity).Position;
+            MagikeTileEntity entity = Entity as MagikeTileEntity;
+            Point16 pos = entity.Position;
 
-            if (Helper.OnScreen(pos.ToWorldCoordinates(), new Vector2(16 * 20)))
+            if (Helper.OnScreen(pos.ToWorldCoordinates()-Main.screenPosition, new Vector2(16 * 20)))//在视野内生成特殊合成粒子
             {
-                //在视野内生成特殊合成粒子
+                Tile t = Framing.GetTileSafely(pos);
+                ModTile mt = TileLoader.GetTile(t.TileType);
 
+                if (mt is BaseCraftAltarTile altartile)
+                {
+                    GetMagikeAlternateData(pos.X, pos.Y, out TileObjectData data, out MagikeAlternateStyle alternate);
+
+                    float rotation = alternate.GetAlternateRotation();
+                    var level = MagikeSystem.FrameToLevel(t.TileType, t.TileFrameX / data.CoordinateFullWidth);
+
+                    if (!level.HasValue)
+                        return;
+
+                    CraftParticle.Spawn(pos,Helper.GetMagikeTileCenter(pos.X, pos.Y) + altartile.GetFloatingOffset(rotation, level.Value)
+                        ,WorkTime, ChosenResipe);
+                }
             }
         }
 
@@ -554,7 +578,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
                 frame = new Rectangle(0, tex.Height / 2, tex.Width, (int)(tex.Height / 2 * percent));
 
-                spriteBatch.Draw(tex, pos, frame, Color.White, 0, Vector2.Zero, 1, 0, 0);
+                spriteBatch.Draw(tex, pos+new Vector2(3,0), frame, Color.White, 0, Vector2.Zero, 1, 0, 0);
 
                 Utils.DrawBorderString(spriteBatch, percentText, center, Color.White, 0.75f, anchorx: 0.5f, anchory: 0.5f);
             }

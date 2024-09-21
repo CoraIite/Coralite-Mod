@@ -304,6 +304,27 @@ namespace Coralite.Core
             /// </summary>
             public static ATex Rune { get; private set; }
 
+            /// <summary> 
+            /// 一圈亮到暗，外加外发光
+            /// </summary>
+            public static ATex Circle { get; private set; }
+
+            /// <summary> 
+            /// 若隐若现的一圈
+            /// </summary>
+            public static ATex FadeCircle { get; private set; }
+
+            /// <summary> 
+            /// 高亮的一圈
+            /// </summary>
+            public static ATex HighlightCircle { get; private set; }
+
+            /// <summary> 
+            /// 高亮的一圈<br></br>
+            /// 透明底
+            /// </summary>
+            public static ATex HighlightCircleA { get; private set; }
+
             internal static void Load()
             {
                 Type t = typeof(Halo);
