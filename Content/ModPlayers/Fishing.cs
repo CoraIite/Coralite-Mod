@@ -28,12 +28,19 @@ namespace Coralite.Content.ModPlayers
                     if (Main.hardMode)
                     {
                         if (Main.rand.NextBool(10))
-                            itemDrop = ItemType<BubblePearlNecklace>();
-                        if (Main.rand.NextBool(6))
                             itemDrop = ItemType<Items.FlyingShields.HorseshoeCrab>();
                     }
-                    if (Main.rand.NextBool(6))
+
+                    if (Main.rand.NextBool(10))
                         itemDrop = ItemType<Items.FlyingShields.PearlRay>();
+                }
+                else if (attempt.rare)
+                {
+                    if (Main.rand.NextBool(4))
+                        itemDrop = Main.rand.NextFromList(
+                            ItemType<BubblePearlNecklace>(),
+                            ItemType<CoralRing>()
+                            );
                 }
                 else if (attempt.legendary)
                 {

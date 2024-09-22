@@ -33,7 +33,7 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
     }
 
     public class SnowfieldLensTile() : BaseLensTile
-        (2, 3, Coralite.IcicleCyan, DustID.Frost)
+        ( Coralite.IcicleCyan, DustID.Frost)
     {
         public override int DropItemType => ItemType<SnowfieldLens>();
 
@@ -125,7 +125,7 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
         }
     }
 
-    public class SnowfieldProducer : UpgradeableBiomeProducer
+    public class SnowfieldProducer : UpgradeableProducerByBiome
     {
         public override MagikeSystem.UITextID ApparatusName()
             => MagikeSystem.UITextID.SnowfieldLensName;

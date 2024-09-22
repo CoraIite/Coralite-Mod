@@ -38,7 +38,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Producers
 
             GetMagikeAlternateData(point.X, point.Y, out TileObjectData data, out MagikeAlternateStyle alternate);
 
-            //检测底座上的物块
+            //检测底座上的物块液体
             switch (alternate)
             {
                 case MagikeAlternateStyle.Bottom:

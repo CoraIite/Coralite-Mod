@@ -34,6 +34,8 @@
         Seashore,
         /// <summary> 羽毛 </summary>
         Eiderdown,
+        /// <summary> 赤玉 </summary>
+        RedJade,
         /// <summary> 帝凝胶 </summary>
         Emperor,
         /// <summary> 狱石 </summary>
@@ -48,6 +50,8 @@
         Forbidden,
         /// <summary> 寒霜 </summary>
         Frost,
+        /// <summary> 赤血玉 </summary>
+        BloodJade,
         /// <summary> 薪火锭 </summary>
         EternalFlame,
         /// <summary> 蘑菇矿锭 </summary>

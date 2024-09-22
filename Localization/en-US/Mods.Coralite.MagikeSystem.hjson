@@ -278,6 +278,12 @@ MagikeSystem: {
 		GetOnlyItemContainerName: 仅取出的物品容器
 		SnowfieldLensName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.SnowfieldLensName
 		SnowfieldCondition: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.SnowfieldCondition
+		MoonlightLensName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.MoonlightLensName
+		MoonlightCondition: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.MoonlightCondition
+		LavaLensName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.LavaLensName
+		LavaCondition: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.LavaCondition
+		HellLensName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.HellLensName
+		HellCondition: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.HellCondition
 	}
 
 	CraftText: {

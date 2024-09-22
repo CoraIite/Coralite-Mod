@@ -44,6 +44,25 @@ namespace Coralite.Content.Items.Magike.Pedestal
             [
                 MagikeApparatusLevel.None,
                 MagikeApparatusLevel.MagicCrystal,
+                MagikeApparatusLevel.Glistent,
+                MagikeApparatusLevel.Crimson,
+                MagikeApparatusLevel.Corruption,
+                MagikeApparatusLevel.Icicle,
+                MagikeApparatusLevel.CrystallineMagike,
+                MagikeApparatusLevel.Hallow,
+                MagikeApparatusLevel.Soul,
+                MagikeApparatusLevel.Feather,
+                MagikeApparatusLevel.HolyLight,
+                MagikeApparatusLevel.SplendorMagicore,
+                MagikeApparatusLevel.Hellstone,
+                MagikeApparatusLevel.EternalFlame,
+                MagikeApparatusLevel.Quicksand,
+                MagikeApparatusLevel.Forbidden,
+                MagikeApparatusLevel.Eiderdown,
+                MagikeApparatusLevel.Flight,
+                MagikeApparatusLevel.Seashore,
+                MagikeApparatusLevel.Pelagic,
+                MagikeApparatusLevel.RedJade,
             ];
         }
     }

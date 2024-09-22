@@ -1,115 +1,157 @@
-﻿//using Coralite.Content.Items.MagikeSeries1;
-//using Coralite.Content.Raritys;
-//using Coralite.Core;
-//using Coralite.Core.Systems.MagikeSystem;
-//using Coralite.Core.Systems.MagikeSystem.BaseItems;
-//using Coralite.Core.Systems.MagikeSystem.TileEntities;
-//using Coralite.Core.Systems.MagikeSystem.Tiles;
-//using Coralite.Helpers;
-//using Terraria;
-//using Terraria.DataStructures;
-//using Terraria.ID;
-//using Terraria.ObjectData;
-//using static Terraria.ModLoader.ModContent;
+﻿using Coralite.Content.Items.MagikeSeries1;
+using Coralite.Content.Raritys;
+using Coralite.Core;
+using Coralite.Core.Systems.MagikeSystem;
+using Coralite.Core.Systems.MagikeSystem.BaseItems;
+using Coralite.Core.Systems.MagikeSystem.Components;
+using Coralite.Core.Systems.MagikeSystem.Components.Producers;
+using Coralite.Core.Systems.MagikeSystem.TileEntities;
+using Coralite.Core.Systems.MagikeSystem.Tiles;
+using Terraria;
+using Terraria.ID;
+using static Terraria.ModLoader.ModContent;
 
-//namespace Coralite.Content.Items.Magike.LiquidLens
-//{
-//    public class LavaLens : BaseMagikePlaceableItem, IMagikeGeneratorItem, IMagikeSenderItem
-//    {
-//        public LavaLens() : base(TileType<LavaLensTile>(), Item.sellPrice(0, 0, 10, 0)
-//            , RarityType<MagicCrystalRarity>(), 50, AssetDirectory.MagikeLens)
-//        { }
+namespace Coralite.Content.Items.Magike.Lens.LiquidLens
+{
+    public class LavaLens() : MagikeApparatusItem(TileType<LavaLensTile>(), Item.sellPrice(silver: 5)
+        , RarityType<MagicCrystalRarity>(), AssetDirectory.MagikeLens)
+    {
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient<Basalt>(14)
+                .AddIngredient(ItemID.LavaBucket)
+                .AddIngredient(ItemID.DemoniteBar, 5)
+                .AddCondition(CoraliteConditions.LearnedMagikeBase)
+                .AddTile(TileID.Anvils)
+                .Register();
+        }
+    }
 
-//        public override int MagikeMax => 60;
-//        public string SendDelay => "10";
-//        public int HowManyPerSend => 2;
-//        public int ConnectLengthMax => 5;
-//        public int HowManyToGenerate => 2;
-//        public string GenerateDelay => "10";
+    public class LavaLensTile() : BaseLensTile
+        (Color.Red, DustID.Lava)
+    {
+        public override int DropItemType => ItemType<LavaLens>();
+        public override MagikeTileEntity GetEntityInstance() => GetInstance<LavaLensTileEntity>();
 
-//        public override void AddRecipes()
-//        {
-//            CreateRecipe()
-//                .AddIngredient<MagicCrystal>(2)
-//                .AddIngredient(ItemID.HellstoneBar, 8)
-//                .AddCondition(CoraliteConditions.LearnedMagikeBase)
-//                .AddTile(TileID.Anvils)
-//                .Register();
-//        }
-//    }
+        public override MagikeApparatusLevel[] GetAllLevels()
+        {
+            return
+            [
+                MagikeApparatusLevel.None,
+                MagikeApparatusLevel.Hellstone,
+                MagikeApparatusLevel.EternalFlame,
+            ];
+        }
+    }
 
-//    public class LavaLensTile : OldBaseLensTile
-//    {
-//        public override void SetStaticDefaults()
-//        {
-//            Main.tileShine[Type] = 400;
-//            Main.tileFrameImportant[Type] = true;
-//            Main.tileNoFail[Type] = true; //不会出现挖掘失败的情况
-//            TileID.Sets.IgnoredInHouseScore[Type] = true;
+    public class LavaLensTileEntity : BaseActiveProducerTileEntity<LavaLensTile>
+    {
+        public override MagikeContainer GetStartContainer()
+            => new LavaLensContainer();
 
-//            TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);
-//            TileObjectData.newTile.Height = 3;
-//            TileObjectData.newTile.CoordinateHeights = new int[3] {
-//                16,
-//                16,
-//                16
-//            };
-//            TileObjectData.newTile.DrawYOffset = 2;
-//            TileObjectData.newTile.LavaDeath = false;
-//            TileObjectData.newTile.WaterDeath = true;
-//            TileObjectData.newTile.LavaPlacement = Terraria.Enums.LiquidPlacement.Allowed;
-//            TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(GetInstance<LavaLensEntity>().Hook_AfterPlacement, -1, 0, true);
+        public override MagikeLinerSender GetStartSender()
+            => new LavaLensSender();
 
-//            TileObjectData.addTile(Type);
+        public override MagikeActiveProducer GetStartProducer()
+            => new LavaProducer();
+    }
 
-//            AddMapEntry(Color.OrangeRed);
-//            DustType = DustID.Lava;
-//        }
-//    }
+    public class LavaLensContainer : UpgradeableContainer
+    {
+        public override void Upgrade(MagikeApparatusLevel incomeLevel)
+        {
+            switch (incomeLevel)
+            {
+                default:
+                    MagikeMaxBase = 0;
+                    AntiMagikeMaxBase = 0;
+                    break;
+                case MagikeApparatusLevel.Hellstone:
+                    MagikeMaxBase = 9;
+                    AntiMagikeMaxBase = MagikeMaxBase * 3;
+                    break;
+                case MagikeApparatusLevel.EternalFlame:
+                    MagikeMaxBase = 562;
+                    AntiMagikeMaxBase = MagikeMaxBase * 2;
+                    break;
+            }
 
-//    public class LavaLensEntity : MagikeGenerator_Normal
-//    {
-//        public const int sendDelay = 10 * 60;
-//        public int sendTimer;
-//        public LavaLensEntity() : base(60, 5 * 16, 10 * 60) { }
+            LimitMagikeAmount();
+            LimitAntiMagikeAmount();
+        }
+    }
 
-//        public override ushort TileType => (ushort)TileType<LavaLensTile>();
+    public class LavaLensSender : UpgradeableLinerSender
+    {
+        public override void Upgrade(MagikeApparatusLevel incomeLevel)
+        {
+            MaxConnectBase = 1;
+            ConnectLengthBase = 4 * 16;
 
-//        public override int HowManyPerSend => 2;
-//        public override int HowManyToGenerate => 2;
+            switch (incomeLevel)
+            {
+                default:
+                    MaxConnectBase = 0;
+                    UnitDeliveryBase = 0;
+                    SendDelayBase = 1_0000_0000 / 60;//随便填个大数
+                    ConnectLengthBase = 0;
+                    break;
+                case MagikeApparatusLevel.Hellstone:
+                    UnitDeliveryBase = 3;
+                    SendDelayBase = 10;
+                    break;
+                case MagikeApparatusLevel.EternalFlame:
+                    UnitDeliveryBase = 150;
+                    SendDelayBase = 8;
+                    break;
+            }
 
-//        public override bool CanSend()
-//        {
-//            sendTimer++;
-//            if (sendTimer > sendDelay)
-//            {
-//                sendTimer = 0;
-//                return true;
-//            }
+            SendDelayBase *= 60;
+            RecheckConnect();
+        }
+    }
 
-//            return false;
-//        }
+    public class LavaProducer : UpgradeableProducerByLiquid
+    {
+        public override MagikeSystem.UITextID ApparatusName()
+            => MagikeSystem.UITextID.LavaLensName;
 
-//        public override void OnGenerate(int howMany)
-//        {
-//            GenerateAndChargeSelf(howMany);
-//        }
+        public override MagikeSystem.UITextID ProduceCondition()
+            => MagikeSystem.UITextID.LavaCondition;
 
-//        public override bool CanGenerate()
-//        {
-//            Point point = new(Position.X, Position.Y + 2);
-//            Tile tile = Framing.GetTileSafely(point);
-//            return tile.LiquidType == LiquidID.Lava && tile.LiquidAmount > 128;
-//        }
+        public override bool CheckLiquid(Tile tile)
+        {
+            if (tile.LiquidAmount < 256 / 16)
+                return false;
 
-//        public override void SendVisualEffect(IMagikeContainer container)
-//        {
-//            MagikeHelper.SpawnDustOnSend(2, 3, Position, container, Color.OrangeRed);
-//        }
+            if (tile.LiquidType != LiquidID.Lava)
+                return false;
 
-//        public override void OnReceiveVisualEffect()
-//        {
-//            MagikeHelper.SpawnDustOnGenerate(2, 3, Position, Color.OrangeRed, DustID.FireworksRGB);
-//        }
-//    }
-//}
+            tile.LiquidAmount -= 256 / 16;
+            return true;
+        }
+
+        public override void Upgrade(MagikeApparatusLevel incomeLevel)
+        {
+            switch (incomeLevel)
+            {
+                default:
+                    ProductionDelayBase = 1_0000_0000 / 60;//随便填个大数
+                    ThroughputBase = 1;
+                    break;
+                case MagikeApparatusLevel.Hellstone:
+                    ProductionDelayBase = 10;
+                    ThroughputBase = 1;
+                    break;
+                case MagikeApparatusLevel.EternalFlame:
+                    ProductionDelayBase = 8;
+                    ThroughputBase = 50;
+                    break;
+            }
+
+            ProductionDelayBase *= 60;
+            Timer = ProductionDelayBase;
+        }
+    }
+}

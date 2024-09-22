@@ -57,13 +57,13 @@ namespace Coralite.Content.Items.CoreKeeper
         {
             if (polished)
             {
-                player.GetDamage(DamageClass.Melee) += 0.123f;
-                player.GetDamage(DamageClass.Ranged) += 0.125f;
+                player.GetDamage(DamageClass.Magic) += 0.123f;
+                player.GetDamage(DamageClass.Summon) += 0.125f;
             }
             else
             {
-                player.GetDamage(DamageClass.Melee) += 0.09f;
-                player.GetDamage(DamageClass.Ranged) += 0.094f;
+                player.GetDamage(DamageClass.Magic) += 0.09f;
+                player.GetDamage(DamageClass.Summon) += 0.094f;
             }
         }
 
@@ -80,7 +80,7 @@ namespace Coralite.Content.Items.CoreKeeper
                 TooltipLine tooltip2 = tooltips.FirstOrDefault(t => t.Mod == "Terraria" && t.Name == "Tooltip0", null);
                 if (tooltip2 != null)
                 {
-                    tooltip2.Text = this.GetLocalization("PolishedToolTip", () => "+12.3%近战伤害\n+12.5%远程伤害").Value;
+                    tooltip2.Text = this.GetLocalization("PolishedToolTip").Value;
                 }
                 tooltip2 = tooltips.FirstOrDefault(t => t.Mod == "Terraria" && t.Name == "Tooltip1", null);
                 if (tooltip2 != null)

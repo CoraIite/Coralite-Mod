@@ -28,7 +28,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
             if (!MagikeSystem.MagikeFrameToLevels.TryGetValue(tileType, out var keyValuePairs))
                 return false;
 
-            string text = MagikeSystem.GetItemDescriptionText(MagikeSystem.ItemDescriptionID.PolarizedFilter);
+            string text = MagikeSystem.GetItemDescriptionText(MagikeSystem.ItemDescriptionID.PolarizedFilter)+ "\n  ";
 
             int lineCountMax = 0;
             foreach (var i in keyValuePairs)
@@ -42,7 +42,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
                 if (lineCountMax > 8)
                 {
                     lineCountMax = 0;
-                    text += Environment.NewLine + "    ";
+                    text += Environment.NewLine + "  ";
                 }
             }
 

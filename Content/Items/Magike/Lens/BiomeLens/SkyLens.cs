@@ -33,7 +33,7 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
     }
 
     public class SkyLensTile() : BaseLensTile
-        (2, 3, Color.SandyBrown, DustID.Cloud)
+        ( Color.SandyBrown, DustID.Cloud)
     {
         public override int DropItemType => ItemType<SkyLens>();
 
@@ -134,7 +134,7 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
         }
     }
 
-    public class SkyProducer : UpgradeableBiomeProducer
+    public class SkyProducer : UpgradeableProducerByBiome
     {
         public override MagikeSystem.UITextID ApparatusName()
             => MagikeSystem.UITextID.SkyLensName;

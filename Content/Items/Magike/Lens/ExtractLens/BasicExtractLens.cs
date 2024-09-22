@@ -27,7 +27,7 @@ namespace Coralite.Content.Items.Magike.Lens.ExtractLens
     }
 
     public class BasicExtractLensTile() : BaseLensTile
-        (2, 3, Coralite.MagicCrystalPink, DustID.CorruptionThorns)
+        ( Coralite.MagicCrystalPink, DustID.CorruptionThorns)
     {
         public override int DropItemType => ItemType<BasicExtractLens>();
 

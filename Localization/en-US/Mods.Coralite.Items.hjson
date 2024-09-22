@@ -1653,7 +1653,8 @@ GlowTulipRing: {
 	PolishedToolTip:
 		'''
 		+4 glow
-		+1 health every sec
+		+7.8% Magic Damage
+		Slightly increases mana regeneration
 		'''
 }
 
@@ -1683,15 +1684,15 @@ GoldCrystalNecklace: {
 	DisplayName: Gold Crystal Necklace
 	Tooltip:
 		'''
-		9% increased melee damage
-		9.4% increased ranged damage
+		9% increased magic damage
+		9.4% increased summon damage
 		[c/8e8e8e:A shiny trinket combining the most valuable of materials.]
 		'''
 	Polished: "Polished "
 	PolishedToolTip:
 		'''
-		+12.3% increased melee damage
-		+12.5% increased ranged damage
+		+12.3% increased magic damage
+		+12.5% increased summon damage
 		'''
 }
 
@@ -1708,16 +1709,6 @@ GoldCrystalRing: {
 		+8.9% increased ranged damage
 		+4% increased ranged attack speed
 		'''
-}
-
-OctarineBar: {
-	DisplayName: Octarine Bar
-	Tooltip: ""
-}
-
-OctarineOre: {
-	DisplayName: Octarine Ore
-	Tooltip: ""
 }
 
 SkyRing: {
@@ -1763,8 +1754,8 @@ BubblePearlNecklace: {
 	DisplayName: Bubble Pearl Necklace
 	Tooltip:
 		'''
-		+12 max health
-		+7 defence
+		+6 increased magic damage
+		Slightly increases mana regeneration
 		+6% dodge chance
 		[c/8e8e8e:Natural grown jewelry made from rare bubble pearls.]
 		'''
@@ -4309,4 +4300,54 @@ RadiantSun: {
 MagicCrystalClusters: {
 	DisplayName: Magic Crystal Clusters
 	Tooltip: ""
+}
+
+MoonlightLens: {
+	DisplayName: Moonlight Lens
+	Tooltip: ""
+}
+
+BloodJadePolarizedFilter: {
+	DisplayName: Blood Jade Polarized Filter
+	Tooltip: ""
+}
+
+RedJadePolarizedFilter: {
+	DisplayName: Red Jade Polarized Filter
+	Tooltip: ""
+}
+
+HellLens: {
+	DisplayName: Hell Lens
+	Tooltip: ""
+}
+
+LavaLens: {
+	DisplayName: Lava Lens
+	Tooltip: ""
+}
+
+CoralAmulet: {
+	DisplayName: Coral Amulet
+	Tooltip:
+		'''
+		+6% move speed
+		[c/8e8e8e:A necklace made with a pretty coral badge and white pebbles.]
+		'''
+	Polished: "Polished "
+	PolishedToolTip:
+		'''
+		+10% move speed
+		+5 fishing skills
+		'''
+}
+
+CoralRing: {
+	DisplayName: Coral Ring
+	Tooltip:
+		'''
+		+45 max health
+		Allows you to swim in the water without hindrance
+		[c/8e8e8e:An intricate ring naturally grown from pink, branchy corals.]
+		'''
 }

@@ -33,7 +33,7 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
     }
 
     public class GlowingMushroomLensTile() : BaseLensTile
-        (2, 3, Color.DarkBlue, DustID.GlowingMushroom)
+        ( Color.DarkBlue, DustID.GlowingMushroom)
     {
         public override int DropItemType => ItemType<GlowingMushroomLens>();
 
@@ -125,7 +125,7 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
         }
     }
 
-    public class GlowingMushroomProducer : UpgradeableBiomeProducer
+    public class GlowingMushroomProducer : UpgradeableProducerByBiome
     {
         public override MagikeSystem.UITextID ApparatusName()
             => MagikeSystem.UITextID.GlowingMushroomLensName;

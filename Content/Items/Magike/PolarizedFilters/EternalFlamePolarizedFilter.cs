@@ -21,6 +21,7 @@ namespace Coralite.Content.Items.Magike.PolarizedFilters
             CreateRecipe()
                 .AddIngredient<HellstonePolarizedFilter>()
                 .AddIngredient(ItemID.HallowedBar, 6)
+                .AddIngredient(ItemID.LivingFireBlock, 12)
                 .AddTile(TileID.Anvils)
                 .Register();
         }

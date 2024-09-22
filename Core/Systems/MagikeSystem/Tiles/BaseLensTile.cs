@@ -6,7 +6,7 @@ using Terraria;
 
 namespace Coralite.Core.Systems.MagikeSystem.Tiles
 {
-    public abstract class BaseLensTile(int width, int height, Color mapColor, int dustType, int minPick = 0)
+    public abstract class BaseLensTile(Color mapColor, int dustType, int width = 2, int height = 3, int minPick = 0)
         : BaseMagikeTile(width, height, mapColor, dustType, minPick)
     {
         public override string Texture => AssetDirectory.MagikeLensTiles + Name;

@@ -33,7 +33,7 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
     }
 
     public class OceanLensTile() : BaseLensTile
-        (2, 3, Color.SandyBrown, DustID.Sand)
+        ( Color.SandyBrown, DustID.Sand)
     {
         public override int DropItemType => ItemType<OceanLens>();
 
@@ -125,7 +125,7 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
         }
     }
 
-    public class OceanProducer : UpgradeableBiomeProducer
+    public class OceanProducer : UpgradeableProducerByBiome
     {
         public override MagikeSystem.UITextID ApparatusName()
             => MagikeSystem.UITextID.OceanLensName;

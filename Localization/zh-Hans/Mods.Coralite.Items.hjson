@@ -1686,7 +1686,8 @@ GlowTulipRing: {
 	PolishedToolTip:
 		'''
 		+4亮光
-		每秒+1.0点生命值
+		+7.8% 魔法伤害
+		略微增加魔力回复
 		'''
 }
 
@@ -1716,15 +1717,15 @@ GoldCrystalNecklace: {
 	DisplayName: 黄金水晶项链
 	Tooltip:
 		'''
-		+9.0%近战伤害
-		+9.4%远程伤害
+		+9.0% 魔法伤害
+		+9.4% 召唤伤害
 		[c/8e8e8e:将最为贵重的几种材料结合起来打造而成的饰物，闪闪发亮。]
 		'''
 	Polished: "经过抛光的 "
 	PolishedToolTip:
 		'''
-		+12.3%近战伤害
-		+12.5%远程伤害
+		+12.3% 魔法伤害
+		+12.5% 召唤伤害
 		'''
 }
 
@@ -1741,16 +1742,6 @@ GoldCrystalRing: {
 		+8.9%远程伤害
 		+4%远程攻击速度
 		'''
-}
-
-OctarineBar: {
-	DisplayName: 幻光金属锭
-	Tooltip: ""
-}
-
-OctarineOre: {
-	DisplayName: 幻光金属矿石
-	Tooltip: ""
 }
 
 SkyRing: {
@@ -1797,9 +1788,9 @@ BubblePearlNecklace: {
 	DisplayName: 气泡珍珠项链
 	Tooltip:
 		'''
-		+12点生命值上限
-		+7护甲
-		+5闪避几率
+		+6% 魔法伤害
+		略微增加魔力再生速率
+		+5 闪避几率
 		[c/8e8e8e:自然生成的首饰，用稀有的气泡珍珠打造而成。]
 		'''
 }
@@ -4435,4 +4426,66 @@ RadiantSun: {
 MagicCrystalClusters: {
 	DisplayName: 魔力水晶簇
 	Tooltip: 可以使用同等级的光束采集器采挖魔力晶体
+}
+
+MoonlightLens: {
+	DisplayName: 月光透镜
+	Tooltip:
+		'''
+		在月光照射时生产魔能
+		{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}
+		'''
+}
+
+BloodJadePolarizedFilter: {
+	DisplayName: 偏振滤镜-赤血玉
+	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
+}
+
+RedJadePolarizedFilter: {
+	DisplayName: 偏振滤镜-赤玉
+	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
+}
+
+HellLens: {
+	DisplayName: 地狱透镜
+	Tooltip:
+		'''
+		在地狱生产魔能，需要将底座放置在灰烬或地狱建筑方块上
+		{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}
+		'''
+}
+
+LavaLens: {
+	DisplayName: 熔岩透镜
+	Tooltip:
+		'''
+		底座沐浴在熔岩中时消耗熔岩生产魔能
+		{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}
+		'''
+}
+
+CoralAmulet: {
+	DisplayName: 珊瑚护身符
+	Tooltip:
+		'''
+		+6% 移动速度
+		[c/8e8e8e:用漂亮的珊瑚徽章和白色鹅卵石制成的项链。]
+		'''
+	Polished: "经过抛光的 "
+	PolishedToolTip:
+		'''
+		+10% 移动速度
+		+5 渔力
+		'''
+}
+
+CoralRing: {
+	DisplayName: 珊瑚戒指
+	Tooltip:
+		'''
+		+45 生命值上限
+		让你在水中畅游无阻
+		[c/8e8e8e:粉色珊瑚枝上天然生成的戒指，相当精致。]
+		'''
 }

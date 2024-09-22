@@ -20,11 +20,11 @@ namespace Coralite.Content.Items.CoreKeeper
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.statDefense += 7;
+            player.GetDamage(DamageClass.Melee) += 0.06f;
+            player.manaRegenBonus += 5;
             if (player.TryGetModPlayer(out CoralitePlayer cp))
             {
                 cp.coreKeeperDodge += 0.05f;
-                cp.LifeMaxModifyer.Flat += 12;
             }
         }
     }

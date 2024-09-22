@@ -278,6 +278,16 @@ MagikeSystem: {
 		GetOnlyItemContainerName: 仅取出的物品容器
 		SnowfieldLensName: 雪原透镜
 		SnowfieldCondition: "  ▶ 需要将底座放置在冰雪块上"
+		MoonlightLensName: 月光透镜
+		MoonlightCondition: "  ▶ 需要月光"
+		LavaLensName: 熔岩透镜
+		LavaCondition:
+			'''
+			  ▶ 需要消耗底座上的岩浆
+			  ▶ 底座上每格消耗 1 / 16 的岩浆
+			'''
+		HellLensName: 地狱透镜
+		HellCondition: "  ▶ 需要将底座放置在灰烬或地狱建筑方块上"
 	}
 
 	CraftText: {

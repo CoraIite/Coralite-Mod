@@ -28,7 +28,7 @@ namespace Coralite.Content.Items.Magike.Lens.DayTimeLens
     }
 
     public class SunlightLensTile() : BaseLensTile
-        (2, 3, Color.SandyBrown, DustID.Sand)
+        ( Color.SaddleBrown, DustID.HallowedTorch)
     {
         public override int DropItemType => ItemType<SunlightLens>();
         public override MagikeTileEntity GetEntityInstance() => GetInstance<SunlightLensTileEntity>();
@@ -120,7 +120,7 @@ namespace Coralite.Content.Items.Magike.Lens.DayTimeLens
         }
     }
 
-    public class SunlightProducer : UpgradeableTimeProducer
+    public class SunlightProducer : UpgradeableProducerByTime
     {
         public override MagikeSystem.UITextID ApparatusName()
             => MagikeSystem.UITextID.SunlightLensName;

@@ -1,165 +1,164 @@
-﻿//using Coralite.Content.Items.MagikeSeries1;
-//using Coralite.Content.Raritys;
-//using Coralite.Core;
-//using Coralite.Core.Systems.MagikeSystem;
-//using Coralite.Core.Systems.MagikeSystem.BaseItems;
-//using Coralite.Core.Systems.MagikeSystem.TileEntities;
-//using Coralite.Core.Systems.MagikeSystem.Tiles;
-//using Coralite.Helpers;
-//using Microsoft.Xna.Framework.Graphics;
-//using System;
-//using Terraria;
-//using Terraria.DataStructures;
-//using Terraria.ID;
-//using Terraria.ObjectData;
-//using static Terraria.ModLoader.ModContent;
+﻿using Coralite.Content.Items.MagikeSeries1;
+using Coralite.Content.Raritys;
+using Coralite.Core;
+using Coralite.Core.Systems.MagikeSystem;
+using Coralite.Core.Systems.MagikeSystem.BaseItems;
+using Coralite.Core.Systems.MagikeSystem.Components;
+using Coralite.Core.Systems.MagikeSystem.Components.Producers;
+using Coralite.Core.Systems.MagikeSystem.TileEntities;
+using Coralite.Core.Systems.MagikeSystem.Tiles;
+using Terraria;
+using Terraria.ID;
+using static Terraria.ModLoader.ModContent;
 
-//namespace Coralite.Content.Items.Magike.BiomeLens
-//{
-//    public class HellLens : BaseMagikePlaceableItem, IMagikeGeneratorItem, IMagikeSenderItem
-//    {
-//        public HellLens() : base(TileType<HellLensTile>(), Item.sellPrice(0, 0, 50, 0)
-//            , RarityType<MagicCrystalRarity>(), 50, AssetDirectory.MagikeLens)
-//        { }
+namespace Coralite.Content.Items.Magike.Lens.BiomeLens
+{
+    public class HellLens() : MagikeApparatusItem(TileType<HellLensTile>(), Item.sellPrice(silver: 5)
+        , RarityType<MagicCrystalRarity>(), AssetDirectory.MagikeLens)
+    {
+        public override bool CanUseItem(Player player)
+        {
+            return player.ZoneUnderworldHeight;
+        }
 
-//        public override int MagikeMax => 80;
-//        public string SendDelay => "10";
-//        public int HowManyPerSend => 3;
-//        public int ConnectLengthMax => 5;
-//        public int HowManyToGenerate => 3;
-//        public string GenerateDelay => "10";
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient<Basalt>(10)
+                .AddIngredient(ItemID.AshBlock, 10)
+                .AddCondition(CoraliteConditions.LearnedMagikeBase)
+                .AddTile(TileID.Anvils)
+                .Register();
+        }
+    }
 
-//        public override void AddRecipes()
-//        {
-//            CreateRecipe()
-//                .AddIngredient<MagicCrystal>(5)
-//                .AddIngredient(ItemID.HellstoneBar, 10)
-//                .AddCondition(CoraliteConditions.LearnedMagikeBase)
-//                .AddTile(TileID.Anvils)
-//                .Register();
-//        }
+    public class HellLensTile() : BaseLensTile
+        (Color.DarkRed, DustID.Torch)
+    {
+        public override int DropItemType => ItemType<HellLens>();
 
-//        public override bool CanUseItem(Player player)
-//        {
-//            return player.ZoneUnderworldHeight;
-//        }
-//    }
+        public override int[] GetAnchorValidTiles()
+        {
+            return
+            [
+                TileID.Ash,TileID.AshGrass,TileID.Hellstone,TileID.HellstoneBrick,TileID.AncientHellstoneBrick,TileID.ObsidianBrick
+            ];
+        }
 
-//    public class HellLensTile : OldBaseLensTile
-//    {
-//        public override void SetStaticDefaults()
-//        {
-//            //Main.tileShine[Type] = 400;
-//            Main.tileFrameImportant[Type] = true;
-//            Main.tileNoFail[Type] = true; //不会出现挖掘失败的情况
-//            TileID.Sets.IgnoredInHouseScore[Type] = true;
+        public override MagikeTileEntity GetEntityInstance() => GetInstance<HellLensTileEntity>();
 
-//            TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);
-//            TileObjectData.newTile.Height = 3;
-//            TileObjectData.newTile.CoordinateHeights = new int[3] {
-//                16,
-//                16,
-//                16
-//            };
-//            TileObjectData.newTile.DrawYOffset = 2;
-//            TileObjectData.newTile.LavaDeath = true;
-//            TileObjectData.newTile.WaterDeath = false;
-//            TileObjectData.newTile.WaterPlacement = Terraria.Enums.LiquidPlacement.Allowed;
-//            TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(GetInstance<HellLensEntity>().Hook_AfterPlacement, -1, 0, true);
+        public override MagikeApparatusLevel[] GetAllLevels()
+        {
+            return
+            [
+                MagikeApparatusLevel.None,
+                MagikeApparatusLevel.Hellstone,
+                MagikeApparatusLevel.EternalFlame,
+            ];
+        }
+    }
 
-//            TileObjectData.addTile(Type);
+    public class HellLensTileEntity : BaseActiveProducerTileEntity<HellLensTile>
+    {
+        public override MagikeContainer GetStartContainer()
+            => new HellLensContainer();
 
-//            AddMapEntry(Color.IndianRed);
-//            DustType = DustID.LavaMoss;
-//        }
+        public override MagikeLinerSender GetStartSender()
+            => new HellLensSender();
 
-//        public override void SpecialDraw(int i, int j, SpriteBatch spriteBatch)
-//        {
-//            //这是特定于照明模式的，如果您手动绘制瓷砖，请始终包含此内容
-//            Vector2 offScreen = new(Main.offScreenRange);
-//            if (Main.drawToScreen)
-//                offScreen = Vector2.Zero;
+        public override MagikeActiveProducer GetStartProducer()
+            => new HellProducer();
+    }
 
-//            //检查物块它是否真的存在
-//            Point p = new(i, j);
-//            Tile tile = Main.tile[p.X, p.Y];
-//            if (tile == null || !tile.HasTile)
-//                return;
+    public class HellLensContainer : UpgradeableContainer
+    {
+        public override void Upgrade(MagikeApparatusLevel incomeLevel)
+        {
+            switch (incomeLevel)
+            {
+                default:
+                    MagikeMaxBase = 0;
+                    AntiMagikeMaxBase = 0;
+                    break;
+                case MagikeApparatusLevel.Hellstone:
+                    MagikeMaxBase = 9;
+                    AntiMagikeMaxBase = MagikeMaxBase * 3;
+                    break;
+                case MagikeApparatusLevel.EternalFlame:
+                    MagikeMaxBase = 562;
+                    AntiMagikeMaxBase = MagikeMaxBase * 2;
+                    break;
+            }
 
-//            //获取初始绘制参数
-//            Texture2D texture = TopTexture.Value;
+            LimitMagikeAmount();
+            LimitAntiMagikeAmount();
+        }
+    }
 
-//            // 根据项目的地点样式拾取图纸上的框架
-//            Rectangle frame = texture.Frame(2, 1, 0, 0);
+    public class HellLensSender : UpgradeableLinerSender
+    {
+        public override void Upgrade(MagikeApparatusLevel incomeLevel)
+        {
+            MaxConnectBase = 1;
+            ConnectLengthBase = 4 * 16;
 
-//            Vector2 origin = frame.Size() / 2f;
-//            Vector2 worldPos = p.ToWorldCoordinates(halfWidth, halfHeight);
+            switch (incomeLevel)
+            {
+                default:
+                    MaxConnectBase = 0;
+                    UnitDeliveryBase = 0;
+                    SendDelayBase = 1_0000_0000 / 60;//随便填个大数
+                    ConnectLengthBase = 0;
+                    break;
+                case MagikeApparatusLevel.Hellstone:
+                    UnitDeliveryBase = 3;
+                    SendDelayBase = 10;
+                    break;
+                case MagikeApparatusLevel.EternalFlame:
+                    UnitDeliveryBase = 150;
+                    SendDelayBase = 8;
+                    break;
+            }
 
-//            Color color = Lighting.GetColor(p.X, p.Y);
+            SendDelayBase *= 60;
+            RecheckConnect();
+        }
+    }
 
-//            //这与我们之前注册的备用磁贴数据有关
-//            bool direction = tile.TileFrameY / FrameHeight != 0;
-//            SpriteEffects effects = direction ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+    public class HellProducer : UpgradeableProducerByBiome
+    {
+        public override MagikeSystem.UITextID ApparatusName()
+            => MagikeSystem.UITextID.HellLensName;
 
-//            // 一些数学魔法，使其随着时间的推移平稳地上下移动
-//            Vector2 drawPos = worldPos + offScreen - Main.screenPosition;
-//            if (MagikeHelper.TryGetEntityWithTopLeft(i, j, out IMagikeContainer container))
-//            {
-//                if (container.Active)   //如果处于活动状态那么就会上下移动，否则就落在底座上
-//                {
-//                    const float TwoPi = (float)Math.PI * 2f;
-//                    float offset = (float)Math.Sin(Main.GlobalTimeWrappedHourly * TwoPi / 5f);
-//                    drawPos += new Vector2(0f, offset * 4f);
-//                    //int yframe = (int)(5 * Main.GlobalTimeWrappedHourly % 10);
-//                    frame = texture.Frame(2, 1, 1, 0);
-//                }
-//                else
-//                    drawPos += new Vector2(0, halfHeight - 16);
-//            }
+        public override MagikeSystem.UITextID ProduceCondition()
+            => MagikeSystem.UITextID.HellCondition;
 
-//            // 绘制主帖图
-//            spriteBatch.Draw(texture, drawPos, frame, color, 0f, origin, 1f, effects, 0f);
-//        }
-//    }
+        public override bool CheckTile(Tile tile)
+            => tile.TileType is TileID.Ash or TileID.AshGrass or TileID.Hellstone or TileID.HellstoneBrick or TileID.AncientHellstoneBrick or TileID.ObsidianBrick;
 
-//    public class HellLensEntity : MagikeGenerator_Normal
-//    {
-//        public const int sendDelay = 10 * 60;
-//        public int sendTimer;
-//        public HellLensEntity() : base(80, 5 * 16, 10 * 60) { }
+        public override bool CheckWall(Tile tile)
+            => true;
 
-//        public override ushort TileType => (ushort)TileType<HellLensTile>();
+        public override void Upgrade(MagikeApparatusLevel incomeLevel)
+        {
+            switch (incomeLevel)
+            {
+                default:
+                    ProductionDelayBase = 1_0000_0000 / 60;//随便填个大数
+                    ThroughputBase = 1;
+                    break;
+                case MagikeApparatusLevel.Hellstone:
+                    ProductionDelayBase = 10;
+                    ThroughputBase = 1;
+                    break;
+                case MagikeApparatusLevel.EternalFlame:
+                    ProductionDelayBase = 8;
+                    ThroughputBase = 50;
+                    break;
+            }
 
-//        public override int HowManyPerSend => 3;
-//        public override int HowManyToGenerate => 3;
-
-//        public override bool CanSend()
-//        {
-//            sendTimer++;
-//            if (sendTimer > sendDelay)
-//            {
-//                sendTimer = 0;
-//                return true;
-//            }
-
-//            return false;
-//        }
-
-//        public override void OnGenerate(int howMany)
-//        {
-//            GenerateAndChargeSelf(howMany);
-//        }
-
-//        public override bool CanGenerate() => true;
-
-//        public override void SendVisualEffect(IMagikeContainer container)
-//        {
-//            MagikeHelper.SpawnDustOnSend(2, 3, Position, container, Color.IndianRed, DustID.LavaMoss);
-//        }
-
-//        public override void OnReceiveVisualEffect()
-//        {
-//            MagikeHelper.SpawnDustOnGenerate(2, 3, Position, Color.IndianRed, DustID.LavaMoss);
-//        }
-//    }
-//}
+            ProductionDelayBase *= 60;
+            Timer = ProductionDelayBase;
+        }
+    }
+}

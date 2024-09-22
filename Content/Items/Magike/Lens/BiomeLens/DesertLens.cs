@@ -34,7 +34,7 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
     }
 
     public class DesertLensTile() : BaseLensTile
-        (2, 3, Color.SandyBrown, DustID.Sand)
+        ( Color.SandyBrown, DustID.Sand)
     {
         public override int DropItemType => ItemType<DesertLens>();
 
@@ -126,7 +126,7 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
         }
     }
 
-    public class DesertProducer : UpgradeableBiomeProducer
+    public class DesertProducer : UpgradeableProducerByBiome
     {
         public override MagikeSystem.UITextID ApparatusName()
             => MagikeSystem.UITextID.DesertLensName;

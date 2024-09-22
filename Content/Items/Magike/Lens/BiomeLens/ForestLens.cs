@@ -35,7 +35,7 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
     }
 
     public class ForestLensTile() : BaseLensTile
-        (2, 3, Color.Green, DustID.Grass)
+        ( Color.Green, DustID.Grass)
     {
         public override int DropItemType => ItemType<ForestLens>();
 
@@ -143,7 +143,7 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
         }
     }
 
-    public class ForestProducer : UpgradeableBiomeProducer
+    public class ForestProducer : UpgradeableProducerByBiome
     {
         public override MagikeSystem.UITextID ApparatusName()
             => MagikeSystem.UITextID.ForestLensName;

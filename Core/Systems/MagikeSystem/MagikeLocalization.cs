@@ -284,8 +284,6 @@ namespace Coralite.Core.Systems.MagikeSystem
              *      - 生产条件
              *      - 含有魔能的物品
              * - 其他生产器
-             *      - 森林名称
-             *      - 森林条件
              *      
              */
 
@@ -308,6 +306,12 @@ namespace Coralite.Core.Systems.MagikeSystem
             SunlightCondition,
             SnowfieldLensName,
             SnowfieldCondition,
+            MoonlightLensName,
+            MoonlightCondition,
+            LavaLensName,
+            LavaCondition,
+            HellLensName,
+            HellCondition,
 
             /*
              * 物品容器

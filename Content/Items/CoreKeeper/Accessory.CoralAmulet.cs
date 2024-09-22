@@ -9,7 +9,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.CoreKeeper
 {
-    public class GlowTulipRing : PolishableAccessory
+    public class CoralAmulet : PolishableAccessory
     {
         public override string Texture => AssetDirectory.CoreKeeperItems + Name;
 
@@ -18,15 +18,15 @@ namespace Coralite.Content.Items.CoreKeeper
             Item.accessory = true;
             Item.width = Item.height = 40;
 
-            Item.value = Item.sellPrice(0, 1, 0, 0);
+            Item.value = Item.sellPrice(0, 1);
             Item.rare = RarityType<UncommonRarity>();
         }
 
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ItemID.GlowTulip)
-                .AddIngredient(ItemID.IronBar, 10)
+                .AddIngredient(ItemID.Coral,5)
+                .AddIngredient(ItemID.Marble, 10)
                 .AddTile(TileID.WorkBenches)
                 .AddOnCraftCallback(Polish)
                 .Register();
@@ -54,16 +54,15 @@ namespace Coralite.Content.Items.CoreKeeper
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            float factor =  0.6f;
+            float speed = 0.06f;
+
             if (polished)
             {
-                factor = 0.8f;
-                player.manaRegenBonus += 5;
-                player.GetDamage(DamageClass.Magic) += 0.078f;
+                speed = 0.10f;
+                player.fishingSkill += 5;
             }
 
-            Lighting.AddLight(player.Center, new Vector3(0.55f, 0.95f, 0.8f) * factor);
-
+            player.moveSpeed += speed;
         }
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
@@ -79,7 +78,7 @@ namespace Coralite.Content.Items.CoreKeeper
                 TooltipLine tooltip2 = tooltips.FirstOrDefault(t => t.Mod == "Terraria" && t.Name == "Tooltip0", null);
                 if (tooltip2 != null)
                 {
-                    tooltip2.Text = this.GetLocalization("PolishedToolTip", () => "+4亮光\n每秒+1.0点生命值").Value;
+                    tooltip2.Text = this.GetLocalization("PolishedToolTip").Value;
                 }
             }
         }
