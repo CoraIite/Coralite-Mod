@@ -4351,3 +4351,53 @@ CoralRing: {
 		[c/8e8e8e:An intricate ring naturally grown from pink, branchy corals.]
 		'''
 }
+
+ChannelingGemstone: {
+	DisplayName: Channeling Gemstone
+	Tooltip: 
+	'''
+	A piece of an ancient weapon. 
+	[c/8e8e8e:A specially carved ancient gemstone that focuses energy at its tip. ]
+	[c/8e8e8e:It seems to be the center piece of an ancient powerful weapon. ]
+	'''
+}
+
+EnergyString: {
+	DisplayName: Energy String
+	Tooltip: 
+	'''
+	A piece of an ancient weapon. 
+	[c/8e8e8e:A fine filament that has microscopic pieces of ancient gemstones woven into it. ]
+	[c/8e8e8e:Its existence is proof of the absolute mastery over materials by whoever created it. ]
+	'''
+}
+
+FracturedLimbs: {
+	DisplayName: Fractured Limbs
+	Tooltip: 
+	'''
+	A piece of an ancient weapon. 
+	[c/8e8e8e:Golden pieces that once seemed to be fused together to endure great pressure. ]
+	[c/8e8e8e:Something inherently powerful must have broken them apart. ]
+	'''
+}
+
+HoneyLens: {
+	DisplayName: Honey Lens
+	Tooltip: ""
+}
+
+WaterflowLens: {
+	DisplayName: Waterflow Lens
+	Tooltip: ""
+}
+
+BeeswaxPolarizedFilter: {
+	DisplayName: Beeswax Polarized Filter
+	Tooltip: ""
+}
+
+GreenOnionBurritos: {
+	DisplayName: Green Onion Burritos
+	Tooltip: ""
+}

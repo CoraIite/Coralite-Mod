@@ -312,6 +312,12 @@ namespace Coralite.Core.Systems.MagikeSystem
             LavaCondition,
             HellLensName,
             HellCondition,
+            WaterflowLensName,
+            WaterflowCondition,
+            HoneyLensName,
+            HoneyCondition,
+            DungeonLensName,
+            DungeonCondition,
 
             /*
              * 物品容器

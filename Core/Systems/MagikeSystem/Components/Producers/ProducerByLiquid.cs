@@ -4,6 +4,7 @@ using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.UI.Elements;
+using Terraria.ID;
 using Terraria.ObjectData;
 using Terraria.UI;
 using static Coralite.Helpers.MagikeHelper;
@@ -24,13 +25,41 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Producers
         /// <returns></returns>
         public abstract MagikeSystem.UITextID ProduceCondition();
 
+        /// <summary>
+        /// 液体类型
+        /// </summary>
+        public virtual int LiquidType { get => 0; }
+
+        /// <summary>
+        /// 每次消耗液体的量
+        /// </summary>
+        public virtual byte CostCount { get => 256 / 16; }
+
         #region 生产逻辑部分
 
         /// <summary>
-        /// 检测当前时间
+        /// 检测当前液体
         /// </summary>
         /// <returns></returns>
-        public abstract bool CheckLiquid(Tile tile);
+        public virtual bool CheckLiquid(Tile tile)
+        {
+            if (tile.LiquidAmount < CostCount)
+                return false;
+
+            if (tile.LiquidType != LiquidType)
+                return false;
+
+            return true;
+        }
+
+        /// <summary>
+        /// 减少液体
+        /// </summary>
+        /// <param name="tile"></param>
+        public virtual void ReduceLiquid(Tile tile)
+        {
+            tile.LiquidAmount -= CostCount;
+        }
 
         public override bool CanProduce_SpecialCheck()
         {
@@ -66,6 +95,38 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Producers
             }
 
             return true;
+        }
+
+        public override void Produce()
+        {
+            Point16 point = (Entity as MagikeTileEntity).Position;
+
+            GetMagikeAlternateData(point.X, point.Y, out TileObjectData data, out MagikeAlternateStyle alternate);
+
+            //检测底座上的物块液体
+            switch (alternate)
+            {
+                case MagikeAlternateStyle.Bottom:
+                    for (int i = 0; i < data.Width; i++)
+                        ReduceLiquid(Framing.GetTileSafely(point.X + i, point.Y + data.Height - 1));
+                    break;
+                case MagikeAlternateStyle.Top:
+                    for (int i = 0; i < data.Width; i++)
+                        ReduceLiquid(Framing.GetTileSafely(point.X + i, point.Y));
+                    break;
+                case MagikeAlternateStyle.Left:
+                    for (int i = 0; i < data.Height; i++)
+                        ReduceLiquid(Framing.GetTileSafely(point.X, point.Y + i));
+                    break;
+                case MagikeAlternateStyle.Right:
+                    for (int i = 0; i < data.Height; i++)
+                        ReduceLiquid(Framing.GetTileSafely(point.X + data.Width - 1, point.Y + i));
+                    break;
+                default:
+                    return;
+            }
+
+            base.Produce();
         }
 
         #endregion

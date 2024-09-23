@@ -3,7 +3,7 @@ using Terraria;
 
 namespace Coralite.Content.Items.CoreKeeper
 {
-    public class ClearGemstone : ModItem
+    public class ChannelingGemstone : ModItem
     {
         public override string Texture => AssetDirectory.CoreKeeperItems + Name;
 
@@ -12,7 +12,7 @@ namespace Coralite.Content.Items.CoreKeeper
             Item.width = Item.height = 40;
             Item.maxStack = Item.CommonMaxStack;
 
-            Item.value = Item.sellPrice(0, 1, 0, 0);
+            Item.value = Item.sellPrice(0, 1);
             Item.rare = ModContent.RarityType<EpicRarity>();
         }
     }

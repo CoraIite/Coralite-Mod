@@ -84,11 +84,11 @@ namespace Coralite.Content.Items.CoreKeeper
                     return false;
                 }
 
-                int combo = Main.rand.Next(2);
+                int combo = Main.rand.NextFromList(0, 0, 0, 0, 1);
                 if (combo == oldCombo)
                 {
                     useCount++;
-                    if (useCount > 1)
+                    if (useCount > 3)
                     {
                         useCount = 0;
                         combo = combo switch

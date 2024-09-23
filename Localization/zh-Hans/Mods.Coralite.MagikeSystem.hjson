@@ -288,6 +288,18 @@ MagikeSystem: {
 			'''
 		HellLensName: 地狱透镜
 		HellCondition: "  ▶ 需要将底座放置在灰烬或地狱建筑方块上"
+		WaterflowLensName: 水流透镜
+		WaterflowCondition: 
+			'''
+			  ▶ 需要消耗底座上的水
+			  ▶ 底座上每格消耗 1 / 16 的水
+			'''
+		HoneyLensName: 蜂蜜透镜
+		HoneyCondition: 
+			'''
+			  ▶ 需要消耗底座上的蜂蜜
+			  ▶ 底座上每格消耗 1 / 16 的蜂蜜
+			'''
 	}
 
 	CraftText: {

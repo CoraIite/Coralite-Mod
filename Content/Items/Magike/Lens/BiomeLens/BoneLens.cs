@@ -1,115 +1,191 @@
-﻿//using Coralite.Content.Items.MagikeSeries1;
-//using Coralite.Content.Raritys;
-//using Coralite.Core;
-//using Coralite.Core.Systems.MagikeSystem;
-//using Coralite.Core.Systems.MagikeSystem.BaseItems;
-//using Coralite.Core.Systems.MagikeSystem.TileEntities;
-//using Coralite.Core.Systems.MagikeSystem.Tiles;
-//using Coralite.Helpers;
-//using Terraria;
-//using Terraria.DataStructures;
-//using Terraria.ID;
-//using Terraria.ObjectData;
-//using static Terraria.ModLoader.ModContent;
+﻿using Coralite.Content.Items.MagikeSeries1;
+using Coralite.Content.Raritys;
+using Coralite.Core;
+using Coralite.Core.Systems.MagikeSystem;
+using Coralite.Core.Systems.MagikeSystem.BaseItems;
+using Coralite.Core.Systems.MagikeSystem.Components;
+using Coralite.Core.Systems.MagikeSystem.Components.Producers;
+using Coralite.Core.Systems.MagikeSystem.TileEntities;
+using Coralite.Core.Systems.MagikeSystem.Tiles;
+using Terraria;
+using Terraria.ID;
+using static Terraria.ModLoader.ModContent;
 
-//namespace Coralite.Content.Items.Magike.BiomeLens
-//{
-//    public class BoneLens : BaseMagikePlaceableItem
-//    {
-//        public BoneLens() : base(TileType<BoneLensTile>(), Item.sellPrice(0, 0, 50, 0)
-//            , RarityType<MagicCrystalRarity>(), 50, AssetDirectory.MagikeLens)
-//        { }
+namespace Coralite.Content.Items.Magike.Lens.BiomeLens
+{
+    public class DungeonLens() : MagikeApparatusItem(TileType<DungeonLensTile>(), Item.sellPrice(silver: 5)
+        , RarityType<MagicCrystalRarity>(), AssetDirectory.MagikeLens)
+    {
+        public override bool CanUseItem(Player player)
+        {
+            return player.ZoneDungeon;
+        }
 
-//        public override int MagikeMax => 100;
-//        public string SendDelay => "10";
-//        public int HowManyPerSend => 4;
-//        public int ConnectLengthMax => 5;
-//        public int HowManyToGenerate => 2;
-//        public string GenerateDelay => "5";
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient<Basalt>(10)
+                .AddIngredient(ItemID.BlueBrick,10)
+                .AddCondition(CoraliteConditions.LearnedMagikeBase)
+                .AddTile(TileID.Anvils)
+                .Register();
 
-//        public override void AddRecipes()
-//        {
-//            CreateRecipe()
-//                .AddIngredient<MagicCrystal>(5)
-//                .AddIngredient(ItemID.Bone, 20)
-//                .AddCondition(CoraliteConditions.LearnedMagikeBase)
-//                .AddTile(TileID.Anvils)
-//                .Register();
-//        }
+            CreateRecipe()
+                .AddIngredient<Basalt>(10)
+                .AddIngredient(ItemID.GreenBrick,10)
+                .AddCondition(CoraliteConditions.LearnedMagikeBase)
+                .AddTile(TileID.Anvils)
+                .Register();
 
-//        public override bool CanUseItem(Player player)
-//        {
-//            return player.ZoneDungeon;
-//        }
-//    }
+            CreateRecipe()
+                .AddIngredient<Basalt>(10)
+                .AddIngredient(ItemID.PinkBrick,10)
+                .AddCondition(CoraliteConditions.LearnedMagikeBase)
+                .AddTile(TileID.Anvils)
+                .Register();
+        }
+    }
 
-//    public class BoneLensTile : OldBaseLensTile
-//    {
-//        public override void SetStaticDefaults()
-//        {
-//            //Main.tileShine[Type] = 400;
-//            Main.tileFrameImportant[Type] = true;
-//            Main.tileNoFail[Type] = true; //不会出现挖掘失败的情况
-//            TileID.Sets.IgnoredInHouseScore[Type] = true;
+    public class DungeonLensTile() : BaseLensTile
+        (Color.DimGray, DustID.Bone)
+    {
+        public override int DropItemType => ItemType<DungeonLens>();
 
-//            TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);
-//            TileObjectData.newTile.Height = 3;
-//            TileObjectData.newTile.CoordinateHeights = new int[3] {
-//                16,
-//                16,
-//                16
-//            };
-//            TileObjectData.newTile.DrawYOffset = 2;
-//            TileObjectData.newTile.LavaDeath = true;
-//            TileObjectData.newTile.WaterDeath = false;
-//            TileObjectData.newTile.WaterPlacement = Terraria.Enums.LiquidPlacement.Allowed;
-//            TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(GetInstance<BoneLensEntity>().Hook_AfterPlacement, -1, 0, true);
+        public override int[] GetAnchorValidTiles()
+        {
+            return
+            [
+                TileID.BlueDungeonBrick, TileID.GreenDungeonBrick, TileID.PinkDungeonBrick,
+                TileID.AncientBlueBrick, TileID.AncientGreenBrick, TileID.AncientPinkBrick,
+            ];
+        }
 
-//            TileObjectData.addTile(Type);
+        public override MagikeTileEntity GetEntityInstance() => GetInstance<DungeonLensTileEntity>();
 
-//            AddMapEntry(Color.Gray);
-//            DustType = DustID.Bone;
-//        }
-//    }
+        public override MagikeApparatusLevel[] GetAllLevels()
+        {
+            return
+            [
+                MagikeApparatusLevel.None,
+                MagikeApparatusLevel.Bone,
+                MagikeApparatusLevel.Soul,
+            ];
+        }
+    }
 
-//    public class BoneLensEntity : MagikeGenerator_Normal
-//    {
-//        public const int sendDelay = 10 * 60;
-//        public int sendTimer;
-//        public BoneLensEntity() : base(100, 5 * 16, 5 * 60) { }
+    public class DungeonLensTileEntity : BaseActiveProducerTileEntity<DungeonLensTile>
+    {
+        public override MagikeContainer GetStartContainer()
+            => new DungeonLensContainer();
 
-//        public override ushort TileType => (ushort)TileType<BoneLensTile>();
+        public override MagikeLinerSender GetStartSender()
+            => new DungeonLensSender();
 
-//        public override int HowManyPerSend => 4;
-//        public override int HowManyToGenerate => 2;
+        public override MagikeActiveProducer GetStartProducer()
+            => new DungeonProducer();
+    }
 
-//        public override bool CanSend()
-//        {
-//            sendTimer++;
-//            if (sendTimer > sendDelay)
-//            {
-//                sendTimer = 0;
-//                return true;
-//            }
+    public class DungeonLensContainer : UpgradeableContainer
+    {
+        public override void Upgrade(MagikeApparatusLevel incomeLevel)
+        {
+            MagikeMaxBase = incomeLevel switch
+            {
+                MagikeApparatusLevel.Bone => 27,
+                MagikeApparatusLevel.Soul => 250,
+                _ => 0,
+            };
+            switch (incomeLevel)
+            {
+                default:
+                    MagikeMaxBase = 0;
+                    AntiMagikeMaxBase = 0;
+                    break;
+                case MagikeApparatusLevel.Bone:
+                    MagikeMaxBase = 27;
+                    AntiMagikeMaxBase = MagikeMaxBase * 3;
+                    break;
+                case MagikeApparatusLevel.Soul:
+                    MagikeMaxBase = 483;
+                    AntiMagikeMaxBase = MagikeMaxBase * 2;
+                    break;
+            }
 
-//            return false;
-//        }
+            LimitMagikeAmount();
+            LimitAntiMagikeAmount();
+        }
+    }
 
-//        public override void OnGenerate(int howMany)
-//        {
-//            GenerateAndChargeSelf(howMany);
-//        }
+    public class DungeonLensSender : UpgradeableLinerSender
+    {
+        public override void Upgrade(MagikeApparatusLevel incomeLevel)
+        {
+            MaxConnectBase = 1;
+            ConnectLengthBase = 4 * 16;
 
-//        public override bool CanGenerate() => true;
+            switch (incomeLevel)
+            {
+                default:
+                    MaxConnectBase = 0;
+                    UnitDeliveryBase = 0;
+                    SendDelayBase = 1_0000_0000 / 60;//随便填个大数
+                    ConnectLengthBase = 0;
+                    break;
+                case MagikeApparatusLevel.Bone:
+                    UnitDeliveryBase = 9;
+                    SendDelayBase = 10;
+                    break;
+                case MagikeApparatusLevel.Soul:
+                    UnitDeliveryBase = 129;
+                    SendDelayBase = 8;
+                    break;
+            }
 
-//        public override void SendVisualEffect(IMagikeContainer container)
-//        {
-//            MagikeHelper.SpawnDustOnSend(2, 3, Position, container, Color.Gray, DustID.Bone);
-//        }
+            SendDelayBase *= 60;
+            RecheckConnect();
+        }
+    }
 
-//        public override void OnReceiveVisualEffect()
-//        {
-//            MagikeHelper.SpawnDustOnGenerate(2, 3, Position, Color.Gray, DustID.Bone);
-//        }
-//    }
-//}
+    public class DungeonProducer : UpgradeableProducerByBiome
+    {
+        public override MagikeSystem.UITextID ApparatusName()
+            => MagikeSystem.UITextID.DungeonLensName;
+
+        public override MagikeSystem.UITextID ProduceCondition()
+            => MagikeSystem.UITextID.DungeonCondition;
+
+        public override bool CheckTile(Tile tile)
+            => TileID.Sets.DungeonBiome[tile.TileType] > 0;
+
+        public override bool CheckWall(Tile tile)
+            => tile.WallType is WallID.BlueDungeon or WallID.BlueDungeonUnsafe or WallID.BlueDungeonSlab or WallID.BlueDungeonSlabUnsafe or WallID.BlueDungeonTile or WallID.BlueDungeonTileUnsafe
+            or WallID.GreenDungeon or WallID.GreenDungeonUnsafe or WallID.GreenDungeonSlab or WallID.GreenDungeonSlabUnsafe or WallID.GreenDungeonTile or WallID.GreenDungeonTileUnsafe
+            or WallID.PinkDungeon or WallID.PinkDungeonUnsafe or WallID.PinkDungeonSlab or WallID.PinkDungeonSlabUnsafe or WallID.PinkDungeonTile or WallID.PinkDungeonTileUnsafe;
+
+        public override void Upgrade(MagikeApparatusLevel incomeLevel)
+        {
+            switch (incomeLevel)
+            {
+                default:
+                    ProductionDelayBase = 1_0000_0000 / 60;//随便填个大数
+                    ThroughputBase = 1;
+                    break;
+                case MagikeApparatusLevel.Bone:
+                    ProductionDelayBase = 10;
+                    ThroughputBase = 3;
+                    break;
+                case MagikeApparatusLevel.Soul:
+                    ProductionDelayBase = 8;
+                    ThroughputBase = 43;
+                    break;
+                case MagikeApparatusLevel.SplendorMagicore:
+                    ProductionDelayBase = 6;
+                    ThroughputBase = 360;
+                    break;
+            }
+
+            ProductionDelayBase *= 60;
+            Timer = ProductionDelayBase;
+        }
+    }
+}

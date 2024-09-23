@@ -10,7 +10,7 @@ namespace Coralite.Content.Items.CoreKeeper
         public override void SetDefaults()
         {
             Item.width = Item.height = 40;
-            Item.maxStack = 999;
+            Item.maxStack = Item.CommonMaxStack;
 
             Item.value = Item.sellPrice(0, 1, 0, 0);
             Item.rare = ModContent.RarityType<EpicRarity>();

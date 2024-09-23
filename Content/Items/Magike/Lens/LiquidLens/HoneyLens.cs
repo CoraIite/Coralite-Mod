@@ -13,50 +13,51 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.Lens.LiquidLens
 {
-    public class WaterflowLens() : MagikeApparatusItem(TileType<WaterflowLensTile>(), Item.sellPrice(silver: 5)
+    public class HoneyLens() : MagikeApparatusItem(TileType<HoneyLensTile>(), Item.sellPrice(silver: 5)
         , RarityType<MagicCrystalRarity>(), AssetDirectory.MagikeLens)
     {
         public override void AddRecipes()
         {
             CreateRecipe()
                 .AddIngredient<Basalt>(14)
-                .AddIngredient(ItemID.WaterBucket)
+                .AddIngredient(ItemID.HoneyBucket)
                 .AddCondition(CoraliteConditions.LearnedMagikeBase)
                 .AddTile(TileID.Anvils)
                 .Register();
         }
     }
 
-    public class WaterflowLensTile() : BaseLensTile
-        (Color.Red, DustID.Water)
+    public class HoneyLensTile() : BaseLensTile
+        (Color.Honeydew, DustID.Honey)
     {
-        public override int DropItemType => ItemType<WaterflowLens>();
-        public override MagikeTileEntity GetEntityInstance() => GetInstance<WaterflowLensTileEntity>();
+        public override int DropItemType => ItemType<HoneyLens>();
+        public override MagikeTileEntity GetEntityInstance() => GetInstance<HoneyLensTileEntity>();
 
         public override MagikeApparatusLevel[] GetAllLevels()
         {
             return
             [
                 MagikeApparatusLevel.None,
-                MagikeApparatusLevel.Glistent,
-                MagikeApparatusLevel.Pelagic,
+                MagikeApparatusLevel.Beeswax,
+                MagikeApparatusLevel.CrystallineMagike,
+                MagikeApparatusLevel.Feather,
             ];
         }
     }
 
-    public class WaterflowLensTileEntity : BaseActiveProducerTileEntity<WaterflowLensTile>
+    public class HoneyLensTileEntity : BaseActiveProducerTileEntity<HoneyLensTile>
     {
         public override MagikeContainer GetStartContainer()
-            => new WaterflowLensContainer();
+            => new HoneyLensContainer();
 
         public override MagikeLinerSender GetStartSender()
-            => new WaterflowLensSender();
+            => new HoneyLensSender();
 
         public override MagikeActiveProducer GetStartProducer()
-            => new WaterflowProducer();
+            => new HoneyProducer();
     }
 
-    public class WaterflowLensContainer : UpgradeableContainer
+    public class HoneyLensContainer : UpgradeableContainer
     {
         public override void Upgrade(MagikeApparatusLevel incomeLevel)
         {
@@ -66,11 +67,15 @@ namespace Coralite.Content.Items.Magike.Lens.LiquidLens
                     MagikeMaxBase = 0;
                     AntiMagikeMaxBase = 0;
                     break;
-                case MagikeApparatusLevel.Glistent:
+                case MagikeApparatusLevel.Beeswax:
                     MagikeMaxBase = 9;
                     AntiMagikeMaxBase = MagikeMaxBase * 3;
                     break;
-                case MagikeApparatusLevel.Pelagic:
+                case MagikeApparatusLevel.CrystallineMagike:
+                    MagikeMaxBase = 562;
+                    AntiMagikeMaxBase = MagikeMaxBase * 2;
+                    break;
+                case MagikeApparatusLevel.Feather:
                     MagikeMaxBase = 562;
                     AntiMagikeMaxBase = MagikeMaxBase * 2;
                     break;
@@ -81,7 +86,7 @@ namespace Coralite.Content.Items.Magike.Lens.LiquidLens
         }
     }
 
-    public class WaterflowLensSender : UpgradeableLinerSender
+    public class HoneyLensSender : UpgradeableLinerSender
     {
         public override void Upgrade(MagikeApparatusLevel incomeLevel)
         {
@@ -96,11 +101,15 @@ namespace Coralite.Content.Items.Magike.Lens.LiquidLens
                     SendDelayBase = 1_0000_0000 / 60;//随便填个大数
                     ConnectLengthBase = 0;
                     break;
-                case MagikeApparatusLevel.Glistent:
+                case MagikeApparatusLevel.Beeswax:
                     UnitDeliveryBase = 3;
                     SendDelayBase = 10;
                     break;
-                case MagikeApparatusLevel.Pelagic:
+                case MagikeApparatusLevel.CrystallineMagike:
+                    UnitDeliveryBase = 150;
+                    SendDelayBase = 8;
+                    break;
+                case MagikeApparatusLevel.Feather:
                     UnitDeliveryBase = 150;
                     SendDelayBase = 8;
                     break;
@@ -111,15 +120,15 @@ namespace Coralite.Content.Items.Magike.Lens.LiquidLens
         }
     }
 
-    public class WaterflowProducer : UpgradeableProducerByLiquid
+    public class HoneyProducer : UpgradeableProducerByLiquid
     {
         public override MagikeSystem.UITextID ApparatusName()
-            => MagikeSystem.UITextID.WaterflowLensName;
+            => MagikeSystem.UITextID.HoneyLensName;
 
         public override MagikeSystem.UITextID ProduceCondition()
-            => MagikeSystem.UITextID.WaterflowCondition;
+            => MagikeSystem.UITextID.HoneyCondition;
 
-        public override int LiquidType => LiquidID.Water;
+        public override int LiquidType => LiquidID.Honey;
 
         public override void Upgrade(MagikeApparatusLevel incomeLevel)
         {
@@ -129,11 +138,15 @@ namespace Coralite.Content.Items.Magike.Lens.LiquidLens
                     ProductionDelayBase = 1_0000_0000 / 60;//随便填个大数
                     ThroughputBase = 1;
                     break;
-                case MagikeApparatusLevel.Glistent:
+                case MagikeApparatusLevel.Beeswax:
                     ProductionDelayBase = 10;
                     ThroughputBase = 1;
                     break;
-                case MagikeApparatusLevel.Pelagic:
+                case MagikeApparatusLevel.CrystallineMagike:
+                    ProductionDelayBase = 8;
+                    ThroughputBase = 50;
+                    break;
+                case MagikeApparatusLevel.Feather:
                     ProductionDelayBase = 8;
                     ThroughputBase = 50;
                     break;

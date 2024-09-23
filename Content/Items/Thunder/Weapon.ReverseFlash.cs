@@ -1,5 +1,7 @@
 ﻿using Coralite.Core;
+using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -13,23 +15,18 @@ namespace Coralite.Content.Items.Thunder
 
         public override void SetDefaults()
         {
-            Item.damage = 68;
-            Item.useTime = 22;
-            Item.useAnimation = 22;
-            Item.knockBack = 7;
-            Item.shootSpeed = 15f;
-            Item.crit = 10;
+            Item.SetWeaponValues(68, 7f, 10);
+            Item.DefaultToRangedWeapon(ProjectileType<ReverseFlashProj>(), AmmoID.Arrow
+                , 22, 15f,true);
 
-            Item.useStyle = ItemUseStyleID.Shoot;
-            Item.DamageType = DamageClass.Ranged;
-            Item.value = Item.sellPrice(0, 2, 50, 0);
             Item.rare = ItemRarityID.Yellow;
-            Item.shoot = ProjectileType<ReverseFlashProj>();
-            Item.useAmmo = AmmoID.Arrow;
-            Item.UseSound = CoraliteSoundID.Bow2_Item102;
+            Item.useStyle = ItemUseStyleID.Rapier;
+            Item.value = Item.sellPrice(0, 2, 50);
 
+            Item.noUseGraphic = true;
             Item.useTurn = false;
-            Item.autoReuse = true;
+
+            Item.UseSound = CoraliteSoundID.Bow2_Item102;
         }
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
@@ -47,6 +44,31 @@ namespace Coralite.Content.Items.Thunder
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
         }
+    }
+
+    public class ReverseFlashHeldProj : BaseDashBow
+    {
+        public override string Texture => AssetDirectory.ThunderItems + "ReverseFlash";
+
+        public override int GetItemType()
+            => ItemType<ReverseFlash>();
+
+        public override Vector2 GetOffset()
+            => new(4, 0);
+
+
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Texture2D mainTex = Projectile.GetTexture();
+            Vector2 center = Projectile.Center - Main.screenPosition;
+
+            Main.spriteBatch.Draw(mainTex, center, null, lightColor, Projectile.rotation, mainTex.Size() / 2, 1
+                , OwnerDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0f);
+
+            return false;
+        }
+
     }
 
     public class ReverseFlashProj : ModProjectile

@@ -73,7 +73,7 @@ namespace Coralite.Content.Items.Magike.Tools
             Projectile.NewProjectile(source, player.Center, Vector2.Zero, type, 0, 0, player.whoAmI, basePoint.X, basePoint.Y);
 
             Helper.PlayPitched("UI/Select", 0.4f, 0, player.Center);
-
+            Main.NewText(basePoint);
 
             return false;
         }

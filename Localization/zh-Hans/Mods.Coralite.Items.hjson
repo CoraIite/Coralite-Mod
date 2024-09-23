@@ -4489,3 +4489,61 @@ CoralRing: {
 		[c/8e8e8e:粉色珊瑚枝上天然生成的戒指，相当精致。]
 		'''
 }
+
+ChannelingGemstone: {
+	DisplayName: 引导宝石
+	Tooltip: 
+		'''
+		独一无二的制作用部件。
+		[c/8e8e8e:一块特意雕刻过的上古宝石，能将能量汇聚于尖端。]
+		[c/8e8e8e:似乎曾是某件强力上古武器的核心部分。]
+		'''
+}
+
+EnergyString: {
+	DisplayName: 能量丝
+	Tooltip: 
+		'''
+		独一无二的制作用部件。
+		[c/8e8e8e:一条纤细的丝状物，里面被织入了许多上古宝石微粒。]
+		[c/8e8e8e:无论当初创造它的人是谁，它的存在都证明了这位高人对各种制作材料的绝对掌控能力。]
+		'''
+}
+
+FracturedLimbs: {
+	DisplayName: 断裂的碎片
+	Tooltip: 
+		'''
+		独一无二的制作用部件。
+		[c/8e8e8e:一些金色的碎片，似乎曾被熔接到仪器，用以承受强大的压力。]
+		[c/8e8e8e:想必是被某种天生力大无穷的东西击打过，才会变成这种四分五裂的模样吧。]
+		'''
+}
+
+HoneyLens: {
+	DisplayName: 蜂蜜透镜
+	Tooltip: 
+		'''
+		底座沐浴在蜂蜜中时消耗蜂蜜生产魔能
+		{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}
+		'''
+}
+
+WaterflowLens: {
+	DisplayName: 水流透镜
+	Tooltip: 
+		'''
+		底座沐浴在水中时消耗水生产魔能
+		{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}
+		'''
+}
+
+BeeswaxPolarizedFilter: {
+	DisplayName: 偏振滤镜-蜂蜡
+	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
+}
+
+GreenOnionBurritos: {
+	DisplayName: 大葱卷饼
+	Tooltip: ""
+}

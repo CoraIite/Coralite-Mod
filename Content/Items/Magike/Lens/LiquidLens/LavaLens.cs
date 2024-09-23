@@ -120,17 +120,7 @@ namespace Coralite.Content.Items.Magike.Lens.LiquidLens
         public override MagikeSystem.UITextID ProduceCondition()
             => MagikeSystem.UITextID.LavaCondition;
 
-        public override bool CheckLiquid(Tile tile)
-        {
-            if (tile.LiquidAmount < 256 / 16)
-                return false;
-
-            if (tile.LiquidType != LiquidID.Lava)
-                return false;
-
-            tile.LiquidAmount -= 256 / 16;
-            return true;
-        }
+        public override int LiquidType => LiquidID.Lava;
 
         public override void Upgrade(MagikeApparatusLevel incomeLevel)
         {

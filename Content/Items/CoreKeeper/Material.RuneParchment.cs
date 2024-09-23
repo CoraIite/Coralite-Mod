@@ -18,7 +18,7 @@ namespace Coralite.Content.Items.CoreKeeper
             Item.useAnimation = 60;
 
             Item.useStyle = ItemUseStyleID.HoldUp;
-            Item.value = Item.sellPrice(0, 1, 0, 0);
+            Item.value = Item.sellPrice(0, 5);
             Item.rare = ModContent.RarityType<EpicRarity>();
             Item.shoot = ModContent.ProjectileType<CraftUIProj>();
 

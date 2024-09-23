@@ -38,8 +38,12 @@
         RedJade,
         /// <summary> 帝凝胶 </summary>
         Emperor,
+        /// <summary> 蜂蜡 </summary>
+        Beeswax,
         /// <summary> 狱石 </summary>
         Hellstone,
+        /// <summary> 骨头 </summary>
+        Bone,
         /// <summary> 流沙 </summary>
         Quicksand,
         /// <summary> 远洋 </summary>

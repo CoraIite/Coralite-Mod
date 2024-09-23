@@ -284,6 +284,10 @@ MagikeSystem: {
 		LavaCondition: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.LavaCondition
 		HellLensName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.HellLensName
 		HellCondition: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.HellCondition
+		WaterflowLensName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.WaterflowLensName
+		WaterflowCondition: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.WaterflowCondition
+		HoneyLensName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.HoneyLensName
+		HoneyCondition: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.HoneyCondition
 	}
 
 	CraftText: {

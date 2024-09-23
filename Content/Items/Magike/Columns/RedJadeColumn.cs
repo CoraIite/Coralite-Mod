@@ -1,102 +1,96 @@
-﻿//using Coralite.Content.Items.MagikeSeries1;
-//using Coralite.Content.Raritys;
-//using Coralite.Core;
-//using Coralite.Core.Systems.MagikeSystem;
-//using Coralite.Core.Systems.MagikeSystem.BaseItems;
-//using Coralite.Core.Systems.MagikeSystem.TileEntities;
-//using Coralite.Core.Systems.MagikeSystem.Tiles;
-//using Coralite.Helpers;
-//using Terraria;
-//using Terraria.DataStructures;
-//using Terraria.ID;
-//using Terraria.ObjectData;
-//using static Terraria.ModLoader.ModContent;
+﻿using Coralite.Content.Items.MagikeSeries1;
+using Coralite.Content.Items.RedJades;
+using Coralite.Core;
+using Coralite.Core.Systems.MagikeSystem;
+using Coralite.Core.Systems.MagikeSystem.BaseItems;
+using Coralite.Core.Systems.MagikeSystem.Components;
+using Coralite.Core.Systems.MagikeSystem.TileEntities;
+using Coralite.Core.Systems.MagikeSystem.Tiles;
+using Terraria;
+using Terraria.ID;
+using static Terraria.ModLoader.ModContent;
 
-//namespace Coralite.Content.Items.Magike.Columns
-//{
-//    public class RedJadeColumn : BaseMagikePlaceableItem, IMagikeSenderItem
-//    {
-//        public RedJadeColumn() : base(TileType<RedJadeColumnTile>(), Item.sellPrice(0, 0, 10, 0)
-//            , RarityType<MagicCrystalRarity>(), 50, AssetDirectory.MagikeColumns)
-//        { }
+namespace Coralite.Content.Items.Magike.Refractors
+{
+    public class RedJadeColumn() : MagikeApparatusItem(TileType<RedJadeColumnTile>(), Item.sellPrice(silver: 5)
+            , ItemRarityID.Blue, AssetDirectory.MagikeColumns)
+    {
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient<Basalt>(20)
+                .AddIngredient<RedJade>(3)
+                .AddCondition(CoraliteConditions.LearnedMagikeBase)
+                .AddTile(TileID.Anvils)
+                .Register();
+        }
+    }
 
-//        public override int MagikeMax => 550;
-//        public string SendDelay => "0.5";
-//        public int HowManyPerSend => 1;
-//        public int ConnectLengthMax => 5;
+    public class RedJadeColumnTile() : BaseColumnTile
+        (3, 3, Coralite.RedJadeRed, DustID.GemRuby)
+    {
+        public override string Texture => AssetDirectory.MagikeColumnTiles + Name;
+        public override int DropItemType => ItemType<RedJadeColumn>();
 
-//        public override void AddRecipes()
-//        {
-//            CreateRecipe()
-//                .AddIngredient<MagicCrystal>(2)
-//                .AddIngredient<RedJades.RedJade>(5)
-//                .AddCondition(CoraliteConditions.LearnedMagikeBase)
-//                .AddTile<Tiles.RedJades.MagicCraftStation>()
-//                .Register();
-//        }
-//    }
+        public override MagikeTileEntity GetEntityInstance() => GetInstance<RedJadeColumnTileEntity>();
 
-//    public class RedJadeColumnTile : OldBaseColumnTile
-//    {
-//        public override string Texture => AssetDirectory.MagikeLensTiles + "RedJadeLensTile";
+        public override MagikeApparatusLevel[] GetAllLevels()
+        {
+            return [
+                MagikeApparatusLevel.None,
+                MagikeApparatusLevel.RedJade,
+                ];
+        }
+    }
 
-//        public override void SetStaticDefaults()
-//        {
-//            Main.tileShine[Type] = 400;
-//            Main.tileFrameImportant[Type] = true;
-//            Main.tileNoFail[Type] = true; //不会出现挖掘失败的情况
-//            TileID.Sets.IgnoredInHouseScore[Type] = true;
+    public class RedJadeColumnTileEntity : BaseSenderTileEntity<RedJadeColumnTile>
+    {
+        public override MagikeContainer GetStartContainer()
+            => new RedJadeColumnTileContainer();
 
-//            TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);
-//            TileObjectData.newTile.Height = 3;
-//            TileObjectData.newTile.CoordinateHeights = new int[3] {
-//                16,
-//                16,
-//                16
-//            };
-//            TileObjectData.newTile.DrawYOffset = 2;
-//            TileObjectData.newTile.LavaDeath = false;
-//            TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(GetInstance<RedJadeColumnEntity>().Hook_AfterPlacement, -1, 0, true);
+        public override MagikeLinerSender GetStartSender()
+            => new RedJadeColumnTileSender();
+    }
 
-//            TileObjectData.addTile(Type);
+    public class RedJadeColumnTileContainer : UpgradeableContainer
+    {
+        public override void Upgrade(MagikeApparatusLevel incomeLevel)
+        {
+            MagikeMaxBase = incomeLevel switch
+            {
+                MagikeApparatusLevel.RedJade => 960,
+                _ => 0,
+            };
+            LimitMagikeAmount();
 
-//            AddMapEntry(Coralite.RedJadeRed);
-//            DustType = DustID.GemRuby;
-//        }
+            AntiMagikeMaxBase = MagikeMaxBase / 2;
+            LimitAntiMagikeAmount();
+        }
+    }
 
-//        public override bool CanExplode(int i, int j) => false;
-//    }
+    public class RedJadeColumnTileSender : UpgradeableLinerSender
+    {
+        public override void Upgrade(MagikeApparatusLevel incomeLevel)
+        {
+            MaxConnectBase = 1;
+            ConnectLengthBase = 6 * 16;
+            SendDelayBase = 60 * 10;
 
-//    public class RedJadeColumnEntity : MagikeSender_Line
-//    {
-//        public const int sendDelay = 30;
-//        public int sendTimer;
-//        public RedJadeColumnEntity() : base(550, 5 * 16) { }
+            switch (incomeLevel)
+            {
+                default:
+                case MagikeApparatusLevel.None:
+                    MaxConnectBase = 0;
+                    UnitDeliveryBase = 0;
+                    SendDelayBase = 1_0000_0000;//随便填个大数
+                    ConnectLengthBase = 0;
+                    break;
+                case MagikeApparatusLevel.RedJade:
+                    UnitDeliveryBase = 80;
+                    break;
+            }
 
-//        public override ushort TileType => (ushort)TileType<RedJadeColumnTile>();
-
-//        public override int HowManyPerSend => 1;
-
-//        public override bool CanSend()
-//        {
-//            sendTimer++;
-//            if (sendTimer > sendDelay)
-//            {
-//                sendTimer = 0;
-//                return true;
-//            }
-
-//            return false;
-//        }
-
-//        public override void SendVisualEffect(IMagikeContainer container)
-//        {
-//            MagikeHelper.SpawnDustOnSend(2, 3, Position, container, Coralite.RedJadeRed);
-//        }
-
-//        public override void OnReceiveVisualEffect()
-//        {
-//            MagikeHelper.SpawnDustOnGenerate(2, 3, Position, Coralite.RedJadeRed);
-//        }
-//    }
-//}
+            RecheckConnect();
+        }
+    }
+}
