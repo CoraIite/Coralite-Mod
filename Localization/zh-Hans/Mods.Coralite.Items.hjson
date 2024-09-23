@@ -4492,7 +4492,7 @@ CoralRing: {
 
 ChannelingGemstone: {
 	DisplayName: 引导宝石
-	Tooltip: 
+	Tooltip:
 		'''
 		独一无二的制作用部件。
 		[c/8e8e8e:一块特意雕刻过的上古宝石，能将能量汇聚于尖端。]
@@ -4502,7 +4502,7 @@ ChannelingGemstone: {
 
 EnergyString: {
 	DisplayName: 能量丝
-	Tooltip: 
+	Tooltip:
 		'''
 		独一无二的制作用部件。
 		[c/8e8e8e:一条纤细的丝状物，里面被织入了许多上古宝石微粒。]
@@ -4512,7 +4512,7 @@ EnergyString: {
 
 FracturedLimbs: {
 	DisplayName: 断裂的碎片
-	Tooltip: 
+	Tooltip:
 		'''
 		独一无二的制作用部件。
 		[c/8e8e8e:一些金色的碎片，似乎曾被熔接到仪器，用以承受强大的压力。]
@@ -4522,7 +4522,7 @@ FracturedLimbs: {
 
 HoneyLens: {
 	DisplayName: 蜂蜜透镜
-	Tooltip: 
+	Tooltip:
 		'''
 		底座沐浴在蜂蜜中时消耗蜂蜜生产魔能
 		{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}
@@ -4531,7 +4531,7 @@ HoneyLens: {
 
 WaterflowLens: {
 	DisplayName: 水流透镜
-	Tooltip: 
+	Tooltip:
 		'''
 		底座沐浴在水中时消耗水生产魔能
 		{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}
@@ -4546,4 +4546,18 @@ BeeswaxPolarizedFilter: {
 GreenOnionBurritos: {
 	DisplayName: 大葱卷饼
 	Tooltip: ""
+}
+
+DungeonLens: {
+	DisplayName: 地牢透镜
+	Tooltip:
+		'''
+		在地牢生产魔能，只能放置在地牢砖上
+		{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}
+		'''
+}
+
+BonePolarizedFilter: {
+	DisplayName: 偏振滤镜-骨头
+	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
 }

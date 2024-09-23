@@ -288,6 +288,8 @@ MagikeSystem: {
 		WaterflowCondition: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.WaterflowCondition
 		HoneyLensName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.HoneyLensName
 		HoneyCondition: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.HoneyCondition
+		DungeonLensName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.DungeonLensName
+		DungeonCondition: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.DungeonCondition
 	}
 
 	CraftText: {

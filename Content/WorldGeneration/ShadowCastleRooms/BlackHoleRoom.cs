@@ -36,7 +36,7 @@ namespace Coralite.Content.WorldGeneration.ShadowCastleRooms
             if (index >= 0)
             {
                 Chest chest = Main.chest[index];
-                ChestRoom.RandChestItem(chest, ModContent.ItemType<Cosmophore>());
+                ChestRoom.RandChestItem(chest, ModContent.ItemType<ShadowCrystal>());
 
                 //放影水晶
                 if (WorldGen.genRand.NextBool(1, 3))

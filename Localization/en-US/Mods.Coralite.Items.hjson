@@ -4354,32 +4354,32 @@ CoralRing: {
 
 ChannelingGemstone: {
 	DisplayName: Channeling Gemstone
-	Tooltip: 
-	'''
-	A piece of an ancient weapon. 
-	[c/8e8e8e:A specially carved ancient gemstone that focuses energy at its tip. ]
-	[c/8e8e8e:It seems to be the center piece of an ancient powerful weapon. ]
-	'''
+	Tooltip:
+		'''
+		A piece of an ancient weapon. 
+		[c/8e8e8e:A specially carved ancient gemstone that focuses energy at its tip. ]
+		[c/8e8e8e:It seems to be the center piece of an ancient powerful weapon. ]
+		'''
 }
 
 EnergyString: {
 	DisplayName: Energy String
-	Tooltip: 
-	'''
-	A piece of an ancient weapon. 
-	[c/8e8e8e:A fine filament that has microscopic pieces of ancient gemstones woven into it. ]
-	[c/8e8e8e:Its existence is proof of the absolute mastery over materials by whoever created it. ]
-	'''
+	Tooltip:
+		'''
+		A piece of an ancient weapon. 
+		[c/8e8e8e:A fine filament that has microscopic pieces of ancient gemstones woven into it. ]
+		[c/8e8e8e:Its existence is proof of the absolute mastery over materials by whoever created it. ]
+		'''
 }
 
 FracturedLimbs: {
 	DisplayName: Fractured Limbs
-	Tooltip: 
-	'''
-	A piece of an ancient weapon. 
-	[c/8e8e8e:Golden pieces that once seemed to be fused together to endure great pressure. ]
-	[c/8e8e8e:Something inherently powerful must have broken them apart. ]
-	'''
+	Tooltip:
+		'''
+		A piece of an ancient weapon. 
+		[c/8e8e8e:Golden pieces that once seemed to be fused together to endure great pressure. ]
+		[c/8e8e8e:Something inherently powerful must have broken them apart. ]
+		'''
 }
 
 HoneyLens: {
@@ -4399,5 +4399,15 @@ BeeswaxPolarizedFilter: {
 
 GreenOnionBurritos: {
 	DisplayName: Green Onion Burritos
+	Tooltip: ""
+}
+
+DungeonLens: {
+	DisplayName: Dungeon Lens
+	Tooltip: ""
+}
+
+BonePolarizedFilter: {
+	DisplayName: Bone Polarized Filter
 	Tooltip: ""
 }
