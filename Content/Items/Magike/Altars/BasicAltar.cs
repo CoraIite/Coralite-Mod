@@ -31,7 +31,7 @@ namespace Coralite.Content.Items.Magike.Altars
     }
 
     public class BasicAltarTile() : BaseCraftAltarTile
-        (4, 5, Coralite.MagicCrystalPink, DustID.CorruptionThorns)
+        (5, 5, Coralite.MagicCrystalPink, DustID.CorruptionThorns)
     {
         public override string Texture => AssetDirectory.MagikeAltarTiles + Name;
         public override int DropItemType => ItemType<BasicAltar>();
@@ -130,7 +130,7 @@ namespace Coralite.Content.Items.Magike.Altars
         {
             var second = incomeLevel switch
             {
-                MagikeApparatusLevel.MagicCrystal => 20,
+                MagikeApparatusLevel.MagicCrystal => 5,//20,
                 _ => (float)(10_0000_0000 / 60),
             };
 

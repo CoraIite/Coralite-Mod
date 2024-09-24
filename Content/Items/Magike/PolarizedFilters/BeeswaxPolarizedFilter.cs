@@ -20,7 +20,7 @@ namespace Coralite.Content.Items.Magike.PolarizedFilters
         {
             CreateRecipe()
                 .AddIngredient<BasicFilter>()
-                .AddIngredient(ItemID.Feather, 5)
+                .AddIngredient(ItemID.BeeWax, 3)
                 .AddTile(TileID.WorkBenches)
                 .Register();
         }

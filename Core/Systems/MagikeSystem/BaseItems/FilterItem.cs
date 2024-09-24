@@ -149,6 +149,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
                     {
                         placed = true;
                         filter.Insert(entity);
+                        filter = (Owner.HeldItem.ModItem as FilterItem).GetFilterComponent();
 
                         //特效部分
                         TileRenewalController.Spawn(currentTopLeft.Value, (Owner.HeldItem.ModItem as FilterItem).FilterColor);

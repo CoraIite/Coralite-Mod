@@ -199,6 +199,11 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
             }
         }
 
+        public override void NumDust(int i, int j, bool fail, ref int num)
+        {
+            num = fail ? 1 : 2;
+        }
+
         /// <summary>
         /// 在物块破坏时触发，用于生成音效等特殊效果
         /// </summary>
