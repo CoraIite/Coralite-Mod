@@ -4401,7 +4401,7 @@ MagikeBasePage: {
 
 LeprechaunBait: {
 	DisplayName: 魔力诱饵
-	Tooltip: ""
+	Tooltip: "使用后抛出诱饵，吸引一些来自魔力水晶洞的小精灵"
 }
 
 EternalVengeance: {

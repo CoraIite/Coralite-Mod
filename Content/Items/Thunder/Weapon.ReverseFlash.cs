@@ -1,15 +1,23 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Items.ThyphionSeries;
+using Coralite.Content.ModPlayers;
+using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
+using Mono.Cecil;
+using rail;
+using System;
+using System.Linq;
+using System.Threading;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Thunder
 {
-    public class ReverseFlash : ModItem
+    public class ReverseFlash : ModItem,IDashable
     {
         public override string Texture => AssetDirectory.ThunderItems + Name;
 
@@ -44,11 +52,63 @@ namespace Coralite.Content.Items.Thunder
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
         }
+
+        public bool Dash(Player Player, int DashDir)
+        {
+            Vector2 newVelocity = Player.velocity;
+            float dashDirection;
+            switch (DashDir)
+            {
+                case CoralitePlayer.DashLeft:
+                case CoralitePlayer.DashRight:
+                    {
+                        dashDirection = DashDir == CoralitePlayer.DashRight ? 1 : -1;
+                        newVelocity.X = dashDirection * 48;
+                        break;
+                    }
+                default:
+                    return false;
+            }
+
+            Player.GetModPlayer<CoralitePlayer>().DashDelay = 80;
+            Player.GetModPlayer<CoralitePlayer>().DashTimer = 3;
+            Player.AddImmuneTime(ImmunityCooldownID.General, 5);
+
+            Player.velocity = newVelocity;
+            Player.direction = (int)dashDirection;
+
+            if (Player.whoAmI == Main.myPlayer)
+            {
+                SoundEngine.PlaySound(CoraliteSoundID.Swing_Item1, Player.Center);
+
+                foreach (var proj in from proj in Main.projectile
+                                     where proj.active && proj.friendly && proj.owner == Player.whoAmI && proj.type == ProjectileType<ReverseFlashHeldProj>()
+                                     select proj)
+                {
+                    proj.Kill();
+                    break;
+                }
+
+                //生成手持弹幕
+
+                int damage = Player.GetWeaponDamage(Player.HeldItem);
+
+                Projectile.NewProjectile(Player.GetSource_ItemUse(Player.HeldItem), Player.Center, Vector2.Zero, ProjectileType<ThunderveinBladeDash>(),
+                   damage, Player.HeldItem.knockBack, Player.whoAmI, 10, DashDir>0?0:3.141f, ai2: 5);
+
+                Projectile.NewProjectile(Player.GetSource_ItemUse(Player.HeldItem), Player.Center, Vector2.Zero, ProjectileType<ReverseFlashHeldProj>(),
+                        damage, Player.HeldItem.knockBack, Player.whoAmI, 1.57f + dashDirection * 1, 1, 20);
+            }
+
+            return true;
+        }
     }
 
     public class ReverseFlashHeldProj : BaseDashBow
     {
         public override string Texture => AssetDirectory.ThunderItems + "ReverseFlash";
+
+        public ref float Timer => ref Projectile.localAI[1];
 
         public override int GetItemType()
             => ItemType<ReverseFlash>();
@@ -56,6 +116,13 @@ namespace Coralite.Content.Items.Thunder
         public override Vector2 GetOffset()
             => new(4, 0);
 
+        public override void DashAttackAI()
+        {
+            if (Timer < DashTime)
+                Projectile.velocity.X = Math.Sign(Projectile.velocity.X) * 32;
+            else if (Timer == DashTime)
+                Projectile.velocity.X = Math.Sign(Projectile.velocity.X) * 2;
+        }
 
 
         public override bool PreDraw(ref Color lightColor)
@@ -68,7 +135,6 @@ namespace Coralite.Content.Items.Thunder
 
             return false;
         }
-
     }
 
     public class ReverseFlashProj : ModProjectile
