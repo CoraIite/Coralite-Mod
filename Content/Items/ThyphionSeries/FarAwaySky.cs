@@ -156,23 +156,14 @@ namespace Coralite.Content.Items.ThyphionSeries
         {
             if (Timer < DashTime + 2)
             {
-                Owner.itemTime = Owner.itemAnimation = 2;
+                LockOwnerItemTime();
 
-                Rotation = Helper.Lerp(RecordAngle, OwnerDirection > 0 ? -1f : (3.141f+1f), Coralite.Instance.HeavySmootherInstance.Smoother( Timer / DashTime));
+                Rotation = Helper.Lerp(RecordAngle, OwnerDirection > 0 ? -1f : (3.141f + 1f), Coralite.Instance.HeavySmootherInstance.Smoother(Timer / DashTime));
                 return;
             }
 
             if (Owner.controlUseItem)
             {
-                if (Main.myPlayer == Projectile.owner)
-                {
-                    if (Main.rand.NextBool(10))
-                    {
-                        Vector2 dir = Rotation.ToRotationVector2();
-                        Vector2 center = Projectile.Center + dir * 20;
-                    }
-                }
-
                 Projectile.timeLeft = 2;
                 Owner.itemTime = Owner.itemAnimation = 2;
             }

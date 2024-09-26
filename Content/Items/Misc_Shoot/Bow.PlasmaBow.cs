@@ -93,7 +93,7 @@ namespace Coralite.Content.Items.Misc_Shoot
         public float Alpha;
         public float fade = 0;
 
-        Vector2 TargetCenter;
+        private Vector2 TargetCenter;
 
         public ThunderTrail trail;
 

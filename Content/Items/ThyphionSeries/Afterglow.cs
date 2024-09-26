@@ -232,7 +232,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                     }
 
                     Projectile.timeLeft = 2;
-                    Owner.itemTime = Owner.itemAnimation = 2;
+                    LockOwnerItemTime();
                 }
                 else
                 {
