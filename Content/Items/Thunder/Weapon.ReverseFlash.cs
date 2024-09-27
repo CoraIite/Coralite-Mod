@@ -2,6 +2,7 @@
 using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
+using Coralite.Core.Systems.CameraSystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -22,7 +23,7 @@ namespace Coralite.Content.Items.Thunder
 
         public override void SetDefaults()
         {
-            Item.SetWeaponValues(68, 7f, 10);
+            Item.SetWeaponValues(64, 7f, 10);
             Item.DefaultToRangedWeapon(ProjectileType<ReverseFlashProj>(), AmmoID.Arrow
                 , 22, 15f, true);
 
@@ -83,8 +84,6 @@ namespace Coralite.Content.Items.Thunder
 
             if (Player.whoAmI == Main.myPlayer)
             {
-                SoundEngine.PlaySound(CoraliteSoundID.Swing_Item1, Player.Center);
-
                 foreach (var proj in from proj in Main.projectile
                                      where proj.active && proj.friendly && proj.owner == Player.whoAmI && proj.type == ProjectileType<ReverseFlashHeldProj>()
                                      select proj)
@@ -97,6 +96,7 @@ namespace Coralite.Content.Items.Thunder
 
                 //生成手持弹幕
                 int damage = Player.GetWeaponDamage(Player.HeldItem);
+                Main.instance.CameraModifiers.Add(new MoveModifyer(3, 15));
 
                 Projectile.NewProjectile(Player.GetSource_ItemUse(Player.HeldItem), Player.Center, Vector2.Zero, ProjectileType<ThunderveinBladeDash>(),
                    damage/2, Player.HeldItem.knockBack, Player.whoAmI, 5, DashDir > 0 ? 0 : 3.141f, ai2: 5);
@@ -132,11 +132,12 @@ namespace Coralite.Content.Items.Thunder
             else
             {
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
-                Rotation = Rotation.AngleLerp((Main.MouseWorld - Owner.MountedCenter).ToRotation(), 0.1f);// Helper.Lerp(RecordAngle, , Coralite.Instance.HeavySmootherInstance.Smoother(Timer / DashTime));
+                Rotation = Rotation.AngleLerp((Main.MouseWorld - Owner.MountedCenter).ToRotation(), 0.2f);// Helper.Lerp(RecordAngle, , Coralite.Instance.HeavySmootherInstance.Smoother(Timer / DashTime));
             }
 
             if (Timer == DashTime + 14)
             {
+                SoundEngine.PlaySound(CoraliteSoundID.Bow2_Item102, Projectile.Center);
                 Projectile.NewProjectileFromThis<ReverseFlashProj>(Projectile.Center, Rotation.ToRotationVector2() * 16,
                     Owner.GetWeaponDamage(Owner.HeldItem), Owner.HeldItem.knockBack, -1);
             }
@@ -186,7 +187,7 @@ namespace Coralite.Content.Items.Thunder
         {
             Projectile.extraUpdates = 2;
             Projectile.width = Projectile.height = 16;
-            Projectile.penetrate = 3;
+            Projectile.penetrate = -1;
             Projectile.tileCollide = true;
             Projectile.timeLeft = 300;
         }
@@ -265,6 +266,11 @@ namespace Coralite.Content.Items.Thunder
                     d.noGravity = true;
                 }
             }
+        }
+
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            Projectile.damage = (int)(Projectile.damage * 0.8f);
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -352,6 +358,14 @@ namespace Coralite.Content.Items.Thunder
                 default:
                 case 0://找到敌人，以极快的速度追踪
                     Chase();
+
+                    if (Main.rand.NextBool())
+                    {
+                        Dust d = Dust.NewDustPerfect(Projectile.Center, DustID.PortalBoltTrail, Projectile.velocity.RotateByRandom(-0.2f, 0.2f) * Main.rand.NextFloat(0.2f, 0.6f)
+                            , newColor: Coralite.ThunderveinYellow, Scale: Main.rand.NextFloat(1f, 1.5f));
+                        d.noGravity = true;
+                    }
+
                     break;
                 case 1://后摇，闪电逐渐消失
                     {
@@ -472,11 +486,6 @@ namespace Coralite.Content.Items.Thunder
                 if (trail.BasePositions.Length > 3)
                     trail.RandomThunder();
             }
-        }
-
-        public override bool OnTileCollide(Vector2 oldVelocity)
-        {
-            return false;
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)

@@ -318,6 +318,8 @@ namespace Coralite.Core.Systems.MagikeSystem
             HoneyCondition,
             DungeonLensName,
             DungeonCondition,
+            HallowLensName,
+            HallowCondition,
 
             /*
              * 物品容器

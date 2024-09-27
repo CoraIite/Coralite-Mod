@@ -250,17 +250,17 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public override bool PreDraw(ref Color lightColor)
         {
-            if (Special==1)
+            if (Special == 1)
             {
                 Texture2D mainTex2 = LightTex.Value;
                 var origin2 = new Vector2(mainTex2.Width / 4, mainTex2.Height / 2);
                 var pos = Projectile.Center - Main.screenPosition;
-                Color c = new (255,205,62);
+                Color c = new(255, 205, 62);
                 c.A = 0;
                 c *= 0.4f * ExAlpha;
 
                 for (int i = 0; i < 3; i++)
-                    Main.spriteBatch.Draw(mainTex2, pos+(Main.GlobalTimeWrappedHourly*3+i*MathHelper.TwoPi/3).ToRotationVector2()*2
+                    Main.spriteBatch.Draw(mainTex2, pos + (Main.GlobalTimeWrappedHourly * 3 + i * MathHelper.TwoPi / 3).ToRotationVector2() * 2
                         , null, c, Projectile.rotation
                         , origin2, 1, 0, 0f);
             }
@@ -273,20 +273,17 @@ namespace Coralite.Content.Items.ThyphionSeries
             Main.spriteBatch.Draw(mainTex, center, null, lightColor, Projectile.rotation, origin, 1, effect, 0f);
             Main.spriteBatch.Draw(GlowTex.Value, center, null, Color.White, Projectile.rotation, origin, 1, effect, 0f);
 
-            if (Special == 0)
-                return false;
-
             return false;
         }
 
         public void DrawAdditive(SpriteBatch spriteBatch)
         {
-            if (Special == 0|| State == 1)
+            if (Special == 0 || State == 1)
                 return;
 
             Texture2D mainTex = ArrowTex.Value;
             Vector2 dir = Rotation.ToRotationVector2();
-            var origin = new Vector2(mainTex.Width / 2, mainTex.Height*2 / 3);
+            var origin = new Vector2(mainTex.Width / 2, mainTex.Height * 2 / 3);
             var pos = Projectile.Center - Main.screenPosition;
             Color c = Color.White;
             c.A = (byte)(255 * ExAlpha);

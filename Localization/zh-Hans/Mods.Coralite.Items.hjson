@@ -276,7 +276,7 @@ BabyIceDragonTrophy: {
 }
 
 IcicleBow: {
-	DisplayName: 冰晶弓
+	DisplayName: 冰雹
 	Tooltip:
 		'''
 		将箭矢转化为冰晶箭
@@ -4560,4 +4560,9 @@ DungeonLens: {
 BonePolarizedFilter: {
 	DisplayName: 偏振滤镜-骨头
 	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
+}
+
+HallowLens: {
+	// DisplayName: Hallow Lens
+	// Tooltip: ""
 }

@@ -27,7 +27,7 @@ namespace Coralite.Content.RecipeGroups
             , ItemID.RichMahoganyBow
             , ItemID.EbonwoodBow
             , ItemID.ShadewoodBow
-            , ItemID.BorealWoodBow
+            , ItemID.PearlwoodBow
             );
 
             RecipeGroup.RegisterGroup(GroupName, g);

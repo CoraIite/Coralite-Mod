@@ -120,6 +120,8 @@ namespace Coralite.Content.Items.Thunder
                 }
 
                 //生成手持弹幕
+                Main.instance.CameraModifiers.Add(new MoveModifyer(5, 50));
+
                 int damage = Player.GetWeaponDamage(Player.HeldItem);
                 Projectile.NewProjectile(Player.GetSource_ItemUse(Player.HeldItem), Player.Center, Vector2.Zero, ProjectileType<ThunderveinBladeSlash>(),
                     damage, Player.HeldItem.knockBack, Player.whoAmI, 3);
@@ -490,7 +492,6 @@ namespace Coralite.Content.Items.Thunder
 
         public override void OnSpawn(IEntitySource source)
         {
-            Main.instance.CameraModifiers.Add(new MoveModifyer(5, 50));
             if (VisualEffectSystem.HitEffect_ScreenShaking)
                 Main.instance.CameraModifiers.Add(new PunchCameraModifier(Projectile.Center, Helper.NextVec2Dir(), 12, 8, 5, 1000));
         }
@@ -545,6 +546,7 @@ namespace Coralite.Content.Items.Thunder
                         {
                             float count = DashCount + 1;
                             Owner.velocity = new Vector2(-30, Owner.velocity.Y);
+                            Main.instance.CameraModifiers.Add(new MoveModifyer(5, 50));
 
                             Projectile.NewProjectile(Owner.GetSource_ItemUse(Owner.HeldItem), Owner.Center, Vector2.Zero, ProjectileType<ThunderveinBladeSlash>(),
                                 Projectile.damage, Projectile.knockBack, Owner.whoAmI, 3);
@@ -556,6 +558,7 @@ namespace Coralite.Content.Items.Thunder
                         {
                             float count = DashCount + 1;
                             Owner.velocity = new Vector2(30, Owner.velocity.Y);
+                            Main.instance.CameraModifiers.Add(new MoveModifyer(5, 50));
 
                             Projectile.NewProjectile(Owner.GetSource_ItemUse(Owner.HeldItem), Owner.Center, Vector2.Zero, ProjectileType<ThunderveinBladeSlash>(),
                                 Projectile.damage, Projectile.knockBack, Owner.whoAmI, 3);
@@ -570,6 +573,7 @@ namespace Coralite.Content.Items.Thunder
                         {
                             float count = DashCount + 1;
                             Owner.velocity = new Vector2(-30, Owner.velocity.Y);
+                            Main.instance.CameraModifiers.Add(new MoveModifyer(5, 50));
 
                             Projectile.NewProjectile(Owner.GetSource_ItemUse(Owner.HeldItem), Owner.Center, Vector2.Zero, ProjectileType<ThunderveinBladeSlash>(),
                                 Projectile.damage, Projectile.knockBack, Owner.whoAmI, 3);
@@ -581,6 +585,7 @@ namespace Coralite.Content.Items.Thunder
                         {
                             float count = DashCount + 1;
                             Owner.velocity = new Vector2(30, Owner.velocity.Y);
+                            Main.instance.CameraModifiers.Add(new MoveModifyer(5, 50));
 
                             Projectile.NewProjectile(Owner.GetSource_ItemUse(Owner.HeldItem), Owner.Center, Vector2.Zero, ProjectileType<ThunderveinBladeSlash>(),
                                 Projectile.damage, Projectile.knockBack, Owner.whoAmI, 3);

@@ -277,7 +277,7 @@ BabyIceDragonTrophy: {
 }
 
 IcicleBow: {
-	DisplayName: Icicle Bow
+	DisplayName: Hail
 	Tooltip:
 		'''
 		Convert arrows into icicle arrows
@@ -4409,5 +4409,10 @@ DungeonLens: {
 
 BonePolarizedFilter: {
 	DisplayName: Bone Polarized Filter
+	Tooltip: ""
+}
+
+HallowLens: {
+	DisplayName: Hallow Lens
 	Tooltip: ""
 }

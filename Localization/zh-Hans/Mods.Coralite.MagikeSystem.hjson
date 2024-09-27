@@ -306,6 +306,8 @@ MagikeSystem: {
 			  ▶ 需要将底座放置在地牢砖上
 			  ▶ 需要在地牢砖墙前
 			'''
+		// HallowLensName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.HallowLensName
+		// HallowCondition: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.HallowCondition
 	}
 
 	CraftText: {
