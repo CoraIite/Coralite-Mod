@@ -102,11 +102,11 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     AntiMagikeMaxBase = 0;
                     break;
                 case MagikeApparatusLevel.Bone:
-                    MagikeMaxBase = 27;
+                    MagikeMaxBase = 120;
                     AntiMagikeMaxBase = MagikeMaxBase * 3;
                     break;
                 case MagikeApparatusLevel.Soul:
-                    MagikeMaxBase = 483;
+                    MagikeMaxBase = 745;
                     AntiMagikeMaxBase = MagikeMaxBase * 2;
                     break;
             }
@@ -132,12 +132,12 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     ConnectLengthBase = 0;
                     break;
                 case MagikeApparatusLevel.Bone:
-                    UnitDeliveryBase = 9;
-                    SendDelayBase = 10;
+                    UnitDeliveryBase = 36;
+                    SendDelayBase = 9;
                     break;
                 case MagikeApparatusLevel.Soul:
-                    UnitDeliveryBase = 129;
-                    SendDelayBase = 8;
+                    UnitDeliveryBase = 174;
+                    SendDelayBase = 7;
                     break;
             }
 
@@ -171,16 +171,12 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     ThroughputBase = 1;
                     break;
                 case MagikeApparatusLevel.Bone:
-                    ProductionDelayBase = 10;
-                    ThroughputBase = 3;
+                    ProductionDelayBase = 9;
+                    ThroughputBase = 12;
                     break;
                 case MagikeApparatusLevel.Soul:
-                    ProductionDelayBase = 8;
-                    ThroughputBase = 43;
-                    break;
-                case MagikeApparatusLevel.SplendorMagicore:
-                    ProductionDelayBase = 6;
-                    ThroughputBase = 360;
+                    ProductionDelayBase = 7;
+                    ThroughputBase = 58;
                     break;
             }
 

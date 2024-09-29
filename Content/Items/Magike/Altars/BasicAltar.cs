@@ -99,7 +99,7 @@ namespace Coralite.Content.Items.Magike.Altars
         {
             MagikeMaxBase = incomeLevel switch
             {
-                MagikeApparatusLevel.MagicCrystal => 60,
+                MagikeApparatusLevel.MagicCrystal => 2000_0000,
                 MagikeApparatusLevel.Glistent => 300,
                 MagikeApparatusLevel.Shadow => 300,
                 MagikeApparatusLevel.CrystallineMagike => 2250,

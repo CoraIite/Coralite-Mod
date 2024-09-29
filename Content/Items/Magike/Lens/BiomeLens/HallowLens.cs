@@ -123,11 +123,11 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     AntiMagikeMaxBase = 0;
                     break;
                 case MagikeApparatusLevel.Hallow:
-                    MagikeMaxBase = 9;
+                    MagikeMaxBase = 630;
                     AntiMagikeMaxBase = MagikeMaxBase * 3;
                     break;
                 case MagikeApparatusLevel.HolyLight:
-                    MagikeMaxBase = 562;
+                    MagikeMaxBase = 932;
                     AntiMagikeMaxBase = MagikeMaxBase * 2;
                     break;
             }
@@ -153,12 +153,12 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     ConnectLengthBase = 0;
                     break;
                 case MagikeApparatusLevel.Hallow:
-                    UnitDeliveryBase = 3;
-                    SendDelayBase = 10;
+                    UnitDeliveryBase = 180;
+                    SendDelayBase = 8;
                     break;
                 case MagikeApparatusLevel.HolyLight:
-                    UnitDeliveryBase = 150;
-                    SendDelayBase = 8;
+                    UnitDeliveryBase = 225;
+                    SendDelayBase = 7;
                     break;
             }
 
@@ -190,12 +190,12 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     ThroughputBase = 1;
                     break;
                 case MagikeApparatusLevel.Hallow:
-                    ProductionDelayBase = 10;
-                    ThroughputBase = 1;
+                    ProductionDelayBase = 8;
+                    ThroughputBase = 60;
                     break;
                 case MagikeApparatusLevel.HolyLight:
-                    ProductionDelayBase = 8;
-                    ThroughputBase = 50;
+                    ProductionDelayBase = 7;
+                    ThroughputBase = 75;
                     break;
             }
 

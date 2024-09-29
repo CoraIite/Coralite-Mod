@@ -67,11 +67,11 @@ namespace Coralite.Content.Items.Magike.Lens.LiquidLens
                     AntiMagikeMaxBase = 0;
                     break;
                 case MagikeApparatusLevel.Glistent:
-                    MagikeMaxBase = 9;
+                    MagikeMaxBase = 72;
                     AntiMagikeMaxBase = MagikeMaxBase * 3;
                     break;
                 case MagikeApparatusLevel.Pelagic:
-                    MagikeMaxBase = 562;
+                    MagikeMaxBase = 732;
                     AntiMagikeMaxBase = MagikeMaxBase * 2;
                     break;
             }
@@ -97,11 +97,11 @@ namespace Coralite.Content.Items.Magike.Lens.LiquidLens
                     ConnectLengthBase = 0;
                     break;
                 case MagikeApparatusLevel.Glistent:
-                    UnitDeliveryBase = 3;
+                    UnitDeliveryBase = 24;
                     SendDelayBase = 10;
                     break;
                 case MagikeApparatusLevel.Pelagic:
-                    UnitDeliveryBase = 150;
+                    UnitDeliveryBase = 195;
                     SendDelayBase = 8;
                     break;
             }
@@ -131,11 +131,11 @@ namespace Coralite.Content.Items.Magike.Lens.LiquidLens
                     break;
                 case MagikeApparatusLevel.Glistent:
                     ProductionDelayBase = 10;
-                    ThroughputBase = 1;
+                    ThroughputBase = 8;
                     break;
                 case MagikeApparatusLevel.Pelagic:
                     ProductionDelayBase = 8;
-                    ThroughputBase = 50;
+                    ThroughputBase = 65;
                     break;
             }
 

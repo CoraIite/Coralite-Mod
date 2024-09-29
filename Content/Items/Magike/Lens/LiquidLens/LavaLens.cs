@@ -68,11 +68,11 @@ namespace Coralite.Content.Items.Magike.Lens.LiquidLens
                     AntiMagikeMaxBase = 0;
                     break;
                 case MagikeApparatusLevel.Hellstone:
-                    MagikeMaxBase = 9;
+                    MagikeMaxBase = 250;
                     AntiMagikeMaxBase = MagikeMaxBase * 3;
                     break;
                 case MagikeApparatusLevel.EternalFlame:
-                    MagikeMaxBase = 562;
+                    MagikeMaxBase = 900;
                     AntiMagikeMaxBase = MagikeMaxBase * 2;
                     break;
             }
@@ -98,11 +98,11 @@ namespace Coralite.Content.Items.Magike.Lens.LiquidLens
                     ConnectLengthBase = 0;
                     break;
                 case MagikeApparatusLevel.Hellstone:
-                    UnitDeliveryBase = 3;
-                    SendDelayBase = 10;
+                    UnitDeliveryBase = 75;
+                    SendDelayBase = 9;
                     break;
                 case MagikeApparatusLevel.EternalFlame:
-                    UnitDeliveryBase = 150;
+                    UnitDeliveryBase = 240;
                     SendDelayBase = 8;
                     break;
             }
@@ -131,12 +131,12 @@ namespace Coralite.Content.Items.Magike.Lens.LiquidLens
                     ThroughputBase = 1;
                     break;
                 case MagikeApparatusLevel.Hellstone:
-                    ProductionDelayBase = 10;
-                    ThroughputBase = 1;
+                    ProductionDelayBase = 9;
+                    ThroughputBase = 25;
                     break;
                 case MagikeApparatusLevel.EternalFlame:
                     ProductionDelayBase = 8;
-                    ThroughputBase = 50;
+                    ThroughputBase = 80;
                     break;
             }
 

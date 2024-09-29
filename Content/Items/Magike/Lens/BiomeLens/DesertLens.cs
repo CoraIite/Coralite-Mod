@@ -19,7 +19,7 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
     {
         public override bool CanUseItem(Player player)
         {
-            return player.ZoneBeach;
+            return player.ZoneDesert;
         }
 
         public override void AddRecipes()
@@ -82,7 +82,7 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     AntiMagikeMaxBase = 0;
                     break;
                 case MagikeApparatusLevel.Quicksand:
-                    MagikeMaxBase = 9;
+                    MagikeMaxBase = 140;
                     AntiMagikeMaxBase = MagikeMaxBase * 3;
                     break;
                 case MagikeApparatusLevel.Forbidden:
@@ -112,8 +112,8 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     ConnectLengthBase = 0;
                     break;
                 case MagikeApparatusLevel.Quicksand:
-                    UnitDeliveryBase = 3;
-                    SendDelayBase = 10;
+                    UnitDeliveryBase = 42;
+                    SendDelayBase = 9;
                     break;
                 case MagikeApparatusLevel.Forbidden:
                     UnitDeliveryBase = 150;
@@ -151,8 +151,8 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     ThroughputBase = 1;
                     break;
                 case MagikeApparatusLevel.Quicksand:
-                    ProductionDelayBase = 10;
-                    ThroughputBase = 1;
+                    ProductionDelayBase = 9;
+                    ThroughputBase = 14;
                     break;
                 case MagikeApparatusLevel.Forbidden:
                     ProductionDelayBase = 8;

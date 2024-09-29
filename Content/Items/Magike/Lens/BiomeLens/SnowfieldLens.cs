@@ -81,11 +81,11 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     AntiMagikeMaxBase = 0;
                     break;
                 case MagikeApparatusLevel.Icicle:
-                    MagikeMaxBase = 9;
+                    MagikeMaxBase = 70;
                     AntiMagikeMaxBase = MagikeMaxBase * 3;
                     break;
                 case MagikeApparatusLevel.Frost:
-                    MagikeMaxBase = 562;
+                    MagikeMaxBase = 540;
                     AntiMagikeMaxBase = MagikeMaxBase * 2;
                     break;
             }
@@ -111,11 +111,11 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     ConnectLengthBase = 0;
                     break;
                 case MagikeApparatusLevel.Icicle:
-                    UnitDeliveryBase = 3;
-                    SendDelayBase = 10;
+                    UnitDeliveryBase = 32;
+                    SendDelayBase = 9;
                     break;
                 case MagikeApparatusLevel.Frost:
-                    UnitDeliveryBase = 150;
+                    UnitDeliveryBase = 144;
                     SendDelayBase = 8;
                     break;
             }
@@ -148,12 +148,12 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     ThroughputBase = 1;
                     break;
                 case MagikeApparatusLevel.Icicle:
-                    ProductionDelayBase = 10;
-                    ThroughputBase = 1;
+                    ProductionDelayBase = 9;
+                    ThroughputBase = 7;
                     break;
                 case MagikeApparatusLevel.Frost:
                     ProductionDelayBase = 8;
-                    ThroughputBase = 50;
+                    ThroughputBase = 48;
                     break;
             }
 

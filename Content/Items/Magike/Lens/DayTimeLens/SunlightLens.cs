@@ -68,15 +68,15 @@ namespace Coralite.Content.Items.Magike.Lens.DayTimeLens
                     AntiMagikeMaxBase = 0;
                     break;
                 case MagikeApparatusLevel.Glistent:
-                    MagikeMaxBase = 9;
+                    MagikeMaxBase = 36;
                     AntiMagikeMaxBase = MagikeMaxBase * 3;
                     break;
                 case MagikeApparatusLevel.Hallow:
-                    MagikeMaxBase = 562;
+                    MagikeMaxBase = 618;
                     AntiMagikeMaxBase = MagikeMaxBase * 2;
                     break;
                 case MagikeApparatusLevel.HolyLight:
-                    MagikeMaxBase = 562;
+                    MagikeMaxBase = 835;
                     AntiMagikeMaxBase = MagikeMaxBase * 2;
                     break;
             }
@@ -102,16 +102,16 @@ namespace Coralite.Content.Items.Magike.Lens.DayTimeLens
                     ConnectLengthBase = 0;
                     break;
                 case MagikeApparatusLevel.Glistent:
-                    UnitDeliveryBase = 3;
+                    UnitDeliveryBase = 12;
                     SendDelayBase = 10;
                     break;
                 case MagikeApparatusLevel.Hallow:
-                    UnitDeliveryBase = 150;
+                    UnitDeliveryBase = 165;
                     SendDelayBase = 8;
                     break;
                 case MagikeApparatusLevel.HolyLight:
-                    UnitDeliveryBase = 150;
-                    SendDelayBase = 8;
+                    UnitDeliveryBase = 195;
+                    SendDelayBase = 7;
                     break;
             }
 
@@ -143,15 +143,15 @@ namespace Coralite.Content.Items.Magike.Lens.DayTimeLens
                     break;
                 case MagikeApparatusLevel.Glistent:
                     ProductionDelayBase = 10;
-                    ThroughputBase = 1;
+                    ThroughputBase = 4;
                     break;
                 case MagikeApparatusLevel.Hallow:
                     ProductionDelayBase = 8;
-                    ThroughputBase = 50;
+                    ThroughputBase = 55;
                     break;
                 case MagikeApparatusLevel.HolyLight:
-                    ProductionDelayBase = 8;
-                    ThroughputBase = 50;
+                    ProductionDelayBase = 7;
+                    ThroughputBase = 65;
                     break;
             }
 

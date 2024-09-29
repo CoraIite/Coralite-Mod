@@ -82,15 +82,15 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     AntiMagikeMaxBase = 0;
                     break;
                 case MagikeApparatusLevel.Eiderdown:
-                    MagikeMaxBase = 9;
+                    MagikeMaxBase = 18;
                     AntiMagikeMaxBase = MagikeMaxBase * 3;
                     break;
                 case MagikeApparatusLevel.Flight:
-                    MagikeMaxBase = 562;
+                    MagikeMaxBase = 540;
                     AntiMagikeMaxBase = MagikeMaxBase * 2;
                     break;
                 case MagikeApparatusLevel.Feather:
-                    MagikeMaxBase = 562;
+                    MagikeMaxBase = 720;
                     AntiMagikeMaxBase = MagikeMaxBase * 2;
                     break;
             }
@@ -116,16 +116,16 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     ConnectLengthBase = 0;
                     break;
                 case MagikeApparatusLevel.Eiderdown:
-                    UnitDeliveryBase = 3;
+                    UnitDeliveryBase = 6;
                     SendDelayBase = 10;
                     break;
                 case MagikeApparatusLevel.Flight:
-                    UnitDeliveryBase = 150;
+                    UnitDeliveryBase = 144;
                     SendDelayBase = 8;
                     break;
                 case MagikeApparatusLevel.Feather:
-                    UnitDeliveryBase = 150;
-                    SendDelayBase = 8;
+                    UnitDeliveryBase = 168;
+                    SendDelayBase = 7;
                     break;
             }
 
@@ -158,15 +158,15 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     break;
                 case MagikeApparatusLevel.Eiderdown:
                     ProductionDelayBase = 10;
-                    ThroughputBase = 1;
+                    ThroughputBase = 2;
                     break;
                 case MagikeApparatusLevel.Flight:
                     ProductionDelayBase = 8;
-                    ThroughputBase = 50;
+                    ThroughputBase = 48;
                     break;
                 case MagikeApparatusLevel.Feather:
-                    ProductionDelayBase = 8;
-                    ThroughputBase = 50;
+                    ProductionDelayBase = 7;
+                    ThroughputBase = 56;
                     break;
             }
 

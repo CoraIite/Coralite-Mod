@@ -81,11 +81,11 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     AntiMagikeMaxBase = 0;
                     break;
                 case MagikeApparatusLevel.Emperor:
-                    MagikeMaxBase = 9;
+                    MagikeMaxBase = 70;
                     AntiMagikeMaxBase = MagikeMaxBase * 3;
                     break;
                 case MagikeApparatusLevel.Shroomite:
-                    MagikeMaxBase = 562;
+                    MagikeMaxBase = 720;
                     AntiMagikeMaxBase = MagikeMaxBase * 2;
                     break;
             }
@@ -111,12 +111,12 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     ConnectLengthBase = 0;
                     break;
                 case MagikeApparatusLevel.Emperor:
-                    UnitDeliveryBase = 3;
-                    SendDelayBase = 10;
+                    UnitDeliveryBase = 21;
+                    SendDelayBase = 9;
                     break;
                 case MagikeApparatusLevel.Shroomite:
-                    UnitDeliveryBase = 150;
-                    SendDelayBase = 8;
+                    UnitDeliveryBase = 168;
+                    SendDelayBase = 7;
                     break;
             }
 
@@ -149,11 +149,11 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     break;
                 case MagikeApparatusLevel.Emperor:
                     ProductionDelayBase = 10;
-                    ThroughputBase = 1;
+                    ThroughputBase = 7;
                     break;
                 case MagikeApparatusLevel.Shroomite:
-                    ProductionDelayBase = 8;
-                    ThroughputBase = 50;
+                    ProductionDelayBase = 7;
+                    ThroughputBase = 56;
                     break;
             }
 

@@ -6,6 +6,8 @@ using Coralite.Content.Items.Thunder;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Terraria;
 using Terraria.ID;
+using static Coralite.Helpers.MagikeHelper;
+using static Coralite.Core.Systems.MagikeSystem.MagikeApparatusLevel;
 
 namespace Coralite.Core.Systems.MagikeSystem.Remodels
 {
@@ -14,113 +16,115 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
         public void AddMagikeCraftRecipe()
         {
             #region 赤玉灵
-            MagikeCraftRecipe.CreateRecipe<RediancieBossBag, RedJade>(150, resultItemStack: 34)
-                .RegisterNew<RediancieMask>(50)
-                .RegisterNew<RediancieTrophy>(250)
-                .RegisterNew<RedianciePet>(50)
+            MagikeCraftRecipe.CreateRecipe<RediancieBossBag, RedJade>(CalculateMagikeCost(MagikeApparatusLevel.RedJade,5,120)
+                , resultItemStack: 34)
+                .RegisterNew<RediancieMask>(CalculateMagikeCost(MagikeApparatusLevel.RedJade))
+                .RegisterNew<RediancieTrophy>(CalculateMagikeCost(MagikeApparatusLevel.RedJade,5,120))
+                .RegisterNew<RedianciePet>(CalculateMagikeCost(MagikeApparatusLevel.RedJade))
                 .AddCondition(Condition.InMasterMode)
                 .Register();
             #endregion
 
             #region 史莱姆王
-            MagikeCraftRecipe.CreateRecipe(ItemID.KingSlimeBossBag, ItemID.SlimySaddle, 150)
-                .RegisterNew(ItemID.NinjaHood, 100)
-                .RegisterNew(ItemID.NinjaShirt, 100)
-                .RegisterNew(ItemID.NinjaPants, 100)
-                .RegisterNew(ItemID.SlimeHook, 150)
-                .RegisterNew(ItemID.SlimeGun, 50)
-                .RegisterNew(ItemID.KingSlimeMask, 100)
-                .RegisterNew(ItemID.KingSlimeTrophy, 150)
-                .RegisterNew(ItemID.KingSlimePetItem, 50)
+            MagikeCraftRecipe.CreateRecipe(ItemID.KingSlimeBossBag, ItemID.SlimySaddle, CalculateMagikeCost(MagikeApparatusLevel.RedJade,5,120))
+                .RegisterNew(ItemID.NinjaHood, CalculateMagikeCost(MagikeApparatusLevel.RedJade,8,180))
+                .RegisterNew(ItemID.NinjaShirt, CalculateMagikeCost(MagikeApparatusLevel.RedJade, 8, 180))
+                .RegisterNew(ItemID.NinjaPants, CalculateMagikeCost(MagikeApparatusLevel.RedJade, 8, 180))
+                .RegisterNew(ItemID.SlimeHook, CalculateMagikeCost(MagikeApparatusLevel.RedJade, 10, 180))
+                .RegisterNew(ItemID.SlimeGun, CalculateMagikeCost(MagikeApparatusLevel.RedJade))
+                .RegisterNew(ItemID.KingSlimeMask, CalculateMagikeCost(MagikeApparatusLevel.RedJade))
+                .RegisterNew(ItemID.KingSlimeTrophy, CalculateMagikeCost(MagikeApparatusLevel.RedJade))
+                .RegisterNew(ItemID.KingSlimePetItem, CalculateMagikeCost(MagikeApparatusLevel.RedJade))
                 .AddCondition(Condition.InMasterMode)
                 .Register();
             #endregion
 
             #region 克苏鲁之眼
-            MagikeCraftRecipe.CreateRecipe(ItemID.EyeOfCthulhuBossBag, ItemID.CrimtaneOre, 150, resultItemStack: 85)
-                .RegisterNew(ItemID.DemoniteOre, 150, 85)
-                .RegisterNew(ItemID.Binoculars, 150)
-                .RegisterNew(ItemID.EyeMask, 100)
-                .RegisterNew(ItemID.EyeofCthulhuTrophy, 150)
-                .RegisterNew(ItemID.EyeOfCthulhuPetItem, 50)
+            MagikeCraftRecipe.CreateRecipe(ItemID.EyeOfCthulhuBossBag, ItemID.CrimtaneOre, CalculateMagikeCost(Glistent,10,180)
+                , resultItemStack: 85)
+                .RegisterNew(ItemID.DemoniteOre, CalculateMagikeCost(Glistent, 10, 180), 85)
+                .RegisterNew(ItemID.Binoculars, CalculateMagikeCost(Glistent, 5, 180))
+                .RegisterNew(ItemID.EyeMask, CalculateMagikeCost(Glistent))
+                .RegisterNew(ItemID.EyeofCthulhuTrophy, CalculateMagikeCost(Glistent))
+                .RegisterNew(ItemID.EyeOfCthulhuPetItem, CalculateMagikeCost(Glistent))
                 .AddCondition(Condition.InMasterMode)
                 .Register();
             #endregion
 
             #region 世界吞噬怪
-            MagikeCraftRecipe.CreateRecipe(ItemID.EaterOfWorldsBossBag, ItemID.DemoniteOre, 225, resultItemStack: 70)
-                .RegisterNew(ItemID.ShadowScale, 250, 25)
-                .RegisterNew(ItemID.EatersBone, 450)
-                .RegisterNew(ItemID.EaterMask, 200)
-                .RegisterNew(ItemID.EaterofWorldsTrophy, 300)
-                .RegisterNew(ItemID.EaterOfWorldsPetItem, 100)
+            MagikeCraftRecipe.CreateRecipe(ItemID.EaterOfWorldsBossBag, ItemID.DemoniteOre, CalculateMagikeCost(Corruption,10,180), resultItemStack: 70)
+                .RegisterNew(ItemID.ShadowScale, CalculateMagikeCost(Corruption, 10, 180), 25)
+                .RegisterNew(ItemID.EatersBone, CalculateMagikeCost(Corruption))
+                .RegisterNew(ItemID.EaterMask, CalculateMagikeCost(Corruption))
+                .RegisterNew(ItemID.EaterofWorldsTrophy, CalculateMagikeCost(Corruption))
+                .RegisterNew(ItemID.EaterOfWorldsPetItem, CalculateMagikeCost(Corruption))
                 .AddCondition(Condition.InMasterMode)
                 .Register();
             #endregion
 
             #region 克苏鲁之脑
-            MagikeCraftRecipe.CreateRecipe(ItemID.BrainOfCthulhuBossBag, ItemID.CrimtaneOre, 225, resultItemStack: 70)
-                .RegisterNew(ItemID.TissueSample, 250, 25)
-                .RegisterNew(ItemID.BoneRattle, 450)
-                .RegisterNew(ItemID.BrainMask, 200)
-                .RegisterNew(ItemID.BrainofCthulhuTrophy, 300)
-                .RegisterNew(ItemID.BrainOfCthulhuPetItem, 100)
+            MagikeCraftRecipe.CreateRecipe(ItemID.BrainOfCthulhuBossBag, ItemID.CrimtaneOre, CalculateMagikeCost(Corruption, 10, 180), resultItemStack: 70)
+                .RegisterNew(ItemID.TissueSample, CalculateMagikeCost(Corruption, 10, 180), 25)
+                .RegisterNew(ItemID.BoneRattle, CalculateMagikeCost(Corruption))
+                .RegisterNew(ItemID.BrainMask, CalculateMagikeCost(Corruption))
+                .RegisterNew(ItemID.BrainofCthulhuTrophy, CalculateMagikeCost(Corruption))
+                .RegisterNew(ItemID.BrainOfCthulhuPetItem, CalculateMagikeCost(Corruption))
                 .AddCondition(Condition.InMasterMode)
                 .Register();
             #endregion
 
             #region 冰龙宝宝
-            MagikeCraftRecipe.CreateRecipe<BabyIceDragonBossBag, IcicleCrystal>(225, resultItemStack: 8)
-                .RegisterNew<IcicleScale>(225, 7)
-                .RegisterNew<IcicleBreath>(225, 10)
-                .RegisterNew<BabyIceDragonMask>(150)
-                .RegisterNew<BabyIceDragonTrophy>(150)
-                .RegisterNew<IcicleSoulStone>(150)
+            MagikeCraftRecipe.CreateRecipe<BabyIceDragonBossBag, IcicleCrystal>(CalculateMagikeCost(Corruption,10,180), resultItemStack: 8)
+                .RegisterNew<IcicleScale>(CalculateMagikeCost(Corruption, 10, 180), 7)
+                .RegisterNew<IcicleBreath>(CalculateMagikeCost(Corruption, 10, 180), 10)
+                .RegisterNew<BabyIceDragonMask>(CalculateMagikeCost(Corruption))
+                .RegisterNew<BabyIceDragonTrophy>(CalculateMagikeCost(Corruption))
+                .RegisterNew<IcicleSoulStone>(CalculateMagikeCost(Corruption))
                 .AddCondition(Condition.InMasterMode)
                 .Register();
             #endregion
 
             #region 蜂后
-            MagikeCraftRecipe.CreateRecipe(ItemID.QueenBeeBossBag, ItemID.BeeGun, 200)
-                .RegisterNew(ItemID.BeeKeeper, 200)
-                .RegisterNew(ItemID.BeesKnees, 200)
-                .RegisterNew(ItemID.BeeHat, 100)
-                .RegisterNew(ItemID.BeeShirt, 100)
-                .RegisterNew(ItemID.BeePants, 100)
-                .RegisterNew(ItemID.HoneyComb, 200)
-                .RegisterNew(ItemID.Nectar, 450)
-                .RegisterNew(ItemID.HoneyedGoggles, 450)
-                .RegisterNew(ItemID.Beenade, 300, 80)
-                .RegisterNew(ItemID.BeeMask, 200)
-                .RegisterNew(ItemID.QueenBeeTrophy, 300)
-                .RegisterNew(ItemID.QueenBeePetItem, 100)
+            MagikeCraftRecipe.CreateRecipe(ItemID.QueenBeeBossBag, ItemID.BeeGun, CalculateMagikeCost(Beeswax, 10, 180))
+                .RegisterNew(ItemID.BeeKeeper, CalculateMagikeCost(Beeswax, 10, 180))//养蜂人
+                .RegisterNew(ItemID.BeesKnees, CalculateMagikeCost(Beeswax, 10, 180))
+                .RegisterNew(ItemID.BeeHat, CalculateMagikeCost(Beeswax, 3, 180))
+                .RegisterNew(ItemID.BeeShirt, CalculateMagikeCost(Beeswax, 3, 180))
+                .RegisterNew(ItemID.BeePants, CalculateMagikeCost(Beeswax, 3, 180))
+                .RegisterNew(ItemID.HoneyComb, CalculateMagikeCost(Beeswax, 10, 180))
+                .RegisterNew(ItemID.Nectar, CalculateMagikeCost(Beeswax))//蜜蜂宠物
+                .RegisterNew(ItemID.HoneyedGoggles, CalculateMagikeCost(Beeswax, 10, 180))//蜜蜂坐骑
+                .RegisterNew(ItemID.Beenade, CalculateMagikeCost(Beeswax, 10, 180), 80)//蜜蜂手雷
+                .RegisterNew(ItemID.BeeMask, CalculateMagikeCost(Beeswax))
+                .RegisterNew(ItemID.QueenBeeTrophy, CalculateMagikeCost(Beeswax))
+                .RegisterNew(ItemID.QueenBeePetItem, CalculateMagikeCost(Beeswax))
                 .AddCondition(Condition.InMasterMode)
                 .Register();
             #endregion
 
             #region 巨鹿
-            MagikeCraftRecipe.CreateRecipe(ItemID.DeerclopsBossBag, ItemID.ChesterPetItem, 450)
-                .RegisterNew(ItemID.Eyebrella, 200)
-                .RegisterNew(ItemID.DontStarveShaderItem, 200)
-                .RegisterNew(ItemID.DizzyHat, 450)
-                .RegisterNew(ItemID.PewMaticHorn, 250)
-                .RegisterNew(ItemID.WeatherPain, 250)
-                .RegisterNew(ItemID.HoundiusShootius, 250)
-                .RegisterNew(ItemID.LucyTheAxe, 250)
-                .RegisterNew(ItemID.DeerclopsMask, 200)
-                .RegisterNew(ItemID.DeerclopsTrophy, 300)
-                .RegisterNew(ItemID.DeerclopsPetItem, 100)
+            MagikeCraftRecipe.CreateRecipe(ItemID.DeerclopsBossBag, ItemID.ChesterPetItem, CalculateMagikeCost(Hellstone))
+                .RegisterNew(ItemID.Eyebrella, CalculateMagikeCost(Hellstone))
+                .RegisterNew(ItemID.DontStarveShaderItem, CalculateMagikeCost(Hellstone))
+                .RegisterNew(ItemID.DizzyHat, CalculateMagikeCost(Hellstone))
+                .RegisterNew(ItemID.PewMaticHorn, CalculateMagikeCost(Hellstone,10,180))
+                .RegisterNew(ItemID.WeatherPain, CalculateMagikeCost(Hellstone, 10, 180))
+                .RegisterNew(ItemID.HoundiusShootius, CalculateMagikeCost(Hellstone, 10, 180))
+                .RegisterNew(ItemID.LucyTheAxe, CalculateMagikeCost(Hellstone, 10, 180))
+                .RegisterNew(ItemID.DeerclopsMask, CalculateMagikeCost(Hellstone))
+                .RegisterNew(ItemID.DeerclopsTrophy, CalculateMagikeCost(Hellstone))
+                .RegisterNew(ItemID.DeerclopsPetItem, CalculateMagikeCost(Hellstone))
                 .AddCondition(Condition.InMasterMode)
                 .Register();
             #endregion
 
             #region 骷髅王
-            MagikeCraftRecipe.CreateRecipe(ItemID.SkeletronBossBag, ItemID.SkeletronHand, 200)
-                .RegisterNew(ItemID.BookofSkulls, 200)
-                .RegisterNew(ItemID.ChippysCouch, 450)
-                .RegisterNew(ItemID.SkeletronMask, 200)
-                .RegisterNew(ItemID.SkeletronTrophy, 300)
-                .RegisterNew(ItemID.SkeletronPetItem, 100)
+            MagikeCraftRecipe.CreateRecipe(ItemID.SkeletronBossBag, ItemID.SkeletronHand, CalculateMagikeCost(Bone, 10, 180))
+                .RegisterNew(ItemID.BookofSkulls, CalculateMagikeCost(Bone,10,180))
+                .RegisterNew(ItemID.ChippysCouch, CalculateMagikeCost(Bone))
+                .RegisterNew(ItemID.SkeletronMask, CalculateMagikeCost(Bone))
+                .RegisterNew(ItemID.SkeletronTrophy, CalculateMagikeCost(Bone))
+                .RegisterNew(ItemID.SkeletronPetItem, CalculateMagikeCost(Bone))
                 .AddCondition(Condition.InMasterMode)
                 .Register();
             #endregion

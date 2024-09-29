@@ -77,13 +77,6 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
     {
         public override void Upgrade(MagikeApparatusLevel incomeLevel)
         {
-            MagikeMaxBase = incomeLevel switch
-            {
-                MagikeApparatusLevel.Glistent => 27,
-                MagikeApparatusLevel.CrystallineMagike => 250,
-                MagikeApparatusLevel.SplendorMagicore => 1125,
-                _ => 0,
-            };
             switch (incomeLevel)
             {
                 default:

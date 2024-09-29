@@ -101,34 +101,35 @@ namespace Coralite.Content.Items.Magike.Lens.ExtractLens
                 default:
                     MaxConnectBase = 0;
                     UnitDeliveryBase = 0;
-                    SendDelayBase = 1_0000_0000;//随便填个大数
+                    SendDelayBase = 1_0000_0000/60;//随便填个大数
                     ConnectLengthBase = 0;
                     break;
                 case MagikeApparatusLevel.MagicCrystal:
                     UnitDeliveryBase = 10;
-                    SendDelayBase = 60 * 5;
+                    SendDelayBase =   5;
                     break;
                 case MagikeApparatusLevel.Crimson:
                 case MagikeApparatusLevel.Corruption:
                 case MagikeApparatusLevel.Icicle:
                     UnitDeliveryBase = 50;
-                    SendDelayBase = 60 * 5;
+                    SendDelayBase =  5;
                     break;
                 case MagikeApparatusLevel.CrystallineMagike:
                     UnitDeliveryBase = 120;
-                    SendDelayBase = 60 * 4;
+                    SendDelayBase =   4;
                     break;
                 case MagikeApparatusLevel.Soul:
                 case MagikeApparatusLevel.Feather:
                     UnitDeliveryBase = 500;
-                    SendDelayBase = 60 * 4;
+                    SendDelayBase =   4;
                     break;
                 case MagikeApparatusLevel.SplendorMagicore:
                     UnitDeliveryBase = 900;
-                    SendDelayBase = 60 * 3;
+                    SendDelayBase =   3;
                     break;
             }
 
+            SendDelayBase *= 60;
             RecheckConnect();
         }
     }

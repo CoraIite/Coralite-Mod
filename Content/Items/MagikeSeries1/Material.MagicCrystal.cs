@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Raritys;
+﻿using Coralite.Content.Items.MagikeSeries2;
+using Coralite.Content.Raritys;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.MagikeSystem;
@@ -17,7 +18,7 @@ namespace Coralite.Content.Items.MagikeSeries1
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.GetMagikeItem().magikeAmount = 25;
+            Item.GetMagikeItem().magikeAmount = 35;
         }
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
@@ -28,7 +29,7 @@ namespace Coralite.Content.Items.MagikeSeries1
 
         public void AddMagikeCraftRecipe()
         {
-            //MagikeSystem.AddRemodelRecipe<MagicCrystal, CrystallineMagike>(275, conditions:Condition.Hardmode);
+            MagikeSystem.AddRemodelRecipe<MagicCrystal, CrystallineMagike>(450, conditions: Condition.Hardmode);
         }
     }
 }

@@ -68,15 +68,15 @@ namespace Coralite.Content.Items.Magike.Lens.LiquidLens
                     AntiMagikeMaxBase = 0;
                     break;
                 case MagikeApparatusLevel.Beeswax:
-                    MagikeMaxBase = 9;
+                    MagikeMaxBase = 200;
                     AntiMagikeMaxBase = MagikeMaxBase * 3;
                     break;
                 case MagikeApparatusLevel.CrystallineMagike:
-                    MagikeMaxBase = 562;
+                    MagikeMaxBase = 675;
                     AntiMagikeMaxBase = MagikeMaxBase * 2;
                     break;
                 case MagikeApparatusLevel.Feather:
-                    MagikeMaxBase = 562;
+                    MagikeMaxBase = 1028;
                     AntiMagikeMaxBase = MagikeMaxBase * 2;
                     break;
             }
@@ -102,16 +102,16 @@ namespace Coralite.Content.Items.Magike.Lens.LiquidLens
                     ConnectLengthBase = 0;
                     break;
                 case MagikeApparatusLevel.Beeswax:
-                    UnitDeliveryBase = 3;
-                    SendDelayBase = 10;
+                    UnitDeliveryBase = 60;
+                    SendDelayBase = 9;
                     break;
                 case MagikeApparatusLevel.CrystallineMagike:
-                    UnitDeliveryBase = 150;
+                    UnitDeliveryBase = 180;
                     SendDelayBase = 8;
                     break;
                 case MagikeApparatusLevel.Feather:
-                    UnitDeliveryBase = 150;
-                    SendDelayBase = 8;
+                    UnitDeliveryBase = 240;
+                    SendDelayBase = 7;
                     break;
             }
 
@@ -139,16 +139,16 @@ namespace Coralite.Content.Items.Magike.Lens.LiquidLens
                     ThroughputBase = 1;
                     break;
                 case MagikeApparatusLevel.Beeswax:
-                    ProductionDelayBase = 10;
-                    ThroughputBase = 1;
+                    ProductionDelayBase = 9;
+                    ThroughputBase = 20;
                     break;
                 case MagikeApparatusLevel.CrystallineMagike:
                     ProductionDelayBase = 8;
-                    ThroughputBase = 50;
+                    ThroughputBase = 60;
                     break;
                 case MagikeApparatusLevel.Feather:
-                    ProductionDelayBase = 8;
-                    ThroughputBase = 50;
+                    ProductionDelayBase = 7;
+                    ThroughputBase = 80;
                     break;
             }
 

@@ -68,11 +68,11 @@ namespace Coralite.Content.Items.Magike.Lens.DayTimeLens
                     AntiMagikeMaxBase = 0;
                     break;
                 case MagikeApparatusLevel.MagicCrystal:
-                    MagikeMaxBase = 9;
+                    MagikeMaxBase = 18;
                     AntiMagikeMaxBase = MagikeMaxBase * 3;
                     break;
                 case MagikeApparatusLevel.BloodJade:
-                    MagikeMaxBase = 562;
+                    MagikeMaxBase = 618;
                     AntiMagikeMaxBase = MagikeMaxBase * 2;
                     break;
             }
@@ -98,11 +98,11 @@ namespace Coralite.Content.Items.Magike.Lens.DayTimeLens
                     ConnectLengthBase = 0;
                     break;
                 case MagikeApparatusLevel.MagicCrystal:
-                    UnitDeliveryBase = 3;
+                    UnitDeliveryBase = 6;
                     SendDelayBase = 10;
                     break;
                 case MagikeApparatusLevel.BloodJade:
-                    UnitDeliveryBase = 150;
+                    UnitDeliveryBase = 165;
                     SendDelayBase = 8;
                     break;
             }
@@ -135,17 +135,13 @@ namespace Coralite.Content.Items.Magike.Lens.DayTimeLens
                     ProductionDelayBase = 1_0000_0000 / 60;//随便填个大数
                     ThroughputBase = 1;
                     break;
-                case MagikeApparatusLevel.Glistent:
+                case MagikeApparatusLevel.MagicCrystal:
                     ProductionDelayBase = 10;
-                    ThroughputBase = 1;
+                    ThroughputBase = 2;
                     break;
-                case MagikeApparatusLevel.Hallow:
+                case MagikeApparatusLevel.BloodJade:
                     ProductionDelayBase = 8;
-                    ThroughputBase = 50;
-                    break;
-                case MagikeApparatusLevel.HolyLight:
-                    ProductionDelayBase = 8;
-                    ThroughputBase = 50;
+                    ThroughputBase = 55;
                     break;
             }
 

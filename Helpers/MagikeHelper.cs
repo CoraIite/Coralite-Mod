@@ -549,7 +549,53 @@ namespace Coralite.Helpers
                 spriteBatch.Draw(itemTex, pos, new Rectangle?(rectangle2), i.GetColor(color), 0f, origin, itemScale, 0, 0f);
         }
 
+        public static int CalculateMagikeCost(MagikeApparatusLevel level,int ProducerCount=1,int workTime = 60)
+        {
+            float produceCountPerSecond = level switch
+            {
+                MagikeApparatusLevel.MagicCrystal
+                or MagikeApparatusLevel.Seashore => 0.1f,
 
+                MagikeApparatusLevel.RedJade
+                or MagikeApparatusLevel.Eiderdown => 0.2f,
+
+                MagikeApparatusLevel.Glistent => 0.3f,
+
+                MagikeApparatusLevel.Crimson
+                or MagikeApparatusLevel.Corruption
+                or MagikeApparatusLevel.Icicle
+                or MagikeApparatusLevel.Emperor => 0.7f,
+
+                MagikeApparatusLevel.Shadow
+                or MagikeApparatusLevel.Bone
+                or MagikeApparatusLevel.Beeswax
+                or MagikeApparatusLevel.Hellstone => 1.1f,
+
+                MagikeApparatusLevel.Quicksand => 1.5f,
+
+                MagikeApparatusLevel.CrystallineMagike => 5.3f,
+
+                MagikeApparatusLevel.Pelagic
+                or MagikeApparatusLevel.Flight
+                or MagikeApparatusLevel.Forbidden
+                or MagikeApparatusLevel.Frost => 6.25f,
+
+                MagikeApparatusLevel.Hallow
+                or MagikeApparatusLevel.BloodJade
+                or MagikeApparatusLevel.EternalFlame => 6.875f,
+
+                MagikeApparatusLevel.Soul
+                or MagikeApparatusLevel.Feather
+                or MagikeApparatusLevel.Shroomite => 8,
+
+                MagikeApparatusLevel.HolyLight => 10,
+
+                MagikeApparatusLevel.SplendorMagicore => 60,
+                _ => 1,
+            };
+
+            return (int)(produceCountPerSecond * ProducerCount * workTime);
+        }
 
 
 

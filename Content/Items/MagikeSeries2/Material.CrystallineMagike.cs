@@ -17,7 +17,7 @@ namespace Coralite.Content.Items.MagikeSeries2
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.GetMagikeItem().magikeAmount = 300;
+            Item.GetMagikeItem().magikeAmount = 450;
         }
 
         public void AddMagikeCraftRecipe()
