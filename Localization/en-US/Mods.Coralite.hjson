@@ -1,9 +1,10 @@
 DamageClasses.FairyDamage.DisplayName: Fairy Damage
-Players.CoralitePlayer.ThunderElectrifiedDeath: 被雷劈死了
+Players.CoralitePlayer.ThunderElectrifiedDeath: killed by lightning
 
 Conditions: {
 	CoraliteConditions: {
-		LearnedMagikeBase: Mods.Coralite.Conditions.CoraliteConditions.LearnedMagikeBase
-		CoralCat: Mods.Coralite.Conditions.CoraliteConditions.CoralCat
+		LearnedMagikeBase: Need to learn the basics of magike
+		CoralCat: Need in the world of rainbow cats (CoralCat)
+		MagikeCraft: Requires using magike craft altar to craft
 	}
 }

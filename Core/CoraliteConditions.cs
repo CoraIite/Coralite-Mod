@@ -8,6 +8,7 @@ namespace Coralite.Core
     {
         public static Condition LearnedMagikeBase { get; private set; }
         public static Condition CoralCat { get; private set; }
+        public static Condition MagikeCraft { get; private set; }
 
         public string LocalizationCategory => "Conditions";
 
@@ -17,6 +18,8 @@ namespace Coralite.Core
                 , () => MagikeSystem.learnedMagikeBase);
             CoralCat = new(this.GetLocalization(nameof(CoralCat))
                 , () => CoraliteWorld.coralCatWorld);
+            MagikeCraft = new(this.GetLocalization(nameof(MagikeCraft))
+                , () => false);
         }
 
         public override void Unload()

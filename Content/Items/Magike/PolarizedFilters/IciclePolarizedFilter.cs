@@ -46,7 +46,7 @@ namespace Coralite.Content.Items.Magike.PolarizedFilters
 
     public class IciclePolarizedFilterComponent : PolarizedFilter
     {
-        public override MagikeApparatusLevel Level => MagikeApparatusLevel.Icicle;
+        public override MALevel Level => MALevel.Icicle;
 
         public override int ItemType => ModContent.ItemType<IciclePolarizedFilter>();
     }

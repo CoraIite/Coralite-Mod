@@ -17,18 +17,6 @@ namespace Coralite.Content.Items.Misc_Melee
     {
         public override string Texture => AssetDirectory.Misc_Melee + Name;
 
-        public static LocalizedText craftCondition;
-
-        public override void Load()
-        {
-            craftCondition = this.GetLocalization("CraftCondition", () => "在CoralCat的世界中合成");
-        }
-
-        public override void Unload()
-        {
-            craftCondition = null;
-        }
-
         public override void SetDefaults()
         {
             Item.CloneDefaults(ItemID.Meowmere);
@@ -83,14 +71,14 @@ namespace Coralite.Content.Items.Misc_Melee
                 .AddIngredient(ItemID.ShadowFlameKnife)//紫：暗影焰刀
                 .AddIngredient<SmallBee>()
                 .AddTile(TileID.RainbowBrick)
-                .AddCondition(craftCondition, () => CoraliteWorld.coralCatWorld)
+                .AddCondition(CoraliteConditions.CoralCat)
                 .Register();
 
             Recipe.Create(ItemID.RainbowBrick)
                 .AddIngredient(ItemID.LunarBar, 4)
                 .AddTile(TileID.LunarCraftingStation)
-                .AddCondition(craftCondition, () => CoraliteWorld.coralCatWorld)
-                .AddDecraftCondition(craftCondition, () => CoraliteWorld.coralCatWorld)
+                .AddCondition(CoraliteConditions.CoralCat)
+                .AddDecraftCondition(CoraliteConditions.CoralCat)
                 .Register();
         }
 

@@ -33,18 +33,18 @@ namespace Coralite.Content.Items.Magike.Refractors
 
         public override MagikeTileEntity GetEntityInstance() => GetInstance<BasicColumnTileEntity>();
 
-        public override MagikeApparatusLevel[] GetAllLevels()
+        public override MALevel[] GetAllLevels()
         {
             return [
-                MagikeApparatusLevel.None,
-                MagikeApparatusLevel.MagicCrystal,
-                MagikeApparatusLevel.Crimson,
-                MagikeApparatusLevel.Corruption,
-                MagikeApparatusLevel.Icicle,
-                MagikeApparatusLevel.CrystallineMagike,
-                MagikeApparatusLevel.Soul,
-                MagikeApparatusLevel.Feather,
-                MagikeApparatusLevel.SplendorMagicore
+                MALevel.None,
+                MALevel.MagicCrystal,
+                MALevel.Crimson,
+                MALevel.Corruption,
+                MALevel.Icicle,
+                MALevel.CrystallineMagike,
+                MALevel.Soul,
+                MALevel.Feather,
+                MALevel.SplendorMagicore
                 ];
         }
     }
@@ -60,18 +60,18 @@ namespace Coralite.Content.Items.Magike.Refractors
 
     public class BasicColumnTileContainer : UpgradeableContainer
     {
-        public override void Upgrade(MagikeApparatusLevel incomeLevel)
+        public override void Upgrade(MALevel incomeLevel)
         {
             MagikeMaxBase = incomeLevel switch
             {
-                MagikeApparatusLevel.MagicCrystal => 720,
-                MagikeApparatusLevel.Crimson
-                or MagikeApparatusLevel.Corruption
-                or MagikeApparatusLevel.Icicle => 3600,
-                MagikeApparatusLevel.CrystallineMagike => 12000,
-                MagikeApparatusLevel.Soul
-                or MagikeApparatusLevel.Feather => 60000,
-                MagikeApparatusLevel.SplendorMagicore => 270000,
+                MALevel.MagicCrystal => 720,
+                MALevel.Crimson
+                or MALevel.Corruption
+                or MALevel.Icicle => 3600,
+                MALevel.CrystallineMagike => 12000,
+                MALevel.Soul
+                or MALevel.Feather => 60000,
+                MALevel.SplendorMagicore => 270000,
                 _ => 0,
             };
             LimitMagikeAmount();
@@ -83,7 +83,7 @@ namespace Coralite.Content.Items.Magike.Refractors
 
     public class BasicColumnTileSender : UpgradeableLinerSender
     {
-        public override void Upgrade(MagikeApparatusLevel incomeLevel)
+        public override void Upgrade(MALevel incomeLevel)
         {
             MaxConnectBase = 1;
             ConnectLengthBase = 6 * 16;
@@ -92,28 +92,28 @@ namespace Coralite.Content.Items.Magike.Refractors
             switch (incomeLevel)
             {
                 default:
-                case MagikeApparatusLevel.None:
+                case MALevel.None:
                     MaxConnectBase = 0;
                     UnitDeliveryBase = 0;
                     SendDelayBase = 1_0000_0000;//随便填个大数
                     ConnectLengthBase = 0;
                     break;
-                case MagikeApparatusLevel.MagicCrystal:
+                case MALevel.MagicCrystal:
                     UnitDeliveryBase = 60;
                     break;
-                case MagikeApparatusLevel.Crimson:
-                case MagikeApparatusLevel.Corruption:
-                case MagikeApparatusLevel.Icicle:
+                case MALevel.Crimson:
+                case MALevel.Corruption:
+                case MALevel.Icicle:
                     UnitDeliveryBase = 300;
                     break;
-                case MagikeApparatusLevel.CrystallineMagike:
+                case MALevel.CrystallineMagike:
                     UnitDeliveryBase = 500;
                     break;
-                case MagikeApparatusLevel.Soul:
-                case MagikeApparatusLevel.Feather:
+                case MALevel.Soul:
+                case MALevel.Feather:
                     UnitDeliveryBase = 2500;
                     break;
-                case MagikeApparatusLevel.SplendorMagicore:
+                case MALevel.SplendorMagicore:
                     UnitDeliveryBase = 9000;
                     break;
             }

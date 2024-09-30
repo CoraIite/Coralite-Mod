@@ -8,12 +8,12 @@
         /// </summary>
         /// <param name="incomeLevel"></param>
         /// <returns></returns>
-        public abstract void Upgrade(MagikeApparatusLevel incomeLevel);
+        public abstract void Upgrade(MALevel incomeLevel);
 
         /// <summary>
         /// 能否升级
         /// </summary>
         /// <param name="incomeLevel"></param>
-        public abstract bool CanUpgrade(MagikeApparatusLevel incomeLevel);
+        public abstract bool CanUpgrade(MALevel incomeLevel);
     }
 }

@@ -1,13 +1,14 @@
 ﻿using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
 using Coralite.Core;
+using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
-using static Coralite.Core.Systems.MagikeSystem.MagikeSystem;
 
 namespace Coralite.Content.Items.Nightmare
 {
@@ -177,18 +178,22 @@ namespace Coralite.Content.Items.Nightmare
 
         public void AddMagikeCraftRecipe()
         {
-            AddRemodelRecipe<GriefSeed, LostSevensideHook>(1_3500);
-            AddRemodelRecipe<GriefSeed, DreamShears>(1_3500);
-            AddRemodelRecipe<GriefSeed, EuphorbiaMilii>(1_3500);
-            AddRemodelRecipe<GriefSeed, Lycoris>(1_3500);
-            AddRemodelRecipe<GriefSeed, BoneRing>(1_3500);
-            AddRemodelRecipe<GriefSeed, QueensWreath>(1_3500);
-            AddRemodelRecipe<GriefSeed, DevilsClaw>(1_3500);
-            AddRemodelRecipe<GriefSeed, BarrenThornsStaff>(1_3500);
-            AddRemodelRecipe<GriefSeed, Lullaby>(1_3500);
-            AddRemodelRecipe<GriefSeed, PurpleToeStaff>(1_3500);
-            AddRemodelRecipe<GriefSeed, Dreamcatcher>(1_3500);
-            AddRemodelRecipe<GriefSeed, Eden>(1_3500);
+            int cost = MagikeHelper.CalculateMagikeCost(MALevel.SplendorMagicore, 24, 60 * 8);
+
+            MagikeCraftRecipe.CreateRecipe<GriefSeed, LostSevensideHook>(cost)
+                .RegisterNew<DreamShears>(cost)
+                .RegisterNew<EuphorbiaMilii>(cost)
+                .RegisterNew<Lycoris>(cost)
+                .RegisterNew<BoneRing>(cost)
+                .RegisterNew<QueensWreath>(cost)
+                .RegisterNew<DevilsClaw>(cost)
+                .RegisterNew<BarrenThornsStaff>(cost)
+                .RegisterNew<Lullaby>(cost)
+                .RegisterNew<PurpleToeStaff>(cost)
+                .RegisterNew<Dreamcatcher>(cost)
+                .RegisterNew<Eden>(cost)
+                .RegisterNew<NightmarePlanteraMask>(MagikeHelper.CalculateMagikeCost(MALevel.SplendorMagicore))
+                .Register();
         }
     }
 }

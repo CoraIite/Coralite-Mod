@@ -50,24 +50,24 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
 
         public override MagikeTileEntity GetEntityInstance() => GetInstance<HallowLensTileEntity>();
 
-        public override MagikeApparatusLevel[] GetAllLevels()
+        public override MALevel[] GetAllLevels()
         {
             return
             [
-                MagikeApparatusLevel.None,
-                MagikeApparatusLevel.Hallow,
-                MagikeApparatusLevel.HolyLight,
+                MALevel.None,
+                MALevel.Hallow,
+                MALevel.HolyLight,
             ];
         }
 
-        public override void DrawTopTex(SpriteBatch spriteBatch, Texture2D tex, Vector2 drawPos, Color lightColor, MagikeApparatusLevel level, bool canProduce)
+        public override void DrawTopTex(SpriteBatch spriteBatch, Texture2D tex, Vector2 drawPos, Color lightColor, MALevel level, bool canProduce)
         {
             switch (level)
             {
                 default:
                     base.DrawTopTex(spriteBatch, tex, drawPos, lightColor, level, canProduce);
                     return;
-                case MagikeApparatusLevel.Hallow:
+                case MALevel.Hallow:
                     {
                         Rectangle frame;
                         if (canProduce)
@@ -81,7 +81,7 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                         spriteBatch.Draw(tex, drawPos, frame, lightColor, 0, frame.Size() / 2, 1f, 0, 0f);
                     }
                     return;
-                case MagikeApparatusLevel.HolyLight:
+                case MALevel.HolyLight:
                     {
                         Rectangle frame;
                         if (canProduce)
@@ -114,7 +114,7 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
 
     public class HallowLensContainer : UpgradeableContainer
     {
-        public override void Upgrade(MagikeApparatusLevel incomeLevel)
+        public override void Upgrade(MALevel incomeLevel)
         {
             switch (incomeLevel)
             {
@@ -122,11 +122,11 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     MagikeMaxBase = 0;
                     AntiMagikeMaxBase = 0;
                     break;
-                case MagikeApparatusLevel.Hallow:
+                case MALevel.Hallow:
                     MagikeMaxBase = 630;
                     AntiMagikeMaxBase = MagikeMaxBase * 3;
                     break;
-                case MagikeApparatusLevel.HolyLight:
+                case MALevel.HolyLight:
                     MagikeMaxBase = 932;
                     AntiMagikeMaxBase = MagikeMaxBase * 2;
                     break;
@@ -139,7 +139,7 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
 
     public class HallowLensSender : UpgradeableLinerSender
     {
-        public override void Upgrade(MagikeApparatusLevel incomeLevel)
+        public override void Upgrade(MALevel incomeLevel)
         {
             MaxConnectBase = 1;
             ConnectLengthBase = 4 * 16;
@@ -152,11 +152,11 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     SendDelayBase = 1_0000_0000 / 60;//随便填个大数
                     ConnectLengthBase = 0;
                     break;
-                case MagikeApparatusLevel.Hallow:
+                case MALevel.Hallow:
                     UnitDeliveryBase = 180;
                     SendDelayBase = 8;
                     break;
-                case MagikeApparatusLevel.HolyLight:
+                case MALevel.HolyLight:
                     UnitDeliveryBase = 225;
                     SendDelayBase = 7;
                     break;
@@ -181,7 +181,7 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
         public override bool CheckWall(Tile tile)
             => true;
 
-        public override void Upgrade(MagikeApparatusLevel incomeLevel)
+        public override void Upgrade(MALevel incomeLevel)
         {
             switch (incomeLevel)
             {
@@ -189,11 +189,11 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     ProductionDelayBase = 1_0000_0000 / 60;//随便填个大数
                     ThroughputBase = 1;
                     break;
-                case MagikeApparatusLevel.Hallow:
+                case MALevel.Hallow:
                     ProductionDelayBase = 8;
                     ThroughputBase = 60;
                     break;
-                case MagikeApparatusLevel.HolyLight:
+                case MALevel.HolyLight:
                     ProductionDelayBase = 7;
                     ThroughputBase = 75;
                     break;

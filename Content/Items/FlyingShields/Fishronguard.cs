@@ -16,11 +16,11 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void SetDefaults2()
         {
-            Item.useTime = Item.useAnimation = 18;
+            Item.useTime = Item.useAnimation = 20;
             Item.shoot = ModContent.ProjectileType<FishronguardProj>();
             Item.knockBack = 4.5f;
             Item.shootSpeed = 15;
-            Item.damage = 75;
+            Item.damage = 70;
         }
 
         public override void AddRecipes()

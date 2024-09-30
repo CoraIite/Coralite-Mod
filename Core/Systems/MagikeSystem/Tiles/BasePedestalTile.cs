@@ -13,7 +13,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
     {
         public const float ItemSize = 36;
 
-        public override void QuickLoadAsset(MagikeApparatusLevel level)
+        public override void QuickLoadAsset(MALevel level)
         {
 
         }
@@ -41,7 +41,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
         /// <param name="lightColor"></param>
         /// <param name="rotation"></param>
         /// <param name="level"></param>
-        public virtual void DrawTopTex(SpriteBatch spriteBatch, Texture2D tex, Vector2 drawPos, Color lightColor, MagikeApparatusLevel level)
+        public virtual void DrawTopTex(SpriteBatch spriteBatch, Texture2D tex, Vector2 drawPos, Color lightColor, MALevel level)
         {
             spriteBatch.Draw(tex, drawPos, null, lightColor, 0, tex.Size() / 2, 1f, 0, 0f);
         }

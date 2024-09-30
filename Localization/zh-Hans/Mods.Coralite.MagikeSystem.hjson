@@ -199,7 +199,7 @@ MagikeSystem: {
 		ChooseReceiver_NotFound: 未找到魔能接收器！
 		ConnectFail_TooFar: 接收器距离太远！
 		ConnectFail_CantBeSelf: 不能连接自己！
-		ConnectFail_ConnectorFillUp: 魔能发送器容量已满！
+		ConnectFail_ConnectorFillUp: 魔能发送器连接量已满！
 		Connect_Success: 成功建立连接
 		Deconnect: 成功取消连接
 		BrilliantConnect: 成功连接{0}个仪器，未成功连接{1}个仪器
@@ -306,8 +306,8 @@ MagikeSystem: {
 			  ▶ 需要将底座放置在地牢砖上
 			  ▶ 需要在地牢砖墙前
 			'''
-		// HallowLensName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.HallowLensName
-		// HallowCondition: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.HallowCondition
+		HallowLensName: 神圣透镜
+		HallowCondition: "  ▶ 需要将底座放置在神圣方块上"
 	}
 
 	CraftText: {

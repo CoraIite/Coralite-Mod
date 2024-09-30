@@ -33,14 +33,14 @@ namespace Coralite.Content.Items.Magike.Lens.LiquidLens
         public override int DropItemType => ItemType<HoneyLens>();
         public override MagikeTileEntity GetEntityInstance() => GetInstance<HoneyLensTileEntity>();
 
-        public override MagikeApparatusLevel[] GetAllLevels()
+        public override MALevel[] GetAllLevels()
         {
             return
             [
-                MagikeApparatusLevel.None,
-                MagikeApparatusLevel.Beeswax,
-                MagikeApparatusLevel.CrystallineMagike,
-                MagikeApparatusLevel.Feather,
+                MALevel.None,
+                MALevel.Beeswax,
+                MALevel.CrystallineMagike,
+                MALevel.Feather,
             ];
         }
     }
@@ -59,7 +59,7 @@ namespace Coralite.Content.Items.Magike.Lens.LiquidLens
 
     public class HoneyLensContainer : UpgradeableContainer
     {
-        public override void Upgrade(MagikeApparatusLevel incomeLevel)
+        public override void Upgrade(MALevel incomeLevel)
         {
             switch (incomeLevel)
             {
@@ -67,15 +67,15 @@ namespace Coralite.Content.Items.Magike.Lens.LiquidLens
                     MagikeMaxBase = 0;
                     AntiMagikeMaxBase = 0;
                     break;
-                case MagikeApparatusLevel.Beeswax:
+                case MALevel.Beeswax:
                     MagikeMaxBase = 200;
                     AntiMagikeMaxBase = MagikeMaxBase * 3;
                     break;
-                case MagikeApparatusLevel.CrystallineMagike:
+                case MALevel.CrystallineMagike:
                     MagikeMaxBase = 675;
                     AntiMagikeMaxBase = MagikeMaxBase * 2;
                     break;
-                case MagikeApparatusLevel.Feather:
+                case MALevel.Feather:
                     MagikeMaxBase = 1028;
                     AntiMagikeMaxBase = MagikeMaxBase * 2;
                     break;
@@ -88,7 +88,7 @@ namespace Coralite.Content.Items.Magike.Lens.LiquidLens
 
     public class HoneyLensSender : UpgradeableLinerSender
     {
-        public override void Upgrade(MagikeApparatusLevel incomeLevel)
+        public override void Upgrade(MALevel incomeLevel)
         {
             MaxConnectBase = 1;
             ConnectLengthBase = 4 * 16;
@@ -101,15 +101,15 @@ namespace Coralite.Content.Items.Magike.Lens.LiquidLens
                     SendDelayBase = 1_0000_0000 / 60;//随便填个大数
                     ConnectLengthBase = 0;
                     break;
-                case MagikeApparatusLevel.Beeswax:
+                case MALevel.Beeswax:
                     UnitDeliveryBase = 60;
                     SendDelayBase = 9;
                     break;
-                case MagikeApparatusLevel.CrystallineMagike:
+                case MALevel.CrystallineMagike:
                     UnitDeliveryBase = 180;
                     SendDelayBase = 8;
                     break;
-                case MagikeApparatusLevel.Feather:
+                case MALevel.Feather:
                     UnitDeliveryBase = 240;
                     SendDelayBase = 7;
                     break;
@@ -130,7 +130,7 @@ namespace Coralite.Content.Items.Magike.Lens.LiquidLens
 
         public override int LiquidType => LiquidID.Honey;
 
-        public override void Upgrade(MagikeApparatusLevel incomeLevel)
+        public override void Upgrade(MALevel incomeLevel)
         {
             switch (incomeLevel)
             {
@@ -138,15 +138,15 @@ namespace Coralite.Content.Items.Magike.Lens.LiquidLens
                     ProductionDelayBase = 1_0000_0000 / 60;//随便填个大数
                     ThroughputBase = 1;
                     break;
-                case MagikeApparatusLevel.Beeswax:
+                case MALevel.Beeswax:
                     ProductionDelayBase = 9;
                     ThroughputBase = 20;
                     break;
-                case MagikeApparatusLevel.CrystallineMagike:
+                case MALevel.CrystallineMagike:
                     ProductionDelayBase = 8;
                     ThroughputBase = 60;
                     break;
-                case MagikeApparatusLevel.Feather:
+                case MALevel.Feather:
                     ProductionDelayBase = 7;
                     ThroughputBase = 80;
                     break;

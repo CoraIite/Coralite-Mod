@@ -4,30 +4,30 @@ namespace Coralite.Core.Systems.MagikeSystem
 {
     public partial class MagikeSystem
     {
-        private static Dictionary<int, Dictionary<MagikeApparatusLevel, int>> _magikeApparatusLevels;
-        private static Dictionary<int, Dictionary<int, MagikeApparatusLevel>> _magikeFrameToLevels;
+        private static Dictionary<int, Dictionary<MALevel, int>> _magikeApparatusLevels;
+        private static Dictionary<int, Dictionary<int, MALevel>> _magikeFrameToLevels;
 
-        public static Dictionary<int, Dictionary<MagikeApparatusLevel, int>> MagikeApparatusLevels
+        public static Dictionary<int, Dictionary<MALevel, int>> MagikeApparatusLevels
         {
             get
             {
-                _magikeApparatusLevels ??= new Dictionary<int, Dictionary<MagikeApparatusLevel, int>>();
+                _magikeApparatusLevels ??= new Dictionary<int, Dictionary<MALevel, int>>();
                 return _magikeApparatusLevels;
             }
         }
-        public static Dictionary<int, Dictionary<int, MagikeApparatusLevel>> MagikeFrameToLevels
+        public static Dictionary<int, Dictionary<int, MALevel>> MagikeFrameToLevels
         {
             get
             {
-                _magikeFrameToLevels ??= new Dictionary<int, Dictionary<int, MagikeApparatusLevel>>();
+                _magikeFrameToLevels ??= new Dictionary<int, Dictionary<int, MALevel>>();
                 return _magikeFrameToLevels;
             }
         }
 
-        public static void RegisterApparatusLevel(int tileType, params MagikeApparatusLevel[] levels)
+        public static void RegisterApparatusLevel(int tileType, params MALevel[] levels)
         {
-            Dictionary<MagikeApparatusLevel, int> keyValuePairs = new();
-            Dictionary<int, MagikeApparatusLevel> keyValuePairs2 = new();
+            Dictionary<MALevel, int> keyValuePairs = new();
+            Dictionary<int, MALevel> keyValuePairs2 = new();
 
             for (int i = 0; i < levels.Length; i++)
             {
@@ -46,7 +46,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         /// <param name="tileType"></param>
         /// <param name="freamX"></param>
         /// <returns></returns>
-        public static MagikeApparatusLevel? FrameToLevel(int tileType, int freamX)
+        public static MALevel? FrameToLevel(int tileType, int freamX)
         {
             if (!MagikeFrameToLevels.TryGetValue(tileType, out var keyValuePairs))
                 return null;

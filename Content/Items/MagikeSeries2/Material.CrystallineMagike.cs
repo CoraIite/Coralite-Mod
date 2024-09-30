@@ -11,7 +11,7 @@ namespace Coralite.Content.Items.MagikeSeries2
 {
     public class CrystallineMagike : BaseMaterial, IMagikeCraftable
     {
-        public CrystallineMagike() : base(Item.CommonMaxStack, Item.sellPrice(0, 0, 1), ModContent.RarityType<CrystallineMagikeRarity>(), AssetDirectory.MagikeSeries2Item)
+        public CrystallineMagike() : base(Item.CommonMaxStack, Item.sellPrice(0, 0, 25), ModContent.RarityType<CrystallineMagikeRarity>(), AssetDirectory.MagikeSeries2Item)
         { }
 
         public override void SetDefaults()
@@ -22,7 +22,7 @@ namespace Coralite.Content.Items.MagikeSeries2
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeSystem.AddRemodelRecipe<CrystallineMagike, SplendorMagicore>(700, conditions: Condition.DownedMoonLord);
+            MagikeSystem.AddRemodelRecipe<CrystallineMagike, SplendorMagicore>(6000, conditions: Condition.DownedMoonLord);
         }
     }
 }

@@ -28,7 +28,7 @@ namespace Coralite.Content.Items.Magike.PolarizedFilters
 
     public class BonePolarizedFilterComponent : PolarizedFilter
     {
-        public override MagikeApparatusLevel Level => MagikeApparatusLevel.Bone;
+        public override MALevel Level => MALevel.Bone;
 
         public override int ItemType => ModContent.ItemType<BonePolarizedFilter>();
     }

@@ -4,25 +4,12 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.Enums;
 using Terraria.ID;
-using Terraria.Localization;
 
 namespace Coralite.Content.Items.Misc_Melee
 {
     public class Cattongue : ModItem
     {
         public override string Texture => AssetDirectory.Misc_Melee + Name;
-
-        public static LocalizedText craftCondition;
-
-        public override void Load()
-        {
-            craftCondition = this.GetLocalization("CraftCondition", () => "在CoralCat的世界中合成");
-        }
-
-        public override void Unload()
-        {
-            craftCondition = null;
-        }
 
         public override void SetDefaults()
         {

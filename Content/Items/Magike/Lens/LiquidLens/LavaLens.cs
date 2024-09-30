@@ -34,13 +34,13 @@ namespace Coralite.Content.Items.Magike.Lens.LiquidLens
         public override int DropItemType => ItemType<LavaLens>();
         public override MagikeTileEntity GetEntityInstance() => GetInstance<LavaLensTileEntity>();
 
-        public override MagikeApparatusLevel[] GetAllLevels()
+        public override MALevel[] GetAllLevels()
         {
             return
             [
-                MagikeApparatusLevel.None,
-                MagikeApparatusLevel.Hellstone,
-                MagikeApparatusLevel.EternalFlame,
+                MALevel.None,
+                MALevel.Hellstone,
+                MALevel.EternalFlame,
             ];
         }
     }
@@ -59,7 +59,7 @@ namespace Coralite.Content.Items.Magike.Lens.LiquidLens
 
     public class LavaLensContainer : UpgradeableContainer
     {
-        public override void Upgrade(MagikeApparatusLevel incomeLevel)
+        public override void Upgrade(MALevel incomeLevel)
         {
             switch (incomeLevel)
             {
@@ -67,11 +67,11 @@ namespace Coralite.Content.Items.Magike.Lens.LiquidLens
                     MagikeMaxBase = 0;
                     AntiMagikeMaxBase = 0;
                     break;
-                case MagikeApparatusLevel.Hellstone:
+                case MALevel.Hellstone:
                     MagikeMaxBase = 250;
                     AntiMagikeMaxBase = MagikeMaxBase * 3;
                     break;
-                case MagikeApparatusLevel.EternalFlame:
+                case MALevel.EternalFlame:
                     MagikeMaxBase = 900;
                     AntiMagikeMaxBase = MagikeMaxBase * 2;
                     break;
@@ -84,7 +84,7 @@ namespace Coralite.Content.Items.Magike.Lens.LiquidLens
 
     public class LavaLensSender : UpgradeableLinerSender
     {
-        public override void Upgrade(MagikeApparatusLevel incomeLevel)
+        public override void Upgrade(MALevel incomeLevel)
         {
             MaxConnectBase = 1;
             ConnectLengthBase = 4 * 16;
@@ -97,11 +97,11 @@ namespace Coralite.Content.Items.Magike.Lens.LiquidLens
                     SendDelayBase = 1_0000_0000 / 60;//随便填个大数
                     ConnectLengthBase = 0;
                     break;
-                case MagikeApparatusLevel.Hellstone:
+                case MALevel.Hellstone:
                     UnitDeliveryBase = 75;
                     SendDelayBase = 9;
                     break;
-                case MagikeApparatusLevel.EternalFlame:
+                case MALevel.EternalFlame:
                     UnitDeliveryBase = 240;
                     SendDelayBase = 8;
                     break;
@@ -122,7 +122,7 @@ namespace Coralite.Content.Items.Magike.Lens.LiquidLens
 
         public override int LiquidType => LiquidID.Lava;
 
-        public override void Upgrade(MagikeApparatusLevel incomeLevel)
+        public override void Upgrade(MALevel incomeLevel)
         {
             switch (incomeLevel)
             {
@@ -130,11 +130,11 @@ namespace Coralite.Content.Items.Magike.Lens.LiquidLens
                     ProductionDelayBase = 1_0000_0000 / 60;//随便填个大数
                     ThroughputBase = 1;
                     break;
-                case MagikeApparatusLevel.Hellstone:
+                case MALevel.Hellstone:
                     ProductionDelayBase = 9;
                     ThroughputBase = 25;
                     break;
-                case MagikeApparatusLevel.EternalFlame:
+                case MALevel.EternalFlame:
                     ProductionDelayBase = 8;
                     ThroughputBase = 80;
                     break;

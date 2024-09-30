@@ -28,7 +28,7 @@ namespace Coralite.Content.Items.Magike.PolarizedFilters
 
     public class BeeswaxPolarizedFilterComponent : PolarizedFilter
     {
-        public override MagikeApparatusLevel Level => MagikeApparatusLevel.Beeswax;
+        public override MALevel Level => MALevel.Beeswax;
 
         public override int ItemType => ModContent.ItemType<BeeswaxPolarizedFilter>();
     }

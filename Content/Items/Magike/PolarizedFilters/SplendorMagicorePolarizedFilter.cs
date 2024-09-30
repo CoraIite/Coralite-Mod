@@ -106,7 +106,7 @@ namespace Coralite.Content.Items.Magike.PolarizedFilters
 
     public class SplendorMagicorePolarizedFilterComponent : PolarizedFilter
     {
-        public override MagikeApparatusLevel Level => MagikeApparatusLevel.SplendorMagicore;
+        public override MALevel Level => MALevel.SplendorMagicore;
 
         public override int ItemType => ModContent.ItemType<SplendorMagicorePolarizedFilter>();
     }

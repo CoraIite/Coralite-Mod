@@ -241,7 +241,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Projectile.DamageType = DamageClass.Magic;
             Projectile.width = Projectile.height = 28;
             Projectile.friendly = true;
-            Projectile.timeLeft = 600;
+            Projectile.timeLeft = 140;
             Projectile.penetrate = 2;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 20;
@@ -276,16 +276,26 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     break;
                 case 1://下落
                     {
-                        if (Projectile.velocity.Y < 15)
-                            Projectile.velocity.Y += 0.2f;
-
                         float xLength = Main.MouseWorld.X - Projectile.Center.X;
+                        float yLength = Main.MouseWorld.Y - Projectile.Center.Y;
                         int dir = Math.Sign(xLength);
+                        int diry = Math.Sign(yLength);
 
                         if (Math.Abs(xLength) < 24)
                             Projectile.velocity.X *= 0.85f;
                         else
                             Helper.Movement_SimpleOneLine(ref Projectile.velocity.X, dir, 14f, 0.35f, 0.65f, 0.97f);
+
+                        if (Math.Abs(yLength) < 24)
+                            Projectile.velocity.X *= 0.99f;
+                        else
+                            Helper.Movement_SimpleOneLine(ref Projectile.velocity.Y, diry, 10f, 0.3f, 0.6f, 0.97f);
+
+                        if (Vector2.Distance(Main.MouseWorld, Projectile.Center) < 128)
+                            Timer++;
+
+                        if (Timer > 20)
+                            Projectile.Kill();
                     }
                     break;
             }

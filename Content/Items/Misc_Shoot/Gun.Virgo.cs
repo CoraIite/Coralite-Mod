@@ -15,14 +15,13 @@ namespace Coralite.Content.Items.Misc_Shoot
         public override void SetDefaults()
         {
             Item.damage = 50;
-            Item.useTime = 24;
-            Item.useAnimation = 24;
+            Item.useTime = Item.useAnimation = 27;
             Item.knockBack = 6;
-            Item.shootSpeed = 12;
+            Item.shootSpeed = 12.5f;
 
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.DamageType = DamageClass.Ranged;
-            Item.value = Item.sellPrice(0, 1, 0, 0);
+            Item.value = Item.sellPrice(0, 1);
             Item.rare = ItemRarityID.LightRed;
             Item.shoot = ProjectileType<VirgoHeldProj>();
             Item.useAmmo = AmmoID.Bullet;
@@ -119,7 +118,7 @@ namespace Coralite.Content.Items.Misc_Shoot
                 }
 
                 Projectile.NewProjectileFromThis<VirgoBullet>(Projectile.Center, Projectile.velocity.SafeNormalize(Vector2.Zero) * 4.5f,
-                    (int)(Projectile.damage * 0.4f), Projectile.knockBack / 5);
+                    (int)(Projectile.damage * 0.35f), Projectile.knockBack / 5);
             }
         }
 

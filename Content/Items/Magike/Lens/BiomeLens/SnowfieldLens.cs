@@ -47,13 +47,13 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
 
         public override MagikeTileEntity GetEntityInstance() => GetInstance<SnowfieldLensTileEntity>();
 
-        public override MagikeApparatusLevel[] GetAllLevels()
+        public override MALevel[] GetAllLevels()
         {
             return
             [
-                MagikeApparatusLevel.None,
-                MagikeApparatusLevel.Icicle,
-                MagikeApparatusLevel.Frost,
+                MALevel.None,
+                MALevel.Icicle,
+                MALevel.Frost,
             ];
         }
     }
@@ -72,7 +72,7 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
 
     public class SnowfieldLensContainer : UpgradeableContainer
     {
-        public override void Upgrade(MagikeApparatusLevel incomeLevel)
+        public override void Upgrade(MALevel incomeLevel)
         {
             switch (incomeLevel)
             {
@@ -80,11 +80,11 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     MagikeMaxBase = 0;
                     AntiMagikeMaxBase = 0;
                     break;
-                case MagikeApparatusLevel.Icicle:
+                case MALevel.Icicle:
                     MagikeMaxBase = 70;
                     AntiMagikeMaxBase = MagikeMaxBase * 3;
                     break;
-                case MagikeApparatusLevel.Frost:
+                case MALevel.Frost:
                     MagikeMaxBase = 540;
                     AntiMagikeMaxBase = MagikeMaxBase * 2;
                     break;
@@ -97,7 +97,7 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
 
     public class SnowfieldLensSender : UpgradeableLinerSender
     {
-        public override void Upgrade(MagikeApparatusLevel incomeLevel)
+        public override void Upgrade(MALevel incomeLevel)
         {
             MaxConnectBase = 1;
             ConnectLengthBase = 4 * 16;
@@ -110,11 +110,11 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     SendDelayBase = 1_0000_0000 / 60;//随便填个大数
                     ConnectLengthBase = 0;
                     break;
-                case MagikeApparatusLevel.Icicle:
+                case MALevel.Icicle:
                     UnitDeliveryBase = 32;
                     SendDelayBase = 9;
                     break;
-                case MagikeApparatusLevel.Frost:
+                case MALevel.Frost:
                     UnitDeliveryBase = 144;
                     SendDelayBase = 8;
                     break;
@@ -139,7 +139,7 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
         public override bool CheckWall(Tile tile)
             => tile.WallType is WallID.SnowBrick or WallID.SnowWallEcho or WallID.SnowWallUnsafe;
 
-        public override void Upgrade(MagikeApparatusLevel incomeLevel)
+        public override void Upgrade(MALevel incomeLevel)
         {
             switch (incomeLevel)
             {
@@ -147,11 +147,11 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     ProductionDelayBase = 1_0000_0000 / 60;//随便填个大数
                     ThroughputBase = 1;
                     break;
-                case MagikeApparatusLevel.Icicle:
+                case MALevel.Icicle:
                     ProductionDelayBase = 9;
                     ThroughputBase = 7;
                     break;
-                case MagikeApparatusLevel.Frost:
+                case MALevel.Frost:
                     ProductionDelayBase = 8;
                     ThroughputBase = 48;
                     break;

@@ -4,6 +4,7 @@ using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Audio;
+using Terraria.GameInput;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
 
@@ -72,6 +73,18 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             if (Main.LocalPlayer.ItemTimeIsZero)
             {
+                if (PlayerInput.Triggers.Current.SmartSelect)
+                {
+                    int invSlot = Helper.GetFreeInventorySlot(Main.LocalPlayer);
+
+                    if (!_container[_index].IsAir && invSlot != -1)
+                    {
+                        Main.LocalPlayer.GetItem(Main.myPlayer, _container[_index].Clone(), GetItemSettings.InventoryUIToInventorySettings);
+                        _container[_index].TurnToAir();
+                        SoundEngine.PlaySound(CoraliteSoundID.Grab);
+                    }
+                }
+
                 if (Main.mouseItem.IsAir)
                 {
                     Main.mouseItem = _container[_index].Clone();

@@ -85,7 +85,7 @@ namespace Coralite.Content.Items.Magike.PolarizedFilters
 
     public class SoulPolarizedFilterComponent : PolarizedFilter
     {
-        public override MagikeApparatusLevel Level => MagikeApparatusLevel.Soul;
+        public override MALevel Level => MALevel.Soul;
 
         public override int ItemType => ModContent.ItemType<SoulPolarizedFilter>();
     }

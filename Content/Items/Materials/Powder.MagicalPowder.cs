@@ -2,6 +2,7 @@
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
+using Coralite.Helpers;
 using Terraria;
 using Terraria.ID;
 
@@ -13,9 +14,10 @@ namespace Coralite.Content.Items.Materials
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeCraftRecipe.CreateRecipe(ModContent.ItemType<MagicalPowder>(), ItemID.EnchantedSword, 150, MainItenStack: 40)
-                .RegisterNew(ItemID.FallenStar, 25).SetMainStack(5)
-                .RegisterNew(ItemID.ManaCrystal, 50).SetMainStack(25)
+            MagikeCraftRecipe.CreateRecipe(ModContent.ItemType<MagicalPowder>(), ItemID.EnchantedSword, MagikeHelper.CalculateMagikeCost(MALevel.MagicCrystal,6,120)
+                , MainItenStack: 40)
+                .RegisterNew(ItemID.FallenStar, MagikeHelper.CalculateMagikeCost(MALevel.MagicCrystal, 6, 20)).SetMainStack(5)
+                .RegisterNew(ItemID.ManaCrystal, MagikeHelper.CalculateMagikeCost(MALevel.MagicCrystal, 6, 40)).SetMainStack(25)
                 .Register();
         }
     }

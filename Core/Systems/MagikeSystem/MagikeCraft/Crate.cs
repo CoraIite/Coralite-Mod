@@ -1,6 +1,7 @@
 ﻿using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Terraria.ID;
-using static Coralite.Core.Systems.MagikeSystem.MagikeSystem;
+using static Coralite.Core.Systems.MagikeSystem.MALevel;
+using static Coralite.Helpers.MagikeHelper;
 
 namespace Coralite.Core.Systems.MagikeSystem.Remodels
 {
@@ -9,17 +10,18 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
         public void AddMagikeCraftRecipe()
         {
             //木板条箱
-            AddRemodelRecipe(ItemID.WoodenCrate, ItemID.SailfishBoots, 150);//航鱼靴
-            AddRemodelRecipe(ItemID.WoodenCrate, ItemID.TsunamiInABottle, 150);//海啸瓶
-            AddRemodelRecipe(ItemID.WoodenCrate, ItemID.Extractinator, 150);//提取机
-            AddRemodelRecipe(ItemID.WoodenCrate, ItemID.Aglet, 150);//金属代扣
-            AddRemodelRecipe(ItemID.WoodenCrate, ItemID.PortableStool, 50);//踢蹬
-            AddRemodelRecipe(ItemID.WoodenCrate, ItemID.ClimbingClaws, 150);//攀爬抓
-            AddRemodelRecipe(ItemID.WoodenCrate, ItemID.CordageGuide, 50);//植物纤维宝典
-            AddRemodelRecipe(ItemID.WoodenCrate, ItemID.Radar, 150);//
-            AddRemodelRecipe(ItemID.WoodenCrate, ItemID.ApprenticeBait, 50, 3);
-            AddRemodelRecipe(ItemID.WoodenCrate, ItemID.JourneymanBait, 100, 3);
-
+            //航鱼靴
+            MagikeCraftRecipe.CreateRecipe(ItemID.WoodenCrate, ItemID.SailfishBoots, CalculateMagikeCost(MagicCrystal, 8, 60 * 3), 2)
+                .RegisterNew(ItemID.TsunamiInABottle, CalculateMagikeCost(MagicCrystal, 8, 180))//海啸瓶
+                .RegisterNew(ItemID.Extractinator, CalculateMagikeCost(MagicCrystal, 8, 180))//提取机
+                .RegisterNew(ItemID.Aglet, CalculateMagikeCost(MagicCrystal, 8, 180))//金属代扣
+                .RegisterNew(ItemID.PortableStool, CalculateMagikeCost(MagicCrystal, 8, 180))//踢蹬
+                .RegisterNew(ItemID.ClimbingClaws, CalculateMagikeCost(MagicCrystal, 8, 180))//攀爬爪
+                .RegisterNew(ItemID.CordageGuide, CalculateMagikeCost(MagicCrystal, 8, 180))//植物纤维宝典
+                .RegisterNew(ItemID.Radar, CalculateMagikeCost(MagicCrystal, 8, 180))
+                .RegisterNew(ItemID.ApprenticeBait, CalculateMagikeCost(MagicCrystal, 8, 180), 3)
+                .RegisterNew(ItemID.JourneymanBait, CalculateMagikeCost(MagicCrystal, 8, 180), 3)
+                .Register();
         }
     }
 }

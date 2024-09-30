@@ -11,13 +11,13 @@ namespace Coralite.Core.Systems.MagikeSystem
 {
     public partial class MagikeSystem
     {
-        public static FrozenDictionary<MagikeApparatusLevel, Color> PolarizeFilterColor;
-        public static FrozenDictionary<MagikeApparatusLevel, int> PolarizeFilterItemType;
+        public static FrozenDictionary<MALevel, Color> PolarizeFilterColor;
+        public static FrozenDictionary<MALevel, int> PolarizeFilterItemType;
 
         public static void LoadPolarizeFilter()
         {
-            Dictionary<MagikeApparatusLevel, Color> tempColor = [];
-            Dictionary<MagikeApparatusLevel, int> tempItemType = [];
+            Dictionary<MALevel, Color> tempColor = [];
+            Dictionary<MALevel, int> tempItemType = [];
 
             foreach (var mod in ModLoader.Mods)
             {
@@ -28,7 +28,7 @@ namespace Coralite.Core.Systems.MagikeSystem
                                          select item)
                     {
                         PolarizedFilter Filter = item.GetFilterComponent() as PolarizedFilter;
-                        MagikeApparatusLevel level = Filter.Level;
+                        MALevel level = Filter.Level;
                         tempColor.Add(level, item.FilterColor);
                         tempItemType.Add(level, ModContent.Find<ModItem>(mod.Name, item.Name).Type);
                     }
@@ -38,7 +38,7 @@ namespace Coralite.Core.Systems.MagikeSystem
             PolarizeFilterItemType = tempItemType.ToFrozenDictionary();
         }
 
-        public static Color GetColor(MagikeApparatusLevel level)
+        public static Color GetColor(MALevel level)
         {
             if (PolarizeFilterColor.TryGetValue(level, out Color c))
                 return c;
@@ -46,7 +46,7 @@ namespace Coralite.Core.Systems.MagikeSystem
             return Color.Gray;
         }
 
-        public static int GetPolarizedFilterItemType(MagikeApparatusLevel level)
+        public static int GetPolarizedFilterItemType(MALevel level)
         {
             if (PolarizeFilterItemType.TryGetValue(level, out int type))
                 return type;

@@ -29,12 +29,12 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public override void Initialize()
         {
-            Upgrade(MagikeApparatusLevel.None);
+            Upgrade(MALevel.None);
         }
 
-        public virtual void Upgrade(MagikeApparatusLevel incomeLevel) { }
+        public virtual void Upgrade(MALevel incomeLevel) { }
 
-        public virtual bool CanUpgrade(MagikeApparatusLevel incomeLevel)
+        public virtual bool CanUpgrade(MALevel incomeLevel)
             => Entity.CheckUpgrageable(incomeLevel);
 
         public override void Work()
@@ -124,7 +124,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
                 foreach (var pos in linerSender.Receivers)
                 {
-                    if (!MagikeHelper.TryGetEntity(pos, out MagikeTileEntity receiverEntity))
+                    if (!TryGetEntity(pos, out MagikeTileEntity receiverEntity))
                         continue;
 
                     Item[] tempItems = null;
@@ -148,11 +148,12 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                             if (howManyNeed < 1)
                                 goto costEnd;
                         }
-
-                    return false;//这块给我写迷糊了，总之就是遍历所有的物品然后挨个消耗
                 }
 
-            costEnd:
+                if (howManyNeed>0)
+                    return false;//这块给我写迷糊了，总之就是遍历所有的物品然后挨个消耗
+
+                costEnd:
                 ;
             }
 

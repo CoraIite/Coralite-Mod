@@ -183,127 +183,148 @@ C4_ConnectStaff: {
 }
 
 MagikeSystem: {
-	learnedMagikeBase: 学习“书页：魔能基础”后可合成
-	learnedMagikeAdvanced: 学习“卷轴：强化魔能提炼”后可合成
-	NewKnowledgeUnlocked: 魔能辞典中解锁了新的知识
-	Error: 发生致命错误！请重新摆放该物块！
+	learnedMagikeBase: Crafting can be achieved by learning "Pages: Magike base".
+	learnedMagikeAdvanced: Crafting can be achieved by learning "Pages: Magike advanced".
+	NewKnowledgeUnlocked: New knowledge has been unlocked
+	Error: A fatal mistake has occurred! Please rearrange the block!
 	PolarizedFilterTooltip:
 		'''
-		左键选择区域，松手后为区域内的魔能仪器插入滤镜并将其偏振至滤镜等级
-		右键取消选择
+		Left-click to select the area
+		 release and insert a filter into the magike apparatus in the area and polarize it to the filter level
+		Right-click to deselect
 		'''
 
 	Staffs: {
-		ChooseSender_Found: 已选择魔能发送器
-		ChooseSender_NotFound: 未找到魔能发送器！
-		ChooseReceiver_NotFound: 未找到魔能接收器！
-		ConnectFail_TooFar: 接收器距离太远！
-		ConnectFail_CantBeSelf: 不能连接自己！
-		ConnectFail_ConnectorFillUp: 魔能发送器容量已满！
-		Connect_Success: 成功建立连接
-		Deconnect: 成功取消连接
-		BrilliantConnect: 成功连接{0}个仪器，未成功连接{1}个仪器
-		ChargeNotFound: 未找到魔能容器！
-		FactoryNotFound: 未找到魔能工作站！
-		ChooseReceiver_AlreadyConnect: Mods.Coralite.MagikeSystem.MagikeSystem.Staffs.ChooseReceiver_AlreadyConnect
+		ChooseSender_Found: Sender selected
+		ChooseSender_NotFound: No sender found！
+		ChooseReceiver_NotFound: No receiver found！
+		ConnectFail_TooFar: The receiver is too far away！
+		ConnectFail_CantBeSelf: Can't connect self！
+		ConnectFail_ConnectorFillUp: The sender connection is full！
+		Connect_Success: Connect success
+		Deconnect: Disconnect success
+		BrilliantConnect:
+			'''
+			{0} apparatus were successfully connected 
+			{1} apparatus were not successfully connected
+			'''
+		ChargeNotFound: No magike container found！
+		FactoryNotFound: No magike workstations found！
+		ChooseReceiver_AlreadyConnect: This apparatus is already connected!
 	}
 
-	ApparatusNotFound: 未找到魔能仪器！
-	FilterFillUp: 仪器内滤镜已满！
-	InsertSuccess: 成功插入滤镜
-	UpgradeableNotFound: 未找到可升级仪器！
-	CantUpgrade: 无法升级！
-	ItemDescriptionPolarizedFilter: 可插入的偏振滤镜：
-	NeedPolarizedFilter: ""
+	ApparatusNotFound: No magike apparatus found！
+	FilterFillUp: The filter in the apparatus is full！
+	InsertSuccess: The filter was successfully inserted
+	UpgradeableNotFound: No upgradeable apparatus found！
+	CantUpgrade: Upgrades are not possible！
+	ItemDescriptionPolarizedFilter: Insertable polarized filters：
+	NeedPolarizedFilter: Need to insert an insertable polarized filter to work
 
 	ApparatusDescription: {
-		MagikeAmount: "魔能容量 "
-		ConnectAmount: "连接情况 "
-		IsWorking: 正在工作中...
+		MagikeAmount: "Magike capacity "
+		ConnectAmount: "Connectivity "
+		IsWorking: Is Working...
 	}
 
 	UIText: {
-		ContainerMagikeAmount: ◇ 魔能量
-		ContainerMagikeMax: ◇ 魔能上限
-		ContainerAntiMagikeAmount: ▽ 反魔能量
-		ContainerAntiMagikeMax: ▽ 反魔能上限
-		MagikeContainerName: 魔能存储单元
-		CraftAltarName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.CraftAltarName
-		CurrentConnect: ◇ 当前连接
+		ContainerMagikeAmount: ◇ Magike capacity
+		ContainerMagikeMax: ◇ Maximum magike
+		ContainerAntiMagikeAmount: ▽ Antimagike capacity
+		ContainerAntiMagikeMax: ▽ Maximum antimagike
+		MagikeContainerName: Magike Container
+		CraftAltarName: Magike Craft Altar
+		CurrentConnect: ◇ Current connections
 		MagikeSendTime:
 			'''
-			◇ 发送冷却（单位：秒）
-			  ▶ 计时器归零后执行一次发送
+			◇ Send CD (in seconds)
+			  ▶ A send is performed after the timer is reset to zero
 			'''
-		MagikeSendAmount: ◇ 单次发送量
-		MagikeConnectLength: ◇ 连接距离（单位：格）
-		MagikeLinerSenderName: 线性魔能发送器
-		CheckOnlyLinerSenderName: 线性连接器
-		PolarizedFilterLevel: ◇ 偏振等级
-		ClickToRemove: 点击以取出滤镜
-		MagikePolarizedFilterName: 偏振滤镜
-		ExtractProducerName: 魔能提取透镜
+		MagikeSendAmount: ◇ The amount of a single send
+		MagikeConnectLength: ◇ Connection distance (unit: grid)
+		MagikeLinerSenderName: Liner Magike Sender
+		CheckOnlyLinerSenderName: Linear connector
+		PolarizedFilterLevel: ◇ Polarization level
+		ClickToRemove: Click to remove the filter
+		MagikePolarizedFilterName: Polarized Filter
+		ExtractProducerName: Magike Extract Producer
 		ProduceTime:
 			'''
-			◇ 生产冷却（单位：秒）
-			  ▶ 计时器归零后执行一次生产
+			◇ Production CD (in seconds)
+			  ▶ A production is performed after the timer is reset to zero
 			'''
-		ProduceAmount: ◇ 单次生产量
-		ProduceCondition: ◇ 生产条件
-		ItemWithMagike: 需要放入含有魔能的物品
-		ForestLensName: 森林透镜
+		ProduceAmount: ◇ Single production volume
+		ProduceCondition: ◇ Production conditions
+		ItemWithMagike: "  ▶ Need Items that contains magike"
+		ForestLensName: Forest Lens
 		ForestCondition:
 			'''
-			  ▶ 需要将底座放置在草方块上
-			  ▶ 需要在草墙或花墙前
+			  ▶ The bottom needs to be placed on a grass block
+			  ▶ Need to be in front of a grass or flower wall
 			'''
-		OceanLensName: 海洋透镜
-		OceanCondition: "  ▶ 需要将底座放置在沙块上"
-		SkyLensName: 天空透镜
-		SkyCondition: "  ▶ 需要将底座放置在任意云块上"
-		DesertLensName: 沙漠透镜
+		OceanLensName: Ocean Lens
+		OceanCondition: "  ▶ The bottom needs to be placed on a sand block"
+		SkyLensName: Sky Lens
+		SkyCondition: "  ▶ The bottom needs to be placed on any cloud block"
+		DesertLensName: Desert Lens
 		DesertCondition:
 			'''
-			  ▶ 需要将底座放置在沙块上
-			  ▶ 发生沙尘暴时产量增加
+			  ▶ The bottom needs to be placed on a sand block
+			  ▶ Production increases in the event of a dust storm
 			'''
-		GlowingMushroomLensName: 蘑菇透镜
-		GlowingMushroomCondition: "  ▶ 需要将底座放置在蘑菇草块上"
-		SunlightLensName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.SunlightLensName
-		SunlightCondition: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.SunlightCondition
-		ItemMax: ◇ 当前物品容量
-		OutPutAll: 强夺全部
-		FastStack: 快速堆叠
-		ItemContainerName: 物品容器
-		GetOnlyItemContainerName: 仅取出的物品容器
-		SnowfieldLensName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.SnowfieldLensName
-		SnowfieldCondition: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.SnowfieldCondition
-		MoonlightLensName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.MoonlightLensName
-		MoonlightCondition: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.MoonlightCondition
-		LavaLensName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.LavaLensName
-		LavaCondition: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.LavaCondition
-		HellLensName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.HellLensName
-		HellCondition: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.HellCondition
-		WaterflowLensName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.WaterflowLensName
-		WaterflowCondition: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.WaterflowCondition
-		HoneyLensName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.HoneyLensName
-		HoneyCondition: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.HoneyCondition
-		DungeonLensName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.DungeonLensName
-		DungeonCondition: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.DungeonCondition
-		HallowLensName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.HallowLensName
-		HallowCondition: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.HallowCondition
+		GlowingMushroomLensName: Glowing Mushroom Lens
+		GlowingMushroomCondition: "  ▶ The base needs to be placed on the glow mushroom grass block"
+		SunlightLensName: Sunlight Lens
+		SunlightCondition: "  ▶ Need sun light"
+		ItemMax: ◇ Current item capacity
+		OutPutAll: Take it all
+		FastStack: Stack quickly
+		ItemContainerName: Item Container
+		GetOnlyItemContainerName: Take Only Item Container
+		SnowfieldLensName: Snowfield Lens
+		SnowfieldCondition: "  ▶ The bottom needs to be placed on the snow or ice block"
+		MoonlightLensName: Moonlight Lens
+		MoonlightCondition: "  ▶ Need moon light"
+		LavaLensName: Lava Lens
+		LavaCondition:
+			'''
+			  ▶ Lava on the bottom needs to be consumed
+			  ▶ Each tile on the base consumes 1 / 16 of Lava
+			'''
+		HellLensName: Hell Lens
+		HellCondition: "  ▶ The bottom needs to be placed on the Ash or Underworld building block"
+		WaterflowLensName: Waterflow Lens
+		WaterflowCondition:
+			'''
+			  ▶ Water on the bottom needs to be consumed
+			  ▶ Each tile on the base consumes 1 / 16 of Water
+			'''
+		HoneyLensName: Honey Lens
+		HoneyCondition:
+			'''
+			  ▶ Honey on the bottom needs to be consumed
+			  ▶ Each tile on the base consumes 1 / 16 of Honey
+			'''
+		DungeonLensName: Dungeon Lens
+		DungeonCondition:
+			'''
+			  ▶ The bottom needs to be placed on the dungeon bricks
+			  ▶ Requires in front of the dungeon brick wall
+			'''
+		HallowLensName: Hallow Lens
+		HallowCondition: "  ▶ The bottom needs to be placed on the Hallowed Block"
 	}
 
 	CraftText: {
-		NoMainItem: 未找到主要物品！
-		MainItemIncorrect: 主要物品类型错误！
-		MainItemNotEnough: 主要物品数量不足！
-		ConditionNotMet: 未达成合成条件！
-		OtherItemNotEnough: 次要物品数量不足！
-		OtherItemLack: 缺失次要物品！
-		MagikeNotEnough: 魔能不足！
-		NoCraftRecipe: 没有可合成的合成表！
-		AntimagikeNotEnough: Mods.Coralite.MagikeSystem.MagikeSystem.CraftText.AntimagikeNotEnough
-		MagikeEnough: Mods.Coralite.MagikeSystem.MagikeSystem.CraftText.MagikeEnough
+		NoMainItem: No main items found!
+		MainItemIncorrect: The main item type is wrong!
+		MainItemNotEnough: The number of main item is not enough!
+		ConditionNotMet: Crafting conditions not met!
+		OtherItemNotEnough: The number of secondary item is not enough!
+		OtherItemLack: Missing secondary items!
+		MagikeNotEnough: Magike not enough! {0} / {1}
+		NoCraftRecipe: There are no recipes to craft!
+		AntimagikeNotEnough: Antimagike not enough! {0} / {1}
+		MagikeEnough: Magike Cost: {0}
 	}
 }

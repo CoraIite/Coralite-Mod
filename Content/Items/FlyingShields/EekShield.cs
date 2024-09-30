@@ -22,7 +22,7 @@ namespace Coralite.Content.Items.FlyingShields
             Item.shoot = ModContent.ProjectileType<EekShieldProj>();
             Item.knockBack = 2;
             Item.shootSpeed = 15;
-            Item.damage = 42;
+            Item.damage = 44;
         }
 
         public override bool PreDrawTooltipLine(DrawableTooltipLine line, ref int yOffset)

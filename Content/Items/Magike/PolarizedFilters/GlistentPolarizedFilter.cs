@@ -37,7 +37,7 @@ namespace Coralite.Content.Items.Magike.PolarizedFilters
 
     public class GlistentPolarizedFilterComponent : PolarizedFilter
     {
-        public override MagikeApparatusLevel Level => MagikeApparatusLevel.Glistent;
+        public override MALevel Level => MALevel.Glistent;
 
         public override int ItemType => ModContent.ItemType<GlistentPolarizedFilter>();
     }

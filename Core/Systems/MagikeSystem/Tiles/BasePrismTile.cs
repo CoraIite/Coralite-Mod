@@ -9,7 +9,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
     public abstract class BasePrismTile(int width, int height, Color mapColor, int dustType, int frameCount, int minPick = 0, bool topSoild = false)
         : BaseMagikeTile(width, height, mapColor, dustType, minPick, topSoild)
     {
-        public override void DrawExtraTex(SpriteBatch spriteBatch, Texture2D tex, Rectangle tileRect, Vector2 offset, Color lightColor, float rotation, MagikeTileEntity entity, MagikeApparatusLevel level)
+        public override void DrawExtraTex(SpriteBatch spriteBatch, Texture2D tex, Rectangle tileRect, Vector2 offset, Color lightColor, float rotation, MagikeTileEntity entity, MALevel level)
         {
             Vector2 selfCenter = tileRect.Center();
             Vector2 drawPos = selfCenter + offset;

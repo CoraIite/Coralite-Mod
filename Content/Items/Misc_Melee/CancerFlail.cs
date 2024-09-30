@@ -160,10 +160,6 @@ namespace Coralite.Content.Items.Misc_Melee
             }
         }
 
-        public override void OnKill(int timeLeft)
-        {
-        }
-
         public override void OnHookedToNPC()
         {
             Vector2 dir = Projectile.rotation.ToRotationVector2();

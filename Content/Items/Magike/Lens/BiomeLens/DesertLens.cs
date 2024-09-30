@@ -48,13 +48,13 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
 
         public override MagikeTileEntity GetEntityInstance() => GetInstance<DesertLensTileEntity>();
 
-        public override MagikeApparatusLevel[] GetAllLevels()
+        public override MALevel[] GetAllLevels()
         {
             return
             [
-                MagikeApparatusLevel.None,
-                MagikeApparatusLevel.Quicksand,
-                MagikeApparatusLevel.Forbidden,
+                MALevel.None,
+                MALevel.Quicksand,
+                MALevel.Forbidden,
             ];
         }
     }
@@ -73,7 +73,7 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
 
     public class DesertLensContainer : UpgradeableContainer
     {
-        public override void Upgrade(MagikeApparatusLevel incomeLevel)
+        public override void Upgrade(MALevel incomeLevel)
         {
             switch (incomeLevel)
             {
@@ -81,11 +81,11 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     MagikeMaxBase = 0;
                     AntiMagikeMaxBase = 0;
                     break;
-                case MagikeApparatusLevel.Quicksand:
+                case MALevel.Quicksand:
                     MagikeMaxBase = 140;
                     AntiMagikeMaxBase = MagikeMaxBase * 3;
                     break;
-                case MagikeApparatusLevel.Forbidden:
+                case MALevel.Forbidden:
                     MagikeMaxBase = 562;
                     AntiMagikeMaxBase = MagikeMaxBase * 2;
                     break;
@@ -98,7 +98,7 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
 
     public class DesertLensSender : UpgradeableLinerSender
     {
-        public override void Upgrade(MagikeApparatusLevel incomeLevel)
+        public override void Upgrade(MALevel incomeLevel)
         {
             MaxConnectBase = 1;
             ConnectLengthBase = 4 * 16;
@@ -111,11 +111,11 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     SendDelayBase = 1_0000_0000 / 60;//随便填个大数
                     ConnectLengthBase = 0;
                     break;
-                case MagikeApparatusLevel.Quicksand:
+                case MALevel.Quicksand:
                     UnitDeliveryBase = 42;
                     SendDelayBase = 9;
                     break;
-                case MagikeApparatusLevel.Forbidden:
+                case MALevel.Forbidden:
                     UnitDeliveryBase = 150;
                     SendDelayBase = 8;
                     break;
@@ -142,7 +142,7 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
         public override bool CheckWall(Tile tile)
             => true;
 
-        public override void Upgrade(MagikeApparatusLevel incomeLevel)
+        public override void Upgrade(MALevel incomeLevel)
         {
             switch (incomeLevel)
             {
@@ -150,11 +150,11 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     ProductionDelayBase = 1_0000_0000 / 60;//随便填个大数
                     ThroughputBase = 1;
                     break;
-                case MagikeApparatusLevel.Quicksand:
+                case MALevel.Quicksand:
                     ProductionDelayBase = 9;
                     ThroughputBase = 14;
                     break;
-                case MagikeApparatusLevel.Forbidden:
+                case MALevel.Forbidden:
                     ProductionDelayBase = 8;
                     ThroughputBase = 50;
                     break;

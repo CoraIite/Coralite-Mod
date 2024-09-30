@@ -743,7 +743,11 @@ MagConnectStaff: {
 MagicCrystal: {
 	DisplayName: 魔力晶体
 	Tooltip: 微弱的魔能散发出粉色的光芒
-	MoreDescription: “去地下寻找水晶洞穴吧，其中藏有如何使用魔能的知识”
+	MoreDescription:
+		'''
+		去地下寻找水晶洞穴吧，其中藏有如何使用魔能的知识
+		或许可以制造一个魔力诱饵来为你指引方向
+		'''
 }
 
 CrystallineMagike: {
@@ -1557,7 +1561,11 @@ BloodJadeRangesWeapon: {
 
 MagikeGuideBook: {
 	DisplayName: 魔能辞典
-	Tooltip: 记载着魔能的知识，物品栏内右键使用，使用鼠标滚轮翻页
+	Tooltip:
+		'''
+		该物品并未准备就绪...
+		记载着魔能的知识，物品栏内右键使用，使用鼠标滚轮翻页
+		'''
 }
 
 MagikeNote1: {
@@ -2994,7 +3002,12 @@ RedJadeBullet: {
 
 ReverseFlash: {
 	DisplayName: 逆闪电
-	Tooltip: 射击时从远处朝玩家生成一道电光
+	Tooltip:
+		'''
+		射击时从远处朝玩家生成一道电光
+		双击方向键进行伏闪，之后生成一道逆闪电
+		[c/fbf236:电闪雷鸣]
+		'''
 }
 
 TenkoFigurine: {
@@ -3186,7 +3199,6 @@ MagicCrystalMusicBox: {
 }
 
 Meowmeo: {
-	CraftCondition: 在CoralCat的世界中合成
 	DisplayName: 彩虹猫圣剑
 	Tooltip: ~喵喵喵~喵喵喵~喵喵喵~
 }
@@ -3205,31 +3217,26 @@ HylianShield: {
 }
 
 Nuranasa: {
-	CraftCondition: 在CoralCat的世界中合成
 	DisplayName: 妖刀·小村正
 	Tooltip: 小小的也很可爱
 }
 
 SmallVolcano: {
-	CraftCondition: 在CoralCat的世界中合成
 	DisplayName: 火柴
 	Tooltip: 小土坡也是山
 }
 
 TerraShortSword: {
-	CraftCondition: 在CoralCat的世界中合成
 	DisplayName: 泰拉水果刀
 	Tooltip: 非常适合用来给水果削皮
 }
 
 TomatoButcherer: {
-	CraftCondition: 在CoralCat的世界中合成
 	DisplayName: 番茄屠夫
 	Tooltip: 这些是番茄酱而不是血，对吧？
 }
 
 TrueNightsCage: {
-	CraftCondition: 在CoralCat的世界中合成
 	DisplayName: 真·夜之囚笼
 	Tooltip: 让你在黑夜中穿梭自如
 }
@@ -3240,79 +3247,68 @@ BrokenHeroShortSword: {
 }
 
 BladeOfCatnip: {
-	CraftCondition: 在CoralCat的世界中合成
 	DisplayName: 猫薄荷剑
 	Tooltip: 令瓶中猫猫爱不释手的武器
+	CraftCondition: 在CoralCat的世界中合成
 }
 
 Excatbar: {
-	CraftCondition: 在CoralCat的世界中合成
 	DisplayName: 超级猫条
 	Tooltip: 这是圣剑？
 }
 
 NightsCage: {
-	CraftCondition: 在CoralCat的世界中合成
 	DisplayName: 夜之囚笼
 	Tooltip: 我看你是不想睡觉了
 }
 
 ShadowsBane: {
-	CraftCondition: 在CoralCat的世界中合成
 	DisplayName: 暗之驱逐
 	Tooltip: 好像也不会发光
 }
 
 TrueExcatbar: {
-	CraftCondition: 在CoralCat的世界中合成
 	DisplayName: 真·超级猫猫条
 	Tooltip: 尝起来是草莓与蓝莓的混合口味
 }
 
 BeamShortSword: {
-	CraftCondition: 在CoralCat的世界中合成
 	DisplayName: 光束小刀
 	Tooltip: 虽然很短但是也能够射出激光
+	CraftCondition: 在CoralCat的世界中合成
 }
 
 Cattongue: {
-	CraftCondition: 在CoralCat的世界中合成
 	DisplayName: 猫舌剑
 	Tooltip: 它很怕烫！
 }
 
 CatTreeSword: {
-	CraftCondition: 在CoralCat的世界中合成
 	DisplayName: 猫爬架剑
 	Tooltip: 猫猫很喜欢在上面玩耍
 }
 
 FlyingDragonBaby: {
-	CraftCondition: 在CoralCat的世界中合成
 	DisplayName: 飞龙宝宝
 	Tooltip: 小飞龙出生时就已经能够吐出光波了
 }
 
 IceShortSword: {
-	CraftCondition: 在CoralCat的世界中合成
 	DisplayName: 冰雪匕首
 	Tooltip: 据说这是古剑豹幼崽换牙时掉落的
 }
 
 SmallBee: {
-	CraftCondition: 在CoralCat的世界中合成
 	DisplayName: 小蜜蜂
 	Tooltip: 嗡嗡嗡嗡嗡
 }
 
 TheCatMansBlade: {
-	CraftCondition: 在CoralCat的世界中合成
 	DisplayName: 猫猫骑士团之剑
 	Tooltip: 黑猫团长的佩剑
 }
 
 Treeler: {
-	CraftCondition: 在CoralCat的世界中合成
 	DisplayName: 大树弯刀
 	Tooltip: 从种子长成了一棵树
 }
@@ -4053,7 +4049,11 @@ MagikeWorldBall: {
 
 BasicRefractor: {
 	DisplayName: 基础广角镜
-	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}"
+	Tooltip:
+		'''
+		连接距离很远
+		{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}
+		'''
 }
 
 Thyphion: {
@@ -4145,12 +4145,20 @@ InfinityClusterWand: {
 
 BasicColumn: {
 	DisplayName: 基础水晶柱
-	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}"
+	Tooltip:
+		'''
+		能容纳较多魔能
+		{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}
+		'''
 }
 
 BasicPrism: {
 	DisplayName: 基础棱镜
-	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}"
+	Tooltip:
+		'''
+		基础连接数量为2
+		{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}
+		'''
 }
 
 Cosmophore: {
@@ -4206,7 +4214,7 @@ FreezePotion: {
 
 HungryPotion: {
 	DisplayName: 饥饿药剂
-	Tooltip: 增加美味伤害，太饿了让你抬不起脚
+	Tooltip: 增加美味伤害，但是饥饿让你抬不起脚
 }
 
 MagikeAnalyser: {
@@ -4365,6 +4373,7 @@ SymbolOfMagike: {
 		该合成表仅供查看，该物品无法获得
 		请使用魔能合成台进行魔能合成
 		'''
+	MagikeNeed: "魔能需求量 "
 }
 
 SnowfieldLens: {
@@ -4396,12 +4405,16 @@ FarAwaySky: {
 
 MagikeBasePage: {
 	DisplayName: 魔能基础残页
-	Tooltip: 放入珊瑚手册内以了解相关知识
+	Tooltip: 使用以学习魔能基础知识
 }
 
 LeprechaunBait: {
 	DisplayName: 魔力诱饵
-	Tooltip: 使用后抛出诱饵，吸引一些来自魔力水晶洞的小精灵
+	Tooltip:
+		'''
+		使用后抛出诱饵，吸引一些来自魔力水晶洞的小精灵
+		小精灵会为你指引魔力水晶洞的方向
+		'''
 }
 
 EternalVengeance: {
@@ -4410,7 +4423,16 @@ EternalVengeance: {
 }
 
 BasicAltar: {
-	Tooltip: ""
+	Tooltip:
+		'''
+		魔能合成的必须仪器，按以下步骤进行魔能合成
+		 1：右键合成坛物块，使用UI界面向内部放入主要物品
+		 2：选择合适的魔能合成表
+		 3：满足合成所需的所有条件，如魔能，次要物品等
+		 4：使用魔能激活杖激活合成台
+
+		{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}
+		'''
 	DisplayName: 基础合成坛
 }
 
@@ -4563,6 +4585,10 @@ BonePolarizedFilter: {
 }
 
 HallowLens: {
-	// DisplayName: Hallow Lens
-	// Tooltip: ""
+	DisplayName: 神圣透镜
+	Tooltip:
+		'''
+		在神圣地生产魔能，只能放置在神圣方块上
+		{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}
+		'''
 }

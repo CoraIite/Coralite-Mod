@@ -33,19 +33,19 @@ namespace Coralite.Content.Items.Magike.Refractors
 
         public override MagikeTileEntity GetEntityInstance() => GetInstance<BasicPrismTileEntity>();
 
-        public override MagikeApparatusLevel[] GetAllLevels()
+        public override MALevel[] GetAllLevels()
         {
             return [
-                MagikeApparatusLevel.None,
-                MagikeApparatusLevel.MagicCrystal,
-                MagikeApparatusLevel.Glistent,
-                MagikeApparatusLevel.Crimson,
-                MagikeApparatusLevel.Corruption,
-                MagikeApparatusLevel.Icicle,
-                MagikeApparatusLevel.CrystallineMagike,
-                MagikeApparatusLevel.Hallow,
-                MagikeApparatusLevel.HolyLight,
-                MagikeApparatusLevel.SplendorMagicore
+                MALevel.None,
+                MALevel.MagicCrystal,
+                MALevel.Glistent,
+                MALevel.Crimson,
+                MALevel.Corruption,
+                MALevel.Icicle,
+                MALevel.CrystallineMagike,
+                MALevel.Hallow,
+                MALevel.HolyLight,
+                MALevel.SplendorMagicore
                 ];
         }
     }
@@ -61,19 +61,19 @@ namespace Coralite.Content.Items.Magike.Refractors
 
     public class BasicPrismContainer : UpgradeableContainer
     {
-        public override void Upgrade(MagikeApparatusLevel incomeLevel)
+        public override void Upgrade(MALevel incomeLevel)
         {
             MagikeMaxBase = incomeLevel switch
             {
-                MagikeApparatusLevel.MagicCrystal => 60,
-                MagikeApparatusLevel.Glistent => 300,
-                MagikeApparatusLevel.Crimson
-                or MagikeApparatusLevel.Corruption
-                or MagikeApparatusLevel.Icicle => 480,
-                MagikeApparatusLevel.CrystallineMagike => 2250,
-                MagikeApparatusLevel.Hallow => 9000,
-                MagikeApparatusLevel.HolyLight => 15000,
-                MagikeApparatusLevel.SplendorMagicore => 35000,
+                MALevel.MagicCrystal => 60,
+                MALevel.Glistent => 300,
+                MALevel.Crimson
+                or MALevel.Corruption
+                or MALevel.Icicle => 480,
+                MALevel.CrystallineMagike => 2250,
+                MALevel.Hallow => 9000,
+                MALevel.HolyLight => 15000,
+                MALevel.SplendorMagicore => 35000,
                 _ => 0,
             };
             LimitMagikeAmount();
@@ -85,57 +85,57 @@ namespace Coralite.Content.Items.Magike.Refractors
 
     public class BasicPrismSender : UpgradeableLinerSender
     {
-        public override void Upgrade(MagikeApparatusLevel incomeLevel)
+        public override void Upgrade(MALevel incomeLevel)
         {
             MaxConnectBase = 2;
 
             switch (incomeLevel)
             {
                 default:
-                case MagikeApparatusLevel.None:
+                case MALevel.None:
                     MaxConnectBase = 0;
                     UnitDeliveryBase = 0;
                     SendDelayBase = 1_0000_0000;//随便填个大数
                     ConnectLengthBase = 0;
                     break;
-                case MagikeApparatusLevel.MagicCrystal:
+                case MALevel.MagicCrystal:
                     UnitDeliveryBase = 15;
                     SendDelayBase = 60 * 10;
                     ConnectLengthBase = 8 * 16;
                     break;
-                case MagikeApparatusLevel.Glistent:
+                case MALevel.Glistent:
                     MaxConnectBase = 3;
                     UnitDeliveryBase = 50;
                     SendDelayBase = 60 * 10;
                     ConnectLengthBase = 8 * 16;
                     break;
-                case MagikeApparatusLevel.Crimson:
-                case MagikeApparatusLevel.Corruption:
-                case MagikeApparatusLevel.Icicle:
+                case MALevel.Crimson:
+                case MALevel.Corruption:
+                case MALevel.Icicle:
                     MaxConnectBase = 3;
                     UnitDeliveryBase = 80;
                     SendDelayBase = 60 * 10;
                     ConnectLengthBase = 8 * 16;
                     break;
-                case MagikeApparatusLevel.CrystallineMagike:
+                case MALevel.CrystallineMagike:
                     MaxConnectBase = 3;
                     UnitDeliveryBase = 200;
                     SendDelayBase = 60 * 8;
                     ConnectLengthBase = 10 * 16;
                     break;
-                case MagikeApparatusLevel.Hallow:
+                case MALevel.Hallow:
                     MaxConnectBase = 4;
                     UnitDeliveryBase = 600;
                     SendDelayBase = 60 * 8;
                     ConnectLengthBase = 10 * 16;
                     break;
-                case MagikeApparatusLevel.HolyLight:
+                case MALevel.HolyLight:
                     MaxConnectBase = 4;
                     UnitDeliveryBase = 1000;
                     SendDelayBase = 60 * 8;
                     ConnectLengthBase = 10 * 16;
                     break;
-                case MagikeApparatusLevel.SplendorMagicore:
+                case MALevel.SplendorMagicore:
                     MaxConnectBase = 4;
                     UnitDeliveryBase = 1500;
                     SendDelayBase = 60 * 6;

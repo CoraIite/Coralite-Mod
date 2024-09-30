@@ -78,7 +78,7 @@ namespace Coralite.Content.Items.Magike.PolarizedFilters
 
     public class HallowPolarizedFilterComponent : PolarizedFilter
     {
-        public override MagikeApparatusLevel Level => MagikeApparatusLevel.Hallow;
+        public override MALevel Level => MALevel.Hallow;
 
         public override int ItemType => ModContent.ItemType<HallowPolarizedFilter>();
     }

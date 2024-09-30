@@ -76,7 +76,7 @@ namespace Coralite.Content.Items.FlyingShields
                 if (!target.friendly && target.CanBeChasedBy())
                 {
                     Projectile.NewProjectileFromThis<RoyalAngelStrike>(target.Center + (Main.rand.NextFloat(-1.57f - 0.5f, -1.57f + 0.5f).ToRotationVector2() * 20),
-                        Vector2.Zero, Projectile.damage, 4, target.whoAmI);
+                        Vector2.Zero, (int)(Projectile.damage*0.8f), 4, target.whoAmI);
                 }
         }
 

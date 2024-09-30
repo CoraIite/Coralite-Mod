@@ -47,14 +47,14 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
 
         public override MagikeTileEntity GetEntityInstance() => GetInstance<SkyLensTileEntity>();
 
-        public override MagikeApparatusLevel[] GetAllLevels()
+        public override MALevel[] GetAllLevels()
         {
             return
             [
-                MagikeApparatusLevel.None,
-                MagikeApparatusLevel.Eiderdown,
-                MagikeApparatusLevel.Flight,
-                MagikeApparatusLevel.Feather,
+                MALevel.None,
+                MALevel.Eiderdown,
+                MALevel.Flight,
+                MALevel.Feather,
             ];
         }
     }
@@ -73,7 +73,7 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
 
     public class SkyLensContainer : UpgradeableContainer
     {
-        public override void Upgrade(MagikeApparatusLevel incomeLevel)
+        public override void Upgrade(MALevel incomeLevel)
         {
             switch (incomeLevel)
             {
@@ -81,15 +81,15 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     MagikeMaxBase = 0;
                     AntiMagikeMaxBase = 0;
                     break;
-                case MagikeApparatusLevel.Eiderdown:
+                case MALevel.Eiderdown:
                     MagikeMaxBase = 18;
                     AntiMagikeMaxBase = MagikeMaxBase * 3;
                     break;
-                case MagikeApparatusLevel.Flight:
+                case MALevel.Flight:
                     MagikeMaxBase = 540;
                     AntiMagikeMaxBase = MagikeMaxBase * 2;
                     break;
-                case MagikeApparatusLevel.Feather:
+                case MALevel.Feather:
                     MagikeMaxBase = 720;
                     AntiMagikeMaxBase = MagikeMaxBase * 2;
                     break;
@@ -102,7 +102,7 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
 
     public class SkyLensSender : UpgradeableLinerSender
     {
-        public override void Upgrade(MagikeApparatusLevel incomeLevel)
+        public override void Upgrade(MALevel incomeLevel)
         {
             MaxConnectBase = 1;
             ConnectLengthBase = 4 * 16;
@@ -115,15 +115,15 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     SendDelayBase = 1_0000_0000 / 60;//随便填个大数
                     ConnectLengthBase = 0;
                     break;
-                case MagikeApparatusLevel.Eiderdown:
+                case MALevel.Eiderdown:
                     UnitDeliveryBase = 6;
                     SendDelayBase = 10;
                     break;
-                case MagikeApparatusLevel.Flight:
+                case MALevel.Flight:
                     UnitDeliveryBase = 144;
                     SendDelayBase = 8;
                     break;
-                case MagikeApparatusLevel.Feather:
+                case MALevel.Feather:
                     UnitDeliveryBase = 168;
                     SendDelayBase = 7;
                     break;
@@ -148,7 +148,7 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
         public override bool CheckWall(Tile tile)
             => true;
 
-        public override void Upgrade(MagikeApparatusLevel incomeLevel)
+        public override void Upgrade(MALevel incomeLevel)
         {
             switch (incomeLevel)
             {
@@ -156,15 +156,15 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     ProductionDelayBase = 1_0000_0000 / 60;//随便填个大数
                     ThroughputBase = 1;
                     break;
-                case MagikeApparatusLevel.Eiderdown:
+                case MALevel.Eiderdown:
                     ProductionDelayBase = 10;
                     ThroughputBase = 2;
                     break;
-                case MagikeApparatusLevel.Flight:
+                case MALevel.Flight:
                     ProductionDelayBase = 8;
                     ThroughputBase = 48;
                     break;
-                case MagikeApparatusLevel.Feather:
+                case MALevel.Feather:
                     ProductionDelayBase = 7;
                     ThroughputBase = 56;
                     break;

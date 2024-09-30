@@ -2,6 +2,8 @@
 using Terraria;
 using Terraria.ID;
 using static Coralite.Core.Systems.MagikeSystem.MagikeSystem;
+using static Coralite.Core.Systems.MagikeSystem.MALevel;
+using static Coralite.Helpers.MagikeHelper;
 
 namespace Coralite.Core.Systems.MagikeSystem.Remodels
 {
@@ -13,16 +15,16 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             AddRemodelRecipe(ItemID.DirtBlock, ItemID.Acorn, 5, mainStack: 8);
 
             //橡实
-            AddRemodelRecipe(ItemID.Acorn, ItemID.Wood, 25, 6);
-            AddRemodelRecipe(ItemID.Acorn, ItemID.AshWood, 25, 6);
-            AddRemodelRecipe(ItemID.Acorn, ItemID.RichMahogany, 25, 6);
-            AddRemodelRecipe(ItemID.Acorn, ItemID.Ebonwood, 25, 6);
-            AddRemodelRecipe(ItemID.Acorn, ItemID.Shadewood, 25, 6);
-            AddRemodelRecipe(ItemID.Acorn, ItemID.Pearlwood, 150, 6, conditions: Condition.Hardmode);
-            AddRemodelRecipe(ItemID.Acorn, ItemID.BorealWood, 25, 6);
-            AddRemodelRecipe(ItemID.Acorn, ItemID.PalmWood, 25, 6);
-
-
+            MagikeCraftRecipe.CreateRecipe(ItemID.Acorn, ItemID.Wood, CalculateMagikeCost(MagicCrystal, 2, 30),resultItemStack:12)
+                .RegisterNew(ItemID.AshWood, CalculateMagikeCost(MagicCrystal, 2, 30),12)
+                .RegisterNew(ItemID.RichMahogany, CalculateMagikeCost(MagicCrystal, 2, 30), 12)
+                .RegisterNew(ItemID.Ebonwood, CalculateMagikeCost(MagicCrystal, 2, 30), 12)
+                .RegisterNew(ItemID.Shadewood, CalculateMagikeCost(MagicCrystal, 2, 30), 12)
+                .RegisterNew(ItemID.BorealWood, CalculateMagikeCost(MagicCrystal, 2, 30), 12)
+                .RegisterNew(ItemID.PalmWood, CalculateMagikeCost(MagicCrystal, 2, 30), 12)
+                .RegisterNew(ItemID.Pearlwood, CalculateMagikeCost(MagicCrystal, 2, 30), 12)
+                .AddCondition(Condition.Hardmode)
+                .Register();
         }
     }
 }

@@ -2,6 +2,7 @@
 using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
+using Coralite.Helpers;
 using Terraria;
 using Terraria.ID;
 
@@ -13,7 +14,8 @@ namespace Coralite.Content.Items.MagikeSeries2
 
         public void AddMagikeCraftRecipe()
         {
-            //MagikeSystem.AddRemodelRecipe<CrystallineMagike, Reel_MagikeAdvance>(300, selfStack: 5, condition: HardModeCondition.Instance);
+            MagikeSystem.AddRemodelRecipe<CrystallineMagike, Reel_MagikeAdvance>(MagikeHelper.CalculateMagikeCost(MALevel.CrystallineMagike, 12, 60 * 10)
+                , 5, conditions: Condition.Hardmode);
         }
 
         public override void SetDefaults()

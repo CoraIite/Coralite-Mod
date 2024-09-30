@@ -29,7 +29,7 @@ namespace Coralite.Content.Items.Magike.PolarizedFilters
 
     public class EmperorPolarizedFilterComponent : PolarizedFilter
     {
-        public override MagikeApparatusLevel Level => MagikeApparatusLevel.Emperor;
+        public override MALevel Level => MALevel.Emperor;
 
         public override int ItemType => ModContent.ItemType<EmperorPolarizedFilter>();
     }

@@ -91,7 +91,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public override void OnRemove(IEntity entity)
         {
-            ChangeTileFrame(MagikeApparatusLevel.None, entity);
+            ChangeTileFrame(MALevel.None, entity);
             SpawnItem(entity);
             base.OnRemove(entity);
         }
@@ -107,7 +107,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 , ItemType);
         }
 
-        public static void ChangeTileFrame(MagikeApparatusLevel level, IEntity entity)
+        public static void ChangeTileFrame(MALevel level, IEntity entity)
         {
             Point16 topLeft = (entity as MagikeTileEntity).Position;
             Tile tile = Framing.GetTileSafely(topLeft);
@@ -137,7 +137,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public override void RestoreComponentValues(Component component)
         {
             if (component is IUpgradeable upgrade)
-                upgrade.Upgrade(MagikeApparatusLevel.None);
+                upgrade.Upgrade(MALevel.None);
         }
 
         #endregion

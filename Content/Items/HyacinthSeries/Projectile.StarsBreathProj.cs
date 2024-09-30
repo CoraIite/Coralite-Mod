@@ -77,7 +77,7 @@ namespace Coralite.Content.Items.HyacinthSeries
                     float scale = 0.4f + (0.1f * factor);
                     Vector2 center = Projectile.Center + Main.rand.NextVector2CircularEdge(8, 8);
 
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), center, Vector2.Zero, ModContent.ProjectileType<StarsBreathExplosion>(), (int)(Projectile.damage * 0.5f), Projectile.knockBack, Projectile.owner, scale);
+                    Projectile.NewProjectileFromThis<StarsBreathExplosion>(center, Vector2.Zero, (int)(Projectile.damage * 0.45f), Projectile.knockBack, Projectile.owner, scale);
                     Particle.NewParticle(center, Vector2.Zero, CoraliteContent.ParticleType<RainbowHalo>(), Color.White, scale + 0.1f);
                     if (factor == 0)
                         PlaySound();
@@ -113,7 +113,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             {
                 Vector2 center = Projectile.Center + Main.rand.NextVector2CircularEdge(8, 8);
 
-                Projectile.NewProjectile(Projectile.GetSource_FromAI(), center, Vector2.Zero, ModContent.ProjectileType<StarsBreathExplosion>(), (int)(Projectile.damage * 0.5f), Projectile.knockBack, Projectile.owner, 0.6f);
+                Projectile.NewProjectileFromThis<StarsBreathExplosion>(center, Vector2.Zero, (int)(Projectile.damage * 0.45f), Projectile.knockBack, Projectile.owner, 0.6f);
                 if (VisualEffectSystem.HitEffect_SpecialParticles)
                     Particle.NewParticle(center, Vector2.Zero, CoraliteContent.ParticleType<RainbowHalo>(), Color.White, 0.6f);
                 if (Projectile.timeLeft > 31)

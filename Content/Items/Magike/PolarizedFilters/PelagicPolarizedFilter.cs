@@ -29,7 +29,7 @@ namespace Coralite.Content.Items.Magike.PolarizedFilters
 
     public class PelagicPolarizedFilterComponent : PolarizedFilter
     {
-        public override MagikeApparatusLevel Level => MagikeApparatusLevel.Pelagic;
+        public override MALevel Level => MALevel.Pelagic;
 
         public override int ItemType => ModContent.ItemType<PelagicPolarizedFilter>();
     }

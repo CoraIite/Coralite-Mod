@@ -5,6 +5,7 @@ using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
+using Terraria.Localization;
 using Terraria.ModLoader.Core;
 using static Terraria.ModLoader.ModContent;
 
@@ -361,6 +362,9 @@ namespace Coralite.Core.Systems.MagikeSystem
             if (_items != null)
                 foreach (var item in RequiredItems)
                     recipe.AddIngredient(item.type, item.stack);
+
+            recipe.AddCondition(CoraliteConditions.MagikeCraft);
+
             if (_conditions != null)
                 recipe.AddCondition(Conditions);
 
@@ -465,6 +469,18 @@ namespace Coralite.Core.Systems.MagikeSystem
     {
         public override string Texture => AssetDirectory.MagikeItems + Name;
 
+        public static LocalizedText MagikeNeed { get;private set; }
+
+        public override void Load()
+        {
+            MagikeNeed=this.GetLocalization(nameof(MagikeNeed));
+        }
+
+        public override void Unload()
+        {
+            MagikeNeed = null;
+        }
+
         public override void SetDefaults()
         {
             Item.maxStack = int.MaxValue;
@@ -475,7 +491,7 @@ namespace Coralite.Core.Systems.MagikeSystem
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
-            TooltipLine line = new(Mod, "Coralite: MagikeNeed", "魔能需求量：" + Item.stack)
+            TooltipLine line = new(Mod, "Coralite: MagikeNeed", MagikeNeed.Value + Item.stack)
             {
                 OverrideColor = Coralite.MagicCrystalPink
             };

@@ -25,10 +25,10 @@ namespace Coralite.Content.Items.Magike
 
         public override void RightClick(Player player)
         {
-            UILoader.GetUIState<MagikeGuideBookUI>().Recalculate();
-            UILoader.GetUIState<MagikeGuideBookUI>().OpenBook();
+            //UILoader.GetUIState<MagikeGuideBookUI>().Recalculate();
+            //UILoader.GetUIState<MagikeGuideBookUI>().OpenBook();
 
-            Main.playerInventory = false;
+            //Main.playerInventory = false;
         }
 
         public override bool ConsumeItem(Player player) => false;

@@ -13,18 +13,6 @@ namespace Coralite.Content.Items.Misc_Melee
     {
         public override string Texture => AssetDirectory.Misc_Melee + Name;
 
-        public static LocalizedText craftCondition;
-
-        public override void Load()
-        {
-            craftCondition = this.GetLocalization("CraftCondition", () => "在CoralCat的世界中合成");
-        }
-
-        public override void Unload()
-        {
-            craftCondition = null;
-        }
-
         public override void SetDefaults()
         {
             Item.CloneDefaults(ItemID.TrueExcalibur);
@@ -50,7 +38,7 @@ namespace Coralite.Content.Items.Misc_Melee
                 .AddIngredient<Excatbar>()
                 .AddIngredient(ItemID.ChlorophyteBar, 24)
                 .AddTile(TileID.MythrilAnvil)
-                .AddCondition(craftCondition, () => CoraliteWorld.coralCatWorld)
+                .AddCondition(CoraliteConditions.CoralCat)
                 .Register();
         }
 

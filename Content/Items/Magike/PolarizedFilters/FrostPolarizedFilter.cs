@@ -28,7 +28,7 @@ namespace Coralite.Content.Items.Magike.PolarizedFilters
 
     public class FrostPolarizedFilterComponent : PolarizedFilter
     {
-        public override MagikeApparatusLevel Level => MagikeApparatusLevel.Frost;
+        public override MALevel Level => MALevel.Frost;
 
         public override int ItemType => ModContent.ItemType<FrostPolarizedFilter>();
     }

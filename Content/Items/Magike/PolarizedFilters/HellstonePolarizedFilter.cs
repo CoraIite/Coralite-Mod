@@ -28,7 +28,7 @@ namespace Coralite.Content.Items.Magike.PolarizedFilters
 
     public class HellstonePolarizedFilterComponent : PolarizedFilter
     {
-        public override MagikeApparatusLevel Level => MagikeApparatusLevel.Hellstone;
+        public override MALevel Level => MALevel.Hellstone;
 
         public override int ItemType => ModContent.ItemType<HellstonePolarizedFilter>();
     }

@@ -38,31 +38,31 @@ namespace Coralite.Content.Items.Magike.Pedestal
 
         public override MagikeTileEntity GetEntityInstance() => GetInstance<BasicPedestalTileEntity>();
 
-        public override MagikeApparatusLevel[] GetAllLevels()
+        public override MALevel[] GetAllLevels()
         {
             return
             [
-                MagikeApparatusLevel.None,
-                MagikeApparatusLevel.MagicCrystal,
-                MagikeApparatusLevel.Glistent,
-                MagikeApparatusLevel.Crimson,
-                MagikeApparatusLevel.Corruption,
-                MagikeApparatusLevel.Icicle,
-                MagikeApparatusLevel.CrystallineMagike,
-                MagikeApparatusLevel.Hallow,
-                MagikeApparatusLevel.Soul,
-                MagikeApparatusLevel.Feather,
-                MagikeApparatusLevel.HolyLight,
-                MagikeApparatusLevel.SplendorMagicore,
-                MagikeApparatusLevel.Hellstone,
-                MagikeApparatusLevel.EternalFlame,
-                MagikeApparatusLevel.Quicksand,
-                MagikeApparatusLevel.Forbidden,
-                MagikeApparatusLevel.Eiderdown,
-                MagikeApparatusLevel.Flight,
-                MagikeApparatusLevel.Seashore,
-                MagikeApparatusLevel.Pelagic,
-                MagikeApparatusLevel.RedJade,
+                MALevel.None,
+                MALevel.MagicCrystal,
+                MALevel.Glistent,
+                MALevel.Crimson,
+                MALevel.Corruption,
+                MALevel.Icicle,
+                MALevel.CrystallineMagike,
+                MALevel.Hallow,
+                MALevel.Soul,
+                MALevel.Feather,
+                MALevel.HolyLight,
+                MALevel.SplendorMagicore,
+                MALevel.Hellstone,
+                MALevel.EternalFlame,
+                MALevel.Quicksand,
+                MALevel.Forbidden,
+                MALevel.Eiderdown,
+                MALevel.Flight,
+                MALevel.Seashore,
+                MALevel.Pelagic,
+                MALevel.RedJade,
             ];
         }
     }

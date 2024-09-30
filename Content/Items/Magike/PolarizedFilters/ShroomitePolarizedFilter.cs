@@ -28,7 +28,7 @@ namespace Coralite.Content.Items.Magike.PolarizedFilters
 
     public class ShroomitePolarizedFilterComponent : PolarizedFilter
     {
-        public override MagikeApparatusLevel Level => MagikeApparatusLevel.Shroomite;
+        public override MALevel Level => MALevel.Shroomite;
 
         public override int ItemType => ModContent.ItemType<ShroomitePolarizedFilter>();
     }

@@ -23,7 +23,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
 {
     public abstract class BaseMagikeTile(int width, int height, Color mapColor, int dustType, int minPick = 0, bool topSoild = false) : ModTile
     {
-        public Dictionary<MagikeApparatusLevel, Asset<Texture2D>> ExtraAssets { get; private set; }
+        public Dictionary<MALevel, Asset<Texture2D>> ExtraAssets { get; private set; }
 
         public abstract int DropItemType { get; }
 
@@ -31,7 +31,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
         {
             ExtraAssets = [];
 
-            MagikeApparatusLevel[] levels = GetAllLevels();
+            MALevel[] levels = GetAllLevels();
             if (levels == null || levels.Length == 0)
                 return;
 
@@ -40,9 +40,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
                 QuickLoadAsset(levels[i]);
         }
 
-        public virtual void QuickLoadAsset(MagikeApparatusLevel level)
+        public virtual void QuickLoadAsset(MALevel level)
         {
-            if (level == MagikeApparatusLevel.None)
+            if (level == MALevel.None)
                 return;
 
             string name = Enum.GetName(level);
@@ -56,7 +56,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
         /// 返回所有可以有的魔能等级
         /// </summary>
         /// <returns></returns>
-        public virtual MagikeApparatusLevel[] GetAllLevels() => null;
+        public virtual MALevel[] GetAllLevels() => null;
 
         /// <summary>
         /// 获取可放置的物块类型
@@ -157,7 +157,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
 
             MinPick = minPick;
 
-            MagikeApparatusLevel[] levels = GetAllLevels();
+            MALevel[] levels = GetAllLevels();
             if (levels == null || levels.Length == 0)
                 return;
 
@@ -425,7 +425,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
         /// <param name="tileRect"></param>
         /// <param name="offset"></param>
         /// <param name="entity"></param>
-        public virtual void DrawExtraTex(SpriteBatch spriteBatch, Texture2D tex, Rectangle tileRect, Vector2 offset, Color lightColor, float rotation, MagikeTileEntity entity, MagikeApparatusLevel level)
+        public virtual void DrawExtraTex(SpriteBatch spriteBatch, Texture2D tex, Rectangle tileRect, Vector2 offset, Color lightColor, float rotation, MagikeTileEntity entity, MALevel level)
         {
 
         }

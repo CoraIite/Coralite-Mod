@@ -33,18 +33,18 @@ namespace Coralite.Content.Items.Magike.Lens.ExtractLens
 
         public override MagikeTileEntity GetEntityInstance() => GetInstance<BasicExtractLensTileEntity>();
 
-        public override MagikeApparatusLevel[] GetAllLevels()
+        public override MALevel[] GetAllLevels()
         {
             return [
-                MagikeApparatusLevel.None,
-                MagikeApparatusLevel.MagicCrystal,
-                MagikeApparatusLevel.Crimson,
-                MagikeApparatusLevel.Corruption,
-                MagikeApparatusLevel.Icicle,
-                MagikeApparatusLevel.CrystallineMagike,
-                MagikeApparatusLevel.Soul,
-                MagikeApparatusLevel.Feather,
-                MagikeApparatusLevel.SplendorMagicore
+                MALevel.None,
+                MALevel.MagicCrystal,
+                MALevel.Crimson,
+                MALevel.Corruption,
+                MALevel.Icicle,
+                MALevel.CrystallineMagike,
+                MALevel.Soul,
+                MALevel.Feather,
+                MALevel.SplendorMagicore
                 ];
         }
     }
@@ -69,18 +69,18 @@ namespace Coralite.Content.Items.Magike.Lens.ExtractLens
 
     public class BasicExtractLensContainer : UpgradeableContainer
     {
-        public override void Upgrade(MagikeApparatusLevel incomeLevel)
+        public override void Upgrade(MALevel incomeLevel)
         {
             MagikeMaxBase = incomeLevel switch
             {
-                MagikeApparatusLevel.MagicCrystal => 120,
-                MagikeApparatusLevel.Crimson
-                or MagikeApparatusLevel.Corruption
-                or MagikeApparatusLevel.Icicle => 600,
-                MagikeApparatusLevel.CrystallineMagike => 1800,
-                MagikeApparatusLevel.Soul
-                or MagikeApparatusLevel.Feather => 7500,
-                MagikeApparatusLevel.SplendorMagicore => 18000,
+                MALevel.MagicCrystal => 120,
+                MALevel.Crimson
+                or MALevel.Corruption
+                or MALevel.Icicle => 600,
+                MALevel.CrystallineMagike => 1800,
+                MALevel.Soul
+                or MALevel.Feather => 7500,
+                MALevel.SplendorMagicore => 18000,
                 _ => 0,
             };
             LimitMagikeAmount();
@@ -92,7 +92,7 @@ namespace Coralite.Content.Items.Magike.Lens.ExtractLens
 
     public class BasicExtractLensSender : UpgradeableLinerSender
     {
-        public override void Upgrade(MagikeApparatusLevel incomeLevel)
+        public override void Upgrade(MALevel incomeLevel)
         {
             MaxConnectBase = 1;
             ConnectLengthBase = 4 * 16;
@@ -104,26 +104,26 @@ namespace Coralite.Content.Items.Magike.Lens.ExtractLens
                     SendDelayBase = 1_0000_0000/60;//随便填个大数
                     ConnectLengthBase = 0;
                     break;
-                case MagikeApparatusLevel.MagicCrystal:
+                case MALevel.MagicCrystal:
                     UnitDeliveryBase = 10;
                     SendDelayBase =   5;
                     break;
-                case MagikeApparatusLevel.Crimson:
-                case MagikeApparatusLevel.Corruption:
-                case MagikeApparatusLevel.Icicle:
+                case MALevel.Crimson:
+                case MALevel.Corruption:
+                case MALevel.Icicle:
                     UnitDeliveryBase = 50;
                     SendDelayBase =  5;
                     break;
-                case MagikeApparatusLevel.CrystallineMagike:
+                case MALevel.CrystallineMagike:
                     UnitDeliveryBase = 120;
                     SendDelayBase =   4;
                     break;
-                case MagikeApparatusLevel.Soul:
-                case MagikeApparatusLevel.Feather:
+                case MALevel.Soul:
+                case MALevel.Feather:
                     UnitDeliveryBase = 500;
                     SendDelayBase =   4;
                     break;
-                case MagikeApparatusLevel.SplendorMagicore:
+                case MALevel.SplendorMagicore:
                     UnitDeliveryBase = 900;
                     SendDelayBase =   3;
                     break;
@@ -136,18 +136,18 @@ namespace Coralite.Content.Items.Magike.Lens.ExtractLens
 
     public class BasicExtractProducer : UpgradeableExtractProducer
     {
-        public override void Upgrade(MagikeApparatusLevel incomeLevel)
+        public override void Upgrade(MALevel incomeLevel)
         {
             ProductionDelayBase = incomeLevel switch
             {
-                MagikeApparatusLevel.MagicCrystal
-                or MagikeApparatusLevel.Crimson
-                or MagikeApparatusLevel.Corruption
-                or MagikeApparatusLevel.Icicle
-                or MagikeApparatusLevel.CrystallineMagike
-                or MagikeApparatusLevel.Soul
-                or MagikeApparatusLevel.Feather
-                or MagikeApparatusLevel.SplendorMagicore => 10,
+                MALevel.MagicCrystal
+                or MALevel.Crimson
+                or MALevel.Corruption
+                or MALevel.Icicle
+                or MALevel.CrystallineMagike
+                or MALevel.Soul
+                or MALevel.Feather
+                or MALevel.SplendorMagicore => 10,
                 _ => 1_0000_0000 / 60,//随便填个大数
             } * 60;
 

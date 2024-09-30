@@ -34,11 +34,11 @@ namespace Coralite.Content.Items.Magike.Refractors
 
         public override MagikeTileEntity GetEntityInstance() => GetInstance<RedJadeColumnTileEntity>();
 
-        public override MagikeApparatusLevel[] GetAllLevels()
+        public override MALevel[] GetAllLevels()
         {
             return [
-                MagikeApparatusLevel.None,
-                MagikeApparatusLevel.RedJade,
+                MALevel.None,
+                MALevel.RedJade,
                 ];
         }
     }
@@ -54,11 +54,11 @@ namespace Coralite.Content.Items.Magike.Refractors
 
     public class RedJadeColumnTileContainer : UpgradeableContainer
     {
-        public override void Upgrade(MagikeApparatusLevel incomeLevel)
+        public override void Upgrade(MALevel incomeLevel)
         {
             MagikeMaxBase = incomeLevel switch
             {
-                MagikeApparatusLevel.RedJade => 960,
+                MALevel.RedJade => 960,
                 _ => 0,
             };
             LimitMagikeAmount();
@@ -70,7 +70,7 @@ namespace Coralite.Content.Items.Magike.Refractors
 
     public class RedJadeColumnTileSender : UpgradeableLinerSender
     {
-        public override void Upgrade(MagikeApparatusLevel incomeLevel)
+        public override void Upgrade(MALevel incomeLevel)
         {
             MaxConnectBase = 1;
             ConnectLengthBase = 6 * 16;
@@ -79,13 +79,13 @@ namespace Coralite.Content.Items.Magike.Refractors
             switch (incomeLevel)
             {
                 default:
-                case MagikeApparatusLevel.None:
+                case MALevel.None:
                     MaxConnectBase = 0;
                     UnitDeliveryBase = 0;
                     SendDelayBase = 1_0000_0000;//随便填个大数
                     ConnectLengthBase = 0;
                     break;
-                case MagikeApparatusLevel.RedJade:
+                case MALevel.RedJade:
                     UnitDeliveryBase = 80;
                     break;
             }

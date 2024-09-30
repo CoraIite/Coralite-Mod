@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
+using Coralite.Content.Items.Materials;
 using Coralite.Content.Items.Nightmare;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
@@ -88,7 +89,17 @@ namespace Coralite.Content.Items.BossSummons
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeSystem.AddRemodelRecipe(ModContent.ItemType<NightmareHarp>(), ItemID.Harp, 10000);
+            MagikeCraftRecipe.CreateRecipe(ModContent.ItemType<NightmareHarp>(), ItemID.Harp
+                , MagikeHelper.CalculateMagikeCost(MALevel.SplendorMagicore, 24, 60 * 20))
+                .AddIngredient(ItemID.SoulofLight, 7)
+                .AddIngredient(ItemID.SoulofNight, 7)
+                .AddIngredient(ItemID.SoulofMight, 7)
+                .AddIngredient(ItemID.SoulofSight, 7)
+                .AddIngredient(ItemID.SoulofFright, 7)
+                .AddIngredient(ItemID.SoulofFlight, 7)
+                .AddIngredient<SoulOfDeveloper>(7)
+                .AddCondition(Condition.DownedMoonLord)
+                .Register();
         }
     }
 

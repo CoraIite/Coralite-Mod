@@ -51,7 +51,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void SetOtherValues()
         {
-            flyingTime = 18;
+            flyingTime = 16;
             backTime = 22;
             backSpeed = 17;
             trailCachesLength = 6;
@@ -65,7 +65,7 @@ namespace Coralite.Content.Items.FlyingShields
                 //射流星
                 Projectile.NewProjectileFromThis<LeonidsMeteor>(Projectile.Center
                     , (Projectile.extraUpdates + 1) * Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.25f, 0.25f)) * Main.rand.NextFloat(0.8f, 1.2f),
-                    (int)(Projectile.damage * 0.86f), Projectile.knockBack);
+                    (int)(Projectile.damage * 0.8f), Projectile.knockBack);
             }
         }
 

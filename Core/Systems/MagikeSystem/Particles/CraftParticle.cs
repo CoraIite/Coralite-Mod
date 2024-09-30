@@ -1,5 +1,4 @@
 ﻿using Coralite.Content.Items.CoreKeeper;
-using Coralite.Content.Prefixes.FairyWeaponPrefixes;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
@@ -169,12 +168,14 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
                 return;
 
             int total = otherItems.Length;
-            Color c= Color.White;
+            Color c = Color.White;
             c.A = (byte)(255 * alpha);
+            Vector2 pos = Center - Main.screenPosition;
+
             for (int i = 0; i < total; i++)
             {
                 float rot = Rotation + (float)i / total * MathHelper.TwoPi;
-                DrawItem(spriteBatch, otherItems[i], rot.ToRotationVector2() * Length, 48, c);
+                DrawItem(spriteBatch, otherItems[i], pos + rot.ToRotationVector2() * Length*0.9f, 48, c);
             }
         }
     }

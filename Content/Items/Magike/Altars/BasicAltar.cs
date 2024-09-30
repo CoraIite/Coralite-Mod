@@ -38,29 +38,29 @@ namespace Coralite.Content.Items.Magike.Altars
 
         public override MagikeTileEntity GetEntityInstance() => GetInstance<BasicAltarTileEntity>();
 
-        public override MagikeApparatusLevel[] GetAllLevels()
+        public override MALevel[] GetAllLevels()
         {
             return
             [
-                MagikeApparatusLevel.None,
-                MagikeApparatusLevel.MagicCrystal,
+                MALevel.None,
+                MALevel.MagicCrystal,
             ];
         }
 
-        public override Vector2 GetFloatingOffset(float rotation, MagikeApparatusLevel level)
+        public override Vector2 GetFloatingOffset(float rotation, MALevel level)
         {
             return level switch
             {
-                MagikeApparatusLevel.MagicCrystal => rotation.ToRotationVector2() * 8,
+                MALevel.MagicCrystal => rotation.ToRotationVector2() * 8,
                 _ => Vector2.Zero
             };
         }
 
-        public override Vector2 GetRestOffset(float rotation, MagikeApparatusLevel level)
+        public override Vector2 GetRestOffset(float rotation, MALevel level)
         {
             return level switch
             {
-                MagikeApparatusLevel.MagicCrystal => Vector2.Zero,
+                MALevel.MagicCrystal => Vector2.Zero,
                 _ => Vector2.Zero
             };
         }
@@ -95,17 +95,17 @@ namespace Coralite.Content.Items.Magike.Altars
 
     public class BasicAltarContainer : UpgradeableContainer
     {
-        public override void Upgrade(MagikeApparatusLevel incomeLevel)
+        public override void Upgrade(MALevel incomeLevel)
         {
             MagikeMaxBase = incomeLevel switch
             {
-                MagikeApparatusLevel.MagicCrystal => 2000_0000,
-                MagikeApparatusLevel.Glistent => 300,
-                MagikeApparatusLevel.Shadow => 300,
-                MagikeApparatusLevel.CrystallineMagike => 2250,
-                MagikeApparatusLevel.Hallow => 9000,
-                MagikeApparatusLevel.HolyLight => 15000,
-                MagikeApparatusLevel.SplendorMagicore => 35000,
+                MALevel.MagicCrystal => 2000_0000,
+                MALevel.Glistent => 300,
+                MALevel.Shadow => 300,
+                MALevel.CrystallineMagike => 2250,
+                MALevel.Hallow => 9000,
+                MALevel.HolyLight => 15000,
+                MALevel.SplendorMagicore => 35000,
                 _ => 0,
             };
             LimitMagikeAmount();
@@ -126,11 +126,11 @@ namespace Coralite.Content.Items.Magike.Altars
 
     public class BasicAltarAltar : CraftAltar
     {
-        public override void Upgrade(MagikeApparatusLevel incomeLevel)
+        public override void Upgrade(MALevel incomeLevel)
         {
             var second = incomeLevel switch
             {
-                MagikeApparatusLevel.MagicCrystal => 5,//20,
+                MALevel.MagicCrystal => 5,//20,
                 _ => (float)(10_0000_0000 / 60),
             };
 

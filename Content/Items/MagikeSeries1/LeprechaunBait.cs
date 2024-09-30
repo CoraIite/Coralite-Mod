@@ -113,7 +113,10 @@ namespace Coralite.Content.Items.MagikeSeries1
                         if (Timer > 80)
                         {
                             if (CoraliteWorld.MagicCrystalCaveCenters == null || CoraliteWorld.MagicCrystalCaveCenters.Count < 1)
+                            {
                                 Projectile.Kill();
+                                return;
+                            }
 
                             State = 1;
                             Timer = 0;

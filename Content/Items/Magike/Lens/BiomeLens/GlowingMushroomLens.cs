@@ -47,13 +47,13 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
 
         public override MagikeTileEntity GetEntityInstance() => GetInstance<GlowingMushroomLensTileEntity>();
 
-        public override MagikeApparatusLevel[] GetAllLevels()
+        public override MALevel[] GetAllLevels()
         {
             return
             [
-                MagikeApparatusLevel.None,
-                MagikeApparatusLevel.Emperor,
-                MagikeApparatusLevel.Shroomite,
+                MALevel.None,
+                MALevel.Emperor,
+                MALevel.Shroomite,
             ];
         }
     }
@@ -72,7 +72,7 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
 
     public class GlowingMushroomLensContainer : UpgradeableContainer
     {
-        public override void Upgrade(MagikeApparatusLevel incomeLevel)
+        public override void Upgrade(MALevel incomeLevel)
         {
             switch (incomeLevel)
             {
@@ -80,11 +80,11 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     MagikeMaxBase = 0;
                     AntiMagikeMaxBase = 0;
                     break;
-                case MagikeApparatusLevel.Emperor:
+                case MALevel.Emperor:
                     MagikeMaxBase = 70;
                     AntiMagikeMaxBase = MagikeMaxBase * 3;
                     break;
-                case MagikeApparatusLevel.Shroomite:
+                case MALevel.Shroomite:
                     MagikeMaxBase = 720;
                     AntiMagikeMaxBase = MagikeMaxBase * 2;
                     break;
@@ -97,7 +97,7 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
 
     public class GlowingMushroomLensSender : UpgradeableLinerSender
     {
-        public override void Upgrade(MagikeApparatusLevel incomeLevel)
+        public override void Upgrade(MALevel incomeLevel)
         {
             MaxConnectBase = 1;
             ConnectLengthBase = 4 * 16;
@@ -110,11 +110,11 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     SendDelayBase = 1_0000_0000 / 60;//随便填个大数
                     ConnectLengthBase = 0;
                     break;
-                case MagikeApparatusLevel.Emperor:
+                case MALevel.Emperor:
                     UnitDeliveryBase = 21;
                     SendDelayBase = 9;
                     break;
-                case MagikeApparatusLevel.Shroomite:
+                case MALevel.Shroomite:
                     UnitDeliveryBase = 168;
                     SendDelayBase = 7;
                     break;
@@ -139,7 +139,7 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
         public override bool CheckWall(Tile tile)
             => true;
 
-        public override void Upgrade(MagikeApparatusLevel incomeLevel)
+        public override void Upgrade(MALevel incomeLevel)
         {
             switch (incomeLevel)
             {
@@ -147,11 +147,11 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     ProductionDelayBase = 1_0000_0000 / 60;//随便填个大数
                     ThroughputBase = 1;
                     break;
-                case MagikeApparatusLevel.Emperor:
+                case MALevel.Emperor:
                     ProductionDelayBase = 10;
                     ThroughputBase = 7;
                     break;
-                case MagikeApparatusLevel.Shroomite:
+                case MALevel.Shroomite:
                     ProductionDelayBase = 7;
                     ThroughputBase = 56;
                     break;

@@ -23,15 +23,11 @@ namespace Coralite.Content.Items.CoreKeeper
     {
         public override string Texture => AssetDirectory.CoreKeeperItems + Name;
 
-        public int useCount;
-        public int oldCombo;
-
         public override void SetDefaults()
         {
             Item.width = Item.height = 40;
             Item.damage = 194;
-            Item.useTime = 26;
-            Item.useAnimation = 26;
+            Item.useTime =  Item.useAnimation = 30;
             Item.knockBack = 4f;
 
             Item.useStyle = ItemUseStyleID.Rapier;
@@ -58,27 +54,9 @@ namespace Coralite.Content.Items.CoreKeeper
                     return false;
                 }
 
-                int combo = Main.rand.Next(2);
-                if (combo == oldCombo)
-                {
-                    useCount++;
-                    if (useCount > 1)
-                    {
-                        useCount = 0;
-                        combo = combo switch
-                        {
-                            0 => 1,
-                            _ => 0,
-                        };
-
-                    }
-                }
-
                 Helper.PlayPitched("CoreKeeper/swordAttack", 0.7f, Main.rand.NextFloat(0f, 0.1f), player.Center);
                 Projectile.NewProjectile(source, player.Center, Vector2.Zero,
-                    type, (int)(damage * 1.4f), knockback, player.whoAmI, combo);
-
-                oldCombo = combo;
+                    type, (int)(damage * 0.75f), knockback, player.whoAmI, 0);
             }
 
             return false;
@@ -398,7 +376,7 @@ namespace Coralite.Content.Items.CoreKeeper
                     Scale: target.width);
             }
 
-            Projectile.damage = (int)(Projectile.damage * 0.8f);
+            Projectile.damage = (int)(Projectile.damage * 0.75f);
 
             if (onHitTimer == 0)
             {

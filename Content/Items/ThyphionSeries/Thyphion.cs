@@ -14,153 +14,153 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.ThyphionSeries
 {
-    public class Thyphion : ModItem, IDashable
-    {
-        public override string Texture => AssetDirectory.ThyphionSeriesItems + Name;
+    //public class Thyphion : ModItem, IDashable
+    //{
+    //    public override string Texture => AssetDirectory.ThyphionSeriesItems + Name;
 
-        public int shootCount;
+    //    public int shootCount;
 
-        public override void SetDefaults()
-        {
-            Item.useAmmo = AmmoID.Arrow;
-            Item.damage = 1000;
-            Item.shootSpeed = 7f;
-            Item.knockBack = 0;
-            Item.shoot = ProjectileID.PurificationPowder;
+    //    public override void SetDefaults()
+    //    {
+    //        Item.useAmmo = AmmoID.Arrow;
+    //        Item.damage = 1000;
+    //        Item.shootSpeed = 7f;
+    //        Item.knockBack = 0;
+    //        Item.shoot = ProjectileID.PurificationPowder;
 
-            Item.DamageType = DamageClass.Ranged;
-            Item.rare = ItemRarityID.Red;
-            Item.useTime = Item.useAnimation = 24;
-            Item.useStyle = ItemUseStyleID.Shoot;
-            Item.value = Item.sellPrice(0, 35);
+    //        Item.DamageType = DamageClass.Ranged;
+    //        Item.rare = ItemRarityID.Red;
+    //        Item.useTime = Item.useAnimation = 24;
+    //        Item.useStyle = ItemUseStyleID.Shoot;
+    //        Item.value = Item.sellPrice(0, 35);
 
-            Item.useTurn = false;
-            Item.noMelee = true;
-            Item.autoReuse = false;
-            Item.channel = true;
+    //        Item.useTurn = false;
+    //        Item.noMelee = true;
+    //        Item.autoReuse = false;
+    //        Item.channel = true;
 
-            Item.UseSound = CoraliteSoundID.Bow_Item5;
-        }
+    //        Item.UseSound = CoraliteSoundID.Bow_Item5;
+    //    }
 
-        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
-        {
-            switch (shootCount)
-            {
-                default://普普通通连射
-                    {
+    //    public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+    //    {
+    //        switch (shootCount)
+    //        {
+    //            default://普普通通连射
+    //                {
 
-                    }
-                    break;
-                case 3://射出贯穿箭
-                    break;
-            }
+    //                }
+    //                break;
+    //            case 3://射出贯穿箭
+    //                break;
+    //        }
 
-            shootCount++;
+    //        shootCount++;
 
-            if (shootCount > 4)
-            {
-                shootCount = 0;
-            }
+    //        if (shootCount > 4)
+    //        {
+    //            shootCount = 0;
+    //        }
 
-            return false;
-        }
+    //        return false;
+    //    }
 
-        public bool Dash(Player Player, int DashDir)
-        {
-            Vector2 newVelocity = Player.velocity;
-            float dashDirection;
-            switch (DashDir)
-            {
-                case CoralitePlayer.DashLeft:
-                case CoralitePlayer.DashRight:
-                    {
-                        dashDirection = DashDir == CoralitePlayer.DashRight ? 1 : -1;
-                        newVelocity.X = dashDirection * 11;
-                        break;
-                    }
-                default:
-                    return false;
-            }
+    //    public bool Dash(Player Player, int DashDir)
+    //    {
+    //        Vector2 newVelocity = Player.velocity;
+    //        float dashDirection;
+    //        switch (DashDir)
+    //        {
+    //            case CoralitePlayer.DashLeft:
+    //            case CoralitePlayer.DashRight:
+    //                {
+    //                    dashDirection = DashDir == CoralitePlayer.DashRight ? 1 : -1;
+    //                    newVelocity.X = dashDirection * 11;
+    //                    break;
+    //                }
+    //            default:
+    //                return false;
+    //        }
 
-            Player.GetModPlayer<CoralitePlayer>().DashDelay = 100;
-            Player.GetModPlayer<CoralitePlayer>().DashTimer = 20;
-            Player.immune = true;
-            Player.AddImmuneTime(ImmunityCooldownID.General, 20);
+    //        Player.GetModPlayer<CoralitePlayer>().DashDelay = 100;
+    //        Player.GetModPlayer<CoralitePlayer>().DashTimer = 20;
+    //        Player.immune = true;
+    //        Player.AddImmuneTime(ImmunityCooldownID.General, 20);
 
-            Player.velocity = newVelocity;
-            Player.direction = (int)dashDirection;
+    //        Player.velocity = newVelocity;
+    //        Player.direction = (int)dashDirection;
 
-            Main.instance.CameraModifiers.Add(new MoveModifyer(5, 15));
+    //        Main.instance.CameraModifiers.Add(new MoveModifyer(5, 15));
 
-            if (Player.whoAmI == Main.myPlayer)
-            {
-                SoundEngine.PlaySound(CoraliteSoundID.Swing_Item1, Player.Center);
+    //        if (Player.whoAmI == Main.myPlayer)
+    //        {
+    //            SoundEngine.PlaySound(CoraliteSoundID.Swing_Item1, Player.Center);
 
-                foreach (var proj in from proj in Main.projectile
-                                     where proj.active && proj.friendly && proj.owner == Player.whoAmI && proj.type == ProjectileType<RadiantSunHeldProj>()
-                                     select proj)
-                {
-                    proj.Kill();
-                    break;
-                }
+    //            foreach (var proj in from proj in Main.projectile
+    //                                 where proj.active && proj.friendly && proj.owner == Player.whoAmI && proj.type == ProjectileType<RadiantSunHeldProj>()
+    //                                 select proj)
+    //            {
+    //                proj.Kill();
+    //                break;
+    //            }
 
-                //生成手持弹幕
-                Projectile.NewProjectile(Player.GetSource_ItemUse(Player.HeldItem), Player.Center, Vector2.Zero, ProjectileType<RadiantSunHeldProj>(),
-                    Player.HeldItem.damage, Player.HeldItem.knockBack, Player.whoAmI, 1.57f - dashDirection * 0.3f, 1, 20);
-            }
+    //            //生成手持弹幕
+    //            Projectile.NewProjectile(Player.GetSource_ItemUse(Player.HeldItem), Player.Center, Vector2.Zero, ProjectileType<RadiantSunHeldProj>(),
+    //                Player.HeldItem.damage, Player.HeldItem.knockBack, Player.whoAmI, 1.57f - dashDirection * 0.3f, 1, 20);
+    //        }
 
-            return true;
-        }
+    //        return true;
+    //    }
 
-        public override void ModifyWeaponDamage(Player player, ref StatModifier damage)
-        {
-            damage = new StatModifier(1 + (damage.Additive - 1) / 10, 1);
-        }
-    }
+    //    public override void ModifyWeaponDamage(Player player, ref StatModifier damage)
+    //    {
+    //        damage = new StatModifier(1 + (damage.Additive - 1) / 10, 1);
+    //    }
+    //}
 
-    public class ThyphionHeldProj : BaseDashBow
-    {
-        public override string Texture => AssetDirectory.ThyphionSeriesItems + "Thyphion";
+    //public class ThyphionHeldProj : BaseDashBow
+    //{
+    //    public override string Texture => AssetDirectory.ThyphionSeriesItems + "Thyphion";
 
-        public float handOffset = 14;
+    //    public float handOffset = 14;
 
-        private static Asset<Texture2D> GlowTex;
+    //    private static Asset<Texture2D> GlowTex;
 
-        public override void Load()
-        {
-            if (Main.dedServ)
-                return;
+    //    public override void Load()
+    //    {
+    //        if (Main.dedServ)
+    //            return;
 
-            GlowTex = Request<Texture2D>(AssetDirectory.ThyphionSeriesItems + "Thyphion_glow");
-        }
+    //        GlowTex = Request<Texture2D>(AssetDirectory.ThyphionSeriesItems + "Thyphion_glow");
+    //    }
 
-        public override void Unload()
-        {
-            GlowTex = null;
-        }
+    //    public override void Unload()
+    //    {
+    //        GlowTex = null;
+    //    }
 
-        public override int GetItemType()
-            => ItemType<Thyphion>();
+    //    public override int GetItemType()
+    //        => ItemType<Thyphion>();
 
-        public override Vector2 GetOffset()
-            => new(handOffset, -12);
+    //    public override Vector2 GetOffset()
+    //        => new(handOffset, -12);
 
-        public override bool PreDraw(ref Color lightColor)
-        {
-            Texture2D mainTex = Projectile.GetTexture();
-            Vector2 center = Projectile.Center - Main.screenPosition;
-            var effect = OwnerDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically;
-            var origin = mainTex.Size() / 2;
+    //    public override bool PreDraw(ref Color lightColor)
+    //    {
+    //        Texture2D mainTex = Projectile.GetTexture();
+    //        Vector2 center = Projectile.Center - Main.screenPosition;
+    //        var effect = OwnerDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically;
+    //        var origin = mainTex.Size() / 2;
 
-            Main.spriteBatch.Draw(mainTex, center, null, lightColor, Projectile.rotation, origin, 1, effect, 0f);
-            Main.spriteBatch.Draw(GlowTex.Value, center, null, Color.White, Projectile.rotation, origin, 1, effect, 0f);
+    //        Main.spriteBatch.Draw(mainTex, center, null, lightColor, Projectile.rotation, origin, 1, effect, 0f);
+    //        Main.spriteBatch.Draw(GlowTex.Value, center, null, Color.White, Projectile.rotation, origin, 1, effect, 0f);
 
-            if (Special == 0)
-                return false;
+    //        if (Special == 0)
+    //            return false;
 
-            return false;
-        }
-    }
+    //        return false;
+    //    }
+    //}
 
     public class ThyphionArrow
     {

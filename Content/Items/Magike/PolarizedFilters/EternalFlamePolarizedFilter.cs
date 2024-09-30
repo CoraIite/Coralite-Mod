@@ -29,7 +29,7 @@ namespace Coralite.Content.Items.Magike.PolarizedFilters
 
     public class EternalFlamePolarizedFilterComponent : PolarizedFilter
     {
-        public override MagikeApparatusLevel Level => MagikeApparatusLevel.EternalFlame;
+        public override MALevel Level => MALevel.EternalFlame;
 
         public override int ItemType => ModContent.ItemType<EternalFlamePolarizedFilter>();
     }

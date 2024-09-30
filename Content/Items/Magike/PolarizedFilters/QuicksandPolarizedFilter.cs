@@ -29,7 +29,7 @@ namespace Coralite.Content.Items.Magike.PolarizedFilters
 
     public class QuicksandPolarizedFilterComponent : PolarizedFilter
     {
-        public override MagikeApparatusLevel Level => MagikeApparatusLevel.Quicksand;
+        public override MALevel Level => MALevel.Quicksand;
 
         public override int ItemType => ModContent.ItemType<QuicksandPolarizedFilter>();
     }

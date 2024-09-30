@@ -7,12 +7,12 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
     {
         public override void Initialize()
         {
-            Upgrade(MagikeApparatusLevel.None);
+            Upgrade(MALevel.None);
         }
 
-        public virtual void Upgrade(MagikeApparatusLevel incomeLevel) { }
+        public virtual void Upgrade(MALevel incomeLevel) { }
 
-        public virtual bool CanUpgrade(MagikeApparatusLevel incomeLevel)
+        public virtual bool CanUpgrade(MALevel incomeLevel)
             => Entity.CheckUpgrageable(incomeLevel);
     }
 
@@ -20,12 +20,12 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
     {
         public override void Initialize()
         {
-            Upgrade(MagikeApparatusLevel.None);
+            Upgrade(MALevel.None);
         }
 
-        public virtual void Upgrade(MagikeApparatusLevel incomeLevel) { }
+        public virtual void Upgrade(MALevel incomeLevel) { }
 
-        public virtual bool CanUpgrade(MagikeApparatusLevel incomeLevel)
+        public virtual bool CanUpgrade(MALevel incomeLevel)
             => Entity.CheckUpgrageable(incomeLevel);
     }
 
@@ -33,12 +33,12 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
     {
         public override void Initialize()
         {
-            Upgrade(MagikeApparatusLevel.None);
+            Upgrade(MALevel.None);
         }
 
-        public virtual void Upgrade(MagikeApparatusLevel incomeLevel) { }
+        public virtual void Upgrade(MALevel incomeLevel) { }
 
-        public virtual bool CanUpgrade(MagikeApparatusLevel incomeLevel)
+        public virtual bool CanUpgrade(MALevel incomeLevel)
             => Entity.CheckUpgrageable(incomeLevel);
     }
 
@@ -46,12 +46,12 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
     {
         public override void Initialize()
         {
-            Upgrade(MagikeApparatusLevel.None);
+            Upgrade(MALevel.None);
         }
 
-        public virtual void Upgrade(MagikeApparatusLevel incomeLevel) { }
+        public virtual void Upgrade(MALevel incomeLevel) { }
 
-        public virtual bool CanUpgrade(MagikeApparatusLevel incomeLevel)
+        public virtual bool CanUpgrade(MALevel incomeLevel)
             => Entity.CheckUpgrageable(incomeLevel);
     }
 
@@ -59,12 +59,12 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
     {
         public override void Initialize()
         {
-            Upgrade(MagikeApparatusLevel.None);
+            Upgrade(MALevel.None);
         }
 
-        public virtual void Upgrade(MagikeApparatusLevel incomeLevel) { }
+        public virtual void Upgrade(MALevel incomeLevel) { }
 
-        public virtual bool CanUpgrade(MagikeApparatusLevel incomeLevel)
+        public virtual bool CanUpgrade(MALevel incomeLevel)
             => Entity.CheckUpgrageable(incomeLevel);
     }
 
@@ -72,12 +72,12 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
     {
         public override void Initialize()
         {
-            Upgrade(MagikeApparatusLevel.None);
+            Upgrade(MALevel.None);
         }
 
-        public virtual void Upgrade(MagikeApparatusLevel incomeLevel) { }
+        public virtual void Upgrade(MALevel incomeLevel) { }
 
-        public virtual bool CanUpgrade(MagikeApparatusLevel incomeLevel)
+        public virtual bool CanUpgrade(MALevel incomeLevel)
             => Entity.CheckUpgrageable(incomeLevel);
     }
 
@@ -85,12 +85,12 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
     {
         public override void Initialize()
         {
-            Upgrade(MagikeApparatusLevel.None);
+            Upgrade(MALevel.None);
         }
 
-        public virtual void Upgrade(MagikeApparatusLevel incomeLevel) { }
+        public virtual void Upgrade(MALevel incomeLevel) { }
 
-        public virtual bool CanUpgrade(MagikeApparatusLevel incomeLevel)
+        public virtual bool CanUpgrade(MALevel incomeLevel)
             => Entity.CheckUpgrageable(incomeLevel);
     }
 
@@ -98,12 +98,12 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
     {
         public override void Initialize()
         {
-            Upgrade(MagikeApparatusLevel.None);
+            Upgrade(MALevel.None);
         }
 
-        public virtual void Upgrade(MagikeApparatusLevel incomeLevel) { }
+        public virtual void Upgrade(MALevel incomeLevel) { }
 
-        public virtual bool CanUpgrade(MagikeApparatusLevel incomeLevel)
+        public virtual bool CanUpgrade(MALevel incomeLevel)
             => Entity.CheckUpgrageable(incomeLevel);
     }
 }

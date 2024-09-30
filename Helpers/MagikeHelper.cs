@@ -257,9 +257,9 @@ namespace Coralite.Helpers
         /// <param name="topLeft"></param>
         /// <param name="level"></param>
         /// <returns></returns>
-        public static bool TryGetMagikeApparatusLevel(Point16 topLeft, out MagikeApparatusLevel level)
+        public static bool TryGetMagikeApparatusLevel(Point16 topLeft, out MALevel level)
         {
-            level = MagikeApparatusLevel.None;
+            level = MALevel.None;
 
             Tile targetTile = Framing.GetTileSafely(topLeft);
             GetMagikeAlternateData(topLeft.X, topLeft.Y, out TileObjectData alternateData, out _);
@@ -268,7 +268,7 @@ namespace Coralite.Helpers
                 return false;
 
             //计算当前帧图
-            MagikeApparatusLevel? chooseLevel = MagikeSystem.FrameToLevel(targetTile.TileType, targetTile.TileFrameX / alternateData.CoordinateFullWidth);
+            MALevel? chooseLevel = MagikeSystem.FrameToLevel(targetTile.TileType, targetTile.TileFrameX / alternateData.CoordinateFullWidth);
 
             if (!chooseLevel.HasValue)
                 return false;
@@ -283,7 +283,7 @@ namespace Coralite.Helpers
         /// <param name="Entity"></param>
         /// <param name="incomeLevel"></param>
         /// <returns></returns>
-        public static bool CheckUpgrageable(this IEntity Entity, MagikeApparatusLevel incomeLevel)
+        public static bool CheckUpgrageable(this IEntity Entity, MALevel incomeLevel)
         {
             int tileType = (Entity as MagikeTileEntity).TileType;
 
@@ -308,7 +308,7 @@ namespace Coralite.Helpers
                 GetMagikeAlternateData(pos.X, pos.Y, out TileObjectData data, out _);
                 Point16 size = data == null ? new Point16(1) : new Point16(data.Width, data.Height);
 
-                if (TryGetMagikeApparatusLevel(topLeft.Value, out MagikeApparatusLevel level))
+                if (TryGetMagikeApparatusLevel(topLeft.Value, out MALevel level))
                     MagikeLozengeParticle.Spawn(Helper.GetMagikeTileCenter(topLeft.Value), size, MagikeSystem.GetColor(level));
             }
         }
@@ -322,7 +322,7 @@ namespace Coralite.Helpers
             GetMagikeAlternateData(topLeft.X, topLeft.Y, out TileObjectData data, out _);
             Point16 size = data == null ? new Point16(1) : new Point16(data.Width, data.Height);
 
-            if (TryGetMagikeApparatusLevel(topLeft, out MagikeApparatusLevel level))
+            if (TryGetMagikeApparatusLevel(topLeft, out MALevel level))
                 MagikeLozengeParticle.Spawn(Helper.GetMagikeTileCenter(topLeft), size, MagikeSystem.GetColor(level));
         }
 
@@ -454,7 +454,7 @@ namespace Coralite.Helpers
 
         public static void SpawnDustOnSend(Point16 selfPos, Point16 targetPos, int dustType = DustID.Teleporter)
         {
-            if (!TryGetMagikeApparatusLevel(selfPos, out MagikeApparatusLevel level))
+            if (!TryGetMagikeApparatusLevel(selfPos, out MALevel level))
                 return;
 
             Color dustColor = MagikeSystem.GetColor(level);
@@ -549,48 +549,48 @@ namespace Coralite.Helpers
                 spriteBatch.Draw(itemTex, pos, new Rectangle?(rectangle2), i.GetColor(color), 0f, origin, itemScale, 0, 0f);
         }
 
-        public static int CalculateMagikeCost(MagikeApparatusLevel level,int ProducerCount=1,int workTime = 60)
+        public static int CalculateMagikeCost(MALevel level,int ProducerCount=1,int workTime = 60)
         {
             float produceCountPerSecond = level switch
             {
-                MagikeApparatusLevel.MagicCrystal
-                or MagikeApparatusLevel.Seashore => 0.1f,
+                MALevel.MagicCrystal
+                or MALevel.Seashore => 0.1f,
 
-                MagikeApparatusLevel.RedJade
-                or MagikeApparatusLevel.Eiderdown => 0.2f,
+                MALevel.RedJade
+                or MALevel.Eiderdown => 0.2f,
 
-                MagikeApparatusLevel.Glistent => 0.3f,
+                MALevel.Glistent => 0.3f,
 
-                MagikeApparatusLevel.Crimson
-                or MagikeApparatusLevel.Corruption
-                or MagikeApparatusLevel.Icicle
-                or MagikeApparatusLevel.Emperor => 0.7f,
+                MALevel.Crimson
+                or MALevel.Corruption
+                or MALevel.Icicle
+                or MALevel.Emperor => 0.7f,
 
-                MagikeApparatusLevel.Shadow
-                or MagikeApparatusLevel.Bone
-                or MagikeApparatusLevel.Beeswax
-                or MagikeApparatusLevel.Hellstone => 1.1f,
+                MALevel.Shadow
+                or MALevel.Bone
+                or MALevel.Beeswax
+                or MALevel.Hellstone => 1.1f,
 
-                MagikeApparatusLevel.Quicksand => 1.5f,
+                MALevel.Quicksand => 1.5f,
 
-                MagikeApparatusLevel.CrystallineMagike => 5.3f,
+                MALevel.CrystallineMagike => 5.3f,
 
-                MagikeApparatusLevel.Pelagic
-                or MagikeApparatusLevel.Flight
-                or MagikeApparatusLevel.Forbidden
-                or MagikeApparatusLevel.Frost => 6.25f,
+                MALevel.Pelagic
+                or MALevel.Flight
+                or MALevel.Forbidden
+                or MALevel.Frost => 6.25f,
 
-                MagikeApparatusLevel.Hallow
-                or MagikeApparatusLevel.BloodJade
-                or MagikeApparatusLevel.EternalFlame => 6.875f,
+                MALevel.Hallow
+                or MALevel.BloodJade
+                or MALevel.EternalFlame => 6.875f,
 
-                MagikeApparatusLevel.Soul
-                or MagikeApparatusLevel.Feather
-                or MagikeApparatusLevel.Shroomite => 8,
+                MALevel.Soul
+                or MALevel.Feather
+                or MALevel.Shroomite => 8,
 
-                MagikeApparatusLevel.HolyLight => 10,
+                MALevel.HolyLight => 10,
 
-                MagikeApparatusLevel.SplendorMagicore => 60,
+                MALevel.SplendorMagicore => 60,
                 _ => 1,
             };
 

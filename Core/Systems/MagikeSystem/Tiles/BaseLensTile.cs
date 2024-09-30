@@ -11,7 +11,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
     {
         public override string Texture => AssetDirectory.MagikeLensTiles + Name;
 
-        public override void DrawExtraTex(SpriteBatch spriteBatch, Texture2D tex, Rectangle tileRect, Vector2 offset, Color lightColor, float rotation, MagikeTileEntity entity, MagikeApparatusLevel level)
+        public override void DrawExtraTex(SpriteBatch spriteBatch, Texture2D tex, Rectangle tileRect, Vector2 offset, Color lightColor, float rotation, MagikeTileEntity entity, MALevel level)
         {
             Vector2 selfCenter = tileRect.Center();
             Vector2 drawPos = selfCenter + offset;
@@ -45,7 +45,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
         /// <param name="lightColor"></param>
         /// <param name="rotation"></param>
         /// <param name="level"></param>
-        public virtual void DrawTopTex(SpriteBatch spriteBatch, Texture2D tex, Vector2 drawPos, Color lightColor, MagikeApparatusLevel level,bool canProduce)
+        public virtual void DrawTopTex(SpriteBatch spriteBatch, Texture2D tex, Vector2 drawPos, Color lightColor, MALevel level,bool canProduce)
         {
             spriteBatch.Draw(tex, drawPos, null, lightColor, 0, tex.Size() / 2, 1f, 0, 0f);
         }

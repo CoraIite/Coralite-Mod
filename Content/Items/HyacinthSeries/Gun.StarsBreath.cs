@@ -12,9 +12,6 @@ namespace Coralite.Content.Items.HyacinthSeries
     {
         public override string Texture => AssetDirectory.HyacinthSeriesItems + Name;
 
-        /*         public int shootStyle;
-                public int shootCount; */
-
         public override void SetDefaults()
         {
             Item.damage = 70;
@@ -101,7 +98,7 @@ namespace Coralite.Content.Items.HyacinthSeries
                  */
                 for (int i = 0; i < 2; i++)
                 {
-                    Projectile.NewProjectile(source, player.Center, velocity.RotatedBy(Main.rand.NextFloat(-0.04f, 0.04f)), type, (int)(damage * 0.65f), knockback, player.whoAmI, 1, 1);
+                    Projectile.NewProjectile(source, player.Center, velocity.RotatedBy(Main.rand.NextFloat(-0.04f, 0.04f)), type, (int)(damage * 0.6f), knockback, player.whoAmI, 1, 1);
                 }
                 SoundEngine.PlaySound(CoraliteSoundID.Gun2_Item40, player.Center);
 

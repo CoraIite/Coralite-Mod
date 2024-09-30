@@ -34,13 +34,13 @@ namespace Coralite.Content.Items.Magike.Lens.DayTimeLens
         public override int DropItemType => ItemType<MoonlightLens>();
         public override MagikeTileEntity GetEntityInstance() => GetInstance<MoonlightLensTileEntity>();
 
-        public override MagikeApparatusLevel[] GetAllLevels()
+        public override MALevel[] GetAllLevels()
         {
             return
             [
-                MagikeApparatusLevel.None,
-                MagikeApparatusLevel.MagicCrystal,
-                MagikeApparatusLevel.BloodJade,
+                MALevel.None,
+                MALevel.MagicCrystal,
+                MALevel.BloodJade,
             ];
         }
     }
@@ -59,7 +59,7 @@ namespace Coralite.Content.Items.Magike.Lens.DayTimeLens
 
     public class MoonlightLensContainer : UpgradeableContainer
     {
-        public override void Upgrade(MagikeApparatusLevel incomeLevel)
+        public override void Upgrade(MALevel incomeLevel)
         {
             switch (incomeLevel)
             {
@@ -67,11 +67,11 @@ namespace Coralite.Content.Items.Magike.Lens.DayTimeLens
                     MagikeMaxBase = 0;
                     AntiMagikeMaxBase = 0;
                     break;
-                case MagikeApparatusLevel.MagicCrystal:
+                case MALevel.MagicCrystal:
                     MagikeMaxBase = 18;
                     AntiMagikeMaxBase = MagikeMaxBase * 3;
                     break;
-                case MagikeApparatusLevel.BloodJade:
+                case MALevel.BloodJade:
                     MagikeMaxBase = 618;
                     AntiMagikeMaxBase = MagikeMaxBase * 2;
                     break;
@@ -84,7 +84,7 @@ namespace Coralite.Content.Items.Magike.Lens.DayTimeLens
 
     public class MoonlightLensSender : UpgradeableLinerSender
     {
-        public override void Upgrade(MagikeApparatusLevel incomeLevel)
+        public override void Upgrade(MALevel incomeLevel)
         {
             MaxConnectBase = 1;
             ConnectLengthBase = 4 * 16;
@@ -97,11 +97,11 @@ namespace Coralite.Content.Items.Magike.Lens.DayTimeLens
                     SendDelayBase = 1_0000_0000 / 60;//随便填个大数
                     ConnectLengthBase = 0;
                     break;
-                case MagikeApparatusLevel.MagicCrystal:
+                case MALevel.MagicCrystal:
                     UnitDeliveryBase = 6;
                     SendDelayBase = 10;
                     break;
-                case MagikeApparatusLevel.BloodJade:
+                case MALevel.BloodJade:
                     UnitDeliveryBase = 165;
                     SendDelayBase = 8;
                     break;
@@ -127,7 +127,7 @@ namespace Coralite.Content.Items.Magike.Lens.DayTimeLens
             return !Main.dayTime && !Main.raining && Main.moonType != (int)MoonPhase.Empty;
         }
 
-        public override void Upgrade(MagikeApparatusLevel incomeLevel)
+        public override void Upgrade(MALevel incomeLevel)
         {
             switch (incomeLevel)
             {
@@ -135,11 +135,11 @@ namespace Coralite.Content.Items.Magike.Lens.DayTimeLens
                     ProductionDelayBase = 1_0000_0000 / 60;//随便填个大数
                     ThroughputBase = 1;
                     break;
-                case MagikeApparatusLevel.MagicCrystal:
+                case MALevel.MagicCrystal:
                     ProductionDelayBase = 10;
                     ThroughputBase = 2;
                     break;
-                case MagikeApparatusLevel.BloodJade:
+                case MALevel.BloodJade:
                     ProductionDelayBase = 8;
                     ThroughputBase = 55;
                     break;

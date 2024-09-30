@@ -14,18 +14,6 @@ namespace Coralite.Content.Items.Misc_Melee
     {
         public override string Texture => AssetDirectory.Misc_Melee + Name;
 
-        public static LocalizedText craftCondition;
-
-        public override void Load()
-        {
-            craftCondition = this.GetLocalization("CraftCondition", () => "在CoralCat的世界中合成");
-        }
-
-        public override void Unload()
-        {
-            craftCondition = null;
-        }
-
         public override void SetDefaults()
         {
             Item.CloneDefaults(ItemID.TerraBlade);
@@ -55,7 +43,7 @@ namespace Coralite.Content.Items.Misc_Melee
                 .AddIngredient<TrueExcatbar>()
                 .AddIngredient<BrokenHeroShortSword>()
                 .AddTile(TileID.MythrilAnvil)
-                .AddCondition(craftCondition, () => CoraliteWorld.coralCatWorld)
+                .AddCondition(CoraliteConditions.CoralCat)
                 .Register();
         }
 

@@ -110,8 +110,8 @@ namespace Coralite.Content.Items.Steel
             else
             {
                 Projectile.tileCollide = false;
-                float num63 = 18f;
-                float num64 = 1.2f;
+                float num63 = 25f;
+                float num64 = 1.75f;
                 Vector2 vector6 = Projectile.Center;
                 float num65 = Main.player[Projectile.owner].position.X + (Main.player[Projectile.owner].width / 2) - vector6.X;
                 float num66 = Main.player[Projectile.owner].position.Y + (Main.player[Projectile.owner].height / 2) - vector6.Y;

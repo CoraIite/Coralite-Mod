@@ -29,7 +29,7 @@ namespace Coralite.Content.Items.Magike.PolarizedFilters
 
     public class BloodJadePolarizedFilterComponent : PolarizedFilter
     {
-        public override MagikeApparatusLevel Level => MagikeApparatusLevel.BloodJade;
+        public override MALevel Level => MALevel.BloodJade;
 
         public override int ItemType => ModContent.ItemType<BloodJadePolarizedFilter>();
     }

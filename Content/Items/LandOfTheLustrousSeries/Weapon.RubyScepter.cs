@@ -20,8 +20,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public override void SetDefs()
         {
             Item.SetShopValues(Terraria.Enums.ItemRarityColor.LightPurple6, Item.sellPrice(0, 9));
-            Item.SetWeaponValues(60, 4);
-            Item.useTime = Item.useAnimation = 34;
+            Item.SetWeaponValues(63, 4);
+            Item.useTime = Item.useAnimation = 30;
             Item.mana = 17;
 
             Item.shoot = ModContent.ProjectileType<RubyScepterProj>();
@@ -222,9 +222,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 return;
 
             Projectile.Center = owner.Center + new Vector2(0, -16);
-            LaserRotation = LaserRotation.AngleLerp((Main.MouseWorld - Projectile.Center).ToRotation(), 0.04f);
+            LaserRotation = LaserRotation.AngleLerp((Main.MouseWorld - Projectile.Center).ToRotation(), 0.08f);
 
-            GetEndPoint(160);
+            GetEndPoint(90);
             LaserAI();
 
             Projectile.UpdateFrameNormally(8, 19);
@@ -253,7 +253,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             for (int k = 0; k < count; k++)
             {
-                Vector2 posCheck = Projectile.Center + (Vector2.UnitX.RotatedBy(LaserRotation) * k * 8);
+                Vector2 posCheck = Projectile.Center + (Vector2.UnitX.RotatedBy(LaserRotation) * k * 16);
 
                 if (Helper.PointInTile(posCheck) || k == count - 1)
                 {
@@ -441,7 +441,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             base.SetDefaults();
             Projectile.width = Projectile.height = 20;
-            Projectile.idStaticNPCHitCooldown = 20;
+            Projectile.idStaticNPCHitCooldown = 10;
         }
 
         public override void AI()
@@ -452,7 +452,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 Projectile.tileCollide = true;
                 Timer--;
                 Projectile.rotation += Projectile.velocity.X / 8;
-                LaserRotation = LaserRotation.AngleLerp((Main.MouseWorld - Projectile.Center).ToRotation(), 0.1f);
+                LaserRotation = LaserRotation.AngleLerp((Main.MouseWorld - Projectile.Center).ToRotation(), 0.14f);
 
                 if (Timer < 1)
                 {
@@ -473,7 +473,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             else
             {
                 LaserRotation = LaserRotation.AngleLerp((Main.MouseWorld - Projectile.Center).ToRotation(), 0.02f);
-                GetEndPoint(60);
+                GetEndPoint(40);
                 LaserAI();
             }
 

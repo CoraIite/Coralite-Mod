@@ -64,7 +64,7 @@ namespace Coralite.Content.Items.Magike.PolarizedFilters
 
     public class SeashorePolarizedFilterComponent : PolarizedFilter
     {
-        public override MagikeApparatusLevel Level => MagikeApparatusLevel.Seashore;
+        public override MALevel Level => MALevel.Seashore;
 
         public override int ItemType => ModContent.ItemType<SeashorePolarizedFilter>();
     }

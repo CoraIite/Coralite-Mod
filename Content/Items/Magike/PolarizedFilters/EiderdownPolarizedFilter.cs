@@ -28,7 +28,7 @@ namespace Coralite.Content.Items.Magike.PolarizedFilters
 
     public class EiderdownPolarizedFilterComponent : PolarizedFilter
     {
-        public override MagikeApparatusLevel Level => MagikeApparatusLevel.Eiderdown;
+        public override MALevel Level => MALevel.Eiderdown;
 
         public override int ItemType => ModContent.ItemType<EiderdownPolarizedFilter>();
     }

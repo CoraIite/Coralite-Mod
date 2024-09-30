@@ -65,7 +65,7 @@ namespace Coralite.Content.Items.Magike.PolarizedFilters
 
     public class ShadowPolarizedFilterComponent : PolarizedFilter
     {
-        public override MagikeApparatusLevel Level => MagikeApparatusLevel.Shadow;
+        public override MALevel Level => MALevel.Shadow;
 
         public override int ItemType => ModContent.ItemType<ShadowPolarizedFilter>();
     }

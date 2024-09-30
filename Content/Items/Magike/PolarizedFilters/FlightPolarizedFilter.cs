@@ -28,7 +28,7 @@ namespace Coralite.Content.Items.Magike.PolarizedFilters
 
     public class FlightPolarizedFilterComponent : PolarizedFilter
     {
-        public override MagikeApparatusLevel Level => MagikeApparatusLevel.Flight;
+        public override MALevel Level => MALevel.Flight;
 
         public override int ItemType => ModContent.ItemType<FlightPolarizedFilter>();
     }

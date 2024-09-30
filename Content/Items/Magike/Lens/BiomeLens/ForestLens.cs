@@ -49,14 +49,14 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
 
         public override MagikeTileEntity GetEntityInstance() => GetInstance<ForestLensTileEntity>();
 
-        public override MagikeApparatusLevel[] GetAllLevels()
+        public override MALevel[] GetAllLevels()
         {
             return
             [
-                MagikeApparatusLevel.None,
-                MagikeApparatusLevel.Glistent,
-                MagikeApparatusLevel.CrystallineMagike,
-                MagikeApparatusLevel.SplendorMagicore
+                MALevel.None,
+                MALevel.Glistent,
+                MALevel.CrystallineMagike,
+                MALevel.SplendorMagicore
             ];
         }
     }
@@ -75,7 +75,7 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
 
     public class ForestLensContainer : UpgradeableContainer
     {
-        public override void Upgrade(MagikeApparatusLevel incomeLevel)
+        public override void Upgrade(MALevel incomeLevel)
         {
             switch (incomeLevel)
             {
@@ -83,15 +83,15 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     MagikeMaxBase = 0;
                     AntiMagikeMaxBase = 0;
                     break;
-                case MagikeApparatusLevel.Glistent:
+                case MALevel.Glistent:
                     MagikeMaxBase = 27;
                     AntiMagikeMaxBase = MagikeMaxBase * 3;
                     break;
-                case MagikeApparatusLevel.CrystallineMagike:
+                case MALevel.CrystallineMagike:
                     MagikeMaxBase = 483;
                     AntiMagikeMaxBase = MagikeMaxBase * 2;
                     break;
-                case MagikeApparatusLevel.SplendorMagicore:
+                case MALevel.SplendorMagicore:
                     MagikeMaxBase = 5400;
                     AntiMagikeMaxBase = MagikeMaxBase * 3;
                     break;
@@ -104,7 +104,7 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
 
     public class ForestLensSender : UpgradeableLinerSender
     {
-        public override void Upgrade(MagikeApparatusLevel incomeLevel)
+        public override void Upgrade(MALevel incomeLevel)
         {
             MaxConnectBase = 1;
             ConnectLengthBase = 4 * 16;
@@ -117,15 +117,15 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     SendDelayBase = 1_0000_0000 / 60;//随便填个大数
                     ConnectLengthBase = 0;
                     break;
-                case MagikeApparatusLevel.Glistent:
+                case MALevel.Glistent:
                     UnitDeliveryBase = 9;
                     SendDelayBase = 10;
                     break;
-                case MagikeApparatusLevel.CrystallineMagike:
+                case MALevel.CrystallineMagike:
                     UnitDeliveryBase = 129;
                     SendDelayBase = 8;
                     break;
-                case MagikeApparatusLevel.SplendorMagicore:
+                case MALevel.SplendorMagicore:
                     UnitDeliveryBase = 1080;
                     SendDelayBase = 6;
                     break;
@@ -150,7 +150,7 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
         public override bool CheckWall(Tile tile)
             => tile.WallType is WallID.Grass or WallID.GrassUnsafe or WallID.Flower or WallID.FlowerUnsafe;
 
-        public override void Upgrade(MagikeApparatusLevel incomeLevel)
+        public override void Upgrade(MALevel incomeLevel)
         {
             switch (incomeLevel)
             {
@@ -158,15 +158,15 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     ProductionDelayBase = 1_0000_0000 / 60;//随便填个大数
                     ThroughputBase = 1;
                     break;
-                case MagikeApparatusLevel.Glistent:
+                case MALevel.Glistent:
                     ProductionDelayBase = 10;
                     ThroughputBase = 3;
                     break;
-                case MagikeApparatusLevel.CrystallineMagike:
+                case MALevel.CrystallineMagike:
                     ProductionDelayBase = 8;
                     ThroughputBase = 43;
                     break;
-                case MagikeApparatusLevel.SplendorMagicore:
+                case MALevel.SplendorMagicore:
                     ProductionDelayBase = 6;
                     ThroughputBase = 360;
                     break;

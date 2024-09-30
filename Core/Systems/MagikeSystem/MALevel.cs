@@ -1,6 +1,9 @@
 ﻿namespace Coralite.Core.Systems.MagikeSystem
 {
-    public enum MagikeApparatusLevel
+    /// <summary>
+    /// MA 是 MagikeApparatus 的缩写，记录魔能仪器的等级
+    /// </summary>
+    public enum MALevel
     {
         //啥都莫有
         None = 0,

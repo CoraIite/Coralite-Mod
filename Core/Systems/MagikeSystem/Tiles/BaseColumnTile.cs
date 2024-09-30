@@ -9,7 +9,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
     public abstract class BaseColumnTile(int width, int height, Color mapColor, int dustType, int minPick = 0, bool topSoild = true)
         : BaseMagikeTile(width, height, mapColor, dustType, minPick, topSoild)
     {
-        public override void DrawExtraTex(SpriteBatch spriteBatch, Texture2D tex, Rectangle tileRect, Vector2 offset, Color lightColor, float rotation, MagikeTileEntity entity, MagikeApparatusLevel level)
+        public override void DrawExtraTex(SpriteBatch spriteBatch, Texture2D tex, Rectangle tileRect, Vector2 offset, Color lightColor, float rotation, MagikeTileEntity entity, MALevel level)
         {
             Vector2 bottomLeft = tileRect.BottomLeft();
             Vector2 drawPos = bottomLeft + offset;

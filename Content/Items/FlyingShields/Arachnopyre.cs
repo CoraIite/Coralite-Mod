@@ -92,7 +92,7 @@ namespace Coralite.Content.Items.FlyingShields
             {
                 canShootSpider = false;
                 Projectile.NewProjectileFromThis<ArachnopyreSpider>(Owner.Center
-                    , (target.Center - Owner.Center).SafeNormalize(Vector2.Zero).RotateByRandom(-0.5f, 0.5f) * 6, (int)(Projectile.damage * 0.8f)
+                    , (target.Center - Owner.Center).SafeNormalize(Vector2.Zero).RotateByRandom(-0.5f, 0.5f) * 9, (int)(Projectile.damage * 0.8f)
                     , Projectile.knockBack, ai2: (Main.rand.Next(0, 6) * 20) + 10);
 
             }
@@ -240,7 +240,7 @@ namespace Coralite.Content.Items.FlyingShields
                                         for (int i = 0; i < 3; i++)
                                         {
                                             Projectile.NewProjectileFromThis<ArachnopyreSpider>(Projectile.Center
-                                                , (angle + (i * MathHelper.TwoPi / 3)).ToRotationVector2() * 6, (int)(Projectile.damage * 0.4f), Projectile.knockBack / 4, 1, ai2: 120);
+                                                , (angle + (i * MathHelper.TwoPi / 3)).ToRotationVector2() * 8, (int)(Projectile.damage * 0.4f), Projectile.knockBack / 4, 1, ai2: 120);
                                         }
                                     }
                                     SoundEngine.PlaySound(CoraliteSoundID.Boom_Item14, Projectile.Center);

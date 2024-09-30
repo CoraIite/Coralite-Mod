@@ -33,7 +33,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
             int lineCountMax = 0;
             foreach (var i in keyValuePairs)
             {
-                if (i.Value == MagikeApparatusLevel.None)
+                if (i.Value == MALevel.None)
                     continue;
 
                 int itemType = MagikeSystem.GetPolarizedFilterItemType(i.Value);
