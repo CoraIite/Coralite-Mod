@@ -10,7 +10,10 @@ namespace Coralite.Content.WorldGeneration
 {
     public partial class CoraliteWorld
     {
-        public static bool coralCatWorld;
+        /// <summary>
+        /// 珊瑚猫的世界！
+        /// </summary>
+        public static bool CoralCatWorld {  get; set; }
 
         public void CoralCatWorldGen(GenerationProgress progress, GameConfiguration configuration)
         {

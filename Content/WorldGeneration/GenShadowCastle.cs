@@ -16,6 +16,7 @@ using Terraria.DataStructures;
 using Terraria.GameContent.Generation;
 using Terraria.ID;
 using Terraria.IO;
+using Terraria.Localization;
 using Terraria.ObjectData;
 using Terraria.WorldBuilding;
 //using static Terraria.WorldGen;
@@ -45,9 +46,11 @@ namespace Coralite.Content.WorldGeneration
             }
         }
 
+        public static LocalizedText ShadowCastleText { get; set; }
+
         public void GenShadowCastle(GenerationProgress progress, GameConfiguration configuration)
         {
-            progress.Message = "正在修建影之城";
+            progress.Message = ShadowCastleText.Value;//"正在修建影之城";
 
             GenVars.dEnteranceX = 0;
             GenVars.numDRooms = 0;

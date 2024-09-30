@@ -30,7 +30,7 @@ namespace Coralite.Content.Items.Materials
 
         public void Transform()
         {
-            if (!CoraliteWorld.coralCatWorld)
+            if (!CoraliteWorld.CoralCatWorld)
             {
                 SoundEngine.PlaySound(CoraliteSoundID.Meowmere);
                 Item.SetDefaults(ItemID.BrokenHeroSword);

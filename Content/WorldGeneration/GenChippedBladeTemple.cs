@@ -8,15 +8,18 @@ using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
 using Terraria.IO;
+using Terraria.Localization;
 using Terraria.WorldBuilding;
 
 namespace Coralite.Content.WorldGeneration
 {
     public partial class CoraliteWorld
     {
+        public static LocalizedText ChippedBladeTemple { get; set; }
+
         public void GenChippedBladeTemple(GenerationProgress progress, GameConfiguration configuration)
         {
-            progress.Message = "正在生成破碎剑刃神庙";
+            progress.Message = ChippedBladeTemple.Value;//"正在生成破碎剑刃神庙";
 
             int itemCount = 1;
             int gened = 0;

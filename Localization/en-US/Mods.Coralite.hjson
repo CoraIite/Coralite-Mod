@@ -8,3 +8,18 @@ Conditions: {
 		MagikeCraft: Requires using magike craft altar to craft
 	}
 }
+
+WorldGeneration: {
+	CoraliteWorld: {
+		StoneBack: Mods.Coralite.WorldGeneration.CoraliteWorld.StoneBack
+		SmallBasalt: Mods.Coralite.WorldGeneration.CoraliteWorld.SmallBasalt
+		ChippedBladeTemple: Mods.Coralite.WorldGeneration.CoraliteWorld.ChippedBladeTemple
+		ClearGemstoneMaze: Mods.Coralite.WorldGeneration.CoraliteWorld.ClearGemstoneMaze
+		EvilChest: Mods.Coralite.WorldGeneration.CoraliteWorld.EvilChest
+		IceDragonNest: Mods.Coralite.WorldGeneration.CoraliteWorld.IceDragonNest
+		MagicCrystalCaveText: Mods.Coralite.WorldGeneration.CoraliteWorld.MagicCrystalCaveText
+		ShadowCastleText: Mods.Coralite.WorldGeneration.CoraliteWorld.ShadowCastleText
+		WindStoneTablet: Mods.Coralite.WorldGeneration.CoraliteWorld.WindStoneTablet
+		ReplaceVanillaChestText: Mods.Coralite.WorldGeneration.CoraliteWorld.ReplaceVanillaChestText
+	}
+}

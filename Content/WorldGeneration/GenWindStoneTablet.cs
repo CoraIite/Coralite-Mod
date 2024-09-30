@@ -3,15 +3,18 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.IO;
+using Terraria.Localization;
 using Terraria.WorldBuilding;
 
 namespace Coralite.Content.WorldGeneration
 {
     public partial class CoraliteWorld
     {
+        public static LocalizedText WindStoneTablet { get; set; }
+
         public void GenWindStoneTablet(GenerationProgress progress, GameConfiguration configuration)
         {
-            progress.Message = "正在生成风石碑牌";
+            progress.Message = WindStoneTablet.Value;// "正在生成风石碑牌";
 
             int tileType = ModContent.TileType<VineStoneTabletTile>();
 

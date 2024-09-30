@@ -1,12 +1,43 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Terraria.GameContent.Generation;
+using Terraria.Localization;
 using Terraria.ModLoader.IO;
 using Terraria.WorldBuilding;
+using System.Linq;
 
 namespace Coralite.Content.WorldGeneration
 {
-    public partial class CoraliteWorld : ModSystem
+    public partial class CoraliteWorld : ModSystem, ILocalizedModType
     {
+        public string LocalizationCategory => "WorldGeneration";
+
+        public override void Load()
+        {
+            Type t = typeof(CoraliteWorld);
+
+            var infos = t.GetProperties(System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public);
+            foreach (var info in from info in infos
+                                 where info.PropertyType.Name == nameof(LocalizedText)
+                                 select info)
+            {
+                info.SetValue(null, this.GetLocalization(info.Name));
+            }
+        }
+
+        public override void Unload()
+        {
+            Type t = typeof(CoraliteWorld);
+
+            var infos = t.GetProperties(System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public);
+            foreach (var info in from info in infos
+                                 where info.PropertyType.Name == nameof(LocalizedText)
+                                 select info)
+            {
+                info.SetValue(null, null);
+            }
+        }
+
         public override void ModifyWorldGenTasks(List<GenPass> tasks, ref double totalWeight)
         {
             if (chaosWorld)
@@ -67,7 +98,7 @@ namespace Coralite.Content.WorldGeneration
                     tasks.Insert(FinalCleanup - 1, new PassLegacy("Coralite Shadow Castle", GenShadowCastle));
             }
 
-            if (coralCatWorld)
+            if (CoralCatWorld)
             {
                 int SettleLiquids = tasks.FindIndex(genpass => genpass.Name.Equals("Settle Liquids Again"));
                 int FinalCleanup2 = tasks.FindIndex(genpass => genpass.Name.Equals("Final Cleanup"));
@@ -77,6 +108,9 @@ namespace Coralite.Content.WorldGeneration
                 if (SettleLiquids != -1)
                     tasks.Insert(FinalCleanup2 - 1, new PassLegacy("Coralite CoralCat World Spawn", CoralCatWorldSpawn));
             }
+
+            if (DigDigDigWorld)
+                ModifyDigdigdigWorldGen(tasks, ref totalWeight);
         }
 
         public override void SaveWorldData(TagCompound tag)
@@ -87,7 +121,8 @@ namespace Coralite.Content.WorldGeneration
             tag.Add("shadowBallsFightAreaX", shadowBallsFightArea.X);
             tag.Add("shadowBallsFightAreaY", shadowBallsFightArea.Y);
             tag.Add("chaosWorld", chaosWorld);
-            tag.Add("coralCat", coralCatWorld);
+            tag.Add("coralCat", CoralCatWorld);
+            tag.Add("digdigdig", DigDigDigWorld);
 
             SaveCrystalCave(tag);
         }
@@ -102,7 +137,8 @@ namespace Coralite.Content.WorldGeneration
                 tag.Get<int>("shadowBallsFightAreaY"), 74 * 16, 59 * 16);
 
             chaosWorld = tag.Get<bool>("chaosWorld");
-            coralCatWorld = tag.Get<bool>("coralCat");
+            CoralCatWorld = tag.Get<bool>("coralCat");
+            DigDigDigWorld = tag.Get<bool>("digdigdig");
 
             LoadCrystalCave(tag);
         }

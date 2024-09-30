@@ -17,7 +17,7 @@ namespace Coralite.Core
             LearnedMagikeBase = new(this.GetLocalization(nameof(LearnedMagikeBase))
                 , () => MagikeSystem.learnedMagikeBase);
             CoralCat = new(this.GetLocalization(nameof(CoralCat))
-                , () => CoraliteWorld.coralCatWorld);
+                , () => CoraliteWorld.CoralCatWorld);
             MagikeCraft = new(this.GetLocalization(nameof(MagikeCraft))
                 , () => false);
         }

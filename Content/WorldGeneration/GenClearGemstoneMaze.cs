@@ -8,15 +8,18 @@ using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
 using Terraria.IO;
+using Terraria.Localization;
 using Terraria.WorldBuilding;
 
 namespace Coralite.Content.WorldGeneration
 {
     public partial class CoraliteWorld
     {
+        public static LocalizedText ClearGemstoneMaze { get; set; }
+
         public void GenClearGemstoneMaze(GenerationProgress progress, GameConfiguration configuration)
         {
-            progress.Message = "正在生成透明宝石迷宫";
+            progress.Message = ClearGemstoneMaze.Value;//"正在生成透明宝石迷宫";
 
             int itemCount = 1;
             int gened = 0;

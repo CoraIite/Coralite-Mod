@@ -731,7 +731,7 @@ namespace Coralite.Content.ModPlayers
 
         public override void OnEnterWorld()
         {
-            if (CoraliteWorld.coralCatWorld)
+            if (CoraliteWorld.CoralCatWorld)
                 Player.QuickSpawnItem(Player.GetSource_FromThis(), ItemID.Meowmere);
         }
     }

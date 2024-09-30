@@ -6,15 +6,18 @@ using Coralite.Content.Tiles.MagikeSeries1;
 using Terraria;
 using Terraria.ID;
 using Terraria.IO;
+using Terraria.Localization;
 using Terraria.WorldBuilding;
 
 namespace Coralite.Content.WorldGeneration
 {
     public partial class CoraliteWorld
     {
+        public static LocalizedText ReplaceVanillaChestText { get; set; }
+
         public void ReplaceVanillaChest(GenerationProgress progress, GameConfiguration configuration)
         {
-            progress.Message = "正在将额外的战利品塞入箱子";
+            progress.Message = ReplaceVanillaChestText.Value;// "正在将额外的战利品塞入箱子";
 
             bool spawnedBrithOfIce = false;//是否生成过冰雪的新生，用于放置运气太差导致的一个都没生成的情况
 

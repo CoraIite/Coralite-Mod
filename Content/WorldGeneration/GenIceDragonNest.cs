@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
 using Terraria.IO;
+using Terraria.Localization;
 using Terraria.WorldBuilding;
 
 namespace Coralite.Content.WorldGeneration
@@ -19,9 +20,11 @@ namespace Coralite.Content.WorldGeneration
         /// </summary>
         public static Point NestCenter;
 
+        public static LocalizedText IceDragonNest { get; set; }
+
         public void GenIceDragonNest(GenerationProgress progress, GameConfiguration configuration)
         {
-            progress.Message = "正在制作冰龙巢穴";
+            progress.Message = IceDragonNest.Value;//"正在制作冰龙巢穴";
             progress.Set(0);
             //随机选择雪原上的某个地方
             int nestCenter_x = ((GenVars.snowOriginRight + GenVars.snowOriginLeft) / 2)

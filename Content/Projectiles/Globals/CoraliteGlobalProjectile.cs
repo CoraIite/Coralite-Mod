@@ -75,7 +75,7 @@ namespace Coralite.Content.Projectiles.Globals
 
         public override bool PreDraw(Projectile projectile, ref Color lightColor)
         {
-            if (CoraliteWorld.coralCatWorld)
+            if (CoraliteWorld.CoralCatWorld)
             {
                 switch (projectile.type)
                 {

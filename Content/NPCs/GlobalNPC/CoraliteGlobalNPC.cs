@@ -42,7 +42,7 @@ namespace Coralite.Content.NPCs.GlobalNPC
                 case NPCID.SandsharkCrimson:
                 case NPCID.SandsharkHallow:
                     {
-                        if (CoraliteWorld.coralCatWorld)
+                        if (CoraliteWorld.CoralCatWorld)
                         {
                             entity.scale = Main.rand.NextFloat(2, 3.5f);
                             entity.lifeMax = (int)(entity.lifeMax * Main.rand.NextFloat(3, 5));
@@ -253,7 +253,7 @@ namespace Coralite.Content.NPCs.GlobalNPC
             if (spawnInfo.Player.InModBiome<ShadowCastleBiome>())
                 pool[0] = 0f;
 
-            if (CoraliteWorld.coralCatWorld && spawnInfo.Player.wet && spawnInfo.Player.position.Y < Main.worldSurface * 16)
+            if (CoraliteWorld.CoralCatWorld && spawnInfo.Player.wet && spawnInfo.Player.position.Y < Main.worldSurface * 16)
             {
                 pool.Add(NPCID.Shark, 1);
             }
@@ -261,7 +261,7 @@ namespace Coralite.Content.NPCs.GlobalNPC
 
         public override bool PreKill(NPC npc)
         {
-            if (npc.type == NPCID.RainbowSlime && CoraliteWorld.coralCatWorld)
+            if (npc.type == NPCID.RainbowSlime && CoraliteWorld.CoralCatWorld)
             {
                 return false;
             }

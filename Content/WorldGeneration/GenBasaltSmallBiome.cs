@@ -4,15 +4,18 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.IO;
+using Terraria.Localization;
 using Terraria.WorldBuilding;
 
 namespace Coralite.Content.WorldGeneration
 {
     public partial class CoraliteWorld
     {
+        public static LocalizedText SmallBasalt { get; set; }
+
         public void GenBasaltSmallBiome(GenerationProgress progress, GameConfiguration configuration)
         {
-            progress.Message = "正在生成玄武岩";
+            progress.Message = SmallBasalt.Value;//"正在生成玄武岩";
 
             ushort basalt = (ushort)ModContent.TileType<BasaltTile>();
             ushort hardBasalt = (ushort)ModContent.TileType<HardBasaltTile>();

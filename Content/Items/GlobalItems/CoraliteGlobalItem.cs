@@ -139,7 +139,7 @@ namespace Coralite.Content.Items.GlobalItems
 
         public override bool PreDrawInInventory(Item item, SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
         {
-            if (CoraliteWorld.coralCatWorld)
+            if (CoraliteWorld.CoralCatWorld)
             {
                 switch (item.type)
                 {
@@ -178,7 +178,7 @@ namespace Coralite.Content.Items.GlobalItems
         public override bool PreDrawInWorld(Item item, SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
         {
             Vector2 center = item.Center - Main.screenPosition;
-            if (CoraliteWorld.coralCatWorld)
+            if (CoraliteWorld.CoralCatWorld)
             {
                 switch (item.type)
                 {
@@ -222,7 +222,7 @@ namespace Coralite.Content.Items.GlobalItems
 
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
-            if (CoraliteWorld.coralCatWorld)
+            if (CoraliteWorld.CoralCatWorld)
             {
                 TooltipLine name = tooltips.Find(line => line.Mod == "Terraria" && line.Name == "ItemName");
                 if (name != null)
@@ -300,7 +300,7 @@ namespace Coralite.Content.Items.GlobalItems
 
         public static void CoralCatWorldTransForm(Item item)
         {
-            if (!CoraliteWorld.coralCatWorld)
+            if (!CoraliteWorld.CoralCatWorld)
                 return;
 
             switch (item.type)

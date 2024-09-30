@@ -10,6 +10,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.IO;
+using Terraria.Localization;
 using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
 using Terraria.WorldBuilding;
@@ -20,9 +21,11 @@ namespace Coralite.Content.WorldGeneration
     {
         public static List<Point16> MagicCrystalCaveCenters = [];
 
+        public static LocalizedText MagicCrystalCaveText { get; set; }
+
         public void GenMagicCrystalCave(GenerationProgress progress, GameConfiguration configuration)
         {
-            progress.Message = "正在生成魔力水晶洞";
+            progress.Message = MagicCrystalCaveText.Value;// "正在生成魔力水晶洞";
 
             int howManyToGen = 2;
             if (Main.maxTilesX > 8000)

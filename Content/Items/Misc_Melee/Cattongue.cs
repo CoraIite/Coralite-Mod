@@ -34,7 +34,7 @@ namespace Coralite.Content.Items.Misc_Melee
 
         public void Transform()
         {
-            if (!CoraliteWorld.coralCatWorld)
+            if (!CoraliteWorld.CoralCatWorld)
             {
                 SoundEngine.PlaySound(CoraliteSoundID.Meowmere);
                 Item.SetDefaults(ItemID.Bladetongue);

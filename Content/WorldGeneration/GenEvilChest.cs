@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
 using Terraria.IO;
+using Terraria.Localization;
 using Terraria.WorldBuilding;
 
 namespace Coralite.Content.WorldGeneration
@@ -95,9 +96,11 @@ namespace Coralite.Content.WorldGeneration
             new(14, 5),
         };
 
+        public static LocalizedText EvilChest { get; set; }
+
         public void GenEvilChest(GenerationProgress progress, GameConfiguration configuration)
         {
-            progress.Message = "正在生成邪恶箱";
+            progress.Message = EvilChest.Value;//"正在生成邪恶箱";
 
             try
             {

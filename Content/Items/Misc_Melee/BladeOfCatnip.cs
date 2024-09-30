@@ -120,7 +120,7 @@ namespace Coralite.Content.Items.Misc_Melee
                 .AddIngredient(ItemID.JungleSpores, 15)
                 .AddIngredient(ItemID.Vine, 3)
                 .AddTile(TileID.Anvils)
-                .AddCondition(craftCondition, () => CoraliteWorld.coralCatWorld)
+                .AddCondition(craftCondition, () => CoraliteWorld.CoralCatWorld)
                 .Register();
         }
 
@@ -136,7 +136,7 @@ namespace Coralite.Content.Items.Misc_Melee
 
         public void Transform()
         {
-            if (!CoraliteWorld.coralCatWorld)
+            if (!CoraliteWorld.CoralCatWorld)
             {
                 SoundEngine.PlaySound(CoraliteSoundID.Meowmere);
                 Item.SetDefaults(ItemID.BladeofGrass);
