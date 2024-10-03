@@ -1,6 +1,5 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
-using Coralite.Core.Systems.MagikeSystem;
 using Terraria;
 using Terraria.ID;
 
@@ -10,7 +9,7 @@ namespace Coralite.Content.Items.Magike
     {
         public override void AddRecipes()
         {
-            CreateRecipe()
+            CreateRecipe(4)
                 .AddIngredient(ItemID.Glass, 4)
                 .AddIngredient(ItemID.Lens)
                 .AddCondition(CoraliteConditions.LearnedMagikeBase)

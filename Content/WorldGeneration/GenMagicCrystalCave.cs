@@ -343,6 +343,68 @@ namespace Coralite.Content.WorldGeneration
             //    WorldGen.PlaceTile(circleCenter.X - 1 + i, circleCenter.Y + 2, crystalBrick);
             #endregion
 
+            #region 生成水晶簇
+            int clustersSpawnCount = WorldGen.genRand.Next(1, 4);
+
+            int clustersX = origin.X + width / 6;
+            int clustersY = origin.Y + height / 6;
+            int clustersType = ModContent.TileType<MagicCrystalClustersTile>();
+
+            for (int i = 0; i < clustersSpawnCount; i++)
+                for (int j = 0; j < 1000; j++)
+                {
+                    if (j == 999)
+                    {
+                        int x1 = clustersX + WorldGen.genRand.Next(0, width * 5 / 6);
+                        int y1 = clustersY + WorldGen.genRand.Next(0, height * 5 / 6);
+
+                        for (int k = 0; k < 3; k++)//检测底部空间
+                            Main.tile[x1 + k, y1].ResetToType(basalt);
+
+                        for (int m = 0; m < 3; m++)//清空底部空间
+                            for (int n = -1; n > -5; n--)
+                                Main.tile[x1 + m, y1 + n].ClearTile();
+
+                        WorldGen.PlaceObject(x1, y1 - 1, clustersType);
+                    }
+
+                    int x = clustersX + WorldGen.genRand.Next(0, width * 5 / 6);
+                    int y = clustersY + WorldGen.genRand.Next(0, height * 5 / 6);
+
+                    bool canGenerate = true;
+
+                    for (int k = 0; k < 3; k++)//检测底部空间
+                    {
+                        Tile bottonTile = Main.tile[x + k, y];
+                        if (!bottonTile.HasTile || bottonTile.TileType != basalt)
+                        {
+                            canGenerate = false;
+                            break;
+                        }
+                    }
+
+                    if (!canGenerate)
+                        continue;
+
+                    for (int m = 0; m < 3; m++)//检测底部空间
+                        for (int n = -1; n > -5; n--)
+                        {
+                            Tile t = Main.tile[x + m, y + n];
+                            if (t.HasTile)
+                            {
+                                canGenerate = false;
+                                break;
+                            }
+                        }
+
+                    if (!canGenerate)
+                        continue;
+
+                    WorldGen.PlaceObject(x, y - 1, clustersType);
+                    break;
+                }
+            #endregion
+
             #region 生成中心小神龛
             int whichOne = WorldGen.genRand.Next(5);
             Texture2D shrineTex = ModContent.Request<Texture2D>(AssetDirectory.Shrines + "MagicCrystalShrine" + whichOne.ToString(), AssetRequestMode.ImmediateLoad).Value;
@@ -483,51 +545,6 @@ namespace Coralite.Content.WorldGeneration
             //    ModContent.ItemType<Page_MagikeBase>(), notNearOtherChests: false, 0, trySlope: false, chestTileType);
 
             #endregion
-
-            int clustersSpawnCount = WorldGen.genRand.Next(1, 4);
-
-            int clustersX = origin.X + width / 6;
-            int clustersY = origin.Y + height / 6;
-            int clustersType = ModContent.TileType<MagicCrystalClustersTile>();
-
-            for (int i = 0; i < clustersSpawnCount; i++)
-                for (int j = 0; j < 1000; j++)
-                {
-                    int x = clustersX + WorldGen.genRand.Next(0, width * 5 / 6);
-                    int y = clustersY + WorldGen.genRand.Next(0, height * 5 / 6);
-
-                    bool canGenerate = true;
-
-                    for (int k = 0; k < 3; k++)//检测底部空间
-                    {
-                        Tile bottonTile = Main.tile[ x + k,  y];
-                        if (!bottonTile.HasTile || bottonTile.TileType != basalt)
-                        {
-                            canGenerate = false;
-                            break;
-                        }
-                    }
-
-                    if (!canGenerate)
-                        continue;
-
-                    for (int m = 0; m < 3; m++)//检测底部空间
-                        for (int n = -1; n > -5; n--)
-                        {
-                            Tile t = Main.tile[x + m, y + n];
-                            if (t.HasTile)
-                            {
-                                canGenerate = false;
-                                break;
-                            }
-                        }
-
-                    if (!canGenerate)
-                        continue;
-
-                    WorldGen.PlaceObject(x, y - 1, clustersType);
-                    break;
-                }
 
             #region 添加装饰
             //添加斜坡

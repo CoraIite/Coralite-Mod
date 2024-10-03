@@ -1,12 +1,15 @@
 ﻿using Terraria;
 using Terraria.ID;
 using Terraria.IO;
+using Terraria.Localization;
 using Terraria.WorldBuilding;
 
 namespace Coralite.Content.WorldGeneration
 {
     public partial class CoraliteWorld
     {
+        public static LocalizedText StoneBack { get; set; }
+
         public void GenShoneBack(GenerationProgress progress, GameConfiguration configuration)
         {
             progress.Message = StoneBack.Value;

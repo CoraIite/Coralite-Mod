@@ -33,7 +33,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Producers
         /// <summary>
         /// 每次消耗液体的量
         /// </summary>
-        public virtual byte CostCount { get => 256 / 16; }
+        public virtual byte CostCount { get => 256 / 32; }
 
         #region 生产逻辑部分
 
