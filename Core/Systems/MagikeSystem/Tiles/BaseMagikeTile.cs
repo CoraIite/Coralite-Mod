@@ -359,7 +359,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
 
         #region 特殊绘制
 
-        public sealed override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData)
+        public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData)
         {
             Point16? topLeft = ToTopLeft(i, j);
 
@@ -431,5 +431,11 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
         }
 
         #endregion
+
+        public override void HitWire(int i, int j)
+        {
+            if (TryGetEntityWithComponent(i, j, MagikeComponentID.MagikeFactory, out MagikeTileEntity entity))
+                entity.GetSingleComponent<MagikeFactory>(MagikeComponentID.MagikeFactory).Activation(out _);
+        }
     }
 }

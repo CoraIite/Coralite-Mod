@@ -73,7 +73,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         public static void AddRemodelRecipe<TMainItem, TResultItem>(int magikeCost, int mainStack = 1, int resultStack = 1, params Condition[] conditions)
             where TMainItem : ModItem
             where TResultItem : ModItem
-           => AddRemodelRecipe(ItemType<TMainItem>(), ItemType<TMainItem>(), magikeCost, mainStack, resultStack, conditions);
+           => AddRemodelRecipe(ItemType<TMainItem>(), ItemType<TResultItem>(), magikeCost, mainStack, resultStack, conditions);
 
         #endregion
 
@@ -244,12 +244,12 @@ namespace Coralite.Core.Systems.MagikeSystem
         /// <param name="magikeCost"></param>
         /// <param name="resultItemStack"></param>
         /// <returns></returns>
-        public static MagikeCraftRecipe CreateRecipe<TMainItem, TResultItem>(int magikeCost, int MainItenStack = 1, int resultItemStack = 1)
+        public static MagikeCraftRecipe CreateRecipe<TMainItem, TResultItem>(int magikeCost, int MainItemStack = 1, int resultItemStack = 1)
             where TMainItem : ModItem where TResultItem : ModItem
         {
             return new MagikeCraftRecipe()
             {
-                MainItem = new(ItemType<TMainItem>(), MainItenStack),
+                MainItem = new(ItemType<TMainItem>(), MainItemStack),
                 ResultItem = new(ItemType<TResultItem>(), resultItemStack),
                 magikeCost = magikeCost
             };

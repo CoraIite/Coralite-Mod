@@ -30,8 +30,8 @@ namespace Coralite.Content.WorldGeneration
 
         public override bool CanUseItem(Player player)
         {
-            Point pos = Main.MouseWorld.ToTileCoordinates();
-            WorldGen.PlaceObject(pos.X, pos.Y, ModContent.TileType<MercuryPlatformTile>());
+            //Point pos = Main.MouseWorld.ToTileCoordinates();
+            //WorldGen.PlaceObject(pos.X, pos.Y, ModContent.TileType<MercuryPlatformTile>());
 
             //ModItem modItem = ItemLoader.GetItem(5614);
             //Main.NewText(modItem.Name);
@@ -43,6 +43,14 @@ namespace Coralite.Content.WorldGeneration
             //Main.tile.ClearEverything();
 
             //CoraliteWorld.DungeonRoom((int)Main.MouseWorld.X / 16, (int)Main.MouseWorld.Y / 16, TileID.CrystalBlock, WallID.CryocoreBrickWall);
+
+            for (int i = 0; i < Main.maxTilesX; i++)
+            {
+                for (int j = 0; j < Main.maxTilesY; j++)
+                {
+                    Main.tile[i, j].Clear(TileDataType.Tile);
+                }
+            }
 
             return base.CanUseItem(player);
         }

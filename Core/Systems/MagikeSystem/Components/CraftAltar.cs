@@ -56,7 +56,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 }, Helper.GetMagikeTileCenter((Entity as MagikeTileEntity).Position) - (Vector2.UnitY * 32));
                 return;
             }
-
+            
             //先减少魔能
             Entity.GetMagikeContainer().ReduceMagike(ChosenResipe.magikeCost);
 

@@ -14,12 +14,17 @@ namespace Coralite.Core.Systems.MagikeSystem
 
         public static LocalizedText Error { get; private set; }
 
+        public static LocalizedText CanMagikeCraft { get; private set; }
+        public static LocalizedText ItemMagikeAmount { get; private set; }
+
         public void LoadLocalization()
         {
             LearnedMagikeBase = this.GetLocalization("learnedMagikeBase");
             LearnedMagikeAdvanced = this.GetLocalization("learnedMagikeAdvanced");
             NewKnowledgeUnlocked = this.GetLocalization("NewKnowledgeUnlocked", () => "魔能辞典中解锁了新的知识");
             Error = this.GetLocalization("Error");
+            CanMagikeCraft = this.GetLocalization(nameof(CanMagikeCraft));
+            ItemMagikeAmount = this.GetLocalization(nameof(ItemMagikeAmount));
 
             this.GetLocalization("PolarizedFilterTooltip");
 
@@ -320,6 +325,7 @@ namespace Coralite.Core.Systems.MagikeSystem
             DungeonCondition,
             HallowLensName,
             HallowCondition,
+            GelLensName,
 
             /*
              * 物品容器

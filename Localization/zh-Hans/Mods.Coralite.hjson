@@ -11,15 +11,15 @@ Conditions: {
 
 WorldGeneration: {
 	CoraliteWorld: {
-		// StoneBack: Mods.Coralite.WorldGeneration.CoraliteWorld.StoneBack
-		// SmallBasalt: Mods.Coralite.WorldGeneration.CoraliteWorld.SmallBasalt
-		// ChippedBladeTemple: Mods.Coralite.WorldGeneration.CoraliteWorld.ChippedBladeTemple
-		// ClearGemstoneMaze: Mods.Coralite.WorldGeneration.CoraliteWorld.ClearGemstoneMaze
-		// EvilChest: Mods.Coralite.WorldGeneration.CoraliteWorld.EvilChest
-		// IceDragonNest: Mods.Coralite.WorldGeneration.CoraliteWorld.IceDragonNest
-		// MagicCrystalCaveText: Mods.Coralite.WorldGeneration.CoraliteWorld.MagicCrystalCaveText
-		// ShadowCastleText: Mods.Coralite.WorldGeneration.CoraliteWorld.ShadowCastleText
-		// WindStoneTablet: Mods.Coralite.WorldGeneration.CoraliteWorld.WindStoneTablet
-		// ReplaceVanillaChestText: Mods.Coralite.WorldGeneration.CoraliteWorld.ReplaceVanillaChestText
+		StoneBack: 挖石头挖石头挖石头挖挖挖挖挖挖挖！
+		SmallBasalt: 正在散布玄武岩
+		ChippedBladeTemple: 正在修建破碎剑刃神庙
+		ClearGemstoneMaze: 正在修建透明宝石迷宫
+		EvilChest: 正在向邪恶地形添加遗迹
+		IceDragonNest: 正在孕育冰龙巢穴
+		MagicCrystalCaveText: 正在凝聚魔力水晶洞
+		ShadowCastleText: 正在实现影之城
+		WindStoneTablet: 正在风化石碑
+		ReplaceVanillaChestText: 正在向宝箱内塞入更多战利品
 	}
 }

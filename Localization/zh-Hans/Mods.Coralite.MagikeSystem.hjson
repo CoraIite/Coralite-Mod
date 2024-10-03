@@ -228,7 +228,7 @@ MagikeSystem: {
 		ContainerAntiMagikeAmount: ▽ 反魔能量
 		ContainerAntiMagikeMax: ▽ 反魔能上限
 		MagikeContainerName: 魔能存储单元
-		CraftAltarName: 魔能合成台
+		CraftAltarName: 魔能合成坛
 		CurrentConnect: ◇ 当前连接
 		MagikeSendTime:
 			'''
@@ -308,6 +308,7 @@ MagikeSystem: {
 			'''
 		HallowLensName: 神圣透镜
 		HallowCondition: "  ▶ 需要将底座放置在神圣方块上"
+		GelLensName: 凝胶透镜
 	}
 
 	CraftText: {
@@ -322,4 +323,7 @@ MagikeSystem: {
 		AntimagikeNotEnough: 反魔能不足！{0} / {1}
 		MagikeEnough: 魔能消耗量：{0}
 	}
+
+	CanMagikeCraft: 魔能合成素材
+	ItemMagikeAmount: 魔能含量：
 }

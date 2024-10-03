@@ -1,48 +1,19 @@
-﻿using Coralite.Helpers;
-using Terraria;
-using Terraria.GameContent.UI.Elements;
+﻿using Terraria;
 using Terraria.ModLoader.IO;
-using Terraria.ModLoader.UI.Elements;
-using Terraria.UI;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components.Producers
 {
-    public class MagikeExtractProducer : MagikeCostItemProducer, IUIShowable
+    public class MagikeExtractProducer : MagikeCostItemProducer
     {
         public override string GetCanProduceText => MagikeSystem.GetUIText(MagikeSystem.UITextID.ItemWithMagike);
+
+        public override MagikeSystem.UITextID NameText { get => MagikeSystem.UITextID.ExtractProducerName; }
 
         public override bool CanConsumeItem(Item item)
             => item.GetGlobalItem<MagikeItem>().magikeAmount > 0;
 
         public override int GetMagikeAmount(Item item)
             => item.GetGlobalItem<MagikeItem>().magikeAmount;
-
-        public void ShowInUI(UIElement parent)
-        {
-            UIElement title = this.AddTitle(MagikeSystem.UITextID.ExtractProducerName, parent);
-
-            UIGrid grid = ItemSlotGrid();
-            grid.SetSize(200, 500);
-
-            UIList list =
-            [
-                //生产时间
-                this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.ProduceTime)
-                + $"\n  - {c.Timer} / {c.ProductionDelay} ({c.ProductionDelayBase} * {c.ProductionDelayBonus})", parent),
-                //提取条件
-                this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.ProduceCondition)
-                + $"\n  - {c.GetCanProduceText}", parent),
-
-                grid
-            ];
-
-            list.SetSize(0, -title.Height.Pixels, 1, 1);
-            list.SetTopLeft(title.Height.Pixels + 8, 0);
-
-            list.QuickInvisibleScrollbar();
-
-            parent.Append(list);
-        }
 
         public override void SaveData(string preName, TagCompound tag)
         {

@@ -15,11 +15,6 @@ namespace Coralite.Content.Items.Magike.Altars
     public class BasicAltar() : MagikeApparatusItem(TileType<BasicAltarTile>(), Item.sellPrice(silver: 5)
         , RarityType<MagicCrystalRarity>(), AssetDirectory.MagikeAltars)
     {
-        public override bool CanUseItem(Player player)
-        {
-            return true;
-        }
-
         public override void AddRecipes()
         {
             CreateRecipe()

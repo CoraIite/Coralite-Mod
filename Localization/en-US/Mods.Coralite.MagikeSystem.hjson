@@ -313,6 +313,7 @@ MagikeSystem: {
 			'''
 		HallowLensName: Hallow Lens
 		HallowCondition: "  ▶ The bottom needs to be placed on the Hallowed Block"
+		GelLensName: Gel Lens
 	}
 
 	CraftText: {
@@ -327,4 +328,7 @@ MagikeSystem: {
 		AntimagikeNotEnough: Antimagike not enough! {0} / {1}
 		MagikeEnough: Magike Cost: {0}
 	}
+
+	CanMagikeCraft: Magike craft material
+	ItemMagikeAmount: "Magike Content: "
 }

@@ -1,13 +1,22 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Items.MagikeSeries1;
+using Coralite.Core;
+using Coralite.Core.Systems.MagikeSystem;
+using Coralite.Core.Systems.MagikeSystem.Tiles;
 using Terraria;
 using Terraria.ID;
 using Terraria.ObjectData;
 
 namespace Coralite.Content.Tiles.MagikeSeries1
 {
-    public class MagicCrystalClustersTile : ModTile
+    public class MagicCrystalClustersTile : ModTile, ICrystalCluster
     {
         public override string Texture => AssetDirectory.MagikeSeries1Tile + Name;
+
+        public MALevel Level => MALevel.MagicCrystal;
+        public int ItemType => ModContent.ItemType<MagicCrystal>();
+        public int MagikeCost => 33;
+
+        public int ItemStack => 1;
 
         public override void SetStaticDefaults()
         {

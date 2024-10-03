@@ -4356,9 +4356,11 @@ BasicAltar: {
 	Tooltip:
 		'''
 		The necessary instrument for magic energy synthesis is to perform magike craft according to the following steps
-		 1: Right click the tile, put the main item inside using ui
+		 1: Right click the tile, put the main item inside using UI
 		 2: Choose the appropriate magike craft recipe
 		 3: Meet all the conditions required for crafting, such as magike, secondary items, etc
+		    Secondary items need to be placed inside a magike tile with the item container 
+			and then connect it to altar.
 		 4: Use the Magike Activator to activate the craft altar
 
 		{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}
@@ -4522,4 +4524,20 @@ HallowLens: {
 		Produce magike in Hallow. Can only be placed on Hallowed blocks
 		{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}
 		'''
+}
+
+LaserCollector: {
+	NoTile: Tile not found！
+	NoCrystalCluster: Crystal Cluster not found！
+	LevelIncorrect: The level does not match the cluster level!
+	MagikeNotEnough: Magike Not Enough!
+	DisplayName: Laser Collector
+	Tooltip: Aim the top at a crystal cluster and activate it to mine items from the crystal cluster
+}
+
+StoneMaker: {
+	CantMake: Mods.Coralite.Items.StoneMaker.CantMake
+	MagikeNotEnough: Mods.Coralite.Items.StoneMaker.MagikeNotEnough
+	DisplayName: Stone Maker
+	Tooltip: ""
 }

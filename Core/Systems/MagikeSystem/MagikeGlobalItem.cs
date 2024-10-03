@@ -245,42 +245,24 @@ namespace Coralite.Core.Systems.MagikeSystem
                 }
             }
 
-            //if (MagikeSystem.remodelRecipes.ContainsKey(item.type))
-            //    tooltips.Add(new TooltipLine(Mod, "canRemodel", "可重塑"));
+            if (MagikeSystem.MagikeCraftRecipes.ContainsKey(item.type))
+                tooltips.Add(new TooltipLine(Mod, "canRemodel", MagikeSystem.CanMagikeCraft.Value));
 
-            //if (magikeAmount > 0)
-            //{
-            //    string magikeAmount = $"魔能含量: {this.magikeAmount}";
-            //    TooltipLine line = new(Mod, "magiteAmount", magikeAmount);
-            //    if (this.magikeAmount < 300)
-            //        line.OverrideColor = Coralite.MagicCrystalPink;
-            //    else if (this.magikeAmount < 1000)
-            //        line.OverrideColor = Coralite.CrystallineMagikePurple;
-            //    else if (this.magikeAmount < 2_0000)
-            //        line.OverrideColor = Coralite.SplendorMagicoreLightBlue;
-            //    else
-            //        line.OverrideColor = Color.Orange;
+            if (magikeAmount > 0)
+            {
+                string magikeAmount = MagikeSystem.ItemMagikeAmount.Value + this.magikeAmount;
+                TooltipLine line = new(Mod, "magiteAmount", magikeAmount);
+                if (this.magikeAmount < 440)
+                    line.OverrideColor = Coralite.MagicCrystalPink;
+                else if (this.magikeAmount < 5900)
+                    line.OverrideColor = Coralite.CrystallineMagikePurple;
+                else if (this.magikeAmount < 50_0000)
+                    line.OverrideColor = Coralite.SplendorMagicoreLightBlue;
+                else
+                    line.OverrideColor = Color.Orange;
 
-            //    tooltips.Add(line);
-            //}
-
-            //if (magike_CraftRequired > 0)
-            //{
-            //    string stackAmount = $"物品需求量： {stack_CraftRequired}\n";
-            //    string magikeAmount = $"消耗魔能： {magike_CraftRequired}";
-            //    string conditionNeed = condition == null ? "" : ("\n" + condition.Description);
-            //    TooltipLine line = new(Mod, "remodelConition", stackAmount + magikeAmount + conditionNeed);
-            //    if (magike_CraftRequired < 300)
-            //        line.OverrideColor = Coralite.MagicCrystalPink;
-            //    else if (magike_CraftRequired < 1000)
-            //        line.OverrideColor = Coralite.CrystallineMagikePurple;
-            //    else if (this.magikeAmount < 2_0000)
-            //        line.OverrideColor = Coralite.SplendorMagicoreLightBlue;
-            //    else
-            //        line.OverrideColor = Color.Orange;
-
-            //    tooltips.Add(line);
-            //}
+                tooltips.Add(line);
+            }
         }
 
         public static Color GetColor(Enchant.Level level)

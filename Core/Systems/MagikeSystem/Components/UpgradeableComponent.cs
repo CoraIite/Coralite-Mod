@@ -55,6 +55,19 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             => Entity.CheckUpgrageable(incomeLevel);
     }
 
+    public abstract class UpgradeableCostItemProducer : MagikeCostItemProducer, IUpgradeable
+    {
+        public override void Initialize()
+        {
+            Upgrade(MALevel.None);
+        }
+
+        public virtual void Upgrade(MALevel incomeLevel) { }
+
+        public virtual bool CanUpgrade(MALevel incomeLevel)
+            => Entity.CheckUpgrageable(incomeLevel);
+    }
+
     public abstract class UpgradeableProducerByBiome : ProducerByBiome, IUpgradeable
     {
         public override void Initialize()

@@ -95,7 +95,7 @@ namespace Coralite.Content.CustomHooks
             }
             if (processedSeed.ToLower() == "digdigdig" || processedSeed.ToLower() == "dig dig dig"
                 ||processedSeed.ToLower() == "digdig dig"||processedSeed.ToLower() == "dig digdig")
-                CoraliteWorld.CoralCatWorld = true;
+                CoraliteWorld.DigDigDigWorld = true;
         }
 
         private void On_UIWorldCreation_ProcessSeed(On_UIWorldCreation.orig_ProcessSeed orig, UIWorldCreation self, out string processedSeed)

@@ -3837,7 +3837,7 @@ CrystallineSkarn: {
 
 Skarn: {
 	DisplayName: 矽卡岩
-	Tooltip: ""
+	Tooltip: 暂时通过玄武岩重塑获得
 }
 
 AmberEardrop: {
@@ -4371,7 +4371,7 @@ SymbolOfMagike: {
 	Tooltip:
 		'''
 		该合成表仅供查看，该物品无法获得
-		请使用魔能合成台进行魔能合成
+		请使用魔能合成坛进行魔能合成
 		'''
 	MagikeNeed: "魔能需求量 "
 }
@@ -4429,7 +4429,8 @@ BasicAltar: {
 		 1：右键合成坛物块，使用UI界面向内部放入主要物品
 		 2：选择合适的魔能合成表
 		 3：满足合成所需的所有条件，如魔能，次要物品等
-		 4：使用魔能激活杖激活合成台
+		    次要物品需要放在带有物品容器功能的魔能物块内，并将合成坛连接到其上
+		 4：使用魔能激活杖激活合成坛
 
 		{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}
 		'''
@@ -4590,5 +4591,26 @@ HallowLens: {
 		'''
 		在神圣地生产魔能，只能放置在神圣方块上
 		{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}
+		'''
+}
+
+LaserCollector: {
+	NoTile: 未找到物块！
+	NoCrystalCluster: 未找到水晶簇！
+	LevelIncorrect: 等级与晶簇等级不符！
+	MagikeNotEnough: 魔能不足！
+	DisplayName: 光束采集器
+	Tooltip: 将顶部对准一个水晶簇后激活就能从水晶簇中开采物品
+}
+
+StoneMaker: {
+	CantMake: 无法生产这种方块！
+	MagikeNotEnough: 魔能不足！
+	DisplayName: 地质再生祭坛
+	Tooltip:
+		'''
+		放置在部分石块上后激活以消耗魔能生产石块
+		可生产的种类：泥土，石头，大理石，花岗岩，猩红石块，腐化石块
+		  灰烬，玄武岩，矽卡岩
 		'''
 }
