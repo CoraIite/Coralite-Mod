@@ -12,7 +12,7 @@ using Terraria.GameContent.UI.Elements;
 using Terraria.ObjectData;
 using Terraria.UI;
 
-namespace Coralite.Core.Systems.MagikeSystem.Components
+namespace Coralite.Core.Systems.MagikeSystem.Components.Filters
 {
     /// <summary>
     /// 偏振滤镜，用于升级魔能仪器
@@ -92,19 +92,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public override void OnRemove(IEntity entity)
         {
             ChangeTileFrame(MALevel.None, entity);
-            SpawnItem(entity);
             base.OnRemove(entity);
-        }
-
-        /// <summary>
-        /// 生成掉落物
-        /// </summary>
-        /// <param name="entity"></param>
-        public virtual void SpawnItem(IEntity entity)
-        {
-            MagikeTileEntity e = entity as MagikeTileEntity;
-            Item.NewItem(new EntitySource_TileEntity(e), Utils.CenteredRectangle(Helper.GetMagikeTileCenter(e.Position), Vector2.One)
-                , ItemType);
         }
 
         public static void ChangeTileFrame(MALevel level, IEntity entity)
@@ -124,7 +112,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 {
                     Tile t = Framing.GetTileSafely(topLeft + new Point16(i, j));
 
-                    t.TileFrameX = (short)(frameX + (i * (data.CoordinateWidth + data.CoordinatePadding)));
+                    t.TileFrameX = (short)(frameX + i * (data.CoordinateWidth + data.CoordinatePadding));
                 }
         }
 
@@ -152,7 +140,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             [
                 //等级
                 this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.PolarizedFilterLevel), parent),
-                new PolarizedFilterText(c =>
+                new FilterText(c =>
                     $"  ▶ [i:{c.ItemType}]",this,parent),
                 //取出按钮
                 new FilterRemoveButton(Entity, this)
@@ -169,7 +157,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         #endregion
     }
 
-    public class PolarizedFilterText(Func<PolarizedFilter, string> text, PolarizedFilter component, UIElement parent, Vector2? scale = null) : ComponentUIElementText<PolarizedFilter>(text, component, parent, scale)
+    public class FilterText(Func<MagikeFilter, string> text, MagikeFilter component, UIElement parent, Vector2? scale = null) : ComponentUIElementText<MagikeFilter>(text, component, parent, scale)
     {
         private Item item = new(component.ItemType);
 

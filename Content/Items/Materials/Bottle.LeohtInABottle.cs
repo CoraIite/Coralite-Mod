@@ -1,5 +1,8 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Items.MagikeSeries1;
+using Coralite.Content.Items.MagikeSeries2;
+using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
+using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
@@ -9,6 +12,9 @@ using Terraria.ObjectData;
 
 namespace Coralite.Content.Items.Materials
 {
+    /// <summary>
+    /// 瓶中光
+    /// </summary>
     public class LeohtInABottle : BaseMaterial, IMagikeCraftable
     {
         public LeohtInABottle() : base(9999, Item.sellPrice(0, 0, 1, 50), ItemRarityID.Orange, AssetDirectory.Materials) { }
@@ -21,11 +27,10 @@ namespace Coralite.Content.Items.Materials
 
         public void AddMagikeCraftRecipe()
         {
-            //PolymerizeRecipe.CreateRecipe<HeatanInABottle>(60)
-            //    .SetMainItem(ItemID.Bottle)
-            //    .AddIngredient(ItemID.LivingFireBlock, 20)
-            //    .AddIngredient<EmpyrosPowder>(7)
-            //    .Register();
+            MagikeCraftRecipe.CreateRecipe(ItemID.Bottle,ModContent.ItemType<LeohtInABottle>(),MagikeHelper.CalculateMagikeCost(MALevel.CrystallineMagike, 6, 60 * 2))
+                .AddIngredient(ItemID.SoulofLight)
+                .AddIngredient(ItemID.FallenStar)
+                .Register();
         }
     }
 

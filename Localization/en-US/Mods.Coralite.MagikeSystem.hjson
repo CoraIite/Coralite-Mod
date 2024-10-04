@@ -193,6 +193,12 @@ MagikeSystem: {
 		 release and insert a filter into the magike apparatus in the area and polarize it to the filter level
 		Right-click to deselect
 		'''
+	TotalReflectionFilterTooltip:
+		'''
+		Left-click to select a region
+		Release it and look for a magike apparatus in the area with a magike container
+		and increase their magike volumn
+		'''
 
 	Staffs: {
 		ChooseSender_Found: Sender selected
@@ -213,11 +219,15 @@ MagikeSystem: {
 		ChooseReceiver_AlreadyConnect: This apparatus is already connected!
 	}
 
-	ApparatusNotFound: No magike apparatus found！
-	FilterFillUp: The filter in the apparatus is full！
-	InsertSuccess: The filter was successfully inserted
-	UpgradeableNotFound: No upgradeable apparatus found！
-	CantUpgrade: Upgrades are not possible！
+	Filter: {
+		ApparatusNotFound: No magike apparatus found！
+		FilterFillUp: The filter in the apparatus is full！
+		InsertSuccess: The filter was successfully inserted
+		UpgradeableNotFound: No upgradeable apparatus found！
+		CantUpgrade: Upgrades are not possible！
+		MagikeContainerNotFound: Magike Container Not Found
+	}
+
 	ItemDescriptionPolarizedFilter: Insertable polarized filters：
 	NeedPolarizedFilter: Need to insert an insertable polarized filter to work
 
@@ -314,6 +324,8 @@ MagikeSystem: {
 		HallowLensName: Hallow Lens
 		HallowCondition: "  ▶ The bottom needs to be placed on the Hallowed Block"
 		GelLensName: Gel Lens
+		TotalReflectionBonus: ◇ Magike volumn bonus：
+		TotalReflectionFilterName: Total Reflection Filter
 	}
 
 	CraftText: {

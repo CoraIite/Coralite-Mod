@@ -735,8 +735,8 @@ MagConnectStaff: {
 	DisplayName: 魔能连接仪
 	Tooltip:
 		'''
-		左键点击选中，再次左键建立连接
-		右键点击打开连接UI，点击按钮以取消连接
+		左键点击选中魔能发送器，再次左键建立连接
+		右键点击魔能发送器打开连接UI，点击按钮以取消连接
 		'''
 }
 
@@ -4613,4 +4613,54 @@ StoneMaker: {
 		可生产的种类：泥土，石头，大理石，花岗岩，猩红石块，腐化石块
 		  灰烬，玄武岩，矽卡岩
 		'''
+}
+
+BrilliantConnectStaff: {
+	DisplayName: 璀璨连接杖
+	Tooltip:
+		'''
+		左键点击选中区域，再次左键选区后将两片区域内的魔能仪器建立连接
+		物品栏内右键切换取消连接的方式
+		  UI模式：右键点击魔能发送器打开连接UI，点击按钮以取消连接
+		  框选模式：长按右键选择区域，松开右键取消区域内所有连接
+		'''
+	CurrentState: 当前取消连接方式：
+	UIDisconnect: UI模式
+	DisconnectAll: 框选模式
+	DisconnectSuccess: 成功断开连接
+}
+
+OpticalPathCalibrator: {
+	TimerNotFound: 未找到计时器！
+	TimerChosen: 已选择计时器
+	TimerSynced: 计时器已同步
+	DisplayName: 光路校准仪
+	Tooltip:
+		'''
+		左键选择具有倒计时组件的魔能仪器
+		再次左键同样的仪器以同步二者的计时器
+		'''
+}
+
+BrilliantCalibrator: {
+	DisplayName: 璀璨校准仪
+	Tooltip:
+		'''
+		左键选择区域
+		松开左键后将区域内的所有魔能仪器计时器重置
+		'''
+}
+
+BrilliantMagikeActivator: {
+	DisplayName: 璀璨激活杖
+	Tooltip:
+		'''
+		左键选择区域
+		松开左键后激活区域内的魔能工厂
+		'''
+}
+
+MagicCrystalTRFilter: {
+	DisplayName: 全反射滤镜-晶体
+	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.TotalReflectionFilterTooltip}"
 }

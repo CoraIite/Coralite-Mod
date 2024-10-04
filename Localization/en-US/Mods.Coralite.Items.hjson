@@ -4536,8 +4536,66 @@ LaserCollector: {
 }
 
 StoneMaker: {
-	CantMake: Mods.Coralite.Items.StoneMaker.CantMake
-	MagikeNotEnough: Mods.Coralite.Items.StoneMaker.MagikeNotEnough
-	DisplayName: Stone Maker
-	Tooltip: ""
+	CantMake: Can't produce this block!
+	MagikeNotEnough: Magike Not Enough!
+	DisplayName: Geological Regenerate Altar
+	Tooltip:
+		'''
+		Activated when placed on some stones to consume mana energy to produce stones
+		Production: Dirt, Stone, Marble, Granite, Crimstone Blocks, Ebonstone Blocks
+		  Ash, basalt, skarn
+		'''
+}
+
+BrilliantConnectStaff: {
+	DisplayName: Brilliant Connect Staff
+	Tooltip:
+		'''
+		Left-click on the selected area
+		left-click and select the area again to connect the magike apparatus in the two areas
+		Right-click in the inventory to toggle how to disconnect
+		  UI mode: Right-click on the magike sender to open the connection UI, 
+		    and click the button to cancel the connection
+		  Marquee mode: Press and hold the right button to select an area, 
+		    release the right button to cancel all connections in the area
+		'''
+	CurrentState: Current disconnection mode:
+	UIDisconnect: UI mode
+	DisconnectAll: Marquee mode
+	DisconnectSuccess: Disconnect successful
+}
+
+OpticalPathCalibrator: {
+	TimerNotFound: Timer not found！
+	TimerChosen: Timer chosen
+	TimerSynced: Sync timer successful
+	DisplayName: Optical Path Calibrator
+	Tooltip:
+		'''
+		Left-click to select the magike apparatus with the timer component
+		Left-click another apparatus to synchronize the timers of the two
+		'''
+}
+
+BrilliantCalibrator: {
+	DisplayName: Brilliant Calibrator
+	Tooltip:
+		'''
+		Left-click to select a region
+		Release it to reset all magike apparatus timers in the area
+		'''
+}
+
+BrilliantMagikeActivator: {
+	DisplayName: Brilliant Magike Activator
+	Tooltip:
+		'''
+		Left-click to select a region
+		Release it to activate the magike factory in the area
+		'''
+}
+
+MagicCrystalTRFilter: {
+	DisplayName: Magic Crystal Total Reflection Filter
+	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.TotalReflectionFilterTooltip}"
 }

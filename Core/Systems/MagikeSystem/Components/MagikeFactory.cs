@@ -23,6 +23,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public float DelayBonus { get; set; } = 1f;
         public int Timer { get; set; }
 
+        public bool TimeResetable => false;
+
         public bool UpdateTime()
         {
             Timer--;

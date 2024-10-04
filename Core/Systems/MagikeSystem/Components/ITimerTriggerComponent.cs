@@ -9,6 +9,11 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// <summary> 时间减少量（效率增幅量） </summary>
         float DelayBonus { get; set; }
 
+        /// <summary>
+        /// 时间是否能够进行重置
+        /// </summary>
+        bool TimeResetable { get; }
+
         int Delay
         {
             get => Math.Clamp((int)(DelayBase * DelayBonus), 1, int.MaxValue);
@@ -27,6 +32,5 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             return false;
         }
-
     }
 }

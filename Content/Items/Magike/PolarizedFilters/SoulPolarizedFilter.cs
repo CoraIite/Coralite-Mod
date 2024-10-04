@@ -1,6 +1,7 @@
 ﻿using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
+using Coralite.Core.Systems.MagikeSystem.Components.Filters;
 using Terraria;
 using Terraria.ID;
 

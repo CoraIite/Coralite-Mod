@@ -1,6 +1,5 @@
 ﻿using Coralite.Core;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
 
@@ -10,28 +9,23 @@ namespace Coralite.Content.Items.Misc_Magic
     {
         public override string Texture => AssetDirectory.Misc_Magic + Name;
 
-        public override void SetStaticDefaults()
-        {
-            // DisplayName.SetDefault("蕴魔灰烬");
-
-            // Tooltip.SetDefault("它尝起来是甜的");
-        }
-
         public override void SetDefaults()
         {
             Item.width = Item.height = 40;
-            Item.damage = 8;
-            Item.useTime = 20;
-            Item.useAnimation = 20;
-            Item.reuseDelay = 25;
-            Item.mana = 18;
+            Item.damage = 7;
+            Item.useTime = 16;
+            Item.useAnimation = 16;
+            Item.reuseDelay = 10;
+            Item.mana = 3;
             Item.knockBack = 6;
 
             Item.useStyle = ItemUseStyleID.Swing;
             Item.DamageType = DamageClass.Magic;
-            Item.value = Item.sellPrice(0, 0, 1, 0);
+            Item.value = Item.sellPrice(0, 0, 1);
             Item.rare = ItemRarityID.Blue;
             Item.shoot = ProjectileType<MagicalAshesProj>();
+            Item.shootSpeed = 15f;
+            Item.UseSound = CoraliteSoundID.Swing_Item1;
 
             Item.useTurn = false;
             Item.noMelee = true;
@@ -39,44 +33,25 @@ namespace Coralite.Content.Items.Misc_Magic
             Item.autoReuse = true;
         }
 
-        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
-        {
-            for (int i = -1; i < 2; i++)
-            {
-                Projectile.NewProjectile(source, player.Center + (player.direction * Vector2.UnitX * 16f), (Main.MouseWorld - player.Center).SafeNormalize(Vector2.UnitX).RotatedBy(i * MathHelper.PiOver4 / 2) * 8f, type, damage, knockback, player.whoAmI);
-            }
-            return false;
-        }
-
         public override void AddRecipes()
         {
-            //CreateRecipe()
-            //    .AddIngredient(ItemID.BambooBlock, 30)
-            //    .Register();
+            CreateRecipe()
+                .AddIngredient(ItemID.BambooBlock, 20)
+                .AddIngredient(TileID.Bottles)
+                .Register();
         }
     }
 
     public class MagicalAshesProj : ModProjectile
     {
-        public override string Texture => AssetDirectory.Projectiles_Magic + Name;
+        public override string Texture => AssetDirectory.Blank;
 
         internal ref float Stoped => ref Projectile.ai[0];
-
-        public override void SetStaticDefaults()
-        {
-            // DisplayName.SetDefault("蕴魔灰烬");
-
-            Main.projFrames[Type] = 2;
-        }
+        internal ref float Timer => ref Projectile.ai[1];
 
         public override void SetDefaults()
         {
-            Projectile.width = 32;
-            Projectile.height = 24;
-            Projectile.alpha = 0;
-            Projectile.scale = 1f;
-
-            Projectile.damage = 20;
+            Projectile.width = Projectile.height = 16;
             Projectile.penetrate = 3;
             Projectile.aiStyle = -1;
 
@@ -87,75 +62,92 @@ namespace Coralite.Content.Items.Misc_Magic
             Projectile.timeLeft = 300;
         }
 
-        public override bool PreAI()
-        {
-            if (Projectile.timeLeft > 60 && Projectile.alpha < 200)
-                Projectile.alpha += 2;
-
-            if (Projectile.timeLeft % 5 == 0)
-            {
-                switch (Projectile.frame)
-                {
-                    case 0:
-                        Projectile.frame = 1;
-                        break;
-                    case 1:
-                        Projectile.frame = 0;
-                        break;
-                    default:
-                        goto case 0;
-                }
-            }
-
-            return true;
-        }
-
         public override void AI()
         {
-            if (Main.netMode != NetmodeID.Server && Projectile.timeLeft % 5 == 0)
+            if (Stoped == 3)
             {
-                Dust dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(32, 32), 261, -Projectile.velocity.SafeNormalize(Vector2.UnitX).RotatedByRandom(1f) * 5f, 0, default, Main.rand.Next(1, 3));
+                Timer++;
+
+                for (int i = -1; i < 2; i += 2)
+                {
+                    Vector2 rotDir = (Projectile.rotation - i * MathHelper.PiOver2 + i * Timer * 0.15f).ToRotationVector2();
+                    Vector2 pos = Projectile.Center - Projectile.rotation.ToRotationVector2() * 4
+                        + (Projectile.rotation + i * MathHelper.PiOver2).ToRotationVector2() * 16
+                        + rotDir * 16;
+                    for (int j = 0; j < 2; j++)
+                    {
+                        Dust dust = Dust.NewDustPerfect(pos + Main.rand.NextVector2Circular(14,14)
+                            , 261, -rotDir * Main.rand.NextFromList(1, 2), 0, default, Main.rand.NextFloat(1, 1.5f));
+                        dust.noGravity = true;
+                    }
+                }
+
+                Dust dust3 = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(4 + 4 * Stoped, 4 + 4 * Stoped)
+                    , 261, -Projectile.velocity.SafeNormalize(Vector2.UnitX).RotatedByRandom(1f) * 2f, 0, default, Main.rand.NextFloat(1, 1.5f));
+                dust3.noGravity = true;
+                return;
+            }
+
+            for (int i = 0; i < 2; i++)
+            {
+                Dust dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(4 + 8 * Stoped, 4 + 8 * Stoped)
+                    , 261, -Projectile.velocity.SafeNormalize(Vector2.UnitX).RotatedByRandom(1f) * 2f, 0, default, Main.rand.NextFloat(1, 1.5f));
                 dust.noGravity = true;
             }
 
-            Projectile.velocity *= 0.95f;
-            Projectile.rotation = Projectile.velocity.ToRotation() + 1.57f;
+            Dust dust2 = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(4 + 8 * Stoped, 4 + 8 * Stoped)
+                , 261, Projectile.velocity.SafeNormalize(Vector2.UnitX).RotatedByRandom(1f) * 2f, 0, default, Main.rand.NextFloat(1, 1.5f));
+            dust2.noGravity = true;
 
-            if (Projectile.velocity.Length() < 0.05f && Stoped == 0)
+            if (Projectile.timeLeft%3==0)
             {
-                Stoped++;
-                Projectile.timeLeft = 60;
+                Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(4 + 8 * Stoped, 4 + 8 * Stoped)
+                   , 261, -Projectile.velocity.SafeNormalize(Vector2.UnitX).RotatedByRandom(1f) * 2f, 0, default, Main.rand.NextFloat(1, 1.5f));
             }
+
+            Projectile.velocity *= 0.94f;
+            Projectile.rotation = Projectile.velocity.ToRotation();
+
+            Timer++;
+            if (Timer > 20)
+            {
+                Timer = 0;
+                Stoped++;
+            }
+
+            if (Projectile.velocity.Length() < 2f && Stoped <3 )
+                FinishFttack();
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Projectile.velocity *= 0.8f;
-            Projectile.alpha += 20;
-            if (Main.netMode != NetmodeID.Server)
-            {
-                for (int i = 0; i < 3; i++)
-                {
-                    Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(32, 32), 261, -Projectile.velocity.SafeNormalize(Vector2.UnitX).RotatedByRandom(1f), 0, default, Main.rand.Next(1, 3));
-                }
-            }
+            Stoped++;
+
+            if (Stoped == 3)
+                FinishFttack();
+
+            for (int i = 0; i < 3; i++)
+                Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(32, 32), 261, -Projectile.velocity.SafeNormalize(Vector2.UnitX).RotatedByRandom(1f), 0, default, Main.rand.Next(1, 3));
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            Stoped++;
-            Projectile.velocity *= 0.1f;
-            Projectile.rotation = Projectile.velocity.ToRotation() + 1.57f;
-            Projectile.timeLeft = 15;
+            Projectile.velocity = oldVelocity;
+            FinishFttack();
             return false;
         }
 
-        public override void OnKill(int timeLeft)
+        public void FinishFttack()
         {
-            for (int i = 0; i < 3; i++)
-            {
-                Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(24, 24), 261, Main.rand.NextVector2Circular(3, 3), 100, default, Main.rand.Next(1, 3));
-            }
+            Stoped = 3;
+            Projectile.tileCollide = false;
+            Projectile.rotation = Projectile.velocity.ToRotation();
+            Projectile.velocity *= 0;
+            Projectile.Resize(60, 60);
+            Projectile.timeLeft = 40;
+            Projectile.extraUpdates = 1;
+            Timer = 0;
         }
     }
 }

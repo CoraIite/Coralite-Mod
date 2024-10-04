@@ -1,5 +1,5 @@
 displayName = 珊瑚石
 author = 瓶中微光
-version = 0.2.0.2
+version = 0.2.0.4
 hideResources = true
 buildIgnore = MysteryTools/*

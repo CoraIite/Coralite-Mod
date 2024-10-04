@@ -261,6 +261,11 @@ namespace Coralite.Content.NPCs.Town
                 shopCustomPrice = 8,
                 shopSpecialCurrency = magicCrystalCurrencyID
             });
+            npcShop.Add(new Item(ModContent.ItemType<OpticalPathCalibrator>())//激活杖
+            {
+                shopCustomPrice = 8,
+                shopSpecialCurrency = magicCrystalCurrencyID
+            });
             npcShop.Add(new Item(ModContent.ItemType<CondensedCrystalBall>())//充能球
             {
                 shopCustomPrice = 8,

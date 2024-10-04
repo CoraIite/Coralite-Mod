@@ -192,6 +192,12 @@ MagikeSystem: {
 		左键选择区域，松手后为区域内的魔能仪器插入滤镜并将其偏振至滤镜等级
 		右键取消选择
 		'''
+	TotalReflectionFilterTooltip:
+		'''
+		左键选择区域
+		松手后在区域内寻找带有魔能容器功能的魔能仪器
+		并为他们增加魔能上限
+		'''
 
 	Staffs: {
 		ChooseSender_Found: 已选择魔能发送器
@@ -208,11 +214,15 @@ MagikeSystem: {
 		ChooseReceiver_AlreadyConnect: 这个仪器已经连接了！
 	}
 
-	ApparatusNotFound: 未找到魔能仪器！
-	FilterFillUp: 仪器内滤镜已满！
-	InsertSuccess: 成功插入滤镜
-	UpgradeableNotFound: 未找到可升级仪器！
-	CantUpgrade: 无法升级！
+	Filter: {
+		ApparatusNotFound: 未找到魔能仪器！
+		FilterFillUp: 仪器内滤镜已满！
+		InsertSuccess: 成功插入滤镜
+		UpgradeableNotFound: 未找到可升级仪器！
+		CantUpgrade: 无法升级！
+		MagikeContainerNotFound: 未找到魔能容器！
+	}
+
 	ItemDescriptionPolarizedFilter: 可插入的偏振滤镜：
 	NeedPolarizedFilter: 需要插入可插入的偏振滤镜后才能工作
 
@@ -309,6 +319,8 @@ MagikeSystem: {
 		HallowLensName: 神圣透镜
 		HallowCondition: "  ▶ 需要将底座放置在神圣方块上"
 		GelLensName: 凝胶透镜
+		TotalReflectionBonus: ◇ 魔能容量强化：
+		TotalReflectionFilterName: 全反射滤镜
 	}
 
 	CraftText: {

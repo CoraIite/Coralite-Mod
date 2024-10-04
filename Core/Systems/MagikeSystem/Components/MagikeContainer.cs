@@ -22,10 +22,10 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// <summary> 自身魔能基础容量，可以通过升级来变化 </summary>
         public int MagikeMaxBase { get; protected set; }
         /// <summary> 额外魔能量，通过扩展膜附加的魔能容量 </summary>
-        public int MagikeMaxExtra { get; set; }
+        public float MagikeMaxBonus { get; set; } = 1f;
 
         /// <summary> 当前的魔能上限 </summary>
-        public int MagikeMax { get => Math.Clamp(MagikeMaxBase + MagikeMaxExtra, 0, int.MaxValue); }
+        public int MagikeMax { get => Math.Clamp((int)(MagikeMaxBase * MagikeMaxBonus), 0, int.MaxValue); }
 
         /// <summary> 当前内部的反魔能量 </summary>
         public int AntiMagike { get; set; }
@@ -189,7 +189,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 //魔能上限
                 this.NewTextBar(c =>MagikeSystem.GetUIText(MagikeSystem.UITextID.ContainerMagikeMax), parent),
                 this.NewTextBar(c =>
-                    $"  ▶ {c.MagikeMax} ({c.MagikeMaxBase} {(c.MagikeMaxExtra >= 0 ? "+" : "-")} {Math.Abs(c.MagikeMaxExtra)})", parent),
+                    $"  ▶ {c.MagikeMax} ({c.MagikeMaxBase} * {Math.Abs(c.MagikeMaxBonus)})", parent),
 
                 this.NewTextBar(c =>MagikeSystem.GetUIText(MagikeSystem.UITextID.ContainerAntiMagikeAmount), parent),
                 this.NewTextBar(c =>
@@ -222,7 +222,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         {
             tag.Add(preName + nameof(Magike), Magike);
             tag.Add(preName + nameof(MagikeMaxBase), MagikeMaxBase);
-            tag.Add(preName + nameof(MagikeMaxExtra), MagikeMaxExtra);
+            tag.Add(preName + nameof(MagikeMaxBonus), MagikeMaxBonus);
 
             tag.Add(preName + nameof(AntiMagike), AntiMagike);
             tag.Add(preName + nameof(AntiMagikeMaxBase), AntiMagikeMaxBase);
@@ -233,7 +233,10 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         {
             Magike = tag.GetInt(preName + nameof(Magike));
             MagikeMaxBase = tag.GetInt(preName + nameof(MagikeMaxBase));
-            MagikeMaxExtra = tag.GetInt(preName + nameof(MagikeMaxExtra));
+            MagikeMaxBonus = tag.GetFloat(preName + nameof(MagikeMaxBonus));
+
+            if (MagikeMaxBonus == 0)
+                MagikeMaxBonus = 1;
 
             AntiMagike = tag.GetInt(preName + nameof(AntiMagike));
             AntiMagikeMaxBase = tag.GetInt(preName + nameof(AntiMagikeMaxBase));

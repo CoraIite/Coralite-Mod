@@ -107,35 +107,34 @@ namespace Coralite.Core.Systems.MagikeSystem
 
         public static LocalizedText[] Filter { get; private set; }
 
-        public class FilterID
+        public enum FilterID
         {
             /*
              * 魔能滤镜的ID
              * 首先通用的为：未找到魔能容器和成功放置，以及滤镜已满
              */
 
-            public const int ApparatusNotFound = 0;
-            public const int FilterFillUp = 1;
-            public const int InsertSuccess = 2;
+           ApparatusNotFound = 0,
+           FilterFillUp = 1,
+           InsertSuccess = 2,
+           UpgradeableNotFound = 3,
+           CantUpgrade = 4,
 
-            public const int UpgradeableNotFound = 3;
-            public const int CantUpgrade = 4;
+           MagikeContainerNotFound,
 
-            public const int Count = 5;
+           Count,
         }
 
         public void LoadFilter()
         {
-            Filter = new LocalizedText[FilterID.Count];
-            Filter[FilterID.ApparatusNotFound] = this.GetLocalization("ApparatusNotFound");
-            Filter[FilterID.FilterFillUp] = this.GetLocalization("FilterFillUp");
-            Filter[FilterID.InsertSuccess] = this.GetLocalization("InsertSuccess");
-            Filter[FilterID.UpgradeableNotFound] = this.GetLocalization("UpgradeableNotFound");
-            Filter[FilterID.CantUpgrade] = this.GetLocalization("CantUpgrade");
+            Filter = new LocalizedText[(int)FilterID.Count];
+
+            for (int i = 0; i < (int)FilterID.Count; i++)
+                Filter[i] = this.GetLocalization(nameof(Filter) + "." + Enum.GetName((FilterID)i));
         }
 
-        public static string GetFilterText(int id)
-            => Filter[id].Value;
+        public static string GetFilterText(FilterID id)
+            => Filter[(int)id].Value;
 
         #endregion
 
@@ -279,6 +278,8 @@ namespace Coralite.Core.Systems.MagikeSystem
             PolarizedFilterLevel,
             ClickToRemove,
             MagikePolarizedFilterName,
+            TotalReflectionFilterName,
+            TotalReflectionBonus,
 
             /*
              * 物品生产器

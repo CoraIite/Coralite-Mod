@@ -480,9 +480,9 @@ namespace Coralite.Helpers
         /// <returns></returns>
         public static string GetMagikeContainerMaxColorCode(this MagikeContainer container)
         {
-            if (container.MagikeMaxExtra > 0)
+            if (container.MagikeMaxBonus > 1)
                 return "80d3ff";//蓝色
-            else if (container.MagikeMaxExtra < 0)
+            else if (container.MagikeMaxBonus < 1)
                 return "ff1919";//红色
             else
                 return "ffffff";

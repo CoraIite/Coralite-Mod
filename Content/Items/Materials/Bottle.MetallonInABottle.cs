@@ -9,6 +9,9 @@ using Terraria.ObjectData;
 
 namespace Coralite.Content.Items.Materials
 {
+    /// <summary>
+    /// 瓶中刚
+    /// </summary>
     public class MetallonInABottle : BaseMaterial, IMagikeCraftable
     {
         public MetallonInABottle() : base(9999, Item.sellPrice(0, 0, 1, 50), ItemRarityID.Gray, AssetDirectory.Materials) { }

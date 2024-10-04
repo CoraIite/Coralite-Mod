@@ -6,6 +6,7 @@ Conditions: {
 		LearnedMagikeBase: Need to learn the basics of magike
 		CoralCat: Need in the world of rainbow cats (CoralCat)
 		MagikeCraft: Requires using magike craft altar to craft
+		LearnedMagikeAdvance: Need to learn the advance of magike
 	}
 }
 
@@ -21,5 +22,7 @@ WorldGeneration: {
 		ShadowCastleText: Realized the Shadows
 		WindStoneTablet: Weather the stones
 		ReplaceVanillaChestText: More loot is being stuffed into chests
+		ReadyDig: Gear up and get ready to dig!
+		DigTheJungle: Dig the jungle! Dig the jungle! Dig! Dig! Dig! Dig! Dig!
 	}
 }

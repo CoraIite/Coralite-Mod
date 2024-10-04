@@ -2,8 +2,10 @@
 using Coralite.Core.Loaders;
 using Coralite.Core.Systems.CoraliteActorComponent;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ModLoader.UI;
 using Terraria.UI;
 
@@ -94,6 +96,19 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         {
             for (int i = 0; i < entity.ComponentsCache.Count; i++)
                 RestoreComponentValues(entity.ComponentsCache[i]);
+
+            SpawnItem(entity);
+        }
+
+        /// <summary>
+        /// 生成掉落物
+        /// </summary>
+        /// <param name="entity"></param>
+        public virtual void SpawnItem(IEntity entity)
+        {
+            MagikeTileEntity e = entity as MagikeTileEntity;
+            Item.NewItem(new EntitySource_TileEntity(e), Utils.CenteredRectangle(Helper.GetMagikeTileCenter(e.Position), Vector2.One)
+                , ItemType);
         }
 
         /// <summary>

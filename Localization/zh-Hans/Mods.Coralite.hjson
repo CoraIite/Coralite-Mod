@@ -6,6 +6,7 @@ Conditions: {
 		LearnedMagikeBase: 需要学习魔能基础
 		CoralCat: 需要在彩虹猫的世界（CoralCat）
 		MagikeCraft: 需要使用魔能合成坛来合成
+		LearnedMagikeAdvance: 需要学习魔能进阶
 	}
 }
 
@@ -21,5 +22,7 @@ WorldGeneration: {
 		ShadowCastleText: 正在实现影之城
 		WindStoneTablet: 正在风化石碑
 		ReplaceVanillaChestText: 正在向宝箱内塞入更多战利品
+		ReadyDig: 带好装备，准备开挖！
+		DigTheJungle: 挖丛林挖丛林挖丛林挖挖挖挖挖挖挖！
 	}
 }
