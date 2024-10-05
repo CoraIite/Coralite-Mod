@@ -24,5 +24,8 @@ WorldGeneration: {
 		ReplaceVanillaChestText: 正在向宝箱内塞入更多战利品
 		ReadyDig: 带好装备，准备开挖！
 		DigTheJungle: 挖丛林挖丛林挖丛林挖挖挖挖挖挖挖！
+		DigTheIce: 挖冰块挖冰块挖冰块挖挖挖挖挖挖挖！
+		DigClearUpText: 拿好你的工具，现在是挖掘时间！
+		// DigDesert: Mods.Coralite.WorldGeneration.CoraliteWorld.DigDesert
 	}
 }

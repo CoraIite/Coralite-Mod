@@ -199,6 +199,18 @@ MagikeSystem: {
 		Release it and look for a magike apparatus in the area with a magike container
 		and increase their magike volumn
 		'''
+	DiffractionFilterFilterTooltip:
+		'''
+		Left-click to select a region
+		Release it and look for a magike apparatus in the area with a magike sender
+		and increase their unit delivery
+		'''
+	InterferenceFilterTooltip:
+		'''
+		Left-click to select a region
+		Release it and look for a magike apparatus in the area with a liner connector
+		and increase their connect capacity
+		'''
 
 	Staffs: {
 		ChooseSender_Found: Sender selected
@@ -225,7 +237,9 @@ MagikeSystem: {
 		InsertSuccess: The filter was successfully inserted
 		UpgradeableNotFound: No upgradeable apparatus found！
 		CantUpgrade: Upgrades are not possible！
-		MagikeContainerNotFound: Magike Container Not Found
+		MagikeContainerNotFound: Magike Container Not Found!
+		MagikeSenderNotFound: Magike Sender Not Found!
+		MagikeLinerSenderNotFound: Liner Connector Not Found!
 	}
 
 	ItemDescriptionPolarizedFilter: Insertable polarized filters：
@@ -326,6 +340,11 @@ MagikeSystem: {
 		GelLensName: Gel Lens
 		TotalReflectionBonus: ◇ Magike volumn bonus：
 		TotalReflectionFilterName: Total Reflection Filter
+		InterferenceFilterName: Interference Filter
+		InterferenceBonus: ◇ Magike send amount bonus：
+		DiffractionFilterName: Diffraction Filter
+		DiffractionBonus: ◇ Connect capacity bonus：
+		ClickToDisconnect: Click To Disconnect
 	}
 
 	CraftText: {

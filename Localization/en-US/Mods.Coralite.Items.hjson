@@ -4599,3 +4599,13 @@ MagicCrystalTRFilter: {
 	DisplayName: Magic Crystal Total Reflection Filter
 	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.TotalReflectionFilterTooltip}"
 }
+
+MagicCrystalDiffractionFilter: {
+	DisplayName: Magic Crystal Diffraction Filter
+	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.DiffractionFilterFilterTooltip}"
+}
+
+MagicCrystalInterferenceFilter: {
+	DisplayName: Magic Crystal Interference Filter
+	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.InterferenceFilterTooltip}"
+}

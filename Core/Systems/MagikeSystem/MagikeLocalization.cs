@@ -121,6 +121,8 @@ namespace Coralite.Core.Systems.MagikeSystem
            CantUpgrade = 4,
 
            MagikeContainerNotFound,
+           MagikeSenderNotFound,
+           MagikeLinerSenderNotFound,
 
            Count,
         }
@@ -268,6 +270,7 @@ namespace Coralite.Core.Systems.MagikeSystem
             MagikeConnectLength,
             MagikeLinerSenderName,
             CheckOnlyLinerSenderName,
+            ClickToDisconnect,
 
             /*
              * 偏振滤镜
@@ -280,6 +283,10 @@ namespace Coralite.Core.Systems.MagikeSystem
             MagikePolarizedFilterName,
             TotalReflectionFilterName,
             TotalReflectionBonus,
+            InterferenceFilterName,
+            InterferenceBonus,
+            DiffractionFilterName,
+            DiffractionBonus,
 
             /*
              * 物品生产器

@@ -42,9 +42,11 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             if (ChosenResipe == null)
                 return;
 
-            //检测魔能量是否足够
+            //检测魔能量和条件是否足够
             MagikeCraftAttempt attempt = new MagikeCraftAttempt();
             ChosenResipe.CanCraft_CheckMagike(Entity.GetMagikeContainer().Magike, ref attempt);
+            ChosenResipe.CanCraft_CheckCondition(ref attempt);
+
             if (!attempt.Success)
             {
                 PopupText.NewText(new AdvancedPopupRequest()

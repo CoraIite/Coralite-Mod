@@ -304,7 +304,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
         /// <returns></returns>
         public virtual string MagikeAmountText(MagikeContainer container)
         {
-            string colorCode = container.GetMagikeContainerMaxColorCode();
+            string colorCode = GetBonusColorCode(container.MagikeMaxBonus);
 
             return string.Concat(MagikeSystem.GetApparatusDescriptionText(MagikeSystem.ApparatusDescriptionID.MagikeAmount)
                 , $"{container.Magike} / [c/{colorCode}:{container.MagikeMax}]");

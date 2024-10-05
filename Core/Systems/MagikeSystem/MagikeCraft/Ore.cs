@@ -231,6 +231,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             #region 钴矿和钯金矿
             cost = CalculateMagikeCost(CrystallineMagike, 6, 20);
 
+            AddRemodelRecipe(ItemID.PearlstoneBlock, ItemID.CobaltOre, cost, 4, conditions: Condition.Hardmode);
+            AddRemodelRecipe(ItemID.PearlstoneBlock, ItemID.PalladiumOre, cost, 4, conditions: Condition.Hardmode);
+
             AddRemodelRecipe(ItemID.CobaltOre, ItemID.MythrilOre, cost,3);
             AddRemodelRecipe(ItemID.CobaltOre, ItemID.OrichalcumOre, cost, 3);
             AddRemodelRecipe(ItemID.CobaltOre, ItemID.CobaltBar, cost, 2);

@@ -50,16 +50,16 @@ namespace Coralite.Content.WorldGeneration
                 int x = WorldGen.genRand.Next((int)(Main.maxTilesX * 0.1f), (int)(Main.maxTilesX * 0.9f));
                 int y = WorldGen.genRand.Next((int)(Main.maxTilesY * 0.3f), (int)(Main.maxTilesY * 0.8f));
 
-                int width = WorldGen.genRand.Next(4, 25);
-                int height = WorldGen.genRand.Next(4, 25);
+                int width = WorldGen.genRand.Next(4, 15);
+                int height = WorldGen.genRand.Next(4, 15);
 
                 WorldUtils.Gen(
                     new Point(x, y),  //中心点
                     new Shapes.Circle(width, height),   //形状：圆
                     Actions.Chain(  //如果要添加多个效果得使用这个chain
                         new Modifiers.Blotches(4, 0.4),     //添加边缘的抖动，让边缘处不那么平滑
-                        new Actions.SetTile(TileID.Silt),    //清除形状内所有物块
-                        new Actions.SetFrames(true)));
+                        new Actions.SetTile(TileID.Silt)));    //清除形状内所有物块
+
 
                 progress.Value += 0.6f / ballCount;
             }
@@ -72,11 +72,11 @@ namespace Coralite.Content.WorldGeneration
             int wallCount;
 
             if (Main.maxTilesY > 8000)
-                wallCount = 900;
+                wallCount = 1000;
             else if (Main.maxTilesX > 6000)
-                wallCount = 700;
+                wallCount = 800;
             else
-                wallCount = 500;
+                wallCount = 600;
 
             for (int i = 0; i < wallCount; i++)
             {
@@ -85,8 +85,8 @@ namespace Coralite.Content.WorldGeneration
                     WallID.Cave5Unsafe, WallID.Cave6Unsafe, WallID.Cave7Unsafe, WallID.Cave8Unsafe,
                     WallID.RocksUnsafe1, WallID.RocksUnsafe2, WallID.RocksUnsafe3, WallID.RocksUnsafe4);
 
-                int originX = WorldGen.genRand.Next((int)(Main.maxTilesX*0.15f), (int)(Main.maxTilesX * 0.85f));
-                int originY = WorldGen.genRand.Next((int)(Main.maxTilesY*0.35f), (int)(Main.maxTilesY * 0.8f));
+                int originX = WorldGen.genRand.Next((int)(Main.maxTilesX * 0.15f), (int)(Main.maxTilesX * 0.85f));
+                int originY = WorldGen.genRand.Next((int)(Main.maxTilesY * 0.2f), (int)(Main.maxTilesY * 0.8f));
                 int x = originX;
                 int y = originY;
 
@@ -98,8 +98,8 @@ namespace Coralite.Content.WorldGeneration
                     new Shapes.Circle(width, height),   //形状：圆
                     Actions.Chain(  //如果要添加多个效果得使用这个chain
                         new Modifiers.Blotches(2, 0.4),     //添加边缘的抖动，让边缘处不那么平滑
-                        new Actions.PlaceWall(wallType),    //放置墙壁
-                        new Actions.SetFrames(true)));
+                        new Actions.PlaceWall(wallType)));    //放置墙壁
+
 
                 for (int j = 0; j < ballCount; j++)
                 {
@@ -115,11 +115,11 @@ namespace Coralite.Content.WorldGeneration
                         new Shapes.Circle(width, height),   //形状：圆
                         Actions.Chain(  //如果要添加多个效果得使用这个chain
                             new Modifiers.Blotches(2, 0.4),     //添加边缘的抖动，让边缘处不那么平滑
-                            new Actions.PlaceWall(wallType),    //放置墙壁
-                            new Actions.SetFrames(true)));
+                            new Actions.PlaceWall(wallType)));    //放置墙壁
 
-                    progress.Value += 0.19f / wallCount;
                 }
+
+                progress.Value += 0.2f / wallCount;
             }
         }
     }

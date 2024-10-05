@@ -13,10 +13,10 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// <summary> 基础单次发送量 </summary>
         public int UnitDeliveryBase { get; protected set; }
         /// <summary> 额外单次发送量 </summary>
-        public int UnitDeliveryExtra { get; set; }
+        public float UnitDeliveryBonus { get; set; } = 1f;
 
         /// <summary> 单次发送量 </summary>
-        public int UnitDelivery { get => UnitDeliveryBase + UnitDeliveryExtra; }
+        public int UnitDelivery { get => (int)(UnitDeliveryBase * UnitDeliveryBonus); }
 
         /// <summary> 基础发送时间 </summary>
         public int SendDelayBase { get => DelayBase; protected set => DelayBase = value; }
@@ -58,7 +58,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             tag.Add(preName + nameof(Timer), Timer);
 
             tag.Add(preName + nameof(UnitDeliveryBase), UnitDeliveryBase);
-            tag.Add(preName + nameof(UnitDeliveryExtra), UnitDeliveryExtra);
+            tag.Add(preName + nameof(UnitDeliveryBonus), UnitDeliveryBonus);
 
             tag.Add(preName + nameof(SendDelayBase), SendDelayBase);
             tag.Add(preName + nameof(SendDelayBonus), SendDelayBonus);
@@ -69,7 +69,10 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             Timer = tag.GetInt(preName + nameof(Timer));
 
             UnitDeliveryBase = tag.GetInt(preName + nameof(UnitDeliveryBase));
-            UnitDeliveryExtra = tag.GetInt(preName + nameof(UnitDeliveryExtra));
+            UnitDeliveryBonus = tag.GetFloat(preName + nameof(UnitDeliveryBonus));
+
+            if (UnitDeliveryBonus == 0)
+                UnitDeliveryBonus = 1;
 
             SendDelayBase = tag.GetInt(preName + nameof(SendDelayBase));
             SendDelayBonus = tag.GetFloat(preName + nameof(SendDelayBonus));

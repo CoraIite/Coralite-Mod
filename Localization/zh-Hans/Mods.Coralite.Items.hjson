@@ -4664,3 +4664,13 @@ MagicCrystalTRFilter: {
 	DisplayName: 全反射滤镜-晶体
 	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.TotalReflectionFilterTooltip}"
 }
+
+MagicCrystalDiffractionFilter: {
+	DisplayName: 衍射滤镜-晶体
+	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.DiffractionFilterFilterTooltip}"
+}
+
+MagicCrystalInterferenceFilter: {
+	DisplayName: 干涉滤镜-晶体
+	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.InterferenceFilterTooltip}"
+}

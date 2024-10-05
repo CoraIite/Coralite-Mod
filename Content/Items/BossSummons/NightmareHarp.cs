@@ -89,8 +89,8 @@ namespace Coralite.Content.Items.BossSummons
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeCraftRecipe.CreateRecipe(ModContent.ItemType<NightmareHarp>(), ItemID.Harp
-                , MagikeHelper.CalculateMagikeCost(MALevel.SplendorMagicore, 24, 60 * 20))
+            MagikeCraftRecipe.CreateRecipe(ItemID.Harp, ModContent.ItemType<NightmareHarp>()
+                , MagikeHelper.CalculateMagikeCost(MALevel.SplendorMagicore, 24, 60 * 10))
                 .AddIngredient(ItemID.SoulofLight, 7)
                 .AddIngredient(ItemID.SoulofNight, 7)
                 .AddIngredient(ItemID.SoulofMight, 7)

@@ -348,6 +348,8 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
 
             ComponentPanel.RemoveAllChildren();
 
+            CurrentShowComponentIndex = Math.Clamp(CurrentShowComponentIndex, 0, CurrentEntity.ComponentsCache.Count - 1);
+
             if (!CurrentEntity.ComponentsCache.IndexInRange(CurrentShowComponentIndex))
                 return;
 

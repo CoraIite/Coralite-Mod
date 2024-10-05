@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Terraria;
 using Terraria.IO;
 using Terraria.Localization;
 using Terraria.WorldBuilding;
-using Terraria;
 
 namespace Coralite.Content.WorldGeneration
 {
@@ -14,7 +9,7 @@ namespace Coralite.Content.WorldGeneration
     {
         public static LocalizedText ReadyDig { get; set; }
 
-        public void DigReset(GenerationProgress progress, GameConfiguration configuration)
+        public static void DigReset(GenerationProgress progress, GameConfiguration configuration)
         {
             progress.Message = ReadyDig.Value;
 
@@ -26,7 +21,7 @@ namespace Coralite.Content.WorldGeneration
             WorldGen.gen = true;
             Liquid.ReInit();
             WorldGen.noTileActions = true;
-            WorldGen. RandomizeWeather();
+            WorldGen.RandomizeWeather();
             Main.cloudAlpha = 0f;
             Main.maxRaining = 0f;
             Main.raining = false;
@@ -54,15 +49,19 @@ namespace Coralite.Content.WorldGeneration
 
             if (GenVars.dungeonSide == -1)
             {
-                double num1089 = 1.0 - (double)WorldGen.genRand.Next(minValue3, maxValue12) * 0.01;
-                GenVars.jungleOriginX = (int)((double)Main.maxTilesX * num1089);
+                double num1089 = 1.0 - WorldGen.genRand.Next(minValue3, maxValue12) * 0.01;
+                GenVars.jungleOriginX = (int)(Main.maxTilesX * num1089);
             }
             else
             {
-                double num1090 = (double)WorldGen.genRand.Next(minValue3, maxValue12) * 0.01;
-                GenVars.jungleOriginX = (int)((double)Main.maxTilesX * num1090);
+                double num1090 = WorldGen.genRand.Next(minValue3, maxValue12) * 0.01;
+                GenVars.jungleOriginX = (int)(Main.maxTilesX * num1090);
             }
 
+            Main.spawnTileX = Main.maxTilesX / 2;
+            Main.spawnTileY = Main.maxTilesY / 2;
+
+            Main.worldSurface = 12;
         }
     }
 }

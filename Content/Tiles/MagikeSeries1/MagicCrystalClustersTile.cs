@@ -33,7 +33,7 @@ namespace Coralite.Content.Tiles.MagikeSeries1
             TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.addTile(Type);
 
-            MinPick = 150;
+            //MinPick = 150;
 
             DustType = DustID.CrystalSerpent_Pink;
             HitSound = CoraliteSoundID.DigStone_Tink;

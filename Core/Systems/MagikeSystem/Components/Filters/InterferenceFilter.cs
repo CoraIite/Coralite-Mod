@@ -9,17 +9,17 @@ using Terraria.UI;
 namespace Coralite.Core.Systems.MagikeSystem.Components.Filters
 {
     /// <summary>
-    /// 全反射滤镜，增加魔能容量
+    /// 干涉滤镜，增加发送量
     /// </summary>
-    public abstract class TotalReflectionFilter : MagikeFilter, IUIShowable
+    public abstract class InterferenceFilter : MagikeFilter, IUIShowable
     {
-        public abstract int MagikeBonus { get; }
+        public abstract int UnitDeliveryBonus { get; }
 
         public override bool CanInsert_SpecialCheck(MagikeTileEntity entity, ref string text)
         {
-            if (!entity.HasComponent(MagikeComponentID.MagikeContainer))
+            if (!entity.HasComponent(MagikeComponentID.MagikeSender))
             {
-                text = MagikeSystem.GetFilterText(MagikeSystem.FilterID.MagikeContainerNotFound);
+                text = MagikeSystem.GetFilterText(MagikeSystem.FilterID.MagikeSenderNotFound);
                 return false;
             }
 
@@ -28,39 +28,37 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Filters
 
         public override void ChangeComponentValues(Component component)
         {
-            if (component is MagikeContainer container)
+            if (component is MagikeSender sender)
             {
-                container.MagikeMaxBonus = 1f;
+                sender.UnitDeliveryBonus = 1f;
 
                 float bonus = 0;
 
                 foreach (MagikeFilter filter in ((List<Component>)(Entity.Components[MagikeComponentID.MagikeFilter])).Cast<MagikeFilter>())
                 {
-                    if (filter is TotalReflectionFilter trf)
-                        bonus += trf.MagikeBonus;
+                    if (filter is InterferenceFilter iff)
+                        bonus += iff.UnitDeliveryBonus;
                 }
 
-                container.MagikeMaxBonus += bonus * 0.01f;
+                sender.UnitDeliveryBonus += bonus * 0.01f;
             }
         }
 
         public override void RestoreComponentValues(Component component)
         {
-            if (component is MagikeContainer container)
+            if (component is MagikeSender sender)
             {
-                container.MagikeMaxBonus = 1f;
+                sender.UnitDeliveryBonus = 1f;
 
                 float bonus = 0;
 
                 foreach (MagikeFilter filter in ((List<Component>)(Entity.Components[MagikeComponentID.MagikeFilter])).Cast<MagikeFilter>())
                 {
-                    if (filter is TotalReflectionFilter trf)
-                        bonus += trf.MagikeBonus;
+                    if (filter is InterferenceFilter iff)
+                        bonus += iff.UnitDeliveryBonus;
                 }
 
-                container.MagikeMaxBonus += bonus * 0.01f;
-
-                container.LimitMagikeAmount();
+                sender.UnitDeliveryBonus += bonus * 0.01f;
             }
         }
 
@@ -68,12 +66,12 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Filters
 
         public void ShowInUI(UIElement parent)
         {
-            UIElement title = this.AddTitle(MagikeSystem.UITextID.TotalReflectionFilterName, parent);
+            UIElement title = this.AddTitle(MagikeSystem.UITextID.InterferenceFilterName, parent);
 
             UIList list =
             [
                 this.NewTextBar(c =>
-                MagikeSystem.GetUIText(MagikeSystem.UITextID.TotalReflectionBonus)+MagikeBonus+"%", parent),
+                MagikeSystem.GetUIText(MagikeSystem.UITextID.InterferenceBonus)+UnitDeliveryBonus+"%", parent),
                 new FilterText(c =>
                     $"  ▶ [i:{c.ItemType}]",this,parent),
                 //取出按钮

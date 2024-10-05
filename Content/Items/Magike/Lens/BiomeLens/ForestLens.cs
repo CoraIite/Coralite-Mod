@@ -84,7 +84,7 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     AntiMagikeMaxBase = 0;
                     break;
                 case MALevel.Glistent:
-                    MagikeMaxBase = 27;
+                    MagikeMaxBase = 90;
                     AntiMagikeMaxBase = MagikeMaxBase * 3;
                     break;
                 case MALevel.CrystallineMagike:
@@ -92,7 +92,7 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     AntiMagikeMaxBase = MagikeMaxBase * 2;
                     break;
                 case MALevel.SplendorMagicore:
-                    MagikeMaxBase = 5400;
+                    MagikeMaxBase = 4500;
                     AntiMagikeMaxBase = MagikeMaxBase * 3;
                     break;
             }
@@ -118,15 +118,15 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     ConnectLengthBase = 0;
                     break;
                 case MALevel.Glistent:
-                    UnitDeliveryBase = 9;
-                    SendDelayBase = 10;
+                    UnitDeliveryBase = 10;
+                    SendDelayBase = 30;
                     break;
                 case MALevel.CrystallineMagike:
                     UnitDeliveryBase = 129;
                     SendDelayBase = 8;
                     break;
                 case MALevel.SplendorMagicore:
-                    UnitDeliveryBase = 1080;
+                    UnitDeliveryBase = 900;
                     SendDelayBase = 6;
                     break;
             }
@@ -160,7 +160,7 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     break;
                 case MALevel.Glistent:
                     ProductionDelayBase = 10;
-                    ThroughputBase = 3;
+                    ThroughputBase = 10;
                     break;
                 case MALevel.CrystallineMagike:
                     ProductionDelayBase = 8;
@@ -168,7 +168,7 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     break;
                 case MALevel.SplendorMagicore:
                     ProductionDelayBase = 6;
-                    ThroughputBase = 360;
+                    ThroughputBase = 300;
                     break;
             }
 

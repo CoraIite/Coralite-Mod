@@ -75,11 +75,13 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             int prefix = 0;
             var wr = new WeightedRandom<int>(rand);
 
-            if (Item.GetPrefixCategory() is not PrefixCategory category)
+            var prefixes = Item.GetPrefixCategories();
+            if (prefixes.Count == 0)
                 return -1;
 
-            foreach (int pre in Item.GetVanillaPrefixes(category))
-                wr.Add(pre, 1);
+            foreach (var category in prefixes)
+                foreach (int pre in Item.GetVanillaPrefixes(category))
+                    wr.Add(pre, 1);
 
             if (PrefixLegacy.ItemSets.ItemsThatCanHaveLegendary2[Item.type]) // Fix #3688, Rather than mess with the PrefixCategory enum and Item.GetPrefixCategory at this time and risk compatibility issues, manually support this until a redesign.
                 wr.Add(PrefixID.Legendary2, 1);

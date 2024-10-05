@@ -72,7 +72,7 @@ namespace Coralite.Content.Items.Magike.Lens.DayTimeLens
                     AntiMagikeMaxBase = MagikeMaxBase * 3;
                     break;
                 case MALevel.BloodJade:
-                    MagikeMaxBase = 618;
+                    MagikeMaxBase = 956;
                     AntiMagikeMaxBase = MagikeMaxBase * 2;
                     break;
             }
@@ -102,7 +102,7 @@ namespace Coralite.Content.Items.Magike.Lens.DayTimeLens
                     SendDelayBase = 10;
                     break;
                 case MALevel.BloodJade:
-                    UnitDeliveryBase = 165;
+                    UnitDeliveryBase = 256;
                     SendDelayBase = 8;
                     break;
             }
@@ -141,7 +141,7 @@ namespace Coralite.Content.Items.Magike.Lens.DayTimeLens
                     break;
                 case MALevel.BloodJade:
                     ProductionDelayBase = 8;
-                    ThroughputBase = 55;
+                    ThroughputBase = 85;
                     break;
             }
 

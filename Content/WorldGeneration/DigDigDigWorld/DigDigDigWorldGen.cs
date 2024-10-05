@@ -16,15 +16,22 @@ namespace Coralite.Content.WorldGeneration
             tasks.Clear();
 
             //设置一些基础值
-            tasks.Add(new PassLegacy("Coralite DigReset", GenShoneBack));
+            tasks.Add(new PassLegacy("Coralite Dig Reset", DigReset));
 
             //放置一层石头背景板，并且随机生成背景墙以及泥沙块
-            tasks.Add(new PassLegacy("Coralite DigStoneBackground", GenShoneBack));
+            tasks.Add(new PassLegacy("Coralite Dig Stone Background", GenShoneBack));
 
             //生成丛林的基本样子
-            tasks.Add(new PassLegacy("Coralite DigJungle", GenDigJungle));
+            tasks.Add(new PassLegacy("Coralite Dig Jungle", GenDigJungle));
 
+            //生成雪地的基本样子
+            tasks.Add(new PassLegacy("Coralite Dig Ice", GenDigIce));
+
+            //生成沙漠的基本样子
+            tasks.Add(new PassLegacy("Coralite Dig Desert", GenDigDesert));
+
+            //最后清理
+            tasks.Add(new PassLegacy("Coralite Dig Clear", GenDigClear));
         }
-
     }
 }

@@ -47,7 +47,7 @@ namespace Coralite.Content.Items.MagikeSeries2
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeCraftRecipe.CreateRecipe<OpticalPathCalibrator, BrilliantCalibrator>(MagikeHelper.CalculateMagikeCost(MALevel.CrystallineMagike, 12, 60 * 5))
+            MagikeCraftRecipe.CreateRecipe<OpticalPathCalibrator, BrilliantCalibrator>(MagikeHelper.CalculateMagikeCost(MALevel.CrystallineMagike, 12, 60 * 2))
                 .AddIngredient<CrystallineMagike>(5)
                 .AddIngredient<Skarn>(20)
                 .AddIngredient<MutatusInABottle>()

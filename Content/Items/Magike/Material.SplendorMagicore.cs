@@ -1,8 +1,6 @@
-﻿using Coralite.Content.Items.MagikeSeries2;
-using Coralite.Content.Raritys;
+﻿using Coralite.Content.Raritys;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
-using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Coralite.Helpers;
 using Terraria;
@@ -21,7 +19,7 @@ namespace Coralite.Content.Items.Magike
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.GetMagikeItem().magikeAmount = 6000;
+            Item.GetMagikeItem().magikeAmount = 5000;
         }
     }
 }

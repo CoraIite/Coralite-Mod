@@ -33,10 +33,10 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// <summary> 自身反魔能基础容量，可以通过升级来变化 </summary>
         public int AntiMagikeMaxBase { get; protected set; }
         /// <summary> 额外反魔能量，通过扩展膜附加的魔能容量 </summary>
-        public int AntiMagikeMaxExtra { get; set; }
+        public float AntiMagikeMaxBonus { get; set; } = 1f;
 
         /// <summary> 当前的反魔能上限 </summary>
-        public int AntiMagikeMax { get => Math.Clamp(AntiMagikeMaxBase + AntiMagikeMaxExtra, 0, int.MaxValue); }
+        public int AntiMagikeMax { get => Math.Clamp((int)(AntiMagikeMaxBase * AntiMagikeMaxBonus), 0, int.MaxValue); }
 
         /// <summary> 有魔能就为<see langword="true"/> </summary>
         public virtual bool HasMagike => Magike > 0;
@@ -182,7 +182,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 this.NewTextBar(c =>MagikeSystem.GetUIText(MagikeSystem.UITextID.ContainerMagikeAmount), parent),
                 this.NewTextBar(c =>
                 {
-                    string colorCode = c.GetMagikeContainerMaxColorCode();
+                    string colorCode = MagikeHelper.GetBonusColorCode(MagikeMaxBonus);
                     return  $"  ▶ {c.Magike} / [c/{colorCode}:{c.MagikeMax}]";
                 }, parent),
 
@@ -194,13 +194,13 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 this.NewTextBar(c =>MagikeSystem.GetUIText(MagikeSystem.UITextID.ContainerAntiMagikeAmount), parent),
                 this.NewTextBar(c =>
                 {
-                    string colorCode = c.GetMagikeContainerMaxColorCode();
+                    string colorCode = MagikeHelper.GetBonusColorCode(AntiMagikeMaxBonus);
                     return $"  ▶ {c.AntiMagike} / [c/{colorCode}:{c.AntiMagikeMax}]";
                 }, parent),
 
                 this.NewTextBar(c =>MagikeSystem.GetUIText(MagikeSystem.UITextID.ContainerAntiMagikeMax), parent),
                 this.NewTextBar(c =>
-                    $"  ▶ {c.AntiMagikeMax} ({c.AntiMagikeMaxBase} {(c.AntiMagikeMaxExtra >= 0 ? "+" : "-")} {Math.Abs(c.AntiMagikeMaxExtra)})", parent),
+                    $"  ▶ {c.AntiMagikeMax} ({c.AntiMagikeMaxBase} * {Math.Abs(c.AntiMagikeMaxBonus)})", parent),
             ];
 
             list.SetSize(0, -title.Height.Pixels, 1, 1);
@@ -226,7 +226,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             tag.Add(preName + nameof(AntiMagike), AntiMagike);
             tag.Add(preName + nameof(AntiMagikeMaxBase), AntiMagikeMaxBase);
-            tag.Add(preName + nameof(AntiMagikeMaxExtra), AntiMagikeMaxExtra);
+            tag.Add(preName + nameof(AntiMagikeMaxBonus), AntiMagikeMaxBonus);
         }
 
         public override void LoadData(string preName, TagCompound tag)
@@ -240,7 +240,10 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             AntiMagike = tag.GetInt(preName + nameof(AntiMagike));
             AntiMagikeMaxBase = tag.GetInt(preName + nameof(AntiMagikeMaxBase));
-            AntiMagikeMaxExtra = tag.GetInt(preName + nameof(AntiMagikeMaxExtra));
+            AntiMagikeMaxBonus = tag.GetFloat(preName + nameof(AntiMagikeMaxBonus));
+
+            if (AntiMagikeMaxBonus == 0)
+                AntiMagikeMaxBonus = 1;
         }
     }
 

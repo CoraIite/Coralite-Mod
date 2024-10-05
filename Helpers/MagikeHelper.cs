@@ -478,11 +478,21 @@ namespace Coralite.Helpers
         /// </summary>
         /// <param name="container"></param>
         /// <returns></returns>
-        public static string GetMagikeContainerMaxColorCode(this MagikeContainer container)
+        public static string GetBonusColorCode(float bonus)
         {
-            if (container.MagikeMaxBonus > 1)
+            if (bonus > 1)
                 return "80d3ff";//蓝色
-            else if (container.MagikeMaxBonus < 1)
+            else if (bonus < 1)
+                return "ff1919";//红色
+            else
+                return "ffffff";
+        }
+
+        public static string GetBonusColorCode2(int bonus)
+        {
+            if (bonus > 0)
+                return "80d3ff";//蓝色
+            else if (bonus < 0)
                 return "ff1919";//红色
             else
                 return "ffffff";
@@ -554,43 +564,43 @@ namespace Coralite.Helpers
             float produceCountPerSecond = level switch
             {
                 MALevel.MagicCrystal
-                or MALevel.Seashore => 0.1f,
+                or MALevel.Seashore => 0.25f,
 
                 MALevel.RedJade
-                or MALevel.Eiderdown => 0.2f,
+                or MALevel.Eiderdown => 0.5f,
 
-                MALevel.Glistent => 0.3f,
+                MALevel.Glistent => 1f,
 
                 MALevel.Crimson
                 or MALevel.Corruption
                 or MALevel.Icicle
-                or MALevel.Emperor => 0.7f,
+                or MALevel.Emperor => 1.5f,
 
                 MALevel.Shadow
                 or MALevel.Bone
                 or MALevel.Beeswax
-                or MALevel.Hellstone => 1.1f,
+                or MALevel.Hellstone => 2f,
 
-                MALevel.Quicksand => 1.5f,
+                MALevel.Quicksand => 2.5f,
 
                 MALevel.CrystallineMagike => 5.3f,
 
                 MALevel.Pelagic
                 or MALevel.Flight
                 or MALevel.Forbidden
-                or MALevel.Frost => 6.25f,
+                or MALevel.Frost => 7.5f,
 
                 MALevel.Hallow
                 or MALevel.BloodJade
-                or MALevel.EternalFlame => 6.875f,
+                or MALevel.EternalFlame => 10,
 
                 MALevel.Soul
                 or MALevel.Feather
-                or MALevel.Shroomite => 8,
+                or MALevel.Shroomite => 14,
 
-                MALevel.HolyLight => 10,
+                MALevel.HolyLight => 20,
 
-                MALevel.SplendorMagicore => 60,
+                MALevel.SplendorMagicore => 50,
                 _ => 1,
             };
 

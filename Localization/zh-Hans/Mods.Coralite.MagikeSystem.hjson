@@ -198,6 +198,18 @@ MagikeSystem: {
 		松手后在区域内寻找带有魔能容器功能的魔能仪器
 		并为他们增加魔能上限
 		'''
+	DiffractionFilterFilterTooltip:
+		'''
+		左键选择区域
+		松手后在区域内寻找带有魔能发送功能的魔能仪器
+		并为他们增加单次发送量
+		'''
+	InterferenceFilterTooltip:
+		'''
+		左键选择区域
+		松手后在区域内寻找带有线性连接功能的魔能仪器
+		并为他们增加连接容量
+		'''
 
 	Staffs: {
 		ChooseSender_Found: 已选择魔能发送器
@@ -221,6 +233,8 @@ MagikeSystem: {
 		UpgradeableNotFound: 未找到可升级仪器！
 		CantUpgrade: 无法升级！
 		MagikeContainerNotFound: 未找到魔能容器！
+		MagikeSenderNotFound: 未找到魔能发送器！
+		MagikeLinerSenderNotFound: 未找到线性连接器！
 	}
 
 	ItemDescriptionPolarizedFilter: 可插入的偏振滤镜：
@@ -321,6 +335,11 @@ MagikeSystem: {
 		GelLensName: 凝胶透镜
 		TotalReflectionBonus: ◇ 魔能容量强化：
 		TotalReflectionFilterName: 全反射滤镜
+		InterferenceFilterName: 干涉滤镜
+		InterferenceBonus: ◇ 魔能发送量强化：
+		DiffractionFilterName: 衍射滤镜
+		DiffractionBonus: ◇ 连接量强化：
+		ClickToDisconnect: 点击以取消连接
 	}
 
 	CraftText: {

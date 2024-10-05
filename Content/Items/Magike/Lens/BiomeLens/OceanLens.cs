@@ -81,11 +81,11 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     AntiMagikeMaxBase = 0;
                     break;
                 case MALevel.Seashore:
-                    MagikeMaxBase = 9;
+                    MagikeMaxBase = 18;
                     AntiMagikeMaxBase = MagikeMaxBase * 3;
                     break;
                 case MALevel.Pelagic:
-                    MagikeMaxBase = 562;
+                    MagikeMaxBase = 675;
                     AntiMagikeMaxBase = MagikeMaxBase * 2;
                     break;
             }
@@ -111,11 +111,11 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     ConnectLengthBase = 0;
                     break;
                 case MALevel.Seashore:
-                    UnitDeliveryBase = 3;
+                    UnitDeliveryBase = 6;
                     SendDelayBase = 10;
                     break;
                 case MALevel.Pelagic:
-                    UnitDeliveryBase = 150;
+                    UnitDeliveryBase = 180;
                     SendDelayBase = 8;
                     break;
             }
@@ -149,11 +149,11 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     break;
                 case MALevel.Seashore:
                     ProductionDelayBase = 10;
-                    ThroughputBase = 1;
+                    ThroughputBase = 2;
                     break;
                 case MALevel.Pelagic:
                     ProductionDelayBase = 8;
-                    ThroughputBase = 50;
+                    ThroughputBase = 60;
                     break;
             }
 

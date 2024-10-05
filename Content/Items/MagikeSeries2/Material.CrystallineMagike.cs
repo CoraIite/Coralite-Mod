@@ -22,7 +22,7 @@ namespace Coralite.Content.Items.MagikeSeries2
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeSystem.AddRemodelRecipe<CrystallineMagike, SplendorMagicore>(6000, conditions: Condition.DownedMoonLord);
+            MagikeSystem.AddRemodelRecipe<CrystallineMagike, SplendorMagicore>(5000, conditions: Condition.DownedMoonLord);
         }
     }
 }

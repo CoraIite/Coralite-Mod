@@ -10,6 +10,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ModLoader.IO;
+using Terraria.ModLoader.UI;
 using Terraria.UI;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components
@@ -306,21 +307,28 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                     float delayBase= MathF.Round(c.SendDelayBase/60f,1);
                     float DelayBonus= c.SendDelayBonus;
 
-                    return $"  ▶ {timer} / {delay} ({delayBase} * {DelayBonus})";
+                    string colorCode = MagikeHelper.GetBonusColorCode(DelayBonus);
+
+                    return $"  ▶ {timer} / [c/{colorCode}:{delay}] ({delayBase} * {DelayBonus})";
                 }, parent),
                 //发送量
                 this.NewTextBar(c =>MagikeSystem.GetUIText(MagikeSystem.UITextID.MagikeSendAmount), parent),
                 this.NewTextBar(c =>
-                    $"\n  ▶ {c.UnitDelivery} ({c.UnitDeliveryBase} {(c.UnitDeliveryExtra >= 0 ? "+" : "-")} {Math.Abs(c.UnitDeliveryExtra)})", parent),
+                {
+                    string colorCode = MagikeHelper.GetBonusColorCode(c.UnitDeliveryBonus);
+                    return $"\n  ▶ [c/{colorCode}:{c.UnitDelivery}] ({c.UnitDeliveryBase} * {Math.Abs(c.UnitDeliveryBonus)})";
+                }, parent),
                 //连接距离
                 this.NewTextBar(c =>MagikeSystem.GetUIText(MagikeSystem.UITextID.MagikeConnectLength), parent),
                 this.NewTextBar(c =>{
-                    float length= MathF.Round(c.ConnectLength/16f,1);
-                    float lengthBase= MathF.Round(c.ConnectLengthBase/16f,1);
+                    float length= MathF.Round(c.ConnectLength / 16f,1);
+                    float lengthBase= MathF.Round(c.ConnectLengthBase / 16f,1);
                     string sign= c.ConnectLengthExtra >= 0 ? "+" : "- ";
-                    float lengthExtra= MathF.Round(c.ConnectLengthExtra/16f,1);
+                    float lengthExtra= MathF.Round(c.ConnectLengthExtra / 16f,1);
 
-                    return $"  ▶ {length} ({lengthBase} {sign} {lengthExtra})";
+                    string colorCode = MagikeHelper.GetBonusColorCode2(c.ConnectLengthExtra);
+
+                    return $"  ▶ [c/{colorCode}:{length}] ({lengthBase} {sign} {lengthExtra})";
                 }, parent),
 
                 this.NewTextBar(c =>MagikeSystem.GetUIText(MagikeSystem.UITextID.CurrentConnect),parent)
@@ -448,11 +456,13 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
                     spriteBatch.End();
                     spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.AnisotropicClamp, DepthStencilState.None, spriteBatch.GraphicsDevice.RasterizerState, null, Main.UIScaleMatrix);
+
+                    UICommon.TooltipMouseText(MagikeSystem.GetUIText(MagikeSystem.UITextID.ClickToDisconnect));
                 }
             }
 
             //位置在右侧往左按钮的距离再一半
-            pos.X -= style.Width / 2;
+            pos.X -= style.Width * 3 / 4;
             pos.Y = style.Center().Y + 4;
 
             string temp = indexInRange ? "◆" : "◇";
@@ -460,7 +470,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             if (_index >= _sender.MaxConnectBase)
                 temp = $"[c/80d3ff:{temp}]";
 
-            Utils.DrawBorderString(spriteBatch, temp, pos, Color.White, 1, 0.5f, 0.5f);
+            Utils.DrawBorderString(spriteBatch, temp, pos, Color.White, 1, 0f, 0.5f);
         }
     }
 }

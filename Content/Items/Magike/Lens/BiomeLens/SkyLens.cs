@@ -82,15 +82,15 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     AntiMagikeMaxBase = 0;
                     break;
                 case MALevel.Eiderdown:
-                    MagikeMaxBase = 18;
+                    MagikeMaxBase = 45;
                     AntiMagikeMaxBase = MagikeMaxBase * 3;
                     break;
                 case MALevel.Flight:
-                    MagikeMaxBase = 540;
+                    MagikeMaxBase = 730;
                     AntiMagikeMaxBase = MagikeMaxBase * 2;
                     break;
                 case MALevel.Feather:
-                    MagikeMaxBase = 720;
+                    MagikeMaxBase = 1285;
                     AntiMagikeMaxBase = MagikeMaxBase * 2;
                     break;
             }
@@ -116,15 +116,15 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     ConnectLengthBase = 0;
                     break;
                 case MALevel.Eiderdown:
-                    UnitDeliveryBase = 6;
+                    UnitDeliveryBase = 15;
                     SendDelayBase = 10;
                     break;
                 case MALevel.Flight:
-                    UnitDeliveryBase = 144;
+                    UnitDeliveryBase = 195;
                     SendDelayBase = 8;
                     break;
                 case MALevel.Feather:
-                    UnitDeliveryBase = 168;
+                    UnitDeliveryBase = 300;
                     SendDelayBase = 7;
                     break;
             }
@@ -158,15 +158,15 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     break;
                 case MALevel.Eiderdown:
                     ProductionDelayBase = 10;
-                    ThroughputBase = 2;
+                    ThroughputBase = 5;
                     break;
                 case MALevel.Flight:
                     ProductionDelayBase = 8;
-                    ThroughputBase = 48;
+                    ThroughputBase = 65;
                     break;
                 case MALevel.Feather:
                     ProductionDelayBase = 7;
-                    ThroughputBase = 56;
+                    ThroughputBase = 100;
                     break;
             }
 

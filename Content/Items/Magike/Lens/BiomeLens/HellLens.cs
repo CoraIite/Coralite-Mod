@@ -81,11 +81,11 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     AntiMagikeMaxBase = 0;
                     break;
                 case MALevel.Hellstone:
-                    MagikeMaxBase = 100;
+                    MagikeMaxBase = 180;
                     AntiMagikeMaxBase = MagikeMaxBase * 3;
                     break;
                 case MALevel.EternalFlame:
-                    MagikeMaxBase = 625;
+                    MagikeMaxBase = 956;
                     AntiMagikeMaxBase = MagikeMaxBase * 2;
                     break;
             }
@@ -111,11 +111,11 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     ConnectLengthBase = 0;
                     break;
                 case MALevel.Hellstone:
-                    UnitDeliveryBase = 30;
+                    UnitDeliveryBase = 54;
                     SendDelayBase = 9;
                     break;
                 case MALevel.EternalFlame:
-                    UnitDeliveryBase = 174;
+                    UnitDeliveryBase = 255;
                     SendDelayBase = 8;
                     break;
             }
@@ -149,11 +149,11 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     break;
                 case MALevel.Hellstone:
                     ProductionDelayBase = 9;
-                    ThroughputBase = 10;
+                    ThroughputBase = 18;
                     break;
                 case MALevel.EternalFlame:
                     ProductionDelayBase = 8;
-                    ThroughputBase = 58;
+                    ThroughputBase = 85;
                     break;
             }
 
