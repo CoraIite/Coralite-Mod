@@ -12,7 +12,7 @@ namespace Coralite.Content.WorldGeneration
     {
         public static LocalizedText DigTheJungle { get; set; }
 
-        public void GenDigJungle(GenerationProgress progress, GameConfiguration configuration)
+        public static void GenDigJungle(GenerationProgress progress, GameConfiguration configuration)
         {
             progress.Message = DigTheJungle.Value;
 
@@ -30,10 +30,10 @@ namespace Coralite.Content.WorldGeneration
             int jungleside = GenVars.dungeonSide * -1;
 
             int center = Main.maxTilesX / 2;
-            int width = Main.maxTilesX / 7;
-            int offset = Main.maxTilesX / 100;
+            int width = Main.maxTilesX / 7 + WorldGen.genRand.Next(-15, 30);
+            int offset = Main.maxTilesX / 80;
 
-            GenVars.jungleOriginX = center + jungleside * (Main.maxTilesX * 2 / 7 + WorldGen.genRand.Next(-offset, offset));
+            GenVars.jungleOriginX = center + jungleside * (Main.maxTilesX * 4 / 13 + WorldGen.genRand.Next(-offset, offset));
             GenVars.jungleMinX = GenVars.jungleOriginX - width / 2;
             GenVars.jungleMaxX = GenVars.jungleOriginX + width / 2;
 
@@ -63,7 +63,7 @@ namespace Coralite.Content.WorldGeneration
 
             for (int j = (int)(Main.maxTilesY * 0.01f); j < Main.maxTilesY * 0.99f; j++)
             {
-                for (int i = 0; i < 7; i++)
+                for (int i = 0; i < 10; i++)
                 {
                     Main.tile[x1 - wr.Get(), j].ResetToType(TileID.Mud);
                     Main.tile[x2 - 1 + wr.Get(), j].ResetToType(TileID.Mud);
@@ -92,6 +92,9 @@ namespace Coralite.Content.WorldGeneration
                 for (int j = 0; j < Main.maxTilesY; j++)
                     Main.tile[i, j].Clear(Terraria.DataStructures.TileDataType.Wall);
 
+            Modifiers.Blotches actions = new Modifiers.Blotches(2, 0.4);
+            Modifiers.OnlyTiles onlyTiles = new Modifiers.OnlyTiles(TileID.Mud, TileID.JungleGrass);
+
             for (int i = 0; i < wallCount; i++)
             {
                 int ballCount = WorldGen.genRand.Next(3, 7);
@@ -110,8 +113,8 @@ namespace Coralite.Content.WorldGeneration
                     new Point(x, y),  //中心点
                     new Shapes.Circle(width, height),   //形状：圆
                     Actions.Chain(  //如果要添加多个效果得使用这个chain
-                        new Modifiers.Blotches(2, 0.4)//添加边缘的抖动，让边缘处不那么平滑
-                        , new Modifiers.OnlyTiles(TileID.Mud, TileID.JungleGrass),     //仅限丛林
+                        actions//添加边缘的抖动，让边缘处不那么平滑
+                        , onlyTiles,     //仅限丛林
                         new Actions.PlaceWall(wallType)));    //放置墙壁
 
 
@@ -128,8 +131,8 @@ namespace Coralite.Content.WorldGeneration
                         new Point(x, y),  //中心点
                         new Shapes.Circle(width, height),   //形状：圆
                         Actions.Chain(  //如果要添加多个效果得使用这个chain
-                        new Modifiers.Blotches(2, 0.4)//添加边缘的抖动，让边缘处不那么平滑
-                        , new Modifiers.OnlyTiles(TileID.Mud, TileID.JungleGrass),     //仅限丛林
+                        actions//添加边缘的抖动，让边缘处不那么平滑
+                        , onlyTiles,     //仅限丛林
                             new Actions.PlaceWall(wallType)));    //放置墙壁
                 }
 

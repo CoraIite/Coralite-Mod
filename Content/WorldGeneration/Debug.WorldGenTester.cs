@@ -3,6 +3,7 @@ using Coralite.Core;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.WorldBuilding;
 
 namespace Coralite.Content.WorldGeneration
 {
@@ -44,16 +45,19 @@ namespace Coralite.Content.WorldGeneration
 
             //CoraliteWorld.DungeonRoom((int)Main.MouseWorld.X / 16, (int)Main.MouseWorld.Y / 16, TileID.CrystalBlock, WallID.CryocoreBrickWall);
 
-            for (int i = 0; i < Main.maxTilesX; i++)
-            {
-                for (int j = 0; j < Main.maxTilesY; j++)
-                {
-                    Main.tile[i, j].Clear(TileDataType.Tile);
-                }
-            }
+
 
             return base.CanUseItem(player);
         }
 
+        /// <summary>
+        /// 清空整个世界的物块
+        /// </summary>
+        public void ClearWorldTile()
+        {
+            for (int i = 0; i < Main.maxTilesX; i++)
+                for (int j = 0; j < Main.maxTilesY; j++)
+                    Main.tile[i, j].Clear(TileDataType.Tile);
+        }
     }
 }

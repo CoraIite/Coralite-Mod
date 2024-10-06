@@ -27,5 +27,6 @@ WorldGeneration: {
 		DigTheIce: Mods.Coralite.WorldGeneration.CoraliteWorld.DigTheIce
 		DigClearUpText: Mods.Coralite.WorldGeneration.CoraliteWorld.DigClearUpText
 		DigDesert: Mods.Coralite.WorldGeneration.CoraliteWorld.DigDesert
+		DigHell: Mods.Coralite.WorldGeneration.CoraliteWorld.DigHell
 	}
 }

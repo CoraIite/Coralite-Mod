@@ -211,6 +211,18 @@ MagikeSystem: {
 		Release it and look for a magike apparatus in the area with a liner connector
 		and increase their connect capacity
 		'''
+	PulseFilterTooltip:
+		'''
+		Left-click to select a region
+		Release it and look for a magike apparatus in the area with a liner connector
+		and increase their connect capacity
+		'''
+	ExcitedFilterTooltip:
+		'''
+		Left-click to select a region
+		Release it and look for a magike apparatus in the area with a liner connector
+		and increase their connect capacity
+		'''
 
 	Staffs: {
 		ChooseSender_Found: Sender selected
@@ -240,6 +252,8 @@ MagikeSystem: {
 		MagikeContainerNotFound: Magike Container Not Found!
 		MagikeSenderNotFound: Magike Sender Not Found!
 		MagikeLinerSenderNotFound: Liner Connector Not Found!
+		MagikeProducerNotFound: Mods.Coralite.MagikeSystem.MagikeSystem.Filter.MagikeProducerNotFound
+		TimerNotFound: Mods.Coralite.MagikeSystem.MagikeSystem.Filter.TimerNotFound
 	}
 
 	ItemDescriptionPolarizedFilter: Insertable polarized filters：
@@ -345,6 +359,10 @@ MagikeSystem: {
 		DiffractionFilterName: Diffraction Filter
 		DiffractionBonus: ◇ Connect capacity bonus：
 		ClickToDisconnect: Click To Disconnect
+		PulseFilterName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.PulseFilterName
+		PulseBonus: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.PulseBonus
+		ExcitedFilterName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ExcitedFilterName
+		ExcitedBonus: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ExcitedBonus
 	}
 
 	CraftText: {

@@ -89,6 +89,22 @@ namespace Coralite.Core.Prefabs.Projectiles
         }
     }
 
+    public class X3Smoother : ISmoother
+    {
+        public void ReCalculate(int maxTime) { }
+
+        public float Smoother(int timer, int maxTime)
+        {
+            float factor = (float)timer / maxTime;
+            return factor * factor;
+        }
+
+        public float Smoother(float factor)
+        {
+            return factor * factor*factor;
+        }
+    }
+
     public class SqrtSmoother : ISmoother
     {
         public void ReCalculate(int maxTime) { }

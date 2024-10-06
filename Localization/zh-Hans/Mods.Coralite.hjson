@@ -26,6 +26,7 @@ WorldGeneration: {
 		DigTheJungle: 挖丛林挖丛林挖丛林挖挖挖挖挖挖挖！
 		DigTheIce: 挖冰块挖冰块挖冰块挖挖挖挖挖挖挖！
 		DigClearUpText: 拿好你的工具，现在是挖掘时间！
-		// DigDesert: Mods.Coralite.WorldGeneration.CoraliteWorld.DigDesert
+		DigDesert: 挖沙漠挖沙漠挖沙漠挖挖挖挖挖挖挖！
+		DigHell: 挖下界挖下界挖下界挖挖挖挖挖挖挖！
 	}
 }

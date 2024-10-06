@@ -23,6 +23,7 @@ namespace Coralite
         public HeavySmoother HeavySmootherInstance;
         public SqrtSmoother SqrtSmoother;
         public X2Smoother X2Smoother;
+        public X3Smoother X3Smoother;
         public SinSmoother SinSmoother;
         public BezierEaseSmoother BezierEaseSmoother;
         /// <summary>
@@ -69,6 +70,7 @@ namespace Coralite
             HeavySmootherInstance = new HeavySmoother();
             SqrtSmoother = new SqrtSmoother();
             X2Smoother = new X2Smoother();
+            X3Smoother = new X3Smoother();
             SinSmoother = new SinSmoother();
             BezierEaseSmoother = new BezierEaseSmoother();
             ReverseX2Smoother = new ReverseX2Smoother();

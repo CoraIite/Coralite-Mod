@@ -118,8 +118,8 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     ConnectLengthBase = 0;
                     break;
                 case MALevel.Glistent:
-                    UnitDeliveryBase = 10;
-                    SendDelayBase = 30;
+                    UnitDeliveryBase = 30;
+                    SendDelayBase = 10;
                     break;
                 case MALevel.CrystallineMagike:
                     UnitDeliveryBase = 129;

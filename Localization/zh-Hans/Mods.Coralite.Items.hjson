@@ -4662,15 +4662,45 @@ BrilliantMagikeActivator: {
 
 MagicCrystalTRFilter: {
 	DisplayName: 全反射滤镜-晶体
-	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.TotalReflectionFilterTooltip}"
+	Tooltip:
+		'''
+		{$Mods.Coralite.MagikeSystem.MagikeSystem.TotalReflectionFilterTooltip}
+		[c/80d3ff:增加 10%]
+		'''
 }
 
 MagicCrystalDiffractionFilter: {
 	DisplayName: 衍射滤镜-晶体
-	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.DiffractionFilterFilterTooltip}"
+	Tooltip:
+		'''
+		{$Mods.Coralite.MagikeSystem.MagikeSystem.DiffractionFilterFilterTooltip}
+		[c/80d3ff:增加 1]
+		'''
 }
 
 MagicCrystalInterferenceFilter: {
 	DisplayName: 干涉滤镜-晶体
-	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.InterferenceFilterTooltip}"
+	Tooltip:
+		'''
+		{$Mods.Coralite.MagikeSystem.MagikeSystem.InterferenceFilterTooltip}
+		[c/80d3ff:增加 10%]
+		'''
+}
+
+MagicCrystalExcitedFilter: {
+	DisplayName: 激发滤镜-晶体
+	Tooltip:
+		'''
+		{$Mods.Coralite.MagikeSystem.MagikeSystem.ExcitedFilterTooltip}
+		[c/80d3ff:增加 10%]
+		'''
+}
+
+MagicCrystalPulseFilter: {
+	DisplayName: 脉冲滤镜-晶体
+	Tooltip:
+		'''
+		{$Mods.Coralite.MagikeSystem.MagikeSystem.PulseFilterTooltip}
+		[c/80d3ff:增加 10%]
+		'''
 }

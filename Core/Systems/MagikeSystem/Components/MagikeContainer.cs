@@ -179,28 +179,18 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             UIList list =
             [
                 //魔能量
-                this.NewTextBar(c =>MagikeSystem.GetUIText(MagikeSystem.UITextID.ContainerMagikeAmount), parent),
-                this.NewTextBar(c =>
-                {
-                    string colorCode = MagikeHelper.GetBonusColorCode(MagikeMaxBonus);
-                    return  $"  ▶ {c.Magike} / [c/{colorCode}:{c.MagikeMax}]";
-                }, parent),
+                this.NewTextBar(MagikeAmountTitle , parent),
+                this.NewTextBar(MagikeAmountText , parent),
 
                 //魔能上限
-                this.NewTextBar(c =>MagikeSystem.GetUIText(MagikeSystem.UITextID.ContainerMagikeMax), parent),
-                this.NewTextBar(c =>
-                    $"  ▶ {c.MagikeMax} ({c.MagikeMaxBase} * {Math.Abs(c.MagikeMaxBonus)})", parent),
+                this.NewTextBar(MagikeMaxTitle, parent),
+                this.NewTextBar(MagikeMaxText , parent),
 
-                this.NewTextBar(c =>MagikeSystem.GetUIText(MagikeSystem.UITextID.ContainerAntiMagikeAmount), parent),
-                this.NewTextBar(c =>
-                {
-                    string colorCode = MagikeHelper.GetBonusColorCode(AntiMagikeMaxBonus);
-                    return $"  ▶ {c.AntiMagike} / [c/{colorCode}:{c.AntiMagikeMax}]";
-                }, parent),
+                this.NewTextBar(AntiMagikeAmountTitle, parent),
+                this.NewTextBar(AntiMagikeAmountText, parent),
 
-                this.NewTextBar(c =>MagikeSystem.GetUIText(MagikeSystem.UITextID.ContainerAntiMagikeMax), parent),
-                this.NewTextBar(c =>
-                    $"  ▶ {c.AntiMagikeMax} ({c.AntiMagikeMaxBase} * {Math.Abs(c.AntiMagikeMaxBonus)})", parent),
+                this.NewTextBar(AntiMagikeMaxTitle, parent),
+                this.NewTextBar(AntiMagikeMaxText, parent),
             ];
 
             list.SetSize(0, -title.Height.Pixels, 1, 1);
@@ -209,6 +199,38 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             list.QuickInvisibleScrollbar();
 
             parent.Append(list);
+        }
+
+        public virtual string MagikeAmountTitle(MagikeContainer c)
+            => MagikeSystem.GetUIText(MagikeSystem.UITextID.ContainerMagikeAmount);
+
+        public virtual string MagikeAmountText(MagikeContainer c)
+            => $"  ▶ {c.Magike} / {MagikeHelper.BonusColoredText(c.MagikeMax.ToString(), MagikeMaxBonus)}";
+
+        public virtual string MagikeMaxTitle(MagikeContainer c)
+            => MagikeSystem.GetUIText(MagikeSystem.UITextID.ContainerMagikeMax);
+
+        public virtual string MagikeMaxText(MagikeContainer c)
+        {
+            string maxText = MagikeHelper.BonusColoredText(c.MagikeMax.ToString(), MagikeMaxBonus) ;
+            string bonusText = MagikeHelper.BonusColoredText(c.MagikeMaxBonus.ToString(), MagikeMaxBonus);
+           return $"  ▶ {maxText} ({c.MagikeMaxBase} * {bonusText})";
+        }
+
+        public virtual string AntiMagikeAmountTitle(MagikeContainer c)
+            => MagikeSystem.GetUIText(MagikeSystem.UITextID.ContainerAntiMagikeAmount);
+
+        public virtual string AntiMagikeAmountText(MagikeContainer c)
+            => $"  ▶ {c.AntiMagike} / {MagikeHelper.BonusColoredText(c.AntiMagikeMax.ToString(), AntiMagikeMaxBonus)}";
+
+        public virtual string AntiMagikeMaxTitle(MagikeContainer c)
+            => MagikeSystem.GetUIText(MagikeSystem.UITextID.ContainerAntiMagikeMax);
+
+        public virtual string AntiMagikeMaxText(MagikeContainer c)
+        {
+            string maxText = MagikeHelper.BonusColoredText(c.AntiMagikeMax.ToString(), AntiMagikeMaxBonus) ;
+            string bonusText = MagikeHelper.BonusColoredText(c.AntiMagikeMaxBonus.ToString(), AntiMagikeMaxBonus);
+           return $"  ▶ {maxText} ({c.AntiMagikeMaxBase} * {bonusText})";
         }
 
         public void AddText(UIList list, Func<MagikeContainer, string> textFunc, UIElement parent)

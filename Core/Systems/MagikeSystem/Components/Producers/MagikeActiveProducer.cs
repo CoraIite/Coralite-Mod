@@ -1,6 +1,7 @@
 ﻿using Coralite.Core.Systems.CoraliteActorComponent;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
+using System;
 using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components.Producers
@@ -54,6 +55,19 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Producers
 
             Produce();
         }
+
+        public virtual string ConnectLengthText(MagikeActiveProducer p)
+        {
+            float timer = MathF.Round(p.Timer / 60f, 1);
+            float delay = MathF.Round(p.ProductionDelay / 60f, 1);
+            float delayBase = MathF.Round(p.ProductionDelayBase / 60f, 1);
+            float DelayBonus = p.ProductionDelayBonus;
+
+            return $"  ▶ {timer} / {MagikeHelper.BonusColoredText(delay.ToString(), DelayBonus, true)} ({delayBase} * {MagikeHelper.BonusColoredText(DelayBonus.ToString(), DelayBonus, true)})";
+        }
+
+        public virtual string ThroughputText(MagikeActiveProducer p)
+            => $"  ▶ {MagikeHelper.BonusColoredText(p.Throughput.ToString(), p.ThroughputBonus)} ({p.ThroughputBase} * {MagikeHelper.BonusColoredText(p.ThroughputBonus.ToString(), p.ThroughputBonus)})";
 
         public override void SaveData(string preName, TagCompound tag)
         {

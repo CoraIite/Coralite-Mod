@@ -300,36 +300,15 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             [
                 //发送时间
                 this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.MagikeSendTime), parent),
-                this.NewTextBar(c =>
-                {
-                    float timer= MathF.Round(c.Timer/60f,1);
-                    float delay= MathF.Round(c.SendDelay/60f,1);
-                    float delayBase= MathF.Round(c.SendDelayBase/60f,1);
-                    float DelayBonus= c.SendDelayBonus;
+                this.NewTextBar(SendDelayText, parent),
 
-                    string colorCode = MagikeHelper.GetBonusColorCode(DelayBonus);
-
-                    return $"  ▶ {timer} / [c/{colorCode}:{delay}] ({delayBase} * {DelayBonus})";
-                }, parent),
                 //发送量
                 this.NewTextBar(c =>MagikeSystem.GetUIText(MagikeSystem.UITextID.MagikeSendAmount), parent),
-                this.NewTextBar(c =>
-                {
-                    string colorCode = MagikeHelper.GetBonusColorCode(c.UnitDeliveryBonus);
-                    return $"\n  ▶ [c/{colorCode}:{c.UnitDelivery}] ({c.UnitDeliveryBase} * {Math.Abs(c.UnitDeliveryBonus)})";
-                }, parent),
+                this.NewTextBar(UnitDeliveryText, parent),
+
                 //连接距离
                 this.NewTextBar(c =>MagikeSystem.GetUIText(MagikeSystem.UITextID.MagikeConnectLength), parent),
-                this.NewTextBar(c =>{
-                    float length= MathF.Round(c.ConnectLength / 16f,1);
-                    float lengthBase= MathF.Round(c.ConnectLengthBase / 16f,1);
-                    string sign= c.ConnectLengthExtra >= 0 ? "+" : "- ";
-                    float lengthExtra= MathF.Round(c.ConnectLengthExtra / 16f,1);
-
-                    string colorCode = MagikeHelper.GetBonusColorCode2(c.ConnectLengthExtra);
-
-                    return $"  ▶ [c/{colorCode}:{length}] ({lengthBase} {sign} {lengthExtra})";
-                }, parent),
+                this.NewTextBar(ConnectLengthText, parent),
 
                 this.NewTextBar(c =>MagikeSystem.GetUIText(MagikeSystem.UITextID.CurrentConnect),parent)
             ];
@@ -343,6 +322,29 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 list.Add(new ConnectButtonForComponent(i, this));
 
             parent.Append(list);
+        }
+
+        public virtual string SendDelayText(MagikeLinerSender s)
+        {
+            float timer = MathF.Round(s.Timer / 60f, 1);
+            float delay = MathF.Round(s.SendDelay / 60f, 1);
+            float delayBase = MathF.Round(s.SendDelayBase / 60f, 1);
+            float DelayBonus = s.SendDelayBonus;
+
+            return $"  ▶ {timer} / {MagikeHelper.BonusColoredText(delay.ToString(), DelayBonus,true)} ({delayBase} * {MagikeHelper.BonusColoredText(DelayBonus.ToString(), DelayBonus,true)})";
+        }
+
+        public virtual string UnitDeliveryText(MagikeLinerSender s)
+            => $"\n  ▶ {MagikeHelper.BonusColoredText(s.UnitDelivery.ToString(), UnitDeliveryBonus)} ({s.UnitDeliveryBase} * {MagikeHelper.BonusColoredText(s.UnitDeliveryBonus.ToString(), UnitDeliveryBonus)})";
+
+        public virtual string ConnectLengthText(MagikeLinerSender s)
+        {
+            float length = MathF.Round(s.ConnectLength / 16f, 1);
+            float lengthBase = MathF.Round(s.ConnectLengthBase / 16f, 1);
+            string sign = s.ConnectLengthExtra >= 0 ? "+" : "- ";
+            float lengthExtra = MathF.Round(s.ConnectLengthExtra / 16f, 1);
+
+            return $"  ▶ {MagikeHelper.BonusColoredText2(length.ToString(), s.ConnectLengthExtra)} ({lengthBase} {sign} {MagikeHelper.BonusColoredText2(lengthExtra.ToString(), s.ConnectLengthExtra)})";
         }
 
         public void AddText(UIList list, Func<MagikeLinerSender, string> textFunc, UIElement parent)

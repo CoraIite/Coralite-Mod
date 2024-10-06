@@ -23,7 +23,7 @@ namespace Coralite.Content.WorldGeneration
         /// 将世界填充满石头
         /// </summary>
         /// <param name="progress"></param>
-        private void FillStone(GenerationProgress progress)
+        private static void FillStone(GenerationProgress progress)
         {
             for (int i = 0; i < Main.maxTilesX; i++)//全部填充石头
                 for (int j = 0; j < Main.maxTilesY; j++)
@@ -34,21 +34,24 @@ namespace Coralite.Content.WorldGeneration
             progress.Value = 0.2f;
         }
 
-        private void PlaceSiltBall(GenerationProgress progress)
+        private static void PlaceSiltBall(GenerationProgress progress)
         {
             //生成泥沙块的球
             int ballCount;
             if (Main.maxTilesY > 8000)
-                ballCount = 950;
+                ballCount = 1050;
             else if (Main.maxTilesX > 6000)
                 ballCount = 750;
             else
                 ballCount = 500;
 
+            Modifiers.Blotches actions = new Modifiers.Blotches(4, 0.4);
+            Actions.SetTile setTile = new Actions.SetTile(TileID.Silt);
+
             for (int i = 0; i < ballCount; i++)
             {
                 int x = WorldGen.genRand.Next((int)(Main.maxTilesX * 0.1f), (int)(Main.maxTilesX * 0.9f));
-                int y = WorldGen.genRand.Next((int)(Main.maxTilesY * 0.3f), (int)(Main.maxTilesY * 0.8f));
+                int y = WorldGen.genRand.Next((int)(Main.maxTilesY * 0.1f), (int)(Main.maxTilesY * 0.8f));
 
                 int width = WorldGen.genRand.Next(4, 15);
                 int height = WorldGen.genRand.Next(4, 15);
@@ -57,9 +60,8 @@ namespace Coralite.Content.WorldGeneration
                     new Point(x, y),  //中心点
                     new Shapes.Circle(width, height),   //形状：圆
                     Actions.Chain(  //如果要添加多个效果得使用这个chain
-                        new Modifiers.Blotches(4, 0.4),     //添加边缘的抖动，让边缘处不那么平滑
-                        new Actions.SetTile(TileID.Silt)));    //清除形状内所有物块
-
+                        actions,     //添加边缘的抖动，让边缘处不那么平滑
+                        setTile));    //清除形状内所有物块
 
                 progress.Value += 0.6f / ballCount;
             }
@@ -67,7 +69,7 @@ namespace Coralite.Content.WorldGeneration
             progress.Value = 0.8f;
         }
 
-        private void FillStoneWall(GenerationProgress progress)
+        private static void FillStoneWall(GenerationProgress progress)
         {
             int wallCount;
 
@@ -77,6 +79,8 @@ namespace Coralite.Content.WorldGeneration
                 wallCount = 800;
             else
                 wallCount = 600;
+
+            Modifiers.Blotches actions = new Modifiers.Blotches(2, 0.4);
 
             for (int i = 0; i < wallCount; i++)
             {
@@ -97,7 +101,7 @@ namespace Coralite.Content.WorldGeneration
                     new Point(x, y),  //中心点
                     new Shapes.Circle(width, height),   //形状：圆
                     Actions.Chain(  //如果要添加多个效果得使用这个chain
-                        new Modifiers.Blotches(2, 0.4),     //添加边缘的抖动，让边缘处不那么平滑
+                        actions,     //添加边缘的抖动，让边缘处不那么平滑
                         new Actions.PlaceWall(wallType)));    //放置墙壁
 
 
@@ -114,7 +118,7 @@ namespace Coralite.Content.WorldGeneration
                         new Point(x, y),  //中心点
                         new Shapes.Circle(width, height),   //形状：圆
                         Actions.Chain(  //如果要添加多个效果得使用这个chain
-                            new Modifiers.Blotches(2, 0.4),     //添加边缘的抖动，让边缘处不那么平滑
+                            actions,     //添加边缘的抖动，让边缘处不那么平滑
                             new Actions.PlaceWall(wallType)));    //放置墙壁
 
                 }

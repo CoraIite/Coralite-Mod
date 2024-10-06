@@ -4609,3 +4609,13 @@ MagicCrystalInterferenceFilter: {
 	DisplayName: Magic Crystal Interference Filter
 	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.InterferenceFilterTooltip}"
 }
+
+MagicCrystalExcitedFilter: {
+	DisplayName: Magic Crystal Excited Filter
+	Tooltip: ""
+}
+
+MagicCrystalPulseFilter: {
+	DisplayName: Magic Crystal Pulse Filter
+	Tooltip: ""
+}

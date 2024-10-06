@@ -16,6 +16,7 @@ namespace Coralite.Content.WorldGeneration
 
             GenSnowBar(progress);
             GenSnowBlur(progress);
+            PlaceSnowSiltBall(progress);
             GenIceSpikes(progress);
             GenSnowWall(progress);
         }
@@ -25,7 +26,7 @@ namespace Coralite.Content.WorldGeneration
             int snowside = GenVars.dungeonSide * -1;
 
             int center = Main.maxTilesX / 2;
-            int width = Main.maxTilesX / 12;
+            int width = Main.maxTilesX / 12 + WorldGen.genRand.Next(-10,20);
             int offset = Main.maxTilesX / 150;
 
             int snowCenter = center + snowside * (Main.maxTilesX / 6 + WorldGen.genRand.Next(-offset, offset));
@@ -55,7 +56,7 @@ namespace Coralite.Content.WorldGeneration
 
             for (int j = (int)(Main.maxTilesY * 0.01f); j < Main.maxTilesY * 0.99f; j++)
             {
-                for (int i = 0; i < 7; i++)
+                for (int i = 0; i < 9; i++)
                 {
                     Main.tile[x1 - wr.Get(), j].ResetToType(TileID.SnowBlock);
                     Main.tile[x2 - 1 + wr.Get(), j].ResetToType(TileID.SnowBlock);
@@ -70,16 +71,20 @@ namespace Coralite.Content.WorldGeneration
             //生成雪泥块的球
             int ballCount;
             if (Main.maxTilesY > 8000)
-                ballCount = 200;
+                ballCount = 400;
             else if (Main.maxTilesX > 6000)
                 ballCount = 150;
             else
                 ballCount = 100;
 
+            Modifiers.Blotches Blotches = new Modifiers.Blotches(4, 0.4);
+            Modifiers.OnlyTiles onlyTiles = new Modifiers.OnlyTiles(TileID.SnowBlock);
+            Actions.SetTile setTile = new Actions.SetTile(TileID.Slush);
+
             for (int i = 0; i < ballCount; i++)
             {
                 int x = WorldGen.genRand.Next(GenVars.snowOriginLeft, GenVars.snowOriginRight);
-                int y = WorldGen.genRand.Next((int)(Main.maxTilesY * 0.2f), (int)(Main.maxTilesY * 0.95f));
+                int y = WorldGen.genRand.Next((int)(Main.maxTilesY * 0.1f), (int)(Main.maxTilesY * 0.95f));
 
                 int width = WorldGen.genRand.Next(4, 15);
                 int height = WorldGen.genRand.Next(4, 15);
@@ -88,10 +93,9 @@ namespace Coralite.Content.WorldGeneration
                     new Point(x, y),  //中心点
                     new Shapes.Circle(width, height),   //形状：圆
                     Actions.Chain(  //如果要添加多个效果得使用这个chain
-                        new Modifiers.Blotches(4, 0.4),     //添加边缘的抖动，让边缘处不那么平滑
-                        new Modifiers.OnlyTiles(TileID.SnowBlock),
-                        new Actions.SetTile(TileID.Slush)));    //清除形状内所有物块
-
+                        Blotches,     //添加边缘的抖动，让边缘处不那么平滑
+                        onlyTiles,
+                        setTile));    //清除形状内所有物块
             }
 
             progress.Value = 0.7f;
@@ -111,13 +115,20 @@ namespace Coralite.Content.WorldGeneration
             int x2 = GenVars.snowOriginRight + 12;
 
             int spikeCount;
+            int spikeMaxWidth = 30;
 
             if (Main.maxTilesY > 8000)
-                spikeCount = 140;
+            {
+                spikeCount = 180;
+                spikeMaxWidth += 8;
+            }
             else if (Main.maxTilesX > 6000)
-                spikeCount = 100;
+                spikeCount = 120;
             else
                 spikeCount = 80;
+
+            Modifiers.Blotches Blotches = new Modifiers.Blotches(2, 0.4);
+            Modifiers.OnlyTiles onlyTiles = new Modifiers.OnlyTiles(TileID.SnowBlock, TileID.Slush);
 
             for (int i = 0; i < spikeCount / 2; i++)
             {
@@ -125,13 +136,12 @@ namespace Coralite.Content.WorldGeneration
 
                 WorldUtils.Gen(
                     new Point(x1, y),  //中心点
-                    new Shapes.Tail(WorldGen.genRand.Next(6,30)
-                    ,new ReLogic.Utilities.Vector2D(1,-1)*WorldGen.genRand.Next(minWidth, maxWidth)),   //形状：三角锥
+                    new Shapes.Tail(WorldGen.genRand.Next(6, spikeMaxWidth)
+                    , new ReLogic.Utilities.Vector2D(1, -1) * WorldGen.genRand.Next(minWidth, maxWidth)),   //形状：三角锥
                     Actions.Chain(  //如果要添加多个效果得使用这个chain
-                        new Modifiers.Blotches(2, 0.4),     //添加边缘的抖动，让边缘处不那么平滑
-                        new Modifiers.OnlyTiles(TileID.SnowBlock, TileID.Slush),
+                        Blotches,     //添加边缘的抖动，让边缘处不那么平滑
+                        onlyTiles,
                         new Actions.SetTile(WorldGen.genRand.NextFromList(TileID.IceBlock, TileID.BreakableIce))));    //放置墙壁
-
 
                 y = WorldGen.genRand.Next((int)(Main.maxTilesY * 0.2f), (int)(Main.maxTilesY * 0.95f));
 
@@ -140,8 +150,8 @@ namespace Coralite.Content.WorldGeneration
                     new Shapes.Tail(WorldGen.genRand.Next(6, 30)
                     , new ReLogic.Utilities.Vector2D(-1, -1) * WorldGen.genRand.Next(minWidth, maxWidth)),   //形状：三角锥
                     Actions.Chain(  //如果要添加多个效果得使用这个chain
-                        new Modifiers.Blotches(2, 0.4),     //添加边缘的抖动，让边缘处不那么平滑
-                        new Modifiers.OnlyTiles(TileID.SnowBlock, TileID.Slush),
+                        Blotches,     //添加边缘的抖动，让边缘处不那么平滑
+                        onlyTiles,
                         new Actions.SetTile(WorldGen.genRand.NextFromList(TileID.IceBlock, TileID.BreakableIce))));    //放置墙壁
 
 
@@ -164,6 +174,9 @@ namespace Coralite.Content.WorldGeneration
                 for (int j = 0; j < Main.maxTilesY; j++)
                     Main.tile[i, j].Clear(Terraria.DataStructures.TileDataType.Wall);
 
+            Modifiers.Blotches actions = new Modifiers.Blotches(2, 0.4);
+            Modifiers.OnlyTiles onlyTiles = new Modifiers.OnlyTiles(TileID.SnowBlock, TileID.IceBlock, TileID.BreakableIce);
+
             for (int i = 0; i < wallCount; i++)
             {
                 int ballCount = WorldGen.genRand.Next(3, 7);
@@ -181,8 +194,8 @@ namespace Coralite.Content.WorldGeneration
                     new Point(x, y),  //中心点
                     new Shapes.Circle(width, height),   //形状：圆
                     Actions.Chain(  //如果要添加多个效果得使用这个chain
-                        new Modifiers.Blotches(2, 0.4)//添加边缘的抖动，让边缘处不那么平滑
-                        , new Modifiers.OnlyTiles(TileID.SnowBlock, TileID.IceBlock,TileID.BreakableIce),     //仅限丛林
+                        actions//添加边缘的抖动，让边缘处不那么平滑
+                        , onlyTiles,     //仅限丛林
                         new Actions.PlaceWall(wallType)));    //放置墙壁
 
                 for (int j = 0; j < ballCount; j++)
@@ -198,8 +211,8 @@ namespace Coralite.Content.WorldGeneration
                         new Point(x, y),  //中心点
                         new Shapes.Circle(width, height),   //形状：圆
                         Actions.Chain(  //如果要添加多个效果得使用这个chain
-                        new Modifiers.Blotches(2, 0.4)//添加边缘的抖动，让边缘处不那么平滑
-                        , new Modifiers.OnlyTiles(TileID.SnowBlock, TileID.IceBlock, TileID.BreakableIce),     //仅限丛林
+                        actions//添加边缘的抖动，让边缘处不那么平滑
+                        , onlyTiles,     //仅限丛林
                             new Actions.PlaceWall(wallType)));    //放置墙壁
 
                 }

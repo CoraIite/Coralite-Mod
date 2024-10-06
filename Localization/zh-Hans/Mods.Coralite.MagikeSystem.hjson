@@ -195,20 +195,32 @@ MagikeSystem: {
 	TotalReflectionFilterTooltip:
 		'''
 		左键选择区域
-		松手后在区域内寻找带有魔能容器功能的魔能仪器
-		并为他们增加魔能上限
+		松手后在区域内寻找带有 [c/80d3ff:魔能容器] 功能的魔能仪器
+		并为他们[c/80d3ff:增加魔能上限]
 		'''
 	DiffractionFilterFilterTooltip:
 		'''
 		左键选择区域
-		松手后在区域内寻找带有魔能发送功能的魔能仪器
-		并为他们增加单次发送量
+		松手后在区域内寻找带有 [c/80d3ff:线性连接] 功能的魔能仪器
+		并为他们[c/80d3ff:增加可连接量]
 		'''
 	InterferenceFilterTooltip:
 		'''
 		左键选择区域
-		松手后在区域内寻找带有线性连接功能的魔能仪器
-		并为他们增加连接容量
+		松手后在区域内寻找带有 [c/80d3ff:魔能发送] 功能的魔能仪器
+		并为他们[c/80d3ff:增加单次发送量]
+		'''
+	PulseFilterTooltip:
+		'''
+		左键选择区域
+		松手后在区域内寻找带有 [c/80d3ff:计时器] 功能的魔能仪器
+		并为他们[c/80d3ff:减少计时器CD]
+		'''
+	ExcitedFilterTooltip:
+		'''
+		左键选择区域
+		松手后在区域内寻找带有 [c/80d3ff:魔能生产] 功能的魔能仪器
+		并为他们[c/80d3ff:增加单次生产量]（[c/ff1919:注意！部分特殊生产器不受此加成！]）
 		'''
 
 	Staffs: {
@@ -235,6 +247,8 @@ MagikeSystem: {
 		MagikeContainerNotFound: 未找到魔能容器！
 		MagikeSenderNotFound: 未找到魔能发送器！
 		MagikeLinerSenderNotFound: 未找到线性连接器！
+		MagikeProducerNotFound: 未找到魔能生产器！
+		TimerNotFound: 未找到计时器！
 	}
 
 	ItemDescriptionPolarizedFilter: 可插入的偏振滤镜：
@@ -340,6 +354,10 @@ MagikeSystem: {
 		DiffractionFilterName: 衍射滤镜
 		DiffractionBonus: ◇ 连接量强化：
 		ClickToDisconnect: 点击以取消连接
+		// PulseFilterName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.PulseFilterName
+		// PulseBonus: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.PulseBonus
+		// ExcitedFilterName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ExcitedFilterName
+		// ExcitedBonus: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ExcitedBonus
 	}
 
 	CraftText: {

@@ -123,6 +123,8 @@ namespace Coralite.Core.Systems.MagikeSystem
            MagikeContainerNotFound,
            MagikeSenderNotFound,
            MagikeLinerSenderNotFound,
+           MagikeProducerNotFound,
+           TimerNotFound,
 
            Count,
         }
@@ -287,6 +289,10 @@ namespace Coralite.Core.Systems.MagikeSystem
             InterferenceBonus,
             DiffractionFilterName,
             DiffractionBonus,
+            PulseFilterName,
+            PulseBonus,
+            ExcitedFilterName,
+            ExcitedBonus,
 
             /*
              * 物品生产器

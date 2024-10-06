@@ -122,7 +122,6 @@ namespace Coralite.Content.WorldGeneration
                     new Modifiers.Blotches(4, 0.4),     //添加边缘的抖动，让边缘处不那么平滑
                     new Actions.Clear(),    //清除形状内所有物块
                     new Actions.SetFrames(true).Output(innerData)));   //通过output记录当前的形状
-                                                                       //这里是设置物块帧，虽说可能没什么大用
 
             //生成外围圈
             WorldUtils.Gen(

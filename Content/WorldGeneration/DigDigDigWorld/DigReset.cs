@@ -13,6 +13,8 @@ namespace Coralite.Content.WorldGeneration
         {
             progress.Message = ReadyDig.Value;
 
+            DigHellWidth = 0;
+
             if (WorldGen.genRand.NextBool(2))
                 GenVars.crimsonLeft = false;
             else
@@ -25,7 +27,7 @@ namespace Coralite.Content.WorldGeneration
             Main.cloudAlpha = 0f;
             Main.maxRaining = 0f;
             Main.raining = false;
-
+            
             Main.checkXMas();
             Main.checkHalloween();
 

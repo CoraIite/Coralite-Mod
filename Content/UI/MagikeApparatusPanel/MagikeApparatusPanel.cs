@@ -1,5 +1,4 @@
 ﻿using Coralite.Core;
-using Coralite.Core.Loaders;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
@@ -287,7 +286,7 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
             InitVerticalLine();
             InitComponentPanel();
 
-            float min = ComponentControllerPanel.Width.Pixels + VerticalLine.Width.Pixels + 330;
+            float min = ComponentControllerPanel.Width.Pixels + VerticalLine.Width.Pixels + 360;
 
             BasePanel.MinWidth.Set(min, 0);
             BasePanel.MinHeight.Set(250, 0);
@@ -348,7 +347,8 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
 
             ComponentPanel.RemoveAllChildren();
 
-            CurrentShowComponentIndex = Math.Clamp(CurrentShowComponentIndex, 0, CurrentEntity.ComponentsCache.Count - 1);
+            if (CurrentEntity.ComponentsCache.Count != 0)
+                CurrentShowComponentIndex = Math.Clamp(CurrentShowComponentIndex, 0, CurrentEntity.ComponentsCache.Count - 1);
 
             if (!CurrentEntity.ComponentsCache.IndexInRange(CurrentShowComponentIndex))
                 return;

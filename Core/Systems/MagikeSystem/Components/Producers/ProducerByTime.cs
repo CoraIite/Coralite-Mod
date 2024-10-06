@@ -43,19 +43,12 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Producers
             [
                 //生产时间
                 this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.ProduceTime), parent),
-                this.NewTextBar(c =>
-                {
-                    float timer= MathF.Round(c.Timer/60f,1);
-                    float delay= MathF.Round(c.ProductionDelay/60f,1);
-                    float delayBase= MathF.Round(c.ProductionDelayBase/60f,1);
-                    float DelayBonus= c.ProductionDelayBonus;
+                this.NewTextBar(ConnectLengthText,parent),
 
-                    return $"  ▶ {timer} / {delay} ({delayBase} * {DelayBonus})";
-                },parent),
                 //生产量
                 this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.ProduceAmount), parent),
-                this.NewTextBar(c =>
-                    $"  ▶ {c.Throughput} ({c.ThroughputBase} * {c.ProductionDelayBonus})", parent),
+                this.NewTextBar(ThroughputText, parent),
+
                 //生产条件
                 this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.ProduceCondition), parent),
                 this.NewTextBar(c => MagikeSystem.GetUIText(c.ProduceCondition()), parent),

@@ -7,6 +7,7 @@ using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Imaging;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
@@ -478,8 +479,18 @@ namespace Coralite.Helpers
         /// </summary>
         /// <param name="container"></param>
         /// <returns></returns>
-        public static string GetBonusColorCode(float bonus)
+        public static string GetBonusColorCode(float bonus, bool reverse = false)
         {
+            if (reverse)
+            {
+                if (bonus < 1)
+                    return "80d3ff";//蓝色
+                else if (bonus > 1)
+                    return "ff1919";//红色
+                else
+                    return "ffffff";
+            }
+
             if (bonus > 1)
                 return "80d3ff";//蓝色
             else if (bonus < 1)
@@ -488,8 +499,18 @@ namespace Coralite.Helpers
                 return "ffffff";
         }
 
-        public static string GetBonusColorCode2(int bonus)
+        public static string GetBonusColorCode2(int bonus,bool reverse=false)
         {
+            if (reverse)
+            {
+                if (bonus < 0)
+                    return "80d3ff";//蓝色
+                else if (bonus > 0)
+                    return "ff1919";//红色
+                else
+                    return "ffffff";
+            }
+
             if (bonus > 0)
                 return "80d3ff";//蓝色
             else if (bonus < 0)
@@ -497,6 +518,12 @@ namespace Coralite.Helpers
             else
                 return "ffffff";
         }
+
+        public static string BonusColoredText(string text,float bonus, bool reverse = false)
+            => $"[c/{GetBonusColorCode(bonus, reverse)}:{text}]";
+
+        public static string BonusColoredText2(string text,int bonus, bool reverse = false)
+            => $"[c/{GetBonusColorCode2(bonus, reverse)}:{text}]";
 
         /// <summary>
         /// 添加标题
