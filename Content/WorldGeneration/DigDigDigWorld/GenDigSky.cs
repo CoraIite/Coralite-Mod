@@ -209,7 +209,7 @@ namespace Coralite.Content.WorldGeneration
 
             for (int i = 0; i < ballCount; i++)
             {
-                int y = WorldGen.genRand.Next((int)(Main.maxTilesY * 0.1f), (int)(Main.maxTilesY * 0.95f));
+                int y = WorldGen.genRand.Next(15, Main.maxTilesY-15);
 
                 int width = WorldGen.genRand.Next(4, 15);
 
@@ -245,7 +245,7 @@ namespace Coralite.Content.WorldGeneration
                 int x = GenVars.dungeonSide > 0 
                     ? Main.maxTilesX - WorldGen.genRand.Next(10, DigSkyWidth / 2)  
                     : WorldGen.genRand.Next(10, DigSkyWidth / 2);
-                int y = WorldGen.genRand.Next((int)(Main.maxTilesY * 0.1f), (int)(Main.maxTilesY * 0.95f));
+                int y = WorldGen.genRand.Next((int)(Main.maxTilesY * 0.1f), (int)(Main.maxTilesY * 0.8f));
 
                 int width = WorldGen.genRand.Next(1, 8);
                 int height = WorldGen.genRand.Next(1, 8);

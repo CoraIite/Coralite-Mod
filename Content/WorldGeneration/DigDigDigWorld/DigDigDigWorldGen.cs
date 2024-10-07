@@ -33,8 +33,16 @@ namespace Coralite.Content.WorldGeneration
             //生成地狱的基本样子
             tasks.Add(new PassLegacy("Coralite Dig Hell", GenDigHell));
 
-            //生成地狱的基本样子
+            //生成天空的基本样子
             tasks.Add(new PassLegacy("Coralite Dig Sky", GenDigSky));
+
+
+            //生成出生点的魔力水晶环
+            tasks.Add(new PassLegacy("Coralite Dig Crystal Cave", GenDigCrystalCave));
+
+
+            //生成NPC
+            tasks.Add(new PassLegacy("Coralite Dig NPC", SpawnDigNPC));
 
             //最后清理
             tasks.Add(new PassLegacy("Coralite Dig Clear", GenDigClear));

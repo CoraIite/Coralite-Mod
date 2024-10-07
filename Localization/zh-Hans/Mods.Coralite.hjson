@@ -29,5 +29,7 @@ WorldGeneration: {
 		DigDesert: 挖沙漠挖沙漠挖沙漠挖挖挖挖挖挖挖！
 		DigHell: 挖下界挖下界挖下界挖挖挖挖挖挖挖！
 		DigSky: 挖地表挖地表挖地表挖挖挖挖挖挖挖！
+		DigTheCrystalCave: 挖水晶洞挖水晶洞挖水晶洞挖挖挖挖挖挖挖！
+		DigTheNPC: 这是什么？笨拙史莱姆？生成一下。这是什么？渔夫？生成一下。这是什么？发型师？生成一下。
 	}
 }

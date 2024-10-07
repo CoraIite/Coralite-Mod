@@ -19,6 +19,7 @@ namespace Coralite.Content.WorldGeneration
             GenJungleBar(progress);
             GenJungleBlur(progress);
             GenJungleWall(progress);
+            GenHiveBall(progress);
         }
 
         /// <summary>
@@ -136,7 +137,47 @@ namespace Coralite.Content.WorldGeneration
                             new Actions.PlaceWall(wallType)));    //放置墙壁
                 }
 
-                progress.Value += 0.4f / wallCount;
+                progress.Value += 0.2f / wallCount;
+            }
+        }
+
+        private static void GenHiveBall(GenerationProgress progress)
+        {
+            int HiveCount;
+
+            if (Main.maxTilesY > 8000)
+                HiveCount = 300;
+            else if (Main.maxTilesX > 6000)
+                HiveCount = 300;
+            else
+                HiveCount = 100;
+
+            Modifiers.Blotches actions = new Modifiers.Blotches(2, 0.4);
+            Modifiers.OnlyTiles onlyTiles = new Modifiers.OnlyTiles(TileID.Mud, TileID.JungleGrass);
+            Actions.ClearTile clearTile = new Actions.ClearTile();
+            Actions.PlaceTile placeTile = new Actions.PlaceTile(TileID.Hive);
+            Actions.ClearWall clearWall = new Actions.ClearWall();
+            Actions.PlaceWall placeWall = new Actions.PlaceWall(WallID.HiveUnsafe);
+
+            for (int i = 0; i < HiveCount; i++)
+            {
+                int originX = WorldGen.genRand.Next(GenVars.jungleMinX, GenVars.jungleMaxX);
+                int originY = WorldGen.genRand.Next((int)(Main.maxTilesY * 0.05f), (int)(Main.maxTilesY * 0.3f));
+
+                int width = WorldGen.genRand.Next(2, 14);
+
+                WorldUtils.Gen(
+                    new Point(originX, originY),  //中心点
+                    new Shapes.Circle(width, width),   //形状：圆
+                    Actions.Chain(  //如果要添加多个效果得使用这个chain
+                        actions//添加边缘的抖动，让边缘处不那么平滑
+                        , onlyTiles,     //仅限丛林
+                        clearTile,
+                        placeTile,
+                        clearWall,
+                        placeWall));    //放置蜂巢
+
+                progress.Value += 0.2f / HiveCount;
             }
         }
 

@@ -109,16 +109,20 @@ namespace Coralite.Content.WorldGeneration
 
         private static void GenDesertWall(GenerationProgress progress)
         {
-            for (int i = GenVars.desertHiveLeft-30; i < GenVars.desertHiveRight+30; i++)
+            for (int i = GenVars.desertHiveLeft - 30; i < GenVars.desertHiveRight + 30; i++)
+            {
                 for (int j = 0; j < Main.maxTilesY; j++)
                 {
                     Tile t = Main.tile[i, j];
                     if (t.TileType is TileID.Sand or TileID.Sandstone or TileID.HardenedSand)
                     {
                         t.Clear(Terraria.DataStructures.TileDataType.Wall);
-                        WorldGen.PlaceWall(i, j, WallID.Sandstone);
+                        WorldGen.PlaceWall(i, j, WallID.Sandstone,true);
                     }
-                }     
+                }
+
+                progress.Value += 0.25f / (GenVars.desertHiveLeft+60);
+            }
         }
     }
 }

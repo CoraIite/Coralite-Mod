@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Tiles.ShadowCastle;
+﻿using Coralite.Content.Tiles.MagikeSeries1;
+using Coralite.Content.Tiles.ShadowCastle;
 using Coralite.Core;
 using Terraria;
 using Terraria.DataStructures;
@@ -44,8 +45,6 @@ namespace Coralite.Content.WorldGeneration
             //Main.tile.ClearEverything();
 
             //CoraliteWorld.DungeonRoom((int)Main.MouseWorld.X / 16, (int)Main.MouseWorld.Y / 16, TileID.CrystalBlock, WallID.CryocoreBrickWall);
-
-
 
             return base.CanUseItem(player);
         }

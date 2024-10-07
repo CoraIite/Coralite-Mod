@@ -29,5 +29,7 @@ WorldGeneration: {
 		DigDesert: Dig the desert! Dig the desert! Dig! Dig! Dig! Dig! Dig!
 		DigHell: Dig the underworld! Dig the underworld! Dig! Dig! Dig! Dig! Dig!
 		DigSky: Dig the sky! Dig the sky! Dig! Dig! Dig! Dig! Dig!
+		DigTheCrystalCave: Mods.Coralite.WorldGeneration.CoraliteWorld.DigTheCrystalCave
+		DigTheNPC: Mods.Coralite.WorldGeneration.CoraliteWorld.DigTheNPC
 	}
 }

@@ -77,7 +77,6 @@ namespace Coralite.Content.Tiles.MagikeSeries1
                 new(ModContent.ItemType<MagicCrystal>())
             };
         }
-
     }
 
     public class CrystalStalactiteLeft : ModTile

@@ -70,7 +70,6 @@ namespace Coralite.Content.WorldGeneration
             ushort basalt = (ushort)ModContent.TileType<BasaltTile>();
             ushort crystalBasalt = (ushort)ModContent.TileType<CrystalBasaltTile>();
             ushort crystalBlock = (ushort)ModContent.TileType<MagicCrystalBlockTile>();
-            ushort crystalBrick = (ushort)ModContent.TileType<MagicCrystalBrickTile>();
 
             //半径最小和最大值以及一半的墙壁厚度
             int radiusMin = 50;
@@ -135,130 +134,13 @@ namespace Coralite.Content.WorldGeneration
 
             try
             {
-                #region 生成浮岛
-                //生成中心水晶小浮岛
-                int howMany = WorldGen.genRand.Next(4, 10);
-
-                for (int i = 0; i < howMany; i++)
-                {
-                    //随机取点，加了点限制让这个点不会在圆环外
-                    Point selfPoint = origin + Main.rand.NextVector2Circular(width * 0.75f, height * 0.75f).ToPoint() + new Point(WorldGen.genRand.Next(-8, 8), WorldGen.genRand.Next(-3, 3));
-                    if (!WorldGen.InWorld(selfPoint.X, selfPoint.Y, 100))
-                        continue;
-
-                    WorldUtils.Gen(
-                        selfPoint,
-                        //史莱姆形状，同时压缩Y方向的大小，让它变得扁平
-                        new Shapes.Slime((int)WorldGen.genRand.NextFloat(width * 0.05f, width * 0.08f), 1f, WorldGen.genRand.NextFloat(0.25f, 0.5f)),
-                        Actions.Chain(
-                            new Modifiers.Flip(false, true),    //竖直翻转一下
-                            new Modifiers.Blotches(2, 0.4),     //添加边缘抖动
-                            new Actions.SetTile(crystalBasalt),     //放置物块
-                            new Actions.SetFrames(true)));      //设置物块帧
-                }
-
-                howMany = WorldGen.genRand.Next(3, 6);
-
-                for (int i = 0; i < howMany; i++)
-                {
-                    Point selfPoint = origin + Main.rand.NextVector2Circular(width * 0.75f, height * 0.75f).ToPoint() + new Point(WorldGen.genRand.Next(-8, 8), WorldGen.genRand.Next(-3, 3));
-                    if (!WorldGen.InWorld(selfPoint.X, selfPoint.Y, 100))
-                        continue;
-
-                    WorldUtils.Gen(
-                        selfPoint,
-                        new Shapes.Slime((int)WorldGen.genRand.NextFloat(width * 0.05f, width * 0.08f), 1f, WorldGen.genRand.NextFloat(0.25f, 0.5f)),
-                        Actions.Chain(
-                            new Modifiers.Flip(false, true),
-                            new Modifiers.Blotches(2, 0.4),
-                            new Actions.SetTile(crystalBlock),
-                            new Actions.SetFrames(true)));
-                }
-
-                //生成中心大浮岛
-                for (int i = 0; i < 3; i++)
-                {
-                    Point selfPoint = origin + Main.rand.NextVector2Circular(width * 0.9f, height * 0.9f).ToPoint() + new Point(WorldGen.genRand.Next(-8, 8), WorldGen.genRand.Next(-3, 3));
-                    WorldUtils.Gen(
-                        selfPoint,
-                        new Shapes.Slime((int)(width * 0.4f), WorldGen.genRand.NextFloat(1.2f, 1.5f), WorldGen.genRand.NextFloat(0.1f, 0.3f)),
-                        Actions.Chain(
-                            new Modifiers.Blotches(2, 0.4),
-                            new Actions.SetTile(basalt),
-                            new Actions.SetFrames(true)));
-                }
-
-                howMany = WorldGen.genRand.Next(8, 12);
-
-                for (int i = 0; i < howMany; i++)
-                {
-                    Point selfPoint = origin + Main.rand.NextVector2Circular(width, height).ToPoint() + new Point(WorldGen.genRand.Next(-8, 8), WorldGen.genRand.Next(-3, 3));
-                    WorldUtils.Gen(
-                        selfPoint,
-                        new Shapes.Slime((int)WorldGen.genRand.NextFloat(width * 0.05f, width * 0.15f), WorldGen.genRand.NextFloat(1f, 1.5f), WorldGen.genRand.NextFloat(0.3f, 0.6f)),
-                        Actions.Chain(
-                            new Modifiers.Blotches(2, 0.4),
-                            new Actions.SetTile(basalt),
-                            new Actions.SetFrames(true)));
-                }
-                #endregion
-
+                int howMany = BasaltFloatIsland(origin, width, height);
                 howMany = WorldGen.genRand.Next(12, 24);
 
                 //生成小起伏
-                for (int i = 0; i < howMany; i++)
-                {
-                    //在圆环上取点，之后在圆环上随机添加一些小凸起
-                    Point selfPoint = origin + Main.rand.NextVector2CircularEdge(width, height).ToPoint() + new Point(WorldGen.genRand.Next(-8, 8), WorldGen.genRand.Next(-3, 3));
-                    if (!WorldGen.InWorld(selfPoint.X, selfPoint.Y, 100))
-                        continue;
+                BasaltBall(origin, width, height, howMany);
 
-                    WorldUtils.Gen(
-                        selfPoint,
-                        new Shapes.Slime((int)WorldGen.genRand.NextFloat(width * 0.1f, width * 0.2f)),
-                        Actions.Chain(
-                            new Actions.SetTile(basalt),
-                            new Actions.SetFrames(true)));
-                }
-
-                #region 生成水晶锥
-                //生成玄武岩水晶锥
-                howMany = WorldGen.genRand.Next(8, 14);
-
-                for (int i = 0; i < howMany; i++)
-                {
-                    //在圆环上取点，并获取该点指向中心的单位向量
-                    Point selfPoint = origin + Main.rand.NextVector2CircularEdge(width, height).ToPoint() + new Point(WorldGen.genRand.Next(-3, 3), WorldGen.genRand.Next(-3, 3));
-                    if (!WorldGen.InWorld(selfPoint.X, selfPoint.Y, 100))
-                        continue;
-                    Vector2 dir = (origin.ToVector2() - selfPoint.ToVector2()).SafeNormalize(Vector2.Zero).RotatedBy(WorldGen.genRand.NextFloat(-0.4f, 0.4f));
-                    WorldUtils.Gen(
-                        selfPoint,
-                        //锥形，第一个参数是初始宽度，第二个参数是方向*距离
-                        new Shapes.Tail(WorldGen.genRand.NextFloat(width * 0.08f, width * 0.1f), dir.ToVector2D() * WorldGen.genRand.NextFloat(width * 0.05f, width * 0.3f)),
-                        Actions.Chain(
-                            new Actions.SetTile(crystalBasalt),
-                            new Actions.SetFrames(true)));
-                }
-
-                howMany = WorldGen.genRand.Next(12, 24);
-
-                //生成水晶锥
-                for (int i = 0; i < howMany; i++)
-                {
-                    Point selfPoint = origin + Main.rand.NextVector2CircularEdge(width, height).ToPoint() + new Point(WorldGen.genRand.Next(-3, 3), WorldGen.genRand.Next(-3, 3));
-                    if (!WorldGen.InWorld(selfPoint.X, selfPoint.Y, 100))
-                        continue;
-
-                    Vector2 dir = (origin.ToVector2() - selfPoint.ToVector2()).SafeNormalize(Vector2.Zero).RotatedBy(WorldGen.genRand.NextFloat(-0.4f, 0.4f));
-                    WorldUtils.Gen(
-                        selfPoint,
-                        new Shapes.Tail(WorldGen.genRand.NextFloat(width * 0.1f, width * 0.2f), dir.ToVector2D() * WorldGen.genRand.NextFloat(width * 0.05f, width * 0.55f)),
-                        Actions.Chain(
-                            new Actions.SetTile(crystalBlock),
-                            new Actions.SetFrames(true)));
-                }
-                #endregion
+                howMany = GenCrystalSpike(origin, width, height);
             }
             catch (System.Exception)
             {
@@ -342,119 +224,8 @@ namespace Coralite.Content.WorldGeneration
             //    WorldGen.PlaceTile(circleCenter.X - 1 + i, circleCenter.Y + 2, crystalBrick);
             #endregion
 
-            #region 生成水晶簇
-            int clustersSpawnCount = WorldGen.genRand.Next(1, 4);
-
-            int clustersX = origin.X + width / 6;
-            int clustersY = origin.Y + height / 6;
-            int clustersType = ModContent.TileType<MagicCrystalClustersTile>();
-
-            for (int i = 0; i < clustersSpawnCount; i++)
-                for (int j = 0; j < 1000; j++)
-                {
-                    if (j == 999)
-                    {
-                        int x1 = clustersX + WorldGen.genRand.Next(0, width * 5 / 6);
-                        int y1 = clustersY + WorldGen.genRand.Next(0, height * 5 / 6);
-
-                        for (int k = 0; k < 3; k++)//检测底部空间
-                            Main.tile[x1 + k, y1].ResetToType(basalt);
-
-                        for (int m = 0; m < 3; m++)//清空底部空间
-                            for (int n = -1; n > -5; n--)
-                                Main.tile[x1 + m, y1 + n].ClearTile();
-
-                        WorldGen.PlaceObject(x1, y1 - 1, clustersType);
-                    }
-
-                    int x = clustersX + WorldGen.genRand.Next(0, width * 5 / 6);
-                    int y = clustersY + WorldGen.genRand.Next(0, height * 5 / 6);
-
-                    bool canGenerate = true;
-
-                    for (int k = 0; k < 3; k++)//检测底部空间
-                    {
-                        Tile bottonTile = Main.tile[x + k, y];
-                        if (!bottonTile.HasTile || bottonTile.TileType != basalt)
-                        {
-                            canGenerate = false;
-                            break;
-                        }
-                    }
-
-                    if (!canGenerate)
-                        continue;
-
-                    for (int m = 0; m < 3; m++)//检测底部空间
-                        for (int n = -1; n > -5; n--)
-                        {
-                            Tile t = Main.tile[x + m, y + n];
-                            if (t.HasTile)
-                            {
-                                canGenerate = false;
-                                break;
-                            }
-                        }
-
-                    if (!canGenerate)
-                        continue;
-
-                    WorldGen.PlaceObject(x, y - 1, clustersType);
-                    break;
-                }
-            #endregion
-
-            #region 生成中心小神龛
-            int whichOne = WorldGen.genRand.Next(5);
-            Texture2D shrineTex = ModContent.Request<Texture2D>(AssetDirectory.Shrines + "MagicCrystalShrine" + whichOne.ToString(), AssetRequestMode.ImmediateLoad).Value;
-            Texture2D clearTex = ModContent.Request<Texture2D>(AssetDirectory.Shrines + "MagicCrystalShrineClear" + whichOne.ToString(), AssetRequestMode.ImmediateLoad).Value;
-            Texture2D wallTex = ModContent.Request<Texture2D>(AssetDirectory.Shrines + "MagicCrystalWall" + whichOne.ToString(), AssetRequestMode.ImmediateLoad).Value;
-
-            int genOrigin_x = origin.X - (clearTex.Width / 2);
-            int genOrigin_y = origin.Y - (clearTex.Height / 2);
-
-            Point chestPos = new(genOrigin_x + 13, genOrigin_y + 13);
-            Point lightPoint1 = new(genOrigin_x + 7, genOrigin_y + 14);
-            Point lightPoint2 = new(genOrigin_x + 17, genOrigin_y + 14);
-
-            Dictionary<Color, int> clearDic = new()
-            {
-                [Color.White] = -2,
-                [Color.Black] = -1
-            };
-            Dictionary<Color, int> mainDic = new()
-            {
-                [new Color(255, 112, 210)] = crystalBlock,
-                [new Color(255, 177, 230)] = crystalBrick,
-                [new Color(142, 43, 170)] = ModContent.TileType<HardBasaltTile>(),
-                [new Color(183, 12, 232)] = basalt,
-                [new Color(90, 100, 80)] = TileID.Chain,
-                [Color.Black] = -1
-            };
-            Dictionary<Color, int> wallDic = new()
-            {
-                [new Color(255, 255, 0)] = ModContent.WallType<Walls.Magike.HardBasaltWall>(),
-                [Color.Black] = -1
-            };
-
-            Task.Run(async () =>
-            {
-                await GenShrine(clearTex, shrineTex, wallTex, clearDic, mainDic, wallDic, genOrigin_x, genOrigin_y);
-            }).Wait();
-
-            //放置灯
-            int brokenLensType = ModContent.TileType<BrokenLens>();
-            TileObjectData data = TileObjectData.GetTileData(brokenLensType, 0);
-
-            WorldGen.PlaceObject(lightPoint1.X, lightPoint1.Y, brokenLensType, true, WorldGen.genRand.Next(data.RandomStyleRange));
-            WorldGen.PlaceObject(lightPoint2.X, lightPoint2.Y, brokenLensType, true, WorldGen.genRand.Next(data.RandomStyleRange));
-
-            //放置箱子
-            ushort chestTileType = (ushort)ModContent.TileType<BasaltChestTile>();
-            WorldGen.AddBuriedChest(chestPos.X, chestPos.Y,
-                ModContent.ItemType<MagikeBasePage>(), notNearOtherChests: false, 0, trySlope: false, chestTileType);
-
-            #endregion
+            GenCrystaClusters(origin, width, height);
+            MagicCrystalCaveChest(origin);
 
             #region 废弃内容
             //for (int i = 0; i < 4; i++)
@@ -545,7 +316,25 @@ namespace Coralite.Content.WorldGeneration
 
             #endregion
 
-            #region 添加装饰
+            AddCrystalCaveDecoration( width, height, topLeft);
+            GenVars.structures.AddProtectedStructure(new Rectangle(origin.X - width, origin.Y - height, width * 2, height * 2), 10);
+
+            MagicCrystalCaveCenters.Add(new Point16(origin.X, origin.Y));
+            return true;
+        }
+
+        /// <summary>
+        /// 添加装饰
+        /// </summary>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <param name="topLeft"></param>
+        private static void AddCrystalCaveDecoration( int width, int height, Point topLeft)
+        {
+            ushort basalt = (ushort)ModContent.TileType<BasaltTile>();
+            ushort crystalBasalt = (ushort)ModContent.TileType<CrystalBasaltTile>();
+            ushort crystalBlock = (ushort)ModContent.TileType<MagicCrystalBlockTile>();
+
             //添加斜坡
             WorldGenHelper.SmoothSlope(topLeft.X, topLeft.Y, 0, 0, width * 2, height * 2, basalt, 5);
             WorldGenHelper.SmoothSlope(topLeft.X, topLeft.Y, 0, 0, width * 2, height * 2, crystalBasalt, 5);
@@ -565,12 +354,296 @@ namespace Coralite.Content.WorldGeneration
 
             WorldGenHelper.PlaceOnTopDecorations(topLeft.X, topLeft.Y, 0, 0, (int)(width * 2.2f), (int)(height * 3f), (ushort)ModContent.TileType<BasaltStalactiteTop>(), 4, 0, basalt);
             WorldGenHelper.PlaceOnGroundDecorations(topLeft.X, topLeft.Y, 0, 0, (int)(width * 2.2f), (int)(height * 3f), (ushort)ModContent.TileType<BasaltStalactiteBottom>(), 4, 0, basalt);
-            #endregion
+        }
 
-            GenVars.structures.AddProtectedStructure(new Rectangle(origin.X - width, origin.Y - height, width * 2, height * 2), 10);
+        /// <summary>
+        /// 生成水晶簇
+        /// </summary>
+        /// <param name="origin"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        private static void GenCrystaClusters(Point origin, int width, int height)
+        {
+            ushort basalt = (ushort)ModContent.TileType<BasaltTile>();
 
-            MagicCrystalCaveCenters.Add(new Point16(origin.X, origin.Y));
-            return true;
+            int clustersSpawnCount = WorldGen.genRand.Next(1, 4);
+
+            int clustersX = origin.X + width / 6;
+            int clustersY = origin.Y + height / 6;
+            int clustersType = ModContent.TileType<MagicCrystalClustersTile>();
+
+            for (int i = 0; i < clustersSpawnCount; i++)
+                for (int j = 0; j < 1000; j++)
+                {
+                    if (j == 999)
+                    {
+                        int x1 = clustersX + WorldGen.genRand.Next(0, width * 5 / 6);
+                        int y1 = clustersY + WorldGen.genRand.Next(0, height * 5 / 6);
+
+                        for (int k = 0; k < 3; k++)//检测底部空间
+                            Main.tile[x1 + k, y1].ResetToType(basalt);
+
+                        for (int m = 0; m < 3; m++)//清空底部空间
+                            for (int n = -1; n > -5; n--)
+                                Main.tile[x1 + m, y1 + n].ClearTile();
+
+                        WorldGen.PlaceObject(x1, y1 - 1, clustersType);
+                    }
+
+                    int x = clustersX + WorldGen.genRand.Next(0, width * 5 / 6);
+                    int y = clustersY + WorldGen.genRand.Next(0, height * 5 / 6);
+
+                    bool canGenerate = true;
+
+                    for (int k = 0; k < 3; k++)//检测底部空间
+                    {
+                        Tile bottonTile = Main.tile[x + k, y];
+                        if (!bottonTile.HasTile || bottonTile.TileType != basalt)
+                        {
+                            canGenerate = false;
+                            break;
+                        }
+                    }
+
+                    if (!canGenerate)
+                        continue;
+
+                    for (int m = 0; m < 3; m++)//检测底部空间
+                        for (int n = -1; n > -5; n--)
+                        {
+                            Tile t = Main.tile[x + m, y + n];
+                            if (t.HasTile)
+                            {
+                                canGenerate = false;
+                                break;
+                            }
+                        }
+
+                    if (!canGenerate)
+                        continue;
+
+                    WorldGen.PlaceObject(x, y - 1, clustersType);
+                    break;
+                }
+        }
+
+        /// <summary>
+        /// 生成水晶锥
+        /// </summary>
+        /// <param name="origin"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <returns></returns>
+        private static int GenCrystalSpike(Point origin, int width, int height)
+        {
+            ushort crystalBasalt = (ushort)ModContent.TileType<CrystalBasaltTile>();
+            ushort crystalBlock = (ushort)ModContent.TileType<MagicCrystalBlockTile>();
+
+            //生成玄武岩水晶锥
+            int howMany = WorldGen.genRand.Next(8, 14);
+            for (int i = 0; i < howMany; i++)
+            {
+                //在圆环上取点，并获取该点指向中心的单位向量
+                Point selfPoint = origin + Main.rand.NextVector2CircularEdge(width, height).ToPoint() + new Point(WorldGen.genRand.Next(-3, 3), WorldGen.genRand.Next(-3, 3));
+                if (!WorldGen.InWorld(selfPoint.X, selfPoint.Y, 100))
+                    continue;
+                Vector2 dir = (origin.ToVector2() - selfPoint.ToVector2()).SafeNormalize(Vector2.Zero).RotatedBy(WorldGen.genRand.NextFloat(-0.4f, 0.4f));
+                WorldUtils.Gen(
+                    selfPoint,
+                    //锥形，第一个参数是初始宽度，第二个参数是方向*距离
+                    new Shapes.Tail(WorldGen.genRand.NextFloat(width * 0.08f, width * 0.1f), dir.ToVector2D() * WorldGen.genRand.NextFloat(width * 0.05f, width * 0.3f)),
+                    Actions.Chain(
+                        new Actions.SetTile(crystalBasalt),
+                        new Actions.SetFrames(true)));
+            }
+
+            howMany = WorldGen.genRand.Next(12, 24);
+
+            //生成水晶锥
+            for (int i = 0; i < howMany; i++)
+            {
+                Point selfPoint = origin + Main.rand.NextVector2CircularEdge(width, height).ToPoint() + new Point(WorldGen.genRand.Next(-3, 3), WorldGen.genRand.Next(-3, 3));
+                if (!WorldGen.InWorld(selfPoint.X, selfPoint.Y, 100))
+                    continue;
+
+                Vector2 dir = (origin.ToVector2() - selfPoint.ToVector2()).SafeNormalize(Vector2.Zero).RotatedBy(WorldGen.genRand.NextFloat(-0.4f, 0.4f));
+                WorldUtils.Gen(
+                    selfPoint,
+                    new Shapes.Tail(WorldGen.genRand.NextFloat(width * 0.1f, width * 0.2f), dir.ToVector2D() * WorldGen.genRand.NextFloat(width * 0.05f, width * 0.55f)),
+                    Actions.Chain(
+                        new Actions.SetTile(crystalBlock),
+                        new Actions.SetFrames(true)));
+            }
+
+            return howMany;
+        }
+
+        private static void BasaltBall(Point origin, int width, int height, int howMany)
+        {
+            ushort basalt = (ushort)ModContent.TileType<BasaltTile>();
+
+            for (int i = 0; i < howMany; i++)
+            {
+                //在圆环上取点，之后在圆环上随机添加一些小凸起
+                Point selfPoint = origin + Main.rand.NextVector2CircularEdge(width, height).ToPoint() + new Point(WorldGen.genRand.Next(-8, 8), WorldGen.genRand.Next(-3, 3));
+                if (!WorldGen.InWorld(selfPoint.X, selfPoint.Y, 100))
+                    continue;
+
+                WorldUtils.Gen(
+                    selfPoint,
+                    new Shapes.Slime((int)WorldGen.genRand.NextFloat(width * 0.1f, width * 0.2f)),
+                    Actions.Chain(
+                        new Actions.SetTile(basalt),
+                        new Actions.SetFrames(true)));
+            }
+        }
+
+        /// <summary>
+        /// 生成浮岛
+        /// </summary>
+        /// <param name="origin"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        /// <returns></returns>
+        private static int BasaltFloatIsland(Point origin, int width, int height)
+        {
+            //生成中心水晶小浮岛
+            int howMany = WorldGen.genRand.Next(4, 10);
+
+            ushort basalt = (ushort)ModContent.TileType<BasaltTile>();
+            ushort crystalBasalt = (ushort)ModContent.TileType<CrystalBasaltTile>();
+            ushort crystalBlock = (ushort)ModContent.TileType<MagicCrystalBlockTile>();
+
+            for (int i = 0; i < howMany; i++)
+            {
+                //随机取点，加了点限制让这个点不会在圆环外
+                Point selfPoint = origin + Main.rand.NextVector2Circular(width * 0.75f, height * 0.75f).ToPoint() + new Point(WorldGen.genRand.Next(-8, 8), WorldGen.genRand.Next(-3, 3));
+                if (!WorldGen.InWorld(selfPoint.X, selfPoint.Y, 100))
+                    continue;
+
+                WorldUtils.Gen(
+                    selfPoint,
+                    //史莱姆形状，同时压缩Y方向的大小，让它变得扁平
+                    new Shapes.Slime((int)WorldGen.genRand.NextFloat(width * 0.05f, width * 0.08f), 1f, WorldGen.genRand.NextFloat(0.25f, 0.5f)),
+                    Actions.Chain(
+                        new Modifiers.Flip(false, true),    //竖直翻转一下
+                        new Modifiers.Blotches(2, 0.4),     //添加边缘抖动
+                        new Actions.SetTile(crystalBasalt),     //放置物块
+                        new Actions.SetFrames(true)));      //设置物块帧
+            }
+
+            howMany = WorldGen.genRand.Next(3, 6);
+
+            for (int i = 0; i < howMany; i++)
+            {
+                Point selfPoint = origin + Main.rand.NextVector2Circular(width * 0.75f, height * 0.75f).ToPoint() + new Point(WorldGen.genRand.Next(-8, 8), WorldGen.genRand.Next(-3, 3));
+                if (!WorldGen.InWorld(selfPoint.X, selfPoint.Y, 100))
+                    continue;
+
+                WorldUtils.Gen(
+                    selfPoint,
+                    new Shapes.Slime((int)WorldGen.genRand.NextFloat(width * 0.05f, width * 0.08f), 1f, WorldGen.genRand.NextFloat(0.25f, 0.5f)),
+                    Actions.Chain(
+                        new Modifiers.Flip(false, true),
+                        new Modifiers.Blotches(2, 0.4),
+                        new Actions.SetTile(crystalBlock),
+                        new Actions.SetFrames(true)));
+            }
+
+            //生成中心大浮岛
+            for (int i = 0; i < 3; i++)
+            {
+                Point selfPoint = origin + Main.rand.NextVector2Circular(width * 0.9f, height * 0.9f).ToPoint() + new Point(WorldGen.genRand.Next(-8, 8), WorldGen.genRand.Next(-3, 3));
+                WorldUtils.Gen(
+                    selfPoint,
+                    new Shapes.Slime((int)(width * 0.4f), WorldGen.genRand.NextFloat(1.2f, 1.5f), WorldGen.genRand.NextFloat(0.1f, 0.3f)),
+                    Actions.Chain(
+                        new Modifiers.Blotches(2, 0.4),
+                        new Actions.SetTile(basalt),
+                        new Actions.SetFrames(true)));
+            }
+
+            howMany = WorldGen.genRand.Next(8, 12);
+
+            for (int i = 0; i < howMany; i++)
+            {
+                Point selfPoint = origin + Main.rand.NextVector2Circular(width, height).ToPoint() + new Point(WorldGen.genRand.Next(-8, 8), WorldGen.genRand.Next(-3, 3));
+                WorldUtils.Gen(
+                    selfPoint,
+                    new Shapes.Slime((int)WorldGen.genRand.NextFloat(width * 0.05f, width * 0.15f), WorldGen.genRand.NextFloat(1f, 1.5f), WorldGen.genRand.NextFloat(0.3f, 0.6f)),
+                    Actions.Chain(
+                        new Modifiers.Blotches(2, 0.4),
+                        new Actions.SetTile(basalt),
+                        new Actions.SetFrames(true)));
+            }
+
+            return howMany;
+        }
+
+        /// <summary>
+        /// 生成魔力水晶洞中心小神龛
+        /// </summary>
+        /// <param name="origin"></param>
+        /// <param name="basalt"></param>
+        /// <param name="crystalBlock"></param>
+        /// <param name="crystalBrick"></param>
+        private Point MagicCrystalCaveChest(Point origin)
+        {
+            int whichOne = WorldGen.genRand.Next(5);
+
+            ushort basalt = (ushort)ModContent.TileType<BasaltTile>();
+            ushort crystalBlock = (ushort)ModContent.TileType<MagicCrystalBlockTile>();
+            ushort crystalBrick = (ushort)ModContent.TileType<MagicCrystalBrickTile>();
+
+            Texture2D shrineTex = ModContent.Request<Texture2D>(AssetDirectory.Shrines + "MagicCrystalShrine" + whichOne.ToString(), AssetRequestMode.ImmediateLoad).Value;
+            Texture2D clearTex = ModContent.Request<Texture2D>(AssetDirectory.Shrines + "MagicCrystalShrineClear" + whichOne.ToString(), AssetRequestMode.ImmediateLoad).Value;
+            Texture2D wallTex = ModContent.Request<Texture2D>(AssetDirectory.Shrines + "MagicCrystalWall" + whichOne.ToString(), AssetRequestMode.ImmediateLoad).Value;
+
+            int genOrigin_x = origin.X - (clearTex.Width / 2);
+            int genOrigin_y = origin.Y - (clearTex.Height / 2);
+
+            Point chestPos = new(genOrigin_x + 13, genOrigin_y + 13);
+            Point lightPoint1 = new(genOrigin_x + 7, genOrigin_y + 14);
+            Point lightPoint2 = new(genOrigin_x + 17, genOrigin_y + 14);
+
+            Dictionary<Color, int> clearDic = new()
+            {
+                [Color.White] = -2,
+                [Color.Black] = -1
+            };
+            Dictionary<Color, int> mainDic = new()
+            {
+                [new Color(255, 112, 210)] = crystalBlock,
+                [new Color(255, 177, 230)] = crystalBrick,
+                [new Color(142, 43, 170)] = ModContent.TileType<HardBasaltTile>(),
+                [new Color(183, 12, 232)] = basalt,
+                [new Color(90, 100, 80)] = TileID.Chain,
+                [Color.Black] = -1
+            };
+            Dictionary<Color, int> wallDic = new()
+            {
+                [new Color(255, 255, 0)] = ModContent.WallType<Walls.Magike.HardBasaltWall>(),
+                [Color.Black] = -1
+            };
+
+            Task.Run(async () =>
+            {
+                await GenShrine(clearTex, shrineTex, wallTex, clearDic, mainDic, wallDic, genOrigin_x, genOrigin_y);
+            }).Wait();
+
+            //放置灯
+            int brokenLensType = ModContent.TileType<BrokenLens>();
+            TileObjectData data = TileObjectData.GetTileData(brokenLensType, 0);
+
+            WorldGen.PlaceObject(lightPoint1.X, lightPoint1.Y, brokenLensType, true, WorldGen.genRand.Next(data.RandomStyleRange));
+            WorldGen.PlaceObject(lightPoint2.X, lightPoint2.Y, brokenLensType, true, WorldGen.genRand.Next(data.RandomStyleRange));
+
+            //放置箱子
+            ushort chestTileType = (ushort)ModContent.TileType<BasaltChestTile>();
+            WorldGen.AddBuriedChest(chestPos.X, chestPos.Y,
+                ModContent.ItemType<MagikeBasePage>(), notNearOtherChests: false, 0, trySlope: false, chestTileType);
+
+            return chestPos;
         }
 
         public Task GenShrine(Texture2D clearTex, Texture2D shrineTex, Texture2D wallTex,
