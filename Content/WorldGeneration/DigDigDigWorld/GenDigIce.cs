@@ -77,7 +77,7 @@ namespace Coralite.Content.WorldGeneration
             else
                 ballCount = 100;
 
-            Modifiers.Blotches Blotches = new Modifiers.Blotches(4, 0.4);
+            Modifiers.Blotches Blotches = new Modifiers.Blotches(1, 0.4);
             Modifiers.OnlyTiles onlyTiles = new Modifiers.OnlyTiles(TileID.SnowBlock);
             Actions.SetTile setTile = new Actions.SetTile(TileID.Slush);
 
@@ -86,8 +86,8 @@ namespace Coralite.Content.WorldGeneration
                 int x = WorldGen.genRand.Next(GenVars.snowOriginLeft, GenVars.snowOriginRight);
                 int y = WorldGen.genRand.Next((int)(Main.maxTilesY * 0.1f), (int)(Main.maxTilesY * 0.95f));
 
-                int width = WorldGen.genRand.Next(4, 15);
-                int height = WorldGen.genRand.Next(4, 15);
+                int width = WorldGen.genRand.Next(4, 12);
+                int height = WorldGen.genRand.Next(4, 12);
 
                 WorldUtils.Gen(
                     new Point(x, y),  //中心点

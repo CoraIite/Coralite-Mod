@@ -4542,7 +4542,7 @@ StoneMaker: {
 	Tooltip:
 		'''
 		Activated when placed on some stones to consume mana energy to produce stones
-		Production: Dirt, Stone, Marble, Granite, Crimstone Blocks, Ebonstone Blocks
+		Production: Dirt, Stone, Marble, Granite, Crimstone Blocks, Ebonstone Blocks, Pealstone blocks
 		  Ash, basalt, skarn
 		'''
 }
@@ -4597,25 +4597,55 @@ BrilliantMagikeActivator: {
 
 MagicCrystalTRFilter: {
 	DisplayName: Magic Crystal Total Reflection Filter
-	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.TotalReflectionFilterTooltip}"
+	Tooltip:
+		'''
+		{$Mods.Coralite.MagikeSystem.MagikeSystem.TotalReflectionFilterTooltip}
+		[c/80d3ff:+10%]
+		'''
 }
 
 MagicCrystalDiffractionFilter: {
 	DisplayName: Magic Crystal Diffraction Filter
-	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.DiffractionFilterFilterTooltip}"
+	Tooltip:
+		'''
+		{$Mods.Coralite.MagikeSystem.MagikeSystem.DiffractionFilterFilterTooltip}
+		[c/80d3ff:+1]
+		'''
 }
 
 MagicCrystalInterferenceFilter: {
 	DisplayName: Magic Crystal Interference Filter
-	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.InterferenceFilterTooltip}"
+	Tooltip:
+		'''
+		{$Mods.Coralite.MagikeSystem.MagikeSystem.InterferenceFilterTooltip}
+		[c/80d3ff:+10%]
+		'''
 }
 
 MagicCrystalExcitedFilter: {
 	DisplayName: Magic Crystal Excited Filter
-	Tooltip: ""
+	Tooltip:
+		'''
+		{$Mods.Coralite.MagikeSystem.MagikeSystem.ExcitedFilterTooltip}
+		[c/80d3ff:+10%]
+		'''
 }
 
 MagicCrystalPulseFilter: {
 	DisplayName: Magic Crystal Pulse Filter
-	Tooltip: ""
+	Tooltip:
+		'''
+		{$Mods.Coralite.MagikeSystem.MagikeSystem.PulseFilterTooltip}
+		[c/80d3ff:+10%]
+		'''
+}
+
+TreasureLens: {
+	DisplayName: Treasure Lens
+	Tooltip:
+		'''
+		Consume valuable items to produce magike
+		The output is the number of silver coins equal to the value of the item, up to a maximum of 100
+		{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}
+		'''
 }

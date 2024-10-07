@@ -28,5 +28,6 @@ WorldGeneration: {
 		DigClearUpText: 拿好你的工具，现在是挖掘时间！
 		DigDesert: 挖沙漠挖沙漠挖沙漠挖挖挖挖挖挖挖！
 		DigHell: 挖下界挖下界挖下界挖挖挖挖挖挖挖！
+		DigSky: 挖地表挖地表挖地表挖挖挖挖挖挖挖！
 	}
 }

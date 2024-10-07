@@ -41,6 +41,7 @@ namespace Coralite.Content.Items.Magike.Altars
                 MALevel.None,
                 MALevel.MagicCrystal,
                 MALevel.Glistent,
+                MALevel.Hallow,
             ];
         }
 
@@ -49,7 +50,8 @@ namespace Coralite.Content.Items.Magike.Altars
             return level switch
             {
                 MALevel.MagicCrystal 
-                or MALevel.Glistent=> rotation.ToRotationVector2() * 8,
+                or MALevel.Glistent
+                or MALevel.Hallow => rotation.ToRotationVector2() * 8,
                 _ => Vector2.Zero
             };
         }
@@ -59,7 +61,8 @@ namespace Coralite.Content.Items.Magike.Altars
             return level switch
             {
                 MALevel.MagicCrystal
-                or MALevel.Glistent => Vector2.Zero,
+                or MALevel.Glistent
+                or MALevel.Hallow=> Vector2.Zero,
                 _ => Vector2.Zero
             };
         }
@@ -98,11 +101,11 @@ namespace Coralite.Content.Items.Magike.Altars
         {
             MagikeMaxBase = incomeLevel switch
             {
-                MALevel.MagicCrystal => MagikeHelper.CalculateMagikeCost(MALevel.MagicCrystal, 48, 60 * 10),
-                MALevel.Glistent => 1000_0000,
+                MALevel.MagicCrystal => MagikeHelper.CalculateMagikeCost(MALevel.MagicCrystal, 32, 60 * 10),
+                MALevel.Glistent => MagikeHelper.CalculateMagikeCost(MALevel.Glistent, 32, 60 * 10),
                 MALevel.Shadow => 300,
                 MALevel.CrystallineMagike => 2250,
-                MALevel.Hallow => 9000,
+                MALevel.Hallow => 1000_0000,
                 MALevel.HolyLight => 15000,
                 MALevel.SplendorMagicore => 35000,
                 _ => 0,
@@ -130,7 +133,8 @@ namespace Coralite.Content.Items.Magike.Altars
             var second = incomeLevel switch
             {
                 MALevel.MagicCrystal => 15,
-                MALevel.Glistent => 5,
+                MALevel.Glistent => 13,
+                MALevel.Hallow => 5,
                 _ => (float)(10_0000_0000 / 60),
             };
 

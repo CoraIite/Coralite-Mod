@@ -306,11 +306,16 @@ namespace Coralite.Core.Systems.MagikeSystem
              *      
              */
 
+            FactoryWorkTime,
+            StoneMakerName,
+            StoneMakerOutPut,
+
             ExtractProducerName,
             ProduceTime,
             ProduceAmount,
             ProduceCondition,
             ItemWithMagike,
+            ItemWithValue,
             ForestLensName,
             ForestCondition,
             OceanLensName,
@@ -340,6 +345,7 @@ namespace Coralite.Core.Systems.MagikeSystem
             HallowLensName,
             HallowCondition,
             GelLensName,
+            TresureLensName,
 
             /*
              * 物品容器

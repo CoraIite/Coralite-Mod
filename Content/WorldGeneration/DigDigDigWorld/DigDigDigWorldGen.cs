@@ -33,6 +33,9 @@ namespace Coralite.Content.WorldGeneration
             //生成地狱的基本样子
             tasks.Add(new PassLegacy("Coralite Dig Hell", GenDigHell));
 
+            //生成地狱的基本样子
+            tasks.Add(new PassLegacy("Coralite Dig Sky", GenDigSky));
+
             //最后清理
             tasks.Add(new PassLegacy("Coralite Dig Clear", GenDigClear));
         }

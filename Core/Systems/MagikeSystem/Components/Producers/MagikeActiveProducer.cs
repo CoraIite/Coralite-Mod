@@ -56,7 +56,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Producers
             Produce();
         }
 
-        public virtual string ConnectLengthText(MagikeActiveProducer p)
+        public virtual string ProductionDelayText(MagikeActiveProducer p)
         {
             float timer = MathF.Round(p.Timer / 60f, 1);
             float delay = MathF.Round(p.ProductionDelay / 60f, 1);

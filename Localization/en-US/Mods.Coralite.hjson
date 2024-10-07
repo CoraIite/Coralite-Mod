@@ -24,9 +24,10 @@ WorldGeneration: {
 		ReplaceVanillaChestText: More loot is being stuffed into chests
 		ReadyDig: Gear up and get ready to dig!
 		DigTheJungle: Dig the jungle! Dig the jungle! Dig! Dig! Dig! Dig! Dig!
-		DigTheIce: Mods.Coralite.WorldGeneration.CoraliteWorld.DigTheIce
-		DigClearUpText: Mods.Coralite.WorldGeneration.CoraliteWorld.DigClearUpText
-		DigDesert: Mods.Coralite.WorldGeneration.CoraliteWorld.DigDesert
-		DigHell: Mods.Coralite.WorldGeneration.CoraliteWorld.DigHell
+		DigTheIce: Dig the ice! Dig the ice! Dig! Dig! Dig! Dig! Dig!
+		DigClearUpText: Take your tools, it's digging time!
+		DigDesert: Dig the desert! Dig the desert! Dig! Dig! Dig! Dig! Dig!
+		DigHell: Dig the underworld! Dig the underworld! Dig! Dig! Dig! Dig! Dig!
+		DigSky: Dig the sky! Dig the sky! Dig! Dig! Dig! Dig! Dig!
 	}
 }

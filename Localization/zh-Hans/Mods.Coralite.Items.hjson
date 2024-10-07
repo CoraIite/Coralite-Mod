@@ -4610,7 +4610,7 @@ StoneMaker: {
 	Tooltip:
 		'''
 		放置在部分石块上后激活以消耗魔能生产石块
-		可生产的种类：泥土，石头，大理石，花岗岩，猩红石块，腐化石块
+		可生产的种类：泥土，石头，大理石，花岗岩，猩红石块，腐化石块，珍珠石块
 		  灰烬，玄武岩，矽卡岩
 		'''
 }
@@ -4702,5 +4702,15 @@ MagicCrystalPulseFilter: {
 		'''
 		{$Mods.Coralite.MagikeSystem.MagikeSystem.PulseFilterTooltip}
 		[c/80d3ff:增加 10%]
+		'''
+}
+
+TreasureLens: {
+	DisplayName: 财宝透镜
+	Tooltip:
+		'''
+		消耗有价值的物品生产魔能
+		产量为物品价值等量的银币数，最多不超过100
+		{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}
 		'''
 }

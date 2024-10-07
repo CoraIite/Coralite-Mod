@@ -6,7 +6,7 @@ using Terraria.UI;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components.Producers
 {
-    public abstract class MagikeCostItemProducer : MagikeActiveProducer,IUIShowable
+    public abstract class MagikeCostItemProducer : MagikeActiveProducer, IUIShowable
     {
         private int _index;
 
@@ -96,11 +96,12 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Producers
             UIList list =
             [
                 //生产时间
-                this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.ProduceTime)
-                + $"\n  - {c.Timer} / {c.ProductionDelay} ({c.ProductionDelayBase} * {c.ProductionDelayBonus})", parent),
+                this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.ProduceTime), parent),
+                this.NewTextBar(ProductionDelayText, parent),
+
                 //提取条件
-                this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.ProduceCondition)
-                + $"\n  - {c.GetCanProduceText}", parent),
+                this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.ProduceCondition), parent),
+                this.NewTextBar(c=> $"  - {c.GetCanProduceText}", parent),
 
                 grid
             ];

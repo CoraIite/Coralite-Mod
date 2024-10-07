@@ -196,32 +196,32 @@ MagikeSystem: {
 	TotalReflectionFilterTooltip:
 		'''
 		Left-click to select a region
-		Release it and look for a magike apparatus in the area with a magike container
-		and increase their magike volumn
+		Release it and look for a magike apparatus in the area with a [c/80d3ff:Magike Container]
+		and [c/80d3ff:increase their magike volumn]
 		'''
 	DiffractionFilterFilterTooltip:
 		'''
 		Left-click to select a region
-		Release it and look for a magike apparatus in the area with a magike sender
-		and increase their unit delivery
+		Release it and look for a magike apparatus in the area with a [c/80d3ff:Magike Sender]
+		and [c/80d3ff:increase their unit delivery]
 		'''
 	InterferenceFilterTooltip:
 		'''
 		Left-click to select a region
-		Release it and look for a magike apparatus in the area with a liner connector
-		and increase their connect capacity
+		Release it and look for a magike apparatus in the area with a [c/80d3ff:Liner Connector]
+		and [c/80d3ff:increase their connect capacity]
 		'''
 	PulseFilterTooltip:
 		'''
 		Left-click to select a region
-		Release it and look for a magike apparatus in the area with a liner connector
-		and increase their connect capacity
+		Release it and look for a magike apparatus in the area with a [c/80d3ff:Timer] 
+		and [c/80d3ff:reduce the timer CD]
 		'''
 	ExcitedFilterTooltip:
 		'''
 		Left-click to select a region
-		Release it and look for a magike apparatus in the area with a liner connector
-		and increase their connect capacity
+		Release it and look for a magike apparatus in the area with [c/80d3ff:Magike Producer]
+		and [c/80d3ff:increase the amount of production per time]. ([c/ff1919:Note! Some special producers are not affected by this bonus！])
 		'''
 
 	Staffs: {
@@ -359,10 +359,15 @@ MagikeSystem: {
 		DiffractionFilterName: Diffraction Filter
 		DiffractionBonus: ◇ Connect capacity bonus：
 		ClickToDisconnect: Click To Disconnect
-		PulseFilterName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.PulseFilterName
-		PulseBonus: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.PulseBonus
-		ExcitedFilterName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ExcitedFilterName
-		ExcitedBonus: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ExcitedBonus
+		PulseFilterName: Pulse Filter
+		PulseBonus: ◇ Timer CD decreased：
+		ExcitedFilterName: Excited Filter
+		ExcitedBonus: ◇ Increases magike production：
+		FactoryWorkTime: ◇ Work timing
+		StoneMakerName: Geological Regenerate Altar
+		StoneMakerOutPut: ◇ Produce
+		ItemWithValue: "  ▶ Requires items worth at least 1 silver"
+		TresureLensName: Tresure Lens
 	}
 
 	CraftText: {

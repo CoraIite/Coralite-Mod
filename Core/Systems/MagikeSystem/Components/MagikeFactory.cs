@@ -1,4 +1,5 @@
 ﻿using Coralite.Core.Systems.CoraliteActorComponent;
+using Coralite.Helpers;
 using System;
 using Terraria.ModLoader.IO;
 
@@ -40,12 +41,24 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public override void Update(IEntity entity)
         {
-            if (!IsWorking || !UpdateTime())
+            if (!IsWorking || DuringWork())
                 return;
 
             IsWorking = false;
             Work();
         }
+
+        public bool DuringWork()
+        {
+            OnWork();
+            
+            return !UpdateTime();
+        }
+
+        /// <summary>
+        /// 在工作时触发
+        /// </summary>
+        public virtual void OnWork() { }
 
         /// <summary>
         /// 特定的工作
@@ -82,6 +95,16 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
          {
             IsWorking = true;
             Timer = WorkTime;
+        }
+
+        public virtual string SendDelayText(MagikeFactory s)
+        {
+            float timer = MathF.Round(s.Timer / 60f, 1);
+            float delay = MathF.Round(s.WorkTime / 60f, 1);
+            float delayBase = MathF.Round(s.WorkTimeBase / 60f, 1);
+            float DelayBonus = s.WorkTimeBonus;
+
+            return $"  ▶ {timer} / {MagikeHelper.BonusColoredText(delay.ToString(), DelayBonus, true)} ({delayBase} * {MagikeHelper.BonusColoredText(DelayBonus.ToString(), DelayBonus, true)})";
         }
 
         public override void SaveData(string preName, TagCompound tag)

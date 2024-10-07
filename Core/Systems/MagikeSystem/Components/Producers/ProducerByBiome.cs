@@ -95,7 +95,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Producers
             [
                 //生产时间
                 this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.ProduceTime), parent),
-                this.NewTextBar(ConnectLengthText,parent),
+                this.NewTextBar(ProductionDelayText,parent),
 
                 //生产量
                 this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.ProduceAmount), parent),

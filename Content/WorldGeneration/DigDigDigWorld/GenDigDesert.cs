@@ -72,7 +72,7 @@ namespace Coralite.Content.WorldGeneration
             else
                 ballCount = 250;
 
-            var Blotches = new Modifiers.Blotches(4, 0.4);
+            var Blotches = new Modifiers.Blotches(2, 0.4);
             var OnlyTiles = new Modifiers.OnlyTiles(TileID.Sandstone);
             var SetTile1 = new Actions.SetTile(TileID.Sand);
             var SetTile2 = new Actions.SetTile(TileID.HardenedSand);

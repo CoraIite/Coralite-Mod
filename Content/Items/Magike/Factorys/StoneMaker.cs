@@ -15,12 +15,14 @@ using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
 using Terraria.UI;
 using static Coralite.Helpers.MagikeHelper;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.Factorys
@@ -140,18 +142,39 @@ namespace Coralite.Content.Items.Magike.Factorys
     {
         public int ProduceItemType;
 
-        public bool CanUpgrade(MALevel incomeLevel)
-            => Entity.CheckUpgrageable(incomeLevel);
-
         /// <summary>
         /// 工作消耗
         /// </summary>
         public int WorkCost { get; set; }
 
+        #region 升级部分
+
+        public bool CanUpgrade(MALevel incomeLevel)
+            => Entity.CheckUpgrageable(incomeLevel);
+
         public override void Initialize()
         {
             Upgrade(MALevel.None);
         }
+
+        public void Upgrade(MALevel incomeLevel)
+        {
+            WorkTimeBase = incomeLevel switch
+            {
+                MALevel.MagicCrystal => 10,
+                _ => 10_0000_0000 / 60,
+            };
+
+            WorkCost = incomeLevel switch
+            {
+                MALevel.MagicCrystal => 20,
+                _ => 0,
+            };
+
+            WorkTimeBase *= 60;
+        }
+
+        #endregion
 
         public override bool CanActivated_SpecialCheck(out string text)
         {
@@ -210,27 +233,25 @@ namespace Coralite.Content.Items.Magike.Factorys
 
         public override void Work()
         {
-            Point16 point = (Entity as MagikeTileEntity).Position;
-
             string text = "";
 
+            Point16 point = (Entity as MagikeTileEntity).Position;
             GetMagikeAlternateData(point.X, point.Y, out TileObjectData data, out MagikeAlternateStyle alternate);
-
-            Point16 topPos = point;
+            Vector2 topPos = point.ToVector2() * 16;
 
             switch (alternate)
             {
                 case MagikeAlternateStyle.Bottom:
-                    topPos = new Point16(point.X+data.Width/2, point.Y - 1);
+                    topPos += new Vector2(data.Width / 2, -0.5f) * 16;
                     break;
                 case MagikeAlternateStyle.Top:
-                    topPos = new Point16(point.X+data.Width/2, point.Y + data.Height);
+                    topPos += new Vector2(data.Width / 2, data.Height + 0.5f) * 16;
                     break;
                 case MagikeAlternateStyle.Left:
-                    topPos = new Point16(point.X + data.Width, point.Y+data.Height/2);
+                    topPos += new Vector2(data.Width + 0.5f, data.Height / 2) * 16;
                     break;
                 case MagikeAlternateStyle.Right:
-                    topPos = new Point16(point.X - 1, point.Y+data.Height/2);
+                    topPos += new Vector2(-0.5f, data.Height / 2) * 16;
                     break;
                 default:
                     break;
@@ -256,12 +277,42 @@ namespace Coralite.Content.Items.Magike.Factorys
             if (Entity.TryGetComponent(MagikeComponentID.ItemGetOnlyContainer, out GetOnlyItemContainer container))
                 container.AddItem(ProduceItemType, 1);
 
-            Vector2 center = new Vector2(topPos.X,topPos.Y)*16;
             for (int i = 0; i < 12; i++)
             {
-                Dust d = Dust.NewDustPerfect(center, DustID.FireworksRGB, (i * MathHelper.TwoPi / 12).ToRotationVector2() * 2, newColor: Coralite.MagicCrystalPink);
+                Dust d = Dust.NewDustPerfect(topPos, DustID.FireworksRGB, (i * MathHelper.TwoPi / 12).ToRotationVector2() * 2, newColor: Coralite.MagicCrystalPink);
                 d.noGravity = true;
             }
+        }
+
+        public override void OnWork()
+        {
+            float factor =1- Timer / (float)WorkTime;
+
+            Point16 point = (Entity as MagikeTileEntity).Position;
+            GetMagikeAlternateData(point.X, point.Y, out TileObjectData data, out MagikeAlternateStyle alternate);
+            Vector2 topPos = point.ToVector2()*16;
+
+            switch (alternate)
+            {
+                case MagikeAlternateStyle.Bottom:
+                    topPos += new Vector2(data.Width / 2, -0.5f) * 16; 
+                    break;
+                case MagikeAlternateStyle.Top:
+                    topPos += new Vector2(data.Width / 2, data.Height+0.5f) * 16;
+                    break;
+                case MagikeAlternateStyle.Left:
+                    topPos += new Vector2(data.Width+0.5f, data.Height /2) * 16;
+                    break;
+                case MagikeAlternateStyle.Right:
+                    topPos += new Vector2(-0.5f, data.Height / 2) * 16;
+                    break;
+                default:
+                    break;
+            }
+
+            float width = 24 - factor * 22;
+            Dust dust = Dust.NewDustPerfect(topPos + Main.rand.NextVector2CircularEdge(width, width), DustID.LastPrism, Vector2.Zero, newColor: Coralite.MagicCrystalPink);
+            dust.noGravity = true;
         }
 
         public int? GetStoneItemType(Tile tile)
@@ -281,30 +332,51 @@ namespace Coralite.Content.Items.Magike.Factorys
                 TileID.Ebonstone => ItemID.EbonstoneBlock,
                 TileID.Crimstone => ItemID.CrimstoneBlock,
                 TileID.Ash => ItemID.AshBlock,
+                TileID.Pearlstone => ItemID.PearlstoneBlock,
                 _  => null
             };
         }
 
+        #region UI部分
+
         public void ShowInUI(UIElement parent)
         {
+            //添加显示在最上面的组件名称
+            UIElement title = this.AddTitle(MagikeSystem.UITextID.StoneMakerName, parent);
+
+            UIList list =
+            [
+                //工作时间
+                this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.FactoryWorkTime) , parent),
+                this.NewTextBar(SendDelayText , parent),
+
+                //生产物品
+                this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.StoneMakerOutPut), parent),
+                this.NewTextBar(c =>
+                {
+                    if (!TryGetTile((c.Entity as MagikeTileEntity).Position, out Tile tile))
+                        return "";
+
+                    int? itemType = c.GetStoneItemType(tile);
+                    if (!itemType.HasValue)
+                        return "";
+
+                    Main.instance.LoadItem(itemType.Value);
+                    return $"[i:{itemType.Value}] {ContentSamples.ItemsByType[itemType.Value].Name}";
+                } , parent),
+            ];
+
+            list.SetSize(0, -title.Height.Pixels, 1, 1);
+            list.SetTopLeft(title.Height.Pixels + 8, 0);
+
+            list.QuickInvisibleScrollbar();
+
+            parent.Append(list);
         }
 
-        public void Upgrade(MALevel incomeLevel)
-        {
-            WorkTimeBase = incomeLevel switch
-            {
-                MALevel.MagicCrystal => 10,
-                _ => 10_0000_0000 / 60,
-            };
+        #endregion
 
-            WorkCost = incomeLevel switch
-            {
-                MALevel.MagicCrystal => 20,
-                _ => 0,
-            };
-
-            WorkTimeBase *= 60;
-        }
+        #region 存取部分
 
         public override void SaveData(string preName, TagCompound tag)
         {
@@ -317,5 +389,7 @@ namespace Coralite.Content.Items.Magike.Factorys
             base.LoadData(preName, tag);
             WorkCost = tag.GetInt(preName + nameof(WorkCost));
         }
+
+        #endregion
     }
 }

@@ -18,6 +18,7 @@ namespace Coralite.Content.WorldGeneration
 
             AshBar(progress);
             AshBlur(progress);
+            PlaceLava(progress);
         }
 
         private static void AshBar(GenerationProgress progress)
@@ -37,7 +38,7 @@ namespace Coralite.Content.WorldGeneration
                         t.ResetToType(TileID.Ash);
                 }
 
-            progress.Value = 0.25f;
+            progress.Value = 0.33f;
         }
 
         private static void AshBlur(GenerationProgress progress)
@@ -62,6 +63,36 @@ namespace Coralite.Content.WorldGeneration
                 for (int i = 0; i < 6; i++)
                     Main.tile[x - hellside * (wr.Get() + width), j].ResetToType(TileID.Ash);
             }
+
+            progress.Value = 0.66f;
+        }
+
+        private static void PlaceLava(GenerationProgress progress)
+        {
+            int hellside = GenVars.dungeonSide * -1;
+            int x = hellside > 0 ? Main.maxTilesX - 10 : 10;
+
+            for (int i = 0; i < DigHellWidth-10; i++)
+                for (int j = 20; j < Main.maxTilesY - 20; j++)
+                    if (WorldGen.genRand.NextBool(130))
+                    {
+                        int x1 = x - hellside * i;
+                        Tile top = Main.tile[x1, j - 1];
+                        Tile bottom = Main.tile[x1, j + 1];
+                        Tile left = Main.tile[x1 + 1, j];
+                        Tile right = Main.tile[x1 - 1, j];
+
+                        if (!top.HasTile || !bottom.HasTile || !left.HasTile || !right.HasTile)
+                            continue;
+
+                        if (Main.tile[x1, j].TileType != TileID.Ash)
+                            continue;
+
+                        Main.tile[x1, j].Clear(Terraria.DataStructures.TileDataType.Tile);
+                        WorldGen.PlaceLiquid(x1, j, (byte)LiquidID.Lava, 255);
+                    }
+
+            progress.Value = 0.99f;
         }
     }
 }

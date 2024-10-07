@@ -16,7 +16,8 @@ namespace Coralite.Content.WorldGeneration
             for (int i = 0; i < Main.maxTilesX; i++)
             {
                 for (int j = 0; j < Main.maxTilesY; j++)
-                    WorldGen.TileFrame(i, j, true);
+                    if (Main.tile[i,j].HasTile)
+                        WorldGen.TileFrame(i, j, true);
 
                 progress.Value += 1f / Main.maxTilesX;
             }

@@ -354,10 +354,15 @@ MagikeSystem: {
 		DiffractionFilterName: 衍射滤镜
 		DiffractionBonus: ◇ 连接量强化：
 		ClickToDisconnect: 点击以取消连接
-		// PulseFilterName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.PulseFilterName
-		// PulseBonus: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.PulseBonus
-		// ExcitedFilterName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ExcitedFilterName
-		// ExcitedBonus: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ExcitedBonus
+		PulseFilterName: 脉冲滤镜
+		PulseBonus: ◇ 计时器CD减少：
+		ExcitedFilterName: 激发滤镜
+		ExcitedBonus: ◇ 魔能生产量强化：
+		FactoryWorkTime: ◇ 工作计时
+		StoneMakerName: 地质再生祭坛
+		StoneMakerOutPut: ◇ 产出
+		ItemWithValue: "  ▶ 需要放入至少价值1银币的物品"
+		TresureLensName: 财宝透镜
 	}
 
 	CraftText: {

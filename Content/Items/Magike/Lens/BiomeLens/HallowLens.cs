@@ -27,7 +27,7 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
             CreateRecipe()
                 .AddIngredient<Skarn>(10)
                 .AddIngredient(ItemID.UnicornHorn)
-                .AddCondition(CoraliteConditions.LearnedMagikeBase)
+                .AddCondition(CoraliteConditions.LearnedMagikeAdvance)
                 .AddTile(TileID.Anvils)
                 .Register();
         }

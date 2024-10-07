@@ -22,7 +22,7 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
         {
             CreateRecipe()
                 .AddIngredient<BasicFilter>()
-                .AddIngredient<EmperorGel>(8)
+                .AddIngredient<EmperorGel>(4)
                 .AddTile(TileID.Solidifier)
                 .Register();
         }
