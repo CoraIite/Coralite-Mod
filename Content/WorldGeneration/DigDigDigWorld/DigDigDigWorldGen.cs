@@ -10,6 +10,11 @@ namespace Coralite.Content.WorldGeneration
         /// 挖挖挖的世界！
         /// </summary>
         public static bool DigDigDigWorld { get; set; }
+        public static int DigDigDigWorldDungeonSide { get; set; }
+
+        private static int CrystalCaveRadius { get => 58; }
+        private static int GraniteMarbleRadius { get => 125; }
+        private static int MushroomRadius { get => 230; }
 
         public void ModifyDigdigdigWorldGen(List<GenPass> tasks, ref double totalWeight)
         {
@@ -39,6 +44,21 @@ namespace Coralite.Content.WorldGeneration
 
             //生成出生点的魔力水晶环
             tasks.Add(new PassLegacy("Coralite Dig Crystal Cave", GenDigCrystalCave));
+
+            //生成大理石和花岗岩的环
+            tasks.Add(new PassLegacy("Coralite Dig Granite Marble Circle", GenGMHalfCircle));
+
+            //生成蘑菇草的环
+            tasks.Add(new PassLegacy("Coralite Dig Mushroom Circle", GenMushroomCircle));
+
+            //生成邪恶地狱
+            tasks.Add(new PassLegacy("Coralite Dig Evil", GenDigEvil));
+
+            //生成天空微光湖
+            tasks.Add(new PassLegacy("Coralite Dig Shimmer", GenDigShimmer));
+
+            //生成天空微光湖
+            tasks.Add(new PassLegacy("Coralite Dig Jungle Temple", GenDigJungleTemple));
 
 
             //生成NPC

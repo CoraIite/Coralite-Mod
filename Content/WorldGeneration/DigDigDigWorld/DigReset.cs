@@ -45,6 +45,7 @@ namespace Coralite.Content.WorldGeneration
             WorldGen.RandomizeMoonState(WorldGen.genRand);
 
             GenVars.dungeonSide = (!WorldGen.genRand.NextBool(2)) ? 1 : (-1);
+            DigDigDigWorldDungeonSide = GenVars.dungeonSide;
 
             int minValue3 = 15;
             int maxValue12 = 30;

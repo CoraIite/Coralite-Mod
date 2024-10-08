@@ -14,7 +14,7 @@ namespace Coralite.Content.Prefixes.GemWeaponPrefixes
 
         public override bool CanRoll(Item item)
         {
-            return item.DamageType == DamageClass.Magic && item.ModItem is BaseGemWeapon;
+            return item.DamageType.CountsAsClass(DamageClass.Magic) && item.ModItem is BaseGemWeapon;
         }
 
         public override void ModifyValue(ref float valueMult)

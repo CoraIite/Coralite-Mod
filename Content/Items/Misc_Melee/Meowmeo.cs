@@ -247,7 +247,7 @@ namespace Coralite.Content.Items.Misc_Melee
 
         public override void SetStaticDefaults()
         {
-            Projectile.QuickTrailSets(Helper.TrailingMode.OnlyPosition, 16);
+            Projectile.QuickTrailSets(Helper.TrailingMode.OnlyPosition, 10);
         }
 
         public override void SetDefaults()

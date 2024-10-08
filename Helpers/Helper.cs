@@ -328,7 +328,7 @@ namespace Coralite.Helpers
                 style.Pitch = pitch.Value;
 
             style.Volume += volumeAdjust;
-            style.Pitch = pitchAdjust;
+            style.Pitch += pitchAdjust;
 
             return SoundEngine.PlaySound(style, position);
         }

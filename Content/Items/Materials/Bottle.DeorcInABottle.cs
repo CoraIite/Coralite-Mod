@@ -1,5 +1,7 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Items.Shadow;
+using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
+using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
@@ -24,11 +26,10 @@ namespace Coralite.Content.Items.Materials
 
         public void AddMagikeCraftRecipe()
         {
-            //PolymerizeRecipe.CreateRecipe<HeatanInABottle>(60)
-            //    .SetMainItem(ItemID.Bottle)
-            //    .AddIngredient(ItemID.LivingFireBlock, 20)
-            //    .AddIngredient<EmpyrosPowder>(7)
-            //    .Register();
+            MagikeCraftRecipe.CreateRecipe(ItemID.Bottle, ModContent.ItemType<DeorcInABottle>(), MagikeHelper.CalculateMagikeCost(MALevel.CrystallineMagike, 6))
+                .AddIngredient(ItemID.SoulofNight)
+                .AddIngredient<ShadowCrystal>()
+                .Register();
         }
     }
 

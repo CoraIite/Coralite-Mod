@@ -1,5 +1,5 @@
 ﻿using Coralite.Content.CustomHooks;
-using Coralite.Content.Items.GlobalItems;
+using Coralite.Content.GlobalItems;
 using Coralite.Core;
 using Terraria;
 using Terraria.ID;

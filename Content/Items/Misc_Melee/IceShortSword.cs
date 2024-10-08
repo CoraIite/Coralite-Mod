@@ -1,4 +1,4 @@
-﻿using Coralite.Content.Items.GlobalItems;
+﻿using Coralite.Content.GlobalItems;
 using Coralite.Content.WorldGeneration;
 using Coralite.Core;
 using Terraria;

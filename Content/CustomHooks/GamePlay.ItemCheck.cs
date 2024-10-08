@@ -1,4 +1,4 @@
-﻿using Coralite.Content.Items.GlobalItems;
+﻿using Coralite.Content.GlobalItems;
 using Coralite.Content.ModPlayers;
 using System;
 using Terraria;
@@ -54,7 +54,7 @@ namespace Coralite.Content.CustomHooks
             int projToShoot = sItem.shoot;
             float speed = sItem.shootSpeed;
             int damage = sItem.damage;
-            if (sItem.DamageType == DamageClass.Melee && !ProjectileID.Sets.NoMeleeSpeedVelocityScaling[projToShoot])
+            if (sItem.DamageType.CountsAsClass(DamageClass.Melee) && !ProjectileID.Sets.NoMeleeSpeedVelocityScaling[projToShoot])
                 speed /= 1 / player.GetTotalAttackSpeed(DamageClass.Melee);
 
             // Copied as-is from 1.3

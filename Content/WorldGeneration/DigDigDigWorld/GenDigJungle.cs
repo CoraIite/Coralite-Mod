@@ -42,7 +42,7 @@ namespace Coralite.Content.WorldGeneration
                 for (int j = 0; j < Main.maxTilesY; j++)
                 {
                     Tile t = Main.tile[GenVars.jungleMinX + i, j];
-                    if (WorldGen.genRand.NextBool(30))
+                    if (WorldGen.genRand.NextBool(20))
                         t.ResetToType(TileID.JungleGrass);
                     else
                         t.ResetToType(TileID.Mud);

@@ -1,5 +1,4 @@
-﻿using Coralite.Core.Systems.MagikeSystem.Components;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria;
 using static Terraria.ModLoader.ModContent;

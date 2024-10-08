@@ -19,7 +19,6 @@ namespace Coralite.Content.WorldGeneration
 
             ushort basalt = (ushort)ModContent.TileType<BasaltTile>();
 
-            int radius = 58;
             int wallWidth = 4;
 
             ShapeData innerData = new();
@@ -31,7 +30,7 @@ namespace Coralite.Content.WorldGeneration
             //挖出一个球，内部全空
             WorldUtils.Gen(
                 origin,  //中心点
-                new Shapes.Circle(radius, radius),   //形状：圆
+                new Shapes.Circle(CrystalCaveRadius, CrystalCaveRadius),   //形状：圆
                 Actions.Chain(  //如果要添加多个效果得使用这个chain
                     new Modifiers.Blotches(4, 0.4),     //添加边缘的抖动，让边缘处不那么平滑
                     new Actions.Clear(),    //清除形状内所有物块
@@ -49,18 +48,18 @@ namespace Coralite.Content.WorldGeneration
 
             progress.Value =0.2f;
 
-            BasaltFloatIsland(origin, radius, radius);
+            BasaltFloatIsland(origin, CrystalCaveRadius, CrystalCaveRadius);
             int howMany = WorldGen.genRand.Next(12, 24);
 
             progress.Value = 0.4f;
 
             //生成小起伏
-            BasaltBall(origin, radius, radius, howMany);
-            GenCrystalSpike(origin, radius, radius);
+            BasaltBall(origin, CrystalCaveRadius, CrystalCaveRadius, howMany);
+            GenCrystalSpike(origin, CrystalCaveRadius, CrystalCaveRadius);
 
             progress.Value = 0.6f;
 
-            Point topLeft = origin - new Point(radius, radius);
+            Point topLeft = origin - new Point(CrystalCaveRadius, CrystalCaveRadius);
 
             ShapeData bornData = new();
 
@@ -96,16 +95,16 @@ namespace Coralite.Content.WorldGeneration
                 for (int j = -3; j < 0; j++)
                     Main.tile[origin.X + i, origin.Y + j].Clear(TileDataType.Tile);
 
-            GenCrystaClusters(origin, radius, radius);
+            GenCrystaClusters(origin, CrystalCaveRadius, CrystalCaveRadius);
             Point chest = MagicCrystalCaveChest(origin + new Point(0, 25));
 
-            int index = Chest.FindChest(chest.X, chest.Y);
+            int index = Chest.FindChest(chest.X-1, chest.Y);
             if (index != -1)
                 ChestRoom.RandChestItem(Main.chest[index], ItemID.AncientChisel);
 
             progress.Value = 0.8f;
 
-            AddCrystalCaveDecoration(radius, radius, topLeft);
+            AddCrystalCaveDecoration(CrystalCaveRadius, CrystalCaveRadius, topLeft);
 
             MagicCrystalCaveCenters.Add(new Point16(origin.X, origin.Y));
         }

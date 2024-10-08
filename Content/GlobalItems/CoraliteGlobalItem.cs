@@ -13,7 +13,7 @@ using Terraria.GameContent.Items;
 using Terraria.ID;
 using Terraria.Localization;
 
-namespace Coralite.Content.Items.GlobalItems
+namespace Coralite.Content.GlobalItems
 {
     public partial class CoraliteGlobalItem : GlobalItem, ILocalizedModType, IVariantItem
     {

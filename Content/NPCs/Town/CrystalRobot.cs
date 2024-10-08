@@ -246,11 +246,11 @@ namespace Coralite.Content.NPCs.Town
                 shopCustomPrice = 10,
                 shopSpecialCurrency = magicCrystalCurrencyID
             });
-            npcShop.Add(new Item(ModContent.ItemType<OpalTower>())//单片镜
-            {
-                shopCustomPrice = 25,
-                shopSpecialCurrency = magicCrystalCurrencyID
-            });
+            //npcShop.Add(new Item(ModContent.ItemType<OpalTower>())//单片镜
+            //{
+            //    shopCustomPrice = 25,
+            //    shopSpecialCurrency = magicCrystalCurrencyID
+            //});
             npcShop.Add(new Item(ModContent.ItemType<MagConnectStaff>())//连接杖
             {
                 shopCustomPrice = 10,

@@ -124,6 +124,11 @@ namespace Coralite.Content.WorldGeneration
             tag.Add("coralCat", CoralCatWorld);
             tag.Add("digdigdig", DigDigDigWorld);
 
+            if (DigDigDigWorld)
+            {
+                tag.Add("digdigdigDungeonSide", DigDigDigWorldDungeonSide);
+            }
+
             SaveCrystalCave(tag);
         }
 
@@ -139,6 +144,11 @@ namespace Coralite.Content.WorldGeneration
             chaosWorld = tag.Get<bool>("chaosWorld");
             CoralCatWorld = tag.Get<bool>("coralCat");
             DigDigDigWorld = tag.Get<bool>("digdigdig");
+
+            if (DigDigDigWorld)
+            {
+                DigDigDigWorldDungeonSide = tag.Get<int>("DigDigDigWorldDungeonSide");
+            }
 
             LoadCrystalCave(tag);
         }

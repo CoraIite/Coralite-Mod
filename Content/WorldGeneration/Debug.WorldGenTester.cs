@@ -45,6 +45,9 @@ namespace Coralite.Content.WorldGeneration
             //Main.tile.ClearEverything();
 
             //CoraliteWorld.DungeonRoom((int)Main.MouseWorld.X / 16, (int)Main.MouseWorld.Y / 16, TileID.CrystalBlock, WallID.CryocoreBrickWall);
+            ClearWorldTile();
+
+            CoraliteWorld.GenDigJungleTemple(new GenerationProgress(), new Terraria.IO.GameConfiguration(null));
 
             return base.CanUseItem(player);
         }
@@ -56,7 +59,7 @@ namespace Coralite.Content.WorldGeneration
         {
             for (int i = 0; i < Main.maxTilesX; i++)
                 for (int j = 0; j < Main.maxTilesY; j++)
-                    Main.tile[i, j].Clear(TileDataType.Tile);
+                    Main.tile[i, j].Clear(TileDataType.All);
         }
     }
 }

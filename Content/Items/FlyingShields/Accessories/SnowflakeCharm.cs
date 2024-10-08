@@ -1,4 +1,4 @@
-﻿using Coralite.Content.Items.GlobalItems;
+﻿using Coralite.Content.GlobalItems;
 using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Systems.FlyingShieldSystem;

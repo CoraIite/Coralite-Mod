@@ -1,4 +1,13 @@
-DamageClasses.FairyDamage.DisplayName: 仙灵伤害
+DamageClasses: {
+	FairyDamage.DisplayName: 仙灵伤害
+	// CreateAxeDamage.DisplayName: Create Axe Damage
+	// CreateDamage.DisplayName: Create Damage
+	// CreateExtraDamage.DisplayName: Create Extra Damage
+	// CreateHammerDamage.DisplayName: Create Hammer Damage
+	// CreatePickaxeDamage.DisplayName: Create Pickaxe Damage
+	// CreateShovelDamage.DisplayName: Create Shovel Damage
+}
+
 Players.CoralitePlayer.ThunderElectrifiedDeath: 被雷劈死了
 
 Conditions: {
@@ -31,5 +40,10 @@ WorldGeneration: {
 		DigSky: 挖地表挖地表挖地表挖挖挖挖挖挖挖！
 		DigTheCrystalCave: 挖水晶洞挖水晶洞挖水晶洞挖挖挖挖挖挖挖！
 		DigTheNPC: 这是什么？笨拙史莱姆？生成一下。这是什么？渔夫？生成一下。这是什么？发型师？生成一下。
+		DigTheGMHalfCircle: 挖花岗岩挖大理石挖花岗岩挖大理石挖挖挖挖挖挖挖！
+		DigTheMushroomCircle: 挖发光蘑菇挖发光蘑菇挖发光蘑菇挖挖挖挖挖挖挖！
+		DigTheEvil: 挖邪恶挖邪恶挖邪恶挖挖挖挖挖挖挖！
+		DigTheJungleTemple: 挖神庙挖神庙挖神庙挖挖挖挖挖挖挖！
+		DigTheShimmer: 挖微光挖微光挖微光挖挖挖挖挖挖挖！
 	}
 }

@@ -1,4 +1,13 @@
-DamageClasses.FairyDamage.DisplayName: Fairy Damage
+DamageClasses: {
+	FairyDamage.DisplayName: Fairy Damage
+	CreateAxeDamage.DisplayName: Create Axe Damage
+	CreateDamage.DisplayName: Create Damage
+	CreateExtraDamage.DisplayName: Create Extra Damage
+	CreateHammerDamage.DisplayName: Create Hammer Damage
+	CreatePickaxeDamage.DisplayName: Create Pickaxe Damage
+	CreateShovelDamage.DisplayName: Create Shovel Damage
+}
+
 Players.CoralitePlayer.ThunderElectrifiedDeath: killed by lightning
 
 Conditions: {
@@ -31,5 +40,10 @@ WorldGeneration: {
 		DigSky: Dig the sky! Dig the sky! Dig! Dig! Dig! Dig! Dig!
 		DigTheCrystalCave: Mods.Coralite.WorldGeneration.CoraliteWorld.DigTheCrystalCave
 		DigTheNPC: Mods.Coralite.WorldGeneration.CoraliteWorld.DigTheNPC
+		DigTheGMHalfCircle: Mods.Coralite.WorldGeneration.CoraliteWorld.DigTheGMHalfCircle
+		DigTheMushroomCircle: Mods.Coralite.WorldGeneration.CoraliteWorld.DigTheMushroomCircle
+		DigTheEvil: Mods.Coralite.WorldGeneration.CoraliteWorld.DigTheEvil
+		DigTheJungleTemple: Mods.Coralite.WorldGeneration.CoraliteWorld.DigTheJungleTemple
+		DigTheShimmer: Mods.Coralite.WorldGeneration.CoraliteWorld.DigTheShimmer
 	}
 }

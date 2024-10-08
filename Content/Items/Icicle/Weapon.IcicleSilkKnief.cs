@@ -1,4 +1,4 @@
-﻿using Coralite.Content.Items.GlobalItems;
+﻿using Coralite.Content.GlobalItems;
 using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Items;

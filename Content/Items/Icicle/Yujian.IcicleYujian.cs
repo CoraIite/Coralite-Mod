@@ -1,5 +1,5 @@
 ﻿using Coralite.Content.Bosses.BabyIceDragon;
-using Coralite.Content.Items.GlobalItems;
+using Coralite.Content.GlobalItems;
 using Coralite.Content.Items.YujianHulu;
 using Coralite.Core;
 using Coralite.Core.Systems.YujianSystem;

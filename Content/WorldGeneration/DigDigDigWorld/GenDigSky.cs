@@ -82,7 +82,7 @@ namespace Coralite.Content.WorldGeneration
             else
                 ballCount = 200;
 
-            Modifiers.Dither Blotches = new Modifiers.Dither( 0.4);
+            Modifiers.Dither Blotches = new Modifiers.Dither( 0.25);
             Modifiers.OnlyTiles onlyTiles = new Modifiers.OnlyTiles(TileID.Dirt,TileID.Grass);
             Actions.SetTile setTile = new Actions.SetTile(TileID.ClayBlock);
 
@@ -233,8 +233,9 @@ namespace Coralite.Content.WorldGeneration
             else
                 ballCount = 150;
 
-            Modifiers.Blotches Blotches = new Modifiers.Blotches(4, 0.4);
+            Modifiers.Blotches Blotches = new Modifiers.Blotches(2, 0.5);
             Modifiers.Blotches Blotches2 = new Modifiers.Blotches(1, 0.4);
+            Modifiers.Flip flip = new Modifiers.Flip(false,true);
             Modifiers.OnlyTiles onlyTiles = new Modifiers.OnlyTiles(TileID.Cloud);
             Actions.SetTile setTile = new Actions.SetTile(TileID.RainCloud);
             Actions.ClearTile clearTile = new Actions.ClearTile();
@@ -247,16 +248,16 @@ namespace Coralite.Content.WorldGeneration
                     : WorldGen.genRand.Next(10, DigSkyWidth / 2);
                 int y = WorldGen.genRand.Next((int)(Main.maxTilesY * 0.1f), (int)(Main.maxTilesY * 0.8f));
 
-                int width = WorldGen.genRand.Next(1, 8);
-                int height = WorldGen.genRand.Next(1, 8);
+                int width = WorldGen.genRand.Next(3, 8);
 
                 ShapeData data = new();
 
                 WorldUtils.Gen(
                     new Point(x, y),  //中心点
-                    new Shapes.Circle(width, height),   //形状：圆
+                    new Shapes.Slime(width,1,WorldGen.genRand.NextFloat(0.8f,1)),   //形状：圆
                     Actions.Chain(  //如果要添加多个效果得使用这个chain
                         Blotches,     //添加边缘的抖动，让边缘处不那么平滑
+                        flip,
                         onlyTiles,
                         clearTile,
                         setLiquid.Output(data)));    //防止水
@@ -265,7 +266,7 @@ namespace Coralite.Content.WorldGeneration
                 new Point(x, y),  //中心点
                     new ModShapes.OuterOutline(data),   //形状：圆
                     Actions.Chain(  //如果要添加多个效果得使用这个chain
-                        new Modifiers.Expand(WorldGen.genRand.Next(1, 3), WorldGen.genRand.Next(1, 4)), //向外扩展
+                        new Modifiers.Expand(WorldGen.genRand.Next(1, 2), WorldGen.genRand.Next(1, 2)), //向外扩展
                         Blotches2,
                         onlyTiles,
                         setTile));    //放置雨云
