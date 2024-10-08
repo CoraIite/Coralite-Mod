@@ -108,19 +108,39 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Producers
             {
                 case MagikeAlternateStyle.Bottom:
                     for (int i = 0; i < data.Width; i++)
-                        ReduceLiquid(Framing.GetTileSafely(point.X + i, point.Y + data.Height - 1));
+                    {
+                        Point p = new Point(point.X + i, point.Y + data.Height - 1);
+                        Tile t = Framing.GetTileSafely(p);
+                        ReduceLiquid(t);
+                        WorldGen.SquareTileFrame(p.X, p.Y);
+                    }
                     break;
                 case MagikeAlternateStyle.Top:
                     for (int i = 0; i < data.Width; i++)
-                        ReduceLiquid(Framing.GetTileSafely(point.X + i, point.Y));
+                    {
+                        Point p = new Point(point.X + i, point.Y);
+                        Tile t = Framing.GetTileSafely(p);
+                        ReduceLiquid(t);
+                        WorldGen.SquareTileFrame(p.X, p.Y);
+                    }
                     break;
                 case MagikeAlternateStyle.Left:
                     for (int i = 0; i < data.Height; i++)
-                        ReduceLiquid(Framing.GetTileSafely(point.X, point.Y + i));
+                    {
+                        Point p = new Point(point.X, point.Y + i);
+                        Tile t = Framing.GetTileSafely(p);
+                        ReduceLiquid(t);
+                        WorldGen.SquareTileFrame(p.X, p.Y);
+                    }
                     break;
                 case MagikeAlternateStyle.Right:
                     for (int i = 0; i < data.Height; i++)
-                        ReduceLiquid(Framing.GetTileSafely(point.X + data.Width - 1, point.Y + i));
+                    {
+                        Point p = new Point(point.X + data.Width - 1, point.Y + i);
+                        Tile t = Framing.GetTileSafely(p);
+                        ReduceLiquid(t);
+                        WorldGen.SquareTileFrame(p.X, p.Y);
+                    }
                     break;
                 default:
                     return;

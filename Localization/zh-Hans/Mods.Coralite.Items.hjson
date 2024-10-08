@@ -4714,3 +4714,8 @@ TreasureLens: {
 		{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}
 		'''
 }
+
+BrilliantScanner: {
+	// DisplayName: Brilliant Scanner
+	// Tooltip: ""
+}
