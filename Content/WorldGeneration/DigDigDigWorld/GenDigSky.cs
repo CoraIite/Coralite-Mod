@@ -197,9 +197,9 @@ namespace Coralite.Content.WorldGeneration
         {
             int ballCount;
             if (Main.maxTilesY > 8000)
-                ballCount = 400;
+                ballCount = 800;
             else if (Main.maxTilesX > 6000)
-                ballCount = 150;
+                ballCount = 450;
             else
                 ballCount = 200;
 
@@ -227,9 +227,9 @@ namespace Coralite.Content.WorldGeneration
         {
             int ballCount;
             if (Main.maxTilesY > 8000)
-                ballCount = 350;
+                ballCount = 650;
             else if (Main.maxTilesX > 6000)
-                ballCount = 250;
+                ballCount = 350;
             else
                 ballCount = 150;
 

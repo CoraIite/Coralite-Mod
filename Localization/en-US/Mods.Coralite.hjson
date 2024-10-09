@@ -45,5 +45,7 @@ WorldGeneration: {
 		DigTheEvil: Mods.Coralite.WorldGeneration.CoraliteWorld.DigTheEvil
 		DigTheJungleTemple: Mods.Coralite.WorldGeneration.CoraliteWorld.DigTheJungleTemple
 		DigTheShimmer: Mods.Coralite.WorldGeneration.CoraliteWorld.DigTheShimmer
+		DigTheIceDragonNest: Mods.Coralite.WorldGeneration.CoraliteWorld.DigTheIceDragonNest
+		DigTheDigDungeon: Mods.Coralite.WorldGeneration.CoraliteWorld.DigTheDigDungeon
 	}
 }

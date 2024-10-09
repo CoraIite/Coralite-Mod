@@ -57,8 +57,14 @@ namespace Coralite.Content.WorldGeneration
             //生成天空微光湖
             tasks.Add(new PassLegacy("Coralite Dig Shimmer", GenDigShimmer));
 
-            //生成天空微光湖
+            //生成丛林神庙
             tasks.Add(new PassLegacy("Coralite Dig Jungle Temple", GenDigJungleTemple));
+
+            //生成冰龙巢
+            tasks.Add(new PassLegacy("Coralite Dig Ice Dragon Nest", GenDigIceDragonNest));
+
+            //生成地牢
+            tasks.Add(new PassLegacy("Coralite Dig Dungeon", GenGenDigDungeon));
 
 
             //生成NPC
