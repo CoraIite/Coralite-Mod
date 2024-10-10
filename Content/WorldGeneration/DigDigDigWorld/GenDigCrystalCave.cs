@@ -1,4 +1,6 @@
-﻿using Coralite.Content.Tiles.MagikeSeries1;
+﻿using Coralite.Content.Items.Magike.Factorys;
+using Coralite.Content.Items.Magike.Filters.PolarizedFilters;
+using Coralite.Content.Tiles.MagikeSeries1;
 using Coralite.Content.WorldGeneration.ShadowCastleRooms;
 using Terraria;
 using Terraria.DataStructures;
@@ -98,9 +100,17 @@ namespace Coralite.Content.WorldGeneration
             GenCrystaClusters(origin, CrystalCaveRadius, CrystalCaveRadius);
             Point chest = MagicCrystalCaveChest(origin + new Point(0, 25));
 
-            int index = Chest.FindChest(chest.X-1, chest.Y);
+            int index = Chest.FindChest(chest.X - 1, chest.Y);//往箱子里多塞一点
             if (index != -1)
+            {
                 ChestRoom.RandChestItem(Main.chest[index], ItemID.AncientChisel);
+                ChestRoom.RandChestItem(Main.chest[index], ModContent.ItemType<StoneMaker>(), 2);
+                ChestRoom.RandChestItem(Main.chest[index], ModContent.ItemType<MagicCrystalPolarizedFilter>(), 1);
+                ChestRoom.RandChestItem(Main.chest[index], ModContent.ItemType<MagicCrystalPolarizedFilter>(), 1);
+                ChestRoom.RandChestItem(Main.chest[index], ModContent.ItemType<MagicCrystalPolarizedFilter>(), 2);
+                ChestRoom.RandChestItem(Main.chest[index], ModContent.ItemType<MagicCrystalPolarizedFilter>(), 4);
+                ChestRoom.RandChestItem(Main.chest[index], ModContent.ItemType<MagicCrystalPolarizedFilter>(), 4);
+            }
 
             progress.Value = 0.8f;
 

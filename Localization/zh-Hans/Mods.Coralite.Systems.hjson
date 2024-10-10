@@ -86,3 +86,4 @@ FlyingShieldSystem: {
 }
 
 WoodenBowGroup.Name: 任意 木弓
+MTBStructureSystem.FailText: 多方快结构触发失败！请查看红框处的物块
