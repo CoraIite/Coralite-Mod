@@ -38,6 +38,12 @@ namespace Coralite.Content.WorldGeneration
 
             WorldGen.crimson = WorldGen.genRand.NextBool(2);
 
+            if (WorldGen.WorldGenParam_Evil == 0)
+                WorldGen.crimson = false;
+
+            if (WorldGen.WorldGenParam_Evil == 1)
+                WorldGen.crimson = true;
+
             Main.worldID = WorldGen.genRand.Next(int.MaxValue);
             WorldGen.RandomizeTreeStyle();
             WorldGen.RandomizeCaveBackgrounds();

@@ -12,6 +12,8 @@ namespace Coralite.Content.WorldGeneration
     {
         public string LocalizationCategory => "WorldGeneration";
 
+        public const string DigDigDigSaveKey= "digdigdig";
+
         public override void Load()
         {
             Type t = typeof(CoraliteWorld);
@@ -113,6 +115,20 @@ namespace Coralite.Content.WorldGeneration
                 ModifyDigdigdigWorldGen(tasks, ref totalWeight);
         }
 
+        public override void ModifyHardmodeTasks(List<GenPass> list)
+        {
+            if (DigDigDigWorld)
+                DigDigDigHardMode(list);
+        }
+
+        public override void SaveWorldHeader(TagCompound tag)
+        {
+            if (DigDigDigWorld)
+            {
+                tag.Add(DigDigDigSaveKey, true);
+            }
+        }
+
         public override void SaveWorldData(TagCompound tag)
         {
             tag.Add("IceNestCenterX", NestCenter.X);
@@ -122,7 +138,7 @@ namespace Coralite.Content.WorldGeneration
             tag.Add("shadowBallsFightAreaY", shadowBallsFightArea.Y);
             tag.Add("chaosWorld", chaosWorld);
             tag.Add("coralCat", CoralCatWorld);
-            tag.Add("digdigdig", DigDigDigWorld);
+            tag.Add(DigDigDigSaveKey, DigDigDigWorld);
 
             if (DigDigDigWorld)
             {
@@ -143,7 +159,7 @@ namespace Coralite.Content.WorldGeneration
 
             chaosWorld = tag.Get<bool>("chaosWorld");
             CoralCatWorld = tag.Get<bool>("coralCat");
-            DigDigDigWorld = tag.Get<bool>("digdigdig");
+            DigDigDigWorld = tag.Get<bool>(DigDigDigSaveKey);
 
             if (DigDigDigWorld)
             {

@@ -10,6 +10,8 @@ namespace Coralite.Core
         public static Condition LearnedMagikeAdvance { get; private set; }
         public static Condition CoralCat { get; private set; }
         public static Condition MagikeCraft { get; private set; }
+        public static Condition InDigDigDig { get; private set; }
+        public static Condition NotInDigDigDig { get; private set; }
 
         public string LocalizationCategory => "Conditions";
 
@@ -21,6 +23,11 @@ namespace Coralite.Core
                 , () => MagikeSystem.learnedMagikeAdvanced);
             CoralCat = new(this.GetLocalization(nameof(CoralCat))
                 , () => CoraliteWorld.CoralCatWorld);
+            InDigDigDig = new(this.GetLocalization(nameof(InDigDigDig))
+                , () => CoraliteWorld.DigDigDigWorld);
+            NotInDigDigDig = new(this.GetLocalization(nameof(NotInDigDigDig))
+                , () => !CoraliteWorld.DigDigDigWorld);
+
             MagikeCraft = new(this.GetLocalization(nameof(MagikeCraft))
                 , () => false);
         }

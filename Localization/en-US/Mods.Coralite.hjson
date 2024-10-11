@@ -16,6 +16,8 @@ Conditions: {
 		CoralCat: Need in the world of rainbow cats (CoralCat)
 		MagikeCraft: Requires using magike craft altar to craft
 		LearnedMagikeAdvance: Need to learn the advance of magike
+		InDigDigDig: Mods.Coralite.Conditions.CoraliteConditions.InDigDigDig
+		NotInDigDigDig: Mods.Coralite.Conditions.CoraliteConditions.NotInDigDigDig
 	}
 }
 

@@ -1,5 +1,5 @@
 ﻿using Coralite.Content.ModPlayers;
-using Coralite.Content.NPCs.GlobalNPC;
+using Coralite.Content.GlobalNPCs;
 using Coralite.Core;
 using Terraria;
 using Terraria.ID;

@@ -1,7 +1,7 @@
 ﻿using Coralite.Content.Dusts;
 using Coralite.Content.Items.Materials;
 using Coralite.Content.ModPlayers;
-using Coralite.Content.NPCs.GlobalNPC;
+using Coralite.Content.GlobalNPCs;
 using Coralite.Content.Tiles.RedJades;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;

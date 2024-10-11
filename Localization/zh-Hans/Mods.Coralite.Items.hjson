@@ -4719,3 +4719,8 @@ BrilliantScanner: {
 	// DisplayName: Brilliant Scanner
 	// Tooltip: ""
 }
+
+SkarnBrick: {
+	// DisplayName: Skarn Brick
+	// Tooltip: ""
+}

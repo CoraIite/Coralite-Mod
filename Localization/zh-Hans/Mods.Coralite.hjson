@@ -16,6 +16,8 @@ Conditions: {
 		CoralCat: 需要在彩虹猫的世界（CoralCat）
 		MagikeCraft: 需要使用魔能合成坛来合成
 		LearnedMagikeAdvance: 需要学习魔能进阶
+		// InDigDigDig: Mods.Coralite.Conditions.CoraliteConditions.InDigDigDig
+		// NotInDigDigDig: Mods.Coralite.Conditions.CoraliteConditions.NotInDigDigDig
 	}
 }
 
