@@ -13,8 +13,6 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             Main.tileSolid[Type] = true;
             Main.tileBlockLight[Type] = true;
 
-            TileID.Sets.ChecksForMerge[Type] = true;
-
             DustType = DustID.BorealWood_Small;
             HitSound = CoraliteSoundID.DigStone_Tink;
             AddMapEntry(new Color(141, 171, 178));

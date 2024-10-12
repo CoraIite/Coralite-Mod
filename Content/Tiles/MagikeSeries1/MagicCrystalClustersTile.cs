@@ -14,7 +14,7 @@ namespace Coralite.Content.Tiles.MagikeSeries1
 
         public MALevel Level => MALevel.MagicCrystal;
         public int ItemType => ModContent.ItemType<MagicCrystal>();
-        public int MagikeCost => 33;
+        public int MagikeCost => 30;
 
         public int ItemStack => 1;
 

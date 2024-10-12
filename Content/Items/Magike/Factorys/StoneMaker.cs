@@ -22,7 +22,6 @@ using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
 using Terraria.UI;
 using static Coralite.Helpers.MagikeHelper;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.Factorys

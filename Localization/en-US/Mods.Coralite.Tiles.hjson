@@ -138,3 +138,19 @@ BasaltSofaTile.MapEntry: Basalt Sofa
 BasaltTableTile.MapEntry: Basalt Table
 BasaltWorkBenchTile.MapEntry: Basalt Work Bench
 MagicCrystalClustersTile.MapEntry: Magic Crystal Clusters Tile
+ChalcedonyBathtubTile.MapEntry: Chalcedony Bathtub Tile
+ChalcedonyBedTile.MapEntry: Chalcedony Bed Tile
+ChalcedonyBigDroplightTile.MapEntry: Chalcedony Big Droplight Tile
+ChalcedonyBookcaseTile.MapEntry: Chalcedony Bookcase Tile
+ChalcedonyCandelabraTile.MapEntry: Chalcedony Candelabra Tile
+ChalcedonyCandleTile.MapEntry: Chalcedony Candle Tile
+ChalcedonyDoorClosedTile.MapEntry: Chalcedony Door Closed Tile
+ChalcedonyDoorOpenTile.MapEntry: Chalcedony Door Open Tile
+ChalcedonyDresserTile.MapEntry: Chalcedony Dresser Tile
+ChalcedonyDroplightTile.MapEntry: Chalcedony Droplight Tile
+ChalcedonyFloorLampTile.MapEntry: Chalcedony Floor Lamp Tile
+ChalcedonyPianoTile.MapEntry: Chalcedony Piano Tile
+ChalcedonySofaTile.MapEntry: Chalcedony Sofa Tile
+ChalcedonyTableTile.MapEntry: Chalcedony Table Tile
+ChalcedonyWorkBenchTile.MapEntry: Chalcedony Work Bench Tile
+ChalcedonyChestTile.MapEntry: Chalcedony Chest Tile

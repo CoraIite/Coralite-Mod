@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Coralite.Content.Items.Gels;
+using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria;
 using Terraria.DataStructures;
@@ -24,7 +25,7 @@ namespace Coralite.Content.Tiles.Trees
         public override void SetStaticDefaults()
         {
             // Makes Example Tree grow on ExampleBlock
-            GrowsOnTileId = new int[3] { TileID.SlimeBlock, TileID.FrozenSlimeBlock, TileID.PinkSlimeBlock };
+            GrowsOnTileId = [TileID.SlimeBlock, TileID.FrozenSlimeBlock, TileID.PinkSlimeBlock];
         }
 
         public override int DropWood()
@@ -80,20 +81,25 @@ namespace Coralite.Content.Tiles.Trees
         {
             if (Main.rand.NextBool(10))
             {
-                NPC.NewNPC(new EntitySource_ShakeTree(x, y), x, y, NPCID.BlueSlime);
+                NPC.NewNPC(new EntitySource_ShakeTree(x, y), x*16, y*16, NPCID.BlueSlime);
                 return false;
             }
 
-            if (Main.rand.NextBool(100))
+            if (Main.rand.NextBool(75))
             {
-                Item.NewItem(new EntitySource_ShakeTree(x, y), new Microsoft.Xna.Framework.Vector2(x, y).ToWorldCoordinates(), ItemID.SlimeStaff);
+                int itemType = Main.rand.NextFromList(
+                    ModContent.ItemType<Woodbine>(),
+                    ModContent.ItemType<Princesstrawberry>(),
+                    ItemID.SlimeStaff);
+
+                Item.NewItem(new EntitySource_ShakeTree(x, y), new Vector2(x, y).ToWorldCoordinates(), itemType);
                 return false;
             }
 
             if (Main.rand.NextBool(5))
             {
                 int howMany = Main.rand.Next(1, 4);
-                Item.NewItem(new EntitySource_ShakeTree(x, y), new Microsoft.Xna.Framework.Vector2(x, y).ToWorldCoordinates(), ItemID.Gel, howMany);
+                Item.NewItem(new EntitySource_ShakeTree(x, y), new Vector2(x, y).ToWorldCoordinates(), ItemID.Gel, howMany);
             }
 
             return false;

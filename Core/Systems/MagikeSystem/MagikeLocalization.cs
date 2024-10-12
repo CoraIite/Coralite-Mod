@@ -309,6 +309,9 @@ namespace Coralite.Core.Systems.MagikeSystem
             FactoryWorkTime,
             StoneMakerName,
             StoneMakerOutPut,
+            LaserCollectorName,
+            LaserCollectorOutPut,
+            LaserCollectorCost,
 
             ExtractProducerName,
             ProduceTime,

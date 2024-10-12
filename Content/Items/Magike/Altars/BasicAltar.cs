@@ -41,7 +41,10 @@ namespace Coralite.Content.Items.Magike.Altars
                 MALevel.None,
                 MALevel.MagicCrystal,
                 MALevel.Glistent,
+                MALevel.Shadow,
+                MALevel.CrystallineMagike,
                 MALevel.Hallow,
+                MALevel.HolyLight,
             ];
         }
 
@@ -51,7 +54,12 @@ namespace Coralite.Content.Items.Magike.Altars
             {
                 MALevel.MagicCrystal 
                 or MALevel.Glistent
-                or MALevel.Hallow => rotation.ToRotationVector2() * 8,
+                or MALevel.Hallow 
+                => rotation.ToRotationVector2() * 8,
+                MALevel.CrystallineMagike
+                or MALevel.Shadow
+                => rotation.ToRotationVector2() * 12,
+                MALevel.HolyLight => rotation.ToRotationVector2() * 4,
                 _ => Vector2.Zero
             };
         }
@@ -62,7 +70,11 @@ namespace Coralite.Content.Items.Magike.Altars
             {
                 MALevel.MagicCrystal
                 or MALevel.Glistent
-                or MALevel.Hallow=> Vector2.Zero,
+                or MALevel.Shadow
+                or MALevel.CrystallineMagike
+                => Vector2.Zero,
+                MALevel.Hallow => -6 * rotation.ToRotationVector2(),
+                MALevel.HolyLight => -6*rotation.ToRotationVector2(),
                 _ => Vector2.Zero
             };
         }
@@ -103,10 +115,10 @@ namespace Coralite.Content.Items.Magike.Altars
             {
                 MALevel.MagicCrystal => MagikeHelper.CalculateMagikeCost(MALevel.MagicCrystal, 32, 60 * 10),
                 MALevel.Glistent => MagikeHelper.CalculateMagikeCost(MALevel.Glistent, 32, 60 * 10),
-                MALevel.Shadow => 300,
-                MALevel.CrystallineMagike => 2250,
-                MALevel.Hallow => 1000_0000,
-                MALevel.HolyLight => 15000,
+                MALevel.Shadow => MagikeHelper.CalculateMagikeCost(MALevel.Shadow, 32, 60 * 10),
+                MALevel.CrystallineMagike => MagikeHelper.CalculateMagikeCost(MALevel.CrystallineMagike, 32, 60 * 10),
+                MALevel.Hallow => MagikeHelper.CalculateMagikeCost(MALevel.Hallow, 32, 60 * 10),
+                MALevel.HolyLight => 1000_0000,
                 MALevel.SplendorMagicore => 35000,
                 _ => 0,
             };
@@ -134,7 +146,10 @@ namespace Coralite.Content.Items.Magike.Altars
             {
                 MALevel.MagicCrystal => 15,
                 MALevel.Glistent => 13,
-                MALevel.Hallow => 5,
+                MALevel.Shadow => 11,
+                MALevel.CrystallineMagike => 9,
+                MALevel.Hallow => 7,
+                MALevel.HolyLight => 5,
                 _ => (float)(10_0000_0000 / 60),
             };
 

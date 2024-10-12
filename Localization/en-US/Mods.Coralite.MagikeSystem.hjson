@@ -368,6 +368,9 @@ MagikeSystem: {
 		StoneMakerOutPut: ◇ Produce
 		ItemWithValue: "  ▶ Requires items worth at least 1 silver"
 		TresureLensName: Tresure Lens
+		LaserCollectorName: Laser Collector
+		LaserCollectorOutPut: Produce
+		LaserCollectorCost: "Magike Cost: "
 	}
 
 	CraftText: {

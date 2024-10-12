@@ -4716,11 +4716,136 @@ TreasureLens: {
 }
 
 BrilliantScanner: {
-	// DisplayName: Brilliant Scanner
-	// Tooltip: ""
+	DisplayName: 璀璨扫描镜
+	Tooltip: 放在背包内时可以观测到魔能流动以及仪器情况
 }
 
 SkarnBrick: {
-	// DisplayName: Skarn Brick
-	// Tooltip: ""
+	DisplayName: 矽卡砖
+	Tooltip: ""
+}
+
+Chalcedony: {
+	DisplayName: 玉髓木
+	Tooltip: 吸收矽卡岩的养分之后形成的木头，已经完全结晶化
+}
+
+ChalcedonyBathtub: {
+	DisplayName: 玉髓浴缸
+	Tooltip: ""
+}
+
+ChalcedonyBed: {
+	DisplayName: 玉髓床
+	Tooltip: ""
+}
+
+ChalcedonyBigDroplight: {
+	DisplayName: 玉髓大吊灯
+	Tooltip: ""
+}
+
+ChalcedonyBookcase: {
+	DisplayName: 玉髓书架
+	Tooltip: ""
+}
+
+ChalcedonyCandelabra: {
+	DisplayName: 玉髓烛台
+	Tooltip: ""
+}
+
+ChalcedonyCandle: {
+	DisplayName: 玉髓蜡烛
+	Tooltip: ""
+}
+
+ChalcedonyChair: {
+	DisplayName: 玉髓椅子
+	Tooltip: ""
+}
+
+ChalcedonyClock: {
+	DisplayName: 玉髓钟
+	Tooltip: ""
+}
+
+ChalcedonyDoor: {
+	DisplayName: 玉髓门
+	Tooltip: ""
+}
+
+ChalcedonyDresser: {
+	DisplayName: 玉髓梳妆台
+	Tooltip: ""
+}
+
+ChalcedonyDroplight: {
+	DisplayName: 玉髓吊灯
+	Tooltip: ""
+}
+
+ChalcedonyFloorLamp: {
+	DisplayName: 玉髓灯柱
+	Tooltip: ""
+}
+
+ChalcedonyPiano: {
+	DisplayName: 玉髓钢琴
+	Tooltip: ""
+}
+
+ChalcedonyPlatform: {
+	DisplayName: 玉髓平台
+	Tooltip: ""
+}
+
+ChalcedonySink: {
+	DisplayName: 玉髓水槽
+	Tooltip: ""
+}
+
+ChalcedonySofa: {
+	DisplayName: 玉髓沙发
+	Tooltip: ""
+}
+
+ChalcedonyTable: {
+	DisplayName: 玉髓桌
+	Tooltip: ""
+}
+
+ChalcedonyToilet: {
+	DisplayName: 玉髓马桶
+	Tooltip: ""
+}
+
+ChalcedonyWallItem: {
+	DisplayName: 玉髓墙
+	Tooltip: ""
+}
+
+ChalcedonyWorkBench: {
+	DisplayName: 玉髓工作台
+	Tooltip: ""
+}
+
+LeafChalcedony: {
+	DisplayName: 缠叶玉髓木
+	Tooltip: 用叶石包裹并压缩后的玉髓木，更适合用于各种加工
+}
+
+ChalcedonyChest: {
+	DisplayName: 玉髓箱
+	Tooltip: ""
+}
+
+Princesstrawberry: {
+	DisplayName: 公主草莓
+	Tooltip: "{$CommonItemTooltip.MinorStats}"
+}
+
+Woodbine: {
+	DisplayName: 忍冬
+	Tooltip: "{$CommonItemTooltip.MinorStats}"
 }

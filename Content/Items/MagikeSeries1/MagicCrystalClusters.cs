@@ -15,9 +15,9 @@ namespace Coralite.Content.Items.MagikeSeries1
     {
         public void AddMagikeCraftRecipe()
         {
-            MagikeCraftRecipe.CreateRecipe<MagicCrystal, MagicCrystalClusters>(MagikeHelper.CalculateMagikeCost(MALevel.Bone, 48, 60 * 30), 200)
-                .AddIngredient<Basalt>(400)
-                .AddIngredient<MagicalPowder>(40)
+            MagikeCraftRecipe.CreateRecipe<MagicCrystal, MagicCrystalClusters>(MagikeHelper.CalculateMagikeCost(MALevel.MagicCrystal, 48, 60 * 30), 60)
+                .AddIngredient<Basalt>(200)
+                .AddIngredient<MagicalPowder>(20)
                 .Register();
         }
 

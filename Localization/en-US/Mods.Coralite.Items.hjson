@@ -4652,10 +4652,135 @@ TreasureLens: {
 
 BrilliantScanner: {
 	DisplayName: Brilliant Scanner
-	Tooltip: ""
+	Tooltip: Keeping it in inventory allows you to observe the flow of magike and check the status of the Magike Apparatus
 }
 
 SkarnBrick: {
 	DisplayName: Skarn Brick
+	Tooltip: ""
+}
+
+Chalcedony: {
+	DisplayName: Chalcedony
+	Tooltip: The wood formed by absorbing nutrients from skarn has been completely crystallized
+}
+
+ChalcedonyBathtub: {
+	DisplayName: Chalcedony Bathtub
+	Tooltip: ""
+}
+
+ChalcedonyBed: {
+	DisplayName: Chalcedony Bed
+	Tooltip: ""
+}
+
+ChalcedonyBigDroplight: {
+	DisplayName: Chalcedony Big Droplight
+	Tooltip: ""
+}
+
+ChalcedonyBookcase: {
+	DisplayName: Chalcedony Bookcase
+	Tooltip: ""
+}
+
+ChalcedonyCandelabra: {
+	DisplayName: Chalcedony Candelabra
+	Tooltip: ""
+}
+
+ChalcedonyCandle: {
+	DisplayName: Chalcedony Candle
+	Tooltip: ""
+}
+
+ChalcedonyChair: {
+	DisplayName: Chalcedony Chair
+	Tooltip: ""
+}
+
+ChalcedonyClock: {
+	DisplayName: Chalcedony Clock
+	Tooltip: ""
+}
+
+ChalcedonyDoor: {
+	DisplayName: Chalcedony Door
+	Tooltip: ""
+}
+
+ChalcedonyDresser: {
+	DisplayName: Chalcedony Dresser
+	Tooltip: ""
+}
+
+ChalcedonyDroplight: {
+	DisplayName: Chalcedony Droplight
+	Tooltip: ""
+}
+
+ChalcedonyFloorLamp: {
+	DisplayName: Chalcedony Floor Lamp
+	Tooltip: ""
+}
+
+ChalcedonyPiano: {
+	DisplayName: Chalcedony Piano
+	Tooltip: ""
+}
+
+ChalcedonyPlatform: {
+	DisplayName: Chalcedony Platform
+	Tooltip: ""
+}
+
+ChalcedonySink: {
+	DisplayName: Chalcedony Sink
+	Tooltip: ""
+}
+
+ChalcedonySofa: {
+	DisplayName: Chalcedony Sofa
+	Tooltip: ""
+}
+
+ChalcedonyTable: {
+	DisplayName: Chalcedony Table
+	Tooltip: ""
+}
+
+ChalcedonyToilet: {
+	DisplayName: Chalcedony Toilet
+	Tooltip: ""
+}
+
+ChalcedonyWallItem: {
+	DisplayName: Chalcedony Wall
+	Tooltip: ""
+}
+
+ChalcedonyWorkBench: {
+	DisplayName: Chalcedony Work Bench
+	Tooltip: ""
+}
+
+LeafChalcedony: {
+	DisplayName: Leaf Chalcedony
+	Tooltip: Chalcedony, wrapped and compressed with leaf stone, is more suitable for various processing
+}
+
+ChalcedonyChest: {
+	DisplayName: Chalcedony Chest
+	Tooltip: ""
+}
+
+Princesstrawberry: {
+	DisplayName: Princesstrawberry
+	Tooltip: ""
+}
+
+Woodbine: {
+	DisplayName: Woodbine
 	Tooltip: ""
 }

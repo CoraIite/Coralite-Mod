@@ -10,6 +10,7 @@ using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ObjectData;
@@ -270,13 +271,73 @@ namespace Coralite.Content.Items.Magike.Factorys
             Vector2 center = topPos.ToWorldCoordinates();
             for (int i = 0; i < 12; i++)
             {
-                Dust d = Dust.NewDustPerfect(center, DustID.FireworksRGB, (i * MathHelper.TwoPi / 12).ToRotationVector2() * 2, newColor: Coralite.MagicCrystalPink);
+                Dust d = Dust.NewDustPerfect(center, DustID.FireworksRGB, (i * MathHelper.TwoPi / 12).ToRotationVector2(), newColor: Coralite.MagicCrystalPink);
                 d.noGravity = true;
             }
         }
 
+        public override void OnWork()
+        {
+            float factor = Timer / (float)WorkTime;
+
+            Point16 point = (Entity as MagikeTileEntity).Position;
+            GetMagikeAlternateData(point.X, point.Y, out _, out MagikeAlternateStyle alternate);
+
+            Vector2 center = Helper.GetMagikeTileCenter(point);
+
+            float rot = alternate.GetAlternateRotation();
+
+            float speed = 4- factor *3;
+            Vector2 dir = rot.ToRotationVector2();
+            Dust dust = Dust.NewDustPerfect(center  + Main.rand.NextVector2CircularEdge(2, 2)
+                , DustID.AncientLight, dir * speed, newColor: Coralite.MagicCrystalPink);
+            dust.noGravity = true;
+        }
+
         public void ShowInUI(UIElement parent)
         {
+            //添加显示在最上面的组件名称
+            UIElement title = this.AddTitle(MagikeSystem.UITextID.LaserCollectorName, parent);
+
+            UIList list =
+            [
+                //工作时间
+                this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.FactoryWorkTime) , parent),
+                this.NewTextBar(SendDelayText , parent),
+
+                //生产物品
+                this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.LaserCollectorOutPut), parent),
+                this.NewTextBar(c =>
+                {
+                    if (!TryGetTile((c.Entity as MagikeTileEntity).Position, out Tile tile))
+                        return "";
+
+                    if (!CheckTile(tile,out ICrystalCluster crystalCluster))
+                        return "";
+
+                    Main.instance.LoadItem(crystalCluster.ItemType);
+                    return $"[i:{crystalCluster.ItemType}] {ContentSamples.ItemsByType[crystalCluster.ItemType].Name}";
+                } , parent),
+
+                //生产消费
+                this.NewTextBar(c =>
+                {
+                    if (!TryGetTile((c.Entity as MagikeTileEntity).Position, out Tile tile))
+                        return "";
+
+                    if (!CheckTile(tile,out ICrystalCluster crystalCluster))
+                        return "";
+
+                    return MagikeSystem.GetUIText(MagikeSystem.UITextID.LaserCollectorCost)+crystalCluster.MagikeCost;
+                } , parent),
+            ];
+
+            list.SetSize(0, -title.Height.Pixels, 1, 1);
+            list.SetTopLeft(title.Height.Pixels + 8, 0);
+
+            list.QuickInvisibleScrollbar();
+
+            parent.Append(list);
         }
 
         public void Upgrade(MALevel incomeLevel)
