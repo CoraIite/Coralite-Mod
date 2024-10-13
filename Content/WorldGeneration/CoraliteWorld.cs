@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Terraria.GameContent.Generation;
 using Terraria.Localization;
 using Terraria.ModLoader.IO;
 using Terraria.WorldBuilding;
-using System.Linq;
 
 namespace Coralite.Content.WorldGeneration
 {

@@ -4849,3 +4849,13 @@ Woodbine: {
 	DisplayName: 忍冬
 	Tooltip: "{$CommonItemTooltip.MinorStats}"
 }
+
+Buttermilk: {
+	DisplayName: 玄饮酪浆
+	Tooltip: "{$CommonItemTooltip.MajorStats}"
+}
+
+RoyalKonjac: {
+	DisplayName: 王室蒟蒻
+	Tooltip: "{$CommonItemTooltip.MajorStats}"
+}

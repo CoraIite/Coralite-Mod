@@ -4784,3 +4784,13 @@ Woodbine: {
 	DisplayName: Woodbine
 	Tooltip: ""
 }
+
+Buttermilk: {
+	DisplayName: Buttermilk
+	Tooltip: ""
+}
+
+RoyalKonjac: {
+	DisplayName: Royal Konjac
+	Tooltip: ""
+}

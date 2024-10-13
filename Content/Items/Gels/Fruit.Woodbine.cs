@@ -22,7 +22,7 @@ namespace Coralite.Content.Items.Gels
         public override void SetDefaults()
         {
             Item.DefaultToFood(22, 22, BuffID.WellFed, 60 * 60 * 5);
-            Item.value = Item.buyPrice(0, 3);
+            Item.value = Item.buyPrice(0, 0, 20);
             Item.rare = ItemRarityID.Blue;
         }
     }
