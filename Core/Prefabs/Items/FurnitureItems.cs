@@ -464,7 +464,7 @@ namespace Coralite.Core.Prefabs.Items
             Item.DefaultToPlaceableTile(CreateTile);
             Item.rare = Rare;
             Item.value = Value;
-            Item.maxStack = 99;
+            Item.maxStack = 9999;
         }
     }
 }

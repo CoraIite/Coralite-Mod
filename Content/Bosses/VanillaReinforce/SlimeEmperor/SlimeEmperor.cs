@@ -826,7 +826,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 
         #endregion
 
-        private struct CrownDatas
+        public struct CrownDatas
         {
             public Vector2 Bottom;
             public float Velocity_Y;

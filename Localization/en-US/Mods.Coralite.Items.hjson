@@ -4794,3 +4794,8 @@ RoyalKonjac: {
 	DisplayName: Royal Konjac
 	Tooltip: ""
 }
+
+SkarnBrickPlatform: {
+	DisplayName: Skarn Brick Platform
+	Tooltip: ""
+}

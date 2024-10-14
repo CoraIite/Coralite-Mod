@@ -4859,3 +4859,8 @@ RoyalKonjac: {
 	DisplayName: 王室蒟蒻
 	Tooltip: "{$CommonItemTooltip.MajorStats}"
 }
+
+SkarnBrickPlatform: {
+	// DisplayName: Skarn Brick Platform
+	// Tooltip: ""
+}

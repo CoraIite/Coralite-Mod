@@ -9,7 +9,7 @@ using Terraria.Enums;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
 
-namespace Coralite.Content.Tiles.GlobalTiles
+namespace Coralite.Content.GlobalTiles
 {
     public class CoraliteGlobalTile : GlobalTile
     {
