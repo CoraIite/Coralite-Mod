@@ -1,5 +1,9 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.WorldGeneration;
+using Coralite.Core;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Graphics.PackedVector;
+using Newtonsoft.Json.Linq;
 using System;
 using Terraria;
 using Terraria.GameContent;
@@ -12,9 +16,7 @@ namespace Coralite.Content.Bosses.DigDigDig.Stonelime
     {
         public override string Texture => AssetDirectory.Bosses + "Stonelime";
 
-        public ref float Init => ref NPC.localAI[3];
-
-        private float LifePercentScale => Math.Clamp(NPC.life / (float)NPC.lifeMax, 0.65f, 1);
+        public ref float Width => ref NPC.localAI[3];
 
         private CrownDatas crown;
 
@@ -36,7 +38,7 @@ namespace Coralite.Content.Bosses.DigDigDig.Stonelime
             NPC.lifeMax = 1800;
             NPC.knockBackResist = 0f;
             NPC.HitSound = CoraliteSoundID.DigStone_Tink;
-            NPC.DeathSound = CoraliteSoundID.MeteorImpact_Item89;
+            NPC.DeathSound = CoraliteSoundID.StoneBurst_Item70;
             NPC.value = 10000f;
             NPC.scale = 1.25f;
             NPC.SpawnWithHigherTime(30);
@@ -61,9 +63,12 @@ namespace Coralite.Content.Bosses.DigDigDig.Stonelime
             if (NPC.ai[3] == 0f && NPC.life > 0)
                 NPC.ai[3] = NPC.lifeMax;
 
-            if (Init == 0f)
+            if (Width == 0f)
             {
-                Init = 1;
+                Width = 6;
+                if (Main.masterMode)
+                    Width = 12;
+
                 init = true;
                 crown = new CrownDatas();
                 crown.Bottom = NPC.Top + new Vector2(0, -50);
@@ -119,6 +124,15 @@ namespace Coralite.Content.Bosses.DigDigDig.Stonelime
                     NPC.ai[1] = 6f;
                     NPC.ai[0] = 0f;
                     NPC.netUpdate = true;
+
+                    int count = Main.rand.Next(2, 5);
+                    for (int i = 0; i < count; i++)
+                    {
+                        Projectile p = NPC.NewProjectileDirectInAI(NPC.Top, -Vector2.UnitY.RotateByRandom(-0.3f, 0.3f) * 12, ProjectileID.Boulder
+                             , Helper.ScaleValueForDiffMode(40, 60, 80, 80), 8, NPC.target);
+
+                        p.friendly = false;
+                    }
                 }
 
                 if (Main.netMode == NetmodeID.MultiplayerClient && NPC.ai[0] >= 120f)
@@ -131,7 +145,7 @@ namespace Coralite.Content.Bosses.DigDigDig.Stonelime
                 {
                     for (int num249 = 0; num249 < 10; num249++)
                     {
-                        int num250 = Dust.NewDust(NPC.position + Vector2.UnitX * -20f, NPC.width + 40, NPC.height, DustID.TintableDust, NPC.velocity.X, NPC.velocity.Y, 150, new Color(78, 136, 255, 80), 2f);
+                        int num250 = Dust.NewDust(NPC.position + Vector2.UnitX * -20f, NPC.width + 40, NPC.height, DustID.Stone, NPC.velocity.X, NPC.velocity.Y, Scale: 2f);
                         Main.dust[num250].noGravity = true;
                         dust = Main.dust[num250];
                         dust.velocity *= 0.5f;
@@ -162,7 +176,7 @@ namespace Coralite.Content.Bosses.DigDigDig.Stonelime
 
                 for (int num251 = 0; num251 < 10; num251++)
                 {
-                    int num252 = Dust.NewDust(NPC.position + Vector2.UnitX * -20f, NPC.width + 40, NPC.height, DustID.TintableDust, NPC.velocity.X, NPC.velocity.Y, 150, new Color(78, 136, 255, 80), 2f);
+                    int num252 = Dust.NewDust(NPC.position + Vector2.UnitX * -20f, NPC.width + 40, NPC.height, DustID.Stone, NPC.velocity.X, NPC.velocity.Y, Scale: 2f);
                     Main.dust[num252].noGravity = true;
                     dust = Main.dust[num252];
                     dust.velocity *= 2f;
@@ -204,6 +218,11 @@ namespace Coralite.Content.Bosses.DigDigDig.Stonelime
                             NPC.velocity.X += 3.5f * NPC.direction;
                             NPC.ai[0] = -200f;
                             NPC.ai[1] = 0f;
+
+                           Projectile p= NPC.NewProjectileDirectInAI(NPC.Top, -Vector2.UnitY.RotateByRandom(-0.3f, 0.3f) * 12, ProjectileID.Boulder
+                                , Helper.ScaleValueForDiffMode(40, 60, 80, 80), 8, NPC.target);
+
+                            p.friendly = false;
                         }
                         else if (NPC.ai[1] == 2f)
                         {
@@ -241,24 +260,32 @@ namespace Coralite.Content.Bosses.DigDigDig.Stonelime
                 }
             }
 
-            int num254 = Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.TintableDust, NPC.velocity.X, NPC.velocity.Y, 255, new Color(0, 80, 255, 80), NPC.scale * 1.2f);
-            Main.dust[num254].noGravity = true;
+            int num254 = Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.Stone, NPC.velocity.X, NPC.velocity.Y, Scale: NPC.scale * 1.2f);
             dust = Main.dust[num254];
+            dust.noGravity = true;
             dust.velocity *= 0.5f;
             if (NPC.life <= 0)
                 return;
 
-            float scale = NPC.life / (float)NPC.lifeMax;
-            scale = scale * 0.5f + 0.75f;
+            float scale = 1.25f;
             scale *= num236;
             scale *= num237;
-            if (scale != NPC.scale || init)
+
+            float factor = Math.Clamp(NPC.life / (float)NPC.lifeMax, 0.5f, 1);
+
+            int width2 = 6;
+            if (Main.masterMode)
+                width2 = 12;
+
+            width2 = (int)(width2 * factor);
+            if (scale != NPC.scale || width2!=(int)Width||init)
             {
+                Width = width2;
                 NPC.position.X += NPC.width / 2;
                 NPC.position.Y += NPC.height;
                 NPC.scale = scale;
-                NPC.width = (int)(98f * NPC.scale);
-                NPC.height = (int)(92f * NPC.scale);
+                NPC.width = (int)(16 * Width * scale);
+                NPC.height = (int)(16 * Width * scale);
                 NPC.position.X -= NPC.width / 2;
                 NPC.position.Y -= NPC.height;
             }
@@ -272,16 +299,12 @@ namespace Coralite.Content.Bosses.DigDigDig.Stonelime
 
             NPC.ai[3] = NPC.life;
             int num257 = Main.rand.Next(1, 4);
-            for (int num258 = 0; num258 < num257; num258++)
+            for (int i = 0; i < num257; i++)
             {
                 int x = (int)(NPC.position.X + Main.rand.Next(NPC.width - 32));
                 int y = (int)(NPC.position.Y + Main.rand.Next(NPC.height - 32));
-                int num259 = 1;
-                if (Main.expertMode && Main.rand.NextBool(4))
-                    num259 = 535;
 
-                int npcIndex = NPC.NewNPC(NPC.GetSource_FromAI(), x, y, num259);
-                Main.npc[npcIndex].SetDefaults(num259);
+                int npcIndex = NPC.NewNPC(NPC.GetSource_FromAI(), x, y, ModContent.NPCType<StoneSmallime>());
                 Main.npc[npcIndex].velocity.X = Main.rand.Next(-15, 16) * 0.1f;
                 Main.npc[npcIndex].velocity.Y = Main.rand.Next(-30, 1) * 0.1f;
                 Main.npc[npcIndex].ai[0] = -1000 * Main.rand.Next(3);
@@ -293,7 +316,7 @@ namespace Coralite.Content.Bosses.DigDigDig.Stonelime
 
         public override void PostAI()
         {
-            int height = GetCrownBottom();
+            int height = (int)( 16 * (Width-2));
             float groundHeight = NPC.Bottom.Y - (NPC.scale * height);
             crown.Bottom.X = MathHelper.Lerp(crown.Bottom.X, NPC.Center.X, 0.5f);
 
@@ -321,11 +344,6 @@ namespace Coralite.Content.Bosses.DigDigDig.Stonelime
             }
 
             crown.Rotation = crown.Rotation.AngleLerp(0, 0.04f);
-        }
-
-        private int GetCrownBottom()
-        {
-            return (int)(LifePercentScale * NPC.scale * 16 * 4);
         }
 
         private void CheckTarget()
@@ -451,50 +469,111 @@ namespace Coralite.Content.Bosses.DigDigDig.Stonelime
             float scale = NPC.scale;
             Vector2 bottom = NPC.Bottom - Main.screenPosition;
 
-            int fullWidth = 16 * 6;//6格
+            int fullWidth = (int)(16 * Width);//多少格
 
             //绘制四个角
-            spriteBatch.Draw(mainTex, bottom + new Vector2(-fullWidth / 2, -fullWidth) * scale, new Rectangle(0, 18 * 3, 16, 16)
-                , drawColor, 0, Vector2.Zero, scale, 0, 0);
-            spriteBatch.Draw(mainTex, bottom + new Vector2(fullWidth / 2 - 16, -fullWidth) * scale, new Rectangle(18, 18 * 3, 16, 16)
-                , drawColor, 0, Vector2.Zero, scale, 0, 0);
-            spriteBatch.Draw(mainTex, bottom + new Vector2(-fullWidth / 2, -16) * scale, new Rectangle(0, 18 * 4, 16, 16)
-                , drawColor, 0, Vector2.Zero, scale, 0, 0);
-            spriteBatch.Draw(mainTex, bottom + new Vector2(fullWidth / 2 - 16, -16) * scale, new Rectangle(18, 18 * 4, 16, 16)
-                , drawColor, 0, Vector2.Zero, scale, 0, 0);
+            DrawStone(spriteBatch, mainTex, scale, bottom + new Vector2(-fullWidth / 2, -fullWidth) * scale, new Rectangle(0, 18 * 3, 16, 16));
+            DrawStone(spriteBatch, mainTex, scale, bottom + new Vector2(fullWidth / 2 - 16, -fullWidth) * scale, new Rectangle(18, 18 * 3, 16, 16));
+            DrawStone(spriteBatch, mainTex, scale, bottom + new Vector2(-fullWidth / 2, -16) * scale, new Rectangle(0, 18 * 4, 16, 16));
+            DrawStone(spriteBatch, mainTex, scale, bottom + new Vector2(fullWidth / 2 - 16, -16) * scale, new Rectangle(18, 18 * 4, 16, 16));
 
             //绘制四条边            
-            for (int i = 1; i < 5; i++)//顶边
-                spriteBatch.Draw(mainTex, bottom + new Vector2(-fullWidth / 2 + 16 * i, -fullWidth) * scale, new Rectangle((18 * (i > 3 ? 1 : i)), 0, 16, 16)
-                    , drawColor, 0, Vector2.Zero, scale, 0, 0);
-            for (int i = 1; i < 5; i++)//底边
-                spriteBatch.Draw(mainTex, bottom + new Vector2(-fullWidth / 2 + 16 * i, -16) * scale, new Rectangle((18 * (i > 3 ? 1 : i)), 18 * 2, 16, 16)
-                    , drawColor, 0, Vector2.Zero, scale, 0, 0);
-            for (int i = 1; i < 5; i++)//左边
-                spriteBatch.Draw(mainTex, bottom + new Vector2(-fullWidth / 2, -fullWidth + 16 * i) * scale, new Rectangle(0, (18 * ((i - 1) > 2 ? 0 : (i - 1))), 16, 16)
-                    , drawColor, 0, Vector2.Zero, scale, 0, 0);
-            for (int i = 1; i < 5; i++)//底边
-                spriteBatch.Draw(mainTex, bottom + new Vector2(fullWidth / 2 - 16, -fullWidth + 16 * i) * scale, new Rectangle(18 * 4, (18 * ((i - 1) > 2 ? 0 : (i - 1))), 16, 16)
-                    , drawColor, 0, Vector2.Zero, scale, 0, 0);
+            for (int i = 1; i < Width - 1; i++)//顶边
+                DrawStone(spriteBatch, mainTex, scale, bottom + new Vector2(-fullWidth / 2 + 16 * i, -fullWidth) * scale, new Rectangle((18 * (i % 3 + 1)), 0, 16, 16));
+            for (int i = 1; i < Width - 1; i++)//底边
+                DrawStone(spriteBatch, mainTex, scale, bottom + new Vector2(-fullWidth / 2 + 16 * i, -16) * scale, new Rectangle((18 * (i % 3 + 1)), 18 * 2, 16, 16));
+            for (int i = 1; i < Width - 1; i++)//左边
+                DrawStone(spriteBatch, mainTex, scale, bottom + new Vector2(-fullWidth / 2, -fullWidth + 16 * i) * scale, new Rectangle(0, (18 * (i % 3)), 16, 16));
+            for (int i = 1; i < Width - 1; i++)//底边
+                DrawStone(spriteBatch, mainTex, scale, bottom + new Vector2(fullWidth / 2 - 16, -fullWidth + 16 * i) * scale, new Rectangle(18 * 4, (18 * (i % 3)), 16, 16));
 
             //填充中心部分
-            for (int i = 1; i < 5; i++)//顶边
-                for (int j = 1; j < 5; j++)
+            for (int i = 1; i < Width - 1; i++)//顶边
+                for (int j = 1; j < Width - 1; j++)
                 {
-                    int xFrame = i*2+j  + (int)(NPC.Center.X / 32);
+                    int xFrame = i * 2 + j + (int)(NPC.Center.X / 32);
                     xFrame %= 4;
 
                     xFrame = Math.Clamp(xFrame, 1, 3);
-
-                    spriteBatch.Draw(mainTex, bottom + new Vector2(-fullWidth / 2 + 16 * i, -fullWidth + 16 * j) * scale, new Rectangle(18 * xFrame, 18, 16, 16)
-                        , drawColor, 0, Vector2.Zero, scale, 0, 0);
+                    DrawStone(spriteBatch, mainTex, scale, bottom + new Vector2(-fullWidth / 2 + 16 * i, -fullWidth + 16 * j) * scale, new Rectangle(18 * xFrame, 18, 16, 16));
                 }
 
             Texture2D crownTex = TextureAssets.Extra[39].Value;
             Vector2 crownOrigin = new Vector2(crownTex.Width / 2, crownTex.Height);
             Vector2 crownPos = crown.Bottom - screenPos;
-            //绘制本体，以底部为中心进行绘制
-            spriteBatch.Draw(crownTex, crownPos, null, drawColor, crown.Rotation, crownOrigin, NPC.scale, 0, 0f);
+            //绘制王冠
+            spriteBatch.Draw(crownTex, crownPos, null, drawColor, crown.Rotation, crownOrigin, 1, 0, 0f);
+
+            return false;
+
+            static void DrawStone(SpriteBatch spriteBatch, Texture2D mainTex, float scale, Vector2 pos,Rectangle rect)
+            {
+                spriteBatch.Draw(mainTex, pos, rect , Lighting.GetColor((pos + Main.screenPosition).ToTileCoordinates()), 0, Vector2.Zero, scale, 0, 0);
+            }
+        }
+    }
+
+    public class StoneSmallime : ModNPC
+    {
+        public override string Texture => AssetDirectory.OtherProjectiles + "White32x32";
+
+        public int frame = 1;
+
+        public override void SetDefaults()
+        {
+            NPC.aiStyle = 1;
+            NPC.damage = 7;
+            NPC.defense = 2;
+            NPC.lifeMax = 25;
+            NPC.value = 25f;
+            NPC.defense += 4;
+            NPC.width = NPC.height = 32;
+            AIType = NPCID.BlueSlime;
+
+            NPC.HitSound = CoraliteSoundID.DigStone_Tink;
+            NPC.DeathSound = CoraliteSoundID.MeteorImpact_Item89;
+            frame = Main.rand.Next(1, 3);
+        }
+
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
+        {
+            NPC.lifeMax = (int)(NPC.lifeMax * balance * bossAdjustment);
+        }
+
+        public override float SpawnChance(NPCSpawnInfo spawnInfo)
+        {
+            if (!CoraliteWorld.DigDigDigWorld)
+                return 0;
+
+            if (spawnInfo.Player.ZoneUnderworldHeight
+                && !spawnInfo.Player.ZoneOverworldHeight
+                && !spawnInfo.Player.ZoneBeach)
+            {
+                return 0.3f;
+            }
+
+            return base.SpawnChance(spawnInfo);
+        }
+
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            Texture2D mainTex = TextureAssets.Tile[TileID.Stone].Value;
+
+            //检测宽度
+            float scale = NPC.scale;
+            Vector2 bottom = NPC.Bottom - Main.screenPosition;
+
+            int fullWidth = 16 * 2;
+
+            //绘制四个角
+            spriteBatch.Draw(mainTex, bottom + new Vector2(-fullWidth / 2, -fullWidth) * scale, new Rectangle(18 * 2*frame, 18 * 3, 16, 16)
+                , drawColor, 0, Vector2.Zero, scale, 0, 0);
+            spriteBatch.Draw(mainTex, bottom + new Vector2(fullWidth / 2 - 16, -fullWidth) * scale, new Rectangle(18 * (2*frame+1), 18 * 3, 16, 16)
+                , drawColor, 0, Vector2.Zero, scale, 0, 0);
+            spriteBatch.Draw(mainTex, bottom + new Vector2(-fullWidth / 2, -16) * scale, new Rectangle(18 * 2*frame, 18 * 4, 16, 16)
+                , drawColor, 0, Vector2.Zero, scale, 0, 0);
+            spriteBatch.Draw(mainTex, bottom + new Vector2(fullWidth / 2 - 16, -16) * scale, new Rectangle(18 * (2*frame+1), 18 * 4, 16, 16)
+                , drawColor, 0, Vector2.Zero, scale, 0, 0);
 
             return false;
         }

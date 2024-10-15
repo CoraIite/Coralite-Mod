@@ -124,15 +124,15 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
             {
                 default:
                 case (int)FlyingShieldStates.Shooting:
-                    OnShootDusts();
                     Shooting();
+                    OnShootDusts();
                     break;
                 case (int)FlyingShieldStates.JustHited:
                     OnJustHited();
                     break;
                 case (int)FlyingShieldStates.Backing:
-                    OnBackDusts();
                     OnBacking();
+                    OnBackDusts();
                     break;
             }
 

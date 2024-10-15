@@ -53,8 +53,8 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                     return true;//右键时没有左键弹幕
                 }
 
-                if (player.ownedProjectileCounts[Item.shoot] >= cp.MaxFlyingShield)
-                    return false;
+                //if (player.ownedProjectileCounts[Item.shoot] >= cp.MaxFlyingShield)
+                //    return false;
             }
 
             return true;

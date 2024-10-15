@@ -92,7 +92,6 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
         /// </summary>
         /// <param name="player"></param>
         /// <param name="source"></param>
-        /// <param name="position"></param>
         /// <param name="velocity"></param>
         /// <param name="type"></param>
         /// <param name="damage"></param>

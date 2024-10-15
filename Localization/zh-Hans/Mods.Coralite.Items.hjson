@@ -4568,7 +4568,11 @@ BeeswaxPolarizedFilter: {
 
 GreenOnionBurritos: {
 	DisplayName: 大葱卷饼
-	Tooltip: ""
+	Tooltip:
+		'''
+		左键丢出大葱，大葱在碰到卷饼后会变为大葱卷饼并造成更高伤害
+		飞盾与防御均为卷饼
+		'''
 }
 
 DungeonLens: {
@@ -4861,6 +4865,6 @@ RoyalKonjac: {
 }
 
 SkarnBrickPlatform: {
-	// DisplayName: Skarn Brick Platform
-	// Tooltip: ""
+	DisplayName: 矽卡砖平台
+	Tooltip: ""
 }
