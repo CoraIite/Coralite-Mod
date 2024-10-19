@@ -14,7 +14,7 @@ namespace Coralite.Core.Prefabs.Misc
     public abstract class BaseBossHealthBar : ModBossBar
     {
         private int bossHeadIndex = -1;
-        private Vector2 offset;
+        protected Vector2 offset;
         private int oldLife;
 
         public virtual int FrameCount => 4;
@@ -22,6 +22,9 @@ namespace Coralite.Core.Prefabs.Misc
         /// 血条背景的尺寸
         /// </summary>
         public virtual Point BarSize => new(406, 20);
+
+        public virtual int HealthBarFrameWidth => 2;
+
         /// <summary>
         /// 血条背景的左上角位置<br></br>
         /// 为血条背景这一帧对应的血条左上角到帧左上角的距离
@@ -109,7 +112,7 @@ namespace Coralite.Core.Prefabs.Misc
             float life = drawParams.Life;
             float lifeMax = drawParams.LifeMax;
 
-            int currentBarLength = BarSize.X * npc.life / npc.lifeMax;
+            int currentBarLength = (int)(BarSize.X * (float)npc.life / npc.lifeMax);
             currentBarLength -= currentBarLength % 2;
 
             Rectangle barPosition = Utils.CenteredRectangle(barCenter, (BarSize + new Point(4, 0)).ToVector2());
@@ -130,9 +133,9 @@ namespace Coralite.Core.Prefabs.Misc
             Rectangle barFrame = barTexture.Frame(verticalFrames: FrameCount, frameY: 1);   //这里和原版的不一样 抄的时候注意点
             barFrame.X += topLeftOffset.X;
             barFrame.Y += topLeftOffset.Y;
-            barFrame.Width = 2;
+            barFrame.Width = HealthBarFrameWidth;
             barFrame.Height = BarSize.Y;
-            Vector2 stretchScale = new(currentBarLength / barFrame.Width, 1f);
+            Vector2 stretchScale = new(currentBarLength / (float)barFrame.Width, 1f);
             Color barColor = npc.dontTakeDamage ? DontTakeDamageColor : Color.White;
 
             DrawBar(spriteBatch, barTexture, barTopLeft, barFrame, barColor, stretchScale);

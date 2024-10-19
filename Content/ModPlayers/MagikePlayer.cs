@@ -1,4 +1,6 @@
-﻿namespace Coralite.Content.ModPlayers
+﻿using Terraria;
+
+namespace Coralite.Content.ModPlayers
 {
     public class MagikePlayer : ModPlayer
     {

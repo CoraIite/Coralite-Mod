@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Items.FlyingShields;
+using Coralite.Content.Items.Misc_Magic;
 using Coralite.Content.Items.Nightmare;
 using Coralite.Content.Items.Steel;
 using Coralite.Content.Items.Vanity;
@@ -20,6 +21,9 @@ namespace Coralite.Content.ModPlayers
                 drawInfo.drawPlayer.head = EquipLoader.GetEquipSlot(Mod, "CharmOfIsis", EquipType.Head);
             if (HasEffect(nameof(OsirisPillar) + "Vanity"))
                 drawInfo.drawPlayer.head = EquipLoader.GetEquipSlot(Mod, "OsirisPillar", EquipType.Head);
+
+            if (HasEffect(nameof(ConchRobe)))
+                drawInfo.drawPlayer.legs = EquipLoader.GetEquipSlot(Mod, nameof(ConchRobe), EquipType.Legs);
 
             if (HasEffect(nameof(SquirrelSet)))
             {

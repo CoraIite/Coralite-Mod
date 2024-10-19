@@ -4,7 +4,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Tiles.MagikeSeries2
 {
-    public class SkarnBrickTile : ModTile
+    public class SmoothSkarnTile : ModTile
     {
         public override string Texture => AssetDirectory.MagikeSeries2Tile + Name;
 
@@ -13,12 +13,16 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             Main.tileSolid[Type] = true;
             Main.tileBlockLight[Type] = true;
 
+            Main.tileMerge[Type][ModContent.TileType<SkarnTile>()] = true;
+            Main.tileMerge[ModContent.TileType<SkarnTile>()][Type] = true;
+            TileID.Sets.ChecksForMerge[Type] = true;
+
             DustType = DustID.BorealWood_Small;
             HitSound = CoraliteSoundID.DigStone_Tink;
             AddMapEntry(new Color(141, 171, 178));
 
             MinPick = 150;
-            MineResist = 12;
+            MineResist = 6;
         }
 
         public override void NumDust(int i, int j, bool fail, ref int num)

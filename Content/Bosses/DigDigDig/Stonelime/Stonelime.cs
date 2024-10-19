@@ -1,20 +1,21 @@
-﻿using Coralite.Content.WorldGeneration;
+﻿using Coralite.Content.Items.DigDigDig.Stonelimes;
 using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Graphics.PackedVector;
-using Newtonsoft.Json.Linq;
 using System;
 using Terraria;
 using Terraria.GameContent;
+using Terraria.GameContent.Drawing;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using static Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor.SlimeEmperor;
 
 namespace Coralite.Content.Bosses.DigDigDig.Stonelime
 {
+    [AutoloadBossHead]
     public class Stonelime : ModNPC
     {
-        public override string Texture => AssetDirectory.Bosses + "Stonelime";
+        public override string Texture => AssetDirectory.DigDigDigBoss + "Stonelime";
 
         public ref float Width => ref NPC.localAI[3];
 
@@ -43,12 +44,22 @@ namespace Coralite.Content.Bosses.DigDigDig.Stonelime
             NPC.scale = 1.25f;
             NPC.SpawnWithHigherTime(30);
             NPC.npcSlots = 5f;
+
+            NPC.BossBar = ModContent.GetInstance<StonelimeBossBar>();
+            ModContent.GetInstance<StonelimeBossBar>().Reset(NPC);
+
+            Music = MusicID.Boss1;
         }
 
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
             NPC.lifeMax = (int)(NPC.lifeMax * 0.7f * balance * bossAdjustment);
             NPC.damage = (int)(NPC.damage * 0.8f);
+        }
+
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<StoneRelic>()));
         }
 
         public override void AI()
@@ -346,6 +357,28 @@ namespace Coralite.Content.Bosses.DigDigDig.Stonelime
             crown.Rotation = crown.Rotation.AngleLerp(0, 0.04f);
         }
 
+        public override void OnKill()
+        {
+            if (Main.netMode != NetmodeID.MultiplayerClient && !NPC.unlockedSlimeBlueSpawn)
+            {
+                NPC.unlockedSlimeBlueSpawn = true;
+                int num = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X - 10, (int)NPC.Center.Y, 670);
+                NPC obj = Main.npc[num];
+                Vector2 movementVector = (obj.velocity = new Vector2(Main.rand.NextFloatDirection() * 3f, -10f));
+                obj.netUpdate = true;
+                WorldGen.CheckAchievement_RealEstateAndTownSlimes();
+                ParticleOrchestrator.BroadcastParticleSpawn(ParticleOrchestraType.TownSlimeTransform, new ParticleOrchestraSettings
+                {
+                    PositionInWorld = NPC.Center,
+                    MovementVector = movementVector,
+                    UniqueInfoPiece = 0
+                });
+            }
+            NPC.SetEventFlagCleared(ref NPC.downedSlimeKing, 11);
+            if (Main.netMode == NetmodeID.Server)
+                NetMessage.SendData(MessageID.WorldData);
+        }
+
         private void CheckTarget()
         {
             int searchDistance = 3000;
@@ -513,69 +546,4 @@ namespace Coralite.Content.Bosses.DigDigDig.Stonelime
         }
     }
 
-    public class StoneSmallime : ModNPC
-    {
-        public override string Texture => AssetDirectory.OtherProjectiles + "White32x32";
-
-        public int frame = 1;
-
-        public override void SetDefaults()
-        {
-            NPC.aiStyle = 1;
-            NPC.damage = 7;
-            NPC.defense = 2;
-            NPC.lifeMax = 25;
-            NPC.value = 25f;
-            NPC.defense += 4;
-            NPC.width = NPC.height = 32;
-            AIType = NPCID.BlueSlime;
-
-            NPC.HitSound = CoraliteSoundID.DigStone_Tink;
-            NPC.DeathSound = CoraliteSoundID.MeteorImpact_Item89;
-            frame = Main.rand.Next(1, 3);
-        }
-
-        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
-        {
-            NPC.lifeMax = (int)(NPC.lifeMax * balance * bossAdjustment);
-        }
-
-        public override float SpawnChance(NPCSpawnInfo spawnInfo)
-        {
-            if (!CoraliteWorld.DigDigDigWorld)
-                return 0;
-
-            if (spawnInfo.Player.ZoneUnderworldHeight
-                && !spawnInfo.Player.ZoneOverworldHeight
-                && !spawnInfo.Player.ZoneBeach)
-            {
-                return 0.3f;
-            }
-
-            return base.SpawnChance(spawnInfo);
-        }
-
-        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
-        {
-            Texture2D mainTex = TextureAssets.Tile[TileID.Stone].Value;
-
-            //检测宽度
-            float scale = NPC.scale;
-            Vector2 bottom = NPC.Bottom - Main.screenPosition;
-
-            int fullWidth = 16 * 2;
-
-            //绘制四个角
-            spriteBatch.Draw(mainTex, bottom + new Vector2(-fullWidth / 2, -fullWidth) * scale, new Rectangle(18 * 2*frame, 18 * 3, 16, 16)
-                , drawColor, 0, Vector2.Zero, scale, 0, 0);
-            spriteBatch.Draw(mainTex, bottom + new Vector2(fullWidth / 2 - 16, -fullWidth) * scale, new Rectangle(18 * (2*frame+1), 18 * 3, 16, 16)
-                , drawColor, 0, Vector2.Zero, scale, 0, 0);
-            spriteBatch.Draw(mainTex, bottom + new Vector2(-fullWidth / 2, -16) * scale, new Rectangle(18 * 2*frame, 18 * 4, 16, 16)
-                , drawColor, 0, Vector2.Zero, scale, 0, 0);
-            spriteBatch.Draw(mainTex, bottom + new Vector2(fullWidth / 2 - 16, -16) * scale, new Rectangle(18 * (2*frame+1), 18 * 4, 16, 16)
-                , drawColor, 0, Vector2.Zero, scale, 0, 0);
-
-            return false;
-        }
-    }
 }

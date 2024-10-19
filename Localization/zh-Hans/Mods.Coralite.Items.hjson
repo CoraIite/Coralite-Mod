@@ -4868,3 +4868,37 @@ SkarnBrickPlatform: {
 	DisplayName: 矽卡砖平台
 	Tooltip: ""
 }
+
+StoneRelic: {
+	DisplayName: 石块，地质的运动
+	Tooltip: ""
+}
+
+SmoothSkarn: {
+	DisplayName: 平滑矽卡岩
+	Tooltip: ""
+}
+
+SmoothSkarnWallItem: {
+	DisplayName: 平滑矽卡岩墙
+	Tooltip: ""
+}
+
+ConchHat: {
+	DisplayName: 海螺盔
+	Tooltip:
+		'''
+		+20 最大魔力值
+		+4% 魔法暴击几率
+		'''
+	ArmorBonus:
+		'''
+		当消耗一半的魔力后获得泡泡祝福，获得快速奔跑能力并+3防御力
+		泡泡祝福持续一段时间后消失
+		'''
+}
+
+ConchRobe: {
+	DisplayName: 海螺长袍
+	Tooltip: +20 最大魔力值
+}

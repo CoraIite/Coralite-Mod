@@ -113,6 +113,8 @@ namespace Coralite.Content.WorldGeneration
 
             if (DigDigDigWorld)
                 ModifyDigdigdigWorldGen(tasks, ref totalWeight);
+
+            tasks.Add(new PassLegacy("Coralite Crystalline Sky Island", GenCrystallineSkyIsland));
         }
 
         public override void ModifyHardmodeTasks(List<GenPass> list)

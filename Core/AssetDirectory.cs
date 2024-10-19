@@ -22,6 +22,7 @@ namespace Coralite.Core
         public const string GodOfWind = Bosses + "GodOfWind/";
 
         public const string Turmoil = Bosses + "Turmoil/";
+        public const string DigDigDigBoss = Bosses + "DigDigDig/";
         #endregion
 
         #region Buff部分！
@@ -166,6 +167,7 @@ namespace Coralite.Core
         public const string IcicleTiles = Tiles + "Icicle/";
         public const string ThunderTiles = Tiles + "Thunder/";
         public const string ShadowCastleTiles = Tiles + "ShadowCastle/";
+        public const string DigDigDigTiles = Tiles + "DigDigDig/";
 
 
         public const string MagikeTiles = Tiles + "Magike/";

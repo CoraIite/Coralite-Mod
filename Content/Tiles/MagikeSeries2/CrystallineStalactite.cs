@@ -7,7 +7,7 @@ using Terraria.ObjectData;
 
 namespace Coralite.Content.Tiles.MagikeSeries2
 {
-    public class CrystallineStalactite2x2:ModTile
+    public class CrystallineStalactite2x2 : ModTile
     {
         public override string Texture => AssetDirectory.MagikeSeries2Tile + Name;
 
@@ -18,9 +18,11 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             Main.tileObsidianKill[Type] = true;
 
             TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
-            TileID.Sets.PreventsTileRemovalIfOnTopOfIt[Type] = true;
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
+            TileObjectData.newTile.AnchorBottom = Terraria.DataStructures.AnchorData.Empty;
+            TileObjectData.newTile.AnchorTop = new Terraria.DataStructures.AnchorData(Terraria.Enums.AnchorType.SolidBottom | Terraria.Enums.AnchorType.SolidTile, 2, 0);
+            TileObjectData.newTile.DrawYOffset = -2;
             TileObjectData.newTile.CoordinateHeights = [16, 18];
             TileObjectData.newTile.StyleMultiplier = 1;
             TileObjectData.newTile.StyleHorizontal = true;
@@ -50,7 +52,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
         }
     }
 
-    public class CrystallineStalactite:ModTile
+    public class CrystallineStalactite : ModTile
     {
         public override string Texture => AssetDirectory.MagikeSeries2Tile + Name;
 
@@ -64,6 +66,9 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileID.Sets.PreventsTileRemovalIfOnTopOfIt[Type] = true;
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1);
+            TileObjectData.newTile.AnchorBottom = Terraria.DataStructures.AnchorData.Empty;
+            TileObjectData.newTile.AnchorTop = new Terraria.DataStructures.AnchorData(Terraria.Enums.AnchorType.SolidBottom | Terraria.Enums.AnchorType.SolidTile, 2, 0);
+            TileObjectData.newTile.DrawYOffset = -2;
             TileObjectData.newTile.CoordinateHeights = [18];
             TileObjectData.newTile.StyleMultiplier = 1;
             TileObjectData.newTile.StyleHorizontal = true;

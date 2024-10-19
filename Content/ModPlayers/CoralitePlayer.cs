@@ -688,7 +688,8 @@ namespace Coralite.Content.ModPlayers
             useSpecialAttack = Core.Loaders.KeybindLoader.SpecialAttack.Current;
             Item item = Player.inventory[Player.selectedItem];
 
-            if (useSpecialAttack && Player.itemAnimation == 0 && item.useStyle != ItemUseStyleID.None)
+            if (useSpecialAttack && Player.itemAnimation == 0 && item.useStyle != ItemUseStyleID.None &&
+                (item.type < ItemID.Count || item.ModItem.Mod.Name == "Coralite" || item.ModItem.Mod is ICoralite))//放置其他模组干扰
             {
                 bool flag3 = !item.IsAir && CombinedHooks.CanUseItem(Player, item);
 

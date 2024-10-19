@@ -4799,3 +4799,29 @@ SkarnBrickPlatform: {
 	DisplayName: Skarn Brick Platform
 	Tooltip: ""
 }
+
+StoneRelic: {
+	DisplayName: Stone Relic
+	Tooltip: ""
+}
+
+SmoothSkarn: {
+	DisplayName: Smooth Skarn
+	Tooltip: ""
+}
+
+SmoothSkarnWallItem: {
+	DisplayName: Smooth Skarn Wall Item
+	Tooltip: ""
+}
+
+ConchHat: {
+	DisplayName: Conch Hat
+	Tooltip: ""
+	ArmorBonus: Mods.Coralite.Items.ConchHat.ArmorBonus
+}
+
+ConchRobe: {
+	DisplayName: Conch Robe
+	Tooltip: ""
+}

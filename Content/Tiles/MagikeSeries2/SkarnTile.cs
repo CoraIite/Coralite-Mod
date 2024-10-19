@@ -15,7 +15,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             Main.tileBlockLight[Type] = true;
             //Main.tileMerge[Type][ModContent.TileType<MagikeCrystalBlockTile>()] = true;
 
-            Main.tileMerge[TileID.Dirt][Type] = true;
+            //Main.tileMerge[TileID.Dirt][Type] = true;
 
             //Main.tileMerge[Type][ModContent.TileType<CrystalBasaltTile>()] = true;
             //Main.tileMerge[ModContent.TileType<CrystalBasaltTile>()][Type] = true;
@@ -27,18 +27,12 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             AddMapEntry(new Color(141, 171, 178));
 
             MinPick = 150;
-            MineResist = 3;
+            MineResist = 6;
         }
 
         public override void NumDust(int i, int j, bool fail, ref int num)
         {
             num = fail ? 2 : 4;
-        }
-
-        public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
-        {
-            TileFraming.CustomMergeFrame(i, j, Type, TileID.Dirt, true, false, false);
-            return false;
         }
     }
 }

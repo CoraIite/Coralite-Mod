@@ -30,7 +30,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             AddMapEntry(new Color(141, 171, 178));
 
             MinPick = 150;
-            MineResist = 3;
+            MineResist = 6;
         }
 
         public override IEnumerable<Item> GetItemDrops(int i, int j)

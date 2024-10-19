@@ -25,18 +25,4 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         public override bool CanExplode(int i, int j) => false;
     }
-
-    public class ChalcedonyWall : ModWall
-    {
-        public override string Texture => AssetDirectory.Walls + Name;
-        public override void SetStaticDefaults()
-        {
-            DustType = DustID.GolfPaticle;
-        }
-
-        public override void NumDust(int i, int j, bool fail, ref int num)
-        {
-            num = fail ? 1 : 3;
-        }
-    }
 }
