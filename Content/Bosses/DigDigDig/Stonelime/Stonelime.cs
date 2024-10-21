@@ -60,6 +60,7 @@ namespace Coralite.Content.Bosses.DigDigDig.Stonelime
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<StoneRelic>()));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<StoneMakerCore>(),1,8,14));
         }
 
         public override void AI()

@@ -17,8 +17,8 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
             //Main.tileMerge[TileID.Dirt][Type] = true;
 
-            //Main.tileMerge[Type][ModContent.TileType<CrystalBasaltTile>()] = true;
-            //Main.tileMerge[ModContent.TileType<CrystalBasaltTile>()][Type] = true;
+            Main.tileMerge[Type][ModContent.TileType<CrystallineSkarnTile>()] = true;
+            Main.tileMerge[ModContent.TileType<CrystallineSkarnTile>()][Type] = true;
 
             TileID.Sets.ChecksForMerge[Type] = true;
 

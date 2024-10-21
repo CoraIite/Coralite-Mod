@@ -51,6 +51,7 @@ namespace Coralite.Content.Items.Magike.Factorys
                 .AddIngredient<MagicCrystalBrick>(4)
                 .AddCondition(CoraliteConditions.LearnedMagikeBase)
                 .AddTile(TileID.Anvils)
+                .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
         }
     }

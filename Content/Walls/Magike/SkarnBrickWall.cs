@@ -4,15 +4,15 @@ using Terraria.ID;
 
 namespace Coralite.Content.Walls.Magike
 {
-    public class ChalcedonyWall : ModWall
+    public  class SkarnBrickWall:ModWall
     {
         public override string Texture => AssetDirectory.MagikeWalls + Name;
 
         public override void SetStaticDefaults()
         {
-            DustType = DustID.GolfPaticle;
+            DustType = DustID.BorealWood_Small;
+            AddMapEntry(new Color(70, 100, 130));
             Main.wallHouse[Type] = true;
-            AddMapEntry(new Color(150, 150, 120));
         }
 
         public override void NumDust(int i, int j, bool fail, ref int num)
@@ -21,14 +21,14 @@ namespace Coralite.Content.Walls.Magike
         }
     }
 
-    public class ChalcedonyWallUnsafe : ModWall
+    public  class SkarnBrickWallUnsafe:ModWall
     {
-        public override string Texture => AssetDirectory.MagikeWalls + "ChalcedonyWall";
+        public override string Texture => AssetDirectory.MagikeWalls + "SkarnBrickWall";
 
         public override void SetStaticDefaults()
         {
-            DustType = DustID.GolfPaticle;
-            AddMapEntry(new Color(150, 150, 120));
+            DustType = DustID.BorealWood_Small;
+            AddMapEntry(new Color(70, 100, 130));
         }
 
         public override void NumDust(int i, int j, bool fail, ref int num)

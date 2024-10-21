@@ -53,7 +53,7 @@ namespace Coralite.Core.Systems.MTBStructure
                 return;
             }
 
-            OnSuccess();
+            OnSuccess(origin);
         }
 
         /// <summary>
@@ -117,9 +117,37 @@ namespace Coralite.Core.Systems.MTBStructure
             Particle.NewParticle<TileHightlight>(failPoint.ToWorldCoordinates(), Vector2.Zero, Color.Red);
         }
 
-        public virtual void OnSuccess()
+        /// <summary>
+        /// 成功检测多方块结构后调用
+        /// </summary>
+        /// <param name="origin"></param>
+        public virtual void OnSuccess(Point origin)
         {
 
+        }
+
+        /// <summary>
+        /// 将多方块结构中的所有物块清除掉
+        /// </summary>
+        /// <param name="origin"></param>
+        protected void KillAll(Point origin)
+        {
+            int[,] structureTile = StructureTile;
+            int width = structureTile.GetLength(1);
+            int height = structureTile.GetLength(0);
+
+            Point topleft = origin - new Point(width / 2, height / 2);
+            for (int i = 0; i < height; i++)
+                for (int j = 0; j < width; j++)
+                {
+                    Point p = new Point(topleft.X + j, topleft.Y + i);
+                    int type = structureTile[i, j];
+
+                    if (type >= 0)
+                    {
+                        WorldGen.KillTile(p.X, p.Y, noItem: true);
+                    }
+                }
         }
     }
 }

@@ -4902,3 +4902,21 @@ ConchRobe: {
 	DisplayName: 海螺长袍
 	Tooltip: +20 最大魔力值
 }
+
+StoneMakerCore: {
+	DisplayName: 石块，凝结核心
+	Tooltip:
+		'''
+		用于制作 [i:Coralite/StoneMaker] 地质再生祭坛
+		通过搭建以下的多方块结构并右键核心进行合成
+
+		[i:Coralite/MagicCrystalBrick]   [i:Coralite/MagicCrystalBrick]
+		[i:Coralite/Basalt][i:Coralite/StoneMakerCore][i:Coralite/Basalt]
+		[i:Coralite/HardBasalt][i:Coralite/HardBasalt][i:Coralite/HardBasalt]
+
+		物块名：
+		[i:Coralite/Basalt]·{$Mods.Coralite.Items.Basalt.DisplayName}
+		[i:Coralite/HardBasalt]·{$Mods.Coralite.Items.HardBasalt.DisplayName}
+		[i:Coralite/MagicCrystalBrick]·{$Mods.Coralite.Items.MagicCrystalBrick.DisplayName}
+		'''
+}

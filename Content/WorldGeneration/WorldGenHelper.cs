@@ -161,7 +161,6 @@ namespace Coralite.Content.WorldGeneration
                             currentStyle = WorldGen.genRand.Next(0, randomTile);
                         ObjectPlace(current_x, current_y, tileType, currentStyle, direction());
                     }
-
                 }
         }
 

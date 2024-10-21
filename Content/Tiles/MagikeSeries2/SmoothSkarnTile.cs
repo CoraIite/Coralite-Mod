@@ -14,7 +14,10 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             Main.tileBlockLight[Type] = true;
 
             Main.tileMerge[Type][ModContent.TileType<SkarnTile>()] = true;
-            Main.tileMerge[ModContent.TileType<SkarnTile>()][Type] = true;
+            Main.tileMerge[ModContent.TileType<SkarnTile>()][Type] = true; 
+
+            Main.tileMerge[Type][ModContent.TileType<CrystallineSkarnTile>()] = true;
+            Main.tileMerge[ModContent.TileType<CrystallineSkarnTile>()][Type] = true;
             TileID.Sets.ChecksForMerge[Type] = true;
 
             DustType = DustID.BorealWood_Small;

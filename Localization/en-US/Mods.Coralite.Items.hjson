@@ -4825,3 +4825,8 @@ ConchRobe: {
 	DisplayName: Conch Robe
 	Tooltip: ""
 }
+
+StoneMakerCore: {
+	DisplayName: Stone Maker Core
+	Tooltip: ""
+}
