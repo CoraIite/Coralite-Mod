@@ -557,3 +557,10 @@ TerranascenceSpurt.DisplayName: 泰拉勇者的剑
 // BrilliantMagikeActivatorProj.DisplayName: Brilliant Magike Activator Proj
 // ThyphionTagProj.DisplayName: Thyphion Tag Proj
 // ConchBubble.DisplayName: Conch Bubble
+
+PremissionProj: {
+	// SoulOfLightText: Mods.Coralite.Projectiles.PremissionProj.SoulOfLightText
+	// SoulOfNightText: Mods.Coralite.Projectiles.PremissionProj.SoulOfNightText
+	// PremissionText: Mods.Coralite.Projectiles.PremissionProj.PremissionText
+	// DisplayName: Premission Proj
+}

@@ -154,3 +154,18 @@ ChalcedonySofaTile.MapEntry: Chalcedony Sofa Tile
 ChalcedonyTableTile.MapEntry: Chalcedony Table Tile
 ChalcedonyWorkBenchTile.MapEntry: Chalcedony Work Bench Tile
 ChalcedonyChestTile.MapEntry: Chalcedony Chest Tile
+
+PremissionAltarTile: {
+	NeedSouls: Mods.Coralite.Tiles.PremissionAltarTile.NeedSouls
+	MapEntry: Premission Altar Tile
+}
+
+SoulOfLightAltarTile: {
+	NeedSouls: Mods.Coralite.Tiles.SoulOfLightAltarTile.NeedSouls
+	MapEntry: Soul Of Light Altar Tile
+}
+
+SoulOfNightAltarTile: {
+	NeedSouls: Mods.Coralite.Tiles.SoulOfNightAltarTile.NeedSouls
+	MapEntry: Soul Of Night Altar Tile
+}

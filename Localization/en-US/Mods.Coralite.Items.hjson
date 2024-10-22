@@ -4830,3 +4830,23 @@ StoneMakerCore: {
 	DisplayName: Stone Maker Core
 	Tooltip: ""
 }
+
+PremissionAltar: {
+	DisplayName: Premission Altar
+	Tooltip: ""
+}
+
+SkarnBrickWallItem: {
+	DisplayName: Skarn Brick Wall Item
+	Tooltip: ""
+}
+
+SoulOfLightAltar: {
+	DisplayName: Soul Of Light Altar
+	Tooltip: ""
+}
+
+SoulOfNightAltar: {
+	DisplayName: Soul Of Night Altar
+	Tooltip: ""
+}

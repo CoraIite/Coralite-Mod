@@ -154,3 +154,18 @@ ChalcedonySofaTile.MapEntry: 玉髓沙发
 ChalcedonyTableTile.MapEntry: 玉髓桌
 ChalcedonyWorkBenchTile.MapEntry: 玉髓工作台
 ChalcedonyChestTile.MapEntry: 玉髓箱
+
+PremissionAltarTile: {
+	// NeedSouls: Mods.Coralite.Tiles.PremissionAltarTile.NeedSouls
+	// MapEntry: Premission Altar Tile
+}
+
+SoulOfLightAltarTile: {
+	// NeedSouls: Mods.Coralite.Tiles.SoulOfLightAltarTile.NeedSouls
+	// MapEntry: Soul Of Light Altar Tile
+}
+
+SoulOfNightAltarTile: {
+	// NeedSouls: Mods.Coralite.Tiles.SoulOfNightAltarTile.NeedSouls
+	// MapEntry: Soul Of Night Altar Tile
+}

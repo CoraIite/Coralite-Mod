@@ -1,13 +1,7 @@
 ﻿using Coralite.Content.Items.MagikeSeries2;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Tiles;
-using Terraria;
-using Terraria.Audio;
-using Terraria.DataStructures;
-using Terraria.GameContent.ObjectInteractions;
 using Terraria.ID;
-using Terraria.Localization;
-using Terraria.ObjectData;
 
 namespace Coralite.Content.Tiles.MagikeSeries2
 {
