@@ -1,11 +1,11 @@
 DamageClasses: {
 	FairyDamage.DisplayName: 仙灵伤害
-	// CreateAxeDamage.DisplayName: Create Axe Damage
-	// CreateDamage.DisplayName: Create Damage
-	// CreateExtraDamage.DisplayName: Create Extra Damage
-	// CreateHammerDamage.DisplayName: Create Hammer Damage
-	// CreatePickaxeDamage.DisplayName: Create Pickaxe Damage
-	// CreateShovelDamage.DisplayName: Create Shovel Damage
+	CreateAxeDamage.DisplayName: 创意伤害
+	CreateDamage.DisplayName: 创意伤害
+	CreateExtraDamage.DisplayName: 创意伤害
+	CreateHammerDamage.DisplayName: 创意伤害
+	CreatePickaxeDamage.DisplayName: 创意伤害
+	CreateShovelDamage.DisplayName: 创意伤害
 }
 
 Players.CoralitePlayer.ThunderElectrifiedDeath: 被雷劈死了
@@ -16,8 +16,8 @@ Conditions: {
 		CoralCat: 需要在彩虹猫的世界（CoralCat）
 		MagikeCraft: 需要使用魔能合成坛来合成
 		LearnedMagikeAdvance: 需要学习魔能进阶
-		// InDigDigDig: Mods.Coralite.Conditions.CoraliteConditions.InDigDigDig
-		// NotInDigDigDig: Mods.Coralite.Conditions.CoraliteConditions.NotInDigDigDig
+		InDigDigDig: 需要在劳工挖挖挖的世界（DigDigDig）
+		NotInDigDigDig: 需要不在劳工挖挖挖的世界（DigDigDig）
 	}
 }
 

@@ -5,7 +5,7 @@ using Terraria.ObjectData;
 
 namespace Coralite.Content.Tiles.MagikeSeries2
 {
-    public class ChalcedonyGrass1x1:ModTile
+    public class ChalcedonyGrass1x1 : ModTile
     {
         public override string Texture => AssetDirectory.MagikeSeries2Tile + Name;
 
@@ -14,7 +14,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             Main.tileNoFail[Type] = true;
             Main.tileFrameImportant[Type] = true;
             Main.tileObsidianKill[Type] = true;
-
+            
             TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1);
@@ -38,6 +38,15 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             num = fail ? 1 : 3;
         }
 
+        public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
+        {
+            Tile t1 = Framing.GetTileSafely(i - 1, j + 1);
+            Tile t2 = Framing.GetTileSafely(i + 1, j + 1);
 
+            int frame = 2;
+
+
+            return false;
+        }
     }
 }

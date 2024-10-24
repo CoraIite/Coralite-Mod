@@ -156,16 +156,16 @@ ChalcedonyWorkBenchTile.MapEntry: 玉髓工作台
 ChalcedonyChestTile.MapEntry: 玉髓箱
 
 PremissionAltarTile: {
-	// NeedSouls: Mods.Coralite.Tiles.PremissionAltarTile.NeedSouls
-	// MapEntry: Premission Altar Tile
+	NeedSouls: 向两侧的祭坛献上古老的光明与黑暗之魂吧...
+	MapEntry: 矽卡祭坛
 }
 
 SoulOfLightAltarTile: {
-	// NeedSouls: Mods.Coralite.Tiles.SoulOfLightAltarTile.NeedSouls
-	// MapEntry: Soul Of Light Altar Tile
+	NeedSouls: 献上古老的光明之魂吧...
+	MapEntry: 矽卡光明之祭坛
 }
 
 SoulOfNightAltarTile: {
-	// NeedSouls: Mods.Coralite.Tiles.SoulOfNightAltarTile.NeedSouls
-	// MapEntry: Soul Of Night Altar Tile
+	NeedSouls: 献上古老的黑暗之魂吧...
+	MapEntry: 矽卡黑暗之祭坛
 }

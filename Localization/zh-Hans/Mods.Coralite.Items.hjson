@@ -4922,21 +4922,28 @@ StoneMakerCore: {
 }
 
 PremissionAltar: {
-	// DisplayName: Premission Altar
-	// Tooltip: ""
+	DisplayName: 矽卡祭坛
+	Tooltip: 
+	'''
+	来自古代的造物，授予拥有光明与黑暗之魂的生灵进入蕴魔空岛的权限
+	向矽卡光明与黑暗之祭坛献上对应的魂魄后再次右键该物块能产生意想不到的效果
+	'''
 }
 
 SkarnBrickWallItem: {
-	// DisplayName: Skarn Brick Wall Item
-	// Tooltip: ""
+	DisplayName: 矽卡砖墙
+	Tooltip: ""
 }
 
 SoulOfLightAltar: {
-	// DisplayName: Soul Of Light Altar
-	// Tooltip: ""
+	DisplayName: 矽卡光明祭坛
+	Tooltip: 
+	'''
+	来自古代的造物，向祭坛献上古老的光明之魂吧
+	'''
 }
 
 SoulOfNightAltar: {
-	// DisplayName: Soul Of Night Altar
-	// Tooltip: ""
+	DisplayName: 矽卡黑暗祭坛
+	Tooltip: 来自古代的造物，向祭坛献上古老的光明之魂吧
 }

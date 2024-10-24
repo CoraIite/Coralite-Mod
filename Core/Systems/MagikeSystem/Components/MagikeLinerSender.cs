@@ -15,7 +15,7 @@ using Terraria.UI;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components
 {
-    public class MagikeLinerSender : MagikeSender, IUIShowable
+    public class MagikeLinerSender : MagikeSender, IUIShowable, IConnectLengthModify
     {
         /// <summary> 基础连接数量 </summary>
         public int MaxConnectBase { get; protected set; }
@@ -26,7 +26,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public int MaxConnect { get => MaxConnectBase + MaxConnectExtra; }
 
         /// <summary> 基础连接距离 </summary>
-        public int ConnectLengthBase { get; protected set; }
+        public int ConnectLengthBase { get => LengthBase; protected set => LengthBase = value; }
         /// <summary> 额外连接距离 </summary>
         public int ConnectLengthExtra { get; set; }
 
@@ -42,6 +42,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// 仅供获取使用，那么为什么不用private set 呢，因为懒得改了，反正区别不大
         /// </summary>
         public List<Point16> Receivers { get => _receivers; }
+
+        public int LengthExtra { get ; set; }
+        public int LengthBase { get ; set ; }
 
         public MagikeLinerSender()
         {
