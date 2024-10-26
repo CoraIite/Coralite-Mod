@@ -4850,3 +4850,13 @@ SoulOfNightAltar: {
 	DisplayName: Soul Of Night Altar
 	Tooltip: ""
 }
+
+LASER: {
+	DisplayName: L A S E R
+	Tooltip: ""
+}
+
+LASERCore: {
+	DisplayName: L A S E R Core
+	Tooltip: ""
+}

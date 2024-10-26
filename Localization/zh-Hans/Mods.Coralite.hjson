@@ -18,6 +18,7 @@ Conditions: {
 		LearnedMagikeAdvance: 需要学习魔能进阶
 		InDigDigDig: 需要在劳工挖挖挖的世界（DigDigDig）
 		NotInDigDigDig: 需要不在劳工挖挖挖的世界（DigDigDig）
+		// UseMultBlockStructure: Mods.Coralite.Conditions.CoraliteConditions.UseMultBlockStructure
 	}
 }
 

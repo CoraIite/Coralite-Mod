@@ -4907,7 +4907,7 @@ StoneMakerCore: {
 	DisplayName: 石块，凝结核心
 	Tooltip:
 		'''
-		用于制作 [i:Coralite/StoneMaker] 地质再生祭坛
+		用于制作 [i:Coralite/StoneMaker] {$Mods.Coralite.Items.StoneMaker.DisplayName}
 		通过搭建以下的多方块结构并右键核心进行合成
 
 		[i:Coralite/MagicCrystalBrick]   [i:Coralite/MagicCrystalBrick]
@@ -4923,11 +4923,11 @@ StoneMakerCore: {
 
 PremissionAltar: {
 	DisplayName: 矽卡祭坛
-	Tooltip: 
-	'''
-	来自古代的造物，授予拥有光明与黑暗之魂的生灵进入蕴魔空岛的权限
-	向矽卡光明与黑暗之祭坛献上对应的魂魄后再次右键该物块能产生意想不到的效果
-	'''
+	Tooltip:
+		'''
+		来自古代的造物，授予拥有光明与黑暗之魂的生灵进入蕴魔空岛的权限
+		向矽卡光明与黑暗之祭坛献上对应的魂魄后再次右键该物块能产生意想不到的效果
+		'''
 }
 
 SkarnBrickWallItem: {
@@ -4937,13 +4937,42 @@ SkarnBrickWallItem: {
 
 SoulOfLightAltar: {
 	DisplayName: 矽卡光明祭坛
-	Tooltip: 
-	'''
-	来自古代的造物，向祭坛献上古老的光明之魂吧
-	'''
+	Tooltip: 来自古代的造物，向祭坛献上古老的光明之魂吧
 }
 
 SoulOfNightAltar: {
 	DisplayName: 矽卡黑暗祭坛
 	Tooltip: 来自古代的造物，向祭坛献上古老的光明之魂吧
+}
+
+LASER: {
+	DisplayName: 激光器
+	Tooltip: 
+	'''
+	一次性将自身内的所有魔能发送到正对着的仪器中
+	发送距离极远
+	{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}
+	'''
+}
+
+LASERCore: {
+	DisplayName: 激光器核心
+	Tooltip:
+		'''
+		用于制作 [i:Coralite/LASER] {$Mods.Coralite.Items.LASER.DisplayName}
+		通过搭建以下的多方块结构并右键核心进行合成
+
+		[i:Coralite/HardBasalt][i:Coralite/HardBasalt]   [i:Coralite/HardBasalt][i:Coralite/HardBasalt]
+		[i:Coralite/Basalt]   [i:Coralite/MagicCrystalBlock]    [i:Coralite/Basalt]
+		[i:Coralite/Basalt]   [i:Coralite/MagicCrystalBlock]    [i:Coralite/Basalt]
+		[i:2173][i:2173][i:Coralite/LASERCore][i:2173][i:2173]
+		[i:Coralite/HardBasalt][i:Coralite/HardBasalt][i:Coralite/HardBasalt][i:Coralite/HardBasalt][i:Coralite/HardBasalt]
+
+		物块名：
+		[i:Coralite/Basalt]·{$Mods.Coralite.Items.Basalt.DisplayName}
+		[i:Coralite/HardBasalt]·{$Mods.Coralite.Items.HardBasalt.DisplayName}
+		[i:Coralite/MagicCrystalBlock]·{$Mods.Coralite.Items.MagicCrystalBlock.DisplayName}
+		[i:2173]·{$ItemName.CopperPlating}
+		.
+		'''
 }

@@ -32,7 +32,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public bool TimeResetable => true;
 
-        public bool CanSend()
+        public virtual bool CanSend()
         {
             return (this as ITimerTriggerComponent).UpdateTime();
         }
