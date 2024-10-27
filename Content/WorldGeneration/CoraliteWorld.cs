@@ -68,6 +68,13 @@ namespace Coralite.Content.WorldGeneration
                 tasks.Insert(EvilBiome + 1, new PassLegacy("Coralite Evil Chest", GenEvilChest));
             }
 
+            int Jungle = tasks.FindIndex(genpass => genpass.Name.Equals("Jungle"));
+
+            if (Jungle != -1)
+            {
+                tasks.Insert(Jungle + 1,new PassLegacy("Coralite Crystalline Sky Island", GenCrystallineSkyIsland));
+            }
+
             int Dungeon = tasks.FindIndex(genpass => genpass.Name.Equals("Dungeon"));
             bool shadowCastle = ShadowCastle;
             if (shadowCastle)
@@ -113,8 +120,6 @@ namespace Coralite.Content.WorldGeneration
 
             if (DigDigDigWorld)
                 ModifyDigdigdigWorldGen(tasks, ref totalWeight);
-
-            tasks.Add(new PassLegacy("Coralite Crystalline Sky Island", GenCrystallineSkyIsland));
         }
 
         public override void ModifyHardmodeTasks(List<GenPass> list)

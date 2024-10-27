@@ -116,6 +116,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             //生成粒子特效
             SendParticles(center.ToWorldCoordinates(), p.Value.ToWorldCoordinates());
+            Rotation += 0.35f;
         }
 
         /// <summary>
@@ -233,6 +234,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public override void SaveData(string preName, TagCompound tag)
         {
+            base.SaveData(preName, tag);
             tag.Add(preName + nameof(ConnectLengthBase), ConnectLengthBase);
             tag.Add(preName + nameof(ConnectLengthExtra), ConnectLengthExtra);
 
@@ -245,6 +247,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public override void LoadData(string preName, TagCompound tag)
         {
+            base.LoadData(preName, tag);
             ConnectLengthBase = tag.GetInt(preName + nameof(ConnectLengthBase));
             ConnectLengthExtra = tag.GetInt(preName + nameof(ConnectLengthExtra));
 

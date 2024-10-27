@@ -18,6 +18,7 @@ namespace Coralite.Core
         public const string NightmarePlantera = Bosses + "NightmarePlantera/";
 
         public const string Bloodiancie = Bosses + "Bloodiancie/";
+        public const string ZacurrentDragon = Bosses + "ZacurrentDragon/";
 
         public const string GodOfWind = Bosses + "GodOfWind/";
 

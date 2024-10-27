@@ -366,7 +366,7 @@ MagikeSystem: {
 		LaserCollectorName: 光束采集器
 		LaserCollectorOutPut: ◇ 产出
 		LaserCollectorCost: ◇ 消耗魔能：
-		// PluseSenderName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.PluseSenderName
+		PluseSenderName: 激光发送器
 	}
 
 	CraftText: {

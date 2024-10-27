@@ -3,6 +3,7 @@ using Coralite.Core;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Terraria;
 using Terraria.ID;
 using Terraria.IO;
@@ -32,14 +33,27 @@ namespace Coralite.Content.WorldGeneration
         public void GenCrystallineSkyIsland(GenerationProgress progress, GameConfiguration configuration)
         {
             //生成地表结构
-            GenGroundLock();
+            GenGroundLock(out Point altarPoint);
 
             GenMainSkyIsland();
         }
 
-        public void GenGroundLock()
+        public void GenGroundLock(out Point altarPoint)
         {
             //找到丛林，在地表处选择一个地方
+            Point p = new Point(GenVars.jungleOriginX + WorldGen.genRand.Next(-30, 30), 40);
+
+            for (int i = 0; i < 1000; i++)
+            {
+                Tile t = Main.tile[p.X, p.Y];
+                if (t.HasTile && Main.tileSolid[t.TileType])
+                    break;
+
+                p.Y++;
+            }
+
+            //p就是中心点，放置主祭坛
+            altarPoint= p;
 
             //放置
         }

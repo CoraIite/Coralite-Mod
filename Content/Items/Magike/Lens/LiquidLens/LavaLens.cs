@@ -21,7 +21,7 @@ namespace Coralite.Content.Items.Magike.Lens.LiquidLens
             CreateRecipe()
                 .AddIngredient<Basalt>(14)
                 .AddIngredient(ItemID.LavaBucket)
-                .AddIngredient(ItemID.DemoniteBar, 5)
+                .AddIngredient(ItemID.HellstoneBar, 3)
                 .AddCondition(CoraliteConditions.LearnedMagikeBase)
                 .AddTile(TileID.Anvils)
                 .Register();

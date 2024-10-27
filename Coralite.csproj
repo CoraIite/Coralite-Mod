@@ -37,7 +37,6 @@
     <Folder Include="Assets\Walls\Magike\" />
     <Folder Include="Assets\WorldGeneration\Shrines\" />
     <Folder Include="Assets\WorldGeneration\ShadowCastleRooms\" />
-    <Folder Include="Content\Bosses\ModReinforce\PurpleVolt\" />
     <Folder Include="Content\Items\Magike\Armors\" />
     <Folder Include="Content\Items\Magike\Accessorys\" />
     <Folder Include="Content\Items\Misc_Summon\" />
