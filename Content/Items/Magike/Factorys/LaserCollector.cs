@@ -142,7 +142,7 @@ namespace Coralite.Content.Items.Magike.Factorys
             }
 
             GetMagikeAlternateData(point.X, point.Y, out TileObjectData data, out MagikeAlternateStyle alternate);
-            var level = MagikeSystem.FrameToLevel(Framing.GetTileSafely(point).TileType, tile.TileFrameX / data.CoordinateFullWidth);
+            var level = MagikeSystem.FrameToLevel(Framing.GetTileSafely(point).TileType, Framing.GetTileSafely(point).TileFrameX / data.CoordinateFullWidth);
 
             if (!level.HasValue || level.Value != crystalCluster.Level)
             {

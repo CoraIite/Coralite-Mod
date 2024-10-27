@@ -32,14 +32,16 @@ namespace Coralite.Content.WorldGeneration
         public void GenCrystallineSkyIsland(GenerationProgress progress, GameConfiguration configuration)
         {
             //生成地表结构
-
+            GenGroundLock();
 
             GenMainSkyIsland();
         }
 
         public void GenGroundLock()
         {
+            //找到丛林，在地表处选择一个地方
 
+            //放置
         }
 
         private void GenMainSkyIsland()

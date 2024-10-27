@@ -271,6 +271,7 @@ namespace Coralite.Core.Systems.MagikeSystem
             MagikeSendAmount,
             MagikeConnectLength,
             MagikeLinerSenderName,
+            PluseSenderName,
             CheckOnlyLinerSenderName,
             ClickToDisconnect,
 

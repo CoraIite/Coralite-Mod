@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Items.MagikeSeries1;
+﻿using Coralite.Content.Items.DigDigDig.Stonelimes;
+using Coralite.Content.Items.MagikeSeries1;
 using Coralite.Content.Items.MagikeSeries2;
 using Coralite.Content.Raritys;
 using Coralite.Content.Tiles.MagikeSeries1;
@@ -52,6 +53,16 @@ namespace Coralite.Content.Items.Magike.Factorys
                 .AddCondition(CoraliteConditions.LearnedMagikeBase)
                 .AddTile(TileID.Anvils)
                 .AddCondition(CoraliteConditions.NotInDigDigDig)
+                .Register();
+
+            CreateRecipe()
+                .AddIngredient<StoneMakerCore>()
+                .AddIngredient<Basalt>(2)
+                .AddIngredient<HardBasalt>(3)
+                .AddIngredient<MagicCrystalBrick>(2)
+                .AddCondition(CoraliteConditions.LearnedMagikeBase)
+                .AddCondition(CoraliteConditions.InDigDigDig)
+                .AddCondition(CoraliteConditions.UseMultiBlockStructure)
                 .Register();
         }
     }

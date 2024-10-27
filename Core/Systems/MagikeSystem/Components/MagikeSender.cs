@@ -1,8 +1,10 @@
 ﻿using Coralite.Core.Systems.CoraliteActorComponent;
+using Coralite.Core.Systems.MagikeSystem.Particles;
 using Coralite.Helpers;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader.IO;
+using Terraria.ObjectData;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components
 {
@@ -44,13 +46,22 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             if (selfOnScreen)
             {
-                MagikeHelper.SpawnLozengeParticle_WithTopLeft(selfPoint);
+                SpawnOnSendParticle(selfPoint);
                 if (rectiverOnScreen)
                     MagikeHelper.SpawnDustOnSend(selfPoint, ReceiverPoint);
             }
 
             if (rectiverOnScreen)
-                MagikeHelper.SpawnLozengeParticle_WithTopLeft(ReceiverPoint);
+                SpawnOnSendParticle(ReceiverPoint);
+        }
+
+        protected virtual void SpawnOnSendParticle(Point16 TopLeft)
+        {
+            MagikeHelper.GetMagikeAlternateData(TopLeft.X, TopLeft.Y, out TileObjectData data, out _);
+            Point16 size = data == null ? new Point16(1) : new Point16(data.Width, data.Height);
+
+            if (MagikeHelper.TryGetMagikeApparatusLevel(TopLeft, out MALevel level))
+                MagikeLozengeParticle2.Spawn(Helper.GetMagikeTileCenter(TopLeft), size, MagikeSystem.GetColor(level));
         }
 
         public override void SaveData(string preName, TagCompound tag)

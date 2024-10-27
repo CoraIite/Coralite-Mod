@@ -5,7 +5,7 @@ namespace Coralite.Core.Loaders
 {
     public class MTBStructureLoader
     {
-        internal static IList<MultBlockStructure> structures;
+        internal static IList<MultiblockStructure> structures;
         internal static int StructureCount { get; private set; } = 0;
 
         /// <summary>
@@ -13,7 +13,7 @@ namespace Coralite.Core.Loaders
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        public static MultBlockStructure GetMTBStructure(int type)
+        public static MultiblockStructure GetMTBStructure(int type)
                  => type < StructureCount ? structures[type] : null;
 
         /// <summary>

@@ -4947,12 +4947,12 @@ SoulOfNightAltar: {
 
 LASER: {
 	DisplayName: 激光器
-	Tooltip: 
-	'''
-	一次性将自身内的所有魔能发送到正对着的仪器中
-	发送距离极远
-	{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}
-	'''
+	Tooltip:
+		'''
+		一次性将自身内的所有魔能发送到正对着的仪器中
+		发送距离极远
+		{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}
+		'''
 }
 
 LASERCore: {

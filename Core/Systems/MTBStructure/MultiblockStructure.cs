@@ -6,15 +6,15 @@ using Terraria;
 
 namespace Coralite.Core.Systems.MTBStructure
 {
-    public abstract class MultBlockStructure : ModType
+    public abstract class MultiblockStructure : ModType
     {
         public int Type { get; internal set; }
 
         protected sealed override void Register()
         {
-            ModTypeLookup<MultBlockStructure>.Register(this);
+            ModTypeLookup<MultiblockStructure>.Register(this);
 
-            MTBStructureLoader.structures ??= new List<MultBlockStructure>();
+            MTBStructureLoader.structures ??= new List<MultiblockStructure>();
             MTBStructureLoader.structures.Add(this);
 
             Type = MTBStructureLoader.ReserveMTBStructureID();

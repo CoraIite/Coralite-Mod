@@ -12,7 +12,7 @@ namespace Coralite.Core
         public static Condition MagikeCraft { get; private set; }
         public static Condition InDigDigDig { get; private set; }
         public static Condition NotInDigDigDig { get; private set; }
-        public static Condition UseMultBlockStructure { get; private set; }
+        public static Condition UseMultiBlockStructure { get; private set; }
 
         public string LocalizationCategory => "Conditions";
 
@@ -31,7 +31,7 @@ namespace Coralite.Core
 
             MagikeCraft = new(this.GetLocalization(nameof(MagikeCraft))
                 , () => false);
-            UseMultBlockStructure = new(this.GetLocalization(nameof(UseMultBlockStructure))
+            UseMultiBlockStructure = new(this.GetLocalization(nameof(UseMultiBlockStructure))
                 , () => false);
         }
 

@@ -46,13 +46,13 @@ namespace Coralite.Content.Items.Magike.Refractors
 
         public override bool RightClick(int i, int j)
         {
-            CoraliteContent.GetMTBS<LASERMBS>().CheckStructure(new Point(i, j-1));
+            CoraliteContent.GetMTBS<LASERMBS>().CheckStructure(new Point(i, j - 1));
 
             return true;
         }
     }
 
-    public class LASERMBS:MultBlockStructure
+    public class LASERMBS : MultiblockStructure
     {
         /// <summary>
         /// 魔力水晶块
@@ -88,7 +88,7 @@ namespace Coralite.Content.Items.Magike.Refractors
         public override void OnSuccess(Point origin)
         {
             KillAll(origin);
-            
+
             Item.NewItem(new EntitySource_TileBreak(origin.X, origin.Y), origin.ToWorldCoordinates()
                 , ItemType<LASER>());
         }

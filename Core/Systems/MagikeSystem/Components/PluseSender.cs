@@ -1,16 +1,17 @@
-﻿using Coralite.Content.CustomHooks;
-using Coralite.Core.Systems.CoraliteActorComponent;
+﻿using Coralite.Core.Systems.CoraliteActorComponent;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
-using Humanizer;
 using System;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
+using Terraria.ModLoader.IO;
+using Terraria.UI;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components
 {
-    public abstract class PluseSender:MagikeSender, IConnectLengthModify
+    public abstract class PluseSender:MagikeSender, IConnectLengthModify,IUIShowable
     {
         /// <summary>
         /// 是否会真的发送，仅在容器内有魔能的时候才会执行这一项操作
@@ -40,9 +41,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             {
                 float factor = (float)Timer / SendDelay;
 
-                if (factor > 0.2f)
+                if (factor > 0.4f)
                 {
-                    Rotation = Helper.Lerp( Rotation,MathHelper.Pi/6, 0.05f);
+                    Rotation = Helper.Lerp(Rotation, MathHelper.Pi / 6+0.1f, 0.04f);
                 }
                 else
                 {
@@ -64,12 +65,12 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                     if (Main.rand.NextBool())
                     {
                         Dust d = Dust.NewDustPerfect(center.ToWorldCoordinates() + Main.rand.NextVector2Circular(8, 8), DustID.CrystalSerpent_Pink
-                            , new Vector2(dir.X, dir.Y) * 2f, Scale: 1f);
+                            , new Vector2(dir.X, dir.Y) * Main.rand.NextFloat(1.5f,4f), Scale: 1f);
                         d.noGravity = true;
                     }
                 }
             }
-            else if(Rotation>0.001f)
+            else if (Rotation > 0.001f)
                 Rotation = Helper.Lerp(Rotation, 0, 0.02f);
 
             if (Timer <= 0)
@@ -178,6 +179,79 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 Dust d = Dust.NewDustPerfect(pos + Main.rand.NextVector2Circular(4, 4), DustID.CrystalSerpent_Pink
                     , new Vector2(dir.X, dir.Y) * 2f, Scale: 1f);
                 d.noGravity = true;
+            }
+        }
+
+        #region UI部分
+
+        public void ShowInUI(UIElement parent)
+        {
+            //添加显示在最上面的组件名称
+            UIElement title = this.AddTitle(MagikeSystem.UITextID.PluseSenderName, parent);
+
+            UIList list =
+            [
+                //发送时间
+                this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.MagikeSendTime), parent),
+                this.NewTextBar(SendDelayText, parent),
+
+                //连接距离
+                this.NewTextBar(c =>MagikeSystem.GetUIText(MagikeSystem.UITextID.MagikeConnectLength), parent),
+                this.NewTextBar(ConnectLengthText, parent),
+            ];
+
+            list.SetSize(0, -title.Height.Pixels, 1, 1);
+            list.SetTopLeft(title.Height.Pixels + 8, 0);
+
+            list.QuickInvisibleScrollbar();
+
+            parent.Append(list);
+        }
+
+        public virtual string SendDelayText(PluseSender s)
+        {
+            float timer = MathF.Round(s.Timer / 60f, 1);
+            float delay = MathF.Round(s.SendDelay / 60f, 1);
+            float delayBase = MathF.Round(s.SendDelayBase / 60f, 1);
+            float DelayBonus = s.SendDelayBonus;
+
+            return $"  ▶ {timer} / {MagikeHelper.BonusColoredText(delay.ToString(), DelayBonus, true)} ({delayBase} * {MagikeHelper.BonusColoredText(DelayBonus.ToString(), DelayBonus, true)})";
+        }
+
+        public virtual string ConnectLengthText(PluseSender s)
+        {
+            float length = MathF.Round(s.ConnectLength / 16f, 1);
+            float lengthBase = MathF.Round(s.ConnectLengthBase / 16f, 1);
+            string sign = s.ConnectLengthExtra >= 0 ? "+" : "- ";
+            float lengthExtra = MathF.Round(s.ConnectLengthExtra / 16f, 1);
+
+            return $"  ▶ {MagikeHelper.BonusColoredText2(length.ToString(), s.ConnectLengthExtra)} ({lengthBase} {sign} {MagikeHelper.BonusColoredText2(lengthExtra.ToString(), s.ConnectLengthExtra)})";
+        }
+
+
+        #endregion
+
+        public override void SaveData(string preName, TagCompound tag)
+        {
+            tag.Add(preName + nameof(ConnectLengthBase), ConnectLengthBase);
+            tag.Add(preName + nameof(ConnectLengthExtra), ConnectLengthExtra);
+
+            if (DoSend)
+            {
+                tag.Add(preName + nameof(DoSend), DoSend);
+                tag.Add(preName + nameof(Rotation), Rotation);
+            }
+        }
+
+        public override void LoadData(string preName, TagCompound tag)
+        {
+            ConnectLengthBase = tag.GetInt(preName + nameof(ConnectLengthBase));
+            ConnectLengthExtra = tag.GetInt(preName + nameof(ConnectLengthExtra));
+
+            if (tag.TryGet<bool>(nameof(DoSend), out _))
+            {
+                DoSend = true;
+                Rotation = tag.GetFloat(preName + nameof(Rotation));
             }
         }
     }

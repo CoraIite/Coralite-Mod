@@ -1,4 +1,4 @@
-﻿using Coralite.Content.Prefixes.FairyWeaponPrefixes;
+﻿using Coralite.Content.Items.MagikeSeries1;
 using Coralite.Content.Raritys;
 using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem;
@@ -8,10 +8,8 @@ using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Core.Systems.MagikeSystem.Tiles;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
-using rail;
 using System;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
 
@@ -20,6 +18,17 @@ namespace Coralite.Content.Items.Magike.Refractors
     public class LASER() : MagikeApparatusItem(TileType<LASERTile>(), Item.sellPrice(silver: 5)
         , RarityType<MagicCrystalRarity>(), AssetDirectory.MagikeRefractors)
     {
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient<LASERCore>()
+                .AddIngredient<Basalt>(4)
+                .AddIngredient<HardBasalt>(9)
+                .AddIngredient<MagicCrystalBlock>(2)
+                .AddIngredient(ItemID.CopperPlating, 2)
+                .AddCondition(CoraliteConditions.UseMultiBlockStructure)
+                .Register();
+        }
     }
 
     public class LASERTile() : BaseMagikeTile

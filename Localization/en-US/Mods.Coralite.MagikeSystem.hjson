@@ -371,6 +371,7 @@ MagikeSystem: {
 		LaserCollectorName: Laser Collector
 		LaserCollectorOutPut: Produce
 		LaserCollectorCost: "Magike Cost: "
+		PluseSenderName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.PluseSenderName
 	}
 
 	CraftText: {

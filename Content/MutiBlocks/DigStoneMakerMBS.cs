@@ -7,7 +7,7 @@ using Terraria.DataStructures;
 
 namespace Coralite.Content.MutiBlocks
 {
-    public class DigStoneMakerMBS : MultBlockStructure
+    public class DigStoneMakerMBS : MultiblockStructure
     {
         /// <summary>
         /// 魔力水晶砖
