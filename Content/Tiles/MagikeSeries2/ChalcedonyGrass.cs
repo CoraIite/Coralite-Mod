@@ -40,13 +40,27 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
         {
+            if (!WorldGen.InWorld(i - 1, j + 1) || !WorldGen.InWorld(i + 1, j + 1))
+                return true;
+
             Tile t1 = Framing.GetTileSafely(i - 1, j + 1);
             Tile t2 = Framing.GetTileSafely(i + 1, j + 1);
 
-            int frame = 2;
+            Tile t11 = Framing.GetTileSafely(i - 1, j);
+            Tile t22 = Framing.GetTileSafely(i + 1, j);
 
+            if (!t1.HasTile && !t1.HasTile)
+            {
+                Main.tile[i, j].TileFrameX = (short)(Main.rand.Next(2) * 18);
+                return false;
+            }
+            if (!t2.HasTile && !t22.HasTile)
+            {
+                Main.tile[i, j].TileFrameX = (short)(Main.rand.Next(3, 5) * 18);
+                return false;
+            }
 
-            return false;
+            return true;
         }
     }
 }

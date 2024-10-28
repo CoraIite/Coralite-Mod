@@ -1,4 +1,5 @@
 ﻿using Coralite.Core;
+using Coralite.Core.SmoothFunctions;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -8,12 +9,16 @@ using Terraria.ID;
 
 namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 {
-    public class ZacurrentDragon : ModNPC
+    public partial class ZacurrentDragon : ModNPC
     {
         public override string Texture => AssetDirectory.ZacurrentDragon + Name;
 
         private Player Target => Main.player[NPC.target];
 
+        /// <summary>
+        /// 是否处于紫伏状态
+        /// </summary>
+        public bool PurpleVolt {  get; private set; }
         /// <summary>
         /// 是否绘制残影
         /// </summary>
@@ -29,7 +34,9 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
         public bool currentSurrounding;
         public float selfAlpha = 1f;
 
-        public static Asset<Texture2D> glowText;
+        public static Asset<Texture2D> glowTex;
+
+        private static SecondOrderDynamics_Vec2 CenterSmoother;
 
         #region tmlHooks
 
@@ -38,7 +45,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             if (Main.dedServ)
                 return;
 
-            glowText = ModContent.Request<Texture2D>(Texture + "_Highlight");
+            glowTex = ModContent.Request<Texture2D>(Texture + "_Highlight");
         }
 
         public override void Unload()
@@ -46,7 +53,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             if (Main.dedServ)
                 return;
 
-            glowText = null;
+            glowTex = null;
         }
 
         public override void SetStaticDefaults()
@@ -168,7 +175,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
             if (NPC.spriteDirection < 0)
             {
-                //effects = SpriteEffects.FlipVertically;
+                effects = SpriteEffects.FlipVertically;
             }
 
             //绘制残影
@@ -242,7 +249,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
             spriteBatch.Draw(mainTex, pos, frameBox, drawColor * selfAlpha, rot, origin, NPC.scale, effects, 0);
             //绘制glow
-            spriteBatch.Draw(glowText.Value, pos, frameBox, Color.White * selfAlpha, rot, origin, NPC.scale, effects, 0);
+            spriteBatch.Draw(glowTex.Value, pos, frameBox, Color.White * selfAlpha, rot, origin, NPC.scale, effects, 0);
         }
 
         #endregion

@@ -291,22 +291,23 @@ namespace Coralite.Content.Bosses.BabyIceDragon
         public override void AI()
         {
             // return;
-            if (NPC.target < 0 || NPC.target == 255 || Target.dead || !Target.active || Target.Distance(NPC.Center) > 3000 || !Target.ZoneSnow)
-            {
-                NPC.TargetClosest();
-
-                if (Target.dead || !Target.active || Target.Distance(NPC.Center) > 3000 || !Target.ZoneSnow)//没有玩家存活时离开
+            if (State != (int)AIStates.onKillAnim)
+                if (NPC.target < 0 || NPC.target == 255 || Target.dead || !Target.active || Target.Distance(NPC.Center) > 3000 || !Target.ZoneSnow)
                 {
-                    NPC.dontTakeDamage = false;
-                    State = -1;
-                    NPC.rotation = NPC.rotation.AngleTowards(0f, 0.14f);
-                    NPC.velocity.X *= 0.98f;
-                    canDrawShadows = false;
-                    FlyUp();
-                    NPC.EncourageDespawn(30);
-                    return;
+                    NPC.TargetClosest();
+
+                    if (Target.dead || !Target.active || Target.Distance(NPC.Center) > 3000 || !Target.ZoneSnow)//没有玩家存活时离开
+                    {
+                        NPC.dontTakeDamage = false;
+                        State = -1;
+                        NPC.rotation = NPC.rotation.AngleTowards(0f, 0.14f);
+                        NPC.velocity.X *= 0.98f;
+                        canDrawShadows = false;
+                        FlyUp();
+                        NPC.EncourageDespawn(30);
+                        return;
+                    }
                 }
-            }
 
             switch ((int)State)
             {

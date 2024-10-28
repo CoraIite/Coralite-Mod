@@ -1,12 +1,13 @@
-﻿using Coralite.Content.Tiles.MagikeSeries2;
+﻿using Coralite.Content.Tiles.MagikeSeries1;
+using Coralite.Content.Tiles.MagikeSeries2;
 using Coralite.Core;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using Terraria;
 using Terraria.ID;
 using Terraria.IO;
+using Terraria.ModLoader.IO;
 using Terraria.WorldBuilding;
 
 namespace Coralite.Content.WorldGeneration
@@ -55,7 +56,34 @@ namespace Coralite.Content.WorldGeneration
             //p就是中心点，放置主祭坛
             altarPoint= p;
 
-            //放置
+            ushort basalt = (ushort)ModContent.TileType<BasaltTile>();
+            ushort beam = (ushort)ModContent.TileType<BasaltBeamTile>();
+
+            for (int j = -1; j < 2; j += 2)//防止底部空
+                if (!Main.tile[p.X + j, p.Y - 2].HasTile)
+                {
+                    WorldGen.KillTile(p.X - 1, p.Y - 2);
+                    Main.tile[p.X - 1, p.Y - 2].ResetToType(basalt);
+                }
+
+            for (int i = -1; i < 3; i++)//放置两条玄武岩柱子
+            {
+                Main.tile[p.X - 1, p.Y + i].ResetToType(beam);
+                Main.tile[p.X + 1, p.Y + i].ResetToType(beam);
+            }
+
+            //放置一条玄武岩
+            for (int i = -2; i < 3; i++)
+                Main.tile[p.X + i, p.Y - 3].ResetToType(basalt);
+
+            Point topP = p + new Point(-1, -6);
+            for (int i = 0; i < 3; i++)
+                for (int j = 0; j < 3; j++)
+                {
+                    WorldGen.KillTile(topP.X + i, topP.Y + j);
+                }   
+
+            //放置主要祭坛
         }
 
         private void GenMainSkyIsland()
@@ -123,6 +151,23 @@ namespace Coralite.Content.WorldGeneration
                 , 0, 0, shrineTex.Width, shrineTex.Height, (ushort)ModContent.TileType<SkarnRubbles3x2>(), () => 1, 3, 0);
             WorldGenHelper.PlaceOnGroundDecorations_NoCheck(genOrigin_x, genOrigin_y
                 , 0, 0, shrineTex.Width, shrineTex.Height, (ushort)ModContent.TileType<SkarnRubbles4x2>(), () => 1, 3, 0);
+        }
+
+        public void SaveSkyIsland(TagCompound tag)
+        {
+            if (PlaceLightSoul)
+                tag.Add(nameof(PlaceLightSoul), true);
+            if (PlaceNightSoul)
+                tag.Add(nameof(PlaceNightSoul), true);
+            if (HasPermission)
+                tag.Add(nameof(HasPermission), true);
+        }
+
+        public void LoadSkyIsland(TagCompound tag)
+        {
+            PlaceLightSoul= tag.ContainsKey(nameof(PlaceLightSoul));
+            PlaceNightSoul = tag.ContainsKey(nameof(PlaceLightSoul));
+            HasPermission = tag.ContainsKey(nameof(PlaceLightSoul));
         }
     }
 }

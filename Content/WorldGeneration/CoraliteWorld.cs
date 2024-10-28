@@ -152,6 +152,7 @@ namespace Coralite.Content.WorldGeneration
                 tag.Add("digdigdigDungeonSide", DigDigDigWorldDungeonSide);
             }
 
+            SaveSkyIsland(tag);
             SaveCrystalCave(tag);
         }
 
@@ -173,6 +174,7 @@ namespace Coralite.Content.WorldGeneration
                 DigDigDigWorldDungeonSide = tag.Get<int>("DigDigDigWorldDungeonSide");
             }
 
+            LoadSkyIsland(tag);
             LoadCrystalCave(tag);
         }
     }

@@ -350,6 +350,7 @@ namespace Coralite.Core.Systems.MagikeSystem
             HallowCondition,
             GelLensName,
             TresureLensName,
+            CogLensName,
 
             /*
              * 物品容器
