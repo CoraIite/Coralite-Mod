@@ -18,7 +18,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.GlobalNPCs
 {
-    public partial class CoraliteGlobalNPC : Terraria.ModLoader.GlobalNPC
+    public partial class CoraliteGlobalNPC : GlobalNPC
     {
         public bool IvyPosion;
         public bool EuphorbiaPoison;
