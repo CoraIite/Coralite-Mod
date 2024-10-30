@@ -12,6 +12,9 @@ namespace Coralite.Helpers
     {
         public static void RedJadeExplosion(Vector2 center, bool canMakeSound = true)
         {
+            if (CLUtils.isServer)
+                return;
+
             if (canMakeSound)
                 PlayPitched("RedJade/RedJadeBoom", 0.4f, 0f, center);
 
