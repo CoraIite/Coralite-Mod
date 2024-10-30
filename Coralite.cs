@@ -8,6 +8,7 @@ using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.BossSystems;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 
@@ -199,5 +200,7 @@ namespace Coralite
                 _ => false,
             };
         }
+
+        public override void HandlePacket(BinaryReader reader, int whoAmI) => CLNetWork.NetWorkHander(reader, whoAmI);
     }
 }

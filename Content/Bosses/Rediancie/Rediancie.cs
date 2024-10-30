@@ -66,6 +66,8 @@ namespace Coralite.Content.Bosses.Rediancie
 
         public List<RediancieFollower> followers;
 
+        private bool spwan;
+
         #region tml hooks
 
         public override void SetStaticDefaults()
@@ -237,20 +239,6 @@ namespace Coralite.Content.Bosses.Rediancie
 
         #region AI
 
-        public override void OnSpawn(IEntitySource source)
-        {
-            followers = new List<RediancieFollower>();
-            SpawnFollowers(3);
-
-            NPC.TargetClosest(false);
-            if (Main.netMode != NetmodeID.MultiplayerClient)
-            {
-                State = (int)AIStates.onSpawnAnim;
-                NPC.Center = Target.Center - new Vector2(0, 600);
-                NPC.netUpdate = true;
-            }
-        }
-
         private enum AIStates : int
         {
             onKillAnim = -5,
@@ -297,6 +285,22 @@ namespace Coralite.Content.Bosses.Rediancie
             //    NPC.frameCounter = 0;
             //}
             //#endregion
+
+            if (!spwan)
+            {
+                followers = new List<RediancieFollower>();
+                SpawnFollowers(3);
+
+                NPC.TargetClosest(false);
+                State = (int)AIStates.onSpawnAnim;
+                if (NPC.target != -1)
+                {
+                    NPC.Center = Target.Center - new Vector2(0, 600);
+                }
+                NPC.netUpdate = true;
+
+                spwan = true;
+            }
 
             if (NPC.target < 0 || NPC.target == 255 || Target.dead || !Target.active || Target.Distance(NPC.Center) > 3000)
             {
@@ -381,8 +385,12 @@ namespace Coralite.Content.Bosses.Rediancie
 
             if (Timer == 245)
             {
-                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ProjectileType<Rediancie_BigBoom>(), 55, 8f);
-                if (Main.netMode != NetmodeID.Server)
+                if (!CLUtils.isClient)
+                {
+                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ProjectileType<Rediancie_BigBoom>(), 55, 8f);
+                }
+                
+                if (!CLUtils.isServer)
                 {
                     var modifier = new PunchCameraModifier(NPC.Center, Main.rand.NextVector2CircularEdge(1, 1), 10, 6f, 20, 1000f);
                     Main.instance.CameraModifiers.Add(modifier);
@@ -397,7 +405,11 @@ namespace Coralite.Content.Bosses.Rediancie
         {
             if (Timer == 0) //生成动画弹幕
             {
-                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ProjectileType<Rediancie_OnSpawnAnim>(), 0, 0);
+                if (!CLUtils.isClient)
+                {
+                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ProjectileType<Rediancie_OnSpawnAnim>(), 0, 0);
+                }
+
                 NPC.velocity = new Vector2(0, 1.5f);
                 NPC.dontTakeDamage = true;
             }
@@ -417,7 +429,11 @@ namespace Coralite.Content.Bosses.Rediancie
 
             if (Timer == 260)
             {
-                Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ProjectileType<Rediancie_BigBoom>(), 55, 8f);
+                if (!CLUtils.isClient)
+                {
+                    Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ProjectileType<Rediancie_BigBoom>(), 55, 8f);
+                }
+                
                 if (Main.netMode != NetmodeID.Server)
                 {
                     var modifier = new PunchCameraModifier(NPC.Center, Main.rand.NextVector2CircularEdge(1, 1), 10, 6f, 20, 1000f);
@@ -425,13 +441,17 @@ namespace Coralite.Content.Bosses.Rediancie
                 }
             }
 
-            if (Timer == 270 && Main.netMode != NetmodeID.MultiplayerClient)
+            if (Timer == 270)
             {
                 State = (int)AIStates.explosion;
                 Timer = 0;
-                NPC.TargetClosest();
-                NPC.dontTakeDamage = false;
-                NPC.netUpdate = true;
+
+                if (!CLUtils.isClient)
+                {
+                    NPC.TargetClosest();
+                    NPC.dontTakeDamage = false;
+                    NPC.netUpdate = true;
+                }
             }
 
             ChangeRotationNormally();
@@ -786,8 +806,8 @@ namespace Coralite.Content.Bosses.Rediancie
         {
             NPC.reflectsProjectiles = false;
             NPC.dontTakeDamage = false;
-            if (Main.netMode == NetmodeID.MultiplayerClient)
-                return;
+            //if (Main.netMode == NetmodeID.MultiplayerClient)
+            //    return;
 
             int phase = 1;
             if (NPC.life < NPC.lifeMax / 2)
@@ -797,104 +817,111 @@ namespace Coralite.Content.Bosses.Rediancie
             bool useMelee = MoveCount < meleeCount;
             bool useShoot = MoveCount < meleeCount + ShootCount;
 
-            switch (phase)
+            if (!CLUtils.isClient)
             {
-                default:
-                case 1:
-                    if (Main.masterMode || Main.getGoodWorld)   //大师模式及以上
-                    {
-                        if (useMelee)   //近战
+                switch (phase)
+                {
+                    default:
+                    case 1:
+                        if (Main.masterMode || Main.getGoodWorld)   //大师模式及以上
                         {
-                            State = Main.rand.Next(2) switch
+                            if (useMelee)   //近战
                             {
-                                0 => (int)AIStates.accumulate,
-                                _ => (int)AIStates.explosion
-                            };
-                            break;
-                        }
+                                State = Main.rand.Next(2) switch
+                                {
+                                    0 => (int)AIStates.accumulate,
+                                    _ => (int)AIStates.explosion
+                                };
+                                break;
+                            }
 
-                        if (useShoot)   //远程
-                            State = Main.rand.Next(4) switch
-                            {
-                                0 => (int)AIStates.upShoot,
-                                _ => (int)AIStates.magicShoot
-                            };
-                    }
-                    else        //其他模式
-                    {
-                        if (useMelee)   //近战，只会普通三连炸
+                            if (useShoot)   //远程
+                                State = Main.rand.Next(4) switch
+                                {
+                                    0 => (int)AIStates.upShoot,
+                                    _ => (int)AIStates.magicShoot
+                                };
+                        }
+                        else        //其他模式
                         {
-                            State = (int)AIStates.explosion;
-                            break;
-                        }
-
-                        if (useShoot)   //远程
-                            State = Main.rand.Next(3) switch
+                            if (useMelee)   //近战，只会普通三连炸
                             {
-                                0 => (int)AIStates.upShoot,
-                                _ => (int)AIStates.magicShoot
-                            };
-                    }
-                    break;
-                case 2:     //二阶段
-                    if (ExchangeState)    //血量低于一半固定放小弟
-                    {
-                        State = (int)AIStates.summon;
-                        ExchangeState = false;
+                                State = (int)AIStates.explosion;
+                                break;
+                            }
+
+                            if (useShoot)   //远程
+                                State = Main.rand.Next(3) switch
+                                {
+                                    0 => (int)AIStates.upShoot,
+                                    _ => (int)AIStates.magicShoot
+                                };
+                        }
                         break;
-                    }
-
-                    if (Main.masterMode || Main.getGoodWorld)   //大师模式及以上
-                    {
-                        if (useMelee)   //近战
+                    case 2:     //二阶段
+                        if (ExchangeState)    //血量低于一半固定放小弟
                         {
-                            State = Main.rand.Next(3) switch
-                            {
-                                0 => (int)AIStates.accumulate,
-                                1 => (int)AIStates.explosion,
-                                _ => (int)AIStates.dash
-                            };
+                            State = (int)AIStates.summon;
+                            ExchangeState = false;
                             break;
                         }
 
-                        if (useShoot)   //远程
-                            State = Main.rand.Next(4) switch
-                            {
-                                0 => (int)AIStates.upShoot,
-                                1 => (int)AIStates.firework,
-                                2 => (int)AIStates.pulse,
-                                _ => (int)AIStates.summon
-                            };
-                    }
-                    else        //其他模式
-                    {
-                        if (useMelee)   //近战，只会普通三连炸
+                        if (Main.masterMode || Main.getGoodWorld)   //大师模式及以上
                         {
-                            State = (int)AIStates.explosion;
-                            break;
-                        }
-
-                        if (useShoot)   //远程
-                            State = Main.rand.Next(3) switch
+                            if (useMelee)   //近战
                             {
-                                0 => (int)AIStates.upShoot,
-                                1 => (int)AIStates.magicShoot,
-                                _ => (int)AIStates.summon
-                            };
-                    }
-                    break;
+                                State = Main.rand.Next(3) switch
+                                {
+                                    0 => (int)AIStates.accumulate,
+                                    1 => (int)AIStates.explosion,
+                                    _ => (int)AIStates.dash
+                                };
+                                break;
+                            }
+
+                            if (useShoot)   //远程
+                                State = Main.rand.Next(4) switch
+                                {
+                                    0 => (int)AIStates.upShoot,
+                                    1 => (int)AIStates.firework,
+                                    2 => (int)AIStates.pulse,
+                                    _ => (int)AIStates.summon
+                                };
+                        }
+                        else        //其他模式
+                        {
+                            if (useMelee)   //近战，只会普通三连炸
+                            {
+                                State = (int)AIStates.explosion;
+                                break;
+                            }
+
+                            if (useShoot)   //远程
+                                State = Main.rand.Next(3) switch
+                                {
+                                    0 => (int)AIStates.upShoot,
+                                    1 => (int)AIStates.magicShoot,
+                                    _ => (int)AIStates.summon
+                                };
+                        }
+                        break;
+                }
             }
+            
 
             MoveCount += 1;
             if (MoveCount >= meleeCount + ShootCount)   //如果一轮全部执行完成那么就在次随机一下循环方式
             {
                 MoveCount = 0;
-                MoveCyclingType = Main.rand.Next(3) switch
+                if (!CLUtils.isClient)
                 {
-                    0 => (int)CyclingType.one_one,
-                    1 => (int)CyclingType.two_one,
-                    _ => (int)CyclingType.two_two,
-                };
+                    MoveCyclingType = Main.rand.Next(3) switch
+                    {
+                        0 => (int)CyclingType.one_one,
+                        1 => (int)CyclingType.two_one,
+                        _ => (int)CyclingType.two_two,
+                    };
+                }
             }
 
             Timer = 0;
@@ -920,12 +947,15 @@ namespace Coralite.Content.Bosses.Rediancie
 
             UpdateFollower_Summon();
 
-            if (Timer % 10 == 0)
+            if (Timer % 10 == 0 && !CLUtils.isServer)
+            {
                 for (int i = 0; i < 6; i++)
                 {
                     Dust dust = Dust.NewDustPerfect(followers[^1].center + Main.rand.NextVector2Circular(20, 20), DustID.GemRuby, Vector2.Zero, 0, default, 1.3f);
                     dust.noGravity = true;
                 }
+            }
+                
 
             if (Timer % 40 == 0)
             {
@@ -938,7 +968,7 @@ namespace Coralite.Content.Bosses.Rediancie
                 //为了保证同场召唤物数量不会过多所以还是保留了这一段
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
-                    if (Main.npc.Count((n) => n.active && n.type == NPCType<RediancieMinion>()) < Helper.ScaleValueForDiffMode(2, 3, 3, 4))
+                    if (Main.npc.Count((n) => n.active && n.type == NPCType<RediancieMinion>()) < Helper.ScaleValueForDiffMode(2, 3, 3, 4) && !CLUtils.isClient)
                         NPC.NewNPC(NPC.GetSource_FromThis(), (int)followers[^1].center.X, (int)followers[^1].center.Y, NPCType<RediancieMinion>());
                     else
                     {
