@@ -43,7 +43,6 @@
     <Folder Include="Content\Items\KeyItems\" />
     <Folder Include="Content\Projectiles\Projectiles_Summon\" />
     <Folder Include="Content\UI\MagikeGuideBook\Chapter5\" />
-    <Folder Include="Content\UI\CoraliteNote\" />
     <Folder Include="Core\Systems\AstronomySystem\" />
     <Folder Include="Core\Systems\SilkKniefSystem\" />
     <Folder Include="Sounds\Shadows\" />

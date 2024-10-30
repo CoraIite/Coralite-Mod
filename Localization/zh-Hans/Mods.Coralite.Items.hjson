@@ -4976,3 +4976,8 @@ LASERCore: {
 		.
 		'''
 }
+
+CogLens: {
+	// DisplayName: Cog Lens
+	// Tooltip: ""
+}

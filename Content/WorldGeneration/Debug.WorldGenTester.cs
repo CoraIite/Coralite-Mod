@@ -44,10 +44,10 @@ namespace Coralite.Content.WorldGeneration
 
             //Main.tile.ClearEverything();
 
-            //CoraliteWorld.DungeonRoom((int)Main.MouseWorld.X / 16, (int)Main.MouseWorld.Y / 16, TileID.CrystalBlock, WallID.CryocoreBrickWall);
-            //ClearWorldTile();
+            ModContent.GetInstance<CoraliteWorld>().GenGroundLock(out _);
+            //ClearWorldTile()
 
-            Main.NewText(NPC.downedBoss3);
+           // Main.NewText(NPC.downedBoss3);
 
             return base.CanUseItem(player);
         }

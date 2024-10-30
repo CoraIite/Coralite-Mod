@@ -4860,3 +4860,8 @@ LASERCore: {
 	DisplayName: L A S E R Core
 	Tooltip: ""
 }
+
+CogLens: {
+	DisplayName: Cog Lens
+	Tooltip: ""
+}

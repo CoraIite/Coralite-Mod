@@ -2,11 +2,11 @@
 
 namespace Coralite.Core
 {
-    public struct CustomVertexInfo : IVertexType
+    public struct CustomVertexInfo(Vector2 position, Color color, Vector3 texCoord) : IVertexType
     {
-        public Vector2 Position;
-        public Color Color;
-        public Vector3 TexCoord;
+        public Vector2 Position = position;
+        public Color Color = color;
+        public Vector3 TexCoord = texCoord;
 
         private static VertexDeclaration _vertexDeclaration = new(new VertexElement[3]
         {
@@ -15,34 +15,15 @@ namespace Coralite.Core
                 new(12,VertexElementFormat.Vector3,VertexElementUsage.TextureCoordinate,0)
         });
 
-        public CustomVertexInfo(Vector2 position, Color color, Vector3 texCoord)
-        {
-            this.Position = position;
-            this.Color = color;
-            this.TexCoord = texCoord;
-        }
-
-        public VertexDeclaration VertexDeclaration
-        {
-            get { return _vertexDeclaration; }
-        }
+        public VertexDeclaration VertexDeclaration => _vertexDeclaration;
     }
 
-    public struct VertexInfo : IVertexType
+    public struct VertexInfo(Vector2 position, Vector3 texCoord) : IVertexType
     {
-        public Vector2 Position;
-        public Vector3 TexCoord;
+        public Vector2 Position = position;
+        public Vector3 TexCoord = texCoord;
 
-        public VertexInfo(Vector2 position, Vector3 texCoord)
-        {
-            Position = position;
-            TexCoord = texCoord;
-        }
-
-        public VertexDeclaration VertexDeclaration
-        {
-            get { return _vertexDeclaration; }
-        }
+        public VertexDeclaration VertexDeclaration => _vertexDeclaration;
 
         private static VertexDeclaration _vertexDeclaration = new(new VertexElement[]
         {

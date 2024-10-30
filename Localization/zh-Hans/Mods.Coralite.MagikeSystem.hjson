@@ -367,6 +367,7 @@ MagikeSystem: {
 		LaserCollectorOutPut: ◇ 产出
 		LaserCollectorCost: ◇ 消耗魔能：
 		PluseSenderName: 激光发送器
+		// CogLensName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.CogLensName
 	}
 
 	CraftText: {

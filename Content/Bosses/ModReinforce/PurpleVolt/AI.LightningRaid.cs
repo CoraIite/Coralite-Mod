@@ -92,130 +92,129 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
                     }
                     break;
-                //case (int)LightningRaidState.SmallDash://小冲刺
-                //    {
-                //        if (Timer == 0)
-                //        {
-                //            //生成弹幕并随机速度方向
-                //            NPC.TargetClosest();
-                //            int damage = Helper.GetProjDamage(20, 30, 70);
-                //            NPC.NewProjectileDirectInAI<LightningDash>(NPC.Center, Vector2.Zero, damage, 0
-                //                , NPC.target, smallDashTime, NPC.whoAmI, 55);
+                case (int)LightningRaidState.SmallDash://小冲刺
+                    {
+                        if (Timer == 0)
+                        {
+                            //生成弹幕并随机速度方向
+                            int damage = Helper.GetProjDamage(20, 30, 70);
+                            NPC.NewProjectileDirectInAI<PurpleDash>(NPC.Center, Vector2.Zero, damage, 0
+                                , NPC.target, smallDashTime, NPC.whoAmI, 55);
 
-                //            SoundEngine.PlaySound(CoraliteSoundID.NoUse_Electric_Item93, NPC.Center);
-                //            float targetrot = (Target.Center - NPC.Center).ToRotation();
+                            SoundEngine.PlaySound(CoraliteSoundID.NoUse_Electric_Item93, NPC.Center);
+                            float targetrot = (Target.Center - NPC.Center).ToRotation();
 
-                //            if (Vector2.Distance(NPC.Center, Target.Center) < 700)
-                //                targetrot += Main.rand.NextFromList(-1, 1) * Main.rand.NextFloat(0.9f, 1.1f);
-                //            NPC.velocity = targetrot.ToRotationVector2() * 35;
-                //            NPC.rotation = NPC.velocity.ToRotation();
-                //            NPC.direction = NPC.spriteDirection = Math.Sign(NPC.velocity.X);
-                //        }
-                //        else if (Timer % smallDashTime == 0)
-                //        {
-                //            NPC.TargetClosest();
+                            if (Vector2.Distance(NPC.Center, Target.Center) < 700)
+                                targetrot += Main.rand.NextFromList(-1, 1) * Main.rand.NextFloat(0.9f, 1.1f);
+                            NPC.velocity = targetrot.ToRotationVector2() * 35;
+                            NPC.rotation = NPC.velocity.ToRotation();
+                            NPC.direction = NPC.spriteDirection = Math.Sign(NPC.velocity.X);
+                        }
+                        else if (Timer % smallDashTime == 0)
+                        {
+                            NPC.TargetClosest();
 
-                //            int damage = Helper.GetProjDamage(20, 30, 70);
-                //            NPC.NewProjectileDirectInAI<LightningDash>(NPC.Center, Vector2.Zero, damage, 0
-                //                , NPC.target, smallDashTime, NPC.whoAmI, 55);
+                            int damage = Helper.GetProjDamage(20, 30, 70);
+                            NPC.NewProjectileDirectInAI<PurpleDash>(NPC.Center, Vector2.Zero, damage, 0
+                                , NPC.target, smallDashTime, NPC.whoAmI, 55);
 
-                //            SoundEngine.PlaySound(CoraliteSoundID.NoUse_Electric_Item93, NPC.Center);
+                            SoundEngine.PlaySound(CoraliteSoundID.NoUse_Electric_Item93, NPC.Center);
 
-                //            float targetrot = (Target.Center - NPC.Center).ToRotation();
-                //            if (Vector2.Distance(NPC.Center, Target.Center) < 700)
-                //                targetrot += (Timer / smallDashTime > 1 ? -1 : 1) * Main.rand.NextFloat(0.6f, 1.1f);
-                //            NPC.velocity = targetrot.ToRotationVector2() * 30;
-                //            NPC.rotation = NPC.velocity.ToRotation();
-                //            NPC.direction = NPC.spriteDirection = Math.Sign(NPC.velocity.X);
-                //        }
+                            float targetrot = (Target.Center - NPC.Center).ToRotation();
+                            if (Vector2.Distance(NPC.Center, Target.Center) < 700)
+                                targetrot += (Timer / smallDashTime > 1 ? -1 : 1) * Main.rand.NextFloat(0.6f, 1.1f);
+                            NPC.velocity = targetrot.ToRotationVector2() * 30;
+                            NPC.rotation = NPC.velocity.ToRotation();
+                            NPC.direction = NPC.spriteDirection = Math.Sign(NPC.velocity.X);
+                        }
 
-                //        //UpdateAllOldCaches();
+                        //UpdateAllOldCaches();
 
-                //        Timer++;
-                //        if (Timer > (smallDashTime * 3) - 2)
-                //        {
-                //            SonState++;
-                //            Timer = 0;
-                //            NPC.velocity *= 0;
-                //            NPC.frame.X = 0;
-                //            NPC.frame.Y = 4;
-                //            NPC.frameCounter = 0;
-                //            NPC.rotation = NPC.direction > 0 ? 0 : 3.141f;
-                //            NPC.TargetClosest();
-                //            isDashing = false;
-                //        }
-                //    }
-                //    break;
-                //case (int)LightningRaidState.Flashing://使用闪烁的方式移动
-                //    {
-                //        NPC.QuickSetDirection();
-                //        SetRotationNormally(0.2f);
+                        Timer++;
+                        if (Timer > (smallDashTime * 3) - 2)
+                        {
+                            SonState++;
+                            Timer = 0;
+                            NPC.velocity *= 0;
+                            NPC.frame.X = 0;
+                            NPC.frame.Y = 4;
+                            NPC.frameCounter = 0;
+                            NPC.rotation = NPC.direction > 0 ? 0 : 3.141f;
+                            NPC.TargetClosest();
+                            isDashing = false;
+                        }
+                    }
+                    break;
+                case (int)LightningRaidState.Flashing://使用闪烁的方式移动
+                    {
+                        NPC.QuickSetDirection();
+                        //SetRotationNormally(0.2f);
 
-                //        if (NPC.velocity.Length() < 8)
-                //            NPC.velocity += (NPC.Center - Target.Center).SafeNormalize(Vector2.Zero) * 0.65f;
+                        if (NPC.velocity.Length() < 8)
+                            NPC.velocity += (NPC.Center - Target.Center).SafeNormalize(Vector2.Zero) * 0.65f;
 
-                //        UpdateAllOldCaches();
+                        //UpdateAllOldCaches();
 
-                //        //向后扇一下翅膀
-                //        if (++NPC.frameCounter > 7)
-                //        {
-                //            NPC.frameCounter = 0;
-                //            NPC.frame.Y++;
-                //            if (NPC.frame.Y > 7)
-                //            {
-                //                SonState++;
-                //                Timer = 0;
+                        //向后扇一下翅膀
+                        if (++NPC.frameCounter > 7)
+                        {
+                            NPC.frameCounter = 0;
+                            NPC.frame.Y++;
+                            if (NPC.frame.Y > 7)
+                            {
+                                SonState++;
+                                Timer = 0;
 
-                //                int damage = Helper.GetProjDamage(50, 60, 120);
-                //                NPC.NewProjectileDirectInAI<LightningDash>(NPC.Center, Vector2.Zero, damage, 0
-                //                    , NPC.target, bigDashTime, NPC.whoAmI, 75);
+                                int damage = Helper.GetProjDamage(50, 60, 120);
+                                NPC.NewProjectileDirectInAI<PurpleDash>(NPC.Center, Vector2.Zero, damage, 0
+                                    , NPC.target, bigDashTime, NPC.whoAmI, 75);
 
-                //                SoundEngine.PlaySound(CoraliteSoundID.NoUse_ElectricMagic_Item122, NPC.Center);
+                                SoundEngine.PlaySound(CoraliteSoundID.NoUse_ElectricMagic_Item122, NPC.Center);
 
-                //                DashFrame();
+                                //DashFrame();
 
-                //                Vector2 dir = (Target.Center - NPC.Center).SafeNormalize(Vector2.Zero);
-                //                NPC.velocity = dir * 40;
-                //                NPC.rotation = NPC.velocity.ToRotation();
-                //                NPC.direction = NPC.spriteDirection = Math.Sign(NPC.velocity.X);
-                //                isDashing = true;
-                //                SetBackgroundLight(0.4f, bigDashTime - 3, 8);
-                //                var modifyer = new PunchCameraModifier(NPC.Center, dir * 2.3f, 14, 5, 20, 1000);
-                //                Main.instance.CameraModifiers.Add(modifyer);
-                //            }
-                //        }
-                //    }
-                //    break;
-                //case (int)LightningRaidState.BigDash://冲刺！冲刺！会朝向玩家拐弯的大冲
-                //    {
-                //        UpdateAllOldCaches();
+                                Vector2 dir = (Target.Center - NPC.Center).SafeNormalize(Vector2.Zero);
+                                NPC.velocity = dir * 40;
+                                NPC.rotation = NPC.velocity.ToRotation();
+                                NPC.direction = NPC.spriteDirection = Math.Sign(NPC.velocity.X);
+                                isDashing = true;
+                                //SetBackgroundLight(0.4f, bigDashTime - 3, 8);
+                                var modifyer = new PunchCameraModifier(NPC.Center, dir * 2.3f, 14, 5, 20, 1000);
+                                Main.instance.CameraModifiers.Add(modifyer);
+                            }
+                        }
+                    }
+                    break;
+                case (int)LightningRaidState.BigDash://冲刺！冲刺！会朝向玩家拐弯的大冲
+                    {
+                        //UpdateAllOldCaches();
 
-                //        if (Timer == bigDashTime)
-                //        {
-                //            isDashing = false;
-                //            NPC.direction = NPC.spriteDirection = Math.Sign(NPC.velocity.X);
+                        if (Timer == bigDashTime)
+                        {
+                            isDashing = false;
+                            NPC.direction = NPC.spriteDirection = Math.Sign(NPC.velocity.X);
 
-                //            NPC.rotation = NPC.direction > 0 ? 0 : 3.141f;
-                //            currentSurrounding = false;
-                //        }
-                //        else if (Timer > bigDashTime)
-                //        {
-                //            NPC.velocity *= 0.8f;
-                //            FlyingFrame();
-                //            if (Math.Abs(NPC.velocity.X) < 2f)
-                //            {
-                //                NPC.QuickSetDirection();
-                //                NPC.rotation = NPC.direction > 0 ? 0 : 3.141f;
-                //            }
-                //        }
-                //        Timer++;
-                //        int delayTime = 40;
-                //        if (Main.getGoodWorld)
-                //            delayTime = 15;
-                //        if (Timer > bigDashTime + delayTime)
-                //            ResetStates();
-                //    }
-                //    break;
+                            NPC.rotation = NPC.direction > 0 ? 0 : 3.141f;
+                            currentSurrounding = false;
+                        }
+                        else if (Timer > bigDashTime)
+                        {
+                            NPC.velocity *= 0.8f;
+                            //FlyingFrame();
+                            if (Math.Abs(NPC.velocity.X) < 2f)
+                            {
+                                NPC.QuickSetDirection();
+                                NPC.rotation = NPC.direction > 0 ? 0 : 3.141f;
+                            }
+                        }
+                        Timer++;
+                        int delayTime = 40;
+                        if (Main.getGoodWorld)
+                            delayTime = 15;
+                        //if (Timer > bigDashTime + delayTime)
+                        //    ResetStates();
+                    }
+                    break;
             }
 
             return false;

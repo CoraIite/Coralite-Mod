@@ -36,7 +36,7 @@ namespace Coralite.Content.WorldGeneration
             //生成地表结构
             GenGroundLock(out Point altarPoint);
 
-            GenMainSkyIsland();
+            //GenMainSkyIsland();
         }
 
         public void GenGroundLock(out Point altarPoint)
@@ -60,30 +60,33 @@ namespace Coralite.Content.WorldGeneration
             ushort beam = (ushort)ModContent.TileType<BasaltBeamTile>();
 
             for (int j = -1; j < 2; j += 2)//防止底部空
-                if (!Main.tile[p.X + j, p.Y - 2].HasTile)
+                if (!Main.tile[p.X + j, p.Y + 2].HasTile)
                 {
-                    WorldGen.KillTile(p.X - 1, p.Y - 2);
-                    Main.tile[p.X - 1, p.Y - 2].ResetToType(basalt);
+                    WorldGen.KillTile(p.X - 1, p.Y + 2);
+                    Main.tile[p.X - 1, p.Y+ 2].ResetToType(basalt);
                 }
 
-            for (int i = -1; i < 3; i++)//放置两条玄武岩柱子
+            int h = WorldGen.genRand.Next(3, 5);
+
+            for (int i = -1; i < h; i++)//放置两条玄武岩柱子
             {
-                Main.tile[p.X - 1, p.Y + i].ResetToType(beam);
-                Main.tile[p.X + 1, p.Y + i].ResetToType(beam);
+                Main.tile[p.X - 1, p.Y - i].ResetToType(beam);
+                Main.tile[p.X + 1, p.Y - i].ResetToType(beam);
             }
 
             //放置一条玄武岩
             for (int i = -2; i < 3; i++)
-                Main.tile[p.X + i, p.Y - 3].ResetToType(basalt);
+                Main.tile[p.X + i, p.Y - h+1].ResetToType(basalt);
 
-            Point topP = p + new Point(-1, -6);
+            Point topP = p + new Point(-1, -h-2);
             for (int i = 0; i < 3; i++)
                 for (int j = 0; j < 3; j++)
                 {
                     WorldGen.KillTile(topP.X + i, topP.Y + j);
-                }   
+                }
 
             //放置主要祭坛
+            WorldGen.PlaceTile(topP.X+1, topP.Y+2 , ModContent.TileType<PremissionAltarTile>(), true);
         }
 
         private void GenMainSkyIsland()

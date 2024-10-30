@@ -38,6 +38,10 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
         private static SecondOrderDynamics_Vec2 CenterSmoother;
 
+        public static Color ThunderveinYellow = new(255, 202, 101);
+        public static Color ZacurrentPurple = new(135, 94, 255);
+        public static Color ThunderveinOrange = new(219, 114, 22);
+
         #region tmlHooks
 
         public override void Load()
