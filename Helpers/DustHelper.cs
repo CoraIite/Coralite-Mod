@@ -41,6 +41,9 @@ namespace Coralite.Helpers
 
         public static void RedJadeBigBoom(Vector2 center, bool canMakeSound = true)
         {
+            if (CLUtils.isServer)
+                return;
+
             if (canMakeSound)
                 PlayPitched("RedJade/RedJadeBoom", 0.8f, -1f, center);
 
@@ -79,6 +82,9 @@ namespace Coralite.Helpers
         /// <param name="noGravity"></param>
         public static void SpawnTrailDust(Vector2 center, int type, Func<Dust, Vector2> velocity, int Alpha = 0, Color newColor = default, float Scale = 1f, bool noGravity = true)
         {
+            if (CLUtils.isServer)
+                return;
+
             Dust dust = Dust.NewDustPerfect(center, type, Alpha: Alpha, newColor: newColor, Scale: Scale);
             dust.noGravity = noGravity;
             dust.velocity = velocity.Invoke(dust);
@@ -96,6 +102,9 @@ namespace Coralite.Helpers
         /// <param name="noGravity">粒子重力</param>
         public static void SpawnTrailDust(this Projectile Projectile, int type, float velocityMult, int Alpha = 0, Color newColor = default, float Scale = 1f, bool noGravity = true)
         {
+            if (CLUtils.isServer)
+                return;
+
             Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, type, Alpha: Alpha, newColor: newColor, Scale: Scale);
             dust.noGravity = noGravity;
             dust.velocity = -Projectile.velocity * velocityMult;
@@ -103,6 +112,9 @@ namespace Coralite.Helpers
 
         public static void SpawnTrailDust(this Projectile Projectile, int type, float velocityMult, float extraRot, int Alpha = 0, Color newColor = default, float Scale = 1f, bool noGravity = true)
         {
+            if (CLUtils.isServer)
+                return;
+
             Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, type, Alpha: Alpha, newColor: newColor, Scale: Scale);
             dust.noGravity = noGravity;
             dust.velocity = -Projectile.velocity.RotatedBy(extraRot) * velocityMult;
@@ -110,6 +122,9 @@ namespace Coralite.Helpers
 
         public static void SpawnTrailDust(this Projectile Projectile, float width, int type, float velocityMult, int Alpha = 0, Color newColor = default, float Scale = 1f, bool noGravity = true)
         {
+            if (CLUtils.isServer)
+                return;
+
             Dust dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(width, width), type, Vector2.Zero, Alpha: Alpha, newColor: newColor, Scale: Scale);
             dust.noGravity = noGravity;
             dust.velocity = -Projectile.velocity * velocityMult;
@@ -130,6 +145,9 @@ namespace Coralite.Helpers
         /// <param name="noGravity"></param>
         public static void SpawnRandomDustJet(Vector2 center, int jetCount, int howManyPerJet, Func<int, float> speed, int type, int Alpha = 0, Color newColor = default, float Scale = 1f, bool noGravity = true)
         {
+            if (CLUtils.isServer)
+                return;
+
             for (int i = 0; i < jetCount; i++)
             {
                 Vector2 dir = NextVec2Dir();
@@ -157,6 +175,9 @@ namespace Coralite.Helpers
         /// <param name="noGravity"></param>
         public static void SpawnDirDustJet(Vector2 center, Func<Vector2> direction, int jetCount, int howManyPerJet, Func<int, float> speed, int type, int Alpha = 0, Color newColor = default, float Scale = 1f, bool noGravity = true, float extraRandRot = 0.05f)
         {
+            if (CLUtils.isServer)
+                return;
+
             for (int i = 0; i < jetCount; i++)
             {
                 Vector2 dir = direction.Invoke();
