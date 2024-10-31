@@ -59,7 +59,8 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
         public int movePhase;
         public bool canDrawShadows;
-        private List<int> Moves;
+        internal List<int> Moves;
+        private bool spwan;
 
         public const int FlyingFrame = 4;
         public const int DizyFrame = 4;
@@ -240,24 +241,6 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
         #region AI
 
-        public override void OnSpawn(IEntitySource source)
-        {
-            NPC.oldPos = new Vector2[8];
-            Moves = new List<int>();
-            ResetMovePool(1);
-            NPC.TargetClosest(false);
-            NPC.frame.Y = 3;
-            if (Main.netMode != NetmodeID.MultiplayerClient)
-            {
-                State = (int)AIStates.onSpawnAnim;
-                NPC.ai[0] = 0f;
-                Timer = 0;
-                NormalMoveCount = 0;
-                NPC.noTileCollide = false;
-                NPC.netUpdate = true;
-            }
-        }
-
         public enum AIStates : int
         {
             //动画
@@ -290,24 +273,39 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
         public override void AI()
         {
-            // return;
-            if (State != (int)AIStates.onKillAnim)
-                if (NPC.target < 0 || NPC.target == 255 || Target.dead || !Target.active || Target.Distance(NPC.Center) > 3000 || !Target.ZoneSnow)
-                {
-                    NPC.TargetClosest();
+            if (!spwan)
+            {
+                NPC.oldPos = new Vector2[8];
+                Moves = new List<int>();
+                ResetMovePool(1);
+                NPC.TargetClosest(false);
+                NPC.frame.Y = 3;
+                State = (int)AIStates.onSpawnAnim;
+                NPC.ai[0] = 0f;
+                Timer = 0;
+                NormalMoveCount = 0;
+                NPC.noTileCollide = false;
+                NPC.netUpdate = true;
 
-                    if (Target.dead || !Target.active || Target.Distance(NPC.Center) > 3000 || !Target.ZoneSnow)//没有玩家存活时离开
-                    {
-                        NPC.dontTakeDamage = false;
-                        State = -1;
-                        NPC.rotation = NPC.rotation.AngleTowards(0f, 0.14f);
-                        NPC.velocity.X *= 0.98f;
-                        canDrawShadows = false;
-                        FlyUp();
-                        NPC.EncourageDespawn(30);
-                        return;
-                    }
+                spwan = true;
+            }
+
+            if (State != (int)AIStates.onKillAnim && NPC.target < 0 || NPC.target == 255 || Target.dead || !Target.active || Target.Distance(NPC.Center) > 3000 || !Target.ZoneSnow)
+            {
+                NPC.TargetClosest();
+
+                if (Target.dead || !Target.active || Target.Distance(NPC.Center) > 3000 || !Target.ZoneSnow)//没有玩家存活时离开
+                {
+                    NPC.dontTakeDamage = false;
+                    State = -1;
+                    NPC.rotation = NPC.rotation.AngleTowards(0f, 0.14f);
+                    NPC.velocity.X *= 0.98f;
+                    canDrawShadows = false;
+                    FlyUp();
+                    NPC.EncourageDespawn(30);
+                    return;
                 }
+            }
 
             switch ((int)State)
             {
@@ -320,24 +318,28 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             NPC.frame.X = 1;
                             NPC.frame.Y = 0;
 
+                            if (!CLUtils.isServer)
                             Dust.NewDustPerfect(NPC.Center + Main.rand.NextVector2Circular(100, 100), DustID.ApprenticeStorm, Vector2.UnitY);
                         }
                         else
                         {
-                            for (int i = 0; i < 12; i++)
+                            if (!CLUtils.isServer)
                             {
-                                Vector2 center = NPC.Center + Main.rand.NextVector2CircularEdge(2000, 2000);
-                                IceStarLight.Spawn(NPC.Center + Main.rand.NextVector2CircularEdge(100, 100),
-                                    Main.rand.NextVector2CircularEdge(4, 4), 1f, () => center, 16);
-                            }
-                            for (int j = 0; j < 20; j++)
-                            {
-                                Dust.NewDustPerfect(NPC.Center + Main.rand.NextVector2Circular(32, 32), ModContent.DustType<CrushedIceDust>(),
-                                    -Vector2.UnitY.RotatedBy(Main.rand.NextFloat(-1.7f, 1.7f)) * Main.rand.Next(2, 7), Scale: Main.rand.NextFloat(1f, 1.4f));
-                            }
+                                for (int i = 0; i < 12; i++)
+                                {
+                                    Vector2 center = NPC.Center + Main.rand.NextVector2CircularEdge(2000, 2000);
+                                    IceStarLight.Spawn(NPC.Center + Main.rand.NextVector2CircularEdge(100, 100),
+                                        Main.rand.NextVector2CircularEdge(4, 4), 1f, () => center, 16);
+                                }
+                                for (int j = 0; j < 20; j++)
+                                {
+                                    Dust.NewDustPerfect(NPC.Center + Main.rand.NextVector2Circular(32, 32), ModContent.DustType<CrushedIceDust>(),
+                                        -Vector2.UnitY.RotatedBy(Main.rand.NextFloat(-1.7f, 1.7f)) * Main.rand.Next(2, 7), Scale: Main.rand.NextFloat(1f, 1.4f));
+                                }
 
-                            for (int i = 0; i < 3; i++)
-                                Particle.NewParticle(NPC.Center, Vector2.Zero, CoraliteContent.ParticleType<IceBurstHalo>(), Color.White, 0.15f);
+                                for (int i = 0; i < 3; i++)
+                                    Particle.NewParticle(NPC.Center, Vector2.Zero, CoraliteContent.ParticleType<IceBurstHalo>(), Color.White, 0.15f);
+                            }
 
                             Helper.PlayPitched("Icicle/Broken", 0.4f, 0f, NPC.Center);
 
@@ -358,10 +360,11 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                                     Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ProjectileType<BabyIceDragon_OnSpawnAnim>(), 0, 0);
                                 NPC.dontTakeDamage = true;
                                 NPC.velocity.Y = -0.2f;
+                                NPC.netUpdate = true;
                                 break;
                             }
 
-                            if (Timer < 30)
+                            if (Timer < 30 && !CLUtils.isServer)
                             {
                                 GlowAlpha -= 1 / 30f;
                                 Dust dust = Dust.NewDustPerfect(NPC.Center + Main.rand.NextVector2Circular(72, 72), DustID.ApprenticeStorm, Vector2.UnitY * Main.rand.NextFloat(2f, 4f),
@@ -390,19 +393,25 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                                 NPC.frame.Y = 1;
                                 SoundEngine.PlaySound(SoundID.Roar, NPC.Center);
                                 GetMouseCenter(out _, out Vector2 mouseCenter);
-                                Particle.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.1f);
-                                PunchCameraModifier modifier = new(NPC.Center, new Vector2(0.8f, 0.8f), 5f, 20f, 40, 1000f, "BabyIceDragon");
-                                Main.instance.CameraModifiers.Add(modifier);
+
+                                if (!CLUtils.isServer)
+                                {
+                                    Particle.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.1f);
+                                    PunchCameraModifier modifier = new(NPC.Center, new Vector2(0.8f, 0.8f), 5f, 20f, 40, 1000f, "BabyIceDragon");
+                                    Main.instance.CameraModifiers.Add(modifier);
+                                }
                             }
 
                             if (Timer < 170)
                             {
                                 GetMouseCenter(out _, out Vector2 mouseCenter);
-                                if ((int)Timer % 10 == 0)
-                                    Particle.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringWave>(), Color.White, 0.1f);
-                                if ((int)Timer % 20 == 0)
-                                    Particle.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.1f);
-
+                                if (!CLUtils.isServer)
+                                {
+                                    if ((int)Timer % 10 == 0)
+                                        Particle.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringWave>(), Color.White, 0.1f);
+                                    if ((int)Timer % 20 == 0)
+                                        Particle.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.1f);
+                                }
                                 break;
                             }
 
@@ -455,18 +464,25 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                                 NPC.frame.Y = 1;
                                 SoundEngine.PlaySound(SoundID.Roar, NPC.Center);
                                 GetMouseCenter(out _, out Vector2 mouseCenter);
-                                Particle.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.1f);
-                                PunchCameraModifier modifier = new(NPC.Center, new Vector2(0.8f, 0.8f), 5f, 20f, 40, 1000f, "BabyIceDragon");
-                                Main.instance.CameraModifiers.Add(modifier);
+
+                                if (!CLUtils.isServer)
+                                {
+                                    Particle.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.1f);
+                                    PunchCameraModifier modifier = new(NPC.Center, new Vector2(0.8f, 0.8f), 5f, 20f, 40, 1000f, "BabyIceDragon");
+                                    Main.instance.CameraModifiers.Add(modifier);
+                                }
                             }
 
                             if (Timer < 80)
                             {
                                 GetMouseCenter(out _, out Vector2 mouseCenter);
-                                if (Timer % 10 == 0)
-                                    Particle.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringWave>(), Color.White, 0.1f);
-                                if (Timer % 20 == 0)
-                                    Particle.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.1f);
+                                if (!CLUtils.isServer)
+                                {
+                                    if (Timer % 10 == 0)
+                                        Particle.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringWave>(), Color.White, 0.1f);
+                                    if (Timer % 20 == 0)
+                                        Particle.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.1f);
+                                }
 
                                 break;
                             }
@@ -551,14 +567,17 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             if ((int)Timer == 62)
                             {
                                 SoundEngine.PlaySound(CoraliteSoundID.IceMagic_Item28, NPC.Center);
-                                GetMouseCenter(out _, out Vector2 mouseCenter2);
-                                Particle.NewParticle(mouseCenter2, Vector2.Zero, CoraliteContent.ParticleType<IceBurstHalo_Reverse>(), Scale: 0.8f);
-                                Particle.NewParticle(mouseCenter2, Vector2.Zero, CoraliteContent.ParticleType<IceBurstHalo_Reverse>(), Scale: 1.2f);
-                                for (int i = 0; i < 4; i++)
-                                    IceStarLight.Spawn(NPC.Center + Main.rand.NextVector2CircularEdge(100, 100), Main.rand.NextVector2CircularEdge(3, 3), 1f, () =>
-                                    {
-                                        return NPC.Center + ((NPC.rotation + (NPC.direction > 0 ? 0f : 3.141f)).ToRotationVector2() * 30);
-                                    }, 16);
+                                if (!CLUtils.isServer)
+                                {
+                                    GetMouseCenter(out _, out Vector2 mouseCenter2);
+                                    Particle.NewParticle(mouseCenter2, Vector2.Zero, CoraliteContent.ParticleType<IceBurstHalo_Reverse>(), Scale: 0.8f);
+                                    Particle.NewParticle(mouseCenter2, Vector2.Zero, CoraliteContent.ParticleType<IceBurstHalo_Reverse>(), Scale: 1.2f);
+                                    for (int i = 0; i < 4; i++)
+                                        IceStarLight.Spawn(NPC.Center + Main.rand.NextVector2CircularEdge(100, 100), Main.rand.NextVector2CircularEdge(3, 3), 1f, () =>
+                                        {
+                                            return NPC.Center + ((NPC.rotation + (NPC.direction > 0 ? 0f : 3.141f)).ToRotationVector2() * 30);
+                                        }, 16);
+                                }
                             }
 
                             if (Timer < 80)
@@ -699,26 +718,28 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
         public void SpawnIceThorns()
         {
-            if (Main.netMode == NetmodeID.MultiplayerClient)
-                return;
-
-            PunchCameraModifier modifier = new(NPC.Center, new Vector2(0f, 1f), 20f, 6f, 30, 1000f, "BabyIceDragon");
-            Main.instance.CameraModifiers.Add(modifier);
-
-            Point sourceTileCoords = NPC.Bottom.ToTileCoordinates();
-            //sourceTileCoords.X += 1;
-            for (int i = 0; i < 4; i++)
+            if (!CLUtils.isServer)
             {
-                TryMakingSpike(ref sourceTileCoords, 1, 20, i * 6, 1, i * 0.2f);
-                sourceTileCoords.X += 2;
+                PunchCameraModifier modifier = new(NPC.Center, new Vector2(0f, 1f), 20f, 6f, 30, 1000f, "BabyIceDragon");
+                Main.instance.CameraModifiers.Add(modifier);
             }
-
-            sourceTileCoords = NPC.Bottom.ToTileCoordinates();
-            //sourceTileCoords.X -= 1;
-            for (int i = 0; i < 4; i++)
+            if (!CLUtils.isClient)
             {
-                TryMakingSpike(ref sourceTileCoords, -1, 20, i * 6, 1, i * 0.2f);
-                sourceTileCoords.X -= 2;
+                Point sourceTileCoords = NPC.Bottom.ToTileCoordinates();
+                //sourceTileCoords.X += 1;
+                for (int i = 0; i < 4; i++)
+                {
+                    TryMakingSpike(ref sourceTileCoords, 1, 20, i * 6, 1, i * 0.2f);
+                    sourceTileCoords.X += 2;
+                }
+
+                sourceTileCoords = NPC.Bottom.ToTileCoordinates();
+                //sourceTileCoords.X -= 1;
+                for (int i = 0; i < 4; i++)
+                {
+                    TryMakingSpike(ref sourceTileCoords, -1, 20, i * 6, 1, i * 0.2f);
+                    sourceTileCoords.X -= 2;
+                }
             }
         }
 
@@ -794,6 +815,39 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
         #region 状态切换相关
 
+        internal void SendMovesRemoveData()
+        {
+            ModPacket modpak = Coralite.Instance.GetPacket();
+            modpak.WriteCLNetID(CLNetWorkEnum.BabyIceDragon);
+            modpak.Write(NPC.whoAmI);
+            modpak.Write(State);
+            modpak.Send();
+        }
+
+        internal static void FumlerMovesRemove(BinaryReader reader, int whoAmI)
+        {
+            int npcWhoAmI = reader.ReadInt32();
+            float state = reader.ReadSingle();
+            if (npcWhoAmI >= 0 && npcWhoAmI < Main.npc.Length)
+            {
+                NPC boss = Main.npc[npcWhoAmI];
+                if (boss.active && boss.type == NPCType<BabyIceDragon>())
+                {
+                    BabyIceDragon babyIceDragon = (BabyIceDragon)boss.ModNPC;
+                    babyIceDragon.Moves.Remove((int)state);
+                }
+            }
+
+            if (CLUtils.isServer)
+            {
+                ModPacket modpak = Coralite.Instance.GetPacket();
+                modpak.WriteCLNetID(CLNetWorkEnum.BabyIceDragon);
+                modpak.Write(npcWhoAmI);
+                modpak.Write(state);
+                modpak.Send(-1, whoAmI);
+            }
+        }
+
         public void ResetStates()
         {
             movePhase = 0;
@@ -825,22 +879,41 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             {
                 NormalMoveCount = 0;
                 ResetMovePool(phase);
-                State = Main.rand.Next(2) switch
+
+                if (!CLUtils.isClient)
                 {
-                    0 => (int)AIStates.dive,
-                    _ => (int)AIStates.accumulate
-                };
+                    State = Main.rand.Next(2) switch
+                    {
+                        0 => (int)AIStates.dive,
+                        _ => (int)AIStates.accumulate
+                    };
+                    NPC.netUpdate = true;
+                }
 
                 goto ResetValues;
             }
 
             if (Moves.Count > 0)
             {
-                State = Main.rand.NextFromList(Moves.ToArray());
-                Moves.Remove((int)State);
+                if (!CLUtils.isClient)
+                {
+                    State = Main.rand.NextFromList(Moves.ToArray());
+                    NPC.netUpdate = true;
+                }
+
+                if (CLUtils.isSinglePlayer)
+                {
+                    Moves.Remove((int)State);
+                }
+                else
+                {
+                    SendMovesRemoveData();
+                }
             }
             else
+            {
                 State = (int)AIStates.iceBreath;
+            }
 
             NormalMoveCount += 1f;
 
@@ -889,8 +962,6 @@ namespace Coralite.Content.Bosses.BabyIceDragon
         {
             movePhase = 0;
             canDrawShadows = false;
-            if (Main.netMode == NetmodeID.MultiplayerClient)
-                return;
 
             State = (int)AIStates.rest;
 
@@ -1029,11 +1100,19 @@ namespace Coralite.Content.Bosses.BabyIceDragon
         public override void SendExtraAI(BinaryWriter writer)
         {
             writer.Write(movePhase);
+            writer.Write(NPC.localAI[0]);
+            writer.Write(NPC.localAI[1]);
+            writer.Write(NPC.localAI[2]);
+            writer.Write(NPC.localAI[3]);
         }
 
         public override void ReceiveExtraAI(BinaryReader reader)
         {
             movePhase = reader.ReadInt32();
+            NPC.localAI[0] = reader.ReadSingle();
+            NPC.localAI[1] = reader.ReadSingle();
+            NPC.localAI[2] = reader.ReadSingle();
+            NPC.localAI[3] = reader.ReadSingle();
         }
 
         #endregion

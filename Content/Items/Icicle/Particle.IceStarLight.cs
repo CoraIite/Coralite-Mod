@@ -104,13 +104,18 @@ namespace Coralite.Content.Items.Icicle
             spriteBatch.Draw(GetTexture().Value, Center - Main.screenPosition, frame, color, Rotation, origin, 1.2f, SpriteEffects.None, 0f);
         }
 
-        public static Particle Spawn(Vector2 center, Vector2 velocity, float scale, GetCenter function, float velocityLimit)
+        public static void Spawn(Vector2 center, Vector2 velocity, float scale, GetCenter function, float velocityLimit)
         {
+            if (!CLUtils.isServer)
+            {
+                return;
+            }
             IceStarLight particle = NewParticle<IceStarLight>(center, velocity, Color.White, scale);
-            particle.centerFunc = function;
-            particle.velocityLimit = velocityLimit;
-
-            return particle;
+            if (particle != null)
+            {
+                particle.centerFunc = function;
+                particle.velocityLimit = velocityLimit;
+            }
         }
 
         public void GetData(out Vector2 center)

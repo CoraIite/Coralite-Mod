@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.Enums;
 using Terraria.GameContent;
 using Terraria.ID;
 
@@ -17,6 +18,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
         private ref float Timer => ref NPC.ai[0];
         private ref float State => ref NPC.ai[1];
+        private bool spwan;
 
         public Vector2 Center
         {
@@ -58,11 +60,43 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
         public override void AI()
         {
+            if (!spwan)
+            {
+                if (!CLUtils.isServer)
+                {
+                    NPC boss = null;
+                    foreach (var npc in Main.ActiveNPCs)
+                    {
+                        if (!npc.active || npc.type != ModContent.NPCType<BabyIceDragon>())
+                        {
+                            continue;
+                        }
+                        boss = npc;
+                    }
+                    if (boss != null)
+                    {
+                        ((BabyIceDragon)boss.ModNPC).GetMouseCenter(out _, out Vector2 mouseCenter);
+                        for (int j = 0; j < 2; j++)
+                        {
+                            IceStarLight.Spawn(new Vector2(NPC.ai[0], NPC.ai[1]),
+                                (boss.Center - NPC.Center).SafeNormalize(Vector2.One).RotatedBy(Main.rand.NextFloat(-0.5f, 0.5f)) * 10,
+                                1f, () => boss.Center, 16);
+                        }
+                    }
+                }
+
+                spwan = true;
+            }
+
             if (State > 2)
             {
                 if (Timer > 60)
                 {
-                    Particle.NewParticle(NPC.Center, Vector2.Zero, CoraliteContent.ParticleType<IceHalo>(), Color.White, 0.25f);
+                    if (!CLUtils.isServer)
+                    {
+                        Particle.NewParticle(NPC.Center, Vector2.Zero, CoraliteContent.ParticleType<IceHalo>(), Color.White, 0.25f);
+                    }
+                    
                     NPC.life -= NPC.lifeMax / 15;
                     Timer = 0;
                 }
@@ -88,7 +122,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                     NPC.width = NPC.height = (int)(NPC.scale * 80);
                     NPC.rotation += 0.2f;
                     NPC.Center = Center;
-                    if (Timer % 2 == 0)
+                    if (!CLUtils.isServer && Timer % 2 == 0)
                     {
                         Dust.NewDustPerfect(NPC.Center, DustID.Ice, -Vector2.UnitY.RotatedBy(Main.rand.NextFloat(-1.3f, 1.3f)) * Main.rand.NextFloat(2, 3));
                         Dust.NewDustPerfect(NPC.Center + Main.rand.NextVector2Circular(NPC.width, NPC.height), DustID.SnowBlock, Vector2.Zero);

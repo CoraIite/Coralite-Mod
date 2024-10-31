@@ -52,7 +52,12 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                         NPC.noGravity = true;
                         NPC.noTileCollide = true;
                         SetDirection();
-                        Particle.NewParticle(NPC.Center, Vector2.Zero, CoraliteContent.ParticleType<Sparkle_Big>(), Coralite.IcicleCyan, 0.8f);
+
+                        if (!CLUtils.isServer)
+                        {
+                            Particle.NewParticle(NPC.Center, Vector2.Zero, CoraliteContent.ParticleType<Sparkle_Big>(), Coralite.IcicleCyan, 0.8f);
+                        }
+                        
                         SoundEngine.PlaySound(CoraliteSoundID.IceMagic_Item28, NPC.Center);
                         NPC.netUpdate = true;
                     }
@@ -62,7 +67,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                         NPC.rotation = NPC.rotation.AngleTowards(NPC.velocity.ToRotation() + (NPC.direction > 0 ? 0 : 3.14f), 0.6f);
                         NPC.velocity.Y += 0.9f;
 
-                        if ((int)Timer % 2 == 0)
+                        if (!CLUtils.isServer && (int)Timer % 2 == 0)
                         {
                             Dust dust = Dust.NewDustPerfect(NPC.Center + Main.rand.NextVector2Circular(32, 32), DustID.FrostStaff, -NPC.velocity * 0.5f, Scale: Main.rand.NextFloat(1.8f, 2f));
                             dust.noGravity = true;
@@ -97,7 +102,9 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             Vector2 position = NPC.BottomLeft;
                             position /= 16;
                             for (int i = 0; i < 4; i++)
+                            {
                                 for (int j = 0; j < 2; j++)
+                                {
                                     if (WorldGen.ActiveAndWalkableTile((int)position.X + i, (int)position.Y + j))    //砸地，生成冰刺弹幕
                                     {
                                         NPC.rotation = 0;
@@ -106,6 +113,8 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                                         HaveARest(30);
                                         return;
                                     }
+                                }
+                            }      
                         }
 
                         if (Timer > 200)

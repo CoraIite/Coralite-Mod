@@ -70,31 +70,42 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                 NPC.netUpdate = true;
             }
 
-            //生成特效粒子
-            if (ExtendCount < 17 && Timer % 6 == 0)
-                IceStarLight.Spawn(NPC.Center + Main.rand.NextVector2CircularEdge(80, 80), Main.rand.NextVector2CircularEdge(5, 5), 0.5f, () => NPC.Center, 12);
-
             if (ExtendCount == 14 && NPC.localAI[2] == 0f)
             {
                 soundSlotID = Helper.PlayPitched("Icicle/Burst", 0.4f, 0f, NPC.Center);
                 NPC.localAI[2] = 1f;
             }
 
+            //生成特效粒子
+            if (!CLUtils.isServer && ExtendCount < 17 && Timer % 6 == 0)
+                IceStarLight.Spawn(NPC.Center + Main.rand.NextVector2CircularEdge(80, 80), Main.rand.NextVector2CircularEdge(5, 5), 0.5f, () => NPC.Center, 12);
+
             if (ExtendCount == 18f && NPC.localAI[1] == 0f)
             {
-                //生成闪光粒子以及蓄力效果
-                Particle.NewParticle(NPC.Center, Vector2.Zero, CoraliteContent.ParticleType<IceBurstHalo_Reverse>(), Scale: 3f);
-                Particle.NewParticle(NPC.Center, Vector2.Zero, CoraliteContent.ParticleType<IceBurstHalo_Reverse>(), Scale: 4f);
-                Particle.NewParticle(NPC.Center, Vector2.Zero, CoraliteContent.ParticleType<Sparkle_Big>(), Coralite.IcicleCyan, 2.5f);
+                if (!CLUtils.isServer)
+                {
+                    //生成闪光粒子以及蓄力效果
+                    Particle.NewParticle(NPC.Center, Vector2.Zero, CoraliteContent.ParticleType<IceBurstHalo_Reverse>(), Scale: 3f);
+                    Particle.NewParticle(NPC.Center, Vector2.Zero, CoraliteContent.ParticleType<IceBurstHalo_Reverse>(), Scale: 4f);
+                    Particle.NewParticle(NPC.Center, Vector2.Zero, CoraliteContent.ParticleType<Sparkle_Big>(), Coralite.IcicleCyan, 2.5f);
+                }
+                
                 NPC.localAI[1] = 1f;
             }
 
             if (ExtendCount >= 19)
             {
-                //大于多少后产生爆炸
-                PunchCameraModifier modifier = new(NPC.Center, new Vector2(2f, 2f), 16f, 20f, 25, 1000f, "BabyIceDragon");
-                Main.instance.CameraModifiers.Add(modifier);
-                Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<IceBurst>(), 90, 10f);
+                if (!CLUtils.isServer)
+                {
+                    //大于多少后产生爆炸
+                    PunchCameraModifier modifier = new(NPC.Center, new Vector2(2f, 2f), 16f, 20f, 25, 1000f, "BabyIceDragon");
+                    Main.instance.CameraModifiers.Add(modifier);
+                }
+                if (!CLUtils.isClient)
+                {
+                    Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<IceBurst>(), 90, 10f);
+                }
+                
                 NPC.Kill();
             }
 

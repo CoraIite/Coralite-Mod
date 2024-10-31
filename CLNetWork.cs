@@ -1,10 +1,12 @@
-﻿using System.IO;
+﻿using Coralite.Content.Bosses.BabyIceDragon;
+using System.IO;
 
 namespace Coralite
 {
     public enum CLNetWorkEnum : byte
     {
         Rediancie,
+        BabyIceDragon,
     }
 
     internal class CLNetWork
@@ -15,6 +17,10 @@ namespace Coralite
             if (cLNetWorkEnum == CLNetWorkEnum.Rediancie)
             {
 
+            }
+            else if (cLNetWorkEnum == CLNetWorkEnum.BabyIceDragon)
+            {
+                BabyIceDragon.FumlerMovesRemove(reader, whoAmI);
             }
         }
     }
