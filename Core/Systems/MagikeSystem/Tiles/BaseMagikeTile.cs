@@ -92,7 +92,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.newTile.WaterPlacement = LiquidPlacement.Allowed;
             TileObjectData.newTile.LavaPlacement = LiquidPlacement.Allowed;
-            TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(GetEntityInstance().Hook_AfterPlacement, -1, 0, true);
+            //TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(GetEntityInstance().Hook_AfterPlacement, -1, 0, true);
 
             //顶部是平台那么不需要下沉，并且最下面额外扩展一格
             if (topSoild)
@@ -165,7 +165,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
             MagikeSystem.RegisterApparatusLevel(Type, levels);
         }
 
-        public abstract MagikeTileEntity GetEntityInstance();
+        public abstract MagikeTP GetEntityInstance();
 
         public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY)
         {
@@ -192,10 +192,10 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
             OnTileKilled(i, j);
-            if (TryGetEntity(new Point16(i, j), out MagikeTileEntity entity))
+            if (TryGetEntity(new Point16(i, j), out MagikeTP entity))
             {
                 entity.RemoveAllComponent();
-                entity.Kill(entity.Position.X, entity.Position.Y);
+                entity.Kill();
             }
         }
 
@@ -225,7 +225,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
                 Main.LocalPlayer.HeldItem.ModItem.AltFunctionUse(Main.LocalPlayer))
                 return false;
 
-            if (!TryGetEntity(i, j, out MagikeTileEntity entity))
+            if (!TryGetEntity(i, j, out MagikeTP entity))
                 return false;
 
             Main.playerInventory = true;
@@ -244,7 +244,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
             if (!cp.HasEffect(nameof(MagikeAnalyser)))
                 return;
 
-            if (!TryGetEntity(i, j, out MagikeTileEntity entity))
+            if (!TryGetEntity(i, j, out MagikeTP entity))
                 return;
 
             //鼠标移上去时显示魔能仪器的各种信息
@@ -334,7 +334,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
             return text;
         }
 
-        public virtual string FilterText(MagikeTileEntity entity)
+        public virtual string FilterText(MagikeTP entity)
         {
             string empty = $"[i:{ModContent.ItemType<BasicFilter>()}]";
             string text = "";
@@ -392,7 +392,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
             Vector2 offset = offScreen - Main.screenPosition;
             Color lightColor = Lighting.GetColor(p.X, p.Y);
 
-            if (!TryGetEntity(p, out MagikeTileEntity entity))
+            if (!TryGetEntity(p, out MagikeTP entity))
                 return;
 
             DrawExtra(spriteBatch, tileRect, offScreen, lightColor, rotation, entity);
@@ -413,7 +413,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
         /// <summary>
         /// 额外绘制一层，这一层在绘制特定的贴图之前，没有额外贴图的话也会调用到
         /// </summary>
-        public virtual void DrawExtra(SpriteBatch spriteBatch, Rectangle tileRect, Vector2 offset, Color lightColor, float rotation, MagikeTileEntity entity)
+        public virtual void DrawExtra(SpriteBatch spriteBatch, Rectangle tileRect, Vector2 offset, Color lightColor, float rotation, MagikeTP entity)
         {
 
         }
@@ -425,7 +425,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
         /// <param name="tileRect"></param>
         /// <param name="offset"></param>
         /// <param name="entity"></param>
-        public virtual void DrawExtraTex(SpriteBatch spriteBatch, Texture2D tex, Rectangle tileRect, Vector2 offset, Color lightColor, float rotation, MagikeTileEntity entity, MALevel level)
+        public virtual void DrawExtraTex(SpriteBatch spriteBatch, Texture2D tex, Rectangle tileRect, Vector2 offset, Color lightColor, float rotation, MagikeTP entity, MALevel level)
         {
 
         }
@@ -434,7 +434,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
 
         public override void HitWire(int i, int j)
         {
-            if (TryGetEntityWithComponent(i, j, MagikeComponentID.MagikeFactory, out MagikeTileEntity entity))
+            if (TryGetEntityWithComponent(i, j, MagikeComponentID.MagikeFactory, out MagikeTP entity))
                 entity.GetSingleComponent<MagikeFactory>(MagikeComponentID.MagikeFactory).Activation(out _);
         }
     }

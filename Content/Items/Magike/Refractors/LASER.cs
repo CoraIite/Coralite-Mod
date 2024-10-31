@@ -37,7 +37,7 @@ namespace Coralite.Content.Items.Magike.Refractors
         public override string Texture => AssetDirectory.MagikeRefractorTiles + Name;
         public override int DropItemType => ItemType<LASER>();
 
-        public override MagikeTileEntity GetEntityInstance() => GetInstance<LASERTileEntity>();
+        public override MagikeTP GetEntityInstance() => GetInstance<LASERTileEntity>();
 
         public override MALevel[] GetAllLevels()
         {
@@ -47,7 +47,7 @@ namespace Coralite.Content.Items.Magike.Refractors
                 ];
         }
 
-        public override void DrawExtraTex(SpriteBatch spriteBatch, Texture2D tex, Rectangle tileRect, Vector2 offset, Color lightColor, float rotation, MagikeTileEntity entity, MALevel level)
+        public override void DrawExtraTex(SpriteBatch spriteBatch, Texture2D tex, Rectangle tileRect, Vector2 offset, Color lightColor, float rotation, MagikeTP entity, MALevel level)
         {
             Vector2 selfCenter = tileRect.Center();
             Vector2 drawPos = selfCenter + offset - rotation.ToRotationVector2() * (tileRect.Height / 2-8);
@@ -95,9 +95,9 @@ namespace Coralite.Content.Items.Magike.Refractors
         }
     }
 
-    public class LASERTileEntity : MagikeTileEntity
+    public class LASERTileEntity : MagikeTP
     {
-        public override ushort TileType => (ushort)TileType<LASERTile>();
+        public override int TargetTileID => TileType<LASERTile>();
 
         public override void InitializeBeginningComponent()
         {

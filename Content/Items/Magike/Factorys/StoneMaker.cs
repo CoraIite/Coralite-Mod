@@ -73,7 +73,7 @@ namespace Coralite.Content.Items.Magike.Factorys
         public override string Texture => AssetDirectory.MagikeFactoryTiles + Name;
         public override int DropItemType => ItemType<StoneMaker>();
 
-        public override MagikeTileEntity GetEntityInstance() => GetInstance<StoneMakerTileEntity>();
+        public override MagikeTP GetEntityInstance() => GetInstance<StoneMakerTileEntity>();
 
         public override MALevel[] GetAllLevels()
         {
@@ -86,7 +86,7 @@ namespace Coralite.Content.Items.Magike.Factorys
 
         public override void QuickLoadAsset(MALevel level) { }
 
-        public override void DrawExtra(SpriteBatch spriteBatch, Rectangle tileRect, Vector2 offset, Color lightColor, float rotation, MagikeTileEntity entity)
+        public override void DrawExtra(SpriteBatch spriteBatch, Rectangle tileRect, Vector2 offset, Color lightColor, float rotation, MagikeTP entity)
         {
             Vector2 selfCenter = tileRect.Center();
             Vector2 drawPos = selfCenter + offset;
@@ -109,9 +109,9 @@ namespace Coralite.Content.Items.Magike.Factorys
         }
     }
 
-    public class StoneMakerTileEntity() : MagikeTileEntity()
+    public class StoneMakerTileEntity() : MagikeTP()
     {
-        public sealed override ushort TileType => (ushort)TileType<StoneMakerTile>();
+        public sealed override int TargetTileID => TileType<StoneMakerTile>();
 
         public override void InitializeBeginningComponent()
         {
@@ -190,7 +190,7 @@ namespace Coralite.Content.Items.Magike.Factorys
         public override bool CanActivated_SpecialCheck(out string text)
         {
             text = "";
-            Point16 point = (Entity as MagikeTileEntity).Position;
+            Point16 point = (Entity as MagikeTP).Position;
 
             if (!TryGetTile(point, out Tile tile))
             {
@@ -246,7 +246,7 @@ namespace Coralite.Content.Items.Magike.Factorys
         {
             string text = "";
 
-            Point16 point = (Entity as MagikeTileEntity).Position;
+            Point16 point = (Entity as MagikeTP).Position;
             GetMagikeAlternateData(point.X, point.Y, out TileObjectData data, out MagikeAlternateStyle alternate);
             Vector2 topPos = point.ToVector2() * 16;
 
@@ -279,7 +279,7 @@ namespace Coralite.Content.Items.Magike.Factorys
                     Text = text,
                     DurationInFrames = 60,
                     Velocity = -Vector2.UnitY
-                }, Helper.GetMagikeTileCenter((Entity as MagikeTileEntity).Position) - (Vector2.UnitY * 32));
+                }, Helper.GetMagikeTileCenter((Entity as MagikeTP).Position) - (Vector2.UnitY * 32));
                 return;
             }
 
@@ -299,7 +299,7 @@ namespace Coralite.Content.Items.Magike.Factorys
         {
             float factor =1- Timer / (float)WorkTime;
 
-            Point16 point = (Entity as MagikeTileEntity).Position;
+            Point16 point = (Entity as MagikeTP).Position;
             GetMagikeAlternateData(point.X, point.Y, out TileObjectData data, out MagikeAlternateStyle alternate);
             Vector2 topPos = point.ToVector2()*16;
 
@@ -365,7 +365,7 @@ namespace Coralite.Content.Items.Magike.Factorys
                 this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.StoneMakerOutPut), parent),
                 this.NewTextBar(c =>
                 {
-                    if (!TryGetTile((c.Entity as MagikeTileEntity).Position, out Tile tile))
+                    if (!TryGetTile((c.Entity as MagikeTP).Position, out Tile tile))
                         return "";
 
                     int? itemType = c.GetStoneItemType(tile);

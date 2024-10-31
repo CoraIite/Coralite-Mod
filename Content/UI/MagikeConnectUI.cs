@@ -90,7 +90,7 @@ namespace Coralite.Content.UI
                 base.Recalculate();
             }
 
-            Vector2 worldPos = Helper.GetMagikeTileCenter((sender.Entity as MagikeTileEntity).Position).ToScreenPosition();
+            Vector2 worldPos = Helper.GetMagikeTileCenter((sender.Entity as MagikeTP).Position).ToScreenPosition();
             if (!Helper.OnScreen(worldPos))
             {
                 visible = false;
@@ -157,7 +157,7 @@ namespace Coralite.Content.UI
 
                 Color drawColor = Color.Lerp(Color.White, Color.Coral, (MathF.Sin((int)Main.timeForVisualEffects * 0.1f) / 2) + 0.5f);
 
-                Vector2 selfPos = Helper.GetMagikeTileCenter((MagikeConnectUI.sender.Entity as MagikeTileEntity).Position);
+                Vector2 selfPos = Helper.GetMagikeTileCenter((MagikeConnectUI.sender.Entity as MagikeTP).Position);
                 Vector2 aimPos = Helper.GetMagikeTileCenter(p);
 
                 MagikeSystem.DrawConnectLine(spriteBatch, selfPos, aimPos, Main.screenPosition, drawColor);

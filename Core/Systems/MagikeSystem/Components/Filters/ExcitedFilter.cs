@@ -16,7 +16,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Filters
     {
         public abstract int ProduceBonus { get; }
 
-        public override bool CanInsert_SpecialCheck(MagikeTileEntity entity, ref string text)
+        public override bool CanInsert_SpecialCheck(MagikeTP entity, ref string text)
         {
             if (!entity.HasComponent(MagikeComponentID.MagikeProducer))
             {

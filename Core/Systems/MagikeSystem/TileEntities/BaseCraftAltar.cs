@@ -2,10 +2,10 @@
 
 namespace Coralite.Core.Systems.MagikeSystem.TileEntities
 {
-    public abstract class BaseCraftAltar<TModTile>() : MagikeTileEntity()
+    public abstract class BaseCraftAltar<TModTile>() : MagikeTP()
         where TModTile : ModTile
     {
-        public sealed override ushort TileType => (ushort)ModContent.TileType<TModTile>();
+        public sealed override int TargetTileID => (ushort)ModContent.TileType<TModTile>();
 
         public override void InitializeBeginningComponent()
         {

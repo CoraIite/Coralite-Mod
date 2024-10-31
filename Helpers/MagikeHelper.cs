@@ -4,6 +4,7 @@ using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.Particles;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
+using InnoVault.TileProcessors;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -48,7 +49,7 @@ namespace Coralite.Helpers
         /// <param name="j"></param>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public static bool TryGetEntity(int i, int j, out MagikeTileEntity entity)
+        public static bool TryGetEntity(int i, int j, out MagikeTP entity)
         {
             entity = null;
 
@@ -56,7 +57,7 @@ namespace Coralite.Helpers
             if (!topLeft.HasValue)
                 return false;
 
-            if (!TryGetEntity(topLeft.Value, out MagikeTileEntity tempEntity))
+            if (!TryGetEntity(topLeft.Value, out MagikeTP tempEntity))
                 return false;
 
             entity = tempEntity;
@@ -70,13 +71,15 @@ namespace Coralite.Helpers
         /// <param name="position"></param>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public static bool TryGetEntity(Point16 position, out MagikeTileEntity entity)
+        public static bool TryGetEntity(Point16 position, out MagikeTP entity)
         {
             entity = null;
-            if (!TileEntity.ByPosition.TryGetValue(position, out TileEntity tileEntity))
+            //if (!TileEntity.ByPosition.TryGetValue(position, out TileEntity tileEntity))
+            //    return false;
+            if (!TileProcessorLoader.ByPositionGetTP(position, out TileProcessor tileProcessor))
                 return false;
 
-            if (tileEntity is not MagikeTileEntity entity1)
+            if (tileProcessor is not MagikeTP entity1)
                 return false;
 
             entity = entity1;
@@ -91,11 +94,11 @@ namespace Coralite.Helpers
         /// <param name="componentType"></param>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public static bool TryGetEntityWithComponent(int i, int j, int componentType, out MagikeTileEntity entity)
+        public static bool TryGetEntityWithComponent(int i, int j, int componentType, out MagikeTP entity)
         {
             entity = null;
 
-            if (!TryGetEntity(i, j, out MagikeTileEntity tempEntity))
+            if (!TryGetEntity(i, j, out MagikeTP tempEntity))
                 return false;
 
             if (!tempEntity.HasComponent(componentType))
@@ -113,12 +116,12 @@ namespace Coralite.Helpers
         /// <param name="componentType"></param>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public static bool TryGetEntityWithComponent<T>(int i, int j, int componentType, out MagikeTileEntity entity)
+        public static bool TryGetEntityWithComponent<T>(int i, int j, int componentType, out MagikeTP entity)
             where T : Component
         {
             entity = null;
 
-            if (!TryGetEntityWithComponent(i, j, componentType, out MagikeTileEntity tempEntity))
+            if (!TryGetEntityWithComponent(i, j, componentType, out MagikeTP tempEntity))
                 return false;
 
             if (!tempEntity.Components.Contains(componentType))
@@ -286,7 +289,7 @@ namespace Coralite.Helpers
         /// <returns></returns>
         public static bool CheckUpgrageable(this IEntity Entity, MALevel incomeLevel)
         {
-            int tileType = (Entity as MagikeTileEntity).TileType;
+            int tileType = (Entity as MagikeTP).TargetTileID;
 
             if (!MagikeSystem.MagikeApparatusLevels.TryGetValue(tileType, out var keyValuePairs))
                 return false;

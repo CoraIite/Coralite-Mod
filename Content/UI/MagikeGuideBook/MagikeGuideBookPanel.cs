@@ -1,14 +1,4 @@
-﻿using Coralite.Content.UI.MagikeGuideBook.Chapter1;
-using Coralite.Content.UI.MagikeGuideBook.Chapter2;
-using Coralite.Content.UI.MagikeGuideBook.Chapter3;
-using Coralite.Content.UI.MagikeGuideBook.Chapter4;
-using Coralite.Content.UI.MagikeGuideBook.Introduce;
-using Coralite.Content.UI.UILib;
-using Coralite.Core;
-using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
-
-namespace Coralite.Content.UI.MagikeGuideBook
+﻿namespace Coralite.Content.UI.MagikeGuideBook
 {
     //public class MagikeGuideBookPanel : UI_BookPanel
     //{

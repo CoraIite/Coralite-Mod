@@ -78,9 +78,10 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// </summary>
         public void ResetCapacity()
         {
-            Vector2 worldPos = (Entity as MagikeTileEntity).Position.ToWorldCoordinates();
-            var source = new EntitySource_TileEntity(Entity as MagikeTileEntity);
-
+            var e = Entity as MagikeTP;
+            Vector2 worldPos = e.Position.ToWorldCoordinates();
+            var source = new EntitySource_WorldGen($"MagikeTP:{e.ID}");
+            
             //超出容量的部分生成掉落物
             for (int i = Capacity; i < Items.Length; i++)
             {
@@ -106,7 +107,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public override void OnRemove(IEntity entity)
         {
-            Point16 coord = (entity as MagikeTileEntity).Position;
+            Point16 coord = (entity as MagikeTP).Position;
             Vector2 pos = Helper.GetMagikeTileCenter(coord);
             for (int i = 0; i < Items.Length; i++)
                 Item.NewItem(new EntitySource_TileBreak(coord.X, coord.Y), pos, Items[i]);
@@ -141,7 +142,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                     return;
                 }
 
-            Item.NewItem(item.GetSource_DropAsItem(), Helper.GetMagikeTileCenter((Entity as MagikeTileEntity).Position), item.Clone());
+            Item.NewItem(item.GetSource_DropAsItem(), Helper.GetMagikeTileCenter((Entity as MagikeTP).Position), item.Clone());
             item.TurnToAir();
         }
 
@@ -167,7 +168,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                     return;
                 }
 
-            Item.NewItem(new EntitySource_DropAsItem(Main.LocalPlayer), Helper.GetMagikeTileCenter((Entity as MagikeTileEntity).Position), itemType, stack);
+            Item.NewItem(new EntitySource_DropAsItem(Main.LocalPlayer), Helper.GetMagikeTileCenter((Entity as MagikeTP).Position), itemType, stack);
         }
 
         #region UI部分

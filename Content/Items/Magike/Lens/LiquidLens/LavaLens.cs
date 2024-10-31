@@ -32,7 +32,7 @@ namespace Coralite.Content.Items.Magike.Lens.LiquidLens
         (Color.Red, DustID.Lava)
     {
         public override int DropItemType => ItemType<LavaLens>();
-        public override MagikeTileEntity GetEntityInstance() => GetInstance<LavaLensTileEntity>();
+        public override MagikeTP GetEntityInstance() => GetInstance<LavaLensTileEntity>();
 
         public override MALevel[] GetAllLevels()
         {

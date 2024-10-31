@@ -84,7 +84,7 @@ namespace Coralite.Content.Items.MagikeSeries2
                     case 0:
                         if (MagikeConnectUI.visible)
                             MagikeConnectUI.visible = false;
-                        else if (MagikeHelper.TryGetEntityWithComponent<MagikeLinerSender>(pos.X, pos.Y, MagikeComponentID.MagikeSender, out MagikeTileEntity entity1))    //找到了
+                        else if (MagikeHelper.TryGetEntityWithComponent<MagikeLinerSender>(pos.X, pos.Y, MagikeComponentID.MagikeSender, out MagikeTP entity1))    //找到了
                         {
                             MagikeLinerSender senderComponent = entity1.GetSingleComponent<MagikeLinerSender>(MagikeComponentID.MagikeSender);
 
@@ -294,7 +294,7 @@ namespace Coralite.Content.Items.MagikeSeries2
                     insertPoint.Add(currentTopLeft.Value);
 
                     //尝试根据左上角获取物块实体
-                    if (!MagikeHelper.TryGetEntityWithComponent<MagikeLinerSender>(currentTopLeft.Value.X, currentTopLeft.Value.Y, MagikeComponentID.MagikeSender, out MagikeTileEntity entity))
+                    if (!MagikeHelper.TryGetEntityWithComponent<MagikeLinerSender>(currentTopLeft.Value.X, currentTopLeft.Value.Y, MagikeComponentID.MagikeSender, out MagikeTP entity))
                         continue;
 
                     //直接加入
@@ -358,13 +358,13 @@ namespace Coralite.Content.Items.MagikeSeries2
                     insertPoint.Add(currentTopLeft.Value);
 
                     //尝试根据左上角获取物块实体
-                    if (!MagikeHelper.TryGetEntity(currentTopLeft.Value, out MagikeTileEntity entity))
+                    if (!MagikeHelper.TryGetEntity(currentTopLeft.Value, out MagikeTP entity))
                         continue;
 
                     //能连接就连一下，不能就提供失败原因
                     foreach (var senderComponent in BrilliantConnectStaff.Senders)
                     {
-                        Point16 pos = (senderComponent.Entity as MagikeTileEntity).Position;
+                        Point16 pos = (senderComponent.Entity as MagikeTP).Position;
                         if (!senderComponent.CanConnect(currentTopLeft.Value, out string failText))
                         {
                             PopupText.NewText(new AdvancedPopupRequest()
@@ -408,7 +408,7 @@ namespace Coralite.Content.Items.MagikeSeries2
                 Point16 currentPoint = new((int)Main.MouseWorld.X / 16, (int)Main.MouseWorld.Y / 16);
                 Vector2 aimPos = currentPoint.ToWorldCoordinates();
 
-                MagikeHelper.TryGetEntity(currentPoint.X, currentPoint.Y, out MagikeTileEntity receiver);
+                MagikeHelper.TryGetEntity(currentPoint.X, currentPoint.Y, out MagikeTP receiver);
 
                 if (receiver != null)
                 {
@@ -418,7 +418,7 @@ namespace Coralite.Content.Items.MagikeSeries2
 
                 foreach (var sender in BrilliantConnectStaff.Senders)
                 {
-                    Point16 pos = (sender.Entity as MagikeTileEntity).Position;
+                    Point16 pos = (sender.Entity as MagikeTP).Position;
 
                     bool canConnect = sender.CanConnect(currentPoint, out _);
                     Color c = canConnect ? Color.GreenYellow : Color.MediumVioletRed;
@@ -525,7 +525,7 @@ namespace Coralite.Content.Items.MagikeSeries2
                     insertPoint.Add(currentTopLeft.Value);
 
                     //尝试根据左上角获取物块实体
-                    if (!MagikeHelper.TryGetEntityWithComponent<MagikeLinerSender>(currentTopLeft.Value.X, currentTopLeft.Value.Y, MagikeComponentID.MagikeSender, out MagikeTileEntity entity))
+                    if (!MagikeHelper.TryGetEntityWithComponent<MagikeLinerSender>(currentTopLeft.Value.X, currentTopLeft.Value.Y, MagikeComponentID.MagikeSender, out MagikeTP entity))
                         continue;
 
                     //能插入就插，不能就提供失败原因

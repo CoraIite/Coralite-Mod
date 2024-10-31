@@ -1,20 +1,16 @@
 ﻿using Coralite.Core.Systems.CoraliteActorComponent;
+using InnoVault.TileProcessors;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
-using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.MagikeSystem.TileEntities
 {
-    public abstract class MagikeTileEntity : ModTileEntity, IEntity
+    public abstract class MagikeTP : TileProcessor, IEntity
     {
         public const string SaveName = "Component";
-
-        /// <summary> 物块类型 </summary>
-        public abstract ushort TileType { get; }
 
         public HybridDictionary Components { get; private set; }
         public List<Component> ComponentsCache { get; private set; }
@@ -36,27 +32,13 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
             return ((List<Component>)Components[MagikeComponentID.MagikeFilter]).Count < ExtendFilterCapacity;
         }
 
-        public override bool IsTileValidForEntity(int x, int y) => Framing.GetTileSafely(x, y).TileType == TileType;
-
-        public override int Hook_AfterPlacement(int i, int j, int type, int style, int direction, int alternate)
-        {
-            if (Main.netMode == NetmodeID.MultiplayerClient)
-            {
-                NetMessage.SendTileSquare(Main.myPlayer, i, j, TileChangeType.HoneyLava);
-                NetMessage.SendData(MessageID.TileEntityPlacement, -1, -1, null, i, j, Type, 0f, 0, 0, 0);
-                return -1;
-            }
-
-            return Place(i, j);
-        }
-
         public override void Update()
         {
             for (int i = 0; i < ComponentsCache.Count; i++)
                 ComponentsCache[i].Update(this);
         }
 
-        public MagikeTileEntity()
+        public MagikeTP()
         {
             InitializeComponentCache();
             InitializeBeginningComponent();

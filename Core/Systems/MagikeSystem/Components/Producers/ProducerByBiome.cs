@@ -43,7 +43,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Producers
 
         public override bool CanProduce_SpecialCheck()
         {
-            Point16 point = (Entity as MagikeTileEntity).Position;
+            Point16 point = (Entity as MagikeTP).Position;
 
             GetMagikeAlternateData(point.X, point.Y, out TileObjectData data, out MagikeAlternateStyle alternate);
 

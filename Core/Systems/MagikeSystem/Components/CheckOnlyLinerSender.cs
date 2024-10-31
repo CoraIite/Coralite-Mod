@@ -29,7 +29,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public override void Update(IEntity entity)
         {
-            Point16 p = (entity as MagikeTileEntity).Position;
+            Point16 p = (entity as MagikeTP).Position;
             Vector2 size = new Vector2(ConnectLength);
             if (Helper.OnScreen(p.ToWorldCoordinates() - Main.screenPosition - size / 2, new Vector2(ConnectLength)))
                 DrawMagikeDevice.LinerSenders.Add(this);

@@ -43,7 +43,7 @@ namespace Coralite.Content.Items.MagikeSeries1
             }
 
             //左键寻找发送器
-            if (MagikeHelper.TryGetEntityWithComponent<MagikeLinerSender>(pos.X, pos.Y, MagikeComponentID.MagikeSender, out MagikeTileEntity entity))    //找到了
+            if (MagikeHelper.TryGetEntityWithComponent<MagikeLinerSender>(pos.X, pos.Y, MagikeComponentID.MagikeSender, out MagikeTP entity))    //找到了
             {
                 if (player.altFunctionUse == 2)
                 {
@@ -127,13 +127,13 @@ namespace Coralite.Content.Items.MagikeSeries1
             aimPos = currentPoint.ToWorldCoordinates();
 
             if (!MagikeHelper.TryGetEntityWithComponent<MagikeLinerSender>(position.X, position.Y, MagikeComponentID.MagikeSender
-                , out MagikeTileEntity sender))
+                , out MagikeTP sender))
             {
                 Projectile.Kill();
                 return;
             }
 
-            MagikeHelper.TryGetEntity(currentPoint.X, currentPoint.Y, out MagikeTileEntity receiver);
+            MagikeHelper.TryGetEntity(currentPoint.X, currentPoint.Y, out MagikeTP receiver);
 
             if (receiver != null)
             {

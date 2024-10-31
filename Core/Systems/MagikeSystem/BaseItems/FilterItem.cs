@@ -141,7 +141,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
                     insertPoint.Add(currentTopLeft.Value);
 
                     //尝试根据左上角获取物块实体
-                    if (!MagikeHelper.TryGetEntity(currentTopLeft.Value, out MagikeTileEntity entity))
+                    if (!MagikeHelper.TryGetEntity(currentTopLeft.Value, out MagikeTP entity))
                         continue;
 
                     //能插入就插，不能就提供失败原因

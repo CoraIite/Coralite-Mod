@@ -48,7 +48,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 else
                 {
                     //生成粒子
-                    Point16 topleft = (Entity as MagikeTileEntity).Position;
+                    Point16 topleft = (Entity as MagikeTP).Position;
 
                     MagikeHelper.GetMagikeAlternateData(topleft.X, topleft.Y, out var data, out var alternate);
                     Point16 dir = alternate switch
@@ -126,7 +126,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         private Point16? TryFindReceiver(out MagikeContainer targetContainer,out Point16 center)
         {
             targetContainer= null;  
-            Point16 topleft = (Entity as MagikeTileEntity).Position;
+            Point16 topleft = (Entity as MagikeTP).Position;
 
             //获取基础属性，确定寻找的方向
             MagikeHelper.GetMagikeAlternateData(topleft.X, topleft.Y, out var data, out var alternate);
