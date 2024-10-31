@@ -12,206 +12,206 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.UI.MagikeGuideBook
 {
-    public class MagikeGuideBookUI : BetterUIState
-    {
-        /// <summary> 是否可见 </summary>
-        public override bool Visible { get => visible; set => visible = value; }
+    //public class MagikeGuideBookUI : BetterUIState
+    //{
+    //    /// <summary> 是否可见 </summary>
+    //    public override bool Visible { get => visible; set => visible = value; }
 
-        public static MagikeGuideBookPanel BookPanel = new();
-        //public static SwitchArrow leftArrow = new SwitchArrow(SpriteEffects.FlipHorizontally);
-        //public static SwitchArrow rightArrow = new SwitchArrow(SpriteEffects.None);
+    //    public static MagikeGuideBookPanel BookPanel = new();
+    //    //public static SwitchArrow leftArrow = new SwitchArrow(SpriteEffects.FlipHorizontally);
+    //    //public static SwitchArrow rightArrow = new SwitchArrow(SpriteEffects.None);
          
-        public override int UILayer(List<GameInterfaceLayer> layers) => layers.FindIndex(layer => layer.Name.Equals("Vanilla: Inventory"));
+    //    public override int UILayer(List<GameInterfaceLayer> layers) => layers.FindIndex(layer => layer.Name.Equals("Vanilla: Inventory"));
 
-        /// <summary> 每个目录页能够容纳多少个跳转按钮 </summary>
-        public const int HowManyButtonPerCatalogPage = 14;
-        public bool visible;
-        public bool openingBook;
-        public bool closeingBook;
-        public bool drawExtra;
-        public static Vector2 basePos = new(Main.screenWidth / 2, Main.screenHeight / 2);
-        public Vector2 bookSize;
-        public float bookWidth;
-        public int Timer;
-        public readonly ParticleGroup particles = new();
+    //    /// <summary> 每个目录页能够容纳多少个跳转按钮 </summary>
+    //    public const int HowManyButtonPerCatalogPage = 14;
+    //    public bool visible;
+    //    public bool openingBook;
+    //    public bool closeingBook;
+    //    public bool drawExtra;
+    //    public static Vector2 basePos = new(Main.screenWidth / 2, Main.screenHeight / 2);
+    //    public Vector2 bookSize;
+    //    public float bookWidth;
+    //    public int Timer;
+    //    public readonly ParticleGroup particles = new();
 
-        public MagicCircle magicCircle;
+    //    public MagicCircle magicCircle;
 
-        public override void OnInitialize()
-        {
-            basePos = new Vector2(Main.screenWidth / 2, Main.screenHeight / 2);
-            BookPanel.InitSize();
-            BookPanel.SetPosition(basePos);
-            BookPanel.InitPageGroups();
-            BookPanel.OnScrollWheel += PlaySound;
-            Append(BookPanel);
-        }
+    //    public override void OnInitialize()
+    //    {
+    //        basePos = new Vector2(Main.screenWidth / 2, Main.screenHeight / 2);
+    //        BookPanel.InitSize();
+    //        BookPanel.SetPosition(basePos);
+    //        BookPanel.InitPageGroups();
+    //        BookPanel.OnScrollWheel += PlaySound;
+    //        Append(BookPanel);
+    //    }
 
-        private void PlaySound(UIScrollWheelEvent evt, UIElement listeningElement)
-        {
-            Helper.PlayPitched("Misc/Pages", 0.4f, 0f, Main.LocalPlayer.Center);
-        }
+    //    private void PlaySound(UIScrollWheelEvent evt, UIElement listeningElement)
+    //    {
+    //        Helper.PlayPitched("Misc/Pages", 0.4f, 0f, Main.LocalPlayer.Center);
+    //    }
 
-        public override void Recalculate()
-        {
-            basePos = new Vector2(Main.screenWidth / 2, Main.screenHeight / 2);
-            BookPanel.SetPosition(basePos);
-            base.Recalculate();
-        }
+    //    public override void Recalculate()
+    //    {
+    //        basePos = new Vector2(Main.screenWidth / 2, Main.screenHeight / 2);
+    //        BookPanel.SetPosition(basePos);
+    //        base.Recalculate();
+    //    }
 
-        public override void Update(GameTime gameTime)
-        {
-            if (Main.playerInventory)
-                closeingBook = true;
+    //    public override void Update(GameTime gameTime)
+    //    {
+    //        if (Main.playerInventory)
+    //            closeingBook = true;
 
-            UpdateVisualEffect();
-            if (UpdateOpeningAnmi())
-                UpdateClosingAnmi();
+    //        UpdateVisualEffect();
+    //        if (UpdateOpeningAnmi())
+    //            UpdateClosingAnmi();
 
-            base.Update(gameTime);
-        }
+    //        base.Update(gameTime);
+    //    }
 
-        public void UpdateVisualEffect()
-        {
-            if (!drawExtra)
-                return;
+    //    public void UpdateVisualEffect()
+    //    {
+    //        if (!drawExtra)
+    //            return;
 
-            //更新特效
-            particles.UpdateParticles();
+    //        //更新特效
+    //        particles.UpdateParticles();
 
-            if (magicCircle != null)
-            {
-                magicCircle.Update();
-                if (!magicCircle.active)
-                    magicCircle = null;
-            }
+    //        if (magicCircle != null)
+    //        {
+    //            magicCircle.Update();
+    //            if (!magicCircle.active)
+    //                magicCircle = null;
+    //        }
 
-            if (!openingBook && !particles.Any())
-                drawExtra = false;
-        }
+    //        if (!openingBook && !particles.Any())
+    //            drawExtra = false;
+    //    }
 
-        public bool UpdateOpeningAnmi()
-        {
-            if (!openingBook)
-                return true;
+    //    public bool UpdateOpeningAnmi()
+    //    {
+    //        if (!openingBook)
+    //            return true;
 
-            bookWidth += 25;
-            BookPanel.Width.Set(bookWidth, 0f);
+    //        bookWidth += 25;
+    //        BookPanel.Width.Set(bookWidth, 0f);
 
-            if (bookWidth >= bookSize.X || Timer > 1000)        //超出时跳出
-            {
-                openingBook = false;
-                BookPanel.OverflowHidden = false;
-                BookPanel.Width.Set(bookSize.X, 0f);
+    //        if (bookWidth >= bookSize.X || Timer > 1000)        //超出时跳出
+    //        {
+    //            openingBook = false;
+    //            BookPanel.OverflowHidden = false;
+    //            BookPanel.Width.Set(bookSize.X, 0f);
 
-                base.Recalculate();
-                return true;
-            }
+    //            base.Recalculate();
+    //            return true;
+    //        }
 
-            Timer++;
-            base.Recalculate();
+    //        Timer++;
+    //        base.Recalculate();
 
-            //CalculatedStyle dimensions = BookPanel.GetDimensions();
+    //        //CalculatedStyle dimensions = BookPanel.GetDimensions();
 
-            //particles.Add(new HorizontalStar()
-            //{
-            //    center = dimensions.Position() + new Vector2(bookWidth, Main.rand.Next(0, (int)bookSize.Y)),
-            //    scale = Main.rand.NextFloat(0.1f, 0.7f),
-            //    velocity = new Vector2(Main.rand.NextFloat(0f, 4), 0),
-            //    color = Main.rand.Next(3) switch
-            //    {
-            //        0 => Color.Purple,
-            //        1 => Color.RosyBrown,
-            //        _ => Color.Brown
-            //    }
-            //});
+    //        //particles.Add(new HorizontalStar()
+    //        //{
+    //        //    center = dimensions.Position() + new Vector2(bookWidth, Main.rand.Next(0, (int)bookSize.Y)),
+    //        //    scale = Main.rand.NextFloat(0.1f, 0.7f),
+    //        //    velocity = new Vector2(Main.rand.NextFloat(0f, 4), 0),
+    //        //    color = Main.rand.Next(3) switch
+    //        //    {
+    //        //        0 => Color.Purple,
+    //        //        1 => Color.RosyBrown,
+    //        //        _ => Color.Brown
+    //        //    }
+    //        //});
 
-            return false;
-        }
+    //        return false;
+    //    }
 
-        public void UpdateClosingAnmi()
-        {
-            if (!closeingBook)//关闭书本时的效果
-                return;
+    //    public void UpdateClosingAnmi()
+    //    {
+    //        if (!closeingBook)//关闭书本时的效果
+    //            return;
 
-            BookPanel.alpha -= 0.05f;
-            BookPanel.Top.Pixels += 80;
-            if (BookPanel.alpha < 0.01f)
-            {
-                BookPanel.alpha = 0;
-                closeingBook = false;
-                visible = false;
-                drawExtra = false;
-            }
+    //        BookPanel.alpha -= 0.05f;
+    //        BookPanel.Top.Pixels += 80;
+    //        if (BookPanel.alpha < 0.01f)
+    //        {
+    //            BookPanel.alpha = 0;
+    //            closeingBook = false;
+    //            visible = false;
+    //            drawExtra = false;
+    //        }
 
-            base.Recalculate();
-        }
-
-
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-            if (drawExtra)      //分成两半绘制magicCircle
-            {
-                magicCircle?.DrawFrontCircle(spriteBatch);
-            }
-
-            base.Draw(spriteBatch);
-
-            if (drawExtra)
-            {
-                RasterizerState rasterizerState = spriteBatch.GraphicsDevice.RasterizerState;
-                spriteBatch.End();
-
-                Main.graphics.GraphicsDevice.BlendState = BlendState.NonPremultiplied;
-
-                //绘制特效
-                foreach (var particle in particles)
-                {
-                    if (particle is IDrawParticlePrimitive idpp)
-                        idpp.DrawPrimitives();
-                }
-
-                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.Transform);
-
-                particles.DrawParticles(spriteBatch);
-
-                spriteBatch.End();
-                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.AnisotropicClamp, DepthStencilState.None, rasterizerState, null, Main.UIScaleMatrix);
-
-                magicCircle?.DrawBackCircle(spriteBatch);
-            }
-        }
+    //        base.Recalculate();
+    //    }
 
 
-        public void OpenBook()
-        {
-            Helper.PlayPitched("Stars/StarsSpawn", 0.4f, 0f, Main.LocalPlayer.Center);
-            BookPanel.alpha = 1;
-            BookPanel.OverflowHidden = true;
-            bookSize = BookPanel.PanelTex.Size() * BookPanel.scale;
-            bookWidth = 0;
-            BookPanel.Width.Set(0, 0);
-            Timer = 0;
+    //    public override void Draw(SpriteBatch spriteBatch)
+    //    {
+    //        if (drawExtra)      //分成两半绘制magicCircle
+    //        {
+    //            magicCircle?.DrawFrontCircle(spriteBatch);
+    //        }
 
-            //初始化特效
-            particles.Clear();
-            Vector2 position = BookPanel.GetDimensions().Position();
-            magicCircle = new MagicCircle(bookSize.X + 50, (bookSize.Y / 2) + 40)
-            {
-                center = position + new Vector2(25, bookSize.Y / 2),
-                color = Color.White,
-                velocity = new Vector2(25, 0),
-            };
+    //        base.Draw(spriteBatch);
 
-            //particles.Add(FlashLine.Spawn(position + new Vector2(80, bookSize.Y / 2),
-            //    new Vector2(20, 0), bookSize.X - 240, (bookSize.Y / 2) - 100));
+    //        if (drawExtra)
+    //        {
+    //            RasterizerState rasterizerState = spriteBatch.GraphicsDevice.RasterizerState;
+    //            spriteBatch.End();
 
-            openingBook = true;
-            closeingBook = false;
-            visible = true;
-            drawExtra = true;
-        }
-    }
+    //            Main.graphics.GraphicsDevice.BlendState = BlendState.NonPremultiplied;
+
+    //            //绘制特效
+    //            foreach (var particle in particles)
+    //            {
+    //                if (particle is IDrawParticlePrimitive idpp)
+    //                    idpp.DrawPrimitives();
+    //            }
+
+    //            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.Transform);
+
+    //            particles.DrawParticles(spriteBatch);
+
+    //            spriteBatch.End();
+    //            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.AnisotropicClamp, DepthStencilState.None, rasterizerState, null, Main.UIScaleMatrix);
+
+    //            magicCircle?.DrawBackCircle(spriteBatch);
+    //        }
+    //    }
+
+
+    //    public void OpenBook()
+    //    {
+    //        Helper.PlayPitched("Stars/StarsSpawn", 0.4f, 0f, Main.LocalPlayer.Center);
+    //        BookPanel.alpha = 1;
+    //        BookPanel.OverflowHidden = true;
+    //        bookSize = BookPanel.PanelTex.Size() * BookPanel.scale;
+    //        bookWidth = 0;
+    //        BookPanel.Width.Set(0, 0);
+    //        Timer = 0;
+
+    //        //初始化特效
+    //        particles.Clear();
+    //        Vector2 position = BookPanel.GetDimensions().Position();
+    //        magicCircle = new MagicCircle(bookSize.X + 50, (bookSize.Y / 2) + 40)
+    //        {
+    //            center = position + new Vector2(25, bookSize.Y / 2),
+    //            color = Color.White,
+    //            velocity = new Vector2(25, 0),
+    //        };
+
+    //        //particles.Add(FlashLine.Spawn(position + new Vector2(80, bookSize.Y / 2),
+    //        //    new Vector2(20, 0), bookSize.X - 240, (bookSize.Y / 2) - 100));
+
+    //        openingBook = true;
+    //        closeingBook = false;
+    //        visible = true;
+    //        drawExtra = true;
+    //    }
+    //}
 
 
     public class MagicCircle

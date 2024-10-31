@@ -1,31 +1,21 @@
 ﻿using Coralite.Core.Systems.KeySystem;
-using Coralite.Core.Systems.MTBStructure;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Coralite.Core.Loaders
 {
     public class KeyKnowledgeLoader
     {
-        internal static IList<KeyKnowledge> knowledges;
-        internal static int knowledgeCount { get; private set; } = 0;
+        internal static List<KeyKnowledge> knowledges;
 
-        /// <summary>
-        /// 根据类型获取
-        /// </summary>
-        /// <param name="type"></param>
-        /// <returns></returns>
-        public static KeyKnowledge GetMTBStructure(int type)
-                 => type < knowledgeCount ? knowledges[type] : null;
+        internal static void SetUp()
+        {
+            knowledges.Sort((k1, k2) => k1.Type.CompareTo(k2.Type));
 
-        /// <summary>
-        /// 设置ID
-        /// </summary>
-        /// <returns></returns>
-        public static int ReserveMTBStructureID() => knowledgeCount++;
+            foreach (var knowledge in knowledges)
+            {
+                knowledge.SetUp();
+            }
+        }
 
         internal static void Unload()
         {
@@ -36,8 +26,6 @@ namespace Coralite.Core.Loaders
 
             knowledges.Clear();
             knowledges = null;
-            knowledgeCount = 0;
         }
-
     }
 }

@@ -218,7 +218,12 @@ namespace Coralite.Core
         public const string MagikeGuideBook = UI + "MagikeGuideBook/";
         public const string MagikeUI = UI + "MagikeUI/";
         public const string WorldIcon = UI + "WorldIcon/";
-        public const string KeyKnowledgeIcon = UI + "KeyKnowledgeIcons/";
+
+        public const string CoraliteNote = UI + "CoraliteNote/";
+
+
+        public const string KeyKnowledgeIcon = CoraliteNote + "KeyKnowledgeIcons/";
+        public const string NoteReadfragment = CoraliteNote + "Readfragment/";
 
         #endregion
 

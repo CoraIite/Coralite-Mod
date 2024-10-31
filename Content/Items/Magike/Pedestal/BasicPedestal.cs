@@ -15,11 +15,6 @@ namespace Coralite.Content.Items.Magike.Pedestal
     public class BasicPedestal() : MagikeApparatusItem(TileType<BasicPedestalTile>(), Item.sellPrice(silver: 5)
         , RarityType<MagicCrystalRarity>(), AssetDirectory.MagikePedestals)
     {
-        public override bool CanUseItem(Player player)
-        {
-            return true;
-        }
-
         public override void AddRecipes()
         {
             CreateRecipe()

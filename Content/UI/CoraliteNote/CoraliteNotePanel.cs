@@ -15,6 +15,7 @@ namespace Coralite.Content.UI.CoraliteNote
 
         public override void InitPageGroups()
         {
+            pageGroups = [];
         }
     }
 }
