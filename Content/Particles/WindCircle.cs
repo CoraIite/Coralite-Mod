@@ -19,14 +19,19 @@ namespace Coralite.Content.Particles
             }
         }
 
-        public static WindCircle Spawn(Vector2 center, Vector2 velocity, float rotation, Color newcolor, float alpha, float Basescale, Vector2 exScale)
+        public static void Spawn(Vector2 center, Vector2 velocity, float rotation, Color newcolor, float alpha, float Basescale, Vector2 exScale)
         {
+            if (CLUtils.isServer)
+            {
+                return;
+            }
             newcolor.A = (byte)(255 * alpha);
             WindCircle p = NewParticle<WindCircle>(center, velocity, newcolor, Basescale);
-            p.Rotation = rotation;
-            p.scale = exScale;
-
-            return p;
+            if (p != null)
+            {
+                p.Rotation = rotation;
+                p.scale = exScale;
+            }
         }
 
         public override void Draw(SpriteBatch spriteBatch)

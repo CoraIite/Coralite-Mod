@@ -42,7 +42,12 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                         SetDirection();
                         movePhase = 1;
                         Timer = 0;
-                        Particle.NewParticle(NPC.Center, Vector2.Zero, CoraliteContent.ParticleType<Sparkle_Big>(), Coralite.IcicleCyan, 0.8f);
+
+                        if (!CLUtils.isServer)
+                        {
+                            Particle.NewParticle(NPC.Center, Vector2.Zero, CoraliteContent.ParticleType<Sparkle_Big>(), Coralite.IcicleCyan, 0.8f);
+                        }
+                        
                         SoundEngine.PlaySound(CoraliteSoundID.IceMagic_Item28, NPC.Center);
                         NPC.velocity = (Target.Center - NPC.Center).SafeNormalize(Vector2.Zero) * 8;
                         NPC.rotation = NPC.velocity.ToRotation() + (NPC.direction > 0 ? 0 : 3.14f);
@@ -111,19 +116,22 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             }
 
                             //生成龙卷风粒子
-                            if ((int)Timer % 2 == 0)
+                            if (!CLUtils.isServer)
                             {
-                                Dust dust = Dust.NewDustPerfect(NPC.Center + Main.rand.NextVector2Circular(32, 32), DustID.FrostStaff, -NPC.velocity * 0.3f, Scale: Main.rand.NextFloat(1.8f, 2f));
-                                dust.noGravity = true;
-                            }
+                                if ((int)Timer % 2 == 0)
+                                {
+                                    Dust dust = Dust.NewDustPerfect(NPC.Center + Main.rand.NextVector2Circular(32, 32), DustID.FrostStaff, -NPC.velocity * 0.3f, Scale: Main.rand.NextFloat(1.8f, 2f));
+                                    dust.noGravity = true;
+                                }
 
-                            Color tornadoColor = Main.rand.Next(3) switch
-                            {
-                                0 => new Color(217, 248, 255, 200),
-                                1 => new Color(120, 211, 231, 200),
-                                _ => new Color(252, 255, 255, 200)
-                            };
-                            Tornado.Spawn(NPC.Center + (NPC.velocity * 8), NPC.velocity * 0.05f, tornadoColor, 60, NPC.velocity.ToRotation(), Main.rand.NextFloat(0.5f, 0.6f));
+                                Color tornadoColor = Main.rand.Next(3) switch
+                                {
+                                    0 => new Color(217, 248, 255, 200),
+                                    1 => new Color(120, 211, 231, 200),
+                                    _ => new Color(252, 255, 255, 200)
+                                };
+                                Tornado.Spawn(NPC.Center + (NPC.velocity * 8), NPC.velocity * 0.05f, tornadoColor, 60, NPC.velocity.ToRotation(), Main.rand.NextFloat(0.5f, 0.6f));
+                            }
 
                             break;
                         }

@@ -127,6 +127,11 @@ namespace Coralite.Content.UI.UILib
         {
             Elements.Clear();
 
+            if (pageGroups is null)
+            {
+                return;
+            }
+
             for (int i = 0; i < pageGroups.Length; i++)//刷新一下
             {
                 if (!pageGroups[i].CanShowInBook)

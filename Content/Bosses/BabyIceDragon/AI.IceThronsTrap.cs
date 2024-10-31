@@ -67,9 +67,13 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                                 NPC.frame.Y = 1;
                                 SoundEngine.PlaySound(CoraliteSoundID.Roar, NPC.Center);
                                 GetMouseCenter(out _, out Vector2 mouseCenter);
-                                Particle.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.1f);
-                                PunchCameraModifier modifier = new(NPC.Center, new Vector2(0.8f, 0.8f), 5f, 20f, 40, 1000f, "BabyIceDragon");
-                                Main.instance.CameraModifiers.Add(modifier);
+
+                                if (!CLUtils.isServer)
+                                {
+                                    Particle.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.1f);
+                                    PunchCameraModifier modifier = new(NPC.Center, new Vector2(0.8f, 0.8f), 5f, 20f, 40, 1000f, "BabyIceDragon");
+                                    Main.instance.CameraModifiers.Add(modifier);
+                                }
                             }
 
                             if ((int)Timer == 60 && Main.netMode != NetmodeID.MultiplayerClient)        //生成冰刺NPC
@@ -84,15 +88,12 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                                 float rot = Main.rand.NextFloat(MathHelper.TwoPi);
                                 for (int i = 0; i < howMany; i++)
                                 {
-                                    int randomWidth = Main.rand.Next(240, 350);
-                                    Vector2 randomPosition = rot.ToRotationVector2() * randomWidth;
-
-                                    NPC npc = NPC.NewNPCDirect(NPC.GetSource_FromAI(), Target.Center + randomPosition,
-                                        ModContent.NPCType<IceThornsTrap>());
-                                    for (int j = 0; j < 2; j++)
-                                        IceStarLight.Spawn(mouseCenter,
-                                            (npc.Center - NPC.Center).SafeNormalize(Vector2.One).RotatedBy(Main.rand.NextFloat(-0.5f, 0.5f)) * 10,
-                                            1f, () => npc.Center, 16);
+                                    if (!CLUtils.isClient)
+                                    {
+                                        int randomWidth = Main.rand.Next(240, 350);
+                                        Vector2 randomPosition = rot.ToRotationVector2() * randomWidth;
+                                        NPC.NewNPCDirect(NPC.GetSource_FromAI(), Target.Center + randomPosition,ModContent.NPCType<IceThornsTrap>());
+                                    }
 
                                     rot += MathHelper.TwoPi / howMany;
                                 }

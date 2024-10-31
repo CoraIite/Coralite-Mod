@@ -7,6 +7,7 @@ using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -23,6 +24,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
         public override string Texture => AssetDirectory.ThunderveinDragon + Name;
 
         private Player Target => Main.player[NPC.target];
+        private bool spwan;
 
         internal ref float Phase => ref NPC.ai[0];
         internal ref float State => ref NPC.ai[1];
@@ -80,6 +82,22 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         #region tmlHooks
 
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(NPC.localAI[0]);
+            writer.Write(NPC.localAI[1]);
+            writer.Write(NPC.localAI[2]);
+            writer.Write(NPC.localAI[3]);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            NPC.localAI[0] = reader.ReadSingle();
+            NPC.localAI[1] = reader.ReadSingle();
+            NPC.localAI[2] = reader.ReadSingle();
+            NPC.localAI[3] = reader.ReadSingle();
+        }
+
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[Type] = 8;
@@ -106,6 +124,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
             NPC.BossBar = ModContent.GetInstance<ThunderveinDragonBossBar>();
             ModContent.GetInstance<ThunderveinDragonBossBar>().Reset(NPC);
+            InitOldFrame();
 
             //BGM：暂无
             //if (!Main.dedServ)
@@ -313,17 +332,23 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             StygianThunder
         }
 
-        public override void OnSpawn(IEntitySource source)
-        {
-            ResetAllOldCaches();
-            Phase = 1;
-            State = (int)AIStates.onSpawnAnmi;
-            if (!SkyManager.Instance["ThunderveinSky"].IsActive())//如果这个天空没激活
-                SkyManager.Instance.Activate("ThunderveinSky");
-        }
-
         public override void AI()
         {
+            if (!spwan)
+            {
+                ResetAllOldCaches();
+                Phase = 1;
+                State = (int)AIStates.onSpawnAnmi;
+                NPC.netUpdate = true;
+
+                if (!CLUtils.isServer && !SkyManager.Instance["ThunderveinSky"].IsActive())//如果这个天空没激活
+                {
+                    SkyManager.Instance.Activate("ThunderveinSky");
+                }
+                
+                spwan = true;
+            }
+
             ThunderveinPurpleAlpha = new Color(135, 94, 255, 0);
             if (NPC.target < 0 || NPC.target == 255 || Target.dead || !Target.active || Target.Distance(NPC.Center) > 3000 || !Target.ZoneSnow)
             {
@@ -436,7 +461,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
         {
             oldSpriteDirection = NPC.spriteDirection;
 
-            if (currentSurrounding && Main.rand.NextBool(3))
+            if (!CLUtils.isServer && currentSurrounding && Main.rand.NextBool(3))
             {
                 Vector2 offset = Main.rand.NextVector2Circular(100 * NPC.scale, 70 * NPC.scale);
                 ElectricParticle_Follow.Spawn(NPC.Center, offset, () => NPC.Center, Main.rand.NextFloat(0.75f, 1f));
@@ -489,6 +514,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             SonState++;
                             Timer = 0;
                             //生成名称
+                            if (!CLUtils.isClient)
                             NPC.NewProjectileDirectInAI<ThunderveinDragon_OnSpawnAnim>(NPC.Center, Vector2.Zero, 1, 0, NPC.target);
                         }
                     }
@@ -525,7 +551,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             Helper.PlayPitched(CoraliteSoundID.LightningOrb_Item121, NPC.Center, pitch: 0.4f);
                             SoundEngine.PlaySound(CoraliteSoundID.Roar, NPC.Center);
                         }
-                        else if (Timer > 15 && Timer < 130)
+                        else if (Timer > 15 && Timer < 130 && !CLUtils.isServer)
                         {
                             Vector2 pos = NPC.Center + (NPC.rotation.ToRotationVector2() * 60 * NPC.Center);
                             if ((int)Timer % 10 == 0)
@@ -558,15 +584,18 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             }
             else
             {
-                for (int i = 0; i < 30; i++)
+                if (!CLUtils.isServer)
                 {
-                    float factor = i / 30f;
-                    float length = Helper.Lerp(80, 400, factor);
-
-                    for (int j = 0; j < 5; j++)
+                    for (int i = 0; i < 30; i++)
                     {
-                        Particle.NewParticle(NPC.Center + Main.rand.NextVector2CircularEdge(length, length),
-                            Vector2.Zero, CoraliteContent.ParticleType<ElectricParticle_Purple>(), Scale: Main.rand.NextFloat(0.9f, 1.3f));
+                        float factor = i / 30f;
+                        float length = Helper.Lerp(80, 400, factor);
+
+                        for (int j = 0; j < 5; j++)
+                        {
+                            Particle.NewParticle(NPC.Center + Main.rand.NextVector2CircularEdge(length, length),
+                                Vector2.Zero, CoraliteContent.ParticleType<ElectricParticle_Purple>(), Scale: Main.rand.NextFloat(0.9f, 1.3f));
+                        }
                     }
                 }
 
@@ -657,9 +686,13 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         //移除上次使用的招式
                         moves.RemoveAll(i => i == oldState);
 
-                        //随机一个招式出来
-                        State = Main.rand.NextFromList(moves.ToArray());
-                        //State = (int)AIStates.LightningRaid;
+                        if (!CLUtils.isClient)
+                        {
+                            //随机一个招式出来
+                            State = Main.rand.NextFromList(moves.ToArray());
+                            //State = (int)AIStates.LightningRaid;
+                            NPC.netUpdate = true;
+                        }
                     }
                     break;
                 case 2:
@@ -694,9 +727,13 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         //移除上次使用的招式
                         moves.RemoveAll(i => i == oldState);
 
-                        //随机一个招式出来
-                        State = Main.rand.NextFromList(moves.ToArray());
-                        //State = (int)AIStates.LightningBreath;
+                        if (!CLUtils.isClient)
+                        {
+                            //随机一个招式出来
+                            State = Main.rand.NextFromList(moves.ToArray());
+                            //State = (int)AIStates.LightningBreath;
+                            NPC.netUpdate = true;
+                        }
 
                         UseMoveCount++;
                         //如果使用了引力雷球那么重置计时
@@ -884,6 +921,10 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public static void SetBackgroundLight(float light, int fadeTime, int exchangeTime = 5)
         {
+            if (CLUtils.isServer)
+            {
+                return;
+            }
             ThunderveinSky sky = (ThunderveinSky)SkyManager.Instance["ThunderveinSky"];
             sky.ExchangeTime = sky.MaxExchangeTime = exchangeTime;
             sky.targetLight = light;
@@ -893,6 +934,10 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public static void UpdateSky()
         {
+            if (CLUtils.isServer)
+            {
+                return;
+            }
             ThunderveinSky sky = (ThunderveinSky)SkyManager.Instance["ThunderveinSky"];
             if (sky.Timeleft < 100)
                 sky.Timeleft += 2;
@@ -902,6 +947,10 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public void InitOldFrame()
         {
+            if (CLUtils.isServer)
+            {
+                return;
+            }
             oldFrame ??= new Point[trailCacheLength];
             for (int i = 0; i < trailCacheLength; i++)
                 oldFrame[i] = new Point(NPC.frame.X, NPC.frame.Y);
@@ -909,6 +958,10 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public void InitOldDirection()
         {
+            if (CLUtils.isServer)
+            {
+                return;
+            }
             oldDirection ??= new int[trailCacheLength];
             for (int i = 0; i < trailCacheLength; i++)
                 oldDirection[i] = NPC.spriteDirection;
@@ -916,6 +969,10 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public void UpdateOldFrame()
         {
+            if (CLUtils.isServer)
+            {
+                return;
+            }
             for (int i = 0; i < oldFrame.Length - 1; i++)
                 oldFrame[i] = oldFrame[i + 1];
             oldFrame[^1] = new Point(NPC.frame.X, NPC.frame.Y);
@@ -923,6 +980,10 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public void UpdateOldDirection()
         {
+            if (CLUtils.isServer)
+            {
+                return;
+            }
             for (int i = 0; i < oldDirection.Length - 1; i++)
                 oldDirection[i] = oldDirection[i + 1];
             oldDirection[^1] = NPC.spriteDirection;
@@ -930,6 +991,10 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public void ResetAllOldCaches()
         {
+            if (CLUtils.isServer)
+            {
+                return;
+            }
             NPC.InitOldPosCache(trailCacheLength);
             NPC.InitOldRotCache(trailCacheLength);
             InitOldFrame();
@@ -938,6 +1003,10 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public void UpdateAllOldCaches()
         {
+            if (CLUtils.isServer)
+            {
+                return;
+            }
             NPC.UpdateOldPosCache();
             NPC.UpdateOldRotCache();
             UpdateOldFrame();

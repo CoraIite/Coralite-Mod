@@ -183,9 +183,12 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     Color c = Main.rand.NextFromList(AquamarineProj.brightC, AquamarineProj.highlightC, Main.DiscoColor);
                     LightLine ll = LightLine.Spwan(Projectile.Center + ((Projectile.rotation + MathHelper.PiOver2).ToRotationVector2() * 10), Vector2.Zero, c,
                        null, Main.rand.NextFloat(0.1f, 0.4f), Main.rand.NextFloat(0.1f, 0.4f));
-                    ll.fadeTime = Main.rand.Next(15, 25);
-                    ll.center = () => Projectile.Center + ((Projectile.rotation + MathHelper.PiOver2).ToRotationVector2() * 10);
-                    ll.scaleY = Main.rand.NextFloat(0.2f, 0.6f);
+                    if (ll != null)
+                    {
+                        ll.fadeTime = Main.rand.Next(15, 25);
+                        ll.center = () => Projectile.Center + ((Projectile.rotation + MathHelper.PiOver2).ToRotationVector2() * 10);
+                        ll.scaleY = Main.rand.NextFloat(0.2f, 0.6f);
+                    }
                 }
 
                 Projectile.rotation = MathF.Sin((1 - (AttackTime / Owner.itemTimeMax)) * MathHelper.TwoPi) * 0.5f;

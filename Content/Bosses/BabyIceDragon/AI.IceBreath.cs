@@ -68,13 +68,17 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                         {
                             SoundEngine.PlaySound(CoraliteSoundID.IceMagic_Item28, NPC.Center);
                             GetMouseCenter(out _, out Vector2 mouseCenter2);
-                            for (int i = 0; i < 4; i++)
-                                IceStarLight.Spawn(NPC.Center + Main.rand.NextVector2CircularEdge(100, 100), Main.rand.NextVector2CircularEdge(3, 3), 1f, () =>
-                                {
-                                    return NPC.Center + ((NPC.rotation + (NPC.direction > 0 ? 0f : 3.141f)).ToRotationVector2() * 30);
-                                }, 16);
-                            Particle.NewParticle(mouseCenter2, Vector2.Zero, CoraliteContent.ParticleType<IceBurstHalo_Reverse>(), Scale: 0.8f);
-                            Particle.NewParticle(mouseCenter2, Vector2.Zero, CoraliteContent.ParticleType<IceBurstHalo_Reverse>(), Scale: 1.2f);
+
+                            if (!CLUtils.isServer)
+                            {
+                                for (int i = 0; i < 4; i++)
+                                    IceStarLight.Spawn(NPC.Center + Main.rand.NextVector2CircularEdge(100, 100), Main.rand.NextVector2CircularEdge(3, 3), 1f, () =>
+                                    {
+                                        return NPC.Center + ((NPC.rotation + (NPC.direction > 0 ? 0f : 3.141f)).ToRotationVector2() * 30);
+                                    }, 16);
+                                Particle.NewParticle(mouseCenter2, Vector2.Zero, CoraliteContent.ParticleType<IceBurstHalo_Reverse>(), Scale: 0.8f);
+                                Particle.NewParticle(mouseCenter2, Vector2.Zero, CoraliteContent.ParticleType<IceBurstHalo_Reverse>(), Scale: 1.2f);
+                            }
                         }
 
                         if (Timer < 30)
@@ -89,11 +93,13 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                                 Vector2 targetDir = (Target.Center + Main.rand.NextVector2CircularEdge(30, 30) - NPC.Center).SafeNormalize(Vector2.Zero);
                                 GetMouseCenter(out _, out Vector2 mouseCenter);
                                 if (Main.netMode != NetmodeID.MultiplayerClient)
+                                {
                                     for (int i = -1; i < 1; i++)
                                     {
                                         int damage = Helper.GetProjDamage(40, 65, 90);
                                         Projectile.NewProjectile(NPC.GetSource_FromAI(), mouseCenter, targetDir.RotatedBy(i * 0.05f) * 10f, ModContent.ProjectileType<IceBreath>(), damage, 5f);
                                     }
+                                }  
                             }
                             break;
                         }

@@ -17,12 +17,21 @@ namespace Coralite.Content.Bosses.GodOfWind
         /// </summary>
         public int HeadIndex;
 
+        private void IndexOutOfRangeNPCStateErrorFunc()
+        {
+            Coralite.Instance.Logger.Info($"IndexOutOfRange ERROR: {NPC} 在检测前体节实体时发生数组越界，PrePartIndex值为:{PrePartIndex}");
+            PrePartIndex = 1;
+            NPC.active = false;
+        }
+
         public NPC PrePart
         {
             get
             {
                 if (PrePartIndex > 200 || PrePartIndex < 0)
-                    throw new Exception("IndexOutOfRange, 请检测是否会越界");
+                {
+                    IndexOutOfRangeNPCStateErrorFunc();
+                }
 
                 return Main.npc[PrePartIndex];
             }
@@ -32,7 +41,9 @@ namespace Coralite.Content.Bosses.GodOfWind
             get
             {
                 if (HeadIndex > 200 || HeadIndex < 0)
-                    throw new Exception("IndexOutOfRange, 请检测是否会越界");
+                {
+                    IndexOutOfRangeNPCStateErrorFunc();
+                }
 
                 return Main.npc[HeadIndex];
             }

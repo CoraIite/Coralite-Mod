@@ -1,4 +1,5 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Items.Icicle;
+using Coralite.Core;
 using Coralite.Helpers;
 using Terraria;
 using Terraria.DataStructures;
@@ -9,6 +10,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
     public class IceyCloud : ModProjectile
     {
         public override string Texture => AssetDirectory.BabyIceDragon + Name;
+        private bool spwan;
 
         public override void SetStaticDefaults()
         {
@@ -42,6 +44,33 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
         public override void AI()
         {
+            if (!spwan)
+            {
+                if (!CLUtils.isServer)
+                {
+                    NPC boss = null;
+                    foreach (var npc in Main.ActiveNPCs)
+                    {
+                        if (!npc.active || npc.type != ModContent.NPCType<BabyIceDragon>())
+                        {
+                            continue;
+                        }
+                        boss = npc;
+                    }
+                    if (boss != null)
+                    {
+                        ((BabyIceDragon)boss.ModNPC).GetMouseCenter(out _, out Vector2 mouseCenter);
+
+                        for (int j = 0; j < 2; j++)
+                            IceStarLight.Spawn(mouseCenter,
+                                (Projectile.Center - boss.Center).SafeNormalize(Vector2.One).RotatedBy(Main.rand.NextFloat(-0.5f, 0.5f)) * 10,
+                                1f, () => Projectile.Center, 16);
+                    }
+                }
+
+                spwan = true;
+            }
+
             Projectile.UpdateFrameNormally(5, 5);
 
             if (Projectile.localAI[0] == 0)

@@ -113,7 +113,7 @@ namespace Coralite.Content.Evevts.ShadowCastle
 
                             int delay = 40 - (int)(25 * MathHelper.Clamp(Timer / (60 * 35), 0, 1));
 
-                            if (Timer % delay == 0)
+                            if (Timer % delay == 0 && Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 Vector2 pos = Projectile.Center +
                                     (Main.rand.NextBool(10) ?
@@ -171,7 +171,7 @@ namespace Coralite.Content.Evevts.ShadowCastle
 
                             int delay2 = 45 - (int)(25 * MathHelper.Clamp(Timer / (60 * 30), 0, 1));
 
-                            if (Timer % delay2 == 0)
+                            if (Timer % delay2 == 0 && Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 Vector2 pos = Projectile.Center + Helper.NextVec2Dir(450, 700);
                                 Projectile.NewProjectileFromThis(pos, new Vector2(0, Main.rand.NextFloat(3f, 5)), ModContent.ProjectileType<BlackStarProj>(),
@@ -217,7 +217,7 @@ namespace Coralite.Content.Evevts.ShadowCastle
 
                             int delay = 50 - (int)(30 * MathHelper.Clamp(Timer / (60 * 15), 0, 1));
 
-                            if (Timer % delay == 0)
+                            if (Timer % delay == 0 && Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 Vector2 pos = Projectile.Center +
                                     (Main.rand.NextBool(10) ?
@@ -229,7 +229,7 @@ namespace Coralite.Content.Evevts.ShadowCastle
 
                             int delay2 = 45 - (int)(20 * MathHelper.Clamp(Timer / (60 * 15), 0, 1));
 
-                            if (Timer % delay2 == 0)
+                            if (Timer % delay2 == 0 && Main.netMode != NetmodeID.MultiplayerClient)
                             {
                                 Vector2 pos = Projectile.Center + Helper.NextVec2Dir(450, 700);
                                 Projectile.NewProjectileFromThis(pos, new Vector2(0, Main.rand.NextFloat(3f, 6)), ModContent.ProjectileType<BlackStarProj>(),

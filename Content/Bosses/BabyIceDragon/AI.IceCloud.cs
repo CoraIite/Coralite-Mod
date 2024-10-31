@@ -65,24 +65,22 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             NPC.frame.Y = 1;
                             SoundEngine.PlaySound(CoraliteSoundID.Roar, NPC.Center);
                             GetMouseCenter(out _, out Vector2 mouseCenter);
-                            Particle.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.1f);
-                            PunchCameraModifier modifier = new(NPC.Center, new Vector2(0.8f, 0.8f), 5f, 20f, 40, 1000f, "BabyIceDragon");
-                            Main.instance.CameraModifiers.Add(modifier);
+
+                            if (!CLUtils.isServer)
+                            {
+                                Particle.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.1f);
+                                PunchCameraModifier modifier = new(NPC.Center, new Vector2(0.8f, 0.8f), 5f, 20f, 40, 1000f, "BabyIceDragon");
+                                Main.instance.CameraModifiers.Add(modifier);
+                            }
                         }
 
-                        if ((int)Timer == 60 && Main.netMode != NetmodeID.MultiplayerClient)        //生成冰云NPC
+                        if (!CLUtils.isClient && (int)Timer == 60)        //生成冰云NPC
                         {
                             Projectile proj = Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), Target.Center + new Vector2(Main.rand.Next(-80, 80), -300),
                                 Vector2.Zero, ModContent.ProjectileType<IceyCloud>(), 1, 1, NPC.target);
-                            GetMouseCenter(out _, out Vector2 mouseCenter);
-
-                            for (int j = 0; j < 2; j++)
-                                IceStarLight.Spawn(mouseCenter,
-                                    (proj.Center - NPC.Center).SafeNormalize(Vector2.One).RotatedBy(Main.rand.NextFloat(-0.5f, 0.5f)) * 10,
-                                    1f, () => proj.Center, 16);
                         }
 
-                        if (Timer < 90)
+                        if (!CLUtils.isServer && Timer < 90)
                         {
                             GetMouseCenter(out _, out Vector2 mouseCenter);
                             if ((int)Timer % 10 == 0)

@@ -39,14 +39,19 @@ namespace Coralite.Content.Particles
         }
 
 
-        public static Particle Spawn(Vector2 center, Vector2 velocity, Color color, float fadeIn, float rotation, float scale = 1f)
+        public static void Spawn(Vector2 center, Vector2 velocity, Color color, float fadeIn, float rotation, float scale = 1f)
         {
+            if (CLUtils.isServer)
+            {
+                return;
+            }
             Tornado particle = NewParticle<Tornado>(center, velocity, color, scale);
-            particle.fadeIn = fadeIn;
-            particle.Rotation = rotation + 1.57f;
-            particle.time = fadeIn - 10f;
-
-            return particle;
+            if (particle != null)
+            {
+                particle.fadeIn = fadeIn;
+                particle.Rotation = rotation + 1.57f;
+                particle.time = fadeIn - 10f;
+            }
         }
     }
 }

@@ -50,14 +50,19 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                         NPC.rotation = NPC.direction;
                         SetDirection();
                         SoundEngine.PlaySound(CoraliteSoundID.IceMagic_Item28, NPC.Center);
-                        GetMouseCenter(out _, out Vector2 mouseCenter2);
-                        Particle.NewParticle(mouseCenter2, Vector2.Zero, CoraliteContent.ParticleType<IceBurstHalo_Reverse>(), Scale: 0.8f);
-                        Particle.NewParticle(mouseCenter2, Vector2.Zero, CoraliteContent.ParticleType<IceBurstHalo_Reverse>(), Scale: 1.2f);
-                        for (int i = 0; i < 4; i++)
-                            IceStarLight.Spawn(NPC.Center + Main.rand.NextVector2CircularEdge(100, 100), Main.rand.NextVector2CircularEdge(3, 3), 1f, () =>
-                            {
-                                return NPC.Center + ((NPC.rotation + (NPC.direction > 0 ? 0f : 3.141f)).ToRotationVector2() * 30);
-                            }, 16);
+
+                        if (!CLUtils.isServer)
+                        {
+                            GetMouseCenter(out _, out Vector2 mouseCenter2);
+                            Particle.NewParticle(mouseCenter2, Vector2.Zero, CoraliteContent.ParticleType<IceBurstHalo_Reverse>(), Scale: 0.8f);
+                            Particle.NewParticle(mouseCenter2, Vector2.Zero, CoraliteContent.ParticleType<IceBurstHalo_Reverse>(), Scale: 1.2f);
+                            for (int i = 0; i < 4; i++)
+                                IceStarLight.Spawn(NPC.Center + Main.rand.NextVector2CircularEdge(100, 100), Main.rand.NextVector2CircularEdge(3, 3), 1f, () =>
+                                {
+                                    return NPC.Center + ((NPC.rotation + (NPC.direction > 0 ? 0f : 3.141f)).ToRotationVector2() * 30);
+                                }, 16);
+                        }
+                        
                         NPC.netUpdate = true;
                     }
                     break;
@@ -78,9 +83,11 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             NPC.rotation = Math.Clamp(NPC.rotation, -0.45f, 0.45f);
 
                             SetDirection();
+
                             GetMouseCenter(out _, out Vector2 mouseCenter);
                             Vector2 targetDir = (Target.Center - NPC.Center).SafeNormalize(Vector2.One);
-                            if ((int)Timer % 2 == 0)
+
+                            if (!CLUtils.isServer && (int)Timer % 2 == 0)
                                 Particle.NewParticle(mouseCenter, targetDir.RotatedBy(Main.rand.NextFloat(-0.6f, 0.6f)) * 4, CoraliteContent.ParticleType<Fog>(), Color.White, 0.8f);
 
                             if ((int)Timer % 12 == 0 && Main.netMode != NetmodeID.MultiplayerClient)
@@ -110,13 +117,17 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             NPC.frame.X = 1;
                             NPC.frame.Y = 1;
                             SoundEngine.PlaySound(SoundID.Roar, NPC.Center);
-                            GetMouseCenter(out _, out Vector2 mouseCenter);
-                            Particle.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.1f);
-                            PunchCameraModifier modifier = new(NPC.Center, new Vector2(0.8f, 0.8f), 5f, 20f, 40, 1000f, "BabyIceDragon");
-                            Main.instance.CameraModifiers.Add(modifier);
+
+                            if (!CLUtils.isServer)
+                            {
+                                GetMouseCenter(out _, out Vector2 mouseCenter);
+                                Particle.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.1f);
+                                PunchCameraModifier modifier = new(NPC.Center, new Vector2(0.8f, 0.8f), 5f, 20f, 40, 1000f, "BabyIceDragon");
+                                Main.instance.CameraModifiers.Add(modifier);
+                            }
                         }
 
-                        if ((int)Timer % 6 == 0 && Main.netMode != NetmodeID.MultiplayerClient)
+                        if (!CLUtils.isClient && (int)Timer % 6 == 0)
                         {
                             int damage = Helper.GetProjDamage(40, 65, 90);
                             Projectile projectile = Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), Target.Center + new Vector2(Main.rand.Next(-100, 100), -500),
@@ -127,11 +138,14 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
                         if (Timer < 80)
                         {
-                            GetMouseCenter(out _, out Vector2 mouseCenter);
-                            if ((int)Timer % 10 == 0)
-                                Particle.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringWave>(), Color.White, 0.1f);
-                            if ((int)Timer % 20 == 0)
-                                Particle.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.1f);
+                            if (!CLUtils.isServer)
+                            {
+                                GetMouseCenter(out _, out Vector2 mouseCenter);
+                                if ((int)Timer % 10 == 0)
+                                    Particle.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringWave>(), Color.White, 0.1f);
+                                if ((int)Timer % 20 == 0)
+                                    Particle.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.1f);
+                            }
 
                             break;
                         }

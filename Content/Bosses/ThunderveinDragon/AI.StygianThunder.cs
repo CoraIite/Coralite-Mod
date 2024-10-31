@@ -101,8 +101,13 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             currentSurrounding = false;
                             NPC.dontTakeDamage = true;
                             NPC.velocity *= 0;
-                            Recorder = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<ThunderPhantom>(),
+
+                            if (!CLUtils.isClient)
+                            {
+                                Recorder = NPC.NewNPC(NPC.GetSource_FromAI(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<ThunderPhantom>(),
                                   ai0: NPC.whoAmI, Target: NPC.target);
+                                NPC.netUpdate = true;
+                            }
                         }
                     }
                     break;
@@ -148,15 +153,22 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                                 NPC.TargetClosest();
                                 int damage = Helper.GetProjDamage(400, 400, 400);
                                 //生成爆炸弹幕
-                                NPC.NewProjectileDirectInAI<EndThunder>(
+                                if (!CLUtils.isClient)
+                                {
+                                    NPC.NewProjectileDirectInAI<EndThunder>(
                                     NPC.Center + new Vector2(0, -200)
                                     , NPC.Center + new Vector2(0, 800), damage, 0, NPC.target, 20, NPC.whoAmI, 70);
+                                }
 
                                 SoundEngine.PlaySound(CoraliteSoundID.BubbleShield_Electric_NPCHit43, NPC.Center);
                                 SoundEngine.PlaySound(CoraliteSoundID.NoUse_ElectricMagic_Item122, NPC.Center);
                                 SoundEngine.PlaySound(CoraliteSoundID.Thunder, NPC.Center);
-                                var modifyer = new PunchCameraModifier(NPC.Center, Vector2.UnitY * 1.4f, 26, 26, 25, 1000);
-                                Main.instance.CameraModifiers.Add(modifyer);
+
+                                if (!CLUtils.isServer)
+                                {
+                                    var modifyer = new PunchCameraModifier(NPC.Center, Vector2.UnitY * 1.4f, 26, 26, 25, 1000);
+                                    Main.instance.CameraModifiers.Add(modifyer);
+                                }
 
                                 canDrawShadows = true;
                                 currentSurrounding = true;
