@@ -68,12 +68,14 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             return false;
         }
 
-        public static Particle Spawn(Vector2 parentCenter, Vector2 offset, Func<Vector2> GetParentCenter, float scale = 1f)
+        public static void Spawn(Vector2 parentCenter, Vector2 offset, Func<Vector2> GetParentCenter, float scale = 1f)
         {
+            if (CLUtils.isServer)
+            {
+                return;
+            }
             ElectricParticle_Follow p = NewParticle<ElectricParticle_Follow>(parentCenter + offset, offset, Scale: scale);
             p.GetParentCenter = GetParentCenter;
-
-            return p;
         }
     }
 

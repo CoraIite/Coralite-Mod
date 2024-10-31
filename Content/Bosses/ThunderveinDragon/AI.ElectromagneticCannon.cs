@@ -97,14 +97,17 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             Recorder = (Target.Center - NPC.Center).ToRotation();
                         }
 
-                        Vector2 pos2 = NPC.Center + ((NPC.rotation - (NPC.direction * 0.25f)).ToRotationVector2() * 60);
-                        Vector2 dir2 = Recorder.ToRotationVector2();
-                        for (int i = 0; i < 3; i++)
+                        if (!CLUtils.isServer)
                         {
-                            Dust d = Dust.NewDustPerfect(pos2 + (dir2 * Main.rand.NextFloat(20f, 1220f)), DustID.PortalBoltTrail
-                                , dir2.RotateByRandom(-0.3f, 0.3f) * Main.rand.NextFloat(2f, 6f), newColor: new Color(255, 202, 101),
-                                Scale: Main.rand.NextFloat(1f, 1.5f));
-                            d.noGravity = true;
+                            Vector2 pos2 = NPC.Center + ((NPC.rotation - (NPC.direction * 0.25f)).ToRotationVector2() * 60);
+                            Vector2 dir2 = Recorder.ToRotationVector2();
+                            for (int i = 0; i < 3; i++)
+                            {
+                                Dust d = Dust.NewDustPerfect(pos2 + (dir2 * Main.rand.NextFloat(20f, 1220f)), DustID.PortalBoltTrail
+                                    , dir2.RotateByRandom(-0.3f, 0.3f) * Main.rand.NextFloat(2f, 6f), newColor: new Color(255, 202, 101),
+                                    Scale: Main.rand.NextFloat(1f, 1.5f));
+                                d.noGravity = true;
+                            }
                         }
 
                         if (NPC.frame.Y != 4)
@@ -122,12 +125,19 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                                 NPC.TargetClosest();
                                 Vector2 pos = GetMousePos();
                                 int damage = Helper.GetProjDamage(100, 130, 150);
-                                NPC.NewProjectileDirectInAI<ElectromagneticCannon>(pos + (Recorder.ToRotationVector2() * 1800), pos, damage, 0, NPC.target
+
+                                if (!CLUtils.isClient)
+                                    NPC.NewProjectileDirectInAI<ElectromagneticCannon>(pos + (Recorder.ToRotationVector2() * 1800), pos, damage, 0, NPC.target
                                     , burstTime, NPC.whoAmI, 85);
 
                                 Helper.PlayPitched(CoraliteSoundID.PhantasmalDeathray_Zombie104, NPC.Center, pitch: 0.3f);
-                                var modifyer = new PunchCameraModifier(NPC.Center, Recorder.ToRotationVector2() * 2, 24, 20, 20, 1000);
-                                Main.instance.CameraModifiers.Add(modifyer);
+
+                                if (!CLUtils.isServer)
+                                {
+                                    var modifyer = new PunchCameraModifier(NPC.Center, Recorder.ToRotationVector2() * 2, 24, 20, 20, 1000);
+                                    Main.instance.CameraModifiers.Add(modifyer);
+                                }
+                                
                                 canDrawShadows = true;
                                 SetBackgroundLight(0.6f, burstTime * 3 / 4, 14);
 
@@ -152,7 +162,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         shadowAlpha = Helper.Lerp(1f, 0f, factor);
 
                         Timer++;
-                        if (Timer > 0 && Timer % 20 == 0)
+                        if (!CLUtils.isServer && Timer > 0 && Timer % 20 == 0)
                         {
                             var modifyer = new PunchCameraModifier(NPC.Center, Helper.NextVec2Dir(), 7, 12, 20, 1000);
                             Main.instance.CameraModifiers.Add(modifyer);
@@ -175,9 +185,12 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         TurnToNoRot();
 
                         FlyingFrame();
-                        Timer++;
-                        if (Timer > 25)
+
+                        if (++Timer > 25)
+                        {
                             ResetStates();
+                        }
+                            
                     }
                     break;
             }

@@ -84,21 +84,33 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                                 //生成爆炸弹幕
 
                                 NPC.TargetClosest();
-                                int damage = Helper.GetProjDamage(100, 130, 180);
-                                if (Phase == 1)
-                                    NPC.NewProjectileDirectInAI<DischargingBurst>(NPC.Center, Vector2.Zero, damage, 0, NPC.target
-                                        , burstTime, NPC.whoAmI);
-                                else
-                                    NPC.NewProjectileDirectInAI<StrongDischargingBurst>(NPC.Center, Vector2.Zero, damage, 0, NPC.target
-                                        , burstTime, NPC.whoAmI);
+
+                                if (!CLUtils.isClient)
+                                {
+                                    int damage = Helper.GetProjDamage(100, 130, 180);
+                                    if (Phase == 1)
+                                    {
+                                        NPC.NewProjectileDirectInAI<DischargingBurst>(NPC.Center, Vector2.Zero, damage, 0, NPC.target
+                                            , burstTime, NPC.whoAmI);
+                                    }
+                                    else
+                                    {
+                                        NPC.NewProjectileDirectInAI<StrongDischargingBurst>(NPC.Center, Vector2.Zero, damage, 0, NPC.target
+                                            , burstTime, NPC.whoAmI);
+                                    }
+                                }
 
                                 SoundEngine.PlaySound(CoraliteSoundID.NoUse_Electric_Item93, NPC.Center);
                                 SoundEngine.PlaySound(CoraliteSoundID.BigBOOM_Item62, NPC.Center);
                                 canDrawShadows = true;
                                 currentSurrounding = true;
                                 SetBackgroundLight(0.5f, burstTime - 3, 8);
-                                var modifyer = new PunchCameraModifier(NPC.Center, Vector2.UnitY * 1.4f, 26, 26, 25, 1000);
-                                Main.instance.CameraModifiers.Add(modifyer);
+
+                                if (!CLUtils.isServer)
+                                {
+                                    var modifyer = new PunchCameraModifier(NPC.Center, Vector2.UnitY * 1.4f, 26, 26, 25, 1000);
+                                    Main.instance.CameraModifiers.Add(modifyer);
+                                }
 
                                 ResetAllOldCaches();
                             }
@@ -147,6 +159,10 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public void SpawnDischargingDust(float edge)
         {
+            if (!CLUtils.isServer)
+            {
+                return;
+            }
             Vector2 pos = NPC.Center + Main.rand.NextVector2CircularEdge(edge, edge);
             Dust d = Dust.NewDustPerfect(pos, DustID.PortalBoltTrail
                 , (pos - NPC.Center).SafeNormalize(Vector2.Zero).RotatedBy(NPC.direction * MathHelper.PiOver2) * Main.rand.NextFloat(4f, 8f)

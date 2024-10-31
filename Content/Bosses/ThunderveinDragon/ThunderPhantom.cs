@@ -149,7 +149,8 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             Vector2 pos = NPC.Center;
                             int damage = Helper.GetProjDamage(60, 70, 80);
 
-                            NPC.NewProjectileDirectInAI<StrongThunderFalling>(
+                            if (!CLUtils.isClient)
+                                NPC.NewProjectileDirectInAI<StrongThunderFalling>(
                                 pos + new Vector2(0, -Main.rand.Next(170, 320)), pos + new Vector2(0, 750), damage, 0, NPC.target
                                 , 20, NPC.whoAmI, 70);
                         }
@@ -157,13 +158,15 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         {
                             SoundEngine.PlaySound(CoraliteSoundID.NoUse_ElectricMagic_Item122, NPC.Center);
                             int damage = Helper.GetProjDamage(20, 40, 60);
-
-                            for (int i = -1; i < 2; i += 2)
+                            if (!CLUtils.isClient)
                             {
-                                Vector2 pos = NPC.Center + new Vector2(i * (Timer / 12) * PhantomDistance, 0);
-                                NPC.NewProjectileDirectInAI<StrongThunderFalling>(
-                                    pos + new Vector2(0, -Main.rand.Next(170, 320)), pos + new Vector2(0, 750), damage, 0, NPC.target
-                                    , 7, NPC.whoAmI, 70);
+                                for (int i = -1; i < 2; i += 2)
+                                {
+                                    Vector2 pos = NPC.Center + new Vector2(i * (Timer / 12) * PhantomDistance, 0);
+                                    NPC.NewProjectileDirectInAI<StrongThunderFalling>(
+                                        pos + new Vector2(0, -Main.rand.Next(170, 320)), pos + new Vector2(0, 750), damage, 0, NPC.target
+                                        , 7, NPC.whoAmI, 70);
+                                }
                             }
                         }
 

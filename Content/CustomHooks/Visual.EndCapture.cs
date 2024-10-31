@@ -21,11 +21,8 @@ namespace Coralite.Content.CustomHooks
 
         public override void Unload()
         {
-            if (screen != null)
-            {
-                screen.Dispose();
-                screen = null;
-            }
+            On_FilterManager.EndCapture -= FilterManager_EndCapture;
+            screen = null;
         }
 
         private void FilterManager_EndCapture(On_FilterManager.orig_EndCapture orig, FilterManager self, RenderTarget2D finalTexture, RenderTarget2D screenTarget1, RenderTarget2D screenTarget2, Color clearColor)
