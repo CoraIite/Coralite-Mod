@@ -76,23 +76,28 @@ namespace Coralite.Content.Particles
         }
 
 
-        public static FlowLine Spawn(Vector2 center, Vector2 velocity, float trailWidth, int spawnTime, float rotate, Color color = default)
+        public static void Spawn(Vector2 center, Vector2 velocity, float trailWidth, int spawnTime, float rotate, Color color = default)
         {
-            FlowLine particle = NewParticle<FlowLine>(center, velocity, color, 1f);
-            particle.fadeIn = spawnTime;
-            particle.InitOldCenters(spawnTime);
-            particle.trail = new Trail(Main.instance.GraphicsDevice, spawnTime, new NoTip(), factor => trailWidth, factor =>
+            if (CLUtils.isServer)
             {
-                if (factor.X > 0.5f)
-                    return Color.Lerp(particle.color, new Color(0, 0, 0, 0), (factor.X - 0.5f) * 2);
+                return;
+            }
+            FlowLine particle = NewParticle<FlowLine>(center, velocity, color, 1f);
+            if (particle != null)
+            {
+                particle.fadeIn = spawnTime;
+                particle.InitOldCenters(spawnTime);
+                particle.trail = new Trail(Main.instance.GraphicsDevice, spawnTime, new NoTip(), factor => trailWidth, factor =>
+                {
+                    if (factor.X > 0.5f)
+                        return Color.Lerp(particle.color, new Color(0, 0, 0, 0), (factor.X - 0.5f) * 2);
 
-                return Color.Lerp(new Color(0, 0, 0, 0), particle.color, factor.X * 2);
-            });
+                    return Color.Lerp(new Color(0, 0, 0, 0), particle.color, factor.X * 2);
+                });
 
-            particle.spawnTime = spawnTime;
-            particle.rotate = rotate;
-
-            return particle;
+                particle.spawnTime = spawnTime;
+                particle.rotate = rotate;
+            }
         }
     }
 }

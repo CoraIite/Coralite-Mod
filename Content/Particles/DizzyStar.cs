@@ -107,15 +107,20 @@ namespace Coralite.Content.Particles
             trail?.Render(effect);
         }
 
-        public static DizzyStar Spawn(Vector2 center, float rotation, float dizzyTime, float length, GetCenter function)
+        public static void Spawn(Vector2 center, float rotation, float dizzyTime, float length, GetCenter function)
         {
+            if (CLUtils.isServer)
+            {
+                return;
+            }
             DizzyStar particle = NewParticle<DizzyStar>(center, Vector2.Zero);
-            particle.Rotation = rotation;
-            particle.fadeIn = dizzyTime;
-            particle.length = length;
-            particle.centerFunc = function;
-
-            return particle;
+            if (particle != null)
+            {
+                particle.Rotation = rotation;
+                particle.fadeIn = dizzyTime;
+                particle.length = length;
+                particle.centerFunc = function;
+            }
         }
     }
 }

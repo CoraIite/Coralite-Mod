@@ -54,13 +54,18 @@ namespace Coralite.Content.Particles
             }
         }
 
-        public static LightTrailParticle Spawn(Vector2 center, Vector2 velocity, Color newcolor, float scale, Color targetColor = default, int trailCacheCount = 10)
+        public static void Spawn(Vector2 center, Vector2 velocity, Color newcolor, float scale, Color targetColor = default, int trailCacheCount = 10)
         {
+            if (CLUtils.isServer)
+            {
+                return;
+            }
             LightTrailParticle p = NewParticle<LightTrailParticle>(center, velocity, newcolor, scale);
-            p.targetColor = targetColor == default ? new Color(0, 60, 250, 0) : targetColor;
-            p.InitOldCaches(trailCacheCount);
-
-            return p;
+            if (p != null)
+            {
+                p.targetColor = targetColor == default ? new Color(0, 60, 250, 0) : targetColor;
+                p.InitOldCaches(trailCacheCount);
+            }
         }
 
         public override void Draw(SpriteBatch spriteBatch)

@@ -43,13 +43,18 @@ namespace Coralite.Content.Particles
         /// <param name="rotation"></param>
         /// <param name="circleScale"></param>
         /// <returns></returns>
-        public static Particle Spawn(Vector2 center, Color newcolor, float rotation, Vector2 circleScale)
+        public static void Spawn(Vector2 center, Color newcolor, float rotation, Vector2 circleScale)
         {
+            if (CLUtils.isServer)
+            {
+                return;
+            }
             Particle p = NewParticle<LightShotParticle>(center, Vector2.Zero, newcolor, 1);
-
-            p.Rotation = rotation;
-            p.Velocity = circleScale;
-            return p;
+            if (p != null)
+            {
+                p.Rotation = rotation;
+                p.Velocity = circleScale;
+            }
         }
 
         public override void Draw(SpriteBatch spriteBatch)
