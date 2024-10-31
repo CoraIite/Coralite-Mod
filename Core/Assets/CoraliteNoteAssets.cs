@@ -13,7 +13,7 @@ namespace Coralite.Core
 
             internal static void Load()
             {
-                Type t = typeof(Trail);
+                Type t = typeof(ReadFragmant);
 
                 var infos = t.GetProperties(BindingFlags.Public | BindingFlags.Static);
 
@@ -23,7 +23,7 @@ namespace Coralite.Core
 
             internal static void Unload()
             {
-                Type t = typeof(Trail);
+                Type t = typeof(ReadFragmant);
 
                 var infos = t.GetProperties(BindingFlags.Public | BindingFlags.Static);
 
