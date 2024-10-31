@@ -34,6 +34,11 @@ namespace Coralite.Core.Systems.KeySystem
             KeyKnowledgeLoader.knowledges.Add(this);
         }
 
+        public virtual void SetUp()
+        {
+
+        }
+
         public void SaveSelfData(TagCompound tag)
         {
             if (Unlock)

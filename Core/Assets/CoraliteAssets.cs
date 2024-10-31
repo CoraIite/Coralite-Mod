@@ -9,7 +9,7 @@ using ATex = ReLogic.Content.Asset<Microsoft.Xna.Framework.Graphics.Texture2D>;
 
 namespace Coralite.Core
 {
-    public class CoraliteAssets : IOrderedLoadable
+    public partial class CoraliteAssets : IOrderedLoadable
     {
         public float Priority => 1;
 
@@ -388,6 +388,7 @@ namespace Coralite.Core
             Sparkle.Load();
             Halo.Load();
             LightBall.Load();
+            ReadFragmant.Load();
         }
 
         public void Unload()
@@ -400,6 +401,7 @@ namespace Coralite.Core
             Sparkle.Unload();
             Halo.Unload();
             LightBall.Unload();
+            ReadFragmant.Unload();
         }
 
         private static ATex Get(string path)
