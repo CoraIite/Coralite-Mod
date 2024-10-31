@@ -13,7 +13,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Filters
     {
         public abstract int ConnectMaxBonus { get; }
 
-        public override bool CanInsert_SpecialCheck(MagikeTileEntity entity, ref string text)
+        public override bool CanInsert_SpecialCheck(MagikeTP entity, ref string text)
         {
             if (!entity.TryGetComponent<MagikeLinerSender>(MagikeComponentID.MagikeSender,out _))
             {

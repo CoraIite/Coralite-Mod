@@ -119,7 +119,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 if (Entity.ComponentsCache[i] is IAnnihilateable annihilateable)
                     annihilateable.OnAnnihilate();
 
-            Point16 p = (Entity as MagikeTileEntity).Position;
+            Point16 p = (Entity as MagikeTP).Position;
             WorldGen.KillTile(p.X, p.Y, noItem: true);
 
             //TODO: 爆炸与反魔能污染

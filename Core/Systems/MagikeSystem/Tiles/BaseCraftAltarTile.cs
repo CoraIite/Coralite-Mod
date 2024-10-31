@@ -30,7 +30,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
             return Vector2.Zero;
         }
 
-        public override void DrawExtraTex(SpriteBatch spriteBatch, Texture2D tex, Rectangle tileRect, Vector2 offset, Color lightColor, float rotation, MagikeTileEntity entity, MALevel level)
+        public override void DrawExtraTex(SpriteBatch spriteBatch, Texture2D tex, Rectangle tileRect, Vector2 offset, Color lightColor, float rotation, MagikeTP entity, MALevel level)
         {
             if (!entity.TryGetComponent(MagikeComponentID.ItemContainer, out ItemContainer container))
                 return;

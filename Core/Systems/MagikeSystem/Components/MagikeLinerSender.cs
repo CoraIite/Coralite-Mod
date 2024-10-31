@@ -55,7 +55,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public override void Update(IEntity entity)
         {
-            Point16 p = (entity as MagikeTileEntity).Position;
+            Point16 p = (entity as MagikeTP).Position;
             Vector2 size = new Vector2(ConnectLength);
             if (Helper.OnScreen(p.ToWorldCoordinates() - Main.screenPosition-size/2, new Vector2(ConnectLength)))
                 DrawMagikeDevice.LinerSenders.Add(this);
@@ -113,7 +113,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public void Send(MagikeContainer selfMagikeContainer, Point16 position, int amount)
         {
             //如果无法获取物块实体就移除
-            if (!MagikeHelper.TryGetEntity(position, out MagikeTileEntity receiverEntity))
+            if (!MagikeHelper.TryGetEntity(position, out MagikeTP receiverEntity))
                 goto remove;
 
             //如果不是魔能容器那么就丢掉喽
@@ -137,7 +137,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             receiver.AddMagike(amount);
             selfMagikeContainer.ReduceMagike(amount);
-            OnSend((Entity as MagikeTileEntity).Position, position);
+            OnSend((Entity as MagikeTP).Position, position);
 
             return;
         remove:
@@ -166,7 +166,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             if (!CanConnect_CheckCapacity(ref failSource))
                 return false;
 
-            Point16 selfPoint = (Entity as MagikeTileEntity).Position;
+            Point16 selfPoint = (Entity as MagikeTP).Position;
 
             if (!CanConnect_CheckSelf(selfPoint, receiverPoint, ref failSource))
                 return false;
@@ -275,7 +275,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 return;
 
             Timer = SendDelay;
-            Vector2 selfPos = Helper.GetMagikeTileCenter((Entity as MagikeTileEntity).Position);
+            Vector2 selfPos = Helper.GetMagikeTileCenter((Entity as MagikeTP).Position);
 
             for (int i = _receivers.Count - 1; i >= 0; i--)
             {

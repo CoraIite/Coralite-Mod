@@ -44,7 +44,7 @@ namespace Coralite.Content.CustomHooks
                 foreach (var linerSender in LinerSenders)
                 {
                     //以上是获取线性发送器组件
-                    Vector2 selfPos = Helper.GetMagikeTileCenter((linerSender.Entity as MagikeTileEntity).Position);
+                    Vector2 selfPos = Helper.GetMagikeTileCenter((linerSender.Entity as MagikeTP).Position);
                     Vector2 startPos = selfPos - Main.screenPosition;
 
                     if (linerSender.Receivers.Count == 0)

@@ -34,7 +34,7 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
         public static bool ShouldResetComponentPanel;
 
         /// <summary> 当前的魔能物块实体 </summary>
-        public static MagikeTileEntity CurrentEntity;
+        public static MagikeTP CurrentEntity;
 
         /// <summary> 当前显示的组件的ID </summary>
         public static int CurrentShowComponentIndex;

@@ -31,7 +31,7 @@ namespace Coralite.Content.Items.Magike.Lens.LiquidLens
         (Color.Red, DustID.Water)
     {
         public override int DropItemType => ItemType<WaterflowLens>();
-        public override MagikeTileEntity GetEntityInstance() => GetInstance<WaterflowLensTileEntity>();
+        public override MagikeTP GetEntityInstance() => GetInstance<WaterflowLensTileEntity>();
 
         public override MALevel[] GetAllLevels()
         {

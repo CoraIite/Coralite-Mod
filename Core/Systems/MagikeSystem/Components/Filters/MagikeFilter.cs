@@ -24,7 +24,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public override void Update(IEntity entity) { }
 
-        public bool CanInsert(MagikeTileEntity entity, out string text)
+        public bool CanInsert(MagikeTP entity, out string text)
         {
             text = "";
 
@@ -47,7 +47,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// <param name="entity"></param>
         /// <param name="text"></param>
         /// <returns></returns>
-        public virtual bool CanInsert_SpecialCheck(MagikeTileEntity entity, ref string text)
+        public virtual bool CanInsert_SpecialCheck(MagikeTP entity, ref string text)
         {
             return true;
         }
@@ -58,7 +58,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// <param name="entity"></param>
         /// <param name="text"></param>
         /// <returns></returns>
-        public virtual bool PostCheckCanInsert(MagikeTileEntity entity, ref string text)
+        public virtual bool PostCheckCanInsert(MagikeTP entity, ref string text)
         {
             if (!entity.CanInsertFilter())
             {
@@ -73,7 +73,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// 直接插入滤镜，如果有特殊需要请在这里检测
         /// </summary>
         /// <param name="entity"></param>
-        public virtual void Insert(MagikeTileEntity entity)
+        public virtual void Insert(MagikeTP entity)
         {
             entity.AddComponent(this);
 
@@ -106,7 +106,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// <param name="entity"></param>
         public virtual void SpawnItem(IEntity entity)
         {
-            MagikeTileEntity e = entity as MagikeTileEntity;
+            MagikeTP e = entity as MagikeTP;
             Item.NewItem(new EntitySource_TileEntity(e), Utils.CenteredRectangle(Helper.GetMagikeTileCenter(e.Position), Vector2.One)
                 , ItemType);
         }

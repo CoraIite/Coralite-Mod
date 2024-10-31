@@ -22,7 +22,7 @@ namespace Coralite.Content.Items.MagikeSeries1
         public static LocalizedText TimerChosen {  get; private set; }
         public static LocalizedText TimerSynced {  get; private set; }
 
-        private MagikeTileEntity entity1;
+        private MagikeTP entity1;
 
         public override void Load()
         {
@@ -54,7 +54,7 @@ namespace Coralite.Content.Items.MagikeSeries1
             //左键寻找发送器
             if (entity1 == null)
             {
-                if (MagikeHelper.TryGetEntity(pos.X,pos.Y, out MagikeTileEntity entity))    //找到了
+                if (MagikeHelper.TryGetEntity(pos.X,pos.Y, out MagikeTP entity))    //找到了
                 {
                     foreach (var component in entity.ComponentsCache)//寻找计时器
                     {
@@ -103,7 +103,7 @@ namespace Coralite.Content.Items.MagikeSeries1
             }
             else//寻找另一个魔能仪器并同步
             {
-                if (MagikeHelper.TryGetEntity(pos.X, pos.Y, out MagikeTileEntity entity))    //找到了
+                if (MagikeHelper.TryGetEntity(pos.X, pos.Y, out MagikeTP entity))    //找到了
                 {
                     bool hasTimer = false;
                     foreach (var component in entity.ComponentsCache)//寻找计时器

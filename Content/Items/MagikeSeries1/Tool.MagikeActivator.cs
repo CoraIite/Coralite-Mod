@@ -30,7 +30,7 @@ namespace Coralite.Content.Items.MagikeSeries1
             Point16 pos = Main.MouseWorld.ToTileCoordinates16();
             string text;
 
-            if (MagikeHelper.TryGetEntityWithComponent(pos.X, pos.Y, MagikeComponentID.MagikeFactory, out MagikeTileEntity entity))
+            if (MagikeHelper.TryGetEntityWithComponent(pos.X, pos.Y, MagikeComponentID.MagikeFactory, out MagikeTP entity))
             {
                 MagikeFactory factory = entity.GetSingleComponent<MagikeFactory>(MagikeComponentID.MagikeFactory);
 

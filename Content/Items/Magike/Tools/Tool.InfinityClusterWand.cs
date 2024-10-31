@@ -175,7 +175,7 @@ namespace Coralite.Content.Items.Magike.Tools
 
                     //尝试根据左上角获取物块实体
                     if (!MagikeHelper.TryGetEntityWithComponent(currentTopLeft.Value.X, currentTopLeft.Value.Y
-                        , MagikeComponentID.MagikeContainer, out MagikeTileEntity entity))
+                        , MagikeComponentID.MagikeContainer, out MagikeTP entity))
                         continue;
 
                     if (mode == 0)

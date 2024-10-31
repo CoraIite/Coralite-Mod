@@ -148,7 +148,7 @@ namespace Coralite.Content.Items.MagikeSeries2
                     insertPoint.Add(currentTopLeft.Value);
 
                     //尝试根据左上角获取物块实体
-                    if (!MagikeHelper.TryGetEntityWithComponent<MagikeFactory>(currentTopLeft.Value.X, currentTopLeft.Value.Y, MagikeComponentID.MagikeFactory, out MagikeTileEntity entity))
+                    if (!MagikeHelper.TryGetEntityWithComponent<MagikeFactory>(currentTopLeft.Value.X, currentTopLeft.Value.Y, MagikeComponentID.MagikeFactory, out MagikeTP entity))
                         continue;
 
                     //激活

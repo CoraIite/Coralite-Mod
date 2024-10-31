@@ -22,7 +22,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Filters
         #region 插入与取出部分
 
         //只有有可升级的组件才能升级
-        public override bool CanInsert_SpecialCheck(MagikeTileEntity entity, ref string text)
+        public override bool CanInsert_SpecialCheck(MagikeTP entity, ref string text)
         {
             //检测是否有可升级的组件
             if (!entity.ComponentsCache.Any(c => c is IUpgradeable))
@@ -48,7 +48,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Filters
             return true;
         }
 
-        public override bool PostCheckCanInsert(MagikeTileEntity entity, ref string text)
+        public override bool PostCheckCanInsert(MagikeTP entity, ref string text)
         {
             //没有其他任何滤镜时
             if (!entity.HasComponent(MagikeComponentID.MagikeFilter))
@@ -97,7 +97,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Filters
 
         public static void ChangeTileFrame(MALevel level, IEntity entity)
         {
-            Point16 topLeft = (entity as MagikeTileEntity).Position;
+            Point16 topLeft = (entity as MagikeTP).Position;
             Tile tile = Framing.GetTileSafely(topLeft);
 
             if (!tile.HasTile)

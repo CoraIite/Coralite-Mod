@@ -46,7 +46,7 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
             ];
         }
 
-        public override MagikeTileEntity GetEntityInstance() => GetInstance<DesertLensTileEntity>();
+        public override MagikeTP GetEntityInstance() => GetInstance<DesertLensTileEntity>();
 
         public override MALevel[] GetAllLevels()
         {

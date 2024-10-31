@@ -3,7 +3,7 @@ using Coralite.Core.Systems.MagikeSystem.Components.Producers;
 
 namespace Coralite.Core.Systems.MagikeSystem.TileEntities
 {
-    public abstract class BaseCostItemProducerTileEntity<TModTile>() : MagikeTileEntity()
+    public abstract class BaseCostItemProducerTileEntity<TModTile>() : MagikeTP()
         where TModTile : ModTile
     {
         public sealed override ushort TileType => (ushort)ModContent.TileType<TModTile>();

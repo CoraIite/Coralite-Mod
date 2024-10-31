@@ -31,7 +31,7 @@ namespace Coralite.Content.Items.Magike.Lens.LiquidLens
         (Color.Honeydew, DustID.Honey)
     {
         public override int DropItemType => ItemType<HoneyLens>();
-        public override MagikeTileEntity GetEntityInstance() => GetInstance<HoneyLensTileEntity>();
+        public override MagikeTP GetEntityInstance() => GetInstance<HoneyLensTileEntity>();
 
         public override MALevel[] GetAllLevels()
         {

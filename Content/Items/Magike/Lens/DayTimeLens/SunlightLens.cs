@@ -31,7 +31,7 @@ namespace Coralite.Content.Items.Magike.Lens.DayTimeLens
         ( Color.SaddleBrown, DustID.HallowedTorch)
     {
         public override int DropItemType => ItemType<SunlightLens>();
-        public override MagikeTileEntity GetEntityInstance() => GetInstance<SunlightLensTileEntity>();
+        public override MagikeTP GetEntityInstance() => GetInstance<SunlightLensTileEntity>();
 
         public override MALevel[] GetAllLevels()
         {

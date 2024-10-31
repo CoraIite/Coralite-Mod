@@ -32,7 +32,7 @@ namespace Coralite.Content.Items.MagikeSeries1
         {
             Point16 pos = Main.MouseWorld.ToTileCoordinates16();
 
-            if (MagikeHelper.TryGetEntityWithComponent<MagikeContainer>(pos.X, pos.Y, MagikeComponentID.MagikeContainer, out MagikeTileEntity entity))
+            if (MagikeHelper.TryGetEntityWithComponent<MagikeContainer>(pos.X, pos.Y, MagikeComponentID.MagikeContainer, out MagikeTP entity))
             {
                 if (player.statMana > 20)
                 {
