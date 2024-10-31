@@ -12,9 +12,6 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
     {
         public const string SaveName = "Component";
 
-        /// <summary> 物块类型 </summary>
-        public abstract ushort TileType { get; }
-
         public HybridDictionary Components { get; private set; }
         public List<Component> ComponentsCache { get; private set; }
 

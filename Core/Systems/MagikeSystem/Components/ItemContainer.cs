@@ -78,9 +78,10 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// </summary>
         public void ResetCapacity()
         {
-            Vector2 worldPos = (Entity as MagikeTP).Position.ToWorldCoordinates();
-            var source = new EntitySource_TileEntity(Entity as MagikeTP);
-
+            var e = Entity as MagikeTP;
+            Vector2 worldPos = e.Position.ToWorldCoordinates();
+            var source = new EntitySource_WorldGen($"MagikeTP:{e.ID}");
+            
             //超出容量的部分生成掉落物
             for (int i = Capacity; i < Items.Length; i++)
             {

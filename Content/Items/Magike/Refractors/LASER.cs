@@ -97,7 +97,7 @@ namespace Coralite.Content.Items.Magike.Refractors
 
     public class LASERTileEntity : MagikeTP
     {
-        public override ushort TileType => (ushort)TileType<LASERTile>();
+        public override int TargetTileID => TileType<LASERTile>();
 
         public override void InitializeBeginningComponent()
         {

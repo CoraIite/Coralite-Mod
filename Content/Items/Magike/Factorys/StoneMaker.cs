@@ -111,7 +111,7 @@ namespace Coralite.Content.Items.Magike.Factorys
 
     public class StoneMakerTileEntity() : MagikeTP()
     {
-        public sealed override ushort TileType => (ushort)TileType<StoneMakerTile>();
+        public sealed override int TargetTileID => TileType<StoneMakerTile>();
 
         public override void InitializeBeginningComponent()
         {

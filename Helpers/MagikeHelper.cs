@@ -289,7 +289,7 @@ namespace Coralite.Helpers
         /// <returns></returns>
         public static bool CheckUpgrageable(this IEntity Entity, MALevel incomeLevel)
         {
-            int tileType = (Entity as MagikeTP).TileType;
+            int tileType = (Entity as MagikeTP).TargetTileID;
 
             if (!MagikeSystem.MagikeApparatusLevels.TryGetValue(tileType, out var keyValuePairs))
                 return false;

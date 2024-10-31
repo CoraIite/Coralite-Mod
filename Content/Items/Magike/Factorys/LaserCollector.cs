@@ -76,7 +76,7 @@ namespace Coralite.Content.Items.Magike.Factorys
 
     public class LaserCollectorTileEntity() : MagikeTP()
     {
-        public sealed override ushort TileType => (ushort)TileType<LaserCollectorTile>();
+        public sealed override int TargetTileID => TileType<LaserCollectorTile>();
 
         public override void InitializeBeginningComponent()
         {
