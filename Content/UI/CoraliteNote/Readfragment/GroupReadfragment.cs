@@ -11,6 +11,7 @@ namespace Coralite.Content.UI.CoraliteNote.Readfragment
             Pages =
                 [
                     new NamePage(),
+                    new DescriptionPage(),
                     new ReadPage()
                 ];
         }

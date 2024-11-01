@@ -1,4 +1,5 @@
-﻿using Coralite.Content.UI.UILib;
+﻿using Coralite.Content.UI.CoraliteNote.Readfragment;
+using Coralite.Content.UI.UILib;
 using Coralite.Core;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -15,7 +16,10 @@ namespace Coralite.Content.UI.CoraliteNote
 
         public override void InitPageGroups()
         {
-            pageGroups = [];
+            pageGroups = 
+                [
+                    new GroupReadfragment()
+                ];
         }
     }
 }
