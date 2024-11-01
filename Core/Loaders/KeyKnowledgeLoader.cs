@@ -5,7 +5,7 @@ namespace Coralite.Core.Loaders
 {
     public class KeyKnowledgeLoader
     {
-        internal static List<KeyKnowledge> knowledges;
+        internal static List<KeyKnowledge> knowledges = [];
 
         internal static void SetUp()
         {
