@@ -37,7 +37,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileID.Sets.PreventsTileRemovalIfOnTopOfIt[Type] = true;
             TileID.Sets.HasOutlines[Type] = true;
 
-            TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
+            TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);
             TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.addTile(Type);
@@ -122,7 +122,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileID.Sets.PreventsTileRemovalIfOnTopOfIt[Type] = true;
             TileID.Sets.HasOutlines[Type] = true;
 
-            TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
+            TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);
             TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.addTile(Type);

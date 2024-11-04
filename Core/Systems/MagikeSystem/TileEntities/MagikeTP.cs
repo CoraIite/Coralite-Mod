@@ -58,6 +58,11 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         /// </summary>
         public abstract void InitializeBeginningComponent();
 
+        public override void OnKill()
+        {
+            RemoveAllComponent();
+        }
+
         #region 数据存储
 
         public override void SaveData(TagCompound tag)

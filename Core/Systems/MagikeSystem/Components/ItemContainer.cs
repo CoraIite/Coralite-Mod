@@ -110,7 +110,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             Point16 coord = (entity as MagikeTP).Position;
             Vector2 pos = Helper.GetMagikeTileCenter(coord);
             for (int i = 0; i < Items.Length; i++)
-                Item.NewItem(new EntitySource_TileBreak(coord.X, coord.Y), pos, Items[i]);
+                if (!Items[i].IsAir)
+                    Item.NewItem(new EntitySource_TileBreak(coord.X, coord.Y), pos, Items[i]);
         }
 
         /// <summary>

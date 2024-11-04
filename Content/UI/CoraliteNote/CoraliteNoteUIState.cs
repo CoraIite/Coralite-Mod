@@ -34,6 +34,7 @@ namespace Coralite.Content.UI.CoraliteNote
             BookPanel.InitSize();
             BookPanel.SetPosition(basePos);
             BookPanel.InitPageGroups();
+            BookPanel.InitGroups();
             BookPanel.OnScrollWheel += PlaySound;
             Append(BookPanel);
         }

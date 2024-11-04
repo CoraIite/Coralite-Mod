@@ -165,6 +165,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
             MagikeSystem.RegisterApparatusLevel(Type, levels);
         }
 
+        [Obsolete("由于更换了新的结构所以这个东西已弃用")]
         public abstract MagikeTP GetEntityInstance();
 
         public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY)
@@ -193,10 +194,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
         {
             OnTileKilled(i, j);
             if (TryGetEntity(new Point16(i, j), out MagikeTP entity))
-            {
-                entity.RemoveAllComponent();
                 entity.Kill();
-            }
         }
 
         public override void NumDust(int i, int j, bool fail, ref int num)
