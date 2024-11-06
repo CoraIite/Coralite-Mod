@@ -4,6 +4,7 @@ using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.Particles;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
+using InnoVault;
 using InnoVault.TileProcessors;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -76,7 +77,7 @@ namespace Coralite.Helpers
             entity = null;
             //if (!TileEntity.ByPosition.TryGetValue(position, out TileEntity tileEntity))
             //    return false;
-            if (!TileProcessorLoader.ByPositionGetTP(position, out TileProcessor tileProcessor))
+            if (!ByTopLeftnGetTP(position, out TileProcessor tileProcessor))
                 return false;
 
             if (tileProcessor is not MagikeTP entity1)
@@ -171,7 +172,7 @@ namespace Coralite.Helpers
                 frameY %= data.Height * 18;
             }
 
-            int x = frameX / 18;
+            int x = frameX / (data.CoordinateWidth + data.CoordinatePadding);
             int y = frameY / 18;
             return new Point16(i - x, j - y);
         }
@@ -637,6 +638,26 @@ namespace Coralite.Helpers
             return (int)(produceCountPerSecond * ProducerCount * workTime);
         }
 
+        /// <summary>
+        /// 根据左上角获得TP
+        /// </summary>
+        /// <param name="topLeft"></param>
+        /// <param name="tileProcessor"></param>
+        /// <returns></returns>
+        public static bool ByTopLeftnGetTP(Point16 topLeft, out TileProcessor tileProcessor)
+        {
+            tileProcessor = null;
+                // 遍历世界中的所有模块，查找与指定ID和坐标匹配的模块
+                foreach (var inds in TileProcessorLoader.TP_InWorld)
+                {
+                    if (inds.Position.X == topLeft.X && inds.Position.Y == topLeft.Y)
+                    {
+                        tileProcessor = inds;
+                        return true;
+                    }
+                }
+            return false;
+        }
 
 
         //public static void SpawnDustOnSend(int selfWidth, int selfHeight, Point16 Position, IMagikeContainer container, Color dustColor, int dustType = DustID.Teleporter)
