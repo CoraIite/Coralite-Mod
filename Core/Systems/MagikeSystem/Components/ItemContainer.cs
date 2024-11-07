@@ -5,6 +5,8 @@ using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
@@ -69,6 +71,26 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 if (Items.IndexInRange(index))
                     Items[index] = value;
             }
+        }
+
+        public override void SendData(ModPacket data)
+        {
+            data.Write(Items.Length);
+            foreach (var item in Items)
+            {
+                data.Write(item.type);
+            }
+        }
+
+        public override void ReceiveData(BinaryReader reader, int whoAmI)
+        {
+            int length = reader.ReadInt32();
+            List<Item> itemList = [];
+            for (int i = 0; i < length; i++)
+            {
+                itemList.Add(new Item(reader.ReadInt32()));
+            }
+            _items = itemList.ToArray();
         }
 
         public override void Update(IEntity entity) { }
