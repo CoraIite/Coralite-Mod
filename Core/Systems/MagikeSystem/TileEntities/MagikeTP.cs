@@ -1,4 +1,6 @@
 ﻿using Coralite.Core.Systems.CoraliteActorComponent;
+using Coralite.Core.Systems.MagikeSystem.Tiles;
+using Coralite.Helpers;
 using InnoVault.TileProcessors;
 using Stubble.Core.Classes;
 using System;
@@ -6,6 +8,9 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
+using Terraria;
+using Terraria.DataStructures;
+using Terraria.ID;
 using Terraria.ModLoader.IO;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -65,6 +70,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         {
             RemoveAllComponent();
         }
+
 
         #region 数据存储
 
@@ -256,5 +262,22 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         }
 
         #endregion
+    }
+
+    public class MagikeGloblaTP:GlobalTileProcessor
+    {
+        public override Point16? PlaceInWorldGetTopLeftPoint(int x, int y)
+        {
+            Tile t=Framing.GetTileSafely(x, y);
+            if (t.TileType < TileID.Count)
+                return null;
+
+            ModTile mt = TileLoader.GetTile(t.TileType);
+
+            if (mt is BaseMagikeTile)
+                return MagikeHelper.ToTopLeft(x, y);
+
+            return null;
+        }
     }
 }
