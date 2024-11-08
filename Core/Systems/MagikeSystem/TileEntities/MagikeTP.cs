@@ -1,6 +1,7 @@
 ﻿using Coralite.Core.Systems.CoraliteActorComponent;
 using Coralite.Core.Systems.MagikeSystem.Tiles;
 using Coralite.Helpers;
+using InnoVault;
 using InnoVault.TileProcessors;
 using Stubble.Core.Classes;
 using System;
@@ -76,6 +77,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
 
         public override void SendData(ModPacket data)
         {
+            $"SendData-ComponentsCache.Count:{ComponentsCache.Count}".LoggerDomp();
             for (int i = 0; i < ComponentsCache.Count; i++)
             {
                 ComponentsCache[i].SendData(data);
@@ -84,6 +86,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
 
         public override void ReceiveData(BinaryReader reader, int whoAmI)
         {
+            $"ReceiveData-ComponentsCache.Count:{ComponentsCache.Count}".LoggerDomp();
             for (int i = 0; i < ComponentsCache.Count; i++)
             {
                 ComponentsCache[i].ReceiveData(reader, whoAmI);

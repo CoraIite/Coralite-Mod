@@ -3,13 +3,16 @@ using Coralite.Core.Loaders;
 using Coralite.Core.Systems.CoraliteActorComponent;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
+using InnoVault;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Xml;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.ID;
 using Terraria.ModLoader.IO;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
@@ -75,20 +78,33 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public override void SendData(ModPacket data)
         {
+            $"SendData-Items[].Length:{Items.Length}".LoggerDomp();
             data.Write(Items.Length);
-            foreach (var item in Items)
+            for (int i = 0; i < Items.Length; i++)
             {
-                data.Write(item.type);
+                $"SendData-Items.type:{Items[i].type}".LoggerDomp();
+                data.Write(Items[i].type);
             }
         }
 
         public override void ReceiveData(BinaryReader reader, int whoAmI)
         {
             int length = reader.ReadInt32();
+            $"ReceiveData-Items[].Length:{length}".LoggerDomp();
             List<Item> itemList = [];
+            if (length > 99)
+            {
+                length = 99;
+            }
             for (int i = 0; i < length; i++)
             {
-                itemList.Add(new Item(reader.ReadInt32()));
+                int type = reader.ReadInt32();
+                $"ReceiveData-Items.type:{type}".LoggerDomp();
+                if (type < 0 || type >= ItemLoader.ItemCount)
+                {
+                    type = ItemID.None;
+                }
+                itemList.Add(new Item(type));
             }
             _items = itemList.ToArray();
         }
@@ -272,6 +288,44 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             this.SetSize(54, 54);
         }
 
+        public void SendData()
+        {
+            if (VaultUtils.isSinglePlayer)
+            {
+                return;
+            }
+            $"ItemContainerSlot-SendData".LoggerDomp();
+            ModPacket modPacket = Coralite.Instance.GetPacket();
+            modPacket.Write((byte)CLNetWorkEnum.MagikeApparatusPanel_ItemContainerSlot);
+            _container.SendData(modPacket);
+            modPacket.Send();
+        }
+
+        public static void ReceiveData(BinaryReader reader, int whoAmI)
+        {
+            $"ItemContainerSlot-ReceiveData".LoggerDomp();
+            List<UIElement> _items = UILoader.GetUIState<MagikeApparatusPanel>().ComponentGrid._items;
+            UIElement uiElement = null;
+            foreach (var item in _items)
+            {
+                if (item.GetType().Name == "ItemContainerSlot")
+                {
+                    uiElement = item;
+                }
+            }
+            if (uiElement != null && uiElement is ItemContainerSlot itemContainerSlot)
+            {
+                itemContainerSlot._container.ReceiveData(reader, whoAmI);
+                if (Main.dedServ)
+                {
+                    ModPacket modPacket = Coralite.Instance.GetPacket();
+                    modPacket.Write((byte)CLNetWorkEnum.MagikeApparatusPanel_ItemContainerSlot);
+                    itemContainerSlot._container.SendData(modPacket);
+                    modPacket.Send(-1, whoAmI);
+                }
+            }
+        }
+
         public bool TryGetItem(out Item item)
         {
             item = _container[_index];
@@ -303,7 +357,21 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 Main.LocalPlayer.mouseInterface = true;
                 ItemSlot.OverrideHover(ref inv, ItemSlot.Context.VoidItem);
                 ItemSlot.LeftClick(ref inv, ItemSlot.Context.VoidItem);
+                if (Main.mouseLeftRelease && Main.mouseLeft)
+                {
+                    if (VaultUtils.isClient)
+                    {
+                        SendData();
+                    }
+                }
                 ItemSlot.RightClick(ref inv, ItemSlot.Context.VoidItem);
+                if (Main.mouseRightRelease && Main.mouseRight)
+                {
+                    if (VaultUtils.isClient)
+                    {
+                        SendData();
+                    }
+                }
                 ItemSlot.MouseHover(ref inv, ItemSlot.Context.VoidItem);
                 _container[_index] = inv;
                 _scale = Helper.Lerp(_scale, 1.1f, 0.2f);
