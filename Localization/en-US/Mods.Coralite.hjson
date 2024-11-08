@@ -52,5 +52,3 @@ WorldGeneration: {
 		DigTheDigDungeon: Mods.Coralite.WorldGeneration.CoraliteWorld.DigTheDigDungeon
 	}
 }
-
-Knowledges.DescriptionPage.Description: Mods.Coralite.Knowledges.DescriptionPage.Description

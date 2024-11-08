@@ -12,17 +12,17 @@ namespace Coralite.Core.Systems.KeySystem
 
         public override void SaveWorldData(TagCompound tag)
         {
-            foreach (var knowledge in KeyKnowledgeLoader.knowledges)
+            foreach (var knowledge in KeyKnowledgeLoader.knowledgesF)
             {
-                knowledge.SaveWorldData(tag);
+                knowledge.Value.SaveWorldData(tag);
             }
         }
 
         public override void LoadWorldData(TagCompound tag)
         {
-            foreach (var knowledge in KeyKnowledgeLoader.knowledges)
+            foreach (var knowledge in KeyKnowledgeLoader.knowledgesF)
             {
-                knowledge.LoadWorldData(tag);
+                knowledge.Value.LoadWorldData(tag);
             }
         }
     }

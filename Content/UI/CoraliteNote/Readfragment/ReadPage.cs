@@ -7,6 +7,11 @@ namespace Coralite.Content.UI.CoraliteNote.Readfragment
     /// </summary>
     public class ReadPage : KnowledgePage
     {
+        public override void OnInitialize()
+        {
+
+        }
+
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
            
