@@ -90,7 +90,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         public override void LoadData(TagCompound tag)
         {
             InitializeComponentCache();
-
+            
             int i = 0;
             while (tag.TryGet(SaveName + i.ToString(), out string fullName))
             {
@@ -255,7 +255,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
 
             if (mt is BaseMagikeTile)
                 return MagikeHelper.ToTopLeft(x, y);
-
+            
             return null;
         }
     }
