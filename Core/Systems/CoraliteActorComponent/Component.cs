@@ -1,4 +1,5 @@
-﻿using Terraria.ModLoader.IO;
+﻿using System.IO;
+using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.CoraliteActorComponent
 {
@@ -20,6 +21,8 @@ namespace Coralite.Core.Systems.CoraliteActorComponent
 
         public abstract void Update(IEntity entity);
 
+        public virtual void SendData(ModPacket data) { }
+        public virtual void ReceiveData(BinaryReader reader, int whoAmI) { }
         public virtual void SaveData(string preName, TagCompound tag) { }
         public virtual void LoadData(string preName, TagCompound tag) { }
     }

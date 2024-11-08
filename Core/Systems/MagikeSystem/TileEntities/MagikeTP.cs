@@ -2,14 +2,17 @@
 using Coralite.Core.Systems.MagikeSystem.Tiles;
 using Coralite.Helpers;
 using InnoVault.TileProcessors;
+using Stubble.Core.Classes;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.IO;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader.IO;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Coralite.Core.Systems.MagikeSystem.TileEntities
 {
@@ -43,7 +46,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
                 ComponentsCache[i].Update(this);
         }
 
-        public MagikeTP()
+        public override void SetProperty()
         {
             InitializeComponentCache();
             InitializeBeginningComponent();
@@ -70,6 +73,22 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
 
 
         #region 数据存储
+
+        public override void SendData(ModPacket data)
+        {
+            for (int i = 0; i < ComponentsCache.Count; i++)
+            {
+                ComponentsCache[i].SendData(data);
+            }
+        }
+
+        public override void ReceiveData(BinaryReader reader, int whoAmI)
+        {
+            for (int i = 0; i < ComponentsCache.Count; i++)
+            {
+                ComponentsCache[i].ReceiveData(reader, whoAmI);
+            }
+        }
 
         public override void SaveData(TagCompound tag)
         {
@@ -100,7 +119,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
                     i++;
                     continue;
                 }
-
+                
                 var component = (Component)Activator.CreateInstance(t);
                 component.LoadData(SaveName + i.ToString(), tag);
                 i++;
@@ -125,6 +144,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         {
             AddComponentWithoutOnAdd(component);
             component.OnAdd(this);
+            SendData();
         }
 
         /// <summary>
@@ -162,6 +182,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         {
             RemoveComponentWithoutOnRemove(currentComponent);
             currentComponent.OnRemove(this);
+            SendData();
         }
 
         /// <summary>
