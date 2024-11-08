@@ -3,7 +3,6 @@ using Coralite.Core.Systems.MagikeSystem.Tiles;
 using Coralite.Helpers;
 using InnoVault;
 using InnoVault.TileProcessors;
-using Stubble.Core.Classes;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -13,7 +12,6 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader.IO;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Coralite.Core.Systems.MagikeSystem.TileEntities
 {
@@ -21,11 +19,21 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
     {
         public const string SaveName = "Component";
 
+        /// <summary>
+        /// 存储各类组件的地方<br></br>
+        /// 不同类型的组件分为单一实例以及多实例，具体可以调用<see cref="MagikeComponentID.IsSingleton(int)"/>来查看<br></br>
+        /// 多实例的组件使用<see cref="List{T}"/>来存储
+        /// </summary>
         public HybridDictionary Components { get; private set; }
+        /// <summary>
+        /// 为了提高性能，在遍历组件进行更新等操作时使用这个<br></br>
+        /// 如果想要精确获取某个组件请使用<see cref="Components"/>
+        /// </summary>
         public List<Component> ComponentsCache { get; private set; }
 
         /// <summary>
-        /// 扩展滤镜容量
+        /// 扩展滤镜容量<br></br>
+        /// 该值无法随意更改
         /// </summary>
         public virtual int ExtendFilterCapacity { get => 2; }
 
@@ -122,7 +130,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
                     i++;
                     continue;
                 }
-                
+
                 var component = (Component)Activator.CreateInstance(t);
                 component.LoadData(SaveName + i.ToString(), tag);
                 i++;
@@ -267,11 +275,11 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         #endregion
     }
 
-    public class MagikeGloblaTP:GlobalTileProcessor
+    public class MagikeGloblaTP : GlobalTileProcessor
     {
         public override Point16? PlaceInWorldGetTopLeftPoint(int x, int y)
         {
-            Tile t=Framing.GetTileSafely(x, y);
+            Tile t = Framing.GetTileSafely(x, y);
             if (t.TileType < TileID.Count)
                 return null;
 

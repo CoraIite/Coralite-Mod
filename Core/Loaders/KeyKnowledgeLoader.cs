@@ -1,31 +1,47 @@
 ﻿using Coralite.Core.Systems.KeySystem;
+using System.Collections.Frozen;
 using System.Collections.Generic;
 
 namespace Coralite.Core.Loaders
 {
     public class KeyKnowledgeLoader
     {
-        internal static List<KeyKnowledge> knowledges = [];
+        internal static FrozenDictionary<int,KeyKnowledge> knowledgesF;
+        internal static Dictionary<int,KeyKnowledge> knowledges = [];
+
+        /// <summary>
+        /// 根据ID获取
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static KeyKnowledge GetKeyKnowledge(int type)
+        {
+            if(knowledgesF.TryGetValue(type,out var knowledge))
+                return knowledge;
+
+            return null;
+        }
 
         internal static void SetUp()
         {
-            knowledges.Sort((k1, k2) => k1.Type.CompareTo(k2.Type));
+            if (knowledges == null)
+                return;
 
-            foreach (var knowledge in knowledges)
-            {
-                knowledge.SetUp();
-            }
+            knowledgesF = knowledges.ToFrozenDictionary();
+            knowledges = null;
+
+            foreach (var knowledge in knowledgesF)
+                knowledge.Value.SetUp();
         }
 
         internal static void Unload()
         {
-            foreach (var item in knowledges)
+            foreach (var item in knowledgesF)
             {
-                item.Unload();
+                item.Value.Unload();
             }
 
-            knowledges.Clear();
-            knowledges = null;
+            knowledgesF = null;
         }
     }
 }

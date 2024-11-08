@@ -1,5 +1,7 @@
 ﻿using Coralite.Core.Loaders;
-using System.Collections.Generic;
+using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
+using Terraria;
 using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.KeySystem
@@ -11,50 +13,70 @@ namespace Coralite.Core.Systems.KeySystem
     {
         public override string Texture => AssetDirectory.KeyKnowledgeIcon + Name;
 
+        public Asset<Texture2D> Texture2D {  get;private set; }
+
         /// <summary>
         /// 类型
         /// </summary>
-        public int Type {  get; set; }
+        public int Type { get; set; }
 
         /// <summary>
         /// 该知识是否解锁
         /// </summary>
-        public bool Unlock {  get; set; }
-
-        /// <summary>
-        /// 是否初次获得
-        /// </summary>
-        public bool FirstPickUp {  get; set; }
+        public bool Unlock { get; set; }
 
         protected override void Register()
         {
             ModTypeLookup<KeyKnowledge>.Register(this);
 
-            KeyKnowledgeLoader.knowledges ??= new List<KeyKnowledge>();
-            KeyKnowledgeLoader.knowledges.Add(this);
+            KeyKnowledgeLoader.knowledges ??= [];
+            KeyKnowledgeLoader.knowledges.Add(Type, this);
+
+            if (!Main.dedServ)
+                Texture2D = ModContent.Request<Texture2D>(Texture);
         }
 
+        /// <summary>
+        /// 设置里面的东西
+        /// </summary>
         public virtual void SetUp()
         {
 
         }
 
+        /// <summary>
+        /// 在该知识解锁时调用，可以用于跳字等行为
+        /// </summary>
+        public virtual void OnKnowldegeUnlock()
+        {
+
+        }
+
+        public void UnlockKnowledge()
+        {
+            Unlock = true;
+
+            OnKnowldegeUnlock();
+        }
+
+
         public void SaveSelfData(TagCompound tag)
         {
             if (Unlock)
                 tag.Add(Name + nameof(Unlock), true);
-            if (FirstPickUp)
-                tag.Add(Name + nameof(FirstPickUp), true);
             SaveWorldData(tag);
         }
 
         public void LoadSelfData(TagCompound tag)
         {
             Unlock = tag.ContainsKey(Name + nameof(Unlock));
-            FirstPickUp = tag.ContainsKey(Name + nameof(FirstPickUp));
             LoadWorldData(tag);
         }
 
+        /// <summary>
+        /// 存储内容
+        /// </summary>
+        /// <param name="tag"></param>
         public virtual void SaveWorldData(TagCompound tag)
         {
 
