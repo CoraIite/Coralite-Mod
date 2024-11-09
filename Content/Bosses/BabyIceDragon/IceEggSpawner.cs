@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.WorldGeneration;
+using InnoVault;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -34,7 +35,10 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                 if (NPC.AnyDanger())
                     recheck *= 6;
                 else
+                {
                     TrySpawning(CoraliteWorld.NestCenter.X, CoraliteWorld.NestCenter.Y);
+                }
+                    
             }
         }
 

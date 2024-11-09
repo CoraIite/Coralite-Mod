@@ -44,8 +44,6 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// <summary> 容量 </summary>
         public int Capacity => CapacityBase + CapacityExtra;
 
-        public int value;
-
         private Item[] _items;
         public Item[] Items
         {
@@ -80,54 +78,61 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public override void SendData(ModPacket data)
         {
-            //$"SendData-CapacityBase:{CapacityBase}".LoggerDomp();
-            //data.Write(CapacityBase);
+            $"SendData-CapacityBase:{CapacityBase}".LoggerDomp();
+            data.Write(CapacityBase);
 
-            //$"SendData-CapacityExtra:{CapacityExtra}".LoggerDomp();
-            //data.Write(CapacityExtra);
+            $"SendData-CapacityExtra:{CapacityExtra}".LoggerDomp();
+            data.Write(CapacityExtra);
 
-            //$"SendData-Items[].Length:{Items.Length}".LoggerDomp();
-            //data.Write(Items.Length);
+            $"SendData-Items[].Length:{Items.Length}".LoggerDomp();
+            data.Write(Items.Length);
 
-            //for (int i = 0; i < Items.Length; i++)
-            //{
-            //    $"SendData-Items.type:{Items[i].type}".LoggerDomp();
-            //    data.Write(Items[i].type);
-            //}
-            $"SendData-value:{value}".LoggerDomp();
-            data.Write(value);
+            for (int i = 0; i < Items.Length; i++)
+            {
+                $"SendData-Items.type:{Items[i].type}".LoggerDomp();
+                data.Write(Items[i].type);
+                data.Write(Items[i].stack);
+                data.Write(Items[i].prefix);
+            }
         }
-
+        //这个模组里面，有某个地方自己先发了个包
         public override void ReceiveData(BinaryReader reader, int whoAmI)
         {
-            //CapacityBase = reader.ReadInt32();
-            //$"ReceiveData-CapacityBase:{CapacityBase}".LoggerDomp();
+            CapacityBase = reader.ReadInt32();
+            $"ReceiveData-CapacityBase:{CapacityBase}".LoggerDomp();
 
-            //CapacityExtra = reader.ReadInt32();
-            //$"ReceiveData-CapacityExtra:{CapacityExtra}".LoggerDomp();
+            CapacityExtra = reader.ReadInt32();
+            $"ReceiveData-CapacityExtra:{CapacityExtra}".LoggerDomp();
 
-            //int length = reader.ReadInt32();
-            //$"ReceiveData-Items[].Length:{length}".LoggerDomp();
+            int length = reader.ReadInt32();
+            $"ReceiveData-Items[].Length:{length}".LoggerDomp();
 
-            //List<Item> itemList = [];
-            //if (length > 99)
-            //{
-            //    length = 99;
-            //}
-            //for (int i = 0; i < length; i++)
-            //{
-            //    int type = reader.ReadInt32();
-            //    $"ReceiveData-Items.type:{type}".LoggerDomp();
-            //    if (type < 0 || type >= ItemLoader.ItemCount)
-            //    {
-            //        type = ItemID.None;
-            //    }
-            //    itemList.Add(new Item(type));
-            //}
-            //_items = itemList.ToArray();
-            
-            value = reader.ReadInt32();
-            $"ReceiveData-value:{value}".LoggerDomp();
+            List<Item> itemList = [];
+            if (length > 99)
+            {
+                length = 99;
+            }
+            for (int i = 0; i < length; i++)
+            {
+                int type = reader.ReadInt32();
+                int stack = reader.ReadInt32();
+                int prefix = reader.ReadInt32();
+                $"ReceiveData-Items.type:{type}".LoggerDomp();
+                $"ReceiveData-Items.stack:{stack}".LoggerDomp();
+                $"ReceiveData-Items.prefix:{prefix}".LoggerDomp();
+                if (type < 0 || type >= ItemLoader.ItemCount)
+                {
+                    type = ItemID.None;
+                }
+                Item item = new Item(type);
+                if (type > 0)
+                {
+                    item.stack = stack;
+                    item.prefix = prefix;
+                }
+                itemList.Add(item);
+            }
+            _items = itemList.ToArray();
         }
 
         public override void Update(IEntity entity)
@@ -295,7 +300,6 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                     _items[i] = new Item();
             }
         }
-
         #endregion
     }
 
@@ -330,6 +334,18 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             Helper.PlayPitched("Fairy/FairyBottleClick", 0.3f, 0.4f);
         }
 
+        public void SendData()
+        {
+            if (!VaultUtils.isClient)
+            {
+                return;
+            }
+            if (_container.Entity is MagikeTP magikeTP)
+            {
+                magikeTP.SendData();
+            }
+        }
+
         //public void GrabSound()
         //{
         //    Helper.PlayPitched("Fairy/FairyBottleClick", 0.4f, 0);
@@ -343,24 +359,15 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 Main.LocalPlayer.mouseInterface = true;
                 ItemSlot.OverrideHover(ref inv, ItemSlot.Context.VoidItem);
                 ItemSlot.LeftClick(ref inv, ItemSlot.Context.VoidItem);
-                //if (Main.mouseLeftRelease && Main.mouseLeft)
-                //{
-                //    if (VaultUtils.isClient)
-                //    {
-                //        SendData();
-                //    }
-                //}
                 ItemSlot.RightClick(ref inv, ItemSlot.Context.VoidItem);
-                //if (Main.mouseRightRelease && Main.mouseRight)
-                //{
-                //    if (VaultUtils.isClient)
-                //    {
-                //        SendData();
-                //    }
-                //}
                 ItemSlot.MouseHover(ref inv, ItemSlot.Context.VoidItem);
                 _container[_index] = inv;
                 _scale = Helper.Lerp(_scale, 1.1f, 0.2f);
+
+                if ((Main.mouseRightRelease && Main.mouseRight) || (Main.mouseLeftRelease && Main.mouseLeft))
+                {
+                    SendData();
+                }
             }
             else
                 _scale = Helper.Lerp(_scale, 1f, 0.2f);
