@@ -77,19 +77,35 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public override void SendData(ModPacket data)
         {
+            $"SendData-CapacityBase:{CapacityBase}".LoggerDomp();
+            data.Write(CapacityBase);
+
+            $"SendData-CapacityExtra:{CapacityExtra}".LoggerDomp();
+            data.Write(CapacityExtra);
+
             $"SendData-Items[].Length:{Items.Length}".LoggerDomp();
             data.Write(Items.Length);
+
             for (int i = 0; i < Items.Length; i++)
             {
                 $"SendData-Items.type:{Items[i].type}".LoggerDomp();
                 data.Write(Items[i].type);
+                data.Write(Items[i].stack);
+                data.Write(Items[i].prefix);
             }
         }
-
+        
         public override void ReceiveData(BinaryReader reader, int whoAmI)
         {
+            CapacityBase = reader.ReadInt32();
+            $"ReceiveData-CapacityBase:{CapacityBase}".LoggerDomp();
+
+            CapacityExtra = reader.ReadInt32();
+            $"ReceiveData-CapacityExtra:{CapacityExtra}".LoggerDomp();
+
             int length = reader.ReadInt32();
             $"ReceiveData-Items[].Length:{length}".LoggerDomp();
+
             List<Item> itemList = [];
             if (length > 99)
             {
@@ -98,17 +114,30 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             for (int i = 0; i < length; i++)
             {
                 int type = reader.ReadInt32();
+                int stack = reader.ReadInt32();
+                int prefix = reader.ReadInt32();
                 $"ReceiveData-Items.type:{type}".LoggerDomp();
+                $"ReceiveData-Items.stack:{stack}".LoggerDomp();
+                $"ReceiveData-Items.prefix:{prefix}".LoggerDomp();
                 if (type < 0 || type >= ItemLoader.ItemCount)
                 {
                     type = ItemID.None;
                 }
-                itemList.Add(new Item(type));
+                Item item = new Item(type);
+                if (type > 0)
+                {
+                    item.stack = stack;
+                    item.prefix = prefix;
+                }
+                itemList.Add(item);
             }
             _items = itemList.ToArray();
         }
 
-        public override void Update(IEntity entity) { }
+        public override void Update(IEntity entity)
+        {
+
+        }
 
         /// <summary>
         /// 修改容量后必须调用这个方法！
@@ -118,7 +147,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             var e = Entity as MagikeTP;
             Vector2 worldPos = e.Position.ToWorldCoordinates();
             var source = new EntitySource_WorldGen($"MagikeTP:{e.ID}");
-            
+
             //超出容量的部分生成掉落物
             for (int i = Capacity; i < Items.Length; i++)
             {
@@ -270,7 +299,6 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                     _items[i] = new Item();
             }
         }
-
         #endregion
     }
 
@@ -285,44 +313,6 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             _container = container;
             _index = index;
             this.SetSize(54, 54);
-        }
-
-        public void SendData()
-        {
-            if (VaultUtils.isSinglePlayer)
-            {
-                return;
-            }
-            $"ItemContainerSlot-SendData".LoggerDomp();
-            ModPacket modPacket = Coralite.Instance.GetPacket();
-            modPacket.Write((byte)CLNetWorkEnum.MagikeApparatusPanel_ItemContainerSlot);
-            _container.SendData(modPacket);
-            modPacket.Send();
-        }
-
-        public static void ReceiveData(BinaryReader reader, int whoAmI)
-        {
-            $"ItemContainerSlot-ReceiveData".LoggerDomp();
-            List<UIElement> _items = UILoader.GetUIState<MagikeApparatusPanel>().ComponentGrid._items;
-            UIElement uiElement = null;
-            foreach (var item in _items)
-            {
-                if (item.GetType().Name == "ItemContainerSlot")
-                {
-                    uiElement = item;
-                }
-            }
-            if (uiElement != null && uiElement is ItemContainerSlot itemContainerSlot)
-            {
-                itemContainerSlot._container.ReceiveData(reader, whoAmI);
-                if (Main.dedServ)
-                {
-                    ModPacket modPacket = Coralite.Instance.GetPacket();
-                    modPacket.Write((byte)CLNetWorkEnum.MagikeApparatusPanel_ItemContainerSlot);
-                    itemContainerSlot._container.SendData(modPacket);
-                    modPacket.Send(-1, whoAmI);
-                }
-            }
         }
 
         public bool TryGetItem(out Item item)
@@ -343,6 +333,18 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             Helper.PlayPitched("Fairy/FairyBottleClick", 0.3f, 0.4f);
         }
 
+        public void SendData()
+        {
+            if (!VaultUtils.isClient)
+            {
+                return;
+            }
+            if (_container.Entity is MagikeTP magikeTP)
+            {
+                magikeTP.SendData();
+            }
+        }
+
         //public void GrabSound()
         //{
         //    Helper.PlayPitched("Fairy/FairyBottleClick", 0.4f, 0);
@@ -356,24 +358,15 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 Main.LocalPlayer.mouseInterface = true;
                 ItemSlot.OverrideHover(ref inv, ItemSlot.Context.VoidItem);
                 ItemSlot.LeftClick(ref inv, ItemSlot.Context.VoidItem);
-                if (Main.mouseLeftRelease && Main.mouseLeft)
-                {
-                    if (VaultUtils.isClient)
-                    {
-                        SendData();
-                    }
-                } 
                 ItemSlot.RightClick(ref inv, ItemSlot.Context.VoidItem);
-                if (Main.mouseRightRelease && Main.mouseRight)
-                {
-                    if (VaultUtils.isClient)
-                    {
-                        SendData();
-                    }
-                }
                 ItemSlot.MouseHover(ref inv, ItemSlot.Context.VoidItem);
                 _container[_index] = inv;
                 _scale = Helper.Lerp(_scale, 1.1f, 0.2f);
+
+                if ((Main.mouseRightRelease && Main.mouseRight) || (Main.mouseLeftRelease && Main.mouseLeft))
+                {
+                    SendData();
+                }
             }
             else
                 _scale = Helper.Lerp(_scale, 1f, 0.2f);
