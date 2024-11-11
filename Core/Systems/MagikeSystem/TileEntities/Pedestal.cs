@@ -1,4 +1,8 @@
 ﻿using Coralite.Core.Systems.MagikeSystem.Components;
+using Microsoft.Xna.Framework.Graphics;
+using Newtonsoft.Json.Linq;
+using Terraria;
+using Terraria.GameContent;
 
 namespace Coralite.Core.Systems.MagikeSystem.TileEntities
 {

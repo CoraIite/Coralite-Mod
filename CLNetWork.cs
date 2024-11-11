@@ -8,7 +8,6 @@ namespace Coralite
     {
         Rediancie,
         BabyIceDragon,
-        MagikeApparatusPanel_ItemContainerSlot,
     }
 
     internal class CLNetWork
@@ -23,10 +22,6 @@ namespace Coralite
             else if (cLNetWorkEnum == CLNetWorkEnum.BabyIceDragon)
             {
                 BabyIceDragon.FumlerMovesRemove(reader, whoAmI);
-            }
-            else if (cLNetWorkEnum == CLNetWorkEnum.MagikeApparatusPanel_ItemContainerSlot)
-            {
-                ItemContainerSlot.ReceiveData(reader, whoAmI);
             }
         }
     }

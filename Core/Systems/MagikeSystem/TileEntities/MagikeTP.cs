@@ -19,6 +19,8 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
     {
         public const string SaveName = "Component";
 
+        internal static int playerInWorldTime;
+
         /// <summary>
         /// 存储各类组件的地方<br></br>
         /// 不同类型的组件分为单一实例以及多实例，具体可以调用<see cref="MagikeComponentID.IsSingleton(int)"/>来查看<br></br>
@@ -155,7 +157,6 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         {
             AddComponentWithoutOnAdd(component);
             component.OnAdd(this);
-            SendData();
         }
 
         /// <summary>

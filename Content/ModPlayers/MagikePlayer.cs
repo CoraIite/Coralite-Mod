@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using Coralite.Core.Systems.MagikeSystem.TileEntities;
+using Terraria;
 
 namespace Coralite.Content.ModPlayers
 {
@@ -8,8 +9,14 @@ namespace Coralite.Content.ModPlayers
 
         public override void ResetEffects()
         {
+            MagikeTP.playerInWorldTime++;
             if (SpecialEnchantCD > 0)
                 SpecialEnchantCD--;
+        }
+
+        public override void OnEnterWorld()
+        {
+            MagikeTP.playerInWorldTime = 0;
         }
     }
 }

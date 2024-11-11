@@ -76,6 +76,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public virtual void Insert(MagikeTP entity)
         {
             entity.AddComponent(this);
+            entity.SendData();
 
             if (entity == MagikeApparatusPanel.CurrentEntity)
             {
