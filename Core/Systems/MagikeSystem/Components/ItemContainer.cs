@@ -362,7 +362,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                     {
                         SendData();
                     }
-                }
+                } 
                 ItemSlot.RightClick(ref inv, ItemSlot.Context.VoidItem);
                 if (Main.mouseRightRelease && Main.mouseRight)
                 {
