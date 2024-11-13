@@ -3,5 +3,5 @@ author = 瓶中微光
 version = 0.2.0.7
 hideResources = true
 modReferences = InnoVault@1.3
-sortAfter = InnoVault
+sortAfter = InnoVault,DDmod
 buildIgnore = MysteryTools/*
