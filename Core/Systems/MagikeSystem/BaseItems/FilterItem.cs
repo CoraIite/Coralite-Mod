@@ -4,11 +4,14 @@ using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.Particles;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
+using InnoVault;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.ID;
 
 namespace Coralite.Core.Systems.MagikeSystem.BaseItems
@@ -36,8 +39,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            Point16 basePoint = Main.MouseWorld.ToTileCoordinates16();
-            Projectile.NewProjectile(source, player.Center, Vector2.Zero, type, 0, 0, player.whoAmI, basePoint.X, basePoint.Y);
+            Projectile.NewProjectile(source, player.Center, Vector2.Zero, type, 0, 0, player.whoAmI);
 
             Helper.PlayPitched("UI/Select", 0.4f, 0, player.Center);
             return false;
@@ -50,6 +52,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
     public class FilterProj : BaseHeldProj, IDrawNonPremultiplied
     {
         public override string Texture => AssetDirectory.Blank;
+        public override bool CanFire => true;
         private bool onspan;
 
         public Point16 BasePosition
@@ -73,6 +76,8 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
         {
             if (!onspan)
             {
+                Projectile.ai[0] = InMousePos.ToTileCoordinates16().X;
+                Projectile.ai[1] = InMousePos.ToTileCoordinates16().Y;
                 TargetPoint = BasePosition;
                 onspan = true;
             }
@@ -84,7 +89,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
                 Projectile.Kill();
                 return;
             }
-
+            DownLeft.Domp();
             if (DownLeft)
             {
                 Owner.itemTime = Owner.itemAnimation = 7;
@@ -95,10 +100,22 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
                     TargetPoint = new Point16(Math.Clamp(TargetPoint.X, BasePosition.X - GamePlaySystem.SelectSize, BasePosition.X + GamePlaySystem.SelectSize), TargetPoint.Y);
                 if (Math.Abs(TargetPoint.Y - BasePosition.Y) > GamePlaySystem.SelectSize)
                     TargetPoint = new Point16(TargetPoint.X, Math.Clamp(TargetPoint.Y, BasePosition.Y - GamePlaySystem.SelectSize, BasePosition.Y + GamePlaySystem.SelectSize));
+
+                $"BasePosition:{BasePosition}".Domp();
+                $"TargetPoint:{TargetPoint}".Domp();
+                $"InMousePos:{InMousePos}".Domp();
+                $"_________________________".Domp();
             }
             else
             {
-                PlaceFilter();
+                if (Projectile.IsOwnedByLocalPlayer())
+                {
+                    PlaceFilter(Owner, TargetPoint, BasePosition);
+                    if (VaultUtils.isClient)
+                    {
+                        Send_PlaceFilter_Data();
+                    }
+                }
                 Projectile.Kill();
                 return;
             }
@@ -111,8 +128,45 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
             }
         }
 
-        public void PlaceFilter()
+        internal void Send_PlaceFilter_Data()
         {
+            ModPacket modPacket = Coralite.Instance.GetPacket();
+            modPacket.Write((byte)CLNetWorkEnum.PlaceFilter);
+            modPacket.Write(Owner.whoAmI);
+            modPacket.Write(TargetPoint.X);
+            modPacket.Write(TargetPoint.Y);
+            modPacket.Write(BasePosition.X);
+            modPacket.Write(BasePosition.Y);
+            modPacket.Send();
+        }
+
+        internal static void Hander_PlaceFilter(BinaryReader reader, int whoAmI)
+        {
+            int ownerIndex = reader.ReadInt32();
+            Point16 TargetPoint = new Point16(reader.ReadInt16(), reader.ReadInt16());
+            Point16 BasePosition = new Point16(reader.ReadInt16(), reader.ReadInt16());
+            if (ownerIndex >= 0 && ownerIndex < Main.player.Length)
+            {
+                Player Owner = Main.player[ownerIndex];
+                PlaceFilter(Owner, TargetPoint, BasePosition);
+                if (Main.dedServ)
+                {
+                    ModPacket modPacket = Coralite.Instance.GetPacket();
+                    modPacket.Write((byte)CLNetWorkEnum.PlaceFilter);
+                    modPacket.Write(ownerIndex);
+                    modPacket.Write(TargetPoint.X);
+                    modPacket.Write(TargetPoint.Y);
+                    modPacket.Write(BasePosition.X);
+                    modPacket.Write(BasePosition.Y);
+                    modPacket.Send(-1, whoAmI);
+                }
+            }
+        }
+
+        public static void PlaceFilter(Player Owner, Point16 TargetPoint, Point16 BasePosition)
+        {
+            "PlaceFilter:正在执行插入".LoggerDomp();
+
             MagikeFilter filter = (Owner.HeldItem.ModItem as FilterItem).GetFilterComponent();
 
             bool placed = false;
@@ -149,6 +203,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
                     //能插入就插，不能就提供失败原因
                     if (filter.CanInsert(entity, out string text))
                     {
+                        "PlaceFilter:插入成功".LoggerDomp();
                         placed = true;
                         filter.Insert(entity);
                         filter = (Owner.HeldItem.ModItem as FilterItem).GetFilterComponent();
@@ -165,6 +220,8 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
                         }
                     }
                     else if (!string.IsNullOrEmpty(text))
+                    {
+                        "PlaceFilter:插入失败".LoggerDomp();
                         PopupText.NewText(new AdvancedPopupRequest()
                         {
                             Color = Coralite.MagicCrystalPink,
@@ -172,6 +229,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
                             DurationInFrames = 60,
                             Velocity = -Vector2.UnitY
                         }, Helper.GetMagikeTileCenter(currentTopLeft.Value));
+                    }
                 }
 
             PlaceOver:

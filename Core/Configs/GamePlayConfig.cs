@@ -32,6 +32,5 @@ namespace Coralite.Core.Configs
     {
         public static bool SpecialDashFirst = true;
         public static int SelectSize = 20;
-
     }
 }

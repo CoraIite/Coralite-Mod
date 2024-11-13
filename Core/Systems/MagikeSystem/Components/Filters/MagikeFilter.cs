@@ -3,7 +3,10 @@ using Coralite.Core.Loaders;
 using Coralite.Core.Systems.CoraliteActorComponent;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
+using InnoVault;
+using InnoVault.TileProcessors;
 using Microsoft.Xna.Framework.Graphics;
+using System.IO;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader.UI;
@@ -76,7 +79,6 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public virtual void Insert(MagikeTP entity)
         {
             entity.AddComponent(this);
-            entity.SendData();
 
             if (entity == MagikeApparatusPanel.CurrentEntity)
             {
@@ -143,10 +145,56 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             _filter = filter;
         }
 
+        internal void Send_LeftClick_Data(MagikeTP tP)
+        {
+            ModPacket modPacket = Coralite.Instance.GetPacket();
+            modPacket.Write((byte)CLNetWorkEnum.FilterRemoveButton_LeftClick);
+            modPacket.Write(tP.ID);
+            modPacket.Write(tP.Position.X);
+            modPacket.Write(tP.Position.Y);
+            modPacket.Send();
+        }
+
+        internal static void Hander_LeftClick_Data(BinaryReader reader, int whoAmI)
+        {
+            int id = reader.ReadInt32();
+            short posX = reader.ReadInt16();
+            short posY = reader.ReadInt16();
+            TileProcessor tp = TileProcessorLoader.FindModulePreciseSearch(id, posX, posY);
+            if (tp != null && tp is MagikeTP magikeTP)
+            {
+                MagikeFilter _filter = null;
+                foreach (var components in magikeTP.ComponentsCache)
+                {
+                    if (components is MagikeFilter filter)
+                    {
+                        _filter = filter;
+                    }
+                }
+                if (_filter != null)
+                {
+                    magikeTP.RemoveComponent(_filter);
+                    if (Main.dedServ)
+                    {
+                        ModPacket modPacket = Coralite.Instance.GetPacket();
+                        modPacket.Write((byte)CLNetWorkEnum.FilterRemoveButton_LeftClick);
+                        modPacket.Write(id);
+                        modPacket.Write(posX);
+                        modPacket.Write(posY);
+                        modPacket.Send(-1, whoAmI);
+                    }
+                }
+            }
+        }
+
         public override void LeftClick(UIMouseEvent evt)
         {
             _entity.RemoveComponent(_filter);
             UILoader.GetUIState<MagikeApparatusPanel>().Recalculate();
+            if (VaultUtils.isClient && _entity is MagikeTP tP)
+            {
+                Send_LeftClick_Data(tP);
+            }
             base.LeftClick(evt);
         }
 

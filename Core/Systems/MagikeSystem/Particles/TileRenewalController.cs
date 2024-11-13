@@ -22,13 +22,15 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
             shouldKilledOutScreen = false;
         }
 
-        public static TileRenewalController Spawn(Point16 topLeft, Color color)
+        public static void Spawn(Point16 topLeft, Color color)
         {
+            if (Main.dedServ)
+            {
+                return;
+            }
             TileRenewalController particle = NewParticle<TileRenewalController>(topLeft.ToWorldCoordinates(), Vector2.Zero, color, 1);
             particle.topLeft = topLeft;
             particle.startY = topLeft.Y;
-
-            return particle;
         }
 
         public override void Update()
