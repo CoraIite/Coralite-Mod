@@ -94,17 +94,8 @@ namespace Coralite.Core.Prefabs.Tiles
         }
     }
 
-    public abstract class BaseBedTile<TItem> : BaseTile where TItem : ModItem
+    public abstract class BaseBedTile<TItem>(int dustType, Color mapColor, string texturePath, bool pathHasName = false) : BaseTile(texturePath, pathHasName) where TItem : ModItem
     {
-        private readonly int dustType;
-        private readonly Color mapColor;
-
-        public BaseBedTile(int dustType, Color mapColor, string texturePath, bool pathHasName = false) : base(texturePath, pathHasName)
-        {
-            this.dustType = dustType;
-            this.mapColor = mapColor;
-        }
-
         public override void SetStaticDefaults()
         {
             this.BedPrefab(dustType, mapColor);
@@ -618,17 +609,8 @@ namespace Coralite.Core.Prefabs.Tiles
         }
     }
 
-    public abstract class BaseBathtubTile : BaseTile
+    public abstract class BaseBathtubTile(int dustType, Color mapColor, string texturePath, bool pathHasName = false) : BaseTile(texturePath, pathHasName)
     {
-        private readonly int dustType;
-        private readonly Color mapColor;
-
-        public BaseBathtubTile(int dustType, Color mapColor, string texturePath, bool pathHasName = false) : base(texturePath, pathHasName)
-        {
-            this.dustType = dustType;
-            this.mapColor = mapColor;
-        }
-
         public override void SetStaticDefaults()
         {
             Main.tileFrameImportant[Type] = true;

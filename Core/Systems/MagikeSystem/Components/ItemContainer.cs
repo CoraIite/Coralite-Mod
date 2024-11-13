@@ -5,7 +5,6 @@ using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
 using InnoVault;
 using Microsoft.Xna.Framework.Graphics;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -95,7 +94,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 data.Write(Items[i].prefix);
             }
         }
-        //这个模组里面，有某个地方自己先发了个包
+        
         public override void ReceiveData(BinaryReader reader, int whoAmI)
         {
             CapacityBase = reader.ReadInt32();
@@ -137,7 +136,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public override void Update(IEntity entity)
         {
-            
+
         }
 
         /// <summary>
@@ -148,7 +147,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             var e = Entity as MagikeTP;
             Vector2 worldPos = e.Position.ToWorldCoordinates();
             var source = new EntitySource_WorldGen($"MagikeTP:{e.ID}");
-            
+
             //超出容量的部分生成掉落物
             for (int i = Capacity; i < Items.Length; i++)
             {
