@@ -77,18 +77,18 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public override void SendData(ModPacket data)
         {
-            $"SendData-CapacityBase:{CapacityBase}".LoggerDomp();
+            //$"SendData-CapacityBase:{CapacityBase}".LoggerDomp();
             data.Write(CapacityBase);
 
-            $"SendData-CapacityExtra:{CapacityExtra}".LoggerDomp();
+            //$"SendData-CapacityExtra:{CapacityExtra}".LoggerDomp();
             data.Write(CapacityExtra);
 
-            $"SendData-Items[].Length:{Items.Length}".LoggerDomp();
+            //$"SendData-Items[].Length:{Items.Length}".LoggerDomp();
             data.Write(Items.Length);
 
             for (int i = 0; i < Items.Length; i++)
             {
-                $"SendData-Items.type:{Items[i].type}".LoggerDomp();
+                //$"SendData-Items.type:{Items[i].type}".LoggerDomp();
                 data.Write(Items[i].type);
                 data.Write(Items[i].stack);
                 data.Write(Items[i].prefix);
@@ -98,13 +98,13 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public override void ReceiveData(BinaryReader reader, int whoAmI)
         {
             CapacityBase = reader.ReadInt32();
-            $"ReceiveData-CapacityBase:{CapacityBase}".LoggerDomp();
+            //$"ReceiveData-CapacityBase:{CapacityBase}".LoggerDomp();
 
             CapacityExtra = reader.ReadInt32();
-            $"ReceiveData-CapacityExtra:{CapacityExtra}".LoggerDomp();
+            //$"ReceiveData-CapacityExtra:{CapacityExtra}".LoggerDomp();
 
             int length = reader.ReadInt32();
-            $"ReceiveData-Items[].Length:{length}".LoggerDomp();
+            //$"ReceiveData-Items[].Length:{length}".LoggerDomp();
 
             List<Item> itemList = [];
             if (length > 99)
@@ -116,9 +116,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 int type = reader.ReadInt32();
                 int stack = reader.ReadInt32();
                 int prefix = reader.ReadInt32();
-                $"ReceiveData-Items.type:{type}".LoggerDomp();
-                $"ReceiveData-Items.stack:{stack}".LoggerDomp();
-                $"ReceiveData-Items.prefix:{prefix}".LoggerDomp();
+                //$"ReceiveData-Items.type:{type}".LoggerDomp();
+                //$"ReceiveData-Items.stack:{stack}".LoggerDomp();
+                //$"ReceiveData-Items.prefix:{prefix}".LoggerDomp();
                 if (type < 0 || type >= ItemLoader.ItemCount)
                 {
                     type = ItemID.None;
