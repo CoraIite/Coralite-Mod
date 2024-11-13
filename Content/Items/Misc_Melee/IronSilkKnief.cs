@@ -161,8 +161,8 @@ namespace Coralite.Content.Items.Misc_Melee
 
             //绘制自己
             int dir = Math.Sign(totalAngle);
-            float extraRot = OwnerDirection < 0 ? MathHelper.Pi : 0;
-            extraRot += OwnerDirection == dir ? 0 : MathHelper.Pi;
+            float extraRot = DirSign < 0 ? MathHelper.Pi : 0;
+            extraRot += DirSign == dir ? 0 : MathHelper.Pi;
             extraRot += spriteRotation * dir;
 
             Main.spriteBatch.Draw(mainTex, endPos, null, lightColor, Projectile.rotation + extraRot, mainTex.Size() / 2, Projectile.scale, CheckEffect(), 0);

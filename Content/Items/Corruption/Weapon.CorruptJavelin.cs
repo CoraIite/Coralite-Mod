@@ -379,7 +379,7 @@ namespace Coralite.Content.Items.Corruption
             Owner.heldProj = Projectile.whoAmI;
             Owner.itemTime = Owner.itemAnimation = 2;
             Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
-            Owner.itemRotation = Projectile.rotation + (OwnerDirection > 0 ? 0 : MathHelper.Pi);
+            Owner.itemRotation = Projectile.rotation + (DirSign > 0 ? 0 : MathHelper.Pi);
             Projectile.spriteDirection = Main.MouseWorld.X > Projectile.Center.X ? 1 : -1;
 
             do

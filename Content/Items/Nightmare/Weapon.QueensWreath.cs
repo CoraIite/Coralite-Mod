@@ -294,7 +294,7 @@ namespace Coralite.Content.Items.Nightmare
                 case 0: //普普通通的射箭
                     {
                         Projectile.Center = Owner.Center + (Projectile.rotation.ToRotationVector2() * 16);
-                        Owner.itemRotation = Projectile.rotation + (OwnerDirection > 0 ? 0 : 3.141f);
+                        Owner.itemRotation = Projectile.rotation + (DirSign > 0 ? 0 : 3.141f);
 
                         //如果满足条件且没有右键过 那么就再次射击
                         if (NotRightClicked && Main.mouseRight && Main.mouseRightRelease
@@ -326,7 +326,7 @@ namespace Coralite.Content.Items.Nightmare
                 case 1: //射出能够获得梦魇光能的
                     {
                         Projectile.Center = Owner.Center + (Projectile.rotation.ToRotationVector2() * 16);
-                        Owner.itemRotation = Projectile.rotation + (OwnerDirection > 0 ? 0 : 3.141f);
+                        Owner.itemRotation = Projectile.rotation + (DirSign > 0 ? 0 : 3.141f);
 
                         //如果满足条件且没有右键过 那么就再次射击
                         if (NotRightClicked && Main.mouseRight && Main.mouseRightRelease
@@ -358,7 +358,7 @@ namespace Coralite.Content.Items.Nightmare
                 case 2://横向冲刺
                     do
                     {
-                        Owner.itemRotation = Projectile.rotation + (OwnerDirection > 0 ? 0 : 3.141f);
+                        Owner.itemRotation = Projectile.rotation + (DirSign > 0 ? 0 : 3.141f);
                         if (Timer < 20)
                         {
                             Owner.itemTime = Owner.itemAnimation = 20;
@@ -491,7 +491,7 @@ namespace Coralite.Content.Items.Nightmare
                 case 3://向上冲刺
                     do
                     {
-                        Owner.itemRotation = Projectile.rotation + (OwnerDirection > 0 ? 0 : 3.141f);
+                        Owner.itemRotation = Projectile.rotation + (DirSign > 0 ? 0 : 3.141f);
                         if (Timer < 20)
                         {
                             Projectile.rotation += MathHelper.TwoPi / 20;
@@ -588,7 +588,7 @@ namespace Coralite.Content.Items.Nightmare
                     {
                         do
                         {
-                            Owner.itemRotation = Projectile.rotation + (OwnerDirection > 0 ? 0 : 3.141f);
+                            Owner.itemRotation = Projectile.rotation + (DirSign > 0 ? 0 : 3.141f);
                             if (Timer < 20)
                             {
                                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
@@ -876,7 +876,7 @@ namespace Coralite.Content.Items.Nightmare
             Texture2D mainTex = Projectile.GetTexture();
             Vector2 center = Projectile.Center - Main.screenPosition;
 
-            Main.spriteBatch.Draw(mainTex, center, null, lightColor, Projectile.rotation, mainTex.Size() / 2, 1.1f, OwnerDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0f);
+            Main.spriteBatch.Draw(mainTex, center, null, lightColor, Projectile.rotation, mainTex.Size() / 2, 1.1f, DirSign > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0f);
 
             return false;
         }

@@ -50,6 +50,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
     public class FilterProj : BaseHeldProj, IDrawNonPremultiplied
     {
         public override string Texture => AssetDirectory.Blank;
+        private bool onspan;
 
         public Point16 BasePosition
         {
@@ -68,13 +69,14 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
         public override bool? CanDamage() => false;
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) => false;
 
-        public override void OnSpawn(IEntitySource source)
-        {
-            TargetPoint = BasePosition;
-        }
-
         public override void AI()
         {
+            if (!onspan)
+            {
+                TargetPoint = BasePosition;
+                onspan = true;
+            }
+
             Projectile.Center = Owner.Center;
 
             if (Owner.HeldItem.ModItem is not FilterItem)
@@ -83,10 +85,10 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
                 return;
             }
 
-            if (Owner.channel)
+            if (DownLeft)
             {
                 Owner.itemTime = Owner.itemAnimation = 7;
-                TargetPoint = Main.MouseWorld.ToTileCoordinates16();
+                TargetPoint = InMousePos.ToTileCoordinates16();
 
                 //限制范围
                 if (Math.Abs(TargetPoint.X - BasePosition.X) > GamePlaySystem.SelectSize)
@@ -102,7 +104,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
             }
 
             //右键直接停止使用
-            if (Main.mouseRight)
+            if (DownRight)
             {
                 Projectile.Kill();
                 return;

@@ -86,7 +86,7 @@ namespace Coralite.Content.Items.MagikeSeries1
 
         public override void AI()
         {
-            SetHeldProj();
+            SetHeld();
             LockOwnerItemTime();
 
             Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
@@ -192,7 +192,7 @@ namespace Coralite.Content.Items.MagikeSeries1
          
         public Vector2 GetHandleTopPos()
         {
-            return Owner.MountedCenter + new Vector2(OwnerDirection * 26, -26);
+            return Owner.MountedCenter + new Vector2(DirSign * 26, -26);
         }
 
         public virtual void DrawLine(Vector2 handlePos, Vector2 stringTipPos)
@@ -325,9 +325,9 @@ namespace Coralite.Content.Items.MagikeSeries1
             DrawLine(handleTopPos, center);
 
             Texture2D mainTex = Projectile.GetTexture();
-            SpriteEffects effects = OwnerDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            SpriteEffects effects = DirSign > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
-            Main.spriteBatch.Draw(mainTex, Owner.MountedCenter + new Vector2(base.OwnerDirection * 16, -8) - Main.screenPosition, null
+            Main.spriteBatch.Draw(mainTex, Owner.MountedCenter + new Vector2(base.DirSign * 16, -8) - Main.screenPosition, null
                 , Lighting.GetColor(Owner.MountedCenter.ToTileCoordinates()), 0, mainTex.Size() / 2, 1, effects, 0);
 
             mainTex = baitTex.Value;

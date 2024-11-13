@@ -73,7 +73,7 @@ namespace Coralite.Core.Prefabs.Projectiles
 
             AIAfter();
 
-            Owner.itemRotation = Rotation + (OwnerDirection > 0 ? 0 : 3.141f);
+            Owner.itemRotation = Rotation + (DirSign > 0 ? 0 : 3.141f);
         }
 
         public virtual void Initialize()
@@ -96,7 +96,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         public virtual void SetCenter()
         {
             Vector2 offset = GetOffset();
-            Vector2 dir2 = (Rotation + (OwnerDirection > 0 ? 1.57f : -1.57f)).ToRotationVector2();
+            Vector2 dir2 = (Rotation + (DirSign > 0 ? 1.57f : -1.57f)).ToRotationVector2();
             Projectile.Center = Owner.Center + (Rotation.ToRotationVector2() * offset.X) + dir2 * offset.Y+new Vector2(0,Owner.gfxOffY);
         }
 

@@ -143,7 +143,7 @@ namespace Coralite.Content.Items.Misc_Melee
                 Owner.heldProj = Projectile.whoAmI;
                 Projectile.rotation += Owner.direction * MathHelper.TwoPi * 2 / Owner.itemTimeMax;
 
-                Owner.itemRotation = Projectile.rotation + (OwnerDirection > 0 ? 0 : MathHelper.Pi);
+                Owner.itemRotation = Projectile.rotation + (DirSign > 0 ? 0 : MathHelper.Pi);
                 Projectile.Center = Owner.Center + (Projectile.rotation.ToRotationVector2() * rollingLength);
             }
             else

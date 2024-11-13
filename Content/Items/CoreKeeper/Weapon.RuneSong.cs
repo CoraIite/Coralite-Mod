@@ -295,7 +295,7 @@ namespace Coralite.Content.Items.CoreKeeper
             Projectile.velocity *= 0f;
             if (Owner.whoAmI == Main.myPlayer)
             {
-                _Rotation = GetStartAngle() - (OwnerDirection * startAngle);//设定起始角度
+                _Rotation = GetStartAngle() - (DirSign * startAngle);//设定起始角度
                 //totalAngle *= OwnerDirection;
             }
 
@@ -338,7 +338,7 @@ namespace Coralite.Content.Items.CoreKeeper
             {
                 channelCount++;
                 Timer = 1;
-                _Rotation = GetStartAngle() - (OwnerDirection * startAngle);
+                _Rotation = GetStartAngle() - (DirSign * startAngle);
                 Slasher();
                 if (channelTimer < ChannelTimeMax)
                 {
@@ -368,8 +368,8 @@ namespace Coralite.Content.Items.CoreKeeper
                 {
                     Timer = minTime + 1;
 
-                    _Rotation = startAngle = GetStartAngle() - (OwnerDirection * startAngle);//设定起始角度
-                    totalAngle *= OwnerDirection;
+                    _Rotation = startAngle = GetStartAngle() - (DirSign * startAngle);//设定起始角度
+                    totalAngle *= DirSign;
 
                     //Helper.PlayPitched("Misc/Slash", 0.4f, 0f, Owner.Center);
                     Helper.PlayPitched("CoreKeeper/swordLegendaryAttack", 0.7f, 0, Owner.Center);

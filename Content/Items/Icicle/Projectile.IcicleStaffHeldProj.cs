@@ -36,11 +36,11 @@ namespace Coralite.Content.Items.Icicle
 
         public override void OnSpawn(IEntitySource source)
         {
-            Projectile.Center = Owner.Center + new Vector2(OwnerDirection * 16, -16);
+            Projectile.Center = Owner.Center + new Vector2(DirSign * 16, -16);
             if (Main.myPlayer == Projectile.owner)
             {
                 //大概是手持法杖的角度
-                Projectile.rotation = Rotate = (OwnerDirection * 0.3f) - (Owner.gravDir * 1.57f) + 0.785f;
+                Projectile.rotation = Rotate = (DirSign * 0.3f) - (Owner.gravDir * 1.57f) + 0.785f;
             }
         }
 
@@ -60,7 +60,7 @@ namespace Coralite.Content.Items.Icicle
                     Projectile.Center = Owner.Center/* + new Vector2(Owner.direction * 4, -4)*/;
                     float sinProgress = MathF.Sin(7.852f * Timer / SWING_TIME);
                     //摇晃一下
-                    Projectile.rotation = Rotate + (sinProgress * -OwnerDirection * 0.4f);
+                    Projectile.rotation = Rotate + (sinProgress * -DirSign * 0.4f);
 
                     visualEffectScale += 0.5f / SWING_TIME;
 
@@ -98,7 +98,7 @@ namespace Coralite.Content.Items.Icicle
 
             Owner.heldProj = Projectile.whoAmI;
             Owner.itemTime = Owner.itemAnimation = 3;
-            Owner.itemRotation = Projectile.rotation + (OwnerDirection > 0 ? -0.6f : 2.2f);
+            Owner.itemRotation = Projectile.rotation + (DirSign > 0 ? -0.6f : 2.2f);
             Projectile.timeLeft = 2;
 
             visualEffectRotate += 0.4f;

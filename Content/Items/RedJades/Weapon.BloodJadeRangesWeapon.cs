@@ -327,7 +327,7 @@ namespace Coralite.Content.Items.RedJades
             {
                 if (Timer == 0)
                 {
-                    Angle = MouseTargetAngle - (Owner.direction * 1f);
+                    Angle = ToMouseA - (Owner.direction * 1f);
                 }
                 if (Timer < 12)
                 {
@@ -403,7 +403,7 @@ namespace Coralite.Content.Items.RedJades
                 {
                     for (int i = -1; i < 2; i += 2)
                     {
-                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, MouseTargetVector2.RotatedBy(i * 0.3f) * 11, ProjectileType<BloodJadeFrisbee>(),
+                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, UnitToMouseV.RotatedBy(i * 0.3f) * 11, ProjectileType<BloodJadeFrisbee>(),
                             (int)(Projectile.damage * 0.6f), Projectile.knockBack, Projectile.owner, 1);
                     }
                     Owner.AddImmuneTime(ImmunityCooldownID.General, immuneTime);

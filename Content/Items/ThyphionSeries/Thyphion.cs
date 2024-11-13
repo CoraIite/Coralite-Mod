@@ -227,7 +227,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         {
             Texture2D mainTex = Projectile.GetTexture();
             Vector2 center = Projectile.Center - Main.screenPosition;
-            var effect = OwnerDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically;
+            var effect = DirSign > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically;
             var origin = mainTex.Size() / 2;
 
             Main.spriteBatch.Draw(mainTex, center, null, lightColor, Projectile.rotation, origin, 1, effect, 0f);

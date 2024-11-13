@@ -146,7 +146,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void Move()
         {
-            Vector2 idlePos = Owner.Center + new Vector2(OwnerDirection * 48, 0);
+            Vector2 idlePos = Owner.Center + new Vector2(DirSign * 48, 0);
             for (int i = 0; i < 8; i++)//检测头顶2个方块并尝试找到没有物块阻挡的那个
             {
                 Tile idleTile = Framing.GetTileSafely(idlePos.ToTileCoordinates());

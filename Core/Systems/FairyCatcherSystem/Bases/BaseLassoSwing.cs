@@ -74,7 +74,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             Projectile.velocity *= 0f;
             if (Owner.whoAmI == Main.myPlayer)
             {
-                _Rotation = GetStartAngle() - (OwnerDirection * startAngle);//设定起始角度
+                _Rotation = GetStartAngle() - (DirSign * startAngle);//设定起始角度
             }
 
             Smoother.ReCalculate(maxTime - minTime);
@@ -109,7 +109,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         protected override void BeforeSlash()
         {
             //Projectile.Kill();
-            _Rotation = GetStartAngle() - (OwnerDirection * (startAngle + (MathF.Sin(Timer / minTime * 2.5f * MathHelper.Pi) * 0.55f)));
+            _Rotation = GetStartAngle() - (DirSign * (startAngle + (MathF.Sin(Timer / minTime * 2.5f * MathHelper.Pi) * 0.55f)));
             distanceToOwner = Helper.Lerp(minDistance / 2, minDistance, Timer / minTime);
             Slasher();
 
@@ -133,7 +133,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         {
             float factor = (Timer - maxTime) / delayTime;
             distanceToOwner = Helper.Lerp(maxDistance, 0, Coralite.Instance.SqrtSmoother.Smoother(factor));
-            _Rotation += OwnerDirection * 0.02f;
+            _Rotation += DirSign * 0.02f;
 
             if ((int)Timer == maxTime + trailCount + 1)
                 ShootFairy();
@@ -352,7 +352,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         public virtual void DrawHandle(Texture2D HandleTex)
         {
             Main.spriteBatch.Draw(HandleTex, Owner.itemLocation - Main.screenPosition, null,
-                Lighting.GetColor(Owner.Center.ToTileCoordinates()), _Rotation + (OwnerDirection * spriteRotation), HandleTex.Size() / 2, 1f, Owner.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
+                Lighting.GetColor(Owner.Center.ToTileCoordinates()), _Rotation + (DirSign * spriteRotation), HandleTex.Size() / 2, 1f, Owner.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
         }
 
         public virtual Color GetStringColor(Vector2 pos)

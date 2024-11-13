@@ -86,7 +86,7 @@ namespace Coralite.Content.Items.ShadowCastle
         public override void Initialize()
         {
             base.Initialize();
-            float rotation = TargetRot + (OwnerDirection > 0 ? 0 : MathHelper.Pi);
+            float rotation = TargetRot + (DirSign > 0 ? 0 : MathHelper.Pi);
             Vector2 dir = rotation.ToRotationVector2();
             Vector2 center = Projectile.Center + (dir * 24);
             for (int i = 0; i < 8; i++)
@@ -118,15 +118,15 @@ namespace Coralite.Content.Items.ShadowCastle
 
         public override void OnSpawn(IEntitySource source)
         {
-            Projectile.rotation = MouseTargetAngle;
+            Projectile.rotation = ToMouseA;
         }
 
         public override void AI()
         {
             LockOwnerItemTime();
-            SetHeldProj();
-            Owner.itemRotation = MouseTargetAngle + (OwnerDirection > 0 ? 0f : MathHelper.Pi) + (Owner.gravDir > 0 ? 0f : MathHelper.Pi) + (OwnerDirection * 0.3f);
-            Projectile.Center = Owner.Center + (MouseTargetVector2 * 20);
+            SetHeld();
+            Owner.itemRotation = ToMouseA + (DirSign > 0 ? 0f : MathHelper.Pi) + (Owner.gravDir > 0 ? 0f : MathHelper.Pi) + (DirSign * 0.3f);
+            Projectile.Center = Owner.Center + (UnitToMouseV * 20);
             Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
 
             switch (State)
@@ -166,7 +166,7 @@ namespace Coralite.Content.Items.ShadowCastle
 
                             if (Owner.PickAmmo(Owner.HeldItem, out int proj, out float speed, out int damage, out float knockBack, out _))
                                 for (int i = 0; i < 6; i++)
-                                    Projectile.NewProjectileFromThis(Owner.Center, MouseTargetVector2.RotatedBy(Main.rand.NextFloat(-0.15f, 0.15f)) * speed, proj,
+                                    Projectile.NewProjectileFromThis(Owner.Center, UnitToMouseV.RotatedBy(Main.rand.NextFloat(-0.15f, 0.15f)) * speed, proj,
                                     (int)(damage * 0.55f), knockBack);
 
                             State++;
@@ -179,7 +179,7 @@ namespace Coralite.Content.Items.ShadowCastle
                         else
                             Projectile.timeLeft = 20;
 
-                        Projectile.rotation = MouseTargetAngle;
+                        Projectile.rotation = ToMouseA;
                     }
                     break;
             }
@@ -189,8 +189,8 @@ namespace Coralite.Content.Items.ShadowCastle
         {
             Texture2D mainTex = Projectile.GetTexture();
 
-            SpriteEffects effects = OwnerDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            float rot = Projectile.rotation + (OwnerDirection > 0 ? 0f : MathHelper.Pi);
+            SpriteEffects effects = DirSign > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            float rot = Projectile.rotation + (DirSign > 0 ? 0f : MathHelper.Pi);
             Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, null, lightColor, rot, mainTex.Size() / 2, Projectile.scale, effects, 0f);
 
             return false;

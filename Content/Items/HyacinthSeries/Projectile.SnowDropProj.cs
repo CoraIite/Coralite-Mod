@@ -25,7 +25,7 @@ namespace Coralite.Content.Items.HyacinthSeries
         public override void Initialize()
         {
             base.Initialize();
-            float rotation = TargetRot + (OwnerDirection > 0 ? 0 : MathHelper.Pi);
+            float rotation = TargetRot + (DirSign > 0 ? 0 : MathHelper.Pi);
             Vector2 dir = rotation.ToRotationVector2();
             Vector2 center = Projectile.Center + (dir * 32);
             for (int i = 0; i < 16; i++)

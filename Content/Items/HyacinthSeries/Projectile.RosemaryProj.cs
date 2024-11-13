@@ -23,7 +23,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             if (Main.myPlayer == Projectile.owner)
             {
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
-                TargetRot = (Main.MouseWorld - Owner.Center).ToRotation() + (OwnerDirection > 0 ? 0f : MathHelper.Pi);
+                TargetRot = (Main.MouseWorld - Owner.Center).ToRotation() + (DirSign > 0 ? 0f : MathHelper.Pi);
                 if (TargetRot == 0f)
                     TargetRot = 0.0001f;
             }
@@ -43,7 +43,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             if (Main.myPlayer == Projectile.owner)
             {
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
-                TargetRot = (Main.MouseWorld - Owner.Center).ToRotation() + (OwnerDirection > 0 ? 0f : MathHelper.Pi);
+                TargetRot = (Main.MouseWorld - Owner.Center).ToRotation() + (DirSign > 0 ? 0f : MathHelper.Pi);
                 if (TargetRot == 0f)
                     TargetRot = 0.0001f;
             }

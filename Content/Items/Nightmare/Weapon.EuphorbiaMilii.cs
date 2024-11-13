@@ -182,7 +182,7 @@ namespace Coralite.Content.Items.Nightmare
                     maxTime = (int)(Owner.itemTimeMax * 0.5f) + 27 + 22;
                     Smoother = Coralite.Instance.BezierEaseSmoother;
                     distanceToOwner = -Projectile.height / 2;
-                    nextStartAngle = GetStartAngle() - (OwnerDirection * 2.4f);
+                    nextStartAngle = GetStartAngle() - (DirSign * 2.4f);
                     delay = 20;
                     useTurnOnStart = false;
                     Helper.PlayPitched("Misc/HeavySwing2", 0.4f, 0.2f, Projectile.Center);
@@ -206,7 +206,7 @@ namespace Coralite.Content.Items.Nightmare
                         maxTime = (int)(Owner.itemTimeMax * 0.5f) + 27 + 22;
                         Smoother = Coralite.Instance.BezierEaseSmoother;
                         distanceToOwner = 10 - (Projectile.height / 2);
-                        nextStartAngle = GetStartAngle() - (OwnerDirection * -2.2f);
+                        nextStartAngle = GetStartAngle() - (DirSign * -2.2f);
 
                         delay = 0;
                         useTurnOnStart = false;
@@ -277,7 +277,7 @@ namespace Coralite.Content.Items.Nightmare
                     totalAngle = -4.85f;
                     maxTime = (int)(Owner.itemTimeMax * 0.5f) + 27 + 22;
                     Smoother = Coralite.Instance.BezierEaseSmoother;
-                    nextStartAngle = GetStartAngle() - (OwnerDirection * -2.2f);
+                    nextStartAngle = GetStartAngle() - (DirSign * -2.2f);
 
                     //distanceToOwner = -Projectile.height / 2;
                     delay = 18;
@@ -462,7 +462,7 @@ namespace Coralite.Content.Items.Nightmare
                     Projectile.scale = 1 + (Coralite.Instance.SinSmoother.Smoother(timer, maxTime - minTime) * 0.3f);
                     if (timer == Owner.itemTimeMax)
                     {
-                        float start = nextStartAngle + (OwnerDirection * 2.4f);
+                        float start = nextStartAngle + (DirSign * 2.4f);
 
                         Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, start.ToRotationVector2() * 22, ProjectileType<EuphorbiaSpike>(), (int)(Projectile.damage * 1.5f), Projectile.knockBack, Projectile.owner);
 
@@ -480,7 +480,7 @@ namespace Coralite.Content.Items.Nightmare
                     Projectile.scale = Helper.EllipticalEase(2.4f - (4.9f * Smoother.Smoother(timer, maxTime - minTime)), 1f, 1.4f);
                     if (timer == Owner.itemTimeMax / 3)
                     {
-                        float start = nextStartAngle + (OwnerDirection * 2.4f);
+                        float start = nextStartAngle + (DirSign * 2.4f);
 
                         Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, start.ToRotationVector2() * 22, ProjectileType<EuphorbiaSpike>(), (int)(Projectile.damage * 1.5f), Projectile.knockBack, Projectile.owner);
 
@@ -497,7 +497,7 @@ namespace Coralite.Content.Items.Nightmare
                     distanceToOwner = 10 - (Projectile.height / 2) + (Smoother.Smoother(timer, maxTime - minTime) * 5);
                     if (timer == Owner.itemTimeMax)
                     {
-                        float start = nextStartAngle + (OwnerDirection * -2.2f);
+                        float start = nextStartAngle + (DirSign * -2.2f);
 
                         Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, start.ToRotationVector2() * 22, ProjectileType<EuphorbiaSpike>(), (int)(Projectile.damage * 1.75f), Projectile.knockBack, Projectile.owner);
 
@@ -515,7 +515,7 @@ namespace Coralite.Content.Items.Nightmare
                     Projectile.scale = Helper.EllipticalEase(1.4f - (4.4f * Smoother.Smoother(timer, maxTime - minTime)), 1.2f, 1.4f);
                     if (timer == Owner.itemTimeMax)
                     {
-                        float start = nextStartAngle + (OwnerDirection * -2.2f);
+                        float start = nextStartAngle + (DirSign * -2.2f);
 
                         for (int i = -3; i < 3; i++)
                         {
@@ -528,7 +528,7 @@ namespace Coralite.Content.Items.Nightmare
                     Projectile.scale = Helper.EllipticalEase(2.2f - (4.4f * Smoother.Smoother(timer, maxTime - minTime)), 1.2f, 1.4f);
                     if (timer == Owner.itemTimeMax / 3)
                     {
-                        float start = nextStartAngle + (OwnerDirection * -2.2f);
+                        float start = nextStartAngle + (DirSign * -2.2f);
 
                         Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, start.ToRotationVector2() * 22, ProjectileType<EuphorbiaSpike>(), (int)(Projectile.damage * 2f), Projectile.knockBack, Projectile.owner);
 
@@ -560,7 +560,7 @@ namespace Coralite.Content.Items.Nightmare
                     Projectile.scale = Helper.EllipticalEase(2.2f - (4.85f * Smoother.Smoother(timer, maxTime - minTime)), 1f, 1.2f);
                     if (timer == Owner.itemTimeMax)
                     {
-                        float start = nextStartAngle + (OwnerDirection * -2.2f);
+                        float start = nextStartAngle + (DirSign * -2.2f);
 
                         for (int i = -3; i < 3; i++)
                         {
@@ -573,7 +573,7 @@ namespace Coralite.Content.Items.Nightmare
                     Projectile.scale = Helper.EllipticalEase(2.2f - (4.85f * Smoother.Smoother(timer, maxTime - minTime)), 1f, 1.2f);
                     if (timer == Owner.itemTimeMax / 3)
                     {
-                        float start = nextStartAngle + (OwnerDirection * -2.2f);
+                        float start = nextStartAngle + (DirSign * -2.2f);
 
                         Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, start.ToRotationVector2() * 22, ProjectileType<EuphorbiaSpike>(), (int)(Projectile.damage * 2f), Projectile.knockBack, Projectile.owner);
 
@@ -817,7 +817,7 @@ namespace Coralite.Content.Items.Nightmare
             Projectile.velocity *= 0f;
             if (Owner.whoAmI == Main.myPlayer)
             {
-                _Rotation = GetStartAngle() - (OwnerDirection * startAngle);//设定起始角度
+                _Rotation = GetStartAngle() - (DirSign * startAngle);//设定起始角度
             }
 
             Slasher();
@@ -841,7 +841,7 @@ namespace Coralite.Content.Items.Nightmare
             {
                 Timer = 2;
 
-                _Rotation = GetStartAngle() - (OwnerDirection * startAngle);
+                _Rotation = GetStartAngle() - (DirSign * startAngle);
                 Slasher();
 
                 if (ChannelTime < MaxChannelTime / 2)

@@ -641,7 +641,7 @@ namespace Coralite.Content.Items.Icicle
             Projectile.velocity *= 0f;
             if (Owner.whoAmI == Main.myPlayer)
             {
-                _Rotation = GetStartAngle() - (OwnerDirection * startAngle);//设定起始角度
+                _Rotation = GetStartAngle() - (DirSign * startAngle);//设定起始角度
             }
 
             Slasher();
@@ -676,12 +676,12 @@ namespace Coralite.Content.Items.Icicle
 
             if (Timer < 30)
                 startAngle += 0.05f;
-            _Rotation = GetStartAngle() - (OwnerDirection * startAngle);
+            _Rotation = GetStartAngle() - (DirSign * startAngle);
             Slasher();
             if ((int)Timer == minTime)
             {
-                _Rotation = startAngle = GetStartAngle() - (OwnerDirection * startAngle);//设定起始角度
-                totalAngle *= OwnerDirection;
+                _Rotation = startAngle = GetStartAngle() - (DirSign * startAngle);//设定起始角度
+                totalAngle *= DirSign;
 
                 //Helper.PlayPitched("Misc/Slash", 0.4f, 0f, Owner.Center);
                 SoundEngine.PlaySound(CoraliteSoundID.IceMagic_Item28, Projectile.Center);

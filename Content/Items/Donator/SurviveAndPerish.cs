@@ -165,7 +165,7 @@ namespace Coralite.Content.Items.Donator
             if (Main.myPlayer == Projectile.owner)
             {
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
-                TargetRot = (Main.MouseWorld - Owner.Center).ToRotation() + (OwnerDirection > 0 ? 0f : MathHelper.Pi);
+                TargetRot = (Main.MouseWorld - Owner.Center).ToRotation() + (DirSign > 0 ? 0f : MathHelper.Pi);
             }
 
             Projectile.netUpdate = true;
@@ -187,7 +187,7 @@ namespace Coralite.Content.Items.Donator
         {
             frame = mainTex.Frame(1, 6, 0, Projectile.frame);
             origin = frame.Value.Size() / 2;
-            origin.X -= OwnerDirection * frame.Value.Width / 6;
+            origin.X -= DirSign * frame.Value.Width / 6;
         }
     }
 
@@ -267,7 +267,7 @@ namespace Coralite.Content.Items.Donator
                             SoundEngine.PlaySound(CoraliteSoundID.NoUse_BlowgunPlus_Item65, Projectile.Center);
                         }
 
-                        Vector2 pos = Projectile.Center + ((Projectile.rotation + (OwnerDirection > 0 ? 0 : 3.141f)).ToRotationVector2() * 10) - (Vector2.UnitY * 30);
+                        Vector2 pos = Projectile.Center + ((Projectile.rotation + (DirSign > 0 ? 0 : 3.141f)).ToRotationVector2() * 10) - (Vector2.UnitY * 30);
 
                         for (int i = 0; i < 2; i++)
                         {
@@ -279,8 +279,8 @@ namespace Coralite.Content.Items.Donator
                         if (Projectile.frame == 3)
                         {
                             //生成gore
-                            Gore.NewGoreDirect(Projectile.GetSource_FromAI(), pos + new Vector2(OwnerDirection > 0 ? 0 : -30, 0)
-                                , new Vector2(OwnerDirection, -2), Mod.Find<ModGore>("PerishMissileCompartment").Type);
+                            Gore.NewGoreDirect(Projectile.GetSource_FromAI(), pos + new Vector2(DirSign > 0 ? 0 : -30, 0)
+                                , new Vector2(DirSign, -2), Mod.Find<ModGore>("PerishMissileCompartment").Type);
                             SoundEngine.PlaySound(CoraliteSoundID.MartianDrone_HitMetal_NPCHit42, Projectile.Center);
                             State++;
                             Timer = 60 * 2;
@@ -317,8 +317,8 @@ namespace Coralite.Content.Items.Donator
                     break;
             }
 
-            Projectile.Center = Owner.Center + new Vector2(-OwnerDirection * 22, -8);
-            float targetRot = (MathF.Sign(Main.MouseWorld.X - Projectile.Center.X) == OwnerDirection ? 1 : -1)
+            Projectile.Center = Owner.Center + new Vector2(-DirSign * 22, -8);
+            float targetRot = (MathF.Sign(Main.MouseWorld.X - Projectile.Center.X) == DirSign ? 1 : -1)
                 * Math.Clamp((Main.MouseWorld.Y - Projectile.Center.Y) / 300, -0.2f, 0.2f);
             Projectile.rotation = Projectile.rotation.AngleLerp(targetRot, 0.2f);
         }
@@ -330,7 +330,7 @@ namespace Coralite.Content.Items.Donator
             if (Timer % 6 == 0)
             {
                 Vector2 pos = Projectile.Center;
-                float rot = (OwnerDirection * Projectile.rotation) + (OwnerDirection > 0 ? 0 : MathHelper.Pi);
+                float rot = (DirSign * Projectile.rotation) + (DirSign > 0 ? 0 : MathHelper.Pi);
                 Vector2 dir = rot.ToRotationVector2();
                 pos -= Vector2.UnitY * 14;
                 pos += dir * 40;
@@ -377,13 +377,13 @@ namespace Coralite.Content.Items.Donator
 
         public override bool PreDraw(ref Color lightColor)
         {
-            SpriteEffects eff = OwnerDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            SpriteEffects eff = DirSign > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             var pos = Projectile.Center - Main.screenPosition;
 
             if (drawed)
             {
                 Texture2D mainTex2 = ShoulderTex.Value;
-                Main.spriteBatch.Draw(mainTex2, pos + new Vector2(OwnerDirection * 10, 12), null, lightColor, 0, mainTex2.Size() / 2, Projectile.scale, eff, 0);
+                Main.spriteBatch.Draw(mainTex2, pos + new Vector2(DirSign * 10, 12), null, lightColor, 0, mainTex2.Size() / 2, Projectile.scale, eff, 0);
 
                 return false;
             }
@@ -391,9 +391,9 @@ namespace Coralite.Content.Items.Donator
             Texture2D mainTex = Projectile.GetTexture();
 
             var frame = mainTex.Frame(2, 11, frameX, Projectile.frame);
-            var origin = new Vector2((frame.Width / 2) - (OwnerDirection * frame.Width * 2 / 5), frame.Height * 3 / 4);
+            var origin = new Vector2((frame.Width / 2) - (DirSign * frame.Width * 2 / 5), frame.Height * 3 / 4);
 
-            Main.spriteBatch.Draw(mainTex, pos, frame, lightColor, Projectile.rotation * OwnerDirection, origin, Projectile.scale, eff, 0);
+            Main.spriteBatch.Draw(mainTex, pos, frame, lightColor, Projectile.rotation * DirSign, origin, Projectile.scale, eff, 0);
             drawed = true;
 
             return false;

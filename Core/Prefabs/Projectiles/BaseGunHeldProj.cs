@@ -61,7 +61,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             if (Main.myPlayer == Projectile.owner)
             {
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
-                TargetRot = (Main.MouseWorld - Owner.Center).ToRotation() + (OwnerDirection > 0 ? 0f : MathHelper.Pi);
+                TargetRot = (Main.MouseWorld - Owner.Center).ToRotation() + (DirSign > 0 ? 0f : MathHelper.Pi);
             }
 
             Projectile.netUpdate = true;
@@ -80,10 +80,10 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         public virtual void ApplyRecoil(float factor)
         {
-            Projectile.rotation = TargetRot - (OwnerDirection * factor * recoilAngle);
+            Projectile.rotation = TargetRot - (DirSign * factor * recoilAngle);
             HeldPositionX = heldPositionX + (factor * recoilLength);
             Projectile.Center = Owner.Center
-                + (OwnerDirection * Projectile.rotation.ToRotationVector2() * HeldPositionX)
+                + (DirSign * Projectile.rotation.ToRotationVector2() * HeldPositionX)
                 + ((Projectile.rotation + 1.57f).ToRotationVector2() * HeldPositionY);
         }
 
@@ -92,7 +92,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         public virtual void AfterAI(float factor)
         {
             Owner.heldProj = Projectile.whoAmI;
-            Owner.itemRotation = Projectile.rotation + (Owner.gravDir > 0 ? 0f : MathHelper.Pi) + (OwnerDirection * 0.3f);
+            Owner.itemRotation = Projectile.rotation + (Owner.gravDir > 0 ? 0f : MathHelper.Pi) + (DirSign * 0.3f);
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -101,7 +101,7 @@ namespace Coralite.Core.Prefabs.Projectiles
 
             GetFrame(mainTex, out Rectangle? frame, out Vector2 origin);
 
-            SpriteEffects effects = OwnerDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            SpriteEffects effects = DirSign > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, frame, lightColor
                 , Projectile.rotation, origin, Projectile.scale, effects, 0f);
             return false;

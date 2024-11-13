@@ -25,7 +25,7 @@
 
         public override void AI()
         {
-            SetHeldProj();
+            SetHeld();
         }
 
         public override bool PreDraw(ref Color lightColor)

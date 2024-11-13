@@ -356,7 +356,7 @@ namespace Coralite.Content.Items.Nightmare
 
             Projectile.Center = Owner.Center;
             Owner.heldProj = Projectile.whoAmI;
-            Owner.itemRotation = Projectile.rotation + (OwnerDirection > 0 ? 0 : MathHelper.Pi);
+            Owner.itemRotation = Projectile.rotation + (DirSign > 0 ? 0 : MathHelper.Pi);
             Owner.itemTime = Owner.itemAnimation = 2;
         }
 
@@ -373,7 +373,7 @@ namespace Coralite.Content.Items.Nightmare
             SpriteEffects effect = SpriteEffects.FlipHorizontally;
             float rot = Projectile.oldRot[0] + Projectile.rotation - MathHelper.PiOver2;
             float exRot = 0f;
-            if (OwnerDirection < 0)
+            if (DirSign < 0)
             {
                 rot -= MathHelper.Pi;
                 //exRot = MathHelper.Pi;

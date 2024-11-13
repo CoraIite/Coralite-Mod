@@ -210,8 +210,8 @@ namespace Coralite.Content.Items.CoreKeeper
             Projectile.velocity *= 0f;
             if (Owner.whoAmI == Main.myPlayer)
             {
-                _Rotation = GetStartAngle() - (OwnerDirection * startAngle);//设定起始角度
-                totalAngle *= OwnerDirection;
+                _Rotation = GetStartAngle() - (DirSign * startAngle);//设定起始角度
+                totalAngle *= DirSign;
             }
 
             Slasher();
@@ -243,12 +243,12 @@ namespace Coralite.Content.Items.CoreKeeper
             {
                 startAngle += Math.Sign(startAngle) * 0.03f;
 
-                _Rotation = GetStartAngle() - (OwnerDirection * startAngle);
+                _Rotation = GetStartAngle() - (DirSign * startAngle);
                 Slasher();
 
                 if (Timer == minTime)
                 {
-                    _Rotation = startAngle = GetStartAngle() - (OwnerDirection * startAngle);//设定起始角度
+                    _Rotation = startAngle = GetStartAngle() - (DirSign * startAngle);//设定起始角度
                     InitializeCaches();
                 }
                 return;
@@ -258,8 +258,8 @@ namespace Coralite.Content.Items.CoreKeeper
             {
                 channelCount++;
                 Timer = 1;
-                _Rotation = GetStartAngle() - (OwnerDirection * startAngle);
-                totalAngle = recordTotalAngle * OwnerDirection;
+                _Rotation = GetStartAngle() - (DirSign * startAngle);
+                totalAngle = recordTotalAngle * DirSign;
 
                 Slasher();
                 if (channelTimer < ChannelTimeMax)
@@ -290,7 +290,7 @@ namespace Coralite.Content.Items.CoreKeeper
                 {
                     Timer = minTime + 1;
 
-                    _Rotation = startAngle = GetStartAngle() - (OwnerDirection * startAngle);//设定起始角度
+                    _Rotation = startAngle = GetStartAngle() - (DirSign * startAngle);//设定起始角度
                     Helper.PlayPitched("CoreKeeper/swooshStrong", 0.9f, 0.2f, Owner.Center);
                     Projectile.damage = (int)(Projectile.damage * 4.5f);
                 }

@@ -20,7 +20,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public ref float Combo => ref Projectile.ai[1];
         public ref float StartAngle => ref Projectile.ai[2];
 
-        public override int OwnerDirection
+        public override int DirSign
         {
             get
             {
@@ -459,8 +459,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
             Projectile.velocity *= 0f;
             if (Owner.whoAmI == Main.myPlayer)
             {
-                _Rotation = startAngle = GetStartAngle() - (OwnerDirection * startAngle);//设定起始角度
-                totalAngle *= OwnerDirection;
+                _Rotation = startAngle = GetStartAngle() - (DirSign * startAngle);//设定起始角度
+                totalAngle *= DirSign;
             }
 
             Slasher();

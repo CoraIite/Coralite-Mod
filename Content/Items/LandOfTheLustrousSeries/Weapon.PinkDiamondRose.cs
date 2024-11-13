@@ -128,7 +128,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void Move()
         {
-            Vector2 idlePos = Owner.Center + new Vector2(-OwnerDirection * 32, 0);
+            Vector2 idlePos = Owner.Center + new Vector2(-DirSign * 32, 0);
             for (int i = 0; i < 12; i++)//检测头顶4个方块并尝试找到没有物块阻挡的那个
             {
                 Tile idleTile = Framing.GetTileSafely(idlePos.ToTileCoordinates());
@@ -161,7 +161,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 if (AttackTime > halfTime)
                 {
                     //蓄力旋转
-                    Projectile.rotation += OwnerDirection * MathHelper.TwoPi / halfTime;
+                    Projectile.rotation += DirSign * MathHelper.TwoPi / halfTime;
                     offset *= 0.9f;
                 }
                 else

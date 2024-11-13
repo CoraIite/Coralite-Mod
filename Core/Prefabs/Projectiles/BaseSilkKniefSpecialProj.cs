@@ -98,7 +98,7 @@ namespace Coralite.Core.Prefabs.Projectiles
                 if (Projectile.rotation % 4 < 0.2f)
                     SoundEngine.PlaySound(CoraliteSoundID.Swing2_Item7, Projectile.Center);
 
-                Owner.itemRotation = Projectile.rotation + (OwnerDirection > 0 ? 0 : MathHelper.Pi);
+                Owner.itemRotation = Projectile.rotation + (DirSign > 0 ? 0 : MathHelper.Pi);
                 Projectile.Center = Owner.Center + (Projectile.rotation.ToRotationVector2() * rollingLength);
             }
             else

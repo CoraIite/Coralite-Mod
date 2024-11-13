@@ -154,7 +154,7 @@ namespace Coralite.Content.Items.Thunder
             Vector2 center = Projectile.Center - Main.screenPosition;
 
             Main.spriteBatch.Draw(mainTex, center, null, lightColor, Projectile.rotation, mainTex.Size() / 2, 1
-                , OwnerDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0f);
+                , DirSign > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0f);
 
             return false;
         }

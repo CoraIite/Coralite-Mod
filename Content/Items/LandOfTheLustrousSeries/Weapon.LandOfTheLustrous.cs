@@ -222,8 +222,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     Helper.Lerp(
                         0,
                         (Owner.velocity.ToRotation()
-                            + (OwnerDirection > 0 ? 0 : (-Math.Sign(Owner.velocity.Y + 0.01f) * MathHelper.Pi)))
-                            + (OwnerDirection * Helper.Lerp(0, 0.6f, factor2))
+                            + (DirSign > 0 ? 0 : (-Math.Sign(Owner.velocity.Y + 0.01f) * MathHelper.Pi)))
+                            + (DirSign * Helper.Lerp(0, 0.6f, factor2))
                             + (MathF.Sin((float)Main.timeForVisualEffects * Helper.Lerp(0.05f, 0.15f, factor2)) * Helper.Lerp(0, 0.4f, factor2))
                         , factor2);
 
@@ -232,7 +232,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
                 for (int i = 0; i < oldDirections.Length - 1; i++)
                     oldDirections[i] = oldDirections[i + 1];
-                oldDirections[^1] = OwnerDirection;
+                oldDirections[^1] = DirSign;
 
                 int count = 0;
                 int old = oldDirections[0];

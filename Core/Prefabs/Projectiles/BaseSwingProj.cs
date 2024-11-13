@@ -159,8 +159,8 @@ namespace Coralite.Core.Prefabs.Projectiles
             Projectile.velocity *= 0f;
             if (Owner.whoAmI == Main.myPlayer)
             {
-                _Rotation = startAngle = GetStartAngle() - (OwnerDirection * startAngle);//设定起始角度
-                totalAngle *= OwnerDirection;
+                _Rotation = startAngle = GetStartAngle() - (DirSign * startAngle);//设定起始角度
+                totalAngle *= DirSign;
             }
 
             Slasher();
@@ -195,12 +195,12 @@ namespace Coralite.Core.Prefabs.Projectiles
             Timer++;
         }
 
-        public override void SendExtraAI(BinaryWriter writer)
+        public override void NetCodeHeldSend(BinaryWriter writer)
         {
             writer.Write(Timer);
         }
 
-        public override void ReceiveExtraAI(BinaryReader reader)
+        public override void NetCodeReceiveHeld(BinaryReader reader)
         {
             Timer = reader.ReadSingle();
         }
@@ -428,8 +428,8 @@ namespace Coralite.Core.Prefabs.Projectiles
         protected virtual float GetExRot()
         {
             int dir = Math.Sign(totalAngle);
-            float extraRot = OwnerDirection < 0 ? MathHelper.Pi : 0;
-            extraRot += OwnerDirection == dir ? 0 : MathHelper.Pi;
+            float extraRot = DirSign < 0 ? MathHelper.Pi : 0;
+            extraRot += DirSign == dir ? 0 : MathHelper.Pi;
             extraRot += spriteRotation * dir;
 
             return extraRot;
@@ -437,7 +437,7 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         protected virtual SpriteEffects CheckEffect()
         {
-            if (OwnerDirection < 0)
+            if (DirSign < 0)
             {
                 if (totalAngle > 0)
                     return SpriteEffects.None;

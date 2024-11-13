@@ -432,8 +432,8 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
             Vector2 origin = new(mainTex.Width / 2, mainTex.Height / 2);
 
             int dir = Math.Sign(totalAngle);
-            float extraRot = OwnerDirection < 0 ? MathHelper.Pi : 0;
-            extraRot += OwnerDirection == dir ? 0 : MathHelper.Pi;
+            float extraRot = DirSign < 0 ? MathHelper.Pi : 0;
+            extraRot += DirSign == dir ? 0 : MathHelper.Pi;
             extraRot += spriteRotation * dir;
 
             if (canDrawSelf)

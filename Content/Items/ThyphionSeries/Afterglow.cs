@@ -200,7 +200,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
                     Owner.itemTime = Owner.itemAnimation = 2;
 
-                    Rotation = Helper.Lerp(RecordAngle, OwnerDirection > 0 ? 0 : 3.141f, Timer / DashTime);
+                    Rotation = Helper.Lerp(RecordAngle, DirSign > 0 ? 0 : 3.141f, Timer / DashTime);
                     break;
                 }
 
@@ -272,7 +272,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             Texture2D mainTex = Projectile.GetTexture();
             Vector2 center = Projectile.Center - Main.screenPosition;
 
-            Main.spriteBatch.Draw(mainTex, center, null, lightColor, Projectile.rotation, mainTex.Size() / 2, 1, OwnerDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0f);
+            Main.spriteBatch.Draw(mainTex, center, null, lightColor, Projectile.rotation, mainTex.Size() / 2, 1, DirSign > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0f);
 
             if (Special == 0)
                 return false;

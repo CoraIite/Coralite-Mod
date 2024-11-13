@@ -176,7 +176,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             {
                 Owner.itemTime = Owner.itemAnimation = 2;
 
-                Rotation = Helper.Lerp(RecordAngle, OwnerDirection > 0 ? -1.3f : (3.141f + 1.3f), Coralite.Instance.HeavySmootherInstance.Smoother(Timer / DashTime));
+                Rotation = Helper.Lerp(RecordAngle, DirSign > 0 ? -1.3f : (3.141f + 1.3f), Coralite.Instance.HeavySmootherInstance.Smoother(Timer / DashTime));
                 ExAlpha = Helper.Lerp(0, 1, Math.Clamp(Timer / DashTime, 0, 1));
                 handOffset = Helper.Lerp(4, 28, Math.Clamp(Timer / DashTime, 0, 1));
 
@@ -267,7 +267,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             Texture2D mainTex = Projectile.GetTexture();
             Vector2 center = Projectile.Center - Main.screenPosition;
-            var effect = OwnerDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically;
+            var effect = DirSign > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically;
             var origin = mainTex.Size() / 2;
 
             Main.spriteBatch.Draw(mainTex, center, null, lightColor, Projectile.rotation, origin, 1, effect, 0f);

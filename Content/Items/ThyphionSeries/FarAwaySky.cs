@@ -158,7 +158,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             {
                 LockOwnerItemTime();
 
-                Rotation = Helper.Lerp(RecordAngle, OwnerDirection > 0 ? -1f : (3.141f + 1f), Coralite.Instance.HeavySmootherInstance.Smoother(Timer / DashTime));
+                Rotation = Helper.Lerp(RecordAngle, DirSign > 0 ? -1f : (3.141f + 1f), Coralite.Instance.HeavySmootherInstance.Smoother(Timer / DashTime));
                 return;
             }
 
@@ -245,7 +245,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             Texture2D mainTex = Projectile.GetTexture();
             Vector2 center = Projectile.Center - Main.screenPosition;
 
-            Main.spriteBatch.Draw(mainTex, center, null, lightColor, Projectile.rotation, mainTex.Size() / 2, 1, OwnerDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0f);
+            Main.spriteBatch.Draw(mainTex, center, null, lightColor, Projectile.rotation, mainTex.Size() / 2, 1, DirSign > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0f);
 
             if (Special == 0)
                 return false;
