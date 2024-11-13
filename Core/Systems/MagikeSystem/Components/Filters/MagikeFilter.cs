@@ -109,9 +109,11 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// <param name="entity"></param>
         public virtual void SpawnItem(IEntity entity)
         {
-            MagikeTP e = entity as MagikeTP;
-            Item.NewItem(new EntitySource_WorldGen($"MagikeTP:{e.ID}"), Utils.CenteredRectangle(Helper.GetMagikeTileCenter(e.Position), Vector2.One)
-                , ItemType);
+            if (!VaultUtils.isServer && entity is MagikeTP magikeTP)
+            {
+                IEntitySource source = new EntitySource_WorldGen($"MagikeTP:{magikeTP.ID}");
+                Main.LocalPlayer.QuickSpawnItem(source, ItemType);
+            }
         }
 
         /// <summary>
