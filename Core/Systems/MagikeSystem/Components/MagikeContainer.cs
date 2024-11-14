@@ -244,20 +244,20 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         {
             data.Write(Magike);
             data.Write(MagikeMaxBase);
-            data.Write(MagikeMaxBonus);
             data.Write(AntiMagike);
             data.Write(AntiMagikeMaxBase);
             data.Write(AntiMagikeMaxBonus);
+            data.Write(MagikeMaxBonus);
         }
 
         public override void ReceiveData(BinaryReader reader, int whoAmI)
         {
             Magike = reader.ReadInt32();
             MagikeMaxBase = reader.ReadInt32();
-            MagikeMaxBonus = reader.ReadInt32();
             AntiMagike = reader.ReadInt32();
             AntiMagikeMaxBase = reader.ReadInt32();
-            AntiMagikeMaxBonus = reader.ReadInt32();
+            AntiMagikeMaxBonus = reader.ReadSingle();
+            MagikeMaxBonus = reader.ReadSingle();
         }
 
         public override void SaveData(string preName, TagCompound tag)
