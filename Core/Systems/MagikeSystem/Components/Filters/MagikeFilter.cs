@@ -19,6 +19,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public abstract MALevel Level { get; }
 
+        public int whoAmI = -1;
+
         /// <summary>
         /// 对应的物品类型，在替换时弹出以及在物块破坏时弹出
         /// </summary>
@@ -153,6 +155,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             modPacket.Write(tP.ID);
             modPacket.Write(tP.Position.X);
             modPacket.Write(tP.Position.Y);
+            modPacket.Write(_filter.whoAmI);
             modPacket.Send();
         }
 
@@ -161,13 +164,14 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             int id = reader.ReadInt32();
             short posX = reader.ReadInt16();
             short posY = reader.ReadInt16();
+            int filterWhoAmI = reader.ReadInt32();
             TileProcessor tp = TileProcessorLoader.FindModulePreciseSearch(id, posX, posY);
             if (tp != null && tp is MagikeTP magikeTP)
             {
                 MagikeFilter _filter = null;
                 foreach (var components in magikeTP.ComponentsCache)
                 {
-                    if (components is MagikeFilter filter)
+                    if (components is MagikeFilter filter && filter.whoAmI == filterWhoAmI)
                     {
                         _filter = filter;
                     }
@@ -182,6 +186,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                         modPacket.Write(id);
                         modPacket.Write(posX);
                         modPacket.Write(posY);
+                        modPacket.Write(filterWhoAmI);
                         modPacket.Send(-1, whoAmI);
                     }
                 }

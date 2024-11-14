@@ -89,7 +89,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
                 Projectile.Kill();
                 return;
             }
-            DownLeft.Domp();
+
             if (DownLeft)
             {
                 Owner.itemTime = Owner.itemAnimation = 7;
@@ -100,11 +100,6 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
                     TargetPoint = new Point16(Math.Clamp(TargetPoint.X, BasePosition.X - GamePlaySystem.SelectSize, BasePosition.X + GamePlaySystem.SelectSize), TargetPoint.Y);
                 if (Math.Abs(TargetPoint.Y - BasePosition.Y) > GamePlaySystem.SelectSize)
                     TargetPoint = new Point16(TargetPoint.X, Math.Clamp(TargetPoint.Y, BasePosition.Y - GamePlaySystem.SelectSize, BasePosition.Y + GamePlaySystem.SelectSize));
-
-                $"BasePosition:{BasePosition}".Domp();
-                $"TargetPoint:{TargetPoint}".Domp();
-                $"InMousePos:{InMousePos}".Domp();
-                $"_________________________".Domp();
             }
             else
             {
@@ -165,8 +160,6 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
 
         public static void PlaceFilter(Player Owner, Point16 TargetPoint, Point16 BasePosition)
         {
-            "PlaceFilter:正在执行插入".LoggerDomp();
-
             MagikeFilter filter = (Owner.HeldItem.ModItem as FilterItem).GetFilterComponent();
 
             bool placed = false;
@@ -203,10 +196,11 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
                     //能插入就插，不能就提供失败原因
                     if (filter.CanInsert(entity, out string text))
                     {
-                        "PlaceFilter:插入成功".LoggerDomp();
+                        //"PlaceFilter:插入成功".LoggerDomp();
                         placed = true;
                         filter.Insert(entity);
                         filter = (Owner.HeldItem.ModItem as FilterItem).GetFilterComponent();
+                        filter.whoAmI = entity.ComponentsCache.Count;
 
                         //特效部分
                         TileRenewalController.Spawn(currentTopLeft.Value, (Owner.HeldItem.ModItem as FilterItem).FilterColor);
@@ -221,7 +215,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
                     }
                     else if (!string.IsNullOrEmpty(text))
                     {
-                        "PlaceFilter:插入失败".LoggerDomp();
+                        //"PlaceFilter:插入失败".LoggerDomp();
                         PopupText.NewText(new AdvancedPopupRequest()
                         {
                             Color = Coralite.MagicCrystalPink,
