@@ -3,6 +3,7 @@ using Coralite.Core.Systems.CoraliteActorComponent;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.IO;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.UI.Elements;
@@ -238,6 +239,26 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         }
 
         #endregion
+
+        public override void SendData(ModPacket data)
+        {
+            data.Write(Magike);
+            data.Write(MagikeMaxBase);
+            data.Write(MagikeMaxBonus);
+            data.Write(AntiMagike);
+            data.Write(AntiMagikeMaxBase);
+            data.Write(AntiMagikeMaxBonus);
+        }
+
+        public override void ReceiveData(BinaryReader reader, int whoAmI)
+        {
+            Magike = reader.ReadInt32();
+            MagikeMaxBase = reader.ReadInt32();
+            MagikeMaxBonus = reader.ReadInt32();
+            AntiMagike = reader.ReadInt32();
+            AntiMagikeMaxBase = reader.ReadInt32();
+            AntiMagikeMaxBonus = reader.ReadInt32();
+        }
 
         public override void SaveData(string preName, TagCompound tag)
         {
