@@ -192,9 +192,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         {
             _entity.RemoveComponent(_filter);
             UILoader.GetUIState<MagikeApparatusPanel>().Recalculate();
-            if (VaultUtils.isClient && _entity is MagikeTP tP)
+            if (VaultUtils.isClient )
             {
-                Send_LeftClick_Data(tP);
+                Send_LeftClick_Data(_entity);
             }
             base.LeftClick(evt);
         }
