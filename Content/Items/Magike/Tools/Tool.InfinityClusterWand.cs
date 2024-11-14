@@ -143,7 +143,7 @@ namespace Coralite.Content.Items.Magike.Tools
                     Charge(Owner, TargetPoint, BasePosition, -1);
                     if (VaultUtils.isClient)
                     {
-                        Send_ClusterWand_Data();
+                        //Send_ClusterWand_Data();
                     }
                 }
                 
@@ -241,6 +241,11 @@ namespace Coralite.Content.Items.Magike.Tools
                     else
                     {
                         entity.GetMagikeContainer().ClearMagike();
+                    }
+
+                    if (!VaultUtils.isSinglePlayer)
+                    {
+                        entity.SendData();
                     }
 
                     MagikeHelper.SpawnLozengeParticle_WithTopLeft(currentTopLeft.Value);
