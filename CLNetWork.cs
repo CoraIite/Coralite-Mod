@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Bosses.BabyIceDragon;
+using Coralite.Content.Items.Magike.Tools;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using System.IO;
@@ -32,7 +33,7 @@ namespace Coralite
             }
             else if (cLNetWorkEnum == CLNetWorkEnum.ClusterWand)
             {
-                FilterRemoveButton.Hander_LeftClick_Data(reader, whoAmI);
+                InfinityClusterWandProj.Hander_ClusterWand(reader, whoAmI);
             }
         }
     }

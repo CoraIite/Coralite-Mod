@@ -173,8 +173,8 @@ namespace Coralite.Content.Items.Magike.Tools
         internal static void Hander_ClusterWand(BinaryReader reader, int whoAmI)
         {
             int ownerIndex = reader.ReadInt32();
-            Point16 TargetPoint = new Point16(reader.ReadInt16(), reader.ReadInt16());
-            Point16 BasePosition = new Point16(reader.ReadInt16(), reader.ReadInt16());
+            Point16 TargetPoint = reader.ReadPoint16();
+            Point16 BasePosition = reader.ReadPoint16();
             int amount = reader.ReadInt32();
             if (ownerIndex >= 0 && ownerIndex < Main.player.Length)
             {
@@ -183,7 +183,7 @@ namespace Coralite.Content.Items.Magike.Tools
                 if (Main.dedServ)
                 {
                     ModPacket modPacket = Coralite.Instance.GetPacket();
-                    modPacket.Write((byte)CLNetWorkEnum.PlaceFilter);
+                    modPacket.Write((byte)CLNetWorkEnum.ClusterWand);
                     modPacket.Write(ownerIndex);
                     modPacket.WritePoint16(TargetPoint);
                     modPacket.WritePoint16(BasePosition);
