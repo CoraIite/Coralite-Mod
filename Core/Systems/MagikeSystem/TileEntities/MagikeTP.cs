@@ -3,6 +3,7 @@ using Coralite.Core.Systems.MagikeSystem.Tiles;
 using Coralite.Helpers;
 using InnoVault;
 using InnoVault.TileProcessors;
+using Stubble.Core.Classes;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -20,6 +21,8 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         public const string SaveName = "Component";
 
         internal static int playerInWorldTime;
+
+        internal const string GUID = "CoraliteMod_GUIDValue-XZ90-UO98-MK87";
 
         /// <summary>
         /// 存储各类组件的地方<br></br>
@@ -88,18 +91,55 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         public override void SendData(ModPacket data)
         {
             //$"SendData-ComponentsCache.Count:{ComponentsCache.Count}".LoggerDomp();
-            for (int i = 0; i < ComponentsCache.Count; i++)
+            if (TileProcessorNetWork.InitializeWorld)
             {
-                ComponentsCache[i].SendData(data);
+                data.Write(ComponentsCache.Count);
+                for (int i = 0; i < ComponentsCache.Count; i++)
+                {
+                    MagikeComponent component = ComponentsCache[i];
+                    string fullName = component.GetType().FullName;
+                    data.Write(GUID);
+                    data.Write(fullName);
+                    component.SendData(data);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < ComponentsCache.Count; i++)
+                {
+                    ComponentsCache[i].SendData(data);
+                }
             }
         }
 
         public override void ReceiveData(BinaryReader reader, int whoAmI)
         {
             //$"ReceiveData-ComponentsCache.Count:{ComponentsCache.Count}".LoggerDomp();
-            for (int i = 0; i < ComponentsCache.Count; i++)
+            if (TileProcessorNetWork.InitializeWorld)
             {
-                ComponentsCache[i].ReceiveData(reader, whoAmI);
+                InitializeComponentCache();
+                int leng = reader.ReadInt32();
+                for (int i = 0; i < leng; i++)
+                {
+                    string guiD = reader.ReadString();
+                    if (guiD != GUID)
+                    {
+                        continue;
+                    }
+
+                    string fullName = reader.ReadString();
+                    Type t = Type.GetType(fullName);
+                    MagikeComponent component = (MagikeComponent)Activator.CreateInstance(t);
+                    component.ReceiveData(reader, whoAmI);
+                    AddComponentWithoutOnAdd(component);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < ComponentsCache.Count; i++)
+                {
+                    ComponentsCache[i].ReceiveData(reader, whoAmI);
+                }
             }
         }
 
