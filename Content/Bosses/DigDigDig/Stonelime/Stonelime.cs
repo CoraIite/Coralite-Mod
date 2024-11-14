@@ -497,6 +497,7 @@ namespace Coralite.Content.Bosses.DigDigDig.Stonelime
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
+            Main.instance.LoadTiles(TileID.Stone);
             Texture2D mainTex = TextureAssets.Tile[TileID.Stone].Value;
 
             //检测宽度
