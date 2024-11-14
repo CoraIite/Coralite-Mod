@@ -35,7 +35,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Filters
             return true;
         }
 
-        public override void ChangeComponentValues(Component component)
+        public override void ChangeComponentValues(MagikeComponent component)
         {
             if (component is ITimerTriggerComponent timer)
             {
@@ -43,7 +43,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Filters
 
                 float bonus = 0;
 
-                foreach (MagikeFilter filter in ((List<Component>)(Entity.Components[MagikeComponentID.MagikeFilter])).Cast<MagikeFilter>())
+                foreach (MagikeFilter filter in ((List<MagikeComponent>)(Entity.Components[MagikeComponentID.MagikeFilter])).Cast<MagikeFilter>())
                 {
                     if (filter is PulseFilter pf)
                         bonus += pf.TimerBonus;
@@ -53,7 +53,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Filters
             }
         }
 
-        public override void RestoreComponentValues(Component component)
+        public override void RestoreComponentValues(MagikeComponent component)
         {
             if (component is ITimerTriggerComponent timer)
             {
@@ -61,7 +61,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Filters
 
                 float bonus = 0;
 
-                foreach (MagikeFilter filter in ((List<Component>)(Entity.Components[MagikeComponentID.MagikeFilter])).Cast<MagikeFilter>())
+                foreach (MagikeFilter filter in ((List<MagikeComponent>)(Entity.Components[MagikeComponentID.MagikeFilter])).Cast<MagikeFilter>())
                 {
                     if (filter is PulseFilter pf)
                         bonus += pf.TimerBonus;

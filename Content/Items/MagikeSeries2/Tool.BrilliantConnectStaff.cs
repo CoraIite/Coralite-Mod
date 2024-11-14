@@ -364,7 +364,7 @@ namespace Coralite.Content.Items.MagikeSeries2
                     //能连接就连一下，不能就提供失败原因
                     foreach (var senderComponent in BrilliantConnectStaff.Senders)
                     {
-                        Point16 pos = (senderComponent.Entity as MagikeTP).Position;
+                        Point16 pos = senderComponent.Entity.Position;
                         if (!senderComponent.CanConnect(currentTopLeft.Value, out string failText))
                         {
                             PopupText.NewText(new AdvancedPopupRequest()
@@ -418,7 +418,7 @@ namespace Coralite.Content.Items.MagikeSeries2
 
                 foreach (var sender in BrilliantConnectStaff.Senders)
                 {
-                    Point16 pos = (sender.Entity as MagikeTP).Position;
+                    Point16 pos = sender.Entity.Position;
 
                     bool canConnect = sender.CanConnect(currentPoint, out _);
                     Color c = canConnect ? Color.GreenYellow : Color.MediumVioletRed;

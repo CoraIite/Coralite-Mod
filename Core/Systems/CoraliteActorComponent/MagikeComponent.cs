@@ -1,25 +1,26 @@
-﻿using System.IO;
+﻿using Coralite.Core.Systems.MagikeSystem.TileEntities;
+using System.IO;
 using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.CoraliteActorComponent
 {
     //并非完全的ECS系统
-    public abstract class Component
+    public abstract class MagikeComponent : IComponent<MagikeTP>
     {
-        public Component()
+        public MagikeComponent()
         {
             Initialize();
         }
 
-        public IEntity Entity { get; set; }
+        public MagikeTP Entity { get; set; }
 
         public abstract int ID { get; }
 
-        public virtual void OnAdd(IEntity entity) { }
-        public virtual void OnRemove(IEntity entity) { }
+        public virtual void OnAdd(MagikeTP entity) { }
+        public virtual void OnRemove(MagikeTP entity) { }
         public virtual void Initialize() { }
 
-        public abstract void Update(IEntity entity);
+        public abstract void Update();
 
         public virtual void SendData(ModPacket data) { }
         public virtual void ReceiveData(BinaryReader reader, int whoAmI) { }

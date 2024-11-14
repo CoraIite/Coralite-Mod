@@ -8,7 +8,7 @@ using Terraria.ObjectData;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components
 {
-    public abstract class MagikeSender : Component, ITimerTriggerComponent
+    public abstract class MagikeSender : MagikeComponent, ITimerTriggerComponent
     {
         public sealed override int ID => MagikeComponentID.MagikeSender;
 

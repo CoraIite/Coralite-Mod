@@ -1,6 +1,4 @@
-﻿using Coralite.Core.Systems.MagikeSystem.TileEntities;
-using Coralite.Helpers;
-using System;
+﻿using Coralite.Helpers;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.UI.Elements;
@@ -43,7 +41,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Producers
 
         public override bool CanProduce_SpecialCheck()
         {
-            Point16 point = (Entity as MagikeTP).Position;
+            Point16 point = Entity.Position;
 
             GetMagikeAlternateData(point.X, point.Y, out TileObjectData data, out MagikeAlternateStyle alternate);
 

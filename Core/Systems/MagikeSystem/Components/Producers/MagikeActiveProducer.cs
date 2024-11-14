@@ -1,6 +1,4 @@
-﻿using Coralite.Core.Systems.CoraliteActorComponent;
-using Coralite.Core.Systems.MagikeSystem.TileEntities;
-using Coralite.Helpers;
+﻿using Coralite.Helpers;
 using System;
 using Terraria.ModLoader.IO;
 
@@ -29,7 +27,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Producers
 
         public bool CanProduce_CheckMagike()
         {
-            return !(Entity as MagikeTP).GetMagikeContainer().FullMagike;
+            return !Entity.GetMagikeContainer().FullMagike;
         }
 
         /// <summary>
@@ -44,7 +42,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Producers
 
         public virtual bool CanProduce_SpecialCheck() => true;
 
-        public override void Update(IEntity entity)
+        public override void Update()
         {
             //生产时间限制
             if (!CheckTime())

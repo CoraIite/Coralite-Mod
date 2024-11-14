@@ -13,7 +13,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Producers
      *  
      *  - 静默启动类型：自身不主动生产，需要外界激发以生产。
      */
-    public abstract class MagikeProducer : Component
+    public abstract class MagikeProducer : MagikeComponent
     {
         public sealed override int ID => MagikeComponentID.MagikeProducer;
 

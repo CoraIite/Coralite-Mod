@@ -1,6 +1,5 @@
 ﻿using Coralite.Content.CustomHooks;
 using Coralite.Content.UI.MagikeApparatusPanel;
-using Coralite.Core.Systems.CoraliteActorComponent;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
@@ -53,9 +52,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         #region 发送工作相关
 
-        public override void Update(IEntity entity)
+        public override void Update()
         {
-            Point16 p = (entity as MagikeTP).Position;
+            Point16 p = Entity.Position;
             Vector2 size = new Vector2(ConnectLength);
             if (Helper.OnScreen(p.ToWorldCoordinates() - Main.screenPosition-size/2, new Vector2(ConnectLength)))
                 DrawMagikeDevice.LinerSenders.Add(this);
@@ -137,7 +136,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             receiver.AddMagike(amount);
             selfMagikeContainer.ReduceMagike(amount);
-            OnSend((Entity as MagikeTP).Position, position);
+            OnSend(Entity.Position, position);
 
             return;
         remove:
@@ -166,7 +165,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             if (!CanConnect_CheckCapacity(ref failSource))
                 return false;
 
-            Point16 selfPoint = (Entity as MagikeTP).Position;
+            Point16 selfPoint = Entity.Position;
 
             if (!CanConnect_CheckSelf(selfPoint, receiverPoint, ref failSource))
                 return false;
@@ -275,7 +274,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 return;
 
             Timer = SendDelay;
-            Vector2 selfPos = Helper.GetMagikeTileCenter((Entity as MagikeTP).Position);
+            Vector2 selfPos = Helper.GetMagikeTileCenter(Entity.Position);
 
             for (int i = _receivers.Count - 1; i >= 0; i--)
             {

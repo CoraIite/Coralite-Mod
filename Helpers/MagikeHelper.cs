@@ -4,12 +4,10 @@ using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.Particles;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
-using InnoVault;
 using InnoVault.TileProcessors;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.Drawing.Imaging;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
@@ -32,7 +30,7 @@ namespace Coralite.Helpers
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public static MagikeContainer GetMagikeContainer(this IEntity entity)
+        public static MagikeContainer GetMagikeContainer(this MagikeTP entity)
             => entity.GetSingleComponent(MagikeComponentID.MagikeContainer) as MagikeContainer;
 
         /// <summary>
@@ -40,7 +38,7 @@ namespace Coralite.Helpers
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public static bool IsMagikeContainer(this IEntity entity)
+        public static bool IsMagikeContainer(this MagikeTP entity)
             => entity.HasComponent(MagikeComponentID.MagikeContainer);
 
         /// <summary>
@@ -118,7 +116,7 @@ namespace Coralite.Helpers
         /// <param name="entity"></param>
         /// <returns></returns>
         public static bool TryGetEntityWithComponent<T>(int i, int j, int componentType, out MagikeTP entity)
-            where T : Component
+            where T : MagikeComponent
         {
             entity = null;
 
@@ -135,7 +133,7 @@ namespace Coralite.Helpers
             }
             else
             {
-                if (!(tempEntity.Components[componentType] as List<Component>).Any(c => c is T))
+                if (!(tempEntity.Components[componentType] as List<MagikeComponent>).Any(c => c is T))
                     return false;
             }
 
@@ -288,9 +286,9 @@ namespace Coralite.Helpers
         /// <param name="Entity"></param>
         /// <param name="incomeLevel"></param>
         /// <returns></returns>
-        public static bool CheckUpgrageable(this IEntity Entity, MALevel incomeLevel)
+        public static bool CheckUpgrageable(this MagikeTP Entity, MALevel incomeLevel)
         {
-            int tileType = (Entity as MagikeTP).TargetTileID;
+            int tileType = Entity.TargetTileID;
 
             if (!MagikeSystem.MagikeApparatusLevels.TryGetValue(tileType, out var keyValuePairs))
                 return false;
@@ -538,7 +536,7 @@ namespace Coralite.Helpers
         /// <param name="parent"></param>
         /// <returns></returns>
         public static UIElement AddTitle<TComponent>(this TComponent component, MagikeSystem.UITextID id, UIElement parent)
-            where TComponent : Component
+            where TComponent : MagikeComponent
         {
             UIElement title = new ComponentUIElementText<TComponent>(c =>
                  MagikeSystem.GetUIText(id), component, parent, new Vector2(1.3f));
@@ -556,7 +554,7 @@ namespace Coralite.Helpers
         /// <param name="parent"></param>
         /// <returns></returns>
         public static ComponentUIElementText<TComponent> NewTextBar<TComponent>(this TComponent component, Func<TComponent, string> textFunc, UIElement parent)
-            where TComponent : Component
+            where TComponent : MagikeComponent
         {
             return new ComponentUIElementText<TComponent>(textFunc, component, parent);
         }

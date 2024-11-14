@@ -2,7 +2,6 @@
 using Coralite.Core.Loaders;
 using Coralite.Core.Systems.CoraliteActorComponent;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
-using Coralite.Helpers;
 using InnoVault;
 using InnoVault.TileProcessors;
 using Microsoft.Xna.Framework.Graphics;
@@ -14,7 +13,7 @@ using Terraria.UI;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components
 {
-    public abstract class MagikeFilter : Component
+    public abstract class MagikeFilter : MagikeComponent
     {
         public sealed override int ID => MagikeComponentID.MagikeFilter;
 
@@ -25,7 +24,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// </summary>
         public abstract int ItemType { get; }
 
-        public override void Update(IEntity entity) { }
+        public override void Update() { }
 
         public bool CanInsert(MagikeTP entity, out string text)
         {
@@ -89,13 +88,13 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             }
         }
 
-        public override void OnAdd(IEntity entity)
+        public override void OnAdd(MagikeTP entity)
         {
             for (int i = 0; i < entity.ComponentsCache.Count; i++)
                 ChangeComponentValues(entity.ComponentsCache[i]);
         }
 
-        public override void OnRemove(IEntity entity)
+        public override void OnRemove(MagikeTP entity)
         {
             for (int i = 0; i < entity.ComponentsCache.Count; i++)
                 RestoreComponentValues(entity.ComponentsCache[i]);
@@ -107,7 +106,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// 生成掉落物
         /// </summary>
         /// <param name="entity"></param>
-        public virtual void SpawnItem(IEntity entity)
+        public virtual void SpawnItem(MagikeTP entity)
         {
             if (!VaultUtils.isServer && entity is MagikeTP magikeTP)
             {
@@ -120,23 +119,23 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// 改变组件的属性
         /// </summary>
         /// <param name="component"></param>
-        public virtual void ChangeComponentValues(Component component) { }
+        public virtual void ChangeComponentValues(MagikeComponent component) { }
 
         /// <summary>
         /// 还原组件的属性
         /// </summary>
         /// <param name="component"></param>
-        public virtual void RestoreComponentValues(Component component) { }
+        public virtual void RestoreComponentValues(MagikeComponent component) { }
     }
 
     public class FilterRemoveButton : UIElement
     {
-        private IEntity _entity;
+        private MagikeTP _entity;
         private MagikeFilter _filter;
 
         private float _scale = 1f;
 
-        public FilterRemoveButton(IEntity entity, MagikeFilter filter)
+        public FilterRemoveButton(MagikeTP entity, MagikeFilter filter)
         {
             Texture2D tex = MagikeSystem.FilterRemoveButton.Value;
             var frameBox = tex.Frame(1, 2);

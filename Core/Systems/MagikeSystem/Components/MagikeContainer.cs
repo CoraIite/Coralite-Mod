@@ -1,6 +1,5 @@
 ﻿using Coralite.Content.UI.MagikeApparatusPanel;
 using Coralite.Core.Systems.CoraliteActorComponent;
-using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -12,7 +11,7 @@ using Terraria.UI;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components
 {
-    public class MagikeContainer : Component, IUIShowable
+    public class MagikeContainer : MagikeComponent, IUIShowable
     {
         public sealed override int ID => MagikeComponentID.MagikeContainer;
 
@@ -43,7 +42,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// <summary> 魔能满了后为true </summary>
         public virtual bool FullMagike => Magike >= MagikeMax;
 
-        public override void Update(IEntity entity) { }
+        public override void Update() { }
 
         #region 魔能操作相关
 
@@ -119,7 +118,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 if (Entity.ComponentsCache[i] is IAnnihilateable annihilateable)
                     annihilateable.OnAnnihilate();
 
-            Point16 p = (Entity as MagikeTP).Position;
+            Point16 p = Entity.Position;
             WorldGen.KillTile(p.X, p.Y, noItem: true);
 
             //TODO: 爆炸与反魔能污染

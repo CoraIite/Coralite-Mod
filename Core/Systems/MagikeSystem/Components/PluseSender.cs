@@ -1,6 +1,4 @@
-﻿using Coralite.Core.Systems.CoraliteActorComponent;
-using Coralite.Core.Systems.MagikeSystem.TileEntities;
-using Coralite.Helpers;
+﻿using Coralite.Helpers;
 using System;
 using Terraria;
 using Terraria.DataStructures;
@@ -11,7 +9,7 @@ using Terraria.UI;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components
 {
-    public abstract class PluseSender:MagikeSender, IConnectLengthModify,IUIShowable
+    public abstract class PluseSender : MagikeSender, IConnectLengthModify, IUIShowable
     {
         /// <summary>
         /// 是否会真的发送，仅在容器内有魔能的时候才会执行这一项操作
@@ -43,12 +41,12 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
                 if (factor > 0.4f)
                 {
-                    Rotation = Helper.Lerp(Rotation, MathHelper.Pi / 6+0.1f, 0.04f);
+                    Rotation = Helper.Lerp(Rotation, MathHelper.Pi / 6 + 0.1f, 0.04f);
                 }
                 else
                 {
                     //生成粒子
-                    Point16 topleft = (Entity as MagikeTP).Position;
+                    Point16 topleft = Entity.Position;
 
                     MagikeHelper.GetMagikeAlternateData(topleft.X, topleft.Y, out var data, out var alternate);
                     Point16 dir = alternate switch
@@ -65,7 +63,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                     if (Main.rand.NextBool())
                     {
                         Dust d = Dust.NewDustPerfect(center.ToWorldCoordinates() + Main.rand.NextVector2Circular(8, 8), DustID.CrystalSerpent_Pink
-                            , new Vector2(dir.X, dir.Y) * Main.rand.NextFloat(1.5f,4f), Scale: 1f);
+                            , new Vector2(dir.X, dir.Y) * Main.rand.NextFloat(1.5f, 4f), Scale: 1f);
                         d.noGravity = true;
                     }
                 }
@@ -89,7 +87,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             return false;
         }
 
-        public override void Update(IEntity entity)
+        public override void Update()
         {
             //发送时间限制
             if (!CanSend())
@@ -100,15 +98,15 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             if (container.Magike < 1)
                 return;
 
-            Point16? p = TryFindReceiver(out var targetContainer,out Point16 center);
+            Point16? p = TryFindReceiver(out var targetContainer, out Point16 center);
             if (!p.HasValue)
                 return;
 
             if (targetContainer.FullMagike)//如果满了就不发送
                 return;
 
-            int sendCount =Math.Min( container.Magike, targetContainer.MagikeMax - targetContainer.Magike);
-            
+            int sendCount = Math.Min(container.Magike, targetContainer.MagikeMax - targetContainer.Magike);
+
             targetContainer.AddMagike(sendCount);
             container.ReduceMagike(sendCount);
 
@@ -123,10 +121,10 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// 尝试找到接收者
         /// </summary>
         /// <returns></returns>
-        private Point16? TryFindReceiver(out MagikeContainer targetContainer,out Point16 center)
+        private Point16? TryFindReceiver(out MagikeContainer targetContainer, out Point16 center)
         {
-            targetContainer= null;  
-            Point16 topleft = (Entity as MagikeTP).Position;
+            targetContainer = null;
+            Point16 topleft = Entity.Position;
 
             //获取基础属性，确定寻找的方向
             MagikeHelper.GetMagikeAlternateData(topleft.X, topleft.Y, out var data, out var alternate);
@@ -139,15 +137,15 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 _ => Point16.Zero,
             };
 
-            center = topleft + new Point16(data.Width/2, data.Height/2);
+            center = topleft + new Point16(data.Width / 2, data.Height / 2);
 
             int howMany = ConnectLength / 16;
 
             for (int k = 2; k < howMany; k++)//向指定方向找寻接收器
             {
-                Point16 targetPoiint = center + new Point16(dir.X*k,dir.Y*k) ;
+                Point16 targetPoiint = center + new Point16(dir.X * k, dir.Y * k);
 
-                if (!WorldGen.InWorld(targetPoiint.X,targetPoiint.Y))
+                if (!WorldGen.InWorld(targetPoiint.X, targetPoiint.Y))
                     return null;
 
                 if (!MagikeHelper.TryGetEntity(targetPoiint.X, targetPoiint.Y, out var entity))
@@ -156,7 +154,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 if (!entity.IsMagikeContainer())
                     continue;
 
-                targetContainer=entity.GetMagikeContainer();
+                targetContainer = entity.GetMagikeContainer();
                 return targetPoiint;
             }
 

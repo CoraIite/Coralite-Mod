@@ -55,7 +55,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                     Text = attempt.OutputText(),
                     DurationInFrames = 60,
                     Velocity = -Vector2.UnitY
-                }, Helper.GetMagikeTileCenter((Entity as MagikeTP).Position) - (Vector2.UnitY * 32));
+                }, Helper.GetMagikeTileCenter(Entity.Position) - (Vector2.UnitY * 32));
                 return;
             }
             
@@ -351,7 +351,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         {
             base.StarkWork();
 
-            MagikeTP entity = Entity as MagikeTP;
+            MagikeTP entity = Entity;
             Point16 pos = entity.Position;
 
             if (Helper.OnScreen(pos.ToWorldCoordinates()-Main.screenPosition, new Vector2(16 * 20)))//在视野内生成特殊合成粒子

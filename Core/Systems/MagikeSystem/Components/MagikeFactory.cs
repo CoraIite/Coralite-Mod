@@ -5,7 +5,7 @@ using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components
 {
-    public abstract class MagikeFactory : Component, ITimerTriggerComponent
+    public abstract class MagikeFactory : MagikeComponent, ITimerTriggerComponent
     {
         public sealed override int ID => MagikeComponentID.MagikeFactory;
 
@@ -39,7 +39,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             return false;
         }
 
-        public override void Update(IEntity entity)
+        public override void Update()
         {
             if (!IsWorking || DuringWork())
                 return;

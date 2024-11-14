@@ -18,7 +18,7 @@ using Terraria.UI;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components
 {
-    public class ItemContainer : Component, IUIShowable
+    public class ItemContainer : MagikeComponent, IUIShowable
     {
         public override int ID => MagikeComponentID.ItemContainer;
 
@@ -107,9 +107,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             //$"ReceiveData-Items[].Length:{length}".LoggerDomp();
 
             List<Item> itemList = [];
-            if (length > 99)
+            if (length > 999)
             {
-                length = 99;
+                length = 999;
             }
             for (int i = 0; i < length; i++)
             {
@@ -131,20 +131,17 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 }
                 itemList.Add(item);
             }
-            _items = itemList.ToArray();
+            _items = [.. itemList];
         }
 
-        public override void Update(IEntity entity)
-        {
-
-        }
+        public override void Update() { }
 
         /// <summary>
         /// 修改容量后必须调用这个方法！
         /// </summary>
         public void ResetCapacity()
         {
-            var e = Entity as MagikeTP;
+            var e = Entity;
             Vector2 worldPos = e.Position.ToWorldCoordinates();
             var source = new EntitySource_WorldGen($"MagikeTP:{e.ID}");
 
@@ -171,9 +168,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             }
         }
 
-        public override void OnRemove(IEntity entity)
+        public override void OnRemove(MagikeTP entity)
         {
-            Point16 coord = (entity as MagikeTP).Position;
+            Point16 coord = entity.Position;
             Vector2 pos = Helper.GetMagikeTileCenter(coord);
             for (int i = 0; i < Items.Length; i++)
                 if (!Items[i].IsAir)
@@ -209,7 +206,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                     return;
                 }
 
-            Item.NewItem(item.GetSource_DropAsItem(), Helper.GetMagikeTileCenter((Entity as MagikeTP).Position), item.Clone());
+            Item.NewItem(item.GetSource_DropAsItem(), Helper.GetMagikeTileCenter(Entity.Position), item.Clone());
             item.TurnToAir();
         }
 
@@ -235,7 +232,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                     return;
                 }
 
-            Item.NewItem(new EntitySource_DropAsItem(Main.LocalPlayer), Helper.GetMagikeTileCenter((Entity as MagikeTP).Position), itemType, stack);
+            Item.NewItem(new EntitySource_DropAsItem(Main.LocalPlayer), Helper.GetMagikeTileCenter(Entity.Position), itemType, stack);
         }
 
         #region UI部分

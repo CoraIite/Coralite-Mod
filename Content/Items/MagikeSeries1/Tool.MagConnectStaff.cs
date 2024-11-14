@@ -47,7 +47,7 @@ namespace Coralite.Content.Items.MagikeSeries1
             {
                 if (player.altFunctionUse == 2)
                 {
-                    MagikeLinerSender senderComponent = ((IEntity)entity).GetSingleComponent<MagikeLinerSender>(MagikeComponentID.MagikeSender);
+                    MagikeLinerSender senderComponent = entity.GetSingleComponent<MagikeLinerSender>(MagikeComponentID.MagikeSender);
 
                     MagikeConnectUI.sender = senderComponent;
                     UILoader.GetUIState<MagikeConnectUI>()?.Recalculate();

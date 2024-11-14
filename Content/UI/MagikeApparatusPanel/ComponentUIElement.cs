@@ -14,7 +14,7 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
     //}
 
     public class ComponentUIElementText<TComponent> : UIElement
-        where TComponent : Component
+        where TComponent : MagikeComponent
     {
         protected readonly TComponent component;
         private readonly Func<TComponent, string> text;

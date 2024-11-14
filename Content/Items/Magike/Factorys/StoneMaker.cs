@@ -190,7 +190,7 @@ namespace Coralite.Content.Items.Magike.Factorys
         public override bool CanActivated_SpecialCheck(out string text)
         {
             text = "";
-            Point16 point = (Entity as MagikeTP).Position;
+            Point16 point = Entity.Position;
 
             if (!TryGetTile(point, out Tile tile))
             {
@@ -246,7 +246,7 @@ namespace Coralite.Content.Items.Magike.Factorys
         {
             string text = "";
 
-            Point16 point = (Entity as MagikeTP).Position;
+            Point16 point = Entity.Position;
             GetMagikeAlternateData(point.X, point.Y, out TileObjectData data, out MagikeAlternateStyle alternate);
             Vector2 topPos = point.ToVector2() * 16;
 
@@ -279,7 +279,7 @@ namespace Coralite.Content.Items.Magike.Factorys
                     Text = text,
                     DurationInFrames = 60,
                     Velocity = -Vector2.UnitY
-                }, Helper.GetMagikeTileCenter((Entity as MagikeTP).Position) - (Vector2.UnitY * 32));
+                }, Helper.GetMagikeTileCenter(Entity.Position) - (Vector2.UnitY * 32));
                 return;
             }
 
@@ -299,7 +299,7 @@ namespace Coralite.Content.Items.Magike.Factorys
         {
             float factor =1- Timer / (float)WorkTime;
 
-            Point16 point = (Entity as MagikeTP).Position;
+            Point16 point = Entity.Position;
             GetMagikeAlternateData(point.X, point.Y, out TileObjectData data, out MagikeAlternateStyle alternate);
             Vector2 topPos = point.ToVector2()*16;
 
@@ -365,7 +365,7 @@ namespace Coralite.Content.Items.Magike.Factorys
                 this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.StoneMakerOutPut), parent),
                 this.NewTextBar(c =>
                 {
-                    if (!TryGetTile((c.Entity as MagikeTP).Position, out Tile tile))
+                    if (!TryGetTile(c.Entity.Position, out Tile tile))
                         return "";
 
                     int? itemType = c.GetStoneItemType(tile);

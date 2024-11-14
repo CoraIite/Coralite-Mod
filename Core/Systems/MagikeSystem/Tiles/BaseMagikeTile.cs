@@ -166,7 +166,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
         }
 
         [Obsolete("由于更换了新的结构所以这个东西已弃用")]
-        public abstract MagikeTP GetEntityInstance();
+        public virtual MagikeTP GetEntityInstance()=>null;
 
         public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY)
         {
@@ -337,9 +337,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
             string empty = $"[i:{ModContent.ItemType<BasicFilter>()}]";
             string text = "";
 
-            List<Component> list = null;
+            List<MagikeComponent> list = null;
             if (entity.HasComponent(MagikeComponentID.MagikeFilter))
-                list = entity.Components[MagikeComponentID.MagikeFilter] as List<Component>;
+                list = entity.Components[MagikeComponentID.MagikeFilter] as List<MagikeComponent>;
 
             for (int i = 0; i < entity.ExtendFilterCapacity; i++)
             {

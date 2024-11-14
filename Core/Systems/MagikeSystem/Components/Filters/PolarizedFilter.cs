@@ -54,7 +54,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Filters
             if (!entity.HasComponent(MagikeComponentID.MagikeFilter))
                 return true;
 
-            PolarizedFilter oldFilter = (PolarizedFilter)(entity.Components[MagikeComponentID.MagikeFilter] as List<Component>)
+            PolarizedFilter oldFilter = (PolarizedFilter)(entity.Components[MagikeComponentID.MagikeFilter] as List<MagikeComponent>)
                 .FirstOrDefault(c => c is PolarizedFilter, null);
 
             if (oldFilter != null)
@@ -83,21 +83,21 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Filters
             return true;
         }
 
-        public override void OnAdd(IEntity entity)
+        public override void OnAdd(MagikeTP entity)
         {
             ChangeTileFrame(Level, entity);
             base.OnAdd(entity);
         }
 
-        public override void OnRemove(IEntity entity)
+        public override void OnRemove(MagikeTP entity)
         {
             ChangeTileFrame(MALevel.None, entity);
             base.OnRemove(entity);
         }
 
-        public static void ChangeTileFrame(MALevel level, IEntity entity)
+        public static void ChangeTileFrame(MALevel level, MagikeTP entity)
         {
-            Point16 topLeft = (entity as MagikeTP).Position;
+            Point16 topLeft = entity.Position;
             Tile tile = Framing.GetTileSafely(topLeft);
 
             if (!tile.HasTile)
@@ -116,13 +116,13 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Filters
                 }
         }
 
-        public override void ChangeComponentValues(Component component)
+        public override void ChangeComponentValues(MagikeComponent component)
         {
             if (component is IUpgradeable upgrade)
                 upgrade.Upgrade(Level);
         }
 
-        public override void RestoreComponentValues(Component component)
+        public override void RestoreComponentValues(MagikeComponent component)
         {
             if (component is IUpgradeable upgrade)
                 upgrade.Upgrade(MALevel.None);

@@ -1,6 +1,7 @@
 ﻿using Coralite.Core.Systems.CoraliteActorComponent;
 using Coralite.Core.Systems.MagikeSystem.Tiles;
 using Coralite.Helpers;
+using InnoVault;
 using InnoVault.TileProcessors;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.MagikeSystem.TileEntities
 {
-    public abstract class MagikeTP : TileProcessor, IEntity
+    public abstract class MagikeTP : TileProcessor, IEntity<MagikeComponent>
     {
         public const string SaveName = "Component";
 
@@ -30,7 +31,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         /// 为了提高性能，在遍历组件进行更新等操作时使用这个<br></br>
         /// 如果想要精确获取某个组件请使用<see cref="Components"/>
         /// </summary>
-        public List<Component> ComponentsCache { get; private set; }
+        public List<MagikeComponent> ComponentsCache { get; private set; }
 
         /// <summary>
         /// 扩展滤镜容量<br></br>
@@ -47,13 +48,13 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
             if (!Components.Contains(MagikeComponentID.MagikeFilter))
                 return true;
 
-            return ((List<Component>)Components[MagikeComponentID.MagikeFilter]).Count < ExtendFilterCapacity;
+            return ((List<MagikeComponent>)Components[MagikeComponentID.MagikeFilter]).Count < ExtendFilterCapacity;
         }
 
         public override void Update()
         {
             for (int i = 0; i < ComponentsCache.Count; i++)
-                ComponentsCache[i].Update(this);
+                ComponentsCache[i].Update();
         }
 
         public override void SetProperty()
@@ -106,7 +107,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         {
             for (int i = 0; i < ComponentsCache.Count; i++)
             {
-                Component component = ComponentsCache[i];
+                MagikeComponent component = ComponentsCache[i];
 
                 string fullName = component.GetType().FullName;
                 string preName = SaveName + i.ToString();
@@ -132,11 +133,11 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
                     continue;
                 }
 
-                var component = (Component)Activator.CreateInstance(t);
+                var component = (MagikeComponent)Activator.CreateInstance(t);
                 component.LoadData(SaveName + i.ToString(), tag);
                 i++;
 
-                (this as IEntity).AddComponentWithoutOnAdd(component);
+                AddComponentWithoutOnAdd(component);
             }
         }
 
@@ -152,18 +153,18 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         /// </summary>
         /// <param name="component"></param>
         /// <returns></returns>
-        public void AddComponent(Component component)
+        public void AddComponent(MagikeComponent component)
         {
             AddComponentWithoutOnAdd(component);
             component.OnAdd(this);
         }
 
         /// <summary>
-        /// 向实体内加入组件，不会触发<see cref="Component.OnAdd(IEntity)"/>
+        /// 向实体内加入组件，不会触发<see cref="MagikeComponent.OnAdd(IEntity)"/>
         /// </summary>
         /// <param name="component"></param>
         /// <returns></returns>
-        public void AddComponentWithoutOnAdd(Component component)
+        public void AddComponentWithoutOnAdd(MagikeComponent component)
         {
             if (MagikeComponentID.IsSingleton(component.ID))//该组件为单例形态
             {
@@ -175,9 +176,9 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
             else//该组件需要多重存在
             {
                 if (!Components.Contains(component.ID))
-                    Components.Add(component.ID, new List<Component>());
+                    Components.Add(component.ID, new List<MagikeComponent>());
 
-                ((List<Component>)Components[component.ID]).Add(component);
+                ((List<MagikeComponent>)Components[component.ID]).Add(component);
             }
 
             ComponentsCache.Add(component);
@@ -189,7 +190,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         /// 移除一个组件
         /// </summary>
         /// <param name="currentComponent"></param>
-        public void RemoveComponent(Component currentComponent)
+        public void RemoveComponent(MagikeComponent currentComponent)
         {
             RemoveComponentWithoutOnRemove(currentComponent);
             currentComponent.OnRemove(this);
@@ -197,16 +198,16 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         }
 
         /// <summary>
-        /// 移除一个组件，不触发<see cref="Component.OnRemove(IEntity)"/>
+        /// 移除一个组件，不触发<see cref="MagikeComponent.OnRemove(IEntity)"/>
         /// </summary>
         /// <param name="currentComponent"></param>
-        public void RemoveComponentWithoutOnRemove(Component currentComponent)
+        public void RemoveComponentWithoutOnRemove(MagikeComponent currentComponent)
         {
             int id = currentComponent.ID;
             if (MagikeComponentID.IsSingleton(id))//该组件为单例形态
                 Components.Remove(id);
             else//该组件需要多重存在
-                ((List<Component>)Components[id]).Remove(currentComponent);
+                ((List<MagikeComponent>)Components[id]).Remove(currentComponent);
 
             ComponentsCache.Remove(currentComponent);
         }
@@ -236,7 +237,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
             Components.Clear();
         }
 
-        public bool TryGetComponent<T>(int id, out T result) where T : Component
+        public bool TryGetComponent<T>(int id, out T result) where T : MagikeComponent
         {
             result = null;
             if (!HasComponent(id))
@@ -245,31 +246,31 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
             if (MagikeComponentID.IsSingleton(id))
                 result = (T)Components[id];
             else
-                result = (T)((List<Component>)Components[id]).FirstOrDefault(c => c is T, null);
+                result = (T)((List<MagikeComponent>)Components[id]).FirstOrDefault(c => c is T, null);
 
             return result != null;
         }
 
-        public Component GetSingleComponent(int index)
+        public MagikeComponent GetSingleComponent(int index)
         {
             if (!HasComponent(index))
-                throw new Exception("所查找的组件不存在！");
+                 $"所查找的组件不存在！index:{index}".LoggerDomp();
 
             if (MagikeComponentID.IsSingleton(index))
-                return (Component)Components[index];
+                return (MagikeComponent)Components[index];
             else
-                return ((List<Component>)Components[index]).First();
+                return ((List<MagikeComponent>)Components[index]).First();
         }
 
-        public T GetSingleComponent<T>(int index) where T : Component
+        public T GetSingleComponent<T>(int index) where T : MagikeComponent
         {
             if (!HasComponent(index))
-                throw new Exception("所查找的组件不存在！");
+                $"所查找的组件不存在！name:{nameof(T)},index:{index}".LoggerDomp();
 
             if (MagikeComponentID.IsSingleton(index))
                 return (T)Components[index];
             else
-                return (T)((List<Component>)Components[index]).First();
+                return (T)((List<MagikeComponent>)Components[index]).First();
         }
 
         #endregion

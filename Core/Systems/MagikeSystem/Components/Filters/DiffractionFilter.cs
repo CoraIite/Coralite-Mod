@@ -24,13 +24,13 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Filters
             return true;
         }
 
-        public override void ChangeComponentValues(Component component)
+        public override void ChangeComponentValues(MagikeComponent component)
         {
             if (component is MagikeLinerSender sender)
                 sender.MaxConnectExtra += ConnectMaxBonus;
         }
 
-        public override void RestoreComponentValues(Component component)
+        public override void RestoreComponentValues(MagikeComponent component)
         {
             if (component is MagikeLinerSender sender)
                 sender.MaxConnectExtra -= ConnectMaxBonus;
