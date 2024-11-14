@@ -11,6 +11,8 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
+using InnoVault;
+using System.IO;
 
 namespace Coralite.Content.Items.Magike.Tools
 {
@@ -90,6 +92,8 @@ namespace Coralite.Content.Items.Magike.Tools
         {
             get => new((int)Projectile.ai[0], (int)Projectile.ai[1]);
         }
+        public override bool CanFire => true;
+        private bool onspan;
 
         public Point16 TargetPoint { get; set; }
 
@@ -103,13 +107,16 @@ namespace Coralite.Content.Items.Magike.Tools
         public override bool? CanDamage() => false;
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) => false;
 
-        public override void OnSpawn(IEntitySource source)
-        {
-            TargetPoint = BasePosition;
-        }
-
         public override void AI()
         {
+            if (!onspan)
+            {
+                Projectile.ai[0] = InMousePos.ToTileCoordinates16().X;
+                Projectile.ai[1] = InMousePos.ToTileCoordinates16().Y;
+                TargetPoint = BasePosition;
+                onspan = true;
+            }
+
             Projectile.Center = Owner.Center;
 
             if (Owner.HeldItem.type != ModContent.ItemType<InfinityClusterWand>())
@@ -118,10 +125,10 @@ namespace Coralite.Content.Items.Magike.Tools
                 return;
             }
 
-            if (Owner.channel)
+            if (DownLeft)
             {
                 Owner.itemTime = Owner.itemAnimation = 7;
-                TargetPoint = Main.MouseWorld.ToTileCoordinates16();
+                TargetPoint = InMousePos.ToTileCoordinates16();
 
                 //限制范围
                 if (Math.Abs(TargetPoint.X - BasePosition.X) > GamePlaySystem.SelectSize)
@@ -131,20 +138,62 @@ namespace Coralite.Content.Items.Magike.Tools
             }
             else
             {
-                Charge();
+                if (Projectile.IsOwnedByLocalPlayer())
+                {
+                    Charge(Owner, TargetPoint, BasePosition, -1);
+                    if (VaultUtils.isClient)
+                    {
+                        Send_ClusterWand_Data();
+                    }
+                }
+                
                 Projectile.Kill();
                 return;
             }
 
             //右键直接停止使用
-            if (Main.mouseRight)
+            if (DownRight)
             {
                 Projectile.Kill();
                 return;
             }
         }
 
-        public void Charge()
+        internal void Send_ClusterWand_Data()
+        {
+            ModPacket modPacket = Coralite.Instance.GetPacket();
+            modPacket.Write((byte)CLNetWorkEnum.ClusterWand);
+            modPacket.Write(Owner.whoAmI);
+            modPacket.WritePoint16(TargetPoint);
+            modPacket.WritePoint16(BasePosition);
+            modPacket.Write(-1);
+            modPacket.Send();
+        }
+
+        internal static void Hander_ClusterWand(BinaryReader reader, int whoAmI)
+        {
+            int ownerIndex = reader.ReadInt32();
+            Point16 TargetPoint = new Point16(reader.ReadInt16(), reader.ReadInt16());
+            Point16 BasePosition = new Point16(reader.ReadInt16(), reader.ReadInt16());
+            int amount = reader.ReadInt32();
+            if (ownerIndex >= 0 && ownerIndex < Main.player.Length)
+            {
+                Player Owner = Main.player[ownerIndex];
+                Charge(Owner, TargetPoint, BasePosition, amount);
+                if (Main.dedServ)
+                {
+                    ModPacket modPacket = Coralite.Instance.GetPacket();
+                    modPacket.Write((byte)CLNetWorkEnum.PlaceFilter);
+                    modPacket.Write(ownerIndex);
+                    modPacket.WritePoint16(TargetPoint);
+                    modPacket.WritePoint16(BasePosition);
+                    modPacket.Write(amount);
+                    modPacket.Send(-1, whoAmI);
+                }
+            }
+        }
+
+        public static void Charge(Player Owner, Point16 TargetPoint, Point16 BasePosition, int amount)
         {
             int mode = (Owner.HeldItem.ModItem as InfinityClusterWand).mode;
 
@@ -179,9 +228,20 @@ namespace Coralite.Content.Items.Magike.Tools
                         continue;
 
                     if (mode == 0)
-                        entity.GetMagikeContainer().FullChargeMagike();
+                    {
+                        if (amount == -1)
+                        {
+                            entity.GetMagikeContainer().FullChargeMagike();
+                        }
+                        else
+                        {
+                            entity.GetMagikeContainer().AddMagike(amount);
+                        }
+                    }
                     else
+                    {
                         entity.GetMagikeContainer().ClearMagike();
+                    }
 
                     MagikeHelper.SpawnLozengeParticle_WithTopLeft(currentTopLeft.Value);
                 }

@@ -157,7 +157,8 @@ namespace Coralite.Content.Items.MagikeSeries2
                 Projectile.ai[1] = value.Y;
             }
         }
-
+        public override bool CanFire => true;
+        private bool onspan;
         public ref float State => ref Projectile.ai[2];
         public bool CanDrawFrame = true;
 
@@ -174,13 +175,16 @@ namespace Coralite.Content.Items.MagikeSeries2
         public override bool? CanDamage() => false;
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) => false;
 
-        public override void OnSpawn(IEntitySource source)
-        {
-            TargetPoint = BasePosition;
-        }
-
         public override void AI()
         {
+            if (!onspan)
+            {
+                Projectile.ai[0] = InMousePos.ToTileCoordinates16().X;
+                Projectile.ai[1] = InMousePos.ToTileCoordinates16().Y;
+                TargetPoint = BasePosition;
+                onspan = true;
+            }
+
             Projectile.Center = Owner.Center;
 
             if (Owner.HeldItem.ModItem is not BrilliantConnectStaff)
@@ -204,12 +208,12 @@ namespace Coralite.Content.Items.MagikeSeries2
 
         public void ChooseSenders()
         {
-            if (Owner.channel)
+            if (DownLeft)
             {
                 LockOwnerItemTime(5);
                 Projectile.timeLeft = 2;
 
-                TargetPoint = Main.MouseWorld.ToTileCoordinates16();
+                TargetPoint = InMousePos.ToTileCoordinates16();
 
                 //限制范围
                 if (Math.Abs(TargetPoint.X - BasePosition.X) > GamePlaySystem.SelectSize)
@@ -224,6 +228,7 @@ namespace Coralite.Content.Items.MagikeSeries2
                     State = 1;
                     Projectile.timeLeft = 60 * 10;
                     CanDrawFrame = false;
+                    Projectile.netUpdate = true;
                 }
                 else
                 {
@@ -238,12 +243,12 @@ namespace Coralite.Content.Items.MagikeSeries2
         {
             LockOwnerItemTime(5);
 
-            if (Owner.controlUseItem)
+            if (DownLeft)
             {
                 if (Projectile.localAI[0] == 0)
                 {
                     CanDrawFrame = true;
-                    BasePosition = Main.MouseWorld.ToTileCoordinates16();
+                    BasePosition = InMousePos.ToTileCoordinates16();
                     TargetPoint = BasePosition;
                     Projectile.localAI[0] = 1;
                     Helper.PlayPitched("Fairy/FairyBottleClick2", 0.4f, 0, Owner.Center);
@@ -251,7 +256,7 @@ namespace Coralite.Content.Items.MagikeSeries2
 
                 Projectile.timeLeft = 2;
 
-                TargetPoint = Main.MouseWorld.ToTileCoordinates16();
+                TargetPoint = InMousePos.ToTileCoordinates16();
 
                 //限制范围
                 if (Math.Abs(TargetPoint.X - BasePosition.X) > GamePlaySystem.SelectSize)
@@ -443,7 +448,8 @@ namespace Coralite.Content.Items.MagikeSeries2
     public class DisconnectProj : BaseHeldProj, IDrawNonPremultiplied
     {
         public override string Texture => AssetDirectory.Blank;
-
+        public override bool CanFire => true;
+        private bool onspan;
         public Point16 BasePosition
         {
             get => new((int)Projectile.ai[0], (int)Projectile.ai[1]);
@@ -461,13 +467,16 @@ namespace Coralite.Content.Items.MagikeSeries2
         public override bool? CanDamage() => false;
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) => false;
 
-        public override void OnSpawn(IEntitySource source)
-        {
-            TargetPoint = BasePosition;
-        }
-
         public override void AI()
         {
+            if (!onspan)
+            {
+                Projectile.ai[0] = InMousePos.ToTileCoordinates16().X;
+                Projectile.ai[1] = InMousePos.ToTileCoordinates16().Y;
+                TargetPoint = BasePosition;
+                onspan = true;
+            }
+
             Projectile.Center = Owner.Center;
 
             if (Owner.HeldItem.ModItem is not BrilliantConnectStaff)
@@ -479,7 +488,7 @@ namespace Coralite.Content.Items.MagikeSeries2
             if (Main.mouseRight)
             {
                 LockOwnerItemTime(5);
-                TargetPoint = Main.MouseWorld.ToTileCoordinates16();
+                TargetPoint = InMousePos.ToTileCoordinates16();
 
                 //限制范围
                 if (Math.Abs(TargetPoint.X - BasePosition.X) > GamePlaySystem.SelectSize)

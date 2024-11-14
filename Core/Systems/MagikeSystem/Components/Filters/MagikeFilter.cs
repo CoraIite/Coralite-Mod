@@ -2,12 +2,14 @@
 using Coralite.Core.Loaders;
 using Coralite.Core.Systems.CoraliteActorComponent;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
+using Coralite.Helpers;
 using InnoVault;
 using InnoVault.TileProcessors;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.ID;
 using Terraria.ModLoader.UI;
 using Terraria.UI;
 
@@ -110,10 +112,11 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// <param name="entity"></param>
         public virtual void SpawnItem(MagikeTP entity)
         {
-            if (!VaultUtils.isServer && entity is MagikeTP magikeTP)
+            if (!VaultUtils.isClient)
             {
-                IEntitySource source = new EntitySource_WorldGen($"MagikeTP:{magikeTP.ID}");
-                Main.LocalPlayer.QuickSpawnItem(source, ItemType);
+                IEntitySource source = new EntitySource_WorldGen($"MagikeTP:{entity.ID}");
+                int type = Item.NewItem(source, Utils.CenteredRectangle(Helper.GetMagikeTileCenter(entity.Position), Vector2.One), ItemType);
+                NetMessage.SendData(MessageID.SyncItem, -1, -1, null, type, 0f, 0f, 0f, 0, 0, 0);
             }
         }
 

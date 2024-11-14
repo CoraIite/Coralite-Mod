@@ -10,6 +10,7 @@ namespace Coralite
         BabyIceDragon,
         PlaceFilter,
         FilterRemoveButton_LeftClick,
+        ClusterWand,
     }
 
     internal class CLNetWork
@@ -26,6 +27,10 @@ namespace Coralite
                 FilterProj.Hander_PlaceFilter(reader, whoAmI);
             }
             else if (cLNetWorkEnum == CLNetWorkEnum.FilterRemoveButton_LeftClick)
+            {
+                FilterRemoveButton.Hander_LeftClick_Data(reader, whoAmI);
+            }
+            else if (cLNetWorkEnum == CLNetWorkEnum.ClusterWand)
             {
                 FilterRemoveButton.Hander_LeftClick_Data(reader, whoAmI);
             }

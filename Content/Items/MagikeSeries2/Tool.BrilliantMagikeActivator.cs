@@ -59,11 +59,9 @@ namespace Coralite.Content.Items.MagikeSeries2
     public class BrilliantMagikeActivatorProj : BaseHeldProj, IDrawNonPremultiplied
     {
         public override string Texture => AssetDirectory.Blank;
-
-        public Point16 BasePosition
-        {
-            get => new((int)Projectile.ai[0], (int)Projectile.ai[1]);
-        }
+        public override bool CanFire => true;
+        private bool onspan;
+        public Point16 BasePosition => new((int)Projectile.ai[0], (int)Projectile.ai[1]);
 
         public Point16 TargetPoint { get; set; }
 
@@ -77,13 +75,15 @@ namespace Coralite.Content.Items.MagikeSeries2
         public override bool? CanDamage() => false;
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) => false;
 
-        public override void OnSpawn(IEntitySource source)
-        {
-            TargetPoint = BasePosition;
-        }
-
         public override void AI()
         {
+            if (!onspan)
+            {
+                Projectile.ai[0] = InMousePos.ToTileCoordinates16().X;
+                Projectile.ai[1] = InMousePos.ToTileCoordinates16().Y;
+                TargetPoint = BasePosition;
+                onspan = true;
+            }
             Projectile.Center = Owner.Center;
 
             if (Owner.HeldItem.ModItem is not BrilliantMagikeActivator)
@@ -95,7 +95,7 @@ namespace Coralite.Content.Items.MagikeSeries2
             if (Owner.channel)
             {
                 LockOwnerItemTime(5);
-                TargetPoint = Main.MouseWorld.ToTileCoordinates16();
+                TargetPoint = InMousePos.ToTileCoordinates16();
 
                 //限制范围
                 if (Math.Abs(TargetPoint.X - BasePosition.X) > GamePlaySystem.SelectSize)
