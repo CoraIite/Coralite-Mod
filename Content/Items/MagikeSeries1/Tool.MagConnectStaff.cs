@@ -3,7 +3,6 @@ using Coralite.Content.UI;
 using Coralite.Core;
 using Coralite.Core.Loaders;
 using Coralite.Core.Prefabs.Projectiles;
-using Coralite.Core.Systems.CoraliteActorComponent;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;

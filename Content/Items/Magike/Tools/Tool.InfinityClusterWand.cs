@@ -83,6 +83,8 @@ namespace Coralite.Content.Items.Magike.Tools
     /// </summary>
     public class InfinityClusterWandProj : RectangleSelectProj
     {
+        public override int ItemType => ModContent.ItemType<InfinityClusterWand>();
+
         public override void Special()
         {
             SearchFromArea(Owner, TargetPoint, BasePosition, FillMagike);

@@ -48,6 +48,11 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
     /// </summary>
     public class FilterProj :  RectangleSelectProj
     {
+        public override bool CheckHeldItem()
+        {
+            return Owner.HeldItem.ModItem is not FilterItem;
+        }
+
         public override void Special()
         {
             PlaceFilter(Owner, TargetPoint, BasePosition);

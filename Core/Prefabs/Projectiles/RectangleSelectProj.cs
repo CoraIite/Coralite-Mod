@@ -16,10 +16,15 @@ namespace Coralite.Core.Prefabs.Projectiles
         public Point16 BasePosition
         {
             get => new((int)Projectile.ai[0], (int)Projectile.ai[1]);
+            set
+            {
+                Projectile.ai[0] = value.X;
+                Projectile.ai[1] = value.Y;
+            }
         }
 
         public override bool CanFire => true;
-        protected bool onspan;
+        protected bool onspawn;
 
         public Point16 TargetPoint { get; set; }
 
@@ -37,17 +42,17 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         public override void AI()
         {
-            if (!onspan)
+            if (!onspawn)
             {
                 Projectile.ai[0] = InMousePos.ToTileCoordinates16().X;
                 Projectile.ai[1] = InMousePos.ToTileCoordinates16().Y;
                 TargetPoint = BasePosition;
-                onspan = true;
+                onspawn = true;
             }
 
             Projectile.Center = Owner.Center;
 
-            if (ItemType != -1 && Owner.HeldItem.type != ItemType)
+            if (CheckHeldItem())
             {
                 Projectile.Kill();
                 return;
@@ -83,6 +88,8 @@ namespace Coralite.Core.Prefabs.Projectiles
             }
         }
 
+        public virtual bool CheckHeldItem()
+=> ItemType != -1 && Owner.HeldItem.type != ItemType;
         /// <summary>
         /// 选择完松手后的特殊操作
         /// </summary>

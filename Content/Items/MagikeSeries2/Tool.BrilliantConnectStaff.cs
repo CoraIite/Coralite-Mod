@@ -144,50 +144,26 @@ namespace Coralite.Content.Items.MagikeSeries2
     /// 使用ai0和ai1传入初始位置<br></br>
     /// ai2传入使用状态
     /// </summary>
-    public class BrilliantConnectStaffProj : BaseHeldProj, IDrawNonPremultiplied
+    public class BrilliantConnectStaffProj : RectangleSelectProj
     {
-        public override string Texture => AssetDirectory.Blank;
+        public override int ItemType => ModContent.ItemType<BrilliantConnectStaff>();
 
-        public Point16 BasePosition
-        {
-            get => new((int)Projectile.ai[0], (int)Projectile.ai[1]);
-            set
-            {
-                Projectile.ai[0] = value.X;
-                Projectile.ai[1] = value.Y;
-            }
-        }
-        public override bool CanFire => true;
-        private bool onspan;
         public ref float State => ref Projectile.ai[2];
         public bool CanDrawFrame = true;
 
-        public Point16 TargetPoint { get; set; }
-
-        public override void SetDefaults()
-        {
-            Projectile.timeLeft = 1200;
-            Projectile.width = Projectile.height = 16;
-            Projectile.tileCollide = false;
-            Projectile.friendly = true;
-        }
-
-        public override bool? CanDamage() => false;
-        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) => false;
-
         public override void AI()
         {
-            if (!onspan)
+            if (!onspawn)
             {
                 Projectile.ai[0] = InMousePos.ToTileCoordinates16().X;
                 Projectile.ai[1] = InMousePos.ToTileCoordinates16().Y;
                 TargetPoint = BasePosition;
-                onspan = true;
+                onspawn = true;
             }
 
             Projectile.Center = Owner.Center;
 
-            if (Owner.HeldItem.ModItem is not BrilliantConnectStaff)
+            if (CheckHeldItem())
             {
                 Projectile.Kill();
                 return;
@@ -437,55 +413,31 @@ namespace Coralite.Content.Items.MagikeSeries2
 
             return false;
         }
-
-        public void DrawNonPremultiplied(SpriteBatch spriteBatch)
-        {
-            if (CanDrawFrame)
-                MagikeHelper.DrawRectangleFrame(spriteBatch, BasePosition, TargetPoint, Coralite.CrystallineMagikePurple);
-        }
     }
 
-    public class DisconnectProj : BaseHeldProj, IDrawNonPremultiplied
+    public class DisconnectProj : RectangleSelectProj
     {
-        public override string Texture => AssetDirectory.Blank;
-        public override bool CanFire => true;
-        private bool onspan;
-        public Point16 BasePosition
-        {
-            get => new((int)Projectile.ai[0], (int)Projectile.ai[1]);
-        }
-
-        public Point16 TargetPoint { get; set; }
-
-        public override void SetDefaults()
-        {
-            Projectile.tileCollide = false;
-            Projectile.width = Projectile.height = 16;
-            Projectile.friendly = true;
-        }
-
-        public override bool? CanDamage() => false;
-        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) => false;
+        public override int ItemType => ModContent.ItemType<BrilliantConnectStaff>();
 
         public override void AI()
         {
-            if (!onspan)
+            if (!onspawn)
             {
                 Projectile.ai[0] = InMousePos.ToTileCoordinates16().X;
                 Projectile.ai[1] = InMousePos.ToTileCoordinates16().Y;
                 TargetPoint = BasePosition;
-                onspan = true;
+                onspawn = true;
             }
 
             Projectile.Center = Owner.Center;
 
-            if (Owner.HeldItem.ModItem is not BrilliantConnectStaff)
+            if (CheckHeldItem())
             {
                 Projectile.Kill();
                 return;
             }
 
-            if (Main.mouseRight)
+            if (DownRight)
             {
                 LockOwnerItemTime(5);
                 TargetPoint = InMousePos.ToTileCoordinates16();
@@ -498,13 +450,13 @@ namespace Coralite.Content.Items.MagikeSeries2
             }
             else
             {
-                PlaceFilter();
+                DisconnectAll();
                 Projectile.Kill();
                 return;
             }
         }
 
-        public void PlaceFilter()
+        public void DisconnectAll()
         {
             bool placed = false;
 
@@ -556,13 +508,6 @@ namespace Coralite.Content.Items.MagikeSeries2
                 Helper.PlayPitched("Fairy/CursorExpand", 0.4f, 0, Owner.Center);
             else
                 Helper.PlayPitched("UI/Error", 0.4f, 0, Owner.Center);
-        }
-
-        public override bool PreDraw(ref Color lightColor) => false;
-
-        public void DrawNonPremultiplied(SpriteBatch spriteBatch)
-        {
-                MagikeHelper.DrawRectangleFrame(spriteBatch, BasePosition, TargetPoint, Coralite.CrystallineMagikePurple);
         }
     }
 }
