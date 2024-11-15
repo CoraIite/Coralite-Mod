@@ -1,17 +1,14 @@
-﻿using Coralite.Core.Configs;
-using Coralite.Core.Prefabs.Projectiles;
+﻿using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.Particles;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
 using InnoVault;
-using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameContent;
 using Terraria.ID;
 
 namespace Coralite.Core.Systems.MagikeSystem.BaseItems
@@ -49,77 +46,14 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
     /// <summary>
     /// 使用ai0和ai1传入初始位置
     /// </summary>
-    public class FilterProj : BaseHeldProj, IDrawNonPremultiplied
+    public class FilterProj :  RectangleSelectProj
     {
-        public override string Texture => AssetDirectory.Blank;
-        public override bool CanFire => true;
-        private bool onspan;
-
-        public Point16 BasePosition
+        public override void Special()
         {
-            get => new((int)Projectile.ai[0], (int)Projectile.ai[1]);
-        }
-
-        public Point16 TargetPoint { get; set; }
-
-        public override void SetDefaults()
-        {
-            Projectile.tileCollide = false;
-            Projectile.width = Projectile.height = 16;
-            Projectile.friendly = true;
-        }
-
-        public override bool? CanDamage() => false;
-        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) => false;
-
-        public override void AI()
-        {
-            if (!onspan)
+            PlaceFilter(Owner, TargetPoint, BasePosition);
+            if (VaultUtils.isClient)
             {
-                Projectile.ai[0] = InMousePos.ToTileCoordinates16().X;
-                Projectile.ai[1] = InMousePos.ToTileCoordinates16().Y;
-                TargetPoint = BasePosition;
-                onspan = true;
-            }
-
-            Projectile.Center = Owner.Center;
-
-            if (Owner.HeldItem.ModItem is not FilterItem)
-            {
-                Projectile.Kill();
-                return;
-            }
-
-            if (DownLeft)
-            {
-                Owner.itemTime = Owner.itemAnimation = 7;
-                TargetPoint = InMousePos.ToTileCoordinates16();
-
-                //限制范围
-                if (Math.Abs(TargetPoint.X - BasePosition.X) > GamePlaySystem.SelectSize)
-                    TargetPoint = new Point16(Math.Clamp(TargetPoint.X, BasePosition.X - GamePlaySystem.SelectSize, BasePosition.X + GamePlaySystem.SelectSize), TargetPoint.Y);
-                if (Math.Abs(TargetPoint.Y - BasePosition.Y) > GamePlaySystem.SelectSize)
-                    TargetPoint = new Point16(TargetPoint.X, Math.Clamp(TargetPoint.Y, BasePosition.Y - GamePlaySystem.SelectSize, BasePosition.Y + GamePlaySystem.SelectSize));
-            }
-            else
-            {
-                if (Projectile.IsOwnedByLocalPlayer())
-                {
-                    PlaceFilter(Owner, TargetPoint, BasePosition);
-                    if (VaultUtils.isClient)
-                    {
-                        Send_PlaceFilter_Data();
-                    }
-                }
-                Projectile.Kill();
-                return;
-            }
-
-            //右键直接停止使用
-            if (DownRight)
-            {
-                Projectile.Kill();
-                return;
+                Send_PlaceFilter_Data();
             }
         }
 
@@ -242,14 +176,6 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
             }
             else
                 Helper.PlayPitched("UI/Error", 0.4f, 0, Owner.Center);
-        }
-
-        public override bool PreDraw(ref Color lightColor) => false;
-
-        public void DrawNonPremultiplied(SpriteBatch spriteBatch)
-        {
-            if (Owner.HeldItem.ModItem is FilterItem filterItem)
-                MagikeHelper.DrawRectangleFrame(spriteBatch, BasePosition, TargetPoint, filterItem.FilterColor);
         }
     }
 }
