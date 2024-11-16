@@ -2,14 +2,12 @@
 using Coralite.Content.Items.Materials;
 using Coralite.Content.Raritys;
 using Coralite.Core;
-using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
-using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -56,69 +54,16 @@ namespace Coralite.Content.Items.MagikeSeries2
         }
     }
 
-    public class BrilliantMagikeActivatorProj : BaseHeldProj, IDrawNonPremultiplied
+    public class BrilliantMagikeActivatorProj : RectangleSelectProj
     {
-        public override string Texture => AssetDirectory.Blank;
-        public override bool CanFire => true;
-        private bool onspan;
-        public Point16 BasePosition => new((int)Projectile.ai[0], (int)Projectile.ai[1]);
+        public override int ItemType => ModContent.ItemType<BrilliantMagikeActivator>();
 
-        public Point16 TargetPoint { get; set; }
-
-        public override void SetDefaults()
+        public override void Special()
         {
-            Projectile.tileCollide = false;
-            Projectile.width = Projectile.height = 16;
-            Projectile.friendly = true;
+            Actractive();
         }
 
-        public override bool? CanDamage() => false;
-        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) => false;
-
-        public override void AI()
-        {
-            if (!onspan)
-            {
-                Projectile.ai[0] = InMousePos.ToTileCoordinates16().X;
-                Projectile.ai[1] = InMousePos.ToTileCoordinates16().Y;
-                TargetPoint = BasePosition;
-                onspan = true;
-            }
-            Projectile.Center = Owner.Center;
-
-            if (Owner.HeldItem.ModItem is not BrilliantMagikeActivator)
-            {
-                Projectile.Kill();
-                return;
-            }
-
-            if (Owner.channel)
-            {
-                LockOwnerItemTime(5);
-                TargetPoint = InMousePos.ToTileCoordinates16();
-
-                //限制范围
-                if (Math.Abs(TargetPoint.X - BasePosition.X) > GamePlaySystem.SelectSize)
-                    TargetPoint = new Point16(Math.Clamp(TargetPoint.X, BasePosition.X - GamePlaySystem.SelectSize, BasePosition.X + GamePlaySystem.SelectSize), TargetPoint.Y);
-                if (Math.Abs(TargetPoint.Y - BasePosition.Y) > GamePlaySystem.SelectSize)
-                    TargetPoint = new Point16(TargetPoint.X, Math.Clamp(TargetPoint.Y, BasePosition.Y - GamePlaySystem.SelectSize, BasePosition.Y + GamePlaySystem.SelectSize));
-            }
-            else
-            {
-                PlaceFilter();
-                Projectile.Kill();
-                return;
-            }
-
-            //右键直接停止使用
-            if (Main.mouseRight)
-            {
-                Projectile.Kill();
-                return;
-            }
-        }
-
-        public void PlaceFilter()
+        public void Actractive()
         {
             bool placed = false;
 
@@ -180,13 +125,6 @@ namespace Coralite.Content.Items.MagikeSeries2
                     Velocity = -Vector2.UnitY
                 }, TargetPoint.ToWorldCoordinates());
             }
-        }
-
-        public override bool PreDraw(ref Color lightColor) => false;
-
-        public void DrawNonPremultiplied(SpriteBatch spriteBatch)
-        {
-            MagikeHelper.DrawRectangleFrame(spriteBatch, BasePosition, TargetPoint, Coralite.CrystallineMagikePurple);
         }
     }
 }

@@ -13,7 +13,7 @@ namespace Coralite.Content.Items.MagikeSeries1
         public override void SetDefaults()
         {
             Item.CloneDefaults(ItemID.AmethystHook);
-            Item.shootSpeed = 16f; // This defines how quickly the hook is shot.
+            Item.shootSpeed = 13f; // This defines how quickly the hook is shot.
             Item.shoot = ModContent.ProjectileType<MagicCrystalHookProjectile>(); // Makes the item shoot the hook's projectile when used.
         }
 
