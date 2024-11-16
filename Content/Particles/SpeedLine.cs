@@ -10,7 +10,7 @@ namespace Coralite.Content.Particles
         {
             Frame = new Rectangle(0, 0, 64, 128);
             Rotation = Velocity.ToRotation() + 1.57f;
-            oldCenter =
+            oldPositions =
             [
                 new Vector2(Scale,Scale*Main.rand.NextFloat(1,2))
             ];
@@ -19,7 +19,7 @@ namespace Coralite.Content.Particles
         public override void Update()
         {
             fadeIn++;
-            Lighting.AddLight(Center, color.ToVector3() * 0.3f);
+            Lighting.AddLight(Position, color.ToVector3() * 0.3f);
 
             if (fadeIn > 8)
             {
@@ -33,15 +33,15 @@ namespace Coralite.Content.Particles
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            Texture2D mainTex = GetTexture().Value;
+            Texture2D mainTex = TexValue;
             Rectangle frame = Frame;
             Vector2 origin = new(frame.Width / 2, frame.Height / 2);
-            var pos = Center - Main.screenPosition;
+            var pos = Position - Main.screenPosition;
             Color c = Color.White * 0.5f;
-            if (oldCenter != null)
+            if (oldPositions != null)
             {
-                spriteBatch.Draw(mainTex, pos, frame, color, Rotation, origin, oldCenter[0], SpriteEffects.None, 0f);
-                spriteBatch.Draw(mainTex, pos, frame, c, Rotation, origin, oldCenter[0] * 0.5f, SpriteEffects.None, 0f);
+                spriteBatch.Draw(mainTex, pos, frame, color, Rotation, origin, oldPositions[0], SpriteEffects.None, 0f);
+                spriteBatch.Draw(mainTex, pos, frame, c, Rotation, origin, oldPositions[0] * 0.5f, SpriteEffects.None, 0f);
             }
         }
     }

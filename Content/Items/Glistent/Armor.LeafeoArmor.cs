@@ -255,7 +255,7 @@ namespace Coralite.Content.Items.Glistent
                         if (alpha < 1)
                             alpha += 0.05f;
 
-                        Center = owner.Center + ((fadeIn + start).ToRotationVector2() * length);
+                        Position = owner.Center + ((fadeIn + start).ToRotationVector2() * length);
                         Rotation = fadeIn + start - 1.57f + (LeafType == 0 ? 1.57f : 0);
 
                         if (fadeIn < 0.5f)
@@ -270,7 +270,7 @@ namespace Coralite.Content.Items.Glistent
                         if (Velocity.Y < 8)
                             Velocity.Y += 0.25f;
 
-                        if (Collision.SolidCollision(Center - (Vector2.One * 5f), 10, 10))
+                        if (Collision.SolidCollision(Position - (Vector2.One * 5f), 10, 10))
                         {
                             if (fadeIn > 0.5f)
                                 fadeIn = 0.5f;

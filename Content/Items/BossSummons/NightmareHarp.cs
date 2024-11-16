@@ -463,7 +463,7 @@ namespace Coralite.Content.Items.BossSummons
             int ownerIndex = (int)Velocity.X;
             if (Main.player.IndexInRange(ownerIndex))
             {
-                Center = Main.player[ownerIndex].Center;
+                Position = Main.player[ownerIndex].Center;
             }
 
             Rotation += 0.05f;
@@ -490,10 +490,10 @@ namespace Coralite.Content.Items.BossSummons
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            Texture2D mainTex = GetTexture().Value;
+            Texture2D mainTex = TexValue;
             Vector2 origin = mainTex.Size() / 2;
 
-            spriteBatch.Draw(mainTex, Center - Main.screenPosition, null, color, Rotation, origin, Scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(mainTex, Position - Main.screenPosition, null, color, Rotation, origin, Scale, SpriteEffects.None, 0f);
         }
     }
 }

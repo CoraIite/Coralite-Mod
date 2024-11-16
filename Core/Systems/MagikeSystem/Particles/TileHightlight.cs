@@ -33,11 +33,11 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            var mainTex = GetTexture().Value;
+            var mainTex = TexValue;
             Rectangle frame = mainTex.Frame(3, 3, Frame.X, Frame.Y);
             Vector2 origin = frame.Size() / 2;
 
-            spriteBatch.Draw(mainTex, Center - Main.screenPosition, frame, color, Rotation, origin, Scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(mainTex, Position - Main.screenPosition, frame, color, Rotation, origin, Scale, SpriteEffects.None, 0f);
         }
     }
 }

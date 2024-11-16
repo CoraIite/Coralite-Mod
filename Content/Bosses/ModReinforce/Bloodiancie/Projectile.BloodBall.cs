@@ -186,7 +186,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
         public override void OnSpawn()
         {
             color = Color.White;
-            Frame = GetTexture().Frame();
+            Frame = TexValue.Frame();
             Rotation = Velocity.ToRotation();
         }
 

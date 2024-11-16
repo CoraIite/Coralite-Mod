@@ -104,7 +104,7 @@ namespace Coralite.Content.Items.Pets
 
         public override void Update()
         {
-            Center += Velocity;
+            Position += Velocity;
             Rotation += Main.rand.NextFloat(0.13f, 0.18f);
             Velocity *= 0.99f;
             if (fadeIn > 45)
@@ -130,7 +130,7 @@ namespace Coralite.Content.Items.Pets
             {
                 c *= fadeIn / 6;
             }
-            spriteBatch.Draw(GetTexture().Value, Center, frame, c, Rotation, origin, Scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(TexValue, Position, frame, c, Rotation, origin, Scale, SpriteEffects.None, 0f);
         }
     }
 

@@ -22,7 +22,7 @@ namespace Coralite.Content.Particles
             shader.UseColor(color);
             shader.UseOpacity(0.65f);
             shader.UseSaturation(2.1f);
-            Lighting.AddLight(Center, color.ToVector3() * 0.3f);
+            Lighting.AddLight(Position, color.ToVector3() * 0.3f);
 
             if (fadeIn < 10)
                 Velocity *= 0.73f;

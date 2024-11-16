@@ -38,19 +38,19 @@ namespace Coralite.Content.Particles
             if (color.A < 2)
                 active = false;
 
-            if (fadeIn < oldCenter.Length)
+            if (fadeIn < oldPositions.Length)
             {
-                int length = oldCenter.Length;
+                int length = oldPositions.Length;
                 for (int i = 0; i < length; i++)
                 {
-                    oldCenter[i] = Vector2.Lerp(oldCenter[0], Center, i / (float)(length - 1));
-                    oldRot[i] = Helper.Lerp(oldRot[0], Rotation, i / (float)(length - 1));
+                    oldPositions[i] = Vector2.Lerp(oldPositions[0], Position, i / (float)(length - 1));
+                    oldRotations[i] = Helper.Lerp(oldRotations[0], Rotation, i / (float)(length - 1));
                 }
             }
             else
             {
-                UpdatePosCachesNormally(oldCenter.Length);
-                UpdateRotCachesNormally(oldRot.Length);
+                UpdatePositionCache(oldPositions.Length);
+                UpdateRotationCache(oldRotations.Length);
             }
         }
 
@@ -64,13 +64,13 @@ namespace Coralite.Content.Particles
             if (p != null)
             {
                 p.targetColor = targetColor == default ? new Color(0, 60, 250, 0) : targetColor;
-                p.InitOldCaches(trailCacheCount);
+                p.InitializeCaches(trailCacheCount);
             }
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            Texture2D mainTex = GetTexture().Value;
+            Texture2D mainTex = TexValue;
             float scale = Scale;
             Color c = color;
 
@@ -79,13 +79,13 @@ namespace Coralite.Content.Particles
             List<CustomVertexInfo> bar4 = new();
 
             float height = mainTex.Height * scale;
-            int cacheCount = oldCenter.Length;
+            int cacheCount = oldPositions.Length;
 
             for (int i = 0; i < cacheCount; i++)
             {
                 float factor = (float)i / cacheCount;
-                Vector2 Center = oldCenter[i];
-                Vector2 normal = (oldRot[i] + 1.57f).ToRotationVector2();
+                Vector2 Center = oldPositions[i];
+                Vector2 normal = (oldRotations[i] + 1.57f).ToRotationVector2();
 
                 Vector2 Top = Center - Main.screenPosition + (normal * height);
                 Vector2 Bottom = Center - Main.screenPosition - (normal * height);
@@ -146,14 +146,14 @@ namespace Coralite.Content.Particles
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            Texture2D mainTex = GetTexture().Value;
+            Texture2D mainTex = TexValue;
             Color c = Color.White * (color.A / 255f);
             c.A = (byte)(c.A * 0.3f);
 
-            spriteBatch.Draw(mainTex, Center - Main.screenPosition, null, c, Rotation, mainTex.Size() / 2, Scale * 1.5f, 0, 0);
+            spriteBatch.Draw(mainTex, Position - Main.screenPosition, null, c, Rotation, mainTex.Size() / 2, Scale * 1.5f, 0, 0);
             c = color;
-            spriteBatch.Draw(mainTex, Center - Main.screenPosition, null, c, Rotation, mainTex.Size() / 2, Scale, 0, 0);
-            spriteBatch.Draw(mainTex, Center - Main.screenPosition, null, c, Rotation, mainTex.Size() / 2, Scale, 0, 0);
+            spriteBatch.Draw(mainTex, Position - Main.screenPosition, null, c, Rotation, mainTex.Size() / 2, Scale, 0, 0);
+            spriteBatch.Draw(mainTex, Position - Main.screenPosition, null, c, Rotation, mainTex.Size() / 2, Scale, 0, 0);
         }
     }
 }

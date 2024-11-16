@@ -66,7 +66,7 @@ namespace Coralite.Content.Particles
 
             } while (false);
 
-            Lighting.AddLight(Center, color.ToVector3());
+            Lighting.AddLight(Position, color.ToVector3());
 
             fadeIn++;
 

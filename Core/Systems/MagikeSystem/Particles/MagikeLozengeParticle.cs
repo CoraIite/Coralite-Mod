@@ -46,15 +46,15 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            var mainTex = GetTexture().Value;
+            var mainTex = TexValue;
             Rectangle frame = mainTex.Frame(1, 13, 0, Frame.Y);
             Vector2 origin = frame.Size() / 2;
 
-            spriteBatch.Draw(mainTex, Center - Main.screenPosition, frame, color, Rotation, origin, Scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(mainTex, Position - Main.screenPosition, frame, color, Rotation, origin, Scale, SpriteEffects.None, 0f);
 
             frame = mainTex.Frame(1, 15, 0, 0);
             Color c2 = new(255, 255, 255, color.A / 2);
-            spriteBatch.Draw(mainTex, Center - Main.screenPosition, frame, c2, Rotation, origin, Scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(mainTex, Position - Main.screenPosition, frame, c2, Rotation, origin, Scale, SpriteEffects.None, 0f);
         }
     }
 
@@ -93,15 +93,15 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            var mainTex = GetTexture().Value;
+            var mainTex = TexValue;
             Rectangle frame = mainTex.Frame(2, 1);
             Vector2 origin = frame.Size() / 2;
 
-            spriteBatch.Draw(mainTex, Center - Main.screenPosition, frame, color, Rotation, origin, Scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(mainTex, Position - Main.screenPosition, frame, color, Rotation, origin, Scale, SpriteEffects.None, 0f);
 
             frame = mainTex.Frame(2, 1, 1);
             Color c2 = new(255, 255, 255, color.A / 2);
-            spriteBatch.Draw(mainTex, Center - Main.screenPosition, frame, c2, Rotation, origin, Scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(mainTex, Position - Main.screenPosition, frame, c2, Rotation, origin, Scale, SpriteEffects.None, 0f);
         }
     }
 }

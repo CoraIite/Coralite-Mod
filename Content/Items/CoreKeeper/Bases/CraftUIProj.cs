@@ -171,10 +171,10 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
                 return Color.Lerp(color, Color.White, (factor.X - 0.7f) / 0.3f);
             });
             float length = Helper.EllipticalEase(Rotation, 0.3f, out float overrideAngle) * Velocity.X;
-            Vector2 center = this.Center + (overrideAngle.ToRotationVector2() * length);
-            oldCenter = new Vector2[16];
+            Vector2 center = this.Position + (overrideAngle.ToRotationVector2() * length);
+            oldPositions = new Vector2[16];
             for (int i = 0; i < 16; i++)
-                oldCenter[i] = center;
+                oldPositions[i] = center;
         }
 
         public override bool ShouldUpdateCenter() => false;
@@ -188,14 +188,14 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
                 float length = Helper.EllipticalEase(Rotation, 0.3f, out float overrideAngle) * Velocity.X;
 
                 for (int i = 0; i < 16 - 1; i++)
-                    oldCenter[i] = oldCenter[i + 1];
+                    oldPositions[i] = oldPositions[i + 1];
 
-                oldCenter[16 - 1] = Center + (overrideAngle.ToRotationVector2() * length);
+                oldPositions[16 - 1] = Position + (overrideAngle.ToRotationVector2() * length);
             }
             else if (fadeIn < Velocity.Y + 16)
             {
                 for (int i = 0; i < 16 - 1; i++)
-                    oldCenter[i] = oldCenter[i + 1];
+                    oldPositions[i] = oldPositions[i + 1];
             }
             else
             {
@@ -203,15 +203,15 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
             }
 
             fadeIn++;
-            trail.Positions = oldCenter;
+            trail.Positions = oldPositions;
         }
 
         public override void Draw(SpriteBatch spriteBatch) { }
 
         public static SpecialCraftParticle Spawn(Vector2 center, float r, float time, float startRot)
         {
-            SpecialCraftParticle p = ParticleLoader.GetParticle(CoraliteContent.ParticleType<SpecialCraftParticle>()).NewInstance() as SpecialCraftParticle;
-            p.Center = center;
+            SpecialCraftParticle p = ParticleLoader.GetParticle(CoraliteContent.ParticleType<SpecialCraftParticle>()).Clone() as SpecialCraftParticle;
+            p.Position = center;
             p.Velocity = new Vector2(r, time);
             p.Rotation = startRot;
             p.active = true;
@@ -267,9 +267,9 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            Texture2D mainTex = GetTexture().Value;
+            Texture2D mainTex = TexValue;
             Vector2 origin = new(mainTex.Width / 2, mainTex.Height);
-            Vector2 pos = Center - Main.screenPosition;
+            Vector2 pos = Position - Main.screenPosition;
             spriteBatch.Draw(mainTex, pos, null, color, 0, origin, Velocity, SpriteEffects.None, 0f);
             spriteBatch.Draw(mainTex, pos, null, color, 0, origin, Velocity * 0.9f, SpriteEffects.None, 0f);
             spriteBatch.Draw(mainTex, pos, null, color, 0, origin, Velocity * 0.9f, SpriteEffects.None, 0f);
@@ -312,10 +312,10 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
         {
             Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.CoreKeeperItems + "CircleLight2").Value;
             Vector2 origin = new(mainTex.Width / 2, mainTex.Height / 2);
-            Vector2 pos = Center - Main.screenPosition;
+            Vector2 pos = Position - Main.screenPosition;
             spriteBatch.Draw(mainTex, pos, null, color, Rotation, origin, Scale, SpriteEffects.None, 0f);
             spriteBatch.Draw(mainTex, pos, null, color, Rotation, origin, Scale, SpriteEffects.None, 0f);
-            mainTex = GetTexture().Value;
+            mainTex = TexValue;
 
             spriteBatch.Draw(mainTex, pos, null, color, Rotation, origin, Velocity * 1.2f, SpriteEffects.FlipVertically, 0f);
             spriteBatch.Draw(mainTex, pos, null, color, Rotation, origin, Velocity * 1.2f, SpriteEffects.FlipVertically, 0f);

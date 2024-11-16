@@ -1,5 +1,6 @@
 ﻿using Coralite.Core.Configs;
 using Coralite.Core.Loaders;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
@@ -7,22 +8,23 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
+using static Coralite.Core.Systems.MagikeSystem.EnchantSystem.Enchant;
 
 namespace Coralite.Core.Systems.ParticleSystem
 {
     public abstract class Particle : ModTexturedType
     {
-        public int Type { get; internal set; }
+        public int ID { get; internal set; }
         //(GetType().Namespace + "." + Name).Replace('.', '/');    GetType().FullName.Replace('.', '/');
         public override string Texture => AssetDirectory.Particles + Name;
 
-        public Vector2 Center;
-        public Vector2[] oldCenter;
+        public Vector2 Position;
+        public Vector2[] oldPositions;
         public Vector2 Velocity;
         public float fadeIn;
         public float Scale;
         public float Rotation;
-        public float[] oldRot;
+        public float[] oldRotations;
         public bool active;
         public bool shouldKilledOutScreen = true;
         public Color color;
@@ -43,13 +45,13 @@ namespace Coralite.Core.Systems.ParticleSystem
             ParticleLoader.Particles ??= new List<Particle>();
             ParticleLoader.Particles.Add(this);
 
-            Type = ParticleLoader.ReserveParticleID();
+            ID = ParticleLoader.ReserveParticleID();
         }
 
-        public virtual Particle NewInstance()
+        public virtual Particle Clone()
         {
             var inst = (Particle)Activator.CreateInstance(GetType(), true);
-            inst.Type = Type;
+            inst.ID = ID;
             return inst;
         }
 
@@ -70,12 +72,12 @@ namespace Coralite.Core.Systems.ParticleSystem
             if (ParticleSystem.Particles.Count > VisualEffectSystem.ParticleCount - 2)
                 return null;
 
-            T p = ParticleLoader.GetParticle(CoraliteContent.ParticleType<T>()).NewInstance() as T;
+            T p = ParticleLoader.GetParticle(CoraliteContent.ParticleType<T>()).Clone() as T;
 
             //设置各种初始值
             p.active = true;
             p.color = newColor;
-            p.Center = center;
+            p.Position = center;
             p.Velocity = velocity;
             p.Scale = Scale;
             p.OnSpawn();
@@ -102,12 +104,12 @@ namespace Coralite.Core.Systems.ParticleSystem
             if (ParticleSystem.Particles.Count > VisualEffectSystem.ParticleCount - 2)
                 return null;
 
-            Particle p = ParticleLoader.GetParticle(type).NewInstance();
+            Particle p = ParticleLoader.GetParticle(type).Clone();
 
             //设置各种初始值
             p.active = true;
             p.color = newColor;
-            p.Center = center;
+            p.Position = center;
             p.Velocity = velocity;
             p.Scale = Scale;
             p.OnSpawn();
@@ -122,12 +124,12 @@ namespace Coralite.Core.Systems.ParticleSystem
             if (Main.netMode == NetmodeID.Server)
                 return null;
 
-            T p = ParticleLoader.GetParticle(CoraliteContent.ParticleType<T>()).NewInstance() as T;
+            T p = ParticleLoader.GetParticle(CoraliteContent.ParticleType<T>()).Clone() as T;
 
             //设置各种初始值
             p.active = true;
             p.color = newColor;
-            p.Center = center;
+            p.Position = center;
             p.Velocity = velocity;
             p.Scale = Scale;
             p.OnSpawn();
@@ -146,7 +148,7 @@ namespace Coralite.Core.Systems.ParticleSystem
             Rectangle frame = Frame;
             Vector2 origin = frame.Size() / 2;
 
-            spriteBatch.Draw(GetTexture().Value, Center - Main.screenPosition, frame, color, Rotation, origin, Scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(TexValue, Position - Main.screenPosition, frame, color, Rotation, origin, Scale, SpriteEffects.None, 0f);
         }
 
         public virtual void DrawInUI(SpriteBatch spriteBatch)
@@ -154,75 +156,77 @@ namespace Coralite.Core.Systems.ParticleSystem
             Rectangle frame = Frame;
             Vector2 origin = frame.Size() / 2;
 
-            spriteBatch.Draw(GetTexture().Value, Center, frame, color, Rotation, origin, Scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(TexValue, Position, frame, color, Rotation, origin, Scale, SpriteEffects.None, 0f);
         }
 
         public virtual void DrawNonPremultiplied(SpriteBatch spriteBatch) { }
 
-        public Asset<Texture2D> GetTexture() => ParticleSystem.ParticleAssets[Type];
+        /// <summary>
+        /// 获取加载的粒子纹理资源
+        /// </summary>
+        public Texture2D TexValue;
 
         /// <summary>
         /// 初始化中心数组
         /// </summary>
         /// <param name="length"></param>
-        public void InitOldCenters(int length)
+        public void InitializePositionCache(int length)
         {
-            oldCenter = new Vector2[length];
+            oldPositions = new Vector2[length];
             for (int i = 0; i < length; i++)
-                oldCenter[i] = Center;
+                oldPositions[i] = Position;
         }
 
         /// <summary>
         /// 初始化旋转数组
         /// </summary>
         /// <param name="length"></param>
-        public void InitOldRotates(int length)
+        public void InitializeRotationCache(int length)
         {
-            oldRot = new float[length];
+            oldRotations = new float[length];
             for (int i = 0; i < length; i++)
-                oldRot[i] = Rotation;
+                oldRotations[i] = Rotation;
         }
 
         /// <summary>
         /// 初始化旧的中心和旋转数组
         /// </summary>
         /// <param name="length"></param>
-        public void InitOldCaches(int length)
+        public void InitializeCaches(int length)
         {
-            oldCenter = new Vector2[length];
-            oldRot = new float[length];
+            oldPositions = new Vector2[length];
+            oldRotations = new float[length];
             for (int i = 0; i < length; i++)
             {
-                oldCenter[i] = Center;
-                oldRot[i] = Rotation;
+                oldPositions[i] = Position;
+                oldRotations[i] = Rotation;
             }
-
         }
 
         /// <summary>
         /// 普普通通地更新记录点
         /// </summary>
         /// <param name="length"></param>
-        public void UpdatePosCachesNormally(int length)
+        public void UpdatePositionCache(int length)
         {
-            if (oldCenter is null || length > oldCenter.Length)
+            if (oldPositions is null || length > oldPositions.Length)
                 return;
 
             for (int i = 0; i < length - 1; i++)
-                oldCenter[i] = oldCenter[i + 1];
+                oldPositions[i] = oldPositions[i + 1];
 
-            oldCenter[length - 1] = Center;
+            oldPositions[length - 1] = Position;
         }
 
-        public void UpdateRotCachesNormally(int length)
+        public void UpdateRotationCache(int length)
         {
-            if (oldRot is null || length > oldRot.Length)
+            if (oldRotations is null || length > oldRotations.Length)
                 return;
 
             for (int i = 0; i < length - 1; i++)
-                oldRot[i] = oldRot[i + 1];
+                oldRotations[i] = oldRotations[i + 1];
 
-            oldRot[length - 1] = Rotation;
+            oldRotations[length - 1] = Rotation;
         }
 
     }

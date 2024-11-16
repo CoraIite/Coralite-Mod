@@ -41,7 +41,7 @@ namespace Coralite.Content.Particles
             //使用oldRot充当改变帧图的 frameCounter
             Frame = new Rectangle(0, 0, 22, 26);
             Scale = 1f;
-            InitOldCaches(12);
+            InitializeCaches(12);
             trail = new Trail(Main.instance.GraphicsDevice, 12, new NoTip(), factor => 2, factor => Color.Lerp(new Color(0, 0, 0, 0), Color.Yellow, factor.X));
         }
 
@@ -50,18 +50,18 @@ namespace Coralite.Content.Particles
             if (centerFunc != null)
             {
                 Vector2 center = centerFunc.Invoke();
-                Center = center + (Rotation.ToRotationVector2() * length * Helper.EllipticalEase(Rotation, 1, 2.4f));
+                Position = center + (Rotation.ToRotationVector2() * length * Helper.EllipticalEase(Rotation, 1, 2.4f));
                 Rotation += 0.12f;
                 Scale = 0.6f + (MathF.Sin(Rotation) * 0.2f);
 
                 //更新拖尾数组
                 for (int i = 0; i < 11; i++)
-                    oldRot[i] = oldRot[i + 1];
+                    oldRotations[i] = oldRotations[i + 1];
 
-                oldRot[11] = Rotation;
+                oldRotations[11] = Rotation;
                 for (int i = 0; i < 12; i++)
-                    oldCenter[i] = center + (oldRot[i].ToRotationVector2() * length * Helper.EllipticalEase(oldRot[i], 1, 2.4f));
-                trail.Positions = oldCenter;
+                    oldPositions[i] = center + (oldRotations[i].ToRotationVector2() * length * Helper.EllipticalEase(oldRotations[i], 1, 2.4f));
+                trail.Positions = oldPositions;
 
                 //使用oldRot充当改变帧图的 frameCounter
                 Velocity.X += 1f;
@@ -88,7 +88,7 @@ namespace Coralite.Content.Particles
             Main.instance.LoadItem(ItemID.FallenStar);
             Texture2D mainTex = TextureAssets.Item[ItemID.FallenStar].Value;
 
-            spriteBatch.Draw(mainTex, Center - Main.screenPosition, Frame, Color.White, 0f, new Vector2(11, 13), Scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(mainTex, Position - Main.screenPosition, Frame, Color.White, 0f, new Vector2(11, 13), Scale, SpriteEffects.None, 0f);
         }
 
         public override void DrawPrimitives()

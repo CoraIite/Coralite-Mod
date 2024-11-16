@@ -58,7 +58,7 @@ namespace Coralite.Content.Bosses.Rediancie
             }
 
             if (rediancie != null)
-                Center = rediancie.Center;
+                Position = rediancie.Center;
 
             fadeIn--;
 
@@ -75,8 +75,8 @@ namespace Coralite.Content.Bosses.Rediancie
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            Vector2 center = this.Center - Main.screenPosition;
-            Texture2D mainTex = GetTexture().Value;
+            Vector2 center = this.Position - Main.screenPosition;
+            Texture2D mainTex = TexValue;
             spriteBatch.Draw(mainTex, center, null, color, Rotation, mainTex.Size() / 2, Scale, SpriteEffects.None, 0);
 
             float extraRot1 = Rotation + (fadeIn * 0.1f);
@@ -98,7 +98,7 @@ namespace Coralite.Content.Bosses.Rediancie
         public static void Kill()
         {
             int type = CoraliteContent.ParticleType<RedShield>();
-            foreach (var particle in ParticleSystem.Particles.Where(p => p.active && p.Type == type))
+            foreach (var particle in ParticleSystem.Particles.Where(p => p.active && p.ID == type))
             {
                 particle.fadeIn = -1;
             }

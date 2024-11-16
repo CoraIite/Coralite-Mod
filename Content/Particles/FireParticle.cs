@@ -38,25 +38,25 @@ namespace Coralite.Content.Particles
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            Texture2D mainTex = GetTexture().Value;
+            Texture2D mainTex = TexValue;
             Rectangle frame = mainTex.Frame(1, 16, 0, Frame.Y);
             Vector2 origin = frame.Size() / 2;
 
-            spriteBatch.Draw(mainTex, Center - Main.screenPosition, frame, color, Rotation, origin, Scale
+            spriteBatch.Draw(mainTex, Position - Main.screenPosition, frame, color, Rotation, origin, Scale
                 , effect, 0f);
-            spriteBatch.Draw(mainTex, Center - Main.screenPosition, frame, color * 0.5f, Rotation, origin, Scale
+            spriteBatch.Draw(mainTex, Position - Main.screenPosition, frame, color * 0.5f, Rotation, origin, Scale
                 , effect, 0f);
         }
 
         public override void DrawInUI(SpriteBatch spriteBatch)
         {
-            Texture2D mainTex = GetTexture().Value;
+            Texture2D mainTex = TexValue;
             Rectangle frame = mainTex.Frame(1, 16, 0, Frame.Y);
             Vector2 origin = frame.Size() / 2;
 
-            spriteBatch.Draw(mainTex, Center, frame, color, Rotation, origin, Scale
+            spriteBatch.Draw(mainTex, Position, frame, color, Rotation, origin, Scale
                 , effect, 0f);
-            spriteBatch.Draw(mainTex, Center, frame, color * 0.5f, Rotation, origin, Scale
+            spriteBatch.Draw(mainTex, Position, frame, color * 0.5f, Rotation, origin, Scale
                 , effect, 0f);
         }
     }

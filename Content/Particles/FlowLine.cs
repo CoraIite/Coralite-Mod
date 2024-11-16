@@ -44,8 +44,8 @@ namespace Coralite.Content.Particles
                 else
                     Velocity = Velocity.RotatedBy(-rotate);
 
-                UpdatePosCachesNormally(spawnTime);
-                trail.Positions = oldCenter;
+                UpdatePositionCache(spawnTime);
+                trail.Positions = oldPositions;
             }
 
             if (fadeIn < -120 || color.A < 10)
@@ -86,7 +86,7 @@ namespace Coralite.Content.Particles
             if (particle != null)
             {
                 particle.fadeIn = spawnTime;
-                particle.InitOldCenters(spawnTime);
+                particle.InitializePositionCache(spawnTime);
                 particle.trail = new Trail(Main.instance.GraphicsDevice, spawnTime, new NoTip(), factor => trailWidth, factor =>
                 {
                     if (factor.X > 0.5f)

@@ -30,12 +30,12 @@ namespace Coralite.Core.Systems.ParticleSystem
             if (Main.netMode == NetmodeID.Server)
                 return null;
 
-            T p = ParticleLoader.GetParticle(CoraliteContent.ParticleType<T>()).NewInstance() as T;
+            T p = ParticleLoader.GetParticle(CoraliteContent.ParticleType<T>()).Clone() as T;
 
             //设置各种初始值
             p.active = true;
             p.color = newColor;
-            p.Center = center;
+            p.Position = center;
             p.Velocity = velocity;
             p.Scale = Scale;
             p.OnSpawn();
@@ -50,12 +50,12 @@ namespace Coralite.Core.Systems.ParticleSystem
             if (Main.netMode == NetmodeID.Server)
                 return null;
 
-            Particle p = ParticleLoader.GetParticle(type).NewInstance();
+            Particle p = ParticleLoader.GetParticle(type).Clone();
 
             //设置各种初始值
             p.active = true;
             p.color = newColor;
-            p.Center = center;
+            p.Position = center;
             p.Velocity = velocity;
             p.Scale = Scale;
             p.OnSpawn();
@@ -86,13 +86,13 @@ namespace Coralite.Core.Systems.ParticleSystem
 
                 particle.Update();
                 if (particle.ShouldUpdateCenter())
-                    particle.Center += particle.Velocity;
+                    particle.Position += particle.Velocity;
 
                 //在粒子不活跃时把一些东西释放掉
                 if (!particle.active)
                 {
-                    particle.oldCenter = null;
-                    particle.oldRot = null;
+                    particle.oldPositions = null;
+                    particle.oldRotations = null;
                 }
 
                 //一些防止粒子持续时间过长的措施，额...还是建议在update里手动设置active比较好
@@ -121,7 +121,7 @@ namespace Coralite.Core.Systems.ParticleSystem
                 if (particle == null || !particle.active)
                     continue;
 
-                if (!Helper.OnScreen(particle.Center - Main.screenPosition))
+                if (!Helper.OnScreen(particle.Position - Main.screenPosition))
                     continue;
 
                 if (particle.shader != armorShaderData)
@@ -155,7 +155,7 @@ namespace Coralite.Core.Systems.ParticleSystem
                 if (!particle.active)
                     continue;
 
-                if (!Helper.OnScreen(particle.Center))
+                if (!Helper.OnScreen(particle.Position))
                     continue;
 
                 if (particle.shader != armorShaderData)

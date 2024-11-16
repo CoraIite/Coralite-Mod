@@ -31,10 +31,10 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             if (follow != null)
             {
-                Center += follow();
+                Position += follow();
             }
 
-            Lighting.AddLight(Center, color.ToVector3() * currentScale.Y * 10);
+            Lighting.AddLight(Position, color.ToVector3() * currentScale.Y * 10);
 
             int dir = MathF.Sign(Velocity.X);
             for (int i = 0; i < shotCount - 1; i++)
@@ -88,12 +88,12 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public static CrystalShine New(Vector2 center, Vector2 velocity, int shotCount, Vector2 scale, Color newColor = default)
         {
-            CrystalShine cs = ParticleLoader.GetParticle(CoraliteContent.ParticleType<CrystalShine>()).NewInstance() as CrystalShine;
+            CrystalShine cs = ParticleLoader.GetParticle(CoraliteContent.ParticleType<CrystalShine>()).Clone() as CrystalShine;
 
             //设置各种初始值
             cs.active = true;
             cs.color = newColor;
-            cs.Center = center;
+            cs.Position = center;
             cs.Velocity = velocity;
             cs.Scale = 1;
             cs.OnSpawn();
@@ -135,8 +135,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public void DrawShot(SpriteBatch spriteBatch, float rot, float exScale, Vector2 screenPos)
         {
-            Texture2D mainTex = GetTexture().Value;
-            Vector2 pos = Center - screenPos;
+            Texture2D mainTex = TexValue;
+            Vector2 pos = Position - screenPos;
             Vector2 origin = new(0, mainTex.Height / 2);
             Vector2 scale = currentScale * 0.1f * exScale;
             scale.Y *= 2;
@@ -156,7 +156,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public void DrawShot2(SpriteBatch spriteBatch, float rot, float exScale, Vector2 screenPos)
         {
-            Texture2D mainTex = GetTexture().Value;
+            Texture2D mainTex = TexValue;
             Color c = color;
 
             List<CustomVertexInfo> bars = new();
@@ -169,7 +169,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             float width = mainTex.Width * scale.X / TrailCount;
             float height = mainTex.Height * scale.Y;
 
-            Vector2 center = Center - screenPos;
+            Vector2 center = Position - screenPos;
 
             for (int i = 0; i < TrailCount; i++)
             {

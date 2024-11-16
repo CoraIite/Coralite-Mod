@@ -581,17 +581,17 @@ namespace Coralite.Content.Items.FlyingShields
             Particle p = NewParticle<LightCiecleParticle>(center, Vector2.Zero, newcolor, baseScale);
 
             p.Rotation = rotation;
-            p.oldCenter = [circleScale];
+            p.oldPositions = [circleScale];
             return p;
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            Texture2D mainTex = GetTexture().Value;
+            Texture2D mainTex = TexValue;
 
-            Vector2 pos = Center - Main.screenPosition;
+            Vector2 pos = Position - Main.screenPosition;
             Vector2 origin = mainTex.Size() / 2;
-            Vector2 scale = oldCenter[0] * Scale;
+            Vector2 scale = oldPositions[0] * Scale;
             Color c = color;
 
             spriteBatch.Draw(mainTex, pos
@@ -640,12 +640,12 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            Texture2D mainTex = GetTexture().Value;
+            Texture2D mainTex = TexValue;
             Vector2 origin = mainTex.Size() / 2;
 
-            spriteBatch.Draw(mainTex, Center - Main.screenPosition,
+            spriteBatch.Draw(mainTex, Position - Main.screenPosition,
                 null, color, 0, origin, new Vector2(1.4f, 1) * Scale, SpriteEffects.None, 0f);
-            spriteBatch.Draw(mainTex, Center - Main.screenPosition,
+            spriteBatch.Draw(mainTex, Position - Main.screenPosition,
                 null, color, 0, origin, new Vector2(1.4f, 1) * Scale / 2, SpriteEffects.None, 0f);
         }
     }

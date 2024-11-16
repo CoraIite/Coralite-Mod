@@ -36,14 +36,14 @@ namespace Coralite.Content.Particles
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            Rectangle frame = GetTexture().Frame(1, 6, 0, Frame.Y);
+            Rectangle frame = TexValue.Frame(1, 6, 0, Frame.Y);
             Vector2 origin = new(frame.Width / 2, frame.Height / 2);
             var scale2 = scale * Scale;
 
-            spriteBatch.Draw(GetTexture().Value, Center - Main.screenPosition, frame, color, Rotation, origin, scale2, SpriteEffects.None, 0f);
+            spriteBatch.Draw(TexValue, Position - Main.screenPosition, frame, color, Rotation, origin, scale2, SpriteEffects.None, 0f);
             Color c = color;
             c.A = (byte)(0.3f * c.A);
-            spriteBatch.Draw(GetTexture().Value, Center - Main.screenPosition, frame, c, Rotation, origin, scale2 * 1.1f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(TexValue, Position - Main.screenPosition, frame, c, Rotation, origin, scale2 * 1.1f, SpriteEffects.None, 0f);
         }
     }
 }

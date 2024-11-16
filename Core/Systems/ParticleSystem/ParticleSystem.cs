@@ -66,17 +66,17 @@ namespace Coralite.Core.Systems.ParticleSystem
                 {
                     particle.Update();
                     if (particle.ShouldUpdateCenter())
-                        particle.Center += particle.Velocity;
+                        particle.Position += particle.Velocity;
 
                     //在粒子不活跃时把一些东西释放掉
                     if (!particle.active)
                     {
-                        particle.oldCenter = null;
-                        particle.oldRot = null;
+                        particle.oldPositions = null;
+                        particle.oldRotations = null;
                     }
 
                     //一些防止粒子持续时间过长的措施，额...还是建议在update里手动设置active比较好
-                    if (particle.shouldKilledOutScreen && !Helpers.Helper.OnScreen(particle.Center - Main.screenPosition))
+                    if (particle.shouldKilledOutScreen && !Helpers.Helper.OnScreen(particle.Position - Main.screenPosition))
                         particle.active = false;
 
                     if (particle.Scale < 0.001f)

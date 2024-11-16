@@ -12,14 +12,14 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
         public override void OnSpawn()
         {
             Rotation = Main.rand.NextFloat(6.282f);
-            Frame = GetTexture().Frame(7, 5, 0, Main.rand.Next(5));
+            Frame = TexValue.Frame(7, 5, 0, Main.rand.Next(5));
             color = Color.White;
         }
 
         public override void Update()
         {
             fadeIn++;
-            Center += Velocity;
+            Position += Velocity;
             if (fadeIn > 1 && fadeIn % 4 == 0)
             {
                 Frame.X += 80;
@@ -45,7 +45,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             if (!GetCenter(out Vector2 parentCenter))
                 return;
 
-            Center = parentCenter + Velocity;
+            Position = parentCenter + Velocity;
             fadeIn++;
             if (fadeIn > 1 && fadeIn % 4 == 0)
             {
@@ -86,14 +86,14 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
         public override void OnSpawn()
         {
             Rotation = Main.rand.NextFloat(6.282f);
-            Frame = GetTexture().Frame(4, 4, 0, Main.rand.Next(4));
+            Frame = TexValue.Frame(4, 4, 0, Main.rand.Next(4));
             color = Color.White;
         }
 
         public override void Update()
         {
             fadeIn++;
-            Center += Velocity;
+            Position += Velocity;
             if (fadeIn > 1 && fadeIn % 5 == 0)
             {
                 Frame.X += 32;

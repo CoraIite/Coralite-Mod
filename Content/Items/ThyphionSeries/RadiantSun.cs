@@ -572,9 +572,9 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            Vector2 origin = GetTexture().Size() / 2;
+            Vector2 origin = TexValue.Size() / 2;
 
-            spriteBatch.Draw(GetTexture().Value, Center - Main.screenPosition, null, color, Rotation, origin, scale * Scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(TexValue, Position - Main.screenPosition, null, color, Rotation, origin, scale * Scale, SpriteEffects.None, 0f);
         }
     }
 }

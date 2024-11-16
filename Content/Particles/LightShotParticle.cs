@@ -59,8 +59,8 @@ namespace Coralite.Content.Particles
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            Texture2D mainTex = GetTexture().Value;
-            Vector2 pos = Center - Main.screenPosition;
+            Texture2D mainTex = TexValue;
+            Vector2 pos = Position - Main.screenPosition;
             Vector2 origin = new(0, mainTex.Height / 2);
             Vector2 scale = Velocity * 0.3f;
             scale.Y *= 2;

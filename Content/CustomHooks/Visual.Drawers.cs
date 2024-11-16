@@ -120,7 +120,7 @@ namespace Coralite.Content.CustomHooks
                 if (particle == null || !particle.active)
                     continue;
 
-                if (!Helper.OnScreen(particle.Center - Main.screenPosition))
+                if (!Helper.OnScreen(particle.Position - Main.screenPosition))
                     continue;
 
                 if (particle.shader != armorShaderData)

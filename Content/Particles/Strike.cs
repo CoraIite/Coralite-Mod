@@ -35,7 +35,7 @@ namespace Coralite.Content.Particles
         {
             Vector2 origin = new(96, 96);
 
-            spriteBatch.Draw(GetTexture().Value, Center - Main.screenPosition, Frame, color, Rotation, origin, Scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(TexValue, Position - Main.screenPosition, Frame, color, Rotation, origin, Scale, SpriteEffects.None, 0f);
 
         }
     }

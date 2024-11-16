@@ -27,7 +27,7 @@ namespace Coralite.Content.Particles
             if (fadeIn % 2 == 0)
                 Frame.Y = (int)(fadeIn / 2) * 128;
 
-            Lighting.AddLight(Center, color.ToVector3());
+            Lighting.AddLight(Position, color.ToVector3());
 
             fadeIn++;
 
