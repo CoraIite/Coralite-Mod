@@ -66,7 +66,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             Helper.PlayPitched(CoraliteSoundID.LightningOrb_Item121, NPC.Center, pitch: 0.4f);
                             SoundEngine.PlaySound(CoraliteSoundID.Roar, NPC.Center);
 
-                            if (!CLUtils.isClient)
+                            if (!VaultUtils.isClient)
                             {
                                 NPC.NewProjectileDirectInAI<ExchangePhaseAnmi>(NPC.Center, Vector2.Zero, 1, 0, NPC.target,
                                 BurstTime, NPC.whoAmI);
@@ -78,7 +78,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                     {
                         UpdateAllOldCaches();
 
-                        if (!CLUtils.isServer)
+                        if (!VaultUtils.isServer)
                         {
                             if (Timer < BurstTime)
                             {

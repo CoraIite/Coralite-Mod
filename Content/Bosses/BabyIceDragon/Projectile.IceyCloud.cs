@@ -46,7 +46,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
         {
             if (!spwan)
             {
-                if (!CLUtils.isServer)
+                if (!VaultUtils.isServer)
                 {
                     NPC boss = null;
                     foreach (var npc in Main.ActiveNPCs)

@@ -41,7 +41,7 @@ namespace Coralite.Content.Particles
 
         public static void Spawn(Vector2 center, Vector2 velocity, Color color, float fadeIn, float rotation, float scale = 1f)
         {
-            if (CLUtils.isServer)
+            if (VaultUtils.isServer)
             {
                 return;
             }

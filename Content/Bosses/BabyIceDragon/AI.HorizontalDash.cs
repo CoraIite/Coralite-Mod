@@ -47,7 +47,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                         //前往冲刺攻击
                         SetDirection();
 
-                        if (!CLUtils.isServer)
+                        if (!VaultUtils.isServer)
                         {
                             Particle.NewParticle<Sparkle_Big>(NPC.Center, Vector2.Zero, Coralite.IcicleCyan, 1.2f);
                         }

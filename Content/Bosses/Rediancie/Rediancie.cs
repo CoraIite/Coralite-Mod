@@ -385,12 +385,12 @@ namespace Coralite.Content.Bosses.Rediancie
 
             if (Timer == 245)
             {
-                if (!CLUtils.isClient)
+                if (!VaultUtils.isClient)
                 {
                     Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ProjectileType<Rediancie_BigBoom>(), 55, 8f);
                 }
                 
-                if (!CLUtils.isServer)
+                if (!VaultUtils.isServer)
                 {
                     var modifier = new PunchCameraModifier(NPC.Center, Main.rand.NextVector2CircularEdge(1, 1), 10, 6f, 20, 1000f);
                     Main.instance.CameraModifiers.Add(modifier);
@@ -405,7 +405,7 @@ namespace Coralite.Content.Bosses.Rediancie
         {
             if (Timer == 0) //生成动画弹幕
             {
-                if (!CLUtils.isClient)
+                if (!VaultUtils.isClient)
                 {
                     Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ProjectileType<Rediancie_OnSpawnAnim>(), 0, 0);
                 }
@@ -429,7 +429,7 @@ namespace Coralite.Content.Bosses.Rediancie
 
             if (Timer == 260)
             {
-                if (!CLUtils.isClient)
+                if (!VaultUtils.isClient)
                 {
                     Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ProjectileType<Rediancie_BigBoom>(), 55, 8f);
                 }
@@ -446,7 +446,7 @@ namespace Coralite.Content.Bosses.Rediancie
                 State = (int)AIStates.explosion;
                 Timer = 0;
 
-                if (!CLUtils.isClient)
+                if (!VaultUtils.isClient)
                 {
                     NPC.TargetClosest();
                     NPC.dontTakeDamage = false;
@@ -817,7 +817,7 @@ namespace Coralite.Content.Bosses.Rediancie
             bool useMelee = MoveCount < meleeCount;
             bool useShoot = MoveCount < meleeCount + ShootCount;
 
-            if (!CLUtils.isClient)
+            if (!VaultUtils.isClient)
             {
                 switch (phase)
                 {
@@ -913,7 +913,7 @@ namespace Coralite.Content.Bosses.Rediancie
             if (MoveCount >= meleeCount + ShootCount)   //如果一轮全部执行完成那么就在次随机一下循环方式
             {
                 MoveCount = 0;
-                if (!CLUtils.isClient)
+                if (!VaultUtils.isClient)
                 {
                     MoveCyclingType = Main.rand.Next(3) switch
                     {
@@ -947,7 +947,7 @@ namespace Coralite.Content.Bosses.Rediancie
 
             UpdateFollower_Summon();
 
-            if (Timer % 10 == 0 && !CLUtils.isServer)
+            if (Timer % 10 == 0 && !VaultUtils.isServer)
             {
                 for (int i = 0; i < 6; i++)
                 {
@@ -968,7 +968,7 @@ namespace Coralite.Content.Bosses.Rediancie
                 //为了保证同场召唤物数量不会过多所以还是保留了这一段
                 if (Main.netMode != NetmodeID.MultiplayerClient)
                 {
-                    if (Main.npc.Count((n) => n.active && n.type == NPCType<RediancieMinion>()) < Helper.ScaleValueForDiffMode(2, 3, 3, 4) && !CLUtils.isClient)
+                    if (Main.npc.Count((n) => n.active && n.type == NPCType<RediancieMinion>()) < Helper.ScaleValueForDiffMode(2, 3, 3, 4) && !VaultUtils.isClient)
                         NPC.NewNPC(NPC.GetSource_FromThis(), (int)followers[^1].center.X, (int)followers[^1].center.Y, NPCType<RediancieMinion>());
                     else
                     {

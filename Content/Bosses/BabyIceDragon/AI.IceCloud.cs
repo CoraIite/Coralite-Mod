@@ -66,7 +66,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             SoundEngine.PlaySound(CoraliteSoundID.Roar, NPC.Center);
                             GetMouseCenter(out _, out Vector2 mouseCenter);
 
-                            if (!CLUtils.isServer)
+                            if (!VaultUtils.isServer)
                             {
                                 Particle.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.1f);
                                 PunchCameraModifier modifier = new(NPC.Center, new Vector2(0.8f, 0.8f), 5f, 20f, 40, 1000f, "BabyIceDragon");
@@ -74,13 +74,13 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             }
                         }
 
-                        if (!CLUtils.isClient && (int)Timer == 60)        //生成冰云NPC
+                        if (!VaultUtils.isClient && (int)Timer == 60)        //生成冰云NPC
                         {
                             Projectile proj = Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), Target.Center + new Vector2(Main.rand.Next(-80, 80), -300),
                                 Vector2.Zero, ModContent.ProjectileType<IceyCloud>(), 1, 1, NPC.target);
                         }
 
-                        if (!CLUtils.isServer && Timer < 90)
+                        if (!VaultUtils.isServer && Timer < 90)
                         {
                             GetMouseCenter(out _, out Vector2 mouseCenter);
                             if ((int)Timer % 10 == 0)

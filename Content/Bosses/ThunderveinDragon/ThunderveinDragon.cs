@@ -341,7 +341,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 State = (int)AIStates.onSpawnAnmi;
                 NPC.netUpdate = true;
 
-                if (!CLUtils.isServer && !SkyManager.Instance["ThunderveinSky"].IsActive())//如果这个天空没激活
+                if (!VaultUtils.isServer && !SkyManager.Instance["ThunderveinSky"].IsActive())//如果这个天空没激活
                 {
                     SkyManager.Instance.Activate("ThunderveinSky");
                 }
@@ -461,7 +461,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
         {
             oldSpriteDirection = NPC.spriteDirection;
 
-            if (!CLUtils.isServer && currentSurrounding && Main.rand.NextBool(3))
+            if (!VaultUtils.isServer && currentSurrounding && Main.rand.NextBool(3))
             {
                 Vector2 offset = Main.rand.NextVector2Circular(100 * NPC.scale, 70 * NPC.scale);
                 ElectricParticle_Follow.Spawn(NPC.Center, offset, () => NPC.Center, Main.rand.NextFloat(0.75f, 1f));
@@ -514,7 +514,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             SonState++;
                             Timer = 0;
                             //生成名称
-                            if (!CLUtils.isClient)
+                            if (!VaultUtils.isClient)
                             NPC.NewProjectileDirectInAI<ThunderveinDragon_OnSpawnAnim>(NPC.Center, Vector2.Zero, 1, 0, NPC.target);
                         }
                     }
@@ -551,7 +551,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             Helper.PlayPitched(CoraliteSoundID.LightningOrb_Item121, NPC.Center, pitch: 0.4f);
                             SoundEngine.PlaySound(CoraliteSoundID.Roar, NPC.Center);
                         }
-                        else if (Timer > 15 && Timer < 130 && !CLUtils.isServer)
+                        else if (Timer > 15 && Timer < 130 && !VaultUtils.isServer)
                         {
                             Vector2 pos = NPC.Center + (NPC.rotation.ToRotationVector2() * 60 * NPC.Center);
                             if ((int)Timer % 10 == 0)
@@ -584,7 +584,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             }
             else
             {
-                if (!CLUtils.isServer)
+                if (!VaultUtils.isServer)
                 {
                     for (int i = 0; i < 30; i++)
                     {
@@ -686,7 +686,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         //移除上次使用的招式
                         moves.RemoveAll(i => i == oldState);
 
-                        if (!CLUtils.isClient)
+                        if (!VaultUtils.isClient)
                         {
                             //随机一个招式出来
                             State = Main.rand.NextFromList(moves.ToArray());
@@ -727,7 +727,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         //移除上次使用的招式
                         moves.RemoveAll(i => i == oldState);
 
-                        if (!CLUtils.isClient)
+                        if (!VaultUtils.isClient)
                         {
                             //随机一个招式出来
                             State = Main.rand.NextFromList(moves.ToArray());
@@ -921,7 +921,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public static void SetBackgroundLight(float light, int fadeTime, int exchangeTime = 5)
         {
-            if (CLUtils.isServer)
+            if (VaultUtils.isServer)
             {
                 return;
             }
@@ -934,7 +934,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public static void UpdateSky()
         {
-            if (CLUtils.isServer)
+            if (VaultUtils.isServer)
             {
                 return;
             }
@@ -947,7 +947,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public void InitOldFrame()
         {
-            if (CLUtils.isServer)
+            if (VaultUtils.isServer)
             {
                 return;
             }
@@ -958,7 +958,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public void InitOldDirection()
         {
-            if (CLUtils.isServer)
+            if (VaultUtils.isServer)
             {
                 return;
             }
@@ -969,7 +969,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public void UpdateOldFrame()
         {
-            if (CLUtils.isServer)
+            if (VaultUtils.isServer)
             {
                 return;
             }
@@ -980,7 +980,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public void UpdateOldDirection()
         {
-            if (CLUtils.isServer)
+            if (VaultUtils.isServer)
             {
                 return;
             }
@@ -991,7 +991,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public void ResetAllOldCaches()
         {
-            if (CLUtils.isServer)
+            if (VaultUtils.isServer)
             {
                 return;
             }
@@ -1003,7 +1003,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public void UpdateAllOldCaches()
         {
-            if (CLUtils.isServer)
+            if (VaultUtils.isServer)
             {
                 return;
             }

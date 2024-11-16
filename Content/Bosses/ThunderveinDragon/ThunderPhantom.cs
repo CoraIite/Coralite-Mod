@@ -149,7 +149,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             Vector2 pos = NPC.Center;
                             int damage = Helper.GetProjDamage(60, 70, 80);
 
-                            if (!CLUtils.isClient)
+                            if (!VaultUtils.isClient)
                                 NPC.NewProjectileDirectInAI<StrongThunderFalling>(
                                 pos + new Vector2(0, -Main.rand.Next(170, 320)), pos + new Vector2(0, 750), damage, 0, NPC.target
                                 , 20, NPC.whoAmI, 70);
@@ -158,7 +158,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         {
                             SoundEngine.PlaySound(CoraliteSoundID.NoUse_ElectricMagic_Item122, NPC.Center);
                             int damage = Helper.GetProjDamage(20, 40, 60);
-                            if (!CLUtils.isClient)
+                            if (!VaultUtils.isClient)
                             {
                                 for (int i = -1; i < 2; i += 2)
                                 {

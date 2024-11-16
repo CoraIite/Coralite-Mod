@@ -45,7 +45,7 @@ namespace Coralite.Content.Particles
         /// <returns></returns>
         public static void Spawn(Vector2 center, Color newcolor, float rotation, Vector2 circleScale)
         {
-            if (CLUtils.isServer)
+            if (VaultUtils.isServer)
             {
                 return;
             }

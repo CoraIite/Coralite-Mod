@@ -53,7 +53,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                         NPC.noTileCollide = true;
                         SetDirection();
 
-                        if (!CLUtils.isServer)
+                        if (!VaultUtils.isServer)
                         {
                             Particle.NewParticle(NPC.Center, Vector2.Zero, CoraliteContent.ParticleType<Sparkle_Big>(), Coralite.IcicleCyan, 0.8f);
                         }
@@ -67,7 +67,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                         NPC.rotation = NPC.rotation.AngleTowards(NPC.velocity.ToRotation() + (NPC.direction > 0 ? 0 : 3.14f), 0.6f);
                         NPC.velocity.Y += 0.9f;
 
-                        if (!CLUtils.isServer && (int)Timer % 2 == 0)
+                        if (!VaultUtils.isServer && (int)Timer % 2 == 0)
                         {
                             Dust dust = Dust.NewDustPerfect(NPC.Center + Main.rand.NextVector2Circular(32, 32), DustID.FrostStaff, -NPC.velocity * 0.5f, Scale: Main.rand.NextFloat(1.8f, 2f));
                             dust.noGravity = true;

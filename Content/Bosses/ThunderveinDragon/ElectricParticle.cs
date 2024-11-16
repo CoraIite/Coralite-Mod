@@ -70,7 +70,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public static void Spawn(Vector2 parentCenter, Vector2 offset, Func<Vector2> GetParentCenter, float scale = 1f)
         {
-            if (CLUtils.isServer)
+            if (VaultUtils.isServer)
             {
                 return;
             }

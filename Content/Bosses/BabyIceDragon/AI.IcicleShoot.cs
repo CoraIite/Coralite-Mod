@@ -51,7 +51,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                         SetDirection();
                         SoundEngine.PlaySound(CoraliteSoundID.IceMagic_Item28, NPC.Center);
 
-                        if (!CLUtils.isServer)
+                        if (!VaultUtils.isServer)
                         {
                             GetMouseCenter(out _, out Vector2 mouseCenter2);
                             Particle.NewParticle(mouseCenter2, Vector2.Zero, CoraliteContent.ParticleType<IceBurstHalo_Reverse>(), Scale: 0.8f);
@@ -87,7 +87,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             GetMouseCenter(out _, out Vector2 mouseCenter);
                             Vector2 targetDir = (Target.Center - NPC.Center).SafeNormalize(Vector2.One);
 
-                            if (!CLUtils.isServer && (int)Timer % 2 == 0)
+                            if (!VaultUtils.isServer && (int)Timer % 2 == 0)
                                 Particle.NewParticle(mouseCenter, targetDir.RotatedBy(Main.rand.NextFloat(-0.6f, 0.6f)) * 4, CoraliteContent.ParticleType<Fog>(), Color.White, 0.8f);
 
                             if ((int)Timer % 12 == 0 && Main.netMode != NetmodeID.MultiplayerClient)
@@ -118,7 +118,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             NPC.frame.Y = 1;
                             SoundEngine.PlaySound(SoundID.Roar, NPC.Center);
 
-                            if (!CLUtils.isServer)
+                            if (!VaultUtils.isServer)
                             {
                                 GetMouseCenter(out _, out Vector2 mouseCenter);
                                 Particle.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.1f);
@@ -127,7 +127,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             }
                         }
 
-                        if (!CLUtils.isClient && (int)Timer % 6 == 0)
+                        if (!VaultUtils.isClient && (int)Timer % 6 == 0)
                         {
                             int damage = Helper.GetProjDamage(40, 65, 90);
                             Projectile projectile = Projectile.NewProjectileDirect(NPC.GetSource_FromAI(), Target.Center + new Vector2(Main.rand.Next(-100, 100), -500),
@@ -138,7 +138,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
                         if (Timer < 80)
                         {
-                            if (!CLUtils.isServer)
+                            if (!VaultUtils.isServer)
                             {
                                 GetMouseCenter(out _, out Vector2 mouseCenter);
                                 if ((int)Timer % 10 == 0)

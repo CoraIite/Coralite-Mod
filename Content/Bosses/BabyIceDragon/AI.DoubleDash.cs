@@ -49,7 +49,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                         //前往冲刺攻击
                         SetDirection();
 
-                        if (!CLUtils.isServer)
+                        if (!VaultUtils.isServer)
                         {
                             Particle.NewParticle(NPC.Center, Vector2.Zero, CoraliteContent.ParticleType<Sparkle_Big>(), Coralite.IcicleCyan, 1.2f);
                         }
@@ -128,7 +128,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                         {
                             SoundEngine.PlaySound(CoraliteSoundID.IceMagic_Item28, NPC.Center);
 
-                            if (!CLUtils.isServer)
+                            if (!VaultUtils.isServer)
                             {
                                 GetMouseCenter(out _, out Vector2 mouseCenter2);
                                 for (int i = 0; i < 4; i++)
@@ -154,7 +154,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             {
                                 SoundEngine.PlaySound(SoundID.DD2_BetsyFlameBreath, NPC.Center);
                                 
-                                if (!CLUtils.isClient)
+                                if (!VaultUtils.isClient)
                                 {
                                     for (int i = -1; i < 1; i++)
                                     {
@@ -164,7 +164,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                                 }
                             }
 
-                            if (!CLUtils.isClient && Timer % 15 == 0)
+                            if (!VaultUtils.isClient && Timer % 15 == 0)
                             {
                                 int damage = Helper.GetProjDamage(40, 65, 90);
                                 Projectile.NewProjectile(NPC.GetSource_FromAI(), mouseCenter, targetDir.RotatedBy(Main.rand.NextFloat(-0.2f, 0.2f)) * 12, ModContent.ProjectileType<IcicleProj_Hostile>(), damage, 8f);
@@ -187,7 +187,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             DoubleDashLength = Math.Clamp(DoubleDashLength, 120, 400);
                             SoundEngine.PlaySound(CoraliteSoundID.IceMagic_Item28, NPC.Center);
 
-                            if (!CLUtils.isServer)
+                            if (!VaultUtils.isServer)
                             {
                                 GetMouseCenter(out _, out Vector2 mouseCenter2);
                                 for (int i = 0; i < 4; i++)
@@ -215,7 +215,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
                         if (Timer < 35)
                         {
-                            if (!CLUtils.isServer && Timer % 2 == 0)
+                            if (!VaultUtils.isServer && Timer % 2 == 0)
                                 Particle.NewParticle(NPC.Center + Main.rand.NextVector2Circular(32, 32), -NPC.velocity * Main.rand.NextFloat(0.2f, 0.5f),
                                     CoraliteContent.ParticleType<SpeedLine>(), Coralite.IcicleCyan, Main.rand.NextFloat(0.1f, 0.4f));
 
