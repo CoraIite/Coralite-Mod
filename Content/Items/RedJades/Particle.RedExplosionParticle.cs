@@ -40,7 +40,7 @@ namespace Coralite.Content.Items.RedJades
 
         public static void Spawn(Vector2 center, float maxScale, Color newColor = default)
         {
-            if (CLUtils.isServer)
+            if (VaultUtils.isServer)
                 return;
 
             RedExplosionParticle particle = NewParticle<RedExplosionParticle>(center, Vector2.Zero, newColor, 0);
@@ -85,7 +85,7 @@ namespace Coralite.Content.Items.RedJades
 
         public static void Spawn(Vector2 center, float maxScale, Color newColor = default, float scale = 1)
         {
-            if (CLUtils.isServer)
+            if (VaultUtils.isServer)
             {
                 return;
             }

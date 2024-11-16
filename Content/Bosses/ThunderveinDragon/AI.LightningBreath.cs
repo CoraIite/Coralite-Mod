@@ -101,7 +101,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         Vector2 pos2 = NPC.Center + ((NPC.rotation - (NPC.direction * 0.25f)).ToRotationVector2() * 60);
                         Vector2 dir2 = Recorder.ToRotationVector2();
 
-                        if (!CLUtils.isServer)
+                        if (!VaultUtils.isServer)
                         {
                             for (int i = 0; i < 3; i++)
                             {
@@ -129,14 +129,14 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                                 Vector2 pos = GetMousePos();
                                 int damage = Helper.GetProjDamage(70, 80, 90);
 
-                                if (!CLUtils.isClient)
+                                if (!VaultUtils.isClient)
                                     NPC.NewProjectileDirectInAI<LightingBreath>(pos + (Recorder.ToRotationVector2() * 1800), pos, damage, 0, NPC.target
                                     , burstTime, NPC.whoAmI, 85);
 
                                 SoundEngine.PlaySound(CoraliteSoundID.NoUse_Electric_Item93, NPC.Center);
                                 SoundEngine.PlaySound(CoraliteSoundID.BubbleShield_Electric_NPCHit43, NPC.Center);
 
-                                if (!CLUtils.isServer)
+                                if (!VaultUtils.isServer)
                                 {
                                     var modifyer = new PunchCameraModifier(NPC.Center, Recorder.ToRotationVector2(), 20, 20, 20, 1000);
                                     Main.instance.CameraModifiers.Add(modifyer);
@@ -287,7 +287,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             Recorder = (Target.Center - NPC.Center).ToRotation();
                         }
 
-                        if (!CLUtils.isServer)
+                        if (!VaultUtils.isServer)
                         {
                             Vector2 pos2 = NPC.Center + ((NPC.rotation - (NPC.direction * 0.25f)).ToRotationVector2() * 60);
                             Vector2 dir2 = Recorder.ToRotationVector2();
@@ -316,14 +316,14 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                                 Vector2 pos = GetMousePos();
                                 int damage = Helper.GetProjDamage(100, 130, 180);
 
-                                if (!CLUtils.isClient)
+                                if (!VaultUtils.isClient)
                                     NPC.NewProjectileDirectInAI<ElectromagneticCannon>(pos + (Recorder.ToRotationVector2() * 2000), pos, damage, 0, NPC.target
                                     , burstTime, NPC.whoAmI, 85);
 
                                 SoundEngine.PlaySound(CoraliteSoundID.NoUse_Electric_Item93, NPC.Center);
                                 SoundEngine.PlaySound(CoraliteSoundID.BubbleShield_Electric_NPCHit43, NPC.Center);
 
-                                if (!CLUtils.isServer)
+                                if (!VaultUtils.isServer)
                                 {
                                     var modifyer = new PunchCameraModifier(NPC.Center, Recorder.ToRotationVector2() * 2, 24, 20, 20, 1000);
                                     Main.instance.CameraModifiers.Add(modifyer);
@@ -355,7 +355,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         shadowScale = Helper.Lerp(1f, 2f, factor);
                         shadowAlpha = Helper.Lerp(1f, 0f, factor);
 
-                        if (!CLUtils.isServer && Timer > 10 && Timer % 10 == 0)
+                        if (!VaultUtils.isServer && Timer > 10 && Timer % 10 == 0)
                         {
                             var modifyer = new PunchCameraModifier(NPC.Center, Helper.NextVec2Dir(), 7, 12, 10, 1000);
                             Main.instance.CameraModifiers.Add(modifyer);

@@ -51,7 +51,7 @@ namespace Coralite.Content.Particles
 
         public static LightLine Spwan(Vector2 center, Vector2 velocity, Color newColor, Func<Vector2> follow = null, float scale = 1, float maxalpha = 1)
         {
-            if (CLUtils.isServer)
+            if (VaultUtils.isServer)
             {
                 return null;
             }

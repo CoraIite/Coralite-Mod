@@ -672,7 +672,7 @@ namespace Coralite.Content.Items.Nightmare
 
         public override void AI()
         {
-            if (!CLUtils.isServer)
+            if (!VaultUtils.isServer)
             trail ??= new Trail(Main.graphics.GraphicsDevice, 16, new NoTip(), WidthFunction, ColorFunction);
 
             if (init)
@@ -753,7 +753,7 @@ namespace Coralite.Content.Items.Nightmare
 
                 Projectile.rotation = Projectile.velocity.ToRotation();
 
-                if (!CLUtils.isServer)
+                if (!VaultUtils.isServer)
                     trail.Positions = Projectile.oldPos;
             }
 

@@ -73,7 +73,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             NPC.TargetClosest();
                             int damage = Helper.GetProjDamage(20, 30, 70);
 
-                            if (!CLUtils.isClient)
+                            if (!VaultUtils.isClient)
                                 NPC.NewProjectileDirectInAI<LightningDash>(NPC.Center, Vector2.Zero, damage, 0
                                 , NPC.target, smallDashTime, NPC.whoAmI, 55);
 
@@ -92,7 +92,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
                             int damage = Helper.GetProjDamage(20, 30, 70);
 
-                            if (!CLUtils.isClient)
+                            if (!VaultUtils.isClient)
                                 NPC.NewProjectileDirectInAI<LightningDash>(NPC.Center, Vector2.Zero, damage, 0
                                 , NPC.target, smallDashTime, NPC.whoAmI, 55);
 
@@ -145,7 +145,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
                                 int damage = Helper.GetProjDamage(50, 60, 120);
 
-                                if (!CLUtils.isClient)
+                                if (!VaultUtils.isClient)
                                     NPC.NewProjectileDirectInAI<LightningDash>(NPC.Center, Vector2.Zero, damage, 0
                                     , NPC.target, bigDashTime, NPC.whoAmI, 75);
 
@@ -160,7 +160,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                                 isDashing = true;
                                 SetBackgroundLight(0.4f, bigDashTime - 3, 8);
 
-                                if (!CLUtils.isServer)
+                                if (!VaultUtils.isServer)
                                 {
                                     var modifyer = new PunchCameraModifier(NPC.Center, dir * 2.3f, 14, 5, 20, 1000);
                                     Main.instance.CameraModifiers.Add(modifyer);
@@ -266,7 +266,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             NPC.TargetClosest();
                             int damage = Helper.GetProjDamage(20, 30, 70);
 
-                            if (!CLUtils.isClient)
+                            if (!VaultUtils.isClient)
                                 NPC.NewProjectileDirectInAI<StrongLightningDash>(NPC.Center, Vector2.Zero, damage, 0
                                 , NPC.target, smallDashTime, NPC.whoAmI, 55);
 
@@ -285,7 +285,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
                             int damage = Helper.GetProjDamage(20, 30, 70);
 
-                            if (!CLUtils.isClient)
+                            if (!VaultUtils.isClient)
                                 NPC.NewProjectileDirectInAI<StrongLightningDash>(NPC.Center, Vector2.Zero, damage, 0
                                 , NPC.target, smallDashTime, NPC.whoAmI, 55);
 
@@ -338,7 +338,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
                                 int damage = Helper.GetProjDamage(60, 70, 140);
 
-                                if (!CLUtils.isClient)
+                                if (!VaultUtils.isClient)
                                     NPC.NewProjectileDirectInAI<StrongLightningDash>(NPC.Center, Vector2.Zero, damage, 0
                                     , NPC.target, bigDashTime, NPC.whoAmI, 75);
 
@@ -353,7 +353,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                                 isDashing = true;
                                 SetBackgroundLight(0.4f, bigDashTime - 3, 8);
 
-                                if (!CLUtils.isServer)
+                                if (!VaultUtils.isServer)
                                 {
                                     var modifyer = new PunchCameraModifier(NPC.Center, dir * 2.3f, 14, 5, 20, 1000);
                                     Main.instance.CameraModifiers.Add(modifyer);
@@ -372,7 +372,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             {
                                 int damage = Helper.GetProjDamage(60, 70, 140);
 
-                                if (!CLUtils.isClient)
+                                if (!VaultUtils.isClient)
                                     NPC.NewProjectileDirectInAI<StrongerCrossLightingBall>(NPC.Center, Vector2.Zero, damage, 0
                                     , NPC.target, NPC.whoAmI, NPC.rotation + MathHelper.PiOver4 + (Timer / 20 * MathHelper.PiOver2) + 0.001f);
                             }

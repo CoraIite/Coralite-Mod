@@ -77,12 +77,12 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             }
 
             //生成特效粒子
-            if (!CLUtils.isServer && ExtendCount < 17 && Timer % 6 == 0)
+            if (!VaultUtils.isServer && ExtendCount < 17 && Timer % 6 == 0)
                 IceStarLight.Spawn(NPC.Center + Main.rand.NextVector2CircularEdge(80, 80), Main.rand.NextVector2CircularEdge(5, 5), 0.5f, () => NPC.Center, 12);
 
             if (ExtendCount == 18f && NPC.localAI[1] == 0f)
             {
-                if (!CLUtils.isServer)
+                if (!VaultUtils.isServer)
                 {
                     //生成闪光粒子以及蓄力效果
                     Particle.NewParticle(NPC.Center, Vector2.Zero, CoraliteContent.ParticleType<IceBurstHalo_Reverse>(), Scale: 3f);
@@ -95,13 +95,13 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
             if (ExtendCount >= 19)
             {
-                if (!CLUtils.isServer)
+                if (!VaultUtils.isServer)
                 {
                     //大于多少后产生爆炸
                     PunchCameraModifier modifier = new(NPC.Center, new Vector2(2f, 2f), 16f, 20f, 25, 1000f, "BabyIceDragon");
                     Main.instance.CameraModifiers.Add(modifier);
                 }
-                if (!CLUtils.isClient)
+                if (!VaultUtils.isClient)
                 {
                     Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<IceBurst>(), 90, 10f);
                 }

@@ -1,10 +1,13 @@
-﻿using Coralite.Core.Systems.ParticleSystem;
+﻿using Coralite.Core;
+using Coralite.Core.Systems.ParticleSystem;
 using Terraria;
 
 namespace Coralite.Content.Particles
 {
     public class BigFog : Particle
     {
+        public override string Texture => AssetDirectory.Particles + Name;
+
         public override void OnSpawn()
         {
             Frame = new Rectangle(0, 256 * Main.rand.Next(4), 256, 256);

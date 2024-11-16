@@ -126,7 +126,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                                 NPC.TargetClosest();
                                 int damage = Helper.GetProjDamage(120, 140, 200);
 
-                                if (!CLUtils.isClient)
+                                if (!VaultUtils.isClient)
                                 {
                                     NPC.NewProjectileDirectInAI<StrongDischargingBurst>(NPC.Center, Vector2.Zero, damage, 0, NPC.target
                                     , burstTime, NPC.whoAmI);
@@ -135,7 +135,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                                 SoundEngine.PlaySound(CoraliteSoundID.NoUse_Electric_Item93, NPC.Center);
                                 SoundEngine.PlaySound(CoraliteSoundID.BigBOOM_Item62, NPC.Center);
 
-                                if (!CLUtils.isServer)
+                                if (!VaultUtils.isServer)
                                 {
                                     var modifyer = new PunchCameraModifier(NPC.Center, Vector2.UnitY * 1.4f, 26, 26, 25, 1000);
                                     Main.instance.CameraModifiers.Add(modifyer);

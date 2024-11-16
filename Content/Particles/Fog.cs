@@ -1,10 +1,13 @@
-﻿using Coralite.Core.Systems.ParticleSystem;
+﻿using Coralite.Core;
+using Coralite.Core.Systems.ParticleSystem;
 using Terraria;
 
 namespace Coralite.Content.Particles
 {
     public class Fog : Particle
     {
+        public override string Texture => AssetDirectory.Particles + Name;
+
         public override void OnSpawn()
         {
             Rotation = Main.rand.NextFloat(6.282f);

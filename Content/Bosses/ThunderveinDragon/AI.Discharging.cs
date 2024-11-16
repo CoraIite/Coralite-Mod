@@ -85,7 +85,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
                                 NPC.TargetClosest();
 
-                                if (!CLUtils.isClient)
+                                if (!VaultUtils.isClient)
                                 {
                                     int damage = Helper.GetProjDamage(100, 130, 180);
                                     if (Phase == 1)
@@ -106,7 +106,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                                 currentSurrounding = true;
                                 SetBackgroundLight(0.5f, burstTime - 3, 8);
 
-                                if (!CLUtils.isServer)
+                                if (!VaultUtils.isServer)
                                 {
                                     var modifyer = new PunchCameraModifier(NPC.Center, Vector2.UnitY * 1.4f, 26, 26, 25, 1000);
                                     Main.instance.CameraModifiers.Add(modifyer);
@@ -159,7 +159,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public void SpawnDischargingDust(float edge)
         {
-            if (!CLUtils.isServer)
+            if (!VaultUtils.isServer)
             {
                 return;
             }

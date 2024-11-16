@@ -69,7 +69,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             SoundEngine.PlaySound(CoraliteSoundID.IceMagic_Item28, NPC.Center);
                             GetMouseCenter(out _, out Vector2 mouseCenter2);
 
-                            if (!CLUtils.isServer)
+                            if (!VaultUtils.isServer)
                             {
                                 for (int i = 0; i < 4; i++)
                                     IceStarLight.Spawn(NPC.Center + Main.rand.NextVector2CircularEdge(100, 100), Main.rand.NextVector2CircularEdge(3, 3), 1f, () =>

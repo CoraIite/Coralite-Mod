@@ -109,7 +109,7 @@ namespace Coralite.Content.Particles
 
         public static void Spawn(Vector2 center, float rotation, float dizzyTime, float length, GetCenter function)
         {
-            if (CLUtils.isServer)
+            if (VaultUtils.isServer)
             {
                 return;
             }

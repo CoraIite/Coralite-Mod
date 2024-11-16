@@ -68,7 +68,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                                 SoundEngine.PlaySound(CoraliteSoundID.Roar, NPC.Center);
                                 GetMouseCenter(out _, out Vector2 mouseCenter);
 
-                                if (!CLUtils.isServer)
+                                if (!VaultUtils.isServer)
                                 {
                                     Particle.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.1f);
                                     PunchCameraModifier modifier = new(NPC.Center, new Vector2(0.8f, 0.8f), 5f, 20f, 40, 1000f, "BabyIceDragon");
@@ -88,7 +88,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                                 float rot = Main.rand.NextFloat(MathHelper.TwoPi);
                                 for (int i = 0; i < howMany; i++)
                                 {
-                                    if (!CLUtils.isClient)
+                                    if (!VaultUtils.isClient)
                                     {
                                         int randomWidth = Main.rand.Next(240, 350);
                                         Vector2 randomPosition = rot.ToRotationVector2() * randomWidth;

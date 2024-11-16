@@ -1,4 +1,5 @@
-﻿using Coralite.Core.Systems.ParticleSystem;
+﻿using Coralite.Core;
+using Coralite.Core.Systems.ParticleSystem;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 
@@ -6,6 +7,7 @@ namespace Coralite.Content.Particles
 {
     public class LightBall : Particle
     {
+        public override string Texture => AssetDirectory.Particles + Name;
         public override void OnSpawn()
         {
             Frame = new Rectangle(0, 0, 128, 128);

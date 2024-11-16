@@ -62,7 +62,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
         {
             if (!spwan)
             {
-                if (!CLUtils.isServer)
+                if (!VaultUtils.isServer)
                 {
                     NPC boss = null;
                     foreach (var npc in Main.ActiveNPCs)
@@ -92,7 +92,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             {
                 if (Timer > 60)
                 {
-                    if (!CLUtils.isServer)
+                    if (!VaultUtils.isServer)
                     {
                         Particle.NewParticle(NPC.Center, Vector2.Zero, CoraliteContent.ParticleType<IceHalo>(), Color.White, 0.25f);
                     }
@@ -122,7 +122,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                     NPC.width = NPC.height = (int)(NPC.scale * 80);
                     NPC.rotation += 0.2f;
                     NPC.Center = Center;
-                    if (!CLUtils.isServer && Timer % 2 == 0)
+                    if (!VaultUtils.isServer && Timer % 2 == 0)
                     {
                         Dust.NewDustPerfect(NPC.Center, DustID.Ice, -Vector2.UnitY.RotatedBy(Main.rand.NextFloat(-1.3f, 1.3f)) * Main.rand.NextFloat(2, 3));
                         Dust.NewDustPerfect(NPC.Center + Main.rand.NextVector2Circular(NPC.width, NPC.height), DustID.SnowBlock, Vector2.Zero);

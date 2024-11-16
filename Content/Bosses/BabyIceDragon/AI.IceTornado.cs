@@ -43,7 +43,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                         movePhase = 1;
                         Timer = 0;
 
-                        if (!CLUtils.isServer)
+                        if (!VaultUtils.isServer)
                         {
                             Particle.NewParticle(NPC.Center, Vector2.Zero, CoraliteContent.ParticleType<Sparkle_Big>(), Coralite.IcicleCyan, 0.8f);
                         }
@@ -116,7 +116,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             }
 
                             //生成龙卷风粒子
-                            if (!CLUtils.isServer)
+                            if (!VaultUtils.isServer)
                             {
                                 if ((int)Timer % 2 == 0)
                                 {

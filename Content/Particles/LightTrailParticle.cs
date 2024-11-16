@@ -56,7 +56,7 @@ namespace Coralite.Content.Particles
 
         public static void Spawn(Vector2 center, Vector2 velocity, Color newcolor, float scale, Color targetColor = default, int trailCacheCount = 10)
         {
-            if (CLUtils.isServer)
+            if (VaultUtils.isServer)
             {
                 return;
             }

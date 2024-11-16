@@ -83,7 +83,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                                 NPC.TargetClosest();
                                 int damage = Helper.GetProjDamage(150, 200, 250);
 
-                                if (!CLUtils.isClient)
+                                if (!VaultUtils.isClient)
                                 NPC.NewProjectileDirectInAI<GravitationThunderBall>(GetMousePos(), (Target.Center - GetMousePos()).SafeNormalize(Vector2.Zero) * 2
                                     , damage, 0, NPC.target);
 

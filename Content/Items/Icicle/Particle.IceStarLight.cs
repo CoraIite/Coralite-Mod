@@ -106,7 +106,7 @@ namespace Coralite.Content.Items.Icicle
 
         public static void Spawn(Vector2 center, Vector2 velocity, float scale, GetCenter function, float velocityLimit)
         {
-            if (!CLUtils.isServer)
+            if (!VaultUtils.isServer)
             {
                 return;
             }

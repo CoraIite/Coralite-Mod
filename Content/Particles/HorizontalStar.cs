@@ -1,4 +1,5 @@
-﻿using Coralite.Core.Systems.ParticleSystem;
+﻿using Coralite.Core;
+using Coralite.Core.Systems.ParticleSystem;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 
@@ -6,6 +7,7 @@ namespace Coralite.Content.Particles
 {
     public class HorizontalStar : Particle
     {
+        public override string Texture => AssetDirectory.Particles + Name;
         public const int phase_1 = 8;
         public const int phase_2 = 16;
         public const int phase_3 = 24;

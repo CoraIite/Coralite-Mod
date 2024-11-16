@@ -34,7 +34,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             NPC.TargetClosest();
                             int damage = Helper.GetProjDamage(20, 30, 40);
 
-                            if (!CLUtils.isClient)
+                            if (!VaultUtils.isClient)
                                 NPC.NewProjectileDirectInAI<LightningDash>(NPC.Center, Vector2.Zero, damage, 0
                                 , NPC.target, smallDashTime, NPC.whoAmI, 55);
 
@@ -80,7 +80,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             NPC.TargetClosest();
                             int damage = Helper.GetProjDamage(20, 30, 40);
 
-                            if (!CLUtils.isClient)
+                            if (!VaultUtils.isClient)
                                 NPC.NewProjectileDirectInAI<LightningDash>(NPC.Center, Vector2.Zero, damage, 0
                                 , NPC.target, smallDashTime, NPC.whoAmI, 55);
 
@@ -149,7 +149,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             NPC.TargetClosest();
                             int damage = Helper.GetProjDamage(20, 30, 40);
 
-                            if (!CLUtils.isClient)
+                            if (!VaultUtils.isClient)
                                 NPC.NewProjectileDirectInAI<StrongLightningDash>(NPC.Center, Vector2.Zero, damage, 0
                                 , NPC.target, smallDashTime, NPC.whoAmI, 55);
 
@@ -196,7 +196,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             NPC.TargetClosest();
                             int damage = Helper.GetProjDamage(20, 30, 40);
 
-                            if (!CLUtils.isClient)
+                            if (!VaultUtils.isClient)
                                 NPC.NewProjectileDirectInAI<StrongLightningDash>(NPC.Center, Vector2.Zero, damage, 0
                                 , NPC.target, smallDashTime, NPC.whoAmI, 55);
 
