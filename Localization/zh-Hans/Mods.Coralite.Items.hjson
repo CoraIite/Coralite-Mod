@@ -4981,3 +4981,8 @@ CogLens: {
 	// DisplayName: Cog Lens
 	// Tooltip: ""
 }
+
+CoraliteNote: {
+	// DisplayName: Coralite Note
+	// Tooltip: ""
+}

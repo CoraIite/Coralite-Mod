@@ -6,9 +6,9 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.UI;
 
-namespace Coralite.Content.UI.CoraliteNote
+namespace Coralite.Content.CoraliteNotes
 {
-    public class CoraliteNoteUIState:BetterUIState
+    public class CoraliteNoteUIState : BetterUIState
     {
         /// <summary> 是否可见 </summary>
         public override bool Visible { get => visible; set => visible = value; }
@@ -47,7 +47,17 @@ namespace Coralite.Content.UI.CoraliteNote
         public override void Recalculate()
         {
             basePos = new Vector2(Main.screenWidth / 2, Main.screenHeight / 2);
+            //BookPanel = new();
+            //BookPanel.scale = 1;
+            //BookPanel.SetPosition(basePos);
+            //BookPanel.InitSize();
             BookPanel.SetPosition(basePos);
+            //BookPanel.InitPageGroups();
+            //BookPanel.InitGroups();
+            //BookPanel.OnScrollWheel += PlaySound;
+
+            //RemoveAllChildren();
+            //Append(BookPanel);
             base.Recalculate();
         }
 
@@ -88,13 +98,13 @@ namespace Coralite.Content.UI.CoraliteNote
                 return true;
 
             bookWidth += 25;
-            BookPanel.Width.Set(bookWidth, 0f);
+            //BookPanel.Width.Set(bookWidth, 0f);
 
             if (bookWidth >= bookSize.X || Timer > 1000)        //超出时跳出
             {
                 openingBook = false;
                 BookPanel.OverflowHidden = false;
-                BookPanel.Width.Set(bookSize.X, 0f);
+                //BookPanel.Width.Set(bookSize.X, 0f);
 
                 base.Recalculate();
                 return true;
@@ -141,15 +151,15 @@ namespace Coralite.Content.UI.CoraliteNote
                 //Main.graphics.GraphicsDevice.BlendState = BlendState.NonPremultiplied;
 
                 ////绘制特效
-                //foreach (var particle in particles)
-                //{
-                //    if (particle is IDrawParticlePrimitive idpp)
-                //        idpp.DrawPrimitives();
-                //}
+                ////foreach (var particle in particles)
+                ////{
+                ////    if (particle is IDrawParticlePrimitive idpp)
+                ////        idpp.DrawPrimitives();
+                ////}
 
                 //spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.Transform);
 
-                //particles.DrawParticles(spriteBatch);
+                ////particles.DrawParticles(spriteBatch);
 
                 //spriteBatch.End();
                 //spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.AnisotropicClamp, DepthStencilState.None, rasterizerState, null, Main.UIScaleMatrix);
@@ -165,7 +175,7 @@ namespace Coralite.Content.UI.CoraliteNote
             BookPanel.OverflowHidden = true;
             bookSize = BookPanel.PanelTex.Size() * BookPanel.scale;
             bookWidth = 0;
-            BookPanel.Width.Set(0, 0);
+            //BookPanel.Width.Set(0, 0);
             Timer = 0;
 
             //初始化特效

@@ -1,8 +1,9 @@
 ﻿using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
+using System.Net.WebSockets;
 using Terraria.Localization;
 
-namespace Coralite.Content.UI.CoraliteNote.Readfragment
+namespace Coralite.Content.CoraliteNotes.Readfragment
 {
     public class DescriptionPage : KnowledgePage
     {
@@ -15,7 +16,7 @@ namespace Coralite.Content.UI.CoraliteNote.Readfragment
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            Helper.DrawText(spriteBatch, Description.Value, PageWidth, Center, Vector2.One / 2, Vector2.One
+            Helper.DrawText(spriteBatch, Description.Value, PageWidth,Center, Vector2.One/2, Vector2.One
                 , new Color(40, 40, 40), Coralite.MagicCrystalPink, out _);
         }
     }

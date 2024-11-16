@@ -1,6 +1,6 @@
 ﻿using Coralite.Content.UI.BookUI;
 
-namespace Coralite.Content.UI.CoraliteNote.Readfragment
+namespace Coralite.Content.CoraliteNotes.Readfragment
 {
     public class GroupReadfragment : UIPageGroup
     {

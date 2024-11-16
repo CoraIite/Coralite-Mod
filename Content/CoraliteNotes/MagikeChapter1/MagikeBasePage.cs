@@ -1,7 +1,7 @@
 ﻿using Coralite.Content.NPCs.Town;
 using Coralite.Content.Raritys;
 using Coralite.Core;
-using Coralite.Core.Systems.MagikeSystem;
+using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -29,9 +29,12 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
         {
             //MagikeSystem.learnedMagikeBase = false;
 
-            if (!MagikeSystem.learnedMagikeBase)
+            if (!CoraliteContent.GetKKnowledge(KeyKnowledgeID.MagikeS1).Unlock)
             {
-                MagikeSystem.learnedMagikeBase = true;
+                //MagikeSystem.learnedMagikeBase = true;
+                CoraliteContent.GetKKnowledge(KeyKnowledgeID.MagikeS1).UnlockKnowledge();
+                //TODO: 同步知识改变
+
                 //MagikeHelper.SpawnDustOnGenerate(3, 3, player.Center.ToPoint16(), Coralite.MagicCrystalPink);
                 if (Main.myPlayer == player.whoAmI)
                     Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, new Vector2(player.direction * 8, -4),

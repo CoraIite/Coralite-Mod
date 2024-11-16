@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.UI.BookUI;
 using Coralite.Core;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
@@ -219,8 +220,13 @@ namespace Coralite.Content.UI.UILib
         /// <param name="center"></param>
         public void SetPosition(Vector2 center)
         {
-            Top.Set(center.Y - (PanelTex.Height() * scale / 2), 0f);
-            Left.Set(center.X - (PanelTex.Width() * scale / 2), 0f);
+            //Top.Set(- (PanelTex.Height() * scale / 2), 0.5f);
+            //Left.Set( - (PanelTex.Width() * scale / 2), 0.5f);
+
+            this.SetTopLeft(-PanelTex.Height() / 2+40, -PanelTex.Width() / 2, 0.5f, 0.5f);
+            //this.SetTopLeft(0, 0, 0f, 0f);
+            HAlign = 0f;
+            VAlign = 0f;
         }
 
         /// <summary>

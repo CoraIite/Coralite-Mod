@@ -1,6 +1,6 @@
 ﻿using Coralite.Content.UI.UILib;
 
-namespace Coralite.Content.UI.CoraliteNote
+namespace Coralite.Content.CoraliteNotes
 {
     public class KnowledgePage : UIPage
     {

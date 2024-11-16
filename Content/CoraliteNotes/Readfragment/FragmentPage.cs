@@ -1,9 +1,10 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.UI;
+using Coralite.Core;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.Localization;
 using Terraria.UI;
 
-namespace Coralite.Content.UI.CoraliteNote.Readfragment
+namespace Coralite.Content.CoraliteNotes.Readfragment
 {
     public class FragmentPage : KnowledgePage
     {
