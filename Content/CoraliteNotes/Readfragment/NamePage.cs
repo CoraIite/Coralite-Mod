@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria;
 
-namespace Coralite.Content.UI.CoraliteNote.Readfragment
+namespace Coralite.Content.CoraliteNotes.Readfragment
 {
     public class NamePage : KnowledgePage
     {

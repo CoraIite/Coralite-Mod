@@ -2,6 +2,6 @@
 {
     public class KeyKnowledgeID
     {
-        public const int Magike1 = 0;
+        public const int MagikeS1 = 0;
     }
 }

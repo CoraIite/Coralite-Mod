@@ -1,10 +1,10 @@
-﻿using Coralite.Content.UI.CoraliteNote.Readfragment;
+﻿using Coralite.Content.CoraliteNotes.Readfragment;
 using Coralite.Content.UI.UILib;
 using Coralite.Core;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 
-namespace Coralite.Content.UI.CoraliteNote
+namespace Coralite.Content.CoraliteNotes
 {
     public class CoraliteNotePanel : UI_BookPanel
     {

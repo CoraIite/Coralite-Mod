@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 
-namespace Coralite.Content.UI.CoraliteNote.Readfragment
+namespace Coralite.Content.CoraliteNotes.Readfragment
 {
     /// <summary>
     /// 读取的页

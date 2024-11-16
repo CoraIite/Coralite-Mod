@@ -18,7 +18,7 @@ namespace Coralite.Core.Systems.KeySystem
         /// <summary>
         /// 类型
         /// </summary>
-        public int Type { get; set; }
+        public abstract int Type { get; }
 
         /// <summary>
         /// 该知识是否解锁
