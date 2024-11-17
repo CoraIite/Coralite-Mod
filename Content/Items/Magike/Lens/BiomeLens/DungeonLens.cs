@@ -25,21 +25,21 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
         {
             CreateRecipe()
                 .AddIngredient<Basalt>(10)
-                .AddIngredient(ItemID.BlueBrick,10)
+                .AddIngredient(ItemID.BlueBrick, 10)
                 .AddCondition(CoraliteConditions.LearnedMagikeBase)
                 .AddTile(TileID.Anvils)
                 .Register();
 
             CreateRecipe()
                 .AddIngredient<Basalt>(10)
-                .AddIngredient(ItemID.GreenBrick,10)
+                .AddIngredient(ItemID.GreenBrick, 10)
                 .AddCondition(CoraliteConditions.LearnedMagikeBase)
                 .AddTile(TileID.Anvils)
                 .Register();
 
             CreateRecipe()
                 .AddIngredient<Basalt>(10)
-                .AddIngredient(ItemID.PinkBrick,10)
+                .AddIngredient(ItemID.PinkBrick, 10)
                 .AddCondition(CoraliteConditions.LearnedMagikeBase)
                 .AddTile(TileID.Anvils)
                 .Register();

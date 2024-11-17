@@ -794,7 +794,7 @@ namespace Coralite.Content.Items.CoreKeeper
                 Main.EntitySpriteDraw(mainTex, pos + (r.ToRotationVector2() * 2), frameBox, c, 0, origin, dust.scale, 0, 0);
                 r += MathHelper.PiOver2;
             }
-            Main.EntitySpriteDraw(mainTex, pos, frameBox,Color.White * dust.rotation, 0, origin, dust.scale, 0, 0);
+            Main.EntitySpriteDraw(mainTex, pos, frameBox, Color.White * dust.rotation, 0, origin, dust.scale, 0, 0);
 
             return false;
         }

@@ -1,6 +1,4 @@
-﻿using Coralite.Content.Items.MagikeSeries1;
-using Coralite.Content.Items.MagikeSeries2;
-using Coralite.Core;
+﻿using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
@@ -27,7 +25,7 @@ namespace Coralite.Content.Items.Materials
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeCraftRecipe.CreateRecipe(ItemID.Bottle,ModContent.ItemType<LeohtInABottle>(),MagikeHelper.CalculateMagikeCost(MALevel.CrystallineMagike, 6))
+            MagikeCraftRecipe.CreateRecipe(ItemID.Bottle, ModContent.ItemType<LeohtInABottle>(), MagikeHelper.CalculateMagikeCost(MALevel.CrystallineMagike, 6))
                 .AddIngredient(ItemID.SoulofLight)
                 .AddIngredient(ItemID.FallenStar)
                 .Register();

@@ -20,7 +20,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             DustType = DustID.GolfPaticle;
             HitSound = CoraliteSoundID.DigStone_Tink;
 
-            AddMapEntry(new Color(217,216,185));
+            AddMapEntry(new Color(217, 216, 185));
         }
 
         public override bool CanExplode(int i, int j) => false;

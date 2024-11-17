@@ -10,7 +10,7 @@ using Terraria;
 
 namespace Coralite.Content.Items.MagikeSeries2
 {
-    public class BrilliantScanner:ModItem,IMagikeCraftable
+    public class BrilliantScanner : ModItem, IMagikeCraftable
     {
         public override string Texture => AssetDirectory.MagikeSeries2Item + Name;
 

@@ -99,7 +99,7 @@ namespace Coralite.Content.Items.Thunder
                 Main.instance.CameraModifiers.Add(new MoveModifyer(3, 15));
 
                 Projectile.NewProjectile(Player.GetSource_ItemUse(Player.HeldItem), Player.Center, Vector2.Zero, ProjectileType<ThunderveinBladeDash>(),
-                   damage/2, Player.HeldItem.knockBack, Player.whoAmI, 5, DashDir > 0 ? 0 : 3.141f, ai2: 5);
+                   damage / 2, Player.HeldItem.knockBack, Player.whoAmI, 5, DashDir > 0 ? 0 : 3.141f, ai2: 5);
 
                 Projectile.NewProjectile(Player.GetSource_ItemUse(Player.HeldItem), Player.Center, Vector2.Zero, ProjectileType<ReverseFlashHeldProj>(),
                         damage, Player.HeldItem.knockBack, Player.whoAmI, 1.57f + dashDirection * 1, 1, 3);
@@ -497,7 +497,7 @@ namespace Coralite.Content.Items.Thunder
         {
             for (int i = 0; i < 5; i++)
             {
-                Dust d = Dust.NewDustPerfect(Projectile.Center, DustID.RainbowMk2, Helper.NextVec2Dir(2f, 5f),newColor:Coralite.ThunderveinYellow);
+                Dust d = Dust.NewDustPerfect(Projectile.Center, DustID.RainbowMk2, Helper.NextVec2Dir(2f, 5f), newColor: Coralite.ThunderveinYellow);
                 d.noGravity = true;
             }
         }

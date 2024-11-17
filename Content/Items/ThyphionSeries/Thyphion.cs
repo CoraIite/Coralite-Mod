@@ -23,7 +23,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         public override void SetDefaults()
         {
             Item.SetWeaponValues(235, 6f);
-            Item.DefaultToRangedWeapon(10, AmmoID.Arrow, 20, 19f,true);
+            Item.DefaultToRangedWeapon(10, AmmoID.Arrow, 20, 19f, true);
 
             Item.rare = ItemRarityID.Red;
             Item.useStyle = ItemUseStyleID.Rapier;
@@ -50,7 +50,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                     break;
                 case 1:
                     Projectile.NewProjectile(source, position, velocity, ProjectileType<ThyphionTagProj>()
-                        , damage, knockback, player.whoAmI,1,type,velocity.Length());
+                        , damage, knockback, player.whoAmI, 1, type, velocity.Length());
 
                     Helper.PlayPitched("Misc/Do", 0.7f, 4 / 13f, player.Center);
                     Helper.PlayPitched("Misc/Arrow", 0.4f, 0, player.Center);
@@ -69,7 +69,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                         Helper.PlayPitched("Misc/Do", 0.7f, 1f, player.Center);
                         Helper.PlayPitched("Misc/Arrow", 0.4f, 0.1f, player.Center);
                         Helper.PlayPitched("Misc/EnergyBurst", 0.2f, 0.3f, player.Center);
-                        Helper.PlayPitched(CoraliteSoundID.StrongWinds_Item66, player.Center,volume:0.4f);
+                        Helper.PlayPitched(CoraliteSoundID.StrongWinds_Item66, player.Center, volume: 0.4f);
                     }
                     break;
             }
@@ -138,14 +138,14 @@ namespace Coralite.Content.Items.ThyphionSeries
         }
     }
 
-    public class ThyphionTagProj:BaseHeldProj
+    public class ThyphionTagProj : BaseHeldProj
     {
         public override string Texture => AssetDirectory.Blank;
 
         public ref float Timer => ref Projectile.localAI[0];
-        public ref float State  =>ref Projectile.ai[0];
-        public ref float ArrowType  =>ref Projectile.ai[1];
-        public ref float Speed  =>ref Projectile.ai[2];
+        public ref float State => ref Projectile.ai[0];
+        public ref float ArrowType => ref Projectile.ai[1];
+        public ref float Speed => ref Projectile.ai[2];
 
         public override void SetDefaults()
         {
@@ -165,11 +165,11 @@ namespace Coralite.Content.Items.ThyphionSeries
                 default:
                 case 1:
                     {
-                        if (Timer < Owner.itemTimeMax / 3-1 && Timer % (Owner.itemTimeMax / 9) == 0)
+                        if (Timer < Owner.itemTimeMax / 3 - 1 && Timer % (Owner.itemTimeMax / 9) == 0)
                         {
                             Vector2 dir = (Main.MouseWorld - Owner.Center).SafeNormalize(Vector2.One);
 
-                            Projectile.NewProjectileFromThis(Owner.Center+Main.rand.NextVector2Circular(20,20), dir * Speed, (int)ArrowType,
+                            Projectile.NewProjectileFromThis(Owner.Center + Main.rand.NextVector2Circular(20, 20), dir * Speed, (int)ArrowType,
                                 Projectile.damage, Projectile.knockBack);
                         }
                     }

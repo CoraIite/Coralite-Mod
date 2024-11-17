@@ -1,7 +1,6 @@
 ﻿using Coralite.Content.Items.Icicle;
 using Coralite.Content.Particles;
 using Coralite.Core;
-using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using System;
@@ -54,7 +53,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                         {
                             PRTLoader.NewParticle(NPC.Center, Vector2.Zero, CoraliteContent.ParticleType<Sparkle_Big>(), Coralite.IcicleCyan, 1.2f);
                         }
-                        
+
                         SoundEngine.PlaySound(CoraliteSoundID.Roar, NPC.Center);
                         movePhase = 1;
                         NPC.velocity *= 0;
@@ -154,7 +153,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             if ((int)Timer % 10 == 0)
                             {
                                 SoundEngine.PlaySound(SoundID.DD2_BetsyFlameBreath, NPC.Center);
-                                
+
                                 if (!VaultUtils.isClient)
                                 {
                                     for (int i = -1; i < 1; i++)

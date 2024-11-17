@@ -3,7 +3,6 @@ using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.Particles;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
-using InnoVault;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -46,7 +45,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
     /// <summary>
     /// 使用ai0和ai1传入初始位置
     /// </summary>
-    public class FilterProj :  RectangleSelectProj
+    public class FilterProj : RectangleSelectProj
     {
         public override bool CheckHeldItem()
         {

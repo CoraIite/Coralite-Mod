@@ -1,5 +1,4 @@
 ﻿using Coralite.Core;
-using Coralite.Core.Systems.ParticleSystem;
 using InnoVault.PRT;
 
 namespace Coralite.Content.Bosses.BabyIceDragon

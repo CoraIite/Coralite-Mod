@@ -26,7 +26,7 @@ namespace Coralite.Content.GlobalItems
         public override void ModifyWeaponDamage(Item item, Player player, ref StatModifier damage)
         {
             if (CoraliteWorld.DigDigDigWorld && !item.DamageType.CountsAsClass<CreateDamage>())
-                damage = new StatModifier(0, 0,1,1);
+                damage = new StatModifier(0, 0, 1, 1);
         }
     }
 }

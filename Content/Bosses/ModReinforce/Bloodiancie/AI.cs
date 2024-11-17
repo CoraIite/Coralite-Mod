@@ -1,7 +1,6 @@
 ﻿using Coralite.Content.Bosses.Rediancie;
 using Coralite.Content.Particles;
 using Coralite.Core;
-using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using System;

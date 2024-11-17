@@ -27,7 +27,7 @@ namespace Coralite.Content.Items.CoreKeeper
         {
             Item.width = Item.height = 40;
             Item.damage = 194;
-            Item.useTime =  Item.useAnimation = 30;
+            Item.useTime = Item.useAnimation = 30;
             Item.knockBack = 4f;
 
             Item.useStyle = ItemUseStyleID.Rapier;

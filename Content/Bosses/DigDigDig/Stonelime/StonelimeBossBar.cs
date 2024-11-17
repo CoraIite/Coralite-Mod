@@ -16,7 +16,7 @@ namespace Coralite.Content.Bosses.DigDigDig.Stonelime
         {
             barTopLeft += offset;
 
-            int width = (int)(stretchScale.X * (barFrame.Width+2));
+            int width = (int)(stretchScale.X * (barFrame.Width + 2));
 
             while (width > 0)
             {

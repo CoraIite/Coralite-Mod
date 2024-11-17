@@ -212,9 +212,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public virtual string MagikeMaxText(MagikeContainer c)
         {
-            string maxText = MagikeHelper.BonusColoredText(c.MagikeMax.ToString(), MagikeMaxBonus) ;
+            string maxText = MagikeHelper.BonusColoredText(c.MagikeMax.ToString(), MagikeMaxBonus);
             string bonusText = MagikeHelper.BonusColoredText(c.MagikeMaxBonus.ToString(), MagikeMaxBonus);
-           return $"  ▶ {maxText} ({c.MagikeMaxBase} * {bonusText})";
+            return $"  ▶ {maxText} ({c.MagikeMaxBase} * {bonusText})";
         }
 
         public virtual string AntiMagikeAmountTitle(MagikeContainer c)
@@ -228,9 +228,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public virtual string AntiMagikeMaxText(MagikeContainer c)
         {
-            string maxText = MagikeHelper.BonusColoredText(c.AntiMagikeMax.ToString(), AntiMagikeMaxBonus) ;
+            string maxText = MagikeHelper.BonusColoredText(c.AntiMagikeMax.ToString(), AntiMagikeMaxBonus);
             string bonusText = MagikeHelper.BonusColoredText(c.AntiMagikeMaxBonus.ToString(), AntiMagikeMaxBonus);
-           return $"  ▶ {maxText} ({c.AntiMagikeMaxBase} * {bonusText})";
+            return $"  ▶ {maxText} ({c.AntiMagikeMaxBase} * {bonusText})";
         }
 
         public void AddText(UIList list, Func<MagikeContainer, string> textFunc, UIElement parent)

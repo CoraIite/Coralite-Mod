@@ -153,7 +153,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
             TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
 
-            TileObjectData.newTile.CopyFrom(TileObjectData.Style4x2 );
+            TileObjectData.newTile.CopyFrom(TileObjectData.Style4x2);
             TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.newTile.StyleMultiplier = 1;
             TileObjectData.newTile.StyleHorizontal = true;

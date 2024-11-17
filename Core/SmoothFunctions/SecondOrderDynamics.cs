@@ -31,7 +31,7 @@ namespace Coralite.Core.SmoothFunctions
                 xp = x;
             }
 
-            float k2_stable = MathF.Max( MathF.Max(k2, t * t / 2 + t * k1 / 2),t*k1);
+            float k2_stable = MathF.Max(MathF.Max(k2, t * t / 2 + t * k1 / 2), t * k1);
 
             y += t * yd;
             yd += t * (x + k3 * xd.Value - y - k1 * yd) / k2_stable;

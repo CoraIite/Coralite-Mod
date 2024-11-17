@@ -14,7 +14,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             Main.tileNoFail[Type] = true;
             Main.tileFrameImportant[Type] = true;
             Main.tileObsidianKill[Type] = true;
-            
+
             TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1);

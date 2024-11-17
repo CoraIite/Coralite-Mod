@@ -105,8 +105,8 @@ namespace Coralite.Content.Items.ShieldPlus
             CreateRecipe()
                 .AddRecipeGroup(RecipeGroupID.Wood, 35)
                 .AddIngredient<GlistentBar>(4)
-                .AddIngredient(ItemID.PlatinumBar,2)
-                .AddIngredient(ItemID.MythrilBar,2)
+                .AddIngredient(ItemID.PlatinumBar, 2)
+                .AddIngredient(ItemID.MythrilBar, 2)
                 .AddTile(TileID.LivingLoom)
                 .Register();
         }
@@ -345,9 +345,9 @@ namespace Coralite.Content.Items.ShieldPlus
 
             for (int i = trailCachesLength - 1; i > 2; i--)
                 Main.spriteBatch.Draw(mainTex, Projectile.oldPos[i] - Main.screenPosition, null,
-                lightColor * 0.4f * ((i - 2) * 1 / 6f), -0.2f* (i - 8) + extraRotation, origin, Projectile.scale, 0, 0);
+                lightColor * 0.4f * ((i - 2) * 1 / 6f), -0.2f * (i - 8) + extraRotation, origin, Projectile.scale, 0, 0);
 
-            Main.spriteBatch.Draw(mainTex, pos, null, lightColor,  extraRotation, origin, Projectile.scale, 0, 0);
+            Main.spriteBatch.Draw(mainTex, pos, null, lightColor, extraRotation, origin, Projectile.scale, 0, 0);
         }
     }
 }

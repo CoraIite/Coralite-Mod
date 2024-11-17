@@ -36,7 +36,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
                 return;
 
             Item item = GetFirstItem(container);
-            Vector2 center = tileRect.Center()+offset;
+            Vector2 center = tileRect.Center() + offset;
             Rectangle frameBox;
 
             //没有物品就静置在基座上
@@ -72,7 +72,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
             spriteBatch.Draw(tex, center + floatingOffset, frameBox, lightColor, rotation + 1.57f, frameBox.Size() / 2, 1, 0, 0);
 
             //绘制物品
-            MagikeHelper.DrawItem(spriteBatch, item, center + floatingOffset, Math.Min(tileRect.Width, tileRect.Height),c);
+            MagikeHelper.DrawItem(spriteBatch, item, center + floatingOffset, Math.Min(tileRect.Width, tileRect.Height), c);
         }
 
         private static Item GetFirstItem(ItemContainer container)

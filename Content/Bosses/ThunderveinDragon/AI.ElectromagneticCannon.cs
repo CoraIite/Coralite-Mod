@@ -137,7 +137,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                                     var modifyer = new PunchCameraModifier(NPC.Center, Recorder.ToRotationVector2() * 2, 24, 20, 20, 1000);
                                     Main.instance.CameraModifiers.Add(modifyer);
                                 }
-                                
+
                                 canDrawShadows = true;
                                 SetBackgroundLight(0.6f, burstTime * 3 / 4, 14);
 
@@ -190,7 +190,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         {
                             ResetStates();
                         }
-                            
+
                     }
                     break;
             }

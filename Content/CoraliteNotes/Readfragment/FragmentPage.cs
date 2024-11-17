@@ -8,11 +8,11 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
 {
     public class FragmentPage : KnowledgePage
     {
-        public static LocalizedText Fragments {  get; set; }
+        public static LocalizedText Fragments { get; set; }
 
         public override void OnInitialize()
         {
-            Fragments=this.GetLocalization(nameof(Fragments));
+            Fragments = this.GetLocalization(nameof(Fragments));
         }
 
         public override void Recalculate()
@@ -26,7 +26,7 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
         }
     }
 
-    public class FragmentSlot:UIElement
+    public class FragmentSlot : UIElement
     {
         public int KnowledgeID;
 

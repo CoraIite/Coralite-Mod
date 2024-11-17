@@ -15,7 +15,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Filters
 
         public override bool CanInsert_SpecialCheck(MagikeTP entity, ref string text)
         {
-            if (!entity.TryGetComponent<MagikeLinerSender>(MagikeComponentID.MagikeSender,out _))
+            if (!entity.TryGetComponent<MagikeLinerSender>(MagikeComponentID.MagikeSender, out _))
             {
                 text = MagikeSystem.GetFilterText(MagikeSystem.FilterID.MagikeLinerSenderNotFound);
                 return false;

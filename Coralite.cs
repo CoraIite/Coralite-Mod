@@ -1,7 +1,7 @@
 ﻿//global usings
+global using InnoVault;
 global using Microsoft.Xna.Framework;
 global using Terraria.ModLoader;
-global using InnoVault;
 using Coralite.Compat.BossCheckList;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;

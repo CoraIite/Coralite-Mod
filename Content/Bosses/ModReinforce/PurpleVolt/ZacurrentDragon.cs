@@ -18,7 +18,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
         /// <summary>
         /// 是否处于紫伏状态
         /// </summary>
-        public bool PurpleVolt {  get; private set; }
+        public bool PurpleVolt { get; private set; }
         /// <summary>
         /// 是否绘制残影
         /// </summary>

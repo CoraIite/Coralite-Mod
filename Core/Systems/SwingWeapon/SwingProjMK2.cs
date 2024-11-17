@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
-using Terraria.Map;
 using static Coralite.Core.Systems.SwingWeapon.SwingProjMK2;
 
 namespace Coralite.Core.Systems.SwingWeapon
@@ -40,15 +39,15 @@ namespace Coralite.Core.Systems.SwingWeapon
         /// <summary>
         /// 
         /// </summary>
-        public SwingController Swing { get; protected set; } 
+        public SwingController Swing { get; protected set; }
         /// <summary>
         /// 甜点攻击
         /// </summary>
-        public SweetController Sweet {  get; protected set; }
+        public SweetController Sweet { get; protected set; }
         /// <summary>
         /// 拖尾控制器
         /// </summary>
-        public TrailController Trail {  get; protected set; }
+        public TrailController Trail { get; protected set; }
 
         public ref float Combo => ref Projectile.ai[0];
         public ref float Timer => ref Projectile.localAI[0];
@@ -94,12 +93,12 @@ namespace Coralite.Core.Systems.SwingWeapon
             /// <summary>
             /// 变换过的起始角度
             /// </summary>
-            public float TransformedStartAngle { get;private set; }
+            public float TransformedStartAngle { get; private set; }
 
             /// <summary>
             /// 变换过的起始角度
             /// </summary>
-            public float TransformedTotalAngle { get;private set; }
+            public float TransformedTotalAngle { get; private set; }
 
             /// <summary>
             /// 角度的渐变

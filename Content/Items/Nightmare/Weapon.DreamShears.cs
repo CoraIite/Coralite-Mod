@@ -673,7 +673,7 @@ namespace Coralite.Content.Items.Nightmare
         public override void AI()
         {
             if (!VaultUtils.isServer)
-            trail ??= new Trail(Main.graphics.GraphicsDevice, 16, new NoTip(), WidthFunction, ColorFunction);
+                trail ??= new Trail(Main.graphics.GraphicsDevice, 16, new NoTip(), WidthFunction, ColorFunction);
 
             if (init)
             {
@@ -762,7 +762,7 @@ namespace Coralite.Content.Items.Nightmare
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            if (Hited && State == 0&& Projectile.IsOwnedByLocalPlayer())
+            if (Hited && State == 0 && Projectile.IsOwnedByLocalPlayer())
             {
                 Hited = false;
 
@@ -912,7 +912,7 @@ namespace Coralite.Content.Items.Nightmare
                 Projectile.rotation = (InMousePos - Owner.Center).ToRotation();
 
                 DistanceToOwner = 65;
-                if (ExtraProjState == 1&& Projectile.IsOwnedByLocalPlayer())//生成噩梦之咬
+                if (ExtraProjState == 1 && Projectile.IsOwnedByLocalPlayer())//生成噩梦之咬
                 {
                     Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center,
                         Projectile.rotation.ToRotationVector2(), ProjectileType<NightmareBite_Firendly>(), Projectile.damage, 2, Owner.whoAmI, Projectile.rotation);

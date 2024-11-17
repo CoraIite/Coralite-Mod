@@ -1,5 +1,4 @@
 ﻿using Coralite.Core;
-using System;
 using Terraria;
 
 namespace Coralite.Content.Bosses.GodOfWind

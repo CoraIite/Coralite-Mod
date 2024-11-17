@@ -1,5 +1,4 @@
-﻿using Coralite.Core.Systems.ParticleSystem;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using Terraria.ModLoader.Config;
 
 namespace Coralite.Core.Configs

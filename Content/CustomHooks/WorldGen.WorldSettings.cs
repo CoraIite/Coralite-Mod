@@ -94,7 +94,7 @@ namespace Coralite.Content.CustomHooks
                 //}
             }
             if (processedSeed.ToLower() == "digdigdig" || processedSeed.ToLower() == "dig dig dig"
-                ||processedSeed.ToLower() == "digdig dig"||processedSeed.ToLower() == "dig digdig")
+                || processedSeed.ToLower() == "digdig dig" || processedSeed.ToLower() == "dig digdig")
                 CoraliteWorld.DigDigDigWorld = true;
         }
 

@@ -29,7 +29,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             {
                 effect = new BasicEffect(Main.instance.GraphicsDevice);
                 effect.VertexColorEnabled = true;
-                effect.Texture = ModContent.Request<Texture2D>(AssetDirectory.Lasers + "VanillaFlowA", AssetRequestMode.ImmediateLoad).Value; 
+                effect.Texture = ModContent.Request<Texture2D>(AssetDirectory.Lasers + "VanillaFlowA", AssetRequestMode.ImmediateLoad).Value;
                 effect.TextureEnabled = true;
             });
         }

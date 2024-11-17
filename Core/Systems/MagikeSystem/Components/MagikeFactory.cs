@@ -51,7 +51,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public bool DuringWork()
         {
             OnWork();
-            
+
             return !UpdateTime();
         }
 
@@ -92,7 +92,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// 开始工作，基方法内包含对<see cref="Timer"/>的赋值
         /// </summary>
         public virtual void StarkWork()
-         {
+        {
             IsWorking = true;
             Timer = WorkTime;
         }

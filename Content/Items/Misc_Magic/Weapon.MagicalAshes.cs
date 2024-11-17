@@ -76,7 +76,7 @@ namespace Coralite.Content.Items.Misc_Magic
                         + rotDir * 16;
                     for (int j = 0; j < 2; j++)
                     {
-                        Dust dust = Dust.NewDustPerfect(pos + Main.rand.NextVector2Circular(14,14)
+                        Dust dust = Dust.NewDustPerfect(pos + Main.rand.NextVector2Circular(14, 14)
                             , 261, -rotDir * Main.rand.NextFromList(1, 2), 0, default, Main.rand.NextFloat(1, 1.5f));
                         dust.noGravity = true;
                     }
@@ -99,7 +99,7 @@ namespace Coralite.Content.Items.Misc_Magic
                 , 261, Projectile.velocity.SafeNormalize(Vector2.UnitX).RotatedByRandom(1f) * 2f, 0, default, Main.rand.NextFloat(1, 1.5f));
             dust2.noGravity = true;
 
-            if (Projectile.timeLeft%3==0)
+            if (Projectile.timeLeft % 3 == 0)
             {
                 Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(4 + 8 * Stoped, 4 + 8 * Stoped)
                    , 261, -Projectile.velocity.SafeNormalize(Vector2.UnitX).RotatedByRandom(1f) * 2f, 0, default, Main.rand.NextFloat(1, 1.5f));
@@ -115,7 +115,7 @@ namespace Coralite.Content.Items.Misc_Magic
                 Stoped++;
             }
 
-            if (Projectile.velocity.Length() < 2f && Stoped <3 )
+            if (Projectile.velocity.Length() < 2f && Stoped < 3)
                 FinishFttack();
         }
 

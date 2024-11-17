@@ -3,7 +3,6 @@ using Coralite.Content.Items.Gels;
 using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
-using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
@@ -29,7 +28,7 @@ namespace Coralite.Content.Items.Thunder
         public override void SetDefaults()
         {
             Item.damage = 78;
-            Item.useTime =  Item.useAnimation = 21;
+            Item.useTime = Item.useAnimation = 21;
             Item.knockBack = 7;
             Item.crit = 12;
             Item.mana = 10;

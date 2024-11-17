@@ -23,10 +23,10 @@ namespace Coralite.Content.Items.Magike.Factorys
     public class LaserCollector() : MagikeApparatusItem(TileType<LaserCollectorTile>(), Item.sellPrice(silver: 5)
         , RarityType<MagicCrystalRarity>(), AssetDirectory.MagikeFactories)
     {
-        public static LocalizedText NoTile { get;private set; }
-        public static LocalizedText NoCrystalCluster { get;private set; }
-        public static LocalizedText LevelIncorrect { get;private set; }
-        public static LocalizedText MagikeNotEnough { get;private set; }
+        public static LocalizedText NoTile { get; private set; }
+        public static LocalizedText NoCrystalCluster { get; private set; }
+        public static LocalizedText LevelIncorrect { get; private set; }
+        public static LocalizedText MagikeNotEnough { get; private set; }
 
         public override void Load()
         {
@@ -159,10 +159,10 @@ namespace Coralite.Content.Items.Magike.Factorys
             return true;
         }
 
-        private static bool TryGetTile(Point16 point,out Tile tile)
+        private static bool TryGetTile(Point16 point, out Tile tile)
         {
             GetMagikeAlternateData(point.X, point.Y, out TileObjectData data, out MagikeAlternateStyle alternate);
-            tile = default ;
+            tile = default;
 
             switch (alternate)
             {
@@ -185,7 +185,7 @@ namespace Coralite.Content.Items.Magike.Factorys
             return true;
         }
 
-        public bool CheckTile(Tile tile,out ICrystalCluster crystalCluster)
+        public bool CheckTile(Tile tile, out ICrystalCluster crystalCluster)
         {
             crystalCluster = null;
             if (!tile.HasTile)
@@ -287,9 +287,9 @@ namespace Coralite.Content.Items.Magike.Factorys
 
             float rot = alternate.GetAlternateRotation();
 
-            float speed = 4- factor *3;
+            float speed = 4 - factor * 3;
             Vector2 dir = rot.ToRotationVector2();
-            Dust dust = Dust.NewDustPerfect(center  + Main.rand.NextVector2CircularEdge(2, 2)
+            Dust dust = Dust.NewDustPerfect(center + Main.rand.NextVector2CircularEdge(2, 2)
                 , DustID.AncientLight, dir * speed, newColor: Coralite.MagicCrystalPink);
             dust.noGravity = true;
         }
@@ -345,7 +345,7 @@ namespace Coralite.Content.Items.Magike.Factorys
             WorkTimeBase = incomeLevel switch
             {
                 MALevel.MagicCrystal => 8,
-                _ => 10_0000_0000/60,
+                _ => 10_0000_0000 / 60,
             };
 
             WorkTimeBase *= 60;

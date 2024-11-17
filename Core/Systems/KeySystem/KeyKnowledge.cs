@@ -13,7 +13,7 @@ namespace Coralite.Core.Systems.KeySystem
     {
         public override string Texture => AssetDirectory.KeyKnowledgeIcon + Name;
 
-        public Asset<Texture2D> Texture2D {  get;private set; }
+        public Asset<Texture2D> Texture2D { get; private set; }
 
         /// <summary>
         /// 类型

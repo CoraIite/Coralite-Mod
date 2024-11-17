@@ -82,15 +82,15 @@ namespace Coralite.Content.WorldGeneration
             else
                 ballCount = 200;
 
-            Modifiers.Dither Blotches = new Modifiers.Dither( 0.25);
-            Modifiers.OnlyTiles onlyTiles = new Modifiers.OnlyTiles(TileID.Dirt,TileID.Grass);
+            Modifiers.Dither Blotches = new Modifiers.Dither(0.25);
+            Modifiers.OnlyTiles onlyTiles = new Modifiers.OnlyTiles(TileID.Dirt, TileID.Grass);
             Actions.SetTile setTile = new Actions.SetTile(TileID.ClayBlock);
 
             for (int i = 0; i < ballCount; i++)
             {
                 int x = GenVars.dungeonSide > 0
-                    ? Main.maxTilesX - WorldGen.genRand.Next(DigSkyWidth / 2, DigSkyWidth )
-                    : WorldGen.genRand.Next( DigSkyWidth / 2,DigSkyWidth);
+                    ? Main.maxTilesX - WorldGen.genRand.Next(DigSkyWidth / 2, DigSkyWidth)
+                    : WorldGen.genRand.Next(DigSkyWidth / 2, DigSkyWidth);
                 int y = WorldGen.genRand.Next((int)(Main.maxTilesY * 0.1f), (int)(Main.maxTilesY * 0.95f));
 
                 int width = WorldGen.genRand.Next(4, 12);
@@ -104,7 +104,7 @@ namespace Coralite.Content.WorldGeneration
                         onlyTiles,
                         setTile));    //清除形状内所有物块
 
-                progress.Value += 0.125f/ballCount;
+                progress.Value += 0.125f / ballCount;
             }
         }
 
@@ -119,15 +119,15 @@ namespace Coralite.Content.WorldGeneration
             else
                 wallCount = 250;
 
-            int left = GenVars.dungeonSide > 0 ? Main.maxTilesX - DigSkyWidth:DigSkyWidth/2;
-            int right = GenVars.dungeonSide > 0 ? Main.maxTilesX - DigSkyWidth/2:DigSkyWidth;
+            int left = GenVars.dungeonSide > 0 ? Main.maxTilesX - DigSkyWidth : DigSkyWidth / 2;
+            int right = GenVars.dungeonSide > 0 ? Main.maxTilesX - DigSkyWidth / 2 : DigSkyWidth;
 
             for (int i = left; i < right; i++)
                 for (int j = 0; j < Main.maxTilesY; j++)
                     Main.tile[i, j].Clear(Terraria.DataStructures.TileDataType.Wall);
 
             Modifiers.Blotches actions = new Modifiers.Blotches(2, 0.4);
-            Modifiers.OnlyTiles onlyTiles = new Modifiers.OnlyTiles(TileID.Dirt, TileID.ClayBlock,TileID.Grass);
+            Modifiers.OnlyTiles onlyTiles = new Modifiers.OnlyTiles(TileID.Dirt, TileID.ClayBlock, TileID.Grass);
 
             for (int i = 0; i < wallCount; i++)
             {
@@ -190,7 +190,7 @@ namespace Coralite.Content.WorldGeneration
                     t.Clear(Terraria.DataStructures.TileDataType.Wall);
                 }
 
-            progress.Value += 0.5f/3 ;
+            progress.Value += 0.5f / 3;
         }
 
         private static void CloudBall(GenerationProgress progress)
@@ -209,7 +209,7 @@ namespace Coralite.Content.WorldGeneration
 
             for (int i = 0; i < ballCount; i++)
             {
-                int y = WorldGen.genRand.Next(15, Main.maxTilesY-15);
+                int y = WorldGen.genRand.Next(15, Main.maxTilesY - 15);
 
                 int width = WorldGen.genRand.Next(4, 15);
 
@@ -235,7 +235,7 @@ namespace Coralite.Content.WorldGeneration
 
             Modifiers.Blotches Blotches = new Modifiers.Blotches(2, 0.5);
             Modifiers.Blotches Blotches2 = new Modifiers.Blotches(1, 0.4);
-            Modifiers.Flip flip = new Modifiers.Flip(false,true);
+            Modifiers.Flip flip = new Modifiers.Flip(false, true);
             Modifiers.OnlyTiles onlyTiles = new Modifiers.OnlyTiles(TileID.Cloud);
             Actions.SetTile setTile = new Actions.SetTile(TileID.RainCloud);
             Actions.ClearTile clearTile = new Actions.ClearTile();
@@ -243,8 +243,8 @@ namespace Coralite.Content.WorldGeneration
 
             for (int i = 0; i < ballCount; i++)
             {
-                int x = GenVars.dungeonSide > 0 
-                    ? Main.maxTilesX - WorldGen.genRand.Next(10, DigSkyWidth / 2)  
+                int x = GenVars.dungeonSide > 0
+                    ? Main.maxTilesX - WorldGen.genRand.Next(10, DigSkyWidth / 2)
                     : WorldGen.genRand.Next(10, DigSkyWidth / 2);
                 int y = WorldGen.genRand.Next((int)(Main.maxTilesY * 0.1f), (int)(Main.maxTilesY * 0.8f));
 
@@ -254,7 +254,7 @@ namespace Coralite.Content.WorldGeneration
 
                 WorldUtils.Gen(
                     new Point(x, y),  //中心点
-                    new Shapes.Slime(width,1,WorldGen.genRand.NextFloat(0.8f,1)),   //形状：圆
+                    new Shapes.Slime(width, 1, WorldGen.genRand.NextFloat(0.8f, 1)),   //形状：圆
                     Actions.Chain(  //如果要添加多个效果得使用这个chain
                         Blotches,     //添加边缘的抖动，让边缘处不那么平滑
                         flip,

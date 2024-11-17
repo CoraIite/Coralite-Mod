@@ -1,5 +1,4 @@
 ﻿using Coralite.Helpers;
-using System;
 using Terraria.GameContent.UI.Elements;
 using Terraria.UI;
 using static Coralite.Helpers.MagikeHelper;

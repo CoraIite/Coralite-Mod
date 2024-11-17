@@ -84,8 +84,8 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                                 int damage = Helper.GetProjDamage(150, 200, 250);
 
                                 if (!VaultUtils.isClient)
-                                NPC.NewProjectileDirectInAI<GravitationThunderBall>(GetMousePos(), (Target.Center - GetMousePos()).SafeNormalize(Vector2.Zero) * 2
-                                    , damage, 0, NPC.target);
+                                    NPC.NewProjectileDirectInAI<GravitationThunderBall>(GetMousePos(), (Target.Center - GetMousePos()).SafeNormalize(Vector2.Zero) * 2
+                                        , damage, 0, NPC.target);
 
                                 SoundEngine.PlaySound(CoraliteSoundID.NoUse_Electric_Item93, NPC.Center);
                                 canDrawShadows = true;

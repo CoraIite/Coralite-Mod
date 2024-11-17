@@ -5,7 +5,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.CoraliteNotes
 {
-    public class CoraliteNote:ModItem
+    public class CoraliteNote : ModItem
     {
         public override string Texture => AssetDirectory.DefaultItem;
 

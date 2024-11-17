@@ -35,7 +35,7 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
     }
 
     public class ForestLensTile() : BaseLensTile
-        ( Color.Green, DustID.Grass)
+        (Color.Green, DustID.Grass)
     {
         public override int DropItemType => ItemType<ForestLens>();
 

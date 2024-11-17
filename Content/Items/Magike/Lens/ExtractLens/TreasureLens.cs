@@ -129,7 +129,7 @@ namespace Coralite.Content.Items.Magike.Lens.ExtractLens
         {
             ProductionDelayBase = incomeLevel switch
             {
-                 MALevel.CrystallineMagike => 8,
+                MALevel.CrystallineMagike => 8,
                 _ => 1_0000_0000 / 60,//随便填个大数
             } * 60;
 

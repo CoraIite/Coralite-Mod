@@ -34,7 +34,7 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
     }
 
     public class DesertLensTile() : BaseLensTile
-        ( Color.SandyBrown, DustID.Sand)
+        (Color.SandyBrown, DustID.Sand)
     {
         public override int DropItemType => ItemType<DesertLens>();
 

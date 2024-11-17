@@ -1,6 +1,5 @@
 ﻿using Coralite.Core;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using Terraria;
 
 namespace Coralite.Content.CoraliteNotes.Readfragment

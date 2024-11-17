@@ -501,7 +501,7 @@ namespace Coralite.Helpers
                 return "ffffff";
         }
 
-        public static string GetBonusColorCode2(int bonus,bool reverse=false)
+        public static string GetBonusColorCode2(int bonus, bool reverse = false)
         {
             if (reverse)
             {
@@ -521,10 +521,10 @@ namespace Coralite.Helpers
                 return "ffffff";
         }
 
-        public static string BonusColoredText(string text,float bonus, bool reverse = false)
+        public static string BonusColoredText(string text, float bonus, bool reverse = false)
             => $"[c/{GetBonusColorCode(bonus, reverse)}:{text}]";
 
-        public static string BonusColoredText2(string text,int bonus, bool reverse = false)
+        public static string BonusColoredText2(string text, int bonus, bool reverse = false)
             => $"[c/{GetBonusColorCode2(bonus, reverse)}:{text}]";
 
         /// <summary>
@@ -559,7 +559,7 @@ namespace Coralite.Helpers
             return new ComponentUIElementText<TComponent>(textFunc, component, parent);
         }
 
-        public static void DrawItem(SpriteBatch spriteBatch, Item i, Vector2 pos, float itemSize,Color color)
+        public static void DrawItem(SpriteBatch spriteBatch, Item i, Vector2 pos, float itemSize, Color color)
         {
             int type = i.type;
 
@@ -588,7 +588,7 @@ namespace Coralite.Helpers
                 spriteBatch.Draw(itemTex, pos, new Rectangle?(rectangle2), i.GetColor(color), 0f, origin, itemScale, 0, 0f);
         }
 
-        public static int CalculateMagikeCost(MALevel level,int ProducerCount=1,int workTime = 60)
+        public static int CalculateMagikeCost(MALevel level, int ProducerCount = 1, int workTime = 60)
         {
             float produceCountPerSecond = level switch
             {
@@ -645,15 +645,15 @@ namespace Coralite.Helpers
         public static bool ByTopLeftnGetTP(Point16 topLeft, out TileProcessor tileProcessor)
         {
             tileProcessor = null;
-                // 遍历世界中的所有模块，查找与指定ID和坐标匹配的模块
-                foreach (var inds in TileProcessorLoader.TP_InWorld)
+            // 遍历世界中的所有模块，查找与指定ID和坐标匹配的模块
+            foreach (var inds in TileProcessorLoader.TP_InWorld)
+            {
+                if (inds.Position.X == topLeft.X && inds.Position.Y == topLeft.Y)
                 {
-                    if (inds.Position.X == topLeft.X && inds.Position.Y == topLeft.Y)
-                    {
-                        tileProcessor = inds;
-                        return true;
-                    }
+                    tileProcessor = inds;
+                    return true;
                 }
+            }
             return false;
         }
 

@@ -143,7 +143,7 @@ namespace Coralite.Content.Items.MagikeSeries1
             if (sender == receiver)
                 return;
 
-            MagikeLinerSender senderComponent  = sender.GetSingleComponent<MagikeLinerSender>(MagikeComponentID.MagikeSender);
+            MagikeLinerSender senderComponent = sender.GetSingleComponent<MagikeLinerSender>(MagikeComponentID.MagikeSender);
 
             bool canConnect = senderComponent.CanConnect(currentPoint, out string failText);
             c = canConnect ? Color.GreenYellow : Color.MediumVioletRed;

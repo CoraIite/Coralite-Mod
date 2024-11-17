@@ -8,7 +8,7 @@ using Terraria.UI;
 
 namespace Coralite.Content.CoraliteNotes.MagikeChapter1
 {
-    public class GetMagikeKnowledge1Page:KnowledgePage
+    public class GetMagikeKnowledge1Page : KnowledgePage
     {
         public static LocalizedText Title { get; private set; }
         public static LocalizedText Welcome { get; private set; }

@@ -52,9 +52,9 @@ namespace Coralite.Content.Items.Magike.Altars
         {
             return level switch
             {
-                MALevel.MagicCrystal 
+                MALevel.MagicCrystal
                 or MALevel.Glistent
-                or MALevel.Hallow 
+                or MALevel.Hallow
                 => rotation.ToRotationVector2() * 8,
                 MALevel.CrystallineMagike
                 or MALevel.Shadow
@@ -74,7 +74,7 @@ namespace Coralite.Content.Items.Magike.Altars
                 or MALevel.CrystallineMagike
                 => Vector2.Zero,
                 MALevel.Hallow => -6 * rotation.ToRotationVector2(),
-                MALevel.HolyLight => -6*rotation.ToRotationVector2(),
+                MALevel.HolyLight => -6 * rotation.ToRotationVector2(),
                 _ => Vector2.Zero
             };
         }
@@ -91,7 +91,7 @@ namespace Coralite.Content.Items.Magike.Altars
             => new BasicAltarContainer();
 
         public override GetOnlyItemContainer GetStartGetOnlyItemContainer()
-            => new ()
+            => new()
             {
                 CapacityBase = 4
             };

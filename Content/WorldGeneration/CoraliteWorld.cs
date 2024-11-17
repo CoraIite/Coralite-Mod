@@ -12,7 +12,7 @@ namespace Coralite.Content.WorldGeneration
     {
         public string LocalizationCategory => "WorldGeneration";
 
-        public const string DigDigDigSaveKey= "digdigdig";
+        public const string DigDigDigSaveKey = "digdigdig";
 
         public override void Load()
         {
@@ -72,7 +72,7 @@ namespace Coralite.Content.WorldGeneration
 
             if (Jungle != -1)
             {
-                tasks.Insert(Jungle + 1,new PassLegacy("Coralite Crystalline Sky Island", GenCrystallineSkyIsland));
+                tasks.Insert(Jungle + 1, new PassLegacy("Coralite Crystalline Sky Island", GenCrystallineSkyIsland));
             }
 
             int Dungeon = tasks.FindIndex(genpass => genpass.Name.Equals("Dungeon"));

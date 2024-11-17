@@ -5,7 +5,6 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.Enums;
 using Terraria.ID;
-using Terraria.Localization;
 
 namespace Coralite.Content.Items.Misc_Melee
 {

@@ -1,11 +1,9 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Systems.ParticleSystem;
-using Coralite.Helpers;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.Graphics.Shaders;
 
 namespace Coralite.Content.CustomHooks
 {

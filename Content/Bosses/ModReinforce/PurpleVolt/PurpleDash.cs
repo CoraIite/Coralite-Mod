@@ -1,6 +1,5 @@
 ﻿using Coralite.Content.Bosses.ThunderveinDragon;
 using Coralite.Core;
-using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
@@ -163,23 +162,23 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
         public void InitTrails()
         {
-                Projectile.Resize((int)PointDistance, 40);
-                Projectile.velocity = Projectile.Center;
-                thunderTrails = new ThunderTrail[3];
-                Asset<Texture2D> trailTex = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "LightingBody");
-                for (int i = 0; i < 3; i++)
-                {
-                    if (i == 0)
-                        thunderTrails[i] = new ThunderTrail(trailTex, ThunderWidthFunc_Sin, ThunderColorFunc2_Orange, GetAlpha);
-                    else
-                        thunderTrails[i] = new ThunderTrail(trailTex, ThunderWidthFunc_Sin, ThunderColorFunc_Yellow, GetAlpha);
-                    thunderTrails[i].CanDraw = false;
-                    thunderTrails[i].SetRange((0, 10));
-                    thunderTrails[i].BasePositions =
-                    [
-                        Projectile.Center,Projectile.Center,Projectile.Center
-                    ];
-                }
+            Projectile.Resize((int)PointDistance, 40);
+            Projectile.velocity = Projectile.Center;
+            thunderTrails = new ThunderTrail[3];
+            Asset<Texture2D> trailTex = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "LightingBody");
+            for (int i = 0; i < 3; i++)
+            {
+                if (i == 0)
+                    thunderTrails[i] = new ThunderTrail(trailTex, ThunderWidthFunc_Sin, ThunderColorFunc2_Orange, GetAlpha);
+                else
+                    thunderTrails[i] = new ThunderTrail(trailTex, ThunderWidthFunc_Sin, ThunderColorFunc_Yellow, GetAlpha);
+                thunderTrails[i].CanDraw = false;
+                thunderTrails[i].SetRange((0, 10));
+                thunderTrails[i].BasePositions =
+                [
+                    Projectile.Center,Projectile.Center,Projectile.Center
+                ];
+            }
         }
 
         public void UpdateThunder()

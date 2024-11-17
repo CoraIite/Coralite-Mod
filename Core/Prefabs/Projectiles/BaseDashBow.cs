@@ -97,7 +97,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         {
             Vector2 offset = GetOffset();
             Vector2 dir2 = (Rotation + (DirSign > 0 ? 1.57f : -1.57f)).ToRotationVector2();
-            Projectile.Center = Owner.Center + (Rotation.ToRotationVector2() * offset.X) + dir2 * offset.Y+new Vector2(0,Owner.gfxOffY);
+            Projectile.Center = Owner.Center + (Rotation.ToRotationVector2() * offset.X) + dir2 * offset.Y + new Vector2(0, Owner.gfxOffY);
         }
 
         public virtual void DashAttackAI()

@@ -424,7 +424,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         {
             string text = "";
             if (noMainItem)
-                text= ConcatText(text, MagikeSystem.GetCraftText(MagikeSystem.CraftTextID.NoMainItem));
+                text = ConcatText(text, MagikeSystem.GetCraftText(MagikeSystem.CraftTextID.NoMainItem));
 
             if (mainItemIncorrect)
                 text = ConcatText(text, MagikeSystem.GetCraftText(MagikeSystem.CraftTextID.MainItemIncorrect));
@@ -439,7 +439,7 @@ namespace Coralite.Core.Systems.MagikeSystem
                 text = ConcatText(text, MagikeSystem.CraftText[(int)MagikeSystem.CraftTextID.OtherItemNotEnough].Format(lackItem.Name, lackAmount));
 
             if (magikeNotEnough)
-                text = ConcatText(text, MagikeSystem.CraftText[(int)MagikeSystem.CraftTextID.MagikeNotEnough].Format(selfMagike,targetMagike));
+                text = ConcatText(text, MagikeSystem.CraftText[(int)MagikeSystem.CraftTextID.MagikeNotEnough].Format(selfMagike, targetMagike));
 
             if (antimagikeNotEnough)
                 text = ConcatText(text, MagikeSystem.GetCraftText(MagikeSystem.CraftTextID.AntimagikeNotEnough));
@@ -469,11 +469,11 @@ namespace Coralite.Core.Systems.MagikeSystem
     {
         public override string Texture => AssetDirectory.MagikeItems + Name;
 
-        public static LocalizedText MagikeNeed { get;private set; }
+        public static LocalizedText MagikeNeed { get; private set; }
 
         public override void Load()
         {
-            MagikeNeed=this.GetLocalization(nameof(MagikeNeed));
+            MagikeNeed = this.GetLocalization(nameof(MagikeNeed));
         }
 
         public override void Unload()

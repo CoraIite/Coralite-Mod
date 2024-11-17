@@ -1,5 +1,4 @@
 ﻿using Coralite.Content.Items.CoreKeeper;
-using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
@@ -89,7 +88,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
 
                 for (int i = 0; i < 5; i++)
                 {
-                    Dust dust = Dust.NewDustPerfect(Position , ModContent.DustType<Runes>(), Helper.NextVec2Dir(3f,5f)
+                    Dust dust = Dust.NewDustPerfect(Position, ModContent.DustType<Runes>(), Helper.NextVec2Dir(3f, 5f)
                         , newColor: Color, Scale: 1f);
                     dust.noGravity = true;
                 }
@@ -116,11 +115,11 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
             fadeIn--;
         }
 
-        public static CraftParticle Spawn(Point16 pos,Vector2 center, int craftTime, MagikeCraftRecipe chosenRecipe)
+        public static CraftParticle Spawn(Point16 pos, Vector2 center, int craftTime, MagikeCraftRecipe chosenRecipe)
         {
             CraftParticle p = PRTLoader.NewParticle<CraftParticle>(center, Vector2.Zero, Coralite.MagicCrystalPink);
 
-            if (chosenRecipe.RequiredItems != null&& chosenRecipe.RequiredItems.Count>0)
+            if (chosenRecipe.RequiredItems != null && chosenRecipe.RequiredItems.Count > 0)
             {
                 p.otherItems = new Item[chosenRecipe.RequiredItems.Count];
                 int i = 0;

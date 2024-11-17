@@ -1,6 +1,6 @@
 ﻿namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 {
-    public partial class  ZacurrentDragon
+    public partial class ZacurrentDragon
     {
         /// <summary>
         /// 用于记录当前的攻击状态

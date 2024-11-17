@@ -3,7 +3,6 @@ using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.CameraSystem;
-using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
@@ -123,7 +122,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public float ExAlpha;
 
-        public float handOffset=14;
+        public float handOffset = 14;
         public int State;
 
         public override void Load()
@@ -212,7 +211,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                     PRTLoader.NewParticle<RadiantSunFlow>(Projectile.Center, dir * 8, Color.White, 0.9f);
 
                     Projectile.NewProjectileFromThis<RadiantSunLaser>(Projectile.Center, Projectile.rotation.ToRotationVector2() * 10
-                        , (int)(Owner.GetWeaponDamage(Owner.HeldItem)*(Main.dayTime?1.15f:1f)), Projectile.knockBack);
+                        , (int)(Owner.GetWeaponDamage(Owner.HeldItem) * (Main.dayTime ? 1.15f : 1f)), Projectile.knockBack);
                 }
             }
         }
@@ -295,7 +294,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         }
     }
 
-    public class RadiantSunLaser : ModProjectile,IDrawAdditive
+    public class RadiantSunLaser : ModProjectile, IDrawAdditive
     {
         public override string Texture => AssetDirectory.ThyphionSeriesItems + "RadiantSunArrow";
 
@@ -306,7 +305,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         public ref float Timer => ref Projectile.ai[1];
         public ref float LaserHeight => ref Projectile.localAI[0];
 
-        public ref  float LaserRotation => ref Projectile.rotation;
+        public ref float LaserRotation => ref Projectile.rotation;
 
         public const int ReadyTime = 18;
 
@@ -355,13 +354,13 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public void Flying()
         {
-            Projectile.rotation = Projectile.velocity.ToRotation()+1.57f;
+            Projectile.rotation = Projectile.velocity.ToRotation() + 1.57f;
 
             if (Main.rand.NextBool(5))
-                PRTLoader.NewParticle<SpeedLine>(Projectile.Center  + Main.rand.NextVector2Circular(8, 8),
-                    -Projectile.velocity.SafeNormalize(Vector2.Zero)*Main.rand.NextFloat(2,4), Color.SaddleBrown, 0.45f);
+                PRTLoader.NewParticle<SpeedLine>(Projectile.Center + Main.rand.NextVector2Circular(8, 8),
+                    -Projectile.velocity.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(2, 4), Color.SaddleBrown, 0.45f);
             if (Main.rand.NextBool(3))
-                Projectile.SpawnTrailDust(DustID.SolarFlare, Main.rand.NextFloat(0.2f, 0.4f),Scale:0.9f);
+                Projectile.SpawnTrailDust(DustID.SolarFlare, Main.rand.NextFloat(0.2f, 0.4f), Scale: 0.9f);
 
             if (Projectile.localAI[1] == 0)
             {
@@ -395,7 +394,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 }
             }
 
-            int width = (int)(Projectile.Center - endPoint).Length()-100;
+            int width = (int)(Projectile.Center - endPoint).Length() - 100;
             Vector2 dir = Vector2.UnitX.RotatedBy(LaserRotation);
             Color color = Color.Gold;
 
@@ -413,7 +412,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
                 if (Timer == ReadyTime)
                 {
-                    Helper.PlayPitched("Misc/GoodCast", 0.3f,-0.1f, Main.player[Projectile.owner].Center);
+                    Helper.PlayPitched("Misc/GoodCast", 0.3f, -0.1f, Main.player[Projectile.owner].Center);
                 }
 
                 if (Timer % 5 == 0)
@@ -456,18 +455,18 @@ namespace Coralite.Content.Items.ThyphionSeries
                             dir * Main.rand.NextFloat(min, max), Color.SaddleBrown, 0.45f);
 
                         Dust d = Dust.NewDustPerfect(Projectile.Center + (dir * i) + Main.rand.NextVector2Circular(12, 12)
-                            , DustID.SolarFlare, dir * Main.rand.NextFloat(min, max),Scale:0.9f);
+                            , DustID.SolarFlare, dir * Main.rand.NextFloat(min, max), Scale: 0.9f);
                         d.noGravity = true;
                     }
                 }
             }
         }
 
-        public static void SpawnSpeedLine(Vector2 center,float baseAngle=0)
+        public static void SpawnSpeedLine(Vector2 center, float baseAngle = 0)
         {
             for (int i = 0; i < 4; i++)
             {
-                PRTLoader.NewParticle<SpeedLine>(center , (baseAngle+i * MathHelper.PiOver2).ToRotationVector2() * Main.rand.NextFloat(2, 4)
+                PRTLoader.NewParticle<SpeedLine>(center, (baseAngle + i * MathHelper.PiOver2).ToRotationVector2() * Main.rand.NextFloat(2, 4)
                     , Color.SaddleBrown, 0.55f);
             }
         }
@@ -502,7 +501,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                     var flowTarget = new Rectangle((int)startPos.X, (int)startPos.Y, width, (int)(height * 0.9f));
 
                     var laserSource = new Rectangle((int)(-Main.timeForVisualEffects + Projectile.timeLeft / 30f * laserTex.Width), 0, laserTex.Width, laserTex.Height);
-                    var flowSource = new Rectangle((int)(-2*Main.timeForVisualEffects+Projectile.timeLeft / 35f * flowTex.Width), 0, flowTex.Width, flowTex.Height);
+                    var flowSource = new Rectangle((int)(-2 * Main.timeForVisualEffects + Projectile.timeLeft / 35f * flowTex.Width), 0, flowTex.Width, flowTex.Height);
 
                     var origin = new Vector2(0, laserTex.Height / 2);
                     var origin2 = new Vector2(0, flowTex.Height / 2);

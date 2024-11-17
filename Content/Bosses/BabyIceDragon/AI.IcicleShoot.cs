@@ -1,7 +1,6 @@
 ﻿using Coralite.Content.Items.Icicle;
 using Coralite.Content.Particles;
 using Coralite.Core;
-using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using System;
@@ -63,7 +62,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                                     return NPC.Center + ((NPC.rotation + (NPC.direction > 0 ? 0f : 3.141f)).ToRotationVector2() * 30);
                                 }, 16);
                         }
-                        
+
                         NPC.netUpdate = true;
                     }
                     break;

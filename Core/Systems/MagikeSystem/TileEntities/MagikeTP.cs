@@ -1,7 +1,6 @@
 ﻿using Coralite.Core.Systems.CoraliteActorComponent;
 using Coralite.Core.Systems.MagikeSystem.Tiles;
 using Coralite.Helpers;
-using InnoVault;
 using InnoVault.TileProcessors;
 using System;
 using System.Collections.Generic;
@@ -293,7 +292,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         public MagikeComponent GetSingleComponent(int index)
         {
             if (!HasComponent(index))
-                 $"所查找的组件不存在！index:{index}".LoggerDomp();
+                $"所查找的组件不存在！index:{index}".LoggerDomp();
 
             if (MagikeComponentID.IsSingleton(index))
                 return (MagikeComponent)Components[index];
@@ -328,7 +327,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
             if (mt is BaseMagikeTile)
                 return MagikeHelper.ToTopLeft(x, y);
 
-            return null; 
+            return null;
         }
 
         public override bool? TryIsTopLeftPoint(int x, int y, out Point16 position)

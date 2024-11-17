@@ -3,7 +3,6 @@ using Coralite.Core.Loaders;
 using Coralite.Core.Systems.CoraliteActorComponent;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
-using InnoVault;
 using InnoVault.TileProcessors;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
@@ -200,7 +199,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         {
             _entity.RemoveComponent(_filter);
             UILoader.GetUIState<MagikeApparatusPanel>().Recalculate();
-            if (VaultUtils.isClient )
+            if (VaultUtils.isClient)
             {
                 Send_LeftClick_Data(_entity);
             }

@@ -16,11 +16,11 @@ namespace Coralite.Content.Tiles.MagikeSeries2
         public override string Texture => AssetDirectory.MagikeSeries2Tile + Name;
 
         public static Asset<Texture2D> EXTex;
-        public static LocalizedText NeedSouls {  get; set; }
+        public static LocalizedText NeedSouls { get; set; }
 
         public override void Load()
         {
-            if (Main.dedServ) 
+            if (Main.dedServ)
                 return;
 
             EXTex = ModContent.Request<Texture2D>(Texture + "Extra");
@@ -59,7 +59,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
                 if (CoraliteWorld.PlaceNightSoul && CoraliteWorld.PlaceNightSoul)
                     CoraliteWorld.HasPermission = true;
                 else
-                    CombatText.NewText(new Rectangle(i * 16, j * 16, 1, 1), Coralite.CrystallineMagikePurple*1.5f, NeedSouls.Value,true);
+                    CombatText.NewText(new Rectangle(i * 16, j * 16, 1, 1), Coralite.CrystallineMagikePurple * 1.5f, NeedSouls.Value, true);
             }
 
             return true;

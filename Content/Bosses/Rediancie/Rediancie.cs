@@ -2,7 +2,6 @@
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Systems.BossSystems;
-using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
@@ -390,7 +389,7 @@ namespace Coralite.Content.Bosses.Rediancie
                 {
                     Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ProjectileType<Rediancie_BigBoom>(), 55, 8f);
                 }
-                
+
                 if (!VaultUtils.isServer)
                 {
                     var modifier = new PunchCameraModifier(NPC.Center, Main.rand.NextVector2CircularEdge(1, 1), 10, 6f, 20, 1000f);
@@ -434,7 +433,7 @@ namespace Coralite.Content.Bosses.Rediancie
                 {
                     Projectile.NewProjectile(NPC.GetSource_FromThis(), NPC.Center, Vector2.Zero, ProjectileType<Rediancie_BigBoom>(), 55, 8f);
                 }
-                
+
                 if (Main.netMode != NetmodeID.Server)
                 {
                     var modifier = new PunchCameraModifier(NPC.Center, Main.rand.NextVector2CircularEdge(1, 1), 10, 6f, 20, 1000f);
@@ -908,7 +907,7 @@ namespace Coralite.Content.Bosses.Rediancie
                         break;
                 }
             }
-            
+
 
             MoveCount += 1;
             if (MoveCount >= meleeCount + ShootCount)   //如果一轮全部执行完成那么就在次随机一下循环方式
@@ -956,7 +955,7 @@ namespace Coralite.Content.Bosses.Rediancie
                     dust.noGravity = true;
                 }
             }
-                
+
 
             if (Timer % 40 == 0)
             {

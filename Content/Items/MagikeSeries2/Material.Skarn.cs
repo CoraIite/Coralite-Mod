@@ -8,7 +8,7 @@ using Terraria;
 
 namespace Coralite.Content.Items.MagikeSeries2
 {
-    public class Skarn : ModItem,IMagikeCraftable
+    public class Skarn : ModItem, IMagikeCraftable
     {
         public override string Texture => AssetDirectory.MagikeSeries2Item + Name;
 

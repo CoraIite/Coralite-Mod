@@ -1,7 +1,6 @@
 ﻿using Coralite.Content.Items.Icicle;
 using Coralite.Content.Particles;
 using Coralite.Core;
-using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
@@ -90,7 +89,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                     PRTLoader.NewParticle(NPC.Center, Vector2.Zero, CoraliteContent.ParticleType<IceBurstHalo_Reverse>(), Scale: 4f);
                     PRTLoader.NewParticle(NPC.Center, Vector2.Zero, CoraliteContent.ParticleType<Sparkle_Big>(), Coralite.IcicleCyan, 2.5f);
                 }
-                
+
                 NPC.localAI[1] = 1f;
             }
 
@@ -106,7 +105,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                 {
                     Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.Zero, ModContent.ProjectileType<IceBurst>(), 90, 10f);
                 }
-                
+
                 NPC.Kill();
             }
 

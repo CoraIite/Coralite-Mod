@@ -13,7 +13,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 {
     public class SoulOfLightAltarTile : ModTile
     {
-        public override string Texture => AssetDirectory.MagikeSeries2Tile+Name;
+        public override string Texture => AssetDirectory.MagikeSeries2Tile + Name;
         public static LocalizedText NeedSouls { get; set; }
 
         public override void Load()
@@ -89,9 +89,9 @@ namespace Coralite.Content.Tiles.MagikeSeries2
                 Vector2 drawPos = worldPos + offScreen - Main.screenPosition;
                 // 绘制主帖图
                 Rectangle sourceRectangle = texture.Frame(1, 4, 0, ((int)(Main.timeForVisualEffects % 24) / 6));
-                spriteBatch.Draw(texture, drawPos, sourceRectangle, color*0.6f);
+                spriteBatch.Draw(texture, drawPos, sourceRectangle, color * 0.6f);
                 color.A = 0;
-                spriteBatch.Draw(texture, drawPos, sourceRectangle, color *0.5f);
+                spriteBatch.Draw(texture, drawPos, sourceRectangle, color * 0.5f);
             }
         }
     }
@@ -131,7 +131,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
         }
 
         public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
-     
+
         public override bool RightClick(int i, int j)
         {
             if (!CoraliteWorld.PlaceNightSoul)
@@ -168,7 +168,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
                 Texture2D texture = TextureAssets.Item[ItemID.SoulofNight].Value;
                 Rectangle sourceRectangle = texture.Frame(1, 4, 0, ((int)(Main.timeForVisualEffects % 24) / 6));
 
-                Vector2 worldPos = p.ToWorldCoordinates(32-sourceRectangle.Width, -12);
+                Vector2 worldPos = p.ToWorldCoordinates(32 - sourceRectangle.Width, -12);
                 Color color = Lighting.GetColor(p.X, p.Y);
 
                 Vector2 drawPos = worldPos + offScreen - Main.screenPosition;

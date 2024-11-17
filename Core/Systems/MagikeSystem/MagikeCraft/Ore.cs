@@ -1,9 +1,7 @@
-﻿using Coralite.Content.Items.MagikeSeries1;
-using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
+﻿using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Terraria;
 using Terraria.ID;
 using static Coralite.Core.Systems.MagikeSystem.MagikeSystem;
-using static Terraria.ModLoader.ModContent;
 using static Coralite.Core.Systems.MagikeSystem.MALevel;
 using static Coralite.Helpers.MagikeHelper;
 
@@ -14,7 +12,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
         public void AddMagikeCraftRecipe()
         {
             //木头
-            AddRemodelRecipe(ItemID.Wood, ItemID.Coal, CalculateMagikeCost(MALevel.MagicCrystal, 4,15), mainStack: 18);
+            AddRemodelRecipe(ItemID.Wood, ItemID.Coal, CalculateMagikeCost(MALevel.MagicCrystal, 4, 15), mainStack: 18);
             AddRemodelRecipe(ItemID.AshWood, ItemID.Coal, CalculateMagikeCost(MALevel.MagicCrystal, 4, 15), mainStack: 18);
             AddRemodelRecipe(ItemID.RichMahogany, ItemID.Coal, CalculateMagikeCost(MALevel.MagicCrystal, 4, 15), mainStack: 18);
             AddRemodelRecipe(ItemID.Ebonwood, ItemID.Coal, CalculateMagikeCost(MALevel.MagicCrystal, 4, 15), mainStack: 18);
@@ -59,7 +57,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             AddRemodelRecipe(ItemID.StoneBlock, ItemID.Ruby, 200, mainStack: 300);
 
             //石头变泥土，虽然微光转化也可以做到，但是使用魔能的话可以翻倍
-            AddRemodelRecipe(ItemID.StoneBlock, ItemID.DirtBlock, CalculateMagikeCost(MALevel.MagicCrystal, 4, 5), resultStack:2);
+            AddRemodelRecipe(ItemID.StoneBlock, ItemID.DirtBlock, CalculateMagikeCost(MALevel.MagicCrystal, 4, 5), resultStack: 2);
             //石头变各种乱七八糟的石头
             //AddRemodelRecipe(ItemID.StoneBlock, ItemID.Granite, 10, mainStack: 2);
             //AddRemodelRecipe(ItemID.StoneBlock, ItemID.Marble, 10, mainStack: 2);
@@ -75,12 +73,12 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
 
             //AddRemodelRecipe(ItemID.CopperOre, ItemID.IronOre, 1);
             //AddRemodelRecipe(ItemID.CopperOre, ItemID.LeadOre, 1);
-            AddRemodelRecipe(ItemID.CopperOre, ItemID.CopperBar, CalculateMagikeCost(MALevel.MagicCrystal, 6, 15),2);
-            AddRemodelRecipe(ItemID.CopperOre, ItemID.TinBar, CalculateMagikeCost(MALevel.MagicCrystal, 6, 15),2);
+            AddRemodelRecipe(ItemID.CopperOre, ItemID.CopperBar, CalculateMagikeCost(MALevel.MagicCrystal, 6, 15), 2);
+            AddRemodelRecipe(ItemID.CopperOre, ItemID.TinBar, CalculateMagikeCost(MALevel.MagicCrystal, 6, 15), 2);
 
             //AddRemodelRecipe(ItemID.TinOre, ItemID.IronOre, 1);
             //AddRemodelRecipe(ItemID.TinOre, ItemID.LeadOre, 1);
-            AddRemodelRecipe(ItemID.TinOre, ItemID.CopperBar, CalculateMagikeCost(MALevel.MagicCrystal, 6, 15),2);
+            AddRemodelRecipe(ItemID.TinOre, ItemID.CopperBar, CalculateMagikeCost(MALevel.MagicCrystal, 6, 15), 2);
             AddRemodelRecipe(ItemID.TinOre, ItemID.TinBar, CalculateMagikeCost(MALevel.MagicCrystal, 6, 15), 2);
 
             //AddRemodelRecipe(ItemID.CopperBar, ItemID.IronBar, 2);
@@ -234,7 +232,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             AddRemodelRecipe(ItemID.PearlstoneBlock, ItemID.CobaltOre, cost, 4, conditions: Condition.Hardmode);
             AddRemodelRecipe(ItemID.PearlstoneBlock, ItemID.PalladiumOre, cost, 4, conditions: Condition.Hardmode);
 
-            AddRemodelRecipe(ItemID.CobaltOre, ItemID.MythrilOre, cost,3);
+            AddRemodelRecipe(ItemID.CobaltOre, ItemID.MythrilOre, cost, 3);
             AddRemodelRecipe(ItemID.CobaltOre, ItemID.OrichalcumOre, cost, 3);
             AddRemodelRecipe(ItemID.CobaltOre, ItemID.CobaltBar, cost, 2);
             AddRemodelRecipe(ItemID.CobaltOre, ItemID.PalladiumBar, cost, 2);

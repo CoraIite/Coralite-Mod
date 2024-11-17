@@ -17,7 +17,7 @@ namespace Coralite.Content.CoraliteNotes
 
         public override void InitPageGroups()
         {
-            pageGroups = 
+            pageGroups =
                 [
                     new GroupReadfragment(),
                     new GroupMagikeChapter1(),

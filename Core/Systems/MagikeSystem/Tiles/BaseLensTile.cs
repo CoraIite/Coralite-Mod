@@ -33,7 +33,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
                 drawPos -= rotation.ToRotationVector2() * (halfHeight - ((tileRect.Width > tileRect.Height ? tex.Width : tex.Height) / 2) - 4);
 
             // 绘制主帖图
-            DrawTopTex(spriteBatch, tex, drawPos, lightColor, level,canProduce);
+            DrawTopTex(spriteBatch, tex, drawPos, lightColor, level, canProduce);
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
         /// <param name="lightColor"></param>
         /// <param name="rotation"></param>
         /// <param name="level"></param>
-        public virtual void DrawTopTex(SpriteBatch spriteBatch, Texture2D tex, Vector2 drawPos, Color lightColor, MALevel level,bool canProduce)
+        public virtual void DrawTopTex(SpriteBatch spriteBatch, Texture2D tex, Vector2 drawPos, Color lightColor, MALevel level, bool canProduce)
         {
             spriteBatch.Draw(tex, drawPos, null, lightColor, 0, tex.Size() / 2, 1f, 0, 0f);
         }

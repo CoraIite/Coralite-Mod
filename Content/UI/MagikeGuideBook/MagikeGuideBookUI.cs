@@ -1,13 +1,10 @@
 ﻿using Coralite.Core;
-using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Core.Systems.Trails;
-using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent;
-using Terraria.UI;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.UI.MagikeGuideBook
@@ -20,7 +17,7 @@ namespace Coralite.Content.UI.MagikeGuideBook
     //    public static MagikeGuideBookPanel BookPanel = new();
     //    //public static SwitchArrow leftArrow = new SwitchArrow(SpriteEffects.FlipHorizontally);
     //    //public static SwitchArrow rightArrow = new SwitchArrow(SpriteEffects.None);
-         
+
     //    public override int UILayer(List<GameInterfaceLayer> layers) => layers.FindIndex(layer => layer.Name.Equals("Vanilla: Inventory"));
 
     //    /// <summary> 每个目录页能够容纳多少个跳转按钮 </summary>

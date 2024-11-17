@@ -92,10 +92,10 @@ namespace Coralite.Content.Items.Magike.Factorys
             Vector2 drawPos = selfCenter + offset;
             int halfHeight = Math.Max(tileRect.Height / 2, tileRect.Width / 2);
 
-            if (entity.TryGetComponent(MagikeComponentID.MagikeFactory,out StoneMakerFactory stoneMaker))
+            if (entity.TryGetComponent(MagikeComponentID.MagikeFactory, out StoneMakerFactory stoneMaker))
             {
                 if (!StoneMakerFactory.TryGetTile(entity.Position, out Tile tile))
-                    return ;
+                    return;
 
                 int? itemType = stoneMaker.GetStoneItemType(tile);
                 if (!itemType.HasValue)
@@ -104,7 +104,7 @@ namespace Coralite.Content.Items.Magike.Factorys
                 Main.instance.LoadItem(itemType.Value);
                 Texture2D mainTex = TextureAssets.Item[itemType.Value].Value;
 
-                spriteBatch.Draw(mainTex, drawPos + rotation.ToRotationVector2() * 24-Main.screenPosition, null, lightColor, 0, mainTex.Size() / 2, 1, 0, 0);
+                spriteBatch.Draw(mainTex, drawPos + rotation.ToRotationVector2() * 24 - Main.screenPosition, null, lightColor, 0, mainTex.Size() / 2, 1, 0, 0);
             }
         }
     }
@@ -212,7 +212,7 @@ namespace Coralite.Content.Items.Magike.Factorys
                 return false;
             }
 
-            ProduceItemType=itemType.Value;
+            ProduceItemType = itemType.Value;
             return true;
         }
 
@@ -224,7 +224,7 @@ namespace Coralite.Content.Items.Magike.Factorys
             switch (alternate)
             {
                 case MagikeAlternateStyle.Bottom:
-                    tile = Framing.GetTileSafely(point.X, point.Y +data.Height);
+                    tile = Framing.GetTileSafely(point.X, point.Y + data.Height);
                     break;
                 case MagikeAlternateStyle.Top:
                     tile = Framing.GetTileSafely(point.X, point.Y - 1);
@@ -297,22 +297,22 @@ namespace Coralite.Content.Items.Magike.Factorys
 
         public override void OnWork()
         {
-            float factor =1- Timer / (float)WorkTime;
+            float factor = 1 - Timer / (float)WorkTime;
 
             Point16 point = Entity.Position;
             GetMagikeAlternateData(point.X, point.Y, out TileObjectData data, out MagikeAlternateStyle alternate);
-            Vector2 topPos = point.ToVector2()*16;
+            Vector2 topPos = point.ToVector2() * 16;
 
             switch (alternate)
             {
                 case MagikeAlternateStyle.Bottom:
-                    topPos += new Vector2(data.Width / 2, -0.5f) * 16; 
+                    topPos += new Vector2(data.Width / 2, -0.5f) * 16;
                     break;
                 case MagikeAlternateStyle.Top:
-                    topPos += new Vector2(data.Width / 2, data.Height+0.5f) * 16;
+                    topPos += new Vector2(data.Width / 2, data.Height + 0.5f) * 16;
                     break;
                 case MagikeAlternateStyle.Left:
-                    topPos += new Vector2(data.Width+0.5f, data.Height /2) * 16;
+                    topPos += new Vector2(data.Width + 0.5f, data.Height / 2) * 16;
                     break;
                 case MagikeAlternateStyle.Right:
                     topPos += new Vector2(-0.5f, data.Height / 2) * 16;
@@ -344,7 +344,7 @@ namespace Coralite.Content.Items.Magike.Factorys
                 TileID.Crimstone => ItemID.CrimstoneBlock,
                 TileID.Ash => ItemID.AshBlock,
                 TileID.Pearlstone => ItemID.PearlstoneBlock,
-                _  => null
+                _ => null
             };
         }
 

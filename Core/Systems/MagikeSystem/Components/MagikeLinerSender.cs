@@ -42,8 +42,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// </summary>
         public List<Point16> Receivers { get => _receivers; }
 
-        public int LengthExtra { get ; set; }
-        public int LengthBase { get ; set ; }
+        public int LengthExtra { get; set; }
+        public int LengthBase { get; set; }
 
         public MagikeLinerSender()
         {
@@ -56,7 +56,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         {
             Point16 p = Entity.Position;
             Vector2 size = new Vector2(ConnectLength);
-            if (Helper.IsAreaOnScreen(p.ToWorldCoordinates() - Main.screenPosition-size/2, new Vector2(ConnectLength)))
+            if (Helper.IsAreaOnScreen(p.ToWorldCoordinates() - Main.screenPosition - size / 2, new Vector2(ConnectLength)))
                 DrawMagikeDevice.LinerSenders.Add(this);
 
             //发送时间限制
@@ -156,10 +156,10 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         {
             failSource = "";
 
-            if (!CanConnect_CheckHasEntity(receiverPoint,ref failSource))
+            if (!CanConnect_CheckHasEntity(receiverPoint, ref failSource))
                 return false;
 
-            if (!CanConnect_CheckConnected(receiverPoint,ref failSource))
+            if (!CanConnect_CheckConnected(receiverPoint, ref failSource))
                 return false;
 
             if (!CanConnect_CheckCapacity(ref failSource))
@@ -209,7 +209,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             return true;
         }
 
-        public virtual bool CanConnect_CheckSelf(Point16 selfPoint, Point16 receiverPoint,ref string failSource)
+        public virtual bool CanConnect_CheckSelf(Point16 selfPoint, Point16 receiverPoint, ref string failSource)
         {
             //检测是否是自己
             if (receiverPoint == selfPoint)
@@ -334,7 +334,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             float delayBase = MathF.Round(s.SendDelayBase / 60f, 1);
             float DelayBonus = s.SendDelayBonus;
 
-            return $"  ▶ {timer} / {MagikeHelper.BonusColoredText(delay.ToString(), DelayBonus,true)} ({delayBase} * {MagikeHelper.BonusColoredText(DelayBonus.ToString(), DelayBonus,true)})";
+            return $"  ▶ {timer} / {MagikeHelper.BonusColoredText(delay.ToString(), DelayBonus, true)} ({delayBase} * {MagikeHelper.BonusColoredText(DelayBonus.ToString(), DelayBonus, true)})";
         }
 
         public virtual string UnitDeliveryText(MagikeLinerSender s)

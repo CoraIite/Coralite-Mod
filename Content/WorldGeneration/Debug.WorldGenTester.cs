@@ -1,10 +1,7 @@
-﻿using Coralite.Content.Tiles.MagikeSeries1;
-using Coralite.Content.Tiles.ShadowCastle;
-using Coralite.Core;
+﻿using Coralite.Core;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
-using Terraria.WorldBuilding;
 
 namespace Coralite.Content.WorldGeneration
 {
@@ -47,7 +44,7 @@ namespace Coralite.Content.WorldGeneration
             ModContent.GetInstance<CoraliteWorld>().GenGroundLock(out _);
             //ClearWorldTile()
 
-           // Main.NewText(NPC.downedBoss3);
+            // Main.NewText(NPC.downedBoss3);
 
             return base.CanUseItem(player);
         }

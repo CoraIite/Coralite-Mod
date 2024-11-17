@@ -4,7 +4,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Walls.Magike
 {
-    public  class SkarnBrickWall:ModWall
+    public class SkarnBrickWall : ModWall
     {
         public override string Texture => AssetDirectory.MagikeWalls + Name;
 
@@ -21,7 +21,7 @@ namespace Coralite.Content.Walls.Magike
         }
     }
 
-    public  class SkarnBrickWallUnsafe:ModWall
+    public class SkarnBrickWallUnsafe : ModWall
     {
         public override string Texture => AssetDirectory.MagikeWalls + "SkarnBrickWall";
 

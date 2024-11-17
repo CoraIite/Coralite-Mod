@@ -4,7 +4,6 @@ using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
-using Terraria.GameContent;
 
 namespace Coralite.Core.Systems.MagikeSystem.Tiles
 {

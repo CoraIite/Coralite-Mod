@@ -33,7 +33,7 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
     }
 
     public class SnowfieldLensTile() : BaseLensTile
-        ( Coralite.IcicleCyan, DustID.Frost)
+        (Coralite.IcicleCyan, DustID.Frost)
     {
         public override int DropItemType => ItemType<SnowfieldLens>();
 

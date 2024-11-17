@@ -2,7 +2,7 @@
 
 namespace Coralite.Content.ModPlayers.DigDigDig
 {
-    public class DigDigDigPlayer:ModPlayer
+    public class DigDigDigPlayer : ModPlayer
     {
         /// <summary>
         /// 灵感值

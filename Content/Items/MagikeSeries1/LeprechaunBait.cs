@@ -189,7 +189,7 @@ namespace Coralite.Content.Items.MagikeSeries1
                 Projectile.Center = handlePos + dir * 50;
             }
         }
-         
+
         public Vector2 GetHandleTopPos()
         {
             return Owner.MountedCenter + new Vector2(DirSign * 26, -26);
@@ -320,7 +320,7 @@ namespace Coralite.Content.Items.MagikeSeries1
         public override bool PreDraw(ref Color lightColor)
         {
             Vector2 handleTopPos = GetHandleTopPos();
-            Vector2 center = Projectile.Center ;
+            Vector2 center = Projectile.Center;
 
             DrawLine(handleTopPos, center);
 

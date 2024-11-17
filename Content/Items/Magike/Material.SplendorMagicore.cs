@@ -7,7 +7,7 @@ using Terraria;
 
 namespace Coralite.Content.Items.Magike
 {
-    public class SplendorMagicore : BaseMaterial,IMagikeCraftable
+    public class SplendorMagicore : BaseMaterial, IMagikeCraftable
     {
         public SplendorMagicore() : base(Item.CommonMaxStack, Item.sellPrice(0, 1), ModContent.RarityType<SplendorMagicoreRarity>(), AssetDirectory.MagikeItems)
         { }

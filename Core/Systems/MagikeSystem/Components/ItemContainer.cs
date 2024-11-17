@@ -3,7 +3,6 @@ using Coralite.Core.Loaders;
 using Coralite.Core.Systems.CoraliteActorComponent;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
-using InnoVault;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -94,7 +93,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 data.Write(Items[i].prefix);
             }
         }
-        
+
         public override void ReceiveData(BinaryReader reader, int whoAmI)
         {
             CapacityBase = reader.ReadInt32();

@@ -1,7 +1,4 @@
 ﻿using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
-using Terraria;
-using Terraria.ID;
-using static Coralite.Core.Systems.MagikeSystem.MagikeSystem;
 
 namespace Coralite.Core.Systems.MagikeSystem.Remodels
 {

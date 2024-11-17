@@ -84,7 +84,7 @@ namespace Coralite.Content.Items.Materials
                 .RegisterNew(ItemID.LokisShirt, 500)
                 .RegisterNew(ItemID.LokisPants, 500)
                 .RegisterNew(ItemID.LokisWings, 500)
-                .RegisterNew(ItemID.LokisDye,  500,3)
+                .RegisterNew(ItemID.LokisDye, 500, 3)
 
                 .RegisterNew(ItemID.RedsHelmet, 500)
                 .RegisterNew(ItemID.RedsBreastplate, 500)
@@ -101,7 +101,7 @@ namespace Coralite.Content.Items.Materials
                 .RegisterNew(ItemID.SkiphsShirt, 500)
                 .RegisterNew(ItemID.SkiphsPants, 500)
                 .RegisterNew(ItemID.SkiphsWings, 500)
-                .RegisterNew(ItemID.DevDye,  500,3)
+                .RegisterNew(ItemID.DevDye, 500, 3)
 
                 .RegisterNew(ItemID.WillsHelmet, 500)
                 .RegisterNew(ItemID.WillsBreastplate, 500)

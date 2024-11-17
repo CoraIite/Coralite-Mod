@@ -316,7 +316,7 @@ namespace Coralite.Content.WorldGeneration
 
             #endregion
 
-            AddCrystalCaveDecoration( width, height, topLeft);
+            AddCrystalCaveDecoration(width, height, topLeft);
             GenVars.structures.AddProtectedStructure(new Rectangle(origin.X - width, origin.Y - height, width * 2, height * 2), 10);
 
             MagicCrystalCaveCenters.Add(new Point16(origin.X, origin.Y));
@@ -329,7 +329,7 @@ namespace Coralite.Content.WorldGeneration
         /// <param name="width"></param>
         /// <param name="height"></param>
         /// <param name="topLeft"></param>
-        private static void AddCrystalCaveDecoration( int width, int height, Point topLeft)
+        private static void AddCrystalCaveDecoration(int width, int height, Point topLeft)
         {
             ushort basalt = (ushort)ModContent.TileType<BasaltTile>();
             ushort crystalBasalt = (ushort)ModContent.TileType<CrystalBasaltTile>();

@@ -6,16 +6,16 @@ using Terraria.UI.Chat;
 
 namespace Coralite.Content.Tiles.MagikeSeries2
 {
-    public class PremissionProj:ModProjectile
+    public class PremissionProj : ModProjectile
     {
         public override string Texture => AssetDirectory.Blank;
 
         public ref float State => ref Projectile.ai[0];
         public ref float Timer => ref Projectile.ai[1];
 
-        public static LocalizedText SoulOfLightText {  get; private set; }
-        public static LocalizedText SoulOfNightText {  get; private set; }
-        public static LocalizedText PremissionText {  get; private set; }
+        public static LocalizedText SoulOfLightText { get; private set; }
+        public static LocalizedText SoulOfNightText { get; private set; }
+        public static LocalizedText PremissionText { get; private set; }
 
         private TextDrawer[] textDrawers;
 
@@ -24,7 +24,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             if (Main.dedServ)
                 return;
 
-            SoulOfLightText=this.GetLocalization(nameof(SoulOfLightText));
+            SoulOfLightText = this.GetLocalization(nameof(SoulOfLightText));
             SoulOfNightText = this.GetLocalization(nameof(SoulOfNightText));
             PremissionText = this.GetLocalization(nameof(PremissionText));
         }
@@ -46,9 +46,9 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             public float alpha;
 
 
-            public void Draw(float y,float factor,Color c,Color darkC)
+            public void Draw(float y, float factor, Color c, Color darkC)
             {
-                Utils.DrawBorderString(Main.spriteBatch, text, new Vector2(centerX,y),c);
+                Utils.DrawBorderString(Main.spriteBatch, text, new Vector2(centerX, y), c);
             }
         }
 
@@ -60,7 +60,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         public override void AI()
         {
-            if (Projectile.localAI[0]==0)
+            if (Projectile.localAI[0] == 0)
             {
                 Projectile.localAI[0] = 1;
 
@@ -81,17 +81,17 @@ namespace Coralite.Content.Tiles.MagikeSeries2
                         break;
                 }
 
-                string[] texts= text.Split(' ');
-                float[] lengths= new float[texts.Length];
+                string[] texts = text.Split(' ');
+                float[] lengths = new float[texts.Length];
                 float total = 0;
                 for (int i = 0; i < lengths.Length; i++)
                 {
-                    lengths[i] = ChatManager.GetStringSize(FontAssets.MouseText.Value, texts[i], Vector2.One).X; 
+                    lengths[i] = ChatManager.GetStringSize(FontAssets.MouseText.Value, texts[i], Vector2.One).X;
                     total += lengths[i];
                 }
 
                 total += lengths.Length * 16;
-                textDrawers =new TextDrawer[lengths.Length];
+                textDrawers = new TextDrawer[lengths.Length];
 
                 //生成文字
                 float x = Projectile.Center.X - total / 2;
@@ -103,12 +103,12 @@ namespace Coralite.Content.Tiles.MagikeSeries2
                         centerX = x + lengths[i] / 2,
                     };
 
-                    x+= lengths[i]+16; 
+                    x += lengths[i] + 16;
                 }
             }
 
             Timer++;
-            if (Timer>60*4)
+            if (Timer > 60 * 4)
                 Projectile.Kill();
         }
 

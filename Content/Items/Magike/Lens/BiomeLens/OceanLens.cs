@@ -33,7 +33,7 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
     }
 
     public class OceanLensTile() : BaseLensTile
-        ( Color.SandyBrown, DustID.Sand)
+        (Color.SandyBrown, DustID.Sand)
     {
         public override int DropItemType => ItemType<OceanLens>();
 

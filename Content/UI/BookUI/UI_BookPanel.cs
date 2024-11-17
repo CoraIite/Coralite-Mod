@@ -223,7 +223,7 @@ namespace Coralite.Content.UI.UILib
             //Top.Set(- (PanelTex.Height() * scale / 2), 0.5f);
             //Left.Set( - (PanelTex.Width() * scale / 2), 0.5f);
 
-            this.SetTopLeft(-PanelTex.Height() / 2+40, -PanelTex.Width() / 2, 0.5f, 0.5f);
+            this.SetTopLeft(-PanelTex.Height() / 2 + 40, -PanelTex.Width() / 2, 0.5f, 0.5f);
             //this.SetTopLeft(0, 0, 0f, 0f);
             HAlign = 0f;
             VAlign = 0f;

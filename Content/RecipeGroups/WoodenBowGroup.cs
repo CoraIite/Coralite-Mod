@@ -4,13 +4,13 @@ using Terraria.Localization;
 
 namespace Coralite.Content.RecipeGroups
 {
-    public class WoodenBowGroup : ModSystem,ILocalizedModType
+    public class WoodenBowGroup : ModSystem, ILocalizedModType
     {
         public string LocalizationCategory => "Systems";
 
         public const string GroupName = nameof(ItemID.WoodenBow);
 
-        public LocalizedText NameLocalize { get;private set; }
+        public LocalizedText NameLocalize { get; private set; }
 
         public override void Load()
         {

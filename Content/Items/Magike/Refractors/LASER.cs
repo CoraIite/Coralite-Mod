@@ -50,7 +50,7 @@ namespace Coralite.Content.Items.Magike.Refractors
         public override void DrawExtraTex(SpriteBatch spriteBatch, Texture2D tex, Rectangle tileRect, Vector2 offset, Color lightColor, float rotation, MagikeTP entity, MALevel level)
         {
             Vector2 selfCenter = tileRect.Center();
-            Vector2 drawPos = selfCenter + offset - rotation.ToRotationVector2() * (tileRect.Height / 2-8);
+            Vector2 drawPos = selfCenter + offset - rotation.ToRotationVector2() * (tileRect.Height / 2 - 8);
             int halfHeight = Math.Max(tileRect.Height / 2, tileRect.Width / 2);
 
             Rectangle frameBox = tex.Frame(2, 1);
@@ -80,7 +80,7 @@ namespace Coralite.Content.Items.Magike.Refractors
             {
                 rotation -= 1.57f;
                 drawPos = selfCenter - rotation.ToRotationVector2() * (tileRect.Height / 2 - 8);
-                int width = frameBox.Height-8;
+                int width = frameBox.Height - 8;
                 for (int i = 0; i < 2; i++)
                 {
                     Dust d = Dust.NewDustPerfect(drawPos - dir - (rot + 1.57f).ToRotationVector2() * Main.rand.NextFloat(width), DustID.CrystalSerpent_Pink

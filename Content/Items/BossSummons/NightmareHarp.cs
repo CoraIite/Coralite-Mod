@@ -6,7 +6,6 @@ using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.BossSystems;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
-using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;

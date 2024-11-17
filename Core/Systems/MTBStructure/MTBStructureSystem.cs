@@ -6,7 +6,7 @@ namespace Coralite.Core.Systems.MTBStructure
     {
         public string LocalizationCategory => "Systems";
 
-        public static LocalizedText FailText {  get;private set; }
+        public static LocalizedText FailText { get; private set; }
 
         public override void Load()
         {

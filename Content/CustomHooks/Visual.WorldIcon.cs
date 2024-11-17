@@ -30,7 +30,7 @@ namespace Coralite.Content.CustomHooks
                         string c = self.Data.HasCorruption ? "Corruption" : "Crimson";
                         string hallow = self.Data.IsHardMode ? "Hallow" : "";
 
-                        Asset<Texture2D> tex = ModContent.Request<Texture2D>(AssetDirectory.WorldIcon + "IconDig" + c + hallow,AssetRequestMode.ImmediateLoad);
+                        Asset<Texture2D> tex = ModContent.Request<Texture2D>(AssetDirectory.WorldIcon + "IconDig" + c + hallow, AssetRequestMode.ImmediateLoad);
                         return new UIImage(tex)
                         {
                             Left = new StyleDimension(4f, 0f)

@@ -6,9 +6,9 @@ using Terraria.ObjectData;
 
 namespace Coralite.Content.Tiles.DigDigDig
 {
-    public class StoneMakerCoreTile:ModTile
+    public class StoneMakerCoreTile : ModTile
     {
-        public override string Texture => AssetDirectory.DigDigDigTiles+Name;
+        public override string Texture => AssetDirectory.DigDigDigTiles + Name;
 
         public override void SetStaticDefaults()
         {

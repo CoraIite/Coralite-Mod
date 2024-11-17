@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Terraria.ModLoader.UI.Elements;
-using Terraria.UI;
 
 namespace Coralite.Content.UI
 {

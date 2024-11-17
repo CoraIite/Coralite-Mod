@@ -22,7 +22,7 @@ using Terraria.ModLoader.IO;
 
 namespace Coralite.Content.Items.MagikeSeries2
 {
-    public class BrilliantConnectStaff : ModItem,IMagikeCraftable
+    public class BrilliantConnectStaff : ModItem, IMagikeCraftable
     {
         public override string Texture => AssetDirectory.MagikeSeries2Item + Name;
 

@@ -9,7 +9,7 @@ using static Terraria.ModLoader.ModContent;
 namespace Coralite.Content.Items.Gels
 {
     [AutoloadEquip(EquipType.Head)]
-    public class GelFiberHelmet : ModItem,ISpecialDrawHead
+    public class GelFiberHelmet : ModItem, ISpecialDrawHead
     {
         public override string Texture => AssetDirectory.GelItems + Name;
 
@@ -64,7 +64,7 @@ namespace Coralite.Content.Items.Gels
 
             if (player.TryGetModPlayer(out CoralitePlayer cp))
             {
-                if (Vector2.Distance(cp.oldOldCenter,player.Center)<0.3f)
+                if (Vector2.Distance(cp.oldOldCenter, player.Center) < 0.3f)
                 {
                     player.endurance += 0.08f;
                     player.GetDamage(DamageClass.Melee).Flat += 5;

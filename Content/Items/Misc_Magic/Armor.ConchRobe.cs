@@ -98,7 +98,7 @@ namespace Coralite.Content.Items.Misc_Magic
         }
     }
 
-    [AutoloadEquip(EquipType.Body,EquipType.Legs)]
+    [AutoloadEquip(EquipType.Body, EquipType.Legs)]
     public class ConchRobe : ModItem
     {
         public override string Texture => AssetDirectory.Misc_Magic + Name;
@@ -122,7 +122,7 @@ namespace Coralite.Content.Items.Misc_Magic
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ItemID.Coral,2)
+                .AddIngredient(ItemID.Coral, 2)
                 .AddIngredient(ItemID.CoralstoneBlock, 4)
                 .AddIngredient(ItemID.PalmWood, 4)
                 .AddTile(TileID.WorkBenches)
@@ -130,7 +130,7 @@ namespace Coralite.Content.Items.Misc_Magic
         }
     }
 
-    public class ConchBubble:BaseHeldProj
+    public class ConchBubble : BaseHeldProj
     {
         public override string Texture => AssetDirectory.Blank;
 
@@ -149,11 +149,11 @@ namespace Coralite.Content.Items.Misc_Magic
 
         public override void OnKill(int timeLeft)
         {
-            SoundEngine.PlaySound(CoraliteSoundID.Bubble_Item54,Projectile.Center);
+            SoundEngine.PlaySound(CoraliteSoundID.Bubble_Item54, Projectile.Center);
             for (int i = 0; i < 14; i++)
             {
                 Vector2 dir = (i * MathHelper.TwoPi / 14).ToRotationVector2();
-                Dust.NewDustPerfect(Projectile.Center + dir * 9, DustID.Water, dir * Main.rand.NextFloat(1, 2),Scale:Main.rand.NextFloat(1,2f));
+                Dust.NewDustPerfect(Projectile.Center + dir * 9, DustID.Water, dir * Main.rand.NextFloat(1, 2), Scale: Main.rand.NextFloat(1, 2f));
                 Dust.NewDustPerfect(Projectile.Center + dir * 18, DustID.Water, dir * Main.rand.NextFloat(3, 4), Scale: Main.rand.NextFloat(1, 2f));
             }
         }

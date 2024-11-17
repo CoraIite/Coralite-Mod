@@ -117,11 +117,11 @@ namespace Coralite.Content.WorldGeneration
                     if (t.TileType is TileID.Sand or TileID.Sandstone or TileID.HardenedSand)
                     {
                         t.Clear(Terraria.DataStructures.TileDataType.Wall);
-                        WorldGen.PlaceWall(i, j, WallID.Sandstone,true);
+                        WorldGen.PlaceWall(i, j, WallID.Sandstone, true);
                     }
                 }
 
-                progress.Value += 0.25f / (GenVars.desertHiveLeft+60);
+                progress.Value += 0.25f / (GenVars.desertHiveLeft + 60);
             }
         }
     }

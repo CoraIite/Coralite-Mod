@@ -5,7 +5,6 @@ using Coralite.Content.WorldGeneration;
 using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.SmoothFunctions;
-using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Core.Systems.Trails;
 using Coralite.Helpers;
 using InnoVault.PRT;
@@ -14,7 +13,6 @@ using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -173,8 +171,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void BeforeMove()
         {
-            positionSmoother ??= new SecondOrderDynamics_Vec2(1f, 0.5f, 0,Projectile.Center);
-            rotationSmoother ??= new SecondOrderDynamics_Float(1f, 0.75f, 0,0);
+            positionSmoother ??= new SecondOrderDynamics_Vec2(1f, 0.5f, 0, Projectile.Center);
+            rotationSmoother ??= new SecondOrderDynamics_Float(1f, 0.75f, 0, 0);
             if (oldDirections == null)
             {
                 oldDirections = new int[30];
@@ -196,7 +194,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             int frameTime = 5;
             if (AttackTime == 0)
             {
-                frameTime -= (int)(Owner.velocity.Length() /4);
+                frameTime -= (int)(Owner.velocity.Length() / 4);
                 if (frameTime < 1)
                     frameTime = 1;
             }
@@ -218,7 +216,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
                 idlePos += new Vector2(a * cos / sin2Plus1, a * sin * cos / sin2Plus1);
 
-                float factor2 =  Math.Clamp(Owner.velocity.Length() / 16, 0, 1);
+                float factor2 = Math.Clamp(Owner.velocity.Length() / 16, 0, 1);
                 float targetRotation =
                     Helper.Lerp(
                         0,
@@ -565,7 +563,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                         if (Target.GetNPCOwner(out NPC target))
                         {
                             targetCenter = Vector2.SmoothStep(targetCenter, target.Center
-                                , Math.Clamp(Coralite.Instance.BezierEaseSmoother.Smoother( Timer / (Projectile.MaxUpdates * 55)), 0, 1));
+                                , Math.Clamp(Coralite.Instance.BezierEaseSmoother.Smoother(Timer / (Projectile.MaxUpdates * 55)), 0, 1));
                         }
                         else
                             Target = -1;

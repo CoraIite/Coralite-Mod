@@ -3,7 +3,7 @@ using System.Collections.Specialized;
 
 namespace Coralite.Core.Systems.CoraliteActorComponent
 {
-    public interface IEntity<TComponent> 
+    public interface IEntity<TComponent>
     {
         /// <summary> 使用组件ID查找组件的地方 </summary>
         HybridDictionary Components { get; }
@@ -50,7 +50,7 @@ namespace Coralite.Core.Systems.CoraliteActorComponent
         /// </summary>
         public void RemoveAllComponent();
 
-        public bool TryGetComponent<T>(int id, out T result) where T :TComponent;
+        public bool TryGetComponent<T>(int id, out T result) where T : TComponent;
 
         public TComponent GetSingleComponent(int index);
 

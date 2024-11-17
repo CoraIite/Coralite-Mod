@@ -1,6 +1,5 @@
 ﻿using Coralite.Core.Loaders;
 using Coralite.Core.Systems.MagikeSystem.Particles;
-using Coralite.Core.Systems.ParticleSystem;
 using InnoVault.PRT;
 using System.Collections.Generic;
 using Terraria;
@@ -40,7 +39,7 @@ namespace Coralite.Core.Systems.MTBStructure
         /// <param name="origin"></param>
         public void CheckStructure(Point origin)
         {
-            if (!CheckStructureInner(origin,out Point failPoint))
+            if (!CheckStructureInner(origin, out Point failPoint))
             {
                 PopupText.NewText(new AdvancedPopupRequest()
                 {
@@ -62,7 +61,7 @@ namespace Coralite.Core.Systems.MTBStructure
         /// </summary>
         /// <param name="origin"></param>
         /// <returns></returns>
-        private bool CheckStructureInner(Point origin,out Point failPoint)
+        private bool CheckStructureInner(Point origin, out Point failPoint)
         {
             int[,] structureTile = StructureTile;
             int width = structureTile.GetLength(1);

@@ -3,7 +3,7 @@ using Terraria;
 
 namespace Coralite.Content.CustomHooks
 {
-    public class DigDigDigBiomes:HookGroup
+    public class DigDigDigBiomes : HookGroup
     {
         public override void Load()
         {

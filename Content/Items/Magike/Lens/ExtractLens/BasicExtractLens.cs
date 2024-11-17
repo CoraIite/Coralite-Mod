@@ -27,7 +27,7 @@ namespace Coralite.Content.Items.Magike.Lens.ExtractLens
     }
 
     public class BasicExtractLensTile() : BaseLensTile
-        ( Coralite.MagicCrystalPink, DustID.CorruptionThorns)
+        (Coralite.MagicCrystalPink, DustID.CorruptionThorns)
     {
         public override int DropItemType => ItemType<BasicExtractLens>();
 
@@ -101,31 +101,31 @@ namespace Coralite.Content.Items.Magike.Lens.ExtractLens
                 default:
                     MaxConnectBase = 0;
                     UnitDeliveryBase = 0;
-                    SendDelayBase = 1_0000_0000/60;//随便填个大数
+                    SendDelayBase = 1_0000_0000 / 60;//随便填个大数
                     ConnectLengthBase = 0;
                     break;
                 case MALevel.MagicCrystal:
                     UnitDeliveryBase = 10;
-                    SendDelayBase =   5;
+                    SendDelayBase = 5;
                     break;
                 case MALevel.Crimson:
                 case MALevel.Corruption:
                 case MALevel.Icicle:
                     UnitDeliveryBase = 50;
-                    SendDelayBase =  5;
+                    SendDelayBase = 5;
                     break;
                 case MALevel.CrystallineMagike:
                     UnitDeliveryBase = 120;
-                    SendDelayBase =   4;
+                    SendDelayBase = 4;
                     break;
                 case MALevel.Soul:
                 case MALevel.Feather:
                     UnitDeliveryBase = 500;
-                    SendDelayBase =   4;
+                    SendDelayBase = 4;
                     break;
                 case MALevel.SplendorMagicore:
                     UnitDeliveryBase = 900;
-                    SendDelayBase =   3;
+                    SendDelayBase = 3;
                     break;
             }
 

@@ -1,5 +1,4 @@
-﻿using Coralite.Content.Items.CoreKeeper;
-using Coralite.Core;
+﻿using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;

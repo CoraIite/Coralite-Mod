@@ -25,7 +25,7 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
             this.text = text;
             this.component = component;
 
-            float width = parent.GetInnerDimensions().Width+50;
+            float width = parent.GetInnerDimensions().Width + 50;
 
             string text2 = FontAssets.MouseText.Value.CreateWrappedText(text(component), width);
 

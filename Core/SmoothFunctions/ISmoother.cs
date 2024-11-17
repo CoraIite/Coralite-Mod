@@ -101,7 +101,7 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         public float Smoother(float factor)
         {
-            return factor * factor*factor;
+            return factor * factor * factor;
         }
     }
 

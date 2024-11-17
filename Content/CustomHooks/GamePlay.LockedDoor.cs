@@ -7,8 +7,8 @@ namespace Coralite.Content.CustomHooks
         public override void Load()
         {
             On_WorldGen.OpenDoor += LockDoor;
-        }  
-        
+        }
+
         public override void Unload()
         {
             On_WorldGen.OpenDoor -= LockDoor;

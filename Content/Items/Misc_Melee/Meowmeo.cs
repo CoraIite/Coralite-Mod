@@ -9,7 +9,6 @@ using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.GameContent;
 using Terraria.ID;
-using Terraria.Localization;
 
 namespace Coralite.Content.Items.Misc_Melee
 {

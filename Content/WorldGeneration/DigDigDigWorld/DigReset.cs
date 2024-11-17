@@ -27,7 +27,7 @@ namespace Coralite.Content.WorldGeneration
             Main.cloudAlpha = 0f;
             Main.maxRaining = 0f;
             Main.raining = false;
-            
+
             Main.checkXMas();
             Main.checkHalloween();
 

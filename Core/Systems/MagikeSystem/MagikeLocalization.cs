@@ -114,19 +114,19 @@ namespace Coralite.Core.Systems.MagikeSystem
              * 首先通用的为：未找到魔能容器和成功放置，以及滤镜已满
              */
 
-           ApparatusNotFound = 0,
-           FilterFillUp = 1,
-           InsertSuccess = 2,
-           UpgradeableNotFound = 3,
-           CantUpgrade = 4,
+            ApparatusNotFound = 0,
+            FilterFillUp = 1,
+            InsertSuccess = 2,
+            UpgradeableNotFound = 3,
+            CantUpgrade = 4,
 
-           MagikeContainerNotFound,
-           MagikeSenderNotFound,
-           MagikeLinerSenderNotFound,
-           MagikeProducerNotFound,
-           TimerNotFound,
+            MagikeContainerNotFound,
+            MagikeSenderNotFound,
+            MagikeLinerSenderNotFound,
+            MagikeProducerNotFound,
+            TimerNotFound,
 
-           Count,
+            Count,
         }
 
         public void LoadFilter()

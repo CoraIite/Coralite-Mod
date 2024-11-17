@@ -21,7 +21,7 @@ namespace Coralite.Content.WorldGeneration
             Actions.SetTile setTile = new Actions.SetTile((ushort)ModContent.TileType<IcicleStoneTile>());
             var rectangle = new Shapes.Rectangle(new Rectangle(-200, 0, 400, 600));
 
-            ShapeData bottomData=new ShapeData();
+            ShapeData bottomData = new ShapeData();
             ShapeData TopData = new ShapeData();
             ShapeData rectangleData = new ShapeData();
 
@@ -35,13 +35,13 @@ namespace Coralite.Content.WorldGeneration
                      setTile.Output(bottomData)));
 
             //生成上半圆
-            WorldUtils.Gen(origin , new Shapes.Circle(13,24),
+            WorldUtils.Gen(origin, new Shapes.Circle(13, 24),
                  Actions.Chain(
                      new Modifiers.Flip(false, true),
                      new Modifiers.NotInShape(rectangleData),
                      setTile.Output(TopData)));
 
-            TopData.Add(bottomData, origin, origin );
+            TopData.Add(bottomData, origin, origin);
 
             ShapeData eddEdge = new ShapeData();
             //蛋边缘一圈
@@ -58,12 +58,12 @@ namespace Coralite.Content.WorldGeneration
 
             WorldUtils.Gen(
             origin,
-           new Shapes.Mound(3,3),
+           new Shapes.Mound(3, 3),
                 Actions.Chain(
-                    new Modifiers.Flip(false,true),
+                    new Modifiers.Flip(false, true),
                     setTile));
 
-            NestCenter = origin+new Point(0,-2);
+            NestCenter = origin + new Point(0, -2);
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using Coralite.Core.Systems.ParticleSystem;
-using InnoVault.PRT;
+﻿using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -82,7 +81,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
             else
                 Color *= 0.9f;
 
-            if (Color.A < 10||fadeIn>60)
+            if (Color.A < 10 || fadeIn > 60)
                 active = false;
         }
 

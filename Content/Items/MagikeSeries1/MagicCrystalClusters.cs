@@ -11,7 +11,7 @@ using Terraria.ID;
 namespace Coralite.Content.Items.MagikeSeries1
 {
     public class MagicCrystalClusters() : BasePlaceableItem(0, ModContent.RarityType<MagicCrystalRarity>(), ModContent.TileType<MagicCrystalClustersTile>(), AssetDirectory.MagikeSeries1Item)
-        ,IMagikeCraftable
+        , IMagikeCraftable
     {
         public void AddMagikeCraftRecipe()
         {

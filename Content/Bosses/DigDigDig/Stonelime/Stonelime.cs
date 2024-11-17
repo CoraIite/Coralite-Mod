@@ -60,7 +60,7 @@ namespace Coralite.Content.Bosses.DigDigDig.Stonelime
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<StoneRelic>()));
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<StoneMakerCore>(),1,8,14));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<StoneMakerCore>(), 1, 8, 14));
         }
 
         public override void AI()
@@ -231,8 +231,8 @@ namespace Coralite.Content.Bosses.DigDigDig.Stonelime
                             NPC.ai[0] = -200f;
                             NPC.ai[1] = 0f;
 
-                           Projectile p= NPC.NewProjectileDirectInAI(NPC.Top, -Vector2.UnitY.RotateByRandom(-0.3f, 0.3f) * 12, ProjectileID.Boulder
-                                , Helper.ScaleValueForDiffMode(40, 60, 80, 80), 8, NPC.target);
+                            Projectile p = NPC.NewProjectileDirectInAI(NPC.Top, -Vector2.UnitY.RotateByRandom(-0.3f, 0.3f) * 12, ProjectileID.Boulder
+                                 , Helper.ScaleValueForDiffMode(40, 60, 80, 80), 8, NPC.target);
 
                             p.friendly = false;
                         }
@@ -290,7 +290,7 @@ namespace Coralite.Content.Bosses.DigDigDig.Stonelime
                 width2 = 12;
 
             width2 = (int)(width2 * factor);
-            if (scale != NPC.scale || width2!=(int)Width||init)
+            if (scale != NPC.scale || width2 != (int)Width || init)
             {
                 Width = width2;
                 NPC.position.X += NPC.width / 2;
@@ -328,7 +328,7 @@ namespace Coralite.Content.Bosses.DigDigDig.Stonelime
 
         public override void PostAI()
         {
-            int height = (int)( 16 * (Width-2));
+            int height = (int)(16 * (Width - 2));
             float groundHeight = NPC.Bottom.Y - (NPC.scale * height);
             crown.Bottom.X = MathHelper.Lerp(crown.Bottom.X, NPC.Center.X, 0.5f);
 
@@ -541,9 +541,9 @@ namespace Coralite.Content.Bosses.DigDigDig.Stonelime
 
             return false;
 
-            static void DrawStone(SpriteBatch spriteBatch, Texture2D mainTex, float scale, Vector2 pos,Rectangle rect)
+            static void DrawStone(SpriteBatch spriteBatch, Texture2D mainTex, float scale, Vector2 pos, Rectangle rect)
             {
-                spriteBatch.Draw(mainTex, pos, rect , Lighting.GetColor((pos + Main.screenPosition).ToTileCoordinates()), 0, Vector2.Zero, scale, 0, 0);
+                spriteBatch.Draw(mainTex, pos, rect, Lighting.GetColor((pos + Main.screenPosition).ToTileCoordinates()), 0, Vector2.Zero, scale, 0, 0);
             }
         }
     }

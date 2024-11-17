@@ -1,6 +1,4 @@
-﻿using Terraria;
-
-namespace Coralite.Content.DamageClasses
+﻿namespace Coralite.Content.DamageClasses
 {
     public class CreateDamage : DamageClass
     {

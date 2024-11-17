@@ -1,14 +1,14 @@
 ﻿using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
+using Coralite.Content.GlobalNPCs;
 using Coralite.Content.Items.Icicle;
 using Coralite.Content.ModPlayers;
-using Coralite.Content.GlobalNPCs;
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
-using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Core.Systems.Trails;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
@@ -20,7 +20,6 @@ using Terraria.Graphics.CameraModifiers;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
-using InnoVault.PRT;
 
 namespace Coralite.Content.Items.Nightmare
 {

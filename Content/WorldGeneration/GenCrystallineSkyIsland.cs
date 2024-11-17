@@ -21,15 +21,15 @@ namespace Coralite.Content.WorldGeneration
         /// <summary>
         /// 是否放置光明之魂
         /// </summary>
-        public static bool PlaceLightSoul {  get; set; }
+        public static bool PlaceLightSoul { get; set; }
         /// <summary>
         /// 是否放置暗影之魂
         /// </summary>
-        public static bool PlaceNightSoul {  get; set; }
+        public static bool PlaceNightSoul { get; set; }
         /// <summary>
         /// 是否有权限进入蕴魔空岛
         /// </summary>
-        public static bool HasPermission {  get; set; }
+        public static bool HasPermission { get; set; }
 
         public void GenCrystallineSkyIsland(GenerationProgress progress, GameConfiguration configuration)
         {
@@ -54,7 +54,7 @@ namespace Coralite.Content.WorldGeneration
             }
 
             //p就是中心点，放置主祭坛
-            altarPoint= p;
+            altarPoint = p;
 
             ushort basalt = (ushort)ModContent.TileType<BasaltTile>();
             ushort beam = (ushort)ModContent.TileType<BasaltBeamTile>();
@@ -63,7 +63,7 @@ namespace Coralite.Content.WorldGeneration
                 if (!Main.tile[p.X + j, p.Y + 2].HasTile)
                 {
                     WorldGen.KillTile(p.X - 1, p.Y + 2);
-                    Main.tile[p.X - 1, p.Y+ 2].ResetToType(basalt);
+                    Main.tile[p.X - 1, p.Y + 2].ResetToType(basalt);
                 }
 
             int h = WorldGen.genRand.Next(3, 5);
@@ -76,9 +76,9 @@ namespace Coralite.Content.WorldGeneration
 
             //放置一条玄武岩
             for (int i = -2; i < 3; i++)
-                Main.tile[p.X + i, p.Y - h+1].ResetToType(basalt);
+                Main.tile[p.X + i, p.Y - h + 1].ResetToType(basalt);
 
-            Point topP = p + new Point(-1, -h-2);
+            Point topP = p + new Point(-1, -h - 2);
             for (int i = 0; i < 3; i++)
                 for (int j = 0; j < 3; j++)
                 {
@@ -86,7 +86,7 @@ namespace Coralite.Content.WorldGeneration
                 }
 
             //放置主要祭坛
-            WorldGen.PlaceTile(topP.X+1, topP.Y+2 , ModContent.TileType<PremissionAltarTile>(), true);
+            WorldGen.PlaceTile(topP.X + 1, topP.Y + 2, ModContent.TileType<PremissionAltarTile>(), true);
         }
 
         private void GenMainSkyIsland()
@@ -107,7 +107,7 @@ namespace Coralite.Content.WorldGeneration
             Texture2D clearTex = ModContent.Request<Texture2D>(AssetDirectory.Shrines + "CrystallineMainIslandClear" + 0.ToString(), AssetRequestMode.ImmediateLoad).Value;
             Texture2D wallTex = ModContent.Request<Texture2D>(AssetDirectory.Shrines + "CrystallineMainIslandWall" + 0.ToString(), AssetRequestMode.ImmediateLoad).Value;
 
-            int genOrigin_x = Main.maxTilesX/2 - (clearTex.Width / 2);
+            int genOrigin_x = Main.maxTilesX / 2 - (clearTex.Width / 2);
             int genOrigin_y = 200 - (clearTex.Height / 2);
 
             Dictionary<Color, int> clearDic = new()
@@ -168,7 +168,7 @@ namespace Coralite.Content.WorldGeneration
 
         public void LoadSkyIsland(TagCompound tag)
         {
-            PlaceLightSoul= tag.ContainsKey(nameof(PlaceLightSoul));
+            PlaceLightSoul = tag.ContainsKey(nameof(PlaceLightSoul));
             PlaceNightSoul = tag.ContainsKey(nameof(PlaceLightSoul));
             HasPermission = tag.ContainsKey(nameof(PlaceLightSoul));
         }

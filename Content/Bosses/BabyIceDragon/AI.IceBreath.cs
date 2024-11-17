@@ -1,6 +1,5 @@
 ﻿using Coralite.Content.Items.Icicle;
 using Coralite.Core;
-using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using System;
@@ -100,7 +99,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                                         int damage = Helper.GetProjDamage(40, 65, 90);
                                         Projectile.NewProjectile(NPC.GetSource_FromAI(), mouseCenter, targetDir.RotatedBy(i * 0.05f) * 10f, ModContent.ProjectileType<IceBreath>(), damage, 5f);
                                     }
-                                }  
+                                }
                             }
                             break;
                         }

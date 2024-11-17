@@ -2,7 +2,6 @@
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
-using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
@@ -200,7 +199,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 //d.noGravity = true;
             }
 
-            if (Timer%2==0)
+            if (Timer % 2 == 0)
             {
                 Color c = Main.rand.NextFromList(Color.White, Color.SkyBlue, Color.DeepSkyBlue);
                 c.A = 100;
@@ -214,7 +213,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 Color c = Main.rand.NextFromList(Color.White, Color.SkyBlue, Color.LightSkyBlue);
                 c.A = 100;
                 PRTLoader.NewParticle<Fog>(arrowPos, (-dir).RotateByRandom(-0.8f, 0.8f) * Main.rand.NextFloat(3, 6),
-                   c , Scale: Main.rand.NextFloat(0.6f, 1f));
+                   c, Scale: Main.rand.NextFloat(0.6f, 1f));
             }
 
             if (Timer > 7)

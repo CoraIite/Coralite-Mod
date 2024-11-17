@@ -25,7 +25,7 @@ namespace Coralite.Content.Items.CoreKeeper
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ItemID.Coral,5)
+                .AddIngredient(ItemID.Coral, 5)
                 .AddIngredient(ItemID.Marble, 10)
                 .AddTile(TileID.WorkBenches)
                 .AddOnCraftCallback(Polish)

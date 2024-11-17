@@ -382,7 +382,7 @@ namespace Coralite.Core
         {
             if (Main.dedServ)
                 return;
-            
+
             Trail.Load();
             Laser.Load();
             Sparkle.Load();
@@ -409,6 +409,6 @@ namespace Coralite.Core
         }
 
         private static ATex Get(string path)
-            => Request<Texture2D>(path,AssetRequestMode.ImmediateLoad);
+            => Request<Texture2D>(path, AssetRequestMode.ImmediateLoad);
     }
 }

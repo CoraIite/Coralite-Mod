@@ -4,7 +4,6 @@ using Coralite.Core.Configs;
 using Coralite.Core.Systems.Trails;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using System;
 using System.Linq;
 using Terraria;

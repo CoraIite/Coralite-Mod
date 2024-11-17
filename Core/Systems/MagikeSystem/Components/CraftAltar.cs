@@ -58,7 +58,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 }, Helper.GetMagikeTileCenter(Entity.Position) - (Vector2.UnitY * 32));
                 return;
             }
-            
+
             //先减少魔能
             Entity.GetMagikeContainer().ReduceMagike(ChosenResipe.magikeCost);
 
@@ -152,7 +152,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                         }
                 }
 
-                if (howManyNeed>0)
+                if (howManyNeed > 0)
                     return false;//这块给我写迷糊了，总之就是遍历所有的物品然后挨个消耗
 
                 costEnd:
@@ -354,7 +354,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             MagikeTP entity = Entity;
             Point16 pos = entity.Position;
 
-            if (Helper.IsAreaOnScreen(pos.ToWorldCoordinates()-Main.screenPosition, new Vector2(16 * 20)))//在视野内生成特殊合成粒子
+            if (Helper.IsAreaOnScreen(pos.ToWorldCoordinates() - Main.screenPosition, new Vector2(16 * 20)))//在视野内生成特殊合成粒子
             {
                 Tile t = Framing.GetTileSafely(pos);
                 ModTile mt = TileLoader.GetTile(t.TileType);
@@ -369,8 +369,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                     if (!level.HasValue)
                         return;
 
-                    CraftParticle.Spawn(pos,Helper.GetMagikeTileCenter(pos.X, pos.Y) + altartile.GetFloatingOffset(rotation, level.Value)
-                        ,WorkTime, ChosenResipe);
+                    CraftParticle.Spawn(pos, Helper.GetMagikeTileCenter(pos.X, pos.Y) + altartile.GetFloatingOffset(rotation, level.Value)
+                        , WorkTime, ChosenResipe);
                 }
             }
         }
@@ -405,7 +405,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             AddRecipeShow(parent, left, top);//添加合成条
         }
 
-        public void AddContainerList(UIElement parent, ItemContainer container, GetOnlyItemContainer getOnlyContainer, float left,float top)
+        public void AddContainerList(UIElement parent, ItemContainer container, GetOnlyItemContainer getOnlyContainer, float left, float top)
         {
             UIList list = [];
 
@@ -446,7 +446,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             top += showButton.Height.Pixels;
         }
 
-        public static void AddController(UIElement parent,CraftAltar altar,float left,ref float top)
+        public static void AddController(UIElement parent, CraftAltar altar, float left, ref float top)
         {
             CraftController controller = new CraftController(altar);
             controller.SetSize(-left, 12, 1, 0);
@@ -458,7 +458,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             top += controller.Height.Pixels;
         }
 
-        public static void AddRecipeShow(UIElement parent ,float left ,float top)
+        public static void AddRecipeShow(UIElement parent, float left, float top)
         {
             switch (CraftShowButton.CurrentShowStyle)
             {
@@ -479,11 +479,11 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 case CraftShowButton.ShowStyle.Grid:
                     {
                         FixedUIGrid grid = new FixedUIGrid();
-                        grid.SetTopLeft(top,left);
-                        grid.SetSize(-left-20, -top, 1, 1);
+                        grid.SetTopLeft(top, left);
+                        grid.SetSize(-left - 20, -top, 1, 1);
 
                         var scrollbar = new UIScrollbar();
-                        scrollbar.SetTopLeft(5000,5000);
+                        scrollbar.SetTopLeft(5000, 5000);
                         grid.SetScrollbar(scrollbar);
 
                         foreach (var recipe in CraftController.Recipes)
@@ -505,7 +505,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         {
             base.SaveData(preName, tag);
 
-            if (ChosenResipe!=null)
+            if (ChosenResipe != null)
             {
                 tag.Add("ResultItem", ChosenResipe.ResultItem);
                 tag.Add("MainItem", ChosenResipe.MainItem);
@@ -581,7 +581,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
                 frame = new Rectangle(0, tex.Height / 2, tex.Width, (int)(tex.Height / 2 * percent));
 
-                spriteBatch.Draw(tex, pos+new Vector2(3,0), frame, Color.White, 0, Vector2.Zero, 1, 0, 0);
+                spriteBatch.Draw(tex, pos + new Vector2(3, 0), frame, Color.White, 0, Vector2.Zero, 1, 0, 0);
 
                 Utils.DrawBorderString(spriteBatch, percentText, center, Color.White, 0.75f, anchorx: 0.5f, anchory: 0.5f);
             }
@@ -820,7 +820,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            
+
             if (!altar.Entity.TryGetComponent(MagikeComponentID.ItemContainer, out ItemContainer container)
                 || !altar.Entity.TryGetComponent(MagikeComponentID.MagikeSender, out MagikeLinerSender sender))
             {

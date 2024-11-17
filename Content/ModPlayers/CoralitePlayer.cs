@@ -582,7 +582,7 @@ namespace Coralite.Content.ModPlayers
 
         public override void ModifyHitNPCWithItem(Item item, NPC target, ref NPC.HitModifiers modifiers)
         {
-            if (HasEffect(nameof(FlaskOfThunderBuff)) && item.DamageType.CountsAsClass( DamageClass.Melee))
+            if (HasEffect(nameof(FlaskOfThunderBuff)) && item.DamageType.CountsAsClass(DamageClass.Melee))
                 target.AddBuff(BuffType<ThunderElectrified>(), 6 * 60);
             if (HasEffect(nameof(FlaskOfRedJadeBuff)) && item.DamageType.CountsAsClass(DamageClass.Melee) && Main.rand.NextBool(4))
                 Projectile.NewProjectile(Player.GetSource_FromThis(), target.Center, Vector2.Zero,

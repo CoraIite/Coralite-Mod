@@ -1,12 +1,9 @@
 ﻿using Coralite.Content.Raritys;
 using Coralite.Core;
-using Coralite.Core.Systems.CoraliteActorComponent;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -18,15 +15,15 @@ namespace Coralite.Content.Items.MagikeSeries1
     {
         public override string Texture => AssetDirectory.MagikeSeries1Item + Name;
 
-        public static LocalizedText TimerNotFound {  get; private set; }
-        public static LocalizedText TimerChosen {  get; private set; }
-        public static LocalizedText TimerSynced {  get; private set; }
+        public static LocalizedText TimerNotFound { get; private set; }
+        public static LocalizedText TimerChosen { get; private set; }
+        public static LocalizedText TimerSynced { get; private set; }
 
         private MagikeTP entity1;
 
         public override void Load()
         {
-            TimerNotFound=this.GetLocalization(nameof(TimerNotFound));
+            TimerNotFound = this.GetLocalization(nameof(TimerNotFound));
             TimerChosen = this.GetLocalization(nameof(TimerChosen));
             TimerSynced = this.GetLocalization(nameof(TimerSynced));
         }
@@ -54,7 +51,7 @@ namespace Coralite.Content.Items.MagikeSeries1
             //左键寻找发送器
             if (entity1 == null)
             {
-                if (MagikeHelper.TryGetEntity(pos.X,pos.Y, out MagikeTP entity))    //找到了
+                if (MagikeHelper.TryGetEntity(pos.X, pos.Y, out MagikeTP entity))    //找到了
                 {
                     foreach (var component in entity.ComponentsCache)//寻找计时器
                     {

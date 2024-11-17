@@ -3,7 +3,6 @@ using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
-using InnoVault;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
@@ -90,7 +89,7 @@ namespace Coralite.Content.Items.Magike.Tools
             SearchFromArea(Owner, TargetPoint, BasePosition, FillMagike);
             Helper.PlayPitched("UI/GetSkill", 0.4f, 0, Owner.Center);
         }
-         
+
         internal void Send_ClusterWand_Data()
         {
             ModPacket modPacket = Coralite.Instance.GetPacket();
@@ -144,7 +143,7 @@ namespace Coralite.Content.Items.Magike.Tools
             int mode = (owner.HeldItem.ModItem as InfinityClusterWand).mode;
 
             if (mode == 0)
-                    entity.GetMagikeContainer().FullChargeMagike();
+                entity.GetMagikeContainer().FullChargeMagike();
             else
                 entity.GetMagikeContainer().ClearMagike();
 

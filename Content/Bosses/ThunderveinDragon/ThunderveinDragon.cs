@@ -2,7 +2,6 @@
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Systems.BossSystems;
-using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
@@ -346,7 +345,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 {
                     SkyManager.Instance.Activate("ThunderveinSky");
                 }
-                
+
                 spwan = true;
             }
 
@@ -516,7 +515,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             Timer = 0;
                             //生成名称
                             if (!VaultUtils.isClient)
-                            NPC.NewProjectileDirectInAI<ThunderveinDragon_OnSpawnAnim>(NPC.Center, Vector2.Zero, 1, 0, NPC.target);
+                                NPC.NewProjectileDirectInAI<ThunderveinDragon_OnSpawnAnim>(NPC.Center, Vector2.Zero, 1, 0, NPC.target);
                         }
                     }
                     break;

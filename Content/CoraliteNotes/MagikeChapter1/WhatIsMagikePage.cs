@@ -2,7 +2,7 @@
 
 namespace Coralite.Content.CoraliteNotes.MagikeChapter1
 {
-    public class WhatIsMagikePage:KnowledgePage
+    public class WhatIsMagikePage : KnowledgePage
     {
         public override void OnInitialize()
         {

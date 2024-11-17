@@ -2,7 +2,6 @@ using Coralite.Content.ModPlayers;
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
-using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
@@ -68,7 +67,7 @@ namespace Coralite.Content.Items.Icicle
 
             do
             {
-                if (Timer < DashTime+2)
+                if (Timer < DashTime + 2)
                 {
                     Rotation += 0.3141f; //1/10 Pi
                     if (Owner.controlUseItem)
@@ -115,7 +114,7 @@ namespace Coralite.Content.Items.Icicle
         }
 
         public override Vector2 GetOffset()
-            => new (12, 0);
+            => new(12, 0);
 
         public override bool PreDraw(ref Color lightColor)
         {

@@ -4,7 +4,7 @@ using Coralite.Core.Systems.KeySystem;
 
 namespace Coralite.Content.CoraliteNotes.MagikeChapter1
 {
-    public class GroupMagikeChapter1:UIPageGroup
+    public class GroupMagikeChapter1 : UIPageGroup
     {
         public override bool CanShowInBook => CoraliteContent.GetKKnowledge(KeyKnowledgeID.MagikeS1).Unlock;
 

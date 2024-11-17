@@ -1,6 +1,5 @@
 ﻿using Coralite.Content.Bosses.ThunderveinDragon;
 using Coralite.Core;
-using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
@@ -22,7 +21,7 @@ namespace Coralite.Content.Items.Thunder
         public override void SetDefaults()
         {
             Item.damage = 57;
-            Item.useTime =  Item.useAnimation = 22;
+            Item.useTime = Item.useAnimation = 22;
             Item.knockBack = 7;
             Item.crit = 10;
             Item.mana = 16;

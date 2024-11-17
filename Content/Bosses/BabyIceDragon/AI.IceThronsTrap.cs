@@ -1,7 +1,5 @@
-﻿using Coralite.Content.Items.Icicle;
-using Coralite.Content.Particles;
+﻿using Coralite.Content.Particles;
 using Coralite.Core;
-using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using System;
@@ -93,7 +91,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                                     {
                                         int randomWidth = Main.rand.Next(240, 350);
                                         Vector2 randomPosition = rot.ToRotationVector2() * randomWidth;
-                                        NPC.NewNPCDirect(NPC.GetSource_FromAI(), Target.Center + randomPosition,ModContent.NPCType<IceThornsTrap>());
+                                        NPC.NewNPCDirect(NPC.GetSource_FromAI(), Target.Center + randomPosition, ModContent.NPCType<IceThornsTrap>());
                                     }
 
                                     rot += MathHelper.TwoPi / howMany;

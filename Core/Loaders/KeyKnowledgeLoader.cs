@@ -6,8 +6,8 @@ namespace Coralite.Core.Loaders
 {
     public class KeyKnowledgeLoader
     {
-        internal static FrozenDictionary<int,KeyKnowledge> knowledgesF;
-        internal static Dictionary<int,KeyKnowledge> knowledges = [];
+        internal static FrozenDictionary<int, KeyKnowledge> knowledgesF;
+        internal static Dictionary<int, KeyKnowledge> knowledges = [];
 
         /// <summary>
         /// 根据ID获取
@@ -16,7 +16,7 @@ namespace Coralite.Core.Loaders
         /// <returns></returns>
         public static KeyKnowledge GetKeyKnowledge(int type)
         {
-            if(knowledgesF.TryGetValue(type,out var knowledge))
+            if (knowledgesF.TryGetValue(type, out var knowledge))
                 return knowledge;
 
             return null;

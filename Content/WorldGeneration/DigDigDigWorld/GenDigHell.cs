@@ -72,7 +72,7 @@ namespace Coralite.Content.WorldGeneration
             int hellside = GenVars.dungeonSide * -1;
             int x = hellside > 0 ? Main.maxTilesX - 10 : 10;
 
-            for (int i = 0; i < DigHellWidth-10; i++)
+            for (int i = 0; i < DigHellWidth - 10; i++)
                 for (int j = 20; j < Main.maxTilesY - 20; j++)
                     if (WorldGen.genRand.NextBool(130))
                     {

@@ -14,7 +14,7 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-           
+
         }
     }
 }

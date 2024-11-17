@@ -31,7 +31,7 @@ namespace Coralite.Content.WorldGeneration
 
             WorldUtils.Gen(
                 origin,  //中心点
-                new Shapes.Slime(20,1,0.8f),   //形状：圆
+                new Shapes.Slime(20, 1, 0.8f),   //形状：圆
                 Actions.Chain(  //如果要添加多个效果得使用这个chain
                     actions,//与矩形相交，裁成半圆环
                     clear,    //清除形状内所有物块

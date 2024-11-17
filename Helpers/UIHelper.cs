@@ -91,7 +91,7 @@ namespace Coralite.Helpers
             foreach (Vector2 direction in ChatManager.ShadowDirections)
             {
                 ChatManager.DrawColorCodedStringShadow(spriteBatch, FontAssets.MouseText.Value, textSnippets, position + direction,
-                    shadowColor, 0f, origin*textSize, scale, maxWidth);
+                    shadowColor, 0f, origin * textSize, scale, maxWidth);
             }
             ChatManager.DrawColorCodedString(spriteBatch, FontAssets.MouseText.Value, textSnippets,
                 position, textColor, 0f, origin * textSize, scale, out _, maxWidth, false);

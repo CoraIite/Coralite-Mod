@@ -2,7 +2,6 @@
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Systems.BossSystems;
-using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
@@ -320,7 +319,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             NPC.frame.Y = 0;
 
                             if (!VaultUtils.isServer)
-                            Dust.NewDustPerfect(NPC.Center + Main.rand.NextVector2Circular(100, 100), DustID.ApprenticeStorm, Vector2.UnitY);
+                                Dust.NewDustPerfect(NPC.Center + Main.rand.NextVector2Circular(100, 100), DustID.ApprenticeStorm, Vector2.UnitY);
                         }
                         else
                         {

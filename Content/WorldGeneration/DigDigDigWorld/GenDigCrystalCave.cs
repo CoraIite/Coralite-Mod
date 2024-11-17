@@ -48,7 +48,7 @@ namespace Coralite.Content.WorldGeneration
                     new Actions.SetFrames(true).Output(outerData)));    //存储圆环形状
             #endregion
 
-            progress.Value =0.2f;
+            progress.Value = 0.2f;
 
             BasaltFloatIsland(origin, CrystalCaveRadius, CrystalCaveRadius);
             int howMany = WorldGen.genRand.Next(12, 24);

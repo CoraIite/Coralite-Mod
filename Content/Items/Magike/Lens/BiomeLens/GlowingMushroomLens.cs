@@ -33,7 +33,7 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
     }
 
     public class GlowingMushroomLensTile() : BaseLensTile
-        ( Color.DarkBlue, DustID.GlowingMushroom)
+        (Color.DarkBlue, DustID.GlowingMushroom)
     {
         public override int DropItemType => ItemType<GlowingMushroomLens>();
 

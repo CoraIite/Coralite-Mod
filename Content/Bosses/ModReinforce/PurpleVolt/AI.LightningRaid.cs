@@ -43,50 +43,50 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
                         return false;
                     }
-                    //{
-                    //    const int chasingTime = 60 * 3;
-                    //    NPC.QuickSetDirection();
+                //{
+                //    const int chasingTime = 60 * 3;
+                //    NPC.QuickSetDirection();
 
-                    //    //追踪玩家
-                    //    GetLengthToTargetPos(Target.Center, out float xLength, out float yLength);
+                //    //追踪玩家
+                //    GetLengthToTargetPos(Target.Center, out float xLength, out float yLength);
 
-                    //    if (xLength < 350)
-                    //        Helper.Movement_SimpleOneLine(ref NPC.velocity.X, -NPC.direction, 18f, 0.35f, 0.6f, 0.95f);
-                    //    else if (xLength > 550)
-                    //        Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 18f, 0.35f, 0.6f, 0.95f);
-                    //    else
-                    //        NPC.velocity.X *= 0.95f;
+                //    if (xLength < 350)
+                //        Helper.Movement_SimpleOneLine(ref NPC.velocity.X, -NPC.direction, 18f, 0.35f, 0.6f, 0.95f);
+                //    else if (xLength > 550)
+                //        Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 18f, 0.35f, 0.6f, 0.95f);
+                //    else
+                //        NPC.velocity.X *= 0.95f;
 
-                    //    if (NPC.directionY < 0)
-                    //        FlyingUp(0.4f, 15, 0.93f);
-                    //    else if (yLength > 70)
-                    //    {
-                    //        Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 15f, 0.25f, 0.6f, 0.95f);
-                    //        FlyingFrame();
-                    //    }
-                    //    else
-                    //    {
-                    //        NPC.velocity.Y *= 0.95f;
-                    //        FlyingFrame();
-                    //    }
+                //    if (NPC.directionY < 0)
+                //        FlyingUp(0.4f, 15, 0.93f);
+                //    else if (yLength > 70)
+                //    {
+                //        Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 15f, 0.25f, 0.6f, 0.95f);
+                //        FlyingFrame();
+                //    }
+                //    else
+                //    {
+                //        NPC.velocity.Y *= 0.95f;
+                //        FlyingFrame();
+                //    }
 
-                    //    SetRotationNormally();
+                //    SetRotationNormally();
 
-                    //    Timer++;
-                    //    if (Timer > chasingTime || (xLength > 350 && yLength < 250 && Timer > 20))
-                    //    {
-                    //        SonState++;
-                    //        Timer = 0;
-                    //        DashFrame();
-                    //        ResetAllOldCaches();
-                    //        canDrawShadows = true;
-                    //        isDashing = true;
-                    //        shadowScale = 1.15f;
-                    //        shadowAlpha = 1;
+                //    Timer++;
+                //    if (Timer > chasingTime || (xLength > 350 && yLength < 250 && Timer > 20))
+                //    {
+                //        SonState++;
+                //        Timer = 0;
+                //        DashFrame();
+                //        ResetAllOldCaches();
+                //        canDrawShadows = true;
+                //        isDashing = true;
+                //        shadowScale = 1.15f;
+                //        shadowAlpha = 1;
 
-                    //        currentSurrounding = true;
-                    //    }
-                    //}
+                //        currentSurrounding = true;
+                //    }
+                //}
                 case (int)LightningRaidState.Wait://扇翅膀向后飞行
                     {
 

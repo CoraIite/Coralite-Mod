@@ -111,7 +111,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                                 d.noGravity = true;
                             }
                         }
-                        
+
 
                         if (NPC.frame.Y != 4)
                             FlyingFrame();

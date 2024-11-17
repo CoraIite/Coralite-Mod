@@ -1,5 +1,4 @@
 ﻿using Coralite.Core;
-using Coralite.Core.Loaders;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Core.Systems.Trails;

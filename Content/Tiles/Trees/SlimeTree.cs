@@ -81,7 +81,7 @@ namespace Coralite.Content.Tiles.Trees
         {
             if (Main.rand.NextBool(10))
             {
-                NPC.NewNPC(new EntitySource_ShakeTree(x, y), x*16, y*16, NPCID.BlueSlime);
+                NPC.NewNPC(new EntitySource_ShakeTree(x, y), x * 16, y * 16, NPCID.BlueSlime);
                 return false;
             }
 

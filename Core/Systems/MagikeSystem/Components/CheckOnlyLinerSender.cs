@@ -1,6 +1,4 @@
 ﻿using Coralite.Content.CustomHooks;
-using Coralite.Core.Systems.CoraliteActorComponent;
-using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
 using System;
 using Terraria;

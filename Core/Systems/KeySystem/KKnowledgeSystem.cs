@@ -4,7 +4,7 @@ using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.KeySystem
 {
-    public class KKnowledgeSystem: ModSystem
+    public class KKnowledgeSystem : ModSystem
     {
         public override void PostSetupContent()
         {

@@ -1,5 +1,4 @@
 ﻿using Coralite.Content.Items.Shadow;
-using Coralite.Content.Items.ShadowCastle;
 using Coralite.Content.Tiles.ShadowCastle;
 using Terraria;
 using Terraria.ID;

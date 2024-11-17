@@ -26,7 +26,7 @@ namespace Coralite.Content.WorldGeneration
             int snowside = GenVars.dungeonSide * -1;
 
             int center = Main.maxTilesX / 2;
-            int width = Main.maxTilesX / 12 + WorldGen.genRand.Next(-10,20);
+            int width = Main.maxTilesX / 12 + WorldGen.genRand.Next(-10, 20);
             int offset = Main.maxTilesX / 150;
 
             int snowCenter = center + snowside * (Main.maxTilesX / 6 + WorldGen.genRand.Next(-offset, offset));
@@ -37,9 +37,9 @@ namespace Coralite.Content.WorldGeneration
                 for (int j = 0; j < Main.maxTilesY; j++)
                 {
                     Tile t = Main.tile[GenVars.snowOriginLeft + i, j];
-                        t.ResetToType(TileID.SnowBlock);
+                    t.ResetToType(TileID.SnowBlock);
                 }
-            
+
             progress.Value = 0.25f;
         }
 

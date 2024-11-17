@@ -10,7 +10,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.MagikeSeries1
 {
-    public class OpalTower : ModItem,IMagikeCraftable
+    public class OpalTower : ModItem, IMagikeCraftable
     {
         public override string Texture => AssetDirectory.MagikeSeries1Item + Name;
 

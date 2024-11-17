@@ -21,7 +21,7 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
         {
             CreateRecipe()
                 .AddIngredient<BasicFilter>()
-                .AddIngredient(ItemID.Bone,15)
+                .AddIngredient(ItemID.Bone, 15)
                 .AddTile(TileID.Anvils)
                 .Register();
         }

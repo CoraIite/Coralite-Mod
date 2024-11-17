@@ -1,5 +1,4 @@
-﻿using Coralite.Core.Systems.ParticleSystem;
-using Coralite.Helpers;
+﻿using Coralite.Helpers;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;

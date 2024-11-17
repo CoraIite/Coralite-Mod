@@ -106,7 +106,7 @@ namespace Coralite.Content.WorldGeneration
             progress.Value = 0.75f;
         }
 
-        private static void GenDungeonBox(Point origin, ushort tileType,ushort crackedTileType, ushort wallType)
+        private static void GenDungeonBox(Point origin, ushort tileType, ushort crackedTileType, ushort wallType)
         {
             for (int i = -7; i < 8; i++)
                 for (int j = -7; j < 8; j++)
@@ -126,7 +126,7 @@ namespace Coralite.Content.WorldGeneration
                         t.ResetToType(crackedTileType);
                 }
         }
-   
+
         private static void GenDungeonEntrance(GenerationProgress progress)
         {
             int y = Main.maxTilesY / 2;

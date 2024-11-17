@@ -1,6 +1,5 @@
 using Coralite.Content.Particles;
 using Coralite.Core;
-using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using System;
@@ -48,7 +47,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                         {
                             PRTLoader.NewParticle(NPC.Center, Vector2.Zero, CoraliteContent.ParticleType<Sparkle_Big>(), Coralite.IcicleCyan, 0.8f);
                         }
-                        
+
                         SoundEngine.PlaySound(CoraliteSoundID.IceMagic_Item28, NPC.Center);
                         NPC.velocity = (Target.Center - NPC.Center).SafeNormalize(Vector2.Zero) * 8;
                         NPC.rotation = NPC.velocity.ToRotation() + (NPC.direction > 0 ? 0 : 3.14f);
