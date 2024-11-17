@@ -31,7 +31,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         {
             Point16 p = Entity.Position;
             Vector2 size = new Vector2(ConnectLength);
-            if (Helper.OnScreen(p.ToWorldCoordinates() - Main.screenPosition - size / 2, new Vector2(ConnectLength)))
+            if (Helper.IsAreaOnScreen(p.ToWorldCoordinates() - Main.screenPosition - size / 2, new Vector2(ConnectLength)))
                 DrawMagikeDevice.LinerSenders.Add(this);
         }
 

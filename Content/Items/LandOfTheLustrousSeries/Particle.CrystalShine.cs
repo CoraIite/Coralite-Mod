@@ -1,6 +1,7 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Loaders;
 using Coralite.Core.Systems.ParticleSystem;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using Terraria;
 
 namespace Coralite.Content.Items.LandOfTheLustrousSeries
 {
-    public class CrystalShine : Particle
+    public class CrystalShine : BasePRT
     {
         public override string Texture => AssetDirectory.OtherProjectiles + "LightGlowShot";
 
@@ -25,16 +26,21 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public Func<Vector2> follow;
 
-        public override void Update()
+        public override void SetProperty()
+        {
+            PRTDrawMode = PRTDrawModeEnum.AdditiveBlend;
+        }
+
+        public override void AI()
         {
             fadeIn++;
 
             if (follow != null)
             {
-                Center += follow();
+                Position += follow();
             }
 
-            Lighting.AddLight(Center, color.ToVector3() * currentScale.Y * 10);
+            Lighting.AddLight(Position, Color.ToVector3() * currentScale.Y * 10);
 
             int dir = MathF.Sign(Velocity.X);
             for (int i = 0; i < shotCount - 1; i++)
@@ -49,7 +55,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 scale.Y *= 0.96f;
                 currentScale = Vector2.SmoothStep(currentScale, scale, 0.5f);
 
-                color.A = (byte)(color.A * 0.98f);
+                Color.A = (byte)(Color.A * 0.98f);
             }
             else if (fadeIn < 8)
             {
@@ -66,7 +72,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public static CrystalShine Spawn(Vector2 center, Vector2 velocity, int shotCount, Vector2 scale, Color newColor = default)
         {
-            var cs = NewParticle<CrystalShine>(center, velocity, newColor);
+            CrystalShine cs = PRTLoader.NewParticle<CrystalShine>(center, velocity, newColor);
             cs.shotCount = shotCount;
             cs.scale = scale;
 
@@ -88,15 +94,15 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public static CrystalShine New(Vector2 center, Vector2 velocity, int shotCount, Vector2 scale, Color newColor = default)
         {
-            CrystalShine cs = ParticleLoader.GetParticle(CoraliteContent.ParticleType<CrystalShine>()).NewInstance() as CrystalShine;
+            CrystalShine cs = PRTLoader.PRT_IDToInstances[CoraliteContent.ParticleType<CrystalShine>()].Clone() as CrystalShine;
 
             //设置各种初始值
             cs.active = true;
-            cs.color = newColor;
-            cs.Center = center;
+            cs.Color = newColor;
+            cs.Position = center;
             cs.Velocity = velocity;
             cs.Scale = 1;
-            cs.OnSpawn();
+            cs.SetProperty();
 
             cs.shotCount = shotCount;
             cs.scale = scale;
@@ -117,12 +123,13 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             return cs;
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public override bool PreDraw(SpriteBatch spriteBatch)
         {
             for (int i = 0; i < shotCount; i++)
             {
                 DrawShot(spriteBatch, _shotRotation[i], _shotScale[i], Main.screenPosition);
             }
+            return false;
         }
 
         public override void DrawInUI(SpriteBatch spriteBatch)
@@ -135,12 +142,12 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public void DrawShot(SpriteBatch spriteBatch, float rot, float exScale, Vector2 screenPos)
         {
-            Texture2D mainTex = GetTexture().Value;
-            Vector2 pos = Center - screenPos;
+            Texture2D mainTex = TexValue;
+            Vector2 pos = Position - screenPos;
             Vector2 origin = new(0, mainTex.Height / 2);
             Vector2 scale = currentScale * 0.1f * exScale;
             scale.Y *= 2;
-            Color c = color;
+            Color c = Color;
 
             spriteBatch.Draw(mainTex, pos
                 , null, c, rot, origin, scale, SpriteEffects.None, 0f);
@@ -156,8 +163,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public void DrawShot2(SpriteBatch spriteBatch, float rot, float exScale, Vector2 screenPos)
         {
-            Texture2D mainTex = GetTexture().Value;
-            Color c = color;
+            Texture2D mainTex = TexValue;
+            Color c = Color;
 
             List<CustomVertexInfo> bars = new();
             List<CustomVertexInfo> bar3 = new();
@@ -169,7 +176,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             float width = mainTex.Width * scale.X / TrailCount;
             float height = mainTex.Height * scale.Y;
 
-            Vector2 center = Center - screenPos;
+            Vector2 center = Position - screenPos;
 
             for (int i = 0; i < TrailCount; i++)
             {

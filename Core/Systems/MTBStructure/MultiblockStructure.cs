@@ -1,6 +1,7 @@
 ﻿using Coralite.Core.Loaders;
 using Coralite.Core.Systems.MagikeSystem.Particles;
 using Coralite.Core.Systems.ParticleSystem;
+using InnoVault.PRT;
 using System.Collections.Generic;
 using Terraria;
 
@@ -114,7 +115,7 @@ namespace Coralite.Core.Systems.MTBStructure
 
         public virtual void Fail(Point failPoint)
         {
-            Particle.NewParticle<TileHightlight>(failPoint.ToWorldCoordinates(), Vector2.Zero, Color.Red);
+            PRTLoader.NewParticle<TileHightlight>(failPoint.ToWorldCoordinates(), Vector2.Zero, Color.Red);
         }
 
         /// <summary>

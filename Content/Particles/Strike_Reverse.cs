@@ -1,19 +1,23 @@
-﻿using Coralite.Core.Systems.ParticleSystem;
+﻿using Coralite.Core;
+using Coralite.Core.Systems.ParticleSystem;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 
 namespace Coralite.Content.Particles
 {
-    internal class Strike_Reverse : Particle
+    internal class Strike_Reverse : BasePRT
     {
-        public override void OnSpawn()
+        public override string Texture => AssetDirectory.Particles + Name;
+        public override void SetProperty()
         {
-            color = Color.White;
+            PRTDrawMode = PRTDrawModeEnum.AdditiveBlend;
+            Color = Color.White;
             shader = new Terraria.Graphics.Shaders.ArmorShaderData(Coralite.Instance.Assets.Request<Effect>("Effects/JustTexture", ReLogic.Content.AssetRequestMode.ImmediateLoad), "JustTexturePass");
             Frame = new Rectangle(0, 0, 128, 128);
         }
 
-        public override void Update()
+        public override void AI()
         {
             if (fadeIn % 2 == 0)
                 Frame.Y = (int)(fadeIn / 2) * 128;
@@ -24,11 +28,12 @@ namespace Coralite.Content.Particles
                 active = false;
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public override bool PreDraw(SpriteBatch spriteBatch)
         {
             Vector2 origin = new(96, 96);
 
-            spriteBatch.Draw(GetTexture().Value, Center - Main.screenPosition, Frame, color, Rotation, origin, Scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(TexValue, Position - Main.screenPosition, Frame, Color, Rotation, origin, Scale, SpriteEffects.None, 0f);
+            return false;
         }
     }
 }

@@ -3,6 +3,7 @@ using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -179,10 +180,13 @@ namespace Coralite.Content.Items.Glistent
                 if (Main.rand.NextBool())
                     return;
 
-                var particle = Particle.NewPawticleInstance<LeafeoShieldParticle>(Projectile.Center, Vector2.Zero
-                    , Color.White, Scale: Main.rand.NextFloat(0.6f, 1));
-                particle.OwnerIndex = Projectile.whoAmI;
-                particles.Add(particle);
+                LeafeoShieldParticle prt = PRTLoader.GetPRTInstance<LeafeoShieldParticle>();
+                prt.Position = Projectile.Center;
+                prt.Velocity = Vector2.Zero;
+                prt.Color = Color.White;
+                prt.Scale = Main.rand.NextFloat(0.6f, 1);
+                prt.OwnerIndex = Projectile.whoAmI;
+                particles.Add(prt);
             }
         }
 
@@ -191,7 +195,7 @@ namespace Coralite.Content.Items.Glistent
             foreach (var p in particles)
             {
                 (p as LeafeoShieldParticle).Fade();
-                ParticleSystem.Particles.Add(p);
+                PRTLoader.AddParticle(p);
             }
 
             if (Owner.armor[1].type == ItemType<LeafeoLightArmor>()
@@ -226,7 +230,7 @@ namespace Coralite.Content.Items.Glistent
 
         public int State;
 
-        public override void OnSpawn()
+        public override void SetProperty()
         {
             frameCounterMax = 6;
             start = Main.rand.NextFloat(6.282f);
@@ -234,10 +238,10 @@ namespace Coralite.Content.Items.Glistent
             length = Main.rand.NextFloat(16, 30);
             speed = Main.rand.NextFloat(0.02f, 0.06f);
             LeafType = Main.rand.Next(2);
-            shouldKilledOutScreen = false;
+            ShouldKillWhenOffScreen = false;
         }
 
-        public override void Update()
+        public override void AI()
         {
             fadeIn -= speed;
             length += speed;
@@ -255,11 +259,11 @@ namespace Coralite.Content.Items.Glistent
                         if (alpha < 1)
                             alpha += 0.05f;
 
-                        Center = owner.Center + ((fadeIn + start).ToRotationVector2() * length);
+                        Position = owner.Center + ((fadeIn + start).ToRotationVector2() * length);
                         Rotation = fadeIn + start - 1.57f + (LeafType == 0 ? 1.57f : 0);
 
                         if (fadeIn < 0.5f)
-                            color *= 0.93f;
+                            Color *= 0.93f;
                     }
                     break;
                 case 1://树叶掉落
@@ -270,7 +274,7 @@ namespace Coralite.Content.Items.Glistent
                         if (Velocity.Y < 8)
                             Velocity.Y += 0.25f;
 
-                        if (Collision.SolidCollision(Center - (Vector2.One * 5f), 10, 10))
+                        if (Collision.SolidCollision(Position - (Vector2.One * 5f), 10, 10))
                         {
                             if (fadeIn > 0.5f)
                                 fadeIn = 0.5f;
@@ -278,7 +282,7 @@ namespace Coralite.Content.Items.Glistent
                         }
 
                         if (fadeIn < 0.5f)
-                            color.A = (byte)(color.A * 0.9f);
+                            Color.A = (byte)(Color.A * 0.9f);
                     }
                     break;
             }
@@ -291,7 +295,7 @@ namespace Coralite.Content.Items.Glistent
         {
             State = 1;
             Velocity = (fadeIn + 1.57f).ToRotationVector2() * Main.rand.NextFloat(2, 5);
-            color = new Color(119, 133, 34, 255);
+            Color = new Color(119, 133, 34, 255);
             alpha = 1;
         }
     }

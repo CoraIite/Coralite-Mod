@@ -8,6 +8,7 @@ using Coralite.Core.SmoothFunctions;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Core.Systems.Trails;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
@@ -184,7 +185,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             {
                 float length = Main.rand.NextFloat(32, 64);
                 Color c = Main.rand.NextFromList(Color.White, Main.DiscoColor * 1.5f);
-                var p = Particle.NewParticle<HexagramParticle>(Projectile.Center + Main.rand.NextVector2CircularEdge(length, length),
+                var p = PRTLoader.NewParticle<HexagramParticle>(Projectile.Center + Main.rand.NextVector2CircularEdge(length, length),
                      Vector2.UnitX, c, Scale: Main.rand.NextFloat(0.1f, 0.15f));
                 p.follow = () => Projectile.position - Projectile.oldPos[1];
                 p.Rotation = -1.57f;
@@ -866,7 +867,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             {
                 float length = Main.rand.NextFloat(0, 6);
                 Color c = Main.rand.NextFromList(Color.White, data.brightC);
-                var p = Particle.NewParticle<HexagramParticle>(Projectile.Center + Main.rand.NextVector2CircularEdge(length, length),
+                var p = PRTLoader.NewParticle<HexagramParticle>(Projectile.Center + Main.rand.NextVector2CircularEdge(length, length),
                      Vector2.UnitX * Main.rand.NextFloat(1f, 2f), c, Scale: Main.rand.NextFloat(0.1f, 0.14f));
                 p.Rotation = -1.57f;
 

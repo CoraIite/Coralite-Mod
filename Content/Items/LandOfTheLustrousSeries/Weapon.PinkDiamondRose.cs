@@ -4,6 +4,7 @@ using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -101,7 +102,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 };
                 Vector2 pos = Projectile.Center +
                     ((Projectile.rotation - 1.57f).ToRotationVector2() * Main.rand.NextFloat(8, 16));
-                group.Add(Particle.NewPawticleInstance<Fog>(pos
+                group.Add(PRTLoader.GetPRTInstance<Fog>(pos
                     , Vector2.UnitY.RotateByRandom(MathHelper.Pi - 0.4f, MathHelper.Pi + 0.4f)
                     , c, Main.rand.NextFloat(0.5f, 0.6f)));
 
@@ -244,7 +245,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     _ => new Color(193, 89, 138, 100),
                 };
                 Vector2 pos = Projectile.Center + Main.rand.NextVector2Circular(4, 4);
-                Particle.NewParticle<Fog>(pos
+                PRTLoader.NewParticle<Fog>(pos
                     , Vector2.UnitY.RotateByRandom(MathHelper.Pi - 0.4f, MathHelper.Pi + 0.4f)
                     , c, Main.rand.NextFloat(0.5f, 0.6f));
 
@@ -289,7 +290,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                             _ => new Color(193, 89, 138, 100),
                         };
                         Vector2 pos = Projectile.Center + Main.rand.NextVector2Circular(4, 4);
-                        Particle.NewParticle<Fog>(pos
+                        PRTLoader.NewParticle<Fog>(pos
                             , Vector2.UnitY.RotateByRandom(MathHelper.Pi - 0.4f, MathHelper.Pi + 0.4f)
                             , c, Main.rand.NextFloat(0.5f, 0.8f));
                     }

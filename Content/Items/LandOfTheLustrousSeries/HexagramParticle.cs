@@ -1,13 +1,14 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Loaders;
 using Coralite.Core.Systems.ParticleSystem;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 
 namespace Coralite.Content.Items.LandOfTheLustrousSeries
 {
-    public class HexagramParticle : Particle
+    public class HexagramParticle : BasePRT
     {
         public override string Texture => AssetDirectory.OtherProjectiles + "HorizontalLight";
 
@@ -16,13 +17,18 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public Func<Vector2> follow;
 
-        public override bool ShouldUpdateCenter() => false;
+        public override bool ShouldUpdatePosition() => false;
 
-        public override void Update()
+        public override void SetProperty()
+        {
+            PRTDrawMode = PRTDrawModeEnum.AdditiveBlend;
+        }
+
+        public override void AI()
         {
             if (follow != null)
             {
-                Center += follow();
+                Position += follow();
             }
 
             if (fadeIn < 5)
@@ -49,45 +55,46 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public static HexagramParticle New(Vector2 center, Vector2 velocity, float rot, float scale, Color newColor = default)
         {
-            HexagramParticle p = ParticleLoader.GetParticle(CoraliteContent.ParticleType<HexagramParticle>()).NewInstance() as HexagramParticle;
+            HexagramParticle p = PRTLoader.PRT_IDToInstances[CoraliteContent.ParticleType<HexagramParticle>()].Clone() as HexagramParticle;
 
             //设置各种初始值
             p.active = true;
-            p.color = newColor;
-            p.Center = center;
+            p.Color = newColor;
+            p.Position = center;
             p.Velocity = velocity;
             p.Scale = scale;
             p.Rotation = rot;
-            p.OnSpawn();
+            p.SetProperty();
 
             return p;
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public override bool PreDraw(SpriteBatch spriteBatch)
         {
-            Texture2D tex = GetTexture().Value;
+            Texture2D tex = TexValue;
             Vector2 origin = tex.Size() / 2;
-            Color c = color * alpha;
+            Color c = Color * alpha;
             for (int i = 0; i < 6; i++)
             {
                 float rot = Rotation + (MathHelper.TwoPi / 6 * i);
-                Vector2 pos = Center + (rot.ToRotationVector2() * distance) - Main.screenPosition;
+                Vector2 pos = Position + (rot.ToRotationVector2() * distance) - Main.screenPosition;
                 spriteBatch.Draw(tex, pos, null, c * 0.6f, rot
                     , origin, Scale * new Vector2(0.75f, 10f), SpriteEffects.None, 0f);
                 spriteBatch.Draw(tex, pos, null, c, rot
                     , origin, Scale * new Vector2(1f, 1f), SpriteEffects.None, 0f);
             }
+            return false;
         }
 
         public override void DrawInUI(SpriteBatch spriteBatch)
         {
-            Texture2D tex = GetTexture().Value;
+            Texture2D tex = TexValue;
             Vector2 origin = tex.Size() / 2;
-            Color c = color * alpha;
+            Color c = Color * alpha;
             for (int i = 0; i < 6; i++)
             {
                 float rot = Rotation + (MathHelper.TwoPi / 6 * i);
-                Vector2 pos = Center + (rot.ToRotationVector2() * distance);
+                Vector2 pos = Position + (rot.ToRotationVector2() * distance);
                 spriteBatch.Draw(tex, pos, null, c, rot
                     , origin, Scale, SpriteEffects.None, 0f);
                 spriteBatch.Draw(tex, pos, null, c, rot

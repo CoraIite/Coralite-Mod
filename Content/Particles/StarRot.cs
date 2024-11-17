@@ -1,5 +1,6 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -8,19 +9,20 @@ using Terraria.ID;
 
 namespace Coralite.Content.Particles
 {
-    public class StarRot : Particle
+    public class StarRot : BasePRT
     {
         public override string Texture => AssetDirectory.Blank;
 
         private int frameCounter;
 
-        public override void OnSpawn()
+        public override void SetProperty()
         {
+            PRTDrawMode = PRTDrawModeEnum.AdditiveBlend;
             Rotation = Main.rand.NextFloat(6.282f);
             Frame = new Rectangle(0, 0, 22, 26);
         }
 
-        public override void Update()
+        public override void AI()
         {
             fadeIn++;
             if (fadeIn < 4)
@@ -45,12 +47,14 @@ namespace Coralite.Content.Particles
             }
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public override bool PreDraw(SpriteBatch spriteBatch)
         {
             Main.instance.LoadItem(ItemID.FallenStar);
             Texture2D mainTex = TextureAssets.Item[ItemID.FallenStar].Value;
 
-            spriteBatch.Draw(mainTex, Center - Main.screenPosition, Frame, color, Rotation, new Vector2(11, 13), Scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(mainTex, Position - Main.screenPosition, Frame, Color, Rotation, new Vector2(11, 13), Scale, SpriteEffects.None, 0f);
+
+            return false;
         }
     }
 }

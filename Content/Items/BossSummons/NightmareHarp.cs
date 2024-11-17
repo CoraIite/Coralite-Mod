@@ -8,6 +8,7 @@ using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -331,7 +332,7 @@ namespace Coralite.Content.Items.BossSummons
 
         public void PlaySound(SoundStyle style)
         {
-            Particle.NewParticle(Owner.Center, new Vector2(Projectile.owner), CoraliteContent.ParticleType<NightmareHarpParticle>()
+            PRTLoader.NewParticle(Owner.Center, new Vector2(Projectile.owner), CoraliteContent.ParticleType<NightmareHarpParticle>()
                 , NightmarePlantera.nightPurple, 0.1f);
             SoundEngine.PlaySound(style);
         }
@@ -447,23 +448,24 @@ namespace Coralite.Content.Items.BossSummons
     /// <summary>
     /// 使用速度的X传入拥有者
     /// </summary>
-    public class NightmareHarpParticle : Particle
+    public class NightmareHarpParticle : BasePRT
     {
         public override string Texture => AssetDirectory.NightmarePlantera + "Flow";
 
-        public override void OnSpawn()
+        public override void SetProperty()
         {
             Rotation = Main.rand.NextFloat(6.282f);
+            PRTDrawMode = PRTDrawModeEnum.AdditiveBlend;
         }
 
-        public override bool ShouldUpdateCenter() => false;
+        public override bool ShouldUpdatePosition() => false;
 
-        public override void Update()
+        public override void AI()
         {
             int ownerIndex = (int)Velocity.X;
             if (Main.player.IndexInRange(ownerIndex))
             {
-                Center = Main.player[ownerIndex].Center;
+                Position = Main.player[ownerIndex].Center;
             }
 
             Rotation += 0.05f;
@@ -481,19 +483,21 @@ namespace Coralite.Content.Items.BossSummons
             {
                 Scale *= 1.02f;
                 if (fadeIn > 30)
-                    color.A = (byte)(color.A * 0.82f);
+                    Color.A = (byte)(Color.A * 0.82f);
             }
 
-            if (color.A < 10)
+            if (Color.A < 10)
                 active = false;
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public override bool PreDraw(SpriteBatch spriteBatch)
         {
-            Texture2D mainTex = GetTexture().Value;
+            Texture2D mainTex = TexValue;
             Vector2 origin = mainTex.Size() / 2;
 
-            spriteBatch.Draw(mainTex, Center - Main.screenPosition, null, color, Rotation, origin, Scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(mainTex, Position - Main.screenPosition, null, Color, Rotation, origin, Scale, SpriteEffects.None, 0f);
+
+            return false;
         }
     }
 }

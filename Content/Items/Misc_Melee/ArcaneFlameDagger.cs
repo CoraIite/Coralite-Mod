@@ -4,6 +4,7 @@ using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Core.Systems.Trails;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
@@ -257,7 +258,7 @@ namespace Coralite.Content.Items.Misc_Melee
                 Color c = Color.Lerp(ArcaneFlameDagger.Purple, ArcaneFlameDagger.Green, factor);
                 for (int i = 0; i < 2; i++)
                 {
-                    var p = Particle.NewParticle<FireParticle>(Projectile.Center + Main.rand.NextVector2Circular(14, 14),
+                    var p = PRTLoader.NewParticle<FireParticle>(Projectile.Center + Main.rand.NextVector2Circular(14, 14),
                           Projectile.velocity * Main.rand.NextFloat(0.1f, 0.4f), c, Main.rand.NextFloat(0.1f, 0.4f));
                     p.MaxFrameCount = 3;
                 }

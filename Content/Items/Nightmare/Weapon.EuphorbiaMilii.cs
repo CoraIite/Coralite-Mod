@@ -20,6 +20,7 @@ using Terraria.Graphics.CameraModifiers;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
+using InnoVault.PRT;
 
 namespace Coralite.Content.Items.Nightmare
 {
@@ -357,7 +358,7 @@ namespace Coralite.Content.Items.Nightmare
                             _ => new Color(122, 110, 134)
                         };
 
-                        Particle.NewParticle(Owner.Center + Main.rand.NextVector2Circular(16, 16), Helper.NextVec2Dir(2, 5f),
+                        PRTLoader.NewParticle(Owner.Center + Main.rand.NextVector2Circular(16, 16), Helper.NextVec2Dir(2, 5f),
                             CoraliteContent.ParticleType<BigFog>(), color, Scale: Main.rand.NextFloat(0.5f, 1.5f));
                     }
 

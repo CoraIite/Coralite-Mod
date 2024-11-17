@@ -1,19 +1,21 @@
 ﻿using Coralite.Core.Systems.ParticleSystem;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 
 namespace Coralite.Core.Systems.MagikeSystem.Particles
 {
-    public class TileHightlight : Particle
+    public class TileHightlight : BasePRT
     {
         public override string Texture => AssetDirectory.Particles + Name;
 
-        public override void OnSpawn()
+        public override void SetProperty()
         {
-            shouldKilledOutScreen = true;
+            PRTDrawMode = PRTDrawModeEnum.AdditiveBlend;
+            ShouldKillWhenOffScreen = true;
         }
 
-        public override void Update()
+        public override void AI()
         {
             fadeIn++;
             if (fadeIn > 1)
@@ -31,13 +33,15 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
             }
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public override bool PreDraw(SpriteBatch spriteBatch)
         {
-            var mainTex = GetTexture().Value;
+            var mainTex = TexValue;
             Rectangle frame = mainTex.Frame(3, 3, Frame.X, Frame.Y);
             Vector2 origin = frame.Size() / 2;
 
-            spriteBatch.Draw(mainTex, Center - Main.screenPosition, frame, color, Rotation, origin, Scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(mainTex, Position - Main.screenPosition, frame, Color, Rotation, origin, Scale, SpriteEffects.None, 0f);
+
+            return false;
         }
     }
 }

@@ -77,7 +77,6 @@ namespace Coralite.Core.Configs
             VisualEffectSystem.UseNightmareBossBar = UseNightmareBossBar;
             VisualEffectSystem.HylianShieldScreenHighlight = HylianShieldScreenHighlight;
             VisualEffectSystem.ParticleCount = ParticleCount;
-            ParticleSystem.Particles = new System.Collections.Generic.List<Particle>(ParticleCount);
         }
     }
 

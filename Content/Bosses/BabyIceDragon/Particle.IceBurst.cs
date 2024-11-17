@@ -1,21 +1,23 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
+using InnoVault.PRT;
 
 namespace Coralite.Content.Bosses.BabyIceDragon
 {
-    public class IceBurstParticle : Particle
+    public class IceBurstParticle : BasePRT
     {
         public override string Texture => AssetDirectory.BabyIceDragon + "IceBurst";
 
-        public override void OnSpawn()
+        public override void SetProperty()
         {
-            color = Color.White;
+            Color = Color.White;
             Rotation = 0f;
             Frame = new Rectangle(0, 0, 128, 128);
-            shouldKilledOutScreen = false;
+            ShouldKillWhenOffScreen = false;
+            PRTDrawMode = PRTDrawModeEnum.AdditiveBlend;
         }
 
-        public override void Update()
+        public override void AI()
         {
             if (fadeIn % 2 == 0)
                 Frame.Y = (int)(fadeIn / 2) * 128;

@@ -333,17 +333,11 @@ namespace Coralite.Helpers
             return SoundEngine.PlaySound(style, position);
         }
 
-        public static bool OnScreen(Vector2 pos) => pos.X > -16 && pos.X < Main.screenWidth + 16 && pos.Y > -16 && pos.Y < Main.screenHeight + 16;
+        public static bool IsPointOnScreen(Vector2 pos) => pos.X > -16 && pos.X < Main.screenWidth + 16 && pos.Y > -16 && pos.Y < Main.screenHeight + 16;
 
-        public static bool OnScreen(Rectangle rect) => rect.Intersects(new Rectangle(0, 0, Main.screenWidth, Main.screenHeight));
+        public static bool IsRectangleOnScreen(Rectangle rect) => rect.Intersects(new Rectangle(0, 0, Main.screenWidth, Main.screenHeight));
 
-        public static bool OnScreen(Vector2 pos, Vector2 size) => OnScreen(new Rectangle((int)pos.X, (int)pos.Y, (int)size.X, (int)size.Y));
-
-        public static void NotOnServer(Action method)
-        {
-            if (Main.netMode != NetmodeID.Server)
-                method();
-        }
+        public static bool IsAreaOnScreen(Vector2 pos, Vector2 size) => IsRectangleOnScreen(new Rectangle((int)pos.X, (int)pos.Y, (int)size.X, (int)size.Y));
 
         public static Rectangle QuickMouseRectangle()
            => new((int)Main.MouseWorld.X, (int)Main.MouseWorld.Y, 2, 2);

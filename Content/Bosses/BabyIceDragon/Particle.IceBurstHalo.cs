@@ -1,28 +1,30 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
+using InnoVault.PRT;
 using Terraria;
 
 namespace Coralite.Content.Bosses.BabyIceDragon
 {
-    public class IceBurstHalo : Particle
+    public class IceBurstHalo : BasePRT
     {
         public override string Texture => AssetDirectory.Particles + "IceHalo";
 
-        public override bool ShouldUpdateCenter() => false;
+        public override bool ShouldUpdatePosition() => false;
 
-        public override void OnSpawn()
+        public override void SetProperty()
         {
             Scale = 0.02f;
-            color = Color.White;
+            Color = Color.White;
             Rotation = Main.rand.NextFloat(6.282f);
             Frame = new Rectangle(0, 0, 128, 128);
-            shouldKilledOutScreen = false;
+            ShouldKillWhenOffScreen = false;
+            PRTDrawMode = PRTDrawModeEnum.AdditiveBlend;
         }
 
-        public override void Update()
+        public override void AI()
         {
             if (fadeIn > 14)
-                color *= 0.88f;
+                Color *= 0.88f;
 
             Scale += 0.875f;
 

@@ -4,6 +4,7 @@ using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Audio;
@@ -36,7 +37,7 @@ namespace Coralite.Content.Items.HyacinthSeries
                     1 => new Color(219, 70, 178),
                     _ => Color.White
                 };
-                Particle.NewParticle(center + Main.rand.NextVector2Circular(6, 6), dir.RotatedBy(Main.rand.NextFloat(-0.5f, 0.5f)) * Main.rand.NextFloat(1.2f, 2.3f), CoraliteContent.ParticleType<HorizontalStar>(), color, Main.rand.NextFloat(0.05f, 0.15f));
+                PRTLoader.NewParticle(center + Main.rand.NextVector2Circular(6, 6), dir.RotatedBy(Main.rand.NextFloat(-0.5f, 0.5f)) * Main.rand.NextFloat(1.2f, 2.3f), CoraliteContent.ParticleType<HorizontalStar>(), color, Main.rand.NextFloat(0.05f, 0.15f));
             }
         }
     }
@@ -78,7 +79,7 @@ namespace Coralite.Content.Items.HyacinthSeries
                     Vector2 center = Projectile.Center + Main.rand.NextVector2CircularEdge(8, 8);
 
                     Projectile.NewProjectileFromThis<StarsBreathExplosion>(center, Vector2.Zero, (int)(Projectile.damage * 0.45f), Projectile.knockBack, Projectile.owner, scale);
-                    Particle.NewParticle(center, Vector2.Zero, CoraliteContent.ParticleType<RainbowHalo>(), Color.White, scale + 0.1f);
+                    PRTLoader.NewParticle(center, Vector2.Zero, CoraliteContent.ParticleType<RainbowHalo>(), Color.White, scale + 0.1f);
                     if (factor == 0)
                         PlaySound();
                 }
@@ -115,7 +116,7 @@ namespace Coralite.Content.Items.HyacinthSeries
 
                 Projectile.NewProjectileFromThis<StarsBreathExplosion>(center, Vector2.Zero, (int)(Projectile.damage * 0.45f), Projectile.knockBack, Projectile.owner, 0.6f);
                 if (VisualEffectSystem.HitEffect_SpecialParticles)
-                    Particle.NewParticle(center, Vector2.Zero, CoraliteContent.ParticleType<RainbowHalo>(), Color.White, 0.6f);
+                    PRTLoader.NewParticle(center, Vector2.Zero, CoraliteContent.ParticleType<RainbowHalo>(), Color.White, 0.6f);
                 if (Projectile.timeLeft > 31)
                     PlaySound();
             }
@@ -204,7 +205,7 @@ namespace Coralite.Content.Items.HyacinthSeries
                         };
 
                         int width = (int)(Projectile.width * 0.25f);
-                        Particle.NewParticle(Projectile.Center + Main.rand.NextVector2CircularEdge(width, width), Vector2.Zero,
+                        PRTLoader.NewParticle(Projectile.Center + Main.rand.NextVector2CircularEdge(width, width), Vector2.Zero,
                             CoraliteContent.ParticleType<HorizontalStar>(), color, Projectile.scale * 0.3f);
                     }
 

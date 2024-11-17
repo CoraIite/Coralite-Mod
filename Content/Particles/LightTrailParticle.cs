@@ -1,30 +1,32 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;
 
 namespace Coralite.Content.Particles
 {
-    public class LightTrailParticle : Particle
+    public class LightTrailParticle : BasePRT
     {
         public override string Texture => AssetDirectory.OtherProjectiles + "HorizontalLight";
 
         public Color targetColor;
         public bool noGravity;
 
-        public override void OnSpawn()
+        public override void SetProperty()
         {
+            PRTDrawMode = PRTDrawModeEnum.AdditiveBlend;
             Rotation = Velocity.ToRotation();
         }
 
-        public override void Update()
+        public override void AI()
         {
             fadeIn++;
             if (fadeIn > 13)
             {
-                color = Color.Lerp(color, targetColor, 0.1f);
+                Color = Color.Lerp(Color, targetColor, 0.1f);
 
                 if (!noGravity && Velocity.Y < 7)
                 {
@@ -35,22 +37,22 @@ namespace Coralite.Content.Particles
                 Rotation = Velocity.ToRotation();
             }
 
-            if (color.A < 2)
+            if (Color.A < 2)
                 active = false;
 
-            if (fadeIn < oldCenter.Length)
+            if (fadeIn < oldPositions.Length)
             {
-                int length = oldCenter.Length;
+                int length = oldPositions.Length;
                 for (int i = 0; i < length; i++)
                 {
-                    oldCenter[i] = Vector2.Lerp(oldCenter[0], Center, i / (float)(length - 1));
-                    oldRot[i] = Helper.Lerp(oldRot[0], Rotation, i / (float)(length - 1));
+                    oldPositions[i] = Vector2.Lerp(oldPositions[0], Position, i / (float)(length - 1));
+                    oldRotations[i] = Helper.Lerp(oldRotations[0], Rotation, i / (float)(length - 1));
                 }
             }
             else
             {
-                UpdatePosCachesNormally(oldCenter.Length);
-                UpdateRotCachesNormally(oldRot.Length);
+                UpdatePositionCache(oldPositions.Length);
+                UpdateRotationCache(oldRotations.Length);
             }
         }
 
@@ -60,32 +62,32 @@ namespace Coralite.Content.Particles
             {
                 return;
             }
-            LightTrailParticle p = NewParticle<LightTrailParticle>(center, velocity, newcolor, scale);
+            LightTrailParticle p = PRTLoader.NewParticle<LightTrailParticle>(center, velocity, newcolor, scale);
             if (p != null)
             {
                 p.targetColor = targetColor == default ? new Color(0, 60, 250, 0) : targetColor;
-                p.InitOldCaches(trailCacheCount);
+                p.InitializeCaches(trailCacheCount);
             }
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public override bool PreDraw(SpriteBatch spriteBatch)
         {
-            Texture2D mainTex = GetTexture().Value;
+            Texture2D mainTex = TexValue;
             float scale = Scale;
-            Color c = color;
+            Color c = Color;
 
             List<CustomVertexInfo> bars = new();
             List<CustomVertexInfo> bar3 = new();
             List<CustomVertexInfo> bar4 = new();
 
             float height = mainTex.Height * scale;
-            int cacheCount = oldCenter.Length;
+            int cacheCount = oldPositions.Length;
 
             for (int i = 0; i < cacheCount; i++)
             {
                 float factor = (float)i / cacheCount;
-                Vector2 Center = oldCenter[i];
-                Vector2 normal = (oldRot[i] + 1.57f).ToRotationVector2();
+                Vector2 Center = oldPositions[i];
+                Vector2 normal = (oldRotations[i] + 1.57f).ToRotationVector2();
 
                 Vector2 Top = Center - Main.screenPosition + (normal * height);
                 Vector2 Bottom = Center - Main.screenPosition - (normal * height);
@@ -93,7 +95,7 @@ namespace Coralite.Content.Particles
                 Vector2 Top2 = Center - Main.screenPosition + (normal * height * 1.5f);
                 Vector2 Bottom2 = Center - Main.screenPosition - (normal * height * 1.5f);
 
-                var Color2 = color;//Color.Lerp(color, Color.DarkBlue, factor);
+                var Color2 = Color;//Color.Lerp(color, Color.DarkBlue, factor);
                 bars.Add(new(Top, Color2, new Vector3(factor, 0, 1)));
                 bars.Add(new(Bottom, Color2, new Vector3(factor, 1, 1)));
                 Color2 = Color.White * (c.A / 255f);
@@ -111,17 +113,19 @@ namespace Coralite.Content.Particles
             spriteBatch.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bar3.ToArray(), 0, bar3.Count - 2);
             spriteBatch.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bar4.ToArray(), 0, bar3.Count - 2);
             spriteBatch.GraphicsDevice.BlendState = BlendState.AlphaBlend;
+
+            return false;
         }
     }
 
     public class LightTrailParticle_NoPrimitive : LightTrailParticle
     {
-        public override void Update()
+        public override void AI()
         {
             fadeIn++;
             if (fadeIn > 13)
             {
-                color = Color.Lerp(color, targetColor, 0.1f);
+                Color = Color.Lerp(Color, targetColor, 0.1f);
 
                 if (!noGravity && Velocity.Y < 7)
                 {
@@ -132,28 +136,30 @@ namespace Coralite.Content.Particles
                 Rotation = Velocity.ToRotation();
             }
 
-            if (color.A < 2)
+            if (Color.A < 2)
                 active = false;
         }
 
         public static LightTrailParticle_NoPrimitive Spawn(Vector2 center, Vector2 velocity, Color newcolor, float scale, Color targetColor = default)
         {
-            LightTrailParticle_NoPrimitive p = NewParticle<LightTrailParticle_NoPrimitive>(center, velocity, newcolor, scale);
+            LightTrailParticle_NoPrimitive p = PRTLoader.NewParticle<LightTrailParticle_NoPrimitive>(center, velocity, newcolor, scale);
             p.targetColor = targetColor == default ? new Color(0, 60, 250, 0) : targetColor;
 
             return p;
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public override bool PreDraw(SpriteBatch spriteBatch)
         {
-            Texture2D mainTex = GetTexture().Value;
-            Color c = Color.White * (color.A / 255f);
+            Texture2D mainTex = TexValue;
+            Color c = Color.White * (Color.A / 255f);
             c.A = (byte)(c.A * 0.3f);
 
-            spriteBatch.Draw(mainTex, Center - Main.screenPosition, null, c, Rotation, mainTex.Size() / 2, Scale * 1.5f, 0, 0);
-            c = color;
-            spriteBatch.Draw(mainTex, Center - Main.screenPosition, null, c, Rotation, mainTex.Size() / 2, Scale, 0, 0);
-            spriteBatch.Draw(mainTex, Center - Main.screenPosition, null, c, Rotation, mainTex.Size() / 2, Scale, 0, 0);
+            spriteBatch.Draw(mainTex, Position - Main.screenPosition, null, c, Rotation, mainTex.Size() / 2, Scale * 1.5f, 0, 0);
+            c = Color;
+            spriteBatch.Draw(mainTex, Position - Main.screenPosition, null, c, Rotation, mainTex.Size() / 2, Scale, 0, 0);
+            spriteBatch.Draw(mainTex, Position - Main.screenPosition, null, c, Rotation, mainTex.Size() / 2, Scale, 0, 0);
+
+            return false;
         }
     }
 }

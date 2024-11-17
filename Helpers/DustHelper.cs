@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
+using InnoVault.PRT;
 using System;
 using Terraria;
 using Terraria.Graphics.CameraModifiers;
@@ -23,12 +24,12 @@ namespace Coralite.Helpers
 
             for (int i = 0; i < 2; i++)
             {
-                Particle.NewParticle(center, NextVec2Dir() * Main.rand.NextFloat(16, 18), type, red, Main.rand.NextFloat(0.1f, 0.15f));
+                PRTLoader.NewParticle(center, NextVec2Dir() * Main.rand.NextFloat(16, 18), type, red, Main.rand.NextFloat(0.1f, 0.15f));
             }
             for (int i = 0; i < 5; i++)
             {
-                Particle.NewParticle(center, NextVec2Dir() * Main.rand.NextFloat(10, 14), type, red, Main.rand.NextFloat(0.1f, 0.15f));
-                Particle.NewParticle(center, NextVec2Dir() * Main.rand.NextFloat(10, 14), type, Color.White, Main.rand.NextFloat(0.05f, 0.1f));
+                PRTLoader.NewParticle(center, NextVec2Dir() * Main.rand.NextFloat(10, 14), type, red, Main.rand.NextFloat(0.1f, 0.15f));
+                PRTLoader.NewParticle(center, NextVec2Dir() * Main.rand.NextFloat(10, 14), type, Color.White, Main.rand.NextFloat(0.05f, 0.1f));
                 Dust dust = Dust.NewDustPerfect(center, DustID.GemRuby, NextVec2Dir() * Main.rand.NextFloat(4, 8), Scale: Main.rand.NextFloat(1.6f, 1.8f));
                 dust.noGravity = true;
             }
@@ -52,12 +53,12 @@ namespace Coralite.Helpers
 
             for (int i = 0; i < 4; i++)
             {
-                Particle.NewParticle(center, NextVec2Dir() * Main.rand.NextFloat(32, 34), type, red, Main.rand.NextFloat(0.15f, 0.2f));
+                PRTLoader.NewParticle(center, NextVec2Dir() * Main.rand.NextFloat(32, 34), type, red, Main.rand.NextFloat(0.15f, 0.2f));
             }
             for (int i = 0; i < 10; i++)
             {
-                Particle.NewParticle(center, NextVec2Dir() * Main.rand.NextFloat(18, 26), type, red, Main.rand.NextFloat(0.1f, 0.15f));
-                Particle.NewParticle(center, NextVec2Dir() * Main.rand.NextFloat(18, 26), type, Color.White, Main.rand.NextFloat(0.05f, 0.1f));
+                PRTLoader.NewParticle(center, NextVec2Dir() * Main.rand.NextFloat(18, 26), type, red, Main.rand.NextFloat(0.1f, 0.15f));
+                PRTLoader.NewParticle(center, NextVec2Dir() * Main.rand.NextFloat(18, 26), type, Color.White, Main.rand.NextFloat(0.05f, 0.1f));
                 Dust dust = Dust.NewDustPerfect(center, DustID.GemRuby, NextVec2Dir() * Main.rand.NextFloat(6, 10), Scale: Main.rand.NextFloat(2f, 2.4f));
                 dust.noGravity = true;
             }

@@ -5,6 +5,7 @@ using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
@@ -338,7 +339,7 @@ namespace Coralite.Content.Items.Icicle
 
             if (Main.rand.NextBool(5))
             {
-                Particle.NewParticle(Top - (RotateVec2 * 16) + Main.rand.NextVector2Circular(32, 32), dir.RotatedBy(Main.rand.NextFloat(-0.4f, 0.4f)) * Main.rand.NextFloat(1f, 2f),
+                PRTLoader.NewParticle(Top - (RotateVec2 * 16) + Main.rand.NextVector2Circular(32, 32), dir.RotatedBy(Main.rand.NextFloat(-0.4f, 0.4f)) * Main.rand.NextFloat(1f, 2f),
                     CoraliteContent.ParticleType<SnowFlower>(), Color.White, Main.rand.NextFloat(0.15f, 0.4f));
             }
 
@@ -389,7 +390,7 @@ namespace Coralite.Content.Items.Icicle
 
             if (VisualEffectSystem.HitEffect_SpecialParticles)
             {
-                Particle p = Particle.NewParticle(pos, Vector2.Zero, CoraliteContent.ParticleType<Strike>(), new Color(129, 216, 243), Main.rand.NextFloat(0.75f, 1.2f));
+                BasePRT p = PRTLoader.NewParticle(pos, Vector2.Zero, CoraliteContent.ParticleType<Strike>(), new Color(129, 216, 243), Main.rand.NextFloat(0.75f, 1.2f));
                 p.Rotation = _Rotation + 2.2f;
             }
         }
@@ -866,7 +867,7 @@ namespace Coralite.Content.Items.Icicle
 
             if (Main.rand.NextBool(5))
             {
-                Particle.NewParticle(Projectile.Center + Main.rand.NextVector2Circular(16, 16), dir.RotatedBy(Main.rand.NextFloat(-0.4f, 0.4f)) * Main.rand.NextFloat(1f, 2f),
+                PRTLoader.NewParticle(Projectile.Center + Main.rand.NextVector2Circular(16, 16), dir.RotatedBy(Main.rand.NextFloat(-0.4f, 0.4f)) * Main.rand.NextFloat(1f, 2f),
                     CoraliteContent.ParticleType<SnowFlower>(), Color.White, Main.rand.NextFloat(0.15f, 0.4f));
             }
         }

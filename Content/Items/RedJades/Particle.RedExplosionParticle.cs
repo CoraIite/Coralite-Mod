@@ -1,30 +1,32 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 
 namespace Coralite.Content.Items.RedJades
 {
-    public class RedExplosionParticle : Particle
+    public class RedExplosionParticle : BasePRT
     {
         public override string Texture => AssetDirectory.OtherProjectiles + "LightFog";
 
         private float scaleAdder;
 
-        public override bool ShouldUpdateCenter() => false;
+        public override bool ShouldUpdatePosition() => false;
 
-        public override void OnSpawn()
+        public override void SetProperty()
         {
             Frame = new Rectangle(0, 0, 256, 256);
             Rotation = Main.rand.NextFloat(6.282f);
             Scale = 0.01f;
             shader = new Terraria.Graphics.Shaders.ArmorShaderData(Coralite.Instance.Assets.Request<Effect>("Effects/GlowingDust", ReLogic.Content.AssetRequestMode.ImmediateLoad), "GlowingDustPass");
             shader.UseOpacity(1);
+            PRTDrawMode = PRTDrawModeEnum.AdditiveBlend;
         }
 
-        public override void Update()
+        public override void AI()
         {
-            shader.UseColor(color);
+            shader.UseColor(Color);
             Scale += scaleAdder;
 
             if (fadeIn > 8)
@@ -43,28 +45,29 @@ namespace Coralite.Content.Items.RedJades
             if (VaultUtils.isServer)
                 return;
 
-            RedExplosionParticle particle = NewParticle<RedExplosionParticle>(center, Vector2.Zero, newColor, 0);
+            RedExplosionParticle particle = PRTLoader.NewParticle<RedExplosionParticle>(center, Vector2.Zero, newColor, 0);
             particle.scaleAdder = maxScale / 8;
         }
     }
 
-    public class RedGlowParticle : Particle
+    public class RedGlowParticle : BasePRT
     {
         public override string Texture => AssetDirectory.Rediancie + "RedShield_Flow";
 
         private float scaleAdder;
 
-        public override bool ShouldUpdateCenter() => false;
+        public override bool ShouldUpdatePosition() => false;
 
-        public override void OnSpawn()
+        public override void SetProperty()
         {
             Frame = new Rectangle(0, 0, 256, 256);
             Rotation = Main.rand.NextFloat(6.282f);
+            PRTDrawMode = PRTDrawModeEnum.AdditiveBlend;
             //shader = new Terraria.Graphics.Shaders.ArmorShaderData(new Ref<Effect>(Coralite.Instance.Assets.Request<Effect>("Effects/GlowingDust", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value), "GlowingDustPass");
             //shader.UseOpacity(1);
         }
 
-        public override void Update()
+        public override void AI()
         {
             //shader.UseColor(color);
             Rotation += 0.2f;
@@ -76,7 +79,7 @@ namespace Coralite.Content.Items.RedJades
             }
 
             if (fadeIn > 8)
-                color *= 0.84f;
+                Color *= 0.84f;
 
             fadeIn++;
             if (fadeIn > 14)
@@ -89,7 +92,7 @@ namespace Coralite.Content.Items.RedJades
             {
                 return;
             }
-            RedGlowParticle particle = NewParticle<RedGlowParticle>(center, Vector2.Zero, newColor, scale);
+            RedGlowParticle particle = PRTLoader.NewParticle<RedGlowParticle>(center, Vector2.Zero, newColor, scale);
             particle.scaleAdder = (maxScale - scale) / 6;
         }
     }

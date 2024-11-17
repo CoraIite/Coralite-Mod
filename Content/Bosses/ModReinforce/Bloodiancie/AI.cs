@@ -3,6 +3,7 @@ using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -368,7 +369,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
                 if (!DespawnFollowers(1))
                 {
                     ResetState();
-                    RedShield.Kill();
+                    RedShield.HanderKill();
                 }
             }
 
@@ -434,7 +435,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
                     NPC.rotation = NPC.rotation.AngleLerp((Target.Center - NPC.Center).ToRotation() + 1.57f, Timer / 45f);
                     if (Timer % 4 == 0)
                     {
-                        Particle.NewParticle(NPC.Center + Main.rand.NextVector2Circular(70, 70), Vector2.UnitY * -2,
+                        PRTLoader.NewParticle(NPC.Center + Main.rand.NextVector2Circular(70, 70), Vector2.UnitY * -2,
                             CoraliteContent.ParticleType<HorizontalStar>(), Coralite.RedJadeRed, Main.rand.NextFloat(0.5f, 0.8f));
                     }
                     break;
@@ -443,7 +444,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
                 if (realTime == 18 && Main.netMode != NetmodeID.Server)
                 {
                     SoundEngine.PlaySound(SoundID.Item4, NPC.Center);
-                    Particle.NewParticle(NPC.Center + new Vector2(0, -16), Vector2.Zero, CoraliteContent.ParticleType<Sparkle_Big>(), Coralite.RedJadeRed, 1.5f);
+                    PRTLoader.NewParticle(NPC.Center + new Vector2(0, -16), Vector2.Zero, CoraliteContent.ParticleType<Sparkle_Big>(), Coralite.RedJadeRed, 1.5f);
                 }
 
                 if (realTime < 20)

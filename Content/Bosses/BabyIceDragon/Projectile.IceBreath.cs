@@ -1,6 +1,7 @@
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
+using InnoVault.PRT;
 using Terraria;
 using Terraria.ID;
 
@@ -35,11 +36,11 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                 Dust dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(8, 8), DustID.FrostStaff);
                 dust.noGravity = true;
 
-                Particle.NewParticle(Projectile.Center + Main.rand.NextVector2Circular(16, 16), -Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.4f, 0.4f)) * 0.1f,
+                PRTLoader.NewParticle(Projectile.Center + Main.rand.NextVector2Circular(16, 16), -Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.4f, 0.4f)) * 0.1f,
                     CoraliteContent.ParticleType<SnowFlower>(), Color.White, Main.rand.NextFloat(0.3f, 0.4f));
             }
 
-            Particle.NewParticle(Projectile.Center + Main.rand.NextVector2Circular(16, 16), (-Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.2f, 0.2f)) * 0.2f) - (Vector2.UnitY * Main.rand.NextFloat(0.1f, 2f)),
+            PRTLoader.NewParticle(Projectile.Center + Main.rand.NextVector2Circular(16, 16), (-Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.2f, 0.2f)) * 0.2f) - (Vector2.UnitY * Main.rand.NextFloat(0.1f, 2f)),
                    CoraliteContent.ParticleType<Fog>(), Color.AliceBlue, Main.rand.NextFloat(0.8f, 0.9f));
         }
 

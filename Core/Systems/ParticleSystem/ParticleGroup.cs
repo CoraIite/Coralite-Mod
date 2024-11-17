@@ -1,5 +1,6 @@
 ﻿using Coralite.Core.Loaders;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,63 +10,63 @@ using Terraria.ID;
 
 namespace Coralite.Core.Systems.ParticleSystem
 {
-    public class ParticleGroup : IEnumerable<Particle>
+    public class ParticleGroup : IEnumerable<BasePRT>
     {
-        private List<Particle> _particles;
+        private List<BasePRT> _particles;
 
         public ParticleGroup()
         {
-            _particles = new List<Particle>();
+            _particles = new List<BasePRT>();
         }
 
-        public IEnumerator<Particle> GetEnumerator() => _particles.GetEnumerator();
+        public IEnumerator<BasePRT> GetEnumerator() => _particles.GetEnumerator();
         IEnumerator IEnumerable.GetEnumerator() => _particles.GetEnumerator();
 
         public void Clear() => _particles.Clear();
 
-        public Particle this[int i] => _particles[i];
+        public BasePRT this[int i] => _particles[i];
 
-        public T NewParticle<T>(Vector2 center, Vector2 velocity, Color newColor = default, float Scale = 1f) where T : Particle
+        public T NewParticle<T>(Vector2 center, Vector2 velocity, Color newColor = default, float Scale = 1f) where T : BasePRT
         {
             if (Main.netMode == NetmodeID.Server)
                 return null;
 
-            T p = ParticleLoader.GetParticle(CoraliteContent.ParticleType<T>()).NewInstance() as T;
+            T p = PRTLoader.PRT_IDToInstances[CoraliteContent.ParticleType<T>()].Clone() as T;
 
             //设置各种初始值
             p.active = true;
-            p.color = newColor;
-            p.Center = center;
+            p.Color = newColor;
+            p.Position = center;
             p.Velocity = velocity;
             p.Scale = Scale;
-            p.OnSpawn();
+            p.SetProperty();
 
             _particles.Add(p);
 
             return p;
         }
 
-        public Particle NewParticle(Vector2 center, Vector2 velocity, int type, Color newColor = default, float Scale = 1f)
+        public BasePRT NewParticle(Vector2 center, Vector2 velocity, int type, Color newColor = default, float Scale = 1f)
         {
             if (Main.netMode == NetmodeID.Server)
                 return null;
 
-            Particle p = ParticleLoader.GetParticle(type).NewInstance();
+            BasePRT p = PRTLoader.GetPRTInstance(type);
 
             //设置各种初始值
             p.active = true;
-            p.color = newColor;
-            p.Center = center;
+            p.Color = newColor;
+            p.Position = center;
             p.Velocity = velocity;
             p.Scale = Scale;
-            p.OnSpawn();
+            p.SetProperty();
 
             _particles.Add(p);
 
             return p;
         }
 
-        public void Add(Particle particle)
+        public void Add(BasePRT particle)
         {
             _particles.Add(particle);
         }
@@ -84,15 +85,15 @@ namespace Coralite.Core.Systems.ParticleSystem
                 if (particle == null)
                     continue;
 
-                particle.Update();
-                if (particle.ShouldUpdateCenter())
-                    particle.Center += particle.Velocity;
+                particle.AI();
+                if (particle.ShouldUpdatePosition())
+                    particle.Position += particle.Velocity;
 
                 //在粒子不活跃时把一些东西释放掉
                 if (!particle.active)
                 {
-                    particle.oldCenter = null;
-                    particle.oldRot = null;
+                    particle.oldPositions = null;
+                    particle.oldRotations = null;
                 }
 
                 //一些防止粒子持续时间过长的措施，额...还是建议在update里手动设置active比较好
@@ -121,7 +122,7 @@ namespace Coralite.Core.Systems.ParticleSystem
                 if (particle == null || !particle.active)
                     continue;
 
-                if (!Helper.OnScreen(particle.Center - Main.screenPosition))
+                if (!VaultUtils.IsPointOnScreen(particle.Position - Main.screenPosition))
                     continue;
 
                 if (particle.shader != armorShaderData)
@@ -137,7 +138,7 @@ namespace Coralite.Core.Systems.ParticleSystem
                     }
                 }
 
-                particle.Draw(spriteBatch);
+                PRTLoader.PRTInstanceDraw(spriteBatch, particle);
             }
 
             if (armorShaderData != null)
@@ -155,7 +156,7 @@ namespace Coralite.Core.Systems.ParticleSystem
                 if (!particle.active)
                     continue;
 
-                if (!Helper.OnScreen(particle.Center))
+                if (!VaultUtils.IsPointOnScreen(particle.Position))
                     continue;
 
                 if (particle.shader != armorShaderData)

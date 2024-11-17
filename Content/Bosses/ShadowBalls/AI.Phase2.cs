@@ -3,6 +3,7 @@ using Coralite.Content.WorldGeneration;
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using System;
 using Terraria;
 using Terraria.ID;
@@ -109,7 +110,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         {
                             if (Timer == 2)
                             {
-                                Particle.NewParticle(NPC.Center, Vector2.Zero, CoraliteContent.ParticleType<Sparkle_Big>(),
+                                PRTLoader.NewParticle(NPC.Center, Vector2.Zero, CoraliteContent.ParticleType<Sparkle_Big>(),
                                     Color.Purple, 1.2f);
 
                                 NPC.rotation = (Target.Center - NPC.Center).ToRotation();

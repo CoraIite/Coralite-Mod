@@ -1,6 +1,7 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -92,23 +93,24 @@ namespace Coralite.Content.Items.Pets
         public override Color RarityColor => Color.Lerp(new Color(255, 152, 210), Color.Pink, Math.Abs(MathF.Sin(Main.GlobalTimeWrappedHourly * 3)));
     }
 
-    public class Petal : Particle
+    public class Petal : BasePRT
     {
         public override string Texture => AssetDirectory.NightmarePlantera + "NightmarePetal";
 
-        public override void OnSpawn()
+        public override void SetProperty()
         {
             Frame = new Rectangle(0, Main.rand.Next(8) * 14, 10, 14);
-            shouldKilledOutScreen = false;
+            ShouldKillWhenOffScreen = false;
+            PRTDrawMode = PRTDrawModeEnum.AdditiveBlend;
         }
 
-        public override void Update()
+        public override void AI()
         {
-            Center += Velocity;
+            Position += Velocity;
             Rotation += Main.rand.NextFloat(0.13f, 0.18f);
             Velocity *= 0.99f;
             if (fadeIn > 45)
-                color *= 0.88f;
+                Color *= 0.88f;
             if (fadeIn % 8 == 0)
             {
                 Frame.Y += 14;
@@ -125,12 +127,12 @@ namespace Coralite.Content.Items.Pets
         {
             Rectangle frame = Frame;
             Vector2 origin = new(frame.Width / 2, frame.Height / 2);
-            Color c = color;
+            Color c = Color;
             if (fadeIn < 6)
             {
                 c *= fadeIn / 6;
             }
-            spriteBatch.Draw(GetTexture().Value, Center, frame, c, Rotation, origin, Scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(TexValue, Position, frame, c, Rotation, origin, Scale, SpriteEffects.None, 0f);
         }
     }
 

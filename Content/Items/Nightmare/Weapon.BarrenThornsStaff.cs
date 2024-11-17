@@ -3,6 +3,7 @@ using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -383,25 +384,26 @@ namespace Coralite.Content.Items.Nightmare
         }
     }
 
-    public class BarrenFogParticle : Particle
+    public class BarrenFogParticle : BasePRT
     {
         public override string Texture => AssetDirectory.Particles + "Fog";
 
-        public override void OnSpawn()
+        public override void SetProperty()
         {
             Rotation = Main.rand.NextFloat(6.282f);
             Frame = new Rectangle(0, Main.rand.Next(4) * 64, 64, 64);
+            PRTDrawMode = PRTDrawModeEnum.AdditiveBlend;
         }
 
-        public override void Update()
+        public override void AI()
         {
             Velocity *= 0.96f;
             Rotation += 0.01f;
             Scale *= 0.997f;
-            color.A = (byte)(color.A * 0.92f);
+            Color.A = (byte)(Color.A * 0.92f);
 
             fadeIn++;
-            if (fadeIn > 40 || color.A < 10)
+            if (fadeIn > 40 || Color.A < 10)
                 active = false;
         }
     }

@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.Items.CoreKeeper;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
@@ -13,7 +14,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
     /// 绘制本体的不断收缩圆圈
     /// 绘制旋转的物品
     /// </summary>
-    public class CraftParticle : Particle
+    public class CraftParticle : BasePRT
     {
         public override string Texture => AssetDirectory.Halos + "Circle";
 
@@ -24,13 +25,14 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
 
         public Item[] otherItems;
 
-        public override void OnSpawn()
+        public override void SetProperty()
         {
-            shouldKilledOutScreen = false;
-            drawNonPremultiplied = true;
+            PRTDrawMode = PRTDrawModeEnum.AdditiveBlend;
+            ShouldKillWhenOffScreen = false;
+            PRTDrawMode = PRTDrawModeEnum.NonPremultiplied;
         }
 
-        public override void Update()
+        public override void AI()
         {
             if (!TryGetEntity(_pos, out _))
             {
@@ -57,16 +59,16 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
                         for (int i = 0; i < 20; i++)
                         {
                             Vector2 dir = (i * MathHelper.TwoPi / 20).ToRotationVector2();
-                            Dust dust = Dust.NewDustPerfect(Center - dir * 26, DustID.RainbowMk2, dir * Main.rand.NextFloat(1f, 2f)
-                                , newColor: color, Scale: 0.8f);
+                            Dust dust = Dust.NewDustPerfect(Position - dir * 26, DustID.RainbowMk2, dir * Main.rand.NextFloat(1f, 2f)
+                                , newColor: Color, Scale: 0.8f);
                             dust.noGravity = true;
                         }
 
                     if ((int)fadeIn % 3 == 0 && Main.rand.NextBool())
                     {
                         Vector2 dir = Helper.NextVec2Dir();
-                        Dust dust = Dust.NewDustPerfect(Center - dir * 26, DustID.RainbowMk2, dir * Main.rand.NextFloat(1.5f, 3f)
-                            , newColor: color, Scale: 0.8f);
+                        Dust dust = Dust.NewDustPerfect(Position - dir * 26, DustID.RainbowMk2, dir * Main.rand.NextFloat(1.5f, 3f)
+                            , newColor: Color, Scale: 0.8f);
                         dust.noGravity = true;
                     }
                 }
@@ -77,22 +79,22 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
                 for (int i = 0; i < 20; i++)
                 {
                     Vector2 dir = (i * MathHelper.TwoPi / 20).ToRotationVector2();
-                    Dust dust = Dust.NewDustPerfect(Center, DustID.RainbowMk2, dir * Main.rand.NextFloat(2f, 5f)
-                        , newColor: color, Scale: 1.2f);
+                    Dust dust = Dust.NewDustPerfect(Position, DustID.RainbowMk2, dir * Main.rand.NextFloat(2f, 5f)
+                        , newColor: Color, Scale: 1.2f);
                     dust.noGravity = true;
-                    dust = Dust.NewDustPerfect(Center, DustID.RainbowMk2, dir * Main.rand.NextFloat(5f, 8f)
-                        , newColor: color, Scale: 1.5f);
+                    dust = Dust.NewDustPerfect(Position, DustID.RainbowMk2, dir * Main.rand.NextFloat(5f, 8f)
+                        , newColor: Color, Scale: 1.5f);
                     dust.noGravity = true;
                 }
 
                 for (int i = 0; i < 5; i++)
                 {
-                    Dust dust = Dust.NewDustPerfect(Center , ModContent.DustType<Runes>(), Helper.NextVec2Dir(3f,5f)
-                        , newColor: color, Scale: 1f);
+                    Dust dust = Dust.NewDustPerfect(Position , ModContent.DustType<Runes>(), Helper.NextVec2Dir(3f,5f)
+                        , newColor: Color, Scale: 1f);
                     dust.noGravity = true;
                 }
 
-                Helper.PlayPitched("UI/Success", 0.4f, -0.2f, Center);
+                Helper.PlayPitched("UI/Success", 0.4f, -0.2f, Position);
 
             }
 
@@ -116,7 +118,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
 
         public static CraftParticle Spawn(Point16 pos,Vector2 center, int craftTime, MagikeCraftRecipe chosenRecipe)
         {
-            CraftParticle p = NewParticle<CraftParticle>(center, Vector2.Zero, Coralite.MagicCrystalPink);
+            CraftParticle p = PRTLoader.NewParticle<CraftParticle>(center, Vector2.Zero, Coralite.MagicCrystalPink);
 
             if (chosenRecipe.RequiredItems != null&& chosenRecipe.RequiredItems.Count>0)
             {
@@ -136,12 +138,12 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
             return p;
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public override bool PreDraw(SpriteBatch spriteBatch)
         {
-            Texture2D mainTex = GetTexture().Value;
+            Texture2D mainTex = TexValue;
 
-            Vector2 pos = Center - Main.screenPosition;
-            Color c = color;
+            Vector2 pos = Position - Main.screenPosition;
+            Color c = Color;
             c.A = (byte)(200 * alpha);
             var origin = mainTex.Size() / 2;
             float scale = Length * 2 / mainTex.Width;
@@ -160,23 +162,26 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
             //c.A = (byte)(255 * alpha);
 
             spriteBatch.Draw(tex2, pos, null, c, Rotation, origin, scale, 0, 0);
+
+            return false;
         }
 
-        public override void DrawNonPremultiplied(SpriteBatch spriteBatch)
-        {
-            if (otherItems == null)
-                return;
+        //TODO
+        //public override void DrawNonPremultiplied(SpriteBatch spriteBatch)
+        //{
+        //    if (otherItems == null)
+        //        return;
 
-            int total = otherItems.Length;
-            Color c = Color.White;
-            c.A = (byte)(255 * alpha);
-            Vector2 pos = Center - Main.screenPosition;
+        //    int total = otherItems.Length;
+        //    Color c = Color.White;
+        //    c.A = (byte)(255 * alpha);
+        //    Vector2 pos = Position - Main.screenPosition;
 
-            for (int i = 0; i < total; i++)
-            {
-                float rot = Rotation + (float)i / total * MathHelper.TwoPi;
-                DrawItem(spriteBatch, otherItems[i], pos + rot.ToRotationVector2() * Length*0.9f, 48, c);
-            }
-        }
+        //    for (int i = 0; i < total; i++)
+        //    {
+        //        float rot = Rotation + (float)i / total * MathHelper.TwoPi;
+        //        DrawItem(spriteBatch, otherItems[i], pos + rot.ToRotationVector2() * Length*0.9f, 48, c);
+        //    }
+        //}
     }
 }

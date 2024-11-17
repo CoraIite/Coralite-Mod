@@ -8,6 +8,7 @@ using Coralite.Core.Systems.CameraSystem;
 using Coralite.Core.Systems.FlyingShieldSystem;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
@@ -1033,7 +1034,7 @@ namespace Coralite.Content.Items.ShieldPlus
                 {
                     velocity = RotateVec2 * 22;
                     if (Timer > 2)
-                        Particle.NewParticle<SpeedLine>(Projectile.Center, -RotateVec2, Color.LightSeaGreen, 0.6f);
+                        PRTLoader.NewParticle<SpeedLine>(Projectile.Center, -RotateVec2, Color.LightSeaGreen, 0.6f);
 
                     Dust d = Dust.NewDustPerfect(Projectile.Center + Helper.NextVec2Dir(0, 32), DustID.Firework_Green,
                         -RotateVec2 * Main.rand.NextFloat(4, 6), Scale: Main.rand.NextFloat(0.2f, 0.8f));
@@ -1087,7 +1088,7 @@ namespace Coralite.Content.Items.ShieldPlus
             base.OnHitNPC(target, hit, damageDone);
 
             if (VisualEffectSystem.HitEffect_Lightning)
-                Particle.NewParticle<SpeedLine>(Projectile.Center + (RotateVec2 * Projectile.height / 2), RotateVec2 * 5, Color.LightSeaGreen, 0.6f);
+                PRTLoader.NewParticle<SpeedLine>(Projectile.Center + (RotateVec2 * Projectile.height / 2), RotateVec2 * 5, Color.LightSeaGreen, 0.6f);
 
             if (VisualEffectSystem.HitEffect_Dusts)
                 for (int i = 0; i < 8; i++)
@@ -1111,7 +1112,7 @@ namespace Coralite.Content.Items.ShieldPlus
 
                 if (VisualEffectSystem.HitEffect_Lightning)
                     for (int i = 0; i < 4; i++)
-                        Particle.NewParticle<SpeedLine>(Projectile.Center + (i * RotateVec2 * 24), RotateVec2 * 5, Color.LightSeaGreen, 0.6f - (i * 0.1f));
+                        PRTLoader.NewParticle<SpeedLine>(Projectile.Center + (i * RotateVec2 * 24), RotateVec2 * 5, Color.LightSeaGreen, 0.6f - (i * 0.1f));
             }
         }
 

@@ -6,6 +6,7 @@ using Coralite.Core.Systems.Trails;
 using Coralite.Core.Systems.YujianSystem;
 using Coralite.Core.Systems.YujianSystem.YujianAIs;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Audio;
@@ -175,7 +176,7 @@ namespace Coralite.Content.Items.YujianHulu
                 r += 0.45f;
             }
 
-            Particle.NewParticle(Projectile.Center, Vector2.Zero, CoraliteContent.ParticleType<HorizontalStar>(), Color.Purple, 0.2f);
+            PRTLoader.NewParticle(Projectile.Center, Vector2.Zero, CoraliteContent.ParticleType<HorizontalStar>(), Color.Purple, 0.2f);
         }
 
         protected override void OnStartAttack(BaseYujianProj yujianProj)

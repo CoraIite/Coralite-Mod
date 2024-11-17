@@ -1,11 +1,11 @@
 ﻿using Coralite.Core;
-using Coralite.Core.Systems.ParticleSystem;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 
 namespace Coralite.Content.Particles
 {
-    public class HorizontalStar : Particle
+    public class HorizontalStar : BasePRT
     {
         public override string Texture => AssetDirectory.Particles + Name;
         public const int phase_1 = 8;
@@ -13,17 +13,18 @@ namespace Coralite.Content.Particles
         public const int phase_3 = 24;
         public const int phase_4 = 32;
 
-        public override void OnSpawn()
+        public override void SetProperty()
         {
             Frame = new Rectangle(0, 0, 126, 93);
             fadeIn = 0;
             shader = new Terraria.Graphics.Shaders.ArmorShaderData(Coralite.Instance.Assets.Request<Effect>("Effects/StarsDust", ReLogic.Content.AssetRequestMode.ImmediateLoad), "StarsDustPass");
             shader.UseSecondaryColor(Color.White);
+            PRTDrawMode = PRTDrawModeEnum.AdditiveBlend;
         }
 
-        public override void Update()
+        public override void AI()
         {
-            shader.UseColor(color);
+            shader.UseColor(Color);
 
             do
             {
@@ -48,7 +49,7 @@ namespace Coralite.Content.Particles
                 }
 
                 Velocity *= 0.96f;
-                color *= 0.96f;
+                Color *= 0.96f;
 
                 if (fadeIn < phase_3)
                 {
@@ -66,7 +67,7 @@ namespace Coralite.Content.Particles
 
             } while (false);
 
-            Lighting.AddLight(Center, color.ToVector3());
+            Lighting.AddLight(Position, Color.ToVector3());
 
             fadeIn++;
 

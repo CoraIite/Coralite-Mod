@@ -3,6 +3,7 @@ using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -448,7 +449,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                                     0 => tentacleColor,
                                     _ => tentacleColor * 2f,
                                 };
-                                Particle.NewParticle(NPC.Center + Main.rand.NextVector2Circular(32, 32), (NPC.rotation + (i * 2.6f)).ToRotationVector2() * Main.rand.NextFloat(12f, 24f),
+                                PRTLoader.NewParticle(NPC.Center + Main.rand.NextVector2Circular(32, 32), (NPC.rotation + (i * 2.6f)).ToRotationVector2() * Main.rand.NextFloat(12f, 24f),
                                     CoraliteContent.ParticleType<SpeedLine>(), c, Main.rand.NextFloat(0.3f, 0.5f));
                             }
 
@@ -621,7 +622,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             _ => new Color(122, 110, 134)
                         };
 
-                        Particle.NewParticle(NPC.Center + Main.rand.NextVector2Circular(32, 32), Helper.NextVec2Dir(2, 10f),
+                        PRTLoader.NewParticle(NPC.Center + Main.rand.NextVector2Circular(32, 32), Helper.NextVec2Dir(2, 10f),
                             CoraliteContent.ParticleType<BigFog>(), color, Scale: Main.rand.NextFloat(0.5f, 1f));
 
                         float rotFactor = Math.Clamp(Timer / ((float)RollingTime / 3), 0, 1);
@@ -783,7 +784,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             _ => new Color(122, 110, 134)
                         };
 
-                        Particle.NewParticle(NPC.Center + Main.rand.NextVector2Circular(32, 32), Helper.NextVec2Dir(2, 10f),
+                        PRTLoader.NewParticle(NPC.Center + Main.rand.NextVector2Circular(32, 32), Helper.NextVec2Dir(2, 10f),
                             CoraliteContent.ParticleType<BigFog>(), color, Scale: Main.rand.NextFloat(0.5f, 1f));
 
                         float rotFactor = Math.Clamp(Timer / ((float)RollingTime / 3), 0, 1);
@@ -1174,7 +1175,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             _ => new Color(122, 110, 134)
                         };
 
-                        Particle.NewParticle(NPC.Center + Main.rand.NextVector2Circular(32, 32), Helper.NextVec2Dir(2, 10f),
+                        PRTLoader.NewParticle(NPC.Center + Main.rand.NextVector2Circular(32, 32), Helper.NextVec2Dir(2, 10f),
                             CoraliteContent.ParticleType<BigFog>(), color, Scale: Main.rand.NextFloat(0.5f, 1f));
 
                         for (int i = 0; i < 3; i++)
@@ -2357,7 +2358,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         _ => new Color(122, 110, 134)
                     };
 
-                    Particle.NewParticle(NPC.Center + Main.rand.NextVector2Circular(32, 32), Helper.NextVec2Dir(6, 10f),
+                    PRTLoader.NewParticle(NPC.Center + Main.rand.NextVector2Circular(32, 32), Helper.NextVec2Dir(6, 10f),
                         CoraliteContent.ParticleType<BigFog>(), color, Scale: Main.rand.NextFloat(0.5f, 1.5f));
                 }
 

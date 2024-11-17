@@ -3,6 +3,7 @@ using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Audio;
@@ -51,8 +52,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
                 {
                     for (int i = 0; i < 2; i++)
                     {
-                        particles.NewParticle<Fog>(Projectile.Center, Helper.NextVec2Dir(2, 4),
-                             Color.DarkRed, Main.rand.NextFloat(1f, 1.5f));
+                        PRTLoader.NewParticle<Fog>(Projectile.Center, Helper.NextVec2Dir(2, 4), Color.DarkRed, Main.rand.NextFloat(1f, 1.5f));
                     }
 
                     Vector2 targetCenter = Owner.Center + new Vector2(0, -450);
@@ -179,27 +179,28 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
         }
     }
 
-    public class RedArrow : Particle
+    public class RedArrow : BasePRT
     {
         public override string Texture => AssetDirectory.Bloodiancie + Name;
 
-        public override void OnSpawn()
+        public override void SetProperty()
         {
-            color = Color.White;
-            Frame = GetTexture().Frame();
+            Color = Color.White;
+            Frame = TexValue.Frame();
             Rotation = Velocity.ToRotation();
+            PRTDrawMode = PRTDrawModeEnum.AdditiveBlend;
         }
 
-        public override void Update()
+        public override void AI()
         {
             fadeIn++;
 
             if (fadeIn > 30)
             {
-                color.A = (byte)(color.A * 0.7f);
+                Color.A = (byte)(Color.A * 0.7f);
             }
 
-            if (color.A < 10)
+            if (Color.A < 10)
             {
                 active = false;
             }

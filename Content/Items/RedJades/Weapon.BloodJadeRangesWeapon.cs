@@ -6,6 +6,7 @@ using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Core.Systems.Trails;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
@@ -417,7 +418,7 @@ namespace Coralite.Content.Items.RedJades
                 if (cp.parryTime < 280)
                     cp.parryTime += 100;
             }
-            Particle.NewParticle(Projectile.Center, Vector2.Zero,
+            PRTLoader.NewParticle(Projectile.Center, Vector2.Zero,
                 CoraliteContent.ParticleType<Sparkle_Big>(), Coralite.RedJadeRed, 1.5f);
             SoundEngine.PlaySound(CoraliteSoundID.Ding_Item4, Projectile.Center);
             Projectile.Kill();

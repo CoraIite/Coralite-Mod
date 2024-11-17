@@ -5,6 +5,7 @@ using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
@@ -530,7 +531,7 @@ namespace Coralite.Content.Items.Icicle
                 {
                     for (int i = 0; i < lineCount - 2; i++)
                     {
-                        Particle.NewParticle(Vector2.Lerp(targetCenter, Owner.Center, (float)i / lineCount) + Main.rand.NextVector2Circular(32, 32), -dashDir * Main.rand.NextFloat(6f, 13f),
+                        PRTLoader.NewParticle(Vector2.Lerp(targetCenter, Owner.Center, (float)i / lineCount) + Main.rand.NextVector2Circular(32, 32), -dashDir * Main.rand.NextFloat(6f, 13f),
                             CoraliteContent.ParticleType<SpeedLine>(), Coralite.IcicleCyan, Main.rand.NextFloat(0.1f, 0.4f));
                     }
                     Helper.PlayPitched("Icicle/Spurt", 0.8f, 0f, Owner.Center);

@@ -1,25 +1,27 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
+using InnoVault.PRT;
 using System;
 using Terraria;
 
 namespace Coralite.Content.Bosses.ThunderveinDragon
 {
-    public class ElectricParticle : Particle
+    public class ElectricParticle : BasePRT
     {
         public override string Texture => AssetDirectory.ThunderveinDragon + "ElectricParticle";
 
-        public override void OnSpawn()
+        public override void SetProperty()
         {
             Rotation = Main.rand.NextFloat(6.282f);
-            Frame = GetTexture().Frame(7, 5, 0, Main.rand.Next(5));
-            color = Color.White;
+            Frame = TexValue.Frame(7, 5, 0, Main.rand.Next(5));
+            Color = Color.White;
+            PRTDrawMode = PRTDrawModeEnum.AdditiveBlend;
         }
 
-        public override void Update()
+        public override void AI()
         {
             fadeIn++;
-            Center += Velocity;
+            Position += Velocity;
             if (fadeIn > 1 && fadeIn % 4 == 0)
             {
                 Frame.X += 80;
@@ -36,16 +38,16 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
     public class ElectricParticle_Follow : ElectricParticle
     {
-        public override bool ShouldUpdateCenter() => false;
+        public override bool ShouldUpdatePosition() => false;
 
         private Func<Vector2> GetParentCenter;
 
-        public override void Update()
+        public override void AI()
         {
             if (!GetCenter(out Vector2 parentCenter))
                 return;
 
-            Center = parentCenter + Velocity;
+            Position = parentCenter + Velocity;
             fadeIn++;
             if (fadeIn > 1 && fadeIn % 4 == 0)
             {
@@ -74,26 +76,27 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             {
                 return;
             }
-            ElectricParticle_Follow p = NewParticle<ElectricParticle_Follow>(parentCenter + offset, offset, Scale: scale);
+            ElectricParticle_Follow p = PRTLoader.NewParticle<ElectricParticle_Follow>(parentCenter + offset, offset, Scale: scale);
             p.GetParentCenter = GetParentCenter;
         }
     }
 
-    public class LightningParticle : Particle
+    public class LightningParticle : BasePRT
     {
         public override string Texture => AssetDirectory.ThunderveinDragon + Name;
 
-        public override void OnSpawn()
+        public override void SetProperty()
         {
             Rotation = Main.rand.NextFloat(6.282f);
-            Frame = GetTexture().Frame(4, 4, 0, Main.rand.Next(4));
-            color = Color.White;
+            Frame = TexValue.Frame(4, 4, 0, Main.rand.Next(4));
+            Color = Color.White;
+            PRTDrawMode = PRTDrawModeEnum.AdditiveBlend;
         }
 
-        public override void Update()
+        public override void AI()
         {
             fadeIn++;
-            Center += Velocity;
+            Position += Velocity;
             if (fadeIn > 1 && fadeIn % 5 == 0)
             {
                 Frame.X += 32;

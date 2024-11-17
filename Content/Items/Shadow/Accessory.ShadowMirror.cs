@@ -2,6 +2,7 @@
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -136,28 +137,29 @@ namespace Coralite.Content.Items.Shadow
         }
     }
 
-    public class ShadowTriangle : Particle
+    public class ShadowTriangle : BasePRT
     {
         public override string Texture => AssetDirectory.Particles + "Triangle";
 
-        public override void OnSpawn()
+        public override void SetProperty()
         {
             Rotation = Main.rand.NextFloat(6.282f);
             Frame = new Rectangle(0, Main.rand.Next(0, 5) * 64, 64, 64);
+            PRTDrawMode = PRTDrawModeEnum.AdditiveBlend;
         }
 
-        public override void Update()
+        public override void AI()
         {
             Rotation += 0.15f;
             Scale *= 0.97f;
-            color *= 0.92f;
+            Color *= 0.92f;
 
             fadeIn++;
             if (fadeIn > 5)
             {
                 Velocity *= 0.97f;
             }
-            if (fadeIn > 40 || color.A < 10)
+            if (fadeIn > 40 || Color.A < 10)
             {
                 active = false;
             }
