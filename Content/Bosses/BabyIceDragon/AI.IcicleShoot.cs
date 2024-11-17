@@ -3,6 +3,7 @@ using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -54,8 +55,8 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                         if (!VaultUtils.isServer)
                         {
                             GetMouseCenter(out _, out Vector2 mouseCenter2);
-                            Particle.NewParticle(mouseCenter2, Vector2.Zero, CoraliteContent.ParticleType<IceBurstHalo_Reverse>(), Scale: 0.8f);
-                            Particle.NewParticle(mouseCenter2, Vector2.Zero, CoraliteContent.ParticleType<IceBurstHalo_Reverse>(), Scale: 1.2f);
+                            PRTLoader.NewParticle(mouseCenter2, Vector2.Zero, CoraliteContent.ParticleType<IceBurstHalo_Reverse>(), Scale: 0.8f);
+                            PRTLoader.NewParticle(mouseCenter2, Vector2.Zero, CoraliteContent.ParticleType<IceBurstHalo_Reverse>(), Scale: 1.2f);
                             for (int i = 0; i < 4; i++)
                                 IceStarLight.Spawn(NPC.Center + Main.rand.NextVector2CircularEdge(100, 100), Main.rand.NextVector2CircularEdge(3, 3), 1f, () =>
                                 {
@@ -88,7 +89,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             Vector2 targetDir = (Target.Center - NPC.Center).SafeNormalize(Vector2.One);
 
                             if (!VaultUtils.isServer && (int)Timer % 2 == 0)
-                                Particle.NewParticle(mouseCenter, targetDir.RotatedBy(Main.rand.NextFloat(-0.6f, 0.6f)) * 4, CoraliteContent.ParticleType<Fog>(), Color.White, 0.8f);
+                                PRTLoader.NewParticle(mouseCenter, targetDir.RotatedBy(Main.rand.NextFloat(-0.6f, 0.6f)) * 4, CoraliteContent.ParticleType<Fog>(), Color.White, 0.8f);
 
                             if ((int)Timer % 12 == 0 && Main.netMode != NetmodeID.MultiplayerClient)
                             {
@@ -121,7 +122,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             if (!VaultUtils.isServer)
                             {
                                 GetMouseCenter(out _, out Vector2 mouseCenter);
-                                Particle.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.1f);
+                                PRTLoader.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.1f);
                                 PunchCameraModifier modifier = new(NPC.Center, new Vector2(0.8f, 0.8f), 5f, 20f, 40, 1000f, "BabyIceDragon");
                                 Main.instance.CameraModifiers.Add(modifier);
                             }
@@ -142,9 +143,9 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             {
                                 GetMouseCenter(out _, out Vector2 mouseCenter);
                                 if ((int)Timer % 10 == 0)
-                                    Particle.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringWave>(), Color.White, 0.1f);
+                                    PRTLoader.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringWave>(), Color.White, 0.1f);
                                 if ((int)Timer % 20 == 0)
-                                    Particle.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.1f);
+                                    PRTLoader.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.1f);
                             }
 
                             break;

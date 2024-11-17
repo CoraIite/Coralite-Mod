@@ -3,6 +3,7 @@ using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Core.Systems.Trails;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -113,7 +114,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            Particle particle = Particle.NewParticle(Vector2.Lerp(Projectile.Center, target.Center, 0.5f), Vector2.Zero, CoraliteContent.ParticleType<Strike>(), FantasyGod.shineColor, 1f);
+            BasePRT particle = PRTLoader.NewParticle(Vector2.Lerp(Projectile.Center, target.Center, 0.5f), Vector2.Zero, CoraliteContent.ParticleType<Strike>(), FantasyGod.shineColor, 1f);
             particle.Rotation = Projectile.velocity.ToRotation() + MathHelper.Pi + 2.2f + Main.rand.NextFloat(-0.5f, 0.5f);
         }
 

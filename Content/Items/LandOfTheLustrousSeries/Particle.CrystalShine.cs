@@ -1,6 +1,7 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Loaders;
 using Coralite.Core.Systems.ParticleSystem;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using Terraria;
 
 namespace Coralite.Content.Items.LandOfTheLustrousSeries
 {
-    public class CrystalShine : Particle
+    public class CrystalShine : BasePRT
     {
         public override string Texture => AssetDirectory.OtherProjectiles + "LightGlowShot";
 
@@ -66,7 +67,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public static CrystalShine Spawn(Vector2 center, Vector2 velocity, int shotCount, Vector2 scale, Color newColor = default)
         {
-            var cs = NewParticle<CrystalShine>(center, velocity, newColor);
+            CrystalShine cs = PRTLoader.NewParticle<CrystalShine>(center, velocity, newColor);
             cs.shotCount = shotCount;
             cs.scale = scale;
 
@@ -88,7 +89,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public static CrystalShine New(Vector2 center, Vector2 velocity, int shotCount, Vector2 scale, Color newColor = default)
         {
-            CrystalShine cs = ParticleLoader.GetParticle(CoraliteContent.ParticleType<CrystalShine>()).Clone() as CrystalShine;
+            CrystalShine cs = PRTLoader.PRT_IDToInstances[CoraliteContent.ParticleType<CrystalShine>()].Clone() as CrystalShine;
 
             //设置各种初始值
             cs.active = true;
@@ -117,12 +118,13 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             return cs;
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public override bool PreDraw(SpriteBatch spriteBatch)
         {
             for (int i = 0; i < shotCount; i++)
             {
                 DrawShot(spriteBatch, _shotRotation[i], _shotScale[i], Main.screenPosition);
             }
+            return false;
         }
 
         public override void DrawInUI(SpriteBatch spriteBatch)

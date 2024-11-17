@@ -5,6 +5,7 @@ using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Core.Systems.YujianSystem;
 using Coralite.Core.Systems.YujianSystem.YujianAIs;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Audio;
@@ -148,7 +149,7 @@ namespace Coralite.Content.Items.RedJades
                     Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity * (Projectile.extraUpdates + 1), ModContent.ProjectileType<SpurtProj>(),
                         Projectile.damage, Projectile.knockBack, Projectile.owner, spurtTime / (Projectile.extraUpdates + 1), 32);
 
-                Particle.NewParticle(Projectile.Center, Vector2.Zero, CoraliteContent.ParticleType<Sparkle_Big>(), Coralite.RedJadeRed, 0.8f);
+                PRTLoader.NewParticle(Projectile.Center, Vector2.Zero, CoraliteContent.ParticleType<Sparkle_Big>(), Coralite.RedJadeRed, 0.8f);
                 SoundEngine.PlaySound(CoraliteSoundID.Ding_Item4, Projectile.Center);
             }
 

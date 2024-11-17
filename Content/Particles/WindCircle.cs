@@ -1,11 +1,14 @@
-﻿using Coralite.Core.Systems.ParticleSystem;
+﻿using Coralite.Core;
+using Coralite.Core.Systems.ParticleSystem;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 
 namespace Coralite.Content.Particles
 {
-    public class WindCircle : Particle
+    public class WindCircle : BasePRT
     {
+        public override string Texture => AssetDirectory.Particles + Name;
         public int frameCounterMax = 1;
         public Vector2 scale = Vector2.One;
 
@@ -26,7 +29,7 @@ namespace Coralite.Content.Particles
                 return;
             }
             newcolor.A = (byte)(255 * alpha);
-            WindCircle p = NewParticle<WindCircle>(center, velocity, newcolor, Basescale);
+            WindCircle p = PRTLoader.NewParticle<WindCircle>(center, velocity, newcolor, Basescale);
             if (p != null)
             {
                 p.Rotation = rotation;
@@ -34,7 +37,7 @@ namespace Coralite.Content.Particles
             }
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public override bool PreDraw(SpriteBatch spriteBatch)
         {
             Rectangle frame = TexValue.Frame(1, 6, 0, Frame.Y);
             Vector2 origin = new(frame.Width / 2, frame.Height / 2);
@@ -44,6 +47,8 @@ namespace Coralite.Content.Particles
             Color c = Color;
             c.A = (byte)(0.3f * c.A);
             spriteBatch.Draw(TexValue, Position - Main.screenPosition, frame, c, Rotation, origin, scale2 * 1.1f, SpriteEffects.None, 0f);
+
+            return false;
         }
     }
 }

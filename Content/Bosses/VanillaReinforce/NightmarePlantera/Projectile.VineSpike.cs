@@ -2,6 +2,7 @@
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
@@ -168,7 +169,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                             0 => tentacleColor,
                             _ => tentacleColor * 2f,
                         };
-                        Particle.NewParticle(Projectile.Center + Main.rand.NextVector2Circular(32, 32), Projectile.velocity * Main.rand.NextFloat(0.05f, 0.2f),
+                        PRTLoader.NewParticle(Projectile.Center + Main.rand.NextVector2Circular(32, 32), Projectile.velocity * Main.rand.NextFloat(0.05f, 0.2f),
                             CoraliteContent.ParticleType<SpeedLine>(), c, Main.rand.NextFloat(0.3f, 0.5f));
                         //}
                         if (Main.rand.NextBool())
@@ -178,7 +179,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                                 0 => tentacleColor,
                                 _ => tentacleColor * 2f,
                             };
-                            Particle.NewParticle(Projectile.Center + Main.rand.NextVector2Circular(16, 16), -Projectile.velocity * Main.rand.NextFloat(0.05f, 0.3f),
+                            PRTLoader.NewParticle(Projectile.Center + Main.rand.NextVector2Circular(16, 16), -Projectile.velocity * Main.rand.NextFloat(0.05f, 0.3f),
                                 CoraliteContent.ParticleType<SpeedLine>(), c2, Main.rand.NextFloat(0.3f, 0.5f));
                         }
 

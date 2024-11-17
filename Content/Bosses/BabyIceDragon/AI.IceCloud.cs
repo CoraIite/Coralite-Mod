@@ -3,6 +3,7 @@ using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -68,7 +69,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
                             if (!VaultUtils.isServer)
                             {
-                                Particle.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.1f);
+                                PRTLoader.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.1f);
                                 PunchCameraModifier modifier = new(NPC.Center, new Vector2(0.8f, 0.8f), 5f, 20f, 40, 1000f, "BabyIceDragon");
                                 Main.instance.CameraModifiers.Add(modifier);
                             }
@@ -84,9 +85,9 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                         {
                             GetMouseCenter(out _, out Vector2 mouseCenter);
                             if ((int)Timer % 10 == 0)
-                                Particle.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringWave>(), Color.White, 0.1f);
+                                PRTLoader.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringWave>(), Color.White, 0.1f);
                             if ((int)Timer % 20 == 0)
-                                Particle.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.1f);
+                                PRTLoader.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.1f);
 
                             break;
                         }

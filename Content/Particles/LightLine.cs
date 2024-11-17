@@ -1,12 +1,12 @@
 ﻿using Coralite.Core;
-using Coralite.Core.Systems.ParticleSystem;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 
 namespace Coralite.Content.Particles
 {
-    public class LightLine : Particle
+    public class LightLine : BasePRT
     {
         public override string Texture => AssetDirectory.OtherProjectiles + "HorizontalLight";
 
@@ -55,7 +55,7 @@ namespace Coralite.Content.Particles
             {
                 return null;
             }
-            LightLine ll = NewParticle<LightLine>(center, velocity, newColor, scale);
+            LightLine ll = PRTLoader.NewParticle<LightLine>(center, velocity, newColor, scale);
             if (ll != null)
             {
                 ll.follow = follow;
@@ -64,7 +64,7 @@ namespace Coralite.Content.Particles
             return ll;
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public override bool PreDraw(SpriteBatch spriteBatch)
         {
             Texture2D mainTex = TexValue;
             Vector2 origin = new(0, mainTex.Height / 2);
@@ -72,6 +72,7 @@ namespace Coralite.Content.Particles
             c.A = (byte)(alpha * 255);
 
             spriteBatch.Draw(mainTex, Position - Main.screenPosition, null, c, Rotation, origin, new Vector2(Scale, 0.4f), SpriteEffects.None, 0f);
+            return false;
         }
     }
 }

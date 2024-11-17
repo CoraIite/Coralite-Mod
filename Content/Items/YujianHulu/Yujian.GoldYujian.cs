@@ -4,6 +4,7 @@ using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Core.Systems.YujianSystem;
 using Coralite.Core.Systems.YujianSystem.YujianAIs;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
@@ -211,7 +212,7 @@ namespace Coralite.Content.Items.YujianHulu
             {
                 for (int i = 0; i < 2; i++)
                 {
-                    Particle particle = Particle.NewParticle(Projectile.Center + Main.rand.NextVector2CircularEdge(16, 16) + (i * Projectile.velocity), Vector2.Zero, CoraliteContent.ParticleType<HorizontalStar>(), Color.Gold, Main.rand.NextFloat(0.1f, 0.15f));
+                    BasePRT particle = PRTLoader.NewParticle(Projectile.Center + Main.rand.NextVector2CircularEdge(16, 16) + (i * Projectile.velocity), Vector2.Zero, CoraliteContent.ParticleType<HorizontalStar>(), Color.Gold, Main.rand.NextFloat(0.1f, 0.15f));
                     particle.Rotation = 1.57f;
                 }
             }

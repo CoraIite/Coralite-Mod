@@ -4,6 +4,7 @@ using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -278,7 +279,7 @@ namespace Coralite.Content.Items.Stars
                 {
                     Color starYellow = new(255, 254, 191);
                     for (int i = 0; i < 2; i++)
-                        Particle.NewParticle(target.Center + Main.rand.NextVector2Circular(target.width, target.height),
+                        PRTLoader.NewParticle(target.Center + Main.rand.NextVector2Circular(target.width, target.height),
                             Main.rand.NextVector2CircularEdge(1, 1), CoraliteContent.ParticleType<HorizontalStar>(), starYellow, 0.3f);
                 }
             }
@@ -290,7 +291,7 @@ namespace Coralite.Content.Items.Stars
             {
                 Color starYellow = new(255, 254, 191);
                 for (int i = 0; i < 6; i++)
-                    Particle.NewParticle(Projectile.Center, Vector2.Normalize(Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.6f, 0.6f))) * Main.rand.Next(2, 5),
+                    PRTLoader.NewParticle(Projectile.Center, Vector2.Normalize(Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.6f, 0.6f))) * Main.rand.Next(2, 5),
                        CoraliteContent.ParticleType<HorizontalStar>(), starYellow, 0.3f);
             }
         }

@@ -5,6 +5,7 @@ using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -104,7 +105,7 @@ namespace Coralite.Content.Items.Nightmare
 
                     for (int i = 0; i < 5; i++)
                     {
-                        Particle.NewParticle(Player.Center + Main.rand.NextVector2Circular(24, 24) + (i * newVelocity), -newVelocity * 0.75f, CoraliteContent.ParticleType<SpeedLine>(), NightmarePlantera.nightmareSparkleColor,
+                        PRTLoader.NewParticle(Player.Center + Main.rand.NextVector2Circular(24, 24) + (i * newVelocity), -newVelocity * 0.75f, CoraliteContent.ParticleType<SpeedLine>(), NightmarePlantera.nightmareSparkleColor,
                             Main.rand.NextFloat(0.2f, 0.6f));
                     }
 
@@ -136,7 +137,7 @@ namespace Coralite.Content.Items.Nightmare
 
                         for (int i = 0; i < 5; i++)
                         {
-                            Particle.NewParticle(Player.Center + Main.rand.NextVector2Circular(24, 24) + (i * newVelocity), -newVelocity * 0.75f, CoraliteContent.ParticleType<SpeedLine>(), NightmarePlantera.nightmareSparkleColor,
+                            PRTLoader.NewParticle(Player.Center + Main.rand.NextVector2Circular(24, 24) + (i * newVelocity), -newVelocity * 0.75f, CoraliteContent.ParticleType<SpeedLine>(), NightmarePlantera.nightmareSparkleColor,
                                 Main.rand.NextFloat(0.2f, 0.6f));
                         }
                     }
@@ -179,7 +180,7 @@ namespace Coralite.Content.Items.Nightmare
 
                         for (int i = 0; i < 5; i++)
                         {
-                            Particle.NewParticle(Player.Center + Main.rand.NextVector2Circular(24, 24) + (i * newVelocity), -newVelocity * 0.75f, CoraliteContent.ParticleType<SpeedLine>(), NightmarePlantera.nightmareSparkleColor,
+                            PRTLoader.NewParticle(Player.Center + Main.rand.NextVector2Circular(24, 24) + (i * newVelocity), -newVelocity * 0.75f, CoraliteContent.ParticleType<SpeedLine>(), NightmarePlantera.nightmareSparkleColor,
                                 Main.rand.NextFloat(0.2f, 0.6f));
                         }
                     }
@@ -381,7 +382,7 @@ namespace Coralite.Content.Items.Nightmare
                             //特效部分
                             for (int i = 0; i < 2; i++)
                             {
-                                Particle.NewParticle(Owner.Center + Main.rand.NextVector2Circular(16, 16), Vector2.Zero, CoraliteContent.ParticleType<Fog>(),
+                                PRTLoader.NewParticle(Owner.Center + Main.rand.NextVector2Circular(16, 16), Vector2.Zero, CoraliteContent.ParticleType<Fog>(),
                                     newColor: NightmarePlantera.nightPurple, Scale: Main.rand.NextFloat(1f, 1.2f));
                             }
 
@@ -405,7 +406,7 @@ namespace Coralite.Content.Items.Nightmare
                                     if (Main.rand.NextBool(20))
                                     {
                                         Vector2 dir = Rotation.ToRotationVector2();
-                                        Particle.NewParticle(Owner.Center + (dir * 16) + Main.rand.NextVector2Circular(8, 8), dir * 1.2f, CoraliteContent.ParticleType<HorizontalStar>(), NightmarePlantera.nightmareRed, Main.rand.NextFloat(0.1f, 0.15f));
+                                        PRTLoader.NewParticle(Owner.Center + (dir * 16) + Main.rand.NextVector2Circular(8, 8), dir * 1.2f, CoraliteContent.ParticleType<HorizontalStar>(), NightmarePlantera.nightmareRed, Main.rand.NextFloat(0.1f, 0.15f));
                                     }
                                 }
 
@@ -507,7 +508,7 @@ namespace Coralite.Content.Items.Nightmare
                             //特效部分
                             for (int i = 0; i < 2; i++)
                             {
-                                Particle.NewParticle(Owner.Center + Main.rand.NextVector2Circular(16, 16), Vector2.Zero, CoraliteContent.ParticleType<Fog>(),
+                                PRTLoader.NewParticle(Owner.Center + Main.rand.NextVector2Circular(16, 16), Vector2.Zero, CoraliteContent.ParticleType<Fog>(),
                                     newColor: NightmarePlantera.nightPurple, Scale: Main.rand.NextFloat(1f, 1.2f));
                             }
 
@@ -532,7 +533,7 @@ namespace Coralite.Content.Items.Nightmare
                                     if (Main.rand.NextBool(20))
                                     {
                                         Vector2 dir = Rotation.ToRotationVector2();
-                                        Particle.NewParticle(Owner.Center + (dir * 16) + Main.rand.NextVector2Circular(8, 8), dir * 1.2f, CoraliteContent.ParticleType<HorizontalStar>(), NightmarePlantera.nightmareRed, Main.rand.NextFloat(0.1f, 0.15f));
+                                        PRTLoader.NewParticle(Owner.Center + (dir * 16) + Main.rand.NextVector2Circular(8, 8), dir * 1.2f, CoraliteContent.ParticleType<HorizontalStar>(), NightmarePlantera.nightmareRed, Main.rand.NextFloat(0.1f, 0.15f));
                                     }
                                 }
 
@@ -614,7 +615,7 @@ namespace Coralite.Content.Items.Nightmare
                                 //特效部分
                                 for (int i = 0; i < 2; i++)
                                 {
-                                    Particle.NewParticle(Owner.Center + Main.rand.NextVector2Circular(16, 16), Vector2.Zero, CoraliteContent.ParticleType<Fog>(),
+                                    PRTLoader.NewParticle(Owner.Center + Main.rand.NextVector2Circular(16, 16), Vector2.Zero, CoraliteContent.ParticleType<Fog>(),
                                         newColor: NightmarePlantera.nightPurple, Scale: Main.rand.NextFloat(1f, 1.2f));
                                 }
 
@@ -672,7 +673,7 @@ namespace Coralite.Content.Items.Nightmare
                                 {
                                     for (int i = 0; i < 2; i++)
                                     {
-                                        Particle.NewParticle(Owner.Center + Main.rand.NextVector2Circular(16, 16), Vector2.Zero, CoraliteContent.ParticleType<Fog>(),
+                                        PRTLoader.NewParticle(Owner.Center + Main.rand.NextVector2Circular(16, 16), Vector2.Zero, CoraliteContent.ParticleType<Fog>(),
                                             newColor: NightmarePlantera.nightPurple, Scale: Main.rand.NextFloat(1f, 1.2f));
                                     }
 
@@ -758,7 +759,7 @@ namespace Coralite.Content.Items.Nightmare
                                     if (Main.rand.NextBool(20))
                                     {
                                         Vector2 dir = Rotation.ToRotationVector2();
-                                        Particle.NewParticle(Owner.Center + (dir * 16) + Main.rand.NextVector2Circular(8, 8), dir * 1.2f, CoraliteContent.ParticleType<HorizontalStar>(), NightmarePlantera.nightmareRed, Main.rand.NextFloat(0.1f, 0.15f));
+                                        PRTLoader.NewParticle(Owner.Center + (dir * 16) + Main.rand.NextVector2Circular(8, 8), dir * 1.2f, CoraliteContent.ParticleType<HorizontalStar>(), NightmarePlantera.nightmareRed, Main.rand.NextFloat(0.1f, 0.15f));
                                     }
                                 }
 

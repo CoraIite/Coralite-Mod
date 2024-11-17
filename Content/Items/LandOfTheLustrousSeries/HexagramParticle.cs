@@ -1,13 +1,14 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Loaders;
 using Coralite.Core.Systems.ParticleSystem;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 
 namespace Coralite.Content.Items.LandOfTheLustrousSeries
 {
-    public class HexagramParticle : Particle
+    public class HexagramParticle : BasePRT
     {
         public override string Texture => AssetDirectory.OtherProjectiles + "HorizontalLight";
 
@@ -16,7 +17,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public Func<Vector2> follow;
 
-        public override bool ShouldUpdateCenter() => false;
+        public override bool ShouldUpdatePosition() => false;
 
         public override void AI()
         {
@@ -49,7 +50,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public static HexagramParticle New(Vector2 center, Vector2 velocity, float rot, float scale, Color newColor = default)
         {
-            HexagramParticle p = ParticleLoader.GetParticle(CoraliteContent.ParticleType<HexagramParticle>()).Clone() as HexagramParticle;
+            HexagramParticle p = PRTLoader.PRT_IDToInstances[CoraliteContent.ParticleType<HexagramParticle>()].Clone() as HexagramParticle;
 
             //设置各种初始值
             p.active = true;
@@ -63,7 +64,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             return p;
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public override bool PreDraw(SpriteBatch spriteBatch)
         {
             Texture2D tex = TexValue;
             Vector2 origin = tex.Size() / 2;
@@ -77,6 +78,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 spriteBatch.Draw(tex, pos, null, c, rot
                     , origin, Scale * new Vector2(1f, 1f), SpriteEffects.None, 0f);
             }
+            return false;
         }
 
         public override void DrawInUI(SpriteBatch spriteBatch)

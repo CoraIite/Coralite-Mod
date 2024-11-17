@@ -2,6 +2,7 @@
 using Coralite.Core.Configs;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Graphics.Shaders;
@@ -57,11 +58,16 @@ namespace Coralite.Content.CustomHooks
                     if (Main.npc[k].active && Main.npc[k].ModNPC is IDrawPrimitive)
                         (Main.npc[k].ModNPC as IDrawPrimitive).DrawPrimitives();
 
-                for (int i = 0; i < ParticleSystem.Particles.Count; i++)
+                foreach (var prt in PRTLoader.PRT_InGame_World_Inds)
                 {
-                    Particle particle = ParticleSystem.Particles[i];
-                    if (particle != null && particle.active && particle is IDrawParticlePrimitive p)
+                    if (prt == null || !prt.active)
+                    {
+                        continue;
+                    }
+                    if (prt is IDrawParticlePrimitive p)
+                    {
                         p.DrawPrimitives();
+                    }
                 }
             }
 
@@ -88,13 +94,6 @@ namespace Coralite.Content.CustomHooks
                 if (Main.npc[k].active && Main.npc[k].ModNPC is IDrawNonPremultiplied non)
                     non.DrawNonPremultiplied(Main.spriteBatch);
 
-            for (int i = 0; i < ParticleSystem.Particles.Count; i++)
-            {
-                Particle particle = ParticleSystem.Particles[i];
-                if (particle != null && particle.active && particle.drawNonPremultiplied)
-                    particle.DrawNonPremultiplied(spriteBatch);
-            }
-
             spriteBatch.End();
 
             ////绘制反色
@@ -110,41 +109,41 @@ namespace Coralite.Content.CustomHooks
 
             //spriteBatch.End();
 
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+            //spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
 
-            //绘制自己的粒子
-            ArmorShaderData armorShaderData = null;
-            for (int i = 0; i < ParticleSystem.Particles.Count; i++)
-            {
-                Particle particle = ParticleSystem.Particles[i];
-                if (particle == null || !particle.active)
-                    continue;
+            ////绘制自己的粒子
+            //ArmorShaderData armorShaderData = null;
+            //for (int i = 0; i < ParticleSystem.Particles.Count; i++)
+            //{
+            //    BasePRT particle = ParticleSystem.Particles[i];
+            //    if (particle == null || !particle.active)
+            //        continue;
 
-                if (!VaultUtils.IsPointOnScreen(particle.Position - Main.screenPosition))
-                    continue;
+            //    if (!VaultUtils.IsPointOnScreen(particle.Position - Main.screenPosition))
+            //        continue;
 
-                if (particle.shader != armorShaderData)
-                {
-                    spriteBatch.End();
-                    armorShaderData = particle.shader;
-                    if (armorShaderData == null)
-                    {
-                        spriteBatch.Begin();
-                        spriteBatch.End();
+            //    if (particle.shader != armorShaderData)
+            //    {
+            //        spriteBatch.End();
+            //        armorShaderData = particle.shader;
+            //        if (armorShaderData == null)
+            //        {
+            //            spriteBatch.Begin();
+            //            spriteBatch.End();
 
-                        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointWrap, default, default, default, Main.GameViewMatrix.TransformationMatrix);
-                    }
-                    else
-                    {
-                        spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.Transform);
-                        particle.shader.Apply(null);
-                    }
-                }
+            //            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointWrap, default, default, default, Main.GameViewMatrix.TransformationMatrix);
+            //        }
+            //        else
+            //        {
+            //            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.Transform);
+            //            particle.shader.Apply(null);
+            //        }
+            //    }
 
-                particle.Draw(spriteBatch);
-            }
+            //    particle.Draw(spriteBatch);
+            //}
 
-            spriteBatch.End();
+            //spriteBatch.End();
         }
     }
 }

@@ -3,6 +3,7 @@ using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -266,7 +267,7 @@ namespace Coralite.Content.Items.Donator
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Helper.SpawnDirDustJet(target.Center, () => Helper.NextVec2Dir(), 2, 8, i => i * 0.8f, DustID.IceTorch);
-            Particle.NewParticle<StarRot>(target.Center, Helper.NextVec2Dir(1, 4), Main.rand.NextBool() ? Color.White : Color.Cyan
+            PRTLoader.NewParticle<StarRot>(target.Center, Helper.NextVec2Dir(1, 4), Main.rand.NextBool() ? Color.White : Color.Cyan
                 , Main.rand.NextFloat(0.4f, 0.6f));
             target.AddBuff(BuffID.Frostburn, 60 * 5);
             Projectile.friendly = false;

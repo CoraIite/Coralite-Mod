@@ -1,10 +1,11 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
+using InnoVault.PRT;
 using Terraria;
 
 namespace Coralite.Content.Particles
 {
-    public class Fog : Particle
+    public class Fog : BasePRT
     {
         public override string Texture => AssetDirectory.Particles + Name;
 

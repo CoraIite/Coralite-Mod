@@ -2,6 +2,7 @@
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -136,7 +137,7 @@ namespace Coralite.Content.Items.Shadow
         }
     }
 
-    public class ShadowTriangle : Particle
+    public class ShadowTriangle : BasePRT
     {
         public override string Texture => AssetDirectory.Particles + "Triangle";
 

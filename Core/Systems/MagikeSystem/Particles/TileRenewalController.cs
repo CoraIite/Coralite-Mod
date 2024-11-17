@@ -1,5 +1,6 @@
 ﻿using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
@@ -7,7 +8,7 @@ using Terraria.ObjectData;
 
 namespace Coralite.Core.Systems.MagikeSystem.Particles
 {
-    public class TileRenewalController : Particle
+    public class TileRenewalController : BasePRT
     {
         public override string Texture => AssetDirectory.DefaultItem;
 
@@ -15,7 +16,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
         public int startY;
         public int frameDelay = 6;
 
-        public override bool ShouldUpdateCenter() => false;
+        public override bool ShouldUpdatePosition() => false;
 
         public override void SetProperty()
         {
@@ -28,7 +29,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
             {
                 return;
             }
-            TileRenewalController particle = NewParticle<TileRenewalController>(topLeft.ToWorldCoordinates(), Vector2.Zero, color, 1);
+            TileRenewalController particle = PRTLoader.NewParticle<TileRenewalController>(topLeft.ToWorldCoordinates(), Vector2.Zero, color, 1);
             particle.topLeft = topLeft;
             particle.startY = topLeft.Y;
         }
@@ -60,7 +61,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
                 {
                     if (tileRect.Contains(x, y))//生成额外粒子
                     {
-                        NewParticle<TileHightlight>(new Point(x, y).ToWorldCoordinates(), Vector2.Zero, Color);
+                        PRTLoader.NewParticle<TileHightlight>(new Point(x, y).ToWorldCoordinates(), Vector2.Zero, Color);
                         spawn = true;
                     }
 
@@ -78,7 +79,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
             }
         }
 
-        public override void Draw(SpriteBatch spriteBatch) { }
+        public override bool PreDraw(SpriteBatch spriteBatch) => false;
 
         public override void DrawInUI(SpriteBatch spriteBatch) { }
     }

@@ -1,13 +1,14 @@
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
+using InnoVault.PRT;
 using Terraria;
 
 namespace Coralite.Content.Particles
 {
-    public class Tornado : Particle
+    public class Tornado : BasePRT
     {
         public override string Texture => AssetDirectory.Particles + "Tornado2";
-        //public override bool ShouldUpdateCenter() => false;
+        //public override bool ShouldUpdatePosition() => false;
 
         private float time;
 
@@ -45,7 +46,7 @@ namespace Coralite.Content.Particles
             {
                 return;
             }
-            Tornado particle = NewParticle<Tornado>(center, velocity, color, scale);
+            Tornado particle = PRTLoader.NewParticle<Tornado>(center, velocity, color, scale);
             if (particle != null)
             {
                 particle.fadeIn = fadeIn;

@@ -1,12 +1,13 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
+using InnoVault.PRT;
 using Terraria;
 
 namespace Coralite.Content.Particles
 {
-    internal class RoaringLine : Particle
+    internal class RoaringLine : BasePRT
     {
-        public override bool ShouldUpdateCenter() => false;
+        public override bool ShouldUpdatePosition() => false;
 
         public override string Texture => AssetDirectory.Particles + "Roaring";
 

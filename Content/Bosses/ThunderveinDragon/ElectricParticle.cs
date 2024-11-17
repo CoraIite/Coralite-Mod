@@ -1,11 +1,12 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
+using InnoVault.PRT;
 using System;
 using Terraria;
 
 namespace Coralite.Content.Bosses.ThunderveinDragon
 {
-    public class ElectricParticle : Particle
+    public class ElectricParticle : BasePRT
     {
         public override string Texture => AssetDirectory.ThunderveinDragon + "ElectricParticle";
 
@@ -36,7 +37,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
     public class ElectricParticle_Follow : ElectricParticle
     {
-        public override bool ShouldUpdateCenter() => false;
+        public override bool ShouldUpdatePosition() => false;
 
         private Func<Vector2> GetParentCenter;
 
@@ -74,12 +75,12 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             {
                 return;
             }
-            ElectricParticle_Follow p = NewParticle<ElectricParticle_Follow>(parentCenter + offset, offset, Scale: scale);
+            ElectricParticle_Follow p = PRTLoader.NewParticle<ElectricParticle_Follow>(parentCenter + offset, offset, Scale: scale);
             p.GetParentCenter = GetParentCenter;
         }
     }
 
-    public class LightningParticle : Particle
+    public class LightningParticle : BasePRT
     {
         public override string Texture => AssetDirectory.ThunderveinDragon + Name;
 

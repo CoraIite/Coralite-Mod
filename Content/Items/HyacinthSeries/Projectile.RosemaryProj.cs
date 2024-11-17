@@ -4,6 +4,7 @@ using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -242,7 +243,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             }
 
             if (justATimer % 3 == 0)
-                Particle.NewParticle(Projectile.Center, new Vector2(0, 3f).RotatedBy(Main.rand.NextFloat(-0.2f, 0.2f)), CoraliteContent.ParticleType<Fog>(), new Color(95, 120, 233, 255), Main.rand.NextFloat(0.5f, 0.7f));
+                PRTLoader.NewParticle(Projectile.Center, new Vector2(0, 3f).RotatedBy(Main.rand.NextFloat(-0.2f, 0.2f)), CoraliteContent.ParticleType<Fog>(), new Color(95, 120, 233, 255), Main.rand.NextFloat(0.5f, 0.7f));
 
             if (Main.rand.NextBool(15))
             {

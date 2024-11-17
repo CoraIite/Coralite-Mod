@@ -2,6 +2,7 @@
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Terraria;
 using Terraria.Audio;
 using Terraria.Graphics.CameraModifiers;
@@ -89,9 +90,9 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         {
                             Vector2 pos = NPC.Center + (NPC.rotation.ToRotationVector2() * 60 * NPC.scale);
                             if ((int)Timer % 10 == 0)
-                                Particle.NewParticle(pos, Vector2.Zero, CoraliteContent.ParticleType<RoaringWave>(), Coralite.ThunderveinYellow, 0.2f);
+                                PRTLoader.NewParticle(pos, Vector2.Zero, CoraliteContent.ParticleType<RoaringWave>(), Coralite.ThunderveinYellow, 0.2f);
                             if ((int)Timer % 20 == 0)
-                                Particle.NewParticle(pos, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.2f);
+                                PRTLoader.NewParticle(pos, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.2f);
                         }
 
                         Timer++;
@@ -242,7 +243,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         {
                             if (Timer % 2 == 0)
                             {
-                                Particle.NewParticle(NPC.Center + Main.rand.NextVector2Circular(NPC.width / 5, NPC.height / 5),
+                                PRTLoader.NewParticle(NPC.Center + Main.rand.NextVector2Circular(NPC.width / 5, NPC.height / 5),
                                     Vector2.Zero, CoraliteContent.ParticleType<BigFog>(), Coralite.ThunderveinYellow * Main.rand.NextFloat(0.5f, 0.8f),
                                     Main.rand.NextFloat(1.5f, 2f));
                                 Vector2 pos = NPC.Center + Main.rand.NextVector2Circular(NPC.width * 0.8f, NPC.height * 0.8f);
@@ -344,9 +345,9 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         {
                             Vector2 pos = NPC.Center + (NPC.rotation.ToRotationVector2() * 60 * NPC.scale);
                             if ((int)Timer % 10 == 0)
-                                Particle.NewParticle(pos, Vector2.Zero, CoraliteContent.ParticleType<RoaringWave>(), Coralite.ThunderveinYellow, 0.2f);
+                                PRTLoader.NewParticle(pos, Vector2.Zero, CoraliteContent.ParticleType<RoaringWave>(), Coralite.ThunderveinYellow, 0.2f);
                             if ((int)Timer % 20 == 0)
-                                Particle.NewParticle(pos, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.2f);
+                                PRTLoader.NewParticle(pos, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.2f);
                         }
 
                         Timer++;
@@ -545,7 +546,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         {
                             if (Timer % 2 == 0)
                             {
-                                Particle.NewParticle(NPC.Center + Main.rand.NextVector2Circular(NPC.width / 5, NPC.height / 5),
+                                PRTLoader.NewParticle(NPC.Center + Main.rand.NextVector2Circular(NPC.width / 5, NPC.height / 5),
                                     Vector2.Zero, CoraliteContent.ParticleType<BigFog>(), Coralite.ThunderveinYellow * Main.rand.NextFloat(0.5f, 0.8f),
                                     Main.rand.NextFloat(1.5f, 2f));
                                 Vector2 pos = NPC.Center + Main.rand.NextVector2Circular(NPC.width * 0.8f, NPC.height * 0.8f);

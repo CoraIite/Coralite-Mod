@@ -1,14 +1,14 @@
 ﻿using Coralite.Core;
-using Coralite.Core.Systems.ParticleSystem;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 
 namespace Coralite.Content.Particles
 {
-    public class LightShotParticle : Particle
+    public class LightShotParticle : BasePRT
     {
         public override string Texture => AssetDirectory.OtherProjectiles + "LightGlowShot";
-        public override bool ShouldUpdateCenter() => false;
+        public override bool ShouldUpdatePosition() => false;
 
         public override void SetProperty()
         {
@@ -49,7 +49,7 @@ namespace Coralite.Content.Particles
             {
                 return;
             }
-            Particle p = NewParticle<LightShotParticle>(center, Vector2.Zero, newcolor, 1);
+            BasePRT p = PRTLoader.NewParticle<LightShotParticle>(center, Vector2.Zero, newcolor, 1);
             if (p != null)
             {
                 p.Rotation = rotation;
@@ -57,7 +57,7 @@ namespace Coralite.Content.Particles
             }
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public override bool PreDraw(SpriteBatch spriteBatch)
         {
             Texture2D mainTex = TexValue;
             Vector2 pos = Position - Main.screenPosition;
@@ -116,6 +116,8 @@ namespace Coralite.Content.Particles
             //spriteBatch.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bar3.ToArray(), 0, bar3.Count - 2);
             //spriteBatch.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bar4.ToArray(), 0, bar3.Count - 2);
             //spriteBatch.GraphicsDevice.BlendState = BlendState.AlphaBlend;
+
+            return false;
         }
     }
 }

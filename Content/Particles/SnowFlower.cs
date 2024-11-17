@@ -1,10 +1,13 @@
-﻿using Coralite.Core.Systems.ParticleSystem;
+﻿using Coralite.Core;
+using Coralite.Core.Systems.ParticleSystem;
+using InnoVault.PRT;
 using Terraria;
 
 namespace Coralite.Content.Particles
 {
-    public class SnowFlower : Particle
+    public class SnowFlower : BasePRT
     {
+        public override string Texture => AssetDirectory.Particles + Name;
         public override void SetProperty()
         {
             Frame = new Rectangle(0, Main.rand.Next(3) * 64, 64, 64);

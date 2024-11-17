@@ -1,11 +1,11 @@
 ﻿using Coralite.Core;
-using Coralite.Core.Systems.ParticleSystem;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 
 namespace Coralite.Content.Particles
 {
-    public class LightBall : Particle
+    public class LightBall : BasePRT
     {
         public override string Texture => AssetDirectory.Particles + Name;
         public override void SetProperty()

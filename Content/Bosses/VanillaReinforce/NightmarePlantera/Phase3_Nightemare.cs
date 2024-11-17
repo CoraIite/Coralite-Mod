@@ -2,6 +2,7 @@
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -184,7 +185,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                                 _ => nightmareRed
                             };
 
-                            Particle.NewParticle(NPC.Center + Main.rand.NextVector2Circular(64, 64), Helper.NextVec2Dir(6, 24f),
+                            PRTLoader.NewParticle(NPC.Center + Main.rand.NextVector2Circular(64, 64), Helper.NextVec2Dir(6, 24f),
                                 CoraliteContent.ParticleType<BigFog>(), color, Scale: Main.rand.NextFloat(0.5f, 1.5f));
                         }
 
@@ -643,7 +644,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                                     0 => tentacleColor,
                                     _ => tentacleColor * 2f,
                                 };
-                                Particle.NewParticle(NPC.Center + Main.rand.NextVector2Circular(32, 32), (NPC.rotation + (i * 2.6f)).ToRotationVector2() * Main.rand.NextFloat(3f, 8f),
+                                PRTLoader.NewParticle(NPC.Center + Main.rand.NextVector2Circular(32, 32), (NPC.rotation + (i * 2.6f)).ToRotationVector2() * Main.rand.NextFloat(3f, 8f),
                                     CoraliteContent.ParticleType<SpeedLine>(), c, Main.rand.NextFloat(0.3f, 0.5f));
                             }
 
@@ -922,7 +923,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                                 _ => nightmareRed
                             };
 
-                            Particle.NewParticle(NPC.Center + Main.rand.NextVector2Circular(64, 64), Helper.NextVec2Dir(6, 16f),
+                            PRTLoader.NewParticle(NPC.Center + Main.rand.NextVector2Circular(64, 64), Helper.NextVec2Dir(6, 16f),
                                 CoraliteContent.ParticleType<BigFog>(), color, Scale: Main.rand.NextFloat(0.5f, 1.5f));
                         }
 
@@ -1203,7 +1204,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                                 _ => nightmareRed
                             };
 
-                            Particle.NewParticle(NPC.Center + Main.rand.NextVector2Circular(64, 64), Helper.NextVec2Dir(6, 24f),
+                            PRTLoader.NewParticle(NPC.Center + Main.rand.NextVector2Circular(64, 64), Helper.NextVec2Dir(6, 24f),
                                 CoraliteContent.ParticleType<BigFog>(), color, Scale: Main.rand.NextFloat(0.5f, 1.5f));
                         }
 
@@ -1462,7 +1463,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         _ => nightmareRed
                     };
 
-                    Particle.NewParticle(NPC.Center + Main.rand.NextVector2Circular(32, 32), Helper.NextVec2Dir(6, 10f),
+                    PRTLoader.NewParticle(NPC.Center + Main.rand.NextVector2Circular(32, 32), Helper.NextVec2Dir(6, 10f),
                         CoraliteContent.ParticleType<BigFog>(), color, Scale: Main.rand.NextFloat(0.5f, 1.5f));
                 }
 

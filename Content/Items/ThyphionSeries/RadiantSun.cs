@@ -5,6 +5,7 @@ using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.CameraSystem;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
@@ -208,7 +209,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                     Projectile.timeLeft = 10;
                     Vector2 dir = Rotation.ToRotationVector2();
                     WindCircle.Spawn(Projectile.Center + (dir * 20), -dir * 2, Rotation, Color.SaddleBrown, 0.75f, 1.3f, new Vector2(1.2f, 1f));
-                    Particle.NewParticle<RadiantSunFlow>(Projectile.Center, dir * 8, Color.White, 0.9f);
+                    PRTLoader.NewParticle<RadiantSunFlow>(Projectile.Center, dir * 8, Color.White, 0.9f);
 
                     Projectile.NewProjectileFromThis<RadiantSunLaser>(Projectile.Center, Projectile.rotation.ToRotationVector2() * 10
                         , (int)(Owner.GetWeaponDamage(Owner.HeldItem)*(Main.dayTime?1.15f:1f)), Projectile.knockBack);
@@ -357,7 +358,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             Projectile.rotation = Projectile.velocity.ToRotation()+1.57f;
 
             if (Main.rand.NextBool(5))
-                Particle.NewParticle<SpeedLine>(Projectile.Center  + Main.rand.NextVector2Circular(8, 8),
+                PRTLoader.NewParticle<SpeedLine>(Projectile.Center  + Main.rand.NextVector2Circular(8, 8),
                     -Projectile.velocity.SafeNormalize(Vector2.Zero)*Main.rand.NextFloat(2,4), Color.SaddleBrown, 0.45f);
             if (Main.rand.NextBool(3))
                 Projectile.SpawnTrailDust(DustID.SolarFlare, Main.rand.NextFloat(0.2f, 0.4f),Scale:0.9f);
@@ -451,7 +452,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                     Lighting.AddLight(Projectile.position + (Vector2.UnitX.RotatedBy(LaserRotation) * i), color.ToVector3() * height * 0.030f);
                     if (Main.rand.NextBool(15))
                     {
-                        Particle.NewParticle<SpeedLine>(Projectile.Center + (dir * i) + Main.rand.NextVector2Circular(8, 8),
+                        PRTLoader.NewParticle<SpeedLine>(Projectile.Center + (dir * i) + Main.rand.NextVector2Circular(8, 8),
                             dir * Main.rand.NextFloat(min, max), Color.SaddleBrown, 0.45f);
 
                         Dust d = Dust.NewDustPerfect(Projectile.Center + (dir * i) + Main.rand.NextVector2Circular(12, 12)
@@ -466,7 +467,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         {
             for (int i = 0; i < 4; i++)
             {
-                Particle.NewParticle<SpeedLine>(center , (baseAngle+i * MathHelper.PiOver2).ToRotationVector2() * Main.rand.NextFloat(2, 4)
+                PRTLoader.NewParticle<SpeedLine>(center , (baseAngle+i * MathHelper.PiOver2).ToRotationVector2() * Main.rand.NextFloat(2, 4)
                     , Color.SaddleBrown, 0.55f);
             }
         }
@@ -544,7 +545,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         }
     }
 
-    public class RadiantSunFlow : Particle
+    public class RadiantSunFlow : BasePRT
     {
         public override string Texture => AssetDirectory.ThyphionSeriesItems + "RadiantSunFlow";
 
@@ -570,11 +571,13 @@ namespace Coralite.Content.Items.ThyphionSeries
             }
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public override bool PreDraw(SpriteBatch spriteBatch)
         {
             Vector2 origin = TexValue.Size() / 2;
 
             spriteBatch.Draw(TexValue, Position - Main.screenPosition, null, Color, Rotation, origin, scale * Scale, SpriteEffects.None, 0f);
+
+            return false;
         }
     }
 }

@@ -4,6 +4,7 @@ using Coralite.Core;
 using Coralite.Core.Systems.BossSystems;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
@@ -338,7 +339,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                                 }
 
                                 for (int i = 0; i < 3; i++)
-                                    Particle.NewParticle(NPC.Center, Vector2.Zero, CoraliteContent.ParticleType<IceBurstHalo>(), Color.White, 0.15f);
+                                    PRTLoader.NewParticle(NPC.Center, Vector2.Zero, CoraliteContent.ParticleType<IceBurstHalo>(), Color.White, 0.15f);
                             }
 
                             Helper.PlayPitched("Icicle/Broken", 0.4f, 0f, NPC.Center);
@@ -396,7 +397,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
                                 if (!VaultUtils.isServer)
                                 {
-                                    Particle.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.1f);
+                                    PRTLoader.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.1f);
                                     PunchCameraModifier modifier = new(NPC.Center, new Vector2(0.8f, 0.8f), 5f, 20f, 40, 1000f, "BabyIceDragon");
                                     Main.instance.CameraModifiers.Add(modifier);
                                 }
@@ -408,9 +409,9 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                                 if (!VaultUtils.isServer)
                                 {
                                     if ((int)Timer % 10 == 0)
-                                        Particle.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringWave>(), Color.White, 0.1f);
+                                        PRTLoader.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringWave>(), Color.White, 0.1f);
                                     if ((int)Timer % 20 == 0)
-                                        Particle.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.1f);
+                                        PRTLoader.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.1f);
                                 }
                                 break;
                             }
@@ -467,7 +468,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
                                 if (!VaultUtils.isServer)
                                 {
-                                    Particle.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.1f);
+                                    PRTLoader.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.1f);
                                     PunchCameraModifier modifier = new(NPC.Center, new Vector2(0.8f, 0.8f), 5f, 20f, 40, 1000f, "BabyIceDragon");
                                     Main.instance.CameraModifiers.Add(modifier);
                                 }
@@ -479,9 +480,9 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                                 if (!VaultUtils.isServer)
                                 {
                                     if (Timer % 10 == 0)
-                                        Particle.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringWave>(), Color.White, 0.1f);
+                                        PRTLoader.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringWave>(), Color.White, 0.1f);
                                     if (Timer % 20 == 0)
-                                        Particle.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.1f);
+                                        PRTLoader.NewParticle(mouseCenter, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.1f);
                                 }
 
                                 break;
@@ -570,8 +571,8 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                                 if (!VaultUtils.isServer)
                                 {
                                     GetMouseCenter(out _, out Vector2 mouseCenter2);
-                                    Particle.NewParticle(mouseCenter2, Vector2.Zero, CoraliteContent.ParticleType<IceBurstHalo_Reverse>(), Scale: 0.8f);
-                                    Particle.NewParticle(mouseCenter2, Vector2.Zero, CoraliteContent.ParticleType<IceBurstHalo_Reverse>(), Scale: 1.2f);
+                                    PRTLoader.NewParticle(mouseCenter2, Vector2.Zero, CoraliteContent.ParticleType<IceBurstHalo_Reverse>(), Scale: 0.8f);
+                                    PRTLoader.NewParticle(mouseCenter2, Vector2.Zero, CoraliteContent.ParticleType<IceBurstHalo_Reverse>(), Scale: 1.2f);
                                     for (int i = 0; i < 4; i++)
                                         IceStarLight.Spawn(NPC.Center + Main.rand.NextVector2CircularEdge(100, 100), Main.rand.NextVector2CircularEdge(3, 3), 1f, () =>
                                         {
@@ -602,7 +603,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             NPC.velocity = targetDir.RotatedBy(-1.57f) * 4f * NPC.direction;
                             NPC.rotation = NPC.rotation.AngleTowards(NPC.velocity.ToRotation() + (NPC.direction > 0 ? 0 : 3.14f), 0.8f);
                             GetMouseCenter(out _, out Vector2 mouseCenter);
-                            Particle.NewParticle(mouseCenter, targetDir.RotatedBy(Main.rand.NextFloat(-0.3f, 0.3f)) * 8f,
+                            PRTLoader.NewParticle(mouseCenter, targetDir.RotatedBy(Main.rand.NextFloat(-0.3f, 0.3f)) * 8f,
                                     CoraliteContent.ParticleType<Fog>(), Color.AliceBlue, Main.rand.NextFloat(0.6f, 0.8f));
 
                             if ((int)Timer % 20 == 0)

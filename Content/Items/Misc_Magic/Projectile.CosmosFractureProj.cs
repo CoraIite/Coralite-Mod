@@ -4,6 +4,7 @@ using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -645,7 +646,7 @@ namespace Coralite.Content.Items.Misc_Magic
         {
             if (VisualEffectSystem.HitEffect_SpecialParticles)
                 for (int i = 0; i < 4; i++)
-                    Particle.NewParticle(Projectile.Center, Main.rand.NextVector2Unit() * 1.5f, CoraliteContent.ParticleType<HorizontalStar>(),
+                    PRTLoader.NewParticle(Projectile.Center, Main.rand.NextVector2Unit() * 1.5f, CoraliteContent.ParticleType<HorizontalStar>(),
                          new Color(138, 255, 254), Main.rand.NextFloat(0.1f, 0.3f));
 
             if (Projectile.ai[0] != 1)

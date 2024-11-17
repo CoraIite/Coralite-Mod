@@ -5,6 +5,7 @@ using Coralite.Core.Configs;
 using Coralite.Core.Systems.FlyingShieldSystem;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -310,7 +311,7 @@ namespace Coralite.Content.Items.FlyingShields
             {
                 Color c2 = Color.Cyan;
                 c2.A = 10;
-                Particle.NewParticle(Projectile.Center, Vector2.Zero, CoraliteContent.ParticleType<ScreenLightParticle>(),
+                PRTLoader.NewParticle(Projectile.Center, Vector2.Zero, CoraliteContent.ParticleType<ScreenLightParticle>(),
                   c2, 12);
             }
         }
@@ -555,7 +556,7 @@ namespace Coralite.Content.Items.FlyingShields
         }
     }
 
-    public class LightCiecleParticle : Particle
+    public class LightCiecleParticle : BasePRT
     {
         public override string Texture => AssetDirectory.Halos + "HighlightCircle";
 
@@ -576,16 +577,16 @@ namespace Coralite.Content.Items.FlyingShields
                 active = false;
         }
 
-        public static Particle Spawn(Vector2 center, Color newcolor, float baseScale, float rotation, Vector2 circleScale)
+        public static BasePRT Spawn(Vector2 center, Color newcolor, float baseScale, float rotation, Vector2 circleScale)
         {
-            Particle p = NewParticle<LightCiecleParticle>(center, Vector2.Zero, newcolor, baseScale);
+            BasePRT p = PRTLoader.NewParticle<LightCiecleParticle>(center, Vector2.Zero, newcolor, baseScale);
 
             p.Rotation = rotation;
             p.oldPositions = [circleScale];
             return p;
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public override bool PreDraw(SpriteBatch spriteBatch)
         {
             Texture2D mainTex = TexValue;
 
@@ -609,10 +610,12 @@ namespace Coralite.Content.Items.FlyingShields
                 , null, c, Rotation, origin, scale * 0.95f, SpriteEffects.None, 0f);
             spriteBatch.Draw(exTex, pos
                 , null, c, Rotation, origin, scale * 1.05f, SpriteEffects.None, 0f);
+
+            return false;
         }
     }
 
-    public class ScreenLightParticle : Particle
+    public class ScreenLightParticle : BasePRT
     {
         public override string Texture => AssetDirectory.Particles + "LightBall";
 
@@ -638,7 +641,7 @@ namespace Coralite.Content.Items.FlyingShields
                 active = false;
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public override bool PreDraw(SpriteBatch spriteBatch)
         {
             Texture2D mainTex = TexValue;
             Vector2 origin = mainTex.Size() / 2;
@@ -647,6 +650,8 @@ namespace Coralite.Content.Items.FlyingShields
                 null, Color, 0, origin, new Vector2(1.4f, 1) * Scale, SpriteEffects.None, 0f);
             spriteBatch.Draw(mainTex, Position - Main.screenPosition,
                 null, Color, 0, origin, new Vector2(1.4f, 1) * Scale / 2, SpriteEffects.None, 0f);
+
+            return false;
         }
     }
 }

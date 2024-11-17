@@ -2,6 +2,7 @@
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Terraria;
 using Terraria.Audio;
 
@@ -87,7 +88,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
                                 for (int i = 0; i < 5; i++)
                                 {
-                                    Particle.NewParticle(NPC.Center + Main.rand.NextVector2CircularEdge(length, length),
+                                    PRTLoader.NewParticle(NPC.Center + Main.rand.NextVector2CircularEdge(length, length),
                                         Vector2.Zero, CoraliteContent.ParticleType<ElectricParticle>(), Scale: Main.rand.NextFloat(0.9f, 1.3f));
                                 }
                             }
@@ -99,9 +100,9 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                                 shadowAlpha = Helper.Lerp(1f, 0f, factor);
                                 Vector2 pos = NPC.Center + (NPC.rotation.ToRotationVector2() * 60);
                                 if ((int)Timer % 10 == 0)
-                                    Particle.NewParticle(pos, Vector2.Zero, CoraliteContent.ParticleType<RoaringWave>(), Coralite.ThunderveinYellow, 0.2f);
+                                    PRTLoader.NewParticle(pos, Vector2.Zero, CoraliteContent.ParticleType<RoaringWave>(), Coralite.ThunderveinYellow, 0.2f);
                                 if ((int)Timer % 20 == 0)
-                                    Particle.NewParticle(pos, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.2f);
+                                    PRTLoader.NewParticle(pos, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.2f);
                             }
                         }
 

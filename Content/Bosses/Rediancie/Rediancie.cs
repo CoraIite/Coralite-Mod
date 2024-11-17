@@ -4,6 +4,7 @@ using Coralite.Core;
 using Coralite.Core.Systems.BossSystems;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -562,7 +563,7 @@ namespace Coralite.Content.Bosses.Rediancie
                 if (!DespawnFollowers(1))
                 {
                     ResetState();
-                    RedShield.Kill();
+                    RedShield.HanderKill();
                 }
             }
 
@@ -626,7 +627,7 @@ namespace Coralite.Content.Bosses.Rediancie
                 if (realTime == 18 && Main.netMode != NetmodeID.Server)
                 {
                     SoundEngine.PlaySound(SoundID.Item4, NPC.Center);
-                    Particle.NewParticle(NPC.Center + new Vector2(0, -16), Vector2.Zero, CoraliteContent.ParticleType<Sparkle_Big>(), Coralite.RedJadeRed, 1.5f);
+                    PRTLoader.NewParticle(NPC.Center + new Vector2(0, -16), Vector2.Zero, CoraliteContent.ParticleType<Sparkle_Big>(), Coralite.RedJadeRed, 1.5f);
                 }
 
                 if (realTime < 20)

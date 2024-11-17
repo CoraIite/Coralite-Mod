@@ -5,6 +5,7 @@ using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.CameraSystem;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
@@ -262,7 +263,7 @@ namespace Coralite.Content.Items.Thunder
                 Vector2 pos = Projectile.Center + (RotateVec2 * Main.rand.NextFloat(20, 70) * Projectile.scale);
                 if (Main.rand.NextBool())
                 {
-                    Particle.NewParticle(pos, Vector2.Zero, CoraliteContent.ParticleType<ElectricParticle>(), Scale: Main.rand.NextFloat(0.5f, 0.7f));
+                    PRTLoader.NewParticle(pos, Vector2.Zero, CoraliteContent.ParticleType<ElectricParticle>(), Scale: Main.rand.NextFloat(0.5f, 0.7f));
                 }
                 else
                 {
@@ -455,7 +456,7 @@ namespace Coralite.Content.Items.Thunder
                 Vector2 pos = Projectile.Center + (RotateVec2 * Main.rand.NextFloat(20, 70) * Projectile.scale);
                 if (Main.rand.NextBool())
                 {
-                    Particle.NewParticle(pos, Vector2.Zero, CoraliteContent.ParticleType<ElectricParticle>(), Scale: Main.rand.NextFloat(0.5f, 0.7f));
+                    PRTLoader.NewParticle(pos, Vector2.Zero, CoraliteContent.ParticleType<ElectricParticle>(), Scale: Main.rand.NextFloat(0.5f, 0.7f));
                 }
                 else
                 {
@@ -636,7 +637,7 @@ namespace Coralite.Content.Items.Thunder
                 SoundEngine.PlaySound(CoraliteSoundID.NoUse_ElectricMagic_Item122, Projectile.Center);
                 for (int i = 0; i < 5; i++)
                 {
-                    Particle.NewParticle(Projectile.Center + Main.rand.NextVector2Circular(50, 50), Vector2.Zero,
+                    PRTLoader.NewParticle(Projectile.Center + Main.rand.NextVector2Circular(50, 50), Vector2.Zero,
                         CoraliteContent.ParticleType<ElectricParticle>(), Scale: Main.rand.NextFloat(0.4f, 0.6f));
                 }
             }

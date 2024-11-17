@@ -1,12 +1,12 @@
 ﻿using Coralite.Core;
-using Coralite.Core.Systems.ParticleSystem;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria;
 
 namespace Coralite.Content.Items.Glistent
 {
-    public abstract class LeafParticle : Particle
+    public abstract class LeafParticle : BasePRT, ICLLoader
     {
         public override string Texture => AssetDirectory.Particles + "SmallLeafParticle";
         public int FrameMax { get => LeafType == 0 ? 8 : 5; }
@@ -18,18 +18,8 @@ namespace Coralite.Content.Items.Glistent
 
         public static Asset<Texture2D> BigLeaf;
 
-        public override void Load()
-        {
-            if (Main.dedServ)
-                return;
-
-            BigLeaf = ModContent.Request<Texture2D>(AssetDirectory.MagikeProjectiles + "LeafShield");
-        }
-
-        public override void Unload()
-        {
-            BigLeaf = null;
-        }
+        void ICLLoader.LoadAsset() => BigLeaf = ModContent.Request<Texture2D>(AssetDirectory.MagikeProjectiles + "LeafShield");
+        void ICLLoader.UnLoadData() => BigLeaf = null;
 
         public void UpdateFrame()
         {
@@ -42,13 +32,16 @@ namespace Coralite.Content.Items.Glistent
             }
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public override bool PreDraw(SpriteBatch spriteBatch)
         {
             Texture2D mainTex = LeafType == 0 ? TexValue : BigLeaf.Value;
             Rectangle frame = mainTex.Frame(1, FrameMax, 0, Frame.Y);
             Vector2 origin = frame.Size() / 2;
 
-            spriteBatch.Draw(mainTex, Position - Main.screenPosition, frame, Lighting.GetColor(Position.ToTileCoordinates()) * (Color.A / 255f) * alpha, Rotation, origin, Scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(mainTex, Position - Main.screenPosition, frame, Lighting.GetColor(Position.ToTileCoordinates()) * (Color.A / 255f) * alpha
+                , Rotation, origin, Scale, SpriteEffects.None, 0f);
+
+            return false;
         }
     }
 }

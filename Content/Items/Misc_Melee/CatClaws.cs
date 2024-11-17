@@ -3,6 +3,7 @@ using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.ParticleSystem;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System.Linq;
 using Terraria;
@@ -309,7 +310,7 @@ namespace Coralite.Content.Items.Misc_Melee
         {
             if (VisualEffectSystem.HitEffect_SpecialParticles)
             {
-                Particle particle = Particle.NewParticle(Vector2.Lerp(Projectile.Center, target.Center, 0.5f), Vector2.Zero, CoraliteContent.ParticleType<Strike>(), Color.Orange, 1f);
+                BasePRT particle = PRTLoader.NewParticle(Vector2.Lerp(Projectile.Center, target.Center, 0.5f), Vector2.Zero, CoraliteContent.ParticleType<Strike>(), Color.Orange, 1f);
                 particle.Rotation = _Rotation + 2.2f + Main.rand.NextFloat(-0.5f, 0.5f);
             }
         }

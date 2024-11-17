@@ -8,6 +8,7 @@ using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -331,7 +332,7 @@ namespace Coralite.Content.Items.BossSummons
 
         public void PlaySound(SoundStyle style)
         {
-            Particle.NewParticle(Owner.Center, new Vector2(Projectile.owner), CoraliteContent.ParticleType<NightmareHarpParticle>()
+            PRTLoader.NewParticle(Owner.Center, new Vector2(Projectile.owner), CoraliteContent.ParticleType<NightmareHarpParticle>()
                 , NightmarePlantera.nightPurple, 0.1f);
             SoundEngine.PlaySound(style);
         }
@@ -447,7 +448,7 @@ namespace Coralite.Content.Items.BossSummons
     /// <summary>
     /// 使用速度的X传入拥有者
     /// </summary>
-    public class NightmareHarpParticle : Particle
+    public class NightmareHarpParticle : BasePRT
     {
         public override string Texture => AssetDirectory.NightmarePlantera + "Flow";
 
@@ -456,7 +457,7 @@ namespace Coralite.Content.Items.BossSummons
             Rotation = Main.rand.NextFloat(6.282f);
         }
 
-        public override bool ShouldUpdateCenter() => false;
+        public override bool ShouldUpdatePosition() => false;
 
         public override void AI()
         {
@@ -488,12 +489,14 @@ namespace Coralite.Content.Items.BossSummons
                 active = false;
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public override bool PreDraw(SpriteBatch spriteBatch)
         {
             Texture2D mainTex = TexValue;
             Vector2 origin = mainTex.Size() / 2;
 
             spriteBatch.Draw(mainTex, Position - Main.screenPosition, null, Color, Rotation, origin, Scale, SpriteEffects.None, 0f);
+
+            return false;
         }
     }
 }

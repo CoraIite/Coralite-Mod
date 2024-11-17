@@ -1,11 +1,14 @@
-﻿using Coralite.Core.Systems.ParticleSystem;
+﻿using Coralite.Core;
+using Coralite.Core.Systems.ParticleSystem;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 
 namespace Coralite.Content.Particles
 {
-    public class SpeedLine : Particle
+    public class SpeedLine : BasePRT
     {
+        public override string Texture => AssetDirectory.Particles + Name;
         public override void SetProperty()
         {
             Frame = new Rectangle(0, 0, 64, 128);
@@ -31,7 +34,7 @@ namespace Coralite.Content.Particles
                 active = false;
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public override bool PreDraw(SpriteBatch spriteBatch)
         {
             Texture2D mainTex = TexValue;
             Rectangle frame = Frame;
@@ -43,6 +46,8 @@ namespace Coralite.Content.Particles
                 spriteBatch.Draw(mainTex, pos, frame, Color, Rotation, origin, oldPositions[0], SpriteEffects.None, 0f);
                 spriteBatch.Draw(mainTex, pos, frame, c, Rotation, origin, oldPositions[0] * 0.5f, SpriteEffects.None, 0f);
             }
+
+            return false;
         }
     }
 }

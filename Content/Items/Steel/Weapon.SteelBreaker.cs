@@ -2,6 +2,7 @@
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -176,7 +177,7 @@ namespace Coralite.Content.Items.Steel
                             Vector2 direction = (MathHelper.PiOver4 + (i * MathHelper.PiOver2)).ToRotationVector2();
                             for (int j = 1; j < 3; j++)
                             {
-                                Particle.NewParticle<SpeedLine>(center + (direction * i * 8), -direction * 2, Color.Cyan, 0.4f);
+                                PRTLoader.NewParticle<SpeedLine>(center + (direction * i * 8), -direction * 2, Color.Cyan, 0.4f);
                             }
                         }
 

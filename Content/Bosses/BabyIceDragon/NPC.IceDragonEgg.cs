@@ -2,6 +2,7 @@
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
@@ -84,7 +85,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                         }
 
                         for (int i = 0; i < 3; i++)
-                            Particle.NewParticle(NPC.Center, Vector2.Zero, CoraliteContent.ParticleType<IceBurstHalo>(), Color.White, 0.15f);
+                            PRTLoader.NewParticle(NPC.Center, Vector2.Zero, CoraliteContent.ParticleType<IceBurstHalo>(), Color.White, 0.15f);
 
                         Helper.PlayPitched("Icicle/Broken", 0.4f, 0f, NPC.Center);
                         NPC.Kill();

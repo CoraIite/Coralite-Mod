@@ -4,6 +4,7 @@ using Coralite.Core.Configs;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Core.Systems.Trails;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -94,7 +95,7 @@ namespace Coralite.Content.Items.Icicle
             {
                 float rot = Main.rand.NextFloat(6.282f);
                 for (int i = 0; i < 3; i++)
-                    Particle.NewParticle(Projectile.Center, (rot + (i * 2.094f)).ToRotationVector2(), CoraliteContent.ParticleType<HorizontalStar>(), Coralite.IcicleCyan, Main.rand.NextFloat(0.2f, 0.3f));
+                    PRTLoader.NewParticle(Projectile.Center, (rot + (i * 2.094f)).ToRotationVector2(), CoraliteContent.ParticleType<HorizontalStar>(), Coralite.IcicleCyan, Main.rand.NextFloat(0.2f, 0.3f));
             }
         }
 

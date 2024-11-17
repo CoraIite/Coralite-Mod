@@ -2,6 +2,7 @@ using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Core.Systems.Trails;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -34,7 +35,7 @@ namespace Coralite.Content.Particles
             });
         }
 
-        public override bool ShouldUpdateCenter() => false;
+        public override bool ShouldUpdatePosition() => false;
 
         public override void SetProperty()
         {
@@ -83,12 +84,14 @@ namespace Coralite.Content.Particles
             active = false;
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public override bool PreDraw(SpriteBatch spriteBatch)
         {
             Main.instance.LoadItem(ItemID.FallenStar);
             Texture2D mainTex = TextureAssets.Item[ItemID.FallenStar].Value;
 
             spriteBatch.Draw(mainTex, Position - Main.screenPosition, Frame, Color.White, 0f, new Vector2(11, 13), Scale, SpriteEffects.None, 0f);
+
+            return false;
         }
 
         public override void DrawPrimitives()
@@ -113,7 +116,7 @@ namespace Coralite.Content.Particles
             {
                 return;
             }
-            DizzyStar particle = NewParticle<DizzyStar>(center, Vector2.Zero);
+            DizzyStar particle = PRTLoader.NewParticle<DizzyStar>(center, Vector2.Zero);
             if (particle != null)
             {
                 particle.Rotation = rotation;

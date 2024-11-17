@@ -1,4 +1,5 @@
 ﻿using Coralite.Core.Systems.ParticleSystem;
+using InnoVault.PRT;
 using Terraria;
 
 namespace Coralite.Content.Items.Icicle
@@ -6,9 +7,9 @@ namespace Coralite.Content.Items.Icicle
     /// <summary>
     /// 冰冻光环
     /// </summary>
-    public class IceHalo : Particle
+    public class IceHalo : BasePRT
     {
-        public override bool ShouldUpdateCenter() => false;
+        public override bool ShouldUpdatePosition() => false;
 
         public override void SetProperty()
         {

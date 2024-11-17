@@ -3,6 +3,7 @@ using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -383,7 +384,7 @@ namespace Coralite.Content.Items.Nightmare
         }
     }
 
-    public class BarrenFogParticle : Particle
+    public class BarrenFogParticle : BasePRT
     {
         public override string Texture => AssetDirectory.Particles + "Fog";
 

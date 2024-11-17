@@ -1,17 +1,18 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 
 namespace Coralite.Content.Items.RedJades
 {
-    public class RedExplosionParticle : Particle
+    public class RedExplosionParticle : BasePRT
     {
         public override string Texture => AssetDirectory.OtherProjectiles + "LightFog";
 
         private float scaleAdder;
 
-        public override bool ShouldUpdateCenter() => false;
+        public override bool ShouldUpdatePosition() => false;
 
         public override void SetProperty()
         {
@@ -43,18 +44,18 @@ namespace Coralite.Content.Items.RedJades
             if (VaultUtils.isServer)
                 return;
 
-            RedExplosionParticle particle = NewParticle<RedExplosionParticle>(center, Vector2.Zero, newColor, 0);
+            RedExplosionParticle particle = PRTLoader.NewParticle<RedExplosionParticle>(center, Vector2.Zero, newColor, 0);
             particle.scaleAdder = maxScale / 8;
         }
     }
 
-    public class RedGlowParticle : Particle
+    public class RedGlowParticle : BasePRT
     {
         public override string Texture => AssetDirectory.Rediancie + "RedShield_Flow";
 
         private float scaleAdder;
 
-        public override bool ShouldUpdateCenter() => false;
+        public override bool ShouldUpdatePosition() => false;
 
         public override void SetProperty()
         {
@@ -89,7 +90,7 @@ namespace Coralite.Content.Items.RedJades
             {
                 return;
             }
-            RedGlowParticle particle = NewParticle<RedGlowParticle>(center, Vector2.Zero, newColor, scale);
+            RedGlowParticle particle = PRTLoader.NewParticle<RedGlowParticle>(center, Vector2.Zero, newColor, scale);
             particle.scaleAdder = (maxScale - scale) / 6;
         }
     }

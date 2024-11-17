@@ -4,6 +4,7 @@ using Coralite.Core;
 using Coralite.Core.Systems.BossSystems;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -241,7 +242,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
         {
             if (Main.rand.NextBool())
             {
-                Particle.NewParticle(NPC.Center.MoveTowards(projectile.Center, 50), Vector2.Zero,
+                PRTLoader.NewParticle(NPC.Center.MoveTowards(projectile.Center, 50), Vector2.Zero,
                     CoraliteContent.ParticleType<LightningParticle>(), Scale: Main.rand.NextFloat(1f, 1.5f));
             }
 
@@ -558,10 +559,10 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             {
                                 var modifyer = new PunchCameraModifier(NPC.Center, Helper.NextVec2Dir(), 8, 12, 20, 1000);
                                 Main.instance.CameraModifiers.Add(modifyer);
-                                Particle.NewParticle(pos, Vector2.Zero, CoraliteContent.ParticleType<RoaringWave>(), Coralite.ThunderveinYellow, 0.2f);
+                                PRTLoader.NewParticle(pos, Vector2.Zero, CoraliteContent.ParticleType<RoaringWave>(), Coralite.ThunderveinYellow, 0.2f);
                             }
                             if ((int)Timer % 20 == 0)
-                                Particle.NewParticle(pos, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.2f);
+                                PRTLoader.NewParticle(pos, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.2f);
                         }
 
                         Timer++;
@@ -593,7 +594,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
                         for (int j = 0; j < 5; j++)
                         {
-                            Particle.NewParticle(NPC.Center + Main.rand.NextVector2CircularEdge(length, length),
+                            PRTLoader.NewParticle(NPC.Center + Main.rand.NextVector2CircularEdge(length, length),
                                 Vector2.Zero, CoraliteContent.ParticleType<ElectricParticle_Purple>(), Scale: Main.rand.NextFloat(0.9f, 1.3f));
                         }
                     }

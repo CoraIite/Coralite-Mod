@@ -1,11 +1,13 @@
-using Coralite.Core.Systems.ParticleSystem;
+using Coralite.Core;
+using InnoVault.PRT;
 using Terraria;
 
 namespace Coralite.Content.Particles
 {
-    public class RainbowHalo : Particle
+    public class RainbowHalo : BasePRT
     {
-        public override bool ShouldUpdateCenter() => false;
+        public override string Texture => AssetDirectory.Particles + Name;
+        public override bool ShouldUpdatePosition() => false;
 
         public override void SetProperty()
         {

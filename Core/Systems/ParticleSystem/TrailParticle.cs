@@ -1,8 +1,9 @@
 ﻿using Coralite.Core.Systems.Trails;
+using InnoVault.PRT;
 
 namespace Coralite.Core.Systems.ParticleSystem
 {
-    public abstract class TrailParticle : Particle, IDrawParticlePrimitive
+    public abstract class TrailParticle : BasePRT, IDrawParticlePrimitive
     {
         public Trail trail;
 

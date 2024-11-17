@@ -4,6 +4,7 @@ using Coralite.Core;
 using Coralite.Core.Systems.FlyingShieldSystem;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -273,7 +274,7 @@ namespace Coralite.Content.Items.FlyingShields
                     {
                         if (Main.rand.NextBool())
                         {
-                            Particle.NewParticle(Projectile.Center + Main.rand.NextVector2Circular(18, 18),
+                            PRTLoader.NewParticle(Projectile.Center + Main.rand.NextVector2Circular(18, 18),
                                 new Vector2(0, Main.rand.NextFloat(3, 5)), CoraliteContent.ParticleType<SpeedLine>(),
                                 newColor: new Color(77, 69, 181), Scale: Main.rand.NextFloat(0.1f, 0.4f));
                         }

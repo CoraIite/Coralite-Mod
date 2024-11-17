@@ -1,6 +1,7 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -146,7 +147,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                     + Main.rand.NextVector2Circular(Projectile.width / 2, Projectile.width / 2);
                 if (Main.rand.NextBool())
                 {
-                    Particle.NewParticle(pos, Vector2.Zero, CoraliteContent.ParticleType<ElectricParticle>(), Scale: Main.rand.NextFloat(0.7f, 1.1f));
+                    PRTLoader.NewParticle(pos, Vector2.Zero, CoraliteContent.ParticleType<ElectricParticle>(), Scale: Main.rand.NextFloat(0.7f, 1.1f));
                 }
                 else
                 {

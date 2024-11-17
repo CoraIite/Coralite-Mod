@@ -4,6 +4,7 @@ using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Core.Systems.Trails;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Utilities;
 using System;
@@ -177,7 +178,7 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
                 oldPositions[i] = center;
         }
 
-        public override bool ShouldUpdateCenter() => false;
+        public override bool ShouldUpdatePosition() => false;
 
         public override void AI()
         {
@@ -206,11 +207,9 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
             trail.Positions = oldPositions;
         }
 
-        public override void Draw(SpriteBatch spriteBatch) { }
-
         public static SpecialCraftParticle Spawn(Vector2 center, float r, float time, float startRot)
         {
-            SpecialCraftParticle p = ParticleLoader.GetParticle(CoraliteContent.ParticleType<SpecialCraftParticle>()).Clone() as SpecialCraftParticle;
+            SpecialCraftParticle p = PRTLoader.PRT_IDToInstances[CoraliteContent.ParticleType<SpecialCraftParticle>()].Clone() as SpecialCraftParticle;
             p.Position = center;
             p.Velocity = new Vector2(r, time);
             p.Rotation = startRot;
@@ -241,7 +240,7 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
         }
     }
 
-    public class OnCraftLightShot : Particle
+    public class OnCraftLightShot : BasePRT
     {
         public override string Texture => AssetDirectory.CoreKeeperItems + "LightPillar";
 
@@ -251,7 +250,7 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
             Velocity = new Vector2(2, 8);
         }
 
-        public override bool ShouldUpdateCenter() => false;
+        public override bool ShouldUpdatePosition() => false;
 
         public override void AI()
         {
@@ -265,7 +264,7 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
             }
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public override bool PreDraw(SpriteBatch spriteBatch)
         {
             Texture2D mainTex = TexValue;
             Vector2 origin = new(mainTex.Width / 2, mainTex.Height);
@@ -273,10 +272,11 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
             spriteBatch.Draw(mainTex, pos, null, Color, 0, origin, Velocity, SpriteEffects.None, 0f);
             spriteBatch.Draw(mainTex, pos, null, Color, 0, origin, Velocity * 0.9f, SpriteEffects.None, 0f);
             spriteBatch.Draw(mainTex, pos, null, Color, 0, origin, Velocity * 0.9f, SpriteEffects.None, 0f);
+            return false;
         }
     }
 
-    public class OnCraftLightExpand : Particle
+    public class OnCraftLightExpand : BasePRT
     {
         public override string Texture => AssetDirectory.CoreKeeperItems + "CircleLight";
 
@@ -286,7 +286,7 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
             Color = new Color(148, 247, 221);
         }
 
-        public override bool ShouldUpdateCenter() => false;
+        public override bool ShouldUpdatePosition() => false;
 
         public override void AI()
         {
@@ -308,7 +308,7 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
             fadeIn++;
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public override bool PreDraw(SpriteBatch spriteBatch)
         {
             Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.CoreKeeperItems + "CircleLight2").Value;
             Vector2 origin = new(mainTex.Width / 2, mainTex.Height / 2);
@@ -319,6 +319,7 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
 
             spriteBatch.Draw(mainTex, pos, null, Color, Rotation, origin, Velocity * 1.2f, SpriteEffects.FlipVertically, 0f);
             spriteBatch.Draw(mainTex, pos, null, Color, Rotation, origin, Velocity * 1.2f, SpriteEffects.FlipVertically, 0f);
+            return false;
         }
     }
 }

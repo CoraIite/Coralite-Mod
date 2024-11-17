@@ -2,6 +2,7 @@
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -49,7 +50,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
                         if (!VaultUtils.isServer)
                         {
-                            Particle.NewParticle<Sparkle_Big>(NPC.Center, Vector2.Zero, Coralite.IcicleCyan, 1.2f);
+                            PRTLoader.NewParticle<Sparkle_Big>(NPC.Center, Vector2.Zero, Coralite.IcicleCyan, 1.2f);
                         }
                         
                         SoundEngine.PlaySound(CoraliteSoundID.Roar, NPC.Center);

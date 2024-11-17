@@ -1,11 +1,14 @@
-﻿using Coralite.Core.Systems.ParticleSystem;
+﻿using Coralite.Core;
+using Coralite.Core.Systems.ParticleSystem;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 
 namespace Coralite.Content.Particles
 {
-    internal class Strike_Reverse : Particle
+    internal class Strike_Reverse : BasePRT
     {
+        public override string Texture => AssetDirectory.Particles + Name;
         public override void SetProperty()
         {
             Color = Color.White;
@@ -24,11 +27,12 @@ namespace Coralite.Content.Particles
                 active = false;
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public override bool PreDraw(SpriteBatch spriteBatch)
         {
             Vector2 origin = new(96, 96);
 
             spriteBatch.Draw(TexValue, Position - Main.screenPosition, Frame, Color, Rotation, origin, Scale, SpriteEffects.None, 0f);
+            return false;
         }
     }
 }

@@ -3,6 +3,7 @@ using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Core.Systems.Trails;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
@@ -31,7 +32,7 @@ namespace Coralite.Content.Items.Icicle
             });
         }
 
-        public override bool ShouldUpdateCenter() => false;
+        public override bool ShouldUpdatePosition() => false;
 
         public override void SetProperty()
         {
@@ -53,7 +54,7 @@ namespace Coralite.Content.Items.Icicle
             //非常简单的追击
             float distance = Vector2.Distance(targetCenter, Position);
             if (distance < 20)
-                Kill();
+                KillEvent();
             else if (distance < 100)
                 Velocity += Vector2.Normalize(targetCenter - Position) * 8;
             else if (distance < 200)
@@ -72,7 +73,7 @@ namespace Coralite.Content.Items.Icicle
 
             fadeIn++;
             if (fadeIn > 120)
-                Kill();
+                KillEvent();
 
             Position += Velocity;
             UpdatePositionCache(8);
@@ -96,12 +97,14 @@ namespace Coralite.Content.Items.Icicle
             trail?.Render(effect);
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public override bool PreDraw(SpriteBatch spriteBatch)
         {
             Rectangle frame = Frame;
             Vector2 origin = new(frame.Width / 2, frame.Height / 2);
 
             spriteBatch.Draw(TexValue, Position - Main.screenPosition, frame, Color, Rotation, origin, 1.2f, SpriteEffects.None, 0f);
+
+            return false;
         }
 
         public static void Spawn(Vector2 center, Vector2 velocity, float scale, GetCenter function, float velocityLimit)
@@ -110,7 +113,7 @@ namespace Coralite.Content.Items.Icicle
             {
                 return;
             }
-            IceStarLight particle = NewParticle<IceStarLight>(center, velocity, Color.White, scale);
+            IceStarLight particle = PRTLoader.NewParticle<IceStarLight>(center, velocity, Color.White, scale);
             if (particle != null)
             {
                 particle.centerFunc = function;
@@ -130,10 +133,10 @@ namespace Coralite.Content.Items.Icicle
             center = centerFunc.Invoke();
         }
 
-        public void Kill()
+        public void KillEvent()
         {
             active = false;
-            NewParticle<HorizontalStar>(Position, Vector2.Zero, Coralite.IcicleCyan, 0.2f);
+            PRTLoader.NewParticle<HorizontalStar>(Position, Vector2.Zero, Coralite.IcicleCyan, 0.2f);
         }
     }
 }

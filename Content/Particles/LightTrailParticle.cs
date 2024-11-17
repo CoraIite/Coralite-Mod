@@ -1,13 +1,14 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;
 
 namespace Coralite.Content.Particles
 {
-    public class LightTrailParticle : Particle
+    public class LightTrailParticle : BasePRT
     {
         public override string Texture => AssetDirectory.OtherProjectiles + "HorizontalLight";
 
@@ -60,7 +61,7 @@ namespace Coralite.Content.Particles
             {
                 return;
             }
-            LightTrailParticle p = NewParticle<LightTrailParticle>(center, velocity, newcolor, scale);
+            LightTrailParticle p = PRTLoader.NewParticle<LightTrailParticle>(center, velocity, newcolor, scale);
             if (p != null)
             {
                 p.targetColor = targetColor == default ? new Color(0, 60, 250, 0) : targetColor;
@@ -68,7 +69,7 @@ namespace Coralite.Content.Particles
             }
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public override bool PreDraw(SpriteBatch spriteBatch)
         {
             Texture2D mainTex = TexValue;
             float scale = Scale;
@@ -111,6 +112,8 @@ namespace Coralite.Content.Particles
             spriteBatch.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bar3.ToArray(), 0, bar3.Count - 2);
             spriteBatch.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bar4.ToArray(), 0, bar3.Count - 2);
             spriteBatch.GraphicsDevice.BlendState = BlendState.AlphaBlend;
+
+            return false;
         }
     }
 
@@ -138,13 +141,13 @@ namespace Coralite.Content.Particles
 
         public static LightTrailParticle_NoPrimitive Spawn(Vector2 center, Vector2 velocity, Color newcolor, float scale, Color targetColor = default)
         {
-            LightTrailParticle_NoPrimitive p = NewParticle<LightTrailParticle_NoPrimitive>(center, velocity, newcolor, scale);
+            LightTrailParticle_NoPrimitive p = PRTLoader.NewParticle<LightTrailParticle_NoPrimitive>(center, velocity, newcolor, scale);
             p.targetColor = targetColor == default ? new Color(0, 60, 250, 0) : targetColor;
 
             return p;
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public override bool PreDraw(SpriteBatch spriteBatch)
         {
             Texture2D mainTex = TexValue;
             Color c = Color.White * (Color.A / 255f);
@@ -154,6 +157,8 @@ namespace Coralite.Content.Particles
             c = Color;
             spriteBatch.Draw(mainTex, Position - Main.screenPosition, null, c, Rotation, mainTex.Size() / 2, Scale, 0, 0);
             spriteBatch.Draw(mainTex, Position - Main.screenPosition, null, c, Rotation, mainTex.Size() / 2, Scale, 0, 0);
+
+            return false;
         }
     }
 }

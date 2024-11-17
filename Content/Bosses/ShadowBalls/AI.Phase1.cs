@@ -3,6 +3,7 @@ using Coralite.Content.WorldGeneration;
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria;
@@ -64,10 +65,10 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         //NPC.dontTakeDamage = false;
 
                         if ((int)Timer % 10 == 0)
-                            Particle.NewParticle(NPC.Center, Vector2.Zero, CoraliteContent.ParticleType<RoaringWave>()
+                            PRTLoader.NewParticle(NPC.Center, Vector2.Zero, CoraliteContent.ParticleType<RoaringWave>()
                                 , new Color(180, 80, 255), 0.6f);
                         if ((int)Timer % 20 == 0)
-                            Particle.NewParticle(NPC.Center, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>()
+                            PRTLoader.NewParticle(NPC.Center, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>()
                                 , new Color(180, 80, 255), 0.6f);
 
                         if (Timer > 180)

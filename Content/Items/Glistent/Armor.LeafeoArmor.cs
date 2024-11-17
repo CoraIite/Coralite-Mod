@@ -3,6 +3,7 @@ using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -179,10 +180,13 @@ namespace Coralite.Content.Items.Glistent
                 if (Main.rand.NextBool())
                     return;
 
-                var particle = Particle.NewPawticleInstance<LeafeoShieldParticle>(Projectile.Center, Vector2.Zero
-                    , Color.White, Scale: Main.rand.NextFloat(0.6f, 1));
-                particle.OwnerIndex = Projectile.whoAmI;
-                particles.Add(particle);
+                LeafeoShieldParticle prt = PRTLoader.GetPRTInstance<LeafeoShieldParticle>();
+                prt.Position = Projectile.Center;
+                prt.Velocity = Vector2.Zero;
+                prt.Color = Color.White;
+                prt.Scale = Main.rand.NextFloat(0.6f, 1);
+                prt.OwnerIndex = Projectile.whoAmI;
+                particles.Add(prt);
             }
         }
 
@@ -191,7 +195,7 @@ namespace Coralite.Content.Items.Glistent
             foreach (var p in particles)
             {
                 (p as LeafeoShieldParticle).Fade();
-                ParticleSystem.Particles.Add(p);
+                PRTLoader.AddParticle(p);
             }
 
             if (Owner.armor[1].type == ItemType<LeafeoLightArmor>()

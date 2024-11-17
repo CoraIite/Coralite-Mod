@@ -1,5 +1,6 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System.Linq;
@@ -7,7 +8,7 @@ using Terraria;
 
 namespace Coralite.Content.Bosses.Rediancie
 {
-    public class RedShield : Particle
+    public class RedShield : BasePRT, ICLLoader
     {
         public override string Texture => AssetDirectory.Rediancie + "RedShield";
         public static Asset<Texture2D> flowTex;
@@ -16,21 +17,10 @@ namespace Coralite.Content.Bosses.Rediancie
         private bool toFadeOut = false;
         private bool Init = true;
 
-        public override void Load()
-        {
-            if (Main.dedServ)
-            {
-                return;
-            }
-            flowTex = ModContent.Request<Texture2D>(AssetDirectory.Rediancie + "RedShield_Flow");
-        }
+        void ICLLoader.LoadAsset() => flowTex = ModContent.Request<Texture2D>(AssetDirectory.Rediancie + "RedShield_Flow");
+        void ICLLoader.UnLoadData() => flowTex = null;
 
-        public override void Unload()
-        {
-            flowTex = null;
-        }
-
-        public override bool ShouldUpdateCenter() => false;
+        public override bool ShouldUpdatePosition() => false;
 
         public override void SetProperty()
         {
@@ -73,7 +63,7 @@ namespace Coralite.Content.Bosses.Rediancie
             }
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public override bool PreDraw(SpriteBatch spriteBatch)
         {
             Vector2 center = this.Position - Main.screenPosition;
             Texture2D mainTex = TexValue;
@@ -86,19 +76,20 @@ namespace Coralite.Content.Bosses.Rediancie
             spriteBatch.Draw(flowTex.Value, center, null, Color, extraRot1, flowOrigin, Scale - 0.1f, SpriteEffects.None, 0);
             spriteBatch.Draw(flowTex.Value, center, null, new Color(255, 255, 255, Color.A * 3 / 4), extraRot1 + extraRot2, flowOrigin, Scale - 0.2f, SpriteEffects.FlipHorizontally, 0);
             spriteBatch.Draw(flowTex.Value, center, null, Color, extraRot2 + 3.141f, flowOrigin, Scale - 0.2f, SpriteEffects.FlipHorizontally, 0);
+            return false;
         }
 
         public static void Spawn(Entity rediancie, int maxTime)
         {
-            RedShield particle = NewParticle<RedShield>(rediancie.Center, Vector2.Zero);
+            RedShield particle = PRTLoader.NewParticle<RedShield>(rediancie.Center, Vector2.Zero);
             particle.rediancie = rediancie;
             particle.fadeIn = maxTime;
         }
 
-        public static void Kill()
+        public static void HanderKill()
         {
             int type = CoraliteContent.ParticleType<RedShield>();
-            foreach (var particle in ParticleSystem.Particles.Where(p => p.active && p.ID == type))
+            foreach (var particle in PRTLoader.PRT_InGame_World_Inds.Where(p => p.active && p.ID == type))
             {
                 particle.fadeIn = -1;
             }

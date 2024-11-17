@@ -1,14 +1,15 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
+using InnoVault.PRT;
 using Terraria;
 
 namespace Coralite.Content.Bosses.BabyIceDragon
 {
-    public class IceBurstHalo : Particle
+    public class IceBurstHalo : BasePRT
     {
         public override string Texture => AssetDirectory.Particles + "IceHalo";
 
-        public override bool ShouldUpdateCenter() => false;
+        public override bool ShouldUpdatePosition() => false;
 
         public override void SetProperty()
         {

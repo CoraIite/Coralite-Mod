@@ -2,6 +2,7 @@
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -84,7 +85,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             float rot = Main.rand.NextFloat(MathHelper.TwoPi);
             for (int i = 0; i < 7; i++)
             {
-                Particle.NewParticle(NPC.Center, (rot + (i * MathHelper.TwoPi / 7)).ToRotationVector2() * 5, CoraliteContent.ParticleType<HorizontalStar>(), NightmarePlantera.phantomColors[i], 0.3f);
+                PRTLoader.NewParticle(NPC.Center, (rot + (i * MathHelper.TwoPi / 7)).ToRotationVector2() * 5, CoraliteContent.ParticleType<HorizontalStar>(), NightmarePlantera.phantomColors[i], 0.3f);
             }
 
             SoundEngine.PlaySound(CoraliteSoundID.ManaCrystal_Item29, NPC.Center);

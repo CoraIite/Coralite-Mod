@@ -4,6 +4,7 @@ using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System.Linq;
@@ -204,7 +205,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 Color c = Main.rand.NextFromList(Color.White, Color.SkyBlue, Color.DeepSkyBlue);
                 c.A = 100;
 
-                Particle.NewParticle<SpeedLine>(arrowPos, (-dir2).RotateByRandom(-0.3f, 0.3f) * Main.rand.NextFloat(3, 7),
+                PRTLoader.NewParticle<SpeedLine>(arrowPos, (-dir2).RotateByRandom(-0.3f, 0.3f) * Main.rand.NextFloat(3, 7),
                     c, Scale: Main.rand.NextFloat(0.2f, 0.4f));
             }
 
@@ -212,7 +213,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             {
                 Color c = Main.rand.NextFromList(Color.White, Color.SkyBlue, Color.LightSkyBlue);
                 c.A = 100;
-                Particle.NewParticle<Fog>(arrowPos, (-dir).RotateByRandom(-0.8f, 0.8f) * Main.rand.NextFloat(3, 6),
+                PRTLoader.NewParticle<Fog>(arrowPos, (-dir).RotateByRandom(-0.8f, 0.8f) * Main.rand.NextFloat(3, 6),
                    c , Scale: Main.rand.NextFloat(0.6f, 1f));
             }
 

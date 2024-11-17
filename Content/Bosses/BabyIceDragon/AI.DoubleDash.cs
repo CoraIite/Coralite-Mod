@@ -3,6 +3,7 @@ using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -51,7 +52,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
                         if (!VaultUtils.isServer)
                         {
-                            Particle.NewParticle(NPC.Center, Vector2.Zero, CoraliteContent.ParticleType<Sparkle_Big>(), Coralite.IcicleCyan, 1.2f);
+                            PRTLoader.NewParticle(NPC.Center, Vector2.Zero, CoraliteContent.ParticleType<Sparkle_Big>(), Coralite.IcicleCyan, 1.2f);
                         }
                         
                         SoundEngine.PlaySound(CoraliteSoundID.Roar, NPC.Center);
@@ -136,8 +137,8 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                                     {
                                         return NPC.Center + ((NPC.rotation + (NPC.direction > 0 ? 0f : 3.141f)).ToRotationVector2() * 30);
                                     }, 16);
-                                Particle.NewParticle<IceBurstHalo_Reverse>(mouseCenter2, Vector2.Zero, Scale: 0.8f);
-                                Particle.NewParticle<IceBurstHalo_Reverse>(mouseCenter2, Vector2.Zero, Scale: 1.2f);
+                                PRTLoader.NewParticle<IceBurstHalo_Reverse>(mouseCenter2, Vector2.Zero, Scale: 0.8f);
+                                PRTLoader.NewParticle<IceBurstHalo_Reverse>(mouseCenter2, Vector2.Zero, Scale: 1.2f);
                             }
                         }
 
@@ -195,8 +196,8 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                                     {
                                         return NPC.Center + ((NPC.rotation + (NPC.direction > 0 ? 0f : 3.141f)).ToRotationVector2() * 30);
                                     }, 16);
-                                Particle.NewParticle(mouseCenter2, Vector2.Zero, CoraliteContent.ParticleType<IceBurstHalo_Reverse>(), Scale: 0.8f);
-                                Particle.NewParticle(mouseCenter2, Vector2.Zero, CoraliteContent.ParticleType<IceBurstHalo_Reverse>(), Scale: 1.2f);
+                                PRTLoader.NewParticle(mouseCenter2, Vector2.Zero, CoraliteContent.ParticleType<IceBurstHalo_Reverse>(), Scale: 0.8f);
+                                PRTLoader.NewParticle(mouseCenter2, Vector2.Zero, CoraliteContent.ParticleType<IceBurstHalo_Reverse>(), Scale: 1.2f);
                             }
                         }
 
@@ -216,7 +217,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                         if (Timer < 35)
                         {
                             if (!VaultUtils.isServer && Timer % 2 == 0)
-                                Particle.NewParticle(NPC.Center + Main.rand.NextVector2Circular(32, 32), -NPC.velocity * Main.rand.NextFloat(0.2f, 0.5f),
+                                PRTLoader.NewParticle(NPC.Center + Main.rand.NextVector2Circular(32, 32), -NPC.velocity * Main.rand.NextFloat(0.2f, 0.5f),
                                     CoraliteContent.ParticleType<SpeedLine>(), Coralite.IcicleCyan, Main.rand.NextFloat(0.1f, 0.4f));
 
                             NormallyFlyingFrame(1);
