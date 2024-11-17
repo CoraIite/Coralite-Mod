@@ -33,7 +33,7 @@ namespace Coralite.Content.Items.Icicle
 
         public override bool ShouldUpdateCenter() => false;
 
-        public override void OnSpawn()
+        public override void SetProperty()
         {
             color = Color.White;
             Frame = new Rectangle(0, 0, 18, 18);
@@ -41,7 +41,7 @@ namespace Coralite.Content.Items.Icicle
             InitializePositionCache(8);
         }
 
-        public override void Update()
+        public override void AI()
         {
             GetData(out Vector2 targetCenter);
             if (targetCenter == Vector2.Zero)

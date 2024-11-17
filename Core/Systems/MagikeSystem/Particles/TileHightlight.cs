@@ -8,12 +8,12 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
     {
         public override string Texture => AssetDirectory.Particles + Name;
 
-        public override void OnSpawn()
+        public override void SetProperty()
         {
             shouldKilledOutScreen = true;
         }
 
-        public override void Update()
+        public override void AI()
         {
             fadeIn++;
             if (fadeIn > 1)

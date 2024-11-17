@@ -451,14 +451,14 @@ namespace Coralite.Content.Items.BossSummons
     {
         public override string Texture => AssetDirectory.NightmarePlantera + "Flow";
 
-        public override void OnSpawn()
+        public override void SetProperty()
         {
             Rotation = Main.rand.NextFloat(6.282f);
         }
 
         public override bool ShouldUpdateCenter() => false;
 
-        public override void Update()
+        public override void AI()
         {
             int ownerIndex = (int)Velocity.X;
             if (Main.player.IndexInRange(ownerIndex))

@@ -9,14 +9,14 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
     {
         public override string Texture => AssetDirectory.ThunderveinDragon + "ElectricParticle";
 
-        public override void OnSpawn()
+        public override void SetProperty()
         {
             Rotation = Main.rand.NextFloat(6.282f);
             Frame = TexValue.Frame(7, 5, 0, Main.rand.Next(5));
             color = Color.White;
         }
 
-        public override void Update()
+        public override void AI()
         {
             fadeIn++;
             Position += Velocity;
@@ -40,7 +40,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         private Func<Vector2> GetParentCenter;
 
-        public override void Update()
+        public override void AI()
         {
             if (!GetCenter(out Vector2 parentCenter))
                 return;
@@ -83,14 +83,14 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
     {
         public override string Texture => AssetDirectory.ThunderveinDragon + Name;
 
-        public override void OnSpawn()
+        public override void SetProperty()
         {
             Rotation = Main.rand.NextFloat(6.282f);
             Frame = TexValue.Frame(4, 4, 0, Main.rand.Next(4));
             color = Color.White;
         }
 
-        public override void Update()
+        public override void AI()
         {
             fadeIn++;
             Position += Velocity;

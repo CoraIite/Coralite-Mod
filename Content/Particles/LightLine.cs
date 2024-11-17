@@ -18,12 +18,12 @@ namespace Coralite.Content.Particles
         public int fadeTime = 15;
         public float scaleY = 0.4f;
 
-        public override void OnSpawn()
+        public override void SetProperty()
         {
             Rotation = Main.rand.NextFloat(6.282f);
         }
 
-        public override void Update()
+        public override void AI()
         {
             fadeIn++;
 

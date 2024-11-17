@@ -226,7 +226,7 @@ namespace Coralite.Content.Items.Glistent
 
         public int State;
 
-        public override void OnSpawn()
+        public override void SetProperty()
         {
             frameCounterMax = 6;
             start = Main.rand.NextFloat(6.282f);
@@ -237,7 +237,7 @@ namespace Coralite.Content.Items.Glistent
             shouldKilledOutScreen = false;
         }
 
-        public override void Update()
+        public override void AI()
         {
             fadeIn -= speed;
             length += speed;

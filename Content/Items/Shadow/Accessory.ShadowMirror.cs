@@ -140,13 +140,13 @@ namespace Coralite.Content.Items.Shadow
     {
         public override string Texture => AssetDirectory.Particles + "Triangle";
 
-        public override void OnSpawn()
+        public override void SetProperty()
         {
             Rotation = Main.rand.NextFloat(6.282f);
             Frame = new Rectangle(0, Main.rand.Next(0, 5) * 64, 64, 64);
         }
 
-        public override void Update()
+        public override void AI()
         {
             Rotation += 0.15f;
             Scale *= 0.97f;

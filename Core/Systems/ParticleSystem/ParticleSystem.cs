@@ -64,7 +64,7 @@ namespace Coralite.Core.Systems.ParticleSystem
 
                 try
                 {
-                    particle.Update();
+                    particle.AI();
                     if (particle.ShouldUpdateCenter())
                         particle.Position += particle.Velocity;
 

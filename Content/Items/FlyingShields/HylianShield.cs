@@ -559,7 +559,7 @@ namespace Coralite.Content.Items.FlyingShields
     {
         public override string Texture => AssetDirectory.Halos + "HighlightCircle";
 
-        public override void Update()
+        public override void AI()
         {
             fadeIn++;
             if (fadeIn > 15)
@@ -616,12 +616,12 @@ namespace Coralite.Content.Items.FlyingShields
     {
         public override string Texture => AssetDirectory.Particles + "LightBall";
 
-        public override void OnSpawn()
+        public override void SetProperty()
         {
             shouldKilledOutScreen = false;
         }
 
-        public override void Update()
+        public override void AI()
         {
             fadeIn++;
             if (fadeIn > 8)

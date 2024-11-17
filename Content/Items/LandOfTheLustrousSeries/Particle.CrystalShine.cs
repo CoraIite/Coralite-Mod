@@ -25,7 +25,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public Func<Vector2> follow;
 
-        public override void Update()
+        public override void AI()
         {
             fadeIn++;
 
@@ -96,7 +96,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             cs.Position = center;
             cs.Velocity = velocity;
             cs.Scale = 1;
-            cs.OnSpawn();
+            cs.SetProperty();
 
             cs.shotCount = shotCount;
             cs.scale = scale;

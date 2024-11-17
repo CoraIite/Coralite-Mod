@@ -32,7 +32,7 @@ namespace Coralite.Content.Bosses.Rediancie
 
         public override bool ShouldUpdateCenter() => false;
 
-        public override void OnSpawn()
+        public override void SetProperty()
         {
             color = Coralite.RedJadeRed;
             color.A = 0;
@@ -41,7 +41,7 @@ namespace Coralite.Content.Bosses.Rediancie
             shouldKilledOutScreen = false;
         }
 
-        public override void Update()
+        public override void AI()
         {
             Rotation += 0.06f;
 

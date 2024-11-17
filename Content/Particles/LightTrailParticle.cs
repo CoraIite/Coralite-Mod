@@ -14,12 +14,12 @@ namespace Coralite.Content.Particles
         public Color targetColor;
         public bool noGravity;
 
-        public override void OnSpawn()
+        public override void SetProperty()
         {
             Rotation = Velocity.ToRotation();
         }
 
-        public override void Update()
+        public override void AI()
         {
             fadeIn++;
             if (fadeIn > 13)
@@ -116,7 +116,7 @@ namespace Coralite.Content.Particles
 
     public class LightTrailParticle_NoPrimitive : LightTrailParticle
     {
-        public override void Update()
+        public override void AI()
         {
             fadeIn++;
             if (fadeIn > 13)

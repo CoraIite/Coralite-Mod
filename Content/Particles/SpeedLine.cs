@@ -6,7 +6,7 @@ namespace Coralite.Content.Particles
 {
     public class SpeedLine : Particle
     {
-        public override void OnSpawn()
+        public override void SetProperty()
         {
             Frame = new Rectangle(0, 0, 64, 128);
             Rotation = Velocity.ToRotation() + 1.57f;
@@ -16,7 +16,7 @@ namespace Coralite.Content.Particles
             ];
         }
 
-        public override void Update()
+        public override void AI()
         {
             fadeIn++;
             Lighting.AddLight(Position, color.ToVector3() * 0.3f);

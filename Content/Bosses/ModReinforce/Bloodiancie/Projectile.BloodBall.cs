@@ -183,14 +183,14 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
     {
         public override string Texture => AssetDirectory.Bloodiancie + Name;
 
-        public override void OnSpawn()
+        public override void SetProperty()
         {
             color = Color.White;
             Frame = TexValue.Frame();
             Rotation = Velocity.ToRotation();
         }
 
-        public override void Update()
+        public override void AI()
         {
             fadeIn++;
 

@@ -36,7 +36,7 @@ namespace Coralite.Content.Particles
 
         public override bool ShouldUpdateCenter() => false;
 
-        public override void OnSpawn()
+        public override void SetProperty()
         {
             //使用oldRot充当改变帧图的 frameCounter
             Frame = new Rectangle(0, 0, 22, 26);
@@ -45,7 +45,7 @@ namespace Coralite.Content.Particles
             trail = new Trail(Main.instance.GraphicsDevice, 12, new NoTip(), factor => 2, factor => Color.Lerp(new Color(0, 0, 0, 0), Color.Yellow, factor.X));
         }
 
-        public override void Update()
+        public override void AI()
         {
             if (centerFunc != null)
             {

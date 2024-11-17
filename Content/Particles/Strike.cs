@@ -6,14 +6,14 @@ namespace Coralite.Content.Particles
 {
     public class Strike : Particle
     {
-        public override void OnSpawn()
+        public override void SetProperty()
         {
             Frame = new Rectangle(0, 0, 128, 128);
             shader = new Terraria.Graphics.Shaders.ArmorShaderData(Coralite.Instance.Assets.Request<Effect>("Effects/StarsDust", ReLogic.Content.AssetRequestMode.ImmediateLoad), "StarsDustPass");
             shader.UseSecondaryColor(Color.White);
         }
 
-        public override void Update()
+        public override void AI()
         {
             shader.UseColor(color);
 

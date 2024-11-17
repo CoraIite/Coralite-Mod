@@ -10,13 +10,13 @@ namespace Coralite.Content.Particles
 
         public override string Texture => AssetDirectory.Particles + "Roaring";
 
-        public override void OnSpawn()
+        public override void SetProperty()
         {
             Frame = new Rectangle(0, 128, 128, 128);
             Rotation = Main.rand.NextFloat(6.282f);
         }
 
-        public override void Update()
+        public override void AI()
         {
             Scale *= 1.1f;
 

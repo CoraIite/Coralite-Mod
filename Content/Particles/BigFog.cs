@@ -8,12 +8,12 @@ namespace Coralite.Content.Particles
     {
         public override string Texture => AssetDirectory.Particles + Name;
 
-        public override void OnSpawn()
+        public override void SetProperty()
         {
             Frame = new Rectangle(0, 256 * Main.rand.Next(4), 256, 256);
         }
 
-        public override void Update()
+        public override void AI()
         {
             Velocity *= 0.98f;
             Rotation += 0.01f;

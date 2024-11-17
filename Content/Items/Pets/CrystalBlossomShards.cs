@@ -96,13 +96,13 @@ namespace Coralite.Content.Items.Pets
     {
         public override string Texture => AssetDirectory.NightmarePlantera + "NightmarePetal";
 
-        public override void OnSpawn()
+        public override void SetProperty()
         {
             Frame = new Rectangle(0, Main.rand.Next(8) * 14, 10, 14);
             shouldKilledOutScreen = false;
         }
 
-        public override void Update()
+        public override void AI()
         {
             Position += Velocity;
             Rotation += Main.rand.NextFloat(0.13f, 0.18f);

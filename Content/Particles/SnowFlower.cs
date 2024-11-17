@@ -5,13 +5,13 @@ namespace Coralite.Content.Particles
 {
     public class SnowFlower : Particle
     {
-        public override void OnSpawn()
+        public override void SetProperty()
         {
             Frame = new Rectangle(0, Main.rand.Next(3) * 64, 64, 64);
             Rotation = Main.rand.NextFloat(6.282f);
         }
 
-        public override void Update()
+        public override void AI()
         {
             Rotation += 0.02f;
             Scale *= 0.955f;

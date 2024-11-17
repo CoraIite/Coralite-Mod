@@ -10,14 +10,14 @@ namespace Coralite.Content.Items.Icicle
     {
         public override bool ShouldUpdateCenter() => false;
 
-        public override void OnSpawn()
+        public override void SetProperty()
         {
             color = Color.White;
             Rotation = Main.rand.NextFloat(6.282f);
             Frame = new Rectangle(0, 0, 128, 128);
         }
 
-        public override void Update()
+        public override void AI()
         {
             Rotation += 0.05f;
             if (fadeIn > 8)

@@ -13,7 +13,7 @@ namespace Coralite.Content.Particles
         public const int phase_3 = 24;
         public const int phase_4 = 32;
 
-        public override void OnSpawn()
+        public override void SetProperty()
         {
             Frame = new Rectangle(0, 0, 126, 93);
             fadeIn = 0;
@@ -21,7 +21,7 @@ namespace Coralite.Content.Particles
             shader.UseSecondaryColor(Color.White);
         }
 
-        public override void Update()
+        public override void AI()
         {
             shader.UseColor(color);
 

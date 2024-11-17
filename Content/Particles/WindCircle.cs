@@ -9,7 +9,7 @@ namespace Coralite.Content.Particles
         public int frameCounterMax = 1;
         public Vector2 scale = Vector2.One;
 
-        public override void Update()
+        public override void AI()
         {
             if (++fadeIn > frameCounterMax)
             {

@@ -7,7 +7,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
     {
         public override string Texture => AssetDirectory.BabyIceDragon + "IceBurst";
 
-        public override void OnSpawn()
+        public override void SetProperty()
         {
             color = Color.White;
             Rotation = 0f;
@@ -15,7 +15,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             shouldKilledOutScreen = false;
         }
 
-        public override void Update()
+        public override void AI()
         {
             if (fadeIn % 2 == 0)
                 Frame.Y = (int)(fadeIn / 2) * 128;

@@ -550,13 +550,13 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         private Vector2 scale;
 
-        public override void OnSpawn()
+        public override void SetProperty()
         {
             scale = new Vector2(0.6f, 0.2f);
             Rotation = Velocity.ToRotation();
         }
 
-        public override void Update()
+        public override void AI()
         {
             fadeIn++;
 

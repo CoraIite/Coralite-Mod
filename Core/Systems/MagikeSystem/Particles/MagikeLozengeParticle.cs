@@ -10,12 +10,12 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
     {
         public override string Texture => AssetDirectory.Particles + "LozengeParticle";
 
-        public override void OnSpawn()
+        public override void SetProperty()
         {
 
         }
 
-        public override void Update()
+        public override void AI()
         {
             //fadeIn++;
             //if (fadeIn>1)
@@ -64,12 +64,12 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
 
         public float recordScale;
 
-        public override void OnSpawn()
+        public override void SetProperty()
         {
 
         }
 
-        public override void Update()
+        public override void AI()
         {
             fadeIn++;
             if (fadeIn < 7)

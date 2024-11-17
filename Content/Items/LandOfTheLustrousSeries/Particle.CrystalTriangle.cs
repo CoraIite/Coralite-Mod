@@ -11,14 +11,14 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         private float FadeTime;
 
-        public override void OnSpawn()
+        public override void SetProperty()
         {
             drawNonPremultiplied = true;
             Rotation = Main.rand.NextFloat(6.282f);
             Frame = new Rectangle(0, Main.rand.Next(0, 5) * 64, 64, 64);
         }
 
-        public override void Update()
+        public override void AI()
         {
             fadeIn++;
 

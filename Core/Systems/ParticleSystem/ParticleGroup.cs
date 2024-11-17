@@ -1,5 +1,6 @@
 ﻿using Coralite.Core.Loaders;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections;
 using System.Collections.Generic;
@@ -38,7 +39,7 @@ namespace Coralite.Core.Systems.ParticleSystem
             p.Position = center;
             p.Velocity = velocity;
             p.Scale = Scale;
-            p.OnSpawn();
+            p.SetProperty();
 
             _particles.Add(p);
 
@@ -58,7 +59,7 @@ namespace Coralite.Core.Systems.ParticleSystem
             p.Position = center;
             p.Velocity = velocity;
             p.Scale = Scale;
-            p.OnSpawn();
+            p.SetProperty();
 
             _particles.Add(p);
 
@@ -84,7 +85,7 @@ namespace Coralite.Core.Systems.ParticleSystem
                 if (particle == null)
                     continue;
 
-                particle.Update();
+                particle.AI();
                 if (particle.ShouldUpdateCenter())
                     particle.Position += particle.Velocity;
 
@@ -114,71 +115,71 @@ namespace Coralite.Core.Systems.ParticleSystem
 
         public void DrawParticles(SpriteBatch spriteBatch)
         {
-            ArmorShaderData armorShaderData = null;
-            for (int i = 0; i < _particles.Count; i++)
-            {
-                var particle = _particles[i];
-                if (particle == null || !particle.active)
-                    continue;
+            //ArmorShaderData armorShaderData = null;
+            //for (int i = 0; i < _particles.Count; i++)
+            //{
+            //    var particle = _particles[i];
+            //    if (particle == null || !particle.active)
+            //        continue;
 
-                if (!Helper.OnScreen(particle.Position - Main.screenPosition))
-                    continue;
+            //    if (!Helper.OnScreen(particle.Position - Main.screenPosition))
+            //        continue;
 
-                if (particle.shader != armorShaderData)
-                {
-                    spriteBatch.End();
-                    armorShaderData = particle.shader;
-                    if (armorShaderData == null)
-                        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointWrap, default, default, default, Main.GameViewMatrix.TransformationMatrix);
-                    else
-                    {
-                        spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.Transform);
-                        particle.shader.Apply(null);
-                    }
-                }
+            //    if (particle.shader != armorShaderData)
+            //    {
+            //        spriteBatch.End();
+            //        armorShaderData = particle.shader;
+            //        if (armorShaderData == null)
+            //            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointWrap, default, default, default, Main.GameViewMatrix.TransformationMatrix);
+            //        else
+            //        {
+            //            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.Transform);
+            //            particle.shader.Apply(null);
+            //        }
+            //    }
 
-                particle.Draw(spriteBatch);
-            }
+            //    particle.Draw(spriteBatch);
+            //}
 
-            if (armorShaderData != null)
-            {
-                spriteBatch.End();
-                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, default, default, default, Main.GameViewMatrix.TransformationMatrix);
-            }
+            //if (armorShaderData != null)
+            //{
+            //    spriteBatch.End();
+            //    spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, default, default, default, Main.GameViewMatrix.TransformationMatrix);
+            //}
         }
 
         public void DrawParticlesInUI(SpriteBatch spriteBatch)
         {
-            ArmorShaderData armorShaderData = null;
-            foreach (var particle in _particles)
-            {
-                if (!particle.active)
-                    continue;
+            //ArmorShaderData armorShaderData = null;
+            //foreach (var particle in _particles)
+            //{
+            //    if (!particle.active)
+            //        continue;
 
-                if (!Helper.OnScreen(particle.Position))
-                    continue;
+            //    if (!Helper.OnScreen(particle.Position))
+            //        continue;
 
-                if (particle.shader != armorShaderData)
-                {
-                    spriteBatch.End();
-                    armorShaderData = particle.shader;
-                    if (armorShaderData == null)
-                        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointWrap, default, default, default, Main.UIScaleMatrix);
-                    else
-                    {
-                        spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.UIScaleMatrix);
-                        particle.shader.Apply(null);
-                    }
-                }
+            //    if (particle.shader != armorShaderData)
+            //    {
+            //        spriteBatch.End();
+            //        armorShaderData = particle.shader;
+            //        if (armorShaderData == null)
+            //            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointWrap, default, default, default, Main.UIScaleMatrix);
+            //        else
+            //        {
+            //            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.UIScaleMatrix);
+            //            particle.shader.Apply(null);
+            //        }
+            //    }
 
-                particle.DrawInUI(spriteBatch);
-            }
+            //    particle.DrawInUI(spriteBatch);
+            //}
 
-            if (armorShaderData != null)
-            {
-                spriteBatch.End();
-                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointWrap, default, default, default, Main.UIScaleMatrix);
-            }
+            //if (armorShaderData != null)
+            //{
+            //    spriteBatch.End();
+            //    spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointWrap, default, default, default, Main.UIScaleMatrix);
+            //}
         }
 
         public void DrawParticlesPrimitive()

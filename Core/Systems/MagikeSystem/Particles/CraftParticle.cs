@@ -24,13 +24,13 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
 
         public Item[] otherItems;
 
-        public override void OnSpawn()
+        public override void SetProperty()
         {
             shouldKilledOutScreen = false;
             drawNonPremultiplied = true;
         }
 
-        public override void Update()
+        public override void AI()
         {
             if (!TryGetEntity(_pos, out _))
             {

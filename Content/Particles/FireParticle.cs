@@ -12,7 +12,7 @@ namespace Coralite.Content.Particles
         private SpriteEffects effect;
         public int MaxFrameCount = 5;
 
-        public override void OnSpawn()
+        public override void SetProperty()
         {
             //color.A = 0;
 
@@ -21,7 +21,7 @@ namespace Coralite.Content.Particles
             Rotation = Velocity.ToRotation() - MathHelper.PiOver2;
         }
 
-        public override void Update()
+        public override void AI()
         {
             fadeIn++;
 

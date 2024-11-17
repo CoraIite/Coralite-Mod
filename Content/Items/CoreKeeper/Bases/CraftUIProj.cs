@@ -156,7 +156,7 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
             });
         }
 
-        public override void OnSpawn()
+        public override void SetProperty()
         {
             color = Main.rand.Next(2) switch
             {
@@ -179,7 +179,7 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
 
         public override bool ShouldUpdateCenter() => false;
 
-        public override void Update()
+        public override void AI()
         {
             Rotation += 0.06f;
 
@@ -218,7 +218,7 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
             p.shouldKilledOutScreen = false;
             p.Scale = 1;
 
-            p.OnSpawn();
+            p.SetProperty();
 
             return p;
         }
@@ -245,7 +245,7 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
     {
         public override string Texture => AssetDirectory.CoreKeeperItems + "LightPillar";
 
-        public override void OnSpawn()
+        public override void SetProperty()
         {
             color = new Color(148, 247, 221, 100);
             Velocity = new Vector2(2, 8);
@@ -253,7 +253,7 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
 
         public override bool ShouldUpdateCenter() => false;
 
-        public override void Update()
+        public override void AI()
         {
             Velocity.X *= 0.99f;
             color *= 0.99f;
@@ -280,7 +280,7 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
     {
         public override string Texture => AssetDirectory.CoreKeeperItems + "CircleLight";
 
-        public override void OnSpawn()
+        public override void SetProperty()
         {
             Scale = 0.1f;
             color = new Color(148, 247, 221);
@@ -288,7 +288,7 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
 
         public override bool ShouldUpdateCenter() => false;
 
-        public override void Update()
+        public override void AI()
         {
             if (fadeIn > 7)
             {

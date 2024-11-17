@@ -29,11 +29,11 @@ namespace Coralite.Content.Particles
             });
         }
 
-        public override void OnSpawn()
+        public override void SetProperty()
         {
         }
 
-        public override void Update()
+        public override void AI()
         {
             if (fadeIn < 0)
                 color *= 0.88f;

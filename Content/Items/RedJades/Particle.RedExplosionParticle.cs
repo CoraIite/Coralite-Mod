@@ -13,7 +13,7 @@ namespace Coralite.Content.Items.RedJades
 
         public override bool ShouldUpdateCenter() => false;
 
-        public override void OnSpawn()
+        public override void SetProperty()
         {
             Frame = new Rectangle(0, 0, 256, 256);
             Rotation = Main.rand.NextFloat(6.282f);
@@ -22,7 +22,7 @@ namespace Coralite.Content.Items.RedJades
             shader.UseOpacity(1);
         }
 
-        public override void Update()
+        public override void AI()
         {
             shader.UseColor(color);
             Scale += scaleAdder;
@@ -56,7 +56,7 @@ namespace Coralite.Content.Items.RedJades
 
         public override bool ShouldUpdateCenter() => false;
 
-        public override void OnSpawn()
+        public override void SetProperty()
         {
             Frame = new Rectangle(0, 0, 256, 256);
             Rotation = Main.rand.NextFloat(6.282f);
@@ -64,7 +64,7 @@ namespace Coralite.Content.Items.RedJades
             //shader.UseOpacity(1);
         }
 
-        public override void Update()
+        public override void AI()
         {
             //shader.UseColor(color);
             Rotation += 0.2f;

@@ -14,13 +14,13 @@ namespace Coralite.Content.Particles
 
         private int frameCounter;
 
-        public override void OnSpawn()
+        public override void SetProperty()
         {
             Rotation = Main.rand.NextFloat(6.282f);
             Frame = new Rectangle(0, 0, 22, 26);
         }
 
-        public override void Update()
+        public override void AI()
         {
             fadeIn++;
             if (fadeIn < 4)

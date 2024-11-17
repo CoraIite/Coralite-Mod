@@ -6,7 +6,7 @@ namespace Coralite.Content.Particles
 {
     public class Sparkle_Big : Particle
     {
-        public override void OnSpawn()
+        public override void SetProperty()
         {
             Velocity *= 0f;
             Rotation = Main.rand.NextFloat(6.282f);
@@ -16,7 +16,7 @@ namespace Coralite.Content.Particles
             shader.UseSecondaryColor(Color.White);
         }
 
-        public override void Update()
+        public override void AI()
         {
             //color *= 0.98f;
             shader.UseColor(color);

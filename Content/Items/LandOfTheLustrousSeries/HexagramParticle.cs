@@ -18,7 +18,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override bool ShouldUpdateCenter() => false;
 
-        public override void Update()
+        public override void AI()
         {
             if (follow != null)
             {
@@ -58,7 +58,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             p.Velocity = velocity;
             p.Scale = scale;
             p.Rotation = rot;
-            p.OnSpawn();
+            p.SetProperty();
 
             return p;
         }

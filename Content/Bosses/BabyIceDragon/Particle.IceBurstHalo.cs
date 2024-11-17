@@ -10,7 +10,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
         public override bool ShouldUpdateCenter() => false;
 
-        public override void OnSpawn()
+        public override void SetProperty()
         {
             Scale = 0.02f;
             color = Color.White;
@@ -19,7 +19,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             shouldKilledOutScreen = false;
         }
 
-        public override void Update()
+        public override void AI()
         {
             if (fadeIn > 14)
                 color *= 0.88f;

@@ -77,7 +77,7 @@ namespace Coralite.Core.Systems.ParticleSystem
             p.Position = center;
             p.Velocity = velocity;
             p.Scale = Scale;
-            p.OnSpawn();
+            p.SetProperty();
 
             ParticleSystem.Particles.Add(p);
 
@@ -109,7 +109,7 @@ namespace Coralite.Core.Systems.ParticleSystem
             p.Position = center;
             p.Velocity = velocity;
             p.Scale = Scale;
-            p.OnSpawn();
+            p.SetProperty();
 
             ParticleSystem.Particles.Add(p);
 
@@ -129,14 +129,14 @@ namespace Coralite.Core.Systems.ParticleSystem
             p.Position = center;
             p.Velocity = velocity;
             p.Scale = Scale;
-            p.OnSpawn();
+            p.SetProperty();
 
             return p;
         }
 
-        public virtual void OnSpawn() { }
+        public virtual void SetProperty() { }
 
-        public virtual void Update() { }
+        public virtual void AI() { }
 
         public virtual bool ShouldUpdateCenter() => true;
 

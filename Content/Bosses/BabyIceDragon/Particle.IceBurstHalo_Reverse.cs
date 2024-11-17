@@ -10,14 +10,14 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
         public override bool ShouldUpdateCenter() => false;
 
-        public override void OnSpawn()
+        public override void SetProperty()
         {
             color = Color.White;
             Rotation = Main.rand.NextFloat(6.282f);
             Frame = new Rectangle(0, 0, 128, 128);
         }
 
-        public override void Update()
+        public override void AI()
         {
             Rotation += 0.02f;
             Scale -= 0.26f;

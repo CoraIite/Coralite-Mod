@@ -8,7 +8,7 @@ namespace Coralite.Content.Particles
     public class LightBall : Particle
     {
         public override string Texture => AssetDirectory.Particles + Name;
-        public override void OnSpawn()
+        public override void SetProperty()
         {
             Frame = new Rectangle(0, 0, 128, 128);
             Rotation = Main.rand.NextFloat(MathHelper.TwoPi);
@@ -16,7 +16,7 @@ namespace Coralite.Content.Particles
             shader.UseSecondaryColor(Color.White);
         }
 
-        public override void Update()
+        public override void AI()
         {
             fadeIn++;
             shader.UseColor(color);

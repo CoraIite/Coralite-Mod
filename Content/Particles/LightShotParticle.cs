@@ -10,11 +10,11 @@ namespace Coralite.Content.Particles
         public override string Texture => AssetDirectory.OtherProjectiles + "LightGlowShot";
         public override bool ShouldUpdateCenter() => false;
 
-        public override void OnSpawn()
+        public override void SetProperty()
         {
         }
 
-        public override void Update()
+        public override void AI()
         {
             fadeIn++;
             if (fadeIn > 15)

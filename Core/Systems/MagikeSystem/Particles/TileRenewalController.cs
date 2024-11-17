@@ -17,7 +17,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
 
         public override bool ShouldUpdateCenter() => false;
 
-        public override void OnSpawn()
+        public override void SetProperty()
         {
             shouldKilledOutScreen = false;
         }
@@ -33,7 +33,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
             particle.startY = topLeft.Y;
         }
 
-        public override void Update()
+        public override void AI()
         {
             Tile t = Framing.GetTileSafely(topLeft);
             if (!t.HasTile)

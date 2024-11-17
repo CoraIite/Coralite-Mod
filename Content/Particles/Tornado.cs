@@ -11,12 +11,12 @@ namespace Coralite.Content.Particles
 
         private float time;
 
-        public override void OnSpawn()
+        public override void SetProperty()
         {
             Frame = new Rectangle(0, Main.rand.Next(8) * 64, 128, 64);
         }
 
-        public override void Update()
+        public override void AI()
         {
             if (fadeIn % 4 == 0)
             {

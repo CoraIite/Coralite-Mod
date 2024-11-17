@@ -339,12 +339,6 @@ namespace Coralite.Helpers
 
         public static bool OnScreen(Vector2 pos, Vector2 size) => OnScreen(new Rectangle((int)pos.X, (int)pos.Y, (int)size.X, (int)size.Y));
 
-        public static void NotOnServer(Action method)
-        {
-            if (Main.netMode != NetmodeID.Server)
-                method();
-        }
-
         public static Rectangle QuickMouseRectangle()
            => new((int)Main.MouseWorld.X, (int)Main.MouseWorld.Y, 2, 2);
 
