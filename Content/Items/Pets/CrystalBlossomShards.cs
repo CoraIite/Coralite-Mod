@@ -101,6 +101,7 @@ namespace Coralite.Content.Items.Pets
         {
             Frame = new Rectangle(0, Main.rand.Next(8) * 14, 10, 14);
             ShouldKillWhenOffScreen = false;
+            PRTDrawMode = PRTDrawModeEnum.AdditiveBlend;
         }
 
         public override void AI()

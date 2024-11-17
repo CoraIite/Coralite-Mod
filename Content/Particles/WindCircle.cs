@@ -11,7 +11,10 @@ namespace Coralite.Content.Particles
         public override string Texture => AssetDirectory.Particles + Name;
         public int frameCounterMax = 1;
         public Vector2 scale = Vector2.One;
-
+        public override void SetProperty()
+        {
+            PRTDrawMode = PRTDrawModeEnum.AdditiveBlend;
+        }
         public override void AI()
         {
             if (++fadeIn > frameCounterMax)

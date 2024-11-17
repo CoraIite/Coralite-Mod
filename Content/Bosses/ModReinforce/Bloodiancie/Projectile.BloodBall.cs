@@ -188,6 +188,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
             Color = Color.White;
             Frame = TexValue.Frame();
             Rotation = Velocity.ToRotation();
+            PRTDrawMode = PRTDrawModeEnum.AdditiveBlend;
         }
 
         public override void AI()

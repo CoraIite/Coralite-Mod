@@ -14,6 +14,7 @@ namespace Coralite.Content.Particles
 
         public override void SetProperty()
         {
+            PRTDrawMode = PRTDrawModeEnum.AdditiveBlend;
             Frame = new Rectangle(0, Main.rand.Next(8) * 64, 128, 64);
         }
 

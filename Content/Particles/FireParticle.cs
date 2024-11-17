@@ -20,6 +20,7 @@ namespace Coralite.Content.Particles
             Frame = new Rectangle(0, Main.rand.Next(3), 1, 1);
             effect = Main.rand.NextBool() ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             Rotation = Velocity.ToRotation() - MathHelper.PiOver2;
+            PRTDrawMode = PRTDrawModeEnum.AdditiveBlend;
         }
 
         public override void AI()

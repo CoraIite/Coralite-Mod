@@ -12,6 +12,7 @@ namespace Coralite.Content.Particles
 
         public override void SetProperty()
         {
+            PRTDrawMode = PRTDrawModeEnum.AdditiveBlend;
         }
 
         public override void AI()

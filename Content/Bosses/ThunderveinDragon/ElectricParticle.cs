@@ -15,6 +15,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             Rotation = Main.rand.NextFloat(6.282f);
             Frame = TexValue.Frame(7, 5, 0, Main.rand.Next(5));
             Color = Color.White;
+            PRTDrawMode = PRTDrawModeEnum.AdditiveBlend;
         }
 
         public override void AI()
@@ -89,6 +90,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             Rotation = Main.rand.NextFloat(6.282f);
             Frame = TexValue.Frame(4, 4, 0, Main.rand.Next(4));
             Color = Color.White;
+            PRTDrawMode = PRTDrawModeEnum.AdditiveBlend;
         }
 
         public override void AI()

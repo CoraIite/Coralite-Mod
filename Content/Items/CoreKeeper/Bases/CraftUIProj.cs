@@ -248,6 +248,7 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
         {
             Color = new Color(148, 247, 221, 100);
             Velocity = new Vector2(2, 8);
+            PRTDrawMode = PRTDrawModeEnum.AdditiveBlend;
         }
 
         public override bool ShouldUpdatePosition() => false;
@@ -284,6 +285,7 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
         {
             Scale = 0.1f;
             Color = new Color(148, 247, 221);
+            PRTDrawMode = PRTDrawModeEnum.AdditiveBlend;
         }
 
         public override bool ShouldUpdatePosition() => false;

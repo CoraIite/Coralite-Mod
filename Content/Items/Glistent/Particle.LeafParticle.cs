@@ -21,6 +21,11 @@ namespace Coralite.Content.Items.Glistent
         void ICLLoader.LoadAsset() => BigLeaf = ModContent.Request<Texture2D>(AssetDirectory.MagikeProjectiles + "LeafShield");
         void ICLLoader.UnLoadData() => BigLeaf = null;
 
+        public override void SetProperty()
+        {
+            PRTDrawMode = PRTDrawModeEnum.AdditiveBlend;
+        }
+
         public void UpdateFrame()
         {
             if (++frameCounter > frameCounterMax)

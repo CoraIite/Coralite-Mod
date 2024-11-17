@@ -17,6 +17,7 @@ namespace Coralite.Content.Particles
 
         public override void SetProperty()
         {
+            PRTDrawMode = PRTDrawModeEnum.AdditiveBlend;
             Rotation = Velocity.ToRotation();
         }
 

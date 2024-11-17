@@ -11,6 +11,7 @@ namespace Coralite.Content.Particles
         public override string Texture => AssetDirectory.Particles + Name;
         public override void SetProperty()
         {
+            PRTDrawMode = PRTDrawModeEnum.AdditiveBlend;
             Frame = new Rectangle(0, 0, 128, 128);
             shader = new Terraria.Graphics.Shaders.ArmorShaderData(Coralite.Instance.Assets.Request<Effect>("Effects/StarsDust", ReLogic.Content.AssetRequestMode.ImmediateLoad), "StarsDustPass");
             shader.UseSecondaryColor(Color.White);

@@ -13,6 +13,7 @@ namespace Coralite.Content.Particles
 
         public override void SetProperty()
         {
+            PRTDrawMode = PRTDrawModeEnum.AdditiveBlend;
             Frame = new Rectangle(0, 0, 128, 128);
             Rotation = Main.rand.NextFloat(6.282f);
         }

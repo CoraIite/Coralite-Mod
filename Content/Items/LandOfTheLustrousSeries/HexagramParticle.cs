@@ -19,6 +19,11 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override bool ShouldUpdatePosition() => false;
 
+        public override void SetProperty()
+        {
+            PRTDrawMode = PRTDrawModeEnum.AdditiveBlend;
+        }
+
         public override void AI()
         {
             if (follow != null)

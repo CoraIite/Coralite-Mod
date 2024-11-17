@@ -555,6 +555,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         {
             scale = new Vector2(0.6f, 0.2f);
             Rotation = Velocity.ToRotation();
+            PRTDrawMode = PRTDrawModeEnum.AdditiveBlend;
         }
 
         public override void AI()

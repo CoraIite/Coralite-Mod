@@ -27,6 +27,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
 
         public override void SetProperty()
         {
+            PRTDrawMode = PRTDrawModeEnum.AdditiveBlend;
             ShouldKillWhenOffScreen = false;
             PRTDrawMode = PRTDrawModeEnum.NonPremultiplied;
         }

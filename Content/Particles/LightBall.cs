@@ -14,6 +14,7 @@ namespace Coralite.Content.Particles
             Rotation = Main.rand.NextFloat(MathHelper.TwoPi);
             shader = new Terraria.Graphics.Shaders.ArmorShaderData(Coralite.Instance.Assets.Request<Effect>("Effects/StarsDust", ReLogic.Content.AssetRequestMode.ImmediateLoad), "StarsDustPass");
             shader.UseSecondaryColor(Color.White);
+            PRTDrawMode = PRTDrawModeEnum.AdditiveBlend;
         }
 
         public override void AI()

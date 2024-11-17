@@ -29,6 +29,7 @@ namespace Coralite.Content.Bosses.Rediancie
             Rotation = Main.rand.NextFloat(6.282f);
             Scale = 0f;
             ShouldKillWhenOffScreen = false;
+            PRTDrawMode = PRTDrawModeEnum.AdditiveBlend;
         }
 
         public override void AI()

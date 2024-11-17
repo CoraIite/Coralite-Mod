@@ -26,6 +26,11 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public Func<Vector2> follow;
 
+        public override void SetProperty()
+        {
+            PRTDrawMode = PRTDrawModeEnum.AdditiveBlend;
+        }
+
         public override void AI()
         {
             fadeIn++;

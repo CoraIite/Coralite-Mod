@@ -19,6 +19,7 @@ namespace Coralite.Content.Particles
             fadeIn = 0;
             shader = new Terraria.Graphics.Shaders.ArmorShaderData(Coralite.Instance.Assets.Request<Effect>("Effects/StarsDust", ReLogic.Content.AssetRequestMode.ImmediateLoad), "StarsDustPass");
             shader.UseSecondaryColor(Color.White);
+            PRTDrawMode = PRTDrawModeEnum.AdditiveBlend;
         }
 
         public override void AI()

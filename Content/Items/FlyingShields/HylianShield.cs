@@ -560,6 +560,11 @@ namespace Coralite.Content.Items.FlyingShields
     {
         public override string Texture => AssetDirectory.Halos + "HighlightCircle";
 
+        public override void SetProperty()
+        {
+            PRTDrawMode = PRTDrawModeEnum.AdditiveBlend;
+        }
+
         public override void AI()
         {
             fadeIn++;
@@ -621,6 +626,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void SetProperty()
         {
+            PRTDrawMode = PRTDrawModeEnum.AdditiveBlend;
             ShouldKillWhenOffScreen = false;
         }
 

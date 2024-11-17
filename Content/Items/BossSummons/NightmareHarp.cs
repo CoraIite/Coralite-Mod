@@ -455,6 +455,7 @@ namespace Coralite.Content.Items.BossSummons
         public override void SetProperty()
         {
             Rotation = Main.rand.NextFloat(6.282f);
+            PRTDrawMode = PRTDrawModeEnum.AdditiveBlend;
         }
 
         public override bool ShouldUpdatePosition() => false;

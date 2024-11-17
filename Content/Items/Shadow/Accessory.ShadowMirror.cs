@@ -145,6 +145,7 @@ namespace Coralite.Content.Items.Shadow
         {
             Rotation = Main.rand.NextFloat(6.282f);
             Frame = new Rectangle(0, Main.rand.Next(0, 5) * 64, 64, 64);
+            PRTDrawMode = PRTDrawModeEnum.AdditiveBlend;
         }
 
         public override void AI()

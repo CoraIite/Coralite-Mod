@@ -392,6 +392,7 @@ namespace Coralite.Content.Items.Nightmare
         {
             Rotation = Main.rand.NextFloat(6.282f);
             Frame = new Rectangle(0, Main.rand.Next(4) * 64, 64, 64);
+            PRTDrawMode = PRTDrawModeEnum.AdditiveBlend;
         }
 
         public override void AI()

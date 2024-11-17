@@ -21,6 +21,7 @@ namespace Coralite.Content.Items.RedJades
             Scale = 0.01f;
             shader = new Terraria.Graphics.Shaders.ArmorShaderData(Coralite.Instance.Assets.Request<Effect>("Effects/GlowingDust", ReLogic.Content.AssetRequestMode.ImmediateLoad), "GlowingDustPass");
             shader.UseOpacity(1);
+            PRTDrawMode = PRTDrawModeEnum.AdditiveBlend;
         }
 
         public override void AI()
@@ -61,6 +62,7 @@ namespace Coralite.Content.Items.RedJades
         {
             Frame = new Rectangle(0, 0, 256, 256);
             Rotation = Main.rand.NextFloat(6.282f);
+            PRTDrawMode = PRTDrawModeEnum.AdditiveBlend;
             //shader = new Terraria.Graphics.Shaders.ArmorShaderData(new Ref<Effect>(Coralite.Instance.Assets.Request<Effect>("Effects/GlowingDust", ReLogic.Content.AssetRequestMode.ImmediateLoad).Value), "GlowingDustPass");
             //shader.UseOpacity(1);
         }
