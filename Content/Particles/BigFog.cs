@@ -18,10 +18,10 @@ namespace Coralite.Content.Particles
             Velocity *= 0.98f;
             Rotation += 0.01f;
             Scale *= 0.997f;
-            color *= 0.94f;
+            Color *= 0.94f;
 
             fadeIn++;
-            if (fadeIn > 60 || color.A < 10)
+            if (fadeIn > 60 || Color.A < 10)
                 active = false;
         }
 

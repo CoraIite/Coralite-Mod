@@ -32,7 +32,7 @@ namespace Coralite.Content.Particles
             if (center != null)
                 Position = center();
 
-            Lighting.AddLight(Position, color.ToVector3() * alpha / 2);
+            Lighting.AddLight(Position, Color.ToVector3() * alpha / 2);
 
             if (fadeIn < fadeTime)
                 alpha += maxAlpha / fadeTime;
@@ -68,7 +68,7 @@ namespace Coralite.Content.Particles
         {
             Texture2D mainTex = TexValue;
             Vector2 origin = new(0, mainTex.Height / 2);
-            Color c = color;
+            Color c = Color;
             c.A = (byte)(alpha * 255);
 
             spriteBatch.Draw(mainTex, Position - Main.screenPosition, null, c, Rotation, origin, new Vector2(Scale, 0.4f), SpriteEffects.None, 0f);

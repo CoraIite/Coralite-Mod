@@ -19,12 +19,12 @@ namespace Coralite.Content.Particles
         public override void AI()
         {
             fadeIn++;
-            Lighting.AddLight(Position, color.ToVector3() * 0.3f);
+            Lighting.AddLight(Position, Color.ToVector3() * 0.3f);
 
             if (fadeIn > 8)
             {
                 Velocity *= 0.96f;
-                color *= 0.8f;
+                Color *= 0.8f;
             }
 
             if (fadeIn > 14)
@@ -40,7 +40,7 @@ namespace Coralite.Content.Particles
             Color c = Color.White * 0.5f;
             if (oldPositions != null)
             {
-                spriteBatch.Draw(mainTex, pos, frame, color, Rotation, origin, oldPositions[0], SpriteEffects.None, 0f);
+                spriteBatch.Draw(mainTex, pos, frame, Color, Rotation, origin, oldPositions[0], SpriteEffects.None, 0f);
                 spriteBatch.Draw(mainTex, pos, frame, c, Rotation, origin, oldPositions[0] * 0.5f, SpriteEffects.None, 0f);
             }
         }

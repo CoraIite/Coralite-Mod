@@ -31,7 +31,7 @@ namespace Coralite.Content.Particles
                 Scale *= 0.975f;
 
             if (fadeIn < 20)
-                color *= 0.92f;
+                Color *= 0.92f;
 
             fadeIn--;
             if (fadeIn < 0)

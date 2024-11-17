@@ -40,8 +40,8 @@ namespace Coralite.Content.Particles
             Vector2 origin = new(frame.Width / 2, frame.Height / 2);
             var scale2 = scale * Scale;
 
-            spriteBatch.Draw(TexValue, Position - Main.screenPosition, frame, color, Rotation, origin, scale2, SpriteEffects.None, 0f);
-            Color c = color;
+            spriteBatch.Draw(TexValue, Position - Main.screenPosition, frame, Color, Rotation, origin, scale2, SpriteEffects.None, 0f);
+            Color c = Color;
             c.A = (byte)(0.3f * c.A);
             spriteBatch.Draw(TexValue, Position - Main.screenPosition, frame, c, Rotation, origin, scale2 * 1.1f, SpriteEffects.None, 0f);
         }

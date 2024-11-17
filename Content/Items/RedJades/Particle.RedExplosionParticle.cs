@@ -24,7 +24,7 @@ namespace Coralite.Content.Items.RedJades
 
         public override void AI()
         {
-            shader.UseColor(color);
+            shader.UseColor(Color);
             Scale += scaleAdder;
 
             if (fadeIn > 8)
@@ -76,7 +76,7 @@ namespace Coralite.Content.Items.RedJades
             }
 
             if (fadeIn > 8)
-                color *= 0.84f;
+                Color *= 0.84f;
 
             fadeIn++;
             if (fadeIn > 14)

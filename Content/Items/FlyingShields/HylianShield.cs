@@ -564,7 +564,7 @@ namespace Coralite.Content.Items.FlyingShields
             fadeIn++;
             if (fadeIn > 15)
             {
-                color = Color.Lerp(color, new Color(0, 100, 250, 0), 0.35f);
+                Color = Color.Lerp(Color, new Color(0, 100, 250, 0), 0.35f);
                 Scale += 0.07f;
             }
             else
@@ -572,7 +572,7 @@ namespace Coralite.Content.Items.FlyingShields
                 Scale += 0.025f;
             }
 
-            if (color.A < 2)
+            if (Color.A < 2)
                 active = false;
         }
 
@@ -592,7 +592,7 @@ namespace Coralite.Content.Items.FlyingShields
             Vector2 pos = Position - Main.screenPosition;
             Vector2 origin = mainTex.Size() / 2;
             Vector2 scale = oldPositions[0] * Scale;
-            Color c = color;
+            Color c = Color;
 
             spriteBatch.Draw(mainTex, pos
                 , null, c, Rotation, origin, scale, SpriteEffects.None, 0f);
@@ -618,7 +618,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void SetProperty()
         {
-            shouldKilledOutScreen = false;
+            ShouldKillWhenOffScreen = false;
         }
 
         public override void AI()
@@ -626,15 +626,15 @@ namespace Coralite.Content.Items.FlyingShields
             fadeIn++;
             if (fadeIn > 8)
             {
-                color = Color.Lerp(color, new Color(0, 60, 250, 0), 0.05f);
+                Color = Color.Lerp(Color, new Color(0, 60, 250, 0), 0.05f);
             }
             else
             {
-                color *= 1.03f;
-                color.A += 3;
+                Color *= 1.03f;
+                Color.A += 3;
             }
 
-            if (color.A < 2)
+            if (Color.A < 2)
                 active = false;
         }
 
@@ -644,9 +644,9 @@ namespace Coralite.Content.Items.FlyingShields
             Vector2 origin = mainTex.Size() / 2;
 
             spriteBatch.Draw(mainTex, Position - Main.screenPosition,
-                null, color, 0, origin, new Vector2(1.4f, 1) * Scale, SpriteEffects.None, 0f);
+                null, Color, 0, origin, new Vector2(1.4f, 1) * Scale, SpriteEffects.None, 0f);
             spriteBatch.Draw(mainTex, Position - Main.screenPosition,
-                null, color, 0, origin, new Vector2(1.4f, 1) * Scale / 2, SpriteEffects.None, 0f);
+                null, Color, 0, origin, new Vector2(1.4f, 1) * Scale / 2, SpriteEffects.None, 0f);
         }
     }
 }

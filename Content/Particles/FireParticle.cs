@@ -33,7 +33,7 @@ namespace Coralite.Content.Particles
             }
 
             Velocity *= 0.95f;
-            color *= 0.96f;
+            Color *= 0.96f;
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -42,9 +42,9 @@ namespace Coralite.Content.Particles
             Rectangle frame = mainTex.Frame(1, 16, 0, Frame.Y);
             Vector2 origin = frame.Size() / 2;
 
-            spriteBatch.Draw(mainTex, Position - Main.screenPosition, frame, color, Rotation, origin, Scale
+            spriteBatch.Draw(mainTex, Position - Main.screenPosition, frame, Color, Rotation, origin, Scale
                 , effect, 0f);
-            spriteBatch.Draw(mainTex, Position - Main.screenPosition, frame, color * 0.5f, Rotation, origin, Scale
+            spriteBatch.Draw(mainTex, Position - Main.screenPosition, frame, Color * 0.5f, Rotation, origin, Scale
                 , effect, 0f);
         }
 
@@ -54,9 +54,9 @@ namespace Coralite.Content.Particles
             Rectangle frame = mainTex.Frame(1, 16, 0, Frame.Y);
             Vector2 origin = frame.Size() / 2;
 
-            spriteBatch.Draw(mainTex, Position, frame, color, Rotation, origin, Scale
+            spriteBatch.Draw(mainTex, Position, frame, Color, Rotation, origin, Scale
                 , effect, 0f);
-            spriteBatch.Draw(mainTex, Position, frame, color * 0.5f, Rotation, origin, Scale
+            spriteBatch.Draw(mainTex, Position, frame, Color * 0.5f, Rotation, origin, Scale
                 , effect, 0f);
         }
     }

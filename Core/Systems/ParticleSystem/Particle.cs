@@ -23,8 +23,8 @@ namespace Coralite.Core.Systems.ParticleSystem
         public float Rotation;
         public float[] oldRotations;
         public bool active;
-        public bool shouldKilledOutScreen = true;
-        public Color color;
+        public bool ShouldKillWhenOffScreen = true;
+        public Color Color;
         public Rectangle Frame;
         public ArmorShaderData shader;
 
@@ -73,7 +73,7 @@ namespace Coralite.Core.Systems.ParticleSystem
 
             //设置各种初始值
             p.active = true;
-            p.color = newColor;
+            p.Color = newColor;
             p.Position = center;
             p.Velocity = velocity;
             p.Scale = Scale;
@@ -105,7 +105,7 @@ namespace Coralite.Core.Systems.ParticleSystem
 
             //设置各种初始值
             p.active = true;
-            p.color = newColor;
+            p.Color = newColor;
             p.Position = center;
             p.Velocity = velocity;
             p.Scale = Scale;
@@ -125,7 +125,7 @@ namespace Coralite.Core.Systems.ParticleSystem
 
             //设置各种初始值
             p.active = true;
-            p.color = newColor;
+            p.Color = newColor;
             p.Position = center;
             p.Velocity = velocity;
             p.Scale = Scale;
@@ -145,7 +145,7 @@ namespace Coralite.Core.Systems.ParticleSystem
             Rectangle frame = Frame;
             Vector2 origin = frame.Size() / 2;
 
-            spriteBatch.Draw(TexValue, Position - Main.screenPosition, frame, color, Rotation, origin, Scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(TexValue, Position - Main.screenPosition, frame, Color, Rotation, origin, Scale, SpriteEffects.None, 0f);
         }
 
         public virtual void DrawInUI(SpriteBatch spriteBatch)
@@ -153,7 +153,7 @@ namespace Coralite.Core.Systems.ParticleSystem
             Rectangle frame = Frame;
             Vector2 origin = frame.Size() / 2;
 
-            spriteBatch.Draw(TexValue, Position, frame, color, Rotation, origin, Scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(TexValue, Position, frame, Color, Rotation, origin, Scale, SpriteEffects.None, 0f);
         }
 
         public virtual void DrawNonPremultiplied(SpriteBatch spriteBatch) { }

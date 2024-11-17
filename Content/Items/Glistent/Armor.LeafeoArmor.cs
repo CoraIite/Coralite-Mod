@@ -234,7 +234,7 @@ namespace Coralite.Content.Items.Glistent
             length = Main.rand.NextFloat(16, 30);
             speed = Main.rand.NextFloat(0.02f, 0.06f);
             LeafType = Main.rand.Next(2);
-            shouldKilledOutScreen = false;
+            ShouldKillWhenOffScreen = false;
         }
 
         public override void AI()
@@ -259,7 +259,7 @@ namespace Coralite.Content.Items.Glistent
                         Rotation = fadeIn + start - 1.57f + (LeafType == 0 ? 1.57f : 0);
 
                         if (fadeIn < 0.5f)
-                            color *= 0.93f;
+                            Color *= 0.93f;
                     }
                     break;
                 case 1://树叶掉落
@@ -278,7 +278,7 @@ namespace Coralite.Content.Items.Glistent
                         }
 
                         if (fadeIn < 0.5f)
-                            color.A = (byte)(color.A * 0.9f);
+                            Color.A = (byte)(Color.A * 0.9f);
                     }
                     break;
             }
@@ -291,7 +291,7 @@ namespace Coralite.Content.Items.Glistent
         {
             State = 1;
             Velocity = (fadeIn + 1.57f).ToRotationVector2() * Main.rand.NextFloat(2, 5);
-            color = new Color(119, 133, 34, 255);
+            Color = new Color(119, 133, 34, 255);
             alpha = 1;
         }
     }

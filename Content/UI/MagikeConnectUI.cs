@@ -91,7 +91,7 @@ namespace Coralite.Content.UI
             }
 
             Vector2 worldPos = Helper.GetMagikeTileCenter(sender.Entity.Position).ToScreenPosition();
-            if (!Helper.OnScreen(worldPos))
+            if (!VaultUtils.IsPointOnScreen(worldPos))
             {
                 visible = false;
                 return;

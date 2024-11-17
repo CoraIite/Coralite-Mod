@@ -34,7 +34,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 Position += follow();
             }
 
-            Lighting.AddLight(Position, color.ToVector3() * currentScale.Y * 10);
+            Lighting.AddLight(Position, Color.ToVector3() * currentScale.Y * 10);
 
             int dir = MathF.Sign(Velocity.X);
             for (int i = 0; i < shotCount - 1; i++)
@@ -49,7 +49,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 scale.Y *= 0.96f;
                 currentScale = Vector2.SmoothStep(currentScale, scale, 0.5f);
 
-                color.A = (byte)(color.A * 0.98f);
+                Color.A = (byte)(Color.A * 0.98f);
             }
             else if (fadeIn < 8)
             {
@@ -92,7 +92,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             //设置各种初始值
             cs.active = true;
-            cs.color = newColor;
+            cs.Color = newColor;
             cs.Position = center;
             cs.Velocity = velocity;
             cs.Scale = 1;
@@ -140,7 +140,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Vector2 origin = new(0, mainTex.Height / 2);
             Vector2 scale = currentScale * 0.1f * exScale;
             scale.Y *= 2;
-            Color c = color;
+            Color c = Color;
 
             spriteBatch.Draw(mainTex, pos
                 , null, c, rot, origin, scale, SpriteEffects.None, 0f);
@@ -157,7 +157,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public void DrawShot2(SpriteBatch spriteBatch, float rot, float exScale, Vector2 screenPos)
         {
             Texture2D mainTex = TexValue;
-            Color c = color;
+            Color c = Color;
 
             List<CustomVertexInfo> bars = new();
             List<CustomVertexInfo> bar3 = new();

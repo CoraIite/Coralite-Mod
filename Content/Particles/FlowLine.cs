@@ -36,7 +36,7 @@ namespace Coralite.Content.Particles
         public override void AI()
         {
             if (fadeIn < 0)
-                color *= 0.88f;
+                Color *= 0.88f;
             else
             {
                 if (fadeIn >= spawnTime * 3f / 4f || fadeIn < spawnTime / 4f)
@@ -48,7 +48,7 @@ namespace Coralite.Content.Particles
                 trail.Positions = oldPositions;
             }
 
-            if (fadeIn < -120 || color.A < 10)
+            if (fadeIn < -120 || Color.A < 10)
                 active = false;
 
             fadeIn -= 1f;
@@ -90,9 +90,9 @@ namespace Coralite.Content.Particles
                 particle.trail = new Trail(Main.instance.GraphicsDevice, spawnTime, new NoTip(), factor => trailWidth, factor =>
                 {
                     if (factor.X > 0.5f)
-                        return Color.Lerp(particle.color, new Color(0, 0, 0, 0), (factor.X - 0.5f) * 2);
+                        return Color.Lerp(particle.Color, new Color(0, 0, 0, 0), (factor.X - 0.5f) * 2);
 
-                    return Color.Lerp(new Color(0, 0, 0, 0), particle.color, factor.X * 2);
+                    return Color.Lerp(new Color(0, 0, 0, 0), particle.Color, factor.X * 2);
                 });
 
                 particle.spawnTime = spawnTime;

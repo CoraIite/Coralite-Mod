@@ -19,17 +19,17 @@ namespace Coralite.Content.Particles
         public override void AI()
         {
             fadeIn++;
-            shader.UseColor(color);
+            shader.UseColor(Color);
             shader.UseOpacity(0.65f);
             shader.UseSaturation(2.1f);
-            Lighting.AddLight(Position, color.ToVector3() * 0.3f);
+            Lighting.AddLight(Position, Color.ToVector3() * 0.3f);
 
             if (fadeIn < 10)
                 Velocity *= 0.73f;
             else if (fadeIn > 16)
             {
                 Scale *= 0.92f;
-                color *= 0.92f;
+                Color *= 0.92f;
                 Velocity.Y -= 0.75f;
             }
 

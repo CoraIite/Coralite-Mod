@@ -24,7 +24,7 @@ namespace Coralite.Content.Particles
             fadeIn++;
             if (fadeIn > 13)
             {
-                color = Color.Lerp(color, targetColor, 0.1f);
+                Color = Color.Lerp(Color, targetColor, 0.1f);
 
                 if (!noGravity && Velocity.Y < 7)
                 {
@@ -35,7 +35,7 @@ namespace Coralite.Content.Particles
                 Rotation = Velocity.ToRotation();
             }
 
-            if (color.A < 2)
+            if (Color.A < 2)
                 active = false;
 
             if (fadeIn < oldPositions.Length)
@@ -72,7 +72,7 @@ namespace Coralite.Content.Particles
         {
             Texture2D mainTex = TexValue;
             float scale = Scale;
-            Color c = color;
+            Color c = Color;
 
             List<CustomVertexInfo> bars = new();
             List<CustomVertexInfo> bar3 = new();
@@ -93,7 +93,7 @@ namespace Coralite.Content.Particles
                 Vector2 Top2 = Center - Main.screenPosition + (normal * height * 1.5f);
                 Vector2 Bottom2 = Center - Main.screenPosition - (normal * height * 1.5f);
 
-                var Color2 = color;//Color.Lerp(color, Color.DarkBlue, factor);
+                var Color2 = Color;//Color.Lerp(color, Color.DarkBlue, factor);
                 bars.Add(new(Top, Color2, new Vector3(factor, 0, 1)));
                 bars.Add(new(Bottom, Color2, new Vector3(factor, 1, 1)));
                 Color2 = Color.White * (c.A / 255f);
@@ -121,7 +121,7 @@ namespace Coralite.Content.Particles
             fadeIn++;
             if (fadeIn > 13)
             {
-                color = Color.Lerp(color, targetColor, 0.1f);
+                Color = Color.Lerp(Color, targetColor, 0.1f);
 
                 if (!noGravity && Velocity.Y < 7)
                 {
@@ -132,7 +132,7 @@ namespace Coralite.Content.Particles
                 Rotation = Velocity.ToRotation();
             }
 
-            if (color.A < 2)
+            if (Color.A < 2)
                 active = false;
         }
 
@@ -147,11 +147,11 @@ namespace Coralite.Content.Particles
         public override void Draw(SpriteBatch spriteBatch)
         {
             Texture2D mainTex = TexValue;
-            Color c = Color.White * (color.A / 255f);
+            Color c = Color.White * (Color.A / 255f);
             c.A = (byte)(c.A * 0.3f);
 
             spriteBatch.Draw(mainTex, Position - Main.screenPosition, null, c, Rotation, mainTex.Size() / 2, Scale * 1.5f, 0, 0);
-            c = color;
+            c = Color;
             spriteBatch.Draw(mainTex, Position - Main.screenPosition, null, c, Rotation, mainTex.Size() / 2, Scale, 0, 0);
             spriteBatch.Draw(mainTex, Position - Main.screenPosition, null, c, Rotation, mainTex.Size() / 2, Scale, 0, 0);
         }

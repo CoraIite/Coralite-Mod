@@ -150,14 +150,14 @@ namespace Coralite.Content.Items.Shadow
         {
             Rotation += 0.15f;
             Scale *= 0.97f;
-            color *= 0.92f;
+            Color *= 0.92f;
 
             fadeIn++;
             if (fadeIn > 5)
             {
                 Velocity *= 0.97f;
             }
-            if (fadeIn > 40 || color.A < 10)
+            if (fadeIn > 40 || Color.A < 10)
             {
                 active = false;
             }

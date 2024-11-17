@@ -41,8 +41,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public virtual void OnSend(Point16 selfPoint, Point16 ReceiverPoint)
         {
-            bool selfOnScreen = Helper.OnScreen(selfPoint.ToWorldCoordinates() - Main.screenPosition);
-            bool rectiverOnScreen = Helper.OnScreen(ReceiverPoint.ToWorldCoordinates() - Main.screenPosition);
+            bool selfOnScreen = VaultUtils.IsPointOnScreen(selfPoint.ToWorldCoordinates() - Main.screenPosition);
+            bool rectiverOnScreen = VaultUtils.IsPointOnScreen(ReceiverPoint.ToWorldCoordinates() - Main.screenPosition);
 
             if (selfOnScreen)
             {

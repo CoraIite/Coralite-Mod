@@ -28,10 +28,10 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             if (fadeIn > FadeTime)
             {
                 Scale *= 0.95f;
-                color.A = (byte)(color.A * 0.9f);
+                Color.A = (byte)(Color.A * 0.9f);
             }
 
-            if (fadeIn > 40 || color.A < 10)
+            if (fadeIn > 40 || Color.A < 10)
             {
                 active = false;
             }
@@ -53,7 +53,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Rectangle frame = Frame;
             Vector2 origin = new(frame.Width / 2, frame.Height / 2);
 
-            spriteBatch.Draw(TexValue, Position - Main.screenPosition, frame, color, Rotation, origin, Scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(TexValue, Position - Main.screenPosition, frame, Color, Rotation, origin, Scale, SpriteEffects.None, 0f);
         }
     }
 }

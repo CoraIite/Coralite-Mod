@@ -398,10 +398,10 @@ namespace Coralite.Content.Items.Nightmare
             Velocity *= 0.96f;
             Rotation += 0.01f;
             Scale *= 0.997f;
-            color.A = (byte)(color.A * 0.92f);
+            Color.A = (byte)(Color.A * 0.92f);
 
             fadeIn++;
-            if (fadeIn > 40 || color.A < 10)
+            if (fadeIn > 40 || Color.A < 10)
                 active = false;
         }
     }

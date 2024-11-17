@@ -26,7 +26,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
 
         public override void SetProperty()
         {
-            shouldKilledOutScreen = false;
+            ShouldKillWhenOffScreen = false;
             drawNonPremultiplied = true;
         }
 
@@ -58,7 +58,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
                         {
                             Vector2 dir = (i * MathHelper.TwoPi / 20).ToRotationVector2();
                             Dust dust = Dust.NewDustPerfect(Position - dir * 26, DustID.RainbowMk2, dir * Main.rand.NextFloat(1f, 2f)
-                                , newColor: color, Scale: 0.8f);
+                                , newColor: Color, Scale: 0.8f);
                             dust.noGravity = true;
                         }
 
@@ -66,7 +66,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
                     {
                         Vector2 dir = Helper.NextVec2Dir();
                         Dust dust = Dust.NewDustPerfect(Position - dir * 26, DustID.RainbowMk2, dir * Main.rand.NextFloat(1.5f, 3f)
-                            , newColor: color, Scale: 0.8f);
+                            , newColor: Color, Scale: 0.8f);
                         dust.noGravity = true;
                     }
                 }
@@ -78,17 +78,17 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
                 {
                     Vector2 dir = (i * MathHelper.TwoPi / 20).ToRotationVector2();
                     Dust dust = Dust.NewDustPerfect(Position, DustID.RainbowMk2, dir * Main.rand.NextFloat(2f, 5f)
-                        , newColor: color, Scale: 1.2f);
+                        , newColor: Color, Scale: 1.2f);
                     dust.noGravity = true;
                     dust = Dust.NewDustPerfect(Position, DustID.RainbowMk2, dir * Main.rand.NextFloat(5f, 8f)
-                        , newColor: color, Scale: 1.5f);
+                        , newColor: Color, Scale: 1.5f);
                     dust.noGravity = true;
                 }
 
                 for (int i = 0; i < 5; i++)
                 {
                     Dust dust = Dust.NewDustPerfect(Position , ModContent.DustType<Runes>(), Helper.NextVec2Dir(3f,5f)
-                        , newColor: color, Scale: 1f);
+                        , newColor: Color, Scale: 1f);
                     dust.noGravity = true;
                 }
 
@@ -141,7 +141,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
             Texture2D mainTex = TexValue;
 
             Vector2 pos = Position - Main.screenPosition;
-            Color c = color;
+            Color c = Color;
             c.A = (byte)(200 * alpha);
             var origin = mainTex.Size() / 2;
             float scale = Length * 2 / mainTex.Width;

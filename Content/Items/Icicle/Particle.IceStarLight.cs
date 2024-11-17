@@ -35,7 +35,7 @@ namespace Coralite.Content.Items.Icicle
 
         public override void SetProperty()
         {
-            color = Color.White;
+            Color = Color.White;
             Frame = new Rectangle(0, 0, 18, 18);
             trail = new Trail(Main.instance.GraphicsDevice, 8, new NoTip(), factor => 2 * Scale, factor => Color.Lerp(new Color(0, 0, 0, 0), Coralite.IcicleCyan, factor.X));
             InitializePositionCache(8);
@@ -101,7 +101,7 @@ namespace Coralite.Content.Items.Icicle
             Rectangle frame = Frame;
             Vector2 origin = new(frame.Width / 2, frame.Height / 2);
 
-            spriteBatch.Draw(TexValue, Position - Main.screenPosition, frame, color, Rotation, origin, 1.2f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(TexValue, Position - Main.screenPosition, frame, Color, Rotation, origin, 1.2f, SpriteEffects.None, 0f);
         }
 
         public static void Spawn(Vector2 center, Vector2 velocity, float scale, GetCenter function, float velocityLimit)

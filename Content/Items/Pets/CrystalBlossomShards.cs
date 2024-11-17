@@ -99,7 +99,7 @@ namespace Coralite.Content.Items.Pets
         public override void SetProperty()
         {
             Frame = new Rectangle(0, Main.rand.Next(8) * 14, 10, 14);
-            shouldKilledOutScreen = false;
+            ShouldKillWhenOffScreen = false;
         }
 
         public override void AI()
@@ -108,7 +108,7 @@ namespace Coralite.Content.Items.Pets
             Rotation += Main.rand.NextFloat(0.13f, 0.18f);
             Velocity *= 0.99f;
             if (fadeIn > 45)
-                color *= 0.88f;
+                Color *= 0.88f;
             if (fadeIn % 8 == 0)
             {
                 Frame.Y += 14;
@@ -125,7 +125,7 @@ namespace Coralite.Content.Items.Pets
         {
             Rectangle frame = Frame;
             Vector2 origin = new(frame.Width / 2, frame.Height / 2);
-            Color c = color;
+            Color c = Color;
             if (fadeIn < 6)
             {
                 c *= fadeIn / 6;

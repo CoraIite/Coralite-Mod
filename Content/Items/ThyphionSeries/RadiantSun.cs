@@ -564,8 +564,8 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             if (fadeIn > 5)
             {
-                color *= 0.74f;
-                if (color.A < 10)
+                Color *= 0.74f;
+                if (Color.A < 10)
                     active = false;
             }
         }
@@ -574,7 +574,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         {
             Vector2 origin = TexValue.Size() / 2;
 
-            spriteBatch.Draw(TexValue, Position - Main.screenPosition, null, color, Rotation, origin, scale * Scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(TexValue, Position - Main.screenPosition, null, Color, Rotation, origin, scale * Scale, SpriteEffects.None, 0f);
         }
     }
 }

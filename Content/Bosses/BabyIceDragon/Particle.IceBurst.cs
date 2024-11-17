@@ -9,10 +9,10 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
         public override void SetProperty()
         {
-            color = Color.White;
+            Color = Color.White;
             Rotation = 0f;
             Frame = new Rectangle(0, 0, 128, 128);
-            shouldKilledOutScreen = false;
+            ShouldKillWhenOffScreen = false;
         }
 
         public override void AI()

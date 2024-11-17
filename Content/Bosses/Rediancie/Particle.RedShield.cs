@@ -34,11 +34,11 @@ namespace Coralite.Content.Bosses.Rediancie
 
         public override void SetProperty()
         {
-            color = Coralite.RedJadeRed;
-            color.A = 0;
+            Color = Coralite.RedJadeRed;
+            Color.A = 0;
             Rotation = Main.rand.NextFloat(6.282f);
             Scale = 0f;
-            shouldKilledOutScreen = false;
+            ShouldKillWhenOffScreen = false;
         }
 
         public override void AI()
@@ -48,11 +48,11 @@ namespace Coralite.Content.Bosses.Rediancie
             if (Init)
             {
                 Scale += 0.05f;
-                color.A += 255 / 16;
+                Color.A += 255 / 16;
                 if (Scale > 0.8f)
                 {
                     Scale = 0.8f;
-                    color.A = 255;
+                    Color.A = 255;
                     Init = false;
                 }
             }
@@ -67,8 +67,8 @@ namespace Coralite.Content.Bosses.Rediancie
 
             if (toFadeOut)
             {
-                color.A -= 255 / 16;
-                if (color.A < 10)
+                Color.A -= 255 / 16;
+                if (Color.A < 10)
                     active = false;
             }
         }
@@ -77,15 +77,15 @@ namespace Coralite.Content.Bosses.Rediancie
         {
             Vector2 center = this.Position - Main.screenPosition;
             Texture2D mainTex = TexValue;
-            spriteBatch.Draw(mainTex, center, null, color, Rotation, mainTex.Size() / 2, Scale, SpriteEffects.None, 0);
+            spriteBatch.Draw(mainTex, center, null, Color, Rotation, mainTex.Size() / 2, Scale, SpriteEffects.None, 0);
 
             float extraRot1 = Rotation + (fadeIn * 0.1f);
             float extraRot2 = Rotation + (fadeIn * 0.05f);
             Vector2 flowOrigin = flowTex.Size() / 2;
 
-            spriteBatch.Draw(flowTex.Value, center, null, color, extraRot1, flowOrigin, Scale - 0.1f, SpriteEffects.None, 0);
-            spriteBatch.Draw(flowTex.Value, center, null, new Color(255, 255, 255, color.A * 3 / 4), extraRot1 + extraRot2, flowOrigin, Scale - 0.2f, SpriteEffects.FlipHorizontally, 0);
-            spriteBatch.Draw(flowTex.Value, center, null, color, extraRot2 + 3.141f, flowOrigin, Scale - 0.2f, SpriteEffects.FlipHorizontally, 0);
+            spriteBatch.Draw(flowTex.Value, center, null, Color, extraRot1, flowOrigin, Scale - 0.1f, SpriteEffects.None, 0);
+            spriteBatch.Draw(flowTex.Value, center, null, new Color(255, 255, 255, Color.A * 3 / 4), extraRot1 + extraRot2, flowOrigin, Scale - 0.2f, SpriteEffects.FlipHorizontally, 0);
+            spriteBatch.Draw(flowTex.Value, center, null, Color, extraRot2 + 3.141f, flowOrigin, Scale - 0.2f, SpriteEffects.FlipHorizontally, 0);
         }
 
         public static void Spawn(Entity rediancie, int maxTime)

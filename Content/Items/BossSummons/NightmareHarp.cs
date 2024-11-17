@@ -481,10 +481,10 @@ namespace Coralite.Content.Items.BossSummons
             {
                 Scale *= 1.02f;
                 if (fadeIn > 30)
-                    color.A = (byte)(color.A * 0.82f);
+                    Color.A = (byte)(Color.A * 0.82f);
             }
 
-            if (color.A < 10)
+            if (Color.A < 10)
                 active = false;
         }
 
@@ -493,7 +493,7 @@ namespace Coralite.Content.Items.BossSummons
             Texture2D mainTex = TexValue;
             Vector2 origin = mainTex.Size() / 2;
 
-            spriteBatch.Draw(mainTex, Position - Main.screenPosition, null, color, Rotation, origin, Scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(mainTex, Position - Main.screenPosition, null, Color, Rotation, origin, Scale, SpriteEffects.None, 0f);
         }
     }
 }

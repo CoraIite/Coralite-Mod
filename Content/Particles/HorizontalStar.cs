@@ -23,7 +23,7 @@ namespace Coralite.Content.Particles
 
         public override void AI()
         {
-            shader.UseColor(color);
+            shader.UseColor(Color);
 
             do
             {
@@ -48,7 +48,7 @@ namespace Coralite.Content.Particles
                 }
 
                 Velocity *= 0.96f;
-                color *= 0.96f;
+                Color *= 0.96f;
 
                 if (fadeIn < phase_3)
                 {
@@ -66,7 +66,7 @@ namespace Coralite.Content.Particles
 
             } while (false);
 
-            Lighting.AddLight(Position, color.ToVector3());
+            Lighting.AddLight(Position, Color.ToVector3());
 
             fadeIn++;
 

@@ -19,7 +19,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
 
         public override void SetProperty()
         {
-            shouldKilledOutScreen = false;
+            ShouldKillWhenOffScreen = false;
         }
 
         public static void Spawn(Point16 topLeft, Color color)
@@ -60,7 +60,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
                 {
                     if (tileRect.Contains(x, y))//生成额外粒子
                     {
-                        NewParticle<TileHightlight>(new Point(x, y).ToWorldCoordinates(), Vector2.Zero, color);
+                        NewParticle<TileHightlight>(new Point(x, y).ToWorldCoordinates(), Vector2.Zero, Color);
                         spawn = true;
                     }
 

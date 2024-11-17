@@ -368,7 +368,7 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
             Vector2 pos = Helper.GetMagikeTileCenter(CurrentEntity.Position);
             //一些情况下的关闭
             if (!Main.playerInventory || CurrentEntity == null
-                || !Helper.OnScreen(pos.ToScreenPosition()))
+                || !VaultUtils.IsPointOnScreen(pos.ToScreenPosition()))
             {
                 visible = false;
                 CurrentEntity = null;

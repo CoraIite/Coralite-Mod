@@ -53,7 +53,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             //设置各种初始值
             p.active = true;
-            p.color = newColor;
+            p.Color = newColor;
             p.Position = center;
             p.Velocity = velocity;
             p.Scale = scale;
@@ -67,7 +67,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             Texture2D tex = TexValue;
             Vector2 origin = tex.Size() / 2;
-            Color c = color * alpha;
+            Color c = Color * alpha;
             for (int i = 0; i < 6; i++)
             {
                 float rot = Rotation + (MathHelper.TwoPi / 6 * i);
@@ -83,7 +83,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             Texture2D tex = TexValue;
             Vector2 origin = tex.Size() / 2;
-            Color c = color * alpha;
+            Color c = Color * alpha;
             for (int i = 0; i < 6; i++)
             {
                 float rot = Rotation + (MathHelper.TwoPi / 6 * i);

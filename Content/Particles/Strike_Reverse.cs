@@ -8,7 +8,7 @@ namespace Coralite.Content.Particles
     {
         public override void SetProperty()
         {
-            color = Color.White;
+            Color = Color.White;
             shader = new Terraria.Graphics.Shaders.ArmorShaderData(Coralite.Instance.Assets.Request<Effect>("Effects/JustTexture", ReLogic.Content.AssetRequestMode.ImmediateLoad), "JustTexturePass");
             Frame = new Rectangle(0, 0, 128, 128);
         }
@@ -28,7 +28,7 @@ namespace Coralite.Content.Particles
         {
             Vector2 origin = new(96, 96);
 
-            spriteBatch.Draw(TexValue, Position - Main.screenPosition, Frame, color, Rotation, origin, Scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(TexValue, Position - Main.screenPosition, Frame, Color, Rotation, origin, Scale, SpriteEffects.None, 0f);
         }
     }
 }

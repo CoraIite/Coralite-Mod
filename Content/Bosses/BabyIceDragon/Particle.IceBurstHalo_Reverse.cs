@@ -12,7 +12,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
         public override void SetProperty()
         {
-            color = Color.White;
+            Color = Color.White;
             Rotation = Main.rand.NextFloat(6.282f);
             Frame = new Rectangle(0, 0, 128, 128);
         }

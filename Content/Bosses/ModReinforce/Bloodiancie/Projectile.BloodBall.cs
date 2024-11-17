@@ -185,7 +185,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
 
         public override void SetProperty()
         {
-            color = Color.White;
+            Color = Color.White;
             Frame = TexValue.Frame();
             Rotation = Velocity.ToRotation();
         }
@@ -196,10 +196,10 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
 
             if (fadeIn > 30)
             {
-                color.A = (byte)(color.A * 0.7f);
+                Color.A = (byte)(Color.A * 0.7f);
             }
 
-            if (color.A < 10)
+            if (Color.A < 10)
             {
                 active = false;
             }

@@ -35,7 +35,7 @@ namespace Coralite.Core.Systems.ParticleSystem
 
             //设置各种初始值
             p.active = true;
-            p.color = newColor;
+            p.Color = newColor;
             p.Position = center;
             p.Velocity = velocity;
             p.Scale = Scale;
@@ -55,7 +55,7 @@ namespace Coralite.Core.Systems.ParticleSystem
 
             //设置各种初始值
             p.active = true;
-            p.color = newColor;
+            p.Color = newColor;
             p.Position = center;
             p.Velocity = velocity;
             p.Scale = Scale;

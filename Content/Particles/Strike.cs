@@ -15,7 +15,7 @@ namespace Coralite.Content.Particles
 
         public override void AI()
         {
-            shader.UseColor(color);
+            shader.UseColor(Color);
 
             if (fadeIn % 2 == 0)
                 Frame.Y = (int)(fadeIn / 2) * 128;
@@ -35,7 +35,7 @@ namespace Coralite.Content.Particles
         {
             Vector2 origin = new(96, 96);
 
-            spriteBatch.Draw(TexValue, Position - Main.screenPosition, Frame, color, Rotation, origin, Scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(TexValue, Position - Main.screenPosition, Frame, Color, Rotation, origin, Scale, SpriteEffects.None, 0f);
 
         }
     }

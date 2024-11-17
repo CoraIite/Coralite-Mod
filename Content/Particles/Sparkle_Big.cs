@@ -19,7 +19,7 @@ namespace Coralite.Content.Particles
         public override void AI()
         {
             //color *= 0.98f;
-            shader.UseColor(color);
+            shader.UseColor(Color);
             float factor = fadeIn / 16;
             shader.UseOpacity(0.55f + (factor * 0.1f));
             shader.UseSaturation(2.5f - (factor * 0.7f));
@@ -27,7 +27,7 @@ namespace Coralite.Content.Particles
             if (fadeIn % 2 == 0)
                 Frame.Y = (int)(fadeIn / 2) * 128;
 
-            Lighting.AddLight(Position, color.ToVector3());
+            Lighting.AddLight(Position, Color.ToVector3());
 
             fadeIn++;
 

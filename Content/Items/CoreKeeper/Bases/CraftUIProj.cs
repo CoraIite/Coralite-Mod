@@ -158,7 +158,7 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
 
         public override void SetProperty()
         {
-            color = Main.rand.Next(2) switch
+            Color = Main.rand.Next(2) switch
             {
                 0 => new Color(148, 247, 221),
                 _ => new Color(24, 133, 216)
@@ -166,9 +166,9 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
             trail = new Trail(Main.instance.GraphicsDevice, 16, new NoTip(), factor => 1 * Scale, factor =>
             {
                 if (factor.X < 0.7f)
-                    return Color.Lerp(new Color(0, 0, 0, 0), color, factor.X / 0.7f);
+                    return Color.Lerp(new Color(0, 0, 0, 0), Color, factor.X / 0.7f);
 
-                return Color.Lerp(color, Color.White, (factor.X - 0.7f) / 0.3f);
+                return Color.Lerp(Color, Color.White, (factor.X - 0.7f) / 0.3f);
             });
             float length = Helper.EllipticalEase(Rotation, 0.3f, out float overrideAngle) * Velocity.X;
             Vector2 center = this.Position + (overrideAngle.ToRotationVector2() * length);
@@ -215,7 +215,7 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
             p.Velocity = new Vector2(r, time);
             p.Rotation = startRot;
             p.active = true;
-            p.shouldKilledOutScreen = false;
+            p.ShouldKillWhenOffScreen = false;
             p.Scale = 1;
 
             p.SetProperty();
@@ -247,7 +247,7 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
 
         public override void SetProperty()
         {
-            color = new Color(148, 247, 221, 100);
+            Color = new Color(148, 247, 221, 100);
             Velocity = new Vector2(2, 8);
         }
 
@@ -256,7 +256,7 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
         public override void AI()
         {
             Velocity.X *= 0.99f;
-            color *= 0.99f;
+            Color *= 0.99f;
             Velocity.Y *= 0.93f;
 
             if (Velocity.Y < 0.5f)
@@ -270,9 +270,9 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
             Texture2D mainTex = TexValue;
             Vector2 origin = new(mainTex.Width / 2, mainTex.Height);
             Vector2 pos = Position - Main.screenPosition;
-            spriteBatch.Draw(mainTex, pos, null, color, 0, origin, Velocity, SpriteEffects.None, 0f);
-            spriteBatch.Draw(mainTex, pos, null, color, 0, origin, Velocity * 0.9f, SpriteEffects.None, 0f);
-            spriteBatch.Draw(mainTex, pos, null, color, 0, origin, Velocity * 0.9f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(mainTex, pos, null, Color, 0, origin, Velocity, SpriteEffects.None, 0f);
+            spriteBatch.Draw(mainTex, pos, null, Color, 0, origin, Velocity * 0.9f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(mainTex, pos, null, Color, 0, origin, Velocity * 0.9f, SpriteEffects.None, 0f);
         }
     }
 
@@ -283,7 +283,7 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
         public override void SetProperty()
         {
             Scale = 0.1f;
-            color = new Color(148, 247, 221);
+            Color = new Color(148, 247, 221);
         }
 
         public override bool ShouldUpdateCenter() => false;
@@ -292,7 +292,7 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
         {
             if (fadeIn > 7)
             {
-                color *= 0.8f;
+                Color *= 0.8f;
                 Scale += 0.08f;
                 Velocity += new Vector2(1, 0.5f) * 0.03f;
             }
@@ -302,7 +302,7 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
                 Velocity = new Vector2(1, 0.5f) * Scale;
             }
 
-            if (fadeIn > 30 || color.A < 10)
+            if (fadeIn > 30 || Color.A < 10)
                 active = false;
 
             fadeIn++;
@@ -313,12 +313,12 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
             Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.CoreKeeperItems + "CircleLight2").Value;
             Vector2 origin = new(mainTex.Width / 2, mainTex.Height / 2);
             Vector2 pos = Position - Main.screenPosition;
-            spriteBatch.Draw(mainTex, pos, null, color, Rotation, origin, Scale, SpriteEffects.None, 0f);
-            spriteBatch.Draw(mainTex, pos, null, color, Rotation, origin, Scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(mainTex, pos, null, Color, Rotation, origin, Scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(mainTex, pos, null, Color, Rotation, origin, Scale, SpriteEffects.None, 0f);
             mainTex = TexValue;
 
-            spriteBatch.Draw(mainTex, pos, null, color, Rotation, origin, Velocity * 1.2f, SpriteEffects.FlipVertically, 0f);
-            spriteBatch.Draw(mainTex, pos, null, color, Rotation, origin, Velocity * 1.2f, SpriteEffects.FlipVertically, 0f);
+            spriteBatch.Draw(mainTex, pos, null, Color, Rotation, origin, Velocity * 1.2f, SpriteEffects.FlipVertically, 0f);
+            spriteBatch.Draw(mainTex, pos, null, Color, Rotation, origin, Velocity * 1.2f, SpriteEffects.FlipVertically, 0f);
         }
     }
 }

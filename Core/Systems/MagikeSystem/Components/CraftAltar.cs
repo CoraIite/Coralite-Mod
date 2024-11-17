@@ -354,7 +354,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             MagikeTP entity = Entity;
             Point16 pos = entity.Position;
 
-            if (Helper.OnScreen(pos.ToWorldCoordinates()-Main.screenPosition, new Vector2(16 * 20)))//在视野内生成特殊合成粒子
+            if (Helper.IsAreaOnScreen(pos.ToWorldCoordinates()-Main.screenPosition, new Vector2(16 * 20)))//在视野内生成特殊合成粒子
             {
                 Tile t = Framing.GetTileSafely(pos);
                 ModTile mt = TileLoader.GetTile(t.TileType);

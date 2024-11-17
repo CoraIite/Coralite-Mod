@@ -19,7 +19,7 @@ namespace Coralite.Content.Particles
             fadeIn++;
             if (fadeIn > 15)
             {
-                color = Color.Lerp(color, new Color(0, 60, 200, 0), 0.15f);
+                Color = Color.Lerp(Color, new Color(0, 60, 200, 0), 0.15f);
                 Velocity.X *= 0.86f;
             }
             else if (fadeIn < 4)
@@ -31,7 +31,7 @@ namespace Coralite.Content.Particles
                 Velocity.X *= 0.98f;
             }
 
-            if (color.A < 2)
+            if (Color.A < 2)
                 active = false;
         }
 
@@ -64,7 +64,7 @@ namespace Coralite.Content.Particles
             Vector2 origin = new(0, mainTex.Height / 2);
             Vector2 scale = Velocity * 0.3f;
             scale.Y *= 2;
-            Color c = color;
+            Color c = Color;
 
             spriteBatch.Draw(mainTex, pos
                 , null, c, Rotation, origin, scale, SpriteEffects.None, 0f);
