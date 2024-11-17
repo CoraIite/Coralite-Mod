@@ -1,1 +1,8 @@
-﻿DescriptionPage.Description: 欢迎来到珊瑚的世界！
+DescriptionPage.Description: 欢迎来到珊瑚的世界！
+
+GetMagikeKnowledge1Page: {
+	// Title: Mods.Coralite.Knowledges.GetMagikeKnowledge1Page.Title
+	// Welcome: Mods.Coralite.Knowledges.GetMagikeKnowledge1Page.Welcome
+	// ClickButton: Mods.Coralite.Knowledges.GetMagikeKnowledge1Page.ClickButton
+	// ContiuneRead: Mods.Coralite.Knowledges.GetMagikeKnowledge1Page.ContiuneRead
+}

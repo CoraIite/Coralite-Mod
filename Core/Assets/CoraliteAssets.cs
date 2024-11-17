@@ -388,7 +388,9 @@ namespace Coralite.Core
             Sparkle.Load();
             Halo.Load();
             LightBall.Load();
+
             ReadFragmant.Load();
+            MagikeChapter1.Load();
         }
 
         public void Unload()
@@ -401,7 +403,9 @@ namespace Coralite.Core
             Sparkle.Unload();
             Halo.Unload();
             LightBall.Unload();
+
             ReadFragmant.Unload();
+            MagikeChapter1.Unload();
         }
 
         private static ATex Get(string path)

@@ -211,7 +211,7 @@ namespace Coralite.Core
 
         #endregion
 
-        #region UI部分
+        #region UI部分！
 
         public const string UI = Assets + "UI/";
 
@@ -221,9 +221,9 @@ namespace Coralite.Core
 
         public const string CoraliteNote = UI + "CoraliteNote/";
 
-
         public const string KeyKnowledgeIcon = CoraliteNote + "KeyKnowledgeIcons/";
         public const string NoteReadfragment = CoraliteNote + "Readfragment/";
+        public const string NoteMagikeS1 = CoraliteNote + "MagikeS1/";
 
         #endregion
 
@@ -242,7 +242,6 @@ namespace Coralite.Core
         public const string Backgrounds = Assets + "Backgrounds/";
 
         public const string Misc = Assets + "Misc/";
-
 
         public const string WorldGen = Assets + "WorldGeneration/";
 

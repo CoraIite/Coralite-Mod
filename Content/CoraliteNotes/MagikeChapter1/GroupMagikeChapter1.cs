@@ -12,8 +12,9 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
         {
             Pages =
                 [
+                    new GetMagikeKnowledge1Page(),
                 ];
         }
-
     }
+
 }

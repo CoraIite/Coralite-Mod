@@ -18,7 +18,6 @@ namespace Coralite.Content.CoraliteNotes
         public bool openingBook;
         public bool closeingBook;
         public bool drawExtra;
-        public static Vector2 basePos = new(Main.screenWidth / 2, Main.screenHeight / 2);
         public Vector2 bookSize;
         public float bookWidth;
         public int Timer;
@@ -28,9 +27,12 @@ namespace Coralite.Content.CoraliteNotes
 
         public override void OnInitialize()
         {
-            basePos = new Vector2(Main.screenWidth / 2, Main.screenHeight / 2);
+        }
+
+        public void Init()
+        {
             BookPanel.InitSize();
-            BookPanel.SetPosition(basePos);
+            BookPanel.SetPosition();
             BookPanel.InitPageGroups();
             BookPanel.InitGroups();
             BookPanel.OnScrollWheel += PlaySound;
@@ -44,12 +46,11 @@ namespace Coralite.Content.CoraliteNotes
 
         public override void Recalculate()
         {
-            basePos = new Vector2(Main.screenWidth / 2, Main.screenHeight / 2);
             //BookPanel = new();
             //BookPanel.scale = 1;
             //BookPanel.SetPosition(basePos);
             //BookPanel.InitSize();
-            BookPanel.SetPosition(basePos);
+            BookPanel?.SetPosition();
             //BookPanel.InitPageGroups();
             //BookPanel.InitGroups();
             //BookPanel.OnScrollWheel += PlaySound;
@@ -98,7 +99,7 @@ namespace Coralite.Content.CoraliteNotes
             //bookWidth += 25;
             //BookPanel.Width.Set(bookWidth, 0f);
 
-            if (/*bookWidth >= bookSize.X ||*/ Timer > 60)        //超出时跳出
+            if (/*bookWidth >= bookSize.X ||*/ Timer > 30)        //超出时跳出
             {
                 openingBook = false;
                 BookPanel.OverflowHidden = false;
@@ -110,8 +111,8 @@ namespace Coralite.Content.CoraliteNotes
                 return true;
             }
 
-            float factor = Coralite.Instance.SqrtSmoother.Smoother(Timer / 60f);
-            BookPanel.Top.Percent = Helper.Lerp(-0.5f, 0.5f, factor);
+            float factor = Coralite.Instance.SqrtSmoother.Smoother(Timer / 30f);
+            BookPanel.Top.Percent = Helper.Lerp(-1f, 0.5f, factor);
             BookPanel.alpha = Helper.Lerp(0, 1, factor);
 
             Timer++;
@@ -192,7 +193,7 @@ namespace Coralite.Content.CoraliteNotes
             //    velocity = new Vector2(25, 0),
             //};
 
-            BookPanel.Top.Percent = -0.5f;
+            BookPanel.Top.Percent = -1f;
 
             openingBook = true;
             closeingBook = false;

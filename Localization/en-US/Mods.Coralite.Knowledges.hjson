@@ -1,1 +1,8 @@
 DescriptionPage.Description: Mods.Coralite.Knowledges.DescriptionPage.Description
+
+GetMagikeKnowledge1Page: {
+	Title: Mods.Coralite.Knowledges.GetMagikeKnowledge1Page.Title
+	Welcome: Mods.Coralite.Knowledges.GetMagikeKnowledge1Page.Welcome
+	ClickButton: Mods.Coralite.Knowledges.GetMagikeKnowledge1Page.ClickButton
+	ContiuneRead: Mods.Coralite.Knowledges.GetMagikeKnowledge1Page.ContiuneRead
+}

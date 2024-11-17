@@ -30,7 +30,31 @@ namespace Coralite.Core
                 foreach (var info in infos)
                     info.SetValue(null, null);
             }
+        }
 
+        public static class MagikeChapter1
+        {
+            public static ATex KnowledgeCheckButton { get; private set; }
+
+            internal static void Load()
+            {
+                Type t = typeof(MagikeChapter1);
+
+                var infos = t.GetProperties(BindingFlags.Public | BindingFlags.Static);
+
+                foreach (var info in infos)
+                    info.SetValue(null, Get(NoteMagikeS1 + info.Name));
+            }
+
+            internal static void Unload()
+            {
+                Type t = typeof(MagikeChapter1);
+
+                var infos = t.GetProperties(BindingFlags.Public | BindingFlags.Static);
+
+                foreach (var info in infos)
+                    info.SetValue(null, null);
+            }
         }
     }
 }

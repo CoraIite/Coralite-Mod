@@ -218,7 +218,7 @@ namespace Coralite.Content.UI.UILib
         /// 初始化位置，请保证你调用了这个方法
         /// </summary>
         /// <param name="center"></param>
-        public void SetPosition(Vector2 center)
+        public void SetPosition()
         {
             //Top.Set(- (PanelTex.Height() * scale / 2), 0.5f);
             //Left.Set( - (PanelTex.Width() * scale / 2), 0.5f);
