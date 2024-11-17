@@ -13,7 +13,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
 
         public override void SetProperty()
         {
-
+            PRTDrawMode = PRTDrawModeEnum.AdditiveBlend;
         }
 
         public override void AI()
@@ -69,7 +69,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
 
         public override void SetProperty()
         {
-
+            PRTDrawMode = PRTDrawModeEnum.AdditiveBlend;
         }
 
         public override void AI()

@@ -18,6 +18,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             Rotation = Main.rand.NextFloat(6.282f);
             Frame = new Rectangle(0, 0, 128, 128);
             ShouldKillWhenOffScreen = false;
+            PRTDrawMode = PRTDrawModeEnum.AdditiveBlend;
         }
 
         public override void AI()
