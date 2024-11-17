@@ -1,7 +1,5 @@
-﻿using Coralite.Content.UI.MagikeGuideBook;
-using Coralite.Core;
+﻿using Coralite.Core;
 using Coralite.Helpers;
-using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.UI;
@@ -26,7 +24,7 @@ namespace Coralite.Content.CoraliteNotes
         public int Timer;
         //public readonly ParticleGroup particles = new();
 
-        public MagicCircle magicCircle;
+        //public MagicCircle magicCircle;
 
         public override void OnInitialize()
         {
@@ -81,12 +79,12 @@ namespace Coralite.Content.CoraliteNotes
             //更新特效
             //particles.UpdateParticles();
 
-            if (magicCircle != null)
-            {
-                magicCircle.Update();
-                if (!magicCircle.active)
-                    magicCircle = null;
-            }
+            //if (magicCircle != null)
+            //{
+            //    magicCircle.Update();
+            //    if (!magicCircle.active)
+            //        magicCircle = null;
+            //}
 
             if (!openingBook /*&& !particles.Any()*/)
                 drawExtra = false;
@@ -97,18 +95,24 @@ namespace Coralite.Content.CoraliteNotes
             if (!openingBook)
                 return true;
 
-            bookWidth += 25;
+            //bookWidth += 25;
             //BookPanel.Width.Set(bookWidth, 0f);
 
-            if (bookWidth >= bookSize.X || Timer > 1000)        //超出时跳出
+            if (/*bookWidth >= bookSize.X ||*/ Timer > 60)        //超出时跳出
             {
                 openingBook = false;
                 BookPanel.OverflowHidden = false;
+                BookPanel.Top.Percent = 0.5f;
+                BookPanel.alpha = 1;
                 //BookPanel.Width.Set(bookSize.X, 0f);
 
                 base.Recalculate();
                 return true;
             }
+
+            float factor = Coralite.Instance.SqrtSmoother.Smoother(Timer / 60f);
+            BookPanel.Top.Percent = Helper.Lerp(-0.5f, 0.5f, factor);
+            BookPanel.alpha = Helper.Lerp(0, 1, factor);
 
             Timer++;
             base.Recalculate();
@@ -134,44 +138,44 @@ namespace Coralite.Content.CoraliteNotes
             base.Recalculate();
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
-        {
-            if (drawExtra)      //分成两半绘制magicCircle
-            {
-                magicCircle?.DrawFrontCircle(spriteBatch);
-            }
+        //public override void Draw(SpriteBatch spriteBatch)
+        //{
+        //    //if (drawExtra)      //分成两半绘制magicCircle
+        //    //{
+        //    //    magicCircle?.DrawFrontCircle(spriteBatch);
+        //    //}
 
-            base.Draw(spriteBatch);
+        //    base.Draw(spriteBatch);
 
-            if (drawExtra)
-            {
-                //RasterizerState rasterizerState = spriteBatch.GraphicsDevice.RasterizerState;
-                //spriteBatch.End();
+        //    if (drawExtra)
+        //    {
+        //        //RasterizerState rasterizerState = spriteBatch.GraphicsDevice.RasterizerState;
+        //        //spriteBatch.End();
 
-                //Main.graphics.GraphicsDevice.BlendState = BlendState.NonPremultiplied;
+        //        //Main.graphics.GraphicsDevice.BlendState = BlendState.NonPremultiplied;
 
-                ////绘制特效
-                ////foreach (var particle in particles)
-                ////{
-                ////    if (particle is IDrawParticlePrimitive idpp)
-                ////        idpp.DrawPrimitives();
-                ////}
+        //        ////绘制特效
+        //        ////foreach (var particle in particles)
+        //        ////{
+        //        ////    if (particle is IDrawParticlePrimitive idpp)
+        //        ////        idpp.DrawPrimitives();
+        //        ////}
 
-                //spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.Transform);
+        //        //spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.Transform);
 
-                ////particles.DrawParticles(spriteBatch);
+        //        ////particles.DrawParticles(spriteBatch);
 
-                //spriteBatch.End();
-                //spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.AnisotropicClamp, DepthStencilState.None, rasterizerState, null, Main.UIScaleMatrix);
+        //        //spriteBatch.End();
+        //        //spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.AnisotropicClamp, DepthStencilState.None, rasterizerState, null, Main.UIScaleMatrix);
 
-                magicCircle?.DrawBackCircle(spriteBatch);
-            }
-        }
+        //        magicCircle?.DrawBackCircle(spriteBatch);
+        //    }
+        //}
 
         public void OpenBook()
         {
-            Helper.PlayPitched("Stars/StarsSpawn", 0.4f, 0f, Main.LocalPlayer.Center);
-            BookPanel.alpha = 1;
+            //Helper.PlayPitched("Stars/StarsSpawn", 0.4f, 0f, Main.LocalPlayer.Center);
+            BookPanel.alpha = 0;
             BookPanel.OverflowHidden = true;
             bookSize = BookPanel.PanelTex.Size() * BookPanel.scale;
             bookWidth = 0;
@@ -181,18 +185,19 @@ namespace Coralite.Content.CoraliteNotes
             //初始化特效
             //particles.Clear();
             Vector2 position = BookPanel.GetDimensions().Position();
-            magicCircle = new MagicCircle(bookSize.X + 50, (bookSize.Y / 2) + 40)
-            {
-                center = position + new Vector2(25, bookSize.Y / 2),
-                color = Color.White,
-                velocity = new Vector2(25, 0),
-            };
+            //magicCircle = new MagicCircle(bookSize.X + 50, (bookSize.Y / 2) + 40)
+            //{
+            //    center = position + new Vector2(25, bookSize.Y / 2),
+            //    color = Color.White,
+            //    velocity = new Vector2(25, 0),
+            //};
+
+            BookPanel.Top.Percent = -0.5f;
 
             openingBook = true;
             closeingBook = false;
             visible = true;
             drawExtra = true;
         }
-
     }
 }
