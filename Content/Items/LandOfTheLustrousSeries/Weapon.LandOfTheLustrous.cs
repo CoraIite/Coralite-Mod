@@ -278,34 +278,37 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 int per = Owner.itemTimeMax / 3;
                 if ((int)AttackTime % per == 0 && AttackTime > 0)
                 {
-                    float angle = Projectile.rotation;
-                    int time = 3 - (int)(AttackTime / per);
-
-                    int recordItemType = itemType;
-                    for (int i = 0; i < 10; i++)
+                    if (Projectile.IsOwnedByLocalPlayer())
                     {
-                        itemType = CoraliteWorld.chaosWorld ? itemType = Main.rand.Next(1, ItemLoader.ItemCount)
-                           : -Main.rand.Next(1, (int)LustrousProj.GemType.CrystallineMagike + 1);
-                        if (itemType != recordItemType)
-                            break;
-                    }
+                        float angle = Projectile.rotation;
+                        int time = 3 - (int)(AttackTime / per);
 
-                    for (int i = 0; i < 3; i++)
-                    {
-                        float speed = i switch
+                        int recordItemType = itemType;
+                        for (int i = 0; i < 10; i++)
                         {
-                            0 => 3.4f,
-                            1 => 2.4f,
-                            _ => 1.6f
-                        };
+                            itemType = CoraliteWorld.chaosWorld ? itemType = Main.rand.Next(1, ItemLoader.ItemCount)
+                               : -Main.rand.Next(1, (int)LustrousProj.GemType.CrystallineMagike + 1);
+                            if (itemType != recordItemType)
+                                break;
+                        }
 
-                        speed -= time * 0.1f;
+                        for (int i = 0; i < 3; i++)
+                        {
+                            float speed = i switch
+                            {
+                                0 => 3.4f,
+                                1 => 2.4f,
+                                _ => 1.6f
+                            };
 
-                        Projectile.NewProjectileFromThis<LustrousProj>(Projectile.Center
-                            , angle.ToRotationVector2() * speed, Owner.GetWeaponDamage(Owner.HeldItem), Projectile.knockBack
-                            , itemType, i == 0 ? 1 : 0, Projectile.whoAmI);
+                            speed -= time * 0.1f;
 
-                        angle += 0.3f;
+                            Projectile.NewProjectileFromThis<LustrousProj>(Projectile.Center
+                                , angle.ToRotationVector2() * speed, Owner.GetWeaponDamage(Owner.HeldItem), Projectile.knockBack
+                                , itemType, i == 0 ? 1 : 0, Projectile.whoAmI);
+
+                            angle += 0.3f;
+                        }
                     }
 
                     Vector2 dir = Projectile.rotation.ToRotationVector2();

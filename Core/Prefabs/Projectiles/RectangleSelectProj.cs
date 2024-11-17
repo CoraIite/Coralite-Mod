@@ -88,8 +88,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             }
         }
 
-        public virtual bool CheckHeldItem()
-=> ItemType != -1 && Owner.HeldItem.type != ItemType;
+        public virtual bool CheckHeldItem() => ItemType != -1 && Owner.HeldItem.type != ItemType;
         /// <summary>
         /// 选择完松手后的特殊操作
         /// </summary>
