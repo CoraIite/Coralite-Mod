@@ -119,7 +119,7 @@ namespace Coralite.Content.Items.Glistent
     {
         public override string Texture => AssetDirectory.Halos + "Circle";
 
-        private ParticleGroup particles = [];
+        private PrimitivePRTGroup particles = [];
 
         public override void SetDefaults()
         {

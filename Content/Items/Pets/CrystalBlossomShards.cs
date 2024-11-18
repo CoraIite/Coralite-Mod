@@ -16,7 +16,7 @@ namespace Coralite.Content.Items.Pets
     {
         public override string Texture => AssetDirectory.PetItems + Name;
 
-        private static ParticleGroup group;
+        private static PrimitivePRTGroup group;
 
         public override void SetStaticDefaults()
         {
@@ -72,7 +72,7 @@ namespace Coralite.Content.Items.Pets
         {
             if (line.Mod == "Terraria" && line.Name == "ItemName")
             {
-                group ??= new ParticleGroup();
+                group ??= new PrimitivePRTGroup();
                 if (group != null)
                 {
                     if (!Main.gamePaused && Main.GameUpdateCount % 20 == 0)

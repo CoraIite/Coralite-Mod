@@ -16,7 +16,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         private Vector2 recordVelocity;
 
-        public ParticleGroup triangles;
+        public PrimitivePRTGroup triangles;
 
         public override void SetDefaults()
         {
@@ -46,7 +46,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public override void AI()
         {
-            triangles ??= new ParticleGroup();
+            triangles ??= new PrimitivePRTGroup();
 
             if (Timer < 80 * 2)//反方向运动
             {

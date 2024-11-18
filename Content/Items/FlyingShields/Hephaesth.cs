@@ -445,7 +445,7 @@ namespace Coralite.Content.Items.FlyingShields
         ref float FlyingTime => ref Projectile.localAI[2];
         public bool Burning => Projectile.ai[2] == 1;
 
-        private ParticleGroup fireParticles;
+        private PrimitivePRTGroup fireParticles;
         private Trail trail;
         private readonly int trailPoint = 24;
 
@@ -500,7 +500,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void AI()
         {
-            fireParticles ??= new ParticleGroup();
+            fireParticles ??= new PrimitivePRTGroup();
             trail ??= new Trail(Main.instance.GraphicsDevice, trailPoint, new NoTip(), factor =>
             {
                 if (factor < 0.8f)

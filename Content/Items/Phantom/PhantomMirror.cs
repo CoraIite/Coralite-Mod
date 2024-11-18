@@ -42,7 +42,7 @@ namespace Coralite.Content.Items.Phantom
     {
         public override string Texture => AssetDirectory.Blank;
 
-        public ParticleGroup triangles;
+        public PrimitivePRTGroup triangles;
         public Vector2[] aimPositions;
 
         public int TrailLength => (int)Projectile.ai[0];
@@ -88,7 +88,7 @@ namespace Coralite.Content.Items.Phantom
                 return;
             }
 
-            triangles ??= new ParticleGroup();
+            triangles ??= new PrimitivePRTGroup();
 
             Color c = Main.rand.Next(3) switch
             {

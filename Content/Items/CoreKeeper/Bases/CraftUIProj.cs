@@ -28,7 +28,7 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
         public ref float CraftMaxTime => ref Projectile.ai[0];
         public ref float CraftTimer => ref Projectile.ai[2];
 
-        private ParticleGroup particles;
+        private PrimitivePRTGroup particles;
         private SlotId slotID;
 
         public override void SetDefaults()
@@ -46,7 +46,7 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
 
         public override void AI()
         {
-            particles ??= new ParticleGroup();
+            particles ??= new PrimitivePRTGroup();
 
             Projectile.Center = Owner.Center;
             if (CraftTimer > CraftMaxTime)

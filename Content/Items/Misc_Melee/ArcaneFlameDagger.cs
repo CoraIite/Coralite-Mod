@@ -21,7 +21,7 @@ namespace Coralite.Content.Items.Misc_Melee
     {
         public override string Texture => AssetDirectory.Misc_Melee + Name;
 
-        protected static ParticleGroup group;
+        protected static PrimitivePRTGroup group;
 
         public static Color Green = new(162, 248, 2);
         public static Color Gray = new(172, 167, 198);
@@ -52,7 +52,7 @@ namespace Coralite.Content.Items.Misc_Melee
         {
             if (line.Mod == "Terraria" && line.Name == "ItemName")
             {
-                group ??= new ParticleGroup();
+                group ??= new PrimitivePRTGroup();
                 if (group != null)
                     SpawnParticle(line);
 

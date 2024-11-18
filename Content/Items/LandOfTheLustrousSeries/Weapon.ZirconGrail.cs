@@ -192,7 +192,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         ref float Timer => ref Projectile.ai[1];
         ref float FlyingTime => ref Projectile.localAI[2];
 
-        private ParticleGroup fireParticles;
+        private PrimitivePRTGroup fireParticles;
         private Trail trail;
         private readonly int trailPoint = 16;
 
@@ -241,7 +241,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             if (fireParticles == null)
             {
-                fireParticles = new ParticleGroup();
+                fireParticles = new PrimitivePRTGroup();
                 Projectile.InitOldPosCache(trailPoint);
                 Projectile.localAI[1] = Main.rand.NextFloat(-0.01f, 0.01f);
                 FlyingTime = 20 * 5;

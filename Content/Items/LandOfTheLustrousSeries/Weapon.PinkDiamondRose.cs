@@ -81,7 +81,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
     {
         public override string Texture => AssetDirectory.LandOfTheLustrousSeriesItems + "PinkDiamondRose";
 
-        private ParticleGroup group;
+        private PrimitivePRTGroup group;
         private Vector2 offset;
 
         public override void SetStaticDefaults()
@@ -91,7 +91,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void BeforeMove()
         {
-            group ??= new ParticleGroup();
+            group ??= new PrimitivePRTGroup();
             if (AttackTime < 1 && Main.rand.NextBool(6))
             {
                 Color c = Main.rand.Next(3) switch

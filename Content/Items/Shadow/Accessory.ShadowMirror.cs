@@ -57,7 +57,7 @@ namespace Coralite.Content.Items.Shadow
     {
         public override string Texture => AssetDirectory.Blank;
 
-        public ParticleGroup triangles;
+        public PrimitivePRTGroup triangles;
         public Vector2[] aimPositions;
 
         public override void SetStaticDefaults()
@@ -100,7 +100,7 @@ namespace Coralite.Content.Items.Shadow
                 return;
             }
 
-            triangles ??= new ParticleGroup();
+            triangles ??= new PrimitivePRTGroup();
 
             triangles.NewParticle(Projectile.position + new Vector2(Main.rand.Next(Projectile.width), Main.rand.Next(Projectile.height))
                 , Helpers.Helper.NextVec2Dir(0.5f, 1.5f), CoraliteContent.ParticleType<ShadowTriangle>(),

@@ -13,7 +13,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         ref float State => ref Projectile.ai[0];
 
-        private ParticleGroup fireParticles;
+        private PrimitivePRTGroup fireParticles;
 
         public override void SetDefaults()
         {
@@ -31,7 +31,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public override void AI()
         {
-            fireParticles ??= new ParticleGroup();
+            fireParticles ??= new PrimitivePRTGroup();
 
             switch (State)
             {

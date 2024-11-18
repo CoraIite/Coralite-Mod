@@ -19,7 +19,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
         public ref float Timer => ref Projectile.ai[0];
         public Player Owner => Main.player[Projectile.owner];
 
-        public ParticleGroup particles;
+        public PrimitivePRTGroup particles;
 
         public Vector2 shootDir;
 
@@ -39,7 +39,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
 
         public override void AI()
         {
-            particles ??= new ParticleGroup();
+            particles ??= new PrimitivePRTGroup();
 
             do
             {

@@ -80,7 +80,7 @@ namespace Coralite.Content.Items.Nightmare
     {
         public override string Texture => AssetDirectory.Blank;
 
-        private ParticleGroup group;
+        private PrimitivePRTGroup group;
 
         public ref float Powerful => ref Projectile.ai[0];
 
@@ -137,7 +137,7 @@ namespace Coralite.Content.Items.Nightmare
             }
 
             if (Main.netMode != NetmodeID.Server)
-                group ??= new ParticleGroup();
+                group ??= new PrimitivePRTGroup();
 
             Color color;
             if (Powerful == 1)
