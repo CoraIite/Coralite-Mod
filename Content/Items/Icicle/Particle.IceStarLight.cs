@@ -109,10 +109,9 @@ namespace Coralite.Content.Items.Icicle
 
         public static void Spawn(Vector2 center, Vector2 velocity, float scale, GetCenter function, float velocityLimit)
         {
-            if (!VaultUtils.isServer)
-            {
+            if (VaultUtils.isServer)
                 return;
-            }
+
             IceStarLight particle = PRTLoader.NewParticle<IceStarLight>(center, velocity, Color.White, scale);
             if (particle != null)
             {
