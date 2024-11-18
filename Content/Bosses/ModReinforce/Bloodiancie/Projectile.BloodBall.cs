@@ -108,7 +108,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
 
             } while (false);
 
-            particles?.UpdateParticles();
+            particles?.Update();
 
             Timer++;
         }
@@ -120,7 +120,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
 
         public void DrawNonPremultiplied(SpriteBatch spriteBatch)
         {
-            particles?.DrawParticles(spriteBatch);
+            particles?.Draw(spriteBatch);
         }
     }
 

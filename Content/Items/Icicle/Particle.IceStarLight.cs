@@ -80,7 +80,7 @@ namespace Coralite.Content.Items.Icicle
             trail.Positions = oldPositions;
         }
 
-        public override void DrawPrimitives()
+        public override void DrawPrimitive()
         {
             if (effect == null)
                 return;

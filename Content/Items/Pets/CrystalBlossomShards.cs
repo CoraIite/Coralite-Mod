@@ -44,7 +44,7 @@ namespace Coralite.Content.Items.Pets
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
-            group?.UpdateParticles();
+            group?.Update();
         }
 
         public override bool PreDrawTooltipLine(DrawableTooltipLine line, ref int yOffset)
@@ -83,7 +83,7 @@ namespace Coralite.Content.Items.Pets
                             , Color.Pink, Main.rand.NextFloat(0.8f, 1f));
                     }
                 }
-                group?.DrawParticlesInUI(Main.spriteBatch);
+                group?.DrawInUI(Main.spriteBatch);
             }
         }
     }

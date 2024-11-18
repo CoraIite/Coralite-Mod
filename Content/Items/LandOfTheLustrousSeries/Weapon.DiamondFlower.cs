@@ -124,7 +124,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 group.Add(cs);
             }
 
-            group.UpdateParticles();
+            group.Update();
         }
 
         public override void Move()
@@ -206,7 +206,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public void DrawAdditive(SpriteBatch spriteBatch)
         {
-            group?.DrawParticles(spriteBatch);
+            group?.Draw(spriteBatch);
         }
     }
 

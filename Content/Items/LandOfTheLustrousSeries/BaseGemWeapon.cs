@@ -41,7 +41,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
-            group?.UpdateParticles();
+            group?.Update();
         }
 
         public override bool PreDrawTooltipLine(DrawableTooltipLine line, ref int yOffset)
@@ -62,7 +62,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 group ??= new ParticleGroup();
                 if (group != null)
                     SpawnParticle(line);
-                group?.DrawParticlesInUI(Main.spriteBatch);
+                group?.DrawInUI(Main.spriteBatch);
             }
         }
 

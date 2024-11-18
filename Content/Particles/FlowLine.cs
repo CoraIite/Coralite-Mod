@@ -60,7 +60,7 @@ namespace Coralite.Content.Particles
 
         public override bool PreDraw(SpriteBatch spriteBatch) => false;
 
-        public override void DrawPrimitives()
+        public override void DrawPrimitive()
         {
             if (effect == null)
                 return;

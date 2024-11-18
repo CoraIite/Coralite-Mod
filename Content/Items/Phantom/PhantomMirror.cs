@@ -113,7 +113,7 @@ namespace Coralite.Content.Items.Phantom
             Projectile.position = Vector2.Lerp(aimPositions[0], aimPositions[1], Projectile.ai[1] / 3);
             Projectile.ai[1]++;
 
-            triangles.UpdateParticles();
+            triangles.Update();
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -129,7 +129,7 @@ namespace Coralite.Content.Items.Phantom
 
             Helper.DrawPrettyStarSparkle(1, 0, Projectile.position + new Vector2(8, 8) - Main.screenPosition, Color.White, Color.Red, 0.5f, 0, 0.5f
                 , 0.5f, 1, 0, new Vector2(2, 1), Vector2.One);
-            triangles?.DrawParticles(Main.spriteBatch);
+            triangles?.Draw(Main.spriteBatch);
             return false;
         }
 

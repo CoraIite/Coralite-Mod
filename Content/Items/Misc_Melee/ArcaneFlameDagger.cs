@@ -45,7 +45,7 @@ namespace Coralite.Content.Items.Misc_Melee
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
-            group?.UpdateParticles();
+            group?.Update();
         }
 
         public override void PostDrawTooltipLine(DrawableTooltipLine line)
@@ -59,7 +59,7 @@ namespace Coralite.Content.Items.Misc_Melee
                 Main.spriteBatch.End();
                 Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, null, Main.UIScaleMatrix);
 
-                group?.DrawParticlesInUI(Main.spriteBatch);
+                group?.DrawInUI(Main.spriteBatch);
 
                 Main.spriteBatch.End();
                 Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, null, Main.UIScaleMatrix);

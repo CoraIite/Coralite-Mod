@@ -94,7 +94,7 @@ namespace Coralite.Content.Particles
             return false;
         }
 
-        public override void DrawPrimitives()
+        public override void DrawPrimitive()
         {
             if (effect == null)
                 return;

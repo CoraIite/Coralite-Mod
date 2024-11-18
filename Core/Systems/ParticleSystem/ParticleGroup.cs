@@ -1,5 +1,6 @@
 ﻿using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Terraria;
@@ -29,7 +30,7 @@ namespace Coralite.Core.Systems.ParticleSystem
             if (Main.netMode == NetmodeID.Server)
                 return null;
 
-            T p = PRTLoader.PRT_IDToInstances[CoraliteContent.ParticleType<T>()].Clone() as T;
+            T p = PRTLoader.GetPRTInstance<T>();
 
             //设置各种初始值
             p.active = true;
@@ -71,47 +72,47 @@ namespace Coralite.Core.Systems.ParticleSystem
 
         public bool Any() => _particles.Count > 0;
 
-        public void UpdateParticles()
+        public void Update()
         {
-            if (Main.netMode == NetmodeID.Server)//不在服务器上运行
-                return;
-
-            for (int i = 0; i < _particles.Count; i++)
+            if (Main.dedServ)//不要在服务器上更新逻辑
             {
-                var particle = _particles[i];
+                return;
+            }
 
-                if (particle == null)
-                    continue;
-
-                particle.AI();
-                if (particle.ShouldUpdatePosition())
-                    particle.Position += particle.Velocity;
-
-                //在粒子不活跃时把一些东西释放掉
-                if (!particle.active)
+            foreach (var particle in _particles)
+            {
+                if (particle == null || !particle.active)
                 {
-                    particle.oldPositions = null;
-                    particle.oldRotations = null;
+                    continue;
                 }
 
-                //一些防止粒子持续时间过长的措施，额...还是建议在update里手动设置active比较好
-                //if (particle.shouldKilledOutScreen && !Helper.OnScreen(particle.Center - Main.screenPosition))
-                //    particle.active = false;
-
-                if (particle.Scale < 0.001f)
+                try
+                {
+                    if (particle.ShouldUpdatePosition())
+                    {
+                        particle.Position += particle.Velocity;
+                    }
+                    particle.Time++;
+                    particle.AI();
+                }
+                catch (Exception)
+                {
+                    Coralite.Instance.Logger.Info($"ERROR:In Group {GetType().Name}{particle} IS UPDATA");
                     particle.active = false;
+                    continue;
+                }
 
-                if (particle.fadeIn > 1000)
+                if (particle.Time >= particle.Lifetime && particle.SetLifetime)
+                {
                     particle.active = false;
-
-                if (!particle.active)
-                    _particles.Remove(particle);
+                    continue;
+                }
             }
 
             _particles.RemoveAll(p => p is null || !p.active);
         }
 
-        public void DrawParticles(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch)
         {
             ArmorShaderData armorShaderData = null;
             for (int i = 0; i < _particles.Count; i++)
@@ -146,7 +147,7 @@ namespace Coralite.Core.Systems.ParticleSystem
             }
         }
 
-        public void DrawParticlesInUI(SpriteBatch spriteBatch)
+        public void DrawInUI(SpriteBatch spriteBatch)
         {
             ArmorShaderData armorShaderData = null;
             foreach (var particle in _particles)
@@ -180,11 +181,11 @@ namespace Coralite.Core.Systems.ParticleSystem
             }
         }
 
-        public void DrawParticlesPrimitive()
+        public void DrawPrimitive()
         {
             foreach (var particle in _particles)
                 if (particle.active && particle is IDrawParticlePrimitive p)
-                    p.DrawPrimitives();
+                    p.DrawPrimitive();
         }
     }
 }

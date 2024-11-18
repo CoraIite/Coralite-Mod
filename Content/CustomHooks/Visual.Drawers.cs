@@ -64,7 +64,7 @@ namespace Coralite.Content.CustomHooks
                     }
                     if (prt is IDrawParticlePrimitive p)
                     {
-                        p.DrawPrimitives();
+                        p.DrawPrimitive();
                     }
                 }
             }

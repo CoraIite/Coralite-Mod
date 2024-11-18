@@ -154,7 +154,7 @@ namespace Coralite.Content.Items.Nightmare
             group?.NewParticle(Projectile.Center + Main.rand.NextVector2Circular(8, 8),
                 Helper.NextVec2Dir(0.5f, 3), CoraliteContent.ParticleType<BarrenFogParticle>(), color, Main.rand.NextFloat(1f, 2f));
 
-            group?.UpdateParticles();
+            group?.Update();
 
             Delay--;
 
@@ -266,7 +266,7 @@ namespace Coralite.Content.Items.Nightmare
 
         public void DrawAdditive(SpriteBatch spriteBatch)
         {
-            group?.DrawParticles(spriteBatch);
+            group?.Draw(spriteBatch);
         }
 
         public void DrawNonPremultiplied(SpriteBatch spriteBatch)

@@ -96,7 +96,7 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
             }
 
             Lighting.AddLight(Projectile.Center, 0.3f, 0.3f, 1f);
-            particles?.UpdateParticles();
+            particles?.Update();
             CraftTimer++;
             Projectile.timeLeft = 2;
             Owner.itemAnimation = Owner.itemTime = 2;
@@ -133,7 +133,7 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
 
         public void DrawPrimitives()
         {
-            particles?.DrawParticlesPrimitive();
+            particles?.DrawPrimitive();
         }
     }
 
@@ -221,7 +221,7 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
             return p;
         }
 
-        public override void DrawPrimitives()
+        public override void DrawPrimitive()
         {
             if (effect == null)
                 return;

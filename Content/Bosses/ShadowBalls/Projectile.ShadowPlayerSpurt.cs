@@ -79,7 +79,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 }
             }
 
-            triangles.UpdateParticles();
+            triangles.Update();
             Timer++;
         }
 
@@ -91,7 +91,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             Main.PlayerRenderer.DrawPlayer(Main.Camera, owner, Projectile.Center + new Vector2(-16, -24), 0f, owner.fullRotationOrigin, Shadow);
 
-            triangles?.DrawParticles(Main.spriteBatch);
+            triangles?.Draw(Main.spriteBatch);
 
             return false;
         }

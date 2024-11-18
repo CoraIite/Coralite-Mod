@@ -66,7 +66,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     break;
             }
 
-            fireParticles.UpdateParticles();
+            fireParticles.Update();
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -78,7 +78,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public void DrawAdditive(SpriteBatch spriteBatch)
         {
-            fireParticles?.DrawParticles(Main.spriteBatch);
+            fireParticles?.Draw(Main.spriteBatch);
         }
     }
 }

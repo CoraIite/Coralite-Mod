@@ -7,6 +7,6 @@ namespace Coralite.Core.Systems.ParticleSystem
     {
         public Trail trail;
 
-        public virtual void DrawPrimitives() { }
+        public virtual void DrawPrimitive() { }
     }
 }

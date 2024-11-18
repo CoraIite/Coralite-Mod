@@ -167,7 +167,7 @@ namespace Coralite.Content.Items.Glistent
             }
 
             SpawnParticles();
-            particles.UpdateParticles();
+            particles.Update();
         }
 
         public void SpawnParticles()
@@ -215,7 +215,7 @@ namespace Coralite.Content.Items.Glistent
             Projectile.QuickDraw(c, 0.3f, 0f);
             Projectile.QuickDraw(c2, 0.25f, 0f);
 
-            particles?.DrawParticles(Main.spriteBatch);
+            particles?.Draw(Main.spriteBatch);
 
             return false;
         }

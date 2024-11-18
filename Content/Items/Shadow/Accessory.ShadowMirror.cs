@@ -118,7 +118,7 @@ namespace Coralite.Content.Items.Shadow
             Projectile.position = Vector2.Lerp(aimPositions[0], aimPositions[1], Projectile.ai[0] / 3);
             Projectile.ai[0]++;
 
-            triangles.UpdateParticles();
+            triangles.Update();
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -132,7 +132,7 @@ namespace Coralite.Content.Items.Shadow
                 Main.PlayerRenderer.DrawPlayer(Main.Camera, owner, Projectile.oldPos[i], 0f, owner.fullRotationOrigin, 0.5f + (i * 0.5f / 7));
             }
 
-            triangles?.DrawParticles(Main.spriteBatch);
+            triangles?.Draw(Main.spriteBatch);
             return false;
         }
     }

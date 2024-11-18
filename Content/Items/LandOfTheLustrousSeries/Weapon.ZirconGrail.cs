@@ -311,7 +311,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             Projectile.UpdateOldPosCache();
             trail.Positions = Projectile.oldPos;
-            fireParticles.UpdateParticles();
+            fireParticles.Update();
         }
 
         public static Color ColorFunc1(Vector2 factor)
@@ -352,7 +352,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public void DrawAdditive(SpriteBatch spriteBatch)
         {
-            fireParticles?.DrawParticles(Main.spriteBatch);
+            fireParticles?.Draw(Main.spriteBatch);
         }
 
         public void DrawPrimitives()
