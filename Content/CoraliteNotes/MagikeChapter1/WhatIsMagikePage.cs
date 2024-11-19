@@ -28,20 +28,21 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
             Vector2 pos = PageTop + new Vector2(0, 60);
+            //标题
             Utils.DrawBorderStringBig(spriteBatch, Title.Value, pos, Coralite.MagicCrystalPink
                 , 0.8f, 0.5f, 0.5f);
 
             pos += new Vector2(0, 60);
 
-            Helper.DrawText(spriteBatch, Description.Value, PageWidth, new Vector2(Position.X, pos.Y), Vector2.Zero, Vector2.One
-                , new Color(40, 40, 40), Color.White, out Vector2 textSize);
+            //描述段
+            Helper.DrawTextParagraph(spriteBatch, Description.Value, PageWidth, new Vector2(Position.X, pos.Y), out Vector2 textSize);
 
             var tex = CoraliteAssets.MagikeChapter1.WhatIsMagike.Value;
             pos.Y += textSize.Y + 20 + tex.Height / 2;
-             
+
+            //绘制图片
             Rectangle rect = Utils.CenteredRectangle(pos, tex.Size());
-            Vector2 pos2 = Main.MouseWorld - Main.screenPosition;
-            if (rect.Contains((int)pos2.X, (int)pos2.Y))
+            if (rect.MouseScreenInRect())
                 _scale = Helper.Lerp(_scale, 1f, 0.15f);
             else
                 _scale = Helper.Lerp(_scale, 0.8f, 0.15f);
