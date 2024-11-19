@@ -39,6 +39,7 @@ namespace Coralite
         public ReverseX2Smoother ReverseX2Smoother;
 
         public static Color RedJadeRed => new(221, 50, 50);
+        /// <summary> ffbeec </summary>
         public static Color MagicCrystalPink => new(255, 190, 236);
         public static Color GlistentGreen => new(127, 218, 153);
         public static Color CrimsonRed => new(231, 48, 54);
