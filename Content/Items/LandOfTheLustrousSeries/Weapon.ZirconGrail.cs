@@ -373,5 +373,4 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Main.graphics.GraphicsDevice.BlendState = BlendState.AlphaBlend;
         }
     }
-
 }

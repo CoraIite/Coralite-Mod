@@ -36,6 +36,8 @@ namespace Coralite.Core
         {
             public static ATex KnowledgeCheckButton { get; private set; }
 
+            public static ATex WhatIsMagike { get; private set; }
+
             internal static void Load()
             {
                 Type t = typeof(MagikeChapter1);

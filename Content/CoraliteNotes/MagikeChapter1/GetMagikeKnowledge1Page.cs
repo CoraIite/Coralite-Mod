@@ -34,16 +34,16 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
         {
             Utils.DrawBorderStringBig(spriteBatch, Title.Value, Center + new Vector2(0, -PageWidth / 2), Coralite.MagicCrystalPink, 1, 0.5f, 0.5f);
 
-            Vector2 pos = Position + new Vector2(0, 120);
+            Vector2 pos = Position + new Vector2(0, 140);
             Vector2 size = Vector2.Zero;
             Helper.DrawText(spriteBatch, Welcome.Value, PageWidth, pos, Vector2.Zero, Vector2.One
                 , new Color(40, 40, 40), Color.White, out size);
 
-            pos.Y += size.Y + 10;
+            pos.Y += size.Y + 60;
 
             string text = MagikeSystem.learnedMagikeBase ? ContiuneRead.Value : ClickButton.Value;
 
-            Helper.DrawText(spriteBatch, Welcome.Value, PageWidth, pos, Vector2.Zero, Vector2.One
+            Helper.DrawText(spriteBatch, text, PageWidth, pos, Vector2.Zero, Vector2.One
                 , new Color(40, 40, 40), Color.White, out size);
         }
     }
@@ -57,7 +57,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
             Width.Set(CoraliteAssets.MagikeChapter1.KnowledgeCheckButton.Width(), 0f);
             Height.Set(CoraliteAssets.MagikeChapter1.KnowledgeCheckButton.Height(), 0f);
 
-            this.SetTopLeft(-Width.Pixels / 2, -Height.Pixels / 2, 0.5f, 0.8f);
+            this.SetTopLeft(-Width.Pixels / 2, -Height.Pixels / 2, 0.8f, 0.5f);
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)

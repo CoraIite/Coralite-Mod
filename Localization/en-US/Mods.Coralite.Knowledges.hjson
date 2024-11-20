@@ -6,3 +6,8 @@ GetMagikeKnowledge1Page: {
 	ClickButton: Mods.Coralite.Knowledges.GetMagikeKnowledge1Page.ClickButton
 	ContiuneRead: Mods.Coralite.Knowledges.GetMagikeKnowledge1Page.ContiuneRead
 }
+
+WhatIsMagikePage: {
+	Title: Mods.Coralite.Knowledges.WhatIsMagikePage.Title
+	Description: Mods.Coralite.Knowledges.WhatIsMagikePage.Description
+}

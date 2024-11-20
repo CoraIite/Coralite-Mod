@@ -1,8 +1,24 @@
 DescriptionPage.Description: 欢迎来到珊瑚的世界！
 
 GetMagikeKnowledge1Page: {
-	// Title: Mods.Coralite.Knowledges.GetMagikeKnowledge1Page.Title
-	// Welcome: Mods.Coralite.Knowledges.GetMagikeKnowledge1Page.Welcome
-	// ClickButton: Mods.Coralite.Knowledges.GetMagikeKnowledge1Page.ClickButton
-	// ContiuneRead: Mods.Coralite.Knowledges.GetMagikeKnowledge1Page.ContiuneRead
+	Title: 魔能残卷 其一
+	Welcome:
+		'''
+		    欢迎你，新人！
+		    [c/ffbeec:魔能] 是古代人类发展的重要工具，之后人们的技术水平突飞猛进，最后因为某些变故才有了如今荒凉的世界。
+
+		    本章节的目的是帮助你了解 [c/ffbeec:魔能] 相关最基础的知识，并且通过实践建造出属于你的 [c/ffbeec:魔能] 产线。
+		'''
+	ClickButton: "    如果你准备好了，就按下此页下方的按钮并开始阅读本章节吧！"
+	ContiuneRead: "    你已经获得了 [c/ffbeec:魔能基础知识] ！跟随章节内容开始搭建你的 [c/ffbeec:魔能] 产线吧！"
+}
+
+WhatIsMagikePage: {
+	Title: 什么是魔能？
+	Description:
+		'''
+		    魔能是一种能量，它无法单独以物品的形式存在，但可以存储在特定的装置中。
+		    或许你已经注意到了，在某些合成表中会需要一个名为“魔能徽记”的物品，它仅仅是用来标记魔能需求量，并非真正需要这个物品。魔能徽记也[c/ff1616:无法通过任何方式获取]!
+		    关于如何合成这些合成表将在后续进行介绍。
+		'''
 }

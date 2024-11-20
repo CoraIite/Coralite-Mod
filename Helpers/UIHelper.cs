@@ -97,6 +97,27 @@ namespace Coralite.Helpers
                 position, textColor, 0f, origin * textSize, scale, out _, maxWidth, false);
         }
 
+        /// <summary>
+        /// 按照一段的方式绘制文字
+        /// </summary>
+        public static void DrawTextParagraph(SpriteBatch spriteBatch, string originText, float maxWidth, Vector2 position, out Vector2 textSize, Vector2? scale = null, Color? shadowColor = null, Color? textColor = null)
+          => DrawText(spriteBatch, originText, maxWidth, position, Vector2.Zero
+                , scale ?? Vector2.One
+                , shadowColor ?? new Color(40, 40, 40)
+                , textColor ?? Color.White
+                , out textSize);
+
+        /// <summary>
+        /// 鼠标的屏幕位置是否包含在矩形中
+        /// </summary>
+        /// <param name="tect"></param>
+        /// <returns></returns>
+        public static bool MouseScreenInRect(this Rectangle rect)
+        {
+            Vector2 pos = Main.MouseWorld - Main.screenPosition;
+            return rect.Contains((int)pos.X, (int)pos.Y);
+        }
+
         public static void QuickInvisibleScrollbar(this UIList list)
         {
             var scrollbar = new UIScrollbar();
