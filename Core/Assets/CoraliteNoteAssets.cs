@@ -38,6 +38,8 @@ namespace Coralite.Core
 
             public static ATex WhatIsMagike { get; private set; }
 
+            public static ATex PlaceFirstLens { get; private set; }
+
             internal static void Load()
             {
                 Type t = typeof(MagikeChapter1);

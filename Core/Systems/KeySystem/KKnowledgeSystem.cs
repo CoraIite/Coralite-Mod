@@ -17,7 +17,7 @@ namespace Coralite.Core.Systems.KeySystem
         {
             foreach (var knowledge in KeyKnowledgeLoader.knowledgesF)
             {
-                knowledge.Value.SaveWorldData(tag);
+                knowledge.Value.SaveSelfData(tag);
             }
         }
 
@@ -25,7 +25,7 @@ namespace Coralite.Core.Systems.KeySystem
         {
             foreach (var knowledge in KeyKnowledgeLoader.knowledgesF)
             {
-                knowledge.Value.LoadWorldData(tag);
+                knowledge.Value.LoadSelfData(tag);
             }
         }
     }

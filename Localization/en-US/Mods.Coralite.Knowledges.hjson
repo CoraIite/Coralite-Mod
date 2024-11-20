@@ -11,3 +11,10 @@ WhatIsMagikePage: {
 	Title: Mods.Coralite.Knowledges.WhatIsMagikePage.Title
 	Description: Mods.Coralite.Knowledges.WhatIsMagikePage.Description
 }
+
+PlaceFirstLens: {
+	BuildYourFirstMagike: Mods.Coralite.Knowledges.PlaceFirstLens.BuildYourFirstMagike
+	ExtractLens: Mods.Coralite.Knowledges.PlaceFirstLens.ExtractLens
+	FourWayPlace: Mods.Coralite.Knowledges.PlaceFirstLens.FourWayPlace
+	TryMouseHover: Mods.Coralite.Knowledges.PlaceFirstLens.TryMouseHover
+}
