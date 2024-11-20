@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.CoraliteNotes;
 using Coralite.Core.Loaders;
+using Terraria;
 using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.KeySystem
@@ -10,7 +11,10 @@ namespace Coralite.Core.Systems.KeySystem
         {
             KeyKnowledgeLoader.SetUp();
 
-            UILoader.GetUIState<CoraliteNoteUIState>().Init();
+            if (!Main.dedServ)
+            {
+                UILoader.GetUIState<CoraliteNoteUIState>().Init();
+            }
         }
 
         public override void SaveWorldData(TagCompound tag)

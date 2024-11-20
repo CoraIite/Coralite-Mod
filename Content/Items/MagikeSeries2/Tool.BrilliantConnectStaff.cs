@@ -14,6 +14,7 @@ using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -179,7 +180,68 @@ namespace Coralite.Content.Items.MagikeSeries2
                     ChooseReceivers();
                     break;
             }
+        }
 
+        internal void Send_Sender_Data()
+        {
+            ModPacket modPacket = Coralite.Instance.GetPacket();
+            modPacket.Write((byte)CLNetWorkEnum.BrilliantConnectStaff_Sender);
+            modPacket.Write(Owner.whoAmI);
+            modPacket.WritePoint16(TargetPoint);
+            modPacket.WritePoint16(BasePosition);
+            modPacket.Send();
+        }
+
+        internal static void Hander_Sender(BinaryReader reader, int whoAmI)
+        {
+            int ownerIndex = reader.ReadInt32();
+            Point16 TargetPoint = reader.ReadPoint16();
+            Point16 BasePosition = reader.ReadPoint16();
+            if (ownerIndex >= 0 && ownerIndex < Main.player.Length)
+            {
+                Player Owner = Main.player[ownerIndex];
+                FindSender(TargetPoint, BasePosition, Owner);
+                if (Main.dedServ)
+                {
+                    ModPacket modPacket = Coralite.Instance.GetPacket();
+                    modPacket.Write((byte)CLNetWorkEnum.BrilliantConnectStaff_Sender);
+                    modPacket.Write(ownerIndex);
+                    modPacket.WritePoint16(TargetPoint);
+                    modPacket.WritePoint16(BasePosition);
+                    modPacket.Send(-1, whoAmI);
+                }
+            }
+        }
+
+        internal void Send_Receivers_Data()
+        {
+            ModPacket modPacket = Coralite.Instance.GetPacket();
+            modPacket.Write((byte)CLNetWorkEnum.BrilliantConnectStaff_Receivers);
+            modPacket.Write(Owner.whoAmI);
+            modPacket.WritePoint16(TargetPoint);
+            modPacket.WritePoint16(BasePosition);
+            modPacket.Send();
+        }
+
+        internal static void Hander_Receivers(BinaryReader reader, int whoAmI)
+        {
+            int ownerIndex = reader.ReadInt32();
+            Point16 TargetPoint = reader.ReadPoint16();
+            Point16 BasePosition = reader.ReadPoint16();
+            if (ownerIndex >= 0 && ownerIndex < Main.player.Length)
+            {
+                Player Owner = Main.player[ownerIndex];
+                FindReceiverAndConnect(TargetPoint, BasePosition, Owner);
+                if (Main.dedServ)
+                {
+                    ModPacket modPacket = Coralite.Instance.GetPacket();
+                    modPacket.Write((byte)CLNetWorkEnum.BrilliantConnectStaff_Receivers);
+                    modPacket.Write(ownerIndex);
+                    modPacket.WritePoint16(TargetPoint);
+                    modPacket.WritePoint16(BasePosition);
+                    modPacket.Send(-1, whoAmI);
+                }
+            }
         }
 
         public void ChooseSenders()
@@ -197,9 +259,15 @@ namespace Coralite.Content.Items.MagikeSeries2
                 if (Math.Abs(TargetPoint.Y - BasePosition.Y) > GamePlaySystem.SelectSize)
                     TargetPoint = new Point16(TargetPoint.X, Math.Clamp(TargetPoint.Y, BasePosition.Y - GamePlaySystem.SelectSize, BasePosition.Y + GamePlaySystem.SelectSize));
             }
-            else
+            else if (Projectile.IsOwnedByLocalPlayer())
             {
-                if (FindSender())
+                bool reset = FindSender(TargetPoint, BasePosition, Owner);
+                if (!VaultUtils.isSinglePlayer)
+                {
+                    Send_Sender_Data();
+                }
+
+                if (reset)
                 {
                     State = 1;
                     Projectile.timeLeft = 60 * 10;
@@ -240,14 +308,18 @@ namespace Coralite.Content.Items.MagikeSeries2
                 if (Math.Abs(TargetPoint.Y - BasePosition.Y) > GamePlaySystem.SelectSize)
                     TargetPoint = new Point16(TargetPoint.X, Math.Clamp(TargetPoint.Y, BasePosition.Y - GamePlaySystem.SelectSize, BasePosition.Y + GamePlaySystem.SelectSize));
             }
-            else if (Projectile.localAI[0] == 1)
+            else if (Projectile.localAI[0] == 1 && Projectile.IsOwnedByLocalPlayer())
             {
-                FindReceiverAndConnect();
+                FindReceiverAndConnect(TargetPoint, BasePosition, Owner);
+                if (!VaultUtils.isSinglePlayer)
+                {
+                    Send_Receivers_Data();
+                }
                 Projectile.Kill();
             }
         }
 
-        public bool FindSender()
+        public static bool FindSender(Point16 TargetPoint, Point16 BasePosition, Player Owner)
         {
             int baseX = Math.Min(TargetPoint.X, BasePosition.X);
             int baseY = Math.Min(TargetPoint.Y, BasePosition.Y);
@@ -311,7 +383,7 @@ namespace Coralite.Content.Items.MagikeSeries2
             return false;
         }
 
-        public void FindReceiverAndConnect()
+        public static void FindReceiverAndConnect(Point16 TargetPoint, Point16 BasePosition, Player Owner)
         {
             int baseX = Math.Min(TargetPoint.X, BasePosition.X);
             int baseY = Math.Min(TargetPoint.Y, BasePosition.Y);
@@ -410,6 +482,8 @@ namespace Coralite.Content.Items.MagikeSeries2
                 spriteBatch.End();
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, default, DepthStencilState.None, spriteBatch.GraphicsDevice.RasterizerState, null, Main.GameViewMatrix.TransformationMatrix);
             }
+
+            MagikeHelper.DrawRectangleFrame(spriteBatch, BasePosition, TargetPoint, Color.Blue);
 
             return false;
         }
