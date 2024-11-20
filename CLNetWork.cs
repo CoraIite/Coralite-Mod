@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Bosses.BabyIceDragon;
 using Coralite.Content.Items.Magike.Tools;
+using Coralite.Content.Items.MagikeSeries2;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using System.IO;
@@ -12,6 +13,8 @@ namespace Coralite
         PlaceFilter,
         FilterRemoveButton_LeftClick,
         ClusterWand,
+        BrilliantConnectStaff_Sender,
+        BrilliantConnectStaff_Receivers,
     }
 
     internal class CLNetWork
@@ -34,6 +37,10 @@ namespace Coralite
             else if (cLNetWorkEnum == CLNetWorkEnum.ClusterWand)
             {
                 InfinityClusterWandProj.Hander_ClusterWand(reader, whoAmI);
+            }
+            else if (cLNetWorkEnum == CLNetWorkEnum.BrilliantConnectStaff_Sender)
+            {
+                BrilliantConnectStaffProj.Hander_Sender(reader, whoAmI);
             }
         }
     }
