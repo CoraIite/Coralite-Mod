@@ -126,5 +126,7 @@ namespace Coralite.Content.Items.MagikeSeries2
                 }, TargetPoint.ToWorldCoordinates());
             }
         }
+
+        public override Color GetDrawColor() => Coralite.CrystallineMagikePurple;
     }
 }

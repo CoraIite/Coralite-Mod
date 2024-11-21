@@ -3,6 +3,7 @@ using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.Particles;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -180,6 +181,11 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
             }
             else
                 Helper.PlayPitched("UI/Error", 0.4f, 0, Owner.Center);
+        }
+
+        public override Color GetDrawColor()
+        {
+            return (Owner.HeldItem.ModItem as FilterItem).FilterColor;
         }
     }
 }

@@ -3,6 +3,7 @@ using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
+using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
@@ -83,6 +84,11 @@ namespace Coralite.Content.Items.Magike.Tools
     public class InfinityClusterWandProj : RectangleSelectProj
     {
         public override int ItemType => ModContent.ItemType<InfinityClusterWand>();
+
+        public override Color GetDrawColor()
+        {
+            return (Owner.HeldItem.ModItem as InfinityClusterWand).mode == 0 ? Color.Orange : Color.DarkGray;
+        }
 
         public override void Special()
         {

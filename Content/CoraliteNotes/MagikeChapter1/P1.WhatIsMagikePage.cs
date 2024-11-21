@@ -11,7 +11,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
         public static LocalizedText Title { get; private set; }
         public static LocalizedText Description { get; private set; }
 
-        private float _scale ;
+        private ScaleController _scale =new ScaleController(0.9f,0.1f);
 
         public override void OnInitialize()
         {
@@ -21,7 +21,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
 
         public override void Recalculate()
         {
-            _scale = 0.8f;
+            _scale.ResetScale();
             base.Recalculate();
         }
 
@@ -43,13 +43,11 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
             //绘制图片
             Rectangle rect = Utils.CenteredRectangle(pos, tex.Size());
             if (rect.MouseScreenInRect())
-                _scale = Helper.Lerp(_scale, 1f, 0.1f);
+                _scale.ToBigSize();
             else
-                _scale = Helper.Lerp(_scale, 0.9f, 0.1f);
+                _scale.ToNormalSize();
 
-            spriteBatch.Draw(tex, pos + Vector2.One * Helper.Lerp(0, 20, (_scale - 0.9f) / 0.1f), null,
-                Color.DarkGray * 0.75f, 0, tex.Size() / 2, _scale, 0, 0);
-            spriteBatch.Draw(tex, pos, null, Color.White, 0, tex.Size() / 2, _scale, 0, 0);
+            Helper.DrawMouseOverScaleTex(spriteBatch, tex, pos, _scale, 20, Color.DarkGray * 0.75f);
         }
     }
 }

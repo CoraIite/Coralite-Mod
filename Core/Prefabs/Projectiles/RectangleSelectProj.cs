@@ -1,5 +1,4 @@
-﻿using Coralite.Content.Items.Magike.Tools;
-using Coralite.Core.Configs;
+﻿using Coralite.Core.Configs;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -115,11 +114,12 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         public override bool PreDraw(ref Color lightColor) => false;
 
-        public void DrawNonPremultiplied(SpriteBatch spriteBatch)
-        {
-            if (Owner.HeldItem.ModItem is InfinityClusterWand wand)
-                MagikeHelper.DrawRectangleFrame(spriteBatch, BasePosition, TargetPoint, wand.mode == 0 ? Color.Orange : Color.DarkGray);
-        }
+        public virtual Color GetDrawColor() => Color.White;
 
+        public virtual void DrawNonPremultiplied(SpriteBatch spriteBatch)
+        {
+            if (!CheckHeldItem())
+                MagikeHelper.DrawRectangleFrame(spriteBatch, BasePosition, TargetPoint, GetDrawColor());
+        }
     }
 }

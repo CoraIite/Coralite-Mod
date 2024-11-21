@@ -18,3 +18,9 @@ PlaceFirstLens: {
 	FourWayPlace: Mods.Coralite.Knowledges.PlaceFirstLens.FourWayPlace
 	TryMouseHover: Mods.Coralite.Knowledges.PlaceFirstLens.TryMouseHover
 }
+
+PlacePolarizedFilter: {
+	NeedPolarizedFilter: Mods.Coralite.Knowledges.PlacePolarizedFilter.NeedPolarizedFilter
+	HowToUsePolarizedFilter: Mods.Coralite.Knowledges.PlacePolarizedFilter.HowToUsePolarizedFilter
+	SeeItemToolTip: Mods.Coralite.Knowledges.PlacePolarizedFilter.SeeItemToolTip
+}

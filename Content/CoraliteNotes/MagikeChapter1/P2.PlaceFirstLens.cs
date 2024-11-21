@@ -16,8 +16,8 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
         public static LocalizedText TryMouseHover { get; private set; }
         public static LocalizedText FourWayPlace { get; private set; }
 
-        private float _scale1 ;
-        private float _scale2;
+        private ScaleController _scale1 = new ScaleController(1.4f, 0.2f);
+        private ScaleController _scale2 = new ScaleController(0.9f, 0.1f);
 
         public override void OnInitialize()
         {
@@ -29,8 +29,8 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
 
         public override void Recalculate()
         {
-            _scale1 = 1.3f;
-            _scale2 = 0.8f;
+            _scale1.ResetScale();
+            _scale2.ResetScale();
             base.Recalculate();
         }
 
@@ -54,16 +54,14 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
             Rectangle rect = Utils.CenteredRectangle(picturePos, tex1.Size() * 4f);
             if (rect.MouseScreenInRect())
             {
-                _scale1 = Helper.Lerp(_scale1, 1.5f, 0.1f);
+                _scale1.ToBigSize();
                 Main.HoverItem = ContentSamples.ItemsByType[ModContent.ItemType<BasicExtractLens>()].Clone();
                 Main.hoverItemName = "a";
             }
             else
-                _scale1 = Helper.Lerp(_scale1, 1.4f, 0.1f);
+                _scale1 .ToNormalSize();
 
-            spriteBatch.Draw(tex1, picturePos + Vector2.One * Helper.Lerp(0, 5, (_scale1 -1.4f) / 0.1f), null,
-                new Color(40,40,40) * 0.75f, 0, tex1.Size() / 2, _scale1, 0, 0);
-            spriteBatch.Draw(tex1, picturePos, null, Color.White, 0, tex1.Size() / 2, _scale1, 0, 0);
+            Helper.DrawMouseOverScaleTex(spriteBatch, tex1, picturePos, _scale1, 5, new Color(40, 40, 40) * 0.5f, true);
 
             Utils.DrawBorderString(spriteBatch, TryMouseHover.Value, picturePos+new Vector2(0,-tex1.Height*1.5f), Coralite.MagicCrystalPink
                 , 1f, 0.5f, 0.5f);
@@ -75,13 +73,11 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
             #region 绘制右边的图片
             rect = Utils.CenteredRectangle(picturePos, tex2.Size());
             if (rect.MouseScreenInRect())
-                _scale2 = Helper.Lerp(_scale2, 1f, 0.15f);
+                _scale2.ToBigSize();
             else
-                _scale2 = Helper.Lerp(_scale2, 0.9f, 0.15f);
+                _scale2.ToNormalSize();
 
-            spriteBatch.Draw(tex2, picturePos + Vector2.One * Helper.Lerp(0, 10, (_scale2 - 0.9f) / 0.1f), null,
-                Color.DarkGray * 0.75f, 0, tex2.Size() / 2, _scale2, 0, 0);
-            spriteBatch.Draw(tex2, picturePos, null, Color.White, 0, tex2.Size() / 2, _scale2, 0, 0);
+            Helper.DrawMouseOverScaleTex(spriteBatch, tex2, picturePos, _scale2, 10, Color.DarkGray * 0.75f);
             #endregion
 
             pos += new Vector2(0, tex2.Height/2 + 20);

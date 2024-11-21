@@ -974,6 +974,5 @@ namespace Coralite.Core
         {
             return mergeTile.HasTile && (mergeTile.TileType == myTile.TileType || Main.tileMerge[myTile.TileType][mergeTile.TileType]);
         }
-
     }
 }

@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Items.MagikeSeries1;
+﻿using Coralite.Content.Items.Magike.Tools;
+using Coralite.Content.Items.MagikeSeries1;
 using Coralite.Content.Items.Materials;
 using Coralite.Content.Raritys;
 using Coralite.Content.UI;
@@ -487,6 +488,12 @@ namespace Coralite.Content.Items.MagikeSeries2
 
             return false;
         }
+
+        public override void DrawNonPremultiplied(SpriteBatch spriteBatch)
+        {
+            if (CanDrawFrame)
+                MagikeHelper.DrawRectangleFrame(spriteBatch, BasePosition, TargetPoint, Coralite.CrystallineMagikePurple);
+        }
     }
 
     public class DisconnectProj : RectangleSelectProj
@@ -583,5 +590,11 @@ namespace Coralite.Content.Items.MagikeSeries2
             else
                 Helper.PlayPitched("UI/Error", 0.4f, 0, Owner.Center);
         }
+
+        public override Color GetDrawColor()
+        {
+            return Coralite.CrystallineMagikePurple;
+        }
+
     }
 }

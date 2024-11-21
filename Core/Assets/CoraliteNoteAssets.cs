@@ -39,6 +39,8 @@ namespace Coralite.Core
             public static ATex WhatIsMagike { get; private set; }
 
             public static ATex PlaceFirstLens { get; private set; }
+            public static ATex PlacePolarizedFilterArrow { get; private set; }
+            public static ATex PlacePolarizedFilter { get; private set; }
 
             internal static void Load()
             {

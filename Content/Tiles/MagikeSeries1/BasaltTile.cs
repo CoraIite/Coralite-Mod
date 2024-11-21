@@ -32,7 +32,5 @@ namespace Coralite.Content.Tiles.MagikeSeries1
             TileFraming.CustomMergeFrame(i, j, Type, TileID.Dirt, true, false, false);
             return false;
         }
-
-
     }
 }

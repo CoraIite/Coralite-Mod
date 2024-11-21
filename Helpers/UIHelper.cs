@@ -1,9 +1,12 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Coralite.Content.CoraliteNotes;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
 using Terraria.UI;
 using Terraria.UI.Chat;
+using static System.Net.Mime.MediaTypeNames;
+using static Terraria.GameContent.Animations.IL_Actions.Sprites;
 
 namespace Coralite.Helpers
 {
@@ -87,14 +90,15 @@ namespace Coralite.Helpers
             ChatManager.ConvertNormalSnippets(textSnippets);
 
             textSize = ChatManager.GetStringSize(FontAssets.MouseText.Value, textSnippets, scale, maxWidth);
+                origin *= textSize;
 
             foreach (Vector2 direction in ChatManager.ShadowDirections)
             {
                 ChatManager.DrawColorCodedStringShadow(spriteBatch, FontAssets.MouseText.Value, textSnippets, position + direction,
-                    shadowColor, 0f, origin * textSize, scale, maxWidth);
+                    shadowColor, 0f, origin , scale, maxWidth);
             }
             ChatManager.DrawColorCodedString(spriteBatch, FontAssets.MouseText.Value, textSnippets,
-                position, textColor, 0f, origin * textSize, scale, out _, maxWidth, false);
+                position, textColor, 0f, origin , scale, out _, maxWidth, false);
         }
 
         /// <summary>
@@ -116,6 +120,14 @@ namespace Coralite.Helpers
         {
             Vector2 pos = Main.MouseWorld - Main.screenPosition;
             return rect.Contains((int)pos.X, (int)pos.Y);
+        }
+
+        public static void DrawMouseOverScaleTex(SpriteBatch spriteBatch, Texture2D tex, Vector2 pos, ScaleController scale, float offset, Color darkColor, bool fadeWithOriginScale = false, Color? selfColor = null)
+        {
+            Vector2 origin = tex.Size() / 2;
+            spriteBatch.Draw(tex, pos + Vector2.One * Lerp(0, offset, scale.ScalePercent), null,
+               darkColor, 0, origin, fadeWithOriginScale ? scale.targetScale : scale.Scale, 0, 0);
+            spriteBatch.Draw(tex, pos, null, selfColor ?? Color.White, 0, origin, scale.Scale, 0, 0);
         }
 
         public static void QuickInvisibleScrollbar(this UIList list)
