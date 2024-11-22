@@ -42,6 +42,10 @@ namespace Coralite
             {
                 BrilliantConnectStaffProj.Hander_Sender(reader, whoAmI);
             }
+            else if (cLNetWorkEnum == CLNetWorkEnum.BrilliantConnectStaff_Receivers)
+            {
+                BrilliantConnectStaffProj.Hander_Receivers(reader, whoAmI);
+            }
         }
     }
 }
