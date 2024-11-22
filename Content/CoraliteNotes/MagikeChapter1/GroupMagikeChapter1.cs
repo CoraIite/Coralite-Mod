@@ -19,6 +19,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
                     //P2：搭建你的第一条魔能产线
                     new PlaceFirstLens(),
                     new PlacePolarizedFilter(),
+                    new PutItemIn(),
                 ];
         }
     }

@@ -48,3 +48,5 @@ PlacePolarizedFilter: {
 	HowToUsePolarizedFilter: "    将偏振滤镜插入仪器的方法也很简单，只需要使用偏振滤镜物品进行框选，松开左键后就可以消耗手中的物品并放入偏振滤镜。"
 	SeeItemToolTip: "    在之后的流程中你会制作更多等级的偏振滤镜，需要注意的是并非所有的偏振滤镜都能顺利插入装置之中。 请仔细阅读魔能仪器的物品描述，能插入的偏振滤镜均会标出。"
 }
+
+// PutItemIn.OpenUI: Mods.Coralite.Knowledges.PutItemIn.OpenUI

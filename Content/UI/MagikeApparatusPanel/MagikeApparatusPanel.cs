@@ -28,8 +28,8 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
         #region 各类记录用字段
 
         public static Color BackgroundColor = new(56, 50, 53, 200);
-        public static Color BackgroundColor2 = new(75, 69, 71, 150);
-        public static Color EdgeColor = new(250, 217, 241, 150);
+        public static Color BackgroundColor2 = new(85, 79, 81, 150);
+        public static Color EdgeColor = new(250, 217, 241, 185);
 
         public static bool ShouldResetComponentPanel;
 
@@ -155,7 +155,8 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
 
         public void InitBasePanel()
         {
-            BasePanel ??= new UIDragablePanel(true, true, true);
+            BasePanel ??= new UIDragablePanel(ModContent.Request<Texture2D>(AssetDirectory.UI + "MagikePanelBackground"),
+                ModContent.Request<Texture2D>(AssetDirectory.UI + "MagikePanelBorder"), dragable: true, resizeableX: true, resizeableY: true);
 
             BasePanel.BackgroundColor = BackgroundColor;
             BasePanel.BorderColor = EdgeColor;
@@ -163,7 +164,8 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
 
         public void InitComponentController()
         {
-            ComponentControllerPanel ??= new UIPanel();
+            ComponentControllerPanel ??= new UIPanel(ModContent.Request<Texture2D>(AssetDirectory.UI + "MagikePanelBackground"),
+                ModContent.Request<Texture2D>(AssetDirectory.UI + "MagikePanelBorder"));
             ComponentControllerPanel.RemoveAllChildren();
 
             ComponentShowTypeButton = new ComponentShowTypeButton();
@@ -254,7 +256,8 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
 
         public void InitComponentPanel()
         {
-            ComponentPanel ??= new UIPanel();
+            ComponentPanel ??= new UIPanel(ModContent.Request<Texture2D>(AssetDirectory.UI + "MagikePanelBackground2"),
+                ModContent.Request<Texture2D>(AssetDirectory.Blank));
 
             ComponentPanel.Left.Set(ComponentControllerPanel.Width.Pixels + VerticalLine.Width.Pixels, 0);
             ComponentPanel.Width.Set(-VerticalLine.Left.Pixels - VerticalLine.Width.Pixels - 6, 1);
@@ -274,7 +277,6 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
         {
             if (BasePanel == null || CurrentEntity == null)
                 return;
-
             InitBasePanel();
 
             BasePanel.RemoveAllChildren();

@@ -25,8 +25,17 @@ namespace Coralite.Content.UI
         //private int minX, minY, maxX, maxY;
         private List<UIElement> additionalDragTargets;
 
-        // TODO, move panel back in if offscreen? prevent drag off screen?
         public UIDragablePanel(bool dragable = true, bool resizeableX = false, bool resizeableY = false)
+        {
+            this.dragable = dragable;
+            this.resizeableX = resizeableX;
+            this.resizeableY = resizeableY;
+            dragTexture ??= ModContent.Request<Texture2D>("Terraria/Images/UI/PanelBorder");
+            additionalDragTargets = new List<UIElement>();
+        }
+
+        public UIDragablePanel(Asset<Texture2D> customBackground, Asset<Texture2D> customborder, int customCornerSize = 12, int customBarSize = 4, bool dragable = true, bool resizeableX = false, bool resizeableY = false)
+            : base(customBackground, customborder, customCornerSize, customBarSize)
         {
             this.dragable = dragable;
             this.resizeableX = resizeableX;
@@ -154,12 +163,13 @@ namespace Coralite.Content.UI
             //	Rectangle hitbox = GetInnerDimensions().ToRectangle();
             //	Main.spriteBatch.Draw(Main.magicPixel, hitbox, Color.LightBlue * 0.6f);
 
+
             Point point = new((int)(dimensions.X + dimensions.Width - 12), (int)(dimensions.Y + dimensions.Height - 12));
             var source = texture.Frame();//new Rectangle(12 + 4, 12 + 4, 12, 12);
 
             //spriteBatch.Draw(texture, new Rectangle(point.X - 2, point.Y - 2, 12 - 2, 12 - 2), source, color);
             //spriteBatch.Draw(texture, new Rectangle(point.X - 4, point.Y - 4, 12 - 4, 12 - 4), source, color);
-            spriteBatch.Draw(texture, new Rectangle(point.X - 6, point.Y - 6, 12, 12), source, color);
+            spriteBatch.Draw(texture, new Rectangle(point.X - 6, point.Y - 6, 12, 12), source, color*0.8f);
             texture = TextureAssets.Cursors[15].Value;
             source = texture.Frame();
             spriteBatch.Draw(texture, new Rectangle(point.X - 6, point.Y - 6, 12, 12), source, Color.White);

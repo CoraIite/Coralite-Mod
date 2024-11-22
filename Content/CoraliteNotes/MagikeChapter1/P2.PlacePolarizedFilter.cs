@@ -31,7 +31,6 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
         {
             _scale1.ResetScale();
             _scale2.ResetScale();
-            _scale3 = new ScaleController(0.8f, 0.1f);
             _scale3.ResetScale();
             base.Recalculate();
         }
