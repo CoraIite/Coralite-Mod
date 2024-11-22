@@ -12,6 +12,7 @@ using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
+using InnoVault;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -72,43 +73,46 @@ namespace Coralite.Content.Items.MagikeSeries2
 
         public override bool CanUseItem(Player player)
         {
-            Point16 pos = Main.MouseWorld.ToTileCoordinates16();
-
-            //左键寻找发送器
-            Point16 topLeft = Main.MouseWorld.ToTileCoordinates16();
-
-            //右键打开UI
-            if (player.altFunctionUse == 2)
+            if (player.whoAmI == Main.myPlayer)
             {
-                switch (DisconnectState)
-                {
-                    default:
-                    case 0:
-                        if (MagikeConnectUI.visible)
-                            MagikeConnectUI.visible = false;
-                        else if (MagikeHelper.TryGetEntityWithComponent<MagikeLinerSender>(pos.X, pos.Y, MagikeComponentID.MagikeSender, out MagikeTP entity1))    //找到了
-                        {
-                            MagikeLinerSender senderComponent = entity1.GetSingleComponent<MagikeLinerSender>(MagikeComponentID.MagikeSender);
+                Point16 pos = Main.MouseWorld.ToTileCoordinates16();
 
-                            MagikeConnectUI.sender = senderComponent;
-                            UILoader.GetUIState<MagikeConnectUI>()?.Recalculate();
-                            MagikeConnectUI.visible = true;
-                            Helper.PlayPitched("UI/Tick", 0.4f, 0, player.Center);
-                        }
-                        break;
-                    case 1:
-                        Projectile.NewProjectile(new EntitySource_ItemUse(Main.LocalPlayer, Main.LocalPlayer.HeldItem), topLeft.ToWorldCoordinates(8, 8),
-                            Vector2.Zero, ModContent.ProjectileType<DisconnectProj>(), 0, 0, Main.myPlayer, topLeft.X, topLeft.Y);
-                        break;
+                //左键寻找发送器
+                Point16 topLeft = Main.MouseWorld.ToTileCoordinates16();
+
+                //右键打开UI
+                if (player.altFunctionUse == 2)
+                {
+                    switch (DisconnectState)
+                    {
+                        default:
+                        case 0:
+                            if (MagikeConnectUI.visible)
+                                MagikeConnectUI.visible = false;
+                            else if (MagikeHelper.TryGetEntityWithComponent<MagikeLinerSender>(pos.X, pos.Y, MagikeComponentID.MagikeSender, out MagikeTP entity1))    //找到了
+                            {
+                                MagikeLinerSender senderComponent = entity1.GetSingleComponent<MagikeLinerSender>(MagikeComponentID.MagikeSender);
+
+                                MagikeConnectUI.sender = senderComponent;
+                                UILoader.GetUIState<MagikeConnectUI>()?.Recalculate();
+                                MagikeConnectUI.visible = true;
+                                Helper.PlayPitched("UI/Tick", 0.4f, 0, player.Center);
+                            }
+                            break;
+                        case 1:
+                            Projectile.NewProjectile(new EntitySource_ItemUse(Main.LocalPlayer, Main.LocalPlayer.HeldItem), topLeft.ToWorldCoordinates(8, 8),
+                                Vector2.Zero, ModContent.ProjectileType<DisconnectProj>(), 0, 0, Main.myPlayer, topLeft.X, topLeft.Y);
+                            break;
+                    }
+
+                    return true;
                 }
 
-                return true;
+
+                Senders.Clear();
+                Projectile.NewProjectile(new EntitySource_ItemUse(Main.LocalPlayer, Main.LocalPlayer.HeldItem), topLeft.ToWorldCoordinates(8, 8),
+                    Vector2.Zero, ModContent.ProjectileType<BrilliantConnectStaffProj>(), 0, 0, Main.myPlayer, topLeft.X, topLeft.Y);
             }
-
-
-            Senders.Clear();
-            Projectile.NewProjectile(new EntitySource_ItemUse(Main.LocalPlayer, Main.LocalPlayer.HeldItem), topLeft.ToWorldCoordinates(8, 8),
-                Vector2.Zero, ModContent.ProjectileType<BrilliantConnectStaffProj>(), 0, 0, Main.myPlayer, topLeft.X, topLeft.Y);
 
             Helper.PlayPitched("Fairy/FairyBottleClick2", 0.4f, 0, player.Center);
 
@@ -190,6 +194,7 @@ namespace Coralite.Content.Items.MagikeSeries2
             modPacket.Write(Owner.whoAmI);
             modPacket.WritePoint16(TargetPoint);
             modPacket.WritePoint16(BasePosition);
+            modPacket.WriteVector2(InMousePos);
             modPacket.Send();
         }
 
@@ -198,10 +203,11 @@ namespace Coralite.Content.Items.MagikeSeries2
             int ownerIndex = reader.ReadInt32();
             Point16 TargetPoint = reader.ReadPoint16();
             Point16 BasePosition = reader.ReadPoint16();
+            Vector2 InMousePos = reader.ReadVector2();
             if (ownerIndex >= 0 && ownerIndex < Main.player.Length)
             {
                 Player Owner = Main.player[ownerIndex];
-                FindSender(TargetPoint, BasePosition, Owner);
+                FindSender(TargetPoint, BasePosition, Owner, InMousePos);
                 if (Main.dedServ)
                 {
                     ModPacket modPacket = Coralite.Instance.GetPacket();
@@ -209,6 +215,7 @@ namespace Coralite.Content.Items.MagikeSeries2
                     modPacket.Write(ownerIndex);
                     modPacket.WritePoint16(TargetPoint);
                     modPacket.WritePoint16(BasePosition);
+                    modPacket.WriteVector2(InMousePos);
                     modPacket.Send(-1, whoAmI);
                 }
             }
@@ -221,6 +228,7 @@ namespace Coralite.Content.Items.MagikeSeries2
             modPacket.Write(Owner.whoAmI);
             modPacket.WritePoint16(TargetPoint);
             modPacket.WritePoint16(BasePosition);
+            modPacket.WriteVector2(InMousePos);
             modPacket.Send();
         }
 
@@ -229,6 +237,7 @@ namespace Coralite.Content.Items.MagikeSeries2
             int ownerIndex = reader.ReadInt32();
             Point16 TargetPoint = reader.ReadPoint16();
             Point16 BasePosition = reader.ReadPoint16();
+            Vector2 InMousePos = reader.ReadVector2();
             if (ownerIndex >= 0 && ownerIndex < Main.player.Length)
             {
                 Player Owner = Main.player[ownerIndex];
@@ -240,6 +249,7 @@ namespace Coralite.Content.Items.MagikeSeries2
                     modPacket.Write(ownerIndex);
                     modPacket.WritePoint16(TargetPoint);
                     modPacket.WritePoint16(BasePosition);
+                    modPacket.WriteVector2(InMousePos);
                     modPacket.Send(-1, whoAmI);
                 }
             }
@@ -262,7 +272,7 @@ namespace Coralite.Content.Items.MagikeSeries2
             }
             else if (Projectile.IsOwnedByLocalPlayer())
             {
-                bool reset = FindSender(TargetPoint, BasePosition, Owner);
+                bool reset = FindSender(TargetPoint, BasePosition, Owner, InMousePos);
                 if (!VaultUtils.isSinglePlayer)
                 {
                     Send_Sender_Data();
@@ -320,7 +330,7 @@ namespace Coralite.Content.Items.MagikeSeries2
             }
         }
 
-        public static bool FindSender(Point16 TargetPoint, Point16 BasePosition, Player Owner)
+        public static bool FindSender(Point16 TargetPoint, Point16 BasePosition, Player Owner, Vector2 InMousePos)
         {
             int baseX = Math.Min(TargetPoint.X, BasePosition.X);
             int baseY = Math.Min(TargetPoint.Y, BasePosition.Y);
@@ -379,7 +389,7 @@ namespace Coralite.Content.Items.MagikeSeries2
                 Text = MagikeSystem.GetConnectStaffText(MagikeSystem.StaffTextID.ChooseSender_NotFound),
                 DurationInFrames = 60,
                 Velocity = -Vector2.UnitY
-            }, Main.MouseWorld - (Vector2.UnitY * 32));
+            }, InMousePos - (Vector2.UnitY * 32));
 
             return false;
         }
