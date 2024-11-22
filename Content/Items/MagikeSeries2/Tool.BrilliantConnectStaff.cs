@@ -281,7 +281,6 @@ namespace Coralite.Content.Items.MagikeSeries2
                 }
                 return;
             }
-
         }
 
         public void ChooseReceivers()
