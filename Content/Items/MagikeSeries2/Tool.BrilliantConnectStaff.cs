@@ -491,8 +491,6 @@ namespace Coralite.Content.Items.MagikeSeries2
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, default, DepthStencilState.None, spriteBatch.GraphicsDevice.RasterizerState, null, Main.GameViewMatrix.TransformationMatrix);
             }
 
-            MagikeHelper.DrawRectangleFrame(spriteBatch, BasePosition, TargetPoint, Color.Blue);
-
             return false;
         }
 

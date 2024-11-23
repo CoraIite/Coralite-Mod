@@ -690,7 +690,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         {
                             //随机一个招式出来
                             State = Main.rand.NextFromList(moves.ToArray());
-                            //State = (int)AIStates.LightningRaid;
+                            State = (int)AIStates.LightningRaid;
                             NPC.netUpdate = true;
                         }
                     }

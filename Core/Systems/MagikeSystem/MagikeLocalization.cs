@@ -34,6 +34,7 @@ namespace Coralite.Core.Systems.MagikeSystem
             LoadApparatusDescription();
             LoadUIText();
             LoadCraftText();
+            LoadUIPanelText();
         }
 
         public void UnloadLocalization()
@@ -48,6 +49,7 @@ namespace Coralite.Core.Systems.MagikeSystem
             ApparatusDescription = null;
             UIText = null;
             CraftText = null;
+            UIPanelText = null;
         }
 
         #region 魔能连接仪相关
@@ -383,5 +385,44 @@ namespace Coralite.Core.Systems.MagikeSystem
             => UIText[(int)id].Value;
 
         #endregion
+
+        public static LocalizedText[] UIPanelText { get; private set; }
+
+        public enum UIPalelTextID
+        {
+            MagikeContainer,
+            MagikeSender,
+            MagikeProducer,
+            MagikeFactory,
+            Filter,
+            ItemContainer,
+            GetOnlyItemContainer,
+            ItemSender,
+
+            ShowAll,//给显示切换按钮使用
+            CloseAll,
+            Show,
+            Close,
+
+            //给列表切换按钮使用
+            ClickToShow,
+            ClickToClose,
+
+            Count
+        }
+
+        public void LoadUIPanelText()
+        {
+            UIPanelText = new LocalizedText[(int)UIPalelTextID.Count];
+
+            for (int i = 0; i < (int)UIPalelTextID.Count; i++)
+            {
+                UIPanelText[i] = this.GetLocalization(nameof(UIPanelText) + "." + Enum.GetName((UIPalelTextID)i));
+            }
+        }
+
+        public static string GetUIPanelText(UIPalelTextID id)
+            => UIPanelText[(int)id].Value;
+
     }
 }
