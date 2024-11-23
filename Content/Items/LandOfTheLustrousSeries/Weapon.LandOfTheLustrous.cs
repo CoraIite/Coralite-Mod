@@ -302,9 +302,10 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
                             speed -= time * 0.1f;
 
-                            Projectile.NewProjectileFromThis<LustrousProj>(Projectile.Center
-                                , angle.ToRotationVector2() * speed, Owner.GetWeaponDamage(Owner.HeldItem), Projectile.knockBack
-                                , itemType, i == 0 ? 1 : 0, Projectile.whoAmI);
+                            if (Projectile.IsOwnedByLocalPlayer())
+                                Projectile.NewProjectileFromThis<LustrousProj>(Projectile.Center
+                                    , angle.ToRotationVector2() * speed, Owner.GetWeaponDamage(Owner.HeldItem), Projectile.knockBack
+                                    , itemType, i == 0 ? 1 : 0, Projectile.whoAmI);
 
                             angle += 0.3f;
                         }
@@ -637,9 +638,16 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 int maxPoint = Shiny ? 16 : 6;
 
                 Target = -1;
-                data = GetDrawData();
-                Projectile.InitOldPosCache(maxPoint);
-                Projectile.InitOldRotCache(maxPoint);
+                if (!VaultUtils.isServer)
+                {
+                    data = GetDrawData();
+                    Projectile.InitOldPosCache(maxPoint);
+                    Projectile.InitOldRotCache(maxPoint);
+                    if (trail == null && Shiny)
+                        trail ??= new Trail(Main.graphics.GraphicsDevice, maxPoint, new TriangularTip(20)
+                            , TrailWidth, TrailColor);
+                }
+
                 if (OwnerIndex.GetProjectileOwner(out Projectile owner, Projectile.Kill))
                 {
                     Timer = 108 / Projectile.velocity.Length();
@@ -647,9 +655,6 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 }
 
                 init = false;
-                if (trail == null && Shiny)
-                    trail ??= new Trail(Main.graphics.GraphicsDevice, maxPoint, new TriangularTip(20)
-                        , TrailWidth, TrailColor);
             }
         }
 

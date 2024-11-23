@@ -1,5 +1,4 @@
-﻿using Coralite.Content.Items.Magike.Tools;
-using Coralite.Content.Items.MagikeSeries1;
+﻿using Coralite.Content.Items.MagikeSeries1;
 using Coralite.Content.Items.Materials;
 using Coralite.Content.Raritys;
 using Coralite.Content.UI;
@@ -12,7 +11,6 @@ using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
-using InnoVault;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
