@@ -705,15 +705,17 @@ namespace Coralite.Helpers
         //}
 
 
-        //public static void SpawnDustOnGenerate(int selfWidth, int selfHeight, Point16 Position, Color dustColor, int dustType = DustID.LastPrism)
-        //{
-        //    Vector2 position = Position.ToWorldCoordinates(selfWidth * 8, selfHeight * 8);
-        //    for (int i = 0; i < 16; i++)
-        //    {
-        //        Dust dust = Dust.NewDustPerfect(position, dustType, (i * MathHelper.TwoPi / 16).ToRotationVector2() * Main.rand.NextFloat(2, 3), newColor: dustColor);
-        //        dust.noGravity = true;
-        //    }
-        //}
+        public static void SpawnDustOnProduce(Point16 Position, Color dustColor, int dustType = DustID.LastPrism)
+        {
+            Vector2 position = Helper.GetMagikeTileCenter(Position);
+            if (!Helper.IsPointOnScreen(position))
+                return;
+            for (int i = 0; i < 16; i++)
+            {
+                Dust dust = Dust.NewDustPerfect(position, dustType, (i * MathHelper.TwoPi / 16).ToRotationVector2() * Main.rand.NextFloat(2, 3), newColor: dustColor,Scale:Main.rand.NextFloat(1.5f,2f));
+                dust.noGravity = true;
+            }
+        }
 
         /// <summary>
         /// 根据当前物块的帧图获取到物块左上角，之后根据位置尝试获取指定类型的TileEntity

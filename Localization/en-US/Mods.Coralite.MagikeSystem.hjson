@@ -390,4 +390,21 @@ MagikeSystem: {
 
 	CanMagikeCraft: Magike craft material
 	ItemMagikeAmount: "Magike Content: "
+
+	UIPanelText: {
+		MagikeContainer: Mods.Coralite.MagikeSystem.MagikeSystem.UIPanelText.MagikeContainer
+		MagikeSender: Mods.Coralite.MagikeSystem.MagikeSystem.UIPanelText.MagikeSender
+		MagikeProducer: Mods.Coralite.MagikeSystem.MagikeSystem.UIPanelText.MagikeProducer
+		MagikeFactory: Mods.Coralite.MagikeSystem.MagikeSystem.UIPanelText.MagikeFactory
+		Filter: Mods.Coralite.MagikeSystem.MagikeSystem.UIPanelText.Filter
+		ItemContainer: Mods.Coralite.MagikeSystem.MagikeSystem.UIPanelText.ItemContainer
+		GetOnlyItemContainer: Mods.Coralite.MagikeSystem.MagikeSystem.UIPanelText.GetOnlyItemContainer
+		ItemSender: Mods.Coralite.MagikeSystem.MagikeSystem.UIPanelText.ItemSender
+		ShowAll: Mods.Coralite.MagikeSystem.MagikeSystem.UIPanelText.ShowAll
+		CloseAll: Mods.Coralite.MagikeSystem.MagikeSystem.UIPanelText.CloseAll
+		Show: Mods.Coralite.MagikeSystem.MagikeSystem.UIPanelText.Show
+		Close: Mods.Coralite.MagikeSystem.MagikeSystem.UIPanelText.Close
+		ClickToShow: Mods.Coralite.MagikeSystem.MagikeSystem.UIPanelText.ClickToShow
+		ClickToClose: Mods.Coralite.MagikeSystem.MagikeSystem.UIPanelText.ClickToClose
+	}
 }

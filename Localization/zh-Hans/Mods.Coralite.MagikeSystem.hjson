@@ -385,4 +385,21 @@ MagikeSystem: {
 
 	CanMagikeCraft: 魔能合成素材
 	ItemMagikeAmount: 魔能含量：
+
+	UIPanelText: {
+		MagikeContainer: 魔能存储单元
+		MagikeSender: 魔能发送单元
+		MagikeProducer: 魔能生产单元
+		MagikeFactory: 魔能工作单元
+		Filter: 滤镜
+		ItemContainer: 物品容器
+		GetOnlyItemContainer: 仅取出的物品容器
+		ItemSender: 物品发送器
+		ShowAll: 点击以显示全部
+		CloseAll: 点击以隐藏全部
+		Show: 点击以显示
+		Close: 点击以隐藏
+		ClickToShow: 点击以展开显示切换按钮
+		ClickToClose: 点击以收起显示切换按钮
+	}
 }

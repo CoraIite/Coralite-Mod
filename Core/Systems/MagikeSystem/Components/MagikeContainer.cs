@@ -240,6 +240,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         #endregion
 
+        #region 网络同步
+
         public override void SendData(ModPacket data)
         {
             data.Write(Magike);
@@ -259,6 +261,10 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             AntiMagikeMaxBonus = reader.ReadSingle();
             MagikeMaxBonus = reader.ReadSingle();
         }
+
+        #endregion
+
+        #region 数据存储
 
         public override void SaveData(string preName, TagCompound tag)
         {
@@ -287,6 +293,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             if (AntiMagikeMaxBonus == 0)
                 AntiMagikeMaxBonus = 1;
         }
+
+        #endregion
     }
 
     public class ContainerBar : UIElement

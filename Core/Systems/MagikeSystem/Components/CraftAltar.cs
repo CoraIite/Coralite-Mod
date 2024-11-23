@@ -595,7 +595,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
                 if (IsMouseHovering)
                 {
-                    if (canCraft)
+                    if (canCraft&&!i.IsAir)
                     {
                         Main.LocalPlayer.mouseInterface = true;
                         ItemSlot.OverrideHover(ref i, ItemSlot.Context.InventoryItem);

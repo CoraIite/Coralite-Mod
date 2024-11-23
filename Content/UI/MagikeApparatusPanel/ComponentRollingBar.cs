@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
 using Terraria;
+using Terraria.ModLoader.UI;
 using Terraria.UI;
 
 namespace Coralite.Content.UI.MagikeApparatusPanel
@@ -97,11 +98,23 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
             Texture2D tex = MagikeSystem.GetComponentButton().Value;
             var frameBox = tex.Frame(MagikeComponentID.Count, 2, id, frameY);
 
-
             if (IsMouseHovering)
             {
                 _scale = Helper.Lerp(_scale, 1.2f, 0.2f);
 
+                string text = id switch
+                {
+                    MagikeComponentID.MagikeContainer => MagikeSystem.GetUIPanelText(MagikeSystem.UIPalelTextID.MagikeContainer),
+                    MagikeComponentID.MagikeSender => MagikeSystem.GetUIPanelText(MagikeSystem.UIPalelTextID.MagikeSender),
+                    MagikeComponentID.MagikeProducer => MagikeSystem.GetUIPanelText(MagikeSystem.UIPalelTextID.MagikeProducer),
+                    MagikeComponentID.MagikeFactory => MagikeSystem.GetUIPanelText(MagikeSystem.UIPalelTextID.MagikeFactory),
+                    MagikeComponentID.MagikeFilter => MagikeSystem.GetUIPanelText(MagikeSystem.UIPalelTextID.Filter),
+                    MagikeComponentID.ItemContainer => MagikeSystem.GetUIPanelText(MagikeSystem.UIPalelTextID.ItemContainer),
+                    MagikeComponentID.ItemGetOnlyContainer => MagikeSystem.GetUIPanelText(MagikeSystem.UIPalelTextID.GetOnlyItemContainer),
+                    _ => MagikeSystem.GetUIPanelText(MagikeSystem.UIPalelTextID.ItemSender),
+                };
+
+                UICommon.TooltipMouseText(text);
             }
             else
                 _scale = Helper.Lerp(_scale, 1f, 0.2f);

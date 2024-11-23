@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
 using Terraria;
+using Terraria.ModLoader.UI;
 using Terraria.UI;
 
 namespace Coralite.Content.UI.MagikeApparatusPanel
@@ -75,6 +76,33 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
                 _scale = Helper.Lerp(_scale, 1.3f, 0.2f);
                 //设置鼠标文本
 
+                if (slot == 0)
+                {
+                    if(MagikeApparatusPanel.ShowComponents[slot])
+                        UICommon.TooltipMouseText(MagikeSystem.GetUIPanelText(MagikeSystem.UIPalelTextID.CloseAll));
+                    else
+                        UICommon.TooltipMouseText(MagikeSystem.GetUIPanelText(MagikeSystem.UIPalelTextID.ShowAll));
+                }
+                else
+                {
+                    string text = slot switch
+                    {
+                        1 => MagikeSystem.GetUIPanelText(MagikeSystem.UIPalelTextID.MagikeContainer),
+                        2 => MagikeSystem.GetUIPanelText(MagikeSystem.UIPalelTextID.MagikeSender),
+                        3 => MagikeSystem.GetUIPanelText(MagikeSystem.UIPalelTextID.MagikeProducer),
+                        4 => MagikeSystem.GetUIPanelText(MagikeSystem.UIPalelTextID.MagikeFactory),
+                        5 => MagikeSystem.GetUIPanelText(MagikeSystem.UIPalelTextID.Filter),
+                        6 => MagikeSystem.GetUIPanelText(MagikeSystem.UIPalelTextID.ItemContainer),
+                        7 => MagikeSystem.GetUIPanelText(MagikeSystem.UIPalelTextID.GetOnlyItemContainer),
+                        _ => MagikeSystem.GetUIPanelText(MagikeSystem.UIPalelTextID.ItemSender),
+                    };
+
+                    if (MagikeApparatusPanel.ShowComponents[slot])
+                        UICommon.TooltipMouseText(MagikeSystem.GetUIPanelText(MagikeSystem.UIPalelTextID.Close)+text);
+                    else
+                        UICommon.TooltipMouseText(MagikeSystem.GetUIPanelText(MagikeSystem.UIPalelTextID.Show)+text);
+
+                }
             }
             else
                 _scale = Helper.Lerp(_scale, 1f, 0.2f);

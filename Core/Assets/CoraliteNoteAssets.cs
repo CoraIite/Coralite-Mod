@@ -41,6 +41,9 @@ namespace Coralite.Core
             public static ATex PlaceFirstLens { get; private set; }
             public static ATex PlacePolarizedFilterArrow { get; private set; }
             public static ATex PlacePolarizedFilter { get; private set; }
+            public static ATex UIDescription { get; private set; }
+            public static ATex TurnToMagikeProducerUI { get; private set; }
+            public static ATex ItemWithMagike { get; private set; }
 
             internal static void Load()
             {

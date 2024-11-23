@@ -1,5 +1,4 @@
-﻿using Coralite.Content.Items.Magike.Tools;
-using Coralite.Content.Items.MagikeSeries1;
+﻿using Coralite.Content.Items.MagikeSeries1;
 using Coralite.Content.Items.Materials;
 using Coralite.Content.Raritys;
 using Coralite.Content.UI;
@@ -12,7 +11,6 @@ using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
-using InnoVault;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -291,7 +289,6 @@ namespace Coralite.Content.Items.MagikeSeries2
                 }
                 return;
             }
-
         }
 
         public void ChooseReceivers()
@@ -493,8 +490,6 @@ namespace Coralite.Content.Items.MagikeSeries2
                 spriteBatch.End();
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, default, DepthStencilState.None, spriteBatch.GraphicsDevice.RasterizerState, null, Main.GameViewMatrix.TransformationMatrix);
             }
-
-            MagikeHelper.DrawRectangleFrame(spriteBatch, BasePosition, TargetPoint, Color.Blue);
 
             return false;
         }

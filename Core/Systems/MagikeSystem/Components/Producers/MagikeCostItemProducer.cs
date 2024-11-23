@@ -55,6 +55,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Producers
             Item item = ((ItemContainer)Entity.GetSingleComponent(MagikeComponentID.ItemContainer)).Items[_index];
 
             Entity.GetMagikeContainer().AddMagike(GetMagikeAmount(item));
+            MagikeHelper.SpawnDustOnProduce(Entity.Position, Coralite.MagicCrystalPink);
 
             item.stack--;
             if (item.stack <= 0)

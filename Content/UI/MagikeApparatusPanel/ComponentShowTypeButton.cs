@@ -4,6 +4,7 @@ using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using Terraria;
+using Terraria.ModLoader.UI;
 using Terraria.UI;
 
 namespace Coralite.Content.UI.MagikeApparatusPanel
@@ -53,7 +54,10 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
             {
                 _scale = Helper.Lerp(_scale, 1.2f, 0.2f);
                 //设置鼠标文本
-
+                if (MagikeApparatusPanel.ComponentButtonsVisible)
+                    UICommon.TooltipMouseText(MagikeSystem.GetUIPanelText(MagikeSystem.UIPalelTextID.ClickToClose));
+                else
+                    UICommon.TooltipMouseText(MagikeSystem.GetUIPanelText(MagikeSystem.UIPalelTextID.ClickToShow));
             }
             else
                 _scale = Helper.Lerp(_scale, 1f, 0.2f);
