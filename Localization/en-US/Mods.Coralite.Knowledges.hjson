@@ -26,6 +26,11 @@ PlacePolarizedFilter: {
 }
 
 PutItemIn: {
-	OpenUI: Mods.Coralite.Knowledges.PutItemIn.OpenUI
-	UIDescription: Mods.Coralite.Knowledges.PutItemIn.UIDescription
+	WhatIsItemWithMagike: Mods.Coralite.Knowledges.PutItemIn.WhatIsItemWithMagike
+	TurnToMagikeProducer: Mods.Coralite.Knowledges.PutItemIn.TurnToMagikeProducer
+}
+
+UIDescriptionPage: {
+	OpenUI: Mods.Coralite.Knowledges.UIDescriptionPage.OpenUI
+	UIDescription: Mods.Coralite.Knowledges.UIDescriptionPage.UIDescription
 }

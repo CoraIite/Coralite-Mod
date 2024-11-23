@@ -11,7 +11,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Filters
     /// </summary>
     public abstract class DiffractionFilter : MagikeFilter, IUIShowable
     {
-        public abstract int ConnectMaxBonus { get; }
+        public abstract byte ConnectMaxBonus { get; }
 
         public override bool CanInsert_SpecialCheck(MagikeTP entity, ref string text)
         {

@@ -1,6 +1,7 @@
 ﻿using Coralite.Core.Systems.CoraliteActorComponent;
 using Coralite.Core.Systems.MagikeSystem.Particles;
 using Coralite.Helpers;
+using System.IO;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader.IO;
@@ -62,6 +63,28 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             if (MagikeHelper.TryGetMagikeApparatusLevel(TopLeft, out MALevel level))
                 MagikeLozengeParticle2.Spawn(Helper.GetMagikeTileCenter(TopLeft), size, MagikeSystem.GetColor(level));
+        }
+
+        public override void SendData(ModPacket data)
+        {
+            data.Write(Timer);
+
+            data.Write(UnitDeliveryBase);
+            data.Write(UnitDeliveryBonus);
+
+            data.Write(SendDelayBase);
+            data.Write(SendDelayBonus);
+        }
+
+        public override void ReceiveData(BinaryReader reader, int whoAmI)
+        {
+            Timer = reader.ReadInt32();
+
+            UnitDeliveryBase = reader.ReadInt32();
+            UnitDeliveryBonus = reader.ReadSingle();
+
+            SendDelayBase = reader.ReadInt32();
+            SendDelayBonus = reader.ReadSingle();
         }
 
         public override void SaveData(string preName, TagCompound tag)

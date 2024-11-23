@@ -5,6 +5,7 @@ using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.UI.Elements;
@@ -17,9 +18,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
     public class MagikeLinerSender : MagikeSender, IUIShowable, IConnectLengthModify
     {
         /// <summary> 基础连接数量 </summary>
-        public int MaxConnectBase { get; protected set; }
+        public byte MaxConnectBase { get; protected set; }
         /// <summary> 额外连接数量 </summary>
-        public int MaxConnectExtra { get; set; }
+        public byte MaxConnectExtra { get; set; }
 
         /// <summary> 可连接数量 </summary>
         public int MaxConnect { get => MaxConnectBase + MaxConnectExtra; }
@@ -32,7 +33,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// <summary> 连接距离 </summary>
         public int ConnectLength { get => ConnectLengthBase + ConnectLengthExtra; }
 
-        /// <summary> 当前连接者 </summary>
+        /// <summary> 当前连接者数量 </summary>
         public int CurrentConnector => _receivers.Count;
 
         protected List<Point16> _receivers = [];
@@ -364,6 +365,41 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public int GetMagikeAmount()
             => Entity.GetMagikeContainer().Magike;
 
+        public override void SendData(ModPacket data)
+        {
+            base.SendData(data);
+
+            data.Write(MaxConnectBase);
+            data.Write(MaxConnectExtra);
+
+            data.Write(ConnectLengthBase);
+            data.Write(ConnectLengthExtra);
+
+            data.Write(_receivers.Count);
+            for (int i = 0; i < _receivers.Count; i++)
+            {
+                data.Write(_receivers[i].X);
+                data.Write(_receivers[i].Y);
+            }
+        }
+
+        public override void ReceiveData(BinaryReader reader, int whoAmI)
+        {
+            base.ReceiveData(reader, whoAmI);
+
+            MaxConnectBase = reader.ReadByte();
+            MaxConnectExtra = reader.ReadByte();
+
+            ConnectLengthBase = reader.ReadInt32();
+            ConnectLengthExtra = reader.ReadInt32();
+
+            int length = reader.ReadInt32();
+            _receivers = new List<Point16>(MaxConnect);
+
+            for (int i = 0; i < length; i++)
+                _receivers[i] = new Point16(reader.ReadInt16(), reader.ReadInt16());
+        }
+
         public override void SaveData(string preName, TagCompound tag)
         {
             base.SaveData(preName, tag);
@@ -384,8 +420,15 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         {
             base.LoadData(preName, tag);
 
-            MaxConnectBase = tag.GetInt(preName + nameof(MaxConnectBase));
-            MaxConnectExtra = tag.GetInt(preName + nameof(MaxConnectExtra));
+            if (tag.TryGet(preName + nameof(MaxConnectBase), out int b1))
+                MaxConnectBase = (byte)b1;
+            else
+                MaxConnectBase = tag.GetByte(preName + nameof(MaxConnectBase));
+
+            if (tag.TryGet(preName + nameof(MaxConnectExtra), out int b2))
+                MaxConnectExtra = (byte)b2;
+            else
+                MaxConnectExtra = tag.GetByte(preName + nameof(MaxConnectExtra));
 
             ConnectLengthBase = tag.GetInt(preName + nameof(ConnectLengthBase));
             ConnectLengthExtra = tag.GetInt(preName + nameof(ConnectLengthExtra));

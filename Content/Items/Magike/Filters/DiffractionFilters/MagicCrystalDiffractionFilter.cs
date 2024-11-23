@@ -38,6 +38,6 @@ namespace Coralite.Content.Items.Magike.Filters.DiffractionFilters
 
         public override int ItemType => ModContent.ItemType<MagicCrystalDiffractionFilter>();
 
-        public override int ConnectMaxBonus => 1;
+        public override byte ConnectMaxBonus => 1;
     }
 }

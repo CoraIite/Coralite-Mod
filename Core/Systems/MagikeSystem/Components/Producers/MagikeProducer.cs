@@ -36,6 +36,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Producers
         public virtual void Produce()
         {
             Entity.GetMagikeContainer().AddMagike(ThroughputBase);
+            MagikeHelper.SpawnDustOnProduce(Entity.Position, Coralite.MagicCrystalPink);
         }
 
         public override void SaveData(string preName, TagCompound tag)
