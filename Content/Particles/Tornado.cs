@@ -19,23 +19,23 @@ namespace Coralite.Content.Particles
 
         public override void AI()
         {
-            if (fadeIn % 4 == 0)
+            if (Opacity % 4 == 0)
             {
                 Frame.Y += 64;
                 if (Frame.Y > 448)
                     Frame.Y = 0;
             }
 
-            if (fadeIn > time)
+            if (Opacity > time)
                 Scale *= 1.09f;
             else
                 Scale *= 0.975f;
 
-            if (fadeIn < 20)
+            if (Opacity < 20)
                 Color *= 0.92f;
 
-            fadeIn--;
-            if (fadeIn < 0)
+            Opacity--;
+            if (Opacity < 0)
                 active = false;
         }
 
@@ -49,7 +49,7 @@ namespace Coralite.Content.Particles
             Tornado particle = PRTLoader.NewParticle<Tornado>(center, velocity, color, scale);
             if (particle != null)
             {
-                particle.fadeIn = fadeIn;
+                particle.Opacity = fadeIn;
                 particle.Rotation = rotation + 1.57f;
                 particle.time = fadeIn - 10f;
             }

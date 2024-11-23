@@ -23,13 +23,13 @@ namespace Coralite.Content.Particles
 
         public override void AI()
         {
-            fadeIn++;
-            if (fadeIn < 4)
+            Opacity++;
+            if (Opacity < 4)
             {
                 Scale *= 1.4f;
             }
 
-            if (fadeIn > 4 + 8)
+            if (Opacity > 4 + 8)
             {
                 Scale *= 0.9f;
                 Velocity *= 0.8f;

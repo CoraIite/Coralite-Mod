@@ -19,9 +19,9 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public override void AI()
         {
-            fadeIn++;
+            Opacity++;
             Position += Velocity;
-            if (fadeIn > 1 && fadeIn % 4 == 0)
+            if (Opacity > 1 && Opacity % 4 == 0)
             {
                 Frame.X += 80;
                 if (Frame.X > 80 * 6)
@@ -47,8 +47,8 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 return;
 
             Position = parentCenter + Velocity;
-            fadeIn++;
-            if (fadeIn > 1 && fadeIn % 4 == 0)
+            Opacity++;
+            if (Opacity > 1 && Opacity % 4 == 0)
             {
                 Frame.X += 80;
                 if (Frame.X > 80 * 6)
@@ -94,9 +94,9 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public override void AI()
         {
-            fadeIn++;
+            Opacity++;
             Position += Velocity;
-            if (fadeIn > 1 && fadeIn % 5 == 0)
+            if (Opacity > 1 && Opacity % 5 == 0)
             {
                 Frame.X += 32;
                 if (Frame.X > 32 * 3)

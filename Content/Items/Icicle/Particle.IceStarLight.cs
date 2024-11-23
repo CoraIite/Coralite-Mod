@@ -65,14 +65,14 @@ namespace Coralite.Content.Items.Icicle
             if (Velocity.Length() > velocityLimit)
                 Velocity = Vector2.Normalize(Velocity) * velocityLimit;
 
-            if (fadeIn % 2 == 0)
+            if (Opacity % 2 == 0)
             {
                 Dust dust = Dust.NewDustPerfect(Position + Main.rand.NextVector2CircularEdge(8, 8), DustID.FrostStaff, -Velocity * 0.2f);
                 dust.noGravity = true;
             }
 
-            fadeIn++;
-            if (fadeIn > 120)
+            Opacity++;
+            if (Opacity > 120)
                 KillEvent();
 
             Position += Velocity;

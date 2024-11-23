@@ -21,10 +21,10 @@ namespace Coralite.Content.Particles
         {
             Scale *= 1.1f;
 
-            if (fadeIn > 15)
+            if (Opacity > 15)
                 Color *= 0.9f;
 
-            fadeIn++;
+            Opacity++;
             if (Color.A < 20)
                 active = false;
         }

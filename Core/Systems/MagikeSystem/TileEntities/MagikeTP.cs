@@ -124,7 +124,6 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
                     {
                         continue;
                     }
-
                     string fullName = reader.ReadString();
                     Type t = Type.GetType(fullName);
                     MagikeComponent component = (MagikeComponent)Activator.CreateInstance(t);

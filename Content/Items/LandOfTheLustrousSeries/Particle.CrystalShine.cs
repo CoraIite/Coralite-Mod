@@ -31,7 +31,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void AI()
         {
-            fadeIn++;
+            Opacity++;
 
             if (follow != null)
             {
@@ -46,7 +46,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 _shotRotation[i] += Main.rand.NextFloat(0.02f, 0.05f) * dir;
             }
 
-            if (fadeIn > fadeTime)
+            if (Opacity > fadeTime)
             {
                 Velocity.X *= 0.86f;
                 scale.X *= 0.99f;
@@ -55,9 +55,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
                 Color.A = (byte)(Color.A * 0.98f);
             }
-            else if (fadeIn < 8)
+            else if (Opacity < 8)
             {
-                currentScale = Vector2.SmoothStep(Vector2.Zero, scale, fadeIn / 8);
+                currentScale = Vector2.SmoothStep(Vector2.Zero, scale, Opacity / 8);
             }
             else
             {

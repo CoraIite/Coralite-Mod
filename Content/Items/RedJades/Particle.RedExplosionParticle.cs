@@ -28,14 +28,14 @@ namespace Coralite.Content.Items.RedJades
             shader.UseColor(Color);
             Scale += scaleAdder;
 
-            if (fadeIn > 8)
+            if (Opacity > 8)
             {
-                shader.UseOpacity((12f - fadeIn) / 4);
+                shader.UseOpacity((12f - Opacity) / 4);
                 scaleAdder *= 0.2f;
             }
 
-            fadeIn++;
-            if (fadeIn > 12)
+            Opacity++;
+            if (Opacity > 12)
                 active = false;
         }
 
@@ -71,17 +71,17 @@ namespace Coralite.Content.Items.RedJades
             //shader.UseColor(color);
             Rotation += 0.2f;
             Scale += scaleAdder;
-            if (fadeIn > 6)
+            if (Opacity > 6)
             {
                 //shader.UseOpacity((12f - fadeIn) / 6);
                 scaleAdder *= 0.2f;
             }
 
-            if (fadeIn > 8)
+            if (Opacity > 8)     
                 Color *= 0.84f;
 
-            fadeIn++;
-            if (fadeIn > 14)
+            Opacity++;
+            if (Opacity > 14)
                 active = false;
         }
 

@@ -559,11 +559,11 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public override void AI()
         {
-            fadeIn++;
+            Opacity++;
 
             scale = Vector2.Lerp(scale, new Vector2(2.2f, 0.7f), 0.2f);
 
-            if (fadeIn > 5)
+            if (Opacity > 5)
             {
                 Color *= 0.74f;
                 if (Color.A < 10)

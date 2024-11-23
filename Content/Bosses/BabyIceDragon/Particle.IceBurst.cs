@@ -18,12 +18,12 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
         public override void AI()
         {
-            if (fadeIn % 2 == 0)
-                Frame.Y = (int)(fadeIn / 2) * 128;
+            if (Opacity % 2 == 0)
+                Frame.Y = (int)(Opacity / 2) * 128;
 
-            fadeIn++;
+            Opacity++;
 
-            if (fadeIn > 16)
+            if (Opacity > 16)
                 active = false;
         }
     }

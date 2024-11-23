@@ -17,13 +17,13 @@ namespace Coralite.Content.Particles
 
         public override void AI()
         {
-            fadeIn++;
-            if (fadeIn > 15)
+            Opacity++;
+            if (Opacity > 15)
             {
                 Color = Color.Lerp(Color, new Color(0, 60, 200, 0), 0.15f);
                 Velocity.X *= 0.86f;
             }
-            else if (fadeIn < 4)
+            else if (Opacity < 4)
             {
                 Velocity *= 1.2f;
             }

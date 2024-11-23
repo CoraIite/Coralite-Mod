@@ -39,22 +39,22 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
                 return;
             }
 
-            if (fadeIn > 0)
+            if (Opacity > 0)
             {
-                float factor = 1 - fadeIn / _totalTime;
+                float factor = 1 - Opacity / _totalTime;
 
                 if (factor < 0.1f)
                     alpha = Helper.Lerp(0, 1, factor / 0.1f);
                 else if (factor > 0.7f)
                     alpha = Helper.Lerp(1, 0, (factor - 0.7f) / 0.3f);
 
-                factor = Coralite.Instance.BezierEaseSmoother.Smoother(fadeIn / _totalTime);
+                factor = Coralite.Instance.BezierEaseSmoother.Smoother(Opacity / _totalTime);
                 Rotation = factor * MathHelper.TwoPi * 10;
                 Length = 12 + factor * 44;
 
-                if (fadeIn > 120)
+                if (Opacity > 120)
                 {
-                    if ((int)fadeIn % 60 == 0)
+                    if ((int)Opacity % 60 == 0)
                         for (int i = 0; i < 20; i++)
                         {
                             Vector2 dir = (i * MathHelper.TwoPi / 20).ToRotationVector2();
@@ -63,7 +63,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
                             dust.noGravity = true;
                         }
 
-                    if ((int)fadeIn % 3 == 0 && Main.rand.NextBool())
+                    if ((int)Opacity % 3 == 0 && Main.rand.NextBool())
                     {
                         Vector2 dir = Helper.NextVec2Dir();
                         Dust dust = Dust.NewDustPerfect(Position - dir * 26, DustID.RainbowMk2, dir * Main.rand.NextFloat(1.5f, 3f)
@@ -73,7 +73,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
                 }
             }
 
-            if (fadeIn == 0)
+            if (Opacity == 0)
             {
                 for (int i = 0; i < 20; i++)
                 {
@@ -97,9 +97,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
 
             }
 
-            if (fadeIn < 0)
+            if (Opacity < 0)
             {
-                float factor = -fadeIn / 20;
+                float factor = -Opacity / 20;
                 float factor2 = Coralite.Instance.SqrtSmoother.Smoother(factor);
                 float factor3 = Coralite.Instance.X2Smoother.Smoother(factor);
 
@@ -107,12 +107,12 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
                 alpha = 1 - factor3;
             }
 
-            if (fadeIn < -20)
+            if (Opacity < -20)
             {
                 active = false;
             }
 
-            fadeIn--;
+            Opacity--;
         }
 
         public static CraftParticle Spawn(Point16 pos, Vector2 center, int craftTime, MagikeCraftRecipe chosenRecipe)
@@ -131,7 +131,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
             }
 
             p._totalTime = craftTime;
-            p.fadeIn = craftTime;
+            p.Opacity = craftTime;
             p._pos = pos;
 
             return p;

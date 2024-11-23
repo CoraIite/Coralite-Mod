@@ -73,15 +73,15 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
 
         public override void AI()
         {
-            fadeIn++;
-            if (fadeIn < 7)
+            Opacity++;
+            if (Opacity < 7)
             {
-                Scale = Helpers.Helper.Lerp(0.25f, recordScale, fadeIn / 7);
+                Scale = Helpers.Helper.Lerp(0.25f, recordScale, Opacity / 7);
             }
             else
                 Color *= 0.9f;
 
-            if (Color.A < 10 || fadeIn > 60)
+            if (Color.A < 10 || Opacity > 60)
                 active = false;
         }
 

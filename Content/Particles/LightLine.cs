@@ -26,7 +26,7 @@ namespace Coralite.Content.Particles
 
         public override void AI()
         {
-            fadeIn++;
+            Opacity++;
 
             if (follow != null)
                 Position += follow();
@@ -35,7 +35,7 @@ namespace Coralite.Content.Particles
 
             Lighting.AddLight(Position, Color.ToVector3() * alpha / 2);
 
-            if (fadeIn < fadeTime)
+            if (Opacity < fadeTime)
                 alpha += maxAlpha / fadeTime;
             else if (alpha > 0)
             {
@@ -46,7 +46,7 @@ namespace Coralite.Content.Particles
                 }
             }
 
-            if (fadeIn > fadeTime * 2)
+            if (Opacity > fadeTime * 2)
                 active = false;
         }
 

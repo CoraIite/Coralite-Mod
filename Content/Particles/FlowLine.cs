@@ -36,11 +36,11 @@ namespace Coralite.Content.Particles
 
         public override void AI()
         {
-            if (fadeIn < 0)
+            if (Opacity < 0)
                 Color *= 0.88f;
             else
             {
-                if (fadeIn >= spawnTime * 3f / 4f || fadeIn < spawnTime / 4f)
+                if (Opacity >= spawnTime * 3f / 4f || Opacity < spawnTime / 4f)
                     Velocity = Velocity.RotatedBy(rotate);
                 else
                     Velocity = Velocity.RotatedBy(-rotate);
@@ -49,11 +49,11 @@ namespace Coralite.Content.Particles
                 trail.Positions = oldPositions;
             }
 
-            if (fadeIn < -120 || Color.A < 10)
+            if (Opacity < -120 || Color.A < 10)
                 active = false;
 
-            fadeIn -= 1f;
-            if (fadeIn == 0)
+            Opacity -= 1f;
+            if (Opacity == 0)
                 Velocity = Vector2.Zero;
 
         }
@@ -86,7 +86,7 @@ namespace Coralite.Content.Particles
             FlowLine particle = PRTLoader.NewParticle<FlowLine>(center, velocity, color, 1f);
             if (particle != null)
             {
-                particle.fadeIn = spawnTime;
+                particle.Opacity = spawnTime;
                 particle.InitializePositionCache(spawnTime);
                 particle.trail = new Trail(Main.instance.GraphicsDevice, spawnTime, new NoTip(), factor => trailWidth, factor =>
                 {

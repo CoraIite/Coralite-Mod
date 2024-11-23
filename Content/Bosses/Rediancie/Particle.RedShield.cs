@@ -50,9 +50,9 @@ namespace Coralite.Content.Bosses.Rediancie
             if (rediancie != null)
                 Position = rediancie.Center;
 
-            fadeIn--;
+            Opacity--;
 
-            if (fadeIn < 0)
+            if (Opacity < 0)
                 toFadeOut = true;
 
             if (toFadeOut)
@@ -69,8 +69,8 @@ namespace Coralite.Content.Bosses.Rediancie
             Texture2D mainTex = TexValue;
             spriteBatch.Draw(mainTex, center, null, Color, Rotation, mainTex.Size() / 2, Scale, SpriteEffects.None, 0);
 
-            float extraRot1 = Rotation + (fadeIn * 0.1f);
-            float extraRot2 = Rotation + (fadeIn * 0.05f);
+            float extraRot1 = Rotation + (Opacity * 0.1f);
+            float extraRot2 = Rotation + (Opacity * 0.05f);
             Vector2 flowOrigin = flowTex.Size() / 2;
 
             spriteBatch.Draw(flowTex.Value, center, null, Color, extraRot1, flowOrigin, Scale - 0.1f, SpriteEffects.None, 0);
@@ -83,7 +83,7 @@ namespace Coralite.Content.Bosses.Rediancie
         {
             RedShield particle = PRTLoader.NewParticle<RedShield>(rediancie.Center, Vector2.Zero);
             particle.rediancie = rediancie;
-            particle.fadeIn = maxTime;
+            particle.Opacity = maxTime;
         }
 
         public static void HanderKill()
@@ -91,7 +91,7 @@ namespace Coralite.Content.Bosses.Rediancie
             int type = CoraliteContent.ParticleType<RedShield>();
             foreach (var particle in PRTLoader.PRT_InGame_World_Inds.Where(p => p.active && p.ID == type))
             {
-                particle.fadeIn = -1;
+                particle.Opacity = -1;
             }
         }
     }

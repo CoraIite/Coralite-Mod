@@ -23,13 +23,13 @@ namespace Coralite.Content.Items.Icicle
         public override void AI()
         {
             Rotation += 0.05f;
-            if (fadeIn > 8)
+            if (Opacity > 8)
                 Color *= 0.92f;
 
             Scale *= 1.07f;
 
-            fadeIn++;
-            if (fadeIn > 18)
+            Opacity++;
+            if (Opacity > 18)
                 active = false;
         }
     }

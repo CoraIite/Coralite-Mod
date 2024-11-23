@@ -154,12 +154,12 @@ namespace Coralite.Content.Items.Shadow
             Scale *= 0.97f;
             Color *= 0.92f;
 
-            fadeIn++;
-            if (fadeIn > 5)
+            Opacity++;
+            if (Opacity > 5)
             {
                 Velocity *= 0.97f;
             }
-            if (fadeIn > 40 || Color.A < 10)
+            if (Opacity > 40 || Color.A < 10)
             {
                 active = false;
             }

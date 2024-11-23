@@ -183,7 +183,7 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
         {
             Rotation += 0.06f;
 
-            if (fadeIn < Velocity.Y)
+            if (Opacity < Velocity.Y)
             {
                 float length = Helper.EllipticalEase(Rotation, 0.3f, out float overrideAngle) * Velocity.X;
 
@@ -192,7 +192,7 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
 
                 oldPositions[16 - 1] = Position + (overrideAngle.ToRotationVector2() * length);
             }
-            else if (fadeIn < Velocity.Y + 16)
+            else if (Opacity < Velocity.Y + 16)
             {
                 for (int i = 0; i < 16 - 1; i++)
                     oldPositions[i] = oldPositions[i + 1];
@@ -202,7 +202,7 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
                 active = false;
             }
 
-            fadeIn++;
+            Opacity++;
             trail.Positions = oldPositions;
         }
 
@@ -291,7 +291,7 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
 
         public override void AI()
         {
-            if (fadeIn > 7)
+            if (Opacity > 7)
             {
                 Color *= 0.8f;
                 Scale += 0.08f;
@@ -303,10 +303,10 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
                 Velocity = new Vector2(1, 0.5f) * Scale;
             }
 
-            if (fadeIn > 30 || Color.A < 10)
+            if (Opacity > 30 || Color.A < 10)
                 active = false;
 
-            fadeIn++;
+            Opacity++;
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch)

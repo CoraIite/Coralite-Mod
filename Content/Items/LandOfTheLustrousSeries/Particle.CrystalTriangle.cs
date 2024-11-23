@@ -20,18 +20,18 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void AI()
         {
-            fadeIn++;
+            Opacity++;
 
-            if (fadeIn > 5)
+            if (Opacity > 5)
                 Velocity *= 0.97f;
 
-            if (fadeIn > FadeTime)
+            if (Opacity > FadeTime)
             {
                 Scale *= 0.95f;
                 Color.A = (byte)(Color.A * 0.9f);
             }
 
-            if (fadeIn > 40 || Color.A < 10)
+            if (Opacity > 40 || Color.A < 10)
             {
                 active = false;
             }
