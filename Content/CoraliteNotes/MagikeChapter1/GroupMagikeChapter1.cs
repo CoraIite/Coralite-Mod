@@ -21,6 +21,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
                     new PlacePolarizedFilter(),
                     new UIDescriptionPage(),
                     new PutItemIn(),
+                    new StoneMaker(),
                 ];
         }
     }

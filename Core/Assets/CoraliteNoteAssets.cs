@@ -44,6 +44,7 @@ namespace Coralite.Core
             public static ATex UIDescription { get; private set; }
             public static ATex TurnToMagikeProducerUI { get; private set; }
             public static ATex ItemWithMagike { get; private set; }
+            public static ATex StoneMakerExample { get; private set; }
 
             internal static void Load()
             {

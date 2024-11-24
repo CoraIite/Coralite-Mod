@@ -400,9 +400,17 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 _receivers[i] = new Point16(reader.ReadInt16(), reader.ReadInt16());
         }
 
+        #region 数据存储
+
         public override void SaveData(string preName, TagCompound tag)
         {
             base.SaveData(preName, tag);
+
+            SaveLinerSender(preName, tag);
+        }
+
+        protected void SaveLinerSender(string preName, TagCompound tag)
+        {
             tag.Add(preName + nameof(MaxConnectBase), MaxConnectBase);
             tag.Add(preName + nameof(MaxConnectExtra), MaxConnectExtra);
 
@@ -420,12 +428,17 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         {
             base.LoadData(preName, tag);
 
-            if (tag.TryGet(preName + nameof(MaxConnectBase), out int b1))
+            LoadLinerSender(preName, tag);
+        }
+
+        protected void LoadLinerSender(string preName, TagCompound tag)
+        {
+            if (tag.TryGet(preName + nameof(MaxConnectBase), out dynamic b1))
                 MaxConnectBase = (byte)b1;
             else
                 MaxConnectBase = tag.GetByte(preName + nameof(MaxConnectBase));
 
-            if (tag.TryGet(preName + nameof(MaxConnectExtra), out int b2))
+            if (tag.TryGet(preName + nameof(MaxConnectExtra), out dynamic b2))
                 MaxConnectExtra = (byte)b2;
             else
                 MaxConnectExtra = tag.GetByte(preName + nameof(MaxConnectExtra));
@@ -441,6 +454,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 i++;
             }
         }
+
+        #endregion
     }
 
     public class ConnectButtonForComponent : UIElement

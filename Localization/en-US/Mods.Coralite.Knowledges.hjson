@@ -34,3 +34,9 @@ UIDescriptionPage: {
 	OpenUI: Mods.Coralite.Knowledges.UIDescriptionPage.OpenUI
 	UIDescription: Mods.Coralite.Knowledges.UIDescriptionPage.UIDescription
 }
+
+StoneMaker: {
+	UseMagikeToDoSomething: Mods.Coralite.Knowledges.StoneMaker.UseMagikeToDoSomething
+	MakeAStoneMaker: Mods.Coralite.Knowledges.StoneMaker.MakeAStoneMaker
+	InsertPolarizedFilter: Mods.Coralite.Knowledges.StoneMaker.InsertPolarizedFilter
+}

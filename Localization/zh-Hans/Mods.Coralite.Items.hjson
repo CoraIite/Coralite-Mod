@@ -4979,7 +4979,7 @@ LASERCore: {
 
 CogLens: {
 	DisplayName: 机械透镜
-	Tooltip: 
+	Tooltip:
 		'''
 		自动生产魔能
 		{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}

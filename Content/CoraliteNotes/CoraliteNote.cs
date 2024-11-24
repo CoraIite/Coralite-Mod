@@ -18,6 +18,9 @@ namespace Coralite.Content.CoraliteNotes
 
         public override bool CanUseItem(Player player)
         {
+            if (player.whoAmI!=Main.myPlayer)
+                return true;
+
             UILoader.GetUIState<CoraliteNoteUIState>().Recalculate();
             UILoader.GetUIState<CoraliteNoteUIState>().OpenBook();
 

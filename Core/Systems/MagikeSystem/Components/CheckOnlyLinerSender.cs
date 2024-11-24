@@ -99,42 +99,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         }
 
         public override void SaveData(string preName, TagCompound tag)
-        {
-            tag.Add(preName + nameof(MaxConnectBase), MaxConnectBase);
-            tag.Add(preName + nameof(MaxConnectExtra), MaxConnectExtra);
-
-            tag.Add(preName + nameof(ConnectLengthBase), ConnectLengthBase);
-            tag.Add(preName + nameof(ConnectLengthExtra), ConnectLengthExtra);
-
-            for (int i = 0; i < _receivers.Count; i++)
-            {
-                tag.Add(string.Concat(preName, nameof(_receivers), i.ToString(), "X"), _receivers[i].X);
-                tag.Add(string.Concat(preName, nameof(_receivers), i.ToString(), "Y"), _receivers[i].Y);
-            }
-        }
-
+            => SaveLinerSender(preName, tag);
         public override void LoadData(string preName, TagCompound tag)
-        {
-            if (tag.TryGet(preName + nameof(MaxConnectBase), out int b1))
-                MaxConnectBase = (byte)b1;
-            else
-                MaxConnectBase = tag.GetByte(preName + nameof(MaxConnectBase));
-
-            if (tag.TryGet(preName + nameof(MaxConnectExtra), out int b2))
-                MaxConnectExtra = (byte)b2;
-            else
-                MaxConnectExtra = tag.GetByte(preName + nameof(MaxConnectExtra));
-
-            ConnectLengthBase = tag.GetInt(preName + nameof(ConnectLengthBase));
-            ConnectLengthExtra = tag.GetInt(preName + nameof(ConnectLengthExtra));
-
-            int i = 0;
-
-            while (tag.TryGet(string.Concat(preName, nameof(_receivers), i.ToString(), "X"), out short X))
-            {
-                _receivers.Add(new Point16(X, tag.GetShort(string.Concat(preName, nameof(_receivers), i.ToString(), "Y"))));
-                i++;
-            }
-        }
+            =>LoadLinerSender(preName, tag);
     }
 }
