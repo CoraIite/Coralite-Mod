@@ -93,10 +93,10 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             {
                 float rot = Rotation + (MathHelper.TwoPi / 6 * i);
                 Vector2 pos = Position + (rot.ToRotationVector2() * distance);
+                spriteBatch.Draw(tex, pos, null, c * 0.6f, rot
+                    , origin, Scale * new Vector2(0.75f, 6f), SpriteEffects.None, 0f);
                 spriteBatch.Draw(tex, pos, null, c, rot
-                    , origin, Scale, SpriteEffects.None, 0f);
-                spriteBatch.Draw(tex, pos, null, c, rot
-                    , origin, Scale * new Vector2(0.9f, 0.5f), SpriteEffects.None, 0f);
+                    , origin, Scale * new Vector2(1f, 0.85f), SpriteEffects.None, 0f);
             }
         }
     }

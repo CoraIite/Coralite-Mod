@@ -4978,11 +4978,20 @@ LASERCore: {
 }
 
 CogLens: {
-	// DisplayName: Cog Lens
-	// Tooltip: ""
+	DisplayName: 机械透镜
+	Tooltip: 
+		'''
+		自动生产魔能
+		{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}
+		'''
 }
 
 CoraliteNote: {
-	// DisplayName: Coralite Note
-	// Tooltip: ""
+	DisplayName: 珊瑚笔记
+	Tooltip: ""
+}
+
+Phosphophyllite: {
+	DisplayName: 磷叶石
+	Tooltip: ""
 }

@@ -87,6 +87,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public override void AddRecipes()
         {
             CreateRecipe()
+                .AddIngredient<Phosphophyllite>()
                 .AddIngredient<PyropeCrown>()
                 .AddIngredient<AmethystNecklace>()
                 .AddIngredient<AquamarineBracelet>()

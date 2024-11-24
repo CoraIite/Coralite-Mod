@@ -4870,3 +4870,8 @@ CoraliteNote: {
 	DisplayName: Coralite Note
 	Tooltip: ""
 }
+
+Phosphophyllite: {
+	DisplayName: Phosphophyllite
+	Tooltip: ""
+}

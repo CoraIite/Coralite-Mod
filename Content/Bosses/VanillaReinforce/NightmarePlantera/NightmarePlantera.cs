@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Items.Nightmare;
+﻿using Coralite.Content.Items.LandOfTheLustrousSeries;
+using Coralite.Content.Items.Nightmare;
 using Coralite.Content.ModPlayers;
 using Coralite.Content.Particles;
 using Coralite.Core;
@@ -182,6 +183,10 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             npcLoot.Add(ItemDropRule.BossBag(ModContent.ItemType<GriefSeed>()));
             //npcLoot.Add(ItemDropRule.Common(ItemType<RediancieTrophy>(), 10));
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<NightmarePlanteraMask>(), 7));
+
+            //掉落磷叶石，之后记得删掉
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Phosphophyllite>(), 2));
+
             //npcLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<NightmareHeart>()));
 
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
