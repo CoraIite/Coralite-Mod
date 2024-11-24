@@ -16,10 +16,10 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
 
         public override void AI()
         {
-            fadeIn++;
-            if (fadeIn > 1)
+            Opacity++;
+            if (Opacity > 1)
             {
-                fadeIn = 0;
+                Opacity = 0;
 
                 Frame.X++;
                 if (Frame.X > 2)

@@ -74,8 +74,8 @@ namespace Coralite.Content.Particles
                         Frame.Y = 0;
                 }
 
-                fadeIn -= 1f;
-                if (fadeIn < 0f)
+                Opacity -= 1f;
+                if (Opacity < 0f)
                     active = false;
 
                 return;
@@ -120,7 +120,7 @@ namespace Coralite.Content.Particles
             if (particle != null)
             {
                 particle.Rotation = rotation;
-                particle.fadeIn = dizzyTime;
+                particle.Opacity = dizzyTime;
                 particle.length = length;
                 particle.centerFunc = function;
             }

@@ -22,8 +22,8 @@ namespace Coralite.Content.Particles
 
         public override void AI()
         {
-            fadeIn++;
-            if (fadeIn > 13)
+            Opacity++;
+            if (Opacity > 13)
             {
                 Color = Color.Lerp(Color, targetColor, 0.1f);
 
@@ -39,7 +39,7 @@ namespace Coralite.Content.Particles
             if (Color.A < 2)
                 active = false;
 
-            if (fadeIn < oldPositions.Length)
+            if (Opacity < oldPositions.Length)
             {
                 int length = oldPositions.Length;
                 for (int i = 0; i < length; i++)
@@ -121,8 +121,8 @@ namespace Coralite.Content.Particles
     {
         public override void AI()
         {
-            fadeIn++;
-            if (fadeIn > 13)
+            Opacity++;
+            if (Opacity > 13)
             {
                 Color = Color.Lerp(Color, targetColor, 0.1f);
 

@@ -402,8 +402,8 @@ namespace Coralite.Content.Items.Nightmare
             Scale *= 0.997f;
             Color.A = (byte)(Color.A * 0.92f);
 
-            fadeIn++;
-            if (fadeIn > 40 || Color.A < 10)
+            Opacity++;
+            if (Opacity > 40 || Color.A < 10)
                 active = false;
         }
     }

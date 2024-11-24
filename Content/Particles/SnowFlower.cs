@@ -19,9 +19,9 @@ namespace Coralite.Content.Particles
             Rotation += 0.02f;
             Scale *= 0.955f;
             Color *= 0.97f;
-            fadeIn++;
+            Opacity++;
 
-            if (fadeIn > 24)
+            if (Opacity > 24)
                 active = false;
         }
     }

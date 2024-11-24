@@ -29,7 +29,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 Position += follow();
             }
 
-            if (fadeIn < 5)
+            if (Opacity < 5)
             {
                 alpha += 1 / 5f;
             }
@@ -38,17 +38,17 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 distance += Velocity.Length();
                 Velocity *= 0.98f;
 
-                if (fadeIn > 5 + 14)
+                if (Opacity > 5 + 14)
                 {
                     alpha -= 0.1f;
-                    if (fadeIn > 6 + 18 + 10)
+                    if (Opacity > 6 + 18 + 10)
                     {
                         active = false;
                     }
                 }
             }
 
-            fadeIn++;
+            Opacity++;
         }
 
         public static HexagramParticle New(Vector2 center, Vector2 velocity, float rot, float scale, Color newColor = default)

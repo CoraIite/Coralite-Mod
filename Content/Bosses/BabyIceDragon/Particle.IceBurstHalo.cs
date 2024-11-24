@@ -22,13 +22,13 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
         public override void AI()
         {
-            if (fadeIn > 14)
+            if (Opacity > 14)
                 Color *= 0.88f;
 
             Scale += 0.875f;
 
-            fadeIn++;
-            if (fadeIn > 20)
+            Opacity++;
+            if (Opacity > 20)
                 active = false;
         }
     }

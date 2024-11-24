@@ -566,8 +566,8 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void AI()
         {
-            fadeIn++;
-            if (fadeIn > 15)
+            Opacity++;
+            if (Opacity > 15)
             {
                 Color = Color.Lerp(Color, new Color(0, 100, 250, 0), 0.35f);
                 Scale += 0.07f;
@@ -631,8 +631,8 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void AI()
         {
-            fadeIn++;
-            if (fadeIn > 8)
+            Opacity++;
+            if (Opacity > 8)
             {
                 Color = Color.Lerp(Color, new Color(0, 60, 250, 0), 0.05f);
             }

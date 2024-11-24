@@ -193,9 +193,9 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
 
         public override void AI()
         {
-            fadeIn++;
+            Opacity++;
 
-            if (fadeIn > 30)
+            if (Opacity > 30)
             {
                 Color.A = (byte)(Color.A * 0.7f);
             }

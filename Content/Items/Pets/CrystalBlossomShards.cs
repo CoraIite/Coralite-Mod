@@ -109,17 +109,17 @@ namespace Coralite.Content.Items.Pets
             Position += Velocity;
             Rotation += Main.rand.NextFloat(0.13f, 0.18f);
             Velocity *= 0.99f;
-            if (fadeIn > 45)
+            if (Opacity > 45)
                 Color *= 0.88f;
-            if (fadeIn % 8 == 0)
+            if (Opacity % 8 == 0)
             {
                 Frame.Y += 14;
                 if (Frame.Y > 98)
                     Frame.Y = 0;
             }
 
-            fadeIn++;
-            if (fadeIn > 60)
+            Opacity++;
+            if (Opacity > 60)
                 active = false;
         }
 
@@ -128,9 +128,9 @@ namespace Coralite.Content.Items.Pets
             Rectangle frame = Frame;
             Vector2 origin = new(frame.Width / 2, frame.Height / 2);
             Color c = Color;
-            if (fadeIn < 6)
+            if (Opacity < 6)
             {
-                c *= fadeIn / 6;
+                c *= Opacity / 6;
             }
             spriteBatch.Draw(TexValue, Position, frame, c, Rotation, origin, Scale, SpriteEffects.None, 0f);
         }

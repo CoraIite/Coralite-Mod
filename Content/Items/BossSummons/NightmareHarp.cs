@@ -468,20 +468,20 @@ namespace Coralite.Content.Items.BossSummons
             }
 
             Rotation += 0.05f;
-            fadeIn++;
+            Opacity++;
 
-            if (fadeIn < 15)
+            if (Opacity < 15)
             {
                 Scale *= 1.08f;
             }
-            else if (fadeIn < 20)
+            else if (Opacity < 20)
             {
                 Scale *= 0.94f;
             }
             else
             {
                 Scale *= 1.02f;
-                if (fadeIn > 30)
+                if (Opacity > 30)
                     Color.A = (byte)(Color.A * 0.82f);
             }
 

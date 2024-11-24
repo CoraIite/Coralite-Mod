@@ -234,7 +234,7 @@ namespace Coralite.Content.Items.Glistent
         {
             frameCounterMax = 6;
             start = Main.rand.NextFloat(6.282f);
-            fadeIn = Main.rand.NextFloat(12, 20);
+            Opacity = Main.rand.NextFloat(12, 20);
             length = Main.rand.NextFloat(16, 30);
             speed = Main.rand.NextFloat(0.02f, 0.06f);
             LeafType = Main.rand.Next(2);
@@ -243,7 +243,7 @@ namespace Coralite.Content.Items.Glistent
 
         public override void AI()
         {
-            fadeIn -= speed;
+            Opacity -= speed;
             length += speed;
 
             UpdateFrame();
@@ -259,10 +259,10 @@ namespace Coralite.Content.Items.Glistent
                         if (alpha < 1)
                             alpha += 0.05f;
 
-                        Position = owner.Center + ((fadeIn + start).ToRotationVector2() * length);
-                        Rotation = fadeIn + start - 1.57f + (LeafType == 0 ? 1.57f : 0);
+                        Position = owner.Center + ((Opacity + start).ToRotationVector2() * length);
+                        Rotation = Opacity + start - 1.57f + (LeafType == 0 ? 1.57f : 0);
 
-                        if (fadeIn < 0.5f)
+                        if (Opacity < 0.5f)
                             Color *= 0.93f;
                     }
                     break;
@@ -276,25 +276,25 @@ namespace Coralite.Content.Items.Glistent
 
                         if (Collision.SolidCollision(Position - (Vector2.One * 5f), 10, 10))
                         {
-                            if (fadeIn > 0.5f)
-                                fadeIn = 0.5f;
+                            if (Opacity > 0.5f)
+                                Opacity = 0.5f;
                             Velocity *= 0.25f;
                         }
 
-                        if (fadeIn < 0.5f)
+                        if (Opacity < 0.5f)
                             Color.A = (byte)(Color.A * 0.9f);
                     }
                     break;
             }
 
-            if (fadeIn < 0)
+            if (Opacity < 0)
                 active = false;
         }
 
         public void Fade()
         {
             State = 1;
-            Velocity = (fadeIn + 1.57f).ToRotationVector2() * Main.rand.NextFloat(2, 5);
+            Velocity = (Opacity + 1.57f).ToRotationVector2() * Main.rand.NextFloat(2, 5);
             Color = new Color(119, 133, 34, 255);
             alpha = 1;
         }

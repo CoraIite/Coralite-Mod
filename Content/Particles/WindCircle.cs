@@ -16,9 +16,9 @@ namespace Coralite.Content.Particles
         }
         public override void AI()
         {
-            if (++fadeIn > frameCounterMax)
+            if (++Opacity > frameCounterMax)
             {
-                fadeIn = 0;
+                Opacity = 0;
                 if (++Frame.Y > 5)
                     active = false;
             }

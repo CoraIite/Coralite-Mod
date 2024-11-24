@@ -45,10 +45,10 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
 
             MagikeHelper.GetMagikeAlternateData(topLeft.X, topLeft.Y, out TileObjectData altermateData, out _);
 
-            fadeIn++;
-            if (fadeIn > frameDelay)
+            Opacity++;
+            if (Opacity > frameDelay)
             {
-                fadeIn = 0;
+                Opacity = 0;
 
                 int x = topLeft.X;
                 int y = startY;

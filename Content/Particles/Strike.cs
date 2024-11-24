@@ -20,17 +20,17 @@ namespace Coralite.Content.Particles
         {
             shader.UseColor(Color);
 
-            if (fadeIn % 2 == 0)
-                Frame.Y = (int)(fadeIn / 2) * 128;
+            if (Opacity % 2 == 0)
+                Frame.Y = (int)(Opacity / 2) * 128;
 
-            float factor = fadeIn / 14;
+            float factor = Opacity / 14;
 
             shader.UseOpacity(0.5f + (factor * 0.4f));
             shader.UseSaturation(2.3f - (factor * 0.8f));
 
-            fadeIn++;
+            Opacity++;
 
-            if (fadeIn > 16)
+            if (Opacity > 16)
                 active = false;
         }
 
