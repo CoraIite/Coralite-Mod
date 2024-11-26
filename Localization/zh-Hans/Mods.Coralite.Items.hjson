@@ -4657,10 +4657,7 @@ BrilliantCalibrator: {
 
 BrilliantMagikeActivator: {
 	DisplayName: 璀璨激活杖
-	Tooltip:
-		'''
-		◇ 左键选择区域，激活区域内的魔能工作站
-		'''
+	Tooltip: ◇ 左键选择区域，激活区域内的魔能工作站
 }
 
 MagicCrystalTRFilter: {

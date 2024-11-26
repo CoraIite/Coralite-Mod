@@ -102,10 +102,7 @@ PartJumpPage: {
 }
 
 ConnectStaff: {
-	HowToMoveMagike:
-		'''
-		    绝大部分仪器都能发送魔能，只是它们不知道要发送给谁。 使用魔能链接仪按下述方式把你的仪器们连接在一起吧！
-		'''
+	HowToMoveMagike: "    绝大部分仪器都能发送魔能，只是它们不知道要发送给谁。 使用魔能链接仪按下述方式把你的仪器们连接在一起吧！"
 	ConnectStep1: ◇  左键点击发送器
 	ConnectStep2: ◇◇  左键点击接收器器
 	UseConnectStaff:
