@@ -40,3 +40,22 @@ StoneMaker: {
 	MakeAStoneMaker: Mods.Coralite.Knowledges.StoneMaker.MakeAStoneMaker
 	InsertPolarizedFilter: Mods.Coralite.Knowledges.StoneMaker.InsertPolarizedFilter
 }
+
+PartJumpPage: {
+	P1Title: Mods.Coralite.Knowledges.PartJumpPage.P1Title
+	P2Title: Mods.Coralite.Knowledges.PartJumpPage.P2Title
+	P3Title: Mods.Coralite.Knowledges.PartJumpPage.P3Title
+	P4Title: Mods.Coralite.Knowledges.PartJumpPage.P4Title
+	P5Title: Mods.Coralite.Knowledges.PartJumpPage.P5Title
+	P6Title: Mods.Coralite.Knowledges.PartJumpPage.P6Title
+	P7Title: Mods.Coralite.Knowledges.PartJumpPage.P7Title
+	P8Title: Mods.Coralite.Knowledges.PartJumpPage.P8Title
+}
+
+ConnectStaff: {
+	HowToMoveMagike: Mods.Coralite.Knowledges.ConnectStaff.HowToMoveMagike
+	ConnectStep1: Mods.Coralite.Knowledges.ConnectStaff.ConnectStep1
+	ConnectStep2: Mods.Coralite.Knowledges.ConnectStaff.ConnectStep2
+	UseConnectStaff: Mods.Coralite.Knowledges.ConnectStaff.UseConnectStaff
+	BuyConnectStaff: Mods.Coralite.Knowledges.ConnectStaff.BuyConnectStaff
+}
