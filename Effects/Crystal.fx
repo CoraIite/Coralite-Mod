@@ -101,7 +101,7 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
     float y = 0.299 * fc.r + 0.587 * fc.g + 0.114 * fc.b;
     if (a < lightRange && y > lightLimit)
     {
-        fc = BLerp(fc, highlightC, (lightRange - a) / lightRange);
+        fc = BLerp(fc, highlightC * tc.a, (lightRange - a) / lightRange);
     }
     
     return fc ;

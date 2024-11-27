@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.CoraliteNotes;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
@@ -82,11 +83,11 @@ namespace Coralite.Helpers
         /// <param name="spriteBatch"></param>
         /// <param name="position"></param>
         /// <param name="maxWidth"></param>
-        public static void DrawText(SpriteBatch spriteBatch, string originText, float maxWidth, Vector2 position, Vector2 origin, Vector2 scale, Color shadowColor, Color textColor, out Vector2 textSize)
+        public static void DrawText(SpriteBatch spriteBatch, string originText, float maxWidth, Vector2 position, Vector2 origin, Vector2 scale, Color shadowColor, Color textColor, out Vector2 textSize,bool useIncomeColor=false)
         {
             string text = FontAssets.MouseText.Value.CreateWrappedText(originText, maxWidth);
 
-            TextSnippet[] textSnippets = ChatManager.ParseMessage(text, Color.White).ToArray();
+            TextSnippet[] textSnippets = [.. ChatManager.ParseMessage(text, Color.White)];
             ChatManager.ConvertNormalSnippets(textSnippets);
 
             textSize = ChatManager.GetStringSize(FontAssets.MouseText.Value, textSnippets, scale, maxWidth);
@@ -97,8 +98,9 @@ namespace Coralite.Helpers
                 ChatManager.DrawColorCodedStringShadow(spriteBatch, FontAssets.MouseText.Value, textSnippets, position + direction,
                     shadowColor, 0f, origin , scale, maxWidth);
             }
+
             ChatManager.DrawColorCodedString(spriteBatch, FontAssets.MouseText.Value, textSnippets,
-                position, textColor, 0f, origin , scale, out _, maxWidth, false);
+                position, textColor, 0f, origin , scale, out _, maxWidth, useIncomeColor);
         }
 
         /// <summary>

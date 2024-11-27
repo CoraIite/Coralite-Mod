@@ -356,6 +356,8 @@ namespace Coralite.Core
             /// </summary>
             public static ATex Ball { get; private set; }
 
+            public static ATex BallA { get; private set; }
+
 
             internal static void Load()
             {

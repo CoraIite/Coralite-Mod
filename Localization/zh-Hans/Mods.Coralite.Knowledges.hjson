@@ -78,14 +78,37 @@ UIDescriptionPage: {
 
 StoneMaker: {
 	UseMagikeToDoSomething: 魔能应该用来干点什么？
-	MakeAStoneMaker: 
-	'''
-	    [c/ffbeec:地质再生祭坛]
-	    它能消耗魔能并复制下方的石头，在后续的矿物生产中可以作为原料供应，对于初学者而言则是最简单的魔能工作站。它的物品描述中详细写明了能够复制哪些石头。
-	'''
-	InsertPolarizedFilter: 
-	'''
-	    就像之前的基础提取透镜一样，这台“造石机”也需要一个偏振滤镜才能正常工作。
-	    如果能生产，它会在顶部显示对应的石块图标。如果你按照正确的方式放置，就会有类似下图中的效果。
-	'''
+	MakeAStoneMaker:
+		'''
+		    [c/ffbeec:地质再生祭坛]
+		    它能消耗魔能并复制下方的石头，在后续的矿物生产中可以作为原料供应，对于初学者而言则是最简单的魔能工作站。它的物品描述中详细写明了能够复制哪些石头。
+		'''
+	InsertPolarizedFilter:
+		'''
+		    就像之前的基础提取透镜一样，这台“造石机”也需要一个偏振滤镜才能正常工作。
+		    如果能生产，它会在顶部显示对应的石块图标。如果你按照正确的方式放置，就会有类似下图中的效果。
+		'''
+}
+
+PartJumpPage: {
+	P1Title: "{$WhatIsMagikePage.Title}"
+	P2Title: "{$PlaceFirstLens.BuildYourFirstMagike}"
+	P3Title: "{$StoneMaker.UseMagikeToDoSomething}"
+	P4Title: 扩大你的生产线！
+	P5Title: 我需要更多魔能！
+	P6Title: 把你的魔能挥霍掉！
+	P7Title: 升级！升级！升级仪器！
+	P8Title: 百变滤镜
+}
+
+ConnectStaff: {
+	HowToMoveMagike: "    绝大部分仪器都能发送魔能，只是它们不知道要发送给谁。 使用魔能链接仪按下述方式把你的仪器们连接在一起吧！"
+	ConnectStep1: ◇  左键点击发送器
+	ConnectStep2: ◇◇  左键点击接收器器
+	UseConnectStaff:
+		'''
+		    需要注意的是，发送器的连接距离和容量都是有限的。
+		    使用魔能连接仪器右键点击发送器可以打开一个UI，点击旋转出的按钮就能断开这段连接，也可以在仪器的UI面板里的发送器组件中取消连接。
+		'''
+	BuyConnectStaff: "    [c/ffbeec:魔能连接仪] 由水晶生命体售卖，它能把接收者的坐标提供给发送者，以此在二者之间建立连接。"
 }

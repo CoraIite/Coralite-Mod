@@ -9,7 +9,7 @@ using Terraria.Localization;
 
 namespace Coralite.Content.CoraliteNotes.MagikeChapter1
 {
-    public class StoneMaker:KnowledgePage
+    public class StoneMaker : KnowledgePage
     {
         public static LocalizedText UseMagikeToDoSomething { get; private set; }
         public static LocalizedText MakeAStoneMaker { get; private set; }
@@ -43,7 +43,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
 
             var tex1 = TextureAssets.Item[ModContent.ItemType<Items.Magike.Factorys.StoneMaker>()].Value;
 
-            Vector2 picturePos = new Vector2(Position.X, pos.Y+ tex1.Height * 5 / 2);
+            Vector2 picturePos = new Vector2(Position.X, pos.Y + tex1.Height * 5 / 2);
 
             #region 绘制左边的物品贴图
             picturePos.X += tex1.Width * 5 / 2;
@@ -64,16 +64,16 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
             float width = PageWidth - tex1.Width * 5;
             Helper.DrawTextParagraph(spriteBatch, MakeAStoneMaker.Value, width, new Vector2(Position.X + tex1.Width * 5, pos.Y), out Vector2 textSize);
 
-            pos.Y += Math.Max(textSize.Y, tex1.Height * 5)+20;
+            pos.Y += Math.Max(textSize.Y, tex1.Height * 5) + 20;
 
             //描述段2
             Helper.DrawTextParagraph(spriteBatch, InsertPolarizedFilter.Value, PageWidth, new Vector2(Position.X, pos.Y), out textSize);
 
             var tex = CoraliteAssets.MagikeChapter1.StoneMakerExample.Value;
-            pos.Y += textSize.Y + tex.Height* 0.8f / 2;
+            pos.Y += textSize.Y + tex.Height * 0.8f / 2;
 
             #region 绘制图片
-            rect = Utils.CenteredRectangle(pos, tex.Size()* 0.7f);
+            rect = Utils.CenteredRectangle(pos, tex.Size() * 0.7f);
             if (rect.MouseScreenInRect())
                 _scale2.ToBigSize();
             else

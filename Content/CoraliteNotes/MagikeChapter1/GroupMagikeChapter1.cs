@@ -12,8 +12,10 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
         {
             Pages =
                 [
-                    //P1：了解魔能
                     new GetMagikeKnowledge1Page(),
+                    new PartJumpPage(),
+
+                    //P1：了解魔能
                     new WhatIsMagikePage(),
 
                     //P2：搭建你的第一条魔能产线
@@ -21,7 +23,10 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
                     new PlacePolarizedFilter(),
                     new UIDescriptionPage(),
                     new PutItemIn(),
+
+                    //P3：魔能应该用来干点什么?
                     new StoneMaker(),
+                    new ConnectStaff(),
                 ];
         }
     }
