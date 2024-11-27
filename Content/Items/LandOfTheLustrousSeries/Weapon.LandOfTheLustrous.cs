@@ -74,9 +74,23 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 effect.Parameters["lightLimit"].SetValue(0.75f);
                 effect.Parameters["addC"].SetValue(0.55f);
                 effect.Parameters["highlightC"].SetValue(Color.White.ToVector4());
-                effect.Parameters["brightC"].SetValue(Main.hslToRgb(factor1, 1, 0.9f).ToVector4());
-                effect.Parameters["darkC"].SetValue(Main.hslToRgb(factor2, 0.8f, 0.3f).ToVector4());
-            }, 0.2f);
+                effect.Parameters["brightC"].SetValue(Main.hslToRgb(factor1, 0.6f, 0.9f).ToVector4());
+                effect.Parameters["darkC"].SetValue(Main.hslToRgb(factor2, 0.6f, 0.65f).ToVector4());
+            }, 0.2f
+            , effect =>
+            {
+                float factor1 = (Main.GlobalTimeWrappedHourly * 0.5f) - MathF.Truncate(Main.GlobalTimeWrappedHourly * 0.5f);
+                float factor2 = (Main.GlobalTimeWrappedHourly * 0.45f) - MathF.Truncate(Main.GlobalTimeWrappedHourly * 0.45f);
+                effect.Parameters["scale"].SetValue(new Vector2(1.2f / Main.GameZoomTarget));
+                effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * 0.01f);
+                effect.Parameters["lightRange"].SetValue(0.1f);
+                effect.Parameters["lightLimit"].SetValue(0.75f);
+                effect.Parameters["addC"].SetValue(0.55f);
+                effect.Parameters["highlightC"].SetValue(Color.White.ToVector4());
+                Color c = Main.hslToRgb(factor1, 0.5f, 0.5f);
+                effect.Parameters["brightC"].SetValue(Main.hslToRgb(factor2, 0.4f, 0.9f).ToVector4());
+                effect.Parameters["darkC"].SetValue(Main.hslToRgb(factor1, 0.1f, 0.6f).ToVector4());
+            }, CoraliteAssets.Sparkle.HShotBallA.Value, new Point(70, 30));
         }
 
         public override void SpawnParticle(DrawableTooltipLine line)

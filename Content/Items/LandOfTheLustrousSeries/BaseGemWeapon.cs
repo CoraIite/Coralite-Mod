@@ -112,7 +112,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             }
         }
 
-        public static void DrawGemNameNormally(DrawableTooltipLine line, Action<Effect> setEffect, float flowXadder = 0.2f)
+        public static void DrawGemNameNormally(DrawableTooltipLine line, Action<Effect> setEffect, float flowXadder = 0.2f, Action<Effect> setBackEffect=null,Texture2D backTex=null,Point? extraSize=null)
         {
             SpriteBatch sb = Main.spriteBatch;
             Effect effect = Filters.Scene["Crystal"].GetShader().Shader;
@@ -126,6 +126,26 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             Texture2D noiseTex = GemTextures.CrystalNoises[(int)(Main.timeForVisualEffects / 7) % 20].Value;
 
+            if (setBackEffect != null)
+            {
+                effect.Parameters["transformMatrix"].SetValue(projection);
+                effect.Parameters["basePos"].SetValue(rand + new Vector2(line.X, line.Y));
+                setBackEffect(effect);
+
+                sb.End();
+                sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, effect, Main.UIScaleMatrix);
+
+                Main.graphics.GraphicsDevice.Textures[1] = noiseTex;
+
+                Vector2 textSize = ChatManager.GetStringSize(line.Font, line.Text, line.BaseScale);
+                Texture2D mainTex = backTex ?? CoraliteAssets.LightBall.BallA.Value;
+
+                int xExpand = extraSize==null?30:extraSize.Value.X;
+                int yExpand = extraSize==null?6:extraSize.Value.Y;
+
+                sb.Draw(mainTex, new Rectangle(line.X - xExpand, line.Y - 4 - yExpand, (int)textSize.X + xExpand * 2, (int)textSize.Y + yExpand * 2), null, Color.White * 0.8f);
+            }
+
             effect.Parameters["transformMatrix"].SetValue(projection);
             effect.Parameters["basePos"].SetValue(rand + new Vector2(line.X, line.Y));
             setEffect(effect);
@@ -134,10 +154,6 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, effect, Main.UIScaleMatrix);
 
             Main.graphics.GraphicsDevice.Textures[1] = noiseTex;
-
-            Vector2 textSize = ChatManager.GetStringSize(line.Font, line.Text, line.BaseScale);
-            Texture2D mainTex = CoraliteAssets.LightBall.BallA.Value;
-            sb.Draw(mainTex, new Rectangle(line.X - 30, line.Y - 4 - 6, (int)textSize.X + 30 * 2, (int)textSize.Y + 6 * 2), null, Color.White * 0.8f);
             
             ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, line.Font, line.Text, new Vector2(line.X, line.Y)
                 , Color.White, line.Rotation, line.Origin, line.BaseScale, line.MaxWidth, line.Spread);

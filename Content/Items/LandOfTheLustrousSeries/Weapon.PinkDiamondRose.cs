@@ -102,6 +102,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 };
                 Vector2 pos = Projectile.Center +
                     ((Projectile.rotation - 1.57f).ToRotationVector2() * Main.rand.NextFloat(8, 16));
+
                 group.Add(PRTLoader.GetPRTInstance<Fog>(pos
                     , Vector2.UnitY.RotateByRandom(MathHelper.Pi - 0.4f, MathHelper.Pi + 0.4f)
                     , c, Main.rand.NextFloat(0.5f, 0.6f)));

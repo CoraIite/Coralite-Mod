@@ -273,6 +273,18 @@ namespace Coralite.Core
             /// </summary>
             public static ATex Cross { get; private set; }
 
+            /// <summary> 
+            /// 横向光外加一些散光束<br></br>
+            /// 透明底
+            /// </summary>
+            public static ATex HShotA { get; private set; }
+
+            /// <summary> 
+            /// 横向光外加光球<br></br>
+            /// 透明底
+            /// </summary>
+            public static ATex HShotBallA { get; private set; }
+
             internal static void Load()
             {
                 Type t = typeof(Sparkle);
@@ -305,6 +317,12 @@ namespace Coralite.Core
             public static ATex Rune { get; private set; }
 
             /// <summary> 
+            /// 看上去像是一圈符文<br></br>
+            /// 符文在一个光圈上
+            /// </summary>
+            public static ATex EdgeRune { get; private set; }
+
+            /// <summary> 
             /// 一圈亮到暗，外加外发光
             /// </summary>
             public static ATex Circle { get; private set; }
@@ -324,6 +342,17 @@ namespace Coralite.Core
             /// 透明底
             /// </summary>
             public static ATex HighlightCircleA { get; private set; }
+
+            /// <summary> 
+            /// 几个光圈叠加，同时在8个方向上有光束
+            /// </summary>
+            public static ATex EightLightShot { get; private set; }
+
+            /// <summary> 
+            /// 几个光圈叠加，同时在8个方向上有光束<br></br>
+            /// 透明底
+            /// </summary>
+            public static ATex EightLightShotA { get; private set; }
 
             internal static void Load()
             {
