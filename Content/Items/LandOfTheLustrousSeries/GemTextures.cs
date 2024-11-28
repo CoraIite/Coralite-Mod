@@ -10,6 +10,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         //public static Asset<Texture2D>[] PearlNoises;
         public static Asset<Texture2D> PearlNoise;
         public static Asset<Texture2D> CellNoise;
+        public static Asset<Texture2D> CrystalNoiseP2;
 
         public override void Load()
         {
@@ -24,6 +25,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             PearlNoise = ModContent.Request<Texture2D>(AssetDirectory.Misc + "PearlNoise");
             CellNoise = ModContent.Request<Texture2D>(AssetDirectory.Misc + "CellNoise1");
+            CrystalNoiseP2 = ModContent.Request<Texture2D>(AssetDirectory.Misc + "CrystalNoiseP2");
         }
 
         public override void Unload()

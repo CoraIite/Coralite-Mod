@@ -13,10 +13,17 @@ namespace Coralite.Core
     {
         public float Priority => 1;
 
+        [AttributeUsage(AttributeTargets.Class)]
+        public class AutoLoadTextureAttribute(string texturePath) : Attribute
+        {
+            public string TexturePath => texturePath;
+        }
+
         /// <summary>
         /// 拖尾所使用的贴图
         /// </summary>
-        public static class Trail
+        [AutoLoadTexture(Trails)]
+        public class Trail
         {
             #region 基础刀光贴图及其变种
 
@@ -192,32 +199,13 @@ namespace Coralite.Core
             public static ATex Split { get; private set; }
 
             #endregion
-
-            internal static void Load()
-            {
-                Type t = typeof(Trail);
-
-                var infos = t.GetProperties(BindingFlags.Public | BindingFlags.Static);
-
-                foreach (var info in infos)
-                    info.SetValue(null, Get(Trails + info.Name));
-            }
-
-            internal static void Unload()
-            {
-                Type t = typeof(Trail);
-
-                var infos = t.GetProperties(BindingFlags.Public | BindingFlags.Static);
-
-                foreach (var info in infos)
-                    info.SetValue(null, null);
-            }
         }
 
         /// <summary>
         /// 激光所使用的贴图，特点是左右连续
         /// </summary>
-        public static class Laser
+        [AutoLoadTexture(Lasers)]
+        public class Laser
         {
             /// <summary> 
             /// 激光主体，一条发光横线
@@ -240,32 +228,13 @@ namespace Coralite.Core
             /// 原版使用，透明底
             /// </summary>
             public static ATex VanillaFlowA { get; private set; }
-
-            internal static void Load()
-            {
-                Type t = typeof(Laser);
-
-                var infos = t.GetProperties(BindingFlags.Public | BindingFlags.Static);
-
-                foreach (var info in infos)
-                    info.SetValue(null, Get(Lasers + info.Name));
-            }
-
-            internal static void Unload()
-            {
-                Type t = typeof(Laser);
-
-                var infos = t.GetProperties(BindingFlags.Public | BindingFlags.Static);
-
-                foreach (var info in infos)
-                    info.SetValue(null, null);
-            }
         }
 
         /// <summary>
         /// 闪光贴图
         /// </summary>
-        public static class Sparkle
+        [AutoLoadTexture(Sparkles)]
+        public class Sparkle
         {
             /// <summary> 
             /// 标准十字闪光<br></br>
@@ -284,32 +253,13 @@ namespace Coralite.Core
             /// 透明底
             /// </summary>
             public static ATex HShotBallA { get; private set; }
-
-            internal static void Load()
-            {
-                Type t = typeof(Sparkle);
-
-                var infos = t.GetProperties(BindingFlags.Public | BindingFlags.Static);
-
-                foreach (var info in infos)
-                    info.SetValue(null, Get(Sparkles + info.Name));
-            }
-
-            internal static void Unload()
-            {
-                Type t = typeof(Sparkle);
-
-                var infos = t.GetProperties(BindingFlags.Public | BindingFlags.Static);
-
-                foreach (var info in infos)
-                    info.SetValue(null, null);
-            }
         }
 
         /// <summary>
         /// 光圈贴图
         /// </summary>
-        public static class Halo
+        [AutoLoadTexture(Halos)]
+        public class Halo
         {
             /// <summary> 
             /// 看上去像是一圈符文
@@ -353,32 +303,13 @@ namespace Coralite.Core
             /// 透明底
             /// </summary>
             public static ATex EightLightShotA { get; private set; }
-
-            internal static void Load()
-            {
-                Type t = typeof(Halo);
-
-                var infos = t.GetProperties(BindingFlags.Public | BindingFlags.Static);
-
-                foreach (var info in infos)
-                    info.SetValue(null, Get(Halos + info.Name));
-            }
-
-            internal static void Unload()
-            {
-                Type t = typeof(Halo);
-
-                var infos = t.GetProperties(BindingFlags.Public | BindingFlags.Static);
-
-                foreach (var info in infos)
-                    info.SetValue(null, null);
-            }
         }
 
         /// <summary>
         /// 光圈贴图
         /// </summary>
-        public static class LightBall
+        [AutoLoadTexture(LightBalls)]
+        public class LightBall
         {
             /// <summary> 
             /// 圆形亮光球
@@ -386,27 +317,6 @@ namespace Coralite.Core
             public static ATex Ball { get; private set; }
 
             public static ATex BallA { get; private set; }
-
-
-            internal static void Load()
-            {
-                Type t = typeof(LightBall);
-
-                var infos = t.GetProperties(BindingFlags.Public | BindingFlags.Static);
-
-                foreach (var info in infos)
-                    info.SetValue(null, Get(LightBalls + info.Name));
-            }
-
-            internal static void Unload()
-            {
-                Type t = typeof(LightBall);
-
-                var infos = t.GetProperties(BindingFlags.Public | BindingFlags.Static);
-
-                foreach (var info in infos)
-                    info.SetValue(null, null);
-            }
         }
 
         public void Load()
@@ -414,14 +324,28 @@ namespace Coralite.Core
             if (Main.dedServ)
                 return;
 
-            Trail.Load();
-            Laser.Load();
-            Sparkle.Load();
-            Halo.Load();
-            LightBall.Load();
+            //获取所有内部类
+            Type[] types = typeof(CoraliteAssets).GetNestedTypes(BindingFlags.Public | BindingFlags.Instance);
 
-            ReadFragmant.Load();
-            MagikeChapter1.Load();
+            foreach (var type in types)
+            {
+                AutoLoadTextureAttribute pathAttribute = type.GetCustomAttribute<AutoLoadTextureAttribute>();
+
+                if (!type.IsAbstract && pathAttribute != null)
+                {
+                    //获取贴图路径
+                    var ins = Activator.CreateInstance(type, null);
+
+                    string path = pathAttribute.TexturePath;
+
+                    //找到所有静态属性
+                    var infos = type.GetProperties(BindingFlags.Public | BindingFlags.Static);
+
+                    //为所有静态属性赋值
+                    foreach (var info in infos)
+                        info.SetValue(null, Get(path + info.Name));
+                }
+            }
         }
 
         public void Unload()
@@ -429,14 +353,28 @@ namespace Coralite.Core
             if (Main.dedServ)
                 return;
 
-            Trail.Unload();
-            Laser.Unload();
-            Sparkle.Unload();
-            Halo.Unload();
-            LightBall.Unload();
+            //获取所有内部类
+            Type[] types = typeof(CoraliteAssets).GetNestedTypes(BindingFlags.Public | BindingFlags.Instance);
 
-            ReadFragmant.Unload();
-            MagikeChapter1.Unload();
+            foreach (var type in types)
+            {
+                AutoLoadTextureAttribute pathAttribute = type.GetCustomAttribute<AutoLoadTextureAttribute>();
+
+                if (!type.IsAbstract && pathAttribute != null)
+                {
+                    //获取贴图路径
+                    var ins = Activator.CreateInstance(type, null);
+
+                    string path = pathAttribute.TexturePath;
+
+                    //找到所有静态属性
+                    var infos = type.GetProperties(BindingFlags.Public | BindingFlags.Static);
+
+                    //为所有静态属性赋值
+                    foreach (var info in infos)
+                        info.SetValue(null, null);
+                }
+            }
         }
 
         private static ATex Get(string path)

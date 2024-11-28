@@ -81,14 +81,13 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             {
                 float factor1 = (Main.GlobalTimeWrappedHourly * 0.5f) - MathF.Truncate(Main.GlobalTimeWrappedHourly * 0.5f);
                 float factor2 = (Main.GlobalTimeWrappedHourly * 0.45f) - MathF.Truncate(Main.GlobalTimeWrappedHourly * 0.45f);
-                effect.Parameters["scale"].SetValue(new Vector2(1.2f / Main.GameZoomTarget));
+                effect.Parameters["scale"].SetValue(new Vector2(1f / Main.GameZoomTarget));
                 effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * 0.01f);
-                effect.Parameters["lightRange"].SetValue(0.1f);
-                effect.Parameters["lightLimit"].SetValue(0.75f);
-                effect.Parameters["addC"].SetValue(0.55f);
+                effect.Parameters["lightRange"].SetValue(0.4f);
+                effect.Parameters["lightLimit"].SetValue(0.9f);
+                effect.Parameters["addC"].SetValue(0.95f);
                 effect.Parameters["highlightC"].SetValue(Color.White.ToVector4());
-                Color c = Main.hslToRgb(factor1, 0.5f, 0.5f);
-                effect.Parameters["brightC"].SetValue(Main.hslToRgb(factor2, 0.4f, 0.9f).ToVector4());
+                effect.Parameters["brightC"].SetValue(Main.hslToRgb(factor2, 0.4f, 0.8f).ToVector4());
                 effect.Parameters["darkC"].SetValue(Main.hslToRgb(factor1, 0.1f, 0.6f).ToVector4());
             }, CoraliteAssets.Sparkle.HShotBallA.Value, new Point(70, 30));
         }

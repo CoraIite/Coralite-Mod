@@ -118,7 +118,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Effect effect = Filters.Scene["Crystal"].GetShader().Shader;
 
             rand.X += flowXadder;
-            rand.Y += 0.01f;
+            rand.Y += 0.1f;
             if (rand.X > 100000)
                 rand.X = 10;
 
@@ -135,7 +135,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 sb.End();
                 sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, effect, Main.UIScaleMatrix);
 
-                Main.graphics.GraphicsDevice.Textures[1] = noiseTex;
+                Main.graphics.GraphicsDevice.Textures[1] = GemTextures.CrystalNoiseP2.Value;
 
                 Vector2 textSize = ChatManager.GetStringSize(line.Font, line.Text, line.BaseScale);
                 Texture2D mainTex = backTex ?? CoraliteAssets.LightBall.BallA.Value;

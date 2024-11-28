@@ -27,6 +27,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
                     //P3：魔能应该用来干点什么?
                     new StoneMaker(),
                     new ConnectStaff(),
+                    new ActivatedTheMachine(),
                 ];
         }
     }

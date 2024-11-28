@@ -9,7 +9,7 @@ using Terraria.Localization;
 
 namespace Coralite.Content.CoraliteNotes.MagikeChapter1
 {
-    public class ConnectStaff:KnowledgePage
+    public class ConnectStaff : KnowledgePage
     {
         public static LocalizedText BuyConnectStaff { get; private set; }
         public static LocalizedText HowToMoveMagike { get; private set; }
@@ -98,7 +98,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
 
             Helper.DrawText(spriteBatch, ConnectStep2.Value, PageWidth, pos, Vector2.One / 2, Vector2.One, new Color(50, 50, 50), Color.White, out textSize);
             tex1 = CoraliteAssets.MagikeChapter1.ConnectStaff2.Value;
-            pos.Y += textSize.Y+ tex1.Height / 2;
+            pos.Y += textSize.Y + tex1.Height / 2;
             spriteBatch.Draw(tex1, pos, null, Color.White, 0, tex1.Size() / 2, 1, 0, 0);
 
             pos.Y += tex1.Height / 2 + 30;
