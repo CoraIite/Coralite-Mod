@@ -59,3 +59,10 @@ ConnectStaff: {
 	UseConnectStaff: Mods.Coralite.Knowledges.ConnectStaff.UseConnectStaff
 	BuyConnectStaff: Mods.Coralite.Knowledges.ConnectStaff.BuyConnectStaff
 }
+
+ActivatedTheMachine: {
+	BuyActivateStaff: Mods.Coralite.Knowledges.ActivatedTheMachine.BuyActivateStaff
+	HowToUseActivateStaff: Mods.Coralite.Knowledges.ActivatedTheMachine.HowToUseActivateStaff
+	WorkingBeLike: Mods.Coralite.Knowledges.ActivatedTheMachine.WorkingBeLike
+	HarvestTheProduct: Mods.Coralite.Knowledges.ActivatedTheMachine.HarvestTheProduct
+}

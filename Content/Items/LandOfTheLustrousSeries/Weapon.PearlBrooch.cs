@@ -53,13 +53,43 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Effect effect = Filters.Scene["Crystal"].GetShader().Shader;
 
             rand.X += 0.6f;
-            rand.Y += 0.01f;
+            rand.Y += 0.1f;
             if (rand.X > 100000)
                 rand.X = 10;
 
             Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
-            Texture2D noiseTex = GemTextures.PearlNoise.Value;//[(int)(Main.timeForVisualEffects / 7) % 20].Value;
+            Texture2D noiseTex = GemTextures.CellNoise2.Value;//[(int)(Main.timeForVisualEffects / 7) % 20].Value;
+
+            Color c1 = PearlProj.brightC*0.75f;
+            c1.A = 255;
+            Color c2 = PearlProj.darkC * 0.75f;
+            c1.A = 255;
+
+            effect.Parameters["transformMatrix"].SetValue(projection);
+            effect.Parameters["basePos"].SetValue(rand + new Vector2(line.X, line.Y));
+            effect.Parameters["scale"].SetValue(new Vector2(3f) / Main.GameZoomTarget);
+            effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * 0.01f);
+            effect.Parameters["lightRange"].SetValue(0.2f);
+            effect.Parameters["lightLimit"].SetValue(0.25f);
+            effect.Parameters["addC"].SetValue(0.15f);
+            effect.Parameters["highlightC"].SetValue(PearlProj.highlightC.ToVector4());
+            effect.Parameters["brightC"].SetValue(c1.ToVector4());
+            effect.Parameters["darkC"].SetValue(c2.ToVector4());
+
+            sb.End();
+            sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, effect, Main.UIScaleMatrix);
+
+            Main.graphics.GraphicsDevice.Textures[1] = GemTextures.CellNoise2.Value;
+
+            Vector2 textSize = ChatManager.GetStringSize(line.Font, line.Text, line.BaseScale);
+            Texture2D mainTex =  CoraliteAssets.LightBall.BallA.Value;
+
+            int xExpand = 45 ;
+            int yExpand = 6;
+
+            sb.Draw(mainTex, new Rectangle(line.X - xExpand, line.Y - 4 - yExpand, (int)textSize.X + xExpand * 2, (int)textSize.Y + yExpand * 2), null, Color.White * 0.8f);
+
 
             effect.Parameters["transformMatrix"].SetValue(projection);
             effect.Parameters["basePos"].SetValue(rand + new Vector2(line.X, line.Y));
@@ -470,7 +500,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Matrix view = Main.GameViewMatrix.TransformationMatrix;
             Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
-            Texture2D noiseTex = GemTextures.PearlNoise.Value;//[(int)(Main.timeForVisualEffects / 7) % 20].Value;
+            Texture2D noiseTex = GemTextures.CellNoise2.Value;//[(int)(Main.timeForVisualEffects / 7) % 20].Value;
 
             effect.Parameters["transformMatrix"].SetValue(world * view * projection);
             effect.Parameters["basePos"].SetValue((Projectile.Center + rand - Main.screenPosition) * Main.GameZoomTarget);

@@ -303,6 +303,17 @@ namespace Coralite.Core
             /// 透明底
             /// </summary>
             public static ATex EightLightShotA { get; private set; }
+
+            /// <summary> 
+            /// 从中心向外的圆环状结构，类似能量体向周围扩散
+            /// </summary>
+            public static ATex Energy { get; private set; }
+
+            /// <summary> 
+            /// 从中心向外的圆环状结构，类似能量体向周围扩散<br></br>
+            /// 透明底
+            /// </summary>
+            public static ATex EnergyA { get; private set; }
         }
 
         /// <summary>

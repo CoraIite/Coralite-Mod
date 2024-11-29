@@ -112,3 +112,14 @@ ConnectStaff: {
 		'''
 	BuyConnectStaff: "    [c/ffbeec:魔能连接仪] 由水晶生命体售卖，它能把接收者的坐标提供给发送者，以此在二者之间建立连接。"
 }
+
+ActivatedTheMachine: {
+	BuyActivateStaff: "    现在所有的准备都完成了，只需要一个信号让工作器开始工作。你可以选择在水晶生命体处购买一个 [c/ffbeec:魔能激活杖] ，或是使用电路来激活。"
+	HowToUseActivateStaff:
+		'''
+		    [c/ffbeec:魔能激活杖]
+		    只需要用它点击一下生产仪器就能激活它。
+		'''
+	WorkingBeLike: "    如果你让你的地质再生祭坛开始工作，它看上去应该是这样的。"
+	HarvestTheProduct: Mods.Coralite.Knowledges.ActivatedTheMachine.HarvestTheProduct
+}

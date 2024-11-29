@@ -39,6 +39,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
             //标题
             Utils.DrawBorderStringBig(spriteBatch, UseMagikeToDoSomething.Value, pos, Coralite.MagicCrystalPink
                 , 0.8f, 0.5f, 0.5f);
+
             pos += new Vector2(0, 50);
 
             var tex1 = TextureAssets.Item[ModContent.ItemType<Items.Magike.Factorys.StoneMaker>()].Value;

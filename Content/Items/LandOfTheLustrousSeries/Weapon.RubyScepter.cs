@@ -57,8 +57,19 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 effect.Parameters["addC"].SetValue(0.55f);
                 effect.Parameters["highlightC"].SetValue(RubyProj.highlightC.ToVector4());
                 effect.Parameters["brightC"].SetValue(RubyProj.brightC.ToVector4());
+                effect.Parameters["darkC"].SetValue(new Color(150, 30, 30).ToVector4());
+            }, 0.2f,
+            effect =>
+            {
+                effect.Parameters["scale"].SetValue(new Vector2(0.6f) / Main.GameZoomTarget);
+                effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * 0.015f);
+                effect.Parameters["lightRange"].SetValue(0.15f);
+                effect.Parameters["lightLimit"].SetValue(0.2f);
+                effect.Parameters["addC"].SetValue(0.55f);
+                effect.Parameters["highlightC"].SetValue(RubyProj.highlightC.ToVector4());
+                effect.Parameters["brightC"].SetValue(RubyProj.brightC.ToVector4());
                 effect.Parameters["darkC"].SetValue(RubyProj.darkC.ToVector4());
-            }, 0.2f);
+            }, extraSize: new Point(45, 4));
         }
 
         public override void SpawnParticle(DrawableTooltipLine line)
