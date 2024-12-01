@@ -547,5 +547,4 @@ namespace Coralite.Content.Bosses.DigDigDig.Stonelime
             }
         }
     }
-
 }

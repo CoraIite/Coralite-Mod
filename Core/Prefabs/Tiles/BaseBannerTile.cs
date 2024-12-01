@@ -2,6 +2,7 @@
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
+using Terraria.GameContent.Drawing;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ObjectData;
@@ -19,6 +20,8 @@ namespace Coralite.Core.Prefabs.Tiles
             Main.tileFrameImportant[Type] = true;
             Main.tileNoAttach[Type] = true;
             TileID.Sets.DisableSmartCursor[Type] = true;
+            TileID.Sets.MultiTileSway[Type] = true;
+            TileID.Sets.SwaysInWindBasic[Type] = true;
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2Top);
             TileObjectData.newTile.Height = 3;
@@ -66,19 +69,14 @@ namespace Coralite.Core.Prefabs.Tiles
             }
         }
 
-        public override void SpecialDraw(int i, int j, SpriteBatch spriteBatch)
-        {
-            CoraliteTileDrawing.DrawMultiTileVinesInWind(Main.instance.TilesRenderer, Main.Camera.UnscaledPosition, Vector2.Zero, i, j, 1, 3);
-            //TileHelper.DrawMultWine(i, j, 1, 3);
-        }
-
         public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
         {
             const int FrameWidth = 18;
             const int FrameHeight = 18 * 3;
             Tile selfTile = Main.tile[i, j];
             if (Main.LightingEveryFrame && selfTile.TileFrameX % FrameWidth == 0 && selfTile.TileFrameY % FrameHeight == 0)
-                ModContent.GetInstance<CoraliteTileDrawing>().AddSpecialPoint(i, j, CoraliteTileDrawing.TileCounterType.MultiTileVine);
+                Main.instance.TilesRenderer.AddSpecialPoint(i, j, TileDrawing.TileCounterType.MultiTileVine);
+
             return false;
         }
     }

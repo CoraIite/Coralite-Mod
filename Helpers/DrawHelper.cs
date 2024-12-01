@@ -25,7 +25,7 @@ namespace Coralite.Helpers
             Main.pixelShader.CurrentTechnique.Passes[0].Apply();
         }
 
-        public static Matrix GetTransfromMaxrix()
+        public static Matrix GetTransfromMatrix()
         {
             Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
             Matrix view = Main.GameViewMatrix.TransformationMatrix;

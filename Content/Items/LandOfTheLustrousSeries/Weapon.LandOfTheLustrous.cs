@@ -316,10 +316,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
                             speed -= time * 0.1f;
 
-                            if (Projectile.IsOwnedByLocalPlayer())
-                                Projectile.NewProjectileFromThis<LustrousProj>(Projectile.Center
-                                    , angle.ToRotationVector2() * speed, Owner.GetWeaponDamage(Owner.HeldItem), Projectile.knockBack
-                                    , itemType, i == 0 ? 1 : 0, Projectile.whoAmI);
+                            Projectile.NewProjectileFromThis<LustrousProj>(Projectile.Center
+                                , angle.ToRotationVector2() * speed, Owner.GetWeaponDamage(Owner.HeldItem), Projectile.knockBack
+                                , itemType, i == 0 ? 1 : 0, Projectile.whoAmI);
 
                             angle += 0.3f;
                         }
@@ -923,7 +922,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             effect.Parameters["noiseTexture"].SetValue(noiseTex);
             effect.Parameters["TrailTexture"].SetValue(LaserTex.Value);
-            effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMaxrix());
+            effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMatrix());
             effect.Parameters["basePos"].SetValue((Projectile.Center - Main.screenPosition + rand) * Main.GameZoomTarget);
             effect.Parameters["scale"].SetValue(data.scale / Main.GameZoomTarget);
             effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * 0.02f);

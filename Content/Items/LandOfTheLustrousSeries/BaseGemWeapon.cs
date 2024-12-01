@@ -1,4 +1,5 @@
-﻿using Coralite.Content.ModPlayers;
+﻿using Coralite.Content.Items.LandOfTheLustrousSeries.Accessories;
+using Coralite.Content.ModPlayers;
 using Coralite.Content.Prefixes.GemWeaponPrefixes;
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
@@ -86,7 +87,11 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             if (PrefixLegacy.ItemSets.ItemsThatCanHaveLegendary2[Item.type]) // Fix #3688, Rather than mess with the PrefixCategory enum and Item.GetPrefixCategory at this time and risk compatibility issues, manually support this until a redesign.
                 wr.Add(PrefixID.Legendary2, 1);
 
-            wr.Add(ModContent.PrefixType<Vibrant>(), 0.1f);
+            float w = 0.1f;
+            if (Main.LocalPlayer.GetModPlayer<CoralitePlayer>().HasEffect(nameof(EightsquareHand)))
+                w = 0.3f;
+
+            wr.Add(ModContent.PrefixType<Vibrant>(), w);
 
             for (int i = 0; i < 50; i++)
             {

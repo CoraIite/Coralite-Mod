@@ -2,41 +2,38 @@
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
-using Terraria.ModLoader.Core;
 using Terraria.UI;
 
 namespace Coralite.Core.Loaders
 {
-    class UILoader : ModSystem
+    class UILoader : ModSystem, IReflactionLoader
     {
         public static List<UserInterface> UserInterfaces;
         public static List<BetterUIState> UIStates;
 
-        public override void Load()
+        public int Priority => 2;
+        public IReflactionLoader.LoadSide Side => IReflactionLoader.LoadSide.Cilent;
+
+        public void PreLoad(Mod Mod)
         {
-            if (Main.dedServ)
-                return;
-
-            Mod Mod = Coralite.Instance;
-
             UserInterfaces = new List<UserInterface>();
             UIStates = new List<BetterUIState>();
+        }
 
-            foreach (Type t in AssemblyManager.GetLoadableTypes(Mod.Code))
+        public void Load(Mod Mod, Type type)
+        {
+            if (type.IsSubclassOf(typeof(BetterUIState)))
             {
-                if (t.IsSubclassOf(typeof(BetterUIState)))
-                {
-                    var state = (BetterUIState)Activator.CreateInstance(t, null);
-                    var userInterface = new UserInterface();
-                    userInterface.SetState(state);
+                var state = (BetterUIState)Activator.CreateInstance(type, null);
+                var userInterface = new UserInterface();
+                userInterface.SetState(state);
 
-                    UIStates?.Add(state);
-                    UserInterfaces?.Add(userInterface);
-                }
+                UIStates?.Add(state);
+                UserInterfaces?.Add(userInterface);
             }
         }
 
-        public override void Unload()
+        public void Unload(Mod Mod)
         {
             UIStates?.ForEach(n => n.Unload());
             UserInterfaces = null;

@@ -1,37 +1,46 @@
 ﻿using System;
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria.GameContent.UI;
-using Terraria.ModLoader.Core;
 
 namespace Coralite.Core.Loaders
 {
-    public class CurrencyLoader : ModSystem
+    public class CurrencyLoader : IReflactionLoader
     {
         public static Dictionary<CustomCurrencySystem, int> CurrencySystemIDs;
+        public static FrozenDictionary<CustomCurrencySystem, int> CurrencySystemIDsF;
 
-        public override void PostSetupContent()
+        public int Priority => 2;
+        public IReflactionLoader.LoadSide Side => IReflactionLoader.LoadSide.All;
+
+        public void PreSetUp(Mod Mod)
         {
-            Mod Mod = Coralite.Instance;
-
             CurrencySystemIDs = new Dictionary<CustomCurrencySystem, int>();
+        }
 
-            foreach (Type t in AssemblyManager.GetLoadableTypes(Mod.Code))
+        public void SetUp(Mod Mod, Type type)
+        {
+            if (type.IsSubclassOf(typeof(CustomCurrencySystem)) && !type.IsAbstract)
             {
-                if (t.IsSubclassOf(typeof(CustomCurrencySystem)) && !t.IsAbstract)
-                {
-                    var system = (CustomCurrencySystem)Activator.CreateInstance(t, null);
+                var system = (CustomCurrencySystem)Activator.CreateInstance(type, null);
 
-                    CurrencySystemIDs[system] = CustomCurrencyManager.RegisterCurrency(system);
-                }
+                CurrencySystemIDs[system] = CustomCurrencyManager.RegisterCurrency(system);
             }
         }
 
-        public static int GetCurrencyID<T>() where T : CustomCurrencySystem => CurrencySystemIDs.FirstOrDefault(n => n.Key is T).Value;
+        public void PostSetUp(Mod Mod)
+        {
+            CurrencySystemIDsF = CurrencySystemIDs.ToFrozenDictionary();
+            CurrencySystemIDs = null;
+        }
 
-        public override void Unload()
+        public static int GetCurrencyID<T>() where T : CustomCurrencySystem => CurrencySystemIDsF.FirstOrDefault(n => n.Key is T).Value;
+
+        public void Unload(Mod Mod)
         {
             CurrencySystemIDs = null;
+            CurrencySystemIDsF = null;
         }
     }
 }

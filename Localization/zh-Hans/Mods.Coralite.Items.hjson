@@ -4991,3 +4991,13 @@ Phosphophyllite: {
 	DisplayName: 磷叶石
 	Tooltip: ""
 }
+
+GlistentRelic: {
+	DisplayName: 晶莹，闪耀的光彩
+	Tooltip: ""
+}
+
+EightsquareHand: {
+	DisplayName: 八角手
+	Tooltip: 提高宝石武器 “闪耀” 前缀的出现概率
+}

@@ -878,7 +878,7 @@ namespace Coralite.Content.Items.ShieldPlus
                 {
                     Effect effect = Filters.Scene["NoHLGradientTrail"].GetShader().Shader;
 
-                    effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMaxrix());
+                    effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMatrix());
                     effect.Parameters["sampleTexture"].SetValue(CoraliteAssets.Trail.Split.Value);
                     effect.Parameters["gradientTexture"].SetValue(GradientTexture.Value);
 

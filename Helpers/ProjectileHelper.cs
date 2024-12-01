@@ -419,15 +419,48 @@ namespace Coralite.Helpers
 
         public static bool IsActiveAndHostile(this Projectile projectile) => projectile.active && projectile.hostile;
 
+        /// <summary>
+        /// 直接生成弹幕，默认仅在弹幕拥有者端生成弹幕
+        /// </summary>
+        /// <param name="projectile"></param>
+        /// <param name="position"></param>
+        /// <param name="velocity"></param>
+        /// <param name="type"></param>
+        /// <param name="damage"></param>
+        /// <param name="knockback"></param>
+        /// <param name="ai0"></param>
+        /// <param name="ai1"></param>
+        /// <param name="ai2"></param>
+        /// <returns></returns>
         public static int NewProjectileFromThis(this Projectile projectile, Vector2 position, Vector2 velocity
             , int type, int damage, float knockback, float ai0 = 0, float ai1 = 0, float ai2 = 0)
         {
-            return Projectile.NewProjectile(projectile.GetSource_FromAI(), position, velocity, type, damage, knockback, projectile.owner, ai0, ai1, ai2);
+            if (projectile.IsOwnedByLocalPlayer())
+                return Projectile.NewProjectile(projectile.GetSource_FromAI(), position, velocity, type, damage, knockback, projectile.owner, ai0, ai1, ai2);
+
+            return -1;
         }
+
+        /// <summary>
+        /// 直接生成弹幕，默认仅在弹幕拥有者端生成弹幕
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="projectile"></param>
+        /// <param name="position"></param>
+        /// <param name="velocity"></param>
+        /// <param name="damage"></param>
+        /// <param name="knockback"></param>
+        /// <param name="ai0"></param>
+        /// <param name="ai1"></param>
+        /// <param name="ai2"></param>
+        /// <returns></returns>
         public static int NewProjectileFromThis<T>(this Projectile projectile, Vector2 position, Vector2 velocity
             , int damage, float knockback, float ai0 = 0, float ai1 = 0, float ai2 = 0) where T : ModProjectile
         {
-            return Projectile.NewProjectile(projectile.GetSource_FromAI(), position, velocity, ModContent.ProjectileType<T>(), damage, knockback, projectile.owner, ai0, ai1, ai2);
+            if (projectile.IsOwnedByLocalPlayer())
+                return Projectile.NewProjectile(projectile.GetSource_FromAI(), position, velocity, ModContent.ProjectileType<T>(), damage, knockback, projectile.owner, ai0, ai1, ai2);
+
+            return -1;
         }
 
         /// <summary>

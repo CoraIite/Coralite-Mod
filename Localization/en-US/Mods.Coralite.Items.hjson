@@ -4875,3 +4875,13 @@ Phosphophyllite: {
 	DisplayName: Phosphophyllite
 	Tooltip: ""
 }
+
+GlistentRelic: {
+	DisplayName: Glistent Relic
+	Tooltip: ""
+}
+
+EightsquareHand: {
+	DisplayName: Eightsquare Hand
+	Tooltip: ""
+}
