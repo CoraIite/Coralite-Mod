@@ -233,6 +233,6 @@ namespace Coralite
             };
         }
 
-        public override void HandlePacket(BinaryReader reader, int whoAmI) => CLNetWork.NetWorkHander(reader, whoAmI);
+        public override void HandlePacket(BinaryReader reader, int whoAmI) => CoraliteNetWork.NetWorkHander(reader, whoAmI);
     }
 }

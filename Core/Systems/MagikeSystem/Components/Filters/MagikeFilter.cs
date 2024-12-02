@@ -153,7 +153,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         internal void Send_LeftClick_Data(MagikeTP tP)
         {
             ModPacket modPacket = Coralite.Instance.GetPacket();
-            modPacket.Write((byte)CLNetWorkEnum.FilterRemoveButton_LeftClick);
+            modPacket.Write((byte)CoraliteNetWorkEnum.FilterRemoveButton_LeftClick);
             modPacket.Write(tP.ID);
             modPacket.Write(tP.Position.X);
             modPacket.Write(tP.Position.Y);
@@ -184,7 +184,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                     if (Main.dedServ)
                     {
                         ModPacket modPacket = Coralite.Instance.GetPacket();
-                        modPacket.Write((byte)CLNetWorkEnum.FilterRemoveButton_LeftClick);
+                        modPacket.Write((byte)CoraliteNetWorkEnum.FilterRemoveButton_LeftClick);
                         modPacket.Write(id);
                         modPacket.Write(posX);
                         modPacket.Write(posY);

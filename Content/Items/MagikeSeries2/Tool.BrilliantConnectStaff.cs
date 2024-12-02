@@ -188,7 +188,7 @@ namespace Coralite.Content.Items.MagikeSeries2
         internal void Send_Sender_Data()
         {
             ModPacket modPacket = Coralite.Instance.GetPacket();
-            modPacket.Write((byte)CLNetWorkEnum.BrilliantConnectStaff_Sender);
+            modPacket.Write((byte)CoraliteNetWorkEnum.BrilliantConnectStaff_Sender);
             modPacket.Write(Owner.whoAmI);
             modPacket.WritePoint16(TargetPoint);
             modPacket.WritePoint16(BasePosition);
@@ -209,7 +209,7 @@ namespace Coralite.Content.Items.MagikeSeries2
                 if (Main.dedServ)
                 {
                     ModPacket modPacket = Coralite.Instance.GetPacket();
-                    modPacket.Write((byte)CLNetWorkEnum.BrilliantConnectStaff_Sender);
+                    modPacket.Write((byte)CoraliteNetWorkEnum.BrilliantConnectStaff_Sender);
                     modPacket.Write(ownerIndex);
                     modPacket.WritePoint16(TargetPoint);
                     modPacket.WritePoint16(BasePosition);
@@ -222,7 +222,7 @@ namespace Coralite.Content.Items.MagikeSeries2
         internal void Send_Receivers_Data()
         {
             ModPacket modPacket = Coralite.Instance.GetPacket();
-            modPacket.Write((byte)CLNetWorkEnum.BrilliantConnectStaff_Receivers);
+            modPacket.Write((byte)CoraliteNetWorkEnum.BrilliantConnectStaff_Receivers);
             modPacket.Write(Owner.whoAmI);
             modPacket.WritePoint16(TargetPoint);
             modPacket.WritePoint16(BasePosition);
@@ -243,7 +243,7 @@ namespace Coralite.Content.Items.MagikeSeries2
                 if (Main.dedServ)
                 {
                     ModPacket modPacket = Coralite.Instance.GetPacket();
-                    modPacket.Write((byte)CLNetWorkEnum.BrilliantConnectStaff_Receivers);
+                    modPacket.Write((byte)CoraliteNetWorkEnum.BrilliantConnectStaff_Receivers);
                     modPacket.Write(ownerIndex);
                     modPacket.WritePoint16(TargetPoint);
                     modPacket.WritePoint16(BasePosition);
@@ -419,7 +419,7 @@ namespace Coralite.Content.Items.MagikeSeries2
                     insertPoint.Add(currentTopLeft.Value);
 
                     //尝试根据左上角获取物块实体
-                    if (!MagikeHelper.TryGetEntity(currentTopLeft.Value, out MagikeTP entity))
+                    if (!MagikeHelper.TryGetEntityWithTopLeft(currentTopLeft.Value, out MagikeTP entity))
                         continue;
 
                     //能连接就连一下，不能就提供失败原因

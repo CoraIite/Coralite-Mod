@@ -43,6 +43,7 @@ namespace Coralite.Helpers
 
         /// <summary>
         /// 尝试从<see cref="TileEntity"/>种获取<see cref="IEntity"/><br></br>
+        /// 传入的点可以不是左上角
         /// </summary>
         /// <param name="i"></param>
         /// <param name="j"></param>
@@ -56,7 +57,7 @@ namespace Coralite.Helpers
             if (!topLeft.HasValue)
                 return false;
 
-            if (!TryGetEntity(topLeft.Value, out MagikeTP tempEntity))
+            if (!TryGetEntityWithTopLeft(topLeft.Value, out MagikeTP tempEntity))
                 return false;
 
             entity = tempEntity;
@@ -70,7 +71,7 @@ namespace Coralite.Helpers
         /// <param name="position"></param>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public static bool TryGetEntity(Point16 position, out MagikeTP entity)
+        public static bool TryGetEntityWithTopLeft(Point16 position, out MagikeTP entity)
         {
             entity = null;
             //if (!TileEntity.ByPosition.TryGetValue(position, out TileEntity tileEntity))

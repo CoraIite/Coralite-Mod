@@ -58,6 +58,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         {
             Magike += amount;
             LimitMagikeAmount();
+            SendMagike();
         }
 
         /// <summary>
@@ -69,6 +70,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         {
             Magike -= amount;
             LimitMagikeAmount();
+            SendMagike();
         }
 
         /// <summary>
@@ -77,6 +79,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public void FullChargeMagike()
         {
             Magike = MagikeMax;
+            SendMagike();
         }
 
         /// <summary>
@@ -85,6 +88,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public void ClearMagike()
         {
             Magike = 0;
+            SendMagike();
         }
 
         /// <summary>
@@ -242,24 +246,53 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         #region 网络同步
 
+        /// <summary>
+        /// 将自身加入到列表中并准备发送<br></br>
+        /// 只有服务端会执行
+        /// </summary>
+        public void SendMagike()
+        {
+            if (!VaultUtils.isServer)
+                return;
+
+            this.AddToPackList(MagikeNetPackType.Container_MagikeChange, SendMagike_Handle);
+        }
+
+        private void SendMagike_Handle(ModPacket modPacket)
+        {
+            modPacket.Write(Magike);
+        }
+
+        /// <summary>
+        /// 接受魔能数值的改动
+        /// </summary>
+        /// <param name="reader"></param>
+        public void ReceiveMagikeChange(BinaryReader reader)
+        {
+            Magike = reader.ReadInt32();
+            LimitAntiMagikeAmount();
+        }
+
         public override void SendData(ModPacket data)
         {
             data.Write(Magike);
             data.Write(MagikeMaxBase);
+            data.Write(MagikeMaxBonus);
+
             data.Write(AntiMagike);
             data.Write(AntiMagikeMaxBase);
             data.Write(AntiMagikeMaxBonus);
-            data.Write(MagikeMaxBonus);
         }
 
         public override void ReceiveData(BinaryReader reader, int whoAmI)
         {
             Magike = reader.ReadInt32();
             MagikeMaxBase = reader.ReadInt32();
+            MagikeMaxBonus = reader.ReadSingle();
+
             AntiMagike = reader.ReadInt32();
             AntiMagikeMaxBase = reader.ReadInt32();
             AntiMagikeMaxBonus = reader.ReadSingle();
-            MagikeMaxBonus = reader.ReadSingle();
         }
 
         #endregion

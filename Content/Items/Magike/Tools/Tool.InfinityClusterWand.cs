@@ -99,7 +99,7 @@ namespace Coralite.Content.Items.Magike.Tools
         internal void Send_ClusterWand_Data()
         {
             ModPacket modPacket = Coralite.Instance.GetPacket();
-            modPacket.Write((byte)CLNetWorkEnum.ClusterWand);
+            modPacket.Write((byte)CoraliteNetWorkEnum.ClusterWand);
             modPacket.Write(Owner.whoAmI);
             modPacket.WritePoint16(TargetPoint);
             modPacket.WritePoint16(BasePosition);
@@ -118,7 +118,7 @@ namespace Coralite.Content.Items.Magike.Tools
                 if (Main.dedServ)
                 {
                     ModPacket modPacket = Coralite.Instance.GetPacket();
-                    modPacket.Write((byte)CLNetWorkEnum.ClusterWand);
+                    modPacket.Write((byte)CoraliteNetWorkEnum.ClusterWand);
                     modPacket.Write(ownerIndex);
                     modPacket.WritePoint16(TargetPoint);
                     modPacket.WritePoint16(BasePosition);

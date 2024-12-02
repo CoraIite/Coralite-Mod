@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent.Drawing;
 using Terraria.ObjectData;
 
 namespace Coralite.Helpers
@@ -34,83 +35,83 @@ namespace Coralite.Helpers
             return new Vector2(x, y);
         }
 
-        //public static void DrawMultWine(int i, int j, int sizeX, int sizeY, float? windRotOffset = 1f)
-        //{
-        //    float windCycle = Main.instance.TilesRenderer.GetWindCycle(i, j, CoraliteTileDrawing.sunflowerWindCounter);
-        //    Vector2 screenPosition = Main.Camera.UnscaledPosition;
+        public static void DrawMultWine(int i, int j, int sizeX, int sizeY, float? windRotOffset = 1f)
+        {
+            float windCycle = Main.instance.TilesRenderer.GetWindCycle(i, j, CoraliteTileDrawing.sunflowerWindCounter);
+            Vector2 screenPosition = Main.Camera.UnscaledPosition;
 
-        //    float num = windCycle;
-        //    int totalPushTime = 60;
-        //    float pushForcePerFrame = 1.26f;
-        //    float highestWindGridPushComplex = 0f;
-        //    if (CoraliteTileDrawing.GetHighestWindGridPushComplex != null)
-        //        highestWindGridPushComplex = CoraliteTileDrawing.GetHighestWindGridPushComplex(Main.instance.TilesRenderer, i, j, sizeX, sizeY, totalPushTime, pushForcePerFrame, 3, true);
+            float num = windCycle;
+            int totalPushTime = 60;
+            float pushForcePerFrame = 1.26f;
+            float highestWindGridPushComplex = 0f;
+            if (CoraliteTileDrawing.GetHighestWindGridPushComplex != null)
+                highestWindGridPushComplex = CoraliteTileDrawing.GetHighestWindGridPushComplex(Main.instance.TilesRenderer, i, j, sizeX, sizeY, totalPushTime, pushForcePerFrame, 3, true);
 
-        //    windCycle += highestWindGridPushComplex;
-        //    Vector2 vector = new((i * 16) - (int)screenPosition.X + (sizeX * 16f * 0.5f), (j * 16) - (int)screenPosition.Y);
-        //    float num2 = 0.15f;
-        //    Tile tile = Main.tile[i, j];
-        //    int type = tile.TileType;
-        //    Vector2 vector2 = new(0f, -2f);
-        //    vector += vector2;
-        //    if (((uint)(type - 591) > 1u) ? (sizeX == 1 && WorldGen.IsBelowANonHammeredPlatform(i, j)) : (WorldGen.IsBelowANonHammeredPlatform(i, j) && WorldGen.IsBelowANonHammeredPlatform(i + 1, j)))
-        //    {
-        //        vector.Y -= 8f;
-        //        vector2.Y -= 8f;
-        //    }
+            windCycle += highestWindGridPushComplex;
+            Vector2 vector = new((i * 16) - (int)screenPosition.X + (sizeX * 16f * 0.5f), (j * 16) - (int)screenPosition.Y);
+            float num2 = 0.15f;
+            Tile tile = Main.tile[i, j];
+            int type = tile.TileType;
+            Vector2 vector2 = new(0f, -2f);
+            vector += vector2;
+            if (((uint)(type - 591) > 1u) ? (sizeX == 1 && WorldGen.IsBelowANonHammeredPlatform(i, j)) : (WorldGen.IsBelowANonHammeredPlatform(i, j) && WorldGen.IsBelowANonHammeredPlatform(i + 1, j)))
+            {
+                vector.Y -= 8f;
+                vector2.Y -= 8f;
+            }
 
-        //    float num4 = 1f;
-        //    float num5 = 0f;
-        //    bool flag2 = false;
+            float num4 = 1f;
+            float num5 = 0f;
+            bool flag2 = false;
 
-        //    if (flag2)
-        //        vector += new Vector2(0f, 16f);
+            if (flag2)
+                vector += new Vector2(0f, 16f);
 
-        //    num2 *= -1f;
-        //    if (!WorldGen.InAPlaceWithWind(i, j, sizeX, sizeY))
-        //        windCycle -= num;
+            num2 *= -1f;
+            if (!WorldGen.InAPlaceWithWind(i, j, sizeX, sizeY))
+                windCycle -= num;
 
-        //    for (int m = i; m < i + sizeX; m++)
-        //    {
-        //        for (int n = j; n < j + sizeY; n++)
-        //        {
-        //            Tile tile2 = Main.tile[m, n];
-        //            ushort type2 = tile2.TileType;
-        //            if (type2 != type || !CoraliteTileDrawing.IsVisible(tile2))
-        //                continue;
+            for (int m = i; m < i + sizeX; m++)
+            {
+                for (int n = j; n < j + sizeY; n++)
+                {
+                    Tile tile2 = Main.tile[m, n];
+                    ushort type2 = tile2.TileType;
+                    if (type2 != type || !TileDrawing.IsVisible(tile2))
+                        continue;
 
-        //            short tileFrameX = tile2.TileFrameX;
-        //            short tileFrameY = tile2.TileFrameY;
-        //            float num7 = (n - j + 1) / (float)sizeY;
-        //            if (num7 == 0f)
-        //                num7 = 0.1f;
+                    short tileFrameX = tile2.TileFrameX;
+                    short tileFrameY = tile2.TileFrameY;
+                    float num7 = (n - j + 1) / (float)sizeY;
+                    if (num7 == 0f)
+                        num7 = 0.1f;
 
-        //            if (windRotOffset.HasValue)
-        //                num7 = windRotOffset.Value;
+                    if (windRotOffset.HasValue)
+                        num7 = windRotOffset.Value;
 
-        //            if (flag2 && n == j)
-        //                num7 = 0f;
+                    if (flag2 && n == j)
+                        num7 = 0f;
 
-        //            Main.instance.TilesRenderer.GetTileDrawData(m, n, tile2, type2, ref tileFrameX, ref tileFrameY, out var tileWidth, out var tileHeight, out var tileTop, out var halfBrickHeight, out var addFrX, out var addFrY, out var tileSpriteEffect, out var _, out var _, out var _);
-        //            Color tileLight = Lighting.GetColor(m, n);
-        //            tileLight = tile2.IsTileFullbright ? Color.White : tileLight;
+                    Main.instance.TilesRenderer.GetTileDrawData(m, n, tile2, type2, ref tileFrameX, ref tileFrameY, out var tileWidth, out var tileHeight, out var tileTop, out var halfBrickHeight, out var addFrX, out var addFrY, out var tileSpriteEffect, out var _, out var _, out var _);
+                    Color tileLight = Lighting.GetColor(m, n);
+                    tileLight = tile2.IsTileFullbright ? Color.White : tileLight;
 
-        //            Vector2 vector3 = new((m * 16) - (int)screenPosition.X, (n * 16) - (int)screenPosition.Y + tileTop);
-        //            vector3 += vector2;
-        //            Vector2 vector4 = new(windCycle * num4, Math.Abs(windCycle) * num5 * num7);
-        //            Vector2 vector5 = vector - vector3;
-        //            Texture2D tileDrawTexture = Main.instance.TilesRenderer.GetTileDrawTexture(tile2, m, n);
-        //            if (tileDrawTexture != null)
-        //            {
-        //                Vector2 vector6 = vector + new Vector2(0f, vector4.Y);
-        //                Rectangle rectangle = new(tileFrameX + addFrX, tileFrameY + addFrY, tileWidth, tileHeight - halfBrickHeight);
-        //                float rotation = windCycle * num2 * num7;
+                    Vector2 vector3 = new((m * 16) - (int)screenPosition.X, (n * 16) - (int)screenPosition.Y + tileTop);
+                    vector3 += vector2;
+                    Vector2 vector4 = new(windCycle * num4, Math.Abs(windCycle) * num5 * num7);
+                    Vector2 vector5 = vector - vector3;
+                    Texture2D tileDrawTexture = Main.instance.TilesRenderer.GetTileDrawTexture(tile2, m, n);
+                    if (tileDrawTexture != null)
+                    {
+                        Vector2 vector6 = vector + new Vector2(0f, vector4.Y);
+                        Rectangle rectangle = new(tileFrameX + addFrX, tileFrameY + addFrY, tileWidth, tileHeight - halfBrickHeight);
+                        float rotation = windCycle * num2 * num7;
 
-        //                Main.spriteBatch.Draw(tileDrawTexture, vector6, rectangle, tileLight, rotation, vector5, 1f, tileSpriteEffect, 0f);
-        //            }
-        //        }
-        //    }
-        //}
+                        Main.spriteBatch.Draw(tileDrawTexture, vector6, rectangle, tileLight, rotation, vector5, 1f, tileSpriteEffect, 0f);
+                    }
+                }
+            }
+        }
 
         public static Vector2 GetMagikeTileCenter(int i, int j)
         {

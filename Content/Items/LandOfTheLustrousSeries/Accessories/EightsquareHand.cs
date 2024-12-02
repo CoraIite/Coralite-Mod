@@ -1,4 +1,5 @@
-﻿using Coralite.Content.ModPlayers;
+﻿using Coralite.Content.Items.Steel;
+using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Terraria;
@@ -14,6 +15,16 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries.Accessories
         {
             if (player.TryGetModPlayer(out CoralitePlayer cp))
                 cp.AddEffect(nameof(EightsquareHand));
+        }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient<SteelBar>(12)
+                .AddIngredient(ItemID.Granite, 8)
+                .AddTile(TileID.TinkerersWorkbench)
+                .DisableDecraft()
+                .Register();
         }
     }
 }

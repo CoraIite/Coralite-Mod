@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Bosses.Rediancie;
 using Coralite.Content.Items.RedJades;
+using System;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
 
@@ -25,11 +26,18 @@ namespace Coralite.Core
         /// 会被判定为影子物块
         /// </summary>
         public static bool[] TileShadowCastle;
+        /// <summary>
+        /// 会被判定为影子物块
+        /// </summary>
+        public static bool[] TileSpecialDraw;
+
+        public override void OnModLoad()
+        {
+            InitAll();
+        }
 
         public override void SetStaticDefaults()
         {
-            InitAll();
-
             #region 爆炸弹幕
             ProjectileExplosible[ProjectileID.Bomb] = true;
             ProjectileExplosible[ProjectileID.BouncyBomb] = true;
@@ -75,20 +83,19 @@ namespace Coralite.Core
         private void InitAll()
         {
             ProjectileExplosible = new bool[ProjectileLoader.ProjectileCount];
-            for (int i = 0; i < ProjectileExplosible.Length; i++)
-                ProjectileExplosible[i] = false;
+            Array.Fill(ProjectileExplosible, false);
 
             TileSticky = new bool[TileLoader.TileCount];
-            for (int i = 0; i < TileSticky.Length; i++)
-                TileSticky[i] = false;
+            Array.Fill(TileSticky, false);
 
             WallShadowCastle = new bool[WallLoader.WallCount];
-            for (int i = 0; i < WallShadowCastle.Length; i++)
-                WallShadowCastle[i] = false;
+            Array.Fill(WallShadowCastle, false);
 
             TileShadowCastle = new bool[TileLoader.TileCount];
-            for (int i = 0; i < TileShadowCastle.Length; i++)
-                TileShadowCastle[i] = false;
+            Array.Fill(TileShadowCastle, false);
+
+            TileSpecialDraw = new bool[TileLoader.TileCount];
+            Array.Fill(TileSpecialDraw, false);
         }
     }
 }

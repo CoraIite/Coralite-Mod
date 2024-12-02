@@ -1,19 +1,24 @@
 ﻿using Coralite.Content.UI.MagikeApparatusPanel;
 using Coralite.Core.Loaders;
+using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.CoraliteActorComponent;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
+using InnoVault;
+using InnoVault.TileProcessors;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader.IO;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components
 {
@@ -74,6 +79,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             }
         }
 
+        #region 网络同步部分
+
         public override void SendData(ModPacket data)
         {
             //$"SendData-CapacityBase:{CapacityBase}".LoggerDomp();
@@ -84,13 +91,19 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             //$"SendData-Items[].Length:{Items.Length}".LoggerDomp();
             data.Write(Items.Length);
-
+            
             for (int i = 0; i < Items.Length; i++)
             {
                 //$"SendData-Items.type:{Items[i].type}".LoggerDomp();
-                data.Write(Items[i].type);
-                data.Write(Items[i].stack);
-                data.Write(Items[i].prefix);
+                //data.Write(Items[i].type);
+                //data.Write(Items[i].stack);
+                //data.Write(Items[i].prefix);
+                if (Items[i].IsAir)
+                    data.Write(false);
+                else
+                    data.Write(true);
+
+                ItemIO.Send(Items[i], data,true);
             }
         }
 
@@ -105,33 +118,76 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             int length = reader.ReadInt32();
             //$"ReceiveData-Items[].Length:{length}".LoggerDomp();
 
-            List<Item> itemList = [];
-            if (length > 999)
-            {
+            //List<Item> itemList = [];
+
+            if (length > 999)//限制最大长度，放置一些可能的BUG导致游戏爆炸
                 length = 999;
-            }
+
+            _items = new Item[length];
+
             for (int i = 0; i < length; i++)
             {
-                int type = reader.ReadInt32();
-                int stack = reader.ReadInt32();
-                int prefix = reader.ReadInt32();
+                bool isAir = reader.ReadBoolean();
+                if (!isAir)
+                    Items[i]=new Item();
+                else
+                    Items[i] = ItemIO.Receive(reader, true);
+
+                //int type = reader.ReadInt32();
+                //int stack = reader.ReadInt32();
+                //int prefix = reader.ReadInt32();
                 //$"ReceiveData-Items.type:{type}".LoggerDomp();
                 //$"ReceiveData-Items.stack:{stack}".LoggerDomp();
                 //$"ReceiveData-Items.prefix:{prefix}".LoggerDomp();
-                if (type < 0 || type >= ItemLoader.ItemCount)
-                {
-                    type = ItemID.None;
-                }
-                Item item = new Item(type);
-                if (type > 0)
-                {
-                    item.stack = stack;
-                    item.prefix = prefix;
-                }
-                itemList.Add(item);
+                //if (type < 0 || type >= ItemLoader.ItemCount)
+                //    type = ItemID.None;
+
+                //Item item=new Item();
+
+                //if (type > 0)
+                //{
+                //    item.stack = stack;
+                //    item.prefix = prefix;
+                //}
+                //itemList.Add(item);
             }
-            _items = [.. itemList];
+
+            //_items = [.. itemList];
         }
+
+        /// <summary>
+        /// 客户端向其他端发送信息，只同步一个物品
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <param name="whoAmI"></param>
+        public static void ReceiveSpecificItem(BinaryReader reader, int whoAmI)
+        {
+            int ownerIndex = reader.ReadInt32();
+            Point16 position = reader.ReadPoint16();
+            int index = reader.ReadInt32();
+
+            if (!Main.player.IndexInRange(ownerIndex))
+                return;
+
+            if (MagikeHelper.TryGetEntityWithTopLeft(position, out var tp)
+                && tp.TryGetComponent(MagikeComponentID.ItemContainer, out ItemContainer container))
+            {
+                container[index] = ItemIO.Receive(reader, true);//接收
+
+                if (Main.dedServ)//服务器端再次向其他客户端同步一下
+                {
+                    ModPacket modPacket = Coralite.Instance.GetPacket();
+                    modPacket.Write((byte)CoraliteNetWorkEnum.ItemContainer_SpecificIndex);
+                    modPacket.Write(Main.myPlayer);
+                    modPacket.WritePoint16(container.Entity.Position);
+                    modPacket.Write(index);
+                    ItemIO.Send(container[index], modPacket, true);
+                    modPacket.Send(-1, whoAmI);
+                }
+            }
+        }
+
+        #endregion
 
         public override void Update() { }
 
@@ -332,13 +388,18 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public void SendData()
         {
             if (!VaultUtils.isClient)
-            {
                 return;
-            }
-            if (_container.Entity is MagikeTP magikeTP)
-            {
-                magikeTP.SendData();
-            }
+
+            //_container.Entity.SendData();
+
+            ModPacket modPacket = Coralite.Instance.GetPacket();
+            modPacket.Write((byte)CoraliteNetWorkEnum.ItemContainer_SpecificIndex);
+            modPacket.Write(Main.myPlayer);
+            modPacket.WritePoint16(_container.Entity.Position);
+            modPacket.Write(_index);
+            ItemIO.Send(_container[_index], modPacket,true);
+
+            modPacket.Send();
         }
 
         //public void GrabSound()
@@ -360,9 +421,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 _scale = Helper.Lerp(_scale, 1.1f, 0.2f);
 
                 if ((Main.mouseRightRelease && Main.mouseRight) || (Main.mouseLeftRelease && Main.mouseLeft))
-                {
                     SendData();
-                }
             }
             else
                 _scale = Helper.Lerp(_scale, 1f, 0.2f);

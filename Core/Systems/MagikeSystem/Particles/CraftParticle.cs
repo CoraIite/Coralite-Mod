@@ -33,7 +33,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
 
         public override void AI()
         {
-            if (!TryGetEntity(_pos, out _))
+            if (!TryGetEntityWithTopLeft(_pos, out _))
             {
                 active = false;
                 return;

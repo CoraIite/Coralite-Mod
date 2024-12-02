@@ -126,7 +126,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
                 foreach (var pos in linerSender.Receivers)
                 {
-                    if (!TryGetEntity(pos, out MagikeTP receiverEntity))
+                    if (!TryGetEntityWithTopLeft(pos, out MagikeTP receiverEntity))
                         continue;
 
                     Item[] tempItems = null;
@@ -173,7 +173,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             foreach (var pos in linerSender.Receivers)
             {
-                if (!MagikeHelper.TryGetEntity(pos, out MagikeTP entity))
+                if (!MagikeHelper.TryGetEntityWithTopLeft(pos, out MagikeTP entity))
                     continue;
 
                 Item[] tempItems = null;
@@ -258,7 +258,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             foreach (var pos in linerSender.Receivers)
             {
-                if (!MagikeHelper.TryGetEntity(pos, out MagikeTP entity))
+                if (!MagikeHelper.TryGetEntityWithTopLeft(pos, out MagikeTP entity))
                     continue;
 
                 Item[] tempItems = null;

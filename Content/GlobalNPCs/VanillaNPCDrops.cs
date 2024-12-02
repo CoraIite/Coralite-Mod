@@ -3,6 +3,7 @@ using Coralite.Content.Items.Donator;
 using Coralite.Content.Items.FlyingShields;
 using Coralite.Content.Items.FlyingShields.Accessories;
 using Coralite.Content.Items.LandOfTheLustrousSeries;
+using Coralite.Content.Items.LandOfTheLustrousSeries.Accessories;
 using Coralite.Content.Items.Materials;
 using Coralite.Content.Items.Placeable;
 using Coralite.Content.Items.YujianHulu;
@@ -51,6 +52,9 @@ namespace Coralite.Content.GlobalNPCs
                     break;
                 case NPCID.Mimic:
                     npcLoot.Add(ItemDropRule.Common(ItemType<EekShield>(), 10));
+                    break;
+                case NPCID.Tim:
+                    npcLoot.Add(ItemDropRule.Common(ItemType<EightsquareHand>(), 2));
                     break;
                 case NPCID.HallowBoss://光女掉落圣光残片
                     npcLoot.Add(ItemDropRule.ByCondition(new DownedGolemCondition(), ItemType<FragmentsOfLight>(), 1, 3, 5));

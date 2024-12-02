@@ -193,7 +193,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
         public override void KillMultiTile(int i, int j, int frameX, int frameY)
         {
             OnTileKilled(i, j);
-            if (TryGetEntity(new Point16(i, j), out MagikeTP entity))
+            if (TryGetEntityWithTopLeft(new Point16(i, j), out MagikeTP entity))
                 entity.Kill();
         }
 
@@ -390,7 +390,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
             Vector2 offset = offScreen - Main.screenPosition;
             Color lightColor = Lighting.GetColor(p.X, p.Y);
 
-            if (!TryGetEntity(p, out MagikeTP entity))
+            if (!TryGetEntityWithTopLeft(p, out MagikeTP entity))
                 return;
 
             DrawExtra(spriteBatch, tileRect, offScreen, lightColor, rotation, entity);

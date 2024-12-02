@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Coralite.Helpers;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.GameContent.Drawing;
 using Terraria.ID;
@@ -23,6 +24,8 @@ namespace Coralite.Core.Prefabs.Tiles
             TileID.Sets.SwaysInWindBasic[Type] = true;
             TileID.Sets.MultiTileSway[Type] = true;
 
+            CoraliteSets.TileSpecialDraw[Type] = true;
+
             DustType = dustType;
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2Top);
@@ -31,7 +34,18 @@ namespace Coralite.Core.Prefabs.Tiles
 
             AddMapEntry(mapColor);
         }
+        public override void SpecialDraw(int i, int j, SpriteBatch spriteBatch)
+        {
+            Helper.DrawMultWine(i, j, 1, 2);
+        }
 
+        //public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
+        //{
+        //    Tile selfTile = Main.tile[i, j];
+        //    if (Main.LightingEveryFrame && selfTile.TileFrameX % FrameWidth == 0 && selfTile.TileFrameY % FrameHeight == 0)
+        //        ModContent.GetInstance<CoraliteTileDrawing>().AddSpecialPoint(i, j, CoraliteTileDrawing.TileCounterType.MultiTileVine);
+        //    return false;
+        //}
         public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
         {
             Tile selfTile = Main.tile[i, j];

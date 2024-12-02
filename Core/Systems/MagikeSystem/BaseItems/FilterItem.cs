@@ -65,7 +65,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
         internal void Send_PlaceFilter_Data()
         {
             ModPacket modPacket = Coralite.Instance.GetPacket();
-            modPacket.Write((byte)CLNetWorkEnum.PlaceFilter);
+            modPacket.Write((byte)CoraliteNetWorkEnum.PlaceFilter);
             modPacket.Write(Owner.whoAmI);
             modPacket.Write(TargetPoint.X);
             modPacket.Write(TargetPoint.Y);
@@ -86,7 +86,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
                 if (Main.dedServ)
                 {
                     ModPacket modPacket = Coralite.Instance.GetPacket();
-                    modPacket.Write((byte)CLNetWorkEnum.PlaceFilter);
+                    modPacket.Write((byte)CoraliteNetWorkEnum.PlaceFilter);
                     modPacket.Write(ownerIndex);
                     modPacket.Write(TargetPoint.X);
                     modPacket.Write(TargetPoint.Y);
@@ -129,7 +129,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
                     insertPoint.Add(currentTopLeft.Value);
 
                     //尝试根据左上角获取物块实体
-                    if (!MagikeHelper.TryGetEntity(currentTopLeft.Value, out MagikeTP entity))
+                    if (!MagikeHelper.TryGetEntityWithTopLeft(currentTopLeft.Value, out MagikeTP entity))
                         continue;
 
                     //能插入就插，不能就提供失败原因

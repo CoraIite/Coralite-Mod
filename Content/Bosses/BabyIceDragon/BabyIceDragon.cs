@@ -818,7 +818,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
         internal void SendMovesRemoveData()
         {
             ModPacket modpak = Coralite.Instance.GetPacket();
-            modpak.Write((byte)CLNetWorkEnum.BabyIceDragon);
+            modpak.Write((byte)CoraliteNetWorkEnum.BabyIceDragon);
             modpak.Write(NPC.whoAmI);
             modpak.Write(State);
             modpak.Send();
@@ -841,7 +841,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             if (VaultUtils.isServer)
             {
                 ModPacket modpak = Coralite.Instance.GetPacket();
-                modpak.Write((byte)CLNetWorkEnum.BabyIceDragon);
+                modpak.Write((byte)CoraliteNetWorkEnum.BabyIceDragon);
                 modpak.Write(npcWhoAmI);
                 modpak.Write(state);
                 modpak.Send(-1, whoAmI);
