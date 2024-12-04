@@ -729,6 +729,15 @@ namespace Coralite.Content.ModPlayers
                 SoundEngine.PlaySound(sItem.UseSound, Player.Center);
         }
 
+        public override void SendClientChanges(ModPlayer clientPlayer)
+        {
+            base.SendClientChanges(clientPlayer);
+        }
+
+        public override void CopyClientState(ModPlayer targetCopy)
+        {
+            base.CopyClientState(targetCopy);
+        }
 
         public override void OnEnterWorld()
         {

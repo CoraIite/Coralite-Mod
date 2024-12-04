@@ -1,5 +1,6 @@
 ﻿using Coralite.Helpers;
 using System;
+using System.IO;
 using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components.Producers
@@ -42,17 +43,21 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Producers
 
         public virtual bool CanProduce_SpecialCheck() => true;
 
-        public override void Update()
+        public sealed override void Update()
         {
             //生产时间限制
             if (!CheckTime())
                 return;
+
+            this.SendTimerComponentTime(this);
 
             if (!CanProduce())
                 return;
 
             Produce();
         }
+
+        #region UI部分
 
         public virtual string ProductionDelayText(MagikeActiveProducer p)
         {
@@ -66,6 +71,30 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Producers
 
         public virtual string ThroughputText(MagikeActiveProducer p)
             => $"  ▶ {MagikeHelper.BonusColoredText(p.Throughput.ToString(), p.ThroughputBonus)} ({p.ThroughputBase} * {MagikeHelper.BonusColoredText(p.ThroughputBonus.ToString(), p.ThroughputBonus)})";
+
+        #endregion
+
+        #region 网络同步
+
+        public override void SendData(ModPacket data)
+        {
+            data.Write(Timer);
+
+            data.Write(ProductionDelayBase);
+            data.Write(ProductionDelayBonus);
+        }
+
+        public override void ReceiveData(BinaryReader reader, int whoAmI)
+        {
+            Timer = reader.ReadInt32();
+
+            ProductionDelayBase = reader.ReadInt32();
+            ProductionDelayBonus = reader.ReadSingle();
+        }
+
+        #endregion
+
+        #region 数据存取
 
         public override void SaveData(string preName, TagCompound tag)
         {
@@ -86,5 +115,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Producers
             ProductionDelayBase = tag.GetInt(preName + nameof(ProductionDelayBase));
             ProductionDelayBonus = tag.GetFloat(preName + nameof(ProductionDelayBonus));
         }
+
+        #endregion
     }
 }

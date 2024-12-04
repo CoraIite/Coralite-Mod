@@ -831,5 +831,9 @@ namespace Coralite.Helpers
         //    Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.MagikeGuideBook + "Fragment").Value;
         //    spriteBatch.Draw(mainTex, center, null, Color.White, 0, mainTex.Size() / 2, 1, 0, 0);
         //}
+
+
+        public static int IndexOfSelf(this MagikeComponent component)
+            => component.Entity.IndexOf(component);
     }
 }

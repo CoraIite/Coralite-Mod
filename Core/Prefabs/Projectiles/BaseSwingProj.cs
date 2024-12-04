@@ -20,7 +20,12 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         protected string TrailTexture = AssetDirectory.Trails + "Slash";
 
+        /// <summary>
+        /// 仅用于控制弹幕是否在初始情况，多人中的服务端和其他客户端会在等待本地端同步后才设置该值
+        /// </summary>
         protected bool onStart = true;
+        protected bool init = true;
+        protected bool netSendBasicValues = false;
         protected bool canDrawSelf = true;
         protected bool useShadowTrail = false;
         protected bool useSlashTrail = false;
@@ -95,7 +100,8 @@ namespace Coralite.Core.Prefabs.Projectiles
         {
             AIBefore();
 
-            if (onHitTimer != 0 && VisualEffectSystem.HitEffect_HitFreeze && onHitTimer < onHitFreeze)//轻微的卡肉效果
+            if (/*VaultUtils.isClient &&*/ onHitTimer != 0 && VisualEffectSystem.HitEffect_HitFreeze
+                && onHitTimer < onHitFreeze)//轻微的卡肉效果
             {
                 Projectile.Center = OwnerCenter() + (RotateVec2 * ((Projectile.scale * Projectile.height / 2) + distanceToOwner));
                 Top = Projectile.Center + (RotateVec2 * ((Projectile.scale * Projectile.height / 2) + trailTopWidth));
@@ -106,7 +112,15 @@ namespace Coralite.Core.Prefabs.Projectiles
 
             if (onStart)
             {
-                Initializer();
+                if (init && Projectile.IsOwnedByLocalPlayer())
+                {
+                    InitBasicValues();
+                    Initializer();
+                }
+
+                if (!Projectile.IsOwnedByLocalPlayer())//客户端和其他端等待本地端同步完数据后再运行
+                    return;
+
                 return;
             }
 
@@ -147,7 +161,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             Bottom = Projectile.Center - (RotateVec2 * (Projectile.scale * Projectile.height / 2));//弹幕的底端和顶端计算，用于检测碰撞以及绘制
             Owner.itemRotation = _Rotation + (Owner.direction > 0 ? 0 : MathHelper.Pi);
 
-            if (useShadowTrail || useSlashTrail)
+            if (!VaultUtils.isServer && (useShadowTrail || useSlashTrail))
                 UpdateCaches();
         }
 
@@ -157,25 +171,31 @@ namespace Coralite.Core.Prefabs.Projectiles
         protected virtual void Initializer()
         {
             Projectile.velocity *= 0f;
-            if (Owner.whoAmI == Main.myPlayer)
+            if (Projectile.IsOwnedByLocalPlayer())
             {
                 _Rotation = startAngle = GetStartAngle() - (DirSign * startAngle);//设定起始角度
                 totalAngle *= DirSign;
+                Projectile.netUpdate = true;
+                onStart = false;
+                netSendBasicValues = true;
+                init = false;
             }
 
             Slasher();
             Smoother.ReCalculate(maxTime - minTime);
 
-            if (useShadowTrail || useSlashTrail)
+            if (!VaultUtils.isServer && (useShadowTrail || useSlashTrail))
             {
-                oldRotate = new float[trailCount];
-                oldDistanceToOwner = new float[trailCount];
-                oldLength = new float[trailCount];
+                oldRotate ??= new float[trailCount];
+                oldDistanceToOwner ??= new float[trailCount];
+                oldLength ??= new float[trailCount];
                 InitializeCaches();
             }
+        }
 
-            onStart = false;
-            Projectile.netUpdate = true;
+        protected virtual void InitBasicValues()
+        {
+
         }
 
         /// <summary>
@@ -193,16 +213,6 @@ namespace Coralite.Core.Prefabs.Projectiles
         protected virtual void TimeUpdater()
         {
             Timer++;
-        }
-
-        public override void NetCodeHeldSend(BinaryWriter writer)
-        {
-            writer.Write(Timer);
-        }
-
-        public override void NetCodeReceiveHeld(BinaryReader reader)
-        {
-            Timer = reader.ReadSingle();
         }
 
         #region 关于挥舞
@@ -283,7 +293,11 @@ namespace Coralite.Core.Prefabs.Projectiles
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (onHitTimer == 0)
+            {
                 onHitTimer = 1;
+                if (Projectile.IsOwnedByLocalPlayer())
+                    Projectile.netUpdate = true;
+            }
 
             OnHitEvent(target, hit, damageDone);
         }
@@ -317,10 +331,82 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         #endregion
 
+        #region 同步
+
+        public override BitsByte SandBitsByte(BitsByte flags)
+        {
+            base.SandBitsByte(flags);
+
+            flags[2] = onStart;
+            flags[3] = netSendBasicValues;
+
+            return flags;
+        }
+
+        public override void ReceiveBitsByte(BitsByte flags)
+        {
+            base.ReceiveBitsByte(flags);
+
+            onStart = flags[2];
+            netSendBasicValues = flags[3];
+        }
+
+        public override void NetCodeHeldSend(BinaryWriter writer)
+        {
+            if (netSendBasicValues)
+            {
+                writer.Write(Timer);
+                writer.Write(_Rotation);
+                writer.Write(startAngle);
+                writer.Write(totalAngle);
+                writer.Write(distanceToOwner);
+
+                netSendBasicValues = false;
+            }
+
+            writer.Write(onHitTimer);
+        }
+
+        public override void NetCodeReceiveHeld(BinaryReader reader)
+        {
+            if (netSendBasicValues)
+            {
+                if (init)
+                    InitBasicValues();
+
+                Timer = reader.ReadSingle();
+                _Rotation = reader.ReadSingle();
+                startAngle = reader.ReadSingle();
+                totalAngle = reader.ReadSingle();
+                distanceToOwner = reader.ReadSingle();
+
+                if (init)
+                {
+                    Initializer();
+                    init = false;
+                }
+
+                if (VaultUtils.isServer)
+                {
+                    Projectile.netUpdate = true;
+                    netSendBasicValues = true;
+                }
+                else
+                    netSendBasicValues = false;
+            }
+
+            onHitTimer = reader.ReadByte();
+        }
+
+        #endregion
+
         #region 绘制
 
         public override bool PreDraw(ref Color lightColor)
         {
+            if (onStart)
+                return false;
+
             if (useSlashTrail && VisualEffectSystem.DrawKniefLight && Timer > minTime)
                 DrawSlashTrail();
 
@@ -329,6 +415,9 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         public override void PostDraw(Color lightColor)
         {
+            if (onStart)
+                return;
+
             //Main.spriteBatch.End();
             //Main.spriteBatch.Begin(0, BlendState.NonPremultiplied, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.ZoomMatrix);
 

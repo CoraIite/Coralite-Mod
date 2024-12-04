@@ -52,7 +52,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Producers
 
         public override void Produce()
         {
-            Item item = ((ItemContainer)Entity.GetSingleComponent(MagikeComponentID.ItemContainer)).Items[_index];
+            ItemContainer container = (ItemContainer)Entity.GetSingleComponent(MagikeComponentID.ItemContainer);
+            Item item = container.Items[_index];
 
             Entity.GetMagikeContainer().AddMagike(GetMagikeAmount(item));
             MagikeHelper.SpawnDustOnProduce(Entity.Position, Coralite.MagicCrystalPink);
@@ -60,6 +61,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Producers
             item.stack--;
             if (item.stack <= 0)
                 item.TurnToAir();
+
+            container.SendIndexedItem(_index);
         }
 
         #region UI部分

@@ -101,9 +101,10 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 if (Items[i].IsAir)
                     data.Write(false);
                 else
+                {
                     data.Write(true);
-
-                ItemIO.Send(Items[i], data,true);
+                    ItemIO.Send(Items[i], data, true);
+                }
             }
         }
 
@@ -129,7 +130,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             {
                 bool isAir = reader.ReadBoolean();
                 if (!isAir)
-                    Items[i]=new Item();
+                    Items[i] = new Item();
                 else
                     Items[i] = ItemIO.Receive(reader, true);
 
@@ -153,6 +154,45 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             }
 
             //_items = [.. itemList];
+        }
+
+        /// <summary>
+        /// 发送指定索引的物品
+        /// </summary>
+        public void SendIndexedItem(int index)
+        {
+            if (!Items.IndexInRange(index))
+            {
+                $"物品容器索引越界！在{Entity.Position.X} {Entity.Position.Y}".DumpInConsole();
+                $"发生致命错误！".Dump();
+                return;
+            }
+
+            this.AddToPackList(MagikeNetPackType.ItemContainer_IndexedItem, packet =>
+            {
+                packet.Write(index);
+                ItemIO.Send(Items[index], packet, true);
+            });
+        }
+
+        /// <summary>
+        /// 接受指定索引的物品
+        /// </summary>
+        /// <param name="reader"></param>
+        public void ReceiveIndexedItem(BinaryReader reader)
+        {
+            int index = reader.ReadInt32();
+
+            Item item = ItemIO.Receive(reader, true);
+
+            if (!Items.IndexInRange(index))
+            {
+                $"物品容器索引越界！在{Entity.Position.X} {Entity.Position.Y}".DumpInConsole();
+                $"发生致命错误！".Dump();
+                return;
+            }
+
+            Items[index] = item;
         }
 
         /// <summary>

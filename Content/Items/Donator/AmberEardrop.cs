@@ -83,6 +83,11 @@ namespace Coralite.Content.Items.Donator
             sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, effect, Main.UIScaleMatrix);
 
             Main.graphics.GraphicsDevice.Textures[1] = noiseTex;
+
+            Vector2 textSize = ChatManager.GetStringSize(line.Font, line.Text, line.BaseScale);
+            Texture2D mainTex = CoraliteAssets.LightBall.BallA.Value;
+            sb.Draw(mainTex, new Rectangle(line.X - 35, line.Y - 4 - 6, (int)textSize.X + 35 * 2, (int)textSize.Y + 6 * 2), null, Color.White * 0.8f);
+            
             ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, line.Font, line.Text, new Vector2(line.X, line.Y)
                 , Color.White, line.Rotation, line.Origin, line.BaseScale, line.MaxWidth, line.Spread);
 

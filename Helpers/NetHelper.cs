@@ -1,5 +1,6 @@
 ﻿using Coralite.Core.Systems.CoraliteActorComponent;
 using Coralite.Core.Systems.MagikeSystem;
+using Coralite.Core.Systems.MagikeSystem.Components;
 using System;
 using System.IO;
 using Terraria.DataStructures;
@@ -61,6 +62,23 @@ namespace Coralite.Helpers
         {
             position = new Point16(reader.ReadInt16(), reader.ReadInt16());
             packType = (MagikeNetPackType)reader.ReadByte();
+        }
+
+
+
+
+        /// <summary>
+        /// 将自身加入到列表中，同步时间，仅服务端会实际运行
+        /// </summary>
+        /// <param name="iTimer"></param>
+        /// <param name="component"></param>
+        public static void SendTimerComponentTime(this ITimerTriggerComponent iTimer, MagikeComponent component)
+        {
+            component.AddToPackList(MagikeNetPackType.TimerTriger_Timer, packet =>
+            {
+                packet.Write(component.IndexOfSelf());
+                packet.Write(iTimer.Timer);
+            });
         }
     }
 }

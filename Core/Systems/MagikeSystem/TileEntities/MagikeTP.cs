@@ -84,7 +84,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         }
 
 
-        #region 数据存储
+        #region 网络同步与数据存储
 
         public override void SendData(ModPacket data)
         {
@@ -308,6 +308,16 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
                 return (T)Components[index];
             else
                 return (T)((List<MagikeComponent>)Components[index]).First();
+        }
+
+        /// <summary>
+        /// 查找组件的索引
+        /// </summary>
+        /// <param name="component"></param>
+        /// <returns></returns>
+        public int IndexOf(MagikeComponent component)
+        {
+            return ComponentsCache.IndexOf(component);
         }
 
         #endregion

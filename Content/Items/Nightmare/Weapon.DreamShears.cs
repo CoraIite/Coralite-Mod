@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -108,7 +109,7 @@ namespace Coralite.Content.Items.Nightmare
 
         public static Asset<Texture2D> GradientTexture;
 
-        public override bool CanFire => true;
+        public override bool CanFire => false;
 
         public DreamShearsSlash() : base(0.785f, trailCount: 26) { }
 
@@ -150,7 +151,7 @@ namespace Coralite.Content.Items.Nightmare
             return 65 * Projectile.scale;
         }
 
-        protected override void Initializer()
+        protected override void InitBasicValues()
         {
             if (Main.myPlayer == Projectile.owner)
                 Owner.direction = InMousePos.X > Owner.Center.X ? 1 : -1;
@@ -183,7 +184,6 @@ namespace Coralite.Content.Items.Nightmare
             }
 
             SoundEngine.PlaySound(st, Owner.Center);
-            base.Initializer();
         }
 
         protected override void AIBefore()
@@ -419,6 +419,8 @@ namespace Coralite.Content.Items.Nightmare
                 Helper.PlayPitched(CoraliteSoundID.Slash_Item71, Owner.Center, pitch: 0.8f);
 
                 init = false;
+                if (Projectile.IsOwnedByLocalPlayer())
+                    Projectile.netUpdate = true;
             }
 
             switch (State)
@@ -469,10 +471,10 @@ namespace Coralite.Content.Items.Nightmare
                     {
                         Timer = 0;
                         State++;
+                        if (Projectile.IsOwnedByLocalPlayer())
+                            Projectile.netUpdate = true;
                     }
 
-                    //什么？看不懂想要注释？
-                    //梦里看去吧
                     break;
                 case 1:
                     SelfRot = SelfRot.AngleTowards(Projectile.rotation, 0.2f);
@@ -494,6 +496,8 @@ namespace Coralite.Content.Items.Nightmare
                     if (Timer > 10)
                     {
                         State++;
+                        if (Projectile.IsOwnedByLocalPlayer())
+                            Projectile.netUpdate = true;
                     }
                     break;
                 case 2:
@@ -520,6 +524,16 @@ namespace Coralite.Content.Items.Nightmare
 
             Projectile.Center = Owner.Center + (Projectile.rotation.ToRotationVector2() * DistanceToOwner);
             Timer++;
+        }
+
+        public override void NetCodeHeldSend(BinaryWriter writer)
+        {
+            writer.Write(startAngle);
+        }
+
+        public override void NetCodeReceiveHeld(BinaryReader reader)
+        {
+            startAngle=reader.ReadSingle();
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
@@ -647,13 +661,6 @@ namespace Coralite.Content.Items.Nightmare
             Projectile.localNPCHitCooldown = 45;
         }
 
-        public override void OnSpawn(IEntitySource source)
-        {
-            Projectile.oldPos = new Vector2[16];
-            for (int i = 0; i < 16; i++)
-                Projectile.oldPos[i] = Projectile.Center;
-        }
-
         public override bool ShouldUpdatePosition() => Timer >= 0 && State == 1;
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
@@ -682,6 +689,14 @@ namespace Coralite.Content.Items.Nightmare
                     Projectile.rotation = Projectile.velocity.ToRotation();
                     Length = Owner.GetAdjustedItemScale(Owner.HeldItem) * 165;
                 }
+
+                if (!VaultUtils.isServer)
+                {
+                    Projectile.oldPos = new Vector2[16];
+                    for (int i = 0; i < 16; i++)
+                        Projectile.oldPos[i] = Projectile.Center;
+                }
+
                 init = false;
             }
 
@@ -696,8 +711,9 @@ namespace Coralite.Content.Items.Nightmare
                             Projectile.Center = Owner.Center;
                             Vector2 targetCenter = Projectile.Center + (Projectile.velocity * Length * 2);
 
-                            for (int i = 0; i < 16; i++)
-                                Projectile.oldPos[i] = Vector2.Lerp(Projectile.Center, targetCenter, i / 16f);
+                            if (!VaultUtils.isServer)
+                                for (int i = 0; i < 16; i++)
+                                    Projectile.oldPos[i] = Vector2.Lerp(Projectile.Center, targetCenter, i / 16f);
 
                             if (Timer < 5)
                             {
@@ -721,19 +737,22 @@ namespace Coralite.Content.Items.Nightmare
                                 Projectile.rotation.ToRotationVector2() * Main.rand.NextFloat(0.5f, 3f));
                             dust.noGravity = true;
 
-                            if (Timer < 12)
+                            if (!VaultUtils.isServer)
                             {
-                                Projectile.oldPos[15] = Projectile.Center + Projectile.velocity;
+                                if (Timer < 12)
+                                {
+                                    Projectile.oldPos[15] = Projectile.Center + Projectile.velocity;
 
-                                for (int i = 0; i < 15; i++)
-                                    Projectile.oldPos[i] = Vector2.Lerp(Projectile.oldPos[0], Projectile.oldPos[15], i / 15f);
-                            }
-                            else
-                            {
-                                for (int i = 0; i < 15; i++)
-                                    Projectile.oldPos[i] = Projectile.oldPos[i + 1];
+                                    for (int i = 0; i < 15; i++)
+                                        Projectile.oldPos[i] = Vector2.Lerp(Projectile.oldPos[0], Projectile.oldPos[15], i / 15f);
+                                }
+                                else
+                                {
+                                    for (int i = 0; i < 15; i++)
+                                        Projectile.oldPos[i] = Projectile.oldPos[i + 1];
 
-                                Projectile.oldPos[15] = Projectile.Center + Projectile.velocity;
+                                    Projectile.oldPos[15] = Projectile.Center + Projectile.velocity;
+                                }
                             }
 
                             if (Timer < 8)
@@ -772,7 +791,7 @@ namespace Coralite.Content.Items.Nightmare
                 center = target.Center + ((Projectile.rotation - 1.57f + Main.rand.NextFloat(-0.45f, 0.45f)).ToRotationVector2() * 140);
                 Projectile.NewProjectile(Projectile.GetSource_FromAI(), center, (target.Center - center).SafeNormalize(Vector2.Zero) * 28, ProjectileType<DreamShearsSpurt>(), Projectile.damage, 2, Owner.whoAmI, 1, 0, 16);
 
-                if (VisualEffectSystem.HitEffect_ScreenShaking)
+                if (VisualEffectSystem.HitEffect_ScreenShaking&& Projectile.IsOwnedByLocalPlayer())
                 {
                     PunchCameraModifier modifier = new(Projectile.Center, rotDir, 3, 6, 6, 1000);
                     Main.instance.CameraModifiers.Add(modifier);
@@ -895,7 +914,6 @@ namespace Coralite.Content.Items.Nightmare
             Projectile.scale = 1.7f;
             Projectile.DamageType = DamageClass.Melee;
             Projectile.localNPCHitCooldown = 16;
-            Projectile.netUpdate = true;
             Projectile.netImportant = true;
             Projectile.usesLocalNPCImmunity = true;
         }
@@ -917,6 +935,7 @@ namespace Coralite.Content.Items.Nightmare
                     Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center,
                         Projectile.rotation.ToRotationVector2(), ProjectileType<NightmareBite_Firendly>(), Projectile.damage, 2, Owner.whoAmI, Projectile.rotation);
                 }
+
                 init = false;
             }
 
@@ -934,6 +953,9 @@ namespace Coralite.Content.Items.Nightmare
                     {
                         State++;
                         Timer = 0;
+
+                        if (Projectile.IsOwnedByLocalPlayer())
+                            Projectile.netUpdate = true;
                     }
                     break;
                 case 1:
@@ -963,6 +985,16 @@ namespace Coralite.Content.Items.Nightmare
             Projectile.Center = Owner.Center + (Projectile.rotation.ToRotationVector2() * DistanceToOwner);
 
             Timer++;
+        }
+
+        public override void NetCodeHeldSend(BinaryWriter writer)
+        {
+            writer.Write(Timer);
+        }
+
+        public override void NetCodeReceiveHeld(BinaryReader reader)
+        {
+            Timer= reader.ReadInt32();
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -1046,6 +1078,8 @@ namespace Coralite.Content.Items.Nightmare
                 Projectile.Center = center;
                 ReadyTime = 3 * Owner.itemTimeMax / 4;
                 Projectile.rotation = StartRot;
+               if( Projectile.IsOwnedByLocalPlayer())
+                    Projectile.netUpdate = true;
             }
 
             do
