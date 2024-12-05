@@ -76,7 +76,7 @@ namespace Coralite.Helpers
             entity = null;
             //if (!TileEntity.ByPosition.TryGetValue(position, out TileEntity tileEntity))
             //    return false;
-            if (!ByTopLeftnGetTP(entity, position, out TileProcessor tileProcessor))
+            if (!ByTopLeftnGetTP(position, out TileProcessor tileProcessor))
                 return false;
 
             if (tileProcessor is not MagikeTP entity1)
@@ -643,13 +643,13 @@ namespace Coralite.Helpers
         /// <param name="topLeft"></param>
         /// <param name="tileProcessor"></param>
         /// <returns></returns>
-        public static bool ByTopLeftnGetTP(MagikeTP entity, Point16 topLeft, out TileProcessor tileProcessor)
+        public static bool ByTopLeftnGetTP(Point16 topLeft, out TileProcessor tileProcessor)
         {
             tileProcessor = null;
             // 遍历世界中的所有模块，查找与指定ID和坐标匹配的模块
             foreach (var inds in TileProcessorLoader.TP_InWorld)
             {
-                if (inds.Position == topLeft && inds.ID == entity.ID)
+                if (inds.Position == topLeft)
                 {
                     tileProcessor = inds;
                     return true;
