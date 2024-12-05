@@ -20,6 +20,10 @@ namespace Coralite.Content.Tiles.RedJades
             Main.tileSolid[Type] = true;
             Main.tileBlockLight[Type] = true;
 
+            //TileID.Sets.ChecksForMerge[Type] = true;
+            //Main.tileMerge[TileID.Stone][Type] = true;
+            //Main.tileMerge[Type][TileID.Stone] = true;
+
             DustType = DustID.GemRuby;
             HitSound = SoundID.Tink;
 

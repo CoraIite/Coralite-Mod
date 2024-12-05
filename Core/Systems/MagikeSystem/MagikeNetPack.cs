@@ -36,5 +36,4 @@ namespace Coralite.Core.Systems.MagikeSystem
         /// </summary>
         ItemContainer_IndexedItem,
     }
-
 }

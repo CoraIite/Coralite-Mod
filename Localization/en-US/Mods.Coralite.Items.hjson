@@ -4885,3 +4885,8 @@ EightsquareHand: {
 	DisplayName: Eightsquare Hand
 	Tooltip: ""
 }
+
+Circumhorizon: {
+	DisplayName: Circumhorizon
+	Tooltip: ""
+}

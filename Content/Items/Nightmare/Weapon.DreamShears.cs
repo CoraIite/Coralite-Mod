@@ -2,6 +2,7 @@
 using Coralite.Content.Items.Icicle;
 using Coralite.Content.ModPlayers;
 using Coralite.Core;
+using Coralite.Core.Attributes;
 using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.Trails;
@@ -101,13 +102,15 @@ namespace Coralite.Content.Items.Nightmare
         public override bool MeleePrefix() => true;
     }
 
+    [AutoLoadTexture(AssetDirectory.NightmareItems)]
     public class DreamShearsSlash : BaseSwingProj, IDrawWarp
     {
         public override string Texture => AssetDirectory.NightmareItems + "DreamShears";
 
         public ref float Combo => ref Projectile.ai[0];
 
-        public static Asset<Texture2D> GradientTexture;
+        [AutoLoadTexture("DreamShearsGradient", 1)]
+        public static Asset<Texture2D> GradientTexture { get; private set; }
 
         public override bool CanFire => false;
 
@@ -115,22 +118,6 @@ namespace Coralite.Content.Items.Nightmare
 
         public int alpha;
         public int delay = 24;
-
-        public override void Load()
-        {
-            if (Main.dedServ)
-                return;
-
-            GradientTexture = Request<Texture2D>(AssetDirectory.NightmareItems + "DreamShearsGradient");
-        }
-
-        public override void Unload()
-        {
-            if (Main.dedServ)
-                return;
-
-            GradientTexture = null;
-        }
 
         public override void SetDefs()
         {

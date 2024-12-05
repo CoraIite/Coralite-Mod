@@ -80,8 +80,26 @@ namespace Coralite.Core.Loaders
         {
             List<IReflactionLoader> loaders = FillLoaderList();
 
+            bool isCilent = !Main.dedServ;
+
             for (int i = 0; i < loaders.Count; i++)
-                loaders[i].Unload(Mod);
+            {
+                if (loaders[i].Side == IReflactionLoader.LoadSide.All)
+                    loaders[i].PreUnload(Mod);
+                else if (loaders[i].Side == IReflactionLoader.LoadSide.Cilent && isCilent)
+                    loaders[i].PreUnload(Mod);
+            }
+
+            foreach (var mod in ModLoader.Mods)
+                if (mod is ICoralite or Coralite)
+                    foreach (Type type in AssemblyManager.GetLoadableTypes(Mod.Code))
+                        for (int i = 0; i < loaders.Count; i++)
+                        {
+                            if (loaders[i].Side == IReflactionLoader.LoadSide.All)
+                                loaders[i].Unload(Mod, type);
+                            else if (loaders[i].Side == IReflactionLoader.LoadSide.Cilent && isCilent)
+                                loaders[i].Unload(Mod, type);
+                        }
         }
 
         public List<IReflactionLoader> FillLoaderList()

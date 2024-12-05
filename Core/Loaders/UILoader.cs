@@ -33,7 +33,7 @@ namespace Coralite.Core.Loaders
             }
         }
 
-        public void Unload(Mod Mod)
+        public void PreUnload(Mod Mod)
         {
             UIStates?.ForEach(n => n.Unload());
             UserInterfaces = null;

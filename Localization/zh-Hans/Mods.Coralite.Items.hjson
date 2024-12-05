@@ -5001,3 +5001,8 @@ EightsquareHand: {
 	DisplayName: 八角手
 	Tooltip: 提高宝石武器 “闪耀” 前缀的出现概率
 }
+
+Circumhorizon: {
+	// DisplayName: Circumhorizon
+	// Tooltip: ""
+}

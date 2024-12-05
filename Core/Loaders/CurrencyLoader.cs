@@ -37,7 +37,7 @@ namespace Coralite.Core.Loaders
 
         public static int GetCurrencyID<T>() where T : CustomCurrencySystem => CurrencySystemIDsF.FirstOrDefault(n => n.Key is T).Value;
 
-        public void Unload(Mod Mod)
+        public void PreUnload(Mod Mod)
         {
             CurrencySystemIDs = null;
             CurrencySystemIDsF = null;

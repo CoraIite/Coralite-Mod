@@ -14,7 +14,7 @@ namespace Coralite.Core
         public float Priority => 1;
 
         [AttributeUsage(AttributeTargets.Class)]
-        public class AutoLoadTextureAttribute(string texturePath) : Attribute
+        private class AutoLoadTextureAttribute(string texturePath) : Attribute
         {
             public string TexturePath => texturePath;
         }
