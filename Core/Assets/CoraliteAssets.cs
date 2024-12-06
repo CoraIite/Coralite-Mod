@@ -5,7 +5,6 @@ using System.Reflection;
 using Terraria;
 using static Coralite.Core.AssetDirectory;
 using static Terraria.ModLoader.ModContent;
-using ATex = ReLogic.Content.Asset<Microsoft.Xna.Framework.Graphics.Texture2D>;
 
 namespace Coralite.Core
 {

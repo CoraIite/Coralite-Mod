@@ -3,11 +3,14 @@
 namespace Coralite.Core.Prefabs.Projectiles
 {
     /// <summary>
-    /// ai0用于判断玩家的手持方向,ai1用于控制是否是特殊的弹幕,ai2用于记录冲刺时间
+    /// ai0用于判断玩家的手持方向，ai1用于控制是否是特殊的弹幕，ai2用于记录冲刺时间
     /// </summary>
     public abstract class BaseDashBow : BaseHeldProj
     {
         public ref float Rotation => ref Projectile.ai[0];
+        /// <summary>
+        /// 为0时是普通射击，为1时是冲刺射击
+        /// </summary>
         public ref float Special => ref Projectile.ai[1];
         public ref float DashTime => ref Projectile.ai[2];
 

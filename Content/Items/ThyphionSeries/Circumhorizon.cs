@@ -1,8 +1,13 @@
 ﻿using Coralite.Content.ModPlayers;
 using Coralite.Content.RecipeGroups;
 using Coralite.Core;
+using Coralite.Core.Attributes;
 using Coralite.Core.Prefabs.Projectiles;
+using Coralite.Core.SmoothFunctions;
+using Coralite.Helpers;
+using System.IO;
 using System.Linq;
+using System.Threading;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -33,7 +38,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         {
             Vector2 dir = (Main.MouseWorld - player.Center).SafeNormalize(Vector2.One);
             float rot = dir.ToRotation();
-            Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, Vector2.Zero, ProjectileType<AfterglowHeldProj>(), damage, knockback, player.whoAmI, rot, 0);
+            Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, Vector2.Zero, ProjectileType<CircumhorizonHeldProj>(), damage, knockback, player.whoAmI, rot, 0);
             Projectile.NewProjectile(source, player.Center, velocity, type, damage, knockback, player.whoAmI);
 
             return false;
@@ -76,7 +81,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 SoundEngine.PlaySound(CoraliteSoundID.Swing_Item1, Player.Center);
 
                 foreach (var proj in from proj in Main.projectile
-                                     where proj.active && proj.friendly && proj.owner == Player.whoAmI && proj.type == ProjectileType<AfterglowHeldProj>()
+                                     where proj.active && proj.friendly && proj.owner == Player.whoAmI && proj.type == ProjectileType<CircumhorizonHeldProj>()
                                      select proj)
                 {
                     proj.Kill();
@@ -84,7 +89,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 }
 
                 //生成手持弹幕
-                Projectile.NewProjectile(Player.GetSource_ItemUse(Player.HeldItem), Player.Center, Vector2.Zero, ProjectileType<AfterglowHeldProj>(),
+                Projectile.NewProjectile(Player.GetSource_ItemUse(Player.HeldItem), Player.Center, Vector2.Zero, ProjectileType<CircumhorizonHeldProj>(),
                     Player.HeldItem.damage, Player.HeldItem.knockBack, Player.whoAmI, 1.57f + dashDirection * 1, 1, 20);
             }
 
@@ -92,6 +97,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         }
     }
 
+    [AutoLoadTexture(Path = AssetDirectory.ThyphionSeriesItems)]
     public class CircumhorizonHeldProj : BaseDashBow
     {
         public override string Texture => AssetDirectory.ThyphionSeriesItems + "Circumhorizon";
@@ -99,7 +105,13 @@ namespace Coralite.Content.Items.ThyphionSeries
         public override int GetItemType() => ItemType<Circumhorizon>();
 
         public int dashState;
+        public ref float RecordOwnerDirection => ref Projectile.localAI[0];
+        public ref float Timer => ref Projectile.localAI[1];
+        public ref float RecordAngle => ref Projectile.localAI[1];
 
+        public SecondOrderDynamics_Float facotr;
+
+        public static ATex CircumhorizonGradient { get; private set; }
 
         private enum DashState
         {
@@ -117,14 +129,66 @@ namespace Coralite.Content.Items.ThyphionSeries
             specialRelease,
         }
 
+        public override void Initialize()
+        {
+            if (Special == 0)
+                return;
+
+            RecordOwnerDirection = Owner.direction;
+            RecordAngle = (RecordOwnerDirection > 0 ? 0.2f : MathHelper.Pi - 0.2f);
+            Rotation = RecordAngle;
+
+            if (VaultUtils.isClient)
+            {
+                facotr = new SecondOrderDynamics_Float(1f, 0.75f, 0, RecordAngle);
+            }
+        }
+
+        #region 冲刺攻击部分
+
         public override void DashAttackAI()
         {
+            if (Timer < DashTime + 2)//冲刺过程中
+            {
+                Owner.itemTime = Owner.itemAnimation = 2;
 
+                Dashing_Angle();
+            }
         }
+
+        public void Dashing_Angle()
+        {
+            if (Timer < (int)(DashTime / 2))//前三分之一段，向上抬起弓
+            {
+                float angle = Helper.Lerp(RecordAngle,
+                    RecordOwnerDirection > 0 ? (-MathHelper.PiOver2 + 0.2f) : (MathHelper.PiOver2 * 3 - 0.2f)
+                    , Timer / (DashTime / 3));
+                Rotation = facotr.Update(1 / 60f, angle);
+                return;
+            }
+
+            if (Timer== (int)(DashTime / 2))//改变记录角度，之后转向向下
+            {
+                RecordAngle = RecordOwnerDirection > 0 ? (-MathHelper.PiOver2 + 0.2f) : (MathHelper.PiOver2 * 3 - 0.2f);
+            }
+        }
+
+        #endregion
 
         public override void NormalShootAI()
         {
 
         }
+
+        public override void NetCodeHeldSend(BinaryWriter writer)
+        {
+            writer.Write(dashState);
+        }
+
+        public override void NetCodeReceiveHeld(BinaryReader reader)
+        {
+            dashState = reader.ReadInt32();
+        }
+
     }
 }

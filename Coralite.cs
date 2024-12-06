@@ -2,6 +2,8 @@
 global using InnoVault;
 global using Microsoft.Xna.Framework;
 global using Terraria.ModLoader;
+global using ATex = ReLogic.Content.Asset<Microsoft.Xna.Framework.Graphics.Texture2D>;
+
 using Coralite.Compat.BossCheckList;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;

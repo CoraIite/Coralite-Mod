@@ -204,7 +204,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                     break;
                 }
 
-                if (Owner.controlUseItem)
+                if (DownLeft)
                 {
                     if (Main.myPlayer == Projectile.owner)
                     {
