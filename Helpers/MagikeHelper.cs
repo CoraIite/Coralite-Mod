@@ -649,7 +649,7 @@ namespace Coralite.Helpers
             // 遍历世界中的所有模块，查找与指定ID和坐标匹配的模块
             foreach (var inds in TileProcessorLoader.TP_InWorld)
             {
-                if (inds.Position.X == topLeft.X && inds.Position.Y == topLeft.Y)
+                if (inds.Position == topLeft)
                 {
                     tileProcessor = inds;
                     return true;
