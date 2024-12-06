@@ -28,7 +28,7 @@ namespace Coralite.Core.Loaders
             if (properties.Length < 1)
                 return;
 
-            string texPath = autoLoadTextureAttribute.TexturePath;
+            string texPath = autoLoadTextureAttribute.Path;
 
             foreach (var property in properties)
             {
@@ -39,7 +39,7 @@ namespace Coralite.Core.Loaders
                 string texName = property.Name;
                 AutoLoadTextureAttribute propAtt = property.GetCustomAttribute<AutoLoadTextureAttribute>();
                 if (propAtt != null)
-                    texName = propAtt.TextureName;
+                    texName = propAtt.Name;
 
                 property.SetValue(null, ModContent.Request<Texture2D>(texPath + texName));
             }

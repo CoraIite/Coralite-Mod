@@ -102,14 +102,14 @@ namespace Coralite.Content.Items.Nightmare
         public override bool MeleePrefix() => true;
     }
 
-    [AutoLoadTexture(AssetDirectory.NightmareItems)]
+    [AutoLoadTexture(Path = AssetDirectory.NightmareItems)]
     public class DreamShearsSlash : BaseSwingProj, IDrawWarp
     {
         public override string Texture => AssetDirectory.NightmareItems + "DreamShears";
 
         public ref float Combo => ref Projectile.ai[0];
 
-        [AutoLoadTexture("DreamShearsGradient", 1)]
+        [AutoLoadTexture(Name = "DreamShearsGradient")]
         public static Asset<Texture2D> GradientTexture { get; private set; }
 
         public override bool CanFire => false;
