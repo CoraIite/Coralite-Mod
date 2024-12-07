@@ -5006,3 +5006,12 @@ Circumhorizon: {
 	// DisplayName: Circumhorizon
 	// Tooltip: ""
 }
+
+HorizonArc: {
+	DisplayName: 棱彩弧
+	Tooltip: 
+	'''
+	双击方向键冲刺，并射出棱彩箭贯穿敌人
+	冲刺时穿过敌对目标会使棱彩的光辉更加耀眼
+	'''
+}

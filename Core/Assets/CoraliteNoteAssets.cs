@@ -1,5 +1,4 @@
 ﻿using static Coralite.Core.AssetDirectory;
-using ATex = ReLogic.Content.Asset<Microsoft.Xna.Framework.Graphics.Texture2D>;
 
 namespace Coralite.Core
 {

@@ -236,13 +236,10 @@ namespace Coralite.Content.Items.ThyphionSeries
                 }
                 else
                 {
-                    if (Main.myPlayer == Projectile.owner)
-                    {
-                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, (Main.MouseWorld - Owner.MountedCenter).SafeNormalize(Vector2.One) * 12f
-                            , GetArrowType(), Owner.GetWeaponDamage(Owner.HeldItem), Projectile.knockBack, Projectile.owner);
-                        SoundEngine.PlaySound(CoraliteSoundID.Bow_Item5, Owner.Center);
-                    }
+                    Projectile.NewProjectileFromThis(Owner.Center, (Main.MouseWorld - Owner.MountedCenter).SafeNormalize(Vector2.One) * 12f
+                        , GetArrowType(), Owner.GetWeaponDamage(Owner.HeldItem), Projectile.knockBack);
 
+                    SoundEngine.PlaySound(CoraliteSoundID.Bow_Item5, Owner.Center);
                     Projectile.Kill();
                 }
 

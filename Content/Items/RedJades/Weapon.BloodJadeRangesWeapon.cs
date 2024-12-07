@@ -326,7 +326,7 @@ namespace Coralite.Content.Items.RedJades
             {
                 if (Timer == 0)
                 {
-                    Angle = ToMouseA - (Owner.direction * 1f);
+                    Angle = ToMouseAngle - (Owner.direction * 1f);
                 }
                 if (Timer < 12)
                 {

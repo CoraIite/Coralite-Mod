@@ -38,11 +38,11 @@ namespace Coralite.Core.Prefabs.Projectiles
         /// <summary>
         /// 获取玩家鼠标的位置
         /// </summary>
-        public virtual Vector2 InMousePos { get; private protected set; }
+        public virtual Vector2 MousePos { get; private protected set; }
         /// <summary>
         /// 获取玩家到鼠标的角度
         /// </summary>
-        public virtual float ToMouseA { get; private protected set; }
+        public virtual float ToMouseAngle { get; private protected set; }
         /// <summary>
         /// 获取玩家鼠标的单位向量
         /// </summary>
@@ -133,9 +133,9 @@ namespace Coralite.Core.Prefabs.Projectiles
             DownLeft = UpdateDownLeftStart();
             DownRight = UpdateDownRightStart();
             ToMouse = UpdateToMouse();
-            ToMouseA = ToMouse.ToRotation();
+            ToMouseAngle = ToMouse.ToRotation();
             UnitToMouseV = ToMouse.UnitVector();
-            InMousePos = ToMouse + Owner.GetPlayerStabilityCenter();
+            MousePos = ToMouse + Owner.GetPlayerStabilityCenter();
         }
         /// <summary>
         /// 在AI更新前进行数据更新

@@ -127,7 +127,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             if ((int)Timer <= minTime)//弹幕生成到开始挥舞之前
             {
                 if (useTurnOnStart)
-                    Owner.direction = InMousePos.X < Owner.Center.X ? -1 : 1;
+                    Owner.direction = MousePos.X < Owner.Center.X ? -1 : 1;
                 BeforeSlash();
             }
             else if ((int)Timer <= maxTime)//挥舞过程中
@@ -204,7 +204,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         /// <returns></returns>
         protected virtual float GetStartAngle()
         {
-            return (InMousePos - Owner.Center).ToRotation();
+            return (MousePos - Owner.Center).ToRotation();
         }
 
         /// <summary>

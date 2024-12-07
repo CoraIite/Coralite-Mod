@@ -1,33 +1,35 @@
 ﻿using Coralite.Content.ModPlayers;
-using Coralite.Content.RecipeGroups;
 using Coralite.Core;
 using Coralite.Core.Attributes;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.SmoothFunctions;
 using Coralite.Helpers;
+using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.ThyphionSeries
 {
-    public class Circumhorizon : ModItem, IDashable
+    public class HorizonArc : ModItem, IDashable
     {
         public override string Texture => AssetDirectory.ThyphionSeriesItems + Name;
 
+        public int SpecialAttack;
+
         public override void SetDefaults()
         {
-            Item.SetWeaponValues(13, 2f);
+            Item.SetWeaponValues(55, 4f);
             Item.DefaultToRangedWeapon(10, AmmoID.Arrow, 27, 7f);
 
-            Item.rare = ItemRarityID.Blue;
+            Item.rare = ItemRarityID.Pink;
             Item.useStyle = ItemUseStyleID.Rapier;
-            Item.value = Item.sellPrice(0, 0, 10);
+            Item.value = Item.sellPrice(0, 4);
 
             Item.noUseGraphic = true;
 
@@ -38,8 +40,10 @@ namespace Coralite.Content.Items.ThyphionSeries
         {
             Vector2 dir = (Main.MouseWorld - player.Center).SafeNormalize(Vector2.One);
             float rot = dir.ToRotation();
-            Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, Vector2.Zero, ProjectileType<CircumhorizonHeldProj>(), damage, knockback, player.whoAmI, rot, 0);
-            Projectile.NewProjectile(source, player.Center, velocity, type, damage, knockback, player.whoAmI);
+            Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, Vector2.Zero, ProjectileType<HorizonArcHeldProj>(), damage, knockback, player.whoAmI, rot, 0);
+            
+            if (SpecialAttack == 0)//非特殊攻击只射普通箭
+                Projectile.NewProjectile(source, player.Center, velocity, type, damage, knockback, player.whoAmI);
 
             return false;
         }
@@ -47,9 +51,9 @@ namespace Coralite.Content.Items.ThyphionSeries
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddRecipeGroup(WoodenBowGroup.GroupName)
-                .AddIngredient(ItemID.Torch, 49)
-                .AddIngredient(ItemID.Ruby)
+                .AddIngredient<FarAwaySky>()
+                .AddIngredient(ItemID.SoulofSight,7)
+                .AddIngredient(ItemID.CrystalShard,12)
                 .AddTile(TileID.WorkBenches)
                 .Register();
         }
@@ -81,7 +85,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 SoundEngine.PlaySound(CoraliteSoundID.Swing_Item1, Player.Center);
 
                 foreach (var proj in from proj in Main.projectile
-                                     where proj.active && proj.friendly && proj.owner == Player.whoAmI && proj.type == ProjectileType<CircumhorizonHeldProj>()
+                                     where proj.active && proj.friendly && proj.owner == Player.whoAmI && proj.type == ProjectileType<HorizonArcHeldProj>()
                                      select proj)
                 {
                     proj.Kill();
@@ -89,7 +93,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 }
 
                 //生成手持弹幕
-                Projectile.NewProjectile(Player.GetSource_ItemUse(Player.HeldItem), Player.Center, Vector2.Zero, ProjectileType<CircumhorizonHeldProj>(),
+                Projectile.NewProjectile(Player.GetSource_ItemUse(Player.HeldItem), Player.Center, Vector2.Zero, ProjectileType<HorizonArcHeldProj>(),
                     Player.HeldItem.damage, Player.HeldItem.knockBack, Player.whoAmI, 1.57f + dashDirection * 1, 1, 20);
             }
 
@@ -98,11 +102,11 @@ namespace Coralite.Content.Items.ThyphionSeries
     }
 
     [AutoLoadTexture(Path = AssetDirectory.ThyphionSeriesItems)]
-    public class CircumhorizonHeldProj : BaseDashBow
+    public class HorizonArcHeldProj : BaseDashBow
     {
-        public override string Texture => AssetDirectory.ThyphionSeriesItems + "Circumhorizon";
+        public override string Texture => AssetDirectory.ThyphionSeriesItems + "HorizonArc";
 
-        public override int GetItemType() => ItemType<Circumhorizon>();
+        public override int GetItemType() => ItemType<HorizonArc>();
 
         public int dashState;
         public ref float RecordOwnerDirection => ref Projectile.localAI[0];
@@ -111,7 +115,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public SecondOrderDynamics_Float facotr;
 
-        public static ATex CircumhorizonGradient { get; private set; }
+        public static ATex HorizonArcGradient { get; private set; }
 
         private enum DashState
         {
@@ -152,7 +156,33 @@ namespace Coralite.Content.Items.ThyphionSeries
             {
                 Owner.itemTime = Owner.itemAnimation = 2;
 
-                Dashing_Angle();
+                Dashing_Angle();//改变弓的角度
+            }
+
+            if (DownLeft)
+            {
+                if (Main.myPlayer == Projectile.owner)
+                {
+                    Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
+                    Rotation = Rotation.AngleLerp((Main.MouseWorld - Owner.MountedCenter).ToRotation(), 0.35f);
+
+                    if (Main.rand.NextBool(10))
+                    {
+                        Vector2 dir = Rotation.ToRotationVector2();
+                        Vector2 center = Projectile.Center + dir * 20;
+                    }
+                }
+
+                Projectile.timeLeft = 2;
+                LockOwnerItemTime();
+            }
+            else
+            {
+                Projectile.NewProjectileFromThis(Owner.Center, (Main.MouseWorld - Owner.MountedCenter).SafeNormalize(Vector2.One) * 12f
+                    , 10, Owner.GetWeaponDamage(Owner.HeldItem), Projectile.knockBack);
+
+                SoundEngine.PlaySound(CoraliteSoundID.Bow_Item5, Owner.Center);
+                Projectile.Kill();
             }
         }
 
@@ -170,7 +200,23 @@ namespace Coralite.Content.Items.ThyphionSeries
             if (Timer== (int)(DashTime / 2))//改变记录角度，之后转向向下
             {
                 RecordAngle = RecordOwnerDirection > 0 ? (-MathHelper.PiOver2 + 0.2f) : (MathHelper.PiOver2 * 3 - 0.2f);
+                return;
             }
+
+            if (Timer<(int)(DashTime*3/4))
+            {
+                float factor = (Timer - (int)(DashTime / 2)) / (int)(DashTime * 3 / 4);
+
+                float angle = Helper.Lerp(RecordAngle,
+                    RecordOwnerDirection > 0 ? 0 : MathHelper.Pi
+                    , Timer / (DashTime / 3));
+
+                Rotation = facotr.Update(1 / 60f, angle);
+
+                return;
+            }
+
+            Rotation = Rotation.AngleLerp(ToMouseAngle, 0.15f);
         }
 
         #endregion
@@ -190,5 +236,28 @@ namespace Coralite.Content.Items.ThyphionSeries
             dashState = reader.ReadInt32();
         }
 
+        #region 绘制部分
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Texture2D mainTex = Projectile.GetTexture();
+            Vector2 center = Projectile.Center - Main.screenPosition;
+
+            Main.spriteBatch.Draw(mainTex, center, null, lightColor, Projectile.rotation, mainTex.Size() / 2, 1, DirSign > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0f);
+
+            if (Special == 0)
+                return false;
+
+            //int type = GetArrowType();
+            //Main.instance.LoadProjectile(type);
+            //Texture2D arrowTex = TextureAssets.Projectile[type].Value;
+            //Vector2 dir = Rotation.ToRotationVector2();
+            //Main.spriteBatch.Draw(arrowTex, center, null, lightColor, Projectile.rotation + 1.57f
+            //    , new Vector2(arrowTex.Width / 2, arrowTex.Height * 5 / 6), 1, 0, 0f);
+
+            return false;
+        }
+
+        #endregion
     }
 }

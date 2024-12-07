@@ -141,7 +141,7 @@ namespace Coralite.Content.Items.Nightmare
         protected override void InitBasicValues()
         {
             if (Main.myPlayer == Projectile.owner)
-                Owner.direction = InMousePos.X > Owner.Center.X ? 1 : -1;
+                Owner.direction = MousePos.X > Owner.Center.X ? 1 : -1;
 
             Projectile.extraUpdates = 3;
             alpha = 0;
@@ -398,7 +398,7 @@ namespace Coralite.Content.Items.Nightmare
             if (init)
             {
                 rolllingTime = (int)(Owner.itemTimeMax * 1.5f) + (21 * 2);
-                Projectile.rotation = startAngle = (InMousePos - Owner.Center).ToRotation() + ((Owner.direction > 0 ? -1 : 1) * 2f);
+                Projectile.rotation = startAngle = (MousePos - Owner.Center).ToRotation() + ((Owner.direction > 0 ? -1 : 1) * 2f);
                 totalAngle = (Owner.direction > 0 ? 1 : -1) * 9.7f;
                 SelfRot = startAngle + totalAngle;
                 Angle = 1f;
@@ -914,7 +914,7 @@ namespace Coralite.Content.Items.Nightmare
             if (init)
             {
                 ChannelTime = 3 * Owner.itemTimeMax / 4;
-                Projectile.rotation = (InMousePos - Owner.Center).ToRotation();
+                Projectile.rotation = (MousePos - Owner.Center).ToRotation();
 
                 DistanceToOwner = 65;
                 if (ExtraProjState == 1 && Projectile.IsOwnedByLocalPlayer())//生成噩梦之咬
@@ -933,7 +933,7 @@ namespace Coralite.Content.Items.Nightmare
                     break;
                 case 0:
                     float factor = Timer / ChannelTime;
-                    Projectile.rotation = Projectile.rotation.AngleTowards((InMousePos - Owner.Center).ToRotation(), 0.3f);
+                    Projectile.rotation = Projectile.rotation.AngleTowards((MousePos - Owner.Center).ToRotation(), 0.3f);
                     DistanceToOwner = Helper.Lerp(65, 25, factor);
                     Angle = Helper.Lerp(0, 1f, factor);
                     if (Timer > ChannelTime)
@@ -1077,7 +1077,7 @@ namespace Coralite.Content.Items.Nightmare
                 {
                     float factor = Timer / ReadyTime;
 
-                    Projectile.rotation = Projectile.rotation.AngleTowards((InMousePos - Owner.Center).ToRotation(), 0.3f);
+                    Projectile.rotation = Projectile.rotation.AngleTowards((MousePos - Owner.Center).ToRotation(), 0.3f);
                     mouseAngle = Helper.Lerp(0, 1.4f, factor);
                     alpha = Helper.Lerp(0.55f, 0.1f, factor);
                     break;

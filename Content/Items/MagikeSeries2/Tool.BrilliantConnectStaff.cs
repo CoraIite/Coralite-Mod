@@ -159,8 +159,8 @@ namespace Coralite.Content.Items.MagikeSeries2
         {
             if (!onspawn)
             {
-                Projectile.ai[0] = InMousePos.ToTileCoordinates16().X;
-                Projectile.ai[1] = InMousePos.ToTileCoordinates16().Y;
+                Projectile.ai[0] = MousePos.ToTileCoordinates16().X;
+                Projectile.ai[1] = MousePos.ToTileCoordinates16().Y;
                 TargetPoint = BasePosition;
                 onspawn = true;
             }
@@ -192,7 +192,7 @@ namespace Coralite.Content.Items.MagikeSeries2
             modPacket.Write(Owner.whoAmI);
             modPacket.WritePoint16(TargetPoint);
             modPacket.WritePoint16(BasePosition);
-            modPacket.WriteVector2(InMousePos);
+            modPacket.WriteVector2(MousePos);
             modPacket.Send();
         }
 
@@ -226,7 +226,7 @@ namespace Coralite.Content.Items.MagikeSeries2
             modPacket.Write(Owner.whoAmI);
             modPacket.WritePoint16(TargetPoint);
             modPacket.WritePoint16(BasePosition);
-            modPacket.WriteVector2(InMousePos);
+            modPacket.WriteVector2(MousePos);
             modPacket.Send();
         }
 
@@ -260,7 +260,7 @@ namespace Coralite.Content.Items.MagikeSeries2
                 LockOwnerItemTime(5);
                 Projectile.timeLeft = 2;
 
-                TargetPoint = InMousePos.ToTileCoordinates16();
+                TargetPoint = MousePos.ToTileCoordinates16();
 
                 //限制范围
                 if (Math.Abs(TargetPoint.X - BasePosition.X) > GamePlaySystem.SelectSize)
@@ -270,7 +270,7 @@ namespace Coralite.Content.Items.MagikeSeries2
             }
             else if (Projectile.IsOwnedByLocalPlayer())
             {
-                bool reset = FindSender(TargetPoint, BasePosition, Owner, InMousePos);
+                bool reset = FindSender(TargetPoint, BasePosition, Owner, MousePos);
                 if (!VaultUtils.isSinglePlayer)
                 {
                     Send_Sender_Data();
@@ -300,7 +300,7 @@ namespace Coralite.Content.Items.MagikeSeries2
                 if (Projectile.localAI[0] == 0)
                 {
                     CanDrawFrame = true;
-                    BasePosition = InMousePos.ToTileCoordinates16();
+                    BasePosition = MousePos.ToTileCoordinates16();
                     TargetPoint = BasePosition;
                     Projectile.localAI[0] = 1;
                     Helper.PlayPitched("Fairy/FairyBottleClick2", 0.4f, 0, Owner.Center);
@@ -308,7 +308,7 @@ namespace Coralite.Content.Items.MagikeSeries2
 
                 Projectile.timeLeft = 2;
 
-                TargetPoint = InMousePos.ToTileCoordinates16();
+                TargetPoint = MousePos.ToTileCoordinates16();
 
                 //限制范围
                 if (Math.Abs(TargetPoint.X - BasePosition.X) > GamePlaySystem.SelectSize)
@@ -509,8 +509,8 @@ namespace Coralite.Content.Items.MagikeSeries2
         {
             if (!onspawn)
             {
-                Projectile.ai[0] = InMousePos.ToTileCoordinates16().X;
-                Projectile.ai[1] = InMousePos.ToTileCoordinates16().Y;
+                Projectile.ai[0] = MousePos.ToTileCoordinates16().X;
+                Projectile.ai[1] = MousePos.ToTileCoordinates16().Y;
                 TargetPoint = BasePosition;
                 onspawn = true;
             }
@@ -526,7 +526,7 @@ namespace Coralite.Content.Items.MagikeSeries2
             if (DownRight)
             {
                 LockOwnerItemTime(5);
-                TargetPoint = InMousePos.ToTileCoordinates16();
+                TargetPoint = MousePos.ToTileCoordinates16();
 
                 //限制范围
                 if (Math.Abs(TargetPoint.X - BasePosition.X) > GamePlaySystem.SelectSize)

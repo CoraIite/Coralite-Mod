@@ -118,14 +118,14 @@ namespace Coralite.Content.Items.ShadowCastle
 
         public override void OnSpawn(IEntitySource source)
         {
-            Projectile.rotation = ToMouseA;
+            Projectile.rotation = ToMouseAngle;
         }
 
         public override void AI()
         {
             LockOwnerItemTime();
             SetHeld();
-            Owner.itemRotation = ToMouseA + (DirSign > 0 ? 0f : MathHelper.Pi) + (Owner.gravDir > 0 ? 0f : MathHelper.Pi) + (DirSign * 0.3f);
+            Owner.itemRotation = ToMouseAngle + (DirSign > 0 ? 0f : MathHelper.Pi) + (Owner.gravDir > 0 ? 0f : MathHelper.Pi) + (DirSign * 0.3f);
             Projectile.Center = Owner.Center + (UnitToMouseV * 20);
             Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
 
@@ -179,7 +179,7 @@ namespace Coralite.Content.Items.ShadowCastle
                         else
                             Projectile.timeLeft = 20;
 
-                        Projectile.rotation = ToMouseA;
+                        Projectile.rotation = ToMouseAngle;
                     }
                     break;
             }

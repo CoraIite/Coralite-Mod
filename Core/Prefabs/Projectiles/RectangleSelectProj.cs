@@ -43,8 +43,8 @@ namespace Coralite.Core.Prefabs.Projectiles
         {
             if (!onspawn)
             {
-                Projectile.ai[0] = InMousePos.ToTileCoordinates16().X;
-                Projectile.ai[1] = InMousePos.ToTileCoordinates16().Y;
+                Projectile.ai[0] = MousePos.ToTileCoordinates16().X;
+                Projectile.ai[1] = MousePos.ToTileCoordinates16().Y;
                 TargetPoint = BasePosition;
                 onspawn = true;
             }
@@ -60,7 +60,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             if (DownLeft)
             {
                 Owner.itemTime = Owner.itemAnimation = 7;
-                TargetPoint = InMousePos.ToTileCoordinates16();
+                TargetPoint = MousePos.ToTileCoordinates16();
 
                 //限制范围
                 if (Math.Abs(TargetPoint.X - BasePosition.X) > GamePlaySystem.SelectSize)
