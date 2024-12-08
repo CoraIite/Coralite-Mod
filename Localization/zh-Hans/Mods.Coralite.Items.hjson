@@ -5008,7 +5008,7 @@ Circumhorizon: {
 }
 
 HorizonArc: {
-	DisplayName: 棱彩弧
+	DisplayName: 环彩弧
 	Tooltip: 
 	'''
 	双击方向键冲刺，并射出棱彩箭贯穿敌人
