@@ -1,9 +1,12 @@
 matrix transformMatrix;
 float uTime;
+float uTimeG;
+float udissolveS;
 
 texture uBaseImage;
 texture uFlow;
 texture uGradient;
+texture uDissolve;
 
 sampler2D baseTex = sampler_state
 {
@@ -28,6 +31,16 @@ sampler2D flowTex = sampler_state
 sampler2D gradientTex = sampler_state
 {
     texture = <uGradient>;
+    magfilter = LINEAR;
+    minfilter = LINEAR;
+    mipfilter = LINEAR;
+    AddressU = wrap;
+    AddressV = wrap; //循环UV
+};
+
+sampler2D dissolveTex = sampler_state
+{
+    texture = <uDissolve>;
     magfilter = LINEAR;
     minfilter = LINEAR;
     mipfilter = LINEAR;
@@ -73,11 +86,19 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
     float4 flowC = tex2D(flowTex, st).xyzw;
     
     //颜色的亮度
-    float a = baseC.r+ baseC.r * flowC.r;
+    float a = baseC.r + baseC.r * flowC.r;
     
     //从色条上取色
-    float4 gradientC = tex2D(gradientTex, float2((ycoord + flowC.r) % 1.0, 0.5)).
-    xyzw;
+    float4 gradientC = tex2D(gradientTex, float2((ycoord*2 + flowC.r *0.7) % 1.0, 0.5)).xyzw;
+    
+    st.r = (xcoord * 1.5 + 0.5 + uTime) % 1.0;
+    //溶解色
+    float4 dissolveC = tex2D(dissolveTex, st).xyzw;
+    
+    float f = input.TexCoords.x;
+    f = f * f;
+    
+    a = lerp(a, 0, (udissolveS * (1 - f) * dissolveC.r));
     
     return gradientC * a;
 }

@@ -155,7 +155,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 streamerFactors = new SecondOrderDynamics_Vec2[20];
                 for (int i = 0; i < streamerFactors.Length; i++)
                     streamerFactors[i] = new SecondOrderDynamics_Vec2(
-                        1.25f + Coralite.Instance.X2Smoother.Smoother(i, 20) * 12f, 0.75f, 0, Projectile.Center);
+                        1.25f + Coralite.Instance.X3Smoother.Smoother(i, 20) * 10f, 0.75f, 0, Projectile.Center);
 
                 streamerPos = new Vector2[20];
                 Array.Fill(streamerPos, Projectile.Center);
@@ -310,10 +310,13 @@ namespace Coralite.Content.Items.ThyphionSeries
             Effect effect = Filters.Scene["ArcRainbow"].GetShader().Shader;
 
             effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMatrix());
-            effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects*0.01f);
+            effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * 0.02f);
+            effect.Parameters["uTimeG"].SetValue(Main.GlobalTimeWrappedHourly*0.1f);
+            effect.Parameters["udissolveS"].SetValue(1f);
             effect.Parameters["uBaseImage"].SetValue(CoraliteAssets.Trail.Meteor.Value);
             effect.Parameters["uFlow"].SetValue(CoraliteAssets.Laser.Airflow.Value);
             effect.Parameters["uGradient"].SetValue(HorizonArcGradient.Value);
+            effect.Parameters["uDissolve"].SetValue(CoraliteAssets.Laser.EnergyFlow.Value);
 
             streamer?.Render(effect);
         }
