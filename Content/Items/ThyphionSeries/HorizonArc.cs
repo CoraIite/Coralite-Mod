@@ -1,15 +1,19 @@
-﻿using Coralite.Content.ModPlayers;
+﻿using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
+using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Attributes;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.SmoothFunctions;
+using Coralite.Core.Systems.Trails;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.IO;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.Graphics.Effects;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
 
@@ -101,7 +105,7 @@ namespace Coralite.Content.Items.ThyphionSeries
     }
 
     [AutoLoadTexture(Path = AssetDirectory.ThyphionSeriesItems)]
-    public class HorizonArcHeldProj : BaseDashBow
+    public class HorizonArcHeldProj : BaseDashBow,IDrawPrimitive
     {
         public override string Texture => AssetDirectory.ThyphionSeriesItems + "HorizonArc";
 
@@ -112,9 +116,13 @@ namespace Coralite.Content.Items.ThyphionSeries
         public ref float Timer => ref Projectile.localAI[1];
         public ref float RecordAngle => ref Projectile.localAI[1];
 
-        public SecondOrderDynamics_Float facotr;
+        public SecondOrderDynamics_Float factor;
+        public SecondOrderDynamics_Vec2[] streamerFactors;
+        public Trail streamer;
+        public Vector2[] streamerPos;
 
         public static ATex HorizonArcGradient { get; private set; }
+        public static ATex HorizonArcArrow { get; private set; }
 
         private enum DashState
         {
@@ -140,10 +148,18 @@ namespace Coralite.Content.Items.ThyphionSeries
             RecordOwnerDirection = Owner.direction;
             RecordAngle = (RecordOwnerDirection > 0 ? 0.2f : MathHelper.Pi - 0.2f);
             Rotation = RecordAngle;
+            factor = new SecondOrderDynamics_Float(1f, 0.75f, 0, RecordAngle);
 
-            if (VaultUtils.isClient)
+            if (!VaultUtils.isServer)
             {
-                facotr = new SecondOrderDynamics_Float(1f, 0.75f, 0, RecordAngle);
+                streamerFactors = new SecondOrderDynamics_Vec2[20];
+                for (int i = 0; i < streamerFactors.Length; i++)
+                    streamerFactors[i] = new SecondOrderDynamics_Vec2(
+                        1.25f + Coralite.Instance.X2Smoother.Smoother(i, 20) * 12f, 0.75f, 0, Projectile.Center);
+
+                streamerPos = new Vector2[20];
+                Array.Fill(streamerPos, Projectile.Center);
+                streamer = new Trail(Main.instance.GraphicsDevice, 20, new NoTip(), factor => 23, factor => Color.White);
             }
         }
 
@@ -183,6 +199,9 @@ namespace Coralite.Content.Items.ThyphionSeries
                 SoundEngine.PlaySound(CoraliteSoundID.Bow_Item5, Owner.Center);
                 Projectile.Kill();
             }
+
+            Projectile.rotation = Rotation;
+            Timer++;
         }
 
         public void Dashing_Angle()
@@ -192,7 +211,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 float angle = Helper.Lerp(RecordAngle,
                     RecordOwnerDirection > 0 ? (-MathHelper.PiOver2 + 0.2f) : (MathHelper.PiOver2 * 3 - 0.2f)
                     , Timer / (DashTime / 3));
-                Rotation = facotr.Update(1 / 60f, angle);
+                Rotation = factor.Update(1 / 60f, angle);
                 return;
             }
 
@@ -210,7 +229,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                     RecordOwnerDirection > 0 ? 0 : MathHelper.Pi
                     , Timer / (DashTime / 3));
 
-                Rotation = facotr.Update(1 / 60f, angle);
+                Rotation = this.factor.Update(1 / 60f, angle);
 
                 return;
             }
@@ -223,6 +242,32 @@ namespace Coralite.Content.Items.ThyphionSeries
         public override void NormalShootAI()
         {
 
+        }
+
+        public override void AIAfter()
+        {
+            switch (Special)
+            {
+                default:
+                    break;
+                case 1:
+                    if (!VaultUtils.isServer)
+                    {
+                        Vector2 dir = -Rotation.ToRotationVector2();
+                        for (int i = 0; i < streamerPos.Length; i++)
+                        {
+                            int k = streamerPos.Length - 1 - i;
+                            float y = k * MathF.Sin(k * 0.6f + (float)(Main.timeForVisualEffects)*0.1f) / 300f;
+                            Vector2 targetPos = Projectile.Center + dir.RotatedBy(y) * k * 8;
+
+                            streamerPos[i] = streamerFactors[i].Update(1 / 60f, targetPos);
+                            streamerPos[i] = Vector2.Lerp(streamerPos[i], targetPos, Coralite.Instance.X3Smoother.Smoother(i, 20));
+                        }
+
+                        streamer.Positions = streamerPos;
+                    }
+                    break;
+            }
         }
 
         public override void NetCodeHeldSend(BinaryWriter writer)
@@ -255,6 +300,22 @@ namespace Coralite.Content.Items.ThyphionSeries
             //    , new Vector2(arrowTex.Width / 2, arrowTex.Height * 5 / 6), 1, 0, 0f);
 
             return false;
+        }
+
+        public void DrawPrimitives()
+        {
+            if (streamer == null)
+                return;
+
+            Effect effect = Filters.Scene["ArcRainbow"].GetShader().Shader;
+
+            effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMatrix());
+            effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects*0.01f);
+            effect.Parameters["uBaseImage"].SetValue(CoraliteAssets.Trail.Meteor.Value);
+            effect.Parameters["uFlow"].SetValue(CoraliteAssets.Laser.Airflow.Value);
+            effect.Parameters["uGradient"].SetValue(HorizonArcGradient.Value);
+
+            streamer?.Render(effect);
         }
 
         #endregion

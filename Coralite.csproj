@@ -17,6 +17,7 @@
   <ItemGroup>
     <None Remove="Effects\AlphaGradientTrail.fx" />
     <None Remove="Effects\AlphaNoHLGradientTrail.fx" />
+    <None Remove="effects\ArcRainbow.fx" />
     <None Remove="effects\Crystal.fx" />
     <None Remove="Effects\CrystalTrail.fx" />
     <None Remove="effects\Fire.fx" />

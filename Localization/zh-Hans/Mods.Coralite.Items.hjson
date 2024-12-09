@@ -5002,16 +5002,11 @@ EightsquareHand: {
 	Tooltip: 提高宝石武器 “闪耀” 前缀的出现概率
 }
 
-Circumhorizon: {
-	// DisplayName: Circumhorizon
-	// Tooltip: ""
-}
-
 HorizonArc: {
 	DisplayName: 环彩弧
-	Tooltip: 
-	'''
-	双击方向键冲刺，并射出棱彩箭贯穿敌人
-	冲刺时穿过敌对目标会使棱彩的光辉更加耀眼
-	'''
+	Tooltip:
+		'''
+		双击方向键冲刺，并射出棱彩箭贯穿敌人
+		冲刺时穿过敌对目标会使棱彩的光辉更加耀眼
+		'''
 }

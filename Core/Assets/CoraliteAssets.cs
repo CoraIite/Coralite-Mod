@@ -227,6 +227,11 @@ namespace Coralite.Core
             /// 原版使用，透明底
             /// </summary>
             public static ATex VanillaFlowA { get; private set; }
+
+            /// <summary> 
+            /// 气流一样的流动图
+            /// </summary>
+            public static ATex Airflow { get; private set; }
         }
 
         /// <summary>
@@ -388,6 +393,6 @@ namespace Coralite.Core
         }
 
         private static ATex Get(string path)
-            => Request<Texture2D>(path, AssetRequestMode.ImmediateLoad);
+            => Request<Texture2D>(path);
     }
 }

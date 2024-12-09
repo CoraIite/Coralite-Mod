@@ -1,6 +1,6 @@
-float uTime;
-float uTimeG;
 matrix transformMatrix;
+float uTime;
+
 texture uBaseImage;
 texture uFlow;
 texture uGradient;
@@ -65,7 +65,7 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
     float xcoord = input.TexCoords.x;
     float ycoord = input.TexCoords.y;
 
-    float2 st = float2(xcoord, (ycoord + uTime) % 1.0);
+    float2 st = float2((xcoord + uTime) % 1.0, ycoord);
     
     //从底图上取色
     float4 baseC = tex2D(baseTex, input.TexCoords).xyzw;
@@ -73,12 +73,11 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
     float4 flowC = tex2D(flowTex, st).xyzw;
     
     //颜色的亮度
-    float a = baseC.r * flowC.r;
+    float a = baseC.r+ baseC.r * flowC.r;
     
     //从色条上取色
-    float4 gradientC = tex2D(gradientTex, float2((uTimeG + ycoord) % 1.0, 0.5)).xyzw;
-
-    
+    float4 gradientC = tex2D(gradientTex, float2((ycoord + flowC.r) % 1.0, 0.5)).
+    xyzw;
     
     return gradientC * a;
 }
