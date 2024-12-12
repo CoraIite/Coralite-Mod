@@ -197,6 +197,11 @@ namespace Coralite.Core
             /// </summary>
             public static ATex Split { get; private set; }
 
+            /// <summary> 
+            /// 类似推进器尾焰，高亮的柔和渐变
+            /// </summary>
+            public static ATex Booster { get; private set; }
+
             #endregion
         }
 

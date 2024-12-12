@@ -1,5 +1,4 @@
-﻿using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
-using Coralite.Content.ModPlayers;
+﻿using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Attributes;
 using Coralite.Core.Prefabs.Projectiles;
@@ -117,6 +116,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         public ref float RecordAngle => ref Projectile.localAI[1];
 
         public SecondOrderDynamics_Float factor;
+        public SecondOrderDynamics_Vec2[] angleFactors;
         public SecondOrderDynamics_Vec2[] streamerFactors;
         public Trail streamer;
         public Vector2[] streamerPos;
@@ -152,6 +152,10 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             if (!VaultUtils.isServer)
             {
+                angleFactors = new SecondOrderDynamics_Vec2[20];
+                for (int i = 0; i < angleFactors.Length; i++)
+                    angleFactors[i] = new SecondOrderDynamics_Vec2(0.4f + i / 20f * 0.35f, 0.5f, 0, GetStreamerAngle().ToRotationVector2());
+
                 streamerFactors = new SecondOrderDynamics_Vec2[20];
                 for (int i = 0; i < streamerFactors.Length; i++)
                     streamerFactors[i] = new SecondOrderDynamics_Vec2(
@@ -159,7 +163,8 @@ namespace Coralite.Content.Items.ThyphionSeries
 
                 streamerPos = new Vector2[20];
                 Array.Fill(streamerPos, Projectile.Center);
-                streamer = new Trail(Main.instance.GraphicsDevice, 20, new NoTip(), factor => 23, factor => Color.White);
+                streamer = new Trail(Main.instance.GraphicsDevice, 20, new NoTip(),
+                    factor => (1- MathF.Cbrt(factor))*45+2, factor => Color.White);
             }
         }
 
@@ -237,6 +242,12 @@ namespace Coralite.Content.Items.ThyphionSeries
             Rotation = Rotation.AngleLerp(ToMouseAngle, 0.15f);
         }
 
+        public float GetStreamerAngle()
+        {
+            float length = Owner.velocity.Length();
+            return Rotation.AngleLerp(  Owner.velocity.ToRotation(), Math.Clamp(length / 8, 0, 1));
+        }
+
         #endregion
 
         public override void NormalShootAI()
@@ -253,12 +264,16 @@ namespace Coralite.Content.Items.ThyphionSeries
                 case 1:
                     if (!VaultUtils.isServer)
                     {
-                        Vector2 dir = -Rotation.ToRotationVector2();
+                        float rot = GetStreamerAngle();
+
+                        Vector2 center = Projectile.Center + ((Owner.direction > 0 ? -1.57f : 1.57f) + Rotation).ToRotationVector2() * 20;
                         for (int i = 0; i < streamerPos.Length; i++)
                         {
+                            Vector2 dir = -angleFactors[i].Update(1 / 60f, rot.ToRotationVector2());
+
                             int k = streamerPos.Length - 1 - i;
-                            float y = k * MathF.Sin(k * 0.6f + (float)(Main.timeForVisualEffects)*0.1f) / 300f;
-                            Vector2 targetPos = Projectile.Center + dir.RotatedBy(y) * k * 8;
+                            float y = k * MathF.Sin(k * 0.6f + (float)(Main.timeForVisualEffects) * 0.05f) / 350f;
+                            Vector2 targetPos = center + dir.RotatedBy(-y) * k * 8;
 
                             streamerPos[i] = streamerFactors[i].Update(1 / 60f, targetPos);
                             streamerPos[i] = Vector2.Lerp(streamerPos[i], targetPos, Coralite.Instance.X3Smoother.Smoother(i, 20));
@@ -281,6 +296,9 @@ namespace Coralite.Content.Items.ThyphionSeries
         }
 
         #region 绘制部分
+
+        public override Vector2 GetOffset()
+            => new(20, 0);
 
         public override bool PreDraw(ref Color lightColor)
         {
@@ -311,9 +329,9 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMatrix());
             effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * 0.02f);
-            effect.Parameters["uTimeG"].SetValue(Main.GlobalTimeWrappedHourly*0.1f);
+            effect.Parameters["uTimeG"].SetValue(Main.GlobalTimeWrappedHourly * 0.1f);
             effect.Parameters["udissolveS"].SetValue(1f);
-            effect.Parameters["uBaseImage"].SetValue(CoraliteAssets.Trail.Meteor.Value);
+            effect.Parameters["uBaseImage"].SetValue(CoraliteAssets.Trail.Booster.Value);
             effect.Parameters["uFlow"].SetValue(CoraliteAssets.Laser.Airflow.Value);
             effect.Parameters["uGradient"].SetValue(HorizonArcGradient.Value);
             effect.Parameters["uDissolve"].SetValue(CoraliteAssets.Laser.EnergyFlow.Value);

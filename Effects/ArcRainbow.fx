@@ -89,7 +89,7 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
     float a = baseC.r + baseC.r * flowC.r;
     
     //从色条上取色
-    float4 gradientC = tex2D(gradientTex, float2((ycoord*2 + flowC.r *0.7) % 1.0, 0.5)).xyzw;
+    float4 gradientC = tex2D(gradientTex, float2((ycoord + flowC.r *0.7) % 1.0, 0.5)).xyzw;
     
     st.r = (xcoord * 1.5 + 0.5 + uTime) % 1.0;
     //溶解色
