@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.ModPlayers;
 using Coralite.Content.Particles;
 using Coralite.Core;
+using Coralite.Core.Attributes;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
 using InnoVault.PRT;
@@ -102,32 +103,22 @@ namespace Coralite.Content.Items.ThyphionSeries
         }
     }
 
+    [AutoLoadTexture(Path = AssetDirectory.ThyphionSeriesItems)]
     public class FarAwaySkyHeldProj : BaseDashBow
     {
         public override string Texture => AssetDirectory.ThyphionSeriesItems + "FarAwaySky";
 
         private Vector2 arrowPos;
 
-        private static Asset<Texture2D> ArrowTex;
+        [AutoLoadTexture(Name = "FarAwaySkyArrow")]
+        public static ATex ArrowTex { get; private set; }
 
         public ref float ArrowLength => ref Projectile.localAI[0];
         public ref float Timer => ref Projectile.localAI[1];
         public ref float RecordAngle => ref Projectile.localAI[2];
 
         public int State;
-
-        public override void Load()
-        {
-            if (Main.dedServ)
-                return;
-
-            ArrowTex = Request<Texture2D>(AssetDirectory.ThyphionSeriesItems + "FarAwaySkyArrow");
-        }
-
-        public override void Unload()
-        {
-            ArrowTex = null;
-        }
+        public float handOffset = 0;
 
         public override int GetItemType()
             => ItemType<FarAwaySky>();
@@ -216,6 +207,11 @@ namespace Coralite.Content.Items.ThyphionSeries
                    c, Scale: Main.rand.NextFloat(0.6f, 1f));
             }
 
+            if (Timer < 4)
+                handOffset -= 4;
+            else
+                handOffset += 4;
+
             if (Timer > 7)
                 Projectile.Kill();
         }
@@ -244,14 +240,14 @@ namespace Coralite.Content.Items.ThyphionSeries
         {
             Texture2D mainTex = Projectile.GetTexture();
             Vector2 center = Projectile.Center - Main.screenPosition;
+            Vector2 dir = Rotation.ToRotationVector2();
 
-            Main.spriteBatch.Draw(mainTex, center, null, lightColor, Projectile.rotation, mainTex.Size() / 2, 1, DirSign > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0f);
+            Main.spriteBatch.Draw(mainTex, center+dir*handOffset, null, lightColor, Projectile.rotation, mainTex.Size() / 2, 1, DirSign > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0f);
 
             if (Special == 0)
                 return false;
 
             Texture2D arrowTex = ArrowTex.Value;
-            Vector2 dir = Rotation.ToRotationVector2();
             Main.spriteBatch.Draw(arrowTex, arrowPos - Main.screenPosition, null, lightColor, Projectile.rotation + 1.57f
                 , new Vector2(arrowTex.Width / 2, arrowTex.Height * 5 / 6), 1, 0, 0f);
 

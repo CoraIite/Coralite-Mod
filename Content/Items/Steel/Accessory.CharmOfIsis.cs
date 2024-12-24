@@ -12,6 +12,8 @@ namespace Coralite.Content.Items.Steel
     {
         public override string Texture => AssetDirectory.SteelItems + Name;
 
+        public Vector2 ExtraOffset => new Vector2(0, 8);
+
         public CharmOfIsis() : base(ItemRarityID.Pink, Item.sellPrice(0, 6, 0, 0))
         {
         }

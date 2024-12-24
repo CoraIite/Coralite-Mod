@@ -40,8 +40,6 @@ namespace Coralite.Content.Items.Magike.SpecialLens
     {
         public override int DropItemType => ItemType<CogLens>();
 
-        public override MagikeTP GetEntityInstance() => GetInstance<CogLensTileEntity>();
-
         public override MALevel[] GetAllLevels()
         {
             return

@@ -31,8 +31,6 @@ namespace Coralite.Content.Items.Magike.Refractors
         public override string Texture => AssetDirectory.MagikeColumnTiles + Name;
         public override int DropItemType => ItemType<BasicColumn>();
 
-        public override MagikeTP GetEntityInstance() => GetInstance<BasicColumnTileEntity>();
-
         public override MALevel[] GetAllLevels()
         {
             return [

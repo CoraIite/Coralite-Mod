@@ -31,7 +31,7 @@ namespace Coralite.Content.CustomHooks
         public static void On_PlayerDrawLayers_DrawPlayer_21_Head(On_PlayerDrawLayers.orig_DrawPlayer_21_Head orig, ref PlayerDrawSet drawinfo)
         {
             EquipTexture e = EquipLoader.GetEquipTexture(EquipType.Head, drawinfo.drawPlayer.head);
-            if (e != null && e.Item != null && e.Item is ISpecialDrawHead && drawinfo.drawPlayer.head > 0)
+            if (e != null && e.Item != null && e.Item is ISpecialDrawHead specialHead && drawinfo.drawPlayer.head > 0)
             {
                 Vector2 helmetOffset = drawinfo.helmetOffset;
                 DrawPlayer_21_Head_TheFace(ref drawinfo);
@@ -96,6 +96,9 @@ namespace Coralite.Content.CustomHooks
                     shader3 = drawinfo.skinDyePacked;
                 }
 
+                Vector2 exOffset = specialHead.ExtraOffset;
+                exOffset.X *= drawinfo.drawPlayer.direction;
+
                 Vector2 drawPos = helmetOffset +
                     new Vector2((int)(drawinfo.Position.X -
                                 (bodyFrame3.Width / 2) +
@@ -105,7 +108,8 @@ namespace Coralite.Content.CustomHooks
                                - bodyFrame3.Height + 4f))
                     - Main.screenPosition
                     + drawinfo.drawPlayer.headPosition
-                    + headVect2;
+                    + headVect2
+                    + exOffset;
 
                 DrawData item = new(TextureAssets.ArmorHead[drawinfo.drawPlayer.head].Value, drawPos
                     , bodyFrame3, color3, drawinfo.drawPlayer.headRotation, headVect2, 1f, drawinfo.playerEffect);
@@ -356,7 +360,7 @@ namespace Coralite.Content.CustomHooks
 
     public interface ISpecialDrawHead
     {
-
+        public virtual Vector2 ExtraOffset => Vector2.Zero;
     }
 
     public interface ISpecialDrawLegs

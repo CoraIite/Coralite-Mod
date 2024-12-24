@@ -1,4 +1,5 @@
 ﻿using Coralite.Core;
+using Coralite.Core.Attributes;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -7,17 +8,17 @@ using Terraria;
 
 namespace Coralite.Content.Bosses.Rediancie
 {
-    public class RedShield : BasePRT, ICLLoader
+    [AutoLoadTexture(Path =AssetDirectory.Rediancie)]
+    public class RedShield : BasePRT
     {
         public override string Texture => AssetDirectory.Rediancie + "RedShield";
-        public static Asset<Texture2D> flowTex;
+
+        [AutoLoadTexture(Name = "RedShield_Flow")]
+        public static ATex FlowTex { get; private set; }
 
         private Entity rediancie;
         private bool toFadeOut = false;
         private bool Init = true;
-
-        void ICLLoader.LoadAsset() => flowTex = ModContent.Request<Texture2D>(AssetDirectory.Rediancie + "RedShield_Flow");
-        void ICLLoader.UnLoadData() => flowTex = null;
 
         public override bool ShouldUpdatePosition() => false;
 
@@ -71,11 +72,11 @@ namespace Coralite.Content.Bosses.Rediancie
 
             float extraRot1 = Rotation + (Opacity * 0.1f);
             float extraRot2 = Rotation + (Opacity * 0.05f);
-            Vector2 flowOrigin = flowTex.Size() / 2;
+            Vector2 flowOrigin = FlowTex.Size() / 2;
 
-            spriteBatch.Draw(flowTex.Value, center, null, Color, extraRot1, flowOrigin, Scale - 0.1f, SpriteEffects.None, 0);
-            spriteBatch.Draw(flowTex.Value, center, null, new Color(255, 255, 255, Color.A * 3 / 4), extraRot1 + extraRot2, flowOrigin, Scale - 0.2f, SpriteEffects.FlipHorizontally, 0);
-            spriteBatch.Draw(flowTex.Value, center, null, Color, extraRot2 + 3.141f, flowOrigin, Scale - 0.2f, SpriteEffects.FlipHorizontally, 0);
+            spriteBatch.Draw(FlowTex.Value, center, null, Color, extraRot1, flowOrigin, Scale - 0.1f, SpriteEffects.None, 0);
+            spriteBatch.Draw(FlowTex.Value, center, null, new Color(255, 255, 255, Color.A * 3 / 4), extraRot1 + extraRot2, flowOrigin, Scale - 0.2f, SpriteEffects.FlipHorizontally, 0);
+            spriteBatch.Draw(FlowTex.Value, center, null, Color, extraRot2 + 3.141f, flowOrigin, Scale - 0.2f, SpriteEffects.FlipHorizontally, 0);
             return false;
         }
 

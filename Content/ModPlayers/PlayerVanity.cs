@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Items.FlyingShields;
+using Coralite.Content.Items.LandOfTheLustrousSeries.Accessories;
 using Coralite.Content.Items.Misc_Magic;
 using Coralite.Content.Items.Nightmare;
 using Coralite.Content.Items.Steel;
@@ -14,6 +15,8 @@ namespace Coralite.Content.ModPlayers
         {
             if (HasEffect(nameof(BoneRing)))
                 drawInfo.drawPlayer.handon = EquipLoader.GetEquipSlot(Mod, "BoneRing", EquipType.HandsOn);
+            if (HasEffect(nameof(VioletEmblem)))
+                drawInfo.drawPlayer.handon = EquipLoader.GetEquipSlot(Mod, "VioletEmblem", EquipType.HandsOn);
             if (HasEffect(nameof(HylianShield)))
                 drawInfo.drawPlayer.shield = EquipLoader.GetEquipSlot(Mod, "HylianShield", EquipType.Shield);
 

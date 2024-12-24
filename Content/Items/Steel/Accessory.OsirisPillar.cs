@@ -1,4 +1,5 @@
-﻿using Coralite.Content.ModPlayers;
+﻿using Coralite.Content.CustomHooks;
+using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Terraria;
@@ -7,9 +8,15 @@ using Terraria.ID;
 namespace Coralite.Content.Items.Steel
 {
     [AutoloadEquip(EquipType.Head)]
-    public class OsirisPillar : BaseAccessory
+    public class OsirisPillar : BaseAccessory,ISpecialDrawHead
     {
         public override string Texture => AssetDirectory.SteelItems + Name;
+
+        public override void SetStaticDefaults()
+        {
+            int id = EquipLoader.GetEquipSlot(Mod, "OsirisPillar", EquipType.Head);
+            ArmorIDs.Head.Sets.DrawFullHair[id] = true;
+        }
 
         public OsirisPillar() : base(ItemRarityID.Pink, Item.sellPrice(0, 4, 0, 0))
         {

@@ -4890,3 +4890,8 @@ HorizonArc: {
 	DisplayName: Horizon Arc
 	Tooltip: ""
 }
+
+VioletEmblem: {
+	DisplayName: Violet Emblem
+	Tooltip: ""
+}

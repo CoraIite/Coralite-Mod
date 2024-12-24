@@ -73,8 +73,6 @@ namespace Coralite.Content.Items.Magike.Factorys
         public override string Texture => AssetDirectory.MagikeFactoryTiles + Name;
         public override int DropItemType => ItemType<StoneMaker>();
 
-        public override MagikeTP GetEntityInstance() => GetInstance<StoneMakerTileEntity>();
-
         public override MALevel[] GetAllLevels()
         {
             return

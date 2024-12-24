@@ -33,8 +33,6 @@ namespace Coralite.Content.Items.Magike.Lens.ExtractLens
     {
         public override int DropItemType => ItemType<TreasureLens>();
 
-        public override MagikeTP GetEntityInstance() => GetInstance<TreasureLensTileEntity>();
-
         public override MALevel[] GetAllLevels()
         {
             return [

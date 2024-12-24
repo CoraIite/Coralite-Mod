@@ -58,8 +58,6 @@ namespace Coralite.Content.Items.Magike.Factorys
         public override string Texture => AssetDirectory.MagikeFactoryTiles + Name;
         public override int DropItemType => ItemType<LaserCollector>();
 
-        public override MagikeTP GetEntityInstance() => GetInstance<LaserCollectorTileEntity>();
-
         public override MALevel[] GetAllLevels()
         {
             return

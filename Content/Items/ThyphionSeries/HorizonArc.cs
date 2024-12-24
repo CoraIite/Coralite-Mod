@@ -34,7 +34,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             Item.value = Item.sellPrice(0, 4);
 
             Item.noUseGraphic = true;
-
+            Item.useTurn = false;   
             Item.UseSound = CoraliteSoundID.Bow_Item5;
         }
 
@@ -70,17 +70,17 @@ namespace Coralite.Content.Items.ThyphionSeries
                 case CoralitePlayer.DashRight:
                     {
                         dashDirection = DashDir == CoralitePlayer.DashRight ? 1 : -1;
-                        newVelocity.X = dashDirection * 7;
+                        newVelocity.X = dashDirection * 10;
                         break;
                     }
                 default:
                     return false;
             }
 
-            Player.GetModPlayer<CoralitePlayer>().DashDelay = 80;
-            Player.GetModPlayer<CoralitePlayer>().DashTimer = 20;
+            Player.GetModPlayer<CoralitePlayer>().DashDelay = 75;
+            Player.GetModPlayer<CoralitePlayer>().DashTimer = 30;
             Player.velocity = newVelocity;
-            Player.direction = (int)dashDirection;
+            //Player.direction = (int)dashDirection;
 
             if (Player.whoAmI == Main.myPlayer)
             {
@@ -96,7 +96,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
                 //生成手持弹幕
                 Projectile.NewProjectile(Player.GetSource_ItemUse(Player.HeldItem), Player.Center, Vector2.Zero, ProjectileType<HorizonArcHeldProj>(),
-                    Player.HeldItem.damage, Player.HeldItem.knockBack, Player.whoAmI, 1.57f + dashDirection * 1, 1, 20);
+                    Player.HeldItem.damage, Player.HeldItem.knockBack, Player.whoAmI, 1.57f - (Main.MouseWorld.X>Player.Center.X?1:-1) * 1, 1, 35);
             }
 
             return true;
@@ -107,15 +107,14 @@ namespace Coralite.Content.Items.ThyphionSeries
     public class HorizonArcHeldProj : BaseDashBow,IDrawPrimitive
     {
         public override string Texture => AssetDirectory.ThyphionSeriesItems + "HorizonArc";
-
+        
         public override int GetItemType() => ItemType<HorizonArc>();
 
         public int dashState;
-        public ref float RecordOwnerDirection => ref Projectile.localAI[0];
         public ref float Timer => ref Projectile.localAI[1];
-        public ref float RecordAngle => ref Projectile.localAI[1];
+        public ref float RecordAngle => ref Projectile.localAI[2];
 
-        public SecondOrderDynamics_Float factor;
+        public SecondOrderDynamics_Vec2 factor;
         public SecondOrderDynamics_Vec2[] angleFactors;
         public SecondOrderDynamics_Vec2[] streamerFactors;
         public Trail streamer;
@@ -139,16 +138,17 @@ namespace Coralite.Content.Items.ThyphionSeries
             /// </summary>
             specialRelease,
         }
-
+        
         public override void Initialize()
         {
+            RecordAngle = Rotation;
+
             if (Special == 0)
                 return;
 
-            RecordOwnerDirection = Owner.direction;
-            RecordAngle = (RecordOwnerDirection > 0 ? 0.2f : MathHelper.Pi - 0.2f);
+            RecordAngle = (Owner.direction > 0 ? 0.2f : MathHelper.Pi - 0.2f);
             Rotation = RecordAngle;
-            factor = new SecondOrderDynamics_Float(1f, 0.75f, 0, RecordAngle);
+            factor = new SecondOrderDynamics_Vec2(0.8f, 0.1f, 0, RecordAngle.ToRotationVector2());
 
             if (!VaultUtils.isServer)
             {
@@ -211,30 +211,27 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public void Dashing_Angle()
         {
-            if (Timer < (int)(DashTime / 2))//前三分之一段，向上抬起弓
+            float upTime = DashTime / 2f;
+
+            if (Timer < (int)upTime)//前二分之一段，向上抬起弓
             {
-                float angle = Helper.Lerp(RecordAngle,
-                    RecordOwnerDirection > 0 ? (-MathHelper.PiOver2 + 0.2f) : (MathHelper.PiOver2 * 3 - 0.2f)
-                    , Timer / (DashTime / 3));
-                Rotation = factor.Update(1 / 60f, angle);
+                float targetAngle = Owner.direction > 0 ? (-MathHelper.PiOver2 - 0.2f) : (MathHelper.PiOver2 * 3 + 0.2f);
+                
+                Rotation =  factor.Update(1 / 60f, targetAngle.ToRotationVector2()).ToRotation();
                 return;
             }
 
-            if (Timer== (int)(DashTime / 2))//改变记录角度，之后转向向下
+            if (Timer == (int)upTime)//改变记录角度，之后转向向下
             {
-                RecordAngle = RecordOwnerDirection > 0 ? (-MathHelper.PiOver2 + 0.2f) : (MathHelper.PiOver2 * 3 - 0.2f);
-                return;
+                RecordAngle = Owner.direction > 0 ? (-MathHelper.PiOver2 - 0.2f) : (MathHelper.PiOver2 * 3 + 0.2f);
             }
 
-            if (Timer<(int)(DashTime*3/4))
+            if (Timer < (int)(DashTime * 3 / 4))
             {
-                float factor = (Timer - (int)(DashTime / 2)) / (int)(DashTime * 3 / 4);
+                float factor = (Timer - (int)upTime) / (int)(DashTime * 3 / 4);
+                float targetAngle = Owner.direction > 0 ? 0 : MathHelper.Pi;
 
-                float angle = Helper.Lerp(RecordAngle,
-                    RecordOwnerDirection > 0 ? 0 : MathHelper.Pi
-                    , Timer / (DashTime / 3));
-
-                Rotation = this.factor.Update(1 / 60f, angle);
+                Rotation = this.factor.Update(1 / 60f, targetAngle.ToRotationVector2()).ToRotation();
 
                 return;
             }
@@ -252,7 +249,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public override void NormalShootAI()
         {
-
+            base.NormalShootAI();
         }
 
         public override void AIAfter()
@@ -298,7 +295,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         #region 绘制部分
 
         public override Vector2 GetOffset()
-            => new(20, 0);
+            => new(22, 0);
 
         public override bool PreDraw(ref Color lightColor)
         {
@@ -307,15 +304,13 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             Main.spriteBatch.Draw(mainTex, center, null, lightColor, Projectile.rotation, mainTex.Size() / 2, 1, DirSign > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0f);
 
-            if (Special == 0)
+            if (Special == 0 || Timer < DashTime / 2)
                 return false;
 
-            //int type = GetArrowType();
-            //Main.instance.LoadProjectile(type);
-            //Texture2D arrowTex = TextureAssets.Projectile[type].Value;
-            //Vector2 dir = Rotation.ToRotationVector2();
-            //Main.spriteBatch.Draw(arrowTex, center, null, lightColor, Projectile.rotation + 1.57f
-            //    , new Vector2(arrowTex.Width / 2, arrowTex.Height * 5 / 6), 1, 0, 0f);
+            Texture2D arrowTex = HorizonArcArrow.Value;
+            Vector2 dir = Rotation.ToRotationVector2();
+            Main.spriteBatch.Draw(arrowTex, center, null, lightColor, Projectile.rotation + 1.57f
+                , new Vector2(arrowTex.Width / 2, arrowTex.Height * 5 / 6), 1, 0, 0f);
 
             return false;
         }

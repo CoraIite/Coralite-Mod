@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.ModPlayers;
 using Coralite.Content.Particles;
 using Coralite.Core;
+using Coralite.Core.Attributes;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.CameraSystem;
 using Coralite.Helpers;
@@ -106,15 +107,19 @@ namespace Coralite.Content.Items.ThyphionSeries
         }
     }
 
+    [AutoLoadTexture(Path = AssetDirectory.ThyphionSeriesItems)]
     public class RadiantSunHeldProj : BaseDashBow, IDrawAdditive
     {
         public override string Texture => AssetDirectory.ThyphionSeriesItems + "RadiantSun";
 
         private Vector2 arrowPos;
 
-        private static Asset<Texture2D> GlowTex;
-        private static Asset<Texture2D> ArrowTex;
-        private static Asset<Texture2D> LightTex;
+        [AutoLoadTexture(Name = "RadiantSun_Glow")]
+        public static ATex GlowTex { get;private set; }
+        [AutoLoadTexture(Name = "RadiantSunArrow")]
+        public static ATex ArrowTex { get; private set; }
+        [AutoLoadTexture(Name = "RadiantSunLight")]
+        public static ATex LightTex { get; private set; }
 
         public ref float ArrowLength => ref Projectile.localAI[0];
         public ref float Timer => ref Projectile.localAI[1];
@@ -124,23 +129,6 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public float handOffset = 14;
         public int State;
-
-        public override void Load()
-        {
-            if (Main.dedServ)
-                return;
-
-            GlowTex = Request<Texture2D>(AssetDirectory.ThyphionSeriesItems + "RadiantSun_Glow");
-            ArrowTex = Request<Texture2D>(AssetDirectory.ThyphionSeriesItems + "RadiantSunArrow");
-            LightTex = Request<Texture2D>(AssetDirectory.ThyphionSeriesItems + "RadiantSunLight");
-        }
-
-        public override void Unload()
-        {
-            GlowTex = null;
-            ArrowTex = null;
-            LightTex = null;
-        }
 
         public override int GetItemType()
             => ItemType<RadiantSun>();

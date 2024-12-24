@@ -32,8 +32,6 @@ namespace Coralite.Content.Items.Magike.Altars
         public override string Texture => AssetDirectory.MagikeAltarTiles + Name;
         public override int DropItemType => ItemType<BasicAltar>();
 
-        public override MagikeTP GetEntityInstance() => GetInstance<BasicAltarTileEntity>();
-
         public override MALevel[] GetAllLevels()
         {
             return

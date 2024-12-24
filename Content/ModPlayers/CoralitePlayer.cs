@@ -291,7 +291,7 @@ namespace Coralite.Content.ModPlayers
                 }
             }
 
-            if (HasEffect(nameof(OsirisPillar)) && Player.statLife <= 60)
+            if (HasEffect(nameof(OsirisPillar)) && Player.statLife <= 80)
             {
                 Player.GetDamage(DamageClass.Generic) *= 1.15f;
                 Player.GetCritChance(DamageClass.Generic) += 6f;
@@ -342,12 +342,12 @@ namespace Coralite.Content.ModPlayers
                 }
             }
 
-            if (HasEffect(nameof(OsirisPillar)) && Player.statMana >= Player.statManaMax2 - 20)
+            if (HasEffect(nameof(OsirisPillar)))
             {
                 if (Player.lifeRegen > 0)
                     Player.lifeRegen = 0;
 
-                if (Player.statLife > 50)
+                if (Player.statLife > 80)
                 {
                     Player.lifeRegen -= 10 * 3;
                     Player.lifeRegenTime = 0;

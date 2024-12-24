@@ -22,10 +22,6 @@ namespace Coralite
         public const int YujianHuluContainsMax = 3;
 
         private List<IOrderedLoadable> loadCache;
-        /// <summary>
-        /// 所有继承了<see cref="ICLLoader"/>接口的类的实例
-        /// </summary>
-        internal static List<ICLLoader> Loaders { get; private set; } = new List<ICLLoader>();
 
         public NoSmoother NoSmootherInstance;
         public HeavySmoother HeavySmootherInstance;
@@ -102,12 +98,6 @@ namespace Coralite
                 loadCache[k].Load();
                 //SetLoadingText("Loading " + loadCache[k].GetType().Name);
             }
-
-            Loaders = VaultUtils.GetSubInterface<ICLLoader>();
-            foreach (var load in Loaders)
-            {
-                load.LoadData();
-            }
         }
 
         public override void Unload()
@@ -121,13 +111,6 @@ namespace Coralite
 
                 loadCache = null;
             }
-
-            foreach (var load in Loaders)
-            {
-                load.UnLoadData();
-            }
-
-            Loaders.Clear();
 
             Instance = null;
         }
@@ -146,19 +129,6 @@ namespace Coralite
         public override void PostSetupContent()
         {
             BossCheckListCalls.CallBossCheckList();
-
-            foreach (var load in Loaders)
-            {
-                load.SetupData();
-            }
-
-            if (!Main.dedServ)
-            {
-                foreach (var load in Loaders)
-                {
-                    load.LoadAsset();
-                }
-            }
         }
 
         public override object Call(params object[] args)
