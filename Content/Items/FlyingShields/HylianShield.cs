@@ -19,6 +19,8 @@ namespace Coralite.Content.Items.FlyingShields
         {
         }
 
+        public float Priority => IDashable.HeldItemDash;
+
         public override bool Dash(Player Player, int DashDir)
         {
             float dashDirection;
@@ -71,13 +73,20 @@ namespace Coralite.Content.Items.FlyingShields
             if (player.TryGetModPlayer(out CoralitePlayer cp))
             {
                 if (player.ItemTimeIsZero && player.ownedProjectileCounts[Item.shoot] == 0)
+                {
                     cp.AddEffect(nameof(HylianShield));
+                    cp.AddDash(this);
+                }
             }
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.statDefense += 25;
+            if (player.TryGetModPlayer(out CoralitePlayer cp))
+            {
+                cp.AddDash(this);
+            }
         }
     }
 

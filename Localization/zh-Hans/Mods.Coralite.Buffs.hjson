@@ -220,3 +220,8 @@ CloudBonus: {
 		+15% 远程伤害
 		'''
 }
+
+HorizonArcBonus: {
+	// DisplayName: Horizon Arc Bonus
+	// Description: Mods.Coralite.Buffs.HorizonArcBonus.Description
+}

@@ -18,6 +18,8 @@ namespace Coralite.Content.Items.ThyphionSeries
     {
         public override string Texture => AssetDirectory.ThyphionSeriesItems + Name;
 
+        public float Priority => IDashable.HeldItemDash;
+
         public override void SetDefaults()
         {
             Item.SetWeaponValues(13, 2f);
@@ -30,6 +32,14 @@ namespace Coralite.Content.Items.ThyphionSeries
             Item.noUseGraphic = true;
 
             Item.UseSound = CoraliteSoundID.Bow_Item5;
+        }
+
+        public override void HoldItem(Player player)
+        {
+            if (player.TryGetModPlayer(out CoralitePlayer cp))
+            {
+                cp.AddDash(this);
+            }
         }
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)

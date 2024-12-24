@@ -21,6 +21,8 @@ namespace Coralite.Content.Items.Nightmare
 
         public int Combo;
 
+        public float Priority => IDashable.HeldItemDash;
+
         public override void SetDefaults()
         {
             Item.useAnimation = Item.useTime = 14;
@@ -36,6 +38,14 @@ namespace Coralite.Content.Items.Nightmare
             Item.noMelee = true;
             Item.useTurn = false;
             Item.shootSpeed = 22;
+        }
+
+        public override void HoldItem(Player player)
+        {
+            if (player.TryGetModPlayer(out CoralitePlayer cp))
+            {
+                cp.AddDash(this);
+            }
         }
 
         public override bool AltFunctionUse(Player player) => false;

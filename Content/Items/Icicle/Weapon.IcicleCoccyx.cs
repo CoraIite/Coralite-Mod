@@ -24,6 +24,8 @@ namespace Coralite.Content.Items.Icicle
         public int useCount;
         public bool canDash;
 
+        public float Priority => IDashable.HeldItemDash;
+
         public override void SetStaticDefaults()
         {
             ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
@@ -48,6 +50,14 @@ namespace Coralite.Content.Items.Icicle
             Item.autoReuse = true;
             Item.expert = true;
             CoraliteGlobalItem.SetColdDamage(Item);
+        }
+
+        public override void HoldItem(Player player)
+        {
+            if (player.TryGetModPlayer(out CoralitePlayer cp))
+            {
+                cp.AddDash(this);
+            }
         }
 
         public override bool AltFunctionUse(Player player) => true;

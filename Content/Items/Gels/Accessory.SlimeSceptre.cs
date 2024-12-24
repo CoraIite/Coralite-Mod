@@ -14,6 +14,8 @@ namespace Coralite.Content.Items.Gels
     {
         public override string Texture => AssetDirectory.GelItems + Name;
 
+        public float Priority => IDashable.HeldItemDash;
+
         public bool Dash(Player Player, int DashDir)
         {
             var offset = DashDir switch
@@ -54,10 +56,22 @@ namespace Coralite.Content.Items.Gels
             Item.UseSound = CoraliteSoundID.SlimeMount_Item81;
         }
 
+        public override void HoldItem(Player player)
+        {
+            if (player.TryGetModPlayer(out CoralitePlayer cp))
+            {
+                cp.AddDash(this);
+            }
+        }
+
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             player.moveSpeed += 0.08f;
             player.GetDamage(DamageClass.Generic) += 0.04f;
+            if (player.TryGetModPlayer(out CoralitePlayer cp))
+            {
+                cp.AddDash(this);
+            }
         }
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)

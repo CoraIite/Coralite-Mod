@@ -24,6 +24,8 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
         {
         }
 
+        public float Priority => IDashable.AccessoryDashHigh + 5;
+
         public override void SetDefaults()
         {
             base.SetDefaults();
@@ -39,6 +41,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
             if (player.TryGetModPlayer(out CoralitePlayer cp))
             {
                 cp.FlyingShieldAccessories?.Add(this);
+                cp.AddDash(this);
             }
 
             if (isDashing)

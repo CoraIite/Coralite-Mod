@@ -5,15 +5,16 @@ using Terraria;
 
 namespace Coralite.Content.Particles
 {
-    public class WindCircle : BasePRT
+    public class StaminaRecover : BasePRT
     {
-        public override string Texture => AssetDirectory.Particles + Name;
+        public override string Texture => AssetDirectory.Particles + "WindCircle";
         public int frameCounterMax = 1;
         public Vector2 scale = Vector2.One;
+        public int ownerIndex;
 
         public override void SetProperty()
         {
-            PRTDrawMode = PRTDrawModeEnum.AdditiveBlend;
+            PRTDrawMode = PRTDrawModeEnum.AlphaBlend;
         }
 
         public override void AI()
@@ -24,19 +25,24 @@ namespace Coralite.Content.Particles
                 if (++Frame.Y > 5)
                     active = false;
             }
+
+            Color *= 0.8f;
+            Scale*= 1.04f;
+            Position += Main.player[ownerIndex].position - Main.player[ownerIndex].oldPosition;
         }
 
-        public static void Spawn(Vector2 center, Vector2 velocity, float rotation, Color newcolor, float alpha, float Basescale, Vector2 exScale)
+        public static void Spawn(Vector2 center, Vector2 velocity, float rotation, Color newcolor, float alpha, float Basescale, Vector2 exScale,int ownerIndex)
         {
             if (VaultUtils.isServer)
                 return;
 
             newcolor.A = (byte)(255 * alpha);
-            WindCircle p = PRTLoader.NewParticle<WindCircle>(center, velocity, newcolor, Basescale);
+            StaminaRecover p = PRTLoader.NewParticle<StaminaRecover>(center, velocity, newcolor, Basescale);
             if (p != null)
             {
                 p.Rotation = rotation;
                 p.scale = exScale;
+                p.ownerIndex = ownerIndex;
             }
         }
 
@@ -53,5 +59,6 @@ namespace Coralite.Content.Particles
 
             return false;
         }
+
     }
 }

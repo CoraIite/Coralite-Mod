@@ -20,6 +20,8 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public int shootCount;
 
+        public float Priority => IDashable.HeldItemDash;
+
         public override void SetDefaults()
         {
             Item.SetWeaponValues(235, 6f);
@@ -31,6 +33,14 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             Item.noUseGraphic = true;
             Item.channel = true;
+        }
+
+        public override void HoldItem(Player player)
+        {
+            if (player.TryGetModPlayer(out CoralitePlayer cp))
+            {
+                cp.AddDash(this);
+            }
         }
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)

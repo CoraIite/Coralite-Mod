@@ -17,6 +17,8 @@ namespace Coralite.Content.Items.FlyingShields
         public TortoiseshellFortress() : base(Item.sellPrice(0, 2, 0, 0), ItemRarityID.Lime, AssetDirectory.FlyingShieldItems)
         { }
 
+        public float Priority => IDashable.HeldItemDash;
+
         public override void SetDefaults2()
         {
             Item.useTime = Item.useAnimation = 15;
@@ -24,6 +26,14 @@ namespace Coralite.Content.Items.FlyingShields
             Item.knockBack = 6;
             Item.shootSpeed = 10;
             Item.damage = 95;
+        }
+
+        public override void HoldItem(Player player)
+        {
+            if (player.TryGetModPlayer(out CoralitePlayer cp))
+            {
+                cp.AddDash(this);
+            }
         }
 
         public override void AddRecipes()

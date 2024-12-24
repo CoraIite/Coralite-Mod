@@ -14,6 +14,8 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
         {
         }
 
+        public float Priority => IDashable.AccessoryDashHigh + 80;
+
         public override void SetDefaults()
         {
             base.SetDefaults();

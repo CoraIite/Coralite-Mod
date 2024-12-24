@@ -21,6 +21,8 @@ namespace Coralite.Content.Items.Thunder
     {
         public override string Texture => AssetDirectory.ThunderItems + Name;
 
+        public float Priority => IDashable.HeldItemDash;
+
         public override void SetDefaults()
         {
             Item.SetWeaponValues(64, 7f, 10);
@@ -35,6 +37,14 @@ namespace Coralite.Content.Items.Thunder
             Item.useTurn = false;
 
             Item.UseSound = CoraliteSoundID.Bow2_Item102;
+        }
+
+        public override void HoldItem(Player player)
+        {
+            if (player.TryGetModPlayer(out CoralitePlayer cp))
+            {
+                cp.AddDash(this);
+            }
         }
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)

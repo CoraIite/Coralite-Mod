@@ -24,6 +24,8 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public int SpecialAttack;
 
+        public float Priority => IDashable.HeldItemDash;
+
         public override void SetDefaults()
         {
             Item.SetWeaponValues(55, 4f);
@@ -36,6 +38,14 @@ namespace Coralite.Content.Items.ThyphionSeries
             Item.noUseGraphic = true;
             Item.useTurn = false;   
             Item.UseSound = CoraliteSoundID.Bow_Item5;
+        }
+
+        public override void HoldItem(Player player)
+        {
+            if (player.TryGetModPlayer(out CoralitePlayer cp))
+            {
+                cp.AddDash(this);
+            }
         }
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
@@ -335,5 +345,15 @@ namespace Coralite.Content.Items.ThyphionSeries
         }
 
         #endregion
+    }
+
+    public class RainbowArrow
+    {
+
+    }
+
+    public class HorizonArcBonus:ModBuff
+    {
+        public override string Texture => AssetDirectory.ThyphionSeriesItems+Name;
     }
 }

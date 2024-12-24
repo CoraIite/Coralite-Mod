@@ -22,6 +22,8 @@ namespace Coralite.Content.GlobalItems
         public static LocalizedText TerraCoralCat;
         public static LocalizedText RainBowCoralCat;
 
+        public static LocalizedText DashPriority;
+
         /// <summary>
         /// 是否能通过特殊攻击键来使用武器
         /// </summary>
@@ -39,6 +41,8 @@ namespace Coralite.Content.GlobalItems
             RainBowCoralCat = this.GetLocalization("RainBowCoralCat", () => "彩虹猫猫币");
             Cold = this.GetLocalization("Cold", () => "[c/5cd7f9:寒冷]");
             Edible = this.GetLocalization("Edible", () => "[c/f0d0b7:可食用]");
+
+            DashPriority = this.GetLocalization("Edible");
         }
 
         public override void Unload()

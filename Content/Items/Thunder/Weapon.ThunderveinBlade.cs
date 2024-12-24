@@ -27,6 +27,8 @@ namespace Coralite.Content.Items.Thunder
 
         public int useCount;
 
+        public float Priority => IDashable.HeldItemDash;
+
         public override void SetDefaults()
         {
             Item.width = Item.height = 40;
@@ -45,6 +47,14 @@ namespace Coralite.Content.Items.Thunder
             Item.noUseGraphic = true;
             Item.noMelee = true;
             Item.autoReuse = true;
+        }
+
+        public override void HoldItem(Player player)
+        {
+            if (player.TryGetModPlayer(out CoralitePlayer cp))
+            {
+                cp.AddDash(this);
+            }
         }
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)

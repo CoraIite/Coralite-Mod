@@ -208,3 +208,8 @@ CloudBonus: {
 	DisplayName: Cloud Bonus
 	Description: Mods.Coralite.Buffs.CloudBonus.Description
 }
+
+HorizonArcBonus: {
+	DisplayName: Horizon Arc Bonus
+	Description: Mods.Coralite.Buffs.HorizonArcBonus.Description
+}
