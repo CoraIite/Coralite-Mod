@@ -5,4 +5,10 @@ CoraliteGlobalItem: {
 	RainBowCoralCat: 彩虹猫猫币
 	Cold: "[c/5cd7f9:寒冷]"
 	Edible: "[c/f0d0b7:美味]"
+	DashPriority: 冲刺优先级：
+	DashPriorityLevel0: 最高
+	DashPriorityLevel1: 较高
+	DashPriorityLevel2: 中
+	DashPriorityLevel3: 较低
+	DashPriorityLevel4: 最低
 }

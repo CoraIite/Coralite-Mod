@@ -37,7 +37,7 @@ namespace Coralite.Content.ModPlayers
         /// <summary>
         /// 是否能够冲刺，判断条件为：钩爪勾到了，玩家被拖拽，玩家正在坐骑上
         /// </summary>
-        public bool CanDash => Player.grappling[0] == -1 && !Player.tongued && !Player.mount.Active;
+        public bool CanDashSpecialCondition => Player.grappling[0] == -1 && !Player.tongued && !Player.mount.Active;
 
         public void BanVanillaDash()
         {
@@ -48,7 +48,7 @@ namespace Coralite.Content.ModPlayers
 
         public void UpdateDash()
         {
-            if (DashDelay == 0 && DashDir != -1 && DashControllers.Count > 0 && CanDash)
+            if (DashDelay == 0 && DashDir != -1 && DashControllers.Count > 0 && CanDashSpecialCondition)
                 do
                 {
                     DashControllers.Sort((d1, d2) => d1.Priority.CompareTo(d2.Priority));

@@ -202,6 +202,21 @@ namespace Coralite.Core
             /// </summary>
             public static ATex Booster { get; private set; }
 
+            /// <summary> 
+            /// 类似推进器尾焰，高亮的柔和渐变
+            /// </summary>
+            public static ATex Strike { get; private set; }
+
+            /// <summary> 
+            /// 箭
+            /// </summary>
+            public static ATex Arrow { get; private set; }
+
+            /// <summary> 
+            /// 一束光，竖过来看是一个水滴
+            /// </summary>
+            public static ATex LightShot { get; private set; }
+
             #endregion
         }
 
@@ -242,6 +257,16 @@ namespace Coralite.Core
             /// 气流一样的流动图
             /// </summary>
             public static ATex Airflow { get; private set; }
+
+            /// <summary> 
+            /// 气流一样的流动图
+            /// </summary>
+            public static ATex AirFlow2 { get; private set; }
+
+            /// <summary> 
+            /// 主要用于溶解的贴图，类似时空隧道的样子
+            /// </summary>
+            public static ATex Tunnel { get; private set; }
         }
 
         /// <summary>

@@ -77,7 +77,7 @@ namespace Coralite.Content.Items.HyacinthSeries
                     float scale = 0.4f + (0.1f * factor);
                     Vector2 center = Projectile.Center + Main.rand.NextVector2CircularEdge(8, 8);
 
-                    Projectile.NewProjectileFromThis<StarsBreathExplosion>(center, Vector2.Zero, (int)(Projectile.damage * 0.45f), Projectile.knockBack, Projectile.owner, scale);
+                    Projectile.NewProjectileFromThis<StarsBreathExplosion>(center, Vector2.Zero, (int)(Projectile.damage * 0.45f), Projectile.knockBack, scale);
                     PRTLoader.NewParticle(center, Vector2.Zero, CoraliteContent.ParticleType<RainbowHalo>(), Color.White, scale + 0.1f);
                     if (factor == 0)
                         PlaySound();
@@ -113,7 +113,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             {
                 Vector2 center = Projectile.Center + Main.rand.NextVector2CircularEdge(8, 8);
 
-                Projectile.NewProjectileFromThis<StarsBreathExplosion>(center, Vector2.Zero, (int)(Projectile.damage * 0.45f), Projectile.knockBack, Projectile.owner, 0.6f);
+                Projectile.NewProjectileFromThis<StarsBreathExplosion>(center, Vector2.Zero, (int)(Projectile.damage * 0.45f), Projectile.knockBack, 0.6f);
                 if (VisualEffectSystem.HitEffect_SpecialParticles)
                     PRTLoader.NewParticle(center, Vector2.Zero, CoraliteContent.ParticleType<RainbowHalo>(), Color.White, 0.6f);
                 if (Projectile.timeLeft > 31)
@@ -175,13 +175,14 @@ namespace Coralite.Content.Items.HyacinthSeries
 
         public override void OnSpawn(IEntitySource source)
         {
-            Projectile.rotation = Main.rand.NextFloat(6.282f);
         }
 
         public override void AI()
         {
             if (Projectile.localAI[1] == 0)
             {
+                Projectile.rotation = Main.rand.NextFloat(6.282f);
+
                 Vector2 center = Projectile.Center;
                 Projectile.scale = Projectile.ai[0];
                 Projectile.width = Projectile.height = (int)(Projectile.scale * 132);
@@ -236,7 +237,8 @@ namespace Coralite.Content.Items.HyacinthSeries
             }
             Texture2D mainTex = Projectile.GetTexture();
 
-            spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, mainTex.Frame(4, 4, (int)frameX, Projectile.frame), Color.White * 0.8f, Projectile.rotation, new Vector2(64, 64), Projectile.scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, mainTex.Frame(4, 4, (int)frameX, Projectile.frame)
+                , Color.White * 0.8f, Projectile.rotation, new Vector2(64, 64), Projectile.scale, SpriteEffects.None, 0f);
         }
     }
 }

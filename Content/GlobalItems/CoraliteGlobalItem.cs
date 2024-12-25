@@ -23,6 +23,7 @@ namespace Coralite.Content.GlobalItems
         public static LocalizedText RainBowCoralCat;
 
         public static LocalizedText DashPriority;
+        public static LocalizedText[] DashPriorityLevel;
 
         /// <summary>
         /// 是否能通过特殊攻击键来使用武器
@@ -42,7 +43,10 @@ namespace Coralite.Content.GlobalItems
             Cold = this.GetLocalization("Cold", () => "[c/5cd7f9:寒冷]");
             Edible = this.GetLocalization("Edible", () => "[c/f0d0b7:可食用]");
 
-            DashPriority = this.GetLocalization("Edible");
+            DashPriority = this.GetLocalization("DashPriority");
+            DashPriorityLevel = new LocalizedText[5];
+            for (int i = 0; i < 5; i++)
+                DashPriorityLevel[i]= this.GetLocalization("DashPriorityLevel"+i);
         }
 
         public override void Unload()
@@ -53,6 +57,8 @@ namespace Coralite.Content.GlobalItems
             RainBowCoralCat = null;
             Cold = null;
             Edible = null;
+            DashPriority = null;
+            DashPriorityLevel = null;
         }
 
         public override void SetDefaults(Item item)
@@ -275,8 +281,23 @@ namespace Coralite.Content.GlobalItems
 
                     newText.Add(text[1]);
                     damage.Text = string.Concat([.. newText]);
-
                 }
+            }
+
+            if (item.ModItem is IDashable dash)
+            {
+                float priority = dash.Priority;
+
+                string level = priority switch
+                {
+                    >= IDashable.AccessoryDashLow => DashPriorityLevel[4].Value,//最低
+                    >= 70 and < IDashable.AccessoryDashLow => DashPriorityLevel[3].Value,//较低
+                    >= 40 and < 70 => DashPriorityLevel[2].Value,//中
+                    >= IDashable.AccessoryDashHigh and < 40 => DashPriorityLevel[1].Value,//较高
+                    _ => DashPriorityLevel[0].Value,//最高
+                };
+                TooltipLine line = new TooltipLine(Mod, "DashPriority", DashPriority.Value+level);
+                tooltips.Add(line);
             }
         }
 

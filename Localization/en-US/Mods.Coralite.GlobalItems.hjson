@@ -5,4 +5,10 @@ CoraliteGlobalItem: {
 	RainBowCoralCat: Rainbow Cat coin
 	Cold: "[c/5cd7f9:Frost]"
 	Edible: "[c/f0d0b7:Delicious]"
+	DashPriority: Mods.Coralite.GlobalItems.CoraliteGlobalItem.DashPriority
+	DashPriorityLevel0: Mods.Coralite.GlobalItems.CoraliteGlobalItem.DashPriorityLevel0
+	DashPriorityLevel1: Mods.Coralite.GlobalItems.CoraliteGlobalItem.DashPriorityLevel1
+	DashPriorityLevel2: Mods.Coralite.GlobalItems.CoraliteGlobalItem.DashPriorityLevel2
+	DashPriorityLevel3: Mods.Coralite.GlobalItems.CoraliteGlobalItem.DashPriorityLevel3
+	DashPriorityLevel4: Mods.Coralite.GlobalItems.CoraliteGlobalItem.DashPriorityLevel4
 }
