@@ -564,7 +564,7 @@ namespace Coralite.Content.Items.FlyingShields
         }
     }
 
-    public class LightCiecleParticle : BasePRT
+    public class LightCiecleParticle : Particle
     {
         public override string Texture => AssetDirectory.Halos + "HighlightCircle";
 
@@ -590,9 +590,9 @@ namespace Coralite.Content.Items.FlyingShields
                 active = false;
         }
 
-        public static BasePRT Spawn(Vector2 center, Color newcolor, float baseScale, float rotation, Vector2 circleScale)
+        public static Particle Spawn(Vector2 center, Color newcolor, float baseScale, float rotation, Vector2 circleScale)
         {
-            BasePRT p = PRTLoader.NewParticle<LightCiecleParticle>(center, Vector2.Zero, newcolor, baseScale);
+            Particle p = PRTLoader.NewParticle<LightCiecleParticle>(center, Vector2.Zero, newcolor, baseScale);
 
             p.Rotation = rotation;
             p.oldPositions = [circleScale];
@@ -628,7 +628,7 @@ namespace Coralite.Content.Items.FlyingShields
         }
     }
 
-    public class ScreenLightParticle : BasePRT
+    public class ScreenLightParticle : Particle
     {
         public override string Texture => AssetDirectory.Particles + "LightBall";
 

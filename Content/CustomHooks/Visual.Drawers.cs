@@ -113,7 +113,7 @@ namespace Coralite.Content.CustomHooks
             //ArmorShaderData armorShaderData = null;
             //for (int i = 0; i < ParticleSystem.Particles.Count; i++)
             //{
-            //    BasePRT particle = ParticleSystem.Particles[i];
+            //    Particle particle = ParticleSystem.Particles[i];
             //    if (particle == null || !particle.active)
             //        continue;
 

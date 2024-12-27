@@ -5,7 +5,7 @@ using Terraria;
 
 namespace Coralite.Content.Bosses.ThunderveinDragon
 {
-    public class ElectricParticle : BasePRT
+    public class ElectricParticle : Particle
     {
         public override string Texture => AssetDirectory.ThunderveinDragon + "ElectricParticle";
 
@@ -80,7 +80,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
         }
     }
 
-    public class LightningParticle : BasePRT
+    public class LightningParticle : Particle
     {
         public override string Texture => AssetDirectory.ThunderveinDragon + Name;
 

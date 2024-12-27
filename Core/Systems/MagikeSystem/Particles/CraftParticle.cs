@@ -13,7 +13,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
     /// 绘制本体的不断收缩圆圈
     /// 绘制旋转的物品
     /// </summary>
-    public class CraftParticle : BasePRT
+    public class CraftParticle : Particle
     {
         public override string Texture => AssetDirectory.Halos + "Circle";
 

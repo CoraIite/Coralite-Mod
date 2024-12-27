@@ -7,7 +7,7 @@ using Terraria;
 
 namespace Coralite.Content.Items.LandOfTheLustrousSeries
 {
-    public class CrystalShine : BasePRT
+    public class CrystalShine : Particle
     {
         public override string Texture => AssetDirectory.OtherProjectiles + "LightGlowShot";
 

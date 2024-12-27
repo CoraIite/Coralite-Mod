@@ -5,7 +5,7 @@ using Terraria;
 
 namespace Coralite.Content.Items.LandOfTheLustrousSeries
 {
-    public class CrystalTriangle : BasePRT
+    public class CrystalTriangle : Particle
     {
         public override string Texture => AssetDirectory.Particles + "Triangle";
 

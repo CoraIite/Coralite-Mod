@@ -5,7 +5,7 @@ using Terraria;
 
 namespace Coralite.Content.Particles
 {
-    public class LightBall : BasePRT
+    public class LightBall : Particle
     {
         public override string Texture => AssetDirectory.Particles + Name;
         public override void SetProperty()

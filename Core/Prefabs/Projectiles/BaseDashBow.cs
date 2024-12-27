@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using System.Linq;
+using Terraria;
 
 namespace Coralite.Core.Prefabs.Projectiles
 {
@@ -51,6 +52,13 @@ namespace Coralite.Core.Prefabs.Projectiles
                     default:
                     case 0:
                         Projectile.timeLeft = Owner.itemTimeMax;
+
+                        if (Main.projectile.Any(p => p.active && p.friendly
+                            && p.owner == Projectile.owner && p.type == Projectile.type && p.ai[1] == 1))
+                        {
+                            Projectile.Kill();
+                        }
+
                         break;
                     case 1:
                         break;

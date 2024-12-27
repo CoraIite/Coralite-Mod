@@ -137,7 +137,7 @@ namespace Coralite.Content.Items.Shadow
         }
     }
 
-    public class ShadowTriangle : BasePRT
+    public class ShadowTriangle : Particle
     {
         public override string Texture => AssetDirectory.Particles + "Triangle";
 

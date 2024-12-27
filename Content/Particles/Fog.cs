@@ -4,7 +4,7 @@ using Terraria;
 
 namespace Coralite.Content.Particles
 {
-    public class Fog : BasePRT
+    public class Fog : Particle
     {
         public override string Texture => AssetDirectory.Particles + Name;
 

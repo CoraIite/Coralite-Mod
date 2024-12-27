@@ -6,7 +6,7 @@ using Terraria;
 
 namespace Coralite.Content.Items.LandOfTheLustrousSeries
 {
-    public class HexagramParticle : BasePRT
+    public class HexagramParticle : Particle
     {
         public override string Texture => AssetDirectory.OtherProjectiles + "HorizontalLight";
 

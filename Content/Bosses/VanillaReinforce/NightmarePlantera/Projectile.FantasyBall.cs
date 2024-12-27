@@ -113,7 +113,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            BasePRT particle = PRTLoader.NewParticle(Vector2.Lerp(Projectile.Center, target.Center, 0.5f), Vector2.Zero, CoraliteContent.ParticleType<Strike>(), FantasyGod.shineColor, 1f);
+            Particle particle = PRTLoader.NewParticle(Vector2.Lerp(Projectile.Center, target.Center, 0.5f), Vector2.Zero, CoraliteContent.ParticleType<Strike>(), FantasyGod.shineColor, 1f);
             particle.Rotation = Projectile.velocity.ToRotation() + MathHelper.Pi + 2.2f + Main.rand.NextFloat(-0.5f, 0.5f);
         }
 

@@ -4,7 +4,7 @@ using Terraria;
 
 namespace Coralite.Content.Particles
 {
-    public class RainbowHalo : BasePRT
+    public class RainbowHalo : Particle
     {
         public override string Texture => AssetDirectory.Particles + Name;
         public override bool ShouldUpdatePosition() => false;

@@ -7,7 +7,7 @@ using Terraria;
 
 namespace Coralite.Content.Particles
 {
-    public class LightTrailParticle : BasePRT
+    public class LightTrailParticle : Particle
     {
         public override string Texture => AssetDirectory.OtherProjectiles + "HorizontalLight";
 

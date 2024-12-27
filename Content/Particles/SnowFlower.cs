@@ -4,7 +4,7 @@ using Terraria;
 
 namespace Coralite.Content.Particles
 {
-    public class SnowFlower : BasePRT
+    public class SnowFlower : Particle
     {
         public override string Texture => AssetDirectory.Particles + Name;
         public override void SetProperty()

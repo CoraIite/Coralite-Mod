@@ -9,7 +9,7 @@ using Terraria;
 namespace Coralite.Content.Bosses.Rediancie
 {
     [AutoLoadTexture(Path =AssetDirectory.Rediancie)]
-    public class RedShield : BasePRT
+    public class RedShield : Particle
     {
         public override string Texture => AssetDirectory.Rediancie + "RedShield";
 

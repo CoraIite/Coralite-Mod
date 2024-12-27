@@ -7,7 +7,7 @@ using Terraria.ObjectData;
 
 namespace Coralite.Core.Systems.MagikeSystem.Particles
 {
-    public class TileRenewalController : BasePRT
+    public class TileRenewalController : Particle
     {
         public override string Texture => AssetDirectory.DefaultItem;
 

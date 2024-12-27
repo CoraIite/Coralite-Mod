@@ -3,6 +3,7 @@ global using InnoVault;
 global using Microsoft.Xna.Framework;
 global using Terraria.ModLoader;
 global using ATex = ReLogic.Content.Asset<Microsoft.Xna.Framework.Graphics.Texture2D>;
+global using Particle = InnoVault.PRT.BasePRT;
 
 using Coralite.Compat.BossCheckList;
 using Coralite.Core;

@@ -447,7 +447,7 @@ namespace Coralite.Content.Items.BossSummons
     /// <summary>
     /// 使用速度的X传入拥有者
     /// </summary>
-    public class NightmareHarpParticle : BasePRT
+    public class NightmareHarpParticle : Particle
     {
         public override string Texture => AssetDirectory.NightmarePlantera + "Flow";
 

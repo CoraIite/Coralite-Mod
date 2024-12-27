@@ -8,7 +8,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Particles
 {
-    public class StarRot : BasePRT
+    public class StarRot : Particle
     {
         public override string Texture => AssetDirectory.Blank;
 

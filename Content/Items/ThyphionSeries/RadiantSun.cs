@@ -541,7 +541,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         }
     }
 
-    public class RadiantSunFlow : BasePRT
+    public class RadiantSunFlow : Particle
     {
         public override string Texture => AssetDirectory.ThyphionSeriesItems + "RadiantSunFlow";
 

@@ -5,7 +5,7 @@ using Terraria;
 
 namespace Coralite.Content.Items.RedJades
 {
-    public class RedExplosionParticle : BasePRT
+    public class RedExplosionParticle : Particle
     {
         public override string Texture => AssetDirectory.OtherProjectiles + "LightFog";
 
@@ -49,7 +49,7 @@ namespace Coralite.Content.Items.RedJades
         }
     }
 
-    public class RedGlowParticle : BasePRT
+    public class RedGlowParticle : Particle
     {
         public override string Texture => AssetDirectory.Rediancie + "RedShield_Flow";
 

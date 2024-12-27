@@ -11,7 +11,7 @@ namespace Coralite.Core
         /// <summary>
         /// 根据类型获取这个粒子的ID（type）。假设一个类一个实例。
         /// </summary>
-        public static int ParticleType<T>() where T : BasePRT => PRTLoader.GetParticleID<T>();
+        public static int ParticleType<T>() where T : Particle => PRTLoader.GetParticleID<T>();
 
         public static int FairyType<T>() where T : Fairy => ModContent.GetInstance<T>()?.Type ?? 0;
 

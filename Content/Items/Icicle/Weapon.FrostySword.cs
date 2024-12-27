@@ -389,7 +389,7 @@ namespace Coralite.Content.Items.Icicle
 
             if (VisualEffectSystem.HitEffect_SpecialParticles)
             {
-                BasePRT p = PRTLoader.NewParticle(pos, Vector2.Zero, CoraliteContent.ParticleType<Strike>(), new Color(129, 216, 243), Main.rand.NextFloat(0.75f, 1.2f));
+                Particle p = PRTLoader.NewParticle(pos, Vector2.Zero, CoraliteContent.ParticleType<Strike>(), new Color(129, 216, 243), Main.rand.NextFloat(0.75f, 1.2f));
                 p.Rotation = _Rotation + 2.2f;
             }
         }

@@ -309,7 +309,7 @@ namespace Coralite.Content.Items.Misc_Melee
         {
             if (VisualEffectSystem.HitEffect_SpecialParticles)
             {
-                BasePRT particle = PRTLoader.NewParticle(Vector2.Lerp(Projectile.Center, target.Center, 0.5f), Vector2.Zero, CoraliteContent.ParticleType<Strike>(), Color.Orange, 1f);
+                Particle particle = PRTLoader.NewParticle(Vector2.Lerp(Projectile.Center, target.Center, 0.5f), Vector2.Zero, CoraliteContent.ParticleType<Strike>(), Color.Orange, 1f);
                 particle.Rotation = _Rotation + 2.2f + Main.rand.NextFloat(-0.5f, 0.5f);
             }
         }

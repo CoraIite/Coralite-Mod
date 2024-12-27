@@ -5,7 +5,7 @@ using Terraria;
 
 namespace Coralite.Content.Particles
 {
-    internal class Strike_Reverse : BasePRT
+    internal class Strike_Reverse : Particle
     {
         public override string Texture => AssetDirectory.Particles + Name;
         public override void SetProperty()

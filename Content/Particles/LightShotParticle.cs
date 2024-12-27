@@ -5,7 +5,7 @@ using Terraria;
 
 namespace Coralite.Content.Particles
 {
-    public class LightShotParticle : BasePRT
+    public class LightShotParticle : Particle
     {
         public override string Texture => AssetDirectory.OtherProjectiles + "LightGlowShot";
         public override bool ShouldUpdatePosition() => false;
@@ -50,7 +50,7 @@ namespace Coralite.Content.Particles
             {
                 return;
             }
-            BasePRT p = PRTLoader.NewParticle<LightShotParticle>(center, Vector2.Zero, newcolor, 1);
+            Particle p = PRTLoader.NewParticle<LightShotParticle>(center, Vector2.Zero, newcolor, 1);
             if (p != null)
             {
                 p.Rotation = rotation;

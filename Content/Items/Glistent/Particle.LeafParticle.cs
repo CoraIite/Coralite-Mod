@@ -8,7 +8,7 @@ using Terraria;
 namespace Coralite.Content.Items.Glistent
 {
     [AutoLoadTexture(Path = AssetDirectory.MagikeProjectiles)]
-    public abstract class LeafParticle : BasePRT
+    public abstract class LeafParticle : Particle
     {
         public override string Texture => AssetDirectory.Particles + "SmallLeafParticle";
         public int FrameMax { get => LeafType == 0 ? 8 : 5; }

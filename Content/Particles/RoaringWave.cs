@@ -4,7 +4,7 @@ using Terraria;
 
 namespace Coralite.Content.Particles
 {
-    public class RoaringWave : BasePRT
+    public class RoaringWave : Particle
     {
         public override bool ShouldUpdatePosition() => false;
 

@@ -239,7 +239,7 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
         }
     }
 
-    public class OnCraftLightShot : BasePRT
+    public class OnCraftLightShot : Particle
     {
         public override string Texture => AssetDirectory.CoreKeeperItems + "LightPillar";
 
@@ -276,7 +276,7 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
         }
     }
 
-    public class OnCraftLightExpand : BasePRT
+    public class OnCraftLightExpand : Particle
     {
         public override string Texture => AssetDirectory.CoreKeeperItems + "CircleLight";
 

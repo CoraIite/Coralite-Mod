@@ -179,7 +179,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
         }
     }
 
-    public class RedArrow : BasePRT
+    public class RedArrow : Particle
     {
         public override string Texture => AssetDirectory.Bloodiancie + Name;
 

@@ -4,7 +4,7 @@ using Terraria;
 
 namespace Coralite.Content.Bosses.BabyIceDragon
 {
-    public class IceBurstHalo_Reverse : BasePRT
+    public class IceBurstHalo_Reverse : Particle
     {
         public override string Texture => AssetDirectory.Particles + "IceHalo";
 

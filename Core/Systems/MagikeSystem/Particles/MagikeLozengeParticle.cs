@@ -6,7 +6,7 @@ using Terraria.DataStructures;
 
 namespace Coralite.Core.Systems.MagikeSystem.Particles
 {
-    public class MagikeLozengeParticle : BasePRT
+    public class MagikeLozengeParticle : Particle
     {
         public override string Texture => AssetDirectory.Particles + "LozengeParticle";
 
@@ -60,7 +60,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
         }
     }
 
-    public class MagikeLozengeParticle2 : BasePRT
+    public class MagikeLozengeParticle2 : Particle
     {
         public override string Texture => AssetDirectory.Particles + "LozengeParticle2";
 

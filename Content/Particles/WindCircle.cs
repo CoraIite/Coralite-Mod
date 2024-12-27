@@ -5,7 +5,7 @@ using Terraria;
 
 namespace Coralite.Content.Particles
 {
-    public class WindCircle : BasePRT
+    public class WindCircle : Particle
     {
         public override string Texture => AssetDirectory.Particles + Name;
         public int frameCounterMax = 1;

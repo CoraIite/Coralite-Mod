@@ -4,7 +4,7 @@ using Terraria;
 
 namespace Coralite.Core.Systems.MagikeSystem.Particles
 {
-    public class TileHightlight : BasePRT
+    public class TileHightlight : Particle
     {
         public override string Texture => AssetDirectory.Particles + Name;
 

@@ -5,7 +5,7 @@ using Terraria;
 
 namespace Coralite.Content.Particles
 {
-    public class HorizontalStar : BasePRT
+    public class HorizontalStar : Particle
     {
         public override string Texture => AssetDirectory.Particles + Name;
         public const int phase_1 = 8;

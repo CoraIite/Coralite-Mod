@@ -384,7 +384,7 @@ namespace Coralite.Content.Items.Nightmare
         }
     }
 
-    public class BarrenFogParticle : BasePRT
+    public class BarrenFogParticle : Particle
     {
         public override string Texture => AssetDirectory.Particles + "Fog";
 

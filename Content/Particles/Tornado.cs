@@ -4,7 +4,7 @@ using Terraria;
 
 namespace Coralite.Content.Particles
 {
-    public class Tornado : BasePRT
+    public class Tornado : Particle
     {
         public override string Texture => AssetDirectory.Particles + "Tornado2";
         //public override bool ShouldUpdatePosition() => false;
