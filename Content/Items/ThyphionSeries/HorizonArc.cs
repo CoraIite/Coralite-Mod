@@ -14,6 +14,7 @@ using System;
 using System.IO;
 using System.Linq;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
@@ -127,6 +128,8 @@ namespace Coralite.Content.Items.ThyphionSeries
         public override int GetItemType() => ItemType<HorizonArc>();
 
         public int dashState;
+        public bool dashHit;
+        public bool bonus;
         public ref float Release => ref Projectile.localAI[0];
         public ref float Timer => ref Projectile.localAI[1];
         public ref float RecordAngle => ref Projectile.localAI[2];
@@ -161,6 +164,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         public override void Initialize()
         {
             RecordAngle = Rotation;
+            bonus = Owner.HasBuff<HorizonArcBonus>();    
 
             if (Special == 0)
                 return;
@@ -199,6 +203,11 @@ namespace Coralite.Content.Items.ThyphionSeries
                 Owner.itemTime = Owner.itemAnimation = 2;
 
                 Dashing_Angle();//改变弓的角度
+
+                if (!dashHit)
+                    CheckCollide();
+
+                Timer++;
             }
             else
             {
@@ -223,17 +232,14 @@ namespace Coralite.Content.Items.ThyphionSeries
                 else
                 {
                     Release = 1;
-                    if (Owner.HasBuff<HorizonArcBonus>())
-                    {
-
-                    }
+                    if (bonus)
+                        PowerfulRainbow();
                     else
                         NotPowerfulRainbow();
                 }
             }
 
             Projectile.rotation = Rotation;
-            Timer++;
         }
 
         public void Dashing_Angle()
@@ -341,6 +347,117 @@ namespace Coralite.Content.Items.ThyphionSeries
             }
 
             Projectile.Kill();
+        }
+
+        public void PowerfulRainbow()
+        {
+            Projectile.timeLeft = 200;
+
+            if (Main.myPlayer == Projectile.owner)
+            {
+                Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
+                Rotation = Rotation.AngleLerp((Main.MouseWorld - Owner.MountedCenter).ToRotation(), 0.1f);
+            }
+
+            float trueTime = Special switch
+            {
+                1 => Timer - DashTime - 2,
+                _ => Timer,
+            };
+
+            if (trueTime != 0 && trueTime % (Owner.itemTimeMax / 3) == 0)
+            {
+                int angle = (int)(trueTime / (Owner.itemTimeMax / 3));
+
+                float angle2 = angle switch
+                {
+                    1 => 0,
+                    2 => 0.3f,
+                    _ => -0.3f,
+                };
+                PowerfulShoot(angle2);
+            }
+
+            if (trueTime > Owner.itemTimeMax + 1)
+                Projectile.Kill();
+
+            Timer++;
+        }
+
+        public void PowerfulShoot(float exAngle)
+        {
+            if (Projectile.IsOwnedByLocalPlayer())
+            {
+                int? targetIndex = FindEnemy();
+
+                Vector2 dir = (Main.MouseWorld - Owner.MountedCenter).SafeNormalize(Vector2.One);
+
+                if (targetIndex.HasValue)
+                    dir = dir.RotatedBy(exAngle);
+
+                Vector2 velocity = dir * 12f;
+
+                Projectile.NewProjectileFromThis<RainbowArrow>(Owner.Center, velocity
+                    , Owner.GetWeaponDamage(Owner.HeldItem), Projectile.knockBack, targetIndex ?? -1);
+
+                Helper.PlayPitched(CoraliteSoundID.Bow_Item5, Owner.Center, pitchAdjust: 0.5f);
+                Helper.PlayPitched(CoraliteSoundID.StrongWinds_Item66, Owner.Center, pitchAdjust: 0.2f);
+
+                //生成粒子
+                float rotation = dir.ToRotation();
+                Vector2 velocity1 = -dir * 3;
+
+                Vector2 pos = Projectile.Center + dir * 12;
+
+                for (int i = 0; i < 6; i++)
+                    PRTLoader.NewParticle<SpeedLine>(pos, dir.RotateByRandom(-0.2f, 0.2f) * Main.rand.NextFloat(3f, 10f)
+                        , Main.hslToRgb(Main.rand.NextFloat(), 0.8f, 0.8f), Main.rand.NextFloat(0.4f, 0.5f));
+                for (int i = 0; i < 3; i++)
+                    PRTLoader.NewParticle<SpeedLine>(pos, -dir.RotateByRandom(-0.2f, 0.2f) * Main.rand.NextFloat(3f, 7f)
+                        , Main.hslToRgb(Main.rand.NextFloat(), 0.8f, 0.8f), Main.rand.NextFloat(0.2f, 0.4f));
+
+                WindCircle.Spawn(Projectile.Center + dir * 24, velocity1, rotation
+                    , Color.White, 0.7f, 0.8f, new Vector2(1.4f, 1.4f));
+            }
+        }
+
+        public  void CheckCollide()
+        {
+            Rectangle rect = Projectile.getRect();
+            for (int i = 0; i < Main.maxProjectiles; i++)
+            {
+                Projectile proj = Main.projectile[i];
+                if (!proj.IsActiveAndHostile() || proj.whoAmI == Projectile.whoAmI)
+                    continue;
+
+                if (proj.Colliding(proj.getRect(), rect))
+                {
+                    JustCollide();
+                    return;
+                }
+            }
+
+            for (int i = 0; i < Main.maxNPCs; i++)
+            {
+                NPC npc = Main.npc[i];
+
+                if (!npc.active || npc.friendly || npc.immortal || !Projectile.localNPCImmunity.IndexInRange(i) || Projectile.localNPCImmunity[i] > 0)
+                    continue;
+
+                if (Projectile.Colliding(rect, npc.getRect()))
+                {
+                    JustCollide();
+                    return;
+                }
+            }
+        }
+
+        public void JustCollide()
+        {
+            dashHit = true;
+            bonus = true;
+            Owner.AddBuff(BuffType<HorizonArcBonus>(), 60 * 4);
+            SoundEngine.PlaySound(CoraliteSoundID.Ding_Item4, Projectile.Center);
         }
 
         #endregion
@@ -505,6 +622,9 @@ namespace Coralite.Content.Items.ThyphionSeries
             Projectile.tileCollide = true;
             Projectile.extraUpdates = 2;
             Projectile.penetrate = -1;
+
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = -1;
         }
 
         public override bool? CanDamage()
