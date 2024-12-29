@@ -31,6 +31,8 @@
     <None Remove="effects\ShadowStars.fx" />
     <None Remove="Effects\SimpleTrailNoHL.fx" />
     <None Remove="effects\StarsTrail.fx" />
+    <None Remove="effects\TurbulenceArrow.fx" />
+    <None Remove="effects\TurbulenceWarp.fx" />
     <None Remove="localization\en-us\Mods.Coralite.Knowledges.hjson" />
   </ItemGroup>
   <ItemGroup>

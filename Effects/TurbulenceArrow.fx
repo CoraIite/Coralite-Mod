@@ -89,18 +89,22 @@ float4 PixelShaderFunction(VertexShaderOutput input) : COLOR0
     float a = baseC.r + baseC.r * flowC.r;
     
     //从色条上取色
-    float4 gradientC = tex2D(gradientTex, float2((ycoord + flowC.r * 0.7) % 1.0, 0.5)).xyzw;
-    
-    st.r = (xcoord * 1.5 + 0.5 + uTime) % 1.0;
+    float4 gradientC = tex2D(gradientTex, float2(clamp(baseC.r, 0.01, 0.99), 0.5)).xyzw;
+    float4 gradientC2 = tex2D(gradientTex, float2(clamp(1 - a, 0.01, 0.99), 0.5)).xyzw;
+
+    st.r = (xcoord * 3 + 0.5 + uTime) % 1.0;
     //溶解色
     float4 dissolveC = tex2D(dissolveTex, st).xyzw;
     
     float f = input.TexCoords.x;
     f = f * f;
     
-    a = lerp(a, 0, (udissolveS * (1 - f) * dissolveC.r));
+    a = lerp(a, 0, (1 - f) * dissolveC.r);
     
-    return gradientC * a * input.Color.a;
+    gradientC = (gradientC + gradientC2) / 2;
+    gradientC.a *= a * input.Color.a;
+    
+    return gradientC;
 }
 
 technique Technique1

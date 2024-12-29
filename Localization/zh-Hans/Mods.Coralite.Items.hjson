@@ -5006,7 +5006,7 @@ HorizonArc: {
 	DisplayName: 环彩弧
 	Tooltip:
 		'''
-		双击方向键冲刺，并射出棱彩箭贯穿敌人
+		双击方向键冲刺，并射出环彩箭
 		冲刺时穿过敌对目标会使棱彩的光辉更加耀眼
 		'''
 }
@@ -5014,4 +5014,9 @@ HorizonArc: {
 VioletEmblem: {
 	DisplayName: 紫罗兰徽记
 	Tooltip: 增加各类运势，好运会伴随着你！
+}
+
+Turbulence: {
+	DisplayName: 乱流
+	Tooltip: 双击方向键冲刺，并射出乱流箭贯穿敌人
 }

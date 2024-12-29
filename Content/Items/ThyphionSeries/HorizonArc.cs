@@ -31,8 +31,8 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public override void SetDefaults()
         {
-            Item.SetWeaponValues(55, 4f);
-            Item.DefaultToRangedWeapon(10, AmmoID.Arrow, 28, 10f);
+            Item.SetWeaponValues(55, 4f,4);
+            Item.DefaultToRangedWeapon(10, AmmoID.Arrow, 26, 10f);
 
             Item.rare = ItemRarityID.Pink;
             Item.useStyle = ItemUseStyleID.Rapier;
@@ -70,7 +70,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         {
             CreateRecipe()
                 .AddIngredient<FarAwaySky>()
-                .AddIngredient(ItemID.SoulofSight, 7)
+                .AddIngredient(ItemID.SoulofSight, 15)
                 .AddIngredient(ItemID.CrystalShard, 12)
                 .AddTile(TileID.WorkBenches)
                 .Register();
@@ -94,7 +94,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             }
 
             Player.GetModPlayer<CoralitePlayer>().DashDelay = 80;
-            Player.GetModPlayer<CoralitePlayer>().DashTimer = 30;
+            Player.GetModPlayer<CoralitePlayer>().DashTimer = 26;
             Player.velocity = newVelocity;
             Player.AddImmuneTime(ImmunityCooldownID.General, 25);
             Player.immune = true;
@@ -222,7 +222,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                     if (Main.myPlayer == Projectile.owner)
                     {
                         Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
-                        Rotation = Rotation.AngleLerp((Main.MouseWorld - Owner.MountedCenter).ToRotation(), 0.1f);
+                        Rotation = Rotation.AngleLerp((Main.MouseWorld - Owner.MountedCenter).ToRotation(), 0.15f);
 
                         if (Main.rand.NextBool(10))
                         {
@@ -274,7 +274,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 return;
             }
 
-            Rotation = Rotation.AngleLerp(ToMouseAngle, 0.15f);
+            Rotation = Rotation.AngleLerp(ToMouseAngle, 0.2f);
         }
 
         public float GetStreamerAngle()
@@ -300,7 +300,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                     continue;
 
                 if (Collision.CanHit(Projectile, n) &&
-                    Collision.CheckAABBvLineCollision(n.TopLeft, n.Size, Projectile.Center, Projectile.Center + dir, 300, ref a))
+                    Collision.CheckAABBvLineCollision(n.TopLeft, n.Size, Projectile.Center, Projectile.Center + dir, 400, ref a))
                 {
                     index = i;
                     break;
@@ -315,11 +315,14 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public void NotPowerfulRainbow()
         {
+            Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
+            Rotation = Rotation.AngleLerp((Main.MouseWorld - Owner.MountedCenter).ToRotation(), 0.2f);
+
             if (Projectile.IsOwnedByLocalPlayer())
             {
                 int? targetIndex = FindEnemy();
 
-                Vector2 dir = (Main.MouseWorld - Owner.MountedCenter).SafeNormalize(Vector2.One);
+                Vector2 dir = Rotation.ToRotationVector2();
                 Vector2 velocity = dir * 12f;
 
                 Projectile.NewProjectileFromThis<RainbowArrow>(Owner.Center, velocity
@@ -394,7 +397,6 @@ namespace Coralite.Content.Items.ThyphionSeries
         {
             if (Projectile.IsOwnedByLocalPlayer())
             {
-                handOffset = -10;
                 int? targetIndex = FindEnemy();
 
                 Vector2 dir = (Main.MouseWorld - Owner.MountedCenter).SafeNormalize(Vector2.One);
@@ -407,7 +409,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 Projectile.NewProjectileFromThis<RainbowArrow>(Owner.Center, velocity
                     , (int)(Owner.GetWeaponDamage(Owner.HeldItem) * 1.5f), Projectile.knockBack, targetIndex ?? -1);
 
-                Helper.PlayPitched(CoraliteSoundID.Bow_Item5, Owner.Center, pitchAdjust: 0.5f);
+                Helper.PlayPitched(CoraliteSoundID.Bow2_Item102, Owner.Center, pitchAdjust: 0.5f);
                 Helper.PlayPitched(CoraliteSoundID.StrongWinds_Item66, Owner.Center, pitchAdjust: 0.2f);
 
                 //生成粒子
@@ -423,8 +425,10 @@ namespace Coralite.Content.Items.ThyphionSeries
                     PRTLoader.NewParticle<SpeedLine>(pos, -dir.RotateByRandom(-0.2f, 0.2f) * Main.rand.NextFloat(3f, 7f)
                         , Main.hslToRgb(Main.rand.NextFloat(), 0.8f, 0.8f), Main.rand.NextFloat(0.2f, 0.4f));
 
-                WindCircle.Spawn(Projectile.Center + dir * 24, velocity1, rotation
+                WindCircle.Spawn(Projectile.Center + dir * 32, velocity1, rotation
                     , Color.White, 0.7f, 0.8f, new Vector2(1.4f, 1.4f));
+
+                handOffset = -10;
 
                 if (VisualEffectSystem.HitEffect_ScreenShaking)
                 {
@@ -735,7 +739,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             Projectile.InitOldPosCache(trailPoint, true);
             trail = new Trail(Main.instance.GraphicsDevice, trailPoint + 6, new NoTip()
-                , f => 26 * TrailWidth, factor => Color.White);
+                , f => 26 * TrailWidth, factor => new Color(255,255,255,220));
         }
 
         public void JustShoot()
@@ -855,20 +859,23 @@ namespace Coralite.Content.Items.ThyphionSeries
             float rot;
             Vector2 pos = Projectile.Center;
 
-            for (int i = -1; i < 2; i += 2)
+            if (hit.Crit)
             {
-                rot = Projectile.rotation + (Main.rand.NextFloat(0.4f, 0.7f) * i);
-
-                for (int j = 0; j < 2; j++)
+                for (int i = -1; i < 2; i += 2)
                 {
-                    LightShotParticle.Spawn(pos, Main.hslToRgb(Main.rand.NextFloat(), 1f, 0.8f), rot + Main.rand.NextFloat(-0.2f, 0.2f)
-                        , new Vector2(Main.rand.NextFloat(0.2f, 0.3f)
-                        , 0.02f));
-                    LightShotParticle.Spawn(pos, Color.White, rot + Main.rand.NextFloat(-0.4f, 0.4f)
-                        , new Vector2(Main.rand.NextFloat(0.1f, 0.2f)
-                        , 0.01f));
+                    rot = Projectile.rotation + (Main.rand.NextFloat(0.4f, 0.7f) * i);
 
-                    rot += MathHelper.Pi;
+                    for (int j = 0; j < 2; j++)
+                    {
+                        LightShotParticle.Spawn(pos, Main.hslToRgb(Main.rand.NextFloat(), 1f, 0.6f), rot + Main.rand.NextFloat(-0.2f, 0.2f)
+                            , new Vector2(Main.rand.NextFloat(0.2f, 0.4f)
+                            , 0.02f));
+                        LightShotParticle.Spawn(pos, Color.White, rot + Main.rand.NextFloat(-0.4f, 0.4f)
+                            , new Vector2(Main.rand.NextFloat(0.1f, 0.25f)
+                            , 0.01f));
+
+                        rot += MathHelper.Pi;
+                    }
                 }
             }
 
@@ -946,7 +953,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, effect, Main.GameViewMatrix.TransformationMatrix);
 
-            Color c = Color.White;
+            Color c = Color.White*0.9f;
             Vector2 scale = new Vector2(1, 0.75f * TrailWidth) * 0.65f;
             spriteBatch.Draw(tex, pos, null, Main.DiscoColor, Projectile.rotation, origin, scale, 0, 0);
 
@@ -954,7 +961,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
 
             c = Color.White;
-            c.A = 70;
+            c.A = 50;
 
             spriteBatch.Draw(tex, pos - Main.screenPosition, null, c, Projectile.rotation, origin, scale, 0, 0);
         }

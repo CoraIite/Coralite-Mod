@@ -209,7 +209,6 @@ namespace Coralite.Content.Items.ThyphionSeries
                     }
 
                     Owner.itemTime = Owner.itemAnimation = 2;
-
                     Rotation = Helper.Lerp(RecordAngle, DirSign > 0 ? 0 : 3.141f, Timer / DashTime);
                     break;
                 }

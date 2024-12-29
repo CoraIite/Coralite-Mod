@@ -32,16 +32,22 @@ namespace Coralite.Core.Loaders
 
             foreach (var property in properties)
             {
-                if (property.PropertyType != typeof(Asset<Texture2D>))
+                if (property.PropertyType != typeof(ATex))
                     return;
 
                 //获取贴图路径与贴图名，然后赋值
+                string p = texPath;
                 string texName = property.Name;
                 AutoLoadTextureAttribute propAtt = property.GetCustomAttribute<AutoLoadTextureAttribute>();
                 if (propAtt != null)
-                    texName = propAtt.Name;
+                {
+                    if (!string.IsNullOrEmpty( propAtt.Path))
+                        p = propAtt.Path;
 
-                property.SetValue(null, ModContent.Request<Texture2D>(texPath + texName));
+                    texName = propAtt.Name;
+                }
+
+                property.SetValue(null, ModContent.Request<Texture2D>(p + texName));
             }
         }
 

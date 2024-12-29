@@ -222,6 +222,6 @@ CloudBonus: {
 }
 
 HorizonArcBonus: {
-	// DisplayName: Horizon Arc Bonus
-	// Description: Mods.Coralite.Buffs.HorizonArcBonus.Description
+	DisplayName: 环彩
+	Description: 为你的箭矢附上彩虹！
 }

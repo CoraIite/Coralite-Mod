@@ -4895,3 +4895,8 @@ VioletEmblem: {
 	DisplayName: Violet Emblem
 	Tooltip: ""
 }
+
+Turbulence: {
+	DisplayName: Turbulence
+	Tooltip: ""
+}
