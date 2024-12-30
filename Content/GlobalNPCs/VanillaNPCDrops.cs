@@ -6,6 +6,7 @@ using Coralite.Content.Items.LandOfTheLustrousSeries;
 using Coralite.Content.Items.LandOfTheLustrousSeries.Accessories;
 using Coralite.Content.Items.Materials;
 using Coralite.Content.Items.Placeable;
+using Coralite.Content.Items.ThyphionSeries;
 using Coralite.Content.Items.YujianHulu;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
@@ -100,6 +101,9 @@ namespace Coralite.Content.GlobalNPCs
                     break;
                 case NPCID.PlanterasTentacle://世花小触手掉落再生触手
                     npcLoot.Add(ItemDropRule.Common(ItemType<RegrowthTentacle>(), 2, 1, 2));
+                    break;
+                case NPCID.SkeletronHead://骷髅王掉落乱流核心
+                    npcLoot.Add(ItemDropRule.Common(ItemType<TurbulenceCore>(), 2));
                     break;
                 case NPCID.FlyingSnake://羽蛇掉毛
                     npcLoot.Add(ItemDropRule.ByCondition(new Conditions.DownedPlantera(), ItemType<FlyingSnakeFeather>(), 1, 1, 2));

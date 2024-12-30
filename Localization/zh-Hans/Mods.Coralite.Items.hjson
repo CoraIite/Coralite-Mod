@@ -5018,5 +5018,32 @@ VioletEmblem: {
 
 Turbulence: {
 	DisplayName: 乱流
-	Tooltip: 双击方向键冲刺，并射出乱流箭贯穿敌人
+	Tooltip: 
+	'''
+	双击方向键冲刺，并射出乱流箭贯穿敌人
+	[c/68c7dd:"穿梭于云间"]
+	'''
+}
+
+TurbulenceCore: {
+	DisplayName: 乱流核心
+	Tooltip: 
+	'''
+	用于制作 [i:Coralite/Turbulence] {$Mods.Coralite.Items.Turbulence.DisplayName}
+	通过搭建以下的多方块结构并右键核心进行合成
+
+	         [i:3087]           [i:3087]         
+	      [i:3087][i:3953][i:3953][i:Coralite/TurbulenceCore][i:3953][i:3953][i:3087]      
+	   [i:3087][i:3953]   [i:3953][i:3953][i:3953]    [i:3953][i:3087]   
+	[i:3087][i:3953]                       [i:3953][i:3087]
+	[i:3953]   [i:1972][i:1972][i:1972][i:1972][i:1972][i:1972][i:1972]   [i:3953]
+
+	物块名：
+	[i:Coralite/TurbulenceCore]·{$Mods.Coralite.Items.TurbulenceCore.DisplayName}
+	[i:3087]·{$ItemName.GraniteBlock}
+	[i:3953]·{$ItemName.LeadBrick}
+	[i:1972]·{$ItemName.SapphireGemsparkBlock}
+	.
+
+	'''
 }

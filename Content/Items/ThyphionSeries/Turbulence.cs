@@ -3,8 +3,10 @@ using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Attributes;
 using Coralite.Core.Configs;
+using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.CameraSystem;
+using Coralite.Core.Systems.MTBStructure;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Core.Systems.Trails;
 using Coralite.Helpers;
@@ -16,6 +18,7 @@ using Terraria.DataStructures;
 using Terraria.Graphics.CameraModifiers;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
+using Terraria.ObjectData;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.ThyphionSeries
@@ -67,12 +70,13 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public override void AddRecipes()
         {
-            //CreateRecipe()
-            //    .AddIngredient<FarAwaySky>()
-            //    .AddIngredient(ItemID.SoulofSight, 15)
-            //    .AddIngredient(ItemID.CrystalShard, 12)
-            //    .AddTile(TileID.WorkBenches)
-            //    .Register();
+            CreateRecipe()
+                .AddIngredient<TurbulenceCore>()
+                .AddIngredient(ItemID.GraniteBlock,8)
+                .AddIngredient(ItemID.LeadBrick, 13)
+                .AddIngredient(ItemID.SapphireGemsparkBlock, 7)
+                .AddCondition(CoraliteConditions.UseMultiBlockStructure)
+                .Register();
         }
 
         public bool Dash(Player Player, int DashDir)
@@ -856,6 +860,72 @@ namespace Coralite.Content.Items.ThyphionSeries
             effect.Texture = TexValue;
 
             trail?.Render(effect);
+        }
+    }
+
+    public class TurbulenceCore() : BasePlaceableItem(Item.sellPrice(gold: 1), ItemRarityID.Orange, TileType<TurbulenceCoreTile>(), AssetDirectory.ThyphionSeriesItems)
+    { }
+
+    public class TurbulenceCoreTile : ModTile
+    {
+        public override string Texture => AssetDirectory.ThyphionSeriesItems + Name;
+
+        public override void SetStaticDefaults()
+        {
+            Main.tileSolid[Type] = true;
+            Main.tileBlockLight[Type] = true;
+            Main.tileFrameImportant[Type] = true;
+
+            TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1);
+            TileObjectData.addTile(Type);
+
+            AddMapEntry(Color.DarkBlue);
+
+            DustType = DustID.IceTorch;
+        }
+
+        public override bool RightClick(int i, int j)
+        {
+            CoraliteContent.GetMTBS<TurbulenceMultiBlock>().CheckStructure(new Point(i, j + 1));
+
+            return true;
+        }
+    }
+
+    public class TurbulenceMultiBlock : MultiblockStructure
+    {
+        /// <summary>
+        /// 铅砖
+        /// </summary>
+        private int lb => TileID.LeadBrick;
+        /// <summary>
+        /// 蓝宝石块
+        /// </summary>
+        private int s => TileID.SapphireGemspark;
+        /// <summary>
+        /// 花岗岩
+        /// </summary>
+        private int g => TileID.GraniteBlock;
+        /// <summary>
+        /// 核心方块
+        /// </summary>
+        private int core => TileType<TurbulenceCoreTile>();
+
+        public override int[,] StructureTile =>
+            new int[5, 11]
+            {
+                {-1, -1, -1, g, -1, -1, -1, g, -1, -1, -1 },
+                {-1, -1, g ,lb, lb,core,lb,lb, g ,-1 ,-1  },
+                {-1, g ,lb ,-1,lb ,lb ,lb ,-1, lb, g ,-1  },
+                {g ,lb ,-1 ,-1,-1 ,-1 ,-1 ,-1,-1 ,lb ,g   },
+                {lb,-1 ,s  ,s  ,s ,s  ,s  ,s ,s  ,-1 ,lb  },
+            };
+
+        public override void OnSuccess(Point origin)
+        {
+            KillAll(origin);
+
+            Item.NewItem(new EntitySource_TileBreak(origin.X, origin.Y), origin.ToWorldCoordinates(), ItemType<Turbulence>());
         }
     }
 }

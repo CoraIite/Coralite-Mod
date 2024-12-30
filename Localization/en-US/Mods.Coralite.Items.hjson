@@ -4900,3 +4900,8 @@ Turbulence: {
 	DisplayName: Turbulence
 	Tooltip: ""
 }
+
+TurbulenceCore: {
+	DisplayName: Turbulence Core
+	Tooltip: ""
+}
