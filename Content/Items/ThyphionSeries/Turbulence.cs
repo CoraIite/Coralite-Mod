@@ -2,8 +2,10 @@
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Attributes;
+using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.CameraSystem;
+using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Core.Systems.Trails;
 using Coralite.Helpers;
 using InnoVault.PRT;
@@ -11,6 +13,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.Graphics.CameraModifiers;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
@@ -25,12 +28,12 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public override void SetDefaults()
         {
-            Item.SetWeaponValues(30, 4f, 4);
+            Item.SetWeaponValues(32, 4f);
             Item.DefaultToRangedWeapon(10, AmmoID.Arrow, 24, 9f);
 
-            Item.rare = ItemRarityID.Pink;
+            Item.rare = ItemRarityID.Orange;
             Item.useStyle = ItemUseStyleID.Rapier;
-            Item.value = Item.sellPrice(0, 4);
+            Item.value = Item.sellPrice(0, 2);
 
             Item.noUseGraphic = true;
             Item.useTurn = false;
@@ -40,9 +43,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         public override void HoldItem(Player player)
         {
             if (player.TryGetModPlayer(out CoralitePlayer cp))
-            {
                 cp.AddDash(this);
-            }
         }
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
@@ -53,7 +54,13 @@ namespace Coralite.Content.Items.ThyphionSeries
             Projectile.NewProjectile(new EntitySource_ItemUse(player, Item)
                 , player.Center, Vector2.Zero, ProjectileType<TurbulenceHeldProj>(), damage, knockback, player.whoAmI, rot);
 
-            Projectile.NewProjectile(source, player.Center, velocity, ProjectileType<TurbulenceArrow>(), damage, knockback, player.whoAmI,1);
+            if (Main.rand.NextBool(3))
+            {
+                type = ProjectileType<TurbulenceArrow>();
+                Helper.PlayPitched(CoraliteSoundID.ShadowflameApparition_NPCDeath55, player.Center,pitchAdjust:0.3f);
+            }
+
+            Projectile.NewProjectile(source, player.Center, velocity, type, damage, knockback, player.whoAmI);
 
             return false;
         }
@@ -78,21 +85,19 @@ namespace Coralite.Content.Items.ThyphionSeries
                 case CoralitePlayer.DashRight:
                     {
                         dashDirection = DashDir == CoralitePlayer.DashRight ? 1 : -1;
-                        newVelocity.X = dashDirection * 8;
+                        newVelocity.X = dashDirection * 2;
                         break;
                     }
                 default:
                     return false;
             }
 
-            Player.GetModPlayer<CoralitePlayer>().DashDelay = 80;
-            Player.GetModPlayer<CoralitePlayer>().DashTimer = 26;
+            Player.GetModPlayer<CoralitePlayer>().DashDelay = 70;
+            Player.GetModPlayer<CoralitePlayer>().DashTimer = 12;
             Player.velocity = newVelocity;
-            Player.AddImmuneTime(ImmunityCooldownID.General, 25);
-            Player.immune = true;
             //Player.direction = (int)dashDirection;
 
-            Main.instance.CameraModifiers.Add(new MoveModifyer(3, 12));
+            Main.instance.CameraModifiers.Add(new MoveModifyer(5, 15));
 
             if (Player.whoAmI == Main.myPlayer)
             {
@@ -108,20 +113,29 @@ namespace Coralite.Content.Items.ThyphionSeries
                 }
 
                 //生成手持弹幕
-                Projectile.NewProjectile(Player.GetSource_ItemUse(Player.HeldItem), Player.Center, Vector2.Zero, ProjectileType<TurbulenceHeldProj>(),
-                    Player.HeldItem.damage, Player.HeldItem.knockBack, Player.whoAmI, 1.57f + dashDirection * 1, 1, 20);
+                Projectile.NewProjectile(Player.GetSource_ItemUse(Player.HeldItem), Player.Center, new Vector2(dashDirection,0), ProjectileType<TurbulenceHeldProj>(),
+                    Player.HeldItem.damage, Player.HeldItem.knockBack, Player.whoAmI, 1.57f + dashDirection * 1, 1, 12);
             }
 
             return true;
         }
     }
 
-    public class TurbulenceHeldProj : BaseDashBow
+    [AutoLoadTexture(Path = AssetDirectory.ThyphionSeriesItems)]
+    public class TurbulenceHeldProj : BaseDashBow, IDrawPrimitive, IDrawAdditive, IDrawNonPremultiplied
     {
         public override string Texture => AssetDirectory.ThyphionSeriesItems + nameof(Turbulence);
 
         public ref float Timer => ref Projectile.localAI[1];
         public ref float RecordAngle => ref Projectile.localAI[2];
+
+        public PrimitivePRTGroup group;
+        public int SPTimer;
+        public float handOffset;
+        public float trailAlpha;
+
+        [AutoLoadTexture(Name = "TurbulenceArrow")]
+        public static ATex TurbulenceArrow1 { get; private set; }
 
         public override int GetItemType()
             => ItemType<Turbulence>();
@@ -131,44 +145,214 @@ namespace Coralite.Content.Items.ThyphionSeries
             RecordAngle = Rotation;
         }
 
+        #region 冲刺攻击
+
         public override void DashAttackAI()
         {
+            Lighting.AddLight(Projectile.Center, (new Color(125, 190, 255) * 0.75f).ToVector3());
+
             if (Timer < DashTime + 2)
             {
-                Owner.itemTime = Owner.itemAnimation = 2;
-                Rotation = Helper.Lerp(RecordAngle, DirSign > 0 ? 0 : 3.141f, Timer / DashTime);
+                group ??= [];
+                if (Main.myPlayer == Projectile.owner)
+                {
+                    Owner.itemTime = Owner.itemAnimation = 2;
+                    Rotation = Helper.Lerp(RecordAngle, DirSign > 0 ? 0 : 3.141f, Timer / DashTime);
+                }
 
+                Owner.velocity.X = Projectile.velocity.X * 10;
+                LockOwnerItemTime();
+
+                if (Main.rand.NextBool(3))
+                {
+                    PRTLoader.NewParticle<SpeedLine>(Projectile.Center + Main.rand.NextVector2Circular(10, 10)
+                        , -Owner.velocity.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(2f, 5f), TurbulenceArrow.RandomColor(), Main.rand.NextFloat(0.2f, 0.4f));
+                }
+            }
+            else if (Timer==DashTime+2)
+            {
+                Owner.velocity.X = Projectile.velocity.X * 2;
+                LockOwnerItemTime();
             }
             else
             {
+                if (DownLeft&&SPTimer==0)
+                {
+                    if (Main.myPlayer == Projectile.owner)
+                    {
+                        Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
+                        Rotation = Rotation.AngleLerp(ToMouseAngle, 0.15f);
+                    }
 
+                    Projectile.timeLeft = 30;
+                    LockOwnerItemTime();
+                }
+                else
+                {
+                    if (SPTimer == 0 && Projectile.IsOwnedByLocalPlayer())
+                    {
+                        Helper.PlayPitched(CoraliteSoundID.ShadowflameApparition_NPCDeath55, Projectile.Center,pitchAdjust:-0.5f);
+                        Helper.PlayPitched(CoraliteSoundID.Bow_Item5, Projectile.Center);
+
+                        Projectile.NewProjectileFromThis<TurbulenceArrow>(Owner.Center, ToMouse.SafeNormalize(Vector2.Zero) * 16
+                            , (int)(Owner.GetWeaponDamage(Owner.HeldItem) * 1.35f), Projectile.knockBack, 1);
+
+                        Rotation = ToMouseAngle;
+
+                        Vector2 dir = Rotation.ToRotationVector2();
+                        TurbulenceTornadoParticle.Spawn(Projectile.Center + dir * 16, dir * 2
+                            , new Color(134, 229, 251), Rotation, 0.35f);
+                        TurbulenceTornadoParticle.Spawn(Projectile.Center + dir * 32, dir * 2
+                            , new Color(125, 190, 255), Rotation, 0.2f);
+
+                        if (VisualEffectSystem.HitEffect_ScreenShaking)
+                            Main.instance.CameraModifiers.Add(new PunchCameraModifier(Projectile.Center, dir, 8, 7, 4, 800));
+
+                        handOffset = -20;
+                    }
+
+                    if (Main.myPlayer == Projectile.owner)
+                    {
+                        Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
+                        if (SPTimer < 8)
+                            Rotation -= Owner.direction * 0.05f;
+                        else
+                            Rotation = Rotation.AngleLerp(ToMouseAngle, 0.15f);
+                    }
+
+                    handOffset = Helper.Lerp(handOffset, 0, 0.1f);
+                    SPTimer++;
+
+                    if (SPTimer > 22)
+                        Projectile.Kill();
+                }
             }
 
+            trailAlpha = Helper.Lerp(trailAlpha, 1, 0.1f);
+            if (SPTimer == 0)
+                SpawnCircleParticle();
+
+            Projectile.rotation = Rotation;
             Timer++;
         }
+
+        public override void SetCenter()
+        {
+            base.SetCenter();
+
+            if (Special == 1)
+                group?.Update();
+        }
+
+        public void SpawnCircleParticle()
+        {
+            if (Timer % 16 == 0)
+            {
+                float r = 20 + Main.rand.Next(2) * 8;
+                float startRot = Main.rand.NextFloat(-0.6f, -0.4f);
+                //总旋转路程除以转速
+                float time = (Main.rand.NextFloat(3.6f, 5.2f) - startRot) / TurbulenceCircle.MaxRotateSpeed;
+
+                var p = TurbulenceCircle.Spawn(Projectile.Center,
+                         r, time, startRot, Main.rand.NextFromList(0.6f, MathHelper.Pi - 0.6f) + Main.rand.NextFloat(-0.4f, 0.4f)
+                         , Main.rand.Next(4) * MathHelper.TwoPi * 0.6f + Main.rand.NextFloat(-0.4f, 0.4f), this);
+                p.Color = Color.White;
+
+                group.Add(p);
+            }
+
+            if (Timer % 20 == 0)
+            {
+                float r = 24 + Main.rand.Next(2) * 12;
+                float startRot = Main.rand.NextFloat(-0.6f, -0.4f);
+                //总旋转路程除以转速
+                float time = (Main.rand.NextFloat(4.6f, 7.2f) - startRot) / TurbulenceCircle.MaxRotateSpeed;
+
+                var p = TurbulenceCircle.Spawn(Projectile.Center,
+                         r, time, startRot, Main.rand.NextFromList(0.7f, MathHelper.Pi - 0.7f) + Main.rand.NextFloat(-0.3f, 0.3f)
+                         , Main.rand.Next(4) * MathHelper.TwoPi * 0.6f + Main.rand.NextFloat(-0.4f, 0.4f), this);
+                p.Color = new Color(125, 190, 255) * 0.55f;
+                group.Add(p);
+            }
+        }
+
+        #endregion
+
+        public override Vector2 GetOffset()
+            => new Vector2(14 + handOffset, 0);
 
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D mainTex = Projectile.GetTexture();
             Vector2 center = Projectile.Center - Main.screenPosition;
 
-            Main.spriteBatch.Draw(mainTex, center, null, lightColor, Projectile.rotation, mainTex.Size() / 2, 1, DirSign > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0f);
+            SpriteBatch spriteBatch = Main.spriteBatch;
+            spriteBatch.Draw(mainTex, center, null, lightColor, Projectile.rotation, mainTex.Size() / 2, 1, DirSign > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0f);
 
-            if (Special == 0 || Timer < DashTime / 2)
+            if (Special == 0 || SPTimer > 0)
                 return false;
 
+            Texture2D tex = TurbulenceArrow.ArrowHighlight.Value;
+
+            Vector2 scale = new Vector2(0.8f, 0.75f * trailAlpha) * 0.55f;
+            Vector2 pos = Projectile.Center + Main.rand.NextVector2Circular(1, 1) - Projectile.rotation.ToRotationVector2() * 8;
+            Effect effect = Filters.Scene["TurbulenceArrow"].GetShader().Shader;
+
+            effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMatrix());
+            effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * 0.03f);
+            effect.Parameters["uTimeG"].SetValue(Main.GlobalTimeWrappedHourly * 0.1f);
+            effect.Parameters["udissolveS"].SetValue(2f);
+            effect.Parameters["uBaseImage"].SetValue(TurbulenceArrow.ArrowHighlight.Value);
+            effect.Parameters["uFlow"].SetValue(CoraliteAssets.Laser.Airflow.Value);
+            effect.Parameters["uGradient"].SetValue(TurbulenceArrow.TurbulenceGradient2.Value);
+            effect.Parameters["uDissolve"].SetValue(TurbulenceArrow.TurbulenceFlow.Value);
+
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, effect, Main.GameViewMatrix.TransformationMatrix);
+
+            spriteBatch.Draw(tex, pos, null
+                , new Color(108, 133, 161), Projectile.rotation, tex.Size() / 2, scale * 1.1f, 0, 0);
+
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+
+            spriteBatch.Draw(tex, pos - Main.screenPosition, null, new Color(255, 255, 255, 120)
+                , Projectile.rotation, tex.Size() / 2, scale, 0, 0);
+
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+
             //绘制箭
-            //Texture2D arrowTex = HorizonArcArrow.Value;
-            //Vector2 dir = Rotation.ToRotationVector2();
-            //Main.spriteBatch.Draw(arrowTex, center, null, lightColor, Projectile.rotation + 1.57f
-            //    , new Vector2(arrowTex.Width / 2, arrowTex.Height * 5 / 6), 1, 0, 0f);
+            Texture2D arrowTex = TurbulenceArrow1.Value;
+            Main.spriteBatch.Draw(arrowTex, center, null, lightColor, Projectile.rotation + 1.57f
+                , new Vector2(arrowTex.Width / 2, arrowTex.Height * 5 / 6), 1, 0, 0f);
 
             return false;
         }
+
+        public void DrawPrimitives()
+        {
+            Main.graphics.GraphicsDevice.BlendState = BlendState.NonPremultiplied;
+            group?.DrawPrimitive();
+            Main.graphics.GraphicsDevice.BlendState = BlendState.AlphaBlend;
+        }
+
+        public void DrawAdditive(SpriteBatch spriteBatch)
+        {
+        }
+
+        public void DrawNonPremultiplied(SpriteBatch spriteBatch)
+        {
+            if (Special == 0 || SPTimer>0)
+                return;
+
+        }
     }
 
-    [AutoLoadTexture(Path =AssetDirectory.ThyphionSeriesItems)]
-    public class TurbulenceArrow : ModProjectile, IDrawPrimitive, IDrawNonPremultiplied,IDrawWarp,IPostDrawAdditive
+    [AutoLoadTexture(Path = AssetDirectory.ThyphionSeriesItems)]
+    public class TurbulenceArrow : ModProjectile, IDrawPrimitive, IDrawNonPremultiplied, IDrawWarp, IPostDrawAdditive
     {
         public override string Texture => AssetDirectory.ThyphionSeriesItems + Name;
 
@@ -185,10 +369,14 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public ref float State => ref Projectile.ai[0];
         public ref float Timer => ref Projectile.ai[1];
-        public ref float HitFreeze => ref Projectile.ai[2];
+        public ref float HitFreeze => ref Projectile.localAI[2];
+
+        public ref float FadeTimer => ref Projectile.localAI[0];
+        public ref float HitCount => ref Projectile.ai[2];
 
         public int trailCount = 10;
         public int trailWidth = 8;
+        public float trailAlpha = 1;
 
         public override void SetDefaults()
         {
@@ -197,10 +385,15 @@ namespace Coralite.Content.Items.ThyphionSeries
             Projectile.friendly = true;
             Projectile.timeLeft = 60 * Projectile.MaxUpdates * 4;
             Projectile.penetrate = -1;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = -1;
         }
 
         public override bool ShouldUpdatePosition()
             => HitFreeze < 1;
+
+        public override bool? CanDamage()
+            => FadeTimer < 1;
 
         public override void AI()
         {
@@ -216,6 +409,27 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             bool normal = State == 0;
 
+            UpdateOldPos(normal);
+
+            if (FadeTimer > 0)
+            {
+                FadeTimer++;
+
+                Projectile.velocity *= 0.85f;
+                trailAlpha = 1 - FadeTimer / 25;
+
+                if (FadeTimer > 25)
+                    Projectile.Kill();
+
+                return;
+            }
+
+            SpawnParticle(normal);
+            SpawnDust(normal);
+        }
+
+        private void UpdateOldPos(bool normal)
+        {
             if (Timer % 2 == 0)
             {
                 if (!VaultUtils.isServer)
@@ -240,7 +454,22 @@ namespace Coralite.Content.Items.ThyphionSeries
                         warpTrail.Positions = Projectile.oldPos;
                 }
             }
+        }
 
+        private void SpawnDust(bool normal)
+        {
+            if (Main.rand.NextBool(3))
+            {
+                int width = normal ? 8 : 24;
+
+                Dust d = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(width, width), DustID.IceTorch
+                    , Projectile.velocity * Main.rand.NextFloat(0.4f, 0.8f), 75, Scale: Main.rand.NextFloat(1, 1.4f));
+                d.noGravity = true;
+            }
+        }
+
+        private void SpawnParticle(bool normal)
+        {
             if (!normal)
             {
                 if (Timer % 8 == 0 && Main.rand.NextBool(3))
@@ -254,15 +483,6 @@ namespace Coralite.Content.Items.ThyphionSeries
                     PRTLoader.NewParticle<SpeedLine>(Projectile.Center + Main.rand.NextVector2Circular(width, width)
                         , Projectile.velocity * Main.rand.NextFloat(0.4f, 1f), RandomColor(), Main.rand.NextFloat(0.1f, 0.3f));
                 }
-            }
-
-            if (Main.rand.NextBool(3))
-            {
-                int width = normal ? 8 : 24;
-
-                Dust d = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(width, width), DustID.IceTorch
-                    , Projectile.velocity * Main.rand.NextFloat(0.4f, 0.8f), 75, Scale: Main.rand.NextFloat(1, 1.4f));
-                d.noGravity = true;
             }
         }
 
@@ -282,20 +502,21 @@ namespace Coralite.Content.Items.ThyphionSeries
                 {
                     Projectile.InitOldPosCache(trailCount);
                     trail = new Trail(Main.instance.GraphicsDevice, trailCount + 4, new NoTip()
-                        , f => trailWidth, f => new Color(255,255,255,170));//=> Color.Lerp(Color.Transparent, Color.White,f.X));
+                        , f => trailWidth * trailAlpha, f => new Color(255, 255, 255, 170));//=> Color.Lerp(Color.Transparent, Color.White,f.X));
                     if (State == 1)
                         warpTrail = new Trail(Main.instance.GraphicsDevice, trailCount, new NoTip()
-                            , f => trailWidth + 30, f =>
+                            , f => (trailWidth + 30) * trailAlpha, f =>
                             {
                                 float r = (Projectile.rotation) % 6.18f;
                                 float dir = (r >= 3.14f ? r - 3.14f : r + 3.14f) / MathHelper.TwoPi;
-                                return new Color(dir, 1 - f.X, 0f,1- f.X);
+                                float p = 1 - f.X;
+                                return new Color(dir, p, 0f, p);
                             });
                 }
             }
         }
 
-        public Color RandomColor()
+        public static Color RandomColor()
         {
             return Main.rand.Next(3) switch
             {
@@ -305,9 +526,54 @@ namespace Coralite.Content.Items.ThyphionSeries
             };
         }
 
+        public void TurnToFade()
+        {
+            Projectile.tileCollide = false;
+            if (FadeTimer == 0)
+                FadeTimer = 1;
+        }
+
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             HitFreeze = Projectile.MaxUpdates;
+
+            HitCount++;
+            if (State == 0)
+            {
+                if (HitCount > 2)
+                    TurnToFade();
+            }
+            else
+            {
+                if (HitCount > 4)
+                    TurnToFade();
+            }
+
+            if (VisualEffectSystem.HitEffect_Dusts)
+            {
+                float rot = Projectile.rotation + MathHelper.Pi;
+                for (int i = 0; i < 10; i++)
+                {
+                    Dust d = Dust.NewDustPerfect(Projectile.Center, Main.rand.NextFromList(DustID.ApprenticeStorm, DustID.IceTorch)
+                        , (rot + Main.rand.NextFloat(-0.2f, 0.2f)).ToRotationVector2() * Main.rand.NextFloat(2f, 8f), 50, Scale: Main.rand.NextFloat(1f, 2f));
+                    d.noGravity = true;
+                }
+
+                rot -= MathHelper.Pi;
+                for (int i = 0; i < 8; i++)
+                {
+                    Dust d = Dust.NewDustPerfect(Projectile.Center, Main.rand.NextFromList(DustID.ApprenticeStorm, DustID.IceTorch)
+                        , (rot + Main.rand.NextFloat(-0.1f, 0.1f)).ToRotationVector2() * Main.rand.NextFloat(1f, 6f), 50, Scale: Main.rand.NextFloat(1f, 1.5f));
+                    d.noGravity = true;
+                }
+            }
+        }
+
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            TurnToFade();
+            Projectile.velocity = oldVelocity;
+            return false;
         }
 
         public override bool PreDraw(ref Color lightColor) => false;
@@ -319,7 +585,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             if (State == 0)
                 mainTex = TurbulencePin.Value;
 
-            spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, null, Color.White, Projectile.rotation + 1.57f,
+            spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, null, new Color(255, 255, 255, (byte)(trailAlpha * 255)), Projectile.rotation + 1.57f,
                 mainTex.Size() / 2, Projectile.scale, 0, 0);
         }
 
@@ -373,13 +639,13 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public void DrawAdditive(SpriteBatch spriteBatch)
         {
-            if (State==0)
+            if (State == 0)
                 return;
 
             Texture2D tex = ArrowHighlight.Value;
 
-            Vector2 scale = new Vector2(0.8f, 0.55f) * 0.65f;
-            Vector2 pos = Projectile.Center - Projectile.rotation.ToRotationVector2()*12;
+            Vector2 scale = new Vector2(0.8f, 0.55f * trailAlpha) * 0.65f;
+            Vector2 pos = Projectile.Center - Projectile.rotation.ToRotationVector2() * 12;
             Effect effect = Filters.Scene["TurbulenceArrow"].GetShader().Shader;
 
             effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMatrix());
@@ -395,7 +661,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, effect, Main.GameViewMatrix.TransformationMatrix);
 
             spriteBatch.Draw(tex, pos, null
-                , new Color(108, 133, 161), Projectile.rotation, tex.Size() / 2, scale*1.1f, 0, 0);
+                , new Color(108, 133, 161), Projectile.rotation, tex.Size() / 2, scale * 1.1f, 0, 0);
 
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
@@ -434,7 +700,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 Color.A = (byte)(Color.A * 0.75f);
 
             Opacity++;
-            if (Opacity>30||Color.A<10)
+            if (Opacity > 30 || Color.A < 10)
                 active = false;
         }
 
@@ -457,8 +723,139 @@ namespace Coralite.Content.Items.ThyphionSeries
         }
     }
 
-    public class TurbulencePin : ModProjectile
+    public class TurbulenceCircle : TrailParticle
     {
-        public override string Texture => AssetDirectory.ThyphionSeriesItems + Name;
+        public override string Texture => AssetDirectory.Particles + "CyanLine";
+
+        static BasicEffect effect;
+        public TurbulenceHeldProj proj;
+        public float zRot;
+        public float alpha = 0;
+        public float exRot;
+        public float startRot;
+
+        public static float MaxRotateSpeed = 0.25f;
+
+        public TurbulenceCircle()
+        {
+            if (Main.dedServ)
+                return;
+
+            Main.QueueMainThreadAction(() =>
+            {
+                effect = new BasicEffect(Main.instance.GraphicsDevice);
+                effect.VertexColorEnabled = true;
+                effect.TextureEnabled = true;
+            });
+        }
+
+        public override void SetProperty()
+        {
+            MaxRotateSpeed = 0.3f;
+            int trailCount = 10;
+            trail = new Trail(Main.instance.GraphicsDevice, trailCount, new NoTip(), factor => 10 * Scale, factor =>
+            {
+                return new Color(Color.R, Color.G, Color.B, (byte)(255 * alpha));
+            });
+
+            oldPositions = new Vector2[trailCount];
+            float r = Rotation - trailCount * MaxRotateSpeed;
+            for (int i = 0; i < oldPositions.Length; i++)
+            {
+                float length2 = Helper.EllipticalEase(r, zRot, out float overrideAngle2) * Velocity.X;
+
+                oldPositions[i] = (overrideAngle2 + exRot).ToRotationVector2() * length2;
+                r += MaxRotateSpeed;
+            }
+        }
+
+        public override bool ShouldUpdatePosition() => false;
+
+        public override void AI()
+        {
+            Rotation += MaxRotateSpeed;
+
+            Vector2 pos = proj.Projectile.Center + proj.Projectile.rotation.ToRotationVector2() * 16;//特殊判定，需要手动给这个oldPos赋值
+
+            Velocity.X *= 1.015f;
+            float length = Helper.EllipticalEase(Rotation, zRot, out float overrideAngle) * Velocity.X;
+
+            for (int i = 0; i < oldPositions.Length - 1; i++)
+                oldPositions[i] = oldPositions[i + 1];
+
+            oldPositions[^1] = (overrideAngle + exRot).ToRotationVector2() * length;
+
+            //for (int i = 0; i < oldPositions.Length; i++)
+            //    oldPositions[i] += offset;
+
+            float time = Velocity.Y;
+
+            if (Opacity < (int)(time * 0.4f))
+            {
+                float factor = Opacity / (time * 0.4f);
+                alpha = factor;
+            }
+            else if (Opacity == (int)(time * 0.4f))
+            {
+                alpha = 1;
+            }
+
+            if (Opacity > (int)(time * 0.9f))
+            {
+                alpha *= 0.9f;
+
+                if (alpha < 0.02f)
+                {
+                    active = false;
+                }
+            }
+
+            Opacity++;
+
+            Vector2[] pos2 = new Vector2[oldPositions.Length];
+            for (int i = 0; i < pos2.Length; i++)
+                pos2[i] = pos + oldPositions[i];
+
+            trail.Positions = pos2;
+        }
+
+        public static TurbulenceCircle Spawn(Vector2 center, float r, float time, float startRot, float zRot, float exRot, TurbulenceHeldProj proj)
+        {
+            if (VaultUtils.isServer)
+                return null;
+
+            TurbulenceCircle p = PRTLoader.PRT_IDToInstances[CoraliteContent.ParticleType<TurbulenceCircle>()].Clone() as TurbulenceCircle;
+            p.Position = center;
+            p.Velocity = new Vector2(r, time);
+            p.Rotation = startRot;
+            p.active = true;
+            p.ShouldKillWhenOffScreen = false;
+            p.Scale = 1;
+            p.proj = proj;
+            p.zRot = zRot;
+            p.exRot = exRot;
+
+            p.SetProperty();
+
+            return p;
+        }
+
+        public override void DrawPrimitive()
+        {
+            if (effect == null)
+                return;
+
+            Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
+            Matrix view = Main.GameViewMatrix.TransformationMatrix;
+            Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
+
+            //effect.Texture = Texture2D.Value;
+            effect.World = world;
+            effect.View = view;
+            effect.Projection = projection;
+            effect.Texture = TexValue;
+
+            trail?.Render(effect);
+        }
     }
 }

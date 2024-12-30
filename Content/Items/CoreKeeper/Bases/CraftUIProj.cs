@@ -208,6 +208,9 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
 
         public static SpecialCraftParticle Spawn(Vector2 center, float r, float time, float startRot)
         {
+            if (VaultUtils.isServer)
+                return null;
+
             SpecialCraftParticle p = PRTLoader.PRT_IDToInstances[CoraliteContent.ParticleType<SpecialCraftParticle>()].Clone() as SpecialCraftParticle;
             p.Position = center;
             p.Velocity = new Vector2(r, time);

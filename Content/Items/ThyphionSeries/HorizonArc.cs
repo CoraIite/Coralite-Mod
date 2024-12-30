@@ -223,12 +223,6 @@ namespace Coralite.Content.Items.ThyphionSeries
                     {
                         Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
                         Rotation = Rotation.AngleLerp((Main.MouseWorld - Owner.MountedCenter).ToRotation(), 0.15f);
-
-                        if (Main.rand.NextBool(10))
-                        {
-                            Vector2 dir = Rotation.ToRotationVector2();
-                            Vector2 center = Projectile.Center + dir * 20;
-                        }
                     }
 
                     Projectile.timeLeft = 2;

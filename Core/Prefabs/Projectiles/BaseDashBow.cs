@@ -17,6 +17,8 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         protected bool Init = true;
 
+        public override bool ShouldUpdatePosition() => false;
+
         public override void SetDefaults()
         {
             Projectile.friendly = true;
