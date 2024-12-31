@@ -48,13 +48,29 @@ namespace Coralite.Content.CustomHooks
 
             if (VisualEffectSystem.DrawTrail)
             {
-                for (int k = 0; k < Main.maxProjectiles; k++) // Projectiles.
-                    if (Main.projectile[k].active && Main.projectile[k].ModProjectile is IDrawPrimitive)
-                        (Main.projectile[k].ModProjectile as IDrawPrimitive).DrawPrimitives();
+                foreach (var p in Main.projectile)
+                {
+                    if (p.ModProjectile == null || !p.active)
+                    {
+                        continue;
+                    }
+                    if (p.ModProjectile is IDrawPrimitive primitive)
+                    {
+                        primitive.DrawPrimitives();
+                    }
+                }
 
-                for (int k = 0; k < Main.maxNPCs; k++) // NPCs.
-                    if (Main.npc[k].active && Main.npc[k].ModNPC is IDrawPrimitive)
-                        (Main.npc[k].ModNPC as IDrawPrimitive).DrawPrimitives();
+                foreach (var n in Main.npc)
+                {
+                    if (n.ModNPC == null || !n.active)
+                    {
+                        continue;
+                    }
+                    if (n.ModNPC is IDrawPrimitive primitive)
+                    {
+                        primitive.DrawPrimitives();
+                    }
+                }
 
                 foreach (var prt in PRTLoader.PRT_InGame_World_Inds)
                 {
