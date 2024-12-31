@@ -2,7 +2,6 @@
 using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -10,11 +9,11 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 
-namespace Coralite.Content.Items.Misc_Shoot
+namespace Coralite.Content.Items.ThyphionSeries
 {
     public class PlasmaBow : ModItem
     {
-        public override string Texture => AssetDirectory.Misc_Shoot + Name;
+        public override string Texture => AssetDirectory.ThyphionSeriesItems + Name;
 
         public static short GlowMaskID;
 
@@ -28,16 +27,16 @@ namespace Coralite.Content.Items.Misc_Shoot
         public override void SetDefaults()
         {
             Item.useAmmo = AmmoID.Arrow;
-            Item.damage = 45;
-            Item.shootSpeed = 7f;
+            Item.damage = 48;
+            Item.shootSpeed = 11f;
             Item.knockBack = 5;
             Item.shoot = ProjectileID.PurificationPowder;
 
             Item.DamageType = DamageClass.Ranged;
-            Item.rare = ItemRarityID.Green;
-            Item.useTime = Item.useAnimation = 27;
+            Item.rare = ItemRarityID.Pink;
+            Item.useTime = Item.useAnimation = 26;
             Item.useStyle = ItemUseStyleID.Shoot;
-            Item.value = Item.sellPrice(0, 0, 50);
+            Item.value = Item.sellPrice(0, 1);
 
             Item.useTurn = false;
             Item.noMelee = true;
@@ -59,7 +58,7 @@ namespace Coralite.Content.Items.Misc_Shoot
             {
                 Vector2 velocity2 = dir.RotatedBy(i * 0.5f) * speed;
                 Projectile.NewProjectile(new EntitySource_ItemUse(player, Item)
-                    , position + (dir.RotatedBy(i * 0.5f) * 18) - (velocity * 2), velocity2, ModContent.ProjectileType<PlasmaBall>()
+                    , position + dir.RotatedBy(i * 0.5f) * 18 - velocity * 2, velocity2, ModContent.ProjectileType<PlasmaBall>()
                     , damage2, knockback, player.whoAmI);
             }
 
@@ -76,6 +75,7 @@ namespace Coralite.Content.Items.Misc_Shoot
             CreateRecipe()
                 .AddIngredient<TremblingBow>()
                 .AddIngredient(ItemID.AncientBattleArmorMaterial, 2)
+                .AddIngredient(ItemID.SoulofFright, 15)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
         }
@@ -99,7 +99,7 @@ namespace Coralite.Content.Items.Misc_Shoot
 
         LinkedList<Vector2> trailList;
 
-        public static Asset<Texture2D> HorizontalStar;
+        public static ATex HorizontalStar;
 
         public override void Load()
         {
@@ -167,7 +167,7 @@ namespace Coralite.Content.Items.Misc_Shoot
                                 NPCIndex = target.whoAmI;
 
                                 TargetCenter = Projectile.Center +
-                                    ((Projectile.Center - Main.player[Projectile.owner].Center).SafeNormalize(Vector2.Zero) * 125);
+                                    (Projectile.Center - Main.player[Projectile.owner].Center).SafeNormalize(Vector2.Zero) * 125;
 
                                 StartAttack();
                             }
@@ -207,7 +207,7 @@ namespace Coralite.Content.Items.Misc_Shoot
 
             Projectile.velocity = (Main.MouseWorld - Projectile.Center).SafeNormalize(Vector2.Zero) * 16;
 
-            Asset<Texture2D> trailTex = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "ThunderTrail2");
+            ATex trailTex = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "ThunderTrail2");
 
             trail = new ThunderTrail(trailTex, ThunderWidthFunc_Sin, ThunderColorFunc, GetAlpha)
             {
@@ -246,8 +246,8 @@ namespace Coralite.Content.Items.Misc_Shoot
                         if (length2 > 100)
                             length2 = 100;
                         dir2 = dir2.SafeNormalize(Vector2.Zero);
-                        Vector2 center2 = Projectile.Center + (dir2 * length2);
-                        Vector2 pos = center2 + (dir2.RotatedBy(Main.rand.NextFromList(1.57f, -1.57f)) * length2);// Main.rand.NextVector2Circular(length2,length2);
+                        Vector2 center2 = Projectile.Center + dir2 * length2;
+                        Vector2 pos = center2 + dir2.RotatedBy(Main.rand.NextFromList(1.57f, -1.57f)) * length2;// Main.rand.NextVector2Circular(length2,length2);
 
                         targetCenter = pos;
                         TargetCenter = pos;
@@ -266,7 +266,7 @@ namespace Coralite.Content.Items.Misc_Shoot
 
             float factor = 1 - Math.Clamp(Vector2.Distance(targetCenter, Projectile.Center) / 500, 0, 1);
 
-            Projectile.velocity = selfAngle.AngleLerp(targetAngle, 0.5f + (0.5f * factor)).ToRotationVector2() * 24f;
+            Projectile.velocity = selfAngle.AngleLerp(targetAngle, 0.5f + 0.5f * factor).ToRotationVector2() * 24f;
 
             if (Main.rand.NextBool(8))
                 Projectile.SpawnTrailDust(DustID.Electric, Main.rand.NextFloat(0.1f, 0.3f), Scale: Main.rand.NextFloat(0.4f, 0.8f));

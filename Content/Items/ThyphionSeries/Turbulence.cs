@@ -33,7 +33,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public override void SetDefaults()
         {
-            Item.SetWeaponValues(32, 4f);
+            Item.SetWeaponValues(33, 4f);
             Item.DefaultToRangedWeapon(10, AmmoID.Arrow, 23, 12f);
 
             Item.rare = ItemRarityID.Orange;
@@ -61,7 +61,6 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             if (Main.rand.NextBool(shootCount,7))
             {
-                Main.NewText(shootCount);
                 shootCount = 0;
                 type = ProjectileType<TurbulenceArrow>();
                 Helper.PlayPitched(CoraliteSoundID.ShadowflameApparition_NPCDeath55, player.Center,pitchAdjust:0.3f);
@@ -901,7 +900,8 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
         {
-            foreach (var p in Main.projectile.Where(p => p.active && p.friendly && p.type == ModContent.ProjectileType<PreviewMultiblockPeoj>()))
+            int type = CoraliteContent.MTBSType<TurbulenceMultiBlock>();
+            foreach (var p in Main.projectile.Where(p => p.active && p.friendly && p.type ==ProjectileType<PreviewMultiblockPeoj>() && p.ai[0] == type))
                 p.Kill();
         }
     }

@@ -1,9 +1,11 @@
 ﻿using Coralite.Content.Items.MagikeSeries1;
+using Coralite.Content.Items.ThyphionSeries;
 using Coralite.Content.Raritys;
 using Coralite.Content.Tiles.MagikeSeries1;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.MTBStructure;
+using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -46,13 +48,20 @@ namespace Coralite.Content.Items.Magike.Refractors
 
         public override bool RightClick(int i, int j)
         {
-            CoraliteContent.GetMTBS<LASERMBS>().CheckStructure(new Point(i, j - 1));
+            CoraliteContent.GetMTBS<LASERMultiblock>().CheckStructure(new Point(i, j - 1));
 
             return true;
         }
+
+        public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
+        {
+            int type = CoraliteContent.MTBSType<LASERMultiblock>();
+            foreach (var p in Main.projectile.Where(p => p.active && p.friendly && p.type == ProjectileType<PreviewMultiblockPeoj>() && p.ai[0] == type))
+                p.Kill();
+        }
     }
 
-    public class LASERMBS : Multiblock
+    public class LASERMultiblock : PreviewMultiblock
     {
         /// <summary>
         /// 魔力水晶块
@@ -87,6 +96,8 @@ namespace Coralite.Content.Items.Magike.Refractors
 
         public override void OnSuccess(Point origin)
         {
+            base.OnSuccess(origin);
+
             KillAll(origin);
 
             Item.NewItem(new EntitySource_TileBreak(origin.X, origin.Y), origin.ToWorldCoordinates()

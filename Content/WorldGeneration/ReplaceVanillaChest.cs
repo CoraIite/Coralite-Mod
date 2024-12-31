@@ -1,7 +1,7 @@
 ﻿using Coralite.Content.Items.FlyingShields.Accessories;
 using Coralite.Content.Items.Magike;
 using Coralite.Content.Items.MagikeSeries1;
-using Coralite.Content.Items.Misc_Shoot;
+using Coralite.Content.Items.ThyphionSeries;
 using Coralite.Content.Tiles.MagikeSeries1;
 using Terraria;
 using Terraria.ID;

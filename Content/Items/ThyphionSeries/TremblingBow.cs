@@ -2,18 +2,17 @@
 using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 
-namespace Coralite.Content.Items.Misc_Shoot
+namespace Coralite.Content.Items.ThyphionSeries
 {
     public class TremblingBow : ModItem
     {
-        public override string Texture => AssetDirectory.Misc_Shoot + Name;
+        public override string Texture => AssetDirectory.ThyphionSeriesItems + Name;
 
         public static short GlowMaskID;
 
@@ -58,7 +57,7 @@ namespace Coralite.Content.Items.Misc_Shoot
             {
                 Vector2 velocity2 = dir.RotatedBy(-i * 0.5f) * speed;
                 Projectile.NewProjectile(new EntitySource_ItemUse(player, Item)
-                    , position + (dir.RotatedBy(i * 1f) * 48) - (velocity * 2), velocity2, ModContent.ProjectileType<TremblingElectric>()
+                    , position + dir.RotatedBy(i * 1f) * 48 - velocity * 2, velocity2, ModContent.ProjectileType<TremblingElectric>()
                     , damage2, knockback, player.whoAmI, i);
             }
 
@@ -116,7 +115,7 @@ namespace Coralite.Content.Items.Misc_Shoot
             {
                 Projectile.InitOldPosCache(10);
                 thunderTrails = new ThunderTrail[3];
-                Asset<Texture2D> trailTex = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "ThunderTrail2");
+                ATex trailTex = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "ThunderTrail2");
                 for (int i = 0; i < 3; i++)
                 {
                     thunderTrails[i] = new ThunderTrail(trailTex, ThunderWidthFunc_Sin, ThunderColorFunc, GetAlpha)

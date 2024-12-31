@@ -7,7 +7,7 @@ using Terraria.DataStructures;
 
 namespace Coralite.Content.MutiBlocks
 {
-    public class DigStoneMakerMBS : Multiblock
+    public class DigStoneMakerMTB : PreviewMultiblock
     {
         /// <summary>
         /// 魔力水晶砖
@@ -36,6 +36,8 @@ namespace Coralite.Content.MutiBlocks
 
         public override void OnSuccess(Point origin)
         {
+            base.OnSuccess(origin);
+
             KillAll(origin);
 
             Item.NewItem(new EntitySource_TileBreak(origin.X, origin.Y), origin.ToWorldCoordinates(), ModContent.ItemType<StoneMaker>());

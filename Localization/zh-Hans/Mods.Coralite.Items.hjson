@@ -4904,16 +4904,7 @@ StoneMakerCore: {
 	Tooltip:
 		'''
 		用于制作 [i:Coralite/StoneMaker] {$Mods.Coralite.Items.StoneMaker.DisplayName}
-		通过搭建以下的多方块结构并右键核心进行合成
-
-		[i:Coralite/MagicCrystalBrick]   [i:Coralite/MagicCrystalBrick]
-		[i:Coralite/Basalt][i:Coralite/StoneMakerCore][i:Coralite/Basalt]
-		[i:Coralite/HardBasalt][i:Coralite/HardBasalt][i:Coralite/HardBasalt]
-
-		物块名：
-		[i:Coralite/Basalt]·{$Mods.Coralite.Items.Basalt.DisplayName}
-		[i:Coralite/HardBasalt]·{$Mods.Coralite.Items.HardBasalt.DisplayName}
-		[i:Coralite/MagicCrystalBrick]·{$Mods.Coralite.Items.MagicCrystalBrick.DisplayName}
+		{$Mods.Coralite.Systems.MultiblockSystem.PreviewMultiblock}
 		'''
 }
 
@@ -4956,20 +4947,7 @@ LASERCore: {
 	Tooltip:
 		'''
 		用于制作 [i:Coralite/LASER] {$Mods.Coralite.Items.LASER.DisplayName}
-		通过搭建以下的多方块结构并右键核心进行合成
-
-		[i:Coralite/HardBasalt][i:Coralite/HardBasalt]   [i:Coralite/HardBasalt][i:Coralite/HardBasalt]
-		[i:Coralite/Basalt]   [i:Coralite/MagicCrystalBlock]    [i:Coralite/Basalt]
-		[i:Coralite/Basalt]   [i:Coralite/MagicCrystalBlock]    [i:Coralite/Basalt]
-		[i:2173][i:2173][i:Coralite/LASERCore][i:2173][i:2173]
-		[i:Coralite/HardBasalt][i:Coralite/HardBasalt][i:Coralite/HardBasalt][i:Coralite/HardBasalt][i:Coralite/HardBasalt]
-
-		物块名：
-		[i:Coralite/Basalt]·{$Mods.Coralite.Items.Basalt.DisplayName}
-		[i:Coralite/HardBasalt]·{$Mods.Coralite.Items.HardBasalt.DisplayName}
-		[i:Coralite/MagicCrystalBlock]·{$Mods.Coralite.Items.MagicCrystalBlock.DisplayName}
-		[i:2173]·{$ItemName.CopperPlating}
-		.
+		{$Mods.Coralite.Systems.MultiblockSystem.PreviewMultiblock}
 		'''
 }
 
@@ -5035,4 +5013,14 @@ TurbulenceCore: {
 		用于制作 [i:Coralite/Turbulence] {$Mods.Coralite.Items.Turbulence.DisplayName}
 		{$Mods.Coralite.Systems.MultiblockSystem.PreviewMultiblock}
 		'''
+}
+
+FullMoon: {
+	// DisplayName: Full Moon
+	// Tooltip: ""
+}
+
+SeismicWave: {
+	// DisplayName: Seismic Wave
+	// Tooltip: ""
 }
