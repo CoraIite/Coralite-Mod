@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace Coralite.Core.Loaders
 {
-    public class MTBStructureLoader
+    public class MultiblockLoader
     {
-        internal static IList<MultiblockStructure> structures;
+        internal static IList<Multiblock> structures;
         internal static int StructureCount { get; private set; } = 0;
 
         /// <summary>
@@ -13,7 +13,7 @@ namespace Coralite.Core.Loaders
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        public static MultiblockStructure GetMTBStructure(int type)
+        public static Multiblock GetMTBStructure(int type)
                  => type < StructureCount ? structures[type] : null;
 
         /// <summary>

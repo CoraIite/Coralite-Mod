@@ -52,7 +52,7 @@ namespace Coralite.Content.Items.Magike.Refractors
         }
     }
 
-    public class LASERMBS : MultiblockStructure
+    public class LASERMBS : Multiblock
     {
         /// <summary>
         /// 魔力水晶块

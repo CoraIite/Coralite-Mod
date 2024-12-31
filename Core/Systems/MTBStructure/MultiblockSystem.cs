@@ -2,7 +2,7 @@
 
 namespace Coralite.Core.Systems.MTBStructure
 {
-    public class MTBStructureSystem : ModSystem, ILocalizedModType
+    public class MultiblockSystem : ModSystem, ILocalizedModType
     {
         public string LocalizationCategory => "Systems";
 

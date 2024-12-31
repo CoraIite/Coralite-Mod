@@ -6,18 +6,18 @@ using Terraria;
 
 namespace Coralite.Core.Systems.MTBStructure
 {
-    public abstract class MultiblockStructure : ModType
+    public abstract class Multiblock : ModType
     {
         public int Type { get; internal set; }
 
         protected sealed override void Register()
         {
-            ModTypeLookup<MultiblockStructure>.Register(this);
+            ModTypeLookup<Multiblock>.Register(this);
 
-            MTBStructureLoader.structures ??= new List<MultiblockStructure>();
-            MTBStructureLoader.structures.Add(this);
+            MultiblockLoader.structures ??= new List<Multiblock>();
+            MultiblockLoader.structures.Add(this);
 
-            Type = MTBStructureLoader.ReserveMTBStructureID();
+            Type = MultiblockLoader.ReserveMTBStructureID();
         }
 
         /// <summary>
@@ -37,14 +37,14 @@ namespace Coralite.Core.Systems.MTBStructure
         /// 检测建筑，成功就触发<see cref="OnSuccess"/>
         /// </summary>
         /// <param name="origin"></param>
-        public void CheckStructure(Point origin)
+        public virtual void CheckStructure(Point origin)
         {
             if (!CheckStructureInner(origin, out Point failPoint))
             {
                 PopupText.NewText(new AdvancedPopupRequest()
                 {
                     Color = Color.Red,
-                    Text = MTBStructureSystem.FailText.Value,
+                    Text = MultiblockSystem.FailText.Value,
                     DurationInFrames = 60,
                     Velocity = -Vector2.UnitY
                 }, origin.ToWorldCoordinates() - (Vector2.UnitY * 32));
@@ -61,7 +61,7 @@ namespace Coralite.Core.Systems.MTBStructure
         /// </summary>
         /// <param name="origin"></param>
         /// <returns></returns>
-        private bool CheckStructureInner(Point origin, out Point failPoint)
+        protected bool CheckStructureInner(Point origin, out Point failPoint)
         {
             int[,] structureTile = StructureTile;
             int width = structureTile.GetLength(1);

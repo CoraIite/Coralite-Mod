@@ -86,4 +86,8 @@ FlyingShieldSystem: {
 }
 
 WoodenBowGroup.Name: Mods.Coralite.Systems.WoodenBowGroup.Name
-MTBStructureSystem.FailText: Mods.Coralite.Systems.MTBStructureSystem.FailText
+
+MultiblockSystem: {
+	FailText: Mods.Coralite.Systems.MultiblockSystem.FailText
+	PreviewMultiblock: ""
+}

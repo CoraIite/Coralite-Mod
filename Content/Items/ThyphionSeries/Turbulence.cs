@@ -29,10 +29,12 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public float Priority => IDashable.HeldItemDash;
 
+        private int shootCount;
+
         public override void SetDefaults()
         {
             Item.SetWeaponValues(32, 4f);
-            Item.DefaultToRangedWeapon(10, AmmoID.Arrow, 24, 9f);
+            Item.DefaultToRangedWeapon(10, AmmoID.Arrow, 23, 12f);
 
             Item.rare = ItemRarityID.Orange;
             Item.useStyle = ItemUseStyleID.Rapier;
@@ -57,11 +59,15 @@ namespace Coralite.Content.Items.ThyphionSeries
             Projectile.NewProjectile(new EntitySource_ItemUse(player, Item)
                 , player.Center, Vector2.Zero, ProjectileType<TurbulenceHeldProj>(), damage, knockback, player.whoAmI, rot);
 
-            if (Main.rand.NextBool(3))
+            if (Main.rand.NextBool(shootCount,7))
             {
+                Main.NewText(shootCount);
+                shootCount = 0;
                 type = ProjectileType<TurbulenceArrow>();
                 Helper.PlayPitched(CoraliteSoundID.ShadowflameApparition_NPCDeath55, player.Center,pitchAdjust:0.3f);
             }
+
+            shootCount++;
 
             Projectile.NewProjectile(source, player.Center, velocity, type, damage, knockback, player.whoAmI);
 
@@ -100,6 +106,8 @@ namespace Coralite.Content.Items.ThyphionSeries
             Player.GetModPlayer<CoralitePlayer>().DashTimer = 12;
             Player.velocity = newVelocity;
             //Player.direction = (int)dashDirection;
+            Player.AddImmuneTime(ImmunityCooldownID.General, 14);
+            Player.immune = true;
 
             Main.instance.CameraModifiers.Add(new MoveModifyer(5, 15));
 
@@ -199,7 +207,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                         Helper.PlayPitched(CoraliteSoundID.Bow_Item5, Projectile.Center);
 
                         Projectile.NewProjectileFromThis<TurbulenceArrow>(Owner.Center, ToMouse.SafeNormalize(Vector2.Zero) * 16
-                            , (int)(Owner.GetWeaponDamage(Owner.HeldItem) * 1.35f), Projectile.knockBack, 1);
+                            , (int)(Owner.GetWeaponDamage(Owner.HeldItem) * 1.5f), Projectile.knockBack, 1);
 
                         Rotation = ToMouseAngle;
 
@@ -890,9 +898,15 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             return true;
         }
+
+        public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
+        {
+            foreach (var p in Main.projectile.Where(p => p.active && p.friendly && p.type == ModContent.ProjectileType<PreviewMultiblockPeoj>()))
+                p.Kill();
+        }
     }
 
-    public class TurbulenceMultiBlock : MultiblockStructure
+    public class TurbulenceMultiBlock : PreviewMultiblock
     {
         /// <summary>
         /// 铅砖
@@ -923,6 +937,8 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public override void OnSuccess(Point origin)
         {
+            base.OnSuccess(origin);
+
             KillAll(origin);
 
             Item.NewItem(new EntitySource_TileBreak(origin.X, origin.Y), origin.ToWorldCoordinates(), ItemType<Turbulence>());
