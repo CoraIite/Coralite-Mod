@@ -4905,3 +4905,13 @@ TurbulenceCore: {
 	DisplayName: Turbulence Core
 	Tooltip: ""
 }
+
+FullMoon: {
+	DisplayName: Full Moon
+	Tooltip: ""
+}
+
+SeismicWave: {
+	DisplayName: Seismic Wave
+	Tooltip: ""
+}

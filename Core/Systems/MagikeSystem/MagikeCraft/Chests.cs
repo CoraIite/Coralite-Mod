@@ -1,5 +1,5 @@
 ﻿using Coralite.Content.Items.FlyingShields.Accessories;
-using Coralite.Content.Items.Misc_Shoot;
+using Coralite.Content.Items.ThyphionSeries;
 using Terraria;
 using Terraria.ID;
 using static Coralite.Core.Systems.MagikeSystem.MALevel;

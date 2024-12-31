@@ -13,7 +13,7 @@ namespace Coralite.Core.Systems.MTBStructure
     {
         public override void CheckStructure(Point origin)
         {
-            foreach (var p in Main.projectile.Where(p => p.active && p.friendly && p.type == ModContent.ProjectileType<PreviewMultiblockPeoj>()))
+            foreach (var p in Main.projectile.Where(p => p.active && p.friendly && p.type == ModContent.ProjectileType<PreviewMultiblockPeoj>() && p.ai[0]==Type))
                 p.Kill();
 
             Projectile.NewProjectile(new EntitySource_TileUpdate(origin.X, origin.Y), origin.ToWorldCoordinates(0, 0), Vector2.Zero
@@ -24,7 +24,7 @@ namespace Coralite.Core.Systems.MTBStructure
 
         public override void OnSuccess(Point origin)
         {
-            foreach (var p in Main.projectile.Where(p => p.active && p.friendly && p.type == ModContent.ProjectileType<PreviewMultiblockPeoj>()))
+            foreach (var p in Main.projectile.Where(p => p.active && p.friendly && p.type == ModContent.ProjectileType<PreviewMultiblockPeoj>() && p.ai[0] == Type))
                 p.Kill();
         }
     }
@@ -74,13 +74,31 @@ namespace Coralite.Core.Systems.MTBStructure
 
                     if (tile.HasTile)
                     {
-                        if (tile.TileType!=type)
+                        if (tile.TileType != type)
                         {
                             Texture2D tex = Projectile.GetTexture();
                             Vector2 pos = p.ToWorldCoordinates() - Main.screenPosition;
 
                             Main.spriteBatch.Draw(tex, pos, null, Color.Red * 0.5f
                                 , 0, tex.Size() / 2, 0.5f, 0, 0);
+
+                            int itemType = TileLoader.GetItemDropFromTypeAndStyle(type);
+
+                            Main.instance.LoadItem(itemType);
+                            Texture2D itemTex = TextureAssets.Item[itemType].Value;
+
+                            float colorA = 0.5f;
+                            float scale = 0.9f;
+                            if (Helper.MouseScreenInRect(new Rectangle((int)pos.X - 8, (int)pos.Y - 8, 16, 16)))
+                            {
+                                colorA = 1f;
+                                scale = 1.2f;
+
+                                Utils.DrawBorderString(Main.spriteBatch, ContentSamples.ItemsByType[itemType].Name, pos - new Vector2(0, 16)
+                                    , Color.White, anchorx: 0.5f, anchory: 0.5f);
+                            }
+
+                            Main.spriteBatch.Draw(itemTex, pos, null, Color.White * colorA, 0, itemTex.Size() / 2, scale, 0, 0);
                         }
                     }
                     else
