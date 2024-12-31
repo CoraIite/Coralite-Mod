@@ -459,10 +459,10 @@ namespace Coralite.Content.Items.ThyphionSeries
                     for (int i = 1; i < 5; i++)
                         pos2[trailCount + i - 1] = Projectile.oldPos[^1] + dir * i * exLength + Projectile.velocity;
 
-                    trail.Positions = pos2;
+                    trail.TrailPositions = pos2;
 
                     if (!normal)
-                        warpTrail.Positions = Projectile.oldPos;
+                        warpTrail.TrailPositions = Projectile.oldPos;
                 }
             }
         }
@@ -512,10 +512,10 @@ namespace Coralite.Content.Items.ThyphionSeries
                 if (!VaultUtils.isServer)
                 {
                     Projectile.InitOldPosCache(trailCount);
-                    trail = new Trail(Main.instance.GraphicsDevice, trailCount + 4, new NoTip()
+                    trail = new Trail(Main.instance.GraphicsDevice, trailCount + 4, new EmptyMeshGenerator()
                         , f => trailWidth * trailAlpha, f => new Color(255, 255, 255, 170));//=> Color.Lerp(Color.Transparent, Color.White,f.X));
                     if (State == 1)
-                        warpTrail = new Trail(Main.instance.GraphicsDevice, trailCount, new NoTip()
+                        warpTrail = new Trail(Main.instance.GraphicsDevice, trailCount, new EmptyMeshGenerator()
                             , f => (trailWidth + 30) * trailAlpha, f =>
                             {
                                 float r = (Projectile.rotation) % 6.18f;
@@ -617,9 +617,9 @@ namespace Coralite.Content.Items.ThyphionSeries
             effect.Parameters["uDissolve"].SetValue(TurbulenceFlow.Value);
 
             Main.graphics.GraphicsDevice.BlendState = BlendState.NonPremultiplied;
-            trail?.Render(effect);
+            trail?.DrawTrail(effect);
             Main.graphics.GraphicsDevice.BlendState = BlendState.Additive;
-            trail?.Render(effect);
+            trail?.DrawTrail(effect);
 
             Main.graphics.GraphicsDevice.BlendState = BlendState.AlphaBlend;
 
@@ -645,7 +645,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             effect.Parameters["uTransform"].SetValue(Helper.GetTransfromMatrix());
             effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly * 0.2f);
 
-            warpTrail?.Render(effect);
+            warpTrail?.DrawTrail(effect);
         }
 
         public void DrawAdditive(SpriteBatch spriteBatch)
@@ -764,7 +764,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         {
             MaxRotateSpeed = 0.3f;
             int trailCount = 10;
-            trail = new Trail(Main.instance.GraphicsDevice, trailCount, new NoTip(), factor => 10 * Scale, factor =>
+            trail = new Trail(Main.instance.GraphicsDevice, trailCount, new EmptyMeshGenerator(), factor => 10 * Scale, factor =>
             {
                 return new Color(Color.R, Color.G, Color.B, (byte)(255 * alpha));
             });
@@ -827,7 +827,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             for (int i = 0; i < pos2.Length; i++)
                 pos2[i] = pos + oldPositions[i];
 
-            trail.Positions = pos2;
+            trail.TrailPositions = pos2;
         }
 
         public static TurbulenceCircle Spawn(Vector2 center, float r, float time, float startRot, float zRot, float exRot, TurbulenceHeldProj proj)
@@ -866,7 +866,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             effect.Projection = projection;
             effect.Texture = TexValue;
 
-            trail?.Render(effect);
+            trail?.DrawTrail(effect);
         }
     }
 

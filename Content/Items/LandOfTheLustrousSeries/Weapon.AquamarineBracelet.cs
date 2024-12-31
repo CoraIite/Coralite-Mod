@@ -281,7 +281,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             if (trail == null)
             {
                 const int maxPoint = 12;
-                trail ??= new Trail(Main.graphics.GraphicsDevice, maxPoint, new NoTip()
+                trail ??= new Trail(Main.graphics.GraphicsDevice, maxPoint, new EmptyMeshGenerator()
                     , factor => Helper.Lerp(2, 13, factor),
                       factor =>
                       {
@@ -311,7 +311,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             Projectile.UpdateFrameNormally(8, 19);
             Projectile.UpdateOldPosCache();
-            trail.Positions = Projectile.oldPos;
+            trail.TrailPositions = Projectile.oldPos;
         }
 
         public void Spawn()
@@ -437,7 +437,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             effect.Parameters["brightC"].SetValue(brightC.ToVector4());
             effect.Parameters["darkC"].SetValue(darkC.ToVector4());
 
-            trail.Render(effect);
+            trail.DrawTrail(effect);
         }
 
         public void DrawNonPremultiplied(SpriteBatch spriteBatch)

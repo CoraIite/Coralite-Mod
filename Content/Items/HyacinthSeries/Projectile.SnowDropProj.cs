@@ -352,7 +352,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             }
 
 
-            trail ??= new Trail(Main.instance.GraphicsDevice, 24, new TriangularTip(4), factor => Helper.Lerp(0, 2, factor), factor =>
+            trail ??= new Trail(Main.instance.GraphicsDevice, 24, new ArrowheadTrailGenerator(4), factor => Helper.Lerp(0, 2, factor), factor =>
             {
                 if (factor.X > 0.7f)
                     return Color.Lerp(new Color(152, 192, 70, 60), Color.White, (factor.X - 0.7f) / 0.3f);
@@ -364,7 +364,7 @@ namespace Coralite.Content.Items.HyacinthSeries
                 Projectile.oldPos[i] = Projectile.oldPos[i + 1];
 
             Projectile.oldPos[23] = Projectile.Center + Projectile.velocity;
-            trail.Positions = Projectile.oldPos;
+            trail.TrailPositions = Projectile.oldPos;
         }
 
         public void DrawPrimitives()
@@ -380,7 +380,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             effect.View = view;
             effect.Projection = projection;
 
-            trail?.Render(effect);
+            trail?.DrawTrail(effect);
         }
 
         public override bool PreDraw(ref Color lightColor) => false;

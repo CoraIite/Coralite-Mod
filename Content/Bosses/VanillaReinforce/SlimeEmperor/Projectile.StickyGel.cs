@@ -68,7 +68,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                 Projectile.rotation = Projectile.velocity.ToRotation();
             }
 
-            trail ??= new Trail(Main.instance.GraphicsDevice, 12, new NoTip(), factor => Helper.Lerp(4, 10, factor), factor =>
+            trail ??= new Trail(Main.instance.GraphicsDevice, 12, new EmptyMeshGenerator(), factor => Helper.Lerp(4, 10, factor), factor =>
             {
                 return Color.Lerp(Color.Transparent, new Color(78, 136, 255, 80), factor.X);
             });
@@ -77,7 +77,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                 Projectile.oldPos[i] = Projectile.oldPos[i + 1];
 
             Projectile.oldPos[11] = Projectile.Center + Projectile.velocity;
-            trail.Positions = Projectile.oldPos;
+            trail.TrailPositions = Projectile.oldPos;
         }
 
         public override void OnKill(int timeLeft)
@@ -146,7 +146,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             effect.View = view;
             effect.Projection = projection;
 
-            trail?.Render(effect);
+            trail?.DrawTrail(effect);
         }
 
         public void DrawNonPremultiplied(SpriteBatch spriteBatch)

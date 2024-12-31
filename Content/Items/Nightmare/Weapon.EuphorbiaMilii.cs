@@ -1243,7 +1243,7 @@ namespace Coralite.Content.Items.Nightmare
 
         public override void AI()
         {
-            trail ??= new Trail(Main.graphics.GraphicsDevice, 24, new NoTip(), WidthFunction, ColorFunction);
+            trail ??= new Trail(Main.graphics.GraphicsDevice, 24, new EmptyMeshGenerator(), WidthFunction, ColorFunction);
 
             if (Timer > 0)
             {
@@ -1288,7 +1288,7 @@ namespace Coralite.Content.Items.Nightmare
 
                     Projectile.oldPos[23] = Projectile.Center + Projectile.velocity;
                 }
-                trail.Positions = Projectile.oldPos;
+                trail.TrailPositions = Projectile.oldPos;
             }
 
             Timer++;
@@ -1322,7 +1322,7 @@ namespace Coralite.Content.Items.Nightmare
             effect.Parameters["gradientTexture"].SetValue(EuphorbiaMiliiProj.GradientTexture.Value);
             effect.Parameters["alpha"].SetValue(Alpha);
 
-            trail.Render(effect);
+            trail.DrawTrail(effect);
         }
 
         public override bool PreDraw(ref Color lightColor) => false;

@@ -79,7 +79,7 @@ namespace Coralite.Content.Items.HyacinthSeries
 
             Projectile.oldPos[11] = Projectile.Center + Projectile.velocity;
 
-            trail ??= new Trail(Main.instance.GraphicsDevice, Projectile.oldPos.Length, new NoTip(), factor => 2,
+            trail ??= new Trail(Main.instance.GraphicsDevice, Projectile.oldPos.Length, new EmptyMeshGenerator(), factor => 2,
                 factor =>
                 {
                     if (factor.X > 0.7f)
@@ -88,7 +88,7 @@ namespace Coralite.Content.Items.HyacinthSeries
                     return Color.Lerp(new Color(0, 0, 0, 0), new Color(95, 120, 233, 60), factor.X / 0.7f);//new Color(99, 83, 142, 0)
                 });
 
-            trail.Positions = Projectile.oldPos;
+            trail.TrailPositions = Projectile.oldPos;
         }
 
         public override void OnKill(int timeLeft)
@@ -115,7 +115,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             effect.View = view;
             effect.Projection = projection;
 
-            trail?.Render(effect);
+            trail?.DrawTrail(effect);
         }
 
         public override bool PreDraw(ref Color lightColor) => false;

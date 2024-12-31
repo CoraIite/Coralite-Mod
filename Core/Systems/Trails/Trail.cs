@@ -7,41 +7,41 @@ namespace Coralite.Core.Systems.Trails
 {
     public class Trail : IDisposable
     {
-        private readonly Primitives primitives;
-        private readonly int maxPointCount;
-        private readonly ITrailTip tip;
-        private readonly TrailWidthFunction trailWidthFunction;
-        private readonly TrailColorFunction trailColorFunction;
+        private readonly MeshRenderer renderer;
+        private readonly int maxPoints;
+        private readonly IMeshTrailGenerator tipHandler;
+        private readonly TrailThicknessCalculator calculateWidth;
+        private readonly TrailColorEvaluator calculateColor;
 
-        private bool filpVertical;
+        private bool isFlippedVertically;
 
         /// <summary>
         /// Array of positions that define the trail. NOTE: Positions[Positions.Length - 1] is assumed to be the start (e.g. Projectile.Center) and Positions[0] is assumed to be the end.
         /// <para></para>定义跟踪的位置数组。注意：位置[Positions.Length - 1]假定为起点（例如Projectile.Center），Positions[0]假定为末尾。
         /// </summary>
-        public Vector2[] Positions
+        public Vector2[] TrailPositions
         {
-            get => positions;
+            get => _trailPositions;
             set
             {
-                if (value.Length != maxPointCount)
+                if (value.Length != maxPoints)
                 {
                     throw new ArgumentException("Array of positions was a different length than the expected result!");
                 }
 
-                positions = value;
+                _trailPositions = value;
             }
         }
 
-        private Vector2[] positions;
+        private Vector2[] _trailPositions;
 
         /// <summary>
         /// Used in order to calculate the normal from the frontmost position, because there isn't a point after it in the original list.
         /// <para>用于从最前面的位置计算法线，因为在原始列表中它后面没有点。</para>
         /// </summary>
-        public Vector2 NextPosition { get; set; }
+        public Vector2 ExtrapolatedStart { get; set; }
 
-        private const float defaultWidth = 16;
+        private const float DefaultTrailWidth = 16;
 
         /// <summary>
         /// 
@@ -51,13 +51,13 @@ namespace Coralite.Core.Systems.Trails
         /// <param name="tip">尖端如何处理</param>
         /// <param name="trailWidthFunction">宽度委托</param>
         /// <param name="trailColorFunction">颜色委托</param>
-        public Trail(GraphicsDevice device, int maxPointCount, ITrailTip tip, TrailWidthFunction trailWidthFunction, TrailColorFunction trailColorFunction, bool flipVertical = false)
+        public Trail(GraphicsDevice device, int maxPointCount, IMeshTrailGenerator tip, TrailThicknessCalculator trailWidthFunction, TrailColorEvaluator trailColorFunction, bool flipVertical = false)
         {
-            this.tip = tip ?? new NoTip();
-            this.maxPointCount = maxPointCount;
-            this.trailWidthFunction = trailWidthFunction;
-            this.trailColorFunction = trailColorFunction;
-            this.filpVertical = flipVertical;
+            this.tipHandler = tip ?? new EmptyMeshGenerator();
+            this.maxPoints = maxPointCount;
+            this.calculateWidth = trailWidthFunction;
+            this.calculateColor = trailColorFunction;
+            this.isFlippedVertically = flipVertical;
 
             /* A---B---C
              * |    / |    / |
@@ -82,7 +82,7 @@ namespace Coralite.Core.Systems.Trails
              * （最基础的顶点绘制了）
              */
 
-            primitives = new Primitives(device, (maxPointCount * 2) + this.tip.ExtraVertices, (6 * (maxPointCount - 1)) + this.tip.ExtraIndices);
+            renderer = new MeshRenderer(device, (maxPointCount * 2) + this.tipHandler.AdditionalVertexCount, (6 * (maxPointCount - 1)) + this.tipHandler.AdditionalIndexCount);
         }
 
         /// <summary>
@@ -91,28 +91,28 @@ namespace Coralite.Core.Systems.Trails
         /// <param name="vertices">顶点数组</param>
         /// <param name="indices">索引数组</param>
         /// <param name="nextAvailableIndex"></param>
-        private void GenerateMesh(out VertexPositionColorTexture[] vertices, out short[] indices, out int nextAvailableIndex)
+        private void BuildTrailMesh(out VertexPositionColorTexture[] vertices, out short[] indices, out int nextAvailableIndex)
         {
-            VertexPositionColorTexture[] verticesTemp = new VertexPositionColorTexture[maxPointCount * 2];
+            VertexPositionColorTexture[] verticesTemp = new VertexPositionColorTexture[maxPoints * 2];
 
-            short[] indicesTemp = new short[(maxPointCount * 6) - 6];
+            short[] indicesTemp = new short[(maxPoints * 6) - 6];
 
             // k = 0 indicates starting at the end of the trail (furthest from the origin of it).
             //k = 0 表示从路径的末端开始（离原点最远）。
-            int texCoordA_Y = filpVertical ? 1 : 0;
-            int texCoordC_Y = filpVertical ? 0 : 1;
-            for (int k = 0; k < Positions.Length; k++)
+            int texCoordA_Y = isFlippedVertically ? 1 : 0;
+            int texCoordC_Y = isFlippedVertically ? 0 : 1;
+            for (int k = 0; k < TrailPositions.Length; k++)
             {
                 // 1 at k = Positions.Length - 1 (start) and 0 at k = 0 (end).
                 //1 在 Positions.Length - 1（开始），0 在 k = 0（结束）。
-                float factorAlongTrail = (float)k / (Positions.Length - 1);
+                float factorAlongTrail = (float)k / (TrailPositions.Length - 1);
 
                 // Uses the trail width function to decide the width of the trail at this point (if no function, use 
                 //使用轨迹宽度函数确定此时轨迹的宽度（如果没有函数，使用默认宽度）
-                float width = trailWidthFunction?.Invoke(factorAlongTrail) ?? defaultWidth;
+                float width = calculateWidth?.Invoke(factorAlongTrail) ?? DefaultTrailWidth;
 
-                Vector2 current = Positions[k];
-                Vector2 next = k == Positions.Length - 1 ? Positions[Positions.Length - 1] + (Positions[Positions.Length - 1] - Positions[Positions.Length - 2]) : Positions[k + 1];
+                Vector2 current = TrailPositions[k];
+                Vector2 next = k == TrailPositions.Length - 1 ? TrailPositions[TrailPositions.Length - 1] + (TrailPositions[TrailPositions.Length - 1] - TrailPositions[TrailPositions.Length - 2]) : TrailPositions[k + 1];
 
                 Vector2 normalToNext = (next - current).SafeNormalize(Vector2.Zero);
                 Vector2 normalPerp = normalToNext.RotatedBy(MathHelper.PiOver2);
@@ -144,8 +144,8 @@ namespace Coralite.Core.Systems.Trails
 
                 // Calculates the color for each vertex based on its texture coordinates. This acts like a very simple shader (for more complex effects you can use the actual shader).
                 //根据每个顶点的纹理坐标计算其颜色。这就像一个非常简单的shader（对于更复杂的效果，建议使用真正的shader）。
-                Color colorA = trailColorFunction?.Invoke(texCoordA) ?? Color.White;
-                Color colorC = trailColorFunction?.Invoke(texCoordC) ?? Color.White;
+                Color colorA = calculateColor?.Invoke(texCoordA) ?? Color.White;
+                Color colorC = calculateColor?.Invoke(texCoordC) ?? Color.White;
 
                 /* 0---1---2
                  * |     /|    /|
@@ -163,7 +163,7 @@ namespace Coralite.Core.Systems.Trails
                  */
 
                 verticesTemp[k] = new VertexPositionColorTexture(a.Vec3(), colorA, texCoordA);
-                verticesTemp[k + maxPointCount] = new VertexPositionColorTexture(c.Vec3(), colorC, texCoordC);
+                verticesTemp[k + maxPoints] = new VertexPositionColorTexture(c.Vec3(), colorC, texCoordC);
             }
 
             /* Now, we have to loop through the indices to generate triangles.
@@ -171,7 +171,7 @@ namespace Coralite.Core.Systems.Trails
              * 现在，我们必须遍历索引以生成三角形。
              * 循环到 maxPointCount - 1 使我们走到了一半;它覆盖顶行（不包括顶行的最后一点）。
              */
-            for (short k = 0; k < maxPointCount - 1; k++)
+            for (short k = 0; k < maxPoints - 1; k++)
             {
                 /* 0---1
                  * |     /|
@@ -189,12 +189,12 @@ namespace Coralite.Core.Systems.Trails
                  * （Coralite注：就是计算一下顶点的索引喽，主要理解了就好了）
                  */
 
-                indicesTemp[k * 6] = (short)(k + maxPointCount);
-                indicesTemp[(k * 6) + 1] = (short)(k + maxPointCount + 1);
+                indicesTemp[k * 6] = (short)(k + maxPoints);
+                indicesTemp[(k * 6) + 1] = (short)(k + maxPoints + 1);
                 indicesTemp[(k * 6) + 2] = (short)(k + 1);
                 indicesTemp[(k * 6) + 3] = (short)(k + 1);
                 indicesTemp[(k * 6) + 4] = k;
-                indicesTemp[(k * 6) + 5] = (short)(k + maxPointCount);
+                indicesTemp[(k * 6) + 5] = (short)(k + maxPoints);
             }
 
             // The next available index will be the next value after the count of points (starting at 0).
@@ -208,49 +208,49 @@ namespace Coralite.Core.Systems.Trails
             indices = indicesTemp;
         }
 
-        private void SetupMeshes()
+        private void PrepareMesh()
         {
-            GenerateMesh(out VertexPositionColorTexture[] mainVertices, out short[] mainIndices, out int nextAvailableIndex);
+            BuildTrailMesh(out VertexPositionColorTexture[] mainVertices, out short[] mainIndices, out int nextAvailableIndex);
 
-            Vector2 toNext = (Positions[Positions.Length - 1] - Positions[Positions.Length - 2]).SafeNormalize(Vector2.Zero);
+            Vector2 toNext = (TrailPositions[TrailPositions.Length - 1] - TrailPositions[TrailPositions.Length - 2]).SafeNormalize(Vector2.Zero);
 
-            tip.GenerateMesh(Positions[Positions.Length - 1], toNext, nextAvailableIndex, out VertexPositionColorTexture[] tipVertices, out short[] tipIndices, trailWidthFunction, trailColorFunction);
+            tipHandler.CreateMesh(TrailPositions[TrailPositions.Length - 1], toNext, nextAvailableIndex, out VertexPositionColorTexture[] tipVertices, out short[] tipIndices, calculateWidth, calculateColor);
 
-            primitives.SetVertices(mainVertices.FastUnion(tipVertices));
-            primitives.SetIndices(mainIndices.FastUnion(tipIndices));
+            renderer.UpdateVertexBuffer(mainVertices.FastUnion(tipVertices));
+            renderer.UpdateIndexBuffer(mainIndices.FastUnion(tipIndices));
         }
 
-        public void Render(Effect effect)
+        public void DrawTrail(Effect effect)
         {
-            if (Positions == null && !(primitives?.IsDisposed ?? true))
+            if (TrailPositions == null && !(renderer?.CanDisposed ?? true))
             {
                 return;
             }
 
-            SetupMeshes();
+            PrepareMesh();
 
-            primitives.Render(effect);
+            renderer.Draw(effect);
         }
 
         /// <summary>
         /// 竖直方向上进行翻转，仅需调用一次
         /// </summary>
-        public void FilpVertical()
+        public void ToggleVerticalFlip()
         {
-            filpVertical = !filpVertical;
+            isFlippedVertically = !isFlippedVertically;
         }
 
         /// <summary>
         /// 竖直方向上进行翻转
         /// </summary>
-        public void SetVertical(bool filpVertical)
+        public void SetFlipState(bool flip)
         {
-            this.filpVertical = filpVertical;
+            this.isFlippedVertically = flip;
         }
 
         public void Dispose()
         {
-            primitives?.Dispose();
+            renderer?.Dispose();
         }
     }
 }

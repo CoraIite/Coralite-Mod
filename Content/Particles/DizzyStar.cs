@@ -43,7 +43,7 @@ namespace Coralite.Content.Particles
             Frame = new Rectangle(0, 0, 22, 26);
             Scale = 1f;
             InitializeCaches(12);
-            trail = new Trail(Main.instance.GraphicsDevice, 12, new NoTip(), factor => 2, factor => Color.Lerp(new Color(0, 0, 0, 0), Color.Yellow, factor.X));
+            trail = new Trail(Main.instance.GraphicsDevice, 12, new EmptyMeshGenerator(), factor => 2, factor => Color.Lerp(new Color(0, 0, 0, 0), Color.Yellow, factor.X));
         }
 
         public override void AI()
@@ -62,7 +62,7 @@ namespace Coralite.Content.Particles
                 oldRotations[11] = Rotation;
                 for (int i = 0; i < 12; i++)
                     oldPositions[i] = center + (oldRotations[i].ToRotationVector2() * length * Helper.EllipticalEase(oldRotations[i], 1, 2.4f));
-                trail.Positions = oldPositions;
+                trail.TrailPositions = oldPositions;
 
                 //使用oldRot充当改变帧图的 frameCounter
                 Velocity.X += 1f;
@@ -107,7 +107,7 @@ namespace Coralite.Content.Particles
             effect.View = view;
             effect.Projection = projection;
 
-            trail?.Render(effect);
+            trail?.DrawTrail(effect);
         }
 
         public static void Spawn(Vector2 center, float rotation, float dizzyTime, float length, GetCenter function)

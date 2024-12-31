@@ -362,7 +362,7 @@ namespace Coralite.Content.Evevts.ShadowCastle
             Projectile owner = Owner;
             if (owner == null) return;
 
-            trail ??= new Trail(Main.graphics.GraphicsDevice, TrailCount, new NoTip(), factor => Helper.Lerp(0, 8, factor),
+            trail ??= new Trail(Main.graphics.GraphicsDevice, TrailCount, new EmptyMeshGenerator(), factor => Helper.Lerp(0, 8, factor),
                 factor =>
                 {
                     return Color.Lerp(Color.Transparent, Color.DarkOrange, factor.X);
@@ -434,7 +434,7 @@ namespace Coralite.Content.Evevts.ShadowCastle
             }
 
             Projectile.rotation = Projectile.velocity.ToRotation();
-            trail.Positions = Projectile.oldPos;
+            trail.TrailPositions = Projectile.oldPos;
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -473,7 +473,7 @@ namespace Coralite.Content.Evevts.ShadowCastle
             effect.Parameters["transformMatrix"].SetValue(world * view * projection);
             effect.Parameters["uTextImage"].SetValue(ModContent.Request<Texture2D>(AssetDirectory.ShadowCastleEvents + "Trail").Value);
 
-            trail?.Render(effect);
+            trail?.DrawTrail(effect);
         }
 
         public void DrawNonPremultiplied(SpriteBatch spriteBatch)

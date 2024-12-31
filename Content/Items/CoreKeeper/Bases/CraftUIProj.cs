@@ -163,7 +163,7 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
                 0 => new Color(148, 247, 221),
                 _ => new Color(24, 133, 216)
             };
-            trail = new Trail(Main.instance.GraphicsDevice, 16, new NoTip(), factor => 1 * Scale, factor =>
+            trail = new Trail(Main.instance.GraphicsDevice, 16, new EmptyMeshGenerator(), factor => 1 * Scale, factor =>
             {
                 if (factor.X < 0.7f)
                     return Color.Lerp(new Color(0, 0, 0, 0), Color, factor.X / 0.7f);
@@ -203,7 +203,7 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
             }
 
             Opacity++;
-            trail.Positions = oldPositions;
+            trail.TrailPositions = oldPositions;
         }
 
         public static SpecialCraftParticle Spawn(Vector2 center, float r, float time, float startRot)
@@ -238,7 +238,7 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
             effect.View = view;
             effect.Projection = projection;
 
-            trail?.Render(effect);
+            trail?.DrawTrail(effect);
         }
     }
 

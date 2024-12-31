@@ -58,7 +58,7 @@ namespace Coralite.Content.Items.Icicle
 
             Projectile.oldPos[15] = Projectile.Center + Projectile.velocity;
 
-            trail ??= new Trail(Main.instance.GraphicsDevice, 16, new NoTip(), factor => 2,
+            trail ??= new Trail(Main.instance.GraphicsDevice, 16, new EmptyMeshGenerator(), factor => 2,
             factor =>
                 {
                     if (factor.X > 0.5f)
@@ -67,7 +67,7 @@ namespace Coralite.Content.Items.Icicle
                     return Color.Lerp(new Color(0, 0, 0, 0), Coralite.IcicleCyan, factor.X / 0.5f);//new Color(99, 83, 142, 0)
                 });
 
-            trail.Positions = Projectile.oldPos;
+            trail.TrailPositions = Projectile.oldPos;
             Lighting.AddLight(Projectile.Center, Coralite.IcicleCyan.ToVector3());
             if (Projectile.timeLeft % 3 == 0)
             {
@@ -113,7 +113,7 @@ namespace Coralite.Content.Items.Icicle
             effect.View = view;
             effect.Projection = projection;
 
-            trail?.Render(effect);
+            trail?.DrawTrail(effect);
         }
 
         public void DrawAdditive(SpriteBatch spriteBatch)

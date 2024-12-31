@@ -321,7 +321,7 @@ namespace Coralite.Content.Items.Nightmare
 
         public override void AI()
         {
-            trail ??= new Trail(Main.graphics.GraphicsDevice, 16, new NoTip(), WidthFunction, ColorFunction);
+            trail ??= new Trail(Main.graphics.GraphicsDevice, 16, new EmptyMeshGenerator(), WidthFunction, ColorFunction);
 
             switch (State)
             {
@@ -405,7 +405,7 @@ namespace Coralite.Content.Items.Nightmare
                     break;
             }
 
-            trail.Positions = Projectile.oldPos;
+            trail.TrailPositions = Projectile.oldPos;
             Timer++;
         }
 
@@ -454,7 +454,7 @@ namespace Coralite.Content.Items.Nightmare
             effect.Parameters["gradientTexture"].SetValue(colotTex);
             effect.Parameters["alpha"].SetValue(Alpha);
 
-            trail.Render(effect);
+            trail.DrawTrail(effect);
         }
     }
 

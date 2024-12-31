@@ -65,7 +65,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             Timer++;
 
-            trail ??= new Trail(Main.graphics.GraphicsDevice, 20, new NoTip(), factor =>
+            trail ??= new Trail(Main.graphics.GraphicsDevice, 20, new EmptyMeshGenerator(), factor =>
             {
                 return Helper.Lerp(tentacleWidth, 0, factor);
             }, factor =>
@@ -76,7 +76,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 return burstColor;
             });
 
-            trail.Positions = Projectile.oldPos;
+            trail.TrailPositions = Projectile.oldPos;
         }
 
         public override bool PreDraw(ref Color lightColor) => false;
@@ -99,7 +99,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             effect.Parameters["flowAlpha"].SetValue(0.85f);
             effect.Parameters["warpAmount"].SetValue(3);
 
-            trail?.Render(effect);
+            trail?.DrawTrail(effect);
         }
     }
 }

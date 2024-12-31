@@ -191,7 +191,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
                 streamerPos = new Vector2[20];
                 Array.Fill(streamerPos, Projectile.Center);
-                streamer = new Trail(Main.instance.GraphicsDevice, 20, new NoTip(),
+                streamer = new Trail(Main.instance.GraphicsDevice, 20, new EmptyMeshGenerator(),
                     factor => (1 - MathF.Cbrt(factor)) * 35 + 2, factor => Color.White);
             }
         }
@@ -535,7 +535,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                             streamerPos[i] = Vector2.Lerp(streamerPos[i], targetPos, Coralite.Instance.X3Smoother.Smoother(i, 20));
                         }
 
-                        streamer.Positions = streamerPos;
+                        streamer.TrailPositions = streamerPos;
                     }
                     break;
             }
@@ -591,7 +591,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             effect.Parameters["uGradient"].SetValue(HorizonArcGradient.Value);
             effect.Parameters["uDissolve"].SetValue(CoraliteAssets.Laser.EnergyFlow.Value);
 
-            streamer?.Render(effect);
+            streamer?.DrawTrail(effect);
         }
 
         public void DrawAdditive(SpriteBatch spriteBatch)
@@ -720,7 +720,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 for (int i = 1; i < 7; i++)
                     pos2[trailPoint + i - 1] = Projectile.oldPos[^1] + dir * i * 4;
 
-                trail.Positions = pos2;
+                trail.TrailPositions = pos2;
             }
         }
 
@@ -732,7 +732,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 return;
 
             Projectile.InitOldPosCache(trailPoint, true);
-            trail = new Trail(Main.instance.GraphicsDevice, trailPoint + 6, new NoTip()
+            trail = new Trail(Main.instance.GraphicsDevice, trailPoint + 6, new EmptyMeshGenerator()
                 , f => 26 * TrailWidth, factor => new Color(255,255,255,220));
         }
 
@@ -916,7 +916,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             effect.Parameters["uGradient"].SetValue(Gradient2.Value);
             effect.Parameters["uDissolve"].SetValue(CoraliteAssets.Laser.Tunnel.Value);
 
-            trail?.Render(effect);
+            trail?.DrawTrail(effect);
         }
 
         public void DrawNonPremultiplied(SpriteBatch spriteBatch)

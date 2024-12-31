@@ -479,7 +479,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 _vertexStrip = new VertexStrip();
                 for (int i = 0; i < TrailCount; i++)
                     oldPos2[i] = Projectile.Center;
-                trail = new Trail(Main.graphics.GraphicsDevice, TrailCount, new NoTip(), factor => 54,
+                trail = new Trail(Main.graphics.GraphicsDevice, TrailCount, new EmptyMeshGenerator(), factor => 54,
                      factor =>
                      {
                          return Color.Lerp(SapphireProj.darkC, SapphireProj.brightC, factor.X);
@@ -549,7 +549,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             for (int i = 0; i < TrailCount - 1; i++)
                 oldPos2[i] = oldPos2[i + 1];
             oldPos2[^1] = Projectile.Center + Projectile.velocity;
-            trail.Positions = oldPos2;
+            trail.TrailPositions = oldPos2;
         }
 
         public override void OnKill(int timeLeft)
@@ -634,7 +634,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Main.graphics.GraphicsDevice.BlendState = BlendState.Additive;
             effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMatrix());
             effect.Parameters["sampleTexture"].SetValue(CoraliteAssets.Trail.Meteor.Value);
-            trail?.Render(effect);
+            trail?.DrawTrail(effect);
 
             Main.graphics.GraphicsDevice.BlendState = BlendState.AlphaBlend;
         }

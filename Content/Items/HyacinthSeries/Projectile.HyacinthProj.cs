@@ -581,7 +581,7 @@ namespace Coralite.Content.Items.HyacinthSeries
 
         public override void AI()
         {
-            trail ??= new Trail(Main.instance.GraphicsDevice, 24, new TriangularTip(4), factor => Helper.Lerp(4, 10, factor),
+            trail ??= new Trail(Main.instance.GraphicsDevice, 24, new ArrowheadTrailGenerator(4), factor => Helper.Lerp(4, 10, factor),
             factor =>
             {
                 if (factor.X > 0.7f)
@@ -594,7 +594,7 @@ namespace Coralite.Content.Items.HyacinthSeries
                 Projectile.oldPos[i] = Projectile.oldPos[i + 1];
 
             Projectile.oldPos[23] = Projectile.Center + Projectile.velocity;
-            trail.Positions = Projectile.oldPos;
+            trail.TrailPositions = Projectile.oldPos;
         }
 
         public override void OnKill(int timeLeft)
@@ -620,7 +620,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             effect.Parameters["transformMatrix"].SetValue(world * view * projection);
             effect.Parameters["sampleTexture"].SetValue(ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "LightAndFogsTrail").Value);
 
-            trail?.Render(effect);
+            trail?.DrawTrail(effect);
         }
     }
 

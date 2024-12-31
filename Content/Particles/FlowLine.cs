@@ -46,7 +46,7 @@ namespace Coralite.Content.Particles
                     Velocity = Velocity.RotatedBy(-rotate);
 
                 UpdatePositionCache(spawnTime);
-                trail.Positions = oldPositions;
+                trail.TrailPositions = oldPositions;
             }
 
             if (Opacity < -120 || Color.A < 10)
@@ -73,7 +73,7 @@ namespace Coralite.Content.Particles
             effect.View = view;
             effect.Projection = projection;
 
-            trail?.Render(effect);
+            trail?.DrawTrail(effect);
         }
 
 
@@ -88,7 +88,7 @@ namespace Coralite.Content.Particles
             {
                 particle.Opacity = spawnTime;
                 particle.InitializePositionCache(spawnTime);
-                particle.trail = new Trail(Main.instance.GraphicsDevice, spawnTime, new NoTip(), factor => trailWidth, factor =>
+                particle.trail = new Trail(Main.instance.GraphicsDevice, spawnTime, new EmptyMeshGenerator(), factor => trailWidth, factor =>
                 {
                     if (factor.X > 0.5f)
                         return Color.Lerp(particle.Color, new Color(0, 0, 0, 0), (factor.X - 0.5f) * 2);

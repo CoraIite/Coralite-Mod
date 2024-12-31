@@ -376,7 +376,7 @@ namespace Coralite.Content.Items.Donator
             if (trail == null)
             {
                 const int maxPoint = 16;
-                trail ??= new Trail(Main.graphics.GraphicsDevice, maxPoint, new NoTip()
+                trail ??= new Trail(Main.graphics.GraphicsDevice, maxPoint, new EmptyMeshGenerator()
                     , factor => Helper.Lerp(2, 18, factor),
                       factor =>
                       {
@@ -396,7 +396,7 @@ namespace Coralite.Content.Items.Donator
             base.AI();
             Projectile.UpdateFrameNormally(8, 19);
             Projectile.UpdateOldPosCache();
-            trail.Positions = Projectile.oldPos;
+            trail.TrailPositions = Projectile.oldPos;
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
@@ -447,7 +447,7 @@ namespace Coralite.Content.Items.Donator
             effect.Parameters["brightC"].SetValue(brightC.ToVector4());
             effect.Parameters["darkC"].SetValue(darkC.ToVector4());
 
-            trail.Render(effect);
+            trail.DrawTrail(effect);
         }
 
         public void DrawNonPremultiplied(SpriteBatch spriteBatch)

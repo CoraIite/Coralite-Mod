@@ -4,20 +4,20 @@ using Terraria;
 
 namespace Coralite.Core.Systems.Trails
 {
-    public class TriangularTip : ITrailTip
+    public class ArrowheadTrailGenerator : IMeshTrailGenerator
     {
-        public int ExtraVertices => 3;
+        public int AdditionalVertexCount => 3;
 
-        public int ExtraIndices => 3;
+        public int AdditionalIndexCount => 3;
 
         private readonly float length;
 
-        public TriangularTip(float length)
+        public ArrowheadTrailGenerator(float length)
         {
             this.length = length;
         }
 
-        public void GenerateMesh(Vector2 trailTipPosition, Vector2 trailTipNormal, int startFromIndex, out VertexPositionColorTexture[] vertices, out short[] indices, TrailWidthFunction trailWidthFunction, TrailColorFunction trailColorFunction)
+        public void CreateMesh(Vector2 trailTipPosition, Vector2 trailTipNormal, int startFromIndex, out VertexPositionColorTexture[] vertices, out short[] indices, TrailThicknessCalculator trailWidthFunction, TrailColorEvaluator trailColorFunction)
         {
             /*       C
              *      /  \

@@ -236,7 +236,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             Projectile.oldPos[TrailLength - 1] = Projectile.Center + Projectile.velocity;
 
-            trail ??= new Trail(Main.graphics.GraphicsDevice, TrailLength, new NoTip(), factor => Helper.Lerp(0, 16, factor)
+            trail ??= new Trail(Main.graphics.GraphicsDevice, TrailLength, new EmptyMeshGenerator(), factor => Helper.Lerp(0, 16, factor)
             , factor =>
             {
                 if (Timer < TrailLength)
@@ -244,7 +244,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 return Color.Lerp(new Color(0, 0, 0, 0), drawColor, factor.X);
             });
 
-            trail.Positions = Projectile.oldPos;
+            trail.TrailPositions = Projectile.oldPos;
         }
 
         public override bool PreDraw(ref Color lightColor) => false;
@@ -304,7 +304,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             effect.Parameters["flowAlpha"].SetValue(0.5f);
             effect.Parameters["warpAmount"].SetValue(3);
 
-            trail.Render(effect);
+            trail.DrawTrail(effect);
         }
     }
 }
