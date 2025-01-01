@@ -164,7 +164,6 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             if (Timer < DashTime + 2)
             {
-                group ??= [];
                 if (Main.myPlayer == Projectile.owner)
                 {
                     Owner.itemTime = Owner.itemAnimation = 2;
@@ -174,10 +173,14 @@ namespace Coralite.Content.Items.ThyphionSeries
                 Owner.velocity.X = Projectile.velocity.X * 10;
                 LockOwnerItemTime();
 
-                if (Main.rand.NextBool(3))
+                if (!VaultUtils.isServer)
                 {
-                    PRTLoader.NewParticle<SpeedLine>(Projectile.Center + Main.rand.NextVector2Circular(10, 10)
-                        , -Owner.velocity.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(2f, 5f), TurbulenceArrow.RandomColor(), Main.rand.NextFloat(0.2f, 0.4f));
+                    group ??= [];
+                    if (Main.rand.NextBool(3))
+                    {
+                        PRTLoader.NewParticle<SpeedLine>(Projectile.Center + Main.rand.NextVector2Circular(10, 10)
+                            , -Owner.velocity.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(2f, 5f), TurbulenceArrow.RandomColor(), Main.rand.NextFloat(0.2f, 0.4f));
+                    }
                 }
             }
             else if (Timer==DashTime+2)
@@ -250,8 +253,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         public override void SetCenter()
         {
             base.SetCenter();
-
-            if (Special == 1)
+            if (!VaultUtils.isServer && Special == 1)
                 group?.Update();
         }
 

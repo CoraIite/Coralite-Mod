@@ -5016,11 +5016,16 @@ TurbulenceCore: {
 }
 
 FullMoon: {
-	// DisplayName: Full Moon
-	// Tooltip: ""
+	DisplayName: 暗月
+	Tooltip:
+		'''
+		双击方向键冲刺，冲撞到敌对目标后弹回并释放暗影之光
+		暗影之光能目标无视一定防御力
+		[c/8a43ff:“暗紫的巨蝠在空中飞翔，为世间带来月光”]
+		'''
 }
 
 SeismicWave: {
-	// DisplayName: Seismic Wave
-	// Tooltip: ""
+	DisplayName: 震波
+	Tooltip: ""
 }

@@ -31,7 +31,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             Item.rare = ItemRarityID.LightRed;
             Item.useStyle = ItemUseStyleID.Rapier;
-            Item.value = Item.sellPrice(0, 2);
+            Item.value = Item.sellPrice(0, 3);
 
             Item.noUseGraphic = true;
 
