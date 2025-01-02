@@ -203,6 +203,12 @@ namespace Coralite.Core
             public static ATex Booster { get; private set; }
 
             /// <summary> 
+            /// 类似推进器尾焰，高亮的柔和渐变<br></br>
+            /// 特殊透明底，能够使用<see cref="BlendState.AlphaBlend"/>
+            /// </summary>
+            public static ATex BoosterASP { get; private set; }
+
+            /// <summary> 
             /// 类似推进器尾焰，高亮的柔和渐变
             /// </summary>
             public static ATex Strike { get; private set; }

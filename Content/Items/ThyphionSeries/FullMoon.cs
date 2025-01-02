@@ -8,7 +8,6 @@ using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System.Linq;
 using Terraria;
-using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
@@ -81,15 +80,31 @@ namespace Coralite.Content.Items.ThyphionSeries
                 case CoralitePlayer.DashRight:
                     {
                         dashDirection = DashDir == CoralitePlayer.DashRight ? 1 : -1;
-                        newVelocity.X = dashDirection * 2;
                         break;
                     }
                 default:
                     return false;
             }
 
+            int mouseDir = Main.MouseWorld.X > Player.Center.X ? 1 : -1;
+
+            if (mouseDir>0)
+            {
+                if (dashDirection > 0)
+                    newVelocity = (Main.MouseWorld - Player.Center).SafeNormalize(Vector2.Zero);
+                else
+                    newVelocity = new Vector2(-1, 0);
+            }
+            else
+            {
+                if (dashDirection > 0)
+                    newVelocity = new Vector2(1, 0);
+                else
+                    newVelocity = (Main.MouseWorld - Player.Center).SafeNormalize(Vector2.Zero);
+            }
+
             Player.GetModPlayer<CoralitePlayer>().DashDelay = 70;
-            Player.GetModPlayer<CoralitePlayer>().DashTimer = 12;
+            Player.GetModPlayer<CoralitePlayer>().DashTimer = 15;
             Player.velocity = newVelocity;
             //Player.direction = (int)dashDirection;
             Player.AddImmuneTime(ImmunityCooldownID.General, 14);
@@ -110,9 +125,11 @@ namespace Coralite.Content.Items.ThyphionSeries
                     break;
                 }
 
+
+
                 //生成手持弹幕
                 Projectile.NewProjectile(Player.GetSource_ItemUse(Player.HeldItem), Player.Center, new Vector2(dashDirection, 0), ProjectileType<FullMoonHeldProj>(),
-                    Player.HeldItem.damage, Player.HeldItem.knockBack, Player.whoAmI, 1.57f + dashDirection * 1, 1, 12);
+                    Player.HeldItem.damage, Player.HeldItem.knockBack, Player.whoAmI, newVelocity.ToRotation(), 1, 15);
             }
 
             return true;
@@ -148,10 +165,16 @@ namespace Coralite.Content.Items.ThyphionSeries
                 case 0://朝向目标方向冲刺，并检测碰撞
                     if (Timer < DashTime + 2)
                     {
+                        Rotation = RecordAngle;
+                        Vector2 dir = Rotation.ToRotationVector2();
+
+                        Owner.velocity = dir * 10;
+
                         if (Dashing_CheckCollide())
                         {
                             DashState = 1;
                             Timer = 0;
+                            Owner.velocity = -dir * 10;
                             return;
                         }
                     }
@@ -160,17 +183,37 @@ namespace Coralite.Content.Items.ThyphionSeries
 
                     break;
                 case 1://与目标产生碰撞，向后反射并旋转弓
+                    const int maxTime = 20;
+                    Rotation += 1f / maxTime * MathHelper.TwoPi;
+
+                    if (Timer>maxTime)
+                    {
+                        DashState = 2;
+                        Timer = 0;
+
+                        if (Projectile.IsOwnedByLocalPlayer())//生成弹幕
+                        {
+
+                        }
+                        return;
+                    }
+
                     break;
                 case 2://射击阶段
+
+
+
+                    Projectile.Kill();
                     break;
             }
 
+            Projectile.rotation = Rotation;
             Timer++;
         }
 
         public bool Dashing_CheckCollide()
         {
-            Rectangle rect = Projectile.getRect();
+            Rectangle rect = GetDashRect();
             for (int i = 0; i < Main.maxProjectiles; i++)
             {
                 Projectile proj = Main.projectile[i];
@@ -198,9 +241,14 @@ namespace Coralite.Content.Items.ThyphionSeries
             return false;
         }
 
+        public Rectangle GetDashRect()
+        {
+            return Utils.CenteredRectangle(Projectile.Center, new Vector2(48, 48));
+        }
+
         public void JustCollideNPC(NPC target)
         {
-            SoundEngine.PlaySound(CoraliteSoundID.Ding_Item4, Projectile.Center);
+            Helper.PlayPitched(CoraliteSoundID.Ding_Item4, Projectile.Center,pitchAdjust:-0.3f);
 
             if (target.CanBeChasedBy())//踢一脚
                 target.SimpleStrikeNPC(Owner.GetWeaponDamage(Owner.HeldItem), Owner.direction, knockBack: 10, damageType: DamageClass.Ranged);
@@ -229,8 +277,34 @@ namespace Coralite.Content.Items.ThyphionSeries
         }
     }
 
-    public class FullMoonStrike:BaseHeldProj
+    public class FullMoonStrike:BaseHeldProj,IDrawNonPremultiplied,IPostDrawAdditive
     {
         public override string Texture => AssetDirectory.Blank;
+
+        public override void AI()
+        {
+            if (!Projectile.ai[0].GetProjectileOwner(out Projectile owner, () => Projectile.Kill()))
+                return;
+
+
+        }
+
+        public void DrawAdditive(SpriteBatch spriteBatch)
+        {
+        }
+
+        public void DrawNonPremultiplied(SpriteBatch spriteBatch)
+        {
+
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Texture2D tex = CoraliteAssets.Trail.BoosterASP.Value;
+
+
+
+            return base.PreDraw(ref lightColor);
+        }
     }
 }
