@@ -1,6 +1,6 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
-using Coralite.Core.Systems.Trails;
+using InnoVault.Trails;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -441,7 +441,7 @@ namespace Coralite.Content.Items.Donator
             if (Projectile.localAI[0] == 0)
             {
                 Projectile.localAI[0] = 1;
-                trail = new Trail(Main.instance.GraphicsDevice, 14, new NoTip()
+                trail = new Trail(Main.instance.GraphicsDevice, 14, new EmptyMeshGenerator()
                     , factor => 2, ColorFunc);
                 Projectile.InitOldPosCache(14);
                 Target = -1;
@@ -459,7 +459,7 @@ namespace Coralite.Content.Items.Donator
 
             Projectile.rotation = Projectile.velocity.ToRotation();
             Projectile.UpdateOldPosCache(addVelocity: true);
-            trail.Positions = Projectile.oldPos;
+            trail.TrailPositions = Projectile.oldPos;
         }
 
         public static Color ColorFunc(Vector2 factor)
@@ -584,7 +584,7 @@ namespace Coralite.Content.Items.Donator
             effect.View = view;
             effect.Projection = projection;
 
-            trail?.Render(effect);
+            trail?.DrawTrail(effect);
         }
 
         public void DrawNonPremultiplied(SpriteBatch spriteBatch)

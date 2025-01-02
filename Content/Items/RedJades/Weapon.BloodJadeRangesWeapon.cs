@@ -3,7 +3,7 @@ using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
-using Coralite.Core.Systems.Trails;
+using InnoVault.Trails;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
@@ -121,7 +121,7 @@ namespace Coralite.Content.Items.RedJades
         {
             Player projOwner = Main.player[Projectile.owner];
 
-            trail ??= new Trail(Main.instance.GraphicsDevice, 14, new NoTip(), factor => Helper.Lerp(4, 8, factor), factor =>
+            trail ??= new Trail(Main.instance.GraphicsDevice, 14, new EmptyMeshGenerator(), factor => Helper.Lerp(4, 8, factor), factor =>
             {
                 if (factor.X < 0.7f)
                     return Color.Lerp(Color.Transparent, new Color(81, 11, 47, 150), factor.X / 0.7f);
@@ -176,7 +176,7 @@ namespace Coralite.Content.Items.RedJades
                 Projectile.oldPos[i] = Projectile.oldPos[i + 1];
 
             Projectile.oldPos[13] = Projectile.Center + Projectile.velocity;
-            trail.Positions = Projectile.oldPos;
+            trail.TrailPositions = Projectile.oldPos;
             //trail2.Positions = Projectile.oldPos;
         }
 
@@ -284,7 +284,7 @@ namespace Coralite.Content.Items.RedJades
             effect.Parameters["transformMatrix"].SetValue(world * view * projection);
             effect.Parameters["sampleTexture"].SetValue(CoraliteAssets.Trail.EdgeA.Value);
 
-            trail?.Render(effect);
+            trail?.DrawTrail(effect);
             //trail2?.Render(effect);
         }
     }

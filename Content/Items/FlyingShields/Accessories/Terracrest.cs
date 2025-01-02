@@ -3,7 +3,7 @@ using Coralite.Content.Items.Materials;
 using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Systems.FlyingShieldSystem;
-using Coralite.Core.Systems.Trails;
+using InnoVault.Trails;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
@@ -165,7 +165,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
 
         public override void AI()
         {
-            trail ??= new Trail(Main.graphics.GraphicsDevice, 16, new NoTip(), WidthFunction, ColorFunction);
+            trail ??= new Trail(Main.graphics.GraphicsDevice, 16, new EmptyMeshGenerator(), WidthFunction, ColorFunction);
 
             Lighting.AddLight(Projectile.Center, Color.LimeGreen.ToVector3());
 
@@ -200,7 +200,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
             }
 
 
-            trail.Positions = Projectile.oldPos;
+            trail.TrailPositions = Projectile.oldPos;
 
             Timer++;
             if (Timer > DelayTime)
@@ -237,7 +237,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
             effect.Parameters["gradientTexture"].SetValue(ModContent.Request<Texture2D>(AssetDirectory.FlyingShieldAccessories + "TerracrestGradient").Value);
             effect.Parameters["alpha"].SetValue(Alpha);
 
-            trail.Render(effect);
+            trail.DrawTrail(effect);
         }
 
         public override bool PreDraw(ref Color lightColor)

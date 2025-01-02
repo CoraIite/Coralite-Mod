@@ -2,7 +2,7 @@
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
-using Coralite.Core.Systems.Trails;
+using InnoVault.Trails;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
@@ -249,7 +249,7 @@ namespace Coralite.Content.Items.Misc_Melee
 
         public override void AI()
         {
-            trail ??= new Trail(Main.graphics.GraphicsDevice, 24, new NoTip(), WidthFunction, ColorFunction);
+            trail ??= new Trail(Main.graphics.GraphicsDevice, 24, new EmptyMeshGenerator(), WidthFunction, ColorFunction);
 
             Lighting.AddLight(Projectile.Center, Color.LimeGreen.ToVector3());
             if (Timer < 10)
@@ -297,7 +297,7 @@ namespace Coralite.Content.Items.Misc_Melee
 
                 Projectile.oldPos[23] = Projectile.Center + Projectile.velocity;
             }
-            trail.Positions = Projectile.oldPos;
+            trail.TrailPositions = Projectile.oldPos;
 
             Timer++;
         }
@@ -326,7 +326,7 @@ namespace Coralite.Content.Items.Misc_Melee
             effect.Parameters["gradientTexture"].SetValue(GradientTexture.Value);
             effect.Parameters["alpha"].SetValue(Alpha);
 
-            trail.Render(effect);
+            trail.DrawTrail(effect);
         }
 
         public override bool PreDraw(ref Color lightColor) => false;

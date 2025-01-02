@@ -1,7 +1,7 @@
 ﻿using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
-using Coralite.Core.Systems.Trails;
+using InnoVault.Trails;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
@@ -38,7 +38,7 @@ namespace Coralite.Content.Items.Icicle
         {
             Color = Color.White;
             Frame = new Rectangle(0, 0, 18, 18);
-            trail = new Trail(Main.instance.GraphicsDevice, 8, new NoTip(), factor => 2 * Scale, factor => Color.Lerp(new Color(0, 0, 0, 0), Coralite.IcicleCyan, factor.X));
+            trail = new Trail(Main.instance.GraphicsDevice, 8, new EmptyMeshGenerator(), factor => 2 * Scale, factor => Color.Lerp(new Color(0, 0, 0, 0), Coralite.IcicleCyan, factor.X));
             InitializePositionCache(8);
         }
 
@@ -77,7 +77,7 @@ namespace Coralite.Content.Items.Icicle
 
             Position += Velocity;
             UpdatePositionCache(8);
-            trail.Positions = oldPositions;
+            trail.TrailPositions = oldPositions;
         }
 
         public override void DrawPrimitive()
@@ -94,7 +94,7 @@ namespace Coralite.Content.Items.Icicle
             effect.View = view;
             effect.Projection = projection;
 
-            trail?.Render(effect);
+            trail?.DrawTrail(effect);
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch)

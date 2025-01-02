@@ -5,7 +5,7 @@ using Coralite.Content.WorldGeneration;
 using Coralite.Core;
 using Coralite.Core.Systems.FlyingShieldSystem;
 using Coralite.Core.Systems.ParticleSystem;
-using Coralite.Core.Systems.Trails;
+using InnoVault.Trails;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -501,7 +501,7 @@ namespace Coralite.Content.Items.FlyingShields
         public override void AI()
         {
             fireParticles ??= new PrimitivePRTGroup();
-            trail ??= new Trail(Main.instance.GraphicsDevice, trailPoint, new NoTip(), factor =>
+            trail ??= new Trail(Main.instance.GraphicsDevice, trailPoint, new EmptyMeshGenerator(), factor =>
             {
                 if (factor < 0.8f)
                     return Helper.Lerp(6, 12, factor / 0.8f);
@@ -564,7 +564,7 @@ namespace Coralite.Content.Items.FlyingShields
             }
 
             Projectile.UpdateOldPosCache();
-            trail.Positions = Projectile.oldPos;
+            trail.TrailPositions = Projectile.oldPos;
             fireParticles.Update();
         }
 
@@ -652,7 +652,7 @@ namespace Coralite.Content.Items.FlyingShields
 
             Main.graphics.GraphicsDevice.BlendState = BlendState.Additive;
 
-            trail.Render(effect);
+            trail.DrawTrail(effect);
 
             Main.graphics.GraphicsDevice.BlendState = BlendState.AlphaBlend;
         }

@@ -1,8 +1,8 @@
 ﻿using Coralite.Content.Particles;
 using Coralite.Core;
-using Coralite.Core.Systems.Trails;
 using Coralite.Helpers;
 using InnoVault.PRT;
+using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -86,7 +86,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     Dust.NewDustPerfect(Projectile.Center, type, dir.RotatedBy(Main.rand.NextFloat(-0.2f, 0.2f)) * Main.rand.NextFloat(1, 4), Scale: Main.rand.NextFloat(1, 1.5f));
                 }
 
-            trail ??= new Trail(Main.graphics.GraphicsDevice, 16, new NoTip(), factor =>
+            trail ??= new Trail(Main.graphics.GraphicsDevice, 16, new EmptyMeshGenerator(), factor =>
             {
                 if (factor < 0.7f)
                     return Helper.Lerp(0, 16, factor / 0.7f);
@@ -103,7 +103,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 return Color.Lerp(Color.White, FantasyGod.shineColor, (factor.X - 0.7f) / 0.3f);
             });
 
-            trail.Positions = Projectile.oldPos;
+            trail.TrailPositions = Projectile.oldPos;
         }
 
         public override bool? CanHitNPC(NPC target)
@@ -146,7 +146,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             effect.Parameters["flowAlpha"].SetValue(0.5f);
             effect.Parameters["warpAmount"].SetValue(3);
 
-            trail?.Render(effect);
+            trail?.DrawTrail(effect);
         }
 
         public void DrawNonPremultiplied(SpriteBatch spriteBatch)

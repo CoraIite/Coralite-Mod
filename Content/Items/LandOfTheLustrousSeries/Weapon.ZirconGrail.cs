@@ -2,7 +2,7 @@
 using Coralite.Content.Tiles.RedJades;
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
-using Coralite.Core.Systems.Trails;
+using InnoVault.Trails;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -258,7 +258,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 FlyingTime = 20 * 5;
             }
 
-            trail ??= new Trail(Main.instance.GraphicsDevice, trailPoint, new NoTip(), factor =>
+            trail ??= new Trail(Main.instance.GraphicsDevice, trailPoint, new EmptyMeshGenerator(), factor =>
             {
                 if (factor < 0.8f)
                     return Helper.Lerp(6, 8, factor / 0.8f);
@@ -321,7 +321,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             }
 
             Projectile.UpdateOldPosCache();
-            trail.Positions = Projectile.oldPos;
+            trail.TrailPositions = Projectile.oldPos;
             fireParticles.Update();
         }
 
@@ -379,7 +379,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             Main.graphics.GraphicsDevice.BlendState = BlendState.Additive;
 
-            trail.Render(effect);
+            trail.DrawTrail(effect);
 
             Main.graphics.GraphicsDevice.BlendState = BlendState.AlphaBlend;
         }

@@ -5,7 +5,7 @@ using Coralite.Content.WorldGeneration;
 using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.SmoothFunctions;
-using Coralite.Core.Systems.Trails;
+using InnoVault.Trails;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
@@ -639,7 +639,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Projectile.UpdateOldPosCache(addVelocity: false);
             Projectile.UpdateOldRotCache();
             if (trail != null)
-                trail.Positions = Projectile.oldPos;
+                trail.TrailPositions = Projectile.oldPos;
             Projectile.rotation = Projectile.velocity.ToRotation() + 1.57f;
             Projectile.UpdateFrameNormally(8, 19);
         }
@@ -657,7 +657,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     Projectile.InitOldPosCache(maxPoint);
                     Projectile.InitOldRotCache(maxPoint);
                     if (trail == null && Shiny)
-                        trail ??= new Trail(Main.graphics.GraphicsDevice, maxPoint, new TriangularTip(20)
+                        trail ??= new Trail(Main.graphics.GraphicsDevice, maxPoint, new ArrowheadTrailGenerator(20)
                             , TrailWidth, TrailColor);
                 }
 
@@ -933,7 +933,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             effect.Parameters["brightC"].SetValue(data.brightC.ToVector4());
             effect.Parameters["darkC"].SetValue(data.darkC.ToVector4());
 
-            trail.Render(effect);
+            trail.DrawTrail(effect);
         }
 
         public void DrawNonPremultiplied(SpriteBatch spriteBatch)

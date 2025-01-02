@@ -2,7 +2,7 @@
 using Coralite.Content.Items.Materials;
 using Coralite.Core;
 using Coralite.Core.Configs;
-using Coralite.Core.Systems.Trails;
+using InnoVault.Trails;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System.Linq;
@@ -226,7 +226,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public override void AI()
         {
             const int trailCount = 14;
-            trail ??= new Trail(Main.graphics.GraphicsDevice, trailCount, new NoTip(), factor => Helper.Lerp(0, 12, factor),
+            trail ??= new Trail(Main.graphics.GraphicsDevice, trailCount, new EmptyMeshGenerator(), factor => Helper.Lerp(0, 12, factor),
                  factor =>
                  {
                      return Color.Lerp(Color.Transparent, brightC * 0.5f, factor.X);
@@ -243,7 +243,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Projectile.UpdateFrameNormally(8, 19);
             Projectile.UpdateOldPosCache(addVelocity: false);
             Projectile.UpdateOldRotCache();
-            trail.Positions = Projectile.oldPos;
+            trail.TrailPositions = Projectile.oldPos;
 
             Lighting.AddLight(Projectile.Center, new Vector3(0.5f, 0.1f, 0.3f));
 
@@ -305,7 +305,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             effect.Parameters["transformMatrix"].SetValue(world * view * projection);
             effect.Parameters["uTextImage"].SetValue(ModContent.Request<Texture2D>(AssetDirectory.ShadowCastleEvents + "Trail").Value);
 
-            trail?.Render(effect);
+            trail?.DrawTrail(effect);
         }
 
         public void DrawNonPremultiplied(SpriteBatch spriteBatch)
