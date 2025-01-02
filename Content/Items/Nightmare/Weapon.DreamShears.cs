@@ -5,7 +5,7 @@ using Coralite.Core;
 using Coralite.Core.Attributes;
 using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
-using Coralite.Core.Systems.Trails;
+using InnoVault.Trails;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -667,7 +667,7 @@ namespace Coralite.Content.Items.Nightmare
         public override void AI()
         {
             if (!VaultUtils.isServer)
-                trail ??= new Trail(Main.graphics.GraphicsDevice, 16, new NoTip(), WidthFunction, ColorFunction);
+                trail ??= new Trail(Main.graphics.GraphicsDevice, 16, new EmptyMeshGenerator(), WidthFunction, ColorFunction);
 
             if (init)
             {
@@ -760,7 +760,7 @@ namespace Coralite.Content.Items.Nightmare
                 Projectile.rotation = Projectile.velocity.ToRotation();
 
                 if (!VaultUtils.isServer)
-                    trail.Positions = Projectile.oldPos;
+                    trail.TrailPositions = Projectile.oldPos;
             }
 
             Timer++;
@@ -814,7 +814,7 @@ namespace Coralite.Content.Items.Nightmare
             effect.Parameters["gradientTexture"].SetValue(DreamShearsSlash.GradientTexture.Value);
             effect.Parameters["alpha"].SetValue(Alpha);
 
-            trail.Render(effect);
+            trail.DrawTrail(effect);
         }
 
         public override bool PreDraw(ref Color lightColor) => false;

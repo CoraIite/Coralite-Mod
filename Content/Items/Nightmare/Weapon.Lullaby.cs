@@ -2,7 +2,7 @@
 using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
-using Coralite.Core.Systems.Trails;
+using InnoVault.Trails;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -552,7 +552,7 @@ namespace Coralite.Content.Items.Nightmare
 
             }
 
-            trail ??= new Trail(Main.graphics.GraphicsDevice, 16, new NoTip(), factor => Helper.Lerp(0, 8, factor)
+            trail ??= new Trail(Main.graphics.GraphicsDevice, 16, new EmptyMeshGenerator(), factor => Helper.Lerp(0, 8, factor)
             , factor =>
             {
                 if (factor.X < 0.7f)
@@ -563,7 +563,7 @@ namespace Coralite.Content.Items.Nightmare
                 return Color.Lerp(DrawColor, FantasyGod.shineColor, (factor.X - 0.7f) / 0.3f);
             });
 
-            trail.Positions = Projectile.oldPos;
+            trail.TrailPositions = Projectile.oldPos;
         }
 
         public override void OnKill(int timeLeft)
@@ -649,7 +649,7 @@ namespace Coralite.Content.Items.Nightmare
             effect.Parameters["flowAlpha"].SetValue(0.5f);
             effect.Parameters["warpAmount"].SetValue(3);
 
-            trail?.Render(effect);
+            trail?.DrawTrail(effect);
         }
 
         public void DrawAdditive(SpriteBatch spriteBatch)

@@ -1,7 +1,7 @@
 ﻿using Coralite.Content.Items.Shadow;
 using Coralite.Content.Particles;
 using Coralite.Core;
-using Coralite.Core.Systems.Trails;
+using InnoVault.Trails;
 using Coralite.Core.Systems.YujianSystem;
 using Coralite.Core.Systems.YujianSystem.YujianAIs;
 using Coralite.Helpers;
@@ -126,7 +126,7 @@ namespace Coralite.Content.Items.YujianHulu
                         Projectile.rotation += 1.57f;
 
                         yujianProj.InitTrailCaches();
-                        trail?.SetVertical(StartAngle < 0);      //开始角度为正时设为false
+                        trail?.SetFlipState(StartAngle < 0);      //开始角度为正时设为false
 
                         return;
                     }
@@ -160,7 +160,7 @@ namespace Coralite.Content.Items.YujianHulu
                 SpawnShadowDust(Projectile);
 
                 yujianProj.InitTrailCaches();
-                trail?.SetVertical(StartAngle < 0);      //开始角度为正时设为false
+                trail?.SetFlipState(StartAngle < 0);      //开始角度为正时设为false
             }
 
         }
@@ -190,13 +190,13 @@ namespace Coralite.Content.Items.YujianHulu
 
         protected override bool UpdateTime(BaseYujianProj yujianProj)
         {
-            trail ??= new Trail(Main.instance.GraphicsDevice, yujianProj.Projectile.oldPos.Length, new NoTip(), factor => yujianProj.Projectile.height / 2,
+            trail ??= new Trail(Main.instance.GraphicsDevice, yujianProj.Projectile.oldPos.Length, new EmptyMeshGenerator(), factor => yujianProj.Projectile.height / 2,
             factor =>
             {
                 return Color.Lerp(yujianProj.color1, yujianProj.color2, factor.X) * 0.8f;
             }, flipVertical: StartAngle < 0);
 
-            trail.Positions = yujianProj.Projectile.oldPos;
+            trail.TrailPositions = yujianProj.Projectile.oldPos;
             return canSlash;
         }
 
@@ -215,7 +215,7 @@ namespace Coralite.Content.Items.YujianHulu
             effect.Parameters["transformMatrix"].SetValue(world * view * projection);
             effect.Parameters["sampleTexture"].SetValue(ModContent.Request<Texture2D>(yujianProj.SlashTexture).Value);
 
-            trail?.Render(effect);
+            trail?.DrawTrail(effect);
         }
 
     }

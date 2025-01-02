@@ -1,5 +1,5 @@
 ﻿using Coralite.Core;
-using Coralite.Core.Systems.Trails;
+using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System.Collections.Generic;
