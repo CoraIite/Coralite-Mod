@@ -108,7 +108,17 @@ namespace Coralite.Content.Items.ThyphionSeries
                     newVelocity = (Main.MouseWorld - Player.Center).SafeNormalize(Vector2.Zero);
             }
 
-            Player.GetModPlayer<CoralitePlayer>().DashDelay = 70;
+            float angle = (Main.MouseWorld - Player.Center).ToRotation();
+            const float angleLimit = 0.2f;
+
+            if ((angle > -MathHelper.PiOver2 - angleLimit && angle < -MathHelper.PiOver2 + angleLimit) 
+                || (angle > MathHelper.PiOver2 - angleLimit && angle < MathHelper.PiOver2 + angleLimit))
+            {
+                dashDirection = Math.Sign(Main.MouseWorld.X - Player.Center.X);
+                newVelocity = (Main.MouseWorld - Player.Center).SafeNormalize(Vector2.Zero);
+            }
+
+            Player.GetModPlayer<CoralitePlayer>().DashDelay = 90;
             Player.GetModPlayer<CoralitePlayer>().DashTimer = 18;
             Player.velocity = newVelocity;
             //Player.direction = (int)dashDirection;
@@ -170,7 +180,6 @@ namespace Coralite.Content.Items.ThyphionSeries
         private struct MoonDustSpawner
         {
             public Vector2 pos;
-            public Vector2 dir;
 
             public void Spawn(float timer)
             {
@@ -218,7 +227,6 @@ namespace Coralite.Content.Items.ThyphionSeries
                             dustSpawner = new MoonDustSpawner()
                             {
                                 pos = Projectile.Center,
-                                dir = Rotation.ToRotationVector2()
                             };
 
                             return;
@@ -291,6 +299,8 @@ namespace Coralite.Content.Items.ThyphionSeries
 
                             handOffset = -20;
                             Owner.velocity = -Rotation.ToRotationVector2() * 6;
+                            if (Owner.velocity.Y > 0 && Math.Abs(Owner.velocity.X) < 2)
+                                Owner.velocity.Y *= 0.5f;
                         }
 
                         if (Main.myPlayer == Projectile.owner)
@@ -370,7 +380,10 @@ namespace Coralite.Content.Items.ThyphionSeries
                     continue;
 
                 if (proj.Colliding(proj.getRect(), rect))
+                {
+                    JustCollideNPC(null);
                     return true;
+                }
             }
 
             for (int i = 0; i < Main.maxNPCs; i++)
@@ -399,7 +412,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         {
             Helper.PlayPitched(CoraliteSoundID.Ding_Item4, Projectile.Center, pitchAdjust: -0.3f);
 
-            if (target.CanBeChasedBy())//踢一脚
+            if (target != null && target.CanBeChasedBy())//踢一脚
                 target.SimpleStrikeNPC(Owner.GetWeaponDamage(Owner.HeldItem), Owner.direction, knockBack: 10, damageType: DamageClass.Ranged);
 
             if (!VisualEffectSystem.HitEffect_Dusts)
@@ -497,11 +510,14 @@ namespace Coralite.Content.Items.ThyphionSeries
         public override bool? CanDamage()
             => State == 1 && Timer < 10;
 
+        public override bool ShouldUpdatePosition()
+            => false;
+
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
             float a = 0;
             return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center
-                , Projectile.Center + Projectile.rotation.ToRotationVector2() * Projectile.localAI[2] * 280, 60, ref a);
+                , Projectile.Center + Projectile.rotation.ToRotationVector2() * Projectile.localAI[2] * 320, 60, ref a);
         }
 
         public override void AI()
@@ -514,6 +530,8 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             Projectile.Center = owner.Center;
             Projectile.rotation = owner.rotation;
+            Projectile.velocity = Projectile.rotation.ToRotationVector2();
+
             Lighting.AddLight(Projectile.Center, Color.MediumPurple.ToVector3());
             switch (State)
             {
@@ -521,7 +539,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 case 0://捏在手里的阶段
 
                     Alpha = Helper.Lerp(Alpha, 0.2f, 0.2f);
-                    Scale = Vector2.SmoothStep(Scale, new Vector2(0.3f, 1f), 0.2f);
+                    Scale = Vector2.SmoothStep(Scale, new Vector2(0.3f, 0.8f), 0.2f);
 
                     break;
                 case 1://释放
@@ -531,10 +549,10 @@ namespace Coralite.Content.Items.ThyphionSeries
 
                         if (Timer < 4)
                         {
-                            Projectile.localAI[2] = Helper.Lerp(1f, 1.8f, Timer / 4);
+                            Projectile.localAI[2] = Helper.Lerp(1f, 1.4f, Timer / 4);
                         }
                         else
-                            Projectile.localAI[2] = Helper.Lerp(Projectile.localAI[2], 1.3f, 0.5f);
+                            Projectile.localAI[2] = Helper.Lerp(Projectile.localAI[2], 0.9f, 0.5f);
 
                         Projectile.localAI[1] = Helper.Lerp(Projectile.localAI[1], 2.75f, 0.45f);
 

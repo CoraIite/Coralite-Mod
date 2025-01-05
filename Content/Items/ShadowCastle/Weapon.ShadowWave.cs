@@ -46,6 +46,11 @@ namespace Coralite.Content.Items.ShadowCastle
 
         public override bool AltFunctionUse(Player player) => true;
 
+        public override bool CanConsumeAmmo(Item ammo, Player player)
+        {
+            return ShootCount > 0;
+        }
+
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             if (Main.myPlayer != player.whoAmI)

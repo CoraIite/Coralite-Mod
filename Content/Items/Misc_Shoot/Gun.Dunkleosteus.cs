@@ -16,21 +16,14 @@ namespace Coralite.Content.Items.Misc_Shoot
 
         public override void SetDefaults()
         {
-            Item.damage = 42;
-            Item.useTime = 5;
-            Item.useAnimation = 5;
-            Item.knockBack = 3;
-            Item.shootSpeed = 11f;
+            Item.SetWeaponValues(42, 3f);
+            Item.DefaultToRangedWeapon(ProjectileID.PurificationPowder, AmmoID.Bullet, 5, 11f);
 
             Item.useStyle = ItemUseStyleID.Rapier;
-            Item.DamageType = DamageClass.Ranged;
             Item.value = Item.sellPrice(0, 8, 0, 0);
             Item.rare = ItemRarityID.Yellow;
-            Item.shoot = ProjectileID.PurificationPowder;
-            Item.useAmmo = AmmoID.Bullet;
 
             Item.useTurn = false;
-            Item.noMelee = true;
             Item.noUseGraphic = true;
             Item.autoReuse = true;
         }

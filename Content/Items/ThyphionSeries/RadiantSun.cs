@@ -394,6 +394,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             int width = (int)(Projectile.Center - endPoint).Length() - 100;
             Vector2 dir = Vector2.UnitX.RotatedBy(LaserRotation);
             Color color = Color.Gold;
+            Projectile.velocity = LaserRotation.ToRotationVector2();
 
             do
             {

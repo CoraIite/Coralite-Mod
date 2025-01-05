@@ -14,7 +14,9 @@ namespace Coralite.Content.Items.HyacinthSeries
 {
     public class SnowdropHeldProj : BaseGunHeldProj
     {
-        public SnowdropHeldProj() : base(1f, 18, -10, AssetDirectory.HyacinthSeriesItems) { }
+        public override string Texture => AssetDirectory.HyacinthSeriesItems + Name;
+
+        public SnowdropHeldProj() : base(0.8f, 24, -10, AssetDirectory.HyacinthSeriesItems) { }
 
         public override float Ease()
         {

@@ -4915,3 +4915,8 @@ SeismicWave: {
 	DisplayName: Seismic Wave
 	Tooltip: ""
 }
+
+WhiteGardenia: {
+	DisplayName: White Gardenia
+	Tooltip: ""
+}

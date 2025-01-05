@@ -5029,3 +5029,8 @@ SeismicWave: {
 	DisplayName: 震波
 	Tooltip: ""
 }
+
+WhiteGardenia: {
+	// DisplayName: White Gardenia
+	// Tooltip: ""
+}
