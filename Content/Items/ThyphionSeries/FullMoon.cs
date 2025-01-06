@@ -499,6 +499,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public override void SetDefaults()
         {
+            Projectile.tileCollide = false;
             Projectile.width = Projectile.height = 16;
             Projectile.friendly = true;
             Projectile.timeLeft = 12000;

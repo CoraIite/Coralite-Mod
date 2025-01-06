@@ -19,6 +19,12 @@ namespace Coralite.Helpers
             return true;
         }
 
+        /// <summary>
+        /// 检测物块是否为实心，即 <see cref="Tile.HasUnactuatedTile"/>，<see cref="Main.tileSolid"/> 为 <see langword="true"/><br></br>
+        /// 并且 <see cref="Main.tileSolidTop"/> 为<see langword="false"/>，用于排除桌子平台之类的
+        /// </summary>
+        /// <param name="tile"></param>
+        /// <returns></returns>
         public static bool HasSolidTile(this Tile tile)
         {
             return tile.HasUnactuatedTile && Main.tileSolid[tile.TileType] && !Main.tileSolidTop[tile.TileType];

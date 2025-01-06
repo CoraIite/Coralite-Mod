@@ -517,6 +517,7 @@ ShadowHead: {
 		Increases maximum mana by 60
 		10% reduced mana usage
 		'''
+	ArmorBonus: Mods.Coralite.Items.ShadowHead.ArmorBonus
 }
 
 ShadowLegs: {

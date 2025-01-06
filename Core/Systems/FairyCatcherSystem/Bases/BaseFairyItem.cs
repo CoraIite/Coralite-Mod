@@ -202,7 +202,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
             if (showRadarCount > 0)
             {
-                if (Main.LocalPlayer.controlUp)
+                if (Main.keyState.PressingShift())
                     showRadarCount += 2;
 
                 tooltips.Add(new TooltipLine(Mod, "RaderChart"
@@ -215,7 +215,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             }
             else
             {
-                if (Main.LocalPlayer.controlUp)
+                if (Main.keyState.PressingShift())
                     showRadarCount = 2;
 
                 //各种增幅数值

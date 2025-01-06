@@ -144,8 +144,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
-            if (item.DamageType == FairyDamage.Instance
-              )
+            if (item.DamageType == FairyDamage.Instance)
             {
                 int index = tooltips.FindIndex(line => line.Name == "Damage");
                 if (index != -1)
