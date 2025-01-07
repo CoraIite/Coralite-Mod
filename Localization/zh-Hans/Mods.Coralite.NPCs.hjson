@@ -67,7 +67,16 @@ Bloodiancie.DisplayName: 赤血玉灵
 BloodiancieMinion.DisplayName: 小赤血玉灵
 ShadowBall.DisplayName: 影子球
 SmallShadowBall.DisplayName: 小影子球
-Biskety.DisplayName: Biskety
+
+Biskety: {
+	DisplayName: Biskety
+	TotalDamage: 总伤害：
+	ProjectileDamage: 弹幕伤害：
+	MeleeDamage: 玩家近战伤害：
+	OtherDamage: 其他伤害：
+	LongTimeDPS: 长期DPS：
+}
+
 ThunderveinDragon.DisplayName: 荒雷龙
 ThunderPhantom.DisplayName: 荒雷幻影
 ShadowVilliger.DisplayName: 影子

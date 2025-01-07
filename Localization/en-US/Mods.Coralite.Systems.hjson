@@ -91,3 +91,12 @@ MultiblockSystem: {
 	FailText: Mods.Coralite.Systems.MultiblockSystem.FailText
 	PreviewMultiblock: ""
 }
+
+BisketyController: {
+	ShowTotalDamage: Mods.Coralite.Systems.BisketyController.ShowTotalDamage
+	ShowProjectileDamage: Mods.Coralite.Systems.BisketyController.ShowProjectileDamage
+	ShowMeleeDamage: Mods.Coralite.Systems.BisketyController.ShowMeleeDamage
+	ShowOtherDamage: Mods.Coralite.Systems.BisketyController.ShowOtherDamage
+	ShowLongTimeDPS: Mods.Coralite.Systems.BisketyController.ShowLongTimeDPS
+	ChangeDefence: Mods.Coralite.Systems.BisketyController.ChangeDefence
+}

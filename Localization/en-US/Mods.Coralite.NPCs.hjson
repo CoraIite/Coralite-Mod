@@ -67,7 +67,16 @@ Bloodiancie.DisplayName: Bloodiancie
 BloodiancieMinion.DisplayName: Bloodiancie Minion
 ShadowBall.DisplayName: Shadow Ball
 SmallShadowBall.DisplayName: Small Shadow Ball
-Biskety.DisplayName: Biskety
+
+Biskety: {
+	DisplayName: Biskety
+	TotalDamage: Mods.Coralite.NPCs.Biskety.TotalDamage
+	ProjectileDamage: Mods.Coralite.NPCs.Biskety.ProjectileDamage
+	MeleeDamage: Mods.Coralite.NPCs.Biskety.MeleeDamage
+	OtherDamage: Mods.Coralite.NPCs.Biskety.OtherDamage
+	LongTimeDPS: Mods.Coralite.NPCs.Biskety.LongTimeDPS
+}
+
 ThunderveinDragon.DisplayName: Thundervein Wyvern
 ThunderPhantom.DisplayName: Thunder Phantom
 ShadowVilliger.DisplayName: Shadow Villiger

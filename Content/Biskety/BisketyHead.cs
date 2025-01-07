@@ -1,4 +1,4 @@
-﻿using Coralite.Content.UI;
+﻿using Coralite.Content.Biskety.UI;
 using Coralite.Core;
 using Coralite.Core.Loaders;
 using Coralite.Helpers;
@@ -8,8 +8,9 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 
-namespace Coralite.Content.Items.Misc
+namespace Coralite.Content.Biskety
 {
     public class BisketyHead : ModItem
     {
@@ -57,11 +58,36 @@ namespace Coralite.Content.Items.Misc
     {
         public override string Texture => AssetDirectory.MiscItems + Name;
 
-        ref float Timer => ref NPC.ai[0];
-        ref float TotalTime => ref NPC.ai[1];
+        public float Timer { get; set; }
+        public float TotalTime { get; set; }
 
-        int itemDamageRecorder;
-        int projectileDamageRecorder;
+        private int itemDamageRecorder;
+        private int projectileDamageRecorder;
+
+        public static LocalizedText[] DamageShowTexts { get; private set; }
+
+        public override void Load()
+        {
+            if (Main.dedServ)
+                return;
+
+            DamageShowTexts = [
+                this.GetLocalization("TotalDamage"),
+                this.GetLocalization("ProjectileDamage"),
+                this.GetLocalization("MeleeDamage"),
+                this.GetLocalization("OtherDamage"),
+                this.GetLocalization("LongTimeDPS"),
+
+                ];
+        }
+
+        public override void Unload()
+        {
+            if (Main.dedServ)
+                return;
+
+            DamageShowTexts = null;
+        }
 
         public override void SetDefaults()
         {
@@ -71,6 +97,8 @@ namespace Coralite.Content.Items.Misc
 
             NPC.width = 38;
             NPC.height = 48;
+
+            NPC.defense = BisketyDefenceController.Defence;
         }
 
         public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone)
@@ -122,6 +150,7 @@ namespace Coralite.Content.Items.Misc
         {
             Texture2D mainTex = NPC.GetTexture();
             Vector2 pos = NPC.Center - Main.screenPosition;
+
             var origin = mainTex.Size() / 2;
 
             if (Timer >= 0)
@@ -131,29 +160,31 @@ namespace Coralite.Content.Items.Misc
                     if (BisketyController.ShowFlags[i])
                         howMany++;
 
-                Vector2 position = pos - new Vector2(0, 40 + (howMany * 20));
+                Vector2 position = pos - new Vector2(0, 40 + howMany * 20);
                 int totalDamage = NPC.lifeMax - NPC.life;
+
                 if (BisketyController.ShowFlags[(int)BisketyController.ShowType.ShowTotalDamage])
-                    Utils.DrawBorderString(spriteBatch, $"总伤害：{totalDamage}", position, Color.White, anchorx: 0.5f, anchory: 0.5f);
+                    Utils.DrawBorderString(spriteBatch, $"{DamageShowTexts[0].Value}{totalDamage}", position, Color.White, anchorx: 0.5f, anchory: 0.5f);
+
                 if (BisketyController.ShowFlags[(int)BisketyController.ShowType.ShowProjectileDamage])
                 {
                     position += new Vector2(0, 20);
-                    Utils.DrawBorderString(spriteBatch, $"弹幕伤害：{projectileDamageRecorder}", position, Color.Pink, anchorx: 0.5f, anchory: 0.5f);
+                    Utils.DrawBorderString(spriteBatch, $"{DamageShowTexts[1].Value}{projectileDamageRecorder}", position, Color.Pink, anchorx: 0.5f, anchory: 0.5f);
                 }
                 if (BisketyController.ShowFlags[(int)BisketyController.ShowType.ShowItemDamage])
                 {
                     position += new Vector2(0, 20);
-                    Utils.DrawBorderString(spriteBatch, $"玩家近战伤害：{itemDamageRecorder}", position, Color.LightBlue, anchorx: 0.5f, anchory: 0.5f);
+                    Utils.DrawBorderString(spriteBatch, $"{DamageShowTexts[2].Value}{itemDamageRecorder}", position, Color.LightBlue, anchorx: 0.5f, anchory: 0.5f);
                 }
                 if (BisketyController.ShowFlags[(int)BisketyController.ShowType.ShowOtherDamage])
                 {
                     position += new Vector2(0, 20);
-                    Utils.DrawBorderString(spriteBatch, $"其他来源伤害：{totalDamage - projectileDamageRecorder - itemDamageRecorder}", position, Color.LightCoral, anchorx: 0.5f, anchory: 0.5f);
+                    Utils.DrawBorderString(spriteBatch, $"{DamageShowTexts[3].Value}{totalDamage - projectileDamageRecorder - itemDamageRecorder}", position, Color.LightCoral, anchorx: 0.5f, anchory: 0.5f);
                 }
                 if (BisketyController.ShowFlags[(int)BisketyController.ShowType.ShowTotalDPS])
                 {
                     position += new Vector2(0, 20);
-                    Utils.DrawBorderString(spriteBatch, $"长期DPS：{MathF.Round(60 * totalDamage / TotalTime, 2)}", position, Color.LightGoldenrodYellow, anchorx: 0.5f, anchory: 0.5f);
+                    Utils.DrawBorderString(spriteBatch, $"{DamageShowTexts[4].Value}{MathF.Round(60 * totalDamage / TotalTime, 2)}", position, Color.LightGoldenrodYellow, anchorx: 0.5f, anchory: 0.5f);
                 }
             }
 

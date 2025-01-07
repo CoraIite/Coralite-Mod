@@ -95,3 +95,12 @@ MultiblockSystem: {
 		- 完成多方块结构后右键核心进行合成
 		'''
 }
+
+BisketyController: {
+	ShowTotalDamage: 显示总伤害
+	ShowProjectileDamage: 显示弹幕伤害
+	ShowMeleeDamage: 显示玩家近战伤害
+	ShowOtherDamage: 显示其他伤害
+	ShowLongTimeDPS: 显示长期DPS
+	ChangeDefence: 设置Biskety防御力
+}
