@@ -1,9 +1,4 @@
 ﻿using Coralite.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 
 namespace Coralite.Content.Dusts
@@ -19,7 +14,7 @@ namespace Coralite.Content.Dusts
 
         public override bool Update(Dust dust)
         {
-            Lighting.AddLight(dust.position, dust.color.ToVector3() * 0.5f);
+            Lighting.AddLight(dust.position, dust.color.ToVector3() * 0.25f);
 
             dust.color *= 0.8f;
             dust.velocity *= 0.95f;

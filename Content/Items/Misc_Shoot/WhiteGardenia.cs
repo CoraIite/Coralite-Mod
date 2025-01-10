@@ -53,10 +53,10 @@ namespace Coralite.Content.Items.Misc_Shoot
         {
             if (Main.myPlayer == player.whoAmI)
             {
-                if (player.ownedProjectileCounts[ModContent.ProjectileType<WhiteGardeniaAimProj>()] < 1)
+                if (player.ownedProjectileCounts[ModContent.ProjectileType<WhiteGardeniaHeldProj>()] < 1)
                 {
                     Projectile.NewProjectile(new EntitySource_ItemUse(player, Item)
-                        , player.Center, Vector2.Zero, ModContent.ProjectileType<WhiteGardeniaAimProj>(), 0, 0, player.whoAmI);
+                        , player.Center, Vector2.Zero, ModContent.ProjectileType<WhiteGardeniaHeldProj>(), 0, 0, player.whoAmI);
                 }
 
                 if (player.ownedProjectileCounts[ModContent.ProjectileType<WhiteGardeniaFloat>()] < 2)
@@ -67,13 +67,26 @@ namespace Coralite.Content.Items.Misc_Shoot
             }
         }
 
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
+        {
+            Projectile heldProj = Main.projectile.FirstOrDefault(p => p.active && p.friendly && p.owner == player.whoAmI && p.type == ModContent.ProjectileType<WhiteGardeniaHeldProj>());
+            if (heldProj != null && heldProj.localAI[1] > 0)
+                (heldProj.ModProjectile as WhiteGardeniaHeldProj).Attack();
+
+            if (heldProj.ai[2].GetNPCOwner(out NPC owner))
+            {
+                float length = velocity.Length();
+                velocity = (owner.Center - player.MountedCenter).SafeNormalize(Vector2.Zero) * length;
+            }
+        }
+
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, Vector2.Zero
-                , ModContent.ProjectileType<WhiteGardeniaHeldProj>(), damage, knockback, player.whoAmI, ai2: shootCount);
 
             if (shootCount < 9)
                 return true;
+
+            shootCount = 0;
 
             return false;
         }
@@ -82,24 +95,326 @@ namespace Coralite.Content.Items.Misc_Shoot
     [AutoLoadTexture(Path = AssetDirectory.Misc_Shoot)]
     public class WhiteGardeniaHeldProj : BaseGunHeldProj
     {
-        public WhiteGardeniaHeldProj() : base(0.1f, 50, -10, AssetDirectory.Misc_Shoot) { }
+        public WhiteGardeniaHeldProj() : base(0.02f, 50, -10, AssetDirectory.Misc_Shoot) { }
 
         [AutoLoadTexture(Name = "WhiteGardenia_Glow")]
         public static ATex Highlight { get; private set; }
 
+        [AutoLoadTexture(Name = "WhiteGardeniaSpawn")]
+        public static ATex SpawnAnmi { get; private set; }
+
+        [AutoLoadTexture(Name = "WhiteGardeniaFade")]
+        public static ATex KillAnmi { get; private set; }
+
+        [AutoLoadTexture(Name = "WhiteGardeniaAim")]
+        public static ATex AimMouse { get; private set; }
+
+        [AutoLoadTexture(Name = "WhiteGardeniaNumber")]
+        public static ATex NumberTex { get; private set; }
+
+        public ref float Timer => ref Projectile.localAI[0];
+        public ref float State => ref Projectile.localAI[1];
+        public ref float Target => ref Projectile.ai[2];
+
+        public Vector2 AimPosition { get => Projectile.velocity; set => Projectile.velocity = value; }
+
+        public override void AI()
+        {
+            if (!init)
+            {
+                Initialize();
+                init = true;
+            }
+
+            Projectile.timeLeft = 2;
+
+            switch (State)
+            {
+                default:
+                case 0://生成动画
+                    Lighting.AddLight(Projectile.Center, WhiteGardenia.LightGreen.ToVector3()*(1 - Projectile.frame / 12f));
+
+                    SpawnDust();
+                    Owner.direction = MousePos.X > Owner.Center.X ? 1 : -1;
+                    ApplyRecoil(0);
+
+                    if (Timer % 2 == 0)
+                    {
+                        Projectile.frame++;
+                        if (Projectile.frame > 11)
+                        {
+                            State = 1;
+                            Timer = 0;
+                            Projectile.frame = 0;
+                            break;
+                        }
+                    }
+
+                    Timer++;
+
+                    break;
+                case 1://静止
+                    {
+                        Owner.direction = MousePos.X > Owner.Center.X ? 1 : -1;
+                        Vector2 targetPos = MousePos;
+                        if (Target.GetNPCOwner(out NPC owner))
+                            targetPos = owner.Center;
+
+                        TargetRot = (targetPos - Owner.Center).ToRotation() + (DirSign > 0 ? 0f : MathHelper.Pi);
+
+                        ApplyRecoil(0);
+
+                        if (Owner.HeldItem.type != ModContent.ItemType<WhiteGardenia>())
+                            TurnToFade();
+                    }
+
+                    break;
+                case 2://射击
+                    {
+                        Vector2 targetPos = MousePos;
+                        if (Target.GetNPCOwner(out NPC owner))
+                            targetPos = owner.Center;
+
+                        TargetRot = (targetPos - Owner.Center).ToRotation() + (DirSign > 0 ? 0f : MathHelper.Pi);
+                        float factor = Ease();
+                        ApplyRecoil(factor);
+
+                        if (Timer > MaxTime)
+                        {
+                            Timer = 0;
+                            State = 1;
+                        }
+
+                        Timer++;
+                    }
+
+                    break;
+                case 3://消失动画
+                    Lighting.AddLight(Projectile.Center, WhiteGardenia.LightGreen.ToVector3() );
+
+                    SpawnDust();
+                    Owner.direction = MousePos.X > Owner.Center.X ? 1 : -1;
+                    ApplyRecoil(0);
+
+                    if (Timer % 2 == 0)
+                    {
+                        Projectile.frame++;
+                        if (Projectile.frame > 7)
+                        {
+                            Projectile.Kill();
+                            break;
+                        }
+                    }
+
+                    Timer++;
+
+                    break;
+            }
+
+            AimLineAI();
+
+            Owner.heldProj = Projectile.whoAmI;
+            Owner.itemRotation = Projectile.rotation + (Owner.gravDir > 0 ? 0f : MathHelper.Pi) + (DirSign * 0.3f);
+        }
+
+        public void AimLineAI()
+        {
+            int? target = FindTarget();
+            if (target.HasValue)
+                Target = target.Value;
+            else
+                Target = -1;
+
+            if (Projectile.IsOwnedByLocalPlayer())//找目标
+            {
+                float length = ToMouse.Length();
+                Vector2 dir = UnitToMouseV;
+                bool collide = false;
+
+                for (int i = 0; i < length; i += 8)
+                {
+                    Vector2 pos = Projectile.Center + dir * i;
+                    Tile t = Framing.GetTileSafely(pos);
+
+                    if (t.HasSolidTile())
+                    {
+                        AimPosition = pos;
+                        collide = true;
+                        break;
+                    }
+                }
+
+                if (!collide)
+                    AimPosition = MousePos;
+            }
+        }
+
+        public int? FindTarget()
+        {
+            Vector2 mouseWorld = MousePos;
+            for (int i = 0; i < Main.maxNPCs; i++)
+            {
+                NPC npc = Main.npc[i];
+                if (!npc.CanBeChasedBy())
+                    continue;
+
+                if (Collision.CanHit(Projectile.Center, 2, 2, npc.Center - npc.Size / 2, npc.width * 2, npc.height * 2) &&
+                    (npc.Hitbox.Contains((int)mouseWorld.X, (int)mouseWorld.Y)
+                    || Collision.CheckAABBvLineCollision(npc.TopLeft - npc.Size / 2, npc.Size * 2, Projectile.Center, MousePos)))
+                    return i;
+            }
+
+            return null;
+        }
+
+        public void SpawnDust()
+        {
+            //if (Main.rand.NextBool())
+            //    return;
+            
+            Vector2 dir = TargetRot.ToRotationVector2();
+
+            Dust.NewDustPerfect(Projectile.Center+dir*Main.rand.NextFloat(-40,40) + Main.rand.NextVector2Circular(32, 32), ModContent.DustType<PixelPoint>()
+                , dir * (Main.rand.NextFromList(-3, 3) + Main.rand.NextFloat(-1, 1)), newColor: WhiteGardenia.LightGreen
+                , Scale: Main.rand.NextFloat(1,2));
+        }
+
+        public void Attack()
+        {
+            MaxTime = Owner.itemTimeMax;
+            Timer = 0;
+            Owner.direction = MousePos.X > Owner.Center.X ? 1 : -1;
+            TargetRot = (MousePos - Owner.Center).ToRotation() + (DirSign > 0 ? 0f : MathHelper.Pi);
+
+            Projectile.netUpdate = true;
+            State = 2;
+        }
+
+        public void TurnToFade()
+        {
+            State = 3;
+            Projectile.frame = 0;
+            Timer = 0;
+        }
+
+        public override float Ease()
+        {
+            float x = 1.772f * (1 - Timer / MaxTime);
+            return x * MathF.Sin(x * x) / 1.3076f;
+        }
+
         public override bool PreDraw(ref Color lightColor)
         {
-            base.PreDraw(ref lightColor);
+            if (State != 0 && State != 3)
+            {
+                #region 绘制光标
+                Texture2D aimTex = AimMouse.Value;
 
-            Texture2D mainTex = Highlight.Value;
+                Vector2 aimPos = AimPosition;
+                int frame = 0;
 
-            GetFrame(mainTex, out Rectangle? frame, out Vector2 origin);
+                if (Main.npc.IndexInRange((int)Target))
+                {
+                    aimPos = Main.npc[(int)Target].Center;
+                    frame = 1;
+                }
 
-            SpriteEffects effects = DirSign > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-            Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, frame, lightColor
-                , Projectile.rotation, origin, Projectile.scale, effects, 0f);
+                Rectangle frameBox = aimTex.Frame(2, 1, frame);
+
+                Main.spriteBatch.Draw(aimTex, aimPos - Main.screenPosition, frameBox, Color.White, 0, frameBox.Size() / 2, 1, 0, 0);
+
+                #endregion
+
+                #region 绘制线
+                Texture2D lineTex = TextureAssets.FishingLine.Value;
+
+                float length = (aimPos - Owner.Center).Length();
+                if (length < 20)
+                    length = 0;
+                else
+                    length -= 20;
+
+                Vector2 linePos = Owner.Center - Main.screenPosition;
+                Rectangle targetRect = new Rectangle((int)linePos.X, (int)linePos.Y, lineTex.Width, (int)length);
+
+                Main.spriteBatch.Draw(lineTex, targetRect, null, WhiteGardenia.LightGreen * 0.5f, (aimPos - Owner.Center).ToRotation() - MathHelper.PiOver2
+                    , new Vector2(lineTex.Width / 2, 0), 0, 0);
+                #endregion
+            }
+
+            #region 绘制玩家数字条
+
+            Texture2D numberTex = NumberTex.Value;
+
+            if (Owner.HeldItem.ModItem is WhiteGardenia gardenia)
+            {
+                int count = gardenia.shootCount;
+
+                if (count > 0 && count < 11)
+                {
+                    float scale = 1f + 0.3f * count / 10f;
+
+                    Rectangle number = numberTex.Frame(10, 1, count - 1);
+
+                    Main.spriteBatch.Draw(numberTex, Owner.Center - Main.screenPosition + new Vector2(0, -42)
+                        , number, Color.White, 0, new Vector2(number.Width / 2, number.Height), scale, 0, 0);
+                }
+            }
+
+            #endregion
+
+            switch (State)
+            {
+                default:
+                case 0:
+                    DrawSpawn(lightColor);
+                    break;
+                case 1:
+                case 2:
+                    base.PreDraw(ref lightColor);
+
+                    Texture2D mainTex = Highlight.Value;
+
+                    GetFrame(mainTex, out Rectangle? frame2, out Vector2 origin);
+
+                    SpriteEffects effects = DirSign > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+                    Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, frame2, Color.White
+                        , Projectile.rotation, origin, Projectile.scale, effects, 0f);
+                    break;
+                case 3:
+                    DrawKill(lightColor);
+                    break;
+            }
 
             return false;
+        }
+
+        public void DrawSpawn(Color lightColor)
+        {
+            Texture2D mainTex = SpawnAnmi.Value;
+
+            var frameBox = mainTex.Frame(1, 13, 0, Projectile.frame);
+
+            SpriteEffects effects = DirSign > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, frameBox, lightColor
+                , Projectile.rotation, frameBox.Size() / 2, Projectile.scale, effects, 0f);
+            lightColor.A = 200;
+            Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, frameBox, lightColor * 0.5f * (1 - Projectile.frame / 12f)
+                , Projectile.rotation, frameBox.Size() / 2, Projectile.scale, effects, 0f);
+        }
+
+        public void DrawKill(Color lightColor)
+        {
+            Texture2D mainTex = KillAnmi.Value;
+
+            var frameBox = mainTex.Frame(1, 9, 0, Projectile.frame);
+
+            SpriteEffects effects = DirSign > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, frameBox, lightColor
+                , Projectile.rotation, frameBox.Size() / 2, Projectile.scale, effects, 0f);
+            lightColor.A = 200;
+            Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, frameBox, lightColor * 0.5f
+                , Projectile.rotation, frameBox.Size() / 2, Projectile.scale, effects, 0f);
         }
     }
 
@@ -213,7 +528,7 @@ namespace Coralite.Content.Items.Misc_Shoot
 
                             Helper.GetMyGroupIndexAndFillBlackList(Projectile, out var index2, out _);
 
-                            if (AttackCount > 10 + index2 * 10
+                            if (AttackCount > 9 + index2 * 10
                                 && Owner.HeldItem.ModItem is WhiteGardenia gardenia && gardenia.shootCount < 10)
                             {
                                 AttackCount = 0;
@@ -261,10 +576,10 @@ namespace Coralite.Content.Items.Misc_Shoot
         public int FindEnemy()
         {
             Projectile aimProj = Main.projectile.FirstOrDefault(
-                p => p.active && p.friendly && p.owner == Projectile.owner && p.type == ModContent.ProjectileType<WhiteGardeniaAimProj>());
+                p => p.active && p.friendly && p.owner == Projectile.owner && p.type == ModContent.ProjectileType<WhiteGardeniaHeldProj>());
 
-            if (aimProj != null && Main.npc.IndexInRange((int)aimProj.ai[0]))
-                return (int)aimProj.ai[0];
+            if (aimProj != null && Main.npc.IndexInRange((int)aimProj.ai[2]))
+                return (int)aimProj.ai[2];
 
             return Projectile.MinionFindTarget();
         }
@@ -365,151 +680,6 @@ namespace Coralite.Content.Items.Misc_Shoot
 
             Main.spriteBatch.Draw(lineTex, targetRect, null, WhiteGardenia.LightGreen * (1 - Timer / 20), (owner.Center - Projectile.Center).ToRotation() - MathHelper.PiOver2
                 , new Vector2(lineTex.Width / 2, 0), 0, 0);
-
-            return false;
-        }
-    }
-
-    /// <summary>
-    /// 使用ai0记录目标
-    /// </summary>
-    [AutoLoadTexture(Path = AssetDirectory.Misc_Shoot)]
-    public class WhiteGardeniaAimProj : BaseHeldProj
-    {
-        public override string Texture => AssetDirectory.Misc_Shoot + Name;
-
-        public ref float Target => ref Projectile.ai[0];
-        public Vector2 AimPosition { get => Projectile.velocity; set => Projectile.velocity = value; }
-
-        [AutoLoadTexture(Name = "WhiteGardeniaNumber")]
-        public static ATex NumberTex { get; private set; }
-
-        public override void SetDefaults()
-        {
-            Projectile.DamageType = DamageClass.Ranged;
-            Projectile.friendly = true;
-            Projectile.tileCollide = false;
-        }
-
-        public override bool ShouldUpdatePosition() => false;
-        public override bool? CanDamage() => false;
-
-        public override void AI()
-        {
-            if (Owner.HeldItem.type != ModContent.ItemType<WhiteGardenia>())
-            {
-                Projectile.Kill();
-                return;
-            }
-
-            Projectile.Center = Owner.Center;
-            Projectile.timeLeft = 2;
-
-            int? target = FindTarget();
-            if (target.HasValue)
-                Target = target.Value;
-            else
-                Target = -1;
-
-
-            if (Projectile.IsOwnedByLocalPlayer())//找目标
-            {
-                float length = ToMouse.Length();
-                Vector2 dir = UnitToMouseV;
-                bool collide = false;
-
-                for (int i = 0; i < length; i += 8)
-                {
-                    Vector2 pos = Projectile.Center + dir * i;
-                    Tile t = Framing.GetTileSafely(pos);
-
-                    if (t.HasSolidTile())
-                    {
-                        AimPosition = pos;
-                        collide = true;
-                        break;
-                    }
-                }
-
-                if (!collide)
-                    AimPosition = MousePos;
-            }
-        }
-
-        public int? FindTarget()
-        {
-            Vector2 mouseWorld = MousePos;
-            for (int i = 0; i < Main.maxNPCs; i++)
-            {
-                NPC npc = Main.npc[i];
-                if (!npc.CanBeChasedBy())
-                    continue;
-
-                if (npc.Hitbox.Contains((int)mouseWorld.X, (int)mouseWorld.Y)
-                    && Collision.CanHitLine(Projectile.Center, 1, 1, npc.Center, npc.width, npc.height))
-                    return i;
-            }
-
-            return null;
-        }
-
-        public override bool PreDraw(ref Color lightColor)
-        {
-            #region 绘制光标
-            Texture2D aimTex = Projectile.GetTexture();
-
-            Vector2 aimPos = AimPosition;
-            int frame = 0;
-
-            if (Main.npc.IndexInRange((int)Target))
-            {
-                aimPos = Main.npc[(int)Target].Center;
-                frame = 1;
-
-            }
-
-            Rectangle frameBox = aimTex.Frame(2, 1, frame);
-
-            Main.spriteBatch.Draw(aimTex, aimPos - Main.screenPosition, frameBox, Color.White, 0, frameBox.Size() / 2, 1, 0, 0);
-
-            #endregion
-
-            #region 绘制线
-            Texture2D lineTex = TextureAssets.FishingLine.Value;
-
-            float length = (aimPos - Owner.Center).Length();
-            if (length < 20)
-                length = 0;
-            else
-                length -= 20;
-
-            Vector2 linePos = Owner.Center - Main.screenPosition;
-            Rectangle targetRect = new Rectangle((int)linePos.X, (int)linePos.Y, lineTex.Width, (int)length);
-
-            Main.spriteBatch.Draw(lineTex, targetRect, null, WhiteGardenia.LightGreen * 0.5f, (aimPos - Owner.Center).ToRotation() - MathHelper.PiOver2
-                , new Vector2(lineTex.Width / 2, 0), 0, 0);
-            #endregion
-
-            #region 绘制玩家数字条
-
-            Texture2D numberTex = NumberTex.Value;
-
-            if (Owner.HeldItem.ModItem is WhiteGardenia gardenia)
-            {
-                int count = gardenia.shootCount;
-
-                if (count > 0 && count < 11)
-                {
-                    float scale = 1f + 0.3f * count / 10f;
-
-                    Rectangle number = numberTex.Frame(10, 1, count - 1);
-
-                    Main.spriteBatch.Draw(numberTex, Owner.Center - Main.screenPosition + new Vector2(0, -42)
-                        , number, Color.White, 0, new Vector2(number.Width / 2, number.Height), scale, 0, 0);
-                }
-            }
-
-            #endregion
 
             return false;
         }

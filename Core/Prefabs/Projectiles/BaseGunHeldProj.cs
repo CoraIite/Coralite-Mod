@@ -24,7 +24,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         protected float HeldPositionX { get; set; } = heldPositionX;
         protected virtual float HeldPositionY { get; set; }
 
-        public bool initialized;
+        public bool init;
 
         public override string Texture => string.IsNullOrEmpty(texturePath) ? base.Texture : (texturePath + (pathHasName ? string.Empty : Name)).Replace("HeldProj", "");
 
@@ -40,12 +40,12 @@ namespace Coralite.Core.Prefabs.Projectiles
         public override bool? CanDamage() => false;
         public override bool ShouldUpdatePosition() => false;
 
-        public sealed override void AI()
+        public override void AI()
         {
-            if (!initialized)
+            if (!init)
             {
                 Initialize();
-                initialized = true;
+                init = true;
             }
 
             float factor = Ease();
@@ -60,8 +60,8 @@ namespace Coralite.Core.Prefabs.Projectiles
             MaxTime = Owner.itemTimeMax;
             if (Main.myPlayer == Projectile.owner)
             {
-                Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
-                TargetRot = (Main.MouseWorld - Owner.Center).ToRotation() + (DirSign > 0 ? 0f : MathHelper.Pi);
+                Owner.direction = MousePos.X > Owner.Center.X ? 1 : -1;
+                TargetRot = (MousePos - Owner.Center).ToRotation() + (DirSign > 0 ? 0f : MathHelper.Pi);
             }
 
             Projectile.netUpdate = true;

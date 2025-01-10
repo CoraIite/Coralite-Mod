@@ -128,6 +128,8 @@ namespace Coralite.Core
 
         public const string Donator = Items + "Donator/";
 
+        public const string DigDigDigItem = Items + "DigDigDig/";
+
         #endregion
 
         #region 弹幕部分！
