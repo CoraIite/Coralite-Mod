@@ -611,6 +611,17 @@ namespace Coralite.Helpers
                     drawColor * (maxAlpha - (i * alphaStep)), projectile.oldRot[i] + extraRot, frameBox.Size() / 2, (scale == -1 ? projectile.scale : scale) * (1 - (i * scaleStep)), 0, 0);
         }
 
+        public static void DrawShadowTrailsSacleStep(this Projectile projectile, Color drawColor, float maxAlpha, float alphaStep, int start, int howMany, int step, float scaleStep, Rectangle? frameBox,SpriteEffects effect, float extraRot = 0, float scale = -1)
+        {
+            Texture2D mainTex = TextureAssets.Projectile[projectile.type].Value;
+            Vector2 toCenter = new(projectile.width / 2, projectile.height / 2);
+            Vector2 origin = frameBox.HasValue ? frameBox.Value.Size()/2 : mainTex.Size() /2;
+
+            for (int i = start; i < howMany; i += step)
+                Main.spriteBatch.Draw(mainTex, projectile.oldPos[i] + toCenter - Main.screenPosition, frameBox,
+                    drawColor * (maxAlpha - (i * alphaStep)), projectile.oldRot[i] + extraRot, origin, (scale == -1 ? projectile.scale : scale) * (1 - (i * scaleStep)), effect, 0);
+        }
+
 
         public static void DrawShadowTrails(this Projectile projectile, Color drawColor, float maxAlpha, float alphaStep, int start, int howMany, int step, Vector2 scale, Rectangle frameBox, float extraRot = 0)
         {

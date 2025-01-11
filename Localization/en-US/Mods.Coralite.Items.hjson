@@ -4921,3 +4921,9 @@ WhiteGardenia: {
 	DisplayName: White Gardenia
 	Tooltip: ""
 }
+
+DigUnloadItem: {
+	ContainsItemText: Mods.Coralite.Items.DigUnloadItem.ContainsItemText
+	DisplayName: Dig Unload Item
+	Tooltip: ""
+}

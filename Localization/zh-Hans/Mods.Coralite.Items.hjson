@@ -5038,6 +5038,12 @@ SeismicWave: {
 }
 
 WhiteGardenia: {
-	// DisplayName: White Gardenia
-	// Tooltip: ""
+	DisplayName: 白冥栀
+	Tooltip: ""
+}
+
+DigUnloadItem: {
+	ContainsItemText: 包含物品：
+	DisplayName: 临时卸载物品
+	Tooltip: "[c/e88ecb:带它离开这个世界吧，这个世界中没有它的容身之处。]"
 }

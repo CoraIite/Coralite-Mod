@@ -30,7 +30,7 @@ namespace Coralite.Content.Items.DigDigDig
 
         public override void SetStaticDefaults()
         {
-            Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(1, 30));
+            Main.RegisterItemAnimation(Item.type, new DrawAnimationVertical(2, 30));
             ItemID.Sets.AnimatesAsSoul[Item.type] = true;
         }
 
@@ -38,6 +38,9 @@ namespace Coralite.Content.Items.DigDigDig
         {
             Item.rare = ItemRarityID.Pink;
         }
+
+        public override bool CanStack(Item source) => false;
+        public override bool CanStackInWorld(Item source) => false;
 
         public override void UpdateInventory(Player player)
         {

@@ -52,10 +52,10 @@ namespace Coralite.Core
             ProjectileExplosible[ProjectileID.Beenade] = true;
 
             //由于不清楚加载顺序的问题....不知道这个到底该怎么写比较好
-            ProjectileExplosible[ModContent.ProjectileType<Rediancie_BigBoom>()] = true;
-            ProjectileExplosible[ModContent.ProjectileType<Rediancie_Explosion>()] = true;
-            ProjectileExplosible[ModContent.ProjectileType<RedJadeBigBoom>()] = true;
-            ProjectileExplosible[ModContent.ProjectileType<RedJadeBoom>()] = true;
+            ProjectileExplosible[ProjectileType<Rediancie_BigBoom>()] = true;
+            ProjectileExplosible[ProjectileType<Rediancie_Explosion>()] = true;
+            ProjectileExplosible[ProjectileType<RedJadeBigBoom>()] = true;
+            ProjectileExplosible[ProjectileType<RedJadeBoom>()] = true;
 
             //后面的暂时懒得写了
 

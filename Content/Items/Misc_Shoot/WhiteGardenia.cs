@@ -4,6 +4,7 @@ using Coralite.Core.Attributes;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.SmoothFunctions;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -35,7 +36,7 @@ namespace Coralite.Content.Items.Misc_Shoot
         public override void SetDefaults()
         {
             Item.SetWeaponValues(150, 3f);
-            Item.DefaultToRangedWeapon(ProjectileID.PurificationPowder, AmmoID.Bullet, 25, 11f);
+            Item.DefaultToRangedWeapon(ProjectileID.PurificationPowder, AmmoID.Bullet, 25, 15f);
             Item.reuseDelay = 5;
 
             Item.useStyle = ItemUseStyleID.Rapier;
@@ -47,6 +48,16 @@ namespace Coralite.Content.Items.Misc_Shoot
             Item.autoReuse = true;
 
             Item.glowMask = GlowMaskID;
+        }
+
+        public override bool AltFunctionUse(Player player) => true;
+
+        public override bool CanUseItem(Player player)
+        {
+            if (player.altFunctionUse == 2 && shootCount < 10)
+                return false;
+
+            return base.CanUseItem(player);
         }
 
         public override void HoldItem(Player player)
@@ -71,7 +82,12 @@ namespace Coralite.Content.Items.Misc_Shoot
         {
             Projectile heldProj = Main.projectile.FirstOrDefault(p => p.active && p.friendly && p.owner == player.whoAmI && p.type == ModContent.ProjectileType<WhiteGardeniaHeldProj>());
             if (heldProj != null && heldProj.localAI[1] > 0)
+            {
                 (heldProj.ModProjectile as WhiteGardeniaHeldProj).Attack();
+
+                if (player.altFunctionUse == 2 && shootCount == 10)
+                    heldProj.localAI[1]=4;
+            }
 
             if (heldProj.ai[2].GetNPCOwner(out NPC owner))
             {
@@ -82,13 +98,24 @@ namespace Coralite.Content.Items.Misc_Shoot
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
+            if (player.altFunctionUse == 2 && shootCount == 10)
+            {
+                shootCount = 0;
+                Helper.PlayPitched(CoraliteSoundID.Gun_Item11, player.Center);
+                Helper.PlayPitched(CoraliteSoundID.AetheriumBlock, player.Center);
+                Helper.PlayPitched(CoraliteSoundID.TerraBlade_Item60, player.Center, pitch: 0.8f);
 
-            if (shootCount < 9)
-                return true;
+                Projectile.NewProjectile(source, player.Center, velocity, ModContent.ProjectileType<WhiteGardeniaPowerfulShoot>()
+                    , damage * 5, knockback, player.whoAmI);
 
-            shootCount = 0;
+                return false;
+            }
 
-            return false;
+            Helper.PlayPitched(CoraliteSoundID.Gun2_Item40,player.Center);
+            Helper.PlayPitched(CoraliteSoundID.AetheriumBlock,player.Center);
+
+
+            return true;
         }
     }
 
@@ -112,6 +139,9 @@ namespace Coralite.Content.Items.Misc_Shoot
         [AutoLoadTexture(Name = "WhiteGardeniaNumber")]
         public static ATex NumberTex { get; private set; }
 
+        [AutoLoadTexture(Name = "WhiteGardeniaSP")]
+        public static ATex SpecialAttackTex { get; private set; }
+
         public ref float Timer => ref Projectile.localAI[0];
         public ref float State => ref Projectile.localAI[1];
         public ref float Target => ref Projectile.ai[2];
@@ -132,7 +162,7 @@ namespace Coralite.Content.Items.Misc_Shoot
             {
                 default:
                 case 0://生成动画
-                    Lighting.AddLight(Projectile.Center, WhiteGardenia.LightGreen.ToVector3()*(1 - Projectile.frame / 12f));
+                    Lighting.AddLight(Projectile.Center, WhiteGardenia.LightGreen.ToVector3() * (1 - Projectile.frame / 12f));
 
                     SpawnDust();
                     Owner.direction = MousePos.X > Owner.Center.X ? 1 : -1;
@@ -190,7 +220,7 @@ namespace Coralite.Content.Items.Misc_Shoot
 
                     break;
                 case 3://消失动画
-                    Lighting.AddLight(Projectile.Center, WhiteGardenia.LightGreen.ToVector3() );
+                    Lighting.AddLight(Projectile.Center, WhiteGardenia.LightGreen.ToVector3());
 
                     SpawnDust();
                     Owner.direction = MousePos.X > Owner.Center.X ? 1 : -1;
@@ -208,6 +238,24 @@ namespace Coralite.Content.Items.Misc_Shoot
 
                     Timer++;
 
+                    break;
+                case 4:
+                    {
+                        Vector2 targetPos = MousePos;
+                        if (Target.GetNPCOwner(out NPC owner))
+                            targetPos = owner.Center;
+
+                        TargetRot = (targetPos - Owner.Center).ToRotation() + (DirSign > 0 ? 0f : MathHelper.Pi);
+                        ApplyRecoil(0);
+
+                        if (Timer > MaxTime)
+                        {
+                            Timer = 0;
+                            State = 1;
+                        }
+
+                        Timer++;
+                    }
                     break;
             }
 
@@ -229,11 +277,12 @@ namespace Coralite.Content.Items.Misc_Shoot
             {
                 float length = ToMouse.Length();
                 Vector2 dir = UnitToMouseV;
+                Vector2 basePos = Projectile.Center - (Projectile.rotation+1.57f).ToRotationVector2()*14;
                 bool collide = false;
 
                 for (int i = 0; i < length; i += 8)
                 {
-                    Vector2 pos = Projectile.Center + dir * i;
+                    Vector2 pos = basePos + dir * i;
                     Tile t = Framing.GetTileSafely(pos);
 
                     if (t.HasSolidTile())
@@ -258,7 +307,7 @@ namespace Coralite.Content.Items.Misc_Shoot
                 if (!npc.CanBeChasedBy())
                     continue;
 
-                if (Collision.CanHit(Projectile.Center, 2, 2, npc.Center - npc.Size / 2, npc.width * 2, npc.height * 2) &&
+                if (Collision.CanHitLine(Projectile.Center, 1, 1, npc.Center ,1,  1) &&
                     (npc.Hitbox.Contains((int)mouseWorld.X, (int)mouseWorld.Y)
                     || Collision.CheckAABBvLineCollision(npc.TopLeft - npc.Size / 2, npc.Size * 2, Projectile.Center, MousePos)))
                     return i;
@@ -271,12 +320,12 @@ namespace Coralite.Content.Items.Misc_Shoot
         {
             //if (Main.rand.NextBool())
             //    return;
-            
+
             Vector2 dir = TargetRot.ToRotationVector2();
 
-            Dust.NewDustPerfect(Projectile.Center+dir*Main.rand.NextFloat(-40,40) + Main.rand.NextVector2Circular(32, 32), ModContent.DustType<PixelPoint>()
+            Dust.NewDustPerfect(Projectile.Center + dir * Main.rand.NextFloat(-40, 40) + Main.rand.NextVector2Circular(32, 32), ModContent.DustType<PixelPoint>()
                 , dir * (Main.rand.NextFromList(-3, 3) + Main.rand.NextFloat(-1, 1)), newColor: WhiteGardenia.LightGreen
-                , Scale: Main.rand.NextFloat(1,2));
+                , Scale: Main.rand.NextFloat(1, 2));
         }
 
         public void Attack()
@@ -327,17 +376,22 @@ namespace Coralite.Content.Items.Misc_Shoot
 
                 #region 绘制线
                 Texture2D lineTex = TextureAssets.FishingLine.Value;
+                Vector2 basePos = Projectile.Center - (Projectile.rotation + 1.57f).ToRotationVector2() * 14;
 
-                float length = (aimPos - Owner.Center).Length();
+                float length = (aimPos - basePos).Length();
                 if (length < 20)
                     length = 0;
                 else
                     length -= 20;
 
-                Vector2 linePos = Owner.Center - Main.screenPosition;
+                Vector2 linePos = basePos - Main.screenPosition;
                 Rectangle targetRect = new Rectangle((int)linePos.X, (int)linePos.Y, lineTex.Width, (int)length);
 
-                Main.spriteBatch.Draw(lineTex, targetRect, null, WhiteGardenia.LightGreen * 0.5f, (aimPos - Owner.Center).ToRotation() - MathHelper.PiOver2
+                float a = 0.4f;
+                if (Target != -1)
+                    a = 0.15f;
+
+                Main.spriteBatch.Draw(lineTex, targetRect, null, WhiteGardenia.LightGreen * a, (aimPos - basePos).ToRotation() - MathHelper.PiOver2
                     , new Vector2(lineTex.Width / 2, 0), 0, 0);
                 #endregion
             }
@@ -352,7 +406,7 @@ namespace Coralite.Content.Items.Misc_Shoot
 
                 if (count > 0 && count < 11)
                 {
-                    float scale = 1f + 0.3f * count / 10f;
+                    float scale = 1f + 0.5f * count / 10f;
 
                     Rectangle number = numberTex.Frame(10, 1, count - 1);
 
@@ -371,18 +425,52 @@ namespace Coralite.Content.Items.Misc_Shoot
                     break;
                 case 1:
                 case 2:
-                    base.PreDraw(ref lightColor);
+                    {
+                        base.PreDraw(ref lightColor);
 
-                    Texture2D mainTex = Highlight.Value;
+                        Texture2D mainTex = Highlight.Value;
 
-                    GetFrame(mainTex, out Rectangle? frame2, out Vector2 origin);
+                        GetFrame(mainTex, out Rectangle? frame2, out Vector2 origin);
 
-                    SpriteEffects effects = DirSign > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-                    Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, frame2, Color.White
-                        , Projectile.rotation, origin, Projectile.scale, effects, 0f);
+                        SpriteEffects effects = DirSign > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+                        Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, frame2, Color.White
+                            , Projectile.rotation, origin, Projectile.scale, effects, 0f);
+                    }
                     break;
                 case 3:
                     DrawKill(lightColor);
+                    break;
+                case 4:
+                    {
+                        base.PreDraw(ref lightColor);
+
+                        Texture2D mainTex = Highlight.Value;
+
+                        GetFrame(mainTex, out Rectangle? frame2, out Vector2 origin);
+
+                        SpriteEffects effects = DirSign > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+                        Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, frame2, Color.White
+                            , Projectile.rotation, origin, Projectile.scale, effects, 0f);
+
+                        float factor = Timer / MaxTime;
+
+                        float scale=1;
+                        if (factor < 0.3f)
+                            scale = Helper.Lerp(0, 1, factor / 0.3f);
+
+                        float alpha = 1;
+                        if (factor>0.3f)
+                        {
+                            alpha = Coralite.Instance.X3Smoother.Smoother(1 - (factor - 0.3f) / 0.7f);
+                        }
+
+                        mainTex = SpecialAttackTex.Value;
+                        GetFrame(mainTex, out frame2, out origin);
+
+                        Main.spriteBatch.Draw(mainTex, Projectile.Center + UnitToMouseV* 130 - Main.screenPosition, frame2, Color.White * alpha
+                            , Projectile.rotation, origin, new Vector2(1, scale), effects, 0f);
+                    }
+
                     break;
             }
 
@@ -435,11 +523,17 @@ namespace Coralite.Content.Items.Misc_Shoot
 
         public Player Owner => Main.player[Projectile.owner];
 
+        public override void SetStaticDefaults()
+        {
+            Projectile.QuickTrailSets(Helper.TrailingMode.OnlyPosition, 10);
+        }
+
         public override void SetDefaults()
         {
             Projectile.DamageType = DamageClass.Ranged;
             Projectile.friendly = true;
             Projectile.width = Projectile.height = 20;
+            Projectile.tileCollide = false;
         }
 
         public override bool? CanDamage()
@@ -489,9 +583,11 @@ namespace Coralite.Content.Items.Misc_Shoot
                                 if (!VaultUtils.isClient)
                                 {
                                     State = index2 + 2;
+                                    AttackCount = -index2 * 10;
+                                    Timer = -index2 * 8;
 
                                     RandomAngle = Main.rand.NextFloat(-0.9f, 0.9f);
-                                    Length = Main.rand.Next(45, 60);
+                                    Length = Main.rand.Next(45, 80);
                                     Projectile.netUpdate = true;
                                 }
                                 return;
@@ -512,7 +608,7 @@ namespace Coralite.Content.Items.Misc_Shoot
                             break;
                         }
 
-                        Projectile.Center = IdleMove.Update(1 / 60f, target.Center + new Vector2(0, -target.height / 2 - 45)
+                        Projectile.Center = IdleMove.Update(1 / 60f, target.Center + new Vector2(0, -target.height / 2 - Length)
                             .RotatedBy(RandomAngle + (State - 3) * 0.8f));
                         Projectile.spriteDirection = Projectile.Center.X > target.Center.X ? -1 : 1;
 
@@ -526,17 +622,16 @@ namespace Coralite.Content.Items.Misc_Shoot
 
                             AttackCount++;
 
-                            Helper.GetMyGroupIndexAndFillBlackList(Projectile, out var index2, out _);
-
-                            if (AttackCount > 9 + index2 * 10
+                            if (AttackCount > 9
                                 && Owner.HeldItem.ModItem is WhiteGardenia gardenia && gardenia.shootCount < 10)
                             {
-                                AttackCount = 0;
+                                AttackCount = - 10;
                                 gardenia.shootCount++;
+                                gardenia.shootCount = 10;
                             }
                         }
 
-                        if (Timer > 30)
+                        if (Timer > 28)
                         {
                             int index = FindEnemy();
                             if (index != -1)
@@ -551,7 +646,7 @@ namespace Coralite.Content.Items.Misc_Shoot
                                         State = 2;
 
                                     RandomAngle = Main.rand.NextFloat(-0.4f, 0.4f);
-                                    Length = Main.rand.Next(45, 60);
+                                    Length = Main.rand.Next(45, 80);
                                     Projectile.netUpdate = true;
                                 }
                                 return;
@@ -600,6 +695,8 @@ namespace Coralite.Content.Items.Misc_Shoot
         {
             Texture2D mainTex = Projectile.GetTexture();
             SpriteEffects effect = Projectile.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+
+            Projectile.DrawShadowTrailsSacleStep(lightColor, 0.4f, 0.4f / 10, 0, 10, 1, 0.4f / 10, null, effect);
 
             Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, null, lightColor, 0, mainTex.Size() / 2, Projectile.scale, effect, 0);
             return false;
@@ -659,6 +756,15 @@ namespace Coralite.Content.Items.Misc_Shoot
                 Dust.NewDustPerfect(Projectile.Center + dir * Main.rand.NextFloat(2, 10), ModContent.DustType<PixelPoint>(), dir, newColor: WhiteGardenia.LightGreen
                     , Scale: 2f);
             }
+
+            for (int i = 0; i < 3; i++)
+            {
+                Vector2 dir = Helper.NextVec2Dir(2, 4);
+              var p=  PRTLoader.NewParticle<PixelLine>(Projectile.Center, dir, newColor: WhiteGardenia.LightGreen
+                    , Scale: 1);
+                p.TrailCount = 16;
+                p.fadeFactor = 0.85f;
+            }
         }
 
         public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
@@ -681,6 +787,81 @@ namespace Coralite.Content.Items.Misc_Shoot
             Main.spriteBatch.Draw(lineTex, targetRect, null, WhiteGardenia.LightGreen * (1 - Timer / 20), (owner.Center - Projectile.Center).ToRotation() - MathHelper.PiOver2
                 , new Vector2(lineTex.Width / 2, 0), 0, 0);
 
+            return false;
+        }
+    }
+
+    public class WhiteGardeniaPowerfulShoot : ModProjectile
+    {
+        public override string Texture => AssetDirectory.Misc_Shoot+Name;
+
+        public override void SetStaticDefaults()
+        {
+            Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 15);
+        }
+
+        public override void SetDefaults()
+        {
+            Projectile.extraUpdates = 3;
+
+            Projectile.timeLeft = Projectile.MaxUpdates * 60;
+            Projectile.width = Projectile.height = 16;
+            Projectile.friendly = true;
+            Projectile.DamageType = DamageClass.Ranged;
+        }
+
+        public override void AI()
+        {
+            Projectile.rotation = Projectile.velocity.ToRotation();
+
+            for (int i = 0; i < 2; i++)
+                Dust.NewDustPerfect(Projectile.Center, ModContent.DustType<PixelPoint>(), Projectile.velocity * Main.rand.NextFloat(-0.4f, 0.4f), newColor: WhiteGardenia.LightGreen
+                , Scale: 1f);
+
+            var p = PRTLoader.NewParticle<PixelLine>(Projectile.Center + Main.rand.NextVector2Circular(8, 8)
+                , Projectile.velocity * Main.rand.NextFloat(0.1f, 0.25f), newColor: WhiteGardenia.LightGreen
+                  , Scale: 1);
+            p.TrailCount = Main.rand.Next(16, 24);
+            p.fadeFactor = Main.rand.NextFloat(0.8f, 0.95f);
+            p.useStartLimit = false;
+        }
+
+        public override void OnKill(int timeLeft)
+        {
+            for (int i = 0; i < 12; i++)
+            {
+                Vector2 dir = Helper.NextVec2Dir();
+                Dust.NewDustPerfect(Projectile.Center + dir*Main.rand.Next(12, 14), ModContent.DustType<PixelPoint>()
+                    , dir*Main.rand.NextFloat(2.5f,3), newColor: WhiteGardenia.LightGreen
+                , Scale: Main.rand.NextFloat(1,1.5f));
+            }
+            for (int i = 0; i < 20; i++)
+            {
+                Vector2 dir = Helper.NextVec2Dir();
+                Dust.NewDustPerfect(Projectile.Center + dir * Main.rand.Next(32, 36), ModContent.DustType<PixelPoint>()
+                        , dir * Main.rand.NextFloat(2.5f, 3), newColor: WhiteGardenia.LightGreen
+                    , Scale: Main.rand.NextFloat(1.5f,2f));
+            }
+
+            for (int i = 0; i < 7; i++)
+            {
+                Vector2 dir = Helper.NextVec2Dir(2, 4);
+                Dust.NewDustPerfect(Projectile.Center + dir * Main.rand.NextFloat(2, 10), ModContent.DustType<PixelPoint>(), dir, newColor: Color.Silver
+                    , Scale: 2f);
+
+                var p = PRTLoader.NewParticle<PixelLine>(Projectile.Center + Main.rand.NextVector2Circular(8, 8)
+                    , Projectile.velocity.RotateByRandom(-0.3f,0.3f) * Main.rand.NextFloat(0.2f, 0.5f), newColor: WhiteGardenia.LightGreen
+                      , Scale: 1);
+                p.TrailCount = Main.rand.Next(12, 20);
+                p.fadeFactor = Main.rand.NextFloat(0.8f, 0.9f);
+                p.useStartLimit = false;
+            }
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Projectile.DrawShadowTrails(Color.White, 0.75f, 0.75f / 15, 0, 15, 1);
+            Projectile.QuickDraw(Color.White,0);
             return false;
         }
     }
