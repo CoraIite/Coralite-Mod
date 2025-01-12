@@ -2,7 +2,7 @@
 
 namespace Coralite.Content.ModPlayers.DigDigDig
 {
-    public class DigDigDigPlayer : ModPlayer
+    public partial class DigDigDigPlayer : ModPlayer
     {
         /// <summary>
         /// 灵感值
@@ -10,6 +10,10 @@ namespace Coralite.Content.ModPlayers.DigDigDig
         public int Muse;
 
         public override void PreUpdate()
+        {
+        }
+
+        public override void ResetEffects()
         {
         }
 

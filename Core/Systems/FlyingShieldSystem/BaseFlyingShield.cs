@@ -61,6 +61,8 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
         public bool firstShoot = true;
         public bool recordTileCollide;
 
+        private bool init = true;
+
         public enum FlyingShieldStates
         {
             Shooting,
@@ -86,28 +88,6 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
             Projectile.localNPCHitCooldown = 24;
         }
 
-        public override void OnSpawn(IEntitySource source)
-        {
-            trailWidth = Projectile.width / 2;
-            shootSpeed = Projectile.velocity.Length();
-            SetOtherValues();
-            UpdateShieldAccessory(accessory => accessory.OnInitialize(this));
-            UpdateShieldAccessory(accessory => accessory.PostInitialize(this));
-            Timer = flyingTime;
-
-            Projectile.velocity = Projectile.velocity.SafeNormalize(Vector2.Zero) * shootSpeed;
-            Projectile.oldPos = new Vector2[trailCachesLength];
-            Projectile.oldRot = new float[trailCachesLength];
-            Projectile.rotation = Projectile.velocity.ToRotation();
-            for (int i = 0; i < trailCachesLength; i++)
-            {
-                Projectile.oldPos[i] = Projectile.Center;
-                Projectile.oldRot[i] = Projectile.rotation;
-            }
-            State = (int)FlyingShieldStates.Shooting;
-            recordTileCollide = Projectile.tileCollide;
-        }
-
         /// <summary>
         /// 在这里设置其他属性
         /// 射击时间 <see cref="flyingTime"/><br></br>
@@ -120,6 +100,29 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
 
         public override void AI()
         {
+            if (init)
+            {
+                init = false;
+                trailWidth = Projectile.width / 2;
+                shootSpeed = Projectile.velocity.Length();
+                SetOtherValues();
+                UpdateShieldAccessory(accessory => accessory.OnInitialize(this));
+                UpdateShieldAccessory(accessory => accessory.PostInitialize(this));
+                Timer = flyingTime;
+
+                Projectile.velocity = Projectile.velocity.SafeNormalize(Vector2.Zero) * shootSpeed;
+                Projectile.oldPos = new Vector2[trailCachesLength];
+                Projectile.oldRot = new float[trailCachesLength];
+                Projectile.rotation = Projectile.velocity.ToRotation();
+                for (int i = 0; i < trailCachesLength; i++)
+                {
+                    Projectile.oldPos[i] = Projectile.Center;
+                    Projectile.oldRot[i] = Projectile.rotation;
+                }
+                State = (int)FlyingShieldStates.Shooting;
+                recordTileCollide = Projectile.tileCollide;
+            }
+
             switch (State)
             {
                 default:

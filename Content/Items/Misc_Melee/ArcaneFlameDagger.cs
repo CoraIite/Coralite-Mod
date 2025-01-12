@@ -163,7 +163,6 @@ namespace Coralite.Content.Items.Misc_Melee
                 vector5 *= num28;
                 Projectile.velocity = -vector5 * 0.9f;
                 Projectile.netUpdate = true;
-
             }
 
             if (hit.Crit)//生成额外斩击弹幕
