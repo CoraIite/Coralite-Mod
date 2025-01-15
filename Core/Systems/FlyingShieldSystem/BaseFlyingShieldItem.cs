@@ -138,7 +138,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
             if (Player.TryGetModPlayer(out CoralitePlayer cp))
             {
                 if ((Player.ownedProjectileCounts[Item.shoot] > 0 || !Player.ItemTimeIsZero) && !cp.FlyingShieldLRMeantime)
-                    return true;
+                    return false;
 
                 foreach (var acc in cp.FlyingShieldAccessories)
                 {

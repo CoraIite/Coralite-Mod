@@ -127,10 +127,13 @@ namespace Coralite.Content.ModPlayers
         /// <returns></returns>
         public bool CheckDashControllers()
         {
-            if (DashControllers[0].Dash(Player, DashDir))
+            foreach (var controller in DashControllers)
             {
-                DashDelay = (int)(DashDelay * DashDelayModifyer.ApplyTo(1));
-                return true;
+                if (controller.Dash(Player, DashDir))
+                {
+                    DashDelay = (int)(DashDelay * DashDelayModifyer.ApplyTo(1));
+                    return true;
+                }
             }
 
             return false;
