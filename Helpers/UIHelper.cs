@@ -1,13 +1,10 @@
 ﻿using Coralite.Content.CoraliteNotes;
 using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
 using Terraria.UI;
 using Terraria.UI.Chat;
-using static System.Net.Mime.MediaTypeNames;
-using static Terraria.GameContent.Animations.IL_Actions.Sprites;
 
 namespace Coralite.Helpers
 {
@@ -39,6 +36,12 @@ namespace Coralite.Helpers
         {
             element.Width.Set(widthPixel, widthPercent);
             element.Height.Set(heightPixel, heightPercent);
+        }
+
+        public static void SetSize(this UIElement element, Vector2 size, float widthPercent = 0, float heightPercent = 0)
+        {
+            element.Width.Set(size.X, widthPercent);
+            element.Height.Set(size.Y, heightPercent);
         }
 
         public static void SetTopLeft(this UIElement element, float topPixel, float leftPixel, float topPercent = 0, float leftPercent = 0)

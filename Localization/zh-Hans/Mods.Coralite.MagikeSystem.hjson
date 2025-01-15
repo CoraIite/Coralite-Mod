@@ -402,4 +402,6 @@ MagikeSystem: {
 		ClickToShow: 点击以展开显示切换按钮
 		ClickToClose: 点击以收起显示切换按钮
 	}
+
+	PressShiftToShowMore: "[c/808080:按shift显示更多]"
 }

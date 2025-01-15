@@ -4,6 +4,7 @@ using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.UI;
 
@@ -16,22 +17,28 @@ namespace Coralite.Content.UI.UILib
     /// </summary>
     public abstract class UI_BookPanel : UIElement
     {
-        public Asset<Texture2D> PanelTex;
+        public ATex PanelTex;
         public readonly int topPageMargins;
         public readonly int bottomPageMargins;
         public readonly int leftPageMargins;
         public readonly int rightPageMargins;
 
-        public float scale;
         public float alpha;
 
         public UIPageGroup[] pageGroups;
         //public Dictionary<UIPageGroup,int> pageGroupIndexes;
 
+        public BookPageArrow LeftArrow;
+        public BookPageArrow RightArrow;
+
         /// <summary>
         /// 左边那一页的ID
         /// </summary>
         public int currentDrawingPage;
+
+        public List<UIElement> PanelElements => Elements;
+
+        public List<UIElement> Pages = new List<UIElement>();
 
         /// <summary>
         /// 请注意！！！
@@ -41,14 +48,13 @@ namespace Coralite.Content.UI.UILib
         /// <param name="topPageMargins">顶部页边距</param>
         /// <param name="leftPageMargins">左侧内页边距</param>
         /// <param name="rightPageMargins">右侧内页边距</param>
-        public UI_BookPanel(Asset<Texture2D> PanelTex, int topPageMargins, int bottomPageMargins, int leftPageMargins, int rightPageMargins, float scale = 1f)
+        public UI_BookPanel(ATex PanelTex, int topPageMargins, int bottomPageMargins, int leftPageMargins, int rightPageMargins)
         {
             this.PanelTex = PanelTex;
-            this.topPageMargins = (int)(topPageMargins * scale);
-            this.bottomPageMargins = (int)(bottomPageMargins * scale);
-            this.leftPageMargins = (int)(leftPageMargins * scale);
-            this.rightPageMargins = (int)(rightPageMargins * scale);
-            this.scale = scale;
+            this.topPageMargins = topPageMargins;
+            this.bottomPageMargins = bottomPageMargins;
+            this.leftPageMargins = leftPageMargins;
+            this.rightPageMargins = rightPageMargins;
         }
 
         public abstract void InitPageGroups();
@@ -69,6 +75,12 @@ namespace Coralite.Content.UI.UILib
             }
         }
 
+        public void InitArrows(ATex leftTex,ATex rightTex)
+        {
+            LeftArrow = new BookPageArrow(this, leftTex, BookPageArrow.ArrowType.Left);
+            RightArrow = new BookPageArrow(this, rightTex , BookPageArrow.ArrowType.Right);
+        }
+
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
             //就只是绘制面板
@@ -87,17 +99,17 @@ namespace Coralite.Content.UI.UILib
 
             if (alpha == 1f)
             {
-                bool hasRightPage = Elements.Count > currentDrawingPage + 1;
+                bool hasRightPage = Pages.Count > currentDrawingPage + 1;
 
-                Elements[currentDrawingPage]?.Draw(spriteBatch);
+                Pages[currentDrawingPage]?.Draw(spriteBatch);
                 if (hasRightPage)
-                    Elements[currentDrawingPage + 1]?.Draw(spriteBatch);
+                    Pages[currentDrawingPage + 1]?.Draw(spriteBatch);
 
                 //绘制Non，先判断一下是否继承了接口然后再进行绘制
-                bool shouldDrawLeftNon = Elements[currentDrawingPage] is IDrawNonPremultiplied;
+                bool shouldDrawLeftNon = Pages[currentDrawingPage] is IDrawNonPremultiplied;
                 bool shouldDrawRightNon = false;
                 if (hasRightPage)
-                    shouldDrawRightNon = Elements[currentDrawingPage + 1] is IDrawNonPremultiplied;
+                    shouldDrawRightNon = Pages[currentDrawingPage + 1] is IDrawNonPremultiplied;
 
                 if (shouldDrawLeftNon || shouldDrawLeftNon)     //如果都不是的话那就不浪费CPU去end begin了
                 {
@@ -106,32 +118,33 @@ namespace Coralite.Content.UI.UILib
                                     spriteBatch.GraphicsDevice.DepthStencilState, spriteBatch.GraphicsDevice.RasterizerState, null, Main.UIScaleMatrix);
 
                     if (shouldDrawLeftNon)
-                        (Elements[currentDrawingPage] as IDrawNonPremultiplied).DrawNonPremultiplied(spriteBatch);
+                        (Pages[currentDrawingPage] as IDrawNonPremultiplied).DrawNonPremultiplied(spriteBatch);
                     if (shouldDrawRightNon)
-                        (Elements[currentDrawingPage + 1] as IDrawNonPremultiplied).DrawNonPremultiplied(spriteBatch);
+                        (Pages[currentDrawingPage + 1] as IDrawNonPremultiplied).DrawNonPremultiplied(spriteBatch);
 
                     spriteBatch.End();
                     spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.AnisotropicClamp,
                                     spriteBatch.GraphicsDevice.DepthStencilState, spriteBatch.GraphicsDevice.RasterizerState, null, Main.UIScaleMatrix);
                 }
 
+                LeftArrow.Draw(spriteBatch);
+                RightArrow.Draw(spriteBatch);
             }
         }
 
         public void DrawPanel(SpriteBatch spriteBatch)
         {
             Vector2 position = GetDimensions().Position();
-            spriteBatch.Draw(PanelTex.Value, position, null, Color.White * alpha, 0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(PanelTex.Value, position, null, Color.White * alpha, 0f, Vector2.Zero, 1, SpriteEffects.None, 0f);
         }
 
         public override void Recalculate()
         {
-            Elements.Clear();
+            RemoveAllChildren();
+            Pages.Clear();
 
             if (pageGroups is null)
-            {
                 return;
-            }
 
             for (int i = 0; i < pageGroups.Length; i++)//刷新一下
             {
@@ -139,20 +152,20 @@ namespace Coralite.Content.UI.UILib
                     continue;
                 for (int j = 0; j < pageGroups[i].Pages.Length; j++)
                     if (pageGroups[i].Pages[j].CanShowInBook)
-                        Append(pageGroups[i].Pages[j]);
+                        AppendPage(pageGroups[i].Pages[j]);
             }
 
             //防止出现越界的情况
-            if (Elements.Count >= 2)
-                currentDrawingPage = Math.Clamp(currentDrawingPage, 0, Elements.Count - 1);
+            if (Pages.Count >= 2)
+                currentDrawingPage = Math.Clamp(currentDrawingPage, 0, Pages.Count - 1);
             else
                 currentDrawingPage = 0;
             currentDrawingPage = currentDrawingPage / 2 * 2;//利用神奇算法让它变为偶数
 
             //设置可以控制的UI页
-            for (int i = Elements.Count - 1; i >= 0; i--)
+            for (int i = Pages.Count - 1; i >= 0; i--)
             {
-                UIElement Element = Elements[i];
+                UIElement Element = Pages[i];
                 if (i == currentDrawingPage || i == (currentDrawingPage + 1))
                 {
                     Element.IgnoresMouseInteraction = false;
@@ -164,8 +177,21 @@ namespace Coralite.Content.UI.UILib
 
             SetIndexes();
             InitalizePages();
+            SetArrows();
 
             base.Recalculate();
+        }
+
+        /// <summary>
+        /// 设置翻页箭头
+        /// </summary>
+        public void SetArrows()
+        {
+            LeftArrow.SetTopLeft(PanelTex.Height() - bottomPageMargins, leftPageMargins);
+            RightArrow.SetTopLeft(PanelTex.Height() - bottomPageMargins, PanelTex.Width() - leftPageMargins-RightArrow.Width.Pixels);
+
+            Append(LeftArrow);
+            Append(RightArrow);
         }
 
         public void SetIndexes()
@@ -196,22 +222,22 @@ namespace Coralite.Content.UI.UILib
         /// </summary>
         public override void RecalculateChildren()
         {
-            if (currentDrawingPage >= Elements.Count || Elements.Count == 0)
+            if (currentDrawingPage >= Pages.Count || Pages.Count == 0)
                 return;
-            Elements[currentDrawingPage]?.Recalculate();
-            if (Elements.Count > currentDrawingPage + 1)
-                Elements[currentDrawingPage + 1]?.Recalculate();
+            Pages[currentDrawingPage]?.Recalculate();
+            if (Pages.Count > currentDrawingPage + 1)
+                Pages[currentDrawingPage + 1]?.Recalculate();
         }
 
-        public int GetPageIndex<T>() where T : UIPage => Elements.FindIndex(n => n is T);
+        public int GetPageIndex<T>() where T : UIPage => Pages.FindIndex(n => n is T);
 
         /// <summary>
         /// 初始化尺寸，请保证你调用了这个方法
         /// </summary>
         public void InitSize()
         {
-            Width.Set(PanelTex.Width() * scale, 0f);
-            Height.Set(PanelTex.Height() * scale, 0f);
+            Width.Set(PanelTex.Width() , 0f);
+            Height.Set(PanelTex.Height() , 0f);
         }
 
         /// <summary>
@@ -234,33 +260,39 @@ namespace Coralite.Content.UI.UILib
         /// </summary>
         public void InitalizePages()
         {
-            float halfPage = PanelTex.Width() * scale / 2f;
-            float pageHeigh = PanelTex.Height() * scale;
-            for (int i = 0; i < Elements.Count; i++)
+            float halfPage = PanelTex.Width()  / 2f;
+            float pageHeigh = PanelTex.Height() ;
+            for (int i = 0; i < Pages.Count; i++)
             {
                 //设置尺寸及上下的内页边距
-                Elements[i].Width.Set(halfPage, 0f);
-                Elements[i].Height.Set(pageHeigh, 0f);
-                Elements[i].PaddingTop = topPageMargins;
-                Elements[i].PaddingBottom = topPageMargins;
+                Pages[i].Width.Set(halfPage, 0f);
+                Pages[i].Height.Set(pageHeigh, 0f);
+                Pages[i].PaddingTop = topPageMargins;
+                Pages[i].PaddingBottom = topPageMargins;
 
-                Elements[i].Top.Set(0, 0f);
+                Pages[i].Top.Set(0, 0f);
 
                 if (i % 2 == 0)
                 {
                     //设置左侧的位置以及内页边距
-                    Elements[i].Left.Set(0, 0f);
-                    Elements[i].PaddingLeft = leftPageMargins;
-                    Elements[i].PaddingRight = rightPageMargins;
+                    Pages[i].Left.Set(0, 0f);
+                    Pages[i].PaddingLeft = leftPageMargins;
+                    Pages[i].PaddingRight = rightPageMargins;
                 }
                 else
                 {
                     //右侧的页数要反一下
-                    Elements[i].Left.Set(halfPage, 0f);
-                    Elements[i].PaddingRight = leftPageMargins;
-                    Elements[i].PaddingLeft = rightPageMargins;
+                    Pages[i].Left.Set(halfPage, 0f);
+                    Pages[i].PaddingRight = leftPageMargins;
+                    Pages[i].PaddingLeft = rightPageMargins;
                 }
             }
+        }
+
+        public void AppendPage(UIElement element)
+        {
+            Append(element);
+            Pages.Add(element);
         }
 
         public bool TryGetGroup<T>(out T group) where T : UIPageGroup
@@ -342,7 +374,7 @@ namespace Coralite.Content.UI.UILib
         /// <returns></returns>
         public Vector2 GetPageSize()
         {
-            return new Vector2((PanelTex.Width() * scale / 2) - leftPageMargins, (PanelTex.Height() * scale) - (2 * topPageMargins));
+            return new Vector2((PanelTex.Width() / 2f) - leftPageMargins-rightPageMargins, PanelTex.Height()  - ( topPageMargins+bottomPageMargins));
         }
     }
 }

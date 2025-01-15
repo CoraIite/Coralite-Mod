@@ -1,7 +1,6 @@
 ﻿using Coralite.Content.UI;
 using Coralite.Content.UI.MagikeApparatusPanel;
 using Coralite.Core.Loaders;
-using Coralite.Core.Systems.MagikeSystem.Particles;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Core.Systems.MagikeSystem.Tiles;
 using Coralite.Helpers;
@@ -14,6 +13,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
+using Terraria.ID;
 using Terraria.ModLoader.IO;
 using Terraria.ModLoader.UI;
 using Terraria.ModLoader.UI.Elements;
@@ -27,6 +27,20 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
     {
         public MagikeCraftRecipe ChosenResipe { get; set; }
 
+        /// <summary>
+        /// 还有需要多少魔能
+        /// </summary>
+        public int RequiredMagike {  get; set; }
+        /// <summary>
+        /// 每次消耗多少魔能
+        /// </summary>
+        public int PerCost {  get; set; }
+
+        /// <summary>
+        /// 消耗多少的百分比，根据等级提升
+        /// </summary>
+        public float CostPercent {  get; set; }
+
         public override void Initialize()
         {
             Upgrade(MALevel.None);
@@ -39,12 +53,15 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public override void Work()
         {
+            RequiredMagike = 0;
+            PerCost = 0;
+
             if (ChosenResipe == null)
                 return;
 
             //检测魔能量和条件是否足够
             MagikeCraftAttempt attempt = new MagikeCraftAttempt();
-            ChosenResipe.CanCraft_CheckMagike(Entity.GetMagikeContainer().Magike, ref attempt);
+            //ChosenResipe.CanCraft_CheckMagike(Entity.GetMagikeContainer().Magike, ref attempt);
             ChosenResipe.CanCraft_CheckCondition(ref attempt);
 
             if (!attempt.Success)
@@ -60,7 +77,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             }
 
             //先减少魔能
-            Entity.GetMagikeContainer().ReduceMagike(ChosenResipe.magikeCost);
+            //Entity.GetMagikeContainer().ReduceMagike(ChosenResipe.magikeCost);
 
             if (!WorkCheck_CostMainItem())//消耗主要物品与次要物品
                 return;
@@ -72,6 +89,53 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             //生成物品并放入
             if (Entity.TryGetComponent(MagikeComponentID.ItemGetOnlyContainer, out GetOnlyItemContainer container))
                 container.AddItem(ChosenResipe.ResultItem.type, ChosenResipe.ResultItem.stack);
+        }
+
+        public override bool DuringWork()
+        {
+            OnWorking();
+
+            //每隔固定时间消耗一次魔能
+            if (UpdateTime())
+            {
+                if (CostMagike())
+                    return true;
+                else
+                {
+                    Timer = WorkTime;
+                    return false;
+                }
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// 消耗魔能
+        /// </summary>
+        /// <returns>如果消耗完魔能，返回 <see cref="true"/> </returns>
+        public bool CostMagike()
+        {
+            MagikeContainer magikeContainer = Entity.GetMagikeContainer();
+
+            int magikeCost = PerCost;
+
+            if (magikeCost > RequiredMagike)
+                magikeCost = RequiredMagike;
+            if (magikeCost > magikeContainer.Magike)
+                magikeCost = magikeContainer.Magike;
+
+            magikeContainer.ReduceMagike(magikeCost);
+            RequiredMagike -= magikeCost;
+
+            return RequiredMagike < 1;
+        }
+
+        public void SetPerCost()
+        {
+            PerCost = (int)(RequiredMagike * CostPercent);
+            if (PerCost < 1)
+                PerCost = 1;
         }
 
         /// <summary>
@@ -351,28 +415,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         {
             base.StarkWork();
 
-            MagikeTP entity = Entity;
-            Point16 pos = entity.Position;
-
-            if (Helper.IsAreaOnScreen(pos.ToWorldCoordinates() - Main.screenPosition, new Vector2(16 * 20)))//在视野内生成特殊合成粒子
-            {
-                Tile t = Framing.GetTileSafely(pos);
-                ModTile mt = TileLoader.GetTile(t.TileType);
-
-                if (mt is BaseCraftAltarTile altartile)
-                {
-                    GetMagikeAlternateData(pos.X, pos.Y, out TileObjectData data, out MagikeAlternateStyle alternate);
-
-                    float rotation = alternate.GetAlternateRotation();
-                    var level = MagikeSystem.FrameToLevel(t.TileType, t.TileFrameX / data.CoordinateFullWidth);
-
-                    if (!level.HasValue)
-                        return;
-
-                    CraftParticle.Spawn(pos, Helper.GetMagikeTileCenter(pos.X, pos.Y) + altartile.GetFloatingOffset(rotation, level.Value)
-                        , WorkTime, ChosenResipe);
-                }
-            }
+            RequiredMagike = ChosenResipe.magikeCost;
+            SetPerCost();
         }
 
         #endregion
@@ -501,25 +545,94 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         #endregion
 
+        #region 绘制
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            if (!IsWorking)
+                return;
+
+            MagikeTP entity = Entity;
+            Point16 pos = entity.Position;
+            Tile t = Framing.GetTileSafely(pos);
+            ModTile mt = TileLoader.GetTile(t.TileType);
+
+            if (mt is BaseCraftAltarTile altartile)
+            {
+                GetMagikeAlternateData(pos.X, pos.Y, out TileObjectData data, out MagikeAlternateStyle alternate);
+
+                float rotation = alternate.GetAlternateRotation();
+                var level = MagikeSystem.FrameToLevel(t.TileType, t.TileFrameX / data.CoordinateFullWidth);
+
+                if (!level.HasValue)
+                    return;
+
+                Vector2 position = Helper.GetMagikeTileCenter(pos.X, pos.Y) + altartile.GetFloatingOffset(rotation, level.Value);
+                Texture2D mainTex = CoraliteAssets.Halo.CircleSPA.Value;
+                float factor = Coralite.Instance.BezierEaseSmoother.Smoother(RequiredMagike / ChosenResipe.magikeCost);
+                float Length = 12 + factor * 44;
+                float alpha = 1;
+                if (factor < 0.1f)
+                    alpha = Helper.Lerp(0, 1, factor / 0.1f);
+                else if (factor > 0.7f)
+                    alpha = Helper.Lerp(1, 0, (factor - 0.7f) / 0.3f);
+
+                if (Timer % 3 == 0 && Main.rand.NextBool())
+                {
+                    Vector2 dir = Helper.NextVec2Dir();
+                    Dust dust = Dust.NewDustPerfect(position - dir * 26, DustID.RainbowMk2, dir * Main.rand.NextFloat(1.5f, 3f)
+                        , newColor: Coralite.MagicCrystalPink, Scale: 0.8f);
+                    dust.noGravity = true;
+                }
+
+                position = position - Main.screenPosition;
+                Color c = Coralite.MagicCrystalPink;
+                c*=(200f/255f * alpha);
+                var origin = mainTex.Size() / 2;
+                float scale = Length * 2 / mainTex.Width;
+                scale *= 1f;
+
+                spriteBatch.Draw(mainTex, position, null, c, 0, origin, scale, 0, 0);
+
+                Texture2D tex2 = CoraliteAssets.Halo.RuneSPA.Value;
+
+                origin = tex2.Size() / 2;
+                scale = Length * 2 / tex2.Width;
+                scale *= 1.1f;
+                spriteBatch.Draw(tex2, position, null, c, Main.GlobalTimeWrappedHourly, origin, scale, 0, 0);
+
+                //c = Color.White;
+                //c.A = (byte)(255 * alpha);
+
+                spriteBatch.Draw(tex2, position, null, c, Main.GlobalTimeWrappedHourly, origin, scale, 0, 0);
+            }
+        }
+
+        #endregion
+
         public override void SaveData(string preName, TagCompound tag)
         {
             base.SaveData(preName, tag);
 
-            if (ChosenResipe != null)
-            {
-                tag.Add("ResultItem", ChosenResipe.ResultItem);
-                tag.Add("MainItem", ChosenResipe.MainItem);
-            }
+            tag.Add(nameof(CostPercent), CostPercent);
+
+            ChosenResipe?.Save(tag);
+
+            if (IsWorking)
+                tag.Add(nameof(RequiredMagike), RequiredMagike);
         }
 
         public override void LoadData(string preName, TagCompound tag)
         {
             base.LoadData(preName, tag);
 
-            if (tag.TryGet("ResultItem", out Item resultItem) && tag.TryGet("MainItem", out Item mainItem)
-                && MagikeSystem.TryGetMagikeCraftRecipes(mainItem.type, out List<MagikeCraftRecipe> recipes))
+            CostPercent = tag.GetFloat(nameof(CostPercent));
+            ChosenResipe = MagikeCraftRecipe.Load(tag);
+
+            if (IsWorking)
             {
-                ChosenResipe = recipes.FirstOrDefault(r => r.ResultItem.type == resultItem.type, null);
+                RequiredMagike = tag.GetInt(nameof(RequiredMagike));
+                SetPerCost();
             }
         }
     }
@@ -950,7 +1063,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             var slot = new CraftSlot(recipe, CraftSlot.SlotType.ResultItem);
             slot.SetSize(46, 0, 0, 1);
             grid.Add(slot);
-            grid.Add(new CraftMaagikeBar(recipe));
+            //grid.Add(new CraftMaagikeBar(recipe));
 
             if (recipe.RequiredItems.Count > 0)
                 for (int i = 0; i < recipe.RequiredItems.Count; i++)
@@ -1044,6 +1157,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             base.LeftClick(evt);
 
             Helper.PlayPitched("UI/Tick", 0.4f, 0);
+
+            if (!CraftController.altar.IsWorking)
             CraftController.altar.ChosenResipe = recipe;
         }
 

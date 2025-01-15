@@ -68,7 +68,7 @@ FairySystem: {
 BossBarSystem.DontTakeDamage: 不可攻击！
 
 FlyingShieldSystem: {
-	FSDescriptionShort: 飞盾（按shift查看更多）
+	FSDescriptionShort: "[c/808080:飞盾（按shift查看更多）]"
 	FSDescriptionLong:
 		'''
 		左键以丢出盾牌，右键进行防御

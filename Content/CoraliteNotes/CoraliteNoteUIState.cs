@@ -1,5 +1,7 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.UI.BookUI;
+using Coralite.Core;
 using Coralite.Helpers;
+using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.UI;
@@ -13,6 +15,9 @@ namespace Coralite.Content.CoraliteNotes
         public override int UILayer(List<GameInterfaceLayer> layers) => layers.FindIndex(layer => layer.Name.Equals("Vanilla: Inventory"));
 
         public static CoraliteNotePanel BookPanel = new();
+
+        public static BookPageArrow LeftArrow;
+        public static BookPageArrow RightArrow;
 
         public bool visible;
         public bool openingBook;
@@ -35,6 +40,8 @@ namespace Coralite.Content.CoraliteNotes
             BookPanel.SetPosition();
             BookPanel.InitPageGroups();
             BookPanel.InitGroups();
+            BookPanel.InitArrows(ModContent.Request<Texture2D>(AssetDirectory.UI+ "PageArrowLeft",ReLogic.Content.AssetRequestMode.ImmediateLoad)
+                , ModContent.Request<Texture2D>(AssetDirectory.UI + "PageArrowRight", ReLogic.Content.AssetRequestMode.ImmediateLoad));
             BookPanel.OnScrollWheel += PlaySound;
             Append(BookPanel);
         }
@@ -47,12 +54,13 @@ namespace Coralite.Content.CoraliteNotes
         public override void Recalculate()
         {
             //BookPanel = new();
-            //BookPanel.scale = 1;
-            //BookPanel.SetPosition(basePos);
+            //BookPanel.SetPosition();
             //BookPanel.InitSize();
             BookPanel?.SetPosition();
             //BookPanel.InitPageGroups();
             //BookPanel.InitGroups();
+            //BookPanel.InitArrows(ModContent.Request<Texture2D>(AssetDirectory.UI + "PageArrowLeft", ReLogic.Content.AssetRequestMode.ImmediateLoad)
+            //    , ModContent.Request<Texture2D>(AssetDirectory.UI + "PageArrowRight", ReLogic.Content.AssetRequestMode.ImmediateLoad));
             //BookPanel.OnScrollWheel += PlaySound;
 
             //RemoveAllChildren();
@@ -178,7 +186,7 @@ namespace Coralite.Content.CoraliteNotes
             //Helper.PlayPitched("Stars/StarsSpawn", 0.4f, 0f, Main.LocalPlayer.Center);
             BookPanel.alpha = 0;
             BookPanel.OverflowHidden = true;
-            bookSize = BookPanel.PanelTex.Size() * BookPanel.scale;
+            bookSize = BookPanel.PanelTex.Size();
             bookWidth = 0;
             //BookPanel.Width.Set(0, 0);
             Timer = 0;

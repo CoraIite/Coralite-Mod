@@ -310,6 +310,10 @@ namespace Coralite.Core
             /// 看上去像是一圈符文
             /// </summary>
             public static ATex Rune { get; private set; }
+            /// <summary> 
+            /// 看上去像是一圈符文
+            /// </summary>
+            public static ATex RuneSPA { get; private set; }
 
             /// <summary> 
             /// 看上去像是一圈符文<br></br>
@@ -321,6 +325,10 @@ namespace Coralite.Core
             /// 一圈亮到暗，外加外发光
             /// </summary>
             public static ATex Circle { get; private set; }
+            /// <summary> 
+            /// 一圈亮到暗，外加外发光
+            /// </summary>
+            public static ATex CircleSPA { get; private set; }
 
             /// <summary> 
             /// 若隐若现的一圈

@@ -407,4 +407,6 @@ MagikeSystem: {
 		ClickToShow: Mods.Coralite.MagikeSystem.MagikeSystem.UIPanelText.ClickToShow
 		ClickToClose: Mods.Coralite.MagikeSystem.MagikeSystem.UIPanelText.ClickToClose
 	}
+
+	PressShiftToShowMore: Mods.Coralite.MagikeSystem.MagikeSystem.PressShiftToShowMore
 }

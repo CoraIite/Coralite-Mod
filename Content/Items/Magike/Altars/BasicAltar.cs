@@ -111,15 +111,16 @@ namespace Coralite.Content.Items.Magike.Altars
         {
             MagikeMaxBase = incomeLevel switch
             {
-                MALevel.MagicCrystal => MagikeHelper.CalculateMagikeCost(MALevel.MagicCrystal, 32, 60 * 10),
-                MALevel.Glistent => MagikeHelper.CalculateMagikeCost(MALevel.Glistent, 32, 60 * 10),
-                MALevel.Shadow => MagikeHelper.CalculateMagikeCost(MALevel.Shadow, 32, 60 * 10),
-                MALevel.CrystallineMagike => MagikeHelper.CalculateMagikeCost(MALevel.CrystallineMagike, 32, 60 * 10),
-                MALevel.Hallow => MagikeHelper.CalculateMagikeCost(MALevel.Hallow, 32, 60 * 10),
+                MALevel.MagicCrystal => MagikeHelper.CalculateMagikeCost(MALevel.MagicCrystal, 16, 60 * 2),
+                MALevel.Glistent => MagikeHelper.CalculateMagikeCost(MALevel.Glistent, 16, 60 * 2),
+                MALevel.Shadow => MagikeHelper.CalculateMagikeCost(MALevel.Shadow, 16, 60 * 2),
+                MALevel.CrystallineMagike => MagikeHelper.CalculateMagikeCost(MALevel.CrystallineMagike, 32, 60 * 2),
+                MALevel.Hallow => MagikeHelper.CalculateMagikeCost(MALevel.Hallow, 16, 60 * 2),
                 MALevel.HolyLight => 1000_0000,
                 MALevel.SplendorMagicore => 35000,
                 _ => 0,
             };
+
             LimitMagikeAmount();
 
             AntiMagikeMaxBase = MagikeMaxBase * 2;
@@ -140,15 +141,26 @@ namespace Coralite.Content.Items.Magike.Altars
     {
         public override void Upgrade(MALevel incomeLevel)
         {
-            var second = incomeLevel switch
+            float second = incomeLevel switch
             {
-                MALevel.MagicCrystal => 15,
-                MALevel.Glistent => 13,
-                MALevel.Shadow => 11,
-                MALevel.CrystallineMagike => 9,
-                MALevel.Hallow => 7,
-                MALevel.HolyLight => 5,
-                _ => (float)(10_0000_0000 / 60),
+                MALevel.MagicCrystal => 1,
+                MALevel.Glistent => 1,
+                MALevel.Shadow => 0.9f,
+                MALevel.CrystallineMagike => 0.5f,
+                MALevel.Hallow => 0.5f,
+                MALevel.HolyLight => 0.4f,
+                _ => 10_0000_0000 / 60,
+            };
+
+            CostPercent = incomeLevel switch
+            {
+                MALevel.MagicCrystal => 0.05f,
+                MALevel.Glistent => 0.05f,
+                MALevel.Shadow => 0.07f,
+                MALevel.CrystallineMagike => 0.1f,
+                MALevel.Hallow => 0.1f,
+                MALevel.HolyLight => 0.13f,
+                _ => 0,
             };
 
             WorkTimeBase = (int)(second * 60);

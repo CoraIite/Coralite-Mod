@@ -2,6 +2,7 @@
 using Coralite.Core.Systems.MagikeSystem.Tiles;
 using Coralite.Helpers;
 using InnoVault.TileProcessors;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -83,6 +84,11 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
             RemoveAllComponent();
         }
 
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            foreach (var component in ComponentsCache)
+                component.Draw(spriteBatch);
+        }
 
         #region 网络同步与数据存储
 

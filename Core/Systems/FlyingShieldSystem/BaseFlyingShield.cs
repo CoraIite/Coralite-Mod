@@ -5,7 +5,6 @@ using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.DataStructures;
 
 namespace Coralite.Core.Systems.FlyingShieldSystem
 {

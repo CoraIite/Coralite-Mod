@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Terraria;
+using Terraria.ID;
 
 namespace Coralite.Core.Systems.MagikeSystem.BaseItems
 {
@@ -30,7 +32,18 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
 
             string text = MagikeSystem.GetItemDescriptionText(MagikeSystem.ItemDescriptionID.PolarizedFilter) + "\n  ";
 
-            int lineCountMax = 0;
+            int lineCount = 0;
+            int total = 0;
+            bool showNmae = false;
+            int lineCountMax = 8;
+            bool shiftPressed = Main.keyState.PressingShift();
+
+            if (shiftPressed)
+            {
+                showNmae = true;
+                lineCountMax = 3;
+            }
+
             foreach (var i in keyValuePairs)
             {
                 if (i.Value == MALevel.None)
@@ -38,15 +51,24 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
 
                 int itemType = MagikeSystem.GetPolarizedFilterItemType(i.Value);
                 text = string.Concat(text, "[i:", itemType.ToString(), "]");
-                lineCountMax++;
-                if (lineCountMax > 8)
+                if (showNmae)
+                    text = string.Concat(text, ContentSamples.ItemsByType[itemType].Name);
+
+                lineCount++;
+                total++;
+                if (lineCount > lineCountMax)
                 {
-                    lineCountMax = 0;
-                    text += Environment.NewLine + "  ";
+                    lineCount = 0;
+                    if (total < keyValuePairs.Count-1)
+                        text += Environment.NewLine + "  ";
                 }
             }
 
+            if (!shiftPressed)
+                text += Environment.NewLine + MagikeSystem.PressShiftToShowMore.Value;
+
             tooltipLine = new TooltipLine(Mod, "MagikeApparatusLevelItems", text);
+
             return true;
         }
     }

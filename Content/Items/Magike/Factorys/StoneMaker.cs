@@ -293,7 +293,7 @@ namespace Coralite.Content.Items.Magike.Factorys
             }
         }
 
-        public override void OnWork()
+        public override void OnWorking()
         {
             float factor = 1 - Timer / (float)WorkTime;
 
