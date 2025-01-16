@@ -372,6 +372,10 @@ namespace Coralite.Core
             /// 受击扩散效果
             /// </summary>
             public static ATex Impact { get; private set; }
+            /// <summary> 
+            /// 受击扩散效果
+            /// </summary>
+            public static ATex ImpactA { get; private set; }
         }
 
         /// <summary>

@@ -5034,7 +5034,11 @@ FullMoon: {
 
 SeismicWave: {
 	DisplayName: 震波
-	Tooltip: ""
+	Tooltip:
+		'''
+		双击下键冲刺，命中敌怪或是地面后产生冲击波
+		[c/bac1ce:来自地下深处的震动]
+		'''
 }
 
 WhiteGardenia: {
