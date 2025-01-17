@@ -150,7 +150,7 @@ namespace Coralite.Core.Systems.MagikeSystem
 
             CanCraft_CheckCondition(ref attempt);
             CanCraft_ItemsCheck(mainItems, otherItems, ref attempt);
-            CanCraft_CheckMagike(magikeAmount, ref attempt);
+            //CanCraft_CheckMagike(magikeAmount, ref attempt);
 
             if (attempt.Success)
                 return true;

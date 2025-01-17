@@ -61,8 +61,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
             if (altar.IsWorking)
             {
                 frameBox = tex.Frame(3, 1, 2);
-                rotation += Coralite.Instance.BezierEaseSmoother.Smoother(altar.Timer, altar.WorkTime) * MathHelper.TwoPi * 15;
-                c *= (float)altar.Timer / altar.WorkTime;
+                rotation = (float)Main.timeForVisualEffects * 0.1f;
+                c *= (float)altar.RequiredMagike / altar.ChosenResipe.magikeCost;
             }
             else
             {

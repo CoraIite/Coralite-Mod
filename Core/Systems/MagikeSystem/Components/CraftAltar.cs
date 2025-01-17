@@ -30,16 +30,16 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// <summary>
         /// 还有需要多少魔能
         /// </summary>
-        public int RequiredMagike {  get; set; }
+        public int RequiredMagike { get; set; }
         /// <summary>
         /// 每次消耗多少魔能
         /// </summary>
-        public int PerCost {  get; set; }
+        public int PerCost { get; set; }
 
         /// <summary>
         /// 消耗多少的百分比，根据等级提升
         /// </summary>
-        public float CostPercent {  get; set; }
+        public float CostPercent { get; set; }
 
         public override void Initialize()
         {
@@ -99,15 +99,15 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             if (UpdateTime())
             {
                 if (CostMagike())
-                    return true;
+                    return false;
                 else
                 {
                     Timer = WorkTime;
-                    return false;
+                    return true;
                 }
             }
 
-            return false;
+            return true;
         }
 
         /// <summary>
@@ -569,7 +569,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
                 Vector2 position = Helper.GetMagikeTileCenter(pos.X, pos.Y) + altartile.GetFloatingOffset(rotation, level.Value);
                 Texture2D mainTex = CoraliteAssets.Halo.CircleSPA.Value;
-                float factor = Coralite.Instance.BezierEaseSmoother.Smoother(RequiredMagike / ChosenResipe.magikeCost);
+                float factor = Coralite.Instance.BezierEaseSmoother.Smoother((float)RequiredMagike / ChosenResipe.magikeCost);
                 float Length = 12 + factor * 44;
                 float alpha = 1;
                 if (factor < 0.1f)
@@ -587,7 +587,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
                 position = position - Main.screenPosition;
                 Color c = Coralite.MagicCrystalPink;
-                c*=(200f/255f * alpha);
+                c *= (200f / 255f * alpha);
                 var origin = mainTex.Size() / 2;
                 float scale = Length * 2 / mainTex.Width;
                 scale *= 1f;
@@ -605,6 +605,15 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 //c.A = (byte)(255 * alpha);
 
                 spriteBatch.Draw(tex2, position, null, c, Main.GlobalTimeWrappedHourly, origin, scale, 0, 0);
+
+                int total = ChosenResipe.RequiredItems.Count;
+                c = Color.White * alpha;
+
+                for (int i = 0; i < total; i++)
+                {
+                    float rot = Main.GlobalTimeWrappedHourly + (float)i / total * MathHelper.TwoPi;
+                    DrawItem(spriteBatch, ChosenResipe.RequiredItems[i], position + rot.ToRotationVector2() * Length * 0.9f, 48, c);
+                }
             }
         }
 
@@ -689,7 +698,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             if (_altar.IsWorking)//工作中就只显示百分比，不然就显示合成表
             {
-                float percent = 1 - (float)_altar.Timer / _altar.WorkTime;
+                float percent = 1 - (float)_altar.RequiredMagike / _altar.ChosenResipe.magikeCost;
                 string percentText = MathF.Round(100 * percent, 1) + "%";
 
                 frame = new Rectangle(0, tex.Height / 2, tex.Width, (int)(tex.Height / 2 * percent));
@@ -708,11 +717,13 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
                 if (IsMouseHovering)
                 {
-                    if (canCraft&&!i.IsAir)
+                    if (canCraft && !i.IsAir)
                     {
                         Main.LocalPlayer.mouseInterface = true;
                         ItemSlot.OverrideHover(ref i, ItemSlot.Context.InventoryItem);
                         ItemSlot.MouseHover(ref i, ItemSlot.Context.InventoryItem);
+
+                        UICommon.TooltipMouseText(_altar.RequiredMagike + "/" + _altar.ChosenResipe.magikeCost);
                     }
                     else
                     {
@@ -1159,7 +1170,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             Helper.PlayPitched("UI/Tick", 0.4f, 0);
 
             if (!CraftController.altar.IsWorking)
-            CraftController.altar.ChosenResipe = recipe;
+                CraftController.altar.ChosenResipe = recipe;
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
