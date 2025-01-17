@@ -183,7 +183,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                     }
                 }
             }
-            else if (Timer==DashTime+2)
+            else if (Timer == DashTime + 2)
             {
                 Owner.velocity.X = Projectile.velocity.X * 2;
                 LockOwnerItemTime();

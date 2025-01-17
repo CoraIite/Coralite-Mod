@@ -61,9 +61,9 @@ namespace Coralite.Content.Items.ThyphionSeries
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient<SteelBar>(15)
-                .AddIngredient(ItemID.HallowedBar, 12)
-                .AddIngredient(ItemID.SoulofMight, 12)
+                .AddIngredient<SteelBar>(10)
+                .AddIngredient(ItemID.HallowedBar, 10)
+                .AddIngredient(ItemID.SoulofMight, 15)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
         }
@@ -80,12 +80,16 @@ namespace Coralite.Content.Items.ThyphionSeries
             }
 
             Player.GetModPlayer<CoralitePlayer>().DashDelay = 90;
-            Player.GetModPlayer<CoralitePlayer>().DashTimer = 22;
+            Player.GetModPlayer<CoralitePlayer>().DashTimer = 24;
 
             float rot = (Main.MouseWorld - Player.Center).ToRotation();
+            if (rot<-1.57f)
+            {
+                rot += MathHelper.TwoPi;
+            }
             rot = MathHelper.Clamp(rot, 1.57f - 0.3f, 1.57f + 0.3f);
 
-            Player.velocity = rot.ToRotationVector2()*16;
+            Player.velocity = rot.ToRotationVector2() * 16;
             Player.AddImmuneTime(ImmunityCooldownID.General, 14);
             Player.immune = true;
 
@@ -106,7 +110,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
                 //生成手持弹幕
                 Projectile.NewProjectile(Player.GetSource_ItemUse(Player.HeldItem), Player.Center, newVelocity, ProjectileType<SeismicWaveHeldProj>(),
-                    Player.GetWeaponDamage(Item), Player.HeldItem.knockBack, Player.whoAmI, rot, 1, 18);
+                    Player.GetWeaponDamage(Item), Player.HeldItem.knockBack, Player.whoAmI, rot, 1, 24);
             }
 
             return true;
@@ -152,6 +156,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
                 if (Hited == 0)
                 {
+                    Owner.velocity = Rotation.ToRotationVector2() * 16;
                     for (int i = -1; i < 2; i++)
                         for (int j = -2; j < 2; j++)
                         {
@@ -180,7 +185,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             if (Hited == 1)
                 return;
 
-            Owner.velocity.Y = -8;
+            Owner.velocity.Y = -12;
             Strike();
         }
 
@@ -258,11 +263,11 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             float length = 20 + Timer / 16f*130;
 
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 5; i++)
             {
                 Vector2 dir = Helper.NextVec2Dir();
                 Dust d = Dust.NewDustPerfect(Projectile.Center + dir * Main.rand.NextFloat(length - 10, length + 10)
-                    , DustID.SilverFlame, dir * Main.rand.NextFloat(2, 6));
+                    , DustID.SilverFlame, dir * Main.rand.NextFloat(2, 6),Alpha:Main.rand.Next(0,100),Scale:Main.rand.NextFloat(1,1.5f));
                 d.noGravity = true;
             }
 

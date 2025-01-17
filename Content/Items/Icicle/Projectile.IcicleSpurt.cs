@@ -99,8 +99,8 @@ namespace Coralite.Content.Items.Icicle
             {
                 Vector2 center = Projectile.Center - new Vector2(0, Main.rand.Next(140, 220)).RotatedBy(Main.rand.NextFloat(-0.4f, 0.4f));
                 Vector2 velocity = (Projectile.Center + Main.rand.NextVector2Circular(8, 8) - center).SafeNormalize(Vector2.UnitY) * 12;
-                Projectile.NewProjectile(Projectile.GetSource_FromAI(), center, velocity,
-                    ModContent.ProjectileType<IcicleFalling>(), (int)(Projectile.damage * 0.9f), Projectile.knockBack, Projectile.owner);
+                Projectile.NewProjectileFromThis<IcicleFalling>( center, velocity,
+                     (int)(Projectile.damage * 0.9f), Projectile.knockBack);
             }
         }
 

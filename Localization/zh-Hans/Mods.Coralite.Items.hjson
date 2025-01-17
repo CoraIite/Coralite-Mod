@@ -5051,3 +5051,13 @@ DigUnloadItem: {
 	DisplayName: 临时卸载物品
 	Tooltip: "[c/e88ecb:带它离开这个世界吧，这个世界中没有它的容身之处。]"
 }
+
+Glaciate: {
+	DisplayName: 冰封世界
+	Tooltip: 
+	'''
+	双击方向键冲刺，之后射出冰霜波并强化下一次攻击
+	冰块命中冰霜波会爆出冰刺
+
+	'''
+}

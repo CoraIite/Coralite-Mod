@@ -93,7 +93,7 @@ namespace Coralite.Content.GlobalNPCs
 
                 case NPCID.EyeofCthulhu://克眼，脑子，世吞掉落美味肉排
                 case NPCID.BrainofCthulhu://克眼，脑子，世吞掉落美味肉排
-                    npcLoot.Add(ItemDropRule.Common(ItemType<DeliciousSteak>(), 6));
+                    npcLoot.Add(ItemDropRule.Common(ItemType<DeliciousSteak>(), 3));
                     break;
                 case NPCID.EaterofWorldsBody://克眼，脑子，世吞掉落美味肉排
                 case NPCID.Creeper://克眼，脑子，世吞掉落美味肉排

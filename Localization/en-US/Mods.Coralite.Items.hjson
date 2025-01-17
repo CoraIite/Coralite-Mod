@@ -4927,3 +4927,8 @@ DigUnloadItem: {
 	DisplayName: Dig Unload Item
 	Tooltip: ""
 }
+
+Glaciate: {
+	DisplayName: Glaciate
+	Tooltip: ""
+}
