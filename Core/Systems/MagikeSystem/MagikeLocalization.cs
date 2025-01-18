@@ -17,6 +17,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         public static LocalizedText CanMagikeCraft { get; private set; }
         public static LocalizedText ItemMagikeAmount { get; private set; }
         public static LocalizedText PressShiftToShowMore { get; private set; }
+        public static LocalizedText RightClickStopCraft { get; private set; }
 
         public void LoadLocalization()
         {
@@ -27,6 +28,7 @@ namespace Coralite.Core.Systems.MagikeSystem
             CanMagikeCraft = this.GetLocalization(nameof(CanMagikeCraft));
             ItemMagikeAmount = this.GetLocalization(nameof(ItemMagikeAmount));
             PressShiftToShowMore = this.GetLocalization(nameof(PressShiftToShowMore));
+            RightClickStopCraft = this.GetLocalization(nameof(RightClickStopCraft));
 
             this.GetLocalization("PolarizedFilterTooltip");
 
@@ -37,6 +39,7 @@ namespace Coralite.Core.Systems.MagikeSystem
             LoadUIText();
             LoadCraftText();
             LoadUIPanelText();
+            LoadMALevelText();
         }
 
         public void UnloadLocalization()
@@ -52,6 +55,7 @@ namespace Coralite.Core.Systems.MagikeSystem
             UIText = null;
             CraftText = null;
             UIPanelText = null;
+            MALevelText = null;
         }
 
         #region 魔能连接仪相关
@@ -369,6 +373,8 @@ namespace Coralite.Core.Systems.MagikeSystem
             FastStack,
             ItemContainerName,
             GetOnlyItemContainerName,
+            NeedPolarizedFilter,
+            CurrentLevel,
 
             Count
         }
@@ -388,10 +394,30 @@ namespace Coralite.Core.Systems.MagikeSystem
 
         #endregion
 
+        #region 等级
+
+        public static LocalizedText[] MALevelText { get; private set; }
+
+        public void LoadMALevelText()
+        {
+            MALevelText = new LocalizedText[Enum.GetValues<MALevel>().Length];
+
+            for (int i = 0; i < MALevelText.Length; i++)
+            {
+                MALevelText[i] = this.GetLocalization(nameof(MALevelText) + "." + Enum.GetName((MALevel)i));
+            }
+        }
+
+        public static string GetMALevelText(MALevel id)
+            => MALevelText[(int)id].Value;
+
+        #endregion
+
         public static LocalizedText[] UIPanelText { get; private set; }
 
         public enum UIPalelTextID
         {
+            ApparatusInformation,
             MagikeContainer,
             MagikeSender,
             MagikeProducer,

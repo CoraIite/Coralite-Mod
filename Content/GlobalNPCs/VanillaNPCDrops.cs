@@ -52,7 +52,8 @@ namespace Coralite.Content.GlobalNPCs
                     npcLoot.Add(ItemDropRule.Common(ItemType<AncientCrimtaneYujian>(), 100));
                     break;
                 case NPCID.Mimic:
-                    npcLoot.Add(ItemDropRule.Common(ItemType<EekShield>(), 10));
+                    npcLoot.Add(ItemDropRule.ByCondition(new Conditions.NotRemixSeed(), ItemType<EekShield>(), 10));
+                    npcLoot.Add(ItemDropRule.ByCondition(new Conditions.RemixSeedHardmode(), ItemType<EekShield>(), 10));
                     break;
                 case NPCID.Tim:
                     npcLoot.Add(ItemDropRule.Common(ItemType<EightsquareHand>(), 2));

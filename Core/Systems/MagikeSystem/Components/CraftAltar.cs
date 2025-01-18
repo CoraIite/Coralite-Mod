@@ -260,6 +260,15 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             return otherItems;
         }
 
+        /// <summary>
+        /// STOP！
+        /// </summary>
+        public void StopWork()
+        {
+            IsWorking = false;
+            Timer = 0;
+        }
+
         #region 检测能否开始工作
 
         public override bool CanActivated_SpecialCheck(out string text)
@@ -274,6 +283,20 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             }
 
             FrozenDictionary<int, int> otherItems2 = otherItems.ToFrozenDictionary();
+
+            if (ChosenResipe != null)//快速检测主要物品以防止主要物品错误而需要删掉合成表
+            {
+                bool hasCorrectMainItem = false;
+                foreach (var item in items)
+                    if (ChosenResipe.MainItem.type == item.type)
+                    {
+                        hasCorrectMainItem = true;
+                        break;
+                    }
+
+                if (!hasCorrectMainItem)
+                    ChosenResipe = null;
+            }
 
             if (ChosenResipe == null)
             {
@@ -372,7 +395,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                     if (recipe.IsAnnihilation)
                         continue;
 
-                    if (recipe.RequiredItems == null)
+                    if (recipe.RequiredItems == null || recipe.RequiredItems.Count == 0)
                     {
                         remodelRecipes.Add(recipe);
                         continue;
@@ -385,7 +408,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                         if (otherItems.ContainsKey(requiredItem.type))
                             matchCount++;
 
-                    if (matchCount / (float)all > matchPercent)//如果匹配程度高于当前的就替换当前的
+                    if (matchCount / (float)all >= matchPercent)//如果匹配程度高于当前的就替换当前的
                         polymerizeRecipe = recipe;
                 }
             }
@@ -549,7 +572,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            if (!IsWorking)
+            if (!IsWorking|| ChosenResipe==null)
                 return;
 
             MagikeTP entity = Entity;
@@ -680,7 +703,21 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             base.LeftClick(evt);
 
             Helper.PlayPitched("UI/Tick", 0.4f, 0);
-            _altar.ChosenResipe = null;
+            FailText = "";
+
+            if (!_altar.IsWorking)
+                _altar.ChosenResipe = null;
+        }
+
+        public override void RightClick(UIMouseEvent evt)
+        {
+            base.RightClick(evt);
+
+            if (_altar.IsWorking)
+            {
+                Helper.PlayPitched("UI/Tick", 0.4f, 0);
+                _altar.StopWork();
+            }
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
@@ -696,6 +733,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             spriteBatch.Draw(tex, center, frame, Color.White, 0, frame.Size() / 2, 1, 0, 0);
 
+
             if (_altar.IsWorking)//工作中就只显示百分比，不然就显示合成表
             {
                 float percent = 1 - (float)_altar.RequiredMagike / _altar.ChosenResipe.magikeCost;
@@ -706,6 +744,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 spriteBatch.Draw(tex, pos + new Vector2(3, 0), frame, Color.White, 0, Vector2.Zero, 1, 0, 0);
 
                 Utils.DrawBorderString(spriteBatch, percentText, center, Color.White, 0.75f, anchorx: 0.5f, anchory: 0.5f);
+                string text = _altar.ChosenResipe.ResultItem.Name;
+                text = string.Concat(text, Environment.NewLine, _altar.RequiredMagike, "/", _altar.ChosenResipe.magikeCost, Environment.NewLine, MagikeSystem.RightClickStopCraft.Value);
+                UICommon.TooltipMouseText(text);
             }
             else
             {
@@ -717,18 +758,24 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
                 if (IsMouseHovering)
                 {
+                    string text = "";
+
                     if (canCraft && !i.IsAir)
                     {
                         Main.LocalPlayer.mouseInterface = true;
                         ItemSlot.OverrideHover(ref i, ItemSlot.Context.InventoryItem);
                         ItemSlot.MouseHover(ref i, ItemSlot.Context.InventoryItem);
 
-                        UICommon.TooltipMouseText(_altar.RequiredMagike + "/" + _altar.ChosenResipe.magikeCost);
+                        text = _altar.ChosenResipe.ResultItem.Name;
+                        text = string.Concat(text, Environment.NewLine, _altar.RequiredMagike, "/", _altar.ChosenResipe.magikeCost, Environment.NewLine, MagikeSystem.RightClickStopCraft.Value);
                     }
                     else
                     {
-                        UICommon.TooltipMouseText(FailText);
+                        text = FailText;
                     }
+
+                    if (!string.IsNullOrEmpty(text))
+                        UICommon.TooltipMouseText(text);
                 }
 
                 float scale = Main.inventoryScale;
@@ -738,6 +785,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 ItemSlot.Draw(spriteBatch, ref i, ItemSlot.Context.ShopItem, position, Color.White);
                 Main.inventoryScale = scale;
             }
+
         }
     }
 
@@ -1075,6 +1123,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             slot.SetSize(46, 0, 0, 1);
             grid.Add(slot);
             //grid.Add(new CraftMaagikeBar(recipe));
+            grid.Add(new UIVerticalLine());
 
             if (recipe.RequiredItems.Count > 0)
                 for (int i = 0; i < recipe.RequiredItems.Count; i++)

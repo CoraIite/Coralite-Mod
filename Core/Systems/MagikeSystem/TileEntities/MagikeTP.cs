@@ -1,4 +1,5 @@
 ﻿using Coralite.Core.Systems.CoraliteActorComponent;
+using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.Tiles;
 using Coralite.Helpers;
 using InnoVault.TileProcessors;
@@ -62,6 +63,10 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         public override void SetProperty()
         {
             InitializeComponentCache();
+            ApparatusInformation c = AddInformation();
+            if (c != null)
+                AddComponent(c);
+
             InitializeBeginningComponent();
         }
 
@@ -72,6 +77,17 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         {
             Components = [];
             ComponentsCache = [];
+        }
+
+        /// <summary>
+        /// 加入显示信息的组件
+        /// </summary>
+        /// <returns></returns>
+        public virtual ApparatusInformation AddInformation()
+        {
+            int tileType = TargetTileID;
+            int itemType = TileLoader.GetItemDropFromTypeAndStyle(tileType);
+            return new ApparatusInformation() { ItemType = itemType };
         }
 
         /// <summary>

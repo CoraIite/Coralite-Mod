@@ -23,7 +23,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
 {
     public abstract class BaseMagikeTile(int width, int height, Color mapColor, int dustType, int minPick = 0, bool topSoild = false) : ModTile
     {
-        public Dictionary<MALevel, Asset<Texture2D>> ExtraAssets { get; private set; }
+        public Dictionary<MALevel, ATex> ExtraAssets { get; private set; }
 
         public abstract int DropItemType { get; }
 

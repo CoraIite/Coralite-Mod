@@ -13,10 +13,10 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
         public void AddMagikeCraftRecipe()
         {
             //赤玉晶核
-            AddRemodelRecipe<RedJade, RedJadeCore>(CalculateMagikeCost(MALevel.RedJade, 3), mainStack: 50);
+            AddRemodelRecipe<RedJade, RedJadeCore>(CalculateMagikeCost(MALevel.RedJade, 3), mainStack: 35);
 
             //冰龙心
-            AddRemodelRecipe<IcicleCrystal, IcicleHeart>(CalculateMagikeCost(Icicle, 3), mainStack: 10);
+            AddRemodelRecipe<IcicleCrystal, IcicleHeart>(CalculateMagikeCost(Icicle, 3), mainStack: 8);
         }
     }
 }

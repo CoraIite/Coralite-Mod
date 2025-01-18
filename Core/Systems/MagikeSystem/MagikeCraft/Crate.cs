@@ -22,6 +22,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
                 .RegisterNew(ItemID.ApprenticeBait, CalculateMagikeCost(MagicCrystal, 8, 180), 3)
                 .RegisterNew(ItemID.JourneymanBait, CalculateMagikeCost(MagicCrystal, 8, 180), 3)
                 .Register();
+
+
         }
     }
 }
