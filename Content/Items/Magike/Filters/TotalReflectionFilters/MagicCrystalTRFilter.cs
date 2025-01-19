@@ -23,7 +23,13 @@ namespace Coralite.Content.Items.Magike.Filters.TotalReflectionFilters
         {
             CreateRecipe()
                 .AddIngredient<MagicCrystalPolarizedFilter>()
-                .AddIngredient(ItemID.MarbleBlock, 4)
+                .AddIngredient(ItemID.MarbleBlock, 3)
+                .AddTile(TileID.WorkBenches)
+                .Register();
+
+            CreateRecipe()
+                .AddIngredient<MagicCrystalPolarizedFilter>()
+                .AddIngredient(ItemID.GraniteBlock, 3)
                 .AddTile(TileID.WorkBenches)
                 .Register();
         }

@@ -1,5 +1,4 @@
 ﻿using Coralite.Core;
-using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
@@ -45,21 +44,21 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
         private int _currentCount;
 
         /// <summary> 当前显示的组件 </summary>
-        private static bool[] _showComponents;
+        //private static bool[] _showComponents;
         /// <summary> 当前显示的组件 </summary>
-        public static bool[] ShowComponents
-        {
-            get
-            {
-                if (_showComponents == null)
-                {
-                    _showComponents = new bool[MagikeComponentID.Count + 1];
-                    Array.Fill(_showComponents, true);
-                }
+        //public static bool[] ShowComponents
+        //{
+        //    get
+        //    {
+        //        if (_showComponents == null)
+        //        {
+        //            _showComponents = new bool[MagikeComponentID.Count + 1];
+        //            Array.Fill(_showComponents, true);
+        //        }
 
-                return _showComponents;
-            }
-        }
+        //        return _showComponents;
+        //    }
+        //}
 
         #endregion
 
@@ -338,8 +337,8 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
                 for (int i = 0; i < CurrentEntity.ComponentsCache.Count; i++)
                 {
                     int id = CurrentEntity.ComponentsCache[i].ID;
-                    if (!ShowComponents[id + 1])
-                        continue;
+                    //if (!ShowComponents[id + 1])
+                    //    continue;
 
                     var button = new ComponentButton(i);
                     button.HAlign = 0.3f;

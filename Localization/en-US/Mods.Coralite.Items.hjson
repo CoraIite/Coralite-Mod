@@ -4932,3 +4932,13 @@ Glaciate: {
 	DisplayName: Glaciate
 	Tooltip: ""
 }
+
+LeafShield: {
+	DisplayName: Leaf Shield
+	Tooltip: ""
+}
+
+WoodenShield: {
+	DisplayName: Wooden Shield
+	Tooltip: ""
+}

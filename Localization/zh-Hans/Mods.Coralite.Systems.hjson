@@ -104,3 +104,15 @@ BisketyController: {
 	ShowLongTimeDPS: 显示长期DPS
 	ChangeDefence: 设置Biskety防御力
 }
+
+KnowledgeSystem: {
+	MagikeS1Knowledge: {
+		Name: "[c/ffbeec:魔能残卷 其一]"
+		LockTip: 去地下的魔力水晶洞寻找“书页：魔能基础”吧！
+		Description:
+			'''
+			记载着魔能的基础使用方法
+			其上会教你如何搭建一条魔能生产线
+			'''
+	}
+}

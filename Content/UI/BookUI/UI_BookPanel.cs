@@ -2,7 +2,6 @@
 using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -34,7 +33,7 @@ namespace Coralite.Content.UI.UILib
         /// <summary>
         /// 左边那一页的ID
         /// </summary>
-        public int currentDrawingPage;
+        public int CurrentDrawingPage { get; set; }
 
         public List<UIElement> PanelElements => Elements;
 
@@ -99,17 +98,17 @@ namespace Coralite.Content.UI.UILib
 
             if (alpha == 1f)
             {
-                bool hasRightPage = Pages.Count > currentDrawingPage + 1;
+                bool hasRightPage = Pages.Count > CurrentDrawingPage + 1;
 
-                Pages[currentDrawingPage]?.Draw(spriteBatch);
+                Pages[CurrentDrawingPage]?.Draw(spriteBatch);
                 if (hasRightPage)
-                    Pages[currentDrawingPage + 1]?.Draw(spriteBatch);
+                    Pages[CurrentDrawingPage + 1]?.Draw(spriteBatch);
 
                 //绘制Non，先判断一下是否继承了接口然后再进行绘制
-                bool shouldDrawLeftNon = Pages[currentDrawingPage] is IDrawNonPremultiplied;
+                bool shouldDrawLeftNon = Pages[CurrentDrawingPage] is IDrawNonPremultiplied;
                 bool shouldDrawRightNon = false;
                 if (hasRightPage)
-                    shouldDrawRightNon = Pages[currentDrawingPage + 1] is IDrawNonPremultiplied;
+                    shouldDrawRightNon = Pages[CurrentDrawingPage + 1] is IDrawNonPremultiplied;
 
                 if (shouldDrawLeftNon || shouldDrawLeftNon)     //如果都不是的话那就不浪费CPU去end begin了
                 {
@@ -118,9 +117,9 @@ namespace Coralite.Content.UI.UILib
                                     spriteBatch.GraphicsDevice.DepthStencilState, spriteBatch.GraphicsDevice.RasterizerState, null, Main.UIScaleMatrix);
 
                     if (shouldDrawLeftNon)
-                        (Pages[currentDrawingPage] as IDrawNonPremultiplied).DrawNonPremultiplied(spriteBatch);
+                        (Pages[CurrentDrawingPage] as IDrawNonPremultiplied).DrawNonPremultiplied(spriteBatch);
                     if (shouldDrawRightNon)
-                        (Pages[currentDrawingPage + 1] as IDrawNonPremultiplied).DrawNonPremultiplied(spriteBatch);
+                        (Pages[CurrentDrawingPage + 1] as IDrawNonPremultiplied).DrawNonPremultiplied(spriteBatch);
 
                     spriteBatch.End();
                     spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.AnisotropicClamp,
@@ -157,16 +156,16 @@ namespace Coralite.Content.UI.UILib
 
             //防止出现越界的情况
             if (Pages.Count >= 2)
-                currentDrawingPage = Math.Clamp(currentDrawingPage, 0, Pages.Count - 1);
+                CurrentDrawingPage = Math.Clamp(CurrentDrawingPage, 0, Pages.Count - 1);
             else
-                currentDrawingPage = 0;
-            currentDrawingPage = currentDrawingPage / 2 * 2;//利用神奇算法让它变为偶数
+                CurrentDrawingPage = 0;
+            CurrentDrawingPage = CurrentDrawingPage / 2 * 2;//利用神奇算法让它变为偶数
 
             //设置可以控制的UI页
             for (int i = Pages.Count - 1; i >= 0; i--)
             {
                 UIElement Element = Pages[i];
-                if (i == currentDrawingPage || i == (currentDrawingPage + 1))
+                if (i == CurrentDrawingPage || i == (CurrentDrawingPage + 1))
                 {
                     Element.IgnoresMouseInteraction = false;
                     continue;
@@ -222,11 +221,11 @@ namespace Coralite.Content.UI.UILib
         /// </summary>
         public override void RecalculateChildren()
         {
-            if (currentDrawingPage >= Pages.Count || Pages.Count == 0)
+            if (CurrentDrawingPage >= Pages.Count || Pages.Count == 0)
                 return;
-            Pages[currentDrawingPage]?.Recalculate();
-            if (Pages.Count > currentDrawingPage + 1)
-                Pages[currentDrawingPage + 1]?.Recalculate();
+            Pages[CurrentDrawingPage]?.Recalculate();
+            if (Pages.Count > CurrentDrawingPage + 1)
+                Pages[CurrentDrawingPage + 1]?.Recalculate();
         }
 
         public int GetPageIndex<T>() where T : UIPage => Pages.FindIndex(n => n is T);
@@ -323,7 +322,7 @@ namespace Coralite.Content.UI.UILib
         /// </summary>
         public void PreviousPage()
         {
-            currentDrawingPage -= 2;
+            CurrentDrawingPage -= 2;
             Recalculate();
         }
 
@@ -332,7 +331,7 @@ namespace Coralite.Content.UI.UILib
         /// </summary>
         public void NextPage()
         {
-            currentDrawingPage += 2;
+            CurrentDrawingPage += 2;
             Recalculate();
         }
 
@@ -342,7 +341,7 @@ namespace Coralite.Content.UI.UILib
         /// <param name="index">目标页数</param>
         public void GoToPage(int index)
         {
-            currentDrawingPage = index % 2 == 0 ? index : index - 1;
+            CurrentDrawingPage = index % 2 == 0 ? index : index - 1;
             Recalculate();
         }
 

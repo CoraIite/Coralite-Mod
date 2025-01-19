@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Items.Shadow;
+using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
@@ -22,44 +23,50 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
         {
             CreateRecipe()
                 .AddIngredient<BasicFilter>()
-                .AddIngredient<ShadowEnergy>(10)
+                .AddIngredient<ShadowEnergy>(5)
                 .DisableDecraft()
                 .AddTile(TileID.Anvils)
+                .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
 
             CreateRecipe()
                 .AddIngredient<IciclePolarizedFilter>()
-                .AddIngredient<ShadowEnergy>(4)
+                .AddIngredient<ShadowEnergy>(2)
                 .DisableDecraft()
                 .AddTile(TileID.Anvils)
+                .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
 
             CreateRecipe()
                 .AddIngredient<CorruptionPolarizedFilter>()
-                .AddIngredient<ShadowEnergy>(4)
+                .AddIngredient<ShadowEnergy>(2)
                 .DisableDecraft()
                 .AddTile(TileID.Anvils)
+                .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
 
             CreateRecipe()
                 .AddIngredient<CrimsonPolarizedFilter>()
-                .AddIngredient<ShadowEnergy>(4)
+                .AddIngredient<ShadowEnergy>(2)
                 .DisableDecraft()
                 .AddTile(TileID.Anvils)
+                .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
 
             CreateRecipe()
                 .AddIngredient<GlistentPolarizedFilter>()
-                .AddIngredient<ShadowEnergy>(6)
+                .AddIngredient<ShadowEnergy>(3)
                 .AddTile(TileID.Anvils)
                 .DisableDecraft()
+                .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
 
             CreateRecipe()
                 .AddIngredient<MagicCrystalPolarizedFilter>()
-                .AddIngredient<ShadowEnergy>(8)
+                .AddIngredient<ShadowEnergy>(4)
                 .DisableDecraft()
                 .AddTile(TileID.Anvils)
+                .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
         }
     }

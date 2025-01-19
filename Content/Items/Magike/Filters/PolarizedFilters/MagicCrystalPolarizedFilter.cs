@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Items.MagikeSeries1;
 using Coralite.Content.Raritys;
+using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
@@ -23,10 +24,11 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
         {
             CreateRecipe()
                 .AddIngredient<BasicFilter>()
-                .AddIngredient<MagicCrystal>(6)
-                .AddIngredient<Basalt>(4)
+                .AddIngredient<MagicCrystal>(4)
+                .AddIngredient<Basalt>(2)
                 .AddTile(TileID.Anvils)
                 .DisableDecraft()
+                .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
         }
     }

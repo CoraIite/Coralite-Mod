@@ -1,5 +1,5 @@
-﻿using Coralite.Content.Items.FlyingShields.Accessories;
-using Coralite.Content.Items.Magike;
+﻿using Coralite.Content.Items.FlyingShields;
+using Coralite.Content.Items.FlyingShields.Accessories;
 using Coralite.Content.Items.MagikeSeries1;
 using Coralite.Content.Items.ThyphionSeries;
 using Coralite.Content.Tiles.MagikeSeries1;
@@ -67,7 +67,7 @@ namespace Coralite.Content.WorldGeneration
                                 break;
                             case 1 * 18 * 2://金箱子
                                 {
-                                    if (chest.y > Main.worldSurface)  //必须要是地下金箱子才行
+                                    if (chest.y > Main.rockLayer)  //必须要是地下金箱子才行
                                     {
                                         if (WorldGen.genRand.NextBool(25, 100))
                                             foreach (var item in chest.item)
@@ -88,6 +88,21 @@ namespace Coralite.Content.WorldGeneration
                                                 if (item.IsAir)
                                                 {
                                                     item.SetDefaults(ModContent.ItemType<FlyingShieldBattleGuide>());
+                                                    break;
+                                                }
+                                    }
+                                }
+                                break;
+                            case 8 * 18 * 2://红木箱
+                            case 10 * 18 * 2://常春藤箱
+                                {
+                                    if (chest.y > Main.worldSurface)  //必须要是地下箱子才行
+                                    {
+                                        if (WorldGen.genRand.NextBool(10, 100))//放置丛林龟壳
+                                            foreach (var item in chest.item)
+                                                if (item.IsAir)
+                                                {
+                                                    item.SetDefaults(ModContent.ItemType<JungleTurtleShell>());
                                                     break;
                                                 }
                                     }
@@ -118,16 +133,13 @@ namespace Coralite.Content.WorldGeneration
                                 break;
                             case 12 * 18 * 2:  //生命木箱
                                 {
-                                    if (chest.y > Main.worldSurface)  //必须要是地下箱子才行
-                                    {
-                                        if (WorldGen.genRand.NextBool(10, 100))//放置丛林龟壳
-                                            foreach (var item in chest.item)
-                                                if (item.IsAir)
-                                                {
-                                                    item.SetDefaults(ModContent.ItemType<JungleTurtleShell>());
-                                                    break;
-                                                }
-                                    }
+                                    if (WorldGen.genRand.NextBool(5,7))//放置生命大叶子
+                                        foreach (var item in chest.item)
+                                            if (item.IsAir)
+                                            {
+                                                item.SetDefaults(ModContent.ItemType<LeafShield>());
+                                                break;
+                                            }
                                 }
                                 break;
                         }
@@ -152,28 +164,28 @@ namespace Coralite.Content.WorldGeneration
                     default:
                         if (tile.TileType == ModContent.TileType<BasaltChestTile>())
                         {
-                            int which = 1;
-                            for (int i = 0; i < 4; i++)//究极偷懒写法，不建议学
-                            {
-                                foreach (var item in chest.item)
-                                    if (item.IsAir)
-                                    {
-                                        item.SetDefaults(ModContent.ItemType<MagikeNote1>());
-                                        if (item.ModItem is MagikeNote1 note1)
-                                        {
-                                            note1.RandomKnowledge(which);
-                                            if (which > 0)
-                                            {
-                                                which++;
-                                                if (which > 7)
-                                                    which = -1;
-                                            }
-                                        }
-                                        break;
-                                    }
-                                if (WorldGen.genRand.NextBool(1, 3))
-                                    break;
-                            }
+                            //int which = 1;
+                            //for (int i = 0; i < 4; i++)//究极偷懒写法，不建议学
+                            //{
+                            //    foreach (var item in chest.item)
+                            //        if (item.IsAir)
+                            //        {
+                            //            item.SetDefaults(ModContent.ItemType<MagikeNote1>());
+                            //            if (item.ModItem is MagikeNote1 note1)
+                            //            {
+                            //                note1.RandomKnowledge(which);
+                            //                if (which > 0)
+                            //                {
+                            //                    which++;
+                            //                    if (which > 7)
+                            //                        which = -1;
+                            //                }
+                            //            }
+                            //            break;
+                            //        }
+                            //    if (WorldGen.genRand.NextBool(1, 3))
+                            //        break;
+                            //}
 
                             if (WorldGen.genRand.NextBool(3))
                             {

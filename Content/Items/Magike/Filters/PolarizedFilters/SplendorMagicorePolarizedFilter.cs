@@ -1,4 +1,5 @@
-﻿using Coralite.Core.Systems.MagikeSystem;
+﻿using Coralite.Core;
+using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.Components.Filters;
@@ -21,86 +22,98 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
         {
             CreateRecipe()
                 .AddIngredient<BasicFilter>()
-                .AddIngredient<SplendorMagicore>(5)
+                .AddIngredient<SplendorMagicore>(3)
                 .DisableDecraft()
                 .AddTile(TileID.MythrilAnvil)
+                .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
 
             CreateRecipe()
                 .AddIngredient<HolyLightPolarizedFilter>()
-                .AddIngredient<SplendorMagicore>(5)
+                .AddIngredient<SplendorMagicore>(3)
                 .DisableDecraft()
                 .AddTile(TileID.MythrilAnvil)
+                .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
 
             CreateRecipe()
                 .AddIngredient<FeatherPolarizedFilter>()
-                .AddIngredient<SplendorMagicore>(5)
+                .AddIngredient<SplendorMagicore>(3)
                 .DisableDecraft()
                 .AddTile(TileID.MythrilAnvil)
+                .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
 
             CreateRecipe()
                 .AddIngredient<SoulPolarizedFilter>()
-                .AddIngredient<SplendorMagicore>(5)
+                .AddIngredient<SplendorMagicore>(3)
                 .DisableDecraft()
                 .AddTile(TileID.MythrilAnvil)
+                .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
 
             CreateRecipe()
                 .AddIngredient<HallowPolarizedFilter>()
-                .AddIngredient<SplendorMagicore>(5)
+                .AddIngredient<SplendorMagicore>(3)
                 .DisableDecraft()
                 .AddTile(TileID.MythrilAnvil)
+                .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
 
             CreateRecipe()
                 .AddIngredient<CrystallineMagikePolarizedFilter>()
-                .AddIngredient<SplendorMagicore>(5)
+                .AddIngredient<SplendorMagicore>(3)
                 .DisableDecraft()
                 .AddTile(TileID.MythrilAnvil)
+                .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
 
             CreateRecipe()
                 .AddIngredient<ShadowPolarizedFilter>()
-                .AddIngredient<SplendorMagicore>(5)
+                .AddIngredient<SplendorMagicore>(3)
                 .DisableDecraft()
                 .AddTile(TileID.MythrilAnvil)
+                .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
 
             CreateRecipe()
                 .AddIngredient<IciclePolarizedFilter>()
-                .AddIngredient<SplendorMagicore>(5)
+                .AddIngredient<SplendorMagicore>(3)
                 .DisableDecraft()
                 .AddTile(TileID.MythrilAnvil)
+                .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
 
             CreateRecipe()
                 .AddIngredient<CorruptionPolarizedFilter>()
-                .AddIngredient<SplendorMagicore>(5)
+                .AddIngredient<SplendorMagicore>(3)
                 .DisableDecraft()
                 .AddTile(TileID.MythrilAnvil)
+                .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
 
             CreateRecipe()
                 .AddIngredient<CrimsonPolarizedFilter>()
-                .AddIngredient<SplendorMagicore>(5)
+                .AddIngredient<SplendorMagicore>(3)
                 .DisableDecraft()
                 .AddTile(TileID.MythrilAnvil)
+                .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
 
             CreateRecipe()
                 .AddIngredient<GlistentPolarizedFilter>()
-                .AddIngredient<SplendorMagicore>(5)
+                .AddIngredient<SplendorMagicore>(3)
                 .AddTile(TileID.MythrilAnvil)
                 .DisableDecraft()
+                .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
 
             CreateRecipe()
                 .AddIngredient<MagicCrystalPolarizedFilter>()
-                .AddIngredient<SplendorMagicore>(5)
+                .AddIngredient<SplendorMagicore>(3)
                 .DisableDecraft()
                 .AddTile(TileID.MythrilAnvil)
+                .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
         }
     }

@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Items.Materials;
+using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
@@ -25,6 +26,7 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
                 .AddIngredient<FragmentsOfLight>(2)
                 .DisableDecraft()
                 .AddTile(TileID.MythrilAnvil)
+                .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
 
             CreateRecipe()
@@ -32,6 +34,7 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
                 .AddIngredient<FragmentsOfLight>()
                 .DisableDecraft()
                 .AddTile(TileID.MythrilAnvil)
+                .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
 
             CreateRecipe()
@@ -39,6 +42,7 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
                 .AddIngredient<FragmentsOfLight>()
                 .DisableDecraft()
                 .AddTile(TileID.MythrilAnvil)
+                .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
 
             CreateRecipe()
@@ -46,6 +50,7 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
                 .AddIngredient<FragmentsOfLight>()
                 .DisableDecraft()
                 .AddTile(TileID.MythrilAnvil)
+                .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
 
             CreateRecipe()
@@ -53,6 +58,7 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
                 .AddIngredient<FragmentsOfLight>()
                 .DisableDecraft()
                 .AddTile(TileID.MythrilAnvil)
+                .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
 
             CreateRecipe()
@@ -60,6 +66,7 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
                 .AddIngredient<FragmentsOfLight>(2)
                 .DisableDecraft()
                 .AddTile(TileID.MythrilAnvil)
+                .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
 
             CreateRecipe()
@@ -67,6 +74,7 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
                 .AddIngredient<FragmentsOfLight>(2)
                 .DisableDecraft()
                 .AddTile(TileID.MythrilAnvil)
+                .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
 
             CreateRecipe()
@@ -74,6 +82,7 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
                 .AddIngredient<FragmentsOfLight>(2)
                 .DisableDecraft()
                 .AddTile(TileID.MythrilAnvil)
+                .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
 
             CreateRecipe()
@@ -81,6 +90,7 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
                 .AddIngredient<FragmentsOfLight>(2)
                 .DisableDecraft()
                 .AddTile(TileID.MythrilAnvil)
+                .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
 
             CreateRecipe()
@@ -88,6 +98,7 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
                 .AddIngredient<FragmentsOfLight>(2)
                 .AddTile(TileID.MythrilAnvil)
                 .DisableDecraft()
+                .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
 
             CreateRecipe()
@@ -95,6 +106,7 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
                 .AddIngredient<FragmentsOfLight>(2)
                 .DisableDecraft()
                 .AddTile(TileID.MythrilAnvil)
+                .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
         }
     }

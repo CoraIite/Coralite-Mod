@@ -34,13 +34,13 @@ namespace Coralite.Content.UI.BookUI
             switch (arrowType)
             {
                 case ArrowType.Left:
-                    if (bookPanel.currentDrawingPage == 0)
+                    if (bookPanel.CurrentDrawingPage == 0)
                         return;
 
                     bookPanel.PreviousPage();
                     break;
                 case ArrowType.Right:
-                    if (bookPanel.currentDrawingPage >= bookPanel.Pages.Count - 1)
+                    if (bookPanel.CurrentDrawingPage >= bookPanel.Pages.Count - 1)
                         return;
 
                     bookPanel.NextPage();
@@ -57,11 +57,11 @@ namespace Coralite.Content.UI.BookUI
             switch (arrowType)
             {
                 case ArrowType.Left:
-                    if (bookPanel.currentDrawingPage == 0)
+                    if (bookPanel.CurrentDrawingPage == 0)
                         return;
                     break;
                 case ArrowType.Right:
-                    if (bookPanel.currentDrawingPage >= bookPanel.Pages.Count - 1)
+                    if (bookPanel.CurrentDrawingPage >= bookPanel.Pages.Count - 2)
                         return;
                     break;
                 default:

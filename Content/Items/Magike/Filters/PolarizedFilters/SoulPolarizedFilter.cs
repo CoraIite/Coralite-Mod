@@ -1,4 +1,5 @@
-﻿using Coralite.Core.Systems.MagikeSystem;
+﻿using Coralite.Core;
+using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.Components.Filters;
@@ -21,65 +22,74 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
         {
             CreateRecipe()
                 .AddIngredient<BasicFilter>()
-                .AddIngredient(ItemID.Ectoplasm, 8)
+                .AddIngredient(ItemID.Ectoplasm, 5)
                 .DisableDecraft()
                 .AddTile(TileID.MythrilAnvil)
+                .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
 
             CreateRecipe()
                 .AddIngredient<HallowPolarizedFilter>()
-                .AddIngredient(ItemID.Ectoplasm, 3)
+                .AddIngredient(ItemID.Ectoplasm, 1)
                 .DisableDecraft()
                 .AddTile(TileID.MythrilAnvil)
+                .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
 
             CreateRecipe()
                 .AddIngredient<CrystallineMagikePolarizedFilter>()
-                .AddIngredient(ItemID.Ectoplasm, 4)
+                .AddIngredient(ItemID.Ectoplasm, 1)
                 .DisableDecraft()
                 .AddTile(TileID.MythrilAnvil)
+                .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
 
             CreateRecipe()
                 .AddIngredient<ShadowPolarizedFilter>()
-                .AddIngredient(ItemID.Ectoplasm, 5)
+                .AddIngredient(ItemID.Ectoplasm, 2)
                 .DisableDecraft()
                 .AddTile(TileID.MythrilAnvil)
+                .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
 
             CreateRecipe()
                 .AddIngredient<IciclePolarizedFilter>()
-                .AddIngredient(ItemID.Ectoplasm, 6)
+                .AddIngredient(ItemID.Ectoplasm, 3)
                 .DisableDecraft()
                 .AddTile(TileID.MythrilAnvil)
+                .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
 
             CreateRecipe()
                 .AddIngredient<CorruptionPolarizedFilter>()
-                .AddIngredient(ItemID.Ectoplasm, 6)
+                .AddIngredient(ItemID.Ectoplasm, 3)
                 .DisableDecraft()
                 .AddTile(TileID.MythrilAnvil)
+                .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
 
             CreateRecipe()
                 .AddIngredient<CrimsonPolarizedFilter>()
-                .AddIngredient(ItemID.Ectoplasm, 6)
+                .AddIngredient(ItemID.Ectoplasm, 3)
                 .DisableDecraft()
                 .AddTile(TileID.MythrilAnvil)
+                .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
 
             CreateRecipe()
                 .AddIngredient<GlistentPolarizedFilter>()
-                .AddIngredient(ItemID.Ectoplasm, 7)
+                .AddIngredient(ItemID.Ectoplasm, 4)
                 .AddTile(TileID.MythrilAnvil)
                 .DisableDecraft()
+                .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
 
             CreateRecipe()
                 .AddIngredient<MagicCrystalPolarizedFilter>()
-                .AddIngredient(ItemID.Ectoplasm, 8)
+                .AddIngredient(ItemID.Ectoplasm, 4)
                 .DisableDecraft()
                 .AddTile(TileID.MythrilAnvil)
+                .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
         }
     }

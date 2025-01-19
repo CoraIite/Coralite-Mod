@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.UI;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.GameContent;
@@ -140,6 +141,13 @@ namespace Coralite.Helpers
             var scrollbar = new UIScrollbar();
             scrollbar.SetTopLeft(5000, 5000);
             list.SetScrollbar(scrollbar);
+        }
+
+        public static void QuickInvisibleScrollbar(this FixedUIGrid grid)
+        {
+            var scrollbar = new UIScrollbar();
+            scrollbar.SetTopLeft(5000, 5000);
+            grid.SetScrollbar(scrollbar);
         }
     }
 }

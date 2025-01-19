@@ -1,8 +1,6 @@
 ﻿using Coralite.Content.UI.UILib;
 using Coralite.Core;
 using Coralite.Helpers;
-using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -12,8 +10,8 @@ namespace Coralite.Content.UI.BookUI
 {
     public abstract class PageJumpButton(Func<UI_BookPanel> GetBookPanel,Func<int> GetPage) : UIElement
     {
-        protected Asset<Texture2D> texture;
-        protected Asset<Texture2D> borderTexture;
+        protected ATex texture;
+        protected ATex borderTexture;
 
         protected float scaleActive = 1.2f;
 
@@ -27,12 +25,12 @@ namespace Coralite.Content.UI.BookUI
             Height.Set(height, 0);
         }
 
-        public void SetHoverImage(Asset<Texture2D> texture)
+        public void SetHoverImage(ATex texture)
         {
             borderTexture = texture;
         }
 
-        public void SetImage(Asset<Texture2D> tex)
+        public void SetImage(ATex tex)
         {
             texture = tex;
         }
@@ -53,7 +51,7 @@ namespace Coralite.Content.UI.BookUI
             int index = GetPage();
             if (index >= 0)
             {
-                GetBookPanel().currentDrawingPage = index;
+                GetBookPanel().CurrentDrawingPage = index;
                 OnSuccessChangePage?.Invoke();
                 Helper.PlayPitched("Misc/Pages", 0.4f, 0f, Main.LocalPlayer.Center);
             }

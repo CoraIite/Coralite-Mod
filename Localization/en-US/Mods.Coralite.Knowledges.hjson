@@ -1,4 +1,7 @@
-DescriptionPage.Description: Mods.Coralite.Knowledges.DescriptionPage.Description
+DescriptionPage: {
+	Description: Mods.Coralite.Knowledges.DescriptionPage.Description
+	HowToUse: Mods.Coralite.Knowledges.DescriptionPage.HowToUse
+}
 
 GetMagikeKnowledge1Page: {
 	Title: Mods.Coralite.Knowledges.GetMagikeKnowledge1Page.Title
@@ -65,4 +68,9 @@ ActivatedTheMachine: {
 	HowToUseActivateStaff: Mods.Coralite.Knowledges.ActivatedTheMachine.HowToUseActivateStaff
 	WorkingBeLike: Mods.Coralite.Knowledges.ActivatedTheMachine.WorkingBeLike
 	HarvestTheProduct: Mods.Coralite.Knowledges.ActivatedTheMachine.HarvestTheProduct
+}
+
+ReadPage: {
+	Description: Mods.Coralite.Knowledges.ReadPage.Description
+	HowToUse: Mods.Coralite.Knowledges.ReadPage.HowToUse
 }

@@ -1,4 +1,5 @@
-﻿using Coralite.Core.Systems.MagikeSystem;
+﻿using Coralite.Core;
+using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.Components.Filters;
@@ -21,9 +22,10 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
         {
             CreateRecipe()
                 .AddIngredient<BasicFilter>()
-                .AddIngredient(ItemID.SandBlock, 20)
+                .AddIngredient(ItemID.SandBlock, 15)
                 .AddIngredient(ItemID.Bone, 5)
                 .AddTile(TileID.Anvils)
+                .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
         }
     }

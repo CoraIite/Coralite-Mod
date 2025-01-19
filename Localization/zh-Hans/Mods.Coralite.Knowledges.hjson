@@ -1,16 +1,19 @@
-DescriptionPage.Description: 欢迎来到珊瑚的世界！
+DescriptionPage: {
+	Description: 欢迎来到珊瑚的世界！
+	HowToUse: 点击页面下边缘的按钮或使用鼠标滚轮翻页
+}
 
 GetMagikeKnowledge1Page: {
 	Title: 魔能残卷 其一
 	Welcome:
 		'''
 		    欢迎你，新人！
-		    [c/ffbeec:魔能] 是古代人类发展的重要工具，之后人们的技术水平突飞猛进，最后因为某些变故才有了如今荒凉的世界。
+		    [c/ffbeec:魔能] 是古代人类发展的重要工具，人们的技术水平突飞猛进离不开它，但最后因为某些变故才有了如今荒凉的世界。
 
 		    本章节的目的是帮助你了解 [c/ffbeec:魔能] 相关最基础的知识，并且通过实践建造出属于你的 [c/ffbeec:魔能] 产线。
 		'''
 	ClickButton: "    如果你准备好了，就按下此页下方的按钮并开始阅读本章节吧！"
-	ContiuneRead: "    你已经获得了 [c/ffbeec:魔能基础知识] ！跟随章节内容开始搭建你的 [c/ffbeec:魔能] 产线吧！"
+	ContiuneRead: "    你已经获得了 [c/ffbeec:魔能基础知识] ！跟随章节内容开始你的 [c/ffbeec:魔能] 之旅吧！"
 }
 
 WhatIsMagikePage: {
@@ -29,7 +32,6 @@ PlaceFirstLens: {
 		'''
 		    首先你需要一个用来生产魔能的仪器。 
 		    初学者可以使用 [c/ffbeec:基础提取透镜] ，它能从那些“含有魔能的物品”中提取魔能，前期的产量也比较可观。
-		    如果你发现材料齐全却无法合成，需要翻到前一页点击获取基础知识的按钮。
 		'''
 	FourWayPlace: "    制作好之后就可以将其摆放出来了，它支持4种方向的放置。"
 	TryMouseHover:
@@ -67,10 +69,10 @@ UIDescriptionPage: {
 		'''
 	UIDescription:
 		'''
-		[c/ffbeec:①]  控制组件显示切换的按钮，具体功能将在之后介绍。
-		[c/ffbeec:②]  仪器内的组件会显示在这里，可以使用鼠标滚轮滑动，点击之后就会在右侧面板显示组件相关信息。
-		[c/ffbeec:③]  组件面板，会显示当前选中的组件的相关信息。
-		[c/ffbeec:④]  点击此处可以将UI拖拽放大。
+		[c/ffbeec:①]  显示仪器内的组件，可以使用鼠标滚轮滑动。
+		     点击之后就会在右侧面板显示组件相关信息。
+		[c/ffbeec:②]  组件面板，会显示当前选中的组件的相关信息。
+		[c/ffbeec:③]  点击此处可以将UI拖拽放大。
 
 		    使用鼠标左键点击面板空白区域可以自由地拖拽UI面板到任何位置。
 		'''
@@ -122,4 +124,13 @@ ActivatedTheMachine: {
 		'''
 	WorkingBeLike: "    如果你让你的地质再生祭坛开始工作，它看上去应该是这样的。"
 	HarvestTheProduct: Mods.Coralite.Knowledges.ActivatedTheMachine.HarvestTheProduct
+}
+
+ReadPage: {
+	Description:
+		'''
+			右侧的书页中存储着所有的知识
+			点击知识可以跳转到对应的章节
+		'''
+	HowToUse: 收集所有的知识碎片吧！
 }

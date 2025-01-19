@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Items.Icicle;
+using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
@@ -26,6 +27,7 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
                 .AddIngredient<IcicleBreath>(2)
                 .DisableDecraft()
                 .AddTile(TileID.Anvils)
+                .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
 
             CreateRecipe()
@@ -33,6 +35,7 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
                 .AddIngredient<IcicleCrystal>()
                 .AddTile(TileID.Anvils)
                 .DisableDecraft()
+                .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
 
             CreateRecipe()
@@ -41,6 +44,7 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
                 .AddIngredient<IcicleBreath>()
                 .DisableDecraft()
                 .AddTile(TileID.Anvils)
+                .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
         }
     }

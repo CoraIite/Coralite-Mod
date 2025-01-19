@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Items.Materials;
+using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
@@ -22,65 +23,74 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
         {
             CreateRecipe()
                 .AddIngredient<BasicFilter>()
-                .AddIngredient<FlyingSnakeFeather>(8)
+                .AddIngredient<FlyingSnakeFeather>(4)
                 .DisableDecraft()
                 .AddTile(TileID.MythrilAnvil)
+                .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
 
             CreateRecipe()
                 .AddIngredient<HallowPolarizedFilter>()
-                .AddIngredient<FlyingSnakeFeather>(3)
+                .AddIngredient<FlyingSnakeFeather>(1)
                 .DisableDecraft()
                 .AddTile(TileID.MythrilAnvil)
+                .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
 
             CreateRecipe()
                 .AddIngredient<CrystallineMagikePolarizedFilter>()
-                .AddIngredient<FlyingSnakeFeather>(4)
+                .AddIngredient<FlyingSnakeFeather>(2)
                 .DisableDecraft()
                 .AddTile(TileID.MythrilAnvil)
+                .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
 
             CreateRecipe()
                 .AddIngredient<ShadowPolarizedFilter>()
-                .AddIngredient<FlyingSnakeFeather>(5)
+                .AddIngredient<FlyingSnakeFeather>(2)
                 .DisableDecraft()
                 .AddTile(TileID.MythrilAnvil)
+                .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
 
             CreateRecipe()
                 .AddIngredient<IciclePolarizedFilter>()
-                .AddIngredient<FlyingSnakeFeather>(6)
+                .AddIngredient<FlyingSnakeFeather>(3)
                 .DisableDecraft()
                 .AddTile(TileID.MythrilAnvil)
+                .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
 
             CreateRecipe()
                 .AddIngredient<CorruptionPolarizedFilter>()
-                .AddIngredient<FlyingSnakeFeather>(6)
+                .AddIngredient<FlyingSnakeFeather>(3)
                 .DisableDecraft()
                 .AddTile(TileID.MythrilAnvil)
+                .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
 
             CreateRecipe()
                 .AddIngredient<CrimsonPolarizedFilter>()
-                .AddIngredient<FlyingSnakeFeather>(6)
+                .AddIngredient<FlyingSnakeFeather>(3)
                 .DisableDecraft()
                 .AddTile(TileID.MythrilAnvil)
+                .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
 
             CreateRecipe()
                 .AddIngredient<GlistentPolarizedFilter>()
-                .AddIngredient<FlyingSnakeFeather>(7)
+                .AddIngredient<FlyingSnakeFeather>(3)
                 .AddTile(TileID.MythrilAnvil)
                 .DisableDecraft()
+                .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
 
             CreateRecipe()
                 .AddIngredient<MagicCrystalPolarizedFilter>()
-                .AddIngredient<FlyingSnakeFeather>(8)
+                .AddIngredient<FlyingSnakeFeather>(3)
                 .DisableDecraft()
                 .AddTile(TileID.MythrilAnvil)
+                .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
         }
     }

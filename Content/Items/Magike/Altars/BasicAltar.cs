@@ -114,7 +114,7 @@ namespace Coralite.Content.Items.Magike.Altars
                 MALevel.MagicCrystal => MagikeHelper.CalculateMagikeCost(MALevel.MagicCrystal, 16, 60 * 2),
                 MALevel.Glistent => MagikeHelper.CalculateMagikeCost(MALevel.Glistent, 16, 60 * 2),
                 MALevel.Shadow => MagikeHelper.CalculateMagikeCost(MALevel.Shadow, 16, 60 * 2),
-                MALevel.CrystallineMagike => MagikeHelper.CalculateMagikeCost(MALevel.CrystallineMagike, 32, 60 * 2),
+                MALevel.CrystallineMagike => MagikeHelper.CalculateMagikeCost(MALevel.CrystallineMagike, 16, 60 * 2),
                 MALevel.Hallow => MagikeHelper.CalculateMagikeCost(MALevel.Hallow, 16, 60 * 2),
                 MALevel.HolyLight => 1000_0000,
                 MALevel.SplendorMagicore => 35000,

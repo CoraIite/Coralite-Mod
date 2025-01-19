@@ -1,4 +1,5 @@
-﻿using Coralite.Core.Systems.MagikeSystem;
+﻿using Coralite.Core;
+using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.Components.Filters;
@@ -23,6 +24,7 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
                 .AddIngredient<BasicFilter>()
                 .AddIngredient(ItemID.HellstoneBar, 4)
                 .AddTile(TileID.Anvils)
+                .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
         }
     }

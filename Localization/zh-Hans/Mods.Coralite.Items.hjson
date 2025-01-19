@@ -894,9 +894,8 @@ Page_MagikeBase: {
 	DisplayName: 书页：魔能基础
 	Tooltip:
 		'''
-		左键使用以学习魔能的基础知识
-		在地下的魔力水晶洞中心处可以找到
-		“水晶生命体售卖的魔能辞典会为你解释与魔能相关的事情”
+		左键使用以学习魔能的基础知识，同时解锁珊瑚笔记中的“魔能残卷 其一”
+		曾经被遗失在地下的魔力水晶洞中...
 		'''
 }
 
@@ -2868,7 +2867,7 @@ JungleTurtleShell: {
 	DisplayName: 丛林龟壳
 	Tooltip:
 		'''
-		将物品状态下的丛林乌龟整只丢入微光液体后变成的龟壳，似乎在丛林地下的宝箱中也会出现
+		将物品状态下的丛林龟（小动物）整只丢入微光液体后变成的龟壳，似乎在丛林地下的宝箱中也会出现
 		略微增加飞盾格挡能力
 		'''
 }
@@ -4058,7 +4057,7 @@ BasicRefractor: {
 	DisplayName: 基础广角镜
 	Tooltip:
 		'''
-		连接距离很远
+		用于中距离传输魔能
 		{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}
 		'''
 }
@@ -4944,7 +4943,7 @@ LASER: {
 	Tooltip:
 		'''
 		一次性将自身内的所有魔能发送到正对着的仪器中
-		发送距离极远
+		用于远距离传输魔能
 		{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}
 		'''
 }
@@ -5060,4 +5059,14 @@ Glaciate: {
 		冰块命中冰霜波会爆出冰刺
 
 		'''
+}
+
+LeafShield: {
+	DisplayName: 生命大叶子
+	Tooltip: 仅仅是一片巨大的叶子而已
+}
+
+WoodenShield: {
+	DisplayName: 木盾
+	Tooltip: 不太趁手
 }

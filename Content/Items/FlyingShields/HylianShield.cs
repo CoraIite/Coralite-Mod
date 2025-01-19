@@ -19,8 +19,6 @@ namespace Coralite.Content.Items.FlyingShields
         {
         }
 
-        public float Priority => IDashable.HeldItemDash;
-
         public override bool Dash(Player Player, int DashDir)
         {
             float dashDirection;

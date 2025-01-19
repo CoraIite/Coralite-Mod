@@ -1,4 +1,5 @@
-﻿using Coralite.Core.Systems.MagikeSystem;
+﻿using Coralite.Core;
+using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.Components.Filters;
@@ -21,9 +22,10 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
         {
             CreateRecipe()
                 .AddIngredient<HellstonePolarizedFilter>()
-                .AddIngredient(ItemID.HallowedBar, 6)
-                .AddIngredient(ItemID.LivingFireBlock, 12)
+                .AddIngredient(ItemID.HallowedBar, 3)
+                .AddIngredient(ItemID.LivingFireBlock, 6)
                 .AddTile(TileID.Anvils)
+                .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
         }
     }
