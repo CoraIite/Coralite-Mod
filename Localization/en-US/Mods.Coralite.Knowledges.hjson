@@ -74,3 +74,10 @@ ReadPage: {
 	Description: Mods.Coralite.Knowledges.ReadPage.Description
 	HowToUse: Mods.Coralite.Knowledges.ReadPage.HowToUse
 }
+
+FragmentPage.ClickToJump: Mods.Coralite.Knowledges.FragmentPage.ClickToJump
+
+CraftAltar: {
+	RemodelPolymerizeAndMagikeCraft: Mods.Coralite.Knowledges.CraftAltar.RemodelPolymerizeAndMagikeCraft
+	CraftACraftAltar: Mods.Coralite.Knowledges.CraftAltar.CraftACraftAltar
+}

@@ -2,8 +2,10 @@
 using Coralite.Core.Systems.CoraliteActorComponent;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
+using System.IO;
 using Terraria;
 using Terraria.ID;
+using Terraria.ModLoader.IO;
 using Terraria.UI;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components
@@ -16,6 +18,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// 当前仪器的等级，用于显示名字
         /// </summary>
         public MALevel CurrentLevel { get; private set; }
+        /// <summary>
+        /// 自身物品类型
+        /// </summary>
         public int ItemType { get; set; }
 
         public sealed override void Update() { }
@@ -68,6 +73,34 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         #endregion
 
         #region 网络同步
+
+        public override void SendData(ModPacket data)
+        {
+            data.Write((int)CurrentLevel);
+            data.Write(ItemType);
+        }
+
+        public override void ReceiveData(BinaryReader reader, int whoAmI)
+        {
+            CurrentLevel = (MALevel)reader.ReadInt32();
+            ItemType = reader.ReadInt32();
+        }
+
+        #endregion
+
+        #region 数据存储
+
+        public override void SaveData(string preName, TagCompound tag)
+        {
+            tag.Add(preName + nameof(CurrentLevel), (int)CurrentLevel);
+            tag.Add(preName + nameof(ItemType), ItemType);
+        }
+
+        public override void LoadData(string preName, TagCompound tag)
+        {
+            CurrentLevel = (MALevel)tag.GetInt(preName + nameof(CurrentLevel));
+            ItemType = tag.GetInt(preName + nameof(ItemType));
+        }
 
         #endregion
     }

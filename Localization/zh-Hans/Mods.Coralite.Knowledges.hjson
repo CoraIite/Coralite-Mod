@@ -96,9 +96,9 @@ PartJumpPage: {
 	P1Title: "{$WhatIsMagikePage.Title}"
 	P2Title: "{$PlaceFirstLens.BuildYourFirstMagike}"
 	P3Title: "{$StoneMaker.UseMagikeToDoSomething}"
-	P4Title: 扩大你的生产线！
-	P5Title: 我需要更多魔能！
-	P6Title: 把你的魔能挥霍掉！
+	P4Title: "{$CraftAltar.RemodelPolymerizeAndMagikeCraft}"
+	P5Title: 扩大你的生产线！
+	P6Title: 我需要更多魔能！
 	P7Title: 升级！升级！升级仪器！
 	P8Title: 百变滤镜
 }
@@ -123,7 +123,7 @@ ActivatedTheMachine: {
 		    只需要用它点击一下生产仪器就能激活它。
 		'''
 	WorkingBeLike: "    如果你让你的地质再生祭坛开始工作，它看上去应该是这样的。"
-	HarvestTheProduct: Mods.Coralite.Knowledges.ActivatedTheMachine.HarvestTheProduct
+	HarvestTheProduct: "    工作完成后就可以在UI内收获产物了。"
 }
 
 ReadPage: {
@@ -133,4 +133,11 @@ ReadPage: {
 			点击知识可以跳转到对应的章节
 		'''
 	HowToUse: 收集所有的知识碎片吧！
+}
+
+FragmentPage.ClickToJump: 点击后跳转到对应章节
+
+CraftAltar: {
+	RemodelPolymerizeAndMagikeCraft: 重塑！聚合！魔能合成！
+	CraftACraftAltar: "    进行魔能合成需要准备一个基础合成坛，放置后同样需要插入偏振滤镜才能正常工作。"
 }

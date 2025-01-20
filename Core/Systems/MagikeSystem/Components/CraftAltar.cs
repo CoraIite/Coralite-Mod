@@ -548,10 +548,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                         FixedUIGrid grid = new FixedUIGrid();
                         grid.SetTopLeft(top, left);
                         grid.SetSize(-left - 20, -top, 1, 1);
-
-                        var scrollbar = new UIScrollbar();
-                        scrollbar.SetTopLeft(5000, 5000);
-                        grid.SetScrollbar(scrollbar);
+                        grid.QuickInvisibleScrollbar();
 
                         foreach (var recipe in CraftController.Recipes)
                         {
