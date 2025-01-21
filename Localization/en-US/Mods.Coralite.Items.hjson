@@ -4942,3 +4942,8 @@ WoodenShield: {
 	DisplayName: Wooden Shield
 	Tooltip: ""
 }
+
+Aurora: {
+	DisplayName: Aurora
+	Tooltip: ""
+}

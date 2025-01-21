@@ -5070,3 +5070,8 @@ WoodenShield: {
 	DisplayName: 木盾
 	Tooltip: 不太趁手
 }
+
+Aurora: {
+	// DisplayName: Aurora
+	// Tooltip: ""
+}

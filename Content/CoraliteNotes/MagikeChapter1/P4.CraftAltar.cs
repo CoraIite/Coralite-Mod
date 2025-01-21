@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Items.Magike.Altars;
+using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -13,20 +14,19 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
     {
         public static LocalizedText RemodelPolymerizeAndMagikeCraft { get; private set; }
         public static LocalizedText CraftACraftAltar { get; private set; }
-        public static LocalizedText PutMainItemIntoAltar { get; private set; }
+        public static LocalizedText AltarUI { get; private set; }
 
-        private ScaleController _scale1 = new ScaleController(1.5f, 0.2f);
+        private ScaleController _scale1 = new ScaleController(1.2f, 0.2f);
 
         public override void OnInitialize()
         {
             RemodelPolymerizeAndMagikeCraft = this.GetLocalization(nameof(RemodelPolymerizeAndMagikeCraft));
             CraftACraftAltar = this.GetLocalization(nameof(CraftACraftAltar));
-            PutMainItemIntoAltar = this.GetLocalization(nameof(PutMainItemIntoAltar));
+            AltarUI = this.GetLocalization(nameof(AltarUI));
         }
 
         public override void Recalculate()
         {
-            _scale1 = new ScaleController(1.2f, 0.2f);
             _scale1.ResetScale();
 
             base.Recalculate();
@@ -61,11 +61,16 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
             #endregion
 
             //绘制右边文字
-            float width = PageWidth - tex1.Width * 5-80;
-            Helper.DrawTextParagraph(spriteBatch, CraftACraftAltar.Value, width, new Vector2(Position.X + tex1.Width * 5+50, pos.Y), out Vector2 textSize);
+            float width = PageWidth - tex1.Width * 5 - 80;
+            Helper.DrawTextParagraph(spriteBatch, CraftACraftAltar.Value, width, new Vector2(Position.X + tex1.Width * 5 + 50, pos.Y), out Vector2 textSize);
 
-            pos.Y += Math.Max(textSize.Y, tex1.Height * 5) + 20;
+            pos.Y += Math.Max(textSize.Y, tex1.Height * 2.5f) + 20;
 
+            Helper.DrawTextParagraph(spriteBatch, AltarUI.Value, PageWidth, new Vector2(Position.X, pos.Y), out textSize);
+            pos.Y += textSize.Y + 20 + CoraliteAssets.MagikeChapter1.CraftAltarUI.Height() / 2;
+
+            //绘制下图
+            CoraliteAssets.MagikeChapter1.CraftAltarUI.Value.QuickCenteredDraw(spriteBatch, pos);
         }
     }
 }

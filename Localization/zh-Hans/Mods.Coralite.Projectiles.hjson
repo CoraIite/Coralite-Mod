@@ -590,3 +590,6 @@ PremissionProj: {
 // LeafShieldProj.DisplayName: Leaf Shield Proj
 // WoodenShieldGuard.DisplayName: Wooden Shield Guard
 // WoodenShieldProj.DisplayName: Wooden Shield Proj
+// AuroraArrow.DisplayName: Aurora Arrow
+// AuroraArrowTag.DisplayName: Aurora Arrow Tag
+// AuroraHeldProj.DisplayName: Aurora Held Proj

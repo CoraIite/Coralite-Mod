@@ -80,4 +80,10 @@ FragmentPage.ClickToJump: Mods.Coralite.Knowledges.FragmentPage.ClickToJump
 CraftAltar: {
 	RemodelPolymerizeAndMagikeCraft: Mods.Coralite.Knowledges.CraftAltar.RemodelPolymerizeAndMagikeCraft
 	CraftACraftAltar: Mods.Coralite.Knowledges.CraftAltar.CraftACraftAltar
+	AltarUI: Mods.Coralite.Knowledges.CraftAltar.AltarUI
+}
+
+PutMainItemAndSelectRecipe: {
+	PutMainItemIntoAltar: Mods.Coralite.Knowledges.PutMainItemAndSelectRecipe.PutMainItemIntoAltar
+	SelectRecipe: Mods.Coralite.Knowledges.PutMainItemAndSelectRecipe.SelectRecipe
 }

@@ -28,5 +28,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
         public override bool Slope(int i, int j) => false;
 
         public override bool IsTileDangerous(int i, int j, Player player) => true;
+
+        public override void NearbyEffects(int i, int j, bool closer)
+        {
+            if (!NPC.AnyNPCs(ModContent.NPCType<SlimeEmperor>()))
+                WorldGen.KillTile(i, j, false, false, true);
+        }
     }
 }

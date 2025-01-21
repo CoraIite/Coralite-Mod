@@ -1,4 +1,5 @@
-﻿using Coralite.Content.UI;
+﻿using Coralite.Content.Items.CoreKeeper;
+using Coralite.Content.UI;
 using Coralite.Content.UI.MagikeApparatusPanel;
 using Coralite.Core.Loaders;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
@@ -89,6 +90,40 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             //生成物品并放入
             if (Entity.TryGetComponent(MagikeComponentID.ItemGetOnlyContainer, out GetOnlyItemContainer container))
                 container.AddItem(ChosenResipe.ResultItem.type, ChosenResipe.ResultItem.stack);
+
+            MagikeTP entity = Entity;
+            Point16 pos = entity.Position;
+            Tile t = Framing.GetTileSafely(pos);
+            ModTile mt = TileLoader.GetTile(t.TileType);
+
+            if (mt is BaseCraftAltarTile altartile)
+            {
+                GetMagikeAlternateData(pos.X, pos.Y, out TileObjectData data, out MagikeAlternateStyle alternate);
+                float rotation = alternate.GetAlternateRotation();
+                var level = MagikeSystem.FrameToLevel(t.TileType, t.TileFrameX / data.CoordinateFullWidth);
+
+                Vector2 position = Helper.GetMagikeTileCenter(pos.X, pos.Y) + altartile.GetFloatingOffset(rotation, level.Value);
+
+                for (int i = 0; i < 20; i++)
+                {
+                    Vector2 dir = (i * MathHelper.TwoPi / 20).ToRotationVector2();
+                    Dust dust = Dust.NewDustPerfect(position, DustID.RainbowMk2, dir * Main.rand.NextFloat(2f, 5f)
+                        , newColor: Coralite.MagicCrystalPink, Scale: 1.2f);
+                    dust.noGravity = true;
+                    dust = Dust.NewDustPerfect(position, DustID.RainbowMk2, dir * Main.rand.NextFloat(5f, 8f)
+                        , newColor: Coralite.MagicCrystalPink, Scale: 1.5f);
+                    dust.noGravity = true;
+                }
+
+                for (int i = 0; i < 5; i++)
+                {
+                    Dust dust = Dust.NewDustPerfect(position, ModContent.DustType<Runes>(), Helper.NextVec2Dir(3f, 5f)
+                        , newColor: Coralite.MagicCrystalPink, Scale: 1f);
+                    dust.noGravity = true;
+                }
+
+                Helper.PlayPitched("UI/Success", 0.4f, -0.2f, position);
+            }
         }
 
         public override bool DuringWork()
@@ -741,9 +776,12 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 spriteBatch.Draw(tex, pos + new Vector2(3, 0), frame, Color.White, 0, Vector2.Zero, 1, 0, 0);
 
                 Utils.DrawBorderString(spriteBatch, percentText, center, Color.White, 0.75f, anchorx: 0.5f, anchory: 0.5f);
-                string text = _altar.ChosenResipe.ResultItem.Name;
-                text = string.Concat(text, Environment.NewLine, _altar.RequiredMagike, "/", _altar.ChosenResipe.magikeCost, Environment.NewLine, MagikeSystem.RightClickStopCraft.Value);
-                UICommon.TooltipMouseText(text);
+                if (IsMouseHovering)
+                {
+                    string text = _altar.ChosenResipe.ResultItem.Name;
+                    text = string.Concat(text, Environment.NewLine, _altar.ChosenResipe.magikeCost- _altar.RequiredMagike, "/", _altar.ChosenResipe.magikeCost, Environment.NewLine, MagikeSystem.RightClickStopCraft.Value);
+                    UICommon.TooltipMouseText(text);
+                }
             }
             else
             {
@@ -764,7 +802,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                         ItemSlot.MouseHover(ref i, ItemSlot.Context.InventoryItem);
 
                         text = _altar.ChosenResipe.ResultItem.Name;
-                        text = string.Concat(text, Environment.NewLine, _altar.RequiredMagike, "/", _altar.ChosenResipe.magikeCost, Environment.NewLine, MagikeSystem.RightClickStopCraft.Value);
+                        text = string.Concat(text, Environment.NewLine, _altar.Entity.GetMagikeContainer().Magike, "/", _altar.ChosenResipe.magikeCost, Environment.NewLine, MagikeSystem.RightClickStopCraft.Value);
                     }
                     else
                     {

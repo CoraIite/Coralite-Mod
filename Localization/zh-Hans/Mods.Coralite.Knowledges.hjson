@@ -140,4 +140,10 @@ FragmentPage.ClickToJump: 点击后跳转到对应章节
 CraftAltar: {
 	RemodelPolymerizeAndMagikeCraft: 重塑！聚合！魔能合成！
 	CraftACraftAltar: "    进行魔能合成需要准备一个基础合成坛，放置后同样需要插入偏振滤镜才能正常工作。"
+	AltarUI: "    下面是魔能合成坛的UI界面，看上去似乎有些复杂。 接下来将以木头合成煤炭为例解释UI内的各个部分作用."
+}
+
+PutMainItemAndSelectRecipe: {
+	PutMainItemIntoAltar: "    第一步，将主要物品：木头放入左上的物品格中。 主要物品是指合成表中除“魔能徽记”以外的第一个物品。"
+	SelectRecipe: "    第二步，点击右侧按钮选择合成表。 魔能合成坛具有比较初级的自动选择功能，对于只有一种合成表的物品可以不需要这一步。"
 }

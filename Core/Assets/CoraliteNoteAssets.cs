@@ -29,6 +29,9 @@ namespace Coralite.Core
             public static ATex ConnectStaff2 { get; private set; }
             public static ATex Working { get; private set; }
             public static ATex HarvestStone { get; private set; }
+            public static ATex CraftAltarUI { get; private set; }
+            public static ATex PutMainItemIn { get; private set; }
+            public static ATex SelectRecipe { get; private set; }
         }
     }
 }

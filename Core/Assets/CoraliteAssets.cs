@@ -223,6 +223,11 @@ namespace Coralite.Core
             /// </summary>
             public static ATex LightShot { get; private set; }
 
+            /// <summary> 
+            /// 一束光，竖过来看是一个水滴
+            /// </summary>
+            public static ATex LightShotSPA { get; private set; }
+
             #endregion
         }
 
