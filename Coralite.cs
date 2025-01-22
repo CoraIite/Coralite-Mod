@@ -37,6 +37,7 @@ namespace Coralite
         /// </summary>
         public ReverseX2Smoother ReverseX2Smoother;
 
+        /// <summary> d33232 </summary>
         public static Color RedJadeRed => new(221, 50, 50);
         /// <summary> ffbeec </summary>
         public static Color MagicCrystalPink => new(255, 190, 236);

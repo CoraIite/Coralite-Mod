@@ -1,7 +1,5 @@
 ﻿using Coralite.Core.Loaders;
 using Coralite.Helpers;
-using System.Collections.Generic;
-using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.Localization;
 
@@ -32,7 +30,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
             buttonList.Add(new Chapter1Jump(ParaTitles[1], () => CoraliteNoteUIState.BookPanel.GetPageIndex<PlaceFirstLens>()));
             buttonList.Add(new Chapter1Jump(ParaTitles[2], () => CoraliteNoteUIState.BookPanel.GetPageIndex<StoneMaker>()));
             buttonList.Add(new Chapter1Jump(ParaTitles[3], () => CoraliteNoteUIState.BookPanel.GetPageIndex<CraftAltar>()));
-            buttonList.Add(new Chapter1Jump(ParaTitles[4], () => CoraliteNoteUIState.BookPanel.GetPageIndex<WhatIsMagikePage>()));
+            buttonList.Add(new Chapter1Jump(ParaTitles[4], () => CoraliteNoteUIState.BookPanel.GetPageIndex<ExpandProductionLine>()));
             buttonList.Add(new Chapter1Jump(ParaTitles[5], () => CoraliteNoteUIState.BookPanel.GetPageIndex<WhatIsMagikePage>()));
             buttonList.Add(new Chapter1Jump(ParaTitles[6], () => CoraliteNoteUIState.BookPanel.GetPageIndex<WhatIsMagikePage>()));
             buttonList.Add(new Chapter1Jump(ParaTitles[7], () => CoraliteNoteUIState.BookPanel.GetPageIndex<WhatIsMagikePage>()));

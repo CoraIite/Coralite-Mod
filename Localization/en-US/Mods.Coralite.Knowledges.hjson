@@ -92,3 +92,17 @@ CraftAltar2: {
 	ActiveAltar: Mods.Coralite.Knowledges.CraftAltar2.ActiveAltar
 	GetResult: Mods.Coralite.Knowledges.CraftAltar2.GetResult
 }
+
+PolymerizeCraft: {
+	ALotOfOtherItems: Mods.Coralite.Knowledges.PolymerizeCraft.ALotOfOtherItems
+	WhatIsPedestal: Mods.Coralite.Knowledges.PolymerizeCraft.WhatIsPedestal
+	PlacePedestal: Mods.Coralite.Knowledges.PolymerizeCraft.PlacePedestal
+}
+
+PolymerizeCraft2: {
+	ConnectToPedestal: Mods.Coralite.Knowledges.PolymerizeCraft2.ConnectToPedestal
+	CheckAltar: Mods.Coralite.Knowledges.PolymerizeCraft2.CheckAltar
+}
+
+ExpandProductionLine.Title: Mods.Coralite.Knowledges.ExpandProductionLine.Title
+RedJadePage.Title: Mods.Coralite.Knowledges.RedJadePage.Title

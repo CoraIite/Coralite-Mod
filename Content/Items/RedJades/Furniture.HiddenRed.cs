@@ -1,5 +1,6 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Prefabs.Tiles;
+using Coralite.Core.Systems.KeySystem;
 using Terraria;
 using Terraria.ID;
 
@@ -14,6 +15,11 @@ namespace Coralite.Content.Items.RedJades
             Item.DefaultToPlaceableTile(ModContent.TileType<HiddenRedTile>());
             Item.rare = ItemRarityID.Blue;
             Item.value = Item.sellPrice(0, 0, 10, 0);
+        }
+
+        public override void UpdateInventory(Player player)
+        {
+            KnowledgeSystem.CheckForUnlock(KeyKnowledgeID.RedJade, player.Center, Coralite.RedJadeRed);
         }
     }
 

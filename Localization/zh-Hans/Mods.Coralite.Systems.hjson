@@ -115,4 +115,16 @@ KnowledgeSystem: {
 			其上会教你如何搭建一条魔能生产线
 			'''
 	}
+
+	RedJadeKnowledge: {
+		Name: "[c/d33232:赤玉残卷]"
+		LockTip: 获得 “隐藏的赤色” 或 “赤色果实” 后解锁
+		Description:
+			'''
+			记载着赤玉与赤玉灵的相关信息
+			凭空产生的红色能量是什么？
+			'''
+	}
+
+	NewKnowledgeUnlock: 珊瑚笔记中解锁了新的章节！
 }

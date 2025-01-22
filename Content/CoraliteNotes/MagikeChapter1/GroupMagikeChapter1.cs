@@ -33,6 +33,11 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
                     new CraftAltar(),
                     new PutMainItemAndSelectRecipe(),
                     new CraftAltar2(),
+                    new PolymerizeCraft(),
+                    new PolymerizeCraft2(),
+
+                    //P5：扩大生产线！
+                    new ExpandProductionLine(),
                 ];
         }
     }

@@ -35,9 +35,8 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
             Utils.DrawBorderStringBig(spriteBatch, Title.Value, Center + new Vector2(0, -PageWidth / 2), Coralite.MagicCrystalPink, 1, 0.5f, 0.5f);
 
             Vector2 pos = Position + new Vector2(0, 140);
-            Vector2 size = Vector2.Zero;
             Helper.DrawText(spriteBatch, Welcome.Value, PageWidth, pos, Vector2.Zero, Vector2.One
-                , new Color(40, 40, 40), Color.White, out size);
+                , new Color(40, 40, 40), Color.White, out Vector2 size);
 
             pos.Y += size.Y + 30;
 

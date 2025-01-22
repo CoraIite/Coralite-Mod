@@ -34,6 +34,10 @@ namespace Coralite.Core
             public static ATex SelectRecipe { get; private set; }
             public static ATex ActiveAltar { get; private set; }
             public static ATex AltarCraftSuccess { get; private set; }
+            public static ATex PolymerizeCraft { get; private set; }
+            public static ATex PlacePedestal { get; private set; }
+            public static ATex ConnectToPedestal { get; private set; }
+            public static ATex CheckAltar { get; private set; }
         }
     }
 }
