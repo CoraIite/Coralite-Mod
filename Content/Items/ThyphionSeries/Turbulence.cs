@@ -59,11 +59,11 @@ namespace Coralite.Content.Items.ThyphionSeries
             Projectile.NewProjectile(new EntitySource_ItemUse(player, Item)
                 , player.Center, Vector2.Zero, ProjectileType<TurbulenceHeldProj>(), damage, knockback, player.whoAmI, rot);
 
-            if (Main.rand.NextBool(shootCount,7))
+            if (Main.rand.NextBool(shootCount, 7))
             {
                 shootCount = 0;
                 type = ProjectileType<TurbulenceArrow>();
-                Helper.PlayPitched(CoraliteSoundID.ShadowflameApparition_NPCDeath55, player.Center,pitchAdjust:0.3f);
+                Helper.PlayPitched(CoraliteSoundID.ShadowflameApparition_NPCDeath55, player.Center, pitchAdjust: 0.3f);
             }
 
             shootCount++;
@@ -77,7 +77,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         {
             CreateRecipe()
                 .AddIngredient<TurbulenceCore>()
-                .AddIngredient(ItemID.GraniteBlock,8)
+                .AddIngredient(ItemID.GraniteBlock, 8)
                 .AddIngredient(ItemID.LeadBrick, 13)
                 .AddIngredient(ItemID.SapphireGemsparkBlock, 7)
                 .AddCondition(CoraliteConditions.UseMultiBlockStructure)
@@ -124,7 +124,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 }
 
                 //生成手持弹幕
-                Projectile.NewProjectile(Player.GetSource_ItemUse(Player.HeldItem), Player.Center, new Vector2(dashDirection,0), ProjectileType<TurbulenceHeldProj>(),
+                Projectile.NewProjectile(Player.GetSource_ItemUse(Player.HeldItem), Player.Center, new Vector2(dashDirection, 0), ProjectileType<TurbulenceHeldProj>(),
                     Player.HeldItem.damage, Player.HeldItem.knockBack, Player.whoAmI, 1.57f + dashDirection * 1, 1, 12);
             }
 
@@ -183,14 +183,14 @@ namespace Coralite.Content.Items.ThyphionSeries
                     }
                 }
             }
-            else if (Timer==DashTime+2)
+            else if (Timer == DashTime + 2)
             {
                 Owner.velocity.X = Projectile.velocity.X * 2;
                 LockOwnerItemTime();
             }
             else
             {
-                if (DownLeft&&SPTimer==0)
+                if (DownLeft && SPTimer == 0)
                 {
                     if (Main.myPlayer == Projectile.owner)
                     {
@@ -205,7 +205,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 {
                     if (SPTimer == 0 && Projectile.IsOwnedByLocalPlayer())
                     {
-                        Helper.PlayPitched(CoraliteSoundID.ShadowflameApparition_NPCDeath55, Projectile.Center,pitchAdjust:-0.5f);
+                        Helper.PlayPitched(CoraliteSoundID.ShadowflameApparition_NPCDeath55, Projectile.Center, pitchAdjust: -0.5f);
                         Helper.PlayPitched(CoraliteSoundID.Bow_Item5, Projectile.Center);
 
                         Projectile.NewProjectileFromThis<TurbulenceArrow>(Owner.Center, ToMouse.SafeNormalize(Vector2.Zero) * 16
@@ -358,7 +358,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public void DrawNonPremultiplied(SpriteBatch spriteBatch)
         {
-            if (Special == 0 || SPTimer>0)
+            if (Special == 0 || SPTimer > 0)
                 return;
 
         }
@@ -903,7 +903,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
         {
             int type = CoraliteContent.MTBSType<TurbulenceMultiBlock>();
-            foreach (var p in Main.projectile.Where(p => p.active && p.friendly && p.type ==ProjectileType<PreviewMultiblockPeoj>() && p.ai[0] == type))
+            foreach (var p in Main.projectile.Where(p => p.active && p.friendly && p.type == ProjectileType<PreviewMultiblockPeoj>() && p.ai[0] == type))
                 p.Kill();
         }
     }

@@ -31,7 +31,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public override void SetDefaults()
         {
-            Item.SetWeaponValues(60, 4f,4);
+            Item.SetWeaponValues(60, 4f, 4);
             Item.DefaultToRangedWeapon(10, AmmoID.Arrow, 24, 10f);
 
             Item.rare = ItemRarityID.Pink;
@@ -733,7 +733,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             Projectile.InitOldPosCache(trailPoint, true);
             trail = new Trail(Main.instance.GraphicsDevice, trailPoint + 6, new EmptyMeshGenerator()
-                , f => 26 * TrailWidth, factor => new Color(255,255,255,220));
+                , f => 26 * TrailWidth, factor => new Color(255, 255, 255, 220));
         }
 
         public void JustShoot()
@@ -947,7 +947,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, effect, Main.GameViewMatrix.TransformationMatrix);
 
-            Color c = Color.White*0.9f;
+            Color c = Color.White * 0.9f;
             Vector2 scale = new Vector2(1, 0.75f * TrailWidth) * 0.65f;
             spriteBatch.Draw(tex, pos, null, Main.DiscoColor, Projectile.rotation, origin, scale, 0, 0);
 
