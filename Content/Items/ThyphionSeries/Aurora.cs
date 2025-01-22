@@ -1,11 +1,10 @@
 ﻿using Coralite.Content.ModPlayers;
 using Coralite.Core;
-using Coralite.Core.Attributes;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.CameraSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
@@ -50,13 +49,13 @@ namespace Coralite.Content.Items.ThyphionSeries
             Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, Vector2.Zero, ProjectileType<AuroraHeldProj>(), damage, knockback, player.whoAmI, rot, 0);
 
             if (player.ownedProjectileCounts[ProjectileType<AuroraHeldProj>()] == 0)
-                Projectile.NewProjectile(source, player.Center, velocity, type, damage, knockback, player.whoAmI);
-
-            //for (int i = 0; i < 2; i++)
             {
                 float r = Main.rand.NextFromList(-0.6f, 0.6f);
-                Projectile.NewProjectile(source, player.Center + velocity.SafeNormalize(Vector2.Zero).RotateByRandom(r - 0.2f, r + 0.2f) * 32
-                    , velocity.SafeNormalize(Vector2.Zero)*12, ProjectileType<AuroraArrow>(), damage, knockback, player.whoAmI);
+                Projectile.NewProjectile(source, player.Center 
+                    , velocity, ProjectileType<AuroraArrow>(), damage, knockback, player.whoAmI);
+                for (int i = 0; i < 2; i++)
+                Projectile.NewProjectile(source, player.Center + velocity.SafeNormalize(Vector2.Zero).RotateByRandom(r - 0.2f, r + 0.2f) * 16, velocity, type, damage, knockback, player.whoAmI);
+
             }
 
             return false;
@@ -162,7 +161,6 @@ namespace Coralite.Content.Items.ThyphionSeries
         }
     }
 
-    [AutoLoadTexture(Path = AssetDirectory.ThyphionSeriesItems)]
     public class AuroraArrow : ModProjectile
     {
         public override string Texture => AssetDirectory.ThyphionSeriesItems + Name;
@@ -170,14 +168,13 @@ namespace Coralite.Content.Items.ThyphionSeries
         public bool SpAttack => Projectile.ai[0] == 1;
         public ref float Timer => ref Projectile.ai[1];
         public ref float Target => ref Projectile.ai[2];
-
-        public static ATex AuroraTrail { get; private set; }
+        public ref float Random => ref Projectile.localAI[0];
 
         private bool init = true;
 
         public override void SetStaticDefaults()
         {
-            Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 30);
+            Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 14);
         }
 
         public override void SetDefaults()
@@ -196,7 +193,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             if (init)
                 Initialize();
 
-            if (Timer > 0 && Timer % (20 * Projectile.MaxUpdates) == 0)
+            if (Timer > 0 && Timer % (8 * Projectile.MaxUpdates) == 0)
             {
                 NPC n = Helper.FindClosestEnemy(Projectile.Center, 400, n => n.CanBeChasedBy());
                 if (n != null)
@@ -221,6 +218,14 @@ namespace Coralite.Content.Items.ThyphionSeries
             else
                 Target = -1;
 
+            if (Timer>0)
+            {
+                var p = PRTLoader.NewParticle<AuroraParticle>(Projectile.Center, new Vector2(0, -Random * Main.rand.NextFloat(1, 3)), Scale: Main.rand.NextFloat(0.8f, 1.3f));
+                p.MaxTime = 10;
+                p.Rotation = Projectile.rotation + (Projectile.velocity.X > 0 ? 0 : MathHelper.Pi);
+            }
+
+            Random += Main.rand.NextFloat(-0.1f, 0.1f);
             Projectile.rotation = Projectile.velocity.ToRotation();
             Timer++;
         }
@@ -253,39 +258,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D trail = AuroraTrail.Value;
-
-            Vector2 trailOrigin = new Vector2(trail.Width,trail.Height/2);
-            Vector2 toCenter = Projectile.Size / 2;
-
-            for (int i = 0; i < Projectile.oldPos.Length; i++)
-            {
-                Vector2 oldPos = Projectile.oldPos[i] - Main.screenPosition;
-                float factor = (float)i / Projectile.oldPos.Length;
-                Color c = GetColor(factor)*(1-factor);
-
-                Vector2 dir = -(Projectile.oldRot[i] + 1.57f).ToRotationVector2();
-
-                float y = i * MathF.Sin((i - Timer / 3) * 0.6f + Projectile.whoAmI * 3.14f) / 180f;
-                Vector2 targetPos = oldPos - dir * y * i * 6 + toCenter;
-
-                float scaleY = 0.3f + i * 0.02f;
-                float scaleX = Coralite.Instance.X2Smoother.Smoother(factor)* 0.3f;
-                float rot = Projectile.oldRot[i] + 1.57f;
-
-                Main.spriteBatch.Draw(trail, targetPos, null, c*0.5f, rot, trailOrigin, new Vector2(scaleX, scaleY), 0, 0);
-
-                Color c2 = c;
-                byte a = c.A;
-                //c2 *= 0.8f;
-                c2.A = a;
-                
-                Main.spriteBatch.Draw(trail, targetPos+ dir * y * i * 12, null, c2, rot, trailOrigin, new Vector2(scaleX * 0.5f, scaleY * 0.5f), 0, 0);
-
-                c.A = 0;
-                //c *= 0.5f;
-                Main.spriteBatch.Draw(trail, targetPos, null, c, rot, trailOrigin, new Vector2(scaleX * 0.5f, scaleY), 0, 0);
-            }
+            Projectile.DrawShadowTrails(lightColor, 0.5f, 0.5f / 14, 0, 14, 1, 1.57f,-1);
 
             Projectile.QuickDraw(lightColor, 1.57f);
 
@@ -324,6 +297,79 @@ namespace Coralite.Content.Items.ThyphionSeries
         public override bool PreDraw(ref Color lightColor)
         {
             return base.PreDraw(ref lightColor);
+        }
+    }
+
+    public class AuroraParticle:Particle
+    {
+        public override string Texture => AssetDirectory.ThyphionSeriesItems + "AuroraTrail";
+
+        public float alpha;
+        public Vector2 scale=new Vector2(0,0.2f);
+        public int MaxTime = 20;
+        public float endX = Main.rand.NextFloat(0.125f, 0.35f);
+
+        public override void SetProperty()
+        {
+            PRTDrawMode = PRTDrawModeEnum.AlphaBlend;
+        }
+
+        public override void AI()
+        {
+            Opacity++;
+
+            Color = GetColor(Opacity / MaxTime);
+            alpha = 1 - Opacity / MaxTime;
+
+            if (Opacity < MaxTime / 4)
+            {
+                float f = Opacity / (MaxTime / 4);
+                alpha = 1 - f;
+
+                scale = Vector2.Lerp(new Vector2(0, 0.2f), new Vector2(endX, 0.3f), f);
+            }
+            else
+            {
+                scale = Vector2.Lerp(scale, new Vector2(0.02f, 0.5f), 0.1f);
+                if (Opacity > MaxTime * 3 / 4)
+                {
+                    alpha *= 0.9f;
+                }
+            }
+
+            if (Opacity > MaxTime)
+            {
+                active = false;
+            }
+        }
+
+        public Color GetColor(float factor)
+        {
+            return Color.Lerp(new Color(181, 255, 180), new Color(202, g: 60, 109), factor);
+        }
+
+        public override bool PreDraw(SpriteBatch spriteBatch)
+        {
+            Texture2D trail = TexValue;
+            Vector2 trailOrigin = new Vector2(trail.Width, trail.Height / 2);
+            Vector2 trailPos = Position - Main.screenPosition;
+
+            Color c = Color * alpha * 0.7f;
+            if (c.A < 2)
+            {
+                return false;
+            }
+            Vector2 s = scale * Scale;
+
+            float rot = Rotation + 1.57f;
+            Main.spriteBatch.Draw(trail, trailPos, null, c * 0.8f, rot, trailOrigin, s, 0, 0);
+            s.X *= 0.35f;
+            Main.spriteBatch.Draw(trail, trailPos + Velocity * 2, null, c, rot, trailOrigin, s, 0, 0);
+
+            c.A = 25;
+            Main.spriteBatch.Draw(trail, trailPos, null, c, rot, trailOrigin, s, 0, 0);
+
+            return false;
         }
     }
 }

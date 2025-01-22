@@ -97,7 +97,7 @@ PartJumpPage: {
 	P2Title: "{$PlaceFirstLens.BuildYourFirstMagike}"
 	P3Title: "{$StoneMaker.UseMagikeToDoSomething}"
 	P4Title: "{$CraftAltar.RemodelPolymerizeAndMagikeCraft}"
-	P5Title: 扩大你的生产线！
+	P5Title: "{$ExpandProductionLine.Title}"
 	P6Title: 我需要更多魔能！
 	P7Title: 升级！升级！升级仪器！
 	P8Title: 百变滤镜
@@ -156,3 +156,21 @@ CraftAltar2: {
 		'''
 	GetResult: "    最后，等待合成坛消耗魔能后，在下方的物品格内收获产物。"
 }
+
+PolymerizeCraft: {
+	ALotOfOtherItems: "    很多魔能合成表除了主要物品之外还需要次要物品，接下来介绍这些合成表的合成方式。"
+	WhatIsPedestal:
+		'''
+		    基础置物台是一个很好的物品容器，可以在内部放入物品。 多做几个放在合成坛旁边吧。
+		    它并不需要偏振滤镜，但是偏振滤镜能够改变它的外观。
+		'''
+	PlacePedestal: "    在置物台内放入物品的样子。"
+}
+
+PolymerizeCraft2: {
+	ConnectToPedestal: "    之后使用连接仪将合成坛连接到置物台上，请注意不要连反了。"
+	CheckAltar: "    查看合成坛，可以发现显示变蓝了，代表物品已经足够。 后续的步骤就不演示了，请参考前几页的流程。"
+}
+
+ExpandProductionLine.Title: 扩大生产线！
+RedJadePage.Title: 赤玉残卷

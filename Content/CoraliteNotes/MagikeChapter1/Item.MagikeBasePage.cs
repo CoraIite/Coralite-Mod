@@ -38,13 +38,17 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
                 CoraliteContent.GetKKnowledge(KeyKnowledgeID.MagikeS1).UnlockKnowledge();
                 //TODO: 同步知识改变
 
-                //MagikeHelper.SpawnDustOnGenerate(3, 3, player.Center.ToPoint16(), Coralite.MagicCrystalPink);
                 if (Main.myPlayer == player.whoAmI)
+                {
+                    KnowledgeSystem.SpawnKnowledgeUnlockText(player.Center, Coralite.MagicCrystalPink);
                     Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, new Vector2(player.direction * 8, -4),
                         ModContent.ProjectileType<Page_MagikeBaseProj>(), 1, 0, player.whoAmI);
+                }
+
+                return true;
             }
 
-            return true;
+            return false;
         }
     }
 

@@ -1227,7 +1227,11 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                     break;
                 case SlotType.RequiredItem://其他物品只需要判断一下有没有足够的就行
                     if (CraftController.OtherItemTypes.TryGetValue(showItem.type, out int stack))
+                    {
                         canCraft = stack >= showItem.stack;
+                        if (!canCraft)
+                            FailText = MagikeSystem.CraftText[(int)MagikeSystem.CraftTextID.OtherItemNotEnough].Format(showItem.Name, showItem.stack - stack);
+                    }
                     else
                     {
                         canCraft = false;
@@ -1261,7 +1265,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         {
             Item inv2 = showItem;
 
-            int context = canCraft ? ItemSlot.Context.InventoryAmmo : ItemSlot.Context.VoidItem;
+            int context = canCraft ? ItemSlot.Context.InventoryCoin : ItemSlot.Context.ChestItem;
 
             if (IsMouseHovering)
             {

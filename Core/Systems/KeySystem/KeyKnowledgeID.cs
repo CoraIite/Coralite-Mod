@@ -2,7 +2,8 @@
 {
     public class KeyKnowledgeID
     {
-        public const int MagikeS1 = 0;
-        public const int Count = MagikeS1+1;
+        public const int RedJade = 0;
+        public const int MagikeS1 = 1;
+        public const int Count = MagikeS1 + 1;
     }
 }

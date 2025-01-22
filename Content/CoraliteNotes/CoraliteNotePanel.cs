@@ -1,6 +1,4 @@
-﻿using Coralite.Content.CoraliteNotes.MagikeChapter1;
-using Coralite.Content.CoraliteNotes.Readfragment;
-using Coralite.Content.UI.UILib;
+﻿using Coralite.Content.UI.UILib;
 using Coralite.Core;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -19,8 +17,9 @@ namespace Coralite.Content.CoraliteNotes
         {
             pageGroups =
                 [
-                    new GroupReadfragment(),
-                    new GroupMagikeChapter1(),
+                    new Readfragment.GroupReadfragment(),
+                    new RedJade.GroupRedJade(),
+                    new MagikeChapter1.GroupMagikeChapter1(),
                 ];
         }
     }

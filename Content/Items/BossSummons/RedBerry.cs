@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Bosses.Rediancie;
 using Coralite.Core;
+using Coralite.Core.Systems.KeySystem;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.Creative;
@@ -33,6 +34,11 @@ namespace Coralite.Content.Items.BossSummons
             Item.useStyle = ItemUseStyleID.HoldUp;
             Item.rare = ItemRarityID.Blue;
             Item.consumable = true;
+        }
+
+        public override void UpdateInventory(Player player)
+        {
+            KnowledgeSystem.CheckForUnlock(KeyKnowledgeID.RedJade, player.Center, Coralite.RedJadeRed);
         }
 
         public override bool CanUseItem(Player player)

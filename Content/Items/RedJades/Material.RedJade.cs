@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.Tiles.RedJades;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
+using Coralite.Core.Systems.KeySystem;
 using Terraria;
 using Terraria.ID;
 
@@ -15,6 +16,11 @@ namespace Coralite.Content.Items.RedJades
             base.SetDefaults();
             Item.consumable = true;
             Item.createTile = ModContent.TileType<RedJadeTile>();
+        }
+
+        public override void UpdateInventory(Player player)
+        {
+            KnowledgeSystem.CheckForUnlock(KeyKnowledgeID.RedJade, player.Center, Coralite.RedJadeRed);
         }
     }
 }

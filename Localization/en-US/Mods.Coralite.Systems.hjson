@@ -107,4 +107,12 @@ KnowledgeSystem: {
 		LockTip: Mods.Coralite.Systems.KnowledgeSystem.MagikeS1Knowledge.LockTip
 		Description: Mods.Coralite.Systems.KnowledgeSystem.MagikeS1Knowledge.Description
 	}
+
+	RedJadeKnowledge: {
+		Name: Mods.Coralite.Systems.KnowledgeSystem.RedJadeKnowledge.Name
+		LockTip: Mods.Coralite.Systems.KnowledgeSystem.RedJadeKnowledge.LockTip
+		Description: Mods.Coralite.Systems.KnowledgeSystem.RedJadeKnowledge.Description
+	}
+
+	NewKnowledgeUnlock: Mods.Coralite.Systems.KnowledgeSystem.NewKnowledgeUnlock
 }

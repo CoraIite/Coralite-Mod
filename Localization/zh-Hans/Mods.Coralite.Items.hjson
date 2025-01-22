@@ -4353,7 +4353,7 @@ Heptachromic: {
 
 BasicPedestal: {
 	DisplayName: 基础置物台
-	Tooltip: 可以在内部放入物品拱展示或魔能合成
+	Tooltip: 可以在内部放入物品
 }
 
 GelFiberBreastplate: {
