@@ -169,3 +169,20 @@ SoulOfNightAltarTile: {
 	NeedSouls: 献上古老的黑暗之魂吧...
 	MapEntry: 矽卡黑暗之祭坛
 }
+
+BlackPlushBathtubTile.MapEntry: 黑色毛绒浴缸
+BlackPlushBedTile.MapEntry: 黑色毛绒床
+BlackPlushBigDroplightTile.MapEntry: 黑色毛绒大吊灯
+BlackPlushBookcaseTile.MapEntry: 黑色毛绒猫爬架
+BlackPlushCandelabraTile.MapEntry: 黑色毛绒烛台
+BlackPlushCandleTile.MapEntry: 黑色毛绒蜡烛
+BlackPlushChestTile.MapEntry: 黑色毛绒箱
+BlackPlushDoorClosedTile.MapEntry: 黑色毛绒门
+BlackPlushDoorOpenTile.MapEntry: 黑色毛绒门
+BlackPlushDresserTile.MapEntry: 黑色毛绒梳妆台
+BlackPlushDroplightTile.MapEntry: 黑色毛绒吊灯
+BlackPlushFloorLampTile.MapEntry: 黑色毛绒灯柱
+BlackPlushPianoTile.MapEntry: 黑色毛绒钢琴
+BlackPlushSofaTile.MapEntry: 黑色毛绒沙发
+BlackPlushTableTile.MapEntry: 黑色毛绒桌
+BlackPlushWorkBenchTile.MapEntry: 黑色毛绒工作台

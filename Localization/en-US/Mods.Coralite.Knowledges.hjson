@@ -87,3 +87,8 @@ PutMainItemAndSelectRecipe: {
 	PutMainItemIntoAltar: Mods.Coralite.Knowledges.PutMainItemAndSelectRecipe.PutMainItemIntoAltar
 	SelectRecipe: Mods.Coralite.Knowledges.PutMainItemAndSelectRecipe.SelectRecipe
 }
+
+CraftAltar2: {
+	ActiveAltar: Mods.Coralite.Knowledges.CraftAltar2.ActiveAltar
+	GetResult: Mods.Coralite.Knowledges.CraftAltar2.GetResult
+}

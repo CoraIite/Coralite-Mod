@@ -5072,6 +5072,121 @@ WoodenShield: {
 }
 
 Aurora: {
-	// DisplayName: Aurora
-	// Tooltip: ""
+	DisplayName: 极光
+	Tooltip: ""
+}
+
+BlackPlush: {
+	DisplayName: 黑色毛绒
+	Tooltip: ""
+}
+
+BlackPlushBathtub: {
+	DisplayName: 黑色毛绒浴缸
+	Tooltip: ""
+}
+
+BlackPlushBed: {
+	DisplayName: 黑色毛绒床
+	Tooltip: ""
+}
+
+BlackPlushBigDroplight: {
+	DisplayName: 黑色毛绒大吊灯
+	Tooltip: ""
+}
+
+BlackPlushBlock: {
+	DisplayName: 黑色毛绒球
+	Tooltip: ""
+}
+
+BlackPlushBookcase: {
+	DisplayName: 黑色毛绒猫爬架
+	Tooltip: ""
+}
+
+BlackPlushCandelabra: {
+	DisplayName: 黑色毛绒烛台
+	Tooltip: ""
+}
+
+BlackPlushCandle: {
+	DisplayName: 黑色毛绒蜡烛
+	Tooltip: ""
+}
+
+BlackPlushChair: {
+	DisplayName: 黑色毛绒椅
+	Tooltip: ""
+}
+
+BlackPlushChest: {
+	DisplayName: 黑色毛绒箱
+	Tooltip: ""
+}
+
+BlackPlushClock: {
+	DisplayName: 黑色毛绒钟
+	Tooltip: ""
+}
+
+BlackPlushDoor: {
+	DisplayName: 黑色毛绒门
+	Tooltip: ""
+}
+
+BlackPlushDresser: {
+	DisplayName: 黑色毛绒梳妆台
+	Tooltip: ""
+}
+
+BlackPlushDroplight: {
+	DisplayName: 黑色毛绒吊灯
+	Tooltip: ""
+}
+
+BlackPlushFloorLamp: {
+	DisplayName: 黑色毛绒灯柱
+	Tooltip: ""
+}
+
+BlackPlushPiano: {
+	DisplayName: 黑色毛绒钢琴
+	Tooltip: ""
+}
+
+BlackPlushPlatform: {
+	DisplayName: 黑色毛绒平台
+	Tooltip: ""
+}
+
+BlackPlushSink: {
+	DisplayName: 黑色毛绒水槽
+	Tooltip: ""
+}
+
+BlackPlushSofa: {
+	DisplayName: 黑色毛绒沙发
+	Tooltip: ""
+}
+
+BlackPlushTable: {
+	DisplayName: 黑色毛绒桌
+	Tooltip: ""
+}
+
+BlackPlushToilet: {
+	DisplayName: 黑色毛绒马桶
+	Tooltip: ""
+}
+
+BlackPlushWorkBench: {
+	DisplayName: 黑色毛绒工作台
+	Tooltip: ""
+}
+
+BlackPlushWallItem: {
+	DisplayName: 黑色毛绒墙纸
+	Tooltip: ""
 }

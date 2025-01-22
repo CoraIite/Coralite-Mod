@@ -79,6 +79,7 @@ namespace Coralite.Core
         public const string FlyingShieldItems = Items + "FlyingShields/";
         public const string ShieldPlusItems = Items + "ShieldPlus/";
         public const string FlyingShieldAccessories = FlyingShieldItems + "Accessories/";
+        public const string PlushItems = Items + "Plush/";
 
         public const string HyacinthSeriesItems = Items + "HyacinthSeries/";
         public const string LandOfTheLustrousSeriesItems = Items + "LandOfTheLustrousSeries/";
@@ -162,6 +163,7 @@ namespace Coralite.Core
 
         public const string MushroomTiles = Tiles + "Mushroom/";
         public const string GelTiles = Tiles + "Gel/";
+        public const string PlushTiles = Tiles + "Plush/";
 
         public const string PlantTiles = Tiles + "Plants/";
         public const string TreeTiles = Tiles + "Trees/";

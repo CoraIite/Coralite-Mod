@@ -169,3 +169,20 @@ SoulOfNightAltarTile: {
 	NeedSouls: Mods.Coralite.Tiles.SoulOfNightAltarTile.NeedSouls
 	MapEntry: Soul Of Night Altar Tile
 }
+
+BlackPlushBathtubTile.MapEntry: Black Plush Bathtub Tile
+BlackPlushBedTile.MapEntry: Black Plush Bed Tile
+BlackPlushBigDroplightTile.MapEntry: Black Plush Big Droplight Tile
+BlackPlushBookcaseTile.MapEntry: Black Plush Bookcase Tile
+BlackPlushCandelabraTile.MapEntry: Black Plush Candelabra Tile
+BlackPlushCandleTile.MapEntry: Black Plush Candle Tile
+BlackPlushChestTile.MapEntry: Black Plush Chest Tile
+BlackPlushDoorClosedTile.MapEntry: Black Plush Door Closed Tile
+BlackPlushDoorOpenTile.MapEntry: Black Plush Door Open Tile
+BlackPlushDresserTile.MapEntry: Black Plush Dresser Tile
+BlackPlushDroplightTile.MapEntry: Black Plush Droplight Tile
+BlackPlushFloorLampTile.MapEntry: Black Plush Floor Lamp Tile
+BlackPlushPianoTile.MapEntry: Black Plush Piano Tile
+BlackPlushSofaTile.MapEntry: Black Plush Sofa Tile
+BlackPlushTableTile.MapEntry: Black Plush Table Tile
+BlackPlushWorkBenchTile.MapEntry: Black Plush Work Bench Tile
