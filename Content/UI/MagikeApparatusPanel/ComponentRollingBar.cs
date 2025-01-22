@@ -104,6 +104,7 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
 
                 string text = id switch
                 {
+                    MagikeComponentID.ApparatusInformation => MagikeSystem.GetUIPanelText(MagikeSystem.UIPalelTextID.ApparatusInformation),
                     MagikeComponentID.MagikeContainer => MagikeSystem.GetUIPanelText(MagikeSystem.UIPalelTextID.MagikeContainer),
                     MagikeComponentID.MagikeSender => MagikeSystem.GetUIPanelText(MagikeSystem.UIPalelTextID.MagikeSender),
                     MagikeComponentID.MagikeProducer => MagikeSystem.GetUIPanelText(MagikeSystem.UIPalelTextID.MagikeProducer),

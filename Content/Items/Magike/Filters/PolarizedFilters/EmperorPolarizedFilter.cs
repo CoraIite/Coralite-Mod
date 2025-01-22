@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Items.Gels;
+using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
@@ -22,8 +23,9 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
         {
             CreateRecipe()
                 .AddIngredient<BasicFilter>()
-                .AddIngredient<EmperorGel>(4)
+                .AddIngredient<EmperorGel>(2)
                 .AddTile(TileID.Solidifier)
+                .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
         }
     }

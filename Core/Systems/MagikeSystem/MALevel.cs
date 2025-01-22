@@ -59,7 +59,7 @@
         Frost,
         /// <summary> 赤血玉 </summary>
         BloodJade,
-        /// <summary> 薪火锭 </summary>
+        /// <summary> 薪火 </summary>
         EternalFlame,
         /// <summary> 蘑菇矿锭 </summary>
         Shroomite,

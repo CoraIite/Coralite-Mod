@@ -37,7 +37,7 @@ namespace Coralite.Content.Items.Misc_Magic
         {
             CreateRecipe()
                 .AddIngredient(ItemID.BambooBlock, 20)
-                .AddIngredient(TileID.Bottles)
+                .AddTile(TileID.Bottles)
                 .Register();
         }
     }

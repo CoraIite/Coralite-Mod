@@ -9,7 +9,7 @@ namespace Coralite.Content.Items.Magike
     {
         public override void AddRecipes()
         {
-            CreateRecipe(4)
+            CreateRecipe(8)
                 .AddIngredient(ItemID.Glass, 4)
                 .AddIngredient(ItemID.Lens)
                 .AddCondition(CoraliteConditions.LearnedMagikeBase)

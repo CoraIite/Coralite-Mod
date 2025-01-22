@@ -48,9 +48,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             Work();
         }
 
-        public bool DuringWork()
+        public virtual bool DuringWork()
         {
-            OnWork();
+            OnWorking();
 
             return !UpdateTime();
         }
@@ -58,7 +58,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// <summary>
         /// 在工作时触发
         /// </summary>
-        public virtual void OnWork() { }
+        public virtual void OnWorking() { }
 
         /// <summary>
         /// 特定的工作

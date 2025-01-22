@@ -19,6 +19,7 @@ namespace Coralite.Content.Items.RedJades
             Item.shoot = ModContent.ProjectileType<RedJadeShieldProj>();
             Item.shootSpeed = 14;
             Item.damage = 24;
+            Item.knockBack = 1;
         }
 
         public override void AddRecipes()
@@ -60,7 +61,7 @@ namespace Coralite.Content.Items.RedJades
             base.OnJustHited();
             if (Main.rand.NextBool(3))
                 Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center
-                    , Vector2.Zero, ModContent.ProjectileType<RedJadeBoom>(), Projectile.damage / 2, Projectile.knockBack, Projectile.owner);
+                    , Vector2.Zero, ModContent.ProjectileType<RedJadeBoom>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
         }
 
         public override Color GetColor(float factor)

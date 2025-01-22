@@ -18,6 +18,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
         public static LocalizedText HarvestTheProduct { get; private set; }
 
         private ScaleController _scale1 = new ScaleController(1.4f, 0.2f);
+        private ScaleController _scale2= new ScaleController(1f, 0.2f);
 
         public override void OnInitialize()
         {
@@ -29,7 +30,9 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
 
         public override void Recalculate()
         {
+            _scale2 = new ScaleController(0.4f, 0.05f);
             _scale1.ResetScale();
+            _scale2.ResetScale();
 
             base.Recalculate();
         }
@@ -71,7 +74,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
 
             #region 第三段-右图左文字
             var picTex = CoraliteAssets.MagikeChapter1.Working.Value;
-            float scale = 0.7f;
+            float scale = 0.6f;
             width = PageWidth - picTex.Width* 0.8f;
             picturePos = new Vector2(Position.X + PageWidth - picTex.Width* scale, pos.Y);
 
@@ -80,7 +83,22 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
             Helper.DrawTextParagraph(spriteBatch, WorkingBeLike.Value, width, new Vector2(Position.X, pos.Y), out textSize);
             #endregion
 
-            pos.Y += Math.Max(textSize.Y, tex1.Height * scale) + 10;
+            //绘制文字与图
+            pos.Y += Math.Max(textSize.Y, picTex.Height * scale) + 10;
+
+            Helper.DrawTextParagraph(spriteBatch, HarvestTheProduct.Value, PageWidth, new Vector2(Position.X, pos.Y), out textSize);
+            pos.Y +=textSize.Y + 10;
+
+            tex1 = CoraliteAssets.MagikeChapter1.HarvestStone.Value;
+            pos.Y += tex1.Height *0.4f/ 2;
+            rect = Utils.CenteredRectangle(pos, tex1.Size());
+
+            if (rect.MouseScreenInRect())
+                _scale2.ToBigSize();
+            else
+                _scale2.ToNormalSize();
+
+            Helper.DrawMouseOverScaleTex(spriteBatch, tex1, pos, _scale2, 10, Color.DarkGray * 0.75f);
         }
     }
 }

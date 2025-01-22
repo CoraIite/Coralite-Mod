@@ -1,11 +1,9 @@
 ﻿using Coralite.Content.ModPlayers;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.DataStructures;
 
 namespace Coralite.Core.Systems.FlyingShieldSystem
 {
@@ -224,7 +222,14 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                 Projectile.velocity = angle.AngleLerp(targetAngle, factor).ToRotationVector2() * backSpeed;
             }
             else
+            {
+                if (Timer>backTime+30)
+                {
+                    backSpeed *= 1.03f;
+                }
+
                 Projectile.velocity = (Owner.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * backSpeed;
+            }
 
             Projectile.rotation = Projectile.velocity.ToRotation();
 
@@ -310,7 +315,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
         /// 获取拖尾贴图
         /// </summary>
         /// <returns></returns>
-        public virtual Asset<Texture2D> GetTrailTex()
+        public virtual ATex GetTrailTex()
         {
             return CoraliteAssets.Trail.EdgeA;
         }
@@ -320,6 +325,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
             Texture2D Texture = GetTrailTex().Value;
 
             List<CustomVertexInfo> bars = [];
+            float r = 0.2989f * lightColor.R/255 + 0.5870f * lightColor.G/255 + 0.1140f * lightColor.B/255;
 
             for (int i = 0; i < trailCachesLength; i++)
             {
@@ -329,7 +335,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                 Vector2 Top = Center - Main.screenPosition + (normal * trailWidth);
                 Vector2 Bottom = Center - Main.screenPosition - (normal * trailWidth);
 
-                var Color = GetColor(factor);//.MultiplyRGB(lightColor);
+                var Color = GetColor(factor) * r;
                 bars.Add(new(Top, Color, new Vector3(factor, 0, 1)));
                 bars.Add(new(Bottom, Color, new Vector3(factor, 1, 1)));
             }

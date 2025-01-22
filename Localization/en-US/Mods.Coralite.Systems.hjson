@@ -100,3 +100,11 @@ BisketyController: {
 	ShowLongTimeDPS: Mods.Coralite.Systems.BisketyController.ShowLongTimeDPS
 	ChangeDefence: Mods.Coralite.Systems.BisketyController.ChangeDefence
 }
+
+KnowledgeSystem: {
+	MagikeS1Knowledge: {
+		Name: Mods.Coralite.Systems.KnowledgeSystem.MagikeS1Knowledge.Name
+		LockTip: Mods.Coralite.Systems.KnowledgeSystem.MagikeS1Knowledge.LockTip
+		Description: Mods.Coralite.Systems.KnowledgeSystem.MagikeS1Knowledge.Description
+	}
+}

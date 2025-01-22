@@ -42,7 +42,7 @@ namespace Coralite.Content.Dusts
         public override string Texture => AssetDirectory.Dusts + "PixelPoint";
 
         public float TrailCount = 8;
-        public bool useStartLimit=true;
+        public bool useStartLimit = true;
         public float fadeFactor = 0.85f;
         public Vector2 basePos;
 

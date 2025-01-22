@@ -12,3 +12,9 @@ CoraliteGlobalItem: {
 	DashPriorityLevel3: 较低
 	DashPriorityLevel4: 最低
 }
+
+DigDigDigGItem: {
+	CurrentDigState: 投镐状态：
+	CanDigTile: "[c/ff3e3e:可破坏方块]"
+	CantDigTile: "[c/6abe30:不可破坏方块]"
+}

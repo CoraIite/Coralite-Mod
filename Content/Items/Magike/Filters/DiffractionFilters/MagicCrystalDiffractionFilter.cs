@@ -25,8 +25,8 @@ namespace Coralite.Content.Items.Magike.Filters.DiffractionFilters
         public void AddMagikeCraftRecipe()
         {
             MagikeCraftRecipe.CreateRecipe<MagicCrystalPolarizedFilter, MagicCrystalDiffractionFilter>(MagikeHelper.CalculateMagikeCost(MALevel.MagicCrystal, 5, 60 * 2))
-                .AddIngredient<Basalt>(10)
-                .AddIngredient<MagicCrystal>(8)
+                .AddIngredient<Basalt>(8)
+                .AddIngredient<MagicCrystal>(6)
                 .AddIngredient(ItemID.Glass, 4)
                 .Register();
         }

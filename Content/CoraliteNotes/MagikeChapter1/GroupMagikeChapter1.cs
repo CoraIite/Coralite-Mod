@@ -28,6 +28,11 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
                     new StoneMaker(),
                     new ConnectStaff(),
                     new ActivatedTheMachine(),
+
+                    //P4：重塑！聚合！魔能合成！
+                    new CraftAltar(),
+                    new PutMainItemAndSelectRecipe(),
+                    new CraftAltar2(),
                 ];
         }
     }

@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Particles;
 using Coralite.Core;
+using Coralite.Core.Attributes;
 using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
@@ -11,16 +12,19 @@ using Terraria.DataStructures;
 
 namespace Coralite.Content.Items.HyacinthSeries
 {
+    [AutoLoadTexture(Path = AssetDirectory.HyacinthSeriesItems)]
     public class StarsBreathHeldProj : BaseGunHeldProj
     {
-        public override string Texture => AssetDirectory.HyacinthSeriesItems + Name;
+        public StarsBreathHeldProj() : base(0.1f, 22, -6, AssetDirectory.HyacinthSeriesItems) { }
 
-        public StarsBreathHeldProj() : base(0.3f, 22, -6, AssetDirectory.HyacinthSeriesItems) { }
+        public static ATex StarsBreathEffect { get; private set; }
 
         public override void OnSpawn(IEntitySource source)
         {
             Projectile.scale = 0.8f;
         }
+
+        protected override float HeldPositionY => -2;
 
         public override void Initialize()
         {
@@ -38,6 +42,33 @@ namespace Coralite.Content.Items.HyacinthSeries
                 };
                 PRTLoader.NewParticle(center + Main.rand.NextVector2Circular(6, 6), dir.RotatedBy(Main.rand.NextFloat(-0.5f, 0.5f)) * Main.rand.NextFloat(1.2f, 2.3f), CoraliteContent.ParticleType<HorizontalStar>(), color, Main.rand.NextFloat(0.05f, 0.15f));
             }
+        }
+
+        public override void ModifyAI(float factor)
+        {
+            if (Projectile.timeLeft != MaxTime && Projectile.timeLeft % 2 == 0)
+            {
+                Projectile.frame++;
+            }
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            base.PreDraw(ref lightColor);
+
+            if (Projectile.frame > 4)
+                return false;
+
+            Texture2D effect = StarsBreathEffect.Value;
+            Rectangle frameBox = effect.Frame(1, 5, 0, Projectile.frame);
+            SpriteEffects effects = DirSign > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+
+            float rot = Projectile.rotation + (DirSign > 0 ? 0 : MathHelper.Pi);
+            float n = rot - DirSign * MathHelper.PiOver2;
+
+            Main.spriteBatch.Draw(effect, Projectile.Center + rot.ToRotationVector2() * 55+n.ToRotationVector2()*4 - Main.screenPosition, frameBox, Color.White
+                , rot, new Vector2(0, frameBox.Height / 2), Projectile.scale * 2, 0, 0f);
+            return false;
         }
     }
 

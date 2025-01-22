@@ -50,29 +50,26 @@ namespace Coralite.Content.ModPlayers
 
             }
 
-            if (Player.InModBiome<MagicCrystalCave>())
+            if (inWater && Player.InModBiome<MagicCrystalCave>())
             {
                 if (attempt.crate)
                 {
-                    if (inWater)
-                    {
-                        // 如果钓到了的是匣子，就替换为自己的匣子
+                    // 如果钓到了的是匣子，就替换为自己的匣子
 
-                        // 为了不替换掉最高级的匣子，所以做点限制
-                        // Their drop conditions are "veryrare" or "legendary"
-                        // (After that come biome crates ("rare"), then iron/mythril ("uncommon"), then wood/pearl (none of the previous))
-                        // Let's replace biome crates 50% of the time (player could be in multiple (modded) biomes, we should respect that)
-                        //增加50%的概率替换掉其他匣子，因为玩家有时候可能在多个重叠的环境中
-                        if (!attempt.rare && !attempt.veryrare && !attempt.legendary && attempt.uncommon && Main.rand.NextBool())
-                        {
-                            itemDrop = ItemType<CrystalCrate>();
-                            return; // This is important so your code after this that rolls items will not run
-                        }
+                    // 为了不替换掉最高级的匣子，所以做点限制
+                    // Their drop conditions are "veryrare" or "legendary"
+                    // (After that come biome crates ("rare"), then iron/mythril ("uncommon"), then wood/pearl (none of the previous))
+                    // Let's replace biome crates 50% of the time (player could be in multiple (modded) biomes, we should respect that)
+                    //增加50%的概率替换掉其他匣子，因为玩家有时候可能在多个重叠的环境中
+                    if (!attempt.rare && !attempt.veryrare && !attempt.legendary && attempt.uncommon && Main.rand.NextBool())
+                    {
+                        itemDrop = ItemType<CrystalCrate>();
+                        return; // This is important so your code after this that rolls items will not run
                     }
                 }
                 else
                 {
-                    if (Main.rand.NextBool(3))//普通的晶鳍鱼
+                    if (attempt.common && Main.rand.NextBool(5))//普通的晶鳍鱼
                     {
                         itemDrop = ItemType<CrystalFins>();
                         return;

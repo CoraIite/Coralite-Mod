@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Raritys;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
+using Steamworks;
 using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Linq;
 using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader.Core;
+using Terraria.ModLoader.IO;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Core.Systems.MagikeSystem
@@ -131,6 +133,8 @@ namespace Coralite.Core.Systems.MagikeSystem
         /// </summary>
         public bool IsAnnihilation => magikeCost == 0 && antiMagikeCost != 0;
 
+        #region 能否合成检测
+
         /// <summary>
         /// 检测是否能够合成
         /// </summary>
@@ -146,7 +150,7 @@ namespace Coralite.Core.Systems.MagikeSystem
 
             CanCraft_CheckCondition(ref attempt);
             CanCraft_ItemsCheck(mainItems, otherItems, ref attempt);
-            CanCraft_CheckMagike(magikeAmount, ref attempt);
+            //CanCraft_CheckMagike(magikeAmount, ref attempt);
 
             if (attempt.Success)
                 return true;
@@ -218,7 +222,7 @@ namespace Coralite.Core.Systems.MagikeSystem
                 if (antiMagikeCost == 0 && magikeCost != 0)
                     attempt.magikeNotEnough = true;
 
-                if (magikeAmount > antiMagikeCost)//反魔能需要反一下
+                if (magikeAmount > -1)//反魔能需要反一下
                 {
                     attempt.antimagikeNotEnough = true;
                 }
@@ -229,13 +233,15 @@ namespace Coralite.Core.Systems.MagikeSystem
             if (magikeAmount == 0 && antiMagikeCost != 0)
                 attempt.antimagikeNotEnough = true;
 
-            if (magikeAmount < magikeCost)
+            if (magikeAmount < 1)
             {
                 attempt.magikeNotEnough = true;
                 attempt.targetMagike = magikeCost;
                 attempt.selfMagike = magikeAmount;
             }
         }
+
+        #endregion
 
         #region 新建合成表部分
 
@@ -370,6 +376,26 @@ namespace Coralite.Core.Systems.MagikeSystem
 
             recipe.DisableDecraft();
             recipe.Register();
+        }
+
+        public void Save(TagCompound tag)
+        {
+            tag.Add("ResultItem", ResultItem);
+            tag.Add("MainItem", MainItem);
+
+            tag.Add(nameof(magikeCost), magikeCost);
+        }
+
+        public static MagikeCraftRecipe Load(TagCompound tag)
+        {
+            if (tag.TryGet("ResultItem", out Item resultItem) && tag.TryGet("MainItem", out Item mainItem)
+                && MagikeSystem.TryGetMagikeCraftRecipes(mainItem.type, out List<MagikeCraftRecipe> recipes))
+            {
+                int magikeCost = tag.GetInt(nameof(magikeCost));
+                return recipes.FirstOrDefault(r => r.ResultItem.type == resultItem.type && r.magikeCost == magikeCost, null);
+            }
+
+            return null;
         }
     }
 

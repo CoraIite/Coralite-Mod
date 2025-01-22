@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Items.DigDigDig;
 using Coralite.Content.WorldGeneration;
+using Coralite.Core;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
@@ -46,6 +47,31 @@ namespace Coralite.Content.GlobalItems.DigDigDig
                 Item i = item.Clone();
                 item.SetDefaults(ModContent.ItemType<DigUnloadItem>());
                 (item.ModItem as DigUnloadItem).containsItem = i;
+            }
+        }
+    }
+
+    public class DigDigDigRecipe : ModSystem
+    {
+        public override void PostAddRecipes()
+        {
+            //在石头世界ban掉所有的无法获取物品的合成，防止玩家通过例如魔法存储之类的搞事情
+            foreach (Recipe recipe in Main.recipe)
+            {
+                if (DigDigDigGItem.ShouldTransform.Contains(recipe.createItem.type))
+                {
+                    recipe.AddCondition(CoraliteConditions.NotInDigDigDig);
+                    continue;
+                }
+
+                foreach (var item in recipe.requiredItem)
+                {
+                    if (DigDigDigGItem.ShouldTransform.Contains(item.type))
+                    {
+                        recipe.AddCondition(CoraliteConditions.NotInDigDigDig);
+                        continue;
+                    }
+                }
             }
         }
     }

@@ -17,7 +17,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
 
         public override string Texture => (TexturePath ?? base.Texture) + (PathHasName ? "" : Name);
 
-        public float Priority => IDashable.HeldItemDash;
+        public virtual float Priority => IDashable.HeldItemDash;
 
         public override void SetStaticDefaults()
         {
@@ -138,7 +138,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
             if (Player.TryGetModPlayer(out CoralitePlayer cp))
             {
                 if ((Player.ownedProjectileCounts[Item.shoot] > 0 || !Player.ItemTimeIsZero) && !cp.FlyingShieldLRMeantime)
-                    return true;
+                    return false;
 
                 foreach (var acc in cp.FlyingShieldAccessories)
                 {

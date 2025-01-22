@@ -94,7 +94,6 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
                 }
 
                 Helper.PlayPitched("UI/Success", 0.4f, -0.2f, Position);
-
             }
 
             if (Opacity < 0)

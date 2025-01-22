@@ -71,8 +71,8 @@ namespace Coralite.Content.Items.Magike.Lens.ExtractLens
             };
             LimitMagikeAmount();
 
-            AntiMagikeMaxBase = MagikeMaxBase * 2;
-            LimitAntiMagikeAmount();
+            //AntiMagikeMaxBase = MagikeMaxBase * 2;
+            //LimitAntiMagikeAmount();
         }
     }
 

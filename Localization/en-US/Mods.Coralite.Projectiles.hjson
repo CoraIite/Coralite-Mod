@@ -581,5 +581,15 @@ WhiteGardeniaFloatLaser.DisplayName: White Gardenia Float Laser
 WhiteGardeniaHeldProj.DisplayName: White Gardenia Held Proj
 WhiteGardeniaPowerfulShoot.DisplayName: White Gardenia Powerful Shoot
 ThrownPickaxe.DisplayName: Thrown Pickaxe
-ThyphionArrow.DisplayName: Thyphion Arrow
-ThyphionShadowBow.DisplayName: Thyphion Shadow Bow
+SeismicWaveHeldProj.DisplayName: Seismic Wave Held Proj
+SeismicWaveStrike.DisplayName: Seismic Wave Strike
+GlaciateHeldProj.DisplayName: Glaciate Held Proj
+GlaciateWave.DisplayName: Glaciate Wave
+GlaciateIceCube.DisplayName: Glaciate Ice Cube
+LeafShieldGuard.DisplayName: Leaf Shield Guard
+LeafShieldProj.DisplayName: Leaf Shield Proj
+WoodenShieldGuard.DisplayName: Wooden Shield Guard
+WoodenShieldProj.DisplayName: Wooden Shield Proj
+AuroraArrow.DisplayName: Aurora Arrow
+AuroraArrowTag.DisplayName: Aurora Arrow Tag
+AuroraHeldProj.DisplayName: Aurora Held Proj

@@ -140,8 +140,6 @@ namespace Coralite.Content.Items.ThyphionSeries
                     break;
                 }
 
-
-
                 //生成手持弹幕
                 Projectile.NewProjectile(Player.GetSource_ItemUse(Player.HeldItem), Player.Center, new Vector2(dashDirection, 0), ProjectileType<FullMoonHeldProj>(),
                     Player.HeldItem.damage, Player.HeldItem.knockBack, Player.whoAmI, newVelocity.ToRotation(), 1, 18);
@@ -499,6 +497,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public override void SetDefaults()
         {
+            Projectile.DamageType = DamageClass.Ranged;
             Projectile.tileCollide = false;
             Projectile.width = Projectile.height = 16;
             Projectile.friendly = true;

@@ -1,4 +1,5 @@
 ﻿using Coralite.Core.Systems.MagikeSystem.TileEntities;
+using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 using Terraria.ModLoader.IO;
 
@@ -26,5 +27,7 @@ namespace Coralite.Core.Systems.CoraliteActorComponent
         public virtual void ReceiveData(BinaryReader reader, int whoAmI) { }
         public virtual void SaveData(string preName, TagCompound tag) { }
         public virtual void LoadData(string preName, TagCompound tag) { }
+
+        public virtual void Draw(SpriteBatch spriteBatch) { }
     }
 }

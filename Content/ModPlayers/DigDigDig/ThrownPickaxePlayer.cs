@@ -12,7 +12,7 @@ namespace Coralite.Content.ModPlayers.DigDigDig
 
         public void ResetPickaxeStats()
         {
-            ThrownPickaxeAccessories??=new();
+            ThrownPickaxeAccessories ??= new();
             if (ThrownPickaxeAccessories.Count > 0)
                 ThrownPickaxeAccessories.Clear();
         }

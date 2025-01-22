@@ -223,6 +223,11 @@ namespace Coralite.Core
             /// </summary>
             public static ATex LightShot { get; private set; }
 
+            /// <summary> 
+            /// 一束光，竖过来看是一个水滴
+            /// </summary>
+            public static ATex LightShotSPA { get; private set; }
+
             #endregion
         }
 
@@ -310,6 +315,10 @@ namespace Coralite.Core
             /// 看上去像是一圈符文
             /// </summary>
             public static ATex Rune { get; private set; }
+            /// <summary> 
+            /// 看上去像是一圈符文
+            /// </summary>
+            public static ATex RuneSPA { get; private set; }
 
             /// <summary> 
             /// 看上去像是一圈符文<br></br>
@@ -321,6 +330,10 @@ namespace Coralite.Core
             /// 一圈亮到暗，外加外发光
             /// </summary>
             public static ATex Circle { get; private set; }
+            /// <summary> 
+            /// 一圈亮到暗，外加外发光
+            /// </summary>
+            public static ATex CircleSPA { get; private set; }
 
             /// <summary> 
             /// 若隐若现的一圈
@@ -364,6 +377,10 @@ namespace Coralite.Core
             /// 受击扩散效果
             /// </summary>
             public static ATex Impact { get; private set; }
+            /// <summary> 
+            /// 受击扩散效果
+            /// </summary>
+            public static ATex ImpactA { get; private set; }
         }
 
         /// <summary>

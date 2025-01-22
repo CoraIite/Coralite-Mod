@@ -45,7 +45,10 @@ namespace Coralite.Content.Items.DigDigDig
         public override void UpdateInventory(Player player)
         {
             if (containsItem == null)
+            {
                 Item.TurnToAir();
+                return;
+            }
 
             if (!CoraliteWorld.DigDigDigWorld)
             {
@@ -57,7 +60,10 @@ namespace Coralite.Content.Items.DigDigDig
         public override void Update(ref float gravity, ref float maxFallSpeed)
         {
             if (containsItem == null)
+            {
                 Item.TurnToAir();
+                return;
+            }
 
             if (!CoraliteWorld.DigDigDigWorld)
             {

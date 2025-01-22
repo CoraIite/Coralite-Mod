@@ -373,6 +373,8 @@ MagikeSystem: {
 		LaserCollectorCost: "Magike Cost: "
 		PluseSenderName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.PluseSenderName
 		CogLensName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.CogLensName
+		NeedPolarizedFilter: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.NeedPolarizedFilter
+		CurrentLevel: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.CurrentLevel
 	}
 
 	CraftText: {
@@ -406,5 +408,40 @@ MagikeSystem: {
 		Close: Mods.Coralite.MagikeSystem.MagikeSystem.UIPanelText.Close
 		ClickToShow: Mods.Coralite.MagikeSystem.MagikeSystem.UIPanelText.ClickToShow
 		ClickToClose: Mods.Coralite.MagikeSystem.MagikeSystem.UIPanelText.ClickToClose
+		ApparatusInformation: Mods.Coralite.MagikeSystem.MagikeSystem.UIPanelText.ApparatusInformation
+	}
+
+	PressShiftToShowMore: Mods.Coralite.MagikeSystem.MagikeSystem.PressShiftToShowMore
+	RightClickStopCraft: Mods.Coralite.MagikeSystem.MagikeSystem.RightClickStopCraft
+
+	MALevelText: {
+		None: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.None
+		MagicCrystal: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.MagicCrystal
+		Glistent: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.Glistent
+		Crimson: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.Crimson
+		Corruption: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.Corruption
+		Icicle: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.Icicle
+		Shadow: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.Shadow
+		CrystallineMagike: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.CrystallineMagike
+		Hallow: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.Hallow
+		Soul: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.Soul
+		Feather: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.Feather
+		HolyLight: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.HolyLight
+		SplendorMagicore: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.SplendorMagicore
+		Seashore: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.Seashore
+		Eiderdown: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.Eiderdown
+		RedJade: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.RedJade
+		Emperor: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.Emperor
+		Beeswax: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.Beeswax
+		Hellstone: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.Hellstone
+		Bone: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.Bone
+		Quicksand: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.Quicksand
+		Pelagic: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.Pelagic
+		Flight: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.Flight
+		Forbidden: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.Forbidden
+		Frost: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.Frost
+		BloodJade: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.BloodJade
+		EternalFlame: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.EternalFlame
+		Shroomite: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.Shroomite
 	}
 }

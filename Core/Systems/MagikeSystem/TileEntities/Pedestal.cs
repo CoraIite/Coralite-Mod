@@ -7,6 +7,8 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
     {
         public sealed override int TargetTileID => (ushort)ModContent.TileType<TModTile>();
 
+        public override ApparatusInformation AddInformation() => null;
+
         public override void InitializeBeginningComponent()
         {
             AddComponent(GetStartItemContainer());

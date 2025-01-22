@@ -1,4 +1,5 @@
-﻿using Coralite.Core.Systems.MagikeSystem;
+﻿using Coralite.Core;
+using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.Components.Filters;
@@ -24,6 +25,7 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
                 .AddIngredient(ItemID.SoulofLight)
                 .AddIngredient(ItemID.SharkFin)
                 .AddTile(TileID.WorkBenches)
+                .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
         }
     }

@@ -1,7 +1,9 @@
 ﻿using Coralite.Core.Systems.CoraliteActorComponent;
+using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.Tiles;
 using Coralite.Helpers;
 using InnoVault.TileProcessors;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -61,6 +63,10 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         public override void SetProperty()
         {
             InitializeComponentCache();
+            ApparatusInformation c = AddInformation();
+            if (c != null)
+                AddComponent(c);
+
             InitializeBeginningComponent();
         }
 
@@ -74,6 +80,17 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         }
 
         /// <summary>
+        /// 加入显示信息的组件
+        /// </summary>
+        /// <returns></returns>
+        public virtual ApparatusInformation AddInformation()
+        {
+            int tileType = TargetTileID;
+            int itemType = TileLoader.GetItemDropFromTypeAndStyle(tileType);
+            return new ApparatusInformation() { ItemType = itemType };
+        }
+
+        /// <summary>
         /// 初始化起始时的组件
         /// </summary>
         public abstract void InitializeBeginningComponent();
@@ -83,6 +100,11 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
             RemoveAllComponent();
         }
 
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            foreach (var component in ComponentsCache)
+                component.Draw(spriteBatch);
+        }
 
         #region 网络同步与数据存储
 

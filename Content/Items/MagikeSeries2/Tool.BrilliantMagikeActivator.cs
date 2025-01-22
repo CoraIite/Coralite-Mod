@@ -99,7 +99,7 @@ namespace Coralite.Content.Items.MagikeSeries2
                     //激活
                     MagikeFactory factory = entity.GetSingleComponent<MagikeFactory>(MagikeComponentID.MagikeFactory);
 
-                    if (factory.Activation(out string text))
+                    if (!factory.Activation(out string text))
                         PopupText.NewText(new AdvancedPopupRequest()
                         {
                             Color = Coralite.MagicCrystalPink,

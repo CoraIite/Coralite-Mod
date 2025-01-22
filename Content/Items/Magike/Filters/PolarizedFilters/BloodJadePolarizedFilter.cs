@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Items.RedJades;
+using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
@@ -22,8 +23,9 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
         {
             CreateRecipe()
                 .AddIngredient<RedJadePolarizedFilter>()
-                .AddIngredient<BloodJade>(5)
+                .AddIngredient<BloodJade>(3)
                 .AddTile(TileID.Anvils)
+                .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
         }
     }

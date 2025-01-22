@@ -68,7 +68,7 @@ FairySystem: {
 BossBarSystem.DontTakeDamage: 不可攻击！
 
 FlyingShieldSystem: {
-	FSDescriptionShort: 飞盾（按shift查看更多）
+	FSDescriptionShort: "[c/808080:飞盾（按shift查看更多）]"
 	FSDescriptionLong:
 		'''
 		左键以丢出盾牌，右键进行防御
@@ -103,4 +103,16 @@ BisketyController: {
 	ShowOtherDamage: 显示其他伤害
 	ShowLongTimeDPS: 显示长期DPS
 	ChangeDefence: 设置Biskety防御力
+}
+
+KnowledgeSystem: {
+	MagikeS1Knowledge: {
+		Name: "[c/ffbeec:魔能残卷 其一]"
+		LockTip: 去地下的魔力水晶洞寻找“书页：魔能基础”吧！
+		Description:
+			'''
+			记载着魔能的基础使用方法
+			其上会教你如何搭建一条魔能生产线
+			'''
+	}
 }

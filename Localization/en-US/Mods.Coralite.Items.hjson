@@ -4927,3 +4927,138 @@ DigUnloadItem: {
 	DisplayName: Dig Unload Item
 	Tooltip: ""
 }
+
+Glaciate: {
+	DisplayName: Glaciate
+	Tooltip: ""
+}
+
+LeafShield: {
+	DisplayName: Leaf Shield
+	Tooltip: ""
+}
+
+WoodenShield: {
+	DisplayName: Wooden Shield
+	Tooltip: ""
+}
+
+Aurora: {
+	DisplayName: Aurora
+	Tooltip: ""
+}
+
+BlackPlush: {
+	DisplayName: Black Plush
+	Tooltip: ""
+}
+
+BlackPlushBathtub: {
+	DisplayName: Black Plush Bathtub
+	Tooltip: ""
+}
+
+BlackPlushBed: {
+	DisplayName: Black Plush Bed
+	Tooltip: ""
+}
+
+BlackPlushBigDroplight: {
+	DisplayName: Black Plush Big Droplight
+	Tooltip: ""
+}
+
+BlackPlushBlock: {
+	DisplayName: Black Plush Block
+	Tooltip: ""
+}
+
+BlackPlushBookcase: {
+	DisplayName: Black Plush Bookcase
+	Tooltip: ""
+}
+
+BlackPlushCandelabra: {
+	DisplayName: Black Plush Candelabra
+	Tooltip: ""
+}
+
+BlackPlushCandle: {
+	DisplayName: Black Plush Candle
+	Tooltip: ""
+}
+
+BlackPlushChair: {
+	DisplayName: Black Plush Chair
+	Tooltip: ""
+}
+
+BlackPlushChest: {
+	DisplayName: Black Plush Chest
+	Tooltip: ""
+}
+
+BlackPlushClock: {
+	DisplayName: Black Plush Clock
+	Tooltip: ""
+}
+
+BlackPlushDoor: {
+	DisplayName: Black Plush Door
+	Tooltip: ""
+}
+
+BlackPlushDresser: {
+	DisplayName: Black Plush Dresser
+	Tooltip: ""
+}
+
+BlackPlushDroplight: {
+	DisplayName: Black Plush Droplight
+	Tooltip: ""
+}
+
+BlackPlushFloorLamp: {
+	DisplayName: Black Plush Floor Lamp
+	Tooltip: ""
+}
+
+BlackPlushPiano: {
+	DisplayName: Black Plush Piano
+	Tooltip: ""
+}
+
+BlackPlushPlatform: {
+	DisplayName: Black Plush Platform
+	Tooltip: ""
+}
+
+BlackPlushSink: {
+	DisplayName: Black Plush Sink
+	Tooltip: ""
+}
+
+BlackPlushSofa: {
+	DisplayName: Black Plush Sofa
+	Tooltip: ""
+}
+
+BlackPlushTable: {
+	DisplayName: Black Plush Table
+	Tooltip: ""
+}
+
+BlackPlushToilet: {
+	DisplayName: Black Plush Toilet
+	Tooltip: ""
+}
+
+BlackPlushWorkBench: {
+	DisplayName: Black Plush Work Bench
+	Tooltip: ""
+}
+
+BlackPlushWallItem: {
+	DisplayName: Black Plush Wall Item
+	Tooltip: ""
+}

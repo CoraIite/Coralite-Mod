@@ -60,6 +60,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void HoldItem(Player player)
         {
+            base.HoldItem(player);
             if (BurstTime > 0)
             {
                 BurstTime--;

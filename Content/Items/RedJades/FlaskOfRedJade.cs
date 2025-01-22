@@ -55,7 +55,7 @@ namespace Coralite.Content.Items.RedJades
         public override void Update(Player player, ref int buffIndex)
         {
             if (player.TryGetModPlayer(out CoralitePlayer cp))
-                cp.AddEffect(nameof(FlaskOfRedJade));
+                cp.AddEffect(nameof(FlaskOfRedJadeBuff));
         }
     }
 }

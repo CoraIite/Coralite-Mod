@@ -894,9 +894,8 @@ Page_MagikeBase: {
 	DisplayName: 书页：魔能基础
 	Tooltip:
 		'''
-		左键使用以学习魔能的基础知识
-		在地下的魔力水晶洞中心处可以找到
-		“水晶生命体售卖的魔能辞典会为你解释与魔能相关的事情”
+		左键使用以学习魔能的基础知识，同时解锁珊瑚笔记中的“魔能残卷 其一”
+		曾经被遗失在地下的魔力水晶洞中...
 		'''
 }
 
@@ -2868,7 +2867,7 @@ JungleTurtleShell: {
 	DisplayName: 丛林龟壳
 	Tooltip:
 		'''
-		将物品状态下的丛林乌龟整只丢入微光液体后变成的龟壳，似乎在丛林地下的宝箱中也会出现
+		将物品状态下的丛林龟（小动物）整只丢入微光液体后变成的龟壳，似乎在丛林地下的宝箱中也会出现
 		略微增加飞盾格挡能力
 		'''
 }
@@ -4058,7 +4057,7 @@ BasicRefractor: {
 	DisplayName: 基础广角镜
 	Tooltip:
 		'''
-		连接距离很远
+		用于中距离传输魔能
 		{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}
 		'''
 }
@@ -4944,7 +4943,7 @@ LASER: {
 	Tooltip:
 		'''
 		一次性将自身内的所有魔能发送到正对着的仪器中
-		发送距离极远
+		用于远距离传输魔能
 		{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}
 		'''
 }
@@ -5034,7 +5033,11 @@ FullMoon: {
 
 SeismicWave: {
 	DisplayName: 震波
-	Tooltip: ""
+	Tooltip:
+		'''
+		双击下键冲刺，命中敌怪或是地面后产生冲击波
+		[c/bac1ce:来自地下深处的震动]
+		'''
 }
 
 WhiteGardenia: {
@@ -5046,4 +5049,144 @@ DigUnloadItem: {
 	ContainsItemText: 包含物品：
 	DisplayName: 临时卸载物品
 	Tooltip: "[c/e88ecb:带它离开这个世界吧，这个世界中没有它的容身之处。]"
+}
+
+Glaciate: {
+	DisplayName: 冰封世界
+	Tooltip:
+		'''
+		双击方向键冲刺，之后射出冰霜波并强化下一次攻击
+		冰块命中冰霜波会爆出冰刺
+
+		'''
+}
+
+LeafShield: {
+	DisplayName: 生命大叶子
+	Tooltip: 仅仅是一片巨大的叶子而已
+}
+
+WoodenShield: {
+	DisplayName: 木盾
+	Tooltip: 不太趁手
+}
+
+Aurora: {
+	DisplayName: 极光
+	Tooltip: ""
+}
+
+BlackPlush: {
+	DisplayName: 黑色毛绒
+	Tooltip: ""
+}
+
+BlackPlushBathtub: {
+	DisplayName: 黑色毛绒浴缸
+	Tooltip: ""
+}
+
+BlackPlushBed: {
+	DisplayName: 黑色毛绒床
+	Tooltip: ""
+}
+
+BlackPlushBigDroplight: {
+	DisplayName: 黑色毛绒大吊灯
+	Tooltip: ""
+}
+
+BlackPlushBlock: {
+	DisplayName: 黑色毛绒球
+	Tooltip: ""
+}
+
+BlackPlushBookcase: {
+	DisplayName: 黑色毛绒猫爬架
+	Tooltip: ""
+}
+
+BlackPlushCandelabra: {
+	DisplayName: 黑色毛绒烛台
+	Tooltip: ""
+}
+
+BlackPlushCandle: {
+	DisplayName: 黑色毛绒蜡烛
+	Tooltip: ""
+}
+
+BlackPlushChair: {
+	DisplayName: 黑色毛绒椅
+	Tooltip: ""
+}
+
+BlackPlushChest: {
+	DisplayName: 黑色毛绒箱
+	Tooltip: ""
+}
+
+BlackPlushClock: {
+	DisplayName: 黑色毛绒钟
+	Tooltip: ""
+}
+
+BlackPlushDoor: {
+	DisplayName: 黑色毛绒门
+	Tooltip: ""
+}
+
+BlackPlushDresser: {
+	DisplayName: 黑色毛绒梳妆台
+	Tooltip: ""
+}
+
+BlackPlushDroplight: {
+	DisplayName: 黑色毛绒吊灯
+	Tooltip: ""
+}
+
+BlackPlushFloorLamp: {
+	DisplayName: 黑色毛绒灯柱
+	Tooltip: ""
+}
+
+BlackPlushPiano: {
+	DisplayName: 黑色毛绒钢琴
+	Tooltip: ""
+}
+
+BlackPlushPlatform: {
+	DisplayName: 黑色毛绒平台
+	Tooltip: ""
+}
+
+BlackPlushSink: {
+	DisplayName: 黑色毛绒水槽
+	Tooltip: ""
+}
+
+BlackPlushSofa: {
+	DisplayName: 黑色毛绒沙发
+	Tooltip: ""
+}
+
+BlackPlushTable: {
+	DisplayName: 黑色毛绒桌
+	Tooltip: ""
+}
+
+BlackPlushToilet: {
+	DisplayName: 黑色毛绒马桶
+	Tooltip: ""
+}
+
+BlackPlushWorkBench: {
+	DisplayName: 黑色毛绒工作台
+	Tooltip: ""
+}
+
+BlackPlushWallItem: {
+	DisplayName: 黑色毛绒墙纸
+	Tooltip: ""
 }

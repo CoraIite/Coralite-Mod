@@ -368,6 +368,8 @@ MagikeSystem: {
 		LaserCollectorCost: ◇ 消耗魔能：
 		PluseSenderName: 激光发送器
 		CogLensName: 机械透镜
+		NeedPolarizedFilter: ◇ [c/ff0000:需要插入偏振滤镜！]
+		CurrentLevel: ◇ 当前等级：
 	}
 
 	CraftText: {
@@ -401,5 +403,40 @@ MagikeSystem: {
 		Close: 点击以隐藏
 		ClickToShow: 点击以展开显示切换按钮
 		ClickToClose: 点击以收起显示切换按钮
+		ApparatusInformation: 基础信息
+	}
+
+	PressShiftToShowMore: "[c/808080:按shift显示更多]"
+	RightClickStopCraft: 右键停止合成
+
+	MALevelText: {
+		None: 无
+		MagicCrystal: 晶体
+		Glistent: 晶莹
+		Crimson: 猩红
+		Corruption: 腐化
+		Icicle: 冰晶
+		Shadow: 影子
+		CrystallineMagike: 璀璨
+		Hallow: 神圣
+		Soul: 灵魂
+		Feather: 羽蛇
+		HolyLight: 圣光
+		SplendorMagicore: 辉界晶核
+		Seashore: 海滨
+		Eiderdown: 羽毛
+		RedJade: 赤玉
+		Emperor: 帝凝胶
+		Beeswax: 蜂蜡
+		Hellstone: 狱石
+		Bone: 骨头
+		Quicksand: 流沙
+		Pelagic: 远洋
+		Flight: 飞翔
+		Forbidden: 禁戒
+		Frost: 寒霜
+		BloodJade: 赤血玉
+		EternalFlame: 薪火
+		Shroomite: 蘑菇锭
 	}
 }

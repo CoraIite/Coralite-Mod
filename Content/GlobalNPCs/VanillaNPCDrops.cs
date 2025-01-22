@@ -52,7 +52,8 @@ namespace Coralite.Content.GlobalNPCs
                     npcLoot.Add(ItemDropRule.Common(ItemType<AncientCrimtaneYujian>(), 100));
                     break;
                 case NPCID.Mimic:
-                    npcLoot.Add(ItemDropRule.Common(ItemType<EekShield>(), 10));
+                    npcLoot.Add(ItemDropRule.ByCondition(new Conditions.NotRemixSeed(), ItemType<EekShield>(), 10));
+                    npcLoot.Add(ItemDropRule.ByCondition(new Conditions.RemixSeedHardmode(), ItemType<EekShield>(), 10));
                     break;
                 case NPCID.Tim:
                     npcLoot.Add(ItemDropRule.Common(ItemType<EightsquareHand>(), 2));
@@ -93,7 +94,7 @@ namespace Coralite.Content.GlobalNPCs
 
                 case NPCID.EyeofCthulhu://克眼，脑子，世吞掉落美味肉排
                 case NPCID.BrainofCthulhu://克眼，脑子，世吞掉落美味肉排
-                    npcLoot.Add(ItemDropRule.Common(ItemType<DeliciousSteak>(), 6));
+                    npcLoot.Add(ItemDropRule.Common(ItemType<DeliciousSteak>(), 3));
                     break;
                 case NPCID.EaterofWorldsBody://克眼，脑子，世吞掉落美味肉排
                 case NPCID.Creeper://克眼，脑子，世吞掉落美味肉排
@@ -204,6 +205,5 @@ namespace Coralite.Content.GlobalNPCs
             if (Main.slimeRainNPC[npc.type])
                 npcLoot.Add(ItemDropRule.Common(ItemType<SlimeSapling>(), 50));
         }
-
     }
 }

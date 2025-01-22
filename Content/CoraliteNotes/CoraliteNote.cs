@@ -21,8 +21,13 @@ namespace Coralite.Content.CoraliteNotes
             if (player.whoAmI!=Main.myPlayer)
                 return true;
 
+            var ui = UILoader.GetUIState<CoraliteNoteUIState>();
+            if (ui.visible)
+                UILoader.GetUIState<CoraliteNoteUIState>().closeingBook = true;
+            else
+                UILoader.GetUIState<CoraliteNoteUIState>().OpenBook();
+
             UILoader.GetUIState<CoraliteNoteUIState>().Recalculate();
-            UILoader.GetUIState<CoraliteNoteUIState>().OpenBook();
 
             Main.playerInventory = false;
             return true;

@@ -212,7 +212,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override bool? CanHitNPC(NPC target)
         {
-            if (target.whoAmI == (int)Target)
+            if (State > 0)
                 return base.CanHitNPC(target);
 
             return false;
@@ -262,7 +262,6 @@ namespace Coralite.Content.Items.FlyingShields
                         {
                             State++;
                             Projectile.timeLeft = 60;
-                            Projectile.tileCollide = true;
                             Projectile.velocity = new Vector2(0, 15);
                             Projectile.extraUpdates++;
                         }
@@ -280,6 +279,13 @@ namespace Coralite.Content.Items.FlyingShields
 
                         Projectile.SpawnTrailDust(DustID.SilverCoin, Main.rand.NextFloat(0.2f, 0.3f),
                             Scale: Main.rand.NextFloat(1f, 1.2f));
+
+                        if (Timer > 40)
+                        {
+                            Projectile.tileCollide = true;
+                        }
+
+                        Timer++;
                     }
                     break;
             }

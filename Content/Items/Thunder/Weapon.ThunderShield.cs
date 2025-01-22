@@ -86,10 +86,10 @@ namespace Coralite.Content.Items.Thunder
             if (State != (int)FlyingShieldStates.Backing && !hited)
             {
                 hited = true;
-                if (Main.rand.NextBool(8))
-                {
-                    SoundEngine.PlaySound(CoraliteSoundID.Thunder, Projectile.Center);
-                }
+                //if (Main.rand.NextBool(8))
+                //{
+                //    SoundEngine.PlaySound(CoraliteSoundID.Thunder, Projectile.Center);
+                //}
                 Projectile.NewProjectileFromThis<ThunderShieldExProj>(Vector2.Lerp(Projectile.Center, target.Center, Main.rand.NextFloat(0, 1f)) + Main.rand.NextVector2Circular(Projectile.width, Projectile.height), Vector2.Zero,
                     Projectile.damage, Projectile.knockBack, 20);
             }
