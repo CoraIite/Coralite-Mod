@@ -1470,7 +1470,7 @@ MiniSplendorColumn: {
 
 CrystalSword: {
 	DisplayName: 魔力水晶剑
-	Tooltip: 消耗 5 魔能射出光束
+	Tooltip: 消耗 1 魔能射出光束
 }
 
 BrilliantCharger: {

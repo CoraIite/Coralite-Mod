@@ -387,7 +387,7 @@ MagikeSystem: {
 	}
 
 	CanMagikeCraft: 魔能合成素材
-	ItemMagikeAmount: 魔能含量：
+	ItemMagikeAmount: 可从中提取 {0} 魔能
 
 	UIPanelText: {
 		MagikeContainer: 魔能存储单元
@@ -440,4 +440,6 @@ MagikeSystem: {
 		EternalFlame: 薪火
 		Shroomite: 蘑菇锭
 	}
+
+	ItemContainsMagike: 存储魔能
 }

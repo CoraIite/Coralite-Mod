@@ -6,6 +6,7 @@ DamageClasses: {
 	CreateHammerDamage.DisplayName: 创意伤害
 	CreatePickaxeDamage.DisplayName: 创意伤害
 	CreateShovelDamage.DisplayName: 创意伤害
+	MagikeDamage.DisplayName: 魔能伤害
 }
 
 Players.CoralitePlayer.ThunderElectrifiedDeath: 被雷劈死了

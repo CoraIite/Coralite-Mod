@@ -19,6 +19,7 @@ namespace Coralite.Content.GlobalItems.DigDigDig
         public string LocalizationCategory => "GlobalItems";
 
         public static LocalizedText[] ThrownPickaxeText { get; set; }
+        public static LocalizedText RightClickExchange { get; set; }
 
         public override void Load()
         {
@@ -31,11 +32,14 @@ namespace Coralite.Content.GlobalItems.DigDigDig
                     this.GetLocalization("CanDigTile"),
                     this.GetLocalization("CantDigTile"),
                 ];
+
+            RightClickExchange= this.GetLocalization(nameof(RightClickExchange));
         }
 
         public override void Unload()
         {
             ThrownPickaxeText = null;
+            RightClickExchange = null;
         }
 
         #region 设置基础值
@@ -106,7 +110,10 @@ namespace Coralite.Content.GlobalItems.DigDigDig
 
         public override bool? CanMeleeAttackCollideWithNPC(Item item, Rectangle meleeAttackHitbox, Player player, NPC target)
         {
-            return CoraliteWorld.DigDigDigWorld && player.altFunctionUse == 2;
+            if (!CoraliteWorld.DigDigDigWorld)
+                return null;
+
+            return item.pick > 0 && player.altFunctionUse == 2;
         }
 
         public override bool CanShoot(Item item, Player player)
@@ -166,7 +173,7 @@ namespace Coralite.Content.GlobalItems.DigDigDig
 
         public override void ModifyWeaponDamage(Item item, Player player, ref StatModifier damage)
         {
-            if (CoraliteWorld.DigDigDigWorld && !item.DamageType.CountsAsClass<CreateDamage>())
+            if (CoraliteWorld.DigDigDigWorld && !item.DamageType.CountsAsClass<CreateDamage>() && !item.DamageType.CountsAsClass<MagikeDamage>())
                 damage = new StatModifier(0, 0, 1, 1);
         }
 
@@ -184,6 +191,7 @@ namespace Coralite.Content.GlobalItems.DigDigDig
                 else
                     t1 += ThrownPickaxeText[2].Value;
 
+                tooltips.Add(new TooltipLine(Mod, "RightClickExchange", RightClickExchange.Value));
                 tooltips.Add(new TooltipLine(Mod, "ThrownPickaxeCanDig", t1));
             }
         }

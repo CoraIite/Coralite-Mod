@@ -785,13 +785,20 @@ namespace Coralite.Helpers
         /// <returns></returns>
         public static bool TryCosumeMagike(this Player player, int howMany)
         {
-            for (int i = 0; i < 58; i++)
+            foreach (var item in player.inventory)
             {
-                Item item = player.inventory[i];
-                if (!item.IsAir && item.TryGetGlobalItem(out MagikeItem mi) && mi.magikeSendable && mi.magike >= howMany)
+                if (!item.IsAir && item.TryGetGlobalItem(out MagikeItem mi) && mi.magikeSendable)
                 {
-                    mi.magike -= howMany;
-                    return true;
+                    if (mi.Magike>=howMany)//这个物品里的魔能足够，就直接消耗掉然后返回
+                    {
+                        mi.ReduceMagike(howMany);
+                        return true;
+                    }
+                    else//不够，直接消耗全部的然后继续遍历
+                    {
+                        howMany -= mi.Magike;
+                        mi.ClearMagike();
+                    }
                 }
             }
 
@@ -799,10 +806,53 @@ namespace Coralite.Helpers
                 for (int i = 0; i < player.bank4.item.Length; i++)
                 {
                     Item item = player.bank4.item[i];
-                    if (!item.IsAir && item.TryGetGlobalItem(out MagikeItem mi) && mi.magikeSendable && mi.magike >= howMany)
+                    if (!item.IsAir && item.TryGetGlobalItem(out MagikeItem mi) && mi.magikeSendable)
                     {
-                        mi.magike -= howMany;
+                        if (mi.Magike >= howMany)//这个物品里的魔能足够，就直接消耗掉然后返回
+                        {
+                            mi.ReduceMagike(howMany);
+                            return true;
+                        }
+                        else//不够，直接消耗全部的然后继续遍历
+                        {
+                            howMany -= mi.Magike;
+                            mi.ClearMagike();
+                        }
+                    }
+                }
+
+            return false;
+        }
+
+        /// <summary>
+        /// 检测玩家身上是否有足够的魔能
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="howMany"></param>
+        /// <returns></returns>
+        public static bool CheckMagike(this Player player,int howMany)
+        {
+            foreach (var item in player.inventory)
+            {
+                if (!item.IsAir && item.TryGetGlobalItem(out MagikeItem mi) && mi.magikeSendable)
+                {
+                    if (mi.Magike >= howMany)//这个物品里的魔能足够，就直接消耗掉然后返回
                         return true;
+                    else//不够，直接消耗全部的然后继续遍历
+                        howMany -= mi.Magike;
+                }
+            }
+
+            if (player.useVoidBag())
+                for (int i = 0; i < player.bank4.item.Length; i++)
+                {
+                    Item item = player.bank4.item[i];
+                    if (!item.IsAir && item.TryGetGlobalItem(out MagikeItem mi) && mi.magikeSendable)
+                    {
+                        if (mi.Magike >= howMany)//这个物品里的魔能足够，就直接消耗掉然后返回
+                            return true;
+                        else//不够，直接消耗全部的然后继续遍历
+                            howMany -= mi.Magike;
                     }
                 }
 
@@ -817,11 +867,39 @@ namespace Coralite.Helpers
         /// <returns></returns>
         public static bool TryCosumeMagike(this Item item, int howMany)
         {
-            if (item.TryGetGlobalItem(out MagikeItem mi) && mi.magike >= howMany)
+            if (item.TryGetGlobalItem(out MagikeItem mi) && mi.Magike >= howMany)
             {
-                mi.magike -= howMany;
+                mi.Magike -= howMany;
                 return true;
             }
+
+            return false;
+        }
+
+        public static bool CheckMagike(this Item item, int howMany)
+        {
+            if (item.TryGetGlobalItem(out MagikeItem mi) && mi.Magike >= howMany)
+                return true;
+
+            return false;
+        }
+
+        public static bool TryCosumeMagike(int count,Item item,Player player)
+        {
+            if (item.TryCosumeMagike(count))
+                return true;
+            if (player.TryCosumeMagike(count))
+                return true;
+
+            return false;
+        }
+
+        public static bool CheckMagike(int count,Item item,Player player)
+        {
+            if (item.CheckMagike(count))
+                return true;
+            if (player.CheckMagike(count))
+                return true;
 
             return false;
         }

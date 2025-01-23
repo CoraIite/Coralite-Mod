@@ -6,6 +6,7 @@ DamageClasses: {
 	CreateHammerDamage.DisplayName: Create Hammer Damage
 	CreatePickaxeDamage.DisplayName: Create Pickaxe Damage
 	CreateShovelDamage.DisplayName: Create Shovel Damage
+	MagikeDamage.DisplayName: Magike Damage
 }
 
 Players.CoralitePlayer.ThunderElectrifiedDeath: killed by lightning

@@ -17,4 +17,5 @@ DigDigDigGItem: {
 	CurrentDigState: Mods.Coralite.GlobalItems.DigDigDigGItem.CurrentDigState
 	CanDigTile: Mods.Coralite.GlobalItems.DigDigDigGItem.CanDigTile
 	CantDigTile: Mods.Coralite.GlobalItems.DigDigDigGItem.CantDigTile
+	RightClickExchange: Mods.Coralite.GlobalItems.DigDigDigGItem.RightClickExchange
 }

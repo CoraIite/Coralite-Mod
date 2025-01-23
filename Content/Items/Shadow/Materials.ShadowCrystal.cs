@@ -28,8 +28,8 @@ namespace Coralite.Content.Items.Shadow
         public override void AddRecipes()
         {
             Recipe recipe = CreateRecipe();
-            recipe.AddIngredient(ItemID.Amethyst, 2);
-            recipe.AddIngredient(ModContent.ItemType<ShadowEnergy>(), 8);
+            recipe.AddIngredient(ItemID.Amethyst);
+            recipe.AddIngredient(ModContent.ItemType<ShadowEnergy>(), 4);
             recipe.AddTile(TileID.Hellforge);
             recipe.Register();
         }

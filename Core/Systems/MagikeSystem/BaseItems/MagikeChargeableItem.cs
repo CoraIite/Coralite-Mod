@@ -12,7 +12,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
             Item.value = value;
             Item.rare = rare;
             Item.maxStack = 1;
-            Item.GetMagikeItem().magikeMax = magikeMax;
+            Item.GetMagikeItem().MagikeMax = magikeMax;
             Item.GetMagikeItem().magikeAmount = magikeAmount;
         }
 

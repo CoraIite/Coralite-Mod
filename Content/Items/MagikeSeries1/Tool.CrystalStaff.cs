@@ -11,13 +11,18 @@ namespace Coralite.Content.Items.MagikeSeries1
 {
     public class CrystalStaff : MagikeChargeableItem, ISpecialPlaceable
     {
-        public CrystalStaff() : base(150, Item.sellPrice(0, 0, 10, 0)
-            , ModContent.RarityType<MagicCrystalRarity>(), 50, AssetDirectory.MagikeSeries1Item)
+        public CrystalStaff() : base(500, Item.sellPrice(0, 0, 10, 0)
+            , ModContent.RarityType<MagicCrystalRarity>(), -1, AssetDirectory.MagikeSeries1Item)
         { }
+
+        public override bool CanUseItem(Player player)
+        {
+            return MagikeHelper.CheckMagike(1, Item, player);
+        }
 
         public bool CanPlace(Player player)
         {
-            return Item.TryCosumeMagike(1) || player.TryCosumeMagike(1);
+            return MagikeHelper.TryCosumeMagike(1, Item, player);
         }
 
         public override void SetDefs()

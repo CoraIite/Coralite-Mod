@@ -19,6 +19,8 @@ namespace Coralite.Core.Systems.MagikeSystem
         public static LocalizedText PressShiftToShowMore { get; private set; }
         public static LocalizedText RightClickStopCraft { get; private set; }
 
+        public static LocalizedText ItemContainsMagike { get; private set; }
+
         public void LoadLocalization()
         {
             LearnedMagikeBase = this.GetLocalization("learnedMagikeBase");
@@ -29,6 +31,7 @@ namespace Coralite.Core.Systems.MagikeSystem
             ItemMagikeAmount = this.GetLocalization(nameof(ItemMagikeAmount));
             PressShiftToShowMore = this.GetLocalization(nameof(PressShiftToShowMore));
             RightClickStopCraft = this.GetLocalization(nameof(RightClickStopCraft));
+            ItemContainsMagike = this.GetLocalization(nameof(ItemContainsMagike));
 
             this.GetLocalization("PolarizedFilterTooltip");
 

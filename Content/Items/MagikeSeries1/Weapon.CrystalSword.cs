@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Dusts;
+﻿using Coralite.Content.DamageClasses;
+using Coralite.Content.Dusts;
 using Coralite.Content.Raritys;
 using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
@@ -14,32 +15,32 @@ namespace Coralite.Content.Items.MagikeSeries1
 {
     public class CrystalSword : MagikeChargeableItem
     {
-        public CrystalSword() : base(150, Item.sellPrice(0, 0, 10, 0)
-            , ModContent.RarityType<MagicCrystalRarity>(), 50, AssetDirectory.MagikeSeries1Item)
+        public CrystalSword() : base(300, Item.sellPrice(0, 0, 10, 0)
+            , ModContent.RarityType<MagicCrystalRarity>(), -1, AssetDirectory.MagikeSeries1Item)
         { }
 
         public override void SetDefs()
         {
             Item.useStyle = ItemUseStyleID.Swing;
-            Item.useTime = 60;
-            Item.useAnimation = 25;
+            Item.useTime = 50;
+            Item.useAnimation = 20;
             Item.shoot = ModContent.ProjectileType<CrystalSwordProj>();
-            Item.damage = 15;
+            Item.damage = 22;
             Item.knockBack = 2;
-            Item.DamageType = DamageClass.Generic;
+            Item.DamageType = MagikeDamage.Instance;
             Item.UseSound = CoraliteSoundID.Swing_Item1;
         }
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (Main.myPlayer == player.whoAmI)
+            if (MagikeHelper.TryCosumeMagike(1, Item, player))
             {
-                if (Item.TryCosumeMagike(5) || player.TryCosumeMagike(5))
-                {
-                    Projectile.NewProjectile(source, position, (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero) * 12,
-                        type, damage, knockback, player.whoAmI);
-                }
+                SoundEngine.PlaySound(CoraliteSoundID.Crystal_Item101, player.Center);
+
+                Projectile.NewProjectile(source, position, (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero) * 15,
+                    type, damage + 15, knockback, player.whoAmI);
             }
+
             return false;
         }
     }
@@ -61,11 +62,7 @@ namespace Coralite.Content.Items.MagikeSeries1
             Projectile.width = Projectile.height = 16;
             Projectile.timeLeft = 240;
             Projectile.aiStyle = -1;
-        }
-
-        public override void OnSpawn(IEntitySource source)
-        {
-            SoundEngine.PlaySound(CoraliteSoundID.Crystal_Item101, Projectile.Center);
+            Projectile.DamageType = MagikeDamage.Instance;
         }
 
         public override void AI()

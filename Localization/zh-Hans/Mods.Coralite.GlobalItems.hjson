@@ -17,4 +17,5 @@ DigDigDigGItem: {
 	CurrentDigState: 投镐状态：
 	CanDigTile: "[c/ff3e3e:可破坏方块]"
 	CantDigTile: "[c/6abe30:不可破坏方块]"
+	RightClickExchange: 物品栏内右键切换投镐是否能挖掘物块
 }

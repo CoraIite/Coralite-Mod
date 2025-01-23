@@ -444,4 +444,6 @@ MagikeSystem: {
 		EternalFlame: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.EternalFlame
 		Shroomite: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.Shroomite
 	}
+
+	ItemContainsMagike: Mods.Coralite.MagikeSystem.MagikeSystem.ItemContainsMagike
 }
