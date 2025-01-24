@@ -38,6 +38,11 @@ namespace Coralite.Core
             public static ATex PlacePedestal { get; private set; }
             public static ATex ConnectToPedestal { get; private set; }
             public static ATex CheckAltar { get; private set; }
+            public static ATex AwkwardTime { get; private set; }
+            public static ATex Refractors { get; private set; }
+            public static ATex Columns { get; private set; }
+            public static ATex BigColumn { get; private set; }
+            public static ATex PrismLevels { get; private set; }
         }
     }
 }

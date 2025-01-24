@@ -159,10 +159,9 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public void SpawnDischargingDust(float edge)
         {
-            if (!VaultUtils.isServer)
-            {
+            if (VaultUtils.isServer)
                 return;
-            }
+
             Vector2 pos = NPC.Center + Main.rand.NextVector2CircularEdge(edge, edge);
             Dust d = Dust.NewDustPerfect(pos, DustID.PortalBoltTrail
                 , (pos - NPC.Center).SafeNormalize(Vector2.Zero).RotatedBy(NPC.direction * MathHelper.PiOver2) * Main.rand.NextFloat(4f, 8f)

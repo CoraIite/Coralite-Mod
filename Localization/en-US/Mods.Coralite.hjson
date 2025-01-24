@@ -20,6 +20,7 @@ Conditions: {
 		InDigDigDig: Mods.Coralite.Conditions.CoraliteConditions.InDigDigDig
 		NotInDigDigDig: Mods.Coralite.Conditions.CoraliteConditions.NotInDigDigDig
 		UseMultiBlockStructure: Mods.Coralite.Conditions.CoraliteConditions.UseMultBlockStructure
+		DownedGolemCondition: Mods.Coralite.Conditions.CoraliteConditions.DownedGolemCondition
 	}
 }
 

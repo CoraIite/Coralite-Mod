@@ -2,6 +2,7 @@
 using Coralite.Content.UI.MagikeApparatusPanel;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
+using InnoVault.TileProcessors;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -279,7 +280,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             for (int i = _receivers.Count - 1; i >= 0; i--)
             {
-                if (i + 1 > MaxConnect || !TileEntity.ByPosition.ContainsKey(_receivers[i]))
+                if (i + 1 > MaxConnect || !MagikeHelper.ByTopLeftnGetTP(_receivers[i],out _))
                 {
                     _receivers.RemoveAt(i);
                     continue;

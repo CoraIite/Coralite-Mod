@@ -25,20 +25,22 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
 
             //描述段1
             Helper.DrawTextParagraph(spriteBatch, PutMainItemIntoAltar.Value, PageWidth, new Vector2(Position.X, pos.Y), out Vector2 textSize);
-            pos.Y += textSize.Y + 10 + CoraliteAssets.MagikeChapter1.PutMainItemIn.Height()* scale1 / 2;
-          
+            Texture2D tex = CoraliteAssets.MagikeChapter1.PutMainItemIn.Value;
+            pos.Y += textSize.Y + 10 + tex.Height* scale1 / 2;
+
             //绘制图1
-            CoraliteAssets.MagikeChapter1.PutMainItemIn.Value.QuickCenteredDraw(spriteBatch, pos,scale: scale1);
-            pos.Y += 20 + CoraliteAssets.MagikeChapter1.PutMainItemIn.Height()* scale1 / 2;
+            tex.QuickCenteredDraw(spriteBatch, pos,scale: scale1);
+            pos.Y += 20 + tex.Height* scale1 / 2;
 
             float scale2 = 0.9f;
 
             //描述段2
             Helper.DrawTextParagraph(spriteBatch, SelectRecipe.Value, PageWidth, new Vector2(Position.X, pos.Y), out textSize);
-            pos.Y += textSize.Y + 10 + CoraliteAssets.MagikeChapter1.SelectRecipe.Height()* scale2 / 2;
+            tex = CoraliteAssets.MagikeChapter1.SelectRecipe.Value;
+            pos.Y += textSize.Y + 10 + tex.Height* scale2 / 2;
 
             //绘制图2
-            CoraliteAssets.MagikeChapter1.SelectRecipe.Value.QuickCenteredDraw(spriteBatch, pos,scale: scale2);
+            tex.QuickCenteredDraw(spriteBatch, pos,scale: scale2);
         }
     }
 }

@@ -87,7 +87,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
 
         public static MagikeLozengeParticle2 Spawn(Vector2 center, Point16 size, Color color)
         {
-            float scale = Math.Max(size.X, size.Y) / 2f;
+            float scale = Math.Max(size.X, size.Y) / 2.2f;
             MagikeLozengeParticle2 particle = PRTLoader.NewParticle<MagikeLozengeParticle2>(center, Vector2.Zero, color, 0.25f);
             particle.recordScale = scale;
             return particle;

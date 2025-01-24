@@ -133,7 +133,7 @@ namespace Coralite.Content.Items.ThyphionSeries
     }
 
     [AutoLoadTexture(Path = AssetDirectory.ThyphionSeriesItems)]
-    public class TurbulenceHeldProj : BaseDashBow, IDrawPrimitive, IDrawAdditive, IDrawNonPremultiplied
+    public class TurbulenceHeldProj : BaseDashBow, IDrawPrimitive
     {
         public override string Texture => AssetDirectory.ThyphionSeriesItems + nameof(Turbulence);
 
@@ -350,17 +350,6 @@ namespace Coralite.Content.Items.ThyphionSeries
             Main.graphics.GraphicsDevice.BlendState = BlendState.NonPremultiplied;
             group?.DrawPrimitive();
             Main.graphics.GraphicsDevice.BlendState = BlendState.AlphaBlend;
-        }
-
-        public void DrawAdditive(SpriteBatch spriteBatch)
-        {
-        }
-
-        public void DrawNonPremultiplied(SpriteBatch spriteBatch)
-        {
-            if (Special == 0 || SPTimer > 0)
-                return;
-
         }
     }
 

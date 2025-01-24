@@ -104,5 +104,22 @@ PolymerizeCraft2: {
 	CheckAltar: Mods.Coralite.Knowledges.PolymerizeCraft2.CheckAltar
 }
 
-ExpandProductionLine.Title: Mods.Coralite.Knowledges.ExpandProductionLine.Title
+ExpandProductionLine: {
+	Title: Mods.Coralite.Knowledges.ExpandProductionLine.Title
+	Awkward: Mods.Coralite.Knowledges.ExpandProductionLine.Awkward
+	Refractor: Mods.Coralite.Knowledges.ExpandProductionLine.Refractor
+	UseMoreRefractor: Mods.Coralite.Knowledges.ExpandProductionLine.UseMoreRefractor
+}
+
 RedJadePage.Title: Mods.Coralite.Knowledges.RedJadePage.Title
+
+Column: {
+	ColumnDescription: Mods.Coralite.Knowledges.Column.ColumnDescription
+	ColumnStack: Mods.Coralite.Knowledges.Column.ColumnStack
+	BigColumn: Mods.Coralite.Knowledges.Column.BigColumn
+}
+
+Prism: {
+	PrismDescription: Mods.Coralite.Knowledges.Prism.PrismDescription
+	PrismLevels: Mods.Coralite.Knowledges.Prism.PrismLevels
+}

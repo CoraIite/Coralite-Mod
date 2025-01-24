@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.WorldGeneration;
 using Coralite.Core.Systems.MagikeSystem;
 using Terraria;
+using Terraria.Localization;
 
 namespace Coralite.Core
 {
@@ -15,6 +16,8 @@ namespace Coralite.Core
         public static Condition UseMultiBlockStructure { get; private set; }
 
         public string LocalizationCategory => "Conditions";
+
+        public static LocalizedText DownedGolemCondition { get; private set; }
 
         public override void Load()
         {
@@ -33,6 +36,8 @@ namespace Coralite.Core
                 , () => false);
             UseMultiBlockStructure = new(this.GetLocalization(nameof(UseMultiBlockStructure))
                 , () => false);
+
+            DownedGolemCondition = this.GetLocalization(nameof(DownedGolemCondition));
         }
 
         public override void Unload()

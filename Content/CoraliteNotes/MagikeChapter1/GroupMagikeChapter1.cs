@@ -38,6 +38,10 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
 
                     //P5：扩大生产线！
                     new ExpandProductionLine(),
+                    new Prism(),
+                    new Column(),
+
+                    //P6：
                 ];
         }
     }

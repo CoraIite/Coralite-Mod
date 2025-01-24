@@ -62,8 +62,17 @@ namespace Coralite.Core.Systems.KeySystem
             }
         }
 
+        public override void PostWorldGen()
+        {
+            foreach (var knowledge in KeyKnowledgeLoader.knowledgesF)
+            {
+                knowledge.Value.Unlock = false;
+            }
+        }
+
         public override void SaveWorldData(TagCompound tag)
         {
+            tag.Add("ThereNeedOneThingToSave!!!", 0);
             foreach (var knowledge in KeyKnowledgeLoader.knowledgesF)
             {
                 knowledge.Value.SaveSelfData(tag);

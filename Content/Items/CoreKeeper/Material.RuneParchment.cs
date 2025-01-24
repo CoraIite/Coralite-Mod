@@ -48,7 +48,8 @@ namespace Coralite.Content.Items.CoreKeeper
 
         public static bool CanCraft(Player p)
         {
-            return p.HasItem(ModContent.ItemType<BrokenHandle>())
+            return p.HasItem(ModContent.ItemType<RuneParchment>())
+                && p.HasItem(ModContent.ItemType<BrokenHandle>())
                 && p.HasItem(ModContent.ItemType<ClearGemstone>())
                 && p.HasItem(ModContent.ItemType<ChippedBlade>())
                 && p.CountItem(ModContent.ItemType<AncientGemstone>(), 11) >= 10
@@ -57,6 +58,9 @@ namespace Coralite.Content.Items.CoreKeeper
 
         private void Mp_OnCraft(Player p)
         {
+            p.QuickSpawnItem(new EntitySource_ItemUse(p, Item), ModContent.ItemType<RuneSong>());
+
+            p.ConsumeItem(ModContent.ItemType<RuneParchment>());
             p.ConsumeItem(ModContent.ItemType<BrokenHandle>());
             p.ConsumeItem(ModContent.ItemType<ClearGemstone>());
             p.ConsumeItem(ModContent.ItemType<ChippedBlade>());
@@ -65,7 +69,6 @@ namespace Coralite.Content.Items.CoreKeeper
             for (int i = 0; i < 50; i++)
                 p.ConsumeItem(ItemID.IronBar);
 
-            Item.SetDefaults(ModContent.ItemType<RuneSong>());
             Main.NewText(this.GetLocalization("OnCraft", () => "得到了") + Item.Name + " !", new Color(243, 180, 65, 255));
             //PopupText.NewText(new AdvancedPopupRequest() { Text = Item.Name
             //    , Color = new Color(243, 180, 65, 255)

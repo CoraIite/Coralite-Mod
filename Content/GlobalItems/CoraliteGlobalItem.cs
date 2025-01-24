@@ -135,18 +135,6 @@ namespace Coralite.Content.GlobalItems
             RegisterEdibleDamageWeapon(item.type);
         }
 
-        public override void ModifyItemLoot(Item item, ItemLoot itemLoot)
-        {
-            switch (item.type)
-            {
-                default:
-                    break;
-                case ItemID.MoonLordBossBag:
-                    itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<ConquerorOfTheSeas>(), 6, 1, 1));
-                    break;
-            }
-        }
-
         public override bool PreDrawInInventory(Item item, SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
         {
             if (CoraliteWorld.CoralCatWorld)
