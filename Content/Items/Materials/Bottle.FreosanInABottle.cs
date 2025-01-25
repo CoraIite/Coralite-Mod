@@ -1,12 +1,12 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Items.Icicle;
+using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Prefabs.Tiles;
+using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Coralite.Helpers;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
-using Terraria.ObjectData;
 
 namespace Coralite.Content.Items.Materials
 {
@@ -25,8 +25,10 @@ namespace Coralite.Content.Items.Materials
 
         public void AddMagikeCraftRecipe()
         {
-            //PolymerizeRecipe.CreateRecipe<FreosanInABottle>(300)
-            //    .SetMainItem<>
+            MagikeRecipe.CreateRecipe(ItemID.Bottle, ModContent.ItemType<FreosanInABottle>(), MagikeHelper.CalculateMagikeCost(MALevel.Hellstone, 6))
+                .AddIngredient<IcicleBreath>()
+                .AddIngredient(ItemID.IceBlock)
+                .Register();
         }
     }
 

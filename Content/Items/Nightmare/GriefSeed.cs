@@ -180,7 +180,7 @@ namespace Coralite.Content.Items.Nightmare
         {
             int cost = MagikeHelper.CalculateMagikeCost(MALevel.SplendorMagicore, 24, 60 * 8);
 
-            MagikeCraftRecipe.CreateRecipe<GriefSeed, LostSevensideHook>(cost)
+            MagikeRecipe.CreateRecipe<GriefSeed, LostSevensideHook>(cost)
                 .RegisterNew<DreamShears>(cost)
                 .RegisterNew<EuphorbiaMilii>(cost)
                 .RegisterNew<Lycoris>(cost)

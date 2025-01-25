@@ -1,12 +1,11 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Prefabs.Tiles;
+using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Coralite.Helpers;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
-using Terraria.ObjectData;
 
 namespace Coralite.Content.Items.Materials
 {
@@ -25,11 +24,10 @@ namespace Coralite.Content.Items.Materials
 
         public void AddMagikeCraftRecipe()
         {
-            //MagikeCraftRecipe.CreateRecipe<HeatanInABottle>(60)
-            //    .SetMainItem(ItemID.Bottle)
-            //    .AddIngredient(ItemID.LivingFireBlock, 20)
-            //    .AddIngredient<EmpyrosPowder>(7)
-            //    .Register();
+            MagikeRecipe.CreateRecipe(ItemID.Bottle, ModContent.ItemType<HeatanInABottle>(), MagikeHelper.CalculateMagikeCost(MALevel.Hellstone, 6))
+                .AddIngredient(ItemID.Hellstone)
+                .AddIngredient(ItemID.Fireblossom)
+                .Register();
         }
     }
 

@@ -16,7 +16,7 @@ namespace Coralite.Content.Items.MagikeSeries2
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeCraftRecipe.CreateRecipe<OpalTower, BrilliantScanner>(MagikeHelper.CalculateMagikeCost(MALevel.CrystallineMagike, 12, 60 * 2))
+            MagikeRecipe.CreateRecipe<OpalTower, BrilliantScanner>(MagikeHelper.CalculateMagikeCost(MALevel.CrystallineMagike, 12, 60 * 2))
                 .AddIngredient<CrystallineMagike>(5)
                 .AddIngredient<MagikeAnalyser>()
                 .AddIngredient<DeorcInABottle>()

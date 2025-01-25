@@ -1,9 +1,11 @@
 ﻿using Coralite.Content.Items.MagikeSeries1;
+using Coralite.Content.Items.Shadow;
 using Coralite.Content.Raritys;
 using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
+using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Core.Systems.MagikeSystem.Tiles;
 using Coralite.Helpers;
@@ -16,7 +18,7 @@ using static Terraria.ModLoader.ModContent;
 namespace Coralite.Content.Items.Magike.Refractors
 {
     public class LASER() : MagikeApparatusItem(TileType<LASERTile>(), Item.sellPrice(silver: 5)
-        , RarityType<MagicCrystalRarity>(), AssetDirectory.MagikeRefractors)
+        , RarityType<MagicCrystalRarity>(), AssetDirectory.MagikeRefractors), IMagikeCraftable
     {
         public override void AddRecipes()
         {
@@ -27,6 +29,15 @@ namespace Coralite.Content.Items.Magike.Refractors
                 .AddIngredient<MagicCrystalBlock>(2)
                 .AddIngredient(ItemID.CopperPlating, 2)
                 .AddCondition(CoraliteConditions.UseMultiBlockStructure)
+                .Register();
+        }
+
+        public void AddMagikeCraftRecipe()
+        {
+            MagikeRecipe.CreateRecipe<LASERCore, LASER>(MagikeHelper.CalculateMagikeCost(MALevel.Shadow, 6))
+                .AddIngredient<ShadowEnergy>(4)
+                .AddIngredient(ItemID.CopperBar, 10)
+                .AddIngredient<HardBasalt>(6)
                 .Register();
         }
     }

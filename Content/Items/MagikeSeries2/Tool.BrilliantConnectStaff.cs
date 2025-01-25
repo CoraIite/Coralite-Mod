@@ -134,7 +134,7 @@ namespace Coralite.Content.Items.MagikeSeries2
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeCraftRecipe.CreateRecipe<MagConnectStaff, BrilliantConnectStaff>(MagikeHelper.CalculateMagikeCost(MALevel.CrystallineMagike, 12, 60 * 2))
+            MagikeRecipe.CreateRecipe<MagConnectStaff, BrilliantConnectStaff>(MagikeHelper.CalculateMagikeCost(MALevel.CrystallineMagike, 12, 60 * 2))
                 .AddIngredient<CrystallineMagike>(5)
                 .AddIngredient<Skarn>(20)
                 .AddIngredient<TalantosInABottle>()

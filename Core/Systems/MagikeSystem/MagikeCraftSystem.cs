@@ -15,8 +15,8 @@ namespace Coralite.Core.Systems.MagikeSystem
 {
     public partial class MagikeSystem : ModSystem
     {
-        internal Dictionary<int, List<MagikeCraftRecipe>> magikeCraftRecipes;
-        internal static FrozenDictionary<int, List<MagikeCraftRecipe>> MagikeCraftRecipes;
+        internal Dictionary<int, List<MagikeRecipe>> magikeCraftRecipes;
+        internal static FrozenDictionary<int, List<MagikeRecipe>> MagikeCraftRecipes;
 
         private void RegisterMagikeCraft()
         {
@@ -56,7 +56,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         /// <param name="resultStack">重塑成的物品数量，默认1</param>
         public static void AddRemodelRecipe(int mainItemType, int resultItemType, int magikeCost, int mainStack = 1, int resultStack = 1, params Condition[] conditions)
         {
-            MagikeCraftRecipe recipe = MagikeCraftRecipe.CreateRecipe(mainItemType, resultItemType, magikeCost, mainStack, resultStack);
+            MagikeRecipe recipe = MagikeRecipe.CreateRecipe(mainItemType, resultItemType, magikeCost, mainStack, resultStack);
             if (conditions != null)
                 foreach (var condition in conditions)
                     recipe.AddCondition(condition);
@@ -79,9 +79,9 @@ namespace Coralite.Core.Systems.MagikeSystem
 
         #endregion
 
-        public static bool TryGetMagikeCraftRecipes(int selfType, out List<MagikeCraftRecipe> recipes)
+        public static bool TryGetMagikeCraftRecipes(int selfType, out List<MagikeRecipe> recipes)
         {
-            if (MagikeCraftRecipes != null && MagikeCraftRecipes.TryGetValue(selfType, out List<MagikeCraftRecipe> value))
+            if (MagikeCraftRecipes != null && MagikeCraftRecipes.TryGetValue(selfType, out List<MagikeRecipe> value))
             {
                 recipes = value;
                 return true;
@@ -92,7 +92,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         }
     }
 
-    public record class MagikeCraftRecipe
+    public record class MagikeRecipe
     {
         /// <summary>
         /// 主物品，以此物品为基础进行合成
@@ -250,10 +250,10 @@ namespace Coralite.Core.Systems.MagikeSystem
         /// <param name="magikeCost"></param>
         /// <param name="resultItemStack"></param>
         /// <returns></returns>
-        public static MagikeCraftRecipe CreateRecipe<TMainItem, TResultItem>(int magikeCost, int MainItemStack = 1, int resultItemStack = 1)
+        public static MagikeRecipe CreateRecipe<TMainItem, TResultItem>(int magikeCost, int MainItemStack = 1, int resultItemStack = 1)
             where TMainItem : ModItem where TResultItem : ModItem
         {
-            return new MagikeCraftRecipe()
+            return new MagikeRecipe()
             {
                 MainItem = new(ItemType<TMainItem>(), MainItemStack),
                 ResultItem = new(ItemType<TResultItem>(), resultItemStack),
@@ -266,9 +266,9 @@ namespace Coralite.Core.Systems.MagikeSystem
         /// <param name="magikeCost"></param>
         /// <param name="resultItemStack"></param>
         /// <returns></returns>
-        public static MagikeCraftRecipe CreateRecipe(int mainItemType, int resultItemType, int magikeCost, int MainItenStack = 1, int resultItemStack = 1)
+        public static MagikeRecipe CreateRecipe(int mainItemType, int resultItemType, int magikeCost, int MainItenStack = 1, int resultItemStack = 1)
         {
-            return new MagikeCraftRecipe()
+            return new MagikeRecipe()
             {
                 MainItem = new(mainItemType, MainItenStack),
                 ResultItem = new(resultItemType, resultItemStack),
@@ -276,39 +276,39 @@ namespace Coralite.Core.Systems.MagikeSystem
             };
         }
 
-        public MagikeCraftRecipe SetMainStack(int mainItemStack)
+        public MagikeRecipe SetMainStack(int mainItemStack)
         {
             MainItem.stack = mainItemStack;
             return this;
         }
 
-        public MagikeCraftRecipe SetAntiMagikeCost(int antiMagikeCost)
+        public MagikeRecipe SetAntiMagikeCost(int antiMagikeCost)
         {
             magikeCost = 0;
             this.antiMagikeCost = antiMagikeCost;
             return this;
         }
 
-        public MagikeCraftRecipe SetMagikeCost(int MagikeCost)
+        public MagikeRecipe SetMagikeCost(int MagikeCost)
         {
             antiMagikeCost = 0;
             magikeCost = MagikeCost;
             return this;
         }
 
-        public MagikeCraftRecipe AddIngredient(int itemID, int stack = 1)
+        public MagikeRecipe AddIngredient(int itemID, int stack = 1)
         {
             RequiredItems.Add(new Item(itemID, stack));
             return this;
         }
 
-        public MagikeCraftRecipe AddIngredient<T>(int stack = 1) where T : ModItem
+        public MagikeRecipe AddIngredient<T>(int stack = 1) where T : ModItem
         {
             RequiredItems.Add(new Item(ItemType<T>(), stack));
             return this;
         }
 
-        public MagikeCraftRecipe AddCondition(Condition condition)
+        public MagikeRecipe AddCondition(Condition condition)
         {
             Conditions.Add(condition);
             return this;
@@ -316,11 +316,11 @@ namespace Coralite.Core.Systems.MagikeSystem
 
         public void Register()
         {
-            Dictionary<int, List<MagikeCraftRecipe>> MagikeCraftRecipes = GetInstance<MagikeSystem>().magikeCraftRecipes;
+            Dictionary<int, List<MagikeRecipe>> MagikeCraftRecipes = GetInstance<MagikeSystem>().magikeCraftRecipes;
             if (MagikeCraftRecipes == null)
                 return;
 
-            if (MagikeCraftRecipes.TryGetValue(MainItem.type, out List<MagikeCraftRecipe> value))
+            if (MagikeCraftRecipes.TryGetValue(MainItem.type, out List<MagikeRecipe> value))
                 value.Add(this);
             else
                 MagikeCraftRecipes.Add(MainItem.type, [this]);
@@ -335,7 +335,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         /// <param name="magikeCost"></param>
         /// <param name="resultItemStack"></param>
         /// <returns></returns>
-        public MagikeCraftRecipe RegisterNew(int resultItemType, int magikeCost, int resultItemStack = 1)
+        public MagikeRecipe RegisterNew(int resultItemType, int magikeCost, int resultItemStack = 1)
         {
             Register();
             return CreateRecipe(MainItem.type, resultItemType, magikeCost, MainItem.stack, resultItemStack);
@@ -348,7 +348,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         /// <param name="magikeCost"></param>
         /// <param name="resultItemStack"></param>
         /// <returns></returns>
-        public MagikeCraftRecipe RegisterNew<TResultItem>(int magikeCost, int resultItemStack = 1)
+        public MagikeRecipe RegisterNew<TResultItem>(int magikeCost, int resultItemStack = 1)
             where TResultItem : ModItem
         {
             Register();
@@ -386,10 +386,10 @@ namespace Coralite.Core.Systems.MagikeSystem
             tag.Add(nameof(magikeCost), magikeCost);
         }
 
-        public static MagikeCraftRecipe Load(TagCompound tag)
+        public static MagikeRecipe Load(TagCompound tag)
         {
             if (tag.TryGet("ResultItem", out Item resultItem) && tag.TryGet("MainItem", out Item mainItem)
-                && MagikeSystem.TryGetMagikeCraftRecipes(mainItem.type, out List<MagikeCraftRecipe> recipes))
+                && MagikeSystem.TryGetMagikeCraftRecipes(mainItem.type, out List<MagikeRecipe> recipes))
             {
                 int magikeCost = tag.GetInt(nameof(magikeCost));
                 return recipes.FirstOrDefault(r => r.ResultItem.type == resultItem.type && r.magikeCost == magikeCost, null);

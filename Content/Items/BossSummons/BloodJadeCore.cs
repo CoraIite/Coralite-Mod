@@ -59,7 +59,7 @@ namespace Coralite.Content.Items.BossSummons
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeCraftRecipe.CreateRecipe<RedJadeCore, BloodJadeCore>(MagikeHelper.CalculateMagikeCost(MALevel.Pelagic, 24, 60 * 15))
+            MagikeRecipe.CreateRecipe<RedJadeCore, BloodJadeCore>(MagikeHelper.CalculateMagikeCost(MALevel.Pelagic, 24, 60 * 15))
                 .AddIngredient<BloodyOrb>(3)
                 .AddIngredient(ItemID.SoulofNight, 5)
                 .AddIngredient(ItemID.CrystalShard, 5)

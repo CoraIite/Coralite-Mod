@@ -47,21 +47,10 @@ namespace Coralite.Content.WorldGeneration
                                         //            item.SetDefaults(ModContent.ItemType<MaintenanceFluid>());
                                         //            break;
                                         //        }
-                                        if (WorldGen.genRand.NextBool(10, 100))
-                                            foreach (var item in chest.item)
-                                                if (item.IsAir)
-                                                {
-                                                    item.SetDefaults(ModContent.ItemType<FlyingShieldVarnish>());
-                                                    break;
-                                                }
-                                        if (WorldGen.genRand.NextBool(10, 100)
-                                            && chest.y < Main.worldSurface)
-                                            foreach (var item in chest.item)
-                                                if (item.IsAir)
-                                                {
-                                                    item.SetDefaults(ModContent.ItemType<HeavyWedges>());
-                                                    break;
-                                                }
+                                        if (WorldGen.genRand.NextBool(15, 100))
+                                            chest.AddItem<FlyingShieldVarnish>();
+                                        if (WorldGen.genRand.NextBool(15, 100))
+                                            chest.AddItem<HeavyWedges>();
                                     }
                                 }
                                 break;
@@ -70,26 +59,11 @@ namespace Coralite.Content.WorldGeneration
                                     if (chest.y > Main.rockLayer)  //必须要是地下金箱子才行
                                     {
                                         if (WorldGen.genRand.NextBool(25, 100))
-                                            foreach (var item in chest.item)
-                                                if (item.IsAir)
-                                                {
-                                                    item.SetDefaults(ModContent.ItemType<Items.RedJades.HiddenRed>());
-                                                    break;
-                                                }
+                                            chest.AddItem<Items.RedJades.HiddenRed>();
                                         if (WorldGen.genRand.NextBool(10, 100))
-                                            foreach (var item in chest.item)
-                                                if (item.IsAir)
-                                                {
-                                                    item.SetDefaults(ModContent.ItemType<FlyingShieldMaintenanceGuide>());
-                                                    break;
-                                                }
+                                            chest.AddItem<FlyingShieldMaintenanceGuide>();
                                         if (WorldGen.genRand.NextBool(10, 100))
-                                            foreach (var item in chest.item)
-                                                if (item.IsAir)
-                                                {
-                                                    item.SetDefaults(ModContent.ItemType<FlyingShieldBattleGuide>());
-                                                    break;
-                                                }
+                                            chest.AddItem<FlyingShieldBattleGuide>();
                                     }
                                 }
                                 break;
@@ -99,12 +73,7 @@ namespace Coralite.Content.WorldGeneration
                                     if (chest.y > Main.worldSurface)  //必须要是地下箱子才行
                                     {
                                         if (WorldGen.genRand.NextBool(10, 100))//放置丛林龟壳
-                                            foreach (var item in chest.item)
-                                                if (item.IsAir)
-                                                {
-                                                    item.SetDefaults(ModContent.ItemType<JungleTurtleShell>());
-                                                    break;
-                                                }
+                                            chest.AddItem<JungleTurtleShell>();
                                     }
                                 }
                                 break;
@@ -112,34 +81,19 @@ namespace Coralite.Content.WorldGeneration
                                 {
                                     if (!spawnedBrithOfIce)
                                     {
-                                        foreach (var item in chest.item)
-                                            if (item.IsAir)
-                                            {
-                                                item.SetDefaults(ModContent.ItemType<Items.Icicle.ANewBirthOfIce>());
-                                                break;
-                                            }
+                                        chest.AddItem<Items.Icicle.ANewBirthOfIce>();
                                         spawnedBrithOfIce = true;
                                         break;
                                     }
 
                                     if (Main.rand.NextBool(25, 100))
-                                        foreach (var item in chest.item)
-                                            if (item.IsAir)
-                                            {
-                                                item.SetDefaults(ModContent.ItemType<Items.Icicle.ANewBirthOfIce>());
-                                                break;
-                                            }
+                                        chest.AddItem<Items.Icicle.ANewBirthOfIce>();
                                 }
                                 break;
                             case 12 * 18 * 2:  //生命木箱
                                 {
                                     if (WorldGen.genRand.NextBool(5,7))//放置生命大叶子
-                                        foreach (var item in chest.item)
-                                            if (item.IsAir)
-                                            {
-                                                item.SetDefaults(ModContent.ItemType<LeafShield>());
-                                                break;
-                                            }
+                                        chest.AddItem<LeafShield>();
                                 }
                                 break;
                         }
@@ -151,12 +105,7 @@ namespace Coralite.Content.WorldGeneration
                                 break;
                             case 10 * 18 * 2://沙漠
                                 if (WorldGen.genRand.NextBool(20, 100))
-                                    foreach (var item in chest.item)
-                                        if (item.IsAir)
-                                        {
-                                            item.SetDefaults(ModContent.ItemType<TremblingBow>());
-                                            break;
-                                        }
+                                    chest.AddItem<TremblingBow>();
 
                                 break;
                         }
@@ -188,14 +137,7 @@ namespace Coralite.Content.WorldGeneration
                             //}
 
                             if (WorldGen.genRand.NextBool(3))
-                            {
-                                foreach (var item in chest.item)
-                                    if (item.IsAir)
-                                    {
-                                        item.SetDefaults(ModContent.ItemType<WarpMirror>());
-                                        break;
-                                    }
-                            }
+                                chest.AddItem<WarpMirror>();
                         }
                         break;
                 }

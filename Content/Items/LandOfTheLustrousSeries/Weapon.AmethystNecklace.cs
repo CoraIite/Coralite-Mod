@@ -514,6 +514,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 modifiers.SourceDamage -= 1 / HitCount;
             if (HitCount > 2)
                 HitCount--;
+
+            modifiers.HitDirectionOverride = target.Center.X > Projectile.Center.X ? 1 : -1;
         }
 
         public override bool PreDraw(ref Color lightColor) => false;

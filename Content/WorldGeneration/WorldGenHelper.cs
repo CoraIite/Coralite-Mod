@@ -1,4 +1,5 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Items.FlyingShields.Accessories;
+using Coralite.Core;
 using Coralite.Helpers;
 using System;
 using Terraria;
@@ -487,5 +488,35 @@ namespace Coralite.Content.WorldGeneration
                 }
         }
 
+
+        /// <summary>
+        /// 向箱子内加入一个物品，会按顺序遍历箱子之后添加在最后一个
+        /// </summary>
+        /// <param name="chest"></param>
+        /// <param name="itemtype"></param>
+        public static void AddItem(this Chest chest, int itemtype)
+        {
+            foreach (var item in chest.item)
+                if (item.IsAir)
+                {
+                    item.SetDefaults(itemtype);
+                    return;
+                }
+        }
+
+        /// <summary>
+        /// 向箱子内加入一个物品，会按顺序遍历箱子之后添加在最后一个
+        /// </summary>
+        /// <param name="chest"></param>
+        /// <param name="itemtype"></param>
+        public static void AddItem<T>(this Chest chest)where T : ModItem
+        {
+            foreach (var item in chest.item)
+                if (item.IsAir)
+                {
+                    item.SetDefaults(ModContent.ItemType<T>());
+                    return;
+                }
+        }
     }
 }

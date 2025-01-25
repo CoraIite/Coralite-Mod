@@ -13,7 +13,7 @@ namespace Coralite.Content.Items.Materials
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeCraftRecipe.CreateRecipe(ModContent.ItemType<TravelJournaling>(), ItemID.YuumaTheBlueTiger, 50, MainItenStack: 2)
+            MagikeRecipe.CreateRecipe(ModContent.ItemType<TravelJournaling>(), ItemID.YuumaTheBlueTiger, 50, MainItenStack: 2)
                 .RegisterNew(ItemID.SunshineofIsrapony, 50)
                 .RegisterNew(ItemID.DoNotEattheVileMushroom, 50)
                 .RegisterNew(ItemID.ParsecPals, 50)

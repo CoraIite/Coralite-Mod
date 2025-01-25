@@ -27,7 +27,7 @@ namespace Coralite.Content.Items.Materials
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeCraftRecipe.CreateRecipe(ItemID.Bottle, ModContent.ItemType<TalantosInABottle>(), MagikeHelper.CalculateMagikeCost(MALevel.Emperor, 6))
+            MagikeRecipe.CreateRecipe(ItemID.Bottle, ModContent.ItemType<TalantosInABottle>(), MagikeHelper.CalculateMagikeCost(MALevel.Emperor, 6))
                 .AddIngredient(ItemID.WaterBucket)
                 .AddIngredient<EmperorGel>()
                 .Register();

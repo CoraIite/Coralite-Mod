@@ -114,7 +114,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
             Opacity--;
         }
 
-        public static CraftParticle Spawn(Point16 pos, Vector2 center, int craftTime, MagikeCraftRecipe chosenRecipe)
+        public static CraftParticle Spawn(Point16 pos, Vector2 center, int craftTime, MagikeRecipe chosenRecipe)
         {
             CraftParticle p = PRTLoader.NewParticle<CraftParticle>(center, Vector2.Zero, Coralite.MagicCrystalPink);
 

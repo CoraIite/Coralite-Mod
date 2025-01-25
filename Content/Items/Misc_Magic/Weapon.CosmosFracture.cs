@@ -87,7 +87,7 @@ namespace Coralite.Content.Items.Misc_Magic
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeCraftRecipe.CreateRecipe(ItemID.SkyFracture, ModContent.ItemType<CosmosFracture>(), 1_0000)
+            MagikeRecipe.CreateRecipe(ItemID.SkyFracture, ModContent.ItemType<CosmosFracture>(), 1_0000)
                 .SetAntiMagikeCost(1_0000)
                 .Register();
         }

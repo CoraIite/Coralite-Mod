@@ -1,7 +1,6 @@
 ﻿using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria;
 using Terraria.Localization;
 
 namespace Coralite.Content.CoraliteNotes.MagikeChapter1

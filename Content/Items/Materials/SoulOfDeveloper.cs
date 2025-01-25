@@ -22,7 +22,7 @@ namespace Coralite.Content.Items.Materials
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeCraftRecipe.CreateRecipe(ModContent.ItemType<SoulOfDeveloper>(), ItemID.AaronsHelmet, 500)
+            MagikeRecipe.CreateRecipe(ModContent.ItemType<SoulOfDeveloper>(), ItemID.AaronsHelmet, 500)
                 .RegisterNew(ItemID.AaronsBreastplate, 500)
                 .RegisterNew(ItemID.AaronsLeggings, 500)
 

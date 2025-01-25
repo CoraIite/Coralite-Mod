@@ -26,12 +26,12 @@ namespace Coralite.Content.Items.Materials
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeCraftRecipe.CreateRecipe(ItemID.Bottle, ModContent.ItemType<ConcileInABottle>(), MagikeHelper.CalculateMagikeCost(MALevel.Glistent, 6))
+            MagikeRecipe.CreateRecipe(ItemID.Bottle, ModContent.ItemType<ConcileInABottle>(), MagikeHelper.CalculateMagikeCost(MALevel.Glistent, 6))
                 .AddIngredient(ItemID.IronAnvil)
                 .AddIngredient(ItemID.TinkerersWorkshop)
                 .Register();
 
-            MagikeCraftRecipe.CreateRecipe(ItemID.Bottle, ModContent.ItemType<ConcileInABottle>(), MagikeHelper.CalculateMagikeCost(MALevel.Glistent, 6))
+            MagikeRecipe.CreateRecipe(ItemID.Bottle, ModContent.ItemType<ConcileInABottle>(), MagikeHelper.CalculateMagikeCost(MALevel.Glistent, 6))
                 .AddIngredient(ItemID.LeadAnvil)
                 .AddIngredient(ItemID.TinkerersWorkshop)
                 .Register();

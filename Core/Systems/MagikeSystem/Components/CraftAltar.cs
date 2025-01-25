@@ -26,7 +26,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 {
     public abstract class CraftAltar : MagikeFactory, IUpgradeable, IUIShowable
     {
-        public MagikeCraftRecipe ChosenResipe { get; set; }
+        public MagikeRecipe ChosenResipe { get; set; }
 
         /// <summary>
         /// 还有需要多少魔能
@@ -416,13 +416,13 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         private bool CheckCanCraft_FindRecipe(Item[] mainItems, IDictionary<int, int> otherItems, out string text)
         {
             text = "";
-            List<MagikeCraftRecipe> remodelRecipes = [];
-            MagikeCraftRecipe polymerizeRecipe = null;
+            List<MagikeRecipe> remodelRecipes = [];
+            MagikeRecipe polymerizeRecipe = null;
             float matchPercent = 0;
 
             foreach (Item mainItem in mainItems)
             {
-                if (mainItem.IsAir || !MagikeSystem.TryGetMagikeCraftRecipes(mainItem.type, out List<MagikeCraftRecipe> recipes))
+                if (mainItem.IsAir || !MagikeSystem.TryGetMagikeCraftRecipes(mainItem.type, out List<MagikeRecipe> recipes))
                     continue;
 
                 foreach (var recipe in recipes)
@@ -691,7 +691,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             base.LoadData(preName, tag);
 
             CostPercent = tag.GetFloat(nameof(CostPercent));
-            ChosenResipe = MagikeCraftRecipe.Load(tag);
+            ChosenResipe = MagikeRecipe.Load(tag);
 
             if (IsWorking)
             {
@@ -828,7 +828,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
     {
         private int magikeCount;
 
-        public CraftMaagikeBar(MagikeCraftRecipe recipe)
+        public CraftMaagikeBar(MagikeRecipe recipe)
         {
             Texture2D tex = MagikeSystem.CraftMagikeBar.Value;
             Vector2 size = tex.Frame(2, 1).Size();
@@ -1009,7 +1009,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// <summary>
         /// 当前显示的所有合成表
         /// </summary>
-        public static List<MagikeCraftRecipe> Recipes = [];
+        public static List<MagikeRecipe> Recipes = [];
         /// <summary>
         /// 当前的主要物品类型
         /// </summary>
@@ -1072,7 +1072,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 if (!CurrentItemTypes.Contains(item.type))
                     CurrentItemTypes.Add(item.type);
 
-                if (MagikeSystem.TryGetMagikeCraftRecipes(item.type, out List<MagikeCraftRecipe> recipes))
+                if (MagikeSystem.TryGetMagikeCraftRecipes(item.type, out List<MagikeRecipe> recipes))
                     foreach (var recipe in recipes)
                         if (recipe.magikeCost > 0)
                             Recipes.Add(recipe);
@@ -1146,7 +1146,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
     {
         private readonly UIGrid grid = new();
 
-        public CraftBar(MagikeCraftRecipe recipe)
+        public CraftBar(MagikeRecipe recipe)
         {
             SetPadding(6);
 
@@ -1187,7 +1187,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
     public class CraftSlot : UIElement
     {
         private readonly Item showItem;
-        private readonly MagikeCraftRecipe recipe;
+        private readonly MagikeRecipe recipe;
         private readonly SlotType slotType;
 
         private bool canCraft;
@@ -1200,7 +1200,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             RequiredItem
         }
 
-        public CraftSlot(MagikeCraftRecipe recipe, SlotType slotType, int requiredIndex = 0)
+        public CraftSlot(MagikeRecipe recipe, SlotType slotType, int requiredIndex = 0)
         {
             this.recipe = recipe;
             this.slotType = slotType;

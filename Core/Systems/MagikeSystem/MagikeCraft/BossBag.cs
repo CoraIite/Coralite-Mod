@@ -16,7 +16,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
         public void AddMagikeCraftRecipe()
         {
             #region 赤玉灵
-            MagikeCraftRecipe.CreateRecipe<RediancieBossBag, RedJade>(CalculateMagikeCost(MALevel.RedJade, 5, 120)
+            MagikeRecipe.CreateRecipe<RediancieBossBag, RedJade>(CalculateMagikeCost(MALevel.RedJade, 5, 120)
                 , resultItemStack: 34)
                 .RegisterNew<RediancieMask>(CalculateMagikeCost(MALevel.RedJade))
                 .RegisterNew<RediancieTrophy>(CalculateMagikeCost(MALevel.RedJade, 5, 120))
@@ -26,7 +26,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             #endregion
 
             #region 史莱姆王
-            MagikeCraftRecipe.CreateRecipe(ItemID.KingSlimeBossBag, ItemID.SlimySaddle, CalculateMagikeCost(MALevel.RedJade, 5, 120))
+            MagikeRecipe.CreateRecipe(ItemID.KingSlimeBossBag, ItemID.SlimySaddle, CalculateMagikeCost(MALevel.RedJade, 5, 120))
                 .RegisterNew(ItemID.NinjaHood, CalculateMagikeCost(MALevel.RedJade, 8, 180))
                 .RegisterNew(ItemID.NinjaShirt, CalculateMagikeCost(MALevel.RedJade, 8, 180))
                 .RegisterNew(ItemID.NinjaPants, CalculateMagikeCost(MALevel.RedJade, 8, 180))
@@ -40,7 +40,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             #endregion
 
             #region 克苏鲁之眼
-            MagikeCraftRecipe.CreateRecipe(ItemID.EyeOfCthulhuBossBag, ItemID.CrimtaneOre, CalculateMagikeCost(Glistent, 10, 180)
+            MagikeRecipe.CreateRecipe(ItemID.EyeOfCthulhuBossBag, ItemID.CrimtaneOre, CalculateMagikeCost(Glistent, 10, 180)
                 , resultItemStack: 85)
                 .RegisterNew(ItemID.DemoniteOre, CalculateMagikeCost(Glistent, 10, 180), 85)
                 .RegisterNew(ItemID.Binoculars, CalculateMagikeCost(Glistent, 5, 180))
@@ -52,7 +52,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             #endregion
 
             #region 世界吞噬怪
-            MagikeCraftRecipe.CreateRecipe(ItemID.EaterOfWorldsBossBag, ItemID.DemoniteOre, CalculateMagikeCost(Corruption, 10, 180), resultItemStack: 70)
+            MagikeRecipe.CreateRecipe(ItemID.EaterOfWorldsBossBag, ItemID.DemoniteOre, CalculateMagikeCost(Corruption, 10, 180), resultItemStack: 70)
                 .RegisterNew(ItemID.ShadowScale, CalculateMagikeCost(Corruption, 10, 180), 25)
                 .RegisterNew(ItemID.EatersBone, CalculateMagikeCost(Corruption))
                 .RegisterNew(ItemID.EaterMask, CalculateMagikeCost(Corruption))
@@ -63,7 +63,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             #endregion
 
             #region 克苏鲁之脑
-            MagikeCraftRecipe.CreateRecipe(ItemID.BrainOfCthulhuBossBag, ItemID.CrimtaneOre, CalculateMagikeCost(Corruption, 10, 180), resultItemStack: 70)
+            MagikeRecipe.CreateRecipe(ItemID.BrainOfCthulhuBossBag, ItemID.CrimtaneOre, CalculateMagikeCost(Corruption, 10, 180), resultItemStack: 70)
                 .RegisterNew(ItemID.TissueSample, CalculateMagikeCost(Corruption, 10, 180), 25)
                 .RegisterNew(ItemID.BoneRattle, CalculateMagikeCost(Corruption))
                 .RegisterNew(ItemID.BrainMask, CalculateMagikeCost(Corruption))
@@ -74,7 +74,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             #endregion
 
             #region 冰龙宝宝
-            MagikeCraftRecipe.CreateRecipe<BabyIceDragonBossBag, IcicleCrystal>(CalculateMagikeCost(Corruption, 10, 180), resultItemStack: 8)
+            MagikeRecipe.CreateRecipe<BabyIceDragonBossBag, IcicleCrystal>(CalculateMagikeCost(Corruption, 10, 180), resultItemStack: 8)
                 .RegisterNew<IcicleScale>(CalculateMagikeCost(Corruption, 10, 180), 7)
                 .RegisterNew<IcicleBreath>(CalculateMagikeCost(Corruption, 10, 180), 10)
                 .RegisterNew<BabyIceDragonMask>(CalculateMagikeCost(Corruption))
@@ -85,7 +85,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             #endregion
 
             #region 蜂后
-            MagikeCraftRecipe.CreateRecipe(ItemID.QueenBeeBossBag, ItemID.BeeGun, CalculateMagikeCost(Beeswax, 10, 180))
+            MagikeRecipe.CreateRecipe(ItemID.QueenBeeBossBag, ItemID.BeeGun, CalculateMagikeCost(Beeswax, 10, 180))
                 .RegisterNew(ItemID.BeeKeeper, CalculateMagikeCost(Beeswax, 10, 180))//养蜂人
                 .RegisterNew(ItemID.BeesKnees, CalculateMagikeCost(Beeswax, 10, 180))
                 .RegisterNew(ItemID.BeeHat, CalculateMagikeCost(Beeswax, 3, 180))
@@ -103,7 +103,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             #endregion
 
             #region 巨鹿
-            MagikeCraftRecipe.CreateRecipe(ItemID.DeerclopsBossBag, ItemID.ChesterPetItem, CalculateMagikeCost(Hellstone))
+            MagikeRecipe.CreateRecipe(ItemID.DeerclopsBossBag, ItemID.ChesterPetItem, CalculateMagikeCost(Hellstone))
                 .RegisterNew(ItemID.Eyebrella, CalculateMagikeCost(Hellstone))
                 .RegisterNew(ItemID.DontStarveShaderItem, CalculateMagikeCost(Hellstone))
                 .RegisterNew(ItemID.DizzyHat, CalculateMagikeCost(Hellstone))
@@ -119,7 +119,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             #endregion
 
             #region 骷髅王
-            MagikeCraftRecipe.CreateRecipe(ItemID.SkeletronBossBag, ItemID.SkeletronHand, CalculateMagikeCost(Bone, 10, 180))
+            MagikeRecipe.CreateRecipe(ItemID.SkeletronBossBag, ItemID.SkeletronHand, CalculateMagikeCost(Bone, 10, 180))
                 .RegisterNew(ItemID.BookofSkulls, CalculateMagikeCost(Bone, 10, 180))
                 .RegisterNew(ItemID.ChippysCouch, CalculateMagikeCost(Bone))
                 .RegisterNew(ItemID.SkeletronMask, CalculateMagikeCost(Bone))
@@ -130,7 +130,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             #endregion
 
             #region 肉山
-            MagikeCraftRecipe.CreateRecipe(ItemID.WallOfFleshBossBag, ItemID.WarriorEmblem, CalculateMagikeCost(Quicksand, 15, 180))
+            MagikeRecipe.CreateRecipe(ItemID.WallOfFleshBossBag, ItemID.WarriorEmblem, CalculateMagikeCost(Quicksand, 15, 180))
                 .RegisterNew(ItemID.RangerEmblem, CalculateMagikeCost(Quicksand, 15, 180))
                 .RegisterNew(ItemID.SorcererEmblem, CalculateMagikeCost(Quicksand, 15, 180))
                 .RegisterNew(ItemID.SummonerEmblem, CalculateMagikeCost(Quicksand, 15, 180))
@@ -146,7 +146,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             #endregion
 
             #region 史莱姆皇后
-            MagikeCraftRecipe.CreateRecipe(ItemID.QueenSlimeBossBag, ItemID.GelBalloon, CalculateMagikeCost(Flight, 10, 180), resultItemStack: 100)
+            MagikeRecipe.CreateRecipe(ItemID.QueenSlimeBossBag, ItemID.GelBalloon, CalculateMagikeCost(Flight, 10, 180), resultItemStack: 100)
                 .RegisterNew(ItemID.Smolstar, CalculateMagikeCost(Flight, 10, 180))
                 .RegisterNew(ItemID.QueenSlimeHook, CalculateMagikeCost(Flight, 10, 180))
                 .RegisterNew(ItemID.QueenSlimeMountSaddle, CalculateMagikeCost(Flight, 10, 180))
@@ -161,7 +161,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             #endregion
 
             #region 双子魔眼
-            MagikeCraftRecipe.CreateRecipe(ItemID.TwinsBossBag, ItemID.HallowedBar, CalculateMagikeCost(Hallow, 10, 180), resultItemStack: 35)
+            MagikeRecipe.CreateRecipe(ItemID.TwinsBossBag, ItemID.HallowedBar, CalculateMagikeCost(Hallow, 10, 180), resultItemStack: 35)
                 .RegisterNew(ItemID.SoulofSight, CalculateMagikeCost(Hallow, 10, 180), 40)
                 .RegisterNew(ItemID.TwinMask, CalculateMagikeCost(Hallow))
                 .RegisterNew(ItemID.RetinazerTrophy, CalculateMagikeCost(Hallow))
@@ -173,7 +173,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             #endregion
 
             #region 铁长直
-            MagikeCraftRecipe.CreateRecipe(ItemID.DestroyerBossBag, ItemID.HallowedBar, CalculateMagikeCost(Hallow, 10, 180), resultItemStack: 35)
+            MagikeRecipe.CreateRecipe(ItemID.DestroyerBossBag, ItemID.HallowedBar, CalculateMagikeCost(Hallow, 10, 180), resultItemStack: 35)
                 .RegisterNew(ItemID.SoulofMight, CalculateMagikeCost(Hallow, 10, 180), 40)
                 .RegisterNew(ItemID.DestroyerMask, CalculateMagikeCost(Hallow))
                 .RegisterNew(ItemID.DestroyerTrophy, CalculateMagikeCost(Hallow))
@@ -184,7 +184,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             #endregion
 
             #region 铁骷髅王
-            MagikeCraftRecipe.CreateRecipe(ItemID.SkeletronPrimeBossBag, ItemID.HallowedBar, CalculateMagikeCost(Hallow, 10, 180), resultItemStack: 35)
+            MagikeRecipe.CreateRecipe(ItemID.SkeletronPrimeBossBag, ItemID.HallowedBar, CalculateMagikeCost(Hallow, 10, 180), resultItemStack: 35)
                 .RegisterNew(ItemID.SoulofFright, CalculateMagikeCost(Hallow, 10, 180), 40)
                 .RegisterNew(ItemID.SkeletronPrimeMask, CalculateMagikeCost(Hallow))
                 .RegisterNew(ItemID.SkeletronPrimeTrophy, CalculateMagikeCost(Hallow))
@@ -195,7 +195,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             #endregion
 
             #region 荒雷龙
-            MagikeCraftRecipe.CreateRecipe<ThunderveinDragonBossBag, ZapCrystal>(CalculateMagikeCost(Hallow, 10, 180), resultItemStack: 16)
+            MagikeRecipe.CreateRecipe<ThunderveinDragonBossBag, ZapCrystal>(CalculateMagikeCost(Hallow, 10, 180), resultItemStack: 16)
                 .RegisterNew<ElectrificationWing>(CalculateMagikeCost(Hallow, 10, 180), 6)
                 .RegisterNew<InsulationCortex>(CalculateMagikeCost(Hallow, 10, 180), 20)
                 .RegisterNew<ThunderveinDragonMask>(CalculateMagikeCost(Hallow))
@@ -207,7 +207,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             #endregion
 
             #region 世纪之花宝藏袋
-            MagikeCraftRecipe.CreateRecipe(ItemID.PlanteraBossBag, ItemID.GrenadeLauncher, CalculateMagikeCost(Soul, 10, 180))
+            MagikeRecipe.CreateRecipe(ItemID.PlanteraBossBag, ItemID.GrenadeLauncher, CalculateMagikeCost(Soul, 10, 180))
                 .RegisterNew(ItemID.VenusMagnum, CalculateMagikeCost(Soul, 10, 180))
                 .RegisterNew(ItemID.NettleBurst, CalculateMagikeCost(Soul, 10, 180))
                 .RegisterNew(ItemID.FlowerPow, CalculateMagikeCost(Soul, 10, 180))
@@ -226,7 +226,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             #endregion
 
             #region 石巨人宝藏袋
-            MagikeCraftRecipe.CreateRecipe(ItemID.GolemBossBag, ItemID.BeetleHusk, CalculateMagikeCost(HolyLight, 10, 180), resultItemStack: 35)
+            MagikeRecipe.CreateRecipe(ItemID.GolemBossBag, ItemID.BeetleHusk, CalculateMagikeCost(HolyLight, 10, 180), resultItemStack: 35)
                 .RegisterNew(ItemID.Picksaw, CalculateMagikeCost(HolyLight, 10, 180))
                 .RegisterNew(ItemID.Stynger, CalculateMagikeCost(HolyLight, 10, 180))
                 .RegisterNew(ItemID.PossessedHatchet, CalculateMagikeCost(HolyLight, 10, 180))
@@ -244,7 +244,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             #endregion
 
             #region 猪鲨宝藏袋
-            MagikeCraftRecipe.CreateRecipe(ItemID.FishronBossBag, ItemID.BubbleGun, CalculateMagikeCost(HolyLight, 10, 180))
+            MagikeRecipe.CreateRecipe(ItemID.FishronBossBag, ItemID.BubbleGun, CalculateMagikeCost(HolyLight, 10, 180))
                 .RegisterNew(ItemID.Flairon, CalculateMagikeCost(HolyLight, 10, 180))
                 .RegisterNew(ItemID.RazorbladeTyphoon, CalculateMagikeCost(HolyLight, 10, 180))
                 .RegisterNew(ItemID.TempestStaff, CalculateMagikeCost(HolyLight, 10, 180))
@@ -259,7 +259,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             #endregion
 
             #region 光女宝藏袋
-            MagikeCraftRecipe.CreateRecipe(ItemID.FairyQueenBossBag, ItemID.FairyQueenMagicItem, CalculateMagikeCost(HolyLight, 10, 180))
+            MagikeRecipe.CreateRecipe(ItemID.FairyQueenBossBag, ItemID.FairyQueenMagicItem, CalculateMagikeCost(HolyLight, 10, 180))
                 .RegisterNew(ItemID.PiercingStarlight, CalculateMagikeCost(HolyLight, 10, 180))
                 .RegisterNew(ItemID.RainbowWhip, CalculateMagikeCost(HolyLight, 10, 180))
                 .RegisterNew(ItemID.FairyQueenRangedItem, CalculateMagikeCost(HolyLight, 10, 180))
@@ -276,7 +276,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             #endregion
 
             #region 月总宝藏袋
-            MagikeCraftRecipe.CreateRecipe(ItemID.MoonLordBossBag, ItemID.Meowmere, CalculateMagikeCost(SplendorMagicore, 10, 180))
+            MagikeRecipe.CreateRecipe(ItemID.MoonLordBossBag, ItemID.Meowmere, CalculateMagikeCost(SplendorMagicore, 10, 180))
                 .RegisterNew(ItemID.Terrarian, CalculateMagikeCost(SplendorMagicore, 10, 180))
                 .RegisterNew(ItemID.StarWrath, CalculateMagikeCost(SplendorMagicore, 10, 180))
                 .RegisterNew(ItemID.SDMG, CalculateMagikeCost(SplendorMagicore, 10, 180))

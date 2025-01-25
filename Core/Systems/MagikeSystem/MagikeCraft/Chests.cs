@@ -12,7 +12,7 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
         public void AddMagikeCraftRecipe()
         {
             //木箱子
-            MagikeCraftRecipe.CreateRecipe(ItemID.Chest, ItemID.Spear, CalculateMagikeCost(MagicCrystal, 8, 60 * 3), 3)
+            MagikeRecipe.CreateRecipe(ItemID.Chest, ItemID.Spear, CalculateMagikeCost(MagicCrystal, 8, 60 * 3), 3)
                 .RegisterNew(ItemID.Blowpipe, CalculateMagikeCost(MagicCrystal, 8, 180))
                 .RegisterNew(ItemID.WoodenBoomerang, CalculateMagikeCost(MagicCrystal, 8, 180))
                 .RegisterNew(ItemID.Aglet, CalculateMagikeCost(MagicCrystal, 8, 180))
@@ -26,7 +26,7 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
                 .Register();
 
             //金箱子
-            MagikeCraftRecipe.CreateRecipe(ItemID.GoldChest, ItemID.BandofRegeneration, CalculateMagikeCost(RedJade, 8, 60 * 3), 3)
+            MagikeRecipe.CreateRecipe(ItemID.GoldChest, ItemID.BandofRegeneration, CalculateMagikeCost(RedJade, 8, 60 * 3), 3)
                 .RegisterNew(ItemID.MagicMirror, CalculateMagikeCost(RedJade, 8, 180))
                 .RegisterNew(ItemID.CloudinaBottle, CalculateMagikeCost(RedJade, 8, 180))
                 .RegisterNew(ItemID.HermesBoots, CalculateMagikeCost(RedJade, 8, 180))
@@ -43,7 +43,7 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
                 .Register();
 
             //沙漠箱子
-            MagikeCraftRecipe.CreateRecipe(ItemID.DesertChest, ItemID.ThunderSpear, CalculateMagikeCost(RedJade, 8, 60 * 3), 3)
+            MagikeRecipe.CreateRecipe(ItemID.DesertChest, ItemID.ThunderSpear, CalculateMagikeCost(RedJade, 8, 60 * 3), 3)
                 .RegisterNew(ItemID.ThunderStaff, CalculateMagikeCost(RedJade, 8, 180))
                 .RegisterNew(ItemID.MagicConch, CalculateMagikeCost(RedJade, 8, 180))
                 .RegisterNew(ItemID.MysticCoilSnake, CalculateMagikeCost(RedJade, 8, 180))
@@ -56,7 +56,7 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
                 .Register();
 
             //冰冻箱子
-            MagikeCraftRecipe.CreateRecipe(ItemID.IceChest, ItemID.Fish, CalculateMagikeCost(RedJade, 8, 60 * 3), 3)
+            MagikeRecipe.CreateRecipe(ItemID.IceChest, ItemID.Fish, CalculateMagikeCost(RedJade, 8, 60 * 3), 3)
                 .RegisterNew(ItemID.IceBlade, CalculateMagikeCost(RedJade, 8, 180))
                 .RegisterNew(ItemID.IceBoomerang, CalculateMagikeCost(RedJade, 8, 180))
                 .RegisterNew(ItemID.IceSkates, CalculateMagikeCost(RedJade, 8, 180))
@@ -68,7 +68,7 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
                 .Register();
 
             //天空箱子
-            MagikeCraftRecipe.CreateRecipe(ItemID.SkywareChest, ItemID.ShinyRedBalloon, CalculateMagikeCost(Glistent, 8, 60 * 3), 3)
+            MagikeRecipe.CreateRecipe(ItemID.SkywareChest, ItemID.ShinyRedBalloon, CalculateMagikeCost(Glistent, 8, 60 * 3), 3)
                 .RegisterNew(ItemID.Starfury, CalculateMagikeCost(Glistent, 8, 180))
                 .RegisterNew(ItemID.LuckyHorseshoe, CalculateMagikeCost(Glistent, 8, 180))
                 .RegisterNew(ItemID.SkyMill, CalculateMagikeCost(Glistent, 8, 180))
@@ -82,7 +82,7 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
                 .Register();
 
             //常春藤箱
-            MagikeCraftRecipe.CreateRecipe(ItemID.IvyChest, ItemID.FeralClaws, CalculateMagikeCost(Glistent, 8, 60 * 3), 3)
+            MagikeRecipe.CreateRecipe(ItemID.IvyChest, ItemID.FeralClaws, CalculateMagikeCost(Glistent, 8, 60 * 3), 3)
                 .RegisterNew(ItemID.AnkletoftheWind, CalculateMagikeCost(Glistent, 8, 180))
                 .RegisterNew(ItemID.StaffofRegrowth, CalculateMagikeCost(Glistent, 8, 180))
                 .RegisterNew(ItemID.Boomstick, CalculateMagikeCost(Glistent, 8, 180))

@@ -26,7 +26,7 @@ namespace Coralite.Content.Items.Materials
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeCraftRecipe.CreateRecipe(ItemID.Bottle, ModContent.ItemType<LeohtInABottle>(), MagikeHelper.CalculateMagikeCost(MALevel.CrystallineMagike, 6))
+            MagikeRecipe.CreateRecipe(ItemID.Bottle, ModContent.ItemType<LeohtInABottle>(), MagikeHelper.CalculateMagikeCost(MALevel.CrystallineMagike, 6))
                 .AddIngredient(ItemID.SoulofLight)
                 .AddIngredient(ItemID.FallenStar)
                 .Register();
