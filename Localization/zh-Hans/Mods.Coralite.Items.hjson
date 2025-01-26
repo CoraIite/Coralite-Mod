@@ -890,15 +890,6 @@ MagicCrystalBrick: {
 	Tooltip: ""
 }
 
-Page_MagikeBase: {
-	DisplayName: 书页：魔能基础
-	Tooltip:
-		'''
-		左键使用以学习魔能的基础知识，同时解锁珊瑚笔记中的“魔能残卷 其一”
-		曾经被遗失在地下的魔力水晶洞中...
-		'''
-}
-
 HardBasalt: {
 	DisplayName: 硬化玄武岩
 	Tooltip: ""
@@ -4412,7 +4403,11 @@ FarAwaySky: {
 
 MagikeBasePage: {
 	DisplayName: 魔能基础残页
-	Tooltip: 使用以学习魔能基础知识
+	Tooltip:
+		'''
+		左键使用学习魔能的基础知识，同时解锁珊瑚笔记中的“魔能残卷 其一”
+		曾经被遗失在地下的魔力水晶洞中...
+		'''
 }
 
 LeprechaunBait: {

@@ -1,6 +1,9 @@
-﻿using System;
+﻿using Coralite.Content.WorldGeneration.Generators;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using Terraria;
 using Terraria.GameContent.Generation;
 using Terraria.Localization;
 using Terraria.ModLoader.IO;
@@ -57,9 +60,6 @@ namespace Coralite.Content.WorldGeneration
                 tasks.Insert(ShiniesIndex - 1, new PassLegacy("Coralite Basalt Small Biome", GenBasaltSmallBiome));
                 ShiniesIndex++;
                 tasks.Insert(ShiniesIndex - 1, new PassLegacy("Coralite Magic Crystal Cave", GenMagicCrystalCave));
-                ShiniesIndex++;
-                tasks.Insert(ShiniesIndex + 1, new PassLegacy("CoreKeeper Clear Gemstone Maze", GenClearGemstoneMaze));
-                tasks.Insert(ShiniesIndex + 2, new PassLegacy("CoreKeeper Chipped Blade Temple", GenChippedBladeTemple));
             }
 
             int EvilBiome = tasks.FindIndex(genpass => genpass.Name.Equals("Corruption"));
@@ -105,17 +105,26 @@ namespace Coralite.Content.WorldGeneration
                 tasks.Insert(FinalCleanup + 1, new PassLegacy("Coralite Replase Vanilla Chest", ReplaceVanillaChest));
                 if (shadowCastle)
                     tasks.Insert(FinalCleanup - 1, new PassLegacy("Coralite Shadow Castle", GenShadowCastle));
+
+                FinalCleanup = tasks.FindIndex(genpass => genpass.Name.Equals("Final Cleanup"));
+                tasks.Insert(FinalCleanup, new PassLegacy("Coralite Note Room", GenCoraliteNoteRoom));
+                FinalCleanup++;
+                tasks.Insert(FinalCleanup, new PassLegacy("CoreKeeper Clear Gemstone Maze", GenClearGemstoneMaze));
+                FinalCleanup++;
+                tasks.Insert(FinalCleanup, new PassLegacy("CoreKeeper Chipped Blade Temple", GenChippedBladeTemple));
             }
 
             if (CoralCatWorld)
             {
                 int SettleLiquids = tasks.FindIndex(genpass => genpass.Name.Equals("Settle Liquids Again"));
-                int FinalCleanup2 = tasks.FindIndex(genpass => genpass.Name.Equals("Final Cleanup"));
 
                 if (SettleLiquids != -1)
                     tasks.Insert(SettleLiquids - 1, new PassLegacy("Coralite CoralCat World", CoralCatWorldGen));
-                if (SettleLiquids != -1)
-                    tasks.Insert(FinalCleanup2 - 1, new PassLegacy("Coralite CoralCat World Spawn", CoralCatWorldSpawn));
+
+                int FinalCleanup2 = tasks.FindIndex(genpass => genpass.Name.Equals("Final Cleanup"));
+
+                if (FinalCleanup2 != -1)
+                    tasks.Insert(FinalCleanup2, new PassLegacy("Coralite CoralCat World Spawn", CoralCatWorldSpawn));
             }
 
             if (DigDigDigWorld)
@@ -176,6 +185,52 @@ namespace Coralite.Content.WorldGeneration
 
             LoadSkyIsland(tag);
             LoadCrystalCave(tag);
+        }
+
+        public static void GenByTexture(Texture2D clearTex, Texture2D roomTex, Texture2D wallClearTex, Texture2D wallTex,
+            Dictionary<Color, int> clearDic, Dictionary<Color, int> roomDic, Dictionary<Color, int> wallClearDic, Dictionary<Color, int> wallDic,
+            int genOrigin_x, int genOrigin_y)
+        {
+            bool genned = false;
+            bool placed = false;
+
+            WorldGenHelper.ClearLiuid(genOrigin_x, genOrigin_y, clearTex.Width, clearTex.Height);
+
+            Texture2TileGenerator clearGenerator = null;
+            Texture2TileGenerator roomGenerator = null;
+            Texture2WallGenerator wallClearGenerator = null;
+            Texture2WallGenerator wallGenerator = null;
+
+            while (!genned)
+            {
+                if (placed)
+                    continue;
+
+                Main.QueueMainThreadAction(() =>
+                {
+                    //清理范围
+                    clearGenerator = TextureGeneratorDatas.GetTex2TileGenerator(clearTex, clearDic);
+
+                    //生成主体地形
+                    roomGenerator = TextureGeneratorDatas.GetTex2TileGenerator(roomTex, roomDic);
+
+                    //清理范围
+                    if (wallClearTex != null)
+                        wallClearGenerator = TextureGeneratorDatas.GetTex2WallGenerator(wallClearTex, wallClearDic);
+
+                    //生成墙壁
+                    if (wallTex != null)
+                        wallGenerator = TextureGeneratorDatas.GetTex2WallGenerator(wallTex, wallDic);
+
+                    genned = true;
+                });
+                placed = true;
+            }
+
+            clearGenerator?.Generate(genOrigin_x, genOrigin_y, true);
+            roomGenerator?.Generate(genOrigin_x, genOrigin_y, true);
+            wallClearGenerator?.Generate(genOrigin_x, genOrigin_y, true);
+            wallGenerator?.Generate(genOrigin_x, genOrigin_y, true);
         }
     }
 }

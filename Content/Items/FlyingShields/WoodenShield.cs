@@ -85,5 +85,11 @@ namespace Coralite.Content.Items.FlyingShields
         {
             damageReduce = 0.05f;
         }
+
+        public override void OnGuard()
+        {
+            DistanceToOwner /= 3;
+            SoundEngine.PlaySound(CoraliteSoundID.Dig, Projectile.Center);
+        }
     }
 }

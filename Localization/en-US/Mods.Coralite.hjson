@@ -52,5 +52,6 @@ WorldGeneration: {
 		DigTheShimmer: Mods.Coralite.WorldGeneration.CoraliteWorld.DigTheShimmer
 		DigTheIceDragonNest: Mods.Coralite.WorldGeneration.CoraliteWorld.DigTheIceDragonNest
 		DigTheDigDungeon: Mods.Coralite.WorldGeneration.CoraliteWorld.DigTheDigDungeon
+		CoraliteNoteRoom: Mods.Coralite.WorldGeneration.CoraliteWorld.CoraliteNoteRoom
 	}
 }

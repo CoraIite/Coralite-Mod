@@ -123,3 +123,11 @@ Prism: {
 	PrismDescription: Mods.Coralite.Knowledges.Prism.PrismDescription
 	PrismLevels: Mods.Coralite.Knowledges.Prism.PrismLevels
 }
+
+INeedMoreMagike: {
+	Title: Mods.Coralite.Knowledges.INeedMoreMagike.Title
+	NeedMoreMagike: Mods.Coralite.Knowledges.INeedMoreMagike.NeedMoreMagike
+	BiomeLens: Mods.Coralite.Knowledges.INeedMoreMagike.BiomeLens
+	DayTimeLens: Mods.Coralite.Knowledges.INeedMoreMagike.DayTimeLens
+	LiquidLens: Mods.Coralite.Knowledges.INeedMoreMagike.LiquidLens
+}

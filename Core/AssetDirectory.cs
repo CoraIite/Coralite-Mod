@@ -252,6 +252,7 @@ namespace Coralite.Core
         public const string IceNest = WorldGen + "IceNest/";
         public const string Shrines = WorldGen + "Shrines/";
         public const string ShadowCastleRooms = WorldGen + "ShadowCastleRooms/";
+        public const string CoraliteNoteRoom = WorldGen + "CoraliteNote/";
 
 
 

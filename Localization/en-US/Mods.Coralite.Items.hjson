@@ -867,20 +867,6 @@ MagicCrystalBrick: {
 	Tooltip: ""
 }
 
-Page_MagikeBase: {
-	DisplayName: Page: Magike Base
-	Tooltip:
-		'''
-		Left click use to learn the basis of magike
-		"Magike, a mysterious energy, is usually considered to be highly concentrated magic. "
-		"Because of its extremely high concentration, it cannot provide magic power for people like potions."
-		"In order to rationalize the control and use of magike, various kinds of lenses, mirrors, and crystal pillars have been invented"
-		"Through the lens to produce magike, wide angle mirror to transmit magike, crystal pillar to store the magike"
-		"In order to use these devices, a connector is essential, which can connect the device with sending function to the receiving device"
-		"After mastering magike, mankind created various tools that are powered by magike"
-		'''
-}
-
 HardBasalt: {
 	DisplayName: Hard Basalt
 	Tooltip: ""

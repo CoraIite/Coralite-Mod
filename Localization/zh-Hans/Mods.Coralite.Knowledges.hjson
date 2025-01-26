@@ -102,7 +102,7 @@ PartJumpPage: {
 	P3Title: "{$StoneMaker.UseMagikeToDoSomething}"
 	P4Title: "{$CraftAltar.RemodelPolymerizeAndMagikeCraft}"
 	P5Title: "{$ExpandProductionLine.Title}"
-	P6Title: 我需要更多魔能！
+	P6Title: "{$INeedMoreMagike.Title}"
 	P7Title: 升级！升级！升级仪器！
 	P8Title: 百变滤镜
 }
@@ -206,4 +206,24 @@ Prism: {
 		    虽然传输距离不如广角镜，但是胜在连接数量够多，容量也比广角镜大。
 		'''
 	PrismLevels: "    不同等级棱镜的连接数量不同，会随着等级增加逐渐提升。"
+}
+
+INeedMoreMagike: {
+	Title: 我需要更多魔能！
+	NeedMoreMagike:
+		'''
+		    经过前面的章节，相信你的魔能产线已经基本铺开了，现在要解决的是魔能的问题。
+		    基础提取透镜虽然在一开始很方便，但是能消耗的物品终究是有限的，有没有什么能够凭空生产魔能的东西呢？
+		'''
+	BiomeLens:
+		'''
+		    环境透镜：在特定的环境中生产魔能。 多数环境透镜都对自身所处的环境有着严格的要求。
+		    以森林透镜为例，它需要在森林环境中才能够放置下来，且只能放在草块上。要让它开始工作还需要在后面铺满草墙或花墙。
+		'''
+	DayTimeLens: "    光照透镜：根据日照决定是否工作。比如日光透镜需要在白天才能工作，月光透镜则相反。"
+	LiquidLens:
+		'''
+		    液体透镜：需要消耗底座上的液体来生产魔能。
+		    最好的方式是将底座完全浸没在液体中。消耗液体听上去相当麻烦，但是与之对应的魔能产量也远超其他透镜。
+		'''
 }

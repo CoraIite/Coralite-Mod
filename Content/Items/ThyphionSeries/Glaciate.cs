@@ -13,6 +13,7 @@ using System;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.Graphics.CameraModifiers;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
@@ -137,7 +138,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
     public class GlaciateHeldProj : BaseDashBow
     {
-        public override string Texture => AssetDirectory.ThyphionSeriesItems + nameof(Glaciate);
+        public override string Texture => AssetDirectory.ThyphionSeriesItems + Name;
 
         public ref float DashState => ref Projectile.localAI[0];
         public ref float Timer => ref Projectile.localAI[1];
@@ -146,12 +147,20 @@ namespace Coralite.Content.Items.ThyphionSeries
         public float handOffset;
         public int SPTimer;
 
+        public float rotAngle;
+
         public override int GetItemType()
             => ItemType<Glaciate>();
 
         public override void Initialize()
         {
             RecordAngle = Rotation;
+
+            rotAngle = Special switch
+            {
+                1=> 0,
+                _ => 0.5f,
+            };
         }
 
         public override void DashAttackAI()
@@ -178,6 +187,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                     particle.TrailCount = Main.rand.Next(10, 24);
                 }
 
+                rotAngle += 0.4f / (DashTime + 1);
 
                 LockOwnerItemTime();
             }
@@ -211,6 +221,11 @@ namespace Coralite.Content.Items.ThyphionSeries
                             glaciate.powerfulAttack = true;
                         }
 
+                        if (Projectile.IsOwnedByLocalPlayer())
+                        {
+                            Main.instance.CameraModifiers.Add(new PunchCameraModifier(Projectile.Center, Projectile.rotation.ToRotationVector2(), 8, 12, 10, 500));
+                        }
+
                         Rotation = ToMouseAngle;
                     }
 
@@ -224,6 +239,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                     }
 
                     handOffset = Helper.Lerp(handOffset, 0, 0.1f);
+                    rotAngle = Helper.Lerp(rotAngle, 0, 0.2f);
                     SPTimer++;
 
                     if (SPTimer > 22)
@@ -247,23 +263,49 @@ namespace Coralite.Content.Items.ThyphionSeries
                 handOffset = Helper.Lerp(handOffset, 0, 0.1f);
             }
 
+            if (Projectile.timeLeft > Owner.itemAnimationMax * 0.6f)
+                rotAngle = Helper.Lerp(rotAngle, 0, 0.15f);
+            else
+                rotAngle = Helper.Lerp(rotAngle, 0.3f, 0.05f);
+
             base.NormalShootAI();
         }
 
         public override Vector2 GetOffset()
-            => new Vector2(16 + handOffset, -10);
+            => new Vector2(22 + handOffset, -10);
 
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D mainTex = Projectile.GetTexture();
             Vector2 center = Projectile.Center - Main.screenPosition;
 
-            Main.spriteBatch.Draw(mainTex, center, null, lightColor, Projectile.rotation, mainTex.Size() / 2, 1, DirSign > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0f);
+            Rectangle framebox = mainTex.Frame(2, 1, 1, 0);
+            float exAngle = rotAngle * DirSign;
+
+            //绘制弦
+            Vector2 dir1 = (Rotation + exAngle).ToRotationVector2();
+            Vector2 n1 = (Rotation + exAngle + DirSign * 1.57f).ToRotationVector2();
+            Vector2 dir2 = (Rotation - exAngle).ToRotationVector2();
+            Vector2 n2 = (Rotation - exAngle + DirSign * 1.57f).ToRotationVector2();
+
+            Vector2 TopPos = center - dir2 * 28 - n2 * 25;
+            Vector2 bottomPos = center - dir1 * 12 + n1 * 47;
+
+            Texture2D lineTex = TextureAssets.FishingLine.Value;
+            Rectangle dest = new Rectangle((int)TopPos.X, (int)TopPos.Y, lineTex.Width, (int)Vector2.Distance(TopPos, bottomPos));
+            Main.spriteBatch.Draw(lineTex, dest, null, Color.Cyan, (bottomPos - TopPos).ToRotation()-1.57f, new Vector2(lineTex.Width / 2, 0), 0, 0);
+
+            //绘制下颚
+            Vector2 origin = framebox.Size() / 2;
+            Main.spriteBatch.Draw(mainTex, center, framebox, lightColor, Projectile.rotation + exAngle, origin, 1, base.DirSign > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0f);
+            //绘制上鄂
+            framebox = mainTex.Frame(2, 1, 0, 0);
+            Main.spriteBatch.Draw(mainTex, center, framebox, lightColor, Projectile.rotation - exAngle, origin, 1, base.DirSign > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0f);
 
             if (Special == 0)
                 return false;
 
-            Vector2 pos = center + Rotation.ToRotationVector2() * 16 + (Rotation + (DirSign > 0 ? -1 : 1) * 1.57f).ToRotationVector2() * 4;
+            Vector2 pos = center + dir2 * 16 - n2 * 2;
 
             Helper.DrawPrettyStarSparkle(1, 0, pos, Color.White, Coralite.IcicleCyan * 0.75f, 0.5f, 0, 0.5f, 0.5f, 0, 0.785f
                 , new Vector2(2.5f), new Vector2(0.75f));

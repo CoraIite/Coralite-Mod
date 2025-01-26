@@ -22,8 +22,8 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public override void SetDefaults()
         {
-            Item.SetWeaponValues(13, 2f);
-            Item.DefaultToRangedWeapon(10, AmmoID.Arrow, 27, 7f);
+            Item.SetWeaponValues(14, 2f);
+            Item.DefaultToRangedWeapon(10, AmmoID.Arrow, 26, 7f);
 
             Item.rare = ItemRarityID.Blue;
             Item.useStyle = ItemUseStyleID.Rapier;
@@ -72,7 +72,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 case CoralitePlayer.DashRight:
                     {
                         dashDirection = DashDir == CoralitePlayer.DashRight ? 1 : -1;
-                        newVelocity.X = dashDirection * 7;
+                        newVelocity.X = dashDirection * 7.5f;
                         break;
                     }
                 default:
@@ -246,7 +246,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 else
                 {
                     Projectile.NewProjectileFromThis(Owner.Center, (Main.MouseWorld - Owner.MountedCenter).SafeNormalize(Vector2.One) * 12f
-                        , GetArrowType(), Owner.GetWeaponDamage(Owner.HeldItem), Projectile.knockBack);
+                        , GetArrowType(), (int)(Owner.GetWeaponDamage(Owner.HeldItem) * 1.2f), Projectile.knockBack);
 
                     SoundEngine.PlaySound(CoraliteSoundID.Bow_Item5, Owner.Center);
                     Projectile.Kill();

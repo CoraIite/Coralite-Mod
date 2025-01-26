@@ -16,7 +16,7 @@ namespace Coralite.Content.Items.Icicle
 
         public override void SetStaticDefaults()
         {
-            Main.RegisterItemAnimation(Type, new DrawAnimationVertical(8, 3, true));
+            Main.RegisterItemAnimation(Type, new DrawAnimationVertical(6, 4));
             ItemID.Sets.ItemNoGravity[Type] = true;
             ItemID.Sets.AnimatesAsSoul[Item.type] = true;
         }

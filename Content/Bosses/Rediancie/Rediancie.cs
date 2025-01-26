@@ -95,6 +95,8 @@ namespace Coralite.Content.Bosses.Rediancie
             NPC.noTileCollide = true;
             NPC.boss = true;
 
+            NPC.HitSound = SoundID.DD2_CrystalCartImpact;
+
             NPC.BossBar = GetInstance<RediancieBossBar>();
             GetInstance<RediancieBossBar>().Reset(NPC);
 
@@ -191,11 +193,6 @@ namespace Coralite.Content.Bosses.Rediancie
 
             for (int i = 0; i < 5; i++)
                 GoreLoader.AddGoreFromTexture<SimpleModGore>(Mod, AssetDirectory.BossGores + "Rediancie_Gore" + i);
-        }
-
-        public override void HitEffect(NPC.HitInfo hit)
-        {
-            SoundEngine.PlaySound(SoundID.Dig, NPC.Center);
         }
 
         public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone)

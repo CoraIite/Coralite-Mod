@@ -85,6 +85,12 @@ namespace Coralite.Content.Items.Glistent
                 .AddIngredient(ItemID.IronBar, 8)
                 .AddTile(TileID.WorkBenches)
                 .Register();
+
+            CreateRecipe()
+                .AddIngredient<LeafStone>(10)
+                .AddIngredient(ItemID.LeadBar, 8)
+                .AddTile(TileID.WorkBenches)
+                .Register();
         }
     }
 

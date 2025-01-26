@@ -14,7 +14,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using Terraria;
 
 namespace Coralite
 {
@@ -172,36 +171,36 @@ namespace Coralite
             return bossName.ToLower() switch
             {
                 "赤玉灵" or
-                "Rediancie"
+                "rediancie"
                     => DownedBossSystem.downedRediancie,
                 "冰龙宝宝" or
-                "BabyIceDragon" or
-                "Baby Ice Dragon"
+                "babyicedragon" or
+                "baby ice dragon"
                     => DownedBossSystem.downedBabyIceDragon,
                 // "影子球" or "ShadowBalls" => DownedBossSystem.xxxx,
                 "荒雷龙" or
-                "ThunderveinDragon" or
-                "Thundervein Dragon"
+                "thunderveindragon" or
+                "thundervein dragon"
                     => DownedBossSystem.downedThunderveinDragon,
                 "史莱姆皇帝" or
                 "至高帝史莱姆王" or
                 "至高帝·史莱姆王" or
                 "至高帝" or
-                "SlimeEmperor" or
-                "Slime Emperor"
+                "slimeemperor" or
+                "slime emperor"
                     => DownedBossSystem.downedSlimeEmperor,
                 "赤血玉灵" or
                 "血咒精赤玉灵" or
                 "血咒精·赤玉灵" or
                 "血咒精" or
-                "Bloodiancie"
+                "bloodiancie"
                     => DownedBossSystem.downedBloodiancie,
                 "梦魇之花" or
                 "梦界主世纪之花" or
                 "梦界主·世纪之花" or
                 "梦界主" or
-                "NightmarePlantera" or
-                "Nightmare Plantera"
+                "nightmareplantera" or
+                "nightmare plantera"
                     => DownedBossSystem.downedNightmarePlantera,
                 _ => false,
             };

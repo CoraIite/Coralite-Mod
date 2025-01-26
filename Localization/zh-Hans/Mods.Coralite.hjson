@@ -52,5 +52,6 @@ WorldGeneration: {
 		DigTheShimmer: 挖微光挖微光挖微光挖挖挖挖挖挖挖！
 		DigTheIceDragonNest: 挖冰龙巢挖冰龙巢挖冰龙巢挖挖挖挖挖挖挖！
 		DigTheDigDungeon: 挖地牢挖地牢挖地牢挖挖挖挖挖挖挖！
+		// CoraliteNoteRoom: Mods.Coralite.WorldGeneration.CoraliteWorld.CoraliteNoteRoom
 	}
 }

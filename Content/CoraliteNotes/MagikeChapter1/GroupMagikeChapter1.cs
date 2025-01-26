@@ -41,7 +41,8 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
                     new Prism(),
                     new Column(),
 
-                    //P6：
+                    //P6：我需要更多魔能！
+                    new INeedMoreMagike(),
                 ];
         }
     }

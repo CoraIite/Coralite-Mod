@@ -617,7 +617,7 @@ namespace Coralite.Content.WorldGeneration
                 [new Color(255, 177, 230)] = crystalBrick,
                 [new Color(142, 43, 170)] = ModContent.TileType<HardBasaltTile>(),
                 [new Color(183, 12, 232)] = basalt,
-                [new Color(90, 100, 80)] = TileID.Chain,
+                [new Color(90, 100, 80)] = TileID.Chain,//5a6450
                 [Color.Black] = -1
             };
             Dictionary<Color, int> wallDic = new()

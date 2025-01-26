@@ -36,6 +36,15 @@ namespace Coralite.Content.Items.Phantom
                 }
             }
         }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient<ShadowMirror>()
+                .AddIngredient(ItemID.Ectoplasm, 12)
+                .AddTile(TileID.TinkerersWorkbench)
+                .Register();
+        }
     }
 
     public class PhantomMirrorProj : ModProjectile
@@ -59,7 +68,7 @@ namespace Coralite.Content.Items.Phantom
             Projectile.timeLeft = 100;
             Projectile.penetrate = -1;
             Projectile.usesIDStaticNPCImmunity = true;
-            Projectile.idStaticNPCHitCooldown = 30;
+            Projectile.idStaticNPCHitCooldown = 25;
 
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
