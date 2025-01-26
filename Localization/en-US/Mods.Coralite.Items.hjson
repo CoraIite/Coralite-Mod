@@ -517,7 +517,14 @@ ShadowHead: {
 		Increases maximum mana by 60
 		10% reduced mana usage
 		'''
-	ArmorBonus: Mods.Coralite.Items.ShadowHead.ArmorBonus
+	ArmorBonus: 
+		'''
+		The Shadow Armor Ring guards you
+		   When using an item, the ring is charged according to the time of use
+		   When you have enough energy, 
+		   press the Set Bonus button to use different attacks based on the type of weapon you use
+		   The set bonus key can be changed in the mod configuration
+		'''
 }
 
 ShadowLegs: {
@@ -731,8 +738,8 @@ MagConnectStaff: {
 	DisplayName: Mag Connect Staff
 	Tooltip:
 		'''
-		Left-click to select and left-click again to establish the connection
-		Right-click to open the connection UI and click the button to cancel the connection
+		◇ Left-click to select and left-click again to establish the connection
+		◇ Right-click to open the connection UI and click the button to cancel the connection
 		'''
 }
 
@@ -758,7 +765,7 @@ CondensedCrystalBall: {
 
 MagikeActivator: {
 	DisplayName: Magike Activator
-	Tooltip: Activate the magike machine in the mouse position
+	Tooltip: ◇ Activate the magike machine in the mouse position
 }
 
 IcicleHeart: {
@@ -1440,7 +1447,7 @@ MiniSplendorColumn: {
 
 CrystalSword: {
 	DisplayName: Crystal Sword
-	Tooltip: Consumes 5 magike to shoot a beam
+	Tooltip: Consumes 1 magike to shoot a beam
 }
 
 BrilliantCharger: {
@@ -1584,7 +1591,8 @@ RuneParchment: {
 		[c/8e8e8e:A unusually well preserved piece of ancient paper.]
 		[c/8e8e8e:The runes are impossible to decipher but small symbols hint at it being the recipe for a strange weapon.]
 			Sold by the Traveling Merchant after defeating Plantera
-		'''
+			Please place it in the hotbar, you can't use it on the mouse!
+			'''
 }
 
 CraftLock: {
@@ -1904,7 +1912,11 @@ FlyingShieldToolbox: {
 
 HeavyWedges: {
 	DisplayName: Heavy Wedges
-	Tooltip: Reduces the flying speed of the Flying Shield, increases its size and melee damage.
+	Tooltip: 
+	'''
+	Appears in chests
+	Reduces the flying speed of the Flying Shield, increases its size and melee damage.
+	'''
 }
 
 DemonsProtection: {
@@ -2765,7 +2777,7 @@ JungleTurtleShell: {
 	DisplayName: Jungle Turtle Shell
 	Tooltip:
 		'''
-		The shell of a Jungle Turtle in its item state when dropped into the Shimmer Liquid 
+		The shell of a Jungle Turtle (Critters) in its item state when dropped into the Shimmer Liquid 
 		also appears in chests underneath the Jungle
 		Slightly increased shield blocking ability
 		'''
@@ -3772,7 +3784,7 @@ OsirisPillar: {
 	DisplayName: Osiris Pillar
 	Tooltip:
 		'''
-		Continuously reduces health while full of mana
+		Continuously reduces health while equipped
 		Gain damage when your health is less than a certain amount, and your critical strike chance increases
 		Increased mana cap and mana regeneration rate
 		'''
@@ -3959,7 +3971,7 @@ BasicRefractor: {
 	DisplayName: Basic Refractor
 	Tooltip:
 		'''
-		The connection is very far away
+		Used to transmit magike at medium distances
 		{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}
 		'''
 }
@@ -4263,7 +4275,7 @@ Heptachromic: {
 
 BasicPedestal: {
 	DisplayName: Basic Pedestal
-	Tooltip: It is possible to put an item arch display or magike craft
+	Tooltip: It is possible to put items inside
 }
 
 GelFiberBreastplate: {
@@ -4322,7 +4334,11 @@ FarAwaySky: {
 
 MagikeBasePage: {
 	DisplayName: Magike Base Page
-	Tooltip: Use to learn the basics of magike
+	Tooltip: 
+	'''
+	Left-click to learn the basics of magic and unlock the "Magike Fragment Part 1" in the Coralite Notes
+	Once lost in the Magic Crystal Cave underground...
+	'''
 }
 
 LeprechaunBait: {
@@ -4538,12 +4554,12 @@ BrilliantConnectStaff: {
 	DisplayName: Brilliant Connect Staff
 	Tooltip:
 		'''
-		Left-click on the selected area
-		left-click and select the area again to connect the magike apparatus in the two areas
-		Right-click in the inventory to toggle how to disconnect
-		  UI mode: Right-click on the magike sender to open the connection UI, 
+		◇ Left-click on the selected area
+		◇ left-click and select the area again to connect the magike apparatus in the two areas
+		◇ Right-click in the inventory to toggle how to disconnect
+		  ▶ UI mode: Right-click on the magike sender to open the connection UI, 
 		    and click the button to cancel the connection
-		  Marquee mode: Press and hold the right button to select an area, 
+		  ▶ Marquee mode: Press and hold the right button to select an area, 
 		    release the right button to cancel all connections in the area
 		'''
 	CurrentState: Current disconnection mode:
@@ -4577,8 +4593,7 @@ BrilliantMagikeActivator: {
 	DisplayName: Brilliant Magike Activator
 	Tooltip:
 		'''
-		Left-click to select a region
-		Release it to activate the magike factory in the area
+		◇ Left-click to select an area to activate the magike machine in the area
 		'''
 }
 
@@ -4839,12 +4854,12 @@ SoulOfNightAltar: {
 }
 
 LASER: {
-	DisplayName: L A S E R
+	DisplayName: LASER
 	Tooltip: ""
 }
 
 LASERCore: {
-	DisplayName: L A S E R Core
+	DisplayName: LASER Core
 	Tooltip: ""
 }
 

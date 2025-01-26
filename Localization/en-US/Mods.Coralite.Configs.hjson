@@ -110,12 +110,12 @@ GamePlayConfig: {
 	}
 
 	Headers: {
-		Magike: Magike Header
-		Misc: Misc Header
+		Magike: Magike
+		Misc: Misc
 	}
 
 	SelectSize: {
 		Label: Select Size
-		Tooltip: ""
+		Tooltip: Change the maximum selection size for each type of filter, etc
 	}
 }

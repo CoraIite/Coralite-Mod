@@ -117,20 +117,29 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
+            int expertBaseLife = 6400;
+            int MasterBaseLife = 7600;
+
+            int expertMultLife = 2060;
+            int masterMultLife = 3030;
+
+            int expertDefence = 14;
+            int masterDefence = 20;
+
             if (Helper.GetJourneyModeStrangth(out float journeyScale, out NPCStrengthHelper nPCStrengthHelper))
             {
                 if (nPCStrengthHelper.IsExpertMode)
                 {
-                    NPC.lifeMax = (int)((5600 + (numPlayers * 1460)) / journeyScale);
+                    NPC.lifeMax = (int)((expertBaseLife + (numPlayers * expertMultLife)) / journeyScale);
                     NPC.damage = 75;
-                    NPC.defense = 10;
+                    NPC.defense = expertDefence;
                 }
 
                 if (nPCStrengthHelper.IsMasterMode)
                 {
-                    NPC.lifeMax = (int)((6200 + (numPlayers * 3030)) / journeyScale);
+                    NPC.lifeMax = (int)((MasterBaseLife + (numPlayers * masterMultLife)) / journeyScale);
                     NPC.scale *= 1.25f;
-                    NPC.defense = 14;
+                    NPC.defense = masterDefence;
                     NPC.damage = 100;
                 }
 
@@ -138,30 +147,30 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                 {
                     NPC.damage = 120;
                     NPC.scale *= 1.25f;
-                    NPC.defense = 16;
+                    NPC.defense = 24;
                 }
 
                 return;
             }
 
-            NPC.lifeMax = 5600 + (numPlayers * 1460);
+            NPC.lifeMax = expertBaseLife + (numPlayers * expertMultLife);
             NPC.damage = 75;
-            NPC.defense = 10;
+            NPC.defense = expertDefence;
 
             if (Main.masterMode)
             {
-                NPC.lifeMax = 6200 + (numPlayers * 3030);
+                NPC.lifeMax = MasterBaseLife + (numPlayers * masterMultLife);
                 NPC.scale *= 1.25f;
-                NPC.defense = 14;
+                NPC.defense = masterDefence;
                 NPC.damage = 100;
             }
 
             if (Main.getGoodWorld)
             {
-                NPC.lifeMax = 6800 + (numPlayers * 4060);
+                NPC.lifeMax = 8800 + (numPlayers * 4060);
                 NPC.damage = 140;
                 NPC.scale *= 1.25f;
-                NPC.defense = 16;
+                NPC.defense = 24;
             }
         }
 

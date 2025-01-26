@@ -17,10 +17,10 @@ Conditions: {
 		CoralCat: Need in the world of rainbow cats (CoralCat)
 		MagikeCraft: Requires using magike craft altar to craft
 		LearnedMagikeAdvance: Need to learn the advance of magike
-		InDigDigDig: Mods.Coralite.Conditions.CoraliteConditions.InDigDigDig
-		NotInDigDigDig: Mods.Coralite.Conditions.CoraliteConditions.NotInDigDigDig
-		UseMultiBlockStructure: Mods.Coralite.Conditions.CoraliteConditions.UseMultBlockStructure
-		DownedGolemCondition: Mods.Coralite.Conditions.CoraliteConditions.DownedGolemCondition
+		InDigDigDig: Need in the world of stone (DigDigDig)
+		NotInDigDigDig: Need not in the world of stone (DigDigDig)
+		UseMultiBlockStructure: Use Multiblock to craft
+		DownedGolemCondition: Need to defeat the Golem
 	}
 }
 
@@ -43,15 +43,15 @@ WorldGeneration: {
 		DigDesert: Dig the desert! Dig the desert! Dig! Dig! Dig! Dig! Dig!
 		DigHell: Dig the underworld! Dig the underworld! Dig! Dig! Dig! Dig! Dig!
 		DigSky: Dig the sky! Dig the sky! Dig! Dig! Dig! Dig! Dig!
-		DigTheCrystalCave: Mods.Coralite.WorldGeneration.CoraliteWorld.DigTheCrystalCave
-		DigTheNPC: Mods.Coralite.WorldGeneration.CoraliteWorld.DigTheNPC
-		DigTheGMHalfCircle: Mods.Coralite.WorldGeneration.CoraliteWorld.DigTheGMHalfCircle
-		DigTheMushroomCircle: Mods.Coralite.WorldGeneration.CoraliteWorld.DigTheMushroomCircle
-		DigTheEvil: Mods.Coralite.WorldGeneration.CoraliteWorld.DigTheEvil
-		DigTheJungleTemple: Mods.Coralite.WorldGeneration.CoraliteWorld.DigTheJungleTemple
-		DigTheShimmer: Mods.Coralite.WorldGeneration.CoraliteWorld.DigTheShimmer
-		DigTheIceDragonNest: Mods.Coralite.WorldGeneration.CoraliteWorld.DigTheIceDragonNest
-		DigTheDigDungeon: Mods.Coralite.WorldGeneration.CoraliteWorld.DigTheDigDungeon
+		DigTheCrystalCave: Dig the Crystal Cave! Dig the sky! Dig! Dig! Dig! Dig! Dig!
+		DigTheNPC: What is it? Clumsy slime? Generate it. What is it? Fisherman? Generate it. What is it? Hairstylist? Generate it.
+		DigTheGMHalfCircle: Dig the granite! Dig the marble! Dig! Dig! Dig! Dig! Dig!
+		DigTheMushroomCircle: Dig the mushroom! Dig the mushroom! Dig! Dig! Dig! Dig! Dig!
+		DigTheEvil: Dig the evil! Dig the evil! Dig! Dig! Dig! Dig! Dig!
+		DigTheJungleTemple: Dig the temple! Dig the temple! Dig! Dig! Dig! Dig! Dig!
+		DigTheShimmer: Dig the shimmer! Dig the shimmer! Dig! Dig! Dig! Dig! Dig!
+		DigTheIceDragonNest: Dig the ice dragon nest Dig! Dig! Dig! Dig! Dig!
+		DigTheDigDungeon: Dig the dungeon! Dig the dungeon! Dig! Dig! Dig! Dig! Dig!
 		CoraliteNoteRoom: Mods.Coralite.WorldGeneration.CoraliteWorld.CoraliteNoteRoom
 	}
 }
