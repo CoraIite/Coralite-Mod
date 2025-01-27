@@ -1,0 +1,57 @@
+DamageClasses: {
+	FairyDamage.DisplayName: Урон феи
+	CreateAxeDamage.DisplayName: Творческий урон
+	CreateDamage.DisplayName: Творческий урон
+	CreateExtraDamage.DisplayName: Творческий урон
+	CreateHammerDamage.DisplayName: Творческий урон
+	CreatePickaxeDamage.DisplayName: Творческий урон
+	CreateShovelDamage.DisplayName: Творческий урон
+	MagikeDamage.DisplayName: Урон магией
+}
+
+Players.CoralitePlayer.ThunderElectrifiedDeath: Убит молнией
+
+Conditions: {
+	CoraliteConditions: {
+		LearnedMagikeBase: Требуется изучить основы магии
+		CoralCat: Требуется находиться в мире Радужного Кота (CoralCat)
+		MagikeCraft: Требуется использовать магический алтарь для создания
+		LearnedMagikeAdvance: Требуется изучить продвинутую магию
+		InDigDigDig: Требуется находиться в мире DigDigDig
+		NotInDigDigDig: Требуется не находиться в мире DigDigDig
+		UseMultiBlockStructure: Использовать многоблочные структуры для создания
+		DownedGolemCondition: Требуется победить Каменного голема
+	}
+}
+
+WorldGeneration: {
+	CoraliteWorld: {
+		StoneBack: Копаем камни, копаем камни, копаем, копаем, копаем, копаем, копаем!
+		SmallBasalt: Распространяем базальт
+		ChippedBladeTemple: Строим храм сломанного клинка
+		ClearGemstoneMaze: Строим лабиринт прозрачных драгоценных камней
+		EvilChest: Добавляем руины в злые биомы
+		IceDragonNest: Готовим гнездо ледяного дракона
+		MagicCrystalCaveText: Создаем пещеру магических кристаллов
+		ShadowCastleText: Создаем замок теней
+		WindStoneTablet: Эрозируем каменные таблички
+		ReplaceVanillaChestText: Добавляем больше лута в сундуки
+		ReadyDig: Берите снаряжение, пора копать!
+		DigTheJungle: Копаем джунгли, копаем джунгли, копаем, копаем, копаем, копаем!
+		DigTheIce: Копаем лед, копаем лед, копаем, копаем, копаем, копаем!
+		DigClearUpText: Берите инструменты, настало время копать!
+		DigDesert: Копаем пустыню, копаем пустыню, копаем, копаем, копаем, копаем!
+		DigHell: Копаем ад, копаем ад, копаем, копаем, копаем, копаем!
+		DigSky: Копаем поверхность, копаем поверхность, копаем, копаем, копаем, копаем!
+		DigTheCrystalCave: Копаем пещеру кристаллов, копаем пещеру кристаллов, копаем, копаем, копаем, копаем!
+		DigTheNPC: Что это? Неуклюжий слизень? Генерация. Что это? Рыбак? Генерация. Что это? Парикмахер? Генерация.
+		DigTheGMHalfCircle: Копаем гранит, копаем мрамор, копаем гранит, копаем мрамор, копаем, копаем, копаем!
+		DigTheMushroomCircle: Копаем светящиеся грибы, копаем светящиеся грибы, копаем, копаем, копаем, копаем!
+		DigTheEvil: Копаем зло, копаем зло, копаем, копаем, копаем, копаем!
+		DigTheJungleTemple: Копаем храм, копаем храм, копаем, копаем, копаем, копаем!
+		DigTheShimmer: Копаем мерцание, копаем мерцание, копаем, копаем, копаем, копаем!
+		DigTheIceDragonNest: Копаем гнездо ледяного дракона, копаем гнездо ледяного дракона, копаем, копаем, копаем, копаем!
+		DigTheDigDungeon: Копаем подземелье, копаем подземелье, копаем, копаем, копаем, копаем!
+		CoraliteNoteRoom: Размещаем утраченные предметы кораллов
+	}
+}

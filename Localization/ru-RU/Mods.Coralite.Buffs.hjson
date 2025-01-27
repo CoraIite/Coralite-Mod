@@ -1,0 +1,227 @@
+SnowDebuff: {
+	DisplayName: Белый снег
+	Description: Окружен снежинками
+}
+
+IcicleThornBuff: {
+	DisplayName: Ледяной шип
+	Description: Ледяной шип сражается за вас
+}
+
+MushroomDragonBuff: {
+	DisplayName: Грибной дракон
+	Description: Грибной дракон сражается за вас
+}
+
+RedBinkBuff: {
+	DisplayName: Маленький красный рубин
+	Description: Маленький, но милый
+}
+
+RedianciePetBuff: {
+	DisplayName: Маленький красный дух
+	Description: Маленький красный дух кружится вокруг вас
+}
+
+BloodyHookDebuff: {
+	DisplayName: Кровавый удар
+	Description: Вы истекаете кровью!
+}
+
+DreamErosion: {
+	DisplayName: Эрозия сна
+	Description: Кошмары разрушают вашу волю
+}
+
+GelWhipDebuff: {
+	DisplayName: Королевский гелевый кнут
+	Description: Липко!
+}
+
+EuphorbiaPoison: {
+	DisplayName: Чистый белый яд
+	Description: Вы укололись молочаем!
+}
+
+NightmareRavenBuff: {
+	DisplayName: Кошмарный ворон
+	Description: Эти маленькие существа из кошмара сражаются за вас!
+}
+
+EdenDebuff: {
+	DisplayName: Эдем
+	Description: Эдем
+}
+
+PurpleToeBuff: {
+	DisplayName: Кошмарные пожиратели
+	Description: Им очень нравятся ваши сны!
+}
+
+Bloodthirsty: {
+	DisplayName: Кровожадность
+	Description: Вы жаждете крови!
+	Current: Текущий уровень:
+}
+
+LimbRebirth: {
+	DisplayName: Возрождение конечностей
+	Description: Мне нужна исцеление!
+	Current: Текущий уровень:
+}
+
+MetallionBuff: {
+	DisplayName: Металлическая магия
+	Description: Снижение урона +8%
+}
+
+BloodJadeBuff: {
+	DisplayName: Взрывная энергия
+	Description: Нестабильность оружия из кровавого рубина увеличена
+}
+
+IvyPoison: {
+	// DisplayName: Ivy Poison
+	// Description: Mods.Coralite.Buffs.IvyPoison.Description
+}
+
+KitsuneBuff: {
+	DisplayName: Лис-воин
+	Description: Лис-воин сопровождает вас!
+}
+
+ThunderveinSoulBuff: {
+	DisplayName: Душа Громовой вены
+	Description: Душа Дракона грома с вами!
+}
+
+IcicleSoulBuff: {
+	DisplayName: Душа ледяного кристалла
+	Description: Душа маленького ледяного дракона с вами!
+}
+
+SovereignSipBuff: {
+	DisplayName: Вкусный напиток
+	Description: Маленький император слизи рядом с вами!
+}
+
+TightenTheClockwork: {
+	DisplayName: Подтянуть пружину!
+	Description: Вы полны энергии, атака в ближнем бою и скорость передвижения увеличены на 10%
+}
+
+ThunderWhipDebuff: {
+	// DisplayName: Thunder Whip Debuff
+	// Description: Mods.Coralite.Buffs.ThunderWhipDebuff.Description
+}
+
+ThunderElectrified: {
+	DisplayName: Гром
+	Description: Чем быстрее вы двигаетесь, тем больше боли!
+}
+
+TenkoBuff: {
+	DisplayName: Небесная лиса
+	Description: Великая небесная лиса уменьшилась и окружает вас
+}
+
+ThunderveinStaffBuff: {
+	DisplayName: Молния
+	Description: Вы весь в электричестве!
+}
+
+FlaskOfRedJadeBuff: {
+	DisplayName: Настой оружия: Красный рубин
+	Description: При попадании в ближнем бою иногда происходят взрывы
+}
+
+FlaskOfThunderBuff: {
+	DisplayName: Настой оружия: Гром
+	Description: При попадании в ближнем бою накладывается дебафф Гром
+}
+
+PollenFire: {
+	DisplayName: Цветочный огонь
+	Description: Горите! Очень приятно пахнет!
+}
+
+OpalBuff: {
+	DisplayName: Кошачий глаз
+	Description: Позволяет вам видеть потоки магической энергии
+}
+
+ElfBless: {
+	DisplayName: Благословение эльфа
+	Description: Захват увеличен на 5%
+}
+
+FriedShrimpBuff: {
+	DisplayName: Вкусный шторм
+	Description: Очень вкусно!
+}
+
+ChocomintIceBuff: {
+	DisplayName: Детская мороженка
+	Description: Свежесть мяты (зубная паста) дает вам силу
+}
+
+IcicleArmorBonus: {
+	DisplayName: Охлаждение кристаллов
+	Description:
+		'''
+		Вы не можете использовать магию комплекта ледяной брони!
+		+15% урон холодом
+		'''
+}
+
+AlloySpringBuff: {
+	DisplayName: Усиленная упругость
+	Description: Увеличивает урон в зависимости от защиты, максимум 10%
+}
+
+GravitationalCatapultBuff: {
+	DisplayName: Гравитационная катапульта
+	Description: Увеличивает урон в зависимости от защиты, максимум 20%
+}
+
+AmberDebuff: {
+	// DisplayName: Amber Debuff
+	// Description: Mods.Coralite.Buffs.AmberDebuff.Description
+}
+
+FreezePotionBuff: {
+	DisplayName: Замораживающая эссенция
+	Description:
+		'''
+		+10% урон холодом
+		-8 защита
+		'''
+}
+
+HungryPotionBuff: {
+	DisplayName: Эссенция голода
+	Description:
+		'''
+		+10% урон вкусом
+		-8% скорость передвижения
+		'''
+}
+
+LeafeoShieldCD: {
+	DisplayName: Кулдаун щита листьев
+	Description: Проводит фотосинтез для создания щита листьев...
+}
+
+CloudBonus: {
+	DisplayName: Преодоление облаков
+	Description:
+		'''
+		+15% скорость передвижения
+		+15% урон на дальнем расстоянии
+		'''
+}
+
+HorizonArcBonus: {
+	DisplayName: Радужная дуга
+	Description: Превращает ваши стрелы в радугу!
+}

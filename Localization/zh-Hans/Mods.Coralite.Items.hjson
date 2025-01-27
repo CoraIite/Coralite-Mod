@@ -4964,11 +4964,11 @@ CogLens: {
 
 CoraliteNote: {
 	DisplayName: 珊瑚笔记
-	Tooltip: 
-	'''
-	具有魔力的神奇笔记
-	在接触一些事物时能够自动在上面显示相关的知识
-	'''
+	Tooltip:
+		'''
+		具有魔力的神奇笔记
+		在接触一些事物时能够自动在上面显示相关的知识
+		'''
 }
 
 Phosphophyllite: {

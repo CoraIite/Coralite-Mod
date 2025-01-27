@@ -1,0 +1,21 @@
+CoraliteGlobalItem: {
+	CopperCoralCat: Медная коралловая монета-кот
+	RubyCoralCat: Рубиновая коралловая монета-кот
+	TerraCoralCat: Терра коралловая монета-кот
+	RainBowCoralCat: Радужная коралловая монета-кот
+	Cold: "[c/5cd7f9:Холод]"
+	Edible: "[c/f0d0b7:Вкусно]"
+	DashPriority: Приоритет рывка:
+	DashPriorityLevel0: Наивысший
+	DashPriorityLevel1: Высокий
+	DashPriorityLevel2: Средний
+	DashPriorityLevel3: Низкий
+	DashPriorityLevel4: Самый низкий
+}
+
+DigDigDigGItem: {
+	CurrentDigState: Состояние копания:
+	CanDigTile: "[c/ff3e3e:Можно разрушить блок]"
+	CantDigTile: "[c/6abe30:Нельзя разрушить блок]"
+	RightClickExchange: Щелчок правой кнопкой в инвентаре переключает возможность кирки разрушать блоки
+}

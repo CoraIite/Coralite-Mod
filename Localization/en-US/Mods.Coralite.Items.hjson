@@ -517,7 +517,7 @@ ShadowHead: {
 		Increases maximum mana by 60
 		10% reduced mana usage
 		'''
-	ArmorBonus: 
+	ArmorBonus:
 		'''
 		The Shadow Armor Ring guards you
 		   When using an item, the ring is charged according to the time of use
@@ -1592,7 +1592,8 @@ RuneParchment: {
 		[c/8e8e8e:The runes are impossible to decipher but small symbols hint at it being the recipe for a strange weapon.]
 			Sold by the Traveling Merchant after defeating Plantera
 			Please place it in the hotbar, you can't use it on the mouse!
-			'''
+			
+		'''
 }
 
 CraftLock: {
@@ -1912,11 +1913,11 @@ FlyingShieldToolbox: {
 
 HeavyWedges: {
 	DisplayName: Heavy Wedges
-	Tooltip: 
-	'''
-	Appears in chests
-	Reduces the flying speed of the Flying Shield, increases its size and melee damage.
-	'''
+	Tooltip:
+		'''
+		Appears in chests
+		Reduces the flying speed of the Flying Shield, increases its size and melee damage.
+		'''
 }
 
 DemonsProtection: {
@@ -4334,11 +4335,11 @@ FarAwaySky: {
 
 MagikeBasePage: {
 	DisplayName: Magike Base Page
-	Tooltip: 
-	'''
-	Left-click to learn the basics of magic and unlock the "Magike Fragment Part 1" in the Coralite Notes
-	Once lost in the Magic Crystal Cave underground...
-	'''
+	Tooltip:
+		'''
+		Left-click to learn the basics of magic and unlock the "Magike Fragment Part 1" in the Coralite Notes
+		Once lost in the Magic Crystal Cave underground...
+		'''
 }
 
 LeprechaunBait: {
@@ -4591,10 +4592,7 @@ BrilliantCalibrator: {
 
 BrilliantMagikeActivator: {
 	DisplayName: Brilliant Magike Activator
-	Tooltip:
-		'''
-		◇ Left-click to select an area to activate the magike machine in the area
-		'''
+	Tooltip: ◇ Left-click to select an area to activate the magike machine in the area
 }
 
 MagicCrystalTRFilter: {
