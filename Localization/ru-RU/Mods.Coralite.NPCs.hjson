@@ -1,0 +1,128 @@
+BabyIceDragon.DisplayName: Детеныш Ледяного дракона
+IceCube.DisplayName: Ледяной куб
+IceDragonEgg.DisplayName: Яйцо ледяного дракона
+IceThornsTrap.DisplayName: Ледяная колючка ловушка
+Rediancie.DisplayName: Красный нефритовый дух
+RediancieMinion.DisplayName: Маленький красный нефритовый дух
+IcicleSpirit.DisplayName: Ледяной дух
+MaragonBody.DisplayName: Тело магического дракона
+MaragonHead.DisplayName: Голова магического дракона
+MaragonTrail.DisplayName: Хвост магического дракона
+ShadowGolem.DisplayName: Теневой голем
+ShadowGuard.DisplayName: Теневой страж
+CrystalFairy.DisplayName: Кристальный фей
+CrystalSpirit.DisplayName: Кристальный дух
+CrystalGolem.DisplayName: Кристальный голем
+CrystalEye.DisplayName: Кристальный глаз
+SlimeEmperor.DisplayName: Император слизней
+ElasticGelBall.DisplayName: Эластичный гелевый шар
+SlimeAvatar.DisplayName: Аватар слизня
+GelFlippy.DisplayName: Летучий слизень
+HealGelBall.DisplayName: Лечебный гелевый шар
+AosSi.DisplayName: Aos Si
+AosSiBodyFront.DisplayName: Передняя часть тела Aos Si
+AosSiBodyLast.DisplayName: Последняя часть тела Aos Si
+AosSiBodyMiddle.DisplayName: Средняя часть тела Aos Si
+AosSiHands.DisplayName: Руки Aos Si
+AosSiLegs.DisplayName: Ноги Aos Si
+AosSiTailFront.DisplayName: Передняя часть хвоста Aos Si
+AosSiTailLast.DisplayName: Последняя часть хвоста Aos Si
+AosSiTailMiddle.DisplayName: Средняя часть хвоста Aos Si
+AosSiTailSecdonary.DisplayName: Вторичный хвост Aos Si
+NightmarePlantera.DisplayName: Цветок ночных кошмаров
+NightmareHook.DisplayName: Крючок ночных кошмаров
+NightmareCatcher.DisplayName: Ловец ночных кошмаров
+FantasySparkle.DisplayName: Искрящийся мечты
+FantasyGod.DisplayName: Бог фантазий
+Turmoil.DisplayName: Источник хаоса
+
+CrystalRobot: {
+	DisplayName: Кристаллическое существо
+
+	TownNPCMood: {
+		Content: Я очень доволен.
+		NoHome: На открытом воздухе, опасно, мне нужен дом.
+		FarFromHome: Слишком далеко от дома.
+		LoveSpace: Пространство, очень большое.
+		DislikeCrowded: Обнаружено слишком много существ.
+		HateCrowded: Существо вокруг меня слишком много!
+		LoveBiome: Мне нравится {BiomeName}, холодно, спокойно.
+		LikeBiome: Мне нравится {BiomeName}, это пригодное для жизни место.
+		DislikeBiome: Мне не нравится {BiomeName}, это не пригодное для жизни место.
+		LoveNPC: Это {NPCName}, мне очень нравится.
+		LikeNPC: Это {NPCName}, мне нравится.
+		DislikeNPC: Это {NPCName}, мне не нравится.
+		HateNPC: Это {NPCName}, мне не нравится.
+		LikeNPC_Princess: Это {NPCName}, уважаемая принцесса.
+		Princess_LovesNPC: О, {NPCName}, неорганическое существо! Этот мир действительно полон чудес.
+	}
+
+	Name0: Кристаллическая звезда
+	Name1: CRS: c000
+	Name2: Кристалис
+	Name3: Магик
+}
+
+Bloodiancie.DisplayName: Кровавый нефритовый дух
+BloodiancieMinion.DisplayName: Маленький кровавый нефритовый дух
+ShadowBall.DisplayName: Теневой шар
+SmallShadowBall.DisplayName: Маленький теневой шар
+
+Biskety: {
+	DisplayName: Бискети
+	TotalDamage: Общий урон:
+	ProjectileDamage: Урон от снарядов:
+	MeleeDamage: Урон от ближнего боя игрока:
+	OtherDamage: Прочий урон:
+	LongTimeDPS: Долгосрочный урон в секунду:
+}
+
+ThunderveinDragon.DisplayName: Дракон Грома
+ThunderPhantom.DisplayName: Гроза Призрак
+ShadowVilliger.DisplayName: Теневой житель
+MagicElemental.DisplayName: Магический элементаль
+
+ElfRanger: {
+	Name1: Эйф
+	Name2: Ита
+	Name3: Мистейл
+	Name4: Дарлумар
+	Name5: Кориа
+	Name6: Сельда
+	DisplayName: Эльфийский защитник
+
+	TownNPCMood: {
+		Content: Я очень доволен.
+		NoHome: Я ненавижу отсутствие дома.
+		FarFromHome: Я слишком далеко от дома.
+		LoveSpace: Мне очень нравится такое большое пространство.
+		DislikeCrowded: Мне не нравится, когда слишком много людей.
+		HateCrowded: Мне не нравится, когда слишком много людей.
+		LoveBiome: Я очень люблю {BiomeName}.
+		LikeBiome: Мне нравится {BiomeName}.
+		DislikeBiome: Мне не нравится {BiomeName}.
+		LoveNPC: Мне очень нравится {NPCName}.
+		LikeNPC: Мне нравится {NPCName}.
+		DislikeNPC: Мне не нравится {NPCName}.
+		HateNPC: Я ненавижу {NPCName}.
+		LikeNPC_Princess: Мне нравится {NPCName}.
+		Princess_LovesNPC: Мне нравится {NPCName}.
+	}
+
+	Name7: Филси
+	Chat1: Наблюдать за этими малыми существами очень интересно, я часто смотрю на них весь день.
+	Chat2: У фей есть любимые стены, только перед этими стенами можно встретить их.
+	Chat3: Ты знаешь о магической пыли? Феи очень любят эту волшебную пыль.
+	Chat4: Если ты хочешь поймать фей, сделай ловушку из лиан!
+	Chat5: Ловить фей и выращивать их довольно распространено, но не переусердствуй!
+	Chat6: Ты видел кораллы? Именно она привела меня сюда.
+	Chat7: Возможно, когда-нибудь ты встретишь пространственную фею и пройдешь ее испытание.
+	DryadChat1: Это древесное существо? Думаю, я давно не видел ее.
+	DryadChat2: Древесное существо когда-то сражалось с Ктулху, а я был в другом мире... это было очень давнее время.
+	DryadChat3: Древесное существо издает запах леса, мне очень нравится этот аромат.
+}
+
+Stonelime.DisplayName: Каменный слизневой король
+StoneSmallime.DisplayName: Каменный слизень
+ZacurrentDragon.DisplayName: Zacurrent Dragon
+EyeOfGlistent.DisplayName: Глаз Искрящегося

@@ -13,8 +13,8 @@ namespace Coralite.Core.Loaders
                 return;
 
             Mod Mod = Coralite.Instance;
-            ArmorBonus = Terraria.ModLoader.KeybindLoader.RegisterKeybind(Mod, "套装效果", "C");
-            SpecialAttack = Terraria.ModLoader.KeybindLoader.RegisterKeybind(Mod, "特殊攻击", "F");
+            ArmorBonus = Terraria.ModLoader.KeybindLoader.RegisterKeybind(Mod, "ArmorBonus", "C");
+            SpecialAttack = Terraria.ModLoader.KeybindLoader.RegisterKeybind(Mod, "SpecialAttack", "F");
         }
 
         public override void Unload()

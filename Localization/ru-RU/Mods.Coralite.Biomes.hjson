@@ -1,0 +1,9 @@
+MagicCrystalCave: {
+	DisplayName: Волшебная хрустальная пещера
+	TownNPCDialogueName: Волшебная хрустальная пещера
+}
+
+ShadowCastleBiome: {
+	// DisplayName: Shadow Castle Biome
+	// TownNPCDialogueName: the Shadow Castle Biome
+}

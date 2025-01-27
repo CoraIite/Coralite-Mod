@@ -1,0 +1,189 @@
+RedJadeWorkBench.MapEntry: Красный янтарный верстак
+RedJadeTile.MapEntry: Красный янтарь
+RedJadeTable.MapEntry: Красный янтарный стол
+RedJadeDroplight.MapEntry: Красный янтарный светильник
+RedJadeDoorOpen.MapEntry: Красная янтарная дверь (открыта)
+RedJadeDoorClosed.MapEntry: Красная янтарная дверь (закрыта)
+RedJadeChest.MapEntry: Красный янтарный сундук
+RedJadeCandle.MapEntry: Красный янтарный подсвечник
+RedJadeBed.MapEntry: Красная янтарная кровать
+MagicCraftStation.MapEntry: Магическая станция
+WatermelonTile.MapEntry: Арбуз
+WaterDrinker.MapEntry: Водный колючник
+TreeJoke.MapEntry: Деревянные плоды
+SnoowFlower.MapEntry: Снежный цветок
+PileaNotata.MapEntry: Холодный цветок
+NacliteMoss.MapEntry: Солевой мох
+GloomMushroom.MapEntry: Гриб пустоты
+EyeballHerb.MapEntry: Глазное растение
+EgenolfiaSandy.MapEntry: Колючий папоротник
+Dandelion.MapEntry: Одуванчик
+CoraliteWaterleaf.MapEntry: Водяной лист
+CoraliteShiverthorn.MapEntry: Морозный шип
+CoraliteMoonglow.MapEntry: Лунный свет
+CoraliteJungleSpores.MapEntry: Джунгли споры
+CoraliteFireblossom.MapEntry: Огненный цветок
+CoraliteDeathweed.MapEntry: Смертельная трава
+CoraliteDaybloom.MapEntry: Солнечный цветок
+CoraliteBlinkroot.MapEntry: Мерцающий корень
+AgropyronFrozen.MapEntry: Замороженная трава
+BasaltChestTile.MapEntry: Базальтовый сундук
+CrystalCrateTile.MapEntry: Магический кристаллический ящик
+
+RottenChestTile: {
+	MapEntry0: Гнилой сундук
+	MapEntry1: Запертый гнилой сундук
+	TryUnlock: Для разблокировки нужно использовать ключ, сделанный из материалов мощных腐化生物
+}
+
+NightmareBedTile.MapEntry: Кровать кошмаров
+
+VertebraeChestTile: {
+	MapEntry0: Сундук с позвоночником
+	MapEntry1: Запертый сундук с позвоночником
+	TryUnlock: Для разблокировки нужно использовать ключ, сделанный из материалов мощных猩红生物
+}
+
+BloodJadeTile.MapEntry: Кровавый янтарь
+AncientChestTile.MapEntry: Древний сундук
+GlowTulipDoorClosed.MapEntry: Дверь из светящегося тюльпана
+GlowTulipDoorOpen.MapEntry: Дверь из светящегося тюльпана
+BlackHoleChestTile.MapEntry: Сундук с черной дырой
+
+MercuryChestTile: {
+	// MapEntry0: Mods.Coralite.Tiles.MercuryChestTile.MapEntry0
+	// MapEntry1: Mods.Coralite.Tiles.MercuryChestTile.MapEntry1
+}
+
+RedJadeFountain.MapEntry: Фонтан из красного янтаря
+GelFiberTableTile.MapEntry: Стол из гелевых волокон
+GeiFiberDroplightTile.MapEntry: Подвесной светильник из гелевых волокон
+GelFiberCandleTile.MapEntry: Свеча из гелевых волокон
+GelFiberFloorLampTile.MapEntry: Напольная лампа из гелевых волокон
+GelFiberTallFloorLampTile.MapEntry: Высокая напольная лампа из гелевых волокон
+GelFiberBedTile.MapEntry: Кровать из гелевых волокон
+GelFiberBigDroplightTile.MapEntry: Большой подвесной светильник из гелевых волокон
+GelFiberBookcaseTile.MapEntry: Книжный шкаф из гелевых волокон
+GelFiberPianoTile.MapEntry: Пианино из гелевых волокон
+GelFiberSofaTile.MapEntry: Диван из гелевых волокон
+GelFiberBathtubTile.MapEntry: Ванна из гелевых волокон
+GelFiberChestTile.MapEntry: Сундук из гелевых волокон
+GelFiberDresserTile.MapEntry: Тумбочка из гелевых волокон
+GelFiberDoorClosedTile.MapEntry: Дверь из гелевых волокон (закрыта)
+GelFiberDoorOpen.MapEntry: Дверь из гелевых волокон (открыта)
+GelFiberWorkBenchTile.MapEntry: Рабочий стол из гелевых волокон
+ThunderBathtubTile.MapEntry: Ванна грома
+ThunderBedTile.MapEntry: Кровать грома
+ThunderBigDroplightTile.MapEntry: Большой подвесной светильник грома
+ThunderBookcaseTile.MapEntry: Книжный шкаф грома
+ThunderCandelabraTile.MapEntry: Канделябр грома
+ThunderCandleTile.MapEntry: Свеча грома
+ThunderChestTile.MapEntry: Сундук грома
+ThunderDoorClosedTile.MapEntry: Дверь грома (закрыта)
+ThunderDoorOpenTile.MapEntry: Дверь грома (открыта)
+ThunderDresserTile.MapEntry: Тумбочка грома
+ThunderDroplightTile.MapEntry: Подвесной светильник грома
+ThunderFloorLampTile.MapEntry: Напольная лампа грома
+ThunderPianoTile.MapEntry: Пианино грома
+ThunderSofaTile.MapEntry: Диван грома
+ThunderTableTile.MapEntry: Стол грома
+ThunderWorkBenchTile.MapEntry: Рабочий стол грома
+MercuryBathtubTile.MapEntry: Ванна из ртути
+MercuryBedTile.MapEntry: Кровать из ртути
+MercuryBigDroplightTile.MapEntry: Большой подвесной светильник из ртути
+MercuryBookcaseTile.MapEntry: Книжный шкаф из ртути
+MercuryCandelabraTile.MapEntry: Канделябр из ртути
+MercuryCandleTile.MapEntry: Свеча из ртути
+MercuryDoorClosedTile.MapEntry: Дверь из ртути (закрыта)
+MercuryDoorOpenTile.MapEntry: Дверь из ртути (открыта)
+MercuryDresserTile.MapEntry: Тумбочка из ртути
+MercuryDroplight2Tile.MapEntry: Подвесной светильник из ртути
+MercuryFloorLampTile.MapEntry: Напольная лампа из ртути
+MercuryPianoTile.MapEntry: Пианино из ртути
+MercurySofaTile.MapEntry: Диван из ртути
+MercuryTableTile.MapEntry: Стол из ртути
+MercuryWorkBenchTile.MapEntry: Рабочий стол из ртути
+IcicleBathtubTile.MapEntry: Ледяная ванна
+IcicleBedTile.MapEntry: Ледяная кровать
+IcicleBigDroplightTile.MapEntry: Большой подвесной светильник изо льда
+IcicleBookcaseTile.MapEntry: Книжный шкаф изо льда
+IcicleCandelabraTile.MapEntry: Канделябр изо льда
+IcicleCandleTile.MapEntry: Свеча изо льда
+IcicleChestTile.MapEntry: Ледяной сундук
+IcicleDoorClosedTile.MapEntry: Ледяная дверь (закрыта)
+IcicleDoorOpenTile.MapEntry: Ледяная дверь (открыта)
+IcicleDresserTile.MapEntry: Тумбочка изо льда
+IcicleDroplightTile.MapEntry: Подвесной светильник изо льда
+IcicleFloorLampTile.MapEntry: Напольная лампа изо льда
+IciclePianoTile.MapEntry: Пианино изо льда
+IcicleSofaTile.MapEntry: Диван изо льда
+IcicleTableTile.MapEntry: Стол изо льда
+IcicleWorkBenchTile.MapEntry: Рабочий стол изо льда
+MagicCrystalMusicBoxTile.MapEntry: Музыкальная шкатулка (магический кристалл)
+AncientFurnaceTile.MapEntry: Древняя печь
+PhantomCrystalBallTile.MapEntry: Призрачный хрустальный шар
+BasaltBathtubTile.MapEntry: Базальтовая ванна
+BasaltBedTile.MapEntry: Базальтовая кровать
+BasaltBigDroplightTile.MapEntry: Большой подвесной светильник из базальта
+BasaltBookcaseTile.MapEntry: Книжный шкаф из базальта
+BasaltCandelabraTile.MapEntry: Канделябр из базальта
+BasaltCandleTile.MapEntry: Свеча из базальта
+BasaltDoorClosedTile.MapEntry: Базальтовая дверь (закрыта)
+BasaltDoorOpenTile.MapEntry: Базальтовая дверь (открыта)
+BasaltDresserTile.MapEntry: Тумбочка из базальта
+BasaltDroplightTile.MapEntry: Подвесной светильник из базальта
+BasaltFloorLampTile.MapEntry: Напольная лампа из базальта
+BasaltPianoTile.MapEntry: Пианино из базальта
+BasaltSofaTile.MapEntry: Диван из базальта
+BasaltTableTile.MapEntry: Стол из базальта
+BasaltWorkBenchTile.MapEntry: Рабочий стол из базальта
+MagicCrystalClustersTile.MapEntry: Магические кристаллы
+ChalcedonyBathtubTile.MapEntry: Ониксная ванна
+ChalcedonyBedTile.MapEntry: Ониксная кровать
+ChalcedonyBigDroplightTile.MapEntry: Большой подвесной светильник из оникса
+ChalcedonyBookcaseTile.MapEntry: Книжный шкаф из оникса
+ChalcedonyCandelabraTile.MapEntry: Канделябр из оникса
+ChalcedonyCandleTile.MapEntry: Свеча из оникса
+ChalcedonyDoorClosedTile.MapEntry: Ониксовая дверь (закрыта)
+ChalcedonyDoorOpenTile.MapEntry: Ониксовая дверь (открыта)
+ChalcedonyDresserTile.MapEntry: Тумбочка из оникса
+ChalcedonyDroplightTile.MapEntry: Подвесной светильник из оникса
+ChalcedonyFloorLampTile.MapEntry: Напольная лампа из оникса
+ChalcedonyPianoTile.MapEntry: Пианино из оникса
+ChalcedonySofaTile.MapEntry: Диван из оникса
+ChalcedonyTableTile.MapEntry: Стол из оникса
+ChalcedonyWorkBenchTile.MapEntry: Рабочий стол из оникса
+ChalcedonyChestTile.MapEntry: Ониксовый сундук
+
+PremissionAltarTile: {
+	NeedSouls: Принесите древние души света и тьмы в алтарь по бокам...
+	MapEntry: Силиконовый алтарь
+}
+
+SoulOfLightAltarTile: {
+	NeedSouls: Принесите древнюю душу света в алтарь...
+	MapEntry: Силиконовый алтарь света
+}
+
+SoulOfNightAltarTile: {
+	NeedSouls: Принесите древнюю душу тьмы в алтарь...
+	MapEntry: Силиконовый алтарь тьмы
+}
+
+BlackPlushBathtubTile.MapEntry: Черная плюшевая ванна
+BlackPlushBedTile.MapEntry: Черная плюшевая кровать
+BlackPlushBigDroplightTile.MapEntry: Большой подвесной светильник из черного плюша
+BlackPlushBookcaseTile.MapEntry: Черная плюшевая кошачья полка
+BlackPlushCandelabraTile.MapEntry: Черный плюшевый канделябр
+BlackPlushCandleTile.MapEntry: Черная плюшевая свеча
+BlackPlushChestTile.MapEntry: Черный плюшевый сундук
+BlackPlushDoorClosedTile.MapEntry: Черная плюшевая дверь (закрыта)
+BlackPlushDoorOpenTile.MapEntry: Черная плюшевая дверь (открыта)
+BlackPlushDresserTile.MapEntry: Черная плюшевая тумбочка
+BlackPlushDroplightTile.MapEntry: Черный плюшевый светильник
+BlackPlushFloorLampTile.MapEntry: Черная плюшевая напольная лампа
+BlackPlushPianoTile.MapEntry: Черное плюшевое пианино
+BlackPlushSofaTile.MapEntry: Черный плюшевый диван
+BlackPlushTableTile.MapEntry: Черный плюшевый стол
+BlackPlushWorkBenchTile.MapEntry: Черный плюшевый рабочий стол
+// CoraliteNoteTile.MapEntry: Coralite Note Tile

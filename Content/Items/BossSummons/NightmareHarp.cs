@@ -28,6 +28,8 @@ namespace Coralite.Content.Items.BossSummons
             ItemID.Sets.SortingPriorityBossSpawns[Type] = 12;
 
             NPCID.Sets.MPAllowedEnemies[ModContent.NPCType<NightmarePlantera>()] = true;
+
+            this.GetLocalization("ShouldSleep", () => "在床上设置出生点后才能使用这个物品");
         }
 
         public override void SetDefaults()
@@ -53,7 +55,7 @@ namespace Coralite.Content.Items.BossSummons
             if (!hasRespawn)
             {
                 CombatText.NewText(new Rectangle((int)player.Top.X, (int)player.Top.Y, 1, 1), Color.White,
-                    this.GetLocalization("ShouldSleep", () => "在床上设置出生点后才能使用这个物品").Value);
+                    this.GetLocalization("ShouldSleep").Value);
             }
             return hasRespawn && !Main.dayTime && !NPC.AnyNPCs(ModContent.NPCType<NightmarePlantera>());
         }

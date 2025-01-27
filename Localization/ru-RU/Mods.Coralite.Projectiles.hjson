@@ -1,0 +1,597 @@
+BabyIceDragon_OnSpawnAnim.DisplayName: Анимация появления младенца львиного дракона
+IceBreath.DisplayName: Ледяное дыхание
+IceBurst.DisplayName: Ледяной взрыв
+IceThorn.DisplayName: Ледяной шип
+IceTornado.DisplayName: Ледяной торнадо
+IcicleAttack.DisplayName: Ледяной шип
+IcicleFalling_Hostile.DisplayName: Ледяной шип
+IcicleFalling.DisplayName: Ледяной шип
+IcicleProj_Hostile.DisplayName: Ледяной шип
+IcicleProj.DisplayName: Ледяной шип
+RedFirework.DisplayName: Красный фейерверк
+Rediancie_Beam.DisplayName: Красный луч
+Rediancie_BigBoom.DisplayName: Красный взрыв
+Rediancie_Explosion.DisplayName: Взрыв красного камня
+Rediancie_OnSpawnAnim.DisplayName: Анимация появления красного камня
+Rediancie_Strike.DisplayName: Атака красным камнем
+RedPulse.DisplayName: Красный импульс
+CrushedIceProj.DisplayName: Разбитый лед
+IcicleArrow.DisplayName: Ледяная стрела
+IcicleBowHeldProj.DisplayName: Ледяной лук
+IcicleMagicBall.DisplayName: Ледяной магический шар
+IcicleSpurt.DisplayName: Ледяной обломок
+IcicleSpurtHeldProj.DisplayName: Ледяной меч
+IcicleStaffHeldProj.DisplayName: Ледяной посох
+IcicleStarArrow.DisplayName: Ледяная звезда
+IcicleSwordHeldProj.DisplayName: Ледяной меч
+IcicleSwordSplash.DisplayName: Ледяная волна
+IcicleThorn.DisplayName: Ледяной шип
+IcicleThornExplosion.DisplayName: Взрыв ледяного шипа
+IcicleYujianProj.DisplayName: Ледяной клинок
+MushroomDragon.DisplayName: Грибной дракон
+RedBink.DisplayName: Малый красный камень
+RedianciePetProj.DisplayName: Малый красный дух
+RedJadeBeam.DisplayName: Луч из красного нефрита
+RedJadeBigBoom.DisplayName: Большой взрыв красного нефрита
+RedJadeBladeHeldProj.DisplayName: Лезвие из красного нефрита
+RedJadeBoom.DisplayName: Взрыв красного нефрита
+RedJadeStaffHeldProj.DisplayName: Посох из красного нефрита
+RedJadeStrike.DisplayName: Атака красным нефритом
+RedJadeYujianProj.DisplayName: Меч из красного нефрита
+DrawInvertedPlayerProj.DisplayName: Отражение
+InvertedShadowBullet.DisplayName: Теневой пуля
+ShadowSickleProj.DisplayName: Теневой серп
+ShadowSwordProj.DisplayName: Скрытая копия
+StarBookProj1.DisplayName: Звездный шар
+StarBookProj2.DisplayName: Звездная руна
+MagicalAshesProj.DisplayName: Магические пепел
+CatClawsProj_shield.DisplayName: Кошачий щит
+CatClawsProj_Slash.DisplayName: Кошачий коготь
+WateringPotProj.DisplayName: Поливочный горшок
+WatermelonKnifeProj.DisplayName: Нож для арбуза
+AncientCrimtaneYujianProj.DisplayName: Древний кровавый меч
+AncientDemoniteYujianProj.DisplayName: Древний демонический меч
+CrimtaneYujianProj.DisplayName: Кровавый меч
+DemoniteSpurt.DisplayName: Демонический укол
+DemoniteStrike.DisplayName: Демоническая атака
+DemoniteYujianProj.DisplayName: Демонический меч
+GlodenSpurtProj.DisplayName: Золотой укол
+GoldYujianProj.DisplayName: Золотой меч
+HellStoneYujianProj.DisplayName: Меч из ада
+IronYujianProj.DisplayName: Железный меч
+PlatinumSplash.DisplayName: Платиновая волна
+PlatinumYujianProj.DisplayName: Платиновый меч
+ShadowYujianProj.DisplayName: Теневой меч
+ShadowYujianSummons.DisplayName: Теневой меч
+SilverYujianProj.DisplayName: Серебряный меч
+SpurtProj.DisplayName: Укол
+WoodenYujianProj.DisplayName: Деревянный меч
+ShadowGolemBall.DisplayName: Теневой шар
+CosmosFractureProj1.DisplayName: Разлом вселенной
+CosmosFractureProj2.DisplayName: Меч из вселенной
+PlatycodonBullet1.DisplayName: ?
+PlatycodonBullet2.DisplayName: ?
+ArethusaBullet.DisplayName: Цветок орхидеи
+ArethusaExplosion.DisplayName: Взрыв орхидеи
+ArethusaHeldProj.DisplayName: Орхидея
+AstrosniperHeldProj.DisplayName: Астрономический снайпер
+BarrageMicProj.DisplayName: ?
+DunkleosteusHeldProj.DisplayName: Акул-денклеостеус
+HyacinthBullet.DisplayName: Красный свет
+HyacinthBullet2.DisplayName: Красные воспоминания
+HyacinthExplosion.DisplayName: Кровавое сердце
+HyacinthHeldProj.DisplayName: Гиацинт
+HyacinthPhantomGun.DisplayName: Призрачный пистолет гиацинта
+HyacinthRedBullet.DisplayName: Кровавое сердце
+RosemaryBullet.DisplayName: Розмариновая пуля
+RosemaryFog.DisplayName: Туман, переправляющий души
+RosemaryHeldProj.DisplayName: Розмарин
+RosemaryHeldProj2.DisplayName: Розмарин
+SnowBullet.DisplayName: Снежная пуля
+SnowdropBloom.DisplayName: Цветение, растапливающее лед
+SnowdropBud.DisplayName: Бутон снежного цветка
+SnowdropHeldProj.DisplayName: Снежный цветок
+SnowSpirit.DisplayName: Зеленое дыхание
+StarsBreathBullet.DisplayName: Дыхание звезд
+StarsBreathExplosion.DisplayName: Взрыв новой звезды
+StarsBreathHeldProj.DisplayName: Млечный путь
+WoodWaxBullet.DisplayName: Споры
+WoodWaxHeldProj.DisplayName: Древесный воск
+BaseIKProj.DisplayName: ?
+IcicleCoccyxSpurt_N.DisplayName: Ледяной укол
+IcicleCoccyx_Ex1.DisplayName: Ледяной укол
+IcicleCoccyx_Ex2.DisplayName: Ледяной укол
+IcicleCoccyx_Ex3.DisplayName: Ледяной укол
+ShadowCircle.DisplayName: Теневой круг
+ShadowCircle_ChasingMagicBall.DisplayName: Магический шар в погоне
+ShadowCircle_CrystalMinion.DisplayName: Теневой огонь
+ShadowCircle_HighSpeedShoot.DisplayName: Теневой снайпер
+ShadowCircle_MeleeClaw.DisplayName: Теневой коготь
+ShadowCircle_MeleeTrack.DisplayName: Теневой охотник
+MagicBeam.DisplayName: Магический луч
+CrystalLaser.DisplayName: Лазер из кристалла
+BloodHookChain.DisplayName: Цепь кровавого крюка
+BloodHookSlash.DisplayName: Кровавый разрез
+IceyCloud.DisplayName: Ледяное облако
+CorruptJavelinProj.DisplayName: Проклятая дротик
+CorruptJavelinSpecial.DisplayName: Проклятая дротик
+SmallCorruptJavelin.DisplayName: Малый проклятый дротик
+GelBall.DisplayName: Гелевый мяч
+SmallGelBall.DisplayName: Малый гелевый мяч
+GelSpike.DisplayName: Гелевый шип
+SpikeGelBall.DisplayName: Колючий гелевый мяч
+GelProj.DisplayName: Гелевое снаряжение
+EmperorSabreSlash.DisplayName: Императорский сабельный разрез
+EmperorSabreSlash2.DisplayName: Императорский сабельный разрез
+EmperorSabreSummon.DisplayName: Призыв императорского сабли
+GelChaser.DisplayName: Малый гелевый мяч
+GelSpawner.DisplayName: Малый гелевый мяч
+// ShadowSwordHeldProj.DisplayName: Shadow Sword
+MagicCrystalHookProjectile.DisplayName: Магический кристаллический крюк
+StickyGel.DisplayName: Липкий гель
+// GOWTestProj.DisplayName: GOW Test Proj
+FrostySwordSlash.DisplayName: Ледяной сабельный разрез
+FrostySwordSlash2.DisplayName: Ледяной сабельный разрез
+FrostySwordRightSlash.DisplayName: Ледяной правый разрез
+FrostySwordProj.DisplayName: Ледяная пуля
+FrostySwordBurst.DisplayName: Ледяное цветение
+HypnotizeFog.DisplayName: Туман гипноза
+DarkLeaf.DisplayName: Тёмный лист
+NightmareSparkle_Normal.DisplayName: Сияние кошмара
+NightmareBite.DisplayName: Укус кошмара
+NightmareSlit.DisplayName: Разлом кошмара
+BlackHole.DisplayName: Мечтательная чёрная дыра
+NightmareSpike.DisplayName: Кошмарное прокалывание
+HookSlash.DisplayName: Кошмарный коготь
+ConfusionHole.DisplayName: Сумятение острие
+GhostSlit.DisplayName: Призрачная трещина
+GhostHand.DisplayName: Призрачная рука
+SuddenDeath.DisplayName: Цветок кошмара
+NightmareSparkle_Rolling.DisplayName: Свет кошмара
+NightmareSparkle_Red.DisplayName: Красный свет кошмара
+FantasyBall.DisplayName: Мечтательный шар
+FantasySpike.DisplayName: Мечтательное острие
+IllusionSpikeHell.DisplayName: Цветок кошмара
+SlimeEruptionBall.DisplayName: Гелевый шар
+SlimeEruptionProj.DisplayName: Шар слайма
+GelWhipProj.DisplayName: Королевская гелевая плеть
+GelSpike_Friendly.DisplayName: Гелевый шип
+SmallGelBall_Friendly.DisplayName: Маленький гелевый шар
+SpikeGelBall_Friendly.DisplayName: Шар с острыми гелевыми шипами
+NightmareBurst.DisplayName: Взрыв кошмара
+NightmareEnergy.DisplayName: Энергия кошмара
+NightmareBat.DisplayName: Кошмарная летучая мышь
+NightmareCrow.DisplayName: Кошмарный ворон
+VineSpike.DisplayName: Шипы лианы
+FantasySpike_Visual.DisplayName: Прекрасное острие
+LostSevensideSlash.DisplayName: Забытый семиугольный крюк
+PlayerNightmareEnergy.DisplayName: Энергия кошмара игрока
+LostSevensideChain.DisplayName: Забытая цепь семиугольника
+LostSevensideSpurt.DisplayName: Забытый прорыв
+LostVine.DisplayName: Забытые шипы лианы
+DreamShearsSlash.DisplayName: Разрывающий мечты удар
+DreamShearsSpurt.DisplayName: Разрывающий мечты прокол
+DreamShearsRolling.DisplayName: Разрывающий мечты вращение
+DreamShearsCut.DisplayName: Разрывающий мечты рез
+NightmareBite_Firendly.DisplayName: Укус кошмара
+EuphorbiaMiliiProj.DisplayName: Колючий молочай
+EuphorbiaSmallSpike.DisplayName: Маленький колючий молочай
+EuphorbiaSpike.DisplayName: Колючий молочай
+EuphorbiaSilt.DisplayName: Трещина молочая
+EuphorbiaSpurt.DisplayName: Пронзающий удар молочая
+EuphorbiaMiliiRightClick.DisplayName: Рез молочая
+EuphorbiaSpecialSpike.DisplayName: Специальный колючий молочай
+NightmareRaven.DisplayName: Кошмарный ворон
+LycorisBullet.DisplayName: Пуля Ликориса
+LycorisHeldProj.DisplayName: Цветок Ликориса
+LycorisSmallBullet.DisplayName: Лепесток Ликориса
+LullabySlash.DisplayName: Колыбельный удар
+LullabyBall.DisplayName: Мечтальный светящийся шар
+LullabySlash2.DisplayName: Пролог Колыбельной
+EdenWhip.DisplayName: Эдем
+EdenWhip2.DisplayName: Удар гигантской змеи
+DevilsClawLeaf.DisplayName: Тёмный летящий лист
+BarrenFog.DisplayName: Пустынный цветочный туман
+BarrenThorn.DisplayName: Пустынные шипы
+PurpleToeProj.DisplayName: Проклятый хищник
+RavenFeather.DisplayName: Перо кошмарного ворона
+QueensWreathArrow.DisplayName: Стрела оков королевы
+QueensWreathHeldProj.DisplayName: Коралловая лиана
+BoneClaw.DisplayName: Кошмарный костяной коготь
+BoneHand.DisplayName: Кошмарная костяная рука
+BoneSilt.DisplayName: Мечтательная трещина
+BoneHands.DisplayName: Падший коготь души
+CadaverousDragonBreath.DisplayName: Дыхание зомби-дракона
+CadaverousDragonHeadProj.DisplayName: Голова скелетного дракона
+VertebraeBladeProj.DisplayName: Позвоночный меч
+VertebraeSpike.DisplayName: Позвоночные осколки
+IronSilkKniefChain.DisplayName: Железная цепь
+IronSilkKniefSlash.DisplayName: Железный шёлковый нож
+IcicleKnief.DisplayName: Ледяной нож
+IcicleKniefChain.DisplayName: Ледяная цепь
+ShadowMirrorProj.DisplayName: Зеркало теней
+SlimeSceptreBall.DisplayName: Гелевый шар скипетра
+MagConnectProj.DisplayName: Магнитная связь
+LeafShield.DisplayName: Листовой щит
+PhantomMirrorProj.DisplayName: Призрачное зеркало
+FreosanProj.DisplayName: Ледяной блок
+HeatanProj.DisplayName: Огненный шар
+Page_MagikeBaseProj.DisplayName: Магическая ритуальная книга
+CrystalSwordProj.DisplayName: Кристальный лазер
+Bloodiancie_BigBoom.DisplayName: Взрыв Красной Крови
+BloodiancieBeam.DisplayName: Луч Крови
+DamnationHeldProj.DisplayName: Звезда погибели
+BloodWave.DisplayName: Волна крови
+RedBomb.DisplayName: Красная бомба
+Bloodiancie_OnSpawnAnim.DisplayName: Сущность Красной Крови
+BloodBall.DisplayName: Шар крови
+BloodRain.DisplayName: Кровавый дождь
+BloodJadeSlash.DisplayName: Кровавый камень разрез
+BloodJade_BigBoom.DisplayName: Взрыв Кровавого Камня
+BloodJadeParry.DisplayName: Отражение Кровавого Камня
+BloodJadeWave.DisplayName: Волна Кровавого Камня
+BloodJadeStrike.DisplayName: Удар Кровавого Камня
+WhistleProj.DisplayName: Свистящий снаряд
+BloodJadeFrisbee.DisplayName: Фрисби Красного Камня
+BloodJadeFrisbeeParry.DisplayName: Отражение фрисби Красного Камня
+ShadowChainSwing.DisplayName: Цепь теней
+ShadowChainShadows.DisplayName: Тени цепи
+ShadowChainSpecial.DisplayName: Особая цепь теней
+RuneSoneSlash.DisplayName: Руническая песня
+BrokenHandleSlash.DisplayName: Разбитая рукоять
+RuneSongSlash.DisplayName: Песнь рун
+CraftUIProj.DisplayName: Легендарное изготовление
+RuneSoneRightProj.DisplayName: Вихрь рун
+PoisonousSickleSlash.DisplayName: Отравленный серп
+NightmareHarpProj.DisplayName: Кошмарная арфа
+NightmareMusicalNotes.DisplayName: Кошмарные музыкальные ноты
+NightmareSpawnEnergy.DisplayName: Энергия появления кошмара
+SpawnLight.DisplayName: Ночной свет
+BlackHoleMainProj.DisplayName: Чёрная звезда
+BlackStarProj.DisplayName: Чёрная звезда
+ShaduraSlash.DisplayName: Тень Глоры
+ShaduraShoot.DisplayName: Призрачный клинок
+ShadowWaveHeldProj.DisplayName: Тень волны
+ShadowWaveReLoad.DisplayName: Тень волны
+MercuryStream.DisplayName: Ртутный поток
+SmallLaser.DisplayName: Тень лазера
+SmallLaserPredictionLine.DisplayName: Тень лазера
+StarsBack.DisplayName: Тень звезды
+ShadowBeam.DisplayName: Тень луча
+ShadowPlayerSpurt.DisplayName: Тень атаки
+SpawnProj.DisplayName: Покажи свою тень
+ShadowBallSlash.DisplayName: Призрачный удар
+ShadowGround.DisplayName: Тень земли
+ShadowBallSlash2.DisplayName: Призрачный удар
+ShadowFire.DisplayName: Призрачное пламя
+ShadowBallSmash.DisplayName: Удар тени
+ShadowBall_NameLine.DisplayName: Тень шара
+GlassShieldGuard.DisplayName: Стеклянный щит
+GlassShieldProj.DisplayName: Стеклянный щит
+TrashCanLidGuard.DisplayName: Крышка мусорного бака
+TrashCanLidProj.DisplayName: Крышка мусорного бака
+RedJadeShieldGuard.DisplayName: Щит из красного нефрита
+RedJadeShieldProj.DisplayName: Щит из красного нефрита
+DeliciousSteakGuard.DisplayName: Вкусный стейк
+DeliciousSteakProj.DisplayName: Вкусный стейк
+SilverAngelGuard.DisplayName: Серебряный ангел
+SilverAngelProj.DisplayName: Серебряный ангел
+SilverAngelStrike.DisplayName: Меч наказания
+PearlRayGuard.DisplayName: Жемчужный луч
+PearlRayProj.DisplayName: Жемчужный луч
+TortoiseshellFortressGuard.DisplayName: Щит из черепашьего панциря
+TortoiseshellFortressProj.DisplayName: Щит из черепашьего панциря
+HolyCharmProj.DisplayName: Святая волна
+TortoiseshellFortressDash.DisplayName: Дар царя джунглей
+TerracrestSpike.DisplayName: Террамагический шип
+FishronguardGuard.DisplayName: Древний король рыбы
+FishronguardProj.DisplayName: Древний король рыбы
+MechRioterGuard.DisplayName: Механический бунтарь
+MechRioterProj.DisplayName: Механический бунтарь
+SmallMechRioter.DisplayName: Механический малый бунтарь
+BatfangShieldGuard.DisplayName: Клыки вампира
+BatfangShieldProj.DisplayName: Клыки вампира
+VampiresFangGuard.DisplayName: Клыки вампира
+VampiresFangProj.DisplayName: Клыки вампира
+GlazeBulwarkEXProj.DisplayName: Хрустальные осколки
+GlazeBulwarkGuard.DisplayName: Хрустальный щит
+GlazeBulwarkProj.DisplayName: Хрустальный щит
+GemrainAegisEXProj.DisplayName: Радужные осколки
+GemrainAegisGuard.DisplayName: Щит из драгоценных камней
+GemrainAegisProj.DisplayName: Щит из драгоценных камней
+LeonidsGuard.DisplayName: Лев зодиака
+LeonidsMeteor.DisplayName: Метеоритный дождь Льва
+LeonidsProj.DisplayName: Лев зодиака
+SolleonisGuard.DisplayName: Лев-победитель
+SolleonisMeteor.DisplayName: Поглощение солнца львом
+SolleonisProj.DisplayName: Лев-победитель
+RoyalAngelGuard.DisplayName: Царственный ангел
+RoyalAngelProj.DisplayName: Царственный ангел
+RoyalAngelStrike.DisplayName: Меч царственного ангела
+NoctiflairGuard.DisplayName: Поэма ночи
+NoctiflairProj.DisplayName: Поэма ночи
+NoctiflairStrike.DisplayName: Смертельная звезда
+ConquerorFlyProj.DisplayName: Старая штурвал
+ConquerorOfTheSeasGuard.DisplayName: Завоеватель морей
+ConquerorOfTheSeasProj.DisplayName: Завоеватель морей
+ConquerorSlash.DisplayName: Старая якорь
+GoldenSamuraiGuard.DisplayName: Золотой самурай
+GoldenSamuraiProj.DisplayName: Золотой самурай
+HorseshoeCrabEXProj.DisplayName: Призванный морской краб
+HorseshoeCrabGuard.DisplayName: Морской краб
+HorseshoeCrabProj.DisplayName: Морской краб
+MineShieldGuard.DisplayName: Мой щит
+MineShieldProj.DisplayName: Мой щит
+ShanHaiGuard.DisplayName: Бескрайние горы и моря
+ShanHaiProj.DisplayName: Бескрайние горы и моря
+TaiJi.DisplayName: Тайцзи
+EekShieldEXProj.DisplayName: Маленький щит EEK
+EekShieldGuard.DisplayName: Щит EEK
+EekShieldProj.DisplayName: Щит EEK
+HephaesthGuard.DisplayName: Город кузнеца
+HephaesthProj.DisplayName: Город кузнеца
+HephaesthFire.DisplayName: Огненный ад
+HephaesthBurst.DisplayName: Взрыв ада
+HephaesthWave.DisplayName: Волна плавки
+HephaesthSmeltingResults.DisplayName: Результаты плавки
+SandWallGuard.DisplayName: Стена песка
+SandWallProj.DisplayName: Стена песка
+SandWallStorm.DisplayName: Песчаная буря
+LightingDash.DisplayName: Молниеносный налет
+DischargingBurst.DisplayName: Разряд
+LightingBreath.DisplayName: Молниеносное дыхание
+LightingBall.DisplayName: Молниеносный шар
+ChainBall.DisplayName: Электрическая цепь
+CrossLightingBall.DisplayName: Молниеносный крест
+ThunderFalling.DisplayName: Молния
+CrossLightingBallChasable.DisplayName: Преследуемый молниеносный крест
+StrongerCrossLightingBall.DisplayName: Усиленный молниеносный крест
+StrongerLightingBreath.DisplayName: Усиленное молниеносное дыхание
+StrongLightingDash.DisplayName: Молниеносный налет
+ExchangePhaseAnmi.DisplayName: Громовой дракон
+StrongDischargingBurst.DisplayName: Усиленный разряд
+GravitationThunderBall.DisplayName: Гравитационный молниеносный шар
+StrongThunderFalling.DisplayName: Сильная молния
+LightningBall.DisplayName: Молниеносный шар
+StrongLightningBall.DisplayName: Усиленный молниеносный шар
+StrongerCrossLightingBallChasable.DisplayName: Усиленный молниеносный крест
+ElectromagneticCannon.DisplayName: Электромагнитная пушка
+EndThunder.DisplayName: Громовая буря
+ThunderveinDragon_OnSpawnAnim.DisplayName: Громовой дракон
+ThunderSpawn.DisplayName: Громовой дракон
+LightningDash.DisplayName: Молниеносный налет
+StrongLightningDash.DisplayName: Сильный молниеносный налет
+Kitsune.DisplayName: Лисий мечник
+ThunderveinSoul.DisplayName: Душа молнии
+ThunderDukeVineHeldProj.DisplayName: Лоза молний
+ElectromagneticCannon_Friendly.DisplayName: Дружелюбная электромагнитная пушка
+ThunderveinBladeSlash.DisplayName: Молниеносный клинок
+IcicleSoul.DisplayName: Ледяная душа
+ThunderveinBladeDash.DisplayName: Молниеносный налет
+ArachnopyreGuard.DisplayName: Щит пламени паука
+ArachnopyreProj.DisplayName: Щит пламени паука
+ArachnopyreSpider.DisplayName: Пламя паука
+SovereignSlime.DisplayName: Маленький слизневой король
+ThunderveinSpearSlash.DisplayName: Молниеносное копьё
+ThunderveinSpearSpurt.DisplayName: Молниеносное копьё
+FlamingLampsExplosion.DisplayName: Пламя лампы
+LavaDroplet.DisplayName: Капля лавы
+Snowflake.DisplayName: Снежинка
+SnowflakeSpike.DisplayName: Снежные шипы
+DemonsProtectionClaw.DisplayName: Когти защиты демона
+ForbiddenDroplet.DisplayName: Запрещённая капля
+ForbiddenLampExplosion.DisplayName: Взрыв лампы
+SolarTwinkleSlash.DisplayName: Солярное сияние
+ThunderveinSpearShoot.DisplayName: Молниеносное копьё
+BlackSpirit.DisplayName: Чёрный дух
+ThunderBobber.DisplayName: Молниеносный поплавок
+ChronoHeartSlash.DisplayName: Вечный цикл
+ThunderWhipProj.DisplayName: Молниеносная кнут
+ThunderShieldGuard.DisplayName: Щит грома
+ThunderShieldProj.DisplayName: Щит грома
+ThunderShieldExProj.DisplayName: Щит молнии
+RedJadeArrowProj.DisplayName: Стрела из красного нефрита
+RedJadeBulletProj.DisplayName: Пуля из красного нефрита
+ReverseFlashProj.DisplayName: Обратная молния
+Tenko.DisplayName: Лисье оружие
+CyberwyrmRehabProj.DisplayName: Реабилитация маленького дракона
+CancerFlailProj.DisplayName: Молниеносная цепь
+LightningBall_Friendly.DisplayName: Молния дружелюбного
+ThunderDaggerSlash.DisplayName: Молниеносный кинжал
+EternalBloomHeldProj.DisplayName: Вечное цветение
+FloetteHeldProj.DisplayName: Флоре
+PosionedSeedPlantera.DisplayName: Ядовитое семя
+SeedPlantera.DisplayName: Семя
+ThornBall.DisplayName: Шар из шипов
+VirgoBullet.DisplayName: Пуля Девы
+VirgoFeather.DisplayName: Перо Девы
+VirgoHeldProj.DisplayName: Созвездие Девы
+ThunderMinion.DisplayName: Молния
+MeowmeoProj.DisplayName: Радужный кот меч
+HylianShieldGuard.DisplayName: Гианский щит
+HylianShieldProj.DisplayName: Гианский щит
+NuranasaProj.DisplayName: Меч демона
+SmallVolcanoProj.DisplayName: Спичка
+TerraShortSwordProj.DisplayName: Тайра меч
+TomatoButchererProj.DisplayName: Помидорный мясник
+TrueNightsCageProj.DisplayName: Истинная клетка ночи
+BladeOfCatnipProj.DisplayName: Меч кошачьей мяты
+ExcatbarProj.DisplayName: Муркота бар
+NightsCageProj.DisplayName: Клетка ночи
+ShadowsBaneProj.DisplayName: Тень изгнания
+TrueExcatbarProj.DisplayName: Супер муркота бар
+BeamShortSwordProj.DisplayName: Лазерный меч
+CattongueProj.DisplayName: Меч кошачьего языка
+CatTreeSwordProj.DisplayName: Меч дерева кошки
+FlyingDragonBabyProj.DisplayName: Драконенок
+IceShortSwordProj.DisplayName: Ледяной короткий меч
+MeowmeoSpecialProj.DisplayName: Радужный кот меч
+SmallBeeProj.DisplayName: Маленькая пчела
+TheCatMansBladeProj.DisplayName: Меч кошачьей гвардии
+TreelerProj.DisplayName: Деревянный меч
+ShadowDartProj.DisplayName: Тень стрелы
+VampireEarlGuard.DisplayName: Красная роскошь
+VampireEarlProj.DisplayName: Красная роскошь
+VampireEarlBat.DisplayName: Вампирная летучая мышь
+VineLassoCatcher.DisplayName: Винтовая верёвка
+
+GreenFairyProj: {
+	SkillText: Удар!
+	DisplayName: Зелёная фея
+}
+
+BlueFairyProj: {
+	SkillText: Удар!
+	DisplayName: Синяя фея
+}
+
+BrownFairyProj: {
+	SkillText: Удар!
+	DisplayName: Коричневая фея
+}
+
+RedJadeSpearSpurt.DisplayName: Алмазное копьё
+
+BreezeFairyProj: {
+	SkillText: Развеять!
+	DisplayName: Ветерок
+}
+
+PollenGunpowderProj.DisplayName: Цветочная пыльца
+RoseGunpowderProj.DisplayName: Розовая пыльца
+RoseGunpowderProj2.DisplayName: Розовая пыльца
+VineLassoSwing.DisplayName: Лиановая веревка
+DevilsYokeCatcher.DisplayName: Ловец Дьявольского ярма
+DevilsYokeSwing.DisplayName: Качель Дьявольского ярма
+TwinRocketLauncherHeldProj.DisplayName: Двойной ракетный пускатель
+TwinRocketLauncherProj.DisplayName: Двойной ракетный снаряд
+TwinRocketLauncherProj2.DisplayName: Двойной ракетный снаряд
+SteelBreakerProj.DisplayName: Разрушитель стали
+ElfTradeProj.DisplayName: Торговля с эльфами
+PyropeCrownProj.DisplayName: Корона красного граната
+PyropeProj.DisplayName: Магический пироп
+AmethystNeckLaceProj.DisplayName: Ожерелье из аметиста
+AmethystLaser.DisplayName: Лазер из аметиста
+FriedShrimpProj.DisplayName: Жареные креветки
+ChocomintIceProj.DisplayName: Мятное шоколадное мороженое
+AquamarineBraceletProj.DisplayName: Браслет аквамарина
+AquamarineProj.DisplayName: Магический аквамарин
+AmethystNecklaceProj.DisplayName: Ожерелье шестого цикла
+PinkDiamondExplosion.DisplayName: Взрыв розового алмаза
+PinkDiamondProj.DisplayName: Магический розовый алмаз
+PinkDiamondRoseProj.DisplayName: Роза из розового алмаза
+ZumurudProj.DisplayName: Магический изумруд
+ZumurudRingProj.DisplayName: Изумрудное кольцо
+SmallZumurudProj.DisplayName: Водяной всплеск изумруда
+PearlBroochProj.DisplayName: Брошка с жемчугом
+PearlProj.DisplayName: Магический жемчуг
+PearlExplosion.DisplayName: Взрыв жемчуга
+RubyProj.DisplayName: Магический рубин
+RubyScepterProj.DisplayName: Скипетр рубина
+RubyLaser.DisplayName: Лазер рубина
+PeridotProj.DisplayName: Магический перидот
+PeridotSpilit.DisplayName: Призрак перидота
+PeridotTalismanProj.DisplayName: Талисман из перидота
+SapphireComet.DisplayName: Сапфировая комета
+SapphireHairpinProj.DisplayName: Заколка с сапфиром
+SapphireProj.DisplayName: Магический сапфир
+SapphireSmallProj.DisplayName: Сапфировая энергия
+TopazFlySword.DisplayName: Летящий меч из топаза
+TopazMirrorProj.DisplayName: Иллюзия топаза
+TopazProj.DisplayName: Магический топаз
+TopazSpike.DisplayName: Шип топаза
+TopazMeteor.DisplayName: Метеор топаза
+TopazBoulder.DisplayName: Валун из топаза
+TopazTrident.DisplayName: Трезубец из топаза
+LandOfTheLustrousProj.DisplayName: Земля сверкающих
+LustrousProj.DisplayName: Сверкающий камень
+TourmalineMonoclasticProj.DisplayName: Алый взгляд
+TourmalineProj.DisplayName: Магический турмалин
+TerranascenceFSProj.DisplayName: Летящий щит Тера-героя
+TerranascenceGuard.DisplayName: Щит Тера-героя
+TerranascenceSwing.DisplayName: Меч Тера-героя
+TerranascenceTag.DisplayName: Природный кристалл
+TerranascenceSpurt.DisplayName: Меч Тера-героя
+TourmalineSlash.DisplayName: Турмалин
+ZirconGrailProj.DisplayName: Проект Жезл Циркона
+BigMacExProj.DisplayName: Большой Мак Экспо Проект
+BigMacHamburgerGuard.DisplayName: Охрана Большого Мака
+BigMacHamburgerProj.DisplayName: Проект Большого Мака
+ZirconProj.DisplayName: Проект Циркон
+SurviveAndPerishHeldProj.DisplayName: Проект Выживание и Погибель
+PerishProj.DisplayName: Проект Погибели
+SurviveHeldProj.DisplayName: Проект Выживания
+MiniDynamite.DisplayName: Мини динамит
+PerishMissile.DisplayName: Ракета Погибели
+AmberEardropProj.DisplayName: Проект Амбер Серьга
+AmberProj.DisplayName: Проект Янтарь
+BigAmber.DisplayName: Большой Янтарь
+DiamondExplosion.DisplayName: Взрыв Алмаза
+DiamondFlowerProj.DisplayName: Проект Алмазного Цветка
+DiamondProj.DisplayName: Проект Алмаз
+ArcaneFlameDaggerProj.DisplayName: Проект Магического Огненного Кинжала
+ArcaneFlameDaggerSlash.DisplayName: Разрез Огненным Кинжалом
+MagikeWorldBallProj.DisplayName: Проект Магический Мировой Шар
+MagicCrystalBobber.DisplayName: Магический Кристалл Удочка
+FilterProj.DisplayName: Проект Фильтра
+InfinityClusterWandProj.DisplayName: Проект Волшебная Палочка Кластера
+GelFiberBall.DisplayName: Шар из гелевых волокон
+TremblingElectric.DisplayName: Дрожащий Электрический
+PlasmaBall.DisplayName: Плазменный Шар
+LeafeoShield.DisplayName: Щит Лифео
+AfterglowHeldProj.DisplayName: Проект Сияния в руке
+FarAwaySkyHeldProj.DisplayName: Проект Далекого Неба в руке
+EternalVengeanceSword.DisplayName: Меч Вечной Мести
+RadiantSunHeldProj.DisplayName: Проект Радужного Солнца в руке
+RadiantSunLaser.DisplayName: Лазер Радужного Солнца
+GreenOnionBurritosFSProj.DisplayName: Проект Бурритос с Зеленым Луком
+GreenOnionBurritosGuard.DisplayName: Охрана Бурритос с Зеленым Луком
+SpringOnion.DisplayName: Зеленый Лук
+ReverseFlashHeldProj.DisplayName: Проект Обратного Молнии в руке
+LeprechaunBaitHeldProj.DisplayName: Проект Приманки для лепрекона в руке
+ReverseFlashThunder.DisplayName: Гром Обратной Молнии
+ThyphionHeldProj.DisplayName: Проект Тифион в руке
+BrilliantConnectStaffProj.DisplayName: Проект Яркой Связующей Палочки
+DisconnectProj.DisplayName: Проект Отключения
+BrilliantCalibratorProj.DisplayName: Проект Яркого Калибратора
+BrilliantMagikeActivatorProj.DisplayName: Проект Яркого Магического Активатора
+ThyphionTagProj.DisplayName: Проект Тега Тифион
+ConchBubble.DisplayName: Пузырь Раковины
+
+PremissionProj: {
+	SoulOfLightText: Mods.Coralite.Projectiles.PremissionProj.SoulOfLightText
+	SoulOfNightText: Mods.Coralite.Projectiles.PremissionProj.SoulOfNightText
+	PremissionText: Mods.Coralite.Projectiles.PremissionProj.PremissionText
+	DisplayName: Проект Разрешение
+}
+
+// PurpleDash.DisplayName: Purple Dash
+// CircumhorizonHeldProj.DisplayName: Circumhorizon Held Proj
+// HorizonArcHeldProj.DisplayName: Horizon Arc Held Proj
+// RainbowArrow.DisplayName: Rainbow Arrow
+// TurbulenceArrow.DisplayName: Turbulence Arrow
+// TurbulenceHeldProj.DisplayName: Turbulence Held Proj
+// TurbulencePin.DisplayName: Turbulence Pin
+// PreviewMultiblockPeoj.DisplayName: Preview Multiblock Peoj
+// FullMoonHeldProj.DisplayName: Full Moon Held Proj
+// FullMoonStrike.DisplayName: Full Moon Strike
+// WhiteGardeniaAimProj.DisplayName: White Gardenia Aim Proj
+// WhiteGardeniaFloat.DisplayName: White Gardenia Float
+// WhiteGardeniaFloatLaser.DisplayName: White Gardenia Float Laser
+// WhiteGardeniaHeldProj.DisplayName: White Gardenia Held Proj
+// WhiteGardeniaPowerfulShoot.DisplayName: White Gardenia Powerful Shoot
+// ThrownPickaxe.DisplayName: Thrown Pickaxe
+// SeismicWaveHeldProj.DisplayName: Seismic Wave Held Proj
+// SeismicWaveStrike.DisplayName: Seismic Wave Strike
+// GlaciateHeldProj.DisplayName: Glaciate Held Proj
+// GlaciateWave.DisplayName: Glaciate Wave
+// GlaciateIceCube.DisplayName: Glaciate Ice Cube
+// LeafShieldGuard.DisplayName: Leaf Shield Guard
+// LeafShieldProj.DisplayName: Leaf Shield Proj
+// WoodenShieldGuard.DisplayName: Wooden Shield Guard
+// WoodenShieldProj.DisplayName: Wooden Shield Proj
+// AuroraArrow.DisplayName: Aurora Arrow
+// AuroraArrowTag.DisplayName: Aurora Arrow Tag
+// AuroraHeldProj.DisplayName: Aurora Held Proj
+// ThyphionArrow.DisplayName: Thyphion Arrow
+// ThyphionShadowBow.DisplayName: Thyphion Shadow Bow
