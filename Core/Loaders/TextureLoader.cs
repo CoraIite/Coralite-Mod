@@ -14,8 +14,8 @@ namespace Coralite.Core.Loaders
 
         public void Load(Mod Mod, Type type)
         {
-            if (type.IsAbstract)
-                return;
+            //if (type.IsAbstract)
+            //    return;
 
             AutoLoadTextureAttribute autoLoadTextureAttribute = type.GetCustomAttribute<AutoLoadTextureAttribute>();
 
@@ -53,8 +53,8 @@ namespace Coralite.Core.Loaders
 
         public void Unload(Mod Mod, Type type)
         {
-            if (type.IsAbstract)
-                return;
+            //if (type.IsAbstract)
+            //    return;
 
             AutoLoadTextureAttribute autoLoadTextureAttribute = type.GetCustomAttribute<AutoLoadTextureAttribute>();
 
@@ -69,7 +69,7 @@ namespace Coralite.Core.Loaders
 
             foreach (var property in properties)
             {
-                if (property.PropertyType != typeof(Asset<Texture2D>))
+                if (property.PropertyType != typeof(ATex))
                     return;
 
                 property.SetValue(null, null);

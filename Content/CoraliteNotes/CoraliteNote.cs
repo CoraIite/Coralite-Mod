@@ -35,6 +35,16 @@ namespace Coralite.Content.CoraliteNotes
             Main.playerInventory = false;
             return true;
         }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient(ItemID.Book)
+                .AddIngredient(ItemID.Coral, 2)
+                .AddTile(TileID.Bookcases)
+                .DisableDecraft()
+                .Register();
+        }
     }
 
     public class CoraliteNoteTile : ModTile

@@ -211,158 +211,158 @@ namespace Coralite.Content.UI.MagikeGuideBook
     //}
 
 
-    public class MagicCircle
-    {
-        public readonly float maxLength;
-        public float length;
-        public float rotation2;
-        public float radius;
-        public float width = 25;       //宽度
+    //public class MagicCircle
+    //{
+    //    public readonly float maxLength;
+    //    public float length;
+    //    public float rotation2;
+    //    public float radius;
+    //    public float width = 25;       //宽度
 
-        //先画在2维的圆
-        public Vector2[] vector2D;
-        //转化为3D的坐标
-        public readonly Vector3[] vector3s = new Vector3[180];
-        //给顶点的2D坐标
-        public readonly Vector2[] vector2s = new Vector2[180];
-        public Vector3 normal = Vector3.Zero;
+    //    //先画在2维的圆
+    //    public Vector2[] vector2D;
+    //    //转化为3D的坐标
+    //    public readonly Vector3[] vector3s = new Vector3[180];
+    //    //给顶点的2D坐标
+    //    public readonly Vector2[] vector2s = new Vector2[180];
+    //    public Vector3 normal = Vector3.Zero;
 
-        public Vector2 center;
-        public Vector2 velocity;
-        public float fadeIn;
-        public float rotation;
-        public bool active = true;
-        public Color color;
-        public Trail trail;
+    //    public Vector2 center;
+    //    public Vector2 velocity;
+    //    public float fadeIn;
+    //    public float rotation;
+    //    public bool active = true;
+    //    public Color color;
+    //    public Trail trail;
 
-        public Asset<Texture2D> Texture2D { get; private set; }
+    //    public Asset<Texture2D> Texture2D { get; private set; }
 
-        public string Texture => AssetDirectory.MagikeGuideBook + "MagicCircleGlow";
+    //    public string Texture => AssetDirectory.MagikeGuideBook + "MagicCircleGlow";
 
-        public MagicCircle(float maxLength, float radius) : base()
-        {
-            Texture2D = !string.IsNullOrEmpty(Texture) ? Request<Texture2D>(Texture, AssetRequestMode.ImmediateLoad) : TextureAssets.Dust;
+    //    public MagicCircle(float maxLength, float radius) : base()
+    //    {
+    //        Texture2D = !string.IsNullOrEmpty(Texture) ? Request<Texture2D>(Texture, AssetRequestMode.ImmediateLoad) : TextureAssets.Dust;
 
-            this.maxLength = maxLength;
-            this.radius = radius;
-            if (vector2D == null)
-            {
-                vector2D = new Vector2[180];
-                for (int i = 0; i < 180; i++)
-                {
-                    //先画个圆
-                    vector2D[i] = new Vector2(0, 1).RotatedBy(i * (MathHelper.TwoPi / 180));
-                }
-            }
+    //        this.maxLength = maxLength;
+    //        this.radius = radius;
+    //        if (vector2D == null)
+    //        {
+    //            vector2D = new Vector2[180];
+    //            for (int i = 0; i < 180; i++)
+    //            {
+    //                //先画个圆
+    //                vector2D[i] = new Vector2(0, 1).RotatedBy(i * (MathHelper.TwoPi / 180));
+    //            }
+    //        }
 
-            rotation = 1.57f - 0.2f;
-            rotation2 = Main.rand.NextFloat();
-        }
+    //        rotation = 1.57f - 0.2f;
+    //        rotation2 = Main.rand.NextFloat();
+    //    }
 
-        public void Update()
-        {
-            rotation2 += 0.02f;
-            for (int i = 0; i < 180; i++)
-            {
-                //再画在3维空间 然后转起来
-                vector3s[i] = Vector3.Transform(new Vector3(vector2D[i].X, vector2D[i].Y, 0), Matrix.CreateRotationY(rotation));
-                normal = Vector3.Transform(new Vector3(0, 0, 1), Matrix.CreateRotationY(rotation));
-            }
+    //    public void Update()
+    //    {
+    //        rotation2 += 0.02f;
+    //        for (int i = 0; i < 180; i++)
+    //        {
+    //            //再画在3维空间 然后转起来
+    //            vector3s[i] = Vector3.Transform(new Vector3(vector2D[i].X, vector2D[i].Y, 0), Matrix.CreateRotationY(rotation));
+    //            normal = Vector3.Transform(new Vector3(0, 0, 1), Matrix.CreateRotationY(rotation));
+    //        }
 
-            for (int i = 0; i < 180; i++)
-            {
-                //重新投影到二维
-                float k1 = -1000 / (vector3s[i].Z - 1000);
-                vector2s[i] = k1 * new Vector2(vector3s[i].X, vector3s[i].Y);
-            }
+    //        for (int i = 0; i < 180; i++)
+    //        {
+    //            //重新投影到二维
+    //            float k1 = -1000 / (vector3s[i].Z - 1000);
+    //            vector2s[i] = k1 * new Vector2(vector3s[i].X, vector3s[i].Y);
+    //        }
 
-            if (length < maxLength)
-            {
-                center += velocity;
-                rotation += 0.2f * 2 / (maxLength / velocity.X);
-                length += velocity.X;   //应该是abs的，但我懒得写了
-            }
-            else
-            {
-                color *= 0.8f;
-                radius *= 0.98f;
-                width *= 0.98f;
-                center += new Vector2(5, 0);
-                if (color.R < 10)
-                    active = false;
-            }
+    //        if (length < maxLength)
+    //        {
+    //            center += velocity;
+    //            rotation += 0.2f * 2 / (maxLength / velocity.X);
+    //            length += velocity.X;   //应该是abs的，但我懒得写了
+    //        }
+    //        else
+    //        {
+    //            color *= 0.8f;
+    //            radius *= 0.98f;
+    //            width *= 0.98f;
+    //            center += new Vector2(5, 0);
+    //            if (color.R < 10)
+    //                active = false;
+    //        }
 
-            fadeIn++;
-            if (fadeIn > 300)
-                active = false;
-        }
+    //        fadeIn++;
+    //        if (fadeIn > 300)
+    //            active = false;
+    //    }
 
 
-        //由于特殊需求不得不把绘制掰成两半
-        //不然大概会出现透视BUG
+    //    //由于特殊需求不得不把绘制掰成两半
+    //    //不然大概会出现透视BUG
 
-        public void DrawBackCircle(SpriteBatch spriteBatch)
-        {
-            DrawCircle(spriteBatch, 0, 90);
+    //    public void DrawBackCircle(SpriteBatch spriteBatch)
+    //    {
+    //        DrawCircle(spriteBatch, 0, 90);
 
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin(0, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
-        }
+    //        Main.spriteBatch.End();
+    //        Main.spriteBatch.Begin(0, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+    //    }
 
-        public void DrawFrontCircle(SpriteBatch spriteBatch)
-        {
-            DrawCircle(spriteBatch, 90, vector2s.Length);
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin(0, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.UIScaleMatrix);
-        }
+    //    public void DrawFrontCircle(SpriteBatch spriteBatch)
+    //    {
+    //        DrawCircle(spriteBatch, 90, vector2s.Length);
+    //        Main.spriteBatch.End();
+    //        Main.spriteBatch.Begin(0, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.UIScaleMatrix);
+    //    }
 
-        public void DrawCircle(SpriteBatch spriteBatch, int start, int end)
-        {
-            Texture2D Texture = Texture2D.Value;
+    //    public void DrawCircle(SpriteBatch spriteBatch, int start, int end)
+    //    {
+    //        Texture2D Texture = Texture2D.Value;
 
-            spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.LinearWrap/*注意了奥*/, DepthStencilState.Default, RasterizerState.CullNone, null, Main.UIScaleMatrix);
+    //        spriteBatch.End();
+    //        spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.LinearWrap/*注意了奥*/, DepthStencilState.Default, RasterizerState.CullNone, null, Main.UIScaleMatrix);
 
-            List<CustomVertexInfo> bars = new();
-            //对法向量进行一个投影
-            float k1 = -1000 / (normal.Z - 1000);
-            var normalDir = k1 * new Vector2(normal.X, normal.Y);
+    //        List<CustomVertexInfo> bars = new();
+    //        //对法向量进行一个投影
+    //        float k1 = -1000 / (normal.Z - 1000);
+    //        var normalDir = k1 * new Vector2(normal.X, normal.Y);
 
-            for (int i = start; i < end; ++i)
-            {
-                //一些数据
-                float factor = ((float)i * 4 / end) + rotation2;
-                var w = 1;//暂时无用
-                float a = vector3s[i].Z + 1.3f;
+    //        for (int i = start; i < end; ++i)
+    //        {
+    //            //一些数据
+    //            float factor = ((float)i * 4 / end) + rotation2;
+    //            var w = 1;//暂时无用
+    //            float a = vector3s[i].Z + 1.3f;
 
-                bars.Add(new CustomVertexInfo(center + (vector2s[i] * radius) + (normalDir * width), color * a, new Vector3(factor, 1, w)));
-                bars.Add(new CustomVertexInfo(center + (vector2s[i] * radius) + (normalDir * -width), color * a, new Vector3(factor, 0, w)));
-                if (i == vector2s.Length - 1)
-                {
-                    bars.Add(new CustomVertexInfo(center + (vector2s[0] * radius) + (normalDir * width), color * a, new Vector3(factor, 1, w)));
-                    bars.Add(new CustomVertexInfo(center + (vector2s[0] * radius) + (normalDir * -width), color * a, new Vector3(factor, 0, w)));
-                }
-            }
+    //            bars.Add(new CustomVertexInfo(center + (vector2s[i] * radius) + (normalDir * width), color * a, new Vector3(factor, 1, w)));
+    //            bars.Add(new CustomVertexInfo(center + (vector2s[i] * radius) + (normalDir * -width), color * a, new Vector3(factor, 0, w)));
+    //            if (i == vector2s.Length - 1)
+    //            {
+    //                bars.Add(new CustomVertexInfo(center + (vector2s[0] * radius) + (normalDir * width), color * a, new Vector3(factor, 1, w)));
+    //                bars.Add(new CustomVertexInfo(center + (vector2s[0] * radius) + (normalDir * -width), color * a, new Vector3(factor, 0, w)));
+    //            }
+    //        }
 
-            List<CustomVertexInfo> Vx = new();
-            if (bars.Count > 2)
-            {
-                for (int i = 0; i < bars.Count - 2; i += 2)
-                {
-                    Vx.Add(bars[i]);
-                    Vx.Add(bars[i + 2]);
-                    Vx.Add(bars[i + 1]);
+    //        List<CustomVertexInfo> Vx = new();
+    //        if (bars.Count > 2)
+    //        {
+    //            for (int i = 0; i < bars.Count - 2; i += 2)
+    //            {
+    //                Vx.Add(bars[i]);
+    //                Vx.Add(bars[i + 2]);
+    //                Vx.Add(bars[i + 1]);
 
-                    Vx.Add(bars[i + 1]);
-                    Vx.Add(bars[i + 2]);
-                    Vx.Add(bars[i + 3]);
-                }
-            }
+    //                Vx.Add(bars[i + 1]);
+    //                Vx.Add(bars[i + 2]);
+    //                Vx.Add(bars[i + 3]);
+    //            }
+    //        }
 
-            Main.graphics.GraphicsDevice.Textures[0] = Texture;
-            Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleList, Vx.ToArray(), 0, Vx.Count / 3);
-        }
-    }
+    //        Main.graphics.GraphicsDevice.Textures[0] = Texture;
+    //        Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleList, Vx.ToArray(), 0, Vx.Count / 3);
+    //    }
+    //}
 
     //public class FlashLine : TrailParticle
     //{

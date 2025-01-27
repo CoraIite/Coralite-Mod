@@ -191,7 +191,7 @@ AmberDebuff: {
 
 FreezePotionBuff: {
 	DisplayName: Freeze Prime
-	Description: 
+	Description:
 		'''
 		+10% Frost damage
 		-8 Defense
@@ -200,7 +200,7 @@ FreezePotionBuff: {
 
 HungryPotionBuff: {
 	DisplayName: Hungry Prime
-	Description: 
+	Description:
 		'''
 		+10% Delicious damage
 		-8% movement speed
@@ -214,7 +214,7 @@ LeafeoShieldCD: {
 
 CloudBonus: {
 	DisplayName: Cloud Bonus
-	Description: 
+	Description:
 		'''
 		+15% movement speed
 		+15% ranged damage

@@ -16,8 +16,8 @@ GetMagikeKnowledge1Page: {
 
 		    本卷的目的是帮助你了解 [c/ffbeec:魔能] 相关最基础的知识，并且通过实践建造出属于你的 [c/ffbeec:魔能] 产线。
 		'''
-	ClickButton: "    如果你准备好了，就按下此页下方的按钮并开始阅读本章节吧！"
 	ContiuneRead: "    你已经获得了 [c/ffbeec:魔能基础知识] ！跟随章节内容开始你的 [c/ffbeec:魔能] 之旅吧！"
+	ClickButton: "    如果你准备好了，就按下此页下方的按钮并开始阅读本章节吧！"
 }
 
 WhatIsMagikePage: {
@@ -144,7 +144,7 @@ FragmentPage.ClickToJump: 点击后跳转到对应章节
 CraftAltar: {
 	RemodelPolymerizeAndMagikeCraft: 重塑！聚合！魔能合成！
 	CraftACraftAltar: "    进行魔能合成需要准备一个基础合成坛，放置后同样需要插入偏振滤镜才能正常工作。"
-	AltarUI: "    下面是魔能合成坛的UI界面，看上去似乎有些复杂。 接下来将以木头合成煤炭为例解释UI内的各个部分作用."
+	AltarUI: "    下面是魔能合成坛的UI界面，看上去似乎有些复杂。 接下来将以木头合成煤炭为例解释UI内的各个部分作用。"
 }
 
 PutMainItemAndSelectRecipe: {
@@ -187,7 +187,15 @@ ExpandProductionLine: {
 	UseMoreRefractor: "   多多利用广角镜延长你的产线吧！"
 }
 
-RedJadePage.Title: 赤玉残卷
+RedJadePage: {
+	Title: 赤玉残卷
+	RedBerryDescription:
+		'''
+		    赤色果实：看上去是某种宝石形成的球形果实，偶尔生长在宝石树上。
+		    据说吃掉后就会在体内爆炸，能用它吸引来一只巨大的石头怪物。
+		    这只石头怪物和赤色果实有着相同的外观，并且能够使用相同的爆炸，但是爆炸的能量似乎是凭空产生的。
+		'''
+}
 
 Column: {
 	ColumnDescription:

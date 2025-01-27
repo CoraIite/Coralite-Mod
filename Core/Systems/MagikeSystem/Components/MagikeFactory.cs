@@ -112,12 +112,22 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             //无需存储工作时间以及是否在工作中
             tag.Add(preName + nameof(WorkTimeBase), WorkTimeBase);
             tag.Add(preName + nameof(WorkTimeBonus), WorkTimeBonus);
+
+            if (IsWorking)
+            {
+                tag.Add(preName + nameof(IsWorking), true);
+                tag.Add(preName + nameof(Timer), Timer);
+            }
         }
 
         public override void LoadData(string preName, TagCompound tag)
         {
             WorkTimeBase = tag.GetInt(preName + nameof(WorkTimeBase));
             WorkTimeBonus = tag.GetFloat(preName + nameof(WorkTimeBonus));
+
+            IsWorking = tag.ContainsKey(preName + nameof(IsWorking));
+            if (IsWorking)
+                Timer = tag.GetInt(preName + nameof(Timer));
         }
     }
 }

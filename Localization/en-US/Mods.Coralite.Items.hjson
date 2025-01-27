@@ -517,7 +517,7 @@ ShadowHead: {
 		Increases maximum mana by 60
 		10% reduced mana usage
 		'''
-	ArmorBonus: 
+	ArmorBonus:
 		'''
 		The Shadow Armor Ring guards you
 		   When using an item, the ring is charged according to the time of use
@@ -1524,16 +1524,6 @@ BloodJadeRangesWeapon: {
 	Tooltip: ""
 }
 
-MagikeGuideBook: {
-	DisplayName: Magike Guide Book
-	Tooltip: ""
-}
-
-MagikeNote1: {
-	DisplayName: Magike Note
-	Tooltip: ""
-}
-
 ShadowChain: {
 	DisplayName: Shadow Chain
 	Tooltip: ""
@@ -1592,7 +1582,8 @@ RuneParchment: {
 		[c/8e8e8e:The runes are impossible to decipher but small symbols hint at it being the recipe for a strange weapon.]
 			Sold by the Traveling Merchant after defeating Plantera
 			Please place it in the hotbar, you can't use it on the mouse!
-			'''
+			
+		'''
 }
 
 CraftLock: {
@@ -1912,11 +1903,11 @@ FlyingShieldToolbox: {
 
 HeavyWedges: {
 	DisplayName: Heavy Wedges
-	Tooltip: 
-	'''
-	Appears in chests
-	Reduces the flying speed of the Flying Shield, increases its size and melee damage.
-	'''
+	Tooltip:
+		'''
+		Appears in chests
+		Reduces the flying speed of the Flying Shield, increases its size and melee damage.
+		'''
 }
 
 DemonsProtection: {
@@ -4334,11 +4325,11 @@ FarAwaySky: {
 
 MagikeBasePage: {
 	DisplayName: Magike Base Page
-	Tooltip: 
-	'''
-	Left-click to learn the basics of magic and unlock the "Magike Fragment Part 1" in the Coralite Notes
-	Once lost in the Magic Crystal Cave underground...
-	'''
+	Tooltip:
+		'''
+		Left-click to learn the basics of magic and unlock the "Magike Fragment Part 1" in the Coralite Notes
+		Once lost in the Magic Crystal Cave underground...
+		'''
 }
 
 LeprechaunBait: {
@@ -4591,10 +4582,7 @@ BrilliantCalibrator: {
 
 BrilliantMagikeActivator: {
 	DisplayName: Brilliant Magike Activator
-	Tooltip:
-		'''
-		◇ Left-click to select an area to activate the magike machine in the area
-		'''
+	Tooltip: ◇ Left-click to select an area to activate the magike machine in the area
 }
 
 MagicCrystalTRFilter: {
@@ -4779,22 +4767,22 @@ ChalcedonyChest: {
 
 Princesstrawberry: {
 	DisplayName: Princesstrawberry
-	Tooltip: ""
+	Tooltip: "{$CommonItemTooltip.MinorStats}"
 }
 
 Woodbine: {
 	DisplayName: Woodbine
-	Tooltip: ""
+	Tooltip: "{$CommonItemTooltip.MinorStats}"
 }
 
 Buttermilk: {
 	DisplayName: Buttermilk
-	Tooltip: ""
+	Tooltip: "{$CommonItemTooltip.MajorStats}"
 }
 
 RoyalKonjac: {
 	DisplayName: Royal Konjac
-	Tooltip: ""
+	Tooltip: "{$CommonItemTooltip.MajorStats}"
 }
 
 SkarnBrickPlatform: {
@@ -4803,7 +4791,7 @@ SkarnBrickPlatform: {
 }
 
 StoneRelic: {
-	DisplayName: Stone Relic
+	DisplayName: Stones, the movement of geology
 	Tooltip: ""
 }
 
@@ -4819,58 +4807,94 @@ SmoothSkarnWallItem: {
 
 ConchHat: {
 	DisplayName: Conch Hat
-	Tooltip: ""
-	ArmorBonus: Mods.Coralite.Items.ConchHat.ArmorBonus
+	Tooltip:
+		'''
+		+20 max mana
+		+4% Magic crit chance
+		'''
+	ArmorBonus:
+		'''
+		When half of your mana is consumed, you gain the Bubble Blessing
+		which gives you the ability to run fast and gain +3 Defense
+		The bubble blessing lasts for a while and then disappears
+		'''
 }
 
 ConchRobe: {
 	DisplayName: Conch Robe
-	Tooltip: ""
+	Tooltip: +20 max mana
 }
 
 StoneMakerCore: {
-	DisplayName: Stone Maker Core
-	Tooltip: ""
+	DisplayName: Stones, condensed core
+	Tooltip:
+		'''
+		For crafting [i:Coralite/StoneMaker] {$Mods.Coralite.Items.StoneMaker.DisplayName}
+		{$Mods.Coralite.Systems.MultiblockSystem.PreviewMultiblock}
+		'''
 }
 
 PremissionAltar: {
-	DisplayName: Premission Altar
-	Tooltip: ""
+	DisplayName: Skarn Altar
+	Tooltip:
+		'''
+		A creation from ancient times.
+		granting access to the Crystalline Sky Island to creatures with souls of light and night
+		Offering the corresponding soul to the Skarn Altar of light and night,
+		and right-clicking on the block again will have an unexpected effect.
+		'''
 }
 
 SkarnBrickWallItem: {
-	DisplayName: Skarn Brick Wall Item
+	DisplayName: Skarn Brick Wall
 	Tooltip: ""
 }
 
 SoulOfLightAltar: {
-	DisplayName: Soul Of Light Altar
-	Tooltip: ""
+	DisplayName: Skarn Light Altar
+	Tooltip: Creatures from ancient times, offer the ancient soul of light to the altar
 }
 
 SoulOfNightAltar: {
-	DisplayName: Soul Of Night Altar
-	Tooltip: ""
+	DisplayName: Skarn Night Altar
+	Tooltip: Creatures from ancient times, offer the ancient soul of night to the altar
 }
 
 LASER: {
 	DisplayName: LASER
-	Tooltip: ""
+	Tooltip:
+		'''
+		Sends all the magike in itself to the apparatus directly in front of it at once
+		Used to transmit magike over long distances
+		{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}
+		'''
 }
 
 LASERCore: {
 	DisplayName: LASER Core
-	Tooltip: ""
+	Tooltip:
+		'''
+		For crafting [i:Coralite/LASER] {$Mods.Coralite.Items.LASER.DisplayName}
+		{$Mods.Coralite.Systems.MultiblockSystem.PreviewMultiblock}
+		'''
 }
 
 CogLens: {
 	DisplayName: Cog Lens
-	Tooltip: ""
+	Tooltip:
+		'''
+		Automatically produces magike
+		{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}
+		'''
 }
 
 CoraliteNote: {
 	DisplayName: Coralite Note
-	Tooltip: ""
+	Tooltip:
+		'''
+		Magical notes with magical powers, open the UI after use
+		When you touch something, you can automatically display relevant knowledge on it
+		'''
 }
 
 Phosphophyllite: {
@@ -4879,43 +4903,67 @@ Phosphophyllite: {
 }
 
 GlistentRelic: {
-	DisplayName: Glistent Relic
+	DisplayName: Glistent, sparkling brilliance
 	Tooltip: ""
 }
 
 EightsquareHand: {
 	DisplayName: Eightsquare Hand
-	Tooltip: ""
+	Tooltip: Increased the chance of the “Vibrant” prefix for gem weapons
 }
 
 HorizonArc: {
 	DisplayName: Horizon Arc
-	Tooltip: ""
+	Tooltip:
+		'''
+		Double tap a direction to dash and shoot a arc arrow
+		Dashing through hostile targets will make the Horizon Arc shine even more brightly
+		Has a short immunity during the dash
+		'''
 }
 
 VioletEmblem: {
 	DisplayName: Violet Emblem
-	Tooltip: ""
+	Tooltip: Increase a lot kinds of fortune, good luck will accompany you!
 }
 
 Turbulence: {
 	DisplayName: Turbulence
-	Tooltip: ""
+	Tooltip:
+		'''
+		Double tap a direction to dash and shoot turbulent arrows through enemies
+		Has a short immunity during the dash
+		[C/68c7dd: "Navigating the Clouds"]
+		'''
 }
 
 TurbulenceCore: {
 	DisplayName: Turbulence Core
-	Tooltip: ""
+	Tooltip:
+		'''
+		"It seems to be the product of Skeletron's weathered eyes, and you can hear the wind when you put it in your ears"
+		For crafting [i:Coralite/Turbulence] {$Mods.Coralite.Items.Turbulence.DisplayName}
+		{$Mods.Coralite.Systems.MultiblockSystem.PreviewMultiblock}
+		'''
 }
 
 FullMoon: {
 	DisplayName: Full Moon
-	Tooltip: ""
+	Tooltip:
+		'''
+		Double tap a direction to dash, crash into a hostile target, bounce back and release a Shadow Light
+		Shadow Light can ignore certain defenses
+		[c/8a43ff:"Dark purple giant bats fly in the sky, bringing moonlight to the world"]
+		'''
 }
 
 SeismicWave: {
 	DisplayName: Seismic Wave
-	Tooltip: ""
+	Tooltip:
+		'''
+		Double tap the down button to dash, creating a shockwave when it hits an enemy or the ground
+		[c/bac1ce:Vibrations from deep underground]
+		'''
 }
 
 WhiteGardenia: {
@@ -4924,29 +4972,38 @@ WhiteGardenia: {
 }
 
 DigUnloadItem: {
-	ContainsItemText: Mods.Coralite.Items.DigUnloadItem.ContainsItemText
-	DisplayName: Dig Unload Item
-	Tooltip: ""
+	ContainsItemText: "Contains: "
+	DisplayName: Temporarily unload item
+	Tooltip: "[c/e88ecb:Take it out of this world, there is no place for it in this world.]"
 }
 
 Glaciate: {
 	DisplayName: Glaciate
-	Tooltip: ""
+	Tooltip:
+		'''
+		Double tap a direction to dash, then shoot a wave of frost and buff your next attack
+		Ice blocks that hit a frost wave will explode ice spikes
+		'''
 }
 
 LeafShield: {
 	DisplayName: Leaf Shield
-	Tooltip: ""
+	Tooltip: It's just a giant leaf
 }
 
 WoodenShield: {
 	DisplayName: Wooden Shield
-	Tooltip: ""
+	Tooltip: Not very handy
 }
 
 Aurora: {
 	DisplayName: Aurora
-	Tooltip: ""
+	Tooltip:
+		'''
+		Double tap a direction to dash, then shoot a marker arrow
+		Aurora Arrows hitting marked enemies increases the number of tagged stacks
+		After a period of time, the marked arrow deals damage based on the number of marked stacks
+		'''
 }
 
 BlackPlush: {
@@ -4975,7 +5032,7 @@ BlackPlushBlock: {
 }
 
 BlackPlushBookcase: {
-	DisplayName: Black Plush Bookcase
+	DisplayName: Black Plush Cat Tree
 	Tooltip: ""
 }
 
@@ -5060,6 +5117,6 @@ BlackPlushWorkBench: {
 }
 
 BlackPlushWallItem: {
-	DisplayName: Black Plush Wall Item
+	DisplayName: Black Plush Wall Paper
 	Tooltip: ""
 }

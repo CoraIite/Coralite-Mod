@@ -743,6 +743,8 @@ namespace Coralite.Content.ModPlayers
         {
             if (CoraliteWorld.CoralCatWorld)
                 Player.QuickSpawnItem(Player.GetSource_FromThis(), ItemID.Meowmere);
+
+            Main.NewText(CoralteSystem.OnEnterWorld.Value,Color.Coral);
         }
     }
 }

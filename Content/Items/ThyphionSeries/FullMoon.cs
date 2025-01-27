@@ -252,7 +252,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                         if (Projectile.IsOwnedByLocalPlayer())//生成弹幕
                         {
                             Projectile.NewProjectileFromThis<FullMoonStrike>(Projectile.Center, Vector2.Zero
-                                , (int)(Owner.GetWeaponDamage(Owner.HeldItem) * 3.5f), 10, Projectile.whoAmI);
+                                , (int)(Owner.GetWeaponDamage(Owner.HeldItem) * 3f), 10, Projectile.whoAmI);
                         }
                         return;
                     }
@@ -618,6 +618,11 @@ namespace Coralite.Content.Items.ThyphionSeries
             {
                 Main.instance.CameraModifiers.Add(new PunchCameraModifier(Projectile.Center, Projectile.rotation.ToRotationVector2(), 10, 7, 5, 500));
             }
+        }
+
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            modifiers.ArmorPenetration += 35;
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)

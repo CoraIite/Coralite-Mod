@@ -1,8 +1,6 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Attributes;
-using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using Terraria;
 
 namespace Coralite.Content.Items.Glistent
@@ -23,7 +21,7 @@ namespace Coralite.Content.Items.Glistent
 
         public override void SetProperty()
         {
-            PRTDrawMode = PRTDrawModeEnum.AdditiveBlend;
+            PRTDrawMode = PRTDrawModeEnum.AlphaBlend;
         }
 
         public void UpdateFrame()

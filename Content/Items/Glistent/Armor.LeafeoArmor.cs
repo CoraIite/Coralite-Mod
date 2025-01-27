@@ -186,11 +186,8 @@ namespace Coralite.Content.Items.Glistent
                 if (Main.rand.NextBool())
                     return;
 
-                LeafeoShieldParticle prt = PRTLoader.GetPRTInstance<LeafeoShieldParticle>();
-                prt.Position = Projectile.Center;
-                prt.Velocity = Vector2.Zero;
-                prt.Color = Color.White;
-                prt.Scale = Main.rand.NextFloat(0.6f, 1);
+                LeafeoShieldParticle prt = PRTLoader.CreateAndInitializePRT<LeafeoShieldParticle>(Projectile.Center, Vector2.Zero
+                    , Color.White, Main.rand.NextFloat(0.6f, 1));
                 prt.OwnerIndex = Projectile.whoAmI;
                 particles.Add(prt);
             }

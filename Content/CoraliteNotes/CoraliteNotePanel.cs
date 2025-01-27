@@ -7,7 +7,7 @@ namespace Coralite.Content.CoraliteNotes
 {
     public class CoraliteNotePanel : UI_BookPanel
     {
-        public CoraliteNotePanel() : base(ModContent.Request<Texture2D>(AssetDirectory.MagikeGuideBook + "BookPanel", AssetRequestMode.ImmediateLoad)
+        public CoraliteNotePanel() : base(ModContent.Request<Texture2D>(AssetDirectory.CoraliteNote + "BookPanel", AssetRequestMode.ImmediateLoad)
             , 38, 100, 50, 50)
         {
 

@@ -1556,20 +1556,6 @@ BloodJadeRangesWeapon: {
 	Tooltip: 右键格挡攻击，成功格挡后获得BUFF，拥有BUFF时普通攻击可以产生爆破
 }
 
-MagikeGuideBook: {
-	DisplayName: 魔能辞典
-	Tooltip:
-		'''
-		该物品并未准备就绪...
-		记载着魔能的知识，物品栏内右键使用，使用鼠标滚轮翻页
-		'''
-}
-
-MagikeNote1: {
-	DisplayName: 古代研究员笔记
-	Tooltip: ""
-}
-
 ShadowChain: {
 	DisplayName: 影之链
 	Tooltip:
@@ -4964,11 +4950,11 @@ CogLens: {
 
 CoraliteNote: {
 	DisplayName: 珊瑚笔记
-	Tooltip: 
-	'''
-	具有魔力的神奇笔记
-	在接触一些事物时能够自动在上面显示相关的知识
-	'''
+	Tooltip:
+		'''
+		具有魔力的神奇笔记，使用后打开UI
+		在接触一些事物时能够自动在上面显示相关的知识
+		'''
 }
 
 Phosphophyllite: {
@@ -4991,7 +4977,7 @@ HorizonArc: {
 	Tooltip:
 		'''
 		双击方向键冲刺，并射出环彩箭
-		冲刺时穿过敌对目标会使棱彩的光辉更加耀眼
+		冲刺时穿过敌对目标会使环彩的光辉更加耀眼
 		冲刺过程中具有短暂无敌
 		'''
 }

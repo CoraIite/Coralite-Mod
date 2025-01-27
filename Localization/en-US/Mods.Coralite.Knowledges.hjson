@@ -1,133 +1,240 @@
 DescriptionPage: {
-	Description: Mods.Coralite.Knowledges.DescriptionPage.Description
-	HowToUse: Mods.Coralite.Knowledges.DescriptionPage.HowToUse
+	Description: Welcome to the world of Coral!
+	HowToUse:
+		'''
+		Click the button on the bottom edge of the page
+		  or use the mouse wheel to turn the page
+		Use the Coral Note again or press the backpack key to close
+		'''
 }
 
 GetMagikeKnowledge1Page: {
-	Title: Mods.Coralite.Knowledges.GetMagikeKnowledge1Page.Title
-	Welcome: Mods.Coralite.Knowledges.GetMagikeKnowledge1Page.Welcome
+	Title: Magike Fragment - Part 1
+	Welcome:
+		'''
+		    Welcome, newcomer!
+		    [c/ffbeec:Magike] It is an important tool for the development of human beings in ancient times, and people's technological level is inseparable from it by leaps and bounds.
+		    But in the end, because of some changes, there is now a desolate world.
+
+		    The purpose of this volume is to help you understand [c/ffbeec:Magike] relevant basic knowledge, and through practice, build your own [c/ffbeec:Magike] production line.
+		'''
+	ContiuneRead: "    You've earned [c/ffbeec: Magike Basics]! Follow the chapter to start your [c/ffbeec: Magike] journey!"
 	ClickButton: Mods.Coralite.Knowledges.GetMagikeKnowledge1Page.ClickButton
-	ContiuneRead: Mods.Coralite.Knowledges.GetMagikeKnowledge1Page.ContiuneRead
 }
 
 WhatIsMagikePage: {
-	Title: Mods.Coralite.Knowledges.WhatIsMagikePage.Title
-	Description: Mods.Coralite.Knowledges.WhatIsMagikePage.Description
+	Title: What is Magike?
+	Description:
+		'''
+		    Magike is a type of energy that can't exist as an item on its own, but can be stored in specific apparatus.
+		    As you may have noticed, in some recipes an item called the "Magike Emblem" is required, which is only used to mark the amount of magike required, not the item that is actually needed. 
+		    The Magike Emblem is also 
+		                  [c/ff1616: unobtainable by any means] !
+		    How to craft these recipe will be described later.
+		'''
 }
 
 PlaceFirstLens: {
-	BuildYourFirstMagike: Mods.Coralite.Knowledges.PlaceFirstLens.BuildYourFirstMagike
-	ExtractLens: Mods.Coralite.Knowledges.PlaceFirstLens.ExtractLens
-	FourWayPlace: Mods.Coralite.Knowledges.PlaceFirstLens.FourWayPlace
-	TryMouseHover: Mods.Coralite.Knowledges.PlaceFirstLens.TryMouseHover
+	BuildYourFirstMagike: Build first magike production line!
+	ExtractLens:
+		'''
+		    First, you'll need a device to produce magike. 
+		    Beginners can use the [C/FFBEEC: Basic Extract Lens], which can extract magike from "items that contain magike", and the early production is also quite impressive.
+		'''
+	FourWayPlace: "    Place it on ground, and it can be placed in 4 directions."
+	TryMouseHover:
+		'''
+		Try hover on it
+		        ↓
+		'''
 }
 
 PlacePolarizedFilter: {
-	NeedPolarizedFilter: Mods.Coralite.Knowledges.PlacePolarizedFilter.NeedPolarizedFilter
-	HowToUsePolarizedFilter: Mods.Coralite.Knowledges.PlacePolarizedFilter.HowToUsePolarizedFilter
-	SeeItemToolTip: Mods.Coralite.Knowledges.PlacePolarizedFilter.SeeItemToolTip
+	NeedPolarizedFilter:
+		'''
+		    To make your apparatus work, you also need a key item, which pundits call [c/ffbeec: Polarized filter].
+		    Let's make a magic crystal polarized filter first! Be careful not to make a mistake with other types of filters.
+		'''
+	HowToUsePolarizedFilter: "    It's easy to insertthe polarized filter, you only need to use the polarized filter item to select the frame, and release left click, then consume the item and put the polarized filter in."
+	SeeItemToolTip: "    You will make more polarized filters later, it's important to note that not all polarized filters can be successfully inserted. Please read the item description of the magike apparatus."
 }
 
 PutItemIn: {
-	WhatIsItemWithMagike: Mods.Coralite.Knowledges.PutItemIn.WhatIsItemWithMagike
-	TurnToMagikeProducer: Mods.Coralite.Knowledges.PutItemIn.TurnToMagikeProducer
+	WhatIsItemWithMagike:
+		'''
+		    "Item contains magike" will mark its magike amount in the item description, and the magic crystal can provide enough magike in the early stage, if it's lacking, go to the cave to dig some.
+		    In addition, the large number of magic crystal blocks in the crystal cave can also provide magike.
+		'''
+	TurnToMagikeProducer: "    Then, as shown below, put the magic crystal into the item slot to make your lens work! The spherical crystals on the apparatus will be suspended up when they are able to work."
 }
 
 UIDescriptionPage: {
-	OpenUI: Mods.Coralite.Knowledges.UIDescriptionPage.OpenUI
-	UIDescription: Mods.Coralite.Knowledges.UIDescriptionPage.UIDescription
+	OpenUI:
+		'''
+		    Before next step, let's learn few things you need to know.
+		    Right click the lens you just put down, if the item in your hand doesn't have function of right click, then a UI panel will be called.
+		    The functions of each area within the UI are as follows.
+		'''
+	UIDescription:
+		'''
+		[c/ffbeec:(1)] Displays the components in the apparatus, which can be slid using the mouse wheel. When you click it, right panel will display information about the component.
+		[c/ffbeec:(2)] Components panel, which displays information about the currently selected component.
+		[c/ffbeec:(3)] Click here to drag and drop the UI to zoom in.
+
+		Use left click on an empty area of the panel to freely drag and drop the UI panel to any position.
+		'''
 }
 
 StoneMaker: {
-	UseMagikeToDoSomething: Mods.Coralite.Knowledges.StoneMaker.UseMagikeToDoSomething
-	MakeAStoneMaker: Mods.Coralite.Knowledges.StoneMaker.MakeAStoneMaker
-	InsertPolarizedFilter: Mods.Coralite.Knowledges.StoneMaker.InsertPolarizedFilter
+	UseMagikeToDoSomething: What should magike used for?
+	MakeAStoneMaker:
+		'''
+		    [c/ffbeec:Geological Regenerate Altar]
+		    It consumes magike and duplicates the stone underneath, and can be used as a raw material in ore production, making it the easiest magike machine for beginners. Its item description details which stones can be reproduced.
+		'''
+	InsertPolarizedFilter:
+		'''
+		    Just like the previous basic extract lens, this "stone maker" also needs a polarized filter to work properly.
+		    If it can be produced, it will display stone icon at top. If place in right way, it will be similar to the one in the image below.
+		'''
 }
 
 PartJumpPage: {
-	P1Title: Mods.Coralite.Knowledges.PartJumpPage.P1Title
-	P2Title: Mods.Coralite.Knowledges.PartJumpPage.P2Title
-	P3Title: Mods.Coralite.Knowledges.PartJumpPage.P3Title
-	P4Title: Mods.Coralite.Knowledges.PartJumpPage.P4Title
-	P5Title: Mods.Coralite.Knowledges.PartJumpPage.P5Title
-	P6Title: Mods.Coralite.Knowledges.PartJumpPage.P6Title
-	P7Title: Mods.Coralite.Knowledges.PartJumpPage.P7Title
-	P8Title: Mods.Coralite.Knowledges.PartJumpPage.P8Title
+	P1Title: "{$WhatIsMagikePage.Title}"
+	P2Title: "{$PlaceFirstLens.BuildYourFirstMagike}"
+	P3Title: "{$StoneMaker.UseMagikeToDoSomething}"
+	P4Title: "{$CraftAltar.RemodelPolymerizeAndMagikeCraft}"
+	P5Title: "{$ExpandProductionLine.Title}"
+	P6Title: "{$INeedMoreMagike.Title}"
+	P7Title: 升级！升级！升级仪器！
+	P8Title: 百变滤镜
 }
 
 ConnectStaff: {
-	HowToMoveMagike: Mods.Coralite.Knowledges.ConnectStaff.HowToMoveMagike
-	ConnectStep1: Mods.Coralite.Knowledges.ConnectStaff.ConnectStep1
-	ConnectStep2: Mods.Coralite.Knowledges.ConnectStaff.ConnectStep2
-	UseConnectStaff: Mods.Coralite.Knowledges.ConnectStaff.UseConnectStaff
-	BuyConnectStaff: Mods.Coralite.Knowledges.ConnectStaff.BuyConnectStaff
+	HowToMoveMagike: "    Most apparatus can send magike, but they don't know who to send to. Use the Magike Connect Staff to connect your apparatus together in the following ways!"
+	ConnectStep1: ◇  Left click on the sender
+	ConnectStep2: ◇◇  Left click on the receiver
+	UseConnectStaff:
+		'''
+		    Sender has limited connect distance and capacity.
+		    Use connect staff right click a sender can open an UI, which can disconnect by clicking the button, or use the sender component in UI panel.
+		'''
+	BuyConnectStaff: "    [c/ffbeec:Magike Connect Staff] Sold by Crystal Robot, it provides the receiver's coordinates to the sender, thus establishing a connection between the two."
 }
 
 ActivatedTheMachine: {
-	BuyActivateStaff: Mods.Coralite.Knowledges.ActivatedTheMachine.BuyActivateStaff
-	HowToUseActivateStaff: Mods.Coralite.Knowledges.ActivatedTheMachine.HowToUseActivateStaff
-	WorkingBeLike: Mods.Coralite.Knowledges.ActivatedTheMachine.WorkingBeLike
-	HarvestTheProduct: Mods.Coralite.Knowledges.ActivatedTheMachine.HarvestTheProduct
+	BuyActivateStaff: "    Now all the preparations are complete, all that need is a signal to start working. Purchase a [c/ffbeec: Magike Activator] from Crystal Robot or use an electrical circuit to activate it."
+	HowToUseActivateStaff:
+		'''
+		 [c/ffbeec:Magike Activator]
+		 It only takes a click on the machine to activate it.
+		'''
+	WorkingBeLike: "    If the Geological Regenerate Altar is working, it should look like this."
+	HarvestTheProduct: "    Once the work is complete, the product can be harvested in UI."
 }
 
 ReadPage: {
-	Description: Mods.Coralite.Knowledges.ReadPage.Description
-	HowToUse: Mods.Coralite.Knowledges.ReadPage.HowToUse
+	Description:
+		'''
+			The page on the right contains all the knowledge
+			Click on the knowledge to jump to the corresponding chapter
+		'''
+	HowToUse: Collect all the pieces of knowledge!
 }
 
-FragmentPage.ClickToJump: Mods.Coralite.Knowledges.FragmentPage.ClickToJump
+FragmentPage.ClickToJump: Click to jump to the corresponding chapter
 
 CraftAltar: {
-	RemodelPolymerizeAndMagikeCraft: Mods.Coralite.Knowledges.CraftAltar.RemodelPolymerizeAndMagikeCraft
-	CraftACraftAltar: Mods.Coralite.Knowledges.CraftAltar.CraftACraftAltar
-	AltarUI: Mods.Coralite.Knowledges.CraftAltar.AltarUI
+	RemodelPolymerizeAndMagikeCraft: Remodel! Polymerize! Magike Craft!
+	CraftACraftAltar: "    To perform magike craft, you need to prepare a Basic Altar, and once placed, you will also need to insert a polarized filter to work properly."
+	AltarUI: "    Craft altar's UI, which seems to be a bit complicated. Next, we will use wood to craft coal as an example to explain how it work."
 }
 
 PutMainItemAndSelectRecipe: {
-	PutMainItemIntoAltar: Mods.Coralite.Knowledges.PutMainItemAndSelectRecipe.PutMainItemIntoAltar
-	SelectRecipe: Mods.Coralite.Knowledges.PutMainItemAndSelectRecipe.SelectRecipe
+	PutMainItemIntoAltar: "    First, put main item, wood, in top left slot. The primary item is the first item in the recipe, other than the “Magike Emblem”."
+	SelectRecipe: "    Step 2: Click the button on right to select the recipe. The craft altar has rudimentary auto-selection function, which can be dispensed with for items that only have one recipe."
 }
 
 CraftAltar2: {
-	ActiveAltar: Mods.Coralite.Knowledges.CraftAltar2.ActiveAltar
-	GetResult: Mods.Coralite.Knowledges.CraftAltar2.GetResult
+	ActiveAltar:
+		'''
+		    Step: Activate it. I know you might be confused, like, “Doesn't it need the magike in the apparatus enough for the recipe to activate?”
+		    Well... It used to be true, but now it doesn't need to.
+		'''
+	GetResult: "  Finally, wait for consuming magike, and then harvest in slot below."
 }
 
 PolymerizeCraft: {
-	ALotOfOtherItems: Mods.Coralite.Knowledges.PolymerizeCraft.ALotOfOtherItems
-	WhatIsPedestal: Mods.Coralite.Knowledges.PolymerizeCraft.WhatIsPedestal
-	PlacePedestal: Mods.Coralite.Knowledges.PolymerizeCraft.PlacePedestal
+	ALotOfOtherItems: "    Many magike recipe require secondary items in addition to the primary item, so let's take a look at how these recipe work."
+	WhatIsPedestal:
+		'''
+		    The basic pedestal is a great container for items. Make more and put them next to the craft altar.
+		    It doesn't need polarized filter, but it can change its appearance.
+		'''
+	PlacePedestal: "    What it looks like to put items in the pedestal."
 }
 
 PolymerizeCraft2: {
-	ConnectToPedestal: Mods.Coralite.Knowledges.PolymerizeCraft2.ConnectToPedestal
-	CheckAltar: Mods.Coralite.Knowledges.PolymerizeCraft2.CheckAltar
+	ConnectToPedestal: "    After that, use connect staff to connect craft altar to the pedestal, taking care not to reverse it."
+	CheckAltar: "    Check the altar, the display has turned blue, which means the item is enough. Next steps will not be demonstrated, please refer to the previous pages."
 }
 
 ExpandProductionLine: {
-	Title: Mods.Coralite.Knowledges.ExpandProductionLine.Title
-	Awkward: Mods.Coralite.Knowledges.ExpandProductionLine.Awkward
-	Refractor: Mods.Coralite.Knowledges.ExpandProductionLine.Refractor
-	UseMoreRefractor: Mods.Coralite.Knowledges.ExpandProductionLine.UseMoreRefractor
+	Title: Expand the production line!
+	Awkward:
+		'''
+		    After some trying, you should already have a complete primary production line. Are you troubled about the sender's connect is too short? Or the magike is full and stop producing?
+		    Both of these issues will be addressed in this chapter.
+		'''
+	Refractor: "    Refractor: An appasatus specially designed for sending magike, with a small footprint and a medium connection distance, it is more suitable for medium-distance magike transmission."
+	UseMoreRefractor: "   Make use of the Refractor to extend your production line!"
 }
 
-RedJadePage.Title: Mods.Coralite.Knowledges.RedJadePage.Title
+RedJadePage: {
+	Title: Fragment of red jade
+	RedBerryDescription:
+		'''
+		    Red Berry: Appears to be a spherical fruit formed by some kind of gemstone, occasionally growing on gem trees.
+		    It is said that when eaten, it explodes inside its body, and it can be used to attract a huge stone monster.
+		    This stone monster has the same appearance as the Red Fruit and is capable of using the same explosion, but the energy of the explosion appears to be generated out of thin air.
+		'''
+}
 
 Column: {
-	ColumnDescription: Mods.Coralite.Knowledges.Column.ColumnDescription
-	ColumnStack: Mods.Coralite.Knowledges.Column.ColumnStack
-	BigColumn: Mods.Coralite.Knowledges.Column.BigColumn
+	ColumnDescription:
+		'''
+		    Column: A device specially designed to store magike, with a close connection distance.
+		    It is capable of storing quite a lot of magike inside, and it is also very efficient at sending.
+		'''
+	ColumnStack: "    Unlike other apparatus, the Column cannot be placed on a wall, but its top can be used as platform for other apparatus to place."
+	BigColumn: "    How long does it take to fill a splendor level column?"
 }
 
 Prism: {
-	PrismDescription: Mods.Coralite.Knowledges.Prism.PrismDescription
-	PrismLevels: Mods.Coralite.Knowledges.Prism.PrismLevels
+	PrismDescription:
+		'''
+		    Prism: Can send magike to multiple containers. Same as refractor, it is also the best choice for medium-distance transmission.
+		    Although the send distance is not as good as refractor, it is better to have a large number of connections and a larger capacity than refractor.
+		'''
+	PrismLevels: "    The number of connections varies depending on the level of prism, and it will gradually increase as the level increases."
 }
 
 INeedMoreMagike: {
-	Title: Mods.Coralite.Knowledges.INeedMoreMagike.Title
-	NeedMoreMagike: Mods.Coralite.Knowledges.INeedMoreMagike.NeedMoreMagike
-	BiomeLens: Mods.Coralite.Knowledges.INeedMoreMagike.BiomeLens
-	DayTimeLens: Mods.Coralite.Knowledges.INeedMoreMagike.DayTimeLens
-	LiquidLens: Mods.Coralite.Knowledges.INeedMoreMagike.LiquidLens
+	Title: I Need More Magike！
+	NeedMoreMagike:
+		'''
+		    After the previous chapters, I believe that your magike production line has been basically rolled out, and now you have to solve the problem of magike.
+		    Although the basic extract lens is very convenient at the beginning, the items that can be consumed are limited after all, is there anything else that can produce magike?
+		'''
+	BiomeLens:
+		'''
+		    Biome Lens: Produce magike in specific biome. Most have strict requirements for Biome.
+		    Such as Forest Lens, it needs to be placed in forest, and can only be placed on grass blocks. You also need to fill grass or flowers wall on back.
+		'''
+	DayTimeLens: "    Light lens: Work depends on sunlight. For example, sunlight lens need to work during the day, while moonlight lens do the opposite."
+	LiquidLens:
+		'''
+		    Liquid Lens: Need to cosume liquid on bottom.
+		    The best way is to completely submerge it in liquid. Consuming liquids sounds like many trouble, but the corresponding amount of magike is far higher than that of other lens.
+		'''
 }
