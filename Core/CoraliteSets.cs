@@ -1,6 +1,8 @@
 ﻿using Coralite.Content.Bosses.Rediancie;
 using Coralite.Content.Items.RedJades;
 using System;
+using System.Collections.Generic;
+using Terraria;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
 
@@ -27,17 +29,16 @@ namespace Coralite.Core
         /// </summary>
         public static bool[] TileShadowCastle;
         /// <summary>
-        /// 会被判定为影子物块
+        /// 特殊绘制
         /// </summary>
         public static bool[] TileSpecialDraw;
 
-        public override void OnModLoad()
+        public static List<int> SpecialDraw=new List<int>();
+
+        public override void PostSetupContent()
         {
             InitAll();
-        }
 
-        public override void SetStaticDefaults()
-        {
             #region 爆炸弹幕
             ProjectileExplosible[ProjectileID.Bomb] = true;
             ProjectileExplosible[ProjectileID.BouncyBomb] = true;
@@ -78,6 +79,11 @@ namespace Coralite.Core
             TileShadowCastle[TileType<Content.Tiles.ShadowCastle.MercuryPlatformTile>()] = true;
             #endregion
 
+            foreach (var type in SpecialDraw)
+            {
+                if (TileSpecialDraw.IndexInRange(type))
+                    TileSpecialDraw[type] = true;
+            }
         }
 
         private void InitAll()

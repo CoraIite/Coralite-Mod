@@ -165,13 +165,18 @@ namespace Coralite.Helpers
 
             int frameX = tile.TileFrameX;
             int frameY = tile.TileFrameY;
+
+            int v = data.CoordinateWidth + data.CoordinatePadding;
+            if (v == 0)
+                v = 18;
+
             if (data != null)
             {
-                frameX %= data.Width * (data.CoordinateWidth + data.CoordinatePadding);
+                frameX %= data.Width * v;
                 frameY %= data.Height * 18;
             }
 
-            int x = frameX / (data.CoordinateWidth + data.CoordinatePadding);
+            int x = frameX / v;
             int y = frameY / 18;
             return new Point16(i - x, j - y);
         }

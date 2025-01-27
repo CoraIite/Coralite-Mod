@@ -24,7 +24,7 @@ namespace Coralite.Core.Prefabs.Tiles
             TileID.Sets.SwaysInWindBasic[Type] = true;
             TileID.Sets.MultiTileSway[Type] = true;
 
-            CoraliteSets.TileSpecialDraw[Type] = true;
+            CoraliteSets.SpecialDraw?.Add(Type);
 
             DustType = dustType;
 
