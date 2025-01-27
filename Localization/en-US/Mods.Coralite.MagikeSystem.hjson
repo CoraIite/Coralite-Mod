@@ -1,227 +1,43 @@
-C0_P1_BookName: {
-	BookName: Magike Guide
-	Author: Author: Coral
-}
-
-C1_P1_ChapterName.ChapterName: Chapter 1: Understanding Magike
-
-C1_P2_1_1_History1: {
-	_1_Name: 1.1 What is Magike
-	_1_1_Name: 1.1.1 The History of Magike
-	History1: "  A long time ago, the technological level of Terraria was not advanced, and due to the war between various races, the world was in chaos. It was during times like this that I came here. Among these races are my former compatriots: humans. They are very weak compared to dragons and fairies, but in them, I see my former self. So I decided to help them and lead them to the discovery of Magike. "
-}
-
-C1_P3_1_1_History2.History2: "    Soon after the discovery of Magike, humanity was able to slowly take back territories, however the cunning fairies were more adept at Magike. In the end, humanity won, but only due to me mediating with the other races and signed peace treaties in secret, nonetheless, this created an era of peace which allowed mankind to develop rapidly, villages turned to cities, all due to manipulating Magike to its fullest."
-C1_P4_1_1_History3.History3: "    Peace did not last for long, demonic entities from another world fell from the sky, it was a lengthy battle but my strength was not enough, my weakness lead to not only the annihilation of mankind but to the whole world."
-C1_P5_1_1_History4.History4: "    The situation was dire, in desperation, I pried open an portal which lead me to another untrodden world, this one. I know I won't be safe for long, that's why I wrote this book and left to be protected by a crystal guardian created by the fairies."
-C1_P6_1_1_History5.History5: "    To you, reader, to be able to destroy the guardian shows that you're able to handle the power that this book is imbued with. The knowledge you will learn is too much for any man but you will master it in due time. Keep expanding your knowledge to unlock the content in the book. I wish you good luck!"
-
-C0_P2_Catalog: {
-	Index: Index
-	Chapter1: -Chapter 1 Understanding Magike-
-	Chapter2: -Chapter 2 The Discovery of Magike-
-	Chapter3: -Chapter 3 The basic instruments-
-	Chapter4: -Chapter 4 The handheld instruments-
-}
-
-C1_ChapterName: {
-	ChapterName: Chapter 1 Understanding Magike
-	History: -The history of magike-
-	Property: -The nature of magike-
-	Classify: -The classification of magike-
-	Origin: -The origin of magike-
-	Function: -The function of magike-
-	Instrument: -How to harness magike-
-}
-
-C1_1_1_History1: {
-	_1_Name: 1.1 What is magike?
-	_1_1_Name: 1.1.1 The history of magike
-	History1: "    A long time ago, the technological level of Terraria was not advanced, and due to the war between various races, the world was in chaos. It was during times like this that I came here. Among these races are my former compatriots: humans. They are very weak compared to dragons and fairies, but in them, I see my former self. So I decided to help them and lead them to the discovery of Magike."
-}
-
-C1_1_1_History2.History2: "    Soon after the discovery of Magike, humanity was able to slowly take back territories, however the cunning fairies were more adept at Magike. In the end, humanity won, but only due to me mediating with the other races and signed peace treaties in secret, nonetheless, this created an era of peace which allowed mankind to develop rapidly, villages turned to cities, all due to manipulating Magike to its fullest."
-C1_1_1_History3.History3: "    Peace did not last for long, demonic entities from another world fell from the sky, it was a lengthy battle but my strength was not enough, my weakness lead to not only the annihilation of mankind but to the whole world."
-C1_1_1_History4.History4: "    The situation was dire, in desperation, I pried open an portal which lead me to another untrodden world, this one. I know I won't be safe for long, that's why I wrote this book and left to be protected by a crystal guardian created by the fairies。"
-C1_1_1_History5.History5: "    To you, reader, to be able to destroy the guardian shows that you're able to handle the power that this book is imbued with. The knowledge you will learn is too much for any man but you will master it in due time. Keep expanding your knowledge to unlock the content in the book. I wish you good luck!"
-
-C1_1_2_Property: {
-	_1_2_Name: 1.1.2 The nature of magike
-	Property1: "    You've noticed the blue stars under your health bar right? That's your mana, which has nothing to do with magike。"
-	Property2: "    Magike is a type of phenomena, but you can break it down and stored. With special instruments, magike can be stored and be used to power certain tools as well."
-}
-
-C1_1_3_Classify: {
-	_1_3_Name: 1.1.2 The nature of magike
-	Classify: "    Most devices will consume just basic unfiltered magike, however, with greater control of magike, you can use magike with special properties, such as growth, freezing, burning, etc. The details of this type of magike will be explained in later chapters."
-}
-
-C1_2_Origin: {
-	_2_Name: 1.2 The source of magic energy
-	Origin1: "    Magike appears naturally deep underground in the form of crystals, through seismic movements, these crystals become infused into basalt which makes them into a great conductor of magike."
-	Origin2: "    In addition to natural magike, there are lens made from certain material that can generate magike though only in certain conditions。"
-}
-
-C1_2_Origin1: {
-	_2_Name: 1.2 The source of magic energy
-	Origin1: "    Magike appears naturally deep underground in the form of crystals, through seismic movements, these crystals become infused into basalt which makes them into a great conductor of magike.。"
-	Origin2: "    In addition to natural magike, there are lens made from certain material that can generate magike though only in certain conditions。"
-}
-
-C1_2_Origin2.Origin3: "    You've probably noticed the crystal lifeforms that spawn after dark and in crystal caves, these creatures are powered by magike and of course will drop magike crystals when destroyed, an important source of magike. Interestingly enough, it seems that they don't form naturally but the origin is unknown.。"
-
-C1_3_Function: {
-	_3_Name: 1.3 The function of magike
-	Function1: "    The old masters of magike knew the weaknesses of the flesh and knew that their magike output was limited. To circumvent this, they created wands and staffs which allowed for greater output. Though this magic cannot regenerate naturally, it does allow for broader range of magic such as creating crystal frameworks or ice/snow that melts。"
-	Function2: "    In addition to portable items, most magike instruments needs to be placed down and you can see the storage limit by hovering your mouse over it."
-}
-
-C1_4_1_WhatIsInstrument: {
-	_4_Name: 1.4 How to harness magike
-	_4_1_Name: 1.4.1 Why use instruments?
-	WhatIsInstrument: "    After relentless research, articulate machinery were created to harness magike with great efficiency. Some were made to store magike while others use magike to function. Many take the appearance of an lens as the property of magike is very similar to light."
-}
-
-C1_4_2_ClassifyOfInstrument: {
-	_4_2_Name: 1.4.2 Classification of Magike Instruments
-	Classify1: "    Production Class Instruments: Lenses, which produce magike under certain conditions."
-	Classify2: "    Transmission Class Instruments: Wide-angle lenses, with stronger conductivity and smaller storage. There are also special wide-angle lenses like the multifaceted mirror, sacrificing some transmission distance for more connections."
-	Classify3: "    Storage Class Instruments: Crystal pillars, the perfect tool for magike storage due to it's great volume."
-	Classify4: The above three are the most basic magike instruments, which need to be placed down to work. Besides, there are instruments collectively called "Magike Factories" that can perform item reshaping, magike infusion, aggregation, or shooting special attack bullets, etc.
-}
-
-C2_ChapterName: {
-	ChapterName: Chapter 2 Discovery
-	CrystalCave: Uncovering the crystal caves
-}
-
-C2_1_CrystalCave1: {
-	_2_Name: 1.1 What is Magike?
-	CrystalCave1: Exploring this continent of Terraria is exciting. You might find the nest of the antlions, the temple of the lihzahrdmen in the jungle, or the dungeon filled with skeletons, or the city of shadows... oh, I seem to have said too much. These fascinating terrains are not the focus; what matters is being able to collect "Magike crystals" at the magike crystal cave。
-	Date: 【Terrarian Calendar 235th Year, November 15th】
-	CrystalCave2: "    After careful consideration, I decided to join the magike exploration team, seeking this unique formation according to Coral's guidance. Speaking of Coral, she suddenly appeared in the king's hall a few days ago, scaring the guards thinking she was an assassin, they all rushed over. At that moment, she took out a mysterious orange crystal, releasing it's tremendous energy which blew a hole through the ceiling. I happened to pass by, peeking through the crack after the explosion, there seemed to be a pink-haired person with blue horns on her head.。"
-	CrystalCave3: Soon enough, the king issued an urgent notice, forming an expedition team to investigate underground and find the magike cave, according to Coral's words. I wonder if this so-called "magike" is reliable, what if we're fooled? But there's hope to  be grasped, in this moment of chaos, there aren't any other options.
-}
-
-C2_1_CrystalCave2: {
-	Date: 【Terrarian Calendar 235th Year, November 16th】
-	CrystalCave1: "    Today we set off from a mountain in the north of the kingdom towards the mines, perhaps due to that influence, the frequency of monsters has increased. Various slimes and skeletons in the cavern have already killed two of our members, I need to be careful. The atmosphere is tense, if this continues, we might all die。"
-}
-
-C2_1_CrystalCave3: {
-	Date: 【Terrarian Calendar 235th Year, November 18th】
-	CrystalCave1: "    In the afternoon, during our descent, we discovered a creature we had never seen before. Its crystal body shined a pink glow, we must not be far from our objective. However, its strength was overwhelming, and the laser it emitted caused parts of the cave to collapse. Due to the aftermath, the team and I got lost, what should we do now? The only good news is that we found pink crystals nearby and unfamiliar black stones. We've explored here many times before and never found anything like this, the objective is close"
-}
-
-C2_1_CrystalCave4: {
-	Date: 【Terrarian Calendar 235th Year, November 19th】
-	CrystalCave1: "    Evading the creature, I barely entered the crystal cave. Inside, there were many large clusters of crystal pillars. After walking around for a bit, I found a resting spot in the center. It's a very hidden entrance, unlikely to be discovered. After settling down, I want to try assembling some of these crystals around me using the method Coral showed us. But looking at this seemingly simple structure, could it really have such a massive energy output? I still find it hard to believe.。"
-}
-
-C2_1_CrystalCave5: {
-	Date: 【Terrarian Calendar 235th Year, November 22nd】
-	CrystalCave1: "    Success! after several days of tinkering, I finally achieved something. After processing and polishing the magic crystals into an elliptical shape, they exhibited unique properties, capable of hovering near the ground for a short time, truly amazing, sometimes immersing oneself in research alone isn't so bad, it keeps the mind focused."
-}
-
-C2_1_CrystalCave6: {
-	Date: 【Terrarian Calendar 235th Year, November 23rd】
-	CrystalCave1: "    While studying these crystals, I noticed some reaction from the surrounding obsidian. So, I tried making a rough base and placed the elliptical crystal on top. This crystal emitted a shimmering pink light, almost attracting those monsters. I decided to take my research findings back to the surface, it's just too dangerous here。"
-}
-
-C2_1_CrystalCave7: {
-	Date: 【Terrarian Calendar 235th Year, November 23rd】
-	CrystalCave1: "    It's tough, the research notes were lost due to an surprise attacks by monster. Luckily, I have a good memory, and most importantly, I have enough of the crucial magike crystals and obsidian, that's good news. Enough of these troubles, today's research discovery is that the combination of magike crystals and obsidian bases emits pink light with the ability to transmute objects. Specifically, it seems to have restructured the properties of objects, I need to tinker some more, and look for Tim, he should be able to master this technique."
-	Description: This happened right after I informed everyone about the magike. Their leaders took it seriously, despite the many casualties caused by the war between dragons and fairies, they still quickly formed an expedition team. "To protect our people, I will try any means necessary" the leader said. Here's a follow-up I think you'll find useful for writing about the knowledge mentioned.
-}
-
-C3_ChapterName.ChapterName: Chapter 3 Types of instruments
-
-C3_BasicInstrument: {
-	Origin2: "    Right-click to open its panel, you can put items inside, wait a little while, and it will automatically start producing magike and storing it within itself.。"
-	Origin1: "    These most basic lenses require items containing magike to produce magike, or simply understood as converting items into magike. Items containing magike will be marked in the item description showing how much magike the item contains."
-	TitleName: Basic Instruments
-}
-
-C3_BasicLens: {
-	TitleName: Basic Lens
-	BasicLens1: "    These most basic lenses require items containing magike to produce magike, or simply understood as converting items into magike. Items containing magike will be marked in the item description showing how much mana the item contains."
-	BasicLens2: "    Right-click to open its panel, you can put items inside, wait a little while, and it will automatically start producing mana and storing it within itself."
-}
-
-C3_BiomeLens: {
-	TitleName: Biome Lens
-	BiomeLens1: "    These biome lenses can only be placed when you are in a specific biome. When placed, it will work automatically and produce magike。"
-	ForestLens: "    The forest lens needs to be placed in the surface forest. The chirping of birds in the morning woods, flowers blooming with the rising sun. The dark green crystal floats on moss-covered forest stones。"
-}
-
-C1_4_3_HowToUseInstrument: {
-	_4_3_Name: 1.4.3 How to Use Magike Instruments
-	HowToUse: Devices with sending capabilities need to be connected using a magike link device to transfer magike. "Mana factories" that can perform specific tasks need to be activated using a magike activation rod or circuit. Specific usage instructions click the button below to jump to the designated location。
-}
-
-C3_BiomeLens1: {
-	TitleName: Biome Lens
-	BiomeLens1: "    These biome lenses can only be placed when you are in a specific biome. When placed, it will work automatically and produce magike。"
-	ForestLens: "    The forest lens needs to be placed in the surface forest. The chirping of birds in the morning woods, flowers blooming with the rising sun. The dark green crystal floats on moss-covered forest stones。"
-	MarbleLens: "    The marble lens needs to be placed in the marble biome. The white caves underground echo with knocking sounds, where skeletal warriors clad in armor wander. White octahedral stones encase the central crystal, floating on a similarly white base."
-	GraniteLens: "    The granite lens needs to be placed in the granite environment. The deep blue caves underground resonate with the sound of flowing water, blue mysterious energy drives the floating granites. Deep blue stones encase the central crystal, floating on a deep blue base.。"
-}
-
-C3_BiomeLens2: {
-	TitleName: Biome Lens
-	HellLens: "    The hell lens needs to be placed in the hell biome. Deeper than lava, there is a vast space, the residence of sinners. Obsidian carved into demon skull shapes encase the central crystal, floating atop a prison stone base."
-	GlowingMushroomLens: "    The glowing mushroom lens needs to be placed in the glowing mushroom biome. Blue lights illuminate the depths of the earth, one of the few sources of light underground. It is said that a rare bat lives in this place. The mycelium of the glowing mushrooms encases the central crystal, floating atop the stipe."
-	BoneLens: "    The bone lens needs to be placed in the dungeon biome. Echoes of moans reverberate through the deep corridors, the spirits of the dungeon discussing their next meal. Crystals embedded in twisted bones float atop dungeon bricks."
-}
-
-C4_ChapterName.ChapterName: Chapter 4 Handheld instrument
-
-C4_ConnectStaff: {
-	TitleName: Magike Link Device
-	ConnectStaff1: "    Connections between magike instruments need to be manually established, and the magike link device is born for this purpose. Left-click on a magike instrument with sending functionality to bring up a panel, the empty slot on the panel is the connection slot for that instrument. Clicking the slot begins the connection process. Most instruments have a transmission distance limit, beyond which the connection line turns red."
-	ConnectStaff2: "    Clicking on another magike instrument within range establishes a connection between the two, magike will automatically be sent from the transmitter to the receiver."
-}
-
 MagikeSystem: {
-	learnedMagikeBase: Crafting can be achieved by learning "Pages: Magike base".
-	learnedMagikeAdvanced: Crafting can be achieved by learning "Pages: Magike advanced".
-	NewKnowledgeUnlocked: New knowledge has been unlocked
+	learnedMagikeBase: Need to learn "Pages: Magike base".
+	learnedMagikeAdvanced: Need to learn "Pages: Magike advanced".
+	NewKnowledgeUnlocked: New knowledge has been unlocked in Coralite Note
 	Error: A fatal mistake has occurred! Please rearrange the block!
 	PolarizedFilterTooltip:
 		'''
-		Left-click to select the area
-		 release and insert a filter into the magike apparatus in the area and polarize it to the filter level
-		Right-click to deselect
+		◇ Left-click to select the area
+		    release and insert a filter into the magike apparatus in the area and polarize it to the filter level
+		◇ Right-click to deselect
 		'''
 	TotalReflectionFilterTooltip:
 		'''
-		Left-click to select a region
-		Release it and look for a magike apparatus in the area with a [c/80d3ff:Magike Container]
-		and [c/80d3ff:increase their magike volumn]
+		◇ Left-click to select a region
+		    Release it and look for a magike apparatus in the area with a [c/80d3ff:Magike Container]
+		◇ and [c/80d3ff:increase their magike volumn]
 		'''
 	DiffractionFilterFilterTooltip:
 		'''
-		Left-click to select a region
-		Release it and look for a magike apparatus in the area with a [c/80d3ff:Magike Sender]
-		and [c/80d3ff:increase their unit delivery]
+		◇ Left-click to select a region
+		    Release it and look for a magike apparatus in the area with a [c/80d3ff:Magike Sender]
+		◇ and [c/80d3ff:increase their unit delivery]
 		'''
 	InterferenceFilterTooltip:
 		'''
-		Left-click to select a region
-		Release it and look for a magike apparatus in the area with a [c/80d3ff:Liner Connector]
-		and [c/80d3ff:increase their connect capacity]
+		◇ Left-click to select a region
+		    Release it and look for a magike apparatus in the area with a [c/80d3ff:Liner Connector]
+		◇ and [c/80d3ff:increase their connect capacity]
 		'''
 	PulseFilterTooltip:
 		'''
-		Left-click to select a region
-		Release it and look for a magike apparatus in the area with a [c/80d3ff:Timer] 
-		and [c/80d3ff:reduce the timer CD]
+		◇ Left-click to select a region
+		    Release it and look for a magike apparatus in the area with a [c/80d3ff:Timer] 
+		◇ and [c/80d3ff:reduce the timer CD]
 		'''
 	ExcitedFilterTooltip:
 		'''
-		Left-click to select a region
-		Release it and look for a magike apparatus in the area with [c/80d3ff:Magike Producer]
-		and [c/80d3ff:increase the amount of production per time]. ([c/ff1919:Note! Some special producers are not affected by this bonus！])
+		◇ Left-click to select a region
+		    Release it and look for a magike apparatus in the area with [c/80d3ff:Magike Producer]
+		◇ and [c/80d3ff:increase the amount of production per time]. ([c/ff1919:Note! Some special producers are not affected by this bonus！])
 		'''
 
 	Staffs: {
@@ -252,8 +68,8 @@ MagikeSystem: {
 		MagikeContainerNotFound: Magike Container Not Found!
 		MagikeSenderNotFound: Magike Sender Not Found!
 		MagikeLinerSenderNotFound: Liner Connector Not Found!
-		MagikeProducerNotFound: Mods.Coralite.MagikeSystem.MagikeSystem.Filter.MagikeProducerNotFound
-		TimerNotFound: Mods.Coralite.MagikeSystem.MagikeSystem.Filter.TimerNotFound
+		MagikeProducerNotFound: Magike Producer Not Found!
+		TimerNotFound: Timer Not Found!
 	}
 
 	ItemDescriptionPolarizedFilter: Insertable polarized filters：
@@ -327,7 +143,7 @@ MagikeSystem: {
 		LavaCondition:
 			'''
 			  ▶ Lava on the bottom needs to be consumed
-			  ▶ Each tile on the base consumes 1 / 16 of Lava
+			  ▶ Each tile on the base consumes 1 / 32 of Lava
 			'''
 		HellLensName: Hell Lens
 		HellCondition: "  ▶ The bottom needs to be placed on the Ash or Underworld building block"
@@ -335,13 +151,13 @@ MagikeSystem: {
 		WaterflowCondition:
 			'''
 			  ▶ Water on the bottom needs to be consumed
-			  ▶ Each tile on the base consumes 1 / 16 of Water
+			  ▶ Each tile on the base consumes 1 / 32 of Water
 			'''
 		HoneyLensName: Honey Lens
 		HoneyCondition:
 			'''
 			  ▶ Honey on the bottom needs to be consumed
-			  ▶ Each tile on the base consumes 1 / 16 of Honey
+			  ▶ Each tile on the base consumes 1 / 32 of Honey
 			'''
 		DungeonLensName: Dungeon Lens
 		DungeonCondition:
@@ -371,10 +187,10 @@ MagikeSystem: {
 		LaserCollectorName: Laser Collector
 		LaserCollectorOutPut: Produce
 		LaserCollectorCost: "Magike Cost: "
-		PluseSenderName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.PluseSenderName
-		CogLensName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.CogLensName
-		NeedPolarizedFilter: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.NeedPolarizedFilter
-		CurrentLevel: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.CurrentLevel
+		PluseSenderName: LASER Sender
+		CogLensName: Cog Lens
+		NeedPolarizedFilter: ◇ [c/ff0000:Need Polarized Filter!]
+		CurrentLevel: ◇ Current Level：
 	}
 
 	CraftText: {
@@ -391,59 +207,59 @@ MagikeSystem: {
 	}
 
 	CanMagikeCraft: Magike craft material
-	ItemMagikeAmount: "Magike Content: "
+	ItemMagikeAmount: "{0} magike can be extracted"
 
 	UIPanelText: {
-		MagikeContainer: Mods.Coralite.MagikeSystem.MagikeSystem.UIPanelText.MagikeContainer
-		MagikeSender: Mods.Coralite.MagikeSystem.MagikeSystem.UIPanelText.MagikeSender
-		MagikeProducer: Mods.Coralite.MagikeSystem.MagikeSystem.UIPanelText.MagikeProducer
-		MagikeFactory: Mods.Coralite.MagikeSystem.MagikeSystem.UIPanelText.MagikeFactory
-		Filter: Mods.Coralite.MagikeSystem.MagikeSystem.UIPanelText.Filter
-		ItemContainer: Mods.Coralite.MagikeSystem.MagikeSystem.UIPanelText.ItemContainer
-		GetOnlyItemContainer: Mods.Coralite.MagikeSystem.MagikeSystem.UIPanelText.GetOnlyItemContainer
-		ItemSender: Mods.Coralite.MagikeSystem.MagikeSystem.UIPanelText.ItemSender
-		ShowAll: Mods.Coralite.MagikeSystem.MagikeSystem.UIPanelText.ShowAll
-		CloseAll: Mods.Coralite.MagikeSystem.MagikeSystem.UIPanelText.CloseAll
-		Show: Mods.Coralite.MagikeSystem.MagikeSystem.UIPanelText.Show
-		Close: Mods.Coralite.MagikeSystem.MagikeSystem.UIPanelText.Close
-		ClickToShow: Mods.Coralite.MagikeSystem.MagikeSystem.UIPanelText.ClickToShow
-		ClickToClose: Mods.Coralite.MagikeSystem.MagikeSystem.UIPanelText.ClickToClose
-		ApparatusInformation: Mods.Coralite.MagikeSystem.MagikeSystem.UIPanelText.ApparatusInformation
+		MagikeContainer: Magike Container
+		MagikeSender: Magike Sender
+		MagikeProducer: Magike Producer
+		MagikeFactory: Magike Factory
+		Filter: Filter
+		ItemContainer: Item Container
+		GetOnlyItemContainer: Get Only ItemC ontainer
+		ItemSender: Item Sender
+		ShowAll: Show All
+		CloseAll: Close All
+		Show: Show
+		Close: Close
+		ClickToShow: Click To Show
+		ClickToClose: Click To Close
+		ApparatusInformation: Apparatus Information
 	}
 
-	PressShiftToShowMore: Mods.Coralite.MagikeSystem.MagikeSystem.PressShiftToShowMore
-	RightClickStopCraft: Mods.Coralite.MagikeSystem.MagikeSystem.RightClickStopCraft
+	PressShiftToShowMore: "[c/808080:Press shift to show more]"
+	RightClickStopCraft: Right click to stop crafting
 
 	MALevelText: {
-		None: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.None
-		MagicCrystal: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.MagicCrystal
-		Glistent: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.Glistent
-		Crimson: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.Crimson
-		Corruption: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.Corruption
-		Icicle: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.Icicle
-		Shadow: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.Shadow
-		CrystallineMagike: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.CrystallineMagike
-		Hallow: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.Hallow
-		Soul: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.Soul
-		Feather: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.Feather
-		HolyLight: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.HolyLight
-		SplendorMagicore: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.SplendorMagicore
-		Seashore: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.Seashore
-		Eiderdown: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.Eiderdown
-		RedJade: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.RedJade
-		Emperor: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.Emperor
-		Beeswax: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.Beeswax
-		Hellstone: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.Hellstone
-		Bone: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.Bone
-		Quicksand: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.Quicksand
-		Pelagic: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.Pelagic
-		Flight: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.Flight
-		Forbidden: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.Forbidden
-		Frost: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.Frost
-		BloodJade: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.BloodJade
-		EternalFlame: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.EternalFlame
-		Shroomite: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.Shroomite
+		None: None
+		MagicCrystal: Magic Crystal
+		Glistent: Glistent
+		Crimson: Crimson
+		Corruption: Corruption
+		Icicle: Icicle
+		Shadow: Shadow
+		CrystallineMagike: Crystalline Magike
+		Hallow: Hallow
+		Soul: Soul
+		Feather: Feather
+		HolyLight: HolyLight
+		SplendorMagicore: Splendor Magicore
+		Seashore: Seashore
+		Eiderdown: Eiderdown
+		RedJade: RedJade
+		Emperor: Emperor
+		Beeswax: Beeswax
+		Hellstone: Hellstone
+		Bone: Bone
+		Quicksand: Quicksand
+		Pelagic: Pelagic
+		Flight: Flight
+		Forbidden: Forbidden
+		Frost: Frost
+		BloodJade: BloodJade
+		EternalFlame: EternalFlame
+		Shroomite: Shroomite
 	}
 
-	ItemContainsMagike: Mods.Coralite.MagikeSystem.MagikeSystem.ItemContainsMagike
+	ItemContainsMagike: Contains magike
 }

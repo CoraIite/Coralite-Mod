@@ -16,7 +16,7 @@ namespace Coralite.Content.CoraliteNotes
         {
             Item.useStyle = ItemUseStyleID.HoldUp;
             Item.useTime = Item.useAnimation = 30;
-            Item.value = Item.sellPrice(0, 1);
+            Item.rare = ItemRarityID.Pink;
         }
 
         public override bool CanUseItem(Player player)

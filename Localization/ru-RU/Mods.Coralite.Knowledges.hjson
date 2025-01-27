@@ -16,8 +16,8 @@ GetMagikeKnowledge1Page: {
 
 		Этот том поможет вам понять основные основы [c/ffbeec:магической энергии] и с помощью практики создать свою собственную линию производства магической энергии.
 		'''
-	ClickButton: "    Если вы готовы, нажмите кнопку внизу страницы, чтобы начать читать эту главу!"
 	ContiuneRead: "    Вы получили [c/ffbeec:Основы магической энергии]! Следуйте за главой, чтобы начать свое путешествие в мир магической энергии!"
+	ClickButton: "    Если вы готовы, нажмите кнопку внизу страницы, чтобы начать читать эту главу!"
 }
 
 WhatIsMagikePage: {
@@ -187,7 +187,15 @@ ExpandProductionLine: {
 	UseMoreRefractor: "    Используйте больше широкоугольных линз для расширения своей производственной линии!"
 }
 
-RedJadePage.Title: Красный нефритовый фрагмент
+RedJadePage: {
+	Title: Красный нефритовый фрагмент
+	/* RedBerryDescription:
+		'''
+		    Red Berry: Appears to be a spherical fruit formed by some kind of gemstone, occasionally growing on gem trees.
+		    It is said that when eaten, it explodes inside its body, and it can be used to attract a huge stone monster.
+		    This stone monster has the same appearance as the Red Fruit and is capable of using the same explosion, but the energy of the explosion appears to be generated out of thin air.
+		''' */
+}
 
 Column: {
 	ColumnDescription: "    Кристальная колонна: прибор, предназначенный для хранения магической энергии. Его дальность соединения невелика, но он может хранить много энергии и имеет высокую эффективность передачи."

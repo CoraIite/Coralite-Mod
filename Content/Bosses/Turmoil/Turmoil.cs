@@ -2,8 +2,8 @@
 
 namespace Coralite.Content.Bosses.Turmoil
 {
-    public class Turmoil : ModNPC
-    {
-        public override string Texture => AssetDirectory.Turmoil + Name;
-    }
+    //public class Turmoil : ModNPC
+    //{
+    //    public override string Texture => AssetDirectory.Turmoil + Name;
+    //}
 }

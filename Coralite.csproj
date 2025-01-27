@@ -34,6 +34,7 @@
     <None Remove="effects\TurbulenceArrow.fx" />
     <None Remove="effects\TurbulenceWarp.fx" />
     <None Remove="localization\en-us\Mods.Coralite.Knowledges.hjson" />
+    <None Remove="mysterytools\old\OldMagikeGuideBook.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Assets\Bosses\SlimeEmperor\" />
