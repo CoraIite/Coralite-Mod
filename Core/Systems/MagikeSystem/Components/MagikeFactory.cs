@@ -26,7 +26,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public bool TimeResetable => false;
 
-        public bool UpdateTime()
+        public virtual bool UpdateTime()
         {
             Timer--;
 

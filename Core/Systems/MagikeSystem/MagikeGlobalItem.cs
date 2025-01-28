@@ -193,14 +193,13 @@ namespace Coralite.Core.Systems.MagikeSystem
         }
 
         /// <summary>
-        /// 给物品充能
+        /// 给物品充能，应该只传入正值，消耗魔能请使用<see cref="Cosume(int)"/>
         /// </summary>
         /// <param name="howManyMagike"></param>
         /// <returns></returns>
         public bool Charge(int howManyMagike)
         {
-            bool ChargeOrDischarge = howManyMagike >= 0;
-            if (Magike >= MagikeMax && ChargeOrDischarge)
+            if (FillUp)
                 return false;
 
             Magike += howManyMagike;
@@ -210,19 +209,22 @@ namespace Coralite.Core.Systems.MagikeSystem
         }
 
         /// <summary>
-        /// 消耗物品中的魔能
+        /// 消耗物品中的魔能，请传入正值
         /// </summary>
         /// <param name="howManyMagike"></param>
         /// <returns></returns>
         public bool Cosume(int howManyMagike)
         {
-            howManyMagike = Math.Abs(howManyMagike);
-
             if (Magike < howManyMagike)
                 return false;
 
-            Magike += howManyMagike;
+            Magike -= howManyMagike;
             return true;
         }
+
+        /// <summary>
+        /// 魔能是否满了
+        /// </summary>
+        public bool FillUp => Magike >= MagikeMax;
     }
 }

@@ -187,6 +187,10 @@ MagikeSystem: {
 		CogLensName: Механическая линза
 		NeedPolarizedFilter: ◇ [c/ff0000:Необходимо вставить поляризационный фильтр!]
 		CurrentLevel: ◇ Текущий уровень:
+		// CraftAltarBarMode: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.CraftAltarBarMode
+		// CraftAltarSlotMode: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.CraftAltarSlotMode
+		// CraftAltarIntoSlot: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.CraftAltarIntoSlot
+		// CraftAltarThrowOut: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.CraftAltarThrowOut
 	}
 
 	CraftText: {
@@ -258,4 +262,5 @@ MagikeSystem: {
 	}
 
 	ItemContainsMagike: Содержит магическую энергию
+	// RightClickRemoveRecipe: Mods.Coralite.MagikeSystem.MagikeSystem.RightClickRemoveRecipe
 }

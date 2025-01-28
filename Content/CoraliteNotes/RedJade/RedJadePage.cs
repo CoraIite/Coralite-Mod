@@ -60,11 +60,10 @@ namespace Coralite.Content.CoraliteNotes.RedJade
             float scale1 = 1f;
 
             tex = CoraliteAssets.RedJade.Rediancie.Value;
-            pos.Y += textSize.Y + 30 + tex.Height * scale1 / 2;
 
             //绘制图2
+            pos = Position + new Vector2(PageWidth/2, PageHeight -80- tex.Height * scale1 / 2);
             tex.QuickCenteredDraw(spriteBatch, pos, scale: scale1);
-
         }
     }
 }

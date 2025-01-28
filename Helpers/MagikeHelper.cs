@@ -20,11 +20,6 @@ namespace Coralite.Helpers
 {
     public static class MagikeHelper
     {
-        public static MagikeItem GetMagikeItem(this Item item)
-        {
-            return item.GetGlobalItem<MagikeItem>();
-        }
-
         /// <summary>
         /// 从实体上获取魔能容器，请使用<see cref="IsMagikeContainer(IEntity)"/>来检测是否为魔能容器
         /// </summary>
@@ -915,6 +910,23 @@ namespace Coralite.Helpers
         //    spriteBatch.Draw(mainTex, center, null, Color.White, 0, mainTex.Size() / 2, 1, 0, 0);
         //}
 
+        public static MagikeItem GetMagikeItem(this Item item)
+        {
+            return item.GetGlobalItem<MagikeItem>();
+        }
+
+        /// <summary>
+        /// 这个物品是否为可充能的物品
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        public static bool IsMagikeChargable(this Item item)
+        {
+            if (item.TryGetGlobalItem(out MagikeItem mi))
+                return mi.MagikeMax > 0;
+
+            return false;
+        }
 
         public static int IndexOfSelf(this MagikeComponent component)
             => component.Entity.IndexOf(component);

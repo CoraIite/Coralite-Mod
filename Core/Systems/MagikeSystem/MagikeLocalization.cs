@@ -18,6 +18,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         public static LocalizedText ItemMagikeAmount { get; private set; }
         public static LocalizedText PressShiftToShowMore { get; private set; }
         public static LocalizedText RightClickStopCraft { get; private set; }
+        public static LocalizedText RightClickRemoveRecipe { get; private set; }
 
         public static LocalizedText ItemContainsMagike { get; private set; }
 
@@ -31,6 +32,7 @@ namespace Coralite.Core.Systems.MagikeSystem
             ItemMagikeAmount = this.GetLocalization(nameof(ItemMagikeAmount));
             PressShiftToShowMore = this.GetLocalization(nameof(PressShiftToShowMore));
             RightClickStopCraft = this.GetLocalization(nameof(RightClickStopCraft));
+            RightClickRemoveRecipe = this.GetLocalization(nameof(RightClickRemoveRecipe));
             ItemContainsMagike = this.GetLocalization(nameof(ItemContainsMagike));
 
             this.GetLocalization("PolarizedFilterTooltip");
@@ -378,6 +380,12 @@ namespace Coralite.Core.Systems.MagikeSystem
             GetOnlyItemContainerName,
             NeedPolarizedFilter,
             CurrentLevel,
+            CraftAltarBarMode,
+            CraftAltarSlotMode,
+            CraftAltarIntoSlot,
+            CraftAltarThrowOut,
+            Charger,
+            ChargerItemNotFound,
 
             Count
         }

@@ -191,6 +191,10 @@ MagikeSystem: {
 		CogLensName: Cog Lens
 		NeedPolarizedFilter: ◇ [c/ff0000:Need Polarized Filter!]
 		CurrentLevel: ◇ Current Level：
+		CraftAltarBarMode: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.CraftAltarBarMode
+		CraftAltarSlotMode: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.CraftAltarSlotMode
+		CraftAltarIntoSlot: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.CraftAltarIntoSlot
+		CraftAltarThrowOut: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.CraftAltarThrowOut
 	}
 
 	CraftText: {
@@ -262,4 +266,5 @@ MagikeSystem: {
 	}
 
 	ItemContainsMagike: Contains magike
+	RightClickRemoveRecipe: Mods.Coralite.MagikeSystem.MagikeSystem.RightClickRemoveRecipe
 }

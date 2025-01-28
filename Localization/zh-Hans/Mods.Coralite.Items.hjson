@@ -5181,3 +5181,8 @@ BlackPlushWallItem: {
 	DisplayName: 黑色毛绒墙纸
 	Tooltip: ""
 }
+
+Solunar: {
+	DisplayName: 日月同辉
+	Tooltip: ""
+}

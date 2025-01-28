@@ -187,6 +187,10 @@ MagikeSystem: {
 		CogLensName: 机械透镜
 		NeedPolarizedFilter: ◇ [c/ff0000:需要插入偏振滤镜！]
 		CurrentLevel: ◇ 当前等级：
+		CraftAltarBarMode: 水平条模式，点击切换至简略网格
+		CraftAltarSlotMode: 简略网格模式，点击切换至水平条
+		CraftAltarIntoSlot: 合成后放入自身，点击切换至弹出
+		CraftAltarThrowOut: 合成后弹出物品，点击切换至放入自身
 	}
 
 	CraftText: {
@@ -258,4 +262,5 @@ MagikeSystem: {
 	}
 
 	ItemContainsMagike: 存储魔能
+	RightClickRemoveRecipe: 左键点击清空合成表
 }

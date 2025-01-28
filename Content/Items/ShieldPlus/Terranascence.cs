@@ -104,6 +104,9 @@ namespace Coralite.Content.Items.ShieldPlus
 
         public override void HoldItem(Player player)
         {
+            if (player.TryGetModPlayer(out CoralitePlayer cp))
+                cp.AddDash(this);
+
             if (player.ownedProjectileCounts[ModContent.ProjectileType<TerranascenceTag>()] < 1)
             {
                 Projectile.NewProjectile(player.GetSource_FromThis(), player.Center, Vector2.Zero, ModContent.ProjectileType<TerranascenceTag>()

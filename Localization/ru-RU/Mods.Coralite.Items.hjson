@@ -5171,3 +5171,8 @@ BlackPlushWallItem: {
 	DisplayName: Чёрные плюшевые обои
 	Tooltip: ""
 }
+
+Solunar: {
+	// DisplayName: Solunar
+	// Tooltip: ""
+}

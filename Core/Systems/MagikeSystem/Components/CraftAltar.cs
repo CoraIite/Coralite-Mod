@@ -42,6 +42,23 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// </summary>
         public float CostPercent { get; set; }
 
+        public ItemSpawnModes ItemSpawnMode { get; set; }
+
+        /// <summary>
+        /// 物品生成模式
+        /// </summary>
+        public enum ItemSpawnModes:byte
+        {
+            /// <summary>
+            /// 放入物品容器内
+            /// </summary>
+            IntoSlot,
+            /// <summary>
+            /// 丢出来
+            /// </summary>
+            ThrowOut
+        }
+
         public override void Initialize()
         {
             Upgrade(MALevel.None);
@@ -88,8 +105,33 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                     return;
 
             //生成物品并放入
-            if (Entity.TryGetComponent(MagikeComponentID.ItemGetOnlyContainer, out GetOnlyItemContainer container))
-                container.AddItem(ChosenResipe.ResultItem.type, ChosenResipe.ResultItem.stack);
+            switch (ItemSpawnMode)
+            {
+                default:
+                case ItemSpawnModes.IntoSlot:
+                    if (Entity.TryGetComponent(MagikeComponentID.ItemGetOnlyContainer, out GetOnlyItemContainer container))
+                        container.AddItem(ChosenResipe.ResultItem.type, ChosenResipe.ResultItem.stack);
+                    break;
+                case ItemSpawnModes.ThrowOut:
+                    {
+                        MagikeTP entity1 = Entity;
+                        Point16 pos1 = entity1.Position;
+                        Tile t1 = Framing.GetTileSafely(pos1);
+                        ModTile mt1 = TileLoader.GetTile(t1.TileType);
+
+                        if (mt1 is BaseCraftAltarTile altartile1)
+                        {
+                            GetMagikeAlternateData(pos1.X, pos1.Y, out TileObjectData data, out MagikeAlternateStyle alternate);
+                            float rotation = alternate.GetAlternateRotation();
+                            var level = MagikeSystem.FrameToLevel(t1.TileType, t1.TileFrameX / data.CoordinateFullWidth);
+
+                            Vector2 position = Helper.GetMagikeTileCenter(pos1.X, pos1.Y) + altartile1.GetFloatingOffset(rotation, level.Value);
+                            if (!VaultUtils.isClient)
+                                Item.NewItem(new EntitySource_TileUpdate(pos1.X, pos1.Y), position, ChosenResipe.ResultItem.type, ChosenResipe.ResultItem.stack);
+                        }
+                    }
+                    break;
+            }
 
             MagikeTP entity = Entity;
             Point16 pos = entity.Position;
@@ -502,7 +544,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             left += 8;
 
-            AddButtons(parent, left, ref top); //切换显示样式的按钮
+            AddButtons(parent, this, left, ref top); //切换显示样式的按钮
             AddController(parent, this, left, ref top);//控制器
             AddRecipeShow(parent, left, top);//添加合成条
         }
@@ -534,16 +576,18 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             parent.Append(list);
         }
 
-        public static void AddButtons(UIElement parent, float left, ref float top)
+        public static void AddButtons(UIElement parent, CraftAltar altar, float left, ref float top)
         {
             //CraftSelectButton selectButton = new();
             CraftShowButton showButton = new CraftShowButton();
+            CraftItemSpawnButton itemSpawnButton = new CraftItemSpawnButton(altar);
 
             //selectButton.SetTopLeft(left, top);
             showButton.SetTopLeft( /*+ selectButton.Width.Pixels*/ top, left);
-
+            itemSpawnButton.SetTopLeft(top, showButton.Width.Pixels + left);
             //parent.Append(selectButton);
             parent.Append(showButton);
+            parent.Append(itemSpawnButton);
 
             top += showButton.Height.Pixels;
         }
@@ -684,6 +728,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             if (IsWorking)
                 tag.Add(nameof(RequiredMagike), RequiredMagike);
+
+            if (ItemSpawnMode!=ItemSpawnModes.IntoSlot)
+                tag.Add(nameof(ItemSpawnMode), (byte)ItemSpawnMode);
         }
 
         public override void LoadData(string preName, TagCompound tag)
@@ -698,6 +745,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 RequiredMagike = tag.GetInt(nameof(RequiredMagike));
                 SetPerCost();
             }
+
+            if (tag.TryGet(nameof(ItemSpawnMode),out byte m))
+                ItemSpawnMode = (ItemSpawnModes)m;
         }
     }
 
@@ -802,7 +852,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                         ItemSlot.MouseHover(ref i, ItemSlot.Context.InventoryItem);
 
                         text = _altar.ChosenResipe.ResultItem.Name;
-                        text = string.Concat(text, Environment.NewLine, _altar.Entity.GetMagikeContainer().Magike, "/", _altar.ChosenResipe.magikeCost, Environment.NewLine, MagikeSystem.RightClickStopCraft.Value);
+                        text = string.Concat(text, Environment.NewLine, _altar.Entity.GetMagikeContainer().Magike, "/", _altar.ChosenResipe.magikeCost, Environment.NewLine, MagikeSystem.RightClickRemoveRecipe.Value);
                     }
                     else
                     {
@@ -992,11 +1042,76 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             if (IsMouseHovering)
             {
                 _scale = Helper.Lerp(_scale, 1.2f, 0.2f);
+
+                string text = CurrentShowStyle switch
+                {
+                    ShowStyle.VerticleLine => MagikeSystem.GetUIText(MagikeSystem.UITextID.CraftAltarBarMode),
+                    _ => MagikeSystem.GetUIText(MagikeSystem.UITextID.CraftAltarSlotMode),
+                };
+
+                UICommon.TooltipMouseText(text);
             }
             else
                 _scale = Helper.Lerp(_scale, 1f, 0.2f);
 
             var framebox = mainTex.Frame(2, 1, (int)CurrentShowStyle);
+            spriteBatch.Draw(mainTex, dimensions.Center(), framebox, Color.White, 0, framebox.Size() / 2, _scale, 0, 0);
+        }
+    }
+
+    public class CraftItemSpawnButton : UIElement
+    {
+        private float _scale = 1f;
+        private CraftAltar _altar;
+
+        public CraftItemSpawnButton(CraftAltar altar)
+        {
+            Texture2D mainTex = MagikeSystem.CraftItemSpawnButton.Value;
+
+            var frameBox = mainTex.Frame(2, 1);
+            this.SetSize(frameBox.Width + 6, frameBox.Height + 6);
+
+            _altar = altar;
+        }
+
+        public override void MouseOver(UIMouseEvent evt)
+        {
+            base.MouseOver(evt);
+            Helper.PlayPitched("Fairy/FairyBottleClick", 0.3f, 0.4f);
+        }
+
+        public override void LeftClick(UIMouseEvent evt)
+        {
+            base.LeftClick(evt);
+
+            _altar.ItemSpawnMode++;
+            if (_altar.ItemSpawnMode>CraftAltar.ItemSpawnModes.ThrowOut)
+                _altar.ItemSpawnMode = CraftAltar.ItemSpawnModes.IntoSlot;
+
+            Helper.PlayPitched("UI/Tick", 0.4f, 0);
+        }
+
+        protected override void DrawSelf(SpriteBatch spriteBatch)
+        {
+            Texture2D mainTex = MagikeSystem.CraftItemSpawnButton.Value;
+            var dimensions = GetDimensions();
+
+            if (IsMouseHovering)
+            {
+                _scale = Helper.Lerp(_scale, 1.2f, 0.2f);
+
+                string text = _altar.ItemSpawnMode switch
+                {
+                    CraftAltar.ItemSpawnModes.IntoSlot => MagikeSystem.GetUIText(MagikeSystem.UITextID.CraftAltarIntoSlot),
+                    _ => MagikeSystem.GetUIText(MagikeSystem.UITextID.CraftAltarThrowOut),
+                };
+
+                UICommon.TooltipMouseText(text);
+            }
+            else
+                _scale = Helper.Lerp(_scale, 1f, 0.2f);
+
+            var framebox = mainTex.Frame(2, 1, (int)_altar.ItemSpawnMode);
             spriteBatch.Draw(mainTex, dimensions.Center(), framebox, Color.White, 0, framebox.Size() / 2, _scale, 0, 0);
         }
     }

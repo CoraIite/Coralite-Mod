@@ -5121,3 +5121,8 @@ BlackPlushWallItem: {
 	DisplayName: Black Plush Wall Paper
 	Tooltip: ""
 }
+
+Solunar: {
+	DisplayName: Solunar
+	Tooltip: ""
+}

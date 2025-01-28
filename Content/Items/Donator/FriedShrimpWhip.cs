@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Dusts;
+using Coralite.Content.GlobalItems;
 using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
@@ -22,6 +23,7 @@ namespace Coralite.Content.Items.Donator
             Item.useTime = 30;
             Item.value = Item.sellPrice(0, 1);
             Item.rare = ModContent.RarityType<FriedShrimpRarity>();
+            CoraliteGlobalItem.SetEdibleDamage(Item);
         }
 
         public override bool AllowPrefix(int pre) => true;
