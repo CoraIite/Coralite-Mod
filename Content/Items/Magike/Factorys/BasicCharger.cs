@@ -7,7 +7,10 @@ using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Core.Systems.MagikeSystem.Tiles;
 using Terraria;
+using Terraria.DataStructures;
+using Terraria.Enums;
 using Terraria.ID;
+using Terraria.ObjectData;
 using static Coralite.Helpers.MagikeHelper;
 using static Terraria.ModLoader.ModContent;
 
@@ -28,10 +31,50 @@ namespace Coralite.Content.Items.Magike.Factorys
     }
 
     public class BasicChargerTile() : BaseChargerTile
-        (3, 1, Coralite.MagicCrystalPink, DustID.CorruptionThorns,topSoild:true)
+        (3, 1, Coralite.MagicCrystalPink, DustID.CorruptionThorns, topSoild: true)
     {
         public override string Texture => AssetDirectory.MagikeFactoryTiles + Name;
         public override int DropItemType => ItemType<BasicCharger>();
+
+        public override void SetStaticDefaults()
+        {
+            Main.tileFrameImportant[Type] = true;
+            Main.tileLavaDeath[Type] = false;
+            Main.tileSolid[Type] = true;
+            Main.tileSolidTop[Type] = true;
+            Main.tileNoAttach[Type] = true;
+            Main.tileTable[Type] = true;
+
+            TileID.Sets.IgnoredInHouseScore[Type] = true;
+
+            TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2);
+            TileObjectData.newTile.Width = 3;
+            TileObjectData.newTile.Height = 1;
+            TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.Table | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
+            TileObjectData.newTile.StyleHorizontal = false;
+            TileObjectData.newTile.WaterPlacement = LiquidPlacement.Allowed;
+            TileObjectData.newTile.LavaPlacement = LiquidPlacement.Allowed;
+            TileObjectData.newTile.UsesCustomCanPlace = true;
+            TileObjectData.newTile.Origin = new Point16(1, 0);
+            TileObjectData.newTile.CoordinateHeights = [18];
+
+            //默认防岩浆
+            TileObjectData.newTile.LavaDeath = false;
+            TileObjectData.newTile.WaterPlacement = LiquidPlacement.Allowed;
+            TileObjectData.newTile.LavaPlacement = LiquidPlacement.Allowed;
+
+            TileObjectData.addTile(Type);
+
+            AddMapEntry(Coralite.MagicCrystalPink);
+            DustType = DustID.CorruptionThorns;
+
+            MALevel[] levels = GetAllLevels();
+            if (levels == null || levels.Length == 0)
+                return;
+
+            //加载等级字典
+            MagikeSystem.RegisterApparatusLevel(Type, levels);
+        }
 
         public override MALevel[] GetAllLevels()
         {
