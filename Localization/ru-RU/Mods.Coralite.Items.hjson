@@ -1465,11 +1465,6 @@ CrystalSword: {
 	Tooltip: Расходует 1 магическую энергию для выстрела лучом
 }
 
-BrilliantCharger: {
-	DisplayName: Зарядная Станция Сияния
-	Tooltip: ПКМ для открытия интерфейса, положите предметы, которые могут накапливать магическую энергию, чтобы зарядить их
-}
-
 CrystalStaff: {
 	DisplayName: Магический Кристальный Посох
 	Tooltip: Расходует 1 магическую энергию для установки кристаллической рамы
@@ -5174,5 +5169,15 @@ BlackPlushWallItem: {
 
 Solunar: {
 	// DisplayName: Solunar
+	// Tooltip: ""
+}
+
+BasicCharger: {
+	// DisplayName: Basic Charger
+	// Tooltip: ""
+}
+
+CrystalBomb: {
+	// DisplayName: Crystal Bomb
 	// Tooltip: ""
 }

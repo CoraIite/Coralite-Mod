@@ -400,7 +400,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
                 return;
 
             //获取初始绘制参数
-            if (!ExtraAssets.TryGetValue(level.Value, out Asset<Texture2D> asset))
+            if (!ExtraAssets.TryGetValue(level.Value, out ATex asset))
                 return;
 
             Texture2D texture = asset.Value;

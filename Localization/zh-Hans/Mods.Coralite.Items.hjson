@@ -1465,11 +1465,6 @@ CrystalSword: {
 	Tooltip: 消耗 1 魔能射出光束
 }
 
-BrilliantCharger: {
-	DisplayName: 璀璨充能站
-	Tooltip: 右键打开UI，放入可容纳魔能的物品后激活为该物品充能
-}
-
 CrystalStaff: {
 	DisplayName: 魔力晶体杖
 	Tooltip: 消耗 1 魔能放置晶体框架
@@ -5185,4 +5180,18 @@ BlackPlushWallItem: {
 Solunar: {
 	DisplayName: 日月同辉
 	Tooltip: ""
+}
+
+BasicCharger: {
+	DisplayName: 基础充能台
+	Tooltip:
+		'''
+		激活后为内部的物品充能，可以在UI内切换是否给上方的物品或上方玩家身上的物品充能
+		{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}
+		'''
+}
+
+CrystalBomb: {
+	DisplayName: 晶体炸弹
+	Tooltip: 消耗 5 魔能丢出晶体炸弹
 }

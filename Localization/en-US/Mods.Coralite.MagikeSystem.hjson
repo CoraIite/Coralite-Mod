@@ -195,6 +195,14 @@ MagikeSystem: {
 		CraftAltarSlotMode: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.CraftAltarSlotMode
 		CraftAltarIntoSlot: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.CraftAltarIntoSlot
 		CraftAltarThrowOut: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.CraftAltarThrowOut
+		Charger: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.Charger
+		ChargerPerCharge: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ChargerPerCharge
+		ChargerChargeItem: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ChargerChargeItem
+		ChargerNotChargeItem: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ChargerNotChargeItem
+		ChargerChargePlayer: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ChargerChargePlayer
+		ChargerNotChargePlayer: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ChargerNotChargePlayer
+		ChargerDescription: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ChargerDescription
+		ChargerItemNotFound: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ChargerItemNotFound
 	}
 
 	CraftText: {

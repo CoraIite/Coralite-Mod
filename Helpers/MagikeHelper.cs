@@ -631,7 +631,7 @@ namespace Coralite.Helpers
                 MALevel.HolyLight => 20,
 
                 MALevel.SplendorMagicore => 50,
-                _ => 1,
+                _ => 0,
             };
 
             return (int)(produceCountPerSecond * ProducerCount * workTime);

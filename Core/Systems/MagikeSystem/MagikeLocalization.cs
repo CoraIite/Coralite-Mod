@@ -385,6 +385,12 @@ namespace Coralite.Core.Systems.MagikeSystem
             CraftAltarIntoSlot,
             CraftAltarThrowOut,
             Charger,
+            ChargerPerCharge,
+            ChargerChargeItem,
+            ChargerNotChargeItem,
+            ChargerChargePlayer,
+            ChargerNotChargePlayer,
+            ChargerDescription,
             ChargerItemNotFound,
 
             Count

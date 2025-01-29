@@ -1451,11 +1451,6 @@ CrystalSword: {
 	Tooltip: Consumes 1 magike to shoot a beam
 }
 
-BrilliantCharger: {
-	DisplayName: Brilliant Charger
-	Tooltip: Right click to open the UI, insert an item that can hold magike, and activate to charge that item
-}
-
 CrystalStaff: {
 	DisplayName: Crystal Staff
 	Tooltip: Consumes 1 magike to place a crystal frame
@@ -5124,5 +5119,15 @@ BlackPlushWallItem: {
 
 Solunar: {
 	DisplayName: Solunar
+	Tooltip: ""
+}
+
+BasicCharger: {
+	DisplayName: Basic Charger
+	Tooltip: ""
+}
+
+CrystalBomb: {
+	DisplayName: Crystal Bomb
 	Tooltip: ""
 }

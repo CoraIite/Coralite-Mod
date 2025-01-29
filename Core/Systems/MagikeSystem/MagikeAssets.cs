@@ -16,8 +16,8 @@ namespace Coralite.Core.Systems.MagikeSystem
 
         public static ATex[] UIApparatusButton { get; private set; }
         public static ATex[] UIComponentButton { get; private set; }
-        public static ATex[] UIShowTypeButton { get; private set; }
-        public static ATex[] ComponentRollingBar { get; private set; }
+        //public static ATex[] UIShowTypeButton { get; private set; }
+        //public static ATex[] ComponentRollingBar { get; private set; }
 
         public static ATex MagikeContainerBar { get; private set; }
         public static ATex CraftArrow { get; private set; }
@@ -26,6 +26,8 @@ namespace Coralite.Core.Systems.MagikeSystem
         public static ATex CraftSelectButton { get; private set; }
         public static ATex CraftShowButton { get; private set; }
         public static ATex CraftItemSpawnButton { get; private set; }
+        public static ATex ChargerItemButton { get; private set; }
+        public static ATex ChargerPlayerButton { get; private set; }
         public static ATex CanCraftShow { get; private set; }
         public static ATex AlphaBar { get; private set; }
         public static ATex CraftMagikeBar { get; private set; }
@@ -71,6 +73,8 @@ namespace Coralite.Core.Systems.MagikeSystem
             CraftSelectButton = Request<Texture2D>(AssetDirectory.MagikeUI + "CraftSelectButton");
             CraftShowButton = Request<Texture2D>(AssetDirectory.MagikeUI + "CraftShowButton");
             CraftItemSpawnButton = Request<Texture2D>(AssetDirectory.MagikeUI + "CraftItemSpawnButton");
+            ChargerItemButton = Request<Texture2D>(AssetDirectory.MagikeUI + "ChargerItemButton");
+            ChargerPlayerButton = Request<Texture2D>(AssetDirectory.MagikeUI + "ChargerPlayerButton");
             CanCraftShow = Request<Texture2D>(AssetDirectory.MagikeUI + "CanCraftShow");
             AlphaBar = Request<Texture2D>(AssetDirectory.UI + "AlphaBar");
             CraftMagikeBar = Request<Texture2D>(AssetDirectory.MagikeUI + "CraftMagikeBar");
@@ -112,17 +116,17 @@ namespace Coralite.Core.Systems.MagikeSystem
                 UIComponentButton[(int)MagikeUIType.MagicCrystal] = Request<Texture2D>(AssetDirectory.MagikeUI + "MagicCrystalComponentButton");
             }
 
-            if (UIShowTypeButton == null)
-            {
-                UIShowTypeButton = new ATex[count];
-                UIShowTypeButton[(int)MagikeUIType.MagicCrystal] = Request<Texture2D>(AssetDirectory.MagikeUI + "MagicCrystalShowTypeButton");
-            }
+            //if (UIShowTypeButton == null)
+            //{
+            //    UIShowTypeButton = new ATex[count];
+            //    UIShowTypeButton[(int)MagikeUIType.MagicCrystal] = Request<Texture2D>(AssetDirectory.MagikeUI + "MagicCrystalShowTypeButton");
+            //}
 
-            if (ComponentRollingBar == null)
-            {
-                ComponentRollingBar = new ATex[count];
-                ComponentRollingBar[(int)MagikeUIType.MagicCrystal] = Request<Texture2D>(AssetDirectory.MagikeUI + "MagicCrystalShowRollingBar");
-            }
+            //if (ComponentRollingBar == null)
+            //{
+            //    ComponentRollingBar = new ATex[count];
+            //    ComponentRollingBar[(int)MagikeUIType.MagicCrystal] = Request<Texture2D>(AssetDirectory.MagikeUI + "MagicCrystalShowRollingBar");
+            //}
         }
 
         public static void UnloadAssets()
@@ -154,19 +158,19 @@ namespace Coralite.Core.Systems.MagikeSystem
             return UIComponentButton[(int)CurrentMagikeUIType];
         }
 
-        public static ATex GetUIShowTypeButton()
-        {
-            if (UIShowTypeButton == null)
-                LoadUIAsset();
-            return UIShowTypeButton[(int)CurrentMagikeUIType];
-        }
+        //public static ATex GetUIShowTypeButton()
+        //{
+        //    if (UIShowTypeButton == null)
+        //        LoadUIAsset();
+        //    return UIShowTypeButton[(int)CurrentMagikeUIType];
+        //}
 
-        public static ATex GetUIRollingBar()
-        {
-            if (ComponentRollingBar == null)
-                LoadUIAsset();
-            return ComponentRollingBar[(int)CurrentMagikeUIType];
-        }
+        //public static ATex GetUIRollingBar()
+        //{
+        //    if (ComponentRollingBar == null)
+        //        LoadUIAsset();
+        //    return ComponentRollingBar[(int)CurrentMagikeUIType];
+        //}
 
         public static void DrawConnectLine(SpriteBatch spriteBatch, Vector2 startPos, Vector2 endPos, Vector2 screenPos, Color drawColor)
         {

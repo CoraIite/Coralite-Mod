@@ -422,6 +422,13 @@ namespace Coralite.Content.Items.ThyphionSeries
     public class SolunarBall : ModProjectile
     {
         public override string Texture => AssetDirectory.ThyphionSeriesItems + Name;
+
+
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            return false;
+        }
     }
 
     public class SolunarLaser

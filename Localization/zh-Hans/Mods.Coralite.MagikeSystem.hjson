@@ -191,6 +191,22 @@ MagikeSystem: {
 		CraftAltarSlotMode: 简略网格模式，点击切换至水平条
 		CraftAltarIntoSlot: 合成后放入自身，点击切换至弹出
 		CraftAltarThrowOut: 合成后弹出物品，点击切换至放入自身
+		Charger: 充能台
+		ChargerPerCharge: 单次充能：
+		ChargerChargeItem: 可充能物块上方的物品，点击禁用该功能
+		ChargerNotChargeItem: 不可充能物块上方的物品，点击启用该功能
+		ChargerChargePlayer:
+			'''
+			可充能物块上方的玩家身上的物品
+			点击禁用该功能
+			'''
+		ChargerNotChargePlayer:
+			'''
+			不可充能物块上方的玩家身上的物品
+			点击启用该功能
+			'''
+		ChargerDescription: 能够为内部物品和物块上方的物品或上方玩家的物品充能，下方按钮切换是否启用该功能
+		ChargerItemNotFound: 未找到可充能物品！
 	}
 
 	CraftText: {
