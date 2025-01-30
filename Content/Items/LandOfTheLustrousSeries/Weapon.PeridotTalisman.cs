@@ -22,7 +22,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Item.SetShopValues(Terraria.Enums.ItemRarityColor.Lime7, Item.sellPrice(0, 11));
             Item.SetWeaponValues(70, 4, 2);
             Item.useTime = Item.useAnimation = 25;
-            Item.mana = 20;
+            Item.mana = 18;
 
             Item.shoot = ModContent.ProjectileType<PeridotTalismanProj>();
             Item.useStyle = ItemUseStyleID.Shoot;

@@ -22,7 +22,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Item.SetShopValues(Terraria.Enums.ItemRarityColor.LightPurple6, Item.sellPrice(0, 9));
             Item.SetWeaponValues(63, 4);
             Item.useTime = Item.useAnimation = 30;
-            Item.mana = 17;
+            Item.mana = 16;
 
             Item.shoot = ModContent.ProjectileType<RubyScepterProj>();
             Item.useStyle = ItemUseStyleID.Shoot;

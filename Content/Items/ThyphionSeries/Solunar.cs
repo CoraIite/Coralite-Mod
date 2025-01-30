@@ -1,10 +1,13 @@
 ﻿using Coralite.Content.Items.Materials;
 using Coralite.Content.ModPlayers;
+using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.CameraSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Linq;
 using Terraria;
@@ -47,9 +50,15 @@ namespace Coralite.Content.Items.ThyphionSeries
             float rot = dir.ToRotation();
 
             Projectile.NewProjectile(new EntitySource_ItemUse(player, Item)
-                , player.Center, Vector2.Zero, ProjectileType<FullMoonHeldProj>(), damage, knockback, player.whoAmI, rot);
+                , player.Center, Vector2.Zero, ProjectileType<SolunarHeldProj>(), damage, knockback, player.whoAmI, rot);
 
             Projectile.NewProjectile(source, player.Center, velocity, type, damage, knockback, player.whoAmI);
+
+            for (int i = -1; i < 2; i++)
+            {
+                Projectile.NewProjectile(source, player.Center + dir.RotatedBy(i * MathHelper.PiOver2), velocity
+                    , ProjectileType<SolunarArrow>(), damage, knockback, player.whoAmI, i + 1, dir.X, dir.Y);
+            }
 
             return false;
         }
@@ -122,7 +131,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 Helper.PlayPitched(CoraliteSoundID.Swing_Item1, Player.Center);
 
                 foreach (var proj in from proj in Main.projectile
-                                     where proj.active && proj.friendly && proj.owner == Player.whoAmI && proj.type == ProjectileType<FullMoonHeldProj>()
+                                     where proj.active && proj.friendly && proj.owner == Player.whoAmI && proj.type == ProjectileType<SolunarHeldProj>()
                                      select proj)
                 {
                     proj.Kill();
@@ -130,7 +139,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 }
 
                 //生成手持弹幕
-                Projectile.NewProjectile(Player.GetSource_ItemUse(Player.HeldItem), Player.Center, new Vector2(dashDirection, 0), ProjectileType<FullMoonHeldProj>(),
+                Projectile.NewProjectile(Player.GetSource_ItemUse(Player.HeldItem), Player.Center, new Vector2(dashDirection, 0), ProjectileType<SolunarHeldProj>(),
                     Player.HeldItem.damage, Player.HeldItem.knockBack, Player.whoAmI, newVelocity.ToRotation(), 1, 18);
 
                 //生成光球弹幕
@@ -174,6 +183,13 @@ namespace Coralite.Content.Items.ThyphionSeries
             }
         }
 
+        public enum DashHitType
+        {
+            NotHit,
+            HitOther,
+            HitSPProj,
+        }
+
         public override void SetStaticDefaults()
         {
             Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 8);
@@ -205,7 +221,9 @@ namespace Coralite.Content.Items.ThyphionSeries
                         Owner.velocity = dir * 14;
                         SpawnDashingDust();
 
-                        if (Dashing_CheckCollide())
+                     DashHitType hit  = Dashing_CheckCollide();
+
+                        if (hit==DashHitType.HitOther)
                         {
                             DashState = 1;
                             Timer = 0;
@@ -217,6 +235,16 @@ namespace Coralite.Content.Items.ThyphionSeries
                             {
                                 pos = Projectile.Center,
                             };
+
+                            return;
+                        }
+                        else if (hit == DashHitType.HitSPProj)
+                        {
+                            DashState = 3;
+                            Timer = 0;
+                            Owner.AddImmuneTime(ImmunityCooldownID.General, 26);
+                            Owner.immune = true;
+                            RecordAngle = Rotation;
 
                             return;
                         }
@@ -305,6 +333,81 @@ namespace Coralite.Content.Items.ThyphionSeries
                     }
 
                     break;
+                case 3://二次冲出
+                    {
+                        if (Timer<20)
+                        {
+                            Vector2 dir = RecordAngle.ToRotationVector2();
+                            Rotation += MathHelper.TwoPi / 20;
+
+                            Owner.velocity = dir * 14;
+                            SpawnDashingDust();
+                        }
+                        else
+                        {
+                            DashState = 4;
+                            Timer = 0;
+                            SPTimer = 0;
+                        }
+                    }
+                    break;
+                case 4://特殊射出
+                    {
+                        if (DownLeft && SPTimer == 0)
+                        {
+                            if (Main.myPlayer == Projectile.owner)
+                            {
+                                Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
+                                Rotation = Rotation.AngleLerp(ToMouseAngle, 0.15f);
+                            }
+
+                            Projectile.timeLeft = 30;
+                        }
+                        else
+                        {
+                            if (SPTimer == 0 && Projectile.IsOwnedByLocalPlayer())
+                            {
+                                Helper.PlayPitched(SoundID.Shimmer1, Projectile.Center, pitchAdjust: -0.8f);
+                                Helper.PlayPitched(CoraliteSoundID.CrystalSerpent_Item109, Projectile.Center, pitchAdjust: 0.8f);
+                                Helper.PlayPitched(CoraliteSoundID.IceMagic_Item28, Projectile.Center, pitchAdjust: -0.2f);
+
+                                Rotation = ToMouseAngle;
+
+                                for (int i = 0; i < Main.maxProjectiles; i++)//将弹幕设置为射出状态
+                                {
+                                    Projectile p = Main.projectile[i];
+
+                                    if (p.active && p.friendly && p.owner == Projectile.owner && p.type == ProjectileType<FullMoonStrike>())
+                                    {
+                                        (p.ModProjectile as FullMoonStrike).TurnToAttack();
+                                        break;
+                                    }
+                                }
+
+                                Vector2 dir = Rotation.ToRotationVector2();
+
+                                if (VisualEffectSystem.HitEffect_ScreenShaking)
+                                    Main.instance.CameraModifiers.Add(new PunchCameraModifier(Projectile.Center, dir, 8, 7, 4, 800));
+
+                                handOffset = -20;
+                                Owner.velocity = -Rotation.ToRotationVector2() * 6;
+                                if (Owner.velocity.Y > 0 && Math.Abs(Owner.velocity.X) < 2)
+                                    Owner.velocity.Y *= 0.5f;
+                            }
+
+                            if (Main.myPlayer == Projectile.owner)
+                            {
+                                Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
+                            }
+
+                            handOffset = Helper.Lerp(handOffset, 0, 0.1f);
+                            SPTimer++;
+
+                            if (SPTimer > 22)
+                                Projectile.Kill();
+                        }
+                    }
+                    break;
             }
 
             Projectile.rotation = Rotation;
@@ -320,12 +423,11 @@ namespace Coralite.Content.Items.ThyphionSeries
             for (int i = -1; i < 2; i += 2)
             {
                 Vector2 velocity = -dir.RotatedBy(i * MathF.Sin((float)Main.timeForVisualEffects * 0.4f) * 0.5f) * Main.rand.NextFloat(2, 4);
-                Dust d = Dust.NewDustPerfect(Projectile.Center + i * n * 28, DustID.GoldFlame, velocity
-                    , Scale: Main.rand.NextFloat(1f, 1.5f));
+                PRTLoader.NewParticle<SpeedLine>(Projectile.Center + i * n * 28, velocity
+                    , Color.Gold, Scale: Main.rand.NextFloat(1f, 1.5f));
 
-                d.noGravity = true;
-                d = Dust.NewDustPerfect(Projectile.Center + i * n * 20, i == direction ? DustID.SolarFlare : DustID.Shadowflame, velocity
-                    , Alpha: 150, Scale: Main.rand.NextFloat(1f, 2f));
+                Dust d = Dust.NewDustPerfect(Projectile.Center + i * n * 20, i == direction ? DustID.SolarFlare : DustID.Shadowflame, velocity
+                     , Alpha: 150, Scale: Main.rand.NextFloat(1f, 2f));
 
                 d.noGravity = true;
             }
@@ -360,7 +462,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 , Scale: Main.rand.NextFloat(0.75f, 1.1f));
         }
 
-        public bool Dashing_CheckCollide()
+        public DashHitType Dashing_CheckCollide()
         {
             Rectangle rect = GetDashRect();
             for (int i = 0; i < Main.maxProjectiles; i++)
@@ -372,7 +474,10 @@ namespace Coralite.Content.Items.ThyphionSeries
                 if (proj.Colliding(proj.getRect(), rect))
                 {
                     JustCollideNPC(null);
-                    return true;
+                    if (proj.type == ProjectileType<SolunarBall>())
+                        return DashHitType.HitSPProj;
+                    else
+                        return DashHitType.HitOther;
                 }
             }
 
@@ -386,11 +491,11 @@ namespace Coralite.Content.Items.ThyphionSeries
                 if (Projectile.Colliding(rect, npc.getRect()))
                 {
                     JustCollideNPC(npc);
-                    return true;
+                    return DashHitType.HitOther;
                 }
             }
 
-            return false;
+            return DashHitType.NotHit ;
         }
 
         public Rectangle GetDashRect()
@@ -414,6 +519,10 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         #endregion
 
+        public override bool PreDraw(ref Color lightColor)
+        {
+            return base.PreDraw(ref lightColor);
+        }
     }
 
     /// <summary>
@@ -427,6 +536,10 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public override bool PreDraw(ref Color lightColor)
         {
+            Texture2D mainTex = Projectile.GetTexture();
+
+
+
             return false;
         }
     }
@@ -436,8 +549,88 @@ namespace Coralite.Content.Items.ThyphionSeries
 
     }
 
-    public class SolunarArrow
+    public class SolunarArrow : ModProjectile
     {
+        public override string Texture => AssetDirectory.ThyphionSeriesItems + Name;
 
+        public int ArrowType => (int)Projectile.ai[0];
+
+        public Vector2 TargetDir => new Vector2(Projectile.ai[1], Projectile.ai[2]);
+
+        public ref float Timer => ref Projectile.localAI[0];
+
+        public override void SetStaticDefaults()
+        {
+            Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 12);
+        }
+
+        public override void SetDefaults()
+        {
+            Projectile.friendly = true;
+            Projectile.DamageType = DamageClass.Ranged;
+            Projectile.width = Projectile.height = 16;
+            Projectile.extraUpdates = 1;
+        }
+
+        public override void AI()
+        {
+            Projectile.rotation = Projectile.velocity.ToRotation();
+
+            switch (ArrowType)
+            {
+                default:
+                case 0://日光箭
+                    {
+                        Projectile.velocity = Projectile.velocity.RotatedBy(MathF.Sin(MathHelper.PiOver2+Timer*0.2f)*0.03f);
+
+                        for (int i = 0; i < 3; i++)
+                        {
+                            Vector2 pos = Vector2.Lerp(Projectile.Center, Projectile.oldPos[1], i / 3f);
+                            Dust d = Dust.NewDustPerfect(pos, DustID.SolarFlare, Vector2.Zero, Alpha: 100, Scale: 0.9f);
+                            d.noGravity = true;
+                        }
+                    }
+                    break;
+                    case 1://同辉箭
+                    {
+                        for (int i = 0; i < 3; i++)
+                        {
+                            Vector2 pos = Vector2.Lerp(Projectile.Center, Projectile.oldPos[1], i / 3f);
+                            Vector2 dir = -Projectile.velocity.SafeNormalize(Vector2.Zero);
+
+                            for (int j = -1; j < 2; j++)
+                            {
+                                Dust d = Dust.NewDustPerfect(pos, DustID.GoldCoin, dir.RotatedBy(j*0.4f*MathF.Sin((int)Main.timeForVisualEffects*0.05f)), Alpha: 100, Scale: 0.9f);
+                                d.noGravity = true;
+                            }
+                        }
+                    }
+                    break;
+                case 2://月光箭
+                    {
+                        Projectile.velocity = Projectile.velocity.RotatedBy(-MathF.Sin(MathHelper.PiOver2 + Timer * 0.2f) * 0.03f);
+
+                        for (int i = 0; i < 3; i++)
+                        {
+                            Vector2 pos = Vector2.Lerp(Projectile.Center, Projectile.oldPos[1], i / 3f);
+                            Dust d = Dust.NewDustPerfect(pos, DustID.PurpleTorch, Vector2.Zero, Alpha: 100, Scale: 0.9f);
+                            d.noGravity = true;
+                        }
+                    }
+                    break;
+            }
+
+            Timer++;
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Rectangle rect = Projectile.GetTexture().Frame(3, 1, ArrowType);
+
+            Projectile.DrawShadowTrails(lightColor, 0.5f, 0.5f / 12, 0, 12, 2, Projectile.scale, rect, 1.57f);
+            Projectile.QuickDraw(rect, lightColor, 1.57f);
+
+            return false;
+        }
     }
 }

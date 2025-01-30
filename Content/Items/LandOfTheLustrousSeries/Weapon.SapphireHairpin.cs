@@ -24,7 +24,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Item.SetShopValues(Terraria.Enums.ItemRarityColor.Yellow8, Item.sellPrice(0, 13));
             Item.SetWeaponValues(79, 4);
             Item.useTime = Item.useAnimation = 35;
-            Item.mana = 27;
+            Item.mana = 25;
 
             Item.shoot = ModContent.ProjectileType<SapphireHairpinProj>();
             Item.useStyle = ItemUseStyleID.Shoot;

@@ -1,4 +1,6 @@
-﻿using Coralite.Helpers;
+﻿using Coralite.Content.Dusts;
+using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;
@@ -181,13 +183,17 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public override void OnWorking()
         {
-            if (Timer % 2 == 0)
+            if (Timer % 3 == 0)
             {
                 MagikeHelper.GetMagikeAlternateData(Entity.Position.X, Entity.Position.Y, out TileObjectData data, out _);
 
                 Rectangle selfRect = new Rectangle(Entity.Position.X * 16, (Entity.Position.Y - 2) * 16, data.Width * 16, 16 * 2);
 
-                Dust d = Dust.NewDustPerfect(Main.rand.NextVector2FromRectangle(selfRect), DustID.FireworksRGB, new Vector2(0, -Main.rand.NextFloat(2, 4))
+                if (Main.rand.NextBool())
+                    PRTLoader.NewParticle<PixelLine>(Main.rand.NextVector2FromRectangle(selfRect), new Vector2(0, -Main.rand.NextFloat(2, 4))
+                        , Coralite.MagicCrystalPink, Main.rand.NextFloat(1, 1.5f));
+
+                Dust d = Dust.NewDustPerfect(Main.rand.NextVector2FromRectangle(selfRect), ModContent.DustType<PixelPoint>(), new Vector2(0, -Main.rand.NextFloat(2, 4))
                     , newColor: Coralite.MagicCrystalPink, Scale: Main.rand.NextFloat(0.5f, 1f));
                 d.noGravity = true;
             }
