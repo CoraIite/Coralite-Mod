@@ -38,6 +38,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.value = Item.sellPrice(0, 4);
 
+            Item.autoReuse = true;
             Item.noUseGraphic = true;
             Item.useTurn = false;
             Item.UseSound = CoraliteSoundID.Bow_Item5;

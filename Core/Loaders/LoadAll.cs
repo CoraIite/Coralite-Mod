@@ -24,7 +24,7 @@ namespace Coralite.Core.Loaders
 
             foreach (var mod in ModLoader.Mods)
                 if (mod is ICoralite or Coralite)
-                    foreach (Type type in AssemblyManager.GetLoadableTypes(Mod.Code))
+                    foreach (Type type in AssemblyManager.GetLoadableTypes(mod.Code))
                         for (int i = 0; i < loaders.Count; i++)
                         {
                             if (loaders[i].Side == IReflactionLoader.LoadSide.All)
@@ -58,7 +58,7 @@ namespace Coralite.Core.Loaders
 
             foreach (var mod in ModLoader.Mods)
                 if (mod is ICoralite or Coralite)
-                    foreach (Type type in AssemblyManager.GetLoadableTypes(Mod.Code))
+                    foreach (Type type in AssemblyManager.GetLoadableTypes(mod.Code))
                         for (int i = 0; i < loaders.Count; i++)
                         {
                             if (loaders[i].Side == IReflactionLoader.LoadSide.All)
@@ -108,7 +108,7 @@ namespace Coralite.Core.Loaders
 
             foreach (var mod in ModLoader.Mods)
                 if (mod is ICoralite or Coralite)
-                    foreach (Type type in AssemblyManager.GetLoadableTypes(Mod.Code))
+                    foreach (Type type in AssemblyManager.GetLoadableTypes(mod.Code))
                     {
                         if (!type.IsAbstract && type.GetInterfaces().Contains(typeof(IReflactionLoader)))
                         {

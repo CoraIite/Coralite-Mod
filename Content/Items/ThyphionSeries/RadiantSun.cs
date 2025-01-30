@@ -34,6 +34,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             Item.value = Item.sellPrice(0, 3);
 
             Item.noUseGraphic = true;
+            Item.autoReuse = true;
 
             Item.UseSound = CoraliteSoundID.Bow_Item5;
         }

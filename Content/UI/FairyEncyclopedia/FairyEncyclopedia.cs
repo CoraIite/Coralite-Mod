@@ -368,7 +368,10 @@ namespace Coralite.Content.UI.FairyEncyclopedia
             {
                 BackGround.Width.Set(Main.ScreenSize.X * 0.66f, 0);
                 BackGround.Height.Set(Main.ScreenSize.Y * 0.7f, 0);
+            }
 
+            if (FairyGrid != null)
+            {
                 FairyGrid.Top.Set(40, 0);
                 FairyGrid.Width.Set(BackGround.Width.Pixels - 18, 0);
                 FairyGrid.Height.Set(BackGround.Height.Pixels - 70, 0);
