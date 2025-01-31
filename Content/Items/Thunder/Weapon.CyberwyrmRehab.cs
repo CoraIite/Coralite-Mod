@@ -290,6 +290,11 @@ namespace Coralite.Content.Items.Thunder
             }
         }
 
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            modifiers.HitDirectionOverride = target.Center.X > Owner.Center.X ? 1 : -1;
+        }
+
         public override bool PreDraw(ref Color lightColor)
         {
             if (thunderTrails != null)

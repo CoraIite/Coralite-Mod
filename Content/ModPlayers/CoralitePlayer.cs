@@ -337,7 +337,7 @@ namespace Coralite.Content.ModPlayers
 
                 if (Player.statLife > 38)
                 {
-                    Player.lifeRegen -= 10 * 2;
+                    Player.lifeRegen -= 10 * 5;
                     Player.lifeRegenTime = 0;
                 }
             }
@@ -349,7 +349,7 @@ namespace Coralite.Content.ModPlayers
 
                 if (Player.statLife > 80)
                 {
-                    Player.lifeRegen -= 10 * 3;
+                    Player.lifeRegen -= 10 * 8;
                     Player.lifeRegenTime = 0;
                 }
             }

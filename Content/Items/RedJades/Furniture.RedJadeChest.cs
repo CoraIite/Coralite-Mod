@@ -13,7 +13,7 @@ namespace Coralite.Content.Items.RedJades
         {
             CreateRecipe()
                 .AddIngredient<RedJade>(4)
-                .AddIngredient(ItemID.IronBar, 2)
+                .AddRecipeGroup(RecipeGroupID.IronBar, 2)
                 .AddTile<Tiles.RedJades.MagicCraftStation>()
                .Register();
         }

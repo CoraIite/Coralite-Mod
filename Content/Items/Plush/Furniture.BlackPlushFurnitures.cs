@@ -277,7 +277,7 @@ namespace Coralite.Content.Items.Plush
         {
             CreateRecipe()
                 .AddIngredient<BlackPlushBlock>(10)
-                .AddIngredient(ItemID.IronBar, 2)
+                .AddRecipeGroup(RecipeGroupID.IronBar, 2)
                 .AddTile(TileID.WorkBenches)
                 .Register();
         }

@@ -1037,7 +1037,7 @@ NightmareHarp: {
 		在夜晚召唤梦魇之花，不消耗
 			可以在视觉效果配置中开启或关闭特殊的天空和特殊血条
 		'''
-	// ShouldSleep: This item can only be used after the birth point is set on the bed
+	ShouldSleep: 在床上设置出生点后才能使用...
 }
 
 EmpyrosPowder: {

@@ -54,7 +54,7 @@ namespace Coralite.Content.Items.Magike
             itemLoot.Add(ItemDropRule.Common(ItemID.CopperCoin, 1, 1, 99));
 
             // 矿物
-            IItemDropRule[] oreTypes = new IItemDropRule[] {
+            IItemDropRule[] oreTypes = [
                 ItemDropRule.Common(ItemID.CopperOre, 1, 4, 10),
                 ItemDropRule.Common(ItemID.TinOre, 1, 4, 10),
                 ItemDropRule.Common(ItemID.IronOre, 1, 3, 8),
@@ -63,44 +63,43 @@ namespace Coralite.Content.Items.Magike
                 ItemDropRule.Common(ItemID.TungstenOre, 1, 2, 7),
                 ItemDropRule.Common(ItemID.GoldOre, 1, 1, 6),
                 ItemDropRule.Common(ItemID.PlatinumOre, 1, 1, 6),
-            };
+            ];
             itemLoot.Add(new OneFromRulesRule(7, oreTypes));
 
             // 矿物锭
-            IItemDropRule[] oreBars = new IItemDropRule[] {
+            IItemDropRule[] oreBars = [
                 ItemDropRule.Common(ItemID.IronBar, 1, 2, 4),
                 ItemDropRule.Common(ItemID.LeadBar, 1, 2, 4),
                 ItemDropRule.Common(ItemID.SilverBar, 1, 1, 3),
                 ItemDropRule.Common(ItemID.TungstenBar, 1, 1, 3),
                 ItemDropRule.Common(ItemID.GoldBar, 1, 1, 3),
                 ItemDropRule.Common(ItemID.PlatinumBar, 1, 1, 3),
-            };
+            ];
             itemLoot.Add(new OneFromRulesRule(4, oreBars));
 
             // Drop an "exploration utility" potion, with the addition of one from ExampleMod
-            IItemDropRule[] explorationPotions = new IItemDropRule[] {
+            IItemDropRule[] explorationPotions = [
                 ItemDropRule.Common(ItemID.SpelunkerPotion, 1, 2, 5),
                 ItemDropRule.Common(ItemID.HunterPotion, 1, 2, 5),
                 ItemDropRule.Common(ItemID.GravitationPotion, 1, 2, 5),
                 ItemDropRule.Common(ItemID.MiningPotion, 1, 2, 5),
-            };
+            ];
             itemLoot.Add(new OneFromRulesRule(4, explorationPotions));
 
             // Drop (pre-hm) resource potion
-            IItemDropRule[] resourcePotions = new IItemDropRule[] {
+            IItemDropRule[] resourcePotions = [
                 ItemDropRule.Common(ItemID.HealingPotion, 1, 5, 18),
                 ItemDropRule.Common(ItemID.ManaPotion, 1, 5, 18),
-            };
+            ];
             itemLoot.Add(new OneFromRulesRule(2, resourcePotions));
 
             // Drop (high-end) bait
-            IItemDropRule[] highendBait = new IItemDropRule[] {
+            IItemDropRule[] highendBait = [
                 ItemDropRule.Common(ItemID.JourneymanBait, 1, 2, 7),
                 ItemDropRule.Common(ItemID.MasterBait, 1, 2, 7),
-            };
+            ];
             itemLoot.Add(new OneFromRulesRule(2, highendBait));
         }
-
     }
 
     public class CrystalCrateTile : ModTile

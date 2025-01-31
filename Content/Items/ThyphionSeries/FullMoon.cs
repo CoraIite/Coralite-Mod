@@ -150,7 +150,6 @@ namespace Coralite.Content.Items.ThyphionSeries
         }
     }
 
-    [AutoLoadTexture(Path = AssetDirectory.ThyphionSeriesItems)]
     public class FullMoonHeldProj : BaseDashBow
     {
         public override string Texture => AssetDirectory.ThyphionSeriesItems + nameof(FullMoon);
@@ -473,7 +472,7 @@ namespace Coralite.Content.Items.ThyphionSeries
     /// ai0传入拥有者，ai1控制状态
     /// </summary>
     [AutoLoadTexture(Path = AssetDirectory.ThyphionSeriesItems)]
-    public class FullMoonStrike : BaseHeldProj, IDrawNonPremultiplied, IPostDrawAdditive
+    public class FullMoonStrike : BaseHeldProj, IDrawNonPremultiplied
     {
         public override string Texture => AssetDirectory.Blank;
 
@@ -638,10 +637,6 @@ namespace Coralite.Content.Items.ThyphionSeries
                         , DustID.ShadowbeamStaff, Scale: 1.35f);
                 }
             }
-        }
-
-        public void DrawAdditive(SpriteBatch spriteBatch)
-        {
         }
 
         public void DrawNonPremultiplied(SpriteBatch spriteBatch)

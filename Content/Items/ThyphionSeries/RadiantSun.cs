@@ -292,7 +292,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         }
     }
 
-    public class RadiantSunLaser : ModProjectile, IDrawAdditive
+    public class RadiantSunLaser : BaseHeldProj, IDrawAdditive
     {
         public override string Texture => AssetDirectory.ThyphionSeriesItems + "RadiantSunArrow";
 
@@ -402,7 +402,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 if (Timer < ReadyTime)
                 {
                     LaserHeight = Helper.Lerp(0, 0.5f, Timer / ReadyTime);
-                    Vector2 pos = Main.MouseWorld;
+                    Vector2 pos = MousePos;
                     Main.player[Projectile.owner].LimitPointToPlayerReachableArea(ref pos);
                     recordPos = recordPos.MoveTowards(pos, 8);
                     LaserRotation = (recordPos - Projectile.Center).ToRotation();
@@ -447,7 +447,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
                 for (int i = 0; i < width; i += 16)
                 {
-                    Lighting.AddLight(Projectile.position + (Vector2.UnitX.RotatedBy(LaserRotation) * i), color.ToVector3() * height * 0.030f);
+                    Lighting.AddLight(Projectile.position + (dir * i), color.ToVector3() * height * 0.030f);
                     if (Main.rand.NextBool(15))
                     {
                         PRTLoader.NewParticle<SpeedLine>(Projectile.Center + (dir * i) + Main.rand.NextVector2Circular(8, 8),

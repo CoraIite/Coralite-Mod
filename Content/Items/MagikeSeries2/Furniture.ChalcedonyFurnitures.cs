@@ -239,7 +239,7 @@ namespace Coralite.Content.Items.MagikeSeries2
         {
             CreateRecipe()
                 .AddIngredient<LeafChalcedony>(10)
-                .AddIngredient(ItemID.IronBar, 2)
+                .AddRecipeGroup(RecipeGroupID.IronBar, 2)
                 .AddTile(TileID.WorkBenches)
                 .Register();
         }

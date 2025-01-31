@@ -19,11 +19,6 @@ namespace Coralite.Content.Items.Magike.SpecialLens
     public class CogLens() : MagikeApparatusItem(TileType<CogLensTile>(), Item.sellPrice(silver: 5)
         , RarityType<MagicCrystalRarity>(), AssetDirectory.MagikeLens)
     {
-        public override bool CanUseItem(Player player)
-        {
-            return player.ZoneDesert;
-        }
-
         public override void AddRecipes()
         {
             CreateRecipe()

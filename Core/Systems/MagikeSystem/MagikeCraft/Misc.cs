@@ -23,6 +23,11 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             AddRemodelRecipe(ItemID.SandBlock, ItemID.Glass, 10, mainStack: 1, resultStack: 2);
             AddRemodelRecipe(ItemID.Glass, ItemID.Bottle, 10, mainStack: 1, resultStack: 4);
 
+            AddRemodelRecipe(ItemID.Gel, ItemID.Lens, 10, mainStack: 5);
+            MagikeRecipe.CreateRecipe(ItemID.Lens, ItemID.BlackLens, CalculateMagikeCost(Corruption, 6, 60 * 3), 4)
+                .AddIngredient(ItemID.BlackInk)
+                .Register();
+
             //橡实
             MagikeRecipe.CreateRecipe(ItemID.Acorn, ItemID.Wood, CalculateMagikeCost(MagicCrystal, 2, 30), resultItemStack: 25)
                 .RegisterNew(ItemID.AshWood, CalculateMagikeCost(MagicCrystal, 2, 30), 25)
@@ -36,7 +41,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
                 .Register();
 
             //生命果
-            AddRemodelRecipe(ItemType<RegrowthTentacle>(), ItemID.LifeFruit, CalculateMagikeCost(Soul, 6, 60 * 2), 5);
+            AddRemodelRecipe(ItemType<RegrowthTentacle>(), ItemID.LifeFruit, CalculateMagikeCost(Soul, 6, 60 * 2));
         }
     }
 }

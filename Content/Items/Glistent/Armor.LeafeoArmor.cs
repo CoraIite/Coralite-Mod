@@ -82,13 +82,7 @@ namespace Coralite.Content.Items.Glistent
         {
             CreateRecipe()
                 .AddIngredient<LeafStone>(14)
-                .AddIngredient(ItemID.IronBar, 8)
-                .AddTile(TileID.WorkBenches)
-                .Register();
-
-            CreateRecipe()
-                .AddIngredient<LeafStone>(10)
-                .AddIngredient(ItemID.LeadBar, 8)
+                .AddRecipeGroup(RecipeGroupID.IronBar, 8)
                 .AddTile(TileID.WorkBenches)
                 .Register();
         }
