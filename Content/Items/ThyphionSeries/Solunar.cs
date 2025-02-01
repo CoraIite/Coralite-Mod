@@ -1,5 +1,4 @@
-﻿using Coralite.Content.Dusts;
-using Coralite.Content.Items.Materials;
+﻿using Coralite.Content.Items.Materials;
 using Coralite.Content.ModPlayers;
 using Coralite.Content.Particles;
 using Coralite.Core;
@@ -11,7 +10,6 @@ using Coralite.Helpers;
 using InnoVault.PRT;
 using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
-using rail;
 using System;
 using System.Linq;
 using Terraria;
@@ -255,6 +253,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                             Vector2 dir = Rotation.ToRotationVector2();
 
                             Owner.velocity = dir * 14;
+                            SpawnDashingDust(Rotation);
 
                             if (Dashing_CheckCollide())
                             {
@@ -275,10 +274,9 @@ namespace Coralite.Content.Items.ThyphionSeries
                         else
                         {
                             Rotation += MathHelper.TwoPi / DashTime;
-                            Owner.velocity = Projectile.velocity * 10;
+                            Owner.velocity = Projectile.velocity * 9;
+                            SpawnDashingDust(RecordAngle);
                         }
-
-                        SpawnDashingDust();
                     }
                     else
                     {
@@ -286,6 +284,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                         {
                             DashState = 3;
                             Timer = 0;
+                            Rotation = -1.57f;
                         }
                         else
                         {
@@ -358,7 +357,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                             if (VisualEffectSystem.HitEffect_ScreenShaking)
                                 Main.instance.CameraModifiers.Add(new PunchCameraModifier(Projectile.Center, dir, 8, 7, 4, 800));
 
-                            handOffset = -20;
+                            handOffset = -30;
                             Owner.velocity = -Rotation.ToRotationVector2() * 6;
                             if (Owner.velocity.Y > 0 && Math.Abs(Owner.velocity.X) < 2)
                                 Owner.velocity.Y *= 0.5f;
@@ -377,35 +376,22 @@ namespace Coralite.Content.Items.ThyphionSeries
                     break;
                 case 3://特殊射出
                     {
-                        if (DownLeft && SPTimer == 0)
+                        if (SPTimer == 0 && Projectile.IsOwnedByLocalPlayer())
                         {
-                            if (Main.myPlayer == Projectile.owner)
-                            {
-                                Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
-                                Rotation = -1.57f;
-                            }
+                            Helper.PlayPitched(CoraliteSoundID.Bow2_Item102, Projectile.Center, pitchAdjust: 0.8f);
+                            Helper.PlayPitched(CoraliteSoundID.TerraBlade_Item60, Projectile.Center, pitchAdjust: -0.2f);
 
-                            Projectile.timeLeft = 30;
+                            SetOwnerSPAttack();
+
+                            Projectile.NewProjectileFromThis<SolunarBallLaser>(Projectile.Center, new Vector2(0, -16), Owner.GetWeaponDamage(Owner.HeldItem), 0);
+                            handOffset = -30;
                         }
-                        else
-                        {
-                            if (SPTimer == 0 && Projectile.IsOwnedByLocalPlayer())
-                            {
-                                Helper.PlayPitched(CoraliteSoundID.Bow2_Item102, Projectile.Center, pitchAdjust: 0.8f);
-                                Helper.PlayPitched(CoraliteSoundID.TerraBlade_Item60, Projectile.Center, pitchAdjust: -0.2f);
 
-                                SetOwnerSPAttack();
+                        handOffset = Helper.Lerp(handOffset, 0, 0.1f);
+                        SPTimer++;
 
-                                Projectile.NewProjectileFromThis<SolunarBallLaser>(Projectile.Center, new Vector2(0, -16), Owner.GetWeaponDamage(Owner.HeldItem), 0);
-                                handOffset = -20;
-                            }
-
-                            handOffset = Helper.Lerp(handOffset, 0, 0.1f);
-                            SPTimer++;
-
-                            if (SPTimer > 22)
-                                Projectile.Kill();
-                        }
+                        if (SPTimer > 22)
+                            Projectile.Kill();
                     }
                     break;
             }
@@ -422,43 +408,44 @@ namespace Coralite.Content.Items.ThyphionSeries
             }
         }
 
-        public void SpawnDashingDust()
+        public void SpawnDashingDust(float rot)
         {
-            Vector2 dir = Rotation.ToRotationVector2();
-            Vector2 n = (Rotation + 1.57f).ToRotationVector2();
+            // 生成两个方向的旋转向量，dir 为当前旋转方向，n 为垂直于 dir 的方向
+            Vector2 dir = rot.ToRotationVector2();
+            Vector2 n = (rot + 1.57f).ToRotationVector2();
 
-            int direction = MathF.Sign(Projectile.rotation.ToRotationVector2().X);
+            //int direction = MathF.Sign(Projectile.rotation.ToRotationVector2().X);
             for (int i = -1; i < 2; i += 2)
             {
                 Vector2 velocity = -dir.RotatedBy(i * MathF.Sin(1.2f + Timer * 0.4f) * 0.3f) * Main.rand.NextFloat(2, 4);
                 Color newColor = i == Owner.direction ? Color.MediumPurple : Color.Gold;
-                PRTLoader.NewParticle<SpeedLine>(Projectile.Center + i * n * 20, velocity
-                    , newColor, Scale: Main.rand.NextFloat(0.1f, 0.2f) * (1 + Timer / DashTime*2));
+                PRTLoader.NewParticle<SpeedLine>(Owner.Center + i * n * 20, velocity
+                    , newColor, Scale: Main.rand.NextFloat(0.1f, 0.2f) * (1 + Timer / DashTime * 1.5f));
 
-                Dust d = Dust.NewDustPerfect(Projectile.Center + i * n * 46, DustType<PixelPoint>(), velocity
-                     , newColor: newColor, Scale: Main.rand.NextFloat(1f, 2f));
+                //Dust d = Dust.NewDustPerfect(Projectile.Center + i * n * 46, DustType<PixelPoint>(), velocity
+                //     , newColor: newColor, Scale: Main.rand.NextFloat(1f, 2f));
 
-                d.noGravity = true;
+                //d.noGravity = true;
             }
 
-            //Dust d2 = Dust.NewDustPerfect(, DustID.GoldCoin
-            //    , -dir.RotateByRandom(-0.1f, 0.1f) * Main.rand.NextFloat(1, 2)
-            //    , Scale: Main.rand.NextFloat(1f, 1.5f));
-            for (int i = 0; i < 3; i++)
-            {
-                int i2 = i;
-                if (Timer % 2 == 0)
-                {
-                    i2 = 3 - i;
-                }
+            Dust d2 = Dust.NewDustPerfect(Owner.Center, DustID.GoldCoin
+                , -dir.RotateByRandom(-0.1f, 0.1f) * Main.rand.NextFloat(1, 2)
+                , Scale: Main.rand.NextFloat(1f, 1.5f));
+            //for (int i = 0; i < 3; i++)
+            //{
+            //    int i2 = i;
+            //    if (Timer % 2 == 0)
+            //    {
+            //        i2 = 3 - i;
+            //    }
 
-                for (int j = -1; j < 2; j += 2)
-                {
-                    Dust d = Dust.NewDustPerfect(Projectile.Center + dir * i * 8, DustID.GoldCoin
-                        , -dir * 2 + dir.RotatedBy(j * MathHelper.PiOver2) * i2 / 3, Alpha: 100, Scale: 0.9f);
-                    d.noGravity = true;
-                }
-            }
+            //    for (int j = -1; j < 2; j += 2)
+            //    {
+            //        Dust d = Dust.NewDustPerfect(Projectile.Center + dir * i * 8, DustID.GoldCoin
+            //            , -dir * 2 + dir.RotatedBy(j * MathHelper.PiOver2) * i2 / 3, Alpha: 100,Color.Goldenrod, Scale: 0.9f);
+            //        d.noGravity = true;
+            //    }
+            //}
 
             //d2.noGravity = true;
         }
@@ -506,7 +493,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             {
                 NPC npc = Main.npc[i];
 
-                if (!npc.active || npc.friendly || npc.dontTakeDamage)
+                if (!npc.active || npc.friendly || npc.dontTakeDamage||npc.immortal)
                     continue;
 
                 if (Projectile.Colliding(rect, npc.getRect()))
@@ -578,8 +565,8 @@ namespace Coralite.Content.Items.ThyphionSeries
         {
             Projectile.friendly = true;
             Projectile.DamageType = DamageClass.Ranged;
-            Projectile.width = Projectile.height = 16;
-            Projectile.tileCollide = false;
+            Projectile.width = Projectile.height = 48;
+            Projectile.tileCollide = true;
             Projectile.ignoreWater = true;
             Projectile.timeLeft = 1000;
             Projectile.penetrate = -1;
@@ -624,10 +611,10 @@ namespace Coralite.Content.Items.ThyphionSeries
                         Projectile.rotation = Projectile.rotation.AngleLerp((MousePos - Projectile.Center).ToRotation(), 0.25f);
                         Timer++;
 
-                        float factor = Timer / 40;
+                        float factor = Timer / 30;
                         Distance = Coralite.Instance.X2Smoother.Smoother(factor)*20;
 
-                        if (Timer > 40)
+                        if (Timer > 30)
                         {
                             State = 1;
                             Timer = 0;
@@ -736,7 +723,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 if (Main.rand.NextBool(30))
                 {
                     PRTLoader.NewParticle<SpeedLine>(Projectile.Center + (dir * i) + Main.rand.NextVector2Circular(8, 8),
-                        dir * Main.rand.NextFloat(min, max), Color.SaddleBrown, 0.45f);
+                        dir * Main.rand.NextFloat(min, max), Color.SaddleBrown, 0.3f);
 
                     Dust d = Dust.NewDustPerfect(Projectile.Center + (dir * i) + Main.rand.NextVector2Circular(12, 12)
                         , dustid, dir * Main.rand.NextFloat(min, max), Scale: 0.9f);
@@ -750,8 +737,13 @@ namespace Coralite.Content.Items.ThyphionSeries
             for (int i = 0; i < 4; i++)
             {
                 PRTLoader.NewParticle<SpeedLine>(center, (baseAngle + i * MathHelper.PiOver2).ToRotationVector2() * Main.rand.NextFloat(2, 4)
-                    , c, 0.55f);
+                    , c, 0.35f);
             }
+        }
+
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            return false;
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -798,7 +790,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 return;
 
             Texture2D laserTex = CoraliteAssets.Laser.VanillaCoreA.Value;
-            Texture2D flowTex = CoraliteAssets.Laser.VanillaFlowA.Value;
+            Texture2D flowTex = CoraliteAssets.Laser.AirflowA.Value;
 
             Color color = Color.LightCoral;
 
@@ -819,22 +811,25 @@ namespace Coralite.Content.Items.ThyphionSeries
             var laserTarget2 = new Rectangle((int)startPos.X, (int)startPos.Y, width2, (int)(height * 2f));
             var flowTarget2 = new Rectangle((int)startPos.X, (int)startPos.Y, width2, (int)(height * 0.9f));
 
-            var laserSource = new Rectangle((int)(-Main.timeForVisualEffects + Projectile.timeLeft / 30f * laserTex.Width), 0, laserTex.Width, laserTex.Height);
+            var laserSource1 = new Rectangle((int)(-Main.timeForVisualEffects + Projectile.timeLeft / 30f * laserTex.Width), 0, width1/10, laserTex.Height);
+            var laserSource2 = new Rectangle((int)(-Main.timeForVisualEffects + Projectile.timeLeft / 30f * laserTex.Width), 0, width2/10, laserTex.Height);
             var flowSource = new Rectangle((int)(-2 * Main.timeForVisualEffects + Projectile.timeLeft / 35f * flowTex.Width), 0, flowTex.Width, flowTex.Height);
 
             var origin = new Vector2(0, laserTex.Height / 2);
             var origin2 = new Vector2(0, flowTex.Height / 2);
 
-            float rot1 = Projectile.rotation + ExAngle;
-            float rot2 = Projectile.rotation - ExAngle;
+            float rot1 = (endPos1 - startPos).ToRotation();
+            float rot2 = (endPos2 - startPos).ToRotation();// Projectile.rotation - ExAngle;
 
             spriteBatch.End();
             spriteBatch.Begin(default, default, SamplerState.LinearWrap, default, default, effect, Main.GameViewMatrix.TransformationMatrix);
 
             //绘制流动效果
-            spriteBatch.Draw(laserTex, laserTarget1, laserSource, color, rot1, origin, 0, 0);
+            spriteBatch.Draw(laserTex, laserTarget1, laserSource1, color, rot1, origin, 0, 0);
             spriteBatch.Draw(flowTex, flowTarget1, flowSource, color * 0.5f, rot1, origin2, 0, 0);
-            spriteBatch.Draw(laserTex, laserTarget2, laserSource, color, rot2, origin, 0, 0);
+            
+            
+            spriteBatch.Draw(laserTex, laserTarget2, laserSource2, color, rot2, origin, 0, 0);
             spriteBatch.Draw(flowTex, flowTarget2, flowSource, color * 0.5f, rot2, origin2, 0, 0);
 
             spriteBatch.End();
@@ -844,10 +839,10 @@ namespace Coralite.Content.Items.ThyphionSeries
             Texture2D bodyTex = CoraliteAssets.Laser.Body.Value;
 
             color = Color.Goldenrod;
-            spriteBatch.Draw(bodyTex, laserTarget1, laserSource, color * 0.8f, rot1, new Vector2(0, bodyTex.Height / 2), 0, 0);
+            spriteBatch.Draw(bodyTex, laserTarget1, laserSource1, color * 0.8f, rot1, new Vector2(0, bodyTex.Height / 2), 0, 0);
 
-            color = Color.MediumPurple;
-            spriteBatch.Draw(bodyTex, laserTarget2, laserSource, color * 0.8f, rot2, new Vector2(0, bodyTex.Height / 2), 0, 0);
+            color = Color.MediumOrchid;
+            spriteBatch.Draw(bodyTex, laserTarget2, laserSource2, color * 0.8f, rot2, new Vector2(0, bodyTex.Height / 2), 0, 0);
 
             //绘制用于遮盖首尾的亮光
             Texture2D glowTex = CoraliteAssets.LightBall.Ball.Value;
@@ -855,22 +850,21 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             float f1 = 0.6f + height * 0.004f;
 
-            DrawEndLight(spriteBatch, Color.MediumPurple, height, endPos2, glowTex, starTex, f1);
+            DrawEndLight(spriteBatch, Color.MediumOrchid, height, endPos2, glowTex, starTex, f1);
             DrawEndLight(spriteBatch, Color.SaddleBrown, height, endPos1, glowTex, starTex, f1);
 
             color = Color.SaddleBrown;
 
-            spriteBatch.Draw(glowTex, startPos, null, color * (height * 0.02f), 0, glowTex.Size() / 2, 0.5f * f1, 0, 0);
-            spriteBatch.Draw(starTex, startPos, null, color * (height * 0.05f), Main.GlobalTimeWrappedHourly * 3, starTex.Size() / 2, new Vector2(0.75f, 1f) * 0.1f * f1, 0, 0);
-            spriteBatch.Draw(starTex, startPos, null, color * (height * 0.05f), Projectile.rotation, starTex.Size() / 2, 0.14f * f1, 0, 0);
-
+            spriteBatch.Draw(glowTex, startPos, null, color * (height * 0.01f), 0, glowTex.Size() / 2, 0.5f * f1, 0, 0);
+            spriteBatch.Draw(starTex, startPos, null, color * (height * 0.04f), Main.GlobalTimeWrappedHourly * 3, starTex.Size() / 2, new Vector2(0.75f, 1f) * 0.1f * f1, 0, 0);
+            spriteBatch.Draw(starTex, startPos, null, color * (height * 0.04f), Projectile.rotation, starTex.Size() / 2, 0.14f * f1, 0, 0);
         }
 
         private void DrawEndLight(SpriteBatch spriteBatch, Color color, float height, Vector2 endPos1, Texture2D glowTex, Texture2D starTex, float f1)
         {
-            spriteBatch.Draw(glowTex, endPos1, null, color * (height * 0.012f), 0, glowTex.Size() / 2, 0.5f * f1, 0, 0);
-            spriteBatch.Draw(starTex, endPos1, null, color * (height * 0.07f), Main.GlobalTimeWrappedHourly * 3, starTex.Size() / 2, new Vector2(0.75f, 1f) * 0.14f * f1, 0, 0);
-            spriteBatch.Draw(starTex, endPos1, null, color * (height * 0.07f), Projectile.rotation, starTex.Size() / 2, 0.16f * f1, 0, 0);
+            spriteBatch.Draw(glowTex, endPos1, null, color * (height * 0.01f), 0, glowTex.Size() / 2, 0.5f * f1, 0, 0);
+            spriteBatch.Draw(starTex, endPos1, null, color * (height * 0.06f), Main.GlobalTimeWrappedHourly * 3, starTex.Size() / 2, new Vector2(0.75f, 1f) * 0.14f * f1, 0, 0);
+            spriteBatch.Draw(starTex, endPos1, null, color * (height * 0.06f), Projectile.rotation, starTex.Size() / 2, 0.16f * f1, 0, 0);
         }
     }
 
@@ -1121,11 +1115,6 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public const int trailCount = 12;
 
-        public override void SetStaticDefaults()
-        {
-            //Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 12);
-        }
-
         public override void SetDefaults()
         {
             Projectile.friendly = true;
@@ -1198,7 +1187,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                         //for (int i = 0; i < 2; i++)
                         //{
                         Vector2 pos = Projectile.Center;//Vector2.Lerp(Projectile.Center, Projectile.oldPos[^3], i / 2f);
-                        Dust d = Dust.NewDustPerfect(pos, DustID.PortalBoltTrail, -dir * Main.rand.NextFloat(6, 12), Alpha: 100, Color.Purple, Scale: Main.rand.NextFloat(0.8f,1f));
+                        Dust d = Dust.NewDustPerfect(pos, DustID.PortalBoltTrail, -dir * Main.rand.NextFloat(6, 12), Alpha: 100, Color.Purple, Scale: Main.rand.NextFloat(0.8f, 1f));
                         d.noGravity = true;
                         //}
 
@@ -1250,6 +1239,38 @@ namespace Coralite.Content.Items.ThyphionSeries
                         trail = new Trail(Main.instance.GraphicsDevice, trailCount + 4, new EmptyMeshGenerator()
                             , f => 24, f => new Color(255, 255, 255, 170));//=> Color.Lerp(Color.Transparent, Color.White,f.X));
                 }
+            }
+        }
+
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            int dustID = ArrowType switch
+            {
+                0 => DustID.SolarFlare,
+                1 => DustID.GoldFlame,
+                _ => DustID.Shadowflame,
+            };
+
+            for (int i = 0; i < 6; i++)
+            {
+                Dust d = Dust.NewDustPerfect(Projectile.Center, dustID, Helper.NextVec2Dir(2, 7), 50,Scale:Main.rand.NextFloat(1,2));
+                d.noGravity = true;
+            }
+        }
+
+        public override void OnKill(int timeLeft)
+        {
+            int dustID = ArrowType switch
+            {
+                0 => DustID.SolarFlare,
+                1 => DustID.GoldCoin,
+                _ => DustID.Shadowflame,
+            };
+
+            for (int i = 0; i < 8; i++)
+            {
+                Dust d = Dust.NewDustPerfect(Projectile.Center, dustID, Projectile.velocity.SafeNormalize(Vector2.Zero).RotateByRandom(-0.2f, 0.2f) * Main.rand.NextFloat(2, 9), 50, Scale: Main.rand.NextFloat(1, 2));
+                d.noGravity = true;
             }
         }
 

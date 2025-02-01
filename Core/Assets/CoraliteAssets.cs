@@ -272,6 +272,11 @@ namespace Coralite.Core
             /// <summary> 
             /// 气流一样的流动图
             /// </summary>
+            public static ATex AirflowA { get; private set; }
+
+            /// <summary> 
+            /// 气流一样的流动图
+            /// </summary>
             public static ATex AirFlow2 { get; private set; }
 
             /// <summary> 
