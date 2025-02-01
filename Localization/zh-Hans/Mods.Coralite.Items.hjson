@@ -5195,3 +5195,12 @@ CrystalBomb: {
 	DisplayName: 晶体炸弹
 	Tooltip: 消耗 5 魔能丢出晶体炸弹
 }
+
+PlatinumMagshield: {
+	DisplayName: 铂金魔能盾
+	Tooltip:
+		'''
+		可以进行完美格挡，完美格挡时消耗 3 魔能或80魔力释放魔能冲击
+		[c/ffbeec:铂金矿太多了]
+		'''
+}

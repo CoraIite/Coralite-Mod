@@ -164,9 +164,7 @@ namespace Coralite.Content.Items.FlyingShields
         public override bool? CanDamage()
         {
             if (canDamage)
-            {
                 return base.CanDamage();
-            }
             return false;
         }
 
@@ -566,6 +564,8 @@ namespace Coralite.Content.Items.FlyingShields
     {
         public override string Texture => AssetDirectory.Halos + "HighlightCircle";
 
+        private Color nextColor;
+
         public override void SetProperty()
         {
             PRTDrawMode = PRTDrawModeEnum.AdditiveBlend;
@@ -576,7 +576,7 @@ namespace Coralite.Content.Items.FlyingShields
             Opacity++;
             if (Opacity > 15)
             {
-                Color = Color.Lerp(Color, new Color(0, 100, 250, 0), 0.35f);
+                Color = Color.Lerp(Color, nextColor, 0.35f);
                 Scale += 0.07f;
             }
             else
@@ -588,12 +588,17 @@ namespace Coralite.Content.Items.FlyingShields
                 active = false;
         }
 
-        public static Particle Spawn(Vector2 center, Color newcolor, float baseScale, float rotation, Vector2 circleScale)
+        public static Particle Spawn(Vector2 center, Color newcolor, float baseScale, float rotation, Vector2 circleScale,Color? nextcolor=null)
         {
-            Particle p = PRTLoader.NewParticle<LightCiecleParticle>(center, Vector2.Zero, newcolor, baseScale);
+            if (VaultUtils.isServer)
+                return null;
+
+            LightCiecleParticle p = PRTLoader.NewParticle<LightCiecleParticle>(center, Vector2.Zero, newcolor, baseScale);
 
             p.Rotation = rotation;
             p.oldPositions = [circleScale];
+            p.nextColor = nextcolor ?? new Color(0, 100, 250, 0);
+
             return p;
         }
 

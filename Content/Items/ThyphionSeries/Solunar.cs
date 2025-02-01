@@ -55,8 +55,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             Vector2 dir = (Main.MouseWorld - player.Center).SafeNormalize(Vector2.One);
             float rot = dir.ToRotation();
 
-            Projectile.NewProjectile(new EntitySource_ItemUse(player, Item)
-                , player.Center, Vector2.Zero, ProjectileType<SolunarHeldProj>(), damage, knockback, player.whoAmI, rot);
+            int sp = 0;
 
             if (SpecialAttack)
             {
@@ -68,6 +67,8 @@ namespace Coralite.Content.Items.ThyphionSeries
                     Projectile.NewProjectile(source, player.Center + dir.RotatedBy(i * MathHelper.PiOver2), velocity
                         , ProjectileType<SolunarArrow>(), damage, knockback, player.whoAmI, i + 1, dir.X, dir.Y);
                 }
+
+                sp = 2;
             }
             else
             {
@@ -75,6 +76,9 @@ namespace Coralite.Content.Items.ThyphionSeries
                     Projectile.NewProjectile(source, player.Center, velocity.RotateByRandom(-0.2f, 0.2f), type, damage, knockback, player.whoAmI);
                 Projectile.NewProjectile(source, player.Center, velocity, type, damage, knockback, player.whoAmI);
             }
+
+            Projectile.NewProjectile(new EntitySource_ItemUse(player, Item)
+                , player.Center, Vector2.Zero, ProjectileType<SolunarHeldProj>(), damage, knockback, player.whoAmI, rot,sp);
 
             return false;
         }
@@ -526,6 +530,21 @@ namespace Coralite.Content.Items.ThyphionSeries
         }
 
         #endregion
+
+        public override void NormalShootAI()
+        {
+            base.NormalShootAI();
+            if (Special==2)
+            {
+                if (SPTimer==0)
+                {
+                    SPTimer++;
+                    handOffset = -30;
+                }
+
+                handOffset = Helper.Lerp(handOffset, 0, 0.1f);
+            }
+        }
 
         public override Vector2 GetOffset()
             => new(12 + handOffset, 0);

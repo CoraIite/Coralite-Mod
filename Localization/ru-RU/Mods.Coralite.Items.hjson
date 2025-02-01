@@ -5181,3 +5181,8 @@ CrystalBomb: {
 	// DisplayName: Crystal Bomb
 	// Tooltip: ""
 }
+
+PlatinumMagshield: {
+	// DisplayName: Platinum Magshield
+	// Tooltip: ""
+}
