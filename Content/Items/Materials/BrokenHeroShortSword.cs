@@ -37,5 +37,14 @@ namespace Coralite.Content.Items.Materials
             }
         }
 
+        public override void AddRecipes()
+        {
+            var recipe = CreateRecipe();
+            recipe.ReplaceResult(ItemID.TerraToilet);
+
+            recipe.AddIngredient<BrokenHeroShortSword>()
+                .AddIngredient(ItemID.Toilet)
+                .Register();
+        }
     }
 }

@@ -139,7 +139,6 @@ namespace Coralite.Content.Items.Gels
             Projectile.rotation += Projectile.velocity.Length() / 80;
         }
 
-
         public override void OnKill(int timeLeft)
         {
             //生成粒子

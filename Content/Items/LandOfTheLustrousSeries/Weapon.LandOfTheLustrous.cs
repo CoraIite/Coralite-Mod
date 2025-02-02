@@ -19,6 +19,7 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
+using Coralite.Content.Items.Magike;
 
 namespace Coralite.Content.Items.LandOfTheLustrousSeries
 {
@@ -124,7 +125,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public int itemType;
 
-        public static Asset<Texture2D> HaloTex;
+        public static ATex HaloTex;
         public ref float Scale => ref Projectile.localAI[2];
         public SecondOrderDynamics_Vec2 positionSmoother;
         public SecondOrderDynamics_Float rotationSmoother;
@@ -300,7 +301,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                         for (int i = 0; i < 10; i++)
                         {
                             itemType = CoraliteWorld.chaosWorld ? itemType = Main.rand.Next(1, ItemLoader.ItemCount)
-                               : -Main.rand.Next(1, (int)LustrousProj.GemType.CrystallineMagike + 1);
+                               : -Main.rand.Next(1, (int)LustrousProj.GemType.SplendorMagicore + 1);
                             if (itemType != recordItemType)
                                 break;
                         }
@@ -411,8 +412,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         private Trail trail;
 
-        public static Asset<Texture2D> SmallPinkDiamond;
-        public static Asset<Texture2D> LaserTex;
+        public static ATex SmallPinkDiamond;
+        public static ATex LaserTex;
 
         public int FlyTime;
         public float alpha;
@@ -469,6 +470,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             MagicCrystal,
             /// <summary> 蕴魔水晶 </summary>
             CrystallineMagike,
+            /// <summary> 辉界晶核 </summary>
+            SplendorMagicore,
         }
 
         public override void Load()
@@ -836,6 +839,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 case GemType.CrystallineMagike:
                     return new GemDrawData(TextureAssets.Item[ModContent.ItemType<CrystallineMagike>()].Value
                         , Color.White, Coralite.CrystallineMagikePurple, Color.DarkBlue);
+                case GemType.SplendorMagicore:
+                    return new GemDrawData(TextureAssets.Item[ModContent.ItemType<SplendorMagicore>()].Value
+                        , Color.White, Coralite.SplendorMagicoreLightBlue, Color.DarkCyan);
                 default:
                     return new GemDrawData(Projectile.GetTexture()
                         , Color.White, Color.Gray, Color.DarkGray);

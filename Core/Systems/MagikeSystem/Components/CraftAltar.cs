@@ -469,8 +469,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
                 foreach (var recipe in recipes)
                 {
-                    if (recipe.IsAnnihilation)
-                        continue;
+                    //TODO：在这里添加检测是否为魔能合成
+                    //if (recipe.IsAnnihilation)
+                    //    continue;
 
                     if (recipe.RequiredItems == null || recipe.RequiredItems.Count == 0)
                     {

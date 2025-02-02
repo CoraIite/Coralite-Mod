@@ -271,28 +271,28 @@ namespace Coralite.Content.NPCs.Town
                 shopCustomPrice = 8,
                 shopSpecialCurrency = magicCrystalCurrencyID
             });
-            //npcShop.Add(new Item(ModContent.ItemType<WarpMirror>())//扭曲镜
-            //{
-            //    shopCustomPrice = 10,
-            //    shopSpecialCurrency = magicCrystalCurrencyID
-            //});
+            npcShop.Add(new Item(ModContent.ItemType<WarpMirror>())//扭曲镜
+            {
+                shopCustomPrice = 10,
+                shopSpecialCurrency = magicCrystalCurrencyID
+            });
 
-            //npcShop.Add(new Item(ModContent.ItemType<CrystalSword>())//水晶剑
-            //{
-            //    shopCustomPrice = 10,
-            //    shopSpecialCurrency = magicCrystalCurrencyID
-            //});
-            //npcShop.Add(new Item(ModContent.ItemType<CrystalStaff>())//方块杖
-            //{
-            //    shopCustomPrice = 10,
-            //    shopSpecialCurrency = magicCrystalCurrencyID
-            //});
+            npcShop.Add(new Item(ModContent.ItemType<CrystalSword>())//水晶剑
+            {
+                shopCustomPrice = 10,
+                shopSpecialCurrency = magicCrystalCurrencyID
+            });
+            npcShop.Add(new Item(ModContent.ItemType<CrystalStaff>())//方块杖
+            {
+                shopCustomPrice = 10,
+                shopSpecialCurrency = magicCrystalCurrencyID
+            });
             npcShop.Add(new Item(ModContent.ItemType<MagikeWorldBall>())//世界球
             {
                 shopCustomPrice = 1,
                 shopSpecialCurrency = magicCrystalCurrencyID
             });
-            npcShop.Add(new Item(ModContent.ItemType<MagikeAnalyser>())//世界球
+            npcShop.Add(new Item(ModContent.ItemType<MagikeAnalyser>())//分析仪
             {
                 shopCustomPrice = 15,
                 shopSpecialCurrency = magicCrystalCurrencyID

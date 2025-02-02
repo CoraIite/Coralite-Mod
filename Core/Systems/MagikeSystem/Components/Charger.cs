@@ -189,11 +189,19 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 Rectangle selfRect = new Rectangle(Entity.Position.X * 16, (Entity.Position.Y - 2) * 16, data.Width * 16, 16 * 2);
 
                 if (Main.rand.NextBool())
-                    PRTLoader.NewParticle<PixelLine>(Main.rand.NextVector2FromRectangle(selfRect), new Vector2(0, -Main.rand.NextFloat(2, 4))
-                        , Coralite.MagicCrystalPink, Main.rand.NextFloat(1, 1.5f));
+                {
+                    Rectangle rect1 = new Rectangle(Entity.Position.X * 16, Entity.Position.Y * 16, data.Width * 16, 4);
+                    var p = PRTLoader.NewParticle<PixelLine>(Main.rand.NextVector2FromRectangle(rect1), new Vector2(0, -Main.rand.NextFloat(2, 4))
+                         , Coralite.MagicCrystalPink, Main.rand.NextFloat(1, 1.5f));
+                    if (p != null)
+                    {
+                        p.TrailCount = Main.rand.Next(12, 20);
+                        p.fadeFactor = Main.rand.NextFloat(0.8f, 0.95f);
+                    }
+                }
 
                 Dust d = Dust.NewDustPerfect(Main.rand.NextVector2FromRectangle(selfRect), ModContent.DustType<PixelPoint>(), new Vector2(0, -Main.rand.NextFloat(2, 4))
-                    , newColor: Coralite.MagicCrystalPink, Scale: Main.rand.NextFloat(0.5f, 1f));
+                    , newColor: Coralite.MagicCrystalPink, Scale: Main.rand.NextFloat(1f, 2f));
                 d.noGravity = true;
             }
         }
@@ -202,13 +210,16 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public void ShowInUI(UIElement parent)
         {
+            //标题
             UIElement title = this.AddTitle(MagikeSystem.UITextID.Charger, parent);
 
+            //工作方式描述
             var text = this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.ChargerDescription), parent);
             text.SetTopLeft(title.Height.Pixels + 5, 0);
 
             parent.Append(text);
 
+            //单次充能多少
             var text2 = this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.ChargerPerCharge) + MagikePerCharge, parent);
             text2.SetTopLeft(text.Height.Pixels + text.Top.Pixels + 5, 0);
 

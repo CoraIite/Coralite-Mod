@@ -207,6 +207,8 @@ MagikeSystem: {
 			'''
 		ChargerDescription: 能够为内部物品和物块上方的物品或上方玩家的物品充能，下方按钮切换是否启用该功能
 		ChargerItemNotFound: 未找到可充能物品！
+		ApothecaryTable: 药剂台
+		ApothecaryTableDescription: 放入药水，激活后给予附近玩家药水效果
 	}
 
 	CraftText: {

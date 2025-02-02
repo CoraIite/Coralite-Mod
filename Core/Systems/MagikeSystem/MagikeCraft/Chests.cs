@@ -42,6 +42,38 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
                 .SetMainStack(8)
                 .Register();
 
+            //地牢金箱子
+            MagikeRecipe.CreateRecipe(ItemID.GoldChest, ItemID.Muramasa, CalculateMagikeCost(Bone, 8, 60 * 3))
+                .AddIngredient(ItemID.GoldenKey)
+                .AddCondition(Condition.DownedSkeletron)
+                .RegisterNew(ItemID.CobaltShield, CalculateMagikeCost(Bone, 8, 60 * 3))
+                .AddIngredient(ItemID.GoldenKey)
+                .AddCondition(Condition.DownedSkeletron)
+                .RegisterNew(ItemID.AquaScepter, CalculateMagikeCost(Bone, 8, 60 * 3))
+                .AddIngredient(ItemID.GoldenKey)
+                .AddCondition(Condition.DownedSkeletron)
+                .AddCondition(Condition.NotRemixWorld)
+                .RegisterNew(ItemID.BubbleGun, CalculateMagikeCost(Bone, 8, 60 * 3))
+                .AddIngredient(ItemID.GoldenKey)
+                .AddCondition(Condition.DownedSkeletron)
+                .AddCondition(Condition.RemixWorld)
+                .RegisterNew(ItemID.BlueMoon, CalculateMagikeCost(Bone, 8, 60 * 3))
+                .AddIngredient(ItemID.GoldenKey)
+                .AddCondition(Condition.DownedSkeletron)
+                .RegisterNew(ItemID.MagicMissile, CalculateMagikeCost(Bone, 8, 60 * 3))
+                .AddIngredient(ItemID.GoldenKey)
+                .AddCondition(Condition.DownedSkeletron)
+                .RegisterNew(ItemID.Valor, CalculateMagikeCost(Bone, 8, 60 * 3))
+                .AddIngredient(ItemID.GoldenKey)
+                .AddCondition(Condition.DownedSkeletron)
+                .RegisterNew(ItemID.Handgun, CalculateMagikeCost(Bone, 8, 60 * 3))
+                .AddIngredient(ItemID.GoldenKey)
+                .AddCondition(Condition.DownedSkeletron)
+                .RegisterNew(ItemID.BoneWelder, CalculateMagikeCost(Bone, 3, 60 * 3))
+                .AddIngredient(ItemID.GoldenKey)
+                .AddCondition(Condition.DownedSkeletron)
+                .Register();
+
             //沙漠箱子
             MagikeRecipe.CreateRecipe(ItemID.DesertChest, ItemID.ThunderSpear, CalculateMagikeCost(RedJade, 8, 60 * 3), 3)
                 .RegisterNew(ItemID.ThunderStaff, CalculateMagikeCost(RedJade, 8, 180))
@@ -53,6 +85,10 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
                 .RegisterNew(ItemID.DesertMinecart, CalculateMagikeCost(RedJade, 8, 180))
                 .RegisterNew(ItemID.EncumberingStone, CalculateMagikeCost(RedJade, 8, 180))
                 .RegisterNew<TremblingBow>(CalculateMagikeCost(RedJade, 8, 180))
+                .RegisterNew(ItemID.PharaohsMask,CalculateMagikeCost(RedJade, 8, 180))
+                .RegisterNew(ItemID.PharaohsRobe,CalculateMagikeCost(RedJade, 8, 180))
+                .RegisterNew(ItemID.FlyingCarpet,CalculateMagikeCost(RedJade, 8, 180))
+                .RegisterNew(ItemID.SandstorminaBottle,CalculateMagikeCost(RedJade, 8, 180))
                 .Register();
 
             //冰冻箱子
@@ -68,7 +104,7 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
                 .Register();
 
             //天空箱子
-            MagikeRecipe.CreateRecipe(ItemID.SkywareChest, ItemID.ShinyRedBalloon, CalculateMagikeCost(Glistent, 8, 60 * 3), 3)
+            MagikeRecipe.CreateRecipe(ItemID.SkywareChest, ItemID.ShinyRedBalloon, CalculateMagikeCost(Glistent, 8, 60 * 3))
                 .RegisterNew(ItemID.Starfury, CalculateMagikeCost(Glistent, 8, 180))
                 .RegisterNew(ItemID.LuckyHorseshoe, CalculateMagikeCost(Glistent, 8, 180))
                 .RegisterNew(ItemID.SkyMill, CalculateMagikeCost(Glistent, 8, 180))
@@ -93,6 +129,21 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
                 .RegisterNew(ItemID.HoneyDispenser, CalculateMagikeCost(Glistent, 8, 180))
                 .RegisterNew(ItemID.LivingMahoganyWand, CalculateMagikeCost(Glistent, 8, 180))
                 .RegisterNew(ItemID.LivingMahoganyLeafWand, CalculateMagikeCost(Glistent, 8, 180))
+                .Register();
+
+            //暗影箱
+            MagikeRecipe.CreateRecipe(ItemID.ShadowChest, ItemID.Sunfury, CalculateMagikeCost(Shadow, 8, 60 * 3), 3)
+                .RegisterNew(ItemID.FlowerofFire, CalculateMagikeCost(Shadow, 8, 60 * 3))
+                .AddCondition(Condition.NotRemixWorld)
+                .RegisterNew(ItemID.UnholyTrident, CalculateMagikeCost(Shadow, 8, 60 * 3))
+                .AddCondition(Condition.RemixWorld)
+                .RegisterNew(ItemID.Flamelash, CalculateMagikeCost(Shadow, 8, 60 * 3))
+                .RegisterNew(ItemID.DarkLance, CalculateMagikeCost(Shadow, 8, 60 * 3))
+                .RegisterNew(ItemID.HellwingBow, CalculateMagikeCost(Shadow, 8, 60 * 3))
+                .RegisterNew(ItemID.TreasureMagnet, CalculateMagikeCost(Shadow, 8, 60 * 3))
+                .RegisterNew(ItemID.HellMinecart, CalculateMagikeCost(Shadow, 4, 60 * 3))
+                .RegisterNew(ItemID.OrnateShadowKey, CalculateMagikeCost(Shadow, 4, 60 * 3))
+                .RegisterNew(ItemID.HellCake, CalculateMagikeCost(Shadow, 4, 60 * 3))
                 .Register();
         }
     }

@@ -199,6 +199,8 @@ MagikeSystem: {
 		// ChargerNotChargePlayer: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ChargerNotChargePlayer
 		// ChargerDescription: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ChargerDescription
 		// ChargerItemNotFound: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ChargerItemNotFound
+		// ApothecaryTable: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ApothecaryTable
+		// ApothecaryTableDescription: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ApothecaryTableDescription
 	}
 
 	CraftText: {

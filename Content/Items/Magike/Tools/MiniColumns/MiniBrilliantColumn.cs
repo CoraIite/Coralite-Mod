@@ -11,8 +11,8 @@ namespace Coralite.Content.Items.Magike.Tools.MiniColumns
 {
     public class MiniBrilliantColumn : MagikeChargeableItem
     {
-        public MiniBrilliantColumn() : base(500, Item.sellPrice(0, 0, 10, 0)
-            , ModContent.RarityType<CrystallineMagikeRarity>(), 600, AssetDirectory.MagikeTools)
+        public MiniBrilliantColumn() : base(3000, Item.sellPrice(0, 0, 10, 0)
+            , ModContent.RarityType<CrystallineMagikeRarity>(), -1, AssetDirectory.MagikeTools)
         {
         }
 

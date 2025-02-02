@@ -217,6 +217,12 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                     ItemIO.Send(container[index], modPacket, true);
                     modPacket.Send(-1, whoAmI);
                 }
+                else
+                {
+                    //刷新魔能UI
+                    if (MagikeSystem.UIActive())
+                        MagikeSystem.RecalculateComponentPanel();
+                }
             }
         }
 
@@ -454,7 +460,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 _scale = Helper.Lerp(_scale, 1.1f, 0.2f);
 
                 if ((Main.mouseRightRelease && Main.mouseRight) || (Main.mouseLeftRelease && Main.mouseLeft))
+                {
                     SendData();
+                }
             }
             else
                 _scale = Helper.Lerp(_scale, 1f, 0.2f);

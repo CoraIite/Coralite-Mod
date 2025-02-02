@@ -49,38 +49,38 @@ namespace Coralite.Content.Items.Misc_Shoot
     //    }
     //}
 
-    public class DamnationHeldProj : BaseHeldProj
-    {
-        public override string Texture => AssetDirectory.Misc_Shoot + "Damnation";
+    //public class DamnationHeldProj : BaseHeldProj
+    //{
+    //    public override string Texture => AssetDirectory.Misc_Shoot + "Damnation";
 
-        public override void SetDefaults()
-        {
-            Projectile.width = Projectile.height = 48;
-            Projectile.friendly = true;
-            Projectile.tileCollide = false;
-            Projectile.ignoreWater = true;
-            Projectile.aiStyle = -1;
-            Projectile.penetrate = -1;
-        }
+    //    public override void SetDefaults()
+    //    {
+    //        Projectile.width = Projectile.height = 48;
+    //        Projectile.friendly = true;
+    //        Projectile.tileCollide = false;
+    //        Projectile.ignoreWater = true;
+    //        Projectile.aiStyle = -1;
+    //        Projectile.penetrate = -1;
+    //    }
 
-        public override bool? CanDamage() => false;
+    //    public override bool? CanDamage() => false;
 
-        public override void AI()
-        {
-            Owner.heldProj = Projectile.whoAmI;
+    //    public override void AI()
+    //    {
+    //        Owner.heldProj = Projectile.whoAmI;
 
-            Projectile.Center = Owner.Center + (Projectile.rotation.ToRotationVector2() * 16);
-            Projectile.rotation = -1.57f + Math.Clamp((Main.MouseWorld.X - Owner.Center.X) / 400f * 0.3f, -0.4f, 0.4f);
-        }
+    //        Projectile.Center = Owner.Center + (Projectile.rotation.ToRotationVector2() * 16);
+    //        Projectile.rotation = -1.57f + Math.Clamp((Main.MouseWorld.X - Owner.Center.X) / 400f * 0.3f, -0.4f, 0.4f);
+    //    }
 
-        public override bool PreDraw(ref Color lightColor)
-        {
-            Texture2D mainTex = Projectile.GetTexture();
-            Vector2 center = Projectile.Center - Main.screenPosition;
+    //    public override bool PreDraw(ref Color lightColor)
+    //    {
+    //        Texture2D mainTex = Projectile.GetTexture();
+    //        Vector2 center = Projectile.Center - Main.screenPosition;
 
-            Main.spriteBatch.Draw(mainTex, center, null, lightColor, Projectile.rotation, mainTex.Size() / 2, 1.1f, DirSign > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0f);
+    //        Main.spriteBatch.Draw(mainTex, center, null, lightColor, Projectile.rotation, mainTex.Size() / 2, 1.1f, DirSign > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0f);
 
-            return false;
-        }
-    }
+    //        return false;
+    //    }
+    //}
 }

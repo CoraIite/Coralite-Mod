@@ -58,6 +58,16 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
             ];
         }
 
+        public override Vector2 GetTexFrameSize(Texture2D tex, MALevel level)
+        {
+            return level switch
+            {
+                MALevel.Hallow => tex.Frame(2, 10).Size(),
+                MALevel.HolyLight => tex.Frame(2, 18).Size(),
+                _ => base.GetTexFrameSize(tex, level),
+            };
+        }
+
         public override void DrawTopTex(SpriteBatch spriteBatch, Texture2D tex, Vector2 drawPos, Color lightColor, MALevel level, bool canProduce)
         {
             switch (level)
@@ -94,7 +104,6 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     }
                     return;
             }
-
         }
     }
 

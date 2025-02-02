@@ -2,13 +2,13 @@
 using Coralite.Content.ModPlayers;
 using Coralite.Content.Particles;
 using Coralite.Core;
+using Coralite.Core.Attributes;
 using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.CameraSystem;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using System;
 using System.Linq;
 using Terraria;
@@ -19,6 +19,7 @@ using Terraria.Graphics.CameraModifiers;
 using Terraria.ID;
 using static Coralite.Content.Items.ThyphionSeries.ThyphionPhantomArrow;
 using static Terraria.ModLoader.ModContent;
+#pragma warning disable CS8524 // switch 表达式不会处理其输入类型的某些值(它不是穷举)，这包括未命名的枚举值。
 
 namespace Coralite.Content.Items.ThyphionSeries
 {
@@ -220,10 +221,9 @@ namespace Coralite.Content.Items.ThyphionSeries
         public override bool PreDraw(ref Color lightColor) => false;
     }
 
+    [AutoLoadTexture(Path =AssetDirectory.ThyphionSeriesItems)]
     public class ThyphionHeldProj : BaseDashBow, IDrawPrimitive
     {
-
-
         public override string Texture => AssetDirectory.ThyphionSeriesItems + "Thyphion";
 
         public ref float Timer => ref Projectile.localAI[0];
@@ -237,21 +237,10 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public bool ShowArrow = false;
 
-        private static Asset<Texture2D> GlowTex;
+        [AutoLoadTexture(Name = "Thyphion_glow")]
+        public static ATex GlowTex { get; private set; }
 
         public int projectile;
-        public override void Load()
-        {
-            if (Main.dedServ)
-                return;
-
-            GlowTex = Request<Texture2D>(AssetDirectory.ThyphionSeriesItems + "Thyphion_glow");
-        }
-
-        public override void Unload()
-        {
-            GlowTex = null;
-        }
 
         public override int GetItemType()
             => ItemType<Thyphion>();
@@ -301,13 +290,11 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public override void DashAttackAI()
         {
-
             do
             {
                 //冲刺
                 if (Timer < DashTime + 2)
                 {
-
                     if (Main.myPlayer == Projectile.owner)
                     {
                         Vector2 dir = (Main.MouseWorld - Owner.MountedCenter).SafeNormalize(Vector2.One);
@@ -319,9 +306,8 @@ namespace Coralite.Content.Items.ThyphionSeries
                     {
                         int bowIndex = Main.rand.Next(1, (int)BowType.End);
 
-                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, Vector2.Zero, ModContent.ProjectileType<ThyphionShadowBow>(), Projectile.damage, Projectile.knockBack, Projectile.owner, bowIndex);
+                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, Vector2.Zero, ProjectileType<ThyphionShadowBow>(), Projectile.damage, Projectile.knockBack, Projectile.owner, bowIndex);
                     }
-
 
                     Owner.itemTime = Owner.itemAnimation = 2;
                     ShowArrow = true;
@@ -334,10 +320,8 @@ namespace Coralite.Content.Items.ThyphionSeries
                 else if (Timer == DashTime + 2)
                 {
                     Vector2 dir = Rotation.ToRotationVector2();
-                    projectile = Projectile.NewProjectileFromThis(Owner.Center, dir * 12f, ModContent.ProjectileType<ThyphionArrow>(), Owner.GetWeaponDamage(Owner.HeldItem), Projectile.knockBack, 0, 0, 2);
+                    projectile = Projectile.NewProjectileFromThis(Owner.Center, dir * 12f, ProjectileType<ThyphionArrow>(), Owner.GetWeaponDamage(Owner.HeldItem), Projectile.knockBack, 0, 0, 2);
                 }
-
-
 
                 //右键瞄准/发射
                 if (DownLeft && ReleaseTimer == 0)
@@ -360,7 +344,6 @@ namespace Coralite.Content.Items.ThyphionSeries
                 {
                     if (ReleaseTimer == 0)
                     {
-
                         Vector2 dir = Rotation.ToRotationVector2();
 
                         SpwanShootParticle(dir);
@@ -373,7 +356,6 @@ namespace Coralite.Content.Items.ThyphionSeries
                     }
                     if (ReleaseTimer >= 20)
                     {
-
                         Projectile.Kill();
                     }
 
@@ -386,7 +368,6 @@ namespace Coralite.Content.Items.ThyphionSeries
                             Rotation = Rotation.AngleLerp(ToMouseAngle, 0.15f);
                     }
 
-
                     handOffset = MathHelper.Lerp(handOffset, 0, 0.07f);
                     ReleaseTimer++;
 
@@ -394,6 +375,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                     Projectile.timeLeft = 2;
                 }
             } while (false);
+
             Timer++;
             Projectile.rotation = Rotation;
             base.DashAttackAI();
@@ -411,9 +393,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             Color lightBlue = new Color(Thyphion.ThyphionColor2.R, Thyphion.ThyphionColor2.G, Thyphion.ThyphionColor2.B, 150);
             Tornado.Spawn(Projectile.Center + (ShootDir * 20), ShootDir * -3 + Owner.velocity, lightBlue, 15, ShootDir.ToRotation(), Main.rand.NextFloat(0.7f, 0.5f));
             Tornado.Spawn(Projectile.Center + (ShootDir * 20), ShootDir * -3 + Owner.velocity, lightBlue, 15, ShootDir.ToRotation(), Main.rand.NextFloat(0.7f, 0.5f));
-
         }
-
 
         public override bool PreDraw(ref Color lightColor)
         {
@@ -438,27 +418,27 @@ namespace Coralite.Content.Items.ThyphionSeries
             {
 
             }
+
             return false;
         }
+
         public void DrawPrimitives()
         {
 
         }
+
         private bool TryGetArrowProjectile(int index, out ThyphionArrow thyphionArrow)
         {
             Projectile p = Main.projectile[index];
-            if (p != null && p.type == ModContent.ProjectileType<ThyphionArrow>())
+            if (p != null && p.type == ProjectileType<ThyphionArrow>())
             {
                 thyphionArrow = p.ModProjectile as ThyphionArrow;
                 return true;
             }
 
-
             thyphionArrow = null;
             return false;
         }
-
-
     }
 
     public class ThyphionArrow : ModProjectile, IDrawPrimitive
@@ -473,6 +453,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         private ref float StartSpeed => ref Projectile.ai[1];
 
         private ArrowType arrowType => (ArrowType)Projectile.ai[2];
+
         public enum ArrowType
         {
             //幻影弓使用
@@ -522,6 +503,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             Projectile.InitOldPosCache(20 + 4);
 
         }
+
         public override void AI()
         {
             if (!hasInit)
@@ -537,6 +519,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             Timer++;
             base.AI();
         }
+
         private void ArrowSpeedUpdate()
         {
             if (Timer < 20 && !IsHoldBy())
@@ -545,10 +528,12 @@ namespace Coralite.Content.Items.ThyphionSeries
             }
 
         }
+
         private void ArrowLight()
         {
             Lighting.AddLight(Projectile.Center, Thyphion.ThyphionColor3.ToVector3());
         }
+
         private void ArrowDust()
         {
             int dustWidth = arrowType switch
@@ -582,6 +567,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 ArrowType.PlayerShoot => 3,
                 ArrowType.DashAttack => 2
             };
+
             if (Main.rand.NextBool(flareFrequnce))
             {
                 Dust flare = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(dustWidth, dustWidth), DustID.BlueFlare
@@ -601,8 +587,8 @@ namespace Coralite.Content.Items.ThyphionSeries
                 PRTLoader.NewParticle<SpeedLine>(Projectile.Center + Main.rand.NextVector2Circular(speedLineWidth, speedLineWidth)
                     , Projectile.velocity * Main.rand.NextFloat(0.6f, 1f) * 1.5f, GetDustRandomColor(4, 2, 1, 255), Main.rand.NextFloat(0.1f, 0.3f));
             }
-
         }
+
         private void ArrowHitDust(Vector2 HitPosition)
         {
             int dustWidth = arrowType switch
@@ -617,7 +603,8 @@ namespace Coralite.Content.Items.ThyphionSeries
                 ArrowType.PlayerShoot => 1.4f,
                 ArrowType.DashAttack => 1.7f,
             };
-            for (int i = 0; i < 13; i++)
+
+            for (int i = 0; i < 7; i++)
             {
                 int reverseVel = Main.rand.NextBool(4) ? 1 : -1;
                 float velRot = Main.rand.NextFloat(-0.1f, 0.1f);
@@ -626,7 +613,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 flare.noGravity = true;
                 flare.color = GetDustRandomColor(1, 1, 1, 200);
             }
-            for (int i = 0; i < 7; i++)
+            for (int i = 0; i < 3; i++)
             {
                 int reverseVel = Main.rand.NextBool(4) ? 1 : -1;
                 float velRot = Main.rand.NextFloat(-0.2f, 0.2f);
@@ -636,6 +623,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 platinum.color = GetDustRandomColor(3, 1, 1, 200);
             }
         }
+
         public override bool PreDraw(ref Color lightColor)
         {
             if (IsHoldBy())
@@ -643,6 +631,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             ArrowSelfDraw(Projectile.Center, Projectile.scale, Projectile.velocity, 1);
             return false;
         }
+
         public static void ArrowSelfDraw(Vector2 center, float scale, Vector2 arrowDir, float alpha)
         {
             Texture2D texture = TextureAssets.Extra[98].Value;
@@ -660,13 +649,12 @@ namespace Coralite.Content.Items.ThyphionSeries
             Main.spriteBatch.Draw(texture, Center - arrowDir.SafeNormalize(Vector2.One) * 10 * scale, null, lightBlue, arrowDir.ToRotation() + MathHelper.PiOver2, texture.Size() / 2f, SecondLayerSize, 0, 0);
             Main.spriteBatch.Draw(texture, Center - arrowDir.SafeNormalize(Vector2.One) * 25 * scale, null, lightBlue, arrowDir.ToRotation() + MathHelper.PiOver2, texture.Size() / 2f, SecondLayerSize, 0, 0);
 
-
-
             Color lightCyen = new Color(Thyphion.ThyphionColor3.R, Thyphion.ThyphionColor3.G, Thyphion.ThyphionColor3.B, 70) * alpha;
             Main.spriteBatch.Draw(texture, Center + arrowDir.SafeNormalize(Vector2.One) * 20 * scale, null, lightCyen, arrowDir.ToRotation() + MathHelper.PiOver2, texture.Size() / 2f, InnerSize * 0.5f, 0, 0);
             Main.spriteBatch.Draw(texture, Center, null, lightCyen, arrowDir.ToRotation() + MathHelper.PiOver2, texture.Size() / 2f, InnerSize, 0, 0);
             Main.spriteBatch.Draw(texture, Center - arrowDir.SafeNormalize(Vector2.One) * 5 * scale, null, lightCyen, arrowDir.ToRotation() + MathHelper.PiOver2, texture.Size() / 2f, InnerSize, 0, 0);
         }
+
         public override void PostDraw(Color lightColor)
         {
             base.PostDraw(lightColor);
@@ -682,6 +670,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             base.OnHitNPC(target, hit, damageDone);
         }
+
         public Color GetDustRandomColor(int lightWeight = 1, int normalWeight = 1, int darkWeight = 1, int alpha = 255)
         {
             float random = Main.rand.NextFloat(lightWeight + normalWeight + darkWeight);
@@ -703,10 +692,12 @@ namespace Coralite.Content.Items.ThyphionSeries
         {
             return !IsHoldBy();
         }
+
         public bool IsHoldBy()
         {
             return Timer <= 3;
         }
+
         public void Hold(Vector2 pos, Vector2 vel)
         {
             Projectile.Center = pos;
@@ -714,6 +705,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             Timer = 0;
             Projectile.timeLeft = 100;
         }
+
         public void DrawPrimitives()
         {
 
@@ -726,7 +718,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         private int BowType => (int)Projectile.ai[0];
 
-        private ArrowData arrowData => ThyphionPhantomArrow.GetArrowData((BowType)BowType);
+        private ArrowData arrowData => GetArrowData((BowType)BowType);
 
         private Vector2 MouseDir => (Main.MouseWorld - Projectile.Center);
 
@@ -734,13 +726,10 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         private bool hasInit = false;
 
-
-
         //记录玩家信息
         Vector2 PlayerVelocity;
         int PlayerWingFrame;
         float Rotation;
-
 
         public override void SetDefaults()
         {
@@ -757,7 +746,6 @@ namespace Coralite.Content.Items.ThyphionSeries
             Projectile.timeLeft = 40;
         }
 
-
         public override void AI()
         {
             if (!hasInit)
@@ -765,18 +753,12 @@ namespace Coralite.Content.Items.ThyphionSeries
                 Init();
             }
 
-            Player Owner = Main.player[Projectile.owner];
             Vector2 MouseDir = (Main.MouseWorld - Projectile.Center).SafeNormalize(Vector2.One);
             if (Projectile.timeLeft == 24)
-            {
                 Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, MouseDir.SafeNormalize(Vector2.One) * 5, ModContent.ProjectileType<ThyphionArrow>(), Projectile.damage, Projectile.knockBack, Projectile.owner, 0, 0, 0);
-            }
-
 
             if (Projectile.timeLeft < 20)
-            {
                 Projectile.Opacity = Projectile.timeLeft / 20f;
-            }
             else
             {
                 Rotation = MathHelper.Lerp(Rotation, MouseDir.ToRotation(), 0.07f);
@@ -786,14 +768,13 @@ namespace Coralite.Content.Items.ThyphionSeries
             base.AI();
         }
 
-
         public void Init()
         {
             hasInit = true;
             Main.instance.LoadItem(arrowData.ItemType);
             InitPhantomPlayer();
-
         }
+
         private void InitPhantomPlayer()
         {
             Player Owner = Main.player[Projectile.owner];
@@ -806,7 +787,6 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public override bool PreDraw(ref Color lightColor)
         {
-
             DrawPhantomPlayer();
             if (PhantomPlayer is null)
                 return false;
@@ -819,13 +799,11 @@ namespace Coralite.Content.Items.ThyphionSeries
             return false;
         }
 
-
         private void DrawPhantomPlayer()
         {
             if (PhantomPlayer == null)
-            {
                 return;
-            }
+
             Vector2 MouseDir = (Projectile.Center - Main.MouseWorld).SafeNormalize(Vector2.One);
             Player Owner = Main.player[Projectile.owner];
 
@@ -866,16 +844,9 @@ namespace Coralite.Content.Items.ThyphionSeries
             Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
         }
 
-        public override bool? CanDamage()
-        {
-            return false;
-        }
-        public override bool? CanCutTiles()
-        {
-            return false;
-        }
+        public override bool? CanDamage() => false;
+        public override bool? CanCutTiles() => false;
     }
-
 
     public class ThyphionPhantomArrow
     {
@@ -898,12 +869,21 @@ namespace Coralite.Content.Items.ThyphionSeries
             /// <summary> 珍珠木弓 </summary>
             PearlwoodBow,
 
-            /// <summary> 晚霞 </summary>
-            AfterGlow,
-            /// <summary> 遥远青空 </summary>
-            FarAwaySky,
+            /// <summary> 乱流 </summary>
+            Turbulence,
+
+            /// <summary> 震波 </summary>
+            SeismicWave,
+
             /// <summary> 冰雹 </summary>
             Hail,
+            /// <summary> 冰之弓 </summary>
+            IceBow,
+            /// <summary> 冰封世界 </summary>
+            Glaciate,
+
+            /// <summary> 晚霞 </summary>
+            AfterGlow,
             /// <summary> 熔火之怒 </summary>
             MoltenFury,
             /// <summary> 地狱蝙蝠弓 </summary>
@@ -911,8 +891,32 @@ namespace Coralite.Content.Items.ThyphionSeries
             /// <summary> 旭日 </summary>
             RadiantSun,
 
+            /// <summary> 暗影焰弓 </summary>
+            ShadowFlameBow,
+            /// <summary> 猩红弓 </summary>
+            TendonBow,
+            /// <summary> 腐化弓 </summary>
+            DemonBow,
+            /// <summary> 暗月 </summary>
+            FullMoon,
+
+            /// <summary> 日月同辉 </summary>
+            Solunar,
+
+            /// <summary> 遥远青空 </summary>
+            FarAwaySky,
+            /// <summary> 环彩弧 </summary>
+            HorizonArc,
+
+            /// <summary> 颤弦弓 </summary>
+            TremblingBow,
+            /// <summary> 电浆弓 </summary>
+            PlasmaBow,
             /// <summary> 逆闪电 </summary>
             ReversedFlash,
+
+            /// <summary> 极光 </summary>
+            Aurora,
             End
         }
 
@@ -935,117 +939,99 @@ namespace Coralite.Content.Items.ThyphionSeries
                         ItemType = 39,
                         Offest = new(8, 0)
                     };
-                    break;
                 case BowType.AshWoodBow:
                     return new ArrowData()
                     {
                         ItemType = 5282,
                         Offest = new(8, 0)
                     };
-                    break;
                 case BowType.BorealWoodBow:
                     return new ArrowData()
                     {
                         ItemType = 2747,
                         Offest = new(8, 0)
                     };
-                    break;
                 case BowType.PalmWoodBow:
                     return new ArrowData()
                     {
                         ItemType = 2515,
                         Offest = new(8, 0)
                     };
-                    break;
                 case BowType.RichMahoganyBow:
                     return new ArrowData()
                     {
                         ItemType = 658,
                         Offest = new(8, 0)
                     };
-                    break;
                 case BowType.EbonwoodBow:
                     return new ArrowData()
                     {
                         ItemType = 655,
                         Offest = new(8, 0)
                     };
-                    break;
                 case BowType.ShadewoodBow:
                     return new ArrowData()
                     {
                         ItemType = 923,
                         Offest = new(8, 0)
                     };
-                    break;
                 case BowType.PearlwoodBow:
                     return new ArrowData()
                     {
                         ItemType = 661,
                         Offest = new(8, 0)
                     };
-                    break;
                 case BowType.AfterGlow:
                     return new ArrowData()
                     {
                         ItemType = ModContent.ItemType<Afterglow>(),
                         Offest = new(8, 0)
                     };
-                    break;
                 case BowType.FarAwaySky:
                     return new ArrowData()
                     {
                         ItemType = ModContent.ItemType<FarAwaySky>(),
                         Offest = new(8, 0)
                     };
-                    break;
                 case BowType.Hail:
                     return new ArrowData()
                     {
                         ItemType = 39,
                         Offest = new(8, 0)
                     };
-                    break;
                 case BowType.MoltenFury:
                     return new ArrowData()
                     {
                         ItemType = 120,
                         Offest = new(8, 0)
                     };
-                    break;
                 case BowType.HellwingBow:
                     return new ArrowData()
                     {
                         ItemType = 3019,
                         Offest = new(9, 0)
                     };
-                    break;
                 case BowType.RadiantSun:
                     return new ArrowData()
                     {
                         ItemType = ModContent.ItemType<RadiantSun>(),
                         Offest = new(14, 0)
                     };
-                    break;
                 case BowType.ReversedFlash:
                     return new ArrowData()
                     {
                         ItemType = ModContent.ItemType<ReverseFlash>(),
                         Offest = new(12, 0)
                     };
-                    break;
                 case BowType.End:
                     return new ArrowData()
                     {
                         ItemType = 39,
                     };
-                    break;
                 default:
                     break;
             }
             return default;
         }
-
     }
-
 }

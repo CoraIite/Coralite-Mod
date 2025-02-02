@@ -392,6 +392,8 @@ namespace Coralite.Core.Systems.MagikeSystem
             ChargerNotChargePlayer,
             ChargerDescription,
             ChargerItemNotFound,
+            ApothecaryTable,
+            ApothecaryTableDescription,
 
             Count
         }

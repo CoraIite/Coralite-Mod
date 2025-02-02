@@ -160,7 +160,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             AddRemodelRecipe(ItemID.PlatinumBar, ItemID.MeteoriteBar, cost, 1, conditions: [Condition.DownedEyeOfCthulhu, CoraliteConditions.NotInDigDigDig]);
             AddRemodelRecipe(ItemID.PlatinumBar, ItemID.AncientGoldHelmet, 150, mainStack: 8);
             AddRemodelRecipe(ItemID.PlatinumBar, ItemID.GoldChest, CalculateMagikeCost(Glistent, 6, 120), mainStack: 12, conditions: CoraliteConditions.NotInDigDigDig);
-
+            AddRemodelRecipe(ItemID.PlatinumBar, ItemID.GoldenKey, CalculateMagikeCost(Bone, 6, 75), mainStack: 12, conditions: Condition.DownedSkeletron);
             #endregion
 
             #region 猩红矿和魔矿

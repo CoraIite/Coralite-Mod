@@ -9,8 +9,8 @@ namespace Coralite.Content.Items.Magike.Tools.MiniColumns
 {
     public class MiniSplendorColumn : MagikeChargeableItem
     {
-        public MiniSplendorColumn() : base(1500, Item.sellPrice(0, 0, 10, 0)
-            , ModContent.RarityType<SplendorMagicoreRarity>(), 1000, AssetDirectory.MagikeTools)
+        public MiniSplendorColumn() : base(12000, Item.sellPrice(0, 0, 10, 0)
+            , ModContent.RarityType<SplendorMagicoreRarity>(), -1, AssetDirectory.MagikeTools)
         {
         }
 

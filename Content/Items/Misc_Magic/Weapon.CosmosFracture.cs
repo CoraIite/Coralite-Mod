@@ -2,6 +2,7 @@
 using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
+using Coralite.Helpers;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -87,8 +88,8 @@ namespace Coralite.Content.Items.Misc_Magic
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeRecipe.CreateRecipe(ItemID.SkyFracture, ModContent.ItemType<CosmosFracture>(), 1_0000)
-                .SetAntiMagikeCost(1_0000)
+            MagikeRecipe.CreateRecipe(ItemID.SkyFracture, ItemType<CosmosFracture>(), MagikeHelper.CalculateMagikeCost(MALevel.SplendorMagicore,12,60*5))
+                .AddCondition(Condition.DownedMoonLord)
                 .Register();
         }
 

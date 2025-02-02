@@ -5204,3 +5204,18 @@ PlatinumMagshield: {
 		[c/ffbeec:铂金矿太多了]
 		'''
 }
+
+ApothecaryTable: {
+	NotHavePotion: 未放入药水！
+	DisplayName: 魔能药剂台
+	Tooltip:
+		'''
+		激活后消耗全部魔能，将内部存储的药水效果给予周围的玩家
+		{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}
+		'''
+}
+
+Aquarius: {
+	// DisplayName: Aquarius
+	// Tooltip: ""
+}

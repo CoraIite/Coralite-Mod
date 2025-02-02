@@ -5186,3 +5186,14 @@ PlatinumMagshield: {
 	// DisplayName: Platinum Magshield
 	// Tooltip: ""
 }
+
+ApothecaryTable: {
+	// NotHavePotion: Mods.Coralite.Items.ApothecaryTable.NotHavePotion
+	// DisplayName: Apothecary Table
+	// Tooltip: ""
+}
+
+Aquarius: {
+	// DisplayName: Aquarius
+	// Tooltip: ""
+}

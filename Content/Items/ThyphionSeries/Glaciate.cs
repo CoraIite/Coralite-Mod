@@ -61,7 +61,6 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             int sp = 0;
 
-
             if (powerfulAttack)
             {
                 powerfulAttack = false;

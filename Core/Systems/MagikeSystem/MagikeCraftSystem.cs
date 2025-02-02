@@ -1,6 +1,5 @@
 ﻿using Coralite.Content.Raritys;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
-using Steamworks;
 using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
@@ -104,7 +103,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         public required Item ResultItem { get; set; }
 
         public int magikeCost;
-        public int antiMagikeCost;
+        //public int antiMagikeCost;
 
         private List<Condition> _conditions;
         public List<Condition> Conditions
@@ -131,7 +130,19 @@ namespace Coralite.Core.Systems.MagikeSystem
         /// <summary>
         /// 是湮灭反应（需求的是反魔能而不是魔能）
         /// </summary>
-        public bool IsAnnihilation => magikeCost == 0 && antiMagikeCost != 0;
+        //public bool IsAnnihilation => magikeCost == 0 && antiMagikeCost != 0;
+
+        public enum RecipeType
+        {
+            /// <summary>
+            /// 魔能合成
+            /// </summary>
+            MagikeCraft,
+            /// <summary>
+            /// 魔能烧矿
+            /// </summary>
+            MagikeSmelting
+        }
 
         #region 能否合成检测
 
@@ -217,21 +228,21 @@ namespace Coralite.Core.Systems.MagikeSystem
 
         public void CanCraft_CheckMagike(int magikeAmount, ref MagikeCraftAttempt attempt)
         {
-            if (magikeAmount < 0)//反魔能
-            {
-                if (antiMagikeCost == 0 && magikeCost != 0)
-                    attempt.magikeNotEnough = true;
+            //if (magikeAmount < 0)//反魔能
+            //{
+            //    if (antiMagikeCost == 0 && magikeCost != 0)
+            //        attempt.magikeNotEnough = true;
 
-                if (magikeAmount > -1)//反魔能需要反一下
-                {
-                    attempt.antimagikeNotEnough = true;
-                }
+            //    if (magikeAmount > -1)//反魔能需要反一下
+            //    {
+            //        attempt.antimagikeNotEnough = true;
+            //    }
 
-                return;
-            }
+            //    return;
+            //}
 
-            if (magikeAmount == 0 && antiMagikeCost != 0)
-                attempt.antimagikeNotEnough = true;
+            //if (magikeAmount == 0 && antiMagikeCost != 0)
+            //    attempt.antimagikeNotEnough = true;
 
             if (magikeAmount < 1)
             {
@@ -282,16 +293,16 @@ namespace Coralite.Core.Systems.MagikeSystem
             return this;
         }
 
-        public MagikeRecipe SetAntiMagikeCost(int antiMagikeCost)
-        {
-            magikeCost = 0;
-            this.antiMagikeCost = antiMagikeCost;
-            return this;
-        }
+        //public MagikeRecipe SetAntiMagikeCost(int antiMagikeCost)
+        //{
+        //    magikeCost = 0;
+        //    this.antiMagikeCost = antiMagikeCost;
+        //    return this;
+        //}
 
         public MagikeRecipe SetMagikeCost(int MagikeCost)
         {
-            antiMagikeCost = 0;
+            //antiMagikeCost = 0;
             magikeCost = MagikeCost;
             return this;
         }
