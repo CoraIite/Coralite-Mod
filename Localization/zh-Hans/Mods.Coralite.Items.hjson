@@ -5216,6 +5216,6 @@ ApothecaryTable: {
 }
 
 Aquarius: {
-	// DisplayName: Aquarius
-	// Tooltip: ""
+	DisplayName: 十二星-水瓶座
+	Tooltip: 射出水球，部分水球会在飞行中破裂并射出箭矢
 }

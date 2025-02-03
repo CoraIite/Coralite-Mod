@@ -4,4 +4,4 @@ version = 0.2.1.3
 hideResources = true
 modReferences = InnoVault@1.7
 sortAfter = InnoVault,DDmod
-buildIgnore = MysteryTools/*,OldAssets/*
+buildIgnore = MysteryFiles/*,OldAssets/*

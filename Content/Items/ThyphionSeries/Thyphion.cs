@@ -1,4 +1,6 @@
-﻿using Coralite.Content.Items.Thunder;
+﻿using Coralite.Content.Items.FlyingShields;
+using Coralite.Content.Items.Icicle;
+using Coralite.Content.Items.Thunder;
 using Coralite.Content.ModPlayers;
 using Coralite.Content.Particles;
 using Coralite.Core;
@@ -15,9 +17,9 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.GameContent.UI;
 using Terraria.Graphics.CameraModifiers;
 using Terraria.ID;
-using static Coralite.Content.Items.ThyphionSeries.ThyphionPhantomArrow;
 using static Terraria.ModLoader.ModContent;
 #pragma warning disable CS8524 // switch 表达式不会处理其输入类型的某些值(它不是穷举)，这包括未命名的枚举值。
 
@@ -26,7 +28,6 @@ namespace Coralite.Content.Items.ThyphionSeries
     public class Thyphion : ModItem, IDashable
     {
         public static Color ThyphionColor1 = new Color(66, 152, 201);
-        public static Color ThyphionColor2 = new Color(85, 198, 207);
         public static Color ThyphionColor3 = new Color(103, 244, 194);
 
         public override string Texture => AssetDirectory.ThyphionSeriesItems + Name;
@@ -91,9 +92,8 @@ namespace Coralite.Content.Items.ThyphionSeries
                     {
                         Helper.PlayPitched("Misc/Do", 0.7f, 1f, player.Center);
                         Helper.PlayPitched("Misc/Arrow", 0.4f, 0.1f, player.Center);
-                        Helper.PlayPitched("Misc/EnergyBurst", 0.2f, 0.3f, player.Center);
                         Helper.PlayPitched(CoraliteSoundID.StrongWinds_Item66, player.Center, volume: 0.4f);
-                        Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<ThyphionArrow>(), damage, knockback, player.whoAmI, 0, 0, 1);
+                        Projectile.NewProjectile(source, position, velocity, ProjectileType<ThyphionArrow>(), damage, knockback, player.whoAmI, ai0: -1, ai2: 1);
                         shootThyphionArrow = 1;
                     }
                     break;
@@ -150,16 +150,28 @@ namespace Coralite.Content.Items.ThyphionSeries
                 }
 
                 //生成手持弹幕
-                Projectile.NewProjectile(Player.GetSource_ItemUse(Player.HeldItem), Player.Center, Vector2.Zero, ProjectileType<ThyphionHeldProj>(),
+                Projectile.NewProjectile(Player.GetSource_ItemUse(Player.HeldItem), Player.Center, newVelocity, ProjectileType<ThyphionHeldProj>(),
                     Player.HeldItem.damage, Player.HeldItem.knockBack, Player.whoAmI, 1.57f - dashDirection * 0.3f, 1, 20);
             }
 
             return true;
         }
 
-        public override void ModifyWeaponDamage(Player player, ref StatModifier damage)
+        public override void AddRecipes()
         {
-            damage = new StatModifier(1 + (damage.Additive - 1) / 10, 1);
+            CreateRecipe()
+                .AddIngredient<Solunar>()
+                .AddIngredient<HorizonArc>()
+                .AddIngredient<SeismicWave>()
+                .AddIngredient<PlasmaBow>()
+                .AddIngredient<ReverseFlash>()
+                //.AddIngredient<>()//海市蜃楼
+                .AddIngredient<Glaciate>()
+                .AddIngredient(ItemID.Tsunami)
+                .AddIngredient(ItemID.FairyQueenRangedItem)
+                .AddIngredient<Aurora>()
+                .AddTile<AncientFurnaceTile>()
+                .Register();
         }
     }
 
@@ -222,7 +234,7 @@ namespace Coralite.Content.Items.ThyphionSeries
     }
 
     [AutoLoadTexture(Path =AssetDirectory.ThyphionSeriesItems)]
-    public class ThyphionHeldProj : BaseDashBow, IDrawPrimitive
+    public class ThyphionHeldProj : BaseDashBow/*, IDrawPrimitive*/
     {
         public override string Texture => AssetDirectory.ThyphionSeriesItems + "Thyphion";
 
@@ -252,10 +264,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         {
             RecordAngle = Rotation;
         }
-        public override void SetCenter()
-        {
-            base.SetCenter();
-        }
+
         public override void NormalShootAI()
         {
             //借用AI2来判断射出的是不是穿透箭
@@ -270,7 +279,6 @@ namespace Coralite.Content.Items.ThyphionSeries
                     WindCircle.Spawn(Projectile.Center + (ShootDir * 40), -ShootDir * 2 + Owner.velocity, Rotation, lightCyen, 0.6f, 1.3f, new Vector2(1.4f, 1f));
                     Color skyBlue = Thyphion.ThyphionColor1;
                     WindCircle.Spawn(Projectile.Center + (ShootDir * 30), -ShootDir * 3 + Owner.velocity, Rotation, skyBlue, 0.2f, 1.3f, new Vector2(1.6f, 1.3f));
-
                 }
                 if (Main.myPlayer == Projectile.owner)
                 {
@@ -288,11 +296,11 @@ namespace Coralite.Content.Items.ThyphionSeries
             base.NormalShootAI();
         }
 
+        //冲刺
         public override void DashAttackAI()
         {
             do
             {
-                //冲刺
                 if (Timer < DashTime + 2)
                 {
                     if (Main.myPlayer == Projectile.owner)
@@ -304,9 +312,20 @@ namespace Coralite.Content.Items.ThyphionSeries
                     }
                     if (Timer % 4 == 0)
                     {
-                        int bowIndex = Main.rand.Next(1, (int)BowType.End);
+                        int bowIndex = Main.rand.Next(1, (int)ThyphionShadowBow.BowType.End);
 
-                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, Vector2.Zero, ProjectileType<ThyphionShadowBow>(), Projectile.damage, Projectile.knockBack, Projectile.owner, bowIndex);
+                        int dir = ((int)Timer / 4) % 4;
+                        dir = dir switch
+                        {
+                            0 => -1,
+                            2 => 1,
+                            _ => 0
+                        };
+
+                        float velicityDir = Projectile.velocity.ToRotation() + MathHelper.Pi + dir * MathF.Sign(Projectile.velocity.X) * 0.3f;
+
+                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, velicityDir.ToRotationVector2() * 10, ProjectileType<ThyphionShadowBow>()
+                            , Owner.GetWeaponDamage(Owner.HeldItem), Projectile.knockBack, Projectile.owner, bowIndex, ToMouseAngle, MathF.Sign(ToMouse.X));
                     }
 
                     Owner.itemTime = Owner.itemAnimation = 2;
@@ -320,10 +339,10 @@ namespace Coralite.Content.Items.ThyphionSeries
                 else if (Timer == DashTime + 2)
                 {
                     Vector2 dir = Rotation.ToRotationVector2();
-                    projectile = Projectile.NewProjectileFromThis(Owner.Center, dir * 12f, ProjectileType<ThyphionArrow>(), Owner.GetWeaponDamage(Owner.HeldItem), Projectile.knockBack, 0, 0, 2);
+                    projectile = Projectile.NewProjectileFromThis<ThyphionArrow>(Owner.Center, dir * 14f
+                        , Owner.GetWeaponDamage(Owner.HeldItem), Projectile.knockBack, ai0: -1, ai2: 2);
                 }
 
-                //右键瞄准/发射
                 if (DownLeft && ReleaseTimer == 0)
                 {
                     if (Main.myPlayer == Projectile.owner)
@@ -332,12 +351,14 @@ namespace Coralite.Content.Items.ThyphionSeries
                         float lerpSpeed = DownLeft ? 0.15f : 1f;
                         Rotation = Rotation.AngleLerp((Main.MouseWorld - Owner.MountedCenter).ToRotation(), lerpSpeed);
                     }
+
                     Projectile.timeLeft = 2;
                     if (TryGetArrowProjectile(projectile, out var thyphionArrow))
                     {
                         Vector2 dir = Rotation.ToRotationVector2();
                         thyphionArrow.Hold(Owner.Center, dir * 12f);
                     }
+
                     LockOwnerItemTime();
                 }
                 else
@@ -350,6 +371,13 @@ namespace Coralite.Content.Items.ThyphionSeries
                         ShowArrow = false;
 
                         handOffset = -30;
+
+                        if (TryGetArrowProjectile(projectile, out var thyphionArrow))
+                            thyphionArrow.canDamage = true;
+
+                        Helper.PlayPitched("Misc/Do", 0.7f, 1f, Owner.Center);
+                        Helper.PlayPitched("Misc/Arrow", 0.4f, -0.2f, Owner.Center);
+                        Helper.PlayPitched(CoraliteSoundID.StrongWinds_Item66, Owner.Center);
 
                         if (VisualEffectSystem.HitEffect_ScreenShaking)
                             Main.instance.CameraModifiers.Add(new PunchCameraModifier(Projectile.Center, dir, 8, 7, 4, 800));
@@ -390,9 +418,8 @@ namespace Coralite.Content.Items.ThyphionSeries
             Color skyBlue = Thyphion.ThyphionColor1;
             WindCircle.Spawn(Projectile.Center + (ShootDir * 15), -ShootDir * 3 + Owner.velocity, Rotation, skyBlue, 0.2f, 1.3f, new Vector2(1.6f, 1.3f));
 
-            Color lightBlue = new Color(Thyphion.ThyphionColor2.R, Thyphion.ThyphionColor2.G, Thyphion.ThyphionColor2.B, 150);
-            Tornado.Spawn(Projectile.Center + (ShootDir * 20), ShootDir * -3 + Owner.velocity, lightBlue, 15, ShootDir.ToRotation(), Main.rand.NextFloat(0.7f, 0.5f));
-            Tornado.Spawn(Projectile.Center + (ShootDir * 20), ShootDir * -3 + Owner.velocity, lightBlue, 15, ShootDir.ToRotation(), Main.rand.NextFloat(0.7f, 0.5f));
+            Tornado.Spawn(Projectile.Center + (ShootDir * 20), ShootDir * -3 + Owner.velocity, lightCyen, 15, ShootDir.ToRotation(), Main.rand.NextFloat(0.7f, 0.5f));
+            Tornado.Spawn(Projectile.Center + (ShootDir * 20), ShootDir * -3 + Owner.velocity, lightCyen, 15, ShootDir.ToRotation(), Main.rand.NextFloat(0.7f, 0.5f));
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -405,27 +432,19 @@ namespace Coralite.Content.Items.ThyphionSeries
             Main.spriteBatch.Draw(mainTex, center, null, lightColor, Projectile.rotation, origin, 1, effect, 0f);
             Main.spriteBatch.Draw(GlowTex.Value, center, null, Color.White, Projectile.rotation, origin, 1, effect, 0f);
 
-            if (Special == 1)
+            if (ShowArrow)
             {
-                if (ShowArrow)
-                {
-                    float value = Math.Clamp(Timer / DashTime, 0, 1);
-                    Vector2 dir2 = (Rotation).ToRotationVector2();
-                    ThyphionArrow.ArrowSelfDraw(Owner.MountedCenter + dir2 * 40, 0.8f * value, Projectile.rotation.ToRotationVector2(), value);
-                }
+                float value = Math.Clamp(Timer / DashTime, 0, 1);
+                Vector2 dir2 = (Rotation).ToRotationVector2();
+                ThyphionArrow.ArrowSelfDraw(Owner.MountedCenter + dir2 * 40, 0.8f * value, Projectile.rotation.ToRotationVector2(), value, Thyphion.ThyphionColor3, 1);
             }
-            else
-            {
-
-            }
-
             return false;
         }
 
-        public void DrawPrimitives()
-        {
+        //public void DrawPrimitives()
+        //{
 
-        }
+        //}
 
         private bool TryGetArrowProjectile(int index, out ThyphionArrow thyphionArrow)
         {
@@ -441,18 +460,30 @@ namespace Coralite.Content.Items.ThyphionSeries
         }
     }
 
-    public class ThyphionArrow : ModProjectile, IDrawPrimitive
+    public class ThyphionArrow : ModProjectile/*, IDrawPrimitive*/
     {
         public int SurrroundTrailCount = 20;
         public override string Texture => AssetDirectory.Blank;
 
-        public bool CanDoDamage = true;
-
         private bool hasInit = false;
-        private ref float Timer => ref Projectile.ai[0];
+
+        private ref float ArrowItemId => ref Projectile.ai[0];
+
+        private ref float Timer => ref Projectile.localAI[0];
         private ref float StartSpeed => ref Projectile.ai[1];
 
         private ArrowType arrowType => (ArrowType)Projectile.ai[2];
+
+        public Color ArrowColor;
+
+        public bool canDamage = true;
+
+        public override bool? CanDamage()
+        {
+            if (canDamage)
+                return null;
+            return false;
+        }
 
         public enum ArrowType
         {
@@ -472,14 +503,9 @@ namespace Coralite.Content.Items.ThyphionSeries
             Projectile.tileCollide = false;
             Projectile.extraUpdates = 2;
             Projectile.penetrate = -1;
-            Projectile.timeLeft = 100;
+            Projectile.timeLeft = 200;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = -1;
-        }
-
-        public override bool? CanDamage()
-        {
-            return CanDoDamage;
         }
 
         public void Init()
@@ -488,6 +514,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             StartSpeed = Projectile.velocity.Length();
             StartSpeed = MathHelper.Clamp(StartSpeed, 5, 7);
             Projectile.velocity = Projectile.velocity.SafeNormalize(Vector2.One) * StartSpeed;
+
             switch (arrowType)
             {
                 case ArrowType.Normal:
@@ -500,39 +527,51 @@ namespace Coralite.Content.Items.ThyphionSeries
                     Projectile.scale = 1.3f;
                     break;
             }
-            Projectile.InitOldPosCache(20 + 4);
 
+            if (ArrowItemId != -1)
+            {
+                var data = ThyphionShadowBow.GetArrowData((ThyphionShadowBow.BowType)ArrowItemId);
+                ArrowColor = data.ArrowColor;
+            }
+            else
+                ArrowColor = Thyphion.ThyphionColor1;
+
+            Projectile.InitOldPosCache(12);
+            Projectile.InitOldRotCache(12);
         }
 
         public override void AI()
         {
             if (!hasInit)
-            {
                 Init();
-            }
+
             if (!IsHoldBy())
             {
                 ArrowSpeedUpdate();
                 ArrowLight();
                 ArrowDust();
+
+                Projectile.rotation = Projectile.velocity.ToRotation();
             }
+
+            Projectile.UpdateOldPosCache();
+            Projectile.UpdateOldRotCache();
+
             Timer++;
-            base.AI();
         }
 
         private void ArrowSpeedUpdate()
         {
             if (Timer < 20 && !IsHoldBy())
-            {
-                Projectile.velocity = Projectile.velocity * 1.05f;
-            }
-
+                Projectile.velocity *= 1.05f;
         }
 
         private void ArrowLight()
         {
             Lighting.AddLight(Projectile.Center, Thyphion.ThyphionColor3.ToVector3());
         }
+
+        #region 弓箭粒子
 
         private void ArrowDust()
         {
@@ -624,41 +663,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             }
         }
 
-        public override bool PreDraw(ref Color lightColor)
-        {
-            if (IsHoldBy())
-                return false;
-            ArrowSelfDraw(Projectile.Center, Projectile.scale, Projectile.velocity, 1);
-            return false;
-        }
-
-        public static void ArrowSelfDraw(Vector2 center, float scale, Vector2 arrowDir, float alpha)
-        {
-            Texture2D texture = TextureAssets.Extra[98].Value;
-            Vector2 ArrowSize = new Vector2(1, 7) * 0.3f * scale;
-            Vector2 InnerSize = ArrowSize;
-            Vector2 SecondLayerSize = ArrowSize * 1.5f;
-            Vector2 OuterSize = ArrowSize * 3 * new Vector2(0.7f, 1);
-
-            Vector2 Center = center - Main.screenPosition;
-
-            Color SkyBlue = Thyphion.ThyphionColor1 * 0.5f * alpha;
-            Main.spriteBatch.Draw(texture, Center - arrowDir.SafeNormalize(Vector2.One) * 40 * scale, null, SkyBlue, arrowDir.ToRotation() + MathHelper.PiOver2, texture.Size() / 2f, OuterSize, 0, 0);
-
-            Color lightBlue = new Color(Thyphion.ThyphionColor2.R, Thyphion.ThyphionColor2.G, Thyphion.ThyphionColor2.B, 200) * alpha;
-            Main.spriteBatch.Draw(texture, Center - arrowDir.SafeNormalize(Vector2.One) * 10 * scale, null, lightBlue, arrowDir.ToRotation() + MathHelper.PiOver2, texture.Size() / 2f, SecondLayerSize, 0, 0);
-            Main.spriteBatch.Draw(texture, Center - arrowDir.SafeNormalize(Vector2.One) * 25 * scale, null, lightBlue, arrowDir.ToRotation() + MathHelper.PiOver2, texture.Size() / 2f, SecondLayerSize, 0, 0);
-
-            Color lightCyen = new Color(Thyphion.ThyphionColor3.R, Thyphion.ThyphionColor3.G, Thyphion.ThyphionColor3.B, 70) * alpha;
-            Main.spriteBatch.Draw(texture, Center + arrowDir.SafeNormalize(Vector2.One) * 20 * scale, null, lightCyen, arrowDir.ToRotation() + MathHelper.PiOver2, texture.Size() / 2f, InnerSize * 0.5f, 0, 0);
-            Main.spriteBatch.Draw(texture, Center, null, lightCyen, arrowDir.ToRotation() + MathHelper.PiOver2, texture.Size() / 2f, InnerSize, 0, 0);
-            Main.spriteBatch.Draw(texture, Center - arrowDir.SafeNormalize(Vector2.One) * 5 * scale, null, lightCyen, arrowDir.ToRotation() + MathHelper.PiOver2, texture.Size() / 2f, InnerSize, 0, 0);
-        }
-
-        public override void PostDraw(Color lightColor)
-        {
-            base.PostDraw(lightColor);
-        }
+        #endregion
 
         //粒子加顶点的设计？
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
@@ -667,8 +672,6 @@ namespace Coralite.Content.Items.ThyphionSeries
             Vector2 DustSpwanPos = Vector2.Clamp(Projectile.Center, npcHitBox.TopLeft(), npcHitBox.BottomRight());
 
             ArrowHitDust(DustSpwanPos);
-
-            base.OnHitNPC(target, hit, damageDone);
         }
 
         public Color GetDustRandomColor(int lightWeight = 1, int normalWeight = 1, int darkWeight = 1, int alpha = 255)
@@ -680,7 +683,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             }
             else if (random <= normalWeight)
             {
-                return new Color(Thyphion.ThyphionColor2.R, Thyphion.ThyphionColor2.G, Thyphion.ThyphionColor2.B, alpha);
+                return new Color(Thyphion.ThyphionColor3.R, Thyphion.ThyphionColor3.G, Thyphion.ThyphionColor3.B, alpha);
             }
             else
             {
@@ -703,33 +706,102 @@ namespace Coralite.Content.Items.ThyphionSeries
             Projectile.Center = pos;
             Projectile.velocity = vel;
             Timer = 0;
-            Projectile.timeLeft = 100;
+            Projectile.timeLeft = 200;
+            canDamage = false;
         }
 
-        public void DrawPrimitives()
-        {
+        //public void DrawPrimitives()
+        //{
 
+        //}
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            if (IsHoldBy())
+                return false;
+
+            float colorFactor;
+
+            if (Timer<15)
+                colorFactor = 0;
+            else
+                colorFactor = Timer > 45 ? 1 : ((Timer-15) / 45);
+
+            Texture2D flowTex = TextureAssets.Extra[98].Value;
+            Vector2 ArrowSize = new Vector2(1, 7) * 0.3f * Projectile.scale;
+
+            Vector2 origin = flowTex.Size() / 2f;
+            Color SkyBlue = Color.Lerp(ArrowColor, Thyphion.ThyphionColor3, colorFactor);
+
+            int count = Projectile.oldPos.Length;
+            for (int i = 0; i < count; i++)
+            {
+                Main.spriteBatch.Draw(flowTex, Projectile.oldPos[i] - Main.screenPosition, null, SkyBlue * ((float)i / count)
+                    , Projectile.oldRot[i] + MathHelper.PiOver2, origin, ArrowSize, 0, 0);
+            }
+
+            ArrowSelfDraw(Projectile.Center, Projectile.scale, Projectile.velocity.SafeNormalize(Vector2.Zero), 1
+                , ArrowColor, colorFactor);
+
+            return false;
+        }
+
+        public static void ArrowSelfDraw(Vector2 center, float scale, Vector2 arrowDir, float alpha, Color startColor, float colorFactor)
+        {
+            Texture2D arrowTex = CoraliteAssets.Trail.ArrowSPA.Value;
+            Vector2 Center = center - Main.screenPosition;
+            Vector2 origin = arrowTex.Size() / 2;
+            float rotation = arrowDir.ToRotation() ;
+
+            Color SkyBlue = Color.Lerp(startColor, Thyphion.ThyphionColor1, colorFactor) * 0.5f * alpha;
+            Color lightCyen = Color.Lerp(startColor, Thyphion.ThyphionColor3, colorFactor) * alpha;
+            lightCyen.A = 70;
+
+            Main.spriteBatch.Draw(arrowTex, Center - arrowDir * 40 * scale, null, SkyBlue, rotation, origin, scale*new Vector2(0.9f,0.75f), 0, 0);
+            Main.spriteBatch.Draw(arrowTex, Center - arrowDir * 40 * scale, null, lightCyen, rotation, origin, scale*new Vector2(0.6f,0.5f), 0, 0);
+            
+            rotation += MathHelper.PiOver2;
+
+            Texture2D flowTex = TextureAssets.Extra[98].Value;
+            Vector2 ArrowSize = new Vector2(1, 7) * 0.3f * scale;
+            Vector2 InnerSize = ArrowSize;
+            Vector2 SecondLayerSize = ArrowSize * 1.5f;
+            Vector2 OuterSize = ArrowSize * 3 * new Vector2(0.7f, 1);
+
+            origin = flowTex.Size() / 2f;
+
+            Main.spriteBatch.Draw(flowTex, Center - arrowDir * 40 * scale, null, SkyBlue, rotation, origin, OuterSize, 0, 0);
+
+            Main.spriteBatch.Draw(flowTex, Center - arrowDir * 10 * scale, null, SkyBlue, rotation, origin, SecondLayerSize, 0, 0);
+
+            Main.spriteBatch.Draw(flowTex, Center + arrowDir * 20 * scale, null, lightCyen, rotation, origin, InnerSize * 0.5f, 0, 0);
+            Main.spriteBatch.Draw(flowTex, Center, null, lightCyen, rotation, origin, InnerSize, 0, 0);
+            Main.spriteBatch.Draw(flowTex, Center - arrowDir * 5 * scale, null, lightCyen, rotation, origin, InnerSize, 0, 0);
+        }
+
+        public override void PostDraw(Color lightColor)
+        {
+            base.PostDraw(lightColor);
         }
     }
 
-    public class ThyphionShadowBow : ModProjectile
+    public class ThyphionShadowBow : BaseHeldProj
     {
+        public override string Texture => AssetDirectory.Blank;
+
         private Player PhantomPlayer;
 
-        private int BowType => (int)Projectile.ai[0];
+        private int BowItemType => (int)Projectile.ai[0];
+        private int StartAngle => (int)Projectile.ai[1];
+        private int Direction => (int)Projectile.ai[2];
 
-        private ArrowData arrowData => GetArrowData((BowType)BowType);
-
-        private Vector2 MouseDir => (Main.MouseWorld - Projectile.Center);
-
-        public override string Texture => AssetDirectory.Blank;
+        private ArrowData Data => GetArrowData((BowType)BowItemType);
 
         private bool hasInit = false;
 
         //记录玩家信息
-        Vector2 PlayerVelocity;
-        int PlayerWingFrame;
-        float Rotation;
+        private int PlayerWingFrame;
+        private float Rotation { get; set; }
 
         public override void SetDefaults()
         {
@@ -749,29 +821,43 @@ namespace Coralite.Content.Items.ThyphionSeries
         public override void AI()
         {
             if (!hasInit)
-            {
                 Init();
+
+            Projectile.velocity *= 0.95f;
+            int time = 40 - Projectile.timeLeft;
+
+            Vector2 MouseDir = (MousePos - Projectile.Center).SafeNormalize(Vector2.One);
+            if (Projectile.timeLeft == 24)
+            {
+                Projectile.NewProjectileFromThis<ThyphionArrow>(Projectile.Center, MouseDir.SafeNormalize(Vector2.One) * 14
+                    , Projectile.damage, Projectile.knockBack, BowItemType);
+
+                Helper.PlayPitched(CoraliteSoundID.Bow_Item5, Projectile.Center);
             }
 
-            Vector2 MouseDir = (Main.MouseWorld - Projectile.Center).SafeNormalize(Vector2.One);
-            if (Projectile.timeLeft == 24)
-                Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, MouseDir.SafeNormalize(Vector2.One) * 5, ModContent.ProjectileType<ThyphionArrow>(), Projectile.damage, Projectile.knockBack, Projectile.owner, 0, 0, 0);
-
-            if (Projectile.timeLeft < 20)
-                Projectile.Opacity = Projectile.timeLeft / 20f;
+            if (time > 16)
+            {
+                if (time > 30)
+                {
+                    Projectile.Opacity = 1 - (time - 30f) / 10f;
+                }
+            }
             else
             {
-                Rotation = MathHelper.Lerp(Rotation, MouseDir.ToRotation(), 0.07f);
-
+                Projectile.Opacity = time / 16f;
+                Rotation += Direction * MathHelper.TwoPi / 16;
+                if (time==16)
+                {
+                    Rotation = MouseDir.ToRotation();
+                }
             }
-
-            base.AI();
         }
 
         public void Init()
         {
             hasInit = true;
-            Main.instance.LoadItem(arrowData.ItemType);
+            Main.instance.LoadItem(Data.ItemType);
+            Rotation = StartAngle;
             InitPhantomPlayer();
         }
 
@@ -780,76 +866,11 @@ namespace Coralite.Content.Items.ThyphionSeries
             Player Owner = Main.player[Projectile.owner];
             PhantomPlayer = new Player();
             PhantomPlayer.CopyVisuals(Owner);
-            PlayerVelocity = Owner.velocity;
             PlayerWingFrame = Owner.wingFrame;
-            Rotation = (Main.MouseWorld - Projectile.Center).ToRotation();
+            Rotation = (MousePos - Projectile.Center).ToRotation();
+            Projectile.netUpdate = true;
         }
 
-        public override bool PreDraw(ref Color lightColor)
-        {
-            DrawPhantomPlayer();
-            if (PhantomPlayer is null)
-                return false;
-            Vector2 ArmPosition = PhantomPlayer.GetFrontHandPosition(Player.CompositeArmStretchAmount.Full, Rotation - MathHelper.PiOver2);
-            ArmPosition.Y += PhantomPlayer.gfxOffY;
-
-            Texture2D texture = TextureAssets.Item[arrowData.ItemType].Value;
-            Vector2 offest = arrowData.Offest.RotatedBy(Rotation);
-            Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition + offest, null, Color.White * Projectile.Opacity, Rotation, texture.Size() / 2f, 1, 0, 0);
-            return false;
-        }
-
-        private void DrawPhantomPlayer()
-        {
-            if (PhantomPlayer == null)
-                return;
-
-            Vector2 MouseDir = (Projectile.Center - Main.MouseWorld).SafeNormalize(Vector2.One);
-            Player Owner = Main.player[Projectile.owner];
-
-            PhantomPlayer.ResetEffects();
-            PhantomPlayer.ResetVisibleAccessories();
-            PhantomPlayer.UpdateDyes();
-            PhantomPlayer.DisplayDollUpdate();
-            PhantomPlayer.UpdateSocialShadow();
-            PhantomPlayer.itemAnimationMax = 60;
-            PhantomPlayer.itemAnimation = 1;
-
-            PhantomPlayer.velocity = PlayerVelocity.SafeNormalize(Vector2.One);
-            PhantomPlayer.wingFrame = PlayerWingFrame;
-
-            PhantomPlayer.itemRotation = Rotation;
-            int dir = (PhantomPlayer).itemRotation.ToRotationVector2().X > 0 ? 1 : -1;
-            PhantomPlayer.direction = dir;
-
-            Player.CompositeArmStretchAmount compositeArmStretchAmount = Projectile.timeLeft switch
-            {
-                <= 25 => Player.CompositeArmStretchAmount.ThreeQuarters,
-                > 25 and <= 30 => Player.CompositeArmStretchAmount.Quarter,
-                > 30 and <= 35 => Player.CompositeArmStretchAmount.None,
-                > 35 and <= 40 => Player.CompositeArmStretchAmount.Full,
-                _ => Player.CompositeArmStretchAmount.Full
-            };
-
-            PhantomPlayer.SetCompositeArmFront(true, compositeArmStretchAmount, PhantomPlayer.itemRotation - MathHelper.PiOver2);
-            PhantomPlayer.PlayerFrame();
-
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
-
-            PhantomPlayer.Center = Projectile.Center;
-            Main.PlayerRenderer.DrawPlayer(Main.Camera, PhantomPlayer, PhantomPlayer.position, 0f, PhantomPlayer.fullRotationOrigin, 1 - Projectile.Opacity);
-
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
-        }
-
-        public override bool? CanDamage() => false;
-        public override bool? CanCutTiles() => false;
-    }
-
-    public class ThyphionPhantomArrow
-    {
         public enum BowType
         {
             /// <summary> 木弓 </summary>
@@ -915,6 +936,12 @@ namespace Coralite.Content.Items.ThyphionSeries
             /// <summary> 逆闪电 </summary>
             ReversedFlash,
 
+            /// <summary> 海啸 </summary>
+            Tsunami,
+
+            /// <summary> 日暮 </summary>
+            Eventide,
+
             /// <summary> 极光 </summary>
             Aurora,
             End
@@ -936,102 +963,280 @@ namespace Coralite.Content.Items.ThyphionSeries
                 case BowType.WoodenBow:
                     return new ArrowData()
                     {
-                        ItemType = 39,
-                        Offest = new(8, 0)
+                        ItemType = ItemID.WoodenBow,
+                        Offest = new(8, 0),
+                        ArrowColor = Color.Brown
                     };
                 case BowType.AshWoodBow:
                     return new ArrowData()
                     {
-                        ItemType = 5282,
-                        Offest = new(8, 0)
+                        ItemType = ItemID.AshWoodBow,
+                        Offest = new(8, 0),
+                        ArrowColor = new Color(167, 137, 141)
                     };
                 case BowType.BorealWoodBow:
                     return new ArrowData()
                     {
-                        ItemType = 2747,
-                        Offest = new(8, 0)
+                        ItemType = ItemID.BorealWoodBow,
+                        Offest = new(8, 0),
+                        ArrowColor = new Color(107, 86, 71)
                     };
                 case BowType.PalmWoodBow:
                     return new ArrowData()
                     {
-                        ItemType = 2515,
-                        Offest = new(8, 0)
+                        ItemType = ItemID.PalmWoodBow,
+                        Offest = new(8, 0),
+                        ArrowColor = Color.Brown
                     };
                 case BowType.RichMahoganyBow:
                     return new ArrowData()
                     {
-                        ItemType = 658,
-                        Offest = new(8, 0)
+                        ItemType = ItemID.RichMahoganyBow,
+                        Offest = new(8, 0),
+                        ArrowColor = Color.DarkRed
                     };
                 case BowType.EbonwoodBow:
                     return new ArrowData()
                     {
-                        ItemType = 655,
-                        Offest = new(8, 0)
+                        ItemType = ItemID.EbonwoodBow,
+                        Offest = new(8, 0),
+                        ArrowColor = Color.DarkMagenta
                     };
                 case BowType.ShadewoodBow:
                     return new ArrowData()
                     {
-                        ItemType = 923,
-                        Offest = new(8, 0)
+                        ItemType = ItemID.ShadewoodBow,
+                        Offest = new(8, 0),
+                        ArrowColor = Color.DarkMagenta
                     };
                 case BowType.PearlwoodBow:
                     return new ArrowData()
                     {
-                        ItemType = 661,
-                        Offest = new(8, 0)
+                        ItemType = ItemID.PearlwoodBow,
+                        Offest = new(8, 0),
+                        ArrowColor = Color.SaddleBrown
                     };
                 case BowType.AfterGlow:
                     return new ArrowData()
                     {
-                        ItemType = ModContent.ItemType<Afterglow>(),
-                        Offest = new(8, 0)
+                        ItemType = ItemType<Afterglow>(),
+                        Offest = new(8, 0),
+                        ArrowColor = Color.Red
                     };
                 case BowType.FarAwaySky:
                     return new ArrowData()
                     {
-                        ItemType = ModContent.ItemType<FarAwaySky>(),
-                        Offest = new(8, 0)
+                        ItemType = ItemType<FarAwaySky>(),
+                        Offest = new(8, 0),
+                        ArrowColor = Color.SkyBlue
                     };
                 case BowType.Hail:
                     return new ArrowData()
                     {
-                        ItemType = 39,
-                        Offest = new(8, 0)
+                        ItemType = ItemType<IcicleBow>(),
+                        Offest = new(8, 0),
+                        ArrowColor = Coralite.IcicleCyan
                     };
                 case BowType.MoltenFury:
                     return new ArrowData()
                     {
-                        ItemType = 120,
-                        Offest = new(8, 0)
+                        ItemType = ItemID.MoltenFury,
+                        Offest = new(8, 0),
+                        ArrowColor = Color.OrangeRed
                     };
                 case BowType.HellwingBow:
                     return new ArrowData()
                     {
-                        ItemType = 3019,
-                        Offest = new(9, 0)
+                        ItemType = ItemID.HellwingBow,
+                        Offest = new(9, 0),
+                        ArrowColor = Color.OrangeRed
                     };
                 case BowType.RadiantSun:
                     return new ArrowData()
                     {
-                        ItemType = ModContent.ItemType<RadiantSun>(),
-                        Offest = new(14, 0)
+                        ItemType = ItemType<RadiantSun>(),
+                        Offest = new(14, 0),
+                        ArrowColor = Color.Goldenrod
                     };
                 case BowType.ReversedFlash:
                     return new ArrowData()
                     {
-                        ItemType = ModContent.ItemType<ReverseFlash>(),
-                        Offest = new(12, 0)
+                        ItemType = ItemType<ReverseFlash>(),
+                        Offest = new(12, 0),
+                        ArrowColor = Coralite.ThunderveinYellow
                     };
-                case BowType.End:
+                case BowType.Turbulence:
                     return new ArrowData()
                     {
-                        ItemType = 39,
+                        ItemType = ItemType<Turbulence>(),
+                        Offest = new(12, 0),
+                        ArrowColor = Color.DeepSkyBlue
+                    };
+                case BowType.SeismicWave:
+                    return new ArrowData()
+                    {
+                        ItemType = ItemType<SeismicWave>(),
+                        Offest = new(12, 0),
+                        ArrowColor = Color.Gray
+                    };
+                case BowType.IceBow:
+                    return new ArrowData()
+                    {
+                        ItemType =ItemID.IceBow,
+                        Offest = new(12, 0),
+                        ArrowColor = new Color(97,200,225)
+                    };
+                case BowType.Glaciate:
+                    return new ArrowData()
+                    {
+                        ItemType = ItemType<Glaciate>(),
+                        Offest = new(12, 0),
+                        ArrowColor = Coralite.IcicleCyan
+                    };
+                case BowType.ShadowFlameBow:
+                    return new ArrowData()
+                    {
+                        ItemType = ItemID.ShadowFlameBow,
+                        Offest = new(12, 0),
+                        ArrowColor = Color.Gray
+                    };
+                case BowType.TendonBow:
+                    return new ArrowData()
+                    {
+                        ItemType = ItemID.TendonBow,
+                        Offest = new(12, 0),
+                        ArrowColor = Color.Crimson
+                    };
+                case BowType.DemonBow:
+                    return new ArrowData()
+                    {
+                        ItemType = ItemID.DemonBow,
+                        Offest = new(12, 0),
+                        ArrowColor = new Color(87,74,166)
+                    };
+                case BowType.FullMoon:
+                    return new ArrowData()
+                    {
+                        ItemType = ItemType<FullMoon>(),
+                        Offest = new(12, 0),
+                        ArrowColor = Color.MediumPurple
+                    };
+                case BowType.Solunar:
+                    return new ArrowData()
+                    {
+                        ItemType = ItemType<Solunar>(),
+                        Offest = new(12, 0),
+                        ArrowColor = new Color(244,225,174)
+                    };
+                case BowType.HorizonArc:
+                    return new ArrowData()
+                    {
+                        ItemType = ItemType<HorizonArc>(),
+                        Offest = new(12, 0),
+                        ArrowColor = Color.White
+                    };
+                case BowType.TremblingBow:
+                    return new ArrowData()
+                    {
+                        ItemType = ItemType<TremblingBow>(),
+                        Offest = new(12, 0),
+                        ArrowColor = new Color(56, 235, 252)
+                    };
+                case BowType.PlasmaBow:
+                    return new ArrowData()
+                    {
+                        ItemType = ItemType<PlasmaBow>(),
+                        Offest = new(12, 0),
+                        ArrowColor = new Color(56, 235, 252)
+                    };
+                case BowType.Aurora:
+                    return new ArrowData()
+                    {
+                        ItemType = ItemType<Aurora>(),
+                        Offest = new(12, 0),
+                        ArrowColor = new Color(181, 255, 249)
+                    };
+                case BowType.Tsunami:
+                    return new ArrowData()
+                    {
+                        ItemType = ItemID.Tsunami,
+                        Offest = new(12, 0),
+                        ArrowColor = Color.LightCyan
+                    };
+                case BowType.Eventide:
+                    return new ArrowData()
+                    {
+                        ItemType = ItemID.FairyQueenRangedItem,
+                        Offest = new(12, 0),
+                        ArrowColor = Main.DiscoColor
                     };
                 default:
                     break;
             }
+
             return default;
+        }
+
+        public override bool? CanDamage() => false;
+        public override bool? CanCutTiles() => false;
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            if (PhantomPlayer is null)
+                return false;
+
+            DrawPhantomPlayer();
+
+            Vector2 ArmPosition = PhantomPlayer.GetFrontHandPosition(Player.CompositeArmStretchAmount.Full, Rotation - MathHelper.PiOver2);
+            ArmPosition.Y += PhantomPlayer.gfxOffY;
+
+            Texture2D texture = TextureAssets.Item[Data.ItemType].Value;
+            Vector2 offest = Data.Offest.RotatedBy(Rotation);
+            Vector2 center = Projectile.Center - Main.screenPosition + offest;
+
+            Vector2 origin = texture.Size() / 2f;
+            SpriteEffects effects = PhantomPlayer.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically;
+            Color color = Data.ArrowColor * 0.3f * Coralite.Instance.SqrtSmoother.Smoother(Projectile.Opacity);
+            float length = (2 + (1 - Projectile.Opacity) * 36);
+            for (int i = 0; i < 4; i++)
+            {
+                Main.spriteBatch.Draw(texture, center + (Projectile.Opacity * 1f + i * MathHelper.TwoPi / 4).ToRotationVector2() * length, null, color,
+                    Rotation, origin, 1.1f, effects, 0);
+            }
+
+            Main.spriteBatch.Draw(texture, center, null, lightColor * Projectile.Opacity, Rotation, origin, 1, effects, 0);
+            return false;
+        }
+
+        private void DrawPhantomPlayer()
+        {
+            PhantomPlayer.ResetEffects();
+            PhantomPlayer.ResetVisibleAccessories();
+            PhantomPlayer.UpdateDyes();
+            PhantomPlayer.DisplayDollUpdate();
+            PhantomPlayer.UpdateSocialShadow();
+            PhantomPlayer.itemAnimationMax = 60;
+            PhantomPlayer.itemAnimation = 1;
+            PhantomPlayer.direction = MathF.Sign(MousePos.X - Projectile.Center.X);
+
+            PhantomPlayer.wingFrame = PlayerWingFrame;
+
+            PhantomPlayer.itemRotation = Rotation+(Direction>0?0:MathHelper.Pi);
+
+            Player.CompositeArmStretchAmount compositeArmStretchAmount = Projectile.timeLeft switch
+            {
+                <= 25 => Player.CompositeArmStretchAmount.ThreeQuarters,
+                > 25 and <= 30 => Player.CompositeArmStretchAmount.Quarter,
+                > 30 and <= 35 => Player.CompositeArmStretchAmount.None,
+                > 35 and <= 40 => Player.CompositeArmStretchAmount.Full,
+                _ => Player.CompositeArmStretchAmount.Full
+            };
+
+            PhantomPlayer.SetCompositeArmFront(true, compositeArmStretchAmount, PhantomPlayer.itemRotation - MathHelper.PiOver2);
+            PhantomPlayer.PlayerFrame();
+
+            PhantomPlayer.Center = Projectile.Center;
+            Main.PlayerRenderer.DrawPlayer(Main.Camera, PhantomPlayer, PhantomPlayer.position, 0f, PhantomPlayer.fullRotationOrigin, 1 - Projectile.Opacity);
         }
     }
 }

@@ -219,6 +219,11 @@ namespace Coralite.Core
             public static ATex Arrow { get; private set; }
 
             /// <summary> 
+            /// 箭
+            /// </summary>
+            public static ATex ArrowSPA { get; private set; }
+
+            /// <summary> 
             /// 一束光，竖过来看是一个水滴
             /// </summary>
             public static ATex LightShot { get; private set; }

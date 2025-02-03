@@ -1,5 +1,6 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Configs;
+using Coralite.Helpers;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -48,9 +49,12 @@ namespace Coralite.Content.Items.RedJades
         {
             Projectile.rotation = Projectile.velocity.ToRotation() + 1.57f;
 
-            Projectile.velocity.Y += 0.05f;
+            Projectile.velocity.Y += 0.1f;
             if (Projectile.velocity.Y > 16)
                 Projectile.velocity.Y = 16;
+
+            if (Main.rand.NextBool())
+                Projectile.SpawnTrailDust(DustID.GemRuby, Main.rand.NextFloat(0.3f, 0.5f));
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)

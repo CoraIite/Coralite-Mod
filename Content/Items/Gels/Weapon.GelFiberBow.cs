@@ -14,7 +14,7 @@ namespace Coralite.Content.Items.Gels
 
         public override void SetDefaults()
         {
-            Item.damage = 11;
+            Item.damage = 20;
             Item.useTime = 23;
             Item.useAnimation = 23;
             Item.knockBack = 4f;
