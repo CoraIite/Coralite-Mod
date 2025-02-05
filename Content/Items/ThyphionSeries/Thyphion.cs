@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Items.FlyingShields;
 using Coralite.Content.Items.Icicle;
+using Coralite.Content.Items.Nightmare;
 using Coralite.Content.Items.Thunder;
 using Coralite.Content.ModPlayers;
 using Coralite.Content.Particles;
@@ -17,7 +18,6 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
-using Terraria.GameContent.UI;
 using Terraria.Graphics.CameraModifiers;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
@@ -128,7 +128,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             }
 
             Player.GetModPlayer<CoralitePlayer>().DashDelay = 100;
-            Player.GetModPlayer<CoralitePlayer>().DashTimer = 20;
+            Player.GetModPlayer<CoralitePlayer>().DashTimer = 23;
             Player.immune = true;
             Player.AddImmuneTime(ImmunityCooldownID.General, 20);
 
@@ -151,7 +151,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
                 //生成手持弹幕
                 Projectile.NewProjectile(Player.GetSource_ItemUse(Player.HeldItem), Player.Center, newVelocity, ProjectileType<ThyphionHeldProj>(),
-                    Player.HeldItem.damage, Player.HeldItem.knockBack, Player.whoAmI, 1.57f - dashDirection * 0.3f, 1, 20);
+                    Player.HeldItem.damage, Player.HeldItem.knockBack, Player.whoAmI, 1.57f - dashDirection * 0.3f, 1, 23);
             }
 
             return true;
@@ -170,6 +170,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 .AddIngredient(ItemID.Tsunami)
                 .AddIngredient(ItemID.FairyQueenRangedItem)
                 .AddIngredient<Aurora>()
+                .AddIngredient<QueensWreath>()
                 .AddTile<AncientFurnaceTile>()
                 .Register();
         }
@@ -339,7 +340,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 else if (Timer == DashTime + 2)
                 {
                     Vector2 dir = Rotation.ToRotationVector2();
-                    projectile = Projectile.NewProjectileFromThis<ThyphionArrow>(Owner.Center, dir * 14f
+                    projectile = Projectile.NewProjectileFromThis<ThyphionArrow>(Owner.Center, dir * 18
                         , Owner.GetWeaponDamage(Owner.HeldItem), Projectile.knockBack, ai0: -1, ai2: 2);
                 }
 
@@ -829,7 +830,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             Vector2 MouseDir = (MousePos - Projectile.Center).SafeNormalize(Vector2.One);
             if (Projectile.timeLeft == 24)
             {
-                Projectile.NewProjectileFromThis<ThyphionArrow>(Projectile.Center, MouseDir.SafeNormalize(Vector2.One) * 14
+                Projectile.NewProjectileFromThis<ThyphionArrow>(Projectile.Center, MouseDir.SafeNormalize(Vector2.One) * 18
                     , Projectile.damage, Projectile.knockBack, BowItemType);
 
                 Helper.PlayPitched(CoraliteSoundID.Bow_Item5, Projectile.Center);
@@ -1221,7 +1222,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             PhantomPlayer.wingFrame = PlayerWingFrame;
 
-            PhantomPlayer.itemRotation = Rotation+(Direction>0?0:MathHelper.Pi);
+            PhantomPlayer.itemRotation = Rotation;
 
             Player.CompositeArmStretchAmount compositeArmStretchAmount = Projectile.timeLeft switch
             {
