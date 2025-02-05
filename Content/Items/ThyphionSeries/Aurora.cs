@@ -57,14 +57,14 @@ namespace Coralite.Content.Items.ThyphionSeries
             if (player.ownedProjectileCounts[ProjectileType<AuroraHeldProj>()] == 0)
             {
                 Projectile.NewProjectile(source, player.Center
-                    , velocity.SafeNormalize(Vector2.Zero)*14.5f, ProjectileType<AuroraArrow>(), damage, knockback, player.whoAmI);
+                    , velocity.SafeNormalize(Vector2.Zero) * 14.5f, ProjectileType<AuroraArrow>(), damage, knockback, player.whoAmI);
                 for (int i = -1; i < 2; i += 2)
                 {
                     float r = i * 0.8f;
                     Projectile.NewProjectile(source, player.Center + velocity.SafeNormalize(Vector2.Zero).RotateByRandom(r - 0.2f, r + 0.2f) * 8, velocity * Main.rand.NextFloat(0.75f, 0.9f), type, damage, knockback, player.whoAmI);
                 }
 
-                Projectile.NewProjectile(source, player.Center , velocity, type, damage, knockback, player.whoAmI);
+                Projectile.NewProjectile(source, player.Center, velocity, type, damage, knockback, player.whoAmI);
             }
 
             return false;
@@ -87,10 +87,10 @@ namespace Coralite.Content.Items.ThyphionSeries
                     return false;
             }
 
-            Player.GetModPlayer<CoralitePlayer>().DashDelay = 100;
+            Player.GetModPlayer<CoralitePlayer>().DashDelay = 85;
             Player.GetModPlayer<CoralitePlayer>().DashTimer = 20;
             Player.immune = true;
-            Player.AddImmuneTime(ImmunityCooldownID.General, 20);
+            Player.AddImmuneTime(ImmunityCooldownID.General, 30);
 
             Player.velocity = newVelocity;
             Player.direction = (int)dashDirection;

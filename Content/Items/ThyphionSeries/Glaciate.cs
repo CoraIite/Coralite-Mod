@@ -212,7 +212,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                         Helper.PlayPitched(CoraliteSoundID.FireStaffSummon_Item77, Projectile.Center);
 
                         //射冰晶波
-                        Projectile.NewProjectileFromThis<GlaciateWave>(Projectile.Center, UnitToMouseV * 24, Owner.GetWeaponDamage(Owner.HeldItem)
+                        Projectile.NewProjectileFromThis<GlaciateWave>(Projectile.Center, UnitToMouseV * 24, (int)(Owner.GetWeaponDamage(Owner.HeldItem)*1.5f)
                             , Projectile.knockBack);
 
                         if (Owner.HeldItem.ModItem is Glaciate glaciate)
@@ -650,15 +650,17 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         private void TryMakingSpike(Vector2 pos, Vector2 dir)
         {
+            int damage = (int)(Projectile.damage * 2.5f);
+
             int p = Projectile.NewProjectileFromThis(pos + dir * 30, dir, ProjectileType<IceThorn>(),
-                 Projectile.damage, 0f, 0f, 1.3f);
+                 damage, 0f, 0f, 1.3f);
             Main.projectile[p].DamageType = DamageClass.Ranged;
 
             for (int i = -1; i < 2; i += 2)
             {
                 Vector2 dir2 = dir.RotatedBy(i * 0.8f);
                 p = Projectile.NewProjectileFromThis(pos + dir2 * 30, dir2, ProjectileType<IceThorn>(),
-                    Projectile.damage, 0f, 0f, 0.6f);
+                    damage, 0f, 0f, 0.6f);
                 Main.projectile[p].DamageType = DamageClass.Ranged;
             }
         }

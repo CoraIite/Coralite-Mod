@@ -86,7 +86,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                     return false;
             }
 
-            Player.GetModPlayer<CoralitePlayer>().DashDelay = 100;
+            Player.GetModPlayer<CoralitePlayer>().DashDelay = 85;
             Player.GetModPlayer<CoralitePlayer>().DashTimer = 20;
             Player.immune = true;
             Player.AddImmuneTime(ImmunityCooldownID.General, 20);
@@ -209,7 +209,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                     PRTLoader.NewParticle<RadiantSunFlow>(Projectile.Center, dir * 8, Color.White, 0.9f);
 
                     Projectile.NewProjectileFromThis<RadiantSunLaser>(Projectile.Center, Projectile.rotation.ToRotationVector2() * 10
-                        , (int)(Owner.GetWeaponDamage(Owner.HeldItem) * (Main.dayTime ? 1.15f : 1f)), Projectile.knockBack);
+                        , (int)(Owner.GetWeaponDamage(Owner.HeldItem) * (Main.dayTime ? 1.5f : 1.3f)), Projectile.knockBack);
                 }
             }
         }

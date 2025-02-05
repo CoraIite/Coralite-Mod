@@ -119,7 +119,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 newVelocity = (Main.MouseWorld - Player.Center).SafeNormalize(Vector2.Zero);
             }
 
-            Player.GetModPlayer<CoralitePlayer>().DashDelay = 90;
+            Player.GetModPlayer<CoralitePlayer>().DashDelay = 84;
             Player.GetModPlayer<CoralitePlayer>().DashTimer = 18;
             Player.velocity = newVelocity;
             //Player.direction = (int)dashDirection;
@@ -218,7 +218,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                         {
                             DashState = 1;
                             Timer = 0;
-                            Owner.velocity = -dir * 9;
+                            Owner.velocity = -dir * 12.5f;
                             Owner.AddImmuneTime(ImmunityCooldownID.General, 26);
                             Owner.immune = true;
 
@@ -252,7 +252,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                         if (Projectile.IsOwnedByLocalPlayer())//生成弹幕
                         {
                             Projectile.NewProjectileFromThis<FullMoonStrike>(Projectile.Center, Vector2.Zero
-                                , (int)(Owner.GetWeaponDamage(Owner.HeldItem) * 3f), 10, Projectile.whoAmI);
+                                , (int)(Owner.GetWeaponDamage(Owner.HeldItem) * 4f), 10, Projectile.whoAmI);
                         }
                         return;
                     }
