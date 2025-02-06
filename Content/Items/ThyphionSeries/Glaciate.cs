@@ -37,6 +37,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.value = Item.sellPrice(0, 4);
 
+            Item.autoReuse = true;
             Item.noUseGraphic = true;
             Item.useTurn = false;
             Item.UseSound = CoraliteSoundID.Bow_Item5;
@@ -627,11 +628,10 @@ namespace Coralite.Content.Items.ThyphionSeries
                     if (p.ai[0] < 2)
                         (p.ModProjectile as GlaciateWave).TurnToFade();
 
-                    Projectile.Kill();
-
                     //生成冰晶柱
                     SpawnIceThorns(Vector2.Lerp(Projectile.Center, p.Center + p.velocity * 5, 0.5f), -Projectile.velocity.SafeNormalize(Vector2.Zero)
                         , p.velocity.SafeNormalize(Vector2.Zero));
+                    Projectile.Kill();
                 }
             }
         }

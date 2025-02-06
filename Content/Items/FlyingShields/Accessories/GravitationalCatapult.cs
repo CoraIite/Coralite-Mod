@@ -12,6 +12,12 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
         {
         }
 
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.defense = 6;
+        }
+
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             if (player.TryGetModPlayer(out CoralitePlayer cp))

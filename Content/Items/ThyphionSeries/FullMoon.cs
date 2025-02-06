@@ -219,7 +219,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                             DashState = 1;
                             Timer = 0;
                             Owner.velocity = -dir * 12.5f;
-                            Owner.AddImmuneTime(ImmunityCooldownID.General, 26);
+                            Owner.AddImmuneTime(ImmunityCooldownID.General, 30);
                             Owner.immune = true;
 
                             dustSpawner = new MoonDustSpawner()

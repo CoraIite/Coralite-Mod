@@ -127,10 +127,10 @@ namespace Coralite.Content.Items.ThyphionSeries
                     return false;
             }
 
-            Player.GetModPlayer<CoralitePlayer>().DashDelay = 100;
+            Player.GetModPlayer<CoralitePlayer>().DashDelay = 80;
             Player.GetModPlayer<CoralitePlayer>().DashTimer = 23;
             Player.immune = true;
-            Player.AddImmuneTime(ImmunityCooldownID.General, 20);
+            Player.AddImmuneTime(ImmunityCooldownID.General, 23);
 
             Player.velocity = newVelocity;
             Player.direction = (int)dashDirection;

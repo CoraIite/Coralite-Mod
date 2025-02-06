@@ -455,12 +455,12 @@ namespace Coralite.Content.ModPlayers
             if (HasEffect(nameof(AlloySpringBuff)))
             {
                 int defence = (int)Player.statDefense;
-                modifiers.SourceDamage += 0.01f * Math.Clamp(defence / 5, 0, 10);
+                modifiers.SourceDamage += 0.01f * Math.Clamp(defence / 5, 0, 15);
             }
             else if (HasEffect(nameof(GravitationalCatapultBuff)))
             {
                 int defence = (int)Player.statDefense;
-                modifiers.SourceDamage += 0.01f * Math.Clamp(defence / 5, 0, 20);
+                modifiers.SourceDamage += 0.01f * Math.Clamp(defence / 4, 0, 30);
             }
 
             #region 海盗王之魂的效果

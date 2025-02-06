@@ -25,7 +25,8 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.damage = 100;
+            Item.damage = 150;
+            Item.defense = 3;
             Item.DamageType = DamageClass.Generic;
         }
 

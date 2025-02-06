@@ -154,7 +154,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             Player.GetModPlayer<CoralitePlayer>().DashTimer = 22;
             Player.velocity = newVelocity;
             //Player.direction = (int)dashDirection;
-            Player.AddImmuneTime(ImmunityCooldownID.General, 14);
+            Player.AddImmuneTime(ImmunityCooldownID.General, 20);
             Player.immune = true;
 
             Main.instance.CameraModifiers.Add(new MoveModifyer(10, 15));
@@ -264,7 +264,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                                 DashState = 1;
                                 Timer = 0;
                                 Owner.velocity = -dir * 9;
-                                Owner.AddImmuneTime(ImmunityCooldownID.General, 26);
+                                Owner.AddImmuneTime(ImmunityCooldownID.General, 30);
                                 Owner.immune = true;
 
                                 dustSpawner = new MoonDustSpawner()
