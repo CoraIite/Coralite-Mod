@@ -130,7 +130,7 @@ namespace Coralite.Content.Items.Nightmare
             Projectile.QuickTrailSets(Helper.TrailingMode.RecordAllAndFollowPlayer, 8);
         }
 
-        public override void SetDefs()
+        public override void SetSwingProperty()
         {
             Projectile.width = Projectile.height = 64;
             Projectile.DamageType = DamageClass.Melee;
@@ -151,7 +151,7 @@ namespace Coralite.Content.Items.Nightmare
 
         protected override void Initializer()
         {
-            if (Main.myPlayer == Projectile.owner)
+            if (Projectile.IsOwnedByLocalPlayer())
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
 
             Projectile.extraUpdates = 2;

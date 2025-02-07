@@ -282,7 +282,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                     Color skyBlue = Thyphion.ThyphionColor1;
                     WindCircle.Spawn(Projectile.Center + (ShootDir * 30), -ShootDir * 3 + Owner.velocity, Rotation, skyBlue, 0.2f, 1.3f, new Vector2(1.6f, 1.3f));
                 }
-                if (Main.myPlayer == Projectile.owner)
+                if (Projectile.IsOwnedByLocalPlayer())
                 {
                     Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
                     if (Timer < 10)
@@ -305,7 +305,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             {
                 if (Timer < DashTime + 2)
                 {
-                    if (Main.myPlayer == Projectile.owner)
+                    if (Projectile.IsOwnedByLocalPlayer())
                     {
                         Vector2 dir = (Main.MouseWorld - Owner.MountedCenter).SafeNormalize(Vector2.One);
                         Owner.itemTime = Owner.itemAnimation = 2;
@@ -347,7 +347,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
                 if (DownLeft && ReleaseTimer == 0)
                 {
-                    if (Main.myPlayer == Projectile.owner)
+                    if (Projectile.IsOwnedByLocalPlayer())
                     {
                         Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
                         float lerpSpeed = DownLeft ? 0.15f : 1f;
@@ -389,7 +389,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                         Projectile.Kill();
                     }
 
-                    if (Main.myPlayer == Projectile.owner)
+                    if (Projectile.IsOwnedByLocalPlayer())
                     {
                         Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
                         if (ReleaseTimer < 10)

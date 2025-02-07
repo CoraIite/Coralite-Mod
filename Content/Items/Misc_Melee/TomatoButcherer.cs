@@ -178,7 +178,7 @@ namespace Coralite.Content.Items.Misc_Melee
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            if (hited && Main.myPlayer == Projectile.owner && target.CanBeChasedBy(this))
+            if (hited && Projectile.IsOwnedByLocalPlayer() && target.CanBeChasedBy(this))
             {
                 Player p = Main.player[Projectile.owner];
                 Vector2 v = target.Center - p.MountedCenter;

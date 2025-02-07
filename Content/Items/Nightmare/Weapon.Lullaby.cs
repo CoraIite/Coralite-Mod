@@ -100,7 +100,7 @@ namespace Coralite.Content.Items.Nightmare
             GradientTexture = null;
         }
 
-        public override void SetDefs()
+        public override void SetSwingProperty()
         {
             Projectile.localNPCHitCooldown = 48;
             Projectile.width = 30;
@@ -114,7 +114,7 @@ namespace Coralite.Content.Items.Nightmare
 
         protected override void Initializer()
         {
-            if (Main.myPlayer == Projectile.owner)
+            if (Projectile.IsOwnedByLocalPlayer())
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
 
             Projectile.extraUpdates = 3;
@@ -290,7 +290,7 @@ namespace Coralite.Content.Items.Nightmare
         public int alpha;
         public int delay = 48;
 
-        public override void SetDefs()
+        public override void SetSwingProperty()
         {
             Projectile.localNPCHitCooldown = 48;
             Projectile.width = 40;
@@ -309,7 +309,7 @@ namespace Coralite.Content.Items.Nightmare
 
         protected override void Initializer()
         {
-            if (Main.myPlayer == Projectile.owner)
+            if (Projectile.IsOwnedByLocalPlayer())
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
 
             Projectile.extraUpdates = 3;

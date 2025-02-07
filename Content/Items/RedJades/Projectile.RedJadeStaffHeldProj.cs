@@ -60,7 +60,7 @@ namespace Coralite.Content.Items.RedJades
                             Projectile.alpha = 255;
                     }
 
-                    if (Main.myPlayer == Projectile.owner && Projectile.timeLeft == 24)
+                    if (Projectile.IsOwnedByLocalPlayer() && Projectile.timeLeft == 24)
                     {
                         Projectile.NewProjectile(Projectile.GetSource_FromThis(), Owner.Center,
                             (Main.MouseWorld - Owner.Center).SafeNormalize(Vector2.UnitX) * 12f, ModContent.ProjectileType<RedJadeBeam>(),
@@ -83,7 +83,7 @@ namespace Coralite.Content.Items.RedJades
                         }
                     }
 
-                    if (Main.myPlayer == Projectile.owner)
+                    if (Projectile.IsOwnedByLocalPlayer())
                         TargetRot = (Main.MouseWorld - Owner.Center).ToRotation();
 
                     Projectile.rotation = TargetRot + (Owner.direction > 0 ? 0f : MathHelper.Pi);
@@ -98,7 +98,7 @@ namespace Coralite.Content.Items.RedJades
         public void Initialize_Normal()
         {
             Projectile.timeLeft = 24;
-            if (Main.myPlayer == Projectile.owner)
+            if (Projectile.IsOwnedByLocalPlayer())
                 TargetRot = (Main.MouseWorld - Owner.Center).ToRotation() + (Owner.direction > 0 ? 0f : 3.141f);
 
             Projectile.rotation = TargetRot;

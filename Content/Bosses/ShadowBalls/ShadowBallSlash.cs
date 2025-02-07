@@ -77,7 +77,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 owner.whoAmI, (int)comboType, startAngle);
         }
 
-        public override void SetDefs()
+        public override void SetSwingProperty()
         {
             Projectile.hostile = true;
             Projectile.friendly = false;

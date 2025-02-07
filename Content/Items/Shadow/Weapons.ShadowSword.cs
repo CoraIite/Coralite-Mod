@@ -81,7 +81,7 @@ namespace Coralite.Content.Items.Shadow
 
         public ShadowSwordHeldProj() : base(MathHelper.PiOver4, trailCount: 34) { }
 
-        public override void SetDefs()
+        public override void SetSwingProperty()
         {
             Projectile.localNPCHitCooldown = 48;
             Projectile.width = 40;
@@ -110,7 +110,7 @@ namespace Coralite.Content.Items.Shadow
 
         protected override void Initializer()
         {
-            if (Main.myPlayer == Projectile.owner)
+            if (Projectile.IsOwnedByLocalPlayer())
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
 
             Projectile.extraUpdates = 3;

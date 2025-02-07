@@ -169,7 +169,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
         public Vector2 scale;
         private float scaleOffset = 0.35f;
 
-        public override void SetDefs()
+        public override void SetSwingProperty()
         {
             Projectile.localNPCHitCooldown = 30;
             Projectile.width = 40;

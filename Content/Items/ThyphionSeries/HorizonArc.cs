@@ -221,7 +221,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 arrowAlpha = Helper.Lerp(arrowAlpha, 1, 0.1f);
                 if (DownLeft && Release == 0)
                 {
-                    if (Main.myPlayer == Projectile.owner)
+                    if (Projectile.IsOwnedByLocalPlayer())
                     {
                         Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
                         Rotation = Rotation.AngleLerp((Main.MouseWorld - Owner.MountedCenter).ToRotation(), 0.15f);
@@ -360,7 +360,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             if (dashHit)
                 Owner.AddBuff(BuffType<HorizonArcBonus>(), 60 * 3 + 20);
 
-            if (Main.myPlayer == Projectile.owner)
+            if (Projectile.IsOwnedByLocalPlayer())
             {
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
                 Rotation = Rotation.AngleLerp((Main.MouseWorld - Owner.MountedCenter).ToRotation(), 0.1f);
@@ -506,7 +506,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             handOffset = Helper.Lerp(handOffset, 0, 0.15f);
 
-            if (Main.myPlayer == Projectile.owner)
+            if (Projectile.IsOwnedByLocalPlayer())
             {
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
                 Rotation = Rotation.AngleLerp((Main.MouseWorld - Owner.MountedCenter).ToRotation(), 0.1f);

@@ -294,7 +294,7 @@ namespace Coralite.Content.Items.Misc_Melee
                 Main.dust[num23].scale = 1f + (Projectile.ai[0] / 4f);
             }
 
-            if (Main.myPlayer == Projectile.owner)
+            if (Projectile.IsOwnedByLocalPlayer())
             {
                 int num24 = Projectile.width;
                 int num25 = Projectile.height;

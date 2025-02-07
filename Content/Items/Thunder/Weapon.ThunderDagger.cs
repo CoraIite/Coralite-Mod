@@ -118,7 +118,7 @@ namespace Coralite.Content.Items.Thunder
             GradientTexture = null;
         }
 
-        public override void SetDefs()
+        public override void SetSwingProperty()
         {
             Projectile.DamageType = DamageClass.Magic;
             Projectile.localNPCHitCooldown = 48;
@@ -146,7 +146,7 @@ namespace Coralite.Content.Items.Thunder
 
         protected override void Initializer()
         {
-            if (Main.myPlayer == Projectile.owner && Combo < 3)
+            if (Projectile.IsOwnedByLocalPlayer() && Combo < 3)
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
 
             Projectile.extraUpdates = 5;

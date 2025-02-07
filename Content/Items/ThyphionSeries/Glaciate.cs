@@ -169,7 +169,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             if (Timer < DashTime + 1)
             {
-                if (Main.myPlayer == Projectile.owner)
+                if (Projectile.IsOwnedByLocalPlayer())
                 {
                     Owner.itemTime = Owner.itemAnimation = 2;
                     Rotation += MathHelper.TwoPi / DashTime;
@@ -195,7 +195,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             {
                 if (DownLeft && SPTimer == 0)
                 {
-                    if (Main.myPlayer == Projectile.owner)
+                    if (Projectile.IsOwnedByLocalPlayer())
                     {
                         Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
                         Rotation = Rotation.AngleLerp(ToMouseA, 0.15f);
@@ -229,7 +229,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                         Rotation = ToMouseA;
                     }
 
-                    if (Main.myPlayer == Projectile.owner)
+                    if (Projectile.IsOwnedByLocalPlayer())
                     {
                         Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
                         if (SPTimer < 8)

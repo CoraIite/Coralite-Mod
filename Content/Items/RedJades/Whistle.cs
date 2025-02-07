@@ -153,7 +153,7 @@ namespace Coralite.Content.Items.RedJades
         {
             if (SoundEngine.TryGetActiveSound(soundSlot, out ActiveSound sound))
                 sound.Stop();
-            if (Main.myPlayer == Projectile.owner && Timer > 120)
+            if (Projectile.IsOwnedByLocalPlayer() && Timer > 120)
             {
                 var source = Projectile.GetSource_FromAI();
 

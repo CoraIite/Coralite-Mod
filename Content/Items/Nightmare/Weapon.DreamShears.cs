@@ -120,7 +120,7 @@ namespace Coralite.Content.Items.Nightmare
         public int alpha;
         public int delay = 24;
 
-        public override void SetDefs()
+        public override void SetSwingProperty()
         {
             Projectile.DamageType = DamageClass.Melee;
             Projectile.localNPCHitCooldown = 48;
@@ -141,7 +141,7 @@ namespace Coralite.Content.Items.Nightmare
 
         protected override void InitBasicValues()
         {
-            if (Main.myPlayer == Projectile.owner)
+            if (Projectile.IsOwnedByLocalPlayer())
                 Owner.direction = InMousePos.X > Owner.Center.X ? 1 : -1;
 
             Projectile.extraUpdates = 3;

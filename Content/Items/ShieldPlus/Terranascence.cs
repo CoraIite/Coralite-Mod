@@ -660,7 +660,7 @@ namespace Coralite.Content.Items.ShieldPlus
             GradientTexture = null;
         }
 
-        public override void SetDefs()
+        public override void SetSwingProperty()
         {
             Projectile.DamageType = DamageClass.Melee;
             Projectile.localNPCHitCooldown = -1;
@@ -679,7 +679,7 @@ namespace Coralite.Content.Items.ShieldPlus
 
         protected override void Initializer()
         {
-            if (Main.myPlayer == Projectile.owner)
+            if (Projectile.IsOwnedByLocalPlayer())
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
 
             Projectile.extraUpdates = 3;
@@ -939,7 +939,7 @@ namespace Coralite.Content.Items.ShieldPlus
             EXTex = null;
         }
 
-        public override void SetDefs()
+        public override void SetSwingProperty()
         {
             Projectile.DamageType = DamageClass.Melee;
             Projectile.localNPCHitCooldown = -1;
@@ -953,7 +953,7 @@ namespace Coralite.Content.Items.ShieldPlus
 
         protected override void Initializer()
         {
-            if (Main.myPlayer == Projectile.owner)
+            if (Projectile.IsOwnedByLocalPlayer())
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
 
             startAngle = 0.001f;

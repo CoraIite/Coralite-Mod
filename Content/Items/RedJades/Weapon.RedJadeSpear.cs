@@ -75,7 +75,7 @@ namespace Coralite.Content.Items.RedJades
 
         public ref float Combo => ref Projectile.ai[0];
 
-        public override void SetDefs()
+        public override void SetSwingProperty()
         {
             Projectile.DamageType = DamageClass.Melee;
             Projectile.localNPCHitCooldown = 48;
@@ -90,7 +90,7 @@ namespace Coralite.Content.Items.RedJades
 
         protected override void Initializer()
         {
-            if (Main.myPlayer == Projectile.owner)
+            if (Projectile.IsOwnedByLocalPlayer())
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
 
             startAngle = Main.rand.NextFloat(-0.2f, 0.2f);

@@ -162,7 +162,7 @@ namespace Coralite.Content.Items.Icicle
                     if (Timer < 35)
                         break;
 
-                    if (Timer == 35 && Main.myPlayer == Projectile.owner)
+                    if (Timer == 35 && Projectile.IsOwnedByLocalPlayer())
                     {
                         //生成冰块弹幕
                         Vector2 dir = (Main.MouseWorld - Projectile.Center).SafeNormalize(Vector2.One);

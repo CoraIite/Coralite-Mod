@@ -122,7 +122,7 @@ namespace Coralite.Content.Items.Icicle
         public int delay;
         public int alpha;
 
-        public override void SetDefs()
+        public override void SetSwingProperty()
         {
             Projectile.coldDamage = true;
 
@@ -162,7 +162,7 @@ namespace Coralite.Content.Items.Icicle
 
         protected override void Initializer()
         {
-            if (Main.myPlayer == Projectile.owner)
+            if (Projectile.IsOwnedByLocalPlayer())
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
 
             Projectile.extraUpdates = 3;
@@ -434,7 +434,7 @@ namespace Coralite.Content.Items.Icicle
         public int alpha;
         public int delay;
 
-        public override void SetDefs()
+        public override void SetSwingProperty()
         {
             Projectile.coldDamage = true;
 
@@ -456,7 +456,7 @@ namespace Coralite.Content.Items.Icicle
 
         protected override void Initializer()
         {
-            if (Main.myPlayer == Projectile.owner)
+            if (Projectile.IsOwnedByLocalPlayer())
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
 
             Projectile.extraUpdates = 3;
@@ -607,7 +607,7 @@ namespace Coralite.Content.Items.Icicle
 
         public FrostySwordRightSlash() : base(MathHelper.PiOver4, trailCount: 48) { }
 
-        public override void SetDefs()
+        public override void SetSwingProperty()
         {
             Projectile.coldDamage = true;
 
@@ -624,7 +624,7 @@ namespace Coralite.Content.Items.Icicle
 
         protected override void Initializer()
         {
-            if (Main.myPlayer == Projectile.owner)
+            if (Projectile.IsOwnedByLocalPlayer())
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
 
             Projectile.extraUpdates = 3;
@@ -811,7 +811,7 @@ namespace Coralite.Content.Items.Icicle
         {
             float rot = Main.rand.NextFloat(MathHelper.TwoPi);
 
-            if (Main.myPlayer == Projectile.owner && Count > FrostySword.LeftHitMax - 1)
+            if (Projectile.IsOwnedByLocalPlayer() && Count > FrostySword.LeftHitMax - 1)
             {
                 for (int i = 0; i < 6; i++)
                 {

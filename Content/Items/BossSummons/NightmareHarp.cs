@@ -305,7 +305,7 @@ namespace Coralite.Content.Items.BossSummons
             else if (Timer > 10 + (part * 10) + 20)
             {
                 SoundEngine.PlaySound(CoraliteSoundID.IceMagic_Item28);
-                if (Main.myPlayer == Projectile.owner)
+                if (Projectile.IsOwnedByLocalPlayer())
                 {
                     int npcType = ModContent.NPCType<NightmarePlantera>();
 

@@ -20,7 +20,7 @@ namespace Coralite.Content.Items.HyacinthSeries
         {
             Projectile.timeLeft = Owner.itemTime + 1;
             MaxTime = Owner.itemTime + 1;
-            if (Main.myPlayer == Projectile.owner)
+            if (Projectile.IsOwnedByLocalPlayer())
             {
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
                 TargetRot = (Main.MouseWorld - Owner.Center).ToRotation() + (DirSign > 0 ? 0f : MathHelper.Pi);
@@ -40,7 +40,7 @@ namespace Coralite.Content.Items.HyacinthSeries
         {
             Projectile.timeLeft = Owner.itemTime + 1;
             MaxTime = Owner.itemTime + 1;
-            if (Main.myPlayer == Projectile.owner)
+            if (Projectile.IsOwnedByLocalPlayer())
             {
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
                 TargetRot = (Main.MouseWorld - Owner.Center).ToRotation() + (DirSign > 0 ? 0f : MathHelper.Pi);
@@ -213,7 +213,7 @@ namespace Coralite.Content.Items.HyacinthSeries
                 Alpha -= 0.04f;
                 if (Timer < 13)  //射出3发弹幕
                 {
-                    if (Timer % 6 == 0 && Main.myPlayer == Projectile.owner)
+                    if (Timer % 6 == 0 && Projectile.IsOwnedByLocalPlayer())
                     {
                         NPC target = Helper.FindClosestEnemy(Projectile.Center, 440,
                             npc => npc.active && !npc.friendly && npc.CanBeChasedBy() && Collision.CanHitLine(Projectile.Center, 1, 1, npc.Center, 1, 1));

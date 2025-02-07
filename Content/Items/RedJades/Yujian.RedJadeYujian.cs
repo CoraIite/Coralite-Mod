@@ -72,7 +72,7 @@ namespace Coralite.Content.Items.RedJades
 
         public override void HitEffect(NPC target, int damage, float knockback, bool crit)
         {
-            if (Main.myPlayer == Projectile.owner && Main.rand.NextBool(5))
+            if (Projectile.IsOwnedByLocalPlayer() && Main.rand.NextBool(5))
                 Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<RedJadeBoom>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
         }
     }
@@ -144,7 +144,7 @@ namespace Coralite.Content.Items.RedJades
 
                 yujianProj.InitTrailCaches();
 
-                if (Main.myPlayer == Projectile.owner)
+                if (Projectile.IsOwnedByLocalPlayer())
                     Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Projectile.velocity * (Projectile.extraUpdates + 1), ModContent.ProjectileType<SpurtProj>(),
                         Projectile.damage, Projectile.knockBack, Projectile.owner, spurtTime / (Projectile.extraUpdates + 1), 32);
 
@@ -156,7 +156,7 @@ namespace Coralite.Content.Items.RedJades
             {
                 yujianProj.UpdateCaches();
                 Projectile.rotation += 0.4f;
-                if (yujianProj.Timer % 10 == 0 && Main.myPlayer == Projectile.owner)
+                if (yujianProj.Timer % 10 == 0 && Projectile.IsOwnedByLocalPlayer())
                     Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center + Main.rand.NextVector2Circular(64, 64), Vector2.Zero,
                         ModContent.ProjectileType<RedJadeBoom>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
                 return;

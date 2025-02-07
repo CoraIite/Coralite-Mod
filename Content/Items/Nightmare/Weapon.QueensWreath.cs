@@ -407,7 +407,7 @@ namespace Coralite.Content.Items.Nightmare
                         {
                             if (Owner.controlUseItem)
                             {
-                                if (Main.myPlayer == Projectile.owner)
+                                if (Projectile.IsOwnedByLocalPlayer())
                                 {
                                     Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
                                     Rotation = Rotation.AngleLerp((Main.MouseWorld - Owner.MountedCenter).ToRotation(), 0.25f);
@@ -534,7 +534,7 @@ namespace Coralite.Content.Items.Nightmare
                         {
                             if (Owner.controlUseItem)
                             {
-                                if (Main.myPlayer == Projectile.owner)
+                                if (Projectile.IsOwnedByLocalPlayer())
                                 {
                                     Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
                                     Rotation = Rotation.AngleLerp((Main.MouseWorld - Owner.MountedCenter).ToRotation(), 0.25f);
@@ -760,7 +760,7 @@ namespace Coralite.Content.Items.Nightmare
                             {
                                 Projectile.rotation = Projectile.rotation.AngleLerp((Main.MouseWorld - Owner.MountedCenter).ToRotation(), 0.25f);
 
-                                if (Main.myPlayer == Projectile.owner)
+                                if (Projectile.IsOwnedByLocalPlayer())
                                 {
                                     Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
                                     Rotation = Rotation.AngleLerp((Main.MouseWorld - Owner.MountedCenter).ToRotation(), 0.25f);

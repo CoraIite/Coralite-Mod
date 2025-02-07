@@ -102,7 +102,7 @@ namespace Coralite.Content.Items.HyacinthSeries
         {
             if (Projectile.timeLeft < 31 && Projectile.timeLeft > 5)
             {
-                if (Projectile.timeLeft % 10 == 0 && Main.myPlayer == Projectile.owner)
+                if (Projectile.timeLeft % 10 == 0 && Projectile.IsOwnedByLocalPlayer())
                 {
                     float factor = (30 - Projectile.timeLeft) / 10;
                     float scale = 0.4f + (0.1f * factor);
@@ -140,7 +140,7 @@ namespace Coralite.Content.Items.HyacinthSeries
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            if (Main.myPlayer == Projectile.owner)
+            if (Projectile.IsOwnedByLocalPlayer())
             {
                 Vector2 center = Projectile.Center + Main.rand.NextVector2CircularEdge(8, 8);
 

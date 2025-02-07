@@ -123,7 +123,7 @@ namespace Coralite.Content.Items.RedJades
             GradientTexture = null;
         }
 
-        public override void SetDefs()
+        public override void SetSwingProperty()
         {
             Projectile.DamageType = DamageClass.Melee;
             Projectile.localNPCHitCooldown = 48;
@@ -144,7 +144,7 @@ namespace Coralite.Content.Items.RedJades
 
         protected override void Initializer()
         {
-            if (Main.myPlayer == Projectile.owner)
+            if (Projectile.IsOwnedByLocalPlayer())
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
 
             Projectile.extraUpdates = 3;
@@ -565,7 +565,7 @@ namespace Coralite.Content.Items.RedJades
 
         public override void OnKill(int timeLeft)
         {
-            if (Main.myPlayer == Projectile.owner)
+            if (Projectile.IsOwnedByLocalPlayer())
             {
                 var source = Projectile.GetSource_FromThis();
                 switch (Projectile.ai[0])
@@ -710,7 +710,7 @@ namespace Coralite.Content.Items.RedJades
 
         public override void OnKill(int timeLeft)
         {
-            if (Main.myPlayer == Projectile.owner)
+            if (Projectile.IsOwnedByLocalPlayer())
                 Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center,
                     Vector2.Zero, ProjectileType<BloodJade_BigBoom>(), Projectile.damage, 8f);
         }

@@ -59,7 +59,7 @@ namespace Coralite.Content.Items.Shadow
 
             Projectile.UpdateFrameNormally(4, 2);
 
-            if (Main.myPlayer == Projectile.owner && (int)State == (int)AIState.idle && Owner.ItemAnimationJustStarted)//只有不在攻击的时候才能加能量
+            if (Projectile.IsOwnedByLocalPlayer() && (int)State == (int)AIState.idle && Owner.ItemAnimationJustStarted)//只有不在攻击的时候才能加能量
             {
                 bool chargeNotComplete = Energy < 1000;
                 //Energy += 1500; //测试时专用
@@ -88,7 +88,7 @@ namespace Coralite.Content.Items.Shadow
                 case (int)AIState.weaklyAttack:
                     NormalUpdate(100, () =>
                     {
-                        if (Main.myPlayer == Projectile.owner)
+                        if (Projectile.IsOwnedByLocalPlayer())
                         {
                             Vector2 targetCenter = Main.MouseWorld;
                             NPC target = Helper.FindClosestEnemy(Projectile.Center, 1000, (n) =>
@@ -110,7 +110,7 @@ namespace Coralite.Content.Items.Shadow
                 case (int)AIState.melee:    //近战攻击，爪击
                     NormalUpdate(150, () =>
                     {
-                        if (Main.myPlayer == Projectile.owner)
+                        if (Projectile.IsOwnedByLocalPlayer())
                         {
                             Vector2 targetCenter = Main.MouseWorld;
                             NPC target = Helper.FindClosestEnemy(Projectile.Center, 1000, (n) =>
@@ -130,7 +130,7 @@ namespace Coralite.Content.Items.Shadow
                 case (int)AIState.shoot:    //射击高速子弹
                     NormalUpdate(100, () =>
                     {
-                        if (Main.myPlayer == Projectile.owner)
+                        if (Projectile.IsOwnedByLocalPlayer())
                         {
                             Vector2 targetCenter = Main.MouseWorld;
                             NPC target = Helper.FindClosestEnemy(Projectile.Center, 1000, (n) =>
@@ -151,7 +151,7 @@ namespace Coralite.Content.Items.Shadow
                 case (int)AIState.magic:    //射出追踪球
                     NormalUpdate(100, () =>
                     {
-                        if (Main.myPlayer == Projectile.owner)
+                        if (Projectile.IsOwnedByLocalPlayer())
                         {
                             Vector2 targetCenter = Main.MouseWorld;
                             NPC target = Helper.FindClosestEnemy(Projectile.Center, 1000, (n) =>
@@ -172,7 +172,7 @@ namespace Coralite.Content.Items.Shadow
                 case (int)AIState.summon:   //召唤出影子火焰
                     NormalUpdate(200, () =>
                     {
-                        if (Main.myPlayer == Projectile.owner)
+                        if (Projectile.IsOwnedByLocalPlayer())
                             Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero,
                                 ModContent.ProjectileType<ShadowCircle_CrystalMinion>(), (int)(Projectile.damage * 0.6f), 0, Projectile.owner);
 
@@ -183,7 +183,7 @@ namespace Coralite.Content.Items.Shadow
                 case (int)AIState.nothing:
                     NormalUpdate(100, () =>
                     {
-                        if (Main.myPlayer == Projectile.owner)
+                        if (Projectile.IsOwnedByLocalPlayer())
                         {
                             Vector2 targetCenter = Main.MouseWorld;
                             NPC target = Helper.FindClosestEnemy(Projectile.Center, 1000, (n) =>
@@ -371,7 +371,7 @@ namespace Coralite.Content.Items.Shadow
                     if (Vector2.Distance(Projectile.position, Main.npc[targetIndex2].Center) < 48)
                     {
                         //生成斩击
-                        if (Main.myPlayer == Projectile.owner)
+                        if (Projectile.IsOwnedByLocalPlayer())
                         {
                             Vector2 rot = Helper.NextVec2Dir();
                             Projectile.NewProjectile(Projectile.GetSource_FromAI(), Main.npc[targetIndex2].Center + (rot * 128), Main.npc[targetIndex2].Center - (rot * 128),

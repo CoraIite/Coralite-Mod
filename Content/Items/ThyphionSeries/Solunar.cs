@@ -330,7 +330,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 case 2://射击阶段
                     if (DownLeft && SPTimer == 0)
                     {
-                        if (Main.myPlayer == Projectile.owner)
+                        if (Projectile.IsOwnedByLocalPlayer())
                         {
                             Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
                             Rotation = Rotation.AngleLerp(ToMouseA, 0.15f);

@@ -288,7 +288,7 @@ namespace Coralite.Content.Items.Nightmare
         {
             if (initialize)
             {
-                if (Main.myPlayer == Projectile.owner)  //初始化鞭子节点，以及其他信息
+                if (Projectile.IsOwnedByLocalPlayer())  //初始化鞭子节点，以及其他信息
                 {
                     Projectile.velocity = (Main.MouseWorld - Owner.Center).SafeNormalize(Vector2.One);
                     Projectile.rotation = Projectile.velocity.ToRotation();

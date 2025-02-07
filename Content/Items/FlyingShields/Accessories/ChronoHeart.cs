@@ -193,7 +193,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
             GradientTexture = Request<Texture2D>(AssetDirectory.FlyingShieldAccessories + "ChronoHeartGradient");
         }
 
-        public override void SetDefs()
+        public override void SetSwingProperty()
         {
             Projectile.localNPCHitCooldown = 30;
             Projectile.width = 40;

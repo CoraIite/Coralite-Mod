@@ -398,7 +398,7 @@ namespace Coralite.Content.Items.HyacinthSeries
                 }
             }
 
-            if (Main.myPlayer == Projectile.owner)
+            if (Projectile.IsOwnedByLocalPlayer())
                 Projectile.spriteDirection = Main.MouseWorld.X > Main.player[Projectile.owner].Center.X ? 0 : 1;
             else
                 Projectile.spriteDirection = Main.player[Projectile.owner].direction > 0 ? 0 : 1;
@@ -410,7 +410,7 @@ namespace Coralite.Content.Items.HyacinthSeries
                     if (Timer % 20 == 0)
                     {
                         //生成弹幕
-                        if (Main.myPlayer == Projectile.owner)
+                        if (Projectile.IsOwnedByLocalPlayer())
                         {
                             float count = Timer / 20;
                             float alpha = 1.3f - (count * 0.3f);
@@ -439,7 +439,7 @@ namespace Coralite.Content.Items.HyacinthSeries
                         //}
                     }
 
-                    if (Main.myPlayer == Projectile.owner)
+                    if (Projectile.IsOwnedByLocalPlayer())
                     {
                         float x = 1.465f * (20 - (Timer % 20)) / 20;
                         float factor = x * MathF.Sin(x * x * x) / 1.186f;
@@ -599,7 +599,7 @@ namespace Coralite.Content.Items.HyacinthSeries
 
         public override void OnKill(int timeLeft)
         {
-            if (Main.myPlayer == Projectile.owner)
+            if (Projectile.IsOwnedByLocalPlayer())
                 Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center + Main.rand.NextVector2CircularEdge(8, 8), Vector2.Zero,
                     ModContent.ProjectileType<HyacinthExplosion>(), Projectile.damage, Projectile.knockBack, Projectile.owner, Projectile.ai[0]);
         }

@@ -92,7 +92,7 @@ namespace Coralite.Content.Items.Misc_Melee
 
         public IronSilkKniefSlash() : base(1.37f) { }
 
-        public override void SetDefs()
+        public override void SetSwingProperty()
         {
             Projectile.width = Projectile.height = 48;
             Projectile.DamageType = DamageClass.Melee;

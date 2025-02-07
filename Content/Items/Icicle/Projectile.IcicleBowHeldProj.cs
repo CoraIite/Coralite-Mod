@@ -30,7 +30,7 @@ namespace Coralite.Content.Items.Icicle
         {
             if (Alpha == 0)
             {
-                if (Main.myPlayer == Projectile.owner)
+                if (Projectile.IsOwnedByLocalPlayer())
                 {
                     Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
                 }
@@ -80,7 +80,7 @@ namespace Coralite.Content.Items.Icicle
                 if (Owner.controlUseItem)
                 {
                     canShoot = true;
-                    if (Main.myPlayer == Projectile.owner)
+                    if (Projectile.IsOwnedByLocalPlayer())
                     {
                         Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
                         Rotation = Rotation.AngleLerp((Main.MouseWorld - Owner.MountedCenter).ToRotation(), 0.25f);
@@ -97,7 +97,7 @@ namespace Coralite.Content.Items.Icicle
                 }
                 else
                 {
-                    if (canShoot && Main.myPlayer == Projectile.owner)
+                    if (canShoot && Projectile.IsOwnedByLocalPlayer())
                     {
                         Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, (Main.MouseWorld - Owner.MountedCenter).SafeNormalize(Vector2.One) * 9.5f
                             , ModContent.ProjectileType<IcicleStarArrow>(), (int)(Owner.GetWeaponDamage(Owner.HeldItem) * 2f), Projectile.knockBack, Projectile.owner);

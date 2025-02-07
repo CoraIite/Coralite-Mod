@@ -203,7 +203,7 @@ namespace Coralite.Content.Items.Nightmare
         {
             if (CanSpawnSmallBullet || State == 1)//能生成或者是强化状态时才会生成小弹幕
             {
-                if (Main.myPlayer == Projectile.owner)//生成一圈小子弹
+                if (Projectile.IsOwnedByLocalPlayer())//生成一圈小子弹
                 {
                     float rot = Main.rand.NextFloat(6.282f);
                     int howMany = 5;

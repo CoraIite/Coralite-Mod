@@ -172,7 +172,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             {
                 SoundEngine.PlaySound(CoraliteSoundID.Bow2_Item102, Owner.Center);
 
-                if (Main.myPlayer == Projectile.owner)
+                if (Projectile.IsOwnedByLocalPlayer())
                 {
                     State = 1;
                     Timer = 0;

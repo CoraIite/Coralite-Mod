@@ -95,7 +95,7 @@ namespace Coralite.Content.Items.YujianHulu
                     Slash(Projectile, time);
                     int index = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Platinum);
                     Main.dust[index].noGravity = true;
-                    if (time == SlashTime / 7 && Main.myPlayer == Projectile.owner)
+                    if (time == SlashTime / 7 && Projectile.IsOwnedByLocalPlayer())
                     {
                         Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, targetRotation.ToRotationVector2() * 10,
                             ModContent.ProjectileType<PlatinumSplash>(), (int)(Projectile.damage * 1.5f), Projectile.knockBack, Projectile.owner, 1, 30);

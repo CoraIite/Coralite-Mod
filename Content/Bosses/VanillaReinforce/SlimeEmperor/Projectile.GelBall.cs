@@ -134,7 +134,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             }
 
             //FTW中才会有分裂弹幕
-            if (Main.getGoodWorld && Main.myPlayer == Projectile.owner)
+            if (Main.getGoodWorld && Projectile.IsOwnedByLocalPlayer())
                 for (int i = 0; i < 2; i++)
                     Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Helper.NextVec2Dir() * 10, ModContent.ProjectileType<SmallGelBall>(), Projectile.damage * 2 / 3, 0, Projectile.owner);
         }

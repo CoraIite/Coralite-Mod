@@ -201,7 +201,7 @@ namespace Coralite.Content.Items.Misc_Melee
 
         public CatClawsProj_Slash() : base(1.57f, trailCount: 30) { }
 
-        public override void SetDefs()
+        public override void SetSwingProperty()
         {
             Projectile.DamageType = DamageClass.Melee;
             Projectile.localNPCHitCooldown = 30;

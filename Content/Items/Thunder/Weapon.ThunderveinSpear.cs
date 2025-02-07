@@ -153,7 +153,7 @@ namespace Coralite.Content.Items.Thunder
             GradientTexture = null;
         }
 
-        public override void SetDefs()
+        public override void SetSwingProperty()
         {
             Projectile.DamageType = DamageClass.Melee;
             Projectile.localNPCHitCooldown = 48;
@@ -174,7 +174,7 @@ namespace Coralite.Content.Items.Thunder
 
         protected override void Initializer()
         {
-            if (Main.myPlayer == Projectile.owner && Combo < 3)
+            if (Projectile.IsOwnedByLocalPlayer() && Combo < 3)
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
 
             Projectile.extraUpdates = 5;
@@ -254,7 +254,7 @@ namespace Coralite.Content.Items.Thunder
             int timer = (int)Timer - minTime;
             float scale = 1f;
 
-            if (Owner.HeldItem.type == ItemType<ThunderveinBlade>())
+            if (Item.type == ItemType<ThunderveinBlade>())
                 scale = Owner.GetAdjustedItemScale(Owner.HeldItem);
 
             if (timer % 5 == 0 && timer < maxTime * 0.7f)
@@ -410,7 +410,7 @@ namespace Coralite.Content.Items.Thunder
             Projectile.QuickTrailSets(Helper.TrailingMode.RecordAllAndFollowPlayer, 10);
         }
 
-        public override void SetDefs()
+        public override void SetSwingProperty()
         {
             Projectile.DamageType = DamageClass.Melee;
             Projectile.localNPCHitCooldown = 48;
@@ -426,7 +426,7 @@ namespace Coralite.Content.Items.Thunder
 
         protected override void Initializer()
         {
-            if (Main.myPlayer == Projectile.owner)
+            if (Projectile.IsOwnedByLocalPlayer())
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
 
             SoundEngine.PlaySound(CoraliteSoundID.Swing_Item1, Projectile.Center);

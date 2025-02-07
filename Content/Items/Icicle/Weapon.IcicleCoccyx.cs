@@ -198,7 +198,7 @@ namespace Coralite.Content.Items.Icicle
                 initialize = false;
             }
 
-            if (Main.myPlayer == Projectile.owner)
+            if (Projectile.IsOwnedByLocalPlayer())
             {
                 Projectile.velocity = (Main.MouseWorld - Owner.Center).SafeNormalize(Vector2.One);
                 Projectile.rotation = Projectile.velocity.ToRotation();
@@ -310,7 +310,7 @@ namespace Coralite.Content.Items.Icicle
         {
             if (initialize)
             {
-                if (Main.myPlayer == Projectile.owner)  //初始化鞭子节点，以及其他信息
+                if (Projectile.IsOwnedByLocalPlayer())  //初始化鞭子节点，以及其他信息
                 {
                     Projectile.velocity = (Main.MouseWorld - Owner.Center).SafeNormalize(Vector2.One);
                     Projectile.rotation = Projectile.velocity.ToRotation();
@@ -487,7 +487,7 @@ namespace Coralite.Content.Items.Icicle
 
         public override void AI()
         {
-            if (onStart && Main.myPlayer == Projectile.owner)
+            if (onStart && Projectile.IsOwnedByLocalPlayer())
             {
                 Vector2 dashDir = Owner.Center.DirectionTo(Main.MouseWorld);
                 switch ((int)DashDir)

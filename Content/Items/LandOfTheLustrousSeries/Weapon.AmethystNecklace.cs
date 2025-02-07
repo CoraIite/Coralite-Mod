@@ -552,7 +552,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     spriteBatch.Draw(flowTex, flowTarget, flowSource, Color.White * 0.3f, LaserRotation, origin2, 0, 0);
                 }, sb =>
                 {
-                    if (Main.myPlayer == Projectile.owner)
+                    if (Projectile.IsOwnedByLocalPlayer())
                     {
                         spriteBatch.End();
                         spriteBatch.Begin(default, default, default, default, default, default, Main.GameViewMatrix.ZoomMatrix);
