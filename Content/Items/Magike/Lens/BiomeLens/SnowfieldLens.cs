@@ -135,7 +135,8 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
             => tile.TileType is TileID.SnowBlock or TileID.SnowBrick or TileID.IceBrick or TileID.IceBlock;
 
         public override bool CheckWall(Tile tile)
-            => tile.WallType is WallID.SnowBrick or WallID.SnowWallEcho or WallID.SnowWallUnsafe;
+            => tile.WallType is WallID.SnowBrick or WallID.SnowWallEcho or WallID.SnowWallUnsafe
+                             or WallID.IceBrick or WallID.IceEcho or WallID.IceUnsafe;
 
         public override void Upgrade(MALevel incomeLevel)
         {

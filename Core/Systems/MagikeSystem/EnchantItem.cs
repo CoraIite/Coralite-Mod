@@ -9,12 +9,12 @@ namespace Coralite.Core.Systems.MagikeSystem
     public partial class MagikeItem
     {
         //只是为了判断是否为null才用的这个
-        internal Enchant enchant;
-        public Enchant Enchant
+        internal MagikeEnchant enchant;
+        public MagikeEnchant Enchant
         {
             get
             {
-                enchant ??= new Enchant();
+                enchant ??= new MagikeEnchant();
                 return enchant;
             }
             set
@@ -23,53 +23,53 @@ namespace Coralite.Core.Systems.MagikeSystem
             }
         }
 
-        private void SaveEnchant(TagCompound tag)
-        {
-            if (enchant != null)
-            {
-                for (int i = 0; i < 3; i++)
-                {
-                    if (enchant.datas[i] != null)
-                    {
-                        string main = "Enchant" + i.ToString();
-                        tag.Add(main + "_name", enchant.datas[i].GetType().FullName);
-                        tag.Add(main + "_level", (int)enchant.datas[i].level);
-                        tag.Add(main + "_bonus0", enchant.datas[i].bonus0);
-                        tag.Add(main + "_bonus1", enchant.datas[i].bonus1);
-                        tag.Add(main + "_bonus2", enchant.datas[i].bonus2);
-                    }
-                }
-            }
-        }
+        //private void SaveEnchant(TagCompound tag)
+        //{
+        //    if (enchant != null)
+        //    {
+        //        for (int i = 0; i < 3; i++)
+        //        {
+        //            if (enchant.datas[i] != null)
+        //            {
+        //                string main = "Enchant" + i.ToString();
+        //                tag.Add(main + "_name", enchant.datas[i].GetType().FullName);
+        //                tag.Add(main + "_level", (int)enchant.datas[i].level);
+        //                tag.Add(main + "_bonus0", enchant.datas[i].bonus0);
+        //                tag.Add(main + "_bonus1", enchant.datas[i].bonus1);
+        //                tag.Add(main + "_bonus2", enchant.datas[i].bonus2);
+        //            }
+        //        }
+        //    }
+        //}
 
-        private void LoadEnchant(TagCompound tag)
-        {
-            for (int i = 0; i < 3; i++)
-            {
-                string main = "Enchant" + i.ToString();
-                if (tag.ContainsKey(main + "_name"))
-                {
-                    try
-                    {
-                        var t = Type.GetType(tag.GetString(main + "_name"));
-                        if (t is null)
-                            continue;
+        //private void LoadEnchant(TagCompound tag)
+        //{
+        //    for (int i = 0; i < 3; i++)
+        //    {
+        //        string main = "Enchant" + i.ToString();
+        //        if (tag.ContainsKey(main + "_name"))
+        //        {
+        //            try
+        //            {
+        //                var t = Type.GetType(tag.GetString(main + "_name"));
+        //                if (t is null)
+        //                    continue;
 
-                        Enchant.Level level = (Enchant.Level)tag.GetInt(main + "_level");
-                        float bonus0 = tag.GetFloat(main + "_bonus0");
-                        float bonus1 = tag.GetFloat(main + "_bonus1");
-                        float bonus2 = tag.GetFloat(main + "_bonus2");
-                        var data = (EnchantData)Activator.CreateInstance(t, level, bonus0, bonus1, bonus2);
+        //                MagikeEnchant.Level level = (MagikeEnchant.Level)tag.GetInt(main + "_level");
+        //                float bonus0 = tag.GetFloat(main + "_bonus0");
+        //                float bonus1 = tag.GetFloat(main + "_bonus1");
+        //                float bonus2 = tag.GetFloat(main + "_bonus2");
+        //                var data = (EnchantData)Activator.CreateInstance(t, level, bonus0, bonus1, bonus2);
 
-                        Enchant.datas[i] = data;
-                    }
-                    catch
-                    {
-                        continue;
-                    }
-                }
-            }
-        }
+        //                Enchant.datas[i] = data;
+        //            }
+        //            catch
+        //            {
+        //                continue;
+        //            }
+        //        }
+        //    }
+        //}
 
         #region  普通加成
 
