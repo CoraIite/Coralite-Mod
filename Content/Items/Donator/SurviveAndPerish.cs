@@ -11,6 +11,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
+using InnoVault.GameContent.BaseEntity;
 
 namespace Coralite.Content.Items.Donator
 {

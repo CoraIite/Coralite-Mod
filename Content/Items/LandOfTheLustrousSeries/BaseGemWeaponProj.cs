@@ -1,4 +1,5 @@
 ﻿using Coralite.Core.Prefabs.Projectiles;
+using InnoVault.GameContent.BaseEntity;
 
 namespace Coralite.Content.Items.LandOfTheLustrousSeries
 {

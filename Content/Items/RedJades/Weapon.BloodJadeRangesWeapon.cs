@@ -14,6 +14,7 @@ using Terraria.DataStructures;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
+using InnoVault.GameContent.BaseEntity;
 
 namespace Coralite.Content.Items.RedJades
 {

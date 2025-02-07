@@ -1,4 +1,6 @@
-﻿namespace Coralite.Core.Prefabs.Projectiles
+﻿using InnoVault.GameContent.BaseEntity;
+
+namespace Coralite.Core.Prefabs.Projectiles
 {
     public abstract class BaseBowHeldProj : BaseHeldProj
     {

@@ -19,6 +19,7 @@ using Terraria.Graphics.CameraModifiers;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
+using InnoVault.GameContent.BaseEntity;
 
 namespace Coralite.Content.Items.Nightmare
 {
@@ -141,7 +142,7 @@ namespace Coralite.Content.Items.Nightmare
         protected override void InitBasicValues()
         {
             if (Main.myPlayer == Projectile.owner)
-                Owner.direction = MousePos.X > Owner.Center.X ? 1 : -1;
+                Owner.direction = InMousePos.X > Owner.Center.X ? 1 : -1;
 
             Projectile.extraUpdates = 3;
             alpha = 0;
@@ -291,7 +292,7 @@ namespace Coralite.Content.Items.Nightmare
                 {
                     Effect effect = Filters.Scene["NoHLGradientTrail"].GetShader().Shader;
 
-                    effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMatrix());
+                    effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
                     effect.Parameters["sampleTexture"].SetValue(CoraliteAssets.Trail.SlashFlatBlur.Value);
                     effect.Parameters["gradientTexture"].SetValue(GradientTexture.Value);
 
@@ -398,7 +399,7 @@ namespace Coralite.Content.Items.Nightmare
             if (init)
             {
                 rolllingTime = (int)(Owner.itemTimeMax * 1.5f) + (21 * 2);
-                Projectile.rotation = startAngle = (MousePos - Owner.Center).ToRotation() + ((Owner.direction > 0 ? -1 : 1) * 2f);
+                Projectile.rotation = startAngle = (InMousePos - Owner.Center).ToRotation() + ((Owner.direction > 0 ? -1 : 1) * 2f);
                 totalAngle = (Owner.direction > 0 ? 1 : -1) * 9.7f;
                 SelfRot = startAngle + totalAngle;
                 Angle = 1f;
@@ -513,12 +514,12 @@ namespace Coralite.Content.Items.Nightmare
             Timer++;
         }
 
-        public override void NetCodeHeldSend(BinaryWriter writer)
+        public override void NetHeldSend(BinaryWriter writer)
         {
             writer.Write(startAngle);
         }
 
-        public override void NetCodeReceiveHeld(BinaryReader reader)
+        public override void NetHeldReceive(BinaryReader reader)
         {
             startAngle=reader.ReadSingle();
         }
@@ -914,7 +915,7 @@ namespace Coralite.Content.Items.Nightmare
             if (init)
             {
                 ChannelTime = 3 * Owner.itemTimeMax / 4;
-                Projectile.rotation = (MousePos - Owner.Center).ToRotation();
+                Projectile.rotation = (InMousePos - Owner.Center).ToRotation();
 
                 DistanceToOwner = 65;
                 if (ExtraProjState == 1 && Projectile.IsOwnedByLocalPlayer())//生成噩梦之咬
@@ -933,7 +934,7 @@ namespace Coralite.Content.Items.Nightmare
                     break;
                 case 0:
                     float factor = Timer / ChannelTime;
-                    Projectile.rotation = Projectile.rotation.AngleTowards((MousePos - Owner.Center).ToRotation(), 0.3f);
+                    Projectile.rotation = Projectile.rotation.AngleTowards((InMousePos - Owner.Center).ToRotation(), 0.3f);
                     DistanceToOwner = Helper.Lerp(65, 25, factor);
                     Angle = Helper.Lerp(0, 1f, factor);
                     if (Timer > ChannelTime)
@@ -974,12 +975,12 @@ namespace Coralite.Content.Items.Nightmare
             Timer++;
         }
 
-        public override void NetCodeHeldSend(BinaryWriter writer)
+        public override void NetHeldSend(BinaryWriter writer)
         {
             writer.Write(Timer);
         }
 
-        public override void NetCodeReceiveHeld(BinaryReader reader)
+        public override void NetHeldReceive(BinaryReader reader)
         {
             Timer= reader.ReadInt32();
         }
@@ -1077,7 +1078,7 @@ namespace Coralite.Content.Items.Nightmare
                 {
                     float factor = Timer / ReadyTime;
 
-                    Projectile.rotation = Projectile.rotation.AngleTowards((MousePos - Owner.Center).ToRotation(), 0.3f);
+                    Projectile.rotation = Projectile.rotation.AngleTowards((InMousePos - Owner.Center).ToRotation(), 0.3f);
                     mouseAngle = Helper.Lerp(0, 1.4f, factor);
                     alpha = Helper.Lerp(0.55f, 0.1f, factor);
                     break;

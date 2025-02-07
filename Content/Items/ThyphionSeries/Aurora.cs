@@ -164,7 +164,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 p.MaxTime = Main.rand.Next(10, 14);
                 p.Rotation = Owner.velocity.ToRotation() + (Owner.velocity.X > 0 ? 0 : MathHelper.Pi);
 
-                LockOwnerItemTime();
+                Owner.itemTime = Owner.itemAnimation = 2;
             }
             else
             {
@@ -177,7 +177,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                     }
 
                     Projectile.timeLeft = 20;
-                    LockOwnerItemTime();
+                    Owner.itemTime = Owner.itemAnimation = 2;
                 }
                 else
                 {

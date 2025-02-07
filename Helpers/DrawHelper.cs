@@ -24,14 +24,5 @@ namespace Coralite.Helpers
             device.SamplerStates[0] = originalSamplerState;
             Main.pixelShader.CurrentTechnique.Passes[0].Apply();
         }
-
-        public static Matrix GetTransfromMatrix()
-        {
-            Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
-            Matrix view = Main.GameViewMatrix.TransformationMatrix;
-            Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
-
-            return world * view * projection;
-        }
     }
 }

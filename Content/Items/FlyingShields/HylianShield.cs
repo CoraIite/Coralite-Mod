@@ -206,7 +206,7 @@ namespace Coralite.Content.Items.FlyingShields
                     break;
                 case (int)GuardState.Parry:
                     {
-                        LockOwnerItemTime();
+                        Owner.itemTime = Owner.itemAnimation = 2;
 
                         if (!Main.mouseRight)
                             TurnToDelay();
@@ -231,7 +231,7 @@ namespace Coralite.Content.Items.FlyingShields
                     break;
                 case (int)GuardState.ParryDelay:
                     {
-                        LockOwnerItemTime();
+                        Owner.itemTime = Owner.itemAnimation = 2;
 
                         DistanceToOwner = Helper.Lerp(0, GetWidth(), Timer / (parryTime * 2));
                         SetPos();
@@ -248,7 +248,7 @@ namespace Coralite.Content.Items.FlyingShields
                     break;
                 case (int)GuardState.Delay:
                     {
-                        LockOwnerItemTime();
+                        Owner.itemTime = Owner.itemAnimation = 2;
                         DistanceToOwner = Helper.Lerp(0, GetWidth(), Timer / delayTime);
                         SetPos();
                         Timer--;

@@ -20,6 +20,7 @@ using Terraria.Graphics.CameraModifiers;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
+using Newtonsoft.Json.Linq;
 
 namespace Coralite.Content.Items.ThyphionSeries
 {
@@ -227,7 +228,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                     }
 
                     Projectile.timeLeft = 2;
-                    LockOwnerItemTime();
+                    Owner.itemTime = Owner.itemAnimation = 2;
                 }
                 else
                 {
@@ -269,7 +270,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 return;
             }
 
-            Rotation = Rotation.AngleLerp(ToMouseAngle, 0.2f);
+            Rotation = Rotation.AngleLerp(ToMouseA, 0.2f);
         }
 
         public float GetStreamerAngle()
@@ -542,12 +543,12 @@ namespace Coralite.Content.Items.ThyphionSeries
             }
         }
 
-        public override void NetCodeHeldSend(BinaryWriter writer)
+        public override void NetHeldSend(BinaryWriter writer)
         {
             writer.Write(dashState);
         }
 
-        public override void NetCodeReceiveHeld(BinaryReader reader)
+        public override void NetHeldReceive(BinaryReader reader)
         {
             dashState = reader.ReadInt32();
         }
@@ -583,7 +584,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             Effect effect = Filters.Scene["ArcRainbow"].GetShader().Shader;
 
-            effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMatrix());
+            effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * 0.02f);
             effect.Parameters["uTimeG"].SetValue(Main.GlobalTimeWrappedHourly * 0.1f);
             effect.Parameters["udissolveS"].SetValue(1f);
@@ -606,7 +607,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             Effect effect = Filters.Scene["ArcRainbow"].GetShader().Shader;
 
-            effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMatrix());
+            effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * 0.02f);
             effect.Parameters["uTimeG"].SetValue(Main.GlobalTimeWrappedHourly * 0.1f);
             effect.Parameters["udissolveS"].SetValue(1f);
@@ -908,7 +909,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             Effect effect = Filters.Scene["ArcRainbow"].GetShader().Shader;
 
-            effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMatrix());
+            effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * 0.03f);
             effect.Parameters["uTimeG"].SetValue(Main.GlobalTimeWrappedHourly * 0.1f);
             effect.Parameters["udissolveS"].SetValue(1f);
@@ -936,7 +937,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             Effect effect = Filters.Scene["ArcRainbow"].GetShader().Shader;
 
-            effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMatrix());
+            effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * 0.02f);
             effect.Parameters["uTimeG"].SetValue(Main.GlobalTimeWrappedHourly * 0.1f);
             effect.Parameters["udissolveS"].SetValue(1f);

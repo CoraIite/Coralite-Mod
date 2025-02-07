@@ -151,7 +151,7 @@ namespace Coralite.Content.Items.Misc_Shoot
             }
 
             Projectile.timeLeft = 2;
-            Owner.direction = MousePos.X > Owner.Center.X ? 1 : -1;
+            Owner.direction = InMousePos.X > Owner.Center.X ? 1 : -1;
 
             switch (State)
             {
@@ -181,7 +181,7 @@ namespace Coralite.Content.Items.Misc_Shoot
                     break;
                 case 1://静止
                     {
-                        Vector2 targetPos = MousePos;
+                        Vector2 targetPos = InMousePos;
                         if (Target.GetNPCOwner(out NPC owner))
                             targetPos = owner.Center;
 
@@ -196,7 +196,7 @@ namespace Coralite.Content.Items.Misc_Shoot
                     break;
                 case 2://射击
                     {
-                        Vector2 targetPos = MousePos;
+                        Vector2 targetPos = InMousePos;
                         if (Target.GetNPCOwner(out NPC owner))
                             targetPos = owner.Center;
 
@@ -236,8 +236,8 @@ namespace Coralite.Content.Items.Misc_Shoot
                     break;
                 case 4:
                     {
-                        LockOwnerItemTime();
-                        Vector2 targetPos = MousePos;
+                        Owner.itemTime = Owner.itemAnimation = 2;
+                        Vector2 targetPos = InMousePos;
                         if (Target.GetNPCOwner(out NPC owner))
                             targetPos = owner.Center;
 
@@ -306,13 +306,13 @@ namespace Coralite.Content.Items.Misc_Shoot
                 }
 
                 if (!collide)
-                    AimPosition = MousePos;
+                    AimPosition = InMousePos;
             }
         }
 
         public int? FindTarget()
         {
-            Vector2 mouseWorld = MousePos;
+            Vector2 mouseWorld = InMousePos;
             for (int i = 0; i < Main.maxNPCs; i++)
             {
                 NPC npc = Main.npc[i];
@@ -321,7 +321,7 @@ namespace Coralite.Content.Items.Misc_Shoot
 
                 if (Collision.CanHitLine(Projectile.Center, 1, 1, npc.Center, 1, 1) &&
                     (npc.Hitbox.Contains((int)mouseWorld.X, (int)mouseWorld.Y)
-                    || Collision.CheckAABBvLineCollision(npc.TopLeft - npc.Size / 2, npc.Size * 2, Projectile.Center, MousePos)))
+                    || Collision.CheckAABBvLineCollision(npc.TopLeft - npc.Size / 2, npc.Size * 2, Projectile.Center, InMousePos)))
                     return i;
             }
 
@@ -344,8 +344,8 @@ namespace Coralite.Content.Items.Misc_Shoot
         {
             MaxTime = Owner.itemTimeMax;
             Timer = 0;
-            Owner.direction = MousePos.X > Owner.Center.X ? 1 : -1;
-            TargetRot = (MousePos - Owner.Center).ToRotation() + (DirSign > 0 ? 0f : MathHelper.Pi);
+            Owner.direction = InMousePos.X > Owner.Center.X ? 1 : -1;
+            TargetRot = (InMousePos - Owner.Center).ToRotation() + (DirSign > 0 ? 0f : MathHelper.Pi);
 
             Projectile.netUpdate = true;
             State = 2;
@@ -356,8 +356,8 @@ namespace Coralite.Content.Items.Misc_Shoot
             MaxTime = 30;
 
             Timer = 0;
-            Owner.direction = MousePos.X > Owner.Center.X ? 1 : -1;
-            TargetRot = (MousePos - Owner.Center).ToRotation() + (DirSign > 0 ? 0f : MathHelper.Pi);
+            Owner.direction = InMousePos.X > Owner.Center.X ? 1 : -1;
+            TargetRot = (InMousePos - Owner.Center).ToRotation() + (DirSign > 0 ? 0f : MathHelper.Pi);
             Projectile.frame = 0;
 
             Projectile.netUpdate = true;

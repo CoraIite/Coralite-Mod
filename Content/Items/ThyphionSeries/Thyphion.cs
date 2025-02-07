@@ -10,6 +10,7 @@ using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.CameraSystem;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -360,7 +361,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                         thyphionArrow.Hold(Owner.Center, dir * 12f);
                     }
 
-                    LockOwnerItemTime();
+                    Owner.itemTime = Owner.itemAnimation = 2;
                 }
                 else
                 {
@@ -400,7 +401,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                     handOffset = MathHelper.Lerp(handOffset, 0, 0.07f);
                     ReleaseTimer++;
 
-                    LockOwnerItemTime();
+                    Owner.itemTime = Owner.itemAnimation = 2;
                     Projectile.timeLeft = 2;
                 }
             } while (false);

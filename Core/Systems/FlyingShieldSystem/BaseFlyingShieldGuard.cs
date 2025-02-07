@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.ModPlayers;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -166,7 +167,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                     break;
                 case (int)GuardState.Parry:
                     {
-                        LockOwnerItemTime();
+                        Owner.itemTime = Owner.itemAnimation = 2;
 
                         if (!Main.mouseRight)
                             TurnToDelay();
@@ -193,7 +194,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                     break;
                 case (int)GuardState.ParryDelay:
                     {
-                        LockOwnerItemTime();
+                        Owner.itemTime = Owner.itemAnimation = 2;
                         DistanceToOwner = Helper.Lerp(0, GetWidth(), Timer / (parryTime * 2));
                         SetPos();
 
@@ -232,7 +233,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
 
         public virtual void Guarding()
         {
-            LockOwnerItemTime();
+            Owner.itemTime = Owner.itemAnimation = 2;
 
             if (!Main.mouseRight)
                 TurnToDelay();

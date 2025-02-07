@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.Items.Icicle;
 using Coralite.Core.Configs;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
@@ -127,7 +128,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             if ((int)Timer <= minTime)//弹幕生成到开始挥舞之前
             {
                 if (useTurnOnStart)
-                    Owner.direction = MousePos.X < Owner.Center.X ? -1 : 1;
+                    Owner.direction = InMousePos.X < Owner.Center.X ? -1 : 1;
                 BeforeSlash();
             }
             else if ((int)Timer <= maxTime)//挥舞过程中
@@ -204,7 +205,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         /// <returns></returns>
         protected virtual float GetStartAngle()
         {
-            return (MousePos - Owner.Center).ToRotation();
+            return (InMousePos - Owner.Center).ToRotation();
         }
 
         /// <summary>
@@ -351,7 +352,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             netSendBasicValues = flags[3];
         }
 
-        public override void NetCodeHeldSend(BinaryWriter writer)
+        public override void NetHeldSend(BinaryWriter writer)
         {
             if (netSendBasicValues)
             {
@@ -367,7 +368,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             writer.Write(onHitTimer);
         }
 
-        public override void NetCodeReceiveHeld(BinaryReader reader)
+        public override void NetHeldReceive(BinaryReader reader)
         {
             if (netSendBasicValues)
             {

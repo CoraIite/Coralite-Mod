@@ -1,5 +1,6 @@
 ﻿using Coralite.Core.Configs;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;

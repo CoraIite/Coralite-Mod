@@ -1,6 +1,7 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Audio;
@@ -128,7 +129,7 @@ namespace Coralite.Content.Items.ShadowCastle
 
         public override void AI()
         {
-            LockOwnerItemTime();
+            Owner.itemTime = Owner.itemAnimation = 2;
             SetHeld();
             Owner.itemRotation = ToMouseAngle + (DirSign > 0 ? 0f : MathHelper.Pi) + (Owner.gravDir > 0 ? 0f : MathHelper.Pi) + (DirSign * 0.3f);
             Projectile.Center = Owner.Center + (UnitToMouseV * 20);

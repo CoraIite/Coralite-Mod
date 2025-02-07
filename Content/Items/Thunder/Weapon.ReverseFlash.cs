@@ -133,7 +133,7 @@ namespace Coralite.Content.Items.Thunder
 
         public override void DashAttackAI()
         {
-            LockOwnerItemTime();
+            Owner.itemTime = Owner.itemAnimation = 2;
 
             if (Timer < DashTime)
                 Owner.velocity.X = Math.Sign(Owner.velocity.X) * 48;

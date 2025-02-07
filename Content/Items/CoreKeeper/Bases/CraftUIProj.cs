@@ -9,6 +9,7 @@ using ReLogic.Utilities;
 using System;
 using Terraria;
 using Terraria.Audio;
+using InnoVault.GameContent.BaseEntity;
 
 namespace Coralite.Content.Items.CoreKeeper.Bases
 {

@@ -157,7 +157,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         {
             if (Timer < DashTime + 2)
             {
-                LockOwnerItemTime();
+                Owner.itemTime = Owner.itemAnimation = 2;
 
                 Rotation = Helper.Lerp(RecordAngle, DirSign > 0 ? -1f : (3.141f + 1f), Coralite.Instance.HeavySmootherInstance.Smoother(Timer / DashTime));
                 return;

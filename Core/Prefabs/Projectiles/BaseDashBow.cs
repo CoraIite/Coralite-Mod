@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using InnoVault.GameContent.BaseEntity;
+using System.Linq;
 using Terraria;
 
 namespace Coralite.Core.Prefabs.Projectiles

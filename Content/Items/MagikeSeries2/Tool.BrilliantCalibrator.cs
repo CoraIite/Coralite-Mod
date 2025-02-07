@@ -9,6 +9,7 @@ using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -94,7 +95,7 @@ namespace Coralite.Content.Items.MagikeSeries2
 
             if (Owner.channel)
             {
-                LockOwnerItemTime(5);
+                Owner.itemTime = Owner.itemAnimation = 5;
                 TargetPoint = Main.MouseWorld.ToTileCoordinates16();
 
                 //限制范围

@@ -7,6 +7,7 @@ using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
@@ -115,7 +116,7 @@ namespace Coralite.Content.Items.MagikeSeries1
                 return;
             }
 
-            LockOwnerItemTime(5);
+            Owner.itemTime = Owner.itemAnimation = 5;
 
             Projectile.timeLeft = 2;
 
