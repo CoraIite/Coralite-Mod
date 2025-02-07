@@ -14,6 +14,7 @@ using Terraria.GameContent;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
+using InnoVault.GameContent.BaseEntity;
 
 namespace Coralite.Content.Items.Nightmare
 {
@@ -59,7 +60,7 @@ namespace Coralite.Content.Items.Nightmare
     /// <summary>
     /// 主体弹幕
     /// </summary>
-    public class BoneHand : ModProjectile
+    public class BoneHand : BaseHeldProj
     {
         public override string Texture => AssetDirectory.Blank;
 
@@ -67,9 +68,6 @@ namespace Coralite.Content.Items.Nightmare
         public ref float State => ref Projectile.ai[2];
         public ref float Timer => ref Projectile.localAI[0];
         public ref float ShootCount => ref Projectile.localAI[1];
-
-        public Player Owner => Main.player[Projectile.owner];
-
         private Vector2 offset;
 
         public override void SetDefaults()
@@ -169,7 +167,7 @@ namespace Coralite.Content.Items.Nightmare
                             Vector2 position = Owner.Center + (dir * 80) + (dir.RotatedBy(MathHelper.PiOver2) * 10 * 15);
                             Vector2 velocity = dir.RotatedBy(-MathHelper.PiOver2) * 10;
 
-                            Projectile.NewProjectile(source, position, velocity, ProjectileType<BoneSilt>(), Owner.GetWeaponDamage(Owner.HeldItem), 0, Projectile.owner);
+                            Projectile.NewProjectile(source, position, velocity, ProjectileType<BoneSilt>(), Owner.GetWeaponDamage(Item), 0, Projectile.owner);
 
                             State = 3;
                         }

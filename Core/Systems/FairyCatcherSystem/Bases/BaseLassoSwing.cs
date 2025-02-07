@@ -159,7 +159,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             if (ItemType < 1)
                 return;
 
-            Item heldItem = Owner.HeldItem;
+            Item heldItem = Item;
             if (heldItem.ModItem is BaseFairyCatcher catcher)
             {
                 float speed = heldItem.shootSpeed;

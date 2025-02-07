@@ -434,9 +434,9 @@ namespace Coralite.Content.Items.CoreKeeper
             {
                 alpha = (int)(Coralite.Instance.X2Smoother.Smoother(timer, maxTime - minTime) * 100) + 100;
             }
-            if (Owner.HeldItem.type == ItemType<RuneSong>())
+            if (Item.type == ItemType<RuneSong>())
             {
-                scale = Owner.GetAdjustedItemScale(Owner.HeldItem);
+                scale = Owner.GetAdjustedItemScale(Item);
                 scale = (1.5f * scale) - 0.5f;
                 if (scale > 3f)
                     scale = 3f;
@@ -505,7 +505,7 @@ namespace Coralite.Content.Items.CoreKeeper
                 onHitTimer = 1;
                 if (TrueMelee && !target.immortal && !target.SpawnedFromStatue)
                     Owner.Heal(3);
-                if (Main.netMode == NetmodeID.Server)
+                if (VaultUtils.isServer)
                     return;
 
                 float strength = 3;

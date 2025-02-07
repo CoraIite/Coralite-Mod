@@ -160,7 +160,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 if (AttackTime == 1 && Projectile.IsOwnedByLocalPlayer())
                 {
                     Projectile.NewProjectileFromThis<PyropeProj>(Projectile.Center,
-                        (Main.MouseWorld - Projectile.Center).SafeNormalize(Vector2.Zero) * 6.5f, Owner.GetWeaponDamage(Owner.HeldItem), Projectile.knockBack);
+                        (Main.MouseWorld - Projectile.Center).SafeNormalize(Vector2.Zero) * 6.5f, Owner.GetWeaponDamage(Item), Projectile.knockBack);
 
                     Helper.PlayPitched("Crystal/CrystalBling", 0.4f, 0, Projectile.Center);
 

@@ -320,7 +320,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
                 dust2.scale += Main.rand.NextFloat();
             }
 
-            if (Main.netMode == NetmodeID.Server)
+            if (VaultUtils.isServer)
                 return;
 
             Dust dust;

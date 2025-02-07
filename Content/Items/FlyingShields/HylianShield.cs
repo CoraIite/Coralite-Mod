@@ -170,7 +170,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void AI()
         {
-            if (Owner.HeldItem.type != ModContent.ItemType<HylianShield>())
+            if (Item.type != ModContent.ItemType<HylianShield>())
             {
                 Projectile.Kill();
                 return;

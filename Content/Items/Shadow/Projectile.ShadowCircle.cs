@@ -1,6 +1,7 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Linq;
@@ -11,7 +12,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Shadow
 {
-    public class ShadowCircle : ModProjectile
+    public class ShadowCircle : BaseHeldProj
     {
         public override string Texture => AssetDirectory.ShadowProjectiles + Name;
 
@@ -51,8 +52,6 @@ namespace Coralite.Content.Items.Shadow
 
         public override void AI()
         {
-            Player Owner = Main.player[Projectile.owner];
-
             if (Owner.active && !Owner.dead && Owner.armor[0].type == ModContent.ItemType<ShadowHead>()
                 && Owner.armor[0].ModItem.IsArmorSet(Owner.armor[0], Owner.armor[1], Owner.armor[2]))
                 Projectile.timeLeft = 2;
@@ -262,8 +261,7 @@ namespace Coralite.Content.Items.Shadow
                 foreach (var proj in Main.projectile.Where(p => p.active && p.friendly && p.owner == Projectile.owner && p.type == minionType))
                     proj.Kill();
 
-                Player Owner = Main.player[Projectile.owner];
-                int type = Owner.HeldItem.DamageType.Type;
+                int type = Item.DamageType.Type;
                 if (type == DamageClass.Melee.Type)
                     State = (int)AIState.melee;
                 else if (type == DamageClass.Ranged.Type)

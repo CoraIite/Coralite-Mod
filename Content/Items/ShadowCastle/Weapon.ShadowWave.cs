@@ -146,7 +146,7 @@ namespace Coralite.Content.Items.ShadowCastle
                         }
                         else
                         {
-                            if (Owner.HeldItem.ModItem is ShadowWave sw)//填充弹药
+                            if (Item.ModItem is ShadowWave sw)//填充弹药
                                 sw.ShootCount = 9;
 
                             if (Main.mouseRight)
@@ -165,12 +165,12 @@ namespace Coralite.Content.Items.ShadowCastle
                     {
                         if (!Main.mouseRight)//清空弹夹！！
                         {
-                            if (Owner.HeldItem.ModItem is ShadowWave sw)//填充弹药
+                            if (Item.ModItem is ShadowWave sw)//填充弹药
                                 sw.ShootCount = 3;
 
                             SoundEngine.PlaySound(CoraliteSoundID.Shotgun_Item36, Owner.Center);
 
-                            if (Owner.PickAmmo(Owner.HeldItem, out int proj, out float speed, out int damage, out float knockBack, out _))
+                            if (Owner.PickAmmo(Item, out int proj, out float speed, out int damage, out float knockBack, out _))
                                 for (int i = 0; i < 6; i++)
                                     Projectile.NewProjectileFromThis(Owner.Center, UnitToMouseV.RotatedBy(Main.rand.NextFloat(-0.15f, 0.15f)) * speed, proj,
                                     (int)(damage * 0.55f), knockBack);

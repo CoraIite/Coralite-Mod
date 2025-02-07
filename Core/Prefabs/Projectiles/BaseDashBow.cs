@@ -41,7 +41,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         public sealed override void AI()
         {
             Owner.heldProj = Projectile.whoAmI;
-            if (Owner.HeldItem.type != GetItemType())
+            if (Item.type != GetItemType())
             {
                 Projectile.Kill();
                 return;

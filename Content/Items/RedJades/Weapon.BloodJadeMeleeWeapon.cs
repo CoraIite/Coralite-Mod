@@ -271,7 +271,7 @@ namespace Coralite.Content.Items.RedJades
             if (onHitTimer == 0)
             {
                 onHitTimer = 1;
-                if (Main.netMode == NetmodeID.Server)
+                if (VaultUtils.isServer)
                     return;
 
                 float baseScale = 1;

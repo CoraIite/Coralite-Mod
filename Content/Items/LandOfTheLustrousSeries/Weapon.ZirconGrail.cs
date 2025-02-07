@@ -158,7 +158,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     for (int i = 0; i < 3; i++)
                     {
                         int p = Projectile.NewProjectileFromThis<ZirconProj>(Projectile.Center + new Vector2(0, -25), -Vector2.UnitY.RotateByRandom(-0.2f, 0.2f) * (12 + (i * 2.5f))
-                             , Owner.GetWeaponDamage(Owner.HeldItem), 5);
+                             , Owner.GetWeaponDamage(Item), 5);
                         Main.projectile[p].localNPCHitCooldown += i;
                     }
                 }

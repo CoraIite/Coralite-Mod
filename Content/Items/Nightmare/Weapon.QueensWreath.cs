@@ -311,7 +311,7 @@ namespace Coralite.Content.Items.Nightmare
                         if (NotRightClicked && Main.mouseRight && Main.mouseRightRelease
                             && Owner.TryGetModPlayer(out CoralitePlayer cp) && cp.nightmareEnergy > 0)
                         {
-                            if (Owner.PickAmmo(Owner.HeldItem, out int type, out float speed, out int damage, out float knockBack, out _))
+                            if (Owner.PickAmmo(Item, out int type, out float speed, out int damage, out float knockBack, out _))
                             {
                                 cp.nightmareEnergy -= 1;
 
@@ -343,7 +343,7 @@ namespace Coralite.Content.Items.Nightmare
                         if (NotRightClicked && Main.mouseRight && Main.mouseRightRelease
                             && Owner.TryGetModPlayer(out CoralitePlayer cp) && cp.nightmareEnergy > 0)
                         {
-                            if (Owner.PickAmmo(Owner.HeldItem, out int type, out float speed, out int damage, out float knockBack, out _))
+                            if (Owner.PickAmmo(Item, out int type, out float speed, out int damage, out float knockBack, out _))
                             {
                                 cp.nightmareEnergy -= 1;
 
@@ -426,7 +426,7 @@ namespace Coralite.Content.Items.Nightmare
                                     {
                                         if (dashHited)//冲刺途中有碰撞到东西
                                         {
-                                            if (Owner.HeldItem.ModItem is QueensWreath qw)
+                                            if (Item.ModItem is QueensWreath qw)
                                                 qw.Combo = 4;
 
                                             for (int i = 0; i < 3; i++)
@@ -450,7 +450,7 @@ namespace Coralite.Content.Items.Nightmare
                                 {
                                     if (dashHited)//冲刺途中有碰撞到东西
                                     {
-                                        if (Owner.HeldItem.ModItem is QueensWreath qw)
+                                        if (Item.ModItem is QueensWreath qw)
                                             qw.Combo = 4;
 
                                         for (int i = 0; i < 3; i++)
@@ -610,7 +610,7 @@ namespace Coralite.Content.Items.Nightmare
 
                                 Projectile.Center = Owner.Center + (Projectile.rotation.ToRotationVector2() * 16);
 
-                                CheckDashHited(npc => npc.SimpleStrikeNPC(Owner.GetWeaponDamage(Owner.HeldItem), Math.Sign(Owner.Center.X - npc.Center.X),
+                                CheckDashHited(npc => npc.SimpleStrikeNPC(Owner.GetWeaponDamage(Item), Math.Sign(Owner.Center.X - npc.Center.X),
                                     damageType: DamageClass.Ranged));
 
                                 if (dashHited)//冲刺过程中命中了什么东西
@@ -850,7 +850,7 @@ namespace Coralite.Content.Items.Nightmare
 
         public void ShootArrow(Action<IEntitySource, Vector2, Vector2, int, float, int> shoot = null)
         {
-            if (Owner.PickAmmo(Owner.HeldItem, out int type, out float _, out int damage, out float knockBack, out _))
+            if (Owner.PickAmmo(Item, out int type, out float _, out int damage, out float knockBack, out _))
             {
                 IEntitySource source = Projectile.GetSource_FromAI();
                 Vector2 position = Owner.Center;

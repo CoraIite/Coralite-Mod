@@ -4,6 +4,7 @@ using Coralite.Core.Attributes;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.SmoothFunctions;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -183,7 +184,7 @@ namespace Coralite.Content.Items.Misc_Shoot
 
                         ApplyRecoil(0);
 
-                        if (Owner.HeldItem.type != ModContent.ItemType<WhiteGardenia>())
+                        if (Item.type != ModContent.ItemType<WhiteGardenia>())
                             TurnToFade();
                     }
 
@@ -250,7 +251,7 @@ namespace Coralite.Content.Items.Misc_Shoot
                                 Helper.PlayPitched(CoraliteSoundID.TerraBlade_Item60, Owner.Center, pitch: 0.8f);
 
                                 Projectile.NewProjectileFromThis<WhiteGardeniaPowerfulShoot>(Projectile.Center, (targetPos - Owner.MountedCenter).SafeNormalize(Vector2.Zero) * 16
-                                    , Owner.GetWeaponDamage(Owner.HeldItem) * 5, Owner.HeldItem.knockBack);
+                                    , Owner.GetWeaponDamage(Item) * 5, Item.knockBack);
                             }
                         }
 
@@ -419,7 +420,7 @@ namespace Coralite.Content.Items.Misc_Shoot
 
             Texture2D numberTex = NumberTex.Value;
 
-            if (Owner.HeldItem.ModItem is WhiteGardenia gardenia)
+            if (Item.ModItem is WhiteGardenia gardenia)
             {
                 int count = gardenia.shootCount;
 
@@ -523,7 +524,7 @@ namespace Coralite.Content.Items.Misc_Shoot
         }
     }
 
-    public class WhiteGardeniaFloat : ModProjectile
+    public class WhiteGardeniaFloat : BaseHeldProj
     {
         public override string Texture => AssetDirectory.Misc_Shoot + Name;
 
@@ -539,8 +540,6 @@ namespace Coralite.Content.Items.Misc_Shoot
 
         public Vector2 offset;
         public SecondOrderDynamics_Vec2 IdleMove;
-
-        public Player Owner => Main.player[Projectile.owner];
 
         public override void SetStaticDefaults()
         {
@@ -569,7 +568,7 @@ namespace Coralite.Content.Items.Misc_Shoot
                 AttackCount = -i * AttackCountMax;
             }
 
-            if (Owner.HeldItem.type != ModContent.ItemType<WhiteGardenia>())
+            if (Item.type != ModContent.ItemType<WhiteGardenia>())
             {
                 Projectile.Kill();
                 return;
@@ -645,12 +644,12 @@ namespace Coralite.Content.Items.Misc_Shoot
                                 Helper.PlayPitched(CoraliteSoundID.LaserGun_Item158, Projectile.Center);
 
                             Projectile.NewProjectileFromThis<WhiteGardeniaFloatLaser>(Projectile.Center, Vector2.Zero
-                                , (int)(Owner.GetWeaponDamage(Owner.HeldItem) * 0.7f), Projectile.knockBack, Projectile.whoAmI, Target);
+                                , (int)(Owner.GetWeaponDamage(Item) * 0.7f), Projectile.knockBack, Projectile.whoAmI, Target);
 
                             AttackCount++;
 
                             if (AttackCount > AttackCountMax - 1
-                                && Owner.HeldItem.ModItem is WhiteGardenia gardenia && gardenia.shootCount < 10)
+                                && Item.ModItem is WhiteGardenia gardenia && gardenia.shootCount < 10)
                             {
                                 AttackCount = -AttackCountMax;
                                 gardenia.shootCount++;
@@ -704,13 +703,13 @@ namespace Coralite.Content.Items.Misc_Shoot
             return Projectile.MinionFindTarget();
         }
 
-        public override void SendExtraAI(BinaryWriter writer)
+        public override void NetHeldSend(BinaryWriter writer)
         {
             writer.Write(RandomAngle);
             writer.Write(Length);
         }
 
-        public override void ReceiveExtraAI(BinaryReader reader)
+        public override void NetHeldReceive(BinaryReader reader)
         {
             RandomAngle = reader.ReadSingle();
             Length = reader.ReadSingle();

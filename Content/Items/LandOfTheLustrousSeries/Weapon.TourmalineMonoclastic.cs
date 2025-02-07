@@ -173,7 +173,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             if (howMany > 5)
                 howMany = 5;
 
-            int damage = Owner.GetWeaponDamage(Owner.HeldItem);
+            int damage = Owner.GetWeaponDamage(Item);
             damage = (int)Helper.Lerp(damage * 1.15f, damage * 0.6f, (howMany - 1) / 4f);
 
             for (int i = 0; i < howMany; i++)

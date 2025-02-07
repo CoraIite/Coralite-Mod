@@ -198,7 +198,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 Projectile.rotation = Projectile.rotation.AngleLerp((Main.MouseWorld - Projectile.Center).ToRotation(), 0.2f);
                 if (AttackTime == 1)//生成射线
                 {
-                    Projectile.NewProjectileFromThis<AmethystLaser>(Projectile.Center, Vector2.Zero, Owner.GetWeaponDamage(Owner.HeldItem)
+                    Projectile.NewProjectileFromThis<AmethystLaser>(Projectile.Center, Vector2.Zero, Owner.GetWeaponDamage(Item)
                         , Projectile.knockBack, Projectile.whoAmI, AmethystLaser.TotalAttackTime + AmethystLaser.delayTime);
                     Helper.PlayPitched("Crystal/CrystalStrike", 0.4f, 0, Projectile.Center);
                 }

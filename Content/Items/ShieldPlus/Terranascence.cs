@@ -433,7 +433,7 @@ namespace Coralite.Content.Items.ShieldPlus
 
         public void SpurtBy(Vector2 velocity)
         {
-            Projectile.damage = (int)(Owner.GetWeaponDamage(Owner.HeldItem) * 0.75f);
+            Projectile.damage = (int)(Owner.GetWeaponDamage(Item) * 0.75f);
             StayTime = 0;
             RollingTime = 3 * 60;
             State = (int)FlyingShieldStates.Shooting;
@@ -494,7 +494,7 @@ namespace Coralite.Content.Items.ShieldPlus
 
         public override void OnParry()
         {
-            if (Owner.HeldItem.ModItem is Terranascence terranascence
+            if (Item.ModItem is Terranascence terranascence
                 && Owner.TryGetModPlayer(out CoralitePlayer cp))
             {
                 if (terranascence.ConsumeEnergy())
@@ -564,7 +564,7 @@ namespace Coralite.Content.Items.ShieldPlus
 
         public override void AI()
         {
-            if (Owner.HeldItem.type != ModContent.ItemType<Terranascence>())
+            if (Item.type != ModContent.ItemType<Terranascence>())
             {
                 Projectile.Kill();
                 return;
@@ -572,7 +572,7 @@ namespace Coralite.Content.Items.ShieldPlus
 
             Projectile.timeLeft = 2;
             Projectile.Center = Owner.Center;
-            if (Owner.HeldItem.ModItem is Terranascence terranascence)
+            if (Item.ModItem is Terranascence terranascence)
             {
                 int count = terranascence.energy;
 
@@ -604,7 +604,7 @@ namespace Coralite.Content.Items.ShieldPlus
 
         public override bool PreDraw(ref Color lightColor)
         {
-            if (Owner.HeldItem.ModItem is Terranascence terranascence)
+            if (Item.ModItem is Terranascence terranascence)
             {
                 Texture2D mainTex = Projectile.GetTexture();
 
@@ -725,7 +725,7 @@ namespace Coralite.Content.Items.ShieldPlus
                     break;
             }
 
-            if (Owner.HeldItem.ModItem is Terranascence terranascence && terranascence.SwordLightNormalAttack)
+            if (Item.ModItem is Terranascence terranascence && terranascence.SwordLightNormalAttack)
                 useSlashTrail = true;
 
             base.Initializer();
@@ -760,8 +760,8 @@ namespace Coralite.Content.Items.ShieldPlus
             if (alpha < 255)
                 alpha += 8;
 
-            if (Owner.HeldItem.type == ModContent.ItemType<Terranascence>())
-                scale = Owner.GetAdjustedItemScale(Owner.HeldItem);
+            if (Item.type == ModContent.ItemType<Terranascence>())
+                scale = Owner.GetAdjustedItemScale(Item);
             else
                 Projectile.Kill();
 
@@ -981,7 +981,7 @@ namespace Coralite.Content.Items.ShieldPlus
             }
             else
             {
-                if (Owner.HeldItem.ModItem is Terranascence terranascence && terranascence.SwordLightNormalAttack)
+                if (Item.ModItem is Terranascence terranascence && terranascence.SwordLightNormalAttack)
                     canDrawBaseEffect = true;
 
                 maxTime = 8;
@@ -1073,7 +1073,7 @@ namespace Coralite.Content.Items.ShieldPlus
                     (proj.ModProjectile as TerranascenceFSProj).SpurtBy(velocity.RotateByRandom(-0.3f, 0.3f));
                     Timer = maxTime + 1;
                     Owner.velocity *= -0.3f;
-                    if (Owner.HeldItem.ModItem is Terranascence terranascence)
+                    if (Item.ModItem is Terranascence terranascence)
                     {
                         terranascence.PowerfulAtt2 = 30;
                         terranascence.PowerfulRight = 30;

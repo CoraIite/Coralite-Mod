@@ -682,7 +682,7 @@ namespace Coralite.Content.Items.Nightmare
             {
                 onHitTimer = 1;
                 Owner.immuneTime += 8;
-                if (Main.netMode == NetmodeID.Server)
+                if (VaultUtils.isServer)
                     return;
 
                 if (VisualEffectSystem.HitEffect_ScreenShaking)

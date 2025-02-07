@@ -110,7 +110,7 @@ namespace Coralite.Content.Items.MagikeSeries1
 
         public override void AI()
         {
-            if (Owner.HeldItem.ModItem is not MagConnectStaff)
+            if (Item.ModItem is not MagConnectStaff)
             {
                 Projectile.Kill();
                 return;

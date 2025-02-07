@@ -316,7 +316,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                         {
                             for (int i = -1; i < 2; i++)
                             {
-                                int damage = i == 0 ? (int)(Owner.GetWeaponDamage(Owner.HeldItem) * 3f) : Owner.GetWeaponDamage(Owner.HeldItem);
+                                int damage = i == 0 ? (int)(Owner.GetWeaponDamage(Item) * 3f) : Owner.GetWeaponDamage(Item);
                                 int p = Projectile.NewProjectileFromThis<SolunarStrike>(Projectile.Center, Vector2.Zero
                                      , damage, 10, Projectile.whoAmI);
 
@@ -388,7 +388,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
                             SetOwnerSPAttack();
 
-                            Projectile.NewProjectileFromThis<SolunarBallLaser>(Projectile.Center, new Vector2(0, -16), Owner.GetWeaponDamage(Owner.HeldItem), 0);
+                            Projectile.NewProjectileFromThis<SolunarBallLaser>(Projectile.Center, new Vector2(0, -16), Owner.GetWeaponDamage(Item), 0);
                             handOffset = -30;
                         }
 
@@ -407,9 +407,9 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public void SetOwnerSPAttack()
         {
-            if (Owner.HeldItem.type==ItemType<Solunar>())
+            if (Item.type==ItemType<Solunar>())
             {
-                (Owner.HeldItem.ModItem as Solunar).SpecialAttack = true;
+                (Item.ModItem as Solunar).SpecialAttack = true;
             }
         }
 
@@ -521,7 +521,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             Helper.PlayPitched(CoraliteSoundID.Ding_Item4, Projectile.Center, pitchAdjust: -0.3f);
 
             if (target != null && target.CanBeChasedBy())//踢一脚
-                target.SimpleStrikeNPC(Owner.GetWeaponDamage(Owner.HeldItem), Owner.direction, knockBack: 10, damageType: DamageClass.Ranged);
+                target.SimpleStrikeNPC(Owner.GetWeaponDamage(Item), Owner.direction, knockBack: 10, damageType: DamageClass.Ranged);
 
             if (!VisualEffectSystem.HitEffect_Dusts)
                 return;

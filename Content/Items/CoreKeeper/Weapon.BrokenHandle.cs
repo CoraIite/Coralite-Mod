@@ -200,8 +200,8 @@ namespace Coralite.Content.Items.CoreKeeper
             int timer = (int)Timer - minTime;
             alpha = (int)(Coralite.Instance.X2Smoother.Smoother(timer, maxTime - minTime) * 140) + 100;
             float scale = 1f;
-            if (Owner.HeldItem.type == ItemType<RuneSong>())
-                scale = Owner.GetAdjustedItemScale(Owner.HeldItem);
+            if (Item.type == ItemType<RuneSong>())
+                scale = Owner.GetAdjustedItemScale(Item);
             Projectile.scale = scale * Helper.EllipticalEase(recordStartAngle - (recordTotalAngle * Smoother.Smoother(timer, maxTime - minTime)), 1.2f, 1.6f);
             base.OnSlash();
         }
@@ -224,7 +224,7 @@ namespace Coralite.Content.Items.CoreKeeper
             if (onHitTimer == 0)
             {
                 onHitTimer = 1;
-                if (Main.netMode == NetmodeID.Server)
+                if (VaultUtils.isServer)
                     return;
 
                 float strength = 1;

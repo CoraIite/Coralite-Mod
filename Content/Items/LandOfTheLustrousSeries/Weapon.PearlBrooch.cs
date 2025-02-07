@@ -212,7 +212,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     float speed = 7f + (Math.Abs(factor) * 7f);
 
                     Projectile.NewProjectileFromThis<PearlProj>(Projectile.Center
-                        , angle.ToRotationVector2() * speed, Owner.GetWeaponDamage(Owner.HeldItem), Projectile.knockBack, Main.rand.Next(4));
+                        , angle.ToRotationVector2() * speed, Owner.GetWeaponDamage(Item), Projectile.knockBack, Main.rand.Next(4));
 
                     Helper.PlayPitched("Crystal/CrystalShoot", 0.1f, 0.4f, Projectile.Center);
 

@@ -318,7 +318,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                             speed -= time * 0.1f;
 
                             Projectile.NewProjectileFromThis<LustrousProj>(Projectile.Center
-                                , angle.ToRotationVector2() * speed, Owner.GetWeaponDamage(Owner.HeldItem), Projectile.knockBack
+                                , angle.ToRotationVector2() * speed, Owner.GetWeaponDamage(Item), Projectile.knockBack
                                 , itemType, i == 0 ? 1 : 0, Projectile.whoAmI);
 
                             angle += 0.3f;

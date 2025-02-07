@@ -156,7 +156,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     Vector2 dir2 = (Main.MouseWorld - Projectile.Center).SafeNormalize(Vector2.Zero);
 
                     Projectile.NewProjectileFromThis<SapphireProj>(Projectile.Center,
-                           dir2 * Main.rand.NextFloat(5, 6), Owner.GetWeaponDamage(Owner.HeldItem)
+                           dir2 * Main.rand.NextFloat(5, 6), Owner.GetWeaponDamage(Item)
                            , Projectile.knockBack);
 
                     Helper.PlayPitched("Crystal/GemShoot", 0.2f, -0.8f, Projectile.Center);

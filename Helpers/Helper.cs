@@ -303,7 +303,7 @@ namespace Coralite.Helpers
 
         public static SlotId PlayPitched(string path, float volume, float pitch, Vector2? position = null)
         {
-            if (Main.netMode == NetmodeID.Server)
+            if (VaultUtils.isServer)
                 return SlotId.Invalid;
 
             var style = new SoundStyle($"{nameof(Coralite)}/Sounds/{path}")
@@ -318,7 +318,7 @@ namespace Coralite.Helpers
 
         public static SlotId PlayPitched(SoundStyle style, Vector2? position = null, float? volume = null, float? pitch = null, float volumeAdjust = 0, float pitchAdjust = 0)
         {
-            if (Main.netMode == NetmodeID.Server)
+            if (VaultUtils.isServer)
                 return SlotId.Invalid;
 
             if (volume.HasValue)

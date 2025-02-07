@@ -210,7 +210,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                         Helper.PlayPitched(CoraliteSoundID.Bow_Item5, Projectile.Center);
 
                         Projectile.NewProjectileFromThis<TurbulenceArrow>(Owner.Center, ToMouse.SafeNormalize(Vector2.Zero) * 16
-                            , (int)(Owner.GetWeaponDamage(Owner.HeldItem) * 1.5f), Projectile.knockBack, 1);
+                            , (int)(Owner.GetWeaponDamage(Item) * 1.5f), Projectile.knockBack, 1);
 
                         Rotation = ToMouseA;
 

@@ -135,7 +135,7 @@ namespace Coralite.Content.Items.Donator
             float particleSpeedAdder = 0.4f;
             int damage = 1;
 
-            if (MagikeHelper.TryCosumeMagike(3, Owner.HeldItem, Owner) || Owner.CheckMana(80, true, true))
+            if (MagikeHelper.TryCosumeMagike(3, Item, Owner) || Owner.CheckMana(80, true, true))
             {
                 projSpeed = 12;
                 particleBaseSpeed = 3;

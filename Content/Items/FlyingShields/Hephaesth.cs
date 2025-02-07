@@ -274,7 +274,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void OnHoldShield()
         {
-            if (Burning && turnToBuring == 0 && Owner.HeldItem.ModItem is Hephaesth hephaesth)
+            if (Burning && turnToBuring == 0 && Item.ModItem is Hephaesth hephaesth)
             {
                 if (hephaesth.BurstTime == 0)
                 {
@@ -319,7 +319,7 @@ namespace Coralite.Content.Items.FlyingShields
         public override void OnGuard()
         {
             base.OnGuard();
-            if (Owner.HeldItem.ModItem is Hephaesth hephaesth)
+            if (Item.ModItem is Hephaesth hephaesth)
             {
                 if (!Burning && hephaesth.GetFuel(30 * 2))
                 {
@@ -356,7 +356,7 @@ namespace Coralite.Content.Items.FlyingShields
         public override void OnStrongGuard()
         {
             Helper.PlayPitched(CoraliteSoundID.NoUse_SuperMagicShoot_Item68, Projectile.Center, pitch: -0.5f);
-            if (Owner.HeldItem.ModItem is Hephaesth hephaesth)
+            if (Item.ModItem is Hephaesth hephaesth)
             {
                 if (!Burning && hephaesth.GetFuel(30 * 8))
                 {

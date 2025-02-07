@@ -124,7 +124,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                             WorldGen.paintCoatTile(i, j, Main.rand.NextFromList(PaintCoatingID.Glow, PaintCoatingID.Echo));
                             WorldGen.paintTile(i, j, (byte)Main.rand.Next(PaintID.Old_IlluminantPaint + 1));
                         }
-                        if (Main.tile[i, j].HasTile && Main.netMode == NetmodeID.Server)
+                        if (Main.tile[i, j].HasTile && VaultUtils.isServer)
                             NetMessage.SendTileSquare(-1, i, j);
                     }
                 }

@@ -92,7 +92,7 @@ namespace Coralite.Content.Items.MagikeSeries1
 
             Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
 
-            if (Owner.HeldItem.type != ModContent.ItemType<LeprechaunBait>())
+            if (Item.type != ModContent.ItemType<LeprechaunBait>())
             {
                 Projectile.Kill();
                 return;

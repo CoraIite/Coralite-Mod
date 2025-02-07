@@ -222,7 +222,7 @@ namespace Coralite.Content.Items.Nightmare
                 if (Owner.TryGetModPlayer(out CoralitePlayer cp2))//获得能量
                     cp2.GetNightmareEnergy(1);
 
-                if (Main.netMode == NetmodeID.Server)
+                if (VaultUtils.isServer)
                     return;
 
                 if (Projectile.IsOwnedByLocalPlayer())
@@ -616,7 +616,7 @@ namespace Coralite.Content.Items.Nightmare
     /// 为跟踪玩家状态时使用速度传入角度
     /// 使用ai2传入宽度
     /// </summary>
-    public class DreamShearsSpurt : ModProjectile, IDrawPrimitive, IDrawWarp
+    public class DreamShearsSpurt : BaseHeldProj, IDrawPrimitive, IDrawWarp
     {
         public override string Texture => AssetDirectory.Trails + "SlashFlatBlurHVMirror";
 
@@ -626,9 +626,6 @@ namespace Coralite.Content.Items.Nightmare
 
         public ref float Alpha => ref Projectile.localAI[0];
         public ref float Length => ref Projectile.localAI[1];
-
-        public Player Owner => Main.player[Projectile.owner];
-
         private Trail trail;
 
         public bool init = true;
@@ -675,7 +672,7 @@ namespace Coralite.Content.Items.Nightmare
                 if (State == 0)
                 {
                     Projectile.rotation = Projectile.velocity.ToRotation();
-                    Length = Owner.GetAdjustedItemScale(Owner.HeldItem) * 165;
+                    Length = Owner.GetAdjustedItemScale(Item) * 165;
                 }
 
                 if (!VaultUtils.isServer)

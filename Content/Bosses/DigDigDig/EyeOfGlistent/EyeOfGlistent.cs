@@ -255,7 +255,7 @@ namespace Coralite.Content.Bosses.DigDigDig.EyeOfGlistent
                                 int index = NPC.NewNPC(NPC.GetSource_FromAI(), (int)vector2.X, (int)vector2.Y, 5);
                                 Main.npc[index].velocity.X = vector3.X;
                                 Main.npc[index].velocity.Y = vector3.Y;
-                                if (Main.netMode == NetmodeID.Server && index < 200)
+                                if (VaultUtils.isServer && index < 200)
                                     NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, index);
                             }
 
@@ -885,7 +885,7 @@ namespace Coralite.Content.Bosses.DigDigDig.EyeOfGlistent
         {
             
             NPC.SetEventFlagCleared(ref NPC.downedBoss1, GameEventClearedID.DefeatedEyeOfCthulu);
-            if (Main.netMode == NetmodeID.Server)
+            if (VaultUtils.isServer)
                 NetMessage.SendData(MessageID.WorldData);
         }
 

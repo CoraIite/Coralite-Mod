@@ -87,7 +87,7 @@ namespace Coralite.Content.Items.MagikeSeries2
         {
             Projectile.Center = Owner.Center;
 
-            if (Owner.HeldItem.ModItem is not BrilliantCalibrator)
+            if (Item.ModItem is not BrilliantCalibrator)
             {
                 Projectile.Kill();
                 return;

@@ -50,7 +50,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
     {
         public override bool CheckHeldItem()
         {
-            return Owner.HeldItem.ModItem is not FilterItem;
+            return Item.ModItem is not FilterItem;
         }
 
         public override void Special()
@@ -185,7 +185,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
 
         public override Color GetDrawColor()
         {
-            return (Owner.HeldItem.ModItem as FilterItem).FilterColor;
+            return (Item.ModItem as FilterItem).FilterColor;
         }
     }
 }

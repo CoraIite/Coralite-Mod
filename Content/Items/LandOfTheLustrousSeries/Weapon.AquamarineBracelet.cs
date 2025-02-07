@@ -203,13 +203,13 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 }
 
                 Projectile.rotation = MathF.Sin((1 - (AttackTime / Owner.itemTimeMax)) * MathHelper.TwoPi) * 0.5f;
-                if ((int)AttackTime % (Owner.itemTimeMax / 3) == 0 && Owner.CheckMana(Owner.HeldItem.mana, true))
+                if ((int)AttackTime % (Owner.itemTimeMax / 3) == 0 && Owner.CheckMana(Item.mana, true))
                 {
                     Owner.manaRegenDelay = 40;
 
                     float angle = (Main.rand.NextFromList(-1, 1) * 0.35f) + Main.rand.NextFloat(-0.5f, 0.5f);
                     Projectile.NewProjectileFromThis<AquamarineProj>(Projectile.Center
-                        , Vector2.UnitY.RotatedBy(angle) * 8, Owner.GetWeaponDamage(Owner.HeldItem), Projectile.knockBack);
+                        , Vector2.UnitY.RotatedBy(angle) * 8, Owner.GetWeaponDamage(Item), Projectile.knockBack);
 
                     for (int i = 0; i < 4; i++)
                     {

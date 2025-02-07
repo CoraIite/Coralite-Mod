@@ -87,7 +87,7 @@ namespace Coralite.Content.Items.Magike.Tools
 
         public override Color GetDrawColor()
         {
-            return (Owner.HeldItem.ModItem as InfinityClusterWand).mode == 0 ? Color.Orange : Color.DarkGray;
+            return (Item.ModItem as InfinityClusterWand).mode == 0 ? Color.Orange : Color.DarkGray;
         }
 
         public override void Special()

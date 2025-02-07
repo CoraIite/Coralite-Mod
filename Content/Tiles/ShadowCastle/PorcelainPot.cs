@@ -230,7 +230,7 @@ namespace Coralite.Content.Tiles.ShadowCastle
                 return;
             }
 
-            if (Main.netMode == NetmodeID.Server && Main.rand.NextBool(30))
+            if (VaultUtils.isServer && Main.rand.NextBool(30))
             {
                 Item.NewItem(GetItemSource_FromTileBreak(i, j), i * 16, j * 16, 16, 16, 2997);
                 return;

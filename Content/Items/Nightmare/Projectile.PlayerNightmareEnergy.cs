@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
 using Coralite.Content.ModPlayers;
 using Coralite.Core;
+using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
@@ -11,12 +12,9 @@ using static Terraria.GameContent.Animations.IL_Actions.Sprites;
 
 namespace Coralite.Content.Items.Nightmare
 {
-    public class PlayerNightmareEnergy : ModProjectile, IDrawAdditive
+    public class PlayerNightmareEnergy : BaseHeldProj, IDrawAdditive
     {
         public override string Texture => AssetDirectory.Blank;
-
-        public Player Owner => Main.player[Projectile.owner];
-
         public ref float Timer => ref Projectile.localAI[0];
         public ref float Scale => ref Projectile.localAI[1];
         public ref float Rot => ref Projectile.localAI[2];
@@ -63,7 +61,7 @@ namespace Coralite.Content.Items.Nightmare
 
             Projectile.Center = Owner.Center;
 
-            if (Owner.HeldItem.ModItem is INightmareWeapon)
+            if (Item.ModItem is INightmareWeapon)
             {
                 Projectile.timeLeft = 2;
             }

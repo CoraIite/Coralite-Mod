@@ -323,7 +323,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
                 onHitTimer = 1;
             }
 
-            if (Main.netMode == NetmodeID.Server)
+            if (VaultUtils.isServer)
                 return;
 
             Dust dust;

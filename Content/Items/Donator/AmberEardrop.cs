@@ -202,7 +202,7 @@ namespace Coralite.Content.Items.Donator
                     dust.rotation = dir.ToRotation() + MathHelper.PiOver2;
                 }
 
-                if ((int)AttackTime % (Owner.itemTimeMax / 4) == 0 && Owner.CheckMana(Owner.HeldItem.mana, true))
+                if ((int)AttackTime % (Owner.itemTimeMax / 4) == 0 && Owner.CheckMana(Item.mana, true))
                 {
                     Owner.manaRegenDelay = 40;
 
@@ -211,7 +211,7 @@ namespace Coralite.Content.Items.Donator
                         .RotateByRandom(-0.05f, 0.05f) * Main.rand.NextFloat(8, 11);
 
                     bool special = Main.rand.NextBool(5);
-                    int dam = Owner.GetWeaponDamage(Owner.HeldItem);
+                    int dam = Owner.GetWeaponDamage(Item);
 
                     if (special)
                         dam = (int)(1.35f * dam);

@@ -227,8 +227,8 @@ namespace Coralite.Content.Items.Thunder
             int timer = (int)Timer - minTime;
             float scale = 1f;
 
-            if (Owner.HeldItem.type == ItemType<ThunderveinBlade>())
-                scale = Owner.GetAdjustedItemScale(Owner.HeldItem);
+            if (Item.type == ItemType<ThunderveinBlade>())
+                scale = Owner.GetAdjustedItemScale(Item);
 
             if (timer % 7 == 0 && timer < maxTime * 0.5f)
             {
@@ -282,7 +282,7 @@ namespace Coralite.Content.Items.Thunder
             {
                 onHitTimer = 1;
                 Owner.immuneTime += 10;
-                if (Main.netMode == NetmodeID.Server)
+                if (VaultUtils.isServer)
                     return;
 
                 float strength = 2;

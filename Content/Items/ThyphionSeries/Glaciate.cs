@@ -213,10 +213,10 @@ namespace Coralite.Content.Items.ThyphionSeries
                         Helper.PlayPitched(CoraliteSoundID.FireStaffSummon_Item77, Projectile.Center);
 
                         //射冰晶波
-                        Projectile.NewProjectileFromThis<GlaciateWave>(Projectile.Center, UnitToMouseV * 24, (int)(Owner.GetWeaponDamage(Owner.HeldItem)*1.5f)
+                        Projectile.NewProjectileFromThis<GlaciateWave>(Projectile.Center, UnitToMouseV * 24, (int)(Owner.GetWeaponDamage(Item)*1.5f)
                             , Projectile.knockBack);
 
-                        if (Owner.HeldItem.ModItem is Glaciate glaciate)
+                        if (Item.ModItem is Glaciate glaciate)
                         {
                             glaciate.powerfulAttack = true;
                         }

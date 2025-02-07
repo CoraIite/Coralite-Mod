@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.ModPlayers;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -12,10 +13,8 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
     /// ai0记录状态<br></br>
     /// ai1记录时间
     /// </summary>
-    public abstract class BaseFlyingShield : ModProjectile
+    public abstract class BaseFlyingShield : BaseHeldProj
     {
-        public Player Owner => Main.player[Projectile.owner];
-
         public ref float State => ref Projectile.ai[0];
         public ref float Timer => ref Projectile.ai[1];
 

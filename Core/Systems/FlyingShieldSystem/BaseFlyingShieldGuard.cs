@@ -101,7 +101,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
 
         public override void OnSpawn(IEntitySource source)
         {
-            Projectile.scale *= Owner.GetAdjustedItemScale(Owner.HeldItem);
+            Projectile.scale *= Owner.GetAdjustedItemScale(Item);
             Projectile.Resize((int)(Projectile.width * Projectile.scale), (int)(Projectile.height * Projectile.scale));
             Projectile.originalDamage = Projectile.damage;//记录原本伤害，因为会受到额外加成影响
 

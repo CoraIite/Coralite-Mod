@@ -230,7 +230,7 @@ namespace Coralite.Content.Items.Donator
 
         public override void AI()
         {
-            if (Owner.HeldItem.type != ModContent.ItemType<SurviveAndPerish>())
+            if (Item.type != ModContent.ItemType<SurviveAndPerish>())
                 return;
 
             Projectile.timeLeft = 2;
@@ -336,7 +336,7 @@ namespace Coralite.Content.Items.Donator
                 pos -= Vector2.UnitY * 14;
                 pos += dir * 40;
                 pos += Main.rand.NextVector2Circular(16, 16);
-                Projectile.NewProjectileFromThis<PerishMissile>(pos, dir.RotateByRandom(-0.2f, 0.2f) * 4, (int)(Owner.GetWeaponDamage(Owner.HeldItem) * 0.75f),
+                Projectile.NewProjectileFromThis<PerishMissile>(pos, dir.RotateByRandom(-0.2f, 0.2f) * 4, (int)(Owner.GetWeaponDamage(Item) * 0.75f),
                     Projectile.knockBack);
 
                 Dust d = Dust.NewDustPerfect(pos + (dir * 30), ModContent.DustType<MissileShootDust>(), Vector2.Zero, Scale: Main.rand.NextFloat(1.5f, 2f));

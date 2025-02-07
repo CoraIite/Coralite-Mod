@@ -265,7 +265,7 @@ namespace Coralite.Content.Items.Icicle
             {
                 onHitTimer = 1;
                 Owner.immuneTime += 10;
-                if (Main.netMode == NetmodeID.Server)
+                if (VaultUtils.isServer)
                     return;
 
                 float strength = 1;
@@ -278,7 +278,7 @@ namespace Coralite.Content.Items.Icicle
                 }
 
                 FrostDustsOnHit(Projectile, Top, Bottom, RotateVec2, totalAngle, _Rotation, strength, baseScale);
-                if (Owner.HeldItem.ModItem is FrostySword fs)
+                if (Item.ModItem is FrostySword fs)
                 {
                     if (fs.leftHitCount < FrostySword.LeftHitMax && target.type != NPCID.TargetDummy)
                     {
@@ -538,7 +538,7 @@ namespace Coralite.Content.Items.Icicle
             {
                 onHitTimer = 1;
                 Owner.immuneTime += 10;
-                if (Main.netMode == NetmodeID.Server)
+                if (VaultUtils.isServer)
                     return;
 
                 float strength = 1;
@@ -552,7 +552,7 @@ namespace Coralite.Content.Items.Icicle
 
                 FrostySwordSlash.FrostDustsOnHit(Projectile, Top, Bottom, RotateVec2, totalAngle, _Rotation, strength, baseScale);
 
-                if (Owner.HeldItem.ModItem is FrostySword fs)
+                if (Item.ModItem is FrostySword fs)
                 {
                     if (fs.leftHitCount < FrostySword.LeftHitMax && target.type != NPCID.TargetDummy)
                     {
@@ -717,7 +717,7 @@ namespace Coralite.Content.Items.Icicle
             {
                 onHitTimer = 1;
                 Owner.immuneTime += 10;
-                if (Main.netMode == NetmodeID.Server)
+                if (VaultUtils.isServer)
                     return;
 
                 FrostySwordSlash.FrostDustsOnHit(Projectile, Top, Bottom, RotateVec2, totalAngle, _Rotation, 2, 5);

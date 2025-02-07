@@ -196,7 +196,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public override void AI()
         {
-            if (Owner.HeldItem.type != ItemType<Thyphion>())
+            if (Item.type != ItemType<Thyphion>())
                 Projectile.Kill();
 
             switch (State)
@@ -327,7 +327,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                         float velicityDir = Projectile.velocity.ToRotation() + MathHelper.Pi + dir * MathF.Sign(Projectile.velocity.X) * 0.3f;
 
                         Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, velicityDir.ToRotationVector2() * 10, ProjectileType<ThyphionShadowBow>()
-                            , Owner.GetWeaponDamage(Owner.HeldItem), Projectile.knockBack, Projectile.owner, bowIndex, ToMouseA, MathF.Sign(ToMouse.X));
+                            , Owner.GetWeaponDamage(Item), Projectile.knockBack, Projectile.owner, bowIndex, ToMouseA, MathF.Sign(ToMouse.X));
                     }
 
                     Owner.itemTime = Owner.itemAnimation = 2;
@@ -342,7 +342,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 {
                     Vector2 dir = Rotation.ToRotationVector2();
                     projectile = Projectile.NewProjectileFromThis<ThyphionArrow>(Owner.Center, dir * 18
-                        , Owner.GetWeaponDamage(Owner.HeldItem), Projectile.knockBack, ai0: -1, ai2: 2);
+                        , Owner.GetWeaponDamage(Item), Projectile.knockBack, ai0: -1, ai2: 2);
                 }
 
                 if (DownLeft && ReleaseTimer == 0)

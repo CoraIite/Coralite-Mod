@@ -100,7 +100,7 @@ namespace Coralite.Content.Items.Icicle
                     if (canShoot && Projectile.IsOwnedByLocalPlayer())
                     {
                         Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, (Main.MouseWorld - Owner.MountedCenter).SafeNormalize(Vector2.One) * 9.5f
-                            , ModContent.ProjectileType<IcicleStarArrow>(), (int)(Owner.GetWeaponDamage(Owner.HeldItem) * 2f), Projectile.knockBack, Projectile.owner);
+                            , ModContent.ProjectileType<IcicleStarArrow>(), (int)(Owner.GetWeaponDamage(Item) * 2f), Projectile.knockBack, Projectile.owner);
                         SoundEngine.PlaySound(CoraliteSoundID.Bow_Item5, Owner.Center);
                     }
 

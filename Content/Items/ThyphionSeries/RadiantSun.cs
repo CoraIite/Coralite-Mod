@@ -210,7 +210,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                     PRTLoader.NewParticle<RadiantSunFlow>(Projectile.Center, dir * 8, Color.White, 0.9f);
 
                     Projectile.NewProjectileFromThis<RadiantSunLaser>(Projectile.Center, Projectile.rotation.ToRotationVector2() * 10
-                        , (int)(Owner.GetWeaponDamage(Owner.HeldItem) * (Main.dayTime ? 1.5f : 1.3f)), Projectile.knockBack);
+                        , (int)(Owner.GetWeaponDamage(Item) * (Main.dayTime ? 1.5f : 1.3f)), Projectile.knockBack);
                 }
             }
         }

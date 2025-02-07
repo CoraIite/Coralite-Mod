@@ -330,9 +330,9 @@ namespace Coralite.Content.Items.CoreKeeper
                    dir * Main.rand.NextFloat(0.5f, 3f), Scale: scale2);
             dust.noGravity = true;
 
-            if (Owner.HeldItem.type == ItemType<PoisonousSickle>())
+            if (Item.type == ItemType<PoisonousSickle>())
             {
-                scale = Owner.GetAdjustedItemScale(Owner.HeldItem);
+                scale = Owner.GetAdjustedItemScale(Item);
                 scale = (1.2f * scale) - 0.2f;
                 if (scale > 3f)
                     scale = 3f;
@@ -381,7 +381,7 @@ namespace Coralite.Content.Items.CoreKeeper
             if (onHitTimer == 0)
             {
                 onHitTimer = 1;
-                if (Main.netMode == NetmodeID.Server)
+                if (VaultUtils.isServer)
                     return;
 
                 float strength = 3;
