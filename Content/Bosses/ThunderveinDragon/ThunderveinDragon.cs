@@ -350,7 +350,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             }
 
             ThunderveinPurpleAlpha = new Color(135, 94, 255, 0);
-            if (NPC.target < 0 || NPC.target == 255 || Target.dead || !Target.active || Target.Distance(NPC.Center) > 3000 || !Target.ZoneSnow)
+            if (NPC.target < 0 || NPC.target == 255 || Target.dead || !Target.active || Target.Distance(NPC.Center) > 3000)
             {
                 NPC.TargetClosest();
 

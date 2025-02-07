@@ -132,7 +132,11 @@ MagikeSystem: {
 		ItemContainerName: 物品容器
 		GetOnlyItemContainerName: 仅取出的物品容器
 		SnowfieldLensName: 雪原透镜
-		SnowfieldCondition: "  ▶ 需要将底座放置在冰雪块上"
+		SnowfieldCondition: 
+		'''
+		▶ 需要将底座放置在冰雪块上
+		▶ 需要在冰雪墙前
+		'''
 		MoonlightLensName: 月光透镜
 		MoonlightCondition: "  ▶ 需要月光"
 		LavaLensName: 熔岩透镜
