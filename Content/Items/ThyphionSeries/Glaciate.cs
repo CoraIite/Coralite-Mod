@@ -152,7 +152,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         public override int GetItemType()
             => ItemType<Glaciate>();
 
-        public override void Initialize()
+        public override void InitializeDashBow()
         {
             RecordAngle = Rotation;
 

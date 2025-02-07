@@ -24,9 +24,9 @@ namespace Coralite.Content.Items.HyacinthSeries
             return x * MathF.Sin(x * x * x) / 1.186f;
         }
 
-        public override void Initialize()
+        public override void InitializeGun()
         {
-            base.Initialize();
+            base.InitializeGun();
             float rotation = TargetRot + (DirSign > 0 ? 0 : MathHelper.Pi);
             Vector2 dir = rotation.ToRotationVector2();
             Vector2 center = Projectile.Center + (dir * 32);

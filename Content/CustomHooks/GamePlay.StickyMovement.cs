@@ -28,9 +28,7 @@ namespace Coralite.Content.CustomHooks
             if (self.mount.Type > 0 && MountID.Sets.Cart[self.mount.Type] && Math.Abs(self.velocity.X) > 5f)
                 flag = true;
 
-            int num = self.width / 2;
-            int num2 = self.height / 2;
-            new Vector2(self.Center.X - (num / 2), self.Center.Y - (num2 / 2));
+            //new Vector2(self.Center.X - (num / 2), self.Center.Y - (num2 / 2));
             Vector2 vector = StickyTiles(self.position, self.velocity, self.width, self.height);
             if (vector.Y != -1f && vector.X != -1f)
             {

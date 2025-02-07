@@ -38,7 +38,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             if (init)
             {
-                Initialize();
+                InitializeGemWeapon();
                 init = false;
             }
 
@@ -47,9 +47,15 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Attack();
         }
 
-        public virtual void Initialize()
+        public override void Initialize()
         {
             TargetPos = Owner.Center;
+            InitializeGemWeapon();
+        }
+
+        public virtual void InitializeGemWeapon()
+        {
+            
         }
 
         public virtual void BeforeMove() { }

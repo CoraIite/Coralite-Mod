@@ -155,7 +155,7 @@ namespace Coralite.Content.Items.Donator
 
         public SurviveHeldProj() : base(0.15f, 18, -8, AssetDirectory.Donator) { }
 
-        public override void Initialize()
+        public override void InitializeGun()
         {
             int time = Owner.itemTimeMax;
             if (time < 6)

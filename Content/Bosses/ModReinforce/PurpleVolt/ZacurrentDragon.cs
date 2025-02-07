@@ -34,13 +34,10 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
         public bool currentSurrounding;
         public float selfAlpha = 1f;
 
-        public static Asset<Texture2D> glowTex;
-
-        private static SecondOrderDynamics_Vec2 CenterSmoother;
-
-        public static Color ThunderveinYellow = new(255, 202, 101);
-        public static Color ZacurrentPurple = new(135, 94, 255);
-        public static Color ThunderveinOrange = new(219, 114, 22);
+        internal static Asset<Texture2D> GlowTex;
+        internal static Color ThunderveinYellow = new(255, 202, 101);
+        internal static Color ZacurrentPurple = new(135, 94, 255);
+        internal static Color ThunderveinOrange = new(219, 114, 22);
 
         #region tmlHooks
 
@@ -49,7 +46,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             if (Main.dedServ)
                 return;
 
-            glowTex = ModContent.Request<Texture2D>(Texture + "_Highlight");
+            GlowTex = ModContent.Request<Texture2D>(Texture + "_Highlight");
         }
 
         public override void Unload()
@@ -57,7 +54,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             if (Main.dedServ)
                 return;
 
-            glowTex = null;
+            GlowTex = null;
         }
 
         public override void SetStaticDefaults()
@@ -253,7 +250,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
             spriteBatch.Draw(mainTex, pos, frameBox, drawColor * selfAlpha, rot, origin, NPC.scale, effects, 0);
             //绘制glow
-            spriteBatch.Draw(glowTex.Value, pos, frameBox, Color.White * selfAlpha, rot, origin, NPC.scale, effects, 0);
+            spriteBatch.Draw(GlowTex.Value, pos, frameBox, Color.White * selfAlpha, rot, origin, NPC.scale, effects, 0);
         }
 
         #endregion

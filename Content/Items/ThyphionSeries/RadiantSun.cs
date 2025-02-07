@@ -242,7 +242,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             }
         }
 
-        public override void Initialize()
+        public override void InitializeDashBow()
         {
             RecordAngle = Rotation;
         }

@@ -116,7 +116,7 @@ namespace Coralite.Content.Items.Misc_Shoot
 
         public AquariusHeldProj() : base(0.25f, 16, -8, AssetDirectory.Misc_Shoot) { }
 
-        public override void Initialize()
+        public override void InitializeGun()
         {
             Projectile.timeLeft = Owner.itemTimeMax;
             MaxTime = Owner.itemTimeMax;

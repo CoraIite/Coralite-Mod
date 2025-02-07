@@ -50,24 +50,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             if (Init)
             {
                 Init = false;
-                switch (Special)
-                {
-                    default:
-                    case 0:
-                        Projectile.timeLeft = Owner.itemTimeMax;
-
-                        if (Main.projectile.Any(p => p.active && p.friendly
-                            && p.owner == Projectile.owner && p.type == Projectile.type && p.ai[1] == 1))
-                        {
-                            Projectile.Kill();
-                        }
-
-                        break;
-                    case 1:
-                        break;
-                }
-
-                Initialize();
+                
             }
 
             AIBefore();
@@ -90,7 +73,29 @@ namespace Coralite.Core.Prefabs.Projectiles
             Owner.itemRotation = Rotation + (DirSign > 0 ? 0 : 3.141f);
         }
 
-        public virtual void Initialize()
+        public override void Initialize()
+        {
+            switch (Special)
+            {
+                default:
+                case 0:
+                    Projectile.timeLeft = Owner.itemTimeMax;
+
+                    if (Main.projectile.Any(p => p.active && p.friendly
+                        && p.owner == Projectile.owner && p.type == Projectile.type && p.ai[1] == 1))
+                    {
+                        Projectile.Kill();
+                    }
+
+                    break;
+                case 1:
+                    break;
+            }
+
+            InitializeDashBow();
+        }
+
+        public virtual void InitializeDashBow()
         {
 
         }

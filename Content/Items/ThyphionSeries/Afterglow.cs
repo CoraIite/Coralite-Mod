@@ -258,7 +258,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             Timer++;
         }
 
-        public override void Initialize()
+        public override void InitializeDashBow()
         {
             RecordAngle = Rotation;
         }

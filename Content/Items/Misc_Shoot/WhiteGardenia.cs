@@ -144,12 +144,6 @@ namespace Coralite.Content.Items.Misc_Shoot
 
         public override void AI()
         {
-            if (!init)
-            {
-                Initialize();
-                init = true;
-            }
-
             Projectile.timeLeft = 2;
             Owner.direction = InMousePos.X > Owner.Center.X ? 1 : -1;
 
@@ -597,7 +591,7 @@ namespace Coralite.Content.Items.Misc_Shoot
                     {
                         IdleMove ??= new SecondOrderDynamics_Vec2(2.5f, 0.9f, 0.5f, Owner.MountedCenter);
 
-                        Helper.GetMyGroupIndexAndFillBlackList(Projectile, out var index2, out var totalIndexesInGroup2);
+                        Helper.GetMyGroupIndexAndFillBlackList(Projectile, out var index2, out _);
 
                         Vector2 position = Owner.Center + new Vector2((index2 == 0 ? -1 : 1) * 40, -60);
                         Projectile.Center = IdleMove.Update(1 / 60f, position);

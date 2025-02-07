@@ -20,7 +20,7 @@ namespace Coralite.Content.Items.Misc_Shoot
 
         }
 
-        public override void Initialize()
+        public override void InitializeGun()
         {
             Projectile.timeLeft = Owner.itemAnimation;
             MaxTime = Owner.itemAnimation;

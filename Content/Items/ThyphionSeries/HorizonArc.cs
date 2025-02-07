@@ -168,7 +168,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             specialRelease,
         }
 
-        public override void Initialize()
+        public override void InitializeDashBow()
         {
             RecordAngle = Rotation;
             bonus = Owner.HasBuff<HorizonArcBonus>();

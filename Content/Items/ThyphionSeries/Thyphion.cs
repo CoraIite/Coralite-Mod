@@ -262,7 +262,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         public override Vector2 GetOffset()
             => new(34 + handOffset, -12);
 
-        public override void Initialize()
+        public override void InitializeDashBow()
         {
             RecordAngle = Rotation;
         }

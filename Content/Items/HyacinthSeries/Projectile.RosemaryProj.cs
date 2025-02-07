@@ -16,7 +16,7 @@ namespace Coralite.Content.Items.HyacinthSeries
     {
         public RosemaryHeldProj() : base(0.05f, 14, -2, AssetDirectory.HyacinthSeriesItems) { }
 
-        public override void Initialize()
+        public override void InitializeGun()
         {
             Projectile.timeLeft = Owner.itemTime + 1;
             MaxTime = Owner.itemTime + 1;
@@ -36,7 +36,7 @@ namespace Coralite.Content.Items.HyacinthSeries
     {
         public RosemaryHeldProj2() : base(0.05f, 16, -2, AssetDirectory.HyacinthSeriesItems) { }
 
-        public override void Initialize()
+        public override void InitializeGun()
         {
             Projectile.timeLeft = Owner.itemTime + 1;
             MaxTime = Owner.itemTime + 1;
@@ -57,7 +57,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             if (Projectile.localAI[1] > 2)
                 return;
             if (Projectile.timeLeft < 2)
-                Initialize();
+                InitializeGun();
         }
     }
 

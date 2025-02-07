@@ -235,7 +235,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         public override int GetItemType()
             => ItemType<Solunar>();
 
-        public override void Initialize()
+        public override void InitializeDashBow()
         {
             RecordAngle = Rotation;
         }

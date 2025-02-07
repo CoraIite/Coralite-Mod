@@ -208,9 +208,9 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                             }
                         }
                         Timer++;
-                        int delayTime = 40;
-                        if (Main.getGoodWorld)
-                            delayTime = 15;
+                        //int delayTime = 40;
+                        //if (Main.getGoodWorld)
+                        //    delayTime = 15;
                         //if (Timer > bigDashTime + delayTime)
                         //    ResetStates();
                     }
