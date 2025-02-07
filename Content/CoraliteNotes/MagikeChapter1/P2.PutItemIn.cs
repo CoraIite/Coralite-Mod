@@ -97,7 +97,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
             Helper.DrawTextParagraph(spriteBatch, TurnToMagikeProducer.Value, PageWidth, new Vector2(Position.X, pos.Y), out textSize);
             tex2 = CoraliteAssets.MagikeChapter1.TurnToMagikeProducerUI.Value;
 
-            pos.Y += textSize.Y + tex2.Height / 2*1.2f;
+            pos.Y += textSize.Y + tex2.Height / 2 * 1.2f;
             #region 绘制右边的图片
             rect = Utils.CenteredRectangle(pos, tex2.Size() * 1.2f);
             if (rect.MouseScreenInRect())

@@ -1,7 +1,6 @@
 ﻿using Coralite.Content.Raritys;
 using Coralite.Content.WorldGeneration;
 using Coralite.Core;
-using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.SmoothFunctions;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;

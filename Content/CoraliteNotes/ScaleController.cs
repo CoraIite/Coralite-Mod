@@ -8,7 +8,7 @@ namespace Coralite.Content.CoraliteNotes
         public readonly float scaleFloatingRange;
         private readonly float lerpSpeed;
 
-        public ScaleController(float targetScale,float scaleFloatingRange,float lerpSpeed=0.1f)
+        public ScaleController(float targetScale, float scaleFloatingRange, float lerpSpeed = 0.1f)
         {
             this.targetScale = targetScale;
             this.scaleFloatingRange = scaleFloatingRange;
@@ -26,7 +26,7 @@ namespace Coralite.Content.CoraliteNotes
 
         public void ToBigSize()
         {
-            Scale= Helper.Lerp(Scale, targetScale+scaleFloatingRange, lerpSpeed);
+            Scale = Helper.Lerp(Scale, targetScale + scaleFloatingRange, lerpSpeed);
         }
 
         public void ToNormalSize()

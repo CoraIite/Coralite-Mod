@@ -101,6 +101,6 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public override void SaveData(string preName, TagCompound tag)
             => SaveLinerSender(preName, tag);
         public override void LoadData(string preName, TagCompound tag)
-            =>LoadLinerSender(preName, tag);
+            => LoadLinerSender(preName, tag);
     }
 }

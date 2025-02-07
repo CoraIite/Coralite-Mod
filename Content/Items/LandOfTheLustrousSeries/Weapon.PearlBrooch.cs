@@ -61,7 +61,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             Texture2D noiseTex = GemTextures.CellNoise2.Value;//[(int)(Main.timeForVisualEffects / 7) % 20].Value;
 
-            Color c1 = PearlProj.brightC*0.75f;
+            Color c1 = PearlProj.brightC * 0.75f;
             c1.A = 255;
             Color c2 = PearlProj.darkC * 0.75f;
             c1.A = 255;
@@ -83,9 +83,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Main.graphics.GraphicsDevice.Textures[1] = GemTextures.CellNoise2.Value;
 
             Vector2 textSize = ChatManager.GetStringSize(line.Font, line.Text, line.BaseScale);
-            Texture2D mainTex =  CoraliteAssets.LightBall.BallA.Value;
+            Texture2D mainTex = CoraliteAssets.LightBall.BallA.Value;
 
-            int xExpand = 45 ;
+            int xExpand = 45;
             int yExpand = 6;
 
             sb.Draw(mainTex, new Rectangle(line.X - xExpand, line.Y - 4 - yExpand, (int)textSize.X + xExpand * 2, (int)textSize.Y + yExpand * 2), null, Color.White * 0.8f);

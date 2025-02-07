@@ -1,5 +1,4 @@
-﻿using Coralite.Content.Items.Magike.Refractors;
-using Coralite.Content.MutiBlocks;
+﻿using Coralite.Content.MutiBlocks;
 using Coralite.Core;
 using Coralite.Core.Systems.MTBStructure;
 using System.Linq;

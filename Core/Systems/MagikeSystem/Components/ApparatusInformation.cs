@@ -10,7 +10,7 @@ using Terraria.UI;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components
 {
-    public class ApparatusInformation : MagikeComponent, IUpgradeable,IUIShowable
+    public class ApparatusInformation : MagikeComponent, IUpgradeable, IUIShowable
     {
         public override int ID => MagikeComponentID.ApparatusInformation;
 

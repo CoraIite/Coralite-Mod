@@ -241,7 +241,7 @@ namespace Coralite.Content.Items.Misc_Shoot
 
                         ApplyRecoil(0);
 
-                        if ( Projectile.frame < 19)
+                        if (Projectile.frame < 19)
                         {
                             Projectile.frame++;
                             if (Projectile.frame == 19)
@@ -331,7 +331,7 @@ namespace Coralite.Content.Items.Misc_Shoot
             Vector2 dir = TargetRot.ToRotationVector2();
 
             Dust.NewDustPerfect(Projectile.Center + dir * Main.rand.NextFloat(-40, 40) + Main.rand.NextVector2Circular(32, 32), ModContent.DustType<PixelPoint>()
-                , dir * (Main.rand.NextFromList(-3, 3) + Main.rand.NextFloat(-1, 1)), newColor:Main.rand.NextFromList( WhiteGardenia.LightGreen,Color.Silver)
+                , dir * (Main.rand.NextFromList(-3, 3) + Main.rand.NextFloat(-1, 1)), newColor: Main.rand.NextFromList(WhiteGardenia.LightGreen, Color.Silver)
                 , Scale: Main.rand.NextFloat(1, 2));
         }
 

@@ -2,8 +2,8 @@
 using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Systems.FlyingShieldSystem;
-using InnoVault.Trails;
 using Coralite.Helpers;
+using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Audio;

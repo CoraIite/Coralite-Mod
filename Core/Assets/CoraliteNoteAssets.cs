@@ -5,7 +5,7 @@ namespace Coralite.Core
     public partial class CoraliteAssets
     {
         [AutoLoadTexture(NoteReadfragment)]
-        public class ReadFragmant 
+        public class ReadFragmant
         {
             public static ATex BookName { get; private set; }
         }

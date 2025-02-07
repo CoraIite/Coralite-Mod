@@ -2,8 +2,8 @@
 using Coralite.Content.Tiles.RedJades;
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
-using InnoVault.Trails;
 using Coralite.Helpers;
+using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Linq;

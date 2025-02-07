@@ -1,7 +1,6 @@
 ﻿using Coralite.Core.Systems.KeySystem;
 using System.Collections.Frozen;
 using System.Collections.Generic;
-using Terraria.Localization;
 
 namespace Coralite.Core.Loaders
 {

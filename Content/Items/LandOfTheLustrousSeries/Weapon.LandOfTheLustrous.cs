@@ -1,15 +1,15 @@
 ﻿using Coralite.Content.Items.Donator;
+using Coralite.Content.Items.Magike;
 using Coralite.Content.Items.MagikeSeries1;
 using Coralite.Content.Items.MagikeSeries2;
 using Coralite.Content.WorldGeneration;
 using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.SmoothFunctions;
-using InnoVault.Trails;
 using Coralite.Helpers;
 using InnoVault.PRT;
+using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +19,6 @@ using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
-using Coralite.Content.Items.Magike;
 
 namespace Coralite.Content.Items.LandOfTheLustrousSeries
 {

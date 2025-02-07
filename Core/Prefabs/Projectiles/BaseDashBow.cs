@@ -50,7 +50,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             if (Init)
             {
                 Init = false;
-                
+
             }
 
             AIBefore();

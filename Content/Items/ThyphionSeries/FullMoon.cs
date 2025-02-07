@@ -113,7 +113,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             float angle = (Main.MouseWorld - Player.Center).ToRotation();
             const float angleLimit = 0.2f;
 
-            if ((angle > -MathHelper.PiOver2 - angleLimit && angle < -MathHelper.PiOver2 + angleLimit) 
+            if ((angle > -MathHelper.PiOver2 - angleLimit && angle < -MathHelper.PiOver2 + angleLimit)
                 || (angle > MathHelper.PiOver2 - angleLimit && angle < MathHelper.PiOver2 + angleLimit))
             {
                 dashDirection = Math.Sign(Main.MouseWorld.X - Player.Center.X);

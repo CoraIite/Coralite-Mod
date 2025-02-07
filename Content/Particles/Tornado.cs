@@ -32,7 +32,7 @@ namespace Coralite.Content.Particles
                 Scale *= 0.975f;
 
             if (Opacity < 20)
-                Color.A =(byte)(Color.A* 0.92f);
+                Color.A = (byte)(Color.A * 0.92f);
 
             Opacity--;
             if (Opacity < 0)

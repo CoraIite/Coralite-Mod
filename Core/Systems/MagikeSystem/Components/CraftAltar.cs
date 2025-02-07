@@ -47,7 +47,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// <summary>
         /// 物品生成模式
         /// </summary>
-        public enum ItemSpawnModes:byte
+        public enum ItemSpawnModes : byte
         {
             /// <summary>
             /// 放入物品容器内
@@ -649,7 +649,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            if (!IsWorking|| ChosenResipe==null)
+            if (!IsWorking || ChosenResipe == null)
                 return;
 
             MagikeTP entity = Entity;
@@ -730,7 +730,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             if (IsWorking)
                 tag.Add(nameof(RequiredMagike), RequiredMagike);
 
-            if (ItemSpawnMode!=ItemSpawnModes.IntoSlot)
+            if (ItemSpawnMode != ItemSpawnModes.IntoSlot)
                 tag.Add(nameof(ItemSpawnMode), (byte)ItemSpawnMode);
         }
 
@@ -747,7 +747,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 SetPerCost();
             }
 
-            if (tag.TryGet(nameof(ItemSpawnMode),out byte m))
+            if (tag.TryGet(nameof(ItemSpawnMode), out byte m))
                 ItemSpawnMode = (ItemSpawnModes)m;
         }
     }
@@ -830,7 +830,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 if (IsMouseHovering)
                 {
                     string text = _altar.ChosenResipe.ResultItem.Name;
-                    text = string.Concat(text, Environment.NewLine, _altar.ChosenResipe.magikeCost- _altar.RequiredMagike, "/", _altar.ChosenResipe.magikeCost, Environment.NewLine, MagikeSystem.RightClickStopCraft.Value);
+                    text = string.Concat(text, Environment.NewLine, _altar.ChosenResipe.magikeCost - _altar.RequiredMagike, "/", _altar.ChosenResipe.magikeCost, Environment.NewLine, MagikeSystem.RightClickStopCraft.Value);
                     UICommon.TooltipMouseText(text);
                 }
             }
@@ -1086,7 +1086,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             base.LeftClick(evt);
 
             _altar.ItemSpawnMode++;
-            if (_altar.ItemSpawnMode>CraftAltar.ItemSpawnModes.ThrowOut)
+            if (_altar.ItemSpawnMode > CraftAltar.ItemSpawnModes.ThrowOut)
                 _altar.ItemSpawnMode = CraftAltar.ItemSpawnModes.IntoSlot;
 
             Helper.PlayPitched("UI/Tick", 0.4f, 0);

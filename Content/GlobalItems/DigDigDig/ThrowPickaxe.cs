@@ -19,7 +19,7 @@ namespace Coralite.Content.GlobalItems.DigDigDig
                 , ItemID.IronPickaxe, ItemID.LeadPickaxe
                 , ItemID.SilverPickaxe, ItemID.TungstenPickaxe
                 , ItemID.GoldPickaxe, ItemID.PlatinumPickaxe
-                ,ItemID.SolarFlarePickaxe);
+                , ItemID.SolarFlarePickaxe);
         }
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace Coralite.Content.GlobalItems.DigDigDig
         /// <param name="item"></param>
         /// <param name="shootSpeed"></param>
         /// <param name="overrideUseTime"></param>
-        public void QuickPickaxeVarient(Item item,float shootSpeed, int? overrideUseTime = null,int? overrideDamage=null,Action<Item> specialAdjestment=null)
+        public void QuickPickaxeVarient(Item item, float shootSpeed, int? overrideUseTime = null, int? overrideDamage = null, Action<Item> specialAdjestment = null)
         {
             if (item.Variant == ItemVariants.StrongerVariant)
             {

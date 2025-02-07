@@ -40,11 +40,11 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
 
             Texture2D tex1 = CoraliteAssets.MagikeChapter1.PolymerizeCraft.Value;
             float scale1 = 0.8f;
-            pos.Y += 10 + textSize.Y + tex1.Height *scale1/ 2;
+            pos.Y += 10 + textSize.Y + tex1.Height * scale1 / 2;
 
-            tex1.QuickCenteredDraw(spriteBatch, pos,scale: scale1);
+            tex1.QuickCenteredDraw(spriteBatch, pos, scale: scale1);
 
-            pos.Y += 20 + tex1.Height* scale1 / 2;
+            pos.Y += 20 + tex1.Height * scale1 / 2;
 
             #region 绘制左边的置物台
 
@@ -73,10 +73,10 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
 
             Helper.DrawTextParagraph(spriteBatch, PlacePedestal.Value, PageWidth, new Vector2(Position.X, pos.Y), out textSize);
             tex1 = CoraliteAssets.MagikeChapter1.PlacePedestal.Value;
-            pos.Y += textSize.Y + 10 + tex1.Height *0.9f/ 2;
+            pos.Y += textSize.Y + 10 + tex1.Height * 0.9f / 2;
 
             //绘制下图
-            tex1.QuickCenteredDraw(spriteBatch, pos,scale:0.9f);
+            tex1.QuickCenteredDraw(spriteBatch, pos, scale: 0.9f);
         }
     }
 }

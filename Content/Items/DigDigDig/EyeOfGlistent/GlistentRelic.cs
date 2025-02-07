@@ -6,6 +6,6 @@ namespace Coralite.Content.Items.DigDigDig.EyeOfGlistent
 {
     public class GlistentRelic : BaseRelicItem
     {
-        public GlistentRelic() : base(ModContent.TileType<GlistentRelicTile>(), AssetDirectory.GlistentItems+ "GlistentBarFlip", true) { }
+        public GlistentRelic() : base(ModContent.TileType<GlistentRelicTile>(), AssetDirectory.GlistentItems + "GlistentBarFlip", true) { }
     }
 }

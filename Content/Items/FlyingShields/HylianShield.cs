@@ -588,7 +588,7 @@ namespace Coralite.Content.Items.FlyingShields
                 active = false;
         }
 
-        public static Particle Spawn(Vector2 center, Color newcolor, float baseScale, float rotation, Vector2 circleScale,Color? nextcolor=null)
+        public static Particle Spawn(Vector2 center, Color newcolor, float baseScale, float rotation, Vector2 circleScale, Color? nextcolor = null)
         {
             if (VaultUtils.isServer)
                 return null;

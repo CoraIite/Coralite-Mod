@@ -8,7 +8,6 @@ using System;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
-using static Terraria.GameContent.Animations.IL_Actions.Sprites;
 
 namespace Coralite.Content.Items.Nightmare
 {
@@ -99,7 +98,7 @@ namespace Coralite.Content.Items.Nightmare
             {
                 float rot1 = Projectile.rotation + (i * MathHelper.TwoPi / howMany);
                 Vector2 dir = rot1.ToRotationVector2();
-                Vector2 position = pos + (dir * (40 + MathF.Sin(Main.GlobalTimeWrappedHourly*2 + i * MathHelper.PiOver2) * 6*factor));
+                Vector2 position = pos + (dir * (40 + MathF.Sin(Main.GlobalTimeWrappedHourly * 2 + i * MathHelper.PiOver2) * 6 * factor));
                 float factor2 = 0.15f + (factor * 0.02f);
                 Vector2 scale = new Vector2(1.35f, 1f) * factor2;
 
@@ -110,7 +109,7 @@ namespace Coralite.Content.Items.Nightmare
                 if (nightmareHeart)
                 {
                     scale = new Vector2(1f, 0.5f) * factor2 * 0.7f;
-                    Main.spriteBatch.Draw(lightTex, position, null, c2, rot1 , origin, scale, 0, 0);
+                    Main.spriteBatch.Draw(lightTex, position, null, c2, rot1, origin, scale, 0, 0);
                     c3 = c2;
                     //Main.spriteBatch.Draw(lightTex, position, null, c3*0.5f, rot1 + MathHelper.PiOver4, origin, factor2, 0, 0);
                     //Helpers.Helper.DrawPrettyStarSparkle(Projectile.Opacity, 0, position, Color.White * 0.7f, NightmarePlantera.nightPurple,

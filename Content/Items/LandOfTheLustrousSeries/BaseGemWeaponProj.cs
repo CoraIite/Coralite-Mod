@@ -1,5 +1,4 @@
-﻿using Coralite.Core.Prefabs.Projectiles;
-using InnoVault.GameContent.BaseEntity;
+﻿using InnoVault.GameContent.BaseEntity;
 
 namespace Coralite.Content.Items.LandOfTheLustrousSeries
 {
@@ -55,7 +54,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public virtual void InitializeGemWeapon()
         {
-            
+
         }
 
         public virtual void BeforeMove() { }

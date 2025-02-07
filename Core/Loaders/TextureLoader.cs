@@ -1,6 +1,5 @@
 ﻿using Coralite.Core.Attributes;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using System;
 using System.Reflection;
 
@@ -41,7 +40,7 @@ namespace Coralite.Core.Loaders
                 AutoLoadTextureAttribute propAtt = property.GetCustomAttribute<AutoLoadTextureAttribute>();
                 if (propAtt != null)
                 {
-                    if (!string.IsNullOrEmpty( propAtt.Path))
+                    if (!string.IsNullOrEmpty(propAtt.Path))
                         p = propAtt.Path;
 
                     texName = propAtt.Name;

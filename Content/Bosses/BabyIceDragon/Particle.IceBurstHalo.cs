@@ -1,5 +1,4 @@
 ﻿using Coralite.Core;
-using InnoVault.PRT;
 using Terraria;
 
 namespace Coralite.Content.Bosses.BabyIceDragon

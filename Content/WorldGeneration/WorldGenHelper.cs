@@ -1,5 +1,4 @@
-﻿using Coralite.Content.Items.FlyingShields.Accessories;
-using Coralite.Core;
+﻿using Coralite.Core;
 using Coralite.Helpers;
 using System;
 using Terraria;
@@ -509,7 +508,7 @@ namespace Coralite.Content.WorldGeneration
         /// </summary>
         /// <param name="chest"></param>
         /// <param name="itemtype"></param>
-        public static void AddItem<T>(this Chest chest)where T : ModItem
+        public static void AddItem<T>(this Chest chest) where T : ModItem
         {
             foreach (var item in chest.item)
                 if (item.IsAir)

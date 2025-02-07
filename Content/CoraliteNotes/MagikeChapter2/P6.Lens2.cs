@@ -1,20 +1,4 @@
-﻿using Coralite.Content.Items.Magike.Lens.BiomeLens;
-using Coralite.Content.Items.Magike.Lens.DayTimeLens;
-using Coralite.Content.Items.Magike.Lens.LiquidLens;
-using Coralite.Helpers;
-using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria.GameContent;
-using Terraria.ID;
-using Terraria.Localization;
-using Terraria;
-using System.Net.WebSockets;
-
-namespace Coralite.Content.CoraliteNotes.MagikeChapter2
+﻿namespace Coralite.Content.CoraliteNotes.MagikeChapter2
 {
     //public class Lens2 : KnowledgePage
     //{

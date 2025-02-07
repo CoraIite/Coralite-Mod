@@ -1,5 +1,4 @@
 ﻿using Coralite.Core;
-using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;

@@ -1,6 +1,4 @@
-﻿using Coralite.Core;
-
-namespace Coralite.Content.Bosses.Turmoil
+﻿namespace Coralite.Content.Bosses.Turmoil
 {
     //public class Turmoil : ModNPC
     //{

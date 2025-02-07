@@ -11,7 +11,6 @@ using Terraria.GameContent.UI.States;
 using Terraria.Localization;
 using Terraria.UI;
 using static Coralite.Content.Biskety.UI.BisketyController;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Coralite.Content.Biskety.UI
 {
@@ -102,7 +101,7 @@ namespace Coralite.Content.Biskety.UI
 
             UIList list = new();
             list.SetSize(300, 390);
-            list.SetTopLeft(10,0);
+            list.SetTopLeft(10, 0);
 
             list.QuickInvisibleScrollbar();
 
@@ -192,7 +191,7 @@ namespace Coralite.Content.Biskety.UI
         public BisketyDefenceController()
         {
             this.SetSize(0, 60, 1);
-           var  box =new UIVirtualKeyboard("???????????????????????????????", "0", OnTextChange, () =>{ },allowEmpty:true);
+            var box = new UIVirtualKeyboard("???????????????????????????????", "0", OnTextChange, () => { }, allowEmpty: true);
             Text = new UIText("0");
             Text.SetSize(100, 20);
             Text.OnLeftMouseDown += Click_SetDefence;
@@ -245,7 +244,7 @@ namespace Coralite.Content.Biskety.UI
         {
             Vector2 p = GetDimensions().Position();
             Vector2 c = GetDimensions().Center();
-            Utils.DrawBorderString(spriteBatch, ChangeDefence.Value,  new Vector2(p.X+120, c.Y-4), Color.White,anchory:0.5f);
+            Utils.DrawBorderString(spriteBatch, ChangeDefence.Value, new Vector2(p.X + 120, c.Y - 4), Color.White, anchory: 0.5f);
         }
     }
 }

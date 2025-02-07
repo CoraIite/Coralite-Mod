@@ -8,7 +8,7 @@ using Terraria.ID;
 namespace Coralite.Content.Items.Steel
 {
     [AutoloadEquip(EquipType.Head)]
-    public class OsirisPillar : BaseAccessory,ISpecialDrawHead
+    public class OsirisPillar : BaseAccessory, ISpecialDrawHead
     {
         public override string Texture => AssetDirectory.SteelItems + Name;
 

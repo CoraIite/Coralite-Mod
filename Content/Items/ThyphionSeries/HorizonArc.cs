@@ -6,9 +6,9 @@ using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.SmoothFunctions;
 using Coralite.Core.Systems.CameraSystem;
-using InnoVault.Trails;
 using Coralite.Helpers;
 using InnoVault.PRT;
+using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.IO;
@@ -20,7 +20,6 @@ using Terraria.Graphics.CameraModifiers;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
-using Newtonsoft.Json.Linq;
 
 namespace Coralite.Content.Items.ThyphionSeries
 {

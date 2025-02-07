@@ -80,7 +80,7 @@ namespace Coralite.Core.Systems.MagikeSystem
 
                         break;
                     case MagikeNetPackType.ItemContainer_IndexedItem:
-                        if (entity.TryGetComponent(MagikeComponentID.ItemContainer,out ItemContainer container))
+                        if (entity.TryGetComponent(MagikeComponentID.ItemContainer, out ItemContainer container))
                             container.ReceiveIndexedItem(reader);
                         break;
                     default:

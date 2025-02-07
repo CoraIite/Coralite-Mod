@@ -95,7 +95,7 @@ namespace Coralite.Content.GlobalNPCs
 
                 case NPCID.EyeofCthulhu://克眼，脑子，世吞掉落美味肉排
                 case NPCID.BrainofCthulhu://克眼，脑子，世吞掉落美味肉排
-                    npcLoot.Add(ItemDropRule.ByCondition(new Conditions.NotExpert(),ItemType<DeliciousSteak>(), 5));
+                    npcLoot.Add(ItemDropRule.ByCondition(new Conditions.NotExpert(), ItemType<DeliciousSteak>(), 5));
                     break;
                 case NPCID.EaterofWorldsBody://克眼，脑子，世吞掉落美味肉排
                 case NPCID.Creeper://克眼，脑子，世吞掉落美味肉排
@@ -105,7 +105,7 @@ namespace Coralite.Content.GlobalNPCs
                     npcLoot.Add(ItemDropRule.Common(ItemType<RegrowthTentacle>(), 2, 1, 2));
                     break;
                 case NPCID.SkeletronHead://骷髅王掉落乱流核心
-                    npcLoot.Add(ItemDropRule.ByCondition(new Conditions.NotExpert(),ItemType<TurbulenceCore>(), 4));
+                    npcLoot.Add(ItemDropRule.ByCondition(new Conditions.NotExpert(), ItemType<TurbulenceCore>(), 4));
                     break;
                 case NPCID.FlyingSnake://羽蛇掉毛
                     npcLoot.Add(ItemDropRule.ByCondition(new Conditions.DownedPlantera(), ItemType<FlyingSnakeFeather>(), 1, 1, 2));

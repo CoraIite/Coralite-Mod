@@ -150,7 +150,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public override void DashAttackAI()
         {
-            Lighting.AddLight(Projectile.Center, ThyphionSeries.AuroraArrow.GetColor(MathF.Sin((int)Main.timeForVisualEffects * 0.05f) / 2 + 0.5f).ToVector3()*0.5f);
+            Lighting.AddLight(Projectile.Center, ThyphionSeries.AuroraArrow.GetColor(MathF.Sin((int)Main.timeForVisualEffects * 0.05f) / 2 + 0.5f).ToVector3() * 0.5f);
 
             if (Timer < DashTime + 2)
             {
@@ -371,8 +371,8 @@ namespace Coralite.Content.Items.ThyphionSeries
                 Vector2 dir = Projectile.velocity.SafeNormalize(Vector2.Zero);
                 for (int i = 0; i < 8; i++)
                 {
-                    Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(24, 24)+Projectile.velocity*Main.rand.NextFloat(-3,1), DustType<PixelPoint>(), dir * Main.rand.NextFloat(4, 7)
-                        ,0, GetColor(Main.rand.NextFloat()), Main.rand.NextFloat(1f, 2f));
+                    Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(24, 24) + Projectile.velocity * Main.rand.NextFloat(-3, 1), DustType<PixelPoint>(), dir * Main.rand.NextFloat(4, 7)
+                        , 0, GetColor(Main.rand.NextFloat()), Main.rand.NextFloat(1f, 2f));
                 }
             }
         }
@@ -498,14 +498,14 @@ namespace Coralite.Content.Items.ThyphionSeries
                 float scaleX = 0.22f - i * 0.013f;
                 scaleX *= 2;
                 float scaleY = 12 * 0.02f - i * 0.02f;
-                scaleY *=2.5f* Length/4;
+                scaleY *= 2.5f * Length / 4;
 
                 Color c = AuroraArrow.GetColor(1 - factor) * 0.5f;
 
                 Main.spriteBatch.Draw(mainTex, targetPos, null, c, rot + MathHelper.Pi, new Vector2(mainTex.Width, mainTex.Height / 2)
                     , new Vector2(scaleX, scaleY), 0, 0);
                 Main.spriteBatch.Draw(mainTex, pos - spDir, null, c, rot + MathHelper.Pi, new Vector2(mainTex.Width, mainTex.Height / 2)
-                    , new Vector2(scaleX*0.5f, scaleY), 0, 0);
+                    , new Vector2(scaleX * 0.5f, scaleY), 0, 0);
 
                 c.A = 10;
 

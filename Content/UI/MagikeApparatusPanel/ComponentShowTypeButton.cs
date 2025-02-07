@@ -1,13 +1,4 @@
-﻿using Coralite.Core.Loaders;
-using Coralite.Core.Systems.MagikeSystem;
-using Coralite.Helpers;
-using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
-using Terraria;
-using Terraria.ModLoader.UI;
-using Terraria.UI;
-
-namespace Coralite.Content.UI.MagikeApparatusPanel
+﻿namespace Coralite.Content.UI.MagikeApparatusPanel
 {
     //public class ComponentShowTypeButton : UIElement
     //{

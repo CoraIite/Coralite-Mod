@@ -6,7 +6,6 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.Audio;
-using Terraria.GameContent;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
@@ -16,7 +15,7 @@ namespace Coralite.Content.Bosses.DigDigDig.EyeOfGlistent
     [AutoloadBossHead]
     public class EyeOfGlistent : ModNPC
     {
-        public override string Texture => AssetDirectory.DigDigDigBoss+ "EyeOfGlistent";
+        public override string Texture => AssetDirectory.DigDigDigBoss + "EyeOfGlistent";
 
         public Player Target => Main.player[NPC.target];
 
@@ -86,7 +85,7 @@ namespace Coralite.Content.Bosses.DigDigDig.EyeOfGlistent
             float num7 = (float)Math.Atan2(num6, num5) + 1.57f;
             if (num7 < 0f)
                 num7 += 6.283f;
-            else if ( num7 > 6.283)
+            else if (num7 > 6.283)
                 num7 -= 6.283f;
 
             float num8 = 0f;
@@ -116,14 +115,14 @@ namespace Coralite.Content.Bosses.DigDigDig.EyeOfGlistent
 
             if (NPC.rotation < num7)
             {
-                if ( (num7 - NPC.rotation) > 3.1415)
+                if ((num7 - NPC.rotation) > 3.1415)
                     NPC.rotation -= num8;
                 else
                     NPC.rotation += num8;
             }
             else if (NPC.rotation > num7)
             {
-                if ( (NPC.rotation - num7) > 3.1415)
+                if ((NPC.rotation - num7) > 3.1415)
                     NPC.rotation += num8;
                 else
                     NPC.rotation -= num8;
@@ -134,7 +133,7 @@ namespace Coralite.Content.Bosses.DigDigDig.EyeOfGlistent
 
             if (NPC.rotation < 0f)
                 NPC.rotation += 6.283f;
-            else if ( NPC.rotation > 6.283)
+            else if (NPC.rotation > 6.283)
                 NPC.rotation -= 6.283f;
 
             if (NPC.rotation > num7 - num8 && NPC.rotation < num7 + num8)
@@ -173,7 +172,7 @@ namespace Coralite.Content.Bosses.DigDigDig.EyeOfGlistent
                         num10 += 1f;
                     }
 
-                    Vector2 npcCenter =NPC.Center;
+                    Vector2 npcCenter = NPC.Center;
                     float num12 = Target.Center.X - npcCenter.X;
                     float num13 = Target.Center.Y - 200f - npcCenter.Y;
                     float num14 = (float)Math.Sqrt(num12 * num12 + num13 * num13);
@@ -305,7 +304,7 @@ namespace Coralite.Content.Bosses.DigDigDig.EyeOfGlistent
                         if (NPC.velocity.X > -0.1f && NPC.velocity.X < 0.1f)
                             NPC.velocity.X = 0f;
 
-                        if ( NPC.velocity.Y > -0.1f &&  NPC.velocity.Y < 0.1f)
+                        if (NPC.velocity.Y > -0.1f && NPC.velocity.Y < 0.1f)
                             NPC.velocity.Y = 0f;
                     }
                     else
@@ -361,7 +360,7 @@ namespace Coralite.Content.Bosses.DigDigDig.EyeOfGlistent
                 if (NPC.ai[0] == 1f || NPC.ai[3] == 1f)
                 {
                     NPC.ai[2] += 0.005f;
-                    if ( NPC.ai[2] > 0.5)
+                    if (NPC.ai[2] > 0.5)
                         NPC.ai[2] = 0.5f;
                 }
                 else
@@ -450,13 +449,13 @@ namespace Coralite.Content.Bosses.DigDigDig.EyeOfGlistent
                     }
                 }
 
-                Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.GreenFairy, Main.rand.Next(-30, 31) * 0.2f,     Main.rand.Next(-30, 31) * 0.2f);
+                Dust.NewDust(NPC.position, NPC.width, NPC.height, DustID.GreenFairy, Main.rand.Next(-30, 31) * 0.2f, Main.rand.Next(-30, 31) * 0.2f);
                 NPC.velocity.X *= 0.98f;
                 NPC.velocity.Y *= 0.98f;
-                if ( NPC.velocity.X > -0.1 &&  NPC.velocity.X < 0.1)
+                if (NPC.velocity.X > -0.1 && NPC.velocity.X < 0.1)
                     NPC.velocity.X = 0f;
 
-                if ( NPC.velocity.Y > -0.1 &&  NPC.velocity.Y < 0.1)
+                if (NPC.velocity.Y > -0.1 && NPC.velocity.Y < 0.1)
                     NPC.velocity.Y = 0f;
 
                 return;
@@ -565,7 +564,7 @@ namespace Coralite.Content.Bosses.DigDigDig.EyeOfGlistent
             }
             else if (NPC.ai[1] == 1f)
             {
-                SoundEngine.PlaySound(CoraliteSoundID.ForceRoar,NPC.position);
+                SoundEngine.PlaySound(CoraliteSoundID.ForceRoar, NPC.position);
                 NPC.rotation = num7;
                 float num44 = 6.8f;
                 if (Main.expertMode && NPC.ai[3] == 1f)
@@ -602,10 +601,10 @@ namespace Coralite.Content.Bosses.DigDigDig.EyeOfGlistent
                     if (Main.expertMode)
                         NPC.velocity *= 0.98f;
 
-                    if ( NPC.velocity.X > -0.1 &&  NPC.velocity.X < 0.1)
+                    if (NPC.velocity.X > -0.1 && NPC.velocity.X < 0.1)
                         NPC.velocity.X = 0f;
 
-                    if ( NPC.velocity.Y > -0.1 &&  NPC.velocity.Y < 0.1)
+                    if (NPC.velocity.Y > -0.1 && NPC.velocity.Y < 0.1)
                         NPC.velocity.Y = 0f;
                 }
                 else
@@ -764,10 +763,10 @@ namespace Coralite.Content.Bosses.DigDigDig.EyeOfGlistent
                 if (NPC.ai[2] >= num62)
                 {
                     NPC.velocity *= 0.95f;
-                    if ( NPC.velocity.X > -0.1 &&  NPC.velocity.X < 0.1)
+                    if (NPC.velocity.X > -0.1 && NPC.velocity.X < 0.1)
                         NPC.velocity.X = 0f;
 
-                    if ( NPC.velocity.Y > -0.1 &&  NPC.velocity.Y < 0.1)
+                    if (NPC.velocity.Y > -0.1 && NPC.velocity.Y < 0.1)
                         NPC.velocity.Y = 0f;
                 }
                 else
@@ -883,7 +882,7 @@ namespace Coralite.Content.Bosses.DigDigDig.EyeOfGlistent
 
         public override void OnKill()
         {
-            
+
             NPC.SetEventFlagCleared(ref NPC.downedBoss1, GameEventClearedID.DefeatedEyeOfCthulu);
             if (VaultUtils.isServer)
                 NetMessage.SendData(MessageID.WorldData);
@@ -891,7 +890,7 @@ namespace Coralite.Content.Bosses.DigDigDig.EyeOfGlistent
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            rand += (NPC.rotation-1.57f).ToRotationVector2();
+            rand += (NPC.rotation - 1.57f).ToRotationVector2();
 
             Texture2D mainTex = NPC.GetTexture();
             Rectangle frameBox = mainTex.Frame(1, 6, 0, NPC.frame.Y);

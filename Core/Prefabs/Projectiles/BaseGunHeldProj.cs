@@ -64,7 +64,7 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         public virtual void InitializeGun()
         {
-            
+
         }
 
         /// <summary>

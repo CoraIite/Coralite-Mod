@@ -4,7 +4,6 @@ using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.ID;
 
 namespace Coralite.Helpers
 {

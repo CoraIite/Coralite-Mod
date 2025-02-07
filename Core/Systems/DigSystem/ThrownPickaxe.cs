@@ -359,7 +359,7 @@ namespace Coralite.Core.Systems.DigSystem
             else
                 frameBox = mainTex.Frame();
 
-            if (item!=null)
+            if (item != null)
                 lightColor = item.GetAlpha(lightColor);
 
             Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, frameBox, lightColor

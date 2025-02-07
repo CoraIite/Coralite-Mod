@@ -252,7 +252,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             Vector2 center = Projectile.Center - Main.screenPosition;
             Vector2 dir = Rotation.ToRotationVector2();
 
-            Main.spriteBatch.Draw(mainTex, center+dir*handOffset, null, lightColor, Projectile.rotation, mainTex.Size() / 2, 1, DirSign > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0f);
+            Main.spriteBatch.Draw(mainTex, center + dir * handOffset, null, lightColor, Projectile.rotation, mainTex.Size() / 2, 1, DirSign > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0f);
 
             if (Special == 0)
                 return false;

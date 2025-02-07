@@ -14,13 +14,13 @@ namespace Coralite.Helpers
         /// </summary>
         /// <param name="mp"></param>
         /// <param name="packType"></param>
-        public static void AddToPackList(this MagikeComponent mp,MagikeNetPackType packType,Action<ModPacket> writeSpecial=null)
+        public static void AddToPackList(this MagikeComponent mp, MagikeNetPackType packType, Action<ModPacket> writeSpecial = null)
         {
             if (VaultUtils.isServer)
             {
                 var pack = new MagikeNetPack(mp.Entity.Position, packType);
 
-                if (writeSpecial!=null)
+                if (writeSpecial != null)
                     pack.WriteSpecialDatas = writeSpecial;
 
                 MagikeSystem.MagikeNetPacks.Add(pack);

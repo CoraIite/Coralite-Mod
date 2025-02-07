@@ -25,7 +25,7 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
                 , new Color(40, 40, 40), Coralite.MagicCrystalPink, out Vector2 size);
 
             Helper.DrawText(spriteBatch, HowToUse.Value, PageWidth, Center + new Vector2(0, size.Y + 80), Vector2.One / 2, Vector2.One
-                , new Color(40, 40, 40), Main.DiscoColor, out _,true);
+                , new Color(40, 40, 40), Main.DiscoColor, out _, true);
         }
     }
 }

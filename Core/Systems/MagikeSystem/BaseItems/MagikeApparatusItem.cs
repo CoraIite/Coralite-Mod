@@ -59,7 +59,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
                 if (lineCount > lineCountMax)
                 {
                     lineCount = 0;
-                    if (total < keyValuePairs.Count-1)
+                    if (total < keyValuePairs.Count - 1)
                         text += Environment.NewLine + "  ";
                 }
             }

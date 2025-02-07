@@ -13,7 +13,7 @@ namespace Coralite.Content.GlobalNPCs
                 if (entry.Item.type is ItemID.TeleportationPylonPurity or ItemID.TeleportationPylonSnow
                     or ItemID.TeleportationPylonDesert or ItemID.TeleportationPylonUnderground or ItemID.TeleportationPylonOcean
                     or ItemID.TeleportationPylonJungle or ItemID.TeleportationPylonHallow or ItemID.TeleportationPylonMushroom
-                    &&!entry.Conditions.Contains(CoraliteConditions.NotInDigDigDig))
+                    && !entry.Conditions.Contains(CoraliteConditions.NotInDigDigDig))
                 {
                     entry.AddCondition(CoraliteConditions.NotInDigDigDig);//晶塔限定不在挖挖挖世界出售
                 }

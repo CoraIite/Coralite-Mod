@@ -1,6 +1,4 @@
-﻿using Coralite.Content.Items.MagikeSeries2;
-using Coralite.Content.Tiles.Plush;
-using Coralite.Content.Walls.Magike;
+﻿using Coralite.Content.Tiles.Plush;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Terraria.ID;

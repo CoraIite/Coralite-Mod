@@ -1,5 +1,4 @@
-﻿using InnoVault.PRT;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 
 namespace Coralite.Core.Systems.MagikeSystem.Particles

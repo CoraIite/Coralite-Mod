@@ -235,7 +235,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         public override bool PreDraw(ref Color lightColor) => false;
     }
 
-    [AutoLoadTexture(Path =AssetDirectory.ThyphionSeriesItems)]
+    [AutoLoadTexture(Path = AssetDirectory.ThyphionSeriesItems)]
     public class ThyphionHeldProj : BaseDashBow/*, IDrawPrimitive*/
     {
         public override string Texture => AssetDirectory.ThyphionSeriesItems + "Thyphion";
@@ -724,10 +724,10 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             float colorFactor;
 
-            if (Timer<15)
+            if (Timer < 15)
                 colorFactor = 0;
             else
-                colorFactor = Timer > 45 ? 1 : ((Timer-15) / 45);
+                colorFactor = Timer > 45 ? 1 : ((Timer - 15) / 45);
 
             Texture2D flowTex = TextureAssets.Extra[98].Value;
             Vector2 ArrowSize = new Vector2(1, 7) * 0.3f * Projectile.scale;
@@ -753,15 +753,15 @@ namespace Coralite.Content.Items.ThyphionSeries
             Texture2D arrowTex = CoraliteAssets.Trail.ArrowSPA.Value;
             Vector2 Center = center - Main.screenPosition;
             Vector2 origin = arrowTex.Size() / 2;
-            float rotation = arrowDir.ToRotation() ;
+            float rotation = arrowDir.ToRotation();
 
             Color SkyBlue = Color.Lerp(startColor, Thyphion.ThyphionColor1, colorFactor) * 0.5f * alpha;
             Color lightCyen = Color.Lerp(startColor, Thyphion.ThyphionColor3, colorFactor) * alpha;
             lightCyen.A = 70;
 
-            Main.spriteBatch.Draw(arrowTex, Center - arrowDir * 40 * scale, null, SkyBlue, rotation, origin, scale*new Vector2(0.9f,0.75f), 0, 0);
-            Main.spriteBatch.Draw(arrowTex, Center - arrowDir * 40 * scale, null, lightCyen, rotation, origin, scale*new Vector2(0.6f,0.5f), 0, 0);
-            
+            Main.spriteBatch.Draw(arrowTex, Center - arrowDir * 40 * scale, null, SkyBlue, rotation, origin, scale * new Vector2(0.9f, 0.75f), 0, 0);
+            Main.spriteBatch.Draw(arrowTex, Center - arrowDir * 40 * scale, null, lightCyen, rotation, origin, scale * new Vector2(0.6f, 0.5f), 0, 0);
+
             rotation += MathHelper.PiOver2;
 
             Texture2D flowTex = TextureAssets.Extra[98].Value;
@@ -848,7 +848,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             {
                 Projectile.Opacity = time / 16f;
                 Rotation += Direction * MathHelper.TwoPi / 16;
-                if (time==16)
+                if (time == 16)
                 {
                     Rotation = MouseDir.ToRotation();
                 }
@@ -1084,9 +1084,9 @@ namespace Coralite.Content.Items.ThyphionSeries
                 case BowType.IceBow:
                     return new ArrowData()
                     {
-                        ItemType =ItemID.IceBow,
+                        ItemType = ItemID.IceBow,
                         Offest = new(12, 0),
-                        ArrowColor = new Color(97,200,225)
+                        ArrowColor = new Color(97, 200, 225)
                     };
                 case BowType.Glaciate:
                     return new ArrowData()
@@ -1114,7 +1114,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                     {
                         ItemType = ItemID.DemonBow,
                         Offest = new(12, 0),
-                        ArrowColor = new Color(87,74,166)
+                        ArrowColor = new Color(87, 74, 166)
                     };
                 case BowType.FullMoon:
                     return new ArrowData()
@@ -1128,7 +1128,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                     {
                         ItemType = ItemType<Solunar>(),
                         Offest = new(12, 0),
-                        ArrowColor = new Color(244,225,174)
+                        ArrowColor = new Color(244, 225, 174)
                     };
                 case BowType.HorizonArc:
                     return new ArrowData()

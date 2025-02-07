@@ -1,9 +1,9 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
-using InnoVault.Trails;
 using Coralite.Core.Systems.YujianSystem;
 using Coralite.Core.Systems.YujianSystem.YujianAIs;
 using Coralite.Helpers;
+using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;

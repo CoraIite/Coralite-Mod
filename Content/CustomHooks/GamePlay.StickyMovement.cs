@@ -181,7 +181,7 @@ namespace Coralite.Content.CustomHooks
                     if (tile == null || !tile.HasTile || tile.IsActuated)
                         continue;
 
-                    if (CoraliteSets.TileSticky.IndexInRange(tile.TileType)&&CoraliteSets.TileSticky[tile.TileType])
+                    if (CoraliteSets.TileSticky.IndexInRange(tile.TileType) && CoraliteSets.TileSticky[tile.TileType])
                     {
                         int num5 = 0;
                         vector2.X = i * 16;

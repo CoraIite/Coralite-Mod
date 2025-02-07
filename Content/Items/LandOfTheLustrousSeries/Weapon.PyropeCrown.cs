@@ -2,8 +2,8 @@
 using Coralite.Content.Items.Materials;
 using Coralite.Core;
 using Coralite.Core.Configs;
-using InnoVault.Trails;
 using Coralite.Helpers;
+using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
 using System.Linq;
 using Terraria;

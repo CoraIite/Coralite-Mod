@@ -1,5 +1,4 @@
 ﻿using Coralite.Core;
-using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.Creative;

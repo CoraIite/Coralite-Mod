@@ -66,7 +66,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             float rot = Projectile.rotation + (DirSign > 0 ? 0 : MathHelper.Pi);
             float n = rot - DirSign * MathHelper.PiOver2;
 
-            Main.spriteBatch.Draw(effect, Projectile.Center + rot.ToRotationVector2() * 55+n.ToRotationVector2()*4 - Main.screenPosition, frameBox, Color.White
+            Main.spriteBatch.Draw(effect, Projectile.Center + rot.ToRotationVector2() * 55 + n.ToRotationVector2() * 4 - Main.screenPosition, frameBox, Color.White
                 , rot, new Vector2(0, frameBox.Height / 2), Projectile.scale * 2, 0, 0f);
             return false;
         }

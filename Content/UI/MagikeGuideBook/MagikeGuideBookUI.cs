@@ -1,13 +1,4 @@
-﻿using Coralite.Core;
-using InnoVault.Trails;
-using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
-using System.Collections.Generic;
-using Terraria;
-using Terraria.GameContent;
-using static Terraria.ModLoader.ModContent;
-
-namespace Coralite.Content.UI.MagikeGuideBook
+﻿namespace Coralite.Content.UI.MagikeGuideBook
 {
     //public class MagikeGuideBookUI : BetterUIState
     //{

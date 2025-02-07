@@ -6,7 +6,7 @@ using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.KeySystem
 {
-    public class KnowledgeSystem : ModSystem,ILocalizedModType
+    public class KnowledgeSystem : ModSystem, ILocalizedModType
     {
         public static LocalizedText NewKnowledgeUnlock { get; private set; }
 
@@ -30,7 +30,7 @@ namespace Coralite.Core.Systems.KeySystem
         /// </summary>
         /// <param name="position"></param>
         /// <param name="color"></param>
-        public static void SpawnKnowledgeUnlockText(Vector2 position,Color color)
+        public static void SpawnKnowledgeUnlockText(Vector2 position, Color color)
         {
             CombatText.NewText(new Rectangle((int)position.X, (int)position.Y, 1, 1)
                 , color, NewKnowledgeUnlock.Value, true);

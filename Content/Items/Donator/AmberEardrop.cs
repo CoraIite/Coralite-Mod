@@ -5,8 +5,8 @@ using Coralite.Content.Items.LandOfTheLustrousSeries;
 using Coralite.Content.Tiles.RedJades;
 using Coralite.Core;
 using Coralite.Core.Configs;
-using InnoVault.Trails;
 using Coralite.Helpers;
+using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
 using System.Linq;
 using Terraria;
@@ -87,7 +87,7 @@ namespace Coralite.Content.Items.Donator
             Vector2 textSize = ChatManager.GetStringSize(line.Font, line.Text, line.BaseScale);
             Texture2D mainTex = CoraliteAssets.LightBall.BallA.Value;
             sb.Draw(mainTex, new Rectangle(line.X - 35, line.Y - 4 - 6, (int)textSize.X + 35 * 2, (int)textSize.Y + 6 * 2), null, Color.White * 0.8f);
-            
+
             ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, line.Font, line.Text, new Vector2(line.X, line.Y)
                 , Color.White, line.Rotation, line.Origin, line.BaseScale, line.MaxWidth, line.Spread);
 

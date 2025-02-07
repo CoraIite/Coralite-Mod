@@ -158,7 +158,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             rotAngle = Special switch
             {
-                1=> 0,
+                1 => 0,
                 _ => 0.5f,
             };
         }
@@ -178,7 +178,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 if (Main.rand.NextBool())
                 {
                     Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(40, 40), DustType<PixelPoint>()
-                        , -RecordAngle.ToRotationVector2() * Main.rand.NextFloat(1, 3), newColor: Main.rand.NextFromList(Color.LightCyan, Coralite.IcicleCyan),Scale:2);
+                        , -RecordAngle.ToRotationVector2() * Main.rand.NextFloat(1, 3), newColor: Main.rand.NextFromList(Color.LightCyan, Coralite.IcicleCyan), Scale: 2);
                 }
                 else
                 {
@@ -213,7 +213,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                         Helper.PlayPitched(CoraliteSoundID.FireStaffSummon_Item77, Projectile.Center);
 
                         //射冰晶波
-                        Projectile.NewProjectileFromThis<GlaciateWave>(Projectile.Center, UnitToMouseV * 24, (int)(Owner.GetWeaponDamage(Item)*1.5f)
+                        Projectile.NewProjectileFromThis<GlaciateWave>(Projectile.Center, UnitToMouseV * 24, (int)(Owner.GetWeaponDamage(Item) * 1.5f)
                             , Projectile.knockBack);
 
                         if (Item.ModItem is Glaciate glaciate)
@@ -293,7 +293,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             Texture2D lineTex = TextureAssets.FishingLine.Value;
             Rectangle dest = new Rectangle((int)TopPos.X, (int)TopPos.Y, lineTex.Width, (int)Vector2.Distance(TopPos, bottomPos));
-            Main.spriteBatch.Draw(lineTex, dest, null, Color.Cyan, (bottomPos - TopPos).ToRotation()-1.57f, new Vector2(lineTex.Width / 2, 0), 0, 0);
+            Main.spriteBatch.Draw(lineTex, dest, null, Color.Cyan, (bottomPos - TopPos).ToRotation() - 1.57f, new Vector2(lineTex.Width / 2, 0), 0, 0);
 
             //绘制下颚
             Vector2 origin = framebox.Size() / 2;

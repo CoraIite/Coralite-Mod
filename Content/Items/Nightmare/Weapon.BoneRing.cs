@@ -2,8 +2,9 @@
 using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Configs;
-using InnoVault.Trails;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
+using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
@@ -14,7 +15,6 @@ using Terraria.GameContent;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
-using InnoVault.GameContent.BaseEntity;
 
 namespace Coralite.Content.Items.Nightmare
 {

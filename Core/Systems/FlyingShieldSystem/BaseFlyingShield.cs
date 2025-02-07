@@ -222,7 +222,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
             }
             else
             {
-                if (Timer>backTime+30)
+                if (Timer > backTime + 30)
                 {
                     backSpeed *= 1.03f;
                 }
@@ -324,7 +324,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
             Texture2D Texture = GetTrailTex().Value;
 
             List<CustomVertexInfo> bars = [];
-            float r = 0.2989f * lightColor.R/255 + 0.5870f * lightColor.G/255 + 0.1140f * lightColor.B/255;
+            float r = 0.2989f * lightColor.R / 255 + 0.5870f * lightColor.G / 255 + 0.1140f * lightColor.B / 255;
 
             for (int i = 0; i < trailCachesLength; i++)
             {

@@ -13,7 +13,7 @@ namespace Coralite.Core.Systems.MTBStructure
     {
         public override void CheckStructure(Point origin)
         {
-            foreach (var p in Main.projectile.Where(p => p.active && p.friendly && p.type == ModContent.ProjectileType<PreviewMultiblockPeoj>() && p.ai[0]==Type))
+            foreach (var p in Main.projectile.Where(p => p.active && p.friendly && p.type == ModContent.ProjectileType<PreviewMultiblockPeoj>() && p.ai[0] == Type))
                 p.Kill();
 
             Projectile.NewProjectile(new EntitySource_TileUpdate(origin.X, origin.Y), origin.ToWorldCoordinates(0, 0), Vector2.Zero
@@ -31,7 +31,7 @@ namespace Coralite.Core.Systems.MTBStructure
 
     public class PreviewMultiblockPeoj : ModProjectile
     {
-        public override string Texture => AssetDirectory.OtherProjectiles+ "White32x32";
+        public override string Texture => AssetDirectory.OtherProjectiles + "White32x32";
 
         public ref float MTBID => ref Projectile.ai[0];
 

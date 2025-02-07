@@ -85,10 +85,10 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
                 .RegisterNew(ItemID.DesertMinecart, CalculateMagikeCost(RedJade, 8, 180))
                 .RegisterNew(ItemID.EncumberingStone, CalculateMagikeCost(RedJade, 8, 180))
                 .RegisterNew<TremblingBow>(CalculateMagikeCost(RedJade, 8, 180))
-                .RegisterNew(ItemID.PharaohsMask,CalculateMagikeCost(RedJade, 8, 180))
-                .RegisterNew(ItemID.PharaohsRobe,CalculateMagikeCost(RedJade, 8, 180))
-                .RegisterNew(ItemID.FlyingCarpet,CalculateMagikeCost(RedJade, 8, 180))
-                .RegisterNew(ItemID.SandstorminaBottle,CalculateMagikeCost(RedJade, 8, 180))
+                .RegisterNew(ItemID.PharaohsMask, CalculateMagikeCost(RedJade, 8, 180))
+                .RegisterNew(ItemID.PharaohsRobe, CalculateMagikeCost(RedJade, 8, 180))
+                .RegisterNew(ItemID.FlyingCarpet, CalculateMagikeCost(RedJade, 8, 180))
+                .RegisterNew(ItemID.SandstorminaBottle, CalculateMagikeCost(RedJade, 8, 180))
                 .Register();
 
             //冰冻箱子

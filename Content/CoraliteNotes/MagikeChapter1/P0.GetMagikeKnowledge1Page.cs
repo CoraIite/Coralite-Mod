@@ -40,7 +40,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
 
             pos.Y += size.Y + 30;
 
-            string text =  ContiuneRead.Value ;
+            string text = ContiuneRead.Value;
 
             Helper.DrawText(spriteBatch, text, PageWidth, pos, Vector2.Zero, Vector2.One
                 , new Color(40, 40, 40), Color.White, out size);

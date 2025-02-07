@@ -3,8 +3,8 @@ using Coralite.Content.Particles;
 using Coralite.Content.Tiles.RedJades;
 using Coralite.Core;
 using Coralite.Core.Configs;
-using InnoVault.Trails;
 using Coralite.Helpers;
+using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Linq;
@@ -303,7 +303,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 case 2:
                     Timer++;
                     Projectile.rotation = Projectile.velocity.ToRotation();
-                    if (Timer>30)
+                    if (Timer > 30)
                         Projectile.Kill();
                     break;
             }

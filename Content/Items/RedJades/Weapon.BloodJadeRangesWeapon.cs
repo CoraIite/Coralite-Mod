@@ -2,10 +2,10 @@
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Configs;
-using Coralite.Core.Prefabs.Projectiles;
-using InnoVault.Trails;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using InnoVault.PRT;
+using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -14,7 +14,6 @@ using Terraria.DataStructures;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
-using InnoVault.GameContent.BaseEntity;
 
 namespace Coralite.Content.Items.RedJades
 {

@@ -126,7 +126,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         private Vector2 arrowPos;
 
         [AutoLoadTexture(Name = "RadiantSun_Glow")]
-        public static ATex GlowTex { get;private set; }
+        public static ATex GlowTex { get; private set; }
         [AutoLoadTexture(Name = "RadiantSunArrow")]
         public static ATex ArrowTex { get; private set; }
         [AutoLoadTexture(Name = "RadiantSunLight")]

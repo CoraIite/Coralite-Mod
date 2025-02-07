@@ -120,7 +120,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                   effect.Parameters["highlightC"].SetValue(AmethystLaser.brightC.ToVector4());
                   effect.Parameters["brightC"].SetValue(AmethystLaser.brightC.ToVector4());
                   effect.Parameters["darkC"].SetValue(new Color(80, 40, 80).ToVector4());
-              },extraSize:new Point(50,2));
+              }, extraSize: new Point(50, 2));
         }
 
         public override void SpawnParticle(DrawableTooltipLine line)

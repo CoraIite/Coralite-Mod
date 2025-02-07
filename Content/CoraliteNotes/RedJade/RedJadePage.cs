@@ -9,7 +9,7 @@ using Terraria.Localization;
 
 namespace Coralite.Content.CoraliteNotes.RedJade
 {
-    public class RedJadePage:KnowledgePage
+    public class RedJadePage : KnowledgePage
     {
         public static LocalizedText Title { get; private set; }
         public static LocalizedText RedBerryDescription { get; private set; }
@@ -33,16 +33,16 @@ namespace Coralite.Content.CoraliteNotes.RedJade
         {
             Utils.DrawBorderStringBig(spriteBatch, Title.Value, Center + new Vector2(0, -PageWidth / 2), Coralite.RedJadeRed, 1, 0.5f, 0.5f);
 
-            Vector2 pos = Position + new Vector2(PageWidth/2, 140);
+            Vector2 pos = Position + new Vector2(PageWidth / 2, 140);
 
             #region 绘制赤玉
 
             Texture2D tex = TextureAssets.Item[ModContent.ItemType<RedBerry>()].Value;
 
-            float width = PageWidth-60 - tex.Width * 3;
-            Helper.DrawTextParagraph(spriteBatch, RedBerryDescription.Value, width, new Vector2(Position.X +80+ tex.Width * 3, pos.Y), out Vector2 textSize);
+            float width = PageWidth - 60 - tex.Width * 3;
+            Helper.DrawTextParagraph(spriteBatch, RedBerryDescription.Value, width, new Vector2(Position.X + 80 + tex.Width * 3, pos.Y), out Vector2 textSize);
 
-            Vector2 picturePos = new Vector2(pos.X -180- tex.Width / 2 * 3, pos.Y + textSize.Y / 2);
+            Vector2 picturePos = new Vector2(pos.X - 180 - tex.Width / 2 * 3, pos.Y + textSize.Y / 2);
 
             Rectangle rect = Utils.CenteredRectangle(picturePos, tex.Size() * 5f);
             if (rect.MouseScreenInRect())
@@ -62,7 +62,7 @@ namespace Coralite.Content.CoraliteNotes.RedJade
             tex = CoraliteAssets.RedJade.Rediancie.Value;
 
             //绘制图2
-            pos = Position + new Vector2(PageWidth/2, PageHeight -80- tex.Height * scale1 / 2);
+            pos = Position + new Vector2(PageWidth / 2, PageHeight - 80 - tex.Height * scale1 / 2);
             tex.QuickCenteredDraw(spriteBatch, pos, scale: scale1);
         }
     }

@@ -142,8 +142,8 @@ namespace Coralite.Content.Items.Donator
                 particleSpeedAdder = 1;
                 damage = 5;
 
-                Helper.PlayPitched(CoraliteSoundID.IceMagic_Item28, Projectile.Center, pitch:-0.5f);
-                Helper.PlayPitched(CoraliteSoundID.NoUse_SuperMagicShoot_Item68, Projectile.Center,pitch:0.7f);
+                Helper.PlayPitched(CoraliteSoundID.IceMagic_Item28, Projectile.Center, pitch: -0.5f);
+                Helper.PlayPitched(CoraliteSoundID.NoUse_SuperMagicShoot_Item68, Projectile.Center, pitch: 0.7f);
             }
 
             LightCiecleParticle.Spawn(Projectile.Center, Coralite.MagicCrystalPink * 0.5f, 0.2f, Projectile.rotation

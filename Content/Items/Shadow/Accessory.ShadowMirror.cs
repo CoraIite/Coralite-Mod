@@ -2,7 +2,6 @@
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
-using InnoVault.PRT;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;

@@ -240,7 +240,7 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
 
             //ComponentGrid.Top.Set(ComponentControllerPanel.Height.Pixels + ComponentControllerPanel.Top.Pixels + 12, 0);
             //ComponentList.Top.Set(ComponentControllerPanel.Height.Pixels + ComponentControllerPanel.Top.Pixels + 12, 0);
-            ComponentList.Top.Set( 12, 0);
+            ComponentList.Top.Set(12, 0);
 
             //宽度和物品按钮相同，高度填满剩余的
             //ComponentGrid.Width.Set(ComponentControllerPanel.Width.Pixels, 0);
@@ -250,13 +250,13 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
             //ComponentList.Width.Set(ComponentControllerPanel.Width.Pixels, 0);
             //ComponentList.Height.Set(-ComponentControllerPanel.Height.Pixels - ComponentControllerPanel.Top.Pixels - 12, 1);
             ComponentList.Width.Set(56, 0);
-            ComponentList.Height.Set( - 12, 1);
+            ComponentList.Height.Set(-12, 1);
             ComponentList.OverflowHidden = true;
 
             //if (ComponentButtonsVisible)
             //    BasePanel.Append(ComponentGrid);
             //else
-                BasePanel.Append(ComponentList);
+            BasePanel.Append(ComponentList);
         }
 
         public void InitComponentPanel()
@@ -333,17 +333,17 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
             //}
             //else
             //{
-                ComponentList.Clear();
-                for (int i = 0; i < CurrentEntity.ComponentsCache.Count; i++)
-                {
-                    int id = CurrentEntity.ComponentsCache[i].ID;
-                    //if (!ShowComponents[id + 1])
-                    //    continue;
+            ComponentList.Clear();
+            for (int i = 0; i < CurrentEntity.ComponentsCache.Count; i++)
+            {
+                int id = CurrentEntity.ComponentsCache[i].ID;
+                //if (!ShowComponents[id + 1])
+                //    continue;
 
-                    var button = new ComponentButton(i);
-                    button.HAlign = 0.3f;
-                    ComponentList.Add(button);
-                }
+                var button = new ComponentButton(i);
+                button.HAlign = 0.3f;
+                ComponentList.Add(button);
+            }
             //}
         }
 

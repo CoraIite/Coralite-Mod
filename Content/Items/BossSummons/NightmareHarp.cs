@@ -2,7 +2,6 @@
 using Coralite.Content.Items.Materials;
 using Coralite.Content.Items.Nightmare;
 using Coralite.Core;
-using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.BossSystems;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;

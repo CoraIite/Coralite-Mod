@@ -92,7 +92,7 @@ namespace Coralite.Content.WorldGeneration
                                 break;
                             case 12 * 18 * 2:  //生命木箱
                                 {
-                                    if (WorldGen.genRand.NextBool(5,7))//放置生命大叶子
+                                    if (WorldGen.genRand.NextBool(5, 7))//放置生命大叶子
                                         chest.AddItem<LeafShield>();
                                 }
                                 break;

@@ -1,12 +1,10 @@
 ﻿using Coralite.Content.Prefixes.GemWeaponPrefixes;
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
-using Microsoft.CodeAnalysis.Text;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.GameContent;
 using Terraria.Graphics.Effects;
 using Terraria.UI.Chat;
 
@@ -86,8 +84,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 Vector2 size = ChatManager.GetStringSize(line.Font, line.Text, line.BaseScale);
                 Color c = Main.rand.NextFromList(new Color(167, 255, 255), new Color(27, 100, 89), new Color(52, 230, 194));
 
-                var p = HexagramParticle.New(new Vector2(line.X, line.Y) + new Vector2(Main.rand.NextFloat(-6, size.X+6), Main.rand.NextFloat(-6, size.Y+6)),
-                    Vector2.UnitX * Main.rand.NextFloat(0.5f, 0.8f), MathHelper.Pi/6, Main.rand.NextFloat(0.07f, 0.12f), c);
+                var p = HexagramParticle.New(new Vector2(line.X, line.Y) + new Vector2(Main.rand.NextFloat(-6, size.X + 6), Main.rand.NextFloat(-6, size.Y + 6)),
+                    Vector2.UnitX * Main.rand.NextFloat(0.5f, 0.8f), MathHelper.Pi / 6, Main.rand.NextFloat(0.07f, 0.12f), c);
 
                 group.Add(p);
             }
@@ -129,12 +127,12 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             sb.End();
             sb.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, effect, Main.UIScaleMatrix);
-            
+
             Main.graphics.GraphicsDevice.Textures[1] = GemTextures.CrystalNoiseP3.Value;
 
             Vector2 textSize = ChatManager.GetStringSize(line.Font, line.Text, line.BaseScale);
             Texture2D mainTex = CoraliteAssets.LightBall.BallA.Value;
-            sb.Draw(mainTex, new Rectangle(line.X - 35, line.Y - 4 - 6, (int)textSize.X + 35 * 2, (int)textSize.Y + 6 * 2), null, Color.White*0.8f);
+            sb.Draw(mainTex, new Rectangle(line.X - 35, line.Y - 4 - 6, (int)textSize.X + 35 * 2, (int)textSize.Y + 6 * 2), null, Color.White * 0.8f);
 
             Main.graphics.GraphicsDevice.Textures[1] = noiseTex;
 

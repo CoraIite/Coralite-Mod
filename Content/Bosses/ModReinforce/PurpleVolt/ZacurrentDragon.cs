@@ -1,5 +1,4 @@
 ﻿using Coralite.Core;
-using Coralite.Core.SmoothFunctions;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;

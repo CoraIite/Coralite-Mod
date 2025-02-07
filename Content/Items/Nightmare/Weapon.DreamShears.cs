@@ -5,8 +5,9 @@ using Coralite.Core;
 using Coralite.Core.Attributes;
 using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
-using InnoVault.Trails;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
+using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
@@ -19,7 +20,6 @@ using Terraria.Graphics.CameraModifiers;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
-using InnoVault.GameContent.BaseEntity;
 
 namespace Coralite.Content.Items.Nightmare
 {
@@ -521,7 +521,7 @@ namespace Coralite.Content.Items.Nightmare
 
         public override void NetHeldReceive(BinaryReader reader)
         {
-            startAngle=reader.ReadSingle();
+            startAngle = reader.ReadSingle();
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
@@ -776,7 +776,7 @@ namespace Coralite.Content.Items.Nightmare
                 center = target.Center + ((Projectile.rotation - 1.57f + Main.rand.NextFloat(-0.45f, 0.45f)).ToRotationVector2() * 140);
                 Projectile.NewProjectile(Projectile.GetSource_FromAI(), center, (target.Center - center).SafeNormalize(Vector2.Zero) * 28, ProjectileType<DreamShearsSpurt>(), Projectile.damage, 2, Owner.whoAmI, 1, 0, 16);
 
-                if (VisualEffectSystem.HitEffect_ScreenShaking&& Projectile.IsOwnedByLocalPlayer())
+                if (VisualEffectSystem.HitEffect_ScreenShaking && Projectile.IsOwnedByLocalPlayer())
                 {
                     PunchCameraModifier modifier = new(Projectile.Center, rotDir, 3, 6, 6, 1000);
                     Main.instance.CameraModifiers.Add(modifier);
@@ -979,7 +979,7 @@ namespace Coralite.Content.Items.Nightmare
 
         public override void NetHeldReceive(BinaryReader reader)
         {
-            Timer= reader.ReadInt32();
+            Timer = reader.ReadInt32();
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -1063,7 +1063,7 @@ namespace Coralite.Content.Items.Nightmare
                 Projectile.Center = center;
                 ReadyTime = 3 * Owner.itemTimeMax / 4;
                 Projectile.rotation = StartRot;
-               if( Projectile.IsOwnedByLocalPlayer())
+                if (Projectile.IsOwnedByLocalPlayer())
                     Projectile.netUpdate = true;
             }
 
