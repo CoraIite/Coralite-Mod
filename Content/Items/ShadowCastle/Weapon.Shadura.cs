@@ -160,7 +160,7 @@ namespace Coralite.Content.Items.ShadowCastle
 
         protected override float GetStartAngle() => Owner.direction > 0 ? 0f : MathHelper.Pi;
 
-        protected override void Initializer()
+        protected override void InitializeSwing()
         {
             if (Projectile.IsOwnedByLocalPlayer())
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
@@ -324,7 +324,7 @@ namespace Coralite.Content.Items.ShadowCastle
             recordTotalAngle = Math.Abs(totalAngle);
             Projectile.scale = Helper.EllipticalEase(recordStartAngle + extraScaleAngle - (recordTotalAngle * Smoother.Smoother(0, maxTime - minTime)), minScale, maxScale);
 
-            base.Initializer();
+            base.InitializeSwing();
             //extraScaleAngle *= Math.Sign(totalAngle);
         }
 

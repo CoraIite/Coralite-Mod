@@ -149,7 +149,7 @@ namespace Coralite.Content.Items.Nightmare
             return 65 * Projectile.scale;
         }
 
-        protected override void Initializer()
+        protected override void InitializeSwing()
         {
             if (Projectile.IsOwnedByLocalPlayer())
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
@@ -202,7 +202,7 @@ namespace Coralite.Content.Items.Nightmare
                     Smoother = Coralite.Instance.NoSmootherInstance;
                     break;
             }
-            base.Initializer();
+            base.InitializeSwing();
         }
 
         protected override void OnSlash()

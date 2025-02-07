@@ -240,7 +240,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         protected override float GetStartAngle() => StartAngle;
 
-        protected override void Initializer()
+        protected override void InitializeSwing()
         {
             Projectile.extraUpdates = 3;
             alpha = 255;
@@ -272,7 +272,7 @@ namespace Coralite.Content.Items.FlyingShields
                     break;
             }
 
-            base.Initializer();
+            base.InitializeSwing();
         }
 
         protected override void AIBefore()

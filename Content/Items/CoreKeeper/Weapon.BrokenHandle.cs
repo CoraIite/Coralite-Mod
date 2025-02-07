@@ -155,7 +155,7 @@ namespace Coralite.Content.Items.CoreKeeper
             return 55 * Projectile.scale;
         }
 
-        protected override void Initializer()
+        protected override void InitializeSwing()
         {
             if (Projectile.IsOwnedByLocalPlayer())
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
@@ -186,7 +186,7 @@ namespace Coralite.Content.Items.CoreKeeper
             recordTotalAngle = Math.Abs(totalAngle);
             Projectile.scale = Helper.EllipticalEase(recordStartAngle - (recordTotalAngle * Smoother.Smoother(0, maxTime - minTime)), 1.2f, 1.6f);
 
-            base.Initializer();
+            base.InitializeSwing();
         }
 
         protected override void AIBefore()

@@ -148,7 +148,7 @@ namespace Coralite.Content.Items.Nightmare
             return 50 * Projectile.scale;
         }
 
-        protected override void Initializer()
+        protected override void InitializeSwing()
         {
             Projectile.extraUpdates = 3;
             alpha = 0;
@@ -411,7 +411,7 @@ namespace Coralite.Content.Items.Nightmare
                     break;
             }
 
-            base.Initializer();
+            base.InitializeSwing();
             finalRotation = startAngle + totalAngle;
         }
 
@@ -622,13 +622,13 @@ namespace Coralite.Content.Items.Nightmare
                     {
                         innerCombo++;
                         Timer = 0;
-                        Initializer();
+                        InitializeSwing();
                     }
                     break;
                 case 3 when innerCombo == 0:
                     innerCombo++;
                     Timer = 0;
-                    Initializer();
+                    InitializeSwing();
 
                     break;
                 case 6 when innerCombo == 0://普通上挥1
@@ -640,7 +640,7 @@ namespace Coralite.Content.Items.Nightmare
                     {
                         innerCombo++;
                         Timer = 0;
-                        Initializer();
+                        InitializeSwing();
                     }
 
                     break;
@@ -659,7 +659,7 @@ namespace Coralite.Content.Items.Nightmare
                     {
                         innerCombo++;
                         Timer = 0;
-                        Initializer();
+                        InitializeSwing();
                     }
                     break;
                 case 4 when innerCombo == 1:
@@ -798,7 +798,7 @@ namespace Coralite.Content.Items.Nightmare
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) => false;
 
-        protected override void Initializer()
+        protected override void InitializeSwing()
         {
             if (Projectile.IsOwnedByLocalPlayer())
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;

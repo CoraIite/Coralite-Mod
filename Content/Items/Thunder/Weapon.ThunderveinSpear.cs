@@ -172,7 +172,7 @@ namespace Coralite.Content.Items.Thunder
             return 70 * Projectile.scale;
         }
 
-        protected override void Initializer()
+        protected override void InitializeSwing()
         {
             if (Projectile.IsOwnedByLocalPlayer() && Combo < 3)
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
@@ -211,7 +211,7 @@ namespace Coralite.Content.Items.Thunder
             }
 
             ExtraInit();
-            base.Initializer();
+            base.InitializeSwing();
         }
 
         private void ExtraInit()
@@ -424,7 +424,7 @@ namespace Coralite.Content.Items.Thunder
             useShadowTrail = true;
         }
 
-        protected override void Initializer()
+        protected override void InitializeSwing()
         {
             if (Projectile.IsOwnedByLocalPlayer())
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
@@ -438,7 +438,7 @@ namespace Coralite.Content.Items.Thunder
 
             Projectile.extraUpdates = 3;
 
-            base.Initializer();
+            base.InitializeSwing();
         }
 
         protected override void AIBefore()

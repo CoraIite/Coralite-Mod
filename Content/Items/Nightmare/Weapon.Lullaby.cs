@@ -112,7 +112,7 @@ namespace Coralite.Content.Items.Nightmare
             useSlashTrail = true;
         }
 
-        protected override void Initializer()
+        protected override void InitializeSwing()
         {
             if (Projectile.IsOwnedByLocalPlayer())
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
@@ -307,7 +307,7 @@ namespace Coralite.Content.Items.Nightmare
             return 75 * Projectile.scale;
         }
 
-        protected override void Initializer()
+        protected override void InitializeSwing()
         {
             if (Projectile.IsOwnedByLocalPlayer())
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
@@ -320,7 +320,7 @@ namespace Coralite.Content.Items.Nightmare
             maxTime = Owner.itemTimeMax * 4;
             Smoother = Coralite.Instance.BezierEaseSmoother;
 
-            base.Initializer();
+            base.InitializeSwing();
         }
 
         protected override float GetStartAngle() => Owner.direction > 0 ? 3.141f : 0f;

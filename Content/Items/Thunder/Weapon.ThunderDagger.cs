@@ -144,7 +144,7 @@ namespace Coralite.Content.Items.Thunder
             return base.GetStartAngle();
         }
 
-        protected override void Initializer()
+        protected override void InitializeSwing()
         {
             if (Projectile.IsOwnedByLocalPlayer() && Combo < 3)
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
@@ -183,7 +183,7 @@ namespace Coralite.Content.Items.Thunder
             }
 
             ExtraInit();
-            base.Initializer();
+            base.InitializeSwing();
         }
 
         private void ExtraInit()

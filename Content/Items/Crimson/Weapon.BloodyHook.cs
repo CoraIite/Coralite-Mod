@@ -115,7 +115,7 @@ namespace Coralite.Content.Items.Crimson
             onHitFreeze = 0;
         }
 
-        protected override void Initializer()
+        protected override void InitializeSwing()
         {
             Projectile.extraUpdates = 1;
 
@@ -147,7 +147,7 @@ namespace Coralite.Content.Items.Crimson
                     Smoother = Coralite.Instance.NoSmootherInstance;
                     break;
             }
-            base.Initializer();
+            base.InitializeSwing();
         }
 
         protected override void OnSlash()

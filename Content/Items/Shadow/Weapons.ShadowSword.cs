@@ -108,7 +108,7 @@ namespace Coralite.Content.Items.Shadow
             GradientTexture = null;
         }
 
-        protected override void Initializer()
+        protected override void InitializeSwing()
         {
             if (Projectile.IsOwnedByLocalPlayer())
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
@@ -126,7 +126,7 @@ namespace Coralite.Content.Items.Shadow
                     Projectile.scale = 0.9f;
                     break;
             }
-            base.Initializer();
+            base.InitializeSwing();
         }
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) => false;

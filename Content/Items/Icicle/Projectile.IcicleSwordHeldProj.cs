@@ -30,7 +30,7 @@ namespace Coralite.Content.Items.Icicle
             Projectile.coldDamage = true;
         }
 
-        protected override void Initializer()
+        protected override void InitializeSwing()
         {
             if (Projectile.IsOwnedByLocalPlayer())
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
@@ -63,7 +63,7 @@ namespace Coralite.Content.Items.Icicle
                     break;
             }
 
-            base.Initializer();
+            base.InitializeSwing();
         }
 
         protected override void OnSlash()

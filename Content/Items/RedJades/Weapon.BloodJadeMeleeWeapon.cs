@@ -142,7 +142,7 @@ namespace Coralite.Content.Items.RedJades
             return 50 * Projectile.scale;
         }
 
-        protected override void Initializer()
+        protected override void InitializeSwing()
         {
             if (Projectile.IsOwnedByLocalPlayer())
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
@@ -181,7 +181,7 @@ namespace Coralite.Content.Items.RedJades
             }
 
             StartRot = GetStartAngle();
-            base.Initializer();
+            base.InitializeSwing();
         }
 
         protected override void AIBefore()

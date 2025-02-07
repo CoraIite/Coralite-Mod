@@ -163,7 +163,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         #endregion
 
-        protected override void Initializer()
+        protected override void InitializeSwing()
         {
             Projectile.extraUpdates = 4;
             bool setScale = true;
@@ -258,7 +258,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 Projectile.scale = Helper.EllipticalEase(recordStartAngle + extraScaleAngle - (recordTotalAngle * Smoother.Smoother(0, maxTime - minTime)), minScale, maxScale);
             else
                 Projectile.scale = 0.01f;
-            base.Initializer();
+            base.InitializeSwing();
             //extraScaleAngle *= Math.Sign(totalAngle);
         }
 
@@ -442,7 +442,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 owner.whoAmI, -1, startAngle);
         }
 
-        protected override void Initializer()
+        protected override void InitializeSwing()
         {
             Projectile.extraUpdates = 4;
             alpha = 0;

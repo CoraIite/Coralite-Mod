@@ -190,7 +190,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
             return base.CanDamage();
         }
 
-        protected override void Initializer()
+        protected override void InitializeSwing()
         {
             scale = new Vector2(1f, 1.75f);
             Projectile.extraUpdates = 2;

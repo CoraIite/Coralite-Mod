@@ -213,7 +213,7 @@ namespace Coralite.Content.Items.Misc_Melee
             onHitFreeze = 20;
         }
 
-        protected override void Initializer()
+        protected override void InitializeSwing()
         {
             switch (Combo)
             {
@@ -262,7 +262,7 @@ namespace Coralite.Content.Items.Misc_Melee
                 default: goto case 0;
             }
 
-            base.Initializer();
+            base.InitializeSwing();
         }
 
         protected override void AfterSlash()

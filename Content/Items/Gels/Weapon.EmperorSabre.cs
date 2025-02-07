@@ -144,7 +144,7 @@ namespace Coralite.Content.Items.Gels
             return 65 * Projectile.scale;
         }
 
-        protected override void Initializer()
+        protected override void InitializeSwing()
         {
             if (Projectile.IsOwnedByLocalPlayer())
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
@@ -200,7 +200,7 @@ namespace Coralite.Content.Items.Gels
                     break;
             }
 
-            base.Initializer();
+            base.InitializeSwing();
         }
 
         protected override void AIBefore()
@@ -411,7 +411,7 @@ namespace Coralite.Content.Items.Gels
             return 75 * Projectile.scale;
         }
 
-        protected override void Initializer()
+        protected override void InitializeSwing()
         {
             if (Projectile.IsOwnedByLocalPlayer())
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
@@ -439,7 +439,7 @@ namespace Coralite.Content.Items.Gels
                     break;
             }
 
-            base.Initializer();
+            base.InitializeSwing();
         }
 
         protected override void AIBefore()
@@ -626,7 +626,7 @@ namespace Coralite.Content.Items.Gels
             return Owner.direction > 0 ? 0 : MathHelper.Pi;
         }
 
-        protected override void Initializer()
+        protected override void InitializeSwing()
         {
             if (Projectile.IsOwnedByLocalPlayer())
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
@@ -639,7 +639,7 @@ namespace Coralite.Content.Items.Gels
             maxTime = (int)(Owner.itemTimeMax * 0.8f) + 24;
             Smoother = Coralite.Instance.SqrtSmoother;
 
-            base.Initializer();
+            base.InitializeSwing();
             Projectile.rotation = _Rotation + MathHelper.Pi;
         }
 

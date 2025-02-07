@@ -155,6 +155,11 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         #region AI
 
+        public override void Initialize()
+        {
+            base.Initialize();
+        }
+
         public sealed override void AI()
         {
             AIBefore();
@@ -174,7 +179,7 @@ namespace Coralite.Core.Prefabs.Projectiles
                 if (init && Projectile.IsOwnedByLocalPlayer())
                 {
                     InitBasicValues();
-                    Initializer();
+                    InitializeSwing();
                 }
 
                 if (!Projectile.IsOwnedByLocalPlayer())//客户端和其他端等待本地端同步完数据后再运行
@@ -227,7 +232,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         /// <summary>
         /// 用于各项初始化操作
         /// </summary>
-        protected virtual void Initializer()
+        protected virtual void InitializeSwing()
         {
             Projectile.velocity *= 0f;
             if (Projectile.IsOwnedByLocalPlayer())
@@ -394,7 +399,7 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         public override BitsByte SandBitsByte(BitsByte flags)
         {
-            base.SandBitsByte(flags);
+            flags = base.SandBitsByte(flags);
 
             flags[2] = onStart;
             flags[3] = netSendBasicValues;
@@ -441,7 +446,7 @@ namespace Coralite.Core.Prefabs.Projectiles
 
                 if (init)
                 {
-                    Initializer();
+                    InitializeSwing();
                     init = false;
                 }
 

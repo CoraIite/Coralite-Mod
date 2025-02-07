@@ -677,7 +677,7 @@ namespace Coralite.Content.Items.ShieldPlus
             return 45 * Projectile.scale;
         }
 
-        protected override void Initializer()
+        protected override void InitializeSwing()
         {
             if (Projectile.IsOwnedByLocalPlayer())
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
@@ -728,7 +728,7 @@ namespace Coralite.Content.Items.ShieldPlus
             if (Item.ModItem is Terranascence terranascence && terranascence.SwordLightNormalAttack)
                 useSlashTrail = true;
 
-            base.Initializer();
+            base.InitializeSwing();
         }
 
         private void ExtraInit()
@@ -951,7 +951,7 @@ namespace Coralite.Content.Items.ShieldPlus
             Projectile.hide = true;
         }
 
-        protected override void Initializer()
+        protected override void InitializeSwing()
         {
             if (Projectile.IsOwnedByLocalPlayer())
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
@@ -988,7 +988,7 @@ namespace Coralite.Content.Items.ShieldPlus
                 delay = 10;
                 SoundEngine.PlaySound(CoraliteSoundID.Swing_Item1, Projectile.Center);
             }
-            base.Initializer();
+            base.InitializeSwing();
         }
 
         public void SpawnCircle()

@@ -214,7 +214,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
             return base.CanDamage();
         }
 
-        protected override void Initializer()
+        protected override void InitializeSwing()
         {
             Projectile.extraUpdates = 2;
             startAngle = 0f;

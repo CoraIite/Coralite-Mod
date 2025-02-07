@@ -58,7 +58,7 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) => null;
 
-        protected override void Initializer()
+        protected override void InitializeSwing()
         {
             if (Projectile.IsOwnedByLocalPlayer())
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;

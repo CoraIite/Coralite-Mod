@@ -26,7 +26,7 @@ namespace Coralite.Content.Items.RedJades
             onHitFreeze = 4;
         }
 
-        protected override void Initializer()
+        protected override void InitializeSwing()
         {
             if (Projectile.IsOwnedByLocalPlayer())
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
@@ -58,7 +58,7 @@ namespace Coralite.Content.Items.RedJades
                     break;
             }
 
-            base.Initializer();
+            base.InitializeSwing();
         }
 
         protected override float GetStartAngle() => Owner.direction > 0 ? 0f : MathHelper.Pi;

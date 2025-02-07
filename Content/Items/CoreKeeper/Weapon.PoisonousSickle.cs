@@ -163,7 +163,7 @@ namespace Coralite.Content.Items.CoreKeeper
             return 60 * Projectile.scale;
         }
 
-        protected override void Initializer()
+        protected override void InitializeSwing()
         {
             if (Projectile.IsOwnedByLocalPlayer())
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
@@ -302,7 +302,7 @@ namespace Coralite.Content.Items.CoreKeeper
                         result.Stop();
                     Timer = 0;
                     Combo = Main.rand.Next(2);
-                    Initializer();
+                    InitializeSwing();
                 }
             }
         }
