@@ -455,7 +455,7 @@ namespace Coralite.Content.Items.Shadow
                 {
                     Effect effect = Filters.Scene["StarsTrail"].GetShader().Shader;
 
-                    effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMatrix());
+                    effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
                     effect.Parameters["sampleTexture"].SetValue(CoraliteAssets.Trail.SlashFlatBright.Value);
                     effect.Parameters["gradientTexture"].SetValue(GradientTexture.Value);
                     effect.Parameters["worldSize"].SetValue(new Vector2(Main.screenWidth, Main.screenHeight));

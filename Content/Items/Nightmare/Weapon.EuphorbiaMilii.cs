@@ -748,7 +748,7 @@ namespace Coralite.Content.Items.Nightmare
                 {
                     Effect effect = Filters.Scene["NoHLGradientTrail"].GetShader().Shader;
 
-                    effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMatrix());
+                    effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
                     effect.Parameters["sampleTexture"].SetValue(CoraliteAssets.Trail.SlashFlat.Value);
                     effect.Parameters["gradientTexture"].SetValue(GradientTexture.Value);
 

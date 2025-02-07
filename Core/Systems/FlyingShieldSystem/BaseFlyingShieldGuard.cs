@@ -137,8 +137,8 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
 
         public override void AI()
         {
-            if (Math.Abs(MousePos.X - Owner.Center.X) > 6)//防止边界问题
-                Projectile.velocity.X = Owner.direction = MousePos.X > Owner.Center.X ? 1 : -1;
+            if (Math.Abs(InMousePos.X - Owner.Center.X) > 6)//防止边界问题
+                Projectile.velocity.X = Owner.direction = InMousePos.X > Owner.Center.X ? 1 : -1;
 
             Projectile.timeLeft = 4;
 

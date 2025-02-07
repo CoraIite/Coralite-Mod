@@ -432,7 +432,7 @@ namespace Coralite.Content.Items.Thunder
                 {
                     Effect effect = Filters.Scene["SimpleGradientTrail"].GetShader().Shader;
 
-                    effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMatrix());
+                    effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
                     effect.Parameters["sampleTexture"].SetValue(CoraliteAssets.Trail.SlashFlatFade.Value);
                     effect.Parameters["gradientTexture"].SetValue(GradientTexture.Value);
 

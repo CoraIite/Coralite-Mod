@@ -320,7 +320,7 @@ namespace Coralite.Content.Items.Misc_Melee
 
             Effect effect = Filters.Scene["AlphaGradientTrail"].GetShader().Shader;
 
-            effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMatrix());
+            effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["sampleTexture"].SetValue(Projectile.GetTexture());
             effect.Parameters["gradientTexture"].SetValue(GradientTexture.Value);
             effect.Parameters["alpha"].SetValue(Alpha);

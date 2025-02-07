@@ -122,7 +122,7 @@ namespace Coralite.Content.Items.Misc_Shoot
             MaxTime = Owner.itemTimeMax;
             if (Projectile.IsOwnedByLocalPlayer())
             {
-                Owner.direction = MousePos.X > Owner.Center.X ? 1 : -1;
+                Owner.direction = InMousePos.X > Owner.Center.X ? 1 : -1;
                 TargetRot = Projectile.ai[2] + (DirSign > 0 ? 0f : MathHelper.Pi);
                 Projectile.netUpdate = true;
             }

@@ -173,7 +173,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                     if (Main.myPlayer == Projectile.owner)
                     {
                         Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
-                        Rotation = Rotation.AngleLerp(ToMouseAngle, 0.15f);
+                        Rotation = Rotation.AngleLerp(ToMouseA, 0.15f);
                     }
 
                     Projectile.timeLeft = 20;
@@ -189,7 +189,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                         Projectile.NewProjectileFromThis<AuroraArrow>(Owner.Center, ToMouse.SafeNormalize(Vector2.Zero) * 16
                             , (int)(Owner.GetWeaponDamage(Owner.HeldItem) * 1.5f), Projectile.knockBack, 1);
 
-                        Rotation = ToMouseAngle;
+                        Rotation = ToMouseA;
 
                         Vector2 dir = Rotation.ToRotationVector2();
                         PRTLoader.NewParticle<AuroraFlow>(Projectile.Center, dir * 8, Color.White, 0.9f);
@@ -206,7 +206,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                         if (SPTimer < 8)
                             Rotation -= Owner.direction * 0.05f;
                         else
-                            Rotation = Rotation.AngleLerp(ToMouseAngle, 0.15f);
+                            Rotation = Rotation.AngleLerp(ToMouseA, 0.15f);
                     }
 
                     handOffset = Helper.Lerp(handOffset, 0, 0.1f);

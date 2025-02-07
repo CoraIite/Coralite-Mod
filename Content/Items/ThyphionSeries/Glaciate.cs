@@ -198,7 +198,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                     if (Main.myPlayer == Projectile.owner)
                     {
                         Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
-                        Rotation = Rotation.AngleLerp(ToMouseAngle, 0.15f);
+                        Rotation = Rotation.AngleLerp(ToMouseA, 0.15f);
                     }
 
                     Projectile.timeLeft = 30;
@@ -226,7 +226,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                             Main.instance.CameraModifiers.Add(new PunchCameraModifier(Projectile.Center, Projectile.rotation.ToRotationVector2(), 8, 12, 10, 500));
                         }
 
-                        Rotation = ToMouseAngle;
+                        Rotation = ToMouseA;
                     }
 
                     if (Main.myPlayer == Projectile.owner)
@@ -235,7 +235,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                         if (SPTimer < 8)
                             Rotation -= Owner.direction * 0.05f;
                         else
-                            Rotation = Rotation.AngleLerp(ToMouseAngle, 0.15f);
+                            Rotation = Rotation.AngleLerp(ToMouseA, 0.15f);
                     }
 
                     handOffset = Helper.Lerp(handOffset, 0, 0.1f);

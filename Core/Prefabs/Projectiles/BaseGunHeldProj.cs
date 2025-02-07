@@ -61,8 +61,8 @@ namespace Coralite.Core.Prefabs.Projectiles
             MaxTime = Owner.itemTimeMax;
             if (Main.myPlayer == Projectile.owner)
             {
-                Owner.direction = MousePos.X > Owner.Center.X ? 1 : -1;
-                TargetRot = (MousePos - Owner.Center).ToRotation() + (DirSign > 0 ? 0f : MathHelper.Pi);
+                Owner.direction = InMousePos.X > Owner.Center.X ? 1 : -1;
+                TargetRot = (InMousePos - Owner.Center).ToRotation() + (DirSign > 0 ? 0f : MathHelper.Pi);
             }
 
             Projectile.netUpdate = true;

@@ -374,7 +374,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Effect effect = Filters.Scene["Flow2"].GetShader().Shader;
 
             effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly * 5);
-            effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMatrix());
+            effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["uTextImage"].SetValue(ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "ExtraLaserFlow").Value);
 
             Main.graphics.GraphicsDevice.BlendState = BlendState.Additive;

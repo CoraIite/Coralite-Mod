@@ -632,7 +632,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Effect effect = Filters.Scene["SimpleTrailNoHL"].GetShader().Shader;
 
             Main.graphics.GraphicsDevice.BlendState = BlendState.Additive;
-            effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMatrix());
+            effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["sampleTexture"].SetValue(CoraliteAssets.Trail.Meteor.Value);
             trail?.DrawTrail(effect);
 

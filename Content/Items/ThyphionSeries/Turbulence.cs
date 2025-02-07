@@ -212,7 +212,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                         Projectile.NewProjectileFromThis<TurbulenceArrow>(Owner.Center, ToMouse.SafeNormalize(Vector2.Zero) * 16
                             , (int)(Owner.GetWeaponDamage(Owner.HeldItem) * 1.5f), Projectile.knockBack, 1);
 
-                        Rotation = ToMouseAngle;
+                        Rotation = ToMouseA;
 
                         Vector2 dir = Rotation.ToRotationVector2();
                         TurbulenceTornadoParticle.Spawn(Projectile.Center + dir * 16, dir * 2
@@ -232,7 +232,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                         if (SPTimer < 8)
                             Rotation -= Owner.direction * 0.05f;
                         else
-                            Rotation = Rotation.AngleLerp(ToMouseAngle, 0.15f);
+                            Rotation = Rotation.AngleLerp(ToMouseA, 0.15f);
                     }
 
                     handOffset = Helper.Lerp(handOffset, 0, 0.1f);
@@ -312,7 +312,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             Vector2 pos = Projectile.Center + Main.rand.NextVector2Circular(1, 1) - Projectile.rotation.ToRotationVector2() * 8;
             Effect effect = Filters.Scene["TurbulenceArrow"].GetShader().Shader;
 
-            effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMatrix());
+            effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * 0.03f);
             effect.Parameters["uTimeG"].SetValue(Main.GlobalTimeWrappedHourly * 0.1f);
             effect.Parameters["udissolveS"].SetValue(2f);
@@ -599,7 +599,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             Effect effect = Filters.Scene["TurbulenceArrow"].GetShader().Shader;
 
-            effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMatrix());
+            effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * 0.08f);
             effect.Parameters["uTimeG"].SetValue(Main.GlobalTimeWrappedHourly * 0.2f);
             effect.Parameters["udissolveS"].SetValue(1f);
@@ -619,7 +619,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             //effect.Parameters["uBaseImage"].SetValue(CoraliteAssets.Trail.LightShot.Value);
             //effect.Parameters["uFlow"].SetValue(TurbulenceFlow.Value);
-            //effect.Parameters["uTransform"].SetValue(Helper.GetTransfromMatrix());
+            //effect.Parameters["uTransform"].SetValue(VaultUtils.GetTransfromMatrix());
             //effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly * 0.1f);
 
             //warpTrail?.Render(effect);
@@ -634,7 +634,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             effect.Parameters["uBaseImage"].SetValue(CoraliteAssets.Trail.LightShot.Value);
             effect.Parameters["uFlow"].SetValue(TurbulenceFlow.Value);
-            effect.Parameters["uTransform"].SetValue(Helper.GetTransfromMatrix());
+            effect.Parameters["uTransform"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly * 0.2f);
 
             warpTrail?.DrawTrail(effect);
@@ -651,7 +651,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             Vector2 pos = Projectile.Center - Projectile.rotation.ToRotationVector2() * 12;
             Effect effect = Filters.Scene["TurbulenceArrow"].GetShader().Shader;
 
-            effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMatrix());
+            effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * 0.03f);
             effect.Parameters["uTimeG"].SetValue(Main.GlobalTimeWrappedHourly * 0.1f);
             effect.Parameters["udissolveS"].SetValue(2f);

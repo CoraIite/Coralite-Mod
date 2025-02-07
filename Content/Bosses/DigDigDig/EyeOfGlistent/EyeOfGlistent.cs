@@ -898,7 +898,7 @@ namespace Coralite.Content.Bosses.DigDigDig.EyeOfGlistent
 
             Effect effect = Filters.Scene["Crystal"].GetShader().Shader;
 
-            effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMatrix());
+            effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["basePos"].SetValue((NPC.Center + rand - Main.screenPosition) * Main.GameZoomTarget);
             effect.Parameters["scale"].SetValue(new Vector2(0.7f) / Main.GameZoomTarget);
             effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * 0.02f);

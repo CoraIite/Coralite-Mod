@@ -403,7 +403,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 if (Timer < ReadyTime)
                 {
                     LaserHeight = Helper.Lerp(0, 0.5f, Timer / ReadyTime);
-                    Vector2 pos = MousePos;
+                    Vector2 pos = InMousePos;
                     Main.player[Projectile.owner].LimitPointToPlayerReachableArea(ref pos);
                     recordPos = recordPos.MoveTowards(pos, 8);
                     LaserRotation = (recordPos - Projectile.Center).ToRotation();

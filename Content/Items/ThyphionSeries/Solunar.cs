@@ -333,7 +333,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                         if (Main.myPlayer == Projectile.owner)
                         {
                             Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
-                            Rotation = Rotation.AngleLerp(ToMouseAngle, 0.15f);
+                            Rotation = Rotation.AngleLerp(ToMouseA, 0.15f);
                         }
 
                         Projectile.timeLeft = 30;
@@ -347,7 +347,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                             Helper.PlayPitched(CoraliteSoundID.TerraBlade_Item60, Projectile.Center, pitchAdjust: -0.2f);
 
                             SetOwnerSPAttack();
-                            Rotation = ToMouseAngle;
+                            Rotation = ToMouseA;
 
                             for (int i = 0; i < Main.maxProjectiles; i++)//将弹幕设置为射出状态
                             {
@@ -628,7 +628,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 case 0://旋转中
                     {
                         Projectile.velocity *= 0.95f;
-                        Projectile.rotation = Projectile.rotation.AngleLerp((MousePos - Projectile.Center).ToRotation(), 0.25f);
+                        Projectile.rotation = Projectile.rotation.AngleLerp((InMousePos - Projectile.Center).ToRotation(), 0.25f);
                         Timer++;
 
                         float factor = Timer / 30;
@@ -1088,7 +1088,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             SpriteBatch spriteBatch = Main.spriteBatch;
             Effect effect = Filters.Scene["TurbulenceArrow"].GetShader().Shader;
 
-            effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMatrix());
+            effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * 0.03f);
             effect.Parameters["uTimeG"].SetValue(Main.GlobalTimeWrappedHourly * 0.1f);
             effect.Parameters["udissolveS"].SetValue(1f);
@@ -1321,7 +1321,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             Effect effect = Filters.Scene["TurbulenceArrow"].GetShader().Shader;
 
-            effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMatrix());
+            effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * 0.08f);
             effect.Parameters["uTimeG"].SetValue(Main.GlobalTimeWrappedHourly * 0.2f);
             effect.Parameters["udissolveS"].SetValue(1f);

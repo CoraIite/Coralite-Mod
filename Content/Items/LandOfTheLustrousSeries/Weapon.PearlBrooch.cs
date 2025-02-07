@@ -498,7 +498,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             Texture2D noiseTex = GemTextures.CellNoise2.Value;//[(int)(Main.timeForVisualEffects / 7) % 20].Value;
 
-            effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMatrix());
+            effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["basePos"].SetValue((Projectile.Center + rand - Main.screenPosition) * Main.GameZoomTarget);
             effect.Parameters["scale"].SetValue(Vector2.One / Main.GameZoomTarget);
             effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * 0.01f);

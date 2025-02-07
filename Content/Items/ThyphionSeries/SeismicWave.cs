@@ -150,7 +150,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         {
             if (Timer < DashTime + 2)
             {
-                Owner.direction = MousePos.X > Owner.Center.X ? 1 : -1;
+                Owner.direction = InMousePos.X > Owner.Center.X ? 1 : -1;
 
                 //Rotation = Projectile.velocity.ToRotation();
                 Point p = Projectile.Center.ToTileCoordinates();

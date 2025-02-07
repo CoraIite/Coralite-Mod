@@ -928,7 +928,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             effect.Parameters["noiseTexture"].SetValue(noiseTex);
             effect.Parameters["TrailTexture"].SetValue(LaserTex.Value);
-            effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMatrix());
+            effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["basePos"].SetValue((Projectile.Center - Main.screenPosition + rand) * Main.GameZoomTarget);
             effect.Parameters["scale"].SetValue(data.scale / Main.GameZoomTarget);
             effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * 0.02f);

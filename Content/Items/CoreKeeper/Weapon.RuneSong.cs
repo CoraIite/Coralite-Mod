@@ -629,7 +629,7 @@ namespace Coralite.Content.Items.CoreKeeper
                 {
                     Effect effect = Filters.Scene["NoHLGradientTrail"].GetShader().Shader;
 
-                    effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMatrix());
+                    effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
                     effect.Parameters["sampleTexture"].SetValue(CoraliteAssets.Trail.SlashFlatBlurSmall.Value);
                     effect.Parameters["gradientTexture"].SetValue(GradientTexture.Value);
 
