@@ -13,7 +13,7 @@ namespace Coralite.Content.Items.RedJades
 
         public ref float Combo => ref Projectile.ai[0];
 
-        public override void SetDefs()
+        public override void SetSwingProperty()
         {
             Projectile.DamageType = DamageClass.Melee;
             Projectile.localNPCHitCooldown = 22;
@@ -26,9 +26,9 @@ namespace Coralite.Content.Items.RedJades
             onHitFreeze = 4;
         }
 
-        protected override void Initializer()
+        protected override void InitializeSwing()
         {
-            if (Main.myPlayer == Projectile.owner)
+            if (Projectile.IsOwnedByLocalPlayer())
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
             switch (Combo)
             {
@@ -58,7 +58,7 @@ namespace Coralite.Content.Items.RedJades
                     break;
             }
 
-            base.Initializer();
+            base.InitializeSwing();
         }
 
         protected override float GetStartAngle() => Owner.direction > 0 ? 0f : MathHelper.Pi;
@@ -71,7 +71,7 @@ namespace Coralite.Content.Items.RedJades
 
         protected override void SpawnDustOnSlash()
         {
-            if (Main.myPlayer == Projectile.owner && Timer == maxTime / 2 && Combo == 3)
+            if (Projectile.IsOwnedByLocalPlayer() && Timer == maxTime / 2 && Combo == 3)
             {
                 Projectile.NewProjectile(Projectile.GetSource_FromThis(), Owner.Center + ((Main.MouseWorld - Owner.Center).SafeNormalize(Vector2.Zero) * 64), Vector2.Zero,
                     ModContent.ProjectileType<RedJadeBigBoom>(), Projectile.damage * 2, Projectile.knockBack, Projectile.owner);

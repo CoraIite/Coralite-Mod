@@ -100,15 +100,15 @@ namespace Coralite.Content.WorldGeneration
             GenByTexture(clearTex, roomTex, wallClearTex, wallTex, clearDic, mainDic, clearDic, wallDic, position.X, position.Y);
 
             //放火把
-            WorldGen.PlaceObject(position.X + 11, position.Y + 7,TileID.Torches,true,TorchID.Shimmer);
-            WorldGen.PlaceObject(position.X + 17, position.Y + 7,TileID.Torches,true,TorchID.Shimmer);
+            WorldGen.PlaceObject(position.X + 11, position.Y + 7, TileID.Torches, true, TorchID.Shimmer);
+            WorldGen.PlaceObject(position.X + 17, position.Y + 7, TileID.Torches, true, TorchID.Shimmer);
             //生成珊瑚笔记物块
-            WorldGen.PlaceObject(position.X + 14, position.Y + 10,ModContent.TileType<CoraliteNoteTile>(),true);
+            WorldGen.PlaceObject(position.X + 14, position.Y + 10, ModContent.TileType<CoraliteNoteTile>(), true);
             //生成箱子
             WorldGen.AddBuriedChest(position.X + 23, position.Y + 9, ModContent.ItemType<ChannelingGemstone>(),
                              notNearOtherChests: false, 14, trySlope: false, TileID.Containers2);
             //生成帐篷
-            WorldGen.PlaceObject(position.X + 6, position.Y + 13,TileID.LargePiles2, true,26);
+            WorldGen.PlaceObject(position.X + 6, position.Y + 13, TileID.LargePiles2, true, 26);
 
             //刷漆
             for (int i = 0; i < 28; i++)

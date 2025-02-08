@@ -2,8 +2,8 @@
 using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
-using InnoVault.Trails;
 using Coralite.Helpers;
+using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
@@ -100,7 +100,7 @@ namespace Coralite.Content.Items.Nightmare
             GradientTexture = null;
         }
 
-        public override void SetDefs()
+        public override void SetSwingProperty()
         {
             Projectile.localNPCHitCooldown = 48;
             Projectile.width = 30;
@@ -112,9 +112,9 @@ namespace Coralite.Content.Items.Nightmare
             useSlashTrail = true;
         }
 
-        protected override void Initializer()
+        protected override void InitializeSwing()
         {
-            if (Main.myPlayer == Projectile.owner)
+            if (Projectile.IsOwnedByLocalPlayer())
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
 
             Projectile.extraUpdates = 3;
@@ -290,7 +290,7 @@ namespace Coralite.Content.Items.Nightmare
         public int alpha;
         public int delay = 48;
 
-        public override void SetDefs()
+        public override void SetSwingProperty()
         {
             Projectile.localNPCHitCooldown = 48;
             Projectile.width = 40;
@@ -307,9 +307,9 @@ namespace Coralite.Content.Items.Nightmare
             return 75 * Projectile.scale;
         }
 
-        protected override void Initializer()
+        protected override void InitializeSwing()
         {
-            if (Main.myPlayer == Projectile.owner)
+            if (Projectile.IsOwnedByLocalPlayer())
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
 
             Projectile.extraUpdates = 3;
@@ -320,7 +320,7 @@ namespace Coralite.Content.Items.Nightmare
             maxTime = Owner.itemTimeMax * 4;
             Smoother = Coralite.Instance.BezierEaseSmoother;
 
-            base.Initializer();
+            base.InitializeSwing();
         }
 
         protected override float GetStartAngle() => Owner.direction > 0 ? 3.141f : 0f;

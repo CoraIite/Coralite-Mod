@@ -1,5 +1,4 @@
 ﻿using InnoVault.Trails;
-using InnoVault.PRT;
 
 namespace Coralite.Core.Systems.ParticleSystem
 {

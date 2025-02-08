@@ -35,7 +35,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                 //    recheck *= 6;
                 //else
                 //{
-                    TrySpawning(CoraliteWorld.NestCenter.X, CoraliteWorld.NestCenter.Y);
+                TrySpawning(CoraliteWorld.NestCenter.X, CoraliteWorld.NestCenter.Y);
                 //}
             }
         }

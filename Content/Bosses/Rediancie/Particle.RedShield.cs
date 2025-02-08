@@ -2,13 +2,12 @@
 using Coralite.Core.Attributes;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using System.Linq;
 using Terraria;
 
 namespace Coralite.Content.Bosses.Rediancie
 {
-    [AutoLoadTexture(Path =AssetDirectory.Rediancie)]
+    [AutoLoadTexture(Path = AssetDirectory.Rediancie)]
     public class RedShield : Particle
     {
         public override string Texture => AssetDirectory.Rediancie + "RedShield";

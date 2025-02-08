@@ -3,8 +3,8 @@ using Coralite.Content.Particles;
 using Coralite.Content.Tiles.RedJades;
 using Coralite.Core;
 using Coralite.Core.Configs;
-using InnoVault.Trails;
 using Coralite.Helpers;
+using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Linq;
@@ -203,13 +203,13 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 }
 
                 Projectile.rotation = MathF.Sin((1 - (AttackTime / Owner.itemTimeMax)) * MathHelper.TwoPi) * 0.5f;
-                if ((int)AttackTime % (Owner.itemTimeMax / 3) == 0 && Owner.CheckMana(Owner.HeldItem.mana, true))
+                if ((int)AttackTime % (Owner.itemTimeMax / 3) == 0 && Owner.CheckMana(Item.mana, true))
                 {
                     Owner.manaRegenDelay = 40;
 
                     float angle = (Main.rand.NextFromList(-1, 1) * 0.35f) + Main.rand.NextFloat(-0.5f, 0.5f);
                     Projectile.NewProjectileFromThis<AquamarineProj>(Projectile.Center
-                        , Vector2.UnitY.RotatedBy(angle) * 8, Owner.GetWeaponDamage(Owner.HeldItem), Projectile.knockBack);
+                        , Vector2.UnitY.RotatedBy(angle) * 8, Owner.GetWeaponDamage(Item), Projectile.knockBack);
 
                     for (int i = 0; i < 4; i++)
                     {
@@ -303,7 +303,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 case 2:
                     Timer++;
                     Projectile.rotation = Projectile.velocity.ToRotation();
-                    if (Timer>30)
+                    if (Timer > 30)
                         Projectile.Kill();
                     break;
             }
@@ -430,7 +430,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             effect.Parameters["noiseTexture"].SetValue(noiseTex);
             effect.Parameters["TrailTexture"].SetValue(ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "ExtraLaser").Value);
-            effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMatrix());
+            effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["basePos"].SetValue((Projectile.Center - Main.screenPosition + rand) * Main.GameZoomTarget);
             effect.Parameters["scale"].SetValue(new Vector2(0.7f / Main.GameZoomTarget));
             effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * (Main.gamePaused ? 0.02f : 0.01f));

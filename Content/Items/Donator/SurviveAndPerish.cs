@@ -1,7 +1,8 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
-using InnoVault.Trails;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
+using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
@@ -154,7 +155,7 @@ namespace Coralite.Content.Items.Donator
 
         public SurviveHeldProj() : base(0.15f, 18, -8, AssetDirectory.Donator) { }
 
-        public override void Initialize()
+        public override void InitializeGun()
         {
             int time = Owner.itemTimeMax;
             if (time < 6)
@@ -162,7 +163,7 @@ namespace Coralite.Content.Items.Donator
 
             Projectile.timeLeft = time;
             MaxTime = time;
-            if (Main.myPlayer == Projectile.owner)
+            if (Projectile.IsOwnedByLocalPlayer())
             {
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
                 TargetRot = (Main.MouseWorld - Owner.Center).ToRotation() + (DirSign > 0 ? 0f : MathHelper.Pi);
@@ -229,7 +230,7 @@ namespace Coralite.Content.Items.Donator
 
         public override void AI()
         {
-            if (Owner.HeldItem.type != ModContent.ItemType<SurviveAndPerish>())
+            if (Item.type != ModContent.ItemType<SurviveAndPerish>())
                 return;
 
             Projectile.timeLeft = 2;
@@ -335,7 +336,7 @@ namespace Coralite.Content.Items.Donator
                 pos -= Vector2.UnitY * 14;
                 pos += dir * 40;
                 pos += Main.rand.NextVector2Circular(16, 16);
-                Projectile.NewProjectileFromThis<PerishMissile>(pos, dir.RotateByRandom(-0.2f, 0.2f) * 4, (int)(Owner.GetWeaponDamage(Owner.HeldItem) * 0.75f),
+                Projectile.NewProjectileFromThis<PerishMissile>(pos, dir.RotateByRandom(-0.2f, 0.2f) * 4, (int)(Owner.GetWeaponDamage(Item) * 0.75f),
                     Projectile.knockBack);
 
                 Dust d = Dust.NewDustPerfect(pos + (dir * 30), ModContent.DustType<MissileShootDust>(), Vector2.Zero, Scale: Main.rand.NextFloat(1.5f, 2f));

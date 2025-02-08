@@ -82,9 +82,9 @@ namespace Coralite.Content.Items.Nightmare
             return x * MathF.Sin(x * x * x) / 1.186f;
         }
 
-        public override void Initialize()
+        public override void InitializeGun()
         {
-            base.Initialize();
+            base.InitializeGun();
             float rotation = TargetRot + (DirSign > 0 ? 0 : MathHelper.Pi);
             Vector2 dir = rotation.ToRotationVector2();
             Vector2 center = Projectile.Center + (dir * 32);
@@ -203,7 +203,7 @@ namespace Coralite.Content.Items.Nightmare
         {
             if (CanSpawnSmallBullet || State == 1)//能生成或者是强化状态时才会生成小弹幕
             {
-                if (Main.myPlayer == Projectile.owner)//生成一圈小子弹
+                if (Projectile.IsOwnedByLocalPlayer())//生成一圈小子弹
                 {
                     float rot = Main.rand.NextFloat(6.282f);
                     int howMany = 5;

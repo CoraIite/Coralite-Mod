@@ -59,11 +59,11 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
                 Main.hoverItemName = "a";
             }
             else
-                _scale1 .ToNormalSize();
+                _scale1.ToNormalSize();
 
             Helper.DrawMouseOverScaleTex(spriteBatch, tex1, picturePos, _scale1, 5, new Color(40, 40, 40) * 0.5f, true);
 
-            Utils.DrawBorderString(spriteBatch, TryMouseHover.Value, picturePos+new Vector2(0,-tex1.Height*1.5f), Coralite.MagicCrystalPink
+            Utils.DrawBorderString(spriteBatch, TryMouseHover.Value, picturePos + new Vector2(0, -tex1.Height * 1.5f), Coralite.MagicCrystalPink
                 , 1f, 0.5f, 0.5f);
 
             #endregion
@@ -80,7 +80,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
             Helper.DrawMouseOverScaleTex(spriteBatch, tex2, picturePos, _scale2, 10, Color.DarkGray * 0.75f);
             #endregion
 
-            pos += new Vector2(0, tex2.Height/2 + 20);
+            pos += new Vector2(0, tex2.Height / 2 + 20);
             Helper.DrawTextParagraph(spriteBatch, FourWayPlace.Value, PageWidth, new Vector2(Position.X, pos.Y), out _);
         }
     }

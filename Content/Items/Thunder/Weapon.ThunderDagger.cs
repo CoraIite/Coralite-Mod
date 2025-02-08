@@ -118,7 +118,7 @@ namespace Coralite.Content.Items.Thunder
             GradientTexture = null;
         }
 
-        public override void SetDefs()
+        public override void SetSwingProperty()
         {
             Projectile.DamageType = DamageClass.Magic;
             Projectile.localNPCHitCooldown = 48;
@@ -144,9 +144,9 @@ namespace Coralite.Content.Items.Thunder
             return base.GetStartAngle();
         }
 
-        protected override void Initializer()
+        protected override void InitializeSwing()
         {
-            if (Main.myPlayer == Projectile.owner && Combo < 3)
+            if (Projectile.IsOwnedByLocalPlayer() && Combo < 3)
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
 
             Projectile.extraUpdates = 5;
@@ -183,7 +183,7 @@ namespace Coralite.Content.Items.Thunder
             }
 
             ExtraInit();
-            base.Initializer();
+            base.InitializeSwing();
         }
 
         private void ExtraInit()
@@ -227,8 +227,8 @@ namespace Coralite.Content.Items.Thunder
             int timer = (int)Timer - minTime;
             float scale = 1f;
 
-            if (Owner.HeldItem.type == ItemType<ThunderveinBlade>())
-                scale = Owner.GetAdjustedItemScale(Owner.HeldItem);
+            if (Item.type == ItemType<ThunderveinBlade>())
+                scale = Owner.GetAdjustedItemScale(Item);
 
             if (timer % 7 == 0 && timer < maxTime * 0.5f)
             {
@@ -282,7 +282,7 @@ namespace Coralite.Content.Items.Thunder
             {
                 onHitTimer = 1;
                 Owner.immuneTime += 10;
-                if (Main.netMode == NetmodeID.Server)
+                if (VaultUtils.isServer)
                     return;
 
                 float strength = 2;
@@ -361,7 +361,7 @@ namespace Coralite.Content.Items.Thunder
                 {
                     Effect effect = Filters.Scene["SimpleGradientTrail"].GetShader().Shader;
 
-                    effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMatrix());
+                    effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
                     effect.Parameters["sampleTexture"].SetValue(CoraliteAssets.Trail.SlashFlatFade.Value);
                     effect.Parameters["gradientTexture"].SetValue(GradientTexture.Value);
 

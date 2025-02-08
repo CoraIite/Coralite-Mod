@@ -3,7 +3,6 @@ using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.Particles;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
-using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -50,7 +49,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
     {
         public override bool CheckHeldItem()
         {
-            return Owner.HeldItem.ModItem is not FilterItem;
+            return Item.ModItem is not FilterItem;
         }
 
         public override void Special()
@@ -185,7 +184,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
 
         public override Color GetDrawColor()
         {
-            return (Owner.HeldItem.ModItem as FilterItem).FilterColor;
+            return (Item.ModItem as FilterItem).FilterColor;
         }
     }
 }

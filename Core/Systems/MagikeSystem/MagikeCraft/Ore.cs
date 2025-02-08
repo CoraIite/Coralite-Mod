@@ -88,7 +88,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
 
             //AddRemodelRecipe(ItemID.IronOre, ItemID.SilverOre, 3);
             //AddRemodelRecipe(ItemID.IronOre, ItemID.TungstenOre, 3);
-            AddRemodelRecipe(ItemID.IronOre, ItemID.IronBar, CalculateMagikeCost(RedJade, 6, 15), 1,conditions:CoraliteConditions.NotInDigDigDig);
+            AddRemodelRecipe(ItemID.IronOre, ItemID.IronBar, CalculateMagikeCost(RedJade, 6, 15), 1, conditions: CoraliteConditions.NotInDigDigDig);
             AddRemodelRecipe(ItemID.IronOre, ItemID.LeadBar, CalculateMagikeCost(RedJade, 6, 15), 1, conditions: CoraliteConditions.NotInDigDigDig);
 
             //AddRemodelRecipe(ItemID.LeadOre, ItemID.SilverOre, 3);

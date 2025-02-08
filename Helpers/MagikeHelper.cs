@@ -713,7 +713,7 @@ namespace Coralite.Helpers
                 return;
             for (int i = 0; i < 16; i++)
             {
-                Dust dust = Dust.NewDustPerfect(position, dustType, (i * MathHelper.TwoPi / 16).ToRotationVector2() * Main.rand.NextFloat(2, 3), newColor: dustColor,Scale:Main.rand.NextFloat(1.5f,2f));
+                Dust dust = Dust.NewDustPerfect(position, dustType, (i * MathHelper.TwoPi / 16).ToRotationVector2() * Main.rand.NextFloat(2, 3), newColor: dustColor, Scale: Main.rand.NextFloat(1.5f, 2f));
                 dust.noGravity = true;
             }
         }
@@ -789,7 +789,7 @@ namespace Coralite.Helpers
             {
                 if (!item.IsAir && item.TryGetGlobalItem(out MagikeItem mi) && mi.magikeSendable)
                 {
-                    if (mi.Magike>=howMany)//这个物品里的魔能足够，就直接消耗掉然后返回
+                    if (mi.Magike >= howMany)//这个物品里的魔能足够，就直接消耗掉然后返回
                     {
                         mi.ReduceMagike(howMany);
                         return true;
@@ -830,7 +830,7 @@ namespace Coralite.Helpers
         /// <param name="player"></param>
         /// <param name="howMany"></param>
         /// <returns></returns>
-        public static bool CheckMagike(this Player player,int howMany)
+        public static bool CheckMagike(this Player player, int howMany)
         {
             foreach (var item in player.inventory)
             {
@@ -884,7 +884,7 @@ namespace Coralite.Helpers
             return false;
         }
 
-        public static bool TryCosumeMagike(int count,Item item,Player player)
+        public static bool TryCosumeMagike(int count, Item item, Player player)
         {
             if (item.TryCosumeMagike(count))
                 return true;
@@ -894,7 +894,7 @@ namespace Coralite.Helpers
             return false;
         }
 
-        public static bool CheckMagike(int count,Item item,Player player)
+        public static bool CheckMagike(int count, Item item, Player player)
         {
             if (item.CheckMagike(count))
                 return true;

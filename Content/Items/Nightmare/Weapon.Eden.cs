@@ -1,8 +1,8 @@
 ﻿using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
 using Coralite.Content.ModPlayers;
 using Coralite.Core;
-using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -287,7 +287,7 @@ namespace Coralite.Content.Items.Nightmare
         {
             if (initialize)
             {
-                if (Main.myPlayer == Projectile.owner)  //初始化鞭子节点，以及其他信息
+                if (Projectile.IsOwnedByLocalPlayer())  //初始化鞭子节点，以及其他信息
                 {
                     Projectile.velocity = (Main.MouseWorld - Owner.Center).SafeNormalize(Vector2.One);
                     Projectile.rotation = Projectile.velocity.ToRotation();

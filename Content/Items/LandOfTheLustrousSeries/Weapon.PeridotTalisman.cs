@@ -149,12 +149,12 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             if (AttackTime > 0)
             {
-                if (AttackTime == 1 && Main.myPlayer == Projectile.owner)
+                if (AttackTime == 1 && Projectile.IsOwnedByLocalPlayer())
                 {
                     Vector2 dir2 = (Main.MouseWorld - Projectile.Center).SafeNormalize(Vector2.Zero);
 
                     Projectile.NewProjectileFromThis<PeridotProj>(Projectile.Center,
-                           Helper.NextVec2Dir(4, 10), Owner.GetWeaponDamage(Owner.HeldItem)
+                           Helper.NextVec2Dir(4, 10), Owner.GetWeaponDamage(Item)
                            , Projectile.knockBack);
 
                     Helper.PlayPitched("Crystal/GemShoot", 0.3f, -0.8f, Projectile.Center);
@@ -279,7 +279,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void OnKill(int timeLeft)
         {
-            if (Main.myPlayer == Projectile.owner)
+            if (Projectile.IsOwnedByLocalPlayer())
             {
                 int x = 2;
                 if (Helper.TryFindClosestEnemy(Projectile.Center, 200, n => n.CanBeChasedBy(), out _))

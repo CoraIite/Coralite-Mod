@@ -1,5 +1,4 @@
-﻿using ReLogic.Content;
-using System;
+﻿using System;
 
 namespace Coralite.Core.Attributes
 {
@@ -23,7 +22,7 @@ namespace Coralite.Core.Attributes
         //    TextureName = textureName;
         //}
 
-        public string Path {  get; set; }
+        public string Path { get; set; }
         public string Name { get; set; }
     }
 }

@@ -106,7 +106,7 @@ namespace Coralite.Content.Items.FlyingShields
             base.OnHitNPC(target, hit, damageDone);
             if (State != (int)FlyingShieldStates.Backing)
             {
-                if (Owner.HeldItem.ModItem is HorseshoeCrab pr)
+                if (Item.ModItem is HorseshoeCrab pr)
                     pr.PowerfulAttack = true;
                 Vector2 dir = Helper.NextVec2Dir();
 
@@ -142,7 +142,7 @@ namespace Coralite.Content.Items.FlyingShields
         {
             DistanceToOwner /= 3;
             SoundEngine.PlaySound(CoraliteSoundID.Jellyfish_NPCHit25, Projectile.Center);
-            if (Owner.HeldItem.ModItem is HorseshoeCrab pr)
+            if (Item.ModItem is HorseshoeCrab pr)
                 pr.PowerfulAttack = true;
         }
 

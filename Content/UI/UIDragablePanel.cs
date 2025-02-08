@@ -169,7 +169,7 @@ namespace Coralite.Content.UI
 
             //spriteBatch.Draw(texture, new Rectangle(point.X - 2, point.Y - 2, 12 - 2, 12 - 2), source, color);
             //spriteBatch.Draw(texture, new Rectangle(point.X - 4, point.Y - 4, 12 - 4, 12 - 4), source, color);
-            spriteBatch.Draw(texture, new Rectangle(point.X - 6, point.Y - 6, 12, 12), source, color*0.8f);
+            spriteBatch.Draw(texture, new Rectangle(point.X - 6, point.Y - 6, 12, 12), source, color * 0.8f);
             texture = TextureAssets.Cursors[15].Value;
             source = texture.Frame();
             spriteBatch.Draw(texture, new Rectangle(point.X - 6, point.Y - 6, 12, 12), source, Color.White);

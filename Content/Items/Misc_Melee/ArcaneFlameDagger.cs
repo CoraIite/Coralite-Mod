@@ -2,9 +2,9 @@
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
-using InnoVault.Trails;
 using Coralite.Helpers;
 using InnoVault.PRT;
+using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
@@ -320,7 +320,7 @@ namespace Coralite.Content.Items.Misc_Melee
 
             Effect effect = Filters.Scene["AlphaGradientTrail"].GetShader().Shader;
 
-            effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMatrix());
+            effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["sampleTexture"].SetValue(Projectile.GetTexture());
             effect.Parameters["gradientTexture"].SetValue(GradientTexture.Value);
             effect.Parameters["alpha"].SetValue(Alpha);

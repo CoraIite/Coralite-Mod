@@ -17,7 +17,7 @@ namespace Coralite.Content.UI.BookUI
         public enum ArrowType
         {
             Left,
-            Right   
+            Right
         }
 
         public BookPageArrow(UI_BookPanel bookPanel, ATex arrowTex, ArrowType arrowType)
@@ -73,7 +73,7 @@ namespace Coralite.Content.UI.BookUI
             if (IsMouseHovering)
                 alpha = 1;
 
-            spriteBatch.Draw(ArrowTex.Value, GetDimensions().Center(), null,Color.White * alpha,0,ArrowTex.Size()/2,1,0,0);
+            spriteBatch.Draw(ArrowTex.Value, GetDimensions().Center(), null, Color.White * alpha, 0, ArrowTex.Size() / 2, 1, 0, 0);
         }
     }
 }

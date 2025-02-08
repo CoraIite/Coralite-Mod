@@ -5,8 +5,8 @@ using Coralite.Content.Items.LandOfTheLustrousSeries;
 using Coralite.Content.Tiles.RedJades;
 using Coralite.Core;
 using Coralite.Core.Configs;
-using InnoVault.Trails;
 using Coralite.Helpers;
+using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
 using System.Linq;
 using Terraria;
@@ -87,7 +87,7 @@ namespace Coralite.Content.Items.Donator
             Vector2 textSize = ChatManager.GetStringSize(line.Font, line.Text, line.BaseScale);
             Texture2D mainTex = CoraliteAssets.LightBall.BallA.Value;
             sb.Draw(mainTex, new Rectangle(line.X - 35, line.Y - 4 - 6, (int)textSize.X + 35 * 2, (int)textSize.Y + 6 * 2), null, Color.White * 0.8f);
-            
+
             ChatManager.DrawColorCodedStringWithShadow(Main.spriteBatch, line.Font, line.Text, new Vector2(line.X, line.Y)
                 , Color.White, line.Rotation, line.Origin, line.BaseScale, line.MaxWidth, line.Spread);
 
@@ -202,7 +202,7 @@ namespace Coralite.Content.Items.Donator
                     dust.rotation = dir.ToRotation() + MathHelper.PiOver2;
                 }
 
-                if ((int)AttackTime % (Owner.itemTimeMax / 4) == 0 && Owner.CheckMana(Owner.HeldItem.mana, true))
+                if ((int)AttackTime % (Owner.itemTimeMax / 4) == 0 && Owner.CheckMana(Item.mana, true))
                 {
                     Owner.manaRegenDelay = 40;
 
@@ -211,7 +211,7 @@ namespace Coralite.Content.Items.Donator
                         .RotateByRandom(-0.05f, 0.05f) * Main.rand.NextFloat(8, 11);
 
                     bool special = Main.rand.NextBool(5);
-                    int dam = Owner.GetWeaponDamage(Owner.HeldItem);
+                    int dam = Owner.GetWeaponDamage(Item);
 
                     if (special)
                         dam = (int)(1.35f * dam);
@@ -436,7 +436,7 @@ namespace Coralite.Content.Items.Donator
 
             effect.Parameters["noiseTexture"].SetValue(noiseTex);
             effect.Parameters["TrailTexture"].SetValue(ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "ExtraLaser").Value);
-            effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMatrix());
+            effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["basePos"].SetValue((Projectile.Center + rand - Main.screenPosition) * Main.GameZoomTarget);
             effect.Parameters["scale"].SetValue(new Vector2(5f / Main.GameZoomTarget));
             effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * 0.01f);

@@ -1,8 +1,8 @@
 ﻿using Coralite.Content.Tiles.RedJades;
 using Coralite.Core;
 using Coralite.Core.Configs;
-using InnoVault.Trails;
 using Coralite.Helpers;
+using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Linq;
@@ -151,12 +151,12 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             if (AttackTime > 0)
             {
-                if (AttackTime == 1 && Main.myPlayer == Projectile.owner)
+                if (AttackTime == 1 && Projectile.IsOwnedByLocalPlayer())
                 {
                     Vector2 dir2 = (Main.MouseWorld - Projectile.Center).SafeNormalize(Vector2.Zero);
 
                     Projectile.NewProjectileFromThis<SapphireProj>(Projectile.Center,
-                           dir2 * Main.rand.NextFloat(5, 6), Owner.GetWeaponDamage(Owner.HeldItem)
+                           dir2 * Main.rand.NextFloat(5, 6), Owner.GetWeaponDamage(Item)
                            , Projectile.knockBack);
 
                     Helper.PlayPitched("Crystal/GemShoot", 0.2f, -0.8f, Projectile.Center);
@@ -632,7 +632,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Effect effect = Filters.Scene["SimpleTrailNoHL"].GetShader().Shader;
 
             Main.graphics.GraphicsDevice.BlendState = BlendState.Additive;
-            effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMatrix());
+            effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["sampleTexture"].SetValue(CoraliteAssets.Trail.Meteor.Value);
             trail?.DrawTrail(effect);
 

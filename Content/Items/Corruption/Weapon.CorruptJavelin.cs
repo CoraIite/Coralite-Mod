@@ -1,8 +1,8 @@
 ﻿using Coralite.Content.Items.Crimson;
 using Coralite.Core;
 using Coralite.Core.Configs;
-using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Linq;
@@ -161,7 +161,7 @@ namespace Coralite.Content.Items.Corruption
                     {
                         Projectile.spriteDirection = Main.MouseWorld.X > Projectile.Center.X ? 1 : -1;
 
-                        if (Timer < 1 && Main.myPlayer == Projectile.owner)
+                        if (Timer < 1 && Projectile.IsOwnedByLocalPlayer())
                         {
                             Projectile.velocity = (Main.MouseWorld - Projectile.Center).SafeNormalize(Vector2.Zero) * 1.5f;
                             Projectile.rotation = Projectile.velocity.ToRotation();
@@ -408,7 +408,7 @@ namespace Coralite.Content.Items.Corruption
                     }
 
                     //生成小投矛弹幕
-                    if (Main.myPlayer == Projectile.owner)
+                    if (Projectile.IsOwnedByLocalPlayer())
                         Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, (Main.MouseWorld - Owner.Center).SafeNormalize(Vector2.One).RotatedBy(Main.rand.NextFloat(-0.06f, 0.06f)) * 12,
                             ProjectileType<SmallCorruptJavelin>(), (int)(Projectile.damage * 0.85f), Projectile.knockBack * 0.5f, Projectile.owner);
                     SoundEngine.PlaySound(CoraliteSoundID.Swing_Item1, Projectile.Center);

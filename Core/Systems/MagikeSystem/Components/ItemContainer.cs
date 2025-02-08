@@ -84,7 +84,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             //$"SendData-Items[].Length:{Items.Length}".LoggerDomp();
             data.Write(Items.Length);
-            
+
             for (int i = 0; i < Items.Length; i++)
             {
                 //$"SendData-Items.type:{Items[i].type}".LoggerDomp();
@@ -436,7 +436,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             modPacket.Write(Main.myPlayer);
             modPacket.WritePoint16(_container.Entity.Position);
             modPacket.Write(_index);
-            ItemIO.Send(_container[_index], modPacket,true);
+            ItemIO.Send(_container[_index], modPacket, true);
 
             modPacket.Send();
         }

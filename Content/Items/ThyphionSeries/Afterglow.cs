@@ -215,7 +215,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
                 if (DownLeft)
                 {
-                    if (Main.myPlayer == Projectile.owner)
+                    if (Projectile.IsOwnedByLocalPlayer())
                     {
                         Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
                         Rotation = Rotation.AngleLerp((Main.MouseWorld - Owner.MountedCenter).ToRotation(), 0.35f);
@@ -241,12 +241,12 @@ namespace Coralite.Content.Items.ThyphionSeries
                     }
 
                     Projectile.timeLeft = 2;
-                    LockOwnerItemTime();
+                    Owner.itemTime = Owner.itemAnimation = 2;
                 }
                 else
                 {
                     Projectile.NewProjectileFromThis(Owner.Center, (Main.MouseWorld - Owner.MountedCenter).SafeNormalize(Vector2.One) * 12f
-                        , GetArrowType(), (int)(Owner.GetWeaponDamage(Owner.HeldItem) * 1.2f), Projectile.knockBack);
+                        , GetArrowType(), (int)(Owner.GetWeaponDamage(Item) * 1.2f), Projectile.knockBack);
 
                     SoundEngine.PlaySound(CoraliteSoundID.Bow_Item5, Owner.Center);
                     Projectile.Kill();
@@ -258,7 +258,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             Timer++;
         }
 
-        public override void Initialize()
+        public override void InitializeDashBow()
         {
             RecordAngle = Rotation;
         }

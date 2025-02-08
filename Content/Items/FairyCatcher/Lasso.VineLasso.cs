@@ -40,9 +40,9 @@ namespace Coralite.Content.Items.FairyCatcher
     {
         public override string Texture => AssetDirectory.FairyCatcherItems + "VineLassoCatcher";
 
-        public override void SetDefs()
+        public override void SetSwingProperty()
         {
-            base.SetDefs();
+            base.SetSwingProperty();
             DrawOriginOffsetX = 8;
         }
 

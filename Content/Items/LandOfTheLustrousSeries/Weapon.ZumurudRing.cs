@@ -155,10 +155,10 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             {
                 Projectile.rotation = Helper.Lerp(0, MathHelper.Pi, Coralite.Instance.SqrtSmoother.Smoother(1 - (AttackTime / Owner.itemTimeMax)));
 
-                if (AttackTime == 1 && Main.myPlayer == Projectile.owner)
+                if (AttackTime == 1 && Projectile.IsOwnedByLocalPlayer())
                 {
                     Projectile.NewProjectileFromThis<ZumurudProj>(Projectile.Center,
-                        (Main.MouseWorld - Projectile.Center).SafeNormalize(Vector2.Zero) * 9.5f, Owner.GetWeaponDamage(Owner.HeldItem), Projectile.knockBack);
+                        (Main.MouseWorld - Projectile.Center).SafeNormalize(Vector2.Zero) * 9.5f, Owner.GetWeaponDamage(Item), Projectile.knockBack);
 
                     Helper.PlayPitched("Crystal/CrystalBling", 0.4f, -0.35f, Projectile.Center);
 

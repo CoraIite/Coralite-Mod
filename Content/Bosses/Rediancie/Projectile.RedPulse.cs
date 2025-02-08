@@ -35,7 +35,7 @@ namespace Coralite.Content.Bosses.Rediancie
             for (int i = 0; i < 2; i++)
                 Projectile.SpawnTrailDust(DustID.GemRuby, 0.4f, Scale: 1.4f);
 
-            if (Timer % 10 == 0 && Main.myPlayer == Projectile.owner)
+            if (Timer % 10 == 0 && Projectile.IsOwnedByLocalPlayer())
                 Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center + Main.rand.NextVector2CircularEdge(32, 32), Vector2.Zero, ModContent.ProjectileType<Rediancie_Explosion>(), (int)(Projectile.damage * 0.8f), Projectile.knockBack, Projectile.owner, (int)Timer % 30);
 
             if (Timer % 2 == 0)
@@ -47,7 +47,7 @@ namespace Coralite.Content.Bosses.Rediancie
 
         public override void OnKill(int timeLeft)
         {
-            if (Main.myPlayer == Projectile.owner)
+            if (Projectile.IsOwnedByLocalPlayer())
                 Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Rediancie_BigBoom>(), Projectile.damage * 2, Projectile.knockBack, Projectile.owner);
         }
 

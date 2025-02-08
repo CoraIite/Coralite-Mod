@@ -41,7 +41,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
             //描述段1
             Helper.DrawTextParagraph(spriteBatch, NeedPolarizedFilter.Value, PageWidth, new Vector2(Position.X, pos.Y), out Vector2 textSize);
 
-            pos.Y += textSize.Y-5;
+            pos.Y += textSize.Y - 5;
 
             var tex1 = TextureAssets.Item[ModContent.ItemType<BasicFilter>()].Value;
             var ArrowTex = CoraliteAssets.MagikeChapter1.PlacePolarizedFilterArrow.Value;
@@ -101,7 +101,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
             Helper.DrawMouseOverScaleTex(spriteBatch, tex1, pos, _scale3, 10, Color.DarkGray * 0.75f);
             #endregion
 
-            pos.Y += tex1.Height / 2+10;
+            pos.Y += tex1.Height / 2 + 10;
             Helper.DrawTextParagraph(spriteBatch, SeeItemToolTip.Value, PageWidth, new Vector2(Position.X, pos.Y), out _);
         }
     }

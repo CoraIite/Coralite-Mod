@@ -51,7 +51,7 @@ namespace Coralite.Content.Items.BossSummons
                     string typeName = Main.npc[num].TypeName;
                     if (Main.netMode == NetmodeID.SinglePlayer)
                         Main.NewText(Language.GetTextValue("Announcement.HasAwoken", typeName), 175, 75);
-                    else if (Main.netMode == NetmodeID.Server)
+                    else if (VaultUtils.isServer)
                         ChatHelper.BroadcastChatMessage(NetworkText.FromKey("Announcement.HasAwoken", Main.npc[num].GetTypeNetName()), new Color(175, 75, 255));
 
                 }

@@ -54,7 +54,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 , player.Center, Vector2.Zero, ProjectileType<SeismicWaveHeldProj>(), damage, knockback, player.whoAmI, rot);
 
             Projectile.NewProjectile(source, player.Center, velocity, type, damage, knockback, player.whoAmI);
-            Projectile.NewProjectile(source, player.Center, velocity.RotateByRandom(-0.1f,0.1f), type, damage, knockback, player.whoAmI);
+            Projectile.NewProjectile(source, player.Center, velocity.RotateByRandom(-0.1f, 0.1f), type, damage, knockback, player.whoAmI);
 
             return false;
         }
@@ -84,7 +84,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             Player.GetModPlayer<CoralitePlayer>().DashTimer = 24;
 
             float rot = (Main.MouseWorld - Player.Center).ToRotation();
-            if (rot<-1.57f)
+            if (rot < -1.57f)
             {
                 rot += MathHelper.TwoPi;
             }
@@ -150,7 +150,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         {
             if (Timer < DashTime + 2)
             {
-                Owner.direction = MousePos.X > Owner.Center.X ? 1 : -1;
+                Owner.direction = InMousePos.X > Owner.Center.X ? 1 : -1;
 
                 //Rotation = Projectile.velocity.ToRotation();
                 Point p = Projectile.Center.ToTileCoordinates();
@@ -196,11 +196,11 @@ namespace Coralite.Content.Items.ThyphionSeries
                 return;
 
             Hited = 1;
-            Timer = DashTime -5;
+            Timer = DashTime - 5;
             //生成震波弹幕
             Collision.HitTiles(Projectile.Center - new Vector2(100, 20), new Vector2(0, 0), 200, 100);
 
-            Projectile.NewProjectileFromThis<SeismicWaveStrike>(Projectile.Center, Vector2.Zero, (int)(Owner.GetWeaponDamage(Owner.HeldItem) * 1.2f)
+            Projectile.NewProjectileFromThis<SeismicWaveStrike>(Projectile.Center, Vector2.Zero, (int)(Owner.GetWeaponDamage(Item) * 1.2f)
                 , 8);
 
             Helper.PlayPitched(CoraliteSoundID.StaffOfEarth_Item69, Projectile.Center, pitch: 0.8f);
@@ -210,11 +210,11 @@ namespace Coralite.Content.Items.ThyphionSeries
                 Owner.AddImmuneTime(ImmunityCooldownID.General, 14);
             Owner.immune = true;
 
-            Main.instance.CameraModifiers.Add(new PunchCameraModifier(Projectile.Center, Vector2.UnitY, 15, 8, 15,800));
+            Main.instance.CameraModifiers.Add(new PunchCameraModifier(Projectile.Center, Vector2.UnitY, 15, 8, 15, 800));
         }
 
         public override Vector2 GetOffset()
-            => new Vector2(20 , 0);
+            => new Vector2(20, 0);
 
         public override bool PreDraw(ref Color lightColor)
         {
@@ -232,7 +232,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
     public class SeismicWaveStrike : ModProjectile, IDrawWarp
     {
-        public override string Texture => AssetDirectory.ThyphionSeriesItems+ "SeismicWaveImpact";
+        public override string Texture => AssetDirectory.ThyphionSeriesItems + "SeismicWaveImpact";
 
         public ref float Scale => ref Projectile.ai[0];
         public ref float Timer => ref Projectile.ai[1];
@@ -254,21 +254,21 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public override void AI()
         {
-            Scale = Coralite.Instance.X2Smoother.Smoother(Timer / 16f)*2;
+            Scale = Coralite.Instance.X2Smoother.Smoother(Timer / 16f) * 2;
             Timer++;
 
-            if (Timer<6)
+            if (Timer < 6)
                 Alpha = Timer / 6f;
             else
-                Alpha =1- (Timer - 6) / 18f;
+                Alpha = 1 - (Timer - 6) / 18f;
 
-            float length = 20 + Timer / 16f*130;
+            float length = 20 + Timer / 16f * 130;
 
             for (int i = 0; i < 5; i++)
             {
                 Vector2 dir = Helper.NextVec2Dir();
                 Dust d = Dust.NewDustPerfect(Projectile.Center + dir * Main.rand.NextFloat(length - 10, length + 10)
-                    , DustID.SilverFlame, dir * Main.rand.NextFloat(2, 6),Alpha:Main.rand.Next(0,100),Scale:Main.rand.NextFloat(1,1.5f));
+                    , DustID.SilverFlame, dir * Main.rand.NextFloat(2, 6), Alpha: Main.rand.Next(0, 100), Scale: Main.rand.NextFloat(1, 1.5f));
                 d.noGravity = true;
             }
 
@@ -287,7 +287,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             var pos = Projectile.Center - Main.screenPosition;
             Vector2 origin = mainTex.Size() / 2;
 
-            Color c = Color.LightGray * Alpha*0.3f;
+            Color c = Color.LightGray * Alpha * 0.3f;
 
             Main.spriteBatch.Draw(mainTex, pos, null, c, Projectile.rotation, origin, Scale, 0, 0);
             Main.spriteBatch.Draw(mainTex, pos, null, c, Projectile.rotation + 0.785f, origin, Scale, 0, 0);
@@ -304,8 +304,8 @@ namespace Coralite.Content.Items.ThyphionSeries
             Color c = Color.White * Alpha;
 
             Main.spriteBatch.Draw(mainTex, pos, null, c, Projectile.rotation, origin, Scale, 0, 0);
-            Main.spriteBatch.Draw(mainTex, pos, null, c, Projectile.rotation + MathHelper.TwoPi/3, origin, Scale, 0, 0);
-            Main.spriteBatch.Draw(mainTex, pos, null, c, Projectile.rotation + MathHelper.TwoPi/3*2, origin, Scale, 0, 0);
+            Main.spriteBatch.Draw(mainTex, pos, null, c, Projectile.rotation + MathHelper.TwoPi / 3, origin, Scale, 0, 0);
+            Main.spriteBatch.Draw(mainTex, pos, null, c, Projectile.rotation + MathHelper.TwoPi / 3 * 2, origin, Scale, 0, 0);
         }
     }
 }

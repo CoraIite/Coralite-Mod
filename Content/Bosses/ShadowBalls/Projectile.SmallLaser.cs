@@ -163,7 +163,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     {
                         if (!CoraliteWorld.shadowBallsFightArea.Contains(currentPos.ToPoint()))
                             currentPos -= dir;
-                        else 
+                        else
                             break;
                     }
                     laserTrailPoints.Add(currentPos);

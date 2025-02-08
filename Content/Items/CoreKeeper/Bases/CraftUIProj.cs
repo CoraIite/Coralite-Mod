@@ -1,9 +1,9 @@
 ﻿using Coralite.Core;
-using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.ParticleSystem;
-using InnoVault.Trails;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using InnoVault.PRT;
+using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Utilities;
 using System;

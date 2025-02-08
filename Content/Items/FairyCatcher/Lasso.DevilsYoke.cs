@@ -42,12 +42,12 @@ namespace Coralite.Content.Items.FairyCatcher
     {
         public override string Texture => AssetDirectory.FairyCatcherItems + "DevilsYokeCatcher";
 
-        public override void SetDefs()
+        public override void SetSwingProperty()
         {
             minDistance = 48;
             maxDistance = 128;
 
-            base.SetDefs();
+            base.SetSwingProperty();
             DrawOriginOffsetX = 8;
         }
 

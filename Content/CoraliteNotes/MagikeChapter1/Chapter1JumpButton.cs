@@ -46,7 +46,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
 
             pos += new Vector2(r, 4);
             Helpers.Helper.DrawText(spriteBatch, Text.Value, GetDimensions().Width
-                , pos, new Vector2(0, 0.5f), Vector2.One * scale, new Color(40, 40, 40), textColor, out _,true);
+                , pos, new Vector2(0, 0.5f), Vector2.One * scale, new Color(40, 40, 40), textColor, out _, true);
         }
     }
 }

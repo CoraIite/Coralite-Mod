@@ -199,7 +199,7 @@ namespace Coralite.Content.Items.CoreKeeper
             GradientTexture = null;
         }
 
-        public override void SetDefs()
+        public override void SetSwingProperty()
         {
             Projectile.DamageType = DamageClass.Melee;
             Projectile.localNPCHitCooldown = 60;
@@ -222,9 +222,9 @@ namespace Coralite.Content.Items.CoreKeeper
             return 65 * Projectile.scale;
         }
 
-        protected override void Initializer()
+        protected override void InitializeSwing()
         {
-            if (Main.myPlayer == Projectile.owner)
+            if (Projectile.IsOwnedByLocalPlayer())
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
 
             Projectile.extraUpdates = 4;
@@ -288,7 +288,7 @@ namespace Coralite.Content.Items.CoreKeeper
 
             if (Combo != 2)
             {
-                base.Initializer();
+                base.InitializeSwing();
                 return;
             }
 
@@ -387,7 +387,7 @@ namespace Coralite.Content.Items.CoreKeeper
                         result.Stop();
                     Timer = 0;
                     Combo = Main.rand.Next(2);
-                    Initializer();
+                    InitializeSwing();
                 }
             }
         }
@@ -434,9 +434,9 @@ namespace Coralite.Content.Items.CoreKeeper
             {
                 alpha = (int)(Coralite.Instance.X2Smoother.Smoother(timer, maxTime - minTime) * 100) + 100;
             }
-            if (Owner.HeldItem.type == ItemType<RuneSong>())
+            if (Item.type == ItemType<RuneSong>())
             {
-                scale = Owner.GetAdjustedItemScale(Owner.HeldItem);
+                scale = Owner.GetAdjustedItemScale(Item);
                 scale = (1.5f * scale) - 0.5f;
                 if (scale > 3f)
                     scale = 3f;
@@ -505,7 +505,7 @@ namespace Coralite.Content.Items.CoreKeeper
                 onHitTimer = 1;
                 if (TrueMelee && !target.immortal && !target.SpawnedFromStatue)
                     Owner.Heal(3);
-                if (Main.netMode == NetmodeID.Server)
+                if (VaultUtils.isServer)
                     return;
 
                 float strength = 3;
@@ -629,7 +629,7 @@ namespace Coralite.Content.Items.CoreKeeper
                 {
                     Effect effect = Filters.Scene["NoHLGradientTrail"].GetShader().Shader;
 
-                    effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMatrix());
+                    effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
                     effect.Parameters["sampleTexture"].SetValue(CoraliteAssets.Trail.SlashFlatBlurSmall.Value);
                     effect.Parameters["gradientTexture"].SetValue(GradientTexture.Value);
 

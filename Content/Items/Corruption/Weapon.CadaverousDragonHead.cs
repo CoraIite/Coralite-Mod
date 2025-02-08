@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.Items.Crimson;
 using Coralite.Core;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Linq;
@@ -88,7 +89,7 @@ namespace Coralite.Content.Items.Corruption
         }
     }
 
-    public class CadaverousDragonHeadProj : ModProjectile
+    public class CadaverousDragonHeadProj : BaseHeldProj
     {
         public override string Texture => AssetDirectory.CorruptionItems + Name;
 
@@ -106,8 +107,6 @@ namespace Coralite.Content.Items.Corruption
             }
         }
 
-        public Player Owner => Main.player[Projectile.owner];
-
         public float mouseAngle;
 
         public override void OnSpawn(IEntitySource source)
@@ -119,7 +118,7 @@ namespace Coralite.Content.Items.Corruption
         {
             //常态在玩家头顶
 
-            if (Owner.HeldItem.type == ModContent.ItemType<CadaverousDragonHead>())
+            if (Item.type == ModContent.ItemType<CadaverousDragonHead>())
                 Projectile.timeLeft = 2;
             else
                 Projectile.Kill();

@@ -35,7 +35,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         public int delayTime = 8;
         public int shootTime = 12;
 
-        public override void SetDefs()
+        public override void SetSwingProperty()
         {
             Projectile.DamageType = FairyDamage.Instance;
             Projectile.localNPCHitCooldown = -1;
@@ -58,9 +58,9 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) => null;
 
-        protected override void Initializer()
+        protected override void InitializeSwing()
         {
-            if (Main.myPlayer == Projectile.owner)
+            if (Projectile.IsOwnedByLocalPlayer())
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
 
             Projectile.extraUpdates = 2;
@@ -159,7 +159,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             if (ItemType < 1)
                 return;
 
-            Item heldItem = Owner.HeldItem;
+            Item heldItem = Item;
             if (heldItem.ModItem is BaseFairyCatcher catcher)
             {
                 float speed = heldItem.shootSpeed;

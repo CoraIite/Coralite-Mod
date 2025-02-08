@@ -2,8 +2,8 @@
 using Coralite.Content.Tiles.RedJades;
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
-using InnoVault.Trails;
 using Coralite.Helpers;
+using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Linq;
@@ -158,7 +158,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     for (int i = 0; i < 3; i++)
                     {
                         int p = Projectile.NewProjectileFromThis<ZirconProj>(Projectile.Center + new Vector2(0, -25), -Vector2.UnitY.RotateByRandom(-0.2f, 0.2f) * (12 + (i * 2.5f))
-                             , Owner.GetWeaponDamage(Owner.HeldItem), 5);
+                             , Owner.GetWeaponDamage(Item), 5);
                         Main.projectile[p].localNPCHitCooldown += i;
                     }
                 }
@@ -374,7 +374,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Effect effect = Filters.Scene["Flow2"].GetShader().Shader;
 
             effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly * 5);
-            effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMatrix());
+            effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["uTextImage"].SetValue(ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "ExtraLaserFlow").Value);
 
             Main.graphics.GraphicsDevice.BlendState = BlendState.Additive;

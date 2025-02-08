@@ -4,6 +4,7 @@ using Coralite.Core.Attributes;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.SmoothFunctions;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -144,14 +145,8 @@ namespace Coralite.Content.Items.Misc_Shoot
 
         public override void AI()
         {
-            if (!init)
-            {
-                Initialize();
-                init = true;
-            }
-
             Projectile.timeLeft = 2;
-            Owner.direction = MousePos.X > Owner.Center.X ? 1 : -1;
+            Owner.direction = InMousePos.X > Owner.Center.X ? 1 : -1;
 
             switch (State)
             {
@@ -181,7 +176,7 @@ namespace Coralite.Content.Items.Misc_Shoot
                     break;
                 case 1://静止
                     {
-                        Vector2 targetPos = MousePos;
+                        Vector2 targetPos = InMousePos;
                         if (Target.GetNPCOwner(out NPC owner))
                             targetPos = owner.Center;
 
@@ -189,14 +184,14 @@ namespace Coralite.Content.Items.Misc_Shoot
 
                         ApplyRecoil(0);
 
-                        if (Owner.HeldItem.type != ModContent.ItemType<WhiteGardenia>())
+                        if (Item.type != ModContent.ItemType<WhiteGardenia>())
                             TurnToFade();
                     }
 
                     break;
                 case 2://射击
                     {
-                        Vector2 targetPos = MousePos;
+                        Vector2 targetPos = InMousePos;
                         if (Target.GetNPCOwner(out NPC owner))
                             targetPos = owner.Center;
 
@@ -236,8 +231,8 @@ namespace Coralite.Content.Items.Misc_Shoot
                     break;
                 case 4:
                     {
-                        LockOwnerItemTime();
-                        Vector2 targetPos = MousePos;
+                        Owner.itemTime = Owner.itemAnimation = 2;
+                        Vector2 targetPos = InMousePos;
                         if (Target.GetNPCOwner(out NPC owner))
                             targetPos = owner.Center;
 
@@ -246,7 +241,7 @@ namespace Coralite.Content.Items.Misc_Shoot
 
                         ApplyRecoil(0);
 
-                        if ( Projectile.frame < 19)
+                        if (Projectile.frame < 19)
                         {
                             Projectile.frame++;
                             if (Projectile.frame == 19)
@@ -256,7 +251,7 @@ namespace Coralite.Content.Items.Misc_Shoot
                                 Helper.PlayPitched(CoraliteSoundID.TerraBlade_Item60, Owner.Center, pitch: 0.8f);
 
                                 Projectile.NewProjectileFromThis<WhiteGardeniaPowerfulShoot>(Projectile.Center, (targetPos - Owner.MountedCenter).SafeNormalize(Vector2.Zero) * 16
-                                    , Owner.GetWeaponDamage(Owner.HeldItem) * 5, Owner.HeldItem.knockBack);
+                                    , Owner.GetWeaponDamage(Item) * 5, Item.knockBack);
                             }
                         }
 
@@ -306,13 +301,13 @@ namespace Coralite.Content.Items.Misc_Shoot
                 }
 
                 if (!collide)
-                    AimPosition = MousePos;
+                    AimPosition = InMousePos;
             }
         }
 
         public int? FindTarget()
         {
-            Vector2 mouseWorld = MousePos;
+            Vector2 mouseWorld = InMousePos;
             for (int i = 0; i < Main.maxNPCs; i++)
             {
                 NPC npc = Main.npc[i];
@@ -321,7 +316,7 @@ namespace Coralite.Content.Items.Misc_Shoot
 
                 if (Collision.CanHitLine(Projectile.Center, 1, 1, npc.Center, 1, 1) &&
                     (npc.Hitbox.Contains((int)mouseWorld.X, (int)mouseWorld.Y)
-                    || Collision.CheckAABBvLineCollision(npc.TopLeft - npc.Size / 2, npc.Size * 2, Projectile.Center, MousePos)))
+                    || Collision.CheckAABBvLineCollision(npc.TopLeft - npc.Size / 2, npc.Size * 2, Projectile.Center, InMousePos)))
                     return i;
             }
 
@@ -336,7 +331,7 @@ namespace Coralite.Content.Items.Misc_Shoot
             Vector2 dir = TargetRot.ToRotationVector2();
 
             Dust.NewDustPerfect(Projectile.Center + dir * Main.rand.NextFloat(-40, 40) + Main.rand.NextVector2Circular(32, 32), ModContent.DustType<PixelPoint>()
-                , dir * (Main.rand.NextFromList(-3, 3) + Main.rand.NextFloat(-1, 1)), newColor:Main.rand.NextFromList( WhiteGardenia.LightGreen,Color.Silver)
+                , dir * (Main.rand.NextFromList(-3, 3) + Main.rand.NextFloat(-1, 1)), newColor: Main.rand.NextFromList(WhiteGardenia.LightGreen, Color.Silver)
                 , Scale: Main.rand.NextFloat(1, 2));
         }
 
@@ -344,8 +339,8 @@ namespace Coralite.Content.Items.Misc_Shoot
         {
             MaxTime = Owner.itemTimeMax;
             Timer = 0;
-            Owner.direction = MousePos.X > Owner.Center.X ? 1 : -1;
-            TargetRot = (MousePos - Owner.Center).ToRotation() + (DirSign > 0 ? 0f : MathHelper.Pi);
+            Owner.direction = InMousePos.X > Owner.Center.X ? 1 : -1;
+            TargetRot = (InMousePos - Owner.Center).ToRotation() + (DirSign > 0 ? 0f : MathHelper.Pi);
 
             Projectile.netUpdate = true;
             State = 2;
@@ -356,8 +351,8 @@ namespace Coralite.Content.Items.Misc_Shoot
             MaxTime = 30;
 
             Timer = 0;
-            Owner.direction = MousePos.X > Owner.Center.X ? 1 : -1;
-            TargetRot = (MousePos - Owner.Center).ToRotation() + (DirSign > 0 ? 0f : MathHelper.Pi);
+            Owner.direction = InMousePos.X > Owner.Center.X ? 1 : -1;
+            TargetRot = (InMousePos - Owner.Center).ToRotation() + (DirSign > 0 ? 0f : MathHelper.Pi);
             Projectile.frame = 0;
 
             Projectile.netUpdate = true;
@@ -425,7 +420,7 @@ namespace Coralite.Content.Items.Misc_Shoot
 
             Texture2D numberTex = NumberTex.Value;
 
-            if (Owner.HeldItem.ModItem is WhiteGardenia gardenia)
+            if (Item.ModItem is WhiteGardenia gardenia)
             {
                 int count = gardenia.shootCount;
 
@@ -529,7 +524,7 @@ namespace Coralite.Content.Items.Misc_Shoot
         }
     }
 
-    public class WhiteGardeniaFloat : ModProjectile
+    public class WhiteGardeniaFloat : BaseHeldProj
     {
         public override string Texture => AssetDirectory.Misc_Shoot + Name;
 
@@ -545,8 +540,6 @@ namespace Coralite.Content.Items.Misc_Shoot
 
         public Vector2 offset;
         public SecondOrderDynamics_Vec2 IdleMove;
-
-        public Player Owner => Main.player[Projectile.owner];
 
         public override void SetStaticDefaults()
         {
@@ -575,7 +568,7 @@ namespace Coralite.Content.Items.Misc_Shoot
                 AttackCount = -i * AttackCountMax;
             }
 
-            if (Owner.HeldItem.type != ModContent.ItemType<WhiteGardenia>())
+            if (Item.type != ModContent.ItemType<WhiteGardenia>())
             {
                 Projectile.Kill();
                 return;
@@ -597,7 +590,7 @@ namespace Coralite.Content.Items.Misc_Shoot
                     {
                         IdleMove ??= new SecondOrderDynamics_Vec2(2.5f, 0.9f, 0.5f, Owner.MountedCenter);
 
-                        Helper.GetMyGroupIndexAndFillBlackList(Projectile, out var index2, out var totalIndexesInGroup2);
+                        Helper.GetMyGroupIndexAndFillBlackList(Projectile, out var index2, out _);
 
                         Vector2 position = Owner.Center + new Vector2((index2 == 0 ? -1 : 1) * 40, -60);
                         Projectile.Center = IdleMove.Update(1 / 60f, position);
@@ -651,12 +644,12 @@ namespace Coralite.Content.Items.Misc_Shoot
                                 Helper.PlayPitched(CoraliteSoundID.LaserGun_Item158, Projectile.Center);
 
                             Projectile.NewProjectileFromThis<WhiteGardeniaFloatLaser>(Projectile.Center, Vector2.Zero
-                                , (int)(Owner.GetWeaponDamage(Owner.HeldItem) * 0.7f), Projectile.knockBack, Projectile.whoAmI, Target);
+                                , (int)(Owner.GetWeaponDamage(Item) * 0.7f), Projectile.knockBack, Projectile.whoAmI, Target);
 
                             AttackCount++;
 
                             if (AttackCount > AttackCountMax - 1
-                                && Owner.HeldItem.ModItem is WhiteGardenia gardenia && gardenia.shootCount < 10)
+                                && Item.ModItem is WhiteGardenia gardenia && gardenia.shootCount < 10)
                             {
                                 AttackCount = -AttackCountMax;
                                 gardenia.shootCount++;
@@ -710,13 +703,13 @@ namespace Coralite.Content.Items.Misc_Shoot
             return Projectile.MinionFindTarget();
         }
 
-        public override void SendExtraAI(BinaryWriter writer)
+        public override void NetHeldSend(BinaryWriter writer)
         {
             writer.Write(RandomAngle);
             writer.Write(Length);
         }
 
-        public override void ReceiveExtraAI(BinaryReader reader)
+        public override void NetHeldReceive(BinaryReader reader)
         {
             RandomAngle = reader.ReadSingle();
             Length = reader.ReadSingle();

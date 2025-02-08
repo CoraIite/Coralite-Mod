@@ -4,10 +4,8 @@ using Coralite.Core.Prefabs.Tiles;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Coralite.Helpers;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.ID;
-using Terraria.ObjectData;
 
 namespace Coralite.Content.Items.Materials
 {

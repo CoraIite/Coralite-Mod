@@ -1,14 +1,4 @@
-﻿using Coralite.Core.Loaders;
-using Coralite.Core.Systems.MagikeSystem;
-using Coralite.Helpers;
-using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
-using System;
-using Terraria;
-using Terraria.ModLoader.UI;
-using Terraria.UI;
-
-namespace Coralite.Content.UI.MagikeApparatusPanel
+﻿namespace Coralite.Content.UI.MagikeApparatusPanel
 {
     /// <summary>
     /// 完全和贴图配合的类

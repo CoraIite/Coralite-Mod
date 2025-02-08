@@ -81,7 +81,7 @@ namespace Coralite.Content.Items.Shadow
 
         public ShadowSwordHeldProj() : base(MathHelper.PiOver4, trailCount: 34) { }
 
-        public override void SetDefs()
+        public override void SetSwingProperty()
         {
             Projectile.localNPCHitCooldown = 48;
             Projectile.width = 40;
@@ -108,9 +108,9 @@ namespace Coralite.Content.Items.Shadow
             GradientTexture = null;
         }
 
-        protected override void Initializer()
+        protected override void InitializeSwing()
         {
-            if (Main.myPlayer == Projectile.owner)
+            if (Projectile.IsOwnedByLocalPlayer())
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
 
             Projectile.extraUpdates = 3;
@@ -126,7 +126,7 @@ namespace Coralite.Content.Items.Shadow
                     Projectile.scale = 0.9f;
                     break;
             }
-            base.Initializer();
+            base.InitializeSwing();
         }
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) => false;

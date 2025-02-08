@@ -1,6 +1,6 @@
 ﻿using Coralite.Core;
-using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -37,7 +37,7 @@ namespace Coralite.Content.Items.Icicle
         public override void OnSpawn(IEntitySource source)
         {
             Projectile.Center = Owner.Center + new Vector2(DirSign * 16, -16);
-            if (Main.myPlayer == Projectile.owner)
+            if (Projectile.IsOwnedByLocalPlayer())
             {
                 //大概是手持法杖的角度
                 Projectile.rotation = Rotate = (DirSign * 0.3f) - (Owner.gravDir * 1.57f) + 0.785f;
@@ -69,7 +69,7 @@ namespace Coralite.Content.Items.Icicle
 
                 if (Timer == SWING_TIME)
                 {
-                    if (Main.myPlayer == Projectile.owner)
+                    if (Projectile.IsOwnedByLocalPlayer())
                     {
                         Rotate = (Main.MouseWorld - Projectile.Center).ToRotation() + 0.785f;
                         Length = (Projectile.Center - Owner.Center).Length();
@@ -86,7 +86,7 @@ namespace Coralite.Content.Items.Icicle
                 float factor = 1 - ((Timer - SWING_TIME) / 15);
                 visualEffectScale = factor * 0.5f;
 
-                if (Main.myPlayer == Projectile.owner && (int)Timer == 35)
+                if (Projectile.IsOwnedByLocalPlayer() && (int)Timer == 35)
                 {
                     Shoot = 1f;
                     Projectile.netUpdate = true;

@@ -50,7 +50,7 @@ namespace Coralite.Helpers
         /// </summary>
         /// <param name="itemLoot"></param>
         /// <param name="mustContain">抽奖袋中必须包含的物品</param>
-        public static void AddToLootBag<T1,T2>(this ItemLoot itemLoot, int mustContain) where T1 : ModItem where T2:ModItem
+        public static void AddToLootBag<T1, T2>(this ItemLoot itemLoot, int mustContain) where T1 : ModItem where T2 : ModItem
         {
             foreach (var rule in itemLoot.Get())
             {

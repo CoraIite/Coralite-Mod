@@ -1,11 +1,4 @@
-﻿using Coralite.Core;
-using Coralite.Core.Prefabs.Projectiles;
-using Coralite.Helpers;
-using Microsoft.Xna.Framework.Graphics;
-using System;
-using Terraria;
-
-namespace Coralite.Content.Items.Misc_Shoot
+﻿namespace Coralite.Content.Items.Misc_Shoot
 {
     //public class Damnation : ModItem
     //{

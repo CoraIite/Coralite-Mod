@@ -2,8 +2,8 @@
 using Coralite.Content.Items.Materials;
 using Coralite.Core;
 using Coralite.Core.Configs;
-using InnoVault.Trails;
 using Coralite.Helpers;
+using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
 using System.Linq;
 using Terraria;
@@ -157,10 +157,10 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 else
                     scale = Vector2.SmoothStep(new Vector2(0.5f, 0.7f), new Vector2(1.5f, 1.5f), (factor - 0.8f) / 0.2f);
 
-                if (AttackTime == 1 && Main.myPlayer == Projectile.owner)
+                if (AttackTime == 1 && Projectile.IsOwnedByLocalPlayer())
                 {
                     Projectile.NewProjectileFromThis<PyropeProj>(Projectile.Center,
-                        (Main.MouseWorld - Projectile.Center).SafeNormalize(Vector2.Zero) * 6.5f, Owner.GetWeaponDamage(Owner.HeldItem), Projectile.knockBack);
+                        (Main.MouseWorld - Projectile.Center).SafeNormalize(Vector2.Zero) * 6.5f, Owner.GetWeaponDamage(Item), Projectile.knockBack);
 
                     Helper.PlayPitched("Crystal/CrystalBling", 0.4f, 0, Projectile.Center);
 

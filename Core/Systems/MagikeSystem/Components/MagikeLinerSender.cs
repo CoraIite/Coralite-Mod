@@ -279,7 +279,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             for (int i = _receivers.Count - 1; i >= 0; i--)
             {
-                if (i + 1 > MaxConnect || !MagikeHelper.ByTopLeftnGetTP(_receivers[i],out _))
+                if (i + 1 > MaxConnect || !MagikeHelper.ByTopLeftnGetTP(_receivers[i], out _))
                 {
                     _receivers.RemoveAt(i);
                     continue;

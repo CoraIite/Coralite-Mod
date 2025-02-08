@@ -40,7 +40,7 @@ namespace Coralite.Content.CoraliteNotes
             BookPanel.SetPosition();
             BookPanel.InitPageGroups();
             BookPanel.InitGroups();
-            BookPanel.InitArrows(ModContent.Request<Texture2D>(AssetDirectory.UI+ "PageArrowLeft",ReLogic.Content.AssetRequestMode.ImmediateLoad)
+            BookPanel.InitArrows(ModContent.Request<Texture2D>(AssetDirectory.UI + "PageArrowLeft", ReLogic.Content.AssetRequestMode.ImmediateLoad)
                 , ModContent.Request<Texture2D>(AssetDirectory.UI + "PageArrowRight", ReLogic.Content.AssetRequestMode.ImmediateLoad));
             BookPanel.OnScrollWheel += PlaySound;
             Append(BookPanel);

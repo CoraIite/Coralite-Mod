@@ -133,7 +133,7 @@ namespace Coralite.Content.Items.Thunder
 
         public override void DashAttackAI()
         {
-            LockOwnerItemTime();
+            Owner.itemTime = Owner.itemAnimation = 2;
 
             if (Timer < DashTime)
                 Owner.velocity.X = Math.Sign(Owner.velocity.X) * 48;
@@ -149,7 +149,7 @@ namespace Coralite.Content.Items.Thunder
             {
                 SoundEngine.PlaySound(CoraliteSoundID.Bow2_Item102, Projectile.Center);
                 Projectile.NewProjectileFromThis<ReverseFlashProj>(Projectile.Center, Rotation.ToRotationVector2() * 16,
-                    Owner.GetWeaponDamage(Owner.HeldItem), Owner.HeldItem.knockBack, -1);
+                    Owner.GetWeaponDamage(Item), Item.knockBack, -1);
             }
             if (Timer > DashTime + 20)
                 Projectile.Kill();

@@ -2,11 +2,11 @@
 using Coralite.Content.UI;
 using Coralite.Core;
 using Coralite.Core.Loaders;
-using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
@@ -109,13 +109,13 @@ namespace Coralite.Content.Items.MagikeSeries1
 
         public override void AI()
         {
-            if (Owner.HeldItem.ModItem is not MagConnectStaff)
+            if (Item.ModItem is not MagConnectStaff)
             {
                 Projectile.Kill();
                 return;
             }
 
-            LockOwnerItemTime(5);
+            Owner.itemTime = Owner.itemAnimation = 5;
 
             Projectile.timeLeft = 2;
 

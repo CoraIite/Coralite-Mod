@@ -2,8 +2,8 @@
 using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
-using InnoVault.Trails;
 using Coralite.Helpers;
+using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -24,9 +24,9 @@ namespace Coralite.Content.Items.HyacinthSeries
             return x * MathF.Sin(x * x * x) / 1.186f;
         }
 
-        public override void Initialize()
+        public override void InitializeGun()
         {
-            base.Initialize();
+            base.InitializeGun();
             float rotation = TargetRot + (DirSign > 0 ? 0 : MathHelper.Pi);
             Vector2 dir = rotation.ToRotationVector2();
             Vector2 center = Projectile.Center + (dir * 32);
@@ -136,7 +136,7 @@ namespace Coralite.Content.Items.HyacinthSeries
 
             if (timer == 6 || timer == 26 || timer == 46)
             {
-                if (Main.myPlayer == Projectile.owner && Helper.FindClosestEnemy(Projectile.Center, 600, npc => npc.active && !npc.friendly && npc.CanBeChasedBy()) is not null)
+                if (Projectile.IsOwnedByLocalPlayer() && Helper.FindClosestEnemy(Projectile.Center, 600, npc => npc.active && !npc.friendly && npc.CanBeChasedBy()) is not null)
                 {
                     Vector2 center = Projectile.Top + ((Projectile.rotation + 1.57f).ToRotationVector2() * 40);
                     Vector2 dir = (center - Projectile.Top).SafeNormalize(Vector2.Zero);
@@ -200,7 +200,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             if (target.HasBuff<SnowDebuff>())
             {
                 target.DelBuff(target.FindBuffIndex(ModContent.BuffType<SnowDebuff>()));
-                if (Main.myPlayer == Projectile.owner)
+                if (Projectile.IsOwnedByLocalPlayer())
                 {
                     float vel = Main.rand.NextFloat(2.5f, 3.5f);
                     Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center + new Vector2(Main.rand.Next(-16, 16), Main.rand.Next(0, 16)), Vector2.UnitY * vel, ModContent.ProjectileType<SnowdropBloom>(), (int)(Projectile.damage * 0.75f), Projectile.knockBack, Projectile.owner);

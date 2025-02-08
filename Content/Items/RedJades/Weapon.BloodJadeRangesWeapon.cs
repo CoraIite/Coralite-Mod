@@ -2,10 +2,10 @@
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Configs;
-using Coralite.Core.Prefabs.Projectiles;
-using InnoVault.Trails;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using InnoVault.PRT;
+using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -326,7 +326,7 @@ namespace Coralite.Content.Items.RedJades
             {
                 if (Timer == 0)
                 {
-                    Angle = ToMouseAngle - (Owner.direction * 1f);
+                    Angle = ToMouseA - (Owner.direction * 1f);
                 }
                 if (Timer < 12)
                 {

@@ -5,6 +5,7 @@ using Coralite.Core.Attributes;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.CameraSystem;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -125,7 +126,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         private Vector2 arrowPos;
 
         [AutoLoadTexture(Name = "RadiantSun_Glow")]
-        public static ATex GlowTex { get;private set; }
+        public static ATex GlowTex { get; private set; }
         [AutoLoadTexture(Name = "RadiantSunArrow")]
         public static ATex ArrowTex { get; private set; }
         [AutoLoadTexture(Name = "RadiantSunLight")]
@@ -183,7 +184,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             if (Owner.controlUseItem && Timer < DashTime + 180)
             {
-                if (Main.myPlayer == Projectile.owner)
+                if (Projectile.IsOwnedByLocalPlayer())
                 {
                     if (Main.rand.NextBool(10))
                     {
@@ -199,7 +200,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             {
                 SoundEngine.PlaySound(CoraliteSoundID.Bow2_Item102, Owner.Center);
 
-                if (Main.myPlayer == Projectile.owner)
+                if (Projectile.IsOwnedByLocalPlayer())
                 {
                     State = 1;
                     Timer = 0;
@@ -209,7 +210,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                     PRTLoader.NewParticle<RadiantSunFlow>(Projectile.Center, dir * 8, Color.White, 0.9f);
 
                     Projectile.NewProjectileFromThis<RadiantSunLaser>(Projectile.Center, Projectile.rotation.ToRotationVector2() * 10
-                        , (int)(Owner.GetWeaponDamage(Owner.HeldItem) * (Main.dayTime ? 1.5f : 1.3f)), Projectile.knockBack);
+                        , (int)(Owner.GetWeaponDamage(Item) * (Main.dayTime ? 1.5f : 1.3f)), Projectile.knockBack);
                 }
             }
         }
@@ -241,7 +242,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             }
         }
 
-        public override void Initialize()
+        public override void InitializeDashBow()
         {
             RecordAngle = Rotation;
         }
@@ -402,7 +403,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 if (Timer < ReadyTime)
                 {
                     LaserHeight = Helper.Lerp(0, 0.5f, Timer / ReadyTime);
-                    Vector2 pos = MousePos;
+                    Vector2 pos = InMousePos;
                     Main.player[Projectile.owner].LimitPointToPlayerReachableArea(ref pos);
                     recordPos = recordPos.MoveTowards(pos, 8);
                     LaserRotation = (recordPos - Projectile.Center).ToRotation();

@@ -19,7 +19,7 @@ namespace Coralite.Core.Systems.BossSystems
             string key = "赤色的矿物出现了";
             if (Main.netMode == NetmodeID.SinglePlayer)
                 Main.NewText(Language.GetTextValue(key), Coralite.RedJadeRed);
-            else if (Main.netMode == NetmodeID.Server)
+            else if (VaultUtils.isServer)
                 ChatHelper.BroadcastChatMessage(NetworkText.FromKey(key), Coralite.RedJadeRed);
 
             //生成赤玉矿物

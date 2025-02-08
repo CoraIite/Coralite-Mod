@@ -152,13 +152,13 @@ namespace Coralite.Content.Items.ThyphionSeries
         public override int GetItemType()
             => ItemType<Glaciate>();
 
-        public override void Initialize()
+        public override void InitializeDashBow()
         {
             RecordAngle = Rotation;
 
             rotAngle = Special switch
             {
-                1=> 0,
+                1 => 0,
                 _ => 0.5f,
             };
         }
@@ -169,7 +169,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             if (Timer < DashTime + 1)
             {
-                if (Main.myPlayer == Projectile.owner)
+                if (Projectile.IsOwnedByLocalPlayer())
                 {
                     Owner.itemTime = Owner.itemAnimation = 2;
                     Rotation += MathHelper.TwoPi / DashTime;
@@ -178,7 +178,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 if (Main.rand.NextBool())
                 {
                     Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(40, 40), DustType<PixelPoint>()
-                        , -RecordAngle.ToRotationVector2() * Main.rand.NextFloat(1, 3), newColor: Main.rand.NextFromList(Color.LightCyan, Coralite.IcicleCyan),Scale:2);
+                        , -RecordAngle.ToRotationVector2() * Main.rand.NextFloat(1, 3), newColor: Main.rand.NextFromList(Color.LightCyan, Coralite.IcicleCyan), Scale: 2);
                 }
                 else
                 {
@@ -189,20 +189,20 @@ namespace Coralite.Content.Items.ThyphionSeries
 
                 rotAngle += 0.4f / (DashTime + 1);
 
-                LockOwnerItemTime();
+                Owner.itemTime = Owner.itemAnimation = 2;
             }
             else
             {
                 if (DownLeft && SPTimer == 0)
                 {
-                    if (Main.myPlayer == Projectile.owner)
+                    if (Projectile.IsOwnedByLocalPlayer())
                     {
                         Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
-                        Rotation = Rotation.AngleLerp(ToMouseAngle, 0.15f);
+                        Rotation = Rotation.AngleLerp(ToMouseA, 0.15f);
                     }
 
                     Projectile.timeLeft = 30;
-                    LockOwnerItemTime();
+                    Owner.itemTime = Owner.itemAnimation = 2;
                 }
                 else
                 {
@@ -213,10 +213,10 @@ namespace Coralite.Content.Items.ThyphionSeries
                         Helper.PlayPitched(CoraliteSoundID.FireStaffSummon_Item77, Projectile.Center);
 
                         //射冰晶波
-                        Projectile.NewProjectileFromThis<GlaciateWave>(Projectile.Center, UnitToMouseV * 24, (int)(Owner.GetWeaponDamage(Owner.HeldItem)*1.5f)
+                        Projectile.NewProjectileFromThis<GlaciateWave>(Projectile.Center, UnitToMouseV * 24, (int)(Owner.GetWeaponDamage(Item) * 1.5f)
                             , Projectile.knockBack);
 
-                        if (Owner.HeldItem.ModItem is Glaciate glaciate)
+                        if (Item.ModItem is Glaciate glaciate)
                         {
                             glaciate.powerfulAttack = true;
                         }
@@ -226,16 +226,16 @@ namespace Coralite.Content.Items.ThyphionSeries
                             Main.instance.CameraModifiers.Add(new PunchCameraModifier(Projectile.Center, Projectile.rotation.ToRotationVector2(), 8, 12, 10, 500));
                         }
 
-                        Rotation = ToMouseAngle;
+                        Rotation = ToMouseA;
                     }
 
-                    if (Main.myPlayer == Projectile.owner)
+                    if (Projectile.IsOwnedByLocalPlayer())
                     {
                         Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
                         if (SPTimer < 8)
                             Rotation -= Owner.direction * 0.05f;
                         else
-                            Rotation = Rotation.AngleLerp(ToMouseAngle, 0.15f);
+                            Rotation = Rotation.AngleLerp(ToMouseA, 0.15f);
                     }
 
                     handOffset = Helper.Lerp(handOffset, 0, 0.1f);
@@ -293,7 +293,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             Texture2D lineTex = TextureAssets.FishingLine.Value;
             Rectangle dest = new Rectangle((int)TopPos.X, (int)TopPos.Y, lineTex.Width, (int)Vector2.Distance(TopPos, bottomPos));
-            Main.spriteBatch.Draw(lineTex, dest, null, Color.Cyan, (bottomPos - TopPos).ToRotation()-1.57f, new Vector2(lineTex.Width / 2, 0), 0, 0);
+            Main.spriteBatch.Draw(lineTex, dest, null, Color.Cyan, (bottomPos - TopPos).ToRotation() - 1.57f, new Vector2(lineTex.Width / 2, 0), 0, 0);
 
             //绘制下颚
             Vector2 origin = framebox.Size() / 2;

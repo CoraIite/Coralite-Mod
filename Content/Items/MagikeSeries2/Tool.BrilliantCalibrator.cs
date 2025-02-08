@@ -3,12 +3,12 @@ using Coralite.Content.Items.Materials;
 using Coralite.Content.Raritys;
 using Coralite.Core;
 using Coralite.Core.Configs;
-using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -86,7 +86,7 @@ namespace Coralite.Content.Items.MagikeSeries2
         {
             Projectile.Center = Owner.Center;
 
-            if (Owner.HeldItem.ModItem is not BrilliantCalibrator)
+            if (Item.ModItem is not BrilliantCalibrator)
             {
                 Projectile.Kill();
                 return;
@@ -94,7 +94,7 @@ namespace Coralite.Content.Items.MagikeSeries2
 
             if (Owner.channel)
             {
-                LockOwnerItemTime(5);
+                Owner.itemTime = Owner.itemAnimation = 5;
                 TargetPoint = Main.MouseWorld.ToTileCoordinates16();
 
                 //限制范围

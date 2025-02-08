@@ -18,7 +18,7 @@ namespace Coralite.Content.Items.Icicle
 
         }
 
-        public override void SetDefs()
+        public override void SetSwingProperty()
         {
             Projectile.DamageType = DamageClass.Melee;
             Projectile.localNPCHitCooldown = 22;
@@ -30,9 +30,9 @@ namespace Coralite.Content.Items.Icicle
             Projectile.coldDamage = true;
         }
 
-        protected override void Initializer()
+        protected override void InitializeSwing()
         {
-            if (Main.myPlayer == Projectile.owner)
+            if (Projectile.IsOwnedByLocalPlayer())
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
 
             Projectile.extraUpdates = 1;
@@ -63,7 +63,7 @@ namespace Coralite.Content.Items.Icicle
                     break;
             }
 
-            base.Initializer();
+            base.InitializeSwing();
         }
 
         protected override void OnSlash()

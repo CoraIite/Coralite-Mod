@@ -103,7 +103,7 @@ namespace Coralite.Content.Items.FlyingShields
             base.OnHitNPC(target, hit, damageDone);
             if (State != (int)FlyingShieldStates.Backing)
             {
-                if (Owner.HeldItem.ModItem is PearlRay pr)
+                if (Item.ModItem is PearlRay pr)
                     pr.PowerfulAttack = true;
             }
         }
@@ -136,7 +136,7 @@ namespace Coralite.Content.Items.FlyingShields
         {
             DistanceToOwner /= 3;
             SoundEngine.PlaySound(CoraliteSoundID.Jellyfish_NPCHit25, Projectile.Center);
-            if (Owner.HeldItem.ModItem is PearlRay pr)
+            if (Item.ModItem is PearlRay pr)
                 pr.PowerfulAttack = true;
         }
 

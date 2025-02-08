@@ -1,4 +1,3 @@
-using Coralite.Content.Items.FlyingShields;
 using Coralite.Content.Items.Materials;
 using Coralite.Content.Items.Misc_Melee;
 using Coralite.Content.ModPlayers;
@@ -8,7 +7,6 @@ using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
-using Terraria.GameContent.ItemDropRules;
 using Terraria.GameContent.Items;
 using Terraria.ID;
 using Terraria.Localization;
@@ -46,7 +44,7 @@ namespace Coralite.Content.GlobalItems
             DashPriority = this.GetLocalization("DashPriority");
             DashPriorityLevel = new LocalizedText[5];
             for (int i = 0; i < 5; i++)
-                DashPriorityLevel[i]= this.GetLocalization("DashPriorityLevel"+i);
+                DashPriorityLevel[i] = this.GetLocalization("DashPriorityLevel" + i);
         }
 
         public override void Unload()
@@ -284,7 +282,7 @@ namespace Coralite.Content.GlobalItems
                     >= IDashable.AccessoryDashHigh and < 40 => DashPriorityLevel[1].Value,//较高
                     _ => DashPriorityLevel[0].Value,//最高
                 };
-                TooltipLine line = new TooltipLine(Mod, "DashPriority", DashPriority.Value+level);
+                TooltipLine line = new TooltipLine(Mod, "DashPriority", DashPriority.Value + level);
                 tooltips.Add(line);
             }
         }

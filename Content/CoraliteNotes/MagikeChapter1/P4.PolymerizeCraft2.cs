@@ -25,7 +25,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
             //描述段1
             Helper.DrawTextParagraph(spriteBatch, ConnectToPedestal.Value, PageWidth, new Vector2(Position.X, pos.Y), out Vector2 textSize);
             ATex tex1 = CoraliteAssets.MagikeChapter1.ConnectToPedestal;
-            pos.Y += textSize.Y + 10 + tex1.Height()  / 2;
+            pos.Y += textSize.Y + 10 + tex1.Height() / 2;
 
             //绘制图1
             tex1.Value.QuickCenteredDraw(spriteBatch, pos);

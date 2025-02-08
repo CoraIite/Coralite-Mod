@@ -6,6 +6,7 @@ using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.CameraSystem;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -112,7 +113,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             float angle = (Main.MouseWorld - Player.Center).ToRotation();
             const float angleLimit = 0.2f;
 
-            if ((angle > -MathHelper.PiOver2 - angleLimit && angle < -MathHelper.PiOver2 + angleLimit) 
+            if ((angle > -MathHelper.PiOver2 - angleLimit && angle < -MathHelper.PiOver2 + angleLimit)
                 || (angle > MathHelper.PiOver2 - angleLimit && angle < MathHelper.PiOver2 + angleLimit))
             {
                 dashDirection = Math.Sign(Main.MouseWorld.X - Player.Center.X);
@@ -170,7 +171,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         public override int GetItemType()
             => ItemType<FullMoon>();
 
-        public override void Initialize()
+        public override void InitializeDashBow()
         {
             RecordAngle = Rotation;
         }
@@ -200,7 +201,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public override void DashAttackAI()
         {
-            LockOwnerItemTime();
+            Owner.itemTime = Owner.itemAnimation = 2;
 
             switch (DashState)
             {
@@ -252,7 +253,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                         if (Projectile.IsOwnedByLocalPlayer())//生成弹幕
                         {
                             Projectile.NewProjectileFromThis<FullMoonStrike>(Projectile.Center, Vector2.Zero
-                                , (int)(Owner.GetWeaponDamage(Owner.HeldItem) * 4f), 10, Projectile.whoAmI);
+                                , (int)(Owner.GetWeaponDamage(Item) * 4f), 10, Projectile.whoAmI);
                         }
                         return;
                     }
@@ -261,10 +262,10 @@ namespace Coralite.Content.Items.ThyphionSeries
                 case 2://射击阶段
                     if (DownLeft && SPTimer == 0)
                     {
-                        if (Main.myPlayer == Projectile.owner)
+                        if (Projectile.IsOwnedByLocalPlayer())
                         {
                             Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
-                            Rotation = Rotation.AngleLerp(ToMouseAngle, 0.15f);
+                            Rotation = Rotation.AngleLerp(ToMouseA, 0.15f);
                         }
 
                         Projectile.timeLeft = 30;
@@ -277,7 +278,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                             Helper.PlayPitched(CoraliteSoundID.CrystalSerpent_Item109, Projectile.Center, pitchAdjust: 0.8f);
                             Helper.PlayPitched(CoraliteSoundID.IceMagic_Item28, Projectile.Center, pitchAdjust: -0.2f);
 
-                            Rotation = ToMouseAngle;
+                            Rotation = ToMouseA;
 
                             for (int i = 0; i < Main.maxProjectiles; i++)//将弹幕设置为射出状态
                             {
@@ -301,7 +302,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                                 Owner.velocity.Y *= 0.5f;
                         }
 
-                        if (Main.myPlayer == Projectile.owner)
+                        if (Projectile.IsOwnedByLocalPlayer())
                         {
                             Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
                         }
@@ -411,7 +412,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             Helper.PlayPitched(CoraliteSoundID.Ding_Item4, Projectile.Center, pitchAdjust: -0.3f);
 
             if (target != null && target.CanBeChasedBy())//踢一脚
-                target.SimpleStrikeNPC(Owner.GetWeaponDamage(Owner.HeldItem), Owner.direction, knockBack: 10, damageType: DamageClass.Ranged);
+                target.SimpleStrikeNPC(Owner.GetWeaponDamage(Item), Owner.direction, knockBack: 10, damageType: DamageClass.Ranged);
 
             if (!VisualEffectSystem.HitEffect_Dusts)
                 return;
@@ -653,7 +654,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             SpriteBatch spriteBatch = Main.spriteBatch;
             Effect effect = Filters.Scene["TurbulenceArrow"].GetShader().Shader;
 
-            effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMatrix());
+            effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * 0.03f);
             effect.Parameters["uTimeG"].SetValue(Main.GlobalTimeWrappedHourly * 0.1f);
             effect.Parameters["udissolveS"].SetValue(1f);

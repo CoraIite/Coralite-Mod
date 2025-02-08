@@ -7,6 +7,7 @@ using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.CameraSystem;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using InnoVault.PRT;
 using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
@@ -60,7 +61,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             if (SpecialAttack)
             {
                 SpecialAttack = false;
-                Helper.PlayPitched(CoraliteSoundID.TerraBlade_Item60, player.Center,pitch:0.4f);
+                Helper.PlayPitched(CoraliteSoundID.TerraBlade_Item60, player.Center, pitch: 0.4f);
 
                 for (int i = -1; i < 2; i++)
                 {
@@ -78,7 +79,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             }
 
             Projectile.NewProjectile(new EntitySource_ItemUse(player, Item)
-                , player.Center, Vector2.Zero, ProjectileType<SolunarHeldProj>(), damage, knockback, player.whoAmI, rot,sp);
+                , player.Center, Vector2.Zero, ProjectileType<SolunarHeldProj>(), damage, knockback, player.whoAmI, rot, sp);
 
             return false;
         }
@@ -173,9 +174,9 @@ namespace Coralite.Content.Items.ThyphionSeries
                 }
 
                 //生成手持弹幕
-                Vector2 velocity = dashDirection == 0 ?new Vector2(0,dashDirection2): new Vector2(dashDirection, 0);
+                Vector2 velocity = dashDirection == 0 ? new Vector2(0, dashDirection2) : new Vector2(dashDirection, 0);
 
-                if (dashDirection!=0)
+                if (dashDirection != 0)
                 {
                     Projectile.NewProjectile(Player.GetSource_ItemUse(Player.HeldItem), Player.Center, velocity, ProjectileType<SolunarHeldProj>(),
                         Player.HeldItem.damage, Player.HeldItem.knockBack, Player.whoAmI, newVelocity.ToRotation(), 1, 22);
@@ -234,7 +235,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         public override int GetItemType()
             => ItemType<Solunar>();
 
-        public override void Initialize()
+        public override void InitializeDashBow()
         {
             RecordAngle = Rotation;
         }
@@ -243,7 +244,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public override void DashAttackAI()
         {
-            LockOwnerItemTime();
+            Owner.itemTime = Owner.itemAnimation = 2;
 
             switch (DashState)
             {
@@ -315,7 +316,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                         {
                             for (int i = -1; i < 2; i++)
                             {
-                                int damage = i == 0 ? (int)(Owner.GetWeaponDamage(Owner.HeldItem) * 3f) : Owner.GetWeaponDamage(Owner.HeldItem);
+                                int damage = i == 0 ? (int)(Owner.GetWeaponDamage(Item) * 3f) : Owner.GetWeaponDamage(Item);
                                 int p = Projectile.NewProjectileFromThis<SolunarStrike>(Projectile.Center, Vector2.Zero
                                      , damage, 10, Projectile.whoAmI);
 
@@ -329,10 +330,10 @@ namespace Coralite.Content.Items.ThyphionSeries
                 case 2://射击阶段
                     if (DownLeft && SPTimer == 0)
                     {
-                        if (Main.myPlayer == Projectile.owner)
+                        if (Projectile.IsOwnedByLocalPlayer())
                         {
                             Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
-                            Rotation = Rotation.AngleLerp(ToMouseAngle, 0.15f);
+                            Rotation = Rotation.AngleLerp(ToMouseA, 0.15f);
                         }
 
                         Projectile.timeLeft = 30;
@@ -346,7 +347,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                             Helper.PlayPitched(CoraliteSoundID.TerraBlade_Item60, Projectile.Center, pitchAdjust: -0.2f);
 
                             SetOwnerSPAttack();
-                            Rotation = ToMouseAngle;
+                            Rotation = ToMouseA;
 
                             for (int i = 0; i < Main.maxProjectiles; i++)//将弹幕设置为射出状态
                             {
@@ -387,7 +388,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
                             SetOwnerSPAttack();
 
-                            Projectile.NewProjectileFromThis<SolunarBallLaser>(Projectile.Center, new Vector2(0, -16), Owner.GetWeaponDamage(Owner.HeldItem), 0);
+                            Projectile.NewProjectileFromThis<SolunarBallLaser>(Projectile.Center, new Vector2(0, -16), Owner.GetWeaponDamage(Item), 0);
                             handOffset = -30;
                         }
 
@@ -406,9 +407,9 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public void SetOwnerSPAttack()
         {
-            if (Owner.HeldItem.type==ItemType<Solunar>())
+            if (Item.type == ItemType<Solunar>())
             {
-                (Owner.HeldItem.ModItem as Solunar).SpecialAttack = true;
+                (Item.ModItem as Solunar).SpecialAttack = true;
             }
         }
 
@@ -489,7 +490,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 if (proj.Colliding(proj.getRect(), rect))
                 {
                     JustCollideNPC(null);
-                        return true;
+                    return true;
                 }
             }
 
@@ -497,7 +498,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             {
                 NPC npc = Main.npc[i];
 
-                if (!npc.active || npc.friendly || npc.dontTakeDamage||npc.immortal)
+                if (!npc.active || npc.friendly || npc.dontTakeDamage || npc.immortal)
                     continue;
 
                 if (Projectile.Colliding(rect, npc.getRect()))
@@ -520,7 +521,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             Helper.PlayPitched(CoraliteSoundID.Ding_Item4, Projectile.Center, pitchAdjust: -0.3f);
 
             if (target != null && target.CanBeChasedBy())//踢一脚
-                target.SimpleStrikeNPC(Owner.GetWeaponDamage(Owner.HeldItem), Owner.direction, knockBack: 10, damageType: DamageClass.Ranged);
+                target.SimpleStrikeNPC(Owner.GetWeaponDamage(Item), Owner.direction, knockBack: 10, damageType: DamageClass.Ranged);
 
             if (!VisualEffectSystem.HitEffect_Dusts)
                 return;
@@ -534,9 +535,9 @@ namespace Coralite.Content.Items.ThyphionSeries
         public override void NormalShootAI()
         {
             base.NormalShootAI();
-            if (Special==2)
+            if (Special == 2)
             {
-                if (SPTimer==0)
+                if (SPTimer == 0)
                 {
                     SPTimer++;
                     handOffset = -30;
@@ -609,7 +610,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
-            if (State > 0 )
+            if (State > 0)
             {
                 float a = 0;
                 return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, endPoint1, 40, ref a)
@@ -627,11 +628,11 @@ namespace Coralite.Content.Items.ThyphionSeries
                 case 0://旋转中
                     {
                         Projectile.velocity *= 0.95f;
-                        Projectile.rotation = Projectile.rotation.AngleLerp((MousePos - Projectile.Center).ToRotation(), 0.25f);
+                        Projectile.rotation = Projectile.rotation.AngleLerp((InMousePos - Projectile.Center).ToRotation(), 0.25f);
                         Timer++;
 
                         float factor = Timer / 30;
-                        Distance = Coralite.Instance.X2Smoother.Smoother(factor)*20;
+                        Distance = Coralite.Instance.X2Smoother.Smoother(factor) * 20;
 
                         if (Timer > 30)
                         {
@@ -730,7 +731,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             }
         }
 
-        public void SpawnLaserParticle(int width,Vector2 dir,Color color,int dustid)
+        public void SpawnLaserParticle(int width, Vector2 dir, Color color, int dustid)
         {
             float height = 64 * LaserHeight;
             float min = width / 120f;
@@ -786,7 +787,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             c.A = 40;
             c *= alpha;
 
-            Color c2 = Color.Goldenrod*alpha;
+            Color c2 = Color.Goldenrod * alpha;
 
             for (int i = -1; i < 2; i += 2)
             {
@@ -830,8 +831,8 @@ namespace Coralite.Content.Items.ThyphionSeries
             var laserTarget2 = new Rectangle((int)startPos.X, (int)startPos.Y, width2, (int)(height * 2f));
             var flowTarget2 = new Rectangle((int)startPos.X, (int)startPos.Y, width2, (int)(height * 0.9f));
 
-            var laserSource1 = new Rectangle((int)(-Main.timeForVisualEffects + Projectile.timeLeft / 30f * laserTex.Width), 0, width1/10, laserTex.Height);
-            var laserSource2 = new Rectangle((int)(-Main.timeForVisualEffects + Projectile.timeLeft / 30f * laserTex.Width), 0, width2/10, laserTex.Height);
+            var laserSource1 = new Rectangle((int)(-Main.timeForVisualEffects + Projectile.timeLeft / 30f * laserTex.Width), 0, width1 / 10, laserTex.Height);
+            var laserSource2 = new Rectangle((int)(-Main.timeForVisualEffects + Projectile.timeLeft / 30f * laserTex.Width), 0, width2 / 10, laserTex.Height);
             var flowSource = new Rectangle((int)(-2 * Main.timeForVisualEffects + Projectile.timeLeft / 35f * flowTex.Width), 0, flowTex.Width, flowTex.Height);
 
             var origin = new Vector2(0, laserTex.Height / 2);
@@ -846,8 +847,8 @@ namespace Coralite.Content.Items.ThyphionSeries
             //绘制流动效果
             spriteBatch.Draw(laserTex, laserTarget1, laserSource1, color, rot1, origin, 0, 0);
             spriteBatch.Draw(flowTex, flowTarget1, flowSource, color * 0.5f, rot1, origin2, 0, 0);
-            
-            
+
+
             spriteBatch.Draw(laserTex, laserTarget2, laserSource2, color, rot2, origin, 0, 0);
             spriteBatch.Draw(flowTex, flowTarget2, flowSource, color * 0.5f, rot2, origin2, 0, 0);
 
@@ -895,7 +896,7 @@ namespace Coralite.Content.Items.ThyphionSeries
     {
         public override string Texture => AssetDirectory.Blank;
 
-        public  float EXRot { get; set; }
+        public float EXRot { get; set; }
         public ref float State => ref Projectile.ai[1];
         public ref float Timer => ref Projectile.ai[2];
 
@@ -925,7 +926,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             Projectile.penetrate = -1;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = -1;
-        } 
+        }
 
         public override bool? CanDamage()
             => State == 1 && Timer < 10;
@@ -937,7 +938,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         {
             float a = 0;
             return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center
-                , Projectile.Center + Projectile.rotation.ToRotationVector2() * Projectile.localAI[2] * (EXRot == 0 ? 400: 280), 60, ref a);
+                , Projectile.Center + Projectile.rotation.ToRotationVector2() * Projectile.localAI[2] * (EXRot == 0 ? 400 : 280), 60, ref a);
         }
 
         public override void AI()
@@ -949,7 +950,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 group ??= [];
 
             Projectile.Center = owner.Center;
-            Projectile.rotation = owner.rotation+EXRot;
+            Projectile.rotation = owner.rotation + EXRot;
             Projectile.velocity = Projectile.rotation.ToRotationVector2();
 
             Lighting.AddLight(Projectile.Center, Color.MediumPurple.ToVector3());
@@ -973,7 +974,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
                         float x1 = 3.5f;//光束长度
 
-                        if (EXRot!=0)
+                        if (EXRot != 0)
                         {
                             y1 = 0.5f;
                             y2 = 0.9f;
@@ -1087,7 +1088,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             SpriteBatch spriteBatch = Main.spriteBatch;
             Effect effect = Filters.Scene["TurbulenceArrow"].GetShader().Shader;
 
-            effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMatrix());
+            effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * 0.03f);
             effect.Parameters["uTimeG"].SetValue(Main.GlobalTimeWrappedHourly * 0.1f);
             effect.Parameters["udissolveS"].SetValue(1f);
@@ -1272,7 +1273,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             for (int i = 0; i < 6; i++)
             {
-                Dust d = Dust.NewDustPerfect(Projectile.Center, dustID, Helper.NextVec2Dir(2, 7), 50,Scale:Main.rand.NextFloat(1,2));
+                Dust d = Dust.NewDustPerfect(Projectile.Center, dustID, Helper.NextVec2Dir(2, 7), 50, Scale: Main.rand.NextFloat(1, 2));
                 d.noGravity = true;
             }
         }
@@ -1297,7 +1298,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         {
             Rectangle rect = Projectile.GetTexture().Frame(3, 1, ArrowType);
 
-            if (ArrowType!=1)
+            if (ArrowType != 1)
             {
                 Texture2D mainTex = Projectile.GetTexture();
                 Vector2 origin = rect.Size() / 2;
@@ -1320,7 +1321,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             Effect effect = Filters.Scene["TurbulenceArrow"].GetShader().Shader;
 
-            effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMatrix());
+            effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * 0.08f);
             effect.Parameters["uTimeG"].SetValue(Main.GlobalTimeWrappedHourly * 0.2f);
             effect.Parameters["udissolveS"].SetValue(1f);

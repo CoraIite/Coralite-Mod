@@ -26,9 +26,9 @@ namespace Coralite.Content.Items.HyacinthSeries
 
         protected override float HeldPositionY => -2;
 
-        public override void Initialize()
+        public override void InitializeGun()
         {
-            base.Initialize();
+            base.InitializeGun();
             float rotation = TargetRot + (DirSign > 0 ? 0 : MathHelper.Pi);
             Vector2 dir = rotation.ToRotationVector2();
             Vector2 center = Projectile.Center + (dir * 54);
@@ -66,7 +66,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             float rot = Projectile.rotation + (DirSign > 0 ? 0 : MathHelper.Pi);
             float n = rot - DirSign * MathHelper.PiOver2;
 
-            Main.spriteBatch.Draw(effect, Projectile.Center + rot.ToRotationVector2() * 55+n.ToRotationVector2()*4 - Main.screenPosition, frameBox, Color.White
+            Main.spriteBatch.Draw(effect, Projectile.Center + rot.ToRotationVector2() * 55 + n.ToRotationVector2() * 4 - Main.screenPosition, frameBox, Color.White
                 , rot, new Vector2(0, frameBox.Height / 2), Projectile.scale * 2, 0, 0f);
             return false;
         }
@@ -102,7 +102,7 @@ namespace Coralite.Content.Items.HyacinthSeries
         {
             if (Projectile.timeLeft < 31 && Projectile.timeLeft > 5)
             {
-                if (Projectile.timeLeft % 10 == 0 && Main.myPlayer == Projectile.owner)
+                if (Projectile.timeLeft % 10 == 0 && Projectile.IsOwnedByLocalPlayer())
                 {
                     float factor = (30 - Projectile.timeLeft) / 10;
                     float scale = 0.4f + (0.1f * factor);
@@ -140,7 +140,7 @@ namespace Coralite.Content.Items.HyacinthSeries
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            if (Main.myPlayer == Projectile.owner)
+            if (Projectile.IsOwnedByLocalPlayer())
             {
                 Vector2 center = Projectile.Center + Main.rand.NextVector2CircularEdge(8, 8);
 

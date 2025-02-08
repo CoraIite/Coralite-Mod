@@ -135,15 +135,15 @@ namespace Coralite.Content.Items.Donator
             float particleSpeedAdder = 0.4f;
             int damage = 1;
 
-            if (MagikeHelper.TryCosumeMagike(3, Owner.HeldItem, Owner) || Owner.CheckMana(80, true, true))
+            if (MagikeHelper.TryCosumeMagike(3, Item, Owner) || Owner.CheckMana(80, true, true))
             {
                 projSpeed = 12;
                 particleBaseSpeed = 3;
                 particleSpeedAdder = 1;
                 damage = 5;
 
-                Helper.PlayPitched(CoraliteSoundID.IceMagic_Item28, Projectile.Center, pitch:-0.5f);
-                Helper.PlayPitched(CoraliteSoundID.NoUse_SuperMagicShoot_Item68, Projectile.Center,pitch:0.7f);
+                Helper.PlayPitched(CoraliteSoundID.IceMagic_Item28, Projectile.Center, pitch: -0.5f);
+                Helper.PlayPitched(CoraliteSoundID.NoUse_SuperMagicShoot_Item68, Projectile.Center, pitch: 0.7f);
             }
 
             LightCiecleParticle.Spawn(Projectile.Center, Coralite.MagicCrystalPink * 0.5f, 0.2f, Projectile.rotation

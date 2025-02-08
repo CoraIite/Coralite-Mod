@@ -207,7 +207,7 @@ namespace Coralite.Content.NPCs.Town
 
         public override void OnGoToStatue(bool toKingStatue)
         {
-            if (Main.netMode == NetmodeID.Server)
+            if (VaultUtils.isServer)
             {
                 ModPacket packet = Mod.GetPacket();
                 packet.Write((byte)NPC.whoAmI);

@@ -1,6 +1,6 @@
 ﻿using Coralite.Content.ModPlayers;
-using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -100,7 +100,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
 
         public override void OnSpawn(IEntitySource source)
         {
-            Projectile.scale *= Owner.GetAdjustedItemScale(Owner.HeldItem);
+            Projectile.scale *= Owner.GetAdjustedItemScale(Item);
             Projectile.Resize((int)(Projectile.width * Projectile.scale), (int)(Projectile.height * Projectile.scale));
             Projectile.originalDamage = Projectile.damage;//记录原本伤害，因为会受到额外加成影响
 
@@ -136,8 +136,8 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
 
         public override void AI()
         {
-            if (Math.Abs(MousePos.X - Owner.Center.X) > 6)//防止边界问题
-                Projectile.velocity.X = Owner.direction = MousePos.X > Owner.Center.X ? 1 : -1;
+            if (Math.Abs(InMousePos.X - Owner.Center.X) > 6)//防止边界问题
+                Projectile.velocity.X = Owner.direction = InMousePos.X > Owner.Center.X ? 1 : -1;
 
             Projectile.timeLeft = 4;
 
@@ -166,7 +166,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                     break;
                 case (int)GuardState.Parry:
                     {
-                        LockOwnerItemTime();
+                        Owner.itemTime = Owner.itemAnimation = 2;
 
                         if (!Main.mouseRight)
                             TurnToDelay();
@@ -193,7 +193,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                     break;
                 case (int)GuardState.ParryDelay:
                     {
-                        LockOwnerItemTime();
+                        Owner.itemTime = Owner.itemAnimation = 2;
                         DistanceToOwner = Helper.Lerp(0, GetWidth(), Timer / (parryTime * 2));
                         SetPos();
 
@@ -232,7 +232,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
 
         public virtual void Guarding()
         {
-            LockOwnerItemTime();
+            Owner.itemTime = Owner.itemAnimation = 2;
 
             if (!Main.mouseRight)
                 TurnToDelay();

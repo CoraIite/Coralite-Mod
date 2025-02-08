@@ -1,5 +1,6 @@
 ﻿using Coralite.Core.Configs;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -43,8 +44,8 @@ namespace Coralite.Core.Prefabs.Projectiles
         {
             if (!onspawn)
             {
-                Projectile.ai[0] = MousePos.ToTileCoordinates16().X;
-                Projectile.ai[1] = MousePos.ToTileCoordinates16().Y;
+                Projectile.ai[0] = InMousePos.ToTileCoordinates16().X;
+                Projectile.ai[1] = InMousePos.ToTileCoordinates16().Y;
                 TargetPoint = BasePosition;
                 onspawn = true;
             }
@@ -60,7 +61,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             if (DownLeft)
             {
                 Owner.itemTime = Owner.itemAnimation = 7;
-                TargetPoint = MousePos.ToTileCoordinates16();
+                TargetPoint = InMousePos.ToTileCoordinates16();
 
                 //限制范围
                 if (Math.Abs(TargetPoint.X - BasePosition.X) > GamePlaySystem.SelectSize)
@@ -87,7 +88,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             }
         }
 
-        public virtual bool CheckHeldItem() => ItemType != -1 && Owner.HeldItem.type != ItemType;
+        public virtual bool CheckHeldItem() => ItemType != -1 && Item.type != ItemType;
         /// <summary>
         /// 选择完松手后的特殊操作
         /// </summary>

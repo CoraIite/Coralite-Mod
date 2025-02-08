@@ -39,7 +39,7 @@ namespace Coralite.Content.Items.Misc_Shoot
             {
                 Projectile.timeLeft = Owner.itemAnimation;
                 MaxTime = Owner.itemAnimation;
-                if (Main.myPlayer == Projectile.owner)
+                if (Projectile.IsOwnedByLocalPlayer())
                 {
                     Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
                     TargetRot = (Main.MouseWorld - Owner.Center).ToRotation() + (Owner.gravDir * Owner.direction > 0 ? 0f : MathHelper.Pi);

@@ -2710,6 +2710,7 @@ ThunderveinSpear: {
 		'''
 		Right-click to throw a spear, hit an enemy and stab it at them
 		Right-clicking again will pull the player towards the spear and spawn a lightning strike
+		"Don't try to replace a lightning rod"
 		'''
 }
 

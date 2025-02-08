@@ -2,11 +2,11 @@
 using Coralite.Content.Items.Materials;
 using Coralite.Content.Items.Nightmare;
 using Coralite.Core;
-using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.BossSystems;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -304,7 +304,7 @@ namespace Coralite.Content.Items.BossSummons
             else if (Timer > 10 + (part * 10) + 20)
             {
                 SoundEngine.PlaySound(CoraliteSoundID.IceMagic_Item28);
-                if (Main.myPlayer == Projectile.owner)
+                if (Projectile.IsOwnedByLocalPlayer())
                 {
                     int npcType = ModContent.NPCType<NightmarePlantera>();
 

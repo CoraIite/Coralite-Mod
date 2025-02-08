@@ -45,7 +45,7 @@ namespace Coralite.Content.Items.Stars
 
         public override void OnSpawn(IEntitySource source)
         {
-            if (Main.myPlayer == Projectile.owner)
+            if (Projectile.IsOwnedByLocalPlayer())
             {
                 _Rotation = (Main.rand.Next(8) * 0.785f) - 1.57f;
                 Projectile.netUpdate = true;

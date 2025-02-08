@@ -1,6 +1,6 @@
 ﻿using Coralite.Core.Prefabs.Projectiles;
-using InnoVault.Trails;
 using Coralite.Helpers;
+using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Audio;

@@ -40,7 +40,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
             Texture2D tex = TextureAssets.Item[ModContent.ItemType<BasicColumn>()].Value;
 
             float width = PageWidth - tex.Width * 4;
-            Helper.DrawTextParagraph(spriteBatch, ColumnDescription.Value, width, new Vector2(Position.X + tex.Width * 4 , pos.Y), out Vector2 textSize);
+            Helper.DrawTextParagraph(spriteBatch, ColumnDescription.Value, width, new Vector2(Position.X + tex.Width * 4, pos.Y), out Vector2 textSize);
 
             Vector2 picturePos = new Vector2(pos.X - 120 - tex.Width / 2 * 5, pos.Y + textSize.Y / 2);
 
@@ -69,7 +69,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
             tex.QuickCenteredDraw(spriteBatch, picturePos, scale: scale1);
 
             width = PageWidth - tex.Width * 2.5f;
-            Helper.DrawTextParagraph(spriteBatch, ColumnStack.Value, width, new Vector2(Position.X+20, pos.Y + tex.Height * scale1 / 2-50), out textSize);
+            Helper.DrawTextParagraph(spriteBatch, ColumnStack.Value, width, new Vector2(Position.X + 20, pos.Y + tex.Height * scale1 / 2 - 50), out textSize);
 
             #endregion
 

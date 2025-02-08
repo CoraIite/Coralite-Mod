@@ -15,7 +15,7 @@ namespace Coralite.Content.Items.DigDigDig
 
         public Item containsItem;
 
-        public static LocalizedText ContainsItemText { get;private set; }
+        public static LocalizedText ContainsItemText { get; private set; }
 
         public override void Load()
         {

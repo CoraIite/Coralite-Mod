@@ -53,7 +53,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
 
             Helper.DrawTextParagraph(spriteBatch, Awkward.Value, PageWidth, new Vector2(Position.X, pos.Y), out Vector2 textSize);
 
-            pos.Y += 20+textSize.Y;
+            pos.Y += 20 + textSize.Y;
             #region 绘制广角镜
 
             tex = TextureAssets.Item[ModContent.ItemType<BasicRefractor>()].Value;
@@ -61,7 +61,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
             float width = PageWidth - tex.Width * 5 - 40;
             Helper.DrawTextParagraph(spriteBatch, Refractor.Value, width, new Vector2(Position.X + tex.Width * 5 + 20, pos.Y), out textSize);
 
-            Vector2 picturePos = new Vector2(pos.X - 190 - tex.Width / 2 * 5, pos.Y + textSize.Y/2);
+            Vector2 picturePos = new Vector2(pos.X - 190 - tex.Width / 2 * 5, pos.Y + textSize.Y / 2);
 
             Rectangle rect = Utils.CenteredRectangle(picturePos, tex.Size() * 4f);
             if (rect.MouseScreenInRect())

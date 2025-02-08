@@ -1,6 +1,7 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Audio;
@@ -88,9 +89,9 @@ namespace Coralite.Content.Items.ShadowCastle
         public ShadowWaveHeldProj() : base(0.4f, 16, -8, AssetDirectory.ShadowCastleItems)
         { }
 
-        public override void Initialize()
+        public override void InitializeGun()
         {
-            base.Initialize();
+            base.InitializeGun();
             float rotation = TargetRot + (DirSign > 0 ? 0 : MathHelper.Pi);
             Vector2 dir = rotation.ToRotationVector2();
             Vector2 center = Projectile.Center + (dir * 24);
@@ -123,14 +124,14 @@ namespace Coralite.Content.Items.ShadowCastle
 
         public override void OnSpawn(IEntitySource source)
         {
-            Projectile.rotation = ToMouseAngle;
+            Projectile.rotation = ToMouseA;
         }
 
         public override void AI()
         {
-            LockOwnerItemTime();
+            Owner.itemTime = Owner.itemAnimation = 2;
             SetHeld();
-            Owner.itemRotation = ToMouseAngle + (DirSign > 0 ? 0f : MathHelper.Pi) + (Owner.gravDir > 0 ? 0f : MathHelper.Pi) + (DirSign * 0.3f);
+            Owner.itemRotation = ToMouseA + (DirSign > 0 ? 0f : MathHelper.Pi) + (Owner.gravDir > 0 ? 0f : MathHelper.Pi) + (DirSign * 0.3f);
             Projectile.Center = Owner.Center + (UnitToMouseV * 20);
             Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
 
@@ -145,7 +146,7 @@ namespace Coralite.Content.Items.ShadowCastle
                         }
                         else
                         {
-                            if (Owner.HeldItem.ModItem is ShadowWave sw)//填充弹药
+                            if (Item.ModItem is ShadowWave sw)//填充弹药
                                 sw.ShootCount = 9;
 
                             if (Main.mouseRight)
@@ -164,12 +165,12 @@ namespace Coralite.Content.Items.ShadowCastle
                     {
                         if (!Main.mouseRight)//清空弹夹！！
                         {
-                            if (Owner.HeldItem.ModItem is ShadowWave sw)//填充弹药
+                            if (Item.ModItem is ShadowWave sw)//填充弹药
                                 sw.ShootCount = 3;
 
                             SoundEngine.PlaySound(CoraliteSoundID.Shotgun_Item36, Owner.Center);
 
-                            if (Owner.PickAmmo(Owner.HeldItem, out int proj, out float speed, out int damage, out float knockBack, out _))
+                            if (Owner.PickAmmo(Item, out int proj, out float speed, out int damage, out float knockBack, out _))
                                 for (int i = 0; i < 6; i++)
                                     Projectile.NewProjectileFromThis(Owner.Center, UnitToMouseV.RotatedBy(Main.rand.NextFloat(-0.15f, 0.15f)) * speed, proj,
                                     (int)(damage * 0.55f), knockBack);
@@ -184,7 +185,7 @@ namespace Coralite.Content.Items.ShadowCastle
                         else
                             Projectile.timeLeft = 20;
 
-                        Projectile.rotation = ToMouseAngle;
+                        Projectile.rotation = ToMouseA;
                     }
                     break;
             }

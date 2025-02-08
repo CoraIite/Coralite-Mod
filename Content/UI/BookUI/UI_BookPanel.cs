@@ -74,10 +74,10 @@ namespace Coralite.Content.UI.UILib
             }
         }
 
-        public void InitArrows(ATex leftTex,ATex rightTex)
+        public void InitArrows(ATex leftTex, ATex rightTex)
         {
             LeftArrow = new BookPageArrow(this, leftTex, BookPageArrow.ArrowType.Left);
-            RightArrow = new BookPageArrow(this, rightTex , BookPageArrow.ArrowType.Right);
+            RightArrow = new BookPageArrow(this, rightTex, BookPageArrow.ArrowType.Right);
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
@@ -187,7 +187,7 @@ namespace Coralite.Content.UI.UILib
         public void SetArrows()
         {
             LeftArrow.SetTopLeft(PanelTex.Height() - bottomPageMargins, leftPageMargins);
-            RightArrow.SetTopLeft(PanelTex.Height() - bottomPageMargins, PanelTex.Width() - leftPageMargins-RightArrow.Width.Pixels);
+            RightArrow.SetTopLeft(PanelTex.Height() - bottomPageMargins, PanelTex.Width() - leftPageMargins - RightArrow.Width.Pixels);
 
             Append(LeftArrow);
             Append(RightArrow);
@@ -235,8 +235,8 @@ namespace Coralite.Content.UI.UILib
         /// </summary>
         public void InitSize()
         {
-            Width.Set(PanelTex.Width() , 0f);
-            Height.Set(PanelTex.Height() , 0f);
+            Width.Set(PanelTex.Width(), 0f);
+            Height.Set(PanelTex.Height(), 0f);
         }
 
         /// <summary>
@@ -259,8 +259,8 @@ namespace Coralite.Content.UI.UILib
         /// </summary>
         public void InitalizePages()
         {
-            float halfPage = PanelTex.Width()  / 2f;
-            float pageHeigh = PanelTex.Height() ;
+            float halfPage = PanelTex.Width() / 2f;
+            float pageHeigh = PanelTex.Height();
             for (int i = 0; i < Pages.Count; i++)
             {
                 //设置尺寸及上下的内页边距
@@ -373,7 +373,7 @@ namespace Coralite.Content.UI.UILib
         /// <returns></returns>
         public Vector2 GetPageSize()
         {
-            return new Vector2((PanelTex.Width() / 2f) - leftPageMargins-rightPageMargins, PanelTex.Height()  - ( topPageMargins+bottomPageMargins));
+            return new Vector2((PanelTex.Width() / 2f) - leftPageMargins - rightPageMargins, PanelTex.Height() - (topPageMargins + bottomPageMargins));
         }
     }
 }

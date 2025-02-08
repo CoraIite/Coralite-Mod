@@ -5,8 +5,9 @@ using Coralite.Core;
 using Coralite.Core.Attributes;
 using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
-using InnoVault.Trails;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
+using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
@@ -119,7 +120,7 @@ namespace Coralite.Content.Items.Nightmare
         public int alpha;
         public int delay = 24;
 
-        public override void SetDefs()
+        public override void SetSwingProperty()
         {
             Projectile.DamageType = DamageClass.Melee;
             Projectile.localNPCHitCooldown = 48;
@@ -140,8 +141,8 @@ namespace Coralite.Content.Items.Nightmare
 
         protected override void InitBasicValues()
         {
-            if (Main.myPlayer == Projectile.owner)
-                Owner.direction = MousePos.X > Owner.Center.X ? 1 : -1;
+            if (Projectile.IsOwnedByLocalPlayer())
+                Owner.direction = InMousePos.X > Owner.Center.X ? 1 : -1;
 
             Projectile.extraUpdates = 3;
             alpha = 0;
@@ -221,7 +222,7 @@ namespace Coralite.Content.Items.Nightmare
                 if (Owner.TryGetModPlayer(out CoralitePlayer cp2))//获得能量
                     cp2.GetNightmareEnergy(1);
 
-                if (Main.netMode == NetmodeID.Server)
+                if (VaultUtils.isServer)
                     return;
 
                 if (Projectile.IsOwnedByLocalPlayer())
@@ -291,7 +292,7 @@ namespace Coralite.Content.Items.Nightmare
                 {
                     Effect effect = Filters.Scene["NoHLGradientTrail"].GetShader().Shader;
 
-                    effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMatrix());
+                    effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
                     effect.Parameters["sampleTexture"].SetValue(CoraliteAssets.Trail.SlashFlatBlur.Value);
                     effect.Parameters["gradientTexture"].SetValue(GradientTexture.Value);
 
@@ -398,7 +399,7 @@ namespace Coralite.Content.Items.Nightmare
             if (init)
             {
                 rolllingTime = (int)(Owner.itemTimeMax * 1.5f) + (21 * 2);
-                Projectile.rotation = startAngle = (MousePos - Owner.Center).ToRotation() + ((Owner.direction > 0 ? -1 : 1) * 2f);
+                Projectile.rotation = startAngle = (InMousePos - Owner.Center).ToRotation() + ((Owner.direction > 0 ? -1 : 1) * 2f);
                 totalAngle = (Owner.direction > 0 ? 1 : -1) * 9.7f;
                 SelfRot = startAngle + totalAngle;
                 Angle = 1f;
@@ -513,14 +514,14 @@ namespace Coralite.Content.Items.Nightmare
             Timer++;
         }
 
-        public override void NetCodeHeldSend(BinaryWriter writer)
+        public override void NetHeldSend(BinaryWriter writer)
         {
             writer.Write(startAngle);
         }
 
-        public override void NetCodeReceiveHeld(BinaryReader reader)
+        public override void NetHeldReceive(BinaryReader reader)
         {
-            startAngle=reader.ReadSingle();
+            startAngle = reader.ReadSingle();
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
@@ -615,7 +616,7 @@ namespace Coralite.Content.Items.Nightmare
     /// 为跟踪玩家状态时使用速度传入角度
     /// 使用ai2传入宽度
     /// </summary>
-    public class DreamShearsSpurt : ModProjectile, IDrawPrimitive, IDrawWarp
+    public class DreamShearsSpurt : BaseHeldProj, IDrawPrimitive, IDrawWarp
     {
         public override string Texture => AssetDirectory.Trails + "SlashFlatBlurHVMirror";
 
@@ -625,9 +626,6 @@ namespace Coralite.Content.Items.Nightmare
 
         public ref float Alpha => ref Projectile.localAI[0];
         public ref float Length => ref Projectile.localAI[1];
-
-        public Player Owner => Main.player[Projectile.owner];
-
         private Trail trail;
 
         public bool init = true;
@@ -674,7 +672,7 @@ namespace Coralite.Content.Items.Nightmare
                 if (State == 0)
                 {
                     Projectile.rotation = Projectile.velocity.ToRotation();
-                    Length = Owner.GetAdjustedItemScale(Owner.HeldItem) * 165;
+                    Length = Owner.GetAdjustedItemScale(Item) * 165;
                 }
 
                 if (!VaultUtils.isServer)
@@ -778,7 +776,7 @@ namespace Coralite.Content.Items.Nightmare
                 center = target.Center + ((Projectile.rotation - 1.57f + Main.rand.NextFloat(-0.45f, 0.45f)).ToRotationVector2() * 140);
                 Projectile.NewProjectile(Projectile.GetSource_FromAI(), center, (target.Center - center).SafeNormalize(Vector2.Zero) * 28, ProjectileType<DreamShearsSpurt>(), Projectile.damage, 2, Owner.whoAmI, 1, 0, 16);
 
-                if (VisualEffectSystem.HitEffect_ScreenShaking&& Projectile.IsOwnedByLocalPlayer())
+                if (VisualEffectSystem.HitEffect_ScreenShaking && Projectile.IsOwnedByLocalPlayer())
                 {
                     PunchCameraModifier modifier = new(Projectile.Center, rotDir, 3, 6, 6, 1000);
                     Main.instance.CameraModifiers.Add(modifier);
@@ -914,7 +912,7 @@ namespace Coralite.Content.Items.Nightmare
             if (init)
             {
                 ChannelTime = 3 * Owner.itemTimeMax / 4;
-                Projectile.rotation = (MousePos - Owner.Center).ToRotation();
+                Projectile.rotation = (InMousePos - Owner.Center).ToRotation();
 
                 DistanceToOwner = 65;
                 if (ExtraProjState == 1 && Projectile.IsOwnedByLocalPlayer())//生成噩梦之咬
@@ -933,7 +931,7 @@ namespace Coralite.Content.Items.Nightmare
                     break;
                 case 0:
                     float factor = Timer / ChannelTime;
-                    Projectile.rotation = Projectile.rotation.AngleTowards((MousePos - Owner.Center).ToRotation(), 0.3f);
+                    Projectile.rotation = Projectile.rotation.AngleTowards((InMousePos - Owner.Center).ToRotation(), 0.3f);
                     DistanceToOwner = Helper.Lerp(65, 25, factor);
                     Angle = Helper.Lerp(0, 1f, factor);
                     if (Timer > ChannelTime)
@@ -974,14 +972,14 @@ namespace Coralite.Content.Items.Nightmare
             Timer++;
         }
 
-        public override void NetCodeHeldSend(BinaryWriter writer)
+        public override void NetHeldSend(BinaryWriter writer)
         {
             writer.Write(Timer);
         }
 
-        public override void NetCodeReceiveHeld(BinaryReader reader)
+        public override void NetHeldReceive(BinaryReader reader)
         {
-            Timer= reader.ReadInt32();
+            Timer = reader.ReadInt32();
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -1065,7 +1063,7 @@ namespace Coralite.Content.Items.Nightmare
                 Projectile.Center = center;
                 ReadyTime = 3 * Owner.itemTimeMax / 4;
                 Projectile.rotation = StartRot;
-               if( Projectile.IsOwnedByLocalPlayer())
+                if (Projectile.IsOwnedByLocalPlayer())
                     Projectile.netUpdate = true;
             }
 
@@ -1077,7 +1075,7 @@ namespace Coralite.Content.Items.Nightmare
                 {
                     float factor = Timer / ReadyTime;
 
-                    Projectile.rotation = Projectile.rotation.AngleTowards((MousePos - Owner.Center).ToRotation(), 0.3f);
+                    Projectile.rotation = Projectile.rotation.AngleTowards((InMousePos - Owner.Center).ToRotation(), 0.3f);
                     mouseAngle = Helper.Lerp(0, 1.4f, factor);
                     alpha = Helper.Lerp(0.55f, 0.1f, factor);
                     break;

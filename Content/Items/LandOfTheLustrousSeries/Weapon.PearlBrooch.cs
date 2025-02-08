@@ -61,7 +61,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             Texture2D noiseTex = GemTextures.CellNoise2.Value;//[(int)(Main.timeForVisualEffects / 7) % 20].Value;
 
-            Color c1 = PearlProj.brightC*0.75f;
+            Color c1 = PearlProj.brightC * 0.75f;
             c1.A = 255;
             Color c2 = PearlProj.darkC * 0.75f;
             c1.A = 255;
@@ -83,9 +83,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Main.graphics.GraphicsDevice.Textures[1] = GemTextures.CellNoise2.Value;
 
             Vector2 textSize = ChatManager.GetStringSize(line.Font, line.Text, line.BaseScale);
-            Texture2D mainTex =  CoraliteAssets.LightBall.BallA.Value;
+            Texture2D mainTex = CoraliteAssets.LightBall.BallA.Value;
 
-            int xExpand = 45 ;
+            int xExpand = 45;
             int yExpand = 6;
 
             sb.Draw(mainTex, new Rectangle(line.X - xExpand, line.Y - 4 - yExpand, (int)textSize.X + xExpand * 2, (int)textSize.Y + yExpand * 2), null, Color.White * 0.8f);
@@ -212,7 +212,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     float speed = 7f + (Math.Abs(factor) * 7f);
 
                     Projectile.NewProjectileFromThis<PearlProj>(Projectile.Center
-                        , angle.ToRotationVector2() * speed, Owner.GetWeaponDamage(Owner.HeldItem), Projectile.knockBack, Main.rand.Next(4));
+                        , angle.ToRotationVector2() * speed, Owner.GetWeaponDamage(Item), Projectile.knockBack, Main.rand.Next(4));
 
                     Helper.PlayPitched("Crystal/CrystalShoot", 0.1f, 0.4f, Projectile.Center);
 
@@ -498,7 +498,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             Texture2D noiseTex = GemTextures.CellNoise2.Value;//[(int)(Main.timeForVisualEffects / 7) % 20].Value;
 
-            effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMatrix());
+            effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["basePos"].SetValue((Projectile.Center + rand - Main.screenPosition) * Main.GameZoomTarget);
             effect.Parameters["scale"].SetValue(Vector2.One / Main.GameZoomTarget);
             effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * 0.01f);

@@ -33,7 +33,7 @@ namespace Coralite.Core
         /// </summary>
         public static bool[] TileSpecialDraw;
 
-        public static List<int> SpecialDraw=new List<int>();
+        public static List<int> SpecialDraw = new List<int>();
 
         public override void PostSetupContent()
         {

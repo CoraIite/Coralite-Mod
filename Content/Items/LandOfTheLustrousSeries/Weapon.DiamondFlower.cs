@@ -185,7 +185,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                         offset = -dir * 128;
 
                         Projectile.NewProjectileFromThis<DiamondProj>(Projectile.Center + (dir * 12), dir * 12
-                            , Owner.GetWeaponDamage(Owner.HeldItem), Projectile.knockBack);
+                            , Owner.GetWeaponDamage(Item), Projectile.knockBack);
 
                         Helper.PlayPitched("Crystal/GemShoot", 0.4f, 0, Projectile.Center);
 

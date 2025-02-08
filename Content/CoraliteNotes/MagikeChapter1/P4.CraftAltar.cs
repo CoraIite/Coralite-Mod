@@ -44,7 +44,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
             #region 绘制左边的合成坛
 
             var tex1 = TextureAssets.Item[ModContent.ItemType<BasicAltar>()].Value;
-            Vector2 picturePos = new Vector2(pos.X - 120 - tex1.Width / 2 * 5, pos.Y+tex1.Height);
+            Vector2 picturePos = new Vector2(pos.X - 120 - tex1.Width / 2 * 5, pos.Y + tex1.Height);
 
             Rectangle rect = Utils.CenteredRectangle(picturePos, tex1.Size() * 4f);
             if (rect.MouseScreenInRect())

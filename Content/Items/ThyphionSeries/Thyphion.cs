@@ -10,6 +10,7 @@ using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.CameraSystem;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -195,7 +196,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public override void AI()
         {
-            if (Owner.HeldItem.type != ItemType<Thyphion>())
+            if (Item.type != ItemType<Thyphion>())
                 Projectile.Kill();
 
             switch (State)
@@ -234,7 +235,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         public override bool PreDraw(ref Color lightColor) => false;
     }
 
-    [AutoLoadTexture(Path =AssetDirectory.ThyphionSeriesItems)]
+    [AutoLoadTexture(Path = AssetDirectory.ThyphionSeriesItems)]
     public class ThyphionHeldProj : BaseDashBow/*, IDrawPrimitive*/
     {
         public override string Texture => AssetDirectory.ThyphionSeriesItems + "Thyphion";
@@ -261,7 +262,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         public override Vector2 GetOffset()
             => new(34 + handOffset, -12);
 
-        public override void Initialize()
+        public override void InitializeDashBow()
         {
             RecordAngle = Rotation;
         }
@@ -281,13 +282,13 @@ namespace Coralite.Content.Items.ThyphionSeries
                     Color skyBlue = Thyphion.ThyphionColor1;
                     WindCircle.Spawn(Projectile.Center + (ShootDir * 30), -ShootDir * 3 + Owner.velocity, Rotation, skyBlue, 0.2f, 1.3f, new Vector2(1.6f, 1.3f));
                 }
-                if (Main.myPlayer == Projectile.owner)
+                if (Projectile.IsOwnedByLocalPlayer())
                 {
                     Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
                     if (Timer < 10)
                         Rotation -= Owner.direction * 0.02f;
                     else
-                        Rotation = Rotation.AngleLerp(ToMouseAngle, 0.15f);
+                        Rotation = Rotation.AngleLerp(ToMouseA, 0.15f);
 
                     handOffset = MathHelper.Lerp(handOffset, 0, 0.13f);
                 }
@@ -304,7 +305,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             {
                 if (Timer < DashTime + 2)
                 {
-                    if (Main.myPlayer == Projectile.owner)
+                    if (Projectile.IsOwnedByLocalPlayer())
                     {
                         Vector2 dir = (Main.MouseWorld - Owner.MountedCenter).SafeNormalize(Vector2.One);
                         Owner.itemTime = Owner.itemAnimation = 2;
@@ -326,7 +327,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                         float velicityDir = Projectile.velocity.ToRotation() + MathHelper.Pi + dir * MathF.Sign(Projectile.velocity.X) * 0.3f;
 
                         Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, velicityDir.ToRotationVector2() * 10, ProjectileType<ThyphionShadowBow>()
-                            , Owner.GetWeaponDamage(Owner.HeldItem), Projectile.knockBack, Projectile.owner, bowIndex, ToMouseAngle, MathF.Sign(ToMouse.X));
+                            , Owner.GetWeaponDamage(Item), Projectile.knockBack, Projectile.owner, bowIndex, ToMouseA, MathF.Sign(ToMouse.X));
                     }
 
                     Owner.itemTime = Owner.itemAnimation = 2;
@@ -341,12 +342,12 @@ namespace Coralite.Content.Items.ThyphionSeries
                 {
                     Vector2 dir = Rotation.ToRotationVector2();
                     projectile = Projectile.NewProjectileFromThis<ThyphionArrow>(Owner.Center, dir * 18
-                        , Owner.GetWeaponDamage(Owner.HeldItem), Projectile.knockBack, ai0: -1, ai2: 2);
+                        , Owner.GetWeaponDamage(Item), Projectile.knockBack, ai0: -1, ai2: 2);
                 }
 
                 if (DownLeft && ReleaseTimer == 0)
                 {
-                    if (Main.myPlayer == Projectile.owner)
+                    if (Projectile.IsOwnedByLocalPlayer())
                     {
                         Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
                         float lerpSpeed = DownLeft ? 0.15f : 1f;
@@ -360,7 +361,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                         thyphionArrow.Hold(Owner.Center, dir * 12f);
                     }
 
-                    LockOwnerItemTime();
+                    Owner.itemTime = Owner.itemAnimation = 2;
                 }
                 else
                 {
@@ -388,19 +389,19 @@ namespace Coralite.Content.Items.ThyphionSeries
                         Projectile.Kill();
                     }
 
-                    if (Main.myPlayer == Projectile.owner)
+                    if (Projectile.IsOwnedByLocalPlayer())
                     {
                         Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
                         if (ReleaseTimer < 10)
                             Rotation -= Owner.direction * 0.05f;
                         else
-                            Rotation = Rotation.AngleLerp(ToMouseAngle, 0.15f);
+                            Rotation = Rotation.AngleLerp(ToMouseA, 0.15f);
                     }
 
                     handOffset = MathHelper.Lerp(handOffset, 0, 0.07f);
                     ReleaseTimer++;
 
-                    LockOwnerItemTime();
+                    Owner.itemTime = Owner.itemAnimation = 2;
                     Projectile.timeLeft = 2;
                 }
             } while (false);
@@ -723,10 +724,10 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             float colorFactor;
 
-            if (Timer<15)
+            if (Timer < 15)
                 colorFactor = 0;
             else
-                colorFactor = Timer > 45 ? 1 : ((Timer-15) / 45);
+                colorFactor = Timer > 45 ? 1 : ((Timer - 15) / 45);
 
             Texture2D flowTex = TextureAssets.Extra[98].Value;
             Vector2 ArrowSize = new Vector2(1, 7) * 0.3f * Projectile.scale;
@@ -752,15 +753,15 @@ namespace Coralite.Content.Items.ThyphionSeries
             Texture2D arrowTex = CoraliteAssets.Trail.ArrowSPA.Value;
             Vector2 Center = center - Main.screenPosition;
             Vector2 origin = arrowTex.Size() / 2;
-            float rotation = arrowDir.ToRotation() ;
+            float rotation = arrowDir.ToRotation();
 
             Color SkyBlue = Color.Lerp(startColor, Thyphion.ThyphionColor1, colorFactor) * 0.5f * alpha;
             Color lightCyen = Color.Lerp(startColor, Thyphion.ThyphionColor3, colorFactor) * alpha;
             lightCyen.A = 70;
 
-            Main.spriteBatch.Draw(arrowTex, Center - arrowDir * 40 * scale, null, SkyBlue, rotation, origin, scale*new Vector2(0.9f,0.75f), 0, 0);
-            Main.spriteBatch.Draw(arrowTex, Center - arrowDir * 40 * scale, null, lightCyen, rotation, origin, scale*new Vector2(0.6f,0.5f), 0, 0);
-            
+            Main.spriteBatch.Draw(arrowTex, Center - arrowDir * 40 * scale, null, SkyBlue, rotation, origin, scale * new Vector2(0.9f, 0.75f), 0, 0);
+            Main.spriteBatch.Draw(arrowTex, Center - arrowDir * 40 * scale, null, lightCyen, rotation, origin, scale * new Vector2(0.6f, 0.5f), 0, 0);
+
             rotation += MathHelper.PiOver2;
 
             Texture2D flowTex = TextureAssets.Extra[98].Value;
@@ -827,7 +828,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             Projectile.velocity *= 0.95f;
             int time = 40 - Projectile.timeLeft;
 
-            Vector2 MouseDir = (MousePos - Projectile.Center).SafeNormalize(Vector2.One);
+            Vector2 MouseDir = (InMousePos - Projectile.Center).SafeNormalize(Vector2.One);
             if (Projectile.timeLeft == 24)
             {
                 Projectile.NewProjectileFromThis<ThyphionArrow>(Projectile.Center, MouseDir.SafeNormalize(Vector2.One) * 18
@@ -847,7 +848,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             {
                 Projectile.Opacity = time / 16f;
                 Rotation += Direction * MathHelper.TwoPi / 16;
-                if (time==16)
+                if (time == 16)
                 {
                     Rotation = MouseDir.ToRotation();
                 }
@@ -868,7 +869,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             PhantomPlayer = new Player();
             PhantomPlayer.CopyVisuals(Owner);
             PlayerWingFrame = Owner.wingFrame;
-            Rotation = (MousePos - Projectile.Center).ToRotation();
+            Rotation = (InMousePos - Projectile.Center).ToRotation();
             Projectile.netUpdate = true;
         }
 
@@ -1083,9 +1084,9 @@ namespace Coralite.Content.Items.ThyphionSeries
                 case BowType.IceBow:
                     return new ArrowData()
                     {
-                        ItemType =ItemID.IceBow,
+                        ItemType = ItemID.IceBow,
                         Offest = new(12, 0),
-                        ArrowColor = new Color(97,200,225)
+                        ArrowColor = new Color(97, 200, 225)
                     };
                 case BowType.Glaciate:
                     return new ArrowData()
@@ -1113,7 +1114,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                     {
                         ItemType = ItemID.DemonBow,
                         Offest = new(12, 0),
-                        ArrowColor = new Color(87,74,166)
+                        ArrowColor = new Color(87, 74, 166)
                     };
                 case BowType.FullMoon:
                     return new ArrowData()
@@ -1127,7 +1128,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                     {
                         ItemType = ItemType<Solunar>(),
                         Offest = new(12, 0),
-                        ArrowColor = new Color(244,225,174)
+                        ArrowColor = new Color(244, 225, 174)
                     };
                 case BowType.HorizonArc:
                     return new ArrowData()
@@ -1218,7 +1219,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             PhantomPlayer.UpdateSocialShadow();
             PhantomPlayer.itemAnimationMax = 60;
             PhantomPlayer.itemAnimation = 1;
-            PhantomPlayer.direction = MathF.Sign(MousePos.X - Projectile.Center.X);
+            PhantomPlayer.direction = MathF.Sign(InMousePos.X - Projectile.Center.X);
 
             PhantomPlayer.wingFrame = PlayerWingFrame;
 

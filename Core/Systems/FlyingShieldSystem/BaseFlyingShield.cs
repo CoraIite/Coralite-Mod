@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.ModPlayers;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -12,10 +13,8 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
     /// ai0记录状态<br></br>
     /// ai1记录时间
     /// </summary>
-    public abstract class BaseFlyingShield : ModProjectile
+    public abstract class BaseFlyingShield : BaseHeldProj
     {
-        public Player Owner => Main.player[Projectile.owner];
-
         public ref float State => ref Projectile.ai[0];
         public ref float Timer => ref Projectile.ai[1];
 
@@ -223,7 +222,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
             }
             else
             {
-                if (Timer>backTime+30)
+                if (Timer > backTime + 30)
                 {
                     backSpeed *= 1.03f;
                 }
@@ -325,7 +324,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
             Texture2D Texture = GetTrailTex().Value;
 
             List<CustomVertexInfo> bars = [];
-            float r = 0.2989f * lightColor.R/255 + 0.5870f * lightColor.G/255 + 0.1140f * lightColor.B/255;
+            float r = 0.2989f * lightColor.R / 255 + 0.5870f * lightColor.G / 255 + 0.1140f * lightColor.B / 255;
 
             for (int i = 0; i < trailCachesLength; i++)
             {

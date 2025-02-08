@@ -141,7 +141,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         public override Vector2 GetOffset()
             => new(12 + handOffset, 0);
 
-        public override void Initialize()
+        public override void InitializeDashBow()
         {
             RecordAngle = Rotation;
         }
@@ -150,11 +150,11 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public override void DashAttackAI()
         {
-            Lighting.AddLight(Projectile.Center, ThyphionSeries.AuroraArrow.GetColor(MathF.Sin((int)Main.timeForVisualEffects * 0.05f) / 2 + 0.5f).ToVector3()*0.5f);
+            Lighting.AddLight(Projectile.Center, ThyphionSeries.AuroraArrow.GetColor(MathF.Sin((int)Main.timeForVisualEffects * 0.05f) / 2 + 0.5f).ToVector3() * 0.5f);
 
             if (Timer < DashTime + 2)
             {
-                if (Main.myPlayer == Projectile.owner)
+                if (Projectile.IsOwnedByLocalPlayer())
                 {
                     Owner.itemTime = Owner.itemAnimation = 2;
                     Rotation = Helper.Lerp(RecordAngle, DirSign > 0 ? 0 : 3.141f, Timer / DashTime);
@@ -164,20 +164,20 @@ namespace Coralite.Content.Items.ThyphionSeries
                 p.MaxTime = Main.rand.Next(10, 14);
                 p.Rotation = Owner.velocity.ToRotation() + (Owner.velocity.X > 0 ? 0 : MathHelper.Pi);
 
-                LockOwnerItemTime();
+                Owner.itemTime = Owner.itemAnimation = 2;
             }
             else
             {
                 if (DownLeft && SPTimer == 0)
                 {
-                    if (Main.myPlayer == Projectile.owner)
+                    if (Projectile.IsOwnedByLocalPlayer())
                     {
                         Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
-                        Rotation = Rotation.AngleLerp(ToMouseAngle, 0.15f);
+                        Rotation = Rotation.AngleLerp(ToMouseA, 0.15f);
                     }
 
                     Projectile.timeLeft = 20;
-                    LockOwnerItemTime();
+                    Owner.itemTime = Owner.itemAnimation = 2;
                 }
                 else
                 {
@@ -187,9 +187,9 @@ namespace Coralite.Content.Items.ThyphionSeries
                         Helper.PlayPitched(CoraliteSoundID.Bow2_Item102, Projectile.Center);
 
                         Projectile.NewProjectileFromThis<AuroraArrow>(Owner.Center, ToMouse.SafeNormalize(Vector2.Zero) * 16
-                            , (int)(Owner.GetWeaponDamage(Owner.HeldItem) * 1.5f), Projectile.knockBack, 1);
+                            , (int)(Owner.GetWeaponDamage(Item) * 1.5f), Projectile.knockBack, 1);
 
-                        Rotation = ToMouseAngle;
+                        Rotation = ToMouseA;
 
                         Vector2 dir = Rotation.ToRotationVector2();
                         PRTLoader.NewParticle<AuroraFlow>(Projectile.Center, dir * 8, Color.White, 0.9f);
@@ -200,13 +200,13 @@ namespace Coralite.Content.Items.ThyphionSeries
                         handOffset = -20;
                     }
 
-                    if (Main.myPlayer == Projectile.owner)
+                    if (Projectile.IsOwnedByLocalPlayer())
                     {
                         Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
                         if (SPTimer < 8)
                             Rotation -= Owner.direction * 0.05f;
                         else
-                            Rotation = Rotation.AngleLerp(ToMouseAngle, 0.15f);
+                            Rotation = Rotation.AngleLerp(ToMouseA, 0.15f);
                     }
 
                     handOffset = Helper.Lerp(handOffset, 0, 0.1f);
@@ -371,8 +371,8 @@ namespace Coralite.Content.Items.ThyphionSeries
                 Vector2 dir = Projectile.velocity.SafeNormalize(Vector2.Zero);
                 for (int i = 0; i < 8; i++)
                 {
-                    Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(24, 24)+Projectile.velocity*Main.rand.NextFloat(-3,1), DustType<PixelPoint>(), dir * Main.rand.NextFloat(4, 7)
-                        ,0, GetColor(Main.rand.NextFloat()), Main.rand.NextFloat(1f, 2f));
+                    Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(24, 24) + Projectile.velocity * Main.rand.NextFloat(-3, 1), DustType<PixelPoint>(), dir * Main.rand.NextFloat(4, 7)
+                        , 0, GetColor(Main.rand.NextFloat()), Main.rand.NextFloat(1f, 2f));
                 }
             }
         }
@@ -498,14 +498,14 @@ namespace Coralite.Content.Items.ThyphionSeries
                 float scaleX = 0.22f - i * 0.013f;
                 scaleX *= 2;
                 float scaleY = 12 * 0.02f - i * 0.02f;
-                scaleY *=2.5f* Length/4;
+                scaleY *= 2.5f * Length / 4;
 
                 Color c = AuroraArrow.GetColor(1 - factor) * 0.5f;
 
                 Main.spriteBatch.Draw(mainTex, targetPos, null, c, rot + MathHelper.Pi, new Vector2(mainTex.Width, mainTex.Height / 2)
                     , new Vector2(scaleX, scaleY), 0, 0);
                 Main.spriteBatch.Draw(mainTex, pos - spDir, null, c, rot + MathHelper.Pi, new Vector2(mainTex.Width, mainTex.Height / 2)
-                    , new Vector2(scaleX*0.5f, scaleY), 0, 0);
+                    , new Vector2(scaleX * 0.5f, scaleY), 0, 0);
 
                 c.A = 10;
 

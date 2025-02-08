@@ -77,7 +77,7 @@ namespace Coralite.Content.Items.RedJades
                 scaleAdder *= 0.2f;
             }
 
-            if (Opacity > 8)     
+            if (Opacity > 8)
                 Color *= 0.84f;
 
             Opacity++;

@@ -73,9 +73,9 @@ namespace Coralite.Content.Particles
             if (Opacity > 5)
             {
                 Velocity *= 0.96f;
-                Color.A = (byte)(0.75f*Color.A);
+                Color.A = (byte)(0.75f * Color.A);
 
-                if (Opacity>7)
+                if (Opacity > 7)
                 {
                     if (oldPositions != null)
                     {

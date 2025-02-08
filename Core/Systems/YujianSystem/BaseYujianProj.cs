@@ -2,6 +2,7 @@
 using Coralite.Core.Systems.YujianSystem.HuluEffects;
 using Coralite.Core.Systems.YujianSystem.YujianAIs;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.IO;
@@ -14,7 +15,7 @@ namespace Coralite.Core.Systems.YujianSystem
     /// <summary>
     /// 御剑弹幕基类，请确保所有的御剑弹幕都继承自这个基类
     /// </summary>
-    public class BaseYujianProj : ModProjectile, IDrawNonPremultiplied, IDrawAdditive, IDrawPrimitive
+    public class BaseYujianProj : BaseHeldProj, IDrawNonPremultiplied, IDrawAdditive, IDrawPrimitive
     {
         public readonly Color color1;
         public readonly Color color2;
@@ -56,7 +57,6 @@ namespace Coralite.Core.Systems.YujianSystem
         public int AttackLength { get => attackLength; set => attackLength = value; }
         public ref float State => ref Projectile.ai[0];
         public ref float Timer => ref Projectile.ai[1];
-        public Player Owner => Main.player[Projectile.owner];
 
         public virtual string SlashTexture => AssetDirectory.Trails + "Slash";
 
@@ -138,7 +138,7 @@ namespace Coralite.Core.Systems.YujianSystem
 
         public sealed override void AI()
         {
-            if (Owner.HeldItem.ModItem is not BaseHulu && !SourceYujian.MainYujian) // 如果手上不是葫芦并且不是主御剑，则清除自己
+            if (Item.ModItem is not BaseHulu && !SourceYujian.MainYujian) // 如果手上不是葫芦并且不是主御剑，则清除自己
             {
                 Projectile.Kill();
                 return;
@@ -168,7 +168,7 @@ namespace Coralite.Core.Systems.YujianSystem
                 cp.ownedYujianProj = false;
 
             Projectile.timeLeft = 2;
-            if (Owner.HeldItem.ModItem is BaseHulu && Owner.controlUseItem)
+            if (Item.ModItem is BaseHulu && Owner.controlUseItem)
             {
                 Owner.itemTime = Owner.itemAnimation = 6;
                 Vector2 vector2 = Main.MouseWorld - Owner.Center;
@@ -221,13 +221,13 @@ namespace Coralite.Core.Systems.YujianSystem
                     Projectile.rotation = idleRotation2;
                     Projectile.tileCollide = false;
 
-                    if (Owner.HeldItem.ModItem is BaseHulu && Owner.controlUseItem) // 手持葫芦则左键攻击,否则自动攻击
+                    if (Item.ModItem is BaseHulu && Owner.controlUseItem) // 手持葫芦则左键攻击,否则自动攻击
                     {
                         State = 0;
                         //State = Main.rand.Next(1, yujianAIs.Length);
                         //yujianAIs[(int)State - 1].OnStart(this);
                     }
-                    else if (Owner.HeldItem.ModItem is not BaseHulu && Main.rand.NextBool(20))
+                    else if (Item.ModItem is not BaseHulu && Main.rand.NextBool(20))
                     {
                         int targetNPCIndex = TryAttackingNPCs(Projectile);
                         if (targetNPCIndex != -1)
@@ -245,7 +245,7 @@ namespace Coralite.Core.Systems.YujianSystem
                     if (Timer++ > 60)   //30帧后切换AI，否则处于拔刀AI
                     {
                         Timer = 0;  //重置计时器
-                        if (Owner.HeldItem.ModItem is not BaseHulu)
+                        if (Item.ModItem is not BaseHulu)
                         {
                             int targetNPCIndex1 = TryAttackingNPCs(Projectile);
                             if (targetNPCIndex1 == -1)
@@ -295,7 +295,7 @@ namespace Coralite.Core.Systems.YujianSystem
         private bool ChangeState(CoralitePlayer cp)
         {
             bool CanAttack = Vector2.Distance(GetTargetCenter(true), Owner.Center) < AttackLength;
-            AimMouse = Owner.HeldItem.ModItem is BaseHulu; // 如果手持葫芦则瞄准鼠标，不是则瞄准敌人
+            AimMouse = Item.ModItem is BaseHulu; // 如果手持葫芦则瞄准鼠标，不是则瞄准敌人
             if (AimMouse)
             {
                 CanAttack = CanAttack && Owner.controlUseItem;
@@ -500,7 +500,7 @@ namespace Coralite.Core.Systems.YujianSystem
         }
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            if (Owner.HeldItem.ModItem is not BaseHulu)
+            if (Item.ModItem is not BaseHulu)
                 modifiers.SourceDamage *= 0.5f;
         }
         public sealed override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
@@ -612,13 +612,13 @@ namespace Coralite.Core.Systems.YujianSystem
 
         #region NetWork
 
-        public override void SendExtraAI(BinaryWriter writer)
+        public override void NetHeldSend(BinaryWriter writer)
         {
             writer.Write(targetIndex);
             writer.WriteVector2(aimCenter);
         }
 
-        public override void ReceiveExtraAI(BinaryReader reader)
+        public override void NetHeldReceive(BinaryReader reader)
         {
             targetIndex = reader.ReadInt32();
             aimCenter = reader.ReadVector2();

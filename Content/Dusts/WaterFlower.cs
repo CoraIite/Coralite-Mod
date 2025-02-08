@@ -5,7 +5,7 @@ namespace Coralite.Content.Dusts
 {
     public class WaterFlower : ModDust
     {
-        public override string Texture => AssetDirectory.Dusts+Name;
+        public override string Texture => AssetDirectory.Dusts + Name;
 
         public override void OnSpawn(Dust dust)
         {
@@ -30,7 +30,7 @@ namespace Coralite.Content.Dusts
 
         public override bool PreDraw(Dust dust)
         {
-            Main.spriteBatch.Draw(Texture2D.Value, dust.position - Main.screenPosition, dust.frame,  dust.color
+            Main.spriteBatch.Draw(Texture2D.Value, dust.position - Main.screenPosition, dust.frame, dust.color
                 , dust.rotation, dust.frame.Size() / 2, dust.scale, 0, 0);
 
             return false;

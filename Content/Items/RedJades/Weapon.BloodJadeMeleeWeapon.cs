@@ -6,6 +6,7 @@ using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -122,7 +123,7 @@ namespace Coralite.Content.Items.RedJades
             GradientTexture = null;
         }
 
-        public override void SetDefs()
+        public override void SetSwingProperty()
         {
             Projectile.DamageType = DamageClass.Melee;
             Projectile.localNPCHitCooldown = 48;
@@ -141,9 +142,9 @@ namespace Coralite.Content.Items.RedJades
             return 50 * Projectile.scale;
         }
 
-        protected override void Initializer()
+        protected override void InitializeSwing()
         {
-            if (Main.myPlayer == Projectile.owner)
+            if (Projectile.IsOwnedByLocalPlayer())
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
 
             Projectile.extraUpdates = 3;
@@ -180,7 +181,7 @@ namespace Coralite.Content.Items.RedJades
             }
 
             StartRot = GetStartAngle();
-            base.Initializer();
+            base.InitializeSwing();
         }
 
         protected override void AIBefore()
@@ -270,7 +271,7 @@ namespace Coralite.Content.Items.RedJades
             if (onHitTimer == 0)
             {
                 onHitTimer = 1;
-                if (Main.netMode == NetmodeID.Server)
+                if (VaultUtils.isServer)
                     return;
 
                 float baseScale = 1;
@@ -564,7 +565,7 @@ namespace Coralite.Content.Items.RedJades
 
         public override void OnKill(int timeLeft)
         {
-            if (Main.myPlayer == Projectile.owner)
+            if (Projectile.IsOwnedByLocalPlayer())
             {
                 var source = Projectile.GetSource_FromThis();
                 switch (Projectile.ai[0])
@@ -709,7 +710,7 @@ namespace Coralite.Content.Items.RedJades
 
         public override void OnKill(int timeLeft)
         {
-            if (Main.myPlayer == Projectile.owner)
+            if (Projectile.IsOwnedByLocalPlayer())
                 Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center,
                     Vector2.Zero, ProjectileType<BloodJade_BigBoom>(), Projectile.damage, 8f);
         }

@@ -25,7 +25,7 @@ namespace Coralite.Content.GlobalTiles
 
                             if (Main.netMode == NetmodeID.SinglePlayer)
                                 Main.NewText(Language.GetTextValue("Announcement.HasAwoken", Main.npc[index].TypeName), 175, 75);
-                            else if (Main.netMode == NetmodeID.Server)
+                            else if (VaultUtils.isServer)
                                 ChatHelper.BroadcastChatMessage(NetworkText.FromKey("Announcement.HasAwoken", Main.npc[index].GetTypeNetName()), new Color(175, 75, 255));
 
                             int x = i - 5;

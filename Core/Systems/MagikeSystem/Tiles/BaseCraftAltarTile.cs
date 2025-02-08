@@ -58,7 +58,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
             Color c = lightColor;
 
             //正在合成时就转动
-            if (altar.IsWorking&& altar.ChosenResipe!=null)
+            if (altar.IsWorking && altar.ChosenResipe != null)
             {
                 frameBox = tex.Frame(3, 1, 2);
                 rotation = (float)Main.timeForVisualEffects * 0.1f;

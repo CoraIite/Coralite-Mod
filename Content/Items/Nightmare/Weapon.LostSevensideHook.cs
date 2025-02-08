@@ -7,9 +7,9 @@ using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.CameraSystem;
-using InnoVault.Trails;
 using Coralite.Helpers;
 using InnoVault.PRT;
+using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
@@ -130,7 +130,7 @@ namespace Coralite.Content.Items.Nightmare
             Projectile.QuickTrailSets(Helper.TrailingMode.RecordAllAndFollowPlayer, 8);
         }
 
-        public override void SetDefs()
+        public override void SetSwingProperty()
         {
             Projectile.width = Projectile.height = 64;
             Projectile.DamageType = DamageClass.Melee;
@@ -149,9 +149,9 @@ namespace Coralite.Content.Items.Nightmare
             return 65 * Projectile.scale;
         }
 
-        protected override void Initializer()
+        protected override void InitializeSwing()
         {
-            if (Main.myPlayer == Projectile.owner)
+            if (Projectile.IsOwnedByLocalPlayer())
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
 
             Projectile.extraUpdates = 2;
@@ -202,7 +202,7 @@ namespace Coralite.Content.Items.Nightmare
                     Smoother = Coralite.Instance.NoSmootherInstance;
                     break;
             }
-            base.Initializer();
+            base.InitializeSwing();
         }
 
         protected override void OnSlash()
@@ -364,7 +364,7 @@ namespace Coralite.Content.Items.Nightmare
                 {
                     Effect effect = Filters.Scene["SimpleGradientTrail"].GetShader().Shader;
 
-                    effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMatrix());
+                    effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
                     effect.Parameters["sampleTexture"].SetValue(CoraliteAssets.Trail.SlashFlatFade.Value);
                     effect.Parameters["gradientTexture"].SetValue(GradientTexture.Value);
 

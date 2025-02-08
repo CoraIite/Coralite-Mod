@@ -33,7 +33,7 @@ namespace Coralite.Content.GlobalItems.DigDigDig
                     this.GetLocalization("CantDigTile"),
                 ];
 
-            RightClickExchange= this.GetLocalization(nameof(RightClickExchange));
+            RightClickExchange = this.GetLocalization(nameof(RightClickExchange));
         }
 
         public override void Unload()

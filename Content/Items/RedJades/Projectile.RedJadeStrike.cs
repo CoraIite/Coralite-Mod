@@ -53,7 +53,7 @@ namespace Coralite.Content.Items.RedJades
 
         public override void OnKill(int timeLeft)
         {
-            if (Projectile.ai[0] == 0 && Main.myPlayer == Projectile.owner)
+            if (Projectile.ai[0] == 0 && Projectile.IsOwnedByLocalPlayer())
             {
                 Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<RedJadeBoom>(), (int)(Projectile.damage * 0.8f), Projectile.knockBack, Projectile.owner);
                 return;

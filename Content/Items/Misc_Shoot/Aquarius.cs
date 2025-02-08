@@ -69,7 +69,7 @@ namespace Coralite.Content.Items.Misc_Shoot
                 angle = MathHelper.Pi.AngleLerp(3 * MathHelper.PiOver2, percent);
             }
 
-            int x =  Main.rand.Next(-2, 0);
+            int x = Main.rand.Next(-2, 0);
             int k = Main.rand.Next(2, 4);
 
             int damage2 = (int)(damage * 0.9f);
@@ -77,7 +77,7 @@ namespace Coralite.Content.Items.Misc_Shoot
             for (int i = x; i < k; i++)
             {
                 int type2 = type;
-                if (type == ProjectileID.WoodenArrowFriendly||!(i == -1 || i == 1))
+                if (type == ProjectileID.WoodenArrowFriendly || !(i == -1 || i == 1))
                     type2 = 0;
 
                 Projectile.NewProjectile(source, player.Center, (angle + i * 0.05f).ToRotationVector2() * v0 * Main.rand.NextFloat(0.95f, 1.05f), ProjectileType<AquariusBall>()
@@ -116,13 +116,13 @@ namespace Coralite.Content.Items.Misc_Shoot
 
         public AquariusHeldProj() : base(0.25f, 16, -8, AssetDirectory.Misc_Shoot) { }
 
-        public override void Initialize()
+        public override void InitializeGun()
         {
             Projectile.timeLeft = Owner.itemTimeMax;
             MaxTime = Owner.itemTimeMax;
             if (Projectile.IsOwnedByLocalPlayer())
             {
-                Owner.direction = MousePos.X > Owner.Center.X ? 1 : -1;
+                Owner.direction = InMousePos.X > Owner.Center.X ? 1 : -1;
                 TargetRot = Projectile.ai[2] + (DirSign > 0 ? 0f : MathHelper.Pi);
                 Projectile.netUpdate = true;
             }
@@ -135,9 +135,9 @@ namespace Coralite.Content.Items.Misc_Shoot
                 Vector2 dir2 = dir.RotateByRandom(-0.75f, 0.75f);
                 Color c = Main.rand.NextFromList(Color.CornflowerBlue, Color.DeepSkyBlue, Color.LightSkyBlue) * 0.5f;
                 c.A = 10;
-                Dust d = Dust.NewDustPerfect(Projectile.Center + dir * 60, DustType<WaterFlower>(), dir2 * (1 + i*0.75f)
+                Dust d = Dust.NewDustPerfect(Projectile.Center + dir * 60, DustType<WaterFlower>(), dir2 * (1 + i * 0.75f)
                       , newColor: c, Scale: Main.rand.NextFloat(0.8f, 1.3f));
-                d.rotation = dir2.ToRotation() +  MathHelper.PiOver2;
+                d.rotation = dir2.ToRotation() + MathHelper.PiOver2;
             }
         }
 

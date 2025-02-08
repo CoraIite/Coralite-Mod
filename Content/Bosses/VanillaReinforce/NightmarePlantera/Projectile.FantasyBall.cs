@@ -139,7 +139,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             Effect effect = Filters.Scene["FantasyTentacle"].GetShader().Shader;
 
-            effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMatrix());
+            effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly / 2);
             effect.Parameters["sampleTexture"].SetValue(NightmarePlantera.tentacleTex.Value);
             effect.Parameters["extraTexture"].SetValue(NightmarePlantera.waterFlowTex.Value);

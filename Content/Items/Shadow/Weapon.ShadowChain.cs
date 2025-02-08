@@ -126,7 +126,7 @@ namespace Coralite.Content.Items.Shadow
             GradientTexture = Request<Texture2D>(AssetDirectory.ShadowItems + "ShadowChainGradient");
         }
 
-        public override void SetDefs()
+        public override void SetSwingProperty()
         {
             Projectile.width = Projectile.height = 48;
             Projectile.DamageType = DamageClass.Melee;
@@ -168,9 +168,9 @@ namespace Coralite.Content.Items.Shadow
             return base.GetStartAngle();
         }
 
-        protected override void Initializer()
+        protected override void InitializeSwing()
         {
-            if (Main.myPlayer == Projectile.owner)
+            if (Projectile.IsOwnedByLocalPlayer())
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
 
             Projectile.extraUpdates = 2;
@@ -259,7 +259,7 @@ namespace Coralite.Content.Items.Shadow
                 }
             }
 
-            base.Initializer();
+            base.InitializeSwing();
         }
 
         protected override void OnSlash()
@@ -455,7 +455,7 @@ namespace Coralite.Content.Items.Shadow
                 {
                     Effect effect = Filters.Scene["StarsTrail"].GetShader().Shader;
 
-                    effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMatrix());
+                    effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
                     effect.Parameters["sampleTexture"].SetValue(CoraliteAssets.Trail.SlashFlatBright.Value);
                     effect.Parameters["gradientTexture"].SetValue(GradientTexture.Value);
                     effect.Parameters["worldSize"].SetValue(new Vector2(Main.screenWidth, Main.screenHeight));

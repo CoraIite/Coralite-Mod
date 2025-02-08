@@ -1,8 +1,8 @@
 ﻿using Coralite.Content.ModPlayers;
 using Coralite.Core;
-using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using InnoVault.PRT;
 using Terraria;
 using Terraria.Audio;

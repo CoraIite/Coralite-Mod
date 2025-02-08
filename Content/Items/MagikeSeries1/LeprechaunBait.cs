@@ -1,9 +1,9 @@
 ﻿using Coralite.Content.Raritys;
 using Coralite.Content.WorldGeneration;
 using Coralite.Core;
-using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.SmoothFunctions;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
@@ -87,11 +87,11 @@ namespace Coralite.Content.Items.MagikeSeries1
         public override void AI()
         {
             SetHeld();
-            LockOwnerItemTime();
+            Owner.itemTime = Owner.itemAnimation = 2;
 
             Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
 
-            if (Owner.HeldItem.type != ModContent.ItemType<LeprechaunBait>())
+            if (Item.type != ModContent.ItemType<LeprechaunBait>())
             {
                 Projectile.Kill();
                 return;

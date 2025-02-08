@@ -87,7 +87,7 @@ namespace Coralite.Helpers
         /// <param name="spriteBatch"></param>
         /// <param name="position"></param>
         /// <param name="maxWidth"></param>
-        public static void DrawText(SpriteBatch spriteBatch, string originText, float maxWidth, Vector2 position, Vector2 origin, Vector2 scale, Color shadowColor, Color textColor, out Vector2 textSize,bool useIncomeColor=false)
+        public static void DrawText(SpriteBatch spriteBatch, string originText, float maxWidth, Vector2 position, Vector2 origin, Vector2 scale, Color shadowColor, Color textColor, out Vector2 textSize, bool useIncomeColor = false)
         {
             string text = FontAssets.MouseText.Value.CreateWrappedText(originText, maxWidth);
 
@@ -95,16 +95,16 @@ namespace Coralite.Helpers
             ChatManager.ConvertNormalSnippets(textSnippets);
 
             textSize = ChatManager.GetStringSize(FontAssets.MouseText.Value, textSnippets, scale, maxWidth);
-                origin *= textSize;
+            origin *= textSize;
 
             foreach (Vector2 direction in ChatManager.ShadowDirections)
             {
                 ChatManager.DrawColorCodedStringShadow(spriteBatch, FontAssets.MouseText.Value, textSnippets, position + direction,
-                    shadowColor, 0f, origin , scale, maxWidth);
+                    shadowColor, 0f, origin, scale, maxWidth);
             }
 
             ChatManager.DrawColorCodedString(spriteBatch, FontAssets.MouseText.Value, textSnippets,
-                position, textColor, 0f, origin , scale, out _, maxWidth, useIncomeColor);
+                position, textColor, 0f, origin, scale, out _, maxWidth, useIncomeColor);
         }
 
         /// <summary>

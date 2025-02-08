@@ -48,7 +48,7 @@ namespace Coralite.Content.Dusts
 
         public override void SetProperty()
         {
-            Rotation = Velocity.ToRotation()+MathHelper.Pi;
+            Rotation = Velocity.ToRotation() + MathHelper.Pi;
 
             basePos = Position;
             PRTDrawMode = PRTDrawModeEnum.AlphaBlend;
@@ -80,7 +80,7 @@ namespace Coralite.Content.Dusts
 
             Vector2 endPos = (Opacity < TrailCount && useStartLimit) ? (basePos - Main.screenPosition) : (pos - dir);
 
-            Rectangle rect = new Rectangle((int)pos.X, (int)pos.Y, (int)((pos- endPos).Length() * Scale), (int)(frame.Height * Scale));
+            Rectangle rect = new Rectangle((int)pos.X, (int)pos.Y, (int)((pos - endPos).Length() * Scale), (int)(frame.Height * Scale));
             Vector2 origin = new Vector2(0, frame.Height / 2);
 
             Main.spriteBatch.Draw(tex, rect, frame, Color, Rotation, origin, 0, 0);

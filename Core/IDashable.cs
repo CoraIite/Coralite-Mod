@@ -7,7 +7,7 @@ namespace Coralite.Core
         /// <summary>
         /// 冲刺优先级
         /// </summary>
-        float Priority {  get; }
+        float Priority { get; }
 
         /// <summary>
         /// 优先度最高：手持物品

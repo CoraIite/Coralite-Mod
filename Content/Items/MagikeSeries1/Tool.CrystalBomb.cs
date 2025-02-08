@@ -60,10 +60,10 @@ namespace Coralite.Content.Items.MagikeSeries1
 
         public override void AI()
         {
-            if (Projectile.localAI[0]==0)
+            if (Projectile.localAI[0] == 0)
             {
                 Projectile.localAI[0] = 1;
-                Projectile.rotation = Projectile.velocity.ToRotation()+MathHelper.Pi;
+                Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.Pi;
             }
 
             Projectile.rotation += Projectile.direction * 0.15f;
@@ -79,7 +79,7 @@ namespace Coralite.Content.Items.MagikeSeries1
             for (int i = 0; i < 2; i++)
             {
                 Vector2 dir = Projectile.rotation.ToRotationVector2();
-              Dust d=  Dust.NewDustPerfect(Projectile.Center + dir * 8, DustID.CrystalSerpent_Pink, dir.RotateByRandom(-0.2f, 0.2f) * Main.rand.NextFloat(2, 3));
+                Dust d = Dust.NewDustPerfect(Projectile.Center + dir * 8, DustID.CrystalSerpent_Pink, dir.RotateByRandom(-0.2f, 0.2f) * Main.rand.NextFloat(2, 3));
                 d.noGravity = true;
             }
         }

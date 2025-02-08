@@ -37,7 +37,7 @@ namespace Coralite.Content.Items.RedJades
 
         public void HitEffect(Projectile projectile, NPC target, int damage, float knockback, bool crit)
         {       //6分之一概率产生爆炸
-            if (Main.myPlayer == projectile.owner && Main.rand.NextBool(6))
+            if (projectile.IsOwnedByLocalPlayer() && Main.rand.NextBool(6))
                 Projectile.NewProjectile(projectile.GetSource_FromThis(), projectile.Center, Vector2.Zero, ModContent.ProjectileType<RedJadeBoom>(), projectile.damage, projectile.knockBack, projectile.owner);
         }
 

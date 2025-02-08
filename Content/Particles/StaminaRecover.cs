@@ -27,11 +27,11 @@ namespace Coralite.Content.Particles
             }
 
             Color *= 0.8f;
-            Scale*= 1.04f;
+            Scale *= 1.04f;
             Position += Main.player[ownerIndex].position - Main.player[ownerIndex].oldPosition;
         }
 
-        public static void Spawn(Vector2 center, Vector2 velocity, float rotation, Color newcolor, float alpha, float Basescale, Vector2 exScale,int ownerIndex)
+        public static void Spawn(Vector2 center, Vector2 velocity, float rotation, Color newcolor, float alpha, float Basescale, Vector2 exScale, int ownerIndex)
         {
             if (VaultUtils.isServer)
                 return;

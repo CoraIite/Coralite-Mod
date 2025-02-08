@@ -153,7 +153,7 @@ namespace Coralite.Content.Items.Thunder
             GradientTexture = null;
         }
 
-        public override void SetDefs()
+        public override void SetSwingProperty()
         {
             Projectile.DamageType = DamageClass.Melee;
             Projectile.localNPCHitCooldown = 48;
@@ -172,9 +172,9 @@ namespace Coralite.Content.Items.Thunder
             return 70 * Projectile.scale;
         }
 
-        protected override void Initializer()
+        protected override void InitializeSwing()
         {
-            if (Main.myPlayer == Projectile.owner && Combo < 3)
+            if (Projectile.IsOwnedByLocalPlayer() && Combo < 3)
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
 
             Projectile.extraUpdates = 5;
@@ -211,7 +211,7 @@ namespace Coralite.Content.Items.Thunder
             }
 
             ExtraInit();
-            base.Initializer();
+            base.InitializeSwing();
         }
 
         private void ExtraInit()
@@ -254,8 +254,8 @@ namespace Coralite.Content.Items.Thunder
             int timer = (int)Timer - minTime;
             float scale = 1f;
 
-            if (Owner.HeldItem.type == ItemType<ThunderveinBlade>())
-                scale = Owner.GetAdjustedItemScale(Owner.HeldItem);
+            if (Item.type == ItemType<ThunderveinBlade>())
+                scale = Owner.GetAdjustedItemScale(Item);
 
             if (timer % 5 == 0 && timer < maxTime * 0.7f)
             {
@@ -312,7 +312,7 @@ namespace Coralite.Content.Items.Thunder
             {
                 onHitTimer = 1;
                 Owner.immuneTime += 10;
-                if (Main.netMode == NetmodeID.Server)
+                if (VaultUtils.isServer)
                     return;
 
                 float strength = 2;
@@ -378,7 +378,7 @@ namespace Coralite.Content.Items.Thunder
                 {
                     Effect effect = Filters.Scene["SimpleGradientTrail"].GetShader().Shader;
 
-                    effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMatrix());
+                    effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
                     effect.Parameters["sampleTexture"].SetValue(CoraliteAssets.Trail.SlashFlatFade.Value);
                     effect.Parameters["gradientTexture"].SetValue(GradientTexture.Value);
 
@@ -410,7 +410,7 @@ namespace Coralite.Content.Items.Thunder
             Projectile.QuickTrailSets(Helper.TrailingMode.RecordAllAndFollowPlayer, 10);
         }
 
-        public override void SetDefs()
+        public override void SetSwingProperty()
         {
             Projectile.DamageType = DamageClass.Melee;
             Projectile.localNPCHitCooldown = 48;
@@ -424,9 +424,9 @@ namespace Coralite.Content.Items.Thunder
             useShadowTrail = true;
         }
 
-        protected override void Initializer()
+        protected override void InitializeSwing()
         {
-            if (Main.myPlayer == Projectile.owner)
+            if (Projectile.IsOwnedByLocalPlayer())
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
 
             SoundEngine.PlaySound(CoraliteSoundID.Swing_Item1, Projectile.Center);
@@ -438,7 +438,7 @@ namespace Coralite.Content.Items.Thunder
 
             Projectile.extraUpdates = 3;
 
-            base.Initializer();
+            base.InitializeSwing();
         }
 
         protected override void AIBefore()
@@ -473,40 +473,44 @@ namespace Coralite.Content.Items.Thunder
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            if (onHitTimer == 0)
+            if (onHitTimer != 0)
             {
-                onHitTimer = 1;
-                Owner.immuneTime += 10;
-                if (Main.netMode == NetmodeID.Server)
-                    return;
+                return;
+            }
 
-                float strength = 2;
+            onHitTimer = 1;
+            Owner.immuneTime += 10;
+            if (VaultUtils.isServer)
+            {
+                return;
+            }
 
-                if (VisualEffectSystem.HitEffect_ScreenShaking)
+            float strength = 2;
+
+            if (VisualEffectSystem.HitEffect_ScreenShaking)
+            {
+                PunchCameraModifier modifier = new(Projectile.Center, RotateVec2, strength, 6, 6, 1000);
+                Main.instance.CameraModifiers.Add(modifier);
+            }
+
+            Dust dust;
+            float offset = Projectile.localAI[1] + Main.rand.NextFloat(0, (Projectile.width * Projectile.scale) - Projectile.localAI[1]);
+            Vector2 pos = Bottom + (RotateVec2 * offset);
+
+            if (VisualEffectSystem.HitEffect_Dusts)
+            {
+                for (int j = 0; j < 4; j++)
                 {
-                    PunchCameraModifier modifier = new(Projectile.Center, RotateVec2, strength, 6, 6, 1000);
-                    Main.instance.CameraModifiers.Add(modifier);
+                    Vector2 dir = -RotateVec2.RotatedBy(Main.rand.NextFloat(-0.6f, 0.6f));
+                    dust = Dust.NewDustPerfect(pos, DustID.PortalBoltTrail, dir * Main.rand.NextFloat(1f, 5f), 50, Coralite.ThunderveinYellow, Scale: Main.rand.NextFloat(1f, 1.5f));
+                    dust.noGravity = true;
                 }
 
-                Dust dust;
-                float offset = Projectile.localAI[1] + Main.rand.NextFloat(0, (Projectile.width * Projectile.scale) - Projectile.localAI[1]);
-                Vector2 pos = Bottom + (RotateVec2 * offset);
-
-                if (VisualEffectSystem.HitEffect_Dusts)
+                for (int i = 0; i < 6; i++)
                 {
-                    for (int j = 0; j < 4; j++)
-                    {
-                        Vector2 dir = -RotateVec2.RotatedBy(Main.rand.NextFloat(-0.6f, 0.6f));
-                        dust = Dust.NewDustPerfect(pos, DustID.PortalBoltTrail, dir * Main.rand.NextFloat(1f, 5f), 50, Coralite.ThunderveinYellow, Scale: Main.rand.NextFloat(1f, 1.5f));
-                        dust.noGravity = true;
-                    }
-
-                    for (int i = 0; i < 6; i++)
-                    {
-                        Vector2 dir = RotateVec2.RotatedBy(Main.rand.NextFloat(-0.8f, 0.8f));
-                        dust = Dust.NewDustPerfect(pos, DustID.PortalBoltTrail, dir * Main.rand.NextFloat(2f, 12f), newColor: Coralite.ThunderveinYellow, Scale: Main.rand.NextFloat(1.5f, 2f));
-                        dust.noGravity = true;
-                    }
+                    Vector2 dir = RotateVec2.RotatedBy(Main.rand.NextFloat(-0.8f, 0.8f));
+                    dust = Dust.NewDustPerfect(pos, DustID.PortalBoltTrail, dir * Main.rand.NextFloat(2f, 12f), newColor: Coralite.ThunderveinYellow, Scale: Main.rand.NextFloat(1.5f, 2f));
+                    dust.noGravity = true;
                 }
             }
         }

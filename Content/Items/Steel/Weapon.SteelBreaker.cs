@@ -148,7 +148,7 @@ namespace Coralite.Content.Items.Steel
                         Projectile.velocity.Y -= num64;
                 }
 
-                if (Main.myPlayer == Projectile.owner)
+                if (Projectile.IsOwnedByLocalPlayer())
                 {
                     Rectangle rectangle = new((int)Projectile.position.X, (int)Projectile.position.Y, Projectile.width, Projectile.height);
                     Rectangle value = new((int)Main.player[Projectile.owner].position.X, (int)Main.player[Projectile.owner].position.Y, Main.player[Projectile.owner].width, Main.player[Projectile.owner].height);
@@ -193,7 +193,7 @@ namespace Coralite.Content.Items.Steel
                 Projectile.velocity.X = 0f - Projectile.velocity.X;
                 Projectile.velocity.Y = 0f - Projectile.velocity.Y;
                 Projectile.netUpdate = true;
-                if (Phase == 0 && Main.myPlayer == Projectile.owner)
+                if (Phase == 0 && Projectile.IsOwnedByLocalPlayer())
                 {
                     int howMany = Main.rand.Next(2, 4);
 

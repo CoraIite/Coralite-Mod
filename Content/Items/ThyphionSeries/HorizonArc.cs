@@ -6,9 +6,9 @@ using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.SmoothFunctions;
 using Coralite.Core.Systems.CameraSystem;
-using InnoVault.Trails;
 using Coralite.Helpers;
 using InnoVault.PRT;
+using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.IO;
@@ -167,7 +167,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             specialRelease,
         }
 
-        public override void Initialize()
+        public override void InitializeDashBow()
         {
             RecordAngle = Rotation;
             bonus = Owner.HasBuff<HorizonArcBonus>();
@@ -220,14 +220,14 @@ namespace Coralite.Content.Items.ThyphionSeries
                 arrowAlpha = Helper.Lerp(arrowAlpha, 1, 0.1f);
                 if (DownLeft && Release == 0)
                 {
-                    if (Main.myPlayer == Projectile.owner)
+                    if (Projectile.IsOwnedByLocalPlayer())
                     {
                         Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
                         Rotation = Rotation.AngleLerp((Main.MouseWorld - Owner.MountedCenter).ToRotation(), 0.15f);
                     }
 
                     Projectile.timeLeft = 2;
-                    LockOwnerItemTime();
+                    Owner.itemTime = Owner.itemAnimation = 2;
                 }
                 else
                 {
@@ -269,7 +269,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 return;
             }
 
-            Rotation = Rotation.AngleLerp(ToMouseAngle, 0.2f);
+            Rotation = Rotation.AngleLerp(ToMouseA, 0.2f);
         }
 
         public float GetStreamerAngle()
@@ -321,7 +321,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 Vector2 velocity = dir * 12f;
 
                 Projectile.NewProjectileFromThis<RainbowArrow>(Owner.Center, velocity
-                    , Owner.GetWeaponDamage(Owner.HeldItem), Projectile.knockBack, targetIndex ?? -1);
+                    , Owner.GetWeaponDamage(Item), Projectile.knockBack, targetIndex ?? -1);
 
                 Helper.PlayPitched(CoraliteSoundID.Bow_Item5, Owner.Center, pitchAdjust: 0.5f);
                 Helper.PlayPitched(CoraliteSoundID.StrongWinds_Item66, Owner.Center, pitchAdjust: 0.2f);
@@ -359,7 +359,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             if (dashHit)
                 Owner.AddBuff(BuffType<HorizonArcBonus>(), 60 * 3 + 20);
 
-            if (Main.myPlayer == Projectile.owner)
+            if (Projectile.IsOwnedByLocalPlayer())
             {
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
                 Rotation = Rotation.AngleLerp((Main.MouseWorld - Owner.MountedCenter).ToRotation(), 0.1f);
@@ -402,7 +402,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 Vector2 velocity = dir * 12f;
 
                 Projectile.NewProjectileFromThis<RainbowArrow>(Owner.Center, velocity
-                    , (int)(Owner.GetWeaponDamage(Owner.HeldItem) * 1.5f), Projectile.knockBack, targetIndex ?? -1);
+                    , (int)(Owner.GetWeaponDamage(Item) * 1.5f), Projectile.knockBack, targetIndex ?? -1);
 
                 Helper.PlayPitched(CoraliteSoundID.Bow2_Item102, Owner.Center, pitchAdjust: 0.5f);
                 Helper.PlayPitched(CoraliteSoundID.StrongWinds_Item66, Owner.Center, pitchAdjust: 0.2f);
@@ -505,7 +505,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             handOffset = Helper.Lerp(handOffset, 0, 0.15f);
 
-            if (Main.myPlayer == Projectile.owner)
+            if (Projectile.IsOwnedByLocalPlayer())
             {
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
                 Rotation = Rotation.AngleLerp((Main.MouseWorld - Owner.MountedCenter).ToRotation(), 0.1f);
@@ -542,12 +542,12 @@ namespace Coralite.Content.Items.ThyphionSeries
             }
         }
 
-        public override void NetCodeHeldSend(BinaryWriter writer)
+        public override void NetHeldSend(BinaryWriter writer)
         {
             writer.Write(dashState);
         }
 
-        public override void NetCodeReceiveHeld(BinaryReader reader)
+        public override void NetHeldReceive(BinaryReader reader)
         {
             dashState = reader.ReadInt32();
         }
@@ -583,7 +583,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             Effect effect = Filters.Scene["ArcRainbow"].GetShader().Shader;
 
-            effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMatrix());
+            effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * 0.02f);
             effect.Parameters["uTimeG"].SetValue(Main.GlobalTimeWrappedHourly * 0.1f);
             effect.Parameters["udissolveS"].SetValue(1f);
@@ -606,7 +606,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             Effect effect = Filters.Scene["ArcRainbow"].GetShader().Shader;
 
-            effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMatrix());
+            effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * 0.02f);
             effect.Parameters["uTimeG"].SetValue(Main.GlobalTimeWrappedHourly * 0.1f);
             effect.Parameters["udissolveS"].SetValue(1f);
@@ -908,7 +908,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             Effect effect = Filters.Scene["ArcRainbow"].GetShader().Shader;
 
-            effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMatrix());
+            effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * 0.03f);
             effect.Parameters["uTimeG"].SetValue(Main.GlobalTimeWrappedHourly * 0.1f);
             effect.Parameters["udissolveS"].SetValue(1f);
@@ -936,7 +936,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             Effect effect = Filters.Scene["ArcRainbow"].GetShader().Shader;
 
-            effect.Parameters["transformMatrix"].SetValue(Helper.GetTransfromMatrix());
+            effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * 0.02f);
             effect.Parameters["uTimeG"].SetValue(Main.GlobalTimeWrappedHourly * 0.1f);
             effect.Parameters["udissolveS"].SetValue(1f);

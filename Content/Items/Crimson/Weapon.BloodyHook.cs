@@ -106,7 +106,7 @@ namespace Coralite.Content.Items.Crimson
             Projectile.QuickTrailSets(Helper.TrailingMode.RecordAllAndFollowPlayer, 8);
         }
 
-        public override void SetDefs()
+        public override void SetSwingProperty()
         {
             Projectile.width = Projectile.height = 48;
             Projectile.DamageType = DamageClass.Melee;
@@ -115,7 +115,7 @@ namespace Coralite.Content.Items.Crimson
             onHitFreeze = 0;
         }
 
-        protected override void Initializer()
+        protected override void InitializeSwing()
         {
             Projectile.extraUpdates = 1;
 
@@ -147,7 +147,7 @@ namespace Coralite.Content.Items.Crimson
                     Smoother = Coralite.Instance.NoSmootherInstance;
                     break;
             }
-            base.Initializer();
+            base.InitializeSwing();
         }
 
         protected override void OnSlash()

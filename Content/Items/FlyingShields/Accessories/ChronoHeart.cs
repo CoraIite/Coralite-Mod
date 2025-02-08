@@ -193,7 +193,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
             GradientTexture = Request<Texture2D>(AssetDirectory.FlyingShieldAccessories + "ChronoHeartGradient");
         }
 
-        public override void SetDefs()
+        public override void SetSwingProperty()
         {
             Projectile.localNPCHitCooldown = 30;
             Projectile.width = 40;
@@ -214,7 +214,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
             return base.CanDamage();
         }
 
-        protected override void Initializer()
+        protected override void InitializeSwing()
         {
             Projectile.extraUpdates = 2;
             startAngle = 0f;
@@ -323,7 +323,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
                 onHitTimer = 1;
             }
 
-            if (Main.netMode == NetmodeID.Server)
+            if (VaultUtils.isServer)
                 return;
 
             Dust dust;

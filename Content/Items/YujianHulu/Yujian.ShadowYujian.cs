@@ -1,11 +1,11 @@
 ﻿using Coralite.Content.Items.Shadow;
 using Coralite.Content.Particles;
 using Coralite.Core;
-using InnoVault.Trails;
 using Coralite.Core.Systems.YujianSystem;
 using Coralite.Core.Systems.YujianSystem.YujianAIs;
 using Coralite.Helpers;
 using InnoVault.PRT;
+using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Audio;

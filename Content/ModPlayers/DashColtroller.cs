@@ -220,8 +220,8 @@ namespace Coralite.Content.ModPlayers
 
             for (int i = -1; i < 2; i += 2)
             {
-                StaminaRecover.Spawn(pos, Vector2.Zero,-1.57f+ i * 0.5f, Color.Gold, 1, 0.7f, new Vector2(2f, 1f), Player.whoAmI);
-                StaminaRecover.Spawn(pos, Vector2.Zero,1.57f+ i * 0.5f, Color.Gold, 1, 0.4f, new Vector2(1.5f, 1f), Player.whoAmI);
+                StaminaRecover.Spawn(pos, Vector2.Zero, -1.57f + i * 0.5f, Color.Gold, 1, 0.7f, new Vector2(2f, 1f), Player.whoAmI);
+                StaminaRecover.Spawn(pos, Vector2.Zero, 1.57f + i * 0.5f, Color.Gold, 1, 0.4f, new Vector2(1.5f, 1f), Player.whoAmI);
             }
         }
 
@@ -230,6 +230,6 @@ namespace Coralite.Content.ModPlayers
         /// </summary>
         /// <param name="dash"></param>
         public void AddDash(IDashable dash)
-            =>DashControllers.Add(dash);
+            => DashControllers.Add(dash);
     }
 }

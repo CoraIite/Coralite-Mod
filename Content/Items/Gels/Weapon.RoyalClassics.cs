@@ -148,7 +148,7 @@ namespace Coralite.Content.Items.Gels
                      Helper.NextVec2Dir(1f, 2.5f), 150, new Color(78, 136, 255, 80), Main.rand.NextFloat(1.2f, 1.6f));
             }
 
-            if (Main.myPlayer == Projectile.owner)
+            if (Projectile.IsOwnedByLocalPlayer())
             {
                 //生成一些尖刺弹幕
                 for (int i = 0; i < 3; i++)

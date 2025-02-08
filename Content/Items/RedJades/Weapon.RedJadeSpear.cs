@@ -75,7 +75,7 @@ namespace Coralite.Content.Items.RedJades
 
         public ref float Combo => ref Projectile.ai[0];
 
-        public override void SetDefs()
+        public override void SetSwingProperty()
         {
             Projectile.DamageType = DamageClass.Melee;
             Projectile.localNPCHitCooldown = 48;
@@ -88,9 +88,9 @@ namespace Coralite.Content.Items.RedJades
             useShadowTrail = true;
         }
 
-        protected override void Initializer()
+        protected override void InitializeSwing()
         {
-            if (Main.myPlayer == Projectile.owner)
+            if (Projectile.IsOwnedByLocalPlayer())
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
 
             startAngle = Main.rand.NextFloat(-0.2f, 0.2f);
@@ -113,7 +113,7 @@ namespace Coralite.Content.Items.RedJades
                     break;
             }
 
-            base.Initializer();
+            base.InitializeSwing();
         }
 
         protected override void BeforeSlash()
@@ -181,7 +181,7 @@ namespace Coralite.Content.Items.RedJades
             {
                 onHitTimer = 1;
                 Owner.immuneTime += 10;
-                if (Main.netMode == NetmodeID.Server)
+                if (VaultUtils.isServer)
                     return;
 
                 float strength = 2;

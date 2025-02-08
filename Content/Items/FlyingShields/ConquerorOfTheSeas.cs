@@ -219,7 +219,7 @@ namespace Coralite.Content.Items.FlyingShields
             Projectile.QuickTrailSets(Helper.TrailingMode.RecordAllAndFollowPlayer, 10);
         }
 
-        public override void SetDefs()
+        public override void SetSwingProperty()
         {
             Projectile.DamageType = DamageClass.Melee;
             Projectile.localNPCHitCooldown = 48;
@@ -240,7 +240,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         protected override float GetStartAngle() => StartAngle;
 
-        protected override void Initializer()
+        protected override void InitializeSwing()
         {
             Projectile.extraUpdates = 3;
             alpha = 255;
@@ -272,7 +272,7 @@ namespace Coralite.Content.Items.FlyingShields
                     break;
             }
 
-            base.Initializer();
+            base.InitializeSwing();
         }
 
         protected override void AIBefore()

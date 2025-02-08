@@ -21,7 +21,7 @@ namespace Coralite.Core.Loaders
         void PostSetUp(Mod Mod) { }
 
         void PreUnload(Mod Mod) { }
-        void Unload(Mod Mod,Type type) { }
+        void Unload(Mod Mod, Type type) { }
 
         int Priority { get; }
         LoadSide Side { get; }

@@ -107,7 +107,7 @@ namespace Coralite.Core.Prefabs.NPCs
                     NPC.active = false;
                 }
 
-                if (!NPC.active && Main.netMode == NetmodeID.Server)
+                if (!NPC.active && VaultUtils.isServer)
                     NetMessage.SendData(MessageID.DamageNPC, -1, -1, null, NPC.whoAmI, -1f, 0f, 0f, 0, 0, 0);
             }
             int position2Tile_Xless1 = (int)(NPC.position.X / 16f) - 1;
@@ -264,11 +264,11 @@ namespace Coralite.Core.Prefabs.NPCs
                                     int num201 = (int)Main.npc[num200].ai[0];
                                     Main.npc[num200].active = false;
                                     NPC.life = 0;
-                                    if (Main.netMode == NetmodeID.Server)
+                                    if (VaultUtils.isServer)
                                         NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, num200, 0f, 0f, 0f, 0, 0, 0);
                                     num200 = num201;
                                 }
-                                if (Main.netMode == NetmodeID.Server)
+                                if (VaultUtils.isServer)
                                     NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, NPC.whoAmI, 0f, 0f, 0f, 0, 0, 0);
                             }
                             distance2TargetX = 0f;

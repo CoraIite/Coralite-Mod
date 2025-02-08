@@ -1,4 +1,5 @@
 ﻿using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -24,8 +25,6 @@ namespace Coralite.Core.Prefabs.Projectiles
         protected float HeldPositionX { get; set; } = heldPositionX;
         protected virtual float HeldPositionY { get; set; }
 
-        public bool init;
-
         public override string Texture => string.IsNullOrEmpty(texturePath) ? base.Texture : (texturePath + (pathHasName ? string.Empty : Name)).Replace("HeldProj", "");
 
         public override void SetDefaults()
@@ -42,29 +41,30 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         public override void AI()
         {
-            if (!init)
-            {
-                Initialize();
-                init = true;
-            }
-
             float factor = Ease();
             ApplyRecoil(factor);
             ModifyAI(factor);
             AfterAI(factor);
         }
 
-        public virtual void Initialize()
+        public override void Initialize()
         {
             Projectile.timeLeft = Owner.itemTimeMax;
             MaxTime = Owner.itemTimeMax;
-            if (Main.myPlayer == Projectile.owner)
+            if (Projectile.IsOwnedByLocalPlayer())
             {
-                Owner.direction = MousePos.X > Owner.Center.X ? 1 : -1;
-                TargetRot = (MousePos - Owner.Center).ToRotation() + (DirSign > 0 ? 0f : MathHelper.Pi);
+                Owner.direction = InMousePos.X > Owner.Center.X ? 1 : -1;
+                TargetRot = (InMousePos - Owner.Center).ToRotation() + (DirSign > 0 ? 0f : MathHelper.Pi);
             }
 
+            InitializeGun();
+
             Projectile.netUpdate = true;
+        }
+
+        public virtual void InitializeGun()
+        {
+
         }
 
         /// <summary>

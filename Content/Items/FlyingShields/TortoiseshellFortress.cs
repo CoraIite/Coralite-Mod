@@ -1,8 +1,8 @@
 ﻿using Coralite.Content.ModPlayers;
 using Coralite.Core;
-using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.FlyingShieldSystem;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -195,7 +195,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void AI()
         {
-            LockOwnerItemTime();
+            Owner.itemTime = Owner.itemAnimation = 2;
 
             Owner.immuneTime = 5;
             Owner.immune = true;

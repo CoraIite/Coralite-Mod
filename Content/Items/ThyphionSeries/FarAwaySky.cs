@@ -157,7 +157,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         {
             if (Timer < DashTime + 2)
             {
-                LockOwnerItemTime();
+                Owner.itemTime = Owner.itemAnimation = 2;
 
                 Rotation = Helper.Lerp(RecordAngle, DirSign > 0 ? -1f : (3.141f + 1f), Coralite.Instance.HeavySmootherInstance.Smoother(Timer / DashTime));
                 return;
@@ -172,7 +172,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             {
                 SoundEngine.PlaySound(CoraliteSoundID.Bow2_Item102, Owner.Center);
 
-                if (Main.myPlayer == Projectile.owner)
+                if (Projectile.IsOwnedByLocalPlayer())
                 {
                     State = 1;
                     Timer = 0;
@@ -241,7 +241,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             }
         }
 
-        public override void Initialize()
+        public override void InitializeDashBow()
         {
             RecordAngle = Rotation;
         }
@@ -252,7 +252,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             Vector2 center = Projectile.Center - Main.screenPosition;
             Vector2 dir = Rotation.ToRotationVector2();
 
-            Main.spriteBatch.Draw(mainTex, center+dir*handOffset, null, lightColor, Projectile.rotation, mainTex.Size() / 2, 1, DirSign > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0f);
+            Main.spriteBatch.Draw(mainTex, center + dir * handOffset, null, lightColor, Projectile.rotation, mainTex.Size() / 2, 1, DirSign > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0f);
 
             if (Special == 0)
                 return false;

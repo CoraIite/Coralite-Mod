@@ -11,7 +11,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
         public static LocalizedText Title { get; private set; }
         public static LocalizedText Description { get; private set; }
 
-        private ScaleController _scale =new ScaleController(0.9f,0.1f);
+        private ScaleController _scale = new ScaleController(0.9f, 0.1f);
 
         public override void OnInitialize()
         {

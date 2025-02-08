@@ -20,8 +20,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
                 .RegisterNew(ItemID.ClimbingClaws, CalculateMagikeCost(MagicCrystal, 8, 180))//攀爬爪
                 .RegisterNew(ItemID.CordageGuide, CalculateMagikeCost(MagicCrystal, 8, 180))//植物纤维宝典
                 .RegisterNew(ItemID.Radar, CalculateMagikeCost(MagicCrystal, 8, 180))//雷达
-                .RegisterNew<FlyingShieldVarnish>( CalculateMagikeCost(MagicCrystal, 8, 180))//飞盾光油
-                .RegisterNew<HeavyWedges>( CalculateMagikeCost(MagicCrystal, 8, 180))//重型楔石
+                .RegisterNew<FlyingShieldVarnish>(CalculateMagikeCost(MagicCrystal, 8, 180))//飞盾光油
+                .RegisterNew<HeavyWedges>(CalculateMagikeCost(MagicCrystal, 8, 180))//重型楔石
                 .RegisterNew(ItemID.ApprenticeBait, CalculateMagikeCost(MagicCrystal, 8, 180), 3)
                 .RegisterNew(ItemID.JourneymanBait, CalculateMagikeCost(MagicCrystal, 8, 180), 3)
                 .Register();
@@ -35,8 +35,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
                 .RegisterNew(ItemID.ClimbingClaws, CalculateMagikeCost(MagicCrystal, 8, 180))//攀爬爪
                 .RegisterNew(ItemID.CordageGuide, CalculateMagikeCost(MagicCrystal, 8, 180))//植物纤维宝典
                 .RegisterNew(ItemID.Radar, CalculateMagikeCost(MagicCrystal, 8, 180))//雷达
-                .RegisterNew<FlyingShieldVarnish>( CalculateMagikeCost(MagicCrystal, 8, 180))//飞盾光油
-                .RegisterNew<HeavyWedges>( CalculateMagikeCost(MagicCrystal, 8, 180))//重型楔石
+                .RegisterNew<FlyingShieldVarnish>(CalculateMagikeCost(MagicCrystal, 8, 180))//飞盾光油
+                .RegisterNew<HeavyWedges>(CalculateMagikeCost(MagicCrystal, 8, 180))//重型楔石
                 .RegisterNew(ItemID.ApprenticeBait, CalculateMagikeCost(MagicCrystal, 8, 180), 3)
                 .RegisterNew(ItemID.JourneymanBait, CalculateMagikeCost(MagicCrystal, 8, 180), 3)
                 .Register();

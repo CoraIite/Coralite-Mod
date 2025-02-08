@@ -170,7 +170,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void AI()
         {
-            if (Owner.HeldItem.type != ModContent.ItemType<HylianShield>())
+            if (Item.type != ModContent.ItemType<HylianShield>())
             {
                 Projectile.Kill();
                 return;
@@ -206,7 +206,7 @@ namespace Coralite.Content.Items.FlyingShields
                     break;
                 case (int)GuardState.Parry:
                     {
-                        LockOwnerItemTime();
+                        Owner.itemTime = Owner.itemAnimation = 2;
 
                         if (!Main.mouseRight)
                             TurnToDelay();
@@ -231,7 +231,7 @@ namespace Coralite.Content.Items.FlyingShields
                     break;
                 case (int)GuardState.ParryDelay:
                     {
-                        LockOwnerItemTime();
+                        Owner.itemTime = Owner.itemAnimation = 2;
 
                         DistanceToOwner = Helper.Lerp(0, GetWidth(), Timer / (parryTime * 2));
                         SetPos();
@@ -248,7 +248,7 @@ namespace Coralite.Content.Items.FlyingShields
                     break;
                 case (int)GuardState.Delay:
                     {
-                        LockOwnerItemTime();
+                        Owner.itemTime = Owner.itemAnimation = 2;
                         DistanceToOwner = Helper.Lerp(0, GetWidth(), Timer / delayTime);
                         SetPos();
                         Timer--;
@@ -588,7 +588,7 @@ namespace Coralite.Content.Items.FlyingShields
                 active = false;
         }
 
-        public static Particle Spawn(Vector2 center, Color newcolor, float baseScale, float rotation, Vector2 circleScale,Color? nextcolor=null)
+        public static Particle Spawn(Vector2 center, Color newcolor, float baseScale, float rotation, Vector2 circleScale, Color? nextcolor = null)
         {
             if (VaultUtils.isServer)
                 return null;

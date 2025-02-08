@@ -120,7 +120,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                   effect.Parameters["highlightC"].SetValue(AmethystLaser.brightC.ToVector4());
                   effect.Parameters["brightC"].SetValue(AmethystLaser.brightC.ToVector4());
                   effect.Parameters["darkC"].SetValue(new Color(80, 40, 80).ToVector4());
-              },extraSize:new Point(50,2));
+              }, extraSize: new Point(50, 2));
         }
 
         public override void SpawnParticle(DrawableTooltipLine line)
@@ -198,7 +198,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 Projectile.rotation = Projectile.rotation.AngleLerp((Main.MouseWorld - Projectile.Center).ToRotation(), 0.2f);
                 if (AttackTime == 1)//生成射线
                 {
-                    Projectile.NewProjectileFromThis<AmethystLaser>(Projectile.Center, Vector2.Zero, Owner.GetWeaponDamage(Owner.HeldItem)
+                    Projectile.NewProjectileFromThis<AmethystLaser>(Projectile.Center, Vector2.Zero, Owner.GetWeaponDamage(Item)
                         , Projectile.knockBack, Projectile.whoAmI, AmethystLaser.TotalAttackTime + AmethystLaser.delayTime);
                     Helper.PlayPitched("Crystal/CrystalStrike", 0.4f, 0, Projectile.Center);
                 }
@@ -552,7 +552,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     spriteBatch.Draw(flowTex, flowTarget, flowSource, Color.White * 0.3f, LaserRotation, origin2, 0, 0);
                 }, sb =>
                 {
-                    if (Main.myPlayer == Projectile.owner)
+                    if (Projectile.IsOwnedByLocalPlayer())
                     {
                         spriteBatch.End();
                         spriteBatch.Begin(default, default, default, default, default, default, Main.GameViewMatrix.ZoomMatrix);
