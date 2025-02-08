@@ -50,7 +50,7 @@ namespace Coralite.Core.Systems.MagikeSystem
 
         public override void SaveData(Item item, TagCompound tag)
         {
-            SaveEnchant(tag);
+            //SaveEnchant(tag);
 
             if (MagikeMax >= 0)
             {
@@ -60,7 +60,7 @@ namespace Coralite.Core.Systems.MagikeSystem
 
         public override void LoadData(Item item, TagCompound tag)
         {
-            LoadEnchant(tag);
+            //LoadEnchant(tag);
 
             Magike = tag.GetInt("magike");
             if (MagikeMax != -1)
@@ -88,18 +88,18 @@ namespace Coralite.Core.Systems.MagikeSystem
 
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
         {
-            if (enchant != null)
-            {
-                for (int i = 0; i < 3; i++)
-                {
-                    if (enchant.datas[i] != null)
-                    {
-                        TooltipLine line = new(Mod, "enchant" + i.ToString(), enchant.datas[i].Description);
-                        line.OverrideColor = GetColor(enchant.datas[i].level);
-                        tooltips.Add(line);
-                    }
-                }
-            }
+            //if (enchant != null)
+            //{
+            //    for (int i = 0; i < 3; i++)
+            //    {
+            //        if (enchant.datas[i] != null)
+            //        {
+            //            TooltipLine line = new(Mod, "enchant" + i.ToString(), enchant.datas[i].Description);
+            //            line.OverrideColor = GetColor(enchant.datas[i].level);
+            //            tooltips.Add(line);
+            //        }
+            //    }
+            //}
 
             if (MagikeSystem.MagikeCraftRecipes.ContainsKey(item.type))
                 tooltips.Add(new TooltipLine(Mod, "canRemodel", MagikeSystem.CanMagikeCraft.Value));
@@ -172,19 +172,19 @@ namespace Coralite.Core.Systems.MagikeSystem
             }
         }
 
-        public static Color GetColor(Enchant.Level level)
-        {
-            return level switch
-            {
-                Enchant.Level.Nothing => Color.Gray,
-                Enchant.Level.One => Color.White,
-                Enchant.Level.Two => Color.CornflowerBlue,
-                Enchant.Level.Three => Color.LightSeaGreen,
-                Enchant.Level.Four => Color.Yellow,
-                Enchant.Level.Five => Color.Pink,
-                _ => Color.Orange
-            };
-        }
+        //public static Color GetColor(Enchant.Level level)
+        //{
+        //    return level switch
+        //    {
+        //        Enchant.Level.Nothing => Color.Gray,
+        //        Enchant.Level.One => Color.White,
+        //        Enchant.Level.Two => Color.CornflowerBlue,
+        //        Enchant.Level.Three => Color.LightSeaGreen,
+        //        Enchant.Level.Four => Color.Yellow,
+        //        Enchant.Level.Five => Color.Pink,
+        //        _ => Color.Orange
+        //    };
+        //}
 
         public void LimitMagike()
         {
