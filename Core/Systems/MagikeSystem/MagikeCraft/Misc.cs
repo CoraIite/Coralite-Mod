@@ -42,6 +42,11 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
 
             //生命果
             AddRemodelRecipe(ItemType<RegrowthTentacle>(), ItemID.LifeFruit, CalculateMagikeCost(Soul, 6, 60 * 2));
+
+            //丛林玫瑰与大自然的恩惠
+            MagikeRecipe.CreateRecipe(ItemID.JungleGrassSeeds, ItemID.JungleRose, CalculateMagikeCost(MagicCrystal, 6, 60), 3)
+                .RegisterNew(ItemID.NaturesGift, CalculateMagikeCost(MagicCrystal, 6, 60 * 3))
+                .Register();
         }
     }
 }
