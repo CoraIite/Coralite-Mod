@@ -87,7 +87,8 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         {
             int tileType = TargetTileID;
             int itemType = TileLoader.GetItemDropFromTypeAndStyle(tileType);
-            return new ApparatusInformation() { ItemType = itemType };
+            Item i = ContentSamples.ItemsByType[itemType].Clone();
+            return new ApparatusInformation() { SelfItem = i };
         }
 
         /// <summary>

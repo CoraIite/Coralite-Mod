@@ -97,12 +97,12 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             //先减少魔能
             //Entity.GetMagikeContainer().ReduceMagike(ChosenResipe.magikeCost);
 
-            if (!WorkCheck_CostMainItem())//消耗主要物品与次要物品
-                return;
-
             if (ChosenResipe.RequiredItems != null)
                 if (!WorkCheck_CostOtherItem())
                     return;
+
+            if (!WorkCheck_CostMainItem())//消耗主要物品与次要物品
+                return;
 
             //生成物品并放入
             switch (ItemSpawnMode)
@@ -258,7 +258,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             if (!Entity.TryGetComponent(MagikeComponentID.MagikeSender, out MagikeLinerSender linerSender))
                 return false;
 
-            List<Item> otherItems = FillOtherItemList(linerSender);
+            //List<Item> otherItems = FillOtherItemList(linerSender);
 
             //挨个消耗物品
             foreach (var item in ChosenResipe.RequiredItems)
@@ -281,7 +281,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                     foreach (var tempitem in tempItems)
                         if (!tempitem.IsAir && tempitem.type == item.type)
                         {
-                            int cost = Math.Min(item.stack, howManyNeed);
+                            int cost = Math.Min(tempitem.stack, howManyNeed);
                             tempitem.stack -= cost;
 
                             if (tempitem.stack < 1)

@@ -21,7 +21,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// <summary>
         /// 自身物品类型
         /// </summary>
-        public int ItemType { get; set; }
+        public Item SelfItem { get; set; }
 
         public sealed override void Update() { }
 
@@ -47,7 +47,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public void ShowInUI(UIElement parent)
         {
             //标题
-            Item i = ContentSamples.ItemsByType[ItemType];
+            Item i = SelfItem;
             UIElement title = new ComponentUIElementText<ApparatusInformation>(c =>
                  i.Name, this, parent, new Vector2(1.3f));
             parent.Append(title);
@@ -77,13 +77,14 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public override void SendData(ModPacket data)
         {
             data.Write((int)CurrentLevel);
-            data.Write(ItemType);
+            ItemIO.Send(SelfItem, data);
+            data.Write(SelfItem.type);
         }
 
         public override void ReceiveData(BinaryReader reader, int whoAmI)
         {
             CurrentLevel = (MALevel)reader.ReadInt32();
-            ItemType = reader.ReadInt32();
+            SelfItem = ItemIO.Receive(reader);
         }
 
         #endregion
@@ -93,13 +94,13 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public override void SaveData(string preName, TagCompound tag)
         {
             tag.Add(preName + nameof(CurrentLevel), (int)CurrentLevel);
-            tag.Add(preName + nameof(ItemType), ItemType);
+            tag.Add(preName + nameof(SelfItem), SelfItem);
         }
 
         public override void LoadData(string preName, TagCompound tag)
         {
             CurrentLevel = (MALevel)tag.GetInt(preName + nameof(CurrentLevel));
-            ItemType = tag.GetInt(preName + nameof(ItemType));
+            SelfItem = tag.Get<Item>(preName + nameof(SelfItem));
         }
 
         #endregion
@@ -124,7 +125,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            Item i = ContentSamples.ItemsByType[_Component.ItemType].Clone();
+            Item i = _Component.SelfItem.Clone();
 
             if (IsMouseHovering)
             {
