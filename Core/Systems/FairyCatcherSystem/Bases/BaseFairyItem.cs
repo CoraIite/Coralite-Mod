@@ -362,7 +362,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
             Texture2D Texture = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "White32x32").Value;
 
-            CustomVertexInfo[] bars = new CustomVertexInfo[4];
+            ColoredVertex[] bars = new ColoredVertex[4];
 
             bars[0] = new(center + new Vector2(0, -baseLength * lifeMaxFactor),
                 GetScaledColor(lifeMaxFactor, factor), new Vector3(0, 0, 1));

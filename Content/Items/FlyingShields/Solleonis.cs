@@ -259,8 +259,8 @@ namespace Coralite.Content.Items.FlyingShields
         {
             Texture2D Texture = CoraliteAssets.Trail.CircleA.Value;
 
-            List<CustomVertexInfo> bars = new();
-            List<CustomVertexInfo> bars2 = new();
+            List<ColoredVertex> bars = new();
+            List<ColoredVertex> bars2 = new();
             Color c = new Color(255, 174, 33) * 0.9f;
             for (int i = 0; i < trailCachesLength; i++)
             {

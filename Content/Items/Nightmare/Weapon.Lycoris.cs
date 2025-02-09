@@ -84,7 +84,6 @@ namespace Coralite.Content.Items.Nightmare
 
         public override void InitializeGun()
         {
-            base.InitializeGun();
             float rotation = TargetRot + (DirSign > 0 ? 0 : MathHelper.Pi);
             Vector2 dir = rotation.ToRotationVector2();
             Vector2 center = Projectile.Center + (dir * 32);

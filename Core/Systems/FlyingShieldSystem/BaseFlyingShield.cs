@@ -323,7 +323,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
         {
             Texture2D Texture = GetTrailTex().Value;
 
-            List<CustomVertexInfo> bars = [];
+            List<ColoredVertex> bars = [];
             float r = 0.2989f * lightColor.R / 255 + 0.5870f * lightColor.G / 255 + 0.1140f * lightColor.B / 255;
 
             for (int i = 0; i < trailCachesLength; i++)

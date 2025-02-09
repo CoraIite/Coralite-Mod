@@ -507,7 +507,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         protected virtual void DrawSlashTrail()
         {
             RasterizerState originalState = Main.graphics.GraphicsDevice.RasterizerState;
-            List<CustomVertexInfo> bars = new();
+            List<ColoredVertex> bars = new();
 
             float length = 1;
             for (int i = 1; i < oldRotate.Length; i++)
@@ -631,7 +631,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             if (Timer < minTime || oldRotate == null)
                 return;
 
-            List<CustomVertexInfo> bars = new();
+            List<ColoredVertex> bars = new();
             GetCurrentTrailCount(out float count);
 
             float w = 1f;
@@ -647,8 +647,8 @@ namespace Coralite.Core.Prefabs.Projectiles
                 Vector2 Top = Center + (oldRotate[i].ToRotationVector2() * (oldLength[i] + trailTopWidth + oldDistanceToOwner[i]));
                 Vector2 Bottom = Center + (oldRotate[i].ToRotationVector2() * (oldLength[i] - (ControlTrailBottomWidth(factor) * trailBottomExtraMult) + oldDistanceToOwner[i]));
 
-                bars.Add(new CustomVertexInfo(Top, new Color(dir, w, 0f, alpha), new Vector3(factor, 0f, w)));
-                bars.Add(new CustomVertexInfo(Bottom, new Color(dir, w, 0f, alpha), new Vector3(factor, 1f, w)));
+                bars.Add(new ColoredVertex(Top, new Color(dir, w, 0f, alpha), new Vector3(factor, 0f, w)));
+                bars.Add(new ColoredVertex(Bottom, new Color(dir, w, 0f, alpha), new Vector3(factor, 1f, w)));
             }
 
             Main.spriteBatch.End();

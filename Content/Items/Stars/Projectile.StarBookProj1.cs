@@ -164,7 +164,7 @@ namespace Coralite.Content.Items.Stars
         public void DrawTrail()
         {
             //RasterizerState originalState = Main.graphics.GraphicsDevice.RasterizerState;
-            List<CustomVertexInfo> bars = new();
+            List<ColoredVertex> bars = new();
 
             Vector2 dir = Vector2.Normalize(Projectile.velocity.RotatedBy(1.57f));
             Vector2 Top = Projectile.oldPos[0] + (dir * 30);
@@ -182,7 +182,7 @@ namespace Coralite.Content.Items.Stars
             bars.Add(new(Bottom - Main.screenPosition, starYellow, new Vector3(0, 0, w)));
 
 
-            List<CustomVertexInfo> triangleList = new()
+            List<ColoredVertex> triangleList = new()
             {
                 bars[0],
                 bars[1],

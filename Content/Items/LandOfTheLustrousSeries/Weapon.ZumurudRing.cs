@@ -312,7 +312,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 return false;
 
             Texture2D Texture = CoraliteAssets.Trail.EdgeA.Value;
-            List<CustomVertexInfo> bars = new();
+            List<ColoredVertex> bars = new();
 
             for (int i = 0; i < 16; i++)
             {
