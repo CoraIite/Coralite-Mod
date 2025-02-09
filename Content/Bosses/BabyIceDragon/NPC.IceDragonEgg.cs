@@ -1,5 +1,7 @@
 ﻿using Coralite.Content.Items.Icicle;
 using Coralite.Core;
+using Coralite.Core.Attributes;
+using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
@@ -12,11 +14,15 @@ using Terraria.ID;
 
 namespace Coralite.Content.Bosses.BabyIceDragon
 {
+    [AutoLoadTexture(Path = AssetDirectory.BabyIceDragon)]
     public class IceDragonEgg : ModNPC, IDrawNonPremultiplied
     {
         public override string Texture => AssetDirectory.BabyIceDragon + Name;
 
-        public static Asset<Texture2D> BurstTex;
+        private Player Target => Main.player[NPC.target];
+
+        [AutoLoadTexture(Name = "IceDragonEggBurst")]
+        public static ATex BurstTex { get; private set; }
 
         public ref float State => ref NPC.ai[1];
         private ref float Timer => ref NPC.localAI[0];
@@ -40,19 +46,9 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             if (Main.dedServ)
                 return;
 
-            BurstTex = ModContent.Request<Texture2D>(AssetDirectory.BabyIceDragon + "IceDragonEggBurst");
-
             for (int i = 0; i < 4; i++)
                 GoreLoader.AddGoreFromTexture<SimpleModGore>(Mod, AssetDirectory.BabyIceDragon + "IceDragonEgg_Gore" + i);
 
-        }
-
-        public override void Unload()
-        {
-            if (Main.dedServ)
-                return;
-
-            BurstTex = null;
         }
 
         public override void AI()
@@ -100,6 +96,13 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                 float sinProgress = MathF.Sin(NPC.ai[0]);
                 NPC.rotation = sinProgress * 0.2f;
                 NPC.ai[0] -= MathHelper.Pi / 16;     //1/16 Pi
+            }
+
+            if ((NPC.target < 0 || NPC.target == 255 || Target.dead || !Target.active || Target.Distance(NPC.Center) > 3000))
+            {
+                NPC.TargetClosest();
+                if (!(NPC.target < 0 || NPC.target == 255 || Target.dead || !Target.active || Target.Distance(NPC.Center) > 3000))
+                    KnowledgeSystem.CheckForUnlock(KeyKnowledgeID.IceDragon1, Target.Center, Coralite.IcicleCyan);
             }
         }
 

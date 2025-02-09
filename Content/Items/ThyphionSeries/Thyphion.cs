@@ -342,7 +342,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 {
                     Vector2 dir = Rotation.ToRotationVector2();
                     projectile = Projectile.NewProjectileFromThis<ThyphionArrow>(Owner.Center, dir * 18
-                        , Owner.GetWeaponDamage(Item), Projectile.knockBack, ai0: -1, ai2: 2);
+                        , 1000, Projectile.knockBack, ai0: -1, ai2: 2);
                 }
 
                 if (DownLeft && ReleaseTimer == 0)
@@ -832,7 +832,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             if (Projectile.timeLeft == 24)
             {
                 Projectile.NewProjectileFromThis<ThyphionArrow>(Projectile.Center, MouseDir.SafeNormalize(Vector2.One) * 18
-                    , Projectile.damage, Projectile.knockBack, BowItemType);
+                    , 1000, Projectile.knockBack, BowItemType);
 
                 Helper.PlayPitched(CoraliteSoundID.Bow_Item5, Projectile.Center);
             }

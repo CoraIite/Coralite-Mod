@@ -21,7 +21,6 @@ namespace Coralite.Content.Items.Icicle
         public ref float Timer => ref Projectile.localAI[1];
 
         public bool fadeIn = true;
-        public bool canShoot;
 
         public override int GetItemType()
             => ModContent.ItemType<IcicleBow>();
@@ -70,16 +69,14 @@ namespace Coralite.Content.Items.Icicle
                 if (Timer < DashTime + 2)
                 {
                     Rotation += 0.3141f; //1/10 Pi
-                    if (Owner.controlUseItem)
-                        canShoot = true;
+                    Projectile.timeLeft = 4;
 
                     Owner.itemTime = Owner.itemAnimation = 2;
                     break;
                 }
 
-                if (Owner.controlUseItem)
+                if (DownLeft)
                 {
-                    canShoot = true;
                     if (Projectile.IsOwnedByLocalPlayer())
                     {
                         Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
@@ -92,15 +89,15 @@ namespace Coralite.Content.Items.Icicle
                             PRTLoader.NewParticle(Owner.Center + (dir * 16) + Main.rand.NextVector2Circular(8, 8), dir * 1.2f, CoraliteContent.ParticleType<HorizontalStar>(), Coralite.IcicleCyan, Main.rand.NextFloat(0.1f, 0.15f));
                         }
                     }
-                    Projectile.timeLeft = 2;
+                    Projectile.timeLeft = 4;
                     Owner.itemTime = Owner.itemAnimation = 2;
                 }
                 else
                 {
-                    if (canShoot && Projectile.IsOwnedByLocalPlayer())
+                    if (Projectile.IsOwnedByLocalPlayer())
                     {
                         Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, (Main.MouseWorld - Owner.MountedCenter).SafeNormalize(Vector2.One) * 9.5f
-                            , ModContent.ProjectileType<IcicleStarArrow>(), (int)(Owner.GetWeaponDamage(Item) * 2f), Projectile.knockBack, Projectile.owner);
+                            , ModContent.ProjectileType<IcicleStarArrow>(), (int)(Owner.GetWeaponDamage(Item) * 2.3f), Projectile.knockBack, Projectile.owner);
                         SoundEngine.PlaySound(CoraliteSoundID.Bow_Item5, Owner.Center);
                     }
 

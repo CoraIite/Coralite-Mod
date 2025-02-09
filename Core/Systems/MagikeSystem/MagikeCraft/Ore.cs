@@ -280,7 +280,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             AddRemodelRecipe(ItemID.AdamantiteBar, ItemID.HallowedBar, cost, 2, conditions: Condition.DownedMechBossAny);
 
             cost = CalculateMagikeCost(Hallow, 6, 30);
-            MagikeRecipe.CreateRecipe(ItemID.HallowedBar, ItemID.ChlorophyteBar, cost, 2)
+            MagikeRecipe.CreateCraftRecipe(ItemID.HallowedBar, ItemID.ChlorophyteBar, cost, 2)
                 .AddIngredient(ItemID.JungleGrassSeeds)
                 .AddIngredient(ItemID.MudBlock, 8)
                 .AddCondition(Condition.DownedMechBossAll)
@@ -290,13 +290,13 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             //叶绿矿
             cost = CalculateMagikeCost(Soul, 6, 30);
 
-            MagikeRecipe.CreateRecipe(ItemID.ChlorophyteOre, ItemID.ShroomiteBar, cost, 2)
+            MagikeRecipe.CreateCraftRecipe(ItemID.ChlorophyteOre, ItemID.ShroomiteBar, cost, 2)
                 .AddIngredient(ItemID.GlowingMushroom, 2)
                 .AddCondition(Condition.DownedPlantera)
                 .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
 
-            MagikeRecipe.CreateRecipe(ItemID.ChlorophyteOre, ItemID.SpectreBar, cost, 2)
+            MagikeRecipe.CreateCraftRecipe(ItemID.ChlorophyteOre, ItemID.SpectreBar, cost, 2)
                 .AddIngredient(ItemID.Ectoplasm, 1)
                 .AddCondition(Condition.DownedPlantera)
                 .AddCondition(CoraliteConditions.NotInDigDigDig)

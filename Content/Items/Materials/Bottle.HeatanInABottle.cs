@@ -24,7 +24,7 @@ namespace Coralite.Content.Items.Materials
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeRecipe.CreateRecipe(ItemID.Bottle, ModContent.ItemType<HeatanInABottle>(), MagikeHelper.CalculateMagikeCost(MALevel.Hellstone, 6))
+            MagikeRecipe.CreateCraftRecipe(ItemID.Bottle, ModContent.ItemType<HeatanInABottle>(), MagikeHelper.CalculateMagikeCost(MALevel.Hellstone, 6))
                 .AddIngredient(ItemID.Hellstone)
                 .AddIngredient(ItemID.Fireblossom)
                 .Register();

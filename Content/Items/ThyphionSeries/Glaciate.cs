@@ -109,7 +109,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             Player.GetModPlayer<CoralitePlayer>().DashTimer = 22;
 
             Player.velocity = newVelocity;
-            Player.AddImmuneTime(ImmunityCooldownID.General, 14);
+            Player.AddImmuneTime(ImmunityCooldownID.General, 24);
             Player.immune = true;
 
             Main.instance.CameraModifiers.Add(new MoveModifyer(5, 10));

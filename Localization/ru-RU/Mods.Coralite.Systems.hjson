@@ -127,4 +127,22 @@ KnowledgeSystem: {
 	}
 
 	NewKnowledgeUnlock: Новый раздел разблокирован в коралловом блокноте!
+
+	IceDragon1Knowledge: {
+		// Name: Mods.Coralite.Systems.KnowledgeSystem.IceDragon1Knowledge.Name
+		// LockTip: Mods.Coralite.Systems.KnowledgeSystem.IceDragon1Knowledge.LockTip
+		// Description: Mods.Coralite.Systems.KnowledgeSystem.IceDragon1Knowledge.Description
+	}
+
+	Slime1Knowledge: {
+		// Name: Mods.Coralite.Systems.KnowledgeSystem.Slime1Knowledge.Name
+		// LockTip: Mods.Coralite.Systems.KnowledgeSystem.Slime1Knowledge.LockTip
+		// Description: Mods.Coralite.Systems.KnowledgeSystem.Slime1Knowledge.Description
+	}
+
+	Thunder1Knowldege: {
+		// Name: Mods.Coralite.Systems.KnowledgeSystem.Thunder1Knowldege.Name
+		// LockTip: Mods.Coralite.Systems.KnowledgeSystem.Thunder1Knowldege.LockTip
+		// Description: Mods.Coralite.Systems.KnowledgeSystem.Thunder1Knowldege.Description
+	}
 }

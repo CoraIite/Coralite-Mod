@@ -18,7 +18,7 @@ namespace Coralite.Content.Items.Icicle
 
         public override void SetDefaults()
         {
-            Item.SetWeaponValues(23, 3f);
+            Item.SetWeaponValues(25, 3f);
             Item.DefaultToRangedWeapon(10, AmmoID.Arrow, 26, 9f, true);
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.value = Item.sellPrice(0, 1);

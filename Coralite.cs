@@ -43,6 +43,7 @@ namespace Coralite
         public static Color GlistentGreen => new(127, 218, 153);
         public static Color CrimsonRed => new(231, 48, 54);
         public static Color CorruptionPurple => new(107, 66, 208);
+        /// <summary> 2bffc6 </summary>
         public static Color IcicleCyan => new(43, 255, 198);
         public static Color ShadowPurple => new(240, 168, 255);
         public static Color CrystallineMagikePurple => new(140, 130, 252);

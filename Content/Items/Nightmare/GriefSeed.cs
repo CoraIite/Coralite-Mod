@@ -181,18 +181,18 @@ namespace Coralite.Content.Items.Nightmare
             int cost = MagikeHelper.CalculateMagikeCost(MALevel.SplendorMagicore, 24, 60 * 8);
 
             MagikeRecipe.CreateRecipe<GriefSeed, LostSevensideHook>(cost)
-                .RegisterNew<DreamShears>(cost)
-                .RegisterNew<EuphorbiaMilii>(cost)
-                .RegisterNew<Lycoris>(cost)
-                .RegisterNew<BoneRing>(cost)
-                .RegisterNew<QueensWreath>(cost)
-                .RegisterNew<DevilsClaw>(cost)
-                .RegisterNew<BarrenThornsStaff>(cost)
-                .RegisterNew<Lullaby>(cost)
-                .RegisterNew<PurpleToeStaff>(cost)
-                .RegisterNew<Dreamcatcher>(cost)
-                .RegisterNew<Eden>(cost)
-                .RegisterNew<NightmarePlanteraMask>(MagikeHelper.CalculateMagikeCost(MALevel.SplendorMagicore))
+                .RegisterNewCraft<DreamShears>(cost)
+                .RegisterNewCraft<EuphorbiaMilii>(cost)
+                .RegisterNewCraft<Lycoris>(cost)
+                .RegisterNewCraft<BoneRing>(cost)
+                .RegisterNewCraft<QueensWreath>(cost)
+                .RegisterNewCraft<DevilsClaw>(cost)
+                .RegisterNewCraft<BarrenThornsStaff>(cost)
+                .RegisterNewCraft<Lullaby>(cost)
+                .RegisterNewCraft<PurpleToeStaff>(cost)
+                .RegisterNewCraft<Dreamcatcher>(cost)
+                .RegisterNewCraft<Eden>(cost)
+                .RegisterNewCraft<NightmarePlanteraMask>(MagikeHelper.CalculateMagikeCost(MALevel.SplendorMagicore))
                 .Register();
         }
     }

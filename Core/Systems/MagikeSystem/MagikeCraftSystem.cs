@@ -55,7 +55,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         /// <param name="resultStack">重塑成的物品数量，默认1</param>
         public static void AddRemodelRecipe(int mainItemType, int resultItemType, int magikeCost, int mainStack = 1, int resultStack = 1, params Condition[] conditions)
         {
-            MagikeRecipe recipe = MagikeRecipe.CreateRecipe(mainItemType, resultItemType, magikeCost, mainStack, resultStack);
+            MagikeRecipe recipe = MagikeRecipe.CreateCraftRecipe(mainItemType, resultItemType, magikeCost, mainStack, resultStack);
             if (conditions != null)
                 foreach (var condition in conditions)
                     recipe.AddCondition(condition);
@@ -277,7 +277,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         /// <param name="magikeCost"></param>
         /// <param name="resultItemStack"></param>
         /// <returns></returns>
-        public static MagikeRecipe CreateRecipe(int mainItemType, int resultItemType, int magikeCost, int MainItenStack = 1, int resultItemStack = 1)
+        public static MagikeRecipe CreateCraftRecipe(int mainItemType, int resultItemType, int magikeCost, int MainItenStack = 1, int resultItemStack = 1)
         {
             return new MagikeRecipe()
             {
@@ -346,10 +346,10 @@ namespace Coralite.Core.Systems.MagikeSystem
         /// <param name="magikeCost"></param>
         /// <param name="resultItemStack"></param>
         /// <returns></returns>
-        public MagikeRecipe RegisterNew(int resultItemType, int magikeCost, int resultItemStack = 1)
+        public MagikeRecipe RegisterNewCraft(int resultItemType, int magikeCost, int resultItemStack = 1)
         {
             Register();
-            return CreateRecipe(MainItem.type, resultItemType, magikeCost, MainItem.stack, resultItemStack);
+            return CreateCraftRecipe(MainItem.type, resultItemType, magikeCost, MainItem.stack, resultItemStack);
         }
 
         /// <summary>
@@ -359,11 +359,11 @@ namespace Coralite.Core.Systems.MagikeSystem
         /// <param name="magikeCost"></param>
         /// <param name="resultItemStack"></param>
         /// <returns></returns>
-        public MagikeRecipe RegisterNew<TResultItem>(int magikeCost, int resultItemStack = 1)
+        public MagikeRecipe RegisterNewCraft<TResultItem>(int magikeCost, int resultItemStack = 1)
             where TResultItem : ModItem
         {
             Register();
-            return CreateRecipe(MainItem.type, ItemType<TResultItem>(), magikeCost, MainItem.stack, resultItemStack);
+            return CreateCraftRecipe(MainItem.type, ItemType<TResultItem>(), magikeCost, MainItem.stack, resultItemStack);
         }
 
         #endregion

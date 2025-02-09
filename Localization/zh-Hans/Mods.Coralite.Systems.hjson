@@ -117,7 +117,7 @@ KnowledgeSystem: {
 	}
 
 	RedJadeKnowledge: {
-		Name: "[c/d33232:赤玉残卷]"
+		Name: "[c/d33232:赤玉残卷-上半]"
 		LockTip: 获得 “隐藏的赤色” 或 “赤色果实” 后解锁
 		Description:
 			'''
@@ -127,4 +127,42 @@ KnowledgeSystem: {
 	}
 
 	NewKnowledgeUnlock: 珊瑚笔记中解锁了新的章节！
+
+	IceDragon1Knowledge: {
+		Name: "[c/2bffc6:冰龙残卷-上半]"
+		LockTip:
+			'''
+			在冰雪地下宝箱中发现 “冰雪的新生”
+			或在冰雪地表的冰龙巢发现冰龙蛋后解锁
+			'''
+		Description:
+			'''
+			记载着有关冰龙的部分信息
+			冰龙巢中的蛋带有不寻常的冰魔力
+			'''
+	}
+
+	Slime1Knowledge: {
+		Name: "[c/639bff:粘液残卷-上半]"
+		LockTip:
+			'''
+			在史莱姆身上偶尔携带史莱姆树苗
+			种下树苗并收获 “凝胶纤维” 后解锁
+			'''
+		Description:
+			'''
+			记载着一位帝王的信息
+			来自史莱姆之国
+			'''
+	}
+
+	Thunder1Knowldege: {
+		Name: "[c/639bff:雷龙残卷-上半]"
+		LockTip: 击败 “双子魔眼” ，“机械骷髅王” 和 “毁灭者” 后解锁
+		Description:
+			'''
+			记载着有关雷龙的部分信息
+			居住在云端的电之双足翼龙
+			'''
+	}
 }

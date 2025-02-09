@@ -25,7 +25,7 @@ namespace Coralite.Content.Items.Materials
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeRecipe.CreateRecipe(ItemID.Bottle, ModContent.ItemType<DeorcInABottle>(), MagikeHelper.CalculateMagikeCost(MALevel.CrystallineMagike, 6))
+            MagikeRecipe.CreateCraftRecipe(ItemID.Bottle, ModContent.ItemType<DeorcInABottle>(), MagikeHelper.CalculateMagikeCost(MALevel.CrystallineMagike, 6))
                 .AddIngredient(ItemID.SoulofNight)
                 .AddIngredient<ShadowCrystal>()
                 .Register();

@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Items.Materials;
+﻿using Coralite.Content.Items.Gels;
+using Coralite.Content.Items.Materials;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Terraria;
 using Terraria.ID;
@@ -24,19 +25,19 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             AddRemodelRecipe(ItemID.Glass, ItemID.Bottle, 10, mainStack: 1, resultStack: 4);
 
             AddRemodelRecipe(ItemID.Gel, ItemID.Lens, 10, mainStack: 5);
-            MagikeRecipe.CreateRecipe(ItemID.Lens, ItemID.BlackLens, CalculateMagikeCost(Corruption, 6, 60 * 3), 4)
+            MagikeRecipe.CreateCraftRecipe(ItemID.Lens, ItemID.BlackLens, CalculateMagikeCost(Corruption, 6, 60 * 3), 4)
                 .AddIngredient(ItemID.BlackInk)
                 .Register();
 
             //橡实
-            MagikeRecipe.CreateRecipe(ItemID.Acorn, ItemID.Wood, CalculateMagikeCost(MagicCrystal, 2, 30), resultItemStack: 25)
-                .RegisterNew(ItemID.AshWood, CalculateMagikeCost(MagicCrystal, 2, 30), 25)
-                .RegisterNew(ItemID.RichMahogany, CalculateMagikeCost(MagicCrystal, 2, 30), 25)
-                .RegisterNew(ItemID.Ebonwood, CalculateMagikeCost(MagicCrystal, 2, 30), 25)
-                .RegisterNew(ItemID.Shadewood, CalculateMagikeCost(MagicCrystal, 2, 30), 25)
-                .RegisterNew(ItemID.BorealWood, CalculateMagikeCost(MagicCrystal, 2, 30), 25)
-                .RegisterNew(ItemID.PalmWood, CalculateMagikeCost(MagicCrystal, 2, 30), 25)
-                .RegisterNew(ItemID.Pearlwood, CalculateMagikeCost(MagicCrystal, 2, 30), 25)
+            MagikeRecipe.CreateCraftRecipe(ItemID.Acorn, ItemID.Wood, CalculateMagikeCost(MagicCrystal, 2, 30), resultItemStack: 25)
+                .RegisterNewCraft(ItemID.AshWood, CalculateMagikeCost(MagicCrystal, 2, 30), 25)
+                .RegisterNewCraft(ItemID.RichMahogany, CalculateMagikeCost(MagicCrystal, 2, 30), 25)
+                .RegisterNewCraft(ItemID.Ebonwood, CalculateMagikeCost(MagicCrystal, 2, 30), 25)
+                .RegisterNewCraft(ItemID.Shadewood, CalculateMagikeCost(MagicCrystal, 2, 30), 25)
+                .RegisterNewCraft(ItemID.BorealWood, CalculateMagikeCost(MagicCrystal, 2, 30), 25)
+                .RegisterNewCraft(ItemID.PalmWood, CalculateMagikeCost(MagicCrystal, 2, 30), 25)
+                .RegisterNewCraft(ItemID.Pearlwood, CalculateMagikeCost(MagicCrystal, 2, 30), 25)
                 .AddCondition(Condition.Hardmode)
                 .Register();
 
@@ -44,9 +45,53 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             AddRemodelRecipe(ItemType<RegrowthTentacle>(), ItemID.LifeFruit, CalculateMagikeCost(Soul, 6, 60 * 2));
 
             //丛林玫瑰与大自然的恩惠
-            MagikeRecipe.CreateRecipe(ItemID.JungleGrassSeeds, ItemID.JungleRose, CalculateMagikeCost(MagicCrystal, 6, 60), 3)
-                .RegisterNew(ItemID.NaturesGift, CalculateMagikeCost(MagicCrystal, 6, 60 * 3))
+            MagikeRecipe.CreateCraftRecipe(ItemID.JungleGrassSeeds, ItemID.JungleRose, CalculateMagikeCost(MagicCrystal, 6, 60), 3)
+                .RegisterNewCraft(ItemID.NaturesGift, CalculateMagikeCost(MagicCrystal, 6, 60 * 3))
                 .Register();
+
+            #region 各种水果
+
+            int fruitCost = CalculateMagikeCost(MagicCrystal, 6);
+            MagikeRecipe.CreateCraftRecipe(ItemID.Wood, ItemID.Apple, fruitCost, 24)
+                .RegisterNewCraft(ItemID.Apricot, fruitCost)
+                .RegisterNewCraft(ItemID.Grapefruit, fruitCost)
+                .RegisterNewCraft(ItemID.Lemon, fruitCost)
+                .RegisterNewCraft(ItemID.Peach, fruitCost)
+                .Register();
+
+            MagikeRecipe.CreateCraftRecipe(ItemID.BorealWood, ItemID.Cherry, fruitCost, 24)
+                .RegisterNewCraft(ItemID.Plum, fruitCost)
+                .Register();
+
+            MagikeRecipe.CreateCraftRecipe(ItemID.Ebonwood, ItemID.BlackCurrant, fruitCost, 24)
+                .RegisterNewCraft(ItemID.Elderberry, fruitCost)
+                .Register();
+
+            MagikeRecipe.CreateCraftRecipe(ItemID.Shadewood, ItemID.BloodOrange, fruitCost, 24)
+                .RegisterNewCraft(ItemID.Rambutan, fruitCost)
+                .Register();
+
+            MagikeRecipe.CreateCraftRecipe(ItemID.RichMahogany, ItemID.Mango, fruitCost, 24)
+                .RegisterNewCraft(ItemID.Pineapple, fruitCost)
+                .Register();
+
+            MagikeRecipe.CreateCraftRecipe(ItemID.PalmWood, ItemID.Banana, fruitCost, 24)
+                .RegisterNewCraft(ItemID.Coconut, fruitCost)
+                .Register();
+
+            MagikeRecipe.CreateCraftRecipe(ItemID.Pearlwood, ItemID.Dragonfruit, CalculateMagikeCost(Hellstone, 6), 24)
+                .RegisterNewCraft(ItemID.Starfruit, CalculateMagikeCost(Hellstone, 6))
+                .Register();
+
+            MagikeRecipe.CreateCraftRecipe(ItemID.AshWood, ItemID.Pomegranate, fruitCost, 24)
+                .RegisterNewCraft(ItemID.SpicyPepper, fruitCost)
+                .Register();
+
+            MagikeRecipe.CreateRecipe<GelFiber, Princesstrawberry>(CalculateMagikeCost(Glistent, 6), 24)
+                .RegisterNewCraft<Woodbine>(CalculateMagikeCost(Glistent, 6))
+                .Register();
+
+            #endregion
         }
     }
 }

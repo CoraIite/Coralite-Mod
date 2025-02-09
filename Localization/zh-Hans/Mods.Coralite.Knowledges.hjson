@@ -188,7 +188,7 @@ ExpandProductionLine: {
 }
 
 RedJadePage: {
-	Title: 赤玉残卷
+	Title: 赤玉残卷-上半
 	RedBerryDescription:
 		'''
 		    赤色果实：看上去是某种宝石形成的球形果实，偶尔生长在宝石树上。
@@ -235,3 +235,5 @@ INeedMoreMagike: {
 		    最好的方式是将底座完全浸没在液体中。消耗液体听上去相当麻烦，但是与之对应的魔能产量也远超其他透镜。
 		'''
 }
+
+BabyIceDragonPage1.Title: 冰龙残卷-上半

@@ -20,6 +20,7 @@ namespace Coralite.Content.CoraliteNotes
                     new Readfragment.GroupReadfragment(),
                     new RedJade.GroupRedJade(),
                     new MagikeChapter1.GroupMagikeChapter1(),
+                    new IceDragonChapter1.GroupIceDragonChapter1(),
                 ];
         }
     }
