@@ -164,9 +164,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Texture2D mainTex = TexValue;
             Color c = Color;
 
-            List<CustomVertexInfo> bars = new();
-            List<CustomVertexInfo> bar3 = new();
-            List<CustomVertexInfo> bar4 = new();
+            List<ColoredVertex> bars = new();
+            List<ColoredVertex> bar3 = new();
+            List<ColoredVertex> bar4 = new();
 
             Vector2 dir = rot.ToRotationVector2();
             Vector2 normal = dir.RotatedBy(1.57f);

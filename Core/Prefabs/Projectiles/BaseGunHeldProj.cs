@@ -51,14 +51,9 @@ namespace Coralite.Core.Prefabs.Projectiles
         {
             Projectile.timeLeft = Owner.itemTimeMax;
             MaxTime = Owner.itemTimeMax;
-            if (Projectile.IsOwnedByLocalPlayer())
-            {
-                Owner.direction = InMousePos.X > Owner.Center.X ? 1 : -1;
-                TargetRot = (InMousePos - Owner.Center).ToRotation() + (DirSign > 0 ? 0f : MathHelper.Pi);
-            }
-
+            Owner.direction = InMousePos.X > Owner.Center.X ? 1 : -1;
+            TargetRot = (InMousePos - Owner.Center).ToRotation() + (DirSign > 0 ? 0f : MathHelper.Pi);
             InitializeGun();
-
             Projectile.netUpdate = true;
         }
 

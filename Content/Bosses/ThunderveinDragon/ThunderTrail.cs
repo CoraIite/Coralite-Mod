@@ -114,10 +114,10 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             int texWidth = Texture.Width;
             float length = 0;
 
-            List<CustomVertexInfo> barsTop = new();
-            List<CustomVertexInfo> barsBottom = new();
-            List<CustomVertexInfo> bars2Top = new();
-            List<CustomVertexInfo> bars2Bottom = new();
+            List<ColoredVertex> barsTop = new();
+            List<ColoredVertex> barsBottom = new();
+            List<ColoredVertex> bars2Top = new();
+            List<ColoredVertex> bars2Bottom = new();
 
             int trailCachesLength = RandomlyPositions.Length;
 
@@ -354,7 +354,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             }
         }
 
-        public void AddVertexInfo(List<CustomVertexInfo> topList, List<CustomVertexInfo> bottomList, Vector2 top, Vector2 bottom, Color color, float factor)
+        public void AddVertexInfo(List<ColoredVertex> topList, List<ColoredVertex> bottomList, Vector2 top, Vector2 bottom, Color color, float factor)
         {
             Vector2 center = (top + bottom) / 2;
 
@@ -365,7 +365,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             bottomList.Add(new(bottom, color, new Vector3(factor, 1, 0)));
         }
 
-        public void AddVertexInfo2(List<CustomVertexInfo> topList, List<CustomVertexInfo> bottomList, Vector2 center, Vector2 dir, Color color, float factor)
+        public void AddVertexInfo2(List<ColoredVertex> topList, List<ColoredVertex> bottomList, Vector2 center, Vector2 dir, Color color, float factor)
         {
             topList.Add(new(center + dir, color, new Vector3(factor, 0, 0)));
             topList.Add(new(center, color, new Vector3(factor, 0.5f, 0)));

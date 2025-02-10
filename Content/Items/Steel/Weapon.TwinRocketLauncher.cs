@@ -245,7 +245,7 @@ namespace Coralite.Content.Items.Steel
         {
             Texture2D Texture = CoraliteAssets.Trail.CircleA.Value;
 
-            List<CustomVertexInfo> bars = new();
+            List<ColoredVertex> bars = new();
 
             for (int i = 0; i < trailCachesLength; i++)
             {
@@ -428,7 +428,7 @@ namespace Coralite.Content.Items.Steel
         {
             Texture2D Texture = CoraliteAssets.Trail.CircleA.Value;
 
-            List<CustomVertexInfo> bars = new();
+            List<ColoredVertex> bars = new();
 
             for (int i = 0; i < trailCachesLength; i++)
             {

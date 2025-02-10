@@ -28,8 +28,7 @@ namespace Coralite.Content.Items.Misc_Shoot
             Item.shoot = ProjectileID.Starfury;
             Item.useAmmo = AmmoID.Bullet;
             Item.UseSound = CoraliteSoundID.Gun2_Item40;
-
-            Item.useTurn = true;
+            Item.useTurn = false;
             Item.noMelee = true;
             Item.noUseGraphic = true;
             Item.autoReuse = false;
