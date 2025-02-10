@@ -87,7 +87,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
                 .RegisterNewCraft(ItemID.SpicyPepper, fruitCost)
                 .Register();
 
-            MagikeRecipe.CreateRecipe<GelFiber, Princesstrawberry>(CalculateMagikeCost(Glistent, 6), 24)
+            MagikeRecipe.CreateCraftRecipe<GelFiber, Princesstrawberry>(CalculateMagikeCost(Glistent, 6), 24)
                 .RegisterNewCraft<Woodbine>(CalculateMagikeCost(Glistent, 6))
                 .Register();
 

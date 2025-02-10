@@ -469,9 +469,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
                 foreach (var recipe in recipes)
                 {
-                    //TODO：在这里添加检测是否为魔能合成
-                    //if (recipe.IsAnnihilation)
-                    //    continue;
+                    if (recipe.recipeType != MagikeRecipe.RecipeType.MagikeCraft)//必须得是魔能合成的合成表
+                        continue;
 
                     if (recipe.RequiredItems == null || recipe.RequiredItems.Count == 0)
                     {
@@ -1190,7 +1189,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
                 if (MagikeSystem.TryGetMagikeCraftRecipes(item.type, out List<MagikeRecipe> recipes))
                     foreach (var recipe in recipes)
-                        if (recipe.magikeCost > 0)
+                        if (recipe.recipeType == MagikeRecipe.RecipeType.MagikeCraft)//必须得是魔能合成的合成表
                             Recipes.Add(recipe);
             }
         }

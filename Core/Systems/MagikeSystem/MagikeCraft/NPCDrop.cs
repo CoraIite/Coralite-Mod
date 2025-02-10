@@ -20,10 +20,10 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             MagikeRecipe.CreateCraftRecipe(ItemID.SoulofLight, ItemID.RodofDiscord, CalculateMagikeCost(CrystallineMagike, 24, 60 * 5), 50)
                 .AddIngredient(ItemID.WandofSparking)
                 .AddIngredient<DeorcInABottle>()
-                .AddIngredient<DeorcInABottle>()
                 .AddIngredient<LeohtInABottle>()
                 .AddIngredient<ConcileInABottle>()
                 .AddIngredient<TalantosInABottle>()
+                .AddIngredient<MutatusInABottle>()
                 .Register();
 
             //大宝箱怪掉落物

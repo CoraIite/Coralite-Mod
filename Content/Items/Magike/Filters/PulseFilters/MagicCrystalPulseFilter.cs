@@ -24,12 +24,12 @@ namespace Coralite.Content.Items.Magike.Filters.PulseFilters
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeRecipe.CreateRecipe<MagicCrystalPolarizedFilter, MagicCrystalPulseFilter>(MagikeHelper.CalculateMagikeCost(MALevel.MagicCrystal, 6, 60 * 4))
+            MagikeRecipe.CreateCraftRecipe<MagicCrystalPolarizedFilter, MagicCrystalPulseFilter>(MagikeHelper.CalculateMagikeCost(MALevel.MagicCrystal, 6, 60 * 4))
                 .AddIngredient<MagicCrystal>(6)
                 .AddIngredient(ItemID.SilverBar, 5)
                 .Register();
 
-            MagikeRecipe.CreateRecipe<MagicCrystalPolarizedFilter, MagicCrystalPulseFilter>(MagikeHelper.CalculateMagikeCost(MALevel.MagicCrystal, 6, 60 * 4))
+            MagikeRecipe.CreateCraftRecipe<MagicCrystalPolarizedFilter, MagicCrystalPulseFilter>(MagikeHelper.CalculateMagikeCost(MALevel.MagicCrystal, 6, 60 * 4))
                 .AddIngredient<MagicCrystal>(6)
                 .AddIngredient(ItemID.TungstenBar, 5)
                 .Register();

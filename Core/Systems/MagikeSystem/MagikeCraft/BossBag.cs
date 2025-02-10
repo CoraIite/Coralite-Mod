@@ -16,7 +16,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
         public void AddMagikeCraftRecipe()
         {
             #region 赤玉灵
-            MagikeRecipe.CreateRecipe<RediancieBossBag, RedJade>(CalculateMagikeCost(MALevel.RedJade, 5, 120)
+            MagikeRecipe.CreateCraftRecipe<RediancieBossBag, RedJade>(CalculateMagikeCost(MALevel.RedJade, 5, 120)
                 , resultItemStack: 34)
                 .RegisterNewCraft<RediancieMask>(CalculateMagikeCost(MALevel.RedJade))
                 .RegisterNewCraft<RediancieTrophy>(CalculateMagikeCost(MALevel.RedJade, 5, 120))
@@ -74,7 +74,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             #endregion
 
             #region 冰龙宝宝
-            MagikeRecipe.CreateRecipe<BabyIceDragonBossBag, IcicleCrystal>(CalculateMagikeCost(Corruption, 10, 180), resultItemStack: 8)
+            MagikeRecipe.CreateCraftRecipe<BabyIceDragonBossBag, IcicleCrystal>(CalculateMagikeCost(Corruption, 10, 180), resultItemStack: 8)
                 .RegisterNewCraft<IcicleScale>(CalculateMagikeCost(Corruption, 10, 180), 7)
                 .RegisterNewCraft<IcicleBreath>(CalculateMagikeCost(Corruption, 10, 180), 10)
                 .RegisterNewCraft<BabyIceDragonMask>(CalculateMagikeCost(Corruption))
@@ -195,7 +195,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             #endregion
 
             #region 荒雷龙
-            MagikeRecipe.CreateRecipe<ThunderveinDragonBossBag, ZapCrystal>(CalculateMagikeCost(Hallow, 10, 180), resultItemStack: 16)
+            MagikeRecipe.CreateCraftRecipe<ThunderveinDragonBossBag, ZapCrystal>(CalculateMagikeCost(Hallow, 10, 180), resultItemStack: 16)
                 .RegisterNewCraft<ElectrificationWing>(CalculateMagikeCost(Hallow, 10, 180), 6)
                 .RegisterNewCraft<InsulationCortex>(CalculateMagikeCost(Hallow, 10, 180), 20)
                 .RegisterNewCraft<ThunderveinDragonMask>(CalculateMagikeCost(Hallow))
