@@ -213,6 +213,9 @@ MagikeSystem: {
 		ChargerItemNotFound: 未找到可充能物品！
 		ApothecaryTable: 药剂台
 		ApothecaryTableDescription: 放入药水，激活后给予附近玩家药水效果
+		CraftAltarShowOnlyCanCraft: 仅显示能合成的合成表，点击切换模式
+		CraftAltarShowOnlyCantCraft: 仅显示不能合成的合成表，点击切换模式
+		CraftAltarShowAll: 显示全部合成表，点击切换模式
 	}
 
 	CraftText: {

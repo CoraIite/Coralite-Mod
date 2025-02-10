@@ -5219,3 +5219,13 @@ Aquarius: {
 	DisplayName: 十二星-水瓶座
 	Tooltip: 射出水球，部分水球会在飞行中破裂并射出箭矢
 }
+
+IcicleMusicBox: {
+	DisplayName: 八音盒（冰结韩流）
+	Tooltip: ""
+}
+
+RedJadeMusicBox: {
+	DisplayName: 八音盒（赤色激流）
+	Tooltip: ""
+}

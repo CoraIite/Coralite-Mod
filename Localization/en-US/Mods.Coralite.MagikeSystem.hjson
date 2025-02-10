@@ -205,6 +205,9 @@ MagikeSystem: {
 		ChargerItemNotFound: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ChargerItemNotFound
 		ApothecaryTable: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ApothecaryTable
 		ApothecaryTableDescription: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ApothecaryTableDescription
+		CraftAltarShowOnlyCanCraft: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.CraftAltarShowOnlyCanCraft
+		CraftAltarShowOnlyCantCraft: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.CraftAltarShowOnlyCantCraft
+		CraftAltarShowAll: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.CraftAltarShowAll
 	}
 
 	CraftText: {

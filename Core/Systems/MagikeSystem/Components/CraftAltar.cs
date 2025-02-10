@@ -581,13 +581,16 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             //CraftSelectButton selectButton = new();
             CraftShowButton showButton = new CraftShowButton();
             CraftItemSpawnButton itemSpawnButton = new CraftItemSpawnButton(altar);
+            CraftShowRecipeButton showRecipeButton = new CraftShowRecipeButton();
 
             //selectButton.SetTopLeft(left, top);
             showButton.SetTopLeft( /*+ selectButton.Width.Pixels*/ top, left);
             itemSpawnButton.SetTopLeft(top, showButton.Width.Pixels + left);
+            showRecipeButton.SetTopLeft(top, showButton.Width.Pixels + itemSpawnButton .Width.Pixels+ left);
             //parent.Append(selectButton);
             parent.Append(showButton);
             parent.Append(itemSpawnButton);
+            parent.Append(showRecipeButton);
 
             top += showButton.Height.Pixels;
         }
@@ -1116,6 +1119,72 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         }
     }
 
+    public class CraftShowRecipeButton : UIElement
+    {
+        private float _scale = 1f;
+
+        public static ShowRecipeType CurrentShowRecipeType=ShowRecipeType.ShowAll;
+
+        public enum ShowRecipeType
+        {
+            OnlyCanCraft,
+            OnlyCantCraft,
+            ShowAll
+        }
+
+        public CraftShowRecipeButton()
+        {
+            Texture2D mainTex = MagikeSystem.CraftShowRecipeButton.Value;
+
+            var frameBox = mainTex.Frame(3, 1);
+            this.SetSize(frameBox.Width + 6, frameBox.Height + 6);
+        }
+
+        public override void MouseOver(UIMouseEvent evt)
+        {
+            base.MouseOver(evt);
+            Helper.PlayPitched("Fairy/FairyBottleClick", 0.3f, 0.4f);
+        }
+
+        public override void LeftClick(UIMouseEvent evt)
+        {
+            base.LeftClick(evt);
+
+            CurrentShowRecipeType++;
+            if (CurrentShowRecipeType>ShowRecipeType.ShowAll)
+                CurrentShowRecipeType = ShowRecipeType.OnlyCanCraft;
+
+            Helper.PlayPitched("UI/Tick", 0.4f, 0);
+            UILoader.GetUIState<MagikeApparatusPanel>().ResetComponentPanel();
+            UILoader.GetUIState<MagikeApparatusPanel>().RecalculateChildren();
+        }
+
+        protected override void DrawSelf(SpriteBatch spriteBatch)
+        {
+            Texture2D mainTex = MagikeSystem.CraftShowRecipeButton.Value;
+            var dimensions = GetDimensions();
+
+            if (IsMouseHovering)
+            {
+                _scale = Helper.Lerp(_scale, 1.2f, 0.2f);
+
+                string text = CurrentShowRecipeType switch
+                {
+                    ShowRecipeType.OnlyCanCraft => MagikeSystem.GetUIText(MagikeSystem.UITextID.CraftAltarShowOnlyCanCraft),
+                    ShowRecipeType.OnlyCantCraft => MagikeSystem.GetUIText(MagikeSystem.UITextID.CraftAltarShowOnlyCantCraft),
+                    _ => MagikeSystem.GetUIText(MagikeSystem.UITextID.CraftAltarShowAll),
+                };
+
+                UICommon.TooltipMouseText(text);
+            }
+            else
+                _scale = Helper.Lerp(_scale, 1f, 0.2f);
+
+            var framebox = mainTex.Frame(3, 1, (int)CurrentShowRecipeType);
+            spriteBatch.Draw(mainTex, dimensions.Center(), framebox, Color.White, 0, framebox.Size() / 2, _scale, 0, 0);
+        }
+    }
+
     /// <summary>
     /// 魔能合成UI的中控类，兼任绘制水平横条的任务
     /// </summary>
@@ -1178,9 +1247,13 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         {
             if (!altar.Entity.TryGetComponent(MagikeComponentID.ItemContainer, out ItemContainer container))
                 return;
-
+            if (altar == null || !altar.GetItems(out Item[] items, out Dictionary<int, int> otherItems))
+                return;
+            
             Recipes.Clear();
             CurrentItemTypes.Clear();
+
+            int magike = altar.Entity.GetMagikeContainer().Magike;
 
             foreach (var item in container.Items)
             {
@@ -1189,8 +1262,26 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
                 if (MagikeSystem.TryGetMagikeCraftRecipes(item.type, out List<MagikeRecipe> recipes))
                     foreach (var recipe in recipes)
-                        if (recipe.recipeType == MagikeRecipe.RecipeType.MagikeCraft)//必须得是魔能合成的合成表
-                            Recipes.Add(recipe);
+                    {
+                        if (recipe.recipeType != MagikeRecipe.RecipeType.MagikeCraft)//必须得是魔能合成的合成表
+                            continue;
+
+                        switch (CraftShowRecipeButton.CurrentShowRecipeType)
+                        {
+                            case CraftShowRecipeButton.ShowRecipeType.OnlyCanCraft:
+                                if (recipe.CanCraftJustCheck(items,otherItems,magike))
+                                    Recipes.Add(recipe);
+                                break;
+                            case CraftShowRecipeButton.ShowRecipeType.OnlyCantCraft:
+                                if (!recipe.CanCraftJustCheck(items, otherItems, magike))
+                                    Recipes.Add(recipe);
+                                break;
+                            default:
+                            case CraftShowRecipeButton.ShowRecipeType.ShowAll:
+                                Recipes.Add(recipe);
+                                break;
+                        }
+                    }
             }
         }
 

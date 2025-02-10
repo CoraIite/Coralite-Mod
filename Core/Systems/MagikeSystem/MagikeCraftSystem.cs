@@ -8,6 +8,7 @@ using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader.Core;
 using Terraria.ModLoader.IO;
+using static System.Net.Mime.MediaTypeNames;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Core.Systems.MagikeSystem
@@ -172,6 +173,26 @@ namespace Coralite.Core.Systems.MagikeSystem
                 return true;
 
             text = attempt.OutputText();
+            return false;
+        }
+
+        /// <summary>
+        /// 检测是否能合成，仅检测，不输出失败信息
+        /// </summary>
+        /// <param name="mainItems"></param>
+        /// <param name="otherItems"></param>
+        /// <param name="magikeAmount"></param>
+        /// <returns></returns>
+        public bool CanCraftJustCheck(IList<Item> mainItems, IDictionary<int, int> otherItems, int magikeAmount)
+        {
+            MagikeCraftAttempt attempt = new MagikeCraftAttempt();
+
+            CanCraft_CheckCondition(ref attempt);
+            CanCraft_ItemsCheck(mainItems, otherItems, ref attempt);
+
+            if (attempt.Success)
+                return true;
+
             return false;
         }
 
