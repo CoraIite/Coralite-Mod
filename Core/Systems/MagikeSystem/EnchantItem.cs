@@ -1,4 +1,5 @@
 ﻿using Coralite.Core.Systems.MagikeSystem.EnchantSystem;
+using System;
 using Terraria;
 using Terraria.DataStructures;
 
@@ -19,6 +20,31 @@ namespace Coralite.Core.Systems.MagikeSystem
             {
                 enchant = value;
             }
+        }
+
+        /// <summary>
+        /// 内部使用，表示当前注魔的百分比，获取该值请使用<see cref="EnchantPercent"/>
+        /// </summary>
+        internal float enchantPercent;
+
+        /// <summary>
+        /// 当前注魔的百分比<br></br>
+        /// 为 0 到 100 之间的值
+        /// </summary>
+        public float EnchantPercent { get => enchantPercent; }
+        /// <summary>
+        /// 注魔已满
+        /// </summary>
+        public bool PerfactEnchant => enchantPercent >= 100;
+
+        /// <summary>
+        /// 增加注魔的进度
+        /// </summary>
+        /// <param name="percent"></param>
+        public void AddEnchantPercent(float percent)
+        {
+            enchantPercent += percent;
+            enchantPercent = Math.Clamp(enchantPercent, 0, 100);
         }
 
         //private void SaveEnchant(TagCompound tag)

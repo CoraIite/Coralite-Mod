@@ -239,4 +239,7 @@ INeedMoreMagike: {
 		'''
 }
 
-BabyIceDragonPage1.Title: Mods.Coralite.Knowledges.BabyIceDragonPage1.Title
+BabyIceDragonPage1: {
+	Title: Mods.Coralite.Knowledges.BabyIceDragonPage1.Title
+	Description: Mods.Coralite.Knowledges.BabyIceDragonPage1.Description
+}

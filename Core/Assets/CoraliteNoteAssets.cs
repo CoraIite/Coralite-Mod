@@ -51,5 +51,10 @@ namespace Coralite.Core
             public static ATex Rediancie { get; private set; }
         }
 
+        [AutoLoadTexture(NoteIceDragon1)]
+        public class IceDragon1
+        {
+            public static ATex BabyIceDragon { get; private set; }
+        }
     }
 }
