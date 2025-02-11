@@ -8,7 +8,7 @@ using static Coralite.Core.Systems.MagikeSystem.MALevel;
 using static Coralite.Helpers.MagikeHelper;
 using static Terraria.ModLoader.ModContent;
 
-namespace Coralite.Core.Systems.MagikeSystem.Remodels
+namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
 {
     public class Misc : IMagikeCraftable
     {
@@ -87,7 +87,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
                 .RegisterNewCraft(ItemID.SpicyPepper, fruitCost)
                 .Register();
 
-            MagikeRecipe.CreateRecipe<GelFiber, Princesstrawberry>(CalculateMagikeCost(Glistent, 6), 24)
+            MagikeRecipe.CreateCraftRecipe<GelFiber, Princesstrawberry>(CalculateMagikeCost(Glistent, 6), 24)
                 .RegisterNewCraft<Woodbine>(CalculateMagikeCost(Glistent, 6))
                 .Register();
 

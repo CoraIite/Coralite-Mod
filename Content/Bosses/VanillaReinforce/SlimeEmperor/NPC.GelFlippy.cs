@@ -87,7 +87,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                 Timer = 0;
                 //生成弹幕和音效，并掉血
                 SoundEngine.PlaySound(CoraliteSoundID.QueenSlime2_Bubble_Item155, NPC.Center);
-                Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.UnitY * Main.rand.NextFloat(1f, 3f), ModContent.ProjectileType<SmallGelBall>(), 15, 0, NPC.target);
+                Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, Vector2.UnitY * Main.rand.NextFloat(1f, 3f), ModContent.ProjectileType<SmallGelBall>(), 25, 0, NPC.target);
 
                 NPC.life -= NPC.lifeMax / 6;
                 if (NPC.life < 1)

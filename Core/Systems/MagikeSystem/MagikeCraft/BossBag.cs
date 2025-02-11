@@ -3,20 +3,20 @@ using Coralite.Content.Items.Icicle;
 using Coralite.Content.Items.Materials;
 using Coralite.Content.Items.RedJades;
 using Coralite.Content.Items.Thunder;
-using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
+using Coralite.Content.Items.ThyphionSeries;
 using Terraria;
 using Terraria.ID;
 using static Coralite.Core.Systems.MagikeSystem.MALevel;
 using static Coralite.Helpers.MagikeHelper;
 
-namespace Coralite.Core.Systems.MagikeSystem.Remodels
+namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
 {
     public class BossBag : IMagikeCraftable
     {
         public void AddMagikeCraftRecipe()
         {
             #region 赤玉灵
-            MagikeRecipe.CreateRecipe<RediancieBossBag, RedJade>(CalculateMagikeCost(MALevel.RedJade, 5, 120)
+            MagikeRecipe.CreateCraftRecipe<RediancieBossBag, RedJade>(CalculateMagikeCost(MALevel.RedJade, 5, 120)
                 , resultItemStack: 34)
                 .RegisterNewCraft<RediancieMask>(CalculateMagikeCost(MALevel.RedJade))
                 .RegisterNewCraft<RediancieTrophy>(CalculateMagikeCost(MALevel.RedJade, 5, 120))
@@ -74,7 +74,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             #endregion
 
             #region 冰龙宝宝
-            MagikeRecipe.CreateRecipe<BabyIceDragonBossBag, IcicleCrystal>(CalculateMagikeCost(Corruption, 10, 180), resultItemStack: 8)
+            MagikeRecipe.CreateCraftRecipe<BabyIceDragonBossBag, IcicleCrystal>(CalculateMagikeCost(Corruption, 10, 180), resultItemStack: 8)
                 .RegisterNewCraft<IcicleScale>(CalculateMagikeCost(Corruption, 10, 180), 7)
                 .RegisterNewCraft<IcicleBreath>(CalculateMagikeCost(Corruption, 10, 180), 10)
                 .RegisterNewCraft<BabyIceDragonMask>(CalculateMagikeCost(Corruption))
@@ -195,7 +195,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
             #endregion
 
             #region 荒雷龙
-            MagikeRecipe.CreateRecipe<ThunderveinDragonBossBag, ZapCrystal>(CalculateMagikeCost(Hallow, 10, 180), resultItemStack: 16)
+            MagikeRecipe.CreateCraftRecipe<ThunderveinDragonBossBag, ZapCrystal>(CalculateMagikeCost(Hallow, 10, 180), resultItemStack: 16)
                 .RegisterNewCraft<ElectrificationWing>(CalculateMagikeCost(Hallow, 10, 180), 6)
                 .RegisterNewCraft<InsulationCortex>(CalculateMagikeCost(Hallow, 10, 180), 20)
                 .RegisterNewCraft<ThunderveinDragonMask>(CalculateMagikeCost(Hallow))
@@ -285,6 +285,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
                 .RegisterNewCraft(ItemID.RainbowCrystalStaff, CalculateMagikeCost(SplendorMagicore, 10, 180))
                 .RegisterNewCraft(ItemID.MoonlordTurretStaff, CalculateMagikeCost(SplendorMagicore, 10, 180))
                 .RegisterNewCraft<ConquerorOfTheSeas>(CalculateMagikeCost(SplendorMagicore, 10, 180))
+                .RegisterNewCraft<Aurora>(CalculateMagikeCost(SplendorMagicore, 10, 180))
                 .RegisterNewCraft(ItemID.Celeb2, CalculateMagikeCost(SplendorMagicore, 10, 180))
                 .RegisterNewCraft(ItemID.LunarOre, CalculateMagikeCost(SplendorMagicore, 10, 180), 170)
                 .RegisterNewCraft(ItemID.MeowmereMinecart, CalculateMagikeCost(SplendorMagicore, 10, 180))

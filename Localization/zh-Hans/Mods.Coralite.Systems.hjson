@@ -147,7 +147,7 @@ KnowledgeSystem: {
 		LockTip:
 			'''
 			在史莱姆身上偶尔携带史莱姆树苗
-			种下树苗并收获 “凝胶纤维” 后解锁
+			获得 “史莱姆树苗” 后解锁
 			'''
 		Description:
 			'''

@@ -1,4 +1,5 @@
 ﻿using Coralite.Core;
+using Coralite.Core.Systems.KeySystem;
 using Terraria;
 using Terraria.ID;
 
@@ -25,6 +26,11 @@ namespace Coralite.Content.Items.Placeable
             Item.rare = ItemRarityID.Blue;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.createTile = ModContent.TileType<Tiles.Trees.SlimeSapling>();
+        }
+
+        public override void UpdateInventory(Player player)
+        {
+            KnowledgeSystem.CheckForUnlock(KeyKnowledgeID.Slime1, player.Center, Color.SkyBlue);
         }
     }
 }

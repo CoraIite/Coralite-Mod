@@ -34,7 +34,7 @@ namespace Coralite.Content.Items.Magike.Refractors
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeRecipe.CreateRecipe<LASERCore, LASER>(MagikeHelper.CalculateMagikeCost(MALevel.Shadow, 6))
+            MagikeRecipe.CreateCraftRecipe<LASERCore, LASER>(MagikeHelper.CalculateMagikeCost(MALevel.Shadow, 6))
                 .AddIngredient<ShadowEnergy>(4)
                 .AddIngredient(ItemID.CopperBar, 10)
                 .AddIngredient<HardBasalt>(6)

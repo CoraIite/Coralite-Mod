@@ -5,7 +5,7 @@ using static Coralite.Core.Systems.MagikeSystem.MagikeSystem;
 using static Coralite.Core.Systems.MagikeSystem.MALevel;
 using static Coralite.Helpers.MagikeHelper;
 
-namespace Coralite.Core.Systems.MagikeSystem.Remodels
+namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
 {
     public class Ore : IMagikeCraftable
     {

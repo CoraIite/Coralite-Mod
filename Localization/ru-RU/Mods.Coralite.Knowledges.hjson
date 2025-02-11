@@ -224,4 +224,13 @@ INeedMoreMagike: {
 	LiquidLens: "    Жидкостная линза: для производства магической энергии использует жидкость на базе. Лучший способ — полностью погрузить базу в жидкость. Это требует затрат, но магической энергии будет гораздо больше."
 }
 
-// BabyIceDragonPage1.Title: Mods.Coralite.Knowledges.BabyIceDragonPage1.Title
+BabyIceDragonPage1: {
+	// Title: Mods.Coralite.Knowledges.BabyIceDragonPage1.Title
+	// Description: Mods.Coralite.Knowledges.BabyIceDragonPage1.Description
+}
+
+SlimePage1: {
+	// Title: Mods.Coralite.Knowledges.SlimePage1.Title
+	// SlimeTreeDescription: Mods.Coralite.Knowledges.SlimePage1.SlimeTreeDescription
+	// GelFiberDescription: Mods.Coralite.Knowledges.SlimePage1.GelFiberDescription
+}

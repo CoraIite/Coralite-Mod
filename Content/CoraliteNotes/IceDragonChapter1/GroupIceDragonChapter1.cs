@@ -4,7 +4,7 @@ using Coralite.Core.Systems.KeySystem;
 
 namespace Coralite.Content.CoraliteNotes.IceDragonChapter1
 {
-    internal class GroupIceDragonChapter1 : UIPageGroup
+    public class GroupIceDragonChapter1 : UIPageGroup
     {
         public override bool CanShowInBook => CoraliteContent.GetKKnowledge(KeyKnowledgeID.IceDragon1).Unlock;
 

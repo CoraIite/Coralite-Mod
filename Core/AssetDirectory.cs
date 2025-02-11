@@ -229,6 +229,8 @@ namespace Coralite.Core
         public const string NoteReadfragment = CoraliteNote + "Readfragment/";
         public const string NoteMagikeS1 = CoraliteNote + "MagikeS1/";
         public const string NoteRedJade = CoraliteNote + "RedJade/";
+        public const string NoteIceDragon1 = CoraliteNote + "IceDragon1/";
+        public const string NoteSlime1 = CoraliteNote + "Slime1/";
 
         #endregion
 

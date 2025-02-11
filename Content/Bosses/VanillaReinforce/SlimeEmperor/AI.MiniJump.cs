@@ -47,27 +47,33 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                             if (Math.Abs(NPC.velocity.Y) < 0.05f)//如果脚下有方块且速度小于一定值，那么判断为在地上
                             {
                                 if (NPC.Center.Y < (Target.Center.Y - 100)) //比玩家高，那么只判断实心物块
-                                    for (int i = 0; i < NPC.width; i += 16)
+                                    for (int i = -16; i < NPC.width + 16; i += 16)
                                     {
-                                        Tile tile = Framing.GetTileSafely(NPC.BottomLeft + new Vector2(i, 0));
-                                        if (tile.HasTile && Main.tileSolid[tile.TileType])
+                                        for (int j = 0; j < 2; j++)
                                         {
-                                            NPC.frame.Y = 0;
-                                            NPC.noGravity = true;
-                                            JumpTimer = -1;
-                                            break;
+                                            Tile tile = Framing.GetTileSafely(NPC.BottomLeft + new Vector2(i, j));
+                                            if (tile.HasTile && Main.tileSolid[tile.TileType])
+                                            {
+                                                NPC.frame.Y = 0;
+                                                NPC.noGravity = true;
+                                                JumpTimer = -1;
+                                                break;
+                                            }
                                         }
                                     }
                                 else    //比玩家低，那么要判断其他顶部实心的物块
-                                    for (int i = 0; i < NPC.width; i += 16)
+                                    for (int i = -16; i < NPC.width + 16; i += 16)
                                     {
-                                        Tile tile = Framing.GetTileSafely(NPC.BottomLeft + new Vector2(i, 0));
-                                        if (tile.HasTile && (Main.tileSolid[tile.TileType] || Main.tileSolidTop[tile.TileType] || TileID.Sets.Platforms[tile.TileType]))
+                                        for (int j = 0; j < 2; j++)
                                         {
-                                            NPC.frame.Y = 0;
-                                            NPC.noGravity = true;
-                                            JumpTimer = -1;
-                                            break;
+                                            Tile tile = Framing.GetTileSafely(NPC.BottomLeft + new Vector2(i, j));
+                                            if (tile.HasTile && (Main.tileSolid[tile.TileType] || Main.tileSolidTop[tile.TileType] || TileID.Sets.Platforms[tile.TileType]))
+                                            {
+                                                NPC.frame.Y = 0;
+                                                NPC.noGravity = true;
+                                                JumpTimer = -1;
+                                                break;
+                                            }
                                         }
                                     }
                             }

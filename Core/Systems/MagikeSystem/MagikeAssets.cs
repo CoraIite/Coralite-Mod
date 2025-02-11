@@ -26,6 +26,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         public static ATex CraftSelectButton { get; private set; }
         public static ATex CraftShowButton { get; private set; }
         public static ATex CraftItemSpawnButton { get; private set; }
+        public static ATex CraftShowRecipeButton { get; private set; }
         public static ATex ChargerItemButton { get; private set; }
         public static ATex ChargerPlayerButton { get; private set; }
         public static ATex CanCraftShow { get; private set; }
@@ -73,6 +74,7 @@ namespace Coralite.Core.Systems.MagikeSystem
             CraftSelectButton = Request<Texture2D>(AssetDirectory.MagikeUI + "CraftSelectButton");
             CraftShowButton = Request<Texture2D>(AssetDirectory.MagikeUI + "CraftShowButton");
             CraftItemSpawnButton = Request<Texture2D>(AssetDirectory.MagikeUI + "CraftItemSpawnButton");
+            CraftShowRecipeButton = Request<Texture2D>(AssetDirectory.MagikeUI + "CraftShowRecipeButton");
             ChargerItemButton = Request<Texture2D>(AssetDirectory.MagikeUI + "ChargerItemButton");
             ChargerPlayerButton = Request<Texture2D>(AssetDirectory.MagikeUI + "ChargerPlayerButton");
             CanCraftShow = Request<Texture2D>(AssetDirectory.MagikeUI + "CanCraftShow");

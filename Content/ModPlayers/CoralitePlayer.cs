@@ -209,15 +209,18 @@ namespace Coralite.Content.ModPlayers
             LifeMaxModifyer = new StatModifier();
         }
 
+        public override void ModifyLuck(ref float luck)
+        {
+            if (luckyStar > 1)//幸运星增加玩家幸运
+                luck += 0.2f;
+            else if (luckyStar > 2)
+                luck += 0.3f;
+        }
+
         public override void PostUpdateEquips()
         {
             if (Player.HeldItem.ModItem is IEquipHeldItem ehi)
                 ehi.UpdateEquipHeldItem(Player);
-
-            if (luckyStar > 1)//幸运星增加玩家幸运
-                Player.luck += 0.2f;
-            else if (luckyStar > 2)
-                Player.luck += 0.3f;
 
             if (ownedYujianProj)
             {

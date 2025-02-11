@@ -5197,3 +5197,18 @@ Aquarius: {
 	// DisplayName: Aquarius
 	// Tooltip: ""
 }
+
+IcicleMusicBox: {
+	// DisplayName: Icicle Music Box
+	// Tooltip: ""
+}
+
+RedJadeMusicBox: {
+	// DisplayName: Red Jade Music Box
+	// Tooltip: ""
+}
+
+WindSpeedArrows: {
+	// DisplayName: Wind Speed Arrows
+	// Tooltip: ""
+}
