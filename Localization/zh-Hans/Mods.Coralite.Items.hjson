@@ -47,7 +47,7 @@ CrystallineGel: {
 	DisplayName: 王后的象征
 	Tooltip:
 		'''
-		这史莱姆族群中象征着王后的威严，拥有它就拥有了无上的荣耀
+		这在史莱姆族群中象征着王后的威严，拥有它就拥有了无上的荣耀
 		在神圣地形召唤史莱姆皇后，不消耗
 		'''
 }
@@ -129,7 +129,7 @@ SymbolOfRoyal: {
 	DisplayName: 王权的象征
 	Tooltip:
 		'''
-		这史莱姆族群中象征着王位，拥有它就拥有了无上的荣耀
+		这在史莱姆族群中象征着王位，拥有它就拥有了无上的荣耀
 		召唤史莱姆王，不消耗
 		'''
 }
@@ -5228,4 +5228,13 @@ IcicleMusicBox: {
 RedJadeMusicBox: {
 	DisplayName: 八音盒（赤色激流）
 	Tooltip: ""
+}
+
+WindSpeedArrows: {
+	DisplayName: 风箭头
+	Tooltip:
+		'''
+		+6% 移动速度
+		根据移速增加远程伤害，最高20%
+		'''
 }

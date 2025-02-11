@@ -5158,3 +5158,8 @@ RedJadeMusicBox: {
 	DisplayName: Red Jade Music Box
 	Tooltip: ""
 }
+
+WindSpeedArrows: {
+	DisplayName: Wind Speed Arrows
+	Tooltip: ""
+}

@@ -3,13 +3,13 @@ using Coralite.Content.Items.Icicle;
 using Coralite.Content.Items.Materials;
 using Coralite.Content.Items.RedJades;
 using Coralite.Content.Items.Thunder;
-using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
+using Coralite.Content.Items.ThyphionSeries;
 using Terraria;
 using Terraria.ID;
 using static Coralite.Core.Systems.MagikeSystem.MALevel;
 using static Coralite.Helpers.MagikeHelper;
 
-namespace Coralite.Core.Systems.MagikeSystem.Remodels
+namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
 {
     public class BossBag : IMagikeCraftable
     {
@@ -285,6 +285,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Remodels
                 .RegisterNewCraft(ItemID.RainbowCrystalStaff, CalculateMagikeCost(SplendorMagicore, 10, 180))
                 .RegisterNewCraft(ItemID.MoonlordTurretStaff, CalculateMagikeCost(SplendorMagicore, 10, 180))
                 .RegisterNewCraft<ConquerorOfTheSeas>(CalculateMagikeCost(SplendorMagicore, 10, 180))
+                .RegisterNewCraft<Aurora>(CalculateMagikeCost(SplendorMagicore, 10, 180))
                 .RegisterNewCraft(ItemID.Celeb2, CalculateMagikeCost(SplendorMagicore, 10, 180))
                 .RegisterNewCraft(ItemID.LunarOre, CalculateMagikeCost(SplendorMagicore, 10, 180), 170)
                 .RegisterNewCraft(ItemID.MeowmereMinecart, CalculateMagikeCost(SplendorMagicore, 10, 180))

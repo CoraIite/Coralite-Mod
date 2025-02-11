@@ -8,7 +8,7 @@ using static Coralite.Core.Systems.MagikeSystem.MALevel;
 using static Coralite.Helpers.MagikeHelper;
 using static Terraria.ModLoader.ModContent;
 
-namespace Coralite.Core.Systems.MagikeSystem.Remodels
+namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
 {
     public class Misc : IMagikeCraftable
     {

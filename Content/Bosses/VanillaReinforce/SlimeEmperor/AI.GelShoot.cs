@@ -25,7 +25,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                             {
                                 int sign = Math.Sign(NPC.Center.X - Target.Center.X);
                                 int directlyHowMany = Helpers.Helper.ScaleValueForDiffMode(1, 1, 3, 4);
-                                int damage = Helper.GetProjDamage(50, 60, 90);
+                                int damage = Helper.GetProjDamage(75, 95, 115);
                                 SoundEngine.PlaySound(CoraliteSoundID.QueenSlime2_Bubble_Item155, NPC.Center);
                                 for (int i = 0; i < directlyHowMany; i++)
                                 {

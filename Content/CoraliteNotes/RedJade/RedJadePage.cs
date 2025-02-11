@@ -36,7 +36,6 @@ namespace Coralite.Content.CoraliteNotes.RedJade
             Vector2 pos = Position + new Vector2(PageWidth / 2, 140);
 
             #region 绘制赤玉
-
             Texture2D tex = TextureAssets.Item[ModContent.ItemType<RedBerry>()].Value;
 
             float width = PageWidth - 60 - tex.Width * 3;
