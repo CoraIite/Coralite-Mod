@@ -61,6 +61,13 @@ namespace Coralite.Core
         public class Slime1
         {
             public static ATex SlimeTree { get; private set; }
+            public static ATex SlimeEmperor { get; private set; }
+        }
+
+        [AutoLoadTexture(NoteThunder1)]
+        public class Thunder1
+        {
+            public static ATex ThunderveidDragon { get; private set; }
         }
     }
 }

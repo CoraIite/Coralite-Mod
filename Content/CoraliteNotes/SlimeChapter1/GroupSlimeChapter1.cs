@@ -11,7 +11,8 @@ namespace Coralite.Content.CoraliteNotes.SlimeChapter1
         public override void InitPages()
         {
             Pages = [
-                new SlimePage1()
+                new SlimePage1(),
+                new SlimePage2(),
                 ];
         }
     }

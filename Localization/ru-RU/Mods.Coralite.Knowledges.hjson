@@ -234,3 +234,10 @@ SlimePage1: {
 	// SlimeTreeDescription: Mods.Coralite.Knowledges.SlimePage1.SlimeTreeDescription
 	// GelFiberDescription: Mods.Coralite.Knowledges.SlimePage1.GelFiberDescription
 }
+
+// SlimePage2.GelInvitationDescription: Mods.Coralite.Knowledges.SlimePage2.GelInvitationDescription
+
+ThunderveinDragonPage1: {
+	// Title: Mods.Coralite.Knowledges.ThunderveinDragonPage1.Title
+	// LightningRodsDescription: Mods.Coralite.Knowledges.ThunderveinDragonPage1.LightningRodsDescription
+}
