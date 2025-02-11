@@ -95,7 +95,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
             if (!MagikeHelper.TryGetEntity(i, j, out MagikeTP entity))
                 return true;
 
-            if (!entity.TryGetComponent(MagikeComponentID.MagikeFactory,out MagikeFactory factory))
+            if (!entity.TryGetComponent(MagikeComponentID.MagikeFactory, out MagikeFactory factory))
                 return true;
 
             return !factory.IsWorking;

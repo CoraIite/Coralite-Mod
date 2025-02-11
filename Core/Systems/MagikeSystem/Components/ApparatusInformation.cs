@@ -4,7 +4,6 @@ using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader.IO;
 using Terraria.UI;
 

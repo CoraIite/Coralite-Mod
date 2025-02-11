@@ -1,7 +1,6 @@
 using Coralite.Core;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
-using Terraria.DataStructures;
 
 namespace Coralite.Content.Items.Icicle
 {

@@ -4,7 +4,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.CustomHooks
 {
-    public class OnGameEventClearedForTheFirstTime:HookGroup
+    public class OnGameEventClearedForTheFirstTime : HookGroup
     {
         public override void Load()
         {

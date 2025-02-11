@@ -29,7 +29,7 @@ namespace Coralite.Content.CoraliteNotes.IceDragonChapter1
             float scale1 = 1f;
 
             //绘制图
-            pos = Position + new Vector2(PageWidth / 2, PageHeight  - tex.Height * scale1 / 2);
+            pos = Position + new Vector2(PageWidth / 2, PageHeight - tex.Height * scale1 / 2);
             tex.QuickCenteredDraw(spriteBatch, pos, scale: scale1);
 
         }

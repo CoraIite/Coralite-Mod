@@ -586,7 +586,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             //selectButton.SetTopLeft(left, top);
             showButton.SetTopLeft( /*+ selectButton.Width.Pixels*/ top, left);
             itemSpawnButton.SetTopLeft(top, showButton.Width.Pixels + left);
-            showRecipeButton.SetTopLeft(top, showButton.Width.Pixels + itemSpawnButton .Width.Pixels+ left);
+            showRecipeButton.SetTopLeft(top, showButton.Width.Pixels + itemSpawnButton.Width.Pixels + left);
             //parent.Append(selectButton);
             parent.Append(showButton);
             parent.Append(itemSpawnButton);
@@ -1123,7 +1123,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
     {
         private float _scale = 1f;
 
-        public static ShowRecipeType CurrentShowRecipeType=ShowRecipeType.ShowAll;
+        public static ShowRecipeType CurrentShowRecipeType = ShowRecipeType.ShowAll;
 
         public enum ShowRecipeType
         {
@@ -1151,7 +1151,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             base.LeftClick(evt);
 
             CurrentShowRecipeType++;
-            if (CurrentShowRecipeType>ShowRecipeType.ShowAll)
+            if (CurrentShowRecipeType > ShowRecipeType.ShowAll)
                 CurrentShowRecipeType = ShowRecipeType.OnlyCanCraft;
 
             Helper.PlayPitched("UI/Tick", 0.4f, 0);
@@ -1249,7 +1249,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 return;
             if (altar == null || !altar.GetItems(out Item[] items, out Dictionary<int, int> otherItems))
                 return;
-            
+
             Recipes.Clear();
             CurrentItemTypes.Clear();
 
@@ -1269,7 +1269,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                         switch (CraftShowRecipeButton.CurrentShowRecipeType)
                         {
                             case CraftShowRecipeButton.ShowRecipeType.OnlyCanCraft:
-                                if (recipe.CanCraftJustCheck(items,otherItems,magike))
+                                if (recipe.CanCraftJustCheck(items, otherItems, magike))
                                     Recipes.Add(recipe);
                                 break;
                             case CraftShowRecipeButton.ShowRecipeType.OnlyCantCraft:

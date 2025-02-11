@@ -2,7 +2,6 @@
 using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -30,7 +29,7 @@ namespace Coralite.Content.CoraliteNotes.SlimeChapter1
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            Vector2 pos = PageTop + new Vector2( 0, 20);
+            Vector2 pos = PageTop + new Vector2(0, 20);
 
             #region 绘制史莱姆树苗
             Texture2D tex = TextureAssets.Item[ModContent.ItemType<GelInvitation>()].Value;

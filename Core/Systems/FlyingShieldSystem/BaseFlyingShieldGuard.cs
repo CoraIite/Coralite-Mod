@@ -6,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
 
 namespace Coralite.Core.Systems.FlyingShieldSystem
 {

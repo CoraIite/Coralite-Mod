@@ -2,7 +2,6 @@
 using Coralite.Core.Configs;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.ID;
 
 namespace Coralite.Content.Items.RedJades

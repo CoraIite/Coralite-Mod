@@ -2,9 +2,7 @@ using Coralite.Core;
 using Coralite.Helpers;
 using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using Terraria;
-using Terraria.DataStructures;
 
 namespace Coralite.Content.Projectiles.Projectiles_Magic
 {

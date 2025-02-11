@@ -1246,7 +1246,7 @@ namespace Coralite.Content.Items.Nightmare
             {
                 trail ??= new Trail(Main.graphics.GraphicsDevice, 24, new EmptyMeshGenerator(), WidthFunction, ColorFunction);
             }
-            
+
 
             if (Timer > 0)
             {

@@ -11,7 +11,6 @@ using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.UI.Chat;

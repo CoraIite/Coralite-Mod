@@ -1,7 +1,6 @@
 using Coralite.Core;
 using InnoVault.GameContent.BaseEntity;
 using Terraria;
-using Terraria.DataStructures;
 
 namespace Coralite.Content.Items.YujianHulu
 {

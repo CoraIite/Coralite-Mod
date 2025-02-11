@@ -1,7 +1,6 @@
 ﻿using Coralite.Core;
 using Coralite.Helpers;
 using Terraria;
-using Terraria.DataStructures;
 
 namespace Coralite.Content.Bosses.Rediancie
 {

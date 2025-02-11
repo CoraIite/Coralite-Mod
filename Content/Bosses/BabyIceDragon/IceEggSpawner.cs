@@ -1,6 +1,4 @@
 ﻿using Coralite.Content.WorldGeneration;
-using Coralite.Core;
-using Coralite.Core.Systems.KeySystem;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;

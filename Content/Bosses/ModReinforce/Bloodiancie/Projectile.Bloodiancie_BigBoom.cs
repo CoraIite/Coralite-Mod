@@ -1,10 +1,8 @@
 ﻿using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Helpers;
-using InnoVault.GameContent.BaseEntity;
 using InnoVault.PRT;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.Graphics.CameraModifiers;
 using Terraria.ID;
 

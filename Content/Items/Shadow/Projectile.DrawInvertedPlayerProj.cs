@@ -3,7 +3,6 @@ using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
 

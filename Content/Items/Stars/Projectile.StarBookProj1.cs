@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
 

@@ -9,7 +9,6 @@ using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
 
 namespace Coralite.Content.Items.HyacinthSeries
 {

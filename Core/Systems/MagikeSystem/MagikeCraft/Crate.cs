@@ -1,5 +1,4 @@
 ﻿using Coralite.Content.Items.FlyingShields.Accessories;
-using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Terraria.ID;
 using static Coralite.Core.Systems.MagikeSystem.MALevel;
 using static Coralite.Helpers.MagikeHelper;

@@ -107,7 +107,7 @@ namespace Coralite.Content.Items.RedJades
                 startAngle = Main.rand.NextFloat(-0.2f, 0.2f);
                 NetUpdate();
             }
-            
+
             totalAngle = 0.01f;
             Projectile.extraUpdates = 3;
 

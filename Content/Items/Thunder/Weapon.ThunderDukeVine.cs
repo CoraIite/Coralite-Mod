@@ -117,7 +117,7 @@ namespace Coralite.Content.Items.Thunder
     {
         const int DelayTime = 30;
         private float laserWidth;
-        
+
         public List<Vector2> laserTrailPoints = new();
 
         public static Asset<Texture2D> gradientTex;

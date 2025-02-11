@@ -4,7 +4,6 @@ using InnoVault.GameContent.BaseEntity;
 using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.Graphics.Effects;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera

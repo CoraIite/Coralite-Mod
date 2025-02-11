@@ -10,7 +10,6 @@ using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.GameContent.Drawing;
 using Terraria.Graphics.Effects;
 using Terraria.ID;

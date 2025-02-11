@@ -2,10 +2,6 @@
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
 
@@ -33,7 +29,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             speed = Math.Clamp(speed, 0, 20);
 
-            player.GetDamage(DamageClass.Ranged) += speed*0.01f;
+            player.GetDamage(DamageClass.Ranged) += speed * 0.01f;
         }
     }
 }

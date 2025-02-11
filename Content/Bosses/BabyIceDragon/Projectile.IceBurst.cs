@@ -4,7 +4,6 @@ using Coralite.Core;
 using InnoVault.GameContent.BaseEntity;
 using InnoVault.PRT;
 using Terraria;
-using Terraria.DataStructures;
 
 namespace Coralite.Content.Bosses.BabyIceDragon
 {

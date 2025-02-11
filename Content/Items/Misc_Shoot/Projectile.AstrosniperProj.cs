@@ -1,10 +1,7 @@
 using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
-using Coralite.Helpers;
-using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
-using Terraria.DataStructures;
 
 namespace Coralite.Content.Items.Misc_Shoot
 {

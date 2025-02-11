@@ -630,7 +630,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             {
                 return;
             }
-            
+
             if (oldRotate == null)
                 return;
 

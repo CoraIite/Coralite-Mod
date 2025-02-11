@@ -4,7 +4,6 @@ using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 
 namespace Coralite.Content.Items.Shadow

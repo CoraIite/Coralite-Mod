@@ -472,7 +472,7 @@ namespace Coralite.Content.Items.Nightmare
                     else
                         DrawColor = FantasyGod.shineColor;
                 }
-                
+
 
                 init = false;
             }
@@ -571,7 +571,7 @@ namespace Coralite.Content.Items.Nightmare
 
                 trail.TrailPositions = Projectile.oldPos;
             }
-            
+
         }
 
         public override void OnKill(int timeLeft)

@@ -7,7 +7,6 @@ using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.ID;
 
 namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie

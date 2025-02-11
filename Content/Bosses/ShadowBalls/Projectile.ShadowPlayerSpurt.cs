@@ -4,7 +4,6 @@ using Coralite.Core.Systems.ParticleSystem;
 using InnoVault.GameContent.BaseEntity;
 using System;
 using Terraria;
-using Terraria.DataStructures;
 
 namespace Coralite.Content.Bosses.ShadowBalls
 {

@@ -5,7 +5,6 @@ using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using System;
 using Terraria;
 using Terraria.Audio;

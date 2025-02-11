@@ -1,5 +1,4 @@
-﻿using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
-using Terraria;
+﻿using Terraria;
 using Terraria.ID;
 using static Coralite.Core.Systems.MagikeSystem.MagikeSystem;
 using static Coralite.Core.Systems.MagikeSystem.MALevel;

@@ -6,7 +6,6 @@ using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 
 namespace Coralite.Content.Bosses.ShadowBalls

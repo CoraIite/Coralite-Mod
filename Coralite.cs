@@ -9,7 +9,6 @@ using Coralite.Compat.BossCheckList;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.BossSystems;
-using Coralite.Core.Systems.MagikeSystem;
 using System;
 using System.Collections.Generic;
 using System.IO;

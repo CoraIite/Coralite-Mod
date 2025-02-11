@@ -7,7 +7,6 @@ using ReLogic.Content;
 using ReLogic.Utilities;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
 
 namespace Coralite.Content.NPCs.Magike
 {
