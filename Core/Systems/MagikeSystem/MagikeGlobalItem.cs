@@ -101,7 +101,7 @@ namespace Coralite.Core.Systems.MagikeSystem
             //    }
             //}
 
-            if (MagikeSystem.MagikeCraftRecipes.ContainsKey(item.type))
+            if (MagikeSystem.MagikeCraftRecipesFrozen.ContainsKey(item.type))
                 tooltips.Add(new TooltipLine(Mod, "canRemodel", MagikeSystem.CanMagikeCraft.Value));
 
             if (magikeAmount > 0)
