@@ -47,8 +47,8 @@ namespace Coralite.Core.Systems.MagikeSystem
             UnloadAssets();
             UnLoadPolarizeFilter();
 
-            magikeCraftRecipes = null;
-            MagikeCraftRecipes = null;
+            MagikeCraftRecipesDic = null;
+            MagikeCraftRecipesFrozen = null;
         }
 
         public override void ModifyInterfaceLayers(List<GameInterfaceLayer> layers)

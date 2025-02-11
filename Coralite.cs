@@ -9,11 +9,14 @@ using Coralite.Compat.BossCheckList;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.BossSystems;
+using Coralite.Core.Systems.MagikeSystem;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using Terraria;
+using static Coralite.Core.Systems.MagikeSystem.MagikeSystem;
 
 namespace Coralite
 {
@@ -152,6 +155,16 @@ namespace Coralite
                         if (args[1] is not string)
                             return new ArgumentException("ERROR: The argument to \"Downed\" must be a string.");
                         return GetBossDowned(args[1].ToString());
+                    case "MagikeRecipe:CreateRecipe":
+                        RemodelRecipeStruct remodelRecipe = new RemodelRecipeStruct();
+                        remodelRecipe.mainItemType = VaultUtils.GetItemTypeFromFullName((string)args[1]);
+                        remodelRecipe.resultItemType = VaultUtils.GetItemTypeFromFullName((string)args[2]);
+                        remodelRecipe.magikeCost = (int)args[3];
+                        remodelRecipe.mainStack = (int)args[4];
+                        remodelRecipe.resultStack = (int)args[5];
+                        remodelRecipe.conditions = (Condition[])args[6];
+                        RemodelRecipeByActions.Add(remodelRecipe);
+                        break;
                 }
             }
             catch (Exception e)

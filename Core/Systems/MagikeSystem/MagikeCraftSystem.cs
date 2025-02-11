@@ -14,34 +14,53 @@ namespace Coralite.Core.Systems.MagikeSystem
 {
     public partial class MagikeSystem : ModSystem
     {
-        internal Dictionary<int, List<MagikeRecipe>> magikeCraftRecipes;
-        internal static FrozenDictionary<int, List<MagikeRecipe>> MagikeCraftRecipes;
+        internal static Dictionary<int, List<MagikeRecipe>> MagikeCraftRecipesDic { get; private set; } = [];
+        internal static FrozenDictionary<int, List<MagikeRecipe>> MagikeCraftRecipesFrozen { get; private set; }
+        internal static List<RemodelRecipeStruct> RemodelRecipeByActions { get; private set; } = [];
 
         private void RegisterMagikeCraft()
         {
-            Mod Mod = Coralite.Instance;
-
-            magikeCraftRecipes = [];
-
-            foreach (var magCraft in from mod in ModLoader.Mods
-                                     where mod is ICoralite or Coralite
-                                     from Type t in AssemblyManager.GetLoadableTypes(mod.Code)//添加魔能合成表
-                                     where !t.IsAbstract && t.GetInterfaces().Contains(typeof(IMagikeCraftable))
-                                     let magCraft = Activator.CreateInstance(t) as IMagikeCraftable
-                                     select magCraft)
+            List<IMagikeCraftable> magikeCraftables = VaultUtils.GetSubclassInstances<IMagikeCraftable>();
+            foreach (var mag in magikeCraftables)
             {
-                magCraft.AddMagikeCraftRecipe();
+                mag.AddMagikeCraftRecipe();
             }
 
-            foreach (var recipes in magikeCraftRecipes)     //只是简单整理一下
-                recipes.Value.Sort((r1, r2) => r1.magikeCost.CompareTo(r2.magikeCost));
+            foreach (var recipeAction in RemodelRecipeByActions)
+            {
+                AddRemodelRecipe(recipeAction);
+            }
 
+            foreach (var recipes in MagikeCraftRecipesDic)//只是简单整理一下
+            {
+                recipes.Value.Sort((r1, r2) => r1.magikeCost.CompareTo(r2.magikeCost));
+            }
             //使用性能更高的冻结字典
-            MagikeCraftRecipes = magikeCraftRecipes.ToFrozenDictionary();
-            magikeCraftRecipes = null;
+            MagikeCraftRecipesFrozen = MagikeCraftRecipesDic.ToFrozenDictionary();
+            MagikeCraftRecipesDic?.Clear();
+        }
+
+        public override void OnModUnload()
+        {
+            MagikeCraftRecipesDic?.Clear();
+            RemodelRecipeByActions?.Clear();
         }
 
         #region 重塑帮助方法
+
+        public struct RemodelRecipeStruct
+        {
+            public int mainItemType;
+            public int resultItemType;
+            public int magikeCost;
+            public int mainStack = 1;
+            public int resultStack = 1;
+            public Condition[] conditions;
+
+            public RemodelRecipeStruct()
+            {
+            }
+        }
 
         /// <summary>
         /// 向重塑合成表字典中添加重塑合成
@@ -67,6 +86,23 @@ namespace Coralite.Core.Systems.MagikeSystem
         /// 向重塑合成表字典中添加重塑合成
         /// </summary>
         /// <remarks>
+        /// 该重载的理想使用情况：自身和对方都是原版物品
+        /// </remarks>
+        public static void AddRemodelRecipe(RemodelRecipeStruct remodelRecipe)
+        {
+            MagikeRecipe recipe = MagikeRecipe.CreateCraftRecipe(remodelRecipe.mainItemType
+                , remodelRecipe.resultItemType, remodelRecipe.magikeCost, remodelRecipe.mainStack, remodelRecipe.resultStack);
+            if (remodelRecipe.conditions != null)
+                foreach (var condition in remodelRecipe.conditions)
+                    recipe.AddCondition(condition);
+
+            recipe.Register();
+        }
+
+        /// <summary>
+        /// 向重塑合成表字典中添加重塑合成
+        /// </summary>
+        /// <remarks>
         /// 该重载的理想使用情况：自身和对方都是模组物品
         /// </remarks>
         /// <param name="magikeCost">魔能消耗量</param>
@@ -80,7 +116,7 @@ namespace Coralite.Core.Systems.MagikeSystem
 
         public static bool TryGetMagikeCraftRecipes(int selfType, out List<MagikeRecipe> recipes)
         {
-            if (MagikeCraftRecipes != null && MagikeCraftRecipes.TryGetValue(selfType, out List<MagikeRecipe> value))
+            if (MagikeCraftRecipesFrozen != null && MagikeCraftRecipesFrozen.TryGetValue(selfType, out List<MagikeRecipe> value))
             {
                 recipes = value;
                 return true;
@@ -327,7 +363,7 @@ namespace Coralite.Core.Systems.MagikeSystem
 
         public void Register()
         {
-            Dictionary<int, List<MagikeRecipe>> MagikeCraftRecipes = GetInstance<MagikeSystem>().magikeCraftRecipes;
+            Dictionary<int, List<MagikeRecipe>> MagikeCraftRecipes = MagikeSystem.MagikeCraftRecipesDic;
             if (MagikeCraftRecipes == null)
                 return;
 
