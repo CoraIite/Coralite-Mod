@@ -1,5 +1,6 @@
 ﻿using Coralite.Core;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -50,7 +51,7 @@ namespace Coralite.Content.Items.Gels
         }
     }
 
-    public class GelFiberBall : ModProjectile
+    public class GelFiberBall : BaseHeldProj
     {
         public override string Texture => AssetDirectory.GelItems + Name;
 
@@ -74,7 +75,7 @@ namespace Coralite.Content.Items.Gels
             Projectile.DamageType = DamageClass.Ranged;
         }
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             for (int i = 0; i < 8; i++)
             {

@@ -11,7 +11,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
     public abstract class BaseThunderProj : BaseHeldProj
     {
         public ref float PointDistance => ref Projectile.ai[2];
-
+        public override bool CanFire => true;
         public ref float ThunderWidth => ref Projectile.localAI[1];
         public ref float ThunderAlpha => ref Projectile.localAI[2];
 

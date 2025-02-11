@@ -4,6 +4,7 @@ using Coralite.Core.Attributes;
 using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -19,15 +20,11 @@ namespace Coralite.Content.Items.HyacinthSeries
 
         public static ATex StarsBreathEffect { get; private set; }
 
-        public override void OnSpawn(IEntitySource source)
-        {
-            Projectile.scale = 0.8f;
-        }
-
         protected override float HeldPositionY => -2;
 
         public override void InitializeGun()
         {
+            Projectile.scale = 0.8f;
             float rotation = TargetRot + (DirSign > 0 ? 0 : MathHelper.Pi);
             Vector2 dir = rotation.ToRotationVector2();
             Vector2 center = Projectile.Center + (dir * 54);
@@ -74,7 +71,7 @@ namespace Coralite.Content.Items.HyacinthSeries
     /// <summary>
     /// ai0用于控制弹幕颜色
     /// </summary>
-    public class StarsBreathBullet : ModProjectile
+    public class StarsBreathBullet : BaseHeldProj
     {
         public override string Texture => AssetDirectory.Blank;
 
@@ -92,7 +89,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             Projectile.usesLocalNPCImmunity = true;
         }
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             Projectile.rotation = Projectile.velocity.ToRotation();
         }
@@ -201,10 +198,6 @@ namespace Coralite.Content.Items.HyacinthSeries
             Projectile.friendly = true;
             Projectile.netImportant = true;
             Projectile.usesLocalNPCImmunity = true;
-        }
-
-        public override void OnSpawn(IEntitySource source)
-        {
         }
 
         public override void AI()

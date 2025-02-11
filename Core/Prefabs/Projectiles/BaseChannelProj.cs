@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using InnoVault.GameContent.BaseEntity;
+using Terraria;
 
 namespace Coralite.Core.Prefabs.Projectiles
 {
@@ -6,10 +7,8 @@ namespace Coralite.Core.Prefabs.Projectiles
     /// 使用前注意：请一定要设置物品的Item.channel为true !!!!
     /// <para>大部分可蓄力的武器都能用这个模板，应该</para>
     /// </summary>
-    public abstract class BaseChannelProj : ModProjectile
+    public abstract class BaseChannelProj : BaseHeldProj
     {
-        public Player Owner => Main.player[Projectile.owner];
-
         public bool completeAndRelease = false;
         protected bool canChannel = true;
 

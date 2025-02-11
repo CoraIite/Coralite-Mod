@@ -638,7 +638,7 @@ namespace Coralite.Content.Items.RedJades
             Projectile.tileCollide = false;
         }
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             Vector2 center = Projectile.Center;
             Helper.PlayPitched("RedJade/RedJadeBoom", 1f, -1f, center);

@@ -3,6 +3,7 @@ using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -75,7 +76,7 @@ namespace Coralite.Content.Items.Nightmare
     /// <summary>
     /// ai0为1时为强化的花雾
     /// </summary>
-    public class BarrenFog : ModProjectile, IDrawAdditive, IDrawNonPremultiplied
+    public class BarrenFog : BaseHeldProj, IDrawAdditive, IDrawNonPremultiplied
     {
         public override string Texture => AssetDirectory.Blank;
 
@@ -103,7 +104,7 @@ namespace Coralite.Content.Items.Nightmare
             Projectile.timeLeft = 800;
         }
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             Projectile.frame = Main.rand.Next(0, 4);
         }

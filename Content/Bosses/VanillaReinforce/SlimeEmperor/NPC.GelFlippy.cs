@@ -40,14 +40,19 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 
         public override bool CanHitNPC(NPC target) => false;
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
-
-        public override void OnSpawn(IEntitySource source)
+        private bool span;
+        public void Initialize()
         {
             NPC.ai[1] = -300 + Main.rand.Next(-80, 80);
         }
 
         public override void AI()
         {
+            if (span)
+            {
+                Initialize();
+                span = true;
+            }
             if (NPC.target < 0 || NPC.target == 255 || Target.dead || !Target.active || Target.Distance(NPC.Center) > 2000)
             {
                 NPC.TargetClosest();

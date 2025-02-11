@@ -2,6 +2,7 @@
 using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
@@ -728,7 +729,7 @@ namespace Coralite.Content.Items.Gels
     /// <summary>
     /// 使用ai1,ai2传入目标位置
     /// </summary>
-    public class GelChaser : ModProjectile
+    public class GelChaser : BaseHeldProj
     {
         public override string Texture => AssetDirectory.SlimeEmperor + "SmallGelBall";
 
@@ -765,7 +766,7 @@ namespace Coralite.Content.Items.Gels
             Projectile.localNPCHitCooldown = 20;
         }
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             for (int i = 0; i < 8; i++)
             {

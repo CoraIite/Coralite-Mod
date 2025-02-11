@@ -2,6 +2,7 @@
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -52,7 +53,7 @@ namespace Coralite.Content.Items.Shadow
         }
     }
 
-    public class ShadowMirrorProj : ModProjectile
+    public class ShadowMirrorProj : BaseHeldProj
     {
         public override string Texture => AssetDirectory.Blank;
 
@@ -79,19 +80,16 @@ namespace Coralite.Content.Items.Shadow
             Projectile.netImportant = true;
         }
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             aimPositions = new Vector2[60];
-            Player owner = Main.player[Projectile.owner];
-
             for (int i = 0; i < 60; i++)
-                aimPositions[i] = owner.position;
+                aimPositions[i] = Owner.position;
         }
 
         public override void AI()
         {
-            Player owner = Main.player[Projectile.owner];
-            if (owner.TryGetModPlayer(out CoralitePlayer cp) && cp.HasEffect(nameof(ShadowMirror)))
+            if (Owner.TryGetModPlayer(out CoralitePlayer cp) && cp.HasEffect(nameof(ShadowMirror)))
                 Projectile.timeLeft = 2;
             else
             {
@@ -111,7 +109,7 @@ namespace Coralite.Content.Items.Shadow
                 for (int i = 0; i < 59; i++)
                     aimPositions[i] = aimPositions[i + 1];
 
-                aimPositions[59] = owner.position;
+                aimPositions[59] = Owner.position;
             }
 
             Projectile.position = Vector2.Lerp(aimPositions[0], aimPositions[1], Projectile.ai[0] / 3);
@@ -122,13 +120,11 @@ namespace Coralite.Content.Items.Shadow
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Player owner = Main.player[Projectile.owner];
-
-            Main.PlayerRenderer.DrawPlayer(Main.Camera, owner, Projectile.position, 0f, owner.fullRotationOrigin, 0.5f);
+            Main.PlayerRenderer.DrawPlayer(Main.Camera, Owner, Projectile.position, 0f, Owner.fullRotationOrigin, 0.5f);
 
             for (int i = 1; i < 7; i++)
             {
-                Main.PlayerRenderer.DrawPlayer(Main.Camera, owner, Projectile.oldPos[i], 0f, owner.fullRotationOrigin, 0.5f + (i * 0.5f / 7));
+                Main.PlayerRenderer.DrawPlayer(Main.Camera, Owner, Projectile.oldPos[i], 0f, Owner.fullRotationOrigin, 0.5f + (i * 0.5f / 7));
             }
 
             triangles?.Draw(Main.spriteBatch);

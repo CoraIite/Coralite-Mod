@@ -77,8 +77,8 @@ namespace Coralite.Content.Items.HyacinthSeries
             Projectile.friendly = true;
             Projectile.netImportant = true;
         }
-
-        public override void OnSpawn(IEntitySource source)
+        private bool span;
+        public void Initialize()
         {
             Dust.NewDustPerfect(Projectile.Center, ModContent.DustType<ArethusaPetal>(), -Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.4f, 0.4f)) * Main.rand.NextFloat(0.05f, 0.15f));
             Projectile.rotation = Projectile.velocity.ToRotation();
@@ -86,6 +86,11 @@ namespace Coralite.Content.Items.HyacinthSeries
 
         public override void AI()
         {
+            if (!span)
+            {
+                Initialize();
+                span = true;
+            }
             Lighting.AddLight(Projectile.Center, new Color(255, 179, 251).ToVector3() * 0.5f);   //粉色的魔法数字
         }
 

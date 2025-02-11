@@ -1,6 +1,7 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Systems.FlyingShieldSystem;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
@@ -181,11 +182,9 @@ namespace Coralite.Content.Items.FlyingShields
     /// <summary>
     /// 使用ai0传入状态，0：机械佝偻王，1：双子魔眼
     /// </summary>
-    public class SmallMechRioter : ModProjectile
+    public class SmallMechRioter : BaseHeldProj
     {
         public override string Texture => AssetDirectory.FlyingShieldItems + "MechRioterProj2";
-
-        Player Owner => Main.player[Projectile.owner];
         ref float Phase => ref Projectile.ai[0];
         ref float State => ref Projectile.ai[1];
         ref float Target => ref Projectile.ai[2];
@@ -216,7 +215,7 @@ namespace Coralite.Content.Items.FlyingShields
             return false;
         }
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             Target = -1;
             if (Phase == 1)

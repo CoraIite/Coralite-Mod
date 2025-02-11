@@ -45,7 +45,7 @@ namespace Coralite.Content.Items.Nightmare
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) => false;
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             Scale = 0.3f;
         }

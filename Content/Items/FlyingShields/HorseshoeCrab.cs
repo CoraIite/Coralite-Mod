@@ -1,6 +1,7 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Systems.FlyingShieldSystem;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -178,7 +179,7 @@ namespace Coralite.Content.Items.FlyingShields
         }
     }
 
-    public class HorseshoeCrabEXProj : ModProjectile
+    public class HorseshoeCrabEXProj : BaseHeldProj
     {
         public override string Texture => AssetDirectory.FlyingShieldItems + "HorseshoeCrab";
 
@@ -200,7 +201,7 @@ namespace Coralite.Content.Items.FlyingShields
             Projectile.idStaticNPCHitCooldown = 25;
         }
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             Projectile.rotation = Projectile.velocity.ToRotation();
         }

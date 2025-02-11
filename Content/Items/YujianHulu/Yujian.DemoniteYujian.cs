@@ -2,6 +2,7 @@
 using Coralite.Core.Systems.YujianSystem;
 using Coralite.Core.Systems.YujianSystem.YujianAIs;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Audio;
@@ -204,7 +205,7 @@ namespace Coralite.Content.Items.YujianHulu
         }
     }
 
-    public class DemoniteSpurt : ModProjectile
+    public class DemoniteSpurt : BaseHeldProj
     {
         public override string Texture => AssetDirectory.Blank;
 
@@ -224,7 +225,7 @@ namespace Coralite.Content.Items.YujianHulu
             Projectile.usesLocalNPCImmunity = true;
         }
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             center = Projectile.Center;
         }

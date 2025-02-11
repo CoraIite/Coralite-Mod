@@ -13,12 +13,6 @@ namespace Coralite.Content.Items.Misc_Shoot
         public AstrosniperHeldProj() : base(0.4f, 34, -6, AssetDirectory.Misc_Shoot) { }
 
         private int dir;
-        public override void OnSpawn(IEntitySource source)
-        {
-            Projectile.scale = 0.7f;
-
-        }
-
         public override float Ease()
         {
             float x = 1.465f * Projectile.timeLeft / MaxTime;
@@ -27,6 +21,7 @@ namespace Coralite.Content.Items.Misc_Shoot
 
         public override void InitializeGun()
         {
+            Projectile.scale = 0.7f;
             float minRot = MathHelper.ToRadians(50);
             float maxRot = MathHelper.ToRadians(130);
             TargetRot = MathHelper.Clamp(ToMouseA + MathHelper.Pi, minRot, maxRot) - MathHelper.Pi;

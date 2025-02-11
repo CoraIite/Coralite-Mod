@@ -1,13 +1,14 @@
 ﻿using Coralite.Content.Items.Shadow;
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
+using InnoVault.GameContent.BaseEntity;
 using System;
 using Terraria;
 using Terraria.DataStructures;
 
 namespace Coralite.Content.Bosses.ShadowBalls
 {
-    public class ShadowPlayerSpurt : ModProjectile
+    public class ShadowPlayerSpurt : BaseHeldProj
     {
         public override string Texture => AssetDirectory.Blank;
 
@@ -28,7 +29,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             Projectile.extraUpdates = 1;
         }
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             recordVelocity = Projectile.velocity;
             Projectile.velocity *= 0;

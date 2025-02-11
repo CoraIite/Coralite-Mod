@@ -363,7 +363,7 @@ namespace Coralite.Content.Items.Corruption
 
         public override bool? CanDamage() => false;
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             Projectile.rotation = (Main.MouseWorld - Owner.Center).ToRotation() + MathHelper.Pi;
             shadowRot = Main.rand.NextFloat(MathHelper.TwoPi);
@@ -473,14 +473,19 @@ namespace Coralite.Content.Items.Corruption
 
             Projectile.DamageType = DamageClass.Summon;
         }
-
-        public override void OnSpawn(IEntitySource source)
+        private bool span;
+        public void Initialize()
         {
             Projectile.rotation = Projectile.velocity.ToRotation();
         }
 
         public override void AI()
         {
+            if (!span)
+            {
+                Initialize();
+                span = true;
+            }
             switch ((int)State)
             {
                 default:

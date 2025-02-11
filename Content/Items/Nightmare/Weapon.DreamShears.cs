@@ -113,8 +113,6 @@ namespace Coralite.Content.Items.Nightmare
         [AutoLoadTexture(Name = "DreamShearsGradient")]
         public static Asset<Texture2D> GradientTexture { get; private set; }
 
-        public override bool CanFire => false;
-
         public DreamShearsSlash() : base(0.785f, trailCount: 26) { }
 
         public int alpha;

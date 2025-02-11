@@ -110,8 +110,6 @@ namespace Coralite.Content.Items.Thunder
 
         public ref float Timer => ref Projectile.localAI[0];
 
-        public Player Owner => Main.player[Projectile.owner];
-
         const int DelayTime = 30;
 
         protected ThunderTrail[] thunderTrails;

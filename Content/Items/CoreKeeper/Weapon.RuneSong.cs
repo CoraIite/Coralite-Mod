@@ -712,8 +712,8 @@ namespace Coralite.Content.Items.CoreKeeper
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) => false;
         public override bool? CanDamage() => false;
-
-        public override void OnSpawn(IEntitySource source)
+        private bool span;
+        public void Initialize()
         {
             var source2 = Projectile.GetSource_FromAI();
             var Owner = Main.player[Projectile.owner];
@@ -731,6 +731,11 @@ namespace Coralite.Content.Items.CoreKeeper
 
         public override void AI()
         {
+            if (!span)
+            {
+                Initialize();
+                span = true;
+            }
             if (Projectile.timeLeft < 50)
             {
                 Projectile.velocity *= 0.9f;

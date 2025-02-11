@@ -246,8 +246,8 @@ namespace Coralite.Content.Bosses.ShadowBalls
             /// <summary> 二阶段招式，水平冲刺，之后冲向灯之影的位置并向四周抛出弹幕 </summary>
             NightmareKingDash,
         }
-
-        public override void OnSpawn(IEntitySource source)
+        private bool span;
+        public void Initialize()
         {
             NPC.Center = CoraliteWorld.shadowBallsFightArea.Center.ToVector2();
             NPC.dontTakeDamage = true;
@@ -267,6 +267,11 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public override void AI()
         {
+            if (span)
+            {
+                Initialize();
+                span = true;
+            }
             if (NPC.target < 0 || NPC.target == 255 || Target.dead || !Target.active || /*Target.Distance(NPC.Center) > 4800 ||*/ Main.dayTime) //世花也是4800
             {
                 NPC.TargetClosest();

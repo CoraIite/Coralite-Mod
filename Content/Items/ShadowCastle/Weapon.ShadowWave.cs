@@ -121,7 +121,7 @@ namespace Coralite.Content.Items.ShadowCastle
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) => false;
         public override bool? CanDamage() => false;
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             Projectile.rotation = ToMouseA;
         }

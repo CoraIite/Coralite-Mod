@@ -618,14 +618,19 @@ namespace Coralite.Content.Items.Donator
             Projectile.localNPCHitCooldown = 30;
             Projectile.extraUpdates = 1;
         }
-
-        public override void OnSpawn(IEntitySource source)
+        private bool span;
+        public void Initialize()
         {
             Projectile.rotation = Projectile.velocity.ToRotation();
         }
 
         public override void AI()
         {
+            if (!span)
+            {
+                Initialize();
+                span = true;
+            }
             switch (State)
             {
                 default:

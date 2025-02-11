@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.Dusts;
 using Coralite.Core;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using ReLogic.Utilities;
@@ -13,7 +14,7 @@ namespace Coralite.Content.NPCs.Magike
     /// <summary>
     /// 使用ai0控制激光角度
     /// </summary>
-    public class CrystalLaser : ModProjectile, IDrawAdditive
+    public class CrystalLaser : BaseHeldProj, IDrawAdditive
     {
         public override string Texture => AssetDirectory.Lasers + "VanillaCoreA";
 
@@ -68,7 +69,7 @@ namespace Coralite.Content.NPCs.Magike
             return false;
         }
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             SoundStyle style = CoraliteSoundID.PhantasmalDeathray_Zombie104;
             style.Volume = 0.2f;

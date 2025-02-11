@@ -507,7 +507,7 @@ namespace Coralite.Content.Items.Shadow
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 15;
         }
-
+        private bool span;
         public override Color? GetAlpha(Color lightColor)
         {
             if (Projectile.alpha > 160)
@@ -518,13 +518,18 @@ namespace Coralite.Content.Items.Shadow
             return color;
         }
 
-        public override void OnSpawn(IEntitySource source)
+        public void Initialize()
         {
             Projectile.rotation = Projectile.velocity.ToRotation() + 1.57f;
         }
 
         public override void AI()
         {
+            if (!span)
+            {
+                Initialize();
+                span = true;
+            }
             float velLength = Projectile.velocity.Length();
             if (Projectile.alpha > 0)
                 Projectile.alpha -= (byte)(velLength * 0.5f);

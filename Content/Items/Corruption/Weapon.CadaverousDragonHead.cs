@@ -109,7 +109,7 @@ namespace Coralite.Content.Items.Corruption
 
         public float mouseAngle;
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             TargetPos = Projectile.Center;
         }

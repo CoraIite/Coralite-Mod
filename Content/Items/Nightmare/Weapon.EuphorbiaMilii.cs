@@ -7,6 +7,7 @@ using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using InnoVault.PRT;
 using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
@@ -1191,15 +1192,13 @@ namespace Coralite.Content.Items.Nightmare
         }
     }
 
-    public class EuphorbiaSpurt : ModProjectile, IDrawPrimitive, IDrawWarp
+    public class EuphorbiaSpurt : BaseHeldProj, IDrawPrimitive, IDrawWarp
     {
         public override string Texture => AssetDirectory.Trails + "SlashFlatBlurVMirror";
 
         public ref float Alpha => ref Projectile.localAI[0];
         public ref float Timer => ref Projectile.ai[0];
         public ref float TrailWidth => ref Projectile.ai[1];
-
-        public Player Owner => Main.player[Projectile.owner];
 
         private Trail trail;
         private bool hited = true;
@@ -1216,7 +1215,7 @@ namespace Coralite.Content.Items.Nightmare
             Projectile.netImportant = true;
         }
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             Projectile.oldPos = new Vector2[24];
             for (int i = 0; i < 24; i++)
@@ -1243,7 +1242,11 @@ namespace Coralite.Content.Items.Nightmare
 
         public override void AI()
         {
-            trail ??= new Trail(Main.graphics.GraphicsDevice, 24, new EmptyMeshGenerator(), WidthFunction, ColorFunction);
+            if (!Main.dedServ)
+            {
+                trail ??= new Trail(Main.graphics.GraphicsDevice, 24, new EmptyMeshGenerator(), WidthFunction, ColorFunction);
+            }
+            
 
             if (Timer > 0)
             {
@@ -1288,7 +1291,8 @@ namespace Coralite.Content.Items.Nightmare
 
                     Projectile.oldPos[23] = Projectile.Center + Projectile.velocity;
                 }
-                trail.TrailPositions = Projectile.oldPos;
+                if (!Main.dedServ)
+                    trail.TrailPositions = Projectile.oldPos;
             }
 
             Timer++;

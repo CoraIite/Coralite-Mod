@@ -70,8 +70,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         {
             return false;
         }
-
-        public override void OnSpawn(IEntitySource source)
+        bool span;
+        public void Initialize()
         {
             for (int i = 0; i < 14; i++)
             {
@@ -92,6 +92,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public override void AI()
         {
+            if (span)
+            {
+                Initialize();
+                span = true;
+            }
             if (!NightmarePlantera.NightmarePlanteraAlive(out NPC np))
             {
                 NPC.Kill();

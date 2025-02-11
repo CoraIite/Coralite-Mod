@@ -42,7 +42,7 @@ namespace Coralite.Content.Items.Shadow
             Projectile.netImportant = true;
         }
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             _Rotation = -1.2f;
             //Projectile.rotation = _Rotation + Owner.direction * (-0.4f + 0.785f);

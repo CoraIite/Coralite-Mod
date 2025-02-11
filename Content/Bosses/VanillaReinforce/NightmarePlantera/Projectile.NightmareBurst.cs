@@ -1,5 +1,6 @@
 ﻿using Coralite.Core;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -8,7 +9,7 @@ using Terraria.Graphics.Effects;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 {
-    public class NightmareBurst : ModProjectile, IDrawPrimitive
+    public class NightmareBurst : BaseHeldProj, IDrawPrimitive
     {
         public override string Texture => AssetDirectory.Blank;
 
@@ -33,7 +34,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         public override bool? CanHitNPC(NPC target) => false;
         public override bool? CanDamage() => false;
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             Projectile.oldPos = new Vector2[20];
             for (int i = 0; i < 20; i++)

@@ -148,7 +148,7 @@ namespace Coralite.Content.Items.Crimson
             return null;
         }
 
-        public override void OnSpawn(IEntitySource source)
+        public void Initialize()
         {
             for (int i = 0; i < 6; i++)
             {
@@ -161,6 +161,7 @@ namespace Coralite.Content.Items.Crimson
         {
             if (init)
             {
+                Initialize();
                 Projectile.frame = (int)Frame;
                 init = false;
             }

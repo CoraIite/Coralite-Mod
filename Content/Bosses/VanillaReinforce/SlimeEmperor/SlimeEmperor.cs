@@ -258,8 +258,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
         #endregion
 
         #region AI
-
-        public override void OnSpawn(IEntitySource source)
+        private bool span;
+        public void Initialize()
         {
             //CanUseHealGelBall = true;
             PolymerizeTime = Helper.ScaleValueForDiffMode(240, 240, 150, 60);
@@ -277,6 +277,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 
         public override void AI()
         {
+            if (!span)
+            {
+                Initialize();
+                span = true;
+            }
             if (NPC.target < 0 || NPC.target == 255 || Target.dead || !Target.active || Target.Distance(NPC.Center) > 3000)
             {
                 NPC.TargetClosest();

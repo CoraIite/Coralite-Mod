@@ -19,13 +19,16 @@ namespace Coralite.Content.Bosses.Rediancie
             Projectile.friendly = false;
             Projectile.hostile = true;
         }
-
-        public override void OnSpawn(IEntitySource source)
+        private bool span;
+        public override bool PreAI()
         {
-            Helper.RedJadeBigBoom(Projectile.Center);
+            if (span)
+            {
+                Helper.RedJadeBigBoom(Projectile.Center);
+                span = true;
+            }
+            return false;
         }
-
-        public override bool PreAI() => false;
         public override bool PreDraw(ref Color lightColor) => false;
 
         public override bool CanHitPlayer(Player target)

@@ -1,5 +1,6 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Configs;
+using InnoVault.GameContent.BaseEntity;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -7,7 +8,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Icicle
 {
-    public class CrushedIceProj : ModProjectile
+    public class CrushedIceProj : BaseHeldProj
     {
         public override string Texture => AssetDirectory.IcicleProjectiles + Name;
 
@@ -23,7 +24,7 @@ namespace Coralite.Content.Items.Icicle
             Projectile.tileCollide = true;
         }
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             Projectile.rotation = Main.rand.NextFloat(6.282f);
         }

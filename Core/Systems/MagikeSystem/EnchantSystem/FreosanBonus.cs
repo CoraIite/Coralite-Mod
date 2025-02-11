@@ -56,7 +56,7 @@
 //            return null;
 //        }
 
-//        public override void OnSpawn(IEntitySource source)
+//        public override void Initialize()
 //        {
 //            Projectile.frame = Main.rand.Next(3);
 //            Projectile.alpha = 255;

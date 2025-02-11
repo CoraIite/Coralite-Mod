@@ -43,8 +43,8 @@ namespace Coralite.Content.Items.Icicle
             Projectile.ignoreWater = true;
             Projectile.coldDamage = true;
         }
-
-        public override void OnSpawn(IEntitySource source)
+        private bool span;
+        public void Initialize()
         {
             Projectile.oldPos = new Vector2[16];
             for (int i = 0; i < 16; i++)
@@ -53,6 +53,11 @@ namespace Coralite.Content.Items.Icicle
 
         public override void AI()
         {
+            if (!span)
+            {
+                Initialize();
+                span = true;
+            }
             for (int i = 0; i < 15; i++)
                 Projectile.oldPos[i] = Projectile.oldPos[i + 1];
 

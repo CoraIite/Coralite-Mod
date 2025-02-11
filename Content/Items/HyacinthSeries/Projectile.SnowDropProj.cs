@@ -3,6 +3,7 @@ using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -40,7 +41,7 @@ namespace Coralite.Content.Items.HyacinthSeries
     /// <summary>
     /// ai0用于控制存活时间小于多少时产生粒子
     /// </summary>
-    public class SnowBullet : ModProjectile
+    public class SnowBullet : BaseHeldProj
     {
         public override string Texture => AssetDirectory.Projectiles_Shoot + Name;
 
@@ -55,7 +56,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             Projectile.DamageType = DamageClass.Ranged;
         }
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             Projectile.rotation = Projectile.velocity.ToRotation();
         }
@@ -167,7 +168,7 @@ namespace Coralite.Content.Items.HyacinthSeries
         }
     }
 
-    public class SnowdropBud : ModProjectile
+    public class SnowdropBud : BaseHeldProj
     {
         public override string Texture => AssetDirectory.Projectiles_Shoot + Name;
 
@@ -181,7 +182,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             Projectile.netImportant = true;
         }
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             Projectile.rotation = Projectile.velocity.ToRotation();
             Dust.NewDustPerfect(Projectile.Center, ModContent.DustType<SnowdropPetal>(), -Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.3f, 0.3f)) * Main.rand.NextFloat(0.15f, 0.2f));
@@ -237,7 +238,7 @@ namespace Coralite.Content.Items.HyacinthSeries
         }
     }
 
-    public class SnowSpirit : ModProjectile, IDrawPrimitive
+    public class SnowSpirit : BaseHeldProj, IDrawPrimitive
     {
         BasicEffect effect;
         private Trail trail;
@@ -269,7 +270,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             Projectile.netImportant = true;
         }
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             Projectile.oldPos = new Vector2[24];
             for (int i = 0; i < 24; i++)

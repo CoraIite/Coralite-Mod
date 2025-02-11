@@ -3,6 +3,7 @@ using Coralite.Helpers;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
+using System.IO;
 using Terraria;
 using Terraria.ModLoader.IO;
 using Terraria.ModLoader.UI;
@@ -257,6 +258,20 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         #endregion
 
         #region 同步
+
+        public override void SendData(ModPacket data)
+        {
+            data.Write(ChargeItemsOnUp);
+            data.Write(ChargePlayerItemsOnUp);
+            data.Write(MagikePerCharge);
+        }
+
+        public override void ReceiveData(BinaryReader reader, int whoAmI)
+        {
+            ChargeItemsOnUp = reader.ReadBoolean();
+            ChargePlayerItemsOnUp = reader.ReadBoolean();
+            MagikePerCharge = reader.ReadInt32();
+        }
 
         #endregion
 

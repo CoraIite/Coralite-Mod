@@ -50,7 +50,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             return State > 2;
         }
 
-        public override void OnSpawn(IEntitySource source)
+        public void Initialize()
         {
             NPC.rotation = Main.rand.NextFloat(6.282f);
             Center = NPC.Center;
@@ -61,6 +61,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
         {
             if (!spwan)
             {
+                Initialize();
                 if (!VaultUtils.isServer)
                 {
                     NPC boss = null;

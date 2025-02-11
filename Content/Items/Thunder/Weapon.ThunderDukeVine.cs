@@ -58,30 +58,25 @@ namespace Coralite.Content.Items.Thunder
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (Main.myPlayer == player.whoAmI)
+            if (shootCount > 14)
             {
-                if (shootCount > 14)
-                {
-                    Vector2 targetDir = (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero);
-                    Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center + (targetDir * 1026), player.Center + (targetDir * 26), ProjectileType<ElectromagneticCannon_Friendly>(),
-                        (int)(damage * 0.9f), knockback, player.whoAmI, 30, ai2: 70);
+                Vector2 targetDir = (position - player.Center).SafeNormalize(Vector2.Zero);
+                Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center + (targetDir * 1026), player.Center + (targetDir * 26), ProjectileType<ElectromagneticCannon_Friendly>(),
+                    (int)(damage * 0.9f), knockback, player.whoAmI, 30, ai2: 70);
 
-                    var modifyer = new PunchCameraModifier(player.Center, targetDir * 1.8f, 10, 10, 20);
-                    Main.instance.CameraModifiers.Add(modifyer);
-                    SoundEngine.PlaySound(CoraliteSoundID.NoUse_Electric_Item93, player.Center);
-                    SoundEngine.PlaySound(CoraliteSoundID.BubbleShield_Electric_NPCHit43, player.Center);
-                    SoundEngine.PlaySound(CoraliteSoundID.BottleExplosion_Item107, player.Center);
-                    shootCount = 0;
-                    return false;
-                }
-                else
-                    Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, Vector2.Zero, ProjectileType<ThunderDukeVineHeldProj>(), damage, knockback, player.whoAmI, ai2: shootCount);
-
-                SoundEngine.PlaySound(CoraliteSoundID.Gun2_Item40, player.Center);
-                return true;
+                var modifyer = new PunchCameraModifier(player.Center, targetDir * 1.8f, 10, 10, 20);
+                Main.instance.CameraModifiers.Add(modifyer);
+                SoundEngine.PlaySound(CoraliteSoundID.NoUse_Electric_Item93, player.Center);
+                SoundEngine.PlaySound(CoraliteSoundID.BubbleShield_Electric_NPCHit43, player.Center);
+                SoundEngine.PlaySound(CoraliteSoundID.BottleExplosion_Item107, player.Center);
+                shootCount = 0;
+                return false;
             }
+            else
+                Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, Vector2.Zero, ProjectileType<ThunderDukeVineHeldProj>(), damage, knockback, player.whoAmI, ai2: shootCount);
 
-            return false;
+            SoundEngine.PlaySound(CoraliteSoundID.Gun2_Item40, player.Center);
+            return true;
         }
 
         public override void AddRecipes()
@@ -122,7 +117,7 @@ namespace Coralite.Content.Items.Thunder
     {
         const int DelayTime = 30;
         private float laserWidth;
-
+        
         public List<Vector2> laserTrailPoints = new();
 
         public static Asset<Texture2D> gradientTex;
@@ -166,12 +161,11 @@ namespace Coralite.Content.Items.Thunder
         {
             InitTrails();
 
-            Player owner = Main.player[Projectile.owner];
-            owner.heldProj = Projectile.whoAmI;
-            owner.itemTime = owner.itemAnimation = 2;
-            owner.direction = Main.MouseWorld.X > owner.Center.X ? 1 : -1;
-            Vector2 dir = (Main.MouseWorld - owner.Center).SafeNormalize(Vector2.Zero);
-            Projectile.velocity = owner.Center + (dir * 26);
+            Owner.heldProj = Projectile.whoAmI;
+            Owner.itemTime = Owner.itemAnimation = 2;
+            Owner.direction = InMousePos.X > Owner.Center.X ? 1 : -1;
+            Vector2 dir = (InMousePos - Owner.Center).SafeNormalize(Vector2.Zero);
+            Projectile.velocity = Owner.Center + (dir * 26);
             Vector2 endPoint = Projectile.velocity;
             laserTrailPoints.Clear();
 
@@ -318,8 +312,8 @@ namespace Coralite.Content.Items.Thunder
                     Projectile.Kill();
             }
 
-            owner.itemRotation = Projectile.rotation;
-            owner.heldProj = Projectile.whoAmI;
+            Owner.itemRotation = Projectile.rotation;
+            Owner.heldProj = Projectile.whoAmI;
             Timer++;
         }
 
@@ -344,23 +338,25 @@ namespace Coralite.Content.Items.Thunder
 
         public void InitTrails()
         {
-            if (thunderTrails == null)
+            if (thunderTrails != null)
             {
-                Projectile.Resize((int)PointDistance, 40);
+                return;
+            }
 
-                thunderTrails = new ThunderTrail[3];
-                for (int i = 0; i < 3; i++)
-                {
-                    thunderTrails[i] = new(Request<Texture2D>(AssetDirectory.OtherProjectiles + "ThunderTrail2")
-                        , ThunderWidthFunc_Sin, ThunderColorFunc_Yellow, GetAlpha);
-                    thunderTrails[i].CanDraw = false;
-                    thunderTrails[i].UseNonOrAdd = true;
-                    thunderTrails[i].SetRange((5, 20));
-                    thunderTrails[i].BasePositions =
-                    [
-                        Projectile.Center,Projectile.Center,Projectile.Center
-                    ];
-                }
+            Projectile.Resize((int)PointDistance, 40);
+
+            thunderTrails = new ThunderTrail[3];
+            for (int i = 0; i < 3; i++)
+            {
+                thunderTrails[i] = new(Request<Texture2D>(AssetDirectory.OtherProjectiles + "ThunderTrail2")
+                    , ThunderWidthFunc_Sin, ThunderColorFunc_Yellow, GetAlpha);
+                thunderTrails[i].CanDraw = false;
+                thunderTrails[i].UseNonOrAdd = true;
+                thunderTrails[i].SetRange((5, 20));
+                thunderTrails[i].BasePositions =
+                [
+                    Projectile.Center,Projectile.Center,Projectile.Center
+                ];
             }
         }
 

@@ -1,5 +1,6 @@
 ﻿using Coralite.Core;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -12,16 +13,19 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
     /// <summary>
     /// 使用ai0传入颜色
     /// </summary>
-    public class GhostHand : BaseNightmareProj
+    public class GhostHand : BaseHeldProj
     {
         public override string Texture => AssetDirectory.Blank;
 
-        private Player Owner => Main.player[Projectile.owner];
         public ref float ColorState => ref Projectile.ai[0];
         private Color drawColor;
 
         private bool Init = true;
-        private SpriteEffects filp;
+        private SpriteEffects filp => Projectile.ai[0] switch
+        {
+            0 => SpriteEffects.None,
+            _ => SpriteEffects.FlipVertically
+        };
 
         public override void SetStaticDefaults()
         {
@@ -38,29 +42,24 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             Projectile.timeLeft = 300;
         }
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
-            filp = Main.rand.Next() switch
+            if (Projectile.IsOwnedByLocalPlayer())
             {
-                0 => SpriteEffects.None,
-                _ => SpriteEffects.FlipVertically
-            };
+                Projectile.ai[0] = Main.rand.Next();
+                Projectile.netUpdate = true;
+            }
+
+            if (ColorState == -1)
+                drawColor = NightmarePlantera.lightPurple;
+            else if (ColorState == -2)
+                drawColor = new Color(255, 20, 20, 130);
+            else
+                drawColor = Main.hslToRgb(new Vector3(Math.Clamp(ColorState, 0, 1f), 1f, 0.8f));
         }
 
         public override void AI()
         {
-            if (Init)
-            {
-                if (ColorState == -1)
-                    drawColor = NightmarePlantera.lightPurple;
-                else if (ColorState == -2)
-                    drawColor = new Color(255, 20, 20, 130);
-                else
-                    drawColor = Main.hslToRgb(new Vector3(Math.Clamp(ColorState, 0, 1f), 1f, 0.8f));
-
-                Init = false;
-            }
-
             if (Projectile.timeLeft > 240)
             {
                 Projectile.velocity *= 0.98f;

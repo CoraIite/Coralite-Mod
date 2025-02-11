@@ -103,14 +103,19 @@ namespace Coralite.Content.Items.FlyingShields
         {
             return false;
         }
-
-        public override void OnSpawn(IEntitySource source)
+        private bool span;
+        public void Initialize()
         {
             Projectile.frame = (int)Projectile.ai[0];
         }
 
         public override void AI()
         {
+            if (span)
+            {
+                Initialize();
+                span = true;
+            }
             Projectile.localAI[0]++;
             if (Projectile.localAI[0] > 60)
             {

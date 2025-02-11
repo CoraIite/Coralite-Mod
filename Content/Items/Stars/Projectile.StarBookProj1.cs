@@ -43,7 +43,7 @@ namespace Coralite.Content.Items.Stars
 
         #region AI
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             if (Projectile.IsOwnedByLocalPlayer())
             {

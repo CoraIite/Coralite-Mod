@@ -127,8 +127,8 @@ namespace Coralite.Content.Items.FlyingShields
                 Projectile.localAI[0] = 20;
             return false;
         }
-
-        public override void OnSpawn(IEntitySource source)
+        private bool span;
+        public void Initialize()
         {
             Projectile.frame = (int)Projectile.ai[0];
             Projectile.rotation = Main.rand.NextFloat(MathHelper.TwoPi);
@@ -136,6 +136,11 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void AI()
         {
+            if (span)
+            {
+                Initialize();
+                span = true;
+            }
             Projectile.localAI[0]++;
             if (Projectile.localAI[0] > 60)
             {

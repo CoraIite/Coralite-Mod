@@ -389,8 +389,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         #endregion
 
         #region AI
-
-        public override void OnSpawn(IEntitySource source)
+        private bool span;
+        public void Initialize()
         {
             NPC.TargetClosest(false);
             if (Main.netMode != NetmodeID.MultiplayerClient)
@@ -414,6 +414,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public override void AI()
         {
+            if (span)
+            {
+                Initialize();
+                span = true;
+            }
             if (NPC.target < 0 || NPC.target == 255 || Target.dead || !Target.active || /*Target.Distance(NPC.Center) > 4800 ||*/ Main.dayTime) //世花也是4800
             {
                 NPC.TargetClosest();

@@ -1,4 +1,5 @@
 ﻿using Coralite.Core;
+using InnoVault.GameContent.BaseEntity;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -6,7 +7,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Bosses.BabyIceDragon
 {
-    public class IcicleFalling_Hostile : ModProjectile
+    public class IcicleFalling_Hostile : BaseHeldProj
     {
         public override string Texture => AssetDirectory.IcicleProjectiles + "Old_IcicleProj";
 
@@ -24,7 +25,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             Projectile.coldDamage = true;
         }
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             for (int i = 0; i < 8; i++)
             {

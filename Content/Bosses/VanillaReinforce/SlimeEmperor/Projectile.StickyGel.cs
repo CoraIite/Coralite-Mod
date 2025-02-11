@@ -1,5 +1,6 @@
 ﻿using Coralite.Core;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -11,7 +12,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 {
-    public class StickyGel : ModProjectile, IDrawPrimitive, IDrawNonPremultiplied
+    public class StickyGel : BaseHeldProj, IDrawPrimitive, IDrawNonPremultiplied
     {
         public override string Texture => AssetDirectory.SlimeEmperor + Name;
 
@@ -45,7 +46,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             Projectile.timeLeft = 80;
         }
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             Projectile.oldPos = new Vector2[12];
             for (int i = 0; i < 12; i++)

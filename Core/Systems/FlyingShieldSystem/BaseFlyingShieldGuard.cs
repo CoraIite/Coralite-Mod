@@ -98,7 +98,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
 
         #region AI
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             Projectile.scale *= Owner.GetAdjustedItemScale(Item);
             Projectile.Resize((int)(Projectile.width * Projectile.scale), (int)(Projectile.height * Projectile.scale));

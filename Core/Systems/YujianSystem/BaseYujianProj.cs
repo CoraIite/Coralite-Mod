@@ -123,8 +123,13 @@ namespace Coralite.Core.Systems.YujianSystem
         #endregion
 
         #region AI
-
+        IEntitySource source;
         public override void OnSpawn(IEntitySource source)
+        {
+            this.source = source;
+        }
+
+        public override void Initialize()
         {
             if (source is YujianSource yujianSource)
             {

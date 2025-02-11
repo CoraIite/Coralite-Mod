@@ -286,8 +286,8 @@ namespace Coralite.Content.Items.YujianHulu
             Projectile.width = Projectile.height = 48;
             Projectile.friendly = true;
         }
-
-        public override void OnSpawn(IEntitySource source)
+        private bool span;
+        public void Initialize()
         {
             for (int i = 0; i < 16; i++)
             {
@@ -298,6 +298,11 @@ namespace Coralite.Content.Items.YujianHulu
 
         public override void AI()
         {
+            if (!span)
+            {
+                Initialize();
+                span = true;
+            }
             Vector2 targetCenter = new(Projectile.ai[0], Projectile.ai[1]);
             if (Timer == 0)
                 Projectile.velocity = -(targetCenter - Projectile.Center).SafeNormalize(Vector2.One) * 1.5f;

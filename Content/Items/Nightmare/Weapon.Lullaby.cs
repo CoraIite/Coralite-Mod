@@ -453,7 +453,7 @@ namespace Coralite.Content.Items.Nightmare
             Projectile.DamageType = DamageClass.Magic;
         }
 
-        public override void OnSpawn(IEntitySource source)
+        public void Initialize()
         {
             Projectile.oldPos = new Vector2[16];
             for (int i = 0; i < 16; i++)
@@ -464,10 +464,15 @@ namespace Coralite.Content.Items.Nightmare
         {
             if (init)
             {
-                if (Projectile.ai[2] >= 0 && Projectile.ai[2] < 7)
-                    DrawColor = NightmarePlantera.phantomColors[(int)Projectile.ai[2]];
-                else
-                    DrawColor = FantasyGod.shineColor;
+                Initialize();
+                if (!Main.dedServ)
+                {
+                    if (Projectile.ai[2] >= 0 && Projectile.ai[2] < 7)
+                        DrawColor = NightmarePlantera.phantomColors[(int)Projectile.ai[2]];
+                    else
+                        DrawColor = FantasyGod.shineColor;
+                }
+                
 
                 init = false;
             }
@@ -551,19 +556,22 @@ namespace Coralite.Content.Items.Nightmare
                 Dust.NewDustPerfect(Projectile.Center, type, dir.RotatedBy(Main.rand.NextFloat(-0.2f, 0.2f)) * Main.rand.NextFloat(0.5f, 2), Scale: Main.rand.NextFloat(1, 1.5f));
 
             }
-
-            trail ??= new Trail(Main.graphics.GraphicsDevice, 16, new EmptyMeshGenerator(), factor => Helper.Lerp(0, 8, factor)
-            , factor =>
+            if (!Main.dedServ)
             {
-                if (factor.X < 0.7f)
+                trail ??= new Trail(Main.graphics.GraphicsDevice, 16, new EmptyMeshGenerator(), factor => Helper.Lerp(0, 8, factor)
+                , factor =>
                 {
-                    return Color.Lerp(new Color(0, 0, 0, 0), DrawColor, factor.X / 0.7f);
-                }
+                    if (factor.X < 0.7f)
+                    {
+                        return Color.Lerp(new Color(0, 0, 0, 0), DrawColor, factor.X / 0.7f);
+                    }
 
-                return Color.Lerp(DrawColor, FantasyGod.shineColor, (factor.X - 0.7f) / 0.3f);
-            });
+                    return Color.Lerp(DrawColor, FantasyGod.shineColor, (factor.X - 0.7f) / 0.3f);
+                });
 
-            trail.TrailPositions = Projectile.oldPos;
+                trail.TrailPositions = Projectile.oldPos;
+            }
+            
         }
 
         public override void OnKill(int timeLeft)

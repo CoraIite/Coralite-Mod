@@ -39,14 +39,14 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         {
             return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, originCenter);
         }
-
-        public override void OnSpawn(IEntitySource source)
-        {
-            originCenter = Projectile.Center;
-        }
-
+        private bool span;
         public override void AI()
         {
+            if (span)
+            {
+                originCenter = Projectile.Center;
+                span = true;
+            }
             if (!NightmarePlantera.NightmarePlanteraAlive(out NPC np))
             {
                 Projectile.Kill();

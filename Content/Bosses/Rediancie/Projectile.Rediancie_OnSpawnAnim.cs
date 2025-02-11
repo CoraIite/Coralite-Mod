@@ -1,5 +1,6 @@
 ﻿using Coralite.Core;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -7,7 +8,7 @@ using Terraria.DataStructures;
 
 namespace Coralite.Content.Bosses.Rediancie
 {
-    public class Rediancie_OnSpawnAnim : ModProjectile
+    public class Rediancie_OnSpawnAnim : BaseHeldProj
     {
         public override string Texture => AssetDirectory.Rediancie + "RediancieNameLine";
 
@@ -29,7 +30,7 @@ namespace Coralite.Content.Bosses.Rediancie
         public override bool CanHitPlayer(Player target) => false;
         public override bool CanHitPvp(Player target) => false;
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             drawCharColor = new Color(0, 0, 0, 0);
             drawPicColor = new Color(0, 0, 0, 0);

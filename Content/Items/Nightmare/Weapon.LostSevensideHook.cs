@@ -536,8 +536,8 @@ namespace Coralite.Content.Items.Nightmare
             Projectile.friendly = true;
             Projectile.netImportant = true;
         }
-
-        public override void OnSpawn(IEntitySource source)
+        private bool span;
+        public void Initialize()
         {
             Projectile.oldPos = new Vector2[16];
             for (int i = 0; i < 16; i++)
@@ -554,6 +554,11 @@ namespace Coralite.Content.Items.Nightmare
 
         public override void AI()
         {
+            if (!span)
+            {
+                Initialize();
+                span = true;
+            }
             trail ??= new Trail(Main.graphics.GraphicsDevice, 16, new EmptyMeshGenerator(), WidthFunction, ColorFunction);
 
             if (Timer > 0)

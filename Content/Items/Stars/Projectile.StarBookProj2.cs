@@ -1,6 +1,7 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -9,7 +10,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Stars
 {
-    public class StarBookProj2 : ModProjectile
+    public class StarBookProj2 : BaseHeldProj
     {
         public override string Texture => AssetDirectory.StarsProjectiles + "StarRunic";
 
@@ -19,7 +20,6 @@ namespace Coralite.Content.Items.Stars
 
         public ref float timer => ref Projectile.localAI[0];
         public ref float direction => ref Projectile.localAI[1];
-        public Player Owner => Main.player[Projectile.owner];
 
         public StarBookProj2()
         {
@@ -47,7 +47,7 @@ namespace Coralite.Content.Items.Stars
 
         #region AI
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             Projectile.rotation = Main.rand.Next(8) * 0.785f;
         }

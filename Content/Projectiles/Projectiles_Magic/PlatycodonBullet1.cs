@@ -49,8 +49,8 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
         }
 
         public override bool? CanDamage() => canDamage;
-
-        public override void OnSpawn(IEntitySource source)
+        private bool span;
+        public void Initialize()
         {
             Alpha = 1;
             Projectile.oldPos = new Vector2[12];
@@ -60,6 +60,11 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
 
         public override void AI()
         {
+            if (!span)
+            {
+                Initialize();
+                span = true;
+            }
             if (canDamage)
             {
                 int timer = 200 - Projectile.timeLeft;

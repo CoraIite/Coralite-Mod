@@ -3,6 +3,7 @@ using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.SlashBladeSystem;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
@@ -537,7 +538,7 @@ namespace Coralite.Content.Items.ShadowCastle
         }
     }
 
-    public class ShaduraShoot : ModProjectile
+    public class ShaduraShoot : BaseHeldProj
     {
         public override string Texture => AssetDirectory.ShadowCastleItems + "Shadura";
 
@@ -555,7 +556,7 @@ namespace Coralite.Content.Items.ShadowCastle
             Projectile.extraUpdates = 1;
         }
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             for (int i = 0; i < 16; i++)
             {
@@ -566,11 +567,10 @@ namespace Coralite.Content.Items.ShadowCastle
 
         public override void AI()
         {
-            Player owner = Main.player[Projectile.owner];
             if (Projectile.localAI[0] < 30)
             {
                 Projectile.localAI[0]++;
-                Projectile.Center = Vector2.Lerp(Projectile.Center, owner.Center + new Vector2(owner.direction * 16, -32), 0.2f);
+                Projectile.Center = Vector2.Lerp(Projectile.Center, Owner.Center + new Vector2(Owner.direction * 16, -32), 0.2f);
                 Projectile.rotation = (Main.MouseWorld - Projectile.Center).ToRotation();
                 Dust d = Dust.NewDustDirect(Projectile.position, 16, 16, DustID.Shadowflame, 0, 0, Scale: Main.rand.NextFloat(1f, 1.3f));
                 d.noGravity = true;

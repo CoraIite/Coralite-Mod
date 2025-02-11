@@ -1,10 +1,11 @@
 using Coralite.Core;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using Terraria.DataStructures;
 
 namespace Coralite.Content.Items.Icicle
 {
-    public class IcicleThornExplosion : ModProjectile
+    public class IcicleThornExplosion : BaseHeldProj
     {
         public override string Texture => AssetDirectory.Blank;
 
@@ -20,7 +21,7 @@ namespace Coralite.Content.Items.Icicle
             Projectile.coldDamage = true;
         }
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             Helper.PlayPitched("Icicle/Broken", 0.4f, 0f, Projectile.Center);
         }

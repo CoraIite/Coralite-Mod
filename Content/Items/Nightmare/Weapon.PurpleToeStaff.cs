@@ -2,6 +2,7 @@
 using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -53,7 +54,7 @@ namespace Coralite.Content.Items.Nightmare
         }
     }
 
-    public class PurpleToeProj : ModProjectile, INightmareMinion
+    public class PurpleToeProj : BaseHeldProj, INightmareMinion
     {
         public override string Texture => AssetDirectory.NightmareItems + "PurpleToe";
 
@@ -62,8 +63,6 @@ namespace Coralite.Content.Items.Nightmare
         public ref float Powerful => ref Projectile.ai[2];
 
         public ref float AttackTimer => ref Projectile.localAI[2];
-
-        public Player Owner => Main.player[Projectile.owner];
 
         private RotateTentacle tentacle;
         private Color tentacleColor;
@@ -110,7 +109,7 @@ namespace Coralite.Content.Items.Nightmare
             Projectile.DamageType = DamageClass.Summon;
         }
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             tentacleColor = NightmarePlantera.nightmareSparkleColor;
         }
@@ -272,6 +271,29 @@ namespace Coralite.Content.Items.Nightmare
                     StartAttack(onAttack: true);
                 }
             }
+
+            if (tentacle == null)
+            {
+                tentacle = new RotateTentacle(20, TentacleColor, TentacleWidth, NightmarePlantera.tentacleTex, NightmareSpike.FlowTex);
+                Vector2 dir = Owner.Center - Projectile.Center;
+                float distance = dir.Length();
+                float tentacleLength = distance * 0.8f / 20f;
+
+                tentacle.SetValue(Projectile.Center, Owner.Center, Projectile.rotation + MathHelper.Pi);
+                tentacle.UpdateTentacle(tentacleLength);
+            }
+            else
+            {
+                Vector2 dir = Owner.Center - Projectile.Center;
+                float distance = dir.Length();
+                float tentacleLength = distance * 0.8f / 20f;
+
+                tentacle.SetValue(Projectile.Center, Owner.Center, Projectile.rotation + MathHelper.Pi);
+                if (Timer > 0)
+                    tentacle.UpdateTentacle(tentacleLength);
+                else
+                    tentacle.UpdateTentacleSmoothly(tentacleLength);
+            }
         }
 
         public void StartAttack(bool RandomRot = true, bool onAttack = false)
@@ -307,33 +329,6 @@ namespace Coralite.Content.Items.Nightmare
                 Timer = -1f;
                 Projectile.netUpdate = true;
             }
-        }
-
-        public override void PostAI()
-        {
-            if (tentacle == null)
-            {
-                tentacle = new RotateTentacle(20, TentacleColor, TentacleWidth, NightmarePlantera.tentacleTex, NightmareSpike.FlowTex);
-                Vector2 dir = Owner.Center - Projectile.Center;
-                float distance = dir.Length();
-                float tentacleLength = distance * 0.8f / 20f;
-
-                tentacle.SetValue(Projectile.Center, Owner.Center, Projectile.rotation + MathHelper.Pi);
-                tentacle.UpdateTentacle(tentacleLength);
-            }
-            else
-            {
-                Vector2 dir = Owner.Center - Projectile.Center;
-                float distance = dir.Length();
-                float tentacleLength = distance * 0.8f / 20f;
-
-                tentacle.SetValue(Projectile.Center, Owner.Center, Projectile.rotation + MathHelper.Pi);
-                if (Timer > 0)
-                    tentacle.UpdateTentacle(tentacleLength);
-                else
-                    tentacle.UpdateTentacleSmoothly(tentacleLength);
-            }
-
         }
 
         public Color TentacleColor(float factor)

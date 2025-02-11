@@ -1,12 +1,13 @@
 ﻿using Coralite.Core;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
 
 namespace Coralite.Content.Bosses.ThunderveinDragon
 {
-    public class ThunderveinDragon_OnSpawnAnim : ModProjectile
+    public class ThunderveinDragon_OnSpawnAnim : BaseHeldProj
     {
         public override string Texture => AssetDirectory.ThunderveinDragon + "ThunderveinDragonNameLine";
 
@@ -27,7 +28,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
         public override bool CanHitPlayer(Player target) => false;
         public override bool CanHitPvp(Player target) => false;
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             drawCharColor = new Color(0, 0, 0, 0);
             drawPicColor = new Color(0, 0, 0, 0);

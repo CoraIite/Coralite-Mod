@@ -3,6 +3,7 @@ using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Systems.FlyingShieldSystem;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -173,7 +174,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
         }
     }
 
-    public class SnowflakeSpike : ModProjectile, IDrawPrimitive
+    public class SnowflakeSpike : BaseHeldProj, IDrawPrimitive
     {
         public override string Texture => AssetDirectory.Trails + "SlashFlatBlurHVMirror";
 
@@ -182,8 +183,6 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
 
         public ref float Alpha => ref Projectile.localAI[0];
         public ref float Length => ref Projectile.localAI[1];
-
-        public Player Owner => Main.player[Projectile.owner];
 
         private Trail trail;
 
@@ -202,7 +201,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
             Projectile.idStaticNPCHitCooldown = 35;
         }
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             Projectile.oldPos = new Vector2[16];
             for (int i = 0; i < 16; i++)

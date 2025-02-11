@@ -78,7 +78,7 @@ namespace Coralite.Content.Items.Nightmare
             Projectile.friendly = true;
         }
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             Projectile.scale = 0.55f;
         }
@@ -255,7 +255,7 @@ namespace Coralite.Content.Items.Nightmare
     /// 使用ai1传入颜色，为1时可变成红色并可以获得梦魇光能<br></br>
     /// 使用ai2传入攻击方向
     /// </summary>
-    public class BoneClaw : ModProjectile, IDrawPrimitive
+    public class BoneClaw : BaseHeldProj, IDrawPrimitive
     {
         public override string Texture => AssetDirectory.Trails + "ClawSlash4";
 
@@ -307,7 +307,7 @@ namespace Coralite.Content.Items.Nightmare
             Projectile.usesLocalNPCImmunity = true;
         }
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             Projectile.oldPos = new Vector2[16];
             for (int i = 0; i < 16; i++)
@@ -658,7 +658,7 @@ namespace Coralite.Content.Items.Nightmare
     /// <summary>
     /// 裂隙
     /// </summary>
-    public class BoneSilt : ModProjectile
+    public class BoneSilt : BaseHeldProj
     {
         public override string Texture => AssetDirectory.Blank;
 
@@ -687,7 +687,7 @@ namespace Coralite.Content.Items.Nightmare
             return false;
         }
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             originCenter = Projectile.Center;
         }

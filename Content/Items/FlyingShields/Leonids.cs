@@ -1,6 +1,7 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Systems.FlyingShieldSystem;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;
@@ -113,7 +114,7 @@ namespace Coralite.Content.Items.FlyingShields
         }
     }
 
-    public class LeonidsMeteor : ModProjectile
+    public class LeonidsMeteor : BaseHeldProj
     {
         public override string Texture => "Terraria/Images/Projectile_16";
 
@@ -127,7 +128,7 @@ namespace Coralite.Content.Items.FlyingShields
             Projectile.timeLeft = 40;
         }
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             Projectile.oldPos = new Vector2[trailCachesLength];
             Projectile.oldRot = new float[trailCachesLength];

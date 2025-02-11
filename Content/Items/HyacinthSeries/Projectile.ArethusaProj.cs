@@ -2,6 +2,7 @@
 using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -16,7 +17,7 @@ namespace Coralite.Content.Items.HyacinthSeries
         public ArethusaHeldProj() : base(0.4f, 6, -6, AssetDirectory.HyacinthSeriesItems) { }
     }
 
-    public class ArethusaBullet : ModProjectile, IDrawPrimitive, IDrawNonPremultiplied
+    public class ArethusaBullet : BaseHeldProj, IDrawPrimitive, IDrawNonPremultiplied
     {
         public override string Texture => AssetDirectory.Projectiles_Shoot + Name;
 
@@ -46,7 +47,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             Projectile.netImportant = true;
         }
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             Projectile.oldPos = new Vector2[12];
             for (int i = 0; i < 12; i++)
@@ -131,7 +132,7 @@ namespace Coralite.Content.Items.HyacinthSeries
         }
     }
 
-    public class ArethusaExplosion : ModProjectile
+    public class ArethusaExplosion : BaseHeldProj
     {
         public override string Texture => AssetDirectory.Projectiles_Shoot + Name;
 
@@ -149,7 +150,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             Projectile.friendly = true;
         }
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             Projectile.rotation = Main.rand.NextFloat(6.282f);
         }

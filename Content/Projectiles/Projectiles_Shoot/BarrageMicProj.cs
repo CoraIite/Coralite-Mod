@@ -20,7 +20,7 @@
 //            Projectile.penetrate = -1;
 //        }
 
-//        public override void OnSpawn(IEntitySource source)
+//        public override void Initialize()
 //        {
 //            barrageMessage = Main.rand.Next(7) switch
 //            {

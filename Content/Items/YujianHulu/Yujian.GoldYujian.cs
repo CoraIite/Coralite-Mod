@@ -187,14 +187,19 @@ namespace Coralite.Content.Items.YujianHulu
             Projectile.friendly = true;
             Projectile.usesLocalNPCImmunity = true;
         }
-
-        public override void OnSpawn(IEntitySource source)
+        private bool span;
+        public void Initialize()
         {
             center = Projectile.Center;
         }
 
         public override void AI()
         {
+            if (span)
+            {
+                Initialize();
+                span = true;
+            }
             if (Projectile.localAI[0] == 0)
             {
                 Projectile.localNPCHitCooldown = (int)maxTime + 12;

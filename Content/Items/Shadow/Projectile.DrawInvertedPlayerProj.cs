@@ -1,5 +1,6 @@
 ﻿using Coralite.Core;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
@@ -8,13 +9,12 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Shadow
 {
-    public class DrawInvertedPlayerProj : ModProjectile
+    public class DrawInvertedPlayerProj : BaseHeldProj
     {
         public override string Texture => AssetDirectory.ShadowItems + "InvertedShadow";
         public override bool? CanDamage() => false;
         public override bool ShouldUpdatePosition() => false;
 
-        public Player Owner => Main.player[Projectile.owner];
         public Player Shadow;
 
         public ref float DrawPlayerOffsetY => ref Projectile.localAI[1];
@@ -34,7 +34,7 @@ namespace Coralite.Content.Items.Shadow
             Projectile.ignoreWater = true;
         }
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             //初始化这个影子玩家
             Shadow = new Player();

@@ -143,8 +143,8 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
             Projectile.friendly = false;
             Projectile.hostile = true;
         }
-
-        public override void OnSpawn(IEntitySource source)
+        bool span;
+        public void Initialize()
         {
             Projectile.rotation = Projectile.velocity.ToRotation();
             for (int i = 0; i < 8; i++)
@@ -155,6 +155,11 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
 
         public override void AI()
         {
+            if (span)
+            {
+                Initialize();
+                span = true;
+            }
             for (int i = 0; i < 3; i++)
                 Projectile.SpawnTrailDust(DustID.GemRuby, 0.4f);
         }

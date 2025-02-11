@@ -1,5 +1,6 @@
 ﻿using Coralite.Core;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
@@ -10,7 +11,7 @@ namespace Coralite.Content.Bosses.Rediancie
     /// <summary>
     /// 使用ai1控制时间
     /// </summary>
-    public class RedFirework : ModProjectile
+    public class RedFirework : BaseHeldProj
     {
         public override string Texture => AssetDirectory.Blank;
 
@@ -30,7 +31,7 @@ namespace Coralite.Content.Bosses.Rediancie
             Projectile.ignoreWater = false;
         }
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             Projectile.ai[0] = Main.rand.Next(2);
 

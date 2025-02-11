@@ -6,6 +6,7 @@ using Coralite.Core;
 using Coralite.Core.Systems.FlyingShieldSystem;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -437,7 +438,7 @@ namespace Coralite.Content.Items.FlyingShields
         }
     }
 
-    public class HephaesthFire : ModProjectile, IDrawAdditive, IDrawPrimitive
+    public class HephaesthFire : BaseHeldProj, IDrawAdditive, IDrawPrimitive
     {
         public override string Texture => AssetDirectory.Blank;
 
@@ -489,7 +490,7 @@ namespace Coralite.Content.Items.FlyingShields
             }
         }
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             Projectile.InitOldPosCache(trailPoint);
             Projectile.localAI[1] = Main.rand.NextFloat(-0.01f, 0.01f);
@@ -699,7 +700,7 @@ namespace Coralite.Content.Items.FlyingShields
             }
         }
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             trailWidth = 24 / 2;
             shootSpeed = Projectile.velocity.Length();
@@ -1085,7 +1086,7 @@ namespace Coralite.Content.Items.FlyingShields
     //    }
     //}
 
-    public class HephaesthBurst : ModProjectile, IDrawAdditive
+    public class HephaesthBurst : BaseHeldProj, IDrawAdditive
     {
         public override string Texture => AssetDirectory.Sparkles + "Cross";
 
@@ -1117,7 +1118,7 @@ namespace Coralite.Content.Items.FlyingShields
             return null;
         }
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             targetRotation = (Main.rand.Next(3) * MathHelper.PiOver2) + MathHelper.PiOver4;
 

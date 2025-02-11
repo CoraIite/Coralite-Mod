@@ -1,5 +1,6 @@
 ﻿using Coralite.Core;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -8,7 +9,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 {
-    public class GelBall : ModProjectile
+    public class GelBall : BaseHeldProj
     {
         public override string Texture => AssetDirectory.SlimeEmperor + Name;
 
@@ -41,7 +42,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             Projectile.netImportant = true;
         }
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             for (int i = 0; i < 8; i++)
             {

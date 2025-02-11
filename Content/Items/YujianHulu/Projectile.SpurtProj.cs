@@ -1,4 +1,5 @@
 using Coralite.Core;
+using InnoVault.GameContent.BaseEntity;
 using Terraria;
 using Terraria.DataStructures;
 
@@ -8,7 +9,7 @@ namespace Coralite.Content.Items.YujianHulu
     /// 只是一个用于造成伤害的弹幕罢了
     /// 使用velocity控制速度，ai[0]控制持续时间
     /// </summary>
-    public class SpurtProj : ModProjectile
+    public class SpurtProj : BaseHeldProj
     {
         public override string Texture => AssetDirectory.Blank;
 
@@ -28,7 +29,7 @@ namespace Coralite.Content.Items.YujianHulu
             Projectile.usesLocalNPCImmunity = true;
         }
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             center = Projectile.Center;
         }

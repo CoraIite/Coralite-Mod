@@ -381,7 +381,7 @@ namespace Coralite.Content.Items.BossSummons
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) => false;
         public override bool? CanDamage() => false;
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             if (Color < 0)
                 drawColor = NightmarePlantera.nightmareSparkleColor;

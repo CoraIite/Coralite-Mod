@@ -2,6 +2,7 @@ using Coralite.Core;
 using Coralite.Helpers;
 using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.DataStructures;
 
@@ -45,8 +46,8 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
             Projectile.netImportant = true;
             Projectile.usesLocalNPCImmunity = true;
         }
-
-        public override void OnSpawn(IEntitySource source)
+        private bool span;
+        public void Initialize()
         {
             Alpha = 1;
             Projectile.rotation = Projectile.velocity.ToRotation();
@@ -59,6 +60,11 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
 
         public override void AI()
         {
+            if (!span)
+            {
+                Initialize();
+                span = true;
+            }
             if (!canDamage)
             {
                 Alpha -= 0.08f;

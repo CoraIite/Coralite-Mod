@@ -1,5 +1,6 @@
 ﻿using Coralite.Core;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
@@ -26,7 +27,7 @@ namespace Coralite.Content.Evevts.ShadowCastle
         }
     }
 
-    public class BlackHoleMainProj : ModProjectile, IDrawWarp
+    public class BlackHoleMainProj : BaseHeldProj, IDrawWarp
     {
         public override string Texture => AssetDirectory.NightmarePlantera + "BlackBall";
 
@@ -47,7 +48,7 @@ namespace Coralite.Content.Evevts.ShadowCastle
             Projectile.tileCollide = false;
         }
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             Helper.PlayPitched(CoraliteSoundID.ShieldDestroyed_NPCDeath58, Projectile.Center, pitch: 0.5f);
         }
@@ -307,11 +308,11 @@ namespace Coralite.Content.Evevts.ShadowCastle
     /// <summary>
     /// 使用ai0传入主人,ai1传入状态
     /// </summary>
-    public class BlackStarProj : ModProjectile, IDrawPrimitive, IDrawNonPremultiplied
+    public class BlackStarProj : BaseHeldProj, IDrawPrimitive, IDrawNonPremultiplied
     {
         public override string Texture => AssetDirectory.NightmarePlantera + "BlackBall";
 
-        Projectile Owner
+        private Projectile HomeProj
         {
             get
             {
@@ -340,7 +341,7 @@ namespace Coralite.Content.Evevts.ShadowCastle
             Projectile.tileCollide = false;
         }
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             Projectile.InitOldPosCache(TrailCount);
         }
@@ -359,7 +360,7 @@ namespace Coralite.Content.Evevts.ShadowCastle
 
         public override void AI()
         {
-            Projectile owner = Owner;
+            Projectile owner = HomeProj;
             if (owner == null) return;
 
             trail ??= new Trail(Main.graphics.GraphicsDevice, TrailCount, new EmptyMeshGenerator(), factor => Helper.Lerp(0, 8, factor),

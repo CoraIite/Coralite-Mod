@@ -156,8 +156,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) => false;
         public override bool? CanHitNPC(NPC target) => false;
         public override bool? CanDamage() => false;
-
-        public override void OnSpawn(IEntitySource source)
+        private bool span;
+        public void Initialize()
         {
             if (ColorState < 0)
                 drawColor = NightmarePlantera.nightmareSparkleColor;
@@ -175,6 +175,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public override void AI()
         {
+            if (span)
+            {
+                Initialize();
+                span = true;
+            }
             if (!NightmarePlantera.NightmarePlanteraAlive(out NPC np))
             {
                 return;

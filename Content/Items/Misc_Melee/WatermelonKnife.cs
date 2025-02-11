@@ -80,7 +80,7 @@
 //            Projectile.ignoreWater = false;
 //        }
 
-//        public override void OnSpawn(IEntitySource source)
+//        public override void Initialize()
 //        {
 //            Projectile.localAI[0] = ItemType<Watermelon>();
 //        }

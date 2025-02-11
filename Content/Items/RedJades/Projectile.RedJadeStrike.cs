@@ -24,8 +24,8 @@ namespace Coralite.Content.Items.RedJades
             Projectile.tileCollide = true;
             Projectile.ignoreWater = false;
         }
-
-        public override void OnSpawn(IEntitySource source)
+        private bool span;
+        public void Initialize()
         {
             if (Main.netMode == NetmodeID.MultiplayerClient)
                 return;
@@ -38,6 +38,11 @@ namespace Coralite.Content.Items.RedJades
 
         public override void AI()
         {
+            if (!span)
+            {
+                Initialize();
+                span = true;
+            }
             if (Projectile.velocity.Y < 14)
                 Projectile.velocity.Y += 0.04f;
 

@@ -24,7 +24,7 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         protected float HeldPositionX { get; set; } = heldPositionX;
         protected virtual float HeldPositionY { get; set; }
-
+        public override bool CanFire => true;
         public override string Texture => string.IsNullOrEmpty(texturePath) ? base.Texture : (texturePath + (pathHasName ? string.Empty : Name)).Replace("HeldProj", "");
 
         public override void SetDefaults()
@@ -47,7 +47,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             AfterAI(factor);
         }
 
-        public override void Initialize()
+        public sealed override void Initialize()
         {
             Projectile.timeLeft = Owner.itemTimeMax;
             MaxTime = Owner.itemTimeMax;

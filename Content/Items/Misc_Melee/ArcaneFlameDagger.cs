@@ -3,6 +3,7 @@ using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using InnoVault.PRT;
 using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
@@ -195,15 +196,13 @@ namespace Coralite.Content.Items.Misc_Melee
         }
     }
 
-    public class ArcaneFlameDaggerSlash : ModProjectile, IDrawPrimitive, IDrawWarp
+    public class ArcaneFlameDaggerSlash : BaseHeldProj, IDrawPrimitive, IDrawWarp
     {
         public override string Texture => AssetDirectory.Trails + "SlashFlatBlurVMirror";
 
         public ref float Alpha => ref Projectile.localAI[0];
         public ref float Timer => ref Projectile.ai[0];
         public ref float TrailWidth => ref Projectile.ai[1];
-
-        public Player Owner => Main.player[Projectile.owner];
 
         public static Asset<Texture2D> GradientTexture;
 
@@ -239,7 +238,7 @@ namespace Coralite.Content.Items.Misc_Melee
             Projectile.extraUpdates = 1;
         }
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             Projectile.oldPos = new Vector2[24];
             for (int i = 0; i < 24; i++)

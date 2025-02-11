@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using InnoVault.PRT;
 using Terraria;
 using Terraria.DataStructures;
@@ -24,8 +25,8 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
             Projectile.hostile = true;
             Projectile.tileCollide = false;
         }
-
-        public override void OnSpawn(IEntitySource source)
+        bool span;
+        public virtual void Initialize()
         {
             Vector2 center = Projectile.Center;
             Helper.PlayPitched("RedJade/RedJadeBoom", 1f, -1f, center);
@@ -53,7 +54,15 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
             Main.instance.CameraModifiers.Add(modifier);
         }
 
-        public override bool PreAI() => false;
+        public override bool PreAI()
+        {
+            if (!span)
+            {
+                Initialize();
+                span = true;
+            }
+            return false;
+        }
         public override bool PreDraw(ref Color lightColor) => false;
 
         public override bool CanHitPlayer(Player target)

@@ -611,8 +611,8 @@ namespace Coralite.Content.Items.Shadow
             Projectile.friendly = true;
             Projectile.netImportant = true;
         }
-
-        public override void OnSpawn(IEntitySource source)
+        private bool span;
+        public void Initialize()
         {
             maxTime = Main.player[Projectile.owner].itemTimeMax + 20;
             maxTime /= 3;
@@ -623,6 +623,11 @@ namespace Coralite.Content.Items.Shadow
 
         public override void AI()
         {
+            if (!span)
+            {
+                Initialize();
+                span = true;
+            }
             do
             {
                 if (Timer == 0)

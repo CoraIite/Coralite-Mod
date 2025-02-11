@@ -1,5 +1,6 @@
 using Coralite.Core;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -10,16 +11,15 @@ namespace Coralite.Content.Items.Misc_Shoot
     /// <summary>
     /// ai0用于控制角度，0是小角度，1是大角度
     /// </summary>
-    public class DunkleosteusHeldProj : ModProjectile
+    public class DunkleosteusHeldProj : BaseHeldProj
     {
         public override string Texture => AssetDirectory.Projectiles_Shoot + Name;
-
+        public override bool CanFire => true;
         /// <summary> 目标角度 </summary>
         protected ref float TargetRot => ref Projectile.ai[1];
         /// <summary> 总时间 </summary>
         protected ref float MaxTime => ref Projectile.localAI[0];
         protected ref float HeldPositionX => ref Projectile.localAI[1];
-
         public const int HELD_LENGTH = 20;
         public override void SetDefaults()
         {
@@ -31,26 +31,19 @@ namespace Coralite.Content.Items.Misc_Shoot
 
         public override bool? CanDamage() => false;
         public override bool ShouldUpdatePosition() => false;
-
+        public override void Initialize()
+        {
+            Projectile.timeLeft = Owner.itemAnimation;
+            MaxTime = Owner.itemAnimation;
+            Owner.direction = InMousePos.X > Owner.Center.X ? 1 : -1;
+            TargetRot = (InMousePos - Owner.Center).ToRotation() + (Owner.gravDir * Owner.direction > 0 ? 0f : MathHelper.Pi);
+            if (TargetRot == 0f)
+                TargetRot = 0.0001f;
+            HeldPositionX = HELD_LENGTH;
+            Projectile.netUpdate = true;
+        }
         public sealed override void AI()
         {
-            Player Owner = Main.player[Projectile.owner];
-            if (TargetRot == 0)
-            {
-                Projectile.timeLeft = Owner.itemAnimation;
-                MaxTime = Owner.itemAnimation;
-                if (Projectile.IsOwnedByLocalPlayer())
-                {
-                    Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
-                    TargetRot = (Main.MouseWorld - Owner.Center).ToRotation() + (Owner.gravDir * Owner.direction > 0 ? 0f : MathHelper.Pi);
-                    if (TargetRot == 0f)
-                        TargetRot = 0.0001f;
-                }
-
-                HeldPositionX = HELD_LENGTH;
-                Projectile.netUpdate = true;
-            }
-
             float x = 1.772f * Projectile.timeLeft / MaxTime;
             float factor = x * MathF.Sin(x * x) / 1.3076f;
             switch (Projectile.ai[0])
@@ -73,19 +66,17 @@ namespace Coralite.Content.Items.Misc_Shoot
 
             Projectile.Center = Owner.Center + (Owner.gravDir * Owner.direction * Projectile.rotation.ToRotationVector2() * HeldPositionX);
 
-            Owner.heldProj = Projectile.whoAmI;
+            SetHeld();
             Owner.itemRotation = Projectile.rotation + (Owner.direction * 0.3f);
         }
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D mainTex = Projectile.GetTexture();
-            Player Owner = Main.player[Projectile.owner];
             Vector2 center = Projectile.Center - Main.screenPosition;
             bool ownerDir = Owner.gravDir * Owner.direction > 0;
             SpriteEffects effects = ownerDir ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
-            Main.spriteBatch.Draw(mainTex, center, null, lightColor, Projectile.rotation, new Vector2(mainTex.Width / 2, mainTex.Height / 2), 0.9f, effects, 0f);
+            Main.spriteBatch.Draw(TextureValue, center, null, lightColor, Projectile.rotation, new Vector2(TextureValue.Width / 2, TextureValue.Height / 2), 0.9f, effects, 0f);
 
             if (Projectile.ai[0] == 1)
             {

@@ -933,14 +933,19 @@ namespace Coralite.Content.Items.Nightmare
             if (CanGetNightmareEnergy && Main.player[Projectile.owner].TryGetModPlayer(out CoralitePlayer cp))
                 cp.GetNightmareEnergy(1);
         }
-
-        public override void OnSpawn(IEntitySource source)
+        private bool span;
+        public void Initialize()
         {
             Projectile.frame = Main.rand.Next(6);
         }
 
         public override void AI()
         {
+            if (!span)
+            {
+                Initialize();
+                span = true;
+            }
             if (Projectile.localAI[0] == 0)
             {
                 if (State == 1)

@@ -45,7 +45,7 @@
 //            Projectile.idStaticNPCHitCooldown = 20;
 //        }
 
-//        public override void OnSpawn(IEntitySource source)
+//        public override void Initialize()
 //        {
 //            for (int i = 0; i < 12; i++)
 //            {

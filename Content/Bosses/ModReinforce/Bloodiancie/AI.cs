@@ -22,8 +22,8 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
         public List<int> shootList = new();
 
         #region AI
-
-        public override void OnSpawn(IEntitySource source)
+        bool span;
+        public void Initialize()
         {
             followers = new List<BloodiancieFollower>();
             SpawnFollowers(6);
@@ -75,6 +75,11 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
 
         public override void AI()
         {
+            if (!span)
+            {
+                Initialize();
+                span = true;
+            }
             if (NPC.target < 0 || NPC.target == 255 || Target.dead || !Target.active || Target.Distance(NPC.Center) > 3000)
             {
                 NPC.TargetClosest();

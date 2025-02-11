@@ -34,7 +34,7 @@ namespace Coralite.Content.Items.Icicle
             Projectile.tileCollide = false;
         }
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             Projectile.Center = Owner.Center + new Vector2(DirSign * 16, -16);
             if (Projectile.IsOwnedByLocalPlayer())

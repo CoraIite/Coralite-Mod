@@ -3,6 +3,7 @@ using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Systems.FlyingShieldSystem;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -178,7 +179,7 @@ namespace Coralite.Content.Items.FlyingShields
         }
     }
 
-    public class SilverAngelStrike : ModProjectile
+    public class SilverAngelStrike : BaseHeldProj
     {
         public override string Texture => AssetDirectory.FlyingShieldItems + Name;
 
@@ -198,7 +199,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override bool ShouldUpdatePosition() => State == 1;
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             if (!Target.GetNPCOwner(out NPC owner, Projectile.Kill))
                 return;

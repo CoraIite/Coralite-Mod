@@ -14,6 +14,7 @@ namespace Coralite.Core.Prefabs.Projectiles
 {
     public abstract class BaseSwingProj(float spriteRotation = 0.785f, short trailCount = 15) : BaseHeldProj
     {
+        #region Data
         /// <summary>
         /// 旧的旋转角度记录
         /// </summary>
@@ -130,6 +131,8 @@ namespace Coralite.Core.Prefabs.Projectiles
         /// 底部位置
         /// </summary>
         public Vector2 Bottom;
+        public override bool CanFire => true;
+        #endregion
         /// <summary>
         /// 设定挥舞属性
         /// </summary>
@@ -325,6 +328,10 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         protected virtual void InitializeCaches()
         {
+            if (VaultUtils.isServer)
+            {
+                return;
+            }
             for (int j = trailCount - 1; j >= 0; j--)
             {
                 oldRotate[j] = 100f;
@@ -335,6 +342,11 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         protected virtual void UpdateCaches()
         {
+            if (VaultUtils.isServer)
+            {
+                return;
+            }
+
             for (int i = trailCount - 1; i > 0; i--)
             {
                 oldRotate[i] = oldRotate[i - 1];
@@ -614,6 +626,11 @@ namespace Coralite.Core.Prefabs.Projectiles
         protected virtual void GetCurrentTrailCount(out float count)
         {
             count = 0f;
+            if (VaultUtils.isServer)
+            {
+                return;
+            }
+            
             if (oldRotate == null)
                 return;
 

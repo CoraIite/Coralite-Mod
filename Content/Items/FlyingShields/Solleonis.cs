@@ -1,6 +1,7 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Systems.FlyingShieldSystem;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;
@@ -121,7 +122,7 @@ namespace Coralite.Content.Items.FlyingShields
         }
     }
 
-    public class SolleonisMeteor : ModProjectile
+    public class SolleonisMeteor : BaseHeldProj
     {
         public override string Texture => AssetDirectory.FlyingShieldItems + Name;
 
@@ -140,7 +141,7 @@ namespace Coralite.Content.Items.FlyingShields
             Projectile.timeLeft = 22;
         }
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             Target = -1;
             Projectile.oldPos = new Vector2[trailCachesLength];

@@ -100,8 +100,6 @@ namespace Coralite.Content.Items.Thunder
         public ref float Timer => ref Projectile.ai[2];
         public ref float Recorder => ref Projectile.localAI[0];
 
-        private Player Owner => Main.player[Projectile.owner];
-
         public Vector2 BasePos;
 
         public bool CanDrawTrail;

@@ -3,20 +3,18 @@ using Coralite.Content.Dusts;
 using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Nightmare
 {
-    public class NightmareRaven : ModProjectile, INightmareMinion
+    public class NightmareRaven : BaseHeldProj, INightmareMinion
     {
         public override string Texture => AssetDirectory.NightmarePlantera + "NightmareCrow";
-
-        private Player Owner => Main.player[Projectile.owner];
 
         public ref float Timer => ref Projectile.ai[0];
         public ref float Target => ref Projectile.ai[1];
@@ -58,7 +56,7 @@ namespace Coralite.Content.Items.Nightmare
             Projectile.DamageType = DamageClass.Summon;
         }
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             drawColor = NightmarePlantera.lightPurple;
         }
@@ -464,11 +462,6 @@ namespace Coralite.Content.Items.Nightmare
             Projectile.friendly = true;
             Projectile.tileCollide = true;
             Projectile.netImportant = true;
-        }
-
-        public override void OnSpawn(IEntitySource source)
-        {
-            //Projectile.rotation = Main.rand.NextFloat(6.282f);
         }
 
         public override void AI()

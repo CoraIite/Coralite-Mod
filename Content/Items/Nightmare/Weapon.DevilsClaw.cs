@@ -2,6 +2,7 @@
 using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
@@ -81,7 +82,7 @@ namespace Coralite.Content.Items.Nightmare
     /// 使用ai0传入颜色，为1时是强化大小<br></br>
     /// 使用ai1传入状态，为1时能够在命中后获得梦魇光能
     /// </summary>
-    public class DevilsClawLeaf : ModProjectile
+    public class DevilsClawLeaf : BaseHeldProj
     {
         public override string Texture => AssetDirectory.NightmarePlantera + "DarkLeaf";
 
@@ -115,7 +116,7 @@ namespace Coralite.Content.Items.Nightmare
             Projectile.DamageType = DamageClass.Magic;
         }
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             Projectile.frame = Main.rand.Next(0, 7);
         }

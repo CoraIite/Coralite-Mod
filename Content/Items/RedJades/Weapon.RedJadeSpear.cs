@@ -3,6 +3,7 @@ using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
+using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -88,12 +89,25 @@ namespace Coralite.Content.Items.RedJades
             useShadowTrail = true;
         }
 
+        public override void NetHeldReceive(BinaryReader reader)
+        {
+            startAngle = reader.ReadSingle();
+        }
+
+        public override void NetHeldSend(BinaryWriter writer)
+        {
+            writer.Write(startAngle);
+        }
+
         protected override void InitializeSwing()
         {
+            Owner.direction = InMousePos.X > Owner.Center.X ? 1 : -1;
             if (Projectile.IsOwnedByLocalPlayer())
-                Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
-
-            startAngle = Main.rand.NextFloat(-0.2f, 0.2f);
+            {
+                startAngle = Main.rand.NextFloat(-0.2f, 0.2f);
+                NetUpdate();
+            }
+            
             totalAngle = 0.01f;
             Projectile.extraUpdates = 3;
 
@@ -112,8 +126,6 @@ namespace Coralite.Content.Items.RedJades
                     maxTime = (int)(Owner.itemTimeMax * 0.4f) + 35 + minTime;
                     break;
             }
-
-            base.InitializeSwing();
         }
 
         protected override void BeforeSlash()
@@ -134,8 +146,6 @@ namespace Coralite.Content.Items.RedJades
                 if (Timer == minTime - 1)
                     SoundEngine.PlaySound(CoraliteSoundID.Ding_Item4, Projectile.Center);
             }
-
-            base.BeforeSlash();
         }
 
         protected override void OnSlash()

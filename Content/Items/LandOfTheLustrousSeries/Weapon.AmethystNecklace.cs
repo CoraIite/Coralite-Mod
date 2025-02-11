@@ -5,6 +5,7 @@ using Coralite.Content.Tiles.RedJades;
 using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Utilities;
 using System.Linq;
@@ -136,7 +137,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public ref float AttackCD => ref Projectile.ai[1];
         public ref float LengthToCenter => ref Projectile.ai[2];
         public ref float Rot => ref Projectile.localAI[2];
-
+        public override bool CanFire => true;
         private float factorTop;
         private float factorBottom;
 
@@ -178,7 +179,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             float lerpFactor = 0.3f;
             if (AttackCD > 0)
             {
-                idlePos += (Main.MouseWorld - Projectile.Center).SafeNormalize(Vector2.Zero) * 48;
+                idlePos += (InMousePos - Projectile.Center).SafeNormalize(Vector2.Zero) * 48;
                 lerpFactor = 0.1f;
             }
 
@@ -195,7 +196,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 factorTop = 1 - (AttackTime / Owner.itemTimeMax);
                 LengthToCenter = Helper.Lerp(54, 32, factorTop);
                 Rot += 0.05f + ((1 - factorTop) * 0.2f);
-                Projectile.rotation = Projectile.rotation.AngleLerp((Main.MouseWorld - Projectile.Center).ToRotation(), 0.2f);
+                Projectile.rotation = Projectile.rotation.AngleLerp((InMousePos - Projectile.Center).ToRotation(), 0.2f);
                 if (AttackTime == 1)//生成射线
                 {
                     Projectile.NewProjectileFromThis<AmethystLaser>(Projectile.Center, Vector2.Zero, Owner.GetWeaponDamage(Item)
@@ -211,7 +212,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             {
                 Rot += 0.01f;
                 LengthToCenter = Helper.Lerp(32, 48, 0.1f);
-                Projectile.rotation = Projectile.rotation.AngleTowards((Main.MouseWorld - Projectile.Center).ToRotation(), 0.015f);
+                Projectile.rotation = Projectile.rotation.AngleTowards((InMousePos - Projectile.Center).ToRotation(), 0.015f);
                 if (AttackCD < AmethystLaser.delayTime)
                 {
                     factorBottom = 1 - (AttackCD / AmethystLaser.delayTime);
@@ -317,7 +318,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         }
     }
 
-    public class AmethystLaser : ModProjectile, IDrawAdditive
+    public class AmethystLaser : BaseHeldProj, IDrawAdditive
     {
         public override string Texture => AssetDirectory.Lasers + "VanillaCoreA";
 
@@ -325,7 +326,6 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public const int TotalAttackTime = PerManaCostTime * 10;
         public const int delayTime = 20;
 
-        public ref float Owner => ref Projectile.ai[0];
         public ref float Timer => ref Projectile.ai[1];
         public ref float LaserRotation => ref Projectile.ai[2];
         public ref float LaserHeight => ref Projectile.localAI[0];
@@ -363,7 +363,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             return false;
         }
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             if (Main.player[Projectile.owner].HeldItem.ModItem is AmethystNecklace an && an.ShootSound)
                 soundSlot = Helper.PlayPitched("Crystal/CrystalLaser", 0.2f, 0, Projectile.Center);
@@ -372,13 +372,13 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public override void AI()
         {
             Projectile owner;
-            if (!Main.projectile.IndexInRange((int)Owner))
+            if (!Main.projectile.IndexInRange(Owner.whoAmI))
             {
                 Projectile.Kill();
                 return;
             }
 
-            owner = Main.projectile[(int)Owner];
+            owner = Main.projectile[Owner.whoAmI];
             if (!owner.active || owner.owner != Projectile.owner || owner.type != ModContent.ProjectileType<AmethystNecklaceProj>())
             {
                 Projectile.Kill();

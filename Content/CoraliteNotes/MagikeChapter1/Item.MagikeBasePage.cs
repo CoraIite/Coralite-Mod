@@ -65,14 +65,19 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
         }
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) => false;
-
-        public override void OnSpawn(IEntitySource source)
+        private bool span;
+        public void Initialize()
         {
             Projectile.rotation = Main.rand.NextFloat(6.282f);
         }
 
         public override void AI()
         {
+            if (!span)
+            {
+                Initialize();
+                span = true;
+            }
             Projectile.velocity *= 0.9f;
 
             Projectile.localAI[0]++;

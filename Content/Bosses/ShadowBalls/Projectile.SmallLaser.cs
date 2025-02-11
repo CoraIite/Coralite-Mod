@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.WorldGeneration;
 using Coralite.Core;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
@@ -14,7 +15,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
     /// <summary>
     /// 使用ai0传入持有者,ai1传入射击时间
     /// </summary>
-    public class SmallLaser : ModProjectile, IShadowBallPrimitive
+    public class SmallLaser : BaseHeldProj, IShadowBallPrimitive
     {
         public override string Texture => AssetDirectory.ShadowCastleEvents + "Trail";
 
@@ -68,7 +69,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         public override bool? CanCutTiles() => false;
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             Projectile.timeLeft = (int)ShootTime;
             Random = Main.rand.NextFloat(3f) * 10f;
@@ -299,7 +300,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) => false;
         public override bool? CanDamage() => false;
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             Projectile.timeLeft = (int)ChannelTime;
         }

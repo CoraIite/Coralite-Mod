@@ -62,9 +62,8 @@ namespace Coralite.Content.Items.FlyingShields
             }
         }
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
-            base.OnSpawn(source);
             shootDelay = flyingTime / Main.rand.Next(2, 5);
             if (Main.bloodMoon)
                 shootDelay = flyingTime / Main.rand.Next(3, 6);

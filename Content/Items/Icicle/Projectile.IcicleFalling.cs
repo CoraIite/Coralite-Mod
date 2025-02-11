@@ -1,5 +1,6 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Configs;
+using InnoVault.GameContent.BaseEntity;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -10,7 +11,7 @@ namespace Coralite.Content.Items.Icicle
     /// <summary>
     /// 冰柱坠击
     /// </summary>
-    public class IcicleFalling : ModProjectile
+    public class IcicleFalling : BaseHeldProj
     {
         public override string Texture => AssetDirectory.IcicleProjectiles + "Old_IcicleProj";
 
@@ -28,7 +29,7 @@ namespace Coralite.Content.Items.Icicle
             Projectile.netImportant = true;
         }
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             for (int i = 0; i < 8; i++)
             {

@@ -6,13 +6,13 @@ using Coralite.Content.Items.Thunder;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.IO;
 using Terraria;
 using Terraria.Audio;
-using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
@@ -24,7 +24,7 @@ namespace Coralite.Content.Items.HyacinthSeries
     {
         public HyacinthHeldProj() : base(0.2f, 16, -4, AssetDirectory.HyacinthSeriesItems) { }
 
-        public override void OnSpawn(IEntitySource source)
+        public override void InitializeGun()
         {
             Projectile.scale = 0.8f;
         }
@@ -279,7 +279,7 @@ namespace Coralite.Content.Items.HyacinthSeries
         }
     }
 
-    public class HyacinthBullet2 : ModProjectile
+    public class HyacinthBullet2 : BaseHeldProj
     {
         public override string Texture => AssetDirectory.Projectiles_Shoot + Name;
 
@@ -311,7 +311,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             return color;
         }
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             Projectile.rotation = Projectile.velocity.ToRotation() + 1.57f;
         }
@@ -344,7 +344,7 @@ namespace Coralite.Content.Items.HyacinthSeries
     /// 使用ai0来控制绘制的物品，特殊列表为-1至-22
     /// ai1用于控制是否能发出枪声，为1时能发出声音
     /// </summary>
-    public class HyacinthPhantomGun : ModProjectile
+    public class HyacinthPhantomGun : BaseHeldProj
     {
         public override string Texture => AssetDirectory.Blank;
 
@@ -366,11 +366,8 @@ namespace Coralite.Content.Items.HyacinthSeries
         }
 
         public override bool? CanDamage() => false;
-
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
-            Player Owner = Main.player[Projectile.owner];
-
             rotation = (Projectile.Center - Owner.Center).ToRotation();
             length = (Owner.Center - Projectile.Center).Length();
             Projectile.netUpdate = true;
@@ -378,7 +375,6 @@ namespace Coralite.Content.Items.HyacinthSeries
 
         public override void AI()
         {
-            Player Owner = Main.player[Projectile.owner];
 
             rotation -= 0.06f;
             if (Timer < 30)
@@ -541,20 +537,20 @@ namespace Coralite.Content.Items.HyacinthSeries
             return (int)Projectile.ai[0];
         }
 
-        public override void SendExtraAI(BinaryWriter writer)
+        public override void NetHeldSend(BinaryWriter writer)
         {
             writer.Write(rotation);
             writer.Write(length);
         }
 
-        public override void ReceiveExtraAI(BinaryReader reader)
+        public override void NetHeldReceive(BinaryReader reader)
         {
             rotation = reader.ReadSingle();
             length = reader.ReadSingle();
         }
     }
 
-    public class HyacinthRedBullet : ModProjectile, IDrawPrimitive
+    public class HyacinthRedBullet : BaseHeldProj, IDrawPrimitive
     {
         public override string Texture => AssetDirectory.Blank;
 
@@ -572,7 +568,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             Projectile.usesLocalNPCImmunity = true;
         }
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             Projectile.oldPos = new Vector2[24];
             for (int i = 0; i < 24; i++)
@@ -630,7 +626,7 @@ namespace Coralite.Content.Items.HyacinthSeries
     /// localAI0用于控制光圈scale
     /// localAI1用于控制光雾scale
     /// </summary>
-    public class HyacinthExplosion : ModProjectile, IDrawNonPremultiplied, IDrawWarp
+    public class HyacinthExplosion : BaseHeldProj, IDrawNonPremultiplied, IDrawWarp
     {
         public override string Texture => AssetDirectory.OtherProjectiles + "Halo";
 
@@ -651,7 +647,7 @@ namespace Coralite.Content.Items.HyacinthSeries
 
         public override bool ShouldUpdatePosition() => false;
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             Projectile.ai[0] = Main.rand.NextFloat(6.282f);
             Projectile.localAI[0] += 0.1f;

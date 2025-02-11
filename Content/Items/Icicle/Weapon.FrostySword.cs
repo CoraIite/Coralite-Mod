@@ -4,6 +4,7 @@ using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -800,7 +801,7 @@ namespace Coralite.Content.Items.Icicle
             Projectile.usesIDStaticNPCImmunity = true;
         }
 
-        //public override void OnSpawn(IEntitySource source)
+        //public override void Initialize()
         //{
         //    Projectile.oldPos = new Vector2[18];
         //    for (int i = 0; i < 18; i++)
@@ -899,7 +900,7 @@ namespace Coralite.Content.Items.Icicle
         //}
     }
 
-    public class FrostySwordBurst : ModProjectile
+    public class FrostySwordBurst : BaseHeldProj
     {
         public override string Texture => AssetDirectory.Blank;
 
@@ -935,7 +936,7 @@ namespace Coralite.Content.Items.Icicle
         //    return false;
         //}
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             Projectile.rotation = Projectile.velocity.ToRotation();
             Projectile.alpha = 255;

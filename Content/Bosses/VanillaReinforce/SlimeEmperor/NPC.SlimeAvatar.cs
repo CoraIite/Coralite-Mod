@@ -61,14 +61,14 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
         }
 
         public override bool? CanFallThroughPlatforms() => NPC.Center.Y < (Main.player[NPC.target].Center.Y - NPC.height);
-
-        public override void OnSpawn(IEntitySource source)
-        {
-            Scale = Vector2.One;
-        }
-
+        private bool span;
         public override void AI()
         {
+            if (span)
+            {
+                Scale = Vector2.One;
+                span = true;
+            }
             //跳一跳，之后分裂
             switch ((int)State)
             {

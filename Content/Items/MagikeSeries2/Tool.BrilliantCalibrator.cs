@@ -77,7 +77,7 @@ namespace Coralite.Content.Items.MagikeSeries2
         public override bool? CanDamage() => false;
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) => false;
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             TargetPoint = BasePosition;
         }

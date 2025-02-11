@@ -177,7 +177,7 @@
 
 //        #region AI
 
-//        public override void OnSpawn(IEntitySource source)
+//        public override void Initialize()
 //        {
 //            NPC.TargetClosest(false);
 //            if (Main.netMode != NetmodeID.MultiplayerClient)

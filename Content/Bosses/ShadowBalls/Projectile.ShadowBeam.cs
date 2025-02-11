@@ -1,12 +1,13 @@
 ﻿using Coralite.Core;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
 
 namespace Coralite.Content.Bosses.ShadowBalls
 {
-    public class ShadowBeam : ModProjectile
+    public class ShadowBeam : BaseHeldProj
     {
         public override string Texture => AssetDirectory.ShadowBalls + Name;
 
@@ -24,7 +25,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             Projectile.hostile = true;
         }
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             originVelocity = Projectile.velocity;
             Projectile.rotation = Projectile.velocity.ToRotation();

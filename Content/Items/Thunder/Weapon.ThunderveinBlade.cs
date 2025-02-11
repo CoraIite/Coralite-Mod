@@ -498,7 +498,7 @@ namespace Coralite.Content.Items.Thunder
             return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.velocity, Projectile.Center, Projectile.width, ref a);
         }
 
-        public override void OnSpawn(IEntitySource source)
+        public override void Initialize()
         {
             if (VisualEffectSystem.HitEffect_ScreenShaking)
                 Main.instance.CameraModifiers.Add(new PunchCameraModifier(Projectile.Center, Helper.NextVec2Dir(), 12, 8, 5, 1000));

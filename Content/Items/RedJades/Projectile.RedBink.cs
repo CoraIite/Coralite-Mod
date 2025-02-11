@@ -54,14 +54,19 @@ namespace Coralite.Content.Items.RedJades
         public override bool OnTileCollide(Vector2 oldVelocity) => false;
 
         #region AI
-
-        public override void OnSpawn(IEntitySource source)
+        private bool span;
+        public void Initialize()
         {
             originDamage = Projectile.originalDamage;
         }
 
         public override void AI()
         {
+            if (!span)
+            {
+                Initialize();
+                span = true;
+            }
             //1：无敌怪时在玩家周围围成一圈
             //2：找到敌人后不断向敌人位置冲刺
             //3：右键打断当前动作短暂蓄力后向敌人冲刺
