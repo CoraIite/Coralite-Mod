@@ -6,9 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.Localization;
-using Terraria.ModLoader.Core;
 using Terraria.ModLoader.IO;
-using static System.Net.Mime.MediaTypeNames;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Core.Systems.MagikeSystem
