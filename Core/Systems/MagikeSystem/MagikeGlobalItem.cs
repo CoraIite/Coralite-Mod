@@ -1,7 +1,9 @@
 ﻿using Coralite.Core.Attributes;
+using Coralite.Core.Systems.MagikeSystem.Components;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Terraria;
 using Terraria.ModLoader.IO;
 
@@ -44,6 +46,16 @@ namespace Coralite.Core.Systems.MagikeSystem
                 mItem.Magike = fromItem.Magike;
             }
             return base.Clone(from, to);
+        }
+
+        public override void NetReceive(Item item, BinaryReader reader)
+        {
+            Magike = reader.ReadInt32();
+        }
+
+        public override void NetSend(Item item, BinaryWriter writer)
+        {
+            writer.Write(Magike);
         }
 
         #region 数据存储
