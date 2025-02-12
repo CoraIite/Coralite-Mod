@@ -444,6 +444,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
                             if (Timer >= 260)
                             {
+                                NPC.netUpdate = true;
                                 NPC.dontTakeDamage = false;
                                 ResetStates();
                                 break;
