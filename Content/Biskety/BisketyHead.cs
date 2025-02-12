@@ -33,7 +33,9 @@ namespace Coralite.Content.Biskety
                 {
                     NPC npc = Main.npc[i];
                     if (npc.active && npc.type == ModContent.NPCType<Biskety>())
+                    {
                         npc.Kill();
+                    }
                 }
 
                 return true;

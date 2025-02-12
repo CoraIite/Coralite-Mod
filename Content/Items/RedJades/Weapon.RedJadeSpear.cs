@@ -221,7 +221,7 @@ namespace Coralite.Content.Items.RedJades
 
         protected override void DrawShadowTrail(Texture2D mainTex, Vector2 origin, Color lightColor, float extraRot)
         {
-            if (Timer < 6)
+            if (Timer < 6 || oldRotate == null || oldLength == null || oldDistanceToOwner == null)
                 return;
 
             SpriteEffects effect = CheckEffect();

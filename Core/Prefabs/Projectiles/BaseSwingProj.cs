@@ -337,7 +337,7 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         protected virtual void UpdateCaches()
         {
-            if (VaultUtils.isServer)
+            if (VaultUtils.isServer || oldRotate == null || oldDistanceToOwner == null || oldLength == null)
             {
                 return;
             }

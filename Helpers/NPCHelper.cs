@@ -18,6 +18,7 @@ namespace Coralite.Helpers
             NPC.life = 0;
             NPC.checkDead();
             NPC.HitEffect();
+            NPC.netUpdate = true;
             NPC.active = false;
         }
 
