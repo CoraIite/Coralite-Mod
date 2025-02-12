@@ -208,7 +208,7 @@ namespace Coralite.Content.Items.FlyingShields
                     {
                         Owner.itemTime = Owner.itemAnimation = 2;
 
-                        if (!Main.mouseRight)
+                        if (!DownRight)
                             TurnToDelay();
 
                         SetPos();
@@ -362,7 +362,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public void Sliding()
         {
-            if (!Main.mouseRight)
+            if (!DownRight)
             {
                 Owner.velocity = Projectile.velocity;
                 Owner.velocity.Y += 0.0001f;

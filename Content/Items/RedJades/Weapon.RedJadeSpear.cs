@@ -40,17 +40,14 @@ namespace Coralite.Content.Items.RedJades
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (Main.myPlayer == player.whoAmI)
+            if (useCount > 3 && Main.rand.NextBool(useCount, 9))
             {
-                if (useCount > 3 && Main.rand.NextBool(useCount, 9))
-                {
-                    Projectile.NewProjectile(source, player.Center, Vector2.Zero, type, damage, knockback, player.whoAmI, 1);
-                    useCount = 0;
-                    return false;
-                }
-
-                Projectile.NewProjectile(source, player.Center, Vector2.Zero, type, damage, knockback, player.whoAmI);
+                Projectile.NewProjectile(source, player.Center, Vector2.Zero, type, damage, knockback, player.whoAmI, 1);
+                useCount = 0;
+                return false;
             }
+
+            Projectile.NewProjectile(source, player.Center, Vector2.Zero, type, damage, knockback, player.whoAmI);
 
             useCount++;
             return false;
@@ -126,6 +123,8 @@ namespace Coralite.Content.Items.RedJades
                     maxTime = (int)(Owner.itemTimeMax * 0.4f) + 35 + minTime;
                     break;
             }
+
+            base.InitializeSwing();
         }
 
         protected override void BeforeSlash()
@@ -146,6 +145,8 @@ namespace Coralite.Content.Items.RedJades
                 if (Timer == minTime - 1)
                     SoundEngine.PlaySound(CoraliteSoundID.Ding_Item4, Projectile.Center);
             }
+
+            base.BeforeSlash();
         }
 
         protected override void OnSlash()
@@ -167,7 +168,7 @@ namespace Coralite.Content.Items.RedJades
             else
                 distanceToOwner = -47 + (70 * Smoother.Smoother((1 - factor) * 2));
 
-            if (Combo == 1)
+            if (Combo == 1 && Projectile.IsOwnedByLocalPlayer())
             {
                 if ((Timer - minTime) % ((maxTime - minTime) / 4) == 0)
                 {

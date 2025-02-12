@@ -17,7 +17,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
             Owner.itemTime = Owner.itemAnimation = 2;
 
             if (CompletelyHeldUpShield)//玩家左键时取消防御
-                if (Main.mouseLeft || !Main.mouseRight)
+                if (DownLeft || !DownRight)
                 {
                     TurnToDelay();
                     return;

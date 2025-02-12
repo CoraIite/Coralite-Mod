@@ -114,9 +114,7 @@ namespace Coralite.Content.Items.Nightmare
 
         protected override void InitializeSwing()
         {
-            if (Projectile.IsOwnedByLocalPlayer())
-                Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
-
+            Owner.direction = InMousePos.X > Owner.Center.X ? 1 : -1;
             Projectile.extraUpdates = 3;
             alpha = 0;
 
@@ -146,11 +144,7 @@ namespace Coralite.Content.Items.Nightmare
             }
 
             Projectile.velocity *= 0f;
-            if (Owner.whoAmI == Main.myPlayer)
-            {
-                _Rotation = GetStartAngle() - (DirSign * startAngle);//设定起始角度
-            }
-
+            _Rotation = GetStartAngle() - (DirSign * startAngle);//设定起始角度
             Slasher();
             Smoother.ReCalculate(maxTime - minTime);
 
@@ -187,8 +181,12 @@ namespace Coralite.Content.Items.Nightmare
                 //Helper.PlayPitched("Misc/Slash", 0.4f, 0f, Owner.Center);
                 SoundEngine.PlaySound(CoraliteSoundID.IceMagic_Item28, Projectile.Center);
                 //射弹幕
-                Projectile.NewProjectile(Projectile.GetSource_FromThis(), Owner.Center,
+                if (Projectile.IsOwnedByLocalPlayer())
+                {
+                    Projectile.NewProjectile(Projectile.GetSource_FromThis(), Owner.Center,
                     (Main.MouseWorld - Owner.Center).SafeNormalize(Vector2.Zero) * 14, ProjectileType<LullabyBall>(), Projectile.damage, Projectile.knockBack, Projectile.owner, ai2: -1);
+                }
+                
                 InitializeCaches();
             }
         }
@@ -309,9 +307,7 @@ namespace Coralite.Content.Items.Nightmare
 
         protected override void InitializeSwing()
         {
-            if (Projectile.IsOwnedByLocalPlayer())
-                Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
-
+            Owner.direction = InMousePos.X > Owner.Center.X ? 1 : -1;
             Projectile.extraUpdates = 3;
             alpha = 0;
 
@@ -359,11 +355,15 @@ namespace Coralite.Content.Items.Nightmare
                 if (Timer == maxTime + 34)
                 {
                     SoundEngine.PlaySound(CoraliteSoundID.ManaCrystal_Item29, Owner.Center);
-                    for (int i = 0; i < 7; i++)
+                    if (Projectile.IsOwnedByLocalPlayer())
                     {
-                        Projectile.NewProjectile(Projectile.GetSource_FromThis(), Owner.Center,
-                            (i * MathHelper.TwoPi / 7).ToRotationVector2() * 8, ProjectileType<LullabyBall>(), (int)(Projectile.damage * 0.75f), Projectile.knockBack, Projectile.owner, ai2: i);
+                        for (int i = 0; i < 7; i++)
+                        {
+                            Projectile.NewProjectile(Projectile.GetSource_FromThis(), Owner.Center,
+                                (i * MathHelper.TwoPi / 7).ToRotationVector2() * 8, ProjectileType<LullabyBall>(), (int)(Projectile.damage * 0.75f), Projectile.knockBack, Projectile.owner, ai2: i);
+                        }
                     }
+                    
                 }
             }
 

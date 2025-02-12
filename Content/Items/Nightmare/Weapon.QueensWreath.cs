@@ -307,7 +307,7 @@ namespace Coralite.Content.Items.Nightmare
                         Owner.itemRotation = Projectile.rotation + (DirSign > 0 ? 0 : 3.141f);
 
                         //如果满足条件且没有右键过 那么就再次射击
-                        if (NotRightClicked && Main.mouseRight && Main.mouseRightRelease
+                        if (NotRightClicked && DownRight && Main.mouseRightRelease
                             && Owner.TryGetModPlayer(out CoralitePlayer cp) && cp.nightmareEnergy > 0)
                         {
                             if (Owner.PickAmmo(Item, out int type, out float speed, out int damage, out float knockBack, out _))
@@ -339,7 +339,7 @@ namespace Coralite.Content.Items.Nightmare
                         Owner.itemRotation = Projectile.rotation + (DirSign > 0 ? 0 : 3.141f);
 
                         //如果满足条件且没有右键过 那么就再次射击
-                        if (NotRightClicked && Main.mouseRight && Main.mouseRightRelease
+                        if (NotRightClicked && DownRight && Main.mouseRightRelease
                             && Owner.TryGetModPlayer(out CoralitePlayer cp) && cp.nightmareEnergy > 0)
                         {
                             if (Owner.PickAmmo(Item, out int type, out float speed, out int damage, out float knockBack, out _))
@@ -469,7 +469,7 @@ namespace Coralite.Content.Items.Nightmare
                         }
 
                         //射完后检测右键
-                        if (NotRightClicked && Main.mouseRight && Main.mouseRightRelease
+                        if (NotRightClicked && DownRight && Main.mouseRightRelease
                             && Owner.TryGetModPlayer(out CoralitePlayer cp) && cp.nightmareEnergy > 0)
                         {
                             ShootArrow((source, position, velocity, type, knockBack, damage) =>
@@ -566,7 +566,7 @@ namespace Coralite.Content.Items.Nightmare
                         }
 
                         //射完后检测右键
-                        if (NotRightClicked && Main.mouseRight && Main.mouseRightRelease
+                        if (NotRightClicked && DownRight && Main.mouseRightRelease
                             && Owner.TryGetModPlayer(out CoralitePlayer cp) && cp.nightmareEnergy > 0)
                         {
                             ShootArrow((source, position, velocity, type, knockBack, damage) =>
@@ -640,7 +640,7 @@ namespace Coralite.Content.Items.Nightmare
                                 Projectile.rotation = Projectile.rotation.AngleLerp((Main.MouseWorld - Owner.MountedCenter).ToRotation(), 0.25f);
 
                                 //射完后检测右键
-                                if (NotRightClicked && Main.mouseRight && Main.mouseRightRelease
+                                if (NotRightClicked && DownRight && Main.mouseRightRelease
                                     && Owner.TryGetModPlayer(out CoralitePlayer cp) && cp.nightmareEnergy > 0)
                                 {
                                     ShootArrow((source, position, velocity, type, knockBack, damage) =>

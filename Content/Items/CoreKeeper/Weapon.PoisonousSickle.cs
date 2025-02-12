@@ -254,7 +254,7 @@ namespace Coralite.Content.Items.CoreKeeper
                 return;
             }
 
-            if (Main.mouseRight)
+            if (DownRight)
             {
                 channelCount++;
                 Timer = 1;

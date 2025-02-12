@@ -167,7 +167,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                     {
                         Owner.itemTime = Owner.itemAnimation = 2;
 
-                        if (!Main.mouseRight)
+                        if (!DownRight)
                             TurnToDelay();
 
                         SetPos();
@@ -233,7 +233,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
         {
             Owner.itemTime = Owner.itemAnimation = 2;
 
-            if (!Main.mouseRight)
+            if (!DownRight)
                 TurnToDelay();
 
             SetPos();

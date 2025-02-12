@@ -90,7 +90,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         /// </summary>
         public virtual void RollingInHand()
         {
-            if (Main.mouseRight)
+            if (DownRight)
             {
                 Owner.heldProj = Projectile.whoAmI;
                 Projectile.hide = true;

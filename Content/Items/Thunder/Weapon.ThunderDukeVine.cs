@@ -60,7 +60,7 @@ namespace Coralite.Content.Items.Thunder
         {
             if (shootCount > 14)
             {
-                Vector2 targetDir = (position - player.Center).SafeNormalize(Vector2.Zero);
+                Vector2 targetDir = (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero);
                 Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center + (targetDir * 1026), player.Center + (targetDir * 26), ProjectileType<ElectromagneticCannon_Friendly>(),
                     (int)(damage * 0.9f), knockback, player.whoAmI, 30, ai2: 70);
 

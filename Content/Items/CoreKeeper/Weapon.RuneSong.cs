@@ -334,7 +334,7 @@ namespace Coralite.Content.Items.CoreKeeper
             if (Combo != 2)
                 return;
 
-            if (Main.mouseRight)
+            if (DownRight)
             {
                 channelCount++;
                 Timer = 1;
