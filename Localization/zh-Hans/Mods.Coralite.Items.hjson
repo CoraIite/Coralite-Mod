@@ -5238,3 +5238,8 @@ WindSpeedArrows: {
 		根据移速增加远程伤害，最高20%
 		'''
 }
+
+Taurus: {
+	DisplayName: 十二星-金牛座
+	Tooltip: ""
+}

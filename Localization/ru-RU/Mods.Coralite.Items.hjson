@@ -5212,3 +5212,8 @@ WindSpeedArrows: {
 	// DisplayName: Wind Speed Arrows
 	// Tooltip: ""
 }
+
+Taurus: {
+	// DisplayName: Taurus
+	// Tooltip: ""
+}

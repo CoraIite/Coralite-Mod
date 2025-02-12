@@ -42,18 +42,35 @@ namespace Coralite.Content.WorldGeneration
         public void GenGroundLock(out Point altarPoint)
         {
             //找到丛林，在地表处选择一个地方
-            Point searchOrigin = new Point((int)(Main.LocalPlayer.Center.X / 16), 0);
+            //Point searchOrigin = new Point((int)(Main.LocalPlayer.Center.X / 16), 0);
+            Point p = new Point(0, 0);
 
-            Point p = new Point(searchOrigin.X + WorldGen.genRand.Next(-30, 30), (int)(Main.worldSurface * 0.4f));
-
-            for (int i = 0; i < 1000; i++)
+            try
             {
-                Tile t = Main.tile[p.X, p.Y];
-                if (t.HasTile && Main.tileSolid[t.TileType])
-                    break;
+                for (int i = 0; i < 100; i++)
+                {
+                    //在丛林中心寻找一个位置
+                    p = new Point(PickAltarX(), (int)(Main.worldSurface * 0.4f));
 
-                p.Y++;
+                    for (int j = 0; j < 1000; j++)//向下遍历，找到地面
+                    {
+                        Tile t = Main.tile[p.X, p.Y];
+                        if (t.HasTile && Main.tileSolid[t.TileType])//找到实心方块
+                            break;
+
+                        p.Y++;
+                    }
+
+                    //向左查找
+
+                    //向右查找
+                }
             }
+            catch (System.Exception)
+            {
+
+            }
+
 
             altarPoint = p;
 
@@ -91,6 +108,45 @@ namespace Coralite.Content.WorldGeneration
 
             ////放置主要祭坛
             //WorldGen.PlaceTile(topP.X + 1, topP.Y + 2, ModContent.TileType<PremissionAltarTile>(), true);
+        }
+
+        /// <summary>
+        /// 传入位置，并找到最高点，实心块向上找，空心块向下找
+        /// </summary>
+        /// <param name="point"></param>
+        public void FindTop(ref Point point)
+        {
+            Tile selfTile = Framing.GetTileSafely(point);
+
+            if (selfTile.HasTile && Main.tileSolid[selfTile.TileType])//实心块，向上查找
+            {
+                for (int i = 0; i < 100; i++)
+                {
+                    point.Y--;
+                    Tile upTile= Framing.GetTileSafely(point);
+                    if (!upTile.HasTile || !Main.tileSolid[upTile.TileType])//找到没有物块的地方了，返回
+                        return;
+                }
+            }
+            else
+            {
+                for (int i = 0; i < 100; i++)
+                {
+                    point.Y++;
+                    Tile upTile = Framing.GetTileSafely(point);
+                    if (upTile.HasTile && Main.tileSolid[upTile.TileType])//找到有物块的地方了，返回
+                        return;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 随机找丛林中心附近的X
+        /// </summary>
+        /// <returns></returns>
+        public int PickAltarX()
+        {
+            return GenVars.jungleOriginX + WorldGen.genRand.Next(-60, 60);
         }
 
         private void GenMainSkyIsland()
