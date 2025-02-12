@@ -1,6 +1,7 @@
 ﻿using Coralite.Core.Systems.CoraliteActorComponent;
 using Coralite.Helpers;
 using System;
+using System.IO;
 using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components
@@ -107,9 +108,26 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             return $"  ▶ {timer} / {MagikeHelper.BonusColoredText(delay.ToString(), DelayBonus, true)} ({delayBase} * {MagikeHelper.BonusColoredText(DelayBonus.ToString(), DelayBonus, true)})";
         }
 
+        public override void SendData(ModPacket data)
+        {
+            data.Write(WorkTimeBase);
+            data.Write(WorkTimeBonus);
+
+            data.Write(IsWorking);
+            data.Write(Timer);
+        }
+
+        public override void ReceiveData(BinaryReader reader, int whoAmI)
+        {
+            WorkTimeBase = reader.ReadInt32();
+            WorkTimeBonus = reader.ReadSingle();
+
+            IsWorking = reader.ReadBoolean();
+            Timer = reader.ReadInt32();
+        }
+
         public override void SaveData(string preName, TagCompound tag)
         {
-            //无需存储工作时间以及是否在工作中
             tag.Add(preName + nameof(WorkTimeBase), WorkTimeBase);
             tag.Add(preName + nameof(WorkTimeBonus), WorkTimeBonus);
 

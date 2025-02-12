@@ -119,10 +119,10 @@ namespace Coralite.Content.Items.Magike.Factorys
         {
             float t = incomeLevel switch
             {
-                MALevel.MagicCrystal => 3,
-                MALevel.Glistent => 2.5f,
-                MALevel.CrystallineMagike => 2,
-                MALevel.SplendorMagicore => 1,
+                MALevel.MagicCrystal => 1,
+                MALevel.Glistent => 0.9f,
+                MALevel.CrystallineMagike => 0.7f,
+                MALevel.SplendorMagicore => 0.5f,
                 _ => 10_0000_0000 / 60,
             };
 

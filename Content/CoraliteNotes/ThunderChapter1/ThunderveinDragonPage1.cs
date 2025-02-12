@@ -39,9 +39,9 @@ namespace Coralite.Content.CoraliteNotes.ThunderChapter1
             Texture2D tex = TextureAssets.Item[ModContent.ItemType<LightningRods>()].Value;
 
             float width = PageWidth - 60 - tex.Width * 3;
-            Helper.DrawTextParagraph(spriteBatch, LightningRodsDescription.Value, width, new Vector2(Position.X + 40 + tex.Width * 3, pos.Y), out Vector2 textSize);
+            Helper.DrawTextParagraph(spriteBatch, LightningRodsDescription.Value, width, new Vector2(Position.X + 60 + tex.Width * 3, pos.Y), out Vector2 textSize);
 
-            Vector2 picturePos = new Vector2(pos.X - 180 - tex.Width / 2 * 3, pos.Y + textSize.Y / 2);
+            Vector2 picturePos = new Vector2(pos.X - 220 - tex.Width / 2 * 3, pos.Y + textSize.Y / 2);
 
             Rectangle rect = Utils.CenteredRectangle(picturePos, tex.Size() * 5f);
             if (rect.MouseScreenInRect())
