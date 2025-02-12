@@ -148,7 +148,7 @@ namespace Coralite.Content.Items.ShadowCastle
                             if (Item.ModItem is ShadowWave sw)//填充弹药
                                 sw.ShootCount = 9;
 
-                            if (Main.mouseRight)
+                            if (DownRight)
                             {
                                 Timer = 0;
                                 State++;
@@ -162,7 +162,7 @@ namespace Coralite.Content.Items.ShadowCastle
                     break;
                 case 1:
                     {
-                        if (!Main.mouseRight)//清空弹夹！！
+                        if (!DownRight)//清空弹夹！！
                         {
                             if (Item.ModItem is ShadowWave sw)//填充弹药
                                 sw.ShootCount = 3;

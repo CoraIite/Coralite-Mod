@@ -1,4 +1,5 @@
 ﻿using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
@@ -8,10 +9,8 @@ using Terraria.GameContent;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 {
-    public abstract class BaseFairyCatcherProj : ModProjectile
+    public abstract class BaseFairyCatcherProj : BaseHeldProj
     {
-        public Player Owner => Main.player[Projectile.owner];
-
         public override string Texture => AssetDirectory.FairyCatcherItems + Name;
         public virtual string HandleTexture => Texture + "Handle";
 
@@ -201,7 +200,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                         UpdateFairySpawn();
 
                         //右键一下就结束捕捉
-                        if (Main.mouseRight)
+                        if (DownRight)
                             TrunToBacking();
                         //玩家距离过远进入回收阶段
                         if (Vector2.Distance(Owner.Center, Projectile.Center) > 1000)

@@ -157,7 +157,7 @@ namespace Coralite.Content.Items.Nightmare
                         Projectile.rotation = (npc.Center - Projectile.Center).ToRotation();
                         Projectile.Center = npc.Center + offset;
 
-                        if (Main.mouseRight && Main.mouseRightRelease
+                        if (DownRight && Main.mouseRightRelease
                             && Owner.TryGetModPlayer(out CoralitePlayer cp) && cp.nightmareEnergy >= 5)
                         {
                             cp.nightmareEnergy -= 5;

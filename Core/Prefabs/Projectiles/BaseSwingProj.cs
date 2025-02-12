@@ -157,11 +157,6 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         #region AI
 
-        public override void Initialize()
-        {
-            base.Initialize();
-        }
-
         public sealed override void AI()
         {
             AIBefore();

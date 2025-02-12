@@ -257,7 +257,7 @@ namespace Coralite.Content.Items.Nightmare
 
                     if (VisualEffectSystem.HitEffect_ScreenShaking)
                     {
-                        var modifier = new PunchCameraModifier(Owner.Center, (Main.MouseWorld - Owner.Center).SafeNormalize(Vector2.Zero), 10, 6, 10, 1000);
+                        var modifier = new PunchCameraModifier(Owner.Center, (InMousePos - Owner.Center).SafeNormalize(Vector2.Zero), 10, 6, 10, 1000);
                         Main.instance.CameraModifiers.Add(modifier);
                     }
 
@@ -306,7 +306,7 @@ namespace Coralite.Content.Items.Nightmare
 
                     if (VisualEffectSystem.HitEffect_ScreenShaking)
                     {
-                        var modifier = new PunchCameraModifier(Owner.Center, (Main.MouseWorld - Owner.Center).SafeNormalize(Vector2.Zero), 10, 6, 10, 1000);
+                        var modifier = new PunchCameraModifier(Owner.Center, (InMousePos - Owner.Center).SafeNormalize(Vector2.Zero), 10, 6, 10, 1000);
                         Main.instance.CameraModifiers.Add(modifier);
                     }
 
@@ -388,7 +388,7 @@ namespace Coralite.Content.Items.Nightmare
                     Helper.PlayPitched("Misc/FlowSwing2", 0.4f, 0.2f, Projectile.Center);
                     ColorState = 1;
 
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                    if (Projectile.IsOwnedByLocalPlayer())
                     {
                         float angle = Main.rand.NextFloat(6.282f);
                         for (int i = 0; i < 5; i++)
@@ -461,7 +461,7 @@ namespace Coralite.Content.Items.Nightmare
                 case 2 when innerCombo == 0://下挥1 小幅度转圈
                     distanceToOwner = (-Projectile.height / 2) + (Coralite.Instance.SqrtSmoother.Smoother(timer, maxTime - minTime) * 40);
                     Projectile.scale = 1 + (Coralite.Instance.SinSmoother.Smoother(timer, maxTime - minTime) * 0.3f);
-                    if (timer == Owner.itemTimeMax)
+                    if (timer == Owner.itemTimeMax && Projectile.IsOwnedByLocalPlayer())
                     {
                         float start = nextStartAngle + (DirSign * 2.4f);
 
@@ -479,7 +479,7 @@ namespace Coralite.Content.Items.Nightmare
                     distanceToOwner = (-Projectile.height / 2) + (Smoother.Smoother(timer, maxTime - minTime) * 60);
                     //Projectile.scale = 1 + Smoother.Smoother(timer, maxTime - minTime) * 0.3f;
                     Projectile.scale = Helper.EllipticalEase(2.4f - (4.9f * Smoother.Smoother(timer, maxTime - minTime)), 1f, 1.4f);
-                    if (timer == Owner.itemTimeMax / 3)
+                    if (timer == Owner.itemTimeMax / 3 && Projectile.IsOwnedByLocalPlayer())
                     {
                         float start = nextStartAngle + (DirSign * 2.4f);
 
@@ -496,7 +496,7 @@ namespace Coralite.Content.Items.Nightmare
                     break;
                 case 3 when innerCombo == 0://下挥 伸出，更类似于挥砍，不会挥到身体后方
                     distanceToOwner = 10 - (Projectile.height / 2) + (Smoother.Smoother(timer, maxTime - minTime) * 5);
-                    if (timer == Owner.itemTimeMax)
+                    if (timer == Owner.itemTimeMax && Projectile.IsOwnedByLocalPlayer())
                     {
                         float start = nextStartAngle + (DirSign * -2.2f);
 
@@ -514,7 +514,7 @@ namespace Coralite.Content.Items.Nightmare
                 case 3 when innerCombo == 1://上挥，转圈
                     distanceToOwner = 15 - (Projectile.height / 2) + (Smoother.Smoother(timer, maxTime - minTime) * 10);
                     Projectile.scale = Helper.EllipticalEase(1.4f - (4.4f * Smoother.Smoother(timer, maxTime - minTime)), 1.2f, 1.4f);
-                    if (timer == Owner.itemTimeMax)
+                    if (timer == Owner.itemTimeMax && Projectile.IsOwnedByLocalPlayer())
                     {
                         float start = nextStartAngle + (DirSign * -2.2f);
 
@@ -527,7 +527,7 @@ namespace Coralite.Content.Items.Nightmare
                 case 3 when innerCombo == 2://上挑
                     distanceToOwner = 25 - (Projectile.height / 2) + (Smoother.Smoother(timer, maxTime - minTime) * 40);
                     Projectile.scale = Helper.EllipticalEase(2.2f - (4.4f * Smoother.Smoother(timer, maxTime - minTime)), 1.2f, 1.4f);
-                    if (timer == Owner.itemTimeMax / 3)
+                    if (timer == Owner.itemTimeMax / 3 && Projectile.IsOwnedByLocalPlayer())
                     {
                         float start = nextStartAngle + (DirSign * -2.2f);
 
@@ -546,7 +546,7 @@ namespace Coralite.Content.Items.Nightmare
                     break;
                 case 4 when innerCombo == 1://大力刺出
                     distanceToOwner = (-Projectile.height / 2) + (Smoother.Smoother(timer, maxTime - minTime) * 180);
-                    if (timer == Owner.itemTimeMax / 2)
+                    if (timer == Owner.itemTimeMax / 2 && Projectile.IsOwnedByLocalPlayer())
                     {
                         Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, startAngle.ToRotationVector2() * 48, ProjectileType<EuphorbiaSpurt>(),
                             (int)(Projectile.damage * 2f), Projectile.knockBack, Projectile.owner, ai1: 28);
@@ -559,7 +559,7 @@ namespace Coralite.Content.Items.Nightmare
                 case 6 when innerCombo == 0://普通上挥1
                     distanceToOwner = 25 - (Projectile.height / 2) + (Smoother.Smoother(timer, maxTime - minTime) * 20);
                     Projectile.scale = Helper.EllipticalEase(2.2f - (4.85f * Smoother.Smoother(timer, maxTime - minTime)), 1f, 1.2f);
-                    if (timer == Owner.itemTimeMax)
+                    if (timer == Owner.itemTimeMax && Projectile.IsOwnedByLocalPlayer())
                     {
                         float start = nextStartAngle + (DirSign * -2.2f);
 
@@ -572,7 +572,7 @@ namespace Coralite.Content.Items.Nightmare
                 case 6 when innerCombo == 1://普通上挥2
                     distanceToOwner = 25 - (Projectile.height / 2) + (Smoother.Smoother(timer, maxTime - minTime) * 20);
                     Projectile.scale = Helper.EllipticalEase(2.2f - (4.85f * Smoother.Smoother(timer, maxTime - minTime)), 1f, 1.2f);
-                    if (timer == Owner.itemTimeMax / 3)
+                    if (timer == Owner.itemTimeMax / 3 && Projectile.IsOwnedByLocalPlayer())
                     {
                         float start = nextStartAngle + (DirSign * -2.2f);
 
@@ -588,7 +588,7 @@ namespace Coralite.Content.Items.Nightmare
                     break;
                 case 6 when innerCombo == 2://普通突刺3
                     distanceToOwner = (-Projectile.height / 2) + (Smoother.Smoother(timer, maxTime - minTime) * 180);
-                    if (timer == Owner.itemTimeMax / 2)
+                    if (timer == Owner.itemTimeMax / 2 && Projectile.IsOwnedByLocalPlayer())
                     {
                         Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, startAngle.ToRotationVector2() * 48, ProjectileType<EuphorbiaSpurt>(),
                             (int)(Projectile.damage * 2f), Projectile.knockBack, Projectile.owner, ai1: 28);
@@ -801,9 +801,7 @@ namespace Coralite.Content.Items.Nightmare
 
         protected override void InitializeSwing()
         {
-            if (Projectile.IsOwnedByLocalPlayer())
-                Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
-
+            Owner.direction = InMousePos.X > Owner.Center.X ? 1 : -1;
             Projectile.extraUpdates = 1;
             ExtraAlpha = 0;
             ExtraScale = 0.3f;
@@ -838,7 +836,7 @@ namespace Coralite.Content.Items.Nightmare
 
         protected override void BeforeSlash()
         {
-            if (Main.mouseRight)
+            if (DownRight)
             {
                 Timer = 2;
 

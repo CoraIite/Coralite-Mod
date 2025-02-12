@@ -779,7 +779,7 @@ namespace Coralite.Content.Items.ShieldPlus
 
         protected override void AfterSlash()
         {
-            if (Main.mouseRight)
+            if (DownRight)
             {
                 Projectile.Kill();
                 Owner.itemAnimation = Owner.itemTime = 0;
@@ -1125,7 +1125,7 @@ namespace Coralite.Content.Items.ShieldPlus
             yScale = 1 - Smoother.Smoother((int)Timer - maxTime, delay);
             alpha = 1 - Smoother.Smoother((int)Timer - maxTime, delay);
             distanceToOwner2 += 7;
-            if (Main.mouseRight)
+            if (DownRight)
             {
                 Projectile.Kill();
                 Owner.itemAnimation = Owner.itemTime = 0;

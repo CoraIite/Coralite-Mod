@@ -111,7 +111,7 @@ namespace Coralite.Content.Items.MagikeSeries2
             }
 
             //右键直接停止使用
-            if (Main.mouseRight)
+            if (DownRight)
             {
                 Projectile.Kill();
                 return;
