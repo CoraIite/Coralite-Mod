@@ -264,7 +264,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
         public virtual void SetPos()
         {
             float baseAngle = Owner.direction > 0 ? 0 : MathHelper.Pi;
-            Projectile.rotation = baseAngle.AngleLerp((Main.MouseWorld - Owner.Center).ToRotation(), 0.4f);
+            Projectile.rotation = baseAngle.AngleLerp(ToMouseA, 0.4f);
 
             Projectile.Center = Owner.Center + (Projectile.rotation.ToRotationVector2() * DistanceToOwner);
         }
