@@ -184,7 +184,7 @@ namespace Coralite.Content.Items.Nightmare
                 if (Projectile.IsOwnedByLocalPlayer())
                 {
                     Projectile.NewProjectile(Projectile.GetSource_FromThis(), Owner.Center,
-                    (Main.MouseWorld - Owner.Center).SafeNormalize(Vector2.Zero) * 14, ProjectileType<LullabyBall>(), Projectile.damage, Projectile.knockBack, Projectile.owner, ai2: -1);
+                    UnitToMouseV * 14, ProjectileType<LullabyBall>(), Projectile.damage, Projectile.knockBack, Projectile.owner, ai2: -1);
                 }
                 
                 InitializeCaches();
