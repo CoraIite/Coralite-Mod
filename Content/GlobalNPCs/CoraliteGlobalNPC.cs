@@ -10,6 +10,7 @@ using Coralite.Content.Items.Plush;
 using Coralite.Content.Items.Thunder;
 using Coralite.Content.WorldGeneration;
 using Coralite.Core.Configs;
+using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using System;
 using System.Collections.Generic;
@@ -273,6 +274,29 @@ namespace Coralite.Content.GlobalNPCs
             }
 
             return base.PreKill(npc);
+        }
+
+        public override void OnKill(NPC npc)
+        {
+            switch (npc.type)
+            {
+                default:
+                    break;
+                case NPCID.Retinazer://检测新三王的击杀
+                case NPCID.Spazmatism:
+                case NPCID.SkeletronPrime:
+                case NPCID.TheDestroyer:
+                    {
+                        bool mechBoss1 = NPC.downedMechBoss1 || npc.type == NPCID.TheDestroyer;
+                        bool mechBoss2 = NPC.downedMechBoss2 || (npc.type == NPCID.Retinazer && !NPC.AnyNPCs(NPCID.Spazmatism)) || (npc.type == NPCID.Spazmatism&&!NPC.AnyNPCs(NPCID.Retinazer));
+                        bool mechBoss3 = NPC.downedMechBoss3 || npc.type == NPCID.SkeletronPrime;
+
+                        if (Main.netMode != NetmodeID.MultiplayerClient && Main.hardMode && mechBoss1 && mechBoss2 && mechBoss3)
+                            KnowledgeSystem.CheckForUnlock(KeyKnowledgeID.Thunder1, npc.Center, Coralite.ThunderveinYellow);
+                    }
+
+                    break;
+            }
         }
     }
 }
