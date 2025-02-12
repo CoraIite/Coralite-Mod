@@ -13,7 +13,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
     {
         public ref float State => ref Projectile.ai[0];
         public ref float Timer => ref Projectile.ai[1];
-
+        public override bool CanFire => true;
         #region 设置类字段
 
         /// <summary> 完美防御时间 </summary>
