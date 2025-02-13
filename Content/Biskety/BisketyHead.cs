@@ -4,11 +4,13 @@ using Coralite.Core.Loaders;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
+using Terraria.ModLoader.IO;
 
 namespace Coralite.Content.Biskety
 {
@@ -25,24 +27,72 @@ namespace Coralite.Content.Biskety
 
         public override bool AltFunctionUse(Player player) => true;
 
+        public static void SendKillBiskety(Mod mod)
+        {
+            if (VaultUtils.isSinglePlayer)
+            {
+                KillBiskety();
+            }
+            else
+            {
+                var netMessage = mod.GetPacket();
+                netMessage.Write((byte)CoraliteNetWorkEnum.KillBiskety);
+                netMessage.Send();
+            }
+        }
+
+        public static void KillBiskety()
+        {
+            foreach (NPC npc in Main.ActiveNPCs)
+            {
+                if (npc.type != ModContent.NPCType<Biskety>())
+                {
+                    continue;
+                }
+
+                npc.Kill();
+                if (Main.netMode == NetmodeID.Server)
+                {
+                    NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, npc.whoAmI);
+                }
+            }
+        }
+
+        public static void SendSpawnBiskety(Player player, Item item, Mod mod)
+        {
+            Vector2 spanPos = new Vector2((int)Main.MouseWorld.X - Biskety.Width / 2, (int)Main.MouseWorld.Y - Biskety.Height / 2);
+            if (VaultUtils.isSinglePlayer)
+            {
+                NPC.NewNPC(new EntitySource_ItemUse(player, item), (int)spanPos.X, (int)spanPos.Y, ModContent.NPCType<Biskety>(), Target: player.whoAmI);
+            }
+            else
+            {
+                var netMessage = mod.GetPacket();
+                netMessage.Write((byte)CoraliteNetWorkEnum.SpawnBiskety);
+                netMessage.WriteVector2(spanPos);
+                netMessage.Send();
+            }
+        }
+
+        public static void SpawnBiskety(BinaryReader reader, int whoAmI)
+        {
+            if (!VaultUtils.isServer)
+            {
+                return;
+            }
+
+            Vector2 spanPos = reader.ReadVector2();
+            NPC.NewNPC(new EntitySource_WorldEvent(), (int)spanPos.X, (int)spanPos.Y, ModContent.NPCType<Biskety>(), Target: whoAmI);
+        }
+
         public override bool CanUseItem(Player player)
         {
             if (player.altFunctionUse == 2)
             {
-                for (int i = 0; i < Main.maxNPCs; i++)
-                {
-                    NPC npc = Main.npc[i];
-                    if (npc.active && npc.type == ModContent.NPCType<Biskety>())
-                    {
-                        npc.Kill();
-                    }
-                }
-
+                SendKillBiskety(Mod);
                 return true;
             }
-
-            NPC.NewNPC(new EntitySource_ItemUse(player, Item), (int)player.Center.X, (int)player.Bottom.Y,
-                ModContent.NPCType<Biskety>(), Target: player.whoAmI);
+            SendSpawnBiskety(player, Item, Mod);
             return base.CanUseItem(player);
         }
 
@@ -65,6 +115,8 @@ namespace Coralite.Content.Biskety
 
         private int itemDamageRecorder;
         private int projectileDamageRecorder;
+        internal const int Height = 38;
+        internal const int Width = 48;
 
         public static LocalizedText[] DamageShowTexts { get; private set; }
 
@@ -97,8 +149,8 @@ namespace Coralite.Content.Biskety
             NPC.noGravity = true;
             NPC.knockBackResist = 0f;
 
-            NPC.width = 38;
-            NPC.height = 48;
+            NPC.width = Width;
+            NPC.height = Width;
 
             NPC.defense = BisketyDefenceController.Defence;
         }
@@ -145,7 +197,10 @@ namespace Coralite.Content.Biskety
                 }
             }
 
-            NPC.spriteDirection = Main.LocalPlayer.Center.X > NPC.Center.X ? -1 : 1;
+            if (NPC.target >= 0 && NPC.target < 255)
+            {
+                NPC.spriteDirection = Main.npc[NPC.target].Center.X > NPC.Center.X ? -1 : 1;
+            }
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
