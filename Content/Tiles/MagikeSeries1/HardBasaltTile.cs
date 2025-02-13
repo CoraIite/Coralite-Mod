@@ -14,6 +14,8 @@ namespace Coralite.Content.Tiles.MagikeSeries1
             Main.tileBlockLight[Type] = true;
 
             TileID.Sets.ChecksForMerge[Type] = true;
+            TileID.Sets.CanBeClearedDuringOreRunner[Type] = false;
+            TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
 
             MineResist = 3f;
             DustType = DustID.CorruptionThorns;

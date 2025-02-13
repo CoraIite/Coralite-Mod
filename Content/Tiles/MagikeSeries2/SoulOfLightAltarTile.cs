@@ -24,18 +24,14 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             NeedSouls = this.GetLocalization(nameof(NeedSouls));
         }
 
-        public override void Unload()
-        {
-            if (Main.dedServ)
-                return;
-        }
-
         public override void SetStaticDefaults()
         {
             Main.tileFrameImportant[Type] = true;
 
             TileID.Sets.PreventsTileRemovalIfOnTopOfIt[Type] = true;
             TileID.Sets.HasOutlines[Type] = true;
+            TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
+            TileID.Sets.CanBeClearedDuringOreRunner[Type] = false;
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);
             TileObjectData.newTile.DrawYOffset = 2;
@@ -81,7 +77,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
                     return;
 
                 Texture2D texture = TextureAssets.Item[ItemID.SoulofLight].Value;
-                Vector2 worldPos = p.ToWorldCoordinates(0, -12);
+                Vector2 worldPos = p.ToWorldCoordinates();
                 Main.instance.LoadItem(ItemID.SoulofLight);
                 Main.itemAnimations[ItemID.SoulofLight].Update();
                 Color color = Lighting.GetColor(p.X, p.Y);
@@ -109,18 +105,14 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             NeedSouls = this.GetLocalization(nameof(NeedSouls));
         }
 
-        public override void Unload()
-        {
-            if (Main.dedServ)
-                return;
-        }
-
         public override void SetStaticDefaults()
         {
             Main.tileFrameImportant[Type] = true;
 
             TileID.Sets.PreventsTileRemovalIfOnTopOfIt[Type] = true;
             TileID.Sets.HasOutlines[Type] = true;
+            TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
+            TileID.Sets.CanBeClearedDuringOreRunner[Type] = false;
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);
             TileObjectData.newTile.DrawYOffset = 2;
@@ -168,7 +160,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
                 Texture2D texture = TextureAssets.Item[ItemID.SoulofNight].Value;
                 Rectangle sourceRectangle = texture.Frame(1, 4, 0, ((int)(Main.timeForVisualEffects % 24) / 6));
 
-                Vector2 worldPos = p.ToWorldCoordinates(32 - sourceRectangle.Width, -12);
+                Vector2 worldPos = p.ToWorldCoordinates(2,6);
                 Color color = Lighting.GetColor(p.X, p.Y);
 
                 Vector2 drawPos = worldPos + offScreen - Main.screenPosition;

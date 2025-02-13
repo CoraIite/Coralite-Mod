@@ -1,4 +1,5 @@
 ﻿using Coralite.Core;
+using Coralite.Core.Attributes;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
@@ -67,12 +68,15 @@ namespace Coralite.Content.Items.Misc_Melee
         }
     }
 
+    [AutoLoadTexture(Path =AssetDirectory.Misc_Melee)]
     public class CancerFlailProj : BaseSilkKnifeSpecialProj
     {
         public override string Texture => AssetDirectory.Misc_Melee + Name;
 
-        public static Asset<Texture2D> ChainTex;
-        public static Asset<Texture2D> HandleTex;
+        [AutoLoadTexture(Name = "CancerFlailChain")]
+        public static ATex ChainTex { get; private set; }
+        [AutoLoadTexture(Name = "CancerFlailHandle")]
+        public static ATex HandleTex { get; private set; }
 
         public ref float Combo => ref Projectile.ai[0];
 
@@ -90,24 +94,6 @@ namespace Coralite.Content.Items.Misc_Melee
             Projectile.friendly = true;
             Projectile.tileCollide = false;
             Projectile.aiStyle = -1;
-        }
-
-        public override void Load()
-        {
-            if (Main.dedServ)
-                return;
-
-            ChainTex = Request<Texture2D>(AssetDirectory.Misc_Melee + "CancerFlailChain");
-            HandleTex = Request<Texture2D>(AssetDirectory.Misc_Melee + "CancerFlailHandle");
-        }
-
-        public override void Unload()
-        {
-            if (Main.dedServ)
-                return;
-
-            ChainTex = null;
-            HandleTex = null;
         }
 
         public override void Dragging()

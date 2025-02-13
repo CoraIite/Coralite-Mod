@@ -45,34 +45,65 @@ namespace Coralite.Content.WorldGeneration
             //Point searchOrigin = new Point((int)(Main.LocalPlayer.Center.X / 16), 0);
             Point p = new Point(0, 0);
 
-            try
+            //在丛林中心寻找一个位置
+            p = new Point(PickAltarX(), (int)(Main.worldSurface * 0.4f));
+
+            for (int j = 0; j < 1000; j++)//向下遍历，找到地面
             {
-                for (int i = 0; i < 100; i++)
-                {
-                    //在丛林中心寻找一个位置
-                    p = new Point(PickAltarX(), (int)(Main.worldSurface * 0.4f));
+                Tile t = Main.tile[p.X, p.Y];
+                if (t.HasTile && Main.tileSolid[t.TileType])//找到实心方块
+                    break;
 
-                    for (int j = 0; j < 1000; j++)//向下遍历，找到地面
-                    {
-                        Tile t = Main.tile[p.X, p.Y];
-                        if (t.HasTile && Main.tileSolid[t.TileType])//找到实心方块
-                            break;
-
-                        p.Y++;
-                    }
-
-                    //向左查找
-
-                    //向右查找
-                }
-            }
-            catch (System.Exception)
-            {
-
+                p.Y++;
             }
 
+            altarPoint = p+new Point(0,-8);
 
-            altarPoint = p;
+            ushort skarn = (ushort)ModContent.TileType<SkarnTile>();
+            ushort smoothSkarn = (ushort)ModContent.TileType<SmoothSkarnTile>();
+            ushort skarnBrick = (ushort)ModContent.TileType<SkarnBrickTile>();
+
+            ushort crystallineBrick = (ushort)ModContent.TileType<CrystallineBrickTile>();
+
+            Texture2D shrineTex = ModContent.Request<Texture2D>(AssetDirectory.Shrines + "SkarnAltars", AssetRequestMode.ImmediateLoad).Value;
+            Texture2D clearTex = ModContent.Request<Texture2D>(AssetDirectory.Shrines + "SkarnAltarsClear", AssetRequestMode.ImmediateLoad).Value;
+            Texture2D wallTex = ModContent.Request<Texture2D>(AssetDirectory.Shrines + "SkarnAltarsWall", AssetRequestMode.ImmediateLoad).Value;
+            Texture2D wallClearTex = ModContent.Request<Texture2D>(AssetDirectory.Shrines + "SkarnAltarsWallClear", AssetRequestMode.ImmediateLoad).Value;
+
+            p -= new Point(shrineTex.Width / 2, shrineTex.Height / 2);
+
+            Dictionary<Color, int> clearDic = new()
+            {
+                [Color.White] = -2,
+                [Color.Black] = -1
+            };
+            Dictionary<Color, int> mainDic = new()
+            {
+                [new Color(51, 76, 117)] = skarn,//334c75
+                [new Color(141, 171, 178)] = smoothSkarn,//8dabb2
+                [new Color(184, 230, 207)] = skarnBrick,//b8e6cf
+
+                [new Color(105, 97, 90)] = ModContent.TileType<BasaltBeamTile>(),//69615a
+                [new Color(63, 76, 73)] = ModContent.TileType<BasaltTile>(),//3f4c49
+                [new Color(166, 166, 166)] = ModContent.TileType<HardBasaltTile>(),//a6a6a6
+
+                [new Color(71, 56, 53)] = TileID.Mud,//473835
+
+                [new Color(241, 130, 255)] = crystallineBrick,//f182ff
+                [Color.Black] = -1
+            };
+            Dictionary<Color, int> wallDic = new()
+            {
+                [new Color(85, 183, 206)] = ModContent.WallType<Walls.Magike.SmoothSkarnWallUnsafe>(),//55b7ce
+                [new Color(29, 30, 28)] = ModContent.WallType<Walls.Magike.HardBasaltWall>(),//1d1e1c
+                [Color.Black] = -1
+            };
+
+            GenByTexture(clearTex, shrineTex, wallClearTex, wallTex, clearDic, mainDic, clearDic, wallDic, p.X, p.Y);
+
+            WorldGen.PlaceObject(p.X + 7, p.Y + 6, ModContent.TileType<SoulOfNightAltarTile>());
+            WorldGen.PlaceObject(p.X + 19, p.Y + 4, ModContent.TileType<PremissionAltarTile>());
+            WorldGen.PlaceObject(p.X + 33, p.Y + 6, ModContent.TileType<SoulOfLightAltarTile>());
 
             //p就是中心点，放置主祭坛
             //altarPoint = p;
@@ -123,7 +154,7 @@ namespace Coralite.Content.WorldGeneration
                 for (int i = 0; i < 100; i++)
                 {
                     point.Y--;
-                    Tile upTile= Framing.GetTileSafely(point);
+                    Tile upTile = Framing.GetTileSafely(point);
                     if (!upTile.HasTile || !Main.tileSolid[upTile.TileType])//找到没有物块的地方了，返回
                         return;
                 }

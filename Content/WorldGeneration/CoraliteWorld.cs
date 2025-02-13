@@ -187,7 +187,7 @@ namespace Coralite.Content.WorldGeneration
             LoadCrystalCave(tag);
         }
 
-        public static void GenByTexture(Texture2D clearTex, Texture2D roomTex, Texture2D wallClearTex, Texture2D wallTex,
+        public static void GenByTexture(Texture2D clearTex, Texture2D mainTex, Texture2D wallClearTex, Texture2D wallTex,
             Dictionary<Color, int> clearDic, Dictionary<Color, int> roomDic, Dictionary<Color, int> wallClearDic, Dictionary<Color, int> wallDic,
             int genOrigin_x, int genOrigin_y)
         {
@@ -212,7 +212,7 @@ namespace Coralite.Content.WorldGeneration
                     clearGenerator = TextureGeneratorDatas.GetTex2TileGenerator(clearTex, clearDic);
 
                     //生成主体地形
-                    roomGenerator = TextureGeneratorDatas.GetTex2TileGenerator(roomTex, roomDic);
+                    roomGenerator = TextureGeneratorDatas.GetTex2TileGenerator(mainTex, roomDic);
 
                     //清理范围
                     if (wallClearTex != null)

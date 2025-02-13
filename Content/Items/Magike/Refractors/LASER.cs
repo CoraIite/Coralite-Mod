@@ -54,6 +54,7 @@ namespace Coralite.Content.Items.Magike.Refractors
                 MALevel.None,
                 MALevel.MagicCrystal,
                 MALevel.Glistent,
+                MALevel.CrystallineMagike,
                 ];
         }
 
@@ -122,8 +123,9 @@ namespace Coralite.Content.Items.Magike.Refractors
         {
             MagikeMaxBase = incomeLevel switch
             {
-                MALevel.MagicCrystal => 1200,
-                MALevel.Glistent => 2000,
+                MALevel.MagicCrystal => 1000,
+                MALevel.Glistent => 1400,
+                MALevel.CrystallineMagike => 2000,
                 _ => 0,
             };
             LimitMagikeAmount();
@@ -153,12 +155,16 @@ namespace Coralite.Content.Items.Magike.Refractors
                     ConnectLengthBase = 0;
                     break;
                 case MALevel.MagicCrystal:
-                    SendDelayBase = 60 * 5;
+                    SendDelayBase = 60 * 3;
                     ConnectLengthBase = 50 * 16;
                     break;
                 case MALevel.Glistent:
-                    SendDelayBase = 60 * 4 + 30;
+                    SendDelayBase = 60 * 2 + 30;
                     ConnectLengthBase = 55 * 16;
+                    break;
+                case MALevel.CrystallineMagike:
+                    SendDelayBase = 60 * 2;
+                    ConnectLengthBase = 60 * 16;
                     break;
             }
 

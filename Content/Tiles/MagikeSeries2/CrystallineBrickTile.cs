@@ -12,6 +12,8 @@ namespace Coralite.Content.Tiles.MagikeSeries2
         {
             Main.tileSolid[Type] = true;
             Main.tileBlockLight[Type] = true;
+            TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
+            TileID.Sets.CanBeClearedDuringOreRunner[Type] = false;
 
             MineResist = 3f;
             DustType = DustID.PurpleTorch;
