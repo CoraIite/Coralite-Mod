@@ -3,6 +3,7 @@ using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
+using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -43,6 +44,16 @@ namespace Coralite.Content.Items.ShadowCastle
             Item.useAmmo = AmmoID.Bullet;
 
             Item.shoot = ProjectileID.Bullet;
+        }
+
+        public override void NetReceive(BinaryReader reader)
+        {
+            ShootCount = reader.ReadInt32();
+        }
+
+        public override void NetSend(BinaryWriter writer)
+        {
+            writer.Write(ShootCount);
         }
 
         public override bool AltFunctionUse(Player player) => true;
