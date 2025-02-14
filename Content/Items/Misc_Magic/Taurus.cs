@@ -26,14 +26,14 @@ namespace Coralite.Content.Items.Misc_Magic
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.value = Item.sellPrice(0, 1);
             Item.rare = ItemRarityID.LightRed;
-
+            
             Item.useTurn = false;
         }
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             shootCount++;
-            Helper.PlayPitched(CoraliteSoundID.PortalGun2_Item115, position);
+            Helper.PlayPitched(CoraliteSoundID.MagicShoot_Item9, position,pitch:-0.5f);
 
             if (shootCount > 7)
             {

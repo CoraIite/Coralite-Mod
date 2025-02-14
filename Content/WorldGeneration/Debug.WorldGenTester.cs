@@ -41,7 +41,7 @@ namespace Coralite.Content.WorldGeneration
 
             //Main.tile.ClearEverything();
 
-            ModContent.GetInstance<CoraliteWorld>().GenGroundLock(out _);
+            ModContent.GetInstance<CoraliteWorld>().GenMainSkyIsland(player.Center.ToTileCoordinates());
             //ClearWorldTile()
 
             // Main.NewText(NPC.downedBoss3);

@@ -8,8 +8,9 @@
 	- 20+ 敌怪，包括6个BOSS
 	- 魔能系统
 
-程序：瓶中微光，ROH，小天使，HoCha113
-贴图：阿形，Rin，万圣，毒昂，京墨，杜格，云酱，凝胶，枫，WZD，陌林，mitsuha
+程序：瓶中微光，ROH，小天使，HoCha113，麻衣
+贴图：阿形，Rin，万圣，毒昂，京墨，杜格，云酱，星海，凝胶，枫，WZD，陌林
+     mitsuha，依琳
 英文翻译：ILoveWater
 
 本模组在[url=https://github.com/CoraIite/Coralite-Mod]Github[/url]上开源，欢迎问题反馈或本地化贡献等。 

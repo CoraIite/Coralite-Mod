@@ -1,9 +1,11 @@
 ﻿using Coralite.Content.Tiles.MagikeSeries1;
 using Coralite.Content.Tiles.MagikeSeries2;
 using Coralite.Core;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Terraria;
 using Terraria.ID;
 using Terraria.IO;
@@ -35,8 +37,8 @@ namespace Coralite.Content.WorldGeneration
         {
             //生成地表结构
             GenGroundLock(out Point altarPoint);
-
-            //GenMainSkyIsland();
+            //生成主体空岛
+            GenMainSkyIsland(altarPoint);
         }
 
         public void GenGroundLock(out Point altarPoint)
@@ -180,71 +182,149 @@ namespace Coralite.Content.WorldGeneration
             return GenVars.jungleOriginX + WorldGen.genRand.Next(-60, 60);
         }
 
-        private void GenMainSkyIsland()
+        public void GenMainSkyIsland(Point altarPos)
         {
+            //矽卡岩
             ushort skarn = (ushort)ModContent.TileType<SkarnTile>();
-            ushort crystallineSkarn = (ushort)ModContent.TileType<CrystallineSkarnTile>();
-            ushort smoothSkarn = (ushort)ModContent.TileType<SmoothSkarnTile>();
-            ushort skarnBrick = (ushort)ModContent.TileType<SkarnBrickTile>();
 
-            ushort chalcedony = (ushort)ModContent.TileType<ChalcedonyTile>();
-            ushort leafChalcedony = (ushort)ModContent.TileType<LeafChalcedonyTile>();
+            //随机一下主岛的尺寸
+            int baseX = 50;
+            int xPlus = 15;
 
-            ushort crystallineBrick = (ushort)ModContent.TileType<CrystallineBrickTile>();
+            int baseY = 70;
+            int yPlus = 18;
 
-            ushort skarnBrickPlatform = (ushort)ModContent.TileType<SkarnBrickPlatformTile>();
-
-            Texture2D shrineTex = ModContent.Request<Texture2D>(AssetDirectory.Shrines + "CrystallineMainIsland" + 0.ToString(), AssetRequestMode.ImmediateLoad).Value;
-            Texture2D clearTex = ModContent.Request<Texture2D>(AssetDirectory.Shrines + "CrystallineMainIslandClear" + 0.ToString(), AssetRequestMode.ImmediateLoad).Value;
-            Texture2D wallTex = ModContent.Request<Texture2D>(AssetDirectory.Shrines + "CrystallineMainIslandWall" + 0.ToString(), AssetRequestMode.ImmediateLoad).Value;
-
-            int genOrigin_x = Main.maxTilesX / 2 - (clearTex.Width / 2);
-            int genOrigin_y = 200 - (clearTex.Height / 2);
-
-            Dictionary<Color, int> clearDic = new()
+            Point mainIslandSize = Main.maxTilesY switch
             {
-                [Color.White] = -2,
-                [Color.Black] = -1
-            };
-            Dictionary<Color, int> mainDic = new()
-            {
-                [new Color(51, 76, 117)] = skarn,//334c75
-                [new Color(165, 58, 255)] = crystallineSkarn,//a53aff
-                [new Color(141, 171, 178)] = smoothSkarn,//8dabb2
-                [new Color(184, 230, 207)] = skarnBrick,//b8e6cf
-
-                [new Color(255, 239, 219)] = chalcedony,//ffefdb
-                [new Color(170, 228, 143)] = leafChalcedony,//aae48f
-
-                [new Color(241, 130, 255)] = crystallineBrick,//f182ff
-                [new Color(90, 100, 80)] = TileID.Chain,//5a6450
-                [Color.Black] = -1
-            };
-            Dictionary<Color, int> wallDic = new()
-            {
-                [new Color(85, 183, 206)] = ModContent.WallType<Walls.Magike.SmoothSkarnWallUnsafe>(),//55b7ce
-                [new Color(188, 171, 150)] = ModContent.WallType<Walls.Magike.ChalcedonyWallUnsafe>(),//bcab96
-                [Color.Black] = -1
+                //小世界
+                < 6000 => new Point(WorldGen.genRand.Next(baseX, baseX + xPlus), WorldGen.genRand.Next(baseY, baseY+yPlus)),
+                //中世界
+                > 6000 and < 8000 => new Point(WorldGen.genRand.Next(baseX + xPlus, baseX + xPlus * 2), WorldGen.genRand.Next(baseY + yPlus, baseY + yPlus*2)),
+                //大世界
+                _ => new Point(WorldGen.genRand.Next(baseX + xPlus * 2, baseX + xPlus * 3), WorldGen.genRand.Next(baseY + yPlus*2, baseY + yPlus*3))
             };
 
-            GenShrine(clearTex, shrineTex, wallTex, clearDic, mainDic, wallDic, genOrigin_x, genOrigin_y);
+            //主岛的中心点和左上角
+            Point mainIslandTopLeft = new Point(altarPos.X - mainIslandSize.X / 2, WorldGen.genRand.Next(60, 80));
+            Point mainIslandCenter = new Point(altarPos.X, mainIslandTopLeft.Y + mainIslandSize.Y / 2);
+
+            //生成主体矩形
+            WorldUtils.Gen(
+                mainIslandTopLeft,
+                new Shapes.Rectangle(mainIslandSize.X, mainIslandSize.Y),
+                Actions.Chain(
+                     new Modifiers.Blotches(4)
+                     , new Actions.SetTile(skarn)
+                     ,new Actions.SetFrames()));
+
+            #region 随机加一些突起和凹坑
+            int count = ValueByWorldSize(16, 20, 26);
+
+            for (int i = 0; i < count; i++)
+            {
+                bool add = WorldGen.genRand.NextBool();
+                //随机在边缘上取点
+                Point p1 = WorldGen.genRand.NextInRectangleEdge(mainIslandTopLeft, mainIslandSize);
+
+                int r = WorldGen.genRand.Next(2, 5);
+
+                WorldUtils.Gen(
+                    p1,
+                    new Shapes.Circle(r),
+                    Actions.Chain(
+                         new Modifiers.Blotches(2)
+                          //new Modifiers.Dither()
+                         , add ? new Actions.SetTile(skarn) : new Actions.ClearTile()
+                         , new Actions.SetFrames(true)));
+            }
+
+            #endregion
+
+            #region 随机挖通道，与中心小遗迹生成
+
+            //主要通道，用于生成小遗迹
 
 
-            WorldGenHelper.PlaceOnGroundDecorations_NoCheck(genOrigin_x, genOrigin_y
-                , 0, 0, shrineTex.Width, shrineTex.Height, (ushort)ModContent.TileType<CrystallineStalactite>(), () => 1, 3, 0);
-            WorldGenHelper.PlaceOnGroundDecorations_NoCheck(genOrigin_x, genOrigin_y
-                , 0, 0, shrineTex.Width, shrineTex.Height, (ushort)ModContent.TileType<CrystallineStalactite2x2>(), () => 1, 3, 0);
+            #endregion
 
-            WorldGenHelper.PlaceOnGroundDecorations_NoCheck(genOrigin_x, genOrigin_y
-                , 0, 0, shrineTex.Width, shrineTex.Height, (ushort)ModContent.TileType<SkarnRubbles1x1>(), () => 1, 3, 0);
-            WorldGenHelper.PlaceOnGroundDecorations_NoCheck(genOrigin_x, genOrigin_y
-                , 0, 0, shrineTex.Width, shrineTex.Height, (ushort)ModContent.TileType<SkarnRubbles2x1>(), () => 1, 3, 0);
-            WorldGenHelper.PlaceOnGroundDecorations_NoCheck(genOrigin_x, genOrigin_y
-                , 0, 0, shrineTex.Width, shrineTex.Height, (ushort)ModContent.TileType<SkarnRubbles2x2>(), () => 1, 3, 0);
-            WorldGenHelper.PlaceOnGroundDecorations_NoCheck(genOrigin_x, genOrigin_y
-                , 0, 0, shrineTex.Width, shrineTex.Height, (ushort)ModContent.TileType<SkarnRubbles3x2>(), () => 1, 3, 0);
-            WorldGenHelper.PlaceOnGroundDecorations_NoCheck(genOrigin_x, genOrigin_y
-                , 0, 0, shrineTex.Width, shrineTex.Height, (ushort)ModContent.TileType<SkarnRubbles4x2>(), () => 1, 3, 0);
+            //用平滑矽卡岩画条纹
+
+
+            //ushort crystallineSkarn = (ushort)ModContent.TileType<CrystallineSkarnTile>();
+            //ushort smoothSkarn = (ushort)ModContent.TileType<SmoothSkarnTile>();
+            //ushort skarnBrick = (ushort)ModContent.TileType<SkarnBrickTile>();
+
+            //ushort chalcedony = (ushort)ModContent.TileType<ChalcedonyTile>();
+            //ushort leafChalcedony = (ushort)ModContent.TileType<LeafChalcedonyTile>();
+
+            //ushort crystallineBrick = (ushort)ModContent.TileType<CrystallineBrickTile>();
+
+            //ushort skarnBrickPlatform = (ushort)ModContent.TileType<SkarnBrickPlatformTile>();
+
+            //Texture2D shrineTex = ModContent.Request<Texture2D>(AssetDirectory.Shrines + "CrystallineMainIsland" + 0.ToString(), AssetRequestMode.ImmediateLoad).Value;
+            //Texture2D clearTex = ModContent.Request<Texture2D>(AssetDirectory.Shrines + "CrystallineMainIslandClear" + 0.ToString(), AssetRequestMode.ImmediateLoad).Value;
+            //Texture2D wallTex = ModContent.Request<Texture2D>(AssetDirectory.Shrines + "CrystallineMainIslandWall" + 0.ToString(), AssetRequestMode.ImmediateLoad).Value;
+
+            //int genOrigin_x = Main.maxTilesX / 2 - (clearTex.Width / 2);
+            //int genOrigin_y = 200 - (clearTex.Height / 2);
+
+            //Dictionary<Color, int> clearDic = new()
+            //{
+            //    [Color.White] = -2,
+            //    [Color.Black] = -1
+            //};
+            //Dictionary<Color, int> mainDic = new()
+            //{
+            //    [new Color(51, 76, 117)] = skarn,//334c75
+            //    [new Color(165, 58, 255)] = crystallineSkarn,//a53aff
+            //    [new Color(141, 171, 178)] = smoothSkarn,//8dabb2
+            //    [new Color(184, 230, 207)] = skarnBrick,//b8e6cf
+
+            //    [new Color(255, 239, 219)] = chalcedony,//ffefdb
+            //    [new Color(170, 228, 143)] = leafChalcedony,//aae48f
+
+            //    [new Color(241, 130, 255)] = crystallineBrick,//f182ff
+            //    [new Color(90, 100, 80)] = TileID.Chain,//5a6450
+            //    [Color.Black] = -1
+            //};
+            //Dictionary<Color, int> wallDic = new()
+            //{
+            //    [new Color(85, 183, 206)] = ModContent.WallType<Walls.Magike.SmoothSkarnWallUnsafe>(),//55b7ce
+            //    [new Color(188, 171, 150)] = ModContent.WallType<Walls.Magike.ChalcedonyWallUnsafe>(),//bcab96
+            //    [Color.Black] = -1
+            //};
+
+            //GenShrine(clearTex, shrineTex, wallTex, clearDic, mainDic, wallDic, genOrigin_x, genOrigin_y);
+
+
+            //WorldGenHelper.PlaceOnGroundDecorations_NoCheck(genOrigin_x, genOrigin_y
+            //    , 0, 0, shrineTex.Width, shrineTex.Height, (ushort)ModContent.TileType<CrystallineStalactite>(), () => 1, 3, 0);
+            //WorldGenHelper.PlaceOnGroundDecorations_NoCheck(genOrigin_x, genOrigin_y
+            //    , 0, 0, shrineTex.Width, shrineTex.Height, (ushort)ModContent.TileType<CrystallineStalactite2x2>(), () => 1, 3, 0);
+
+            //WorldGenHelper.PlaceOnGroundDecorations_NoCheck(genOrigin_x, genOrigin_y
+            //    , 0, 0, shrineTex.Width, shrineTex.Height, (ushort)ModContent.TileType<SkarnRubbles1x1>(), () => 1, 3, 0);
+            //WorldGenHelper.PlaceOnGroundDecorations_NoCheck(genOrigin_x, genOrigin_y
+            //    , 0, 0, shrineTex.Width, shrineTex.Height, (ushort)ModContent.TileType<SkarnRubbles2x1>(), () => 1, 3, 0);
+            //WorldGenHelper.PlaceOnGroundDecorations_NoCheck(genOrigin_x, genOrigin_y
+            //    , 0, 0, shrineTex.Width, shrineTex.Height, (ushort)ModContent.TileType<SkarnRubbles2x2>(), () => 1, 3, 0);
+            //WorldGenHelper.PlaceOnGroundDecorations_NoCheck(genOrigin_x, genOrigin_y
+            //    , 0, 0, shrineTex.Width, shrineTex.Height, (ushort)ModContent.TileType<SkarnRubbles3x2>(), () => 1, 3, 0);
+            //WorldGenHelper.PlaceOnGroundDecorations_NoCheck(genOrigin_x, genOrigin_y
+            //    , 0, 0, shrineTex.Width, shrineTex.Height, (ushort)ModContent.TileType<SkarnRubbles4x2>(), () => 1, 3, 0);
+        }
+
+        public T ValueByWorldSize<T>(T smallWorld,T middleWorld,T bigWorld)
+        {
+            return Main.maxTilesY switch
+            {
+                //小世界
+                < 6000 => smallWorld,
+                //中世界
+                > 6000 and < 8000 => middleWorld,
+                //大世界
+                _ => bigWorld
+            };
         }
 
         public void SaveSkyIsland(TagCompound tag)

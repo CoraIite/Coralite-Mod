@@ -1,9 +1,11 @@
 ﻿using Coralite.Core.Systems.FairyCatcherSystem;
 using ReLogic.Utilities;
 using System;
+using System.Security.Cryptography.Xml;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.Utilities;
 
 namespace Coralite.Helpers
 {
@@ -363,6 +365,17 @@ namespace Coralite.Helpers
                 value = FTWModeValue;
 
             return value;
+        }
+
+        public static Point NextInRectangleEdge(this UnifiedRandom rand, Point topLeft, Point size)
+        {
+            return rand.Next(4) switch
+            {
+                0 => new Point(topLeft.X + rand.Next(size.X), topLeft.Y),//顶部一条
+                1 => new Point(topLeft.X, topLeft.Y + rand.Next(size.Y)),//左边一条
+                2 => new Point(topLeft.X + size.X, topLeft.Y + rand.Next(size.Y)),//右边一条
+                _ => new Point(topLeft.X + rand.Next(size.X), topLeft.Y + size.Y),//底部一条
+            };
         }
 
 

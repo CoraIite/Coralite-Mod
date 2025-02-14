@@ -5243,3 +5243,18 @@ Taurus: {
 	DisplayName: 十二星-金牛座
 	Tooltip: ""
 }
+
+B94WindbreakingArrowItem: {
+	DisplayName: B9-4破风箭
+	Tooltip: 锁定附近的敌人后进行追踪
+}
+
+B94WindbreakingCompoundBow: {
+	DisplayName: B9-4破风式复合弓
+	Tooltip: 将木箭转化为B9-4破风箭
+}
+
+B9Alloy: {
+	DisplayName: B9合金
+	Tooltip: 具有坚硬，轻质，耐高温等优点的合金，适用于各类远程武器
+}

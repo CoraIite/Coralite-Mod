@@ -160,7 +160,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
                 Texture2D texture = TextureAssets.Item[ItemID.SoulofNight].Value;
                 Rectangle sourceRectangle = texture.Frame(1, 4, 0, ((int)(Main.timeForVisualEffects % 24) / 6));
 
-                Vector2 worldPos = p.ToWorldCoordinates(2,6);
+                Vector2 worldPos = p.ToWorldCoordinates(2, 6);
                 Color color = Lighting.GetColor(p.X, p.Y);
 
                 Vector2 drawPos = worldPos + offScreen - Main.screenPosition;

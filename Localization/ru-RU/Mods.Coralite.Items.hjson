@@ -5217,3 +5217,18 @@ Taurus: {
 	// DisplayName: Taurus
 	// Tooltip: ""
 }
+
+B94WindbreakingArrowItem: {
+	// DisplayName: B94 Windbreaking Arrow Item
+	// Tooltip: ""
+}
+
+B94WindbreakingCompoundBow: {
+	// DisplayName: B94 Windbreaking Compound Bow
+	// Tooltip: ""
+}
+
+B9Alloy: {
+	// DisplayName: B9 Alloy
+	// Tooltip: ""
+}

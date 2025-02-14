@@ -39,40 +39,38 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
             Vector2 center = tileRect.Center() + offset;
             Rectangle frameBox;
 
-            //没有物品就静置在基座上
-            if (item == null)
-            {
-                Vector2 restOffset = GetRestOffset(rotation, level);
-                frameBox = tex.Frame(3, 1);
-
-                spriteBatch.Draw(tex, center + restOffset, frameBox, lightColor, rotation + 1.57f, frameBox.Size() / 2, 1, 0, 0);
-                return;
-            }
-
             if (!entity.TryGetComponent(MagikeComponentID.MagikeFactory, out CraftAltar altar))
                 return;
 
             //有物品直接悬浮
-            Vector2 floatingOffset = GetFloatingOffset(rotation, level);
+            offset = GetFloatingOffset(rotation, level);
 
             Color c = lightColor;
 
-            //正在合成时就转动
-            if (altar.IsWorking && altar.ChosenResipe != null)
+            //合成中就转
+            bool working = altar.IsWorking && altar.ChosenResipe != null;
+            if (working)
             {
                 frameBox = tex.Frame(3, 1, 2);
                 rotation = (float)Main.timeForVisualEffects * 0.1f;
                 c *= (float)altar.RequiredMagike / altar.ChosenResipe.magikeCost;
             }
             else
-            {
                 frameBox = tex.Frame(3, 1, 1);
+
+            //没有物品就静置在基座上
+            if (!working)
+            {
+                offset = GetRestOffset(rotation, level);
+                frameBox = tex.Frame(3, 1);
+
+                spriteBatch.Draw(tex, center + offset, frameBox, lightColor, rotation + 1.57f, frameBox.Size() / 2, 1, 0, 0);
             }
+            else
+                spriteBatch.Draw(tex, center + offset, frameBox, lightColor, rotation + 1.57f, frameBox.Size() / 2, 1, 0, 0);
 
-            spriteBatch.Draw(tex, center + floatingOffset, frameBox, lightColor, rotation + 1.57f, frameBox.Size() / 2, 1, 0, 0);
-
-            //绘制物品
-            MagikeHelper.DrawItem(spriteBatch, item, center + floatingOffset, Math.Min(tileRect.Width, tileRect.Height), c);
+            if (item != null)
+                MagikeHelper.DrawItem(spriteBatch, item, center + offset, Math.Min(tileRect.Width, tileRect.Height), c);
         }
 
         private static Item GetFirstItem(ItemContainer container)

@@ -78,31 +78,24 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 return;
 
             //检测魔能量和条件是否足够
-            MagikeCraftAttempt attempt = new MagikeCraftAttempt();
+            //MagikeCraftAttempt attempt = new MagikeCraftAttempt();
             //ChosenResipe.CanCraft_CheckMagike(Entity.GetMagikeContainer().Magike, ref attempt);
-            ChosenResipe.CanCraft_CheckCondition(ref attempt);
+            //ChosenResipe.CanCraft_CheckCondition(ref attempt);
 
-            if (!attempt.Success)
-            {
-                PopupText.NewText(new AdvancedPopupRequest()
-                {
-                    Color = Coralite.MagicCrystalPink,
-                    Text = attempt.OutputText(),
-                    DurationInFrames = 60,
-                    Velocity = -Vector2.UnitY
-                }, Helper.GetMagikeTileCenter(Entity.Position) - (Vector2.UnitY * 32));
-                return;
-            }
+            //if (!attempt.Success)
+            //{
+            //    PopupText.NewText(new AdvancedPopupRequest()
+            //    {
+            //        Color = Coralite.MagicCrystalPink,
+            //        Text = attempt.OutputText(),
+            //        DurationInFrames = 60,
+            //        Velocity = -Vector2.UnitY
+            //    }, Helper.GetMagikeTileCenter(Entity.Position) - (Vector2.UnitY * 32));
+            //    return;
+            //}
 
             //先减少魔能
             //Entity.GetMagikeContainer().ReduceMagike(ChosenResipe.magikeCost);
-
-            if (ChosenResipe.RequiredItems != null)
-                if (!WorkCheck_CostOtherItem())
-                    return;
-
-            if (!WorkCheck_CostMainItem())//消耗主要物品与次要物品
-                return;
 
             //生成物品并放入
             switch (ItemSpawnMode)
@@ -383,6 +376,13 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             //检测物品是否能够合成
             if (!ChosenResipe.CanCraft(items, otherItems2, Entity.GetMagikeContainer().Magike, out text))
+                return false;
+
+            if (ChosenResipe.RequiredItems != null)//消耗次要物品
+                if (!WorkCheck_CostOtherItem())
+                    return false;
+
+            if (!WorkCheck_CostMainItem())//消耗主要物品
                 return false;
 
             return true;
