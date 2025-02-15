@@ -34,12 +34,6 @@ namespace Coralite.Content.WorldGeneration
                 itemCount++;
             }
 
-            Dictionary<Color, int> clearDic = new()
-            {
-                [Color.White] = -2,
-                [Color.Black] = -1
-            };
-
             Dictionary<Color, int> mainDic = new()
             {
                 [new Color(155, 173, 183)] = TileID.LeadBrick,

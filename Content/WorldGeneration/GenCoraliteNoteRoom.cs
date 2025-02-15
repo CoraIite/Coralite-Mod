@@ -75,11 +75,6 @@ namespace Coralite.Content.WorldGeneration
             Texture2D wallTex = ModContent.Request<Texture2D>(AssetDirectory.CoraliteNoteRoom + "CoraliteNoteRoomWall", AssetRequestMode.ImmediateLoad).Value;
             Texture2D wallClearTex = ModContent.Request<Texture2D>(AssetDirectory.CoraliteNoteRoom + "CoraliteNoteRoomWallClear", AssetRequestMode.ImmediateLoad).Value;
 
-            Dictionary<Color, int> clearDic = new()
-            {
-                [Color.White] = -2,
-                [Color.Black] = -1
-            };
             Dictionary<Color, int> mainDic = new()
             {
                 [new Color(215, 123, 186)] = TileID.ReefBlock,//d77bba

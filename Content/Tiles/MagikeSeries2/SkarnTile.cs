@@ -21,6 +21,8 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             Main.tileMerge[ModContent.TileType<CrystallineSkarnTile>()][Type] = true;
 
             TileID.Sets.ChecksForMerge[Type] = true;
+            TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
+            TileID.Sets.CanBeClearedDuringOreRunner[Type] = false;
 
             DustType = DustID.BorealWood_Small;
             HitSound = CoraliteSoundID.DigStone_Tink;

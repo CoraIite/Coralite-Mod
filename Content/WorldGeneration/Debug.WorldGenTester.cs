@@ -1,4 +1,5 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Items.MagikeSeries2;
+using Coralite.Core;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -41,7 +42,22 @@ namespace Coralite.Content.WorldGeneration
 
             //Main.tile.ClearEverything();
 
-            ModContent.GetInstance<CoraliteWorld>().GenMainSkyIsland(player.Center.ToTileCoordinates());
+            int x = (int)(Main.rand.NextFloat() * 100);
+            int y = (int)(Main.rand.NextFloat() * 100);
+
+            for (int i = 0; i < 100; i++)
+                for (int j = 0; j < 100; j++)
+                {
+                    float mainNoise = ModContent.GetInstance<CoraliteWorld>().MainNoise(new Vector2(x + i, y+j), new Vector2(100, 100)*5);
+                    if (mainNoise > 0.8f)
+                    {
+                        Dust d = Dust.NewDustPerfect(Main.MouseWorld + new Vector2(i, j) * 8, DustID.GemDiamond, Vector2.Zero, Scale: 2);
+                        d.noGravity = true;
+                    }
+                }
+
+
+            //ModContent.GetInstance<CoraliteWorld>().GenMainSkyIsland(player.Center.ToTileCoordinates());
             //ClearWorldTile()
 
             // Main.NewText(NPC.downedBoss3);

@@ -84,6 +84,8 @@ namespace Coralite.Core
                 if (TileSpecialDraw.IndexInRange(type))
                     TileSpecialDraw[type] = true;
             }
+
+            TileID.Sets.CanBeClearedDuringOreRunner[TileID.Chain] = false;
         }
 
         private void InitAll()

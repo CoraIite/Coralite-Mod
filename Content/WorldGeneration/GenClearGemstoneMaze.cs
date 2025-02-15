@@ -37,12 +37,6 @@ namespace Coralite.Content.WorldGeneration
             //if (itemCount > heartCount)
             //    itemCount = heartCount;
 
-            Dictionary<Color, int> clearDic = new()
-            {
-                [Color.White] = -2,
-                [Color.Black] = -1
-            };
-
             Dictionary<Color, int> mainDic = new()
             {
                 [new Color(102, 57, 49)] = TileID.Dirt,

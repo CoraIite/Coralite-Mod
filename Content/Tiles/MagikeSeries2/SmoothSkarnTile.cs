@@ -13,6 +13,9 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             Main.tileSolid[Type] = true;
             Main.tileBlockLight[Type] = true;
 
+            TileID.Sets.CanBeClearedDuringGeneration[Type] = false; 
+            TileID.Sets.CanBeClearedDuringOreRunner[Type] = false; 
+
             Main.tileMerge[Type][ModContent.TileType<SkarnTile>()] = true;
             Main.tileMerge[ModContent.TileType<SkarnTile>()][Type] = true;
 
@@ -22,7 +25,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
             DustType = DustID.BorealWood_Small;
             HitSound = CoraliteSoundID.DigStone_Tink;
-            AddMapEntry(new Color(141, 171, 178));
+            AddMapEntry(new Color(51, 76, 117));
 
             MinPick = 150;
             MineResist = 6;

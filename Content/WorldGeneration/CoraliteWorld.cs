@@ -17,6 +17,15 @@ namespace Coralite.Content.WorldGeneration
 
         public const string DigDigDigSaveKey = "digdigdig";
 
+        /// <summary>
+        /// 用于清除物块的字典
+        /// </summary>
+        internal static Dictionary<Color, int> clearDic = new()
+        {
+            [Color.White] = -2,
+            [Color.Black] = -1
+        };
+
         public override void Load()
         {
             Type t = typeof(CoraliteWorld);

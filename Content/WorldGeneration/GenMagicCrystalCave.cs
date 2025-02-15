@@ -606,11 +606,6 @@ namespace Coralite.Content.WorldGeneration
             Point lightPoint1 = new(genOrigin_x + 7, genOrigin_y + 14);
             Point lightPoint2 = new(genOrigin_x + 17, genOrigin_y + 14);
 
-            Dictionary<Color, int> clearDic = new()
-            {
-                [Color.White] = -2,
-                [Color.Black] = -1
-            };
             Dictionary<Color, int> mainDic = new()
             {
                 [new Color(255, 112, 210)] = crystalBlock,
