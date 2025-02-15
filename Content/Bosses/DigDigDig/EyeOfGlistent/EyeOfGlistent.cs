@@ -1,5 +1,7 @@
-﻿using Coralite.Content.Items.DigDigDig.EyeOfGlistent;
+﻿using Coralite.Content.Bosses.DigDigDig.Stonelime;
+using Coralite.Content.Items.DigDigDig.EyeOfGlistent;
 using Coralite.Content.Items.LandOfTheLustrousSeries;
+using Coralite.Content.NPCs.Icicle;
 using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
@@ -251,7 +253,7 @@ namespace Coralite.Content.Bosses.DigDigDig.EyeOfGlistent
                             vector2.Y += vector3.Y * 10f;
                             if (Main.netMode != NetmodeID.MultiplayerClient)
                             {
-                                int index = NPC.NewNPC(NPC.GetSource_FromAI(), (int)vector2.X, (int)vector2.Y, 5);
+                                int index = NPC.NewNPC(NPC.GetSource_FromAI(), (int)vector2.X, (int)vector2.Y, ModContent.NPCType<ServantOfGlistent>());
                                 Main.npc[index].velocity.X = vector3.X;
                                 Main.npc[index].velocity.Y = vector3.Y;
                                 if (VaultUtils.isServer && index < 200)
@@ -401,7 +403,7 @@ namespace Coralite.Content.Bosses.DigDigDig.EyeOfGlistent
                     vector6.Y += vector7.Y * 10f;
                     if (Main.netMode != NetmodeID.MultiplayerClient)
                     {
-                        int num34 = NPC.NewNPC(NPC.GetSource_FromAI(), (int)vector6.X, (int)vector6.Y, 5);
+                        int num34 = NPC.NewNPC(NPC.GetSource_FromAI(), (int)vector6.X, (int)vector6.Y, ModContent.NPCType<ServantOfGlistent>());
                         Main.npc[num34].velocity.X = vector7.X;
                         Main.npc[num34].velocity.Y = vector7.Y;
                         if (VaultUtils.isServer && num34 < 200)
@@ -882,6 +884,21 @@ namespace Coralite.Content.Bosses.DigDigDig.EyeOfGlistent
 
         public override void OnKill()
         {
+            float speed = 6f;
+
+            // Directions: Right, Left, Up, Down
+            Vector2[] directions = new Vector2[]
+            {
+                new Vector2(1, 0),  // Right
+                new Vector2(-1, 0), // Left
+                new Vector2(0, 1),  // Down
+                new Vector2(0, -1)  // Up
+            };
+
+            foreach (Vector2 direction in directions)
+            {
+                Projectile.NewProjectile(NPC.GetSource_FromAI(), NPC.Center, direction * speed, ModContent.ProjectileType<EyeOfGlistentOnKill>(), 20, 1f, Main.myPlayer);
+            }
 
             NPC.SetEventFlagCleared(ref NPC.downedBoss1, GameEventClearedID.DefeatedEyeOfCthulu);
             if (VaultUtils.isServer)

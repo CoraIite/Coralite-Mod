@@ -260,7 +260,7 @@ namespace Coralite.Content.WorldGeneration
             #region 随机挖通道，与中心小遗迹生成
 
             //主要通道，用于生成小遗迹
-            int type = WorldGen.genRand.Next(0, 1);
+            int type = 1;//WorldGen.genRand.Next(0, 1);
 
             Texture2D shrineTex = ModContent.Request<Texture2D>(AssetDirectory.Shrines + "MainSkyIslandShrine" + type, AssetRequestMode.ImmediateLoad).Value;
             Texture2D clearTex = ModContent.Request<Texture2D>(AssetDirectory.Shrines + "MainSkyIslandShrineClear" + type, AssetRequestMode.ImmediateLoad).Value;
@@ -307,7 +307,8 @@ namespace Coralite.Content.WorldGeneration
                 [new Color(85, 183, 206)] = skarnWall,//55b7ce
                 [new Color(188, 171, 150)] = ModContent.WallType<ChalcedonyWallUnsafe>(),//bcab96
                 [new Color(113, 128, 131)] = ModContent.WallType<SkarnBrickWallUnsafe>(),//718083
-                [Color.Black] = -1
+                [Color.Black] = -1,
+                [Color.White] = -2
             };
 
             //生成遗迹
