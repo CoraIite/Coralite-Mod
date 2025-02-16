@@ -48,7 +48,7 @@ namespace Coralite.Content.WorldGeneration
             for (int i = 0; i < 100; i++)
                 for (int j = 0; j < 100; j++)
                 {
-                    float mainNoise = ModContent.GetInstance<CoraliteWorld>().MainNoise(new Vector2(x + i, y+j), new Vector2(100, 100)*5);
+                    float mainNoise = ModContent.GetInstance<CoraliteWorld>().MainNoise(new Vector2(x + i, y+j), new Vector2(100, 100)*8);
                     if (mainNoise > 0.8f)
                     {
                         Dust d = Dust.NewDustPerfect(Main.MouseWorld + new Vector2(i, j) * 8, DustID.GemDiamond, Vector2.Zero, Scale: 2);

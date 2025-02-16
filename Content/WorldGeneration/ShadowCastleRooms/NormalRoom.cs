@@ -51,7 +51,7 @@ namespace Coralite.Content.WorldGeneration.ShadowCastleRooms
             {
                 rate = 32;
             }
-            if (Main.maxTilesY > 8000)
+            if (Main.maxTilesX > 8000)
             {
                 rate = 36;
             }

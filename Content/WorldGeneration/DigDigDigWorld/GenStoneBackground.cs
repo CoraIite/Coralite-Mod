@@ -38,7 +38,7 @@ namespace Coralite.Content.WorldGeneration
         {
             //生成泥沙块的球
             int ballCount;
-            if (Main.maxTilesY > 8000)
+            if (Main.maxTilesX > 8000)
                 ballCount = 1050;
             else if (Main.maxTilesX > 6000)
                 ballCount = 750;
@@ -73,7 +73,7 @@ namespace Coralite.Content.WorldGeneration
         {
             int wallCount;
 
-            if (Main.maxTilesY > 8000)
+            if (Main.maxTilesX > 8000)
                 wallCount = 1000;
             else if (Main.maxTilesX > 6000)
                 wallCount = 800;

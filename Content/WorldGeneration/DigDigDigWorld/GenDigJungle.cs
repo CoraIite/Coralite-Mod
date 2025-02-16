@@ -82,7 +82,7 @@ namespace Coralite.Content.WorldGeneration
         {
             int wallCount;
 
-            if (Main.maxTilesY > 8000)
+            if (Main.maxTilesX > 8000)
                 wallCount = 500;
             else if (Main.maxTilesX > 6000)
                 wallCount = 400;
@@ -145,7 +145,7 @@ namespace Coralite.Content.WorldGeneration
         {
             int HiveCount;
 
-            if (Main.maxTilesY > 8000)
+            if (Main.maxTilesX > 8000)
                 HiveCount = 300;
             else if (Main.maxTilesX > 6000)
                 HiveCount = 300;

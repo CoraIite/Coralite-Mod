@@ -75,7 +75,7 @@ namespace Coralite.Content.WorldGeneration
         private static void ClayBall(GenerationProgress progress)
         {
             int ballCount;
-            if (Main.maxTilesY > 8000)
+            if (Main.maxTilesX > 8000)
                 ballCount = 500;
             else if (Main.maxTilesX > 6000)
                 ballCount = 350;
@@ -112,7 +112,7 @@ namespace Coralite.Content.WorldGeneration
         {
             int wallCount;
 
-            if (Main.maxTilesY > 8000)
+            if (Main.maxTilesX > 8000)
                 wallCount = 400;
             else if (Main.maxTilesX > 6000)
                 wallCount = 300;
@@ -196,7 +196,7 @@ namespace Coralite.Content.WorldGeneration
         private static void CloudBall(GenerationProgress progress)
         {
             int ballCount;
-            if (Main.maxTilesY > 8000)
+            if (Main.maxTilesX > 8000)
                 ballCount = 800;
             else if (Main.maxTilesX > 6000)
                 ballCount = 450;
@@ -226,7 +226,7 @@ namespace Coralite.Content.WorldGeneration
         private static void RainCloudBall(GenerationProgress progress)
         {
             int ballCount;
-            if (Main.maxTilesY > 8000)
+            if (Main.maxTilesX > 8000)
                 ballCount = 650;
             else if (Main.maxTilesX > 6000)
                 ballCount = 350;

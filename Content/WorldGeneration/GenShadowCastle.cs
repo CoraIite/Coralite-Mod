@@ -64,7 +64,7 @@ namespace Coralite.Content.WorldGeneration
                 limit += 80;
                 roomCount = 50;
             }
-            if (Main.maxTilesY > 8000)
+            if (Main.maxTilesX > 8000)
             {
                 limit += 80;
                 roomCount = 60;

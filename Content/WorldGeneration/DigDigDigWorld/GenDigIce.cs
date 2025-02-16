@@ -70,7 +70,7 @@ namespace Coralite.Content.WorldGeneration
         {
             //生成雪泥块的球
             int ballCount;
-            if (Main.maxTilesY > 8000)
+            if (Main.maxTilesX > 8000)
                 ballCount = 400;
             else if (Main.maxTilesX > 6000)
                 ballCount = 150;
@@ -117,7 +117,7 @@ namespace Coralite.Content.WorldGeneration
             int spikeCount;
             int spikeMaxWidth = 30;
 
-            if (Main.maxTilesY > 8000)
+            if (Main.maxTilesX > 8000)
             {
                 spikeCount = 180;
                 spikeMaxWidth += 8;
@@ -163,7 +163,7 @@ namespace Coralite.Content.WorldGeneration
         {
             int wallCount;
 
-            if (Main.maxTilesY > 8000)
+            if (Main.maxTilesX > 8000)
                 wallCount = 400;
             else if (Main.maxTilesX > 6000)
                 wallCount = 300;
