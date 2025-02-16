@@ -650,7 +650,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         private void TryMakingSpike(Vector2 pos, Vector2 dir)
         {
-            int damage = (int)(Projectile.damage * 2.5f);
+            int damage = (int)(Projectile.damage * 3.5f);
 
             int p = Projectile.NewProjectileFromThis(pos + dir * 30, dir, ProjectileType<IceThorn>(),
                  damage, 0f, 0f, 1.3f);

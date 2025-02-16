@@ -74,7 +74,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             else
             {
                 for (int i = 0; i < 2; i++)
-                    Projectile.NewProjectile(source, player.Center, velocity.RotateByRandom(-0.2f, 0.2f), type, damage, knockback, player.whoAmI);
+                    Projectile.NewProjectile(source, player.Center, velocity.RotateByRandom(-0.1f, 0.1f), type, damage, knockback, player.whoAmI);
                 Projectile.NewProjectile(source, player.Center, velocity, type, damage, knockback, player.whoAmI);
             }
 
@@ -316,7 +316,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                         {
                             for (int i = -1; i < 2; i++)
                             {
-                                int damage = i == 0 ? (int)(Owner.GetWeaponDamage(Item) * 3f) : Owner.GetWeaponDamage(Item);
+                                int damage = i == 0 ? (int)(Owner.GetWeaponDamage(Item) * 5f) : Owner.GetWeaponDamage(Item);
                                 int p = Projectile.NewProjectileFromThis<SolunarStrike>(Projectile.Center, Vector2.Zero
                                      , damage, 10, Projectile.whoAmI);
 

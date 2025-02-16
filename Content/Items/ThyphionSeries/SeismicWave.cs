@@ -27,7 +27,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         public override void SetDefaults()
         {
             Item.SetWeaponValues(60, 8f);
-            Item.DefaultToRangedWeapon(10, AmmoID.Arrow, 27, 13f);
+            Item.DefaultToRangedWeapon(10, AmmoID.Arrow, 25, 13f);
 
             Item.rare = ItemRarityID.Pink;
             Item.useStyle = ItemUseStyleID.Rapier;
@@ -207,7 +207,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             Helper.PlayPitched(CoraliteSoundID.DungeonSpirit1_Zombie53, Projectile.Center, pitch: -0.5f);
 
             if (Owner.immuneTime < 20)
-                Owner.AddImmuneTime(ImmunityCooldownID.General, 14);
+                Owner.AddImmuneTime(ImmunityCooldownID.General, 30);
             Owner.immune = true;
 
             Main.instance.CameraModifiers.Add(new PunchCameraModifier(Projectile.Center, Vector2.UnitY, 15, 8, 15, 800));

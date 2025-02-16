@@ -29,7 +29,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         public override void SetDefaults()
         {
             Item.SetWeaponValues(44, 6f);
-            Item.DefaultToRangedWeapon(10, AmmoID.Arrow, 21, 5.3f);
+            Item.DefaultToRangedWeapon(10, AmmoID.Arrow, 21, 5.5f);
 
             Item.rare = ItemRarityID.LightRed;
             Item.useStyle = ItemUseStyleID.Rapier;

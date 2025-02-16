@@ -27,7 +27,7 @@ namespace Coralite.Content.Items.Thunder
         {
             Item.SetWeaponValues(64, 7f, 10);
             Item.DefaultToRangedWeapon(ProjectileType<ReverseFlashProj>(), AmmoID.Arrow
-                , 22, 15f, true);
+                , 20, 15f, true);
 
             Item.rare = ItemRarityID.Yellow;
             Item.useStyle = ItemUseStyleID.Rapier;
@@ -85,7 +85,7 @@ namespace Coralite.Content.Items.Thunder
                     return false;
             }
 
-            Player.GetModPlayer<CoralitePlayer>().DashDelay = 80;
+            Player.GetModPlayer<CoralitePlayer>().DashDelay = 76;
             Player.GetModPlayer<CoralitePlayer>().DashTimer = 4;
             Player.AddImmuneTime(ImmunityCooldownID.General, 5);
 
@@ -112,7 +112,7 @@ namespace Coralite.Content.Items.Thunder
                    damage / 2, Player.HeldItem.knockBack, Player.whoAmI, 5, DashDir > 0 ? 0 : 3.141f, ai2: 5);
 
                 Projectile.NewProjectile(Player.GetSource_ItemUse(Player.HeldItem), Player.Center, Vector2.Zero, ProjectileType<ReverseFlashHeldProj>(),
-                        damage, Player.HeldItem.knockBack, Player.whoAmI, 1.57f + dashDirection * 1, 1, 3);
+                        damage, Player.HeldItem.knockBack, Player.whoAmI, 1.57f + dashDirection * 1, 1, 4);
             }
 
             return true;
