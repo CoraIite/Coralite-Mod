@@ -9,6 +9,14 @@ namespace Coralite.Core.Loaders
         internal static FrozenDictionary<int, KeyKnowledge> knowledgesF;
         internal static Dictionary<int, KeyKnowledge> knowledges = [];
 
+        internal static int KnowledgeCount { get; private set; } = 0;
+
+        /// <summary>
+        /// 设置ID
+        /// </summary>
+        /// <returns></returns>
+        public static int ReserveKnowledgeID() => KnowledgeCount++;
+
         /// <summary>
         /// 根据ID获取
         /// </summary>
@@ -42,6 +50,7 @@ namespace Coralite.Core.Loaders
             }
 
             knowledgesF = null;
+            KnowledgeCount = 0;
         }
     }
 }

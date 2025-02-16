@@ -52,14 +52,28 @@ namespace Coralite.Core.Systems.KeySystem
             }
         }
 
+        /// <summary>
+        /// 检测并解锁知识，解锁时跳字
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="position"></param>
+        /// <param name="color"></param>
+        public static void CheckForUnlock<T>( Vector2 position, Color color)where T:KeyKnowledge
+        {
+            KeyKnowledge keyKnowledge = CoraliteContent.GetKKnowledge<KeyKnowledge>();
+            if (!keyKnowledge.Unlock)
+            {
+                keyKnowledge.UnlockKnowledge();
+                SpawnKnowledgeUnlockText(position, color);
+            }
+        }
+
         public override void PostSetupContent()
         {
             KeyKnowledgeLoader.SetUp();
 
             if (!Main.dedServ)
-            {
                 UILoader.GetUIState<CoraliteNoteUIState>().Init();
-            }
         }
 
         public override void PostWorldGen()

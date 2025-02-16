@@ -19,6 +19,8 @@ namespace Coralite.Core.Systems.KeySystem
         public LocalizedText LockTip { get; private set; }
         public LocalizedText Description { get; private set; }
 
+        public int InnerType {  get; private set; }
+
         /// <summary>
         /// 类型
         /// </summary>
@@ -40,8 +42,10 @@ namespace Coralite.Core.Systems.KeySystem
         {
             ModTypeLookup<KeyKnowledge>.Register(this);
 
+            InnerType = KeyKnowledgeLoader.ReserveKnowledgeID();
+
             KeyKnowledgeLoader.knowledges ??= [];
-            KeyKnowledgeLoader.knowledges.Add(Type, this);
+            KeyKnowledgeLoader.knowledges.Add(InnerType, this);
 
             if (!Main.dedServ)
             {

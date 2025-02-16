@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Bosses.Rediancie;
+using Coralite.Content.CoraliteNotes.RedJade;
 using Coralite.Core;
 using Coralite.Core.Systems.KeySystem;
 using Terraria;
@@ -38,7 +39,7 @@ namespace Coralite.Content.Items.BossSummons
 
         public override void UpdateInventory(Player player)
         {
-            KnowledgeSystem.CheckForUnlock(KeyKnowledgeID.RedJade, player.Center, Coralite.RedJadeRed);
+            KnowledgeSystem.CheckForUnlock<RedJadeKnowledge>( player.Center, Coralite.RedJadeRed);
         }
 
         public override bool CanUseItem(Player player)

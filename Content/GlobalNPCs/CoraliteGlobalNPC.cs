@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Biomes;
 using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
+using Coralite.Content.CoraliteNotes.ThunderChapter1;
 using Coralite.Content.Items.CoreKeeper;
 using Coralite.Content.Items.Donator;
 using Coralite.Content.Items.FlyingShields;
@@ -292,7 +293,7 @@ namespace Coralite.Content.GlobalNPCs
                         bool mechBoss3 = NPC.downedMechBoss3 || npc.type == NPCID.SkeletronPrime;
 
                         if (Main.netMode != NetmodeID.MultiplayerClient && Main.hardMode && mechBoss1 && mechBoss2 && mechBoss3)
-                            KnowledgeSystem.CheckForUnlock(KeyKnowledgeID.Thunder1, npc.Center, Coralite.ThunderveinYellow);
+                            KnowledgeSystem.CheckForUnlock<Thunder1Knowldege>( npc.Center, Coralite.ThunderveinYellow);
                     }
 
                     break;

@@ -32,10 +32,10 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
             //CoraliteContent.GetKKnowledge(KeyKnowledgeID.MagikeS1).Unlock = false;
             //return true;
 
-            if (!CoraliteContent.GetKKnowledge(KeyKnowledgeID.MagikeS1).Unlock)
+            if (!CoraliteContent.GetKKnowledge<MagikeS1Knowledge>().Unlock)
             {
                 MagikeSystem.learnedMagikeBase = true;
-                CoraliteContent.GetKKnowledge(KeyKnowledgeID.MagikeS1).UnlockKnowledge();
+                CoraliteContent.GetKKnowledge<MagikeS1Knowledge>().UnlockKnowledge();
                 //TODO: 同步知识改变
 
                 if (Main.myPlayer == player.whoAmI)

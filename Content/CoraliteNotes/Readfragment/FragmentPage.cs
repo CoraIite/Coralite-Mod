@@ -6,6 +6,7 @@ using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader.UI;
@@ -41,10 +42,18 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
         public static void AddFragments(FixedUIGrid grid)
         {
             //遍历知识，把所有的知识都加入进去
+            List<KeyKnowledge> knowledges = [];
 
-            for (int i = 0; i < KeyKnowledgeID.Count; i++)
+            foreach (var item in KeyKnowledgeLoader.knowledgesF)
             {
-                var slot = new FragmentSlot(i);
+                knowledges.Add(item.Value);
+            }
+
+            knowledges.Sort((k1,k2)=>k1.Type.CompareTo(k2.Type));
+
+            foreach (var item in knowledges)
+            {
+                var slot = new FragmentSlot(item.InnerType);
                 grid.Add(slot);
             }
         }

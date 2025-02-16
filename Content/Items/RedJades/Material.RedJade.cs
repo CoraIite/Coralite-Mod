@@ -1,4 +1,6 @@
-﻿using Coralite.Content.Tiles.RedJades;
+﻿using Coralite.Content.CoraliteNotes.IceDragonChapter1;
+using Coralite.Content.CoraliteNotes.RedJade;
+using Coralite.Content.Tiles.RedJades;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.KeySystem;
@@ -20,7 +22,7 @@ namespace Coralite.Content.Items.RedJades
 
         public override void UpdateInventory(Player player)
         {
-            KnowledgeSystem.CheckForUnlock(KeyKnowledgeID.RedJade, player.Center, Coralite.RedJadeRed);
+            KnowledgeSystem.CheckForUnlock<RedJadeKnowledge>(player.Center, Coralite.RedJadeRed);
         }
     }
 }

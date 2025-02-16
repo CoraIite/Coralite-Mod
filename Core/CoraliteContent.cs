@@ -21,5 +21,8 @@ namespace Coralite.Core
 
         public static KeyKnowledge GetKKnowledge(int ID)
             => KeyKnowledgeLoader.GetKeyKnowledge(ID);
+
+        public static KeyKnowledge GetKKnowledge<T>() where T : KeyKnowledge
+            => KeyKnowledgeLoader.GetKeyKnowledge(ModContent.GetInstance<T>()?.InnerType ?? 0);
     }
 }

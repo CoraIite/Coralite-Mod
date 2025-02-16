@@ -21,16 +21,16 @@ namespace Coralite.Compat.BossCheckList
                 AddBabyIceDragon(bcl);
 
                 //史莱姆皇帝
-                AddSlimeEmperor(bcl);
+                //AddSlimeEmperor(bcl);
 
                 //赤血玉灵
-                AddBloodiancie(bcl);
+                //AddBloodiancie(bcl);
 
                 //荒雷龙
                 AddThunderveinDragon(bcl);
 
                 //梦魇之花
-                AddNightmarePlantera(bcl);
+                //AddNightmarePlantera(bcl);
             }
         }
 

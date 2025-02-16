@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Items.Icicle;
+﻿using Coralite.Content.CoraliteNotes.IceDragonChapter1;
+using Coralite.Content.Items.Icicle;
 using Coralite.Core;
 using Coralite.Core.Attributes;
 using Coralite.Core.Systems.KeySystem;
@@ -101,7 +102,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             {
                 NPC.TargetClosest();
                 if (!(NPC.target < 0 || NPC.target == 255 || Target.dead || !Target.active || Target.Distance(NPC.Center) > 3000))
-                    KnowledgeSystem.CheckForUnlock(KeyKnowledgeID.IceDragon1, Target.Center, Coralite.IcicleCyan);
+                    KnowledgeSystem.CheckForUnlock<IceDragon1Knowledge>( Target.Center, Coralite.IcicleCyan);
             }
         }
 

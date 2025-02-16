@@ -1,4 +1,6 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.CoraliteNotes.MagikeChapter1;
+using Coralite.Content.CoraliteNotes.SlimeChapter1;
+using Coralite.Core;
 using Coralite.Core.Systems.KeySystem;
 using Terraria;
 using Terraria.ID;
@@ -30,7 +32,8 @@ namespace Coralite.Content.Items.Placeable
 
         public override void UpdateInventory(Player player)
         {
-            KnowledgeSystem.CheckForUnlock(KeyKnowledgeID.Slime1, player.Center, Color.SkyBlue);
+            if (CoraliteContent.GetKKnowledge<MagikeS1Knowledge>().Unlock)
+                KnowledgeSystem.CheckForUnlock<Slime1Knowledge>(player.Center, Color.SkyBlue);
         }
     }
 }
