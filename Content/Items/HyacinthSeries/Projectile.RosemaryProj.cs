@@ -67,6 +67,8 @@ namespace Coralite.Content.Items.HyacinthSeries
     {
         public override string Texture => AssetDirectory.Projectiles_Shoot + Name;
 
+        private bool span;
+
         public override void SetDefaults()
         {
             Projectile.width = Projectile.height = 16;
@@ -76,7 +78,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             Projectile.friendly = true;
             Projectile.netImportant = true;
         }
-        private bool span;
+        
         public void Initialize()
         {
             Dust.NewDustPerfect(Projectile.Center, ModContent.DustType<ArethusaPetal>(), -Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.4f, 0.4f)) * Main.rand.NextFloat(0.05f, 0.15f));

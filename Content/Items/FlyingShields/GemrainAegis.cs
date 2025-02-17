@@ -104,6 +104,7 @@ namespace Coralite.Content.Items.FlyingShields
         public override string Texture => AssetDirectory.FlyingShieldItems + "GemrainAegisProj";
 
         float alpha = 1;
+        private bool span;
 
         public override void SetStaticDefaults()
         {
@@ -126,7 +127,7 @@ namespace Coralite.Content.Items.FlyingShields
                 Projectile.localAI[0] = 20;
             return false;
         }
-        private bool span;
+        
         public void Initialize()
         {
             Projectile.frame = (int)Projectile.ai[0];
@@ -135,7 +136,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void AI()
         {
-            if (span)
+            if (!span)
             {
                 Initialize();
                 span = true;

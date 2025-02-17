@@ -15,6 +15,7 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
         BasicEffect effect;
         private Trail trail;
         public bool canDamage = true;
+        private bool span;
 
         public ref float Alpha => ref Projectile.localAI[0];
         public PlatycodonBullet1()
@@ -48,7 +49,7 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
         }
 
         public override bool? CanDamage() => canDamage;
-        private bool span;
+        
         public void Initialize()
         {
             Alpha = 1;

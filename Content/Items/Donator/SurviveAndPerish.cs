@@ -605,6 +605,7 @@ namespace Coralite.Content.Items.Donator
         public ref float State => ref Projectile.ai[1];
 
         public bool canDamage = true;
+        private bool span;
 
         public override void SetDefaults()
         {
@@ -618,7 +619,7 @@ namespace Coralite.Content.Items.Donator
             Projectile.localNPCHitCooldown = 30;
             Projectile.extraUpdates = 1;
         }
-        private bool span;
+        
         public void Initialize()
         {
             Projectile.rotation = Projectile.velocity.ToRotation();

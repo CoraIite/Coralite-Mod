@@ -17,6 +17,7 @@ namespace Coralite.Content.Items.Icicle
 
         BasicEffect effect;
         private Trail trail;
+        private bool span;
 
         public IcicleStarArrow()
         {
@@ -42,7 +43,7 @@ namespace Coralite.Content.Items.Icicle
             Projectile.ignoreWater = true;
             Projectile.coldDamage = true;
         }
-        private bool span;
+        
         public void Initialize()
         {
             Projectile.oldPos = new Vector2[16];

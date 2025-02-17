@@ -41,6 +41,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         public bool canOnlyBeHitByFantasyGod;
         public RotateTentacle[] rotateTentacles;
         public Color tentacleColor;
+        private bool span;
 
         //public static FlowerParticle[] particles_front;
         //public static FlowerParticle[] particles_ffront;
@@ -389,7 +390,6 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         #endregion
 
         #region AI
-        private bool span;
         public void Initialize()
         {
             NPC.TargetClosest(false);
@@ -414,7 +414,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public override void AI()
         {
-            if (span)
+            if (!span)
             {
                 Initialize();
                 span = true;

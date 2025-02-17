@@ -11,6 +11,7 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
         BasicEffect effect;
         private Trail trail;
         public bool canDamage = true;
+        private bool span;
 
         public ref float Alpha => ref Projectile.localAI[0];
 
@@ -44,7 +45,7 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
             Projectile.netImportant = true;
             Projectile.usesLocalNPCImmunity = true;
         }
-        private bool span;
+        
         public void Initialize()
         {
             Alpha = 1;

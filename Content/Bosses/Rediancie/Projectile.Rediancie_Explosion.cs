@@ -11,6 +11,7 @@ namespace Coralite.Content.Bosses.Rediancie
     {
         public override string Texture => AssetDirectory.Blank;
         private bool span;
+
         public override void SetDefaults()
         {
             Projectile.width = Projectile.height = 100;

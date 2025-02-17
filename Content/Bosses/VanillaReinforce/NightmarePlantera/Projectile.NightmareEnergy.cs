@@ -141,6 +141,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         private ref float Timer => ref Projectile.localAI[0];
 
         public Color drawColor;
+        private bool span;
 
         public override void SetDefaults()
         {
@@ -155,7 +156,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) => false;
         public override bool? CanHitNPC(NPC target) => false;
         public override bool? CanDamage() => false;
-        private bool span;
+
         public void Initialize()
         {
             if (ColorState < 0)
@@ -174,7 +175,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public override void AI()
         {
-            if (span)
+            if (!span)
             {
                 Initialize();
                 span = true;

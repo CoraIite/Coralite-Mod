@@ -8,6 +8,8 @@ namespace Coralite.Content.Items.RedJades
     {
         public override string Texture => AssetDirectory.Blank;
 
+        private bool span;
+
         public override void SetDefaults()
         {
             Projectile.width = Projectile.height = 64;
@@ -18,7 +20,7 @@ namespace Coralite.Content.Items.RedJades
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 10;
         }
-        private bool span;
+       
         public void Initialize()
         {
             Helper.RedJadeExplosion(Projectile.Center);

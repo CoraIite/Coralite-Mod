@@ -56,6 +56,8 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
     {
         public override string Texture => AssetDirectory.MagikeSeries1Item + "MagikeBasePage";
 
+        private bool span;
+
         public override void SetDefaults()
         {
             Projectile.width = Projectile.height = 16;
@@ -65,7 +67,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
         }
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) => false;
-        private bool span;
+        
         public void Initialize()
         {
             Projectile.rotation = Main.rand.NextFloat(6.282f);

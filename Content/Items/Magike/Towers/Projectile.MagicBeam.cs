@@ -15,6 +15,7 @@ namespace Coralite.Content.Items.Magike.Towers
 
         //private Trail trail;
         private static VertexStrip _vertexStrip = new();
+        private bool span;
 
         public override void SetStaticDefaults()
         {
@@ -33,7 +34,7 @@ namespace Coralite.Content.Items.Magike.Towers
             Projectile.usesLocalNPCImmunity = true;
             Projectile.tileCollide = true;
         }
-        private bool span;
+        
         public void Initialize()
         {
             //Projectile.oldPos = new Vector2[12];

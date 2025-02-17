@@ -24,6 +24,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         public float tentacleWidth = 15;
         public Color tencleColor;
         private bool Init = true;
+        private bool span;
 
         public override void SetDefaults()
         {
@@ -39,7 +40,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         {
             return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, originCenter);
         }
-        private bool span;
+
         public void Initialize()
         {
             originCenter = Projectile.Center;
@@ -47,7 +48,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public override void AI()
         {
-            if (span)
+            if (!span)
             {
                 Initialize();
                 span = true;

@@ -176,6 +176,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         float distanceToTarget;
         float alpha;
+        private bool span;
 
         public override void SetDefaults()
         {
@@ -186,7 +187,7 @@ namespace Coralite.Content.Items.FlyingShields
         }
 
         public override bool ShouldUpdatePosition() => State > 0;
-        private bool span;
+        
         public void Initialize()
         {
             if (!Target.GetNPCOwner(out NPC owner, Projectile.Kill))

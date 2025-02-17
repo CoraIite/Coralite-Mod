@@ -175,6 +175,7 @@ namespace Coralite.Content.Items.YujianHulu
         public ref float Width => ref Projectile.ai[1];
         public ref float Alpha => ref Projectile.localAI[1];
         public Vector2 center;
+        private bool span;
 
         public override void SetDefaults()
         {
@@ -186,7 +187,7 @@ namespace Coralite.Content.Items.YujianHulu
             Projectile.friendly = true;
             Projectile.usesLocalNPCImmunity = true;
         }
-        private bool span;
+       
         public void Initialize()
         {
             center = Projectile.Center;
@@ -194,7 +195,7 @@ namespace Coralite.Content.Items.YujianHulu
 
         public override void AI()
         {
-            if (span)
+            if (!span)
             {
                 Initialize();
                 span = true;

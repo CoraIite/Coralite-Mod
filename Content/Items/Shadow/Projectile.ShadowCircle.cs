@@ -490,6 +490,8 @@ namespace Coralite.Content.Items.Shadow
     {
         public override string Texture => AssetDirectory.Projectiles_Shoot + "HyacinthBullet2";
 
+        private bool span;
+
         public override void SetDefaults()
         {
             Projectile.width = 4;
@@ -506,7 +508,7 @@ namespace Coralite.Content.Items.Shadow
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 15;
         }
-        private bool span;
+        
         public override Color? GetAlpha(Color lightColor)
         {
             if (Projectile.alpha > 160)

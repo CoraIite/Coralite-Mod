@@ -32,6 +32,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
         public int smallBallType;
         public float ballScale = 1;
         public float ballAlpha = 1;
+        private bool span;
 
         public ShadowCircleController shadowCircle;
 
@@ -79,7 +80,6 @@ namespace Coralite.Content.Bosses.ShadowBalls
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
-        private bool span;
         #region AI
 
         public override void SendExtraAI(BinaryWriter writer)

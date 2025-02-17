@@ -10,6 +10,8 @@ namespace Coralite.Content.Items.RedJades
     {
         public override string Texture => AssetDirectory.RedJadeProjectiles + Name;
 
+        private bool span;
+
         public override void SetDefaults()
         {
             Projectile.width = 10;
@@ -23,7 +25,7 @@ namespace Coralite.Content.Items.RedJades
             Projectile.tileCollide = true;
             Projectile.ignoreWater = false;
         }
-        private bool span;
+        
         public void Initialize()
         {
             if (Main.netMode == NetmodeID.MultiplayerClient)

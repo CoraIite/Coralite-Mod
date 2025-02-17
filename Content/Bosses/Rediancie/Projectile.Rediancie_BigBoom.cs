@@ -7,6 +7,7 @@ namespace Coralite.Content.Bosses.Rediancie
     public class Rediancie_BigBoom : ModProjectile
     {
         public override string Texture => AssetDirectory.Blank;
+        private bool span;
 
         public override void SetDefaults()
         {
@@ -18,16 +19,17 @@ namespace Coralite.Content.Bosses.Rediancie
             Projectile.friendly = false;
             Projectile.hostile = true;
         }
-        private bool span;
+
         public override bool PreAI()
         {
-            if (span)
+            if (!span)
             {
                 Helper.RedJadeBigBoom(Projectile.Center);
                 span = true;
             }
             return false;
         }
+
         public override bool PreDraw(ref Color lightColor) => false;
 
         public override bool CanHitPlayer(Player target)

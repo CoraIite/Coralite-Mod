@@ -163,25 +163,17 @@ namespace Coralite.Content.Items.ThyphionSeries
                 return;
             }
 
-            if (Owner.controlUseItem)
-            {
-                Projectile.timeLeft = 2;
-                Owner.itemTime = Owner.itemAnimation = 2;
-            }
-            else
-            {
-                SoundEngine.PlaySound(CoraliteSoundID.Bow2_Item102, Owner.Center);
+            SoundEngine.PlaySound(CoraliteSoundID.Bow2_Item102, Owner.Center);
 
-                if (Projectile.IsOwnedByLocalPlayer())
-                {
-                    State = 1;
-                    Timer = 0;
-                    Projectile.timeLeft = 100;
-                    Owner.AddBuff(BuffType<CloudBonus>(), 60 * 8);
-                    Vector2 dir = Rotation.ToRotationVector2();
-                    WindCircle.Spawn(Projectile.Center + (dir * 30), -dir, Rotation, Color.White, 0.75f, 0.95f, new Vector2(1.5f, 0.8f));
-                    WindCircle.Spawn(Projectile.Center + (dir * 20), -dir, Rotation, Color.SkyBlue, 0.55f, 1.55f, new Vector2(1.5f, 0.8f));
-                }
+            if (Projectile.IsOwnedByLocalPlayer())
+            {
+                State = 1;
+                Timer = 0;
+                Projectile.timeLeft = 100;
+                Owner.AddBuff(BuffType<CloudBonus>(), 60 * 8);
+                Vector2 dir = Rotation.ToRotationVector2();
+                WindCircle.Spawn(Projectile.Center + (dir * 30), -dir, Rotation, Color.White, 0.75f, 0.95f, new Vector2(1.5f, 0.8f));
+                WindCircle.Spawn(Projectile.Center + (dir * 20), -dir, Rotation, Color.SkyBlue, 0.55f, 1.55f, new Vector2(1.5f, 0.8f));
             }
         }
 

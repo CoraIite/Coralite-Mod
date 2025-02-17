@@ -27,6 +27,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 
         public float xVel;
         public float yVel;
+        private bool span;
 
         public override void SetStaticDefaults()
         {
@@ -60,10 +61,10 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
         }
 
         public override bool? CanFallThroughPlatforms() => NPC.Center.Y < (Main.player[NPC.target].Center.Y - NPC.height);
-        private bool span;
+        
         public override void AI()
         {
-            if (span)
+            if (!span)
             {
                 Scale = Vector2.One;
                 span = true;

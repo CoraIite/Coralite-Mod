@@ -19,6 +19,7 @@ namespace Coralite.Content.Items.RedJades
         public float ReadyRotation;
         public bool rightClick;
         public int originDamage;
+        private bool span;
 
         public override void SetStaticDefaults()
         {
@@ -53,7 +54,7 @@ namespace Coralite.Content.Items.RedJades
         public override bool OnTileCollide(Vector2 oldVelocity) => false;
 
         #region AI
-        private bool span;
+        
         public void Initialize()
         {
             originDamage = Projectile.originalDamage;

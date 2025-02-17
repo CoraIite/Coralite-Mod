@@ -1,9 +1,9 @@
 ﻿using Coralite.Content.Items.Gels;
 using Coralite.Core;
+using Coralite.Core.Attributes;
 using Coralite.Core.Systems.BossSystems;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using System;
 using System.IO;
 using Terraria;
@@ -41,6 +41,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
     ///                            ---————————————----
     /// </summary>
     [AutoloadBossHead]
+    [AutoLoadTexture(Path= AssetDirectory.SlimeEmperor)]
     public partial class SlimeEmperor : ModNPC
     {
         public override string Texture => AssetDirectory.SlimeEmperor + Name;
@@ -71,8 +72,10 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
         /// <summary> 纯属视觉效果的缩放 </summary>
         internal Vector2 Scale;
         private CrownDatas crown;
+        private bool span;
 
-        private static Asset<Texture2D> CrownTex;
+        [AutoLoadTexture(Name = "SlimeEmperorCrown")]
+        public static ATex CrownTex { get; private set; }
         private const int WidthMax = 158;
         private const int HeightMax = 100;
 
@@ -210,14 +213,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             if (Main.dedServ)
                 return;
 
-            CrownTex = Request<Texture2D>(AssetDirectory.SlimeEmperor + "SlimeEmperorCrown");
             //王冠gore
             GoreLoader.AddGoreFromTexture<SimpleModGore>(Mod, AssetDirectory.SlimeEmperor + "SlimeEmperorCrown");
-        }
-
-        public override void Unload()
-        {
-            CrownTex = null;
         }
 
         public override void OnKill()
@@ -258,7 +255,6 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
         #endregion
 
         #region AI
-        private bool span;
         public void Initialize()
         {
             //CanUseHealGelBall = true;

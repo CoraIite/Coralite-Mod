@@ -279,13 +279,14 @@ namespace Coralite.Content.Items.YujianHulu
         public override string Texture => AssetDirectory.YujianHulu + "ShadowYujian";
 
         public ref float Timer => ref Projectile.localAI[0];
+        private bool span;
 
         public override void SetDefaults()
         {
             Projectile.width = Projectile.height = 48;
             Projectile.friendly = true;
         }
-        private bool span;
+        
         public void Initialize()
         {
             for (int i = 0; i < 16; i++)

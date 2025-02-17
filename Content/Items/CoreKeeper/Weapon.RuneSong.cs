@@ -703,6 +703,8 @@ namespace Coralite.Content.Items.CoreKeeper
     {
         public override string Texture => AssetDirectory.Blank;
 
+        private bool span;
+
         public override void SetDefaults()
         {
             Projectile.timeLeft = 90;
@@ -712,7 +714,7 @@ namespace Coralite.Content.Items.CoreKeeper
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) => false;
         public override bool? CanDamage() => false;
-        private bool span;
+        
         public void Initialize()
         {
             var source2 = Projectile.GetSource_FromAI();

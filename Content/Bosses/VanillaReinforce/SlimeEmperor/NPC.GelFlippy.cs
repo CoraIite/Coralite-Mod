@@ -16,6 +16,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
         private Player Target => Main.player[NPC.target];
 
         private ref float Timer => ref NPC.ai[0];
+        private bool span;
 
         public override void SetStaticDefaults()
         {
@@ -39,7 +40,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 
         public override bool CanHitNPC(NPC target) => false;
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
-        private bool span;
+
         public void Initialize()
         {
             NPC.ai[1] = -300 + Main.rand.Next(-80, 80);
@@ -47,11 +48,12 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 
         public override void AI()
         {
-            if (span)
+            if (!span)
             {
                 Initialize();
                 span = true;
             }
+
             if (NPC.target < 0 || NPC.target == 255 || Target.dead || !Target.active || Target.Distance(NPC.Center) > 2000)
             {
                 NPC.TargetClosest();

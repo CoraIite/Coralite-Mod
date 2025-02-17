@@ -456,6 +456,7 @@ namespace Coralite.Content.Items.Corruption
 
         private Vector2 offset;
         private float alpha;
+        private bool span;
 
         public override void SetDefaults()
         {
@@ -473,7 +474,7 @@ namespace Coralite.Content.Items.Corruption
 
             Projectile.DamageType = DamageClass.Summon;
         }
-        private bool span;
+        
         public void Initialize()
         {
             Projectile.rotation = Projectile.velocity.ToRotation();

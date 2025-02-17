@@ -14,6 +14,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         public override string Texture => AssetDirectory.Blank;
 
         public Vector2 originCenter;
+        private bool span;
 
         public ref float State => ref Projectile.ai[0];
         public ref float Timer => ref Projectile.localAI[0];
@@ -38,10 +39,10 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         {
             return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center, originCenter);
         }
-        private bool span;
+
         public override void AI()
         {
-            if (span)
+            if (!span)
             {
                 originCenter = Projectile.Center;
                 span = true;

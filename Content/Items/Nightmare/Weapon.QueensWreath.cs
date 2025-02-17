@@ -902,6 +902,7 @@ namespace Coralite.Content.Items.Nightmare
 
         public ref float State => ref Projectile.ai[0];
         public bool CanGetNightmareEnergy => Projectile.ai[1] == 1;
+        private bool span;
 
         public override void SetStaticDefaults()
         {
@@ -933,7 +934,7 @@ namespace Coralite.Content.Items.Nightmare
             if (CanGetNightmareEnergy && Main.player[Projectile.owner].TryGetModPlayer(out CoralitePlayer cp))
                 cp.GetNightmareEnergy(1);
         }
-        private bool span;
+        
         public void Initialize()
         {
             Projectile.frame = Main.rand.Next(6);

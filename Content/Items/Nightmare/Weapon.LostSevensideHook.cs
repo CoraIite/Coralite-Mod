@@ -524,6 +524,7 @@ namespace Coralite.Content.Items.Nightmare
         public Player Owner => Main.player[Projectile.owner];
 
         private Trail trail;
+        private bool span;
 
         public override void SetDefaults()
         {
@@ -536,7 +537,7 @@ namespace Coralite.Content.Items.Nightmare
             Projectile.friendly = true;
             Projectile.netImportant = true;
         }
-        private bool span;
+        
         public void Initialize()
         {
             Projectile.oldPos = new Vector2[16];

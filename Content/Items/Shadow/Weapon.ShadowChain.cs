@@ -598,6 +598,7 @@ namespace Coralite.Content.Items.Shadow
         public ref float Alpha => ref Projectile.ai[2];
 
         public int maxTime;
+        private bool span;
 
         public override void SetDefaults()
         {
@@ -611,7 +612,7 @@ namespace Coralite.Content.Items.Shadow
             Projectile.friendly = true;
             Projectile.netImportant = true;
         }
-        private bool span;
+        
         public void Initialize()
         {
             maxTime = Main.player[Projectile.owner].itemTimeMax + 20;
