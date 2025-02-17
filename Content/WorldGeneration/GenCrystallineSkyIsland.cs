@@ -285,8 +285,8 @@ namespace Coralite.Content.WorldGeneration
 
             #endregion
 
-            int xExpand = 8;
-            int yExpand = 8;
+            int xExpand = ValueByWorldSize(8,10,12);
+            int yExpand = ValueByWorldSize(8, 12, 16);
             Point mainIslandOutTopLeft = mainIslandTopLeft - new Point(xExpand, yExpand);
             Point mainIslandOutSize = mainIslandSize + new Point(xExpand * 2, yExpand * 2);
             //空岛外缘的矩形
@@ -375,20 +375,29 @@ namespace Coralite.Content.WorldGeneration
             int tunnelDir = WorldGen.genRand.NextFromList(-1, 1);
 
             //挖通道的中心点，挖主要通道
-            Point tunnelCenter = tunnelDir > 0 ? (shrineTopLeft + new Point(27, 12)) : (shrineTopLeft + new Point(0, 12));
-            DigSkyIslandTunnel(outerRect, shrineRect, tunnelCenter, 0, tunnelDir, GetTunnelLength, true);
+            DigSkyIslandTunnel(outerRect, shrineRect, shrineTopLeft + new Point(27, 12), 0, 1, GetTunnelLength, true);
+            DigSkyIslandTunnel(outerRect, shrineRect, shrineTopLeft + new Point(0, 12), 0, -1, GetTunnelLength, true);
 
             int tunnelCount = ValueByWorldSize(5, 8, 12);
+            float randDir = WorldGen.genRand.NextFloat(6.282f);
 
             for (int i = 0; i < tunnelCount; i++)
             {
-                for (int k = 0; k < 20000; k++)//尝试20000次
+                Vector2 dir = (randDir + MathHelper.TwoPi / tunnelCount * i).ToRotationVector2();
+
+                for (int k = 0; k < 5000; k++)//尝试20000次
                 {
-                    Point tunnelP1;
-                    do
+                    Point tunnelP1 = innerRect.Center
+                            + (dir * WorldGen.genRand.NextVector2Circular(innerRect.Width / 2, innerRect.Height / 2).Length()).ToPoint();
+
+                    for (int m = 0; m < 2000; m++)
                     {
-                        tunnelP1 = WorldGen.genRand.NextVector2FromRectangle(innerRect).ToPoint();
-                    } while (!Main.tile[tunnelP1.X, tunnelP1.Y].HasTile || shrineRect.Contains(tunnelP1));
+                        if (Main.tile[tunnelP1.X, tunnelP1.Y].HasTile && !shrineRect.Contains(tunnelP1))
+                            break;
+
+                        tunnelP1 = innerRect.Center
+                            + (dir * WorldGen.genRand.NextVector2Circular(innerRect.Width / 2, innerRect.Height / 2).Length()).ToPoint();
+                    }
 
                     if (DigSkyIslandTunnel(outerRect, shrineRect, tunnelP1, WorldGen.genRand.Next(2), WorldGen.genRand.NextFromList(-1, 1), GetTunnelLength))
                         break;
@@ -400,7 +409,7 @@ namespace Coralite.Content.WorldGeneration
                 for (int j = 0; j < size; j++)
                 {
                     Point clearP = new Point(mainIslandCenter.X - size / 2 + i, mainIslandCenter.Y - size / 2 + j);
-                    if (Main.tile[clearP.X, clearP.Y].HasTile && SkyIslandTileCounter(clearP.X, clearP.Y) < 6)
+                    if (Main.tile[clearP.X, clearP.Y].HasTile && SkyIslandTileCounter(clearP.X, clearP.Y) < 8)
                         SkyIslandTileCounterKill();
                 }
 
@@ -490,13 +499,13 @@ namespace Coralite.Content.WorldGeneration
         /// <param name="tunnelCenter">从哪开始挖</param>
         /// <param name="digType">初始挖掘类型， 横向或竖向，0为竖向，1为横向</param>
         /// <param name="tunnelLength">初始挖多长</param>
-        public bool DigSkyIslandTunnel(Rectangle outerRect, Rectangle shrineRect, Point tunnelCenter, int digType,int tunnelDir, Func<int> getTunnelLength, bool ignoreFirstDig = false)
+        public bool DigSkyIslandTunnel(Rectangle outerRect, Rectangle shrineRect, Point tunnelCenter, int digType, int tunnelDir, Func<int> getTunnelLength, bool ignoreFirstDig = false)
         {
-            int tunnelWidth = WorldGen.genRand.Next(5, 7);
+            int tunnelWidth = ValueByWorldSize(WorldGen.genRand.Next(3, 6), WorldGen.genRand.Next(4, 6), WorldGen.genRand.Next(4, 7));
             int tunnelLength = getTunnelLength();
             int digCount = 0;
             //计时器，每挖掘多少距离就开始随机一次中心点偏移
-            int digRandRecord = WorldGen.genRand.Next(6, 10);
+            int digRandRecord = WorldGen.genRand.Next(4, 10);
             //中心点偏移，随机偏移-1至1格
             int digRandPos = 0;
 
@@ -515,7 +524,12 @@ namespace Coralite.Content.WorldGeneration
                                 if (digRandRecord < 0)
                                 {
                                     digRandRecord = WorldGen.genRand.Next(6, 10);
-                                    digRandPos = WorldGen.genRand.Next(-1, 2);
+                                    digRandPos = digRandPos switch
+                                    {
+                                        -1 => 0,
+                                        0 => WorldGen.genRand.NextFromList(-1, 1),
+                                        _ => 0,
+                                    };
                                 }
 
                                 //遇到遗迹了就退出
@@ -531,7 +545,10 @@ namespace Coralite.Content.WorldGeneration
 
                             //横向挖完就竖向挖
                             digType = 1;
-                            tunnelDir = outerRect.Center.Y > tunnelCenter.Y ? -1 : 1;
+                            tunnelDir = WorldGen.genRand.NextBool(8) ?
+                                WorldGen.genRand.NextFromList(-1, 1) 
+                                : (outerRect.Center.Y > tunnelCenter.Y ? -1 : 1);
+                            tunnelCenter.Y -= tunnelDir * tunnelWidth / 2;
                             tunnelLength = getTunnelLength();
                             digCount++;
                         }
@@ -545,7 +562,12 @@ namespace Coralite.Content.WorldGeneration
                                 if (digRandRecord < 0)
                                 {
                                     digRandRecord = WorldGen.genRand.Next(6, 10);
-                                    digRandPos = WorldGen.genRand.Next(-1, 2);
+                                    digRandPos = digRandPos switch
+                                    {
+                                        -1 => 0,
+                                        0 => WorldGen.genRand.NextFromList(-1, 1),
+                                        _ => 0,
+                                    };
                                 }
 
                                 if (!(ignoreFirstDig && digCount == 0))
@@ -560,7 +582,10 @@ namespace Coralite.Content.WorldGeneration
 
                             //竖向挖完就横向挖
                             digType = 0;
-                            tunnelDir = outerRect.Center.X > tunnelCenter.X ? -1 : 1;
+                            tunnelDir = WorldGen.genRand.NextBool(8) ?
+                                WorldGen.genRand.NextFromList(-1, 1)
+                                : (outerRect.Center.X > tunnelCenter.X ? -1 : 1);
+                            tunnelCenter.X -= tunnelDir * tunnelWidth / 2;
                             tunnelLength = getTunnelLength();
                             digCount++;
                         }
@@ -594,7 +619,8 @@ namespace Coralite.Content.WorldGeneration
 
         public static void SkyIslandTileCounterNext(int x, int y)
         {
-            if (tileCounterNum >= tileCounterMax || x < 5 || x > Main.maxTilesX - 5 || y < 5 || y > Main.maxTilesY - 5 || !Main.tile[x, y].HasTile || !Main.tileSolid[Main.tile[x, y].TileType])
+            if (tileCounterNum >= tileCounterMax || x < 5 || x > Main.maxTilesX - 5 || y < 5 || y > Main.maxTilesY - 5 
+                || !Main.tile[x, y].HasTile || !Main.tileSolid[Main.tile[x, y].TileType]|| (Main.tile[x, y].TileType!=ModContent.TileType<SkarnTile>()&& Main.tile[x, y].TileType != ModContent.TileType<SmoothSkarnTile>()))
                 return;
 
             for (int i = 0; i < tileCounterNum; i++)
