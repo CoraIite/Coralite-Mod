@@ -170,20 +170,20 @@ namespace Coralite.Content.Items.Misc_Melee
 
         public override void AddRecipes()
         {
-            CreateRecipe()
-            .AddIngredient(ItemID.LicenseCat)
-            .AddIngredient(ItemID.Ruby)
-            .AddIngredient(ItemID.Wood, 20)
-            .AddIngredient(ItemID.RichMahogany, 20)
-            .AddIngredient(ItemID.Ebonwood, 20)
-            .AddIngredient(ItemID.Shadewood, 20)
-            .AddIngredient(ItemID.Pearlwood, 20)
-            .AddIngredient(ItemID.BorealWood, 20)
-            .AddIngredient(ItemID.PalmWood, 20)
-            .AddIngredient(ItemID.SpookyWood, 20)
-            .AddIngredient(ItemID.DynastyWood, 20)
-            .AddTile(TileID.MythrilAnvil)
-            .Register();
+            //CreateRecipe()
+            //.AddIngredient(ItemID.LicenseCat)
+            //.AddIngredient(ItemID.Ruby)
+            //.AddIngredient(ItemID.Wood, 20)
+            //.AddIngredient(ItemID.RichMahogany, 20)
+            //.AddIngredient(ItemID.Ebonwood, 20)
+            //.AddIngredient(ItemID.Shadewood, 20)
+            //.AddIngredient(ItemID.Pearlwood, 20)
+            //.AddIngredient(ItemID.BorealWood, 20)
+            //.AddIngredient(ItemID.PalmWood, 20)
+            //.AddIngredient(ItemID.SpookyWood, 20)
+            //.AddIngredient(ItemID.DynastyWood, 20)
+            //.AddTile(TileID.MythrilAnvil)
+            //.Register();
         }
     }
 
@@ -209,7 +209,7 @@ namespace Coralite.Content.Items.Misc_Melee
             Projectile.height = 62;
             distanceToOwner = 10;
             minTime = 0;
-            TrailTexture = AssetDirectory.VFX + "ClawSlash3aYellow";
+            TrailTexture = AssetDirectory.Trails + "ClawSlash3AYellow";
             onHitFreeze = 20;
         }
 

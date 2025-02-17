@@ -40,33 +40,30 @@ namespace Coralite.Content.Items.Shadow
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (Main.myPlayer == player.whoAmI)
+            if (player.altFunctionUse == 2)
             {
-                if (player.altFunctionUse == 2)
+                foreach (var proj in Main.projectile.Where(p => p.active && p.owner == player.whoAmI && p.type == ProjectileType<ShadowChainSpecial>()))
                 {
-                    foreach (var proj in Main.projectile.Where(p => p.active && p.owner == player.whoAmI && p.type == ProjectileType<ShadowChainSpecial>()))
+                    if ((int)proj.ai[2] == (int)BaseSilkKnifeSpecialProj.AIStates.onHit)
                     {
-                        if ((int)proj.ai[2] == (int)BaseSilkKnifeSpecialProj.AIStates.onHit)
-                        {
-                            for (int i = 0; i < proj.localNPCImmunity.Length; i++)
-                                proj.localNPCImmunity[i] = 0;
+                        for (int i = 0; i < proj.localNPCImmunity.Length; i++)
+                            proj.localNPCImmunity[i] = 0;
 
-                            proj.ai[2] = (int)BaseSilkKnifeSpecialProj.AIStates.drag;
-                            proj.netUpdate = true;
-                        }
-                        return false;
+                        proj.ai[2] = (int)BaseSilkKnifeSpecialProj.AIStates.drag;
+                        proj.netUpdate = true;
                     }
-
-                    //生成弹幕
-                    Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<ShadowChainSpecial>(), (int)(damage * 1.4f), knockback, player.whoAmI);
                     return false;
                 }
 
-                Projectile.NewProjectile(source, player.Center, Vector2.Zero, type, damage, knockback, player.whoAmI, -1, combo);
-                combo++;
-                if (combo > 3)
-                    combo = 0;
+                //生成弹幕
+                Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<ShadowChainSpecial>(), (int)(damage * 1.4f), knockback, player.whoAmI);
+                return false;
             }
+
+            Projectile.NewProjectile(source, player.Center, Vector2.Zero, type, damage, knockback, player.whoAmI, -1, combo);
+            combo++;
+            if (combo > 3)
+                combo = 0;
 
             return false;
         }
@@ -168,7 +165,7 @@ namespace Coralite.Content.Items.Shadow
             return base.GetStartAngle();
         }
 
-        protected override void InitializeSwing()
+        protected override void InitBasicValues()
         {
             if (Projectile.IsOwnedByLocalPlayer())
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
@@ -258,8 +255,14 @@ namespace Coralite.Content.Items.Shadow
                         , Projectile.damage, 0, Projectile.owner, index, 4, vel.ToRotation());
                 }
             }
+            else
+                Projectile.hide = false;
+        }
 
-            base.InitializeSwing();
+        protected override void AIBefore()
+        {
+            if (!Main.projectile.IndexInRange((int)OwnerIndex))
+                base.AIBefore();
         }
 
         protected override void OnSlash()

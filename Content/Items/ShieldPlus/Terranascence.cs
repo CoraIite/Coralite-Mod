@@ -193,7 +193,7 @@ namespace Coralite.Content.Items.ShieldPlus
                 CheckGuardProj(Player.GetModPlayer<CoralitePlayer>(), Player);
 
                 if (cp.TryGetFlyingShieldGuardProj(out BaseFlyingShieldGuard flyingShieldGuard)
-                && flyingShieldGuard.CanDash())
+                    && flyingShieldGuard.CanDash())
                 {
                     SoundEngine.PlaySound(CoraliteSoundID.WhipSwing_Item152, Player.Center);
 

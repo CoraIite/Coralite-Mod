@@ -43,6 +43,8 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
         public float extraRotation;
         public float DistanceToOwner = 0;
 
+        public bool dashInit = false;
+
         public int[] localProjectileImmunity = new int[Main.maxProjectiles];
 
         public IFlyingShieldAccessory_Guard dashFunction;
@@ -107,9 +109,13 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
             UpdateShieldAccessory(accessory => accessory.OnGuardInitialize(this));
             LimitFields();
 
-            Timer = parryTime;
             Projectile.rotation = Projectile.velocity.ToRotation();
-            InitState();
+
+            if (!dashInit)
+            {
+                Timer = parryTime;
+                InitState();
+            }
         }
 
         public virtual void LimitFields()
@@ -395,6 +401,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
         /// <param name="dashFunction"></param>
         public virtual void TurnToDashing(IFlyingShieldAccessory dashFunction, int dashTime, float dashDir, float dashSpeed)
         {
+            dashInit = true;
             this.dashFunction = dashFunction;
             State = (int)GuardState.Dashing;
             DistanceToOwner = GetWidth();

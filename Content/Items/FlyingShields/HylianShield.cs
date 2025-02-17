@@ -44,6 +44,7 @@ namespace Coralite.Content.Items.FlyingShields
                 flyingShieldGuard.DistanceToOwner = flyingShieldGuard.GetWidth();
                 flyingShieldGuard.Projectile.velocity = dashDirection.ToRotationVector2() * 9f;
                 flyingShieldGuard.Projectile.rotation = dashDirection;
+                flyingShieldGuard.dashInit = true;
 
                 Player.GetModPlayer<CoralitePlayer>().DashTimer = 75;
                 Player.GetModPlayer<CoralitePlayer>().DashDelay = 75;
@@ -362,13 +363,13 @@ namespace Coralite.Content.Items.FlyingShields
 
         public void Sliding()
         {
-            if (!DownRight)
-            {
-                Owner.velocity = Projectile.velocity;
-                Owner.velocity.Y += 0.0001f;
-                TurnToDelay();
-                return;
-            }
+            //if (!DownRight)
+            //{
+            //    Owner.velocity = Projectile.velocity;
+            //    Owner.velocity.Y += 0.0001f;
+            //    TurnToDelay();
+            //    return;
+            //}
 
             //设置玩家中心
             Projectile.tileCollide = true;
