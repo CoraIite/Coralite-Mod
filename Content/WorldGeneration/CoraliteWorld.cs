@@ -64,25 +64,53 @@ namespace Coralite.Content.WorldGeneration
             int DesertIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Micro Biomes"));
             int IceBiomeIndex = tasks.FindIndex(genpass => genpass.Name.Equals("Generate Ice Biome"));
 
-            if (ShiniesIndex != -1)
-            {
-                tasks.Insert(ShiniesIndex - 1, new PassLegacy("Coralite Basalt Small Biome", GenBasaltSmallBiome));
-                ShiniesIndex++;
-                tasks.Insert(ShiniesIndex - 1, new PassLegacy("Coralite Magic Crystal Cave", GenMagicCrystalCave));
-            }
+            //添加魔力水晶洞
+            AddGenPass(tasks, VanillaGenPassName.Shinies, "Coralite Basalt Small Biome", GenBasaltSmallBiome, 0);
+            AddGenPass(tasks, VanillaGenPassName.Shinies, "Coralite Magic Crystal Cave", GenMagicCrystalCave, 0);
 
-            int EvilBiome = tasks.FindIndex(genpass => genpass.Name.Equals("Corruption"));
-            if (EvilBiome != -1)
-            {
-                tasks.Insert(EvilBiome + 1, new PassLegacy("Coralite Evil Chest", GenEvilChest));
-            }
+            //添加邪恶箱子地形
+            AddGenPass(tasks, VanillaGenPassName.Corruption, "Coralite Evil Chest", GenEvilChest);
 
-            int Jungle = tasks.FindIndex(genpass => genpass.Name.Equals("Jungle"));
+            //添加蕴魔空岛
+            AddGenPass(tasks, VanillaGenPassName.FinalCleanup, "Coralite Crystalline Sky Island", GenCrystallineSkyIsland);
 
-            if (Jungle != -1)
-            {
-                //tasks.Insert(Jungle + 1, new PassLegacy("Coralite Crystalline Sky Island", GenCrystallineSkyIsland));
-            }
+            //添加冰龙巢穴
+            AddGenPass(tasks, VanillaGenPassName.Lakes, "Coralite Ice Dragon Nest", GenIceDragonNest);
+
+            //放置风石碑牌
+            AddGenPass(tasks, VanillaGenPassName.PlaceFallenLog, "Coralite Wind Stone Tablet", GenWindStoneTablet);
+
+            //在箱子中塞入更多战利品
+            AddGenPass(tasks, VanillaGenPassName.FinalCleanup, "Coralite Replase Vanilla Chest", ReplaceVanillaChest);
+
+            //珊瑚笔记
+            AddGenPass(tasks, VanillaGenPassName.FinalCleanup, "Coralite Note Room", GenCoraliteNoteRoom);
+
+            //符文之歌相关地形
+            AddGenPass(tasks, VanillaGenPassName.FinalCleanup, "CoreKeeper Clear Gemstone Maze", GenClearGemstoneMaze);
+            AddGenPass(tasks, VanillaGenPassName.FinalCleanup, "CoreKeeper Chipped Blade Temple", GenChippedBladeTemple);
+
+
+
+            //if (ShiniesIndex != -1)
+            //{
+            //    tasks.Insert(ShiniesIndex - 1, new PassLegacy("Coralite Basalt Small Biome", GenBasaltSmallBiome));
+            //    ShiniesIndex++;
+            //    tasks.Insert(ShiniesIndex - 1, new PassLegacy("Coralite Magic Crystal Cave", GenMagicCrystalCave));
+            //}
+
+            //int EvilBiome = tasks.FindIndex(genpass => genpass.Name.Equals("Corruption"));
+            //if (EvilBiome != -1)
+            //{
+            //    tasks.Insert(EvilBiome + 1, new PassLegacy("Coralite Evil Chest", GenEvilChest));
+            //}
+
+            //int Jungle = tasks.FindIndex(genpass => genpass.Name.Equals("Jungle"));
+
+            //if (Jungle != -1)
+            //{
+            //    tasks.Insert(Jungle + 1, new PassLegacy("Coralite Crystalline Sky Island", GenCrystallineSkyIsland));
+            //}
 
             int Dungeon = tasks.FindIndex(genpass => genpass.Name.Equals("Dungeon"));
             bool shadowCastle = ShadowCastle;
@@ -91,36 +119,36 @@ namespace Coralite.Content.WorldGeneration
                 tasks.RemoveAt(Dungeon);
             }
 
-            int Lakes = tasks.FindIndex(genpass => genpass.Name.Equals("Lakes"));
-            if (IceBiomeIndex != -1)
-            {
-                tasks.Insert(Lakes + 1, new PassLegacy("Coralite Ice Dragon Nest", GenIceDragonNest));
-            }
+            //int Lakes = tasks.FindIndex(genpass => genpass.Name.Equals("Lakes"));
+            //if (IceBiomeIndex != -1)
+            //{
+            //    tasks.Insert(Lakes + 1, new PassLegacy("Coralite Ice Dragon Nest", GenIceDragonNest));
+            //}
 
             //int MudsWallsInJungle = tasks.FindIndex(genpass => genpass.Name.Equals("Muds Walls In Jungle"));
             //if (MudsWallsInJungle!=-1)
             //{
             //}
 
-            int PlaceFallenLog = tasks.FindIndex(genpass => genpass.Name.Equals("Place Fallen Log"));
-            if (PlaceFallenLog != -1)
-            {
-                tasks.Insert(PlaceFallenLog + 1, new PassLegacy("Coralite Wind Stone Tablet", GenWindStoneTablet));
-            }
+            //int PlaceFallenLog = tasks.FindIndex(genpass => genpass.Name.Equals("Place Fallen Log"));
+            //if (PlaceFallenLog != -1)
+            //{
+            //    tasks.Insert(PlaceFallenLog + 1, new PassLegacy("Coralite Wind Stone Tablet", GenWindStoneTablet));
+            //}
 
             int FinalCleanup = tasks.FindIndex(genpass => genpass.Name.Equals("Final Cleanup"));
             if (FinalCleanup != -1)
             {
-                tasks.Insert(FinalCleanup + 1, new PassLegacy("Coralite Replase Vanilla Chest", ReplaceVanillaChest));
+                //tasks.Insert(FinalCleanup + 1, new PassLegacy("Coralite Replase Vanilla Chest", ReplaceVanillaChest));
                 if (shadowCastle)
                     tasks.Insert(FinalCleanup - 1, new PassLegacy("Coralite Shadow Castle", GenShadowCastle));
 
-                FinalCleanup = tasks.FindIndex(genpass => genpass.Name.Equals("Final Cleanup"));
-                tasks.Insert(FinalCleanup, new PassLegacy("Coralite Note Room", GenCoraliteNoteRoom));
-                FinalCleanup++;
-                tasks.Insert(FinalCleanup, new PassLegacy("CoreKeeper Clear Gemstone Maze", GenClearGemstoneMaze));
-                FinalCleanup++;
-                tasks.Insert(FinalCleanup, new PassLegacy("CoreKeeper Chipped Blade Temple", GenChippedBladeTemple));
+                //FinalCleanup = tasks.FindIndex(genpass => genpass.Name.Equals("Final Cleanup"));
+                //tasks.Insert(FinalCleanup, new PassLegacy("Coralite Note Room", GenCoraliteNoteRoom));
+                //FinalCleanup++;
+                //tasks.Insert(FinalCleanup, new PassLegacy("CoreKeeper Clear Gemstone Maze", GenClearGemstoneMaze));
+                //FinalCleanup++;
+                //tasks.Insert(FinalCleanup, new PassLegacy("CoreKeeper Chipped Blade Temple", GenChippedBladeTemple));
             }
 
             if (CoralCatWorld)
@@ -240,6 +268,21 @@ namespace Coralite.Content.WorldGeneration
             roomGenerator?.Generate(genOrigin_x, genOrigin_y, true);
             wallClearGenerator?.Generate(genOrigin_x, genOrigin_y, true);
             wallGenerator?.Generate(genOrigin_x, genOrigin_y, true);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="genPassList"></param>
+        /// <param name="findVanillaIndex"></param>
+        /// <param name="genPassName"></param>
+        /// <param name="method"></param>
+        /// <param name="addToIndex">1 表示插在后面，0 表示插在前面</param>
+        public void AddGenPass(List<GenPass> genPassList, string findVanillaIndex, string genPassName, WorldGenLegacyMethod method, int addToIndex = 1)
+        {
+            int index = genPassList.FindIndex(genpass => genpass.Name.Equals(findVanillaIndex));
+            if (index != -1)
+                genPassList.Insert(index + addToIndex, new PassLegacy(genPassName, method));
         }
     }
 }
