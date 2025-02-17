@@ -288,11 +288,13 @@ namespace Coralite.Core.Systems.YujianSystem
                 GetYujianRandomState();
                 //State = Main.rand.Next(1, yujianAIs.Length + 1);
                 //yujianAIs[(int)State - 1].OnStart(this);
+                Projectile.tileCollide = false;
             }
             else
             {
                 State = -1f;
                 Timer = 0f;
+                Projectile.tileCollide = true;
                 Projectile.netUpdate = true;
             }
         }
@@ -331,7 +333,18 @@ namespace Coralite.Core.Systems.YujianSystem
             {
                 if (Projectile.owner == Main.myPlayer)
                 {
-                    aimCenter = Main.MouseWorld;
+                    Vector2 mousePos = Main.MouseWorld;
+                    if (Collision.CanHitLine(Main.player[Projectile.owner].Center, 1, 1, mousePos, 1, 1))
+                    {
+                        aimCenter = mousePos;
+                        Projectile.netUpdate = true;
+                    }
+                    else
+                    {
+                        // If the mouse target is behind a wall, cancel the attack
+                        aimCenter = Vector2.Zero;
+                        State = -1f;
+                    }
                     Projectile.netUpdate = true;
                 }
 
@@ -339,12 +352,12 @@ namespace Coralite.Core.Systems.YujianSystem
             }
             if (targetIndex == -1)
             {
-                State = -2;
+                State = -2f;
                 return Owner.Center;
             }
             else if (!Main.npc[targetIndex].active || Main.npc[targetIndex].life < 0 || !Main.npc[targetIndex].CanBeChasedBy())
             {
-                State = -2;
+                State = -2f;
                 targetIndex = -1;
                 return Owner.Center;
             }
@@ -409,15 +422,14 @@ namespace Coralite.Core.Systems.YujianSystem
             int result = -1;
             float num = -1f;
 
-            for (int i = 0; i < 200; i++)
+            for (int i = 0; i < Main.maxNPCs; i++)
             {
                 NPC nPC = Main.npc[i];
                 if (nPC.CanBeChasedBy(Projectile))
                 {
                     float npcDistance2Owner = Vector2.Distance(ownerCenter, nPC.Center);
-                    if (npcDistance2Owner <= AttackLength &&
-                            (npcDistance2Owner <= num || num == -1f) &&
-                            Collision.CanHitLine(Projectile.Center, 1, 1, nPC.Center, 1, 1))
+                    bool hasLineOfSight = Collision.CanHitLine(ownerCenter, 1, 1, nPC.Center, 1, 1);
+                    if (npcDistance2Owner <= AttackLength && (npcDistance2Owner <= num || num == -1f) && hasLineOfSight)
                     {
                         num = npcDistance2Owner;
                         result = i;
