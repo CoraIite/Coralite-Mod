@@ -88,6 +88,12 @@ namespace Coralite.Core.Systems.YujianSystem
         {
             TooltipLine line = new(Mod, "HuluDescription", Language.GetOrRegister($"Mods.Coralite.Systems.YujianSystem.HuluDescription", () => "右键单击打开UI面板，将御剑放进栏位后可召唤出御剑").Value);
             tooltips.Add(line);
+
+            if (Main.InReforgeMenu)
+            {
+                CoralitePlayer player = Main.LocalPlayer.GetModPlayer<CoralitePlayer>();
+                player.TempYujians = this.Yujians;
+            }
         }
 
         #endregion
@@ -212,5 +218,27 @@ namespace Coralite.Core.Systems.YujianSystem
         //}
 
         #endregion
+
+        /// <summary>
+        /// 修复重铸会导致御剑消失的bug
+        /// </summary>
+        public override void PreReforge()
+        {
+            for (int i = 0; i < slotCount; i++)
+            {
+                Main.LocalPlayer.GetModPlayer<CoralitePlayer>().TempYujians[i] = this.Yujians[i];
+            }
+            base.PreReforge();
+        }
+
+        public override void PostReforge()
+        {
+            for (int i = 0; i < slotCount; i++)
+            {
+                this.Yujians[i] = Main.LocalPlayer.GetModPlayer<CoralitePlayer>().TempYujians[i];
+                Main.LocalPlayer.GetModPlayer<CoralitePlayer>().TempYujians[i] = null;
+            }
+            base.PostReforge();
+        }
     }
 }
