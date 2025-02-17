@@ -53,7 +53,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             Vector2 dir = velocity.SafeNormalize(Vector2.Zero);
             float speed = 8f;
-            int damage2 = (int)(damage * 0.3f);
+            int damage2 = (int)(damage * 0.28f);
             for (int i = -1; i < 2; i++)
             {
                 Vector2 velocity2 = dir.RotatedBy(i * 0.5f) * speed;

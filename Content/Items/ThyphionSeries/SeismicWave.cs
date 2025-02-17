@@ -26,7 +26,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public override void SetDefaults()
         {
-            Item.SetWeaponValues(60, 8f);
+            Item.SetWeaponValues(58, 8f);
             Item.DefaultToRangedWeapon(10, AmmoID.Arrow, 25, 13f);
 
             Item.rare = ItemRarityID.Pink;
@@ -53,8 +53,8 @@ namespace Coralite.Content.Items.ThyphionSeries
             Projectile.NewProjectile(new EntitySource_ItemUse(player, Item)
                 , player.Center, Vector2.Zero, ProjectileType<SeismicWaveHeldProj>(), damage, knockback, player.whoAmI, rot);
 
-            Projectile.NewProjectile(source, player.Center, velocity, type, damage, knockback, player.whoAmI);
-            Projectile.NewProjectile(source, player.Center, velocity.RotateByRandom(-0.1f, 0.1f), type, damage, knockback, player.whoAmI);
+            Projectile.NewProjectile(source, player.Center, velocity, type, (int)(damage * 0.7f), knockback, player.whoAmI);
+            Projectile.NewProjectile(source, player.Center, velocity.RotateByRandom(-0.1f, 0.1f), type, (int)(damage * 0.7f), knockback, player.whoAmI);
 
             return false;
         }

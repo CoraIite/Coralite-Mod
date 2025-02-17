@@ -32,7 +32,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         public override void SetDefaults()
         {
             Item.SetWeaponValues(63, 4f, 6);
-            Item.DefaultToRangedWeapon(10, AmmoID.Arrow, 24, 10f);
+            Item.DefaultToRangedWeapon(10, AmmoID.Arrow, 23, 11f);
 
             Item.rare = ItemRarityID.Pink;
             Item.useStyle = ItemUseStyleID.Rapier;
@@ -402,7 +402,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 Vector2 velocity = dir * 12f;
 
                 Projectile.NewProjectileFromThis<RainbowArrow>(Owner.Center, velocity
-                    , (int)(Owner.GetWeaponDamage(Item) * 1.5f), Projectile.knockBack, targetIndex ?? -1);
+                    , (int)(Owner.GetWeaponDamage(Item) * 1.6f), Projectile.knockBack, targetIndex ?? -1);
 
                 Helper.PlayPitched(CoraliteSoundID.Bow2_Item102, Owner.Center, pitchAdjust: 0.5f);
                 Helper.PlayPitched(CoraliteSoundID.StrongWinds_Item66, Owner.Center, pitchAdjust: 0.2f);
@@ -1052,6 +1052,9 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public override void Update(Player player, ref int buffIndex)
         {
+            player.GetDamage(DamageClass.Ranged) += 0.15f;
+            player.moveSpeed += 0.15f;
+
             if (Main.rand.NextBool())
             {
                 Dust d = Dust.NewDustPerfect(player.Bottom + new Vector2(Main.rand.NextFloat(-16, 16), Main.rand.NextFloat(-6, 0))

@@ -10,7 +10,7 @@ namespace Coralite.Content.Items.Steel
         public override string Texture => AssetDirectory.SteelItems + Name;
         public override void SetDefaults()
         {
-            Item.SetWeaponValues(46, 2f, 4);
+            Item.SetWeaponValues(45, 2f, 4);
             Item.DefaultToRangedWeapon(ProjectileType<B94WindbreakingArrow>(), AmmoID.Arrow, 18, 14.5f, true);
 
             Item.useStyle = ItemUseStyleID.Shoot;

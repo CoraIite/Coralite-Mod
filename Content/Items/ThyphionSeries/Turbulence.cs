@@ -34,7 +34,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         public override void SetDefaults()
         {
             Item.SetWeaponValues(34, 4f);
-            Item.DefaultToRangedWeapon(10, AmmoID.Arrow, 23, 12f);
+            Item.DefaultToRangedWeapon(10, AmmoID.Arrow, 21, 12f);
 
             Item.rare = ItemRarityID.Orange;
             Item.useStyle = ItemUseStyleID.Rapier;
@@ -210,7 +210,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                         Helper.PlayPitched(CoraliteSoundID.Bow_Item5, Projectile.Center);
 
                         Projectile.NewProjectileFromThis<TurbulenceArrow>(Owner.Center, ToMouse.SafeNormalize(Vector2.Zero) * 16
-                            , (int)(Owner.GetWeaponDamage(Item) * 1.5f), Projectile.knockBack, 1);
+                            , (int)(Owner.GetWeaponDamage(Item) * 1.75f), Projectile.knockBack, 1);
 
                         Rotation = ToMouseA;
 
