@@ -161,6 +161,7 @@ namespace Coralite.Content.WorldGeneration
             ushort skarn = (ushort)ModContent.TileType<SkarnTile>();
             ushort smoothSkarn = (ushort)ModContent.TileType<SmoothSkarnTile>();
             ushort skarnBrick = (ushort)ModContent.TileType<SkarnBrickTile>();
+            ushort CrystallineSkarn = (ushort)ModContent.TileType<CrystallineSkarnTile>();
 
             //光滑矽卡岩墙
             ushort skarnWall = (ushort)ModContent.WallType<SmoothSkarnWallUnsafe>();
@@ -307,10 +308,33 @@ namespace Coralite.Content.WorldGeneration
                     if (!t.HasTile)
                         continue;
 
-                    float mainNoise = MainNoise(new Vector2(x + i, y + j), new Vector2(size) * 8);
+                    float mainNoise = MainNoise(new Vector2(x + i, y + j), new Vector2(size) * 7);
                     if (mainNoise > 0.8f)
                         t.ResetToType(smoothSkarn);
                 }
+
+            #endregion
+
+            #region 生成蕴魔水晶矿
+
+            int crystalCount = ValueByWorldSize(WorldGen.genRand.Next(14, 20)
+                    , WorldGen.genRand.Next(24, 28)
+                    , WorldGen.genRand.Next(38, 46));
+
+            for (int i = 0; i < crystalCount; i++)
+            {
+                int crystalSize = WorldGen.genRand.Next(7, 12);
+
+                WorldUtils.Gen(
+                    WorldGen.genRand.NextVector2FromRectangle(outerRect).ToPoint(),
+                    new Shapes.Tail(crystalSize , new ReLogic.Utilities.Vector2D(0, crystalSize / 2f * 1.732f)),
+                    Actions.Chain(
+                        new Modifiers.OnlyTiles(skarn)
+                        , new Actions.ClearTile()
+                        , new Actions.PlaceTile(CrystallineSkarn)
+                        , new Actions.SetFrames())
+                    );
+            }
 
             #endregion
 
@@ -385,20 +409,21 @@ namespace Coralite.Content.WorldGeneration
             {
                 Vector2 dir = (randDir + MathHelper.TwoPi / tunnelCount * i).ToRotationVector2();
 
-                for (int k = 0; k < 5000; k++)//尝试20000次
+                //随机取点
+                Point tunnelP1 = innerRect.Center
+                        + (dir * WorldGen.genRand.NextVector2Circular(innerRect.Width / 2, innerRect.Height / 2).Length()).ToPoint();
+
+                for (int m = 0; m < 2000; m++)//检测点是否符合要求
                 {
-                    Point tunnelP1 = innerRect.Center
-                            + (dir * WorldGen.genRand.NextVector2Circular(innerRect.Width / 2, innerRect.Height / 2).Length()).ToPoint();
+                    if (Main.tile[tunnelP1.X, tunnelP1.Y].HasTile && !shrineRect.Contains(tunnelP1))
+                        break;
 
-                    for (int m = 0; m < 2000; m++)
-                    {
-                        if (Main.tile[tunnelP1.X, tunnelP1.Y].HasTile && !shrineRect.Contains(tunnelP1))
-                            break;
+                    tunnelP1 = innerRect.Center
+                        + (dir * WorldGen.genRand.NextVector2Circular(innerRect.Width / 2, innerRect.Height / 2).Length()).ToPoint();
+                }
 
-                        tunnelP1 = innerRect.Center
-                            + (dir * WorldGen.genRand.NextVector2Circular(innerRect.Width / 2, innerRect.Height / 2).Length()).ToPoint();
-                    }
-
+                for (int k = 0; k < 5000; k++)//尝试生成通道
+                {
                     if (DigSkyIslandTunnel(outerRect, shrineRect, tunnelP1, WorldGen.genRand.Next(2), WorldGen.genRand.NextFromList(-1, 1), GetTunnelLength))
                         break;
                 }
@@ -417,7 +442,74 @@ namespace Coralite.Content.WorldGeneration
             //Main.tile[mainIslandOutTopLeft.X+size, mainIslandOutTopLeft.Y+size].ResetToType(crystallineBrick);
             #endregion
 
+            #region 生成矽卡砖
 
+            //生成贯穿的矽卡砖
+            int brickCount = ValueByWorldSize(WorldGen.genRand.Next(8, 14)
+                    , WorldGen.genRand.Next(20, 28)
+                    , WorldGen.genRand.Next(30, 46)); 
+
+            for (int i = 0; i < brickCount; i++)
+            {
+                //随机找点
+                Point p = new Point(0, 0);
+
+                for (int j = 0; j < 1000; j++)//找到一个自身没物块，但是底部有物块的地方
+                {
+                    Point p2 = WorldGen.genRand.NextVector2FromRectangle(outerRect).ToPoint();
+                    if (Main.tile[p2.X, p2.Y].HasTile || !Main.tile[p2.X, p2.Y + 1].HasTile || Main.tile[p2.X, p2.Y + 1].TileType == skarnBrick || shrineRect.Contains(p2))
+                        continue;
+
+                    Dictionary<ushort, int> scan = [];
+                    WorldUtils.Gen(p2 - new Point(4, 4), new Shapes.Rectangle(4, 4)
+                        , new Actions.TileScanner(skarnBrick).Output(scan));
+                    if (scan[skarnBrick] > 0)
+                        continue;
+
+                    p = p2;
+                }
+
+                if (p == default)
+                    continue;
+
+                //额外向下的长度
+                int exY = 1;
+
+                int checkY = WorldGenHelper.CheckUpAreaEmpty(p);
+
+                //检测上方的空间，如果有空间那么就向上突起
+                if (checkY > 5)
+                    exY = WorldGen.genRand.Next(-1, 1);
+                if (checkY > 7)
+                    exY = WorldGen.genRand.Next(-3, 1);
+
+                int brickWidth = WorldGen.genRand.Next(2, 4);
+                int maxY = ValueByWorldSize(WorldGen.genRand.Next(4, 10)
+                    , WorldGen.genRand.Next(6, 14)
+                    , WorldGen.genRand.Next(8, 18));
+
+                //向下生成砖块
+                for (int k = 0; k < maxY; k++)
+                    for (int n = 0; n < brickWidth; n++)
+                    {
+                        Point brickP = p + new Point(brickWidth / 2 + n, exY + k);
+                        if (shrineRect.Contains(brickP))
+                            break;
+
+                        if (n == 0 && !Main.tile[brickP.X, brickP.Y].HasTile)
+                        {
+                            int yBottomCheck = WorldGenHelper.CheckBottomAreaEmpty(brickP);
+                            if (yBottomCheck < 5 && yBottomCheck > 2)
+                                goto spawnEnd;
+                        }
+
+                        Main.tile[brickP.X, brickP.Y].ResetToType(skarnBrick);
+                    }
+
+                spawnEnd:;
+            }
+
+            #endregion
 
             //ushort crystallineSkarn = (ushort)ModContent.TileType<CrystallineSkarnTile>();
             //ushort smoothSkarn = (ushort)ModContent.TileType<SmoothSkarnTile>();

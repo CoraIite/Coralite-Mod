@@ -28,7 +28,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             HitSound = CoraliteSoundID.DigStone_Tink;
             AddMapEntry(new Color(141, 171, 178));
 
-            MinPick = 150;
+            MinPick = 110;
             MineResist = 6;
         }
 

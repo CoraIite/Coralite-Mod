@@ -517,5 +517,39 @@ namespace Coralite.Content.WorldGeneration
                     return;
                 }
         }
+
+        /// <summary>
+        /// 向上查找物块，检测有多少格没有物块
+        /// </summary>
+        /// <param name="baseP"></param>
+        /// <param name="maxCheck"></param>
+        /// <returns></returns>
+        public static int CheckUpAreaEmpty(Point baseP,int maxCheck=10)
+        {
+            int check = 0;
+            for (int m = 0; m < maxCheck; m++)
+            {
+                if (Main.tile[baseP.X, baseP.Y - m].HasTile)
+                    break;
+
+                check++;
+            }
+
+            return check;
+        }
+
+        public static int CheckBottomAreaEmpty(Point baseP, int maxCheck = 10)
+        {
+            int check = 0;
+            for (int m = 0; m < maxCheck; m++)
+            {
+                if (Main.tile[baseP.X, baseP.Y + m].HasTile)
+                    break;
+
+                check++;
+            }
+
+            return check;
+        }
     }
 }

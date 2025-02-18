@@ -1,8 +1,11 @@
 ﻿using Coralite.Content.Items.MagikeSeries2;
+using Coralite.Content.Tiles.MagikeSeries2;
 using Coralite.Core;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.WorldBuilding;
 
 namespace Coralite.Content.WorldGeneration
 {
@@ -42,19 +45,78 @@ namespace Coralite.Content.WorldGeneration
 
             //Main.tile.ClearEverything();
 
-            int x = (int)(Main.rand.NextFloat() * 100);
-            int y = (int)(Main.rand.NextFloat() * 100);
+            //int x = (int)(Main.rand.NextFloat() * 100);
+            //int y = (int)(Main.rand.NextFloat() * 100);
 
-            for (int i = 0; i < 100; i++)
-                for (int j = 0; j < 100; j++)
-                {
-                    float mainNoise = ModContent.GetInstance<CoraliteWorld>().MainNoise(new Vector2(x + i, y+j), new Vector2(100, 100)*8);
-                    if (mainNoise > 0.8f)
-                    {
-                        Dust d = Dust.NewDustPerfect(Main.MouseWorld + new Vector2(i, j) * 8, DustID.GemDiamond, Vector2.Zero, Scale: 2);
-                        d.noGravity = true;
-                    }
-                }
+            //for (int i = 0; i < 100; i++)
+            //    for (int j = 0; j < 100; j++)
+            //    {
+            //        float mainNoise = ModContent.GetInstance<CoraliteWorld>().MainNoise(new Vector2(x + i, y+j), new Vector2(100, 100)*8);
+            //        if (mainNoise > 0.8f)
+            //        {
+            //            Dust d = Dust.NewDustPerfect(Main.MouseWorld + new Vector2(i, j) * 8, DustID.GemDiamond, Vector2.Zero, Scale: 2);
+            //            d.noGravity = true;
+            //        }
+            //    }
+
+            //int brickCount = 20;
+            //ushort skarnBrick = (ushort)ModContent.TileType<SkarnBrickTile>();
+            //Rectangle outerRect = Utils.CenteredRectangle(player.Center/16, new Vector2(100, 100));
+            //for (int i = 0; i < brickCount; i++)
+            //{
+            //    //随机找点
+            //    Point p = new Point(0, 0);
+
+            //    for (int j = 0; j < 1000; j++)//找到一个自身没物块，但是底部有物块的地方
+            //    {
+            //        Point p2 = WorldGen.genRand.NextVector2FromRectangle(outerRect).ToPoint();
+
+            //        Dictionary<ushort, int> scan = [];
+            //        WorldUtils.Gen(p2 - new Point(4, 4), new Shapes.Rectangle(4, 4)
+            //            , new Actions.TileScanner(skarnBrick).Output(scan));
+            //        if (scan[skarnBrick] > 0)
+            //            continue;
+
+            //        p = p2;
+            //    }
+
+            //    if (p == default)
+            //        continue;
+
+            //    //额外向下的长度
+            //    int exY = 1;
+
+            //    int checkY = WorldGenHelper.CheckUpAreaEmpty(p);
+
+            //    //检测上方的空间，如果有空间那么就向上突起
+            //    if (checkY > 5)
+            //        exY = WorldGen.genRand.Next(-1, 1);
+            //    if (checkY > 7)
+            //        exY = WorldGen.genRand.Next(-3, 1);
+
+            //    int brickWidth = WorldGen.genRand.Next(2, 4);
+            //    int maxY = 18;
+
+            //    //向下生成砖块
+            //    for (int k = 0; k < maxY; k++)
+            //        for (int n = 0; n < brickWidth; n++)
+            //        {
+            //            Point brickP = p + new Point(brickWidth / 2 + n, exY + k);
+
+            //            if (n == 0 && !Main.tile[brickP.X, brickP.Y].HasTile)
+            //            {
+            //                int yBottomCheck = WorldGenHelper.CheckBottomAreaEmpty(brickP);
+            //                if (yBottomCheck < 5)
+            //                    goto spawnEnd;
+            //            }
+
+            //            //Main.tile[brickP.X, brickP.Y].ClearTile();
+            //            WorldGen.KillTile(brickP.X, brickP.Y, noItem: true);
+            //            Main.tile[brickP.X, brickP.Y].ResetToType(skarnBrick);
+            //        }
+
+            //    spawnEnd:;
+            //}
 
 
             //ModContent.GetInstance<CoraliteWorld>().GenMainSkyIsland(player.Center.ToTileCoordinates());

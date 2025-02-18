@@ -28,9 +28,9 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
             DustType = DustID.BorealWood_Small;
             HitSound = CoraliteSoundID.DigStone_Tink;
-            AddMapEntry(new Color(141, 171, 178));
+            AddMapEntry(Coralite.CrystallineMagikePurple);
 
-            MinPick = 150;
+            MinPick = 110;
             MineResist = 6;
         }
 
@@ -42,11 +42,10 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             ];
         }
 
-        public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
-        {
-            TileFraming.CustomMergeFrame(i, j, Type, ModContent.TileType<SkarnTile>(), true, true, false);
-            return false;
-        }
-
+        //public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
+        //{
+        //    TileFraming.CustomMergeFrame(i, j, Type, ModContent.TileType<SkarnTile>(), true, true, false);
+        //    return false;
+        //}
     }
 }
