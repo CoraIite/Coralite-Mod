@@ -7,6 +7,7 @@ using Coralite.Content.Projectiles.Globals;
 using Coralite.Content.UI;
 using Coralite.Content.WorldGeneration;
 using Coralite.Core;
+using Coralite.Core.Systems.YujianSystem;
 using Coralite.Helpers;
 using System;
 using System.Collections.Generic;
@@ -97,6 +98,9 @@ namespace Coralite.Content.ModPlayers
         /// <summary> 宝石武器攻速加成 </summary>
         public StatModifier GemWeaponAttSpeedBonus;
 
+        /// <summary> 储存御剑葫芦 </summary>
+        public Item[] TempYujians;
+
         public override void Load()
         {
             LoadDeathReasons();
@@ -165,6 +169,7 @@ namespace Coralite.Content.ModPlayers
         {
             nightmareCount = 0;
             nightmareEnergy = 0;
+            TempYujians = new Item[BaseHulu.slotCount];
         }
 
         public override bool CanUseItem(Item item)

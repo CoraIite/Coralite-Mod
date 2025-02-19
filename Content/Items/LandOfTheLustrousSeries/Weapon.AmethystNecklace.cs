@@ -326,6 +326,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public const int TotalAttackTime = PerManaCostTime * 10;
         public const int delayTime = 20;
 
+        public ref float ProjOwner => ref Projectile.ai[0];
         public ref float Timer => ref Projectile.ai[1];
         public ref float LaserRotation => ref Projectile.ai[2];
         public ref float LaserHeight => ref Projectile.localAI[0];
@@ -333,6 +334,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public Vector2 endPoint;
         private SlotId soundSlot;
+        private bool init = true;
 
         public static Color highlightC = new(235, 201, 238);
         public static Color brightC = new(200, 123, 193);
@@ -365,25 +367,14 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void Initialize()
         {
-            if (Main.player[Projectile.owner].HeldItem.ModItem is AmethystNecklace an && an.ShootSound)
+            if (Owner.HeldItem.ModItem is AmethystNecklace an && an.ShootSound)
                 soundSlot = Helper.PlayPitched("Crystal/CrystalLaser", 0.2f, 0, Projectile.Center);
         }
 
         public override void AI()
         {
-            Projectile owner;
-            if (!Main.projectile.IndexInRange(Owner.whoAmI))
-            {
-                Projectile.Kill();
+            if (!ProjOwner.GetProjectileOwner<AmethystNecklaceProj>(out Projectile owner, Projectile.Kill))
                 return;
-            }
-
-            owner = Main.projectile[Owner.whoAmI];
-            if (!owner.active || owner.owner != Projectile.owner || owner.type != ModContent.ProjectileType<AmethystNecklaceProj>())
-            {
-                Projectile.Kill();
-                return;
-            }
 
             Projectile.Center = owner.Center;
             LaserRotation = owner.rotation;
