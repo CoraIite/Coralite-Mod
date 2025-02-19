@@ -489,25 +489,25 @@ namespace Coralite.Content.WorldGeneration
                     , WorldGen.genRand.Next(8, 18));
 
                 //向下生成砖块
-                for (int k = 0; k < maxY; k++)
-                    for (int n = 0; n < brickWidth; n++)
-                    {
-                        Point brickP = p + new Point(brickWidth / 2 + n, exY + k);
-                        if (shrineRect.Contains(brickP))
-                            break;
+                SpawnSkarnBrick(skarnBrick, shrineRect, p, exY, brickWidth, maxY);
 
-                        if (n == 0 && !Main.tile[brickP.X, brickP.Y].HasTile)
-                        {
-                            int yBottomCheck = WorldGenHelper.CheckBottomAreaEmpty(brickP);
-                            if (yBottomCheck < 5 && yBottomCheck > 2)
-                                goto spawnEnd;
-                        }
+                if (WorldGen.genRand.NextBool(3))
+                {
+                    int dir = WorldGen.genRand.NextFromList(-1, 1);
 
-                        Main.tile[brickP.X, brickP.Y].ResetToType(skarnBrick);
-                    }
+                    SpawnSkarnBrick(skarnBrick, shrineRect, p + new Point(dir * brickWidth * 2, 0), exY, brickWidth, WorldGen.genRand.Next(4,7), true);
 
-                spawnEnd:;
+                    int yoff = WorldGen.genRand.Next(1, 3);
+                    for (int m = 0; m < brickWidth * 2; m++)
+                        Main.tile[p.X + dir * m, p.Y + yoff + exY].ResetToType(skarnBrick);
+                }
             }
+
+            #endregion
+
+            #region 生成更多矽卡砖
+
+
 
             #endregion
 
@@ -573,6 +573,26 @@ namespace Coralite.Content.WorldGeneration
             //    , 0, 0, shrineTex.Width, shrineTex.Height, (ushort)ModContent.TileType<SkarnRubbles3x2>(), () => 1, 3, 0);
             //WorldGenHelper.PlaceOnGroundDecorations_NoCheck(genOrigin_x, genOrigin_y
             //    , 0, 0, shrineTex.Width, shrineTex.Height, (ushort)ModContent.TileType<SkarnRubbles4x2>(), () => 1, 3, 0);
+        }
+
+        private static void SpawnSkarnBrick(ushort skarnBrick, Rectangle shrineRect, Point p, int exY, int brickWidth, int maxY,bool skipEmptyCheck=false)
+        {
+            for (int k = 0; k < maxY; k++)
+                for (int n = 0; n < brickWidth; n++)
+                {
+                    Point brickP = p + new Point(-brickWidth / 2 + n, exY + k);
+                    if (shrineRect.Contains(brickP))
+                        break;
+
+                    if (!skipEmptyCheck && n == 0 && !Main.tile[brickP.X, brickP.Y].HasTile)
+                    {
+                        int yBottomCheck = WorldGenHelper.CheckBottomAreaEmpty(brickP);
+                        if (yBottomCheck < 6 && yBottomCheck > 3)
+                            return;
+                    }
+
+                    Main.tile[brickP.X, brickP.Y].ResetToType(skarnBrick);
+                }
         }
 
         private int GetTunnelLength()
