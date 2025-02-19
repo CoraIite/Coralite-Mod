@@ -82,10 +82,10 @@ namespace Coralite.Content.WorldGeneration
 
             ushort crystallineBrick = (ushort)ModContent.TileType<CrystallineBrickTile>();
 
-            Texture2D shrineTex = ModContent.Request<Texture2D>(AssetDirectory.Shrines + "SkarnAltars", AssetRequestMode.ImmediateLoad).Value;
-            Texture2D clearTex = ModContent.Request<Texture2D>(AssetDirectory.Shrines + "SkarnAltarsClear", AssetRequestMode.ImmediateLoad).Value;
-            Texture2D wallTex = ModContent.Request<Texture2D>(AssetDirectory.Shrines + "SkarnAltarsWall", AssetRequestMode.ImmediateLoad).Value;
-            Texture2D wallClearTex = ModContent.Request<Texture2D>(AssetDirectory.Shrines + "SkarnAltarsWallClear", AssetRequestMode.ImmediateLoad).Value;
+            Texture2D shrineTex = ModContent.Request<Texture2D>(AssetDirectory.CrystallineSkyIsland + "SkarnAltars", AssetRequestMode.ImmediateLoad).Value;
+            Texture2D clearTex = ModContent.Request<Texture2D>(AssetDirectory.CrystallineSkyIsland + "SkarnAltarsClear", AssetRequestMode.ImmediateLoad).Value;
+            Texture2D wallTex = ModContent.Request<Texture2D>(AssetDirectory.CrystallineSkyIsland + "SkarnAltarsWall", AssetRequestMode.ImmediateLoad).Value;
+            Texture2D wallClearTex = ModContent.Request<Texture2D>(AssetDirectory.CrystallineSkyIsland + "SkarnAltarsWallClear", AssetRequestMode.ImmediateLoad).Value;
 
             p -= new Point(shrineTex.Width / 2, shrineTex.Height / 2);
 
@@ -317,19 +317,64 @@ namespace Coralite.Content.WorldGeneration
 
             #region 生成蕴魔水晶矿
 
-            int crystalCount = ValueByWorldSize(WorldGen.genRand.Next(14, 20)
-                    , WorldGen.genRand.Next(24, 28)
-                    , WorldGen.genRand.Next(38, 46));
+            int crystalCount = ValueByWorldSize(WorldGen.genRand.Next(6, 10)
+                    , WorldGen.genRand.Next(12, 18)
+                    , WorldGen.genRand.Next(16, 22));
 
             for (int i = 0; i < crystalCount; i++)
             {
-                int crystalSize = WorldGen.genRand.Next(7, 12);
+                int crystalSize = WorldGen.genRand.Next(14, 17);
+                crystalSize /= 2;
+                crystalSize *= 2;
+                crystalSize++;
+
+                Point orecenter = default;
+
+                for (int j = 0; j < 1000; j++)//找到一个自身没物块，但是底部有物块的地方
+                {
+                    Point p2 = WorldGen.genRand.NextVector2FromRectangle(outerRect).ToPoint();
+                    if (!Main.tile[p2].HasTile || Main.tile[p2].TileType == CrystallineSkarn)
+                        continue;
+
+                    orecenter = p2;
+                }
+
+                if (orecenter == default)
+                    continue;
+
+                Point oreP = orecenter + new Vector2(0, -crystalSize / 4f).ToPoint();
+
+                ShapeData oreData = new ShapeData();
+                int y1 = (int)(crystalSize / 2f * 1.732f);
 
                 WorldUtils.Gen(
-                    WorldGen.genRand.NextVector2FromRectangle(outerRect).ToPoint(),
-                    new Shapes.Tail(crystalSize , new ReLogic.Utilities.Vector2D(0, crystalSize / 2f * 1.732f)),
+                    oreP,
+                    new Shapes.Tail(crystalSize, new ReLogic.Utilities.Vector2D(0, y1)),
+                    new Actions.Blank().Output(oreData));
+
+                //生成外面一圈三角形
+                WorldUtils.Gen(
+                    oreP,
+                    new ModShapes.InnerOutline(oreData),
                     Actions.Chain(
-                        new Modifiers.OnlyTiles(skarn)
+                        new Modifiers.OnlyTiles(skarn,smoothSkarn)
+                        , new Actions.ClearTile()
+                        , new Actions.PlaceTile(CrystallineSkarn)
+                        , new Actions.SetFrames())
+                    );
+
+                crystalSize /= 2;
+                crystalSize++;
+
+                oreP = orecenter + new Vector2(1, crystalSize / 4f).ToPoint();
+                int y2 = (int)(-crystalSize / 2f * 1.732f);
+
+                //生成里面的小三角形
+                WorldUtils.Gen(
+                    oreP,
+                    new Shapes.Tail(crystalSize, new ReLogic.Utilities.Vector2D(0, y2)),
+                    Actions.Chain(
+                        new Modifiers.OnlyTiles(skarn, smoothSkarn)
                         , new Actions.ClearTile()
                         , new Actions.PlaceTile(CrystallineSkarn)
                         , new Actions.SetFrames())
@@ -343,10 +388,10 @@ namespace Coralite.Content.WorldGeneration
             //主要通道，用于生成小遗迹
             int type = WorldGen.genRand.Next(0, 2);
 
-            Texture2D shrineTex = ModContent.Request<Texture2D>(AssetDirectory.Shrines + "MainSkyIslandShrine" + type, AssetRequestMode.ImmediateLoad).Value;
-            Texture2D clearTex = ModContent.Request<Texture2D>(AssetDirectory.Shrines + "MainSkyIslandShrineClear" + type, AssetRequestMode.ImmediateLoad).Value;
-            Texture2D wallTex = ModContent.Request<Texture2D>(AssetDirectory.Shrines + "MainSkyIslandShrineWall" + type, AssetRequestMode.ImmediateLoad).Value;
-            Texture2D wallClearTex = ModContent.Request<Texture2D>(AssetDirectory.Shrines + "MainSkyIslandShrineWallClear" + type, AssetRequestMode.ImmediateLoad).Value;
+            Texture2D shrineTex = ModContent.Request<Texture2D>(AssetDirectory.CrystallineSkyIsland + "MainSkyIslandShrine" + type, AssetRequestMode.ImmediateLoad).Value;
+            Texture2D clearTex = ModContent.Request<Texture2D>(AssetDirectory.CrystallineSkyIsland + "MainSkyIslandShrineClear" + type, AssetRequestMode.ImmediateLoad).Value;
+            Texture2D wallTex = ModContent.Request<Texture2D>(AssetDirectory.CrystallineSkyIsland + "MainSkyIslandShrineWall" + type, AssetRequestMode.ImmediateLoad).Value;
+            Texture2D wallClearTex = ModContent.Request<Texture2D>(AssetDirectory.CrystallineSkyIsland + "MainSkyIslandShrineWallClear" + type, AssetRequestMode.ImmediateLoad).Value;
 
             int width = shrineTex.Width;
             int height = shrineTex.Height;
@@ -415,7 +460,7 @@ namespace Coralite.Content.WorldGeneration
 
                 for (int m = 0; m < 2000; m++)//检测点是否符合要求
                 {
-                    if (Main.tile[tunnelP1.X, tunnelP1.Y].HasTile && !shrineRect.Contains(tunnelP1))
+                    if (Main.tile[tunnelP1].HasTile && !shrineRect.Contains(tunnelP1))
                         break;
 
                     tunnelP1 = innerRect.Center
@@ -434,7 +479,7 @@ namespace Coralite.Content.WorldGeneration
                 for (int j = 0; j < size; j++)
                 {
                     Point clearP = new Point(mainIslandCenter.X - size / 2 + i, mainIslandCenter.Y - size / 2 + j);
-                    if (Main.tile[clearP.X, clearP.Y].HasTile && SkyIslandTileCounter(clearP.X, clearP.Y) < 8)
+                    if (Main.tile[clearP].HasTile && SkyIslandTileCounter(clearP.X, clearP.Y) < 8)
                         SkyIslandTileCounterKill();
                 }
 
@@ -457,7 +502,7 @@ namespace Coralite.Content.WorldGeneration
                 for (int j = 0; j < 1000; j++)//找到一个自身没物块，但是底部有物块的地方
                 {
                     Point p2 = WorldGen.genRand.NextVector2FromRectangle(outerRect).ToPoint();
-                    if (Main.tile[p2.X, p2.Y].HasTile || !Main.tile[p2.X, p2.Y + 1].HasTile || Main.tile[p2.X, p2.Y + 1].TileType == skarnBrick || shrineRect.Contains(p2))
+                    if (Main.tile[p2].HasTile || !Main.tile[p2.X, p2.Y + 1].HasTile || Main.tile[p2.X, p2.Y + 1].TileType == skarnBrick || shrineRect.Contains(p2))
                         continue;
 
                     Dictionary<ushort, int> scan = [];
@@ -491,7 +536,7 @@ namespace Coralite.Content.WorldGeneration
                 //向下生成砖块
                 SpawnSkarnBrick(skarnBrick, shrineRect, p, exY, brickWidth, maxY);
 
-                if (WorldGen.genRand.NextBool(3))
+                if (WorldGen.genRand.NextBool(3))// 生成更多矽卡砖
                 {
                     int dir = WorldGen.genRand.NextFromList(-1, 1);
 
@@ -499,32 +544,200 @@ namespace Coralite.Content.WorldGeneration
 
                     int yoff = WorldGen.genRand.Next(1, 3);
                     for (int m = 0; m < brickWidth * 2; m++)
-                        Main.tile[p.X + dir * m, p.Y + yoff + exY].ResetToType(skarnBrick);
+                    {
+                        Point b2P = new Point(p.X + dir * m, p.Y + yoff + exY);
+                        if (shrineRect.Contains(b2P))
+                            break;
+
+                        Main.tile[b2P].ResetToType(skarnBrick);
+                    }
                 }
             }
 
             #endregion
 
-            #region 生成更多矽卡砖
+            #region 生成云朵和云墙
 
+            int cloudCount = ValueByWorldSize(WorldGen.genRand.Next(8, 14)
+                    , WorldGen.genRand.Next(20, 28)
+                    , WorldGen.genRand.Next(30, 46));
 
+            for (int i = 0; i < cloudCount; i++)
+            {
+                //随机找点
+                Point p = new Point(0, 0);
+
+                for (int j = 0; j < 1000; j++)//找到一个自身没物块的地方
+                {
+                    Point p2 = WorldGen.genRand.NextVector2FromRectangle(outerRect).ToPoint();
+                    if (Main.tile[p2].HasTile || shrineRect.Intersects(Utils.CenteredRectangle(p2.ToVector2(),new Vector2(8,8))))
+                        continue;
+
+                    p = p2;
+                }
+
+                if (p == default)
+                    continue;
+
+                //向外生成越来越扁的云
+                int cloudWidth = WorldGen.genRand.Next(5, 11);
+                int dir = WorldGen.genRand.NextFromList(-1, 1);
+                int cloudBallcount = WorldGen.genRand.Next(1, 4);
+
+                for (int v = 0; v < cloudBallcount; v++)
+                {
+                    float scale = 1 + v * 0.1f;
+                    float yScale = 0.8f - v * 0.2f;
+
+                    int verticalRadius = (int)((cloudWidth - 2) / 2 * yScale);
+                    if (verticalRadius < 1)
+                        verticalRadius = 1;
+
+                    int horizontalRadius = (int)(cloudWidth / 2 * scale);
+                    if (horizontalRadius < 1)
+                        horizontalRadius = 1;
+
+                    Point cloudOrigin = p + new Point(horizontalRadius * dir * v, WorldGen.genRand.Next(-verticalRadius, verticalRadius));
+
+                    if (shrineRect.Intersects(Utils.CenteredRectangle(cloudOrigin.ToVector2(), new Vector2(horizontalRadius * 2, verticalRadius * 2))))
+                        break;
+
+                    WorldUtils.Gen(
+                        cloudOrigin,
+                        new Shapes.Circle(horizontalRadius, verticalRadius),
+                        Actions.Chain(
+                            new Actions.PlaceTile(TileID.Cloud)
+                            , new Actions.SetFrames()));
+                }
+            }
+
+            int cloudWallcount = ValueByWorldSize(12, 16, 20);
+
+            for (int i = 0; i < cloudWallcount; i++)
+            {
+                //随机在边缘上取点
+                Point p1 = WorldGen.genRand.NextInRectangleEdge(mainIslandTopLeft, mainIslandSize);
+
+                int cloudWidth = WorldGen.genRand.Next(5, 11);
+                int dir = WorldGen.genRand.NextFromList(-1, 1);
+                int cloudBallcount = WorldGen.genRand.Next(2, 4);
+
+                for (int v = 0; v < cloudBallcount; v++)
+                {
+                    float scale = 1 + v * 0.1f;
+                    float yScale = 1 - v * 0.2f;
+
+                    int verticalRadius = (int)((cloudWidth - 2) / 2 * yScale);
+                    if (verticalRadius < 1)
+                        verticalRadius = 1;
+
+                    int horizontalRadius = (int)(cloudWidth / 2 * scale);
+                    if (horizontalRadius < 1)
+                        horizontalRadius = 1;
+
+                    Point cloudOrigin = p1 + new Point(horizontalRadius * dir * v, WorldGen.genRand.Next(-verticalRadius, verticalRadius));
+
+                    if (shrineRect.Intersects(Utils.CenteredRectangle(cloudOrigin.ToVector2(), new Vector2(horizontalRadius * 2, verticalRadius * 2))))
+                        break;
+
+                    WorldUtils.Gen(
+                        cloudOrigin,
+                        new Shapes.Circle(horizontalRadius, verticalRadius),
+                        Actions.Chain(
+                             new Modifiers.Blotches(1)
+                            , new Actions.PlaceWall(WallID.Cloud)
+                            , new Actions.SetFrames()));
+                }
+            }
 
             #endregion
 
-            //ushort crystallineSkarn = (ushort)ModContent.TileType<CrystallineSkarnTile>();
-            //ushort smoothSkarn = (ushort)ModContent.TileType<SmoothSkarnTile>();
-            //ushort skarnBrick = (ushort)ModContent.TileType<SkarnBrickTile>();
+            #region 生成水池
 
-            //ushort chalcedony = (ushort)ModContent.TileType<ChalcedonyTile>();
-            //ushort leafChalcedony = (ushort)ModContent.TileType<LeafChalcedonyTile>();
+            //Point poolPos = mainIslandCenter;
+            //poolPos.Y = 10;
 
-            //ushort crystallineBrick = (ushort)ModContent.TileType<CrystallineBrickTile>();
+            //for (int i = 0; i < 1000; i++)
+            //{
+            //    Tile t = Main.tile[poolPos];
+            //    if (t.HasTile && Main.tileSolid[t.TileType]&&t.TileType!=TileID.ClayBlock)//找到实心方块
+            //        break;
+
+            //    poolPos.Y++;
+            //}
+
+            //Texture2D poolTex = ModContent.Request<Texture2D>(AssetDirectory.CrystallineSkyIsland + "MainSkyIslandPool", AssetRequestMode.ImmediateLoad).Value;
+            //Texture2D poolClearTex = ModContent.Request<Texture2D>(AssetDirectory.CrystallineSkyIsland + "MainSkyIslandPoolClear", AssetRequestMode.ImmediateLoad).Value;
+            //Texture2D poolWallTex = ModContent.Request<Texture2D>(AssetDirectory.CrystallineSkyIsland + "MainSkyIslandPoolWall", AssetRequestMode.ImmediateLoad).Value;
+            //Texture2D poolWallClearTex = ModContent.Request<Texture2D>(AssetDirectory.CrystallineSkyIsland + "MainSkyIslandPoolWallClear", AssetRequestMode.ImmediateLoad).Value;
+            //Texture2D poolWaterTex = ModContent.Request<Texture2D>(AssetDirectory.CrystallineSkyIsland + "MainSkyIslandPoolWater", AssetRequestMode.ImmediateLoad).Value;
+
+            //poolPos -= new Point(poolTex.Width / 2, poolTex.Height / 2);
+
+            //GenByTexture(poolClearTex, poolTex, poolWallClearTex, poolWallTex, clearDic, mainDic, clearDic, wallDic, poolPos.X, poolPos.Y);
+            //GenLiquidByTexture(poolWaterTex, new Dictionary<Color, int>() { [Color.Black] = -1, [Color.White] = LiquidID.Water }, poolPos);
+
+            #endregion
+
+            #region 生成瀑布
+
+            int waterfallCount = ValueByWorldSize(WorldGen.genRand.Next(4, 7)
+                    , WorldGen.genRand.Next(6, 11)
+                    , WorldGen.genRand.Next(8, 16));
+
+            for (int i = 0; i < waterfallCount; i++)
+            {
+                //随机找点
+                Point p = new Point(0, 0);
+
+                for (int j = 0; j < 1000; j++)//找到一个自身没物块的地方
+                {
+                    Point p2 = WorldGen.genRand.NextVector2FromRectangle(outerRect).ToPoint();
+
+                    if (shrineRect.Contains(p2) || Main.tile[p2].TileType == skarnBrick)
+                        continue;
+
+                    Tile left = Main.tile[p2.X - 1, p2.Y];
+                    Tile right = Main.tile[p2.X + 1, p2.Y];
+                    Tile bottom = Main.tile[p2.X, p2.Y + 1];
+
+                    if (!left.HasTile || !right.HasTile || !bottom.HasTile)//左右两侧必须有物块
+                        continue;
+
+                    Tile left2 = Main.tile[p2.X - 2, p2.Y];
+                    Tile right2 = Main.tile[p2.X + 2, p2.Y];
+
+                    if (left2.HasTile && right2.HasTile)//左右两侧至少有一个没物块的地方
+                        continue;
+
+                    p = p2;
+                }
+
+                if (p == default)
+                    continue;
+
+                Main.tile[p].ClearTile();//清除物块
+                WorldGen.PlaceLiquid(p.X, p.Y, (byte)LiquidID.Water, 255);
+
+                Tile left22 = Main.tile[p.X - 2, p.Y];
+                Tile right22 = Main.tile[p.X + 2, p.Y];
+
+                if (!left22.HasTile)
+                    WorldGen.PoundTile(p.X - 1, p.Y);
+                if (!right22.HasTile)
+                    WorldGen.PoundTile(p.X + 1, p.Y);
+            }
+
+            #endregion
+
+            //Main.tile[mainIslandCenter].ResetToType(TileID.RubyGemspark);
+
 
             //ushort skarnBrickPlatform = (ushort)ModContent.TileType<SkarnBrickPlatformTile>();
 
-            //Texture2D shrineTex = ModContent.Request<Texture2D>(AssetDirectory.Shrines + "CrystallineMainIsland" + 0.ToString(), AssetRequestMode.ImmediateLoad).Value;
-            //Texture2D clearTex = ModContent.Request<Texture2D>(AssetDirectory.Shrines + "CrystallineMainIslandClear" + 0.ToString(), AssetRequestMode.ImmediateLoad).Value;
-            //Texture2D wallTex = ModContent.Request<Texture2D>(AssetDirectory.Shrines + "CrystallineMainIslandWall" + 0.ToString(), AssetRequestMode.ImmediateLoad).Value;
+            //Texture2D shrineTex = ModContent.Request<Texture2D>(AssetDirectory.CrystallineSkyIsland + "CrystallineMainIsland" + 0.ToString(), AssetRequestMode.ImmediateLoad).Value;
+            //Texture2D clearTex = ModContent.Request<Texture2D>(AssetDirectory.CrystallineSkyIsland + "CrystallineMainIslandClear" + 0.ToString(), AssetRequestMode.ImmediateLoad).Value;
+            //Texture2D wallTex = ModContent.Request<Texture2D>(AssetDirectory.CrystallineSkyIsland + "CrystallineMainIslandWall" + 0.ToString(), AssetRequestMode.ImmediateLoad).Value;
 
             //int genOrigin_x = Main.maxTilesX / 2 - (clearTex.Width / 2);
             //int genOrigin_y = 200 - (clearTex.Height / 2);
@@ -796,7 +1009,7 @@ namespace Coralite.Content.WorldGeneration
         /// <returns></returns>
         public int PickAltarX()
         {
-            return GenVars.jungleOriginX + WorldGen.genRand.Next(-60, 60);
+            return GenVars.jungleOriginX + WorldGen.genRand.Next(-30, 30);
         }
 
 

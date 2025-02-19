@@ -17,15 +17,17 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
             DustType = DustID.BorealWood_Small;
             HitSound = CoraliteSoundID.DigStone_Tink;
-            AddMapEntry(new Color(141, 171, 178));
+            AddMapEntry(new Color(214, 245, 212));
 
             MinPick = 110;
-            MineResist = 12;
+            MineResist = 7;
         }
 
         public override void NumDust(int i, int j, bool fail, ref int num)
         {
             num = fail ? 2 : 4;
         }
+
+        public override bool CanExplode(int i, int j) => false;
     }
 }

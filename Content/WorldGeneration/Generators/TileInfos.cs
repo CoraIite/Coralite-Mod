@@ -35,4 +35,14 @@ namespace Coralite.Content.WorldGeneration.Generators
             tileStyle = style;
         }
     }
+
+    public class LiquidInfo
+    {
+        public int liquidID = -1;
+
+        public LiquidInfo(int liquidID)
+        {
+            this.liquidID = liquidID;
+        }
+    }
 }

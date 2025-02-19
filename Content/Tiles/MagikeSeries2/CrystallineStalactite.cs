@@ -30,7 +30,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.addTile(Type);
 
-            HitSound = CoraliteSoundID.DigStone_Tink;
+            HitSound = SoundID.DD2_CrystalCartImpact;
             DustType = DustID.PurpleTorch;
             AddMapEntry(Coralite.CrystallineMagikePurple);
 
@@ -76,7 +76,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.addTile(Type);
 
-            HitSound = CoraliteSoundID.DigStone_Tink;
+            HitSound = SoundID.DD2_CrystalCartImpact;
             DustType = DustID.PurpleTorch;
             AddMapEntry(Coralite.CrystallineMagikePurple);
 

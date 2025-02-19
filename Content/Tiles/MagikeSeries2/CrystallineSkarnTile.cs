@@ -14,6 +14,8 @@ namespace Coralite.Content.Tiles.MagikeSeries2
         {
             TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
 
+            Main.tileLighted[Type] = true;
+
             Main.tileShine2[Type] = true;
             Main.tileShine[Type] = 1000;
 
@@ -26,12 +28,12 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
             TileID.Sets.ChecksForMerge[Type] = true;
 
-            DustType = DustID.BorealWood_Small;
-            HitSound = CoraliteSoundID.DigStone_Tink;
+            DustType = DustID.PurpleTorch;
+            HitSound = SoundID.DD2_CrystalCartImpact;
             AddMapEntry(Coralite.CrystallineMagikePurple);
 
             MinPick = 110;
-            MineResist = 6;
+            MineResist = 3;
         }
 
         public override IEnumerable<Item> GetItemDrops(int i, int j)
@@ -41,6 +43,15 @@ namespace Coralite.Content.Tiles.MagikeSeries2
                 new Item(ModContent.ItemType<CrystallineMagike>())
             ];
         }
+
+        public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+        {
+            r = 0.08f;
+            g = 0.03f;
+            b = 0.1f;
+        }
+
+        public override bool CanExplode(int i, int j) => false;
 
         //public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
         //{

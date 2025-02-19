@@ -15,7 +15,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
     {
         public override string Texture => AssetDirectory.MagikeSeries2Tile + Name;
 
-        public static Asset<Texture2D> EXTex;
+        public static ATex EXTex;
         public static LocalizedText NeedSouls { get; set; }
 
         public override void Load()
@@ -97,5 +97,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
                 spriteBatch.Draw(texture, drawPos, null, color);
             }
         }
+
+        public override bool CanExplode(int i, int j) => false;
     }
 }

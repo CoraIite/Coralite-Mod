@@ -90,6 +90,8 @@ namespace Coralite.Content.Tiles.MagikeSeries2
                 spriteBatch.Draw(texture, drawPos, sourceRectangle, color * 0.5f);
             }
         }
+
+        public override bool CanExplode(int i, int j) => false;
     }
 
     public class SoulOfNightAltarTile : ModTile
@@ -171,5 +173,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
                 spriteBatch.Draw(texture, drawPos, sourceRectangle, color * 0.5f);
             }
         }
+
+        public override bool CanExplode(int i, int j) => false;
     }
 }

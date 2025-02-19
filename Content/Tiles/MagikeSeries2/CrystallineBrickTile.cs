@@ -17,8 +17,8 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
             MineResist = 3f;
             DustType = DustID.PurpleTorch;
-            HitSound = CoraliteSoundID.DigStone_Tink;
-            MinPick = 150;
+            HitSound = SoundID.DD2_CrystalCartImpact;
+            MinPick = 110;
 
             AddMapEntry(Coralite.CrystallineMagikePurple);
         }

@@ -19,7 +19,7 @@ namespace Coralite.Content.Tiles.MagikeSeries1
             Main.tileBlockLight[Type] = true;
 
             DustType = DustID.CrystalSerpent_Pink;
-            HitSound = CoraliteSoundID.DigStone_Tink;
+            HitSound = SoundID.DD2_CrystalCartImpact;
             AddMapEntry(Coralite.MagicCrystalPink);
         }
 

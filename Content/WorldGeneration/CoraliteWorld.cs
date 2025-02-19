@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.GameContent.Generation;
+using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader.IO;
 using Terraria.WorldBuilding;
@@ -268,6 +269,32 @@ namespace Coralite.Content.WorldGeneration
             roomGenerator?.Generate(genOrigin_x, genOrigin_y, true);
             wallClearGenerator?.Generate(genOrigin_x, genOrigin_y, true);
             wallGenerator?.Generate(genOrigin_x, genOrigin_y, true);
+        }
+
+        public static void GenLiquidByTexture(Texture2D liquidTex,Dictionary<Color ,int> liquidDic,Point center)
+        {
+            bool genned = false;
+            bool placed = false;
+
+            Texture2Liquid liquidGenerator = null;
+
+            while (!genned)
+            {
+                if (placed)
+                    continue;
+
+                Main.QueueMainThreadAction(() =>
+                {
+                    //生成液体
+                    if (liquidTex != null)
+                        liquidGenerator = TextureGeneratorDatas.GetTex2LiquidGenerator(liquidTex, liquidDic);
+
+                    genned = true;
+                });
+                placed = true;
+            }
+
+            liquidGenerator?.Generate(center.X, center.Y, true);
         }
 
         /// <summary>

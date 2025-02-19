@@ -95,5 +95,32 @@ namespace Coralite.Content.WorldGeneration.Generators
 
             return gen;
         }
+
+        public static Texture2Liquid GetTex2LiquidGenerator(Texture2D tex, Dictionary<Color, int> colorToLiquid)
+        {
+            Color[] objectData = new Color[tex.Width * tex.Height];
+
+            tex.GetData(0, tex.Bounds, objectData, 0, tex.Width * tex.Height);
+
+            int x = 0;
+            int y = 0;
+            Texture2Liquid gen = new(tex.Width, tex.Height);
+            for (int m = 0; m < objectData.Length; m++)
+            {
+                Color liquidColor = tex == null ? Color.Black : objectData[m];
+                int liquidInfo = colorToLiquid.ContainsKey(liquidColor) ? colorToLiquid[liquidColor] : -1;
+                gen.tileLiquidGen[x, y] = new LiquidInfo(liquidInfo);
+                x++;
+                if (x >= tex.Width)
+                {
+                    x = 0;
+                    y++;
+                }
+                if (y >= tex.Height)
+                    break;
+            }
+
+            return gen;
+        }
     }
 }

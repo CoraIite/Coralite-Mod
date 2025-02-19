@@ -26,7 +26,7 @@ namespace Coralite.Content.Tiles.MagikeSeries1
             TileID.Sets.ChecksForMerge[Type] = true;
 
             DustType = DustID.CorruptionThorns;
-            HitSound = CoraliteSoundID.DigStone_Tink;
+            HitSound = SoundID.DD2_CrystalCartImpact;
             AddMapEntry(new Color(31, 31, 50));
         }
 
