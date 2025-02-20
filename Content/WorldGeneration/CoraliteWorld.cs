@@ -72,7 +72,7 @@ namespace Coralite.Content.WorldGeneration
             AddGenPass(tasks, VanillaGenPassName.Corruption, "Coralite Evil Chest", GenEvilChest);
 
             //添加蕴魔空岛
-            AddGenPass(tasks, VanillaGenPassName.FinalCleanup, "Coralite Crystalline Sky Island", GenCrystallineSkyIsland, 0);
+            AddGenPass(tasks, VanillaGenPassName.FinalCleanup, "Coralite Crystalline Sky Island", GenCrystallineSkyIsland);
 
             //添加冰龙巢穴
             AddGenPass(tasks, VanillaGenPassName.Lakes, "Coralite Ice Dragon Nest", GenIceDragonNest);

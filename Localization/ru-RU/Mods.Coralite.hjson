@@ -53,6 +53,7 @@ WorldGeneration: {
 		DigTheIceDragonNest: Копаем гнездо ледяного дракона, копаем гнездо ледяного дракона, копаем, копаем, копаем, копаем!
 		DigTheDigDungeon: Копаем подземелье, копаем подземелье, копаем, копаем, копаем, копаем!
 		CoraliteNoteRoom: Размещаем утраченные предметы кораллов
+		// CrystallineSkyIsland: Mods.Coralite.WorldGeneration.CoraliteWorld.CrystallineSkyIsland
 	}
 }
 

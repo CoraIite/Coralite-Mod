@@ -23,6 +23,5 @@ namespace Coralite.Content.WorldGeneration.Generators
                         WorldGenHelper.Texture2WallGenerate(current_x, current_y, info.wallID);
                 }
         }
-
     }
 }

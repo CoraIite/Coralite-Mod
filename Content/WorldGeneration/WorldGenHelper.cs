@@ -480,7 +480,6 @@ namespace Coralite.Content.WorldGeneration
         {
             try
             {
-                Tile Mtile = Main.tile[x, y];
                 if (!WorldGen.InWorld(x, y))
                     return;
 
@@ -489,10 +488,11 @@ namespace Coralite.Content.WorldGeneration
                     if (wall == -2)
                     {
                         wall = 0;
-                        WorldGen.KillWall(x, y);
+                        Main.tile[x, y].Clear(TileDataType.Wall);//WorldGen.KillWall(x, y);
                         return;
                     }
-                    Main.tile[x, y].WallType = 0;
+
+                    Main.tile[x, y].Clear(TileDataType.Wall);
                     WorldGen.PlaceWall(x, y, wall, true);
                 }
             }
@@ -500,7 +500,6 @@ namespace Coralite.Content.WorldGeneration
             {
                 DEBUGHelper.LogFancy("Coralite:TILEGEN ERROR:", e);
             }
-
         }
 
         public static void ClearLiuid(int x, int y, int width, int height)

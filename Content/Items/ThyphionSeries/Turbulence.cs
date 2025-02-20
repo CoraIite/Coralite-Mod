@@ -12,6 +12,7 @@ using Coralite.Helpers;
 using InnoVault.PRT;
 using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
@@ -186,7 +187,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             }
             else if (Timer == DashTime + 2)
             {
-                Owner.velocity.X = Projectile.velocity.X * 2;
+                Owner.velocity.X *= 0.8f;
                 Owner.itemTime = Owner.itemAnimation = 2;
             }
             else

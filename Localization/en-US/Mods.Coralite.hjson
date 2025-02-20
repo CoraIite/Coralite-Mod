@@ -1,4 +1,4 @@
-﻿DamageClasses: {
+DamageClasses: {
 	FairyDamage.DisplayName: Fairy Damage
 	CreateAxeDamage.DisplayName: Create Axe Damage
 	CreateDamage.DisplayName: Create Damage
@@ -53,6 +53,7 @@ WorldGeneration: {
 		DigTheIceDragonNest: Dig the ice dragon nest Dig! Dig! Dig! Dig! Dig!
 		DigTheDigDungeon: Dig the dungeon! Dig the dungeon! Dig! Dig! Dig! Dig! Dig!
 		CoraliteNoteRoom: Coral lost items are being placed
+		CrystallineSkyIsland: Mods.Coralite.WorldGeneration.CoraliteWorld.CrystallineSkyIsland
 	}
 }
 
