@@ -62,11 +62,11 @@ namespace Coralite.Content.WorldGeneration.ShadowCastleRooms
                 }
             }
 
-            WorldGenHelper.PlaceOnGroundDecorations_NoCheck(roomRect.Left, roomRect.Top, 5, 14, Width - 5, Height - 14
+            WorldGenHelper.PlaceDecorations_NoCheck(roomRect.Left, roomRect.Top, 5, 14, Width - 5, Height - 14
                 , (ushort)ModContent.TileType<MercuryBookcaseTile>(), () => 1, 10);
-            WorldGenHelper.PlaceOnGroundDecorations_NoCheck(roomRect.Left, roomRect.Top, 5, 14, Width - 5, Height - 14
-                , (ushort)ModContent.TileType<MercuryChairTile>(), () => WorldGen.genRand.NextFromList(-1, 1), 16, style: 0);
-            WorldGenHelper.PlaceOnGroundDecorations_NoCheck(roomRect.Left, roomRect.Top, 5, 14, Width - 5, Height - 14
+            WorldGenHelper.PlaceDecorations_NoCheck(roomRect.Left, roomRect.Top, 5, 14, Width - 5, Height - 14
+                , (ushort)ModContent.TileType<MercuryChairTile>(), () => WorldGen.genRand.NextFromList(-1, 1), 16);
+            WorldGenHelper.PlaceDecorations_NoCheck(roomRect.Left, roomRect.Top, 5, 14, Width - 5, Height - 14
                 , (ushort)ModContent.TileType<MercuryTableTile>(), () => 1, 10);
 
             WorldGenHelper.PlaceOnTopDecorations(roomRect.Left, roomRect.Top, 5, 14, Width - 5, Height - 14

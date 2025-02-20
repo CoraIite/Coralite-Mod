@@ -19,7 +19,6 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         public ref float ColorState => ref Projectile.ai[0];
         private Color drawColor;
 
-        private bool Init = true;
         private SpriteEffects filp => Projectile.ai[0] switch
         {
             0 => SpriteEffects.None,

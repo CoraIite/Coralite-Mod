@@ -189,3 +189,8 @@ BlackPlushWorkBenchTile.MapEntry: Black Plush Work Bench Tile
 CoraliteNoteTile.MapEntry: Coralite Note Tile
 IcicleMusicBoxTile.MapEntry: Icicle Music Box Tile
 RedJadeMusicBoxTile.MapEntry: Red Jade Music Box Tile
+
+SkarnChestTile: {
+	MapEntry0: Mods.Coralite.Tiles.SkarnChestTile.MapEntry0
+	MapEntry1: Mods.Coralite.Tiles.SkarnChestTile.MapEntry1
+}

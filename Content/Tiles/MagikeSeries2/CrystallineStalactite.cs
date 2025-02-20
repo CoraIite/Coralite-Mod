@@ -14,6 +14,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
         public override void SetStaticDefaults()
         {
             Main.tileNoFail[Type] = true;
+            Main.tileLighted[Type] = true;
             Main.tileFrameImportant[Type] = true;
             Main.tileObsidianKill[Type] = true;
 
@@ -28,14 +29,12 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileObjectData.newTile.StyleHorizontal = true;
             TileObjectData.newTile.RandomStyleRange = 2;
             TileObjectData.newTile.LavaDeath = false;
+            TileObjectData.newTile.AnchorInvalidTiles = [TileID.Cloud, ModContent.TileType<SkarnBrickTile>()];
             TileObjectData.addTile(Type);
 
             HitSound = SoundID.DD2_CrystalCartImpact;
             DustType = DustID.PurpleTorch;
             AddMapEntry(Coralite.CrystallineMagikePurple);
-
-            MinPick = 150;
-            MineResist = 2;
         }
 
         public override void NumDust(int i, int j, bool fail, ref int num)
@@ -50,6 +49,13 @@ namespace Coralite.Content.Tiles.MagikeSeries2
                 new(ModContent.ItemType<CrystallineMagike>(),2)
             ];
         }
+
+        public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+        {
+            r = 0.08f;
+            g = 0.03f;
+            b = 0.1f;
+        }
     }
 
     public class CrystallineStalactite : ModTile
@@ -59,6 +65,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
         public override void SetStaticDefaults()
         {
             Main.tileNoFail[Type] = true;
+            Main.tileLighted[Type] = true;
             Main.tileFrameImportant[Type] = true;
             Main.tileObsidianKill[Type] = true;
 
@@ -74,14 +81,17 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileObjectData.newTile.StyleHorizontal = true;
             TileObjectData.newTile.RandomStyleRange = 4;
             TileObjectData.newTile.LavaDeath = false;
+            TileObjectData.newTile.AnchorInvalidTiles = [
+                TileID.Cloud,
+                ModContent.TileType<SkarnBrickTile>(),
+                ModContent.TileType<ChalcedonyTile>(),
+                ModContent.TileType<LeafChalcedonyTile>(),
+                ];
             TileObjectData.addTile(Type);
 
             HitSound = SoundID.DD2_CrystalCartImpact;
             DustType = DustID.PurpleTorch;
             AddMapEntry(Coralite.CrystallineMagikePurple);
-
-            MinPick = 150;
-            MineResist = 2;
         }
 
         public override void NumDust(int i, int j, bool fail, ref int num)
@@ -95,6 +105,13 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             [
                 new(ModContent.ItemType<CrystallineMagike>())
             ];
+        }
+
+        public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+        {
+            r = 0.08f;
+            g = 0.03f;
+            b = 0.1f;
         }
     }
 }

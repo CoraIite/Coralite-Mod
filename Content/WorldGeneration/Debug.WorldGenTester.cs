@@ -1,10 +1,4 @@
-﻿using Coralite.Content.Items.LandOfTheLustrousSeries;
-using Coralite.Content.Items.MagikeSeries2;
-using Coralite.Content.Tiles.MagikeSeries2;
-using Coralite.Core;
-using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
-using System;
-using System.Collections.Generic;
+﻿using Coralite.Core;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;

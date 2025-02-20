@@ -23,14 +23,12 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileObjectData.newTile.StyleHorizontal = true;
             TileObjectData.newTile.RandomStyleRange = 7;
             TileObjectData.newTile.LavaDeath = false;
+            TileObjectData.newTile.AnchorInvalidTiles = [TileID.Cloud, ModContent.TileType<SkarnBrickTile>(), ModContent.TileType<CrystallineBrickTile>()];
             TileObjectData.addTile(Type);
 
             HitSound = CoraliteSoundID.DigStone_Tink;
             DustType = DustID.Pearlsand;
             AddMapEntry(new Color(141, 171, 178));
-
-            MinPick = 150;
-            MineResist = 2;
         }
 
         public override void NumDust(int i, int j, bool fail, ref int num)
@@ -55,16 +53,14 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.newTile.StyleMultiplier = 1;
             TileObjectData.newTile.StyleHorizontal = true;
-            TileObjectData.newTile.RandomStyleRange = 7;
+            TileObjectData.newTile.RandomStyleRange = 5;
             TileObjectData.newTile.LavaDeath = false;
+            TileObjectData.newTile.AnchorInvalidTiles = [TileID.Cloud, ModContent.TileType<SkarnBrickTile>(), ModContent.TileType<CrystallineBrickTile>()];
             TileObjectData.addTile(Type);
 
             HitSound = CoraliteSoundID.DigStone_Tink;
             DustType = DustID.Pearlsand;
             AddMapEntry(new Color(141, 171, 178));
-
-            MinPick = 150;
-            MineResist = 2;
         }
 
         public override void NumDust(int i, int j, bool fail, ref int num)
@@ -89,16 +85,14 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.newTile.StyleMultiplier = 1;
             TileObjectData.newTile.StyleHorizontal = true;
-            TileObjectData.newTile.RandomStyleRange = 7;
+            TileObjectData.newTile.RandomStyleRange = 5;
             TileObjectData.newTile.LavaDeath = false;
+            TileObjectData.newTile.AnchorInvalidTiles = [TileID.Cloud, ModContent.TileType<SkarnBrickTile>(), ModContent.TileType<CrystallineBrickTile>()];
             TileObjectData.addTile(Type);
 
             HitSound = CoraliteSoundID.DigStone_Tink;
             DustType = DustID.Pearlsand;
             AddMapEntry(new Color(141, 171, 178));
-
-            MinPick = 150;
-            MineResist = 2;
         }
 
         public override void NumDust(int i, int j, bool fail, ref int num)
@@ -123,16 +117,14 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.newTile.StyleMultiplier = 1;
             TileObjectData.newTile.StyleHorizontal = true;
-            TileObjectData.newTile.RandomStyleRange = 7;
+            TileObjectData.newTile.RandomStyleRange = 1;
             TileObjectData.newTile.LavaDeath = false;
+            TileObjectData.newTile.AnchorInvalidTiles = [TileID.Cloud, ModContent.TileType<SkarnBrickTile>(), ModContent.TileType<CrystallineBrickTile>()];
             TileObjectData.addTile(Type);
 
             HitSound = CoraliteSoundID.DigStone_Tink;
             DustType = DustID.Pearlsand;
             AddMapEntry(new Color(141, 171, 178));
-
-            MinPick = 150;
-            MineResist = 2;
         }
 
         public override void NumDust(int i, int j, bool fail, ref int num)
@@ -157,16 +149,14 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.newTile.StyleMultiplier = 1;
             TileObjectData.newTile.StyleHorizontal = true;
-            TileObjectData.newTile.RandomStyleRange = 7;
+            TileObjectData.newTile.RandomStyleRange = 1;
             TileObjectData.newTile.LavaDeath = false;
+            TileObjectData.newTile.AnchorInvalidTiles = [TileID.Cloud, ModContent.TileType<SkarnBrickTile>(), ModContent.TileType<CrystallineBrickTile>()];
             TileObjectData.addTile(Type);
 
             HitSound = CoraliteSoundID.DigStone_Tink;
             DustType = DustID.Pearlsand;
             AddMapEntry(new Color(141, 171, 178));
-
-            MinPick = 150;
-            MineResist = 2;
         }
 
         public override void NumDust(int i, int j, bool fail, ref int num)

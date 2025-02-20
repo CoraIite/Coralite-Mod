@@ -5183,3 +5183,8 @@ B9Alloy: {
 	DisplayName: B9 Alloy
 	Tooltip: ""
 }
+
+SkarnChest: {
+	DisplayName: Skarn Chest
+	Tooltip: ""
+}

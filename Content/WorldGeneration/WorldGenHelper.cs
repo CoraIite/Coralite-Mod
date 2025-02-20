@@ -36,8 +36,8 @@ namespace Coralite.Content.WorldGeneration
 
         public static void ObjectPlace(int x, int y, int TileType, int style = 0, int direction = -1)
         {
-            WorldGen.PlaceObject(x, y, TileType, false, style, 0, -1, direction);
-            NetMessage.SendObjectPlacement(-1, x, y, TileType, style, 0, -1, direction);
+            WorldGen.PlaceObject(x, y, TileType, true, style, 0, -1, direction);
+            //NetMessage.SendObjectPlacement(-1, x, y, TileType, style, 0, -1, direction);
         }
 
         /// <summary>
@@ -141,9 +141,9 @@ namespace Coralite.Content.WorldGeneration
         /// <param name="tileType">物块种类</param>
         /// <param name="random">决定是否生成的随机数，越大越难生成</param>
         /// <param name="bottomTileType">底部物块种类，如有需要的话</param>
-        public static void PlaceOnGroundDecorations_NoCheck(int origin_x, int origin_y, int startX, int startY, int endX, int endY, ushort tileType, Func<int> direction, int random = 10, int style = 0)
+        public static void PlaceDecorations_NoCheck(int origin_x, int origin_y, int startX, int startY, int endX, int endY, ushort tileType, Func<int> direction, int random = 10)
         {
-            TileObjectData data = TileObjectData.GetTileData(tileType, style);
+            TileObjectData data = TileObjectData.GetTileData(tileType, 0);
             int randomTile = data == null ? 1 : data.RandomStyleRange;
 
             for (int i = startX; i < endX; i++)
@@ -160,6 +160,34 @@ namespace Coralite.Content.WorldGeneration
                         else
                             currentStyle = WorldGen.genRand.Next(0, randomTile);
                         ObjectPlace(current_x, current_y, tileType, currentStyle, direction());
+                    }
+                }
+        }       
+        
+        public static void PlaceDecorations_NoCheck(Rectangle area, ushort tileType, int random = 10, Func<int> direction=null,Rectangle? avoidArea=null)
+        {
+            TileObjectData data = TileObjectData.GetTileData(tileType, 0);
+            int randomTile = data == null ? 1 : data.RandomStyleRange;
+
+            for (int i = 0; i < area.Width; i++)
+                for (int j = 0; j < area.Height; j++)
+                {
+                    int current_x = area.X + i;
+                    int current_y = area.Y + j;
+
+                    if (avoidArea != null)
+                        if (avoidArea.Value.Contains(current_x, current_y))
+                            continue;
+
+                    //添加一些随机性
+                    if (WorldGen.genRand.NextBool(random))
+                    {
+                        int currentStyle;
+                        if (randomTile <= 1)
+                            currentStyle = 0;
+                        else
+                            currentStyle = WorldGen.genRand.Next(0, randomTile);
+                        ObjectPlace(current_x, current_y, tileType, currentStyle, direction == null ? -1 : direction());
                     }
                 }
         }

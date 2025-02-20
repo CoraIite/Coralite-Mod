@@ -1416,8 +1416,12 @@ MagikeMonoclastic: {
 }
 
 Reel_MagikeAdvance: {
-	DisplayName: 卷轴：强化魔能提炼
-	Tooltip: 现在你懂得如何再次强化你的魔能器械了
+	DisplayName: 卷轴：进阶魔能
+	Tooltip:
+		'''
+		在丛林上方某处的蕴魔空岛中发现它
+		包含一些进阶的魔能知识
+		'''
 }
 
 PhantomMirror: {
@@ -5257,4 +5261,9 @@ B94WindbreakingCompoundBow: {
 B9Alloy: {
 	DisplayName: B9合金
 	Tooltip: 具有坚硬，轻质，耐高温等优点的合金，适用于各类远程武器
+}
+
+SkarnChest: {
+	// DisplayName: Skarn Chest
+	// Tooltip: ""
 }

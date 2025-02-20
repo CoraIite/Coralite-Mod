@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Tiles.MagikeSeries1;
+﻿using Coralite.Content.Items.MagikeSeries2;
+using Coralite.Content.Tiles.MagikeSeries1;
 using Coralite.Content.Tiles.MagikeSeries2;
 using Coralite.Content.Walls.Magike;
 using Coralite.Core;
@@ -7,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -42,6 +44,9 @@ namespace Coralite.Content.WorldGeneration
 
         public void GenCrystallineSkyIsland(GenerationProgress progress, GameConfiguration configuration)
         {
+            PlaceLightSoul = false;
+            PlaceNightSoul = false;
+            HasPermission = false;
             //生成地表结构
             GenGroundLock(out Point altarPoint);
             //生成主体空岛
@@ -383,6 +388,10 @@ namespace Coralite.Content.WorldGeneration
 
             #endregion
 
+            #region 清理单独的物块
+
+            #endregion
+
             #region 随机挖通道，与中心小遗迹生成
 
             //主要通道，用于生成小遗迹
@@ -440,6 +449,11 @@ namespace Coralite.Content.WorldGeneration
             //生成遗迹
             GenByTexture(clearTex, shrineTex, wallClearTex, wallTex, clearDic, mainDic, clearDic, wallDic, shrineTopLeft.X, shrineTopLeft.Y);
 
+            //放置中心的箱子
+            ushort chestTileType = (ushort)ModContent.TileType<SkarnChestTile>();
+            WorldGen.AddBuriedChest(shrineTopLeft.X + 14, shrineTopLeft.Y + 15,
+                ModContent.ItemType<Reel_MagikeAdvance>(), notNearOtherChests: false, 1, trySlope: false, chestTileType);
+
             //向哪边开通道
             int tunnelDir = WorldGen.genRand.NextFromList(-1, 1);
 
@@ -479,7 +493,7 @@ namespace Coralite.Content.WorldGeneration
                 for (int j = 0; j < size; j++)
                 {
                     Point clearP = new Point(mainIslandCenter.X - size / 2 + i, mainIslandCenter.Y - size / 2 + j);
-                    if (Main.tile[clearP].HasTile && SkyIslandTileCounter(clearP.X, clearP.Y) < 8)
+                    if (Main.tile[clearP].HasTile && SkyIslandTileCounter(clearP.X, clearP.Y, skarn, smoothSkarn, CrystallineSkarn) < 8)
                         SkyIslandTileCounterKill();
                 }
 
@@ -492,7 +506,7 @@ namespace Coralite.Content.WorldGeneration
             //生成贯穿的矽卡砖
             int brickCount = ValueByWorldSize(WorldGen.genRand.Next(8, 14)
                     , WorldGen.genRand.Next(20, 28)
-                    , WorldGen.genRand.Next(30, 46)); 
+                    , WorldGen.genRand.Next(28, 38));
 
             for (int i = 0; i < brickCount; i++)
             {
@@ -540,7 +554,7 @@ namespace Coralite.Content.WorldGeneration
                 {
                     int dir = WorldGen.genRand.NextFromList(-1, 1);
 
-                    SpawnSkarnBrick(skarnBrick, shrineRect, p + new Point(dir * brickWidth * 2, 0), exY, brickWidth, WorldGen.genRand.Next(4,7), true);
+                    SpawnSkarnBrick(skarnBrick, shrineRect, p + new Point(dir * brickWidth * 2, 0), exY, brickWidth, WorldGen.genRand.Next(4, 7), true);
 
                     int yoff = WorldGen.genRand.Next(1, 3);
                     for (int m = 0; m < brickWidth * 2; m++)
@@ -570,7 +584,7 @@ namespace Coralite.Content.WorldGeneration
                 for (int j = 0; j < 1000; j++)//找到一个自身没物块的地方
                 {
                     Point p2 = WorldGen.genRand.NextVector2FromRectangle(outerRect).ToPoint();
-                    if (Main.tile[p2].HasTile || shrineRect.Intersects(Utils.CenteredRectangle(p2.ToVector2(),new Vector2(8,8))))
+                    if (Main.tile[p2].HasTile || shrineRect.Intersects(Utils.CenteredRectangle(p2.ToVector2(), new Vector2(8, 8))))
                         continue;
 
                     p = p2;
@@ -652,6 +666,22 @@ namespace Coralite.Content.WorldGeneration
 
             #endregion
 
+            #region 添加斜坡
+
+            for (int i = 0; i < outerRect.Width; i++)
+                for (int j = 0; j < outerRect.Height; j++)
+                {
+                    Point point = outerRect.TopLeft().ToPoint() + new Point(i, j);
+                    Tile t = Main.tile[point];
+                    if (!t.HasTile || shrineRect.Contains(point)||t.TileType==skarnBrick)
+                        continue;
+
+                    if (WorldGen.genRand.NextBool())
+                        Tile.SmoothSlope(point.X, point.Y, false);
+                }
+
+            #endregion
+
             #region 生成水池
 
             //Point poolPos = mainIslandCenter;
@@ -723,10 +753,25 @@ namespace Coralite.Content.WorldGeneration
                 Tile right22 = Main.tile[p.X + 2, p.Y];
 
                 if (!left22.HasTile)
-                    WorldGen.PoundTile(p.X - 1, p.Y);
+                    WorldGen.PoundTile(p.X - 1, p.Y);//左边敲半砖
                 if (!right22.HasTile)
-                    WorldGen.PoundTile(p.X + 1, p.Y);
+                    WorldGen.PoundTile(p.X + 1, p.Y);//右边敲半砖
+
+                Main.tile[p.X, p.Y + 1].Clear(TileDataType.Slope);//底部变成整块
             }
+
+            #endregion
+
+            #region 生成装饰物
+
+            WorldGenHelper.PlaceDecorations_NoCheck(outerRect, (ushort)ModContent.TileType<CrystallineStalactite>(), 5);
+            WorldGenHelper.PlaceDecorations_NoCheck(outerRect, (ushort)ModContent.TileType<CrystallineStalactite2x2>(), 4, avoidArea: shrineRect);
+
+            WorldGenHelper.PlaceDecorations_NoCheck(outerRect, (ushort)ModContent.TileType<SkarnRubbles4x2>(), 4, avoidArea: shrineRect);
+            WorldGenHelper.PlaceDecorations_NoCheck(outerRect, (ushort)ModContent.TileType<SkarnRubbles3x2>(), 5, avoidArea: shrineRect);
+            WorldGenHelper.PlaceDecorations_NoCheck(outerRect, (ushort)ModContent.TileType<SkarnRubbles2x2>(), 4, avoidArea: shrineRect);
+            WorldGenHelper.PlaceDecorations_NoCheck(outerRect, (ushort)ModContent.TileType<SkarnRubbles1x1>(), 5);
+            WorldGenHelper.PlaceDecorations_NoCheck(outerRect, (ushort)ModContent.TileType<SkarnRubbles2x1>(), 4);
 
             #endregion
 
@@ -739,8 +784,8 @@ namespace Coralite.Content.WorldGeneration
             //Texture2D clearTex = ModContent.Request<Texture2D>(AssetDirectory.CrystallineSkyIsland + "CrystallineMainIslandClear" + 0.ToString(), AssetRequestMode.ImmediateLoad).Value;
             //Texture2D wallTex = ModContent.Request<Texture2D>(AssetDirectory.CrystallineSkyIsland + "CrystallineMainIslandWall" + 0.ToString(), AssetRequestMode.ImmediateLoad).Value;
 
-            //int genOrigin_x = Main.maxTilesX / 2 - (clearTex.Width / 2);
-            //int genOrigin_y = 200 - (clearTex.Height / 2);
+            //int decorateX = Main.maxTilesX / 2 - (clearTex.Width / 2);
+            //int decorateY = 200 - (clearTex.Height / 2);
 
             //Dictionary<Color, int> clearDic = new()
             //{
@@ -768,23 +813,23 @@ namespace Coralite.Content.WorldGeneration
             //    [Color.Black] = -1
             //};
 
-            //GenShrine(clearTex, shrineTex, wallTex, clearDic, mainDic, wallDic, genOrigin_x, genOrigin_y);
+            //GenShrine(clearTex, shrineTex, wallTex, clearDic, mainDic, wallDic, decorateX, decorateY);
 
 
-            //WorldGenHelper.PlaceOnGroundDecorations_NoCheck(genOrigin_x, genOrigin_y
+            //WorldGenHelper.PlaceOnGroundDecorations_NoCheck(decorateX, decorateY
             //    , 0, 0, shrineTex.Width, shrineTex.Height, (ushort)ModContent.TileType<CrystallineStalactite>(), () => 1, 3, 0);
-            //WorldGenHelper.PlaceOnGroundDecorations_NoCheck(genOrigin_x, genOrigin_y
+            //WorldGenHelper.PlaceOnGroundDecorations_NoCheck(decorateX, decorateY
             //    , 0, 0, shrineTex.Width, shrineTex.Height, (ushort)ModContent.TileType<CrystallineStalactite2x2>(), () => 1, 3, 0);
 
-            //WorldGenHelper.PlaceOnGroundDecorations_NoCheck(genOrigin_x, genOrigin_y
+            //WorldGenHelper.PlaceOnGroundDecorations_NoCheck(decorateX, decorateY
             //    , 0, 0, shrineTex.Width, shrineTex.Height, (ushort)ModContent.TileType<SkarnRubbles1x1>(), () => 1, 3, 0);
-            //WorldGenHelper.PlaceOnGroundDecorations_NoCheck(genOrigin_x, genOrigin_y
+            //WorldGenHelper.PlaceOnGroundDecorations_NoCheck(decorateX, decorateY
             //    , 0, 0, shrineTex.Width, shrineTex.Height, (ushort)ModContent.TileType<SkarnRubbles2x1>(), () => 1, 3, 0);
-            //WorldGenHelper.PlaceOnGroundDecorations_NoCheck(genOrigin_x, genOrigin_y
+            //WorldGenHelper.PlaceOnGroundDecorations_NoCheck(decorateX, decorateY
             //    , 0, 0, shrineTex.Width, shrineTex.Height, (ushort)ModContent.TileType<SkarnRubbles2x2>(), () => 1, 3, 0);
-            //WorldGenHelper.PlaceOnGroundDecorations_NoCheck(genOrigin_x, genOrigin_y
+            //WorldGenHelper.PlaceOnGroundDecorations_NoCheck(decorateX, decorateY
             //    , 0, 0, shrineTex.Width, shrineTex.Height, (ushort)ModContent.TileType<SkarnRubbles3x2>(), () => 1, 3, 0);
-            //WorldGenHelper.PlaceOnGroundDecorations_NoCheck(genOrigin_x, genOrigin_y
+            //WorldGenHelper.PlaceOnGroundDecorations_NoCheck(decorateX, decorateY
             //    , 0, 0, shrineTex.Width, shrineTex.Height, (ushort)ModContent.TileType<SkarnRubbles4x2>(), () => 1, 3, 0);
         }
 
@@ -871,7 +916,7 @@ namespace Coralite.Content.WorldGeneration
                             //横向挖完就竖向挖
                             digType = 1;
                             tunnelDir = WorldGen.genRand.NextBool(8) ?
-                                WorldGen.genRand.NextFromList(-1, 1) 
+                                WorldGen.genRand.NextFromList(-1, 1)
                                 : (outerRect.Center.Y > tunnelCenter.Y ? -1 : 1);
                             tunnelCenter.Y -= tunnelDir * tunnelWidth / 2;
                             tunnelLength = getTunnelLength();
@@ -922,7 +967,7 @@ namespace Coralite.Content.WorldGeneration
             return true;
         }
 
-        public T ValueByWorldSize<T>(T smallWorld,T middleWorld,T bigWorld)
+        public T ValueByWorldSize<T>(T smallWorld, T middleWorld, T bigWorld)
         {
             return Main.maxTilesX switch
             {
@@ -935,17 +980,20 @@ namespace Coralite.Content.WorldGeneration
             };
         }
 
-        public static int SkyIslandTileCounter(int x, int y)
+        public static int SkyIslandTileCounter(int x, int y, params ushort[] checkTilesType)
         {
             tileCounterNum = 0;
-            SkyIslandTileCounterNext(x, y);
+            SkyIslandTileCounterNext(x, y, checkTilesType);
             return tileCounterNum;
         }
 
-        public static void SkyIslandTileCounterNext(int x, int y)
+        public static void SkyIslandTileCounterNext(int x, int y, params ushort[] checkTilesType)
         {
-            if (tileCounterNum >= tileCounterMax || x < 5 || x > Main.maxTilesX - 5 || y < 5 || y > Main.maxTilesY - 5 
-                || !Main.tile[x, y].HasTile || !Main.tileSolid[Main.tile[x, y].TileType]|| (Main.tile[x, y].TileType!=ModContent.TileType<SkarnTile>()&& Main.tile[x, y].TileType != ModContent.TileType<SmoothSkarnTile>()))
+            if (tileCounterNum >= tileCounterMax || x < 5 || x > Main.maxTilesX - 5 || y < 5 || y > Main.maxTilesY - 5
+                || !Main.tile[x, y].HasTile || !Main.tileSolid[Main.tile[x, y].TileType])
+                return;
+
+            if (!checkTilesType.Contains(Main.tile[x, y].TileType))
                 return;
 
             for (int i = 0; i < tileCounterNum; i++)
@@ -957,10 +1005,10 @@ namespace Coralite.Content.WorldGeneration
             tileCounterX[tileCounterNum] = x;
             tileCounterY[tileCounterNum] = y;
             tileCounterNum++;
-            SkyIslandTileCounterNext(x - 1, y);
-            SkyIslandTileCounterNext(x + 1, y);
-            SkyIslandTileCounterNext(x, y - 1);
-            SkyIslandTileCounterNext(x, y + 1);
+            SkyIslandTileCounterNext(x - 1, y, checkTilesType);
+            SkyIslandTileCounterNext(x + 1, y, checkTilesType);
+            SkyIslandTileCounterNext(x, y - 1,checkTilesType);
+            SkyIslandTileCounterNext(x, y + 1, checkTilesType);
         }
 
         public static void SkyIslandTileCounterKill()
@@ -1009,7 +1057,7 @@ namespace Coralite.Content.WorldGeneration
         /// <returns></returns>
         public int PickAltarX()
         {
-            return GenVars.jungleOriginX + WorldGen.genRand.Next(-30, 30);
+            return (GenVars.jungleMinX + GenVars.jungleMaxX) / 2 + WorldGen.genRand.Next(-30, 30);
         }
 
 
@@ -1074,14 +1122,12 @@ namespace Coralite.Content.WorldGeneration
 
             Vector2 pos = new Vector2(st.Y, st.X) * new Vector2(7f, 8f);
 
-            float pattern = pos.X;
-
             // 添加噪声并旋转
             float noiseValue = Noise(pos);
             pos = Vector2.Transform(pos, Rotate2D(pos, noiseValue));
-            
+
             // 绘制线条
-            return pattern = Lines(pos, 0.5f);
+            return Lines(pos, 0.5f);
         }
 
         #endregion

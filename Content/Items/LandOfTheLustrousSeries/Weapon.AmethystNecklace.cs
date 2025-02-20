@@ -334,7 +334,6 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public Vector2 endPoint;
         private SlotId soundSlot;
-        private bool init = true;
 
         public static Color highlightC = new(235, 201, 238);
         public static Color brightC = new(200, 123, 193);
