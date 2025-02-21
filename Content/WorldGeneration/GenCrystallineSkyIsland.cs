@@ -232,7 +232,7 @@ namespace Coralite.Content.WorldGeneration
             #endregion
 
             //清理一下浮空物块，包括矽卡岩，平滑矽卡岩和蕴魔矽卡岩
-            CSkyIslandQuickClear(skarn, smoothSkarn, CrystallineSkarn, mainIslandCenter, size);
+            CSkyIslandQuickClear(skarn, smoothSkarn, CrystallineSkarn, mainIslandCenter, size, shrineRect);
 
             //生成贯穿的矽卡砖
             CSkyIslandBrickPillars(skarnBrick, outerRect, shrineRect);
@@ -293,11 +293,11 @@ namespace Coralite.Content.WorldGeneration
             WorldGenHelper.PlaceDecorations_NoCheck(outerRect, (ushort)ModContent.TileType<CrystallineStalactite>(), 5);
             WorldGenHelper.PlaceDecorations_NoCheck(outerRect, (ushort)ModContent.TileType<CrystallineStalactite2x2>(), 4, avoidArea: shrineRect);
 
-            WorldGenHelper.PlaceDecorations_NoCheck(outerRect, (ushort)ModContent.TileType<SkarnRubbles4x2>(), 4, avoidArea: shrineRect);
-            WorldGenHelper.PlaceDecorations_NoCheck(outerRect, (ushort)ModContent.TileType<SkarnRubbles3x2>(), 5, avoidArea: shrineRect);
+            WorldGenHelper.PlaceDecorations_NoCheck(outerRect, (ushort)ModContent.TileType<SkarnRubbles4x2>(), 5, avoidArea: shrineRect);
+            WorldGenHelper.PlaceDecorations_NoCheck(outerRect, (ushort)ModContent.TileType<SkarnRubbles3x2>(), 6, avoidArea: shrineRect);
             WorldGenHelper.PlaceDecorations_NoCheck(outerRect, (ushort)ModContent.TileType<SkarnRubbles2x2>(), 4, avoidArea: shrineRect);
-            WorldGenHelper.PlaceDecorations_NoCheck(outerRect, (ushort)ModContent.TileType<SkarnRubbles1x1>(), 5);
-            WorldGenHelper.PlaceDecorations_NoCheck(outerRect, (ushort)ModContent.TileType<SkarnRubbles2x1>(), 4);
+            WorldGenHelper.PlaceDecorations_NoCheck(outerRect, (ushort)ModContent.TileType<SkarnRubbles2x1>(), 3);
+            WorldGenHelper.PlaceDecorations_NoCheck(outerRect, (ushort)ModContent.TileType<SkarnRubbles1x1>(), 2);
         }
 
         private void CSkyIslandWaterFall(ushort skarnBrick, Rectangle outerRect, Rectangle shrineRect)
@@ -542,13 +542,13 @@ namespace Coralite.Content.WorldGeneration
             }
         }
 
-        private static void CSkyIslandQuickClear(ushort skarn, ushort smoothSkarn, ushort CrystallineSkarn, Point mainIslandCenter, int size)
+        private static void CSkyIslandQuickClear(ushort skarn, ushort smoothSkarn, ushort CrystallineSkarn, Point mainIslandCenter, int size,Rectangle shrineRect)
         {
             for (int i = 0; i < size; i++)
                 for (int j = 0; j < size; j++)
                 {
                     Point clearP = new Point(mainIslandCenter.X - size / 2 + i, mainIslandCenter.Y - size / 2 + j);
-                    if (Main.tile[clearP].HasTile && SkyIslandTileCounter(clearP.X, clearP.Y, skarn, smoothSkarn, CrystallineSkarn) < 8)
+                    if (Main.tile[clearP].HasTile && !shrineRect.Contains(clearP) && SkyIslandTileCounter(clearP.X, clearP.Y, skarn, smoothSkarn, CrystallineSkarn) < 8)
                         SkyIslandTileCounterKill();
                 }
         }
@@ -586,7 +586,7 @@ namespace Coralite.Content.WorldGeneration
         private Rectangle CSkyIslandShrineAndMainTunnel(ushort skarn, ushort smoothSkarn, ushort skarnBrick, ushort skarnWall, ushort crystallineBrick, Point mainIslandSize, Point mainIslandTopLeft, Rectangle outerRect)
         {
             //主要通道，用于生成小遗迹
-            int type = 2;//WorldGen.genRand.Next(0, 3);
+            int type = 3;//WorldGen.genRand.Next(0, 4);
 
             Texture2D shrineTex = ModContent.Request<Texture2D>(AssetDirectory.CrystallineSkyIsland + "MainSkyIslandShrine" + type, AssetRequestMode.ImmediateLoad).Value;
             Texture2D clearTex = ModContent.Request<Texture2D>(AssetDirectory.CrystallineSkyIsland + "MainSkyIslandShrineClear" + type, AssetRequestMode.ImmediateLoad).Value;
