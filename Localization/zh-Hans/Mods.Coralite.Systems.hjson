@@ -158,7 +158,7 @@ KnowledgeSystem: {
 
 	Thunder1Knowldege: {
 		Name: "[c/639bff:雷龙残卷-上半]"
-		LockTip: 击败 “双子魔眼” ，“机械骷髅王” 和 “毁灭者” 后解锁
+		LockTip: 在困难模式中击败 “双子魔眼” ，“机械骷髅王” 和 “毁灭者” 后解锁
 		Description:
 			'''
 			记载着有关雷龙的部分信息

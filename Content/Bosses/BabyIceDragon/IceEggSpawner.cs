@@ -8,9 +8,9 @@ namespace Coralite.Content.Bosses.BabyIceDragon
     public class IceEggSpawner : ModSystem
     {
         //public const int delayStart = 60 * 60 * 8;
-        public const int respawnDelay = 60 * 60 * 4;
-        private const int timePerEgg = 60 * 60;
-        private const int recheckStart = 60 * 10;
+        public const int respawnDelay = 60 * 60 * 8;
+        private const int timePerEgg = 60 * 60 * 2;
+        private const int recheckStart = 60 * 15;
 
         public static double delay;
         public static double recheck;

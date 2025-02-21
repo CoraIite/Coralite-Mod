@@ -285,6 +285,9 @@ namespace Coralite.Content.GlobalTiles
                     Tile bottomTile = Framing.GetTileSafely(x, y);
                     TreeTypes tree = WorldGen.GetTreeType(bottomTile.TileType);
 
+                    if (Main.hardMode && Main.rand.NextBool(1, 250))
+                        Item.NewItem(new EntitySource_TileBreak(i, j), new Vector2(i, j) * 16, ItemType<CrystalBlossomShards>());
+
                     switch (tree)
                     {
                         case TreeTypes.None:
@@ -329,7 +332,7 @@ namespace Coralite.Content.GlobalTiles
                     }
                     break;
                 case TileID.VanityTreeSakura:
-                    if (Main.hardMode && Main.rand.NextBool(1, 400))
+                    if (Main.rand.NextBool(1, 300))
                         Item.NewItem(new EntitySource_TileBreak(i, j), new Vector2(i, j) * 16, ItemType<CrystalBlossomShards>());
                     break;
                 case TileID.Heart:
