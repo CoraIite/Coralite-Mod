@@ -58,9 +58,9 @@ namespace Coralite.Core.Systems.KeySystem
         /// <param name="id"></param>
         /// <param name="position"></param>
         /// <param name="color"></param>
-        public static void CheckForUnlock<T>( Vector2 position, Color color)where T:KeyKnowledge
+        public static void CheckForUnlock<T>(Vector2 position, Color color) where T : KeyKnowledge
         {
-            KeyKnowledge keyKnowledge = CoraliteContent.GetKKnowledge<KeyKnowledge>();
+            KeyKnowledge keyKnowledge = CoraliteContent.GetKKnowledge<T>();
             if (!keyKnowledge.Unlock)
             {
                 keyKnowledge.UnlockKnowledge();

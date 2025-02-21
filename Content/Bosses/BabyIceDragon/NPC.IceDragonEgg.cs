@@ -29,6 +29,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
         public override void SetDefaults()
         {
+            NPC.chaseable = false;
             NPC.npcSlots = 0;
             NPC.width = 32;
             NPC.height = 32;
@@ -39,6 +40,8 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             NPC.aiStyle = -1;
             NPC.npcSlots = 1f;
             NPC.value = Item.buyPrice(0, 0, 0, 0);
+
+            NPC.HitSound = CoraliteSoundID.DigIce;
         }
 
         public override void Load()
@@ -150,9 +153,18 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D mainTex = TextureAssets.Npc[NPC.type].Value;
+            Texture2D mainTex = NPC.GetTexture();
 
-            spriteBatch.Draw(mainTex, NPC.Bottom - Main.screenPosition, null, drawColor, NPC.rotation, new Vector2(mainTex.Width / 2, mainTex.Height), 1, SpriteEffects.None, 0f);
+            Vector2 position = NPC.Bottom - Main.screenPosition;
+            Rectangle frameBox = mainTex.Frame(2, 1, 1);
+
+            Vector2 origin = new Vector2(frameBox.Width / 2, frameBox.Height);
+            //绘制蛋
+            spriteBatch.Draw(mainTex, position, frameBox, drawColor, NPC.rotation, origin, 1, SpriteEffects.None, 0f);
+            frameBox = mainTex.Frame(2, 1);
+
+            //绘制底座
+            spriteBatch.Draw(mainTex, position, frameBox, drawColor, 0, origin, 1, SpriteEffects.None, 0f);
             return false;
         }
 

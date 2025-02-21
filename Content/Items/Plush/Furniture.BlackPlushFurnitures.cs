@@ -35,7 +35,7 @@ namespace Coralite.Content.Items.Plush
         public override void AddRecipes()
         {
             CreateRecipe(4)
-                .AddIngredient<BlackPlushBlock>()
+                .AddIngredient<BlackPlush>()
                 .AddTile(TileID.WorkBenches)
                 .Register();
         }
@@ -53,7 +53,7 @@ namespace Coralite.Content.Items.Plush
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient<BlackPlushBlock>(12)
+                .AddIngredient<BlackPlush>(12)
                 .AddTile(TileID.WorkBenches)
                 .Register();
         }
@@ -64,7 +64,7 @@ namespace Coralite.Content.Items.Plush
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient<BlackPlushBlock>(12)
+                .AddIngredient<BlackPlush>(12)
                 .AddIngredient(ItemID.Silk, 12)
                 .AddTile(TileID.WorkBenches)
                 .Register();
@@ -76,7 +76,7 @@ namespace Coralite.Content.Items.Plush
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient<BlackPlushBlock>(6)
+                .AddIngredient<BlackPlush>(6)
                 .AddIngredient(ItemID.Torch, 4)
                 .AddTile(TileID.WorkBenches)
                 .Register();
@@ -88,7 +88,7 @@ namespace Coralite.Content.Items.Plush
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient<BlackPlushBlock>(20)
+                .AddIngredient<BlackPlush>(20)
                 .AddIngredient(ItemID.Book, 10)
                 .AddTile(TileID.WorkBenches)
                 .Register();
@@ -100,7 +100,7 @@ namespace Coralite.Content.Items.Plush
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient<BlackPlushBlock>(8)
+                .AddIngredient<BlackPlush>(8)
                 .AddIngredient(ItemID.Torch, 3)
                 .AddTile(TileID.WorkBenches)
                 .Register();
@@ -112,7 +112,7 @@ namespace Coralite.Content.Items.Plush
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient<BlackPlushBlock>(4)
+                .AddIngredient<BlackPlush>(4)
                 .AddIngredient(ItemID.Torch)
                 .AddTile(TileID.WorkBenches)
                 .Register();
@@ -124,7 +124,7 @@ namespace Coralite.Content.Items.Plush
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient<BlackPlushBlock>(4)
+                .AddIngredient<BlackPlush>(4)
                 .AddTile(TileID.WorkBenches)
                 .Register();
         }
@@ -135,7 +135,7 @@ namespace Coralite.Content.Items.Plush
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient<BlackPlushBlock>(12)
+                .AddIngredient<BlackPlush>(12)
                 .AddRecipeGroup(RecipeGroupID.IronBar, 3)
                 .AddIngredient(ItemID.Glass, 6)
                 .AddTile(TileID.WorkBenches)
@@ -148,7 +148,7 @@ namespace Coralite.Content.Items.Plush
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient<BlackPlushBlock>(6)
+                .AddIngredient<BlackPlush>(6)
                 .AddTile(TileID.WorkBenches)
                 .Register();
         }
@@ -159,7 +159,7 @@ namespace Coralite.Content.Items.Plush
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient<BlackPlushBlock>(16)
+                .AddIngredient<BlackPlush>(16)
                 .AddTile(TileID.WorkBenches)
                 .Register();
         }
@@ -170,7 +170,7 @@ namespace Coralite.Content.Items.Plush
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient<BlackPlushBlock>(6)
+                .AddIngredient<BlackPlush>(6)
                 .AddIngredient(ItemID.Torch, 2)
                 .AddTile(TileID.WorkBenches)
                 .Register();
@@ -182,7 +182,7 @@ namespace Coralite.Content.Items.Plush
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient<BlackPlushBlock>(6)
+                .AddIngredient<BlackPlush>(6)
                 .AddIngredient(ItemID.Torch, 2)
                 .AddTile(TileID.WorkBenches)
                 .Register();
@@ -194,7 +194,7 @@ namespace Coralite.Content.Items.Plush
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient<BlackPlushBlock>(12)
+                .AddIngredient<BlackPlush>(12)
                 .AddIngredient(ItemID.Bone, 20)
                 .AddIngredient(ItemID.Book)
                 .AddTile(TileID.WorkBenches)
@@ -207,7 +207,7 @@ namespace Coralite.Content.Items.Plush
         public override void AddRecipes()
         {
             CreateRecipe(2)
-                .AddIngredient<BlackPlushBlock>()
+                .AddIngredient<BlackPlush>()
                 .AddTile(TileID.WorkBenches)
                 .Register();
         }
@@ -218,7 +218,7 @@ namespace Coralite.Content.Items.Plush
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient<BlackPlushBlock>(12)
+                .AddIngredient<BlackPlush>(12)
                 .AddIngredient(ItemID.WaterBucket)
                 .AddTile(TileID.WorkBenches)
                 .Register();
@@ -230,7 +230,7 @@ namespace Coralite.Content.Items.Plush
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient<BlackPlushBlock>(8)
+                .AddIngredient<BlackPlush>(8)
                 .AddTile(TileID.WorkBenches)
                 .Register();
         }
@@ -241,7 +241,7 @@ namespace Coralite.Content.Items.Plush
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient<BlackPlushBlock>(8)
+                .AddIngredient<BlackPlush>(8)
                 .AddTile(TileID.WorkBenches)
                 .Register();
         }
@@ -252,7 +252,7 @@ namespace Coralite.Content.Items.Plush
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient<BlackPlushBlock>(6)
+                .AddIngredient<BlackPlush>(6)
                 .AddTile(TileID.WorkBenches)
                 .Register();
         }
@@ -263,8 +263,7 @@ namespace Coralite.Content.Items.Plush
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient<BlackPlushBlock>(10)
-                .AddTile(TileID.WorkBenches)
+                .AddIngredient<BlackPlush>(10)
                 .Register();
         }
     }
@@ -274,7 +273,7 @@ namespace Coralite.Content.Items.Plush
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient<BlackPlushBlock>(10)
+                .AddIngredient<BlackPlush>(10)
                 .AddRecipeGroup(RecipeGroupID.IronBar, 2)
                 .AddTile(TileID.WorkBenches)
                 .Register();
