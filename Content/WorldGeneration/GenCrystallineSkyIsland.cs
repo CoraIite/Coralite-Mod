@@ -586,7 +586,7 @@ namespace Coralite.Content.WorldGeneration
         private Rectangle CSkyIslandShrineAndMainTunnel(ushort skarn, ushort smoothSkarn, ushort skarnBrick, ushort skarnWall, ushort crystallineBrick, Point mainIslandSize, Point mainIslandTopLeft, Rectangle outerRect)
         {
             //主要通道，用于生成小遗迹
-            int type = 3;//WorldGen.genRand.Next(0, 4);
+            int type = 5;//WorldGen.genRand.Next(0, 6);
 
             Texture2D shrineTex = ModContent.Request<Texture2D>(AssetDirectory.CrystallineSkyIsland + "MainSkyIslandShrine" + type, AssetRequestMode.ImmediateLoad).Value;
             Texture2D clearTex = ModContent.Request<Texture2D>(AssetDirectory.CrystallineSkyIsland + "MainSkyIslandShrineClear" + type, AssetRequestMode.ImmediateLoad).Value;

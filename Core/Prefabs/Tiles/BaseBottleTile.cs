@@ -34,6 +34,7 @@ namespace Coralite.Core.Prefabs.Tiles
 
             AddMapEntry(mapColor);
         }
+
         public override void SpecialDraw(int i, int j, SpriteBatch spriteBatch)
         {
             Helper.DrawMultWine(i, j, 1, 2);
@@ -46,6 +47,7 @@ namespace Coralite.Core.Prefabs.Tiles
         //        ModContent.GetInstance<CoraliteTileDrawing>().AddSpecialPoint(i, j, CoraliteTileDrawing.TileCounterType.MultiTileVine);
         //    return false;
         //}
+
         public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
         {
             Tile selfTile = Main.tile[i, j];

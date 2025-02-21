@@ -3,6 +3,7 @@ using Coralite.Core.Configs;
 using Coralite.Core.Systems.ParticleSystem;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 using Terraria;
 
 namespace Coralite.Content.CustomHooks
@@ -13,6 +14,9 @@ namespace Coralite.Content.CustomHooks
         public override SafetyLevel Safety => SafetyLevel.Safe;
 
         public static BlendState Reverse;
+
+        public static List<Point> SpecialTiles = [];
+        public static Dictionary<Point,byte> SpecialTilesCounter = [];
 
         public override void Load()
         {
@@ -35,7 +39,7 @@ namespace Coralite.Content.CustomHooks
         /// <summary>
         /// 在绘制粒子之后插一段，使用自己的渲染方式
         /// </summary>
-        private void Drawer(Terraria.On_Main.orig_DrawDust orig, Main self)
+        private void Drawer(On_Main.orig_DrawDust orig, Main self)
         {
             orig(self);
 
@@ -86,7 +90,7 @@ namespace Coralite.Content.CustomHooks
             }
 
             //绘制Non
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
 
             for (int k = 0; k < Main.maxProjectiles; k++) //Projectiles
                 if (Main.projectile[k].active && Main.projectile[k].ModProjectile is IDrawNonPremultiplied non)
@@ -98,7 +102,7 @@ namespace Coralite.Content.CustomHooks
 
             spriteBatch.End();
 
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
 
             for (int k = 0; k < Main.maxProjectiles; k++) //Projectiles
                 if (Main.projectile[k].active && Main.projectile[k].ModProjectile is IPostDrawAdditive add)
@@ -109,6 +113,29 @@ namespace Coralite.Content.CustomHooks
                     add.DrawAdditive(spriteBatch);
 
             spriteBatch.End();
+
+            if (SpecialTiles.Count != 0)
+            {
+                spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+
+                for (int i = SpecialTiles.Count - 1; i >= 0; i--)
+                {
+                    var p = SpecialTiles[i];
+                    Tile t = Main.tile[p];
+
+                    ModTile mt = TileLoader.GetTile(t.TileType);
+                    mt?.SpecialDraw(p.X, p.Y, Main.spriteBatch);
+
+                    SpecialTilesCounter[p]--;
+                    if (SpecialTilesCounter[p] < 1)
+                    {
+                        SpecialTiles.Remove(p);
+                        SpecialTilesCounter.Remove(p);
+                    }
+                }
+                Main.NewText(SpecialTiles.Count);
+                spriteBatch.End();
+            }
 
             ////绘制反色
             //Main.spriteBatch.Begin(SpriteSortMode.Deferred, Reverse, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
@@ -158,6 +185,17 @@ namespace Coralite.Content.CustomHooks
             //}
 
             //spriteBatch.End();
+        }
+
+        public static void AddSpecialTile(int i, int j)
+        {
+            if (SpecialTilesCounter.TryGetValue(new Point(i, j), out _))
+                SpecialTilesCounter[new Point(i, j)] = 5;
+            else
+            {
+                SpecialTilesCounter.Add(new Point(i, j), 5);
+                SpecialTiles.Add(new Point(i, j));
+            }
         }
     }
 }
