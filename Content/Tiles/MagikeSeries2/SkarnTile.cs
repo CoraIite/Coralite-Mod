@@ -10,7 +10,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         public override void SetStaticDefaults()
         {
-            Main.tileMergeDirt[Type] = true;
+            //Main.tileMergeDirt[Type] = true;
             Main.tileSolid[Type] = true;
             Main.tileBlockLight[Type] = true;
             //Main.tileMerge[Type][ModContent.TileType<MagikeCrystalBlockTile>()] = true;

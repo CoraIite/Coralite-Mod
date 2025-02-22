@@ -33,6 +33,11 @@ namespace Coralite.Core
         /// </summary>
         public static bool[] TileSpecialDraw;
 
+        /// <summary>
+        /// 物块是否是特殊苔藓
+        /// </summary>
+        public static bool[] TileSpecialMoss;
+
         public static List<int> SpecialDraw = new List<int>();
 
         public override void PostSetupContent()
@@ -79,6 +84,8 @@ namespace Coralite.Core
             TileShadowCastle[TileType<Content.Tiles.ShadowCastle.MercuryPlatformTile>()] = true;
             #endregion
 
+            TileSpecialMoss[TileType<Content.Tiles.MagikeSeries2.ChalcedonySkarn>()] = true;
+
             foreach (var type in SpecialDraw)
             {
                 if (TileSpecialDraw.IndexInRange(type))
@@ -103,6 +110,9 @@ namespace Coralite.Core
             Array.Fill(TileShadowCastle, false);
 
             TileSpecialDraw = new bool[TileLoader.TileCount];
+            Array.Fill(TileSpecialDraw, false);
+
+            TileSpecialMoss = new bool[TileLoader.TileCount];
             Array.Fill(TileSpecialDraw, false);
         }
     }

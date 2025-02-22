@@ -133,7 +133,7 @@ namespace Coralite.Content.CustomHooks
                         SpecialTilesCounter.Remove(p);
                     }
                 }
-                Main.NewText(SpecialTiles.Count);
+                //Main.NewText(SpecialTiles.Count);
                 spriteBatch.End();
             }
 
