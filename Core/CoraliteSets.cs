@@ -85,6 +85,7 @@ namespace Coralite.Core
             #endregion
 
             TileSpecialMoss[TileType<Content.Tiles.MagikeSeries2.ChalcedonySkarn>()] = true;
+            TileSpecialMoss[TileType<Content.Tiles.MagikeSeries2.ChalcedonySmoothSkarn>()] = true;
 
             foreach (var type in SpecialDraw)
             {

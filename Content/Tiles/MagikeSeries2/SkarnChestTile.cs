@@ -40,8 +40,8 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             DustType = DustID.BorealWood_Small;
             AdjTiles = [TileID.Containers];
 
-            AddMapEntry(Color.MediumPurple, this.GetLocalization("MapEntry0"), MapChestName);
-            AddMapEntry(Color.MediumPurple, this.GetLocalization("MapEntry1"), MapChestName);
+            AddMapEntry(Color.Gold, this.GetLocalization("MapEntry0"), MapChestName);
+            AddMapEntry(Color.Gold, this.GetLocalization("MapEntry1"), MapChestName);
 
             RegisterItemDrop(ModContent.ItemType<RottenChest>(), 1);
             RegisterItemDrop(ModContent.ItemType<RottenChest>());

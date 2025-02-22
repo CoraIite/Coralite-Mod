@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Items.MagikeSeries2;
+﻿using Coralite.Content.CoraliteNotes.MagikeChapter1;
+using Coralite.Content.Items.MagikeSeries2;
 using Coralite.Content.Tiles.MagikeSeries1;
 using Coralite.Content.Tiles.MagikeSeries2;
 using Coralite.Content.Walls.Magike;
@@ -248,6 +249,9 @@ namespace Coralite.Content.WorldGeneration
 
             #region 添加各类美化与装饰
 
+            // 种植浮萍
+            CSkyIslandGrass(skarn, smoothSkarn, mainIslandRect, shrineRect);
+
             // 添加斜坡
             CSkyIslandSlope(skarnBrick, outerRect, shrineRect);
 
@@ -256,6 +260,9 @@ namespace Coralite.Content.WorldGeneration
 
             // 生成装饰物
             CSkyIslandDecorations(outerRect, shrineRect);
+
+            // 生成草
+            CSkyIslandGrassDecorations(outerRect);
 
             #endregion
 
@@ -288,13 +295,39 @@ namespace Coralite.Content.WorldGeneration
             mainRect = outerRect;
         }
 
+        private void CSkyIslandGrassDecorations(Rectangle outerRect)
+        {
+            for (int i = 0; i < outerRect.Width; i++)
+                for (int j = 0; j < outerRect.Height; j++)
+                {
+                    Point point = new Point(outerRect.X, outerRect.Y) + new Point(i, j);
+                    Tile t = Main.tile[point];
+
+                    if (!t.HasTile || (t.TileType != ModContent.TileType<ChalcedonySkarn>() && t.TileType != ModContent.TileType<ChalcedonySmoothSkarn>()))
+                        continue;
+
+                    Tile top = Main.tile[point.X, point.Y - 1];
+                    if (!top.HasTile)
+                    {
+                        WorldGenHelper.ObjectPlace(point.X, point.Y - 1, ModContent.TileType<ChalcedonyGrass1x1>(),WorldGen.genRand.Next(11));
+                        continue;
+                    }
+
+                    if (Main.tileSolid[top.TileType] || Main.tileContainer[top.TileType])
+                        continue;
+
+                    WorldGen.KillTile(point.X, point.Y - 1);
+                    WorldGenHelper.ObjectPlace(point.X, point.Y - 1, ModContent.TileType<ChalcedonyGrass1x1>(), WorldGen.genRand.Next(11));
+                }
+        }
+
         private static void CSkyIslandDecorations(Rectangle outerRect, Rectangle shrineRect)
         {
             WorldGenHelper.PlaceDecorations_NoCheck(outerRect, (ushort)ModContent.TileType<CrystallineStalactite>(), 5);
             WorldGenHelper.PlaceDecorations_NoCheck(outerRect, (ushort)ModContent.TileType<CrystallineStalactite2x2>(), 4, avoidArea: shrineRect);
 
             WorldGenHelper.PlaceDecorations_NoCheck(outerRect, (ushort)ModContent.TileType<SkarnRubbles4x2>(), 5, avoidArea: shrineRect);
-            WorldGenHelper.PlaceDecorations_NoCheck(outerRect, (ushort)ModContent.TileType<SkarnRubbles3x2>(), 6, avoidArea: shrineRect);
+            WorldGenHelper.PlaceDecorations_NoCheck(outerRect, (ushort)ModContent.TileType<SkarnRubbles3x2>(), 7, avoidArea: shrineRect);
             WorldGenHelper.PlaceDecorations_NoCheck(outerRect, (ushort)ModContent.TileType<SkarnRubbles2x2>(), 4, avoidArea: shrineRect);
             WorldGenHelper.PlaceDecorations_NoCheck(outerRect, (ushort)ModContent.TileType<SkarnRubbles2x1>(), 3);
             WorldGenHelper.PlaceDecorations_NoCheck(outerRect, (ushort)ModContent.TileType<SkarnRubbles1x1>(), 2);
@@ -365,6 +398,75 @@ namespace Coralite.Content.WorldGeneration
                     if (WorldGen.genRand.NextBool())
                         Tile.SmoothSlope(point.X, point.Y, false);
                 }
+        }
+
+        private void CSkyIslandGrass(ushort skarn, ushort smoothSkarn, Rectangle rect,Rectangle shrineRect)
+        {
+            int grassCount = ValueByWorldSize(WorldGen.genRand.Next(4, 7)
+                    , WorldGen.genRand.Next(5, 8)
+                    , WorldGen.genRand.Next(6, 10));
+
+            const int size = 10;
+
+            for (int i = 0; i < grassCount; i++)
+            {
+                //随机找点
+                Point p = new Point(0, 0);
+
+                for (int j = 0; j < 1000; j++)//找到一个自身没物块的地方
+                {
+                    Point p2 = WorldGen.genRand.NextVector2FromRectangle(rect).ToPoint();
+
+                    if (Main.tile[p2].HasTile || shrineRect.Intersects(Utils.CenteredRectangle(p2.ToVector2(), new Vector2(size, size))))
+                        continue;
+
+                    p = p2;
+                }
+
+                if (p == default)
+                    continue;
+
+                for (int m = 0; m < size; m++)
+                    for (int n = 0; n < size; n++)
+                    {
+                        Point point = p + new Point(-size/2 + m, -size/2 + n);
+                        Tile t = Main.tile[point];
+                        if (!t.HasTile || (t.TileType != skarn && t.TileType != smoothSkarn))//限制感染物块
+                            continue;
+
+                        //检测周围需要有一定空间才能生成浮萍
+                        Tile top = Main.tile[point.X, point.Y - 1];
+                        Tile bottom = Main.tile[point.X, point.Y + 1];
+                        Tile left = Main.tile[point.X - 1, point.Y];
+                        Tile right = Main.tile[point.X + 1, point.Y];
+
+                        if (top.HasTile && bottom.HasTile && left.HasTile && right.HasTile)
+                        {
+                            Tile topLeft = Main.tile[point.X - 1, point.Y - 1];
+                            Tile topRight = Main.tile[point.X + 1, point.Y - 1];
+                            Tile bottomLeft = Main.tile[point.X - 1, point.Y + 1];
+                            Tile bottomRight = Main.tile[point.X + 1, point.Y + 1];
+
+                            int k = 0;
+                            if (!topLeft.HasTile)
+                                k++;
+                            if (!topRight.HasTile)
+                                k++;
+                            if (!bottomLeft.HasTile)
+                                k++;
+                            if (!bottomRight.HasTile)
+                                k++;
+
+                            if (k < 2)
+                                continue;
+                        }
+
+                        if (t.TileType == skarn)
+                            Main.tile[point].ResetToType((ushort)(ModContent.TileType<ChalcedonySkarn>()));
+                        else if (t.TileType == smoothSkarn)
+                            Main.tile[point].ResetToType((ushort)(ModContent.TileType<ChalcedonySmoothSkarn>()));
+                    }
+            }
         }
 
         private void CSkyIslandCloudWalls(Point mainIslandSize, Point mainIslandTopLeft, Rectangle shrineRect)
@@ -586,7 +688,7 @@ namespace Coralite.Content.WorldGeneration
         private Rectangle CSkyIslandShrineAndMainTunnel(ushort skarn, ushort smoothSkarn, ushort skarnBrick, ushort skarnWall, ushort crystallineBrick, Point mainIslandSize, Point mainIslandTopLeft, Rectangle outerRect)
         {
             //主要通道，用于生成小遗迹
-            int type = 5;//WorldGen.genRand.Next(0, 6);
+            int type = WorldGen.genRand.Next(0, 6);
 
             Texture2D shrineTex = ModContent.Request<Texture2D>(AssetDirectory.CrystallineSkyIsland + "MainSkyIslandShrine" + type, AssetRequestMode.ImmediateLoad).Value;
             Texture2D clearTex = ModContent.Request<Texture2D>(AssetDirectory.CrystallineSkyIsland + "MainSkyIslandShrineClear" + type, AssetRequestMode.ImmediateLoad).Value;

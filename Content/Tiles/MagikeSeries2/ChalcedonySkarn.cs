@@ -14,7 +14,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
     [AutoLoadTexture(Path = AssetDirectory.MagikeSeries2Tile)]
     public class ChalcedonySkarn : ModTile
     {
-        public override string Texture => AssetDirectory.MagikeSeries2Tile + Name;
+        public override string Texture => AssetDirectory.MagikeSeries2Tile + "SkarnTile";
 
         public static ATex ChalcedonyMoss { get; private set; }
 
@@ -40,12 +40,12 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
             DustType = DustID.BorealWood_Small;
             HitSound = CoraliteSoundID.Grass;
-            AddMapEntry(new Color(122, 144, 151));
+            AddMapEntry(new Color(147, 186, 84));
         }
 
         public override bool Slope(int i, int j)
         {
-            return false;
+            return true;
         }
 
         public override void NearbyEffects(int i, int j, bool closer)
@@ -90,7 +90,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             return true;
         }
 
-        private static void SpecialDrawMoss(int i, int j, Vector2 offScreen,SpriteBatch spriteBatch)
+        public static void SpecialDrawMoss(int i, int j, Vector2 offScreen,SpriteBatch spriteBatch)
         {
             Texture2D tex = ChalcedonyMoss.Value;
             Vector2 screenPosition = Main.Camera.UnscaledPosition;
@@ -117,8 +117,6 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
             float rotation = windCycle * n2;
 
-            Rectangle frameBox = tex.Frame(13, 5, xFrame, yFrame);
-
             int i2 = i;
             int j2 = j;
 
@@ -143,6 +141,38 @@ namespace Coralite.Content.Tiles.MagikeSeries2
                 if (yFrame < 3)
                     i2 += 1;
             }
+
+            if (t.IsHalfBlock)
+            {
+                xFrame = 0;
+
+                yFrame = 5 + (i + j / 2) % 3;
+            }
+            else
+            {
+                if (t.Slope == SlopeType.SlopeDownRight)
+                {
+                    xFrame = 1;
+                    yFrame = 5 + (i + j / 2) % 3;
+                }
+                else if (t.Slope == SlopeType.SlopeDownLeft)
+                {
+                    xFrame = 2;
+                    yFrame = 5 + (i + j / 2) % 3;
+                }
+                else if (t.Slope == SlopeType.SlopeUpLeft)
+                {
+                    xFrame = 3;
+                    yFrame = 5 + (i + j / 2) % 3;
+                }
+                else if (t.Slope == SlopeType.SlopeUpRight)
+                {
+                    xFrame = 4;
+                    yFrame = 5 + (i + j / 2) % 3;
+                }
+            }
+
+            Rectangle frameBox = tex.Frame(13, 8, xFrame, yFrame);
 
             Color color = Lighting.GetColor(i2, j2);
             spriteBatch.Draw(tex, pos, frameBox, color
@@ -172,11 +202,14 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             //Main.tile[i, j].ResetToType((ushort)ModContent.TileType<SkarnTile>());
         }
 
-        public bool ShouldDrawOnTop(int i, int j)
+        public static bool ShouldDrawOnTop(int i, int j)
         {
             Tile t = Main.tile[i, j];
             int xFrame = t.TileFrameX / 18;
             int yFrame = t.TileFrameY / 18;
+
+            if (t.BottomSlope)
+                return false;
 
             switch (yFrame)
             {
@@ -198,9 +231,114 @@ namespace Coralite.Content.Tiles.MagikeSeries2
                     if (xFrame < 6 || xFrame > 8)
                         return true;
                     break;
+                case 4:
+                    if (xFrame >5)
+                        return true;
+                    break;
             }
 
             return false;
+        }
+    }
+
+    public class ChalcedonySmoothSkarn : ModTile
+    {
+        public override string Texture => AssetDirectory.MagikeSeries2Tile + "SmoothSkarnTile";
+
+        public override void SetStaticDefaults()
+        {
+            Main.tileNoFail[Type] = true;
+            Main.tileMergeDirt[Type] = true;
+            Main.tileSolid[Type] = true;
+            Main.tileBlockLight[Type] = true;
+
+            Main.tileMerge[Type][ModContent.TileType<SkarnTile>()] = true;
+            Main.tileMerge[ModContent.TileType<SkarnTile>()][Type] = true;
+            Main.tileMerge[Type][ModContent.TileType<SmoothSkarnTile>()] = true;
+            Main.tileMerge[ModContent.TileType<SmoothSkarnTile>()][Type] = true;
+            Main.tileMerge[Type][ModContent.TileType<CrystallineSkarnTile>()] = true;
+            Main.tileMerge[ModContent.TileType<CrystallineSkarnTile>()][Type] = true;
+            Main.tileMerge[Type][ModContent.TileType<ChalcedonySkarn>()] = true;
+            Main.tileMerge[ModContent.TileType<ChalcedonySkarn>()][Type] = true;
+
+            //Main.tileMerge[TileID.Dirt][Type] = true;
+
+            TileID.Sets.ChecksForMerge[Type] = true;
+            TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
+            TileID.Sets.CanBeClearedDuringOreRunner[Type] = false;
+
+            DustType = DustID.BorealWood_Small;
+            HitSound = CoraliteSoundID.Grass;
+            AddMapEntry(new Color(147, 186, 84));
+        }
+
+        public override bool Slope(int i, int j)
+        {
+            return true;
+        }
+
+        public override void NearbyEffects(int i, int j, bool closer)
+        {
+            Tile t = Main.tile[i, j];
+
+            int xFrame = t.TileFrameX / 18;
+            int yFrame = t.TileFrameY / 18;
+            if (yFrame == 1 && xFrame > 0 && xFrame < 4)
+            {
+                Main.tile[i, j].ResetToType((ushort)ModContent.TileType<SmoothSkarnTile>());//被包裹在内部的时候转变为矽卡岩
+                WorldGen.TileFrame(i, j, true, true);
+            }
+            //if (closer)
+            //{
+            //    Drawers.SpecialTiles.Add(new Point(i, j));
+            //}
+        }
+
+        public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData)
+        {
+            if (ChalcedonySkarn.ShouldDrawOnTop(i,j))//只有在顶部和侧面的时候才绘制在图层上方
+                Drawers.AddSpecialTile(i, j);
+        }
+
+        public override void SpecialDraw(int i, int j, SpriteBatch spriteBatch)
+        {
+            ChalcedonySkarn.SpecialDrawMoss(i, j, Vector2.Zero, spriteBatch);
+        }
+
+        public override bool PreDraw(int i, int j, SpriteBatch spriteBatch)
+        {
+            if (ChalcedonySkarn.ShouldDrawOnTop(i, j))
+                return true;
+
+            Vector2 offScreen = new(Main.offScreenRange);
+            if (Main.drawToScreen)
+                offScreen = Vector2.Zero;
+
+            ChalcedonySkarn.SpecialDrawMoss(i, j,offScreen , spriteBatch);
+
+            return true;
+        }
+
+        public override void NumDust(int i, int j, bool fail, ref int num)
+        {
+            num = fail ? 2 : 4;
+        }
+
+        public override IEnumerable<Item> GetItemDrops(int i, int j)
+        {
+            return [new Item(ModContent.ItemType<SmoothSkarn>())];
+        }
+
+        public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
+        {
+            if (effectOnly)
+                return;
+
+            if (fail)
+            {
+                Helper.PlayPitched(CoraliteSoundID.Grab, new Vector2(i, j) * 16);
+                WorldGen.PlaceTile(i, j, (ushort)ModContent.TileType<SmoothSkarnTile>(), true, true);
+            }
         }
     }
 }
