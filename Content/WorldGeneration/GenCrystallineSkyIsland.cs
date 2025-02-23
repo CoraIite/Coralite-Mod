@@ -1,5 +1,4 @@
-﻿using Coralite.Content.CoraliteNotes.MagikeChapter1;
-using Coralite.Content.Items.MagikeSeries2;
+﻿using Coralite.Content.Items.MagikeSeries2;
 using Coralite.Content.Tiles.MagikeSeries1;
 using Coralite.Content.Tiles.MagikeSeries2;
 using Coralite.Content.Walls.Magike;
@@ -16,7 +15,9 @@ using Terraria.ID;
 using Terraria.IO;
 using Terraria.Localization;
 using Terraria.ModLoader.IO;
+using Terraria.ObjectData;
 using Terraria.WorldBuilding;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Coralite.Content.WorldGeneration
 {
@@ -84,7 +85,8 @@ namespace Coralite.Content.WorldGeneration
                 for (int j = 0; j < 500; j++)//向下遍历，找到地面
                 {
                     Tile t = Main.tile[p2.X, p2.Y];
-                    if (t.HasTile && Main.tileSolid[t.TileType])//找到实心方块
+                    if ((t.HasTile && Main.tileSolid[t.TileType])
+                        || t.LiquidAmount > 0)//找到实心方块
                         break;
 
                     p2.Y++;
@@ -191,14 +193,6 @@ namespace Coralite.Content.WorldGeneration
                 WorldGen.genRand.Next(80, 100)));
             Point mainIslandCenter = new Point(altarPos.X, mainIslandTopLeft.Y + mainIslandSize.Y / 2);
 
-            #region 主体形状
-
-            // 生成主体
-            CSkyIslandMainBlock(skarn, skarnWall, mainIslandSize, mainIslandCenter);
-
-            // 随机加一些突起和凹坑
-            CSkyIslandAddSmallBlocks(skarn, mainIslandSize, mainIslandTopLeft);
-
             //
             int xExpand = ValueByWorldSize(8, 10, 12);
             int yExpand = ValueByWorldSize(8, 12, 16);
@@ -209,6 +203,18 @@ namespace Coralite.Content.WorldGeneration
             Rectangle mainIslandRect = Utils.CenteredRectangle(mainIslandCenter.ToVector2(), mainIslandSize.ToVector2());
             Rectangle innerRect = Utils.CenteredRectangle(mainIslandCenter.ToVector2(), (mainIslandSize - new Point(xExpand * 2, yExpand * 2)).ToVector2());
             Rectangle outerRect = new Rectangle(mainIslandOutTopLeft.X, mainIslandOutTopLeft.Y, mainIslandOutSize.X, mainIslandOutSize.Y);
+
+            #region 主体形状
+
+            // 清理范围
+            CSkyIslandClear(outerRect);
+
+            // 生成主体
+            CSkyIslandMainBlock(skarn, skarnWall, mainIslandSize, mainIslandCenter);
+
+            // 随机加一些突起和凹坑
+            CSkyIslandAddSmallBlocks(skarn, mainIslandSize, mainIslandTopLeft);
+
 
             #endregion
 
@@ -297,6 +303,9 @@ namespace Coralite.Content.WorldGeneration
 
         private void CSkyIslandGrassDecorations(Rectangle outerRect)
         {
+            int Grass2x2 = ModContent.TileType<ChalcedonyGrass2x2>();
+            int Grass1x1 = ModContent.TileType<ChalcedonyGrass1x1>();
+
             for (int i = 0; i < outerRect.Width; i++)
                 for (int j = 0; j < outerRect.Height; j++)
                 {
@@ -309,15 +318,21 @@ namespace Coralite.Content.WorldGeneration
                     Tile top = Main.tile[point.X, point.Y - 1];
                     if (!top.HasTile)
                     {
-                        WorldGenHelper.ObjectPlace(point.X, point.Y - 1, ModContent.TileType<ChalcedonyGrass1x1>(),WorldGen.genRand.Next(11));
+                        ushort tileType = (ushort)Main.rand.NextFromList(Grass1x1, Grass1x1, Grass2x2);
+                        TileObjectData data = TileObjectData.GetTileData(tileType, 0);
+
+                        WorldGen.PlaceObject(point.X, point.Y-1, tileType, true, WorldGen.genRand.Next(data.RandomStyleRange));
                         continue;
                     }
 
-                    if (Main.tileSolid[top.TileType] || Main.tileContainer[top.TileType])
+                    if (Main.tileSolid[top.TileType] || Main.tileContainer[top.TileType] || top.TileType == Grass2x2)
                         continue;
 
                     WorldGen.KillTile(point.X, point.Y - 1);
-                    WorldGenHelper.ObjectPlace(point.X, point.Y - 1, ModContent.TileType<ChalcedonyGrass1x1>(), WorldGen.genRand.Next(11));
+                    ushort tileType2 = (ushort)Main.rand.NextFromList(Grass1x1, Grass1x1, Grass2x2);
+                    TileObjectData data2 = TileObjectData.GetTileData(tileType2, 0);
+
+                    WorldGen.PlaceObject(point.X, point.Y - 1, tileType2, true, WorldGen.genRand.Next(data2.RandomStyleRange));
                 }
         }
 
@@ -326,9 +341,11 @@ namespace Coralite.Content.WorldGeneration
             WorldGenHelper.PlaceDecorations_NoCheck(outerRect, (ushort)ModContent.TileType<CrystallineStalactite>(), 5);
             WorldGenHelper.PlaceDecorations_NoCheck(outerRect, (ushort)ModContent.TileType<CrystallineStalactite2x2>(), 4, avoidArea: shrineRect);
 
-            WorldGenHelper.PlaceDecorations_NoCheck(outerRect, (ushort)ModContent.TileType<SkarnRubbles4x2>(), 5, avoidArea: shrineRect);
-            WorldGenHelper.PlaceDecorations_NoCheck(outerRect, (ushort)ModContent.TileType<SkarnRubbles3x2>(), 7, avoidArea: shrineRect);
-            WorldGenHelper.PlaceDecorations_NoCheck(outerRect, (ushort)ModContent.TileType<SkarnRubbles2x2>(), 4, avoidArea: shrineRect);
+            WorldGenHelper.PlaceDecorations_NoCheck(outerRect, (ushort)ModContent.TileType<SkarnRubbles4x2>(), 15, avoidArea: shrineRect);
+            WorldGenHelper.PlaceDecorations_NoCheck(outerRect, (ushort)ModContent.TileType<SkarnRubbles3x4>(), 13, avoidArea: shrineRect);
+            WorldGenHelper.PlaceDecorations_NoCheck(outerRect, (ushort)ModContent.TileType<SkarnRubbles3x3>(), 11, avoidArea: shrineRect);
+            WorldGenHelper.PlaceDecorations_NoCheck(outerRect, (ushort)ModContent.TileType<SkarnRubbles3x2>(), 10, avoidArea: shrineRect);
+            WorldGenHelper.PlaceDecorations_NoCheck(outerRect, (ushort)ModContent.TileType<SkarnRubbles2x2>(), 5, avoidArea: shrineRect);
             WorldGenHelper.PlaceDecorations_NoCheck(outerRect, (ushort)ModContent.TileType<SkarnRubbles2x1>(), 3);
             WorldGenHelper.PlaceDecorations_NoCheck(outerRect, (ushort)ModContent.TileType<SkarnRubbles1x1>(), 2);
         }
@@ -688,7 +705,7 @@ namespace Coralite.Content.WorldGeneration
         private Rectangle CSkyIslandShrineAndMainTunnel(ushort skarn, ushort smoothSkarn, ushort skarnBrick, ushort skarnWall, ushort crystallineBrick, Point mainIslandSize, Point mainIslandTopLeft, Rectangle outerRect)
         {
             //主要通道，用于生成小遗迹
-            int type = WorldGen.genRand.Next(0, 6);
+            int type = WorldGen.genRand.Next(8);
 
             Texture2D shrineTex = ModContent.Request<Texture2D>(AssetDirectory.CrystallineSkyIsland + "MainSkyIslandShrine" + type, AssetRequestMode.ImmediateLoad).Value;
             Texture2D clearTex = ModContent.Request<Texture2D>(AssetDirectory.CrystallineSkyIsland + "MainSkyIslandShrineClear" + type, AssetRequestMode.ImmediateLoad).Value;
@@ -726,6 +743,9 @@ namespace Coralite.Content.WorldGeneration
                 [new Color(255, 239, 219)] = ModContent.TileType<ChalcedonyTile>(),//ffefdb
                 [new Color(170, 228, 143)] = ModContent.TileType<LeafChalcedonyTile>(),//aae48f
 
+                [new Color(147, 186, 84)] = ModContent.TileType<ChalcedonySkarn>(),//93ba54
+                [new Color(95, 212, 111)] = ModContent.TileType<ChalcedonySmoothSkarn>(),//5fd46f
+
                 [new Color(241, 130, 255)] = crystallineBrick,//f182ff
                 [new Color(90, 100, 80)] = TileID.Chain,//5a6450
 
@@ -742,6 +762,12 @@ namespace Coralite.Content.WorldGeneration
 
             //生成遗迹
             GenByTexture(clearTex, shrineTex, wallClearTex, wallTex, clearDic, mainDic, clearDic, wallDic, shrineTopLeft.X, shrineTopLeft.Y);
+
+            if (type == 7)//特定样式生成水池
+            {
+                Texture2D liquidTex = ModContent.Request<Texture2D>(AssetDirectory.CrystallineSkyIsland + "MainSkyIslandShrineLiquid" + type, AssetRequestMode.ImmediateLoad).Value;
+                GenLiquidByTexture(liquidTex, new Dictionary<Color, int>() { [Color.Black] = -1, [Color.White] = LiquidID.Water }, shrineTopLeft);
+            }
 
             //放置中心的箱子
             ushort chestTileType = (ushort)ModContent.TileType<SkarnChestTile>();
@@ -941,6 +967,29 @@ namespace Coralite.Content.WorldGeneration
                     new Modifiers.NotInShape(OutlineData)
                     , new Modifiers.Blotches(4)
                     , new Actions.PlaceWall(skarnWall)));
+        }
+
+        private void CSkyIslandClear(Rectangle rect)
+        {
+            rect.X -= 200;
+            rect.Width += 400;
+            if (rect.X < 40)
+                rect.X = 40;
+
+            if (rect.X + rect.Width > Main.maxTilesX - 40)
+                rect.Width = Main.maxTilesX - 40 - rect.X;
+
+            if (rect.Y < 40)
+            {
+                rect.Y = 40;
+            }
+
+            for (int i = 0; i < rect.Width; i++)
+                for (int j = 0; j < rect.Height; j++)
+                {
+                    Framing.GetTileSafely(new Point(rect.X + i, rect.Y + j)).ClearEverything();
+                }
+
         }
 
         private static void SpawnSkarnBrick(ushort skarnBrick, Rectangle shrineRect, Point p, int exY, int brickWidth, int maxY,bool skipEmptyCheck=false)
@@ -1201,6 +1250,204 @@ namespace Coralite.Content.WorldGeneration
         }
 
         #endregion
+
+        #endregion
+
+        #region 生成周边小岛
+
+        public enum SmallIslandType
+        {
+            /// <summary>
+            /// 平平无奇的小石头岛
+            /// </summary>
+            Normal,
+            /// <summary>
+            /// 有水池的岛
+            /// </summary>
+            Pool,
+            /// <summary>
+            /// 山洞岛，中空
+            /// </summary>
+            Cave,
+            /// <summary>
+            /// 遗迹岛
+            /// </summary>
+            Ruins,
+            /// <summary>
+            /// 箱子岛
+            /// </summary>
+            Chest,
+            /// <summary>
+            /// 柱子岛，比较长，比较窄
+            /// </summary>
+            Pillar,
+            /// <summary>
+            /// 树岛，顶部比较平，用于种植树
+            /// </summary>
+            Tree,
+
+            Count
+        }
+
+        public struct SkyIslandGenTextures
+        {
+            public int RandomType;
+            public Point Size;
+
+            public Texture2D MainTex;
+            public Texture2D ClearTex;
+            public Texture2D WallTex;
+            public Texture2D WallClearTex;
+
+            public Texture2D LiquidTex;
+
+            public static Texture2D Get(string path)
+                => ModContent.Request<Texture2D>(path, AssetRequestMode.ImmediateLoad).Value;
+
+            public static SkyIslandGenTextures GetTextures(SmallIslandType type)
+            {
+                const string Clear = "Clear";
+                const string Wall = "Wall";
+                const string WallClear = "WallClear";
+                const string Liquid = "Liquid";
+
+                string secondName = "";
+                int randomCountMax = 0;
+
+                switch (type)
+                {
+                    case SmallIslandType.Normal:
+                        {
+                            secondName = "Normal";
+                            string path2 = AssetDirectory.CrystallineSmallIsland + secondName;
+                            int randomType2 = 0;
+                            Texture2D mainTex2 = Get(path2 + randomType2);
+                            return new SkyIslandGenTextures()
+                            {
+                                RandomType = randomType2,
+                                MainTex = mainTex2,
+                                ClearTex = Get(path2 + Clear + randomType2),
+                                WallTex = Get(path2 + Wall + randomType2),
+                                WallClearTex = Get(path2 + WallClear + randomType2),
+                                Size = mainTex2.Size().ToPoint()
+                            };
+                        }
+                        break;
+                    case SmallIslandType.Pool:
+                        break;
+                    case SmallIslandType.Cave:
+                        break;
+                    case SmallIslandType.Ruins:
+                        break;
+                    case SmallIslandType.Chest:
+                        break;
+                    case SmallIslandType.Pillar:
+                        break;
+                    case SmallIslandType.Tree:
+                        break;
+                    case SmallIslandType.Count:
+                        break;
+                    default:
+                        return default;
+                }
+
+                string path = AssetDirectory.CrystallineSmallIsland + secondName;
+                int randomType = 0;
+                Texture2D mainTex = Get(path + randomType);
+                return new SkyIslandGenTextures()
+                {
+                    RandomType = randomType,
+                    MainTex = mainTex,
+                    ClearTex = Get(path + Clear + randomType),
+                    WallTex = Get(path + Wall + randomType),
+                    WallClearTex = Get(path + WallClear + randomType),
+                    Size = mainTex.Size().ToPoint(),
+                };
+            }
+        }
+
+        public struct SmallIslandDatas
+        {
+            public Rectangle Box;
+            public SmallIslandType IslandType;
+            public int RandomType;
+        }
+
+        public void GenSmallIslands(Rectangle mainRect, out List<SmallIslandDatas> SmallIslandDatas)
+        {
+            int smallIslandCount = ValueByWorldSize(
+                WorldGen.genRand.Next(5, 8),
+                WorldGen.genRand.Next(7, 12),
+                WorldGen.genRand.Next(9, 14)
+                );
+
+            List<Rectangle> avoidRects = [mainRect];
+            SmallIslandDatas = [];
+
+            Rectangle expandRect = mainRect;
+
+            for (int i = 0; i < smallIslandCount; i++)
+            {
+                //随机选择生成类型
+                //之后不断扩展中心矩形，指导能够容纳小岛的生成
+
+                SmallIslandType smallIslandType = (SmallIslandType)WorldGen.genRand.Next((int)SmallIslandType.Count);
+
+                //获取类型，尺寸和贴图集合
+                SkyIslandGenTextures data = SkyIslandGenTextures.GetTextures(smallIslandType);
+
+                //外部尺寸
+                int protect = WorldGen.genRand.Next(4, 8);
+                Point outerSize = data.Size + new Point(protect, protect);
+
+                Point SpawnTopLeft = default;
+                bool success = false;
+
+                do
+                {
+                    expandRect.X--;//扩张基础矩形
+                    expandRect.Width++;
+                    Rectangle currentRect = default;
+                    for (int k = 0; k < 50; k++)//每次随机50次中心点
+                    {
+                        bool findPoint = true;
+
+                        //直到随机到一个可以容纳的情况
+                        Point p = WorldGen.genRand.NextVector2FromRectangle(expandRect).ToPoint();
+                        currentRect = new Rectangle(p.X, p.Y, outerSize.X, outerSize.Y);
+
+                        foreach (var rect in avoidRects)//检测碰撞
+                            if (rect.Intersects(currentRect))
+                            {
+                                findPoint = false;
+                                break;
+                            }
+
+                        if (findPoint)//未发生碰撞，成功找到可生成的位置
+                        {
+                            SpawnTopLeft = p + new Point(protect / 2, protect / 2);
+                            success = true;
+                            break;
+                        }
+                    }
+
+                    if (success)//成功找到位置
+                    {
+                        avoidRects.Add(currentRect);
+                        SmallIslandDatas.Add(new SmallIslandDatas()
+                        {
+                            Box = currentRect,
+                            IslandType = smallIslandType,
+                            RandomType = data.RandomType
+                        });
+                    }
+
+                } while (!success);
+
+                //成功找到了位置，开始生成
+
+            }
+        }
 
         #endregion
 

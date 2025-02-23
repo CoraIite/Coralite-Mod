@@ -14,6 +14,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             Main.tileNoFail[Type] = true;
             Main.tileFrameImportant[Type] = true;
             Main.tileObsidianKill[Type] = true;
+            Main.tileCut[Type] = true;
 
             TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
             TileID.Sets.SwaysInWindBasic[Type] = true;
@@ -27,7 +28,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.addTile(Type);
 
-            HitSound = CoraliteSoundID.DigStone_Tink;
+            HitSound = CoraliteSoundID.Grass;
             DustType = DustID.Pearlsand;
             AddMapEntry(new Color(147, 186, 84));
         }
@@ -61,5 +62,37 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         //    return true;
         //}
+    }
+
+    public class ChalcedonyGrass2x2 : ModTile
+    {
+        public override string Texture => AssetDirectory.MagikeSeries2Tile + Name;
+
+        public override void SetStaticDefaults()
+        {
+            Main.tileNoFail[Type] = true;
+            Main.tileFrameImportant[Type] = true;
+            Main.tileObsidianKill[Type] = true;
+
+            TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
+
+            TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
+            TileObjectData.newTile.CoordinateHeights = [16,16];
+            TileObjectData.newTile.DrawYOffset = 2;
+            TileObjectData.newTile.StyleMultiplier = 1;
+            TileObjectData.newTile.StyleHorizontal = true;
+            TileObjectData.newTile.RandomStyleRange = 2;
+            TileObjectData.newTile.LavaDeath = false;
+            TileObjectData.addTile(Type);
+
+            HitSound = CoraliteSoundID.Grass;
+            DustType = DustID.Pearlsand;
+            AddMapEntry(new Color(147, 186, 84));
+        }
+
+        public override void NumDust(int i, int j, bool fail, ref int num)
+        {
+            num = fail ? 1 : 3;
+        }
     }
 }

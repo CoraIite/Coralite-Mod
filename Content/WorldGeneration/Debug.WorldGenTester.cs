@@ -1,4 +1,5 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Tiles.MagikeSeries2;
+using Coralite.Core;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -30,7 +31,9 @@ namespace Coralite.Content.WorldGeneration
 
         public override bool CanUseItem(Player player)
         {
-            //Point pos = Main.MouseWorld.ToTileCoordinates();
+            Point point = Main.MouseWorld.ToTileCoordinates();
+            WorldGenHelper.ObjectPlace(point.X, point.Y - 1, ModContent.TileType<ChalcedonyGrass2x2>(), WorldGen.genRand.Next(2));
+
             //WorldGen.PlaceObject(pos.X, pos.Y, ModContent.TileType<MercuryPlatformTile>());
 
             //ModItem modItem = ItemLoader.GetItem(5614);
@@ -145,45 +148,45 @@ namespace Coralite.Content.WorldGeneration
             //            , new Actions.SetFrames()));
             //}
 
-            int crystalSize = 14;
-            crystalSize /= 2;
-            crystalSize *= 2;
-            crystalSize ++;
-            Point orecenter = Main.MouseWorld.ToTileCoordinates();
-            Point oreP = orecenter + new Vector2(0, -crystalSize / 4f).ToPoint();
+            //int crystalSize = 14;
+            //crystalSize /= 2;
+            //crystalSize *= 2;
+            //crystalSize ++;
+            //Point orecenter = Main.MouseWorld.ToTileCoordinates();
+            //Point oreP = orecenter + new Vector2(0, -crystalSize / 4f).ToPoint();
 
-            ShapeData oreData = new ShapeData();
-            int y1 = (int)(crystalSize / 2f * 1.732f);
+            //ShapeData oreData = new ShapeData();
+            //int y1 = (int)(crystalSize / 2f * 1.732f);
 
-            WorldUtils.Gen(
-            oreP,
-                new Shapes.Tail(crystalSize, new ReLogic.Utilities.Vector2D(0, y1)),
-                new Actions.Blank().Output(oreData));
+            //WorldUtils.Gen(
+            //oreP,
+            //    new Shapes.Tail(crystalSize, new ReLogic.Utilities.Vector2D(0, y1)),
+            //    new Actions.Blank().Output(oreData));
 
-            //生成外面一圈三角形
-            WorldUtils.Gen(
-            oreP,
-                new ModShapes.InnerOutline(oreData),
-                Actions.Chain(
-                    new Actions.ClearTile()
-                    , new Actions.PlaceTile(TileID.Mud)
-            , new Actions.SetFrames())
-            );
+            ////生成外面一圈三角形
+            //WorldUtils.Gen(
+            //oreP,
+            //    new ModShapes.InnerOutline(oreData),
+            //    Actions.Chain(
+            //        new Actions.ClearTile()
+            //        , new Actions.PlaceTile(TileID.Mud)
+            //, new Actions.SetFrames())
+            //);
 
-            crystalSize /= 2;
-            crystalSize++;
-            oreP = orecenter + new Vector2(1, crystalSize / 4f).ToPoint();
+            //crystalSize /= 2;
+            //crystalSize++;
+            //oreP = orecenter + new Vector2(1, crystalSize / 4f).ToPoint();
 
-            //生成里面的小三角形
-            int y = (int)(-crystalSize / 2f * 1.732f);
-            WorldUtils.Gen(
-            oreP,
-            new Shapes.Tail(crystalSize, new ReLogic.Utilities.Vector2D(0, y)),
-                Actions.Chain(
-                    new Actions.ClearTile()
-                    , new Actions.PlaceTile(TileID.Mud)
-                    , new Actions.SetFrames())
-                );
+            ////生成里面的小三角形
+            //int y = (int)(-crystalSize / 2f * 1.732f);
+            //WorldUtils.Gen(
+            //oreP,
+            //new Shapes.Tail(crystalSize, new ReLogic.Utilities.Vector2D(0, y)),
+            //    Actions.Chain(
+            //        new Actions.ClearTile()
+            //        , new Actions.PlaceTile(TileID.Mud)
+            //        , new Actions.SetFrames())
+            //    );
 
             return base.CanUseItem(player);
         }

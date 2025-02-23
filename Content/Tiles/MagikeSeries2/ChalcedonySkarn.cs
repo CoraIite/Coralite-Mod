@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.ObjectData;
 
 namespace Coralite.Content.Tiles.MagikeSeries2
 {
@@ -43,9 +44,21 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             AddMapEntry(new Color(147, 186, 84));
         }
 
-        public override bool Slope(int i, int j)
+        public override void RandomUpdate(int i, int j)
         {
-            return true;
+            if (Main.rand.NextBool(5))
+            {
+                Tile t = Framing.GetTileSafely(i, j - 1);
+
+                if (t.HasTile)
+                    return;
+
+                ushort tileType = (ushort)Main.rand.NextFromList(ModContent.TileType<ChalcedonyGrass1x1>(), ModContent.TileType<ChalcedonyGrass2x2>());
+
+                TileObjectData data = TileObjectData.GetTileData(tileType, 0);
+
+                WorldGen.PlaceObject(i, j - 1, tileType, true, Main.rand.Next(data.RandomStyleRange));
+            }
         }
 
         public override void NearbyEffects(int i, int j, bool closer)
@@ -272,9 +285,21 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             AddMapEntry(new Color(147, 186, 84));
         }
 
-        public override bool Slope(int i, int j)
+        public override void RandomUpdate(int i, int j)
         {
-            return true;
+            if (Main.rand.NextBool(5))
+            {
+                Tile t = Framing.GetTileSafely(i, j - 1);
+
+                if (t.HasTile)
+                    return;
+
+                ushort tileType = (ushort)Main.rand.NextFromList(ModContent.TileType<ChalcedonyGrass1x1>(), ModContent.TileType<ChalcedonyGrass2x2>());
+
+                TileObjectData data = TileObjectData.GetTileData(tileType, 0);
+
+                WorldGen.PlaceObject(i, j - 2 + data.Height, tileType, true, Main.rand.Next(data.RandomStyleRange));
+            }
         }
 
         public override void NearbyEffects(int i, int j, bool closer)
