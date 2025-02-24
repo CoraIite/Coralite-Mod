@@ -19,10 +19,10 @@ namespace Coralite.Content.Items.MagikeSeries2
 
         public override void AddRecipes()
         {
-            CreateRecipe()
-                .AddIngredient<CrystallineBlock>(2)
-                .AddTile(TileID.HeavyWorkBench)
-                .Register();
+            //CreateRecipe()
+            //    .AddIngredient<CrystallineBlock>(2)
+            //    .AddTile(TileID.HeavyWorkBench)
+            //    .Register();
         }
     }
 }

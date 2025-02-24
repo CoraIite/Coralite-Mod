@@ -1,5 +1,4 @@
-﻿using Coralite.Content.Items.MagikeSeries2;
-using Coralite.Core;
+﻿using Coralite.Core;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
