@@ -17,7 +17,6 @@ using Terraria.Localization;
 using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
 using Terraria.WorldBuilding;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Coralite.Content.WorldGeneration
 {
@@ -207,7 +206,7 @@ namespace Coralite.Content.WorldGeneration
             #region 主体形状
 
             // 清理范围
-            CSkyIslandClear(outerRect);
+            //CSkyIslandClear(outerRect);
 
             // 生成主体
             CSkyIslandMainBlock(skarn, skarnWall, mainIslandSize, mainIslandCenter);
@@ -301,7 +300,7 @@ namespace Coralite.Content.WorldGeneration
             mainRect = outerRect;
         }
 
-        private void CSkyIslandGrassDecorations(Rectangle outerRect)
+        private static void CSkyIslandGrassDecorations(Rectangle outerRect)
         {
             int Grass2x2 = ModContent.TileType<ChalcedonyGrass2x2>();
             int Grass1x1 = ModContent.TileType<ChalcedonyGrass1x1>();
