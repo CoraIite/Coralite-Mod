@@ -5237,3 +5237,8 @@ SkarnChest: {
 	// DisplayName: Skarn Chest
 	// Tooltip: ""
 }
+
+CrystallineBlock: {
+	// DisplayName: Crystalline Block
+	// Tooltip: ""
+}
