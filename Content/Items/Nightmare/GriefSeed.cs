@@ -46,7 +46,7 @@ namespace Coralite.Content.Items.Nightmare
             itemLoot.Add(ItemDropRule.CoinsBasedOnNPCValue(ModContent.NPCType<NightmarePlantera>()));
             //itemLoot.Add(ItemDropRule.Common(ItemID.Gel, 1, 45, 150));
 
-            IItemDropRule[] weaponTypes = new IItemDropRule[] {
+            IItemDropRule[] weaponTypes = [
                 ItemDropRule.Common(ModContent.ItemType<LostSevensideHook>(), 1, 1, 1),
                 ItemDropRule.Common(ModContent.ItemType<DreamShears>(), 1, 1, 1),
                 ItemDropRule.Common(ModContent.ItemType<EuphorbiaMilii>(), 1, 1, 1),
@@ -62,7 +62,7 @@ namespace Coralite.Content.Items.Nightmare
                 ItemDropRule.Common(ModContent.ItemType<PurpleToeStaff>(), 1, 1, 1),
                 ItemDropRule.Common(ModContent.ItemType<Dreamcatcher>(), 1, 1, 1),
                 ItemDropRule.Common(ModContent.ItemType<Eden>(), 1, 1, 1),
-            };
+            ];
 
             itemLoot.Add(new FewFromRulesRule(3, 1, weaponTypes));
         }
@@ -178,7 +178,7 @@ namespace Coralite.Content.Items.Nightmare
 
         public void AddMagikeCraftRecipe()
         {
-            int cost = MagikeHelper.CalculateMagikeCost(MALevel.SplendorMagicore, 24, 60 * 8);
+            int cost = MagikeHelper.CalculateMagikeCost(MALevel.SplendorMagicore, 12, 60 * 4);
 
             MagikeRecipe.CreateCraftRecipe<GriefSeed, LostSevensideHook>(cost)
                 .RegisterNewCraft<DreamShears>(cost)

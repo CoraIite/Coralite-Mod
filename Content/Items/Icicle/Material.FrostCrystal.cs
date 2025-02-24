@@ -15,7 +15,7 @@ namespace Coralite.Content.Items.Icicle
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeSystem.AddRemodelRecipe<IcicleCrystal, FrostCrystal>(MagikeHelper.CalculateMagikeCost(MALevel.Frost, 12, 60 * 10));
+            MagikeSystem.AddRemodelRecipe<IcicleCrystal, FrostCrystal>(MagikeHelper.CalculateMagikeCost(MALevel.Frost, 6, 60 * 2));
             //MagikeSystem.AddRemodelRecipe<FrostCrystal, IcicleCrystal>(100);
         }
     }

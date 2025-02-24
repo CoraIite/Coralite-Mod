@@ -10,34 +10,35 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
         public void AddMagikeCraftRecipe()
         {
             //木板条箱
+            int woddenChestCost = CalculateMagikeCost(MagicCrystal, 4, 60 * 3);
             //航鱼靴
-            MagikeRecipe.CreateCraftRecipe(ItemID.WoodenCrate, ItemID.SailfishBoots, CalculateMagikeCost(MagicCrystal, 8, 60 * 3), 2)
-                .RegisterNewCraft(ItemID.TsunamiInABottle, CalculateMagikeCost(MagicCrystal, 8, 180))//海啸瓶
-                .RegisterNewCraft(ItemID.Extractinator, CalculateMagikeCost(MagicCrystal, 8, 180))//提取机
-                .RegisterNewCraft(ItemID.Aglet, CalculateMagikeCost(MagicCrystal, 8, 180))//金属代扣
-                .RegisterNewCraft(ItemID.PortableStool, CalculateMagikeCost(MagicCrystal, 8, 180))//踢蹬
-                .RegisterNewCraft(ItemID.ClimbingClaws, CalculateMagikeCost(MagicCrystal, 8, 180))//攀爬爪
-                .RegisterNewCraft(ItemID.CordageGuide, CalculateMagikeCost(MagicCrystal, 8, 180))//植物纤维宝典
-                .RegisterNewCraft(ItemID.Radar, CalculateMagikeCost(MagicCrystal, 8, 180))//雷达
-                .RegisterNewCraft<FlyingShieldVarnish>(CalculateMagikeCost(MagicCrystal, 8, 180))//飞盾光油
-                .RegisterNewCraft<HeavyWedges>(CalculateMagikeCost(MagicCrystal, 8, 180))//重型楔石
-                .RegisterNewCraft(ItemID.ApprenticeBait, CalculateMagikeCost(MagicCrystal, 8, 180), 3)
-                .RegisterNewCraft(ItemID.JourneymanBait, CalculateMagikeCost(MagicCrystal, 8, 180), 3)
+            MagikeRecipe.CreateCraftRecipe(ItemID.WoodenCrate, ItemID.SailfishBoots, woddenChestCost, 2)
+                .RegisterNewCraft(ItemID.TsunamiInABottle, woddenChestCost)//海啸瓶
+                .RegisterNewCraft(ItemID.Extractinator, woddenChestCost)//提取机
+                .RegisterNewCraft(ItemID.Aglet, woddenChestCost)//金属代扣
+                .RegisterNewCraft(ItemID.PortableStool, woddenChestCost)//踢蹬
+                .RegisterNewCraft(ItemID.ClimbingClaws, woddenChestCost)//攀爬爪
+                .RegisterNewCraft(ItemID.CordageGuide, woddenChestCost)//植物纤维宝典
+                .RegisterNewCraft(ItemID.Radar, woddenChestCost)//雷达
+                .RegisterNewCraft<FlyingShieldVarnish>(woddenChestCost)//飞盾光油
+                .RegisterNewCraft<HeavyWedges>(woddenChestCost)//重型楔石
+                .RegisterNewCraft(ItemID.ApprenticeBait, woddenChestCost, 3)
+                .RegisterNewCraft(ItemID.JourneymanBait, woddenChestCost, 3)
                 .Register();
 
             //珍珠木板条箱
-            MagikeRecipe.CreateCraftRecipe(ItemID.WoodenCrateHard, ItemID.SailfishBoots, CalculateMagikeCost(MagicCrystal, 8, 60 * 3), 2)
-                .RegisterNewCraft(ItemID.TsunamiInABottle, CalculateMagikeCost(MagicCrystal, 8, 180))//海啸瓶
+            MagikeRecipe.CreateCraftRecipe(ItemID.WoodenCrateHard, ItemID.SailfishBoots, woddenChestCost, 2)
+                .RegisterNewCraft(ItemID.TsunamiInABottle, woddenChestCost)//海啸瓶
                 .RegisterNewCraft(ItemID.Anchor, CalculateMagikeCost(CrystallineMagike, 8, 180))//锚
-                .RegisterNewCraft(ItemID.Aglet, CalculateMagikeCost(MagicCrystal, 8, 180))//金属代扣
-                .RegisterNewCraft(ItemID.PortableStool, CalculateMagikeCost(MagicCrystal, 8, 180))//踢蹬
-                .RegisterNewCraft(ItemID.ClimbingClaws, CalculateMagikeCost(MagicCrystal, 8, 180))//攀爬爪
-                .RegisterNewCraft(ItemID.CordageGuide, CalculateMagikeCost(MagicCrystal, 8, 180))//植物纤维宝典
-                .RegisterNewCraft(ItemID.Radar, CalculateMagikeCost(MagicCrystal, 8, 180))//雷达
-                .RegisterNewCraft<FlyingShieldVarnish>(CalculateMagikeCost(MagicCrystal, 8, 180))//飞盾光油
-                .RegisterNewCraft<HeavyWedges>(CalculateMagikeCost(MagicCrystal, 8, 180))//重型楔石
-                .RegisterNewCraft(ItemID.ApprenticeBait, CalculateMagikeCost(MagicCrystal, 8, 180), 3)
-                .RegisterNewCraft(ItemID.JourneymanBait, CalculateMagikeCost(MagicCrystal, 8, 180), 3)
+                .RegisterNewCraft(ItemID.Aglet, woddenChestCost)//金属代扣
+                .RegisterNewCraft(ItemID.PortableStool, woddenChestCost)//踢蹬
+                .RegisterNewCraft(ItemID.ClimbingClaws, woddenChestCost)//攀爬爪
+                .RegisterNewCraft(ItemID.CordageGuide, woddenChestCost)//植物纤维宝典
+                .RegisterNewCraft(ItemID.Radar, woddenChestCost)//雷达
+                .RegisterNewCraft<FlyingShieldVarnish>(woddenChestCost)//飞盾光油
+                .RegisterNewCraft<HeavyWedges>(woddenChestCost)//重型楔石
+                .RegisterNewCraft(ItemID.ApprenticeBait, woddenChestCost, 3)
+                .RegisterNewCraft(ItemID.JourneymanBait, woddenChestCost, 3)
                 .Register();
 
 

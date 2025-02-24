@@ -6,21 +6,21 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.MagikeSeries2
 {
-    public class CrystallineBrick : ModItem
+    public class CrystallineBlock : ModItem
     {
         public override string Texture => AssetDirectory.MagikeSeries2Item + Name;
 
         public override void SetDefaults()
         {
-            Item.DefaultToPlaceableTile(ModContent.TileType<CrystallineBrickTile>());
-            Item.GetMagikeItem().magikeAmount = 200;
+            Item.DefaultToPlaceableTile(ModContent.TileType<CrystallineBlockTile>());
+            Item.GetMagikeItem().magikeAmount = 100;
             Item.rare = ModContent.RarityType<CrystallineMagikeRarity>();
         }
 
         public override void AddRecipes()
         {
-            CreateRecipe()
-                .AddIngredient<CrystallineBlock>(2)
+            CreateRecipe(4)
+                .AddIngredient<CrystallineMagike>()
                 .AddTile(TileID.HeavyWorkBench)
                 .Register();
         }
