@@ -45,7 +45,6 @@ namespace Coralite.Content.Items.BossSummons
 
             Item.shoot = ModContent.ProjectileType<NightmareHarpProj>();
             Item.noUseGraphic = true;
-
         }
 
         public override bool CanUseItem(Player player)
@@ -92,7 +91,7 @@ namespace Coralite.Content.Items.BossSummons
         public void AddMagikeCraftRecipe()
         {
             MagikeRecipe.CreateCraftRecipe(ItemID.Harp, ModContent.ItemType<NightmareHarp>()
-                , MagikeHelper.CalculateMagikeCost(MALevel.SplendorMagicore, 24, 60 * 10))
+                , MagikeHelper.CalculateMagikeCost(MALevel.SplendorMagicore, 12, 60 * 5))
                 .AddIngredient(ItemID.SoulofLight, 7)
                 .AddIngredient(ItemID.SoulofNight, 7)
                 .AddIngredient(ItemID.SoulofMight, 7)

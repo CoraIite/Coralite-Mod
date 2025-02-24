@@ -2,6 +2,7 @@
 using Coralite.Content.Tiles.MagikeSeries2;
 using Coralite.Core;
 using Coralite.Helpers;
+using Terraria.ID;
 
 namespace Coralite.Content.Items.MagikeSeries2
 {
@@ -12,14 +13,14 @@ namespace Coralite.Content.Items.MagikeSeries2
         public override void SetDefaults()
         {
             Item.DefaultToPlaceableTile(ModContent.TileType<CrystallineBrickTile>());
-            Item.GetMagikeItem().magikeAmount = 150;
+            Item.GetMagikeItem().magikeAmount = 200;
             Item.rare = ModContent.RarityType<CrystallineMagikeRarity>();
         }
 
         public override void AddRecipes()
         {
             //CreateRecipe()
-            //    .AddIngredient<Basalt>(4)
+            //    .AddIngredient<CrystallineBlock>(2)
             //    .AddTile(TileID.HeavyWorkBench)
             //    .Register();
         }

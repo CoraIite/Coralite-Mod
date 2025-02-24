@@ -13,6 +13,7 @@ namespace Coralite.Core.Systems
         {
             Type t = typeof(ItemVariants);
             FieldInfo info = t.GetField("_variants", BindingFlags.NonPublic | BindingFlags.Static);
+
             if (info != null)
             {
                 var entrys = (List<ItemVariants.VariantEntry>[])info.GetValue(null);

@@ -171,6 +171,11 @@ namespace Coralite.Content.NPCs.Elemental
                 flag20 = true;
             }
 
+            SetVelocity(flag20, flag21);
+        }
+
+        private void SetVelocity(bool flag20, bool flag21)
+        {
             if (flag20)
             {
                 NPC.velocity.Y += 0.2f;

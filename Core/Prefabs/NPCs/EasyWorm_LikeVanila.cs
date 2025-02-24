@@ -176,7 +176,7 @@ namespace Coralite.Core.Prefabs.NPCs
             center2TopLeft.Y = (int)(center2TopLeft.Y / 16f) * 16;
             distance2TargetX -= center2TopLeft.X;
             distance2TargetY -= center2TopLeft.Y;
-            float distance2Target = (float)System.Math.Sqrt((double)((distance2TargetX * distance2TargetX) + (distance2TargetY * distance2TargetY)));
+            float distance2Target = System.MathF.Sqrt(((distance2TargetX * distance2TargetX) + (distance2TargetY * distance2TargetY)));
             if (NPC.ai[1] > 0f && NPC.ai[1] < Main.npc.Length)
             {
                 try
@@ -186,8 +186,8 @@ namespace Coralite.Core.Prefabs.NPCs
                     distance2TargetY = Main.npc[(int)NPC.ai[1]].position.Y + (Main.npc[(int)NPC.ai[1]].height / 2) - center2TopLeft.Y;
                 }
                 catch { }
-                NPC.rotation = (float)System.Math.Atan2((double)distance2TargetY, (double)distance2TargetX) + 1.57f;
-                distance2Target = (float)System.Math.Sqrt((double)((distance2TargetX * distance2TargetX) + (distance2TargetY * distance2TargetY)));
+                NPC.rotation = System.MathF.Atan2(distance2TargetY, distance2TargetX) + 1.57f;
+                distance2Target = System.MathF.Sqrt(((distance2TargetX * distance2TargetX) + (distance2TargetY * distance2TargetY)));
                 int width = NPC.width;
                 distance2Target = (distance2Target - width) / distance2Target;
                 distance2TargetX *= distance2Target;

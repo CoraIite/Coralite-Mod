@@ -9,7 +9,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.RedJades
 {
-    internal class BloodiancieBossBag : ModItem
+    public class BloodiancieBossBag : ModItem
     {
         public override string Texture => AssetDirectory.RedJadeItems + Name;
 
