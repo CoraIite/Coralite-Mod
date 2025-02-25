@@ -95,7 +95,7 @@ namespace Coralite.Content.Bosses.Rediancie
             NPC.noTileCollide = true;
             NPC.boss = true;
 
-            NPC.HitSound = SoundID.DD2_CrystalCartImpact;
+            NPC.HitSound = CoraliteSoundID.CrystalHit_DD2_CrystalCartImpact;
 
             NPC.BossBar = GetInstance<RediancieBossBar>();
             GetInstance<RediancieBossBar>().Reset(NPC);

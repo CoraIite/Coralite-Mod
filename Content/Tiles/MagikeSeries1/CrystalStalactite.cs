@@ -30,7 +30,7 @@ namespace Coralite.Content.Tiles.MagikeSeries1
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.addTile(Type);
 
-            HitSound = SoundID.DD2_CrystalCartImpact;
+            HitSound = CoraliteSoundID.CrystalHit_DD2_CrystalCartImpact;
             DustType = DustID.CrystalSerpent_Pink;
             AddMapEntry(Coralite.MagicCrystalPink);
         }
@@ -65,7 +65,7 @@ namespace Coralite.Content.Tiles.MagikeSeries1
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.addTile(Type);
 
-            HitSound = SoundID.DD2_CrystalCartImpact;
+            HitSound = CoraliteSoundID.CrystalHit_DD2_CrystalCartImpact;
             DustType = DustID.CrystalSerpent_Pink;
             AddMapEntry(Coralite.MagicCrystalPink);
         }
@@ -100,7 +100,7 @@ namespace Coralite.Content.Tiles.MagikeSeries1
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.addTile(Type);
 
-            HitSound = SoundID.DD2_CrystalCartImpact;
+            HitSound = CoraliteSoundID.CrystalHit_DD2_CrystalCartImpact;
             DustType = DustID.CrystalSerpent_Pink;
             AddMapEntry(Coralite.MagicCrystalPink);
         }
@@ -135,7 +135,7 @@ namespace Coralite.Content.Tiles.MagikeSeries1
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.addTile(Type);
 
-            HitSound = SoundID.DD2_CrystalCartImpact;
+            HitSound = CoraliteSoundID.CrystalHit_DD2_CrystalCartImpact;
             DustType = DustID.CrystalSerpent_Pink;
             AddMapEntry(Coralite.MagicCrystalPink);
         }
@@ -170,7 +170,7 @@ namespace Coralite.Content.Tiles.MagikeSeries1
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.addTile(Type);
 
-            HitSound = SoundID.DD2_CrystalCartImpact;
+            HitSound = CoraliteSoundID.CrystalHit_DD2_CrystalCartImpact;
             DustType = DustID.CrystalSerpent_Pink;
             AddMapEntry(Coralite.MagicCrystalPink);
         }
@@ -204,7 +204,7 @@ namespace Coralite.Content.Tiles.MagikeSeries1
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.addTile(Type);
 
-            HitSound = SoundID.DD2_CrystalCartImpact;
+            HitSound = CoraliteSoundID.CrystalHit_DD2_CrystalCartImpact;
             DustType = DustID.CrystalSerpent_Pink;
             AddMapEntry(Coralite.MagicCrystalPink);
         }

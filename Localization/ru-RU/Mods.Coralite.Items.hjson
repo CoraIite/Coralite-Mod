@@ -5242,3 +5242,13 @@ CrystallineBlock: {
 	// DisplayName: Crystalline Block
 	// Tooltip: ""
 }
+
+WildChalcedonyWallItem: {
+	// DisplayName: Wild Chalcedony Wall Item
+	// Tooltip: ""
+}
+
+CrackedSkarnWallItem: {
+	// DisplayName: Cracked Skarn Wall Item
+	// Tooltip: ""
+}

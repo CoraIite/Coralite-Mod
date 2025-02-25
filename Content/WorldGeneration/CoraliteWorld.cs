@@ -1,10 +1,12 @@
-﻿using Coralite.Content.WorldGeneration.Generators;
+﻿using Coralite.Content.Walls.Magike;
+using Coralite.Content.WorldGeneration.Generators;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.GameContent.Generation;
+using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader.IO;
 using Terraria.WorldBuilding;
@@ -25,6 +27,19 @@ namespace Coralite.Content.WorldGeneration
             [Color.White] = -2,
             [Color.Black] = -1
         };
+
+        /// <summary>
+        /// 用于生成液体的字典
+        /// </summary>
+        internal static Dictionary<Color, int> liquidDic = new()
+        {
+            [Color.Black] = -1,
+            [Color.White] = LiquidID.Water,
+            [new Color(255, 0, 0)] = LiquidID.Lava,
+            [new Color(255, 255, 0)] = LiquidID.Honey,
+            [new Color(255, 0, 255)] = LiquidID.Shimmer,
+        };
+
 
         public override void Load()
         {
@@ -270,7 +285,7 @@ namespace Coralite.Content.WorldGeneration
             wallGenerator?.Generate(genOrigin_x, genOrigin_y, true);
         }
 
-        public static void GenLiquidByTexture(Texture2D liquidTex,Dictionary<Color ,int> liquidDic,Point center)
+        public static void GenLiquidByTexture(Texture2D liquidTex, Dictionary<Color, int> liquidDic, Point topLeft)
         {
             bool genned = false;
             bool placed = false;
@@ -293,7 +308,7 @@ namespace Coralite.Content.WorldGeneration
                 placed = true;
             }
 
-            liquidGenerator?.Generate(center.X, center.Y, true);
+            liquidGenerator?.Generate(topLeft.X, topLeft.Y, true);
         }
 
         /// <summary>

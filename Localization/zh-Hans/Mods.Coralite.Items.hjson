@@ -5264,11 +5264,21 @@ B9Alloy: {
 }
 
 SkarnChest: {
-	// DisplayName: Skarn Chest
-	// Tooltip: ""
+	DisplayName: 矽卡箱
+	Tooltip: ""
 }
 
 CrystallineBlock: {
-	// DisplayName: Crystalline Block
+	DisplayName: 蕴魔水晶块
+	Tooltip: ""
+}
+
+WildChalcedonyWallItem: {
+	DisplayName: 狂野玉髓墙
+	Tooltip: ""
+}
+
+CrackedSkarnWallItem: {
+	// DisplayName: Cracked Skarn Wall Item
 	// Tooltip: ""
 }

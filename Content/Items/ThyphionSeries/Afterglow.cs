@@ -156,7 +156,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
                                 if (t.HasTile && (Main.tileSolid[t.TileType] || TileID.Sets.Platforms[t.TileType]))
                                 {
-                                    Helper.PlayPitched(CoraliteSoundID.FireBallExplosion_Item74, Projectile.Center, pitch: 0.4f);
+                                    Helper.PlayPitched(CoraliteSoundID.FireShoot_DD2_BetsysWrathShot, Projectile.Center, pitch: 0.4f);
                                     CurrentArrowType = (int)ArrowType.fire;
                                     if (t.TileType is TileID.IceBlock or TileID.IceBrick)
                                         CurrentArrowType = (int)ArrowType.iceFire;

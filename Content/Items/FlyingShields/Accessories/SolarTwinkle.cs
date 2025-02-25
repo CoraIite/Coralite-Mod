@@ -105,7 +105,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
                 && cp.TryGetFlyingShieldGuardProj(out BaseFlyingShieldGuard flyingShieldGuard)
                 && flyingShieldGuard.CanDash())
             {
-                SoundEngine.PlaySound(CoraliteSoundID.FireBallExplosion_Item74, Player.Center);
+                SoundEngine.PlaySound(CoraliteSoundID.FireShoot_DD2_BetsyFireballShot, Player.Center);
                 int damage = Player.GetWeaponDamage(Item);
                 int combo = Main.rand.Next(4);
                 float startAngle = combo switch

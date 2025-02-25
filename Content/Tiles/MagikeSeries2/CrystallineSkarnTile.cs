@@ -29,7 +29,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileID.Sets.ChecksForMerge[Type] = true;
 
             DustType = DustID.PurpleTorch;
-            HitSound = SoundID.DD2_CrystalCartImpact;
+            HitSound = CoraliteSoundID.CrystalHit_DD2_CrystalCartImpact;
             AddMapEntry(Coralite.CrystallineMagikePurple);
 
             MinPick = 110;

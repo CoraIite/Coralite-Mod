@@ -22,7 +22,7 @@ namespace Coralite.Content.Tiles.MagikeSeries1
             TileID.Sets.ChecksForMerge[Type] = true;
 
             DustType = DustID.CrystalSerpent_Pink;
-            HitSound = SoundID.DD2_CrystalCartImpact;
+            HitSound = CoraliteSoundID.CrystalHit_DD2_WitherBeastCrystalImpact;
             AddMapEntry(Coralite.MagicCrystalPink);
         }
 

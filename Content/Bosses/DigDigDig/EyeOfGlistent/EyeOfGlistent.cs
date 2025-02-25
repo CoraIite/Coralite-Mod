@@ -37,7 +37,7 @@ namespace Coralite.Content.Bosses.DigDigDig.EyeOfGlistent
             NPC.damage = 15;
             NPC.defense = 12;
             NPC.lifeMax = 3800;
-            NPC.HitSound = SoundID.DD2_CrystalCartImpact;
+            NPC.HitSound = CoraliteSoundID.CrystalHit_DD2_CrystalCartImpact;
             NPC.DeathSound = CoraliteSoundID.StoneBurst_Item70;
             NPC.knockBackResist = 0f;
             NPC.noGravity = true;
@@ -260,7 +260,7 @@ namespace Coralite.Content.Bosses.DigDigDig.EyeOfGlistent
                                     NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, index);
                             }
 
-                            SoundEngine.PlaySound(SoundID.DD2_CrystalCartImpact, vector2);
+                            SoundEngine.PlaySound(CoraliteSoundID.CrystalHit_DD2_CrystalCartImpact, vector2);
 
                             for (int m = 0; m < 10; m++)
                             {
@@ -433,7 +433,7 @@ namespace Coralite.Content.Bosses.DigDigDig.EyeOfGlistent
                         }
                         else
                         {
-                            SoundEngine.PlaySound(SoundID.DD2_CrystalCartImpact, NPC.position);
+                            SoundEngine.PlaySound(CoraliteSoundID.CrystalHit_DD2_CrystalCartImpact, NPC.position);
                             for (int num35 = 0; num35 < 2; num35++)
                             {
                                 Gore.NewGore(NPC.GetSource_FromAI(), NPC.position, new Vector2(Main.rand.Next(-30, 31) * 0.2f, Main.rand.Next(-30, 31) * 0.2f), 8);

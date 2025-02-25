@@ -27,10 +27,8 @@ namespace Coralite.Content.WorldGeneration
         private static int[] tileCounterX = new int[tileCounterMax];
         private static int[] tileCounterY = new int[tileCounterMax];
 
-        /// <summary>
-        /// 蕴魔空岛的范围
-        /// </summary>
-        public static Rectangle CrystallineSkyIslandArea { get; set; }
+        public static Vector2 AltarPos;
+
         /// <summary>
         /// 是否放置光明之魂
         /// </summary>
@@ -611,7 +609,7 @@ namespace Coralite.Content.WorldGeneration
                         continue;
 
                     Dictionary<ushort, int> scan = [];
-                    WorldUtils.Gen(p2 - new Point(4, 4), new Shapes.Rectangle(4, 4)
+                    WorldUtils.Gen(p2 - new Point(2, 2), new Shapes.Rectangle(4, 4)
                         , new Actions.TileScanner(skarnBrick).Output(scan));
                     if (scan[skarnBrick] > 0)
                         continue;
@@ -753,7 +751,7 @@ namespace Coralite.Content.WorldGeneration
             Dictionary<Color, int> wallDic = new()
             {
                 [new Color(85, 183, 206)] = skarnWall,//55b7ce
-                [new Color(188, 171, 150)] = ModContent.WallType<ChalcedonyWallUnsafe>(),//bcab96
+                [new Color(188, 171, 150)] = ModContent.WallType<WildChalcedonyWallUnsafe>(),//bcab96
                 [new Color(113, 128, 131)] = ModContent.WallType<SkarnBrickWallUnsafe>(),//718083
                 [Color.Black] = -1,
                 [Color.White] = -2
@@ -765,7 +763,7 @@ namespace Coralite.Content.WorldGeneration
             if (type == 7)//特定样式生成水池
             {
                 Texture2D liquidTex = ModContent.Request<Texture2D>(AssetDirectory.CrystallineSkyIsland + "MainSkyIslandShrineLiquid" + type, AssetRequestMode.ImmediateLoad).Value;
-                GenLiquidByTexture(liquidTex, new Dictionary<Color, int>() { [Color.Black] = -1, [Color.White] = LiquidID.Water }, shrineTopLeft);
+                GenLiquidByTexture(liquidTex, liquidDic, shrineTopLeft);
             }
 
             //放置中心的箱子
@@ -1363,6 +1361,36 @@ namespace Coralite.Content.WorldGeneration
                     Size = mainTex.Size().ToPoint(),
                 };
             }
+
+            public readonly void Generate(Point topLeft)
+            {
+                Dictionary<Color, int> mainDic = new()
+                {
+                    [new Color(51, 76, 117)] = ModContent.TileType<SkarnTile>(),//334c75
+                    [new Color(141, 171, 178)] = ModContent.TileType<SmoothSkarnTile>(),//8dabb2
+                    [new Color(184, 230, 207)] = ModContent.TileType<SkarnBrickTile>(),//b8e6cf
+
+                    [new Color(105, 97, 90)] = ModContent.TileType<BasaltBeamTile>(),//69615a
+                    [new Color(63, 76, 73)] = ModContent.TileType<BasaltTile>(),//3f4c49
+                    [new Color(166, 166, 166)] = ModContent.TileType<HardBasaltTile>(),//a6a6a6
+
+                    [new Color(71, 56, 53)] = TileID.Mud,//473835
+
+                    [new Color(241, 130, 255)] = ModContent.TileType<CrystallineBrickTile>(),//f182ff
+                    [Color.Black] = -1
+                };
+                Dictionary<Color, int> wallDic = new()
+                {
+                    [new Color(85, 183, 206)] = ModContent.WallType<SmoothSkarnWallUnsafe>(),//55b7ce
+                    [new Color(29, 30, 28)] = ModContent.WallType<HardBasaltWall>(),//1d1e1c
+                    [Color.Black] = -1
+                };
+
+                GenByTexture(ClearTex, MainTex, WallClearTex, WallTex, clearDic, mainDic, clearDic, wallDic, topLeft.X, topLeft.Y);
+
+                if (LiquidTex != null)
+                    GenLiquidByTexture(LiquidTex, liquidDic, topLeft);
+            }
         }
 
         public struct SmallIslandDatas
@@ -1370,6 +1398,11 @@ namespace Coralite.Content.WorldGeneration
             public Rectangle Box;
             public SmallIslandType IslandType;
             public int RandomType;
+
+            public void PostGenerate()
+            {
+
+            }
         }
 
         public void GenSmallIslands(Rectangle mainRect, out List<SmallIslandDatas> SmallIslandDatas)
@@ -1444,7 +1477,12 @@ namespace Coralite.Content.WorldGeneration
                 } while (!success);
 
                 //成功找到了位置，开始生成
+                data.Generate(SpawnTopLeft);
+            }
 
+            foreach (var data in SmallIslandDatas)
+            {
+                data.PostGenerate();
             }
         }
 

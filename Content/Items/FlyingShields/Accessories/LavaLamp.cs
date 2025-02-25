@@ -93,7 +93,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
                 && cp.TryGetFlyingShieldGuardProj(out BaseFlyingShieldGuard flyingShieldGuard)
                 && flyingShieldGuard.CanDash())
             {
-                SoundEngine.PlaySound(CoraliteSoundID.FireBallExplosion_Item74, Player.Center);
+                SoundEngine.PlaySound(CoraliteSoundID.FireShoot_DD2_BetsyFireballShot, Player.Center);
 
                 flyingShieldGuard.TurnToDashing(this, 15, dashDirection, 12f);
                 Player.GetModPlayer<CoralitePlayer>().DashDelay = 75;

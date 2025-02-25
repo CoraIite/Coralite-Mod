@@ -6,20 +6,25 @@ namespace Coralite.Core
 {
     /// <summary>
     /// 音效合集，可以使用Ctrl+F搜索中文名来查找你想要的音效
-    /// DD2（旧日军团）的音效不包含在内，因为它们已经有能让人看得懂的名字了
     /// 部分重名了的不包含在内，例如那些吉他和架子鼓的音效（只是避免出现2个一模一样的东西而已）
     /// </summary>
     public static class CoraliteSoundID
     {
         #region 玩家音效
 
-        /// <summary>玩家受伤，共3种</summary>
-        public static SoundStyle PlayerHit => SoundID.PlayerHit;
+        /// <summary> 男性玩家受伤，共3种</summary>
+        public static SoundStyle MalePlayerHit => SoundID.PlayerHit;
 
-        /// <summary>女性玩家受伤的音效，共3种 </summary>
+        /// <summary> 女性玩家受伤的音效，共3种 </summary>
         public static SoundStyle FemalePlayerHit => SoundID.FemaleHit;
 
-        /// <summary>玩家死亡</summary>
+        /// <summary> 饥荒世界中男性玩家受伤，共3种 </summary>
+        public static SoundStyle DSTMaleHurt => SoundID.DSTMaleHurt;
+
+        /// <summary> 饥荒世界中女性玩家受伤，共3种 </summary>
+        public static SoundStyle DSTFemaleHurt => SoundID.DSTFemaleHurt;
+
+        /// <summary> 玩家死亡</summary>
         public static SoundStyle PlayerKilled => SoundID.PlayerKilled;
 
         /// <summary>捡起物品的声音（也可用于点击按钮）</summary>
@@ -34,13 +39,13 @@ namespace Coralite.Core
         /// <summary> 打开NPC聊天面板时的音效</summary>
         public static SoundStyle Chat => SoundID.Chat;
 
-        /// <summary>二段跳的音效，例如云瓶，独角兽坐骑等</summary>
+        /// <summary> 二段跳的音效，例如云瓶，独角兽坐骑等</summary>
         public static SoundStyle DoubleJump => SoundID.DoubleJump;
 
-        /// <summary>疾跑的音效，比如赫尔墨斯鞋，泰拉闪耀鞋等</summary>
+        /// <summary> 疾跑的音效，比如赫尔墨斯鞋，泰拉闪耀鞋等</summary>
         public static SoundStyle Run => SoundID.Run;
 
-        /// <summary>微光BUFF消失时的音效</summary>
+        /// <summary> 微光BUFF消失时的音效</summary>
         public static SoundStyle ShimmeringExpires => SoundID.Shimmer2;
 
         #endregion
@@ -167,6 +172,64 @@ namespace Coralite.Core
         public static SoundStyle DrumFloorTom_Item148 => SoundID.Item148;
 
         #endregion
+        #region 旧日军团武器
+
+        /// <summary> 弩车塔，共3种，很正常的弩箭射出的声音</summary>
+        public static SoundStyle DD2_BallistaTowerShot => SoundID.DD2_BallistaTowerShot;
+
+        /// <summary> 爆炸机关，共3种，火球爆炸</summary>
+        public static SoundStyle FireBallExplosion_DD2_ExplosiveTrapExplode => SoundID.DD2_ExplosiveTrapExplode;
+
+        /// <summary> 爆炸烈焰塔，共3种，火焰射击</summary>
+        public static SoundStyle FireShoot_DD2_FlameburstTowerShot => SoundID.DD2_FlameburstTowerShot;
+
+        /// <summary> 闪电光环，共4种，动静很小的电击声</summary>
+        public static SoundStyle QuietElectric_DD2_LightningAuraZap => SoundID.DD2_LightningAuraZap;
+
+        /// <summary> 弩车、爆炸机关、爆炸烈焰或闪电光环被召唤，生成建筑的声音</summary>
+        public static SoundStyle Summon_DD2_DefenseTowerSpawn => SoundID.DD2_DefenseTowerSpawn;
+
+
+        /// <summary> 双足翼龙怒气，共3种</summary>
+        public static SoundStyle FireShoot_DD2_BetsysWrathShot => SoundID.DD2_BetsysWrathShot;
+
+        /// <summary> 双足翼龙怒气，共3种</summary>
+        public static SoundStyle FireHitDD2_BetsysWrathImpact => SoundID.DD2_BetsysWrathImpact;
+
+        /// <summary> 无限智慧巨著，共3种</summary>
+        public static SoundStyle DD2_BookStaffCast => SoundID.DD2_BookStaffCast;
+
+        /// <summary> 无限智慧巨著，共3种</summary>
+        public static SoundStyle DD2_BookStaffTwisterLoop => SoundID.DD2_BookStaffTwisterLoop;
+
+        /// <summary> 恐怖关刀，共3种</summary>
+        public static SoundStyle Swing_DD2_GhastlyGlaiveImpactGhost => SoundID.DD2_GhastlyGlaiveImpactGhost;
+
+        /// <summary> 恐怖关刀，共3种</summary>
+        public static SoundStyle Swing_DD2_GhastlyGlaivePierce => SoundID.DD2_GhastlyGlaivePierce;
+
+        /// <summary> 瞌睡章鱼，共3种</summary>
+        public static SoundStyle DD2_MonkStaffGroundImpact => SoundID.DD2_MonkStaffGroundImpact;
+
+        /// <summary> 瞌睡章鱼，共4种</summary>
+        public static SoundStyle Swing_DD2_MonkStaffSwing => SoundID.DD2_MonkStaffSwing;
+
+        /// <summary> 幽灵凤凰，共3种</summary>
+        public static SoundStyle FireShoot_DD2_PhantomPhoenixShot => SoundID.DD2_PhantomPhoenixShot;
+
+        /// <summary> 飞龙，共3种</summary>
+        public static SoundStyle DD2_SonicBoomBladeSlash => SoundID.DD2_SonicBoomBladeSlash;
+
+        /// <summary> 天龙之怒，共3种</summary>
+        public static SoundStyle DD2_SkyDragonsFuryCircle => SoundID.DD2_SkyDragonsFuryCircle;
+
+        /// <summary> 天龙之怒，共3种</summary>
+        public static SoundStyle DD2_SkyDragonsFuryShot => SoundID.DD2_SkyDragonsFuryShot;
+
+        /// <summary> 天龙之怒，共4种</summary>
+        public static SoundStyle DD2_SkyDragonsFurySwing => SoundID.DD2_SkyDragonsFurySwing;
+
+        #endregion
 
         //----------其他-----------
 
@@ -174,7 +237,7 @@ namespace Coralite.Core
         /// <summary> 大多数近战武器挥动，各种工具的使用等的声音 </summary>
         public static SoundStyle Swing_Item1 => SoundID.Item1;
 
-        /// <summary>吃东西，召唤宠物的声音</summary>
+        /// <summary> 吃东西，召唤宠物的声音</summary>
         public static SoundStyle Eat_Item2 => SoundID.Item2;
 
         /// <summary> 喝药水的声音 </summary>
@@ -192,19 +255,19 @@ namespace Coralite.Core
         /// <summary> 各种回旋镖，圣骑士锤，吹叶机（世花掉的那个魔法武器）的声音</summary>
         public static SoundStyle Swing2_Item7 => SoundID.Item7;
 
-        /// <summary>前期各种矿物法杖法杖，一些NPC的声音，类似weng~ </summary>
+        /// <summary> 前期各种矿物法杖法杖，一些NPC的声音，类似weng~ </summary>
         public static SoundStyle MagicStaff_Item8 => SoundID.Item8;
 
-        /// <summary>魔晶风暴，裂天剑等的声音，类似Xiu~</summary>
+        /// <summary> 魔晶风暴，裂天剑等的声音，类似Xiu~</summary>
         public static SoundStyle MagicShoot_Item9 => SoundID.Item9;
 
-        /// <summary>石巨人拳头之类的，还有子弹落地的声音，Da! </summary>
+        /// <summary> 石巨人拳头之类的，还有子弹落地的声音，Da! </summary>
         public static SoundStyle Hit_Item10 => SoundID.Item10;
 
-        /// <summary>喷水的声音，例如海蓝法杖，黄金雨，滋~~~ </summary>
+        /// <summary> 喷水的声音，例如海蓝法杖，黄金雨，滋~~~ </summary>
         public static SoundStyle WaterShoot_Item13 => SoundID.Item13;
 
-        /// <summary>小炸弹的声音，例如各种手雷 </summary>
+        /// <summary> 小炸弹的声音，例如各种手雷 </summary>
         public static SoundStyle Boom_Item14 => SoundID.Item14;
 
         /// <summary> 放屁声音</summary>
@@ -228,7 +291,7 @@ namespace Coralite.Core
         /// <summary> 电锯，钻头之类的使用声音，类似拉动引擎 </summary>
         public static SoundStyle Drill_Item22 => SoundID.Item22;
 
-        /// <summary>电锯，钻头之类的的使用声音</summary>
+        /// <summary> 电锯，钻头之类的的使用声音</summary>
         public static SoundStyle Drill2_Item23 => SoundID.Item23;
 
         /// <summary> 各类悬浮推进器悬浮时的声音，嗡嗡嗡 </summary>
@@ -276,7 +339,7 @@ namespace Coralite.Core
         /// <summary> 蜘蛛女王召唤杖和冰霜九头蛇召唤杖的声音 </summary>
         public static SoundStyle HorribleSummon_Item46 => SoundID.Item46;
 
-        /// <summary>雪球碎裂的声音 </summary>
+        /// <summary> 雪球碎裂的声音 </summary>
         public static SoundStyle SnowBall_Item51 => SoundID.Item51;
 
         /// <summary> 矿车铁轨放置时的声音，Ding! </summary>
@@ -321,7 +384,7 @@ namespace Coralite.Core
         /// <summary> 强化吹管，工程蓝图的声音（这玩意也有声音？）/ </summary>
         public static SoundStyle Blowgun_Item64 => SoundID.Item64;
 
-        /// <summary>原版未使用，感觉像是强化再强化的吹管的声音</summary>
+        /// <summary> 原版未使用，感觉像是强化再强化的吹管的声音</summary>
         public static SoundStyle NoUse_BlowgunPlus_Item65 => SoundID.Item65;
 
         /// <summary> 雷云法杖，巨鹿掉的天气魔棒的声音 </summary>
@@ -345,7 +408,7 @@ namespace Coralite.Core
         /// <summary> 暗影束法杖的声音，Diu-- </summary>
         public static SoundStyle ShadowBeam_Item72 => SoundID.Item72;
 
-        /// <summary>狱火叉的使用声音</summary>
+        /// <summary> 狱火叉的使用声音</summary>
         public static SoundStyle FireFork_Item73 => SoundID.Item73;
 
         /// <summary> 狱火叉的火球爆炸的声音 </summary>
@@ -354,13 +417,13 @@ namespace Coralite.Core
         /// <summary> 黄蜂法杖的召唤声音</summary>
         public static SoundStyle HoneyStaffSummon_Item76 => SoundID.Item76;
 
-        /// <summary>小鬼法杖的召唤声音</summary>
+        /// <summary> 小鬼法杖的召唤声音</summary>
         public static SoundStyle FireStaffSummon_Item77 => SoundID.Item77;
 
-        /// <summary>月亮门法杖，蜘蛛女王法杖，七彩水晶法杖的召唤声音</summary>
+        /// <summary> 月亮门法杖，蜘蛛女王法杖，七彩水晶法杖的召唤声音</summary>
         public static SoundStyle SpecialSummon_Item78 => SoundID.Item78;
 
-        /// <summary>白色的胡萝卜的召唤声音，召唤兔子坐骑 </summary>
+        /// <summary> 白色的胡萝卜的召唤声音，召唤兔子坐骑 </summary>
         public static SoundStyle RabbitMount_Item79 => SoundID.Item79;
 
         /// <summary> 猪鱼坐骑的召唤声音（是猪龙稀有掉落物的那个）</summary>
@@ -372,34 +435,34 @@ namespace Coralite.Core
         /// <summary> 泰拉棱镜，双子眼召唤杖的召唤声音，星光灯笼的使用声音</summary>
         public static SoundStyle TerraprismaSummon_Item82 => SoundID.Item82;
 
-        /// <summary>蜘蛛法杖的声音</summary>
+        /// <summary> 蜘蛛法杖的声音</summary>
         public static SoundStyle SpiderStaff_Item83 => SoundID.Item83;
 
-        /// <summary>水龙卷刃的使用声音</summary>
+        /// <summary> 水龙卷刃的使用声音</summary>
         public static SoundStyle WaterTyphoon_Item84 => SoundID.Item84;
 
         /// <summary> 泡泡枪的使用声音</summary>
         public static SoundStyle BubbleGun_Item85 => SoundID.Item85;
 
-        /// <summary>原版未使用，水滴落入水中的声音</summary>
+        /// <summary> 原版未使用，水滴落入水中的声音</summary>
         public static SoundStyle NoUse_WaterDrop_Item86 => SoundID.Item86;
 
         /// <summary> 原版未使用，水滴落入水中的声音 </summary>
         public static SoundStyle NoUse_WaterDrop2_Item87 => SoundID.Item87;
 
-        /// <summary>月曜，陨石法杖的使用声音 </summary>
+        /// <summary> 月曜，陨石法杖的使用声音 </summary>
         public static SoundStyle LunarFlare_Item88 => SoundID.Item88;
 
-        /// <summary>陨石法杖的爆炸声音</summary>
+        /// <summary> 陨石法杖的爆炸声音</summary>
         public static SoundStyle MeteorImpact_Item89 => SoundID.Item89;
 
-        /// <summary>外星蛞蝓的召唤声音，感觉可以用于魔法弹幕射击的声音</summary>
+        /// <summary> 外星蛞蝓的召唤声音，感觉可以用于魔法弹幕射击的声音</summary>
         public static SoundStyle ScutlixMount_Item90 => SoundID.Item90;
 
-        /// <summary>战斗指南1，2的使用声音，3种动物通行卷的使用声音</summary>
+        /// <summary> 战斗指南1，2的使用声音，3种动物通行卷的使用声音</summary>
         public static SoundStyle NPCSummon_NPCStrengthen_Item92 => SoundID.Item92;
 
-        /// <summary>原版未使用，类似电流的声音 </summary>
+        /// <summary> 原版未使用，类似电流的声音 </summary>
         public static SoundStyle NoUse_Electric_Item93 => SoundID.Item93;
 
         /// <summary> 电圈发射器的声音</summary>
@@ -432,13 +495,13 @@ namespace Coralite.Core
         /// <summary> 瓶子碎裂的的声音，各种环境球也是这个声音（改变背景的那个东西） </summary>
         public static SoundStyle BottleExplosion_Item107 => SoundID.Item107;
 
-        /// <summary>水晶蛇的声音 </summary>
+        /// <summary> 水晶蛇的声音 </summary>
         public static SoundStyle CrystalSerpent_Item109 => SoundID.Item109;
 
         /// <summary> 水晶蛇弹幕的声音，但是听上去像是烟花的声音</summary>
         public static SoundStyle Firework_Item110 => SoundID.Item110;
 
-        /// <summary>叫什么忘记了，总之是肉后腐化之地钓鱼获得的那个武器，射出毒泡泡的声音 </summary>
+        /// <summary> 叫什么忘记了，总之是肉后腐化之地钓鱼获得的那个武器，射出毒泡泡的声音 </summary>
         public static SoundStyle ToxicBubble_Item111 => SoundID.Item111;
 
         /// <summary> 泡泡的声音，和上面的类似 </summary>
@@ -453,10 +516,10 @@ namespace Coralite.Core
         /// <summary> 传送枪的声音</summary>
         public static SoundStyle PortalGun2_Item115 => SoundID.Item115;
 
-        /// <summary>太阳能喷发的声音</summary>
+        /// <summary> 太阳能喷发的声音</summary>
         public static SoundStyle SolarEruption_Item116 => SoundID.Item116;
 
-        /// <summary>神灯烈焰，星云奥秘的声音</summary>
+        /// <summary> 神灯烈焰，星云奥秘的声音</summary>
         public static SoundStyle SpiritFlame_Item117 => SoundID.Item117;
 
         /// <summary> 还是水晶蛇弹幕的声音（一把武器3个音效可还行） </summary>
@@ -471,13 +534,13 @@ namespace Coralite.Core
         /// <summary> 高尔夫进球得分的声音 </summary>
         public static SoundStyle GetScores_Item129 => SoundID.Item129;
 
-        /// <summary>虚空袋的声音 </summary>
+        /// <summary> 虚空袋的声音 </summary>
         public static SoundStyle VoidBag_Item130 => SoundID.Item130;
 
-        /// <summary>原版未使用，听不出是什么，类似什么东西摩擦滑行的声音</summary>
+        /// <summary> 原版未使用，听不出是什么，类似什么东西摩擦滑行的声音</summary>
         public static SoundStyle NoUse_Item131 => SoundID.Item131;
 
-        /// <summary>激光钻头的声音（这玩意是这个声音的？） </summary>
+        /// <summary> 激光钻头的声音（这玩意是这个声音的？） </summary>
         public static SoundStyle LaserDrill_Item132 => SoundID.Item132;
 
         /// <summary> 弹幕被反弹时的声音，比如ftw克眼旋转时，还有微光史莱姆，大宝箱怪等 </summary>
@@ -486,28 +549,28 @@ namespace Coralite.Core
         /// <summary> 耍蛇者长笛的声音（召唤蛇蛇绳索的那个笛子）</summary>
         public static SoundStyle Snake_Item151 => SoundID.Item151;
 
-        /// <summary>鞭子甩出的声音 </summary>
+        /// <summary> 鞭子甩出的声音 </summary>
         public static SoundStyle WhipSwing_Item152 => SoundID.Item152;
 
-        /// <summary>鞭子命中的声音，Pia!</summary>
+        /// <summary> 鞭子命中的声音，Pia!</summary>
         public static SoundStyle WhipHit_Item153 => SoundID.Item153;
 
         /// <summary> 喜庆弹射器的声音，放烟花 </summary>
         public static SoundStyle Firework2_Item156 => SoundID.Item156;
 
-        /// <summary>音乐盒记录的声音 </summary>
+        /// <summary> 音乐盒记录的声音 </summary>
         public static SoundStyle MusicBoxRecorded_Item166 => SoundID.Item166;
 
         /// <summary> 蹦蹦跷召唤的声音 </summary>
         public static SoundStyle PogoStickMount_Item168 => SoundID.Item168;
 
-        /// <summary>天顶剑的声音，其实是复制的Item1，只不过调整了音高，听起来更沉重 </summary>
+        /// <summary> 天顶剑的声音，其实是复制的Item1，只不过调整了音高，听起来更沉重 </summary>
         public static SoundStyle Zenith_Item169 => SoundID.Item169;
 
         /// <summary> 1.4.4蜂后召唤物，幼虫的声音 </summary>
         public static SoundStyle BugsScream_Item173 => SoundID.Item173;
 
-        /// <summary>1.4.4KO大炮的声音</summary>
+        /// <summary> 1.4.4KO大炮的声音</summary>
         public static SoundStyle KOCannon_Item174 => SoundID.Item174;
 
         /// <summary> 1.4.4拍拍手的声音（超高击退的那个玩具武器） </summary>
@@ -524,6 +587,34 @@ namespace Coralite.Core
 
         /// <summary> 钱币捡起的声音，共5种</summary>
         public static SoundStyle CoinPickup => SoundID.CoinPickup;
+
+
+        /// <summary> 露西斧说话，共5种</summary>
+        public static SoundStyle LucyTheAxeTalk => SoundID.LucyTheAxeTalk;
+
+        /// <summary> 切斯特，共2种</summary>
+        public static SoundStyle ChesterOpen => SoundID.ChesterOpen;
+
+        /// <summary> 切斯特，共2种</summary>
+        public static SoundStyle ChesterClose => SoundID.ChesterClose;
+
+        /// <summary> 阿比盖尔</summary>
+        public static SoundStyle AbigailSummon => SoundID.AbigailSummon;
+
+        /// <summary> 阿比盖尔</summary>
+        public static SoundStyle AbigailAttack => SoundID.AbigailAttack;
+
+        /// <summary> 阿比盖尔，共3种</summary>
+        public static SoundStyle AbigailCry => SoundID.AbigailCry;
+
+        /// <summary> 阿比盖尔，共3种</summary>
+        public static SoundStyle AbigailUpgrade => SoundID.AbigailUpgrade;
+
+        /// <summary> 咕噜咪，共2种</summary>
+        public static SoundStyle GlommerBounce => SoundID.GlommerBounce;
+
+        /// <summary> 四轴竞速无人机飞行</summary>
+        public static SoundStyle JimsDrone => SoundID.JimsDrone;
 
         #endregion
 
@@ -573,13 +664,13 @@ namespace Coralite.Core
         /// <summary> 猪鲨的受击音效 </summary>
         public static SoundStyle DukeFishron_NPCHit14 => SoundID.NPCHit14;
 
-        /// <summary> 傀儡 a.k.a 训练假人的受击音效 </summary>
+        /// <summary> 傀儡 / 训练假人的受击音效 </summary>
         public static SoundStyle TargetDummy_NPCHit15 => SoundID.NPCHit15;
 
-        /// <summary> 傀儡 a.k.a 训练假人的受击音效</summary>
+        /// <summary> 傀儡 / 训练假人的受击音效</summary>
         public static SoundStyle TargetDummy2_NPCHit16 => SoundID.NPCHit16;
 
-        /// <summary> 傀儡 a.k.a 训练假人的受击音效</summary>
+        /// <summary> 傀儡 / 训练假人的受击音效</summary>
         public static SoundStyle TargetDummy3_NPCHit17 => SoundID.NPCHit17;
 
         /// <summary>鲜血僵尸，僵尸鱼人的受击音效（都是血月的怪）</summary>
@@ -600,7 +691,7 @@ namespace Coralite.Core
         /// <summary> 飞蛇，沙尘精的受击音效</summary>
         public static SoundStyle FlyingSnake_NPCHit23 => SoundID.NPCHit23;
 
-        /// <summary> 巨型陆龟 a.k.a 丛林王八 a.k.a 丛林核弹 a.k.a 萌新杀手......（编不下去了），冰雪陆龟的受击音效 </summary>
+        /// <summary> 巨型陆龟 / 丛林王八 / 丛林核弹 / 萌新杀手......（编不下去了），冰雪陆龟的受击音效 </summary>
         public static SoundStyle GiantTortoise_NPCHit24 => SoundID.NPCHit24;
 
         /// <summary>3种颜色的水母的受击音效 </summary>
@@ -651,7 +742,7 @@ namespace Coralite.Core
         /// <summary> 鹦鹉的受击音效</summary>
         public static SoundStyle Parrot_NPCHit46 => SoundID.NPCHit46;
 
-        /// <summary> 蝾螈 a.k.a 鸭鸭怪的受击音效</summary>
+        /// <summary> 蝾螈 / 鸭鸭怪的受击音效</summary>
         public static SoundStyle Salamander_NPCHit50 => SoundID.NPCHit50;
 
         /// <summary> 暗影焰幻鬼的受击音效（哥布林巫师/召唤师召唤出来的）</summary>
@@ -687,7 +778,7 @@ namespace Coralite.Core
         /// <summary> 魔唾液的死亡声音（腐化者和世界吞噬者吐出的东西，这东西也有死亡音效啊...） </summary>
         public static SoundStyle VileSpit_NPCDeath9 => SoundID.NPCDeath9;
 
-        /// <summary> 血肉之墙 a.k.a 肉山的死亡声音 </summary>
+        /// <summary> 血肉之墙 / 肉山的死亡声音 </summary>
         public static SoundStyle WallOfFlesh_NPCDeath10 => SoundID.NPCDeath10;
 
         /// <summary>克苏鲁之脑，飞眼怪（Creeper?），肉山，蚁狮卵的死亡声音</summary>
@@ -735,7 +826,7 @@ namespace Coralite.Core
         /// <summary> 飞蛇的死亡音效 </summary>
         public static SoundStyle FlyingSnake_NPCDeath26 => SoundID.NPCDeath26;
 
-        /// <summary> 巨型陆龟 a.k.a 丛林王八 a.k.a 丛林核弹 a.k.a 萌新杀手......（编不下去了），冰雪陆龟的死亡音效</summary>
+        /// <summary> 巨型陆龟 / 丛林王八 / 丛林核弹 / 萌新杀手......（编不下去了），冰雪陆龟的死亡音效</summary>
         public static SoundStyle GiantTortoise_NPCDeath27 => SoundID.NPCDeath27;
 
         /// <summary> 3种颜色的水母的死亡音效 </summary>
@@ -807,7 +898,7 @@ namespace Coralite.Core
         #endregion
         #region NPC其他音效
 
-        /// <summary>僵尸音效，共3种</summary>
+        /// <summary> 僵尸音效，共3种</summary>
         public static SoundStyle Zombie => SoundID.ZombieMoan;
 
         /// <summary>僵尸音效2</summary>
@@ -880,7 +971,7 @@ namespace Coralite.Core
         /// <summary>飞蛇的音效</summary>
         public static SoundStyle FlyingSnake_Zombie32 => SoundID.Zombie32;
 
-        /// <summary>巨型陆龟 a.k.a 丛林王八 a.k.a 丛林核弹 a.k.a 萌新杀手......（编不下去了）的音效</summary>
+        /// <summary>巨型陆龟 / 丛林王八 / 丛林核弹 / 萌新杀手......（编不下去了）的音效</summary>
         public static SoundStyle GiantTortoise_Zombie33 => SoundID.Zombie33;
 
 
@@ -986,7 +1077,7 @@ namespace Coralite.Core
         public static SoundStyle MushiLadybug4_Zombie77 => SoundID.Zombie77;
 
 
-        /// <summary>鹦鹉的音效 </summary>
+        /// <summary> 海盗船长的鹦鹉的音效 </summary>
         public static SoundStyle Parrot_Zombie78 => SoundID.Zombie78;
 
 
@@ -1119,13 +1210,13 @@ namespace Coralite.Core
 
         #region BOSS-邪教徒
 
-        /// <summary>邪教徒召唤时的音效 </summary>
+        /// <summary> 邪教徒召唤时的音效 </summary>
         public static SoundStyle LunaticCultistSummoned_Zombie105 => SoundID.Zombie105;
 
         /// <summary> 教徒放冰刺时的声音 </summary>
         public static SoundStyle IceMist_Item120 => SoundID.Item120;
 
-        /// <summary>教徒放闪电球时的声音</summary>
+        /// <summary> 邪教徒放闪电球时的声音</summary>
         public static SoundStyle LightningOrb_Item121 => SoundID.Item121;
 
         /// <summary>原版未使用，类似电击魔法的声音 </summary>
@@ -1143,16 +1234,16 @@ namespace Coralite.Core
         /// <summary> 邪教徒的受击音效 </summary>
         public static SoundStyle LunaticCultist_NPCHit55 => SoundID.NPCHit55;
 
-        /// <summary>邪教徒的音效 </summary>
+        /// <summary> 邪教徒的音效 </summary>
         public static SoundStyle LunaticCultist1_Zombie88 => SoundID.Zombie88;
 
-        /// <summary>邪教徒的音效 </summary>
+        /// <summary> 邪教徒的音效 </summary>
         public static SoundStyle LunaticCultist2_Zombie89 => SoundID.Zombie89;
 
-        /// <summary>邪教徒的音效 </summary>
+        /// <summary> 邪教徒的音效 </summary>
         public static SoundStyle LunaticCultist3_Zombie90 => SoundID.Zombie90;
 
-        /// <summary>邪教徒的音效 </summary>
+        /// <summary> 邪教徒的音效 </summary>
         public static SoundStyle LunaticCultist4_Zombie91 => SoundID.Zombie91;
 
         /// <summary> 邪教徒的死亡音效，同伴方块的音效（致敬传送门的那个宠物）</summary>
@@ -1161,7 +1252,7 @@ namespace Coralite.Core
         /// <summary> 幻影龙/幻影弓龙召唤时的声音 </summary>
         public static SoundStyle DragonRoar_Item119 => SoundID.Item119;
 
-        /// <summary>幻影龙/幻影弓龙的受击音效 </summary>
+        /// <summary> 幻影龙/幻影弓龙的受击音效 </summary>
         public static SoundStyle PhantasmDragon_NPCHit56 => SoundID.NPCHit56;
 
         /// <summary> 幻影龙/幻影弓龙的死亡音效 </summary>
@@ -1170,55 +1261,55 @@ namespace Coralite.Core
         #endregion
         #region BOSS - 月球领主/月总
 
-        /// <summary> 月亮领主 a.k.a 月总，月蛭凝块（月总舌头）的受击音效</summary>
+        /// <summary> 月亮领主 / 月总，月蛭凝块（月总舌头）的受击音效</summary>
         public static SoundStyle MoonLord_NPCHit57 => SoundID.NPCHit57;
 
-        /// <summary>月球领主/月总召唤时的音效 </summary>
+        /// <summary> 月球领主/月总召唤时的音效 </summary>
         public static SoundStyle MoonLordSummoned_Zombie92 => SoundID.Zombie92;
 
-        /// <summary>月球领主/月总的音效 </summary>
+        /// <summary> 月球领主/月总的音效 </summary>
         public static SoundStyle MoonLord1_Zombie93 => SoundID.Zombie93;
 
-        /// <summary>月球领主/月总的音效 </summary>
+        /// <summary> 月球领主/月总的音效 </summary>
         public static SoundStyle MoonLord2_Zombie94 => SoundID.Zombie94;
 
-        /// <summary>月球领主/月总的音效 </summary>
+        /// <summary> 月球领主/月总的音效 </summary>
         public static SoundStyle MoonLord3_Zombie95 => SoundID.Zombie95;
 
-        /// <summary>月球领主/月总的音效 </summary>
+        /// <summary> 月球领主/月总的音效 </summary>
         public static SoundStyle MoonLord4_Zombie96 => SoundID.Zombie96;
 
-        /// <summary>月球领主/月总的音效 </summary>
+        /// <summary> 月球领主/月总的音效 </summary>
         public static SoundStyle MoonLord5_Zombie97 => SoundID.Zombie97;
 
-        /// <summary>月球领主/月总的音效 </summary>
+        /// <summary> 月球领主/月总的音效 </summary>
         public static SoundStyle MoonLord6_Zombie98 => SoundID.Zombie98;
 
-        /// <summary>月球领主/月总的音效 </summary>
+        /// <summary> 月球领主/月总的音效 </summary>
         public static SoundStyle MoonLord7_Zombie99 => SoundID.Zombie99;
 
-        /// <summary>月球领主/月总真眼/克苏鲁真眼的音效 </summary>
+        /// <summary >月球领主/月总真眼/克苏鲁真眼的音效 </summary>
         public static SoundStyle TrueEyeOfCthulhu1_Zombie100 => SoundID.Zombie100;
 
-        /// <summary>月球领主/月总真眼/克苏鲁真眼的音效 </summary>
+        /// <summary> 月球领主/月总真眼/克苏鲁真眼的音效 </summary>
         public static SoundStyle TrueEyeOfCthulhu2_Zombie101 => SoundID.Zombie101;
 
-        /// <summary>月球领主/月总真眼/克苏鲁真眼的幻影球音效 </summary>
+        /// <summary> 月球领主/月总真眼/克苏鲁真眼的幻影球音效 </summary>
         public static SoundStyle PhantasmalSphere_Zombie102 => SoundID.Zombie102;
 
-        /// <summary>月球领主/月总的幻影眼音效 </summary>
+        /// <summary> 月球领主/月总的幻影眼音效 </summary>
         public static SoundStyle PhantasmalEyeImpact_Zombie103 => SoundID.Zombie103;
 
-        /// <summary>月球领主/月总的幻影死亡射线音效 </summary>
+        /// <summary> 月球领主/月总的幻影死亡射线音效 </summary>
         public static SoundStyle PhantasmalDeathray_Zombie104 => SoundID.Zombie104;
 
-        /// <summary> 月亮领主 a.k.a 月总的死亡音效，同伴方块的音效（致敬传送门的那个宠物）</summary>
+        /// <summary> 月亮领主 / 月总的死亡音效，同伴方块的音效（致敬传送门的那个宠物）</summary>
         public static SoundStyle MoonLord_NPCDeath61 => SoundID.NPCDeath61;
 
-        /// <summary>月亮领主 a.k.a 月总的手，头，月蛭凝块（月总舌头）的死亡音效</summary>
+        /// <summary> 月亮领主 / 月总的手，头，月蛭凝块（月总舌头）的死亡音效</summary>
         public static SoundStyle MoonLord2_NPCDeath62 => SoundID.NPCDeath62;
 
-        /// <summary>不知道什么音效，但名字叫做月总</summary>
+        /// <summary> 不知道什么音效，但名字叫做月总</summary>
         public static SoundStyle MoonLord => SoundID.MoonLord;
 
         #endregion
@@ -1277,14 +1368,110 @@ namespace Coralite.Core
         #endregion
         #region BOSS-恐惧鹦鹉螺
 
-        /// <summary>恐惧鹦鹉螺蓄力的声音 </summary>
+        /// <summary> 恐惧鹦鹉螺蓄力的声音 </summary>
         public static SoundStyle Dreadnautilus_ChargeUp_Item170 => SoundID.Item170;
 
-        /// <summary>恐惧鹦鹉螺发射血弹的声音</summary>
+        /// <summary> 恐惧鹦鹉螺发射血弹的声音</summary>
         public static SoundStyle Dreadnautilus_FireProjectiles_Item171 => SoundID.Item171;
 
         /// <summary> 恐惧鹦鹉螺冲刺的声音 </summary>
         public static SoundStyle Dreadnautilus_Dash_Item172 => SoundID.Item172;
+
+        #endregion
+
+        #region BOSS-黑暗魔法师
+
+        /// <summary> 暗黑能量被召唤，共3种，听着像木棍挥舞声音 </summary>
+        public static SoundStyle Swing_DD2_DarkMageAttack => SoundID.DD2_DarkMageAttack;
+
+        /// <summary> 黑暗魔法师，共3种 </summary>
+        public static SoundStyle DD2_DarkMageCastHeal => SoundID.DD2_DarkMageCastHeal;
+
+        /// <summary> 黑暗魔法师死亡音效，共3种 </summary>
+        public static SoundStyle DD2_DarkMageDeath => SoundID.DD2_DarkMageDeath;
+
+        /// <summary> 暗黑魔符撞击，共3种，听着像是什么光属性魔法 </summary>
+        public static SoundStyle LightMagic_DD2_DarkMageHealImpact => SoundID.DD2_DarkMageHealImpact;
+
+        /// <summary> 黑暗魔法师受击，共3种 </summary>
+        public static SoundStyle DD2_DarkMageHurt => SoundID.DD2_DarkMageHurt;
+
+        /// <summary> 撒旦骷髅被召唤，共3种 </summary>
+        public static SoundStyle DD2_DarkMageSummonSkeleton => SoundID.DD2_DarkMageSummonSkeleton;
+
+        #endregion
+        #region 食人魔
+
+        /// <summary> 食人魔，共3种 </summary>
+        public static SoundStyle DD2_OgreAttack => SoundID.DD2_OgreAttack;
+
+        /// <summary> 食人魔，共3种 </summary>
+        public static SoundStyle DD2_OgreDeath => SoundID.DD2_OgreDeath;
+
+        /// <summary> 食人魔砸地板 </summary>
+        public static SoundStyle DD2_OgreGroundPound => SoundID.DD2_OgreGroundPound;
+
+        /// <summary> 食人魔唾液 </summary>
+        public static SoundStyle DD2_OgreSpit => SoundID.DD2_OgreSpit;
+
+        /// <summary> 食人魔，共3种 </summary>
+        public static SoundStyle DD2_OgreHurt => SoundID.DD2_OgreHurt;
+
+        /// <summary> 食人魔，共3种 </summary>
+        public static SoundStyle DD2_OgreRoar => SoundID.DD2_OgreRoar;
+
+        #endregion
+        #region BOSS-双足翼龙
+
+        /// <summary> 双足翼龙死亡音效，共3种 </summary>
+        public static SoundStyle DD2_BetsyDeath => SoundID.DD2_BetsyDeath;
+
+        /// <summary> 双足翼龙发射火球，共3种 </summary>
+        public static SoundStyle FireShoot_DD2_BetsyFireballShot => SoundID.DD2_BetsyFireballShot;
+
+        /// <summary> 双足翼龙火球爆炸，共3种 </summary>
+        public static SoundStyle FireBallExplosion_DD2_BetsyFireballImpact => SoundID.DD2_BetsyFireballImpact;
+
+        /// <summary> 双足翼龙火焰吐息攻击</summary>
+        public static SoundStyle FireShoot_DD2_BetsyFlameBreath => SoundID.DD2_BetsyFlameBreath;
+
+        /// <summary> 双足翼龙环形飞行攻击</summary>
+        public static SoundStyle DD2_BetsyFlyingCircleAttack => SoundID.DD2_BetsyFlyingCircleAttack;
+
+        /// <summary> 双足翼龙受击，共3种</summary>
+        public static SoundStyle DD2_BetsyHurt => SoundID.DD2_BetsyHurt;
+
+        /// <summary> 双足翼龙尖叫，哇奥奥奥奥奥！！！！！┗|｀O′|┛ 嗷~~</summary>
+        public static SoundStyle Roar_DD2_BetsyScream => SoundID.DD2_BetsyScream;
+
+        /// <summary> 双足翼龙被召唤，共3种</summary>
+        public static SoundStyle DD2_BetsySummon => SoundID.DD2_BetsySummon;
+
+        /// <summary> 双足翼龙狂风攻击，共3种</summary>
+        public static SoundStyle DD2_BetsyWindAttack => SoundID.DD2_BetsyWindAttack;
+
+        #endregion
+
+        #region BOSS-独眼巨鹿
+
+        /// <summary> 独眼巨鹿，共3种 </summary>
+        public static SoundStyle DeerclopsHit => SoundID.DeerclopsHit;
+
+        /// <summary> 独眼巨鹿 </summary>
+        public static SoundStyle DeerclopsDeath => SoundID.DeerclopsDeath;
+
+        /// <summary> 独眼巨鹿，共3种 </summary>
+        public static SoundStyle DeerclopsScream => SoundID.DeerclopsScream;
+
+        /// <summary> 独眼巨鹿，共3种 </summary>
+        public static SoundStyle IceSpike_DeerclopsIceAttack => SoundID.DeerclopsIceAttack;
+
+        /// <summary> 独眼巨鹿掀地板 </summary>
+        public static SoundStyle DeerclopsRubbleAttack => SoundID.DeerclopsRubbleAttack;
+
+        /// <summary> 独眼巨鹿走路 </summary>
+        public static SoundStyle DeerclopsStep => SoundID.DeerclopsStep;
+
 
         #endregion
 
@@ -1326,13 +1513,13 @@ namespace Coralite.Core
         /// <summary> 苍蝇人博士的死亡音效 </summary>
         public static SoundStyle DrManFly_NPCDeath38 => SoundID.NPCDeath38;
 
-        /// <summary>蛾怪 a.k.a 魔斯拉的受击音效</summary>
+        /// <summary>蛾怪 / 魔斯拉的受击音效</summary>
         public static SoundStyle Mothron_NPCHit44 => SoundID.NPCHit44;
 
-        /// <summary>蛾怪 a.k.a 魔斯拉的音效 </summary>
+        /// <summary>蛾怪 / 魔斯拉的音效 </summary>
         public static SoundStyle Mothron_Zombie73 => SoundID.Zombie73;
 
-        /// <summary>蛾怪 a.k.a 魔斯拉的死亡音效</summary>
+        /// <summary>蛾怪 / 魔斯拉的死亡音效</summary>
         public static SoundStyle Mothron_NPCDeath46 => SoundID.NPCDeath46;
 
         /// <summary> 攀爬魔的受击音效</summary>
@@ -1401,13 +1588,13 @@ namespace Coralite.Core
         /// <summary> 火星人的泡泡盾的死亡音效</summary>
         public static SoundStyle BubbleShield_NPCDeath45 => SoundID.NPCDeath45;
 
-        /// <summary> 鳞甲怪 a.k.a 火星蛞蝓的受击音效</summary>
+        /// <summary> 鳞甲怪 / 火星蛞蝓的受击音效</summary>
         public static SoundStyle Scutlix_NPCHit51 => SoundID.NPCHit51;
 
-        /// <summary>鳞甲怪 a.k.a 火星蛞蝓的音效 </summary>
+        /// <summary>鳞甲怪 / 火星蛞蝓的音效 </summary>
         public static SoundStyle Scutlix_Zombie86 => SoundID.Zombie86;
 
-        /// <summary> 鳞甲怪 a.k.a 火星蛞蝓的死亡音效</summary>
+        /// <summary> 鳞甲怪 / 火星蛞蝓的死亡音效</summary>
         public static SoundStyle Scutlix_NPCDeath54 => SoundID.NPCDeath54;
 
         /// <summary> 特斯拉炮塔的受击音效</summary>
@@ -1423,18 +1610,158 @@ namespace Coralite.Core
         public static SoundStyle Martian_NPCDeath57 => SoundID.NPCDeath57;
 
         #endregion
+        #region 旧日军团NPC
 
+        /// <summary> 德拉克龙，共3种 </summary>
+        public static SoundStyle DD2_DrakinBreathIn => SoundID.DD2_DrakinBreathIn;
+
+        /// <summary> 德拉克龙，共3种 </summary>
+        public static SoundStyle DD2_DrakinDeath => SoundID.DD2_DrakinDeath;
+
+        /// <summary> 德拉克龙，共3种 </summary>
+        public static SoundStyle DD2_DrakinHurt => SoundID.DD2_DrakinHurt;
+
+        /// <summary> 德拉克龙，共3种，爆炸声 </summary>
+        public static SoundStyle Explosion_DD2_DrakinShot => SoundID.DD2_DrakinShot;
+
+        /// <summary> 埃特尼亚哥布林，共3种 </summary>
+        public static SoundStyle DD2_GoblinDeath => SoundID.DD2_GoblinDeath;
+
+        /// <summary> 埃特尼亚哥布林，共6种 </summary>
+        public static SoundStyle DD2_GoblinHurt => SoundID.DD2_GoblinHurt;
+
+        /// <summary> 埃特尼亚哥布林，共3种 </summary>
+        public static SoundStyle DD2_GoblinScream => SoundID.DD2_GoblinScream;
+
+        /// <summary> 埃特尼亚哥布林投弹手，共3种 </summary>
+        public static SoundStyle DD2_GoblinBomberDeath => SoundID.DD2_GoblinBomberDeath;
+
+        /// <summary> 埃特尼亚哥布林投弹手，共3种 </summary>
+        public static SoundStyle DD2_GoblinBomberHurt => SoundID.DD2_GoblinBomberHurt;
+
+        /// <summary> 埃特尼亚哥布林投弹手，共3种 </summary>
+        public static SoundStyle DD2_GoblinBomberScream => SoundID.DD2_GoblinBomberScream;
+
+        /// <summary> 埃特尼亚哥布林投弹手，共3种 </summary>
+        public static SoundStyle DD2_GoblinBomberThrow => SoundID.DD2_GoblinBomberThrow;
+
+        /// <summary> 埃特尼亚标枪投掷怪，共3种 </summary>
+        public static SoundStyle Shoot_DD2_JavelinThrowersAttack => SoundID.DD2_JavelinThrowersAttack;
+
+        /// <summary> 埃特尼亚标枪投掷怪，共3种 </summary>
+        public static SoundStyle DD2_JavelinThrowersDeath => SoundID.DD2_JavelinThrowersDeath;
+
+        /// <summary> 埃特尼亚标枪投掷怪，共3种 </summary>
+        public static SoundStyle DD2_JavelinThrowersHurt => SoundID.DD2_JavelinThrowersHurt;
+
+        /// <summary> 埃特尼亚标枪投掷怪，共3种 </summary>
+        public static SoundStyle DD2_JavelinThrowersTaunt => SoundID.DD2_JavelinThrowersTaunt;
+
+        /// <summary> 小妖魔，共3种 </summary>
+        public static SoundStyle DD2_KoboldDeath => SoundID.DD2_KoboldDeath;
+
+        /// <summary> 小妖魔，共3种，爆炸声 </summary>
+        public static SoundStyle Explosion_DD2_KoboldExplosion => SoundID.DD2_KoboldExplosion;
+
+        /// <summary> 小妖魔，共3种 </summary>
+        public static SoundStyle DD2_KoboldHurt => SoundID.DD2_KoboldHurt;
+
+        /// <summary> 小妖魔，用打火石点火的声音 </summary>
+        public static SoundStyle Fire_DD2_KoboldIgnite => SoundID.DD2_KoboldIgnite;
+
+        /// <summary> 小妖魔，炸弹引线燃烧的声音 </summary>
+        public static SoundStyle DD2_KoboldIgniteLoop => SoundID.DD2_KoboldIgniteLoop;
+
+        /// <summary> 小妖魔 </summary>
+        public static SoundStyle DD2_KoboldScreamChargeLoop => SoundID.DD2_KoboldScreamChargeLoop;
+
+        /// <summary> 小妖魔，共3种 </summary>
+        public static SoundStyle DD2_KoboldFlyerChargeScream => SoundID.DD2_KoboldFlyerChargeScream;
+
+        /// <summary> 小妖魔滑翔怪，共3种 </summary>
+        public static SoundStyle DD2_KoboldFlyerDeath => SoundID.DD2_KoboldFlyerDeath;
+
+        /// <summary> 小妖魔滑翔怪，共3种 </summary>
+        public static SoundStyle DD2_KoboldFlyerHurt => SoundID.DD2_KoboldFlyerHurt;
+
+        /// <summary> 埃特尼亚荧光虫，共3种 </summary>
+        public static SoundStyle DD2_LightningBugDeath => SoundID.DD2_LightningBugDeath;
+
+        /// <summary> 埃特尼亚荧光虫，共3种 </summary>
+        public static SoundStyle DD2_LightningBugHurt => SoundID.DD2_LightningBugHurt;
+
+        /// <summary> 埃特尼亚荧光虫，共3种 </summary>
+        public static SoundStyle DD2_LightningBugZap => SoundID.DD2_LightningBugZap;
+
+        /// <summary> 撒旦骷髅，共3种 </summary>
+        public static SoundStyle DD2_SkeletonDeath => SoundID.DD2_SkeletonDeath;
+
+        /// <summary> 撒旦骷髅，共3种 </summary>
+        public static SoundStyle DD2_SkeletonHurt => SoundID.DD2_SkeletonHurt;
+
+        /// <summary> 撒旦骷髅被召唤 </summary>
+        public static SoundStyle DD2_SkeletonSummoned => SoundID.DD2_SkeletonSummoned;
+
+        /// <summary> 枯萎兽，共2种 </summary>
+        public static SoundStyle DD2_WitherBeastAuraPulse => SoundID.DD2_WitherBeastAuraPulse;
+
+        /// <summary> 枯萎兽，共3种，水晶受击声 </summary>
+        public static SoundStyle CrystalHit_DD2_WitherBeastCrystalImpact => SoundID.DD2_WitherBeastCrystalImpact;
+
+        /// <summary> 枯萎兽，共3种，水晶碎裂声 </summary>
+        public static SoundStyle CrystalBroken_DD2_WitherBeastDeath => SoundID.DD2_WitherBeastDeath;
+
+        /// <summary> 枯萎兽，共3种，水晶受击声 </summary>
+        public static SoundStyle CrystalHit_DD2_WitherBeastHurt => SoundID.DD2_WitherBeastHurt;
+
+        /// <summary> 埃特尼亚飞龙，共3种 </summary>
+        public static SoundStyle DD2_WyvernDeath => SoundID.DD2_WyvernDeath;
+
+        /// <summary> 埃特尼亚飞龙，共3种 </summary>
+        public static SoundStyle DD2_WyvernHurt => SoundID.DD2_WyvernHurt;
+
+        /// <summary> 埃特尼亚飞龙，共3种 </summary>
+        public static SoundStyle DD2_WyvernScream => SoundID.DD2_WyvernScream;
+
+        /// <summary> 埃特尼亚飞龙，共3种 </summary>
+        public static SoundStyle DD2_WyvernDiveDown => SoundID.DD2_WyvernDiveDown;
+
+        /// <summary> 接触神秘传送门？ </summary>
+        public static SoundStyle MagicShoot_DD2_EtherianPortalDryadTouch => SoundID.DD2_EtherianPortalDryadTouch;
+
+        /// <summary> 神秘传送门 </summary>
+        public static SoundStyle DD2_EtherianPortalIdleLoop => SoundID.DD2_EtherianPortalIdleLoop;
+
+        /// <summary> 神秘传送门开启 </summary>
+        public static SoundStyle DD2_EtherianPortalOpen => SoundID.DD2_EtherianPortalOpen;
+
+        /// <summary> 神秘传送门刷怪，共3种 </summary>
+        public static SoundStyle DD2_EtherianPortalSpawnEnemy => SoundID.DD2_EtherianPortalSpawnEnemy;
+
+        /// <summary> 永恒水晶，共3种，水晶受击声 </summary>
+        public static SoundStyle CrystalHit_DD2_CrystalCartImpact => SoundID.DD2_CrystalCartImpact;
+
+
+        /// <summary> 撒旦军队事件失败 </summary>
+        public static SoundStyle DD2_DefeatScene => SoundID.DD2_DefeatScene;
+
+        /// <summary> 撒旦军队事件胜利 </summary>
+        public static SoundStyle DD2_WinScene => SoundID.DD2_WinScene;
+
+
+
+        #endregion
 
         //----------其他-----------
 
 
-        /// <summary>敌怪咆哮的音效，大部分召唤BOSS的物品的音效</summary>
+        /// <summary> 敌怪咆哮的音效，大部分召唤BOSS的物品的音效</summary>
         public static SoundStyle Roar => SoundID.Roar;
 
-        /// <summary>蠕虫挖地的声音</summary>
+        /// <summary> 蠕虫挖地的声音</summary>
         public static SoundStyle WormDig => SoundID.WormDig;
 
-        /// <summary>原版未使用，是尖叫声，带点机械的感觉</summary>
+        /// <summary> 原版未使用，是尖叫声，带点机械的感觉</summary>
         public static SoundStyle NoUse_ScaryScream => SoundID.ScaryScream;
 
         /// <summary> 小精灵自身的音效</summary>
@@ -1507,7 +1834,16 @@ namespace Coralite.Core
         public static SoundStyle Chest_Unlock => SoundID.Unlock;
 
         /// <summary> 以太块/镒块产生时的音效 </summary>
-        public static SoundStyle AetheriumBlock => SoundID.ShimmerWeak1;
+        public static SoundStyle SpawnAetheriumBlock => SoundID.ShimmerWeak1;
+        
+        /// <summary> 蜂蜜块/蜜蜂块产生时的音效，共3种 </summary>
+        public static SoundStyle SpawnHoneyBlock => SoundID.LiquidsHoneyWater;
+
+        /// <summary> 松脆蜂蜜块产生时的音效，共3种 </summary>
+        public static SoundStyle SpawnCrispyHoneyBlock => SoundID.LiquidsHoneyLava;
+
+        /// <summary> 黑曜石产生时的音效，共3种 </summary>
+        public static SoundStyle SpawnObsidian => SoundID.LiquidsWaterLava;
 
         #endregion
 
@@ -1541,27 +1877,40 @@ namespace Coralite.Core
 
         #region UI音效
 
-        /// <summary>打开UI的声音，例如打开背包</summary>
+        /// <summary> 打开UI的声音，例如打开背包</summary>
         public static SoundStyle MenuOpen => SoundID.MenuOpen;
 
-        /// <summary>关闭UI的声音，例如关闭背包</summary>
+        /// <summary> 关闭UI的声音，例如关闭背包</summary>
         public static SoundStyle MenuClose => SoundID.MenuClose;
 
-        /// <summary>鼠标悬浮在UI上时发出的声音</summary>
+        /// <summary> 鼠标悬浮在UI上时发出的声音</summary>
         public static SoundStyle MenuTick => SoundID.MenuTick;
 
-        /// <summary>照相模式照相的声音</summary>
+        /// <summary> 照相模式照相的声音</summary>
         public static SoundStyle Camera => SoundID.Camera;
 
-        /// <summary>搜索物品的声音，共3种</summary>
+        /// <summary> 搜索物品的声音，共3种</summary>
         public static SoundStyle Research => SoundID.Research;
 
-        /// <summary>搜索物品完成时的声音</summary>
+        /// <summary> 搜索物品完成时的声音</summary>
         public static SoundStyle ResearchComplete => SoundID.ResearchComplete;
+
+        /// <summary> 成就解锁时的声音</summary>
+        public static SoundStyle AchievementComplete => SoundID.AchievementComplete;
 
         #endregion
 
+        #region 天气音效
+
         /// <summary> 打雷/闪电天气的声音，共7种 </summary>
         public static SoundStyle Thunder => SoundID.Thunder;
+
+        /// <summary> 在建筑内（背景墙前）的暴雪音效 </summary>
+        public static SoundStyle BlizzardInsideBuildingLoop => SoundID.BlizzardInsideBuildingLoop;
+        
+        /// <summary> 暴雪音效 </summary>
+        public static SoundStyle BlizzardStrongLoop => SoundID.BlizzardStrongLoop;
+
+        #endregion
     }
 }

@@ -183,7 +183,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 {
                     if (SPTimer == 0 && Projectile.IsOwnedByLocalPlayer())
                     {
-                        Helper.PlayPitched(CoraliteSoundID.AetheriumBlock, Projectile.Center, pitchAdjust: -0.5f);
+                        Helper.PlayPitched(CoraliteSoundID.SpawnAetheriumBlock, Projectile.Center, pitchAdjust: -0.5f);
                         Helper.PlayPitched(CoraliteSoundID.Bow2_Item102, Projectile.Center);
 
                         Projectile.NewProjectileFromThis<AuroraArrow>(Owner.Center, ToMouse.SafeNormalize(Vector2.Zero) * 16

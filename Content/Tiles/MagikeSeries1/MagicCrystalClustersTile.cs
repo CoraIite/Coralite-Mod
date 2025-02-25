@@ -36,7 +36,7 @@ namespace Coralite.Content.Tiles.MagikeSeries1
             //MinPick = 150;
 
             DustType = DustID.CrystalSerpent_Pink;
-            HitSound = SoundID.DD2_CrystalCartImpact;
+            HitSound = CoraliteSoundID.CrystalBroken_DD2_WitherBeastDeath;
             AddMapEntry(Coralite.MagicCrystalPink, CreateMapEntryName());
         }
 

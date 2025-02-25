@@ -32,7 +32,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileObjectData.newTile.AnchorInvalidTiles = [TileID.Cloud, ModContent.TileType<SkarnBrickTile>()];
             TileObjectData.addTile(Type);
 
-            HitSound = SoundID.DD2_CrystalCartImpact;
+            HitSound = CoraliteSoundID.CrystalHit_DD2_CrystalCartImpact;
             DustType = DustID.PurpleTorch;
             AddMapEntry(Coralite.CrystallineMagikePurple);
         }
@@ -89,7 +89,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
                 ];
             TileObjectData.addTile(Type);
 
-            HitSound = SoundID.DD2_CrystalCartImpact;
+            HitSound = CoraliteSoundID.CrystalHit_DD2_CrystalCartImpact;
             DustType = DustID.PurpleTorch;
             AddMapEntry(Coralite.CrystallineMagikePurple);
         }

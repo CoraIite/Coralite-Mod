@@ -3,7 +3,6 @@ using Coralite.Core;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
-using Terraria.WorldBuilding;
 
 namespace Coralite.Content.WorldGeneration
 {
