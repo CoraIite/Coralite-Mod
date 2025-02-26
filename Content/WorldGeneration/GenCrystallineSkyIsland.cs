@@ -227,6 +227,8 @@ namespace Coralite.Content.WorldGeneration
 
             #region 遗迹与通道
 
+            // 生成墙壁缝隙和其他种类的墙壁
+
             // 生成中心遗迹与两侧的主要通道
             Rectangle shrineRect = CSkyIslandShrineAndMainTunnel(skarn, smoothSkarn, skarnBrick, skarnWall, crystallineBrick, mainIslandSize, mainIslandTopLeft, outerRect);
 
@@ -559,7 +561,7 @@ namespace Coralite.Content.WorldGeneration
         /// <param name="shrineRect"></param>
         /// <param name="p"></param>
         /// <returns></returns>
-        private void CSkyIslandCloudBall(Rectangle shrineRect, Point p,int cloudBallcount)
+        private void CSkyIslandCloudBall(Rectangle shrineRect, Point p, int cloudBallcount)
         {
             int cloudWidth = WorldGen.genRand.Next(5, 11);
             int dir = WorldGen.genRand.NextFromList(-1, 1);
@@ -775,6 +777,43 @@ namespace Coralite.Content.WorldGeneration
             DigSkyIslandTunnel(outerRect, shrineRect, shrineTopLeft + new Point(27, 12), 0, 1, GetTunnelLength, true);
             DigSkyIslandTunnel(outerRect, shrineRect, shrineTopLeft + new Point(0, 12), 0, -1, GetTunnelLength, true);
             return shrineRect;
+        }
+
+        private void CSkyIslandSPWalls(Rectangle rect)
+        {
+            //糊几片粗糙墙
+            for (int i = 0; i < 5; i++)
+            {
+                Point p = WorldGen.genRand.NextVector2FromRectangle(rect).ToPoint();
+
+                WorldUtils.Gen(
+                    p,
+                    new Shapes.Slime(WorldGen.genRand.Next(4, 12)),
+                    Actions.Chain(
+                        new Modifiers.Flip(false, true),
+                        new Modifiers.Blotches(3),
+                        new Modifiers.Dither(0.75f),
+                        new Modifiers.OnlyWalls((ushort)ModContent.WallType<SmoothSkarnWallUnsafe>()),
+                        new Actions.ClearWall(),
+                        new Actions.PlaceWall((ushort)ModContent.WallType<CrackedSkarnWallUnsafe>())));
+            }
+
+            //按照噪声随机生成狂野木墙
+            for (int i = 0; i < 3; i++)
+            {
+                Point p = WorldGen.genRand.NextVector2FromRectangle(rect).ToPoint();
+
+                ShapeData shape = new ShapeData();
+
+                int radius = WorldGen.genRand.Next(8, 12);//获取形状
+                WorldUtils.Gen(
+                    p,
+                    new Shapes.Circle(radius),
+                    Actions.Chain(
+                        new Modifiers.Flip(false, true),
+                        new Modifiers.Blotches(3),
+                        new Modifiers.Dither(0.75f).Output(shape)));
+            }
         }
 
         private void CSkyIslandGenCMOre(ushort skarn, ushort smoothSkarn, ushort CrystallineSkarn, Rectangle outerRect)
@@ -1035,6 +1074,11 @@ namespace Coralite.Content.WorldGeneration
             //中心点偏移，随机偏移-1至1格
             int digRandPos = 0;
 
+            //挖墙壁
+            int DigWall = WorldGen.genRand.NextBool(7) ? tunnelLength : 0;
+            int skipWall = DigWall > 0 ? WorldGen.genRand.Next(2,5) : 0;
+            int BrickWall = WorldGen.genRand.Next(3, 6);
+
             while (outerRect.Contains(tunnelCenter))
             {
                 switch (digType)
@@ -1065,6 +1109,33 @@ namespace Coralite.Content.WorldGeneration
 
                                 for (int i = 0; i < tunnelWidth; i++)
                                     Main.tile[tunnelCenter.X, yTop + i].Clear(TileDataType.Tile);
+
+                                if (DigWall > 0)//放墙壁
+                                {
+                                    if (skipWall > 0)
+                                        skipWall--;
+                                    else
+                                    {
+                                        for (int i = -1; i < tunnelWidth + 1; i++)
+                                            if (Main.tile[tunnelCenter.X, yTop + i].WallType == ModContent.WallType<SmoothSkarnWallUnsafe>())
+                                                Main.tile[tunnelCenter.X, yTop + i].Clear(TileDataType.Wall);
+
+                                        if (BrickWall > 0)//生成砖墙
+                                            BrickWall--;
+                                        else
+                                        {
+                                            for (int i = -1; i < tunnelWidth + 1; i++)
+                                            {
+                                                Main.tile[tunnelCenter.X, yTop + i].Clear(TileDataType.Wall);
+                                                WorldGen.PlaceWall(tunnelCenter.X, yTop + i, ModContent.WallType<SkarnBrickWallUnsafe>(), true);
+                                            }
+
+                                            BrickWall = WorldGen.genRand.Next(3, 6);
+                                        }
+
+                                        DigWall--;
+                                    }
+                                }
 
                                 tunnelCenter.X += tunnelDir;
                             }
@@ -1114,6 +1185,10 @@ namespace Coralite.Content.WorldGeneration
                             tunnelCenter.X -= tunnelDir * tunnelWidth / 2;
                             tunnelLength = getTunnelLength();
                             digCount++;
+
+                            DigWall = WorldGen.genRand.NextBool(7) ? tunnelLength : 0;
+                            skipWall = DigWall > 0 ? WorldGen.genRand.Next(2, 5) : 0;
+                            BrickWall = WorldGen.genRand.Next(3, 6);
                         }
 
                         break;

@@ -1,6 +1,11 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Items.MagikeSeries1;
+using Coralite.Content.ModPlayers;
+using Coralite.Core;
 using Coralite.Core.Configs;
+using Coralite.Core.Systems.MagikeSystem;
+using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.ParticleSystem;
+using Coralite.Helpers;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
@@ -17,6 +22,8 @@ namespace Coralite.Content.CustomHooks
 
         public static List<Point> SpecialTiles = [];
         public static Dictionary<Point,byte> SpecialTilesCounter = [];
+
+        public static List<MagikeLinerSender> LinerSenders = new(128);
 
         public override void Load()
         {
@@ -46,74 +53,60 @@ namespace Coralite.Content.CustomHooks
             if (Main.gameMenu)
                 return;
 
-            //绘制拖尾
             SpriteBatch spriteBatch = Main.spriteBatch;
-            Main.graphics.GraphicsDevice.BlendState = BlendState.AlphaBlend;
 
-            if (VisualEffectSystem.DrawTrail)
-            {
-                foreach (var p in Main.projectile)
-                {
-                    if (p.ModProjectile == null || !p.active)
-                    {
-                        continue;
-                    }
-                    if (p.ModProjectile is IDrawPrimitive primitive)
-                    {
-                        primitive.DrawPrimitives();
-                    }
-                }
+            //绘制魔能仪器
+            DrawMagikeLines(spriteBatch);
 
-                foreach (var n in Main.npc)
-                {
-                    if (n.ModNPC == null || !n.active)
-                    {
-                        continue;
-                    }
-                    if (n.ModNPC is IDrawPrimitive primitive)
-                    {
-                        primitive.DrawPrimitives();
-                    }
-                }
+            //绘制特殊物块
+            DrawSpecialTiles(spriteBatch);
 
-                foreach (var prt in PRTLoader.PRT_InGame_World_Inds)
-                {
-                    if (prt == null || !prt.active)
-                    {
-                        continue;
-                    }
-                    if (prt is IDrawParticlePrimitive p)
-                    {
-                        p.DrawPrimitive();
-                    }
-                }
-            }
+            //绘制拖尾
+            DrawTrail();
+
+            DrawAdditive(spriteBatch);
 
             //绘制Non
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+            DrawNonPremultiplied(spriteBatch);
 
-            for (int k = 0; k < Main.maxProjectiles; k++) //Projectiles
-                if (Main.projectile[k].active && Main.projectile[k].ModProjectile is IDrawNonPremultiplied non)
-                    non.DrawNonPremultiplied(Main.spriteBatch);
+            //后绘制叠加
+            PostDrawAdditive(spriteBatch);
+        }
 
-            for (int k = 0; k < Main.maxNPCs; k++) //NPCs
-                if (Main.npc[k].active && Main.npc[k].ModNPC is IDrawNonPremultiplied non)
-                    non.DrawNonPremultiplied(Main.spriteBatch);
+        public void DrawMagikeLines(SpriteBatch spriteBatch)
+        {
+            if (Main.LocalPlayer.TryGetModPlayer(out CoralitePlayer cp) && cp.HasEffect(nameof(MagikeMonoclastic))
+                && LinerSenders.Count > 0)
+            {
+                spriteBatch.Begin(default, BlendState.AlphaBlend, SamplerState.PointWrap, default, default, null, Main.GameViewMatrix.TransformationMatrix);
 
-            spriteBatch.End();
+                Texture2D laserTex = MagikeSystem.GetConnectLine();
+                Color drawColor = Coralite.MagicCrystalPink * 0.6f;
+                var origin = new Vector2(0, laserTex.Height / 2);
 
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+                foreach (var linerSender in LinerSenders)
+                {
+                    if (linerSender.Receivers.Count == 0)
+                        continue;
 
-            for (int k = 0; k < Main.maxProjectiles; k++) //Projectiles
-                if (Main.projectile[k].active && Main.projectile[k].ModProjectile is IPostDrawAdditive add)
-                    add.DrawAdditive(spriteBatch);
+                    //以上是获取线性发送器组件
+                    Vector2 selfPos = Helper.GetMagikeTileCenter(linerSender.Entity.Position);
+                    Vector2 startPos = selfPos - Main.screenPosition;
 
-            for (int k = 0; k < Main.maxNPCs; k++) //NPCs
-                if (Main.npc[k].active && Main.npc[k].ModNPC is IPostDrawAdditive add)
-                    add.DrawAdditive(spriteBatch);
+                    for (int i = 0; i < linerSender.Receivers.Count; i++)
+                    {
+                        Vector2 aimPos = Helper.GetMagikeTileCenter(linerSender.Receivers[i]);
+                        MagikeSystem.DrawConnectLine(spriteBatch, selfPos, aimPos, Main.screenPosition, drawColor);
+                    }
+                }
 
-            spriteBatch.End();
+                spriteBatch.End();
+                LinerSenders.Clear();
+            }
+        }
 
+        private static void DrawSpecialTiles(SpriteBatch spriteBatch)
+        {
             if (SpecialTiles.Count != 0)
             {
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
@@ -136,55 +129,83 @@ namespace Coralite.Content.CustomHooks
                 //Main.NewText(SpecialTiles.Count);
                 spriteBatch.End();
             }
+        }
 
-            ////绘制反色
-            //Main.spriteBatch.Begin(SpriteSortMode.Deferred, Reverse, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+        private static void PostDrawAdditive(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
 
-            //for (int k = 0; k < Main.maxProjectiles; k++) //Projectiles
-            //    if (Main.projectile[k].active && Main.projectile[k].ModProjectile is IDrawColorReverse)
-            //        (Main.projectile[k].ModProjectile as IDrawColorReverse).DrawColorReverse(Main.spriteBatch);
+            for (int k = 0; k < Main.maxProjectiles; k++) //Projectiles
+                if (Main.projectile[k].active && Main.projectile[k].ModProjectile is IPostDrawAdditive add)
+                    add.DrawAdditive(spriteBatch);
 
-            //for (int k = 0; k < Main.maxNPCs; k++) //NPCs
-            //    if (Main.npc[k].active && Main.npc[k].ModNPC is IDrawColorReverse)
-            //        (Main.npc[k].ModNPC as IDrawColorReverse).DrawColorReverse(Main.spriteBatch);
+            for (int k = 0; k < Main.maxNPCs; k++) //NPCs
+                if (Main.npc[k].active && Main.npc[k].ModNPC is IPostDrawAdditive add)
+                    add.DrawAdditive(spriteBatch);
 
-            //spriteBatch.End();
+            spriteBatch.End();
+        }
 
-            //spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+        private static void DrawAdditive(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
 
-            ////绘制自己的粒子
-            //ArmorShaderData armorShaderData = null;
-            //for (int i = 0; i < ParticleSystem.Particles.Count; i++)
-            //{
-            //    Particle particle = ParticleSystem.Particles[i];
-            //    if (particle == null || !particle.active)
-            //        continue;
+            for (int k = 0; k < Main.maxProjectiles; k++) //Projectiles
+                if (Main.projectile[k].active && Main.projectile[k].ModProjectile is IDrawAdditive)
+                    (Main.projectile[k].ModProjectile as IDrawAdditive).DrawAdditive(spriteBatch);
 
-            //    if (!VaultUtils.IsPointOnScreen(particle.Position - Main.screenPosition))
-            //        continue;
+            for (int k = 0; k < Main.maxNPCs; k++) //NPCs
+                if (Main.npc[k].active && Main.npc[k].ModNPC is IDrawAdditive)
+                    (Main.npc[k].ModNPC as IDrawAdditive).DrawAdditive(spriteBatch);
 
-            //    if (particle.shader != armorShaderData)
-            //    {
-            //        spriteBatch.End();
-            //        armorShaderData = particle.shader;
-            //        if (armorShaderData == null)
-            //        {
-            //            spriteBatch.Begin();
-            //            spriteBatch.End();
+            spriteBatch.End();
+        }
 
-            //            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointWrap, default, default, default, Main.GameViewMatrix.TransformationMatrix);
-            //        }
-            //        else
-            //        {
-            //            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.Transform);
-            //            particle.shader.Apply(null);
-            //        }
-            //    }
+        private static void DrawNonPremultiplied(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
 
-            //    particle.Draw(spriteBatch);
-            //}
+            for (int k = 0; k < Main.maxProjectiles; k++) //Projectiles
+                if (Main.projectile[k].active && Main.projectile[k].ModProjectile is IDrawNonPremultiplied non)
+                    non.DrawNonPremultiplied(Main.spriteBatch);
 
-            //spriteBatch.End();
+            for (int k = 0; k < Main.maxNPCs; k++) //NPCs
+                if (Main.npc[k].active && Main.npc[k].ModNPC is IDrawNonPremultiplied non)
+                    non.DrawNonPremultiplied(Main.spriteBatch);
+
+            spriteBatch.End();
+        }
+
+        private static void DrawTrail()
+        {
+            Main.graphics.GraphicsDevice.BlendState = BlendState.AlphaBlend;
+
+            if (VisualEffectSystem.DrawTrail)
+            {
+                foreach (var p in Main.projectile)
+                {
+                    if (p.ModProjectile == null || !p.active)
+                        continue;
+                    if (p.ModProjectile is IDrawPrimitive primitive)
+                        primitive.DrawPrimitives();
+                }
+
+                foreach (var n in Main.npc)
+                {
+                    if (n.ModNPC == null || !n.active)
+                        continue;
+                    if (n.ModNPC is IDrawPrimitive primitive)
+                        primitive.DrawPrimitives();
+                }
+
+                foreach (var prt in PRTLoader.PRT_InGame_World_Inds)
+                {
+                    if (prt == null || !prt.active)
+                        continue;
+                    if (prt is IDrawParticlePrimitive p)
+                        p.DrawPrimitive();
+                }
+            }
         }
 
         public static void AddSpecialTile(int i, int j)
