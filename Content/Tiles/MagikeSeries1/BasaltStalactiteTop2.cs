@@ -25,7 +25,7 @@ namespace Coralite.Content.Tiles.MagikeSeries1
             TileObjectData.newTile.StyleWrapLimit = 3;
             TileObjectData.newTile.StyleMultiplier = 1;
             TileObjectData.newTile.StyleHorizontal = true;
-            TileObjectData.newTile.RandomStyleRange = 3;
+            //TileObjectData.newTile.RandomStyleRange = 3;
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.addTile(Type);
 

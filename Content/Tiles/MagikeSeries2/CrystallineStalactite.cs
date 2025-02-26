@@ -28,7 +28,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileObjectData.newTile.CoordinateHeights = [16, 18];
             TileObjectData.newTile.StyleMultiplier = 1;
             TileObjectData.newTile.StyleHorizontal = true;
-            TileObjectData.newTile.RandomStyleRange = 2;
+            //TileObjectData.newTile.RandomStyleRange = 2;
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.newTile.AnchorInvalidTiles = [TileID.Cloud, ModContent.TileType<SkarnBrickTile>()];
             TileObjectData.addTile(Type);

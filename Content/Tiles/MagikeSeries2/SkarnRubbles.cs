@@ -24,7 +24,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileObjectData.newTile.DrawYOffset = -8;
             TileObjectData.newTile.StyleMultiplier = 1;
             TileObjectData.newTile.StyleHorizontal = true;
-            TileObjectData.newTile.RandomStyleRange = 9;
+            //TileObjectData.newTile.RandomStyleRange = 9;
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.newTile.AnchorInvalidTiles = [TileID.Cloud, ModContent.TileType<SkarnBrickTile>(), ModContent.TileType<CrystallineBrickTile>()];
             TileObjectData.addTile(Type);
@@ -68,7 +68,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.newTile.StyleMultiplier = 1;
             TileObjectData.newTile.StyleHorizontal = true;
-            TileObjectData.newTile.RandomStyleRange = 8;
+            //TileObjectData.newTile.RandomStyleRange = 8;
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.newTile.AnchorInvalidTiles = [TileID.Cloud, ModContent.TileType<SkarnBrickTile>(), ModContent.TileType<CrystallineBrickTile>()];
             TileObjectData.addTile(Type);
@@ -113,7 +113,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.newTile.StyleMultiplier = 1;
             TileObjectData.newTile.StyleHorizontal = true;
-            TileObjectData.newTile.RandomStyleRange = 8;
+            //TileObjectData.newTile.RandomStyleRange = 8;
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.newTile.AnchorInvalidTiles = [TileID.Cloud, ModContent.TileType<SkarnBrickTile>(), ModContent.TileType<CrystallineBrickTile>()];
             TileObjectData.addTile(Type);
@@ -158,7 +158,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.newTile.StyleMultiplier = 1;
             TileObjectData.newTile.StyleHorizontal = true;
-            TileObjectData.newTile.RandomStyleRange = 2;
+            //TileObjectData.newTile.RandomStyleRange = 2;
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.newTile.AnchorInvalidTiles = [TileID.Cloud, ModContent.TileType<SkarnBrickTile>(), ModContent.TileType<CrystallineBrickTile>()];
             TileObjectData.addTile(Type);
@@ -203,7 +203,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.newTile.StyleMultiplier = 1;
             TileObjectData.newTile.StyleHorizontal = true;
-            TileObjectData.newTile.RandomStyleRange = 4;
+            //TileObjectData.newTile.RandomStyleRange = 4;
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.newTile.AnchorInvalidTiles = [TileID.Cloud, ModContent.TileType<SkarnBrickTile>(), ModContent.TileType<CrystallineBrickTile>()];
             TileObjectData.addTile(Type);
@@ -248,7 +248,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.newTile.StyleMultiplier = 1;
             TileObjectData.newTile.StyleHorizontal = true;
-            TileObjectData.newTile.RandomStyleRange = 4;
+            //TileObjectData.newTile.RandomStyleRange = 4;
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.newTile.AnchorInvalidTiles = [TileID.Cloud, ModContent.TileType<SkarnBrickTile>(), ModContent.TileType<CrystallineBrickTile>()];
             TileObjectData.addTile(Type);
@@ -293,7 +293,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.newTile.StyleMultiplier = 1;
             TileObjectData.newTile.StyleHorizontal = true;
-            TileObjectData.newTile.RandomStyleRange = 1;
+            //TileObjectData.newTile.RandomStyleRange = 1;
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.newTile.AnchorInvalidTiles = [TileID.Cloud, ModContent.TileType<SkarnBrickTile>(), ModContent.TileType<CrystallineBrickTile>()];
             TileObjectData.addTile(Type);

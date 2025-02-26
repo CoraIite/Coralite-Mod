@@ -26,7 +26,7 @@ namespace Coralite.Content.Tiles.MagikeSeries1
             TileObjectData.newTile.StyleWrapLimit = 4;
             TileObjectData.newTile.StyleMultiplier = 1;
             TileObjectData.newTile.StyleHorizontal = true;
-            TileObjectData.newTile.RandomStyleRange = 4;
+            //TileObjectData.newTile.RandomStyleRange = 4;
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.addTile(Type);
 
@@ -45,7 +45,7 @@ namespace Coralite.Content.Tiles.MagikeSeries1
         {
             base.SetStaticDefaults();
 
-            FlexibleTileWand.RubblePlacementSmall.AddVariations(ModContent.ItemType<MagicCrystal>(), Type, 0, 1, 2,3);
+            FlexibleTileWand.RubblePlacementSmall.AddVariations(ModContent.ItemType<MagicCrystal>(), Type, 0, 1, 2, 3);
         }
     }
 
@@ -65,7 +65,7 @@ namespace Coralite.Content.Tiles.MagikeSeries1
             TileObjectData.newTile.StyleWrapLimit = 4;
             TileObjectData.newTile.StyleMultiplier = 1;
             TileObjectData.newTile.StyleHorizontal = true;
-            TileObjectData.newTile.RandomStyleRange = 4;
+            //TileObjectData.newTile.RandomStyleRange = 4;
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.addTile(Type);
 
@@ -105,7 +105,7 @@ namespace Coralite.Content.Tiles.MagikeSeries1
             TileObjectData.newTile.StyleWrapLimit = 4;
             TileObjectData.newTile.StyleMultiplier = 1;
             //TileObjectData.newTile.StyleHorizontal = true;
-            TileObjectData.newTile.RandomStyleRange = 4;
+            //TileObjectData.newTile.RandomStyleRange = 4;
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.addTile(Type);
 
@@ -144,7 +144,7 @@ namespace Coralite.Content.Tiles.MagikeSeries1
             TileObjectData.newTile.StyleWrapLimit = 1;
             TileObjectData.newTile.StyleMultiplier = 1;
             //TileObjectData.newTile.StyleHorizontal = true;
-            TileObjectData.newTile.RandomStyleRange = 4;
+            //TileObjectData.newTile.RandomStyleRange = 4;
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.addTile(Type);
 
@@ -183,7 +183,7 @@ namespace Coralite.Content.Tiles.MagikeSeries1
             TileObjectData.newTile.StyleWrapLimit = 6;
             TileObjectData.newTile.StyleMultiplier = 1;
             TileObjectData.newTile.StyleHorizontal = true;
-            TileObjectData.newTile.RandomStyleRange = 6;
+            //TileObjectData.newTile.RandomStyleRange = 6;
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.addTile(Type);
 
@@ -221,7 +221,7 @@ namespace Coralite.Content.Tiles.MagikeSeries1
             TileObjectData.newTile.StyleWrapLimit = 6;
             TileObjectData.newTile.StyleMultiplier = 1;
             TileObjectData.newTile.StyleHorizontal = true;
-            TileObjectData.newTile.RandomStyleRange = 6;
+            //TileObjectData.newTile.RandomStyleRange = 6;
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.addTile(Type);
 

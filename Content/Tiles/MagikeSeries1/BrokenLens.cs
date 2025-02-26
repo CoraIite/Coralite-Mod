@@ -25,14 +25,13 @@ namespace Coralite.Content.Tiles.MagikeSeries1
                 16,18
             ];
             TileObjectData.newTile.DrawYOffset = 2;
-            TileObjectData.newTile.StyleWrapLimit = 3;
             TileObjectData.newTile.StyleMultiplier = 1;
             TileObjectData.newTile.StyleHorizontal = true;
-            TileObjectData.newTile.RandomStyleRange = 3;
+            //TileObjectData.newTile.RandomStyleRange = 3;
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.addTile(Type);
 
-            HitSound = CoraliteSoundID.DigStone_Tink;
+            HitSound = CoraliteSoundID.CrystalHit_DD2_CrystalCartImpact;
             DustType = DustID.CrystalSerpent_Pink;
             AddMapEntry(Coralite.MagicCrystalPink);
             RegisterItemDrop(ModContent.ItemType<MagicCrystal>());
@@ -54,7 +53,7 @@ namespace Coralite.Content.Tiles.MagikeSeries1
         {
             base.SetStaticDefaults();
 
-            FlexibleTileWand.RubblePlacementSmall.AddVariations(ModContent.ItemType<MagicCrystal>(), Type, 0, 1, 2);
+            FlexibleTileWand.RubblePlacementLarge.AddVariations(ModContent.ItemType<MagicCrystal>(), Type, 0, 1, 2);
         }
     }
 }
