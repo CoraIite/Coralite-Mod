@@ -15,6 +15,7 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
+using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
 using static Coralite.Helpers.MagikeHelper;
 
@@ -229,20 +230,97 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
 
         public override bool RightClick(int i, int j)
         {
-            if (Main.LocalPlayer.HeldItem.ModItem != null &&
-                Main.LocalPlayer.HeldItem.ModItem.AltFunctionUse(Main.LocalPlayer))
-                return false;
+            //if (Main.LocalPlayer.HeldItem.ModItem != null &&
+            //    Main.LocalPlayer.HeldItem.ModItem.AltFunctionUse(Main.LocalPlayer))
+            //    return false;
 
             if (!TryGetEntity(i, j, out MagikeTP entity))
                 return false;
 
+            bool itemTimeIsZero = Main.LocalPlayer.ItemTimeIsZero;
+            if (itemTimeIsZero && entity.HasComponent(MagikeComponentID.ItemGetOnlyContainer))
+            {
+                GetOnlyItemContainer container = entity.GetSingleComponent<GetOnlyItemContainer>(MagikeComponentID.ItemGetOnlyContainer);
+
+                if (Main.keyState.PressingShift())//按shift加右键取出物品
+                    if (container.OutPutItem())
+                    {
+                        Helper.PlayPitched(CoraliteSoundID.Dig, new Vector2(i, j) * 16);
+                        return true;
+                    }
+            }
+
+            if (itemTimeIsZero && entity.HasComponent(MagikeComponentID.ItemContainer))
+            {
+                ItemContainer container = entity.GetSingleComponent<ItemContainer>(MagikeComponentID.ItemContainer);
+
+                if (Main.keyState.PressingShift())//按shift加右键取出物品
+                    if (container.OutPutItem())
+                    {
+                        Helper.PlayPitched(CoraliteSoundID.Dig, new Vector2(i, j) * 16);
+                        return true;
+                    }
+
+                //放入物品
+                //有物品容器，同时可以放入物品，就直接塞进去
+                Player localPlayer = Main.LocalPlayer;
+                if (localPlayer.inventory[localPlayer.selectedItem].stack > 0 && !localPlayer.inventory[localPlayer.selectedItem].favorited)
+                {
+                    localPlayer.GamepadEnableGrappleCooldown();
+                    PlaceItemInFrame(localPlayer, entity.Position.X, entity.Position.Y, container);
+                    Recipe.FindRecipes();
+                    return true;
+                }
+            }
+
+            OpenMagikeUI(entity);
+
+            return true;
+        }
+
+        private static void OpenMagikeUI(MagikeTP entity)
+        {
             Main.playerInventory = true;
             Helper.PlayPitched("Fairy/CursorExpand", 0.5f, 0);
             UILoader.GetUIState<MagikeApparatusPanel>().visible = true;
             MagikeApparatusPanel.CurrentEntity = entity;
             UILoader.GetUIState<MagikeApparatusPanel>().Recalculate();
+        }
 
-            return true;
+        public static void PlaceItemInFrame(Player player, int i,int j,ItemContainer container)
+        {
+            if (!player.ItemTimeIsZero)
+                return;
+
+            if (VaultUtils.isClient)
+            {
+                NetMessage.SendData(MessageID.ItemFrameTryPlacing, -1, -1, null, i, j, player.selectedItem, player.whoAmI, 1);
+
+                Item item = player.inventory[player.selectedItem].Clone();
+                player.inventory[player.selectedItem].TurnToAir();
+                container.AddItem(item);
+
+                ModPacket modPacket = Coralite.Instance.GetPacket();
+                modPacket.Write((byte)CoraliteNetWorkEnum.ItemContainer_SpecificIndex);
+                modPacket.Write(Main.myPlayer);
+                modPacket.WritePoint16(container.Entity.Position);
+                ItemIO.Send(item, modPacket, true);
+
+                modPacket.Send();
+            }
+            else if (VaultUtils.isSinglePlayer)
+            {
+                Item item = player.inventory[player.selectedItem].Clone();
+                player.inventory[player.selectedItem].TurnToAir();
+                container.AddItem(item);
+            }
+
+            if (player.selectedItem == 58)
+                Main.mouseItem = player.inventory[player.selectedItem].Clone();
+
+            player.releaseUseItem = false;
+            player.mouseInterface = true;
+            player.PlayDroppedItemAnimation(20);
         }
 
         public override void MouseOver(int i, int j)
@@ -256,6 +334,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
                 return;
 
             //鼠标移上去时显示魔能仪器的各种信息
+            Main.LocalPlayer.noThrow = 2;
             string text = "";
 
             //  魔能量 / 魔能上限

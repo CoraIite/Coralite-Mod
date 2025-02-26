@@ -1580,7 +1580,6 @@ RuneSong: {
 AncientGemstone: {
 	DisplayName: 上古宝石
 	Tooltip: "[c/8e8e8e:奇怪的蓝色宝石，散发着能量波。]"
-	ShlimmerTranslation: 此为微光转化合成表
 }
 
 BrokenHandle: {
@@ -3863,7 +3862,6 @@ SquirrelSet: {
 		[c/8c8c8c:*带着些许绒毛的小角和温热的红色毛线.]
 		“非常适合用来冒充珊瑚石开发者！”
 		'''
-	ShlimmerTranslation: 此为微光转化合成表
 }
 
 IceAxe: {

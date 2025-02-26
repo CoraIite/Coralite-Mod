@@ -14,6 +14,7 @@ namespace Coralite.Core
         public static Condition InDigDigDig { get; private set; }
         public static Condition NotInDigDigDig { get; private set; }
         public static Condition UseMultiBlockStructure { get; private set; }
+        public static Condition UseShlimmerTranslation { get; private set; }
 
         public string LocalizationCategory => "Conditions";
 
@@ -35,6 +36,8 @@ namespace Coralite.Core
             MagikeCraft = new(this.GetLocalization(nameof(MagikeCraft))
                 , () => false);
             UseMultiBlockStructure = new(this.GetLocalization(nameof(UseMultiBlockStructure))
+                , () => false);
+            UseShlimmerTranslation = new(this.GetLocalization(nameof(UseShlimmerTranslation))
                 , () => false);
 
             DownedGolemCondition = this.GetLocalization(nameof(DownedGolemCondition));

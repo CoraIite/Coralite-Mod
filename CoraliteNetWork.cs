@@ -34,6 +34,10 @@ namespace Coralite
         /// </summary>
         ItemContainer_SpecificIndex,
         /// <summary>
+        /// 接收特定的
+        /// </summary>
+        ItemContainer,
+        /// <summary>
         /// 同步魔能的改动
         /// </summary>
         MagikeSystem,
@@ -80,6 +84,9 @@ namespace Coralite
                     break;
                 case CoraliteNetWorkEnum.ItemContainer_SpecificIndex:
                     ItemContainer.ReceiveSpecificItem(reader, whoAmI);
+                    break;
+                case CoraliteNetWorkEnum.ItemContainer:
+                    ItemContainer.ReceiveItem(reader, whoAmI);
                     break;
                 case CoraliteNetWorkEnum.MagikeSystem:
                     MagikeSystem.ReceiveMagikePack(reader);

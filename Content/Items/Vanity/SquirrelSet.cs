@@ -81,7 +81,7 @@ namespace Coralite.Content.Items.Vanity
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddCondition(this.GetLocalization("ShlimmerTranslation", () => "此为微光转化合成表"), () => false)
+                .AddCondition(CoraliteConditions.UseShlimmerTranslation)
                 .AddCustomShimmerResult(ItemID.Squirrel)
                 .AddCustomShimmerResult(ItemID.Chest, 2)
                 .AddCustomShimmerResult(ItemID.RedDye)

@@ -21,6 +21,7 @@ Conditions: {
 		NotInDigDigDig: Требуется не находиться в мире DigDigDig
 		UseMultiBlockStructure: Использовать многоблочные структуры для создания
 		DownedGolemCondition: Требуется победить Каменного голема
+		UseShlimmerTranslation: Это таблица преобразования сияния
 	}
 }
 

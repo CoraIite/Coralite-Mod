@@ -226,6 +226,38 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             }
         }
 
+        public static void ReceiveItem(BinaryReader reader, int whoAmI)
+        {
+            int ownerIndex = reader.ReadInt32();
+            Point16 position = reader.ReadPoint16();
+
+            if (!Main.player.IndexInRange(ownerIndex))
+                return;
+
+            if (MagikeHelper.TryGetEntityWithTopLeft(position, out var tp)
+                && tp.TryGetComponent(MagikeComponentID.ItemContainer, out ItemContainer container))
+            {
+                Item item = ItemIO.Receive(reader, true);
+                container.AddItem(item);//接收
+
+                if (Main.dedServ)//服务器端再次向其他客户端同步一下
+                {
+                    ModPacket modPacket = Coralite.Instance.GetPacket();
+                    modPacket.Write((byte)CoraliteNetWorkEnum.ItemContainer);
+                    modPacket.Write(Main.myPlayer);
+                    modPacket.WritePoint16(container.Entity.Position);
+                    ItemIO.Send(item, modPacket, true);
+                    modPacket.Send(-1, whoAmI);
+                }
+                else
+                {
+                    //刷新魔能UI
+                    if (MagikeSystem.UIActive())
+                        MagikeSystem.RecalculateComponentPanel();
+                }
+            }
+        }
+
         #endregion
 
         public override void Update() { }
@@ -327,6 +359,24 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 }
 
             Item.NewItem(new EntitySource_DropAsItem(Main.LocalPlayer), Helper.GetMagikeTileCenter(Entity.Position), itemType, stack);
+        }
+
+        /// <summary>
+        /// 取出一个物品
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        public virtual bool OutPutItem()
+        {
+            for (int i = 0; i < Items.Length; i++)
+                if (!Items[i].IsAir)
+                {
+                    Item.NewItem(new EntitySource_DropAsItem(Main.LocalPlayer), Helper.GetMagikeTileCenter(Entity.Position), Items[i].Clone());
+                    Items[i].TurnToAir();
+                    return true;
+                }
+
+            return false;
         }
 
         #region UI部分
