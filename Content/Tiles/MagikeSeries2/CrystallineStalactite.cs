@@ -2,6 +2,7 @@
 using Coralite.Core;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ObjectData;
 
@@ -58,6 +59,16 @@ namespace Coralite.Content.Tiles.MagikeSeries2
         }
     }
 
+    public class CrystallineStalactite2x2Fake : CrystallineStalactite2x2
+    {
+        public override string Texture => AssetDirectory.MagikeSeries2Tile + nameof(CrystallineStalactite2x2);
+
+        public override void SetStaticDefaults()
+        {
+            FlexibleTileWand.RubblePlacementMedium.AddVariations(ModContent.ItemType<CrystallineMagike>(), Type, 0, 1);
+        }
+    }
+
     public class CrystallineStalactite : ModTile
     {
         public override string Texture => AssetDirectory.MagikeSeries2Tile + Name;
@@ -92,6 +103,8 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             HitSound = CoraliteSoundID.CrystalHit_DD2_CrystalCartImpact;
             DustType = DustID.PurpleTorch;
             AddMapEntry(Coralite.CrystallineMagikePurple);
+
+            RegisterItemDrop(ModContent.ItemType<CrystallineMagike>());
         }
 
         public override void NumDust(int i, int j, bool fail, ref int num)
@@ -99,19 +112,21 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             num = fail ? 1 : 3;
         }
 
-        public override IEnumerable<Item> GetItemDrops(int i, int j)
-        {
-            return
-            [
-                new(ModContent.ItemType<CrystallineMagike>())
-            ];
-        }
-
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
             r = 0.08f;
             g = 0.03f;
             b = 0.1f;
+        }
+    }
+
+    public class CrystallineStalactiteFake: CrystallineStalactite
+    {
+        public override string Texture => AssetDirectory.MagikeSeries2Tile + nameof(CrystallineStalactite);
+
+        public override void SetStaticDefaults()
+        {
+            FlexibleTileWand.RubblePlacementSmall.AddVariations(ModContent.ItemType<CrystallineMagike>(), Type, 0, 1, 2, 3);
         }
     }
 }

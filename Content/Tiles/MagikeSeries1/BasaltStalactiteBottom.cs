@@ -1,5 +1,7 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Items.MagikeSeries1;
+using Coralite.Core;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ObjectData;
 
@@ -27,6 +29,16 @@ namespace Coralite.Content.Tiles.MagikeSeries1
             DustType = DustID.CorruptionThorns;
             AddMapEntry(new Color(31, 31, 50));
         }
+    }
 
+    public class BasaltStalactiteBottomFake : BasaltStalactiteBottom
+    {
+        public override string Texture => AssetDirectory.MagikeSeries1Tile + nameof(BasaltStalactiteBottom);
+
+        public override void SetStaticDefaults()
+        {
+            FlexibleTileWand.RubblePlacementSmall.AddVariations(ModContent.ItemType<Basalt>(), Type, 0, 1, 2);
+            RegisterItemDrop(ModContent.ItemType<Basalt>());
+        }
     }
 }

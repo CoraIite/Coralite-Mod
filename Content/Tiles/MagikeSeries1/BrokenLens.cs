@@ -1,7 +1,7 @@
 ﻿using Coralite.Content.Items.MagikeSeries1;
 using Coralite.Core;
-using System.Collections.Generic;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ObjectData;
 
@@ -20,10 +20,10 @@ namespace Coralite.Content.Tiles.MagikeSeries1
             Main.tileObsidianKill[Type] = true;
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
-            TileObjectData.newTile.CoordinateHeights = new int[2]
-            {
+            TileObjectData.newTile.CoordinateHeights =
+            [
                 16,18
-            };
+            ];
             TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.newTile.StyleWrapLimit = 3;
             TileObjectData.newTile.StyleMultiplier = 1;
@@ -35,14 +35,7 @@ namespace Coralite.Content.Tiles.MagikeSeries1
             HitSound = CoraliteSoundID.DigStone_Tink;
             DustType = DustID.CrystalSerpent_Pink;
             AddMapEntry(Coralite.MagicCrystalPink);
-        }
-
-        public override IEnumerable<Item> GetItemDrops(int i, int j)
-        {
-            return new Item[1]
-            {
-                new(ModContent.ItemType<MagicCrystal>())
-            };
+            RegisterItemDrop(ModContent.ItemType<MagicCrystal>());
         }
 
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
@@ -50,6 +43,16 @@ namespace Coralite.Content.Tiles.MagikeSeries1
             r = 0.7f;
             g = 0.45f;
             b = 0.65f;
+        }
+    }
+
+    public class BrokenLensFake : BrokenLens
+    {
+        public override string Texture => AssetDirectory.MagikeSeries1Tile + nameof(BrokenLens);
+
+        public override void SetStaticDefaults()
+        {
+            FlexibleTileWand.RubblePlacementSmall.AddVariations(ModContent.ItemType<MagicCrystal>(), Type, 0, 1, 2);
         }
     }
 }

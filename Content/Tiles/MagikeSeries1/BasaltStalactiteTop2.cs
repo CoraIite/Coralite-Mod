@@ -1,13 +1,15 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Items.MagikeSeries1;
+using Coralite.Core;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ObjectData;
 
 namespace Coralite.Content.Tiles.MagikeSeries1
 {
-    internal class BasaltStalactiteTop2 : ModTile
+    public class BasaltStalactiteTop2 : ModTile
     {
         public override string Texture => AssetDirectory.MagikeSeries1Tile + Name;
 
@@ -30,6 +32,17 @@ namespace Coralite.Content.Tiles.MagikeSeries1
             HitSound = CoraliteSoundID.DigStone_Tink;
             DustType = DustID.CorruptionThorns;
             AddMapEntry(new Color(31, 31, 50));
+        }
+    }
+
+    public class BasaltStalactiteTop2Fake : BasaltStalactiteTop2
+    {
+        public override string Texture => AssetDirectory.MagikeSeries1Tile + nameof(BasaltStalactiteTop2);
+
+        public override void SetStaticDefaults()
+        {
+            FlexibleTileWand.RubblePlacementSmall.AddVariations(ModContent.ItemType<Basalt>(), Type, 0, 1, 2);
+            RegisterItemDrop(ModContent.ItemType<Basalt>());
         }
     }
 }
