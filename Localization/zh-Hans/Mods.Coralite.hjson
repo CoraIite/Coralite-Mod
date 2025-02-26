@@ -21,6 +21,7 @@ Conditions: {
 		NotInDigDigDig: 需要不在劳工挖挖挖的世界（DigDigDig）
 		UseMultiBlockStructure: 使用多方块结构合成
 		DownedGolemCondition: 需要击败石巨人
+		UseShlimmerTranslation: 此为微光转化合成表
 	}
 }
 

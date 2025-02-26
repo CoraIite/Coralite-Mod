@@ -26,12 +26,12 @@ namespace Coralite.Content.Items.CoreKeeper
         public override void AddRecipes()
         {
             CreateRecipe(10)
-                .AddCondition(this.GetLocalization("ShlimmerTranslation", () => "此为微光转化合成表"), () => false)
+                .AddCondition(CoraliteConditions.UseShlimmerTranslation)
                 .AddCustomShimmerResult(ItemID.GlowTulip)
                 .Register();
 
             Recipe.Create(ItemID.GlowTulip)
-                .AddCondition(this.GetLocalization("ShlimmerTranslation", () => "此为微光转化合成表"), () => false)
+                .AddCondition(CoraliteConditions.UseShlimmerTranslation)
                 .AddCustomShimmerResult(Type, 10)
                 .Register();
         }

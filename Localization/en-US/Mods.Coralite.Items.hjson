@@ -1540,7 +1540,6 @@ RuneSong: {
 AncientGemstone: {
 	DisplayName: Ancient Gemstone
 	Tooltip: "[c/8e8e8e:Strange, blue gemstone emitting waves of energy.]"
-	ShlimmerTranslation: This is the shimmer conversion synthesis table
 }
 
 BrokenHandle: {
@@ -3787,7 +3786,6 @@ SquirrelSet: {
 		[c/8c8c8c:*With a little fluffy horn and warm red yarn.]
 		"Perfect for impersonating a Coralite developer!"
 		'''
-	ShlimmerTranslation: This is the shlimmer conversion synthesis table
 }
 
 IceAxe: {
