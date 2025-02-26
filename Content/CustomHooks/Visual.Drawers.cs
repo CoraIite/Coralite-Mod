@@ -10,6 +10,7 @@ using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.DataStructures;
 
 namespace Coralite.Content.CustomHooks
 {
@@ -21,9 +22,14 @@ namespace Coralite.Content.CustomHooks
         public static BlendState Reverse;
 
         public static List<Point> SpecialTiles = [];
-        public static Dictionary<Point,byte> SpecialTilesCounter = [];
+        public static Dictionary<Point, byte> SpecialTilesCounter = [];
 
         public static List<MagikeLinerSender> LinerSenders = new(128);
+        /// <summary>
+        /// 是否绘制特殊线
+        /// </summary>
+        public static bool DrawLinerSenders { get; private set; }
+
 
         public override void Load()
         {
@@ -75,9 +81,13 @@ namespace Coralite.Content.CustomHooks
 
         public void DrawMagikeLines(SpriteBatch spriteBatch)
         {
-            if (Main.LocalPlayer.TryGetModPlayer(out CoralitePlayer cp) && cp.HasEffect(nameof(MagikeMonoclastic))
-                && LinerSenders.Count > 0)
+            if (Main.LocalPlayer.TryGetModPlayer(out CoralitePlayer cp) && cp.HasEffect(nameof(MagikeMonoclastic)))
             {
+                DrawLinerSenders = true;
+
+                if (LinerSenders.Count < 1)
+                    return;
+
                 spriteBatch.Begin(default, BlendState.AlphaBlend, SamplerState.PointWrap, default, default, null, Main.GameViewMatrix.TransformationMatrix);
 
                 Texture2D laserTex = MagikeSystem.GetConnectLine();
@@ -103,6 +113,24 @@ namespace Coralite.Content.CustomHooks
                 spriteBatch.End();
                 LinerSenders.Clear();
             }
+            else
+                DrawLinerSenders = false;
+        }
+
+        /// <summary>
+        /// 将线性连接器加入绘制列表
+        /// </summary>
+        /// <param name="sender"></param>
+        public static void AddToLinerSenderDraw(MagikeLinerSender sender)
+        {
+            if (VaultUtils.isServer || !DrawLinerSenders)//无法绘制时就返回
+                return;
+
+            Point16 p = sender.Entity.Position;
+            Vector2 size = new Vector2(sender.ConnectLength);
+
+            if (Helper.IsAreaOnScreen(p.ToWorldCoordinates() - Main.screenPosition - size / 2, size))
+                LinerSenders.Add(sender);
         }
 
         private static void DrawSpecialTiles(SpriteBatch spriteBatch)

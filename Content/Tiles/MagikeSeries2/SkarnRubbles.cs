@@ -46,7 +46,8 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         public override void SetStaticDefaults()
         {
-            FlexibleTileWand.RubblePlacementSmall.AddVariations(ModContent.ItemType<Skarn>(), Type, 0, 1, 2, 3,4,5,6,7,8);
+            base.SetStaticDefaults();
+            FlexibleTileWand.RubblePlacementSmall.AddVariations(ModContent.ItemType<Skarn>(), Type, 0, 1, 2, 3, 4, 5, 6, 7, 8);
             RegisterItemDrop(ModContent.ItemType<Skarn>());
         }
     }
@@ -89,6 +90,8 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         public override void SetStaticDefaults()
         {
+            base.SetStaticDefaults();
+
             FlexibleTileWand.RubblePlacementMedium.AddVariations(ModContent.ItemType<Skarn>(), Type, 0, 1, 2, 3, 4, 5, 6, 7);
             RegisterItemDrop(ModContent.ItemType<Skarn>());
         }
@@ -132,6 +135,8 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         public override void SetStaticDefaults()
         {
+            base.SetStaticDefaults();
+
             FlexibleTileWand.RubblePlacementMedium.AddVariations(ModContent.ItemType<Skarn>(), Type, 0, 1, 2, 3, 4, 5, 6, 7);
             RegisterItemDrop(ModContent.ItemType<Skarn>());
         }
@@ -175,6 +180,8 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         public override void SetStaticDefaults()
         {
+            base.SetStaticDefaults();
+
             FlexibleTileWand.RubblePlacementLarge.AddVariations(ModContent.ItemType<Skarn>(), Type, 0, 1);
             RegisterItemDrop(ModContent.ItemType<Skarn>());
         }
@@ -218,6 +225,8 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         public override void SetStaticDefaults()
         {
+            base.SetStaticDefaults();
+
             FlexibleTileWand.RubblePlacementLarge.AddVariations(ModContent.ItemType<Skarn>(), Type, 0, 1,2,3);
             RegisterItemDrop(ModContent.ItemType<Skarn>());
         }
@@ -261,6 +270,8 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         public override void SetStaticDefaults()
         {
+            base.SetStaticDefaults();
+
             FlexibleTileWand.RubblePlacementLarge.AddVariations(ModContent.ItemType<Skarn>(), Type, 0, 1, 2, 3);
             RegisterItemDrop(ModContent.ItemType<Skarn>());
         }
@@ -304,6 +315,8 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         public override void SetStaticDefaults()
         {
+            base.SetStaticDefaults();
+
             FlexibleTileWand.RubblePlacementLarge.AddVariations(ModContent.ItemType<Skarn>(), Type, 0);
             RegisterItemDrop(ModContent.ItemType<Skarn>());
         }

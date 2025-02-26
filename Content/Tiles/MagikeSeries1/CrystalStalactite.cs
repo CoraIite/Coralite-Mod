@@ -43,6 +43,8 @@ namespace Coralite.Content.Tiles.MagikeSeries1
 
         public override void SetStaticDefaults()
         {
+            base.SetStaticDefaults();
+
             FlexibleTileWand.RubblePlacementSmall.AddVariations(ModContent.ItemType<MagicCrystal>(), Type, 0, 1, 2,3);
         }
     }
@@ -80,6 +82,8 @@ namespace Coralite.Content.Tiles.MagikeSeries1
 
         public override void SetStaticDefaults()
         {
+            base.SetStaticDefaults();
+
             FlexibleTileWand.RubblePlacementSmall.AddVariations(ModContent.ItemType<MagicCrystal>(), Type, 0, 1, 2, 3);
         }
     }
@@ -118,6 +122,8 @@ namespace Coralite.Content.Tiles.MagikeSeries1
 
         public override void SetStaticDefaults()
         {
+            base.SetStaticDefaults();
+
             FlexibleTileWand.RubblePlacementSmall.AddVariations(ModContent.ItemType<MagicCrystal>(), Type, 0, 1, 2, 3);
         }
     }
@@ -155,6 +161,8 @@ namespace Coralite.Content.Tiles.MagikeSeries1
 
         public override void SetStaticDefaults()
         {
+            base.SetStaticDefaults();
+
             FlexibleTileWand.RubblePlacementSmall.AddVariations(ModContent.ItemType<MagicCrystal>(), Type, 0, 1, 2, 3);
         }
     }
@@ -192,6 +200,8 @@ namespace Coralite.Content.Tiles.MagikeSeries1
 
         public override void SetStaticDefaults()
         {
+            base.SetStaticDefaults();
+
             FlexibleTileWand.RubblePlacementSmall.AddVariations(ModContent.ItemType<MagicCrystal>(), Type, 0, 1, 2, 3,4,5);
         }
     }
@@ -228,6 +238,8 @@ namespace Coralite.Content.Tiles.MagikeSeries1
 
         public override void SetStaticDefaults()
         {
+            base.SetStaticDefaults();
+
             FlexibleTileWand.RubblePlacementSmall.AddVariations(ModContent.ItemType<MagicCrystal>(), Type, 0, 1, 2, 3, 4, 5);
         }
     }

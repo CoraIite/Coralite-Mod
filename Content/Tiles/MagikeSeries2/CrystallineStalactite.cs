@@ -65,6 +65,8 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         public override void SetStaticDefaults()
         {
+            base.SetStaticDefaults();
+
             FlexibleTileWand.RubblePlacementMedium.AddVariations(ModContent.ItemType<CrystallineMagike>(), Type, 0, 1);
         }
     }
@@ -126,6 +128,8 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         public override void SetStaticDefaults()
         {
+            base.SetStaticDefaults();
+
             FlexibleTileWand.RubblePlacementSmall.AddVariations(ModContent.ItemType<CrystallineMagike>(), Type, 0, 1, 2, 3);
         }
     }
