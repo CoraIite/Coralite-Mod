@@ -211,6 +211,17 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
             SoundEngine.PlaySound(CoraliteSoundID.GlassBroken_Shatter, new Vector2(i, j) * 16);
         }
 
+        /// <summary>
+        /// 获取左上角位置，默认返回null即启用默认的逻辑
+        /// </summary>
+        /// <param name="i"></param>
+        /// <param name="j"></param>
+        /// <returns></returns>
+        public virtual Point16? ToTopLeft(int i, int j)
+        {
+            return null;
+        }
+
         public override IEnumerable<Item> GetItemDrops(int i, int j)
         {
             return [new Item(DropItemType)];

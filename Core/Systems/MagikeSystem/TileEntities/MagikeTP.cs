@@ -348,40 +348,13 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
 
     public class MagikeGloblaTP : GlobalTileProcessor
     {
-        public override Point16? GetTopLeftPoint(int x, int y)
+        public override Point16? GetTopLeftOrNull(Tile tile, int i, int j)
         {
-            Tile t = Framing.GetTileSafely(x, y);
-            if (t.TileType < TileID.Count)
-                return null;
-
-            ModTile mt = TileLoader.GetTile(t.TileType);
-
-            if (mt is BaseMagikeTile)
-                return MagikeHelper.ToTopLeft(x, y);
-
-            return null;
-        }
-
-        public override bool? TryIsTopLeftPoint(int x, int y, out Point16 position)
-        {
-            position = default;
-            Tile t = Framing.GetTileSafely(x, y);
-            if (t.TileType < TileID.Count)
-                return null;
-
-            ModTile mt = TileLoader.GetTile(t.TileType);
-
-            if (mt is BaseMagikeTile)
+            if (TileLoader.GetTile(tile.TileType) is BaseMagikeTile magikeTile)
             {
-                Point16? p = MagikeHelper.ToTopLeft(x, y);
-                if (p.HasValue)
-                {
-                    position = p.Value;
-                    return x == position.X && y == position.Y;
-                }
+                return magikeTile.ToTopLeft(i, j) ?? MagikeHelper.ToTopLeft(i, j);
             }
-
-            return null;
+            return base.GetTopLeftOrNull(tile, i, j);
         }
     }
 }
