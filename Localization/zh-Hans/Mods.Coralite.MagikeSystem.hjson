@@ -78,7 +78,7 @@ MagikeSystem: {
 	}
 
 	UIText: {
-		ContainerMagikeAmount: ◇ 魔能量
+		ContainerMagikeAmount: ◇ 魔能容量
 		ContainerMagikeMax: ◇ 魔能上限
 		ContainerAntiMagikeAmount: ▽ 反魔能量
 		ContainerAntiMagikeMax: ▽ 反魔能上限

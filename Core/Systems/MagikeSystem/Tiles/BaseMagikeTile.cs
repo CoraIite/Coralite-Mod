@@ -448,7 +448,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
 
         public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData)
         {
-            Point16? topLeft = ToTopLeft(i, j);
+            Point16? topLeft = MagikeHelper.ToTopLeft(i, j);
 
             if (!topLeft.HasValue)
                 return;

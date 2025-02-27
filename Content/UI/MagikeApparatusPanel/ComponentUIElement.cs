@@ -45,7 +45,7 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            Helpers.Helper.DrawText(spriteBatch, text(component), Parent.GetInnerDimensions().Width + 50, GetDimensions().Position() + new Vector2(0, 4)
+            Helpers.Helper.DrawText(spriteBatch, text(component), Parent.GetInnerDimensions().Width + 52, GetDimensions().Position() + new Vector2(2, 4)
                 , new Vector2(0), scale, new Color(0, 0, 0, 150), Color.White, out Vector2 textSize);
             if (Height.Pixels != textSize.Y || Width.Pixels != textSize.X)
             {

@@ -1,13 +1,17 @@
 ﻿using Coralite.Content.UI.MagikeApparatusPanel;
+using Coralite.Core.Loaders;
 using Coralite.Core.Systems.CoraliteActorComponent;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.ComponentModel;
 using System.IO;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ModLoader.IO;
 using Terraria.UI;
+using Terraria.UI.Chat;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components
 {
@@ -183,11 +187,12 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             [
                 //魔能量
                 this.NewTextBar(MagikeAmountTitle , parent),
-                this.NewTextBar(MagikeAmountText , parent),
+                new ContainerShow(this),
+                //this.NewTextBar(MagikeAmountText , parent),
 
                 //魔能上限
-                this.NewTextBar(MagikeMaxTitle, parent),
-                this.NewTextBar(MagikeMaxText , parent),
+                //this.NewTextBar(MagikeMaxTitle, parent),
+                //this.NewTextBar(MagikeMaxText , parent),
 
                 //this.NewTextBar(AntiMagikeAmountTitle, parent),
                 //this.NewTextBar(AntiMagikeAmountText, parent),
@@ -207,18 +212,18 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public virtual string MagikeAmountTitle(MagikeContainer c)
             => MagikeSystem.GetUIText(MagikeSystem.UITextID.ContainerMagikeAmount);
 
-        public virtual string MagikeAmountText(MagikeContainer c)
-            => $"  ▶ {c.Magike} / {MagikeHelper.BonusColoredText(c.MagikeMax.ToString(), MagikeMaxBonus)}";
+        //public virtual string MagikeAmountText(MagikeContainer c)
+        //    => $"  ▶ {c.Magike} / {MagikeHelper.BonusColoredText(c.MagikeMax.ToString(), MagikeMaxBonus)}";
 
-        public virtual string MagikeMaxTitle(MagikeContainer c)
-            => MagikeSystem.GetUIText(MagikeSystem.UITextID.ContainerMagikeMax);
+        //public virtual string MagikeMaxTitle(MagikeContainer c)
+        //    => MagikeSystem.GetUIText(MagikeSystem.UITextID.ContainerMagikeMax);
 
-        public virtual string MagikeMaxText(MagikeContainer c)
-        {
-            string maxText = MagikeHelper.BonusColoredText(c.MagikeMax.ToString(), MagikeMaxBonus);
-            string bonusText = MagikeHelper.BonusColoredText(c.MagikeMaxBonus.ToString(), MagikeMaxBonus);
-            return $"  ▶ {maxText} ({c.MagikeMaxBase} * {bonusText})";
-        }
+        //public virtual string MagikeMaxText(MagikeContainer c)
+        //{
+        //    string maxText = MagikeHelper.BonusColoredText(c.MagikeMax.ToString(), MagikeMaxBonus);
+        //    string bonusText = MagikeHelper.BonusColoredText(c.MagikeMaxBonus.ToString(), MagikeMaxBonus);
+        //    return $"  ▶ {maxText} ({c.MagikeMaxBase} * {bonusText})";
+        //}
 
         //public virtual string AntiMagikeAmountTitle(MagikeContainer c)
         //    => MagikeSystem.GetUIText(MagikeSystem.UITextID.ContainerAntiMagikeAmount);
@@ -356,7 +361,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             //绘制底层
             spriteBatch.Draw(tex, pos, frameBox, Color.White);
 
-            float percent = (float)container.Magike / container.MagikeMax;
+            float percent = container.MagikeMax > 1 ? ((float)container.Magike / container.MagikeMax) : 0;
 
             Vector2 drawPos = pos + new Vector2(0, frameBox.Height);
             for (int i = 0; i < frameBox.Width / 2; i++)
@@ -373,6 +378,117 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             string percentText = MathF.Round(100 * percent, 1) + "%";
 
             Utils.DrawBorderString(spriteBatch, percentText, center, Color.White, 0.75f, anchorx: 0.5f, anchory: 0.5f);
+        }
+    }
+
+    public class ContainerShow : UIElement
+    {
+        protected MagikeContainer container;
+        private int oldMagike;
+        private int oldMagikeMax;
+
+        /// <summary>
+        /// 仅供视觉效果使用的魔能
+        /// </summary>
+        private int visualMagike;
+        private int visualMagikeMax;
+
+        private const int LeftPaddling = 20;
+
+        public ContainerShow(MagikeContainer container)
+        {
+            this.container = container;
+            oldMagike = container.Magike;
+            oldMagikeMax = container.MagikeMax;
+
+            ResetSize();
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            if (visualMagike != oldMagike)
+            {
+                visualMagike = (int)Helper.Lerp(visualMagike, oldMagike, 0.35f);
+                if (Math.Abs(oldMagike - visualMagike) < 4)
+                    visualMagike = oldMagike;
+            }
+            if (visualMagikeMax != oldMagikeMax)
+            {
+                visualMagikeMax = (int)Helper.Lerp(visualMagikeMax, oldMagikeMax, 0.35f);
+                if (Math.Abs(oldMagikeMax - visualMagikeMax) < 4)
+                    visualMagikeMax = oldMagikeMax;
+            }
+
+            if (container.Magike != oldMagike || container.MagikeMax != oldMagikeMax)
+            {
+                oldMagike = container.Magike;
+                oldMagikeMax = container.MagikeMax;
+                ResetSize();
+                UILoader.GetUIState<MagikeApparatusPanel>().ComponentPanel.RecalculateChildren();
+            }
+
+            base.Update(gameTime);
+        }
+
+        public void ResetSize()
+        {
+            Vector2 magikeSize = GetStringSize(container.Magike);
+            Vector2 magikeMaxSize = GetStringSize(container.MagikeMax);
+
+            float width = magikeSize.X + 10;
+            if (magikeMaxSize.X + 10 > width)
+                width = magikeMaxSize.X + 10;
+
+            if (width < 84)
+                width = 84;
+
+            Width.Set(width+ LeftPaddling, 0);
+            Height.Set(magikeSize.Y * 3.5f, 0);
+        }
+
+        private static Vector2 GetStringSize(int value)
+        {
+            TextSnippet[] textSnippets = [.. ChatManager.ParseMessage(value.ToString(), Color.White)];
+            ChatManager.ConvertNormalSnippets(textSnippets);
+
+           return ChatManager.GetStringSize(FontAssets.MouseText.Value, textSnippets, Vector2.One*1.1f);
+        }
+
+        protected override void DrawSelf(SpriteBatch spriteBatch)
+        {
+            Rectangle size = GetDimensions().ToRectangle();
+
+            float per = size.Height / 3.5f;
+            int width = size.Width - LeftPaddling;
+            Vector2 pos = size.TopLeft() + new Vector2(30 + width / 2, per / 2);
+
+            //绘制魔能量
+            Utils.DrawBorderString(spriteBatch, visualMagike.ToString(), pos + new Vector2(0, 4), Color.White
+                , 1.1f, anchorx: 0.5f, anchory: 0.5f);
+
+            pos += new Vector2(0, per * 0.75f);
+
+            Color lineC = Color.White;
+
+            if (container.Entity.TryGetComponent(MagikeComponentID.ApparatusInformation, out ApparatusInformation info))
+                lineC = MagikeSystem.GetColor(info.CurrentLevel);
+
+            Texture2D lineTex = TextureAssets.FishingLine.Value;
+            spriteBatch.Draw(lineTex, pos, null, lineC, 1.57f + 0.1f * MathF.Sin((float)Main.timeForVisualEffects * 0.01f), lineTex.Size() / 2
+                , new Vector2(1.25f, width * 1.2f / lineTex.Height), 0, 0);
+
+            pos += new Vector2(0, per * 0.75f);
+
+            //绘制魔能上限
+            Color color = MagikeHelper.GetBonusColor(container.MagikeMaxBonus);
+            Utils.DrawBorderString(spriteBatch, visualMagikeMax.ToString(), pos + new Vector2(0, 4), color
+                , 1.1f, anchorx: 0.5f, anchory: 0.5f);
+
+            pos += new Vector2(0, per * 0.75f);
+
+            //绘制额外魔能上限
+            Utils.DrawBorderString(spriteBatch, $"< × {container.MagikeMaxBonus} >", pos + new Vector2(0, 4), color
+                , 1, anchorx: 0.5f, anchory: 0.5f);
         }
     }
 

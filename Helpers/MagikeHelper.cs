@@ -522,8 +522,31 @@ namespace Coralite.Helpers
                 return "ffffff";
         }
 
+        public static Color GetBonusColor(float bonus, bool reverse = false)
+        {
+            if (reverse)
+            {
+                if (bonus < 1)
+                    return new Color(128,211,255);//蓝色
+                else if (bonus > 1)
+                    return new Color(255, 25, 25);//红色
+                else
+                    return Color.White;
+            }
+
+            if (bonus > 1)
+                return new Color(128, 211, 255);//蓝色
+            else if (bonus < 1)
+                return new Color(255,25,25);//红色
+            else
+                return Color.White;
+        }
+
         public static string BonusColoredText(string text, float bonus, bool reverse = false)
             => $"[c/{GetBonusColorCode(bonus, reverse)}:{text}]";
+
+        public static string BonusColoredText(float bonus, bool reverse = false)
+            => $"[c/{GetBonusColorCode(bonus, reverse)}:{bonus}]";
 
         public static string BonusColoredText2(string text, int bonus, bool reverse = false)
             => $"[c/{GetBonusColorCode2(bonus, reverse)}:{text}]";
