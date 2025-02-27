@@ -16,6 +16,7 @@ using Terraria.IO;
 using Terraria.Localization;
 using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
+using Terraria.Social.Base;
 using Terraria.WorldBuilding;
 
 namespace Coralite.Content.WorldGeneration
@@ -228,6 +229,7 @@ namespace Coralite.Content.WorldGeneration
             #region 遗迹与通道
 
             // 生成墙壁缝隙和其他种类的墙壁
+            CSkyIslandSPWalls(mainIslandRect);
 
             // 生成中心遗迹与两侧的主要通道
             Rectangle shrineRect = CSkyIslandShrineAndMainTunnel(skarn, smoothSkarn, skarnBrick, skarnWall, crystallineBrick, mainIslandSize, mainIslandTopLeft, outerRect);
@@ -798,6 +800,8 @@ namespace Coralite.Content.WorldGeneration
                         new Actions.PlaceWall((ushort)ModContent.WallType<CrackedSkarnWallUnsafe>())));
             }
 
+            int size = Math.Max(rect.X, rect.Y);
+
             //按照噪声随机生成狂野木墙
             for (int i = 0; i < 3; i++)
             {
@@ -805,14 +809,38 @@ namespace Coralite.Content.WorldGeneration
 
                 ShapeData shape = new ShapeData();
 
-                int radius = WorldGen.genRand.Next(8, 12);//获取形状
+                int radius = WorldGen.genRand.Next(6, 10);//获取形状
                 WorldUtils.Gen(
                     p,
                     new Shapes.Circle(radius),
                     Actions.Chain(
-                        new Modifiers.Flip(false, true),
                         new Modifiers.Blotches(3),
                         new Modifiers.Dither(0.75f).Output(shape)));
+
+                Point topLeft = p - new Point(radius / 2, radius / 2);
+                ushort wildWall = (ushort)(ModContent.WallType<WildChalcedonyWallUnsafe>());
+
+                for (int m = 0; m < radius; m++)
+                    for (int n = 0; n < radius; n++)
+                    {
+                        Point currP = topLeft + new Point(m, n);
+                        if (!shape.Contains(currP.X, currP.Y))
+                            continue;
+
+                        float mainNoise = MainNoise(currP.ToVector2(), new Vector2(size) * 2);
+                        if (mainNoise > 0.8f)
+                        {
+                            if (Main.tile[currP].WallType > 0)
+                            {
+                                WorldGen.KillWall(currP.X, currP.Y);
+                                WorldGen.PlaceWall(currP.X, currP.Y, wildWall);
+                            }
+                        }
+                        else
+                        {
+                            WorldGen.KillWall(currP.X, currP.Y);
+                        }
+                    }
             }
         }
 
@@ -1075,7 +1103,7 @@ namespace Coralite.Content.WorldGeneration
             int digRandPos = 0;
 
             //挖墙壁
-            int DigWall = WorldGen.genRand.NextBool(7) ? tunnelLength : 0;
+            int DigWall = WorldGen.genRand.NextBool(10) ? tunnelLength : 0;
             int skipWall = DigWall > 0 ? WorldGen.genRand.Next(2,5) : 0;
             int BrickWall = WorldGen.genRand.Next(3, 6);
 
@@ -1110,15 +1138,19 @@ namespace Coralite.Content.WorldGeneration
                                 for (int i = 0; i < tunnelWidth; i++)
                                     Main.tile[tunnelCenter.X, yTop + i].Clear(TileDataType.Tile);
 
-                                if (DigWall > 0)//放墙壁
+                                if (tunnelWidth < 6 && DigWall > 0)//放墙壁
                                 {
                                     if (skipWall > 0)
                                         skipWall--;
                                     else
                                     {
                                         for (int i = -1; i < tunnelWidth + 1; i++)
+                                        {
+                                            if (Main.tile[tunnelCenter.X, yTop + i].WallType == 0)
+                                                goto Placeend;
                                             if (Main.tile[tunnelCenter.X, yTop + i].WallType == ModContent.WallType<SmoothSkarnWallUnsafe>())
                                                 Main.tile[tunnelCenter.X, yTop + i].Clear(TileDataType.Wall);
+                                        }
 
                                         if (BrickWall > 0)//生成砖墙
                                             BrickWall--;
@@ -1133,6 +1165,7 @@ namespace Coralite.Content.WorldGeneration
                                             BrickWall = WorldGen.genRand.Next(3, 6);
                                         }
 
+                                    Placeend:;
                                         DigWall--;
                                     }
                                 }
@@ -1186,7 +1219,7 @@ namespace Coralite.Content.WorldGeneration
                             tunnelLength = getTunnelLength();
                             digCount++;
 
-                            DigWall = WorldGen.genRand.NextBool(7) ? tunnelLength : 0;
+                            DigWall = WorldGen.genRand.NextBool(10) ? tunnelLength : 0;
                             skipWall = DigWall > 0 ? WorldGen.genRand.Next(2, 5) : 0;
                             BrickWall = WorldGen.genRand.Next(3, 6);
                         }
