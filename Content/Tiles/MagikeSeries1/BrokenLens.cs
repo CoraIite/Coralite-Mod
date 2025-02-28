@@ -11,7 +11,14 @@ namespace Coralite.Content.Tiles.MagikeSeries1
     {
         public override string Texture => AssetDirectory.MagikeSeries1Tile + Name;
 
+        public const int Random = 3;
+
         public override void SetStaticDefaults()
+        {
+            DefaultValues(true);
+        }
+
+        protected void DefaultValues(bool UseRandom)
         {
             TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
             Main.tileLighted[Type] = true;
@@ -27,7 +34,8 @@ namespace Coralite.Content.Tiles.MagikeSeries1
             TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.newTile.StyleMultiplier = 1;
             TileObjectData.newTile.StyleHorizontal = true;
-            //TileObjectData.newTile.RandomStyleRange = 3;
+            if (UseRandom)
+                TileObjectData.newTile.RandomStyleRange = Random;
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.addTile(Type);
 
@@ -51,7 +59,7 @@ namespace Coralite.Content.Tiles.MagikeSeries1
 
         public override void SetStaticDefaults()
         {
-            base.SetStaticDefaults();
+            DefaultValues(false);
 
             FlexibleTileWand.RubblePlacementLarge.AddVariations(ModContent.ItemType<MagicCrystal>(), Type, 0, 1, 2);
         }

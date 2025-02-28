@@ -3,6 +3,7 @@ using Coralite.Core;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.WorldBuilding;
 
 namespace Coralite.Content.WorldGeneration
 {
@@ -186,6 +187,47 @@ namespace Coralite.Content.WorldGeneration
             //        , new Actions.PlaceTile(TileID.Mud)
             //        , new Actions.SetFrames())
             //    );
+
+            Point p = Main.MouseWorld.ToTileCoordinates();
+
+            ShapeData shape = new ShapeData();
+
+            int radius = 20;
+
+            //获取形状
+            WorldUtils.Gen(
+                p,
+                new Shapes.Circle(radius),
+                Actions.Chain(
+                    new Modifiers.Dither(0.1f).Output(shape)));
+
+            Point topLeft = p - new Point(radius , radius );
+
+            int x = (int)(WorldGen.genRand.NextFloat() * radius * 2);
+            int y = (int)(WorldGen.genRand.NextFloat() * radius);
+
+            for (int m = 0; m < radius * 2; m++)
+                for (int n = 0; n < radius * 2; n++)
+                {
+                    if (!shape.Contains(-radius + m, -radius + n))
+                        continue;
+
+                    Point currP = topLeft + new Point(m, n);
+
+                    float mainNoise = ModContent.GetInstance<CoraliteWorld>().MainNoise(new Vector2(x + m, y + n), new Vector2(radius * 2) * 6);
+                    if (mainNoise > 0.8f)
+                    {
+                        //if (Main.tile[currP].WallType > 0)
+                        {
+                            WorldGen.KillWall(currP.X, currP.Y);
+                            WorldGen.PlaceWall(currP.X, currP.Y, WallID.Cave1Echo);
+                        }
+                    }
+                    //else if (WorldGen.genRand.NextBool(5))
+                    //{
+                    //    WorldGen.KillWall(currP.X, currP.Y);
+                    //}
+                }
 
             return base.CanUseItem(player);
         }

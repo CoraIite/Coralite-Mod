@@ -13,7 +13,14 @@ namespace Coralite.Content.Tiles.MagikeSeries1
     {
         public override string Texture => AssetDirectory.MagikeSeries1Tile + Name;
 
+        public const int Random = 4;
+
         public override void SetStaticDefaults()
+        {
+            DefaultValues(true);
+        }
+
+        protected void DefaultValues(bool UseRandom)
         {
             Main.tileNoFail[Type] = true;
             Main.tileFrameImportant[Type] = true;
@@ -26,7 +33,8 @@ namespace Coralite.Content.Tiles.MagikeSeries1
             TileObjectData.newTile.StyleWrapLimit = 4;
             TileObjectData.newTile.StyleMultiplier = 1;
             TileObjectData.newTile.StyleHorizontal = true;
-            //TileObjectData.newTile.RandomStyleRange = 4;
+            if (UseRandom)
+                TileObjectData.newTile.RandomStyleRange = Random;
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.addTile(Type);
 
@@ -43,7 +51,7 @@ namespace Coralite.Content.Tiles.MagikeSeries1
 
         public override void SetStaticDefaults()
         {
-            base.SetStaticDefaults();
+            DefaultValues(false);
 
             FlexibleTileWand.RubblePlacementSmall.AddVariations(ModContent.ItemType<MagicCrystal>(), Type, 0, 1, 2, 3);
         }
@@ -53,19 +61,27 @@ namespace Coralite.Content.Tiles.MagikeSeries1
     {
         public override string Texture => AssetDirectory.MagikeSeries1Tile + Name;
 
+        public const int Random = 4;
+
         public override void SetStaticDefaults()
+        {
+            DefaultValues(true);
+        }
+
+        protected void DefaultValues(bool UseRandom)
         {
             Main.tileNoFail[Type] = true;
             Main.tileFrameImportant[Type] = true;
             Main.tileObsidianKill[Type] = true;
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1);
-            TileObjectData.newTile.CoordinateHeights = new int[1] { 24 };
+            TileObjectData.newTile.CoordinateHeights = [24];
             TileObjectData.newTile.DrawYOffset = -6;
             TileObjectData.newTile.StyleWrapLimit = 4;
             TileObjectData.newTile.StyleMultiplier = 1;
             TileObjectData.newTile.StyleHorizontal = true;
-            //TileObjectData.newTile.RandomStyleRange = 4;
+            if (UseRandom)
+                TileObjectData.newTile.RandomStyleRange = Random;
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.addTile(Type);
 
@@ -82,7 +98,7 @@ namespace Coralite.Content.Tiles.MagikeSeries1
 
         public override void SetStaticDefaults()
         {
-            base.SetStaticDefaults();
+            DefaultValues(false);
 
             FlexibleTileWand.RubblePlacementSmall.AddVariations(ModContent.ItemType<MagicCrystal>(), Type, 0, 1, 2, 3);
         }
@@ -92,7 +108,14 @@ namespace Coralite.Content.Tiles.MagikeSeries1
     {
         public override string Texture => AssetDirectory.MagikeSeries1Tile + Name;
 
+        public const int Random = 4;
+
         public override void SetStaticDefaults()
+        {
+            DefaultValues(true);
+        }
+
+        protected void DefaultValues(bool UseRandom)
         {
             Main.tileNoFail[Type] = true;
             Main.tileFrameImportant[Type] = true;
@@ -105,7 +128,8 @@ namespace Coralite.Content.Tiles.MagikeSeries1
             TileObjectData.newTile.StyleWrapLimit = 4;
             TileObjectData.newTile.StyleMultiplier = 1;
             //TileObjectData.newTile.StyleHorizontal = true;
-            //TileObjectData.newTile.RandomStyleRange = 4;
+            if (UseRandom)
+                TileObjectData.newTile.RandomStyleRange = Random;
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.addTile(Type);
 
@@ -122,7 +146,7 @@ namespace Coralite.Content.Tiles.MagikeSeries1
 
         public override void SetStaticDefaults()
         {
-            base.SetStaticDefaults();
+            DefaultValues(false);
 
             FlexibleTileWand.RubblePlacementSmall.AddVariations(ModContent.ItemType<MagicCrystal>(), Type, 0, 1, 2, 3);
         }
@@ -132,7 +156,14 @@ namespace Coralite.Content.Tiles.MagikeSeries1
     {
         public override string Texture => AssetDirectory.MagikeSeries1Tile + Name;
 
+        public const int Random = 4;
+
         public override void SetStaticDefaults()
+        {
+            DefaultValues(true);
+        }
+
+        protected void DefaultValues(bool UseRandom)
         {
             Main.tileNoFail[Type] = true;
             Main.tileFrameImportant[Type] = true;
@@ -144,7 +175,8 @@ namespace Coralite.Content.Tiles.MagikeSeries1
             TileObjectData.newTile.StyleWrapLimit = 1;
             TileObjectData.newTile.StyleMultiplier = 1;
             //TileObjectData.newTile.StyleHorizontal = true;
-            //TileObjectData.newTile.RandomStyleRange = 4;
+            if (UseRandom)
+                TileObjectData.newTile.RandomStyleRange = Random;
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.addTile(Type);
 
@@ -161,7 +193,7 @@ namespace Coralite.Content.Tiles.MagikeSeries1
 
         public override void SetStaticDefaults()
         {
-            base.SetStaticDefaults();
+            DefaultValues(false);
 
             FlexibleTileWand.RubblePlacementSmall.AddVariations(ModContent.ItemType<MagicCrystal>(), Type, 0, 1, 2, 3);
         }
@@ -171,7 +203,14 @@ namespace Coralite.Content.Tiles.MagikeSeries1
     {
         public override string Texture => AssetDirectory.MagikeSeries1Tile + Name;
 
+        public const int Random = 6;
+
         public override void SetStaticDefaults()
+        {
+            DefaultValues(true);
+        }
+
+        protected void DefaultValues(bool UseRandom)
         {
             Main.tileNoFail[Type] = true;
             Main.tileFrameImportant[Type] = true;
@@ -183,7 +222,8 @@ namespace Coralite.Content.Tiles.MagikeSeries1
             TileObjectData.newTile.StyleWrapLimit = 6;
             TileObjectData.newTile.StyleMultiplier = 1;
             TileObjectData.newTile.StyleHorizontal = true;
-            //TileObjectData.newTile.RandomStyleRange = 6;
+            if (UseRandom)
+                TileObjectData.newTile.RandomStyleRange = Random;
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.addTile(Type);
 
@@ -200,7 +240,7 @@ namespace Coralite.Content.Tiles.MagikeSeries1
 
         public override void SetStaticDefaults()
         {
-            base.SetStaticDefaults();
+            DefaultValues(false);
 
             FlexibleTileWand.RubblePlacementSmall.AddVariations(ModContent.ItemType<MagicCrystal>(), Type, 0, 1, 2, 3,4,5);
         }
@@ -210,7 +250,14 @@ namespace Coralite.Content.Tiles.MagikeSeries1
     {
         public override string Texture => AssetDirectory.MagikeSeries1Tile + Name;
 
+        public const int Random = 6;
+
         public override void SetStaticDefaults()
+        {
+            DefaultValues(true);
+        }
+
+        protected void DefaultValues(bool UseRandom)
         {
             Main.tileNoFail[Type] = true;
             Main.tileFrameImportant[Type] = true;
@@ -221,7 +268,8 @@ namespace Coralite.Content.Tiles.MagikeSeries1
             TileObjectData.newTile.StyleWrapLimit = 6;
             TileObjectData.newTile.StyleMultiplier = 1;
             TileObjectData.newTile.StyleHorizontal = true;
-            //TileObjectData.newTile.RandomStyleRange = 6;
+            if (UseRandom)
+                TileObjectData.newTile.RandomStyleRange = Random;
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.addTile(Type);
 
@@ -238,7 +286,7 @@ namespace Coralite.Content.Tiles.MagikeSeries1
 
         public override void SetStaticDefaults()
         {
-            base.SetStaticDefaults();
+            DefaultValues(false);
 
             FlexibleTileWand.RubblePlacementSmall.AddVariations(ModContent.ItemType<MagicCrystal>(), Type, 0, 1, 2, 3, 4, 5);
         }

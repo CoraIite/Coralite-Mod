@@ -784,50 +784,78 @@ namespace Coralite.Content.WorldGeneration
         private void CSkyIslandSPWalls(Rectangle rect)
         {
             //糊几片粗糙墙
-            for (int i = 0; i < 5; i++)
+
+            int crackWallCount = ValueByWorldSize(WorldGen.genRand.Next(3, 6)
+                , WorldGen.genRand.Next(4, 7)
+                , WorldGen.genRand.Next(5, 8));
+
+            for (int i = 0; i < crackWallCount; i++)
             {
                 Point p = WorldGen.genRand.NextVector2FromRectangle(rect).ToPoint();
 
+                //WorldUtils.Gen(
+                //    p,
+                //    new Shapes.Slime(WorldGen.genRand.Next(4, 12)),
+                //    Actions.Chain(
+                //        new Modifiers.Flip(false, true),
+                //        new Modifiers.Blotches(5),
+                //        new Modifiers.Dither(0.95f),
+                //        new Modifiers.OnlyWalls((ushort)ModContent.WallType<SmoothSkarnWallUnsafe>()),
+                //        new Actions.ClearWall()));
+
+                int radius = WorldGen.genRand.Next(4, 12);
                 WorldUtils.Gen(
                     p,
-                    new Shapes.Slime(WorldGen.genRand.Next(4, 12)),
+                    new Shapes.Slime(radius),
                     Actions.Chain(
                         new Modifiers.Flip(false, true),
                         new Modifiers.Blotches(3),
-                        new Modifiers.Dither(0.75f),
+                        new Modifiers.RadialDither(radius / 2, radius * 1.25f),
                         new Modifiers.OnlyWalls((ushort)ModContent.WallType<SmoothSkarnWallUnsafe>()),
                         new Actions.ClearWall(),
                         new Actions.PlaceWall((ushort)ModContent.WallType<CrackedSkarnWallUnsafe>())));
             }
 
-            int size = Math.Max(rect.X, rect.Y);
+            int size = Math.Max(rect.Width, rect.Height);
 
             //按照噪声随机生成狂野木墙
-            for (int i = 0; i < 3; i++)
+            ushort wildWall = (ushort)(ModContent.WallType<WildChalcedonyWallUnsafe>());
+
+            int wildWallCount = ValueByWorldSize(WorldGen.genRand.Next(3, 5)
+                , WorldGen.genRand.Next(4, 6)
+                , WorldGen.genRand.Next(4, 7));
+
+            for (int i = 0; i < wildWallCount; i++)
             {
                 Point p = WorldGen.genRand.NextVector2FromRectangle(rect).ToPoint();
 
                 ShapeData shape = new ShapeData();
 
-                int radius = WorldGen.genRand.Next(6, 10);//获取形状
+                int radius = ValueByWorldSize(WorldGen.genRand.Next(6, 12)
+                    , WorldGen.genRand.Next(7, 14)
+                    , WorldGen.genRand.Next(9, 16));
+
+                //获取形状
                 WorldUtils.Gen(
                     p,
                     new Shapes.Circle(radius),
                     Actions.Chain(
-                        new Modifiers.Blotches(3),
-                        new Modifiers.Dither(0.75f).Output(shape)));
+                        new Modifiers.Dither(0.1f).Output(shape)));
 
-                Point topLeft = p - new Point(radius / 2, radius / 2);
-                ushort wildWall = (ushort)(ModContent.WallType<WildChalcedonyWallUnsafe>());
+                Point topLeft = p - new Point(radius, radius);
 
-                for (int m = 0; m < radius; m++)
-                    for (int n = 0; n < radius; n++)
+                int x = (int)(WorldGen.genRand.NextFloat() * radius * 2);
+                int y = (int)(WorldGen.genRand.NextFloat() * radius * 2);
+
+                for (int m = 0; m < radius * 2; m++)
+                    for (int n = 0; n < radius * 2; n++)
                     {
-                        Point currP = topLeft + new Point(m, n);
-                        if (!shape.Contains(currP.X, currP.Y))
+                        if (!shape.Contains(-radius + m, -radius + n))
                             continue;
 
-                        float mainNoise = MainNoise(currP.ToVector2(), new Vector2(size) * 2);
+                        Point currP = topLeft + new Point(m, n);
+
+                        float mainNoise = MainNoise(new Vector2(x + m, y + n), new Vector2(radius * 2) * 6);
                         if (mainNoise > 0.8f)
                         {
                             if (Main.tile[currP].WallType > 0)
@@ -836,10 +864,10 @@ namespace Coralite.Content.WorldGeneration
                                 WorldGen.PlaceWall(currP.X, currP.Y, wildWall);
                             }
                         }
-                        else
-                        {
-                            WorldGen.KillWall(currP.X, currP.Y);
-                        }
+                        //else if (WorldGen.genRand.NextBool(5))
+                        //{
+                        //    WorldGen.KillWall(currP.X, currP.Y);
+                        //}
                     }
             }
         }
@@ -1103,7 +1131,7 @@ namespace Coralite.Content.WorldGeneration
             int digRandPos = 0;
 
             //挖墙壁
-            int DigWall = WorldGen.genRand.NextBool(10) ? tunnelLength : 0;
+            int DigWall = WorldGen.genRand.NextBool(9) ? tunnelLength : 0;
             int skipWall = DigWall > 0 ? WorldGen.genRand.Next(2,5) : 0;
             int BrickWall = WorldGen.genRand.Next(3, 6);
 
@@ -1119,7 +1147,7 @@ namespace Coralite.Content.WorldGeneration
                             {
                                 int yTop = tunnelCenter.Y - tunnelWidth / 2 + digRandPos;
                                 digRandRecord--;
-                                if (digRandRecord < 0)
+                                if (digRandRecord < 0)//随机向一个方向扭一下
                                 {
                                     digRandRecord = WorldGen.genRand.Next(6, 10);
                                     digRandPos = digRandPos switch
@@ -1219,7 +1247,7 @@ namespace Coralite.Content.WorldGeneration
                             tunnelLength = getTunnelLength();
                             digCount++;
 
-                            DigWall = WorldGen.genRand.NextBool(10) ? tunnelLength : 0;
+                            DigWall = WorldGen.genRand.NextBool(9) ? tunnelLength : 0;
                             skipWall = DigWall > 0 ? WorldGen.genRand.Next(2, 5) : 0;
                             BrickWall = WorldGen.genRand.Next(3, 6);
                         }

@@ -11,7 +11,14 @@ namespace Coralite.Content.Tiles.MagikeSeries2
     {
         public override string Texture => AssetDirectory.MagikeSeries2Tile + Name;
 
+        public const int Random = 9;
+
         public override void SetStaticDefaults()
+        {
+            DefaultValues(true);
+        }
+
+        protected void DefaultValues(bool UseRandom)
         {
             Main.tileNoFail[Type] = true;
             Main.tileFrameImportant[Type] = true;
@@ -24,7 +31,8 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileObjectData.newTile.DrawYOffset = -8;
             TileObjectData.newTile.StyleMultiplier = 1;
             TileObjectData.newTile.StyleHorizontal = true;
-            //TileObjectData.newTile.RandomStyleRange = 9;
+            if (UseRandom)
+                TileObjectData.newTile.RandomStyleRange = Random;
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.newTile.AnchorInvalidTiles = [TileID.Cloud, ModContent.TileType<SkarnBrickTile>(), ModContent.TileType<CrystallineBrickTile>()];
             TileObjectData.addTile(Type);
@@ -46,7 +54,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         public override void SetStaticDefaults()
         {
-            base.SetStaticDefaults();
+            DefaultValues(false);
             FlexibleTileWand.RubblePlacementSmall.AddVariations(ModContent.ItemType<Skarn>(), Type, 0, 1, 2, 3, 4, 5, 6, 7, 8);
             RegisterItemDrop(ModContent.ItemType<Skarn>());
         }
@@ -56,7 +64,14 @@ namespace Coralite.Content.Tiles.MagikeSeries2
     {
         public override string Texture => AssetDirectory.MagikeSeries2Tile + Name;
 
+        public const int Random = 8;
+
         public override void SetStaticDefaults()
+        {
+            DefaultValues(true);
+        }
+
+        protected void DefaultValues(bool UseRandom)
         {
             Main.tileNoFail[Type] = true;
             Main.tileFrameImportant[Type] = true;
@@ -68,7 +83,8 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.newTile.StyleMultiplier = 1;
             TileObjectData.newTile.StyleHorizontal = true;
-            //TileObjectData.newTile.RandomStyleRange = 8;
+            if (UseRandom)
+                TileObjectData.newTile.RandomStyleRange = Random;
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.newTile.AnchorInvalidTiles = [TileID.Cloud, ModContent.TileType<SkarnBrickTile>(), ModContent.TileType<CrystallineBrickTile>()];
             TileObjectData.addTile(Type);
@@ -90,7 +106,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         public override void SetStaticDefaults()
         {
-            base.SetStaticDefaults();
+            DefaultValues(false);
 
             FlexibleTileWand.RubblePlacementMedium.AddVariations(ModContent.ItemType<Skarn>(), Type, 0, 1, 2, 3, 4, 5, 6, 7);
             RegisterItemDrop(ModContent.ItemType<Skarn>());
@@ -101,7 +117,14 @@ namespace Coralite.Content.Tiles.MagikeSeries2
     {
         public override string Texture => AssetDirectory.MagikeSeries2Tile + Name;
 
+        public const int Random = 8;
+
         public override void SetStaticDefaults()
+        {
+            DefaultValues(true);
+        }
+
+        protected void DefaultValues(bool UseRandom)
         {
             Main.tileNoFail[Type] = true;
             Main.tileFrameImportant[Type] = true;
@@ -113,7 +136,8 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.newTile.StyleMultiplier = 1;
             TileObjectData.newTile.StyleHorizontal = true;
-            //TileObjectData.newTile.RandomStyleRange = 8;
+            if (UseRandom)
+                TileObjectData.newTile.RandomStyleRange = Random;
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.newTile.AnchorInvalidTiles = [TileID.Cloud, ModContent.TileType<SkarnBrickTile>(), ModContent.TileType<CrystallineBrickTile>()];
             TileObjectData.addTile(Type);
@@ -135,7 +159,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         public override void SetStaticDefaults()
         {
-            base.SetStaticDefaults();
+            DefaultValues(false);
 
             FlexibleTileWand.RubblePlacementMedium.AddVariations(ModContent.ItemType<Skarn>(), Type, 0, 1, 2, 3, 4, 5, 6, 7);
             RegisterItemDrop(ModContent.ItemType<Skarn>());
@@ -146,7 +170,14 @@ namespace Coralite.Content.Tiles.MagikeSeries2
     {
         public override string Texture => AssetDirectory.MagikeSeries2Tile + Name;
 
+        public const int Random = 2;
+
         public override void SetStaticDefaults()
+        {
+            DefaultValues(true);
+        }
+
+        protected void DefaultValues(bool UseRandom)
         {
             Main.tileNoFail[Type] = true;
             Main.tileFrameImportant[Type] = true;
@@ -158,7 +189,8 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.newTile.StyleMultiplier = 1;
             TileObjectData.newTile.StyleHorizontal = true;
-            //TileObjectData.newTile.RandomStyleRange = 2;
+            if (UseRandom)
+                TileObjectData.newTile.RandomStyleRange = Random;
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.newTile.AnchorInvalidTiles = [TileID.Cloud, ModContent.TileType<SkarnBrickTile>(), ModContent.TileType<CrystallineBrickTile>()];
             TileObjectData.addTile(Type);
@@ -180,7 +212,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         public override void SetStaticDefaults()
         {
-            base.SetStaticDefaults();
+            DefaultValues(false);
 
             FlexibleTileWand.RubblePlacementLarge.AddVariations(ModContent.ItemType<Skarn>(), Type, 0, 1);
             RegisterItemDrop(ModContent.ItemType<Skarn>());
@@ -191,7 +223,14 @@ namespace Coralite.Content.Tiles.MagikeSeries2
     {
         public override string Texture => AssetDirectory.MagikeSeries2Tile + Name;
 
+        public const int Random = 4;
+
         public override void SetStaticDefaults()
+        {
+            DefaultValues(true);
+        }
+
+        protected void DefaultValues(bool UseRandom)
         {
             Main.tileNoFail[Type] = true;
             Main.tileFrameImportant[Type] = true;
@@ -203,7 +242,8 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.newTile.StyleMultiplier = 1;
             TileObjectData.newTile.StyleHorizontal = true;
-            //TileObjectData.newTile.RandomStyleRange = 4;
+            if (UseRandom)
+                TileObjectData.newTile.RandomStyleRange = Random;
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.newTile.AnchorInvalidTiles = [TileID.Cloud, ModContent.TileType<SkarnBrickTile>(), ModContent.TileType<CrystallineBrickTile>()];
             TileObjectData.addTile(Type);
@@ -225,7 +265,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         public override void SetStaticDefaults()
         {
-            base.SetStaticDefaults();
+            DefaultValues(false);
 
             FlexibleTileWand.RubblePlacementLarge.AddVariations(ModContent.ItemType<Skarn>(), Type, 0, 1,2,3);
             RegisterItemDrop(ModContent.ItemType<Skarn>());
@@ -236,7 +276,14 @@ namespace Coralite.Content.Tiles.MagikeSeries2
     {
         public override string Texture => AssetDirectory.MagikeSeries2Tile + Name;
 
+        public const int Random = 4;
+
         public override void SetStaticDefaults()
+        {
+            DefaultValues(true);
+        }
+
+        protected void DefaultValues(bool UseRandom)
         {
             Main.tileNoFail[Type] = true;
             Main.tileFrameImportant[Type] = true;
@@ -248,7 +295,8 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.newTile.StyleMultiplier = 1;
             TileObjectData.newTile.StyleHorizontal = true;
-            //TileObjectData.newTile.RandomStyleRange = 4;
+            if (UseRandom)
+                TileObjectData.newTile.RandomStyleRange = Random;
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.newTile.AnchorInvalidTiles = [TileID.Cloud, ModContent.TileType<SkarnBrickTile>(), ModContent.TileType<CrystallineBrickTile>()];
             TileObjectData.addTile(Type);
@@ -270,7 +318,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         public override void SetStaticDefaults()
         {
-            base.SetStaticDefaults();
+            DefaultValues(false);
 
             FlexibleTileWand.RubblePlacementLarge.AddVariations(ModContent.ItemType<Skarn>(), Type, 0, 1, 2, 3);
             RegisterItemDrop(ModContent.ItemType<Skarn>());
@@ -281,7 +329,14 @@ namespace Coralite.Content.Tiles.MagikeSeries2
     {
         public override string Texture => AssetDirectory.MagikeSeries2Tile + Name;
 
+        public const int Random = 1;
+
         public override void SetStaticDefaults()
+        {
+            DefaultValues(true);
+        }
+
+        protected void DefaultValues(bool UseRandom)
         {
             Main.tileNoFail[Type] = true;
             Main.tileFrameImportant[Type] = true;
@@ -293,7 +348,8 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.newTile.StyleMultiplier = 1;
             TileObjectData.newTile.StyleHorizontal = true;
-            //TileObjectData.newTile.RandomStyleRange = 1;
+            if (UseRandom)
+                TileObjectData.newTile.RandomStyleRange = Random;
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.newTile.AnchorInvalidTiles = [TileID.Cloud, ModContent.TileType<SkarnBrickTile>(), ModContent.TileType<CrystallineBrickTile>()];
             TileObjectData.addTile(Type);
@@ -315,7 +371,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         public override void SetStaticDefaults()
         {
-            base.SetStaticDefaults();
+            DefaultValues(false);
 
             FlexibleTileWand.RubblePlacementLarge.AddVariations(ModContent.ItemType<Skarn>(), Type, 0);
             RegisterItemDrop(ModContent.ItemType<Skarn>());

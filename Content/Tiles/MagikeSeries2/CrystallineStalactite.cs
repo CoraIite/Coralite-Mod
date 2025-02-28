@@ -12,12 +12,17 @@ namespace Coralite.Content.Tiles.MagikeSeries2
     {
         public override string Texture => AssetDirectory.MagikeSeries2Tile + Name;
 
+        public const int Random = 2;
+
         public override void SetStaticDefaults()
         {
-            Main.tileNoFail[Type] = true;
+            DefaultValues(true);
+        }
+
+        protected void DefaultValues(bool UseRandom)
+        {
             Main.tileLighted[Type] = true;
             Main.tileFrameImportant[Type] = true;
-            Main.tileObsidianKill[Type] = true;
 
             TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
 
@@ -28,13 +33,17 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileObjectData.newTile.CoordinateHeights = [16, 18];
             TileObjectData.newTile.StyleMultiplier = 1;
             TileObjectData.newTile.StyleHorizontal = true;
-            //TileObjectData.newTile.RandomStyleRange = 2;
+            if (UseRandom)
+                TileObjectData.newTile.RandomStyleRange = Random;
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.newTile.AnchorInvalidTiles = [TileID.Cloud, ModContent.TileType<SkarnBrickTile>()];
             TileObjectData.addTile(Type);
 
             HitSound = CoraliteSoundID.CrystalHit_DD2_CrystalCartImpact;
             DustType = DustID.PurpleTorch;
+
+            MinPick = 110;
+
             AddMapEntry(Coralite.CrystallineMagikePurple);
         }
 
@@ -65,7 +74,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         public override void SetStaticDefaults()
         {
-            base.SetStaticDefaults();
+            DefaultValues(false);
 
             FlexibleTileWand.RubblePlacementMedium.AddVariations(ModContent.ItemType<CrystallineMagike>(), Type, 0, 1);
         }
@@ -75,15 +84,19 @@ namespace Coralite.Content.Tiles.MagikeSeries2
     {
         public override string Texture => AssetDirectory.MagikeSeries2Tile + Name;
 
+        public const int Random = 4;
+
         public override void SetStaticDefaults()
         {
-            Main.tileNoFail[Type] = true;
+            DefaultValues(true);
+        }
+
+        protected void DefaultValues(bool UseRandom)
+        {
             Main.tileLighted[Type] = true;
             Main.tileFrameImportant[Type] = true;
-            Main.tileObsidianKill[Type] = true;
 
             TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
-            TileID.Sets.PreventsTileRemovalIfOnTopOfIt[Type] = true;
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1);
             TileObjectData.newTile.AnchorBottom = Terraria.DataStructures.AnchorData.Empty;
@@ -92,7 +105,8 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileObjectData.newTile.CoordinateHeights = [18];
             TileObjectData.newTile.StyleMultiplier = 1;
             TileObjectData.newTile.StyleHorizontal = true;
-            TileObjectData.newTile.RandomStyleRange = 4;
+            if (UseRandom)
+                TileObjectData.newTile.RandomStyleRange = Random;
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.newTile.AnchorInvalidTiles = [
                 TileID.Cloud,
@@ -105,6 +119,8 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             HitSound = CoraliteSoundID.CrystalHit_DD2_CrystalCartImpact;
             DustType = DustID.PurpleTorch;
             AddMapEntry(Coralite.CrystallineMagikePurple);
+
+            MinPick = 110;
 
             RegisterItemDrop(ModContent.ItemType<CrystallineMagike>());
         }
@@ -128,7 +144,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         public override void SetStaticDefaults()
         {
-            base.SetStaticDefaults();
+            DefaultValues(false);
 
             FlexibleTileWand.RubblePlacementSmall.AddVariations(ModContent.ItemType<CrystallineMagike>(), Type, 0, 1, 2, 3);
         }

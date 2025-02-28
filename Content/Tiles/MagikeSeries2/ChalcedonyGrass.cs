@@ -24,7 +24,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileObjectData.newTile.DrawYOffset = -14;
             TileObjectData.newTile.StyleMultiplier = 1;
             TileObjectData.newTile.StyleHorizontal = true;
-            //TileObjectData.newTile.RandomStyleRange = 11;
+            TileObjectData.newTile.RandomStyleRange = 11;
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.addTile(Type);
 
