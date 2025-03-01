@@ -9,9 +9,9 @@ namespace Coralite.Content.WorldGeneration
 {
     public struct TextureGenerator
     {
-        public string BasePath {  get;private set; }
+        public string BasePath { get; private set; }
 
-        public int? style {  get; private set; }
+        public int? Style { get; private set; }
 
         /// <summary> 主地形图 </summary>
         public Texture2D MainTex { get; private set; }
@@ -26,13 +26,13 @@ namespace Coralite.Content.WorldGeneration
         public int Width { get; private set; }
         public int Height { get; private set; }
 
-        public Point Size=>new Point(Width, Height);
+        public Point Size => new Point(Width, Height);
 
         public TextureGenerator(string name, int? style = null, string path = AssetDirectory.WorldGen)
         {
             BasePath = path + name;
 
-            this.style = style;
+            Style = style;
             MainTex = Get(BasePath + style ?? "");
             ClearTex = Get(BasePath + "Clear" + style ?? "");
 
@@ -46,8 +46,8 @@ namespace Coralite.Content.WorldGeneration
         /// <param name="style"></param>
         public void SetWallTex()
         {
-            WallTex = Get(BasePath + "Wall" + style ?? "");
-            WallClearTex = Get(BasePath + "WallClear" + style ?? "");
+            WallTex = Get(BasePath + "Wall" + Style ?? "");
+            WallClearTex = Get(BasePath + "WallClear" + Style ?? "");
         }
 
         /// <summary>

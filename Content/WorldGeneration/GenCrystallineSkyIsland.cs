@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Items.MagikeSeries2;
+﻿using Coralite.Content.Items.MagikeSeries1;
+using Coralite.Content.Items.MagikeSeries2;
 using Coralite.Content.Tiles.MagikeSeries1;
 using Coralite.Content.Tiles.MagikeSeries2;
 using Coralite.Content.Walls.Magike;
@@ -16,7 +17,6 @@ using Terraria.IO;
 using Terraria.Localization;
 using Terraria.ModLoader.IO;
 using Terraria.ObjectData;
-using Terraria.Social.Base;
 using Terraria.WorldBuilding;
 
 namespace Coralite.Content.WorldGeneration
@@ -83,7 +83,7 @@ namespace Coralite.Content.WorldGeneration
                 for (int j = 0; j < 500; j++)//向下遍历，找到地面
                 {
                     Tile t = Main.tile[p2.X, p2.Y];
-                    if ((t.HasTile && Main.tileSolid[t.TileType])
+                    if ((t.HasTile && Main.tileSolid[t.TileType]&&t.TileType is not TileID.ClayBlock or TileID.Dirt or TileID.Grass or TileID.RainCloud)
                         || t.LiquidAmount > 0)//找到实心方块
                         break;
 
@@ -104,12 +104,10 @@ namespace Coralite.Content.WorldGeneration
 
             ushort crystallineBrick = (ushort)ModContent.TileType<CrystallineBrickTile>();
 
-            Texture2D shrineTex = ModContent.Request<Texture2D>(AssetDirectory.CrystallineSkyIsland + "SkarnAltars", AssetRequestMode.ImmediateLoad).Value;
-            Texture2D clearTex = ModContent.Request<Texture2D>(AssetDirectory.CrystallineSkyIsland + "SkarnAltarsClear", AssetRequestMode.ImmediateLoad).Value;
-            Texture2D wallTex = ModContent.Request<Texture2D>(AssetDirectory.CrystallineSkyIsland + "SkarnAltarsWall", AssetRequestMode.ImmediateLoad).Value;
-            Texture2D wallClearTex = ModContent.Request<Texture2D>(AssetDirectory.CrystallineSkyIsland + "SkarnAltarsWallClear", AssetRequestMode.ImmediateLoad).Value;
+            TextureGenerator generator =new TextureGenerator("SkarnAltars",path: AssetDirectory.CrystallineSkyIsland);
+            generator.SetWallTex();
 
-            p -= new Point(shrineTex.Width / 2, shrineTex.Height / 2);
+            p -= new Point(generator.Width / 2, generator.Height / 2);
 
             Dictionary<Color, int> mainDic = new()
             {
@@ -133,13 +131,13 @@ namespace Coralite.Content.WorldGeneration
                 [Color.Black] = -1
             };
 
-            GenByTexture(clearTex, shrineTex, wallClearTex, wallTex, clearDic, mainDic, clearDic, wallDic, p.X, p.Y);
+            generator.GenerateByTopLeft(p,mainDic,wallDic);
 
             WorldGen.PlaceObject(p.X + 7, p.Y + 6, ModContent.TileType<SoulOfNightAltarTile>());
             WorldGen.PlaceObject(p.X + 19, p.Y + 4, ModContent.TileType<PremissionAltarTile>());
             WorldGen.PlaceObject(p.X + 33, p.Y + 6, ModContent.TileType<SoulOfLightAltarTile>());
 
-            GenVars.structures.AddProtectedStructure(new Rectangle(p.X, p.Y, shrineTex.Width, shrineTex.Height));
+            GenVars.structures.AddProtectedStructure(new Rectangle(p.X, p.Y, generator.Width, generator.Height));
         }
 
         /// <summary>
@@ -820,7 +818,7 @@ namespace Coralite.Content.WorldGeneration
             ushort wildWall = (ushort)(ModContent.WallType<WildChalcedonyWallUnsafe>());
 
             int wildWallCount = ValueByWorldSize(WorldGen.genRand.Next(3, 5)
-                , WorldGen.genRand.Next(4, 6)
+                , WorldGen.genRand.Next(3, 5)
                 , WorldGen.genRand.Next(4, 7));
 
             for (int i = 0; i < wildWallCount; i++)
@@ -829,9 +827,9 @@ namespace Coralite.Content.WorldGeneration
 
                 ShapeData shape = new ShapeData();
 
-                int radius = ValueByWorldSize(WorldGen.genRand.Next(6, 12)
-                    , WorldGen.genRand.Next(7, 14)
-                    , WorldGen.genRand.Next(9, 16));
+                int radius = ValueByWorldSize(WorldGen.genRand.Next(5, 10)
+                    , WorldGen.genRand.Next(6, 10)
+                    , WorldGen.genRand.Next(7, 12));
 
                 //获取形状
                 WorldUtils.Gen(
@@ -1445,6 +1443,17 @@ namespace Coralite.Content.WorldGeneration
                 [new Color(95, 212, 111)] = ModContent.TileType<ChalcedonySmoothSkarn>(),//5fd46f
 
                 [new Color(241, 130, 255)] = ModContent.TileType<CrystallineBrickTile>(),//f182ff
+                [new Color(134, 156, 255)] = ModContent.TileType<CrystallineBlockTile>(),//869cff
+
+                [new Color(223, 255, 255)] = TileID.Cloud,//dfffff
+                [new Color(147, 144, 178)] = TileID.RainCloud,//9390b2
+
+                [new Color(255, 112, 210)] = ModContent.TileType<MagicCrystalBlockTile>(),//ff70d2
+                [new Color(255, 177, 230)] = ModContent.TileType<MagicCrystalBrickTile>(),//ffb1e6
+                [new Color(211, 103, 156)] = ModContent.TileType<CrystalBasaltTile>(),//d3679c
+                [new Color(54, 52, 58)] = ModContent.TileType<HardBasaltTile>(),//36343a
+                [new Color(105, 97, 90)] = ModContent.TileType<BasaltTile>(),//69615a
+
                 [new Color(90, 100, 80)] = TileID.Chain,//5a6450
 
                 [Color.Black] = -1
@@ -1454,6 +1463,12 @@ namespace Coralite.Content.WorldGeneration
                 [new Color(85, 183, 206)] = ModContent.WallType<SmoothSkarnWallUnsafe>(),//55b7ce
                 [new Color(188, 171, 150)] = ModContent.WallType<WildChalcedonyWallUnsafe>(),//bcab96
                 [new Color(113, 128, 131)] = ModContent.WallType<SkarnBrickWallUnsafe>(),//718083
+                [new Color(64, 77, 100)] = ModContent.WallType<CrackedSkarnWallUnsafe>(),//404d64
+                [new Color(152, 158, 149)] = ModContent.WallType<ChalcedonyWallUnsafe>(),//989e95
+
+                [new Color(54, 52, 58)] = ModContent.WallType<Walls.Magike.HardBasaltWall>(),//36343a
+
+                [new Color(189, 202, 222)] = WallID.Cloud,//bdcade
                 [Color.Black] = -1,
                 [Color.White] = -2
             };
@@ -1471,10 +1486,10 @@ namespace Coralite.Content.WorldGeneration
                 //获取类型，尺寸和贴图集合
                 TextureGenerator data = new TextureGenerator(Enum.GetName(smallIslandType), style, AssetDirectory.CrystallineSmallIsland);
                 data.SetWallTex();
-                
+
                 //外部尺寸
                 int protect = WorldGen.genRand.Next(8, 18);
-                Point outerSize = data.Size + new Point(protect, protect);
+                Point outerSize = data.Size + new Point(protect, protect + data.Height);//让高度高一些
 
                 Point SpawnTopLeft = default;
                 bool success = false;
@@ -1482,7 +1497,7 @@ namespace Coralite.Content.WorldGeneration
                 do
                 {
                     expandRect.X--;//扩张基础矩形
-                    expandRect.Width++;
+                    expandRect.Width += 2;
                     Rectangle currentRect = default;
                     for (int k = 0; k < 50; k++)//每次随机50次中心点
                     {
@@ -1501,7 +1516,7 @@ namespace Coralite.Content.WorldGeneration
 
                         if (findPoint)//未发生碰撞，成功找到可生成的位置
                         {
-                            SpawnTopLeft = p + new Point(protect / 2, protect / 2);
+                            SpawnTopLeft = p + new Point(protect / 2, protect / 2 + data.Height / 2);
                             success = true;
                             break;
                         }
@@ -1514,14 +1529,14 @@ namespace Coralite.Content.WorldGeneration
                         {
                             Box = currentRect,
                             IslandType = smallIslandType,
-                            RandomType = data.style.Value
+                            RandomType = data.Style.Value
                         });
                     }
 
                 } while (!success);
 
                 //成功找到了位置，开始生成
-                data.Generate(SpawnTopLeft, mainDic, wallDic);
+                data.GenerateByTopLeft(SpawnTopLeft, mainDic, wallDic);
             }
 
             //后续生成各种杂物等
