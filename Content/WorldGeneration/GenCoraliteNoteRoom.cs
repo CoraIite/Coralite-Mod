@@ -70,10 +70,8 @@ namespace Coralite.Content.WorldGeneration
         {
             Point position = new Point(center.X - 14, center.Y - 11);
 
-            Texture2D roomTex = ModContent.Request<Texture2D>(AssetDirectory.CoraliteNoteRoom + "CoraliteNoteRoom", AssetRequestMode.ImmediateLoad).Value;
-            Texture2D clearTex = ModContent.Request<Texture2D>(AssetDirectory.CoraliteNoteRoom + "CoraliteNoteRoomClear", AssetRequestMode.ImmediateLoad).Value;
-            Texture2D wallTex = ModContent.Request<Texture2D>(AssetDirectory.CoraliteNoteRoom + "CoraliteNoteRoomWall", AssetRequestMode.ImmediateLoad).Value;
-            Texture2D wallClearTex = ModContent.Request<Texture2D>(AssetDirectory.CoraliteNoteRoom + "CoraliteNoteRoomWallClear", AssetRequestMode.ImmediateLoad).Value;
+            TextureGenerator generator = new TextureGenerator("CoraliteNoteRoom",path:AssetDirectory.CoraliteNoteRoom);
+            generator.SetWallTex();
 
             Dictionary<Color, int> mainDic = new()
             {
@@ -92,7 +90,7 @@ namespace Coralite.Content.WorldGeneration
                 [Color.Black] = -1
             };
 
-            GenByTexture(clearTex, roomTex, wallClearTex, wallTex, clearDic, mainDic, clearDic, wallDic, position.X, position.Y);
+            generator.Generate(center, mainDic, wallDic);
 
             //放火把
             WorldGen.PlaceObject(position.X + 11, position.Y + 7, TileID.Torches, true, TorchID.Shimmer);

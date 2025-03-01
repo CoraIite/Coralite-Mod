@@ -62,9 +62,9 @@ namespace Coralite.Content.WorldGeneration
             progress.Value = 0.5f;
 
             //生成小岛
+            GenSmallIslands(mainRect,out List<SmallIslandDatas> smallIslands);
 
             //生成主岛与地面遗迹之间的物块
-
 
         }
 
@@ -708,13 +708,11 @@ namespace Coralite.Content.WorldGeneration
             //主要通道，用于生成小遗迹
             int type = WorldGen.genRand.Next(8);
 
-            Texture2D shrineTex = ModContent.Request<Texture2D>(AssetDirectory.CrystallineSkyIsland + "MainSkyIslandShrine" + type, AssetRequestMode.ImmediateLoad).Value;
-            Texture2D clearTex = ModContent.Request<Texture2D>(AssetDirectory.CrystallineSkyIsland + "MainSkyIslandShrineClear" + type, AssetRequestMode.ImmediateLoad).Value;
-            Texture2D wallTex = ModContent.Request<Texture2D>(AssetDirectory.CrystallineSkyIsland + "MainSkyIslandShrineWall" + type, AssetRequestMode.ImmediateLoad).Value;
-            Texture2D wallClearTex = ModContent.Request<Texture2D>(AssetDirectory.CrystallineSkyIsland + "MainSkyIslandShrineWallClear" + type, AssetRequestMode.ImmediateLoad).Value;
+            TextureGenerator generator = new TextureGenerator("MainSkyIslandShrine",type,AssetDirectory.CrystallineSkyIsland);
+            generator.SetWallTex();
 
-            int width = shrineTex.Width;
-            int height = shrineTex.Height;
+            int width = generator.Width;
+            int height = generator.Height;
             /* 一一一一一一一一一一一
              * |    一一一一      |
              * |    |      |     |
@@ -762,7 +760,7 @@ namespace Coralite.Content.WorldGeneration
             };
 
             //生成遗迹
-            GenByTexture(clearTex, shrineTex, wallClearTex, wallTex, clearDic, mainDic, clearDic, wallDic, shrineTopLeft.X, shrineTopLeft.Y);
+            generator.GenerateByTopLeft(shrineTopLeft, mainDic, wallDic);
 
             if (type == 7)//特定样式生成水池
             {
@@ -1390,143 +1388,22 @@ namespace Coralite.Content.WorldGeneration
 
         public enum SmallIslandType
         {
-            /// <summary>
-            /// 平平无奇的小石头岛
-            /// </summary>
+            /// <summary> 平平无奇的小石头岛 </summary>
             Normal,
-            /// <summary>
-            /// 有水池的岛
-            /// </summary>
+            /// <summary> 有水池的岛 </summary>
             Pool,
-            /// <summary>
-            /// 山洞岛，中空
-            /// </summary>
+            /// <summary> 山洞岛，中空 </summary>
             Cave,
-            /// <summary>
-            /// 遗迹岛
-            /// </summary>
+            /// <summary> 遗迹岛 </summary>
             Ruins,
-            /// <summary>
-            /// 箱子岛
-            /// </summary>
+            /// <summary> 箱子岛 </summary>
             Chest,
-            /// <summary>
-            /// 柱子岛，比较长，比较窄
-            /// </summary>
+            /// <summary> 柱子岛，比较长，比较窄 </summary>
             Pillar,
-            /// <summary>
-            /// 树岛，顶部比较平，用于种植树
-            /// </summary>
+            /// <summary> 树岛，顶部比较平，用于种植树 </summary>
             Tree,
 
             Count
-        }
-
-        public struct SkyIslandGenTextures
-        {
-            public int RandomType;
-            public Point Size;
-
-            public Texture2D MainTex;
-            public Texture2D ClearTex;
-            public Texture2D WallTex;
-            public Texture2D WallClearTex;
-
-            public Texture2D LiquidTex;
-
-            public static Texture2D Get(string path)
-                => ModContent.Request<Texture2D>(path, AssetRequestMode.ImmediateLoad).Value;
-
-            public static SkyIslandGenTextures GetTextures(SmallIslandType type)
-            {
-                const string Clear = "Clear";
-                const string Wall = "Wall";
-                const string WallClear = "WallClear";
-                const string Liquid = "Liquid";
-
-                string secondName = "";
-                int randomCountMax = 0;
-
-                switch (type)
-                {
-                    case SmallIslandType.Normal:
-                        {
-                            secondName = "Normal";
-                            string path2 = AssetDirectory.CrystallineSmallIsland + secondName;
-                            int randomType2 = 0;
-                            Texture2D mainTex2 = Get(path2 + randomType2);
-                            return new SkyIslandGenTextures()
-                            {
-                                RandomType = randomType2,
-                                MainTex = mainTex2,
-                                ClearTex = Get(path2 + Clear + randomType2),
-                                WallTex = Get(path2 + Wall + randomType2),
-                                WallClearTex = Get(path2 + WallClear + randomType2),
-                                Size = mainTex2.Size().ToPoint()
-                            };
-                        }
-                        break;
-                    case SmallIslandType.Pool:
-                        break;
-                    case SmallIslandType.Cave:
-                        break;
-                    case SmallIslandType.Ruins:
-                        break;
-                    case SmallIslandType.Chest:
-                        break;
-                    case SmallIslandType.Pillar:
-                        break;
-                    case SmallIslandType.Tree:
-                        break;
-                    case SmallIslandType.Count:
-                        break;
-                    default:
-                        return default;
-                }
-
-                string path = AssetDirectory.CrystallineSmallIsland + secondName;
-                int randomType = 0;
-                Texture2D mainTex = Get(path + randomType);
-                return new SkyIslandGenTextures()
-                {
-                    RandomType = randomType,
-                    MainTex = mainTex,
-                    ClearTex = Get(path + Clear + randomType),
-                    WallTex = Get(path + Wall + randomType),
-                    WallClearTex = Get(path + WallClear + randomType),
-                    Size = mainTex.Size().ToPoint(),
-                };
-            }
-
-            public readonly void Generate(Point topLeft)
-            {
-                Dictionary<Color, int> mainDic = new()
-                {
-                    [new Color(51, 76, 117)] = ModContent.TileType<SkarnTile>(),//334c75
-                    [new Color(141, 171, 178)] = ModContent.TileType<SmoothSkarnTile>(),//8dabb2
-                    [new Color(184, 230, 207)] = ModContent.TileType<SkarnBrickTile>(),//b8e6cf
-
-                    [new Color(105, 97, 90)] = ModContent.TileType<BasaltBeamTile>(),//69615a
-                    [new Color(63, 76, 73)] = ModContent.TileType<BasaltTile>(),//3f4c49
-                    [new Color(166, 166, 166)] = ModContent.TileType<HardBasaltTile>(),//a6a6a6
-
-                    [new Color(71, 56, 53)] = TileID.Mud,//473835
-
-                    [new Color(241, 130, 255)] = ModContent.TileType<CrystallineBrickTile>(),//f182ff
-                    [Color.Black] = -1
-                };
-                Dictionary<Color, int> wallDic = new()
-                {
-                    [new Color(85, 183, 206)] = ModContent.WallType<SmoothSkarnWallUnsafe>(),//55b7ce
-                    [new Color(29, 30, 28)] = ModContent.WallType<HardBasaltWall>(),//1d1e1c
-                    [Color.Black] = -1
-                };
-
-                GenByTexture(ClearTex, MainTex, WallClearTex, WallTex, clearDic, mainDic, clearDic, wallDic, topLeft.X, topLeft.Y);
-
-                if (LiquidTex != null)
-                    GenLiquidByTexture(LiquidTex, liquidDic, topLeft);
-            }
         }
 
         public struct SmallIslandDatas
@@ -1554,18 +1431,49 @@ namespace Coralite.Content.WorldGeneration
 
             Rectangle expandRect = mainRect;
 
+            Dictionary<Color, int> mainDic = new()
+            {
+                [new Color(51, 76, 117)] = ModContent.TileType<SkarnTile>(),//334c75
+                [new Color(141, 171, 178)] = ModContent.TileType<SmoothSkarnTile>(),//8dabb2
+                [new Color(184, 230, 207)] = ModContent.TileType<SkarnBrickTile>(),//b8e6cf
+                [new Color(158, 77, 255)] = ModContent.TileType<CrystallineSkarnTile>(),//9e4dff
+
+                [new Color(255, 239, 219)] = ModContent.TileType<ChalcedonyTile>(),//ffefdb
+                [new Color(170, 228, 143)] = ModContent.TileType<LeafChalcedonyTile>(),//aae48f
+
+                [new Color(147, 186, 84)] = ModContent.TileType<ChalcedonySkarn>(),//93ba54
+                [new Color(95, 212, 111)] = ModContent.TileType<ChalcedonySmoothSkarn>(),//5fd46f
+
+                [new Color(241, 130, 255)] = ModContent.TileType<CrystallineBrickTile>(),//f182ff
+                [new Color(90, 100, 80)] = TileID.Chain,//5a6450
+
+                [Color.Black] = -1
+            };
+            Dictionary<Color, int> wallDic = new()
+            {
+                [new Color(85, 183, 206)] = ModContent.WallType<SmoothSkarnWallUnsafe>(),//55b7ce
+                [new Color(188, 171, 150)] = ModContent.WallType<WildChalcedonyWallUnsafe>(),//bcab96
+                [new Color(113, 128, 131)] = ModContent.WallType<SkarnBrickWallUnsafe>(),//718083
+                [Color.Black] = -1,
+                [Color.White] = -2
+            };
+
             for (int i = 0; i < smallIslandCount; i++)
             {
                 //随机选择生成类型
                 //之后不断扩展中心矩形，指导能够容纳小岛的生成
 
                 SmallIslandType smallIslandType = (SmallIslandType)WorldGen.genRand.Next((int)SmallIslandType.Count);
+                smallIslandType = SmallIslandType.Normal;
+
+                int style = CSkyIslandRandStyle(smallIslandType);
 
                 //获取类型，尺寸和贴图集合
-                SkyIslandGenTextures data = SkyIslandGenTextures.GetTextures(smallIslandType);
-
+                TextureGenerator data = new TextureGenerator(Enum.GetName(smallIslandType), style, AssetDirectory.CrystallineSmallIsland);
+                data.SetWallTex();
+                
                 //外部尺寸
-                int protect = WorldGen.genRand.Next(4, 8);
+                int protect = WorldGen.genRand.Next(8, 18);
                 Point outerSize = data.Size + new Point(protect, protect);
 
                 Point SpawnTopLeft = default;
@@ -1606,20 +1514,48 @@ namespace Coralite.Content.WorldGeneration
                         {
                             Box = currentRect,
                             IslandType = smallIslandType,
-                            RandomType = data.RandomType
+                            RandomType = data.style.Value
                         });
                     }
 
                 } while (!success);
 
                 //成功找到了位置，开始生成
-                data.Generate(SpawnTopLeft);
+                data.Generate(SpawnTopLeft, mainDic, wallDic);
             }
 
+            //后续生成各种杂物等
             foreach (var data in SmallIslandDatas)
             {
                 data.PostGenerate();
             }
+        }
+
+        public int CSkyIslandRandStyle(SmallIslandType smallIslandType)
+        {
+            switch (smallIslandType)
+            {
+                case SmallIslandType.Normal:
+                    return 0;
+                case SmallIslandType.Pool:
+                    break;
+                case SmallIslandType.Cave:
+                    break;
+                case SmallIslandType.Ruins:
+                    break;
+                case SmallIslandType.Chest:
+                    break;
+                case SmallIslandType.Pillar:
+                    break;
+                case SmallIslandType.Tree:
+                    break;
+                case SmallIslandType.Count:
+                    break;
+                default:
+                    break;
+            }
+
+            return 0;
         }
 
         #endregion

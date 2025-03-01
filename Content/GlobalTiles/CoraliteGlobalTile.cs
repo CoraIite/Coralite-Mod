@@ -261,13 +261,13 @@ namespace Coralite.Content.GlobalTiles
             {
                 default:
                     break;
-                case TileID.Trees:
+                //case TileID.Trees:
                     //WorldGen.GetTreeBottom(i, j, out int x, out int y);
                     //Tile bottomTile = Framing.GetTileSafely(x, y);
                     //TreeTypes tree = WorldGen.GetTreeType(bottomTile.TileType);
 
-                    if (Main.hardMode && Main.rand.NextBool(1, 250))
-                        Item.NewItem(new EntitySource_TileBreak(i, j), new Vector2(i, j) * 16, ItemType<CrystalBlossomShards>());
+                    //if (Main.hardMode && Main.rand.NextBool(1, 250))
+                    //    Item.NewItem(new EntitySource_TileBreak(i, j), new Vector2(i, j) * 16, ItemType<CrystalBlossomShards>());
 
                     //switch (tree)
                     //{
@@ -300,7 +300,7 @@ namespace Coralite.Content.GlobalTiles
                     //    default:
                     //        break;
                     //}
-                    break;
+                    //break;
                 case TileID.PalmTree:
                     {
                         if (CoraliteWorld.CoralCatWorld)
@@ -313,7 +313,7 @@ namespace Coralite.Content.GlobalTiles
                     }
                     break;
                 case TileID.VanityTreeSakura:
-                    if (Main.rand.NextBool(1, 300))
+                    if (Main.rand.NextBool(1, 200))
                         Item.NewItem(new EntitySource_TileBreak(i, j), new Vector2(i, j) * 16, ItemType<CrystalBlossomShards>());
                     break;
                 case TileID.Heart:
@@ -348,6 +348,33 @@ namespace Coralite.Content.GlobalTiles
                     return false;
 
             return true;
+        }
+
+        public override bool ShakeTree(int x, int y, TreeTypes treeType)
+        {
+            switch (treeType)
+            {
+                case TreeTypes.None:
+                    return false;
+                case TreeTypes.Forest:
+                case TreeTypes.Corrupt:
+                case TreeTypes.Crimson:
+                case TreeTypes.Jungle:
+                case TreeTypes.Snow:
+                case TreeTypes.Hallowed:
+                    if (Main.hardMode && Main.rand.NextBool(1, 200))
+                    {
+                        Item.NewItem(new EntitySource_ShakeTree(x, y), new Vector2(x, y) * 16, ItemType<CrystalBlossomShards>());
+                        return true;
+                    }
+                    break;
+                case TreeTypes.Custom:
+                    break;
+                default:
+                    break;
+            }
+
+            return base.ShakeTree(x, y, treeType);
         }
     }
 }
