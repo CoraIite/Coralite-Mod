@@ -5250,3 +5250,8 @@ CrackedSkarnWallItem: {
 	// DisplayName: Cracked Skarn Wall Item
 	// Tooltip: ""
 }
+
+WindrangerQuiver: {
+	// DisplayName: Windranger Quiver
+	// Tooltip: ""
+}

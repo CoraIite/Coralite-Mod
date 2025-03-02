@@ -5277,6 +5277,16 @@ WildChalcedonyWallItem: {
 }
 
 CrackedSkarnWallItem: {
-	// DisplayName: Cracked Skarn Wall Item
-	// Tooltip: ""
+	DisplayName: 破碎矽卡岩墙
+	Tooltip: ""
+}
+
+WindrangerQuiver: {
+	DisplayName: 风行者箭袋
+	Tooltip: 
+	'''
+	根据移动速度增加箭矢伤害
+	延长受击无敌时间
+	增加箭的速度
+	'''
 }

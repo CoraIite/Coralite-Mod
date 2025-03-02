@@ -43,6 +43,7 @@ namespace Coralite.Content.Items.RedJades
         {
             Projectile.CloneDefaults(ProjectileID.WoodenArrowFriendly);
             Projectile.aiStyle = -1;
+            Projectile.arrow = true;
         }
 
         public override void AI()

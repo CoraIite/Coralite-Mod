@@ -34,6 +34,7 @@ namespace Coralite.Content.Items.Steel
             Projectile.width = Projectile.height = 16;
 
             Projectile.friendly = true;
+            Projectile.arrow = true;
         }
 
         public override void AI()

@@ -18,6 +18,7 @@ namespace Coralite.Content.Items.Icicle
 
             Projectile.coldDamage = true;
             Projectile.friendly = true;
+            Projectile.arrow = true;
         }
 
         public override void AI()
