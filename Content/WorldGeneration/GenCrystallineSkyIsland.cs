@@ -850,7 +850,7 @@ namespace Coralite.Content.WorldGeneration
 
                         Point currP = topLeft + new Point(m, n);
 
-                        float mainNoise = MainNoise(new Vector2(x + m, y + n), new Vector2(radius * 2) * 6);
+                        float mainNoise = MainNoise(new Vector2(x + m, y + n), new Vector2(radius * 2) * 8);
                         if (mainNoise > 0.8f)
                         {
                             if (Main.tile[currP].WallType > 0)
@@ -1417,6 +1417,8 @@ namespace Coralite.Content.WorldGeneration
                         CSkyIslandSlope((ushort)ModContent.TileType<SkarnBrickTile>(), Box, default, 3);
                         CSkyIslandDecorations(Box, default);
                         CSkyIslandGrassDecorations(Box);
+
+                        ClearUncorrectDecoration(Box);
                         break;
                     case SmallIslandType.Pool:
                         break;
@@ -1446,6 +1448,8 @@ namespace Coralite.Content.WorldGeneration
                 WorldGen.genRand.Next(9, 14)
                 );
 
+            smallIslandCount = 8;
+
             List<Rectangle> avoidRects = [mainRect];
             SmallIslandDatas = [];
 
@@ -1469,6 +1473,9 @@ namespace Coralite.Content.WorldGeneration
 
                 [new Color(223, 255, 255)] = TileID.Cloud,//dfffff
                 [new Color(147, 144, 178)] = TileID.RainCloud,//9390b2
+
+                [new Color(135, 101, 108)] = TileID.Mud,//87656c
+                [new Color(164, 246, 35)] = TileID.JungleGrass,//a4f623
 
                 [new Color(255, 112, 210)] = ModContent.TileType<MagicCrystalBlockTile>(),//ff70d2
                 [new Color(255, 177, 230)] = ModContent.TileType<MagicCrystalBrickTile>(),//ffb1e6
@@ -1518,12 +1525,14 @@ namespace Coralite.Content.WorldGeneration
                 //之后不断扩展中心矩形，指导能够容纳小岛的生成
 
                 SmallIslandType smallIslandType = types[i];
-                smallIslandType = SmallIslandType.Normal;
+                smallIslandType = SmallIslandType.Normal;//测试用
 
                 int style = CSkyIslandRandStyle(smallIslandType);
+                style = i % 8;//测试用
 
                 //获取类型，尺寸和贴图集合
-                TextureGenerator data = new TextureGenerator(Enum.GetName(smallIslandType), style, AssetDirectory.CrystallineSmallIsland);
+                string name = Enum.GetName(smallIslandType);
+                TextureGenerator data = new TextureGenerator($"{name}/{name}", style, AssetDirectory.CrystallineSmallIsland);
                 data.SetWallTex();
 
                 //外部尺寸
@@ -1566,7 +1575,7 @@ namespace Coralite.Content.WorldGeneration
                         avoidRects.Add(currentRect);
                         SmallIslandDatas.Add(new SmallIslandDatas()
                         {
-                            Box = currentRect,
+                            Box = new Rectangle(SpawnTopLeft.X, SpawnTopLeft.Y, data.Width, data.Height),
                             IslandType = smallIslandType,
                             RandomType = data.Style.Value
                         });
@@ -1590,7 +1599,7 @@ namespace Coralite.Content.WorldGeneration
             switch (smallIslandType)
             {
                 case SmallIslandType.Normal:
-                    return WorldGen.genRand.Next(2);
+                    return WorldGen.genRand.Next(8);
                 case SmallIslandType.Pool:
                     break;
                 case SmallIslandType.Cave:
@@ -1610,6 +1619,32 @@ namespace Coralite.Content.WorldGeneration
             }
 
             return 0;
+        }
+
+        public static void ClearUncorrectDecoration(Rectangle rect)
+        {
+            Point p = rect.TopLeft().ToPoint();
+
+            ushort basalt = (ushort)ModContent.TileType<BasaltTile>();
+            ushort hardBasalt = (ushort)ModContent.TileType<HardBasaltTile>();
+            ushort crystalBlock = (ushort)ModContent.TileType<MagicCrystalBlockTile>();
+            ushort crystalBrick = (ushort)ModContent.TileType<MagicCrystalBrickTile>();
+            ushort crystalBasalt = (ushort)ModContent.TileType<CrystalBasaltTile>();
+
+            for (int i = 0; i < rect.Width; i++)
+                for (int j = 0; j < rect.Height; j++)
+                {
+                    Tile t = Main.tile[p + new Point(i, j)];
+
+                    if (t.TileType == TileID.RainCloud || t.TileType == basalt
+                        || t.TileType == hardBasalt || t.TileType == crystalBlock || t.TileType == crystalBrick
+                         || t.TileType == crystalBasalt)
+                    {
+                        Tile up = Main.tile[p + new Point(i, j - 1)];
+                        if (up.HasTile && !Main.tileSolid[up.TileType] && !Main.tileContainer[up.TileType])
+                            WorldGen.KillTile(p.X + i, p.Y + j - 1, noItem: true);
+                    }
+                }
         }
 
         #endregion

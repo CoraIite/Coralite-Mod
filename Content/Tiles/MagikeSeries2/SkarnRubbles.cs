@@ -34,7 +34,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             if (UseRandom)
                 TileObjectData.newTile.RandomStyleRange = Random;
             TileObjectData.newTile.LavaDeath = false;
-            TileObjectData.newTile.AnchorInvalidTiles = [TileID.Cloud, ModContent.TileType<SkarnBrickTile>(), ModContent.TileType<CrystallineBrickTile>()];
+            TileObjectData.newTile.AnchorInvalidTiles = [TileID.Cloud, ModContent.TileType<SkarnBrickTile>(), ModContent.TileType<CrystallineBrickTile>(), ModContent.TileType<CrystallineBlockTile>()];
             TileObjectData.addTile(Type);
 
             HitSound = CoraliteSoundID.DigStone_Tink;
@@ -86,7 +86,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             if (UseRandom)
                 TileObjectData.newTile.RandomStyleRange = Random;
             TileObjectData.newTile.LavaDeath = false;
-            TileObjectData.newTile.AnchorInvalidTiles = [TileID.Cloud, ModContent.TileType<SkarnBrickTile>(), ModContent.TileType<CrystallineBrickTile>()];
+            TileObjectData.newTile.AnchorInvalidTiles = [TileID.Cloud, ModContent.TileType<SkarnBrickTile>(), ModContent.TileType<CrystallineBrickTile>(), ModContent.TileType<CrystallineBlockTile>()];
             TileObjectData.addTile(Type);
 
             HitSound = CoraliteSoundID.DigStone_Tink;
@@ -139,7 +139,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             if (UseRandom)
                 TileObjectData.newTile.RandomStyleRange = Random;
             TileObjectData.newTile.LavaDeath = false;
-            TileObjectData.newTile.AnchorInvalidTiles = [TileID.Cloud, ModContent.TileType<SkarnBrickTile>(), ModContent.TileType<CrystallineBrickTile>()];
+            TileObjectData.newTile.AnchorInvalidTiles = [TileID.Cloud, ModContent.TileType<SkarnBrickTile>(), ModContent.TileType<CrystallineBrickTile>(), ModContent.TileType<CrystallineBlockTile>()];
             TileObjectData.addTile(Type);
 
             HitSound = CoraliteSoundID.DigStone_Tink;
@@ -192,7 +192,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             if (UseRandom)
                 TileObjectData.newTile.RandomStyleRange = Random;
             TileObjectData.newTile.LavaDeath = false;
-            TileObjectData.newTile.AnchorInvalidTiles = [TileID.Cloud, ModContent.TileType<SkarnBrickTile>(), ModContent.TileType<CrystallineBrickTile>()];
+            TileObjectData.newTile.AnchorInvalidTiles = [TileID.Cloud, ModContent.TileType<SkarnBrickTile>(), ModContent.TileType<CrystallineBrickTile>(), ModContent.TileType<CrystallineBlockTile>()];
             TileObjectData.addTile(Type);
 
             HitSound = CoraliteSoundID.DigStone_Tink;
@@ -245,7 +245,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             if (UseRandom)
                 TileObjectData.newTile.RandomStyleRange = Random;
             TileObjectData.newTile.LavaDeath = false;
-            TileObjectData.newTile.AnchorInvalidTiles = [TileID.Cloud, ModContent.TileType<SkarnBrickTile>(), ModContent.TileType<CrystallineBrickTile>()];
+            TileObjectData.newTile.AnchorInvalidTiles = [TileID.Cloud, ModContent.TileType<SkarnBrickTile>(), ModContent.TileType<CrystallineBrickTile>(), ModContent.TileType<CrystallineBlockTile>()];
             TileObjectData.addTile(Type);
 
             HitSound = CoraliteSoundID.DigStone_Tink;
@@ -298,7 +298,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             if (UseRandom)
                 TileObjectData.newTile.RandomStyleRange = Random;
             TileObjectData.newTile.LavaDeath = false;
-            TileObjectData.newTile.AnchorInvalidTiles = [TileID.Cloud, ModContent.TileType<SkarnBrickTile>(), ModContent.TileType<CrystallineBrickTile>()];
+            TileObjectData.newTile.AnchorInvalidTiles = [TileID.Cloud, ModContent.TileType<SkarnBrickTile>(), ModContent.TileType<CrystallineBrickTile>(), ModContent.TileType<CrystallineBlockTile>()];
             TileObjectData.addTile(Type);
 
             HitSound = CoraliteSoundID.DigStone_Tink;
@@ -351,7 +351,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             if (UseRandom)
                 TileObjectData.newTile.RandomStyleRange = Random;
             TileObjectData.newTile.LavaDeath = false;
-            TileObjectData.newTile.AnchorInvalidTiles = [TileID.Cloud, ModContent.TileType<SkarnBrickTile>(), ModContent.TileType<CrystallineBrickTile>()];
+            TileObjectData.newTile.AnchorInvalidTiles = [TileID.Cloud, ModContent.TileType<SkarnBrickTile>(), ModContent.TileType<CrystallineBrickTile>(), ModContent.TileType<CrystallineBlockTile>()];
             TileObjectData.addTile(Type);
 
             HitSound = CoraliteSoundID.DigStone_Tink;
