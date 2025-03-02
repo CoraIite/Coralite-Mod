@@ -400,7 +400,7 @@ namespace Coralite.Content.WorldGeneration
             }
         }
 
-        private static void CSkyIslandSlope(ushort skarnBrick, Rectangle outerRect, Rectangle shrineRect)
+        private static void CSkyIslandSlope(ushort skarnBrick, Rectangle outerRect, Rectangle shrineRect,int smoothRand=2)
         {
             for (int i = 0; i < outerRect.Width; i++)
                 for (int j = 0; j < outerRect.Height; j++)
@@ -410,7 +410,7 @@ namespace Coralite.Content.WorldGeneration
                     if (!t.HasTile || shrineRect.Contains(point) || t.TileType == skarnBrick)
                         continue;
 
-                    if (WorldGen.genRand.NextBool())
+                    if (WorldGen.genRand.NextBool(smoothRand))
                         Tile.SmoothSlope(point.X, point.Y, false);
                 }
         }
@@ -1409,9 +1409,32 @@ namespace Coralite.Content.WorldGeneration
             public SmallIslandType IslandType;
             public int RandomType;
 
-            public void PostGenerate()
+            public readonly void PostGenerate()
             {
-
+                switch (IslandType)
+                {
+                    case SmallIslandType.Normal:
+                        CSkyIslandSlope((ushort)ModContent.TileType<SkarnBrickTile>(), Box, default, 3);
+                        CSkyIslandDecorations(Box, default);
+                        CSkyIslandGrassDecorations(Box);
+                        break;
+                    case SmallIslandType.Pool:
+                        break;
+                    case SmallIslandType.Cave:
+                        break;
+                    case SmallIslandType.Ruins:
+                        break;
+                    case SmallIslandType.Chest:
+                        break;
+                    case SmallIslandType.Pillar:
+                        break;
+                    case SmallIslandType.Tree:
+                        break;
+                    case SmallIslandType.Count:
+                        break;
+                    default:
+                        break;
+                }
             }
         }
 
@@ -1465,19 +1488,36 @@ namespace Coralite.Content.WorldGeneration
                 [new Color(64, 77, 100)] = ModContent.WallType<CrackedSkarnWallUnsafe>(),//404d64
                 [new Color(152, 158, 149)] = ModContent.WallType<ChalcedonyWallUnsafe>(),//989e95
 
-                [new Color(54, 52, 58)] = ModContent.WallType<Walls.Magike.HardBasaltWall>(),//36343a
+                [new Color(54, 52, 58)] = ModContent.WallType<HardBasaltWall>(),//36343a
 
                 [new Color(189, 202, 222)] = WallID.Cloud,//bdcade
                 [Color.Black] = -1,
                 [Color.White] = -2
             };
 
+            List<SmallIslandType> types = [SmallIslandType.Ruins, SmallIslandType.Chest, SmallIslandType.Tree];
+
+            while (types.Count < smallIslandCount)
+            {
+                types.Add(WorldGen.genRand.NextFromList(
+                    SmallIslandType.Normal,
+                    SmallIslandType.Pool,
+                    SmallIslandType.Cave,
+                    SmallIslandType.Ruins,
+                    SmallIslandType.Chest,
+                    SmallIslandType.Pillar,
+                    SmallIslandType.Tree
+                    ));
+            }
+
+            types = [.. types.OrderBy(i => WorldGen.genRand.Next())];
+
             for (int i = 0; i < smallIslandCount; i++)
             {
                 //随机选择生成类型
                 //之后不断扩展中心矩形，指导能够容纳小岛的生成
 
-                SmallIslandType smallIslandType = (SmallIslandType)WorldGen.genRand.Next((int)SmallIslandType.Count);
+                SmallIslandType smallIslandType = types[i];
                 smallIslandType = SmallIslandType.Normal;
 
                 int style = CSkyIslandRandStyle(smallIslandType);
@@ -1488,7 +1528,7 @@ namespace Coralite.Content.WorldGeneration
 
                 //外部尺寸
                 int protect = WorldGen.genRand.Next(8, 18);
-                Point outerSize = data.Size + new Point(protect, protect + data.Height);//让高度高一些
+                Point outerSize = data.Size + new Point(protect, protect + data.Height/3);//让高度高一些
 
                 Point SpawnTopLeft = default;
                 bool success = false;
@@ -1515,7 +1555,7 @@ namespace Coralite.Content.WorldGeneration
 
                         if (findPoint)//未发生碰撞，成功找到可生成的位置
                         {
-                            SpawnTopLeft = p + new Point(protect / 2, protect / 2 + data.Height / 2);
+                            SpawnTopLeft = p + new Point(protect / 2, protect / 2 + data.Height / 6);
                             success = true;
                             break;
                         }
@@ -1550,7 +1590,7 @@ namespace Coralite.Content.WorldGeneration
             switch (smallIslandType)
             {
                 case SmallIslandType.Normal:
-                    return 0;
+                    return WorldGen.genRand.Next(2);
                 case SmallIslandType.Pool:
                     break;
                 case SmallIslandType.Cave:

@@ -405,7 +405,7 @@ namespace Coralite.Content.WorldGeneration
                                 Main.tile[x, y].TileType = 0;
                                 if (!silent)
                                 {
-                                    WorldGen.KillTile(x, y, false, true, true);
+                                    WorldGen.KillTile(x, y, false, false, true);
                                     Main.tile[x, y].Clear(TileDataType.Tile);
                                     Main.tile[x, y].Clear(TileDataType.Slope);
                                 }
@@ -423,7 +423,7 @@ namespace Coralite.Content.WorldGeneration
                     }
                     else if (!silent)
                     {
-                        WorldGen.KillTile(x, y, false, true, true);
+                        WorldGen.KillTile(x, y, false, false, true);
                         Main.tile[x, y].Clear(TileDataType.Tile);
                         Main.tile[x, y].Clear(TileDataType.Slope);
                     }
@@ -444,7 +444,7 @@ namespace Coralite.Content.WorldGeneration
                                 for (int x1 = 0; x1 < tileWidth; x1++)
                                     for (int y1 = 0; y1 < tileHeight; y1++)
                                     {
-                                        WorldGen.KillTile(x + x1, y + y1, false, true, true);
+                                        WorldGen.KillTile(x + x1, y + y1, false, false, true);
                                         Main.tile[x + x1, y + y1].Clear(TileDataType.Tile);
                                         Main.tile[x + x1, y + y1].Clear(TileDataType.Slope);
                                     }

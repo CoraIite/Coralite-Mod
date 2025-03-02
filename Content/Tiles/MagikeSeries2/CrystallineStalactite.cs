@@ -36,7 +36,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             if (UseRandom)
                 TileObjectData.newTile.RandomStyleRange = Random;
             TileObjectData.newTile.LavaDeath = false;
-            TileObjectData.newTile.AnchorInvalidTiles = [TileID.Cloud, ModContent.TileType<SkarnBrickTile>()];
+            TileObjectData.newTile.AnchorInvalidTiles = [TileID.Cloud,TileID.RainCloud, ModContent.TileType<SkarnBrickTile>()];
             TileObjectData.addTile(Type);
 
             HitSound = CoraliteSoundID.CrystalHit_DD2_CrystalCartImpact;
@@ -110,6 +110,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.newTile.AnchorInvalidTiles = [
                 TileID.Cloud,
+                TileID.RainCloud,
                 ModContent.TileType<SkarnBrickTile>(),
                 ModContent.TileType<ChalcedonyTile>(),
                 ModContent.TileType<LeafChalcedonyTile>(),

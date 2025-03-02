@@ -19,7 +19,7 @@
                     TileInfo info = tileGen[x1, y1];
 
                     if (info.tileID != -1)
-                        WorldGenHelper.Texture2TileGenerate(current_x, current_y, info.tileID, info.tileStyle, info.tileID > -1, info.liquidAmt == 0, false, sync);
+                        WorldGenHelper.Texture2TileGenerate(current_x, current_y, info.tileID, info.tileStyle, info.tileID > -1, info.liquidAmt == 0, true, sync);
                 }
         }
     }

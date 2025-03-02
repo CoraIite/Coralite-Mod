@@ -1,8 +1,6 @@
 ﻿using Coralite.Content.CoraliteNotes;
 using Coralite.Content.Items.CoreKeeper;
 using Coralite.Core;
-using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
