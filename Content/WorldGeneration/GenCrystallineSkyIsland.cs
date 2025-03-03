@@ -1448,7 +1448,7 @@ namespace Coralite.Content.WorldGeneration
                 WorldGen.genRand.Next(9, 14)
                 );
 
-            smallIslandCount = 8;
+            //smallIslandCount = 8;
 
             List<Rectangle> avoidRects = [mainRect];
             SmallIslandDatas = [];
@@ -1510,10 +1510,10 @@ namespace Coralite.Content.WorldGeneration
                     SmallIslandType.Normal,
                     SmallIslandType.Pool,
                     SmallIslandType.Cave,
-                    SmallIslandType.Ruins,
-                    SmallIslandType.Chest,
+                    SmallIslandType.Ruins, SmallIslandType.Ruins,
+                    SmallIslandType.Chest, SmallIslandType.Chest,
                     SmallIslandType.Pillar,
-                    SmallIslandType.Tree
+                    SmallIslandType.Tree, SmallIslandType.Tree
                     ));
             }
 
@@ -1525,15 +1525,18 @@ namespace Coralite.Content.WorldGeneration
                 //之后不断扩展中心矩形，指导能够容纳小岛的生成
 
                 SmallIslandType smallIslandType = types[i];
-                smallIslandType = SmallIslandType.Normal;//测试用
+                smallIslandType = SmallIslandType.Pool;//测试用
 
                 int style = CSkyIslandRandStyle(smallIslandType);
-                style = i % 8;//测试用
+                //style = i % 8;//测试用
 
                 //获取类型，尺寸和贴图集合
                 string name = Enum.GetName(smallIslandType);
                 TextureGenerator data = new TextureGenerator($"{name}/{name}", style, AssetDirectory.CrystallineSmallIsland);
                 data.SetWallTex();
+
+                if (smallIslandType == SmallIslandType.Pool)
+                    data.SetLiquidTex();
 
                 //外部尺寸
                 int protect = WorldGen.genRand.Next(8, 18);
@@ -1601,7 +1604,7 @@ namespace Coralite.Content.WorldGeneration
                 case SmallIslandType.Normal:
                     return WorldGen.genRand.Next(8);
                 case SmallIslandType.Pool:
-                    break;
+                    return WorldGen.genRand.Next(2);
                 case SmallIslandType.Cave:
                     break;
                 case SmallIslandType.Ruins:
