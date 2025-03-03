@@ -5206,3 +5206,13 @@ WindrangerQuiver: {
 	DisplayName: Windranger Quiver
 	Tooltip: ""
 }
+
+CrystallineLemna: {
+	DisplayName: Crystalline Lemna
+	Tooltip: ""
+}
+
+FocusPotion: {
+	DisplayName: Focus Potion
+	Tooltip: ""
+}

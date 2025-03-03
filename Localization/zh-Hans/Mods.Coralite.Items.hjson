@@ -5290,3 +5290,13 @@ WindrangerQuiver: {
 		增加箭的速度
 		'''
 }
+
+CrystallineLemna: {
+	DisplayName: 蕴魔浮萍幼苗
+	Tooltip: 在矽卡岩或平滑矽卡岩上种植蕴魔浮萍
+}
+
+FocusPotion: {
+	DisplayName: 聚焦药剂
+	Tooltip: 让你的鼠标发光！
+}

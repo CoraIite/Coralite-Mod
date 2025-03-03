@@ -1,4 +1,6 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Items.MagikeSeries2;
+using Coralite.Core;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.ObjectData;
@@ -36,6 +38,16 @@ namespace Coralite.Content.Tiles.MagikeSeries2
         public override void NumDust(int i, int j, bool fail, ref int num)
         {
             num = fail ? 1 : 3;
+        }
+
+        public override bool CanDrop(int i, int j)
+        {
+            return Main.rand.NextBool(3);
+        }
+
+        public override IEnumerable<Item> GetItemDrops(int i, int j)
+        {
+            return [new Item (ModContent.ItemType<CrystallineLemna>())];
         }
 
         //public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
@@ -88,6 +100,8 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             HitSound = CoraliteSoundID.Grass;
             DustType = DustID.Pearlsand;
             AddMapEntry(new Color(147, 186, 84));
+
+            RegisterItemDrop(ModContent.ItemType<CrystallineLemna>());
         }
 
         public override void NumDust(int i, int j, bool fail, ref int num)

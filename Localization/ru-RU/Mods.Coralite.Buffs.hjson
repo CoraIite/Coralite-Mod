@@ -225,3 +225,8 @@ HorizonArcBonus: {
 	DisplayName: Радужная дуга
 	Description: Превращает ваши стрелы в радугу!
 }
+
+FocusBuff: {
+	// DisplayName: Focus Buff
+	// Description: Mods.Coralite.Buffs.FocusBuff.Description
+}

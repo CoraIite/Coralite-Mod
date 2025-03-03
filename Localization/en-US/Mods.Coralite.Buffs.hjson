@@ -225,3 +225,8 @@ HorizonArcBonus: {
 	DisplayName: Horizon Arc Bonus
 	Description: Attach a rainbow to your arrows!
 }
+
+FocusBuff: {
+	DisplayName: Focus Buff
+	Description: Mods.Coralite.Buffs.FocusBuff.Description
+}

@@ -225,3 +225,8 @@ HorizonArcBonus: {
 	DisplayName: 环彩
 	Description: 为你的箭矢附上彩虹！
 }
+
+FocusBuff: {
+	DisplayName: 聚焦
+	Description: 你的鼠标在发光！
+}
