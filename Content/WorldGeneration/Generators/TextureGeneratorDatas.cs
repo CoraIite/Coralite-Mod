@@ -22,7 +22,7 @@ namespace Coralite.Content.WorldGeneration.Generators
             for (int m = 0; m < tileData.Length; m++)
             {
                 Color tileColor = tileData[m];
-                int tileID = colorToTile.ContainsKey(tileColor) ? colorToTile[tileColor] : -1; //if no key assume no action
+                int tileID = colorToTile.TryGetValue(tileColor, out int value) ? value : -1; //if no key assume no action
                 gen.tileGen[x, y] = new TileInfo(tileID, 0);
                 x++;
                 if (x >= tileTex.Width)
@@ -36,6 +36,41 @@ namespace Coralite.Content.WorldGeneration.Generators
 
             return gen;
         }
+
+        /// <summary>
+        /// 长宽必须和贴图相等！
+        /// 获取清除的生成器
+        /// </summary>
+        /// <param name="tileTex"></param>
+        /// <param name="colorToTile"></param>
+        /// <returns></returns>
+        public static Texture2TileGenerator GetTex2TileClearGenerator(Texture2D tileTex, Dictionary<Color, int> colorToTile)
+        {
+            Color[] tileData = new Color[tileTex.Width * tileTex.Height];
+            tileTex.GetData(0, tileTex.Bounds, tileData, 0, tileTex.Width * tileTex.Height);
+
+            int x = 0;
+            int y = 0;
+            Texture2TileGenerator gen = new(tileTex.Width, tileTex.Height);
+            for (int m = 0; m < tileData.Length; m++)
+            {
+                Color tileColor = tileData[m];
+                int tileID = tileColor == Color.Transparent ? -1 : -2; //if no key assume no action
+                gen.tileGen[x, y] = new TileInfo(tileID, 0);
+                x++;
+                if (x >= tileTex.Width)
+                {
+                    x = 0;
+                    y++;
+                }
+                if (y >= tileTex.Height)
+                    break; //you've somehow reached the end of the texture! (this shouldn't happen!)
+            }
+
+            return gen;
+        }
+
+
 
         /// <summary>
         /// 长宽必须和贴图相等！
@@ -53,8 +88,40 @@ namespace Coralite.Content.WorldGeneration.Generators
             Texture2WallGenerator gen = new(wallTex.Width, wallTex.Height);
             for (int m = 0; m < wallData.Length; m++)
             {
-                Color wallColor = wallTex == null ? Color.Black : wallData[m];
-                int wallID = colorToWall.ContainsKey(wallColor) ? colorToWall[wallColor] : -1;
+                Color wallColor = wallData[m];
+                int wallID = colorToWall.TryGetValue(wallColor, out int value) ? value : -1;
+                gen.wallGen[x, y] = new WallInfo(wallID);
+                x++;
+                if (x >= wallTex.Width)
+                {
+                    x = 0;
+                    y++;
+                }
+                if (y >= wallTex.Height)
+                    break; //you've somehow reached the end of the texture! (this shouldn't happen!)
+            }
+
+            return gen;
+        }
+
+        /// <summary>
+        /// 长宽必须和贴图相等！
+        /// </summary>
+        /// <param name="wallTex"></param>
+        /// <param name="colorTowall"></param>
+        /// <returns></returns>
+        public static Texture2WallGenerator GetTex2WallClearGenerator(Texture2D wallTex, Dictionary<Color, int> colorToWall)
+        {
+            Color[] wallData = new Color[wallTex.Width * wallTex.Height];
+            wallTex.GetData(0, wallTex.Bounds, wallData, 0, wallTex.Width * wallTex.Height);
+
+            int x = 0;
+            int y = 0;
+            Texture2WallGenerator gen = new(wallTex.Width, wallTex.Height);
+            for (int m = 0; m < wallData.Length; m++)
+            {
+                Color wallColor = wallData[m];
+                int wallID = wallColor == Color.Transparent ? -1 : -2;
                 gen.wallGen[x, y] = new WallInfo(wallID);
                 x++;
                 if (x >= wallTex.Width)
@@ -81,7 +148,7 @@ namespace Coralite.Content.WorldGeneration.Generators
             for (int m = 0; m < objectData.Length; m++)
             {
                 Color wallColor = tex == null ? Color.Black : objectData[m];
-                (int, int) tileInfos = colorToObject.ContainsKey(wallColor) ? colorToObject[wallColor] : (-1, 0);
+                (int, int) tileInfos = colorToObject.TryGetValue(wallColor, out (int, int) value) ? value : (-1, 0);
                 gen.tileObjectGen[x, y] = new TileObjectInfo(tileInfos.Item1, tileInfos.Item2);
                 x++;
                 if (x >= tex.Width)

@@ -75,23 +75,19 @@ namespace Coralite.Content.WorldGeneration
                     if (tileDictionary[TileID.Dirt] + tileDictionary[TileID.Mud] + tileDictionary[TileID.JungleGrass] < 550)
                         continue; //如果不是，则返回false，这将导致调用方法尝试一个不同的origin。
 
-                    Texture2D shrineTex = ModContent.Request<Texture2D>(AssetDirectory.WorldGen + "CoreKeeper/ChippedBladeTemple", AssetRequestMode.ImmediateLoad).Value;
-                    Texture2D clearTex = ModContent.Request<Texture2D>(AssetDirectory.WorldGen + "CoreKeeper/ChippedBladeTempleClear", AssetRequestMode.ImmediateLoad).Value;
-                    Texture2D wallTex = ModContent.Request<Texture2D>(AssetDirectory.WorldGen + "CoreKeeper/ChippedBladeTempleWall", AssetRequestMode.ImmediateLoad).Value;
+                    TextureGenerator generator = new TextureGenerator("ChippedBladeTemple",path: AssetDirectory.WorldGen + "CoreKeeper/");
+                    generator.SetWallTex();
 
                     position += new Point(-12, -13);
                     if (!WorldGen.InWorld(position.X, position.Y))
                         continue;
-                    if (!WorldGen.InWorld(position.X + shrineTex.Width, position.Y + shrineTex.Height))
+                    if (!WorldGen.InWorld(position.X + generator.Width, position.Y + generator.Height))
                         continue;
 
                     if (!GenVars.structures.CanPlace(new Rectangle(position.X, position.Y, 12 * 2, 14 * 2)))
                         continue;
 
-                    Task.Run(async () =>
-                    {
-                        await GenShrine(clearTex, shrineTex, wallTex, clearDic, mainDic, wallDic, position.X, position.Y);
-                    }).Wait();
+                    generator.GenerateByTopLeft(position, mainDic, wallDic);
 
                     //放门
 

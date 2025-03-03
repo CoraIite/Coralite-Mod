@@ -15,18 +15,15 @@ namespace Coralite.Content.WorldGeneration
 
         /// <summary> 主地形图 </summary>
         public Texture2D MainTex { get; private set; }
-        /// <summary> 清理地形图 </summary>
-        public Texture2D ClearTex { get; private set; }
 
         public Texture2D WallTex { get; private set; }
-        public Texture2D WallClearTex { get; private set; }
 
         public Texture2D LiquidTex { get; private set; }
 
         public int Width { get; private set; }
         public int Height { get; private set; }
 
-        public Point Size => new Point(Width, Height);
+        public readonly Point Size => new Point(Width, Height);
 
         public TextureGenerator(string name, int? style = null, string path = AssetDirectory.WorldGen)
         {
@@ -34,7 +31,6 @@ namespace Coralite.Content.WorldGeneration
 
             Style = style;
             MainTex = Get(BasePath + style ?? "");
-            ClearTex = Get(BasePath + "Clear" + style ?? "");
 
             Width = MainTex.Width;
             Height = MainTex.Height;
@@ -47,7 +43,6 @@ namespace Coralite.Content.WorldGeneration
         public void SetWallTex()
         {
             WallTex = Get(BasePath + "Wall" + Style ?? "");
-            WallClearTex = Get(BasePath + "WallClear" + Style ?? "");
         }
 
         /// <summary>
@@ -67,7 +62,7 @@ namespace Coralite.Content.WorldGeneration
             GenerateByTopLeft(new Point(x, y), mainDic, wallDic);
         }
 
-        public readonly void GenerateByTopLeft(Point topLeft, Dictionary<Color, int> mainDic, Dictionary<Color, int> wallDic)
+        public readonly void GenerateByTopLeft(Point topLeft, Dictionary<Color, int> mainDic, Dictionary<Color, int> wallDic = null)
         {
             int x = topLeft.X;
             int y = topLeft.Y;
@@ -93,18 +88,17 @@ namespace Coralite.Content.WorldGeneration
                 Main.QueueMainThreadAction(() =>
                 {
                     //清理范围
-                    clearGenerator = TextureGeneratorDatas.GetTex2TileGenerator(generator.ClearTex, CoraliteWorld.clearDic);
+                    clearGenerator = TextureGeneratorDatas.GetTex2TileClearGenerator(generator.MainTex, CoraliteWorld.clearDic);
 
                     //生成主体地形
                     roomGenerator = TextureGeneratorDatas.GetTex2TileGenerator(generator.MainTex, mainDic);
 
-                    //清理范围
-                    if (generator.WallClearTex != null)
-                        wallClearGenerator = TextureGeneratorDatas.GetTex2WallGenerator(generator.WallClearTex, CoraliteWorld.clearDic);
-
                     //生成墙壁
                     if (generator.WallTex != null)
+                    {
+                        wallClearGenerator = TextureGeneratorDatas.GetTex2WallClearGenerator(generator.WallTex, CoraliteWorld.clearDic);
                         wallGenerator = TextureGeneratorDatas.GetTex2WallGenerator(generator.WallTex, wallDic);
+                    }
 
                     if (generator.LiquidTex != null)
                         liquidGenerator = TextureGeneratorDatas.GetTex2LiquidGenerator(generator.LiquidTex, CoraliteWorld.liquidDic);

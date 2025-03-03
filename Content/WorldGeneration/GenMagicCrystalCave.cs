@@ -595,12 +595,11 @@ namespace Coralite.Content.WorldGeneration
             ushort crystalBlock = (ushort)ModContent.TileType<MagicCrystalBlockTile>();
             ushort crystalBrick = (ushort)ModContent.TileType<MagicCrystalBrickTile>();
 
-            Texture2D shrineTex = ModContent.Request<Texture2D>(AssetDirectory.Shrines + "MagicCrystalShrine" + whichOne.ToString(), AssetRequestMode.ImmediateLoad).Value;
-            Texture2D clearTex = ModContent.Request<Texture2D>(AssetDirectory.Shrines + "MagicCrystalShrineClear" + whichOne.ToString(), AssetRequestMode.ImmediateLoad).Value;
-            Texture2D wallTex = ModContent.Request<Texture2D>(AssetDirectory.Shrines + "MagicCrystalWall" + whichOne.ToString(), AssetRequestMode.ImmediateLoad).Value;
+            TextureGenerator generator = new TextureGenerator("MagicCrystalShrine",whichOne, AssetDirectory.Shrines+ "MagicCrystalCave/");
+            generator.SetWallTex();
 
-            int genOrigin_x = origin.X - (clearTex.Width / 2);
-            int genOrigin_y = origin.Y - (clearTex.Height / 2);
+            int genOrigin_x = origin.X - (generator.Width / 2);
+            int genOrigin_y = origin.Y - (generator.Height / 2);
 
             Point chestPos = new(genOrigin_x + 13, genOrigin_y + 13);
             Point lightPoint1 = new(genOrigin_x + 7, genOrigin_y + 14);
@@ -621,10 +620,7 @@ namespace Coralite.Content.WorldGeneration
                 [Color.Black] = -1
             };
 
-            Task.Run(async () =>
-            {
-                await GenShrine(clearTex, shrineTex, wallTex, clearDic, mainDic, wallDic, genOrigin_x, genOrigin_y);
-            }).Wait();
+            generator.GenerateByTopLeft(new Point(genOrigin_x, genOrigin_y), mainDic, wallDic);
 
             //放置灯
             int brokenLensType = ModContent.TileType<BrokenLens>();

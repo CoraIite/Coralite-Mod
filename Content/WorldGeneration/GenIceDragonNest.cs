@@ -44,11 +44,10 @@ namespace Coralite.Content.WorldGeneration
             nestCenter_y += 5;
 
             int whichOne = WorldGen.genRand.Next(3);
-            Texture2D nestTex = ModContent.Request<Texture2D>(AssetDirectory.IceNest + "IceNest" + whichOne.ToString(), AssetRequestMode.ImmediateLoad).Value;
-            Texture2D clearTex = ModContent.Request<Texture2D>(AssetDirectory.IceNest + "IceNestClear" + whichOne.ToString(), AssetRequestMode.ImmediateLoad).Value;
+            TextureGenerator generator=new TextureGenerator("IceNest",whichOne,AssetDirectory.IceNest);
 
-            int genOrigin_x = nestCenter_x - (clearTex.Width / 2);
-            int genOrigin_y = nestCenter_y - (clearTex.Height / 2);
+            int genOrigin_x = nestCenter_x - (generator.Width / 2);
+            int genOrigin_y = nestCenter_y - (generator.Height / 2);
 
             NestCenter = new Point(genOrigin_x + 52, genOrigin_y + 20);
 
@@ -62,49 +61,46 @@ namespace Coralite.Content.WorldGeneration
                 [Color.Black] = -1
             };
 
-            Task.Run(async () =>
-            {
-                await GenIceNestWithTex(clearTex, nestTex, clearDic, nestDic, genOrigin_x, genOrigin_y);
-            }).Wait();
+            generator.GenerateByTopLeft(new Point(genOrigin_x, genOrigin_y), nestDic, null);
 
             progress.Set(0.75);
             //生成装饰物
-            WorldGenHelper.PlaceOnTopDecorations(genOrigin_x, genOrigin_y, 0, 0, nestTex.Width, nestTex.Height, TileID.Stalactite, 10, 0);
-            WorldGenHelper.PlaceOnGroundDecorations(genOrigin_x, genOrigin_y, 0, 0, nestTex.Width, nestTex.Height, TileID.SmallPiles, 10, 5);
-            WorldGenHelper.PlaceOnGroundDecorations(genOrigin_x, genOrigin_y, 0, 0, nestTex.Width, nestTex.Height, TileID.SmallPiles, 10, 6);
-            WorldGenHelper.PlaceOnGroundDecorations(genOrigin_x, genOrigin_y, 0, 0, nestTex.Width, nestTex.Height, TileID.SmallPiles, 3, 24);
-            WorldGenHelper.PlaceOnGroundDecorations(genOrigin_x, genOrigin_y, 0, 0, nestTex.Width, nestTex.Height, TileID.LargePiles, 3, 8);
+            WorldGenHelper.PlaceOnTopDecorations(genOrigin_x, genOrigin_y, 0, 0, generator.Width, generator.Height, TileID.Stalactite, 10, 0);
+            WorldGenHelper.PlaceOnGroundDecorations(genOrigin_x, genOrigin_y, 0, 0, generator.Width, generator.Height, TileID.SmallPiles, 10, 5);
+            WorldGenHelper.PlaceOnGroundDecorations(genOrigin_x, genOrigin_y, 0, 0, generator.Width, generator.Height, TileID.SmallPiles, 10, 6);
+            WorldGenHelper.PlaceOnGroundDecorations(genOrigin_x, genOrigin_y, 0, 0, generator.Width, generator.Height, TileID.SmallPiles, 3, 24);
+            WorldGenHelper.PlaceOnGroundDecorations(genOrigin_x, genOrigin_y, 0, 0, generator.Width, generator.Height, TileID.LargePiles, 3, 8);
 
             //添加斜坡
-            WorldGenHelper.SmoothSlope(genOrigin_x, genOrigin_y, 0, 0, nestTex.Width, nestTex.Height, TileID.IceBlock, 5);
-            WorldGenHelper.SmoothSlope(genOrigin_x, genOrigin_y, 0, 0, nestTex.Width, nestTex.Height, TileID.SnowBlock, 5);
+            WorldGenHelper.SmoothSlope(genOrigin_x, genOrigin_y, 0, 0, generator.Width, generator.Height, TileID.IceBlock, 5);
+            WorldGenHelper.SmoothSlope(genOrigin_x, genOrigin_y, 0, 0, generator.Width, generator.Height, TileID.SnowBlock, 5);
         }
 
-        private static Task GenIceNestWithTex(Texture2D clearTex, Texture2D nestTex, Dictionary<Color, int> clearDic, Dictionary<Color, int> nestDic, int genOrigin_x, int genOrigin_y)
-        {
-            bool genned = false;
-            bool placed = false;
-            while (!genned)
-            {
-                if (placed)
-                    continue;
+        //private static Task GenIceNestWithTex(Texture2D clearTex, Texture2D nestTex, Dictionary<Color, int> clearDic, Dictionary<Color, int> nestDic, int genOrigin_x, int genOrigin_y)
+        //{
+        //    bool genned = false;
+        //    bool placed = false;
+        //    while (!genned)
+        //    {
+        //        if (placed)
+        //            continue;
 
-                Main.QueueMainThreadAction(() =>
-                {
-                    //清理范围
-                    Texture2TileGenerator clearGenerator = TextureGeneratorDatas.GetTex2TileGenerator(clearTex, clearDic);
-                    clearGenerator.Generate(genOrigin_x, genOrigin_y, true);
+        //        Main.QueueMainThreadAction(() =>
+        //        {
+        //            //清理范围
+        //            Texture2TileGenerator clearGenerator = TextureGeneratorDatas.GetTex2TileGenerator(clearTex, clearDic);
+        //            clearGenerator.Generate(genOrigin_x, genOrigin_y, true);
 
-                    //生成主体地形
-                    Texture2TileGenerator nestGenerator = TextureGeneratorDatas.GetTex2TileGenerator(nestTex, nestDic);
-                    nestGenerator.Generate(genOrigin_x, genOrigin_y, true);
-                    genned = true;
-                });
-                placed = true;
-            }
+        //            //生成主体地形
+        //            Texture2TileGenerator nestGenerator = TextureGeneratorDatas.GetTex2TileGenerator(nestTex, nestDic);
+        //            nestGenerator.Generate(genOrigin_x, genOrigin_y, true);
+        //            genned = true;
+        //        });
+        //        placed = true;
+        //    }
 
-            return Task.CompletedTask;
-        }
+        //    return Task.CompletedTask;
+        //}
     }
 
     public class IceDragonNestReplacer : ModItem
