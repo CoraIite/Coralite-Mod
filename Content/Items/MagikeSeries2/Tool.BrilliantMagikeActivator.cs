@@ -28,7 +28,6 @@ namespace Coralite.Content.Items.MagikeSeries2
             Item.maxStack = 1;
             Item.value = Item.sellPrice(0, 0, 50, 0);
             Item.rare = ModContent.RarityType<CrystallineMagikeRarity>();
-            Item.GetMagikeItem().magikeAmount = 450;
             Item.channel = true;
         }
 

@@ -35,10 +35,29 @@ namespace Coralite.Helpers
             Tile tile = Main.tile[x, y];
             if (tile == null)
                 return new Vector2(x, y);
+
             TileObjectData data = TileObjectData.GetTileData(tile.TileType, 0);
+            if (data == null)
+                return new Vector2(x, y);
+
             x -= tile.TileFrameX / 18 % data.Width;
             y -= tile.TileFrameY / 18 % data.Height;
             return new Vector2(x, y);
+        }
+
+        public static Point FindTopLeftPoint(int x, int y)
+        {
+            Tile tile = Main.tile[x, y];
+            if (tile == null)
+                return new Point(x, y);
+
+            TileObjectData data = TileObjectData.GetTileData(tile.TileType, 0);
+            if (data==null)
+                return new Point(x, y);
+
+            x -= tile.TileFrameX / 18 % data.Width;
+            y -= tile.TileFrameY / 18 % data.Height;
+            return new Point(x, y);
         }
 
         public static void DrawMultWine(int i, int j, int sizeX, int sizeY, float? windRotOffset = 1f)

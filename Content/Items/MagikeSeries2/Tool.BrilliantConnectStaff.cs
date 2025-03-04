@@ -52,7 +52,6 @@ namespace Coralite.Content.Items.MagikeSeries2
             Item.maxStack = 1;
             Item.value = Item.sellPrice(0, 0, 50);
             Item.rare = ModContent.RarityType<CrystallineMagikeRarity>();
-            Item.GetMagikeItem().magikeAmount = 450;
             Item.channel = true;
         }
 
@@ -112,7 +111,7 @@ namespace Coralite.Content.Items.MagikeSeries2
                     Vector2.Zero, ModContent.ProjectileType<BrilliantConnectStaffProj>(), 0, 0, Main.myPlayer, topLeft.X, topLeft.Y);
             }
 
-            Helper.PlayPitched("Fairy/FairyBottleClick2", 0.4f, 0, player.Center);
+            //Helper.PlayPitched("Fairy/FairyBottleClick2", 0.4f, 0, player.Center);
 
             return true;
         }

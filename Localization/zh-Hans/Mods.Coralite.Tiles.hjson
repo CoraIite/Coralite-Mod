@@ -191,6 +191,8 @@ IcicleMusicBoxTile.MapEntry: 八音盒（冰结寒流）
 RedJadeMusicBoxTile.MapEntry: 八音盒（赤色激流）
 
 SkarnChestTile: {
-	// MapEntry0: Mods.Coralite.Tiles.SkarnChestTile.MapEntry0
-	// MapEntry1: Mods.Coralite.Tiles.SkarnChestTile.MapEntry1
+	MapEntry0: 矽卡箱
+	MapEntry1: 上锁的矽卡箱
 }
+
+CrystallineSeaOatsMother.MapEntry: 蕴魔海燕麦母体

@@ -5300,3 +5300,17 @@ FocusPotion: {
 	DisplayName: 聚焦药剂
 	Tooltip: 让你的鼠标发光！
 }
+
+CrystallineSeaOats: {
+	DisplayName: 蕴魔海燕麦
+	Tooltip: ""
+}
+
+CrystallineSeaOatsSeed: {
+	DisplayName: 蕴魔海燕麦幼苗
+	Tooltip:
+		'''
+		在矽卡系列物块上种植蕴魔海燕麦母体
+		蕴魔海燕麦会在母体附近的水中生长
+		'''
+}

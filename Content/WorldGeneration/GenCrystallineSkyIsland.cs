@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Items.MagikeSeries2;
+using Coralite.Content.Items.YujianHulu;
 using Coralite.Content.Tiles.MagikeSeries1;
 using Coralite.Content.Tiles.MagikeSeries2;
 using Coralite.Content.Walls.Magike;
@@ -1421,6 +1422,38 @@ namespace Coralite.Content.WorldGeneration
                         ClearUncorrectDecoration(Box);
                         break;
                     case SmallIslandType.Pool:
+                        CSkyIslandSlope((ushort)ModContent.TileType<SkarnBrickTile>(), Box, default, 3);
+
+                        ushort mother = (ushort)ModContent.TileType<CrystallineSeaOatsMother>();
+                        WorldGenHelper.PlaceDecorations_NoCheck(Box, mother, 4);
+
+                        //清理掉不合适的
+                        for (int i = 0; i < Box.Width; i++)
+                            for (int j = 0; j < Box.Height; j++)
+                            {
+                                Point p = new Point(Box.X + i, Box.Y + j);
+                                Tile tile = Main.tile[p];
+                                if (tile.TileType == mother && tile.TileFrameY > 18 && (tile.LiquidType != LiquidID.Water || tile.LiquidAmount < 255))
+                                    WorldGen.KillTile(p.X, p.Y, noItem: true);
+
+                                if (tile.LiquidType == LiquidID.Water && tile.LiquidAmount > 0 && !Main.tileSolid[tile.TileType]&&tile.TileType!=mother)
+                                    WorldGen.KillTile(p.X, p.Y, noItem: true);
+                            }
+
+                        CSkyIslandDecorations(Box, default);
+
+                        //清理水中杂物
+                        for (int i = 0; i < Box.Width; i++)
+                            for (int j = 0; j < Box.Height; j++)
+                            {
+                                Point p = new Point(Box.X + i, Box.Y + j);
+                                Tile tile = Main.tile[p];
+
+                                if (tile.LiquidType == LiquidID.Water && tile.LiquidAmount > 0 && !Main.tileSolid[tile.TileType] && tile.TileType != mother)
+                                    WorldGen.KillTile(p.X, p.Y, noItem: true);
+                            }
+                        CSkyIslandGrassDecorations(Box);
+
                         break;
                     case SmallIslandType.Cave:
                         break;
@@ -1604,7 +1637,7 @@ namespace Coralite.Content.WorldGeneration
                 case SmallIslandType.Normal:
                     return WorldGen.genRand.Next(8);
                 case SmallIslandType.Pool:
-                    return WorldGen.genRand.Next(2);
+                    return WorldGen.genRand.Next(5);
                 case SmallIslandType.Cave:
                     break;
                 case SmallIslandType.Ruins:

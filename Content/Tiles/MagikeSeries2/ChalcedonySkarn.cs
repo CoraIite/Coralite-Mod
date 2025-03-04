@@ -209,7 +209,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
             if (fail)
             {
-                Helper.PlayPitched(CoraliteSoundID.Grab, new Vector2(i, j) * 16);
+                Helper.PlayPitched(CoraliteSoundID.Grass, new Vector2(i, j) * 16);
                 WorldGen.PlaceTile(i, j, (ushort)ModContent.TileType<SkarnTile>(), true, true);
             }
             //Main.tile[i, j].ResetToType((ushort)ModContent.TileType<SkarnTile>());
@@ -361,7 +361,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
             if (fail)
             {
-                Helper.PlayPitched(CoraliteSoundID.Grab, new Vector2(i, j) * 16);
+                Helper.PlayPitched(CoraliteSoundID.Grass, new Vector2(i, j) * 16);
                 WorldGen.PlaceTile(i, j, (ushort)ModContent.TileType<SmoothSkarnTile>(), true, true);
             }
         }

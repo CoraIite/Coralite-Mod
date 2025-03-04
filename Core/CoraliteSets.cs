@@ -86,6 +86,8 @@ namespace Coralite.Core
 
             TileSpecialMoss[TileType<Content.Tiles.MagikeSeries2.ChalcedonySkarn>()] = true;
             TileSpecialMoss[TileType<Content.Tiles.MagikeSeries2.ChalcedonySmoothSkarn>()] = true;
+            TileSpecialMoss[TileType<Content.Tiles.MagikeSeries2.CrystallineSeaOats1x2>()] = true;
+            TileSpecialMoss[TileType<Content.Tiles.MagikeSeries2.CrystallineSeaOats1x3>()] = true;
 
             foreach (var type in SpecialDraw)
             {
@@ -114,7 +116,7 @@ namespace Coralite.Core
             Array.Fill(TileSpecialDraw, false);
 
             TileSpecialMoss = new bool[TileLoader.TileCount];
-            Array.Fill(TileSpecialDraw, false);
+            Array.Fill(TileSpecialMoss, false);
         }
     }
 }

@@ -5216,3 +5216,13 @@ FocusPotion: {
 	DisplayName: Focus Potion
 	Tooltip: ""
 }
+
+CrystallineSeaOats: {
+	DisplayName: Crystalline Sea Oats
+	Tooltip: ""
+}
+
+CrystallineSeaOatsSeed: {
+	DisplayName: Crystalline Sea Oats Seed
+	Tooltip: ""
+}
