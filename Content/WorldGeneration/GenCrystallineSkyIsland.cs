@@ -1,5 +1,4 @@
 ﻿using Coralite.Content.Items.MagikeSeries2;
-using Coralite.Content.Items.YujianHulu;
 using Coralite.Content.Tiles.MagikeSeries1;
 using Coralite.Content.Tiles.MagikeSeries2;
 using Coralite.Content.Walls.Magike;

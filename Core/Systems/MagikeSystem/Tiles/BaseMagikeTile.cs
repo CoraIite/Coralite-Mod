@@ -75,8 +75,6 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
             TileObjectData.newTile.Height = height;
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.Table | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
             TileObjectData.newTile.StyleHorizontal = false;
-            TileObjectData.newTile.WaterPlacement = LiquidPlacement.Allowed;
-            TileObjectData.newTile.LavaPlacement = LiquidPlacement.Allowed;
             TileObjectData.newTile.UsesCustomCanPlace = true;
             TileObjectData.newTile.Origin = new Point16(width / 2, height - 1);
             //TileObjectData.newTile.StyleWrapLimit = 100;

@@ -181,7 +181,11 @@ namespace Coralite.Core.Systems.MagikeSystem
             /// <summary>
             /// 魔能火山烧矿
             /// </summary>
-            MagikeSmelting
+            MagikeSmelting,
+            /// <summary>
+            /// 法术合成
+            /// </summary>
+            Spell
         }
 
         #region 能否合成检测
@@ -465,10 +469,20 @@ namespace Coralite.Core.Systems.MagikeSystem
             if (MagikeCraftRecipes == null)
                 return;
 
-            if (MagikeCraftRecipes.TryGetValue(MainItem.type, out List<MagikeRecipe> value))
-                value.Add(this);
+            if (MainItem!=null)
+            {
+                if (MagikeCraftRecipes.TryGetValue(MainItem.type, out List<MagikeRecipe> value))
+                    value.Add(this);
+                else
+                    MagikeCraftRecipes.Add(MainItem.type, [this]);
+            }
             else
-                MagikeCraftRecipes.Add(MainItem.type, [this]);
+            {
+                if (MagikeCraftRecipes.TryGetValue(-1, out List<MagikeRecipe> value))
+                    value.Add(this);
+                else
+                    MagikeCraftRecipes.Add(-1, [this]);
+            }
 
             AddVanillaRecipe();
         }
@@ -482,7 +496,8 @@ namespace Coralite.Core.Systems.MagikeSystem
             if (magikeCost > 0)
                 recipe.AddIngredient<SymbolOfMagike>(magikeCost);
 
-            recipe.AddIngredient(MainItem.type, MainItem.stack);
+            if (MainItem != null)
+                recipe.AddIngredient(MainItem.type, MainItem.stack);
 
             if (_items != null)
                 foreach (var item in RequiredItems)
@@ -496,6 +511,9 @@ namespace Coralite.Core.Systems.MagikeSystem
                 case RecipeType.MagikeSmelting:
 
                     break;
+                case RecipeType.Spell:
+                    recipe.AddCondition(CoraliteConditions.MagikeCraft);
+                    break;
                 default:
                     break;
             }
@@ -504,6 +522,30 @@ namespace Coralite.Core.Systems.MagikeSystem
                 recipe.AddCondition(Conditions);
 
             recipe.DisableDecraft();
+            recipe.Register();
+        }
+
+        #endregion
+
+        #region 法术合成部分
+
+        /// <summary>
+        /// 创建魔能合成表
+        /// </summary>
+        /// <param name="magikeCost"></param>
+        /// <param name="resultItemStack"></param>
+        /// <returns></returns>
+        public static void RegisterSpell< TResultItem>(int magikeCost, int resultItemStack = 1)
+            where TResultItem : ModItem
+        {
+            var recipe= new MagikeRecipe()
+            {
+                MainItem = null,
+                ResultItem = new(ItemType<TResultItem>(), resultItemStack),
+                magikeCost = magikeCost,
+                recipeType=RecipeType.Spell,
+            };
+
             recipe.Register();
         }
 

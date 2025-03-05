@@ -11,6 +11,8 @@ namespace Coralite.Core
         public static Condition LearnedMagikeAdvance { get; private set; }
         public static Condition CoralCat { get; private set; }
         public static Condition MagikeCraft { get; private set; }
+        public static Condition SpellCraft { get; private set; }
+
         public static Condition InDigDigDig { get; private set; }
         public static Condition NotInDigDigDig { get; private set; }
         public static Condition UseMultiBlockStructure { get; private set; }
@@ -35,6 +37,9 @@ namespace Coralite.Core
 
             MagikeCraft = new(this.GetLocalization(nameof(MagikeCraft))
                 , () => false);
+            SpellCraft = new(this.GetLocalization(nameof(SpellCraft))
+                , () => false);
+
             UseMultiBlockStructure = new(this.GetLocalization(nameof(UseMultiBlockStructure))
                 , () => false);
             UseShlimmerTranslation = new(this.GetLocalization(nameof(UseShlimmerTranslation))

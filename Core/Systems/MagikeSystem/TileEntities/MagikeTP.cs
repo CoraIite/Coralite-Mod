@@ -311,6 +311,17 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
             return result != null;
         }
 
+        public bool TryGetFilters(out List<MagikeFilter> result)
+        {
+            result = null;
+            if (!HasComponent(MagikeComponentID.MagikeFilter))
+                return false;
+
+            result = (List<MagikeFilter>)Components[MagikeComponentID.MagikeFilter];
+
+            return result != null;
+        }
+
         public MagikeComponent GetSingleComponent(int index)
         {
             if (!HasComponent(index))

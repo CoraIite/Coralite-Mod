@@ -312,6 +312,12 @@ namespace Coralite.Core
             /// 透明底
             /// </summary>
             public static ATex HShotBallA { get; private set; }
+
+            /// <summary> 
+            /// 横向光条<br></br>
+            /// 透明底
+            /// </summary>
+            public static ATex ShotLineSPA { get; private set; }
         }
 
         /// <summary>
