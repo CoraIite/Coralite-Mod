@@ -114,12 +114,12 @@ namespace Coralite.Core.Systems.MagikeSystem
             //}
 
             if (MagikeSystem.MagikeCraftRecipesFrozen.ContainsKey(item.type))
-                tooltips.Add(new TooltipLine(Mod, "canRemodel", MagikeSystem.CanMagikeCraft.Value));
+                tooltips.Add(new TooltipLine(Mod, "CanMagikeCraft", MagikeSystem.CanMagikeCraft.Value));
 
             if (magikeAmount > 0)
             {
                 string magikeAmount = MagikeSystem.ItemMagikeAmount.Format(this.magikeAmount);
-                TooltipLine line = new(Mod, "magiteAmount", magikeAmount);
+                TooltipLine line = new(Mod, "MagikeAmount", magikeAmount);
                 if (this.magikeAmount < 440)
                     line.OverrideColor = Coralite.MagicCrystalPink;
                 else if (this.magikeAmount < 4900)

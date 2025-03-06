@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.UI.MagikeApparatusPanel;
+using Coralite.Core;
 using Coralite.Core.Systems.CoraliteActorComponent;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.Components;
@@ -155,7 +156,7 @@ namespace Coralite.Helpers
             if (data == null)
                 return new Point16(i, j);
 
-            if (!Main.tileSolidTop[tile.TileType])
+            if (!CoraliteSets.NotFourWayPlaceMagike[tile.TileType])
                 GetMagikeAlternateData(i, j, out data, out _);
 
             int frameX = tile.TileFrameX;
@@ -178,7 +179,7 @@ namespace Coralite.Helpers
 
         /// <summary>
         /// 获取魔能仪器的<see cref="TileObjectData"/>，对于没有这个的会返回默认值<br></br>
-        /// 使用<see cref="Main.tileSolidTop"/>来判断是否有特殊的摆放形式
+        /// 使用<see cref="CoraliteSets.NotFourWayPlaceMagike"/>来判断是否有特殊的摆放形式
         /// </summary>
         /// <param name="i"></param>
         /// <param name="j"></param>
@@ -196,7 +197,7 @@ namespace Coralite.Helpers
                 return;
             }
 
-            if (Main.tileSolidTop[t.TileType])
+            if (CoraliteSets.NotFourWayPlaceMagike[t.TileType])
             {
                 alternateData = tileData;
                 alternate = MagikeAlternateStyle.None;

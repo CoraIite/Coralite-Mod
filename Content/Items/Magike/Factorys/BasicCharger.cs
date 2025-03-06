@@ -46,6 +46,7 @@ namespace Coralite.Content.Items.Magike.Factorys
             Main.tileTable[Type] = true;
 
             TileID.Sets.IgnoredInHouseScore[Type] = true;
+            CoraliteSets.NotFourWayPlaceMagikeSet.Add(Type);
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2);
             TileObjectData.newTile.Width = 3;

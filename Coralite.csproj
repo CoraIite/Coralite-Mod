@@ -44,7 +44,6 @@
     <Folder Include="Assets\WorldGeneration\ShadowCastleRooms\" />
     <Folder Include="Content\Items\Magike\Armors\" />
     <Folder Include="Content\Items\Magike\Accessorys\" />
-    <Folder Include="Content\Items\Magike\Filters\SpellFilters\" />
     <Folder Include="Content\Items\Misc_Summon\" />
     <Folder Include="Content\Items\KeyItems\" />
     <Folder Include="Content\Projectiles\Projectiles_Summon\" />

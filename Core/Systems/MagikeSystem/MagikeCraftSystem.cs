@@ -124,6 +124,18 @@ namespace Coralite.Core.Systems.MagikeSystem
             recipes = null;
             return false;
         }
+
+        public static bool TryGetSpellRecipes( out List<MagikeRecipe> recipes)
+        {
+            if (MagikeCraftRecipesFrozen != null && MagikeCraftRecipesFrozen.TryGetValue(-1, out List<MagikeRecipe> value))
+            {
+                recipes = value;
+                return true;
+            }
+
+            recipes = null;
+            return false;
+        }
     }
 
     public record class MagikeRecipe
@@ -542,6 +554,25 @@ namespace Coralite.Core.Systems.MagikeSystem
             {
                 MainItem = null,
                 ResultItem = new(ItemType<TResultItem>(), resultItemStack),
+                magikeCost = magikeCost,
+                recipeType=RecipeType.Spell,
+            };
+
+            recipe.Register();
+        }
+
+        /// <summary>
+        /// 创建魔能合成表
+        /// </summary>
+        /// <param name="magikeCost"></param>
+        /// <param name="resultItemStack"></param>
+        /// <returns></returns>
+        public static void RegisterSpell(int resultItemType,int magikeCost, int resultItemStack = 1)
+        {
+            var recipe= new MagikeRecipe()
+            {
+                MainItem = null,
+                ResultItem = new(resultItemType, resultItemStack),
                 magikeCost = magikeCost,
                 recipeType=RecipeType.Spell,
             };

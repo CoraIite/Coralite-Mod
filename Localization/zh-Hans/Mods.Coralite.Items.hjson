@@ -1982,7 +1982,7 @@ DemonsProtection: {
 }
 
 FlyingShieldToolboxProMax: {
-	DisplayName: 飞盾工具箱-豪华版
+	DisplayName: 飞盾工具箱 - 豪华版
 	Tooltip:
 		'''
 		让飞盾能够在敌人间弹射一次
@@ -2128,12 +2128,12 @@ GemrainAegis: {
 }
 
 Leonids: {
-	DisplayName: 十二星-狮子座
+	DisplayName: 十二星 - 狮子座
 	Tooltip: 射出流星雨
 }
 
 Solleonis: {
-	DisplayName: 狮煌-破日
+	DisplayName: 狮煌 - 破日
 	Tooltip: “释放吞噬太阳的巨狮”
 }
 
@@ -3114,7 +3114,7 @@ CyberwyrmRehab: {
 }
 
 CancerFlail: {
-	DisplayName: 十二星-巨蟹座
+	DisplayName: 十二星 - 巨蟹座
 	Tooltip: 挥动双钳
 }
 
@@ -3148,7 +3148,7 @@ WarpMirror: {
 }
 
 Virgo: {
-	DisplayName: 十二星-处女座
+	DisplayName: 十二星 - 处女座
 	Tooltip: 将火枪子弹转化为羽毛弹
 }
 
@@ -4049,7 +4049,7 @@ MagicCrystalFishingRod: {
 }
 
 MagicCrystalPolarizedFilter: {
-	DisplayName: 偏振滤镜-晶体
+	DisplayName: 偏振滤镜 ◊ 晶体
 	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
 }
 
@@ -4059,57 +4059,57 @@ BasicFilter: {
 }
 
 CorruptionPolarizedFilter: {
-	DisplayName: 偏振滤镜-腐化
+	DisplayName: 偏振滤镜 ◊ 腐化
 	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
 }
 
 CrimsonPolarizedFilter: {
-	DisplayName: 偏振滤镜-猩红
+	DisplayName: 偏振滤镜 ◊ 猩红
 	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
 }
 
 CrystallineMagikePolarizedFilter: {
-	DisplayName: 偏振滤镜-蕴魔
+	DisplayName: 偏振滤镜 ◊ 蕴魔
 	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
 }
 
 FeatherPolarizedFilter: {
-	DisplayName: 偏振滤镜-羽蛇
+	DisplayName: 偏振滤镜 ◊ 羽蛇
 	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
 }
 
 GlistentPolarizedFilter: {
-	DisplayName: 偏振滤镜-晶莹
+	DisplayName: 偏振滤镜 ◊ 晶莹
 	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
 }
 
 HallowPolarizedFilter: {
-	DisplayName: 偏振滤镜-神圣
+	DisplayName: 偏振滤镜 ◊ 神圣
 	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
 }
 
 HolyLightPolarizedFilter: {
-	DisplayName: 偏振滤镜-圣光
+	DisplayName: 偏振滤镜 ◊ 圣光
 	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
 }
 
 IciclePolarizedFilter: {
-	DisplayName: 偏振滤镜-冰晶
+	DisplayName: 偏振滤镜 ◊ 冰晶
 	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
 }
 
 ShadowPolarizedFilter: {
-	DisplayName: 偏振滤镜-影子
+	DisplayName: 偏振滤镜 ◊ 影子
 	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
 }
 
 SoulPolarizedFilter: {
-	DisplayName: 偏振滤镜-灵魂
+	DisplayName: 偏振滤镜 ◊ 灵魂
 	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
 }
 
 SplendorMagicorePolarizedFilter: {
-	DisplayName: 偏振滤镜-光辉
+	DisplayName: 偏振滤镜 ◊ 光辉
 	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
 }
 
@@ -4229,12 +4229,12 @@ EmperorGel: {
 }
 
 PelagicPolarizedFilter: {
-	DisplayName: 偏振滤镜-远洋
+	DisplayName: 偏振滤镜 ◊ 远洋
 	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
 }
 
 SeashorePolarizedFilter: {
-	DisplayName: 偏振滤镜-海滨
+	DisplayName: 偏振滤镜 ◊ 海滨
 	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
 }
 
@@ -4248,17 +4248,17 @@ SkyLens: {
 }
 
 EiderdownPolarizedFilter: {
-	DisplayName: 偏振滤镜-羽毛
+	DisplayName: 偏振滤镜 ◊ 羽毛
 	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
 }
 
 EmperorPolarizedFilter: {
-	DisplayName: 偏振滤镜-帝凝胶
+	DisplayName: 偏振滤镜 ◊ 帝凝胶
 	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
 }
 
 FlightPolarizedFilter: {
-	DisplayName: 偏振滤镜-飞翔
+	DisplayName: 偏振滤镜 ◊ 飞翔
 	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
 }
 
@@ -4272,27 +4272,27 @@ DesertLens: {
 }
 
 EternalFlamePolarizedFilter: {
-	DisplayName: 偏振滤镜-薪火
+	DisplayName: 偏振滤镜 ◊ 薪火
 	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
 }
 
 ForbiddenPolarizedFilter: {
-	DisplayName: 偏振滤镜-禁戒
+	DisplayName: 偏振滤镜 ◊ 禁戒
 	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
 }
 
 FrostPolarizedFilter: {
-	DisplayName: 偏振滤镜-寒霜
+	DisplayName: 偏振滤镜 ◊ 寒霜
 	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
 }
 
 HellstonePolarizedFilter: {
-	DisplayName: 偏振滤镜-狱石
+	DisplayName: 偏振滤镜 ◊ 狱石
 	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
 }
 
 QuicksandPolarizedFilter: {
-	DisplayName: 偏振滤镜-流沙
+	DisplayName: 偏振滤镜 ◊ 流沙
 	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
 }
 
@@ -4307,7 +4307,7 @@ InsulationCortex: {
 }
 
 ShroomitePolarizedFilter: {
-	DisplayName: 偏振滤镜-蘑菇矿锭
+	DisplayName: 偏振滤镜 ◊ 蘑菇
 	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
 }
 
@@ -4447,12 +4447,12 @@ MoonlightLens: {
 }
 
 BloodJadePolarizedFilter: {
-	DisplayName: 偏振滤镜-赤血玉
+	DisplayName: 偏振滤镜 ◊ 赤血玉
 	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
 }
 
 RedJadePolarizedFilter: {
-	DisplayName: 偏振滤镜-赤玉
+	DisplayName: 偏振滤镜 ◊ 赤玉
 	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
 }
 
@@ -4548,7 +4548,7 @@ WaterflowLens: {
 }
 
 BeeswaxPolarizedFilter: {
-	DisplayName: 偏振滤镜-蜂蜡
+	DisplayName: 偏振滤镜 ◊ 蜂蜡
 	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
 }
 
@@ -4571,7 +4571,7 @@ DungeonLens: {
 }
 
 BonePolarizedFilter: {
-	DisplayName: 偏振滤镜-骨头
+	DisplayName: 偏振滤镜 ◊ 骨头
 	Tooltip: "{$Mods.Coralite.MagikeSystem.MagikeSystem.PolarizedFilterTooltip}"
 }
 
@@ -4647,7 +4647,7 @@ BrilliantMagikeActivator: {
 }
 
 MagicCrystalTRFilter: {
-	DisplayName: 全反射滤镜-晶体
+	DisplayName: 全反射滤镜 ◊ 晶体
 	Tooltip:
 		'''
 		{$Mods.Coralite.MagikeSystem.MagikeSystem.TotalReflectionFilterTooltip}
@@ -4656,7 +4656,7 @@ MagicCrystalTRFilter: {
 }
 
 MagicCrystalDiffractionFilter: {
-	DisplayName: 衍射滤镜-晶体
+	DisplayName: 衍射滤镜 ◊ 晶体
 	Tooltip:
 		'''
 		{$Mods.Coralite.MagikeSystem.MagikeSystem.DiffractionFilterFilterTooltip}
@@ -4665,7 +4665,7 @@ MagicCrystalDiffractionFilter: {
 }
 
 MagicCrystalInterferenceFilter: {
-	DisplayName: 干涉滤镜-晶体
+	DisplayName: 干涉滤镜 ◊ 晶体
 	Tooltip:
 		'''
 		{$Mods.Coralite.MagikeSystem.MagikeSystem.InterferenceFilterTooltip}
@@ -4674,7 +4674,7 @@ MagicCrystalInterferenceFilter: {
 }
 
 MagicCrystalExcitedFilter: {
-	DisplayName: 激发滤镜-晶体
+	DisplayName: 激发滤镜 ◊ 晶体
 	Tooltip:
 		'''
 		{$Mods.Coralite.MagikeSystem.MagikeSystem.ExcitedFilterTooltip}
@@ -4683,7 +4683,7 @@ MagicCrystalExcitedFilter: {
 }
 
 MagicCrystalPulseFilter: {
-	DisplayName: 脉冲滤镜-晶体
+	DisplayName: 脉冲滤镜 ◊ 晶体
 	Tooltip:
 		'''
 		{$Mods.Coralite.MagikeSystem.MagikeSystem.PulseFilterTooltip}
@@ -5218,7 +5218,7 @@ ApothecaryTable: {
 }
 
 Aquarius: {
-	DisplayName: 十二星-水瓶座
+	DisplayName: 十二星 - 水瓶座
 	Tooltip: 射出水球，部分水球会在飞行中破裂并射出箭矢
 }
 
@@ -5242,18 +5242,18 @@ WindSpeedArrows: {
 }
 
 Taurus: {
-	DisplayName: 十二星-金牛座
+	DisplayName: 十二星 - 金牛座
 	Tooltip: ""
 }
 
 B94WindbreakingArrowItem: {
-	DisplayName: B9-4破风箭
+	DisplayName: B9-4 破风箭
 	Tooltip: 锁定附近的敌人后进行追踪
 }
 
 B94WindbreakingCompoundBow: {
-	DisplayName: B9-4破风式复合弓
-	Tooltip: 将木箭转化为B9-4破风箭
+	DisplayName: B9-4 破风式复合弓
+	Tooltip: 将木箭转化为B9-4 破风箭
 }
 
 B9Alloy: {
@@ -5313,4 +5313,19 @@ CrystallineSeaOatsSeed: {
 		在矽卡系列物块上种植蕴魔海燕麦母体
 		蕴魔海燕麦会在母体附近的水中生长
 		'''
+}
+
+LightSoulCatalyst: {
+	DisplayName: 媒介 ◊ 光之魂
+	Tooltip: ""
+}
+
+SpellCircuitCore: {
+	DisplayName: 法术回路核心
+	Tooltip: ""
+}
+
+LightSoulFilter: {
+	DisplayName: 法术滤镜 ◊ 光之魂
+	Tooltip: ""
 }

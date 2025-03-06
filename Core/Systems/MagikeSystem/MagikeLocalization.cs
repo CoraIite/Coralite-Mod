@@ -139,6 +139,8 @@ namespace Coralite.Core.Systems.MagikeSystem
             MagikeProducerNotFound,
             TimerNotFound,
 
+            NotSpellCore,
+
             Count,
         }
 

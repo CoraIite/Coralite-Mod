@@ -5,14 +5,20 @@ using Terraria;
 
 namespace Coralite.Core.Systems.MagikeSystem.Spells
 {
-    public abstract class SpellConnector : CheckOnlyLinerSender
+    public class SpellConnector(int connectLengthBase, byte maxConnectBase, Color drawColor) : CheckOnlyLinerSender
     {
-        public abstract Color DrawColor { get; }
-
-        public override void Update()
+        public override void Initialize()
         {
+            ConnectLengthBase = connectLengthBase;
+            MaxConnectBase = maxConnectBase;
         }
 
+        public override void Update() { }
+
+        /// <summary>
+        /// 绘制连线
+        /// </summary>
+        /// <param name="spriteBatch"></param>
         public override void Draw(SpriteBatch spriteBatch)
         {
             Texture2D laserTex = CoraliteAssets.Sparkle.ShotLineSPA.Value;
@@ -26,10 +32,10 @@ namespace Coralite.Core.Systems.MagikeSystem.Spells
                 var origin = new Vector2(0, laserTex.Height / 2);
 
                 var laserTarget = new Rectangle((int)selfPos.X, (int)selfPos.Y, width, 16);
-                var laserSource = new Rectangle((int)(-Main.GlobalTimeWrappedHourly * laserTex.Width), 0, width, laserTex.Height);
+                var laserSource = new Rectangle(0, 0, laserTex.Width, laserTex.Height);
 
                 float rotation = (targetPos - selfPos).ToRotation();
-                spriteBatch.Draw(laserTex, laserTarget, laserSource, DrawColor, rotation, origin, 0, 0);
+                spriteBatch.Draw(laserTex, laserTarget, laserSource, drawColor, rotation, origin, 0, 0);
                 spriteBatch.Draw(laserTex, laserTarget, laserSource, new Color(40, 40, 40, 0), rotation, origin, 0, 0);
             }
         }

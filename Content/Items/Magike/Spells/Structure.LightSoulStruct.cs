@@ -2,6 +2,9 @@
 
 namespace Coralite.Content.Items.Magike.Spells
 {
+    /// <summary>
+    /// 用于生产光明之魂的法术回路结构
+    /// </summary>
     public class LightSoulStruct : SpellStructure
     {
         public override void Load()

@@ -52,7 +52,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
                 int itemType = MagikeSystem.GetPolarizedFilterItemType(i.Value);
                 text = string.Concat(text, "[i:", itemType.ToString(), "]");
                 if (showNmae)
-                    text = string.Concat(text, ContentSamples.ItemsByType[itemType].Name);
+                    text = string.Concat(text, MagikeSystem.GetMALevelText(i.Value));
 
                 lineCount++;
                 total++;

@@ -1,4 +1,5 @@
-﻿using Coralite.Core.Systems.MagikeSystem.Tiles;
+﻿using Coralite.Core;
+using Coralite.Core.Systems.MagikeSystem.Tiles;
 using Coralite.Helpers;
 using System.Reflection;
 using Terraria;
@@ -40,7 +41,7 @@ namespace Coralite.Content.CustomHooks
                 return;
 
             ModTile m = TileLoader.GetTile(type);
-            if (!Main.tileSolidTop[type] && m is BaseMagikeTile)
+            if (!CoraliteSets.NotFourWayPlaceMagike[type] && m is BaseMagikeTile)
             {
                 Tile t = Main.tile[i, j];
                 int width = tileData.Width;

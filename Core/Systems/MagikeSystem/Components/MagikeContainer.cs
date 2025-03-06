@@ -473,6 +473,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             if (container.Entity.TryGetComponent(MagikeComponentID.ApparatusInformation, out ApparatusInformation info))
                 lineC = MagikeSystem.GetColor(info.CurrentLevel);
 
+            //绘制中间那条线
             Texture2D lineTex = TextureAssets.FishingLine.Value;
             spriteBatch.Draw(lineTex, pos, null, lineC, 1.57f + 0.1f * MathF.Sin((float)Main.timeForVisualEffects * 0.01f), lineTex.Size() / 2
                 , new Vector2(1.25f, width * 1.2f / lineTex.Height), 0, 0);

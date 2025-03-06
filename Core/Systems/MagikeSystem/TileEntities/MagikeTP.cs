@@ -208,6 +208,9 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         public bool HasComponent(int componentId)
             => Components.Contains(componentId);
 
+        public bool HasComponent<T>() where T : MagikeComponent
+            => ComponentsCache.FirstOrDefault(c => c is T, null) != null;
+
         /// <summary>
         /// 向实体内加入组件
         /// </summary>

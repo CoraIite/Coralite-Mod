@@ -5275,3 +5275,18 @@ CrystallineSeaOatsSeed: {
 	// DisplayName: Crystalline Sea Oats Seed
 	// Tooltip: ""
 }
+
+LightSoulCatalyst: {
+	// DisplayName: Light Soul Catalyst
+	// Tooltip: ""
+}
+
+SpellCircuitCore: {
+	// DisplayName: Spell Circuit Core
+	// Tooltip: ""
+}
+
+LightSoulFilter: {
+	// DisplayName: Light Soul Filter
+	// Tooltip: ""
+}

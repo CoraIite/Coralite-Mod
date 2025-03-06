@@ -1,8 +1,10 @@
 ﻿using Coralite.Core.Systems.MagikeSystem.Components;
+using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.IO;
+using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.UI.Elements;
@@ -12,6 +14,10 @@ using Terraria.UI;
 
 namespace Coralite.Core.Systems.MagikeSystem.Spells
 {
+    /// <summary>
+    /// 法术滤镜<br></br>
+    /// 需要有魔能工作站的功能
+    /// </summary>
     public abstract class SpellFilter : MagikeFilter, ITimerTriggerComponent,IUIShowable
     {
         /// <summary> 是否正在工作中 </summary>
@@ -25,7 +31,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Spells
         /// <summary> 工作时间 </summary>
         public int WorkTime { get => Math.Clamp((int)(WorkTimeBase * WorkTimeBonus), 1, int.MaxValue); }
 
-        public int DelayBase { get; set; }
+        public int DelayBase { get; set; } = 15;
         public float DelayBonus { get; set; } = 1f;
         public int Timer { get; set; }
 
@@ -60,8 +66,34 @@ namespace Coralite.Core.Systems.MagikeSystem.Spells
         /// 获取魔能合成表
         /// </summary>
         /// <returns></returns>
-        public abstract MagikeRecipe GetRecipe();
+        public virtual MagikeRecipe GetRecipe()
+        {
+            if (MagikeSystem.TryGetSpellRecipes(out var recipes))
+            {
+                int type = GetCraftResultItemType();
+                return recipes.First(r => r.ResultItem.type == type);
+            }
+
+            throw new Exception("未找到指定的合成表！");
+        }
+
+        /// <summary>
+        /// 获取
+        /// </summary>
+        /// <returns></returns>
+        public abstract int GetCraftResultItemType();
         public abstract SpellStructure GetSpellStructure();
+
+        public override bool CanInsert_SpecialCheck(MagikeTP entity, ref string text)
+        {
+            text = "";
+
+            if (entity.HasComponent<SpellFactory>())
+                return true;
+
+            text = MagikeSystem.GetFilterText(MagikeSystem.FilterID.NotSpellCore);
+            return false;
+        }
 
         #region 工作部分
 
@@ -165,7 +197,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Spells
 
             if (data != null)
             {
-                if (!Main.tileSolidTop[tile.TileType])
+                if (!CoraliteSets.NotFourWayPlaceMagike[tile.TileType])
                     MagikeHelper.GetMagikeAlternateData(p.X, p.Y, out data, out _);
 
                 int x = data == null ? 1 : data.Width;

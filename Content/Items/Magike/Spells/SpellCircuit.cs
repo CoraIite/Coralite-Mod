@@ -25,10 +25,16 @@ namespace Coralite.Content.Items.Magike.Spells
             => new SpellCircuitContainer();
 
         public override SpellFactory GetStartFactory()
-            =>new SpellFactory();
+            => new SpellFactory();
+
+        public override GetOnlyItemContainer GetStartGetOnlyContainer()
+            => new GetOnlyItemContainer()
+            {
+                CapacityBase = 20
+            };
     }
 
-    public class SpellCircuitContainer:UpgradeableContainer
+    public class SpellCircuitContainer : UpgradeableContainer
     {
         public override void Upgrade(MALevel incomeLevel)
         {

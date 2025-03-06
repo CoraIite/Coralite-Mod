@@ -66,6 +66,7 @@ MagikeSystem: {
 		MagikeLinerSenderNotFound: Линейный соединитель не найден!
 		MagikeProducerNotFound: Магический производитель не найден!
 		TimerNotFound: Таймер не найден!
+		// NotSpellCore: Mods.Coralite.MagikeSystem.MagikeSystem.Filter.NotSpellCore
 	}
 
 	ItemDescriptionPolarizedFilter: Могу вставить поляризационный фильтр:

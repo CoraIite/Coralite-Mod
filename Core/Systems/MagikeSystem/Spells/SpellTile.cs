@@ -1,4 +1,5 @@
 ﻿using Coralite.Core.Systems.MagikeSystem.Tiles;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.DataStructures;
@@ -16,8 +17,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Spells
         {
             Main.tileFrameImportant[Type] = true;
             Main.tileLavaDeath[Type] = false;
-            Main.tileSolidTop[Type] = true;
             TileID.Sets.IgnoredInHouseScore[Type] = true;
+            CoraliteSets.NotFourWayPlaceMagikeSet.Add(Type);
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2);
             TileObjectData.newTile.Width = width;
@@ -45,6 +46,14 @@ namespace Coralite.Core.Systems.MagikeSystem.Spells
 
             //加载等级字典
             MagikeSystem.RegisterApparatusLevel(Type, levels);
+        }
+
+        public override void Load()
+        {
+        }
+
+        public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData)
+        {
         }
     }
 }

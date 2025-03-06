@@ -97,6 +97,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
             {
                 TileObjectData.newTile.CoordinateHeights[^1] = 18;
                 Main.tileSolidTop[Type] = true;
+                CoraliteSets.NotFourWayPlaceMagikeSet.Add(Type);
                 //Main.tileSolid[Type] = true;
                 Main.tileNoAttach[Type] = true;
                 Main.tileTable[Type] = true;
@@ -169,7 +170,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
         public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY)
         {
             Tile t = Framing.GetTileSafely(i, j);
-            if (Main.tileSolidTop[t.TileType])
+            if (CoraliteSets.NotFourWayPlaceMagike[t.TileType])
                 return;
 
             GetMagikeAlternateData(i, j, out _, out MagikeAlternateStyle alternate);

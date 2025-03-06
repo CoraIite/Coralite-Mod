@@ -25,12 +25,12 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// <summary> 可连接数量 </summary>
         public int MaxConnect { get => MaxConnectBase + MaxConnectExtra; }
 
-        /// <summary> 基础连接距离 </summary>
+        /// <summary> 基础连接距离，单位：像素 </summary>
         public int ConnectLengthBase { get => LengthBase; protected set => LengthBase = value; }
-        /// <summary> 额外连接距离 </summary>
+        /// <summary> 额外连接距离，单位：像素 </summary>
         public int ConnectLengthExtra { get; set; }
 
-        /// <summary> 连接距离 </summary>
+        /// <summary> 连接距离，单位：像素 </summary>
         public int ConnectLength { get => ConnectLengthBase + ConnectLengthExtra; }
 
         /// <summary> 当前连接者数量 </summary>

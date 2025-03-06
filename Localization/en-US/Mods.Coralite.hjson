@@ -22,6 +22,7 @@ Conditions: {
 		UseMultiBlockStructure: Use Multiblock to craft
 		DownedGolemCondition: Need to defeat the Golem
 		UseShlimmerTranslation: This is the shimmer conversion synthesis table
+		SpellCraft: Mods.Coralite.Conditions.CoraliteConditions.SpellCraft
 	}
 }
 

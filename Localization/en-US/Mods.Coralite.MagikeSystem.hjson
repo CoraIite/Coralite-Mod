@@ -70,6 +70,7 @@ MagikeSystem: {
 		MagikeLinerSenderNotFound: Liner Connector Not Found!
 		MagikeProducerNotFound: Magike Producer Not Found!
 		TimerNotFound: Timer Not Found!
+		NotSpellCore: Mods.Coralite.MagikeSystem.MagikeSystem.Filter.NotSpellCore
 	}
 
 	ItemDescriptionPolarizedFilter: Insertable polarized filters：

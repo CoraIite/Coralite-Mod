@@ -1,20 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Terraria;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
 using Terraria.ObjectData;
-using Terraria;
 
 namespace Coralite.Core.Prefabs.Tiles
 {
-    public class Base1x1FloatTile(Color mapColor, int dustType, string TexturePath, bool PathHasName = false) :ModTile
+    public class Base1x1FloatTile(Color mapColor, int dustType, string TexturePath, bool PathHasName = false) : BaseTile(TexturePath,PathHasName)
     {
-        public override string Texture => string.IsNullOrEmpty(TexturePath) ? base.Texture : TexturePath + (PathHasName ? string.Empty : Name);
-
         public override void SetStaticDefaults()
         {
             Main.tileFrameImportant[Type] = true;
@@ -23,8 +16,6 @@ namespace Coralite.Core.Prefabs.Tiles
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1);
             TileObjectData.newTile.AnchorBottom = AnchorData.Empty;
-            TileObjectData.newTile.StyleHorizontal = false;
-            TileObjectData.newTile.CoordinateHeights = new int[16];
 
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.newTile.WaterPlacement = LiquidPlacement.Allowed;
