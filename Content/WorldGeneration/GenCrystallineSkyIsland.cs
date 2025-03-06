@@ -104,7 +104,6 @@ namespace Coralite.Content.WorldGeneration
             ushort crystallineBrick = (ushort)ModContent.TileType<CrystallineBrickTile>();
 
             TextureGenerator generator =new TextureGenerator("SkarnAltars",path: AssetDirectory.CrystallineSkyIsland);
-            generator.SetWallTex();
 
             p -= new Point(generator.Width / 2, generator.Height / 2);
 
@@ -348,7 +347,7 @@ namespace Coralite.Content.WorldGeneration
             WorldGenHelper.PlaceDecorations_NoCheck(outerRect, (ushort)ModContent.TileType<SkarnRubbles1x1>(), 2);
         }
 
-        private void CSkyIslandWaterFall(ushort skarnBrick, Rectangle outerRect, Rectangle shrineRect)
+        private static void CSkyIslandWaterFall(ushort skarnBrick, Rectangle outerRect, Rectangle shrineRect)
         {
             int waterfallCount = ValueByWorldSize(WorldGen.genRand.Next(4, 7)
                     , WorldGen.genRand.Next(6, 11)
@@ -415,7 +414,7 @@ namespace Coralite.Content.WorldGeneration
                 }
         }
 
-        private void CSkyIslandGrass(ushort skarn, ushort smoothSkarn, Rectangle rect,Rectangle shrineRect)
+        private static void CSkyIslandGrass(ushort skarn, ushort smoothSkarn, Rectangle rect,Rectangle shrineRect)
         {
             int grassCount = ValueByWorldSize(WorldGen.genRand.Next(4, 7)
                     , WorldGen.genRand.Next(5, 8)
@@ -706,7 +705,6 @@ namespace Coralite.Content.WorldGeneration
             int type = WorldGen.genRand.Next(8);
 
             TextureGenerator generator = new TextureGenerator("MainSkyIslandShrine",type,AssetDirectory.CrystallineSkyIsland);
-            generator.SetWallTex();
 
             int width = generator.Width;
             int height = generator.Height;
@@ -1056,7 +1054,7 @@ namespace Coralite.Content.WorldGeneration
                     , new Actions.PlaceWall(skarnWall)));
         }
 
-        private void CSkyIslandClear(Rectangle rect)
+        private static void CSkyIslandClear(Rectangle rect)
         {
             rect.X -= 200;
             rect.Width += 400;
@@ -1188,7 +1186,8 @@ namespace Coralite.Content.WorldGeneration
                                             BrickWall = WorldGen.genRand.Next(3, 6);
                                         }
 
-                                    Placeend:;
+                                    Placeend:
+                                        ;
                                         DigWall--;
                                     }
                                 }
@@ -1254,7 +1253,7 @@ namespace Coralite.Content.WorldGeneration
             return true;
         }
 
-        public T ValueByWorldSize<T>(T smallWorld, T middleWorld, T bigWorld)
+        public static T ValueByWorldSize<T>(T smallWorld, T middleWorld, T bigWorld)
         {
             return Main.maxTilesX switch
             {
@@ -1310,7 +1309,7 @@ namespace Coralite.Content.WorldGeneration
 
         #region 蕴魔空岛使用到的噪声方法
 
-        float Random(Vector2 st)
+        static float Random(Vector2 st)
         {
             float a = MathF.Sin(Vector2.Dot(st, new Vector2(12.9898f, 78.233f))) * 43758.5453123f;
             int a2 = (int)a;
@@ -1319,7 +1318,7 @@ namespace Coralite.Content.WorldGeneration
 
         // Value noise by Inigo Quilez - iq/2013
         // https://www.shadertoy.com/view/lsf3WH
-        float Noise(Vector2 st)
+        static float Noise(Vector2 st)
         {
             Vector2 i = new Vector2((float)Math.Floor(st.X), (float)Math.Floor(st.Y));
             Vector2 f = new Vector2(st.X - i.X, st.Y - i.Y);
@@ -1337,7 +1336,7 @@ namespace Coralite.Content.WorldGeneration
         }
 
         // 2D旋转矩阵
-        private Matrix Rotate2D(Vector2 pos, float angle)
+        private static Matrix Rotate2D(Vector2 pos, float angle)
         {
             float cosTheta = (float)Math.Cos(angle);
             float sinTheta = (float)Math.Sin(angle);
@@ -1565,10 +1564,6 @@ namespace Coralite.Content.WorldGeneration
                 //获取类型，尺寸和贴图集合
                 string name = Enum.GetName(smallIslandType);
                 TextureGenerator data = new TextureGenerator($"{name}/{name}", style, AssetDirectory.CrystallineSmallIsland);
-                data.SetWallTex();
-
-                if (smallIslandType == SmallIslandType.Pool)
-                    data.SetLiquidTex();
 
                 //外部尺寸
                 int protect = WorldGen.genRand.Next(8, 18);
@@ -1636,7 +1631,7 @@ namespace Coralite.Content.WorldGeneration
                 case SmallIslandType.Normal:
                     return WorldGen.genRand.Next(8);
                 case SmallIslandType.Pool:
-                    return WorldGen.genRand.Next(5);
+                    return WorldGen.genRand.Next(6);
                 case SmallIslandType.Cave:
                     break;
                 case SmallIslandType.Ruins:

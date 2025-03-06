@@ -183,7 +183,6 @@ namespace Coralite.Content.WorldGeneration
                         int whichOne = WorldGen.genRand.Next(7);
 
                         TextureGenerator generator = new TextureGenerator("CrimsonChest", whichOne, path: AssetDirectory.Shrines + "EvilChest/");
-                        generator.SetWallTex();
 
                         position += new Point(-10, -7);
                         if (!WorldGen.InWorld(position.X, position.Y))
@@ -284,7 +283,6 @@ namespace Coralite.Content.WorldGeneration
                         int whichOne = WorldGen.genRand.Next(6);
 
                         TextureGenerator generator = new TextureGenerator("CorruptionChest", whichOne, path: AssetDirectory.Shrines + "EvilChest/");
-                        generator.SetWallTex();
 
                         position += new Point(-10, -7);
                         if (!WorldGen.InWorld(position.X, position.Y))

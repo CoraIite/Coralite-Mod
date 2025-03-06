@@ -76,7 +76,6 @@ namespace Coralite.Content.WorldGeneration
                         continue; //如果不是，则返回false，这将导致调用方法尝试一个不同的origin。
 
                     TextureGenerator generator = new TextureGenerator("ChippedBladeTemple",path: AssetDirectory.WorldGen + "CoreKeeper/");
-                    generator.SetWallTex();
 
                     position += new Point(-12, -13);
                     if (!WorldGen.InWorld(position.X, position.Y))

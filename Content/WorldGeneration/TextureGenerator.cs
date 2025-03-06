@@ -32,26 +32,18 @@ namespace Coralite.Content.WorldGeneration
             Style = style;
             MainTex = Get(BasePath + style ?? "");
 
+            //加载墙壁
+            string wallName = BasePath + "Wall" + Style ?? "";
+            if (ModContent.HasAsset(wallName))
+                WallTex = Get(wallName);
+
+            //加载液体
+            string LiquidName = BasePath + "Liquid" + Style ?? "";
+            if (ModContent.HasAsset(LiquidName))
+                LiquidTex = Get(LiquidName);
+
             Width = MainTex.Width;
             Height = MainTex.Height;
-        }
-
-        /// <summary>
-        /// 自动根据创建时候的路径和名称获取墙壁图
-        /// </summary>
-        /// <param name="style"></param>
-        public void SetWallTex()
-        {
-            WallTex = Get(BasePath + "Wall" + Style ?? "");
-        }
-
-        /// <summary>
-        /// 自动根据创建时候的路径和名称获取液体图
-        /// </summary>
-        /// <param name="style"></param>
-        public void SetLiquidTex()
-        {
-            LiquidTex = Get(BasePath + "Liquid" + Style ?? "");
         }
 
         public readonly void Generate(Point Center, Dictionary<Color, int> mainDic, Dictionary<Color, int> wallDic = null)

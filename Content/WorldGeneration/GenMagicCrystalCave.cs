@@ -596,7 +596,6 @@ namespace Coralite.Content.WorldGeneration
             ushort crystalBrick = (ushort)ModContent.TileType<MagicCrystalBrickTile>();
 
             TextureGenerator generator = new TextureGenerator("MagicCrystalShrine",whichOne, AssetDirectory.Shrines+ "MagicCrystalCave/");
-            generator.SetWallTex();
 
             int genOrigin_x = origin.X - (generator.Width / 2);
             int genOrigin_y = origin.Y - (generator.Height / 2);
