@@ -110,6 +110,8 @@ namespace Coralite.Content.Items.Magike.Refractors
     {
         public override int TargetTileID => TileType<LASERTile>();
 
+        public override int MainComponentID => MagikeComponentID.MagikeSender;
+
         public override void InitializeBeginningComponent()
         {
             AddComponent(new LASERContainer());

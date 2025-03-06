@@ -19,6 +19,9 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.Factorys
 {
+    /// <summary>
+    /// 药剂台
+    /// </summary>
     public class ApothecaryTable() : MagikeApparatusItem(TileType<ApothecaryTableTile>(), Item.sellPrice(silver: 5)
         , RarityType<MagicCrystalRarity>(), AssetDirectory.MagikeFactories)
     {
@@ -67,6 +70,8 @@ namespace Coralite.Content.Items.Magike.Factorys
     public class ApothecaryTableTileEntity() : MagikeTP()
     {
         public sealed override int TargetTileID => TileType<ApothecaryTableTile>();
+
+        public override int MainComponentID => MagikeComponentID.MagikeFactory;
 
         public override void InitializeBeginningComponent()
         {

@@ -43,6 +43,18 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         public virtual int ExtendFilterCapacity { get => 2; }
 
         /// <summary>
+        /// 在UI中显示的主要组件，会在开启UI的时候设置
+        /// </summary>
+        public abstract int MainComponentID {  get; }
+
+        /// <summary>
+        /// 获取主要组件在列表中的索引
+        /// </summary>
+        /// <returns></returns>
+        public int GetMainComponentIndex()
+            => ComponentsCache.FindIndex(c => c.ID == MainComponentID);
+
+        /// <summary>
         /// 检测滤镜容量，如果已经满了那么就无法插入
         /// </summary>
         /// <returns></returns>

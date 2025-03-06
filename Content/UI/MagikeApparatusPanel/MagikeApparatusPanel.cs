@@ -306,7 +306,9 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
 
             BasePanel.OverflowHidden = true;
 
-            base.Recalculate();
+            int index = CurrentEntity.GetMainComponentIndex();
+            if (index != -1)
+                CurrentShowComponentIndex = index;
 
             ResetComponentPanel();
 

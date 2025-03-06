@@ -12,6 +12,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Spells
     {
         public sealed override int TargetTileID => ModContent.TileType<TModTile>();
 
+        public override int MainComponentID => MagikeComponentID.MagikeFactory;
+
         public override void InitializeBeginningComponent()
         {
             AddComponent(GetStartContainer());

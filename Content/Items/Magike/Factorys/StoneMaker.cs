@@ -111,6 +111,8 @@ namespace Coralite.Content.Items.Magike.Factorys
     {
         public sealed override int TargetTileID => TileType<StoneMakerTile>();
 
+        public override int MainComponentID => MagikeComponentID.MagikeFactory;
+
         public override void InitializeBeginningComponent()
         {
             AddComponent(GetStartContainer());

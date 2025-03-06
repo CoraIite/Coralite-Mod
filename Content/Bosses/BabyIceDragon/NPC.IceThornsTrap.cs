@@ -66,20 +66,21 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                     NPC boss = null;
                     foreach (var npc in Main.ActiveNPCs)
                     {
-                        if (!npc.active || npc.type != ModContent.NPCType<BabyIceDragon>())
+                        if (npc.active && npc.type == ModContent.NPCType<BabyIceDragon>())
                         {
-                            continue;
+                            boss = npc;
+                            break;
                         }
-                        boss = npc;
                     }
+
                     if (boss != null)
                     {
                         ((BabyIceDragon)boss.ModNPC).GetMouseCenter(out _, out Vector2 mouseCenter);
                         for (int j = 0; j < 2; j++)
                         {
-                            IceStarLight.Spawn(new Vector2(NPC.ai[0], NPC.ai[1]),
+                            IceStarLight.Spawn(mouseCenter,
                                 (boss.Center - NPC.Center).SafeNormalize(Vector2.One).RotatedBy(Main.rand.NextFloat(-0.5f, 0.5f)) * 10,
-                                1f, () => boss.Center, 16);
+                                1f, () => NPC.Center, 16);
                         }
                     }
                 }

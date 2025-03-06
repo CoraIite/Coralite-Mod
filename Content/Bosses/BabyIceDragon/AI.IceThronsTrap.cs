@@ -75,7 +75,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                                 }
                             }
 
-                            if ((int)Timer == 60 && Main.netMode != NetmodeID.MultiplayerClient)        //生成冰刺NPC
+                            if ((int)Timer == 60 && !VaultUtils.isClient)        //生成冰刺NPC
                             {
                                 int howMany = 4;
                                 if (Main.expertMode)
@@ -87,12 +87,9 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                                 float rot = Main.rand.NextFloat(MathHelper.TwoPi);
                                 for (int i = 0; i < howMany; i++)
                                 {
-                                    if (!VaultUtils.isClient)
-                                    {
-                                        int randomWidth = Main.rand.Next(240, 350);
-                                        Vector2 randomPosition = rot.ToRotationVector2() * randomWidth;
-                                        NPC.NewNPCDirect(NPC.GetSource_FromAI(), Target.Center + randomPosition, ModContent.NPCType<IceThornsTrap>());
-                                    }
+                                    int randomWidth = Main.rand.Next(240, 350);
+                                    Vector2 randomPosition = rot.ToRotationVector2() * randomWidth;
+                                    NPC.NewNPCDirect(NPC.GetSource_FromAI(), Target.Center + randomPosition, ModContent.NPCType<IceThornsTrap>());
 
                                     rot += MathHelper.TwoPi / howMany;
                                 }

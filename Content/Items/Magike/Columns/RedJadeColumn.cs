@@ -43,6 +43,8 @@ namespace Coralite.Content.Items.Magike.Refractors
 
     public class RedJadeColumnTileEntity : BaseSenderTileEntity<RedJadeColumnTile>
     {
+        public override int MainComponentID => MagikeComponentID.MagikeContainer;
+
         public override MagikeContainer GetStartContainer()
             => new RedJadeColumnTileContainer();
 

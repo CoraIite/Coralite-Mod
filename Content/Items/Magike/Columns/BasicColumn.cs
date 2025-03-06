@@ -49,6 +49,8 @@ namespace Coralite.Content.Items.Magike.Refractors
 
     public class BasicColumnTileEntity : BaseSenderTileEntity<BasicColumnTile>
     {
+        public override int MainComponentID => MagikeComponentID.MagikeContainer;
+
         public override MagikeContainer GetStartContainer()
             => new BasicColumnTileContainer();
 
