@@ -9,8 +9,10 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.Audio;
-using Terraria.GameContent;
+using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Map;
+using Terraria.UI;
 
 namespace Coralite.Content.Bosses.BabyIceDragon
 {
@@ -40,6 +42,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             NPC.aiStyle = -1;
             NPC.npcSlots = 1f;
             NPC.value = Item.buyPrice(0, 0, 0, 0);
+            NPC.netAlways = true;
 
             NPC.HitSound = CoraliteSoundID.DigIce;
         }
@@ -101,11 +104,11 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                 NPC.ai[0] -= MathHelper.Pi / 16;     //1/16 Pi
             }
 
-            if ((NPC.target < 0 || NPC.target == 255 || Target.dead || !Target.active || Target.Distance(NPC.Center) > 3000))
+            if (NPC.target < 0 || NPC.target == 255 || Target.dead || !Target.active)
             {
                 NPC.TargetClosest();
-                if (!(NPC.target < 0 || NPC.target == 255 || Target.dead || !Target.active || Target.Distance(NPC.Center) > 3000))
-                    KnowledgeSystem.CheckForUnlock<IceDragon1Knowledge>( Target.Center, Coralite.IcicleCyan);
+                if (!(NPC.target < 0 || NPC.target == 255 || Target.dead || !Target.active))
+                    KnowledgeSystem.CheckForUnlock<IceDragon1Knowledge>(Target.Center, Coralite.IcicleCyan);
             }
         }
 
@@ -113,6 +116,11 @@ namespace Coralite.Content.Bosses.BabyIceDragon
         {
             //受击时摇晃一下
             NPC.ai[0] += 6.282f;
+        }
+
+        public override bool CheckActive()
+        {
+            return false;
         }
 
         public override bool CheckDead()
@@ -176,6 +184,39 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                 var frame = glowTex.Frame(1, 3, 0, NPC.frame.Y);
 
                 spriteBatch.Draw(glowTex, NPC.Center - Main.screenPosition, frame, Color.White, NPC.rotation, frame.Size() / 2, 1, SpriteEffects.None, 0f);
+            }
+        }
+    }
+
+    [AutoLoadTexture(Path =AssetDirectory.BabyIceDragon)]
+    public class IceDragonEggDrawer : ModMapLayer
+    {
+        public static ATex IceDragonEgg_Head { get; private set; }
+
+        public override void Draw(ref MapOverlayDrawContext context, ref string text)
+        {
+            NPC egg = null;
+
+            for (int i = 0; i < 200; i++)
+            {
+                if (Main.npc[i].active && Main.npc[i].type == ModContent.NPCType<IceDragonEgg>())
+                {
+                    egg = Main.npc[i];
+                    break;
+                }    
+            }
+
+            if (egg == null)
+                return;
+
+            const float scaleIfNotSelected = 1f;
+            const float scaleIfSelected = scaleIfNotSelected * 2f;
+
+            if (context.Draw(IceDragonEgg_Head.Value, egg.Center/16, Color.White
+                , new SpriteFrame(1, 1, 0, 0)
+                , scaleIfNotSelected, scaleIfSelected, Alignment.Center).IsMouseOver)
+            {
+                text = ContentSamples.NpcsByNetId[ModContent.NPCType<IceDragonEgg>()].FullName;
             }
         }
     }
