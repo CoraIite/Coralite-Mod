@@ -47,25 +47,25 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         public override void RandomUpdate(int i, int j)
         {
-            for (int k = 0; k < 2; k++)
+            if (!Main.rand.NextBool(4))
+                return;
+
+            Point p = new Point(i, j) + new Point(Main.rand.Next(-10, 11), Main.rand.Next(-6, 3));
+
+            Tile t = Framing.GetTileSafely(p);
+            if (!t.HasTile)
+                return;
+
+            if (t.TileType != ModContent.TileType<SkarnTile>() && t.TileType != ModContent.TileType<SmoothSkarnTile>())
+                return;
+
+            Tile up = Framing.GetTileSafely(p + new Point(0, -1));
+            if (up.HasTile || up.LiquidType != LiquidID.Water || up.LiquidAmount < 255)
             {
-                Point p = new Point(i, j) + new Point(Main.rand.Next(-10, 11), Main.rand.Next(-6, 3));
-
-                Tile t = Framing.GetTileSafely(p);
-                if (!t.HasTile)
-                    continue;
-
-                if (t.TileType != ModContent.TileType<SkarnTile>() && t.TileType != ModContent.TileType<SmoothSkarnTile>())
-                    continue;
-
-                Tile up = Framing.GetTileSafely(p + new Point(0, -1));
-                if (up.HasTile || up.LiquidType != LiquidID.Water || up.LiquidAmount < 255)
-                {
-                    continue;
-                }
-
-                WorldGen.PlaceTile(p.X, p.Y - 1, ModContent.TileType<CrystallineSeaOats1x1>(), true);
+                return;
             }
+
+            WorldGen.PlaceTile(p.X, p.Y - 1, ModContent.TileType<CrystallineSeaOats1x1>(), true, style: Main.rand.Next(3));
         }
     }
 }

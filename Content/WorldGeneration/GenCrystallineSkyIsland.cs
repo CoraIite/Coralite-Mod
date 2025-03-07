@@ -298,9 +298,6 @@ namespace Coralite.Content.WorldGeneration
 
         private static void CSkyIslandGrassDecorations(Rectangle outerRect)
         {
-            int Grass2x2 = ModContent.TileType<ChalcedonyGrass2x2>();
-            int Grass1x1 = ModContent.TileType<ChalcedonyGrass1x1>();
-
             for (int i = 0; i < outerRect.Width; i++)
                 for (int j = 0; j < outerRect.Height; j++)
                 {
@@ -312,22 +309,13 @@ namespace Coralite.Content.WorldGeneration
 
                     Tile top = Main.tile[point.X, point.Y - 1];
                     if (!top.HasTile)
-                    {
-                        ushort tileType = (ushort)Main.rand.NextFromList(Grass1x1, Grass1x1, Grass2x2);
-                        TileObjectData data = TileObjectData.GetTileData(tileType, 0);
-
-                        WorldGen.PlaceObject(point.X, point.Y-1, tileType, true, WorldGen.genRand.Next(data.RandomStyleRange));
-                        continue;
-                    }
-
-                    if (Main.tileSolid[top.TileType] || Main.tileContainer[top.TileType] || top.TileType == Grass2x2)
                         continue;
 
-                    WorldGen.KillTile(point.X, point.Y - 1);
-                    ushort tileType2 = (ushort)Main.rand.NextFromList(Grass1x1, Grass1x1, Grass2x2);
-                    TileObjectData data2 = TileObjectData.GetTileData(tileType2, 0);
+                    if (Main.tileSolid[top.TileType] || Main.tileContainer[top.TileType])
+                        continue;
 
-                    WorldGen.PlaceObject(point.X, point.Y - 1, tileType2, true, WorldGen.genRand.Next(data2.RandomStyleRange));
+                    if (WorldGen.genRand.NextBool(5))
+                        WorldGen.KillTile(point.X, point.Y - 1);
                 }
         }
 

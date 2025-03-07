@@ -66,6 +66,21 @@ namespace Coralite.Content.Items.Misc_Magic
         {
             return new Vector2(-20, -8);
         }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient(ItemID.TitaniumBar, 12)
+                .AddIngredient(ItemID.SoulofFlight, 5)
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
+
+            CreateRecipe()
+                .AddIngredient(ItemID.AdamantiteBar, 12)
+                .AddIngredient(ItemID.SoulofFlight, 5)
+                .AddTile(TileID.MythrilAnvil)
+                .Register();
+        }
     }
 
     /// <summary>

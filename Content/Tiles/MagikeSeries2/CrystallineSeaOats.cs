@@ -52,7 +52,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         public override void RandomUpdate(int i, int j)
         {
-            if (Main.rand.NextBool())
+            if (!Main.rand.NextBool(4))
                 return;
 
             Tile t = Framing.GetTileSafely(i, j - 1);
@@ -60,7 +60,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
                 return;
 
             WorldGen.KillTile(i, j, noItem: true);
-            WorldGen.PlaceTile(i, j, ModContent.TileType<CrystallineSeaOats1x2>(), true);
+            WorldGen.PlaceTile(i, j, ModContent.TileType<CrystallineSeaOats1x2>(), true, style: Main.rand.Next(2));
         }
     }
 
@@ -108,7 +108,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         public override void RandomUpdate(int i, int j)
         {
-            if (Main.rand.NextBool())
+            if (!Main.rand.NextBool(4))
                 return;
 
             Point bottom = Helper.FindTopLeftPoint(i, j) + new Point(0, 1);
@@ -124,7 +124,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
                     Main.tile[bottom + new Point(0, -k)].ClearTile();
             }
 
-            WorldGen.PlaceTile(bottom.X, bottom.Y, ModContent.TileType<CrystallineSeaOats1x3>(), true);
+            WorldGen.PlaceTile(bottom.X, bottom.Y, ModContent.TileType<CrystallineSeaOats1x3>(), true,style:Main.rand.Next(4));
         }
 
         public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
