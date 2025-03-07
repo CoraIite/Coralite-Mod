@@ -1,10 +1,7 @@
 ﻿using Coralite.Content.Items.CoreKeeper;
 using Coralite.Core;
-using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
 using Terraria.IO;
@@ -19,29 +16,15 @@ namespace Coralite.Content.WorldGeneration
 
         public void GenClearGemstoneMaze(GenerationProgress progress, GameConfiguration configuration)
         {
-            progress.Message = ClearGemstoneMaze.Value;//"正在生成透明宝石迷宫";
+            progress.Message = ClearGemstoneMaze.Value;
 
-            int itemCount = 1;
+            int itemCount = ValueByWorldSize(1, 2, 3);
             int gened = 0;
-
-            if (Main.maxTilesX > 8000)
-            {
-                itemCount++;
-            }
-
-            if (Main.maxTilesX > 6000)
-            {
-                itemCount++;
-            }
-
-            //if (itemCount > heartCount)
-            //    itemCount = heartCount;
 
             Dictionary<Color, int> mainDic = new()
             {
                 [new Color(102, 57, 49)] = TileID.Dirt,
                 [new Color(7, 60, 49)] = ModContent.TileType<HartcoreObsidianTile>(),
-                [Color.Black] = -1
             };
 
             for (int i = 0; i < 1000; i++)

@@ -1,4 +1,5 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.WorldGeneration.Generators;
+using Coralite.Core;
 using Coralite.Helpers;
 using System;
 using Terraria;
@@ -372,7 +373,7 @@ namespace Coralite.Content.WorldGeneration
                 NetMessage.SendTileSquare(-1, x, y, 1);
         }
 
-        public static void Texture2TileGenerate(int x, int y, int tileType, int tileStyle = 0, bool active = true, bool removeLiquid = true, bool silent = false, bool sync = true)
+        public static void Texture2TileGenerate(int x, int y, int tileType, int tileStyle = 0, bool active = true)
         {
             try
             {
@@ -380,6 +381,7 @@ namespace Coralite.Content.WorldGeneration
 
                 if (!WorldGen.InWorld(x, y))
                     return;
+
                 TileObjectData data = tileType <= -1 ? null : TileObjectData.GetTileData(tileType, tileStyle);
                 int width = data == null ? 1 : data.Width;
                 int height = data == null ? 1 : data.Height;
@@ -387,7 +389,8 @@ namespace Coralite.Content.WorldGeneration
                 int tileHeight = tileType == -1 || data == null ? 1 : data.Height;
                 byte oldSlope = (byte)Main.tile[x, y].Slope;
                 bool oldHalfBrick = Main.tile[x, y].IsHalfBlock;
-                if (tileType != -1)
+
+                if (tileType != GenerateType.Ignore)
                 {
                     WorldGen.destroyObject = true;
                     if (width > 1 || height > 1)
@@ -395,23 +398,21 @@ namespace Coralite.Content.WorldGeneration
                         int xs = x;
                         int ys = y;
                         Vector2 newPos = Helper.FindTopLeft(xs, ys);    //找到左上角
+
                         for (int x1 = 0; x1 < width; x1++)      //把原有物块清了
                             for (int y1 = 0; y1 < height; y1++)
                             {
                                 int x2 = (int)newPos.X + x1;
                                 int y2 = (int)newPos.Y + y1;
-                                if (x1 == 0 && y1 == 0 && Main.tile[x2, y2].TileType == 21)
+                                if (x1 == 0 && y1 == 0 && Main.tileContainer[Main.tile[x2, y2].TileType])
                                     KillChestAndItems(x2, y2);
-                                Main.tile[x, y].TileType = 0;
-                                if (!silent)
-                                {
                                     WorldGen.KillTile(x, y, false, false, true);
                                     Main.tile[x, y].Clear(TileDataType.Tile);
                                     Main.tile[x, y].Clear(TileDataType.Slope);
-                                }
-                                if (removeLiquid)
+
                                     GenerateLiquid(x2, y2, 0, true, 0, false);
                             }
+
                         for (int x1 = 0; x1 < width; x1++)      //帧图
                             for (int y1 = 0; y1 < height; y1++)
                             {
@@ -421,54 +422,52 @@ namespace Coralite.Content.WorldGeneration
                                 WorldGen.SquareWallFrame(x2, y2);
                             }
                     }
-                    else if (!silent)
+                    else 
                     {
                         WorldGen.KillTile(x, y, false, false, true);
                         Main.tile[x, y].Clear(TileDataType.Tile);
                         Main.tile[x, y].Clear(TileDataType.Slope);
                     }
+
                     WorldGen.destroyObject = false;
+
                     if (active)
                     {
                         if (tileWidth <= 1 && tileHeight <= 1 && !Main.tileFrameImportant[tileType])        //直接放置没有帧图的物块
                         {
-                            Main.tile[x, y].TileType = (ushort)tileType;
-                            Mtile.HasTile = true;
+                            Main.tile[x, y].ResetToType((ushort)tileType);
                             WorldGen.SquareTileFrame(x, y);
                         }
                         else
                         {
                             WorldGen.destroyObject = true;
-                            if (!silent)
-                            {
-                                for (int x1 = 0; x1 < tileWidth; x1++)
-                                    for (int y1 = 0; y1 < tileHeight; y1++)
-                                    {
-                                        WorldGen.KillTile(x + x1, y + y1, false, false, true);
-                                        Main.tile[x + x1, y + y1].Clear(TileDataType.Tile);
-                                        Main.tile[x + x1, y + y1].Clear(TileDataType.Slope);
-                                    }
-                            }
+                            for (int x1 = 0; x1 < tileWidth; x1++)
+                                for (int y1 = 0; y1 < tileHeight; y1++)
+                                {
+                                    WorldGen.KillTile(x + x1, y + y1, false, false, true);
+                                    Main.tile[x + x1, y + y1].Clear(TileDataType.Tile);
+                                    Main.tile[x + x1, y + y1].Clear(TileDataType.Slope);
+                                }
+
                             WorldGen.destroyObject = false;
+
                             int genX = x;
-                            int genY = tileType == 10 ? y : y + height;
+                            int genY = tileType == TileID.ClosedDoor ? y : y + height;
                             WorldGen.PlaceTile(genX, genY, tileType, true, true, -1, tileStyle);    //放置有帧图的物块
                             for (int x1 = 0; x1 < tileWidth; x1++)
                                 for (int y1 = 0; y1 < tileHeight; y1++)
                                     WorldGen.SquareTileFrame(x + x1, y + y1);
                         }
                     }
-                    else
-                        Mtile.HasTile = false;
                 }
 
-                if (sync && Main.netMode != NetmodeID.SinglePlayer)
-                {
-                    int sizeWidth = tileWidth + Math.Max(0, width - 1);
-                    int sizeHeight = tileHeight + Math.Max(0, height - 1);
-                    int size = sizeWidth > sizeHeight ? sizeWidth : sizeHeight;
-                    NetMessage.SendTileSquare(-1, x + (int)(size * 0.5f), y + (int)(size * 0.5f), size + 1);        //同步 感觉我这只在世界生成是调用的话这个就没太大必要了
-                }
+                //if (sync && Main.netMode != NetmodeID.SinglePlayer)
+                //{
+                //    int sizeWidth = tileWidth + Math.Max(0, width - 1);
+                //    int sizeHeight = tileHeight + Math.Max(0, height - 1);
+                //    int size = sizeWidth > sizeHeight ? sizeWidth : sizeHeight;
+                //    NetMessage.SendTileSquare(-1, x + (int)(size * 0.5f), y + (int)(size * 0.5f), size + 1);        //同步 感觉我这只在世界生成是调用的话这个就没太大必要了
+                //}
             }
             catch (Exception e)
             {
@@ -483,9 +482,9 @@ namespace Coralite.Content.WorldGeneration
                 if (!WorldGen.InWorld(x, y))
                     return;
 
-                if (wall != -1)
+                if (wall != GenerateType.Ignore)
                 {
-                    if (wall == -2)
+                    if (wall == GenerateType.Clear)
                     {
                         wall = 0;
                         Main.tile[x, y].Clear(TileDataType.Wall);//WorldGen.KillWall(x, y);

@@ -77,28 +77,26 @@ namespace Coralite.Content.WorldGeneration
                 [new Color(132, 126, 135)] = TileID.GrayBrick,//847e87
                 [new Color(255, 211, 238)] = TileID.PlatinumBrick,//ffd3ee
                 [new Color(90, 100, 80)] = TileID.Chain,//5a6450
-                [Color.Black] = -1
             };
             Dictionary<Color, int> wallDic = new()
             {
                 [new Color(138, 0, 255)] = WallID.ArcaneRunes,//8a00ff
                 [new Color(255, 0, 175)] = WallID.ReefWall,//ff00af
                 [new Color(85, 85, 85)] = WallID.GrayBrick,//555555
-                [Color.Black] = -1
             };
 
-            generator.Generate(center, mainDic, wallDic);
-
-            //放火把
-            WorldGen.PlaceObject(position.X + 11, position.Y + 7, TileID.Torches, true, TorchID.Shimmer);
-            WorldGen.PlaceObject(position.X + 17, position.Y + 7, TileID.Torches, true, TorchID.Shimmer);
-            //生成珊瑚笔记物块
-            WorldGen.PlaceObject(position.X + 14, position.Y + 10, ModContent.TileType<CoraliteNoteTile>(), true);
-            //生成箱子
-            WorldGen.AddBuriedChest(position.X + 23, position.Y + 9, ModContent.ItemType<ChannelingGemstone>(),
-                             notNearOtherChests: false, 14, trySlope: false, TileID.Containers2);
-            //生成帐篷
-            WorldGen.PlaceObject(position.X + 6, position.Y + 13, TileID.LargePiles2, true, 26);
+            generator.Generate(center, mainDic, wallDic, (color, x, y) =>
+            {
+                if (color == new Color(255, 0, 0))//生成珊瑚笔记物块
+                    WorldGen.PlaceObject(x, y, ModContent.TileType<CoraliteNoteTile>(), true);
+                else if (color == new Color(212, 0, 255))//放火把
+                    WorldGen.PlaceObject(x, y, TileID.Torches, true, TorchID.Shimmer);
+                else if (color == new Color(166, 83, 0))//生成帐篷
+                    WorldGen.PlaceObject(x, y, TileID.LargePiles2, true, 26);
+                else if (color == new Color(0, 255, 255))//生成箱子
+                    WorldGen.AddBuriedChest(x, y, ModContent.ItemType<ChannelingGemstone>(),
+                                     notNearOtherChests: false, 14, trySlope: false, TileID.Containers2);
+            });
 
             //刷漆
             for (int i = 0; i < 28; i++)

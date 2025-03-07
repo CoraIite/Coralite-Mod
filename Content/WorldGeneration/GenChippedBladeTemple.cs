@@ -1,10 +1,7 @@
 ﻿using Coralite.Content.Items.CoreKeeper;
 using Coralite.Core;
-using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.ID;
 using Terraria.IO;
@@ -19,32 +16,20 @@ namespace Coralite.Content.WorldGeneration
 
         public void GenChippedBladeTemple(GenerationProgress progress, GameConfiguration configuration)
         {
-            progress.Message = ChippedBladeTemple.Value;//"正在生成破碎剑刃神庙";
+            progress.Message = ChippedBladeTemple.Value;
 
-            int itemCount = 1;
+            int itemCount = ValueByWorldSize(1, 2, 3);
             int gened = 0;
-
-            if (Main.maxTilesX > 8000)
-            {
-                itemCount++;
-            }
-
-            if (Main.maxTilesX > 6000)
-            {
-                itemCount++;
-            }
 
             Dictionary<Color, int> mainDic = new()
             {
                 [new Color(155, 173, 183)] = TileID.LeadBrick,
                 [new Color(7, 60, 49)] = ModContent.TileType<HartcoreObsidianTile>(),
-                [Color.Black] = -1
             };
 
             Dictionary<Color, int> wallDic = new()
             {
                 [new Color(77, 146, 185)] = WallID.LeadBrick,
-                [Color.Black] = -1
             };
 
             for (int i = 0; i < 1000; i++)

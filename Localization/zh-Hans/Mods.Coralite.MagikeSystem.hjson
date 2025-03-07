@@ -61,7 +61,7 @@ MagikeSystem: {
 		FilterFillUp: 仪器内滤镜已满！
 		InsertSuccess: 成功插入滤镜
 		UpgradeableNotFound: 未找到可升级仪器！
-		CantUpgrade: 无法升级！
+		CantUpgrade: 该仪器不支持当前的滤镜等级！
 		MagikeContainerNotFound: 未找到魔能容器！
 		MagikeSenderNotFound: 未找到魔能发送器！
 		MagikeLinerSenderNotFound: 未找到线性连接器！
@@ -71,7 +71,7 @@ MagikeSystem: {
 	}
 
 	ItemDescriptionPolarizedFilter: 可插入的偏振滤镜：
-	NeedPolarizedFilter: 需要插入可插入的偏振滤镜后才能工作
+	NeedPolarizedFilter: 需要插入偏振滤镜后才能启动
 
 	ApparatusDescription: {
 		MagikeAmount: "魔能容量 "
@@ -237,7 +237,7 @@ MagikeSystem: {
 	ItemMagikeAmount: 可从中提取 {0} 魔能
 
 	UIPanelText: {
-		MagikeContainer: 魔能存储单元
+		MagikeContainer: 魔能容器
 		MagikeSender: 魔能发送单元
 		MagikeProducer: 魔能生产单元
 		MagikeFactory: 魔能工作单元

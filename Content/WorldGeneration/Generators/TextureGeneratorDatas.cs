@@ -7,23 +7,35 @@ namespace Coralite.Content.WorldGeneration.Generators
     {
         /// <summary>
         /// 长宽必须和贴图相等！
+        /// 获取清除的生成器
         /// </summary>
         /// <param name="tileTex"></param>
         /// <param name="colorToTile"></param>
         /// <returns></returns>
         public static Texture2TileGenerator GetTex2TileGenerator(Texture2D tileTex, Dictionary<Color, int> colorToTile)
         {
+            //读图
             Color[] tileData = new Color[tileTex.Width * tileTex.Height];
             tileTex.GetData(0, tileTex.Bounds, tileData, 0, tileTex.Width * tileTex.Height);
 
             int x = 0;
             int y = 0;
+
+            
             Texture2TileGenerator gen = new(tileTex.Width, tileTex.Height);
             for (int m = 0; m < tileData.Length; m++)
             {
+                //获取颜色
                 Color tileColor = tileData[m];
-                int tileID = colorToTile.TryGetValue(tileColor, out int value) ? value : -1; //if no key assume no action
-                gen.tileGen[x, y] = new TileInfo(tileID, 0);
+
+                //如果是透明的颜色那么就清除掉
+                int tileID = GenerateType.Clear;
+                if (colorToTile.TryGetValue(tileColor,out int tileType))
+                    tileID = tileType;
+                if (tileColor == Color.Transparent)
+                    tileID = GenerateType.Ignore;
+
+                gen.tileGen[x, y] = new TileInfo(tileColor, tileID, 0);
                 x++;
                 if (x >= tileTex.Width)
                 {
@@ -31,46 +43,11 @@ namespace Coralite.Content.WorldGeneration.Generators
                     y++;
                 }
                 if (y >= tileTex.Height)
-                    break; //you've somehow reached the end of the texture! (this shouldn't happen!)
+                    break; 
             }
 
             return gen;
         }
-
-        /// <summary>
-        /// 长宽必须和贴图相等！
-        /// 获取清除的生成器
-        /// </summary>
-        /// <param name="tileTex"></param>
-        /// <param name="colorToTile"></param>
-        /// <returns></returns>
-        public static Texture2TileGenerator GetTex2TileClearGenerator(Texture2D tileTex, Dictionary<Color, int> colorToTile)
-        {
-            Color[] tileData = new Color[tileTex.Width * tileTex.Height];
-            tileTex.GetData(0, tileTex.Bounds, tileData, 0, tileTex.Width * tileTex.Height);
-
-            int x = 0;
-            int y = 0;
-            Texture2TileGenerator gen = new(tileTex.Width, tileTex.Height);
-            for (int m = 0; m < tileData.Length; m++)
-            {
-                Color tileColor = tileData[m];
-                int tileID = tileColor == Color.Transparent ? -1 : -2; //if no key assume no action
-                gen.tileGen[x, y] = new TileInfo(tileID, 0);
-                x++;
-                if (x >= tileTex.Width)
-                {
-                    x = 0;
-                    y++;
-                }
-                if (y >= tileTex.Height)
-                    break; //you've somehow reached the end of the texture! (this shouldn't happen!)
-            }
-
-            return gen;
-        }
-
-
 
         /// <summary>
         /// 长宽必须和贴图相等！
@@ -89,7 +66,13 @@ namespace Coralite.Content.WorldGeneration.Generators
             for (int m = 0; m < wallData.Length; m++)
             {
                 Color wallColor = wallData[m];
-                int wallID = colorToWall.TryGetValue(wallColor, out int value) ? value : -1;
+
+                int wallID = GenerateType.Clear;
+                if (colorToWall.TryGetValue(wallColor, out int wallType))
+                    wallID = wallType;
+                else if (wallColor == Color.Transparent)
+                    wallID = GenerateType.Ignore;
+
                 gen.wallGen[x, y] = new WallInfo(wallID);
                 x++;
                 if (x >= wallTex.Width)
@@ -131,33 +114,6 @@ namespace Coralite.Content.WorldGeneration.Generators
                 }
                 if (y >= wallTex.Height)
                     break; //you've somehow reached the end of the texture! (this shouldn't happen!)
-            }
-
-            return gen;
-        }
-
-        public static Texture2Object GetTex2ObjectGenerator(Texture2D tex, Dictionary<Color, (int, int)> colorToObject)
-        {
-            Color[] objectData = new Color[tex.Width * tex.Height];
-
-            tex.GetData(0, tex.Bounds, objectData, 0, tex.Width * tex.Height);
-
-            int x = 0;
-            int y = 0;
-            Texture2Object gen = new(tex.Width, tex.Height);
-            for (int m = 0; m < objectData.Length; m++)
-            {
-                Color wallColor = tex == null ? Color.Black : objectData[m];
-                (int, int) tileInfos = colorToObject.TryGetValue(wallColor, out (int, int) value) ? value : (-1, 0);
-                gen.tileObjectGen[x, y] = new TileObjectInfo(tileInfos.Item1, tileInfos.Item2);
-                x++;
-                if (x >= tex.Width)
-                {
-                    x = 0;
-                    y++;
-                }
-                if (y >= tex.Height)
-                    break;
             }
 
             return gen;

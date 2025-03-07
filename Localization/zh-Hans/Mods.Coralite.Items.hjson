@@ -5233,7 +5233,7 @@ RedJadeMusicBox: {
 }
 
 WindSpeedArrows: {
-	DisplayName: 风箭头
+	DisplayName: 风速箭头
 	Tooltip:
 		'''
 		+6% 移动速度

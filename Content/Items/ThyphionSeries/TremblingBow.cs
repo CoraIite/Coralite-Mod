@@ -26,7 +26,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         public override void SetDefaults()
         {
             Item.useAmmo = AmmoID.Arrow;
-            Item.damage = 14;
+            Item.damage = 16;
             Item.shootSpeed = 7f;
             Item.knockBack = 5;
             Item.shoot = ProjectileID.PurificationPowder;

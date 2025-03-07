@@ -2,6 +2,7 @@
 using Coralite.Core;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
+using System;
 using System.Collections.Generic;
 using Terraria;
 
@@ -46,24 +47,22 @@ namespace Coralite.Content.WorldGeneration
             Height = MainTex.Height;
         }
 
-        public readonly void Generate(Point Center, Dictionary<Color, int> mainDic, Dictionary<Color, int> wallDic = null)
+        public readonly void Generate(Point Center, Dictionary<Color, int> mainDic, Dictionary<Color, int> wallDic = null, Action<Color, int, int> objectPlacement = null)
         {
             int x = Center.X - Width / 2;
             int y = Center.Y - Height / 2;
 
-            GenerateByTopLeft(new Point(x, y), mainDic, wallDic);
+            GenerateByTopLeft(new Point(x, y), mainDic, wallDic,objectPlacement);
         }
 
-        public readonly void GenerateByTopLeft(Point topLeft, Dictionary<Color, int> mainDic, Dictionary<Color, int> wallDic = null)
+        public readonly void GenerateByTopLeft(Point topLeft, Dictionary<Color, int> mainDic, Dictionary<Color, int> wallDic = null,Action<Color,int,int> objectPlacement=null)
         {
             int x = topLeft.X;
             int y = topLeft.Y;
 
             WorldGenHelper.ClearLiuid(x, y, Width, Height);
 
-            Texture2TileGenerator clearGenerator = null;
-            Texture2TileGenerator roomGenerator = null;
-            Texture2WallGenerator wallClearGenerator = null;
+            Texture2TileGenerator mainGenerator = null;
             Texture2WallGenerator wallGenerator = null;
             Texture2Liquid liquidGenerator = null;
 
@@ -79,18 +78,12 @@ namespace Coralite.Content.WorldGeneration
 
                 Main.QueueMainThreadAction(() =>
                 {
-                    //清理范围
-                    clearGenerator = TextureGeneratorDatas.GetTex2TileClearGenerator(generator.MainTex, CoraliteWorld.clearDic);
-
                     //生成主体地形
-                    roomGenerator = TextureGeneratorDatas.GetTex2TileGenerator(generator.MainTex, mainDic);
+                    mainGenerator = TextureGeneratorDatas.GetTex2TileGenerator(generator.MainTex, mainDic);
 
                     //生成墙壁
                     if (generator.WallTex != null)
-                    {
-                        wallClearGenerator = TextureGeneratorDatas.GetTex2WallClearGenerator(generator.WallTex, CoraliteWorld.clearDic);
                         wallGenerator = TextureGeneratorDatas.GetTex2WallGenerator(generator.WallTex, wallDic);
-                    }
 
                     if (generator.LiquidTex != null)
                         liquidGenerator = TextureGeneratorDatas.GetTex2LiquidGenerator(generator.LiquidTex, CoraliteWorld.liquidDic);
@@ -101,11 +94,15 @@ namespace Coralite.Content.WorldGeneration
                 placed = true;
             }
 
-            clearGenerator?.Generate(x, y, true);
-            roomGenerator?.Generate(x, y, true);
-            wallClearGenerator?.Generate(x, y, true);
+            mainGenerator?.Clear(x, y);
+            mainGenerator?.Generate(x, y);
+
             wallGenerator?.Generate(x, y, true);
+
             liquidGenerator?.Generate(x, y, true);
+
+            if (objectPlacement != null)
+                mainGenerator?.ObjectPlace(x, y, objectPlacement);
         }
 
         private Texture2D Get(string name)

@@ -1,11 +1,7 @@
 ﻿using Coralite.Content.CoraliteNotes.MagikeChapter1;
 using Coralite.Content.Tiles.MagikeSeries1;
-using Coralite.Content.WorldGeneration.Generators;
 using Coralite.Core;
-using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -25,19 +21,9 @@ namespace Coralite.Content.WorldGeneration
 
         public void GenMagicCrystalCave(GenerationProgress progress, GameConfiguration configuration)
         {
-            progress.Message = MagicCrystalCaveText.Value;// "正在生成魔力水晶洞";
+            progress.Message = MagicCrystalCaveText.Value;
 
-            int howManyToGen = 2;
-            if (Main.maxTilesX > 8000)
-            {
-                howManyToGen += 2;
-            }
-
-            if (Main.maxTilesX > 6000)
-            {
-                howManyToGen += 2;
-            }
-
+            int howManyToGen = ValueByWorldSize(2, 4, 6);
             int howManyGened = 0;
 
             //最小X和最大X，这里是在X坐标在1/4 - 3/4内才能生成
@@ -68,8 +54,6 @@ namespace Coralite.Content.WorldGeneration
         {
             //物块类型，提前声明出来变量方便后面使用
             ushort basalt = (ushort)ModContent.TileType<BasaltTile>();
-            ushort crystalBasalt = (ushort)ModContent.TileType<CrystalBasaltTile>();
-            ushort crystalBlock = (ushort)ModContent.TileType<MagicCrystalBlockTile>();
 
             //半径最小和最大值以及一半的墙壁厚度
             int radiusMin = 50;
@@ -611,12 +595,10 @@ namespace Coralite.Content.WorldGeneration
                 [new Color(142, 43, 170)] = ModContent.TileType<HardBasaltTile>(),
                 [new Color(183, 12, 232)] = basalt,
                 [new Color(90, 100, 80)] = TileID.Chain,//5a6450
-                [Color.Black] = -1
             };
             Dictionary<Color, int> wallDic = new()
             {
                 [new Color(255, 255, 0)] = ModContent.WallType<Walls.Magike.HardBasaltWall>(),
-                [Color.Black] = -1
             };
 
             generator.GenerateByTopLeft(new Point(genOrigin_x, genOrigin_y), mainDic, wallDic);
@@ -634,39 +616,6 @@ namespace Coralite.Content.WorldGeneration
                 ModContent.ItemType<MagikeBasePage>(), notNearOtherChests: false, 0, trySlope: false, chestTileType);
 
             return chestPos;
-        }
-
-        public Task GenShrine(Texture2D clearTex, Texture2D shrineTex, Texture2D wallTex,
-             Dictionary<Color, int> clearDic, Dictionary<Color, int> shrineDic, Dictionary<Color, int> wallDic,
-             int genOrigin_x, int genOrigin_y)
-        {
-            bool genned = false;
-            bool placed = false;
-            while (!genned)
-            {
-                if (placed)
-                    continue;
-
-                Main.QueueMainThreadAction(() =>
-                {
-                    //清理范围
-                    Texture2TileGenerator clearGenerator = TextureGeneratorDatas.GetTex2TileGenerator(clearTex, clearDic);
-                    clearGenerator.Generate(genOrigin_x, genOrigin_y, true);
-
-                    //生成主体地形
-                    Texture2TileGenerator shrineGenerator = TextureGeneratorDatas.GetTex2TileGenerator(shrineTex, shrineDic);
-                    shrineGenerator.Generate(genOrigin_x, genOrigin_y, true);
-
-                    //生成墙壁
-                    Texture2WallGenerator wallGenerator = TextureGeneratorDatas.GetTex2WallGenerator(wallTex, wallDic);
-                    wallGenerator.Generate(genOrigin_x, genOrigin_y, true);
-
-                    genned = true;
-                });
-                placed = true;
-            }
-
-            return Task.CompletedTask;
         }
 
         public void LoadCrystalCave(TagCompound tag)
