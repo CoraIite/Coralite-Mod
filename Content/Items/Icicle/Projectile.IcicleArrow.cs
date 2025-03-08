@@ -41,7 +41,7 @@ namespace Coralite.Content.Items.Icicle
             {
                 Vector2 center = Projectile.Center - new Vector2(0, Main.rand.Next(220, 280)).RotatedBy(Main.rand.NextFloat(-0.2f, 0.2f));
                 Vector2 velocity = (Projectile.Center + Main.rand.NextVector2Circular(24, 24) - center).SafeNormalize(Vector2.UnitY) * 12;
-                int damage = (int)(Projectile.damage * 0.5f);
+                int damage = (int)(Projectile.damage * 0.35f);
                 if (damage > 26)
                     damage = 26;
 

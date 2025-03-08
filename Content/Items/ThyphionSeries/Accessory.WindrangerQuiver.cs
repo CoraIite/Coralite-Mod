@@ -17,7 +17,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 .AddIngredient<WindSpeedArrows>()
                 .AddIngredient(ItemID.MagicQuiver)
                 .AddIngredient(ItemID.CrossNecklace)
-                .AddIngredient(ItemID.ChlorophyteBar, 6)
+                .AddIngredient(ItemID.Ectoplasm, 6)
                 .AddTile(TileID.WorkBenches)
                 .Register();
         }

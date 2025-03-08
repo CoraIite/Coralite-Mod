@@ -535,7 +535,6 @@ ShadowLegs: {
 	DisplayName: 影子护腿
 	Tooltip:
 		'''
-		攻速 +8%
 		击退 +6%
 		'''
 }

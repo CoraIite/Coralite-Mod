@@ -27,7 +27,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public override void SetDefaults()
         {
-            Item.SetWeaponValues(120, 6f);
+            Item.SetWeaponValues(132, 6f);
             Item.DefaultToRangedWeapon(10, AmmoID.Arrow, 22, 16f);
 
             Item.rare = ItemRarityID.Red;
@@ -474,7 +474,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            modifiers.SourceDamage += HitCount * 0.2f;
+            modifiers.SourceDamage += HitCount * 0.22f;
         }
 
         public override bool PreDraw(ref Color lightColor)

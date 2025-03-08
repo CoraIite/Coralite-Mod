@@ -19,7 +19,7 @@ namespace Coralite.Content.Items.Misc_Shoot
         public override void SetDefaults()
         {
             Item.SetWeaponValues(50, 6f);
-            Item.DefaultToRangedWeapon(ProjectileType<AquariusHeldProj>(), AmmoID.Arrow, 29, 14f);
+            Item.DefaultToRangedWeapon(ProjectileType<AquariusHeldProj>(), AmmoID.Arrow, 31, 14f);
 
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.value = Item.sellPrice(0, 1);
@@ -72,7 +72,7 @@ namespace Coralite.Content.Items.Misc_Shoot
             int x = Main.rand.Next(-2, 0);
             int k = Main.rand.Next(2, 4);
 
-            int damage2 = (int)(damage * 0.9f);
+            int damage2 = (int)(damage * 0.86f);
 
             for (int i = x; i < k; i++)
             {

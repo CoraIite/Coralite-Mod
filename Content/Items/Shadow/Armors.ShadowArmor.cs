@@ -120,7 +120,7 @@ namespace Coralite.Content.Items.Shadow
 
         public override void UpdateEquip(Player player)
         {
-            player.GetAttackSpeed(DamageClass.Generic) += 0.08f;
+            //player.GetAttackSpeed(DamageClass.Generic) += 0.08f;
             player.GetKnockback(DamageClass.Generic) += 0.06f;
         }
 

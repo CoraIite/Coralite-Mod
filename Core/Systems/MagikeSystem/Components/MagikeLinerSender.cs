@@ -554,7 +554,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         protected MagikeLinerSender sender;
 
-        private const int LeftPaddling = 20;
+        private const int LeftPaddling = 10;
 
         public SendProgressBar(MagikeLinerSender sender)
         {

@@ -93,32 +93,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                     return false;
             }
 
-            int mouseDir = Main.MouseWorld.X > Player.Center.X ? 1 : -1;
-
-            if (mouseDir > 0)
-            {
-                if (dashDirection > 0)
-                    newVelocity = (Main.MouseWorld - Player.Center).SafeNormalize(Vector2.Zero);
-                else
-                    newVelocity = new Vector2(-1, 0);
-            }
-            else
-            {
-                if (dashDirection > 0)
-                    newVelocity = new Vector2(1, 0);
-                else
-                    newVelocity = (Main.MouseWorld - Player.Center).SafeNormalize(Vector2.Zero);
-            }
-
-            float angle = (Main.MouseWorld - Player.Center).ToRotation();
-            const float angleLimit = 0.2f;
-
-            if ((angle > -MathHelper.PiOver2 - angleLimit && angle < -MathHelper.PiOver2 + angleLimit)
-                || (angle > MathHelper.PiOver2 - angleLimit && angle < MathHelper.PiOver2 + angleLimit))
-            {
-                dashDirection = Math.Sign(Main.MouseWorld.X - Player.Center.X);
-                newVelocity = (Main.MouseWorld - Player.Center).SafeNormalize(Vector2.Zero);
-            }
+            newVelocity = new Vector2(dashDirection, 0);
 
             Player.GetModPlayer<CoralitePlayer>().DashDelay = 84;
             Player.GetModPlayer<CoralitePlayer>().DashTimer = 18;

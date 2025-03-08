@@ -64,7 +64,7 @@ namespace Coralite.Content.Items.RedJades
             {
                 if (Main.rand.NextBool(3))
                 {
-                    int damage = (int)(Projectile.damage * 0.5f);
+                    int damage = (int)(Projectile.damage * 0.3f);
                     if (damage > 18)
                         damage = 18;
 

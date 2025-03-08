@@ -119,22 +119,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             if (dashDirection != 0)
             {
-                int mouseDir = Main.MouseWorld.X > Player.Center.X ? 1 : -1;
-
-                if (mouseDir > 0)
-                {
-                    if (dashDirection > 0)
-                        newVelocity = (Main.MouseWorld - Player.Center).SafeNormalize(Vector2.Zero);
-                    else
-                        newVelocity = new Vector2(-1, 0);
-                }
-                else
-                {
-                    if (dashDirection > 0)
-                        newVelocity = new Vector2(1, 0);
-                    else
-                        newVelocity = (Main.MouseWorld - Player.Center).SafeNormalize(Vector2.Zero);
-                }
+                newVelocity = new Vector2(dashDirection, 0);
 
                 float angle = (Main.MouseWorld - Player.Center).ToRotation();
                 const float angleLimit = 0.2f;
