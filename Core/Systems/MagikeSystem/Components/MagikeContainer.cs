@@ -4,7 +4,6 @@ using Coralite.Core.Systems.CoraliteActorComponent;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.ComponentModel;
 using System.IO;
 using Terraria;
 using Terraria.GameContent;

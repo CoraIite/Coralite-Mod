@@ -13,7 +13,6 @@ using Terraria.ID;
 using Terraria.IO;
 using Terraria.Localization;
 using Terraria.ModLoader.IO;
-using Terraria.ObjectData;
 using Terraria.WorldBuilding;
 
 namespace Coralite.Content.WorldGeneration

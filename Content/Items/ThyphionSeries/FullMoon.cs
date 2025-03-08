@@ -253,7 +253,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                         if (Projectile.IsOwnedByLocalPlayer())//生成弹幕
                         {
                             Projectile.NewProjectileFromThis<FullMoonStrike>(Projectile.Center, Vector2.Zero
-                                , (int)(Owner.GetWeaponDamage(Item) * 4f), 10, Projectile.whoAmI);
+                                , (int)(Owner.GetDamageWithAmmo(Item) * 5f), 10, Projectile.whoAmI);
                         }
                         return;
                     }
@@ -412,7 +412,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             Helper.PlayPitched(CoraliteSoundID.Ding_Item4, Projectile.Center, pitchAdjust: -0.3f);
 
             if (target != null && target.CanBeChasedBy())//踢一脚
-                target.SimpleStrikeNPC(Owner.GetWeaponDamage(Item), Owner.direction, knockBack: 10, damageType: DamageClass.Ranged);
+                target.SimpleStrikeNPC(Owner.GetDamageWithAmmo(Item), Owner.direction, knockBack: 10, damageType: DamageClass.Ranged);
 
             if (!VisualEffectSystem.HitEffect_Dusts)
                 return;

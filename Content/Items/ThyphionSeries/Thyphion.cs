@@ -327,7 +327,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                         float velicityDir = Projectile.velocity.ToRotation() + MathHelper.Pi + dir * MathF.Sign(Projectile.velocity.X) * 0.3f;
 
                         Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, velicityDir.ToRotationVector2() * 10, ProjectileType<ThyphionShadowBow>()
-                            , Owner.GetWeaponDamage(Item), Projectile.knockBack, Projectile.owner, bowIndex, ToMouseA, MathF.Sign(ToMouse.X));
+                            , Owner.GetDamageWithAmmo(Item), Projectile.knockBack, Projectile.owner, bowIndex, ToMouseA, MathF.Sign(ToMouse.X));
                     }
 
                     Owner.itemTime = Owner.itemAnimation = 2;

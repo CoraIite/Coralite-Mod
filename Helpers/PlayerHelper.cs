@@ -11,5 +11,19 @@ namespace Coralite.Helpers
         /// <param name="player"></param>
         /// <returns></returns>
         public static bool UseSpecialAttack(this Player player) => player.TryGetModPlayer(out CoralitePlayer cp) && cp.useSpecialAttack;
+        
+        /// <summary>
+        /// 如果是使用弹药的武器就是弹药+武器的伤害，否则均为武器伤害
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="weapon"></param>
+        /// <returns></returns>
+        public static int GetDamageWithAmmo(this Player player,Item weapon)
+        {
+            if (player.PickAmmo(weapon, out _,out _,out int damage,out _,out _,true))
+                return damage;
+
+            return player.GetWeaponDamage(weapon);
+        }
     }
 }

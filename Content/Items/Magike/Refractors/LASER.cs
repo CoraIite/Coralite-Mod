@@ -153,7 +153,7 @@ namespace Coralite.Content.Items.Magike.Refractors
             {
                 default:
                 case MALevel.None:
-                    SendDelayBase = 1_0000_0000;//随便填个大数
+                    SendDelayBase = -1;
                     ConnectLengthBase = 0;
                     break;
                 case MALevel.MagicCrystal:

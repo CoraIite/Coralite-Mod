@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.CustomHooks;
 using Coralite.Content.UI.MagikeApparatusPanel;
+using Coralite.Core.Attributes;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
@@ -8,10 +9,12 @@ using System.Collections.Generic;
 using System.IO;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ModLoader.IO;
 using Terraria.ModLoader.UI;
 using Terraria.UI;
+using Terraria.UI.Chat;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components
 {
@@ -55,7 +58,11 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public override void Update()
         {
-            Drawers.AddToLinerSenderDraw(this);
+            if (SendDelayBase < 0)
+                return;
+
+            if (_receivers.Count < 1)
+                return;
 
             //发送时间限制
             if (!CanSend())
@@ -139,6 +146,11 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             return;
         remove:
             RemoveReceiver(position);
+        }
+
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            Drawers.AddToLinerSenderDraw(this);
         }
 
         #endregion
@@ -300,8 +312,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             UIList list =
             [
                 //发送时间
-                this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.MagikeSendTime), parent),
-                this.NewTextBar(SendDelayText, parent),
+                //this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.MagikeSendTime), parent),
+                //this.NewTextBar(SendDelayText, parent),
+                new SendProgressBar(this),
 
                 //发送量
                 this.NewTextBar(c =>MagikeSystem.GetUIText(MagikeSystem.UITextID.MagikeSendAmount), parent),
@@ -531,6 +544,98 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 temp = $"[c/80d3ff:{temp}]";
 
             Utils.DrawBorderString(spriteBatch, temp, pos, Color.White, 1, 0f, 0.5f);
+        }
+    }
+
+    [AutoLoadTexture(Path = AssetDirectory.MagikeUI)]
+    public class SendProgressBar : UIElement
+    {
+        public static ATex ProgressBar { get; private set; }
+
+        protected MagikeLinerSender sender;
+
+        private const int LeftPaddling = 20;
+
+        public SendProgressBar(MagikeLinerSender sender)
+        {
+            this.sender = sender;
+
+            ResetSize();
+        }
+
+        public void ResetSize()
+        {
+            Vector2 timerSize = GetStringSize(sender.Timer);
+            Vector2 sendDelaySize = GetStringSize(sender.SendDelay);
+
+            float width = timerSize.X + 10;
+            if (sendDelaySize.X + 10 > width)
+                width = sendDelaySize.X + 10;
+            if (ProgressBar.Width() + 10 > width)
+                width = ProgressBar.Width() + 10;
+
+            Width.Set(width + LeftPaddling, 0);
+            Height.Set(timerSize.Y * 3f + ProgressBar.Height() / 2, 0);
+        }
+
+        private static Vector2 GetStringSize(int value)
+        {
+            TextSnippet[] textSnippets = [.. ChatManager.ParseMessage(value.ToString(), Color.White)];
+            ChatManager.ConvertNormalSnippets(textSnippets);
+
+            return ChatManager.GetStringSize(FontAssets.MouseText.Value, textSnippets, Vector2.One * 1.1f);
+        }
+
+        protected override void DrawSelf(SpriteBatch spriteBatch)
+        {
+            Rectangle size = GetDimensions().ToRectangle();
+
+            float per = (size.Height - ProgressBar.Height() / 2) / 3f;
+            int width = size.Width - LeftPaddling;
+            Vector2 topLeft = size.TopLeft();
+            Vector2 pos = topLeft + new Vector2(30 + width / 2, per / 2);
+
+            //绘制时间
+            Utils.DrawBorderString(spriteBatch, MathF.Round((sender.SendDelay - sender.Timer) / 60f, 1).ToString(), pos + new Vector2(0, 4), Color.White
+                , 1.1f, anchorx: 0.5f, anchory: 0.5f);
+
+            //绘制中间的进度条
+            Texture2D barTex = ProgressBar.Value;
+
+            Rectangle box = barTex.Frame(1, 2, 0, 1);
+
+            pos += new Vector2(0, per / 2 + box.Height / 2);
+
+            Vector2 barPos = pos - new Vector2(width / 2-4, 0);
+            Vector2 origin = new Vector2(0, box.Height / 2);
+            spriteBatch.Draw(barTex, barPos, box, Color.White, 0, origin
+                , 1, 0, 0);
+
+            int delay = sender.SendDelay;
+            if (sender.SendDelay <= 0)
+            {
+                delay = 0;
+            }
+            else
+            {
+                box = barTex.Frame(1, 2);
+                box.Width = (int)((1 - sender.Timer / (float)sender.SendDelay) * box.Width);
+                spriteBatch.Draw(barTex,barPos, box, Color.White, 0, origin
+                    , 1, 0, 0);
+            }
+
+            pos += new Vector2(0, per / 2 + box.Height / 2);
+
+            //绘制倒计时
+            Color color = MagikeHelper.GetBonusColor(sender.SendDelayBonus, true);
+            Utils.DrawBorderString(spriteBatch, MathF.Round(delay / 60f, 1).ToString(), pos + new Vector2(0, 4), color
+                , 1.1f, anchorx: 0.5f, anchory: 0.5f);
+
+            pos += new Vector2(0, per);
+
+            //绘制倒计时加成
+            Utils.DrawBorderString(spriteBatch, $"< × {sender.SendDelayBonus} >", pos + new Vector2(0, 4), color
+                , 1, anchorx: 0.5f, anchory: 0.5f);
         }
     }
 }

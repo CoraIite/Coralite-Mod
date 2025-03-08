@@ -129,7 +129,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
                 //生成手持弹幕
                 Projectile.NewProjectile(Player.GetSource_ItemUse(Player.HeldItem), Player.Center, newVelocity, ProjectileType<GlaciateHeldProj>(),
-                    Player.GetWeaponDamage(Item), Player.HeldItem.knockBack, Player.whoAmI, newVelocity.ToRotation(), 1, 22);
+                    Player.GetDamageWithAmmo(Item), Player.HeldItem.knockBack, Player.whoAmI, newVelocity.ToRotation(), 1, 22);
             }
 
             return true;
@@ -213,7 +213,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                         Helper.PlayPitched(CoraliteSoundID.FireStaffSummon_Item77, Projectile.Center);
 
                         //射冰晶波
-                        Projectile.NewProjectileFromThis<GlaciateWave>(Projectile.Center, UnitToMouseV * 24, (int)(Owner.GetWeaponDamage(Item) * 1.5f)
+                        Projectile.NewProjectileFromThis<GlaciateWave>(Projectile.Center, UnitToMouseV * 24, (int)(Owner.GetDamageWithAmmo(Item) * 1.5f)
                             , Projectile.knockBack);
 
                         if (Item.ModItem is Glaciate glaciate)

@@ -10,7 +10,6 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
-using Terraria.ModLoader.IO;
 
 namespace Coralite.Content.Biskety
 {
@@ -155,6 +154,11 @@ namespace Coralite.Content.Biskety
             NPC.defense = BisketyDefenceController.Defence;
         }
 
+        public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
+        {
+            modifiers.DamageVariationScale *= 0;
+        }
+
         public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone)
         {
             Timer = 0;
@@ -217,7 +221,7 @@ namespace Coralite.Content.Biskety
                     if (BisketyController.ShowFlags[i])
                         howMany++;
 
-                Vector2 position = pos - new Vector2(0, 40 + howMany * 20);
+                Vector2 position = pos + new Vector2(0, 40 + howMany * 20);
                 int totalDamage = NPC.lifeMax - NPC.life;
 
                 if (BisketyController.ShowFlags[(int)BisketyController.ShowType.ShowTotalDamage])

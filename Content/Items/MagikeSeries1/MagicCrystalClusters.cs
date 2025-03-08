@@ -27,6 +27,7 @@ namespace Coralite.Content.Items.MagikeSeries1
             recipe.ReplaceResult<MagicCrystal>(40);
             recipe.AddIngredient<MagicCrystalClusters>()
                 .AddTile(TileID.WorkBenches)
+                .DisableDecraft()
                 .Register();
         }
     }

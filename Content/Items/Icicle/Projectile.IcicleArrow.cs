@@ -39,10 +39,14 @@ namespace Coralite.Content.Items.Icicle
         {
             if (Projectile.IsOwnedByLocalPlayer())
             {
-                Vector2 center = Projectile.Center - new Vector2(0, Main.rand.Next(140, 220)).RotatedBy(Main.rand.NextFloat(-0.4f, 0.4f));
+                Vector2 center = Projectile.Center - new Vector2(0, Main.rand.Next(220, 280)).RotatedBy(Main.rand.NextFloat(-0.2f, 0.2f));
                 Vector2 velocity = (Projectile.Center + Main.rand.NextVector2Circular(24, 24) - center).SafeNormalize(Vector2.UnitY) * 12;
+                int damage = (int)(Projectile.damage * 0.5f);
+                if (damage > 26)
+                    damage = 26;
+
                 Projectile.NewProjectile(Projectile.GetSource_FromAI(), center, velocity,
-                    ModContent.ProjectileType<IcicleFalling>(), (int)(Projectile.damage * 0.5f), Projectile.knockBack, Projectile.owner);
+                    ModContent.ProjectileType<IcicleFalling>(), damage, Projectile.knockBack, Projectile.owner);
             }
         }
 

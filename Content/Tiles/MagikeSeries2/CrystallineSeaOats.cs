@@ -52,7 +52,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         public override void RandomUpdate(int i, int j)
         {
-            if (!Main.rand.NextBool(4))
+            if (!Main.rand.NextBool(10))
                 return;
 
             Tile t = Framing.GetTileSafely(i, j - 1);
@@ -108,7 +108,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         public override void RandomUpdate(int i, int j)
         {
-            if (!Main.rand.NextBool(4))
+            if (!Main.rand.NextBool(10))
                 return;
 
             Point bottom = Helper.FindTopLeftPoint(i, j) + new Point(0, 1);

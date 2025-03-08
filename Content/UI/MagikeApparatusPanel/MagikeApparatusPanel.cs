@@ -390,7 +390,7 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
                 Recalculate();
             }
 
-            if (Vector2.Distance(Main.LocalPlayer.Center, pos) > 16 * 6)
+            if (Vector2.Distance(Main.LocalPlayer.Center, pos) > 16 * 30)
             {
                 visible = false;
                 CurrentEntity = null;

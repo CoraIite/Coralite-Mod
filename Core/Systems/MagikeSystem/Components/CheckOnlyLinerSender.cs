@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.CustomHooks;
 using Coralite.Helpers;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -26,7 +27,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             return true;
         }
 
-        public override void Update()
+        public override void Update() { }
+
+        public override void Draw(SpriteBatch spriteBatch)
         {
             Drawers.AddToLinerSenderDraw(this);
         }

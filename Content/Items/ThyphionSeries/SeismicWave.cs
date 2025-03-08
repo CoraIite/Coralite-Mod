@@ -111,7 +111,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
                 //生成手持弹幕
                 Projectile.NewProjectile(Player.GetSource_ItemUse(Player.HeldItem), Player.Center, newVelocity, ProjectileType<SeismicWaveHeldProj>(),
-                    Player.GetWeaponDamage(Item), Player.HeldItem.knockBack, Player.whoAmI, rot, 1, 24);
+                    Player.GetDamageWithAmmo(Item), Player.HeldItem.knockBack, Player.whoAmI, rot, 1, 24);
             }
 
             return true;
@@ -200,7 +200,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             //生成震波弹幕
             Collision.HitTiles(Projectile.Center - new Vector2(100, 20), new Vector2(0, 0), 200, 100);
 
-            Projectile.NewProjectileFromThis<SeismicWaveStrike>(Projectile.Center, Vector2.Zero, (int)(Owner.GetWeaponDamage(Item) * 1.2f)
+            Projectile.NewProjectileFromThis<SeismicWaveStrike>(Projectile.Center, Vector2.Zero, (int)(Owner.GetDamageWithAmmo(Item) * 2f)
                 , 8);
 
             Helper.PlayPitched(CoraliteSoundID.StaffOfEarth_Item69, Projectile.Center, pitch: 0.8f);

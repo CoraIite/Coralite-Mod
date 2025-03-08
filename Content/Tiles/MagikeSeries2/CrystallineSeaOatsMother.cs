@@ -47,7 +47,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         public override void RandomUpdate(int i, int j)
         {
-            if (!Main.rand.NextBool(4))
+            if (!Main.rand.NextBool(8))
                 return;
 
             Point p = new Point(i, j) + new Point(Main.rand.Next(-10, 11), Main.rand.Next(-6, 3));

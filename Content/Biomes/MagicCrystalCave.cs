@@ -1,5 +1,4 @@
-﻿using Coralite.Content.Tiles.MagikeSeries1;
-using Coralite.Core;
+﻿using Coralite.Core;
 using System;
 using Terraria;
 
@@ -17,7 +16,7 @@ namespace Coralite.Content.Biomes
 
         public override bool IsBiomeActive(Player player)
         {
-            bool b1 = ModContent.GetInstance<MagicCrystalCaveTileCount>().BasaltTileCount >= 500;
+            bool b1 = ModContent.GetInstance<CoraliteTileCount>().CrystalCaveTileCount >= 500;
 
             bool b2 = Math.Abs(player.position.ToTileCoordinates().X - (Main.maxTilesX / 2)) < Main.maxTilesX / 4;
 
@@ -37,7 +36,7 @@ namespace Coralite.Content.Biomes
 
         public override bool IsSceneEffectActive(Player player)
         {
-            bool b1 = ModContent.GetInstance<MagicCrystalCaveTileCount>().BasaltTileCount >= 400;
+            bool b1 = ModContent.GetInstance<CoraliteTileCount>().CrystalCaveTileCount >= 500;
 
             bool b2 = Math.Abs(player.position.ToTileCoordinates().X - (Main.maxTilesX / 2)) < Main.maxTilesX / 4;
 
@@ -56,16 +55,6 @@ namespace Coralite.Content.Biomes
             textureSlots[2] = BackgroundTextureLoader.GetBackgroundSlot(AssetDirectory.Backgrounds + "MagicCrystalCaveBackground2");
             textureSlots[3] = BackgroundTextureLoader.GetBackgroundSlot(AssetDirectory.Backgrounds + "MagicCrystalCaveBackground3");
             textureSlots[4] = BackgroundTextureLoader.GetBackgroundSlot(AssetDirectory.Backgrounds + "MagicCrystalCaveBackground4");
-        }
-    }
-
-    public class MagicCrystalCaveTileCount : ModSystem
-    {
-        public int BasaltTileCount;
-
-        public override void TileCountsAvailable(ReadOnlySpan<int> tileCounts)
-        {
-            BasaltTileCount = tileCounts[ModContent.TileType<BasaltTile>()];
         }
     }
 }

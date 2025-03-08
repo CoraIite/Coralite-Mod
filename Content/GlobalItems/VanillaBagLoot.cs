@@ -59,7 +59,7 @@ namespace Coralite.Content.GlobalItems
                     itemLoot.AddCommonItem<DeliciousSteak>(3);
                     break;
                 case ItemID.SkeletronBossBag:
-                    itemLoot.AddCommonItem<TurbulenceCore>(2);
+                    itemLoot.AddCommonItem<TurbulenceCore>();
                     break;
                 case ItemID.MoonLordBossBag://月总袋子加入海洋征服者，极光
                     foreach (var rule in itemLoot.Get())

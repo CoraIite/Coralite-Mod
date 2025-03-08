@@ -7,3 +7,8 @@ ShadowCastleBiome: {
 	DisplayName: Shadow Castle Biome
 	TownNPCDialogueName: the Shadow Castle Biome
 }
+
+CrystallineSkyIsland: {
+	DisplayName: Crystalline Sky Island
+	TownNPCDialogueName: the Crystalline Sky Island
+}

@@ -1,6 +1,7 @@
 ﻿using Coralite.Core.Systems.CoraliteActorComponent;
 using Coralite.Core.Systems.MagikeSystem.Particles;
 using Coralite.Helpers;
+using System;
 using System.IO;
 using Terraria;
 using Terraria.DataStructures;
@@ -27,7 +28,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public float SendDelayBonus { get => DelayBonus; set => DelayBonus = value; }
 
         /// <summary> 发送时间 </summary>
-        public int SendDelay => (this as ITimerTriggerComponent).Delay;
+        public int SendDelay => Math.Clamp((int)(DelayBase * DelayBonus), -1, int.MaxValue);
 
         public int DelayBase { get; set; }
         public float DelayBonus { get; set; } = 1f;
@@ -35,9 +36,21 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public bool TimeResetable => true;
 
+        public virtual bool UpdateTime()
+        {
+            Timer--;
+            if (Timer <= 0)
+            {
+                Timer = SendDelay;
+                return true;
+            }
+
+            return false;
+        }
+
         public virtual bool CanSend()
         {
-            return (this as ITimerTriggerComponent).UpdateTime();
+            return UpdateTime();
         }
 
         public virtual void OnSend(Point16 selfPoint, Point16 ReceiverPoint)

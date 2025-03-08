@@ -62,9 +62,15 @@ namespace Coralite.Content.Items.RedJades
         {
             if (Projectile.IsOwnedByLocalPlayer())
             {
-                if (Main.rand.NextBool())
+                if (Main.rand.NextBool(3))
+                {
+                    int damage = (int)(Projectile.damage * 0.5f);
+                    if (damage > 18)
+                        damage = 18;
+
                     Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero,
-                        ModContent.ProjectileType<RedJadeBoom>(), (int)(Projectile.damage * 0.5f), Projectile.knockBack, Projectile.owner);
+                        ModContent.ProjectileType<RedJadeBoom>(), damage, Projectile.knockBack, Projectile.owner);
+                }
             }
         }
 
