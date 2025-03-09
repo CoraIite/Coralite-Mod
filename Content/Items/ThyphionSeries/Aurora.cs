@@ -168,7 +168,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             }
             else
             {
-                if (DownLeft && SPTimer == 0)
+                if (!DownLeft && SPTimer == 0)
                 {
                     if (Projectile.IsOwnedByLocalPlayer())
                     {

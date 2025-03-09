@@ -182,16 +182,16 @@ namespace Coralite.Content.Items.ThyphionSeries
                 return;
             }
 
-            if (Owner.controlUseItem && Timer < DashTime + 180)
+            if (!DownLeft && Timer < DashTime + 60)
             {
-                if (Projectile.IsOwnedByLocalPlayer())
-                {
-                    if (Main.rand.NextBool(10))
-                    {
-                        Vector2 dir = Rotation.ToRotationVector2();
-                        Vector2 center = Projectile.Center + dir * 20;
-                    }
-                }
+                //if (Projectile.IsOwnedByLocalPlayer())
+                //{
+                //    if (Main.rand.NextBool(10))
+                //    {
+                //        Vector2 dir = Rotation.ToRotationVector2();
+                //        Vector2 center = Projectile.Center + dir * 20;
+                //    }
+                //}
 
                 Projectile.timeLeft = 2;
                 Owner.itemTime = Owner.itemAnimation = 2;
@@ -364,7 +364,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             if (Projectile.localAI[1] == 0)
             {
                 Projectile.localAI[1] = 1;
-                Vector2 pos = Main.MouseWorld;
+                Vector2 pos = InMousePos;
                 Main.player[Projectile.owner].LimitPointToPlayerReachableArea(ref pos);
                 recordPos = pos;
             }
@@ -373,6 +373,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             {
                 State = 1;
                 Projectile.velocity *= 0;
+                Projectile.localAI[2] = -1;
                 LaserRotation = (recordPos - Projectile.Center).ToRotation();
 
                 SpawnSpeedLine(Projectile.Center);
@@ -402,10 +403,38 @@ namespace Coralite.Content.Items.ThyphionSeries
             {
                 if (Timer < ReadyTime)
                 {
-                    LaserHeight = Helper.Lerp(0, 0.5f, Timer / ReadyTime);
-                    Vector2 pos = InMousePos;
-                    Main.player[Projectile.owner].LimitPointToPlayerReachableArea(ref pos);
-                    recordPos = recordPos.MoveTowards(pos, 8);
+                    float factor = Timer / ReadyTime;
+                    LaserHeight = Helper.Lerp(0, 0.5f, factor);
+
+                    if (Projectile.localAI[2] == -1)
+                    {
+                        NPC n = Helper.FindClosestEnemy(recordPos, 800, n => n.CanBeChasedBy());
+                        if (n != null)
+                        {
+                            Projectile.localAI[2] = n.whoAmI;
+                        }
+                    }
+
+                    if (Projectile.localAI[2].GetNPCOwner(out NPC owner, () => Projectile.localAI[2] = -1))
+                    {
+                        Vector2 aimPos = Projectile.Center;
+                        Vector2 dir2 = (owner.Center - aimPos).SafeNormalize(Vector2.Zero);
+                        float cost = (recordPos.Y - aimPos.Y) / dir2.Y;
+
+                        recordPos = recordPos.MoveTowards(aimPos + dir2 * cost, 50 * factor);
+                    }
+                    else
+                    {
+                        Vector2 pos = InMousePos;
+
+                        Main.player[Projectile.owner].LimitPointToPlayerReachableArea(ref pos);
+                        Vector2 aimPos = Projectile.Center;
+                        Vector2 dir2 = (pos - aimPos).SafeNormalize(Vector2.Zero);
+                        float cost = (recordPos.Y - aimPos.Y) / dir2.Y;
+
+                        recordPos = recordPos.MoveTowards(aimPos + dir2 * cost, 40 * factor);
+                    }
+
                     LaserRotation = (recordPos - Projectile.Center).ToRotation();
                     break;
                 }

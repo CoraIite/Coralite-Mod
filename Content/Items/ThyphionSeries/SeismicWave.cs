@@ -136,6 +136,8 @@ namespace Coralite.Content.Items.ThyphionSeries
         {
             base.SetDefaults();
             Projectile.width = Projectile.height = 70;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = -1;
         }
 
         public override bool? CanDamage()
@@ -188,6 +190,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             Owner.velocity.Y = -12;
             Strike();
+            Owner.wingTime = Owner.wingTimeMax;
         }
 
         public void Strike()
@@ -242,14 +245,14 @@ namespace Coralite.Content.Items.ThyphionSeries
         {
             Projectile.friendly = true;
             Projectile.DamageType = DamageClass.Ranged;
-            Projectile.width = Projectile.height = 320;
+            Projectile.width = Projectile.height = 400;
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
             Projectile.timeLeft = 1000;
             Projectile.penetrate = -1;
 
             Projectile.usesIDStaticNPCImmunity = true;
-            Projectile.idStaticNPCHitCooldown = 12;
+            Projectile.idStaticNPCHitCooldown = 6;
         }
 
         public override void AI()
@@ -262,7 +265,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             else
                 Alpha = 1 - (Timer - 6) / 18f;
 
-            float length = 20 + Timer / 16f * 130;
+            float length = 20 + Timer / 16f * 220;
 
             for (int i = 0; i < 5; i++)
             {

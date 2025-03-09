@@ -75,7 +75,7 @@ namespace Coralite.Content.Items.Icicle
                     break;
                 }
 
-                if (DownLeft)
+                if (!DownLeft)
                 {
                     if (Projectile.IsOwnedByLocalPlayer())
                     {
@@ -101,7 +101,11 @@ namespace Coralite.Content.Items.Icicle
                         SoundEngine.PlaySound(CoraliteSoundID.Bow_Item5, Owner.Center);
                     }
 
-                    Projectile.Kill();
+                    Owner.itemTime = Owner.itemAnimation = 2;
+                    if (Projectile.localAI[2] > 10)
+                        Projectile.Kill();
+
+                    Projectile.localAI[2]++;
                 }
 
             } while (false);

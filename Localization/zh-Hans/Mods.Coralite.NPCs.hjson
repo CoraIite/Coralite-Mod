@@ -61,6 +61,15 @@ CrystalRobot: {
 	Name1: CRS: c000
 	Name2: 克丽丝塔
 	Name3: 魔盖克
+	StandardDialogue1: 你看上去缺少了一点魔能！
+	StandardDialogue2: 需要补充魔能以维持机体运转。
+	StandardDialogue3: 魔力晶体，美味。
+	StandardDialogue4: 天空中，有过去的同伴。
+	StandardDialogue5: 魔力水晶洞，舒适。
+	CommonDialogue1: 魔力晶体，需要大量，会用实用物资与你交换。
+	RareDialogue1: 妖精与仙灵，强大且充满智慧。
+	RareDialogue2: 珊瑚... ... 资料未解锁。
+	RareDialogue3: 古代的龙们，穿过时间来到这里。
 }
 
 Bloodiancie.DisplayName: 赤血玉灵
@@ -126,4 +135,4 @@ Stonelime.DisplayName: 石莱姆王
 StoneSmallime.DisplayName: 石莱姆
 ZacurrentDragon.DisplayName: 兹雷龙
 EyeOfGlistent.DisplayName: 晶莹之眼
-// ServantOfGlistent.DisplayName: Servant Of Glistent
+ServantOfGlistent.DisplayName: 晶莹之仆从

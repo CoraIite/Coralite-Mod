@@ -218,7 +218,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             else
             {
                 arrowAlpha = Helper.Lerp(arrowAlpha, 1, 0.1f);
-                if (DownLeft && Release == 0)
+                if (!DownLeft && Release == 0)
                 {
                     if (Projectile.IsOwnedByLocalPlayer())
                     {
@@ -321,7 +321,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 Vector2 velocity = dir * 12f;
 
                 Projectile.NewProjectileFromThis<RainbowArrow>(Owner.Center, velocity
-                    , Owner.GetDamageWithAmmo(Item), Projectile.knockBack, targetIndex ?? -1);
+                    ,(int)( Owner.GetDamageWithAmmo(Item)*2f), Projectile.knockBack, targetIndex ?? -1);
 
                 Helper.PlayPitched(CoraliteSoundID.Bow_Item5, Owner.Center, pitchAdjust: 0.5f);
                 Helper.PlayPitched(CoraliteSoundID.StrongWinds_Item66, Owner.Center, pitchAdjust: 0.2f);
@@ -402,7 +402,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 Vector2 velocity = dir * 12f;
 
                 Projectile.NewProjectileFromThis<RainbowArrow>(Owner.Center, velocity
-                    , (int)(Owner.GetDamageWithAmmo(Item) * 1.6f), Projectile.knockBack, targetIndex ?? -1);
+                    , (int)(Owner.GetDamageWithAmmo(Item) * 2.75f), Projectile.knockBack, targetIndex ?? -1);
 
                 Helper.PlayPitched(CoraliteSoundID.Bow2_Item102, Owner.Center, pitchAdjust: 0.5f);
                 Helper.PlayPitched(CoraliteSoundID.StrongWinds_Item66, Owner.Center, pitchAdjust: 0.2f);

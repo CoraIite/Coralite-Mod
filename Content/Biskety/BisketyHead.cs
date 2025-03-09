@@ -5,6 +5,7 @@ using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.IO;
+using System.Reflection;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -109,7 +110,7 @@ namespace Coralite.Content.Biskety
     {
         public override string Texture => AssetDirectory.MiscItems + Name;
 
-        public float Timer { get; set; }
+        public float Timer { get; set; } = -1;
         public float TotalTime { get; set; }
 
         private int itemDamageRecorder;

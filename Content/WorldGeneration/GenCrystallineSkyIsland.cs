@@ -49,19 +49,62 @@ namespace Coralite.Content.WorldGeneration
             PlaceNightSoul = false;
             HasPermission = false;
 
+
             //生成地表结构
             GenGroundLock(out Point altarPoint);
-            progress.Value = 0.25f;
+            progress.Value = 0.33f;
+
+            int highestY = GetHighestY(altarPoint);
 
             //生成主体空岛
-            GenMainSkyIsland(altarPoint,out Rectangle mainRect);
-            progress.Value = 0.5f;
+            GenMainSkyIsland(altarPoint, out Rectangle mainRect);
+            progress.Value = 0.66f;
+
+            mainRect.Height += 60;
+
+            if (mainRect.Y + mainRect.Height < highestY)
+                mainRect.Height = highestY - mainRect.Y;
 
             //生成小岛
-            GenSmallIslands(mainRect,out List<Rectangle> smallIslands);
+            GenSmallIslands(mainRect);
+        }
 
-            //生成主岛与地面遗迹之间的物块
+        public int GetHighestY(Point center)
+        {
+            int x = center.X - 300;//设置范围
+            if (x < 41)
+                x = 41;
 
+            int count = 600;
+            if (x + count > Main.maxTilesX - 41)
+                count = Main.maxTilesX - 41 - x;
+
+            int y = Main.maxTilesY;
+
+            for (int i = 0; i < count; i++)
+            {
+                int currentX = x + i;
+                int currentY = (int)(Main.worldSurface * 0.4f);
+                for (int j = 0; j < 500; j++)//向下遍历，找到地面
+                {
+                    Tile t = Main.tile[currentX, currentY];
+                    if ((t.HasTile && Main.tileSolid[t.TileType] && t.TileType is not TileID.ClayBlock or TileID.Dirt or TileID.Grass or TileID.RainCloud or TileID.Cloud)
+                        || t.LiquidAmount > 0)//找到实心方块
+                        break;
+
+                    currentY++;
+                }
+
+                if (currentY < y)
+                    y = currentY;
+            }
+
+            y -= 150;
+
+            if (y < 41)
+                y = 41;
+
+            return y;
         }
 
         #region 生成地面遗迹
@@ -79,7 +122,7 @@ namespace Coralite.Content.WorldGeneration
                 for (int j = 0; j < 500; j++)//向下遍历，找到地面
                 {
                     Tile t = Main.tile[p2.X, p2.Y];
-                    if ((t.HasTile && Main.tileSolid[t.TileType]&&t.TileType is not TileID.ClayBlock or TileID.Dirt or TileID.Grass or TileID.RainCloud)
+                    if ((t.HasTile && Main.tileSolid[t.TileType]&&t.TileType is not TileID.ClayBlock or TileID.Dirt or TileID.Grass or TileID.RainCloud or TileID.Cloud)
                         || t.LiquidAmount > 0)//找到实心方块
                         break;
 
@@ -117,13 +160,11 @@ namespace Coralite.Content.WorldGeneration
                 [new Color(71, 56, 53)] = TileID.Mud,//473835
 
                 [new Color(241, 130, 255)] = crystallineBrick,//f182ff
-                [Color.Black] = -1
             };
             Dictionary<Color, int> wallDic = new()
             {
                 [new Color(85, 183, 206)] = ModContent.WallType<SmoothSkarnWallUnsafe>(),//55b7ce
                 [new Color(29, 30, 28)] = ModContent.WallType<Walls.Magike.HardBasaltWall>(),//1d1e1c
-                [Color.Black] = -1
             };
 
             generator.GenerateByTopLeft(p,mainDic,wallDic);
@@ -1356,7 +1397,7 @@ namespace Coralite.Content.WorldGeneration
             Count
         }
 
-        public void GenSmallIslands(Rectangle mainRect, out List<Rectangle> SmallIslandDatas)
+        public void GenSmallIslands(Rectangle mainRect)
         {
             int smallIslandCount = ValueByWorldSize(
                 WorldGen.genRand.Next(5, 8),
@@ -1367,7 +1408,7 @@ namespace Coralite.Content.WorldGeneration
             //smallIslandCount = 8;
 
             List<Rectangle> avoidRects = [mainRect];
-            SmallIslandDatas = [];
+            List<Rectangle> rects = [];
 
             Rectangle expandRect = mainRect;
 
@@ -1442,7 +1483,7 @@ namespace Coralite.Content.WorldGeneration
                 {
                     if (!typesRecord.Contains((smallIslandType, style)))
                     {
-                        typesRecord.Add((smallIslandType,style));
+                        typesRecord.Add((smallIslandType, style));
                         break;
                     }
 
@@ -1457,15 +1498,15 @@ namespace Coralite.Content.WorldGeneration
 
                 //外部尺寸
                 int protect = WorldGen.genRand.Next(8, 18);
-                Point outerSize = data.Size + new Point(protect, protect + data.Height/3);//让高度高一些
+                Point outerSize = data.Size + new Point(protect, protect + data.Height / 3);//让高度高一些
 
                 Point SpawnTopLeft = default;
                 bool success = false;
 
                 do
                 {
-                    expandRect.X--;//扩张基础矩形
-                    expandRect.Width += 2;
+                    expandRect = ExpandArea(expandRect);
+
                     Rectangle currentRect = default;
                     for (int k = 0; k < 50; k++)//每次随机50次中心点
                     {
@@ -1474,6 +1515,10 @@ namespace Coralite.Content.WorldGeneration
                         //直到随机到一个可以容纳的情况
                         Point p = WorldGen.genRand.NextVector2FromRectangle(expandRect).ToPoint();
                         currentRect = new Rectangle(p.X, p.Y, outerSize.X, outerSize.Y);
+
+                        //出范围直接重来
+                        if (!expandRect.Contains(currentRect))
+                            continue;
 
                         foreach (var rect in avoidRects)//检测碰撞
                             if (rect.Intersects(currentRect))
@@ -1493,7 +1538,7 @@ namespace Coralite.Content.WorldGeneration
                     if (success)//成功找到位置
                     {
                         avoidRects.Add(currentRect);
-                        SmallIslandDatas.Add(new Rectangle(SpawnTopLeft.X, SpawnTopLeft.Y, data.Width, data.Height));
+                        rects.Add(new Rectangle(SpawnTopLeft.X, SpawnTopLeft.Y, data.Width, data.Height));
                     }
 
                 } while (!success);
@@ -1503,11 +1548,56 @@ namespace Coralite.Content.WorldGeneration
             }
 
             //清理范围内坏掉的箱子和树
+            CSmallIslandClearVanillaThings(expandRect);
 
             //在岛屿中间放置各种小石块和云块
+            CSmallIslandFloatingBalls(expandRect, avoidRects);
 
             //后续生成各种杂物等
-            foreach (var Box in SmallIslandDatas)
+            CSmallIslandDecorations(rects);
+        }
+
+        private static void CSmallIslandFloatingBalls(Rectangle area, List<Rectangle> avoidRects)
+        {
+            int count = (area.Width + area.Height) / 20;//放置这些次云团和矽卡岩团
+
+            for (int i = 0; i < count; i++)
+            {
+
+            }
+        }
+
+        private static void CSmallIslandClearVanillaThings(Rectangle rect)
+        {
+            Point topLeft = rect.TopLeft().ToPoint();
+
+            for (int i = 0; i < rect.Width; i++)
+                for (int j = 0; j < rect.Height; j++)
+                {
+                    Tile t = Main.tile[topLeft + new Point(i, j)];
+                    if (!t.HasTile)
+                        continue;
+
+                    if (t.TileType == TileID.Trees)//清理树
+                        WorldGen.KillTile(topLeft.X + i, topLeft.Y + j, noItem: true);
+
+                    int index = Chest.FindChest(topLeft.X + i, topLeft.Y + j);
+
+                    if (index != -1)//清理原版箱子
+                        if (t.TileType != ModContent.TileType<SkarnChestTile>())
+                            Chest.DestroyChestDirect(topLeft.X + i, topLeft.Y + j, index);
+
+                    if (t.TileType == TileID.Containers)//清理原版箱子物块
+                    {
+                        t.ClearTile();
+                        WorldGen.KillTile(topLeft.X + i, topLeft.Y + j, noItem: true);
+                    }
+                }
+        }
+
+        private static void CSmallIslandDecorations(List<Rectangle> rects)
+        {
+            foreach (var Box in rects)
             {
                 CSkyIslandSlope((ushort)ModContent.TileType<SkarnBrickTile>(), Box, default, 3);
 
@@ -1543,6 +1633,21 @@ namespace Coralite.Content.WorldGeneration
                 CSkyIslandGrassDecorations(Box);
                 ClearUncorrectDecoration(Box);
             }
+        }
+
+        private static Rectangle ExpandArea(Rectangle expandRect)
+        {
+            if (expandRect.X < 41)//左边顶到世界边界了，只向右扩展
+                expandRect.Width += 2;
+            else if (expandRect.X + expandRect.Width > Main.maxTilesX - 41)//右边顶到世界边界了，只向左扩展
+                expandRect.X -= 2;
+            else
+            {
+                expandRect.X--;//扩张基础矩形
+                expandRect.Width += 2;
+            }
+
+            return expandRect;
         }
 
         public static void CSkyIslandObjectPlace(Color c, int x, int y)

@@ -193,7 +193,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             }
             else
             {
-                if (DownLeft && SPTimer == 0)
+                if (!DownLeft && SPTimer == 0)
                 {
                     if (Projectile.IsOwnedByLocalPlayer())
                     {
@@ -215,11 +215,6 @@ namespace Coralite.Content.Items.ThyphionSeries
                         //射冰晶波
                         Projectile.NewProjectileFromThis<GlaciateWave>(Projectile.Center, UnitToMouseV * 24, (int)(Owner.GetDamageWithAmmo(Item) * 1.5f)
                             , Projectile.knockBack);
-
-                        if (Item.ModItem is Glaciate glaciate)
-                        {
-                            glaciate.powerfulAttack = true;
-                        }
 
                         if (Projectile.IsOwnedByLocalPlayer())
                         {
@@ -459,6 +454,12 @@ namespace Coralite.Content.Items.ThyphionSeries
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Projectile.velocity = Projectile.velocity.SafeNormalize(Vector2.Zero) * 2;
+            if (Projectile.localAI[2]==0)
+            {
+                Projectile.localAI[2] = 1;
+            if (Main.player[Projectile.owner].HeldItem.ModItem is Glaciate glaciate)
+                glaciate.powerfulAttack = true;
+            }
         }
 
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
@@ -650,7 +651,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         private void TryMakingSpike(Vector2 pos, Vector2 dir)
         {
-            int damage = (int)(Projectile.damage * 5.5f);
+            int damage = (int)(Projectile.damage * 9f);
 
             int p = Projectile.NewProjectileFromThis(pos + dir * 30, dir, ProjectileType<IceThorn>(),
                  damage, 0f, 0f, 1.3f);

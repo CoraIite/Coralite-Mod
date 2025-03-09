@@ -213,7 +213,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                     break;
                 }
 
-                if (DownLeft)
+                if (!DownLeft)
                 {
                     if (Projectile.IsOwnedByLocalPlayer())
                     {

@@ -66,7 +66,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 for (int i = -1; i < 2; i++)
                 {
                     Projectile.NewProjectile(source, player.Center + dir.RotatedBy(i * MathHelper.PiOver2), velocity
-                        , ProjectileType<SolunarArrow>(), damage, knockback, player.whoAmI, i + 1, dir.X, dir.Y);
+                        , ProjectileType<SolunarArrow>(), damage*2, knockback, player.whoAmI, i + 1, dir.X, dir.Y);
                 }
 
                 sp = 2;
@@ -121,15 +121,15 @@ namespace Coralite.Content.Items.ThyphionSeries
             {
                 newVelocity = new Vector2(dashDirection, 0);
 
-                float angle = (Main.MouseWorld - Player.Center).ToRotation();
-                const float angleLimit = 0.2f;
+                //float angle = (Main.MouseWorld - Player.Center).ToRotation();
+                //const float angleLimit = 0.2f;
 
-                if ((angle > -MathHelper.PiOver2 - angleLimit && angle < -MathHelper.PiOver2 + angleLimit)
-                    || (angle > MathHelper.PiOver2 - angleLimit && angle < MathHelper.PiOver2 + angleLimit))
-                {
-                    dashDirection = Math.Sign(Main.MouseWorld.X - Player.Center.X);
-                    newVelocity = (Main.MouseWorld - Player.Center).SafeNormalize(Vector2.Zero);
-                }
+                //if ((angle > -MathHelper.PiOver2 - angleLimit && angle < -MathHelper.PiOver2 + angleLimit)
+                //    || (angle > MathHelper.PiOver2 - angleLimit && angle < MathHelper.PiOver2 + angleLimit))
+                //{
+                //    dashDirection = Math.Sign(Main.MouseWorld.X - Player.Center.X);
+                //    newVelocity = (Main.MouseWorld - Player.Center).SafeNormalize(Vector2.Zero);
+                //}
             }
             else
             {
@@ -301,7 +301,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                         {
                             for (int i = -1; i < 2; i++)
                             {
-                                int damage = i == 0 ? (int)(Owner.GetDamageWithAmmo(Item) * 5f) : Owner.GetDamageWithAmmo(Item);
+                                int damage = i == 0 ? (int)(Owner.GetDamageWithAmmo(Item) * 6.5f) : Owner.GetDamageWithAmmo(Item);
                                 int p = Projectile.NewProjectileFromThis<SolunarStrike>(Projectile.Center, Vector2.Zero
                                      , damage, 10, Projectile.whoAmI);
 
@@ -313,7 +313,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
                     break;
                 case 2://射击阶段
-                    if (DownLeft && SPTimer == 0)
+                    if (!DownLeft && SPTimer == 0)
                     {
                         if (Projectile.IsOwnedByLocalPlayer())
                         {
@@ -373,7 +373,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
                             SetOwnerSPAttack();
 
-                            Projectile.NewProjectileFromThis<SolunarBallLaser>(Projectile.Center, new Vector2(0, -16), Owner.GetDamageWithAmmo(Item), 0);
+                            Projectile.NewProjectileFromThis<SolunarBallLaser>(Projectile.Center, new Vector2(0, -16), Owner.GetDamageWithAmmo(Item)*2, 0);
                             handOffset = -30;
                         }
 
@@ -704,16 +704,17 @@ namespace Coralite.Content.Items.ThyphionSeries
         public void SetEndPoint(ref Vector2 endPoint, int exAngledir)
         {
             Vector2 dir = Vector2.UnitX.RotatedBy(Projectile.rotation + exAngledir * ExAngle);
-            for (int k = 0; k < 90; k++)
-            {
-                Vector2 posCheck = Projectile.Center + (dir * k * 16);
+            endPoint = Projectile.Center + dir * 120 * 16;
+            //for (int k = 0; k < 70; k++)
+            //{
+            //    Vector2 posCheck = Projectile.Center + (dir * k * 16);
 
-                if (Helper.PointInTile(posCheck) || k == 89)
-                {
-                    endPoint = posCheck;
-                    return;
-                }
-            }
+            //    if (Helper.PointInTile(posCheck) || k == 69)
+            //    {
+            //        endPoint = posCheck;
+            //        return;
+            //    }
+            //}
         }
 
         public void SpawnLaserParticle(int width, Vector2 dir, Color color, int dustid)

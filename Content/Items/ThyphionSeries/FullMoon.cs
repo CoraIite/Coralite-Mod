@@ -235,7 +235,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
                     break;
                 case 2://射击阶段
-                    if (DownLeft && SPTimer == 0)
+                    if (!DownLeft && SPTimer == 0)
                     {
                         if (Projectile.IsOwnedByLocalPlayer())
                         {

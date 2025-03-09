@@ -32,6 +32,9 @@ namespace Coralite.Content.NPCs.Town
         private static Profiles.StackedNPCProfile NPCProfile;
 
         private static LocalizedText[] Names;
+        private static LocalizedText[] StandardChats;
+        private static LocalizedText[] CommonChats;
+        private static LocalizedText[] RareChats;
 
         public override void Load()
         {
@@ -44,6 +47,26 @@ namespace Coralite.Content.NPCs.Town
                 this.GetLocalization("Name2", () => "克丽丝塔"),
                 this.GetLocalization("Name3", () => "魔盖克"),
                 ];
+
+            StandardChats = [
+                this.GetLocalization("StandardDialogue1", () => "你看上去缺少了一点魔能！"),
+                this.GetLocalization("StandardDialogue2", () => "需要补充魔能以维持机体运转。"),
+                this.GetLocalization("StandardDialogue3", () => "魔力晶体，美味。"),
+                this.GetLocalization("StandardDialogue4", () => "天空中，有过去的同伴。"),
+                this.GetLocalization("StandardDialogue5", () => "魔力水晶洞，舒适。"),
+                ];
+
+            CommonChats = [
+                this.GetLocalization("CommonDialogue1", () => "魔力晶体，需要大量，会用实用物资与你交换。"),
+                ];
+
+            RareChats = [
+                this.GetLocalization("RareDialogue1", () => "妖精与仙灵，强大且充满智慧。"),
+                this.GetLocalization("RareDialogue2", () => "珊瑚... ... 资料未解锁。"),
+                this.GetLocalization("RareDialogue3", () => "古代的龙们，穿过时间来到这里。"),
+                ];
+
+
         }
 
         public override void Unload()
@@ -196,25 +219,14 @@ namespace Coralite.Content.NPCs.Town
         {
             WeightedRandom<string> chat = new();
 
-            //int partyGirl = NPC.FindFirstNPC(NPCID.PartyGirl);
-            //if (partyGirl >= 0 && Main.rand.NextBool(4))
-            //{
-            //    chat.Add(Language.GetTextValue($"Mods.Coralite.Dialogue.CrystalRobot.PartyGirlDialogue", Main.npc[partyGirl].GivenName));
-            //}
+            foreach (var item in StandardChats)
+                chat.Add(item.Value);
+            foreach (var item in CommonChats)
+                chat.Add(item.Value,3);
+            foreach (var item in RareChats)
+                chat.Add(item.Value,0.1f);
 
-            chat.Add(Language.GetOrRegister($"Mods.Coralite.Dialogue.CrystalRobot.StandardDialogue1", () => "当今，神明隐去，万物复兴。").Value);
-            chat.Add(Language.GetOrRegister($"Mods.Coralite.Dialogue.CrystalRobot.StandardDialogue2", () => "需要补充魔能以维持机体运转。").Value);
-            chat.Add(Language.GetOrRegister($"Mods.Coralite.Dialogue.CrystalRobot.StandardDialogue3", () => "魔力晶体，美味。").Value);
-            chat.Add(Language.GetOrRegister($"Mods.Coralite.Dialogue.CrystalRobot.CommonDialogue", () => "魔力晶体，需要大量，会用实用物资与你交换。").Value, 3.0);
-            chat.Add(Language.GetOrRegister($"Mods.Coralite.Dialogue.CrystalRobot.RareDialogue1", () => "妖精，强大且充满智慧，创造了我。").Value, 0.1);
-            chat.Add(Language.GetOrRegister($"Mods.Coralite.Dialogue.CrystalRobot.RareDialogue2", () => "珊瑚，过于强大，集全族之力也无法与之抗衡。").Value, 0.1);
-            chat.Add(Language.GetOrRegister($"Mods.Coralite.Dialogue.CrystalRobot.RareDialogue3", () => "应龙，伟大，但记忆体中只有文字记载。").Value, 0.1);
-
-            NumberOfTimesTalkedTo++;
-            if (NumberOfTimesTalkedTo >= 10)
-                chat.Add(Language.GetOrRegister($"Mods.Coralite.Dialogue.CrystalRobot.TalkALot", () => "魔能辞典，你需要，尽快购买。").Value);
-
-            return chat;
+            return chat.Get();
         }
 
         public override void SetChatButtons(ref string button, ref string button2)

@@ -1,5 +1,4 @@
 ﻿using Coralite.Core;
-using System;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
@@ -18,7 +17,7 @@ namespace Coralite.Content.Biomes
 
         public override bool IsBiomeActive(Player player)
         {
-            bool b1 = ModContent.GetInstance<CoraliteTileCount>().CrystallineSkyIslandTileCount >= 350;
+            bool b1 = ModContent.GetInstance<CoraliteTileCount>().CrystallineSkyIslandTileCount >= 400;
             bool b2 = player.Center.Y / 16 < Main.worldSurface * 0.8f;
 
             return b1 && b2;
@@ -37,7 +36,7 @@ namespace Coralite.Content.Biomes
 
         public override bool IsSceneEffectActive(Player player)
         {
-            bool b1 = ModContent.GetInstance<CoraliteTileCount>().CrystallineSkyIslandTileCount >= 350;
+            bool b1 = ModContent.GetInstance<CoraliteTileCount>().CrystallineSkyIslandTileCount >= 400;
             bool b2 = player.Center.Y / 16 < Main.worldSurface * 0.8f;
 
             return b1 && b2;

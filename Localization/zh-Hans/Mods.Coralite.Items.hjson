@@ -533,10 +533,7 @@ ShadowHead: {
 
 ShadowLegs: {
 	DisplayName: 影子护腿
-	Tooltip:
-		'''
-		击退 +6%
-		'''
+	Tooltip: 击退 +6%
 }
 
 ShadowPickaxe: {
@@ -4989,6 +4986,7 @@ Turbulence: {
 	Tooltip:
 		'''
 		双击方向键冲刺，并射出乱流箭贯穿敌人
+		右键射出乱流针
 		冲刺过程中具有短暂无敌
 		[c/68c7dd:"穿梭于云间"]
 		'''
@@ -5019,6 +5017,7 @@ SeismicWave: {
 	Tooltip:
 		'''
 		双击下键冲刺，命中敌怪或是地面后产生冲击波
+		下冲命中敌怪后弹起并重置飞行时间
 		[c/bac1ce:来自地下深处的震动]
 		'''
 }
