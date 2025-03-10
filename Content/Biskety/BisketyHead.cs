@@ -192,7 +192,7 @@ namespace Coralite.Content.Biskety
             {
                 TotalTime++;
                 Timer++;
-                if (Timer > 60 * 5)
+                if (Timer > 60 * 3)
                 {
                     TotalTime = 0;
                     Timer = -1;

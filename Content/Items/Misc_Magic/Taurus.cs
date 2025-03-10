@@ -20,8 +20,8 @@ namespace Coralite.Content.Items.Misc_Magic
         public override void SetDefaults()
         {
             Item.SetWeaponValues(50, 6f);
-            Item.DefaultToMagicWeapon(ModContent.ProjectileType<TaurusStar>(), 12, 12, true);
-            Item.mana = 5;
+            Item.DefaultToMagicWeapon(ModContent.ProjectileType<TaurusStar>(), 11, 12, true);
+            Item.mana = 9;
 
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.value = Item.sellPrice(0, 1);
@@ -33,19 +33,19 @@ namespace Coralite.Content.Items.Misc_Magic
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             shootCount++;
-            Helper.PlayPitched(CoraliteSoundID.MagicShoot_Item9, position,pitch:-0.5f);
+            Helper.PlayPitched(CoraliteSoundID.MagicShoot_Item9, position,pitch:-0.5f,volume:0.6f);
 
             if (shootCount > 7)
             {
                 shootCount = 0;
-                Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<TaurusMeteor>(), damage, knockback, player.whoAmI);
+                Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<TaurusMeteor>(), (int)(damage*1.5f), knockback, player.whoAmI);
                 return false;
             }
 
             if (Main.rand.NextBool(3))
             {
-                for (int i = -1; i < 2; i+=2)
-                    ShootSmallStar(player, source, position, velocity, type, (int)(damage*0.6f), knockback, i);
+                for (int i = -1; i < 2; i += 2)
+                    ShootSmallStar(player, source, position, velocity, type, (int)(damage * 0.65f), knockback, i);
             }
             else
                 ShootSmallStar(player, source, position, velocity, type, damage, knockback, Main.rand.NextFromList(-1, 1));

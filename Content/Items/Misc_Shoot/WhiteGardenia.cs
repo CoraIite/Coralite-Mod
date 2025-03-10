@@ -251,7 +251,7 @@ namespace Coralite.Content.Items.Misc_Shoot
                                 Helper.PlayPitched(CoraliteSoundID.TerraBlade_Item60, Owner.Center, pitch: 0.8f);
 
                                 Projectile.NewProjectileFromThis<WhiteGardeniaPowerfulShoot>(Projectile.Center, (targetPos - Owner.MountedCenter).SafeNormalize(Vector2.Zero) * 16
-                                    , Owner.GetDamageWithAmmo(Item) * 5, Item.knockBack);
+                                    , Owner.GetDamageWithAmmo(Item) * 30, Item.knockBack);
                             }
                         }
 

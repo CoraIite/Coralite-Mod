@@ -67,8 +67,8 @@ namespace Coralite.Content.Items.Phantom
             Projectile.height = 16 * 3;
             Projectile.timeLeft = 100;
             Projectile.penetrate = -1;
-            Projectile.usesIDStaticNPCImmunity = true;
-            Projectile.idStaticNPCHitCooldown = 25;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 12;
 
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
