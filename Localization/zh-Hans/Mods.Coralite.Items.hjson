@@ -3145,7 +3145,7 @@ WarpMirror: {
 
 Virgo: {
 	DisplayName: 十二星 - 处女座
-	Tooltip: 将火枪子弹转化为羽毛弹
+	Tooltip: 将子弹转化为羽毛弹
 }
 
 GigantesShoes: {

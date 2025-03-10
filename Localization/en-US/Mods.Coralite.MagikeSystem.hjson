@@ -209,6 +209,7 @@ MagikeSystem: {
 		CraftAltarShowOnlyCanCraft: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.CraftAltarShowOnlyCanCraft
 		CraftAltarShowOnlyCantCraft: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.CraftAltarShowOnlyCantCraft
 		CraftAltarShowAll: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.CraftAltarShowAll
+		Second: s
 	}
 
 	CraftText: {

@@ -399,6 +399,7 @@ namespace Coralite.Core.Systems.MagikeSystem
             ChargerItemNotFound,
             ApothecaryTable,
             ApothecaryTableDescription,
+            Second,
 
             Count
         }

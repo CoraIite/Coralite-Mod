@@ -596,7 +596,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             Vector2 pos = topLeft + new Vector2(30 + width / 2, per / 2);
 
             //绘制时间
-            Utils.DrawBorderString(spriteBatch, MathF.Round((sender.SendDelay - sender.Timer) / 60f, 1).ToString(), pos + new Vector2(0, 4), Color.White
+            Utils.DrawBorderString(spriteBatch, MathF.Round((1 - sender.Timer / (float)sender.SendDelay) * 100).ToString() + " %", pos + new Vector2(0, 4), Color.White
                 , 1.1f, anchorx: 0.5f, anchory: 0.5f);
 
             //绘制中间的进度条
@@ -606,7 +606,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             pos += new Vector2(0, per / 2 + box.Height / 2);
 
-            Vector2 barPos = pos - new Vector2(width / 2-4, 0);
+            Vector2 barPos = pos - new Vector2(width / 2 - 4, 0);
             Vector2 origin = new Vector2(0, box.Height / 2);
             spriteBatch.Draw(barTex, barPos, box, Color.White, 0, origin
                 , 1, 0, 0);
@@ -628,7 +628,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             //绘制倒计时
             Color color = MagikeHelper.GetBonusColor(sender.SendDelayBonus, true);
-            Utils.DrawBorderString(spriteBatch, MathF.Round(delay / 60f, 1).ToString(), pos + new Vector2(0, 4), color
+            Utils.DrawBorderString(spriteBatch, MathF.Round(delay / 60f, 1).ToString() + " " + MagikeSystem.GetUIText(MagikeSystem.UITextID.Second), pos + new Vector2(0, 4), color
                 , 1.1f, anchorx: 0.5f, anchory: 0.5f);
 
             pos += new Vector2(0, per);

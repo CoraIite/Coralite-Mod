@@ -55,18 +55,25 @@ namespace Coralite.Content.WorldGeneration
             progress.Value = 0.33f;
 
             int highestY = GetHighestY(altarPoint);
+            int y2 = highestY;
+
+            y2 -= 150;
+
+            if (y2 < 41)
+                y2 = 41;
 
             //生成主体空岛
             GenMainSkyIsland(altarPoint, out Rectangle mainRect);
             progress.Value = 0.66f;
 
+            Rectangle tempMain = mainRect;
             mainRect.Height += 60;
 
-            if (mainRect.Y + mainRect.Height < highestY)
-                mainRect.Height = highestY - mainRect.Y;
+            if (mainRect.Y + mainRect.Height < y2)
+                mainRect.Height = y2 - mainRect.Y;
 
             //生成小岛
-            GenSmallIslands(mainRect);
+            GenSmallIslands(mainRect, tempMain, highestY);
         }
 
         public int GetHighestY(Point center)
@@ -98,11 +105,6 @@ namespace Coralite.Content.WorldGeneration
                 if (currentY < y)
                     y = currentY;
             }
-
-            y -= 150;
-
-            if (y < 41)
-                y = 41;
 
             return y;
         }
@@ -522,6 +524,8 @@ namespace Coralite.Content.WorldGeneration
                 int dir = WorldGen.genRand.NextFromList(-1, 1);
                 int cloudBallcount = WorldGen.genRand.Next(2, 4);
 
+                bool otherSide = WorldGen.genRand.NextBool(4);
+
                 for (int v = 0; v < cloudBallcount; v++)
                 {
                     float scale = 1 + v * 0.1f;
@@ -548,6 +552,34 @@ namespace Coralite.Content.WorldGeneration
                             , new Actions.PlaceWall(WallID.Cloud)
                             , new Actions.SetFrames()));
                 }
+
+                if (otherSide)
+                    for (int v = 1; v < cloudBallcount; v++)
+                    {
+                        float scale = 1 + v * 0.1f;
+                        float yScale = 1 - v * 0.2f;
+
+                        int verticalRadius = (int)((cloudWidth - 2) / 2 * yScale);
+                        if (verticalRadius < 1)
+                            verticalRadius = 1;
+
+                        int horizontalRadius = (int)(cloudWidth / 2 * scale);
+                        if (horizontalRadius < 1)
+                            horizontalRadius = 1;
+
+                        Point cloudOrigin = p1 + new Point(-horizontalRadius * dir * v, WorldGen.genRand.Next(-verticalRadius, verticalRadius));
+
+                        if (shrineRect.Intersects(Utils.CenteredRectangle(cloudOrigin.ToVector2(), new Vector2(horizontalRadius * 2, verticalRadius * 2))))
+                            break;
+
+                        WorldUtils.Gen(
+                            cloudOrigin,
+                            new Shapes.Circle(horizontalRadius, verticalRadius),
+                            Actions.Chain(
+                                 new Modifiers.Blotches(1)
+                                , new Actions.PlaceWall(WallID.Cloud)
+                                , new Actions.SetFrames()));
+                    }
             }
         }
 
@@ -585,10 +617,13 @@ namespace Coralite.Content.WorldGeneration
         /// <param name="shrineRect"></param>
         /// <param name="p"></param>
         /// <returns></returns>
-        private static void CSkyIslandCloudBall(Rectangle shrineRect, Point p, int cloudBallcount)
+        private static void CSkyIslandCloudBall(Rectangle shrineRect, Point p, int cloudBallcount,int? overrideCloudWidth=null)
         {
             int cloudWidth = WorldGen.genRand.Next(5, 11);
+            cloudWidth = overrideCloudWidth ?? cloudWidth;
             int dir = WorldGen.genRand.NextFromList(-1, 1);
+
+            bool otherSide = WorldGen.genRand.NextBool(4);
 
             for (int v = 0; v < cloudBallcount; v++)
             {
@@ -614,6 +649,35 @@ namespace Coralite.Content.WorldGeneration
                     Actions.Chain(
                         new Actions.PlaceTile(TileID.Cloud)
                         , new Actions.SetFrames()));
+            }
+
+            if (otherSide)
+            {
+                for (int v = 1; v < cloudBallcount; v++)
+                {
+                    float scale = 1 + v * 0.1f;
+                    float yScale = 0.8f - v * 0.2f;
+
+                    int verticalRadius = (int)((cloudWidth - 2) / 2 * yScale);
+                    if (verticalRadius < 1)
+                        verticalRadius = 1;
+
+                    int horizontalRadius = (int)(cloudWidth / 2 * scale);
+                    if (horizontalRadius < 1)
+                        horizontalRadius = 1;
+
+                    Point cloudOrigin = p + new Point(-horizontalRadius * dir * v, WorldGen.genRand.Next(-verticalRadius, verticalRadius));
+
+                    if (shrineRect.Intersects(Utils.CenteredRectangle(cloudOrigin.ToVector2(), new Vector2(horizontalRadius * 2, verticalRadius * 2))))
+                        break;
+
+                    WorldUtils.Gen(
+                        cloudOrigin,
+                        new Shapes.Circle(horizontalRadius, verticalRadius),
+                        Actions.Chain(
+                            new Actions.PlaceTile(TileID.Cloud)
+                            , new Actions.SetFrames()));
+                }
             }
         }
 
@@ -1397,7 +1461,7 @@ namespace Coralite.Content.WorldGeneration
             Count
         }
 
-        public void GenSmallIslands(Rectangle mainRect)
+        public void GenSmallIslands(Rectangle mainRect, Rectangle originMainRect,int highestY)
         {
             int smallIslandCount = ValueByWorldSize(
                 WorldGen.genRand.Next(5, 8),
@@ -1407,7 +1471,7 @@ namespace Coralite.Content.WorldGeneration
 
             //smallIslandCount = 8;
 
-            List<Rectangle> avoidRects = [mainRect];
+            List<Rectangle> avoidRects = [originMainRect];
             List<Rectangle> rects = [];
 
             Rectangle expandRect = mainRect;
@@ -1548,7 +1612,10 @@ namespace Coralite.Content.WorldGeneration
             }
 
             //清理范围内坏掉的箱子和树
-            CSmallIslandClearVanillaThings(expandRect);
+            CSmallIslandClearVanillaThings(expandRect with
+            {
+                Height = (highestY > expandRect.Y + expandRect.Height) ? (highestY - expandRect.Y) : expandRect.Height
+            });
 
             //在岛屿中间放置各种小石块和云块
             CSmallIslandFloatingBalls(expandRect, avoidRects);
@@ -1561,9 +1628,178 @@ namespace Coralite.Content.WorldGeneration
         {
             int count = (area.Width + area.Height) / 20;//放置这些次云团和矽卡岩团
 
+            //放置矽卡岩团
             for (int i = 0; i < count; i++)
             {
+                Point p = Point.Zero;// WorldGen.genRand.NextVector2FromRectangle(area).ToPoint();
 
+                for (int j = 0; j < 500; j++)//找到一个自身没物块的地方
+                {
+                    Point p2 = WorldGen.genRand.NextVector2FromRectangle(area).ToPoint();
+                    if (Main.tile[p2].HasTile)
+                        continue;
+
+                    bool cont = false;
+                    foreach (var rect in avoidRects)
+                        if (rect.Intersects(Utils.CenteredRectangle(p2.ToVector2(), new Vector2(4, 4))))
+                        {
+                            cont = true;
+                            break;
+                        }
+
+                    if (cont)
+                        continue;
+
+                    p = p2;
+                }
+
+                if (p == Point.Zero)
+                    continue;
+
+                ushort tileType = WorldGen.genRand.NextFromList(
+                    (ushort)ModContent.TileType<SkarnTile>(),
+                    (ushort)ModContent.TileType<SmoothSkarnTile>(),
+                    (ushort)ModContent.TileType<ChalcedonySkarn>(),
+                    (ushort)ModContent.TileType<ChalcedonySmoothSkarn>()
+                    );
+
+                //ShapeData data=new ShapeData();
+
+                    WorldUtils.Gen(
+                        p,
+                        new Shapes.Mound(WorldGen.genRand.Next(3, 8), WorldGen.genRand.Next(4, 8)),
+                        Actions.Chain(
+                            new Modifiers.Flip(false, true),
+                            new Modifiers.Blotches(2),
+                            new Actions.PlaceTile(tileType)/*.Output(data)*/));
+                //else
+                //    WorldUtils.Gen(
+                //        p,
+                //        new Shapes.Slime(WorldGen.genRand.Next(3, 8), WorldGen.genRand.NextFloat(1f, 1.2f), WorldGen.genRand.NextFloat(0.8f, 1f)),
+                //        Actions.Chain(
+                //            new Modifiers.Flip(false, true),
+                //            new Modifiers.Blotches(2),
+                //            new Actions.PlaceTile(tileType)/*.Output(data)*/));
+
+                //WorldUtils.Gen(
+                //    p,
+                //   new ModShapes.InnerOutline(data),
+                //    Actions.Chain(
+                //        new Modifiers.Dither(0.15f),
+                //        new Actions.ClearTile()));
+            }
+
+            //放置云团
+            for (int i = 0; i < count; i++)
+            {
+                Point p = Point.Zero;// WorldGen.genRand.NextVector2FromRectangle(area).ToPoint();
+
+                for (int j = 0; j < 500; j++)//找到一个自身没物块的地方
+                {
+                    Point p2 = WorldGen.genRand.NextVector2FromRectangle(area).ToPoint();
+                    if (Main.tile[p2].HasTile)
+                        continue;
+
+                    bool cont = false;
+                    foreach (var rect in avoidRects)
+                        if (rect.Intersects(Utils.CenteredRectangle(p2.ToVector2(), new Vector2(4, 4))))
+                        {
+                            cont = true;
+                            break;
+                        }
+
+                    if (cont)
+                        continue;
+
+                    p = p2;
+                }
+
+                if (p == Point.Zero)
+                    continue;
+
+                CSkyIslandCloudBall(default, p, WorldGen.genRand.Next(2, 5), WorldGen.genRand.Next(6, 12));
+            }
+
+            //放置云墙
+            for (int i = 0; i < count; i++)
+            {
+                Point p = Point.Zero;// WorldGen.genRand.NextVector2FromRectangle(area).ToPoint();
+
+                for (int j = 0; j < 500; j++)//找到一个自身没物块的地方
+                {
+                    Point p2 = WorldGen.genRand.NextVector2FromRectangle(area).ToPoint();
+
+                    bool cont = false;
+                    foreach (var rect in avoidRects)
+                        if (rect.Intersects(Utils.CenteredRectangle(p2.ToVector2(), new Vector2(4, 4))))
+                        {
+                            cont = true;
+                            break;
+                        }
+
+                    if (cont)
+                        continue;
+
+                    p = p2;
+                }
+
+                if (p == Point.Zero)
+                    continue;
+
+                int cloudWidth = WorldGen.genRand.Next(8, 11);
+                int dir = WorldGen.genRand.NextFromList(-1, 1);
+                int cloudBallcount = WorldGen.genRand.Next(3, 5);
+
+                bool otherSide = WorldGen.genRand.NextBool(3);
+
+                for (int v = 0; v < cloudBallcount; v++)
+                {
+                    float scale = 1 + v * 0.1f;
+                    float yScale = 1 - v * 0.2f;
+
+                    int verticalRadius = (int)((cloudWidth - 2) / 2 * yScale);
+                    if (verticalRadius < 1)
+                        verticalRadius = 1;
+
+                    int horizontalRadius = (int)(cloudWidth / 2 * scale);
+                    if (horizontalRadius < 1)
+                        horizontalRadius = 1;
+
+                    Point cloudOrigin = p + new Point(horizontalRadius * dir * v, WorldGen.genRand.Next(-verticalRadius, verticalRadius));
+
+                    WorldUtils.Gen(
+                        cloudOrigin,
+                        new Shapes.Circle(horizontalRadius, verticalRadius),
+                        Actions.Chain(
+                             new Modifiers.Blotches(1)
+                            , new Actions.PlaceWall(WallID.Cloud)
+                            , new Actions.SetFrames()));
+                }
+
+                if (otherSide)
+                    for (int v = 1; v < cloudBallcount; v++)
+                    {
+                        float scale = 1 + v * 0.1f;
+                        float yScale = 1 - v * 0.2f;
+
+                        int verticalRadius = (int)((cloudWidth - 2) / 2 * yScale);
+                        if (verticalRadius < 1)
+                            verticalRadius = 1;
+
+                        int horizontalRadius = (int)(cloudWidth / 2 * scale);
+                        if (horizontalRadius < 1)
+                            horizontalRadius = 1;
+
+                        Point cloudOrigin = p + new Point(-horizontalRadius * dir * v, WorldGen.genRand.Next(-verticalRadius, verticalRadius));
+
+                        WorldUtils.Gen(
+                            cloudOrigin,
+                            new Shapes.Circle(horizontalRadius, verticalRadius),
+                            Actions.Chain(
+                                 new Modifiers.Blotches(1)
+                                , new Actions.PlaceWall(WallID.Cloud)
+                                , new Actions.SetFrames()));
+                    }
             }
         }
 
@@ -1575,11 +1811,26 @@ namespace Coralite.Content.WorldGeneration
                 for (int j = 0; j < rect.Height; j++)
                 {
                     Tile t = Main.tile[topLeft + new Point(i, j)];
+
+                    if (t.WallType is WallID.DiscWall or WallID.Glass)
+                    {
+                        WorldGen.KillWall(topLeft.X + i, topLeft.Y + j);
+                        Main.tile[topLeft + new Point(i, j)].Clear(TileDataType.Wall);
+                        WorldGen.PlaceLiquid(topLeft.X + i, topLeft.Y + j, (byte)LiquidID.Water, 255);
+                    }
+
                     if (!t.HasTile)
                         continue;
 
-                    if (t.TileType == TileID.Trees)//清理树
+                    if (t.TileType is TileID.Trees or TileID.VanityTreeSakura 
+                        or TileID.VanityTreeYellowWillow or TileID.Grass or TileID.Dirt or TileID.Sunflower or TileID.SkyMill
+                        or TileID.Banners or TileID.Tables or TileID.Tables2 or TileID.Chairs or TileID.ClosedDoor
+                        or TileID.Sunplate or TileID.Silver or TileID.Tungsten or TileID.Gold or TileID.Platinum or TileID.Copper or TileID.Tin
+                        or TileID.Iron or TileID.Lead)//清理空岛物块
+                    {
                         WorldGen.KillTile(topLeft.X + i, topLeft.Y + j, noItem: true);
+                        WorldGen.PlaceLiquid(topLeft.X + i, topLeft.Y + j, (byte)LiquidID.Water, 255);
+                    }
 
                     int index = Chest.FindChest(topLeft.X + i, topLeft.Y + j);
 
@@ -1591,6 +1842,7 @@ namespace Coralite.Content.WorldGeneration
                     {
                         t.ClearTile();
                         WorldGen.KillTile(topLeft.X + i, topLeft.Y + j, noItem: true);
+                        WorldGen.PlaceLiquid(topLeft.X + i, topLeft.Y + j, (byte)LiquidID.Water, 255);
                     }
                 }
         }
