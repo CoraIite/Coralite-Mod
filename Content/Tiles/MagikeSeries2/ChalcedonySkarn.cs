@@ -46,7 +46,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         public override void RandomUpdate(int i, int j)
         {
-            if (Main.rand.NextBool(5))
+            if (Main.rand.NextBool(10))
             {
                 Tile t = Framing.GetTileSafely(i, j - 1);
 
@@ -287,7 +287,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         public override void RandomUpdate(int i, int j)
         {
-            if (Main.rand.NextBool(5))
+            if (Main.rand.NextBool(10))
             {
                 Tile t = Framing.GetTileSafely(i, j - 1);
 

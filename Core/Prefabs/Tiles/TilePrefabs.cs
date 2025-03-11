@@ -125,20 +125,19 @@ namespace Coralite.Core.Prefabs.Tiles
             tile.AddMapEntry(mapColor, name);
         }
 
-        public static void SaplingPrefab(this ModTile tile, int[] AnchorValidTiles, int dustType, Color mapColor)
+        public static void SaplingPrefab(this ModTile tile, int[] AnchorValidTiles, int dustType, Color mapColor, int width = 16, int Bottomheight = 18)
         {
             Main.tileFrameImportant[tile.Type] = true;
             Main.tileNoAttach[tile.Type] = true;
             Main.tileLavaDeath[tile.Type] = true;
 
-            TileObjectData.newTile.Width = 1;
-            TileObjectData.newTile.Height = 2;
+            TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2);
             TileObjectData.newTile.Origin = new Point16(0, 1);
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile, TileObjectData.newTile.Width, 0);
             TileObjectData.newTile.UsesCustomCanPlace = true;
-            TileObjectData.newTile.CoordinateHeights = new[] { 16, 18 };
-            TileObjectData.newTile.CoordinateWidth = 16;
-            TileObjectData.newTile.CoordinatePadding = 2;
+            TileObjectData.newTile.CoordinateHeights = [16, Bottomheight];
+            TileObjectData.newTile.CoordinateWidth = width;
+            TileObjectData.newTile.DrawYOffset = 16 - Bottomheight;
             TileObjectData.newTile.AnchorValidTiles = AnchorValidTiles;
             TileObjectData.newTile.StyleHorizontal = true;
             TileObjectData.newTile.DrawFlipHorizontal = true;
@@ -156,8 +155,7 @@ namespace Coralite.Core.Prefabs.Tiles
             TileMaterials.SetForTileId(tile.Type, TileMaterials._materialsByName["Plant"]); // Make this tile interact with golf balls in the same way other plants do
 
             tile.DustType = dustType;
-            tile.AdjTiles = new int[] { TileID.Saplings };
+            tile.AdjTiles = [TileID.Saplings];
         }
-
     }
 }

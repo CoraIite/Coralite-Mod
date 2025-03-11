@@ -48,6 +48,8 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.addTile(Type);
 
+            MinPick = 110;
+
             AddMapEntry(new Color(105, 97, 90), CreateMapEntryName());
         }
 

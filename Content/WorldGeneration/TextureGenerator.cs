@@ -16,15 +16,18 @@ namespace Coralite.Content.WorldGeneration
 
         /// <summary> 主地形图 </summary>
         public Texture2D MainTex { get; private set; }
-
         public Texture2D WallTex { get; private set; }
-
         public Texture2D LiquidTex { get; private set; }
+
+        public Texture2TileGenerator MainGenerator { get; private set; }
+        public Texture2WallGenerator WallGenerator { get; private set; }
+        public Texture2Liquid LiquidGenerator { get; private set; }
 
         public int Width { get; private set; }
         public int Height { get; private set; }
 
         public readonly Point Size => new Point(Width, Height);
+        public Point RecordTopLeft { get; private set; }
 
         public TextureGenerator(string name, int? style = null, string path = AssetDirectory.WorldGen)
         {
@@ -47,7 +50,7 @@ namespace Coralite.Content.WorldGeneration
             Height = MainTex.Height;
         }
 
-        public readonly void Generate(Point Center, Dictionary<Color, int> mainDic, Dictionary<Color, int> wallDic = null, Action<Color, int, int> objectPlacement = null)
+        public void Generate(Point Center, Dictionary<Color, int> mainDic, Dictionary<Color, int> wallDic = null, Action<Color, int, int> objectPlacement = null)
         {
             int x = Center.X - Width / 2;
             int y = Center.Y - Height / 2;
@@ -55,8 +58,9 @@ namespace Coralite.Content.WorldGeneration
             GenerateByTopLeft(new Point(x, y), mainDic, wallDic,objectPlacement);
         }
 
-        public readonly void GenerateByTopLeft(Point topLeft, Dictionary<Color, int> mainDic, Dictionary<Color, int> wallDic = null,Action<Color,int,int> objectPlacement=null)
+        public void GenerateByTopLeft(Point topLeft, Dictionary<Color, int> mainDic, Dictionary<Color, int> wallDic = null,Action<Color,int,int> objectPlacement=null)
         {
+            RecordTopLeft = topLeft;
             int x = topLeft.X;
             int y = topLeft.Y;
 
@@ -94,6 +98,10 @@ namespace Coralite.Content.WorldGeneration
                 placed = true;
             }
 
+            MainGenerator = mainGenerator;
+            WallGenerator = wallGenerator;
+            LiquidGenerator = liquidGenerator;
+
             mainGenerator?.Clear(x, y);
             mainGenerator?.Generate(x, y);
 
@@ -103,6 +111,14 @@ namespace Coralite.Content.WorldGeneration
 
             if (objectPlacement != null)
                 mainGenerator?.ObjectPlace(x, y, objectPlacement);
+        }
+
+        public readonly void ReplaceObject( Action<Color, int, int> objectPlacement)
+        {
+            int x = RecordTopLeft.X;
+            int y = RecordTopLeft.Y;
+
+            MainGenerator?.ObjectPlace(x, y, objectPlacement);
         }
 
         private Texture2D Get(string name)

@@ -18,8 +18,9 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileID.Sets.PreventsTileRemovalIfOnTopOfIt[Type] = true;
             TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
             TileID.Sets.CanBeClearedDuringOreRunner[Type] = false;
+            TileID.Sets.SwaysInWindBasic[Type] = true;
 
-            TileObjectData.newTile.CopyFrom(TileObjectData.Style3x3);
+            TileObjectData.newTile.CopyFrom(TileObjectData.Style1xX);
             TileObjectData.newTile.LavaDeath = false;
             TileObjectData.newTile.AnchorValidTiles =
                 [
@@ -40,14 +41,14 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
-            r = 0.35f;
-            g = 0.5f;
-            b = 0.3f;
+            r = 0.15f;
+            g = 0.3f;
+            b = 0.5f;
         }
 
         public override void RandomUpdate(int i, int j)
         {
-            if (!Main.rand.NextBool(8))
+            if (!Main.rand.NextBool(9))
                 return;
 
             Point p = new Point(i, j) + new Point(Main.rand.Next(-10, 11), Main.rand.Next(-6, 3));

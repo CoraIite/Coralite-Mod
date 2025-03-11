@@ -377,4 +377,55 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             RegisterItemDrop(ModContent.ItemType<Skarn>());
         }
     }
+
+    public class SkarnRubbles6x6 : ModTile
+    {
+        public override string Texture => AssetDirectory.MagikeSeries2Tile + Name;
+
+        public override void SetStaticDefaults()
+        {
+            DefaultValues();
+            MinPick = 110;
+        }
+
+        protected void DefaultValues()
+        {
+            Main.tileFrameImportant[Type] = true;
+            Main.tileObsidianKill[Type] = true;
+
+            TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
+
+            TileObjectData.newTile.CopyFrom(TileObjectData.Style1x1);
+            TileObjectData.newTile.Height = 6;
+            TileObjectData.newTile.Width = 6;
+            TileObjectData.newTile.CoordinateHeights = [16, 16, 16, 16, 16, 16];
+            TileObjectData.newTile.Origin = new Terraria.DataStructures.Point16(0, 5);
+            TileObjectData.newTile.DrawYOffset = 2;
+            TileObjectData.newTile.StyleHorizontal = true;
+            TileObjectData.newTile.LavaDeath = false;
+            TileObjectData.addTile(Type);
+
+            HitSound = CoraliteSoundID.DigStone_Tink;
+            DustType = DustID.Pearlsand;
+            AddMapEntry(new Color(141, 171, 178));
+        }
+
+        public override void NumDust(int i, int j, bool fail, ref int num)
+        {
+            num = fail ? 1 : 3;
+        }
+    }
+
+    public class SkarnRubbles6x6Fake : SkarnRubbles6x6
+    {
+        public override string Texture => AssetDirectory.MagikeSeries2Tile + nameof(SkarnRubbles6x6);
+
+        public override void SetStaticDefaults()
+        {
+            DefaultValues();
+
+            FlexibleTileWand.RubblePlacementLarge.AddVariations(ModContent.ItemType<Skarn>(), Type, 0);
+            RegisterItemDrop(ModContent.ItemType<Skarn>());
+        }
+    }
 }

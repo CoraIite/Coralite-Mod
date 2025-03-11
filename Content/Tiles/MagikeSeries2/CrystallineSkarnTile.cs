@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Items.MagikeSeries2;
+﻿using Coralite.Content.Items.LandOfTheLustrousSeries;
+using Coralite.Content.Items.MagikeSeries2;
 using Coralite.Core;
 using System.Collections.Generic;
 using Terraria;
@@ -38,6 +39,13 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         public override IEnumerable<Item> GetItemDrops(int i, int j)
         {
+            if (Main.rand.NextBool(15, 100))
+                return
+                [
+                    new Item(ModContent.ItemType<CrystallineMagike>()),
+                    new Item(ModContent.ItemType<SeniorRoughGemstone>())
+                ];
+
             return
             [
                 new Item(ModContent.ItemType<CrystallineMagike>())

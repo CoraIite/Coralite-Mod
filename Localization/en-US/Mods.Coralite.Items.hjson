@@ -5241,3 +5241,8 @@ LightSoulFilter: {
 	DisplayName: Light Soul Filter
 	Tooltip: ""
 }
+
+ChalcedonySapling: {
+	DisplayName: Chalcedony Sapling
+	Tooltip: ""
+}

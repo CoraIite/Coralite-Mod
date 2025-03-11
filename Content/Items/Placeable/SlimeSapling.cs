@@ -15,7 +15,7 @@ namespace Coralite.Content.Items.Placeable
         {
             Item.width = 30;
             Item.height = 30;
-            Item.maxStack = 999;
+            Item.maxStack = 9999;
             Item.useAnimation = 15;
             Item.useTime = 10;
 

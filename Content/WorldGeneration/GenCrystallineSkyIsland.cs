@@ -73,7 +73,7 @@ namespace Coralite.Content.WorldGeneration
                 mainRect.Height = y2 - mainRect.Y;
 
             //生成小岛
-            GenSmallIslands(mainRect, tempMain, highestY);
+            GenSmallIslands(mainRect, tempMain);
         }
 
         public int GetHighestY(Point center)
@@ -617,18 +617,20 @@ namespace Coralite.Content.WorldGeneration
         /// <param name="shrineRect"></param>
         /// <param name="p"></param>
         /// <returns></returns>
-        private static void CSkyIslandCloudBall(Rectangle shrineRect, Point p, int cloudBallcount,int? overrideCloudWidth=null)
+        private static void CSkyIslandCloudBall(Rectangle shrineRect, Point p, int cloudBallcount, int? overrideCloudWidth = null)
         {
             int cloudWidth = WorldGen.genRand.Next(5, 11);
             cloudWidth = overrideCloudWidth ?? cloudWidth;
             int dir = WorldGen.genRand.NextFromList(-1, 1);
+            float baseYSacle = WorldGen.genRand.NextFloat(0.8f, 1f);
+            float yScaleReduce = baseYSacle * WorldGen.genRand.NextFloat(0.1f, 0.23f);
 
             bool otherSide = WorldGen.genRand.NextBool(4);
 
             for (int v = 0; v < cloudBallcount; v++)
             {
                 float scale = 1 + v * 0.1f;
-                float yScale = 0.8f - v * 0.2f;
+                float yScale = baseYSacle - v * yScaleReduce;
 
                 int verticalRadius = (int)((cloudWidth - 2) / 2 * yScale);
                 if (verticalRadius < 1)
@@ -638,7 +640,9 @@ namespace Coralite.Content.WorldGeneration
                 if (horizontalRadius < 1)
                     horizontalRadius = 1;
 
-                Point cloudOrigin = p + new Point(horizontalRadius * dir * v, WorldGen.genRand.Next(-verticalRadius, verticalRadius));
+                int yFloat = WorldGen.genRand.NextFromList(WorldGen.genRand.Next(-verticalRadius, 0), WorldGen.genRand.Next(1, verticalRadius + 1));
+
+                Point cloudOrigin = p + new Point(horizontalRadius * dir * v, yFloat);
 
                 if (shrineRect.Intersects(Utils.CenteredRectangle(cloudOrigin.ToVector2(), new Vector2(horizontalRadius * 2, verticalRadius * 2))))
                     break;
@@ -1457,22 +1461,21 @@ namespace Coralite.Content.WorldGeneration
             Ruins,
             /// <summary> 箱子岛 </summary>
             Chest,
-
-            Count
         }
 
-        public void GenSmallIslands(Rectangle mainRect, Rectangle originMainRect,int highestY)
+        public void GenSmallIslands(Rectangle mainRect, Rectangle originMainRect)
         {
             int smallIslandCount = ValueByWorldSize(
                 WorldGen.genRand.Next(5, 8),
-                WorldGen.genRand.Next(7, 12),
-                WorldGen.genRand.Next(9, 14)
+                WorldGen.genRand.Next(7, 13),
+                WorldGen.genRand.Next(9, 16)
                 );
 
             //smallIslandCount = 8;
 
             List<Rectangle> avoidRects = [originMainRect];
             List<Rectangle> rects = [];
+            List<TextureGenerator> generators = [];
 
             Rectangle expandRect = mainRect;
 
@@ -1539,7 +1542,7 @@ namespace Coralite.Content.WorldGeneration
                 //之后不断扩展中心矩形，指导能够容纳小岛的生成
 
                 SmallIslandType smallIslandType = types[i];
-                smallIslandType = SmallIslandType.Ruins;//测试用
+                //smallIslandType = SmallIslandType.Chest;//测试用
 
                 int style = CSkyIslandRandStyle(smallIslandType);
 
@@ -1558,11 +1561,11 @@ namespace Coralite.Content.WorldGeneration
 
                 //获取类型，尺寸和贴图集合
                 string name = Enum.GetName(smallIslandType);
-                TextureGenerator data = new TextureGenerator($"{name}/{name}", style, AssetDirectory.CrystallineSmallIsland);
+                TextureGenerator generator = new TextureGenerator($"{name}/{name}", style, AssetDirectory.CrystallineSmallIsland);
 
                 //外部尺寸
-                int protect = WorldGen.genRand.Next(8, 18);
-                Point outerSize = data.Size + new Point(protect, protect + data.Height / 3);//让高度高一些
+                int protect = WorldGen.genRand.Next(6, 24);
+                Point outerSize = generator.Size + new Point(protect, protect + generator.Height / 4);//让高度高一些
 
                 Point SpawnTopLeft = default;
                 bool success = false;
@@ -1593,7 +1596,7 @@ namespace Coralite.Content.WorldGeneration
 
                         if (findPoint)//未发生碰撞，成功找到可生成的位置
                         {
-                            SpawnTopLeft = p + new Point(protect / 2, protect / 2 + data.Height / 6);
+                            SpawnTopLeft = p + new Point(protect / 2, protect / 2 + generator.Height / 8);
                             success = true;
                             break;
                         }
@@ -1602,26 +1605,38 @@ namespace Coralite.Content.WorldGeneration
                     if (success)//成功找到位置
                     {
                         avoidRects.Add(currentRect);
-                        rects.Add(new Rectangle(SpawnTopLeft.X, SpawnTopLeft.Y, data.Width, data.Height));
+                        rects.Add(new Rectangle(SpawnTopLeft.X, SpawnTopLeft.Y, generator.Width, generator.Height));
                     }
 
                 } while (!success);
 
                 //成功找到了位置，开始生成
-                data.GenerateByTopLeft(SpawnTopLeft, mainDic, wallDic, CSkyIslandObjectPlace);
+                generator.GenerateByTopLeft(SpawnTopLeft, mainDic, wallDic, CSkyIslandObjectPlace);
+                generators.Add(generator);
             }
 
             //清理范围内坏掉的箱子和树
-            CSmallIslandClearVanillaThings(expandRect with
-            {
-                Height = (highestY > expandRect.Y + expandRect.Height) ? (highestY - expandRect.Y) : expandRect.Height
-            });
+            CSmallIslandClearVanillaThings(expandRect);
 
             //在岛屿中间放置各种小石块和云块
             CSmallIslandFloatingBalls(expandRect, avoidRects);
 
             //后续生成各种杂物等
             CSmallIslandDecorations(rects);
+
+            //由于一些特殊问题，在这里再设置斜坡
+            foreach (TextureGenerator g in generators)
+            {
+                g.ReplaceObject((c, x, y) =>
+                {
+                    if (c == new Color(0, 255, 170))
+                        WorldGen.PoundTile(x, y);
+                    else if (c == new Color(0, 21, 255))
+                        WorldGen.PoundTile(x, y);
+                    else if (c == new Color(255, 32, 32))
+                        WorldGen.PlaceTile(x, y, ModContent.TileType<SkarnRubbles6x6>(), true);
+                });
+            }
         }
 
         private static void CSmallIslandFloatingBalls(Rectangle area, List<Rectangle> avoidRects)
@@ -1717,7 +1732,7 @@ namespace Coralite.Content.WorldGeneration
                 if (p == Point.Zero)
                     continue;
 
-                CSkyIslandCloudBall(default, p, WorldGen.genRand.Next(2, 5), WorldGen.genRand.Next(6, 12));
+                CSkyIslandCloudBall(default, p, WorldGen.genRand.Next(2, 5), WorldGen.genRand.Next(7, 12));
             }
 
             //放置云墙
@@ -1813,38 +1828,51 @@ namespace Coralite.Content.WorldGeneration
                     Tile t = Main.tile[topLeft + new Point(i, j)];
 
                     if (t.WallType is WallID.DiscWall or WallID.Glass)
-                    {
-                        WorldGen.KillWall(topLeft.X + i, topLeft.Y + j);
-                        Main.tile[topLeft + new Point(i, j)].Clear(TileDataType.Wall);
-                        WorldGen.PlaceLiquid(topLeft.X + i, topLeft.Y + j, (byte)LiquidID.Water, 255);
-                    }
+                        ClearVanillaSkyIsland(new Point(topLeft.X + i, topLeft.Y + j), 0);
 
                     if (!t.HasTile)
                         continue;
 
-                    if (t.TileType is TileID.Trees or TileID.VanityTreeSakura 
-                        or TileID.VanityTreeYellowWillow or TileID.Grass or TileID.Dirt or TileID.Sunflower or TileID.SkyMill
-                        or TileID.Banners or TileID.Tables or TileID.Tables2 or TileID.Chairs or TileID.ClosedDoor
-                        or TileID.Sunplate or TileID.Silver or TileID.Tungsten or TileID.Gold or TileID.Platinum or TileID.Copper or TileID.Tin
-                        or TileID.Iron or TileID.Lead)//清理空岛物块
-                    {
-                        WorldGen.KillTile(topLeft.X + i, topLeft.Y + j, noItem: true);
-                        WorldGen.PlaceLiquid(topLeft.X + i, topLeft.Y + j, (byte)LiquidID.Water, 255);
-                    }
-
-                    int index = Chest.FindChest(topLeft.X + i, topLeft.Y + j);
-
-                    if (index != -1)//清理原版箱子
-                        if (t.TileType != ModContent.TileType<SkarnChestTile>())
-                            Chest.DestroyChestDirect(topLeft.X + i, topLeft.Y + j, index);
-
-                    if (t.TileType == TileID.Containers)//清理原版箱子物块
-                    {
-                        t.ClearTile();
-                        WorldGen.KillTile(topLeft.X + i, topLeft.Y + j, noItem: true);
-                        WorldGen.PlaceLiquid(topLeft.X + i, topLeft.Y + j, (byte)LiquidID.Water, 255);
-                    }
+                    ClearVanillaSkyIsland(new Point(topLeft.X + i, topLeft.Y + j),0);
                 }
+        }
+
+        /// <summary>
+        /// 注意，此处有递归，请谨慎使用
+        /// </summary>
+        /// <param name="p"></param>
+        public static void ClearVanillaSkyIsland(Point p, int count)
+        {
+            if (count > 1000)
+                return;
+
+            Tile t = Main.tile[p];
+
+            if (t.HasTile && t.TileType is TileID.Trees or TileID.VanityTreeSakura
+                or TileID.VanityTreeYellowWillow or TileID.Grass or TileID.Dirt or TileID.Sunflower or TileID.SkyMill
+                or TileID.Banners or TileID.Tables or TileID.Tables2 or TileID.Chairs or TileID.ClosedDoor
+                or TileID.Sunplate or TileID.Silver or TileID.Tungsten or TileID.Gold or TileID.Platinum or TileID.Copper or TileID.Tin
+                or TileID.Iron or TileID.Lead or TileID.Containers)//清理空岛物块
+            {
+                t.ClearTile();
+                WorldGen.PlaceLiquid(p.X, p.Y, (byte)LiquidID.Water, 255);
+
+                ClearVanillaSkyIsland(p + new Point(0, 1), count + 1);
+                ClearVanillaSkyIsland(p + new Point(0, -1), count + 1);
+                ClearVanillaSkyIsland(p + new Point(1, 0), count + 1);
+                ClearVanillaSkyIsland(p + new Point(-1, 0), count + 1);
+            }
+
+            if (t.WallType is WallID.DiscWall or WallID.Glass)
+            {
+                Main.tile[p].Clear(TileDataType.Wall);
+                WorldGen.PlaceLiquid(p.X, p.Y, (byte)LiquidID.Water, 255);
+
+                ClearVanillaSkyIsland(p + new Point(0, 1), count + 1);
+                ClearVanillaSkyIsland(p + new Point(0, -1), count + 1);
+                ClearVanillaSkyIsland(p + new Point(1, 0), count + 1);
+                ClearVanillaSkyIsland(p + new Point(-1, 0), count + 1);
+            }
         }
 
         private static void CSmallIslandDecorations(List<Rectangle> rects)
@@ -1854,7 +1882,7 @@ namespace Coralite.Content.WorldGeneration
                 CSkyIslandSlope((ushort)ModContent.TileType<SkarnBrickTile>(), Box, default, 3);
 
                 ushort mother = (ushort)ModContent.TileType<CrystallineSeaOatsMother>();
-                WorldGenHelper.PlaceDecorations_NoCheck(Box, mother, 7);
+                WorldGenHelper.PlaceDecorations_NoCheck(Box, mother, 14);
 
                 //清理掉不合适的
                 for (int i = 0; i < Box.Width; i++)
@@ -1906,25 +1934,28 @@ namespace Coralite.Content.WorldGeneration
         {
             if (c == new Color(255, 241, 183))
                 WorldGen.PlaceObject(x, y, ModContent.TileType<AncientColumn>(), true);
+            else if (c == new Color(255, 32, 32))
+                WorldGen.PlaceTile(x, y, ModContent.TileType<SkarnRubbles6x6>(), true);
+            else if (c == new Color(165, 99, 85))
+            {
+                WorldGen.AddBuriedChest(x, y,
+                    ModContent.ItemType<Reel_MagikeAdvance>(), notNearOtherChests: false, 1, trySlope: false, (ushort)ModContent.TileType<SkarnChestTile>());
+            }
+            else if (c == new Color(0, 255, 170))
+                WorldGen.PlaceTile(x, y, ModContent.TileType<SkarnBrickTile>(), true);
+            else if (c == new Color(0, 21, 255))
+                WorldGen.PlaceTile(x, y, ModContent.TileType<SkarnTile>(), true);
         }
 
         public static int CSkyIslandRandStyle(SmallIslandType smallIslandType)
         {
-            switch (smallIslandType)
+            return smallIslandType switch
             {
-                case SmallIslandType.Normal:
-                    return WorldGen.genRand.Next(14);
-                case SmallIslandType.Ruins:
-                    return WorldGen.genRand.Next(6);
-                case SmallIslandType.Chest:
-                    break;
-                case SmallIslandType.Count:
-                    break;
-                default:
-                    break;
-            }
-
-            return 0;
+                SmallIslandType.Normal => WorldGen.genRand.Next(14),
+                SmallIslandType.Ruins => WorldGen.genRand.Next(6),
+                SmallIslandType.Chest => WorldGen.genRand.Next(6),
+                _ => 0,
+            };
         }
 
         public static void ClearUncorrectDecoration(Rectangle rect)

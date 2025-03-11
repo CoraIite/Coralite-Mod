@@ -32,7 +32,9 @@ namespace Coralite.Content.WorldGeneration
         public override bool CanUseItem(Player player)
         {
             Point point = Main.MouseWorld.ToTileCoordinates();
-            WorldGenHelper.ObjectPlace(point.X, point.Y - 1, ModContent.TileType<ChalcedonyGrass2x2>(), WorldGen.genRand.Next(2));
+            Tile t = Main.tile[point];
+            Main.NewText(t.TileFrameX);
+            //WorldGenHelper.ObjectPlace(point.X, point.Y - 1, ModContent.TileType<ChalcedonyGrass2x2>(), WorldGen.genRand.Next(2));
 
             //WorldGen.PlaceObject(pos.X, pos.Y, ModContent.TileType<MercuryPlatformTile>());
 
@@ -188,46 +190,46 @@ namespace Coralite.Content.WorldGeneration
             //        , new Actions.SetFrames())
             //    );
 
-            Point p = Main.MouseWorld.ToTileCoordinates();
+            //Point p = Main.MouseWorld.ToTileCoordinates();
 
-            ShapeData shape = new ShapeData();
+            //ShapeData shape = new ShapeData();
 
-            int radius = 20;
+            //int radius = 20;
 
-            //获取形状
-            WorldUtils.Gen(
-                p,
-                new Shapes.Circle(radius),
-                Actions.Chain(
-                    new Modifiers.Dither(0.1f).Output(shape)));
+            ////获取形状
+            //WorldUtils.Gen(
+            //    p,
+            //    new Shapes.Circle(radius),
+            //    Actions.Chain(
+            //        new Modifiers.Dither(0.1f).Output(shape)));
 
-            Point topLeft = p - new Point(radius , radius );
+            //Point topLeft = p - new Point(radius , radius );
 
-            int x = (int)(WorldGen.genRand.NextFloat() * radius * 2);
-            int y = (int)(WorldGen.genRand.NextFloat() * radius);
+            //int x = (int)(WorldGen.genRand.NextFloat() * radius * 2);
+            //int y = (int)(WorldGen.genRand.NextFloat() * radius);
 
-            for (int m = 0; m < radius * 2; m++)
-                for (int n = 0; n < radius * 2; n++)
-                {
-                    if (!shape.Contains(-radius + m, -radius + n))
-                        continue;
+            //for (int m = 0; m < radius * 2; m++)
+            //    for (int n = 0; n < radius * 2; n++)
+            //    {
+            //        if (!shape.Contains(-radius + m, -radius + n))
+            //            continue;
 
-                    Point currP = topLeft + new Point(m, n);
+            //        Point currP = topLeft + new Point(m, n);
 
-                    float mainNoise = ModContent.GetInstance<CoraliteWorld>().MainNoise(new Vector2(x + m, y + n), new Vector2(radius * 2) * 6);
-                    if (mainNoise > 0.8f)
-                    {
-                        //if (Main.tile[currP].WallType > 0)
-                        {
-                            WorldGen.KillWall(currP.X, currP.Y);
-                            WorldGen.PlaceWall(currP.X, currP.Y, WallID.Cave1Echo);
-                        }
-                    }
-                    //else if (WorldGen.genRand.NextBool(5))
-                    //{
-                    //    WorldGen.KillWall(currP.X, currP.Y);
-                    //}
-                }
+            //        float mainNoise = ModContent.GetInstance<CoraliteWorld>().MainNoise(new Vector2(x + m, y + n), new Vector2(radius * 2) * 6);
+            //        if (mainNoise > 0.8f)
+            //        {
+            //            //if (Main.tile[currP].WallType > 0)
+            //            {
+            //                WorldGen.KillWall(currP.X, currP.Y);
+            //                WorldGen.PlaceWall(currP.X, currP.Y, WallID.Cave1Echo);
+            //            }
+            //        }
+            //        //else if (WorldGen.genRand.NextBool(5))
+            //        //{
+            //        //    WorldGen.KillWall(currP.X, currP.Y);
+            //        //}
+            //    }
 
             return base.CanUseItem(player);
         }

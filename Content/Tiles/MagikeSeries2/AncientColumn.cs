@@ -15,11 +15,11 @@ namespace Coralite.Content.Tiles.MagikeSeries2
         public override void SetStaticDefaults()
         {
             DefaultValues();
+            MinPick = 110;
         }
 
         protected void DefaultValues()
         {
-            Main.tileNoFail[Type] = true;
             Main.tileFrameImportant[Type] = true;
             Main.tileObsidianKill[Type] = true;
 

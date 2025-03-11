@@ -14,7 +14,6 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         public override void SetStaticDefaults()
         {
-            Main.tileNoFail[Type] = true;
             Main.tileFrameImportant[Type] = true;
             Main.tileObsidianKill[Type] = true;
             Main.tileLighted[Type] = true;
@@ -37,7 +36,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
                 ;
             TileObjectData.addTile(Type);
 
-            HitSound = CoraliteSoundID.DigStone_Tink;
+            HitSound = CoraliteSoundID.CrystalHit_DD2_WitherBeastCrystalImpact;
             DustType = DustID.Pearlsand;
             MinPick = 110;
             AddMapEntry(new Color(181, 91, 235));
@@ -70,7 +69,6 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         public override void SetStaticDefaults()
         {
-            Main.tileNoFail[Type] = true;
             Main.tileFrameImportant[Type] = true;
             Main.tileObsidianKill[Type] = true;
             Main.tileLighted[Type] = true;
@@ -93,7 +91,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
                 ;
             TileObjectData.addTile(Type);
 
-            HitSound = CoraliteSoundID.Grass;
+            HitSound = CoraliteSoundID.CrystalHit_DD2_WitherBeastCrystalImpact;
             DustType = DustID.Pearlsand;
             MinPick = 110;
             AddMapEntry(new Color(181, 91, 235));
@@ -153,7 +151,6 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         public override void SetStaticDefaults()
         {
-            Main.tileNoFail[Type] = true;
             Main.tileFrameImportant[Type] = true;
             Main.tileObsidianKill[Type] = true;
             Main.tileLighted[Type] = true;
@@ -164,8 +161,9 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1xX);
             TileObjectData.newTile.StyleMultiplier = 1;
+            TileObjectData.newTile.CoordinateWidth = 20;
             TileObjectData.newTile.StyleHorizontal = true;
-            TileObjectData.newTile.RandomStyleRange = 4;
+            TileObjectData.newTile.RandomStyleRange = 7;
             TileObjectData.newTile.AnchorValidTiles =
                 [
                     ModContent.TileType<SkarnTile>(),
@@ -176,7 +174,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
                 ;
             TileObjectData.addTile(Type);
 
-            HitSound = CoraliteSoundID.Grass;
+            HitSound = CoraliteSoundID.CrystalHit_DD2_WitherBeastCrystalImpact;
             DustType = DustID.Pearlsand;
             MinPick = 110;
             AddMapEntry(new Color(181, 91, 235));

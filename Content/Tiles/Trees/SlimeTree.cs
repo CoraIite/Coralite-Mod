@@ -1,6 +1,5 @@
 ﻿using Coralite.Content.Items.Gels;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -47,9 +46,9 @@ namespace Coralite.Content.Tiles.Trees
             return woodType;
         }
 
-        public override Asset<Texture2D> GetTexture() => ModContent.Request<Texture2D>("Coralite/Assets/Tiles/Trees/SlimeTree");
-        public override Asset<Texture2D> GetTopTextures() => ModContent.Request<Texture2D>("Coralite/Assets/Tiles/Trees/SlimeTree_Tops");
-        public override Asset<Texture2D> GetBranchTextures() => ModContent.Request<Texture2D>("Coralite/Assets/Tiles/Trees/SlimeTree_Branches");
+        public override ATex GetTexture() => ModContent.Request<Texture2D>("Coralite/Assets/Tiles/Trees/SlimeTree");
+        public override ATex GetTopTextures() => ModContent.Request<Texture2D>("Coralite/Assets/Tiles/Trees/SlimeTree_Tops");
+        public override ATex GetBranchTextures() => ModContent.Request<Texture2D>("Coralite/Assets/Tiles/Trees/SlimeTree_Branches");
 
         public override void SetTreeFoliageSettings(Tile tile, ref int xoffset, ref int treeFrame, ref int floorY, ref int topTextureFrameWidth, ref int topTextureFrameHeight)
         {

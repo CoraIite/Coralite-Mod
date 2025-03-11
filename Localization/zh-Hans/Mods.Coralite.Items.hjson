@@ -573,7 +573,7 @@ MagicalAshes: {
 
 AncientCore: {
 	DisplayName: 远古核心
-	Tooltip: 军火商压箱底的宝贝，来自远古文明的能量核心
+	Tooltip: 来自远古文明的能量核心
 }
 
 Arethusa: {
@@ -5326,4 +5326,9 @@ SpellCircuitCore: {
 LightSoulFilter: {
 	DisplayName: 法术滤镜 ◊ 光之魂
 	Tooltip: ""
+}
+
+ChalcedonySapling: {
+	// DisplayName: Chalcedony Sapling
+	// Tooltip: ""
 }
