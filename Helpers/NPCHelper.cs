@@ -5,6 +5,7 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.GameContent.Creative;
+using Terraria.ID;
 
 namespace Coralite.Helpers
 {
@@ -143,6 +144,12 @@ namespace Coralite.Helpers
 
             npc.direction = npc.spriteDirection = p.Center.X > npc.Center.X ? 1 : -1;
             npc.directionY = p.Center.Y > npc.Center.Y ? 1 : -1;
+        }
+
+        public static void QuickTrailSets(this NPC npc, TrailingMode trailingMode, int trailCacheLength)
+        {
+            NPCID.Sets.TrailingMode[npc.type] = (int)trailingMode;
+            NPCID.Sets.TrailCacheLength[npc.type] = trailCacheLength;
         }
 
         public static int GetProjDamage(int normalDamage, int expertDamage, int masterDamage)

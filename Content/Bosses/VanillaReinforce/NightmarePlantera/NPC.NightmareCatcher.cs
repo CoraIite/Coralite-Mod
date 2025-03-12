@@ -65,6 +65,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             NPC.noGravity = true;
             NPC.HitSound = CoraliteSoundID.Fleshy_NPCHit1;
             NPC.DeathSound = CoraliteSoundID.Fleshy_NPCDeath1;
+            NPC.SpawnedFromStatue = true;
         }
 
         public override bool CanHitNPC(NPC target) => false;

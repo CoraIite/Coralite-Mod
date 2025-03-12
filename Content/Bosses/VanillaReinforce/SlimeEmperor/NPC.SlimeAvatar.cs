@@ -49,6 +49,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             NPC.noTileCollide = false;
             NPC.HitSound = CoraliteSoundID.Fleshy_NPCHit1;
             NPC.hide = true;
+            NPC.SpawnedFromStatue = true;
         }
 
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)

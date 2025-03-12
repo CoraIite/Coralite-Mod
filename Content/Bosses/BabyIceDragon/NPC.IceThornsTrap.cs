@@ -37,6 +37,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             NPC.knockBackResist = 0f;
             NPC.noGravity = true;
             NPC.HitSound = CoraliteSoundID.DigIce;
+            NPC.SpawnedFromStatue = true;
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)

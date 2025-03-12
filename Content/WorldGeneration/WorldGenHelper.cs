@@ -2,6 +2,7 @@
 using Coralite.Core;
 using Coralite.Helpers;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -163,9 +164,9 @@ namespace Coralite.Content.WorldGeneration
                         ObjectPlace(current_x, current_y, tileType, currentStyle, direction());
                     }
                 }
-        }       
-        
-        public static void PlaceDecorations_NoCheck(Rectangle area, ushort tileType, int random = 10, Func<int> direction=null,Rectangle? avoidArea=null)
+        }
+
+        public static void PlaceDecorations_NoCheck(Rectangle area, ushort tileType, int random = 10, Func<int> direction = null, Rectangle? avoidArea = null)
         {
             TileObjectData data = TileObjectData.GetTileData(tileType, 0);
             int randomTile = data == null ? 1 : data.RandomStyleRange;
@@ -179,6 +180,44 @@ namespace Coralite.Content.WorldGeneration
                     if (avoidArea != null)
                         if (avoidArea.Value.Contains(current_x, current_y))
                             continue;
+
+                    //添加一些随机性
+                    if (WorldGen.genRand.NextBool(random))
+                    {
+                        int currentStyle;
+                        if (randomTile <= 1)
+                            currentStyle = 0;
+                        else
+                            currentStyle = WorldGen.genRand.Next(0, randomTile);
+                        ObjectPlace(current_x, current_y, tileType, currentStyle, direction == null ? -1 : direction());
+                    }
+                }
+        }
+
+        public static void PlaceDecorations_NoCheck2(Rectangle area, ushort tileType, int random = 10, Func<int> direction = null, List<Rectangle> avoidArea = null)
+        {
+            TileObjectData data = TileObjectData.GetTileData(tileType, 0);
+            int randomTile = data == null ? 1 : data.RandomStyleRange;
+
+            for (int i = 0; i < area.Width; i++)
+                for (int j = 0; j < area.Height; j++)
+                {
+                    int current_x = area.X + i;
+                    int current_y = area.Y + j;
+
+                    if (avoidArea != null)
+                    {
+                        bool contain = false;
+                        foreach (var r in avoidArea)
+                            if (r.Contains(current_x, current_y))
+                            {
+                                contain = true;
+                                break;
+                            }
+
+                        if (contain)
+                            continue;
+                    }
 
                     //添加一些随机性
                     if (WorldGen.genRand.NextBool(random))

@@ -12,9 +12,9 @@ namespace Coralite.Content.Bosses.Rediancie
     {
         public override string Texture => AssetDirectory.Rediancie + "RedBink_BossMinion";
 
-        Player target => Main.player[NPC.target];
+        Player Target => Main.player[NPC.target];
         public ref float Timer => ref NPC.ai[0];
-        public ref float alpha => ref NPC.ai[1];
+        public ref float Alpha => ref NPC.ai[1];
         public ref float ReadyRotation => ref NPC.ai[3];
 
         public override void SetStaticDefaults()
@@ -37,8 +37,11 @@ namespace Coralite.Content.Bosses.Rediancie
             NPC.npcSlots = 1f;
             NPC.value = Item.buyPrice(0, 0, 0, 0);
 
+            NPC.HitSound = CoraliteSoundID.CrystalHit_DD2_CrystalCartImpact;
+
             NPC.noGravity = true;
             NPC.noTileCollide = true;
+            NPC.SpawnedFromStatue = true;
         }
 
         public override void AI()
@@ -60,14 +63,14 @@ namespace Coralite.Content.Bosses.Rediancie
                     if (NPC.velocity.Length() > 0.8f)
                         NPC.velocity = ReadyRotation.ToRotationVector2() * 0.8f;
 
-                    alpha += 3f;
+                    Alpha += 3f;
                     break;
                 }
 
                 if (Timer == 100)
                 {
                     NPC.TargetClosest();
-                    NPC.velocity = (target.Center - NPC.Center).SafeNormalize(Vector2.UnitY) * 8f;
+                    NPC.velocity = (Target.Center - NPC.Center).SafeNormalize(Vector2.UnitY) * 8f;
                     NPC.rotation = NPC.velocity.ToRotation() + 1.57f;
                     break;
                 }
@@ -85,19 +88,29 @@ namespace Coralite.Content.Bosses.Rediancie
                 {
                     NPC.velocity *= 0.96f;
                     NPC.rotation = Helper.Lerp(NPC.rotation, 0, 0.1f);
-                    alpha -= 40;
-                    if (alpha < 0)
-                        alpha = 0;
+                    Alpha -= 40;
+                    if (Alpha < 0)
+                        Alpha = 0;
                     break;
                 }
 
                 Timer = 0;
-                alpha = 0;
+                Alpha = 0;
                 return;
 
             } while (false);
 
             Timer++;
+        }
+
+        public override void OnKill()
+        {
+            if (!VaultUtils.isServer)
+                for (int i = 0; i < 6; i++)
+                {
+                    Dust dust = Dust.NewDustPerfect(NPC.Center, DustID.GemRuby, Main.rand.NextVector2CircularEdge(5, 5), 0, default, 1.3f);
+                    dust.noGravity = true;
+                }
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
@@ -107,31 +120,16 @@ namespace Coralite.Content.Bosses.Rediancie
             Vector2 origin = mainTex.Size() / 2;
 
             if (Timer < 101)
-                spriteBatch.Draw(mainTex, drawPos, null, new Color(248, 40, 24, (int)alpha), NPC.rotation, origin, NPC.scale + (0.5f * (alpha / 255)), SpriteEffects.None, 0f);
+                spriteBatch.Draw(mainTex, drawPos, null, new Color(248, 40, 24, (int)Alpha), NPC.rotation, origin, NPC.scale + (0.5f * (Alpha / 255)), SpriteEffects.None, 0f);
             else
             {
                 Texture2D extraTex = ModContent.Request<Texture2D>(AssetDirectory.RedJadeProjectiles + "RedBinkRush").Value;
-                int color = (int)alpha;
+                int color = (int)Alpha;
                 spriteBatch.Draw(extraTex, NPC.Center - NPC.velocity - screenPos, null, new Color(color, color, color, color), NPC.rotation, extraTex.Size() / 2, 0.85f, SpriteEffects.None, 0f);
             }
 
             spriteBatch.Draw(mainTex, drawPos, null, drawColor, NPC.rotation, origin, NPC.scale, SpriteEffects.None, 0f);
             return false;
-        }
-
-        public override void OnKill()
-        {
-            if (Main.netMode != NetmodeID.Server)
-                for (int i = 0; i < 6; i++)
-                {
-                    Dust dust = Dust.NewDustPerfect(NPC.Center, DustID.GemRuby, Main.rand.NextVector2CircularEdge(5, 5), 0, default, 1.3f);
-                    dust.noGravity = true;
-                }
-        }
-
-        public override void HitEffect(NPC.HitInfo hit)
-        {
-            SoundEngine.PlaySound(SoundID.Dig, NPC.Center);
         }
     }
 }

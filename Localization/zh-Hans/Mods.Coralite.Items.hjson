@@ -5329,6 +5329,6 @@ LightSoulFilter: {
 }
 
 ChalcedonySapling: {
-	// DisplayName: Chalcedony Sapling
-	// Tooltip: ""
+	DisplayName: 玉髓树幼苗
+	Tooltip: 可以种在矽卡岩上
 }

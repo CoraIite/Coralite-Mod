@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Bosses.BabyIceDragon;
 using Coralite.Content.Dusts;
+using Coralite.Content.GlobalItems;
 using Coralite.Content.Items.Icicle;
 using Coralite.Content.ModPlayers;
 using Coralite.Content.Particles;
@@ -41,6 +42,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             Item.noUseGraphic = true;
             Item.useTurn = false;
             Item.UseSound = CoraliteSoundID.Bow_Item5;
+            CoraliteGlobalItem.SetColdDamage(Item);
         }
 
         public override void HoldItem(Player player)
@@ -332,6 +334,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             Projectile.penetrate = -1;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = -1;
+            Projectile.coldDamage = true;
         }
 
         public override bool? CanDamage()

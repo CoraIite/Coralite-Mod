@@ -356,7 +356,7 @@ namespace Coralite.Content.WorldGeneration
                     if (Main.tileSolid[top.TileType] || Main.tileContainer[top.TileType])
                         continue;
 
-                    if (WorldGen.genRand.NextBool(5))
+                    if (WorldGen.genRand.NextBool(7))
                         WorldGen.KillTile(point.X, point.Y - 1);
                 }
         }
@@ -427,7 +427,7 @@ namespace Coralite.Content.WorldGeneration
             }
         }
 
-        private static void CSkyIslandSlope(ushort skarnBrick, Rectangle outerRect, Rectangle shrineRect,int smoothRand=2)
+        private static void CSkyIslandSlope(ushort skarnBrick, Rectangle outerRect, Rectangle shrineRect, int smoothRand = 2)
         {
             for (int i = 0; i < outerRect.Width; i++)
                 for (int j = 0; j < outerRect.Height; j++)
@@ -1621,8 +1621,17 @@ namespace Coralite.Content.WorldGeneration
             //在岛屿中间放置各种小石块和云块
             CSmallIslandFloatingBalls(expandRect, avoidRects);
 
+
+            //添加平滑与种树
+            CSmallIslandSlope(expandRect, avoidRects);
+            CSmallIslandTree(expandRect);
+
+            //添加瀑布
+            CSmallIslandWaterFall(expandRect, avoidRects);
+
             //后续生成各种杂物等
             CSmallIslandDecorations(rects);
+            CSmallIslandDecorations(expandRect, avoidRects);
 
             //由于一些特殊问题，在这里再设置斜坡
             foreach (TextureGenerator g in generators)
@@ -1637,6 +1646,142 @@ namespace Coralite.Content.WorldGeneration
                         WorldGen.PlaceTile(x, y, ModContent.TileType<SkarnRubbles6x6>(), true);
                 });
             }
+        }
+
+        private static void CSmallIslandDecorations(Rectangle outerRect, List<Rectangle> avoidRect)
+        {
+            WorldGenHelper.PlaceDecorations_NoCheck2(outerRect, (ushort)ModContent.TileType<CrystallineStalactite>(), 5, avoidArea: avoidRect);
+            WorldGenHelper.PlaceDecorations_NoCheck2(outerRect, (ushort)ModContent.TileType<CrystallineStalactite2x2>(), 4, avoidArea: avoidRect);
+
+            WorldGenHelper.PlaceDecorations_NoCheck2(outerRect, (ushort)ModContent.TileType<SkarnRubbles4x2>(), 15, avoidArea: avoidRect);
+            WorldGenHelper.PlaceDecorations_NoCheck2(outerRect, (ushort)ModContent.TileType<SkarnRubbles3x4>(), 13, avoidArea: avoidRect);
+            WorldGenHelper.PlaceDecorations_NoCheck2(outerRect, (ushort)ModContent.TileType<SkarnRubbles3x3>(), 11, avoidArea: avoidRect);
+            WorldGenHelper.PlaceDecorations_NoCheck2(outerRect, (ushort)ModContent.TileType<SkarnRubbles3x2>(), 10, avoidArea: avoidRect);
+            WorldGenHelper.PlaceDecorations_NoCheck2(outerRect, (ushort)ModContent.TileType<SkarnRubbles2x2>(), 5, avoidArea: avoidRect);
+            WorldGenHelper.PlaceDecorations_NoCheck2(outerRect, (ushort)ModContent.TileType<SkarnRubbles2x1>(), 3, avoidArea: avoidRect);
+            WorldGenHelper.PlaceDecorations_NoCheck2(outerRect, (ushort)ModContent.TileType<SkarnRubbles1x1>(), 2, avoidArea: avoidRect);
+        }
+
+        private static void CSmallIslandWaterFall(Rectangle outerRect, List<Rectangle> avoidRect)
+        {
+            int waterfallCount = (outerRect.Width + outerRect.Height) / 40;
+            ushort skarnBrick = (ushort)ModContent.TileType<SkarnBrickTile>();
+
+            for (int i = 0; i < waterfallCount; i++)
+            {
+                //随机找点
+                Point p = default;
+
+                for (int j = 0; j < 750; j++)//找到一个自身没物块的地方
+                {
+                    Point p2 = WorldGen.genRand.NextVector2FromRectangle(outerRect).ToPoint();
+
+                    if (Main.tile[p2].TileType == skarnBrick)
+                        continue;
+
+                    bool skip = false;
+                    foreach (var r in avoidRect)
+                    {
+                        if (r.Contains(p2))
+                        {
+                            skip = true;
+                            break;
+                        }
+                    }
+
+                    if (skip)
+                        continue;
+
+                    Tile left = Main.tile[p2.X - 1, p2.Y];
+                    Tile right = Main.tile[p2.X + 1, p2.Y];
+                    Tile bottom = Main.tile[p2.X, p2.Y + 1];
+
+                    if (!left.HasTile || !right.HasTile || !bottom.HasTile)//左右两侧必须有物块
+                        continue;
+
+                    Tile left2 = Main.tile[p2.X - 2, p2.Y];
+                    Tile right2 = Main.tile[p2.X + 2, p2.Y];
+
+                    if (left2.HasTile && right2.HasTile)//左右两侧至少有一个没物块的地方
+                        continue;
+
+                    p = p2;
+                }
+
+                if (p == default)
+                    continue;
+
+                Main.tile[p].ClearTile();//清除物块
+                WorldGen.PlaceLiquid(p.X, p.Y, (byte)LiquidID.Water, 255);
+
+                Tile left22 = Main.tile[p.X - 2, p.Y];
+                Tile right22 = Main.tile[p.X + 2, p.Y];
+
+                if (!left22.HasTile)
+                    WorldGen.PoundTile(p.X - 1, p.Y);//左边敲半砖
+                if (!right22.HasTile)
+                    WorldGen.PoundTile(p.X + 1, p.Y);//右边敲半砖
+
+                Main.tile[p.X, p.Y + 1].Clear(TileDataType.Slope);//底部变成整块
+            }
+        }
+
+        private static void CSmallIslandTree(Rectangle rect)
+        {
+            ushort skarn = (ushort)ModContent.TileType<SkarnTile>();
+            ushort sSkarn = (ushort)ModContent.TileType<SmoothSkarnTile>();
+            ushort cSkarn = (ushort)ModContent.TileType<ChalcedonySkarn>();
+            ushort csSkarn = (ushort)ModContent.TileType<ChalcedonySmoothSkarn>();
+            ushort sapling = (ushort)ModContent.TileType<Tiles.Trees.ChalcedonySapling>();
+
+            for (int i = 0; i < rect.Width; i++)
+                for (int j = 0; j < rect.Height; j++)
+                {
+                    if (!WorldGen.genRand.NextBool(10))
+                        continue;
+
+                    Point p = new Point(rect.X + i, rect.Y + j);
+                    Tile t = Main.tile[p];
+                    if (!t.HasTile)
+                        continue;
+
+                    if (t.TileType != skarn && t.TileType != sSkarn && t.TileType != cSkarn && t.TileType != csSkarn)
+                        continue;
+
+                    Tile top = Main.tile[p + new Point(0, -1)];
+                    if (top.HasTile || top.WallType != 0)
+                        continue;
+
+                    WorldGen.PlaceObject(p.X, p.Y - 1, sapling, true);
+                    WorldGen.GrowTree(p.X, p.Y - 1);
+                }
+        }
+
+        private static void CSmallIslandSlope(Rectangle rect, List<Rectangle> avoidRects)
+        {
+            for (int i = 0; i < rect.Width; i++)
+                for (int j = 0; j < rect.Height; j++)
+                {
+                    Point p = new Point(rect.X + i, rect.Y + j);
+                    bool skip = false;
+
+                    foreach (var r in avoidRects)
+                        if (r.Contains(p))
+                        {
+                            skip = true;
+                            break;
+                        }
+
+                    if (skip)
+                        continue;
+
+                    Tile t = Main.tile[p];
+                    if (!t.HasTile || t.TileType == (ushort) ModContent.TileType<SkarnBrickTile>())
+                        continue;
+
+                    if (WorldGen.genRand.NextBool(3,4))
+                        Tile.SmoothSlope(p.X, p.Y, false);
+                }
         }
 
         private static void CSmallIslandFloatingBalls(Rectangle area, List<Rectangle> avoidRects)

@@ -34,6 +34,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             NPC.npcSlots = 0.1f;
             NPC.noGravity = true;
             NPC.noTileCollide = false;
+            NPC.SpawnedFromStatue = true;
         }
 
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)

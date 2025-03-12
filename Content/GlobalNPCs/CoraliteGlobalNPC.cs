@@ -254,17 +254,13 @@ namespace Coralite.Content.GlobalNPCs
         public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
         {
             if (spawnInfo.Player.InModBiome<MagicCrystalCave>())
-            {
-                pool[0] = 0.5f;
-            }
+                pool[0] = 0.25f;
 
-            if (spawnInfo.Player.InModBiome<ShadowCastleBiome>())
+            if (spawnInfo.Player.InModBiome<CrystallineSkyIsland>() || spawnInfo.Player.InModBiome<ShadowCastleBiome>())
                 pool[0] = 0f;
 
             if (CoraliteWorld.CoralCatWorld && spawnInfo.Player.wet && spawnInfo.Player.position.Y < Main.worldSurface * 16)
-            {
                 pool.Add(NPCID.Shark, 1);
-            }
         }
 
         public override bool PreKill(NPC npc)

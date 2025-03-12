@@ -212,8 +212,7 @@ namespace Coralite.Content.GlobalItems
 
         public override void PickAmmo(Item weapon, Item ammo, Player player, ref int type, ref float speed, ref StatModifier damage, ref float knockback)
         {
-
-            base.PickAmmo(weapon, ammo, player, ref type, ref speed, ref damage, ref knockback);
+            ApplySpecialDamage(player, ref damage);
         }
 
         public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
@@ -289,14 +288,7 @@ namespace Coralite.Content.GlobalItems
 
         public override void ModifyWeaponDamage(Item item, Player player, ref StatModifier damage)
         {
-
-            if (player.TryGetModPlayer(out CoralitePlayer cp))
-            {
-                if (ColdDamage)
-                    damage = damage.CombineWith(cp.coldDamageBonus);
-                if (EdibleDamage)
-                    damage = damage.CombineWith(cp.deliciousDamageBonus);
-            }
+            ApplySpecialDamage(player, ref damage);
         }
 
         public override void UpdateInventory(Item item, Player player)
@@ -377,6 +369,17 @@ namespace Coralite.Content.GlobalItems
             }
 
             SoundEngine.PlaySound(CoraliteSoundID.Meowmere);
+        }
+
+        public void ApplySpecialDamage(Player player,ref StatModifier damage)
+        {
+            if (player.TryGetModPlayer(out CoralitePlayer cp))
+            {
+                if (ColdDamage)
+                    damage = damage.CombineWith(cp.coldDamageBonus);
+                if (EdibleDamage)
+                    damage = damage.CombineWith(cp.deliciousDamageBonus);
+            }
         }
 
         public void AddVarient()

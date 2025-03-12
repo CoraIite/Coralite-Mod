@@ -31,6 +31,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             NPC.height = 30;
             NPC.noGravity = true;
             NPC.HitSound = CoraliteSoundID.Fleshy_NPCHit1;
+            NPC.SpawnedFromStatue = true;
         }
 
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)

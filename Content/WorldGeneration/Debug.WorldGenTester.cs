@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Tiles.MagikeSeries2;
+using Coralite.Content.Tiles.Trees;
 using Coralite.Core;
 using Terraria;
 using Terraria.DataStructures;
@@ -31,9 +32,11 @@ namespace Coralite.Content.WorldGeneration
 
         public override bool CanUseItem(Player player)
         {
-            Point point = Main.MouseWorld.ToTileCoordinates();
-            Tile t = Main.tile[point];
-            Main.NewText(t.TileFrameX);
+            Point p = Main.MouseWorld.ToTileCoordinates();
+            Tile t = Main.tile[p];
+            //Main.NewText(t.TileFrameX);
+            WorldGen.PlaceObject(p.X, p.Y - 1, ModContent.TileType<ChalcedonySapling>(), true);
+
             //WorldGenHelper.ObjectPlace(point.X, point.Y - 1, ModContent.TileType<ChalcedonyGrass2x2>(), WorldGen.genRand.Next(2));
 
             //WorldGen.PlaceObject(pos.X, pos.Y, ModContent.TileType<MercuryPlatformTile>());
