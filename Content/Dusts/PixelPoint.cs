@@ -88,4 +88,20 @@ namespace Coralite.Content.Dusts
             return false;
         }
     }
+
+    public class ChaseablePixelLine : PixelLine
+    {
+        public Entity entity;
+
+        public override void AI()
+        {
+            base.AI();
+            if (entity != null && entity.active)
+            {
+                Vector2 toOld = entity.position - entity.oldPosition;
+                basePos += toOld;
+                Position += toOld;
+            }
+        }
+    }
 }

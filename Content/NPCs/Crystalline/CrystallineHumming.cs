@@ -50,9 +50,9 @@ namespace Coralite.Content.NPCs.Crystalline
         }
 
         private ref float TextTimer => ref NPC.localAI[1];
-        private PopupText TextType
+        private TextTypes TextType
         {
-            get => (PopupText)NPC.localAI[2];
+            get => (TextTypes)NPC.localAI[2];
             set => NPC.localAI[2] = (int)value;
         }
         private ref float Recorder2 => ref NPC.localAI[3];
@@ -71,7 +71,7 @@ namespace Coralite.Content.NPCs.Crystalline
             Attack_Floating,
         }
 
-        private enum PopupText
+        private enum TextTypes
         {
             None,
             Surprise,
@@ -94,18 +94,24 @@ namespace Coralite.Content.NPCs.Crystalline
 
         public override void SetDefaults()
         {
-            NPC.width = 42;
-            NPC.height = 42;
+            NPC.width = 54;
+            NPC.height = 54;
             NPC.damage = 75;
-            NPC.defense = 25;
+            NPC.defense = 20;
 
-            NPC.lifeMax = 1100;
+            NPC.lifeMax = 700;
             NPC.aiStyle = -1;
             NPC.knockBackResist = 0.5f;
             NPC.HitSound = CoraliteSoundID.CrystalHit_DD2_WitherBeastHurt;
             NPC.DeathSound = CoraliteSoundID.CrystalBroken_DD2_WitherBeastDeath;
             NPC.noGravity = true;
-            NPC.value = Item.buyPrice(0, 0, 40, 0);
+            NPC.value = Item.buyPrice(0, 0, 25, 0);
+        }
+
+        public override bool ModifyCollisionData(Rectangle victimHitbox, ref int immunityCooldownSlot, ref MultipliableFloat damageMultiplier, ref Rectangle npcHitbox)
+        {
+            npcHitbox = Utils.CenteredRectangle(NPC.Center, new Vector2(NPC.scale * 42));
+            return base.ModifyCollisionData(victimHitbox, ref immunityCooldownSlot, ref damageMultiplier, ref npcHitbox);
         }
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
@@ -196,7 +202,7 @@ namespace Coralite.Content.NPCs.Crystalline
             {
                 TextTimer--;
                 if (TextTimer == 0)
-                    TextType = PopupText.None;
+                    TextType = TextTypes.None;
             }
 
             Lighting.AddLight(NPC.Center, new Vector3(0.16f, 0.06f, 0.2f));
@@ -322,7 +328,7 @@ namespace Coralite.Content.NPCs.Crystalline
             if (Confused)
             {
                 TextTimer = 90;
-                TextType = PopupText.Confusion;
+                TextType = TextTypes.Confusion;
             }
         }
 
@@ -337,7 +343,7 @@ namespace Coralite.Content.NPCs.Crystalline
             if (State == AIStates.Idle_Floating || State == AIStates.Idle_Flying)
             {
                 TextTimer = 90;
-                TextType = PopupText.Surprise;
+                TextType = TextTypes.Surprise;
             }
 
             //Main.NewText("开始攻击！");
@@ -426,13 +432,18 @@ namespace Coralite.Content.NPCs.Crystalline
                             NormalFlyFrame();
 
                             //粒子
-                            float distance = Main.rand.NextFloat(48, 64);
-                            Vector2 pos = NPC.Center + Main.rand.NextVector2CircularEdge(distance, distance);
-                            var p = PRTLoader.NewParticle<PixelLine>(pos
-                                , (NPC.Center - pos).SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(1.5f, 3), newColor: Main.rand.NextFromList(Coralite.CrystallineMagikePurple, Coralite.MagicCrystalPink)
-                                  , Scale: Main.rand.NextFloat(0.8f, 1.5f));
-
-                            p.fadeFactor = 0.9f;
+                            if (Timer % 3 == 0)
+                            {
+                                float distance = Main.rand.NextFloat(64, 80);
+                                Vector2 pos = NPC.Center + Main.rand.NextVector2CircularEdge(distance, distance);
+                                var p = PRTLoader.NewParticle<ChaseablePixelLine>(pos
+                                    , (NPC.Center - pos).SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(3f, 4.5f), newColor: Main.rand.NextFromList(Coralite.CrystallineMagikePurple, Coralite.MagicCrystalPink)
+                                      , Scale: Main.rand.NextFloat(1f, 1.5f));
+                               
+                                p.entity = NPC;
+                                p.fadeFactor = 0.9f;
+                                p.TrailCount = 20;
+                            }
 
                             Timer++;
 
@@ -455,6 +466,9 @@ namespace Coralite.Content.NPCs.Crystalline
                                 CanHit = true;
                                 CanDrawShadowTrail = true;
                                 NPC.knockBackResist = 0;
+
+                                Helper.PlayPitched(CoraliteSoundID.Shoot_DD2_JavelinThrowersAttack, NPC.Center);
+
                                 NPC.velocity = (Target.Center - NPC.Center).SafeNormalize(Vector2.Zero) * 20;
                                 NPC.rotation = NPC.velocity.ToRotation()
                                     + (NPC.spriteDirection > 0 ? (-0.65f) : (0.65f + MathHelper.Pi));
@@ -474,9 +488,9 @@ namespace Coralite.Content.NPCs.Crystalline
                                 if (collide)//撞墙后自己受伤
                                 {
                                     Helper.PlayPitched(CoraliteSoundID.CrystalBroken_DD2_WitherBeastDeath, NPC.Center);
-                                    NPC.SimpleStrikeNPC(75, 0);
+                                    NPC.SimpleStrikeNPC(Helper.ScaleValueForDiffMode(75, 85, 100, 30), 0, damageVariation: true, noPlayerInteraction: true);
                                     TextTimer = 90;
-                                    TextType = PopupText.Hurt;
+                                    TextType = TextTypes.Hurt;
 
                                     Vector2 dir = -NPC.velocity.SafeNormalize(Vector2.Zero);
                                     for (int i = 0; i < 12; i++)
@@ -582,7 +596,7 @@ namespace Coralite.Content.NPCs.Crystalline
 
                             float rot = (Target.Center - NPC.Center).ToRotation();
                             Recorder2 = Recorder2.AngleLerp(rot, 0.25f);
-                            NPC.rotation = Recorder2 + (NPC.spriteDirection > 0 ? (-0.65f) : (0.65f + MathHelper.Pi));
+                            NPC.rotation = NPC.rotation.AngleLerp( Recorder2 + (NPC.spriteDirection > 0 ? (-0.65f) : (0.65f + MathHelper.Pi)),0.35f);
 
                             //粒子
                             Vector2 pos = NPC.Center + Main.rand.NextVector2CircularEdge(48, 48);
@@ -623,7 +637,8 @@ namespace Coralite.Content.NPCs.Crystalline
                                         , Helper.GetProjDamage(80, 100, 140), 0);
                                 }
 
-                                Helper.PlayPitched(CoraliteSoundID.Shoot_DD2_JavelinThrowersAttack, NPC.Center);
+                                Helper.PlayPitched(CoraliteSoundID.Stinger_Item17, NPC.Center,pitch:0.5f);
+                                Helper.PlayPitched(CoraliteSoundID.Swing_DD2_MonkStaffSwing, NPC.Center);
                                 WindCircle.Spawn(NPC.Center + dir2 * 15, -dir2 * 2, Recorder2, Coralite.CrystallineMagikePurple, 0.75f, 1.3f, new Vector2(1.2f, 1f));
 
                                 NPC.netUpdate = true;
@@ -896,9 +911,9 @@ namespace Coralite.Content.NPCs.Crystalline
             {
                 string text = TextType switch
                 {
-                    PopupText.Confusion => "( o O ) ?",
-                    PopupText.Surprise => "( o o ) !",
-                    PopupText.Hurt => "( x x )",
+                    TextTypes.Confusion => "( o O ) ?",
+                    TextTypes.Surprise => "( o o ) !",
+                    TextTypes.Hurt => "( x x )",
                     _ => ""
                 };
 

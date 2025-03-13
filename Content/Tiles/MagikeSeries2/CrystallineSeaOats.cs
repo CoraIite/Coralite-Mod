@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Items.MagikeSeries2;
+﻿using Coralite.Content.Dusts;
+using Coralite.Content.Items.MagikeSeries2;
 using Coralite.Core;
 using Coralite.Helpers;
 using Terraria;
@@ -37,7 +38,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileObjectData.addTile(Type);
 
             HitSound = CoraliteSoundID.CrystalHit_DD2_WitherBeastCrystalImpact;
-            DustType = DustID.Pearlsand;
+            DustType = ModContent.DustType<CrystallineDust>();
             MinPick = 110;
             AddMapEntry(new Color(181, 91, 235));
         }

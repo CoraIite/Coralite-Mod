@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Items.LandOfTheLustrousSeries;
+﻿using Coralite.Content.Dusts;
+using Coralite.Content.Items.LandOfTheLustrousSeries;
 using Coralite.Content.Items.MagikeSeries2;
 using Coralite.Core;
 using System.Collections.Generic;
@@ -29,7 +30,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
             TileID.Sets.ChecksForMerge[Type] = true;
 
-            DustType = DustID.PurpleTorch;
+            DustType = ModContent.DustType<CrystallineDust>();
             HitSound = CoraliteSoundID.CrystalHit_DD2_CrystalCartImpact;
             AddMapEntry(Coralite.CrystallineMagikePurple);
 

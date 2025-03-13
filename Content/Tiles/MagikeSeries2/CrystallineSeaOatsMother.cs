@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Items.MagikeSeries2;
+﻿using Coralite.Content.Dusts;
+using Coralite.Content.Items.MagikeSeries2;
 using Coralite.Core;
 using Terraria;
 using Terraria.ID;
@@ -33,6 +34,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileObjectData.addTile(Type);
 
             HitSound = CoraliteSoundID.Grass;
+            DustType = ModContent.DustType<CrystallineDust>();
             AddMapEntry(new Color(181, 91, 235), CreateMapEntryName());
             MinPick = 110;
 

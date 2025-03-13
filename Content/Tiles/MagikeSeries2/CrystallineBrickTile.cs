@@ -1,4 +1,5 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Dusts;
+using Coralite.Core;
 using Terraria;
 using Terraria.ID;
 
@@ -16,7 +17,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileID.Sets.CanBeClearedDuringOreRunner[Type] = false;
 
             MineResist = 3f;
-            DustType = DustID.PurpleTorch;
+            DustType = ModContent.DustType<CrystallineDust>();
             HitSound = CoraliteSoundID.CrystalHit_DD2_WitherBeastCrystalImpact;
             MinPick = 110;
 

@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Items.Materials;
+﻿using Coralite.Content.Biomes;
+using Coralite.Content.Items.Materials;
 using Coralite.Core;
 using Coralite.Core.Prefabs.NPCs;
 using Terraria;
@@ -82,7 +83,8 @@ namespace Coralite.Content.NPCs.OtherNPC
             if (spawnInfo.Player.townNPCs > 2f)
                 return 0;
 
-            if (spawnInfo.Player.statLifeMax2 > 150 && !Main.dayTime && spawnInfo.Player.ZoneOverworldHeight&&!spawnInfo.Player.ZoneSkyHeight)
+            if (spawnInfo.Player.statLifeMax2 > 150 && !Main.dayTime && spawnInfo.Player.ZoneOverworldHeight 
+                && !spawnInfo.Player.InModBiome<CrystallineSkyIsland>())
                 return 0.04f;
             return 0f;
         }

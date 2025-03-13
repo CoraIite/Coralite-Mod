@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Items.MagikeSeries2;
+﻿using Coralite.Content.Dusts;
+using Coralite.Content.Items.MagikeSeries2;
 using Coralite.Core;
 using System.Collections.Generic;
 using Terraria;
@@ -46,7 +47,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileObjectData.addTile(Type);
 
             HitSound = CoraliteSoundID.CrystalHit_DD2_CrystalCartImpact;
-            DustType = DustID.PurpleTorch;
+            DustType = ModContent.DustType<CrystallineDust>();
 
             MinPick = 110;
 
@@ -124,7 +125,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileObjectData.addTile(Type);
 
             HitSound = CoraliteSoundID.CrystalHit_DD2_CrystalCartImpact;
-            DustType = DustID.PurpleTorch;
+            DustType = ModContent.DustType<CrystallineDust>();
             AddMapEntry(Coralite.CrystallineMagikePurple);
 
             MinPick = 110;
