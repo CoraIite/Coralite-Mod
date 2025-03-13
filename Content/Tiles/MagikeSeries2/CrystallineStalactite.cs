@@ -68,9 +68,9 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
-            r = 0.08f;
-            g = 0.03f;
-            b = 0.1f;
+            r = 0.016f;
+            g = 0.06f;
+            b = 0.2f;
         }
     }
 
@@ -139,9 +139,9 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
-            r = 0.08f;
-            g = 0.03f;
-            b = 0.1f;
+            r = 0.016f;
+            g = 0.06f;
+            b = 0.2f;
         }
     }
 

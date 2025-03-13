@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Coralite.Core;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Diagnostics;
 using Terraria;
@@ -146,7 +147,13 @@ namespace Coralite.Helpers
             npc.directionY = p.Center.Y > npc.Center.Y ? 1 : -1;
         }
 
-        public static void QuickTrailSets(this NPC npc, TrailingMode trailingMode, int trailCacheLength)
+        public enum NPCTrailingMode
+        {
+            OnlyPosition = 1,
+            RecordAll = 3,
+        }
+
+        public static void QuickTrailSets(this NPC npc, NPCTrailingMode trailingMode, int trailCacheLength)
         {
             NPCID.Sets.TrailingMode[npc.type] = (int)trailingMode;
             NPCID.Sets.TrailCacheLength[npc.type] = trailCacheLength;
@@ -222,6 +229,18 @@ namespace Coralite.Helpers
             npc.oldRot[^1] = npc.rotation;
         }
 
+        public static void LoadGore(this ModNPC modnpc, int count)
+        {
+            for (int i = 0; i < count; i++)
+                GoreLoader.AddGoreFromTexture<SimpleModGore>(modnpc.Mod, modnpc.Texture + "_Gore" + i);
+        }
 
+        public static void SpawnGore(this ModNPC modnpc, int count, float speed = 1)
+        {
+            for (int i = 0; i < count; i++)
+                Gore.NewGoreDirect(modnpc.NPC.GetSource_Death()
+                    , Main.rand.NextVector2FromRectangle(modnpc.NPC.Hitbox)
+                    , Main.rand.NextVector2Circular(speed, speed), modnpc.Mod.Find<ModGore>(modnpc.Name + "_Gore" + i).Type);
+        }
     }
 }

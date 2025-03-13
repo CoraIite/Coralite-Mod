@@ -292,7 +292,7 @@ namespace Coralite.Content.NPCs.Elemental
             if (spawnInfo.Player.townNPCs > 2f)
                 return 0;
 
-            if (Main.dayTime && spawnInfo.Player.ZonePurity)
+            if (Main.dayTime && spawnInfo.Player.ZonePurity&&!spawnInfo.Player.ZoneSkyHeight)
                 return 0.02f;
             return 0f;
         }

@@ -82,7 +82,7 @@ namespace Coralite.Content.NPCs.OtherNPC
             if (spawnInfo.Player.townNPCs > 2f)
                 return 0;
 
-            if (spawnInfo.Player.statLifeMax2 > 150 && !Main.dayTime && spawnInfo.Player.ZoneOverworldHeight)
+            if (spawnInfo.Player.statLifeMax2 > 150 && !Main.dayTime && spawnInfo.Player.ZoneOverworldHeight&&!spawnInfo.Player.ZoneSkyHeight)
                 return 0.04f;
             return 0f;
         }
