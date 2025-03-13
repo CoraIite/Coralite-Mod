@@ -77,15 +77,6 @@ namespace Coralite.Content.WorldGeneration
             //添加邪恶箱子地形
             AddGenPass(tasks, VanillaGenPassName.Corruption, "Coralite Evil Chest", GenEvilChest);
 
-            //添加蕴魔空岛
-            AddGenPass(tasks, VanillaGenPassName.FinalCleanup, "Coralite Crystalline Sky Island", GenCrystallineSkyIsland);
-
-            //添加冰龙巢穴
-            AddGenPass(tasks, VanillaGenPassName.Lakes, "Coralite Ice Dragon Nest", GenIceDragonNest);
-
-            //放置风石碑牌
-            AddGenPass(tasks, VanillaGenPassName.PlaceFallenLog, "Coralite Wind Stone Tablet", GenWindStoneTablet);
-
             //在箱子中塞入更多战利品
             AddGenPass(tasks, VanillaGenPassName.FinalCleanup, "Coralite Replase Vanilla Chest", ReplaceVanillaChest);
 
@@ -95,6 +86,15 @@ namespace Coralite.Content.WorldGeneration
             //符文之歌相关地形
             AddGenPass(tasks, VanillaGenPassName.FinalCleanup, "CoreKeeper Clear Gemstone Maze", GenClearGemstoneMaze, 0);
             AddGenPass(tasks, VanillaGenPassName.FinalCleanup, "CoreKeeper Chipped Blade Temple", GenChippedBladeTemple, 0);
+
+            //添加蕴魔空岛
+            AddGenPass(tasks, VanillaGenPassName.FinalCleanup, "Coralite Crystalline Sky Island", GenCrystallineSkyIsland);
+
+            //添加冰龙巢穴
+            AddGenPass(tasks, VanillaGenPassName.Lakes, "Coralite Ice Dragon Nest", GenIceDragonNest);
+
+            //放置风石碑牌
+            AddGenPass(tasks, VanillaGenPassName.PlaceFallenLog, "Coralite Wind Stone Tablet", GenWindStoneTablet);
 
             int Dungeon = tasks.FindIndex(genpass => genpass.Name.Equals("Dungeon"));
             bool shadowCastle = ShadowCastle;

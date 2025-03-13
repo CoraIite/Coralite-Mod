@@ -3,6 +3,7 @@ using Coralite.Content.Items.FlyingShields.Accessories;
 using Coralite.Content.Items.MagikeSeries1;
 using Coralite.Content.Items.ThyphionSeries;
 using Coralite.Content.Tiles.MagikeSeries1;
+using Coralite.Content.Tiles.MagikeSeries2;
 using Terraria;
 using Terraria.ID;
 using Terraria.IO;
@@ -138,6 +139,11 @@ namespace Coralite.Content.WorldGeneration
 
                             if (WorldGen.genRand.NextBool(3))
                                 chest.AddItem<WarpMirror>();
+                        }
+                        else if (tile.TileType==ModContent.TileType<SkarnChestTile>())
+                        {
+                            for (int i = 0; i < 5; i++)
+                                WorldGenHelper.RandChestItem(chest, ItemID.InvisibilityPotion, WorldGen.genRand.Next(1, 5));
                         }
                         break;
                 }
