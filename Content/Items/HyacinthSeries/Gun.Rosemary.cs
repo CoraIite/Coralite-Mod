@@ -59,11 +59,8 @@ namespace Coralite.Content.Items.HyacinthSeries
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (Main.myPlayer == player.whoAmI)
-            {
-                Projectile.NewProjectile(source, player.Center, (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero).RotatedBy(Main.rand.NextFloat(-0.04f, 0.04f)) * 14, ProjectileType<RosemaryBullet>(), damage, knockback, player.whoAmI);
-                Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, Vector2.Zero, ProjectileType<RosemaryHeldProj>(), damage, knockback, player.whoAmI);
-            }
+            Projectile.NewProjectile(source, player.Center, (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero).RotatedBy(Main.rand.NextFloat(-0.04f, 0.04f)) * 14, ProjectileType<RosemaryBullet>(), damage, knockback, player.whoAmI);
+            Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, Vector2.Zero, ProjectileType<RosemaryHeldProj>(), damage, knockback, player.whoAmI);
 
             return false;
         }
@@ -76,20 +73,19 @@ namespace Coralite.Content.Items.HyacinthSeries
             .AddIngredient(ItemID.SoulofSight, 5)
             .AddTile(TileID.MythrilAnvil)
             .Register();
-
-            //供普通模式使用
-            //CreateRecipe()
-            //.AddIngredient<ArethusaNormalMode>()
-            //.AddIngredient(ItemID.SoulofNight, 5)
-            //.AddIngredient(ItemID.SoulofSight, 5)
-            //.AddTile(TileID.MythrilAnvil)
-            //.Register();
         }
-
     }
 
     public class Rosemary2 : Rosemary
     {
+        public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
+        {
+            Projectile.NewProjectile(source, player.Center, (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero).RotatedBy(Main.rand.NextFloat(-0.04f, 0.04f)) * 14, ProjectileType<RosemaryBullet>(), damage, knockback, player.whoAmI);
+            Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, Vector2.Zero, ProjectileType<RosemaryHeldProj2>(), damage, knockback, player.whoAmI);
+
+            return false;
+        }
+
         public override void AddRecipes()
         {
             CreateRecipe()
@@ -105,22 +101,6 @@ namespace Coralite.Content.Items.HyacinthSeries
             .AddIngredient(ItemID.SoulofFright, 5)
             .AddTile(TileID.MythrilAnvil)
             .Register();
-
-            //供普通模式使用
-            //CreateRecipe()
-            //.AddIngredient<ArethusaNormalMode>()
-            //.AddIngredient(ItemID.SoulofNight, 5)
-            //.AddIngredient(ItemID.SoulofMight, 5)
-            //.AddTile(TileID.MythrilAnvil)
-            //.Register();
-
-            //CreateRecipe()
-            //.AddIngredient<ArethusaNormalMode>()
-            //.AddIngredient(ItemID.SoulofNight, 5)
-            //.AddIngredient(ItemID.SoulofFright, 5)
-            //.AddTile(TileID.MythrilAnvil)
-            //.Register();
         }
-
     }
 }
