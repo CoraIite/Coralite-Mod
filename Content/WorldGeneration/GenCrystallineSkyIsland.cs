@@ -124,8 +124,8 @@ namespace Coralite.Content.WorldGeneration
                 for (int j = 0; j < 500; j++)//向下遍历，找到地面
                 {
                     Tile t = Main.tile[p2.X, p2.Y];
-                    if ((t.HasTile && Main.tileSolid[t.TileType]&&t.TileType is not TileID.ClayBlock or TileID.Dirt or TileID.Grass or TileID.RainCloud or TileID.Cloud)
-                        || t.LiquidAmount > 0)//找到实心方块
+                    if ((t.HasTile && Main.tileSolid[t.TileType] && t.TileType is not TileID.ClayBlock or TileID.Dirt or TileID.Grass or TileID.RainCloud or TileID.Cloud)
+                        || (!CoralCatWorld && t.LiquidAmount > 0))//找到实心方块
                         break;
 
                     p2.Y++;

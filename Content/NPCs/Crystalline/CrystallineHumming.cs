@@ -96,7 +96,7 @@ namespace Coralite.Content.NPCs.Crystalline
         {
             NPC.width = 54;
             NPC.height = 54;
-            NPC.damage = 75;
+            NPC.damage = 70;
             NPC.defense = 20;
 
             NPC.lifeMax = 700;
@@ -117,7 +117,7 @@ namespace Coralite.Content.NPCs.Crystalline
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
             if (Main.hardMode && spawnInfo.Player.InModBiome<CrystallineSkyIsland>())
-                return 0.02f;
+                return 0.03f;
 
             return 0;
         }
@@ -129,9 +129,6 @@ namespace Coralite.Content.NPCs.Crystalline
 
             //小概率掉落魔鸟
 
-
-            //概率掉落蕴魔海燕麦母体
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PrimaryRoughGemstone>(), 8));
 
             //掉落宝石原石
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PrimaryRoughGemstone>(), 3, 1, 3));
@@ -306,7 +303,7 @@ namespace Coralite.Content.NPCs.Crystalline
         /// <summary>
         /// 转变成待机模式，随机飞行或悬浮
         /// </summary>
-        public void TurnToIdle(bool Confused=false)
+        public void TurnToIdle(bool Confused = false)
         {
             Timer = 0;
             CanHit = false;
@@ -439,7 +436,7 @@ namespace Coralite.Content.NPCs.Crystalline
                                 var p = PRTLoader.NewParticle<ChaseablePixelLine>(pos
                                     , (NPC.Center - pos).SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(3f, 4.5f), newColor: Main.rand.NextFromList(Coralite.CrystallineMagikePurple, Coralite.MagicCrystalPink)
                                       , Scale: Main.rand.NextFloat(1f, 1.5f));
-                               
+
                                 p.entity = NPC;
                                 p.fadeFactor = 0.9f;
                                 p.TrailCount = 20;
@@ -596,7 +593,7 @@ namespace Coralite.Content.NPCs.Crystalline
 
                             float rot = (Target.Center - NPC.Center).ToRotation();
                             Recorder2 = Recorder2.AngleLerp(rot, 0.25f);
-                            NPC.rotation = NPC.rotation.AngleLerp( Recorder2 + (NPC.spriteDirection > 0 ? (-0.65f) : (0.65f + MathHelper.Pi)),0.35f);
+                            NPC.rotation = NPC.rotation.AngleLerp(Recorder2 + (NPC.spriteDirection > 0 ? (-0.65f) : (0.65f + MathHelper.Pi)), 0.35f);
 
                             //粒子
                             Vector2 pos = NPC.Center + Main.rand.NextVector2CircularEdge(48, 48);
@@ -637,7 +634,7 @@ namespace Coralite.Content.NPCs.Crystalline
                                         , Helper.GetProjDamage(80, 100, 140), 0);
                                 }
 
-                                Helper.PlayPitched(CoraliteSoundID.Stinger_Item17, NPC.Center,pitch:0.5f);
+                                Helper.PlayPitched(CoraliteSoundID.Stinger_Item17, NPC.Center, pitch: 0.5f);
                                 Helper.PlayPitched(CoraliteSoundID.Swing_DD2_MonkStaffSwing, NPC.Center);
                                 WindCircle.Spawn(NPC.Center + dir2 * 15, -dir2 * 2, Recorder2, Coralite.CrystallineMagikePurple, 0.75f, 1.3f, new Vector2(1.2f, 1f));
 
@@ -870,16 +867,12 @@ namespace Coralite.Content.NPCs.Crystalline
                 return;
 
             Timer += 20;
-        } 
+        }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
             return CanHit;
         }
-
-        #region 网络同步
-
-        #endregion
 
         #region 绘制
 
@@ -899,7 +892,7 @@ namespace Coralite.Content.NPCs.Crystalline
                 for (int i = 0; i < 8; i++)
                 {
                     Vector2 p = NPC.oldPos[i] + offset;
-                    spriteBatch.Draw(mainTex, p, frameBox, drawColor*(0.35f-i*0.35f/8), NPC.oldRot[i]
+                    spriteBatch.Draw(mainTex, p, frameBox, drawColor * (0.35f - i * 0.35f / 8), NPC.oldRot[i]
                         , origin, NPC.scale, effect, 0);
                 }
             }
@@ -926,7 +919,7 @@ namespace Coralite.Content.NPCs.Crystalline
         #endregion
     }
 
-    public class CrystallineSpike:ModProjectile
+    public class CrystallineSpike : ModProjectile
     {
         public override string Texture => AssetDirectory.CrystallineNPCs + Name;
 
@@ -956,7 +949,7 @@ namespace Coralite.Content.NPCs.Crystalline
                 Vector2 dir2 = -Projectile.velocity.SafeNormalize(Vector2.Zero);
                 for (int i = -1; i < 2; i++)
                     Projectile.NewProjectileFromThis<CrystallinePieces>(Projectile.Center
-                        , dir2.RotatedBy(i * 0.65f)*12, (int)(Projectile.damage * 0.66f), 0, i + 1);
+                        , dir2.RotatedBy(i * 0.65f) * 12, (int)(Projectile.damage * 0.66f), 0, i + 1);
             }
 
             Helper.PlayPitched(CoraliteSoundID.CrystalHit_DD2_WitherBeastCrystalImpact, Projectile.Center);
@@ -968,7 +961,7 @@ namespace Coralite.Content.NPCs.Crystalline
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Projectile.DrawShadowTrails(lightColor, 0.5f, 0.5f / 7, 1, 7, 1, 0.785f,-1);
+            Projectile.DrawShadowTrails(lightColor, 0.5f, 0.5f / 7, 1, 7, 1, 0.785f, -1);
             Projectile.QuickDraw(lightColor, 0.785f);
             return false;
         }
