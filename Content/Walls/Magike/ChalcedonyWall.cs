@@ -27,6 +27,7 @@ namespace Coralite.Content.Walls.Magike
 
         public override void SetStaticDefaults()
         {
+            WallID.Sets.AllowsPlantsToGrow[Type] = true;
             DustType = DustID.GolfPaticle;
             AddMapEntry(new Color(150, 150, 120));
         }

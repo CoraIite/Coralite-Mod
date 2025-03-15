@@ -28,6 +28,7 @@ namespace Coralite.Content.Walls.Magike
         public override void SetStaticDefaults()
         {
             DustType = DustID.BorealWood_Small;
+            WallID.Sets.AllowsPlantsToGrow[Type] = true;
             AddMapEntry(new Color(70, 100, 130));
         }
 

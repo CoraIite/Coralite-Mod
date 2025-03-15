@@ -108,6 +108,16 @@ namespace Coralite.Content.NPCs.Crystalline
             NPC.value = Item.buyPrice(0, 0, 25, 0);
         }
 
+        public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
+        {
+            if (Main.getGoodWorld)
+            {
+                NPC.scale = 0.75f;
+                NPC.width = (int)(NPC.width * NPC.scale);
+                NPC.height = (int)(NPC.height * NPC.scale);
+            }
+        }
+
         public override bool ModifyCollisionData(Rectangle victimHitbox, ref int immunityCooldownSlot, ref MultipliableFloat damageMultiplier, ref Rectangle npcHitbox)
         {
             npcHitbox = Utils.CenteredRectangle(NPC.Center, new Vector2(NPC.scale * 42));
@@ -117,7 +127,7 @@ namespace Coralite.Content.NPCs.Crystalline
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
             if (Main.hardMode && spawnInfo.Player.InModBiome<CrystallineSkyIsland>())
-                return 0.03f;
+                return 0.04f;
 
             return 0;
         }
@@ -434,7 +444,7 @@ namespace Coralite.Content.NPCs.Crystalline
                                 float distance = Main.rand.NextFloat(64, 80);
                                 Vector2 pos = NPC.Center + Main.rand.NextVector2CircularEdge(distance, distance);
                                 var p = PRTLoader.NewParticle<ChaseablePixelLine>(pos
-                                    , (NPC.Center - pos).SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(3f, 4.5f), newColor: Main.rand.NextFromList(Coralite.CrystallineMagikePurple, Coralite.MagicCrystalPink)
+                                    , (NPC.Center - pos).SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(3.5f, 5f), newColor: Main.rand.NextFromList(Coralite.CrystallineMagikePurple, Coralite.MagicCrystalPink)
                                       , Scale: Main.rand.NextFloat(1f, 1.5f));
 
                                 p.entity = NPC;
@@ -610,6 +620,8 @@ namespace Coralite.Content.NPCs.Crystalline
 
                         if (Timer == ReadyTime)//准备攻击
                         {
+                            AttackDirection();
+
                             float rot = (Target.Center - NPC.Center).ToRotation();
                             Recorder2 = Recorder2.AngleLerp(rot, 0.08f);
                             NPC.rotation = Recorder2 + (NPC.spriteDirection > 0 ? (-0.65f) : (0.65f + MathHelper.Pi));
@@ -938,6 +950,8 @@ namespace Coralite.Content.NPCs.Crystalline
 
         public override void AI()
         {
+            if (Projectile.velocity.Y<8)
+                Projectile.velocity.Y += 0.05f;
             Projectile.rotation = Projectile.velocity.ToRotation();
             Lighting.AddLight(Projectile.Center, Coralite.CrystallineMagikePurple.ToVector3() / 2);
         }

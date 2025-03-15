@@ -797,6 +797,7 @@ namespace Coralite.Content.WorldGeneration
         {
             //主要通道，用于生成小遗迹
             int type = WorldGen.genRand.Next(8);
+            type = 6;//测试用
 
             TextureGenerator generator = new TextureGenerator("MainSkyIslandShrine",type,AssetDirectory.CrystallineSkyIsland);
 
@@ -823,9 +824,9 @@ namespace Coralite.Content.WorldGeneration
 
             Dictionary<Color, int> mainDic = new()
             {
-                [new Color(51, 76, 117)] = skarn,//334c75
-                [new Color(141, 171, 178)] = smoothSkarn,//8dabb2
-                [new Color(184, 230, 207)] = skarnBrick,//b8e6cf
+                [new Color(51, 76, 117)] = ModContent.TileType<SkarnTile>(),//334c75
+                [new Color(141, 171, 178)] = ModContent.TileType<SmoothSkarnTile>(),//8dabb2
+                [new Color(184, 230, 207)] = ModContent.TileType<SkarnBrickTile>(),//b8e6cf
                 [new Color(158, 77, 255)] = ModContent.TileType<CrystallineSkarnTile>(),//9e4dff
 
                 [new Color(255, 239, 219)] = ModContent.TileType<ChalcedonyTile>(),//ffefdb
@@ -834,18 +835,29 @@ namespace Coralite.Content.WorldGeneration
                 [new Color(147, 186, 84)] = ModContent.TileType<ChalcedonySkarn>(),//93ba54
                 [new Color(95, 212, 111)] = ModContent.TileType<ChalcedonySmoothSkarn>(),//5fd46f
 
-                [new Color(241, 130, 255)] = crystallineBrick,//f182ff
+                [new Color(241, 130, 255)] = ModContent.TileType<CrystallineBrickTile>(),//f182ff
+                [new Color(134, 156, 255)] = ModContent.TileType<CrystallineBlockTile>(),//869cff
+
+                [new Color(223, 255, 255)] = TileID.Cloud,//dfffff
+                [new Color(147, 144, 178)] = TileID.RainCloud,//9390b2
+
                 [new Color(90, 100, 80)] = TileID.Chain,//5a6450
             };
             Dictionary<Color, int> wallDic = new()
             {
-                [new Color(85, 183, 206)] = skarnWall,//55b7ce
+                [new Color(85, 183, 206)] = ModContent.WallType<SmoothSkarnWallUnsafe>(),//55b7ce
                 [new Color(188, 171, 150)] = ModContent.WallType<WildChalcedonyWallUnsafe>(),//bcab96
                 [new Color(113, 128, 131)] = ModContent.WallType<SkarnBrickWallUnsafe>(),//718083
+                [new Color(64, 77, 100)] = ModContent.WallType<CrackedSkarnWallUnsafe>(),//404d64
+                [new Color(152, 158, 149)] = ModContent.WallType<ChalcedonyWallUnsafe>(),//989e95
+
+                [new Color(54, 52, 58)] = ModContent.WallType<HardBasaltWall>(),//36343a
+
+                [new Color(189, 202, 222)] = WallID.Cloud,//bdcade
             };
 
             //生成遗迹
-            generator.GenerateByTopLeft(shrineTopLeft, mainDic, wallDic);
+            generator.GenerateByTopLeft(shrineTopLeft, mainDic, wallDic,CSkyIslandObjectPlace);
 
             //放置中心的箱子
             ushort chestTileType = (ushort)ModContent.TileType<SkarnChestTile>();
@@ -1461,6 +1473,8 @@ namespace Coralite.Content.WorldGeneration
             Ruins,
             /// <summary> 箱子岛 </summary>
             Chest,
+            /// <summary> 箱子岛 </summary>
+            Forest,
         }
 
         public void GenSmallIslands(Rectangle mainRect, Rectangle originMainRect)
@@ -1522,15 +1536,16 @@ namespace Coralite.Content.WorldGeneration
                 [new Color(189, 202, 222)] = WallID.Cloud,//bdcade
             };
 
-            List<SmallIslandType> types = [SmallIslandType.Ruins, SmallIslandType.Chest];
+            List<SmallIslandType> types = [SmallIslandType.Ruins, SmallIslandType.Chest,SmallIslandType.Forest];
             List<(SmallIslandType, int)> typesRecord = [];
 
             while (types.Count < smallIslandCount)
             {
                 types.Add(WorldGen.genRand.NextFromList(
-                    SmallIslandType.Normal,
-                    SmallIslandType.Ruins,
-                    SmallIslandType.Chest
+                    SmallIslandType.Normal,SmallIslandType.Normal,
+                    SmallIslandType.Ruins,SmallIslandType.Ruins,
+                    SmallIslandType.Chest,SmallIslandType.Chest,
+                    SmallIslandType.Forest
                     ));
             }
 
@@ -2090,6 +2105,11 @@ namespace Coralite.Content.WorldGeneration
                 WorldGen.PlaceTile(x, y, ModContent.TileType<SkarnBrickTile>(), true);
             else if (c == new Color(0, 21, 255))
                 WorldGen.PlaceTile(x, y, ModContent.TileType<SkarnTile>(), true);
+            else if (c == new Color(49, 255, 219))//31ffdb
+            {
+                WorldGen.PlaceObject(x,y, (ushort)ModContent.TileType<Tiles.Trees.ChalcedonySapling>(), true);
+                WorldGen.GrowTree(x,y);
+            }
         }
 
         public static int CSkyIslandRandStyle(SmallIslandType smallIslandType)
@@ -2099,6 +2119,7 @@ namespace Coralite.Content.WorldGeneration
                 SmallIslandType.Normal => WorldGen.genRand.Next(14),
                 SmallIslandType.Ruins => WorldGen.genRand.Next(6),
                 SmallIslandType.Chest => WorldGen.genRand.Next(6),
+                SmallIslandType.Forest => WorldGen.genRand.Next(3),
                 _ => 0,
             };
         }

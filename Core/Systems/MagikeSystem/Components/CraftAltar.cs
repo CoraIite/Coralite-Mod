@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
@@ -689,6 +690,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
                 position = position - Main.screenPosition;
                 Color c = Coralite.MagicCrystalPink;
+                if (Entity.TryGetComponent(MagikeComponentID.ApparatusInformation, out ApparatusInformation info))
+                    c = MagikeSystem.GetColor(info.CurrentLevel);
+
                 c *= (200f / 255f * alpha);
                 var origin = mainTex.Size() / 2;
                 float scale = Length * 2 / mainTex.Width;
