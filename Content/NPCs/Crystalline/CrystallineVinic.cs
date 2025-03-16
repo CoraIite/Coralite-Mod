@@ -1,11 +1,10 @@
 ﻿using Coralite.Content.Biomes;
-using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
 using Coralite.Content.Dusts;
 using Coralite.Content.Items.LandOfTheLustrousSeries;
+using Coralite.Content.Items.Magike.Refractors;
 using Coralite.Content.Items.MagikeSeries2;
 using Coralite.Core;
 using Coralite.Core.Attributes;
-using Coralite.Core.SmoothFunctions;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
@@ -79,6 +78,11 @@ namespace Coralite.Content.NPCs.Crystalline
             NPC.QuickTrailSets(Helper.NPCTrailingMode.OnlyPosition, 2);
         }
 
+        public override void Load()
+        {
+            this.LoadGore(3);
+        }
+
         public override void SetDefaults()
         {
             NPC.width = NPC.height = 16 * 3;
@@ -100,13 +104,16 @@ namespace Coralite.Content.NPCs.Crystalline
             if (Main.hardMode && spawnInfo.Player.InModBiome<CrystallineSkyIsland>())
             {
                 int tileY = spawnInfo.SpawnTileY;
-                for (int i = 0; i < 200; i++)
+                for (int i = 0; i < 45; i++)
                 {
                     Tile t = Framing.GetTileSafely(spawnInfo.SpawnTileX, tileY);
                     if (t.HasTile && Main.tileSolid[t.TileType])
                         break;
 
-                    tileY++;
+                    if (OnTileType == OnTileTypes.OnBottom)
+                        tileY++;
+                    else
+                        tileY--;
                 }
 
                 Tile t2 = Framing.GetTileSafely(spawnInfo.SpawnTileX, tileY);
@@ -116,7 +123,7 @@ namespace Coralite.Content.NPCs.Crystalline
                 if (Helper.IsPointOnScreen(new Vector2(spawnInfo.SpawnTileX, tileY) * 16 - Main.screenPosition))
                     return 0;
                 else
-                    return 0.04f;
+                    return 0.03f;
             }
 
             return 0;
@@ -162,13 +169,16 @@ namespace Coralite.Content.NPCs.Crystalline
 
         public override int SpawnNPC(int tileX, int tileY)
         {
-            for (int i = 0; i < 200; i++)
+            for (int i = 0; i < 45; i++)
             {
                 Tile t = Framing.GetTileSafely(tileX, tileY);
                 if (t.HasTile && Main.tileSolid[t.TileType])
                     break;
 
-                tileY++;
+                if (OnTileType == OnTileTypes.OnBottom)
+                    tileY++;
+                else
+                    tileY--;
             }
 
             return NPC.NewNPC(new EntitySource_SpawnNPC(), tileX * 16 + 8, tileY * 16, NPC.type
@@ -213,7 +223,7 @@ namespace Coralite.Content.NPCs.Crystalline
                     Waiting();
                     break;
                 case AIStates.Attack:
-                    AttackBite();
+                    Attack();
 
                     Lighting.AddLight(NPC.Center, Coralite.CrystallinePurple.ToVector3() / 2);
                     break;
@@ -229,7 +239,7 @@ namespace Coralite.Content.NPCs.Crystalline
                     }
 
                     if (Timer > 0 && Timer % 30 == 0)
-                        if (NPC.target >= 0 && NPC.target < 255 && !Main.player[NPC.target].dead && CanHitTarget() && CanHitCheck())
+                        if (!(NPC.target >= 0 && NPC.target < 255 && !Main.player[NPC.target].dead && CanHitTarget() && CanHitCheck()))
                             TurnToBackWaiting();
 
                     Resting();
@@ -242,20 +252,25 @@ namespace Coralite.Content.NPCs.Crystalline
             }
         }
 
+        /// <summary>
+        /// 从短暂休息到继续攻击的判定，返回true表示能打到玩家，也可以检测之间有无物块之类的
+        /// </summary>
+        /// <returns></returns>
         public abstract bool CanHitCheck();
 
         public void Waiting()
         {
             NPC.velocity = Vector2.Zero;
-            NPC.rotation = -MathHelper.PiOver2;
+            NPC.rotation = GetVerticalDir() * MathHelper.PiOver2;
             NPC.chaseable = false;
-            NPC.Center = SpawnPoint.ToWorldCoordinates() + new Vector2(0, -32);
+            NPC.Center = SpawnPoint.ToWorldCoordinates() + new Vector2(0, GetVerticalDir() * 32);
 
             if (Timer > 20)
             {
                 NPC.TargetClosest(false);
-                if (NPC.target >= 0 && NPC.target < 255 && !Main.player[NPC.target].dead && CanHitTarget()
-                    && Collision.CanHit(NPC.Center, 1, 1, Target.TopLeft, Target.width, Target.height))//玩家在6格以内开始发动攻击
+                if (NPC.target >= 0 && NPC.target < 255 && !Main.player[NPC.target].dead 
+                    && !(Target.invis && Target.itemAnimation == 0) && WaitingToAttackCheck(Target.Center, SpawnPoint.ToWorldCoordinates())
+                    && Collision.CanHit(NPC.Center, 1, 1, Target.TopLeft, Target.width, Target.height))//玩家在8格以内开始发动攻击
                 {
                     StartAttack();
                     return;
@@ -267,9 +282,387 @@ namespace Coralite.Content.NPCs.Crystalline
             Timer++;
         }
 
+        /// <summary>
+        /// 从伪装状态到起身攻击状态的判定，例如水晶柱模仿藤为两个参数距离小于一定值触发
+        /// </summary>
+        /// <param name="targetCenter"></param>
+        /// <param name="basePoint"></param>
+        /// <returns></returns>
+        public abstract bool WaitingToAttackCheck(Vector2 targetCenter,Vector2 basePoint);
+
         #region 攻击状态
 
-        public void AttackBite()
+        /// <summary>
+        /// 特殊的攻击动作
+        /// </summary>
+        public virtual void Attack() { }
+
+        /// <summary>
+        /// 根据底座类型返回方向
+        /// </summary>
+        /// <returns></returns>
+        public int GetVerticalDir()
+        {
+            return OnTileType switch
+            {
+                OnTileTypes.OnBottom => -1,
+                _ => 1
+            };
+        }
+
+        public void Resting()
+        {
+            Vector2 baseP = SpawnPoint.ToWorldCoordinates(8, GetVerticalDir() * 12);
+            Vector2 toTarget = Target.Center - NPC.Center;
+            Vector2 dir = toTarget.SafeNormalize(Vector2.Zero);
+            float distanceToTarget = toTarget.Length();
+
+            distanceToTarget /= 2;
+
+            if (distanceToTarget < 86)
+                distanceToTarget = 86;
+
+            //在目标点周围随便晃一晃
+            Vector2 aimCenter = baseP + dir * distanceToTarget;
+
+            float distance = NPC.Distance(aimCenter);
+
+            Vector2 velocity = NPC.velocity;
+
+            if (distance > 16 * 6.5f)//太远就飞近点
+            {
+                velocity += (aimCenter - NPC.Center).SafeNormalize(Vector2.Zero) * 0.15f;
+                if (velocity.Length() > 4)
+                    velocity = velocity.SafeNormalize(Vector2.Zero) * 4;
+            }
+            else if (distance < 16 * 5.5f)//太近就飞远点
+            {
+                velocity -= (aimCenter - NPC.Center).SafeNormalize(Vector2.Zero) * 0.05f;
+                if (velocity.Length() > 4)
+                    velocity = velocity.SafeNormalize(Vector2.Zero) * 4;
+            }
+            else
+            {
+                velocity *= 0.96f;
+                if (Timer % 60 == 0)
+                    velocity += dir * 3;
+            }
+
+            NPC.velocity = velocity;
+            NPC.rotation = (NPC.Center - baseP).ToRotation();
+            MouseRotation = MouseRotation.AngleLerp(0.15f + 0.2f * MathF.Sin((int)Main.timeForVisualEffects * 0.1f), 0.7f);
+        }
+
+        public void BackToWaiting()
+        {
+            Vector2 baseP = SpawnPoint.ToWorldCoordinates();
+
+            const int BackToTopTime = 40;
+            const int BackPosTime = 30;
+
+            do
+            {
+                if (Timer < BackToTopTime)
+                {
+                    Vector2 aimPos = baseP + new Vector2(0, GetVerticalDir()*16 * 6);
+                    MouseRotation = MouseRotation.AngleLerp(0.3f, 0.2f);
+                    NPC.velocity *= 0.8f;
+                    NPC.Center = Vector2.SmoothStep(NPC.Center, aimPos, 0.2f);
+                    NPC.rotation = (NPC.Center - baseP).ToRotation();
+                    break;
+                }
+
+                if (Timer < BackToTopTime + 10)
+                {
+                    MouseRotation = MouseRotation.AngleLerp(0, 0.3f);
+
+                    NPC.rotation = (NPC.Center - baseP).ToRotation();
+                    break;
+                }
+
+                if (Timer < BackToTopTime + 10 + BackPosTime)
+                {
+                    MouseRotation = MouseRotation.AngleLerp(0, 0.3f);
+                    NPC.rotation = NPC.rotation.AngleLerp(GetVerticalDir() * MathHelper.PiOver2, 0.2f);
+
+                    NPC.Center = Vector2.SmoothStep(NPC.Center, baseP + new Vector2(0, GetVerticalDir() * 32), 0.2f);
+                    break;
+                }
+
+                for (int i = 0; i < 38; i++)
+                {
+                    Vector2 pos = NPC.Center + Main.rand.NextVector2Circular(24, 24);
+                    Dust.NewDustPerfect(pos, ModContent.DustType<CrystallineDust>()
+                        , (pos - NPC.Center).SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(1, 3), Scale: Main.rand.NextFloat(0.8f, 1.4f));
+                }
+
+                TurnToWaiting();
+
+            } while (false);
+
+            Timer++;
+        }
+
+        public virtual void TurnToRest()
+        {
+            State = AIStates.Attack_Rest;
+
+            Timer = 0;
+            CanHit = false;
+
+            NPC.netUpdate = true;
+        }
+
+        public void TurnToBackWaiting()
+        {
+            State = AIStates.BackToWait;
+
+            Timer = 0;
+            CanHit = false;
+
+            NPC.netUpdate = true;
+        }
+
+        #endregion
+
+        public void StartAttack()
+        {
+            NPC.chaseable = true;
+            Timer = 0;
+            CanHit = false;
+
+            if (State == AIStates.Waiting)//突然蹦起来
+            {
+                Helper.PlayPitched(CoraliteSoundID.CrystalBroken_DD2_WitherBeastDeath, NPC.Center);
+                for (int i = 0; i < 38; i++)
+                {
+                    Vector2 pos = NPC.Center + Main.rand.NextVector2Circular(24, 24);
+                    Dust.NewDustPerfect(pos, ModContent.DustType<CrystallineDust>()
+                        , (pos - NPC.Center).SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(1, 3), Scale: Main.rand.NextFloat(0.8f, 1.4f));
+                }
+            }
+
+            State = AIStates.Attack;
+        }
+
+        public void TurnToWaiting()
+        {
+            NPC.chaseable = false;
+            State = AIStates.Waiting;
+
+            Timer = 0;
+            CanHit = false;
+
+            NPC.netUpdate = true;
+        }
+
+        /// <summary>
+        /// 检测基座的物块是否安全
+        /// </summary>
+        public bool CheckTile()
+        {
+            Point p = SpawnPoint;
+
+            if (p == Point.Zero)
+            {
+                int tileX = (int)NPC.Center.X / 16;
+                int tileY = (int)NPC.Center.Y / 16;
+                for (int i = 0; i < 30; i++)
+                {
+                    Tile t2 = Framing.GetTileSafely(tileX, tileY);
+                    if (t2.HasTile && Main.tileSolid[t2.TileType])
+                        break;
+
+                    switch (OnTileType)
+                    {
+                        default:
+                        case OnTileTypes.OnBottom:
+                            tileY++;
+                            break;
+                        case OnTileTypes.OnTop:
+                            tileY--;
+                            break;
+                    }
+                }
+
+                Tile t3 = Framing.GetTileSafely(tileX, tileY);
+                if (!t3.HasTile || !Main.tileSolid[t3.TileType] || !Main.tileBlockLight[t3.TileType])//必须得是遮光物块
+                    return false;
+
+                SpawnPoint = new Point(tileX, tileY);
+
+                return true;
+            }
+
+            if (!WorldGen.InWorld(p.X, p.Y))
+                return false;
+
+            Tile t = Framing.GetTileSafely(p.X, p.Y);
+            if (!t.HasTile || !Main.tileSolid[t.TileType])
+                return false;
+
+            return true;
+        }
+
+        /// <summary>
+        /// 需要玩家不隐身（隐身是指有隐身药水BUFF和不在使用物品）<br></br>
+        /// 需要距离小于800，并且可以看到玩家
+        /// </summary>
+        /// <returns></returns>
+        public bool CanHitTarget()
+            => !(Target.invis && Target.itemAnimation == 0) && Vector2.Distance(Target.Center, SpawnPoint.ToWorldCoordinates()) < AttackLength;
+
+        #endregion
+
+        public override void HitEffect(NPC.HitInfo hit)
+        {
+            if (State == AIStates.Attack_Rest)
+                Timer += 5;
+            else if (State == AIStates.Waiting)
+            {
+                if (NPC.life < NPC.lifeMax / 2)
+                {
+                    NPC.TargetClosest(false);
+                    StartAttack();
+                }
+            }
+
+
+            if (NPC.life <= 0)
+            {
+                this.SpawnGore(3, 3);
+            }    
+        }
+
+
+        #region 网络同步
+
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            BitsByte b = new BitsByte();
+            b[0] = CanHit;
+
+            writer.Write(b);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            BitsByte b = reader.ReadBitsByte();
+            CanHit = b[0];
+        }
+
+        #endregion
+
+        #region 绘制
+
+        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
+        {
+            Vector2 dir = NPC.rotation.ToRotationVector2() * 16;
+
+            if (State != AIStates.Waiting)
+            {
+                int offset = GetVerticalDir() switch
+                {
+                    1 => 30,
+                    _ => -12
+                };
+                
+                DrawLine(spriteBatch, SpawnPoint.ToWorldCoordinates(8, offset), NPC.Center - dir, screenPos);
+            }
+
+            Texture2D mainTex = NPC.GetTexture();
+            Rectangle frameBox;
+            Vector2 pos = NPC.Center - screenPos;
+
+            float rotation = NPC.rotation;
+
+            if (State == AIStates.Waiting)
+            {
+                frameBox = mainTex.Frame(1, 4,0, 0);
+                spriteBatch.Draw(mainTex, pos, frameBox, drawColor, (float)rotation, frameBox.Size() / 2, NPC.scale, 0, 0);
+            }
+            else
+            {
+                //绘制底层
+                frameBox = mainTex.Frame(1, 4, 0, 1);
+                spriteBatch.Draw(mainTex, pos, frameBox, drawColor, rotation, frameBox.Size() / 2, NPC.scale, 0, 0);
+
+                pos -= dir;
+
+                //绘制左边嘴
+                frameBox = mainTex.Frame(1, 4, 0, 2);
+                spriteBatch.Draw(mainTex, pos, frameBox, drawColor, rotation - MouseRotation, new Vector2(frameBox.Width / 4, frameBox.Height / 2), NPC.scale, 0, 0);
+
+                //绘制右边嘴
+                frameBox = mainTex.Frame(1, 4, 0, 3);
+                spriteBatch.Draw(mainTex, pos, frameBox, drawColor, rotation + MouseRotation, new Vector2(frameBox.Width / 4, frameBox.Height / 2), NPC.scale, 0, 0);
+
+            }
+            return false;
+        }
+
+        public virtual void DrawLine(SpriteBatch spriteBatch, Vector2 bottomPos, Vector2 tipPos, Vector2 screenpos)
+        {
+            Texture2D mainTex = VineTex.Value;
+
+            float length = Vector2.Distance(bottomPos, tipPos);
+            const int TipHeight = 28;
+
+            Vector2 origin = new Vector2(mainTex.Width / 4, TipHeight);
+            Vector2 dir = (tipPos - bottomPos).SafeNormalize(Vector2.Zero);
+
+            float rotation = dir.ToRotation() + MathHelper.PiOver2;
+
+            if (length > TipHeight)
+            {
+                float middleLength = length - TipHeight / 2;
+
+                int drawCount = (int)middleLength / TipHeight;
+                int height = (int)middleLength % TipHeight;
+                for (int i = 0; i < drawCount; i++)
+                {
+                    Vector2 middleP = bottomPos + dir * (i * 28 + TipHeight / 2);
+                    int frame;
+                    if (i < 4)
+                        frame = 6 - i;
+                    else
+                        frame = 2 - (i - 3) % 3;
+                    spriteBatch.Draw(mainTex, middleP - screenpos, mainTex.Frame(2, 8, 0, frame)
+                        , Lighting.GetColor(middleP.ToTileCoordinates()), (float)rotation, origin, NPC.scale, 0, 0);
+                }
+
+                Vector2 tP = bottomPos + dir * (drawCount * 28 + TipHeight / 2);
+                spriteBatch.Draw(mainTex, tP - screenpos, new Rectangle(0, 30 - height, 60, height)
+                    , Lighting.GetColor(tP.ToTileCoordinates()), (float)rotation, new Vector2(mainTex.Width / 4, height), NPC.scale, 0, 0);
+            }
+
+            //绘制底部
+            Rectangle frameBox = new Rectangle(60, 0, 60, 30);
+            spriteBatch.Draw(mainTex, bottomPos - screenpos, frameBox
+                , Lighting.GetColor(bottomPos.ToTileCoordinates()), OnTileType == OnTileTypes.OnBottom ? 0 : MathHelper.Pi, frameBox.Size() / 2, NPC.scale, 0, 0);
+
+            frameBox = mainTex.Frame(2, 8, 0, 7);
+            spriteBatch.Draw(mainTex, bottomPos - screenpos, frameBox
+                , Lighting.GetColor(bottomPos.ToTileCoordinates()), rotation, frameBox.Size() / 2, NPC.scale, 0, 0);
+        }
+
+        #endregion
+    }
+
+    public class CrystallineVinicColumn : CrystallineVinic
+    {
+        protected override OnTileTypes OnTileType => OnTileTypes.OnBottom;
+
+        protected override int AttackLength => GetBiteLength()+16;
+
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            NormalDrop(ref npcLoot);
+
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<BasicColumn>(), 4));
+        }
+
+        public override void Attack()
         {
             int ReadyTime = Helper.ScaleValueForDiffMode(40, 30, 25, 15);
             const int BiteTime = 7;
@@ -392,12 +785,49 @@ namespace Coralite.Content.NPCs.Crystalline
             } while (false);
         }
 
-        public void AttackLaser()
+        public int GetBiteLength()
+            => 16 * Helper.ScaleValueForDiffMode(24, 28, 34, 48);
+
+        public override bool CanHitCheck() => true;
+
+        public override bool WaitingToAttackCheck(Vector2 targetCenter, Vector2 basePoint)
+        {
+            return Vector2.Distance(targetCenter, basePoint) < 16 * 8;
+        }
+    }
+
+    public class CrystallineVinicLaser : CrystallineVinic
+    {
+        protected override OnTileTypes OnTileType => OnTileTypes.OnTop;
+
+        protected override int AttackLength => 16 * 40;
+
+        private ref float LaserShootCount => ref NPC.localAI[2];
+
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            NormalDrop(ref npcLoot);
+
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<LASER>(), 4));
+        }
+
+        public override void TurnToRest()
+        {
+            State = AIStates.Attack_Rest;
+
+            Timer = 0;
+            CanHit = false;
+            LaserShootCount = 0;
+
+            NPC.netUpdate = true;
+        }
+
+        public override void Attack()
         {
             int ReadyTime = Helper.ScaleValueForDiffMode(45, 35, 30, 25);
             const float BiteMouseAngle = 0.8f;
 
-            Vector2 baseP = SpawnPoint.ToWorldCoordinates(8, -12);
+            Vector2 baseP = SpawnPoint.ToWorldCoordinates(8, 12);
 
             do
             {
@@ -471,351 +901,13 @@ namespace Coralite.Content.NPCs.Crystalline
             } while (false);
         }
 
-        public void Resting()
+        public override bool CanHitCheck()
+            => Collision.CanHit(NPC.Center, 1, 1, Target.TopLeft, Target.waist, Target.height);
+
+        public override bool WaitingToAttackCheck(Vector2 targetCenter, Vector2 basePoint)
         {
-            Vector2 baseP = SpawnPoint.ToWorldCoordinates(8, -12);
-            Vector2 toTarget = Target.Center - NPC.Center;
-            Vector2 dir = toTarget.SafeNormalize(Vector2.Zero);
-            float distanceToTarget = toTarget.Length();
-
-            distanceToTarget /= 2;
-
-            if (distanceToTarget < 86)
-                distanceToTarget = 86;
-
-            //在目标点周围随便晃一晃
-            Vector2 aimCenter = baseP + dir * distanceToTarget;
-
-            float distance = NPC.Distance(aimCenter);
-
-            Vector2 velocity = NPC.velocity;
-
-            if (distance > 16 * 6.5f)//太远就飞近点
-            {
-                velocity += (aimCenter - NPC.Center).SafeNormalize(Vector2.Zero) * 0.15f;
-                if (velocity.Length() > 4)
-                    velocity = velocity.SafeNormalize(Vector2.Zero) * 4;
-            }
-            else if (distance < 16 * 5.5f)//太近就飞远点
-            {
-                velocity -= (aimCenter - NPC.Center).SafeNormalize(Vector2.Zero) * 0.05f;
-                if (velocity.Length() > 4)
-                    velocity = velocity.SafeNormalize(Vector2.Zero) * 4;
-            }
-            else
-            {
-                velocity *= 0.96f;
-                if (Timer % 60 == 0)
-                    velocity += dir * 3;
-            }
-
-            NPC.velocity = velocity;
-            NPC.rotation = (NPC.Center - baseP).ToRotation();
-            MouseRotation = MouseRotation.AngleLerp(0.15f + 0.2f * MathF.Sin((int)Main.timeForVisualEffects * 0.1f), 0.7f);
+            return Math.Abs(targetCenter.X - basePoint.X) < 16 * 4 && basePoint.Y - 16 < targetCenter.Y && Vector2.Distance(targetCenter, basePoint) < 16 * 40;
         }
-
-        public void BackToWaiting()
-        {
-            Vector2 baseP = SpawnPoint.ToWorldCoordinates();
-
-            const int BackToTopTime = 40;
-            const int BackPosTime = 30;
-
-            do
-            {
-                if (Timer < BackToTopTime)
-                {
-                    Vector2 aimPos = baseP + new Vector2(0, -16 * 6);
-                    MouseRotation = MouseRotation.AngleLerp(0.3f, 0.2f);
-                    NPC.velocity *= 0.8f;
-                    NPC.Center = Vector2.SmoothStep(NPC.Center, aimPos, 0.2f);
-                    NPC.rotation = (NPC.Center - baseP).ToRotation();
-                    break;
-                }
-
-                if (Timer < BackToTopTime + 10)
-                {
-                    MouseRotation = MouseRotation.AngleLerp(0, 0.3f);
-
-                    NPC.rotation = (NPC.Center - baseP).ToRotation();
-                    break;
-                }
-
-                if (Timer < BackToTopTime + 10 + BackPosTime)
-                {
-                    MouseRotation = MouseRotation.AngleLerp(0, 0.3f);
-                    NPC.rotation = NPC.rotation.AngleLerp(-MathHelper.PiOver2, 0.2f);
-
-                    NPC.Center = Vector2.SmoothStep(NPC.Center, baseP + new Vector2(0, -32), 0.2f);
-                    break;
-                }
-
-                for (int i = 0; i < 38; i++)
-                {
-                    Vector2 pos = NPC.Center + Main.rand.NextVector2Circular(24, 24);
-                    Dust.NewDustPerfect(pos, ModContent.DustType<CrystallineDust>()
-                        , (pos - NPC.Center).SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(1, 3), Scale: Main.rand.NextFloat(0.8f, 1.4f));
-                }
-
-                TurnToWaiting();
-
-            } while (false);
-
-            Timer++;
-        }
-
-        public int GetBiteLength()
-            => 16 * Helper.ScaleValueForDiffMode(24, 28, 34, 48);
-
-        public void TurnToRest()
-        {
-            State = AIStates.Attack_Rest;
-
-            Timer = 0;
-            CanHit = false;
-            LaserShootCount = 0;
-
-            NPC.netUpdate = true;
-        }
-
-        public void TurnToBackWaiting()
-        {
-            State = AIStates.BackToWait;
-
-            Timer = 0;
-            CanHit = false;
-
-            NPC.netUpdate = true;
-        }
-
-        #endregion
-
-        public void StartAttack()
-        {
-            NPC.chaseable = true;
-            Timer = 0;
-            CanHit = false;
-
-            if (State == AIStates.Waiting)//突然蹦起来
-            {
-                Helper.PlayPitched(CoraliteSoundID.CrystalBroken_DD2_WitherBeastDeath, NPC.Center);
-                for (int i = 0; i < 38; i++)
-                {
-                    Vector2 pos = NPC.Center + Main.rand.NextVector2Circular(24, 24);
-                    Dust.NewDustPerfect(pos, ModContent.DustType<CrystallineDust>()
-                        , (pos - NPC.Center).SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(1, 3), Scale: Main.rand.NextFloat(0.8f, 1.4f));
-                }
-            }
-
-            State = AIStates.Attack;
-        }
-
-        public void TurnToWaiting()
-        {
-            NPC.chaseable = false;
-            State = AIStates.Waiting;
-
-            Timer = 0;
-            CanHit = false;
-
-            NPC.netUpdate = true;
-        }
-
-        /// <summary>
-        /// 检测基座的物块是否安全
-        /// </summary>
-        public bool CheckTile()
-        {
-            Point p = SpawnPoint;
-
-            if (p == Point.Zero)
-            {
-                int tileX = (int)NPC.Center.X / 16;
-                int tileY = (int)NPC.Center.Y / 16;
-                for (int i = 0; i < 30; i++)
-                {
-                    Tile t2 = Framing.GetTileSafely(tileX, tileY);
-                    if (t2.HasTile && Main.tileSolid[t2.TileType])
-                        break;
-
-                    switch (OnTileType)
-                    {
-                        default:
-                        case OnTileTypes.OnBottom:
-                            tileY++;
-                            break;
-                        case OnTileTypes.OnTop:
-                            tileY--;
-                            break;
-                    }
-                    tileY++;
-                }
-
-                Tile t3 = Framing.GetTileSafely(tileX, tileY);
-                if (!t3.HasTile || !Main.tileSolid[t3.TileType] || !Main.tileBlockLight[t3.TileType])//必须得是遮光物块
-                    return false;
-
-                SpawnPoint = new Point(tileX, tileY);
-
-                return true;
-            }
-
-            if (!WorldGen.InWorld(p.X, p.Y))
-                return false;
-
-            Tile t = Framing.GetTileSafely(p.X, p.Y);
-            if (!t.HasTile || !Main.tileSolid[t.TileType])
-                return false;
-
-            return true;
-        }
-
-        /// <summary>
-        /// 需要玩家不隐身（隐身是指有隐身药水BUFF和不在使用物品）<br></br>
-        /// 需要距离小于800，并且可以看到玩家
-        /// </summary>
-        /// <returns></returns>
-        public bool CanHitTarget()
-            => !(Target.invis && Target.itemAnimation == 0) && Vector2.Distance(Target.Center, SpawnPoint.ToWorldCoordinates()) < AttackLength;
-
-        #endregion
-
-        public override void HitEffect(NPC.HitInfo hit)
-        {
-            if (State == AIStates.Attack_Rest)
-                Timer += 5;
-            else if (State == AIStates.Waiting)
-            {
-                if (NPC.life < NPC.lifeMax / 2)
-                {
-                    NPC.TargetClosest(false);
-                    StartAttack();
-                }
-            }
-
-
-            if (NPC.life <= 0)
-            {
-
-            }
-        }
-
-        #region 网络同步
-
-        public override void SendExtraAI(BinaryWriter writer)
-        {
-            BitsByte b = new BitsByte();
-            b[0] = CanHit;
-
-            writer.Write(b);
-        }
-
-        public override void ReceiveExtraAI(BinaryReader reader)
-        {
-            BitsByte b = reader.ReadBitsByte();
-            CanHit = b[0];
-        }
-
-        #endregion
-
-    }
-
-    public class CrystallineVinic : ModNPC
-    {
-
-        private ref float LaserShootCount => ref NPC.localAI[2];
-
-
-
-
-
-
-        #region 绘制
-
-        public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
-        {
-            Vector2 dir = NPC.rotation.ToRotationVector2() * 16;
-
-            if (State != AIStates.Waiting)
-                DrawLine(spriteBatch, SpawnPoint.ToWorldCoordinates(8, -12), NPC.Center - dir, screenPos);
-
-            Texture2D mainTex = NPC.GetTexture();
-            Rectangle frameBox;
-            Vector2 pos = NPC.Center - screenPos;
-
-            float rotation = NPC.rotation;
-
-            if (State == AIStates.Waiting)
-            {
-                frameBox = mainTex.Frame(2, 4, (int)VinicType, 0);
-                spriteBatch.Draw(mainTex, pos, frameBox, drawColor, (float)rotation, frameBox.Size() / 2, NPC.scale, 0, 0);
-            }
-            else
-            {
-                //绘制底层
-                frameBox = mainTex.Frame(2, 4, (int)VinicType, 1);
-                spriteBatch.Draw(mainTex, pos, frameBox, drawColor, rotation, frameBox.Size() / 2, NPC.scale, 0, 0);
-
-                pos -= dir;
-
-                //绘制左边嘴
-                frameBox = mainTex.Frame(2, 4, (int)VinicType, 2);
-                spriteBatch.Draw(mainTex, pos, frameBox, drawColor, rotation - MouseRotation, new Vector2(frameBox.Width / 4, frameBox.Height / 2), NPC.scale, 0, 0);
-
-                //绘制右边嘴
-                frameBox = mainTex.Frame(2, 4, (int)VinicType, 3);
-                spriteBatch.Draw(mainTex, pos, frameBox, drawColor, rotation + MouseRotation, new Vector2(frameBox.Width / 4, frameBox.Height / 2), NPC.scale, 0, 0);
-
-            }
-            return false;
-        }
-
-        public virtual void DrawLine(SpriteBatch spriteBatch, Vector2 bottomPos, Vector2 tipPos, Vector2 screenpos)
-        {
-            Texture2D mainTex = VineTex.Value;
-
-            float length = Vector2.Distance(bottomPos, tipPos);
-            const int TipHeight = 28;
-
-            Vector2 origin = new Vector2(mainTex.Width / 4, TipHeight);
-            Vector2 dir = (tipPos - bottomPos).SafeNormalize(Vector2.Zero);
-
-            float rotation = dir.ToRotation() + MathHelper.PiOver2;
-
-            if (length > TipHeight)
-            {
-                float middleLength = length - TipHeight / 2;
-
-                int drawCount = (int)middleLength / TipHeight;
-                int height = (int)middleLength % TipHeight;
-                for (int i = 0; i < drawCount; i++)
-                {
-                    Vector2 middleP = bottomPos + dir * (i * 28 + TipHeight / 2);
-                    int frame;
-                    if (i < 4)
-                        frame = 6 - i;
-                    else
-                        frame = 2 - (i - 3) % 3;
-                    spriteBatch.Draw(mainTex, middleP - screenpos, mainTex.Frame(2, 8, 0, frame)
-                        , Lighting.GetColor(middleP.ToTileCoordinates()), (float)rotation, origin, NPC.scale, 0, 0);
-                }
-
-                Vector2 tP = bottomPos + dir * (drawCount * 28 + TipHeight / 2);
-                spriteBatch.Draw(mainTex, tP - screenpos, new Rectangle(0, 30 - height, 60, height)
-                    , Lighting.GetColor(tP.ToTileCoordinates()), (float)rotation, new Vector2(mainTex.Width / 4, height), NPC.scale, 0, 0);
-            }
-
-            //绘制底部
-            Rectangle frameBox = new Rectangle(60, 0, 60, 30);
-            spriteBatch.Draw(mainTex, bottomPos - screenpos, frameBox
-                , Lighting.GetColor(bottomPos.ToTileCoordinates()), 0, frameBox.Size() / 2, NPC.scale, 0, 0);
-
-            frameBox = mainTex.Frame(2, 8, 0, 7);
-            spriteBatch.Draw(mainTex, bottomPos - screenpos, frameBox
-                , Lighting.GetColor(bottomPos.ToTileCoordinates()), rotation, frameBox.Size() / 2, NPC.scale, 0, 0);
-        }
-
-        #endregion
     }
 
     public class VinicLaser : ModProjectile

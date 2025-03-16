@@ -366,6 +366,9 @@ namespace Coralite.Content.WorldGeneration
             WorldGenHelper.PlaceDecorations_NoCheck(outerRect, (ushort)ModContent.TileType<CrystallineStalactite>(), 5);
             WorldGenHelper.PlaceDecorations_NoCheck(outerRect, (ushort)ModContent.TileType<CrystallineStalactite2x2>(), 4, avoidArea: shrineRect);
 
+            WorldGenHelper.PlaceDecorations_NoCheck(outerRect, (ushort)ModContent.TileType<BrokenColumn>(), 12, avoidArea: shrineRect);
+            WorldGenHelper.PlaceDecorations_NoCheck(outerRect, (ushort)ModContent.TileType<BrokenLaser>(), 5, avoidArea: shrineRect);
+
             WorldGenHelper.PlaceDecorations_NoCheck(outerRect, (ushort)ModContent.TileType<SkarnRubbles4x2>(), 15, avoidArea: shrineRect);
             WorldGenHelper.PlaceDecorations_NoCheck(outerRect, (ushort)ModContent.TileType<SkarnRubbles3x4>(), 13, avoidArea: shrineRect);
             WorldGenHelper.PlaceDecorations_NoCheck(outerRect, (ushort)ModContent.TileType<SkarnRubbles3x3>(), 11, avoidArea: shrineRect);
@@ -1679,6 +1682,9 @@ namespace Coralite.Content.WorldGeneration
         {
             WorldGenHelper.PlaceDecorations_NoCheck2(outerRect, (ushort)ModContent.TileType<CrystallineStalactite>(), 5, avoidArea: avoidRect);
             WorldGenHelper.PlaceDecorations_NoCheck2(outerRect, (ushort)ModContent.TileType<CrystallineStalactite2x2>(), 4, avoidArea: avoidRect);
+
+            WorldGenHelper.PlaceDecorations_NoCheck2(outerRect, (ushort)ModContent.TileType<BrokenColumn>(), 12, avoidArea: avoidRect);
+            WorldGenHelper.PlaceDecorations_NoCheck2(outerRect, (ushort)ModContent.TileType<BrokenLaser>(), 5, avoidArea: avoidRect);
 
             WorldGenHelper.PlaceDecorations_NoCheck2(outerRect, (ushort)ModContent.TileType<SkarnRubbles4x2>(), 15, avoidArea: avoidRect);
             WorldGenHelper.PlaceDecorations_NoCheck2(outerRect, (ushort)ModContent.TileType<SkarnRubbles3x4>(), 13, avoidArea: avoidRect);

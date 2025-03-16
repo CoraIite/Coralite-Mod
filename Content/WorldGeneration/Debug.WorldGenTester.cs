@@ -35,12 +35,9 @@ namespace Coralite.Content.WorldGeneration
         {
             Point p = Main.MouseWorld.ToTileCoordinates();
             Tile t = Main.tile[p];
-            //Main.NewText(t.TileFrameX);
-            WorldGen.PlaceObject(p.X, p.Y - 1, ModContent.TileType<ChalcedonySapling>(), true);
-            Item i = ContentSamples.ItemsByType[ItemID.ActiveStoneBlock];
+            Main.NewText(t.TileFrameX);
+            //WorldGen.PlaceObject(p.X, p.Y - 1, ModContent.TileType<ChalcedonySapling>(), true);
             //WorldGenHelper.ObjectPlace(point.X, point.Y - 1, ModContent.TileType<ChalcedonyGrass2x2>(), WorldGen.genRand.Next(2));
-            Main.NewText(i.width);
-            Main.NewText(i.height);
             //WorldGen.PlaceObject(pos.X, pos.Y, ModContent.TileType<MercuryPlatformTile>());
 
             //ModItem modItem = ItemLoader.GetItem(5614);

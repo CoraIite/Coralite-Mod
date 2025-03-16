@@ -87,7 +87,7 @@ namespace Coralite.Content.Items.Thunder
 
             Player.GetModPlayer<CoralitePlayer>().DashDelay = 76;
             Player.GetModPlayer<CoralitePlayer>().DashTimer = 4;
-            Player.AddImmuneTime(ImmunityCooldownID.General, 5);
+            Player.AddImmuneTime(ImmunityCooldownID.General, 17);
 
             Player.velocity = newVelocity;
             Player.direction = (int)dashDirection;
@@ -105,7 +105,7 @@ namespace Coralite.Content.Items.Thunder
                 Helper.PlayPitched(CoraliteSoundID.TeslaTurret_Electric_NPCHit53, Player.Center, pitchAdjust: -0.3f);
 
                 //生成手持弹幕
-                int damage = Player.GetWeaponDamage(Player.HeldItem);
+                int damage = Player.GetDamageWithAmmo(Player.HeldItem) * 3;
                 Main.instance.CameraModifiers.Add(new MoveModifyer(3, 15));
 
                 Projectile.NewProjectile(Player.GetSource_ItemUse(Player.HeldItem), Player.Center, Vector2.Zero, ProjectileType<ThunderveinBladeDash>(),
@@ -312,7 +312,7 @@ namespace Coralite.Content.Items.Thunder
         public ThunderTrail trail;
 
         LinkedList<Vector2> trailList;
-        public static Asset<Texture2D> HorizontalStar;
+        public static ATex HorizontalStar;
 
         public override void Load()
         {
