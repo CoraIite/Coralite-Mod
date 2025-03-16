@@ -22,7 +22,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             HitSound = CoraliteSoundID.CrystalHit_DD2_WitherBeastCrystalImpact;
             MinPick = 110;
 
-            AddMapEntry(Coralite.CrystallineMagikePurple);
+            AddMapEntry(Coralite.CrystallinePurple);
         }
     }
 }

@@ -32,7 +32,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
             DustType = ModContent.DustType<CrystallineDust>();
             HitSound = CoraliteSoundID.CrystalHit_DD2_CrystalCartImpact;
-            AddMapEntry(Coralite.CrystallineMagikePurple);
+            AddMapEntry(Coralite.CrystallinePurple);
 
             MinPick = 110;
             MineResist = 3;

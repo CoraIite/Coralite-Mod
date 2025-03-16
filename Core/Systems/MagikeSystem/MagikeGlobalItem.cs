@@ -123,7 +123,7 @@ namespace Coralite.Core.Systems.MagikeSystem
                 if (this.magikeAmount < 440)
                     line.OverrideColor = Coralite.MagicCrystalPink;
                 else if (this.magikeAmount < 4900)
-                    line.OverrideColor = Coralite.CrystallineMagikePurple;
+                    line.OverrideColor = Coralite.CrystallinePurple;
                 else if (this.magikeAmount < 50_0000)
                     line.OverrideColor = Coralite.SplendorMagicoreLightBlue;
                 else

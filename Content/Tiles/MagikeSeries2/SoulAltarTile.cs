@@ -52,7 +52,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
                 if (Main.LocalPlayer.ConsumeItem(ItemID.SoulofLight, includeVoidBag: true))
                     CoraliteWorld.PlaceLightSoul = true;
                 else
-                    CombatText.NewText(new Rectangle(i * 16, j * 16, 1, 1), Coralite.CrystallineMagikePurple, NeedSouls.Value);
+                    CombatText.NewText(new Rectangle(i * 16, j * 16, 1, 1), Coralite.CrystallinePurple, NeedSouls.Value);
             }
 
             return true;
@@ -137,7 +137,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
                 if (Main.LocalPlayer.ConsumeItem(ItemID.SoulofNight, includeVoidBag: true))
                     CoraliteWorld.PlaceNightSoul = true;
                 else
-                    CombatText.NewText(new Rectangle(i * 16, j * 16, 1, 1), Coralite.CrystallineMagikePurple, NeedSouls.Value);
+                    CombatText.NewText(new Rectangle(i * 16, j * 16, 1, 1), Coralite.CrystallinePurple, NeedSouls.Value);
             }
 
             return true;

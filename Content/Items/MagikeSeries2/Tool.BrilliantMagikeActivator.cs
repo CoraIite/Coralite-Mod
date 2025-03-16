@@ -126,6 +126,6 @@ namespace Coralite.Content.Items.MagikeSeries2
             }
         }
 
-        public override Color GetDrawColor() => Coralite.CrystallineMagikePurple;
+        public override Color GetDrawColor() => Coralite.CrystallinePurple;
     }
 }

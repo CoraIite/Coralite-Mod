@@ -444,7 +444,7 @@ namespace Coralite.Content.NPCs.Crystalline
                                 float distance = Main.rand.NextFloat(64, 80);
                                 Vector2 pos = NPC.Center + Main.rand.NextVector2CircularEdge(distance, distance);
                                 var p = PRTLoader.NewParticle<ChaseablePixelLine>(pos
-                                    , (NPC.Center - pos).SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(3.5f, 5f), newColor: Main.rand.NextFromList(Coralite.CrystallineMagikePurple, Coralite.MagicCrystalPink)
+                                    , (NPC.Center - pos).SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(3.5f, 5f), newColor: Main.rand.NextFromList(Coralite.CrystallinePurple, Coralite.MagicCrystalPink)
                                       , Scale: Main.rand.NextFloat(1f, 1.5f));
 
                                 p.entity = NPC;
@@ -609,7 +609,7 @@ namespace Coralite.Content.NPCs.Crystalline
                             Vector2 pos = NPC.Center + Main.rand.NextVector2CircularEdge(48, 48);
                             Dust d = Dust.NewDustPerfect(pos, ModContent.DustType<PixelPoint>(),
                                 (NPC.Center - pos).SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(1f, 3f)
-                                , newColor: Main.rand.NextFromList(Coralite.CrystallineMagikePurple, Coralite.MagicCrystalPink), Scale: Main.rand.NextFloat(0.8f, 1.5f));
+                                , newColor: Main.rand.NextFromList(Coralite.CrystallinePurple, Coralite.MagicCrystalPink), Scale: Main.rand.NextFloat(0.8f, 1.5f));
 
                             d.noGravity = true;
 
@@ -644,11 +644,16 @@ namespace Coralite.Content.NPCs.Crystalline
                                 {
                                     NPC.NewProjectileInAI<CrystallineSpike>(NPC.Center + dir2 * 22, dir2 * 9
                                         , Helper.GetProjDamage(80, 100, 140), 0);
+
+                                    if (Main.getGoodWorld)
+                                        for (int i = -1; i < 2; i += 2)
+                                            NPC.NewProjectileInAI<CrystallineSpike>(NPC.Center + dir2 * 22, dir2.RotatedBy(i * 0.4f) * 9
+                                                , Helper.GetProjDamage(60, 80, 100), 0);
                                 }
 
                                 Helper.PlayPitched(CoraliteSoundID.Stinger_Item17, NPC.Center, pitch: 0.5f);
                                 Helper.PlayPitched(CoraliteSoundID.Swing_DD2_MonkStaffSwing, NPC.Center);
-                                WindCircle.Spawn(NPC.Center + dir2 * 15, -dir2 * 2, Recorder2, Coralite.CrystallineMagikePurple, 0.75f, 1.3f, new Vector2(1.2f, 1f));
+                                WindCircle.Spawn(NPC.Center + dir2 * 15, -dir2 * 2, Recorder2, Coralite.CrystallinePurple, 0.75f, 1.3f, new Vector2(1.2f, 1f));
 
                                 NPC.netUpdate = true;
                             }
@@ -922,7 +927,7 @@ namespace Coralite.Content.NPCs.Crystalline
                     _ => ""
                 };
 
-                Utils.DrawBorderString(spriteBatch, text, pos + new Vector2(0, -48), Coralite.CrystallineMagikePurple
+                Utils.DrawBorderString(spriteBatch, text, pos + new Vector2(0, -48), Coralite.CrystallinePurple
                     , 1f, 0.5f, 0.5f);
             }
             return false;
@@ -953,7 +958,7 @@ namespace Coralite.Content.NPCs.Crystalline
             if (Projectile.velocity.Y<8)
                 Projectile.velocity.Y += 0.05f;
             Projectile.rotation = Projectile.velocity.ToRotation();
-            Lighting.AddLight(Projectile.Center, Coralite.CrystallineMagikePurple.ToVector3() / 2);
+            Lighting.AddLight(Projectile.Center, Coralite.CrystallinePurple.ToVector3() / 2);
         }
 
         public override void OnKill(int timeLeft)
@@ -1003,7 +1008,7 @@ namespace Coralite.Content.NPCs.Crystalline
             Projectile.velocity *= 0.97f;
             Projectile.velocity.Y += 0.25f;
             Projectile.rotation += Projectile.velocity.Length() * 0.04f;
-            Lighting.AddLight(Projectile.Center, Coralite.CrystallineMagikePurple.ToVector3() / 2);
+            Lighting.AddLight(Projectile.Center, Coralite.CrystallinePurple.ToVector3() / 2);
         }
 
         public override void OnKill(int timeLeft)

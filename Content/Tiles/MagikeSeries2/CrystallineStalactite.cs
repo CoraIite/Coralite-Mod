@@ -51,7 +51,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
             MinPick = 110;
 
-            AddMapEntry(Coralite.CrystallineMagikePurple);
+            AddMapEntry(Coralite.CrystallinePurple);
         }
 
         public override void NumDust(int i, int j, bool fail, ref int num)
@@ -126,7 +126,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
             HitSound = CoraliteSoundID.CrystalHit_DD2_CrystalCartImpact;
             DustType = ModContent.DustType<CrystallineDust>();
-            AddMapEntry(Coralite.CrystallineMagikePurple);
+            AddMapEntry(Coralite.CrystallinePurple);
 
             MinPick = 110;
 

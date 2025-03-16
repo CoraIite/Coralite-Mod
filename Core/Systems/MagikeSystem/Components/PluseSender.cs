@@ -170,10 +170,10 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             for (int k = 0; k < count; k++)
             {
                 Vector2 pos = selfPoint + dir * k * 4;
-                int num402 = Dust.NewDust(pos + Main.rand.NextVector2Circular(4, 4), 0, 0, DustID.RainbowTorch
+                int index = Dust.NewDust(pos + Main.rand.NextVector2Circular(4, 4), 0, 0, DustID.RainbowTorch
                     , 0f, 0f, 150, Color.Transparent, 1.2f);
-                Main.dust[num402].color = Coralite.MagicCrystalPink;
-                Main.dust[num402].noGravity = true;
+                Main.dust[index].color = Coralite.MagicCrystalPink;
+                Main.dust[index].noGravity = true;
 
                 Dust d = Dust.NewDustPerfect(pos + Main.rand.NextVector2Circular(4, 4), DustID.CrystalSerpent_Pink
                     , new Vector2(dir.X, dir.Y) * 2f, Scale: 1f);

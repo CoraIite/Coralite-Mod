@@ -7,7 +7,7 @@
 
     public class CrystallineMagikeRarity : ModRarity
     {
-        public override Color RarityColor => Coralite.CrystallineMagikePurple;
+        public override Color RarityColor => Coralite.CrystallinePurple;
     }
 
     public class SplendorMagicoreRarity : ModRarity

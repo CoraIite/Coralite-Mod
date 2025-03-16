@@ -188,7 +188,7 @@ namespace Coralite.Content.Items.MagikeSeries2
 
         public void DrawNonPremultiplied(SpriteBatch spriteBatch)
         {
-            MagikeHelper.DrawRectangleFrame(spriteBatch, BasePosition, TargetPoint, Coralite.CrystallineMagikePurple);
+            MagikeHelper.DrawRectangleFrame(spriteBatch, BasePosition, TargetPoint, Coralite.CrystallinePurple);
         }
     }
 }

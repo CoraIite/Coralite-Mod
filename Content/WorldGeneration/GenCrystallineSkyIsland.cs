@@ -57,7 +57,7 @@ namespace Coralite.Content.WorldGeneration
             int highestY = GetHighestY(altarPoint);
             int y2 = highestY;
 
-            y2 -= 150;
+            y2 -= ValueByWorldSize(40,80,150);
 
             if (y2 < 41)
                 y2 = 41;
@@ -67,7 +67,7 @@ namespace Coralite.Content.WorldGeneration
             progress.Value = 0.66f;
 
             Rectangle tempMain = mainRect;
-            mainRect.Height += 60;
+            mainRect.Height += ValueByWorldSize(10, 30, 60);
 
             if (mainRect.Y + mainRect.Height < y2)
                 mainRect.Height = y2 - mainRect.Y;
@@ -797,7 +797,7 @@ namespace Coralite.Content.WorldGeneration
         {
             //主要通道，用于生成小遗迹
             int type = WorldGen.genRand.Next(8);
-            type = 6;//测试用
+            //type = 7;//测试用
 
             TextureGenerator generator = new TextureGenerator("MainSkyIslandShrine",type,AssetDirectory.CrystallineSkyIsland);
 
@@ -1492,6 +1492,7 @@ namespace Coralite.Content.WorldGeneration
             List<TextureGenerator> generators = [];
 
             Rectangle expandRect = mainRect;
+            int expandCount = 0;
 
             Dictionary<Color, int> mainDic = new()
             {
@@ -1542,7 +1543,7 @@ namespace Coralite.Content.WorldGeneration
             while (types.Count < smallIslandCount)
             {
                 types.Add(WorldGen.genRand.NextFromList(
-                    SmallIslandType.Normal,SmallIslandType.Normal,
+                    SmallIslandType.Normal,
                     SmallIslandType.Ruins,SmallIslandType.Ruins,
                     SmallIslandType.Chest,SmallIslandType.Chest,
                     SmallIslandType.Forest
@@ -1555,39 +1556,43 @@ namespace Coralite.Content.WorldGeneration
             {
                 //随机选择生成类型
                 //之后不断扩展中心矩形，指导能够容纳小岛的生成
+                int Hlimit = ValueByWorldSize(650, 1000, 1200);
 
                 SmallIslandType smallIslandType = types[i];
                 //smallIslandType = SmallIslandType.Chest;//测试用
 
-                int style = CSkyIslandRandStyle(smallIslandType);
-
-                for (int j = 0; j < 100; j++)//防止生成重复
-                {
-                    if (!typesRecord.Contains((smallIslandType, style)))
-                    {
-                        typesRecord.Add((smallIslandType, style));
-                        break;
-                    }
-
-                    style = CSkyIslandRandStyle(smallIslandType);
-                }
-
-                //style = i % 8;//测试用
-
-                //获取类型，尺寸和贴图集合
-                string name = Enum.GetName(smallIslandType);
-                TextureGenerator generator = new TextureGenerator($"{name}/{name}", style, AssetDirectory.CrystallineSmallIsland);
-
-                //外部尺寸
-                int protect = WorldGen.genRand.Next(6, 24);
-                Point outerSize = generator.Size + new Point(protect, protect + generator.Height / 4);//让高度高一些
-
+                TextureGenerator generator;
                 Point SpawnTopLeft = default;
+
                 bool success = false;
 
                 do
                 {
+                    int style = CSkyIslandRandStyle(smallIslandType);
+
+                    for (int j = 0; j < 100; j++)//防止生成重复
+                    {
+                        if (!typesRecord.Contains((smallIslandType, style)))
+                        {
+                            typesRecord.Add((smallIslandType, style));
+                            break;
+                        }
+
+                        style = CSkyIslandRandStyle(smallIslandType);
+                    }
+
+                    //style = i % 8;//测试用
+
+                    //获取类型，尺寸和贴图集合
+                    string name = Enum.GetName(smallIslandType);
+                    generator = new TextureGenerator($"{name}/{name}", style, AssetDirectory.CrystallineSmallIsland);
+
+                    //外部尺寸
+                    int protect = WorldGen.genRand.Next(6, 24);
+                    Point outerSize = generator.Size + new Point(protect, protect + generator.Height / 4);//让高度高一些
+
                     expandRect = ExpandArea(expandRect);
+                    expandCount++;
 
                     Rectangle currentRect = default;
                     for (int k = 0; k < 50; k++)//每次随机50次中心点
@@ -1622,12 +1627,19 @@ namespace Coralite.Content.WorldGeneration
                         avoidRects.Add(currentRect);
                         rects.Add(new Rectangle(SpawnTopLeft.X, SpawnTopLeft.Y, generator.Width, generator.Height));
                     }
+                    else
+                    {
+                        SpawnTopLeft = default;
+                    }
 
-                } while (!success);
+                } while (!success && expandCount < Hlimit);
 
                 //成功找到了位置，开始生成
-                generator.GenerateByTopLeft(SpawnTopLeft, mainDic, wallDic, CSkyIslandObjectPlace);
-                generators.Add(generator);
+                if (success)
+                {
+                    generator.GenerateByTopLeft(SpawnTopLeft, mainDic, wallDic, CSkyIslandObjectPlace);
+                    generators.Add(generator);
+                }
             }
 
             //清理范围内坏掉的箱子和树
@@ -2087,6 +2099,12 @@ namespace Coralite.Content.WorldGeneration
                 expandRect.Width += 2;
             }
 
+            //限制范围
+            if (expandRect.X < 41)
+                expandRect.X = 41;
+             if (expandRect.X + expandRect.Width > Main.maxTilesX - 41)
+                expandRect.Width=Main.maxTilesX-41-expandRect.X;
+
             return expandRect;
         }
 
@@ -2119,7 +2137,7 @@ namespace Coralite.Content.WorldGeneration
                 SmallIslandType.Normal => WorldGen.genRand.Next(14),
                 SmallIslandType.Ruins => WorldGen.genRand.Next(6),
                 SmallIslandType.Chest => WorldGen.genRand.Next(6),
-                SmallIslandType.Forest => WorldGen.genRand.Next(3),
+                SmallIslandType.Forest => WorldGen.genRand.Next(6),
                 _ => 0,
             };
         }

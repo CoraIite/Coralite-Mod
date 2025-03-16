@@ -12,7 +12,7 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
 {
     public class CrystallineMagikePolarizedFilter : PolarizedFilterItem
     {
-        public override Color FilterColor => Coralite.CrystallineMagikePurple;
+        public override Color FilterColor => Coralite.CrystallinePurple;
 
         public CrystallineMagikePolarizedFilter() : base(Item.sellPrice(0, 0, 50), ModContent.RarityType<CrystallineMagikeRarity>())
         {

@@ -62,7 +62,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
                 if (CoraliteWorld.PlaceNightSoul && CoraliteWorld.PlaceNightSoul)
                     CoraliteWorld.HasPermission = true;
                 else
-                    CombatText.NewText(new Rectangle(i * 16, j * 16, 1, 1), Coralite.CrystallineMagikePurple * 1.5f, NeedSouls.Value, true);
+                    CombatText.NewText(new Rectangle(i * 16, j * 16, 1, 1), Coralite.CrystallinePurple * 1.5f, NeedSouls.Value, true);
             }
 
             return true;

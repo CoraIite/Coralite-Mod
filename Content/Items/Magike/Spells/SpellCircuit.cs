@@ -6,7 +6,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Magike.Spells
 {
-    public class SpellCircuitTile() : SpellTile(3,3,Coralite.CrystallineMagikePurple,DustID.Water)
+    public class SpellCircuitTile() : SpellTile(3,3,Coralite.CrystallinePurple,DustID.Water)
     {
         public override int DropItemType => ModContent.ItemType<SpellCircuitCore>();
 

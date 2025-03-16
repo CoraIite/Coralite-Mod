@@ -17,7 +17,7 @@ namespace Coralite.Content.Dusts
         {
             Lighting.AddLight(dust.position, dust.color.ToVector3() * 0.25f);
 
-            dust.color *= 0.8f;
+            dust.color *= 0.84f;
             dust.velocity *= 0.95f;
 
             dust.position += dust.velocity;
@@ -31,8 +31,10 @@ namespace Coralite.Content.Dusts
 
         public override bool PreDraw(Dust dust)
         {
-            Main.spriteBatch.Draw(Texture2D.Value, dust.position - Main.screenPosition, Texture2D.Frame(2, 1), dust.color, 0, Texture2D.Size() / 2, dust.scale, 0, 0);
-            Main.spriteBatch.Draw(Texture2D.Value, dust.position - Main.screenPosition, Texture2D.Frame(2, 1, 1), dust.color * 2f, 0, Texture2D.Size() / 2, dust.scale, 0, 0);
+            Vector2 position = dust.position - Main.screenPosition;
+            Rectangle frameBox = Texture2D.Frame(2, 1);
+            Main.spriteBatch.Draw(Texture2D.Value, position, frameBox, dust.color, 0, frameBox.Size() / 2, dust.scale, 0, 0);
+            Main.spriteBatch.Draw(Texture2D.Value, position, Texture2D.Frame(2, 1, 1), dust.color * 2f, 0, frameBox.Size() / 2, dust.scale, 0, 0);
             return false;
         }
     }

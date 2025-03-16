@@ -496,7 +496,7 @@ namespace Coralite.Content.Items.MagikeSeries2
         public override void DrawNonPremultiplied(SpriteBatch spriteBatch)
         {
             if (CanDrawFrame)
-                MagikeHelper.DrawRectangleFrame(spriteBatch, BasePosition, TargetPoint, Coralite.CrystallineMagikePurple);
+                MagikeHelper.DrawRectangleFrame(spriteBatch, BasePosition, TargetPoint, Coralite.CrystallinePurple);
         }
     }
 
@@ -597,7 +597,7 @@ namespace Coralite.Content.Items.MagikeSeries2
 
         public override Color GetDrawColor()
         {
-            return Coralite.CrystallineMagikePurple;
+            return Coralite.CrystallinePurple;
         }
 
     }
