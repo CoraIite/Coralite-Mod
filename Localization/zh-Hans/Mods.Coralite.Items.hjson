@@ -1901,7 +1901,7 @@ ShadowCandelabra: {
 
 GlassShield: {
 	DisplayName: 玻璃盾
-	Tooltip: 一块玻璃制成的盾牌，或许防御时就会碎成碎片
+	Tooltip: 一块玻璃制成的盾牌，或许格挡时就会碎成碎片（并不会）
 }
 
 BisketyHead: {
@@ -1928,7 +1928,7 @@ FlyingShieldMaintenanceGuide: {
 	Tooltip:
 		'''
 		古代人类留在地下金箱子内的指南
-		增加飞盾右键格挡能力
+		使飞盾加速回归
 		'''
 }
 
@@ -1952,8 +1952,8 @@ FlyingShieldToolbox: {
 		'''
 		让飞盾能够在敌人间弹射一次
 		增加飞盾飞行速度
-		增加飞盾右键格挡能力
-		盾冲与格挡变得更加自由
+		使飞盾加速回归
+		飞盾未回归时也能使用盾冲
 		'''
 }
 
@@ -1971,8 +1971,8 @@ DemonsProtection: {
 	Tooltip:
 		'''
 		[c/8aebff:举起盾牌的瞬间能够进行完美格挡并释放恶魔爪击]
-		+10% 飞盾格挡时减少弹幕穿透数的概率
-		略微增加飞盾格挡能力
+		+20% 飞盾格挡时弹回弹幕
+		略微增加飞盾成功格挡后获得的伤害减免
 		略微增加举盾速度
 		'''
 }
@@ -1983,8 +1983,8 @@ FlyingShieldToolboxProMax: {
 		'''
 		让飞盾能够在敌人间弹射一次
 		增加飞盾飞行速度
-		增加飞盾右键格挡能力
-		盾冲与格挡变得更加自由
+		使飞盾加速回归
+		飞盾未回归时也能使用盾冲
 		'''
 }
 
@@ -2019,7 +2019,7 @@ FloralHarmonyMedallion: {
 
 PearlRay: {
 	DisplayName: 白玉鳐
-	Tooltip: 飞盾命中或成功防御后下一次攻击伤害增加
+	Tooltip: 飞盾命中或成功格挡后下一次攻击伤害增加
 }
 
 FlyingShieldCore: {
@@ -2079,8 +2079,8 @@ Terracrest: {
 	Tooltip:
 		'''
 		[c/8aebff:举起盾牌的瞬间能够进行完美格挡并释放泰拉魔刺]
-		+18% 飞盾格挡时减少弹幕穿透数的概率
-		增加飞盾格挡能力
+		+25% 飞盾格挡时弹回弹幕
+		增加飞盾格挡后获得的伤害减免
 		增加举盾速度
 		'''
 }
@@ -2115,12 +2115,12 @@ VampiresFang: {
 
 GlazeBulwark: {
 	DisplayName: 琉璃重盾
-	Tooltip: 在防御时会变成碎片
+	Tooltip: 在格挡时会变成碎片
 }
 
 GemrainAegis: {
 	DisplayName: 七彩宝石盾
-	Tooltip: 防御时变成七彩碎片
+	Tooltip: 格挡时变成七彩碎片
 }
 
 Leonids: {
@@ -2161,8 +2161,8 @@ NanoAmplifier: {
 		'''
 		+2 飞盾在敌人间弹射次数
 		大幅增加飞盾飞行速度
-		增加飞盾右键格挡能力
-		盾冲与格挡变得更加自由
+		使飞盾加速回归
+		飞盾未回归时也能使用盾冲
 		'''
 }
 
@@ -2185,7 +2185,7 @@ HorseshoeCrab: {
 	DisplayName: 冥凯鲎
 	Tooltip:
 		'''
-		飞盾命中或成功防御后下一次攻击伤害增加
+		飞盾命中或成功格挡后下一次攻击伤害增加
 		命中敌人时呼唤同伴一同攻击
 		'''
 }
@@ -2833,7 +2833,7 @@ PiezoArmorPanel: {
 
 AmberAmulet: {
 	DisplayName: 琥珀护盾符
-	Tooltip: +8% 飞盾格挡时减少弹幕穿透数的概率
+	Tooltip: +15% 飞盾格挡时弹回弹幕
 }
 
 JungleTurtleShell: {
@@ -2841,7 +2841,7 @@ JungleTurtleShell: {
 	Tooltip:
 		'''
 		将物品状态下的丛林龟（小动物）整只丢入微光液体后变成的龟壳，似乎在丛林地下的宝箱中也会出现
-		略微增加飞盾格挡能力
+		略微增加飞盾成功格挡后获得的伤害减免
 		'''
 }
 
@@ -2887,7 +2887,7 @@ OniMask: {
 	Tooltip:
 		'''
 		[c/8aebff:手持飞盾或完全举起盾牌时双击方向键可进行盾冲]
-		[c/8aebff:盾冲命中后会将自身弹回，并触发盾牌防御效果]
+		[c/8aebff:盾冲命中后会将自身弹回，并触发盾牌格挡效果]
 		[c/8aebff:如果佩戴了完美格挡相关饰品能在刚开始盾冲时触发效果]
 		冲刺开始时丢出骨头
 		“或许戴上后能够变为一般系”
@@ -2899,7 +2899,7 @@ KamonFlag: {
 	Tooltip:
 		'''
 		[c/8aebff:手持飞盾或完全举起盾牌时双击方向键可进行盾冲]
-		[c/8aebff:盾冲命中后会将自身弹回，并触发盾牌防御效果]
+		[c/8aebff:盾冲命中后会将自身弹回，并触发盾牌格挡效果]
 		[c/8aebff:如果佩戴了完美格挡相关饰品能在刚开始盾冲时触发效果]
 		冲刺开始时生成灰黑冤魂
 		'''
@@ -2910,7 +2910,7 @@ SolarPanel: {
 	Tooltip:
 		'''
 		[c/8aebff:手持飞盾或完全举起盾牌时双击方向键可进行盾冲]
-		[c/8aebff:盾冲命中后会将自身弹回，并触发盾牌防御效果]
+		[c/8aebff:盾冲命中后会将自身弹回，并触发盾牌格挡效果]
 		[c/8aebff:如果佩戴了完美格挡相关饰品能在刚开始盾冲时触发效果]
 		冲刺途中生成带电爆破弹
 		'''
@@ -2926,7 +2926,7 @@ OldClockwork: {
 	Tooltip:
 		'''
 		[c/8aebff:手持飞盾或完全举起盾牌时双击方向键可进行盾冲]
-		[c/8aebff:盾冲命中后会将自身弹回，并触发盾牌防御效果]
+		[c/8aebff:盾冲命中后会将自身弹回，并触发盾牌格挡效果]
 		[c/8aebff:如果佩戴了完美格挡相关饰品能在刚开始盾冲时触发效果]
 		冲刺命中后给予“拧紧发条”BUFF
 		“博士，这个什么时候才能拿掉呢？”
@@ -2938,7 +2938,7 @@ ChronoHeart: {
 	Tooltip:
 		'''
 		[c/8aebff:手持飞盾或完全举起盾牌时双击方向键可进行盾冲]
-		[c/8aebff:盾冲命中后会将自身弹回，并触发盾牌防御效果]
+		[c/8aebff:盾冲命中后会将自身弹回，并触发盾牌格挡效果]
 		[c/8aebff:如果佩戴了完美格挡相关饰品能在刚开始盾冲时触发效果]
 		冲刺时生成时针
 		“你听得到时间的心跳”
@@ -3188,7 +3188,7 @@ HylianShield: {
 		'''
 		手持时增加25防御
 		举起盾牌后双击方向键使用盾滑
-		举盾瞬间可进行盾反，防御时能够将弹幕弹回去
+		举盾瞬间可进行盾反，格挡时能够将弹幕弹回去
 		“伴随着持有它的勇者的传说，自古从海拉鲁王族流传下来的盾。”
 		“以其他盾无法企及的压倒性的防御力和耐久性为傲。”
 		[c/00ff00:盾反时产生的高亮效果可以在模组配置中关闭]
@@ -3461,7 +3461,7 @@ ThunderveinDragonMask: {
 
 EtheriaLegacy: {
 	DisplayName: 埃特尼亚之遗
-	Tooltip: 飞盾在完美防御时获得惊人一刻效果
+	Tooltip: 飞盾在完美格挡时获得惊人一刻效果
 }
 
 CrystalEyeBannerItem: {
@@ -3738,7 +3738,7 @@ Zircon: {
 
 FlyingShieldBattleGuide: {
 	DisplayName: 飞盾战斗指南
-	Tooltip: 让盾冲与格挡变得更加自由
+	Tooltip: 飞盾未回归时也能使用盾冲
 }
 
 Terranascence: {
@@ -3755,8 +3755,9 @@ AlloySpring: {
 	DisplayName: 强化合金弹簧
 	Tooltip:
 		'''
-		增加冲刺速度
-		冲刺时根据防御力增加伤害，最多10%
+		增加盾冲的冲刺速度
+		冲刺时根据防御力增加伤害，最多15%
+		冲刺时获得一次性的35点伤害减免
 		{$Mods.Coralite.Items.FlyingShieldBattleGuide.Tooltip}
 		'''
 }
@@ -3766,7 +3767,8 @@ GravitationalCatapult: {
 	Tooltip:
 		'''
 		大幅增加冲刺速度，增加冲刺时间
-		冲刺时根据防御力增加伤害，最多20%
+		冲刺时根据防御力增加伤害，最多30%
+		冲刺时获得一次性的50点伤害减免
 		{$Mods.Coralite.Items.FlyingShieldBattleGuide.Tooltip}
 		'''
 }
@@ -4553,7 +4555,7 @@ GreenOnionBurritos: {
 	Tooltip:
 		'''
 		左键丢出大葱，大葱在碰到卷饼后会变为大葱卷饼并造成更高伤害
-		飞盾与防御均为卷饼
+		飞盾与格挡均为卷饼
 		'''
 }
 
@@ -5331,4 +5333,9 @@ LightSoulFilter: {
 ChalcedonySapling: {
 	DisplayName: 玉髓树幼苗
 	Tooltip: 可以种在矽卡岩上
+}
+
+PossessedChest: {
+	DisplayName: 幻影胸甲
+	Tooltip: 冲刺时获得一次性的30点伤害减免
 }

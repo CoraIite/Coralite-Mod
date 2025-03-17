@@ -22,6 +22,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
             base.SetDefaults();
             Item.damage = 90;
             Item.DamageType = DamageClass.Generic;
+            Item.defense = 3;
         }
 
         public override bool CanAccessoryBeEquippedWith(Item equippedItem, Item incomingItem, Player player)

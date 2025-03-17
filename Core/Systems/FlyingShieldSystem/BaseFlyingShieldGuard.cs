@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
+using Terraria.ID;
 
 namespace Coralite.Core.Systems.FlyingShieldSystem
 {
@@ -23,7 +24,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
         /// <summary> 后摇时间 </summary>
         public int delayTime = 15;
 
-        /// <summary> 削减弹幕的穿透数的概率 </summary>
+        /// <summary> 弹回弹幕的概率 </summary>
         public float strongGuard;
         /// <summary> 决定了举盾时每帧的距离增加量，这个数越大举盾速度越快 </summary>
         public float distanceAdder = 1.5f;
@@ -122,8 +123,8 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
         {
             if (damageReduce > 0.8f)
                 damageReduce = 0.8f;
-            if (strongGuard > 0.75f)
-                strongGuard = 0.75f;
+            if (strongGuard > 0.8f)
+                strongGuard = 0.8f;
         }
 
         public virtual void InitState()
@@ -300,17 +301,20 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                 if (proj.Colliding(proj.getRect(), rect))
                 {
                     float damageR = damageReduce;
-                    if (proj.penetrate < 0)//对于无限穿透的弹幕额外减伤
+                    bool canReflect = CanProjBeReflect(proj);
+
+                    if (canReflect)//对于不可弹回弹幕
                         damageR += Main.rand.NextFloat(0, strongGuard / 3);
 
                     OnGuard_DamageReduce(damageR);
 
                     float percent = MathHelper.Clamp(strongGuard, 0, 1);
-                    if (Main.rand.NextBool((int)(percent * 100), 100) && proj.penetrate > 0)//削减穿透数
+                    if (Main.rand.NextBool((int)(percent * 100), 100) && canReflect)//弹回
                     {
-                        proj.penetrate--;
-                        if (proj.penetrate < 1)
-                            proj.Kill();
+                        proj.velocity *= -1;
+                        float angle = proj.velocity.ToRotation();
+                        proj.velocity = angle.AngleLerp(Projectile.rotation, 0.5f).ToRotationVector2() * proj.velocity.Length();
+                        proj.friendly= true;
                         OnStrongGuard();
                     }
                     localProjectileImmunity[i] = Projectile.localNPCHitCooldown;
@@ -341,6 +345,21 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
 
             index = -1;
             return (int)GuardType.notGuard;
+        }
+
+        private bool CanProjBeReflect(Projectile proj)
+        {
+            if (proj.aiStyle == 4 || proj.aiStyle == 38 || proj.aiStyle == 84 || proj.aiStyle == 148 ||
+                (proj.aiStyle == 7 && proj.ai[0] == 2f) || ((proj.type == 440 || proj.type == 449 ||
+                proj.type == 606) && proj.ai[1] == 1f) || (proj.aiStyle == 93 && proj.ai[0] < 0f) ||
+                proj.type == 540 || proj.type == 756 || proj.type == 818 || proj.type == 856 ||
+                proj.type == 961 || proj.type == 933 || ProjectileID.Sets.IsAGolfBall[proj.type])
+                return false;
+
+            if (!ProjectileLoader.ShouldUpdatePosition(proj))
+                return  false;
+
+            return true;
         }
 
         #region 特定时期触发类方法

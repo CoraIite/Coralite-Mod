@@ -145,6 +145,13 @@ namespace Coralite.Content.Items.FlyingShields
             SoundEngine.PlaySound(CoraliteSoundID.Jellyfish_NPCHit25, Projectile.Center);
             if (Item.ModItem is HorseshoeCrab pr)
                 pr.PowerfulAttack = true;
+
+            if (Projectile.IsOwnedByLocalPlayer())
+            {
+                Vector2 dir = (Owner.Center - Main.MouseWorld).SafeNormalize(Vector2.Zero).RotateByRandom(-0.5f,0.5f);
+
+                Projectile.NewProjectileFromThis<HorseshoeCrabEXProj>(Projectile.Center + (dir * 16 * 10), -dir * 10, Projectile.damage, Projectile.knockBack);
+            }
         }
 
         public override float GetWidth()
@@ -208,7 +215,7 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            Projectile.damage = (int)(Projectile.damage * 0.85f);
+            Projectile.damage = (int)(Projectile.damage * 0.9f);
         }
 
         public override void AI()

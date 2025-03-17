@@ -42,6 +42,10 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
 
             projectile.dashSpeed += speedAdder;
             projectile.Owner.AddBuff(ModContent.BuffType<AlloySpringBuff>(), (int)(projectile.dashTime * 2f));
+            if (projectile.Owner.TryGetModPlayer(out CoralitePlayer cp))
+            {
+                cp.FlyingShieldDashDamageReduce = 35;
+            }
         }
 
         public override void AddRecipes()
@@ -51,6 +55,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
                 .AddIngredient<ShieldSpring>()
                 .AddIngredient<HeavyWedges>()
                 .AddIngredient<FlyingShieldBattleGuide>()
+                .AddIngredient<PossessedChest>()
                 .AddTile(TileID.TinkerersWorkbench)
                 .Register();
         }

@@ -26,14 +26,15 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
         {
             base.SetDefaults();
             Item.damage = 150;
-            Item.defense = 3;
+            Item.defense = 5;
             Item.DamageType = DamageClass.Generic;
         }
 
         public override bool CanAccessoryBeEquippedWith(Item equippedItem, Item incomingItem, Player player)
         {
             return !((equippedItem.type == ModContent.ItemType<DemonsProtection>()//下位
-                || equippedItem.type == ModContent.ItemType<HolyCharm>())//下位
+                || equippedItem.type == ModContent.ItemType<HolyCharm>()//下位
+                || equippedItem.type == ModContent.ItemType<AmberAmulet>())
 
                 && incomingItem.type == ModContent.ItemType<Terracrest>());
         }
@@ -41,15 +42,13 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             if (player.TryGetModPlayer(out CoralitePlayer cp))
-            {
                 cp.FlyingShieldAccessories?.Add(this);
-            }
         }
 
         public void OnGuardInitialize(BaseFlyingShieldGuard projectile)
         {
             projectile.parryTime = 10;
-            projectile.strongGuard += 0.18f;
+            projectile.strongGuard += 0.25f;
             projectile.damageReduce *= 1.2f;
             projectile.distanceAdder *= 1.2f;
         }
@@ -241,7 +240,8 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
 
         public override bool PreDraw(ref Color lightColor)
         {
-
+            if (Projectile.oldPos.Length < 13)
+                return false;
             Helper.DrawPrettyStarSparkle(Projectile.Opacity, 0, Projectile.oldPos[12] - Main.screenPosition,
                 Color.White, Color.LimeGreen, Timer / 35, 0, 0.2f, 0.6f, 1, Projectile.rotation + 1.57f,
                 new Vector2(0.1f, 2.4f), Vector2.One);

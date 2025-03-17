@@ -5,15 +5,10 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.FlyingShields.Accessories
 {
-    public class JungleTurtleShell : BaseFlyingShieldAccessory, IFlyingShieldAccessory
+    public class PossessedChest : BaseFlyingShieldAccessory, IFlyingShieldAccessory
     {
-        public JungleTurtleShell() : base(ItemRarityID.Green, Item.sellPrice(0, 0, 10))
+        public PossessedChest() : base(ItemRarityID.LightRed, Item.sellPrice(0, 1))
         { }
-
-        public override void SetStaticDefaults()
-        {
-            ItemID.Sets.ShimmerTransformToItem[ItemID.TurtleJungle] = Type;
-        }
 
         public override void SetDefaults()
         {
@@ -25,13 +20,16 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
         {
             if (player.TryGetModPlayer(out CoralitePlayer cp))
             {
-                cp.FlyingShieldAccessories?.Add(this);
+                cp.FlyingShieldAccessories.Add(this);
             }
         }
 
-        public void OnGuardInitialize(BaseFlyingShieldGuard projectile)
+        public void OnStartDashing(BaseFlyingShieldGuard projectile)
         {
-            projectile.damageReduce *= 1.1f;
+            if (projectile.Owner.TryGetModPlayer(out CoralitePlayer cp))
+            {
+                cp.FlyingShieldDashDamageReduce = 30;
+            }
         }
     }
 }

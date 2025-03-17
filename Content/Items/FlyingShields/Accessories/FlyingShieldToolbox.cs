@@ -32,13 +32,14 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
             {
                 cp.FlyingShieldAccessories?.Add(this);
                 cp.FlyingShieldLRMeantime = true;
+                cp.FlyingShieldAccBack = true;
             }
         }
 
-        public void OnGuardInitialize(BaseFlyingShieldGuard projectile)
-        {
-            projectile.damageReduce *= 1.2f;
-        }
+        //public void OnGuardInitialize(BaseFlyingShieldGuard projectile)
+        //{
+        //    projectile.damageReduce *= 1.2f;
+        //}
 
         public void OnInitialize(BaseFlyingShield projectile)
         {

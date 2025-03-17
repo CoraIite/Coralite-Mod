@@ -5246,3 +5246,8 @@ ChalcedonySapling: {
 	DisplayName: Chalcedony Sapling
 	Tooltip: ""
 }
+
+PossessedChest: {
+	DisplayName: Possessed Chest
+	Tooltip: ""
+}

@@ -56,6 +56,9 @@ namespace Coralite.Content.GlobalNPCs
                     npcLoot.Add(ItemDropRule.ByCondition(new Conditions.NotRemixSeed(), ItemType<EekShield>(), 10));
                     npcLoot.Add(ItemDropRule.ByCondition(new Conditions.RemixSeedHardmode(), ItemType<EekShield>(), 10));
                     break;
+                case NPCID.PossessedArmor://幻影胸甲
+                    npcLoot.Add(ItemDropRule.Common(ItemType<PossessedChest>(), 22));
+                    break;
                 case NPCID.Tim://八角手
                     npcLoot.Add(ItemDropRule.Common(ItemType<EightsquareHand>()));
                     break;

@@ -71,7 +71,7 @@ namespace Coralite.Content.Items.FlyingShields
                 {
                     int index = Projectile.NewProjectileFromThis(Projectile.Center
                         , (target.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * 12,
-                        ProjectileID.DeathLaser, Projectile.damage, Projectile.knockBack, ai1: 1);
+                        ProjectileID.DeathLaser, Projectile.damage*4, Projectile.knockBack, ai1: 1);
                     Main.projectile[index].hostile = false;
                     Main.projectile[index].friendly = true;
                     Main.projectile[index].penetrate = 1;

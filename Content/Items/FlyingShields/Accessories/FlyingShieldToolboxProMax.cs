@@ -10,6 +10,12 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
         public FlyingShieldToolboxProMax() : base(ItemRarityID.LightRed, Item.sellPrice(0, 0, 50))
         { }
 
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.defense = 2;
+        }
+
         public override bool CanAccessoryBeEquippedWith(Item equippedItem, Item incomingItem, Player player)
         {
             return !((equippedItem.type == ModContent.ItemType<FlyingShieldToolbox>()//素材
@@ -31,14 +37,15 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
             if (player.TryGetModPlayer(out CoralitePlayer cp))
             {
                 cp.FlyingShieldLRMeantime = true;
+                cp.FlyingShieldAccBack = true;
                 cp.FlyingShieldAccessories?.Add(this);
             }
         }
 
-        public void OnGuardInitialize(BaseFlyingShieldGuard projectile)
-        {
-            projectile.damageReduce *= 1.2f;
-        }
+        //public void OnGuardInitialize(BaseFlyingShieldGuard projectile)
+        //{
+        //    projectile.damageReduce *= 1.2f;
+        //}
 
         public void OnInitialize(BaseFlyingShield projectile)
         {

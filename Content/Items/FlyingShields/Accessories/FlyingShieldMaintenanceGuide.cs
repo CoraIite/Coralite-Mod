@@ -14,14 +14,15 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
         {
             if (player.TryGetModPlayer(out CoralitePlayer cp))
             {
-                cp.FlyingShieldAccessories?.Add(this);
+                //cp.FlyingShieldAccessories?.Add(this);
+                cp.FlyingShieldAccBack = true;
             }
         }
 
-        public void OnGuardInitialize(BaseFlyingShieldGuard projectile)
-        {
-            projectile.damageReduce *= 1.2f;
-        }
+        //public void OnGuardInitialize(BaseFlyingShieldGuard projectile)
+        //{
+        //    projectile.damageReduce *= 1.2f;
+        //}
 
         public override void AddRecipes()
         {

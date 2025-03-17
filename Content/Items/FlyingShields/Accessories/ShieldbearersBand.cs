@@ -11,6 +11,12 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
         public ShieldbearersBand() : base(ItemRarityID.Green, Item.sellPrice(0, 0, 20))
         { }
 
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.defense = 2;
+        }
+
         public override bool CanAccessoryBeEquippedWith(Item equippedItem, Item incomingItem, Player player)
         {
             return !((equippedItem.type == ModContent.ItemType<PowerliftExoskeleton>()//上位

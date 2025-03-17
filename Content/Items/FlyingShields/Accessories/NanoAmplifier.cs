@@ -17,6 +17,12 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
         public NanoAmplifier() : base(ItemRarityID.Yellow, Item.sellPrice(0, 5, 50))
         { }
 
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.defense = 6;
+        }
+
         public override bool CanAccessoryBeEquippedWith(Item equippedItem, Item incomingItem, Player player)
         {
             return !((equippedItem.type == ModContent.ItemType<FlyingShieldToolbox>()//素材
@@ -37,14 +43,15 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
             if (player.TryGetModPlayer(out CoralitePlayer cp))
             {
                 cp.FlyingShieldLRMeantime = true;
+                cp.FlyingShieldAccBack = true;
                 cp.FlyingShieldAccessories?.Add(this);
             }
         }
 
-        public void OnGuardInitialize(BaseFlyingShieldGuard projectile)
-        {
-            projectile.damageReduce *= 1.2f;
-        }
+        //public void OnGuardInitialize(BaseFlyingShieldGuard projectile)
+        //{
+        //    projectile.damageReduce *= 1.2f;
+        //}
 
         public void OnInitialize(BaseFlyingShield projectile)
         {

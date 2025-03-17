@@ -32,6 +32,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
             base.SetDefaults();
             Item.DamageType = DamageClass.Generic;
             Item.damage = 240;
+            Item.defense = 4;
         }
 
         public bool isDashing;
@@ -133,7 +134,8 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
                 float startAngle = Main.rand.Next(12) * MathHelper.TwoPi / 12;
 
                 flyingShieldGuard.TurnToDashing(this, 12, dashDirection, 35f);
-                Main.instance.CameraModifiers.Add(new MoveModifyer(10, 50));
+                if (!VaultUtils.isServer)
+                Main.instance.CameraModifiers.Add(new MoveModifyer(5, 40));
 
                 Projectile.NewProjectile(Player.GetSource_FromAI(), Player.Center, Vector2.Zero,
                     ProjectileType<ChronoHeartSlash>(), damage, 4, Player.whoAmI, startAngle, 0, DashDir);
