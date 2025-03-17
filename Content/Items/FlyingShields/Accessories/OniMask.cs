@@ -104,9 +104,12 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
                 flyingShieldGuard.TurnToDashing(this, 16, dashDirection, 12f);
                 Player.GetModPlayer<CoralitePlayer>().DashDelay = 75;
                 int damage = Player.GetWeaponDamage(Item);
+                Vector2 dir = Main.MouseWorld - Player.Center;
+                dir = dir.SafeNormalize(Vector2.Zero);
+
                 for (int i = -1; i < 2; i++)
                 {
-                    int index = Projectile.NewProjectile(Player.GetSource_ItemUse(Item), Player.Center, (dashDirection + (i * 0.2f)).ToRotationVector2() * 10,
+                    int index = Projectile.NewProjectile(Player.GetSource_ItemUse(Item), Player.Center, dir.RotatedBy(i*0.2f) * 10,
                          ProjectileID.BoneGloveProj, damage, 0, Player.whoAmI);
                     Main.projectile[index].usesLocalNPCImmunity = true;
                     Main.projectile[index].localNPCHitCooldown = 30;

@@ -10,6 +10,12 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
         public HeavyWedges() : base(ItemRarityID.Blue, Item.sellPrice(0, 0, 0, 50))
         { }
 
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.defense = 1;
+        }
+
         public override bool CanAccessoryBeEquippedWith(Item equippedItem, Item incomingItem, Player player)
         {
             return !((equippedItem.type == ModContent.ItemType<FlyingShieldToolboxProMax>()//与工具箱冲突

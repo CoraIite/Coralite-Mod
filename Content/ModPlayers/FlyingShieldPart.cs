@@ -15,6 +15,10 @@ namespace Coralite.Content.ModPlayers
         /// </summary>
         public bool FlyingShieldLRMeantime;
         /// <summary>
+        /// 回归时是否会逐渐加速
+        /// </summary>
+        public bool FlyingShieldAccBack;
+        /// <summary>
         /// 飞盾格挡后获得的伤害减免
         /// </summary>
         public float FlyingShieldDamageReduce;
@@ -22,6 +26,10 @@ namespace Coralite.Content.ModPlayers
         /// 防御时间，
         /// </summary>
         public int FlyingShieldGuardTime;
+        /// <summary>
+        /// 冲刺时的伤害减少
+        /// </summary>
+        public int FlyingShieldDashDamageReduce;
         /// <summary>
         /// 飞盾饰品的list
         /// </summary>
@@ -41,6 +49,7 @@ namespace Coralite.Content.ModPlayers
             MaxFlyingShield = 1;
             //无法同时左右键使用
             FlyingShieldLRMeantime = false;
+            FlyingShieldAccBack = false;
             //更新飞盾提供的伤害减免
             if (FlyingShieldGuardTime > 0)
             {
@@ -94,6 +103,29 @@ namespace Coralite.Content.ModPlayers
             }
 
             return false;
+        }
+
+        public void OnFlyingShieldDashOver()
+        {
+            FlyingShieldDashDamageReduce = 0;
+        }
+
+        public override void ModifyHurt(ref Player.HurtModifiers modifiers)
+        {
+            //modifiers.ModifyHurtInfo += Final;
+            if (FlyingShieldDashDamageReduce > 0)
+            {
+                modifiers.DisableSound();
+                modifiers.DisableDust();
+
+                modifiers.FinalDamage.Flat -= FlyingShieldDashDamageReduce;
+                FlyingShieldDashDamageReduce = 0;
+            }
+
+            //void Final(ref Player.HurtInfo info)
+            //{
+            //    Main.NewText(info.Damage);
+            //}
         }
     }
 }

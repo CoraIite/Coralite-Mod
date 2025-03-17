@@ -22,7 +22,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
         {
             base.SetDefaults();
             Item.DamageType = DamageClass.Generic;
-            Item.damage = 53;
+            Item.damage = 55;
         }
 
         public bool isDashing;

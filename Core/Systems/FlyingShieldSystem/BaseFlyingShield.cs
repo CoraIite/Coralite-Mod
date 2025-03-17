@@ -222,10 +222,8 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
             }
             else
             {
-                if (Timer > backTime + 30)
-                {
+                if (Owner.GetModPlayer<CoralitePlayer>().FlyingShieldAccBack && Timer > backTime + 14)
                     backSpeed *= 1.03f;
-                }
 
                 Projectile.velocity = (Owner.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * backSpeed;
             }

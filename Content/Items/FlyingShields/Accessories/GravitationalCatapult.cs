@@ -42,6 +42,10 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
             projectile.dashTime += 6;
             projectile.dashSpeed += speedAdder;
             projectile.Owner.AddBuff(ModContent.BuffType<GravitationalCatapultBuff>(), (int)(projectile.dashTime * 2f));
+            if (projectile.Owner.TryGetModPlayer(out CoralitePlayer cp))
+            {
+                cp.FlyingShieldDashDamageReduce = 50;
+            }
         }
 
         public override void AddRecipes()

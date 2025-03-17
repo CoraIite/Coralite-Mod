@@ -20,7 +20,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
 
         public void OnGuardInitialize(BaseFlyingShieldGuard projectile)
         {
-            projectile.strongGuard += 0.08f;
+            projectile.strongGuard += 0.15f;
         }
 
         public override void AddRecipes()

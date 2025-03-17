@@ -5232,3 +5232,8 @@ B9Alloy: {
 	// DisplayName: B9 Alloy
 	// Tooltip: ""
 }
+
+PossessedChest: {
+	// DisplayName: Possessed Chest
+	// Tooltip: ""
+}

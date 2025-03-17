@@ -11,6 +11,12 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
         public BeetleLimbStrap() : base(ItemRarityID.Yellow, Item.sellPrice(0, 5))
         { }
 
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Item.defense = 8;
+        }
+
         public override bool CanAccessoryBeEquippedWith(Item equippedItem, Item incomingItem, Player player)
         {
             return !((equippedItem.type == ModContent.ItemType<ShieldbearersBand>()//下位

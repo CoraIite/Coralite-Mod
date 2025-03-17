@@ -94,10 +94,20 @@ namespace Coralite.Content.ModPlayers
                     BanVanillaDash();
 
                 DashTimer--;
+                if (DashTimer == 0)
+                    OnDashOver();
             }
 
             if (DashControllers.Count > 0)
                 DashControllers.Clear();
+        }
+
+        /// <summary>
+        /// 在冲刺结束时调用
+        /// </summary>
+        public void OnDashOver()
+        {
+            OnFlyingShieldDashOver();
         }
 
         /// <summary>
