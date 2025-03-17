@@ -331,10 +331,10 @@ namespace Coralite.Content.GlobalTiles
                     if (Main.rand.NextBool(12, 100))
                         Item.NewItem(new EntitySource_TileBreak(i, j), new Vector2(i, j) * 16, ItemType<PrimaryRoughGemstone>());
                     break;
-                case TileID.Crystals:
-                    if (Main.rand.NextBool(15, 100))
-                        Item.NewItem(new EntitySource_TileBreak(i, j), new Vector2(i, j) * 16, ItemType<SeniorRoughGemstone>());
-                    break;
+                //case TileID.Crystals:
+                //    if (Main.rand.NextBool(15, 100))
+                //        Item.NewItem(new EntitySource_TileBreak(i, j), new Vector2(i, j) * 16, ItemType<SeniorRoughGemstone>());
+                //    break;
             }
         }
 

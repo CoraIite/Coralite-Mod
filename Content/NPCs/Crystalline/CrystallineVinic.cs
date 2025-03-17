@@ -134,9 +134,6 @@ namespace Coralite.Content.NPCs.Crystalline
             //固定掉落蕴魔水晶
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CrystallineMagike>(), 1, 2, 5));
 
-            //概率掉落蕴魔海燕麦母体
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CrystallineSeaOatsSeed>(), 12));
-
             //掉落各种植物
             IItemDropRule[] plants = [
                 ItemDropRule.Common(ModContent.ItemType<CrystallineSeaOats>(), 1, 1, 3),
