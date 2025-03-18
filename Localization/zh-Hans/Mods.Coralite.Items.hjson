@@ -5339,3 +5339,13 @@ PossessedChest: {
 	DisplayName: 幻影胸甲
 	Tooltip: 冲刺时获得一次性的30点伤害减免
 }
+
+Luminward: {
+	DisplayName: 曲光泡膜
+	Tooltip:
+		'''
+		12秒未受击后获得隐身
+		隐身时 +6% 暴击率并获得一次性的 35% 伤害减免
+		伤害减免对低于30点的伤害不生效
+		'''
+}

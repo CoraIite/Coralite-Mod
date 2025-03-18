@@ -2123,7 +2123,9 @@ namespace Coralite.Content.WorldGeneration
             else if (c == new Color(165, 99, 85))
             {
                 WorldGen.AddBuriedChest(x, y,
-                    ModContent.ItemType<Reel_MagikeAdvance>(), notNearOtherChests: false, 1, trySlope: false, (ushort)ModContent.TileType<SkarnChestTile>());
+                   WorldGen.genRand.NextFromList(
+                       ModContent.ItemType<Luminward>()
+                       ), notNearOtherChests: false, 1, trySlope: false, (ushort)ModContent.TileType<SkarnChestTile>());
             }
             else if (c == new Color(0, 255, 170))
                 WorldGen.PlaceTile(x, y, ModContent.TileType<SkarnBrickTile>(), true);

@@ -501,7 +501,7 @@ namespace Coralite.Content.NPCs.Crystalline
 
                                     Vector2 dir = -NPC.velocity.SafeNormalize(Vector2.Zero);
                                     for (int i = 0; i < 12; i++)
-                                        Dust.NewDustPerfect(NPC.Center - dir * 32, ModContent.DustType<CrystallineDust>()
+                                        Dust.NewDustPerfect(NPC.Center - dir * 32, ModContent.DustType<CrystallineDustSmall>()
                                             , dir.RotateByRandom(-0.4f, 0.4f) * Main.rand.NextFloat(1, 4), Scale: Main.rand.NextFloat(1, 1.6f));
 
                                     NPC.velocity *= -0.4f;
@@ -863,7 +863,7 @@ namespace Coralite.Content.NPCs.Crystalline
                 this.SpawnGore(4, 2);
                 for (int i = 0; i < 6; i++)
                 {
-                    Dust d = Dust.NewDustPerfect(NPC.Center, ModContent.DustType<CrystallineDust>()
+                    Dust d = Dust.NewDustPerfect(NPC.Center, ModContent.DustType<CrystallineDustSmall>()
                         , Helper.NextVec2Dir(0.5f, 2.5f));
                     d.noGravity = true;
                 }
@@ -974,7 +974,7 @@ namespace Coralite.Content.NPCs.Crystalline
             Helper.PlayPitched(CoraliteSoundID.CrystalHit_DD2_WitherBeastCrystalImpact, Projectile.Center);
             Vector2 dir = -Projectile.velocity.SafeNormalize(Vector2.Zero);
             for (int i = 0; i < 12; i++)
-                Dust.NewDustPerfect(Projectile.Center - dir * 32, ModContent.DustType<CrystallineDust>()
+                Dust.NewDustPerfect(Projectile.Center - dir * 32, ModContent.DustType<CrystallineDustSmall>()
                     , dir.RotateByRandom(-0.4f, 0.4f) * Main.rand.NextFloat(1, 4), Scale: Main.rand.NextFloat(1, 1.6f));
         }
 
@@ -1015,7 +1015,7 @@ namespace Coralite.Content.NPCs.Crystalline
         {
             for (int i = 0; i < 6; i++)
             {
-                Dust d = Dust.NewDustPerfect(Projectile.Center, ModContent.DustType<CrystallineDust>()
+                Dust d = Dust.NewDustPerfect(Projectile.Center, ModContent.DustType<CrystallineDustSmall>()
                     , Helper.NextVec2Dir(0.5f, 1.5f));
                 d.noGravity = true;
             }

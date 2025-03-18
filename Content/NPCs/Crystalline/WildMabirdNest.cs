@@ -22,18 +22,14 @@ namespace Coralite.Content.NPCs.Crystalline
 
         private ref float Timer => ref NPC.ai[1];
         private ref float Recorder => ref NPC.ai[2];
+        /// <summary>
+        /// 当前有多少的魔鸟
+        /// </summary>
+        private ref float MabirdCount => ref NPC.ai[3];
 
-        private bool CanHit
-        {
-            get => NPC.ai[3] == 1;
-            set
-            {
-                if (value)
-                    NPC.ai[3] = 1;
-                else
-                    NPC.ai[3] = 0;
-            }
-        }
+        protected Player Target => Main.player[NPC.target];
+
+        private bool init = true;
 
         private enum AIStates
         {
@@ -45,13 +41,13 @@ namespace Coralite.Content.NPCs.Crystalline
 
         public override void SetStaticDefaults()
         {
-            Main.npcFrameCount[Type] = 8;
+            Main.npcFrameCount[Type] = 7;
         }
 
         public override void SetDefaults()
         {
-            NPC.width = 54;
-            NPC.height = 54;
+            NPC.width = 48;
+            NPC.height = 80;
             NPC.damage = 50;
             NPC.defense = 15;
 
@@ -69,6 +65,7 @@ namespace Coralite.Content.NPCs.Crystalline
             //固定掉落蕴魔水晶
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CrystallineMagike>(), 1, 4, 12));
 
+            //掉落魔鸟
 
             //掉落宝石原石
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PrimaryRoughGemstone>(), 1, 2, 4));
@@ -124,6 +121,104 @@ namespace Coralite.Content.NPCs.Crystalline
 
         #region AI
 
+        public override void AI()
+        {
+            if (init)
+            {
+                init = false;
+                Initialize();
+            }
+
+            switch (State)
+            {
+                case AIStates.Waiting:
+                    Waiting();
+                    break;
+                case AIStates.Shoot:
+                    Attack();
+                    break;
+                default:
+                    break;
+            }
+
+            GetMabird();
+        }
+
+        public void Initialize()
+        {
+            NPC.TargetClosest();
+            NPC.spriteDirection = NPC.direction;
+        }
+
+        public void Waiting()
+        {
+            if (Timer > 40)
+            {
+                NPC.TargetClosest(false);
+                if (CanAttack())//玩家在8格以内开始发动攻击
+                {
+                    StartAttack();
+                    return;
+                }
+
+                Timer = 0;
+            }
+
+            Timer++;
+        }
+
+        public void Attack()
+        {
+            if (Timer > 20)
+            {
+                Timer = 0;
+                NPC.TargetClosest(false);
+                if (CanAttack())
+                {
+                    if (MabirdCount > 0)//魔鸟出动！
+                    {
+
+                    }
+                }
+                else
+                    State = AIStates.Waiting;
+            }
+
+            Timer++;
+        }
+
+        private bool CanAttack()
+        {
+            return NPC.target >= 0 && NPC.target < 255 && !Main.player[NPC.target].dead
+                                && !(Target.invis && Target.itemAnimation == 0) && Vector2.Distance(NPC.Center, Target.Center) < 16 * 30
+                                && Collision.CanHit(NPC.Center, 1, 1, Target.TopLeft, Target.width, Target.height);
+        }
+
+        /// <summary>
+        /// 每隔固定时间生产一只魔鸟
+        /// </summary>
+        public void GetMabird()
+        {
+            if (Recorder > Helper.ScaleValueForDiffMode(60 * 4, 60 * 3, 60 * 2f, 30))
+            {
+                Recorder = 0;
+                if (MabirdCount < 6)
+                {
+                    MabirdCount++;
+                    NPC.netUpdate = true;
+                }
+            }
+
+            Recorder++;
+        }
+
+        public void StartAttack()
+        {
+            Timer = 0;
+            Recorder = 0;
+            State= AIStates.Shoot;
+        }
+
         #endregion
 
         #region 网络同步
@@ -134,6 +229,10 @@ namespace Coralite.Content.NPCs.Crystalline
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
+            Texture2D mainTex = NPC.GetTexture();
+            Rectangle box = mainTex.Frame(1, 7, 0, (int)MabirdCount);
+            spriteBatch.Draw(mainTex, NPC.Center - screenPos, box, drawColor, 0, box.Size() / 2, NPC.scale,
+                NPC.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
             return false;
         }
 
@@ -152,6 +251,19 @@ namespace Coralite.Content.NPCs.Crystalline
 
         private ref float Timer => ref NPC.ai[1];
         private ref float Recorder => ref NPC.ai[2];
+        private bool CanHit
+        {
+            get => NPC.ai[3] == 1;
+            set
+            {
+                if (value)
+                    NPC.ai[3] = 1;
+                else
+                    NPC.ai[3] = 0;
+            }
+        }
+
+        protected Player Target => Main.player[NPC.target];
 
         private enum AIStates
         {
@@ -190,6 +302,43 @@ namespace Coralite.Content.NPCs.Crystalline
         #endregion
 
         #region AI
+
+        public override void AI()
+        {
+            switch (State)
+            {
+                case AIStates.Idle:
+                    break;
+                case AIStates.Fly:
+                    break;
+                case AIStates.Attack:
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public void Idle()
+        {
+
+        }
+
+        private bool CanAttack()
+        {
+            return NPC.target >= 0 && NPC.target < 255 && !Main.player[NPC.target].dead
+                                && !(Target.invis && Target.itemAnimation == 0) && Vector2.Distance(NPC.Center, Target.Center) < 16 * 30
+                                && Collision.CanHit(NPC.Center, 1, 1, Target.TopLeft, Target.width, Target.height);
+        }
+
+        private void FlyUpFrame()
+        {
+
+        }
+
+        private void FlyDownFrame()
+        {
+
+        }
 
         #endregion
 

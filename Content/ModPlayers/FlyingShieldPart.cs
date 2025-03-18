@@ -1,4 +1,5 @@
-﻿using Coralite.Core.Systems.FlyingShieldSystem;
+﻿using Coralite.Core;
+using Coralite.Core.Systems.FlyingShieldSystem;
 using System.Collections.Generic;
 using Terraria;
 
@@ -110,9 +111,8 @@ namespace Coralite.Content.ModPlayers
             FlyingShieldDashDamageReduce = 0;
         }
 
-        public override void ModifyHurt(ref Player.HurtModifiers modifiers)
+        public void FlyingShieldHurt(ref Player.HurtModifiers modifiers)
         {
-            //modifiers.ModifyHurtInfo += Final;
             if (FlyingShieldDashDamageReduce > 0)
             {
                 modifiers.DisableSound();
@@ -120,12 +120,9 @@ namespace Coralite.Content.ModPlayers
 
                 modifiers.FinalDamage.Flat -= FlyingShieldDashDamageReduce;
                 FlyingShieldDashDamageReduce = 0;
-            }
 
-            //void Final(ref Player.HurtInfo info)
-            //{
-            //    Main.NewText(info.Damage);
-            //}
+                Helpers.Helper.PlayPitched(CoraliteSoundID.Metal_NPCHit4, Player.Center);
+            }
         }
     }
 }

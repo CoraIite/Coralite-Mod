@@ -1,5 +1,10 @@
 ﻿using Coralite.Content.Items.FlyingShields;
 using Coralite.Content.Items.FlyingShields.Accessories;
+using Coralite.Content.Items.Magike.Filters.DiffractionFilters;
+using Coralite.Content.Items.Magike.Filters.ExcitedFilters;
+using Coralite.Content.Items.Magike.Filters.InterferenceFilters;
+using Coralite.Content.Items.Magike.Filters.PolarizedFilters;
+using Coralite.Content.Items.Magike.Filters.PulseFilters;
 using Coralite.Content.Items.MagikeSeries1;
 using Coralite.Content.Items.ThyphionSeries;
 using Coralite.Content.Tiles.MagikeSeries1;
@@ -114,36 +119,28 @@ namespace Coralite.Content.WorldGeneration
                     default:
                         if (tile.TileType == ModContent.TileType<BasaltChestTile>())
                         {
-                            //int which = 1;
-                            //for (int i = 0; i < 4; i++)//究极偷懒写法，不建议学
-                            //{
-                            //    foreach (var item in chest.item)
-                            //        if (item.IsAir)
-                            //        {
-                            //            item.SetDefaults(ModContent.ItemType<MagikeNote1>());
-                            //            if (item.ModItem is MagikeNote1 note1)
-                            //            {
-                            //                note1.RandomKnowledge(which);
-                            //                if (which > 0)
-                            //                {
-                            //                    which++;
-                            //                    if (which > 7)
-                            //                        which = -1;
-                            //                }
-                            //            }
-                            //            break;
-                            //        }
-                            //    if (WorldGen.genRand.NextBool(1, 3))
-                            //        break;
-                            //}
-
                             if (WorldGen.genRand.NextBool(3))
                                 chest.AddItem<WarpMirror>();
+
+                            for (int i = 0; i < 2; i++)//添加偏振滤镜
+                                WorldGenHelper.RandChestItem(chest, ModContent.ItemType<MagicCrystalPolarizedFilter>(), WorldGen.genRand.Next(1, 2));
+
+                            if (WorldGen.genRand.NextBool(3))//添加其他滤镜
+                                WorldGenHelper.RandChestItem(chest, ModContent.ItemType<MagicCrystalDiffractionFilter>(), 1);
+                            if (WorldGen.genRand.NextBool(3))//添加其他滤镜
+                                WorldGenHelper.RandChestItem(chest, ModContent.ItemType<MagicCrystalExcitedFilter>(), 1);
+                            if (WorldGen.genRand.NextBool(3))//添加其他滤镜
+                                WorldGenHelper.RandChestItem(chest, ModContent.ItemType<MagicCrystalInterferenceFilter>(), 1);
+                            if (WorldGen.genRand.NextBool(3))//添加其他滤镜
+                                WorldGenHelper.RandChestItem(chest, ModContent.ItemType<MagicCrystalPulseFilter>(), 1);
                         }
                         else if (tile.TileType==ModContent.TileType<SkarnChestTile>())
                         {
-                            for (int i = 0; i < 5; i++)
+                            for (int i = 0; i < 3; i++)//放隐身药水
                                 WorldGenHelper.RandChestItem(chest, ItemID.InvisibilityPotion, WorldGen.genRand.Next(1, 5));
+                            
+                            //放偏振滤镜
+                            WorldGenHelper.RandChestItem(chest, ModContent.ItemType<CrimsonPolarizedFilter>(), WorldGen.genRand.Next(1, 2));
                         }
                         break;
                 }

@@ -821,7 +821,7 @@ namespace Coralite.Content.NPCs.Crystalline
 
         public override void Attack()
         {
-            int ReadyTime = Helper.ScaleValueForDiffMode(45, 35, 30, 25);
+            int ReadyTime = Helper.ScaleValueForDiffMode(40, 30, 20, 15);
             const float BiteMouseAngle = 0.8f;
 
             Vector2 baseP = SpawnPoint.ToWorldCoordinates(8, 12);

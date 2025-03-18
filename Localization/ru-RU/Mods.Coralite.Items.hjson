@@ -5300,3 +5300,8 @@ PossessedChest: {
 	// DisplayName: Possessed Chest
 	// Tooltip: ""
 }
+
+Luminward: {
+	// DisplayName: Luminward
+	// Tooltip: ""
+}

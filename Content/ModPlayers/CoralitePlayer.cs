@@ -9,6 +9,8 @@ using Coralite.Content.WorldGeneration;
 using Coralite.Core;
 using Coralite.Core.Systems.YujianSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -66,6 +68,8 @@ namespace Coralite.Content.ModPlayers
         /// <summary> 使用梦魇之花的噩梦能量 </summary>
         public int nightmareEnergy;
         public int nightmareEnergyMax;
+
+        public int HurtTimer;
 
         /// <summary> 爆伤加成 </summary>
         public float critDamageBonus;
@@ -167,6 +171,7 @@ namespace Coralite.Content.ModPlayers
 
         public override void OnRespawn()
         {
+            HurtTimer = 0;
             nightmareCount = 0;
             nightmareEnergy = 0;
             TempYujians = new Item[BaseHulu.slotCount];
@@ -203,6 +208,9 @@ namespace Coralite.Content.ModPlayers
 
         public override void PreUpdateBuffs()
         {
+            if (HurtTimer < 60 * 60)//更新受击时间
+                HurtTimer++;
+
             if (Player.HeldItem.ModItem is IBuffHeldItem buffHeldItem)
                 buffHeldItem.UpdateBuffHeldItem(Player);
 
@@ -412,6 +420,39 @@ namespace Coralite.Content.ModPlayers
         #endregion
 
         #region 受击与攻击
+
+        public override void ModifyHurt(ref Player.HurtModifiers modifiers)
+        {
+            FlyingShieldHurt(ref modifiers);
+
+            int tempHurtTime = HurtTimer;
+            HurtTimer = 0;
+
+            modifiers.ModifyHurtInfo += Post;
+
+            void Post(ref Player.HurtInfo info)
+            {
+                if (HasEffect(nameof(Items.MagikeSeries2.Luminward)))
+                {
+                    //Main.NewText(info.Damage);
+                    if (info.Damage > 30)
+                    {
+                        info.SoundDisabled = true;
+                        info.DustDisabled = true;
+                        info.Damage = (int)(info.Damage * (1 - 0.35f));
+                        //生成音效与粒子
+                        Helper.PlayPitched(CoraliteSoundID.BubbleGun_Item85, Player.Center, volumeAdjust: 0.1f);
+
+                        var p = PRTLoader.NewParticle<Items.MagikeSeries2.LuminwardParticleExplosion>(Player.Center, Vector2.Zero, Color.White, 1);
+                        p.player = Player;
+                        p.Rotation = Main.rand.NextFloat(-0.4f, 0.4f);
+                        p.effect = Main.rand.NextFromList(SpriteEffects.None, SpriteEffects.FlipHorizontally);
+                    }
+                    else
+                        HurtTimer = tempHurtTime;
+                }
+            }
+        }
 
         public override void ModifyHitByProjectile(Projectile proj, ref Player.HurtModifiers modifiers)
         {
