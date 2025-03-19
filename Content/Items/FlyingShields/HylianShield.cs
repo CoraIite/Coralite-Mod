@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.ModPlayers;
 using Coralite.Content.Particles;
 using Coralite.Core;
+using Coralite.Core.Attributes;
 using Coralite.Core.Configs;
 using Coralite.Core.Systems.FlyingShieldSystem;
 using Coralite.Helpers;
@@ -13,6 +14,7 @@ using Terraria.ID;
 namespace Coralite.Content.Items.FlyingShields
 {
     [AutoloadEquip(EquipType.Shield)]
+    [PlayerEffect]
     public class HylianShield : BaseFlyingShieldItem<HylianShieldGuard>, IEquipHeldItem, IDashable
     {
         public HylianShield() : base(Item.sellPrice(0, 20), ItemRarityID.Red, AssetDirectory.FlyingShieldItems)

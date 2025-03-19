@@ -1,10 +1,12 @@
 ﻿using Coralite.Content.ModPlayers;
 using Coralite.Core;
+using Coralite.Core.Attributes;
 using Terraria;
 
 namespace Coralite.Content.Items.RedJades
 {
     [AutoloadEquip(EquipType.Waist)]
+    [PlayerEffect]
     public class RedJadePendant : ModItem
     {
         public override string Texture => AssetDirectory.RedJadeItems + Name;

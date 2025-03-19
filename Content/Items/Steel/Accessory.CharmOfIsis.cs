@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.CustomHooks;
 using Coralite.Content.ModPlayers;
 using Coralite.Core;
+using Coralite.Core.Attributes;
 using Coralite.Core.Prefabs.Items;
 using Terraria;
 using Terraria.ID;
@@ -8,6 +9,7 @@ using Terraria.ID;
 namespace Coralite.Content.Items.Steel
 {
     [AutoloadEquip(EquipType.Head)]
+    [PlayerEffect(ExtraEffectNames = [nameof(CharmOfIsis) + "Vanity"])]
     public class CharmOfIsis : BaseAccessory, ISpecialDrawHead
     {
         public override string Texture => AssetDirectory.SteelItems + Name;
@@ -20,8 +22,8 @@ namespace Coralite.Content.Items.Steel
 
         public override void SetStaticDefaults()
         {
-            int slot = EquipLoader.GetEquipSlot(Mod, "CharmOfIsis", EquipType.Head);
-            ArmorIDs.Head.Sets.DrawHatHair[slot] = true;
+            int slot = EquipLoader.GetEquipSlot(Mod, nameof(CharmOfIsis), EquipType.Head);
+            //ArmorIDs.Head.Sets.DrawHatHair[slot] = true;
             ArmorIDs.Head.Sets.DrawFullHair[slot] = true;
         }
 
@@ -45,7 +47,7 @@ namespace Coralite.Content.Items.Steel
             {
                 cp.AddEffect(nameof(CharmOfIsis));
                 if (!hideVisual)
-                    cp.AddEffect(nameof(CharmOfIsis) + "Vanity");
+                    cp.AddEffect(nameof(CharmOfIsis)+"Vanity");
             }
 
             player.pStone = true;

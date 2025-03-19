@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.ModPlayers;
 using Coralite.Core;
+using Coralite.Core.Attributes;
 using Coralite.Core.Prefabs.Items;
 using Terraria;
 using Terraria.ID;
@@ -7,6 +8,7 @@ using Terraria.ID;
 namespace Coralite.Content.Items.Steel
 {
     [AutoloadEquip(EquipType.HandsOn)]
+    [PlayerEffect]
     public class LifePulseDevice : BaseAccessory
     {
         public override string Texture => AssetDirectory.SteelItems + Name;

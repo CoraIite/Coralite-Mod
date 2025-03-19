@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.Items.Steel;
 using Coralite.Content.ModPlayers;
 using Coralite.Core;
+using Coralite.Core.Attributes;
 using Coralite.Core.Systems.FlyingShieldSystem;
 using Terraria;
 using Terraria.ID;
@@ -61,6 +62,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
         }
     }
 
+    [PlayerEffect]
     public class AlloySpringBuff : ModBuff
     {
         public override string Texture => AssetDirectory.FlyingShieldAccessories + Name;

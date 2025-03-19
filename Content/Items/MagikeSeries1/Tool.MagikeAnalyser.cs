@@ -1,11 +1,13 @@
 ﻿using Coralite.Content.ModPlayers;
 using Coralite.Content.Raritys;
 using Coralite.Core;
+using Coralite.Core.Attributes;
 using Coralite.Helpers;
 using Terraria;
 
 namespace Coralite.Content.Items.MagikeSeries1
 {
+    [PlayerEffect]
     public class MagikeAnalyser : ModItem
     {
         public override string Texture => AssetDirectory.MagikeSeries1Item + Name;

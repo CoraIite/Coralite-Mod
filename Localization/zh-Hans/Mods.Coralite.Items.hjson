@@ -5344,8 +5344,118 @@ Luminward: {
 	DisplayName: 曲光泡膜
 	Tooltip:
 		'''
-		12秒未受击后获得隐身
-		隐身时 +6% 暴击率并获得一次性的 35% 伤害减免
+		10秒未受击后获得隐身
+		隐身时 +5% 暴击率并获得一次性的 20% 伤害减免
 		伤害减免对低于30点的伤害不生效
 		'''
+}
+
+B9AlloyBathtub: {
+	DisplayName: B9 合金浴缸
+	Tooltip: ""
+}
+
+B9AlloyBed: {
+	DisplayName: B9 合金床
+	Tooltip: ""
+}
+
+B9AlloyBigDroplight: {
+	DisplayName: B9 合金大吊灯
+	Tooltip: ""
+}
+
+B9AlloyBookcase: {
+	DisplayName: B9 合金书架
+	Tooltip: ""
+}
+
+B9AlloyCandelabra: {
+	DisplayName: B9 合金烛台
+	Tooltip: ""
+}
+
+B9AlloyCandle: {
+	DisplayName: B9 合金蜡烛
+	Tooltip: ""
+}
+
+B9AlloyChair: {
+	DisplayName: B9 合金椅
+	Tooltip: ""
+}
+
+B9AlloyChest: {
+	DisplayName: B9 合金箱
+	Tooltip: ""
+}
+
+B9AlloyClock: {
+	DisplayName: B9 合金钟
+	Tooltip: ""
+}
+
+B9AlloyDoor: {
+	DisplayName: B9 合金门
+	Tooltip: ""
+}
+
+B9AlloyDresser: {
+	DisplayName: B9 合金梳妆台
+	Tooltip: ""
+}
+
+B9AlloyDroplight: {
+	DisplayName: B9 合金吊灯
+	Tooltip: ""
+}
+
+B9AlloyFloorLamp: {
+	DisplayName: B9 合金灯柱
+	Tooltip: ""
+}
+
+B9AlloyPiano: {
+	DisplayName: B9 合金钢琴
+	Tooltip: ""
+}
+
+B9AlloyPlatform: {
+	DisplayName: B9 合金平台
+	Tooltip: ""
+}
+
+B9AlloySink: {
+	DisplayName: B9 合金水槽
+	Tooltip: ""
+}
+
+B9AlloySofa: {
+	DisplayName: B9 合金沙发
+	Tooltip: ""
+}
+
+B9AlloyTable: {
+	DisplayName: B9 合金桌
+	Tooltip: ""
+}
+
+B9AlloyTileItem: {
+	DisplayName: B9 合金块
+	Tooltip: ""
+}
+
+B9AlloyToilet: {
+	DisplayName: B9 合金马桶
+	Tooltip: ""
+}
+
+B9AlloyWallItem: {
+	DisplayName: B9 合金墙
+	Tooltip: ""
+}
+
+B9AlloyWorkBench: {
+	DisplayName: B9 合金工作台
+	Tooltip: ""
 }

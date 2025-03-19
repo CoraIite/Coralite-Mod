@@ -17,7 +17,7 @@ namespace Coralite.Content.Items.Steel
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeRecipe.CreateCraftRecipe<SteelBar, B9Alloy>(MagikeHelper.CalculateMagikeCost(MALevel.CrystallineMagike, 4, 20), 1)
+            MagikeRecipe.CreateCraftRecipe<SteelBar, B9Alloy>(MagikeHelper.CalculateMagikeCost(MALevel.CrystallineMagike, 4, 20), 3, 3)
                             .AddIngredient<IcicleCrystal>()
                             .AddIngredient(ItemID.HellstoneBar)
                             .Register();

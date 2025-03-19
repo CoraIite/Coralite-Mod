@@ -26,12 +26,10 @@ namespace Coralite.Content.CoraliteNotes.IceDragonChapter1
             Helper.DrawTextParagraph(spriteBatch, Description.Value, PageWidth, new Vector2(Position.X, pos.Y), out _);
 
             Texture2D tex = CoraliteAssets.IceDragon1.BabyIceDragon.Value;
-            float scale1 = 1f;
+            float scale1 = 0.85f;
 
             //绘制图
-            pos = Position + new Vector2(PageWidth / 2, PageHeight - tex.Height * scale1 / 2);
-            tex.QuickCenteredDraw(spriteBatch, pos, scale: scale1);
-
+            spriteBatch.Draw(tex, Bottom+new Vector2(0,-40), null, Color.White, 0, new Vector2(tex.Width/2,tex.Height),scale1, 0, 0);
         }
     }
 }

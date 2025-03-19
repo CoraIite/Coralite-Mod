@@ -3,19 +3,19 @@ using Terraria;
 
 namespace Coralite.Content.NPCs.Crystalline
 {
-    public class CrystallineImpact:ModDust
+    public class CrystallineImpact : ModDust
     {
         public override string Texture => AssetDirectory.CrystallineNPCs + Name;
 
         public override void OnSpawn(Dust dust)
         {
-            dust.frame = Texture2D.Frame(2, 4, Main.rand.Next(2),0);
+            dust.frame = Texture2D.Frame(2, 4, Main.rand.Next(2), 0);
             dust.color = Color.White;
         }
 
         public override bool Update(Dust dust)
         {
-            if (++dust.fadeIn>2)
+            if (++dust.fadeIn > 2)
             {
                 dust.frame.Y += Texture2D.Height() / 4;
                 if (dust.frame.Y > Texture2D.Height() / 4 * 3)

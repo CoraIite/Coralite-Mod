@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.ModPlayers;
 using Coralite.Core;
+using Coralite.Core.Attributes;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
@@ -8,6 +9,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Shadow
 {
+    [PlayerEffect]
     public class ShadowMirror : ModItem
     {
         public override string Texture => AssetDirectory.ShadowItems + Name;

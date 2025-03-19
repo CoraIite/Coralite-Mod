@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.CustomHooks;
 using Coralite.Content.ModPlayers;
 using Coralite.Core;
+using Coralite.Core.Attributes;
 using Coralite.Core.Prefabs.Items;
 using Terraria;
 using Terraria.ID;
@@ -8,13 +9,14 @@ using Terraria.ID;
 namespace Coralite.Content.Items.Steel
 {
     [AutoloadEquip(EquipType.Head)]
+    [PlayerEffect(ExtraEffectNames = [nameof(OsirisPillar) + "Vanity"])]
     public class OsirisPillar : BaseAccessory, ISpecialDrawHead
     {
         public override string Texture => AssetDirectory.SteelItems + Name;
 
         public override void SetStaticDefaults()
         {
-            int id = EquipLoader.GetEquipSlot(Mod, "OsirisPillar", EquipType.Head);
+            int id = EquipLoader.GetEquipSlot(Mod, nameof(OsirisPillar), EquipType.Head);
             ArmorIDs.Head.Sets.DrawFullHair[id] = true;
         }
 

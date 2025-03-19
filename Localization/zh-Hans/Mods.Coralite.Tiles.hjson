@@ -196,3 +196,19 @@ SkarnChestTile: {
 }
 
 CrystallineSeaOatsMother.MapEntry: 蕴魔海燕麦母体
+B9AlloyBathtubTile.MapEntry: B9 合金浴缸
+B9AlloyBedTile.MapEntry: B9 合金床
+B9AlloyBigDroplightTile.MapEntry: B9 合金大吊灯
+B9AlloyBookcaseTile.MapEntry: B9 合金书架
+B9AlloyCandelabraTile.MapEntry: B9 合金烛台
+B9AlloyCandleTile.MapEntry: B9 合金蜡烛
+B9AlloyChestTile.MapEntry: B9 合金箱
+B9AlloyDoorClosedTile.MapEntry: B9 合金门
+B9AlloyDoorOpenTile.MapEntry: B9 合金门
+B9AlloyDresserTile.MapEntry: B9 合金梳妆台
+B9AlloyDroplightTile.MapEntry: B9 合金吊灯
+B9AlloyFloorLampTile.MapEntry: B9 合金灯柱
+B9AlloyPianoTile.MapEntry: B9 合金钢琴
+B9AlloySofaTile.MapEntry: B9 合金沙发
+B9AlloyTableTile.MapEntry: B9 合金桌
+B9AlloyWorkBenchTile.MapEntry: B9 合金工作台

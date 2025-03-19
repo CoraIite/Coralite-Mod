@@ -7,6 +7,7 @@ using Coralite.Content.Projectiles.Globals;
 using Coralite.Content.UI;
 using Coralite.Content.WorldGeneration;
 using Coralite.Core;
+using Coralite.Core.Loaders;
 using Coralite.Core.Systems.YujianSystem;
 using Coralite.Helpers;
 using InnoVault.PRT;
@@ -33,7 +34,12 @@ namespace Coralite.Content.ModPlayers
         /// <summary>
         /// 各种效果
         /// </summary>
-        public HashSet<string> Effects = new();
+        //public HashSet<string> Effects = new();
+
+        /// <summary>
+        /// 各种效果的bool
+        /// </summary>
+        public bool[] Effects = new bool[PlayerEffectLoader.EffectCount];
         public List<IInventoryCraftStation> inventoryCraftStations = new();
 
         #region 装备类字段
@@ -117,11 +123,18 @@ namespace Coralite.Content.ModPlayers
 
         public override void ResetEffects()
         {
-            Effects ??= new HashSet<string>();
+            //Effects ??= new HashSet<string>();
+            //防止出现各种各样的奇葩问题
+            if (Effects.Length != PlayerEffectLoader.EffectCount)
+                Effects = new bool[Effects.Length];
+
+            for (int i = 0; i < Effects.Length; i++)
+                Effects[i] = false;
+
             inventoryCraftStations ??= new List<IInventoryCraftStation>();
 
             inventoryCraftStations.Clear();
-            Effects.Clear();
+            //Effects.Clear();
 
             pirateKingSoul = 0;
             if (pirateKingSoulCD > 0)
@@ -439,7 +452,7 @@ namespace Coralite.Content.ModPlayers
                     {
                         info.SoundDisabled = true;
                         info.DustDisabled = true;
-                        info.Damage = (int)(info.Damage * (1 - 0.35f));
+                        info.Damage = (int)(info.Damage * (1 - 0.2f));
                         //生成音效与粒子
                         Helper.PlayPitched(CoraliteSoundID.BubbleGun_Item85, Player.Center, volumeAdjust: 0.1f);
 
@@ -710,14 +723,29 @@ namespace Coralite.Content.ModPlayers
         /// </summary>
         /// <param name="effectName"></param>
         /// <returns></returns>
-        public bool HasEffect(string effectName) => Effects.Contains(effectName);
+        public bool HasEffect(string effectName) //=> Effects.Contains(effectName);
+        {
+            if (PlayerEffectLoader.Effects.TryGetValue(effectName, out var index))
+               return Effects[index];
+
+            return false;
+        }
 
         /// <summary>
         /// 为玩家添加某个效果，建议使用<see cref="nameof"/>来获取字符串
         /// </summary>
         /// <param name="effectName"></param>
         /// <returns></returns>
-        public bool AddEffect(string effectName) => Effects.Add(effectName);
+        public bool AddEffect(string effectName) //=> Effects.Add(effectName);
+        {
+            if (PlayerEffectLoader.Effects.TryGetValue(effectName, out var index))
+            {
+                Effects[index] = true;
+                return true;
+            }
+
+            return false;
+        }
 
         public override void ProcessTriggers(TriggersSet triggersSet)
         {
@@ -780,12 +808,12 @@ namespace Coralite.Content.ModPlayers
 
         public override void SendClientChanges(ModPlayer clientPlayer)
         {
-            base.SendClientChanges(clientPlayer);
+
         }
 
         public override void CopyClientState(ModPlayer targetCopy)
         {
-            base.CopyClientState(targetCopy);
+
         }
 
         public override void OnEnterWorld()

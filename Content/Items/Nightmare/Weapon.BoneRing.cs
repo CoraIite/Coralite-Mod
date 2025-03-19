@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
 using Coralite.Content.ModPlayers;
 using Coralite.Core;
+using Coralite.Core.Attributes;
 using Coralite.Core.Configs;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
@@ -19,6 +20,7 @@ using static Terraria.ModLoader.ModContent;
 namespace Coralite.Content.Items.Nightmare
 {
     [AutoloadEquip(EquipType.HandsOn)]
+    [PlayerEffect]
     public class BoneRing : ModItem, INightmareWeapon
     {
         public override string Texture => AssetDirectory.NightmareItems + Name;

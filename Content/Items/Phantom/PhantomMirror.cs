@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.Items.Shadow;
 using Coralite.Content.ModPlayers;
 using Coralite.Core;
+using Coralite.Core.Attributes;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using Terraria;
@@ -8,6 +9,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Phantom
 {
+    [PlayerEffect]
     public class PhantomMirror : ModItem
     {
         public override string Texture => AssetDirectory.PhantomItems + Name;

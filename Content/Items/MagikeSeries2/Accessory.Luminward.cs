@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.ModPlayers;
 using Coralite.Content.Raritys;
 using Coralite.Core;
+using Coralite.Core.Attributes;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Helpers;
 using InnoVault.PRT;
@@ -9,6 +10,7 @@ using Terraria;
 
 namespace Coralite.Content.Items.MagikeSeries2
 {
+    [PlayerEffect]
     public class Luminward() : BaseAccessory(ModContent.RarityType<CrystallineMagikeRarity>(), Item.sellPrice(0, 2))
     {
         public override string Texture => AssetDirectory.MagikeSeries2Item + Name;
@@ -18,10 +20,10 @@ namespace Coralite.Content.Items.MagikeSeries2
             if (player.TryGetModPlayer(out CoralitePlayer cp) && cp.HurtTimer >= 60 * 12)
             {
                 player.invis = true;
-                player.GetCritChance(DamageClass.Generic) += 6;
+                player.GetCritChance(DamageClass.Generic) += 5;
                 cp.AddEffect(nameof(Luminward));
 
-                if (cp.HurtTimer == 60 * 12)
+                if (cp.HurtTimer == 60 * 10)
                 {
                     Helper.PlayPitched(CoraliteSoundID.WindyBalloon_NPCDeath63, player.Center);
                     Helper.PlayPitched(CoraliteSoundID.ShimmerContract, player.Center);

@@ -5305,3 +5305,113 @@ Luminward: {
 	// DisplayName: Luminward
 	// Tooltip: ""
 }
+
+B9AlloyBathtub: {
+	// DisplayName: B9 Alloy Bathtub
+	// Tooltip: ""
+}
+
+B9AlloyBed: {
+	// DisplayName: B9 Alloy Bed
+	// Tooltip: ""
+}
+
+B9AlloyBigDroplight: {
+	// DisplayName: B9 Alloy Big Droplight
+	// Tooltip: ""
+}
+
+B9AlloyBookcase: {
+	// DisplayName: B9 Alloy Bookcase
+	// Tooltip: ""
+}
+
+B9AlloyCandelabra: {
+	// DisplayName: B9 Alloy Candelabra
+	// Tooltip: ""
+}
+
+B9AlloyCandle: {
+	// DisplayName: B9 Alloy Candle
+	// Tooltip: ""
+}
+
+B9AlloyChair: {
+	// DisplayName: B9 Alloy Chair
+	// Tooltip: ""
+}
+
+B9AlloyChest: {
+	// DisplayName: B9 Alloy Chest
+	// Tooltip: ""
+}
+
+B9AlloyClock: {
+	// DisplayName: B9 Alloy Clock
+	// Tooltip: ""
+}
+
+B9AlloyDoor: {
+	// DisplayName: B9 Alloy Door
+	// Tooltip: ""
+}
+
+B9AlloyDresser: {
+	// DisplayName: B9 Alloy Dresser
+	// Tooltip: ""
+}
+
+B9AlloyDroplight: {
+	// DisplayName: B9 Alloy Droplight
+	// Tooltip: ""
+}
+
+B9AlloyFloorLamp: {
+	// DisplayName: B9 Alloy Floor Lamp
+	// Tooltip: ""
+}
+
+B9AlloyPiano: {
+	// DisplayName: B9 Alloy Piano
+	// Tooltip: ""
+}
+
+B9AlloyPlatform: {
+	// DisplayName: B9 Alloy Platform
+	// Tooltip: ""
+}
+
+B9AlloySink: {
+	// DisplayName: B9 Alloy Sink
+	// Tooltip: ""
+}
+
+B9AlloySofa: {
+	// DisplayName: B9 Alloy Sofa
+	// Tooltip: ""
+}
+
+B9AlloyTable: {
+	// DisplayName: B9 Alloy Table
+	// Tooltip: ""
+}
+
+B9AlloyTileItem: {
+	// DisplayName: B9 Alloy Tile Item
+	// Tooltip: ""
+}
+
+B9AlloyToilet: {
+	// DisplayName: B9 Alloy Toilet
+	// Tooltip: ""
+}
+
+B9AlloyWallItem: {
+	// DisplayName: B9 Alloy Wall Item
+	// Tooltip: ""
+}
+
+B9AlloyWorkBench: {
+	// DisplayName: B9 Alloy Work Bench
+	// Tooltip: ""
+}

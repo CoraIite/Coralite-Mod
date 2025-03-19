@@ -257,6 +257,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         }
     }
 
+    [PlayerEffect]
     public class CloudBonus : ModBuff
     {
         public override string Texture => AssetDirectory.ThyphionSeriesItems + Name;

@@ -1,11 +1,13 @@
 ﻿using Coralite.Content.GlobalNPCs;
 using Coralite.Content.ModPlayers;
 using Coralite.Core;
+using Coralite.Core.Attributes;
 using Terraria;
 using Terraria.ID;
 
 namespace Coralite.Content.Items.Thunder
 {
+    [PlayerEffect]
     public class ThunderElectrified : ModBuff
     {
         public override string Texture => AssetDirectory.Debuffs + Name;

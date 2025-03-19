@@ -1,11 +1,13 @@
 ﻿using Coralite.Content.ModPlayers;
 using Coralite.Content.Raritys;
 using Coralite.Core;
+using Coralite.Core.Attributes;
 using Terraria;
 
 namespace Coralite.Content.Items.MagikeSeries1
 {
     [AutoloadEquip(EquipType.Face)]
+    [PlayerEffect]
     public class MagikeMonoclastic : ModItem
     {
         public override string Texture => AssetDirectory.MagikeSeries1Item + Name;

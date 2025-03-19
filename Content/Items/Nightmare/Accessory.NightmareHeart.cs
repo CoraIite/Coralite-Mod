@@ -1,11 +1,13 @@
 ﻿using Coralite.Content.ModPlayers;
 using Coralite.Core;
+using Coralite.Core.Attributes;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 
 namespace Coralite.Content.Items.Nightmare
 {
+    [PlayerEffect]
     public class NightmareHeart : ModItem
     {
         public override string Texture => AssetDirectory.NightmareItems + Name;

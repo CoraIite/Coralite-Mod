@@ -1,11 +1,7 @@
-﻿using Coralite.Content.Items.Shadow;
-using Coralite.Content.Tiles.MagikeSeries2;
-using Coralite.Content.Tiles.Trees;
-using Coralite.Core;
+﻿using Coralite.Core;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
-using Terraria.WorldBuilding;
 
 namespace Coralite.Content.WorldGeneration
 {
