@@ -10,7 +10,7 @@ namespace Coralite.Content.CoraliteNotes
         public CoraliteNotePanel() : base(ModContent.Request<Texture2D>(AssetDirectory.CoraliteNote + "BookPanel", AssetRequestMode.ImmediateLoad)
             , 38, 100, 50, 50)
         {
-
+            PanelBackTex = ModContent.Request<Texture2D>(AssetDirectory.CoraliteNote + "BookPanelBack", AssetRequestMode.ImmediateLoad);
         }
 
         public override void InitPageGroups()

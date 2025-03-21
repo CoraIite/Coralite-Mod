@@ -17,6 +17,7 @@ namespace Coralite.Content.UI.UILib
     public abstract class UI_BookPanel : UIElement
     {
         public ATex PanelTex;
+        public ATex PanelBackTex;
         public readonly int topPageMargins;
         public readonly int bottomPageMargins;
         public readonly int leftPageMargins;
@@ -83,7 +84,7 @@ namespace Coralite.Content.UI.UILib
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
             //就只是绘制面板
-            if (!OverflowHidden)
+            //if (!OverflowHidden)
                 DrawPanel(spriteBatch);
         }
 
@@ -92,7 +93,7 @@ namespace Coralite.Content.UI.UILib
             //存在该页，并且不在渐入渐出的时候才会绘制
             if (OverflowHidden)
             {
-                DrawPanel(spriteBatch);
+                //DrawPanel(spriteBatch);
                 return;
             }
 
@@ -133,8 +134,10 @@ namespace Coralite.Content.UI.UILib
 
         public void DrawPanel(SpriteBatch spriteBatch)
         {
-            Vector2 position = GetDimensions().Position();
-            spriteBatch.Draw(PanelTex.Value, position, null, Color.White * alpha, 0f, Vector2.Zero, 1, SpriteEffects.None, 0f);
+            Vector2 position = GetDimensions().Center();
+            if (PanelBackTex != null)
+                spriteBatch.Draw(PanelBackTex.Value, position, null, Color.White * alpha, 0f, PanelBackTex.Size() / 2, 1, SpriteEffects.None, 0f);
+            spriteBatch.Draw(PanelTex.Value, position, null, Color.White * alpha, 0f, PanelTex.Size() / 2, 1, SpriteEffects.None, 0f);
         }
 
         public override void Recalculate()

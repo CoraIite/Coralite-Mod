@@ -57,7 +57,7 @@ namespace Coralite.Content.CoraliteNotes.SlimeChapter1
             tex = CoraliteAssets.Slime1.SlimeEmperor.Value;
 
             //绘制图2
-            pos = Position + new Vector2(PageWidth / 2, PageHeight - 40 - tex.Height * scale1 / 2);
+            pos = Position + new Vector2(PageWidth / 2, PageHeight - 60 - tex.Height * scale1 / 2);
             tex.QuickCenteredDraw(spriteBatch, pos, scale: scale1);
         }
     }

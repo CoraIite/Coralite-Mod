@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.CoraliteNotes.MagikeChapter1;
 using Coralite.Content.Items.MagikeSeries1;
+using Coralite.Content.Raritys;
 using Coralite.Core;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
@@ -25,7 +26,7 @@ namespace Coralite.Content.Items.Magike
             Item.DefaultToPlaceableTile(ModContent.TileType<CrystalCrateTile>());
             Item.width = 12;
             Item.height = 12;
-            Item.rare = ItemRarityID.Blue;
+            Item.rare = ModContent.RarityType<MagicCrystalRarity>();
             Item.value = Item.sellPrice(0, 2);
         }
 
@@ -46,7 +47,7 @@ namespace Coralite.Content.Items.Magike
             // 掉玄武岩
             itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<Basalt>(), 3, 10, 35));
             // 掉魔力晶体
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<MagicCrystal>(), 1, 5, 20));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<MagicCrystal>(), 1, 3, 12));
 
             // 钱币
             itemLoot.Add(ItemDropRule.Common(ItemID.GoldCoin, 8, 1, 2));
@@ -86,13 +87,6 @@ namespace Coralite.Content.Items.Magike
             ];
             itemLoot.Add(new OneFromRulesRule(4, explorationPotions));
 
-            // Drop (pre-hm) resource potion
-            IItemDropRule[] resourcePotions = [
-                ItemDropRule.Common(ItemID.HealingPotion, 1, 5, 18),
-                ItemDropRule.Common(ItemID.ManaPotion, 1, 5, 18),
-            ];
-            itemLoot.Add(new OneFromRulesRule(2, resourcePotions));
-
             // Drop (high-end) bait
             IItemDropRule[] highendBait = [
                 ItemDropRule.Common(ItemID.JourneymanBait, 1, 2, 7),
@@ -129,5 +123,4 @@ namespace Coralite.Content.Items.Magike
             return false;
         }
     }
-
 }

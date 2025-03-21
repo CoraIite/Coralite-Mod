@@ -5366,3 +5366,8 @@ B9AlloyWorkBench: {
 	DisplayName: B9 Alloy Work Bench
 	Tooltip: ""
 }
+
+CrystallineCrate: {
+	DisplayName: Crystalline Crate
+	Tooltip: ""
+}

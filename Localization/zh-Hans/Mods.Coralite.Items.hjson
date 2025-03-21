@@ -5459,3 +5459,8 @@ B9AlloyWorkBench: {
 	DisplayName: B9 合金工作台
 	Tooltip: ""
 }
+
+CrystallineCrate: {
+	DisplayName: 蕴魔水晶匣
+	Tooltip: 右键点击以打开
+}

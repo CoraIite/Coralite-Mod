@@ -38,12 +38,15 @@ namespace Coralite.Content.UI.BookUI
                         return;
 
                     bookPanel.PreviousPage();
+                    Helper.PlayPitched("Misc/Pages", 0.4f, 0f, Main.LocalPlayer.Center);
+
                     break;
                 case ArrowType.Right:
                     if (bookPanel.CurrentDrawingPage >= bookPanel.Pages.Count - 1)
                         return;
 
                     bookPanel.NextPage();
+                    Helper.PlayPitched("Misc/Pages", 0.4f, 0f, Main.LocalPlayer.Center);
 
                     break;
                 default:
