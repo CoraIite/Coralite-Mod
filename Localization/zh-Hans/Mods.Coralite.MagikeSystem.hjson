@@ -219,17 +219,17 @@ MagikeSystem: {
 		CraftAltarShowOnlyCantCraft: 仅显示不能合成的合成表，点击切换模式
 		CraftAltarShowAll: 显示全部合成表，点击切换模式
 		Second: 秒
-		CraftAltarAutoChoseAll: 
+		CraftAltarAutoChoseAll:
 			'''
 			为所有合成表进行自动选择
 			点击切换模式
 			'''
-		CraftAltarAutoChoseOnlyOne: 
+		CraftAltarAutoChoseOnlyOne:
 			'''
 			仅为只有一种合成表的物品进行自动选择
 			点击切换模式
 			'''
-		CraftAltarAutoChoseNever: 
+		CraftAltarAutoChoseNever:
 			'''
 			禁用自动选择
 			点击切换模式

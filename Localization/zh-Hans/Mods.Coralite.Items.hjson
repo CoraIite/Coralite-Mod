@@ -5464,3 +5464,17 @@ CrystallineCrate: {
 	DisplayName: 蕴魔水晶匣
 	Tooltip: 右键点击以打开
 }
+
+SkyshipInABottle: {
+	DisplayName: 瓶中天船
+	Tooltip: 唤出一艘玉髓木船，带你在云海遨游
+}
+
+CrystallineLance: {
+	DisplayName: 锋芒
+	Tooltip:
+		'''
+		创造动力以增加攻击力
+		消耗 40 魔能射出尾刺
+		'''
+}

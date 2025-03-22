@@ -34,6 +34,7 @@ namespace Coralite.Core
         public const string PetBuffs = Buffs + "Pets/";
         public const string Debuffs = Buffs + "Debuffs/";
         public const string PotionBuffs = Buffs + "Potions/";
+        public const string MountBuffs = Buffs + "Mounts/";
 
         #endregion
 

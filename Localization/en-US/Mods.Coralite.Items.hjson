@@ -5371,3 +5371,13 @@ CrystallineCrate: {
 	DisplayName: Crystalline Crate
 	Tooltip: ""
 }
+
+SkyshipInABottle: {
+	DisplayName: Skyship In A Bottle
+	Tooltip: ""
+}
+
+CrystallineLance: {
+	DisplayName: Crystalline Lance
+	Tooltip: ""
+}

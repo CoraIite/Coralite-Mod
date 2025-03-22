@@ -137,8 +137,8 @@ namespace Coralite.Content.NPCs.Crystalline
             //固定掉落蕴魔水晶
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CrystallineMagike>(), 1, 2, 5));
 
-            //小概率掉落魔鸟
-
+            //小概率掉落锋芒
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CrystallineLance>(), 80));
 
             //掉落宝石原石
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PrimaryRoughGemstone>(), 3, 1, 3));

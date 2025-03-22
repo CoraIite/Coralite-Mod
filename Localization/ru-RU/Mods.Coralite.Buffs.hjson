@@ -230,3 +230,8 @@ FocusBuff: {
 	// DisplayName: Focus Buff
 	// Description: Mods.Coralite.Buffs.FocusBuff.Description
 }
+
+ChalcedonySkyshipBuff: {
+	// DisplayName: Chalcedony Skyship Buff
+	// Description: Mods.Coralite.Buffs.ChalcedonySkyshipBuff.Description
+}

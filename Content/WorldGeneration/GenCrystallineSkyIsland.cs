@@ -24,7 +24,10 @@ namespace Coralite.Content.WorldGeneration
         private static int[] tileCounterX = new int[tileCounterMax];
         private static int[] tileCounterY = new int[tileCounterMax];
 
-        public static Vector2 AltarPos;
+        /// <summary>
+        /// 矽卡祭坛的位置，没有权限的时候会将玩家传送到该位置
+        /// </summary>
+        public static Point AltarPos { get; set; }
 
         /// <summary>
         /// 是否放置光明之魂
@@ -48,7 +51,7 @@ namespace Coralite.Content.WorldGeneration
             PlaceLightSoul = false;
             PlaceNightSoul = false;
             HasPermission = false;
-
+            AltarPos = Point.Zero;
 
             //生成地表结构
             GenGroundLock(out Point altarPoint);
@@ -176,6 +179,8 @@ namespace Coralite.Content.WorldGeneration
             WorldGen.PlaceObject(p.X + 33, p.Y + 6, ModContent.TileType<SoulOfLightAltarTile>());
 
             GenVars.structures.AddProtectedStructure(new Rectangle(p.X, p.Y, generator.Width, generator.Height));
+
+            AltarPos = p + new Point(generator.Width, 3);
         }
 
         /// <summary>
@@ -2124,7 +2129,8 @@ namespace Coralite.Content.WorldGeneration
             {
                 WorldGen.AddBuriedChest(x, y,
                    WorldGen.genRand.NextFromList(
-                       ModContent.ItemType<Luminward>()
+                       ModContent.ItemType<Luminward>(),
+                       ModContent.ItemType<SkyshipInABottle>()
                        ), notNearOtherChests: false, 1, trySlope: false, (ushort)ModContent.TileType<SkarnChestTile>());
             }
             else if (c == new Color(0, 255, 170))

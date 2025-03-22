@@ -230,3 +230,8 @@ FocusBuff: {
 	DisplayName: 聚焦
 	Description: 你的鼠标在发光！
 }
+
+ChalcedonySkyshipBuff: {
+	DisplayName: 瓶中天船
+	Description: 飞吧！小船！
+}
