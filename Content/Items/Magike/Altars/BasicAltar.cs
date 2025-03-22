@@ -163,6 +163,17 @@ namespace Coralite.Content.Items.Magike.Altars
                 _ => 0,
             };
 
+            MinCost = incomeLevel switch
+            {
+                MALevel.MagicCrystal => 1,
+                MALevel.Glistent => 3,
+                MALevel.Shadow => 8,
+                MALevel.CrystallineMagike => 15,
+                MALevel.Hallow => 30,
+                MALevel.HolyLight => 50,
+                _ => 1,
+            };
+
             WorkTimeBase = (int)(second * 60);
         }
     }

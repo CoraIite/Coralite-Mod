@@ -339,7 +339,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public ContainerBar(MagikeContainer container)
         {
-            Texture2D tex = MagikeSystem.MagikeContainerBar.Value;
+            Texture2D tex = MagikeAssets.MagikeContainerBar.Value;
             Vector2 size = tex.Frame(2, 1).Size();
 
             Width.Set(size.X + 10, 0);
@@ -349,7 +349,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            Texture2D tex = MagikeSystem.MagikeContainerBar.Value;
+            Texture2D tex = MagikeAssets.MagikeContainerBar.Value;
 
             var frameBox = tex.Frame(2, 1);
 

@@ -355,7 +355,7 @@ namespace Coralite.Helpers
                     if (!GetFrame(i, j, width, height, out Point framePoint))
                         continue;
 
-                    Texture2D mainTex = MagikeSystem.SelectFrame.Value;
+                    Texture2D mainTex = MagikeAssets.SelectFrame.Value;
                     Rectangle frame = mainTex.Frame(4, 4, framePoint.X, framePoint.Y);
 
                     Vector2 pos = (new Vector2(rect.X + i, rect.Y + j) * 16) - Main.screenPosition;

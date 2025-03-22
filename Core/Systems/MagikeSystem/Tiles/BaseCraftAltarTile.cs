@@ -54,20 +54,20 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
                 frameBox = tex.Frame(3, 1, 2);
                 rotation = (float)Main.timeForVisualEffects * 0.1f;
                 c *= (float)altar.RequiredMagike / altar.ChosenResipe.magikeCost;
+
+                spriteBatch.Draw(tex, center + offset, frameBox, lightColor, rotation + 1.57f, frameBox.Size() / 2, 1, 0, 0);
             }
             else
-                frameBox = tex.Frame(3, 1, 1);
-
-            //没有物品就静置在基座上
-            if (!working)
             {
+                if (item != null)
+                    frameBox = tex.Frame(3, 1, 1);
+                else
+                    frameBox = tex.Frame(3, 1);
+
                 offset = GetRestOffset(rotation, level);
-                frameBox = tex.Frame(3, 1);
 
                 spriteBatch.Draw(tex, center + offset, frameBox, lightColor, rotation + 1.57f, frameBox.Size() / 2, 1, 0, 0);
             }
-            else
-                spriteBatch.Draw(tex, center + offset, frameBox, lightColor, rotation + 1.57f, frameBox.Size() / 2, 1, 0, 0);
 
             if (item != null)
                 MagikeHelper.DrawItem(spriteBatch, item, center + offset, Math.Min(tileRect.Width, tileRect.Height), c);

@@ -316,7 +316,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public ChargerItemButton(Charger charger)
         {
-            Texture2D mainTex = MagikeSystem.ChargerItemButton.Value;
+            Texture2D mainTex = MagikeAssets.ChargerItemButton.Value;
 
             var frameBox = mainTex.Frame(2, 1);
             this.SetSize(frameBox.Width + 6, frameBox.Height + 6);
@@ -340,7 +340,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            Texture2D mainTex = MagikeSystem.ChargerItemButton.Value;
+            Texture2D mainTex = MagikeAssets.ChargerItemButton.Value;
             var dimensions = GetDimensions();
 
             if (IsMouseHovering)
@@ -370,7 +370,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public ChargerPlayerButton(Charger charger)
         {
-            Texture2D mainTex = MagikeSystem.ChargerPlayerButton.Value;
+            Texture2D mainTex = MagikeAssets.ChargerPlayerButton.Value;
 
             var frameBox = mainTex.Frame(2, 1);
             this.SetSize(frameBox.Width + 6, frameBox.Height + 6);
@@ -394,7 +394,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            Texture2D mainTex = MagikeSystem.ChargerPlayerButton.Value;
+            Texture2D mainTex = MagikeAssets.ChargerPlayerButton.Value;
             var dimensions = GetDimensions();
 
             if (IsMouseHovering)

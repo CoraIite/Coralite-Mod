@@ -43,7 +43,8 @@ namespace Coralite.Core.Loaders
                     if (!string.IsNullOrEmpty(propAtt.Path))
                         p = propAtt.Path;
 
-                    texName = propAtt.Name;
+                    if (!string.IsNullOrEmpty(propAtt.Name))
+                        texName = propAtt.Name;
                 }
 
                 property.SetValue(null, ModContent.Request<Texture2D>(p + texName));

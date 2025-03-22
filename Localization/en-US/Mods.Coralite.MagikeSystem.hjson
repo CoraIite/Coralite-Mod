@@ -210,6 +210,9 @@ MagikeSystem: {
 		CraftAltarShowOnlyCantCraft: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.CraftAltarShowOnlyCantCraft
 		CraftAltarShowAll: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.CraftAltarShowAll
 		Second: s
+		CraftAltarAutoChoseAll: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.CraftAltarAutoChoseAll
+		CraftAltarAutoChoseOnlyOne: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.CraftAltarAutoChoseOnlyOne
+		CraftAltarAutoChoseNever: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.CraftAltarAutoChoseNever
 	}
 
 	CraftText: {
