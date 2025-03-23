@@ -101,23 +101,23 @@ namespace Coralite.Content.Items.MagikeSeries2
                     player.velocity.Y = 0;
             }
 
-            float value = -player.velocity.Y / MountData.dashSpeed;
+            float value = -player.velocity.Y / 5;
             value = MathHelper.Clamp(value, -1f, 1f);
             float value2 = player.velocity.X / MountData.dashSpeed;
             value2 = MathHelper.Clamp(value2, -1f, 1f);
             float num11 = -(float)Math.PI / 18f * value * player.direction;
             float num12 = (float)Math.PI / 18f * value2;
             float fullRotation3 = num11 + num12;
-            if (MathF.Abs(fullRotation3) < 0.02f)
+            if (MathF.Abs(fullRotation3) < 0.01f)
                 fullRotation3 = 0;
             player.fullRotation = fullRotation3;
             player.fullRotationOrigin = new Vector2(player.width / 2, player.height * 3 / 4);
 
             player.fallStart = (int)(player.position.Y / 16f);//让你的坐骑拥有一个合理的坠落判定
 
-            if (player.velocity.Length() > 1 && Main.rand.NextBool(2))
+            if (player.velocity.Length() > 2)
             {
-                Dust d = Dust.NewDustPerfect(player.MountedCenter + new Vector2(0, 24) + Main.rand.NextVector2Circular(12, 12)
+                Dust d = Dust.NewDustPerfect(player.MountedCenter + new Vector2(0, 30) + Main.rand.NextVector2Circular(48, 12)
                        , DustID.Cloud, -player.velocity * Main.rand.NextFloat(0.1f, 0.3f), Scale: Main.rand.NextFloat(1f, 1.5f));
                 d.noGravity = true;
             }

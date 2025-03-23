@@ -36,7 +36,7 @@ namespace Coralite.Content.Biomes
         public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Temp_CrystallineSkyIsland");
 
         public override ModWaterStyle WaterStyle => ModContent.GetInstance<CrystallineSkyIslandWaterStyle>();
-        
+
         public override bool IsSceneEffectActive(Player player)
         {
             bool b1 = ModContent.GetInstance<CoraliteTileCount>().CrystallineSkyIslandTileCount >= 400;
@@ -48,7 +48,7 @@ namespace Coralite.Content.Biomes
         public override void SpecialVisuals(Player player, bool isActive)
         {
             if (isActive && !CoraliteWorld.HasPermission &&
-                !Main.projectile.Any(p=>p.active&&p.owner==Main.myPlayer&&p.type==ModContent.ProjectileType<CrystallineSkyIslandCloudScreen>()))
+                !Main.projectile.Any(p => p.active && p.owner == Main.myPlayer && p.type == ModContent.ProjectileType<CrystallineSkyIslandCloudScreen>()))
             {
                 Projectile.NewProjectile(new EntitySource_WorldEvent(), Main.LocalPlayer.Center, Vector2.Zero
                     , ModContent.ProjectileType<CrystallineSkyIslandCloudScreen>(), 0, 0, Main.myPlayer);

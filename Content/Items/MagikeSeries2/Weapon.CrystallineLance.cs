@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Dusts;
+﻿using Coralite.Content.DamageClasses;
+using Coralite.Content.Dusts;
 using Coralite.Content.Raritys;
 using Coralite.Core;
 using Coralite.Helpers;
@@ -17,11 +18,12 @@ namespace Coralite.Content.Items.MagikeSeries2
         public override void SetDefaults()
         {
             Item.DefaultToSpear(ModContent.ProjectileType<CrystallineLanceProj>(), 1f, 24);
-            Item.DamageType = DamageClass.MeleeNoSpeed; // We need to use MeleeNoSpeed here so that attack speed doesn't effect our held projectile.
-            Item.SetWeaponValues(60, 12f, 0); // A special method that sets the damage, knockback, and bonus critical strike chance.
+            Item.DamageType = MagikeDamage.Instance; // We need to use MeleeNoSpeed here so that attack speed doesn't effect our held projectile.
+            Item.SetWeaponValues(70, 12f, 0); // A special method that sets the damage, knockback, and bonus critical strike chance.
+            Item.useTurn = false;
             Item.rare = ModContent.RarityType<CrystallineMagikeRarity>();
             Item.value = Item.sellPrice(0, 4);
-            Item.channel = true; // Channel is important for our projectile.
+            Item.channel = true; 
 
             Item.StopAnimationOnHurt = true;
 
@@ -33,14 +35,9 @@ namespace Coralite.Content.Items.MagikeSeries2
         {
             if (MagikeHelper.TryCosumeMagike(40, Item, player))
                 Projectile.NewProjectile(source, position, velocity.SafeNormalize(Vector2.Zero) * 15
-                    , ModContent.ProjectileType<CrystallineSpikeFriendly>(), damage * 3, knockback, player.whoAmI);
+                    , ModContent.ProjectileType<CrystallineSpikeFriendly>(), (int)(damage * (1 + player.velocity.Length() / 6f)), knockback, player.whoAmI);
 
             return base.Shoot(player, source, position, velocity, type, damage, knockback);
-        }
-
-        public override bool MeleePrefix()
-        {
-            return true;
         }
     }
 
@@ -48,10 +45,14 @@ namespace Coralite.Content.Items.MagikeSeries2
     {
         public override string Texture => AssetDirectory.MagikeSeries2Item + Name;
 
+        private int State;
+        private int Timer;
+
         public override void SetStaticDefaults()
         {
             ProjectileID.Sets.DismountsPlayersOnHit[Type] = true;
             ProjectileID.Sets.NoMeleeSpeedVelocityScaling[Type] = true;
+            Main.projFrames[Type] = 9;
         }
 
         public override void SetDefaults()
@@ -70,31 +71,69 @@ namespace Coralite.Content.Items.MagikeSeries2
             Projectile.scale = 1f; // The scale of the projectile. This only effects the drawing and the width of the collision.
             Projectile.hide = true; // We are drawing the projectile ourselves. See PreDraw() below.
             Projectile.ownerHitCheck = true; // Make sure the owner of the projectile has line of sight to the target (aka can't hit things through tile).
-            Projectile.DamageType = DamageClass.MeleeNoSpeed; // Set the damage to melee damage.
+            Projectile.DamageType = MagikeDamage.Instance;
         }
 
         public override void AI()
         {
             Player owner = Main.player[Projectile.owner]; // Get the owner of the projectile.
+            owner.direction = MathF.Sign(Projectile.velocity.X);
+
             Projectile.direction = owner.direction; // Direction will be -1 when facing left and +1 when facing right. 
             owner.heldProj = Projectile.whoAmI; // Set the owner's held projectile to this projectile. heldProj is used so that the projectile will be killed when the player drops or swap items.
-
             int itemAnimationMax = owner.itemAnimationMax;
             // Remember, frames count down from itemAnimationMax to 0
             // Frame at which the lance is fully extended. Hold at this frame before retracting.
             // Scale factor (0.34f) means the last 34% of the animation will be used for retracting.
-            int holdOutFrame = (int)(itemAnimationMax * 0.34f);
-            if (owner.channel && owner.itemAnimation < holdOutFrame)
+            int holdOutFrame = 15;
+
+            switch (State)
             {
-                owner.SetDummyItemTime(holdOutFrame); // This makes it so the projectile never dies while we are holding it (except when we take damage, see ExampleJoustingLancePlayer).
+                default:
+                case 0://拿出来
+                    owner.SetDummyItemTime(Timer>15?15:Timer);
+                    if (Projectile.frame < 5)
+                    {
+                        if (++Projectile.frameCounter > 3)
+                        {
+                            Projectile.frameCounter = 0;
+                            Projectile.frame++;
+                        }
+                    }
+                    else
+                        State = 1;
+
+                    Timer++;
+                    break;
+                case 1://正常
+                    if (owner.channel && owner.itemAnimation < 15)
+                        owner.SetDummyItemTime(15);
+
+                    if (owner.ItemAnimationEndingOrEnded)
+                    {
+                        State = 2;
+                        Timer = 8;
+                    }
+                    break;
+                case 2:
+                    if (Projectile.frame < 7)
+                        owner.SetDummyItemTime(Timer < 2 ? 2 : Timer);
+
+                    if (++Projectile.frameCounter > 3)
+                    {
+                        Projectile.frameCounter = 0;
+                        if (++Projectile.frame > 7)
+                        {
+                            Projectile.Kill();
+                            return;
+                        }
+                    }
+
+                    Timer--;
+                    break;
             }
 
             // If the Jousting Lance is no longer being used, kill the projectile.
-            if (owner.ItemAnimationEndingOrEnded)
-            {
-                Projectile.Kill();
-                return;
-            }
 
             int itemAnimation = owner.itemAnimation;
             // extension and retraction factors (0-1). As the animation plays out, extension goes from 0-1 and stays at 1 while holding, then retraction goes from 0-1.
@@ -104,7 +143,7 @@ namespace Coralite.Content.Items.MagikeSeries2
             // Distances are in pixels
             float extendDist = 24; // How far to fly out during extension
             float retractDist = extendDist / 2; // How far to fly back during retraction
-            float tipDist = 98 + extension * extendDist - retraction * retractDist; // If your Jousting Lance is larger or smaller than the standard size, it is recommended to change the shoot speed of the item instead of this value.
+            float tipDist = 130 + extension * extendDist - retraction * retractDist; // If your Jousting Lance is larger or smaller than the standard size, it is recommended to change the shoot speed of the item instead of this value.
 
             Vector2 center = owner.RotatedRelativePoint(owner.MountedCenter); // Get the center of the owner. This accounts for the player being shifted up or down while riding a mount, sitting in a chair, etc.
             Projectile.Center = center; // Set the center of the projectile to the center of the owner. Projectile.Center is now actually the tip of the Jousting Lance.
@@ -223,6 +262,7 @@ namespace Coralite.Content.Items.MagikeSeries2
             Projectile.friendly = true;
             Projectile.extraUpdates = 1;
             Projectile.timeLeft = 2 * 180;
+            Projectile.DamageType = MagikeDamage.Instance; 
         }
 
         public override void AI()
@@ -276,6 +316,7 @@ namespace Coralite.Content.Items.MagikeSeries2
             Projectile.penetrate = -1;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 30;
+            Projectile.DamageType = MagikeDamage.Instance;
         }
 
         public override void AI()
