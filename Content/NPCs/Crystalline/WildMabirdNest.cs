@@ -4,6 +4,7 @@ using Coralite.Content.Items.MagikeSeries2;
 using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.ItemDropRules;
@@ -216,7 +217,7 @@ namespace Coralite.Content.NPCs.Crystalline
         {
             Timer = 0;
             Recorder = 0;
-            State= AIStates.Shoot;
+            State = AIStates.Shoot;
         }
 
         #endregion
@@ -250,7 +251,7 @@ namespace Coralite.Content.NPCs.Crystalline
         }
 
         private ref float Timer => ref NPC.ai[1];
-        private ref float Recorder => ref NPC.ai[2];
+        private ref float Timer2 => ref NPC.ai[2];
         private bool CanHit
         {
             get => NPC.ai[3] == 1;
@@ -276,28 +277,28 @@ namespace Coralite.Content.NPCs.Crystalline
 
         public override void SetStaticDefaults()
         {
-            Main.npcFrameCount[Type] = 8;
+            Main.npcFrameCount[Type] = 12;
         }
 
         public override void SetDefaults()
         {
-            NPC.width = 54;
-            NPC.height = 54;
+            NPC.width = 24;
+            NPC.height = 32;
             NPC.damage = 50;
-            NPC.defense = 45;
+            NPC.defense = 20;
 
-            NPC.lifeMax = 2000;
+            NPC.lifeMax = 200;
             NPC.aiStyle = -1;
             NPC.knockBackResist = 0.5f;
             NPC.HitSound = CoraliteSoundID.CrystalHit_DD2_WitherBeastHurt;
             NPC.DeathSound = CoraliteSoundID.CrystalBroken_DD2_WitherBeastDeath;
-            NPC.noGravity = false;
-            NPC.value = Item.buyPrice(0, 2);
+            NPC.noGravity = true;
+            NPC.value = Item.buyPrice(0, 0,2);
         }
 
         public override bool? CanFallThroughPlatforms() => true;
 
-        public override bool CanHitPlayer(Player target, ref int cooldownSlot) => true;
+        public override bool CanHitPlayer(Player target, ref int cooldownSlot) => CanHit;
 
         #endregion
 
@@ -308,10 +309,19 @@ namespace Coralite.Content.NPCs.Crystalline
             switch (State)
             {
                 case AIStates.Idle:
+                    NormalFrame();
+                    SetSpriteDirectionAndRot();
+
+                    Idle();
                     break;
                 case AIStates.Fly:
+                    Fly();
+
+                    NormalFrame();
+                    SetSpriteDirectionAndRot();
                     break;
                 case AIStates.Attack:
+                    Attack();
                     break;
                 default:
                     break;
@@ -320,24 +330,272 @@ namespace Coralite.Content.NPCs.Crystalline
 
         public void Idle()
         {
+            if (Timer % 60 == 0)
+            {
+                NPC.TargetClosest(false);
+                if (CanAttack())
+                    StartAttack();
+            }
 
+            Timer++;
+
+            if (MathF.Abs(NPC.velocity.Y) > 0.02f && !FindStandableTile())
+                SwitchState(AIStates.Fly);
+
+            NPC.velocity.X *= 0.94f;
+
+            if (NPC.velocity.Y < 4)
+                NPC.velocity.Y += 0.1f;
+
+            if (NPC.collideY)
+                NPC.velocity *= 0.5f;
+        }
+
+        public void Fly()
+        {
+            if (Timer % 30 == 0)
+            {
+                NPC.TargetClosest(false);
+                if (CanAttack())
+                    StartAttack();
+            }
+
+            //每隔一段时间向下查找可以站立的物块，如果能站上去就飞到物块上
+
+            Timer++;
+            if (Timer % 60 == 0 && FindStandableTile())//查找可以站立的物块
+                SwitchState(AIStates.Idle);
+
+            //X方向的运动
+            if (NPC.collideX)
+                NPC.velocity *= -0.4f;
+
+            if (MathF.Abs(NPC.velocity.X) < 5)
+                NPC.velocity.X += MathF.Sign(NPC.velocity.X) * 0.15f;
+
+            //Y方向的运动
+            if (Timer2 < 45)//按照时间飞上飞下
+            {
+                if (NPC.velocity.Y > 3)
+                    NPC.velocity.Y -= 0.1f;
+            }
+            else if (Timer2 < 45 * 2)
+            {
+                if (NPC.velocity.Y < 3)
+                    NPC.velocity.Y += 0.1f;
+            }
+            else
+                Timer2 = 0;
+
+            Timer2++;
+        }
+
+        public void Attack()
+        {
+            switch (Timer2)
+            {
+                default:
+                case 0://飞到玩家附近
+                    {
+                        const int chasingTime = 60 * 3;
+
+                        Vector2 targetPos = Target.Center + new Vector2(MathF.Sin(Timer * 0.05f) * 300, -100);
+
+                        NPC.direction = NPC.spriteDirection = targetPos.X > NPC.Center.X ? 1 : -1;
+                        NPC.directionY = targetPos.Y > NPC.Center.Y ? 1 : -1;
+                        SetSpriteDirectionAndRot();
+
+                        //追踪玩家
+                        GetLengthToTargetPos(targetPos, out float xLength, out float yLength);
+
+                        if (xLength > 50)
+                            Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 7f, 0.2f, 0.3f, 0.95f);
+                        else
+                            NPC.velocity.X *= 0.95f;
+
+                        if (yLength > 20)
+                            Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 7f, 0.15f, 0.3f, 0.95f);
+                        else
+                            NPC.velocity.Y *= 0.95f;
+
+                        if (xLength < 50 && yLength < 0)
+                            Timer += 10;
+
+                        Timer++;
+                        NormalFrame();
+                        if (Timer > chasingTime)
+                        {
+                            NPC.TargetClosest(false);
+                            if (CanAttack())
+                            {
+                                NPC.frame.X = 3;
+                                NPC.frame.Y = 0;
+                                NPC.knockBackResist = 0;
+                                CanHit = true;
+                                Timer2++;
+                                Timer = 0;
+                                float speed = (Target.Center - NPC.Center).Length();
+                                speed = 1 + speed / 40;
+                                if (speed > 16)
+                                    speed = 16;
+                                NPC.velocity = (Target.Center - NPC.Center).SafeNormalize(Vector2.Zero)*speed;
+                                NPC.netUpdate = true;
+                            }
+                            else
+                                SwitchState(AIStates.Fly);
+                        }
+                    }
+                    break;
+                case 1://朝玩家攻击
+                    {
+                        SetSpriteDirectionAndRot();
+                        if (++NPC.frameCounter > 3)
+                        {
+                            NPC.frameCounter = 0;
+                            if (NPC.frame.Y < 5)
+                                NPC.frame.Y++;
+                        }
+
+                        if (Target.Center.Y < NPC.Center.Y)
+                            NPC.velocity.Y *= 0.99f;
+
+                        Timer++;
+                        if (Timer > 30)
+                        {
+                            NPC.frame.X = 2;
+                            NPC.frame.Y = 0;
+                            CanHit = false;
+                            Timer2++;
+                            Timer = 0;
+                        }
+                    }
+                    break;
+                case 2://后摇
+                    NPC.velocity.X *= 0.97f;
+
+                    SetSpriteDirectionAndRot();
+                    NormalFrame();
+
+                    Timer++;
+                    if (Timer > 20)
+                    {
+                        NPC.TargetClosest(false);
+                        if (CanAttack())
+                            StartAttack();
+                        else
+                            SwitchState(AIStates.Fly);
+                    }
+                    break;
+            }
+        }
+
+        public void GetLengthToTargetPos(Vector2 targetPos, out float xLength, out float yLength)
+        {
+            xLength = NPC.Center.X - targetPos.X;
+            yLength = NPC.Center.Y - targetPos.Y;
+
+            xLength = Math.Abs(xLength);
+            yLength = Math.Abs(yLength);
+        }
+
+        public bool FindStandableTile(int findCount = 20)
+        {
+            Point p = NPC.Center.ToTileCoordinates();
+            for (int i = 0; i < findCount; i++)
+            {
+                Tile t = Framing.GetTileSafely(p + new Point(0, i));
+                if (t.HasSolidTile())
+                    return true;
+            }
+
+            return false;
+        }
+
+        private void SwitchState(AIStates state)
+        {
+            State = state;
+            Timer = 0;
+            Timer2 = 0;
+            CanHit = false;
+        }
+
+        private void StartAttack()
+        {
+            State = AIStates.Attack;
+            Timer = 0;
+            Timer2 = 0;
+            CanHit = false;
         }
 
         private bool CanAttack()
         {
             return NPC.target >= 0 && NPC.target < 255 && !Main.player[NPC.target].dead
-                                && !(Target.invis && Target.itemAnimation == 0) && Vector2.Distance(NPC.Center, Target.Center) < 16 * 30
+                                && !(Target.invis && Target.itemAnimation == 0) && Vector2.Distance(NPC.Center, Target.Center) < 16 * 40
                                 && Collision.CanHit(NPC.Center, 1, 1, Target.TopLeft, Target.width, Target.height);
+        }
+
+        public void SetSpriteDirectionAndRot()
+        {
+            if (MathF.Abs(NPC.velocity.X) > 0.02f)
+                NPC.spriteDirection = MathF.Sign(NPC.velocity.X);
+            NPC.rotation = NPC.velocity.X * 0.04f;
+        }
+
+        private void NormalFrame()
+        {
+            if (NPC.velocity.Length() == 0 && Framing.GetTileSafely(NPC.Bottom.ToTileCoordinates()).HasSolidTile())
+            {
+                NPC.frame.X = 0;
+                NPC.frame.Y = 0;
+                return;
+            }
+
+            if (NPC.velocity.Y < 0 && NPC.frame.X != 1 && NPC.frame.Y == 0)//切换至向上飞
+                NPC.frame.X = 1;
+            if (NPC.velocity.Y >= 0 && NPC.frame.X != 2 && NPC.frame.Y == 0)
+                NPC.frame.X = 2;
+
+            switch (NPC.frame.X)
+            {
+                default:
+                    break;
+                case 1:
+                    FlyUpFrame();
+                    break;
+                case 2:
+                    FlyDownFrame();
+                    break;
+            }
         }
 
         private void FlyUpFrame()
         {
-
+            if (NPC.frame.Y < 4)
+            {
+                if (++NPC.frameCounter > 3)
+                {
+                    NPC.frameCounter = 0;
+                    NPC.frame.Y++;
+                }
+            }
+            else
+            {
+                if (++NPC.frameCounter > 8)//延长最后一帧的持续时间
+                {
+                    NPC.frameCounter = 0;
+                    NPC.frame.Y = 0;
+                }
+            }
         }
 
         private void FlyDownFrame()
         {
-
+            if (++NPC.frameCounter > 3)
+            {
+                NPC.frameCounter = 0;
+                if (++NPC.frame.Y > 11)
+                    NPC.frame.Y = 0;
+            }
         }
 
         #endregion
@@ -350,6 +608,9 @@ namespace Coralite.Content.NPCs.Crystalline
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
+            SpriteEffects effect = NPC.spriteDirection > 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+
+            NPC.QuickDraw(spriteBatch, screenPos, drawColor, NPC.GetFrameBox(4), effect);
             return false;
         }
 

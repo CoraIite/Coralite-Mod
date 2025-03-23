@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.DamageClasses;
 using Coralite.Content.Dusts;
+using Coralite.Content.Particles;
 using Coralite.Content.Raritys;
 using Coralite.Core;
 using Coralite.Helpers;
@@ -34,8 +35,14 @@ namespace Coralite.Content.Items.MagikeSeries2
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             if (MagikeHelper.TryCosumeMagike(40, Item, player))
+            {
+                Vector2 dir = velocity.SafeNormalize(Vector2.Zero);
+                WindCircle.Spawn(player.Center + dir * 15, -dir * 2, dir.ToRotation(), Coralite.CrystallinePurple, 0.75f, 1.3f, new Vector2(1.2f, 1f));
                 Projectile.NewProjectile(source, position, velocity.SafeNormalize(Vector2.Zero) * 15
-                    , ModContent.ProjectileType<CrystallineSpikeFriendly>(), (int)(damage * (1 + player.velocity.Length() / 6f)), knockback, player.whoAmI);
+                        , ModContent.ProjectileType<CrystallineSpikeFriendly>(), (int)(damage * (1 + player.velocity.Length() / 6f)), knockback, player.whoAmI);
+            }
+
+            Helper.PlayPitched(CoraliteSoundID.Crystal_Item101,position,pitch:0.5f);
 
             return base.Shoot(player, source, position, velocity, type, damage, knockback);
         }

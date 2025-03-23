@@ -115,5 +115,10 @@ namespace Coralite.Content.Items.Materials
                 .RegisterNewCraft(ItemID.Yoraiz0rDarkness, 500)
                 .Register();
         }
+
+        public override Color? GetAlpha(Color lightColor)
+        {
+            return Color.White * 0.8f;
+        }
     }
 }

@@ -28,6 +28,19 @@ namespace Coralite.Helpers
             return TextureAssets.Npc[npc.type].Value;
         }
 
+        public static Rectangle GetFrameBox(this NPC npc,int xFrame)
+        {
+            Texture2D tex = npc.GetTexture();
+            return tex.Frame(xFrame, Main.npcFrameCount[npc.type], npc.frame.X, npc.frame.Y);
+        }
+
+        public static void QuickDraw(this NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color lightColor, Rectangle? frameBox = null, SpriteEffects effect = SpriteEffects.None, float exRot = 0)
+        {
+            Texture2D tex = npc.GetTexture();
+            spriteBatch.Draw(tex, npc.Center - screenPos, frameBox, lightColor
+                , npc.rotation + exRot, frameBox == null ? tex.Size() / 2 : frameBox.Value.Size() / 2, npc.scale, effect, 0);
+        }
+
         /// <summary>
         /// 简易NPC运动，控制单个方向上的运动，做匀加速和匀减速运动
         /// </summary>

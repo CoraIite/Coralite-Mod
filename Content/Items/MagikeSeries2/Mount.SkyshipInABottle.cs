@@ -18,6 +18,7 @@ namespace Coralite.Content.Items.MagikeSeries2
             Item.DefaultToMount(ModContent.MountType<ChalcedonySkyship>());
             Item.rare = ModContent.RarityType<CrystallineMagikeRarity>();
             Item.value = Item.sellPrice(0, 2);
+            Item.UseSound = CoraliteSoundID.RabbitMount_Item79 with { Pitch = 0.5f };
         }
     }
 
@@ -29,7 +30,7 @@ namespace Coralite.Content.Items.MagikeSeries2
         {
             MountData.spawnDust = DustID.Cloud;
 
-            MountData.heightBoost = 0;
+            MountData.heightBoost = 8;
             MountData.flightTimeMax = 320;
             MountData.fatigueMax = 320;
             MountData.fallDamage = 0f;
@@ -120,6 +121,9 @@ namespace Coralite.Content.Items.MagikeSeries2
                 Dust d = Dust.NewDustPerfect(player.MountedCenter + new Vector2(0, 30) + Main.rand.NextVector2Circular(48, 12)
                        , DustID.Cloud, -player.velocity * Main.rand.NextFloat(0.1f, 0.3f), Scale: Main.rand.NextFloat(1f, 1.5f));
                 d.noGravity = true;
+
+                if (player.mount._frame == 0 && player.mount._frameCounter == 1)
+                    Helpers.Helper.PlayPitched(CoraliteSoundID.Swing2_Item7, player.Center);
             }
         }
 
@@ -163,7 +167,7 @@ namespace Coralite.Content.Items.MagikeSeries2
         public override void Update(Player player, ref int buffIndex)
         {
             player.mount.SetMount(ModContent.MountType<ChalcedonySkyship>(), player);
-            player.mount._flyTime = 320;
+                player.mount._flyTime = 320;
             player.mount._fatigue = 0;
         }
     }
