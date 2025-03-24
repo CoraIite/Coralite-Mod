@@ -1,10 +1,14 @@
 ﻿using Coralite.Content.Biomes;
+using Coralite.Content.Dusts;
 using Coralite.Content.Items.LandOfTheLustrousSeries;
 using Coralite.Content.Items.MagikeSeries2;
+using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
+using System.IO;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.ItemDropRules;
@@ -45,6 +49,11 @@ namespace Coralite.Content.NPCs.Crystalline
             Main.npcFrameCount[Type] = 7;
         }
 
+        public override void Load()
+        {
+            this.LoadGore(3);
+        }
+
         public override void SetDefaults()
         {
             NPC.width = 48;
@@ -55,18 +64,22 @@ namespace Coralite.Content.NPCs.Crystalline
             NPC.lifeMax = 600;
             NPC.aiStyle = -1;
             NPC.knockBackResist = 0;
-            NPC.HitSound = CoraliteSoundID.CrystalHit_DD2_WitherBeastHurt;
-            NPC.DeathSound = CoraliteSoundID.CrystalBroken_DD2_WitherBeastDeath;
+            NPC.HitSound = CoraliteSoundID.DigStone_Tink;
+            NPC.DeathSound = CoraliteSoundID.StoneBurst_Item70;
             NPC.noGravity = false;
             NPC.value = Item.buyPrice(0, 2);
         }
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            //固定掉落蕴魔水晶
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CrystallineMagike>(), 1, 4, 12));
+            //固定掉落矽卡岩
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Skarn>(), 1, 2, 6));
+            //随机掉落矽卡岩砖与平滑矽卡岩
+            npcLoot.Add(new CommonDrop(ModContent.ItemType<SmoothSkarn>(), 4, 2, 6,3));
+            npcLoot.Add(new CommonDrop(ModContent.ItemType<SkarnBrick>(), 5, 2, 6,2));
 
             //掉落魔鸟
+
 
             //掉落宝石原石
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PrimaryRoughGemstone>(), 1, 2, 4));
@@ -94,7 +107,7 @@ namespace Coralite.Content.NPCs.Crystalline
                 if (Helper.IsPointOnScreen(new Vector2(spawnInfo.SpawnTileX, tileY) * 16 - Main.screenPosition))
                     return 0;
                 else
-                    return 0.01f;
+                    return 0.03f;
             }
 
             return 0;
@@ -114,7 +127,7 @@ namespace Coralite.Content.NPCs.Crystalline
             return NPC.NewNPC(new EntitySource_SpawnNPC(), tileX * 16 + 8, tileY * 16, NPC.type);
         }
 
-        public override bool? CanFallThroughPlatforms() => true;
+        public override bool? CanFallThroughPlatforms() => false;
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
 
@@ -178,7 +191,29 @@ namespace Coralite.Content.NPCs.Crystalline
                 {
                     if (MabirdCount > 0)//魔鸟出动！
                     {
+                        Vector2 baseOffset = new Vector2(20, 34);
+                        if (MabirdCount % 2 == 0)
+                        {
+                            baseOffset += new Vector2(8, (3 - (int)MabirdCount / 2) * 12);
+                        }
+                        else
+                            baseOffset += new Vector2(0, (3 - (int)(MabirdCount+1) / 2) * 12);
 
+                        Vector2 pos = NPC.position + baseOffset;
+
+                        if (!VaultUtils.isClient)
+                        {
+                            int i = NPC.NewNPC(NPC.GetSource_FromAI(), (int)pos.X, (int)pos.Y, ModContent.NPCType<WildMabird>()
+                                  , 0, 1);
+                            Main.npc[i].velocity = new Vector2(NPC.direction * 8, 0);
+                        }
+
+                        Dust d = Dust.NewDustPerfect(pos+new Vector2(NPC.direction*12,0), ModContent.DustType<CrystallineImpact>(), Vector2.Zero);
+                        d.rotation = NPC.spriteDirection > 0 ? 0 : MathHelper.Pi;
+
+                        Helper.PlayPitched(CoraliteSoundID.CrystalBroken_DD2_WitherBeastDeath, NPC.Center);
+                        MabirdCount--;
+                        NPC.netUpdate = true;
                     }
                 }
                 else
@@ -226,6 +261,12 @@ namespace Coralite.Content.NPCs.Crystalline
 
         #endregion
 
+        public override void HitEffect(NPC.HitInfo hit)
+        {
+            if (NPC.life <= 0)
+                this.SpawnGore(3, 3);
+        }
+
         #region 绘制
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
@@ -243,6 +284,8 @@ namespace Coralite.Content.NPCs.Crystalline
     public class WildMabird : ModNPC
     {
         public override string Texture => AssetDirectory.CrystallineNPCs + Name;
+
+        public const int trailCachesLength = 12;
 
         private AIStates State
         {
@@ -264,7 +307,11 @@ namespace Coralite.Content.NPCs.Crystalline
             }
         }
 
+        private ref float LifeTime => ref NPC.localAI[0];
+
         protected Player Target => Main.player[NPC.target];
+
+        private bool init = true;
 
         private enum AIStates
         {
@@ -272,6 +319,8 @@ namespace Coralite.Content.NPCs.Crystalline
             Fly,
             Attack,
         }
+
+        private List<ColoredVertex> bars;
 
         #region 基础设置
 
@@ -287,13 +336,13 @@ namespace Coralite.Content.NPCs.Crystalline
             NPC.damage = 50;
             NPC.defense = 20;
 
-            NPC.lifeMax = 200;
+            NPC.lifeMax = 180;
             NPC.aiStyle = -1;
             NPC.knockBackResist = 0.5f;
             NPC.HitSound = CoraliteSoundID.CrystalHit_DD2_WitherBeastHurt;
             NPC.DeathSound = CoraliteSoundID.CrystalBroken_DD2_WitherBeastDeath;
             NPC.noGravity = true;
-            NPC.value = Item.buyPrice(0, 0,2);
+            NPC.value = 0;
         }
 
         public override bool? CanFallThroughPlatforms() => true;
@@ -306,6 +355,13 @@ namespace Coralite.Content.NPCs.Crystalline
 
         public override void AI()
         {
+            if (init)
+            {
+                Initialize();
+                init = false;
+            }
+            Lighting.AddLight(NPC.Center, Coralite.CrystallinePurple.ToVector3() / 2);
+
             switch (State)
             {
                 case AIStates.Idle:
@@ -322,9 +378,32 @@ namespace Coralite.Content.NPCs.Crystalline
                     break;
                 case AIStates.Attack:
                     Attack();
+
+                    LifeTime = 0;
                     break;
                 default:
                     break;
+            }
+
+            LifeTime++;
+            if (LifeTime > 60 * 60)
+                NPC.Kill();
+
+            NPC.UpdateOldPosCache(addVelocity: true);
+            for (int i = 0; i < NPC.oldRot.Length - 1; i++)
+                NPC.oldRot[i] = NPC.oldRot[i + 1];
+            NPC.oldRot[^1] = NPC.velocity.ToRotation();
+        }
+
+        public void Initialize()
+        {
+            NPC.oldPos = new Vector2[trailCachesLength];
+            NPC.oldRot = new float[trailCachesLength];
+
+            for (int i = 0; i < trailCachesLength; i++)
+            {
+                NPC.oldPos[i] = NPC.Center;
+                NPC.oldRot[i] = NPC.rotation;
             }
         }
 
@@ -353,17 +432,26 @@ namespace Coralite.Content.NPCs.Crystalline
 
         public void Fly()
         {
-            if (Timer % 30 == 0)
+            if (Timer > 0 && Timer % 30 == 0)
             {
                 NPC.TargetClosest(false);
                 if (CanAttack())
+                {
                     StartAttack();
+                    return;
+                }
             }
 
             //每隔一段时间向下查找可以站立的物块，如果能站上去就飞到物块上
 
-            Timer++;
-            if (Timer % 60 == 0 && FindStandableTile())//查找可以站立的物块
+            Timer--;
+            if (Timer <= 0 && !VaultUtils.isClient)
+            {
+                Timer = Main.rand.Next(60, 60 * 3);
+                NPC.netUpdate = true;
+            }
+
+            if (Timer != 0 && Timer % 60 == 0 && FindStandableTile())//查找可以站立的物块
                 SwitchState(AIStates.Idle);
 
             //X方向的运动
@@ -435,25 +523,42 @@ namespace Coralite.Content.NPCs.Crystalline
                                 Timer2++;
                                 Timer = 0;
                                 float speed = (Target.Center - NPC.Center).Length();
-                                speed = 1 + speed / 40;
+                                speed = 3 + speed / 40;
                                 if (speed > 16)
                                     speed = 16;
-                                NPC.velocity = (Target.Center - NPC.Center).SafeNormalize(Vector2.Zero)*speed;
+
+                                Vector2 dir2 = (Target.Center - NPC.Center).SafeNormalize(Vector2.Zero);
+
+                                NPC.velocity = dir2 * speed;
                                 NPC.netUpdate = true;
+
+                                WindCircle.Spawn(NPC.Center + dir2 * 15, -dir2 * 2, dir2.ToRotation(), Coralite.CrystallinePurple, 0.75f, 0.5f, new Vector2(1.2f, 1f));
                             }
                             else
+                            {
+                                if (!VaultUtils.isClient)
+                                {
+                                    if (Main.rand.NextBool())
+                                        NPC.velocity.X *= -1;
+                                }
                                 SwitchState(AIStates.Fly);
+                            }
                         }
                     }
                     break;
                 case 1://朝玩家攻击
                     {
+                        Dust d = Dust.NewDustPerfect(NPC.Center + Main.rand.NextVector2Circular(12, 12), ModContent.DustType<CrystallineDustSmall>()
+                                , NPC.velocity * Main.rand.NextFloat(-0.3f, -0.1f), newColor: Coralite.CrystallinePurple
+                                , Scale: Main.rand.NextFloat(1f, 1.4f));
+                        d.noGravity = true;
+
                         SetSpriteDirectionAndRot();
                         if (++NPC.frameCounter > 3)
                         {
                             NPC.frameCounter = 0;
-                            if (NPC.frame.Y < 5)
-                                NPC.frame.Y++;
+                            if (++NPC.frame.Y > 5)
+                                NPC.frame.Y = 0;
                         }
 
                         if (Target.Center.Y < NPC.Center.Y)
@@ -517,6 +622,8 @@ namespace Coralite.Content.NPCs.Crystalline
             Timer = 0;
             Timer2 = 0;
             CanHit = false;
+
+            NPC.netUpdate = true;
         }
 
         private void StartAttack()
@@ -543,12 +650,40 @@ namespace Coralite.Content.NPCs.Crystalline
 
         private void NormalFrame()
         {
-            if (NPC.velocity.Length() == 0 && Framing.GetTileSafely(NPC.Bottom.ToTileCoordinates()).HasSolidTile())
+            if (NPC.velocity.Length() == 0)
             {
-                NPC.frame.X = 0;
-                NPC.frame.Y = 0;
-                return;
+                bool hasSoild = false;
+                for (int i = 0; i < 2; i++)
+                    for (int j = 0; j < 2; j++)
+                    {
+                        Tile t = Framing.GetTileSafely((NPC.BottomLeft+new Vector2(i*8,j*16)).ToTileCoordinates());
+                        if (t.HasUnactuatedTile && Main.tileSolid[t.TileType])
+                        {
+                            hasSoild = true;
+                            goto over;
+                        }
+                    }
+
+                over:;
+                if (hasSoild)
+                {
+                    if (NPC.frame.X != 0)
+                    {
+                        NPC.frame.Y = 0;
+                    }
+                    NPC.frame.X = 0;
+                    if (++NPC.frameCounter > 3)
+                    {
+                        NPC.frameCounter = 0;
+                        if (NPC.frame.Y < 7)
+                            NPC.frame.Y++;
+                    }
+
+                    return;
+                }
             }
+            else if (NPC.frame.X == 0)
+                NPC.frame.Y = 0;
 
             if (NPC.velocity.Y < 0 && NPC.frame.X != 1 && NPC.frame.Y == 0)//切换至向上飞
                 NPC.frame.X = 1;
@@ -600,7 +735,31 @@ namespace Coralite.Content.NPCs.Crystalline
 
         #endregion
 
+        public override void HitEffect(NPC.HitInfo hit)
+        {
+            if (NPC.life <= 0)
+            {
+                float r = Main.rand.NextFloat(MathHelper.TwoPi);
+                for (int i = 0; i < 3; i++)
+                {
+                    float r2 = r + i * MathHelper.TwoPi / 3;
+                    Dust d = Dust.NewDustPerfect(NPC.Center+r2.ToRotationVector2()*16, ModContent.DustType<CrystallineImpact>(), Vector2.Zero,Scale:Main.rand.NextFloat(1,1.5f));
+                    d.rotation =r2;
+                }
+            }
+        }
+
         #region 网络同步
+
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(NPC.localAI[0]);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            NPC.localAI[0] = reader.ReadSingle();
+        }
 
         #endregion
 
@@ -608,10 +767,45 @@ namespace Coralite.Content.NPCs.Crystalline
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
+            DrawTrails(screenPos);
+            //return false;
             SpriteEffects effect = NPC.spriteDirection > 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
 
             NPC.QuickDraw(spriteBatch, screenPos, drawColor, NPC.GetFrameBox(4), effect);
+
+            Vector2 pos = NPC.Center - screenPos + new Vector2(NPC.spriteDirection * 6, 0);
+
+            Helper.DrawPrettyStarSparkle(1, 0, pos, Color.Magenta with { A = 100 } * 0.5f, Coralite.CrystallinePurple
+                , 0.5f, 0, 0.5f, 0.5f, 1, MathHelper.PiOver4
+                , Vector2.One * 0.75f, Vector2.One * 0.5f);
             return false;
+        }
+
+        public virtual void DrawTrails(Vector2 screenPos)
+        {
+            if (NPC.oldPos == null || NPC.oldPos.Length != trailCachesLength)
+                return;
+            
+            Texture2D Texture = CoraliteAssets.Trail.LightShotSPA.Value;
+
+            bars ??= [];
+
+            for (int i = 0; i < trailCachesLength; i++)
+            {
+                float factor = (float)i / trailCachesLength;
+                Vector2 Center = NPC.oldPos[i];
+                Vector2 normal = (NPC.oldRot[i]+1.57f).ToRotationVector2();
+                Vector2 Top = Center - Main.screenPosition + (normal * 12 * factor);
+                Vector2 Bottom = Center - Main.screenPosition - (normal * 12 * factor);
+
+                var color = Coralite.CrystallinePurple * factor;
+                bars.Add(new(Top, color, new Vector3(factor, 0, 1)));
+                bars.Add(new(Bottom, color, new Vector3(factor, 1, 1)));
+            }
+
+            Main.graphics.GraphicsDevice.Textures[0] = Texture;
+            Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars.ToArray(), 0, bars.Count - 2);
+            bars.Clear();
         }
 
         #endregion

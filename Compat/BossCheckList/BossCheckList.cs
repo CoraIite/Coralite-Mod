@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Items.BossSummons;
 using Coralite.Core.Systems.BossSystems;
+using Coralite.Core.Systems.MagikeSystem;
 using System.Collections.Generic;
 using Terraria.Localization;
 using static Terraria.ModLoader.ModContent;
@@ -21,16 +22,16 @@ namespace Coralite.Compat.BossCheckList
                 AddBabyIceDragon(bcl);
 
                 //史莱姆皇帝
-                //AddSlimeEmperor(bcl);
+                AddSlimeEmperor(bcl);
 
                 //赤血玉灵
-                //AddBloodiancie(bcl);
+                AddBloodiancie(bcl);
 
                 //荒雷龙
                 AddThunderveinDragon(bcl);
 
                 //梦魇之花
-                //AddNightmarePlantera(bcl);
+                AddNightmarePlantera(bcl);
             }
         }
 
@@ -124,7 +125,8 @@ namespace Coralite.Compat.BossCheckList
                     ["spawnInfo"] = Language.GetOrRegister($"Mods.Coralite.Compat.BossChecklist.SlimeEmperor.SpawnInfo", () => SlimeEmperorInfo),
                     ["despawnMessage"] = Language.GetOrRegister($"Mods.Coralite.Compat.BossChecklist.SlimeEmperor.Despawn", () => "史莱姆皇帝回归了它的王国"),
                     ["spawnItems"] = ItemType<GelInvitation>(),
-                    ["collectibles"] = SlimeEmperorCollection
+                    ["collectibles"] = SlimeEmperorCollection,
+                    ["availability"] = () => MagikeSystem.learnedMagikeBase
                 });
 
         }
@@ -158,7 +160,8 @@ namespace Coralite.Compat.BossCheckList
                     ["despawnMessage"] = Language.GetOrRegister($"Mods.Coralite.Compat.BossChecklist.Bloodiancie.Despawn", () => "赤血玉灵回归了地底"),
                     ["spawnItems"] = ItemType<BloodJadeCore>(),
                     ["customPortrait"] = BloodianciePortrait.DrawPortrait,
-                    ["collectibles"] = BloodiancieCollection
+                    ["collectibles"] = BloodiancieCollection,
+                    ["availability"] = () => MagikeSystem.learnedMagikeAdvanced
                 });
         }
 
@@ -234,7 +237,8 @@ namespace Coralite.Compat.BossCheckList
                     ["spawnInfo"] = Language.GetOrRegister($"Mods.Coralite.Compat.BossChecklist.NightmarePlantera.SpawnInfo", () => NightmarePlanteraInfo),
                     ["despawnMessage"] = Language.GetOrRegister($"Mods.Coralite.Compat.BossChecklist.NightmarePlantera.Despawn", () => "梦境消散了"),
                     ["spawnItems"] = ItemType<NightmareHarp>(),
-                    ["collectibles"] = NightmarePlanteraCollection
+                    ["collectibles"] = NightmarePlanteraCollection,
+                    ["availability"] = () => MagikeSystem.learnedMagikeAdvanced
                 });
         }
 

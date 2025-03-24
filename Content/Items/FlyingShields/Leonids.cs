@@ -117,7 +117,7 @@ namespace Coralite.Content.Items.FlyingShields
     {
         public override string Texture => "Terraria/Images/Projectile_16";
 
-        public int trailCachesLength = 6;
+        public const int trailCachesLength = 6;
 
         public override void SetDefaults()
         {

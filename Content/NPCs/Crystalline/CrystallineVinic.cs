@@ -129,7 +129,7 @@ namespace Coralite.Content.NPCs.Crystalline
             return 0;
         }
 
-        protected void NormalDrop(ref NPCLoot npcLoot)
+        protected static void NormalDrop(ref NPCLoot npcLoot)
         {
             //固定掉落蕴魔水晶
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CrystallineMagike>(), 1, 2, 5));
