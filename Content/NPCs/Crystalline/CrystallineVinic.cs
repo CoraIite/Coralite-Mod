@@ -650,7 +650,7 @@ namespace Coralite.Content.NPCs.Crystalline
     {
         protected override OnTileTypes OnTileType => OnTileTypes.OnBottom;
 
-        protected override int AttackLength => GetBiteLength()+16;
+        protected override int AttackLength => GetBiteLength()+16*5;
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {

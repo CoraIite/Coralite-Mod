@@ -5381,3 +5381,10 @@ CrystallineLance: {
 	DisplayName: Crystalline Lance
 	Tooltip: ""
 }
+
+EmperorSlimeBoots: {
+	ArmorBonus0: Mods.Coralite.Items.EmperorSlimeBoots.ArmorBonus0
+	ArmorBonus1: Mods.Coralite.Items.EmperorSlimeBoots.ArmorBonus1
+	DisplayName: Emperor Slime Boots
+	Tooltip: ""
+}

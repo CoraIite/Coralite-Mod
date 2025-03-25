@@ -25,5 +25,12 @@ namespace Coralite.Helpers
 
             return player.GetWeaponDamage(weapon);
         }
+
+        public static Item HeadArmor(this Player player)
+            => player.armor[0];
+        public static Item BodyArmor(this Player player)
+            => player.armor[1];
+        public static Item LegArmor(this Player player)
+            => player.armor[2];
     }
 }

@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using Coralite.Content.Items.Materials;
+using Terraria;
 using Terraria.ID;
 using static Coralite.Core.Systems.MagikeSystem.MagikeSystem;
 using static Coralite.Core.Systems.MagikeSystem.MALevel;
@@ -39,6 +40,12 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
 
             ////金戒指
             //AddRemodelRecipe(ItemID.GoldBar, ItemID.GoldRing, 3500, mainStack: 50);
+
+            //魔法箭袋
+            MagikeRecipe.CreateCraftRecipe(ItemID.EndlessQuiver, ItemID.MagicQuiver, CalculateMagikeCost(CrystallineMagike, 12, 60 * 3))
+                .AddIngredient<MutatusInABottle>()
+                .AddIngredient<DeorcInABottle>()
+                .Register();
         }
     }
 }

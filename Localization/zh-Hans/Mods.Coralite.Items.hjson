@@ -5478,3 +5478,10 @@ CrystallineLance: {
 		消耗 40 魔能射出尾刺
 		'''
 }
+
+EmperorSlimeBoots: {
+	// ArmorBonus0: Mods.Coralite.Items.EmperorSlimeBoots.ArmorBonus0
+	// ArmorBonus1: Mods.Coralite.Items.EmperorSlimeBoots.ArmorBonus1
+	// DisplayName: Emperor Slime Boots
+	// Tooltip: ""
+}
