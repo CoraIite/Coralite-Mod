@@ -233,81 +233,91 @@ namespace Coralite.Content.ModPlayers
             SetStartDash();
             if (HasEffect(nameof(Items.Gels.EmperorSlimeBoots))
                 && !Player.mount.Active && Player.grappling[0] == -1 && !Player.tongued && !Player.shimmering)
+                EmperorSlimeMove();
+        }
+
+        private void EmperorSlimeMove()
+        {
+            int hitX = -1;
+            int hitY = -1;
+            bool spawnDust = false;
+
+            List<Point> xHits = null;
+
+            if (!Collision.IsClearSpotTest(Player.position + Player.velocity, 16f, Player.width, Player.height, fallThrough: false, fall2: false, (int)Player.gravDir, checkCardinals: true, checkSlopes: true))
+                xHits = Collision.FindCollisionTile(Player.velocity.X > 0 ? 0 : 1, Player.position + Player.velocity, 16f, Player.width, Player.height, fallThrough: false, fall2: false, (int)Player.gravDir, checkCardinals: true);
+            //Main.NewText(Player.dashDelay);
+            //Main.NewText(DashTimer,Color.Yellow);
+            if ((Player.dashDelay < 0 || DashTimer != 0)
+                && xHits != null && xHits.Count != 0)
+                foreach (var tilePoint in xHits)
+                {
+                    Tile tile = Main.tile[tilePoint.X, tilePoint.Y];
+                    if (!tile.HasUnactuatedTile || !Main.tileSolid[tile.TileType] || tile.BlockType != BlockType.Solid)
+                        continue;
+
+                    Vector2 center = tilePoint.ToWorldCoordinates();
+
+                    if (center.Y > Player.position.Y && center.Y < Player.position.Y + Player.height
+                        && (center.X < Player.position.X + 8 || center.X > Player.position.X + Player.width - 8))
+                    {
+                        hitX = tilePoint.X;
+                        break;
+                    }
+                }
+
+            if (Player.TouchedTiles.Count != 0)
+                foreach (var tilePoint in Player.TouchedTiles)
+                {
+                    Tile tile = Main.tile[tilePoint.X, tilePoint.Y];
+                    if (!tile.HasUnactuatedTile || !Main.tileSolid[tile.TileType] || tile.BlockType != BlockType.Solid)
+                        continue;
+
+                    Vector2 center = tilePoint.ToWorldCoordinates();
+                    if (center.X > Player.position.X && center.X < Player.position.X + Player.width
+                        && (center.Y < Player.position.Y || center.Y > Player.position.Y + Player.height))
+                    {
+                        hitY = tilePoint.Y;
+                        break;
+                    }
+                }
+
+            float bounceF = -0.7f;
+            if (Player.controlDown)
+                bounceF = -0.2f;
+            else if (hitX != -1 && MathF.Abs(Player.velocity.X) > 4f)
             {
-                int hitX = -1;
-                int hitY = -1;
-                bool spawnDust = false;
+                Player.velocity.X *= bounceF;
+                OnBouncy();
+            }
 
-                List<Point> xHits = null;
+            if (hitY != -1 && MathF.Abs(Player.velocity.Y) > 4f /*&& !Player.controlJump*/)
+            {
+                Player.velocity.Y *= bounceF;
+                OnBouncy();
+            }
 
-                if (!Collision.IsClearSpotTest(Player.position + Player.velocity, 16f, Player.width, Player.height, fallThrough: false, fall2: false, (int)Player.gravDir, checkCardinals: true, checkSlopes: true))
-                    xHits = Collision.FindCollisionTile(Player.velocity.X > 0 ? 0 : 1, Player.position + Player.velocity, 16f, Player.width, Player.height, fallThrough: false, fall2: false, (int)Player.gravDir, checkCardinals: true);
-                //Main.NewText(Player.dashDelay);
-                //Main.NewText(DashTimer,Color.Yellow);
-                if ((Player.dashDelay < 0 || DashTimer != 0)
-                    && xHits != null && xHits.Count != 0)
-                    foreach (var tilePoint in xHits)
-                    {
-                        Tile tile = Main.tile[tilePoint.X, tilePoint.Y];
-                        if (!tile.HasUnactuatedTile || !Main.tileSolid[tile.TileType] || tile.BlockType != BlockType.Solid)
-                            continue;
-
-                        Vector2 center = tilePoint.ToWorldCoordinates();
-
-                        if (center.Y > Player.position.Y && center.Y < Player.position.Y + Player.height
-                            && (center.X < Player.position.X + 8 || center.X > Player.position.X + Player.width - 8))
-                        {
-                            hitX = tilePoint.X;
-                            break;
-                        }
-                    }
-
-                if (Player.TouchedTiles.Count != 0)
-                    foreach (var tilePoint in Player.TouchedTiles)
-                    {
-                        Tile tile = Main.tile[tilePoint.X, tilePoint.Y];
-                        if (!tile.HasUnactuatedTile || !Main.tileSolid[tile.TileType] || tile.BlockType != BlockType.Solid)
-                            continue;
-
-                        Vector2 center = tilePoint.ToWorldCoordinates();
-                        if (center.X > Player.position.X && center.X < Player.position.X + Player.width
-                            && (center.Y < Player.position.Y || center.Y > Player.position.Y + Player.height))
-                        {
-                            hitY = tilePoint.Y;
-                            break;
-                        }
-                    }
-
-                float bounceF = -0.7f;
-                if (Player.controlDown)
-                    bounceF = -0.2f;
-                else if (hitX != -1 && MathF.Abs(Player.velocity.X) > 4f)
+            if (spawnDust)
+            {
+                Vector2 dir = Player.velocity.SafeNormalize(Vector2.Zero);
+                for (int i = 0; i < 16; i++)
                 {
-                    spawnDust = true;
-                    Player.velocity.X *= bounceF;
-                    if (HasEffect(Items.Gels.EmperorSlimeBoots.DefenceSet) && Player.velocity.Length() > 6.5f)
-                        AddEmperorDefence();
+                    Dust.NewDustPerfect(Main.rand.NextVector2FromRectangle(Player.Hitbox)
+                        , DustID.t_Slime, dir.RotateByRandom(-0.3f, 0.3f) * Main.rand.NextFloat(1, 5), 150, new Color(50, 150, 225, 50), Main.rand.NextFloat(1f, 1.5f));
                 }
 
-                if (hitY != -1 && MathF.Abs(Player.velocity.Y) > 4f /*&& !Player.controlJump*/)
-                {
-                    spawnDust = true;
-                    Player.velocity.Y *= bounceF;
-                    if (HasEffect(Items.Gels.EmperorSlimeBoots.DefenceSet) && Player.velocity.Length() > 6.5f)
-                        AddEmperorDefence();
-                }
+                Helper.PlayPitched(CoraliteSoundID.QueenSlime_Item154, Player.Center, pitch: 0.3f);
+            }
 
-                if (spawnDust)
-                {
-                    Vector2 dir = Player.velocity.SafeNormalize(Vector2.Zero);
-                    for (int i = 0; i < 16; i++)
-                    {
-                        Dust.NewDustPerfect(Main.rand.NextVector2FromRectangle(Player.Hitbox)
-                            , DustID.t_Slime, dir.RotateByRandom(-0.3f, 0.3f) * Main.rand.NextFloat(1, 5), 150, new Color(50, 150, 225, 50), Main.rand.NextFloat(1f, 1.5f));
-                    }
+            void OnBouncy()
+            {
+                spawnDust = true;
 
-                    Helper.PlayPitched(CoraliteSoundID.QueenSlime_Item154, Player.Center,pitch:0.3f);
-                }
+                if (HasEffect(Items.Gels.EmperorSlimeBoots.DefenceSet) && Player.velocity.Length() > 6.5f)
+                    AddEmperorDefence();
+
+                if (HasEffect(Items.Gels.EmperorSlimeBoots.AttackSet))
+                    Player.AddBuff(BuffType<Items.Gels.EmperorSlimeBuff>(), 60 * 20);
             }
         }
 
@@ -645,6 +655,9 @@ namespace Coralite.Content.ModPlayers
                         , 2, -1, ai1: target.Center.X, ai2: target.Center.Y);
                 }
             }
+
+            if (Player.HasBuff<Items.Gels.EmperorSlimeBuff>())
+                target.AddBuff(BuffID.Slimed, 60 * 5);
 
             #region 海盗王之魂的效果
             void PriateKingSoulEffect(ref NPC.HitModifiers modifiers)

@@ -235,3 +235,8 @@ ChalcedonySkyshipBuff: {
 	DisplayName: 瓶中天船
 	Description: 飞吧！小船！
 }
+
+EmperorSlimeBuff: {
+	DisplayName: 史莱姆的祝福
+	Description: 命中敌怪时施加史莱姆减益
+}

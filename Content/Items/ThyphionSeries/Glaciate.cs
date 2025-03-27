@@ -203,8 +203,8 @@ namespace Coralite.Content.Items.ThyphionSeries
                         Rotation = Rotation.AngleLerp(ToMouseA, 0.15f);
                     }
 
-                    Projectile.timeLeft = 30;
-                    Owner.itemTime = Owner.itemAnimation = 2;
+                    Projectile.timeLeft = 22;
+                    Owner.itemTime = Owner.itemAnimation = 22;
                 }
                 else
                 {

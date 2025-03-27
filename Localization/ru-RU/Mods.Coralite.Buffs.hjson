@@ -235,3 +235,8 @@ ChalcedonySkyshipBuff: {
 	// DisplayName: Chalcedony Skyship Buff
 	// Description: Mods.Coralite.Buffs.ChalcedonySkyshipBuff.Description
 }
+
+EmperorSlimeBuff: {
+	// DisplayName: Emperor Slime Buff
+	// Description: Mods.Coralite.Buffs.EmperorSlimeBuff.Description
+}

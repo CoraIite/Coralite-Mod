@@ -26,8 +26,8 @@ namespace Coralite.Core.Loaders
             if (playerEffectAttribute != null)
             {
                 string name = type.Name;
-                if (!string.IsNullOrEmpty(playerEffectAttribute.EffectName))
-                    name = playerEffectAttribute.EffectName;
+                if (!string.IsNullOrEmpty(playerEffectAttribute.OverrideEffectName))
+                    name = playerEffectAttribute.OverrideEffectName;
 
                 effects.Add(name, EffectCount);
                 EffectCount++;

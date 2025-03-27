@@ -164,27 +164,28 @@ namespace Coralite.Content.Items.Gels
         {
             Texture2D mainTex = Projectile.GetTexture();
             var pos = Projectile.Center - Main.screenPosition;
+
+            float exRot = Projectile.whoAmI * MathHelper.PiOver2;
+
             if (Main.zenithWorld)
                 lightColor = SlimeEmperor.BlackSlimeColor;
 
-            Color color = lightColor * Projectile.localAI[0];
-            var frameBox = mainTex.Frame(1, 2, 0, 0);
             Vector2 scale = Scale;
 
-            //绘制自己
-            Main.spriteBatch.Draw(mainTex, pos, frameBox, color, Projectile.rotation, frameBox.Size() / 2, scale, 0, 0);
-
             float factor = MathF.Sin(Main.GlobalTimeWrappedHourly);
-            color = new Color(194, 75 + (int)(60 * factor), 234);
+            Color color = new Color(194, 75 + (int)(60 * factor), 234);
             color *= Projectile.localAI[0] * 0.75f;
 
             //绘制影子拖尾
-            Projectile.DrawShadowTrails(color, 0.5f, 0.062f, 1, 8, 1, scale, frameBox);
+            Vector2 toCenter = new(Projectile.width / 2, Projectile.height / 2);
 
-            //绘制发光
-            frameBox = mainTex.Frame(1, 2, 0, 1);
+            for (int i = 1; i < 8; i += 2)
+                GelBall.DrawGelBall(mainTex, Projectile.oldPos[i] + toCenter - Main.screenPosition
+                    , color * (0.3f - (i * 0.03f)), Projectile.oldRot[i], Projectile.oldRot[i] + exRot + i * MathHelper.PiOver2, scale, false, highlightUseRot: true);
 
-            Main.spriteBatch.Draw(mainTex, pos, frameBox, color, Projectile.rotation, frameBox.Size() / 2, scale, 0, 0);
+            //绘制自己
+            GelBall.DrawGelBall(mainTex, pos, lightColor * Projectile.localAI[0]
+                , Projectile.rotation, exRot + Projectile.rotation, scale, true, true, color, highlightUseRot: true);
 
             return false;
         }
@@ -413,24 +414,27 @@ namespace Coralite.Content.Items.Gels
             Texture2D mainTex = Projectile.GetTexture();
             var pos = Projectile.Center - Main.screenPosition;
 
-            Color color = lightColor * Projectile.localAI[0];
-            var frameBox = mainTex.Frame(1, 2, 0, 0);
+            float exRot = Projectile.whoAmI * 0.3f + Main.GlobalTimeWrappedHourly * 2;
+
+            if (Main.zenithWorld)
+                lightColor = SlimeEmperor.BlackSlimeColor;
+
             Vector2 scale = Scale;
 
-            //绘制自己
-            Main.spriteBatch.Draw(mainTex, pos, frameBox, color, Projectile.rotation, frameBox.Size() / 2, scale, 0, 0);
-
             float factor = MathF.Sin(Main.GlobalTimeWrappedHourly);
-            color = new Color(194, 75 + (int)(60 * factor), 234);
+            Color color = new Color(50, 152 + (int)(100 * factor), 225);
             color *= Projectile.localAI[0] * 0.75f;
 
             //绘制影子拖尾
-            Projectile.DrawShadowTrails(color, 0.5f, 0.062f, 1, 8, 1, scale, frameBox);
+            Vector2 toCenter = new(Projectile.width / 2, Projectile.height / 2);
 
-            //绘制发光
-            frameBox = mainTex.Frame(1, 2, 0, 1);
+            for (int i = 1; i < 8; i += 2)
+                GelBall.DrawGelBall(mainTex, Projectile.oldPos[i] + toCenter - Main.screenPosition
+                    , color * (0.3f - (i * 0.03f)), Projectile.oldRot[i], exRot + i * 1.1f, scale, false);
 
-            Main.spriteBatch.Draw(mainTex, pos, frameBox, color, Projectile.rotation, frameBox.Size() / 2, scale, 0, 0);
+            //绘制自己
+            GelBall.DrawGelBall(mainTex, pos, lightColor * Projectile.localAI[0]
+                , Projectile.rotation, exRot, scale, true, true, color);
 
             return false;
         }

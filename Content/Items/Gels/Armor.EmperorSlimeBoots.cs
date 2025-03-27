@@ -68,6 +68,14 @@ namespace Coralite.Content.Items.Gels
                 .AddIngredient(ItemID.FrozenSlimeBlock)
                 .AddIngredient(ItemID.PinkSlimeBlock)
                 .Register();
+
+            MagikeRecipe.CreateCraftRecipe(ItemID.NinjaPants,ItemType<EmperorSlimeBoots>(),MagikeHelper.CalculateMagikeCost(MALevel.Emperor, 12, 60 * 5))
+                .AddIngredient<EmperorGel>(12)
+                .AddIngredient(ItemID.HellstoneBar, 8)
+                .AddIngredient(ItemID.SlimeBlock)
+                .AddIngredient(ItemID.FrozenSlimeBlock)
+                .AddIngredient(ItemID.PinkSlimeBlock)
+                .Register();
         }
 
         public override void SetDefaults()
@@ -183,5 +191,10 @@ namespace Coralite.Content.Items.Gels
     public class EmperorRarity : ModRarity
     {
         public override Color RarityColor => Color.Lerp(Coralite.MagicCrystalPink, new Color(50, 152, 225), 0.5f + 0.5f * MathF.Sin((int)Main.timeForVisualEffects * 0.1f));
+    }
+
+    public class EmperorSlimeBuff:ModBuff
+    {
+        public override string Texture => AssetDirectory.Buffs + "Buff";
     }
 }
