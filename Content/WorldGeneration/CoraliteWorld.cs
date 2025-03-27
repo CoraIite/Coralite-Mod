@@ -123,8 +123,8 @@ namespace Coralite.Content.WorldGeneration
                     tasks.Insert(FinalCleanup2, new PassLegacy("Coralite CoralCat World Spawn", CoralCatWorldSpawn));
             }
 
-            if (DigDigDigWorld)
-                ModifyDigdigdigWorldGen(tasks, ref totalWeight);
+            //if (DigDigDigWorld)
+            //    ModifyDigdigdigWorldGen(tasks, ref totalWeight);
         }
 
         public override void ModifyHardmodeTasks(List<GenPass> list)

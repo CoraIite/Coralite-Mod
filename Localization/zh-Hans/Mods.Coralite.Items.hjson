@@ -5480,8 +5480,31 @@ CrystallineLance: {
 }
 
 EmperorSlimeBoots: {
-	// ArmorBonus0: Mods.Coralite.Items.EmperorSlimeBoots.ArmorBonus0
-	// ArmorBonus1: Mods.Coralite.Items.EmperorSlimeBoots.ArmorBonus1
-	// DisplayName: Emperor Slime Boots
-	// Tooltip: ""
+	DisplayName: 皇帝史莱姆鞋
+	Tooltip:
+		'''
+		获得[c/3298e1:史莱姆的弹力]！
+		    ▶ 落地后弹起，冲刺撞墙弹回，按住下键减少弹起距离
+		免疫摔落伤害，增加跳跃高度
+		'''
+	ExtraTooltip: 装备凝胶纤维套装 [i:Coralite/GelFiberHelmet][i:Coralite/GelFiberBreastplate] 或忍者套装 [i:256][i:257] 触发不同的套装效果
+	ArmorBonusGelFiber:
+		'''
+		+12防御力
+		命中带有史莱姆减益的敌怪时获得一层粘液覆层，该效果有半秒CD
+		以较高速度触发[c/3298e1:史莱姆的弹力]时获得一层粘液覆层
+		每层提供1.5生命值，实际效果向下取整，最多叠加30层
+		拥有超过15层粘液时增加生命再生
+		受击时失去5层粘液
+		将自身的史莱姆减益转换为一层粘液覆层
+		'''
+	ArmorBonusNinja:
+		'''
+		+6防御力，+4%暴击率，+15%移动速度
+		命中带有史莱姆减益的敌怪时生成皇家凝胶球攻击
+		触发[c/3298e1:史莱姆的弹力]时获得史莱姆的祝福，命中敌人附加史莱姆减益
+		该效果有半秒CD
+		'''
+	SpecialNameGelFiber: 至高
+	SpecialNameNinja: 远征
 }

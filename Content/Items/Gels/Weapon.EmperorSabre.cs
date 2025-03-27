@@ -766,6 +766,16 @@ namespace Coralite.Content.Items.Gels
             Projectile.localNPCHitCooldown = 20;
         }
 
+        public override bool? CanDamage()
+        {
+            if (State<1)
+            {
+                return false;
+            }
+
+            return base.CanDamage();
+        }
+
         public override void Initialize()
         {
             for (int i = 0; i < 8; i++)

@@ -5432,8 +5432,11 @@ CrystallineLance: {
 }
 
 EmperorSlimeBoots: {
-	// ArmorBonus0: Mods.Coralite.Items.EmperorSlimeBoots.ArmorBonus0
-	// ArmorBonus1: Mods.Coralite.Items.EmperorSlimeBoots.ArmorBonus1
 	// DisplayName: Emperor Slime Boots
 	// Tooltip: ""
+	// ExtraTooltip: Mods.Coralite.Items.EmperorSlimeBoots.ExtraTooltip
+	// ArmorBonusGelFiber: Mods.Coralite.Items.EmperorSlimeBoots.ArmorBonusGelFiber
+	// ArmorBonusNinja: Mods.Coralite.Items.EmperorSlimeBoots.ArmorBonusNinja
+	// SpecialNameGelFiber: Mods.Coralite.Items.EmperorSlimeBoots.SpecialNameGelFiber
+	// SpecialNameNinja: Mods.Coralite.Items.EmperorSlimeBoots.SpecialNameNinja
 }

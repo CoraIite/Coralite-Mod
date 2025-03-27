@@ -4,6 +4,8 @@ using Coralite.Content.Items.Misc_Magic;
 using Coralite.Content.Items.Nightmare;
 using Coralite.Content.Items.Steel;
 using Coralite.Content.Items.Vanity;
+using System;
+using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 
@@ -46,7 +48,37 @@ namespace Coralite.Content.ModPlayers
                     drawInfo.drawPlayer.back = EquipLoader.GetEquipSlot(Mod, "SquirrelSet", EquipType.Back);
                 }
             }
-        }
 
+            if (SlimeDraw)//傻逼中的傻逼写法
+            {
+                Color targetColor = Color.Lerp(new Color(50, 150, 225, 80), new Color(255, 51, 234, 80), 0.5f + 0.5f * MathF.Sin(0.06f * (int)Main.timeForVisualEffects));
+                Color c = Color.Lerp(Color.Transparent, targetColor, EmperorDefence / (float)EmperorDefenctMax);
+                drawInfo.colorHair = c;
+                drawInfo.colorEyeWhites = c;
+                drawInfo.colorEyes = c;
+                drawInfo.colorHead = c;
+                drawInfo.colorBodySkin = c;
+                drawInfo.colorLegs = c;
+                drawInfo.colorShirt = c;
+                drawInfo.colorUnderShirt = c;
+                drawInfo.colorPants = c;
+                drawInfo.colorShoes = c;
+                drawInfo.colorArmorHead = c;
+                drawInfo.colorArmorBody = c;
+                drawInfo.colorMount = c;
+                drawInfo.colorArmorLegs = c;
+                drawInfo.colorElectricity = c;
+                drawInfo.colorDisplayDollSkin = c;
+
+                drawInfo.headGlowColor = c;
+                drawInfo.bodyGlowColor = c;
+                drawInfo.armGlowColor = c;
+                drawInfo.legsGlowColor = c;
+                drawInfo.ArkhalisColor = c;
+                drawInfo.selectionGlowColor = c;
+                drawInfo.itemColor = c;
+                drawInfo.floatingTubeColor = c;
+            }
+        }
     }
 }

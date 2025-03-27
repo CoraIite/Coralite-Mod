@@ -1,8 +1,12 @@
 ﻿using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Attributes;
+using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Coralite.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -19,8 +23,13 @@ namespace Coralite.Content.Items.Gels
         public const string AttackSet = "EmperorSlimeBootsA";
         public const string DefenceSet = "EmperorSlimeBootsB";
 
+        public static LocalizedText exTip;
+
         public static LocalizedText bonus0;
         public static LocalizedText bonus1;
+
+        public static LocalizedText exName0;
+        public static LocalizedText exName1;
 
         private enum ArmorSetType
         {
@@ -30,25 +39,41 @@ namespace Coralite.Content.Items.Gels
 
         public override void Load()
         {
-            bonus0 = this.GetLocalization("ArmorBonus0");
-            bonus1 = this.GetLocalization("ArmorBonus1");
+            exTip = this.GetLocalization("ExtraTooltip");
+
+            bonus0 = this.GetLocalization("ArmorBonusGelFiber");
+            bonus1 = this.GetLocalization("ArmorBonusNinja");
+
+            exName0 = this.GetLocalization("SpecialNameGelFiber");
+            exName1 = this.GetLocalization("SpecialNameNinja");
         }
 
         public override void Unload()
         {
+            exTip = null;
+
             bonus0 = null;
             bonus1 = null;
+
+            exName0 = null;
+            exName1 = null;
         }
 
         public void AddMagikeCraftRecipe()
         {
-
+            MagikeRecipe.CreateCraftRecipe<GelFiberBoots, EmperorSlimeBoots>(MagikeHelper.CalculateMagikeCost(MALevel.Emperor, 12, 60 * 5))
+                .AddIngredient<EmperorGel>(12)
+                .AddIngredient(ItemID.HellstoneBar, 8)
+                .AddIngredient(ItemID.SlimeBlock)
+                .AddIngredient(ItemID.FrozenSlimeBlock)
+                .AddIngredient(ItemID.PinkSlimeBlock)
+                .Register();
         }
 
         public override void SetDefaults()
         {
             Item.value = Item.sellPrice(gold: 2);
-            Item.rare = ItemRarityID.Blue;
+            Item.rare = RarityType<EmperorRarity>();
             Item.defense = 4;
         }
 
@@ -58,14 +83,21 @@ namespace Coralite.Content.Items.Gels
             {
                 cp.AddEffect(nameof(EmperorSlimeBoots));
             }
+
+            player.jumpBoost = true;
+            player.noFallDmg = true;
         }
 
         public override bool IsArmorSet(Item head, Item body, Item legs)
-            => CheckArmorSet(head, body, out _);
+            => CheckArmorSet(head, body, legs,out _);
 
-        private static bool CheckArmorSet(Item head, Item body, out ArmorSetType? type)
+        private static bool CheckArmorSet(Item head, Item body, Item legs,out ArmorSetType? type)
         {
             type = null;
+
+            if (legs.type != ItemType<EmperorSlimeBoots>())
+                return false;
+
             if (head.type == ItemType<GelFiberHelmet>() && body.type == ItemType<GelFiberBreastplate>())
             {
                 type = ArmorSetType.GelFiber;
@@ -83,7 +115,7 @@ namespace Coralite.Content.Items.Gels
 
         public override void UpdateArmorSet(Player player)
         {
-            CheckArmorSet(player.HeadArmor(), player.BodyArmor(), out ArmorSetType? type);
+            CheckArmorSet(player.HeadArmor(), player.BodyArmor(), player.LegArmor(), out ArmorSetType? type);
 
             if (player.TryGetModPlayer(out CoralitePlayer cp))
             {
@@ -91,14 +123,65 @@ namespace Coralite.Content.Items.Gels
                 {
                     case ArmorSetType.GelFiber:
                         player.setBonus = bonus0.Value;
+                        cp.AddEffect(DefenceSet);
+                        if (player.HasBuff(BuffID.Slimed))
+                        {
+                            player.DelBuff(BuffID.Slimed);
+                            cp.AddEmperorDefence();
+                        }
+
+                        cp.LifeMaxModifyer.Flat += (int)(1.5f * cp.EmperorDefence);
+                        player.statDefense += 12;
+
                         break;
                     case ArmorSetType.Ninja:
                         player.setBonus = bonus1.Value;
+                        cp.AddEffect(AttackSet);
+
+                        player.statDefense += 6;
+                        player.GetCritChance(DamageClass.Generic) += 4;
+                        player.moveSpeed += 0.15f;
+
                         break;
                     default:
                         break;
                 }
             }
         }
+
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            if (!CheckArmorSet(Main.LocalPlayer.HeadArmor(), Main.LocalPlayer.BodyArmor(), Main.LocalPlayer.LegArmor(), out ArmorSetType? type))
+            {
+                TooltipLine line2 = new TooltipLine(Mod, "SpecialArmorSet", exTip.Value);
+                tooltips.Add(line2);
+                return;
+            }
+
+            string name = "ItemName";
+            TooltipLine line = tooltips.FirstOrDefault(l => l.Name == name && l.Mod == "Terraria");
+            if (line != null)
+            {
+                string text = line.Text;
+                switch (type.Value)
+                {
+                    case ArmorSetType.GelFiber:
+                        text = exName0.Value + " " + text;
+                        break;
+                    case ArmorSetType.Ninja:
+                        text = exName1.Value + " " + text;
+                        break;
+                    default:
+                        break;
+                }
+
+                line.Text = text;
+            }
+        }
+    }
+
+    public class EmperorRarity : ModRarity
+    {
+        public override Color RarityColor => Color.Lerp(Coralite.MagicCrystalPink, new Color(50, 152, 225), 0.5f + 0.5f * MathF.Sin((int)Main.timeForVisualEffects * 0.1f));
     }
 }

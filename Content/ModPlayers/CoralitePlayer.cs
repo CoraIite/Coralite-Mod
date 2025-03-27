@@ -72,10 +72,20 @@ namespace Coralite.Content.ModPlayers
 
         public int nightmareCount;
         /// <summary> 使用梦魇之花的噩梦能量 </summary>
-        public int nightmareEnergy;
-        public int nightmareEnergyMax;
+        public short nightmareEnergy;
+        public short nightmareEnergyMax;
 
+        /// <summary>
+        /// 距离上次受伤的时间
+        /// </summary>
         public int HurtTimer;
+
+        /// <summary> 皇帝凝胶鞋的CD </summary>
+        public byte EmperorArmorCD;
+        /// <summary> 皇帝凝胶鞋的粘液覆层 </summary>
+        public short EmperorDefence;
+        public bool SlimeDraw;
+        public const short EmperorDefenctMax = 30;
 
         /// <summary> 爆伤加成 </summary>
         public float critDamageBonus;
@@ -136,6 +146,9 @@ namespace Coralite.Content.ModPlayers
             inventoryCraftStations.Clear();
             //Effects.Clear();
 
+            if (EmperorArmorCD > 0)
+                EmperorArmorCD --;
+
             pirateKingSoul = 0;
             if (pirateKingSoulCD > 0)
                 pirateKingSoulCD--;
@@ -184,6 +197,7 @@ namespace Coralite.Content.ModPlayers
 
         public override void OnRespawn()
         {
+            EmperorDefence = 0;
             HurtTimer = 0;
             nightmareCount = 0;
             nightmareEnergy = 0;
@@ -217,6 +231,84 @@ namespace Coralite.Content.ModPlayers
         public override void PreUpdateMovement()
         {
             SetStartDash();
+            if (HasEffect(nameof(Items.Gels.EmperorSlimeBoots))
+                && !Player.mount.Active && Player.grappling[0] == -1 && !Player.tongued && !Player.shimmering)
+            {
+                int hitX = -1;
+                int hitY = -1;
+                bool spawnDust = false;
+
+                List<Point> xHits = null;
+
+                if (!Collision.IsClearSpotTest(Player.position + Player.velocity, 16f, Player.width, Player.height, fallThrough: false, fall2: false, (int)Player.gravDir, checkCardinals: true, checkSlopes: true))
+                    xHits = Collision.FindCollisionTile(Player.velocity.X > 0 ? 0 : 1, Player.position + Player.velocity, 16f, Player.width, Player.height, fallThrough: false, fall2: false, (int)Player.gravDir, checkCardinals: true);
+                //Main.NewText(Player.dashDelay);
+                //Main.NewText(DashTimer,Color.Yellow);
+                if ((Player.dashDelay < 0 || DashTimer != 0)
+                    && xHits != null && xHits.Count != 0)
+                    foreach (var tilePoint in xHits)
+                    {
+                        Tile tile = Main.tile[tilePoint.X, tilePoint.Y];
+                        if (!tile.HasUnactuatedTile || !Main.tileSolid[tile.TileType] || tile.BlockType != BlockType.Solid)
+                            continue;
+
+                        Vector2 center = tilePoint.ToWorldCoordinates();
+
+                        if (center.Y > Player.position.Y && center.Y < Player.position.Y + Player.height
+                            && (center.X < Player.position.X + 8 || center.X > Player.position.X + Player.width - 8))
+                        {
+                            hitX = tilePoint.X;
+                            break;
+                        }
+                    }
+
+                if (Player.TouchedTiles.Count != 0)
+                    foreach (var tilePoint in Player.TouchedTiles)
+                    {
+                        Tile tile = Main.tile[tilePoint.X, tilePoint.Y];
+                        if (!tile.HasUnactuatedTile || !Main.tileSolid[tile.TileType] || tile.BlockType != BlockType.Solid)
+                            continue;
+
+                        Vector2 center = tilePoint.ToWorldCoordinates();
+                        if (center.X > Player.position.X && center.X < Player.position.X + Player.width
+                            && (center.Y < Player.position.Y || center.Y > Player.position.Y + Player.height))
+                        {
+                            hitY = tilePoint.Y;
+                            break;
+                        }
+                    }
+
+                float bounceF = -0.7f;
+                if (Player.controlDown)
+                    bounceF = -0.2f;
+                else if (hitX != -1 && MathF.Abs(Player.velocity.X) > 4f)
+                {
+                    spawnDust = true;
+                    Player.velocity.X *= bounceF;
+                    if (HasEffect(Items.Gels.EmperorSlimeBoots.DefenceSet) && Player.velocity.Length() > 6.5f)
+                        AddEmperorDefence();
+                }
+
+                if (hitY != -1 && MathF.Abs(Player.velocity.Y) > 4f /*&& !Player.controlJump*/)
+                {
+                    spawnDust = true;
+                    Player.velocity.Y *= bounceF;
+                    if (HasEffect(Items.Gels.EmperorSlimeBoots.DefenceSet) && Player.velocity.Length() > 6.5f)
+                        AddEmperorDefence();
+                }
+
+                if (spawnDust)
+                {
+                    Vector2 dir = Player.velocity.SafeNormalize(Vector2.Zero);
+                    for (int i = 0; i < 16; i++)
+                    {
+                        Dust.NewDustPerfect(Main.rand.NextVector2FromRectangle(Player.Hitbox)
+                            , DustID.t_Slime, dir.RotateByRandom(-0.3f, 0.3f) * Main.rand.NextFloat(1, 5), 150, new Color(50, 150, 225, 50), Main.rand.NextFloat(1f, 1.5f));
+                    }
+
+                    Helper.PlayPitched(CoraliteSoundID.QueenSlime_Item154, Player.Center,pitch:0.3f);
+                }
+            }
         }
 
         public override void PreUpdateBuffs()
@@ -340,6 +432,9 @@ namespace Coralite.Content.ModPlayers
 
         public override void UpdateLifeRegen()
         {
+            if (HasEffect(Items.Gels.EmperorSlimeBoots.DefenceSet)&&EmperorDefence>EmperorDefenctMax/2)
+                Player.lifeRegen += 4;
+
             Player.lifeRegen = (int)(Player.lifeRegen * (1 + lifeReganBonus));
         }
 
@@ -441,6 +536,10 @@ namespace Coralite.Content.ModPlayers
             int tempHurtTime = HurtTimer;
             HurtTimer = 0;
 
+            EmperorDefence -= 5;
+            if (EmperorDefence < 0)
+                EmperorDefence = 0;
+
             modifiers.ModifyHurtInfo += Post;
 
             void Post(ref Player.HurtInfo info)
@@ -523,6 +622,28 @@ namespace Coralite.Content.ModPlayers
             {
                 int defence = (int)Player.statDefense;
                 modifiers.SourceDamage += 0.01f * Math.Clamp(defence / 4, 0, 30);
+            }
+
+            if (target.HasBuff(BuffID.Slimed) && EmperorArmorCD == 0)
+            {
+                if (HasEffect(Items.Gels.EmperorSlimeBoots.DefenceSet))//凝胶防御套
+                {
+                    EmperorArmorCD = 30;
+                    AddEmperorDefence();
+                }
+                else if (HasEffect(Items.Gels.EmperorSlimeBoots.AttackSet))//凝胶攻击套
+                {
+                    EmperorArmorCD = 30;
+                    Vector2 dir = Helper.NextVec2Dir();
+
+                    int damage = 44;
+                    if (Player.HeldItem.damage > 0)
+                        damage = (int)Player.GetTotalDamage(Player.HeldItem.DamageType).ApplyTo(damage);
+
+                    Projectile.NewProjectile(Player.GetSource_FromThis(), target.Center + (dir * Main.rand.NextFloat(60, 80)),
+                        dir * Main.rand.NextFloat(2, 4), ProjectileType<Items.Gels.GelChaser>(), damage
+                        , 2, -1, ai1: target.Center.X, ai2: target.Center.Y);
+                }
             }
 
             #region 海盗王之魂的效果
@@ -695,6 +816,7 @@ namespace Coralite.Content.ModPlayers
 
         #endregion
 
+
         public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genDust, ref PlayerDeathReason damageSource)
         {
             if (damageSource.SourceItem == null
@@ -708,7 +830,7 @@ namespace Coralite.Content.ModPlayers
             return true;
         }
 
-        public void GetNightmareEnergy(int howMany)
+        public void GetNightmareEnergy(short howMany)
         {
             if (nightmareEnergy < nightmareEnergyMax)
             {
@@ -754,7 +876,7 @@ namespace Coralite.Content.ModPlayers
                 {
                     if (Player.armor[i].ModItem is null)
                         continue;
-                    if (Player.armor[i].ModItem.IsArmorSet(Player.armor[0], Player.armor[1], Player.armor[2])
+                    if (Player.armor[i].ModItem.IsArmorSet(Player.HeadArmor(), Player.BodyArmor(), Player.LegArmor())
                         && Player.armor[i].ModItem is IControllableArmorBonus conrtolableArmor)
                     {
                         conrtolableArmor.UseArmorBonus(Player);   //使用套装效果
@@ -806,6 +928,15 @@ namespace Coralite.Content.ModPlayers
                 SoundEngine.PlaySound(sItem.UseSound, Player.Center);
         }
 
+        public void AddEmperorDefence()
+        {
+            EmperorDefence++;
+            if (EmperorDefence>EmperorDefenctMax)
+                EmperorDefence = EmperorDefenctMax;
+        }
+
+        #region 多人同步
+
         public override void SendClientChanges(ModPlayer clientPlayer)
         {
 
@@ -815,6 +946,8 @@ namespace Coralite.Content.ModPlayers
         {
 
         }
+
+        #endregion
 
         public override void OnEnterWorld()
         {
