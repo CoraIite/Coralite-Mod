@@ -41,17 +41,29 @@ namespace Coralite.Content.NPCs.Crystalline
             set => NPC.localAI[2] = (int)value;
         }
 
+        private Player Target => Main.player[NPC.target];
+
         private enum AIStates
         {
             P1Idle,
+            P1Walking,
 
             P1Guard,
             P1Spurt,
 
             Exchange,
 
+            /// <summary>
+            /// 二阶段悬浮
+            /// </summary>
             P2Idle,
+            /// <summary>
+            /// 二阶段螺旋冲刺
+            /// </summary>
             P2Rolling,
+            /// <summary>
+            /// 二阶段挥刀
+            /// </summary>
             P2Swing,
         }
 
@@ -67,13 +79,13 @@ namespace Coralite.Content.NPCs.Crystalline
 
         public override void SetStaticDefaults()
         {
-            Main.npcFrameCount[Type] = 8;
+            Main.npcFrameCount[Type] = 21;
         }
 
         public override void SetDefaults()
         {
-            NPC.width = 54;
-            NPC.height = 54;
+            NPC.width = 50;
+            NPC.height = 80;
             NPC.damage = 70;
             NPC.defense = 45;
 
@@ -158,6 +170,96 @@ namespace Coralite.Content.NPCs.Crystalline
 
         #region AI
 
+        public override void AI()
+        {
+            switch (State)
+            {
+                case AIStates.P1Idle:
+                    P1Idle();
+                    break;
+                case AIStates.P1Walking:
+                    break;
+                case AIStates.P1Guard:
+                    break;
+                case AIStates.P1Spurt:
+                    break;
+                case AIStates.Exchange:
+                    break;
+                case AIStates.P2Idle:
+                    break;
+                case AIStates.P2Rolling:
+                    break;
+                case AIStates.P2Swing:
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public void P1Idle()
+        {
+            //一动不动
+            NPC.velocity.X = 0;
+            NPC.frame.X = 0;
+            NPC.frame.Y = 0;
+
+            if (Timer % 45 == 0)
+                TryTurnToAttack();
+
+            if (Timer > 60 * 5)//随便走走
+                SwitchState(AIStates.P1Walking);
+
+            Timer++;
+        }
+
+        private void SwitchState(AIStates targetState)
+        {
+            State = targetState;
+            Timer = 0;
+            Recorder = 0;
+            CanHit = false;
+
+            NPC.netUpdate=true;
+        }
+
+        private void TryTurnToAttack()
+        {
+            NPC.TargetClosest(false);
+
+            //找到玩家了就转向攻击阶段
+            if (NPC.target >= 0 && NPC.target < 255 && !Main.player[NPC.target].dead && CanHitTarget())//不攻击隐身玩家
+                StartAttack();
+        }
+
+        /// <summary>
+        /// 需要玩家不隐身（隐身是指有隐身药水BUFF和不在使用物品）<br></br>
+        /// 需要距离小于1000，并且可以看到玩家
+        /// </summary>
+        /// <returns></returns>
+        public bool CanHitTarget()
+            => !(Target.invis && Target.itemAnimation == 0) && Vector2.Distance(NPC.Center, Target.Center) < 1000 &&
+                    Collision.CanHit(NPC.Center, 1, 1, Target.TopLeft, Target.width, Target.height);
+
+        public void StartAttack()
+        {
+            switch (State)
+            {
+                case AIStates.P1Idle:
+                case AIStates.P1Walking:
+                    SwitchState(AIStates.P1Spurt);
+                    break;
+                case AIStates.P2Idle:
+                    SwitchState(AIStates.P2Rolling);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        #region 一阶段帧图
+
+        #endregion
+
         #endregion
 
         #region 网络同步
@@ -168,6 +270,36 @@ namespace Coralite.Content.NPCs.Crystalline
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
+            SpriteEffects effect = NPC.spriteDirection > 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+
+            switch (State)
+            {
+                case AIStates.P1Idle:
+                case AIStates.P1Walking:
+                case AIStates.P1Guard:
+                case AIStates.P1Spurt://一阶段绘制
+                    {
+                        Texture2D tex = NPC.GetTexture();
+
+                        Rectangle frameBox = tex.Frame(5, Main.npcFrameCount[NPC.type], NPC.frame.X, NPC.frame.Y);
+
+                        spriteBatch.Draw(tex, NPC.Center - screenPos, frameBox, drawColor
+                            , NPC.rotation, frameBox.Size() / 2, NPC.scale, effect, 0);
+                    }
+                    break;
+                case AIStates.Exchange:
+                    break;
+                case AIStates.P2Idle:
+                    break;
+                case AIStates.P2Rolling:
+                    break;
+                case AIStates.P2Swing:
+                    break;
+                default:
+                    break;
+            }
+
+
             return false;
         }
 

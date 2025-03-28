@@ -61,7 +61,7 @@ namespace Coralite.Content.Items.Gels
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeRecipe.CreateCraftRecipe<GelFiberBoots, EmperorSlimeBoots>(MagikeHelper.CalculateMagikeCost(MALevel.Emperor, 12, 60 * 5))
+            MagikeRecipe.CreateCraftRecipe<GelFiberBoots, EmperorSlimeBoots>(MagikeHelper.CalculateMagikeCost(MALevel.Emperor, 12, 60 * 4))
                 .AddIngredient<EmperorGel>(12)
                 .AddIngredient(ItemID.HellstoneBar, 8)
                 .AddIngredient(ItemID.SlimeBlock)
@@ -69,7 +69,7 @@ namespace Coralite.Content.Items.Gels
                 .AddIngredient(ItemID.PinkSlimeBlock)
                 .Register();
 
-            MagikeRecipe.CreateCraftRecipe(ItemID.NinjaPants,ItemType<EmperorSlimeBoots>(),MagikeHelper.CalculateMagikeCost(MALevel.Emperor, 12, 60 * 5))
+            MagikeRecipe.CreateCraftRecipe(ItemID.NinjaPants,ItemType<EmperorSlimeBoots>(),MagikeHelper.CalculateMagikeCost(MALevel.Emperor, 12, 60 * 4))
                 .AddIngredient<EmperorGel>(12)
                 .AddIngredient(ItemID.HellstoneBar, 8)
                 .AddIngredient(ItemID.SlimeBlock)
@@ -88,9 +88,7 @@ namespace Coralite.Content.Items.Gels
         public override void UpdateEquip(Player player)
         {
             if (player.TryGetModPlayer(out CoralitePlayer cp))
-            {
                 cp.AddEffect(nameof(EmperorSlimeBoots));
-            }
 
             player.jumpBoost = true;
             player.noFallDmg = true;
@@ -134,7 +132,7 @@ namespace Coralite.Content.Items.Gels
                         cp.AddEffect(DefenceSet);
                         if (player.HasBuff(BuffID.Slimed))
                         {
-                            player.DelBuff(BuffID.Slimed);
+                            player.ClearBuff(BuffID.Slimed);
                             cp.AddEmperorDefence();
                         }
 
@@ -195,6 +193,6 @@ namespace Coralite.Content.Items.Gels
 
     public class EmperorSlimeBuff:ModBuff
     {
-        public override string Texture => AssetDirectory.Buffs + "Buff";
+        public override string Texture => AssetDirectory.Buffs + Name;
     }
 }

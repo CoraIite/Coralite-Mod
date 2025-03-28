@@ -244,10 +244,11 @@ namespace Coralite.Content.ModPlayers
 
             List<Point> xHits = null;
 
+            #region X方向撞墙检测，只有冲刺时触发
+
             if (!Collision.IsClearSpotTest(Player.position + Player.velocity, 16f, Player.width, Player.height, fallThrough: false, fall2: false, (int)Player.gravDir, checkCardinals: true, checkSlopes: true))
                 xHits = Collision.FindCollisionTile(Player.velocity.X > 0 ? 0 : 1, Player.position + Player.velocity, 16f, Player.width, Player.height, fallThrough: false, fall2: false, (int)Player.gravDir, checkCardinals: true);
-            //Main.NewText(Player.dashDelay);
-            //Main.NewText(DashTimer,Color.Yellow);
+
             if ((Player.dashDelay < 0 || DashTimer != 0)
                 && xHits != null && xHits.Count != 0)
                 foreach (var tilePoint in xHits)
@@ -266,6 +267,10 @@ namespace Coralite.Content.ModPlayers
                     }
                 }
 
+            #endregion
+
+            #region Y方向撞墙检测
+
             if (Player.TouchedTiles.Count != 0)
                 foreach (var tilePoint in Player.TouchedTiles)
                 {
@@ -282,16 +287,18 @@ namespace Coralite.Content.ModPlayers
                     }
                 }
 
-            float bounceF = -0.7f;
+            #endregion
+
+            float bounceF = -0.7f;//弹力系数
             if (Player.controlDown)
-                bounceF = -0.2f;
+                bounceF = -0.15f;//按住下键减少弹性
             else if (hitX != -1 && MathF.Abs(Player.velocity.X) > 4f)
             {
                 Player.velocity.X *= bounceF;
                 OnBouncy();
             }
 
-            if (hitY != -1 && MathF.Abs(Player.velocity.Y) > 4f /*&& !Player.controlJump*/)
+            if (hitY != -1 && MathF.Abs(Player.velocity.Y) > 4f)
             {
                 Player.velocity.Y *= bounceF;
                 OnBouncy();
@@ -309,6 +316,7 @@ namespace Coralite.Content.ModPlayers
                 Helper.PlayPitched(CoraliteSoundID.QueenSlime_Item154, Player.Center, pitch: 0.3f);
             }
 
+            //弹起时触发，生成粒子，并触发套装效果
             void OnBouncy()
             {
                 spawnDust = true;
@@ -944,7 +952,7 @@ namespace Coralite.Content.ModPlayers
         public void AddEmperorDefence()
         {
             EmperorDefence++;
-            if (EmperorDefence>EmperorDefenctMax)
+            if (EmperorDefence > EmperorDefenctMax)
                 EmperorDefence = EmperorDefenctMax;
         }
 
