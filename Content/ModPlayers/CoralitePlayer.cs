@@ -280,7 +280,7 @@ namespace Coralite.Content.ModPlayers
 
                     Vector2 center = tilePoint.ToWorldCoordinates();
                     if (center.X > Player.position.X && center.X < Player.position.X + Player.width
-                        && (center.Y < Player.position.Y || center.Y > Player.position.Y + Player.height))
+                        && center.Y > Player.position.Y + Player.height)
                     {
                         hitY = tilePoint.Y;
                         break;
@@ -301,6 +301,7 @@ namespace Coralite.Content.ModPlayers
             if (hitY != -1 && MathF.Abs(Player.velocity.Y) > 4f)
             {
                 Player.velocity.Y *= bounceF;
+                Player.RefreshMovementAbilities();
                 OnBouncy();
             }
 

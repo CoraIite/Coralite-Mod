@@ -5391,3 +5391,8 @@ EmperorSlimeBoots: {
 	SpecialNameGelFiber: Mods.Coralite.Items.EmperorSlimeBoots.SpecialNameGelFiber
 	SpecialNameNinja: Mods.Coralite.Items.EmperorSlimeBoots.SpecialNameNinja
 }
+
+ChalcedonyWing: {
+	DisplayName: Chalcedony Wing
+	Tooltip: ""
+}

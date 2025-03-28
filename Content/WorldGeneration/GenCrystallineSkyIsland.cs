@@ -2130,7 +2130,8 @@ namespace Coralite.Content.WorldGeneration
                 WorldGen.AddBuriedChest(x, y,
                    WorldGen.genRand.NextFromList(
                        ModContent.ItemType<Luminward>(),
-                       ModContent.ItemType<SkyshipInABottle>()
+                       ModContent.ItemType<SkyshipInABottle>(),
+                       ModContent.ItemType<ChalcedonyWing>()
                        ), notNearOtherChests: false, 1, trySlope: false, (ushort)ModContent.TileType<SkarnChestTile>());
             }
             else if (c == new Color(0, 255, 170))

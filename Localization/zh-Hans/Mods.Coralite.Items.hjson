@@ -5510,3 +5510,8 @@ EmperorSlimeBoots: {
 	SpecialNameGelFiber: 至高
 	SpecialNameNinja: 远征
 }
+
+ChalcedonyWing: {
+	DisplayName: 玉髓翼
+	Tooltip: 可飞行和缓慢坠落
+}

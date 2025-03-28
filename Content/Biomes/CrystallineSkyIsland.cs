@@ -14,9 +14,20 @@ namespace Coralite.Content.Biomes
 
         public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Temp_CrystallineSkyIsland");
 
+        public override void Load()
+        {
+            BackgroundTextureLoader.AddBackgroundTexture(Mod, AssetDirectory.Backgrounds + nameof(CrystallineSkyIslandBackground) + "Far");
+            BackgroundTextureLoader.AddBackgroundTexture(Mod, AssetDirectory.Backgrounds + nameof(CrystallineSkyIslandBackground) + "Mid");
+            BackgroundTextureLoader.AddBackgroundTexture(Mod, AssetDirectory.Backgrounds + nameof(CrystallineSkyIslandBackground) + "Close");
+        }
+
         //public override string BestiaryIcon => AssetDirectory.Biomes + "MagicCrystalCaveIcon";
 
         public override ModWaterStyle WaterStyle => ModContent.GetInstance<CrystallineSkyIslandWaterStyle>();
+
+        public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => ModContent.GetInstance<CrystallineSkyIslandBackground>();
+
+        public override Color? BackgroundColor => Color.CornflowerBlue;
 
         public override bool IsBiomeActive(Player player)
         {
@@ -36,6 +47,8 @@ namespace Coralite.Content.Biomes
         public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Temp_CrystallineSkyIsland");
 
         public override ModWaterStyle WaterStyle => ModContent.GetInstance<CrystallineSkyIslandWaterStyle>();
+
+        public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => ModContent.GetInstance<CrystallineSkyIslandBackground>();
 
         public override bool IsSceneEffectActive(Player player)
         {
@@ -110,6 +123,48 @@ namespace Coralite.Content.Biomes
         //public override Asset<Texture2D> GetRainTexture() => rainTexture;
     }
 
+    public class CrystallineSkyIslandBackground : ModSurfaceBackgroundStyle
+    {
+        public override void ModifyFarFades(float[] fades, float transitionSpeed)
+        {
+            for (int i = 0; i < fades.Length; i++)
+            {
+                if (i == Slot)
+                {
+                    fades[i] += transitionSpeed;
+                    if (fades[i] > 1f)
+                    {
+                        fades[i] = 1f;
+                    }
+                }
+                else
+                {
+                    fades[i] -= transitionSpeed;
+                    if (fades[i] < 0f)
+                    {
+                        fades[i] = 0f;
+                    }
+                }
+            }
+        }
+
+        public override int ChooseFarTexture()
+        {
+            return BackgroundTextureLoader.GetBackgroundSlot(Mod, "Assets/Backgrounds/CrystallineSkyIslandBackgroundFar");
+        }
+
+        public override int ChooseMiddleTexture()
+        {
+            return BackgroundTextureLoader.GetBackgroundSlot(Mod, "Assets/Backgrounds/CrystallineSkyIslandBackgroundMid");
+        }
+
+        public override int ChooseCloseTexture(ref float scale, ref double parallax, ref float a, ref float b)
+        {
+            return BackgroundTextureLoader.GetBackgroundSlot(Mod, "Assets/Backgrounds/CrystallineSkyIslandBackgroundClose");
+        }
+
+    }
+
     public class CrystallineSkyIslandDroplet : ModGore
     {
         public override string Texture => AssetDirectory.Biomes + Name;
@@ -123,5 +178,4 @@ namespace Coralite.Content.Biomes
             UpdateType = GoreID.WaterDrip;
         }
     }
-
 }
