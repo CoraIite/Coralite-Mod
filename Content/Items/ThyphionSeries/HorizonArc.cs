@@ -206,7 +206,8 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             if (Timer < DashTime + 2)//冲刺过程中
             {
-                Owner.itemTime = Owner.itemAnimation = 2;
+                Projectile.timeLeft = 20;
+                Owner.itemTime = Owner.itemAnimation = 15;
 
                 Dashing_Angle();//改变弓的角度
 
@@ -229,7 +230,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                     Projectile.timeLeft = 20;
                     Owner.itemTime = Owner.itemAnimation = 20;
                 }
-                else
+                else 
                 {
                     Release = 1;
                     if (bonus)
@@ -355,6 +356,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         public void PowerfulRainbow()
         {
             Projectile.timeLeft = 200;
+            Owner.itemTime = Owner.itemAnimation = 10;
             handOffset = Helper.Lerp(handOffset, 0, 0.15f);
             if (dashHit)
                 Owner.AddBuff(BuffType<HorizonArcBonus>(), 60 * 3 + 20);

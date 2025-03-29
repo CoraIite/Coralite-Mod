@@ -257,16 +257,12 @@ namespace Coralite.Content.Items.ThyphionSeries
         }
     }
 
-    [PlayerEffect]
     public class CloudBonus : ModBuff
     {
         public override string Texture => AssetDirectory.ThyphionSeriesItems + Name;
 
         public override void Update(Player player, ref int buffIndex)
         {
-            if (player.TryGetModPlayer(out CoralitePlayer cp))
-                cp.AddEffect(nameof(CloudBonus));
-
             player.moveSpeed += 0.15f;
             player.GetDamage(DamageClass.Ranged) += 0.15f;
 

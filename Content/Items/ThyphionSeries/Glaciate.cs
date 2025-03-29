@@ -191,7 +191,8 @@ namespace Coralite.Content.Items.ThyphionSeries
 
                 rotAngle += 0.4f / (DashTime + 1);
 
-                Owner.itemTime = Owner.itemAnimation = 2;
+                Projectile.timeLeft = 22;
+                Owner.itemTime = Owner.itemAnimation = 22;
             }
             else
             {
