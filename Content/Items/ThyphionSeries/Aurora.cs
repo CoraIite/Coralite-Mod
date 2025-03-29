@@ -27,7 +27,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public override void SetDefaults()
         {
-            Item.SetWeaponValues(136, 6f);
+            Item.SetWeaponValues(132, 6f);
             Item.DefaultToRangedWeapon(10, AmmoID.Arrow, 22, 16f);
 
             Item.rare = ItemRarityID.Red;
@@ -168,7 +168,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             }
             else
             {
-                if (DownLeft && SPTimer == 0)
+                if (!DownLeft && SPTimer == 0)
                 {
                     if (Projectile.IsOwnedByLocalPlayer())
                     {
@@ -183,12 +183,12 @@ namespace Coralite.Content.Items.ThyphionSeries
                 {
                     if (SPTimer == 0 && Projectile.IsOwnedByLocalPlayer())
                     {
-                        Helper.PlayPitched(CoraliteSoundID.AetheriumBlock, Projectile.Center, pitchAdjust: -0.5f);
+                        Helper.PlayPitched(CoraliteSoundID.SpawnAetheriumBlock, Projectile.Center, pitchAdjust: -0.5f);
                         Helper.PlayPitched(CoraliteSoundID.Bow2_Item102, Projectile.Center);
 
                         Projectile.NewProjectileFromThis<AuroraArrow>(Owner.Center, ToMouse.SafeNormalize(Vector2.Zero) * 16
-                            , (int)(Owner.GetWeaponDamage(Item) * 1.5f), Projectile.knockBack, 1);
-
+                            , (int)(Owner.GetDamageWithAmmo(Item) * 2.5f), Projectile.knockBack, 1);
+                        
                         Rotation = ToMouseA;
 
                         Vector2 dir = Rotation.ToRotationVector2();
@@ -474,7 +474,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            modifiers.SourceDamage += HitCount * 0.15f;
+            modifiers.SourceDamage += HitCount * 0.22f;
         }
 
         public override bool PreDraw(ref Color lightColor)

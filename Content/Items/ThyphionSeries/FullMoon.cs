@@ -93,32 +93,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                     return false;
             }
 
-            int mouseDir = Main.MouseWorld.X > Player.Center.X ? 1 : -1;
-
-            if (mouseDir > 0)
-            {
-                if (dashDirection > 0)
-                    newVelocity = (Main.MouseWorld - Player.Center).SafeNormalize(Vector2.Zero);
-                else
-                    newVelocity = new Vector2(-1, 0);
-            }
-            else
-            {
-                if (dashDirection > 0)
-                    newVelocity = new Vector2(1, 0);
-                else
-                    newVelocity = (Main.MouseWorld - Player.Center).SafeNormalize(Vector2.Zero);
-            }
-
-            float angle = (Main.MouseWorld - Player.Center).ToRotation();
-            const float angleLimit = 0.2f;
-
-            if ((angle > -MathHelper.PiOver2 - angleLimit && angle < -MathHelper.PiOver2 + angleLimit)
-                || (angle > MathHelper.PiOver2 - angleLimit && angle < MathHelper.PiOver2 + angleLimit))
-            {
-                dashDirection = Math.Sign(Main.MouseWorld.X - Player.Center.X);
-                newVelocity = (Main.MouseWorld - Player.Center).SafeNormalize(Vector2.Zero);
-            }
+            newVelocity = new Vector2(dashDirection, 0);
 
             Player.GetModPlayer<CoralitePlayer>().DashDelay = 84;
             Player.GetModPlayer<CoralitePlayer>().DashTimer = 18;
@@ -253,14 +228,14 @@ namespace Coralite.Content.Items.ThyphionSeries
                         if (Projectile.IsOwnedByLocalPlayer())//生成弹幕
                         {
                             Projectile.NewProjectileFromThis<FullMoonStrike>(Projectile.Center, Vector2.Zero
-                                , (int)(Owner.GetWeaponDamage(Item) * 4f), 10, Projectile.whoAmI);
+                                , (int)(Owner.GetDamageWithAmmo(Item) * 6f), 10, Projectile.whoAmI);
                         }
                         return;
                     }
 
                     break;
                 case 2://射击阶段
-                    if (DownLeft && SPTimer == 0)
+                    if (!DownLeft && SPTimer == 0)
                     {
                         if (Projectile.IsOwnedByLocalPlayer())
                         {
@@ -412,7 +387,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             Helper.PlayPitched(CoraliteSoundID.Ding_Item4, Projectile.Center, pitchAdjust: -0.3f);
 
             if (target != null && target.CanBeChasedBy())//踢一脚
-                target.SimpleStrikeNPC(Owner.GetWeaponDamage(Item), Owner.direction, knockBack: 10, damageType: DamageClass.Ranged);
+                target.SimpleStrikeNPC(Owner.GetDamageWithAmmo(Item), Owner.direction, knockBack: 10, damageType: DamageClass.Ranged);
 
             if (!VisualEffectSystem.HitEffect_Dusts)
                 return;

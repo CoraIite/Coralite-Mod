@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Bosses.BabyIceDragon;
 using Coralite.Content.Dusts;
+using Coralite.Content.GlobalItems;
 using Coralite.Content.Items.Icicle;
 using Coralite.Content.ModPlayers;
 using Coralite.Content.Particles;
@@ -41,6 +42,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             Item.noUseGraphic = true;
             Item.useTurn = false;
             Item.UseSound = CoraliteSoundID.Bow_Item5;
+            CoraliteGlobalItem.SetColdDamage(Item);
         }
 
         public override void HoldItem(Player player)
@@ -129,7 +131,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
                 //生成手持弹幕
                 Projectile.NewProjectile(Player.GetSource_ItemUse(Player.HeldItem), Player.Center, newVelocity, ProjectileType<GlaciateHeldProj>(),
-                    Player.GetWeaponDamage(Item), Player.HeldItem.knockBack, Player.whoAmI, newVelocity.ToRotation(), 1, 22);
+                    Player.GetDamageWithAmmo(Item), Player.HeldItem.knockBack, Player.whoAmI, newVelocity.ToRotation(), 1, 22);
             }
 
             return true;
@@ -193,7 +195,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             }
             else
             {
-                if (DownLeft && SPTimer == 0)
+                if (!DownLeft && SPTimer == 0)
                 {
                     if (Projectile.IsOwnedByLocalPlayer())
                     {
@@ -201,8 +203,8 @@ namespace Coralite.Content.Items.ThyphionSeries
                         Rotation = Rotation.AngleLerp(ToMouseA, 0.15f);
                     }
 
-                    Projectile.timeLeft = 30;
-                    Owner.itemTime = Owner.itemAnimation = 2;
+                    Projectile.timeLeft = 22;
+                    Owner.itemTime = Owner.itemAnimation = 22;
                 }
                 else
                 {
@@ -213,13 +215,8 @@ namespace Coralite.Content.Items.ThyphionSeries
                         Helper.PlayPitched(CoraliteSoundID.FireStaffSummon_Item77, Projectile.Center);
 
                         //射冰晶波
-                        Projectile.NewProjectileFromThis<GlaciateWave>(Projectile.Center, UnitToMouseV * 24, (int)(Owner.GetWeaponDamage(Item) * 1.5f)
+                        Projectile.NewProjectileFromThis<GlaciateWave>(Projectile.Center, UnitToMouseV * 24, (int)(Owner.GetDamageWithAmmo(Item) * 1.5f)
                             , Projectile.knockBack);
-
-                        if (Item.ModItem is Glaciate glaciate)
-                        {
-                            glaciate.powerfulAttack = true;
-                        }
 
                         if (Projectile.IsOwnedByLocalPlayer())
                         {
@@ -337,6 +334,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             Projectile.penetrate = -1;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = -1;
+            Projectile.coldDamage = true;
         }
 
         public override bool? CanDamage()
@@ -459,6 +457,12 @@ namespace Coralite.Content.Items.ThyphionSeries
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Projectile.velocity = Projectile.velocity.SafeNormalize(Vector2.Zero) * 2;
+            if (Projectile.localAI[2]==0)
+            {
+                Projectile.localAI[2] = 1;
+            if (Main.player[Projectile.owner].HeldItem.ModItem is Glaciate glaciate)
+                glaciate.powerfulAttack = true;
+            }
         }
 
         public override bool TileCollideStyle(ref int width, ref int height, ref bool fallThrough, ref Vector2 hitboxCenterFrac)
@@ -650,7 +654,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         private void TryMakingSpike(Vector2 pos, Vector2 dir)
         {
-            int damage = (int)(Projectile.damage * 3.5f);
+            int damage = (int)(Projectile.damage * 9f);
 
             int p = Projectile.NewProjectileFromThis(pos + dir * 30, dir, ProjectileType<IceThorn>(),
                  damage, 0f, 0f, 1.3f);

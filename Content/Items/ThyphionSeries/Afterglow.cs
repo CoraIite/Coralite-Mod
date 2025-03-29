@@ -22,7 +22,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public override void SetDefaults()
         {
-            Item.SetWeaponValues(14, 2f);
+            Item.SetWeaponValues(13, 2f);
             Item.DefaultToRangedWeapon(10, AmmoID.Arrow, 24, 7f);
 
             Item.rare = ItemRarityID.Blue;
@@ -113,6 +113,8 @@ namespace Coralite.Content.Items.ThyphionSeries
         public ref float Timer => ref Projectile.localAI[1];
         public ref float RecordAngle => ref Projectile.localAI[2];
 
+        private int timer2;
+
         public enum ArrowType
         {
             arrow,
@@ -156,7 +158,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
                                 if (t.HasTile && (Main.tileSolid[t.TileType] || TileID.Sets.Platforms[t.TileType]))
                                 {
-                                    Helper.PlayPitched(CoraliteSoundID.FireBallExplosion_Item74, Projectile.Center, pitch: 0.4f);
+                                    Helper.PlayPitched(CoraliteSoundID.FireShoot_DD2_BetsysWrathShot, Projectile.Center, pitch: 0.4f);
                                     CurrentArrowType = (int)ArrowType.fire;
                                     if (t.TileType is TileID.IceBlock or TileID.IceBrick)
                                         CurrentArrowType = (int)ArrowType.iceFire;
@@ -213,11 +215,11 @@ namespace Coralite.Content.Items.ThyphionSeries
                     break;
                 }
 
-                if (DownLeft)
+                if (!DownLeft && Timer < DashTime + 60)
                 {
                     if (Projectile.IsOwnedByLocalPlayer())
                     {
-                        Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
+                        Owner.direction = InMousePos.X > Owner.Center.X ? 1 : -1;
                         Rotation = Rotation.AngleLerp((Main.MouseWorld - Owner.MountedCenter).ToRotation(), 0.35f);
 
                         if (Main.rand.NextBool(10))
@@ -240,16 +242,27 @@ namespace Coralite.Content.Items.ThyphionSeries
                         }
                     }
 
-                    Projectile.timeLeft = 2;
+                    Projectile.timeLeft = Owner.itemTimeMax;
                     Owner.itemTime = Owner.itemAnimation = 2;
                 }
                 else
                 {
-                    Projectile.NewProjectileFromThis(Owner.Center, (Main.MouseWorld - Owner.MountedCenter).SafeNormalize(Vector2.One) * 12f
-                        , GetArrowType(), (int)(Owner.GetWeaponDamage(Item) * 1.2f), Projectile.knockBack);
+                    Owner.direction = InMousePos.X > Owner.Center.X ? 1 : -1;
+                    Rotation = Rotation.AngleLerp((Main.MouseWorld - Owner.MountedCenter).ToRotation(), 0.35f);
 
-                    SoundEngine.PlaySound(CoraliteSoundID.Bow_Item5, Owner.Center);
-                    Projectile.Kill();
+                    Timer = DashTime + 62;
+                    if (timer2 == 0 && Projectile.IsOwnedByLocalPlayer())
+                    {
+                        SoundEngine.PlaySound(CoraliteSoundID.Bow_Item5, Owner.Center);
+                        Projectile.NewProjectileFromThis(Owner.Center, (Main.MouseWorld - Owner.MountedCenter).SafeNormalize(Vector2.One) * 12f
+                                , GetArrowType(), (int)(Owner.GetDamageWithAmmo(Item) * 2.2f), Projectile.knockBack);
+                    }
+
+                    Owner.itemTime = Owner.itemAnimation = 2;
+
+                    timer2++;
+                    if (timer2 > Owner.itemTimeMax)
+                        Projectile.Kill();
                 }
 
             } while (false);
@@ -280,7 +293,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             Main.spriteBatch.Draw(mainTex, center, null, lightColor, Projectile.rotation, mainTex.Size() / 2, 1, DirSign > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0f);
 
-            if (Special == 0)
+            if (Special == 0 || timer2 != 0)
                 return false;
 
             int type = GetArrowType();

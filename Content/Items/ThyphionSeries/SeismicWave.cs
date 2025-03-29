@@ -27,7 +27,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         public override void SetDefaults()
         {
             Item.SetWeaponValues(58, 8f);
-            Item.DefaultToRangedWeapon(10, AmmoID.Arrow, 25, 13f);
+            Item.DefaultToRangedWeapon(10, AmmoID.Arrow, 24, 13f);
 
             Item.rare = ItemRarityID.Pink;
             Item.useStyle = ItemUseStyleID.Rapier;
@@ -83,7 +83,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             Player.GetModPlayer<CoralitePlayer>().DashDelay = 90;
             Player.GetModPlayer<CoralitePlayer>().DashTimer = 24;
 
-            float rot = (Main.MouseWorld - Player.Center).ToRotation();
+            float rot = Player.velocity.ToRotation();
             if (rot < -1.57f)
             {
                 rot += MathHelper.TwoPi;
@@ -111,7 +111,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
                 //生成手持弹幕
                 Projectile.NewProjectile(Player.GetSource_ItemUse(Player.HeldItem), Player.Center, newVelocity, ProjectileType<SeismicWaveHeldProj>(),
-                    Player.GetWeaponDamage(Item), Player.HeldItem.knockBack, Player.whoAmI, rot, 1, 24);
+                    Player.GetDamageWithAmmo(Item), Player.HeldItem.knockBack, Player.whoAmI, rot, 1, 24);
             }
 
             return true;
@@ -136,6 +136,8 @@ namespace Coralite.Content.Items.ThyphionSeries
         {
             base.SetDefaults();
             Projectile.width = Projectile.height = 70;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = -1;
         }
 
         public override bool? CanDamage()
@@ -188,6 +190,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             Owner.velocity.Y = -12;
             Strike();
+            Owner.wingTime = Owner.wingTimeMax;
         }
 
         public void Strike()
@@ -200,7 +203,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             //生成震波弹幕
             Collision.HitTiles(Projectile.Center - new Vector2(100, 20), new Vector2(0, 0), 200, 100);
 
-            Projectile.NewProjectileFromThis<SeismicWaveStrike>(Projectile.Center, Vector2.Zero, (int)(Owner.GetWeaponDamage(Item) * 1.2f)
+            Projectile.NewProjectileFromThis<SeismicWaveStrike>(Projectile.Center, Vector2.Zero, (int)(Owner.GetDamageWithAmmo(Item) * 2f)
                 , 8);
 
             Helper.PlayPitched(CoraliteSoundID.StaffOfEarth_Item69, Projectile.Center, pitch: 0.8f);
@@ -242,14 +245,14 @@ namespace Coralite.Content.Items.ThyphionSeries
         {
             Projectile.friendly = true;
             Projectile.DamageType = DamageClass.Ranged;
-            Projectile.width = Projectile.height = 320;
+            Projectile.width = Projectile.height = 400;
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
             Projectile.timeLeft = 1000;
             Projectile.penetrate = -1;
 
             Projectile.usesIDStaticNPCImmunity = true;
-            Projectile.idStaticNPCHitCooldown = 12;
+            Projectile.idStaticNPCHitCooldown = 6;
         }
 
         public override void AI()
@@ -262,7 +265,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             else
                 Alpha = 1 - (Timer - 6) / 18f;
 
-            float length = 20 + Timer / 16f * 130;
+            float length = 20 + Timer / 16f * 220;
 
             for (int i = 0; i < 5; i++)
             {

@@ -29,11 +29,14 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public float Priority => IDashable.HeldItemDash;
 
-        private int shootCount;
+        public override void SetStaticDefaults()
+        {
+            ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
+        }
 
         public override void SetDefaults()
         {
-            Item.SetWeaponValues(34, 4f);
+            Item.SetWeaponValues(32, 4f);
             Item.DefaultToRangedWeapon(10, AmmoID.Arrow, 21, 12f);
 
             Item.rare = ItemRarityID.Orange;
@@ -52,6 +55,8 @@ namespace Coralite.Content.Items.ThyphionSeries
                 cp.AddDash(this);
         }
 
+        public override bool AltFunctionUse(Player player) => true;
+
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             Vector2 dir = (Main.MouseWorld - player.Center).SafeNormalize(Vector2.One);
@@ -60,14 +65,11 @@ namespace Coralite.Content.Items.ThyphionSeries
             Projectile.NewProjectile(new EntitySource_ItemUse(player, Item)
                 , player.Center, Vector2.Zero, ProjectileType<TurbulenceHeldProj>(), damage, knockback, player.whoAmI, rot);
 
-            if (Main.rand.NextBool(shootCount, 7))
+            if (player.altFunctionUse == 2)
             {
-                shootCount = 0;
                 type = ProjectileType<TurbulenceArrow>();
                 Helper.PlayPitched(CoraliteSoundID.ShadowflameApparition_NPCDeath55, player.Center, pitchAdjust: 0.3f);
             }
-
-            shootCount++;
 
             Projectile.NewProjectile(source, player.Center, velocity, type, damage, knockback, player.whoAmI);
 
@@ -186,12 +188,12 @@ namespace Coralite.Content.Items.ThyphionSeries
             }
             else if (Timer == DashTime + 2)
             {
-                Owner.velocity.X = Projectile.velocity.X * 2;
+                Owner.velocity.X *= 0.8f;
                 Owner.itemTime = Owner.itemAnimation = 2;
             }
             else
             {
-                if (DownLeft && SPTimer == 0)
+                if ((!DownLeft && !DownRight) && SPTimer == 0)
                 {
                     if (Projectile.IsOwnedByLocalPlayer())
                     {
@@ -210,7 +212,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                         Helper.PlayPitched(CoraliteSoundID.Bow_Item5, Projectile.Center);
 
                         Projectile.NewProjectileFromThis<TurbulenceArrow>(Owner.Center, ToMouse.SafeNormalize(Vector2.Zero) * 16
-                            , (int)(Owner.GetWeaponDamage(Item) * 1.75f), Projectile.knockBack, 1);
+                            , (int)(Owner.GetDamageWithAmmo(Item) * 4.5f), Projectile.knockBack, 1);
 
                         Rotation = ToMouseA;
 
@@ -235,6 +237,8 @@ namespace Coralite.Content.Items.ThyphionSeries
                             Rotation = Rotation.AngleLerp(ToMouseA, 0.15f);
                     }
 
+                    
+                    Owner.itemTime = Owner.itemAnimation = 2;
                     handOffset = Helper.Lerp(handOffset, 0, 0.1f);
                     SPTimer++;
 
@@ -375,7 +379,6 @@ namespace Coralite.Content.Items.ThyphionSeries
         public ref float HitFreeze => ref Projectile.localAI[2];
 
         public ref float FadeTimer => ref Projectile.localAI[0];
-        public ref float HitCount => ref Projectile.ai[2];
 
         public int trailCount = 10;
         public int trailWidth = 8;
@@ -383,7 +386,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public override void SetDefaults()
         {
-            Projectile.width = Projectile.height = 16;
+            Projectile.width = Projectile.height = 28;
             Projectile.extraUpdates = 3;
             Projectile.friendly = true;
             Projectile.timeLeft = 60 * Projectile.MaxUpdates * 4;
@@ -539,18 +542,6 @@ namespace Coralite.Content.Items.ThyphionSeries
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             HitFreeze = Projectile.MaxUpdates;
-
-            HitCount++;
-            if (State == 0)
-            {
-                if (HitCount > 2)
-                    TurnToFade();
-            }
-            else
-            {
-                if (HitCount > 4)
-                    TurnToFade();
-            }
 
             if (VisualEffectSystem.HitEffect_Dusts)
             {

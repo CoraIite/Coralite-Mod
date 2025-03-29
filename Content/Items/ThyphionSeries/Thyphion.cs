@@ -94,6 +94,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                         Helper.PlayPitched("Misc/Do", 0.7f, 1f, player.Center);
                         Helper.PlayPitched("Misc/Arrow", 0.4f, 0.1f, player.Center);
                         Helper.PlayPitched(CoraliteSoundID.StrongWinds_Item66, player.Center, volume: 0.4f);
+                        damage *= 6;
                         Projectile.NewProjectile(source, position, velocity, ProjectileType<ThyphionArrow>(), damage, knockback, player.whoAmI, ai0: -1, ai2: 1);
                         shootThyphionArrow = 1;
                     }
@@ -327,7 +328,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                         float velicityDir = Projectile.velocity.ToRotation() + MathHelper.Pi + dir * MathF.Sign(Projectile.velocity.X) * 0.3f;
 
                         Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, velicityDir.ToRotationVector2() * 10, ProjectileType<ThyphionShadowBow>()
-                            , Owner.GetWeaponDamage(Item), Projectile.knockBack, Projectile.owner, bowIndex, ToMouseA, MathF.Sign(ToMouse.X));
+                            , Owner.GetDamageWithAmmo(Item), Projectile.knockBack, Projectile.owner, bowIndex, ToMouseA, MathF.Sign(ToMouse.X));
                     }
 
                     Owner.itemTime = Owner.itemAnimation = 2;
@@ -341,11 +342,12 @@ namespace Coralite.Content.Items.ThyphionSeries
                 else if (Timer == DashTime + 2)
                 {
                     Vector2 dir = Rotation.ToRotationVector2();
+                    int damage = Owner.GetDamageWithAmmo(Owner.HeldItem) * 15;
                     projectile = Projectile.NewProjectileFromThis<ThyphionArrow>(Owner.Center, dir * 18
-                        , 1000, Projectile.knockBack, ai0: -1, ai2: 2);
+                        , damage, Projectile.knockBack, ai0: -1, ai2: 2);
                 }
 
-                if (DownLeft && ReleaseTimer == 0)
+                if (!DownLeft && ReleaseTimer == 0)
                 {
                     if (Projectile.IsOwnedByLocalPlayer())
                     {
@@ -503,9 +505,9 @@ namespace Coralite.Content.Items.ThyphionSeries
             Projectile.DamageType = DamageClass.Ranged;
             Projectile.width = Projectile.height = 20;
             Projectile.tileCollide = false;
-            Projectile.extraUpdates = 2;
+            Projectile.extraUpdates = 4;
             Projectile.penetrate = -1;
-            Projectile.timeLeft = 200;
+            Projectile.timeLeft = 70*Projectile.MaxUpdates;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = -1;
         }
@@ -564,7 +566,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         private void ArrowSpeedUpdate()
         {
-            if (Timer < 20 && !IsHoldBy())
+            if (Timer < 30 && !IsHoldBy())
                 Projectile.velocity *= 1.05f;
         }
 
@@ -700,7 +702,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public bool IsHoldBy()
         {
-            return Timer <= 3;
+            return Timer <= 6;
         }
 
         public void Hold(Vector2 pos, Vector2 vel)
@@ -724,10 +726,10 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             float colorFactor;
 
-            if (Timer < 15)
+            if (Timer < 25)
                 colorFactor = 0;
             else
-                colorFactor = Timer > 45 ? 1 : ((Timer - 15) / 45);
+                colorFactor = Timer > 60 ? 1 : ((Timer - 25) / 35);
 
             Texture2D flowTex = TextureAssets.Extra[98].Value;
             Vector2 ArrowSize = new Vector2(1, 7) * 0.3f * Projectile.scale;
@@ -781,10 +783,10 @@ namespace Coralite.Content.Items.ThyphionSeries
             Main.spriteBatch.Draw(flowTex, Center - arrowDir * 5 * scale, null, lightCyen, rotation, origin, InnerSize, 0, 0);
         }
 
-        public override void PostDraw(Color lightColor)
-        {
-            base.PostDraw(lightColor);
-        }
+        //public override void PostDraw(Color lightColor)
+        //{
+        //    base.PostDraw(lightColor);
+        //}
     }
 
     public class ThyphionShadowBow : BaseHeldProj
@@ -828,11 +830,28 @@ namespace Coralite.Content.Items.ThyphionSeries
             Projectile.velocity *= 0.95f;
             int time = 40 - Projectile.timeLeft;
 
-            Vector2 MouseDir = (InMousePos - Projectile.Center).SafeNormalize(Vector2.One);
+            Vector2 MouseDir;
+
+            if (Projectile.localAI[2] == -1)
+            {
+                NPC n = Helper.FindClosestEnemy(InMousePos, 1200, n => n.CanBeChasedBy());
+                if (n != null)
+                    Projectile.localAI[2] = n.whoAmI;
+            }
+
+            if (Projectile.localAI[2].GetNPCOwner(out NPC npc, () => Projectile.localAI[2] = -1))
+                MouseDir = (npc.Center - Projectile.Center).SafeNormalize(Vector2.One);
+            else
+                MouseDir = (InMousePos - Projectile.Center).SafeNormalize(Vector2.One);
+
             if (Projectile.timeLeft == 24)
             {
+                int damage = Owner.GetDamageWithAmmo(Owner.HeldItem) * 3;
+                if (damage < 1000)
+                    damage = 1000;
+
                 Projectile.NewProjectileFromThis<ThyphionArrow>(Projectile.Center, MouseDir.SafeNormalize(Vector2.One) * 18
-                    , 1000, Projectile.knockBack, BowItemType);
+                    , damage, Projectile.knockBack, BowItemType);
 
                 Helper.PlayPitched(CoraliteSoundID.Bow_Item5, Projectile.Center);
             }
@@ -857,6 +876,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public void Init()
         {
+            Projectile.localAI[2] = -1;
             hasInit = true;
             Main.instance.LoadItem(Data.ItemType);
             Rotation = StartAngle;
