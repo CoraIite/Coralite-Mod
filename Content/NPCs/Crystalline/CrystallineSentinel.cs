@@ -164,6 +164,8 @@ namespace Coralite.Content.NPCs.Crystalline
         {
             if (State == AIStates.P1Guard)//防御状态鼠标移上去没效果
                 boundingBox = default;
+
+            boundingBox = Utils.CenteredRectangle(NPC.Center, NPC.Size);
         }
 
         #endregion
@@ -176,12 +178,19 @@ namespace Coralite.Content.NPCs.Crystalline
             {
                 case AIStates.P1Idle:
                     P1Idle();
+
+                    //懒得单独封个方法了，就这样
+                    NPC.frame.X = 0;
+                    NPC.frame.Y = 0;
                     break;
                 case AIStates.P1Walking:
+                    P1Walk();
+                    WalkFrame();
                     break;
                 case AIStates.P1Guard:
                     break;
                 case AIStates.P1Spurt:
+                    State = AIStates.P1Idle;
                     break;
                 case AIStates.Exchange:
                     break;
@@ -196,30 +205,107 @@ namespace Coralite.Content.NPCs.Crystalline
             }
         }
 
+        #region 一阶段非攻击状态
+
         public void P1Idle()
         {
             //一动不动
             NPC.velocity.X = 0;
-            NPC.frame.X = 0;
-            NPC.frame.Y = 0;
 
             if (Timer % 45 == 0)
                 TryTurnToAttack();
 
-            if (Timer > 60 * 5)//随便走走
-                SwitchState(AIStates.P1Walking);
+            if (Timer < 0)//随便走走
+                SwitchState(AIStates.P1Walking, Main.rand.Next(60 * 2, 60 * 4), true);
 
-            Timer++;
+            Timer--;
         }
 
-        private void SwitchState(AIStates targetState)
+        public void P1Walk()
+        {
+            //走不了或者时间大于一定值后就歇一会
+            if (!CanWalkForward() || Timer < 0)
+            {
+                SwitchState(AIStates.P1Idle, Main.rand.Next(60 * 4, 60 * 6));
+                return;
+            }
+
+            //走路
+            Collision.StepUp(ref NPC.position, ref NPC.velocity, NPC.width, NPC.height, ref NPC.stepSpeed, ref NPC.gfxOffY);
+            NPC.velocity.X = NPC.direction * 1;
+
+            if (Timer % 45 == 0)
+                TryTurnToAttack();
+
+            Timer--;
+        }
+
+        public void WalkFrame()
+        {
+            NPC.frame.X = 1;
+            if (++NPC.frameCounter > 5)
+            {
+                NPC.frameCounter = 0;
+                if (++NPC.frame.Y > 10)
+                    NPC.frame.Y = 0;
+            }
+        }
+
+        public bool CanWalkForward()
+        {
+            //检测前方的 （自身宽度）格的下方两格的物块，大于2格物块时才能向前走
+
+            Vector2 pos = NPC.Bottom;
+
+            pos.X += NPC.direction * NPC.width / 2;
+            pos.Y += 4;
+
+            int checkX = (int)(NPC.width / 16f);
+
+            int soildTileCount = 0;//脚下有多少格实心的
+
+            for (int i = 0; i < checkX; i++)
+            {
+                bool hasTile = false;
+
+                for (int j = 0; j < 2; j++)
+                {
+                    Tile t = Framing.GetTileSafely(pos + new Vector2(NPC.direction * i * 16, j * 16));
+                    if (t.HasSolidTile())
+                    {
+                        hasTile = true;
+                        break;
+                    }
+                }
+
+                if (hasTile)
+                    soildTileCount++;
+            }
+
+            return soildTileCount >= checkX - 1;
+        }
+
+        #endregion
+
+        private void SwitchState(AIStates targetState,int? overrideTime=null,bool randDirection=false)
         {
             State = targetState;
-            Timer = 0;
             Recorder = 0;
             CanHit = false;
 
-            NPC.netUpdate=true;
+            if (!VaultUtils.isClient)
+            {
+                Timer = overrideTime??0;
+
+                if (randDirection)
+                    NPC.direction = NPC.spriteDirection = Main.rand.NextFromList(-1, 1);
+
+                NPC.netUpdate = true;
+            }
+            else
+            {
+                Timer = 6;//给客户端6帧时间用于同步延迟
+            }
         }
 
         private void TryTurnToAttack()
@@ -283,8 +369,8 @@ namespace Coralite.Content.NPCs.Crystalline
 
                         Rectangle frameBox = tex.Frame(5, Main.npcFrameCount[NPC.type], NPC.frame.X, NPC.frame.Y);
 
-                        spriteBatch.Draw(tex, NPC.Center - screenPos, frameBox, drawColor
-                            , NPC.rotation, frameBox.Size() / 2, NPC.scale, effect, 0);
+                        spriteBatch.Draw(tex, NPC.Center - screenPos + new Vector2(NPC.spriteDirection*40, -4), frameBox, drawColor
+                            , NPC.rotation, frameBox.Size()/2, NPC.scale, effect, 0);
                     }
                     break;
                 case AIStates.Exchange:

@@ -7,10 +7,10 @@ namespace Coralite.Core.Configs
     {
         public override ConfigScope Mode => ConfigScope.ClientSide;
 
-        [Header("Particles")]
-        [DefaultValue(1200)]
-        [Range(100, 3000)]
-        public int ParticleCount;
+        //[Header("Particles")]
+        //[DefaultValue(1200)]
+        //[Range(100, 3000)]
+        //public int ParticleCount;
 
         [Header("HitEffects")]
         [SeparatePage]
@@ -75,7 +75,7 @@ namespace Coralite.Core.Configs
             VisualEffectSystem.UseNightmareSky = UseNightmareSky;
             VisualEffectSystem.UseNightmareBossBar = UseNightmareBossBar;
             VisualEffectSystem.HylianShieldScreenHighlight = HylianShieldScreenHighlight;
-            VisualEffectSystem.ParticleCount = ParticleCount;
+            //VisualEffectSystem.ParticleCount = ParticleCount;
         }
     }
 
@@ -96,6 +96,6 @@ namespace Coralite.Core.Configs
 
         public static bool HylianShieldScreenHighlight = true;
 
-        public static int ParticleCount = 1200;
+        //public static int ParticleCount = 1200;
     }
 }
