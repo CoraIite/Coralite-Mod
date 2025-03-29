@@ -1,5 +1,8 @@
 ﻿using Coralite.Content.WorldGeneration;
 using Coralite.Core;
+using Coralite.Core.Attributes;
+using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
@@ -16,8 +19,8 @@ namespace Coralite.Content.Biomes
 
         public override void Load()
         {
-            BackgroundTextureLoader.AddBackgroundTexture(Mod, AssetDirectory.Backgrounds + nameof(CrystallineSkyIslandBackground) + "Far");
-            BackgroundTextureLoader.AddBackgroundTexture(Mod, AssetDirectory.Backgrounds + nameof(CrystallineSkyIslandBackground) + "Mid");
+            //BackgroundTextureLoader.AddBackgroundTexture(Mod, AssetDirectory.Backgrounds + nameof(CrystallineSkyIslandBackground) + "Far");
+            //BackgroundTextureLoader.AddBackgroundTexture(Mod, AssetDirectory.Backgrounds + nameof(CrystallineSkyIslandBackground) + "Mid");
             BackgroundTextureLoader.AddBackgroundTexture(Mod, AssetDirectory.Backgrounds + nameof(CrystallineSkyIslandBackground) + "Close");
         }
 
@@ -40,6 +43,9 @@ namespace Coralite.Content.Biomes
 
     public class CrystallineSkyIslandEffect : ModSceneEffect
     {
+        public static float BiomeTimer;
+        public const float BiomeTimerMax=20000;
+
         public override SceneEffectPriority Priority => SceneEffectPriority.Environment;
 
         //public override ModUndergroundBackgroundStyle UndergroundBackgroundStyle => ModContent.Find<ModUndergroundBackgroundStyle>("Coralite/MagicCrystalCaveBackground");
@@ -60,7 +66,14 @@ namespace Coralite.Content.Biomes
 
         public override void SpecialVisuals(Player player, bool isActive)
         {
-            if (isActive && !CoraliteWorld.HasPermission &&
+            if (!isActive)
+                return;
+
+            BiomeTimer += 0.5f;
+            if (BiomeTimer > BiomeTimerMax)
+                BiomeTimer = 0;
+
+            if (!CoraliteWorld.HasPermission &&
                 !Main.projectile.Any(p => p.active && p.owner == Main.myPlayer && p.type == ModContent.ProjectileType<CrystallineSkyIslandCloudScreen>()))
             {
                 Projectile.NewProjectile(new EntitySource_WorldEvent(), Main.LocalPlayer.Center, Vector2.Zero
@@ -123,8 +136,16 @@ namespace Coralite.Content.Biomes
         //public override Asset<Texture2D> GetRainTexture() => rainTexture;
     }
 
+    [AutoLoadTexture(Path =AssetDirectory.Backgrounds)]
     public class CrystallineSkyIslandBackground : ModSurfaceBackgroundStyle
     {
+        [AutoLoadTexture(Name = "CrystallineSkyIslandBackgroundFar")]
+        public static ATex FarTex { get;private set; }
+        [AutoLoadTexture(Name = "CrystallineSkyIslandBackgroundMid")]
+        public static ATex MidTex { get;private set; }
+        [AutoLoadTexture(Name = "CrystallineSkyIslandBackgroundClose")]
+        public static ATex CloseTex { get;private set; }
+
         public override void ModifyFarFades(float[] fades, float transitionSpeed)
         {
             for (int i = 0; i < fades.Length; i++)
@@ -148,21 +169,92 @@ namespace Coralite.Content.Biomes
             }
         }
 
-        public override int ChooseFarTexture()
-        {
-            return BackgroundTextureLoader.GetBackgroundSlot(Mod, "Assets/Backgrounds/CrystallineSkyIslandBackgroundFar");
-        }
 
-        public override int ChooseMiddleTexture()
-        {
-            return BackgroundTextureLoader.GetBackgroundSlot(Mod, "Assets/Backgrounds/CrystallineSkyIslandBackgroundMid");
-        }
+
+        //public override int ChooseFarTexture()
+        //{
+        //    return BackgroundTextureLoader.GetBackgroundSlot(Mod, "Assets/Backgrounds/CrystallineSkyIslandBackgroundFar");
+        //}
+
+        //public override int ChooseMiddleTexture()
+        //{
+        //    return BackgroundTextureLoader.GetBackgroundSlot(Mod, "Assets/Backgrounds/CrystallineSkyIslandBackgroundMid");
+        //}
 
         public override int ChooseCloseTexture(ref float scale, ref double parallax, ref float a, ref float b)
         {
             return BackgroundTextureLoader.GetBackgroundSlot(Mod, "Assets/Backgrounds/CrystallineSkyIslandBackgroundClose");
         }
 
+        public override bool PreDrawCloseBackground(SpriteBatch spriteBatch)
+        {
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, null, Main.Transform);
+
+            float timeFactor = CrystallineSkyIslandEffect.BiomeTimer / CrystallineSkyIslandEffect.BiomeTimerMax;
+
+            float alpha = Main.bgAlphaFrontLayer[Slot];
+            DrawFarBackground(spriteBatch, alpha,timeFactor);
+            DrawMiddleBackground(spriteBatch, alpha, timeFactor);
+            DrawCloseBackground(spriteBatch, alpha, timeFactor);
+
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.AnisotropicClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.Transform);
+
+            return false;
+        }
+
+        public void DrawFarBackground(SpriteBatch spriteBatch, float alpha, float time)
+        {
+            Texture2D farTex = FarTex.Value;
+            Color drawColor = Main.ColorOfTheSkies * alpha * 0.75f;
+
+            time = MathF.Sin(time * MathHelper.TwoPi);
+
+            Vector2 pos = new Vector2(Main.screenWidth / 2 + time * 300, Main.screenHeight / 2 + 600 + Main.screenPosition.Y / 50);
+            Rectangle frameBox =
+                new Rectangle((int)(Main.screenPosition.X / 50), 0, Main.screenWidth + 800, farTex.Height);
+
+            spriteBatch.Draw(farTex,
+                pos, frameBox, drawColor, 0f,
+                frameBox.Size() / 2, 3f, 0, 0f);
+        }
+
+        public void DrawMiddleBackground(SpriteBatch spriteBatch, float alpha,float time)
+        {
+            Texture2D farTex = MidTex.Value;
+            Color drawColor = Main.ColorOfTheSkies * alpha;
+
+            time = MathF.Cos(time * MathHelper.TwoPi);
+
+            Vector2 pos = new Vector2(Main.screenWidth / 2 + time * 200, Main.screenHeight / 2 - 300 + Main.screenPosition.Y / 25);
+            Rectangle frameBox =
+                new Rectangle((int)(Main.screenPosition.X / 30) , 0, Main.screenWidth + 600, farTex.Height);
+
+            spriteBatch.Draw(farTex,
+                pos, frameBox, drawColor, 0f,
+                frameBox.Size() / 2, 1.2f, 0, 0f);
+        }
+
+        public void DrawCloseBackground(SpriteBatch spriteBatch, float alpha,float time)
+        {
+            Texture2D farTex = CloseTex.Value;
+            Color drawColor = Main.ColorOfTheSkies * alpha;
+
+            time = MathF.Cos(time * MathHelper.TwoPi + MathHelper.PiOver4);
+
+            Vector2 pos = new Vector2(Main.screenWidth / 2 + time * 100, Main.screenHeight / 2 + 100 + Main.screenPosition.Y / 10);
+            Rectangle frameBox =
+                new Rectangle((int)(Main.screenPosition.X / 10), 0, Main.screenWidth + 600, farTex.Height);
+
+            spriteBatch.Draw(farTex,
+                pos, frameBox, drawColor, 0f,
+                frameBox.Size() / 2, 1f, 0, 0f);
+        }
+    }
+
+    public class CrystallineSkyIslandSystem:ModSystem
+    {
     }
 
     public class CrystallineSkyIslandDroplet : ModGore
