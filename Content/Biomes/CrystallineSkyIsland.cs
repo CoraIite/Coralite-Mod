@@ -30,7 +30,7 @@ namespace Coralite.Content.Biomes
 
         public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => ModContent.GetInstance<CrystallineSkyIslandBackground>();
 
-        public override Color? BackgroundColor => Color.CornflowerBlue;
+        public override Color? BackgroundColor => Color.LightCyan;
 
         public override bool IsBiomeActive(Player player)
         {
@@ -72,6 +72,11 @@ namespace Coralite.Content.Biomes
             BiomeTimer += 0.5f;
             if (BiomeTimer > BiomeTimerMax)
                 BiomeTimer = 0;
+
+            for (int i = 0; i < Main.maxClouds; i++)
+            {
+                Main.cloud[i].active = false;
+            }
 
             if (!CoraliteWorld.HasPermission &&
                 !Main.projectile.Any(p => p.active && p.owner == Main.myPlayer && p.type == ModContent.ProjectileType<CrystallineSkyIslandCloudScreen>()))
@@ -188,18 +193,22 @@ namespace Coralite.Content.Biomes
 
         public override bool PreDrawCloseBackground(SpriteBatch spriteBatch)
         {
+            Matrix transformationMatrix = Main.BackgroundViewMatrix.TransformationMatrix;
+            transformationMatrix.Translation -= Main.BackgroundViewMatrix.ZoomMatrix.Translation * new Vector3(1f, Main.BackgroundViewMatrix.Effects.HasFlag(SpriteEffects.FlipVertically) ? (-1f) : 1f, 1f);
+
             spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, null, Main.Transform);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, null, transformationMatrix);
 
             float timeFactor = CrystallineSkyIslandEffect.BiomeTimer / CrystallineSkyIslandEffect.BiomeTimerMax;
 
+            //绘制3层背景
             float alpha = Main.bgAlphaFrontLayer[Slot];
             DrawFarBackground(spriteBatch, alpha,timeFactor);
             DrawMiddleBackground(spriteBatch, alpha, timeFactor);
             DrawCloseBackground(spriteBatch, alpha, timeFactor);
 
             spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.AnisotropicClamp, DepthStencilState.Default, RasterizerState.CullNone, null, Main.Transform);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.AnisotropicClamp, DepthStencilState.Default, RasterizerState.CullNone, null, transformationMatrix);
 
             return false;
         }
@@ -207,17 +216,20 @@ namespace Coralite.Content.Biomes
         public void DrawFarBackground(SpriteBatch spriteBatch, float alpha, float time)
         {
             Texture2D farTex = FarTex.Value;
-            Color drawColor = Main.ColorOfTheSkies * alpha * 0.75f;
+            Color drawColor = Main.ColorOfTheSkies * alpha * 0.35f;
 
             time = MathF.Sin(time * MathHelper.TwoPi);
 
-            Vector2 pos = new Vector2(Main.screenWidth / 2 + time * 300, Main.screenHeight / 2 + 600 + Main.screenPosition.Y / 50);
+            float yoffset = 300;
+            yoffset -= Math.Clamp(Main.screenPosition.Y / 15, 0, 600);
+
+            Vector2 pos = new Vector2(Main.screenWidth / 2 + time * 300, Main.screenHeight / 2 + yoffset);
             Rectangle frameBox =
                 new Rectangle((int)(Main.screenPosition.X / 50), 0, Main.screenWidth + 800, farTex.Height);
 
             spriteBatch.Draw(farTex,
                 pos, frameBox, drawColor, 0f,
-                frameBox.Size() / 2, 3f, 0, 0f);
+                frameBox.Size() / 2, 1f, 0, 0f);
         }
 
         public void DrawMiddleBackground(SpriteBatch spriteBatch, float alpha,float time)
@@ -227,13 +239,16 @@ namespace Coralite.Content.Biomes
 
             time = MathF.Cos(time * MathHelper.TwoPi);
 
-            Vector2 pos = new Vector2(Main.screenWidth / 2 + time * 200, Main.screenHeight / 2 - 300 + Main.screenPosition.Y / 25);
+            float yoffset = -100;
+            yoffset -= Math.Clamp(Main.screenPosition.Y / 10, 0, 600);
+
+            Vector2 pos = new Vector2(Main.screenWidth / 2 + time * 200, Main.screenHeight / 2 +yoffset);
             Rectangle frameBox =
                 new Rectangle((int)(Main.screenPosition.X / 30) , 0, Main.screenWidth + 600, farTex.Height);
 
             spriteBatch.Draw(farTex,
                 pos, frameBox, drawColor, 0f,
-                frameBox.Size() / 2, 1.2f, 0, 0f);
+                frameBox.Size() / 2, 1.1f, 0, 0f);
         }
 
         public void DrawCloseBackground(SpriteBatch spriteBatch, float alpha,float time)
@@ -243,7 +258,10 @@ namespace Coralite.Content.Biomes
 
             time = MathF.Cos(time * MathHelper.TwoPi + MathHelper.PiOver4);
 
-            Vector2 pos = new Vector2(Main.screenWidth / 2 + time * 100, Main.screenHeight / 2 + 100 + Main.screenPosition.Y / 10);
+            float yoffset = 800;
+            yoffset -= Math.Clamp(Main.screenPosition.Y / 6, 0, 500);
+
+            Vector2 pos = new Vector2(Main.screenWidth / 2 + time * 100, Main.screenHeight / 2 + yoffset);
             Rectangle frameBox =
                 new Rectangle((int)(Main.screenPosition.X / 10), 0, Main.screenWidth + 600, farTex.Height);
 
@@ -251,10 +269,6 @@ namespace Coralite.Content.Biomes
                 pos, frameBox, drawColor, 0f,
                 frameBox.Size() / 2, 1f, 0, 0f);
         }
-    }
-
-    public class CrystallineSkyIslandSystem:ModSystem
-    {
     }
 
     public class CrystallineSkyIslandDroplet : ModGore
