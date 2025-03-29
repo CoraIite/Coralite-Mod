@@ -5237,7 +5237,7 @@ WindSpeedArrows: {
 	Tooltip:
 		'''
 		+6% 移动速度
-		根据移速增加远程伤害，最高20%
+		根据移速增加箭矢伤害，最高20%
 		'''
 }
 
@@ -5264,4 +5264,14 @@ B9Alloy: {
 PossessedChest: {
 	DisplayName: 幻影胸甲
 	Tooltip: 冲刺时获得一次性的30点伤害减免
+}
+
+WindrangerQuiver: {
+	DisplayName: 风行者箭袋
+	Tooltip:
+		'''
+		根据移动速度增加箭矢伤害
+		延长受击无敌时间
+		增加箭的速度
+		'''
 }

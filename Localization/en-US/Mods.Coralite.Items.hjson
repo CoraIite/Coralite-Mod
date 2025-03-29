@@ -5188,3 +5188,8 @@ PossessedChest: {
 	DisplayName: Possessed Chest
 	Tooltip: ""
 }
+
+WindrangerQuiver: {
+	DisplayName: Windranger Quiver
+	Tooltip: ""
+}

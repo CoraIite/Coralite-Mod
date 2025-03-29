@@ -107,7 +107,7 @@ namespace Coralite.Content.Items.Misc_Shoot
             }
 
             Helper.PlayPitched(CoraliteSoundID.Gun2_Item40, player.Center);
-            Helper.PlayPitched(CoraliteSoundID.AetheriumBlock, player.Center);
+            Helper.PlayPitched(CoraliteSoundID.SpawnAetheriumBlock, player.Center);
 
 
             return true;
@@ -247,11 +247,11 @@ namespace Coralite.Content.Items.Misc_Shoot
                             if (Projectile.frame == 19)
                             {
                                 Helper.PlayPitched(CoraliteSoundID.Gun_Item11, Owner.Center);
-                                Helper.PlayPitched(CoraliteSoundID.AetheriumBlock, Owner.Center);
+                                Helper.PlayPitched(CoraliteSoundID.SpawnAetheriumBlock, Owner.Center);
                                 Helper.PlayPitched(CoraliteSoundID.TerraBlade_Item60, Owner.Center, pitch: 0.8f);
 
                                 Projectile.NewProjectileFromThis<WhiteGardeniaPowerfulShoot>(Projectile.Center, (targetPos - Owner.MountedCenter).SafeNormalize(Vector2.Zero) * 16
-                                    , Owner.GetWeaponDamage(Item) * 5, Item.knockBack);
+                                    , Owner.GetDamageWithAmmo(Item) * 30, Item.knockBack);
                             }
                         }
 
@@ -644,7 +644,7 @@ namespace Coralite.Content.Items.Misc_Shoot
                                 Helper.PlayPitched(CoraliteSoundID.LaserGun_Item158, Projectile.Center);
 
                             Projectile.NewProjectileFromThis<WhiteGardeniaFloatLaser>(Projectile.Center, Vector2.Zero
-                                , (int)(Owner.GetWeaponDamage(Item) * 0.7f), Projectile.knockBack, Projectile.whoAmI, Target);
+                                , (int)(Owner.GetDamageWithAmmo(Item) * 0.7f), Projectile.knockBack, Projectile.whoAmI, Target);
 
                             AttackCount++;
 
