@@ -1,18 +1,32 @@
 ﻿using Coralite.Content.Biomes;
+using Coralite.Content.Dusts;
 using Coralite.Content.Items.LandOfTheLustrousSeries;
 using Coralite.Content.Items.MagikeSeries2;
+using Coralite.Content.Items.ThyphionSeries;
 using Coralite.Core;
+using Coralite.Core.Attributes;
+using Coralite.Core.SmoothFunctions;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.ItemDropRules;
+using Terraria.ID;
 
 namespace Coralite.Content.NPCs.Crystalline
 {
+    [AutoLoadTexture(Path =AssetDirectory.CrystallineNPCs)]
     public class CrystallineSentinel : ModNPC
     {
         public override string Texture => AssetDirectory.CrystallineNPCs + Name;
+
+        [AutoLoadTexture(Name = "CrystallineSentinelFloatStone")]
+        public static ATex FloatStone { get; private set; }
+
+        private SecondOrderDynamics_Vec2[] FloatStoneMoves;
+        private Vector2[] FloatStonePos;
 
         private AIStates State
         {
@@ -42,6 +56,8 @@ namespace Coralite.Content.NPCs.Crystalline
         }
 
         private Player Target => Main.player[NPC.target];
+
+        private bool Init = true;
 
         private enum AIStates
         {
@@ -91,7 +107,7 @@ namespace Coralite.Content.NPCs.Crystalline
 
             NPC.lifeMax = 2000;
             NPC.aiStyle = -1;
-            NPC.knockBackResist = 0.5f;
+            NPC.knockBackResist = 0;
             NPC.HitSound = CoraliteSoundID.CrystalHit_DD2_WitherBeastHurt;
             NPC.DeathSound = CoraliteSoundID.CrystalBroken_DD2_WitherBeastDeath;
             NPC.noGravity = false;
@@ -107,6 +123,11 @@ namespace Coralite.Content.NPCs.Crystalline
             //掉落宝石原石
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PrimaryRoughGemstone>(), 1, 2, 4));
             npcLoot.Add(ItemDropRule.ByCondition(new Conditions.IsHardmode(), ModContent.ItemType<SeniorRoughGemstone>(), 1, 2, 4));
+        }
+
+        public override bool CanHitPlayer(Player target, ref int cooldownSlot)
+        {
+            return base.CanHitPlayer(target, ref cooldownSlot);
         }
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
@@ -174,6 +195,12 @@ namespace Coralite.Content.NPCs.Crystalline
 
         public override void AI()
         {
+            if (Init)
+            {
+                Init = false;
+                Initialize();
+            }
+
             switch (State)
             {
                 case AIStates.P1Idle:
@@ -182,15 +209,20 @@ namespace Coralite.Content.NPCs.Crystalline
                     //懒得单独封个方法了，就这样
                     NPC.frame.X = 0;
                     NPC.frame.Y = 0;
+                    P1FloatStoneMove();
                     break;
                 case AIStates.P1Walking:
                     P1Walk();
                     WalkFrame();
+                    P1FloatStoneMove();
                     break;
                 case AIStates.P1Guard:
+                    State = AIStates.P1Idle;
+                    P1FloatStoneMove();
                     break;
                 case AIStates.P1Spurt:
-                    State = AIStates.P1Idle;
+                    P1Spurt();
+                    P1FloatStoneMove();
                     break;
                 case AIStates.Exchange:
                     break;
@@ -202,6 +234,18 @@ namespace Coralite.Content.NPCs.Crystalline
                     break;
                 default:
                     break;
+            }
+        }
+
+        public void Initialize()
+        {
+            //初始化各种视觉效果运动
+            if (!VaultUtils.isServer)
+            {
+                FloatStonePos ??= [NPC.Center, NPC.Center, NPC.Center];
+                FloatStoneMoves ??= [new SecondOrderDynamics_Vec2(0.8f,0.75f,1,NPC.Center)
+                    ,new SecondOrderDynamics_Vec2(0.6f,0.5f,1,NPC.Center)
+                    ,new SecondOrderDynamics_Vec2(0.6f,0.5f,1,NPC.Center)];
             }
         }
 
@@ -232,7 +276,8 @@ namespace Coralite.Content.NPCs.Crystalline
 
             //走路
             Collision.StepUp(ref NPC.position, ref NPC.velocity, NPC.width, NPC.height, ref NPC.stepSpeed, ref NPC.gfxOffY);
-            NPC.velocity.X = NPC.direction * 1;
+            if (MathF.Abs(NPC.velocity.X) < 0.8f)
+                NPC.velocity.X += NPC.direction * 0.1f;
 
             if (Timer % 45 == 0)
                 TryTurnToAttack();
@@ -243,7 +288,8 @@ namespace Coralite.Content.NPCs.Crystalline
         public void WalkFrame()
         {
             NPC.frame.X = 1;
-            if (++NPC.frameCounter > 5)
+            float xSpeed = 8 - MathF.Abs(NPC.velocity.X);
+            if (++NPC.frameCounter > xSpeed)
             {
                 NPC.frameCounter = 0;
                 if (++NPC.frame.Y > 10)
@@ -287,6 +333,102 @@ namespace Coralite.Content.NPCs.Crystalline
 
         #endregion
 
+        #region 一阶段攻击状态
+
+        public void P1Spurt()
+        {
+            //一直走直到与玩家进到一定距离，之后进入戳刺的动画，如果无法攻击到玩家那么就有概率变为防守形态
+
+            switch (Recorder)
+            {
+                default:
+                case 0://朝玩家走
+                    {
+                        if (Timer % 60 * 2 == 0)
+                        {
+                            NPC.direction = Target.Center.X > NPC.Center.X ? 1 : -1;
+                            NPC.spriteDirection = NPC.direction;
+                        }
+
+                        Collision.StepUp(ref NPC.position, ref NPC.velocity, NPC.width, NPC.height, ref NPC.stepSpeed, ref NPC.gfxOffY);
+                        if (MathF.Abs(NPC.velocity.X) < 1.3f)
+                            NPC.velocity.X += NPC.direction * 0.1f;
+                        if (MathF.Sign(NPC.velocity.X) != NPC.direction)
+                            NPC.velocity.X = 0;
+                        WalkFrame();
+
+                        float distance = Vector2.Distance(Target.Center, NPC.Center);
+                        if (distance < 16 * 24)
+                        {
+                            Timer += 2;
+                            if (distance < 16 * 10)
+                                Timer += 5;
+                        }
+
+                        if (Timer > 60 * 8||!CanWalkForward())
+                        {
+                            if (CanHitTarget())//可以攻击，进入下一阶段
+                            {
+                                NPC.direction = Target.Center.X > NPC.Center.X ? 1 : -1;
+                                NPC.spriteDirection = NPC.direction;
+                                NPC.velocity.X = 0;
+                                NPC.frame.X = 2;
+                                NPC.frame.Y = 0;
+                                Recorder = 1;
+                                Timer = 0;
+
+                                NPC.netUpdate = true;
+                            }
+                            else
+                                SwitchState(AIStates.P1Idle, 60);
+                        }
+
+                        Timer++;
+                    }
+                    break;
+                case 1://戳
+                    {
+                        if (Timer > 0 && Timer % 5 == 0)
+                        {
+                            NPC.frame.Y++;
+                            if (NPC.frame.Y > 20)
+                                NPC.frame.Y = 20;
+                        }
+
+                        if (Timer == 5 * 6)//生成戳刺弹幕
+                        {
+                            Helper.PlayPitched(CoraliteSoundID.Crystal_Item101, NPC.Center, pitch: 0.8f);
+                            CanHit = true;
+                            NPC.NewProjectileInAI<CrystallineSentinelSpurtProj>(NPC.Center + new Vector2(NPC.direction * 40, 0)
+                                , Vector2.Zero, Helper.ScaleValueForDiffMode(200, 350, 480, 1000)
+                                , 0, ai0: NPC.whoAmI, ai1: NPC.direction);
+                        }
+                        Timer++;
+
+                        if (Timer > 5 * 21)
+                            SwitchState(AIStates.P1Guard);
+                    }
+                    break;
+            }
+        }
+
+        #endregion
+
+        public void P1FloatStoneMove()
+        {
+            if (VaultUtils.isServer)
+                return;
+
+            for (int i = 0; i < 3; i++)
+            {
+                Vector2 pos = NPC.Center +new Vector2(0,-10)+ (1f + i * MathHelper.TwoPi / 3).ToRotationVector2() * 36*NPC.scale;
+                float factor = (int)Main.timeForVisualEffects * 0.02f + i * MathHelper.TwoPi / 2;
+                pos += new Vector2(MathF.Cos(factor) * 3, MathF.Sin(factor) * 6);
+
+                FloatStonePos[i] = FloatStoneMoves[i].Update(1 / 60f, pos);
+            }
+        }
+
         private void SwitchState(AIStates targetState,int? overrideTime=null,bool randDirection=false)
         {
             State = targetState;
@@ -295,7 +437,7 @@ namespace Coralite.Content.NPCs.Crystalline
 
             if (!VaultUtils.isClient)
             {
-                Timer = overrideTime??0;
+                Timer = overrideTime ?? 0;
 
                 if (randDirection)
                     NPC.direction = NPC.spriteDirection = Main.rand.NextFromList(-1, 1);
@@ -340,11 +482,10 @@ namespace Coralite.Content.NPCs.Crystalline
                 default:
                     break;
             }
+
+            NPC.direction = Target.Center.X > NPC.Center.X ? 1 : -1;
+            NPC.spriteDirection = NPC.direction;
         }
-
-        #region 一阶段帧图
-
-        #endregion
 
         #endregion
 
@@ -369,8 +510,22 @@ namespace Coralite.Content.NPCs.Crystalline
 
                         Rectangle frameBox = tex.Frame(5, Main.npcFrameCount[NPC.type], NPC.frame.X, NPC.frame.Y);
 
-                        spriteBatch.Draw(tex, NPC.Center - screenPos + new Vector2(NPC.spriteDirection*40, -4), frameBox, drawColor
-                            , NPC.rotation, frameBox.Size()/2, NPC.scale, effect, 0);
+                        spriteBatch.Draw(tex, NPC.Center - screenPos + new Vector2(NPC.spriteDirection * 40, -4), frameBox, drawColor
+                            , NPC.rotation, frameBox.Size() / 2, NPC.scale, effect, 0);
+
+                        if (FloatStonePos != null)
+                        {
+                            tex = FloatStone.Value;
+
+                            for (int i = 0; i < 3; i++)
+                            {
+                                Vector2 pos = FloatStonePos[i] - screenPos;
+                                frameBox = tex.Frame(3, 1, i, 0);
+
+                                spriteBatch.Draw(tex, pos, frameBox, drawColor
+                                    , 0, frameBox.Size() / 2, NPC.scale, effect, 0);
+                            }
+                        }
                     }
                     break;
                 case AIStates.Exchange:
@@ -391,4 +546,43 @@ namespace Coralite.Content.NPCs.Crystalline
 
         #endregion
     }
+
+    public class CrystallineSentinelSpurtProj:ModProjectile
+    {
+        public override string Texture => AssetDirectory.Blank;
+
+        public ref float TargetIndex => ref Projectile.ai[0];
+        public ref float Direction => ref Projectile.ai[1];
+
+        public override void SetDefaults()
+        {
+            Projectile.hostile = true;
+            Projectile.width = 120;
+            Projectile.height = 32;
+            Projectile.timeLeft = 15;
+        }
+
+        public override void AI()
+        {
+            if (!TargetIndex.GetNPCOwner(out NPC owner, Projectile.Kill))
+                return;
+
+            Projectile.Center = owner.Center + new Vector2(Direction * Projectile.width / 2, 0);
+            float factor = 1 - Projectile.timeLeft / 15f;
+
+            Vector2 pos = Projectile.Center + new Vector2(Direction * (-80 + factor * 120), 8);
+            Dust d = Dust.NewDustPerfect(pos + Main.rand.NextVector2Circular(12, 20)
+                    , DustID.PurpleTorch, new Vector2(Direction * factor * Main.rand.NextFloat(3,6), 0), Scale: Main.rand.NextFloat(1, 2));
+            d.noGravity = true;
+
+            if (Projectile.timeLeft % 3 == 0)
+            {
+                PRTLoader.NewParticle<HorizonArcArrowParticle>(pos
+                    , new Vector2(Direction * factor * 3, 0), Coralite.CrystallinePurple, 0.45f);
+            }
+        }
+
+        public override bool PreDraw(ref Color lightColor) => false;
+    }
+
 }

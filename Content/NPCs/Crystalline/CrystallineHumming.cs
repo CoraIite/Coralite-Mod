@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Biomes;
 using Coralite.Content.Dusts;
+using Coralite.Content.Items.Banner;
 using Coralite.Content.Items.LandOfTheLustrousSeries;
 using Coralite.Content.Items.MagikeSeries2;
 using Coralite.Content.Particles;
@@ -10,6 +11,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
+using Terraria.ID;
 
 namespace Coralite.Content.NPCs.Crystalline
 {
@@ -94,6 +96,10 @@ namespace Coralite.Content.NPCs.Crystalline
 
         public override void SetDefaults()
         {
+            Banner = NPC.type;
+            BannerItem = ModContent.ItemType<CrystallineHummingBannerItem>();
+            
+
             NPC.width = 54;
             NPC.height = 54;
             NPC.damage = 70;

@@ -1045,7 +1045,6 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             return false;
         }
-
     }
 
     public class HorizonArcBonus : ModBuff

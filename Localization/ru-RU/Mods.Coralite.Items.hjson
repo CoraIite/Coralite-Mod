@@ -5445,3 +5445,18 @@ ChalcedonyWing: {
 	// DisplayName: Chalcedony Wing
 	// Tooltip: ""
 }
+
+CrystallineHummingBannerItem: {
+	// DisplayName: Crystalline Humming Banner Item
+	// Tooltip: ""
+}
+
+CrystallineVinicColumnBannerItem: {
+	// DisplayName: Crystalline Vinic Column Banner Item
+	// Tooltip: ""
+}
+
+CrystallineVinicLaserBannerItem: {
+	// DisplayName: Crystalline Vinic Laser Banner Item
+	// Tooltip: ""
+}
