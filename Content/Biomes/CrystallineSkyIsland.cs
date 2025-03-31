@@ -44,7 +44,7 @@ namespace Coralite.Content.Biomes
     public class CrystallineSkyIslandEffect : ModSceneEffect
     {
         public static float BiomeTimer;
-        public const float BiomeTimerMax=20000;
+        public const float BiomeTimerMax = 20000;
 
         public override SceneEffectPriority Priority => SceneEffectPriority.Environment;
 
@@ -153,6 +153,8 @@ namespace Coralite.Content.Biomes
         public static ATex CrystallineSkyIslandBackground6 { get;private set; }
         public static ATex CrystallineSkyIslandBackground7 { get;private set; }
 
+        public static ATex CrystallineSkyIslandBackgroundStar { get;private set; }
+
         public override void ModifyFarFades(float[] fades, float transitionSpeed)
         {
             for (int i = 0; i < fades.Length; i++)
@@ -197,7 +199,7 @@ namespace Coralite.Content.Biomes
             transformationMatrix.Translation -= Main.BackgroundViewMatrix.ZoomMatrix.Translation * new Vector3(1f, Main.BackgroundViewMatrix.Effects.HasFlag(SpriteEffects.FlipVertically) ? (-1f) : 1f, 1f);
 
             spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, null, transformationMatrix);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, transformationMatrix);
 
             float timeFactor = CrystallineSkyIslandEffect.BiomeTimer / CrystallineSkyIslandEffect.BiomeTimerMax;
 
@@ -211,34 +213,37 @@ namespace Coralite.Content.Biomes
 
             //最底下的蓝色背景层
             DrawBackgroundBack(spriteBatch, CrystallineSkyIslandBackground0.Value
-                , alpha * 0.43f, 0, 0, 60, yOffset);
+                , alpha * 0.43f, timeFactor * CrystallineSkyIslandBackground0.Width(), 60, yOffset);
 
             DrawBackground(spriteBatch, CrystallineSkyIslandBackground1.Value
-                , alpha, sinTime, 100, 50, yOffset);
+                , alpha, sinTime * 100, 50, yOffset+120);
+
+            DrawBackgroundStar(spriteBatch, CrystallineSkyIslandBackgroundStar.Value
+                , alpha, timeFactor * CrystallineSkyIslandBackgroundStar.Width(), 55, yOffset - 200);
 
             yOffset = -Math.Clamp((Main.screenPosition.Y - 2000) / 10, -125, 525);
 
             //小石子
             DrawBackground(spriteBatch, CrystallineSkyIslandBackground2.Value
-                , alpha, timeFactor, CrystallineSkyIslandBackground2.Width(), 45, yOffset);
+                , alpha, timeFactor * CrystallineSkyIslandBackground2.Width(), 45, yOffset);
 
             //各种云层
             DrawBackground(spriteBatch, CrystallineSkyIslandBackground3.Value
-                , alpha, 1 - timeFactor, CrystallineSkyIslandBackground3.Width(), 40, yOffset);
+                , alpha, (1 - timeFactor) * CrystallineSkyIslandBackground3.Width(), 40, yOffset);
 
             yOffset = -Math.Clamp((Main.screenPosition.Y - 2600) / 6, -200, 800);
 
             DrawBackground(spriteBatch, CrystallineSkyIslandBackground4.Value
-                , alpha, 1, -200 + MathF.Sin(timeFactorTwoPI) * 200, 35, yOffset);
+                , alpha, -200 + MathF.Sin(timeFactorTwoPI) * 200, 16, yOffset);
             DrawBackground(spriteBatch, CrystallineSkyIslandBackground5.Value
-                , alpha, 1, 100 - MathF.Sin(timeFactorTwoPI) * 100, 30, yOffset);
+                , alpha, 100 - MathF.Sin(timeFactorTwoPI) * 100, 18, yOffset);
 
             yOffset = -Math.Clamp((Main.screenPosition.Y - 2600) / 4, -200, 800);
 
             DrawBackground(spriteBatch, CrystallineSkyIslandBackground6.Value
-                , alpha, Coralite.Instance.BezierEaseSmoother.Smoother(timeFactor), CrystallineSkyIslandBackground7.Width(), 25, yOffset);
+                , alpha, Coralite.Instance.BezierEaseSmoother.Smoother(timeFactor) * CrystallineSkyIslandBackground7.Width(), 12, yOffset);
             DrawBackground(spriteBatch, CrystallineSkyIslandBackground7.Value
-                , alpha, sinTime, 100, 20, yOffset);
+                , alpha, sinTime * 100, 20, yOffset);
 
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.AnisotropicClamp, DepthStencilState.Default, RasterizerState.CullNone, null, transformationMatrix);
@@ -256,18 +261,41 @@ namespace Coralite.Content.Biomes
         /// <param name="moveRange">左右移动的最大距离</param>
         /// <param name="xFarAway">跟随玩家移动，数字越大移动效果越不明显</param>
         /// <param name="yoffset"> y坐标的偏移量，用于上升或下降时的偏移 </param>
-        public void DrawBackground(SpriteBatch spriteBatch, Texture2D bgTex, float alpha, float time, float moveRange, float xFarAway, float yoffset)
+        public void DrawBackground(SpriteBatch spriteBatch, Texture2D bgTex, float alpha, float xMove, float xFarAway, float yoffset)
         {
             Color drawColor = Main.ColorOfTheSkies * alpha;
+            float xOffset = Main.screenPosition.X / xFarAway + xMove;
+            int xOffsetInt = (int)xOffset;
+            float scale = (Main.screenWidth + 2) / (float)bgTex.Width;
 
-            Vector2 pos = new Vector2(Main.screenWidth / 2, Main.screenHeight / 2 + yoffset);
+            xOffset = 1f - (xOffset - xOffsetInt);
+            xOffset *= scale;
 
-                Rectangle frameBox =
-                    new Rectangle((int)(Main.screenPosition.X / xFarAway + time * moveRange), 0, bgTex.Width, bgTex.Height);
+            Vector2 pos = new Vector2(Main.screenWidth / 2f + xOffset, Main.screenHeight / 2f + yoffset);
 
-                spriteBatch.Draw(bgTex,
-                    pos, frameBox, drawColor, 0f,
-                    frameBox.Size() / 2, Main.screenWidth / (float)bgTex.Width, 0, 0f);
+            Rectangle frameBox =
+                    new Rectangle(xOffsetInt, 0, bgTex.Width, bgTex.Height);
+
+            spriteBatch.Draw(bgTex,
+                pos, frameBox, drawColor, 0f,
+                frameBox.Size() / 2, scale, 0, 0f);
+        }
+
+        public void DrawBackgroundStar(SpriteBatch spriteBatch, Texture2D bgTex, float alpha, float xMove, float xFarAway, float yoffset)
+        {
+            Color drawColor = Color.Lerp(Color.White, Main.ColorOfTheSkies, 0.5f) * alpha;
+            float xOffset = Main.screenPosition.X / xFarAway + xMove;
+            int xOffsetInt = (int)xOffset;
+
+            xOffset = 1f - (xOffset - xOffsetInt);
+            Vector2 pos = new Vector2(Main.screenWidth / 2f + xOffset, Main.screenHeight / 2f + yoffset);
+
+            Rectangle frameBox =
+                    new Rectangle(xOffsetInt, 0, Main.screenWidth + 2, bgTex.Height);
+
+            spriteBatch.Draw(bgTex,
+                pos, frameBox, drawColor, 0f,
+                frameBox.Size() / 2, 1.001f, 0, 0f);
         }
 
         /// <summary>
@@ -280,25 +308,28 @@ namespace Coralite.Content.Biomes
         /// <param name="moveRange">左右移动的最大距离</param>
         /// <param name="xFarAway">跟随玩家移动，数字越大移动效果越不明显</param>
         /// <param name="yoffset"> y坐标的偏移量，用于上升或下降时的偏移 </param>
-        public void DrawBackgroundBack(SpriteBatch spriteBatch, Texture2D bgTex, float alpha, float time, float moveRange, float xFarAway, float yoffset)
+        public void DrawBackgroundBack(SpriteBatch spriteBatch, Texture2D bgTex, float alpha, float xMove, float xFarAway, float yoffset)
         {
             Color drawColor = Main.ColorOfTheSkies * alpha;
+            float xOffset = Main.screenPosition.X / xFarAway + xMove;
+            int xOffsetInt = (int)xOffset;
 
-            Vector2 pos = new Vector2(Main.screenWidth / 2, Main.screenHeight / 2 + yoffset);
+            xOffset = 1f - (xOffset - xOffsetInt);
+            Vector2 pos = new Vector2(Main.screenWidth / 2f + xOffset*2, Main.screenHeight / 2f + yoffset);
 
             Rectangle frameBox =
-                new Rectangle((int)(Main.screenPosition.X / xFarAway + time * moveRange), 0, Main.screenWidth, bgTex.Height);
+                new Rectangle(xOffsetInt, 0, Main.screenWidth, bgTex.Height);
 
             spriteBatch.Draw(bgTex,
                 pos, frameBox, drawColor, 0f,
-                frameBox.Size() / 2, 1, 0, 0f);
+                frameBox.Size() / 2, 2f, 0, 0f);
 
             frameBox =
                 new Rectangle(0, bgTex.Height - 2, Main.screenWidth, 2);
 
             spriteBatch.Draw(bgTex,
                 pos + new Vector2(0, bgTex.Height / 2), frameBox, drawColor, 0f,
-                new Vector2(frameBox.Width / 2, 0), new Vector2(1, (Main.screenHeight - bgTex.Height) / 2), 0, 0f);
+                new Vector2(frameBox.Width / 2, 0), new Vector2(1.001f, (Main.screenHeight - bgTex.Height) / 2), 0, 0f);
         }
 
         //public void DrawFarBackground(SpriteBatch spriteBatch, float alpha, float time)

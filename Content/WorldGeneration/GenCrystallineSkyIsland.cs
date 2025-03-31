@@ -60,7 +60,7 @@ namespace Coralite.Content.WorldGeneration
             int highestY = GetHighestY(altarPoint);
             int y2 = highestY;
 
-            y2 -= ValueByWorldSize(40,80,150);
+            y2 -= ValueByWorldSize(40, 80, 150);
 
             if (y2 < 41)
                 y2 = 41;
@@ -122,7 +122,7 @@ namespace Coralite.Content.WorldGeneration
             //在丛林中心寻找一个位置
             for (int i = 0; i < 100; i++)
             {
-               Point p2 = new Point(PickAltarX(), (int)(Main.worldSurface * 0.4f));
+                Point p2 = new Point(PickAltarX(), (int)(Main.worldSurface * 0.4f));
 
                 for (int j = 0; j < 500; j++)//向下遍历，找到地面
                 {
@@ -148,7 +148,7 @@ namespace Coralite.Content.WorldGeneration
 
             ushort crystallineBrick = (ushort)ModContent.TileType<CrystallineBrickTile>();
 
-            TextureGenerator generator =new TextureGenerator("SkarnAltars",path: AssetDirectory.CrystallineSkyIsland);
+            TextureGenerator generator = new TextureGenerator("SkarnAltars", path: AssetDirectory.CrystallineSkyIsland);
 
             p -= new Point(generator.Width / 2, generator.Height / 2);
 
@@ -172,7 +172,7 @@ namespace Coralite.Content.WorldGeneration
                 [new Color(29, 30, 28)] = ModContent.WallType<Walls.Magike.HardBasaltWall>(),//1d1e1c
             };
 
-            generator.GenerateByTopLeft(p,mainDic,wallDic);
+            generator.GenerateByTopLeft(p, mainDic, wallDic);
 
             WorldGen.PlaceObject(p.X + 7, p.Y + 6, ModContent.TileType<SoulOfNightAltarTile>());
             WorldGen.PlaceObject(p.X + 19, p.Y + 4, ModContent.TileType<PremissionAltarTile>());
@@ -196,7 +196,7 @@ namespace Coralite.Content.WorldGeneration
 
         #region 生成主岛
 
-        public void GenMainSkyIsland(Point altarPos,out Rectangle mainRect)
+        public void GenMainSkyIsland(Point altarPos, out Rectangle mainRect)
         {
             //矽卡岩
             ushort skarn = (ushort)ModContent.TileType<SkarnTile>();
@@ -450,7 +450,7 @@ namespace Coralite.Content.WorldGeneration
                 }
         }
 
-        private static void CSkyIslandGrass(ushort skarn, ushort smoothSkarn, Rectangle rect,Rectangle shrineRect)
+        private static void CSkyIslandGrass(ushort skarn, ushort smoothSkarn, Rectangle rect, Rectangle shrineRect)
         {
             int grassCount = ValueByWorldSize(WorldGen.genRand.Next(4, 7)
                     , WorldGen.genRand.Next(5, 8)
@@ -479,7 +479,7 @@ namespace Coralite.Content.WorldGeneration
                 for (int m = 0; m < size; m++)
                     for (int n = 0; n < size; n++)
                     {
-                        Point point = p + new Point(-size/2 + m, -size/2 + n);
+                        Point point = p + new Point(-size / 2 + m, -size / 2 + n);
                         Tile t = Main.tile[point];
                         if (!t.HasTile || (t.TileType != skarn && t.TileType != smoothSkarn))//限制感染物块
                             continue;
@@ -615,7 +615,7 @@ namespace Coralite.Content.WorldGeneration
                     continue;
 
                 //向外生成越来越扁的云
-                 CSkyIslandCloudBall(shrineRect, p, WorldGen.genRand.Next(1, 4));
+                CSkyIslandCloudBall(shrineRect, p, WorldGen.genRand.Next(1, 4));
             }
         }
 
@@ -760,7 +760,7 @@ namespace Coralite.Content.WorldGeneration
             }
         }
 
-        private static void CSkyIslandQuickClear(ushort skarn, ushort smoothSkarn, ushort CrystallineSkarn, Point mainIslandCenter, int size,Rectangle shrineRect)
+        private static void CSkyIslandQuickClear(ushort skarn, ushort smoothSkarn, ushort CrystallineSkarn, Point mainIslandCenter, int size, Rectangle shrineRect)
         {
             for (int i = 0; i < size; i++)
                 for (int j = 0; j < size; j++)
@@ -807,7 +807,7 @@ namespace Coralite.Content.WorldGeneration
             int type = WorldGen.genRand.Next(8);
             //type = 7;//测试用
 
-            TextureGenerator generator = new TextureGenerator("MainSkyIslandShrine",type,AssetDirectory.CrystallineSkyIsland);
+            TextureGenerator generator = new TextureGenerator("MainSkyIslandShrine", type, AssetDirectory.CrystallineSkyIsland);
 
             int width = generator.Width;
             int height = generator.Height;
@@ -865,7 +865,7 @@ namespace Coralite.Content.WorldGeneration
             };
 
             //生成遗迹
-            generator.GenerateByTopLeft(shrineTopLeft, mainDic, wallDic,CSkyIslandObjectPlace);
+            generator.GenerateByTopLeft(shrineTopLeft, mainDic, wallDic, CSkyIslandObjectPlace);
 
             //放置中心的箱子
             ushort chestTileType = (ushort)ModContent.TileType<SkarnChestTile>();
@@ -1181,7 +1181,7 @@ namespace Coralite.Content.WorldGeneration
 
         }
 
-        private static void SpawnSkarnBrick(ushort skarnBrick, Rectangle shrineRect, Point p, int exY, int brickWidth, int maxY,bool skipEmptyCheck=false)
+        private static void SpawnSkarnBrick(ushort skarnBrick, Rectangle shrineRect, Point p, int exY, int brickWidth, int maxY, bool skipEmptyCheck = false)
         {
             for (int k = 0; k < maxY; k++)
                 for (int n = 0; n < brickWidth; n++)
@@ -1229,7 +1229,7 @@ namespace Coralite.Content.WorldGeneration
 
             //挖墙壁
             int DigWall = WorldGen.genRand.NextBool(9) ? tunnelLength : 0;
-            int skipWall = DigWall > 0 ? WorldGen.genRand.Next(2,5) : 0;
+            int skipWall = DigWall > 0 ? WorldGen.genRand.Next(2, 5) : 0;
             int BrickWall = WorldGen.genRand.Next(3, 6);
 
             while (outerRect.Contains(tunnelCenter))
@@ -1384,7 +1384,7 @@ namespace Coralite.Content.WorldGeneration
             tileCounterNum++;
             SkyIslandTileCounterNext(x - 1, y, checkTilesType);
             SkyIslandTileCounterNext(x + 1, y, checkTilesType);
-            SkyIslandTileCounterNext(x, y - 1,checkTilesType);
+            SkyIslandTileCounterNext(x, y - 1, checkTilesType);
             SkyIslandTileCounterNext(x, y + 1, checkTilesType);
         }
 
@@ -1545,15 +1545,15 @@ namespace Coralite.Content.WorldGeneration
                 [new Color(189, 202, 222)] = WallID.Cloud,//bdcade
             };
 
-            List<SmallIslandType> types = [SmallIslandType.Ruins, SmallIslandType.Chest,SmallIslandType.Forest];
+            List<SmallIslandType> types = [SmallIslandType.Ruins, SmallIslandType.Chest, SmallIslandType.Forest];
             List<(SmallIslandType, int)> typesRecord = [];
 
             while (types.Count < smallIslandCount)
             {
                 types.Add(WorldGen.genRand.NextFromList(
                     SmallIslandType.Normal,
-                    SmallIslandType.Ruins,SmallIslandType.Ruins,
-                    SmallIslandType.Chest,SmallIslandType.Chest,
+                    SmallIslandType.Ruins, SmallIslandType.Ruins,
+                    SmallIslandType.Chest, SmallIslandType.Chest,
                     SmallIslandType.Forest
                     ));
             }
@@ -1814,10 +1814,10 @@ namespace Coralite.Content.WorldGeneration
                         continue;
 
                     Tile t = Main.tile[p];
-                    if (!t.HasTile || t.TileType == (ushort) ModContent.TileType<SkarnBrickTile>())
+                    if (!t.HasTile || t.TileType == (ushort)ModContent.TileType<SkarnBrickTile>())
                         continue;
 
-                    if (WorldGen.genRand.NextBool(3,4))
+                    if (WorldGen.genRand.NextBool(3, 4))
                         Tile.SmoothSlope(p.X, p.Y, false);
                 }
         }
@@ -1863,13 +1863,13 @@ namespace Coralite.Content.WorldGeneration
 
                 //ShapeData data=new ShapeData();
 
-                    WorldUtils.Gen(
-                        p,
-                        new Shapes.Mound(WorldGen.genRand.Next(3, 8), WorldGen.genRand.Next(4, 8)),
-                        Actions.Chain(
-                            new Modifiers.Flip(false, true),
-                            new Modifiers.Blotches(2),
-                            new Actions.PlaceTile(tileType)/*.Output(data)*/));
+                WorldUtils.Gen(
+                    p,
+                    new Shapes.Mound(WorldGen.genRand.Next(3, 8), WorldGen.genRand.Next(4, 8)),
+                    Actions.Chain(
+                        new Modifiers.Flip(false, true),
+                        new Modifiers.Blotches(2),
+                        new Actions.PlaceTile(tileType)/*.Output(data)*/));
                 //else
                 //    WorldUtils.Gen(
                 //        p,
@@ -2016,7 +2016,7 @@ namespace Coralite.Content.WorldGeneration
                     if (!t.HasTile)
                         continue;
 
-                    ClearVanillaSkyIsland(new Point(topLeft.X + i, topLeft.Y + j),0);
+                    ClearVanillaSkyIsland(new Point(topLeft.X + i, topLeft.Y + j), 0);
                 }
         }
 
@@ -2113,8 +2113,8 @@ namespace Coralite.Content.WorldGeneration
             //限制范围
             if (expandRect.X < 41)
                 expandRect.X = 41;
-             if (expandRect.X + expandRect.Width > Main.maxTilesX - 41)
-                expandRect.Width=Main.maxTilesX-41-expandRect.X;
+            if (expandRect.X + expandRect.Width > Main.maxTilesX - 41)
+                expandRect.Width = Main.maxTilesX - 41 - expandRect.X;
 
             return expandRect;
         }
@@ -2140,8 +2140,8 @@ namespace Coralite.Content.WorldGeneration
                 WorldGen.PlaceTile(x, y, ModContent.TileType<SkarnTile>(), true);
             else if (c == new Color(49, 255, 219))//31ffdb
             {
-                WorldGen.PlaceObject(x,y, (ushort)ModContent.TileType<Tiles.Trees.ChalcedonySapling>(), true);
-                WorldGen.GrowTree(x,y);
+                WorldGen.PlaceObject(x, y, (ushort)ModContent.TileType<Tiles.Trees.ChalcedonySapling>(), true);
+                WorldGen.GrowTree(x, y);
             }
         }
 

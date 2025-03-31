@@ -1,5 +1,4 @@
 ﻿using Coralite.Content.Biomes;
-using Coralite.Content.Dusts;
 using Coralite.Content.Items.LandOfTheLustrousSeries;
 using Coralite.Content.Items.MagikeSeries2;
 using Coralite.Content.Items.ThyphionSeries;
