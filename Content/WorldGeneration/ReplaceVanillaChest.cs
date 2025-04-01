@@ -140,7 +140,7 @@ namespace Coralite.Content.WorldGeneration
                                 WorldGenHelper.RandChestItem(chest, ItemID.InvisibilityPotion, WorldGen.genRand.Next(1, 5));
                             
                             //放偏振滤镜
-                            WorldGenHelper.RandChestItem(chest, ModContent.ItemType<CrimsonPolarizedFilter>(), WorldGen.genRand.Next(1, 2));
+                            WorldGenHelper.RandChestItem(chest, ModContent.ItemType<CrystallineMagikePolarizedFilter>(), WorldGen.genRand.Next(1, 2));
                         }
                         break;
                 }

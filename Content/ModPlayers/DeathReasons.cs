@@ -20,7 +20,7 @@ namespace Coralite.Content.ModPlayers
 
         public PlayerDeathReason DeathByLocalization(string key)
         {
-            return PlayerDeathReason.ByCustomReason(Language.GetTextValue($"Mods.Coralite.DeathMessage.{key}", Player.name));
+            return PlayerDeathReason.ByCustomReason(NetworkText.FromFormattable($"Mods.Coralite.DeathMessage.{key}", Player.name));
         }
 
         public void ThunderElectrifiedDeathReason(ref PlayerDeathReason damageSource)

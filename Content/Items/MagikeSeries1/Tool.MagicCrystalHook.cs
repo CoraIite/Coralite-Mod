@@ -1,6 +1,6 @@
 ﻿using Coralite.Core;
+using Coralite.Core.Attributes;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using Terraria;
 using Terraria.ID;
 
@@ -27,21 +27,13 @@ namespace Coralite.Content.Items.MagikeSeries1
         }
     }
 
+    [AutoLoadTexture(Path = AssetDirectory.MagikeSeries1Item)]
     public class MagicCrystalHookProjectile : ModProjectile
     {
         public override string Texture => AssetDirectory.MagikeSeries1Item + Name;
 
-        private static Asset<Texture2D> chainTexture;
-
-        public override void Load()
-        {
-            chainTexture = ModContent.Request<Texture2D>(AssetDirectory.MagikeSeries1Item + "MagicCrystalHookChain");
-        }
-
-        public override void Unload()
-        {
-            chainTexture = null;
-        }
+        [AutoLoadTexture(Name = "MagicCrystalHookChain")]
+        public static ATex ChainTexture { get; private set; }
 
         public override void SetStaticDefaults()
         {
@@ -55,12 +47,11 @@ namespace Coralite.Content.Items.MagikeSeries1
 
         public override bool? CanUseGrapple(Player player)
         {
-            int hooksOut = 0;
             for (int l = 0; l < 1000; l++)
                 if (Main.projectile[l].active && Main.projectile[l].owner == Main.myPlayer && Main.projectile[l].type == Projectile.type)
-                    hooksOut++;
+                    return false;
 
-            return hooksOut <= 2;
+            return null;
         }
 
         // Use this to kill oldest hook. For hooks that kill the oldest when shot, not when the newest latches on: Like SkeletronHand
@@ -91,7 +82,7 @@ namespace Coralite.Content.Items.MagikeSeries1
         // Amethyst Hook is 300, Static Hook is 600.
         public override float GrappleRange()
         {
-            return 350f;
+            return 320f;
         }
 
         public override void NumGrappleHooks(Player player, ref int numHooks)
@@ -107,7 +98,7 @@ namespace Coralite.Content.Items.MagikeSeries1
 
         public override void GrapplePullSpeed(Player player, ref float speed)
         {
-            speed = 10; // How fast you get pulled to the grappling hook projectile's landing position
+            speed = 8.5f; // How fast you get pulled to the grappling hook projectile's landing position
         }
 
         // Adjusts the position that the player will be pulled towards. This will make them hang 50 pixels away from the tile being grappled.
@@ -149,7 +140,7 @@ namespace Coralite.Content.Items.MagikeSeries1
             while (distanceToPlayer > 20f && !float.IsNaN(distanceToPlayer))
             {
                 directionToPlayer /= distanceToPlayer; // get unit vector
-                directionToPlayer *= chainTexture.Height(); // multiply by chain link length
+                directionToPlayer *= ChainTexture.Height(); // multiply by chain link length
 
                 center += directionToPlayer; // update draw position
                 directionToPlayer = playerCenter - center; // update distance
@@ -158,9 +149,9 @@ namespace Coralite.Content.Items.MagikeSeries1
                 Color drawColor = Lighting.GetColor((int)center.X / 16, (int)(center.Y / 16));
 
                 // Draw chain
-                Main.EntitySpriteDraw(chainTexture.Value, center - Main.screenPosition,
-                    chainTexture.Value.Bounds, drawColor, chainRotation,
-                    chainTexture.Size() * 0.5f, 1f, SpriteEffects.None, 0);
+                Main.EntitySpriteDraw(ChainTexture.Value, center - Main.screenPosition,
+                    ChainTexture.Value.Bounds, drawColor, chainRotation,
+                    ChainTexture.Size() * 0.5f, 1f, SpriteEffects.None, 0);
             }
             // Stop vanilla from drawing the default chain.
             return false;

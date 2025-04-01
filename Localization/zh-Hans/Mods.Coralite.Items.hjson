@@ -5513,20 +5513,24 @@ EmperorSlimeBoots: {
 
 ChalcedonyWing: {
 	DisplayName: 玉髓翼
-	Tooltip: 可飞行和缓慢坠落
+	Tooltip:
+		'''
+		可飞行和缓慢坠落
+		获得强力云朵跳跃
+		'''
 }
 
 CrystallineHummingBannerItem: {
-	// DisplayName: Crystalline Humming Banner Item
-	// Tooltip: ""
+	DisplayName: 蕴魔蜂鸟旗
+	Tooltip: ""
 }
 
 CrystallineVinicColumnBannerItem: {
-	// DisplayName: Crystalline Vinic Column Banner Item
-	// Tooltip: ""
+	DisplayName: 水晶柱蕴魔仿藤旗
+	Tooltip: ""
 }
 
 CrystallineVinicLaserBannerItem: {
-	// DisplayName: Crystalline Vinic Laser Banner Item
-	// Tooltip: ""
+	DisplayName: 激光器蕴魔仿藤旗
+	Tooltip: ""
 }

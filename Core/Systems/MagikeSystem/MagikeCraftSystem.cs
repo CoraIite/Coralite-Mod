@@ -364,6 +364,20 @@ namespace Coralite.Core.Systems.MagikeSystem
                 magikeCost = magikeCost
             };
         }
+        public static MagikeRecipe[] CreateCraftRecipes(int[] mainItemType, int resultItemType, int magikeCost, int MainItenStack = 1, int resultItemStack = 1)
+        {
+            MagikeRecipe[] recipes=new MagikeRecipe[mainItemType.Length];
+            for (int i = 0; i < mainItemType.Length; i++)
+            {
+                recipes[i]= new MagikeRecipe()
+                {
+                    MainItem = new(mainItemType[i], MainItenStack),
+                    ResultItem = new(resultItemType, resultItemStack),
+                    magikeCost = magikeCost
+                };
+            }
+            return recipes;
+        }
 
         //public MagikeRecipe SetAntiMagikeCost(int antiMagikeCost)
         //{

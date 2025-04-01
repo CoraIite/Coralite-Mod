@@ -5,6 +5,7 @@ using Coralite.Content.Items.ThyphionSeries;
 using Coralite.Core;
 using Coralite.Core.Attributes;
 using Coralite.Core.SmoothFunctions;
+using Coralite.Core.Systems.MagikeSystem.Particles;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
@@ -23,6 +24,8 @@ namespace Coralite.Content.NPCs.Crystalline
 
         [AutoLoadTexture(Name = "CrystallineSentinelFloatStone")]
         public static ATex FloatStone { get; private set; }
+        [AutoLoadTexture(Name = "CrystallineSentinelGuard")]
+        public static ATex GuardTex { get; private set; }
 
         private SecondOrderDynamics_Vec2[] FloatStoneMoves;
         private Vector2[] FloatStonePos;
@@ -57,6 +60,10 @@ namespace Coralite.Content.NPCs.Crystalline
         private Player Target => Main.player[NPC.target];
 
         private bool Init = true;
+        /// <summary>
+        /// 该变量不同步，仅作视觉效果等使用
+        /// </summary>
+        private ref float Recorder2 => ref NPC.localAI[0];
 
         private enum AIStates
         {
@@ -411,6 +418,63 @@ namespace Coralite.Content.NPCs.Crystalline
             }
         }
 
+        public void P1Guard()
+        {
+            //走几秒钟后进入防御阶段
+            switch (Recorder)
+            {
+                default:
+                case 0:
+                    {
+                        if (Timer % 60 == 0)
+                        {
+                            NPC.direction = Target.Center.X > NPC.Center.X ? 1 : -1;
+                            NPC.spriteDirection = NPC.direction;
+                        }
+
+                        Collision.StepUp(ref NPC.position, ref NPC.velocity, NPC.width, NPC.height, ref NPC.stepSpeed, ref NPC.gfxOffY);
+                        if (MathF.Abs(NPC.velocity.X) < 1.3f)
+                            NPC.velocity.X += NPC.direction * 0.1f;
+                        if (MathF.Sign(NPC.velocity.X) != NPC.direction)
+                            NPC.velocity.X = 0;
+                        WalkFrame();
+
+                        if (Timer > 60 * 3 || !CanWalkForward())
+                        {
+                            if (CanHitTarget())//可以攻击，进入下一阶段
+                            {
+                                NPC.direction = Target.Center.X > NPC.Center.X ? 1 : -1;
+                                NPC.spriteDirection = NPC.direction;
+                                NPC.velocity.X = 0;
+                                NPC.frame.X = 3;
+                                NPC.frame.Y = 0;
+                                Recorder = 1;
+                                Timer = 0;
+
+                                PRTLoader.NewParticle<MagikeLozengeParticle>(NPC.Center, Vector2.Zero, Coralite.CrystallinePurple, 1.5f);
+
+                                NPC.netUpdate = true;
+                            }
+                            else
+                                SwitchState(AIStates.P1Idle, 60);
+                        }
+                        Timer++;
+                    }
+                    break;
+                case 1:
+                    {
+                        //更新帧图，逐渐变为展开形态
+                    }
+                    break;
+                case 2:
+                    {
+
+                    }
+                    break;
+
+            }
+        }
+
         #endregion
 
         public void P1FloatStoneMove()
@@ -432,6 +496,7 @@ namespace Coralite.Content.NPCs.Crystalline
         {
             State = targetState;
             Recorder = 0;
+            Recorder2 = 0;
             CanHit = false;
 
             if (!VaultUtils.isClient)
@@ -524,6 +589,11 @@ namespace Coralite.Content.NPCs.Crystalline
                                 spriteBatch.Draw(tex, pos, frameBox, drawColor
                                     , 0, frameBox.Size() / 2, NPC.scale, effect, 0);
                             }
+                        }
+
+                        if (State==AIStates.P1Guard)//绘制格挡特效
+                        {
+
                         }
                     }
                     break;

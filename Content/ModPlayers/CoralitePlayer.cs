@@ -572,7 +572,9 @@ namespace Coralite.Content.ModPlayers
                         info.DustDisabled = true;
                         info.Damage = (int)(info.Damage * (1 - 0.2f));
                         //生成音效与粒子
-                        Helper.PlayPitched(CoraliteSoundID.BubbleGun_Item85, Player.Center, volumeAdjust: 0.1f);
+
+                        Helper.PlayPitched(CoraliteSoundID.WindyBalloon_NPCDeath63, Player.Center);
+                        Helper.PlayPitched(CoraliteSoundID.ShimmerContract, Player.Center);
 
                         var p = PRTLoader.NewParticle<Items.MagikeSeries2.LuminwardParticleExplosion>(Player.Center, Vector2.Zero, Color.White, 1);
                         p.player = Player;

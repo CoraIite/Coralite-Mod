@@ -70,6 +70,7 @@ namespace Coralite.Content.Biomes
                 return;
 
             BiomeTimer += 0.5f;
+            //BiomeTimer += 30f;
             if (BiomeTimer > BiomeTimerMax)
                 BiomeTimer = 0;
 
@@ -210,18 +211,19 @@ namespace Coralite.Content.Biomes
 
             float alpha = Main.bgAlphaFrontLayer[Slot];
             float sinTime = MathF.Sin(timeFactorTwoPI);
+            float cosTime = MathF.Cos(timeFactorTwoPI);
 
             //最底下的蓝色背景层
             DrawBackgroundBack(spriteBatch, CrystallineSkyIslandBackground0.Value
-                , alpha * 0.43f, timeFactor * CrystallineSkyIslandBackground0.Width(), 60, yOffset);
+                , alpha * 0.35f, timeFactor * CrystallineSkyIslandBackground0.Width(), 60, yOffset+80);
 
             DrawBackground(spriteBatch, CrystallineSkyIslandBackground1.Value
-                , alpha, sinTime * 100, 50, yOffset+120);
+                , alpha * 0.7f, sinTime * 100, 50, yOffset + 140);
 
             DrawBackgroundStar(spriteBatch, CrystallineSkyIslandBackgroundStar.Value
                 , alpha, timeFactor * CrystallineSkyIslandBackgroundStar.Width(), 55, yOffset - 200);
 
-            yOffset = -Math.Clamp((Main.screenPosition.Y - 2000) / 10, -125, 525);
+            yOffset = -Math.Clamp((Main.screenPosition.Y - 2200) / 10, -200, 1200);
 
             //小石子
             DrawBackground(spriteBatch, CrystallineSkyIslandBackground2.Value
@@ -231,19 +233,19 @@ namespace Coralite.Content.Biomes
             DrawBackground(spriteBatch, CrystallineSkyIslandBackground3.Value
                 , alpha, (1 - timeFactor) * CrystallineSkyIslandBackground3.Width(), 40, yOffset);
 
-            yOffset = -Math.Clamp((Main.screenPosition.Y - 2600) / 6, -200, 800);
+            yOffset = -Math.Clamp((Main.screenPosition.Y - 2600) / 6, -400, 1000);
 
             DrawBackground(spriteBatch, CrystallineSkyIslandBackground4.Value
-                , alpha, -200 + MathF.Sin(timeFactorTwoPI) * 200, 16, yOffset);
+                , alpha, -350 + sinTime * 400, 16, yOffset);
             DrawBackground(spriteBatch, CrystallineSkyIslandBackground5.Value
-                , alpha, 100 - MathF.Sin(timeFactorTwoPI) * 100, 18, yOffset);
+                , alpha, 100 - cosTime * 100, 18, yOffset);
 
-            yOffset = -Math.Clamp((Main.screenPosition.Y - 2600) / 4, -200, 800);
+            yOffset = -Math.Clamp((Main.screenPosition.Y - 2600) / 4, -600, 800);
 
             DrawBackground(spriteBatch, CrystallineSkyIslandBackground6.Value
-                , alpha, Coralite.Instance.BezierEaseSmoother.Smoother(timeFactor) * CrystallineSkyIslandBackground7.Width(), 12, yOffset);
+                , alpha, timeFactor * CrystallineSkyIslandBackground6.Width()*2, 12, yOffset);
             DrawBackground(spriteBatch, CrystallineSkyIslandBackground7.Value
-                , alpha, sinTime * 100, 20, yOffset);
+                , alpha, sinTime * 150, 8, yOffset);
 
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.AnisotropicClamp, DepthStencilState.Default, RasterizerState.CullNone, null, transformationMatrix);
@@ -324,12 +326,12 @@ namespace Coralite.Content.Biomes
                 pos, frameBox, drawColor, 0f,
                 frameBox.Size() / 2, 2f, 0, 0f);
 
-            frameBox =
-                new Rectangle(0, bgTex.Height - 2, Main.screenWidth, 2);
+            //frameBox =
+            //    new Rectangle(0, bgTex.Height - 2, Main.screenWidth, 2);
 
-            spriteBatch.Draw(bgTex,
-                pos + new Vector2(0, bgTex.Height / 2), frameBox, drawColor, 0f,
-                new Vector2(frameBox.Width / 2, 0), new Vector2(1.001f, (Main.screenHeight - bgTex.Height) / 2), 0, 0f);
+            //spriteBatch.Draw(bgTex,
+            //    pos + new Vector2(0, bgTex.Height / 2), frameBox, drawColor, 0f,
+            //    new Vector2(frameBox.Width / 2, 0), new Vector2(1.001f, (Main.screenHeight - bgTex.Height) / 2), 0, 0f);
         }
 
         //public void DrawFarBackground(SpriteBatch spriteBatch, float alpha, float time)

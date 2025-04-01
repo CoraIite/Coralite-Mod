@@ -8,7 +8,7 @@ using Terraria.ObjectData;
 
 namespace Coralite.Content.Items.Glistent
 {
-    public class GlistentBar : BaseMaterial  //, IMagikePolymerizable
+    public class GlistentBar : BaseMaterial
     {
         public GlistentBar() : base(9999, Item.sellPrice(0, 0, 5, 50), ItemRarityID.Green, AssetDirectory.GlistentItems) { }
 
@@ -28,16 +28,16 @@ namespace Coralite.Content.Items.Glistent
 
         public override void AddRecipes()
         {
-            CreateRecipe()
-                .AddIngredient<LeafStone>()
-                .AddIngredient(ItemID.CrimtaneBar)
+            CreateRecipe(3)
+                .AddIngredient<LeafStone>(3)
+                .AddIngredient(ItemID.CrimtaneBar,3)
                 .AddIngredient(ItemID.Diamond)
                 .AddTile<MagicCraftStation>()
                 .Register();
 
-            CreateRecipe()
-                .AddIngredient<LeafStone>()
-                .AddIngredient(ItemID.DemoniteBar)
+            CreateRecipe(3)
+                .AddIngredient<LeafStone>(3)
+                .AddIngredient(ItemID.DemoniteBar,3)
                 .AddIngredient(ItemID.Diamond)
                 .AddTile<MagicCraftStation>()
                 .Register();

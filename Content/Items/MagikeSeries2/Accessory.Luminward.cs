@@ -17,7 +17,7 @@ namespace Coralite.Content.Items.MagikeSeries2
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            if (player.TryGetModPlayer(out CoralitePlayer cp) && cp.HurtTimer >= 60 * 12)
+            if (player.TryGetModPlayer(out CoralitePlayer cp) && cp.HurtTimer >= 60 * 10)
             {
                 player.invis = true;
                 player.GetCritChance(DamageClass.Generic) += 5;
@@ -25,8 +25,7 @@ namespace Coralite.Content.Items.MagikeSeries2
 
                 if (cp.HurtTimer == 60 * 10)
                 {
-                    Helper.PlayPitched(CoraliteSoundID.WindyBalloon_NPCDeath63, player.Center);
-                    Helper.PlayPitched(CoraliteSoundID.ShimmerContract, player.Center);
+                    Helper.PlayPitched(CoraliteSoundID.BubbleGun_Item85, player.Center, volumeAdjust: 0.1f);
 
                     var p = PRTLoader.NewParticle<LuminwardParticle>(player.Center, Vector2.Zero, Color.White , 1);
                     p.player = player;
