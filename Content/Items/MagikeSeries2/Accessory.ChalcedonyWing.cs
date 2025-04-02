@@ -59,11 +59,6 @@ namespace Coralite.Content.Items.MagikeSeries2
             return 0.4f;
         }
 
-        public override void OnEnded(Player player)
-        {
-            base.OnEnded(player);
-        }
-
         public override void UpdateHorizontalSpeeds(Player player)
         {
             player.runAcceleration *= 3.8f;

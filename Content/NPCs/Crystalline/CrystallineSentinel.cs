@@ -17,7 +17,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.NPCs.Crystalline
 {
-    [AutoLoadTexture(Path =AssetDirectory.CrystallineNPCs)]
+    [AutoLoadTexture(Path = AssetDirectory.CrystallineNPCs)]
     public class CrystallineSentinel : ModNPC
     {
         public override string Texture => AssetDirectory.CrystallineNPCs + Name;
@@ -190,7 +190,10 @@ namespace Coralite.Content.NPCs.Crystalline
         public override void ModifyHoverBoundingBox(ref Rectangle boundingBox)
         {
             if (State == AIStates.P1Guard)//防御状态鼠标移上去没效果
+            {
                 boundingBox = default;
+                return;
+            }
 
             boundingBox = Utils.CenteredRectangle(NPC.Center, NPC.Size);
         }
@@ -212,9 +215,7 @@ namespace Coralite.Content.NPCs.Crystalline
                 case AIStates.P1Idle:
                     P1Idle();
 
-                    //懒得单独封个方法了，就这样
-                    NPC.frame.X = 0;
-                    NPC.frame.Y = 0;
+                    SetFrame(0, 0);
                     P1FloatStoneMove();
                     break;
                 case AIStates.P1Walking:
@@ -223,7 +224,7 @@ namespace Coralite.Content.NPCs.Crystalline
                     P1FloatStoneMove();
                     break;
                 case AIStates.P1Guard:
-                    State = AIStates.P1Idle;
+                    P1Guard();
                     P1FloatStoneMove();
                     break;
                 case AIStates.P1Spurt:
@@ -295,12 +296,15 @@ namespace Coralite.Content.NPCs.Crystalline
         {
             NPC.frame.X = 1;
             float xSpeed = 8 - MathF.Abs(NPC.velocity.X);
+
             if (++NPC.frameCounter > xSpeed)
             {
                 NPC.frameCounter = 0;
-                if (++NPC.frame.Y > 10)
-                    NPC.frame.Y = 0;
+                NPC.frame.Y++;
             }
+
+            if (NPC.frame.Y > 10)
+                NPC.frame.Y = 0;
         }
 
         public bool CanWalkForward()
@@ -371,7 +375,7 @@ namespace Coralite.Content.NPCs.Crystalline
                                 Timer += 5;
                         }
 
-                        if (Timer > 60 * 8||!CanWalkForward())
+                        if (Timer > 60 * 8 || !CanWalkForward())
                         {
                             if (CanHitTarget())//可以攻击，进入下一阶段
                             {
@@ -446,12 +450,11 @@ namespace Coralite.Content.NPCs.Crystalline
                                 NPC.direction = Target.Center.X > NPC.Center.X ? 1 : -1;
                                 NPC.spriteDirection = NPC.direction;
                                 NPC.velocity.X = 0;
-                                NPC.frame.X = 3;
-                                NPC.frame.Y = 0;
+                                SetFrame(3, 0);
                                 Recorder = 1;
                                 Timer = 0;
 
-                                PRTLoader.NewParticle<MagikeLozengeParticle>(NPC.Center, Vector2.Zero, Coralite.CrystallinePurple, 1.5f);
+                                PRTLoader.NewParticle<MagikeLozengeParticle>(NPC.Center, Vector2.Zero, Coralite.CrystallinePurple, 1f);
 
                                 NPC.netUpdate = true;
                             }
@@ -463,15 +466,69 @@ namespace Coralite.Content.NPCs.Crystalline
                     break;
                 case 1:
                     {
-                        //更新帧图，逐渐变为展开形态
+                        //更新帧图，逐渐变为防御
+                        if (Timer > 0 && Timer % 4 == 0)
+                        {
+                            NPC.frame.Y++;
+                            if (NPC.frame.Y > 8)
+                                NPC.frame.Y = 8;
+                        }
+
+                        if (Timer > 4 * 6)//展开护盾
+                        {
+                            Recorder2 += 0.1f;
+                            if (Recorder2 > 1)
+                                Recorder2 = 1;
+                        }
+
+                        if (Timer > 4 * 9)
+                        {
+                            Recorder++;
+                            Timer = 0;
+                            NPC.frame.Y = 8;
+                            NPC.reflectsProjectiles = true;
+                            NPC.SuperArmor = true;
+                            NPC.netUpdate = true;
+
+                            //防御音效
+                        }
+
+                        Timer++;
                     }
                     break;
-                case 2:
+                case 2://防御中
                     {
-
+                        if (Timer > 60 * 3)
+                        {
+                            Recorder++;
+                            Timer = 0;
+                            SetFrame(4, 0);
+                            NPC.reflectsProjectiles = false;
+                            NPC.SuperArmor = false;
+                            NPC.netUpdate = true;
+                        }
+                        Timer++;
                     }
                     break;
+                case 3://后摇
+                    {
+                        if (Timer > 0 && Timer % 5 == 0)
+                        {
+                            NPC.frame.Y++;
+                            if (NPC.frame.Y > 4)
+                                NPC.frame.Y = 4;
+                        }
 
+                        Recorder2 -= 0.08f;
+                        if (Recorder2 < 0)
+                            Recorder2 = 0;
+
+                        if (Timer > 5 * 5)
+                            SwitchState(AIStates.P1Idle, 60);
+
+                        Timer++;
+                    }
+                    break;
             }
         }
 
@@ -484,7 +541,7 @@ namespace Coralite.Content.NPCs.Crystalline
 
             for (int i = 0; i < 3; i++)
             {
-                Vector2 pos = NPC.Center +new Vector2(0,-10)+ (1f + i * MathHelper.TwoPi / 3).ToRotationVector2() * 36*NPC.scale;
+                Vector2 pos = NPC.Center + new Vector2(0, -10) + (1f + i * MathHelper.TwoPi / 3).ToRotationVector2() * 36 * NPC.scale;
                 float factor = (int)Main.timeForVisualEffects * 0.02f + i * MathHelper.TwoPi / 2;
                 pos += new Vector2(MathF.Cos(factor) * 3, MathF.Sin(factor) * 6);
 
@@ -492,12 +549,15 @@ namespace Coralite.Content.NPCs.Crystalline
             }
         }
 
-        private void SwitchState(AIStates targetState,int? overrideTime=null,bool randDirection=false)
+        private void SwitchState(AIStates targetState, int? overrideTime = null, bool randDirection = false)
         {
             State = targetState;
             Recorder = 0;
             Recorder2 = 0;
             CanHit = false;
+
+            NPC.reflectsProjectiles = false;
+            NPC.SuperArmor = false;
 
             if (!VaultUtils.isClient)
             {
@@ -551,6 +611,12 @@ namespace Coralite.Content.NPCs.Crystalline
             NPC.spriteDirection = NPC.direction;
         }
 
+        public void SetFrame(int frameX, int frameY)
+        {
+            NPC.frame.X = frameX;
+            NPC.frame.Y = frameY;
+        }
+
         #endregion
 
         #region 网络同步
@@ -591,10 +657,8 @@ namespace Coralite.Content.NPCs.Crystalline
                             }
                         }
 
-                        if (State==AIStates.P1Guard)//绘制格挡特效
-                        {
-
-                        }
+                        if (Recorder2 != 0)
+                            DrawGuard(spriteBatch, screenPos);
                     }
                     break;
                 case AIStates.Exchange:
@@ -609,14 +673,37 @@ namespace Coralite.Content.NPCs.Crystalline
                     break;
             }
 
-
             return false;
         }
 
+        public void DrawGuard(SpriteBatch spriteBatch, Vector2 screenPos)
+        {
+            Texture2D guardTex = GuardTex.Value;
+            Vector2 pos = NPC.Center+new Vector2(0,-20) - screenPos;
+            float scale = Coralite.Instance.BezierEaseSmoother.Smoother(Recorder2);
+
+            //最内层
+            var framebox = guardTex.Frame(1, 3, 0, 0);
+            spriteBatch.Draw(guardTex, pos, framebox, Color.White, Coralite.Instance.SqrtSmoother.Smoother(Recorder2) * MathHelper.TwoPi, framebox.Size() / 2, scale, 0, 0);
+
+            //外层
+            framebox = guardTex.Frame(1, 3, 0, 2);
+            spriteBatch.Draw(guardTex, pos, framebox, Color.White, 0, framebox.Size() / 2, scale, 0, 0);
+
+            //绘制闪光
+            int visualTimer = (int)(Main.timeForVisualEffects % 30);
+            if (visualTimer < 12)
+                return;
+
+            framebox = guardTex.Frame(1, 3, 0, 1);
+            SpriteEffects effects = visualTimer < (12+9) ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            float alpha = 0.1f + MathF.Sin(visualTimer / 18f * MathHelper.TwoPi) * 0.3f;
+            spriteBatch.Draw(guardTex, pos, framebox, Color.White * alpha, 0, framebox.Size() / 2, scale, effects, 0);
+        }
         #endregion
     }
 
-    public class CrystallineSentinelSpurtProj:ModProjectile
+    public class CrystallineSentinelSpurtProj : ModProjectile
     {
         public override string Texture => AssetDirectory.Blank;
 
@@ -628,7 +715,7 @@ namespace Coralite.Content.NPCs.Crystalline
             Projectile.hostile = true;
             Projectile.width = 120;
             Projectile.height = 32;
-            Projectile.timeLeft = 15;
+            Projectile.timeLeft = 10;
         }
 
         public override void AI()
@@ -637,11 +724,11 @@ namespace Coralite.Content.NPCs.Crystalline
                 return;
 
             Projectile.Center = owner.Center + new Vector2(Direction * Projectile.width / 2, 0);
-            float factor = 1 - Projectile.timeLeft / 15f;
+            float factor = 1 - Projectile.timeLeft / 10f;
 
             Vector2 pos = Projectile.Center + new Vector2(Direction * (-80 + factor * 120), 8);
             Dust d = Dust.NewDustPerfect(pos + Main.rand.NextVector2Circular(12, 20)
-                    , DustID.PurpleTorch, new Vector2(Direction * factor * Main.rand.NextFloat(3,6), 0), Scale: Main.rand.NextFloat(1, 2));
+                    , DustID.PurpleTorch, new Vector2(Direction * factor * Main.rand.NextFloat(3, 6), 0), Scale: Main.rand.NextFloat(1, 2));
             d.noGravity = true;
 
             if (Projectile.timeLeft % 3 == 0)
@@ -653,5 +740,4 @@ namespace Coralite.Content.NPCs.Crystalline
 
         public override bool PreDraw(ref Color lightColor) => false;
     }
-
 }

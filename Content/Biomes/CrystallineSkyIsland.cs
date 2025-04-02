@@ -24,6 +24,8 @@ namespace Coralite.Content.Biomes
             BackgroundTextureLoader.AddBackgroundTexture(Mod, AssetDirectory.Backgrounds + nameof(CrystallineSkyIslandBackground) + "0");
         }
 
+        public override string MapBackground => AssetDirectory.Backgrounds+ "CrystallineSkyIslandMap";
+
         //public override string BestiaryIcon => AssetDirectory.Biomes + "MagicCrystalCaveIcon";
 
         public override ModWaterStyle WaterStyle => ModContent.GetInstance<CrystallineSkyIslandWaterStyle>();
@@ -51,6 +53,8 @@ namespace Coralite.Content.Biomes
         //public override ModUndergroundBackgroundStyle UndergroundBackgroundStyle => ModContent.Find<ModUndergroundBackgroundStyle>("Coralite/MagicCrystalCaveBackground");
 
         public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Temp_CrystallineSkyIsland");
+
+        public override string MapBackground => AssetDirectory.Backgrounds + "CrystallineSkyIslandMap";
 
         public override ModWaterStyle WaterStyle => ModContent.GetInstance<CrystallineSkyIslandWaterStyle>();
 
