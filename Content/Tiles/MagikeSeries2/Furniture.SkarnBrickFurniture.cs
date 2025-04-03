@@ -2,7 +2,10 @@
 using Coralite.Core;
 using Coralite.Core.Prefabs.Tiles;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
+using Terraria.ObjectData;
 
 namespace Coralite.Content.Tiles.MagikeSeries2
 {
@@ -83,8 +86,33 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
     public class SkarnBrickClockTile : BaseClockTile
     {
-        public SkarnBrickClockTile() : base(DustID.Stone, new Color(173, 193, 183), 5, new int[] { 16, 16, 16, 16, 16 }, AssetDirectory.MagikeSeries2Tile)
+        public SkarnBrickClockTile() : base(DustID.Stone, new Color(173, 193, 183), 5, new int[] { 16, 16, 16, 16, 18 }, AssetDirectory.MagikeSeries2Tile)
         {
+        }
+
+        public override void SetStaticDefaults()
+        {
+            // Properties
+            Main.tileFrameImportant[Type] = true;
+            Main.tileNoAttach[Type] = true;
+            Main.tileLavaDeath[Type] = true;
+            Main.tileTable[Type] = true;
+            TileID.Sets.Clock[Type] = true;
+            TileID.Sets.HasOutlines[Type] = true;
+
+            DustType = DustID.Stone;
+            AdjTiles = new int[] { TileID.GrandfatherClocks };
+
+            // Placement
+            TileObjectData.newTile.CopyFrom(TileObjectData.Style2xX);
+            TileObjectData.newTile.Height = 5;
+            TileObjectData.newTile.Origin = new Point16(0, 5 - 1);
+            TileObjectData.newTile.DrawYOffset = 0;
+            TileObjectData.newTile.CoordinateHeights = new int[] { 16, 16, 16, 16, 18 };
+            TileObjectData.addTile(Type);
+
+            // Etc
+            AddMapEntry(new Color(173, 193, 183), Language.GetText("ItemName.GrandfatherClock"));
         }
     }
 
