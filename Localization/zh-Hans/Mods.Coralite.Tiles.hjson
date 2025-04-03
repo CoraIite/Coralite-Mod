@@ -51,8 +51,8 @@ GlowTulipDoorOpen.MapEntry: 远古郁金香门
 BlackHoleChestTile.MapEntry: 地心黑曜石
 
 MercuryChestTile: {
-	// MapEntry0: Mods.Coralite.Tiles.MercuryChestTile.MapEntry0
-	// MapEntry1: Mods.Coralite.Tiles.MercuryChestTile.MapEntry1
+	MapEntry0: Mods.Coralite.Tiles.MercuryChestTile.MapEntry0
+	MapEntry1: Mods.Coralite.Tiles.MercuryChestTile.MapEntry1
 }
 
 RedJadeFountain.MapEntry: 赤玉喷泉
@@ -212,4 +212,54 @@ B9AlloyPianoTile.MapEntry: B9 合金钢琴
 B9AlloySofaTile.MapEntry: B9 合金沙发
 B9AlloyTableTile.MapEntry: B9 合金桌
 B9AlloyWorkBenchTile.MapEntry: B9 合金工作台
-// CrystallineCrateTile.MapEntry: Crystalline Crate Tile
+CrystallineCrateTile.MapEntry: 蕴魔匣
+LeafStoneBathtubTile.MapEntry: 叶石浴缸
+LeafStoneBedTile.MapEntry: 叶石床
+LeafStoneBigDroplightTile.MapEntry: 叶石大吊灯
+LeafStoneBookcaseTile.MapEntry: 叶石书架
+LeafStoneCandelabraTile.MapEntry: 叶石烛台
+LeafStoneCandleTile.MapEntry: 叶石蜡烛
+LeafStoneChestTile.MapEntry: 叶石箱
+LeafStoneDoorClosedTile.MapEntry: 叶石门
+LeafStoneDoorOpenTile.MapEntry: 叶石门
+LeafStoneDresserTile.MapEntry: 叶石梳妆台
+LeafStoneDroplightTile.MapEntry: 叶石吊灯
+LeafStoneFloorLampTile.MapEntry: 叶石灯柱
+LeafStonePianoTile.MapEntry: 叶石钢琴
+LeafStoneSofaTile.MapEntry: 叶石沙发
+LeafStoneTableTile.MapEntry: 叶石桌
+LeafStoneWorkBenchTile.MapEntry: 叶石工作台
+SkarnBrickBathtubTile.MapEntry: 矽卡砖浴缸
+SkarnBrickBedTile.MapEntry: 矽卡砖床
+SkarnBrickBigDroplightTile.MapEntry: 矽卡砖大吊灯
+SkarnBrickBookcaseTile.MapEntry: 矽卡砖书架
+SkarnBrickCandelabraTile.MapEntry: 矽卡砖烛台
+SkarnBrickCandleTile.MapEntry: 矽卡砖蜡烛
+SkarnBrickChestTile.MapEntry: 矽卡砖箱
+SkarnBrickDoorClosedTile.MapEntry: 矽卡砖门
+SkarnBrickDoorOpenTile.MapEntry: 矽卡砖门
+SkarnBrickDresserTile.MapEntry: 矽卡砖梳妆台
+SkarnBrickDroplightTile.MapEntry: 矽卡砖吊灯
+SkarnBrickFloorLampTile.MapEntry: 矽卡砖灯柱
+SkarnBrickPianoTile.MapEntry: 矽卡砖钢琴
+SkarnBrickSofaTile.MapEntry: 矽卡砖沙发
+SkarnBrickTableTile.MapEntry: 矽卡砖桌
+SkarnBrickWorkBenchTile.MapEntry: 矽卡砖工作台
+SteelBathtubTile.MapEntry: 钢浴缸
+SteelBedTile.MapEntry: 钢床
+SteelBenchTile.MapEntry: 钢长椅
+SteelBigDroplightTile.MapEntry: 钢大吊灯
+SteelBookcaseTile.MapEntry: 钢书架
+SteelCandelabraTile.MapEntry: 钢烛台
+SteelCandleTile.MapEntry: 钢蜡烛
+SteelChestTile.MapEntry: 钢箱
+SteelDoorClosedTile.MapEntry: 钢门
+SteelDoorOpenTile.MapEntry: 钢门
+SteelDresserTile.MapEntry: 钢梳妆台
+SteelDroplightTile.MapEntry: 钢吊灯
+SteelFloorLampTile.MapEntry: 钢灯柱
+SteelPianoTile.MapEntry: 钢钢琴
+SteelSofaTile.MapEntry: 钢沙发
+SteelTableTile.MapEntry: 钢桌
+SteelWorkBenchTile.MapEntry: 钢工作台
+SkarnBrickBenchTile.MapEntry: 矽卡砖长椅

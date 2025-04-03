@@ -14,7 +14,7 @@ namespace Coralite.Content.Tiles.Steel
             Main.tileBlockLight[Type] = true;
 
             MineResist = 2f;
-            DustType = TileID.Titanium;
+            DustType = DustID.Titanium;
             HitSound = CoraliteSoundID.Metal_NPCHit4;
             MinPick = 110;
 

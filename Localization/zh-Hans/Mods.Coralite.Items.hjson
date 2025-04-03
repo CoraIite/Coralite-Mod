@@ -5534,3 +5534,328 @@ CrystallineVinicLaserBannerItem: {
 	DisplayName: 激光器蕴魔仿藤旗
 	Tooltip: ""
 }
+
+LeafStoneBathtub: {
+	DisplayName: 叶石浴缸
+	Tooltip: ""
+}
+
+LeafStoneBed: {
+	DisplayName: 叶石床
+	Tooltip: ""
+}
+
+LeafStoneBigDroplight: {
+	DisplayName: 叶石大吊灯
+	Tooltip: ""
+}
+
+LeafStoneBookcase: {
+	DisplayName: 叶石书架
+	Tooltip: ""
+}
+
+LeafStoneBrick: {
+	DisplayName: 叶石砖
+	Tooltip: ""
+}
+
+LeafStoneCandelabra: {
+	DisplayName: 叶石烛台
+	Tooltip: ""
+}
+
+LeafStoneCandle: {
+	DisplayName: 叶石蜡烛
+	Tooltip: ""
+}
+
+LeafStoneChair: {
+	DisplayName: 叶石椅
+	Tooltip: ""
+}
+
+LeafStoneChest: {
+	DisplayName: 叶石箱
+	Tooltip: ""
+}
+
+LeafStoneClock: {
+	DisplayName: 叶石钟
+	Tooltip: ""
+}
+
+LeafStoneDoor: {
+	DisplayName: 叶石门
+	Tooltip: ""
+}
+
+LeafStoneDresser: {
+	DisplayName: 叶石梳妆台
+	Tooltip: ""
+}
+
+LeafStoneDroplight: {
+	DisplayName: 叶石吊灯
+	Tooltip: ""
+}
+
+LeafStoneFloorLamp: {
+	DisplayName: 叶石灯柱
+	Tooltip: ""
+}
+
+LeafStonePiano: {
+	DisplayName: 叶石钢琴
+	Tooltip: ""
+}
+
+LeafStonePlatform: {
+	DisplayName: 叶石平台
+	Tooltip: ""
+}
+
+LeafStoneSink: {
+	DisplayName: 叶石水槽
+	Tooltip: ""
+}
+
+LeafStoneSofa: {
+	DisplayName: 叶石沙发
+	Tooltip: ""
+}
+
+LeafStoneTable: {
+	DisplayName: 叶石桌
+	Tooltip: ""
+}
+
+LeafStoneToilet: {
+	DisplayName: 叶石马桶
+	Tooltip: ""
+}
+
+LeafStoneWallItem: {
+	DisplayName: 叶石墙
+	Tooltip: ""
+}
+
+LeafStoneWorkBench: {
+	DisplayName: 叶石工作台
+	Tooltip: ""
+}
+
+SkarnBrickBathtub: {
+	DisplayName: 矽卡砖浴缸
+	Tooltip: ""
+}
+
+SkarnBrickBed: {
+	DisplayName: 矽卡砖床
+	Tooltip: ""
+}
+
+SkarnBrickBigDroplight: {
+	DisplayName: 矽卡砖大吊灯
+	Tooltip: ""
+}
+
+SkarnBrickBookcase: {
+	DisplayName: 矽卡砖书架
+	Tooltip: ""
+}
+
+SkarnBrickCandelabra: {
+	DisplayName: 矽卡砖烛台
+	Tooltip: ""
+}
+
+SkarnBrickCandle: {
+	DisplayName: 矽卡砖蜡烛
+	Tooltip: ""
+}
+
+SkarnBrickChair: {
+	DisplayName: 矽卡砖椅
+	Tooltip: ""
+}
+
+SkarnBrickChest: {
+	DisplayName: 矽卡砖箱
+	Tooltip: ""
+}
+
+SkarnBrickClock: {
+	DisplayName: 矽卡砖钟
+	Tooltip: ""
+}
+
+SkarnBrickDoor: {
+	DisplayName: 矽卡砖门
+	Tooltip: ""
+}
+
+SkarnBrickDresser: {
+	DisplayName: 矽卡砖梳妆台
+	Tooltip: ""
+}
+
+SkarnBrickDroplight: {
+	DisplayName: 矽卡砖吊灯
+	Tooltip: ""
+}
+
+SkarnBrickFloorLamp: {
+	DisplayName: 矽卡砖灯柱
+	Tooltip: ""
+}
+
+SkarnBrickPiano: {
+	DisplayName: 矽卡砖钢琴
+	Tooltip: ""
+}
+
+SkarnBrickSink: {
+	DisplayName: 矽卡砖水槽
+	Tooltip: ""
+}
+
+SkarnBrickSofa: {
+	DisplayName: 矽卡砖沙发
+	Tooltip: ""
+}
+
+SkarnBrickTable: {
+	DisplayName: 矽卡砖桌
+	Tooltip: ""
+}
+
+SkarnBrickToilet: {
+	DisplayName: 矽卡砖马桶
+	Tooltip: ""
+}
+
+SkarnBrickWorkBench: {
+	DisplayName: 矽卡砖工作台
+	Tooltip: ""
+}
+
+SteelBathtub: {
+	DisplayName: 钢浴缸
+	Tooltip: ""
+}
+
+SteelBed: {
+	DisplayName: 钢床
+	Tooltip: ""
+}
+
+SteelBench: {
+	DisplayName: 钢长椅
+	Tooltip: ""
+}
+
+SteelBigDroplight: {
+	DisplayName: 钢大吊灯
+	Tooltip: ""
+}
+
+SteelBookcase: {
+	DisplayName: 钢书架
+	Tooltip: ""
+}
+
+SteelBrick: {
+	DisplayName: 钢砖
+	Tooltip: ""
+}
+
+SteelBrickWallItem: {
+	DisplayName: 钢砖墙
+	Tooltip: ""
+}
+
+SteelCandelabra: {
+	DisplayName: 钢烛台
+	Tooltip: ""
+}
+
+SteelCandle: {
+	DisplayName: 钢蜡烛
+	Tooltip: ""
+}
+
+SteelChair: {
+	DisplayName: 钢椅
+	Tooltip: ""
+}
+
+SteelChest: {
+	DisplayName: 钢箱
+	Tooltip: ""
+}
+
+SteelClock: {
+	DisplayName: 钢钟
+	Tooltip: ""
+}
+
+SteelDoor: {
+	DisplayName: 钢网门
+	Tooltip: “可以阻挡豌豆！”
+}
+
+SteelDresser: {
+	DisplayName: 钢梳妆台
+	Tooltip: ""
+}
+
+SteelDroplight: {
+	DisplayName: 钢吊灯
+	Tooltip: ""
+}
+
+SteelFloorLamp: {
+	DisplayName: 钢灯柱
+	Tooltip: ""
+}
+
+SteelPiano: {
+	DisplayName: 钢钢琴
+	Tooltip: ""
+}
+
+SteelPlatform: {
+	DisplayName: 钢平台
+	Tooltip: ""
+}
+
+SteelSink: {
+	DisplayName: 钢水槽
+	Tooltip: ""
+}
+
+SteelSofa: {
+	DisplayName: 钢沙发
+	Tooltip: ""
+}
+
+SteelTable: {
+	DisplayName: 钢桌
+	Tooltip: ""
+}
+
+SteelToilet: {
+	DisplayName: 钢马桶
+	Tooltip: ""
+}
+
+SteelWorkBench: {
+	DisplayName: 钢工作台
+	Tooltip: ""
+}
+
+SkarnBrickBench: {
+	DisplayName: 矽卡砖长椅
+	Tooltip: ""
+}

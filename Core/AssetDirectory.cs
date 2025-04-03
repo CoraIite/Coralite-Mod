@@ -168,6 +168,7 @@ namespace Coralite.Core
         public const string GelTiles = Tiles + "Gel/";
         public const string PlushTiles = Tiles + "Plush/";
         public const string SteelTiles = Tiles + "Steel/";
+        public const string GlistentTiles = Tiles + "Glistent/";
 
         public const string PlantTiles = Tiles + "Plants/";
         public const string TreeTiles = Tiles + "Trees/";

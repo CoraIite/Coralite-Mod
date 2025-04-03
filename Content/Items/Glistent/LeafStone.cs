@@ -1,18 +1,20 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Tiles.Glistent;
+using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Terraria;
 using Terraria.ID;
 
 namespace Coralite.Content.Items.Glistent
 {
-    public class LeafStone : BaseMaterial  //, IMagikeRemodelable
+    public class LeafStone : BasePlaceableItem
     {
-        public LeafStone() : base(9999, Item.sellPrice(0, 0, 0, 50), ItemRarityID.Green, AssetDirectory.GlistentItems) { }
+        public LeafStone() : base( Item.sellPrice(0, 0, 0, 20), ItemRarityID.Green
+            ,ModContent.TileType<LeafStoneTile>(), AssetDirectory.GlistentItems) { }
 
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddRecipeGroup(RecipeGroupID.Wood, 5)
+                .AddRecipeGroup(RecipeGroupID.Wood, 12)
                 .AddTile(TileID.Furnaces)
                 .Register();
 
@@ -22,7 +24,7 @@ namespace Coralite.Content.Items.Glistent
                 .Register();
 
             CreateRecipe()
-                .AddIngredient(ItemID.VineRope, 5)
+                .AddIngredient(ItemID.VineRope, 8)
                 .AddTile(TileID.Furnaces)
                 .Register();
         }

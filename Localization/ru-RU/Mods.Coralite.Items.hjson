@@ -5460,3 +5460,328 @@ CrystallineVinicLaserBannerItem: {
 	// DisplayName: Crystalline Vinic Laser Banner Item
 	// Tooltip: ""
 }
+
+LeafStoneBathtub: {
+	// DisplayName: Leaf Stone Bathtub
+	// Tooltip: ""
+}
+
+LeafStoneBed: {
+	// DisplayName: Leaf Stone Bed
+	// Tooltip: ""
+}
+
+LeafStoneBigDroplight: {
+	// DisplayName: Leaf Stone Big Droplight
+	// Tooltip: ""
+}
+
+LeafStoneBookcase: {
+	// DisplayName: Leaf Stone Bookcase
+	// Tooltip: ""
+}
+
+LeafStoneBrick: {
+	// DisplayName: Leaf Stone Brick
+	// Tooltip: ""
+}
+
+LeafStoneCandelabra: {
+	// DisplayName: Leaf Stone Candelabra
+	// Tooltip: ""
+}
+
+LeafStoneCandle: {
+	// DisplayName: Leaf Stone Candle
+	// Tooltip: ""
+}
+
+LeafStoneChair: {
+	// DisplayName: Leaf Stone Chair
+	// Tooltip: ""
+}
+
+LeafStoneChest: {
+	// DisplayName: Leaf Stone Chest
+	// Tooltip: ""
+}
+
+LeafStoneClock: {
+	// DisplayName: Leaf Stone Clock
+	// Tooltip: ""
+}
+
+LeafStoneDoor: {
+	// DisplayName: Leaf Stone Door
+	// Tooltip: ""
+}
+
+LeafStoneDresser: {
+	// DisplayName: Leaf Stone Dresser
+	// Tooltip: ""
+}
+
+LeafStoneDroplight: {
+	// DisplayName: Leaf Stone Droplight
+	// Tooltip: ""
+}
+
+LeafStoneFloorLamp: {
+	// DisplayName: Leaf Stone Floor Lamp
+	// Tooltip: ""
+}
+
+LeafStonePiano: {
+	// DisplayName: Leaf Stone Piano
+	// Tooltip: ""
+}
+
+LeafStonePlatform: {
+	// DisplayName: Leaf Stone Platform
+	// Tooltip: ""
+}
+
+LeafStoneSink: {
+	// DisplayName: Leaf Stone Sink
+	// Tooltip: ""
+}
+
+LeafStoneSofa: {
+	// DisplayName: Leaf Stone Sofa
+	// Tooltip: ""
+}
+
+LeafStoneTable: {
+	// DisplayName: Leaf Stone Table
+	// Tooltip: ""
+}
+
+LeafStoneToilet: {
+	// DisplayName: Leaf Stone Toilet
+	// Tooltip: ""
+}
+
+LeafStoneWallItem: {
+	// DisplayName: Leaf Stone Wall Item
+	// Tooltip: ""
+}
+
+LeafStoneWorkBench: {
+	// DisplayName: Leaf Stone Work Bench
+	// Tooltip: ""
+}
+
+SkarnBrickBathtub: {
+	// DisplayName: Skarn Brick Bathtub
+	// Tooltip: ""
+}
+
+SkarnBrickBed: {
+	// DisplayName: Skarn Brick Bed
+	// Tooltip: ""
+}
+
+SkarnBrickBigDroplight: {
+	// DisplayName: Skarn Brick Big Droplight
+	// Tooltip: ""
+}
+
+SkarnBrickBookcase: {
+	// DisplayName: Skarn Brick Bookcase
+	// Tooltip: ""
+}
+
+SkarnBrickCandelabra: {
+	// DisplayName: Skarn Brick Candelabra
+	// Tooltip: ""
+}
+
+SkarnBrickCandle: {
+	// DisplayName: Skarn Brick Candle
+	// Tooltip: ""
+}
+
+SkarnBrickChair: {
+	// DisplayName: Skarn Brick Chair
+	// Tooltip: ""
+}
+
+SkarnBrickChest: {
+	// DisplayName: Skarn Brick Chest
+	// Tooltip: ""
+}
+
+SkarnBrickClock: {
+	// DisplayName: Skarn Brick Clock
+	// Tooltip: ""
+}
+
+SkarnBrickDoor: {
+	// DisplayName: Skarn Brick Door
+	// Tooltip: ""
+}
+
+SkarnBrickDresser: {
+	// DisplayName: Skarn Brick Dresser
+	// Tooltip: ""
+}
+
+SkarnBrickDroplight: {
+	// DisplayName: Skarn Brick Droplight
+	// Tooltip: ""
+}
+
+SkarnBrickFloorLamp: {
+	// DisplayName: Skarn Brick Floor Lamp
+	// Tooltip: ""
+}
+
+SkarnBrickPiano: {
+	// DisplayName: Skarn Brick Piano
+	// Tooltip: ""
+}
+
+SkarnBrickSink: {
+	// DisplayName: Skarn Brick Sink
+	// Tooltip: ""
+}
+
+SkarnBrickSofa: {
+	// DisplayName: Skarn Brick Sofa
+	// Tooltip: ""
+}
+
+SkarnBrickTable: {
+	// DisplayName: Skarn Brick Table
+	// Tooltip: ""
+}
+
+SkarnBrickToilet: {
+	// DisplayName: Skarn Brick Toilet
+	// Tooltip: ""
+}
+
+SkarnBrickWorkBench: {
+	// DisplayName: Skarn Brick Work Bench
+	// Tooltip: ""
+}
+
+SteelBathtub: {
+	// DisplayName: Steel Bathtub
+	// Tooltip: ""
+}
+
+SteelBed: {
+	// DisplayName: Steel Bed
+	// Tooltip: ""
+}
+
+SteelBench: {
+	// DisplayName: Steel Bench
+	// Tooltip: ""
+}
+
+SteelBigDroplight: {
+	// DisplayName: Steel Big Droplight
+	// Tooltip: ""
+}
+
+SteelBookcase: {
+	// DisplayName: Steel Bookcase
+	// Tooltip: ""
+}
+
+SteelBrick: {
+	// DisplayName: Steel Brick
+	// Tooltip: ""
+}
+
+SteelBrickWallItem: {
+	// DisplayName: Steel Brick Wall Item
+	// Tooltip: ""
+}
+
+SteelCandelabra: {
+	// DisplayName: Steel Candelabra
+	// Tooltip: ""
+}
+
+SteelCandle: {
+	// DisplayName: Steel Candle
+	// Tooltip: ""
+}
+
+SteelChair: {
+	// DisplayName: Steel Chair
+	// Tooltip: ""
+}
+
+SteelChest: {
+	// DisplayName: Steel Chest
+	// Tooltip: ""
+}
+
+SteelClock: {
+	// DisplayName: Steel Clock
+	// Tooltip: ""
+}
+
+SteelDoor: {
+	// DisplayName: Steel Door
+	// Tooltip: ""
+}
+
+SteelDresser: {
+	// DisplayName: Steel Dresser
+	// Tooltip: ""
+}
+
+SteelDroplight: {
+	// DisplayName: Steel Droplight
+	// Tooltip: ""
+}
+
+SteelFloorLamp: {
+	// DisplayName: Steel Floor Lamp
+	// Tooltip: ""
+}
+
+SteelPiano: {
+	// DisplayName: Steel Piano
+	// Tooltip: ""
+}
+
+SteelPlatform: {
+	// DisplayName: Steel Platform
+	// Tooltip: ""
+}
+
+SteelSink: {
+	// DisplayName: Steel Sink
+	// Tooltip: ""
+}
+
+SteelSofa: {
+	// DisplayName: Steel Sofa
+	// Tooltip: ""
+}
+
+SteelTable: {
+	// DisplayName: Steel Table
+	// Tooltip: ""
+}
+
+SteelToilet: {
+	// DisplayName: Steel Toilet
+	// Tooltip: ""
+}
+
+SteelWorkBench: {
+	// DisplayName: Steel Work Bench
+	// Tooltip: ""
+}
+
+SkarnBrickBench: {
+	// DisplayName: Skarn Brick Bench
+	// Tooltip: ""
+}
