@@ -27,5 +27,7 @@ namespace Coralite.Core
             CrystallineSkyIslandTileCount += tileCounts[ModContent.TileType<ChalcedonySmoothSkarn>()];
         }
 
+        public bool InCrystalCave => CrystalCaveTileCount > 500;
+        public bool InCrystallineSkyIsland => CrystallineSkyIslandTileCount > 400;
     }
 }

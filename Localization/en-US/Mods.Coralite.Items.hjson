@@ -5736,3 +5736,33 @@ SkarnBrickBench: {
 	DisplayName: Skarn Brick Bench
 	Tooltip: ""
 }
+
+LuminDye: {
+	DisplayName: Lumin Dye
+	Tooltip: ""
+}
+
+GlassCat: {
+	DisplayName: Glass Cat
+	Tooltip: ""
+}
+
+CrystallinePylon: {
+	DisplayName: Crystalline Pylon
+	Tooltip: ""
+}
+
+CrystallineSentinelBannerItem: {
+	DisplayName: Crystalline Sentinel Banner Item
+	Tooltip: ""
+}
+
+WildMabirdBannerItem: {
+	DisplayName: Wild Mabird Banner Item
+	Tooltip: ""
+}
+
+WildMabirdNestBannerItem: {
+	DisplayName: Wild Mabird Nest Banner Item
+	Tooltip: ""
+}

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.Localization;
+using Terraria.ModLoader.Exceptions;
 using Terraria.ModLoader.IO;
 using static Terraria.ModLoader.ModContent;
 
@@ -172,6 +173,16 @@ namespace Coralite.Core.Systems.MagikeSystem
             }
         }
 
+        private List<(RecipeGroup,int)> _itemGroups;
+        public List<(RecipeGroup,int)> RequiredItemGroups
+        {
+            get
+            {
+                _itemGroups ??= [];
+                return _itemGroups;
+            }
+        }
+
         public Action<Item, Item> onCraft;
 
         /// <summary>
@@ -210,7 +221,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         /// <param name="magikeAmount"></param>
         /// <param name="text"></param>
         /// <returns></returns>
-        public bool CanCraft(IList<Item> mainItems, IDictionary<int, int> otherItems, int magikeAmount, out string text)
+        public bool CanCraft(IList<Item> mainItems, Dictionary<int, int> otherItems, int magikeAmount, out string text)
         {
             text = "";
             MagikeCraftAttempt attempt = new MagikeCraftAttempt();
@@ -233,7 +244,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         /// <param name="otherItems"></param>
         /// <param name="magikeAmount"></param>
         /// <returns></returns>
-        public bool CanCraftJustCheck(IList<Item> mainItems, IDictionary<int, int> otherItems, int magikeAmount)
+        public bool CanCraftJustCheck(IList<Item> mainItems, Dictionary<int, int> otherItems, int magikeAmount)
         {
             MagikeCraftAttempt attempt = new MagikeCraftAttempt();
 
@@ -263,23 +274,23 @@ namespace Coralite.Core.Systems.MagikeSystem
                 }
         }
 
-        public void CanCraft_ItemsCheck(IList<Item> mainItems, IDictionary<int, int> otherItems, ref MagikeCraftAttempt attempt)
+        public void CanCraft_ItemsCheck(IList<Item> mainItems, Dictionary<int, int> otherItems, ref MagikeCraftAttempt attempt)
         {
             foreach (var item in mainItems)
             {
-                if (item is null || item.IsAir)
+                if (item is null || item.IsAir)//是否有主要物品的检测
                 {
                     attempt.noMainItem = true;
                     continue;
                 }
 
-                if (item.type != MainItem.type)
+                if (item.type != MainItem.type)//主要物品是否正确
                 {
                     attempt.mainItemIncorrect = true;
                     continue;
                 }
 
-                if (item.stack < MainItem.stack)
+                if (item.stack < MainItem.stack)//主要物品数量够不够
                 {
                     attempt.mainItemNotEnough = true;
                     attempt.lackMainItem = MainItem.Clone();
@@ -294,8 +305,21 @@ namespace Coralite.Core.Systems.MagikeSystem
                     else
                     {
                         attempt.otherItemNotEnough = true;
-                        attempt.lackItem = requireItem;
+                        attempt.lackItemName = requireItem.Name;
                         attempt.lackAmount = requireItem.stack - currentStack;
+                        break;
+                    }
+                }
+
+                foreach (var groupItem in RequiredItemGroups)//遍历合成组
+                {
+                    //如果数量不够就返回
+                    int currentCount = groupItem.Item1.CountUsableItems(otherItems);
+                    if (currentCount < groupItem.Item2)
+                    {
+                        attempt.otherItemNotEnough = true;
+                        attempt.lackItemName = groupItem.Item1.GetText();
+                        attempt.lackAmount = groupItem.Item2 - currentCount;
                         break;
                     }
                 }
@@ -465,6 +489,39 @@ namespace Coralite.Core.Systems.MagikeSystem
         }
 
         /// <summary>
+        /// 添加次要合成组
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="stack"></param>
+        /// <returns></returns>
+        public MagikeRecipe AddIngredientGroup(string groupName, int stack = 1)
+        {
+            if (!RecipeGroup.recipeGroupIDs.TryGetValue(groupName, out int value))
+                throw new RecipeException($"A recipe group with the name {groupName} does not exist.");
+
+            int id = value;
+            var group = RecipeGroup.recipeGroups[id];
+
+            RequiredItemGroups.Add((group, stack));
+            return this;
+        }
+
+        /// <summary>
+        /// 添加次要合成组
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="stack"></param>
+        /// <returns></returns>
+        public MagikeRecipe AddIngredientGroup(int recipeGroupId, int stack = 1)
+        {
+            if (!RecipeGroup.recipeGroups.TryGetValue(recipeGroupId, out RecipeGroup rec))
+                throw new RecipeException($"A recipe group with the ID {recipeGroupId} does not exist.");
+
+            RequiredItemGroups.Add((rec, stack));
+            return this;
+        }
+
+        /// <summary>
         /// 向合成表内添加合成条件
         /// </summary>
         /// <param name="condition"></param>
@@ -528,6 +585,10 @@ namespace Coralite.Core.Systems.MagikeSystem
             if (_items != null)
                 foreach (var item in RequiredItems)
                     recipe.AddIngredient(item.type, item.stack);
+
+            if (_itemGroups != null)
+                foreach (var item in RequiredItemGroups)
+                    recipe.AddRecipeGroup(item.Item1, item.Item2);
 
             switch (recipeType)
             {
@@ -659,7 +720,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         /// <summary>
         /// 缺失的物品
         /// </summary>
-        public Item lackItem = null;
+        public string lackItemName = null;
         /// <summary>
         /// 缺失的数量
         /// </summary>
@@ -681,7 +742,7 @@ namespace Coralite.Core.Systems.MagikeSystem
                 text = ConcatText(text, MagikeSystem.GetCraftText(MagikeSystem.CraftTextID.ConditionNotMet) + conditionFailText);
 
             if (otherItemNotEnough)
-                text = ConcatText(text, MagikeSystem.CraftText[(int)MagikeSystem.CraftTextID.OtherItemNotEnough].Format(lackItem.Name, lackAmount));
+                text = ConcatText(text, MagikeSystem.CraftText[(int)MagikeSystem.CraftTextID.OtherItemNotEnough].Format(lackItemName, lackAmount));
 
             //if (magikeNotEnough)
             //    text = ConcatText(text, MagikeSystem.CraftText[(int)MagikeSystem.CraftTextID.MagikeNotEnough].Format(selfMagike, targetMagike));

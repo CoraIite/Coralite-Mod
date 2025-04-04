@@ -24,6 +24,8 @@ namespace Coralite.Content.WorldGeneration
         private static int[] tileCounterX = new int[tileCounterMax];
         private static int[] tileCounterY = new int[tileCounterMax];
 
+        private static int ChestSpawnCount = 0;
+
         /// <summary>
         /// 矽卡祭坛的位置，没有权限的时候会将玩家传送到该位置
         /// </summary>
@@ -52,6 +54,7 @@ namespace Coralite.Content.WorldGeneration
             PlaceNightSoul = false;
             HasPermission = false;
             AltarPos = Point.Zero;
+            ChestSpawnCount = 0;
 
             //生成地表结构
             GenGroundLock(out Point altarPoint);
@@ -2127,12 +2130,22 @@ namespace Coralite.Content.WorldGeneration
                 WorldGen.PlaceTile(x, y, ModContent.TileType<SkarnRubbles6x6>(), true);
             else if (c == new Color(165, 99, 85))
             {
-                WorldGen.AddBuriedChest(x, y,
-                   WorldGen.genRand.NextFromList(
+                int chestItem = ChestSpawnCount switch
+                {
+                    0 => ModContent.ItemType<Luminward>(),
+                    1 => ModContent.ItemType<SkyshipInABottle>(),
+                    2 => ModContent.ItemType<ChalcedonyWing>(),
+                    _ => WorldGen.genRand.NextFromList(
                        ModContent.ItemType<Luminward>(),
                        ModContent.ItemType<SkyshipInABottle>(),
                        ModContent.ItemType<ChalcedonyWing>()
-                       ), notNearOtherChests: false, 1, trySlope: false, (ushort)ModContent.TileType<SkarnChestTile>());
+                       )
+                };
+
+                ChestSpawnCount++;
+
+                WorldGen.AddBuriedChest(x, y, chestItem
+                  , notNearOtherChests: false, 1, trySlope: false, (ushort)ModContent.TileType<SkarnChestTile>());
             }
             else if (c == new Color(0, 255, 170))
                 WorldGen.PlaceTile(x, y, ModContent.TileType<SkarnBrickTile>(), true);

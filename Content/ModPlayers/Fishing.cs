@@ -2,6 +2,7 @@
 using Coralite.Content.Items.CoreKeeper;
 using Coralite.Content.Items.Magike;
 using Coralite.Content.Items.MagikeSeries1;
+using Coralite.Content.Items.MagikeSeries2;
 using Terraria;
 using Terraria.DataStructures;
 using static Terraria.ModLoader.ModContent;
@@ -72,6 +73,30 @@ namespace Coralite.Content.ModPlayers
                     if (attempt.common && Main.rand.NextBool(5))//普通的晶鳍鱼
                     {
                         itemDrop = ItemType<CrystalFins>();
+                        return;
+                    }
+                }
+            }
+
+            if (inWater && Player.InModBiome<CrystallineSkyIsland>())
+            {
+                if (attempt.crate)
+                {
+                    // 如果钓到了的是匣子，就替换为自己的匣子
+
+                    // 为了不替换掉最高级的匣子，所以做点限制
+                    //增加50%的概率替换掉其他匣子，因为玩家有时候可能在多个重叠的环境中
+                    if (!attempt.rare && !attempt.veryrare && !attempt.legendary && attempt.uncommon && Main.rand.NextBool())
+                    {
+                        itemDrop = ItemType<CrystallineCrate>();
+                        return; // This is important so your code after this that rolls items will not run
+                    }
+                }
+                else
+                {
+                    if (attempt.common && Main.rand.NextBool(5))//普通的玻璃猫
+                    {
+                        itemDrop = ItemType<GlassCat>();
                         return;
                     }
                 }

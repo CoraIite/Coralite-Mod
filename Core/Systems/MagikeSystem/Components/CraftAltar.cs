@@ -7,7 +7,6 @@ using Coralite.Core.Systems.MagikeSystem.Tiles;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
@@ -64,7 +63,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             ThrowOut
         }
 
-        public enum AutoChoseModes:byte
+        public enum AutoChoseModes : byte
         {
             /// <summary>
             /// 只为有一个合成表的物品添加自动选择
@@ -316,6 +315,45 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 ;
             }
 
+            foreach (var item in ChosenResipe.RequiredItemGroups)
+            {
+                int howManyNeed = item.Item2;
+
+                foreach (var pos in linerSender.Receivers)
+                {
+                    if (!TryGetEntityWithTopLeft(pos, out MagikeTP receiverEntity))
+                        continue;
+
+                    Item[] tempItems = null;
+
+                    if (receiverEntity.TryGetComponent(MagikeComponentID.ItemContainer, out ItemContainer container2))
+                        tempItems = container2.Items;
+
+                    if (receiverEntity.TryGetComponent(MagikeComponentID.ItemGetOnlyContainer, out GetOnlyItemContainer container3))
+                        tempItems = container3.Items;
+
+                    foreach (var tempitem in tempItems)
+                        if (!tempitem.IsAir && item.Item1.ContainsItem(tempitem.type))
+                        {
+                            int cost = Math.Min(tempitem.stack, howManyNeed);
+                            tempitem.stack -= cost;
+
+                            if (tempitem.stack < 1)
+                                tempitem.TurnToAir();
+
+                            howManyNeed -= cost;
+                            if (howManyNeed < 1)
+                                goto costEnd;
+                        }
+                }
+
+                if (howManyNeed > 0)
+                    return false;//这块给我写迷糊了，总之就是遍历所有的物品然后挨个消耗
+
+                costEnd:
+                ;
+            }
+
             return true;
         }
 
@@ -360,6 +398,14 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         {
             IsWorking = false;
             Timer = 0;
+
+            if (ChosenResipe != null && Entity.TryGetComponent(MagikeComponentID.ItemContainer, out ItemContainer container))
+                container.AddItem(ChosenResipe.MainItem.Clone());
+
+            Entity.GetMagikeContainer().AddMagike((ChosenResipe.magikeCost - RequiredMagike) / 2);
+
+            RequiredMagike = 0;
+            PerCost = 0;
         }
 
         #region 检测能否开始工作
@@ -377,8 +423,6 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 text = MagikeSystem.Error.Value;
                 return false;
             }
-
-            FrozenDictionary<int, int> otherItems2 = otherItems.ToFrozenDictionary();
 
             if (AutoChoseMode == AutoChoseModes.ForAll && ChosenResipe != null)//快速检测主要物品以防止主要物品错误而需要删掉合成表
             {
@@ -398,16 +442,16 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             {
                 if (AutoChoseMode == AutoChoseModes.Never)//当不使用自动查找时
                 {
-                    text = text = MagikeSystem.GetCraftText(MagikeSystem.CraftTextID.NoCraftRecipe);
+                    text = MagikeSystem.GetCraftText(MagikeSystem.CraftTextID.NoCraftRecipe);
                     return false;
                 }
 
-                if (!CheckCanCraft_FindRecipe(items, otherItems2, out text))//寻找合成表
+                if (!CheckCanCraft_FindRecipe(items, otherItems, out text))//寻找合成表
                     return false;
             }
 
             //检测物品是否能够合成
-            if (!ChosenResipe.CanCraft(items, otherItems2, Entity.GetMagikeContainer().Magike, out text))
+            if (!ChosenResipe.CanCraft(items, otherItems, Entity.GetMagikeContainer().Magike, out text))
                 return false;
 
             if (ChosenResipe.RequiredItems != null)//消耗次要物品
@@ -1432,6 +1476,14 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                     grid.Add(slot);
                 }
 
+            if (recipe.RequiredItemGroups.Count > 0)
+                for (int i = 0; i < recipe.RequiredItemGroups.Count; i++)
+                {
+                    slot = new CraftSlot(recipe, CraftSlot.SlotType.GroupItem, i);
+                    slot.SetSize(46, 0, 0, 1);
+                    grid.Add(slot);
+                }
+
             Append(grid);
         }
 
@@ -1455,25 +1507,39 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         private readonly SlotType slotType;
 
         private bool canCraft;
+        private int index;
         private string FailText;
         private float _scale;
 
         public enum SlotType
         {
             ResultItem,
-            RequiredItem
+            RequiredItem,
+            GroupItem,
         }
 
         public CraftSlot(MagikeRecipe recipe, SlotType slotType, int requiredIndex = 0)
         {
             this.recipe = recipe;
             this.slotType = slotType;
+            index = requiredIndex;
 
-            showItem = slotType switch
+            switch (slotType)
             {
-                SlotType.RequiredItem => recipe.RequiredItems[requiredIndex].Clone(),
-                _ => recipe.ResultItem.Clone(),
-            };
+                case SlotType.ResultItem:
+                    showItem = recipe.ResultItem.Clone();
+                    break;
+                case SlotType.RequiredItem:
+                    showItem = recipe.RequiredItems[requiredIndex].Clone();
+                    break;
+                case SlotType.GroupItem:
+                    var i = new Item(recipe.RequiredItemGroups[requiredIndex].Item1.IconicItemId, recipe.RequiredItemGroups[requiredIndex].Item2);
+                    i.SetNameOverride(recipe.RequiredItemGroups[requiredIndex].Item1.GetText());
+                    showItem = i;
+                    break;
+                default:
+                    break;
+            }
         }
 
         public override void Update(GameTime gameTime)
@@ -1490,18 +1556,27 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                     }
                     break;
                 case SlotType.RequiredItem://其他物品只需要判断一下有没有足够的就行
-                    if (CraftController.OtherItemTypes.TryGetValue(showItem.type, out int stack))
                     {
+                        if (CraftController.OtherItemTypes.TryGetValue(showItem.type, out int stack))
+                        {
+                            canCraft = stack >= showItem.stack;
+                            if (!canCraft)
+                                FailText = MagikeSystem.CraftText[(int)MagikeSystem.CraftTextID.OtherItemNotEnough].Format(showItem.Name, showItem.stack - stack);
+                        }
+                        else
+                        {
+                            canCraft = false;
+                            FailText = MagikeSystem.CraftText[(int)MagikeSystem.CraftTextID.OtherItemNotEnough].Format(showItem.Name, showItem.stack - stack);
+                        }
+                    }
+                    break;
+                case SlotType.GroupItem://其他物品只需要判断一下有没有足够的就行
+                    {
+                        int stack = recipe.RequiredItemGroups[index].Item1.CountUsableItems(CraftController.OtherItemTypes);
                         canCraft = stack >= showItem.stack;
                         if (!canCraft)
                             FailText = MagikeSystem.CraftText[(int)MagikeSystem.CraftTextID.OtherItemNotEnough].Format(showItem.Name, showItem.stack - stack);
                     }
-                    else
-                    {
-                        canCraft = false;
-                        FailText = MagikeSystem.CraftText[(int)MagikeSystem.CraftTextID.OtherItemNotEnough].Format(showItem.Name, showItem.stack - stack);
-                    }
-
                     break;
                 default:
                     break;

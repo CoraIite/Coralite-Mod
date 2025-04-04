@@ -1,4 +1,5 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Dusts;
+using Coralite.Core;
 using Terraria;
 using Terraria.ID;
 
@@ -15,7 +16,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
             TileID.Sets.CanBeClearedDuringOreRunner[Type] = false;
 
-            DustType = DustID.BorealWood_Small;
+            DustType = ModContent.DustType<SkarnDust>();
             HitSound = CoraliteSoundID.DigStone_Tink;
             AddMapEntry(new Color(214, 245, 212));
 

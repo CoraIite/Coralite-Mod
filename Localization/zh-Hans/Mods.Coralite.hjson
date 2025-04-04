@@ -23,6 +23,8 @@ Conditions: {
 		DownedGolemCondition: 需要击败石巨人
 		UseShlimmerTranslation: 此为微光转化合成表
 		SpellCraft: 需要使用法术回路制作
+		InMagicCrystalCave: 需要处于魔力水晶洞中
+		InCrystallineSkyIsland: 需要处于蕴魔空岛中
 	}
 }
 

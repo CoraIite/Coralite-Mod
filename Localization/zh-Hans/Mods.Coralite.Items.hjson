@@ -3308,7 +3308,7 @@ VampireEarl: {
 
 CrystalFins: {
 	DisplayName: 晶鳍鱼
-	Tooltip: 身上长着水晶状的鱼鳍
+	Tooltip: 来到水晶洞后发生变异的鱼，身上长着水晶状的鱼鳍
 }
 
 GalacticVortexBanner: {
@@ -5857,5 +5857,35 @@ SteelWorkBench: {
 
 SkarnBrickBench: {
 	DisplayName: 矽卡砖长椅
+	Tooltip: ""
+}
+
+LuminDye: {
+	DisplayName: 曲光染料
+	Tooltip: 让你的衣服偶尔变得半透明！
+}
+
+GlassCat: {
+	DisplayName: 玻璃猫
+	Tooltip: 透过半透明的身体能够看到内脏！
+}
+
+CrystallinePylon: {
+	DisplayName: 蕴魔晶塔
+	Tooltip: 当附近有两个村民时，传送至另一个晶塔
+}
+
+CrystallineSentinelBannerItem: {
+	DisplayName: 结晶战斗体旗
+	Tooltip: ""
+}
+
+WildMabirdBannerItem: {
+	DisplayName: 野生魔鸟旗
+	Tooltip: ""
+}
+
+WildMabirdNestBannerItem: {
+	DisplayName: 野生魔鸟巢旗
 	Tooltip: ""
 }

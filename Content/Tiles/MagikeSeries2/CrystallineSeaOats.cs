@@ -38,7 +38,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileObjectData.addTile(Type);
 
             HitSound = CoraliteSoundID.CrystalHit_DD2_WitherBeastCrystalImpact;
-            DustType = ModContent.DustType<CrystallineDust>();
+            DustType = ModContent.DustType<CrystallineSeaOatDust>();
             MinPick = 110;
             AddMapEntry(new Color(181, 91, 235));
         }
@@ -93,7 +93,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileObjectData.addTile(Type);
 
             HitSound = CoraliteSoundID.CrystalHit_DD2_WitherBeastCrystalImpact;
-            DustType = DustID.Pearlsand;
+            DustType = ModContent.DustType<CrystallineSeaOatDust>();
             MinPick = 110;
             AddMapEntry(new Color(181, 91, 235));
         }
@@ -176,7 +176,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileObjectData.addTile(Type);
 
             HitSound = CoraliteSoundID.CrystalHit_DD2_WitherBeastCrystalImpact;
-            DustType = DustID.Pearlsand;
+            DustType = ModContent.DustType<CrystallineSeaOatDust>();
             MinPick = 110;
             AddMapEntry(new Color(181, 91, 235));
         }

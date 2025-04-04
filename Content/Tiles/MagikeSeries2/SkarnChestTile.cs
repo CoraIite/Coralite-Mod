@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Items.Corruption;
+﻿using Coralite.Content.Dusts;
+using Coralite.Content.Items.Corruption;
 using Coralite.Content.Items.MagikeSeries2;
 using Coralite.Content.WorldGeneration;
 using Coralite.Core;
@@ -37,7 +38,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileID.Sets.IsAContainer[Type] = true;
             TileID.Sets.FriendlyFairyCanLureTo[Type] = true;
 
-            DustType = DustID.BorealWood_Small;
+            DustType = ModContent.DustType<SkarnDust>();
             AdjTiles = [TileID.Containers];
 
             AddMapEntry(Color.Gold, this.GetLocalization("MapEntry0"), MapChestName);

@@ -34,7 +34,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileObjectData.addTile(Type);
 
             HitSound = CoraliteSoundID.Grass;
-            DustType = ModContent.DustType<CrystallineDust>();
+            DustType = ModContent.DustType<CrystallineSeaOatDust>();
             AddMapEntry(new Color(181, 91, 235), CreateMapEntryName());
             MinPick = 110;
 

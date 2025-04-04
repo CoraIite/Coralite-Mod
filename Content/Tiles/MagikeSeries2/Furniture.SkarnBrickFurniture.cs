@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Items.MagikeSeries2;
+﻿using Coralite.Content.Dusts;
+using Coralite.Content.Items.MagikeSeries2;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Tiles;
 using Terraria;
@@ -11,7 +12,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 {
     public class SkarnBrickBathtubTile : BaseBathtubTile
     {
-        public SkarnBrickBathtubTile() : base(DustID.Stone, new Color(173, 193, 183), AssetDirectory.MagikeSeries2Tile)
+        public SkarnBrickBathtubTile() : base(ModContent.DustType<SkarnDust>(), new Color(173, 193, 183), AssetDirectory.MagikeSeries2Tile)
         {
         }
 
@@ -29,14 +30,14 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
     public class SkarnBrickBedTile : BaseBedTile<SkarnBrickBed>
     {
-        public SkarnBrickBedTile() : base(DustID.Stone, new Color(173, 193, 183), AssetDirectory.MagikeSeries2Tile)
+        public SkarnBrickBedTile() : base(ModContent.DustType<SkarnDust>(), new Color(173, 193, 183), AssetDirectory.MagikeSeries2Tile)
         {
         }
     }
 
     public class SkarnBrickBigDroplightTile : BaseBigDroplightTile<SkarnBrickBigDroplight>
     {
-        public SkarnBrickBigDroplightTile() : base(DustID.Stone, new Color(173, 193, 183), AssetDirectory.MagikeSeries2Tile)
+        public SkarnBrickBigDroplightTile() : base(ModContent.DustType<SkarnDust>(), new Color(173, 193, 183), AssetDirectory.MagikeSeries2Tile)
         {
         }
 
@@ -48,14 +49,14 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
     public class SkarnBrickBookcaseTile : BaseBookcaseTile
     {
-        public SkarnBrickBookcaseTile() : base(DustID.Stone, new Color(173, 193, 183), AssetDirectory.MagikeSeries2Tile)
+        public SkarnBrickBookcaseTile() : base(ModContent.DustType<SkarnDust>(), new Color(173, 193, 183), AssetDirectory.MagikeSeries2Tile)
         {
         }
     }
 
     public class SkarnBrickCandelabraTile : BaseCandelabraTile<SkarnBrickCandelabra>
     {
-        public SkarnBrickCandelabraTile() : base(DustID.Stone, new Color(173, 193, 183), AssetDirectory.MagikeSeries2Tile)
+        public SkarnBrickCandelabraTile() : base(ModContent.DustType<SkarnDust>(), new Color(173, 193, 183), AssetDirectory.MagikeSeries2Tile)
         {
         }
 
@@ -67,7 +68,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
     public class SkarnBrickCandleTile : BaseCandleTile<SkarnBrickCandle>
     {
-        public SkarnBrickCandleTile() : base(DustID.Stone, new Color(173, 193, 183), AssetDirectory.MagikeSeries2Tile)
+        public SkarnBrickCandleTile() : base(ModContent.DustType<SkarnDust>(), new Color(173, 193, 183), AssetDirectory.MagikeSeries2Tile)
         {
         }
 
@@ -79,14 +80,14 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
     public class SkarnBrickChairTile : BaseChairTile<SkarnBrickChair>
     {
-        public SkarnBrickChairTile() : base(DustID.Stone, new Color(173, 193, 183), AssetDirectory.MagikeSeries2Tile)
+        public SkarnBrickChairTile() : base(ModContent.DustType<SkarnDust>(), new Color(173, 193, 183), AssetDirectory.MagikeSeries2Tile)
         {
         }
     }
 
     public class SkarnBrickClockTile : BaseClockTile
     {
-        public SkarnBrickClockTile() : base(DustID.Stone, new Color(173, 193, 183), 5, new int[] { 16, 16, 16, 16, 18 }, AssetDirectory.MagikeSeries2Tile)
+        public SkarnBrickClockTile() : base(ModContent.DustType<SkarnDust>(), new Color(173, 193, 183), 5, new int[] { 16, 16, 16, 16, 18 }, AssetDirectory.MagikeSeries2Tile)
         {
         }
 
@@ -97,10 +98,11 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             Main.tileNoAttach[Type] = true;
             Main.tileLavaDeath[Type] = true;
             Main.tileTable[Type] = true;
+            Main.tileSolid[Type] = true;
             TileID.Sets.Clock[Type] = true;
             TileID.Sets.HasOutlines[Type] = true;
 
-            DustType = DustID.Stone;
+            DustType = ModContent.DustType<SkarnDust>();
             AdjTiles = new int[] { TileID.GrandfatherClocks };
 
             // Placement
@@ -118,28 +120,28 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
     public class SkarnBrickDoorClosedTile : BaseDoorClosedTile<SkarnBrickDoor, SkarnBrickDoorOpenTile>
     {
-        public SkarnBrickDoorClosedTile() : base(DustID.Stone, new Color(173, 193, 183), AssetDirectory.MagikeSeries2Tile)
+        public SkarnBrickDoorClosedTile() : base(ModContent.DustType<SkarnDust>(), new Color(173, 193, 183), AssetDirectory.MagikeSeries2Tile)
         {
         }
     }
 
     public class SkarnBrickDoorOpenTile : BaseDoorOpenTile<SkarnBrickDoor, SkarnBrickDoorClosedTile>
     {
-        public SkarnBrickDoorOpenTile() : base(DustID.Stone, new Color(173, 193, 183), AssetDirectory.MagikeSeries2Tile)
+        public SkarnBrickDoorOpenTile() : base(ModContent.DustType<SkarnDust>(), new Color(173, 193, 183), AssetDirectory.MagikeSeries2Tile)
         {
         }
     }
 
     public class SkarnBrickDresserTile : BaseDresserTile<SkarnBrickDresser>
     {
-        public SkarnBrickDresserTile() : base(DustID.Stone, new Color(173, 193, 183), AssetDirectory.MagikeSeries2Tile)
+        public SkarnBrickDresserTile() : base(ModContent.DustType<SkarnDust>(), new Color(173, 193, 183), AssetDirectory.MagikeSeries2Tile)
         {
         }
     }
 
     public class SkarnBrickDroplightTile : BaseDroplightTile<SkarnBrickDroplight>
     {
-        public SkarnBrickDroplightTile() : base(DustID.Stone, new Color(173, 193, 183), AssetDirectory.MagikeSeries2Tile)
+        public SkarnBrickDroplightTile() : base(ModContent.DustType<SkarnDust>(), new Color(173, 193, 183), AssetDirectory.MagikeSeries2Tile)
         {
         }
 
@@ -151,7 +153,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
     public class SkarnBrickFloorLampTile : BaseFloorLampTile<SkarnBrickFloorLamp>
     {
-        public SkarnBrickFloorLampTile() : base(DustID.Stone, new Color(173, 193, 183), AssetDirectory.MagikeSeries2Tile)
+        public SkarnBrickFloorLampTile() : base(ModContent.DustType<SkarnDust>(), new Color(173, 193, 183), AssetDirectory.MagikeSeries2Tile)
         {
         }
 
@@ -163,14 +165,14 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
     public class SkarnBrickPianoTile : BasePianoTile
     {
-        public SkarnBrickPianoTile() : base(DustID.Stone, new Color(173, 193, 183), AssetDirectory.MagikeSeries2Tile)
+        public SkarnBrickPianoTile() : base(ModContent.DustType<SkarnDust>(), new Color(173, 193, 183), AssetDirectory.MagikeSeries2Tile)
         {
         }
     }
 
     public class SkarnBrickSinkTile : BaseSinkTile
     {
-        public SkarnBrickSinkTile() : base(DustID.Stone, new Color(173, 193, 183), AssetDirectory.MagikeSeries2Tile)
+        public SkarnBrickSinkTile() : base(ModContent.DustType<SkarnDust>(), new Color(173, 193, 183), AssetDirectory.MagikeSeries2Tile)
         {
         }
 
@@ -188,42 +190,35 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
     public class SkarnBrickSofaTile : BaseSofaTile<SkarnBrickSofa>
     {
-        public SkarnBrickSofaTile() : base(DustID.Stone, new Color(173, 193, 183), AssetDirectory.MagikeSeries2Tile)
+        public SkarnBrickSofaTile() : base(ModContent.DustType<SkarnDust>(), new Color(173, 193, 183), AssetDirectory.MagikeSeries2Tile)
         {
         }
     }
 
     public class SkarnBrickBenchTile : BaseSofaTile<SkarnBrickBench>
     {
-        public SkarnBrickBenchTile() : base(DustID.Stone, new Color(173, 193, 183), AssetDirectory.MagikeSeries2Tile)
+        public SkarnBrickBenchTile() : base(ModContent.DustType<SkarnDust>(), new Color(173, 193, 183), AssetDirectory.MagikeSeries2Tile)
         {
         }
     }
 
     public class SkarnBrickTableTile : BaseTableTile
     {
-        public SkarnBrickTableTile() : base(DustID.Stone, new Color(173, 193, 183), AssetDirectory.MagikeSeries2Tile)
+        public SkarnBrickTableTile() : base(ModContent.DustType<SkarnDust>(), new Color(173, 193, 183), AssetDirectory.MagikeSeries2Tile)
         {
         }
     }
 
     public class SkarnBrickToiletTile : BaseToiletTile<SkarnBrickToilet>
     {
-        public SkarnBrickToiletTile() : base(DustID.Stone, new Color(173, 193, 183), AssetDirectory.MagikeSeries2Tile)
+        public SkarnBrickToiletTile() : base(ModContent.DustType<SkarnDust>(), new Color(173, 193, 183), AssetDirectory.MagikeSeries2Tile)
         {
         }
     }
 
     public class SkarnBrickWorkBenchTile : BaseWorkBenchTile
     {
-        public SkarnBrickWorkBenchTile() : base(DustID.Stone, new Color(173, 193, 183), AssetDirectory.MagikeSeries2Tile)
-        {
-        }
-    }
-
-    public class SkarnBrickChestTile : BaseChestTile<SkarnBrickChest>
-    {
-        public SkarnBrickChestTile() : base(DustID.Stone, new Color(173, 193, 183), AssetDirectory.MagikeSeries2Tile)
+        public SkarnBrickWorkBenchTile() : base(ModContent.DustType<SkarnDust>(), new Color(173, 193, 183), AssetDirectory.MagikeSeries2Tile)
         {
         }
     }

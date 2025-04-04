@@ -13,7 +13,12 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
         public void AddMagikeCraftRecipe()
         {
             //蝙蝠
-            AddRemodelRecipe(ItemID.BatBanner, ItemType<BatfangShield>(), CalculateMagikeCost(RedJade, 5, 120), mainStack: 1);
+            AddRemodelRecipe(ItemID.BatBanner, ItemType<BatfangShield>(), CalculateMagikeCost(RedJade, 5, 120));
+            AddRemodelRecipe(ItemID.BatBanner, ItemID.BatBat, CalculateMagikeCost(RedJade, 5, 120), 2);
+            //链刃，但是和蝙蝠没啥关联
+            MagikeRecipe.CreateCraftRecipe(ItemID.Chain, ItemID.ChainKnife, CalculateMagikeCost(MagicCrystal, 12, 60 * 5), 3)
+                .AddIngredientGroup(RecipeGroupID.IronBar, 12)
+                .Register();
 
             //混沌传送杖
             MagikeRecipe.CreateCraftRecipe(ItemID.SoulofLight, ItemID.RodofDiscord, CalculateMagikeCost(CrystallineMagike, 12, 60 * 5), 50)

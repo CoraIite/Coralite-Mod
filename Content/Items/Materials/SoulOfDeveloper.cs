@@ -118,7 +118,7 @@ namespace Coralite.Content.Items.Materials
 
         public override Color? GetAlpha(Color lightColor)
         {
-            return Color.White * 0.8f;
+            return Color.White;
         }
     }
 }

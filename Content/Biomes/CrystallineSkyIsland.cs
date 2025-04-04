@@ -1,4 +1,5 @@
-﻿using Coralite.Content.WorldGeneration;
+﻿using Coralite.Content.ModPlayers;
+using Coralite.Content.WorldGeneration;
 using Coralite.Core;
 using Coralite.Core.Attributes;
 using Microsoft.Xna.Framework.Graphics;
@@ -36,13 +37,14 @@ namespace Coralite.Content.Biomes
 
         public override bool IsBiomeActive(Player player)
         {
-            bool b1 = ModContent.GetInstance<CoraliteTileCount>().CrystallineSkyIslandTileCount >= 400;
+            bool b1 = ModContent.GetInstance<CoraliteTileCount>().InCrystallineSkyIsland;
             bool b2 = player.Center.Y / 16 < Main.worldSurface * 0.8f;
 
             return b1 && b2;
         }
     }
 
+    [PlayerEffect]
     public class CrystallineSkyIslandEffect : ModSceneEffect
     {
         public static float BiomeTimer;
@@ -62,10 +64,10 @@ namespace Coralite.Content.Biomes
 
         public override bool IsSceneEffectActive(Player player)
         {
-            bool b1 = ModContent.GetInstance<CoraliteTileCount>().CrystallineSkyIslandTileCount >= 400;
+            bool b1 = ModContent.GetInstance<CoraliteTileCount>().InCrystallineSkyIsland;
             bool b2 = player.Center.Y / 16 < Main.worldSurface * 0.8f;
 
-            return b1 && b2;
+            return (b1 && b2) || (player.TryGetModPlayer(out CoralitePlayer cp) && cp.HasEffect(nameof(CrystallineSkyIslandEffect)));
         }
 
         public override void SpecialVisuals(Player player, bool isActive)
@@ -146,7 +148,7 @@ namespace Coralite.Content.Biomes
         //public override Asset<Texture2D> GetRainTexture() => rainTexture;
     }
 
-    [AutoLoadTexture(Path =AssetDirectory.Backgrounds)]
+    [AutoLoadTexture(Path = AssetDirectory.Backgrounds)]
     public class CrystallineSkyIslandBackground : ModSurfaceBackgroundStyle
     {
         public static ATex CrystallineSkyIslandBackground0 { get;private set; }

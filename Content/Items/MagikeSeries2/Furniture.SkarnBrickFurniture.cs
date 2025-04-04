@@ -233,7 +233,7 @@ namespace Coralite.Content.Items.MagikeSeries2
         }
     }
 
-    public class SkarnBrickChest : BaseSkarnBrickFurniture<SkarnBrickChestTile>
+    public class SkarnBrickChest : BaseSkarnBrickFurniture<SkarnChestTile>
     {
         public override void AddRecipes()
         {

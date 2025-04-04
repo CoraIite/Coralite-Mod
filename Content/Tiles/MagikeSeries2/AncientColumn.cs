@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Items.MagikeSeries2;
+﻿using Coralite.Content.Dusts;
+using Coralite.Content.Items.MagikeSeries2;
 using Coralite.Core;
 using System.Collections.Generic;
 using Terraria;
@@ -37,7 +38,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileObjectData.addTile(Type);
 
             HitSound = CoraliteSoundID.DigStone_Tink;
-            DustType = DustID.Pearlsand;
+            DustType = ModContent.DustType<SkarnDust>();
             AddMapEntry(new Color(141, 171, 178));
         }
 

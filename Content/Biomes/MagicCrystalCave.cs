@@ -16,7 +16,7 @@ namespace Coralite.Content.Biomes
 
         public override bool IsBiomeActive(Player player)
         {
-            bool b1 = ModContent.GetInstance<CoraliteTileCount>().CrystalCaveTileCount >= 500;
+            bool b1 = ModContent.GetInstance<CoraliteTileCount>().InCrystalCave;
 
             bool b2 = Math.Abs(player.position.ToTileCoordinates().X - (Main.maxTilesX / 2)) < Main.maxTilesX / 4;
 
@@ -36,7 +36,7 @@ namespace Coralite.Content.Biomes
 
         public override bool IsSceneEffectActive(Player player)
         {
-            bool b1 = ModContent.GetInstance<CoraliteTileCount>().CrystalCaveTileCount >= 500;
+            bool b1 = ModContent.GetInstance<CoraliteTileCount>().InCrystalCave;
 
             bool b2 = Math.Abs(player.position.ToTileCoordinates().X - (Main.maxTilesX / 2)) < Main.maxTilesX / 4;
 

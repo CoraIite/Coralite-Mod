@@ -23,6 +23,8 @@ Conditions: {
 		DownedGolemCondition: Требуется победить Каменного голема
 		UseShlimmerTranslation: Это таблица преобразования сияния
 		// SpellCraft: Mods.Coralite.Conditions.CoraliteConditions.SpellCraft
+		// InMagicCrystalCave: Mods.Coralite.Conditions.CoraliteConditions.InMagicCrystalCave
+		// InCrystallineSkyIsland: Mods.Coralite.Conditions.CoraliteConditions.InCrystallineSkyIsland
 	}
 }
 

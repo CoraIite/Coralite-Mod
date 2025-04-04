@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Items.MagikeSeries2;
+﻿using Coralite.Content.Dusts;
+using Coralite.Content.Items.MagikeSeries2;
 using Coralite.Core;
 using Terraria;
 using Terraria.GameContent;
@@ -38,7 +39,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileObjectData.addTile(Type);
 
             HitSound = CoraliteSoundID.DigStone_Tink;
-            DustType = DustID.Pearlsand;
+            DustType = ModContent.DustType<SkarnDust>();
             AddMapEntry(new Color(141, 171, 178));
         }
 
@@ -90,7 +91,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileObjectData.addTile(Type);
 
             HitSound = CoraliteSoundID.DigStone_Tink;
-            DustType = DustID.Pearlsand;
+            DustType = ModContent.DustType<SkarnDust>();
             AddMapEntry(new Color(141, 171, 178));
         }
 
@@ -143,7 +144,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileObjectData.addTile(Type);
 
             HitSound = CoraliteSoundID.DigStone_Tink;
-            DustType = DustID.Pearlsand;
+            DustType = ModContent.DustType<SkarnDust>();
             AddMapEntry(new Color(141, 171, 178));
         }
 
@@ -196,7 +197,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileObjectData.addTile(Type);
 
             HitSound = CoraliteSoundID.DigStone_Tink;
-            DustType = DustID.Pearlsand;
+            DustType = ModContent.DustType<SkarnDust>();
             AddMapEntry(new Color(141, 171, 178));
         }
 
@@ -249,7 +250,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileObjectData.addTile(Type);
 
             HitSound = CoraliteSoundID.DigStone_Tink;
-            DustType = DustID.Pearlsand;
+            DustType = ModContent.DustType<SkarnDust>();
             AddMapEntry(new Color(141, 171, 178));
         }
 
@@ -267,7 +268,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
         {
             DefaultValues(false);
 
-            FlexibleTileWand.RubblePlacementLarge.AddVariations(ModContent.ItemType<Skarn>(), Type, 0, 1,2,3);
+            FlexibleTileWand.RubblePlacementLarge.AddVariations(ModContent.ItemType<Skarn>(), Type, 0, 1, 2, 3);
             RegisterItemDrop(ModContent.ItemType<Skarn>());
         }
     }
@@ -302,7 +303,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileObjectData.addTile(Type);
 
             HitSound = CoraliteSoundID.DigStone_Tink;
-            DustType = DustID.Pearlsand;
+            DustType = ModContent.DustType<SkarnDust>();
             AddMapEntry(new Color(141, 171, 178));
         }
 
@@ -355,7 +356,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileObjectData.addTile(Type);
 
             HitSound = CoraliteSoundID.DigStone_Tink;
-            DustType = DustID.Pearlsand;
+            DustType = ModContent.DustType<SkarnDust>();
             AddMapEntry(new Color(141, 171, 178));
         }
 
@@ -406,7 +407,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileObjectData.addTile(Type);
 
             HitSound = CoraliteSoundID.DigStone_Tink;
-            DustType = DustID.Pearlsand;
+            DustType = ModContent.DustType<SkarnDust>();
             AddMapEntry(new Color(141, 171, 178));
         }
 

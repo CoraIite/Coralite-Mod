@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.CustomHooks;
+using Coralite.Content.Dusts;
 using Coralite.Content.Items.MagikeSeries2;
 using Coralite.Core;
 using Coralite.Core.Attributes;
@@ -39,7 +40,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
             TileID.Sets.CanBeClearedDuringOreRunner[Type] = false;
 
-            DustType = DustID.BorealWood_Small;
+            DustType = ModContent.DustType<ChalcedonyDust>();
             HitSound = CoraliteSoundID.Grass;
             AddMapEntry(new Color(147, 186, 84));
         }
@@ -280,7 +281,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
             TileID.Sets.CanBeClearedDuringOreRunner[Type] = false;
 
-            DustType = DustID.BorealWood_Small;
+            DustType = ModContent.DustType<ChalcedonyDust>();
             HitSound = CoraliteSoundID.Grass;
             AddMapEntry(new Color(147, 186, 84));
         }

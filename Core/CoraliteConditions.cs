@@ -1,4 +1,5 @@
-﻿using Coralite.Content.WorldGeneration;
+﻿using Coralite.Content.Biomes;
+using Coralite.Content.WorldGeneration;
 using Coralite.Core.Systems.MagikeSystem;
 using Terraria;
 using Terraria.Localization;
@@ -17,6 +18,9 @@ namespace Coralite.Core
         public static Condition NotInDigDigDig { get; private set; }
         public static Condition UseMultiBlockStructure { get; private set; }
         public static Condition UseShlimmerTranslation { get; private set; }
+
+        public static Condition InMagicCrystalCave { get; private set; }
+        public static Condition InCrystallineSkyIsland { get; private set; }
 
         public string LocalizationCategory => "Conditions";
 
@@ -40,12 +44,19 @@ namespace Coralite.Core
             SpellCraft = new(this.GetLocalization(nameof(SpellCraft))
                 , () => false);
 
+            InMagicCrystalCave = new(this.GetLocalization(nameof(InMagicCrystalCave))
+                , Main.LocalPlayer.InModBiome<MagicCrystalCave>);
+            InCrystallineSkyIsland = new(this.GetLocalization(nameof(InCrystallineSkyIsland))
+                , Main.LocalPlayer.InModBiome<CrystallineSkyIsland>);
+
+
             UseMultiBlockStructure = new(this.GetLocalization(nameof(UseMultiBlockStructure))
                 , () => false);
             UseShlimmerTranslation = new(this.GetLocalization(nameof(UseShlimmerTranslation))
                 , () => false);
 
             DownedGolemCondition = this.GetLocalization(nameof(DownedGolemCondition));
+
         }
 
         public override void Unload()

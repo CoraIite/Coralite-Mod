@@ -26,6 +26,7 @@
     <None Remove="effects\KEx2.fx" />
     <None Remove="Effects\LaserAlpha.fx" />
     <None Remove="Effects\LaserReplaceAlpha.fx" />
+    <None Remove="Effects\LuminDye.fx" />
     <None Remove="Effects\NoHLGradientTrail.fx" />
     <None Remove="effects\ShadowLaser.fx" />
     <None Remove="effects\ShadowStars.fx" />

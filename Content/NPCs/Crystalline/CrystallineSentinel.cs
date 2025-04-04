@@ -26,6 +26,8 @@ namespace Coralite.Content.NPCs.Crystalline
         public static ATex FloatStone { get; private set; }
         [AutoLoadTexture(Name = "CrystallineSentinelGuard")]
         public static ATex GuardTex { get; private set; }
+        [AutoLoadTexture(Name = "CrystallineSentinelExchange")]
+        public static ATex ExchangeTex { get; private set; }
 
         private SecondOrderDynamics_Vec2[] FloatStoneMoves;
         private Vector2[] FloatStonePos;
@@ -133,7 +135,7 @@ namespace Coralite.Content.NPCs.Crystalline
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
         {
-            return base.CanHitPlayer(target, ref cooldownSlot);
+            return CanHit;
         }
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
@@ -232,6 +234,7 @@ namespace Coralite.Content.NPCs.Crystalline
                     P1FloatStoneMove();
                     break;
                 case AIStates.Exchange:
+                    Exchange();
                     break;
                 case AIStates.P2Idle:
                     break;
@@ -267,7 +270,7 @@ namespace Coralite.Content.NPCs.Crystalline
                 TryTurnToAttack();
 
             if (Timer < 0)//随便走走
-                SwitchState(AIStates.P1Walking, Main.rand.Next(60 * 2, 60 * 4), true);
+                SwitchStateP1(AIStates.P1Walking, Main.rand.Next(60 * 2, 60 * 4), true);
 
             Timer--;
         }
@@ -277,7 +280,7 @@ namespace Coralite.Content.NPCs.Crystalline
             //走不了或者时间大于一定值后就歇一会
             if (!CanWalkForward() || Timer < 0)
             {
-                SwitchState(AIStates.P1Idle, Main.rand.Next(60 * 4, 60 * 6));
+                SwitchStateP1(AIStates.P1Idle, Main.rand.Next(60 * 4, 60 * 6));
                 return;
             }
 
@@ -390,7 +393,7 @@ namespace Coralite.Content.NPCs.Crystalline
                                 NPC.netUpdate = true;
                             }
                             else
-                                SwitchState(AIStates.P1Idle, 60);
+                                SwitchStateP1(AIStates.P1Idle, 60);
                         }
 
                         Timer++;
@@ -416,7 +419,7 @@ namespace Coralite.Content.NPCs.Crystalline
                         Timer++;
 
                         if (Timer > 5 * 21)
-                            SwitchState(AIStates.P1Guard);
+                            SwitchStateP1(AIStates.P1Guard);
                     }
                     break;
             }
@@ -459,7 +462,7 @@ namespace Coralite.Content.NPCs.Crystalline
                                 NPC.netUpdate = true;
                             }
                             else
-                                SwitchState(AIStates.P1Idle, 60);
+                                SwitchStateP1(AIStates.P1Idle, 60);
                         }
                         Timer++;
                     }
@@ -486,7 +489,6 @@ namespace Coralite.Content.NPCs.Crystalline
                             Recorder++;
                             Timer = 0;
                             NPC.frame.Y = 8;
-                            NPC.reflectsProjectiles = true;
                             NPC.SuperArmor = true;
                             NPC.netUpdate = true;
 
@@ -503,7 +505,6 @@ namespace Coralite.Content.NPCs.Crystalline
                             Recorder++;
                             Timer = 0;
                             SetFrame(4, 0);
-                            NPC.reflectsProjectiles = false;
                             NPC.SuperArmor = false;
                             NPC.netUpdate = true;
                         }
@@ -524,7 +525,7 @@ namespace Coralite.Content.NPCs.Crystalline
                             Recorder2 = 0;
 
                         if (Timer > 5 * 5)
-                            SwitchState(AIStates.P1Idle, 60);
+                            SwitchStateP1(AIStates.P1Idle, 60);
 
                         Timer++;
                     }
@@ -534,6 +535,25 @@ namespace Coralite.Content.NPCs.Crystalline
 
         #endregion
 
+        public void Exchange()
+        {
+            NPC.velocity.X *= 0;
+            if (Timer % 5 == 0)
+            {
+                NPC.frame.Y++;
+                if (NPC.frame.Y > 18)
+                    NPC.frame.Y = 18;
+            }
+
+            if (Timer > 5 * 18)
+            {
+                SwitchStateP2(AIStates.P2Idle, 60);
+                return;
+            }
+
+            Timer++;
+        }
+
         public void P1FloatStoneMove()
         {
             if (VaultUtils.isServer)
@@ -541,7 +561,7 @@ namespace Coralite.Content.NPCs.Crystalline
 
             for (int i = 0; i < 3; i++)
             {
-                Vector2 pos = NPC.Center + new Vector2(0, -10) + (1f + i * MathHelper.TwoPi / 3).ToRotationVector2() * 36 * NPC.scale;
+                Vector2 pos = NPC.Center + new Vector2(0, -10) + (4f + i * MathHelper.TwoPi / 3).ToRotationVector2() * 36 * NPC.scale;
                 float factor = (int)Main.timeForVisualEffects * 0.02f + i * MathHelper.TwoPi / 2;
                 pos += new Vector2(MathF.Cos(factor) * 3, MathF.Sin(factor) * 6);
 
@@ -549,14 +569,47 @@ namespace Coralite.Content.NPCs.Crystalline
             }
         }
 
-        private void SwitchState(AIStates targetState, int? overrideTime = null, bool randDirection = false)
+        private void SwitchStateP1(AIStates targetState, int? overrideTime = null, bool randDirection = false)
         {
-            State = targetState;
             Recorder = 0;
             Recorder2 = 0;
             CanHit = false;
 
-            NPC.reflectsProjectiles = false;
+            NPC.SuperArmor = false;
+
+            if (!VaultUtils.isClient)
+            {
+                Timer = overrideTime ?? 0;
+
+                if (randDirection)
+                    NPC.direction = NPC.spriteDirection = Main.rand.NextFromList(-1, 1);
+
+                NPC.netUpdate = true;
+            }
+            else
+            {
+                Timer = 6;//给客户端6帧时间用于同步延迟
+            }
+
+            if (NPC.life < NPC.lifeMax / 2)
+            {
+                State = AIStates.Exchange;
+                SetFrame(0, 0);
+                NPC.noGravity = true;
+                Timer = 0;
+            }
+            else
+                State = targetState;
+
+        }
+
+        private void SwitchStateP2(AIStates targetState, int? overrideTime = null, bool randDirection = false)
+        {
+                State = targetState;
+            Recorder = 0;
+            Recorder2 = 0;
+            CanHit = false;
+
             NPC.SuperArmor = false;
 
             if (!VaultUtils.isClient)
@@ -598,10 +651,10 @@ namespace Coralite.Content.NPCs.Crystalline
             {
                 case AIStates.P1Idle:
                 case AIStates.P1Walking:
-                    SwitchState(AIStates.P1Spurt);
+                    SwitchStateP1(AIStates.P1Spurt);
                     break;
                 case AIStates.P2Idle:
-                    SwitchState(AIStates.P2Rolling);
+                    SwitchStateP1(AIStates.P2Rolling);
                     break;
                 default:
                     break;
@@ -662,6 +715,14 @@ namespace Coralite.Content.NPCs.Crystalline
                     }
                     break;
                 case AIStates.Exchange:
+                    {
+                        Texture2D tex = ExchangeTex.Value;
+
+                        Rectangle frameBox = tex.Frame(1, 19, NPC.frame.X, NPC.frame.Y);
+
+                        spriteBatch.Draw(tex, NPC.Center - screenPos + new Vector2(NPC.spriteDirection * 0, -22), frameBox, drawColor
+                            , NPC.rotation, frameBox.Size() / 2, NPC.scale, effect, 0);
+                    }
                     break;
                 case AIStates.P2Idle:
                     break;

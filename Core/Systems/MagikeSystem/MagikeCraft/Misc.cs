@@ -353,6 +353,11 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
                 .AddIngredient(ItemID.GoldBar,99)
                 .Register();
             #endregion
+
+            //黑墨水
+            MagikeRecipe.CreateCraftRecipe(ItemID.Bottle, ItemID.BlackInk, CalculateMagikeCost(MagicCrystal, 6))
+                .AddIngredient(ItemID.BlackThread)
+                .Register();
         }
     }
 }
