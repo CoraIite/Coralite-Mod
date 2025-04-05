@@ -186,9 +186,9 @@ BlackPlushPianoTile.MapEntry: Черное плюшевое пианино
 BlackPlushSofaTile.MapEntry: Черный плюшевый диван
 BlackPlushTableTile.MapEntry: Черный плюшевый стол
 BlackPlushWorkBenchTile.MapEntry: Черный плюшевый рабочий стол
-// CoraliteNoteTile.MapEntry: Coralite Note Tile
-// IcicleMusicBoxTile.MapEntry: Icicle Music Box Tile
-// RedJadeMusicBoxTile.MapEntry: Red Jade Music Box Tile
+// CoraliteNoteTile.MapEntry: Coralite Note
+// IcicleMusicBoxTile.MapEntry: Icicle Music Box
+// RedJadeMusicBoxTile.MapEntry: Red Jade Music Box
 
 SkarnChestTile: {
 	// MapEntry0: Mods.Coralite.Tiles.SkarnChestTile.MapEntry0
@@ -196,71 +196,71 @@ SkarnChestTile: {
 }
 
 // CrystallineSeaOatsMother.MapEntry: Crystalline Sea Oats Mother
-// B9AlloyBathtubTile.MapEntry: B9 Alloy Bathtub Tile
-// B9AlloyBedTile.MapEntry: B9 Alloy Bed Tile
-// B9AlloyBigDroplightTile.MapEntry: B9 Alloy Big Droplight Tile
-// B9AlloyBookcaseTile.MapEntry: B9 Alloy Bookcase Tile
-// B9AlloyCandelabraTile.MapEntry: B9 Alloy Candelabra Tile
-// B9AlloyCandleTile.MapEntry: B9 Alloy Candle Tile
-// B9AlloyChestTile.MapEntry: B9 Alloy Chest Tile
-// B9AlloyDoorClosedTile.MapEntry: B9 Alloy Door Closed Tile
-// B9AlloyDoorOpenTile.MapEntry: B9 Alloy Door Open Tile
-// B9AlloyDresserTile.MapEntry: B9 Alloy Dresser Tile
-// B9AlloyDroplightTile.MapEntry: B9 Alloy Droplight Tile
-// B9AlloyFloorLampTile.MapEntry: B9 Alloy Floor Lamp Tile
-// B9AlloyPianoTile.MapEntry: B9 Alloy Piano Tile
-// B9AlloySofaTile.MapEntry: B9 Alloy Sofa Tile
-// B9AlloyTableTile.MapEntry: B9 Alloy Table Tile
-// B9AlloyWorkBenchTile.MapEntry: B9 Alloy Work Bench Tile
-// CrystallineCrateTile.MapEntry: Crystalline Crate Tile
-// LeafStoneBathtubTile.MapEntry: Leaf Stone Bathtub Tile
-// LeafStoneBedTile.MapEntry: Leaf Stone Bed Tile
-// LeafStoneBigDroplightTile.MapEntry: Leaf Stone Big Droplight Tile
-// LeafStoneBookcaseTile.MapEntry: Leaf Stone Bookcase Tile
-// LeafStoneCandelabraTile.MapEntry: Leaf Stone Candelabra Tile
-// LeafStoneCandleTile.MapEntry: Leaf Stone Candle Tile
-// LeafStoneChestTile.MapEntry: Leaf Stone Chest Tile
-// LeafStoneDoorClosedTile.MapEntry: Leaf Stone Door Closed Tile
-// LeafStoneDoorOpenTile.MapEntry: Leaf Stone Door Open Tile
-// LeafStoneDresserTile.MapEntry: Leaf Stone Dresser Tile
-// LeafStoneDroplightTile.MapEntry: Leaf Stone Droplight Tile
-// LeafStoneFloorLampTile.MapEntry: Leaf Stone Floor Lamp Tile
-// LeafStonePianoTile.MapEntry: Leaf Stone Piano Tile
-// LeafStoneSofaTile.MapEntry: Leaf Stone Sofa Tile
-// LeafStoneTableTile.MapEntry: Leaf Stone Table Tile
-// LeafStoneWorkBenchTile.MapEntry: Leaf Stone Work Bench Tile
-// SkarnBrickBathtubTile.MapEntry: Skarn Brick Bathtub Tile
-// SkarnBrickBedTile.MapEntry: Skarn Brick Bed Tile
-// SkarnBrickBigDroplightTile.MapEntry: Skarn Brick Big Droplight Tile
-// SkarnBrickBookcaseTile.MapEntry: Skarn Brick Bookcase Tile
-// SkarnBrickCandelabraTile.MapEntry: Skarn Brick Candelabra Tile
-// SkarnBrickCandleTile.MapEntry: Skarn Brick Candle Tile
-// SkarnBrickChestTile.MapEntry: Skarn Brick Chest Tile
-// SkarnBrickDoorClosedTile.MapEntry: Skarn Brick Door Closed Tile
-// SkarnBrickDoorOpenTile.MapEntry: Skarn Brick Door Open Tile
-// SkarnBrickDresserTile.MapEntry: Skarn Brick Dresser Tile
-// SkarnBrickDroplightTile.MapEntry: Skarn Brick Droplight Tile
-// SkarnBrickFloorLampTile.MapEntry: Skarn Brick Floor Lamp Tile
-// SkarnBrickPianoTile.MapEntry: Skarn Brick Piano Tile
-// SkarnBrickSofaTile.MapEntry: Skarn Brick Sofa Tile
-// SkarnBrickTableTile.MapEntry: Skarn Brick Table Tile
-// SkarnBrickWorkBenchTile.MapEntry: Skarn Brick Work Bench Tile
-// SteelBathtubTile.MapEntry: Steel Bathtub Tile
-// SteelBedTile.MapEntry: Steel Bed Tile
-// SteelBenchTile.MapEntry: Steel Bench Tile
-// SteelBigDroplightTile.MapEntry: Steel Big Droplight Tile
-// SteelBookcaseTile.MapEntry: Steel Bookcase Tile
-// SteelCandelabraTile.MapEntry: Steel Candelabra Tile
-// SteelCandleTile.MapEntry: Steel Candle Tile
-// SteelChestTile.MapEntry: Steel Chest Tile
-// SteelDoorClosedTile.MapEntry: Steel Door Closed Tile
-// SteelDoorOpenTile.MapEntry: Steel Door Open Tile
-// SteelDresserTile.MapEntry: Steel Dresser Tile
-// SteelDroplightTile.MapEntry: Steel Droplight Tile
-// SteelFloorLampTile.MapEntry: Steel Floor Lamp Tile
-// SteelPianoTile.MapEntry: Steel Piano Tile
-// SteelSofaTile.MapEntry: Steel Sofa Tile
-// SteelTableTile.MapEntry: Steel Table Tile
-// SteelWorkBenchTile.MapEntry: Steel Work Bench Tile
-// SkarnBrickBenchTile.MapEntry: Skarn Brick Bench Tile
-// CrystallinePylonTile.MapEntry: Crystalline Pylon Tile
+// B9AlloyBathtubTile.MapEntry: B9 Alloy Bathtub
+// B9AlloyBedTile.MapEntry: B9 Alloy Bed
+// B9AlloyBigDroplightTile.MapEntry: B9 Alloy Big Droplight
+// B9AlloyBookcaseTile.MapEntry: B9 Alloy Bookcase
+// B9AlloyCandelabraTile.MapEntry: B9 Alloy Candelabra
+// B9AlloyCandleTile.MapEntry: B9 Alloy Candle
+// B9AlloyChestTile.MapEntry: B9 Alloy Chest
+// B9AlloyDoorClosedTile.MapEntry: B9 Alloy Door
+// B9AlloyDoorOpenTile.MapEntry: B9 Alloy Door
+// B9AlloyDresserTile.MapEntry: B9 Alloy Dresser
+// B9AlloyDroplightTile.MapEntry: B9 Alloy Droplight
+// B9AlloyFloorLampTile.MapEntry: B9 Alloy Floor Lamp
+// B9AlloyPianoTile.MapEntry: B9 Alloy Piano
+// B9AlloySofaTile.MapEntry: B9 Alloy Sofa
+// B9AlloyTableTile.MapEntry: B9 Alloy Table
+// B9AlloyWorkBenchTile.MapEntry: B9 Alloy Work Bench
+// CrystallineCrateTile.MapEntry: Crystalline Crate
+// LeafStoneBathtubTile.MapEntry: Leaf Stone Bathtub
+// LeafStoneBedTile.MapEntry: Leaf Stone Bed
+// LeafStoneBigDroplightTile.MapEntry: Leaf Stone Big Droplight
+// LeafStoneBookcaseTile.MapEntry: Leaf Stone Bookcase
+// LeafStoneCandelabraTile.MapEntry: Leaf Stone Candelabra
+// LeafStoneCandleTile.MapEntry: Leaf Stone Candle
+// LeafStoneChestTile.MapEntry: Leaf Stone Chest
+// LeafStoneDoorClosedTile.MapEntry: Leaf Stone Door
+// LeafStoneDoorOpenTile.MapEntry: Leaf Stone Door
+// LeafStoneDresserTile.MapEntry: Leaf Stone Dresser
+// LeafStoneDroplightTile.MapEntry: Leaf Stone Droplight
+// LeafStoneFloorLampTile.MapEntry: Leaf Stone Floor Lamp
+// LeafStonePianoTile.MapEntry: Leaf Stone Piano
+// LeafStoneSofaTile.MapEntry: Leaf Stone Sofa
+// LeafStoneTableTile.MapEntry: Leaf Stone Table
+// LeafStoneWorkBenchTile.MapEntry: Leaf Stone Work Bench
+// SkarnBrickBathtubTile.MapEntry: Skarn Brick Bathtub
+// SkarnBrickBedTile.MapEntry: Skarn Brick Bed
+// SkarnBrickBigDroplightTile.MapEntry: Skarn Brick Big Droplight
+// SkarnBrickBookcaseTile.MapEntry: Skarn Brick Bookcase
+// SkarnBrickCandelabraTile.MapEntry: Skarn Brick Candelabra
+// SkarnBrickCandleTile.MapEntry: Skarn Brick Candle
+// SkarnBrickDoorClosedTile.MapEntry: Skarn Brick Door
+// SkarnBrickDoorOpenTile.MapEntry: Skarn Brick Door
+// SkarnBrickDresserTile.MapEntry: Skarn Brick Dresser
+// SkarnBrickDroplightTile.MapEntry: Skarn Brick Droplight
+// SkarnBrickFloorLampTile.MapEntry: Skarn Brick Floor Lamp
+// SkarnBrickPianoTile.MapEntry: Skarn Brick Piano
+// SkarnBrickSofaTile.MapEntry: Skarn Brick Sofa
+// SkarnBrickTableTile.MapEntry: Skarn Brick Table
+// SkarnBrickWorkBenchTile.MapEntry: Skarn Brick Work Bench
+// SteelBathtubTile.MapEntry: Steel Bathtub
+// SteelBedTile.MapEntry: Steel Bed
+// SteelBenchTile.MapEntry: Steel Bench
+// SteelBigDroplightTile.MapEntry: Steel Big Droplight
+// SteelBookcaseTile.MapEntry: Steel Bookcase
+// SteelCandelabraTile.MapEntry: Steel Candelabra
+// SteelCandleTile.MapEntry: Steel Candle
+// SteelChestTile.MapEntry: Steel Chest
+// SteelDoorClosedTile.MapEntry: Steel Door
+// SteelDoorOpenTile.MapEntry: Steel Door
+// SteelDresserTile.MapEntry: Steel Dresser
+// SteelDroplightTile.MapEntry: Steel Droplight
+// SteelFloorLampTile.MapEntry: Steel Floor Lamp
+// SteelPianoTile.MapEntry: Steel Piano
+// SteelSofaTile.MapEntry: Steel Sofa
+// SteelTableTile.MapEntry: Steel Table
+// SteelWorkBenchTile.MapEntry: Steel Work Bench
+// SkarnBrickBenchTile.MapEntry: Skarn Brick Bench
+// CrystallinePylonTile.MapEntry: Crystalline Pylon
+// CrystallineFountain.MapEntry: Crystalline Fountain

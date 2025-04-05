@@ -5766,3 +5766,15 @@ UnsentLetter: {
 	DisplayName: Unsent Letter
 	Tooltip: ""
 }
+
+CrystallineFountainItem: {
+	DisplayName: Crystalline Fountain Item
+	Tooltip: ""
+}
+
+RainbowPorpoise: {
+	Description: Mods.Coralite.Items.RainbowPorpoise.Description
+	CatchLocation: Mods.Coralite.Items.RainbowPorpoise.CatchLocation
+	DisplayName: Rainbow Porpoise
+	Tooltip: ""
+}

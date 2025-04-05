@@ -1,5 +1,7 @@
 ﻿using Coralite.Content.Raritys;
 using Coralite.Core;
+using Coralite.Core.Attributes;
+using Coralite.Core.SmoothFunctions;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -35,13 +37,25 @@ namespace Coralite.Content.Items.MagikeSeries2
         }
     }
 
-    public class BringerHarpy:ModProjectile
+    [AutoLoadTexture(Path = AssetDirectory.MagikeSeries2Item)]
+    public class BringerHarpy : ModProjectile
     {
         public override string Texture => AssetDirectory.MagikeSeries2Item + Name;
 
         public ref float State => ref Projectile.ai[0];
         public ref float Recorder => ref Projectile.ai[1];
         public ref float Timer => ref Projectile.ai[2];
+        public ref float LetterFactor => ref Projectile.localAI[0];
+        public ref float LetterRot => ref Projectile.localAI[1];
+
+        private SecondOrderDynamics_Float LetterSmoother;
+
+        public static ATex BringerHarpyLetter { get; private set; }
+
+        public override void Load()
+        {
+            GoreLoader.AddGoreFromTexture<SimpleModGore>(Mod, AssetDirectory.MagikeSeries2Item + "BringerHarpyLetter");
+        }
 
         public override void SetStaticDefaults()
         {
@@ -83,23 +97,27 @@ namespace Coralite.Content.Items.MagikeSeries2
                 case 0://在玩家身边飞
                     {
                         FlyMovement(owner);
+                        UpdateLetter();
 
                         Timer++;
                         if (Timer > 60)
                         {
                             Timer = 0;
                             int? itemIndex = FindItem(owner);
-                            if (itemIndex!=null)
+                            if (itemIndex != null)
                             {
                                 Main.item[itemIndex.Value].noGrabDelay = 2;
                                 State = 1;
                                 Recorder = itemIndex.Value;
                                 Timer = 0;
+                                LetterFactor = 0;
+
+                                Gore.NewGore(Projectile.GetSource_FromAI(), Projectile.Bottom, Vector2.Zero, Mod.Find<ModGore>("BringerHarpyLetter").Type);
                             }
                         }
                     }
                     break;
-                case 1://飞到物品旁边捡回来
+                case 1://飞到物品旁边
                     {
                         Vector2 toPlayer = owner.Center - Projectile.Center;
                         float lengthToPlayer = toPlayer.Length();
@@ -133,12 +151,12 @@ namespace Coralite.Content.Items.MagikeSeries2
                         float targetRot = dir.ToRotation();
 
                         float speed = Projectile.velocity.Length();
-                        float aimSpeed =3+ Math.Clamp(dir.Length() / 1000f, 0, 1) * 8;
+                        float aimSpeed = 3 + Math.Clamp(dir.Length() / 1000f, 0, 1) * 8;
 
                         Projectile.velocity = velRot.AngleTowards(targetRot, 0.25f).ToRotationVector2() * Helper.Lerp(speed, aimSpeed, 0.25f);
                     }
                     break;
-                case 2:
+                case 2://捡回来
                     {
                         Vector2 toPlayer = owner.Center - Projectile.Center;
                         float lengthToPlayer = toPlayer.Length();
@@ -157,7 +175,7 @@ namespace Coralite.Content.Items.MagikeSeries2
                         }
 
                         i.noGrabDelay = 2;
-                        float distanceToOwner = Projectile.Center.Distance(owner.Center);
+                        float distanceToOwner = Projectile.Center.Distance(owner.Top);
 
                         if (distanceToOwner < Player.defaultItemGrabRange - 16)
                         {
@@ -196,13 +214,29 @@ namespace Coralite.Content.Items.MagikeSeries2
             if (Projectile.frame > 5)
                 Projectile.frame = 0;
 
-            Projectile.rotation = Projectile.velocity.X / 25;
+            Projectile.rotation = Projectile.velocity.X / 30;
+        }
+
+        public void UpdateLetter()
+        {
+            if (LetterFactor<1)
+            {
+                LetterFactor += 0.1f;
+                if (LetterFactor > 1)
+                    LetterFactor = 1;
+            }
+
+            if (VaultUtils.isServer)
+                return;
+
+            LetterSmoother ??= new SecondOrderDynamics_Float(0.9f, 0.1f, 0, 0);
+            LetterRot = LetterSmoother.Update(1 / 60f, Projectile.velocity.X / 15);
         }
 
         private void FlyMovement(Player player)
         {
             Projectile.tileCollide = false;
-            float acc = 0.2f;//加速度
+            float acc = 0.22f;//加速度
             float num18 = 10f;
             int num19 = 200;
             if (num18 < Math.Abs(player.velocity.X) + Math.Abs(player.velocity.Y))
@@ -228,28 +262,28 @@ namespace Coralite.Content.Items.MagikeSeries2
                 {
                     Projectile.velocity.X += acc;
                     if (Projectile.velocity.X < 0f)
-                        Projectile.velocity.X += acc * 2.5f;
+                        Projectile.velocity.X += acc * 2.2f;
                 }
 
                 if (Projectile.velocity.X > toPlayer.X)
                 {
                     Projectile.velocity.X -= acc;
                     if (Projectile.velocity.X > 0f)
-                        Projectile.velocity.X -= acc * 2.5f;
+                        Projectile.velocity.X -= acc * 2.2f;
                 }
 
                 if (Projectile.velocity.Y < toPlayer.Y)
                 {
                     Projectile.velocity.Y += acc;
                     if (Projectile.velocity.Y < 0f)
-                        Projectile.velocity.Y += acc * 2.5f;
+                        Projectile.velocity.Y += acc * 4.2f;
                 }
 
                 if (Projectile.velocity.Y > toPlayer.Y)
                 {
                     Projectile.velocity.Y -= acc;
                     if (Projectile.velocity.Y > 0f)
-                        Projectile.velocity.Y -= acc * 2.5f;
+                        Projectile.velocity.Y -= acc * 4.2f;
                 }
             }
         }
@@ -273,8 +307,18 @@ namespace Coralite.Content.Items.MagikeSeries2
 
         public override bool PreDraw(ref Color lightColor)
         {
+            SpriteEffects effect = Projectile.spriteDirection > 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+
+            Texture2D letterTex = BringerHarpyLetter.Value;
+            int v = ((Projectile.frame + 4) % 5);
+            int offset = v < 3 ? v : (5 - v);
+            Vector2 pos = Projectile.Center + new Vector2(-Projectile.spriteDirection * 4, 2 + LetterFactor * 12 - offset * 2) - Main.screenPosition;
+            Main.spriteBatch.Draw(letterTex, pos, null, lightColor * LetterFactor
+                , LetterRot, new Vector2(letterTex.Width / 2, 0), Projectile.scale, effect, 0);
+
             Projectile.QuickDraw(Projectile.GetTexture().Frame(1, 6, 0, Projectile.frame)
-                , Projectile.spriteDirection > 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, lightColor, 0);
+                , effect, lightColor, 0);
+
             return false;
         }
     }

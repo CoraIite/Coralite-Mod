@@ -5,11 +5,13 @@ using Coralite.Content.Items.CoreKeeper;
 using Coralite.Content.Items.Donator;
 using Coralite.Content.Items.FlyingShields;
 using Coralite.Content.Items.Gels;
+using Coralite.Content.Items.MagikeSeries2;
 using Coralite.Content.Items.Materials;
 using Coralite.Content.Items.Nightmare;
 using Coralite.Content.Items.Plush;
 using Coralite.Content.Items.Thunder;
 using Coralite.Content.WorldGeneration;
+using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
@@ -163,6 +165,11 @@ namespace Coralite.Content.GlobalNPCs
                 //        shop.Add<RuneParchment>(Condition.DownedPlantera);//花后获取符文羊皮纸
                 //    }
                 //    break;
+                case NPCID.WitchDoctor:
+                    {
+                        shop.Add<CrystallineFountainItem>(CoraliteConditions.InCrystallineSkyIsland);
+                    }
+                    break;
                 default: break;
             }
         }

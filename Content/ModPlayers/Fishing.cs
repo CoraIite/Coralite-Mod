@@ -99,6 +99,12 @@ namespace Coralite.Content.ModPlayers
                         itemDrop = ItemType<GlassCat>();
                         return;
                     }
+
+                    if (attempt.uncommon && attempt.questFish == ItemType<RainbowPorpoise>())
+                    {
+                        itemDrop = ItemType<RainbowPorpoise>();
+                        return;
+                    }
                 }
             }
         }

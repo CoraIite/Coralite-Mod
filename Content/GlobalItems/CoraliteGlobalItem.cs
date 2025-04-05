@@ -62,7 +62,7 @@ namespace Coralite.Content.GlobalItems
         public override void SetDefaults(Item item)
         {
             if (item.ModItem != null && item.ModItem.Mod is Coralite)
-                item.width = item.height = 40;
+                item.width = item.height = 28;
 
             switch (item.type)
             {

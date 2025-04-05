@@ -243,5 +243,9 @@ EmperorSlimeBuff: {
 
 BringerHarpyBuff: {
 	DisplayName: 信使鸟妖
-	Description: 你好，今天要寄信吗？
+	Description:
+		'''
+		你好，今天要寄信吗？
+		绝对不会把信弄丢的！
+		'''
 }

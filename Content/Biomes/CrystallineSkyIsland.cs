@@ -33,7 +33,7 @@ namespace Coralite.Content.Biomes
 
         public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => ModContent.GetInstance<CrystallineSkyIslandBackground>();
 
-        public override Color? BackgroundColor => Color.LightCyan;
+        public override Color? BackgroundColor => Color.DeepSkyBlue;
 
         public override bool IsBiomeActive(Player player)
         {
@@ -42,9 +42,26 @@ namespace Coralite.Content.Biomes
 
             return b1 && b2;
         }
+
+        public override void SpecialVisuals(Player player, bool isActive)
+        {
+            if (!isActive)
+                return;
+
+            for (int i = 0; i < Main.maxClouds; i++)
+            {
+                Main.cloud[i].Alpha *= 0.8f;
+            }
+
+            if (!CoraliteWorld.HasPermission &&
+                !Main.projectile.Any(p => p.active && p.owner == Main.myPlayer && p.type == ModContent.ProjectileType<CrystallineSkyIslandCloudScreen>()))
+            {
+                Projectile.NewProjectile(new EntitySource_WorldEvent(), Main.LocalPlayer.Center, Vector2.Zero
+                    , ModContent.ProjectileType<CrystallineSkyIslandCloudScreen>(), 0, 0, Main.myPlayer);
+            }
+        }
     }
 
-    [PlayerEffect]
     public class CrystallineSkyIslandEffect : ModSceneEffect
     {
         public static float BiomeTimer;
@@ -64,10 +81,7 @@ namespace Coralite.Content.Biomes
 
         public override bool IsSceneEffectActive(Player player)
         {
-            bool b1 = ModContent.GetInstance<CoraliteTileCount>().InCrystallineSkyIsland;
-            bool b2 = player.Center.Y / 16 < Main.worldSurface * 0.8f;
-
-            return (b1 && b2) || (player.TryGetModPlayer(out CoralitePlayer cp) && cp.HasEffect(nameof(CrystallineSkyIslandEffect)));
+            return player.TryGetModPlayer(out CoralitePlayer cp) && cp.CrystallineSkyIslandEffect > 0;
         }
 
         public override void SpecialVisuals(Player player, bool isActive)
@@ -81,16 +95,7 @@ namespace Coralite.Content.Biomes
                 BiomeTimer = 0;
 
             for (int i = 0; i < Main.maxClouds; i++)
-            {
-                Main.cloud[i].active = false;
-            }
-
-            if (!CoraliteWorld.HasPermission &&
-                !Main.projectile.Any(p => p.active && p.owner == Main.myPlayer && p.type == ModContent.ProjectileType<CrystallineSkyIslandCloudScreen>()))
-            {
-                Projectile.NewProjectile(new EntitySource_WorldEvent(), Main.LocalPlayer.Center, Vector2.Zero
-                    , ModContent.ProjectileType<CrystallineSkyIslandCloudScreen>(), 0, 0, Main.myPlayer);
-            }
+                Main.cloud[i].Alpha *=0.8f;
         }
     }
 

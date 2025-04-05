@@ -9,6 +9,8 @@ namespace Coralite.Core
         public int CrystalCaveTileCount;
         public int CrystallineSkyIslandTileCount;
 
+        public bool CrystallineSkyIslandEffect { get; private set; }
+
         public override void TileCountsAvailable(ReadOnlySpan<int> tileCounts)
         {
             //魔力水晶洞的环境物块
@@ -25,6 +27,8 @@ namespace Coralite.Core
             CrystallineSkyIslandTileCount += tileCounts[ModContent.TileType<CrystallineSkarnTile>()];
             CrystallineSkyIslandTileCount += tileCounts[ModContent.TileType<ChalcedonySkarn>()];
             CrystallineSkyIslandTileCount += tileCounts[ModContent.TileType<ChalcedonySmoothSkarn>()];
+
+            CrystallineSkyIslandEffect = tileCounts[ModContent.TileType<CrystallineFountain>()] > 0;
         }
 
         public bool InCrystalCave => CrystalCaveTileCount > 500;

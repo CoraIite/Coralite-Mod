@@ -79,6 +79,7 @@ namespace Coralite.Content.ModPlayers
         /// 距离上次受伤的时间
         /// </summary>
         public int HurtTimer;
+        public int CrystallineSkyIslandEffect;
 
         /// <summary> 皇帝凝胶鞋的CD </summary>
         public byte EmperorArmorCD;
@@ -145,6 +146,9 @@ namespace Coralite.Content.ModPlayers
 
             inventoryCraftStations.Clear();
             //Effects.Clear();
+
+            if (CrystallineSkyIslandEffect>0)
+                CrystallineSkyIslandEffect--;
 
             if (EmperorArmorCD > 0)
                 EmperorArmorCD --;

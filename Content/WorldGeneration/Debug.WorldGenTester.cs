@@ -29,6 +29,7 @@ namespace Coralite.Content.WorldGeneration
 
         public override bool CanUseItem(Player player)
         {
+            Main.AnglerQuestSwap();
             Point p = Main.MouseWorld.ToTileCoordinates();
             Tile t = Main.tile[p];
             Main.NewText(t.TileFrameX);

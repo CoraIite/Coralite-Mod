@@ -235,7 +235,6 @@ SkarnBrickBigDroplightTile.MapEntry: 矽卡砖大吊灯
 SkarnBrickBookcaseTile.MapEntry: 矽卡砖书架
 SkarnBrickCandelabraTile.MapEntry: 矽卡砖烛台
 SkarnBrickCandleTile.MapEntry: 矽卡砖蜡烛
-SkarnBrickChestTile.MapEntry: 矽卡砖箱
 SkarnBrickDoorClosedTile.MapEntry: 矽卡砖门
 SkarnBrickDoorOpenTile.MapEntry: 矽卡砖门
 SkarnBrickDresserTile.MapEntry: 矽卡砖梳妆台
@@ -263,4 +262,5 @@ SteelSofaTile.MapEntry: 钢沙发
 SteelTableTile.MapEntry: 钢桌
 SteelWorkBenchTile.MapEntry: 钢工作台
 SkarnBrickBenchTile.MapEntry: 矽卡砖长椅
-// CrystallinePylonTile.MapEntry: Crystalline Pylon Tile
+// CrystallinePylonTile.MapEntry: Crystalline Pylon
+// CrystallineFountain.MapEntry: Crystalline Fountain

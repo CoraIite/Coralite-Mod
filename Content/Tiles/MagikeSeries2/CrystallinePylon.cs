@@ -1,10 +1,10 @@
-﻿using Coralite.Content.Raritys;
+﻿using Coralite.Content.Dusts;
+using Coralite.Content.Items.MagikeSeries2;
 using Coralite.Core;
 using Coralite.Core.Attributes;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.Enums;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.Localization;
@@ -14,21 +14,6 @@ using Terraria.ObjectData;
 
 namespace Coralite.Content.Tiles.MagikeSeries2
 {
-    public class CrystallinePylon : ModItem
-    {
-        public override string Texture => AssetDirectory.MagikeSeries2Item+Name;
-        public override void SetDefaults()
-        {
-            // Basically, this a just a shorthand method that will set all default values necessary to place
-            // the passed in tile type; in this case, the Example Pylon tile.
-            Item.DefaultToPlaceableTile(ModContent.TileType<CrystallinePylonTile>());
-
-            // Another shorthand method that will set the rarity and how much the item is worth.
-            Item.SetShopValues(ItemRarityColor.Blue1, Item.buyPrice(gold: 10));
-            Item.rare = ModContent.RarityType<CrystallineMagikeRarity>();
-        }
-    }
-
     [AutoLoadTexture(Path = AssetDirectory.MagikeSeries2Tile)]
     public class CrystallinePylonTile : ModPylon
     {
@@ -66,9 +51,10 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
             // Adds functionality for proximity of pylons; if this is true, then being near this tile will count as being near a pylon for the teleportation process.
             AddToArray(ref TileID.Sets.CountsAsPylon);
+            DustType = ModContent.DustType<SkarnDust>();
 
             LocalizedText pylonName = CreateMapEntryName(); //Name is in the localization file
-            AddMapEntry(Color.White, pylonName);
+            AddMapEntry(Coralite.CrystallinePurple, pylonName);
         }
 
         public override NPCShop.Entry GetNPCShopEntry()

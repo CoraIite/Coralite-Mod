@@ -5885,12 +5885,19 @@ WildMabirdNestBannerItem: {
 	Tooltip: ""
 }
 
-SkarnBrickChest: {
-	DisplayName: Tooltip: ""
+UnsentLetter: {
+	DisplayName: 未寄出的信件
+	Tooltip: 召唤一只信使鸟妖，她会帮你拾取远处的物品
+}
+
+CrystallineFountainItem: {
+	DisplayName: 蕴魔喷泉
 	Tooltip: ""
 }
 
-UnsentLetter: {
-	DisplayName: 未寄出的信件
-	Tooltip: "召唤一只信使鸟妖，她会帮你拾取远处的物品"
+RainbowPorpoise: {
+	Description: 你能进入那个充满云雾的地方吗？太好了，去给我抓一条虹豚来！不是海豚，是虹豚！
+	CatchLocation: 捕获位置：蕴魔空岛
+	DisplayName: 虹豚
+	Tooltip: ""
 }

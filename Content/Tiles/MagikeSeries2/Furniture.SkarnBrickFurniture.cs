@@ -98,7 +98,8 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             Main.tileNoAttach[Type] = true;
             Main.tileLavaDeath[Type] = true;
             Main.tileTable[Type] = true;
-            Main.tileSolid[Type] = true;
+            //Main.tileSolid[Type] = true;
+            Main.tileSolidTop[Type] = true;
             TileID.Sets.Clock[Type] = true;
             TileID.Sets.HasOutlines[Type] = true;
 
