@@ -2135,10 +2135,12 @@ namespace Coralite.Content.WorldGeneration
                     0 => ModContent.ItemType<Luminward>(),
                     1 => ModContent.ItemType<SkyshipInABottle>(),
                     2 => ModContent.ItemType<ChalcedonyWing>(),
+                    3 => ModContent.ItemType<UnsentLetter>(),
                     _ => WorldGen.genRand.NextFromList(
                        ModContent.ItemType<Luminward>(),
                        ModContent.ItemType<SkyshipInABottle>(),
-                       ModContent.ItemType<ChalcedonyWing>()
+                       ModContent.ItemType<ChalcedonyWing>(),
+                       ModContent.ItemType<UnsentLetter>()
                        )
                 };
 

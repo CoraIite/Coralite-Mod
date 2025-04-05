@@ -418,61 +418,7 @@ namespace Coralite.Content.Items.Pets
                     break;
                 case 1://飞行
                     {
-                        Projectile.tileCollide = false;
-                        float num17 = 0.2f;
-                        float num18 = 10f;
-                        int num19 = 200;
-                        if (num18 < Math.Abs(player.velocity.X) + Math.Abs(player.velocity.Y))
-                            num18 = Math.Abs(player.velocity.X) + Math.Abs(player.velocity.Y);
-
-                        Vector2 vector6 = player.Center - Projectile.Center;
-                        float num20 = vector6.Length();
-                        if (num20 > 2000f)
-                            Projectile.position = player.Center - (new Vector2(Projectile.width, Projectile.height) / 2f);
-
-                        if (num20 < num19 && player.velocity.Y == 0f && Projectile.position.Y + Projectile.height <= player.position.Y + player.height && !Collision.SolidCollision(Projectile.position, Projectile.width, Projectile.height))
-                        {
-                            State = 0f;
-                            Projectile.netUpdate = true;
-                            if (Projectile.velocity.Y < -6f)
-                                Projectile.velocity.Y = -6f;
-                        }
-
-                        if (!(num20 < 60f))
-                        {
-                            vector6.Normalize();
-                            vector6 *= num18;
-                            if (Projectile.velocity.X < vector6.X)
-                            {
-                                Projectile.velocity.X += num17;
-                                if (Projectile.velocity.X < 0f)
-                                    Projectile.velocity.X += num17 * 1.5f;
-                            }
-
-                            if (Projectile.velocity.X > vector6.X)
-                            {
-                                Projectile.velocity.X -= num17;
-                                if (Projectile.velocity.X > 0f)
-                                    Projectile.velocity.X -= num17 * 1.5f;
-                            }
-
-                            if (Projectile.velocity.Y < vector6.Y)
-                            {
-                                Projectile.velocity.Y += num17;
-                                if (Projectile.velocity.Y < 0f)
-                                    Projectile.velocity.Y += num17 * 1.5f;
-                            }
-
-                            if (Projectile.velocity.Y > vector6.Y)
-                            {
-                                Projectile.velocity.Y -= num17;
-                                if (Projectile.velocity.Y > 0f)
-                                    Projectile.velocity.Y -= num17 * 1.5f;
-                            }
-                        }
-
-                        if (Projectile.velocity.X != 0f)
-                            Projectile.spriteDirection = Math.Sign(Projectile.velocity.X);
+                        FlyMovement(player);
 
                         Timer++;
                         if (Timer > 120)
@@ -619,6 +565,65 @@ namespace Coralite.Content.Items.Pets
                     }
                     break;
             }
+        }
+
+        private void FlyMovement(Player player)
+        {
+            Projectile.tileCollide = false;
+            float acc = 0.2f;//加速度
+            float num18 = 10f;
+            int num19 = 200;
+            if (num18 < Math.Abs(player.velocity.X) + Math.Abs(player.velocity.Y))
+                num18 = Math.Abs(player.velocity.X) + Math.Abs(player.velocity.Y);
+
+            Vector2 toPlayer = player.Center - Projectile.Center;
+            float lengthToPlayer = toPlayer.Length();
+            if (lengthToPlayer > 2000f)
+                Projectile.Center = player.Center;
+
+            if (lengthToPlayer < num19 && player.velocity.Y == 0f && Projectile.position.Y + Projectile.height <= player.position.Y + player.height && !Collision.SolidCollision(Projectile.position, Projectile.width, Projectile.height))
+            {
+                State = 0f;//切换为静止状态
+                Projectile.netUpdate = true;
+                if (Projectile.velocity.Y < -6f)
+                    Projectile.velocity.Y = -6f;
+            }
+
+            if (!(lengthToPlayer < 60f))
+            {
+                toPlayer.SafeNormalize(Vector2.Zero);
+                toPlayer *= num18;
+                if (Projectile.velocity.X < toPlayer.X)
+                {
+                    Projectile.velocity.X += acc;
+                    if (Projectile.velocity.X < 0f)
+                        Projectile.velocity.X += acc * 1.5f;
+                }
+
+                if (Projectile.velocity.X > toPlayer.X)
+                {
+                    Projectile.velocity.X -= acc;
+                    if (Projectile.velocity.X > 0f)
+                        Projectile.velocity.X -= acc * 1.5f;
+                }
+
+                if (Projectile.velocity.Y < toPlayer.Y)
+                {
+                    Projectile.velocity.Y += acc;
+                    if (Projectile.velocity.Y < 0f)
+                        Projectile.velocity.Y += acc * 1.5f;
+                }
+
+                if (Projectile.velocity.Y > toPlayer.Y)
+                {
+                    Projectile.velocity.Y -= acc;
+                    if (Projectile.velocity.Y > 0f)
+                        Projectile.velocity.Y -= acc * 1.5f;
+                }
+            }
+
+            if (Projectile.velocity.X != 0f)
+                Projectile.spriteDirection = Math.Sign(Projectile.velocity.X);
         }
 
         public override bool PreDraw(ref Color lightColor)

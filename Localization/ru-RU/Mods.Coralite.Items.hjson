@@ -5606,11 +5606,6 @@ SkarnBrickChair: {
 	// Tooltip: ""
 }
 
-SkarnBrickChest: {
-	// DisplayName: Skarn Brick Chest
-	// Tooltip: ""
-}
-
 SkarnBrickClock: {
 	// DisplayName: Skarn Brick Clock
 	// Tooltip: ""
@@ -5813,5 +5808,15 @@ WildMabirdBannerItem: {
 
 WildMabirdNestBannerItem: {
 	// DisplayName: Wild Mabird Nest Banner Item
+	// Tooltip: ""
+}
+
+SkarnBrickChest: {
+	// DisplayName: Skarn Brick Chest
+	// Tooltip: ""
+}
+
+UnsentLetter: {
+	// DisplayName: Unsent Letter
 	// Tooltip: ""
 }

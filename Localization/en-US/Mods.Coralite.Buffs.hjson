@@ -240,3 +240,8 @@ EmperorSlimeBuff: {
 	DisplayName: Emperor Slime Buff
 	Description: Mods.Coralite.Buffs.EmperorSlimeBuff.Description
 }
+
+BringerHarpyBuff: {
+	DisplayName: Bringer Harpy Buff
+	Description: Mods.Coralite.Buffs.BringerHarpyBuff.Description
+}

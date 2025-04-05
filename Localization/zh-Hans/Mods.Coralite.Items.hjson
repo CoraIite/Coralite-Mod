@@ -5262,7 +5262,7 @@ B9Alloy: {
 }
 
 SkarnChest: {
-	DisplayName: 矽卡箱
+	DisplayName: 矽卡砖箱
 	Tooltip: ""
 }
 
@@ -5680,11 +5680,6 @@ SkarnBrickChair: {
 	Tooltip: ""
 }
 
-SkarnBrickChest: {
-	DisplayName: 矽卡砖箱
-	Tooltip: ""
-}
-
 SkarnBrickClock: {
 	DisplayName: 矽卡砖钟
 	Tooltip: ""
@@ -5888,4 +5883,14 @@ WildMabirdBannerItem: {
 WildMabirdNestBannerItem: {
 	DisplayName: 野生魔鸟巢旗
 	Tooltip: ""
+}
+
+SkarnBrickChest: {
+	DisplayName: Tooltip: ""
+	Tooltip: ""
+}
+
+UnsentLetter: {
+	DisplayName: 未寄出的信件
+	Tooltip: "召唤一只信使鸟妖，她会帮你拾取远处的物品"
 }

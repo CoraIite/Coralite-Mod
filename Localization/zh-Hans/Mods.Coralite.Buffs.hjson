@@ -240,3 +240,8 @@ EmperorSlimeBuff: {
 	DisplayName: 史莱姆的祝福
 	Description: 命中敌怪时施加史莱姆减益
 }
+
+BringerHarpyBuff: {
+	DisplayName: 信使鸟妖
+	Description: 你好，今天要寄信吗？
+}
