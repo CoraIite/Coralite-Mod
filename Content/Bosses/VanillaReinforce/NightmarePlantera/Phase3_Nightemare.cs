@@ -1574,7 +1574,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         {
             MoveCount = 0;
             NPC.dontTakeDamage = false;
-            NPC.defense = NPC.defDefense + 25;
+            NPC.defense = NPC.defDefense + 10;
             if (Main.LocalPlayer.TryGetModPlayer(out NightmarePlayerCamera NCamera))
             {
                 NCamera.useShake = false;
