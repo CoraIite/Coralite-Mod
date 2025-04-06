@@ -5827,3 +5827,8 @@ RainbowPorpoise: {
 	// DisplayName: Rainbow Porpoise
 	// Tooltip: ""
 }
+
+CrystallineHook: {
+	// DisplayName: Crystalline Hook
+	// Tooltip: ""
+}

@@ -11,6 +11,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
     {
         public override string Texture => AssetDirectory.MagikeLensTiles + Name;
 
+        public override CoraliteSets.MagikeTileType PlaceType => CoraliteSets.MagikeTileType.FourWayNormal;
+
         public override void DrawExtraTex(SpriteBatch spriteBatch, Texture2D tex, Rectangle tileRect, Vector2 offset, Color lightColor, float rotation, MagikeTP entity, MALevel level)
         {
             Vector2 selfCenter = tileRect.Center();

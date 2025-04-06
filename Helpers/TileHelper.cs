@@ -156,7 +156,8 @@ namespace Coralite.Helpers
             if (data == null)
                 return position.ToWorldCoordinates();
 
-            if (!CoraliteSets.NotFourWayPlaceMagike[tile.TileType])
+            if (CoraliteSets.MagikeTileTypes.TryGetValue(tile.TileType, out var placeType)
+                && placeType != CoraliteSets.MagikeTileType.None)
                 MagikeHelper.GetMagikeAlternateData(position.X, position.Y, out data, out _);
 
             int x = data == null ? 8 : data.Width * 16 / 2;
@@ -178,7 +179,8 @@ namespace Coralite.Helpers
             if (data == null)
                 return topleft.Value.ToWorldCoordinates();
 
-            if (!CoraliteSets.NotFourWayPlaceMagike[tile.TileType])
+            if (CoraliteSets.MagikeTileTypes.TryGetValue(tile.TileType, out var placeType)
+                && placeType != CoraliteSets.MagikeTileType.None)
                 MagikeHelper.GetMagikeAlternateData(topleft.Value.X, topleft.Value.Y, out data, out _);
 
             int x = data == null ? 8 : data.Width * 16 / 2;

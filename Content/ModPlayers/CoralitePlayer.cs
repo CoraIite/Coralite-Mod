@@ -558,7 +558,7 @@ namespace Coralite.Content.ModPlayers
 
             int tempHurtTime = HurtTimer;
             HurtTimer = 0;
-
+            
             EmperorDefence -= 5;
             if (EmperorDefence < 0)
                 EmperorDefence = 0;
@@ -579,7 +579,7 @@ namespace Coralite.Content.ModPlayers
 
                         Helper.PlayPitched(CoraliteSoundID.WindyBalloon_NPCDeath63, Player.Center);
                         Helper.PlayPitched(CoraliteSoundID.ShimmerContract, Player.Center);
-
+                        
                         var p = PRTLoader.NewParticle<Items.MagikeSeries2.LuminwardParticleExplosion>(Player.Center, Vector2.Zero, Color.White, 1);
                         p.player = Player;
                         p.Rotation = Main.rand.NextFloat(-0.4f, 0.4f);
@@ -813,7 +813,7 @@ namespace Coralite.Content.ModPlayers
         {
             if (coreKeeperDodge > 0.9f)
                 coreKeeperDodge = 0.9f;
-
+            
             if (info.Dodgeable && Main.rand.NextBool((int)(coreKeeperDodge * 100), 100))
             {
                 CombatText.NewText(new Rectangle((int)Player.Top.X, (int)Player.Top.Y, 1, 1)

@@ -1,5 +1,4 @@
 ﻿using Coralite.Core;
-using Coralite.Core.Systems.MagikeSystem.Tiles;
 using Coralite.Helpers;
 using System.Reflection;
 using Terraria;
@@ -40,8 +39,8 @@ namespace Coralite.Content.CustomHooks
             if (tileData == null)
                 return;
 
-            ModTile m = TileLoader.GetTile(type);
-            if (!CoraliteSets.NotFourWayPlaceMagike[type] && m is BaseMagikeTile)
+            if (CoraliteSets.MagikeTileTypes.TryGetValue(type, out var placeType)
+                && placeType != CoraliteSets.MagikeTileType.None)
             {
                 Tile t = Main.tile[i, j];
                 int width = tileData.Width;
@@ -50,8 +49,13 @@ namespace Coralite.Content.CustomHooks
 
                 TileObjectData alternateData;
                 int style = 0;
-
                 int partFrameY = t.TileFrameY % tileData.CoordinateFullHeight;
+
+                int leftHeight = placeType switch
+                {
+                    CoraliteSets.MagikeTileType.FourWayNormal => (height * 2) + width,
+                    _ => height * 3
+                };
 
                 if (y1 < height)
                     alternateData = tileData;
@@ -60,7 +64,7 @@ namespace Coralite.Content.CustomHooks
                     style = 1;
                     alternateData = TileObjectData.GetTileData(type, 0, style + 1);// ((List<TileObjectData>)_alternateInfo.GetValue(tileData))[style];
                 }
-                else if (y1 < (height * 2) + width)
+                else if (y1 < leftHeight)
                 {
                     style = 2;
                     alternateData = TileObjectData.GetTileData(type, 0, style + 1);// ((List<TileObjectData>)_alternateInfo.GetValue(tileData))[style];

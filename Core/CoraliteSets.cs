@@ -40,8 +40,14 @@ namespace Coralite.Core
 
         public static List<int> SpecialDraw = new List<int>();
 
-        public static HashSet<int> NotFourWayPlaceMagikeSet=new HashSet<int>();
-        public static bool[] NotFourWayPlaceMagike;
+        public static Dictionary<int, MagikeTileType> MagikeTileTypes=new Dictionary<int, MagikeTileType>();
+
+        public enum MagikeTileType
+        {
+            FourWayNormal,
+            FourWayNoFilp,
+            None
+        }
 
         public override void PostSetupContent()
         {
@@ -99,11 +105,6 @@ namespace Coralite.Core
             }
 
             TileID.Sets.CanBeClearedDuringOreRunner[TileID.Chain] = false;
-
-            foreach (var item in NotFourWayPlaceMagikeSet)
-                NotFourWayPlaceMagike[item] = true;
-
-            NotFourWayPlaceMagikeSet = null;
         }
 
         private void InitAll()
@@ -125,9 +126,6 @@ namespace Coralite.Core
 
             TileSpecialMoss = new bool[TileLoader.TileCount];
             Array.Fill(TileSpecialMoss, false);
-
-            NotFourWayPlaceMagike = new bool[TileLoader.TileCount];
-            Array.Fill(NotFourWayPlaceMagike, false);
         }
     }
 }

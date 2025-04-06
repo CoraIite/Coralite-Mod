@@ -12,6 +12,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
     {
         public const float ItemSize = 36;
 
+        public override CoraliteSets.MagikeTileType PlaceType => CoraliteSets.MagikeTileType.FourWayNormal;
+
         public override void QuickLoadAsset(MALevel level)
         {
 

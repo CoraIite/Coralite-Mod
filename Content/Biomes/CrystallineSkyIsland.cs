@@ -64,9 +64,6 @@ namespace Coralite.Content.Biomes
 
     public class CrystallineSkyIslandEffect : ModSceneEffect
     {
-        public static float BiomeTimer;
-        public const float BiomeTimerMax = 20000;
-
         public override SceneEffectPriority Priority => SceneEffectPriority.Environment;
 
         //public override ModUndergroundBackgroundStyle UndergroundBackgroundStyle => ModContent.Find<ModUndergroundBackgroundStyle>("Coralite/MagicCrystalCaveBackground");
@@ -89,13 +86,22 @@ namespace Coralite.Content.Biomes
             if (!isActive)
                 return;
 
+            for (int i = 0; i < Main.maxClouds; i++)
+                Main.cloud[i].Alpha *=0.8f;
+        }
+    }
+
+    public class CrystallineSkyIslandSystem:ModSystem
+    {
+        public static float BiomeTimer;
+        public const float BiomeTimerMax = 20000;
+
+        public override void PostUpdateTime()
+        {
             BiomeTimer += 0.5f;
             //BiomeTimer += 30f;
             if (BiomeTimer > BiomeTimerMax)
                 BiomeTimer = 0;
-
-            for (int i = 0; i < Main.maxClouds; i++)
-                Main.cloud[i].Alpha *=0.8f;
         }
     }
 
@@ -213,7 +219,7 @@ namespace Coralite.Content.Biomes
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, transformationMatrix);
 
-            float timeFactor = CrystallineSkyIslandEffect.BiomeTimer / CrystallineSkyIslandEffect.BiomeTimerMax;
+            float timeFactor = CrystallineSkyIslandSystem.BiomeTimer / CrystallineSkyIslandSystem.BiomeTimerMax;
 
             float timeFactorTwoPI = timeFactor * MathHelper.TwoPi;
 
@@ -226,10 +232,10 @@ namespace Coralite.Content.Biomes
 
             //最底下的蓝色背景层
             DrawBackgroundBack(spriteBatch, CrystallineSkyIslandBackground0.Value
-                , alpha * 0.35f, timeFactor * CrystallineSkyIslandBackground0.Width(), 60, yOffset+80);
+                , alpha * 0.3f, timeFactor * CrystallineSkyIslandBackground0.Width(), 60, yOffset+80);
 
             DrawBackground(spriteBatch, CrystallineSkyIslandBackground1.Value
-                , alpha * 0.7f, sinTime * 100, 50, yOffset + 140);
+                , alpha * 0.6f, sinTime * 100, 50, yOffset + 140);
 
             DrawBackgroundStar(spriteBatch, CrystallineSkyIslandBackgroundStar.Value
                 , alpha, timeFactor * CrystallineSkyIslandBackgroundStar.Width(), 55, yOffset - 200);

@@ -6,6 +6,7 @@ using Coralite.Content.Items.Magike.Filters.InterferenceFilters;
 using Coralite.Content.Items.Magike.Filters.PolarizedFilters;
 using Coralite.Content.Items.Magike.Filters.PulseFilters;
 using Coralite.Content.Items.MagikeSeries1;
+using Coralite.Content.Items.MagikeSeries2;
 using Coralite.Content.Items.ThyphionSeries;
 using Coralite.Content.Tiles.MagikeSeries1;
 using Coralite.Content.Tiles.MagikeSeries2;
@@ -134,13 +135,16 @@ namespace Coralite.Content.WorldGeneration
                             if (WorldGen.genRand.NextBool(3))//添加其他滤镜
                                 WorldGenHelper.RandChestItem(chest, ModContent.ItemType<MagicCrystalPulseFilter>(), 1);
                         }
-                        else if (tile.TileType==ModContent.TileType<SkarnChestTile>())
+                        else if (tile.TileType == ModContent.TileType<SkarnChestTile>())
                         {
                             for (int i = 0; i < 3; i++)//放隐身药水
                                 WorldGenHelper.RandChestItem(chest, ItemID.InvisibilityPotion, WorldGen.genRand.Next(1, 5));
-                            
+
                             //放偏振滤镜
                             WorldGenHelper.RandChestItem(chest, ModContent.ItemType<CrystallineMagikePolarizedFilter>(), WorldGen.genRand.Next(1, 2));
+                            //放染料
+                            if (WorldGen.genRand.NextBool(3))
+                                WorldGenHelper.RandChestItem(chest, ModContent.ItemType<LuminDye>(), 1);
                         }
                         break;
                 }

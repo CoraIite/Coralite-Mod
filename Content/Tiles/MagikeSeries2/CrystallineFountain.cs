@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Dusts;
+using Coralite.Content.Items.MagikeSeries2;
 using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Helpers;
@@ -26,7 +27,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileObjectData.newTile.Height = 4;
             TileObjectData.newTile.CoordinateHeights = [16, 16, 16, 16];
             TileObjectData.newTile.LavaDeath = false;
-            TileObjectData.newTile.Origin = new Terraria.DataStructures.Point16(0,3);
+            TileObjectData.newTile.Origin = new Terraria.DataStructures.Point16(0, 3);
             TileObjectData.newTile.DrawYOffset = 2;
 
             TileObjectData.addTile(Type);
@@ -34,6 +35,8 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             DustType = ModContent.DustType<SkarnDust>();
             LocalizedText pylonName = CreateMapEntryName();
             AddMapEntry(Color.White, pylonName);
+
+            RegisterItemDrop(ModContent.ItemType<CrystallineFountainItem>());
         }
 
         public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings)

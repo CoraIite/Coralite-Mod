@@ -5896,8 +5896,13 @@ CrystallineFountainItem: {
 }
 
 RainbowPorpoise: {
-	Description: 你能进入那个充满云雾的地方吗？太好了，去给我抓一条虹豚来！不是海豚，是虹豚！
+	Description: 你能进入那个充满云雾的地方吗？太好了，去给我抓一条虹豚来！不是海豚，是虹豚！现在就给我去！
 	CatchLocation: 捕获位置：蕴魔空岛
 	DisplayName: 虹豚
 	Tooltip: ""
+}
+
+CrystallineHook: {
+	DisplayName: 蕴魔钩爪
+	Tooltip: 牵引玩家到一定距离内松开钩爪
 }

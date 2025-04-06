@@ -26,6 +26,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
         public Dictionary<MALevel, ATex> ExtraAssets { get; private set; }
 
         public abstract int DropItemType { get; }
+        public abstract CoraliteSets.MagikeTileType PlaceType { get; }
 
         public override void Load()
         {
@@ -80,6 +81,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
             //TileObjectData.newTile.StyleWrapLimit = 100;
             TileObjectData.newTile.CoordinateHeights = new int[height];
 
+            CoraliteSets.MagikeTileTypes.Add(Type, PlaceType);
+
             int[] tiles = GetAnchorValidTiles();
             if (tiles != null)
                 TileObjectData.newTile.AnchorValidTiles = tiles;
@@ -93,14 +96,16 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
             //TileObjectData.newTile.HookPostPlaceMyPlayer = new PlacementHook(GetEntityInstance().Hook_AfterPlacement, -1, 0, true);
 
             //顶部是平台那么不需要下沉，并且最下面额外扩展一格
-            if (topSoild)
+            if (PlaceType == CoraliteSets.MagikeTileType.None)
             {
                 TileObjectData.newTile.CoordinateHeights[^1] = 18;
-                Main.tileSolidTop[Type] = true;
-                CoraliteSets.NotFourWayPlaceMagikeSet.Add(Type);
-                //Main.tileSolid[Type] = true;
+                if (topSoild)
+                {
+                    Main.tileSolidTop[Type] = true;
+                    Main.tileTable[Type] = true;
+                }
+
                 Main.tileNoAttach[Type] = true;
-                Main.tileTable[Type] = true;
             }
             else
             {
@@ -127,26 +132,36 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
                 TileObjectData.newAlternate.CopyFrom(TileObjectData.newTile);
                 TileObjectData.newAlternate.AnchorBottom = AnchorData.Empty;
                 TileObjectData.newAlternate.DrawYOffset = 0;
-                TileObjectData.newAlternate.Width = height;
-                TileObjectData.newAlternate.Height = width;
                 TileObjectData.newAlternate.AnchorLeft = new AnchorData(AnchorType.SolidTile | AnchorType.SolidBottom | AnchorType.SolidSide, TileObjectData.newAlternate.Height, 0);
                 TileObjectData.newAlternate.Origin = new Point16(0, width / 2);
 
-                TileObjectData.newAlternate.CoordinateHeights = new int[width];
-                Array.Fill(TileObjectData.newAlternate.CoordinateHeights, 16);
-                TileObjectData.addAlternate(height * 2 / width);
+                if (PlaceType == CoraliteSets.MagikeTileType.FourWayNormal)
+                {
+                    TileObjectData.newAlternate.Width = height;
+                    TileObjectData.newAlternate.Height = width;
+                    TileObjectData.newAlternate.CoordinateHeights = new int[width];
+                    Array.Fill(TileObjectData.newAlternate.CoordinateHeights, 16);
+                    TileObjectData.addAlternate(height * 2 / width);
+                }
+                else
+                    TileObjectData.addAlternate(2);
 
                 //放置在右边
                 TileObjectData.newAlternate.CopyFrom(TileObjectData.newTile);
                 TileObjectData.newAlternate.AnchorBottom = AnchorData.Empty;
                 TileObjectData.newAlternate.DrawYOffset = 0;
-                TileObjectData.newAlternate.Width = height;
-                TileObjectData.newAlternate.Height = width;
                 TileObjectData.newAlternate.AnchorRight = new AnchorData(AnchorType.SolidTile | AnchorType.SolidBottom | AnchorType.SolidSide, TileObjectData.newAlternate.Height, 0);
                 TileObjectData.newAlternate.Origin = new Point16(height - 1, width / 2);
-                TileObjectData.newAlternate.CoordinateHeights = new int[width];
-                Array.Fill(TileObjectData.newAlternate.CoordinateHeights, 16);
-                TileObjectData.addAlternate((height * 2 / width) + 1);
+                if (PlaceType == CoraliteSets.MagikeTileType.FourWayNormal)
+                {
+                    TileObjectData.newAlternate.Width = height;
+                    TileObjectData.newAlternate.Height = width;
+                    TileObjectData.newAlternate.CoordinateHeights = new int[width];
+                    Array.Fill(TileObjectData.newAlternate.CoordinateHeights, 16);
+                    TileObjectData.addAlternate((height * 2 / width) + 1);
+                }
+                else
+                    TileObjectData.addAlternate(3);
             }
 
             TileObjectData.addTile(Type);
@@ -170,7 +185,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
         public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY)
         {
             Tile t = Framing.GetTileSafely(i, j);
-            if (CoraliteSets.NotFourWayPlaceMagike[t.TileType])
+            if (PlaceType==CoraliteSets.MagikeTileType.None)
                 return;
 
             GetMagikeAlternateData(i, j, out _, out MagikeAlternateStyle alternate);

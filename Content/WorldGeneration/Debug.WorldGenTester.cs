@@ -1,7 +1,9 @@
 ﻿using Coralite.Core;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent.Generation;
 using Terraria.ID;
+using Terraria.WorldBuilding;
 
 namespace Coralite.Content.WorldGeneration
 {
@@ -29,10 +31,17 @@ namespace Coralite.Content.WorldGeneration
 
         public override bool CanUseItem(Player player)
         {
-            Main.AnglerQuestSwap();
-            Point p = Main.MouseWorld.ToTileCoordinates();
-            Tile t = Main.tile[p];
-            Main.NewText(t.TileFrameX);
+            Vector2 myVector = Main.MouseWorld;
+            Point p = myVector.ToTileCoordinates();
+
+            ExampleStructure(p);
+
+
+
+            //Main.AnglerQuestSwap();
+            //Point p = Main.MouseWorld.ToTileCoordinates();
+            //Tile t = Main.tile[p];
+            //Main.NewText(t.TileFrameX);
             //WorldGen.PlaceObject(p.X, p.Y - 1, ModContent.TileType<ChalcedonySapling>(), true);
             //WorldGenHelper.ObjectPlace(point.X, point.Y - 1, ModContent.TileType<ChalcedonyGrass2x2>(), WorldGen.genRand.Next(2));
             //WorldGen.PlaceObject(pos.X, pos.Y, ModContent.TileType<MercuryPlatformTile>());
@@ -241,6 +250,84 @@ namespace Coralite.Content.WorldGeneration
             for (int i = 0; i < Main.maxTilesX; i++)
                 for (int j = 0; j < Main.maxTilesY; j++)
                     Main.tile[i, j].Clear(TileDataType.All);
+        }
+
+        public void ExampleStructure(Point origin)
+        {
+            ShapeData slimeShapeData = new ShapeData();
+            ShapeData moundShapeData = new ShapeData();
+            Point point = new Point(origin.X, origin.Y + 20);
+            Point point2 = new Point(origin.X, origin.Y + 30);
+
+            WorldUtils.Gen(
+                point,
+                new Shapes.Circle(20),//new Shapes.Slime(20, 0.8f, 1f),
+                Actions.Chain(
+                    //new Modifiers.Blotches(2, 0.4),
+                    new Actions.ClearTile(frameNeighbors: true).Output(slimeShapeData)));
+
+            Point point3 = point2 - new Point(7, 11);
+            WorldUtils.Gen(
+                point3,
+                new Shapes.Rectangle(14,22),//new Shapes.Mound(14, 14),
+                Actions.Chain(
+                    //new Modifiers.Blotches(2, 1, 0.8),
+                    new Actions.SetTile(TileID.Ash),
+                    new Actions.SetFrames(frameNeighbors: true).Output(moundShapeData)));
+
+            slimeShapeData.Subtract(moundShapeData, point, point3);
+
+            WorldUtils.Gen(
+                point3,
+                new ModShapes.InnerOutline(moundShapeData),
+                Actions.Chain(
+                    new Modifiers.IsSolid(),
+                    new Actions.SetTile(TileID.AshGrass),
+                    new Actions.SetFrames(frameNeighbors: true)));
+
+            WorldUtils.Gen(
+                point,
+                new ModShapes.All(slimeShapeData),
+                Actions.Chain(
+                    new Modifiers.RectangleMask(-40, 40, 0, 40),
+                    new Modifiers.IsEmpty(),
+                    new Actions.SetLiquid(LiquidID.Lava)));
+
+            WorldUtils.Gen(
+                point,
+                new ModShapes.All(slimeShapeData),
+                Actions.Chain(
+                    new Actions.PlaceWall(WallID.HellstoneBrick),
+                    new Modifiers.OnlyTiles(TileID.Ash),
+                    new Modifiers.Offset(0, 1),
+                    new ActionVines(3, 5)));
+
+            //ShapeData shaftShapeData = new ShapeData();
+            //WorldUtils.Gen(
+            //    new Point(origin.X, surfacePoint.Y + 10),
+            //    new Shapes.Rectangle(1, origin.Y - surfacePoint.Y - 9),
+            //    Actions.Chain(
+            //        new Modifiers.Blotches(2, 0.2),
+            //        new Actions.ClearTile().Output(shaftShapeData),
+            //        new Modifiers.Expand(1),
+            //        new Modifiers.OnlyTiles(TileID.Sand),
+            //        new Actions.SetTile(TileID.HardenedSand).Output(shaftShapeData)));
+
+            //WorldUtils.Gen(
+            //    new Point(origin.X, surfacePoint.Y + 10),
+            //    new ModShapes.All(shaftShapeData),
+            //    new Actions.SetFrames(frameNeighbors: true));
+
+            //放置一个史莱姆ang圣物（史莱姆ang圣物的style是5）
+            WorldGen.PlaceObject(point3.X+7, point3.Y - 1, TileID.MasterTrophyBase, mute: true,  6);
+            // 将植物放置在土丘形状的草砖之上。
+            //WorldUtils.Gen(
+            //    point3,
+            //    new ModShapes.All(moundShapeData),
+            //    Actions.Chain(
+            //        new Modifiers.Offset(0, -1),
+            //        new Modifiers.OnlyTiles(TileID.AshGrass),
+            //        new Modifiers.Offset(0, -1), new ActionGrass()));
         }
     }
 }

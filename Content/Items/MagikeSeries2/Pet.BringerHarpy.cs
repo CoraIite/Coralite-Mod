@@ -2,15 +2,18 @@
 using Coralite.Core;
 using Coralite.Core.Attributes;
 using Coralite.Core.SmoothFunctions;
+using Coralite.Core.Systems.MagikeSystem;
+using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.GameContent.Creative;
+using Terraria.ID;
 
 namespace Coralite.Content.Items.MagikeSeries2
 {
-    public class UnsentLetter : ModItem
+    public class UnsentLetter : ModItem,IMagikeCraftable
     {
         public override string Texture => AssetDirectory.MagikeSeries2Item + Name;
 
@@ -34,6 +37,16 @@ namespace Coralite.Content.Items.MagikeSeries2
             {
                 player.AddBuff(Item.buffType, 15, true, false);
             }
+        }
+
+        public void AddMagikeCraftRecipe()
+        {
+            MagikeRecipe.CreateCraftRecipe(ItemID.GiantHarpyFeather, ModContent.ItemType<UnsentLetter>()
+                , MagikeHelper.CalculateMagikeCost(MALevel.CrystallineMagike, 12, 60 * 3))
+                .AddIngredient<Chalcedony>(20)
+                .AddIngredient(ItemID.Silk, 5)
+                .AddIngredient(ItemID.GreenThread)
+                .Register();
         }
     }
 
@@ -186,7 +199,7 @@ namespace Coralite.Content.Items.MagikeSeries2
                         }
 
                         Timer++;
-                        Vector2 dir = owner.Center - Projectile.Center;
+                        Vector2 dir = owner.Top - Projectile.Center;
 
                         float velRot = Projectile.velocity.ToRotation();
                         float targetRot = dir.ToRotation();

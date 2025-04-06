@@ -48,6 +48,8 @@ namespace Coralite.Content.Items.Magike.Refractors
         public override string Texture => AssetDirectory.MagikeRefractorTiles + Name;
         public override int DropItemType => ItemType<LASER>();
 
+        public override CoraliteSets.MagikeTileType PlaceType => CoraliteSets.MagikeTileType.FourWayNormal;
+
         public override MALevel[] GetAllLevels()
         {
             return [
