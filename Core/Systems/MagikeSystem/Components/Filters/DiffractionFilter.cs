@@ -9,7 +9,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Filters
     /// <summary>
     /// 衍射滤镜，增加发送器连接量
     /// </summary>
-    public abstract class DiffractionFilter : MagikeFilter, IUIShowable
+    public abstract class DiffractionFilter : MagikeFilter/*, IUIShowable*/
     {
         public abstract byte ConnectMaxBonus { get; }
 
@@ -38,27 +38,27 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Filters
 
         #region UI部分
 
-        public void ShowInUI(UIElement parent)
-        {
-            UIElement title = this.AddTitle(MagikeSystem.UITextID.DiffractionFilterName, parent);
+        //public void ShowInUI(UIElement parent)
+        //{
+        //    UIElement title = this.AddTitle(MagikeSystem.UITextID.DiffractionFilterName, parent);
 
-            UIList list =
-            [
-                this.NewTextBar(c =>
-                MagikeSystem.GetUIText(MagikeSystem.UITextID.DiffractionBonus)+ConnectMaxBonus, parent),
-                new FilterText(c =>
-                    $"  ▶ [i:{c.ItemType}]",this,parent),
-                //取出按钮
-                new FilterRemoveButton(Entity, this)
-            ];
+        //    UIList list =
+        //    [
+        //        this.NewTextBar(c =>
+        //        MagikeSystem.GetUIText(MagikeSystem.UITextID.DiffractionBonus)+ConnectMaxBonus, parent),
+        //        new FilterText(c =>
+        //            $"  ▶ [i:{c.ItemType}]",this,parent),
+        //        //取出按钮
+        //        new FilterRemoveButton(Entity, this)
+        //    ];
 
-            list.SetSize(0, 0, 1, 1);
-            list.SetTopLeft(title.Height.Pixels + 8, 0);
+        //    list.SetSize(0, 0, 1, 1);
+        //    list.SetTopLeft(title.Height.Pixels + 8, 0);
 
-            list.QuickInvisibleScrollbar();
+        //    list.QuickInvisibleScrollbar();
 
-            parent.Append(list);
-        }
+        //    parent.Append(list);
+        //}
 
         #endregion
     }

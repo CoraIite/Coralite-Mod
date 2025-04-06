@@ -70,7 +70,6 @@ MagikeSystem: {
 		NotSpellCore: 该滤镜只能插入到法术核心中！
 	}
 
-	ItemDescriptionPolarizedFilter: 可插入的偏振滤镜：
 	NeedPolarizedFilter: 需要插入偏振滤镜后才能启动
 
 	ApparatusDescription: {
@@ -97,7 +96,7 @@ MagikeSystem: {
 		MagikeLinerSenderName: 线性魔能发送器
 		CheckOnlyLinerSenderName: 线性连接器
 		PolarizedFilterLevel: ◇ 偏振等级
-		ClickToRemove: 点击以取出滤镜
+		ClickToRemove: ▶ 点击以取出滤镜
 		MagikePolarizedFilterName: 偏振滤镜
 		ExtractProducerName: 魔能提取透镜
 		ProduceTime:
@@ -234,6 +233,7 @@ MagikeSystem: {
 			禁用自动选择
 			点击切换模式
 			'''
+		FilterController: 滤镜
 	}
 
 	CraftText: {
@@ -306,4 +306,9 @@ MagikeSystem: {
 
 	ItemContainsMagike: 存储魔能
 	RightClickRemoveRecipe: 左键点击清空合成表
+
+	ItemDescription: {
+		PolarizedFilter: 可插入的偏振滤镜：
+		CanInsertTo: 可插入的仪器：
+	}
 }

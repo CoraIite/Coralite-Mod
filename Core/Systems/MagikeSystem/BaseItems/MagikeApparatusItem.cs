@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.ID;
 
 namespace Coralite.Core.Systems.MagikeSystem.BaseItems
 {

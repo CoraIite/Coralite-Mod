@@ -6,7 +6,11 @@ namespace Coralite.Core.Systems.MagikeSystem
     {
         private static Dictionary<int, Dictionary<MALevel, int>> _magikeApparatusLevels;
         private static Dictionary<int, Dictionary<int, MALevel>> _magikeFrameToLevels;
+        private static Dictionary<MALevel,List<int>> _magikeLevelToType;
 
+        /// <summary>
+        /// 
+        /// </summary>
         public static Dictionary<int, Dictionary<MALevel, int>> MagikeApparatusLevels
         {
             get
@@ -15,12 +19,26 @@ namespace Coralite.Core.Systems.MagikeSystem
                 return _magikeApparatusLevels;
             }
         }
+        /// <summary>
+        /// 
+        /// </summary>
         public static Dictionary<int, Dictionary<int, MALevel>> MagikeFrameToLevels
         {
             get
             {
                 _magikeFrameToLevels ??= new Dictionary<int, Dictionary<int, MALevel>>();
                 return _magikeFrameToLevels;
+            }
+        }
+        /// <summary>
+        /// 存储等级对应的物块
+        /// </summary>
+        public static Dictionary<MALevel, List<int>> MagikeLevelToType
+        {
+            get
+            {
+                _magikeLevelToType ??= new();
+                return _magikeLevelToType;
             }
         }
 
@@ -31,8 +49,13 @@ namespace Coralite.Core.Systems.MagikeSystem
 
             for (int i = 0; i < levels.Length; i++)
             {
-                keyValuePairs.Add(levels[i], i);
-                keyValuePairs2.Add(i, levels[i]);
+                MALevel level = levels[i];
+                keyValuePairs.Add(level, i);
+                keyValuePairs2.Add(i, level);
+                if (MagikeLevelToType.TryGetValue(level, out var list))
+                    list.Add(tileType);
+                else
+                    MagikeLevelToType.Add(level, [tileType]);
             }
 
             MagikeApparatusLevels.Add(tileType, keyValuePairs);

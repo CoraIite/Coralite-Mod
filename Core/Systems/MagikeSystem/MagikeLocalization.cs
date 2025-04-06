@@ -232,15 +232,17 @@ namespace Coralite.Core.Systems.MagikeSystem
              *      - 能够插入哪些偏振滤镜
              */
             public const int PolarizedFilter = 0;
+            public const int CanInsertTo = 1;
 
-            public const int Count = 1;
+            public const int Count = 2;
         }
 
         public void LoadItemDescription()
         {
             ItemDescription = new LocalizedText[ItemDescriptionID.Count];
 
-            ItemDescription[ItemDescriptionID.PolarizedFilter] = this.GetLocalization(nameof(ItemDescription) + "PolarizedFilter");
+            ItemDescription[ItemDescriptionID.PolarizedFilter] = this.GetLocalization(nameof(ItemDescription) + "." + "PolarizedFilter");
+            ItemDescription[ItemDescriptionID.CanInsertTo] = this.GetLocalization(nameof(ItemDescription) + "." + "CanInsertTo");
         }
 
         public static string GetItemDescriptionText(int id)
@@ -403,6 +405,8 @@ namespace Coralite.Core.Systems.MagikeSystem
             ApothecaryTable,
             ApothecaryTableDescription,
             Second,
+
+            FilterController,
 
             Count
         }

@@ -69,7 +69,6 @@ MagikeSystem: {
 		// NotSpellCore: Mods.Coralite.MagikeSystem.MagikeSystem.Filter.NotSpellCore
 	}
 
-	ItemDescriptionPolarizedFilter: Могу вставить поляризационный фильтр:
 	NeedPolarizedFilter: Требуется вставить поляризационный фильтр для работы
 
 	ApparatusDescription: {
@@ -209,6 +208,7 @@ MagikeSystem: {
 		// CraftAltarAutoChoseAll: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.CraftAltarAutoChoseAll
 		// CraftAltarAutoChoseOnlyOne: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.CraftAltarAutoChoseOnlyOne
 		// CraftAltarAutoChoseNever: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.CraftAltarAutoChoseNever
+		// FilterController: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.FilterController
 	}
 
 	CraftText: {
@@ -281,4 +281,9 @@ MagikeSystem: {
 
 	ItemContainsMagike: Содержит магическую энергию
 	// RightClickRemoveRecipe: Mods.Coralite.MagikeSystem.MagikeSystem.RightClickRemoveRecipe
+
+	ItemDescription: {
+		PolarizedFilter: Могу вставить поляризационный фильтр:
+		// CanInsertTo: Mods.Coralite.MagikeSystem.MagikeSystem.ItemDescription.CanInsertTo
+	}
 }

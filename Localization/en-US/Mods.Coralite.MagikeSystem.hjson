@@ -73,7 +73,6 @@ MagikeSystem: {
 		NotSpellCore: Mods.Coralite.MagikeSystem.MagikeSystem.Filter.NotSpellCore
 	}
 
-	ItemDescriptionPolarizedFilter: Insertable polarized filters：
 	NeedPolarizedFilter: Need to insert an insertable polarized filter to work
 
 	ApparatusDescription: {
@@ -213,6 +212,7 @@ MagikeSystem: {
 		CraftAltarAutoChoseAll: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.CraftAltarAutoChoseAll
 		CraftAltarAutoChoseOnlyOne: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.CraftAltarAutoChoseOnlyOne
 		CraftAltarAutoChoseNever: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.CraftAltarAutoChoseNever
+		FilterController: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.FilterController
 	}
 
 	CraftText: {
@@ -285,4 +285,9 @@ MagikeSystem: {
 
 	ItemContainsMagike: Contains magike
 	RightClickRemoveRecipe: Mods.Coralite.MagikeSystem.MagikeSystem.RightClickRemoveRecipe
+
+	ItemDescription: {
+		PolarizedFilter: Insertable polarized filters：
+		CanInsertTo: Mods.Coralite.MagikeSystem.MagikeSystem.ItemDescription.CanInsertTo
+	}
 }

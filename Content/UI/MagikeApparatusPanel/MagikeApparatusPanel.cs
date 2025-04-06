@@ -1,4 +1,5 @@
 ﻿using Coralite.Core;
+using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
@@ -336,16 +337,25 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
             //else
             //{
             ComponentList.Clear();
+
+            var filterButton = new ComponentButton(-1);
+            filterButton.HAlign = 0.3f;
+            ComponentList.Add(filterButton);
+
             for (int i = 0; i < CurrentEntity.ComponentsCache.Count; i++)
             {
                 int id = CurrentEntity.ComponentsCache[i].ID;
                 //if (!ShowComponents[id + 1])
                 //    continue;
 
+                if (id == MagikeComponentID.MagikeFilter && CurrentEntity.ComponentsCache[i] is not IUIShowable)
+                    continue;
+
                 var button = new ComponentButton(i);
                 button.HAlign = 0.3f;
                 ComponentList.Add(button);
             }
+
             //}
         }
 
@@ -357,10 +367,20 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
             ComponentPanel.RemoveAllChildren();
 
             if (CurrentEntity.ComponentsCache.Count != 0)
-                CurrentShowComponentIndex = Math.Clamp(CurrentShowComponentIndex, 0, CurrentEntity.ComponentsCache.Count - 1);
+                CurrentShowComponentIndex = Math.Clamp(CurrentShowComponentIndex, -1, CurrentEntity.ComponentsCache.Count - 1);
 
             if (!CurrentEntity.ComponentsCache.IndexInRange(CurrentShowComponentIndex))
+            {
+                if (CurrentShowComponentIndex == -1)
+                {
+                    BaseRecalculate();
+                    BaseRecalculate();
+                    AddFilterController(ComponentPanel);
+                    return;
+                }
+
                 return;
+            }
 
             if (CurrentEntity.ComponentsCache[CurrentShowComponentIndex] is IUIShowable showable)
             {
@@ -368,6 +388,30 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
                 BaseRecalculate();
                 BaseRecalculate();
             }
+        }
+
+        /// <summary>
+        /// 添加滤镜控制器
+        /// </summary>
+        /// <param name="parent"></param>
+        public void AddFilterController(UIElement parent)
+        {
+            UIElement title = new ComponentUIElementText(() => MagikeSystem.GetUIText(MagikeSystem.UITextID.FilterController), parent,new Vector2(1.3f));
+            parent.Append(title);
+            UIElement Text1 = new ComponentUIElementText(() => MagikeSystem.GetUIText(MagikeSystem.UITextID.ClickToRemove), parent);
+            Text1.SetTopLeft(title.Height.Pixels + 8, 0);
+            parent.Append(Text1);
+
+            FixedUIGrid grid = new FixedUIGrid();
+            for (int i = 0; i < CurrentEntity.ExtendFilterCapacity; i++)
+                grid.Add(new FilterButton(i));
+
+            grid.SetSize(0, 0, 1, 1);
+            grid.SetTopLeft(Text1.Top.Pixels+title.Height.Pixels + 8, 0);
+
+            grid.QuickInvisibleScrollbar();
+
+            parent.Append(grid);
         }
 
         public override void Update(GameTime gameTime)

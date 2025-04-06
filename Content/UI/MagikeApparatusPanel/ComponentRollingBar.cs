@@ -91,8 +91,18 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
 
             Vector2 pos = GetInnerDimensions().Center();
 
-            int id = MagikeApparatusPanel.CurrentEntity.ComponentsCache[_index].ID;
-            int frameY = MagikeApparatusPanel.CurrentShowComponentIndex == _index ? 1 : 0;
+            int id = 0;
+            int frameY = 0;
+            if (_index >= 0)
+            {
+                id = MagikeApparatusPanel.CurrentEntity.ComponentsCache[_index].ID;
+            }
+            else if (_index == -1)
+            {
+                id = MagikeComponentID.MagikeFilter;
+            }
+
+            frameY = MagikeApparatusPanel.CurrentShowComponentIndex == _index ? 1 : 0;
 
             Texture2D tex = MagikeSystem.GetComponentButton().Value;
             var frameBox = tex.Frame(MagikeComponentID.Count, 2, id, frameY);

@@ -407,13 +407,13 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         {
             if (visualMagike != oldMagike)
             {
-                visualMagike = (int)Helper.Lerp(visualMagike, oldMagike, 0.35f);
+                visualMagike = (int)Helper.Lerp(visualMagike, oldMagike, 0.45f);
                 if (Math.Abs(oldMagike - visualMagike) < 4)
                     visualMagike = oldMagike;
             }
             if (visualMagikeMax != oldMagikeMax)
             {
-                visualMagikeMax = (int)Helper.Lerp(visualMagikeMax, oldMagikeMax, 0.35f);
+                visualMagikeMax = (int)Helper.Lerp(visualMagikeMax, oldMagikeMax, 0.45f);
                 if (Math.Abs(oldMagikeMax - visualMagikeMax) < 4)
                     visualMagikeMax = oldMagikeMax;
             }
