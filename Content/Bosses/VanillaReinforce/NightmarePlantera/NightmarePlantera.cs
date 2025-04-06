@@ -144,15 +144,15 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
                 if (nPCStrengthHelper.IsMasterMode)
                 {
-                    NPC.lifeMax = (int)((32_8000 + (numPlayers * 7_8000)) / journeyScale);
-                    NPC.defense = 65;
+                    NPC.lifeMax = (int)((30_8000 + (numPlayers * 7_8000)) / journeyScale);
+                    NPC.defense = 55;
                     NPC.damage = 120;
                 }
 
                 if (Main.getGoodWorld)
                 {
                     NPC.damage = 140;
-                    NPC.defense = 70;
+                    NPC.defense = 65;
                 }
 
                 return;
@@ -164,8 +164,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             if (Main.masterMode)
             {
-                NPC.lifeMax = 32_8000 + (numPlayers * 7_8000);
-                NPC.defense = 65;
+                NPC.lifeMax = 30_8000 + (numPlayers * 7_8000);
+                NPC.defense = 55;
                 NPC.damage = 120;
             }
 
@@ -173,7 +173,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             {
                 NPC.lifeMax = 43_2000 + (numPlayers * 10_0000);
                 NPC.damage = 140;
-                NPC.defense = 70;
+                NPC.defense = 65;
             }
         }
 
@@ -655,7 +655,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             {
                 if (cp.nightmareCount < 28)
                 {
-                    byte howMany = (byte)Helper.ScaleValueForDiffMode(1, 2, 4, 5);
+                    byte howMany = (byte)Helper.ScaleValueForDiffMode(1, 2, 3, 4);
                     if (cp.HasEffect(nameof(NightmareHeart)))
                     {
                         howMany -= 1;
