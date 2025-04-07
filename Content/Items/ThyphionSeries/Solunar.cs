@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.Items.Materials;
 using Coralite.Content.ModPlayers;
 using Coralite.Content.Particles;
+using Coralite.Content.Prefixes.FairyWeaponPrefixes;
 using Coralite.Core;
 using Coralite.Core.Attributes;
 using Coralite.Core.Configs;
@@ -159,16 +160,8 @@ namespace Coralite.Content.Items.ThyphionSeries
                 }
 
                 //生成手持弹幕
-                Vector2 velocity = dashDirection == 0 ? new Vector2(0, dashDirection2) : new Vector2(dashDirection, 0);
-
-                if (dashDirection != 0)
-                {
-                    Projectile.NewProjectile(Player.GetSource_ItemUse(Player.HeldItem), Player.Center, velocity, ProjectileType<SolunarHeldProj>(),
-                        Player.HeldItem.damage, Player.HeldItem.knockBack, Player.whoAmI, newVelocity.ToRotation(), 1, 22);
-                }
-                else
-                    Projectile.NewProjectile(Player.GetSource_ItemUse(Player.HeldItem), Player.Center, velocity, ProjectileType<SolunarHeldProj>(),
-                        Player.HeldItem.damage, Player.HeldItem.knockBack, Player.whoAmI, -1.57f, 1, 18);
+                Projectile.NewProjectile(Player.GetSource_ItemUse(Player.HeldItem), Player.Center, newVelocity, ProjectileType<SolunarHeldProj>(),
+                    Player.HeldItem.damage, Player.HeldItem.knockBack, Player.whoAmI, newVelocity.ToRotation(), 1, 22);
             }
 
             return true;
@@ -237,6 +230,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 case 0://朝向目标方向冲刺，并检测碰撞
                     if (Timer < DashTime + 2)
                     {
+
                         if (Projectile.velocity.X != 0)
                         {
                             Rotation = RecordAngle;
@@ -264,7 +258,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                         else
                         {
                             Rotation += MathHelper.TwoPi / DashTime;
-                            Owner.velocity *= 0.8f;
+                            Owner.velocity = Projectile.velocity * 9;
                             SpawnDashingDust(RecordAngle);
                         }
                     }

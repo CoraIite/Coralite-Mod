@@ -1,5 +1,8 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
+using Coralite.Core.Systems.MagikeSystem;
+using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
+using Coralite.Helpers;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
@@ -7,7 +10,7 @@ using Terraria.ObjectData;
 
 namespace Coralite.Content.Items.Steel
 {
-    public class SteelBar : BaseMaterial  //, IMagikePolymerizable
+    public class SteelBar : BaseMaterial, IMagikeCraftable
     {
         public SteelBar() : base(9999, Item.sellPrice(0, 0, 20), ItemRarityID.LightRed, AssetDirectory.SteelItems) { }
 
@@ -30,6 +33,21 @@ namespace Coralite.Content.Items.Steel
             CreateRecipe()
                 .AddIngredient(ItemID.IronBar, 3)
                 .AddTile(TileID.AdamantiteForge)
+                .Register();
+        }
+
+        public void AddMagikeCraftRecipe()
+        {
+            MagikeRecipe.CreateCraftRecipe(ItemID.IronOre, ModContent.ItemType<SteelBar>()
+                , MagikeHelper.CalculateMagikeCost(MALevel.CrystallineMagike, 3, 45), 2)
+                .AddIngredient(ItemID.TitaniumOre)
+                .AddIngredient(ItemID.Coal)
+                .Register();
+
+            MagikeRecipe.CreateCraftRecipe(ItemID.IronOre, ModContent.ItemType<SteelBar>()
+                , MagikeHelper.CalculateMagikeCost(MALevel.CrystallineMagike, 3, 45), 2)
+                .AddIngredient(ItemID.AdamantiteOre)
+                .AddIngredient(ItemID.Coal)
                 .Register();
         }
 
