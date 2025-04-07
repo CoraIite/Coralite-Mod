@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.WorldGeneration;
 using Coralite.Core.Systems.MagikeSystem;
 using Terraria;
+using Terraria.ID;
 using Terraria.Localization;
 
 namespace Coralite.Core
@@ -14,6 +15,31 @@ namespace Coralite.Core
         public static Condition InDigDigDig { get; private set; }
         public static Condition NotInDigDigDig { get; private set; }
         public static Condition UseMultiBlockStructure { get; private set; }
+
+        /// <summary>
+        /// 解锁染料商
+        /// </summary>
+        public static Condition UnlockDyeTrder { get; private set; }
+        /// <summary>
+        /// 解锁发型师
+        /// </summary>
+        public static Condition UnlockStylist { get; private set; }
+        /// <summary>
+        /// 解锁电工妹
+        /// </summary>
+        public static Condition UnlockMechanic { get; private set; }
+        /// <summary>
+        /// 解锁派对女孩
+        /// </summary>
+        public static Condition UnlockPartyGirl { get; private set; }
+        /// <summary>
+        /// 解锁税收官
+        /// </summary>
+        public static Condition UnlockTaxCollector { get; private set; }
+        /// <summary>
+        /// 解锁公主
+        /// </summary>
+        public static Condition UnlockPrincess { get; private set; }
 
         public string LocalizationCategory => "Conditions";
 
@@ -36,6 +62,19 @@ namespace Coralite.Core
                 , () => false);
             UseMultiBlockStructure = new(this.GetLocalization(nameof(UseMultiBlockStructure))
                 , () => false);
+
+            UnlockDyeTrder = new(this.GetLocalization(nameof(UnlockDyeTrder))
+                , () => NPC.unlockedDyeTraderSpawn);
+            UnlockStylist = new(this.GetLocalization(nameof(UnlockStylist))
+                , () => NPC.savedStylist);
+            UnlockMechanic = new(this.GetLocalization(nameof(UnlockMechanic))
+                , () => NPC.savedMech);
+            UnlockPartyGirl = new(this.GetLocalization(nameof(UnlockPartyGirl))
+                , () => NPC.unlockedPartyGirlSpawn);
+            UnlockTaxCollector = new(this.GetLocalization(nameof(UnlockTaxCollector))
+                , () => NPC.savedTaxCollector);
+            UnlockPrincess = new(this.GetLocalization(nameof(UnlockPrincess))
+                , () => NPC.unlockedPrincessSpawn);
 
             DownedGolemCondition = this.GetLocalization(nameof(DownedGolemCondition));
         }

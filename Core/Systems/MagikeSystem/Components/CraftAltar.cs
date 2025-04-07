@@ -352,7 +352,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 return false;
             }
 
-            FrozenDictionary<int, int> otherItems2 = otherItems.ToFrozenDictionary();
+            //FrozenDictionary<int, int> otherItems = otherItems.ToFrozenDictionary();
 
             if (ChosenResipe != null)//快速检测主要物品以防止主要物品错误而需要删掉合成表
             {
@@ -370,12 +370,12 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             if (ChosenResipe == null)
             {
-                if (!CheckCanCraft_FindRecipe(items, otherItems2, out text))//寻找合成表
+                if (!CheckCanCraft_FindRecipe(items, otherItems, out text))//寻找合成表
                     return false;
             }
 
             //检测物品是否能够合成
-            if (!ChosenResipe.CanCraft(items, otherItems2, Entity.GetMagikeContainer().Magike, out text))
+            if (!ChosenResipe.CanCraft(items, otherItems, Entity.GetMagikeContainer().Magike, out text))
                 return false;
 
             if (ChosenResipe.RequiredItems != null)//消耗次要物品

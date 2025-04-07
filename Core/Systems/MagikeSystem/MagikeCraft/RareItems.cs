@@ -1,4 +1,6 @@
-﻿using Terraria;
+﻿using Coralite.Content.Items.Materials;
+using Terraria;
+using Terraria.GameContent.UI.Chat;
 using Terraria.ID;
 using static Coralite.Core.Systems.MagikeSystem.MagikeSystem;
 using static Coralite.Core.Systems.MagikeSystem.MALevel;
@@ -39,6 +41,34 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
 
             ////金戒指
             //AddRemodelRecipe(ItemID.GoldBar, ItemID.GoldRing, 3500, mainStack: 50);
+
+            //魔法箭袋
+            MagikeRecipe.CreateCraftRecipe(ItemID.EndlessQuiver, ItemID.MagicQuiver, CalculateMagikeCost(CrystallineMagike, 12, 60 * 3))
+                .AddIngredient<MutatusInABottle>()
+                .AddIngredient<DeorcInABottle>()
+                .Register();
+
+            //深度计
+            MagikeRecipe.CreateCraftRecipe(ModContent.ItemType<MagicalPowder>(), ItemID.DepthMeter, CalculateMagikeCost(RedJade, 12, 60 * 3), 4)
+                .AddIngredient(ItemID.Wire)
+                .AddIngredientGroup(RecipeGroupID.IronBar, 12)
+                .Register();
+
+            //指南针
+            MagikeRecipe.CreateCraftRecipe(ItemID.CelestialMagnet, ItemID.DepthMeter, CalculateMagikeCost(RedJade, 12, 60 * 3), 4)
+                .AddIngredientGroup(RecipeGroupID.IronBar, 12)
+                .Register();
+
+            //杀怪计数器
+            MagikeRecipe.CreateCraftRecipe(ItemID.Bone, ItemID.TallyCounter, CalculateMagikeCost(Bone, 12, 60 * 3), 25)
+                .AddIngredientGroup(RecipeGroupID.IronBar, 12)
+                .AddIngredient(ItemID.GoldBar, 4)
+                .Register();
+
+            //金属探测仪
+            MagikeRecipe.CreateCraftRecipe(ItemID.Diamond, ItemID.MetalDetector, CalculateMagikeCost(RedJade, 12, 60 * 3), 25)
+                .AddIngredientGroup(RecipeGroupID.IronBar, 12)
+                .Register();
         }
     }
 }
