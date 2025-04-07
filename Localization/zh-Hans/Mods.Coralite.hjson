@@ -62,12 +62,4 @@ WorldGeneration: {
 	}
 }
 
-Important.CoralteSystem.OnEnterWorld:
-	'''
-	珊瑚石 v0.2.1.x 破坏性更新提示
-	一一一一一一一一
-	由于一些破坏性修改，导致在0.2.1版本之前存在于世界中的魔能仪器现在处于不可用状态。
-	对此造成的不便还请谅解。
-	修复方式是将其破坏后再次放置，但是内部的滤镜等不会归还。
-	一一一一一一一一
-	'''
+Important.CoralteSystem.OnEnterWorld:""
