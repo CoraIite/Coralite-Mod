@@ -61,11 +61,16 @@ namespace Coralite.Content.Items.HyacinthSeries
         public override void AddRecipes()
         {
             CreateRecipe()
-            .AddIngredient(ItemID.Vine, 3)
-            .AddIngredient(ItemID.BeeWax, 5)
-            .AddIngredient(ItemID.JungleRose)
-            .AddTile(TileID.Anvils)
-            .Register();
+                .AddIngredient(ItemID.CrimtaneBar, 15)
+                .AddIngredient(ItemID.FlowerPacketPink)
+                .AddTile(TileID.Anvils)
+                .Register();
+
+            CreateRecipe()
+                .AddIngredient(ItemID.DemoniteBar, 15)
+                .AddIngredient(ItemID.FlowerPacketPink)
+                .AddTile(TileID.Anvils)
+                .Register();
         }
     }
 }
