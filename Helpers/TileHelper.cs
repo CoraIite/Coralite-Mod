@@ -143,6 +143,11 @@ namespace Coralite.Helpers
             return GetMagikeTileCenter(new Point16(i, j));
         }
 
+        public static Vector2 GetMagikeTileCenter(Point p)
+        {
+            return GetMagikeTileCenter(new Point16(p));
+        }
+
         /// <summary>
         /// 获取魔能物块的中心点
         /// </summary>

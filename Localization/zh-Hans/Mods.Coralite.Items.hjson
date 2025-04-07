@@ -5896,7 +5896,7 @@ CrystallineFountainItem: {
 }
 
 RainbowPorpoise: {
-	Description: 你能进入那个充满云雾的地方吗？太好了，去给我抓一条虹豚来！不是海豚，是虹豚！现在就给我去！
+	Description: 海豚很可爱，但虹豚更可爱！你能飞到那个空岛上吗？太好了，去给我抓一条虹豚来！不是海豚，是虹豚！现在就给我去！
 	CatchLocation: 捕获位置：蕴魔空岛
 	DisplayName: 虹豚
 	Tooltip: ""

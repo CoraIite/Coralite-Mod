@@ -226,16 +226,16 @@ namespace Coralite.Content.Biomes
             float yOffset = Main.screenPosition.Y;
             yOffset = -Math.Clamp((yOffset - 2000) / 15, -100, 0);
 
-            float alpha = Main.bgAlphaFrontLayer[Slot];
+            float alpha = Main.bgAlphaFrontLayer[Slot]*0.9f;
             float sinTime = MathF.Sin(timeFactorTwoPI);
             float cosTime = MathF.Cos(timeFactorTwoPI);
 
             //最底下的蓝色背景层
             DrawBackgroundBack(spriteBatch, CrystallineSkyIslandBackground0.Value
-                , alpha * 0.3f, timeFactor * CrystallineSkyIslandBackground0.Width(), 60, yOffset+80);
+                , alpha * 0.2f, timeFactor * CrystallineSkyIslandBackground0.Width(), 60, yOffset+80);
 
             DrawBackground(spriteBatch, CrystallineSkyIslandBackground1.Value
-                , alpha * 0.6f, sinTime * 100, 50, yOffset + 140);
+                , alpha * 0.5f, sinTime * 100, 50, yOffset + 140);
 
             DrawBackgroundStar(spriteBatch, CrystallineSkyIslandBackgroundStar.Value
                 , alpha, timeFactor * CrystallineSkyIslandBackgroundStar.Width(), 55, yOffset - 200);

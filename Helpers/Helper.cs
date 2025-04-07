@@ -383,5 +383,53 @@ namespace Coralite.Helpers
         {
             return new EntitySource_FairyCatch() { player = player, fairy = catchedFairy };
         }
+
+        /// <summary>
+        /// 获得一个物品，需要指定数量，还可以指定类型<br></br>
+        /// 如果数量不足则会只拿出该拿的
+        /// </summary>
+        /// <param name="stack"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static Item GetItem(this Chest chest, int stack, int? type = null)
+        {
+            Item[] items = chest.item;
+            for (int i = 0; i < items.Length; i++)
+            {
+                Item item = items[i];
+                if (item == null || item.IsAir)
+                    continue;
+
+                if (type != null)//有指定的类型
+                {
+                    if (item.type == type.Value)//正好对上了
+                        return NewItem(stack, item);
+
+                    continue;
+                }
+
+                return NewItem(stack, item);
+            }
+
+            return null;
+
+            static Item NewItem(int stack, Item item)
+            {
+                if (item.stack > stack)//数量多，直接减少
+                {
+                    item.stack -= stack;
+
+                    Item item1 = item.Clone();
+                    item1.stack = stack;
+                    return item1;
+                }
+                else//数量不够，全部返回，自身重置
+                {
+                    Item item1 = item.Clone();
+                    item.TurnToAir();
+                    return item1;
+                }
+            }
+        }
     }
 }

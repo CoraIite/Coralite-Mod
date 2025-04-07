@@ -27,6 +27,10 @@ Conditions: {
 		UnlockPartyGirl: Mods.Coralite.Conditions.CoraliteConditions.UnlockPartyGirl
 		UnlockTaxCollector: Mods.Coralite.Conditions.CoraliteConditions.UnlockTaxCollector
 		UnlockPrincess: Mods.Coralite.Conditions.CoraliteConditions.UnlockPrincess
+		SpellCraft: Mods.Coralite.Conditions.CoraliteConditions.SpellCraft
+		InMagicCrystalCave: Mods.Coralite.Conditions.CoraliteConditions.InMagicCrystalCave
+		InCrystallineSkyIsland: Mods.Coralite.Conditions.CoraliteConditions.InCrystallineSkyIsland
+		UseShlimmerTranslation: Mods.Coralite.Conditions.CoraliteConditions.UseShlimmerTranslation
 	}
 }
 
@@ -59,6 +63,7 @@ WorldGeneration: {
 		DigTheIceDragonNest: Dig the ice dragon nest Dig! Dig! Dig! Dig! Dig!
 		DigTheDigDungeon: Dig the dungeon! Dig the dungeon! Dig! Dig! Dig! Dig! Dig!
 		CoraliteNoteRoom: Coral lost items are being placed
+		CrystallineSkyIsland: Mods.Coralite.WorldGeneration.CoraliteWorld.CrystallineSkyIsland
 	}
 }
 

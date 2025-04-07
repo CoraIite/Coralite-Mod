@@ -257,7 +257,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
                 GetOnlyItemContainer container = entity.GetSingleComponent<GetOnlyItemContainer>(MagikeComponentID.ItemGetOnlyContainer);
 
                 if (Main.keyState.PressingShift())//按shift加右键取出物品
-                    if (container.OutPutItem())
+                    if (container.DropItem())
                     {
                         Helper.PlayPitched(CoraliteSoundID.Dig, new Vector2(i, j) * 16);
                         return true;
@@ -269,7 +269,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
                 ItemContainer container = entity.GetSingleComponent<ItemContainer>(MagikeComponentID.ItemContainer);
 
                 if (Main.keyState.PressingShift())//按shift加右键取出物品
-                    if (container.OutPutItem())
+                    if (container.DropItem())
                     {
                         Helper.PlayPitched(CoraliteSoundID.Dig, new Vector2(i, j) * 16);
                         return true;

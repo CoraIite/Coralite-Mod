@@ -24,5 +24,8 @@ namespace Coralite.Core.Systems.MagikeSystem
         [AutoLoadTexture(Path = AssetDirectory.UI)]
         public static ATex AlphaBar { get; private set; }
         public static ATex CraftMagikeBar { get; private set; }
+
+        [AutoLoadTexture(Path = AssetDirectory.Misc)]
+        public static ATex Mabird { get; private set; }
     }
 }

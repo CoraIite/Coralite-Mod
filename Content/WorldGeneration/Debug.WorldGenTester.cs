@@ -34,8 +34,8 @@ namespace Coralite.Content.WorldGeneration
             Vector2 myVector = Main.MouseWorld;
             Point p = myVector.ToTileCoordinates();
 
-            ExampleStructure(p);
-
+            //ExampleStructure(p);
+            var a = Main.chest[0];
 
 
             //Main.AnglerQuestSwap();
@@ -254,10 +254,13 @@ namespace Coralite.Content.WorldGeneration
 
         public void ExampleStructure(Point origin)
         {
+            int width = 13;
+            int height = 26;
+
             ShapeData slimeShapeData = new ShapeData();
             ShapeData moundShapeData = new ShapeData();
-            Point point = new Point(origin.X, origin.Y + 20);
-            Point point2 = new Point(origin.X, origin.Y + 30);
+            Point point = new Point(origin.X, origin.Y);
+            Point point2 = new Point(origin.X, origin.Y + height / 3);
 
             WorldUtils.Gen(
                 point,
@@ -266,24 +269,33 @@ namespace Coralite.Content.WorldGeneration
                     //new Modifiers.Blotches(2, 0.4),
                     new Actions.ClearTile(frameNeighbors: true).Output(slimeShapeData)));
 
-            Point point3 = point2 - new Point(7, 11);
             WorldUtils.Gen(
-                point3,
-                new Shapes.Rectangle(14,22),//new Shapes.Mound(14, 14),
+                point2,
+                new Shapes.Rectangle(new Rectangle(-width / 2, -height / 2, width, height)),//new Shapes.Mound(14, 14),
                 Actions.Chain(
                     //new Modifiers.Blotches(2, 1, 0.8),
                     new Actions.SetTile(TileID.Ash),
                     new Actions.SetFrames(frameNeighbors: true).Output(moundShapeData)));
 
-            slimeShapeData.Subtract(moundShapeData, point, point3);
+            WorldUtils.Gen(
+                point,
+                new ModShapes.OuterOutline(slimeShapeData),
+                Actions.Chain(
+                    new Modifiers.RectangleMask(-40, 40, 0, 40),
+                    new Modifiers.Expand(1),
+                    new Modifiers.IsEmpty(),
+                    new Actions.PlaceTile(TileID.HellstoneBrick)));
+
+            slimeShapeData.Subtract(moundShapeData, point, point2);
 
             WorldUtils.Gen(
-                point3,
+                point2,
                 new ModShapes.InnerOutline(moundShapeData),
                 Actions.Chain(
                     new Modifiers.IsSolid(),
                     new Actions.SetTile(TileID.AshGrass),
                     new Actions.SetFrames(frameNeighbors: true)));
+
 
             WorldUtils.Gen(
                 point,
@@ -292,15 +304,6 @@ namespace Coralite.Content.WorldGeneration
                     new Modifiers.RectangleMask(-40, 40, 0, 40),
                     new Modifiers.IsEmpty(),
                     new Actions.SetLiquid(LiquidID.Lava)));
-
-            WorldUtils.Gen(
-                point,
-                new ModShapes.All(slimeShapeData),
-                Actions.Chain(
-                    new Actions.PlaceWall(WallID.HellstoneBrick),
-                    new Modifiers.OnlyTiles(TileID.Ash),
-                    new Modifiers.Offset(0, 1),
-                    new ActionVines(3, 5)));
 
             //ShapeData shaftShapeData = new ShapeData();
             //WorldUtils.Gen(
@@ -318,16 +321,45 @@ namespace Coralite.Content.WorldGeneration
             //    new ModShapes.All(shaftShapeData),
             //    new Actions.SetFrames(frameNeighbors: true));
 
-            //放置一个史莱姆ang圣物（史莱姆ang圣物的style是5）
-            WorldGen.PlaceObject(point3.X+7, point3.Y - 1, TileID.MasterTrophyBase, mute: true,  6);
+            //放置一个肉山圣物（肉山圣物的style是5）
+            WorldGen.PlaceObject(point2.X, point2.Y - height / 2-1, TileID.MasterTrophyBase, mute: true, 6);
+            //Dust d=  Dust.NewDustPerfect(new Point(point2.X, point2.Y - height / 2).ToWorldCoordinates(), DustID.Torch, Vector2.Zero, Scale: 5);
+            //  d.noGravity = true;
             // 将植物放置在土丘形状的草砖之上。
-            //WorldUtils.Gen(
-            //    point3,
-            //    new ModShapes.All(moundShapeData),
-            //    Actions.Chain(
-            //        new Modifiers.Offset(0, -1),
-            //        new Modifiers.OnlyTiles(TileID.AshGrass),
-            //        new Modifiers.Offset(0, -1), new ActionGrass()));
+            WorldUtils.Gen(
+                point2,
+                new ModShapes.All(moundShapeData),
+                Actions.Chain(
+                    new Modifiers.Offset(0, -1),
+                    new Modifiers.OnlyTiles(TileID.AshGrass),
+                    //new Modifiers.Offset(0, -1),
+                    new ActionAshGrass()));
+
+            WorldUtils.Gen(
+                point,
+                new ModShapes.All(slimeShapeData),
+                Actions.Chain(
+                    new Actions.PlaceWall(WallID.HellstoneBrick),
+                    new Modifiers.OnlyTiles(TileID.Ash),
+                    new Modifiers.Offset(0, 1),
+                    new ActionVines(3, 5)));
         }
     }
+
+    public class ActionAshGrass : GenAction
+    {
+        public override bool Apply(Point origin, int x, int y, params object[] args)
+        {
+            if (!_tiles[x, y].HasTile || _tiles[x, y - 1].HasTile)
+                return false;
+            //Dust d = Dust.NewDustPerfect(new Point(x, y).ToWorldCoordinates(), DustID.Torch, Vector2.Zero, Scale: 5);
+            //d.noGravity = true;
+
+            //WorldGen.KillWall(x, y-1);
+            WorldGen.PlaceTile(x, y-1 , TileID.AshPlants, mute: true);
+
+            return UnitApply(origin, x, y, args);
+        }
+    }
+
 }

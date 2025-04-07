@@ -5,17 +5,20 @@ using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.ID;
 using Terraria.ModLoader.IO;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components
 {
-    public class ItemContainer : MagikeComponent, IUIShowable
+    public class ItemContainer : MagikeComponent, IUIShowable,IEnumerable<Item>
     {
         public override int ID => MagikeComponentID.ItemContainer;
 
@@ -366,7 +369,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// </summary>
         /// <param name="x"></param>
         /// <param name="y"></param>
-        public virtual bool OutPutItem()
+        public virtual bool DropItem()
         {
             for (int i = 0; i < Items.Length; i++)
                 if (!Items[i].IsAir)
@@ -377,6 +380,53 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 }
 
             return false;
+        }
+
+        /// <summary>
+        /// 获得一个物品，需要指定数量，还可以指定类型<br></br>
+        /// 如果数量不足则会只拿出该拿的
+        /// </summary>
+        /// <param name="stack"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public virtual Item GetItem(int stack, int? type = null)
+        {
+            for (int i = 0; i < Items.Length; i++)
+            {
+                Item item = Items[i];
+                if (item.IsAir)
+                    continue;
+
+                if (type != null)//有指定的类型
+                {
+                    if (item.type == type.Value)//正好对上了
+                        return NewItem(stack, item);
+
+                    continue;
+                }
+
+                return NewItem(stack, item);
+            }
+
+            return null;
+
+            static Item NewItem(int stack, Item item)
+            {
+                if (item.stack > stack)//数量多，直接减少
+                {
+                    item.stack -= stack;
+
+                    Item item1 = item.Clone();
+                    item1.stack = stack;
+                    return item1;
+                }
+                else//数量不够，全部返回，自身重置
+                {
+                    Item item1 = item.Clone();
+                    item.TurnToAir();
+                    return item1;
+                }
+            }
         }
 
         #region UI部分
@@ -440,6 +490,21 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                     _items[i] = new Item();
             }
         }
+
+        #endregion
+
+        #region 迭代相关
+
+        public IEnumerator<Item> GetEnumerator()
+        {
+            return ((IEnumerable<Item>)Items).GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return Items.GetEnumerator();
+        }
+
         #endregion
     }
 
