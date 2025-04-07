@@ -255,7 +255,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                     {
                         SoundEngine.PlaySound(CoraliteSoundID.Bow_Item5, Owner.Center);
                         Projectile.NewProjectileFromThis(Owner.Center, (Main.MouseWorld - Owner.MountedCenter).SafeNormalize(Vector2.One) * 12f
-                                , GetArrowType(), (int)(Owner.GetDamageWithAmmo(Item) * 2.2f), Projectile.knockBack);
+                                , GetArrowType(), (int)(Owner.GetDamageWithAmmo(Item) * 3f), Projectile.knockBack);
                     }
 
                     Owner.itemTime = Owner.itemAnimation = 2;

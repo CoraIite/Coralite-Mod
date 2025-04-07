@@ -33,7 +33,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             Item.DamageType = DamageClass.Ranged;
             Item.rare = ItemRarityID.Green;
-            Item.useTime = Item.useAnimation = 27;
+            Item.useTime = Item.useAnimation = 25;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.value = Item.sellPrice(0, 0, 50);
 
@@ -52,7 +52,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             Vector2 dir = velocity.SafeNormalize(Vector2.Zero);
             float speed = 9f;
-            int damage2 = (int)(damage * 0.4f);
+            int damage2 = (int)(damage * 0.45f);
             for (int i = -1; i < 2; i += 2)
             {
                 Vector2 velocity2 = dir.RotatedBy(-i * 0.5f) * speed;

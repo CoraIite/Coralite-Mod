@@ -32,7 +32,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         public override void SetDefaults()
         {
             Item.SetWeaponValues(78, 5f);
-            Item.DefaultToRangedWeapon(10, AmmoID.Arrow, 26, 13f);
+            Item.DefaultToRangedWeapon(10, AmmoID.Arrow, 24, 13f);
 
             Item.rare = ItemRarityID.Pink;
             Item.useStyle = ItemUseStyleID.Rapier;
@@ -68,7 +68,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             {
                 powerfulAttack = false;
                 sp = 2;
-                Projectile.NewProjectile(source, player.Center, velocity, ProjectileType<GlaciateIceCube>(), damage, knockback, player.whoAmI);
+                Projectile.NewProjectile(source, player.Center, velocity, ProjectileType<GlaciateIceCube>(), damage*2, knockback, player.whoAmI);
             }
             else
                 Projectile.NewProjectile(source, player.Center, velocity, type, damage, knockback, player.whoAmI);
@@ -216,7 +216,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                         Helper.PlayPitched(CoraliteSoundID.FireStaffSummon_Item77, Projectile.Center);
 
                         //射冰晶波
-                        Projectile.NewProjectileFromThis<GlaciateWave>(Projectile.Center, UnitToMouseV * 24, (int)(Owner.GetDamageWithAmmo(Item) * 1.5f)
+                        Projectile.NewProjectileFromThis<GlaciateWave>(Projectile.Center, UnitToMouseV * 24, (int)(Owner.GetDamageWithAmmo(Item) * 2f)
                             , Projectile.knockBack);
 
                         if (Projectile.IsOwnedByLocalPlayer())
@@ -655,7 +655,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         private void TryMakingSpike(Vector2 pos, Vector2 dir)
         {
-            int damage = (int)(Projectile.damage * 9f);
+            int damage = (int)(Projectile.damage * 7.5f);
 
             int p = Projectile.NewProjectileFromThis(pos + dir * 30, dir, ProjectileType<IceThorn>(),
                  damage, 0f, 0f, 1.3f);

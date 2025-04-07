@@ -123,10 +123,9 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
 
             //公主法杖
             MagikeRecipe.CreateCraftRecipe(ItemID.RoyalScepter, ItemID.PrincessWeapon
-                , CalculateMagikeCost(HolyLight, 6, 60), 12)
+                , CalculateMagikeCost(HolyLight, 6, 60))
                 .AddCondition(CoraliteConditions.UnlockTaxCollector)
                 .Register();
-
 
             #endregion
         }

@@ -21,6 +21,12 @@ Conditions: {
 		NotInDigDigDig: 需要不在劳工挖挖挖的世界（DigDigDig）
 		UseMultiBlockStructure: 使用多方块结构合成
 		DownedGolemCondition: 需要击败石巨人
+		UnlockDyeTrder: 需要解锁染料商
+		UnlockStylist: 需要解救发型商
+		UnlockMechanic: 需要解救机械师
+		UnlockPartyGirl: 需要解锁排队女孩
+		UnlockTaxCollector: 需要解救税收官
+		UnlockPrincess: 需要解锁公主
 	}
 }
 

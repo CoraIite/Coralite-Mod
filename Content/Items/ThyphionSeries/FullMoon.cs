@@ -209,7 +209,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                     else
                     {
                         Projectile.Kill();
-                        Owner.velocity *= 0.5f;
+                        Owner.velocity *= 0.8f;
                     }
 
                     break;
@@ -228,7 +228,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                         if (Projectile.IsOwnedByLocalPlayer())//生成弹幕
                         {
                             Projectile.NewProjectileFromThis<FullMoonStrike>(Projectile.Center, Vector2.Zero
-                                , (int)(Owner.GetDamageWithAmmo(Item) * 6f), 10, Projectile.whoAmI);
+                                , (int)(Owner.GetDamageWithAmmo(Item) * 8f), 10, Projectile.whoAmI);
                         }
                         return;
                     }

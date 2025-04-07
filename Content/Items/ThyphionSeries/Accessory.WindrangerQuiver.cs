@@ -1,5 +1,4 @@
-﻿using Coralite.Content.Items.Steel;
-using Coralite.Core;
+﻿using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using System;
 using Terraria;
@@ -31,7 +30,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             float speed = player.velocity.Length();
             //Main.NewText(speed);
 
-            speed = Math.Clamp(speed, 0, 20);
+            speed = Math.Clamp(speed, 0, 25);
 
             player.arrowDamage += speed * 0.012f;
         }

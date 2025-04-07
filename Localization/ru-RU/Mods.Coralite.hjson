@@ -21,6 +21,12 @@ Conditions: {
 		NotInDigDigDig: Требуется не находиться в мире DigDigDig
 		UseMultiBlockStructure: Использовать многоблочные структуры для создания
 		DownedGolemCondition: Требуется победить Каменного голема
+		// UnlockDyeTrder: Mods.Coralite.Conditions.CoraliteConditions.UnlockDyeTrder
+		// UnlockStylist: Mods.Coralite.Conditions.CoraliteConditions.UnlockStylist
+		// UnlockMechanic: Mods.Coralite.Conditions.CoraliteConditions.UnlockMechanic
+		// UnlockPartyGirl: Mods.Coralite.Conditions.CoraliteConditions.UnlockPartyGirl
+		// UnlockTaxCollector: Mods.Coralite.Conditions.CoraliteConditions.UnlockTaxCollector
+		// UnlockPrincess: Mods.Coralite.Conditions.CoraliteConditions.UnlockPrincess
 	}
 }
 
