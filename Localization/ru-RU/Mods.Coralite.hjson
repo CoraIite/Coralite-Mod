@@ -21,10 +21,12 @@ Conditions: {
 		NotInDigDigDig: Требуется не находиться в мире DigDigDig
 		UseMultiBlockStructure: Использовать многоблочные структуры для создания
 		DownedGolemCondition: Требуется победить Каменного голема
-		UseShlimmerTranslation: Это таблица преобразования сияния
-		// SpellCraft: Mods.Coralite.Conditions.CoraliteConditions.SpellCraft
-		// InMagicCrystalCave: Mods.Coralite.Conditions.CoraliteConditions.InMagicCrystalCave
-		// InCrystallineSkyIsland: Mods.Coralite.Conditions.CoraliteConditions.InCrystallineSkyIsland
+		// UnlockDyeTrder: Mods.Coralite.Conditions.CoraliteConditions.UnlockDyeTrder
+		// UnlockStylist: Mods.Coralite.Conditions.CoraliteConditions.UnlockStylist
+		// UnlockMechanic: Mods.Coralite.Conditions.CoraliteConditions.UnlockMechanic
+		// UnlockPartyGirl: Mods.Coralite.Conditions.CoraliteConditions.UnlockPartyGirl
+		// UnlockTaxCollector: Mods.Coralite.Conditions.CoraliteConditions.UnlockTaxCollector
+		// UnlockPrincess: Mods.Coralite.Conditions.CoraliteConditions.UnlockPrincess
 	}
 }
 
@@ -57,7 +59,6 @@ WorldGeneration: {
 		DigTheIceDragonNest: Копаем гнездо ледяного дракона, копаем гнездо ледяного дракона, копаем, копаем, копаем, копаем!
 		DigTheDigDungeon: Копаем подземелье, копаем подземелье, копаем, копаем, копаем, копаем!
 		CoraliteNoteRoom: Размещаем утраченные предметы кораллов
-		// CrystallineSkyIsland: Mods.Coralite.WorldGeneration.CoraliteWorld.CrystallineSkyIsland
 	}
 }
 

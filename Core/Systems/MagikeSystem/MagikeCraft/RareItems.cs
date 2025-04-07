@@ -69,6 +69,15 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
             MagikeRecipe.CreateCraftRecipe(ItemID.Diamond, ItemID.MetalDetector, CalculateMagikeCost(RedJade, 12, 60 * 3), 25)
                 .AddIngredientGroup(RecipeGroupID.IronBar, 12)
                 .Register();
+
+            //珍珠
+            AddRemodelRecipe(ItemID.Oyster, ItemID.WhitePearl, CalculateMagikeCost(Glistent, 3, 60), mainStack: 5);
+            AddRemodelRecipe(ItemID.Oyster, ItemID.BlackPearl, CalculateMagikeCost(Glistent, 6, 60), mainStack: 10);
+            AddRemodelRecipe(ItemID.Oyster, ItemID.PinkPearl, CalculateMagikeCost(Glistent, 12, 60), mainStack: 15);
+         
+            AddRemodelRecipe(ItemID.ShuckedOyster, ItemID.WhitePearl, CalculateMagikeCost(Glistent, 3, 120), mainStack: 10);
+            AddRemodelRecipe(ItemID.ShuckedOyster, ItemID.BlackPearl, CalculateMagikeCost(Glistent, 6, 120), mainStack: 20);
+            AddRemodelRecipe(ItemID.ShuckedOyster, ItemID.PinkPearl, CalculateMagikeCost(Glistent, 12, 120), mainStack: 30);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.Items.Materials;
 using Coralite.Content.ModPlayers;
 using Coralite.Content.Particles;
+using Coralite.Content.Prefixes.FairyWeaponPrefixes;
 using Coralite.Core;
 using Coralite.Core.Attributes;
 using Coralite.Core.Configs;
@@ -33,7 +34,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         public override void SetDefaults()
         {
             Item.SetWeaponValues(70, 6f);
-            Item.DefaultToRangedWeapon(10, AmmoID.Arrow, 23, 14f);
+            Item.DefaultToRangedWeapon(10, AmmoID.Arrow, 21, 14f);
 
             Item.rare = ItemRarityID.Yellow;
             Item.useStyle = ItemUseStyleID.Rapier;
@@ -66,7 +67,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 for (int i = -1; i < 2; i++)
                 {
                     Projectile.NewProjectile(source, player.Center + dir.RotatedBy(i * MathHelper.PiOver2), velocity
-                        , ProjectileType<SolunarArrow>(), damage*2, knockback, player.whoAmI, i + 1, dir.X, dir.Y);
+                        , ProjectileType<SolunarArrow>(), (int)(damage*2.5f), knockback, player.whoAmI, i + 1, dir.X, dir.Y);
                 }
 
                 sp = 2;
@@ -159,16 +160,8 @@ namespace Coralite.Content.Items.ThyphionSeries
                 }
 
                 //生成手持弹幕
-                Vector2 velocity = dashDirection == 0 ? new Vector2(0, dashDirection2) : new Vector2(dashDirection, 0);
-
-                if (dashDirection != 0)
-                {
-                    Projectile.NewProjectile(Player.GetSource_ItemUse(Player.HeldItem), Player.Center, velocity, ProjectileType<SolunarHeldProj>(),
-                        Player.HeldItem.damage, Player.HeldItem.knockBack, Player.whoAmI, newVelocity.ToRotation(), 1, 22);
-                }
-                else
-                    Projectile.NewProjectile(Player.GetSource_ItemUse(Player.HeldItem), Player.Center, velocity, ProjectileType<SolunarHeldProj>(),
-                        Player.HeldItem.damage, Player.HeldItem.knockBack, Player.whoAmI, -1.57f, 1, 18);
+                Projectile.NewProjectile(Player.GetSource_ItemUse(Player.HeldItem), Player.Center, newVelocity, ProjectileType<SolunarHeldProj>(),
+                    Player.HeldItem.damage, Player.HeldItem.knockBack, Player.whoAmI, newVelocity.ToRotation(), 1, 22);
             }
 
             return true;
@@ -237,6 +230,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 case 0://朝向目标方向冲刺，并检测碰撞
                     if (Timer < DashTime + 2)
                     {
+
                         if (Projectile.velocity.X != 0)
                         {
                             Rotation = RecordAngle;
@@ -301,7 +295,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                         {
                             for (int i = -1; i < 2; i++)
                             {
-                                int damage = i == 0 ? (int)(Owner.GetDamageWithAmmo(Item) * 6.5f) : Owner.GetDamageWithAmmo(Item);
+                                int damage = i == 0 ? (int)(Owner.GetDamageWithAmmo(Item) * 9f) : Owner.GetDamageWithAmmo(Item)*2;
                                 int p = Projectile.NewProjectileFromThis<SolunarStrike>(Projectile.Center, Vector2.Zero
                                      , damage, 10, Projectile.whoAmI);
 

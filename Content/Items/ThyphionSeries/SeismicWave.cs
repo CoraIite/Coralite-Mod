@@ -203,7 +203,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             //生成震波弹幕
             Collision.HitTiles(Projectile.Center - new Vector2(100, 20), new Vector2(0, 0), 200, 100);
 
-            Projectile.NewProjectileFromThis<SeismicWaveStrike>(Projectile.Center, Vector2.Zero, (int)(Owner.GetDamageWithAmmo(Item) * 2f)
+            Projectile.NewProjectileFromThis<SeismicWaveStrike>(Projectile.Center, Vector2.Zero, (int)(Owner.GetDamageWithAmmo(Item) * 4f)
                 , 8);
 
             Helper.PlayPitched(CoraliteSoundID.StaffOfEarth_Item69, Projectile.Center, pitch: 0.8f);
