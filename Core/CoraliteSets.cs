@@ -40,12 +40,31 @@ namespace Coralite.Core
 
         public static List<int> SpecialDraw = new List<int>();
 
-        public static Dictionary<int, MagikeTileType> MagikeTileTypes=new Dictionary<int, MagikeTileType>();
+        /// <summary>
+        /// 物块是否是特殊苔藓
+        /// </summary>
+        public static bool[] Mabird;
+
+        public static List<int> IsMabird = new List<int>();
+
+        /// <summary>
+        /// 魔能物块的摆放方式
+        /// </summary>
+        public static Dictionary<int, MagikeTileType> MagikeTileTypes = new Dictionary<int, MagikeTileType>();
 
         public enum MagikeTileType
         {
+            /// <summary>
+            /// 普通四向放置，横向放置时会将宽高交换
+            /// </summary>
             FourWayNormal,
+            /// <summary>
+            /// 无反转的四向放置，所有方向宽高相同
+            /// </summary>
             FourWayNoFilp,
+            /// <summary>
+            /// 不支持四向放置
+            /// </summary>
             None
         }
 
@@ -104,6 +123,12 @@ namespace Coralite.Core
                     TileSpecialDraw[type] = true;
             }
 
+            foreach (var type in IsMabird)
+            {
+                if (Mabird.IndexInRange(type))
+                    Mabird[type] = true;
+            }
+
             TileID.Sets.CanBeClearedDuringOreRunner[TileID.Chain] = false;
         }
 
@@ -126,6 +151,9 @@ namespace Coralite.Core
 
             TileSpecialMoss = new bool[TileLoader.TileCount];
             Array.Fill(TileSpecialMoss, false);
+
+            Mabird = new bool[ItemLoader.ItemCount];
+            Array.Fill(Mabird, false);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Helpers;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
 
@@ -69,9 +70,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
         public Item WhiteListItem { get; set; }
 
         private byte frameY;
-
         private byte frameCounter;
-
         private Item catchItem;
 
         public void UpdateMabird(Vector2 center)
@@ -84,17 +83,11 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
                     if (Timer > RestTime)
                     {
                         Timer = 0;
+                        TurnToGetItem(center);
                     }
                     return;
                 case MabirdAIState.FlyToGetItem://飞向目标点1
                     {
-                        if (Timer == 0)//初始化
-                        {
-                            Center = center;
-                            Velocity = (GetItemPos.Pos - center).SafeNormalize(Vector2.Zero) * Speed;
-                            Timer = 1;
-                        }
-
                         Center += Velocity;
                         UpdateFrame();
 
@@ -106,7 +99,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
                                 State = MabirdAIState.FlyToReleaseItem;
                             }
                             else
-                                State = MabirdAIState.FlyBack;
+                                TurnToBack(center);
                         }
                     }
                     break;
@@ -124,12 +117,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
                     break;
                 case MabirdAIState.FlyBack:
                     {
-                        if (Timer == 0)//初始化
-                        {
-                            Velocity = (center - Center).SafeNormalize(Vector2.Zero) * Speed;
-                            Timer = 1;
-                        }
-
+                        UpdateFrame();
                         Center += Velocity;
 
                         if (Vector2.Distance(center, Center) < Speed * 1.5f)//到达指定位置，开始拿物品
@@ -137,10 +125,23 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
                             Timer = 0;
                             State = MabirdAIState.Rest;
                         }
-
                     }
                     break;
             }
+        }
+
+        private void TurnToGetItem(Vector2 center)
+        {
+            State = MabirdAIState.FlyToGetItem;
+
+            Center = center;
+            Velocity = (GetItemPos.Pos - center).SafeNormalize(Vector2.Zero) * Speed;
+        }
+
+        public void TurnToBack(Vector2 center)
+        {
+            State = MabirdAIState.FlyBack;
+            Velocity = (center - Center).SafeNormalize(Vector2.Zero) * Speed;
         }
 
         private bool CatchItem()
@@ -196,14 +197,6 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
             return false;
         }
 
-        private unsafe void A()
-        {
-            int a = 1;
-            int* a2 = &a;
-
-            int** a3 = &a2;
-        }
-
         public void UpdateFrame()
         {
             if (++frameCounter > 4)
@@ -216,11 +209,20 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
                 frameY = 0;
         }
 
-        public void DrawMabird()
+        public void DrawMabird(SpriteBatch spriteBatch)
         {
             if (State == MabirdAIState.Rest)//休息时不绘制
                 return;
 
+            Texture2D tex = MagikeAssets.Mabird.Value;
+
+            Rectangle frameBox = tex.Frame(1, 5, 0, frameY);
+            Color color = Lighting.GetColor(Center.ToTileCoordinates());
+            spriteBatch.Draw(tex, Center - Main.screenPosition, frameBox
+                , color, 0, frameBox.Size() / 2, 1, Velocity.X > 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
+
+            if (catchItem != null && !catchItem.IsAir)//绘制下面吊着的物品
+                MagikeHelper.DrawItem(spriteBatch, catchItem, Center + new Vector2(0, 24), 48, color);
         }
 
         public void SetGetItemPos(Point p)
