@@ -319,11 +319,6 @@ IcicleYujian: {
 	Tooltip: ""
 }
 
-CrossBreedMachine_G1Item: {
-	DisplayName: Cross Breed Machine_ G1 Item
-	Tooltip: ""
-}
-
 IceyPowder: {
 	DisplayName: Icy Powder
 	Tooltip: Contains a faint ice magic
@@ -611,11 +606,6 @@ Hyacinth: {
 }
 
 Rosemary: {
-	DisplayName: Rosemary
-	Tooltip: Keeping the good memories
-}
-
-Rosemary2: {
 	DisplayName: Rosemary
 	Tooltip: Keeping the good memories
 }
@@ -5781,5 +5771,10 @@ RainbowPorpoise: {
 
 CrystallineHook: {
 	DisplayName: Crystalline Hook
+	Tooltip: ""
+}
+
+Wisteria: {
+	DisplayName: Wisteria
 	Tooltip: ""
 }

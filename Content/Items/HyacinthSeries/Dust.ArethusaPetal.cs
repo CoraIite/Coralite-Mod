@@ -5,7 +5,7 @@ namespace Coralite.Content.Items.HyacinthSeries
 {
     public class ArethusaPetal : ModDust
     {
-        public override string Texture => AssetDirectory.Projectiles_Shoot + Name;
+        public override string Texture => AssetDirectory.HyacinthSeriesItems + Name;
 
         public override void OnSpawn(Dust dust)
         {

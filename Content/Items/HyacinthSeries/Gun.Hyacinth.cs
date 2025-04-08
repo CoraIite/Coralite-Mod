@@ -73,7 +73,7 @@ namespace Coralite.Content.Items.HyacinthSeries
         public override void AddRecipes()
         {
             CreateRecipe()
-            .AddIngredient(ItemID.PainterPaintballGun)
+            .AddIngredient<Wisteria>()
             .AddIngredient(ItemID.SuperStarCannon)
             .AddIngredient<ThunderDukeVine>()
             .AddIngredient(ItemID.OnyxBlaster)

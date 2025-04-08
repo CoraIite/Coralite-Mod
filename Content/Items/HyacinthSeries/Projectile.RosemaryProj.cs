@@ -29,27 +29,6 @@ namespace Coralite.Content.Items.HyacinthSeries
 
             Projectile.netUpdate = true;
         }
-    }
-
-    public class RosemaryHeldProj2 : BaseGunHeldProj
-    {
-        public RosemaryHeldProj2() : base(0.05f, 16, -2, AssetDirectory.HyacinthSeriesItems) { }
-
-        public override void InitializeGun()
-        {
-            Projectile.timeLeft = Owner.itemTime + 1;
-            MaxTime = Owner.itemTime + 1;
-            if (Projectile.IsOwnedByLocalPlayer())
-            {
-                Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
-                TargetRot = (Main.MouseWorld - Owner.Center).ToRotation() + (DirSign > 0 ? 0f : MathHelper.Pi);
-                if (TargetRot == 0f)
-                    TargetRot = 0.0001f;
-            }
-
-            Projectile.localAI[1] += 1;
-            Projectile.netUpdate = true;
-        }
 
         public override void ModifyAI(float factor)
         {
@@ -65,7 +44,7 @@ namespace Coralite.Content.Items.HyacinthSeries
     /// </summary>
     public class RosemaryBullet : ModProjectile
     {
-        public override string Texture => AssetDirectory.Projectiles_Shoot + Name;
+        public override string Texture => AssetDirectory.HyacinthSeriesItems + Name;
 
         private bool span;
         private ref float TargetIndex => ref Projectile.ai[1];
@@ -224,7 +203,7 @@ namespace Coralite.Content.Items.HyacinthSeries
     /// </summary>
     public class RosemaryFog : ModProjectile
     {
-        public override string Texture => AssetDirectory.Projectiles_Shoot + Name;
+        public override string Texture => AssetDirectory.HyacinthSeriesItems + Name;
 
         public ref float State => ref Projectile.ai[0];
         public ref float Rotation => ref Projectile.ai[1];

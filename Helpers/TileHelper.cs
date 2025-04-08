@@ -52,7 +52,7 @@ namespace Coralite.Helpers
                 return new Point(x, y);
 
             TileObjectData data = TileObjectData.GetTileData(tile.TileType, 0);
-            if (data==null)
+            if (data == null)
                 return new Point(x, y);
 
             x -= tile.TileFrameX / 18 % data.Width;
@@ -197,6 +197,16 @@ namespace Coralite.Helpers
 
 
         public static Vector2 GetTileCenter(Point16 position)
+        {
+            Tile tile = Framing.GetTileSafely(position);
+            TileObjectData data = TileObjectData.GetTileData(tile);
+            int x = data == null ? 8 : data.Width * 16 / 2;
+            int y = data == null ? 8 : data.Height * 16 / 2;
+
+            return position.ToWorldCoordinates(x, y);
+        }
+
+        public static Vector2 GetTileCenter(Point position)
         {
             Tile tile = Framing.GetTileSafely(position);
             TileObjectData data = TileObjectData.GetTileData(tile);

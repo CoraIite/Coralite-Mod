@@ -13,7 +13,7 @@ namespace Coralite.Content.Items.Misc_Shoot
     /// </summary>
     public class DunkleosteusHeldProj : BaseHeldProj
     {
-        public override string Texture => AssetDirectory.Projectiles_Shoot + Name;
+        public override string Texture => AssetDirectory.Misc_Shoot + Name;
         public override bool CanFire => true;
         /// <summary> 目标角度 </summary>
         protected ref float TargetRot => ref Projectile.ai[1];
@@ -21,6 +21,7 @@ namespace Coralite.Content.Items.Misc_Shoot
         protected ref float MaxTime => ref Projectile.localAI[0];
         protected ref float HeldPositionX => ref Projectile.localAI[1];
         public const int HELD_LENGTH = 20;
+
         public override void SetDefaults()
         {
             Projectile.width = Projectile.height = 16;

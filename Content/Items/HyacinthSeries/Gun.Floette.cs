@@ -12,24 +12,16 @@ namespace Coralite.Content.Items.HyacinthSeries
 
         public override void SetDefaults()
         {
-            Item.damage = 28;
-            Item.useTime = 18;
-            Item.useAnimation = 18;
-            Item.knockBack = 4;
-            Item.shootSpeed = 12.5f;
+            Item.SetWeaponValues(25, 4);
+            Item.DefaultToRangedWeapon(ProjectileType<FloetteHeldProj>(), AmmoID.Bullet, 18, 12.5f, true);
 
             Item.useStyle = ItemUseStyleID.Rapier;
-            Item.DamageType = DamageClass.Ranged;
             Item.value = Item.sellPrice(0, 1, 0, 0);
             Item.rare = ItemRarityID.Orange;
-            Item.shoot = ProjectileType<FloetteHeldProj>();
-            Item.useAmmo = AmmoID.Bullet;
             Item.UseSound = CoraliteSoundID.Gun3_Item41;
 
             Item.useTurn = false;
-            Item.noMelee = true;
             Item.noUseGraphic = true;
-            Item.autoReuse = true;
         }
 
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
@@ -39,23 +31,16 @@ namespace Coralite.Content.Items.HyacinthSeries
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (Main.myPlayer == player.whoAmI)
+            Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, Vector2.Zero, ProjectileType<FloetteHeldProj>(), 0, knockback, player.whoAmI);
+            if (type == ProjectileID.Bullet)
             {
-                Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, Vector2.Zero, ProjectileType<FloetteHeldProj>(), 0, knockback, player.whoAmI);
-                if (type == ProjectileID.Bullet)
-                {
-                    int index = Projectile.NewProjectile(source, position, velocity
-                         , ProjectileType<PosionedSeedPlantera>(), damage, knockback, player.whoAmI);
-                    Main.projectile[index].friendly = true;
-                    Main.projectile[index].hostile = false;
+                Projectile.NewProjectile(source, position, velocity
+                    , ProjectileType<PosionedSeedPlantera>(), damage, knockback, player.whoAmI);
 
-                    return false;
-                }
-
-                return true;
+                return false;
             }
 
-            return false;
+            return true;
         }
 
         public override void AddRecipes()

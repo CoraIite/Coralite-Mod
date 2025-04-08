@@ -42,7 +42,7 @@ namespace Coralite.Content.Items.HyacinthSeries
     /// </summary>
     public class SnowBullet : BaseHeldProj
     {
-        public override string Texture => AssetDirectory.Projectiles_Shoot + Name;
+        public override string Texture => AssetDirectory.HyacinthSeriesItems + Name;
 
         public override void SetDefaults()
         {
@@ -113,7 +113,7 @@ namespace Coralite.Content.Items.HyacinthSeries
 
     public class SnowdropBloom : ModProjectile
     {
-        public override string Texture => AssetDirectory.Projectiles_Shoot + Name;
+        public override string Texture => AssetDirectory.HyacinthSeriesItems + Name;
 
         public override void SetDefaults()
         {
@@ -169,7 +169,7 @@ namespace Coralite.Content.Items.HyacinthSeries
 
     public class SnowdropBud : BaseHeldProj
     {
-        public override string Texture => AssetDirectory.Projectiles_Shoot + Name;
+        public override string Texture => AssetDirectory.HyacinthSeriesItems + Name;
 
         public override void SetDefaults()
         {

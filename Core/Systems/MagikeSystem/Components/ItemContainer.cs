@@ -365,6 +365,23 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         }
 
         /// <summary>
+        /// 能否放入一个物品
+        /// </summary>
+        /// <param name="itemType"></param>
+        /// <param name="stack"></param>
+        public virtual bool CanAddItem(int itemType, int stack)
+        {
+            for (int i = 0; i < Items.Length; i++)
+            {
+                Item item = Items[i];//有空物品或者容量足够就放入
+                if (item.IsAir || item.type == itemType && item.stack < item.maxStack - stack)
+                    return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// 取出一个物品
         /// </summary>
         /// <param name="x"></param>

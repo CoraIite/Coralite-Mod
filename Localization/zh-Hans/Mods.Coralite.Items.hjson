@@ -578,7 +578,7 @@ AncientCore: {
 
 Arethusa: {
 	DisplayName: 幽兰
-	Tooltip: 迟来的爱
+	Tooltip: “迟来的爱”
 }
 
 Astrosniper: {
@@ -607,27 +607,27 @@ Dunkleosteus: {
 
 Hyacinth: {
 	DisplayName: 风信子
-	Tooltip: "[c/ff3333:你的爱充满我心中]"
+	Tooltip: "“[c/ff3333:你的爱充满我心中]”"
 }
 
 Rosemary: {
 	DisplayName: 迷迭香
-	Tooltip: 留住美好的回忆
+	Tooltip: “留住美好的回忆”
 }
 
 Rosemary2: {
 	DisplayName: 迷迭香
-	Tooltip: 留住美好的回忆
+	Tooltip: “留住美好的回忆”
 }
 
 Snowdrop: {
 	DisplayName: 雪花莲
-	Tooltip: 怀抱希望
+	Tooltip: “怀抱希望”
 }
 
 StarsBreath: {
 	DisplayName: 满天星
-	Tooltip: 一切美好的祝愿
+	Tooltip: “一切美好的祝愿”
 }
 
 WoodWax: {
@@ -5905,4 +5905,13 @@ RainbowPorpoise: {
 CrystallineHook: {
 	DisplayName: 蕴魔钩爪
 	Tooltip: 牵引玩家到一定距离内松开钩爪
+}
+
+Wisteria: {
+	DisplayName: 紫藤萝
+	Tooltip: 
+	'''
+	射出花瓣
+	“沉迷的爱”
+	'''
 }

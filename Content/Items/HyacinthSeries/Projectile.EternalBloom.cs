@@ -29,7 +29,9 @@ namespace Coralite.Content.Items.HyacinthSeries
             Projectile.hostile = false;
             Projectile.friendly = true;
             Projectile.aiStyle = -1;
-            Projectile.penetrate = 4;
+            Projectile.penetrate = 2;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 20;
         }
 
         public override void AI()
@@ -51,6 +53,11 @@ namespace Coralite.Content.Items.HyacinthSeries
             {
                 Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), Projectile.width, Projectile.height, DustID.WoodFurniture);
             }
+        }
+
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            target.AddBuff(BuffID.Venom, 60 * 3);
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -79,15 +86,15 @@ namespace Coralite.Content.Items.HyacinthSeries
             Projectile.hostile = false;
             Projectile.friendly = true;
             Projectile.aiStyle = -1;
-            Projectile.penetrate = 4;
+            Projectile.penetrate = 30;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 20;
         }
 
         public override void AI()
         {
             if (Projectile.velocity.Y < 16)
-            {
                 Projectile.velocity.Y += 0.3f;
-            }
 
             Projectile.rotation += Projectile.velocity.X / 20;
         }
@@ -110,6 +117,11 @@ namespace Coralite.Content.Items.HyacinthSeries
             Projectile.rotation = Projectile.velocity.ToRotation();
             Projectile.position -= oldVelocity;
             return Projectile.ai[0] > 5;
+        }
+
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            target.AddBuff(BuffID.Venom, 60 * 3);
         }
 
         public override bool PreDraw(ref Color lightColor)

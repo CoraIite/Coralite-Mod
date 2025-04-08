@@ -5832,3 +5832,8 @@ CrystallineHook: {
 	// DisplayName: Crystalline Hook
 	// Tooltip: ""
 }
+
+Wisteria: {
+	// DisplayName: Wisteria
+	// Tooltip: ""
+}

@@ -40,22 +40,17 @@ namespace Coralite.Content.Items.HyacinthSeries
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (Main.myPlayer == player.whoAmI)
+            Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, Vector2.Zero, ProjectileType<EternalBloomHeldProj>(), 0, knockback, player.whoAmI);
+            if (type == ProjectileID.Bullet)
             {
-                Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, Vector2.Zero, ProjectileType<EternalBloomHeldProj>(), 0, knockback, player.whoAmI);
-                if (type == ProjectileID.Bullet)
-                {
-                    type = Main.rand.NextBool(4) ? ProjectileType<ThornBall>() : ProjectileType<SeedPlantera>();
+                type = Main.rand.NextBool(4) ? ProjectileType<ThornBall>() : ProjectileType<SeedPlantera>();
 
-                    Projectile.NewProjectile(source, position, velocity
-                         , type, damage, knockback, player.whoAmI);
-                    return false;
-                }
-
-                return true;
+                Projectile.NewProjectile(source, position, velocity
+                     , type, damage, knockback, player.whoAmI);
+                return false;
             }
 
-            return false;
+            return true;
         }
 
         public override void AddRecipes()

@@ -56,7 +56,7 @@ namespace Coralite.Content.Items.HyacinthSeries
 
         public enum GunType
         {
-            PainterPaintballGun = 1,
+            Wisteria = 1,
             SuperStarCannon,
             StarCannon,
             OnyxBlaster,
@@ -69,7 +69,6 @@ namespace Coralite.Content.Items.HyacinthSeries
             StarsBreath,
             Snowdrop,
             Rosemary,
-            Rosemary2,
             Arethusa,
             WoodWax,
             Musket,
@@ -213,8 +212,8 @@ namespace Coralite.Content.Items.HyacinthSeries
         {
             switch (value)
             {
-                case (int)GunType.PainterPaintballGun://彩弹枪
-                    return Color.Silver;
+                case (int)GunType.Wisteria://紫藤萝
+                    return new  Color(234,173,255);
                 case (int)GunType.SuperStarCannon://超级星星炮
                     return Color.LightYellow;
                 case (int)GunType.StarCannon://星星炮
@@ -238,8 +237,6 @@ namespace Coralite.Content.Items.HyacinthSeries
                 case (int)GunType.Snowdrop://雪花莲
                     return new Color(152, 192, 70);
                 case (int)GunType.Rosemary://迷迭香
-                    return new Color(235, 141, 207);
-                case (int)GunType.Rosemary2://迷迭香2
                     return new Color(235, 141, 207);
                 case (int)GunType.Arethusa://幽兰
                     return new Color(95, 120, 233);
@@ -281,7 +278,7 @@ namespace Coralite.Content.Items.HyacinthSeries
 
     public class HyacinthBullet2 : BaseHeldProj
     {
-        public override string Texture => AssetDirectory.Projectiles_Shoot + Name;
+        public override string Texture => AssetDirectory.HyacinthSeriesItems + Name;
 
         public override void SetDefaults()
         {
@@ -484,8 +481,8 @@ namespace Coralite.Content.Items.HyacinthSeries
             switch (-(int)Projectile.ai[0])
             {
                 default: break;
-                case (int)GunType.PainterPaintballGun://彩弹枪
-                    return ItemID.PainterPaintballGun;
+                case (int)GunType.Wisteria://紫藤萝
+                    return ModContent.ItemType<Wisteria>();
                 case (int)GunType.SuperStarCannon://超级星星炮
                     return ItemID.SuperStarCannon;
                 case (int)GunType.StarCannon://星星炮
@@ -510,8 +507,6 @@ namespace Coralite.Content.Items.HyacinthSeries
                     return ModContent.ItemType<Snowdrop>();
                 case (int)GunType.Rosemary://迷迭香
                     return ModContent.ItemType<Rosemary>();
-                case (int)GunType.Rosemary2://迷迭香2
-                    return ModContent.ItemType<Rosemary2>();
                 case (int)GunType.Arethusa://幽兰
                     return ModContent.ItemType<Arethusa>();
                 case (int)GunType.WoodWax://木蜡

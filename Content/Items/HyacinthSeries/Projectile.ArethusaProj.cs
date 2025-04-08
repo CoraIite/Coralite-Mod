@@ -18,7 +18,7 @@ namespace Coralite.Content.Items.HyacinthSeries
 
     public class ArethusaBullet : BaseHeldProj, IDrawPrimitive, IDrawNonPremultiplied
     {
-        public override string Texture => AssetDirectory.Projectiles_Shoot + Name;
+        public override string Texture => AssetDirectory.HyacinthSeriesItems + Name;
 
         private Trail trail;
         BasicEffect effect;
@@ -133,7 +133,7 @@ namespace Coralite.Content.Items.HyacinthSeries
 
     public class ArethusaExplosion : BaseHeldProj
     {
-        public override string Texture => AssetDirectory.Projectiles_Shoot + Name;
+        public override string Texture => AssetDirectory.HyacinthSeriesItems + Name;
 
         public ref float Scale => ref Projectile.ai[0];
         public ref float Alpha => ref Projectile.ai[1];

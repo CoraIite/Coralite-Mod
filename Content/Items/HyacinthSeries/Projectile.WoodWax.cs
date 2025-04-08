@@ -20,7 +20,7 @@ namespace Coralite.Content.Items.HyacinthSeries
 
     public class WoodWaxBullet : ModProjectile
     {
-        public override string Texture => AssetDirectory.Projectiles_Shoot + Name;
+        public override string Texture => AssetDirectory.HyacinthSeriesItems + Name;
 
         public override void SetDefaults()
         {

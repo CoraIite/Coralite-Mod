@@ -181,7 +181,7 @@ namespace Coralite.Content.Items.HyacinthSeries
     /// </summary>
     public class StarsBreathExplosion : ModProjectile, IDrawAdditive
     {
-        public override string Texture => AssetDirectory.Projectiles_Shoot + Name;
+        public override string Texture => AssetDirectory.HyacinthSeriesItems + Name;
 
         public ref float frameX => ref Projectile.localAI[0];
 

@@ -488,7 +488,7 @@ namespace Coralite.Content.Items.Shadow
 
     public class ShadowCircle_HighSpeedShoot : ModProjectile
     {
-        public override string Texture => AssetDirectory.Projectiles_Shoot + "HyacinthBullet2";
+        public override string Texture => AssetDirectory.HyacinthSeriesItems + "HyacinthBullet2";
 
         private bool span;
 

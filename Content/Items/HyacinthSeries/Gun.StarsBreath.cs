@@ -116,13 +116,6 @@ namespace Coralite.Content.Items.HyacinthSeries
             .AddIngredient<AncientCore>()
             .AddTile(TileID.MythrilAnvil)
             .Register();
-
-            CreateRecipe()
-            .AddIngredient<Snowdrop>()
-            .AddIngredient<Rosemary2>()
-            .AddIngredient<AncientCore>()
-            .AddTile(TileID.MythrilAnvil)
-            .Register();
         }
     }
 }

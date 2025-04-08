@@ -29,7 +29,7 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
             });
         }
 
-        public override string Texture => AssetDirectory.Projectiles_Shoot + Name;
+        public override string Texture => AssetDirectory.HyacinthSeriesItems + Name;
 
         public override void SetDefaults()
         {
