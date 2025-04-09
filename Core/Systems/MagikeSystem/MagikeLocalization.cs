@@ -407,6 +407,8 @@ namespace Coralite.Core.Systems.MagikeSystem
             Second,
 
             FilterController,
+            MabirdController,
+            MabirdOuting,
 
             Count
         }
