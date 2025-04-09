@@ -213,6 +213,8 @@ MagikeSystem: {
 		CraftAltarAutoChoseOnlyOne: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.CraftAltarAutoChoseOnlyOne
 		CraftAltarAutoChoseNever: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.CraftAltarAutoChoseNever
 		FilterController: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.FilterController
+		MabirdController: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.MabirdController
+		MabirdOuting: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.MabirdOuting
 	}
 
 	CraftText: {

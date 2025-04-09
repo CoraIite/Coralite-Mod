@@ -27,5 +27,11 @@ namespace Coralite.Core.Systems.MagikeSystem
 
         [AutoLoadTexture(Path = AssetDirectory.Misc)]
         public static ATex Mabird { get; private set; }
+
+        public static ATex MabirdStateButton { get; private set; }
+        public static ATex MabirdSlot { get; private set; }
+        public static ATex RouteDrawButton { get; private set; }
+        public static ATex CopyRouteButton { get; private set; }
+        public static ATex PasteRouteButton { get; private set; }
     }
 }

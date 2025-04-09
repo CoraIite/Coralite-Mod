@@ -318,18 +318,6 @@ IcicleYujian: {
 	Tooltip: ""
 }
 
-CrossBreedMachine_G1Item: {
-	DisplayName: 植物杂交机1型
-	Tooltip:
-		'''
-		放置后右键打开面板
-		左侧和右侧的物品格中放入父植物和母植物，中间物品格可放入催化剂
-		点击按钮并消耗一定的魔能进行杂交
-		杂交消耗父植物和母植物并在下方的物品格中输出子代植物
-		部分植物杂交时概率产生突变
-		'''
-}
-
 IceyPowder: {
 	DisplayName: 冰魔尘
 	Tooltip: 含有微弱的冰魔力
@@ -607,15 +595,10 @@ Dunkleosteus: {
 
 Hyacinth: {
 	DisplayName: 风信子
-	Tooltip: "“[c/ff3333:你的爱充满我心中]”"
+	Tooltip: “[c/ff3333:你的爱充满我心中]”
 }
 
 Rosemary: {
-	DisplayName: 迷迭香
-	Tooltip: “留住美好的回忆”
-}
-
-Rosemary2: {
 	DisplayName: 迷迭香
 	Tooltip: “留住美好的回忆”
 }
@@ -5909,9 +5892,9 @@ CrystallineHook: {
 
 Wisteria: {
 	DisplayName: 紫藤萝
-	Tooltip: 
-	'''
-	射出花瓣
-	“沉迷的爱”
-	'''
+	Tooltip:
+		'''
+		射出花瓣
+		“沉迷的爱”
+		'''
 }

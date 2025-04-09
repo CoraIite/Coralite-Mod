@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using Coralite.Helpers;
+using Terraria;
 using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components.Producers
@@ -10,7 +11,14 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Producers
         public override MagikeSystem.UITextID NameText { get => MagikeSystem.UITextID.ExtractProducerName; }
 
         public override bool CanConsumeItem(Item item)
-            => item.GetGlobalItem<MagikeItem>().magikeAmount > 0;
+        {
+            int count = item.GetGlobalItem<MagikeItem>().magikeAmount;
+            MagikeContainer container = Entity.GetMagikeContainer();
+            int magikeCount = container.Magike;
+            int magikeMax = container.MagikeMax;
+
+            return count > 0 && magikeCount + count < magikeMax;
+        }
 
         public override int GetMagikeAmount(Item item)
             => item.GetGlobalItem<MagikeItem>().magikeAmount;

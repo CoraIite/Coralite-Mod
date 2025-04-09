@@ -122,7 +122,7 @@ namespace Coralite.Content.Items.HyacinthSeries
                 for (int i = 0; i < 4; i++)
                 {
                     Dust dust = Dust.NewDustPerfect(Projectile.Center, DustID.PinkTorch, -Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.5f, 0.5f)) * Main.rand.NextFloat(0.15f, 0.6f)
-                        , Alpha:100,Scale: Main.rand.NextFloat(1f, 1.5f));
+                        , Alpha: 100, Scale: Main.rand.NextFloat(1f, 1.5f));
                     dust.noGravity = true;
                 }
 

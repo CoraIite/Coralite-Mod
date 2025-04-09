@@ -8,6 +8,7 @@ using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.Graphics.Capture;
 using Terraria.ID;
 
 namespace Coralite.Content.Biomes
@@ -102,6 +103,16 @@ namespace Coralite.Content.Biomes
             //BiomeTimer += 30f;
             if (BiomeTimer > BiomeTimerMax)
                 BiomeTimer = 0;
+        }
+
+        public override void ModifySunLightColor(ref Color tileColor, ref Color backgroundColor)
+        {
+            if (Main.LocalPlayer.InModBiome<CrystallineSkyIsland>()
+                || ModContent.GetInstance<CrystallineSkyIslandEffect>().IsSceneEffectActive(Main.LocalPlayer))
+            {
+                tileColor = (new Color(220, 240, 255) * (tileColor.R / 255f)) with { A = 255 };
+                backgroundColor = (new Color(230, 230, 255) * (backgroundColor.R / 255f)) with { A = 255 };
+            }
         }
     }
 

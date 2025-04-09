@@ -340,6 +340,24 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         }
 
         /// <summary>
+        /// 向容器内加入物品，并指定索引<br></br>
+        /// 成功加入后会将传入的物品重置为空物品
+        /// </summary>
+        /// <param name="item"></param>
+        /// <param name="index"></param>
+        public virtual void AddItemByIndex(Item item,int index)
+        {
+            if (!Items.IndexInRange(index))
+                return;
+
+            if (!Items[index].IsAir)
+                return;
+
+            Items[index] = item.Clone();
+            item.TurnToAir();
+        }
+
+        /// <summary>
         /// 向容器内加入物品，注意在结束后会使传入的item消失
         /// </summary>
         /// <param name="item"></param>

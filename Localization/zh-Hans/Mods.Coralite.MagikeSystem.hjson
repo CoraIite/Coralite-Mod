@@ -234,6 +234,8 @@ MagikeSystem: {
 			点击切换模式
 			'''
 		FilterController: 滤镜
+		// MabirdController: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.MabirdController
+		// MabirdOuting: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.MabirdOuting
 	}
 
 	CraftText: {
