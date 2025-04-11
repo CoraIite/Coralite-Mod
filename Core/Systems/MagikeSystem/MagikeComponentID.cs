@@ -10,9 +10,8 @@
         public const int MagikeFilter = 5;
         public const int ItemContainer = 6;
         public const int ItemGetOnlyContainer = 7;
-        public const int ItemSender = 8;
 
-        public const int Count = 9;
+        public const int Count = 8;
 
         /// <summary>
         /// 是否为单一实例

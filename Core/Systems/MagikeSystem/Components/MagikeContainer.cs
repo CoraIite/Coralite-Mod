@@ -43,7 +43,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// <summary> 有魔能就为<see langword="true"/> </summary>
         public virtual bool HasMagike => Magike > 0;
         /// <summary> 魔能满了后为true </summary>
-        public virtual bool FullMagike => Magike >= MagikeMax;
+        public virtual bool FullMagike => MagikeMax != 0 && Magike >= MagikeMax;
 
         public override void Update() { }
 

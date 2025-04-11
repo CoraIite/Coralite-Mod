@@ -7,7 +7,7 @@ namespace Coralite.Core.Systems.MagikeSystem
     {
         public string LocalizationCategory => "MagikeSystem";
 
-        public static LocalizedText NewKnowledgeUnlocked { get; private set; }
+        //public static LocalizedText NewKnowledgeUnlocked { get; private set; }
 
         public static LocalizedText LearnedMagikeBase { get; private set; }
         public static LocalizedText LearnedMagikeAdvanced { get; private set; }
@@ -26,7 +26,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         {
             LearnedMagikeBase = this.GetLocalization("learnedMagikeBase");
             LearnedMagikeAdvanced = this.GetLocalization("learnedMagikeAdvanced");
-            NewKnowledgeUnlocked = this.GetLocalization("NewKnowledgeUnlocked", () => "魔能辞典中解锁了新的知识");
+            //NewKnowledgeUnlocked = this.GetLocalization("NewKnowledgeUnlocked", () => "魔能辞典中解锁了新的知识");
             Error = this.GetLocalization("Error");
             CanMagikeCraft = this.GetLocalization(nameof(CanMagikeCraft));
             ItemMagikeAmount = this.GetLocalization(nameof(ItemMagikeAmount));
@@ -51,7 +51,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         {
             LearnedMagikeBase = null;
             LearnedMagikeAdvanced = null;
-            NewKnowledgeUnlocked = null;
+            //NewKnowledgeUnlocked = null;
 
             Staffs = null;
             Filter = null;

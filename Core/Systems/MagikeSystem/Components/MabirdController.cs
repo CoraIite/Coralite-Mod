@@ -309,6 +309,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         private Color c;
         private bool start = true;
 
+        public ref float Index => ref Projectile.ai[2];
+        public float State { get; set; }
+
         public override void SetDefaults()
         {
             Projectile.timeLeft = 1200;
@@ -329,14 +332,29 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             Point16 position = new((int)Projectile.ai[0], (int)Projectile.ai[1]);
             selfPos = Helper.GetMagikeTileCenter(position);
 
-            Point16 currentPoint = new((int)Main.MouseWorld.X / 16, (int)Main.MouseWorld.Y / 16);
+            Point16 currentPoint = InMousePos.ToTileCoordinates16();// new((int)InMousePos.X / 16, (int)InMousePos.Y / 16);
             aimPos = currentPoint.ToWorldCoordinates();
 
-            if (!MagikeHelper.TryGetEntityWithComponent<MabirdController>(position.X, position.Y, MagikeComponentID.MagikeSender
+            if (!MagikeHelper.TryGetEntityWithComponent<MabirdController>(position.X, position.Y, MagikeComponentID.ItemContainer
                 , out MagikeTP controller))
             {
                 Projectile.Kill();
                 return;
+            }
+
+            switch (State)
+            {
+                default:
+                case 0://点击左键查找取出点
+                    {
+
+                    }
+                    break;
+                case 1://点击左键查找放入点
+                    {
+
+                    }
+                    break;
             }
 
             MagikeHelper.TryGetEntity(currentPoint.X, currentPoint.Y, out MagikeTP receiver);

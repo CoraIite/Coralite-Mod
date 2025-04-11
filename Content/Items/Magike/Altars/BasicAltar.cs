@@ -143,12 +143,12 @@ namespace Coralite.Content.Items.Magike.Altars
         {
             float second = incomeLevel switch
             {
-                MALevel.MagicCrystal => 1,
-                MALevel.Glistent => 0.9f,
-                MALevel.Shadow => 0.8f,
-                MALevel.CrystallineMagike => 0.5f,
-                MALevel.Hallow => 0.5f,
-                MALevel.HolyLight => 0.4f,
+                MALevel.MagicCrystal => 0.5f,
+                MALevel.Glistent => 0.45f,
+                MALevel.Shadow => 0.4f,
+                MALevel.CrystallineMagike => 0.35f,
+                MALevel.Hallow => 0.3f,
+                MALevel.HolyLight => 0.25f,
                 _ => 10_0000_0000 / 60,
             };
 
