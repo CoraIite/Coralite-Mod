@@ -156,6 +156,9 @@ namespace Coralite.Helpers
         public static Vector2 GetMagikeTileCenter(Point16 position)
         {
             Tile tile = Framing.GetTileSafely(position);
+            if (!tile.HasTile)
+                return position.ToWorldCoordinates();
+
             TileObjectData data = TileObjectData.GetTileData(tile);
 
             if (data == null)

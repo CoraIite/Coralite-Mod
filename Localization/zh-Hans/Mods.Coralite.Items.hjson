@@ -5898,3 +5898,18 @@ Wisteria: {
 		“沉迷的爱”
 		'''
 }
+
+BasicMabirdNest: {
+	DisplayName: 基础魔鸟巢
+	Tooltip: ""
+}
+
+CrystallineMabird: {
+	DisplayName: 蕴魔鸟
+	Tooltip: ""
+}
+
+StartSkyIsland: {
+	DisplayName: 起始空岛
+	Tooltip: ""
+}

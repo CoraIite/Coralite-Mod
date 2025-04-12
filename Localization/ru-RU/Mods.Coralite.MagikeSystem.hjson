@@ -211,6 +211,12 @@ MagikeSystem: {
 		// FilterController: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.FilterController
 		// MabirdController: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.MabirdController
 		// MabirdOuting: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.MabirdOuting
+		// ItemContainerNotFound: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ItemContainerNotFound
+		// ClickToDrawRoute: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ClickToDrawRoute
+		// NoItem: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.NoItem
+		// NoRouteCanCopy: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.NoRouteCanCopy
+		// ClickToCopyRoute: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ClickToCopyRoute
+		// ClickToPasteRoute: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ClickToPasteRoute
 	}
 
 	CraftText: {

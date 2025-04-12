@@ -5820,3 +5820,18 @@ Wisteria: {
 	// DisplayName: Wisteria
 	// Tooltip: ""
 }
+
+BasicMabirdNest: {
+	// DisplayName: Basic Mabird Nest
+	// Tooltip: ""
+}
+
+CrystallineMabird: {
+	// DisplayName: Crystalline Mabird
+	// Tooltip: ""
+}
+
+StartSkyIsland: {
+	// DisplayName: Start Sky Island
+	// Tooltip: ""
+}

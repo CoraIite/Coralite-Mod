@@ -234,8 +234,14 @@ MagikeSystem: {
 			点击切换模式
 			'''
 		FilterController: 滤镜
-		// MabirdController: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.MabirdController
-		// MabirdOuting: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.MabirdOuting
+		MabirdController: 魔鸟巢
+		MabirdOuting: 魔鸟外出中
+		ItemContainerNotFound: 未找到物品容器
+		ClickToDrawRoute: 点击选择魔鸟路线
+		NoItem: "[c/ff0000:物品缺失]"
+		NoRouteCanCopy: "[c/ff0000:没有可复制的路线]"
+		ClickToCopyRoute: 点击复制魔鸟路线
+		ClickToPasteRoute: 点击黏贴魔鸟路线
 	}
 
 	CraftText: {

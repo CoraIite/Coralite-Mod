@@ -418,10 +418,15 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
         {
             base.Update(gameTime);
 
+            if (!Main.playerInventory || CurrentEntity == null)
+            {
+                visible = false;
+                return;
+            }
+
             Vector2 pos = Helper.GetMagikeTileCenter(CurrentEntity.Position);
             //一些情况下的关闭
-            if (!Main.playerInventory || CurrentEntity == null
-                || !VaultUtils.IsPointOnScreen(pos.ToScreenPosition()))
+            if (!VaultUtils.IsPointOnScreen(pos.ToScreenPosition()))
             {
                 visible = false;
                 CurrentEntity = null;

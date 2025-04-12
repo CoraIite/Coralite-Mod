@@ -16,15 +16,15 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
         /// <summary>
         /// 魔鸟的最远飞行距离
         /// </summary>
-        public int SendLength { get; }
+        public abstract int SendLength { get; }
         /// <summary>
         /// 一次能抓多少物品
         /// </summary>
-        public int CatchStack { get; }
+        public abstract int CatchStack { get; }
         /// <summary>
         /// 飞行速度
         /// </summary>
-        public float Speed { get; }
+        public abstract float Speed { get; }
 
         /// <summary>
         /// 休息时间
@@ -99,7 +99,9 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
                         {
                             UpdateBaseValue();
 
-                            if (Vector2.Distance(center, GetItemPos.Pos) > Speed * 1.5f)
+                            Velocity = (GetItemPos.Pos - Center).SafeNormalize(Vector2.Zero) * Speed;
+
+                            if (Vector2.Distance(Center, GetItemPos.Pos) > Speed * 2f)
                                 break;
 
                             //到达指定位置，开始拿物品
@@ -119,7 +121,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
                         {
                             UpdateBaseValue();
 
-                            if (Vector2.Distance(center, ReleaseItemPos.Pos) > Speed * 1.5f)
+                            if (Vector2.Distance(Center, ReleaseItemPos.Pos) > Speed * 2f)
                                 break;
 
                             if (HasEmptySlot(ReleaseItemPos))//并且位置2能够容纳物品
@@ -135,7 +137,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
                         {
                             UpdateBaseValue();
 
-                            if (Vector2.Distance(center, GetItemPos.Pos) > Speed * 1.5f)
+                            if (Vector2.Distance(Center, GetItemPos.Pos) > Speed * 2f)
                                 break;
 
                             if (HasEmptySlot(GetItemPos))//位置1能继续放
@@ -156,7 +158,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
                         {
                             UpdateBaseValue();
 
-                            if (Vector2.Distance(center, Center) < Speed * 1.5f)//到达指定位置，开始拿物品
+                            if (Vector2.Distance(Center, center) < Speed * 2f)//到达指定位置，开始拿物品
                             {
                                 Timer = 0;
                                 State = MabirdAIState.Rest;
@@ -218,6 +220,9 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
 
         #region 各种帮助方法
 
+        public bool CanSend(Vector2 pos1, Vector2 pos2)
+            => pos1.Distance(pos2) < SendLength; 
+
         /// <summary>
         /// 抓取物品，从一个物品容器中拿物品，会直接设置<see cref="catchItem"/>
         /// </summary>
@@ -229,7 +234,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
             if (!t.HasTile)
                 return false;
 
-            int? whiteListType = WhiteListItem == null ? WhiteListItem.type : null;
+            int? whiteListType = WhiteListItem?.type;
 
             if (MagikeHelper.TryGetEntityWithTopLeft(new Point16(p), out var magikeTP))
             {
@@ -390,11 +395,22 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
 
         public override ModItem Clone(Item newEntity)
         {
-            return base.Clone(newEntity);
+            ModItem i= base.Clone(newEntity);
+            if (i is Mabird mabird)
+            {
+                mabird.State = State;
+                mabird.Timer = Timer;
+                mabird.GetItemPos = GetItemPos;
+                mabird.ReleaseItemPos = ReleaseItemPos;
+                mabird.WhiteListItem = WhiteListItem;
+            }
+
+            return i;
         }
 
         public override void SaveData(TagCompound tag)
         {
+            //TODO: 修复无法存储的问题
             bool save = false;
             BitsByte b1 = new BitsByte();
 

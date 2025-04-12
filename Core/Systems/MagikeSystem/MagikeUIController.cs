@@ -38,6 +38,20 @@ namespace Coralite.Core.Systems.MagikeSystem
 
         }
 
+        public static void CloseUI()
+        {
+            MagikeApparatusPanel.CurrentEntity = null;
+            switch (MagikeUIShowStyle)
+            {
+                default:
+                case UIType.Baby:
+                    break;
+                case UIType.Pro:
+                    UILoader.GetUIState<MagikeApparatusPanel>().Visible = false;
+                    break;
+            }
+        }
+
         /// <summary>
         /// 刷新魔能UI的组件显示面板
         /// </summary>

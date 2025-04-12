@@ -11,14 +11,13 @@ using System.IO;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.ID;
 using Terraria.ModLoader.IO;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components
 {
-    public class ItemContainer : MagikeComponent, IUIShowable,IEnumerable<Item>
+    public class ItemContainer : MagikeComponent, IUIShowable, IEnumerable<Item>
     {
         public override int ID => MagikeComponentID.ItemContainer;
 

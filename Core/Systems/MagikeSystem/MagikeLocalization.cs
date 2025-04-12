@@ -410,6 +410,13 @@ namespace Coralite.Core.Systems.MagikeSystem
             MabirdController,
             MabirdOuting,
 
+            ItemContainerNotFound,
+            ClickToDrawRoute,
+            NoItem,
+            NoRouteCanCopy,
+            ClickToCopyRoute,
+            ClickToPasteRoute,
+
             Count
         }
 
