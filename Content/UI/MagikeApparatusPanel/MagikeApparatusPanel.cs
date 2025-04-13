@@ -23,6 +23,8 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
         public bool visible;
         public override bool Visible => visible;
 
+        public static List<Action<SpriteBatch>> DrawExtras = new List<Action<SpriteBatch>>(4);
+
         //public static bool ComponentButtonsVisible = false;
 
         #region 各类记录用字段
@@ -479,6 +481,10 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
 
             if (BasePanel.IsMouseHovering)
                 PlayerInput.LockVanillaMouseScroll("Coralite/MagikePanel");
+
+            foreach (var item in DrawExtras)
+                item.Invoke(spriteBatch);
+            DrawExtras.Clear();
 
             base.Draw(spriteBatch);
         }

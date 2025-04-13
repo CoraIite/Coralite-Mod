@@ -242,6 +242,9 @@ MagikeSystem: {
 		NoRouteCanCopy: "[c/ff0000:没有可复制的路线]"
 		ClickToCopyRoute: 点击复制魔鸟路线
 		ClickToPasteRoute: 点击黏贴魔鸟路线
+		ClickToActiveMabird: 点击启用魔鸟
+		ClickToInactiveMabird: 点击禁用魔鸟
+		MabirdSendLengthTooFar: 超出魔鸟飞行范围
 	}
 
 	CraftText: {
@@ -318,5 +321,9 @@ MagikeSystem: {
 	ItemDescription: {
 		PolarizedFilter: 可插入的偏振滤镜：
 		CanInsertTo: 可插入的仪器：
+		MabirdSendLength: 飞行距离 {0} 格
+		MabirdFlySpeed: 飞行速度 {0} 格每秒
+		MabirdCatchItemCount: 单次运送物品数 {0}
+		MabirdRestTime: 发送后休息 {0} 秒
 	}
 }

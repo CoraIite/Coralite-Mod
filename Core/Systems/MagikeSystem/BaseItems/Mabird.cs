@@ -2,6 +2,7 @@
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader.IO;
@@ -18,21 +19,22 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
         /// </summary>
         public abstract int SendLength { get; }
         /// <summary>
-        /// 一次能抓多少物品
-        /// </summary>
-        public abstract int CatchStack { get; }
-        /// <summary>
         /// 飞行速度
         /// </summary>
         public abstract float Speed { get; }
+        /// <summary>
+        /// 一次能抓多少物品
+        /// </summary>
+        public abstract int CatchStack { get; }
 
         /// <summary>
         /// 休息时间
         /// </summary>
-        public const int RestTime = 60 * 5;
+        public abstract short RestTime { get; }
 
         public MabirdAIState State { get; set; }
         public short Timer { get; set; }
+        public bool Active { get; set; } = true;
 
         public enum MabirdAIState : byte
         {
@@ -88,7 +90,8 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
                 {
                     default:
                     case MabirdAIState.Rest://啥也不干
-                        Timer++;
+                        if (Active)
+                            Timer++;
                         if (Timer > RestTime)
                         {
                             Timer = 0;
@@ -110,8 +113,18 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
                             {
                                 if (HasEmptySlot(ReleaseItemPos))//并且位置2能够容纳物品
                                     TurnToReleaseItem();//放物品到位置2
-                                else
-                                    TurnToPutItemBack();//物品放回位置1
+                                else//位置2没位置就返回，并且把拿出来的物品塞回去
+                                {
+                                    PutItemIn(GetItemPos);
+
+                                    if (!catchItem.IsAir)
+                                    {
+                                        Item.NewItem(catchItem.GetSource_DropAsItem(), Center, catchItem);
+                                        catchItem.TurnToAir();
+                                    }
+
+                                    TurnToBack(center);//放完直接返回
+                                }
                             }
                             else
                                 TurnToBack(center);//没抓到直接返回
@@ -149,6 +162,11 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
                                     Item.NewItem(catchItem.GetSource_DropAsItem(), Center, catchItem);
                                     catchItem.TurnToAir();
                                 }
+                            }
+                            else if (!catchItem.IsAir)
+                            {
+                                Item.NewItem(catchItem.GetSource_DropAsItem(), Center, catchItem);
+                                catchItem.TurnToAir();
                             }
 
                             TurnToBack(center);//放完直接返回
@@ -349,7 +367,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
         {
             Center += Velocity;
 
-            if (++frameCounter > 4)
+            if (++frameCounter > 3)
             {
                 frameCounter = 0;
                 frameY++;
@@ -374,7 +392,25 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
                 , color, 0, frameBox.Size() / 2, 1, Velocity.X > 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
 
             if (catchItem != null && !catchItem.IsAir)//绘制下面吊着的物品
-                MagikeHelper.DrawItem(spriteBatch, catchItem, Center + new Vector2(0, 24), 48, color);
+                MagikeHelper.DrawItem(spriteBatch, catchItem, Center-Main.screenPosition + new Vector2(0, 24), 48, color);
+        }
+
+        public void Reset(Vector2 center)
+        {
+            Center = center;
+            State = MabirdAIState.Rest;
+            Timer = 0;
+
+            if (GetItemPos != null && !CanSend(center, GetItemPos.Pos))
+                GetItemPos = null;
+            if (ReleaseItemPos != null && !CanSend(center, ReleaseItemPos.Pos))
+                ReleaseItemPos = null;
+
+            if (catchItem != null && !catchItem.IsAir)
+            {
+                Item.NewItem(Main.LocalPlayer.GetSource_FromThis(), center, catchItem.Clone());
+                catchItem.TurnToAir();
+            }
         }
 
         /// <summary>
@@ -403,47 +439,56 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
                 mabird.GetItemPos = GetItemPos;
                 mabird.ReleaseItemPos = ReleaseItemPos;
                 mabird.WhiteListItem = WhiteListItem;
+                mabird.catchItem = catchItem;
             }
 
             return i;
         }
 
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+             tooltips.Add( new TooltipLine(Mod, "MabirdSendLength"
+                , MagikeSystem.GetItemDescription(MagikeSystem.ItemDescriptionID.MabirdSendLength).Format(SendLength/16)));
+             tooltips.Add( new TooltipLine(Mod, "MabirdSpeed"
+                , MagikeSystem.GetItemDescription(MagikeSystem.ItemDescriptionID.MabirdFlySpeed).Format(Speed/16*60)));
+             tooltips.Add( new TooltipLine(Mod, "MabirdCatchItemCount"
+                , MagikeSystem.GetItemDescription(MagikeSystem.ItemDescriptionID.MabirdCatchItemCount).Format(CatchStack)));
+             tooltips.Add( new TooltipLine(Mod, "MabirdRestTime"
+                , MagikeSystem.GetItemDescription(MagikeSystem.ItemDescriptionID.MabirdRestTime).Format(RestTime/60)));
+        }
+
+        #region IO
+
         public override void SaveData(TagCompound tag)
         {
-            //TODO: 修复无法存储的问题
-            bool save = false;
             BitsByte b1 = new BitsByte();
 
             if (GetItemPos != null)
             {
                 b1[0] = true;
-                save = true;
                 GetItemPos.Save(tag, nameof(GetItemPos));
             }
 
             if (ReleaseItemPos != null)
             {
                 b1[1] = true;
-                save = true;
                 ReleaseItemPos.Save(tag, nameof(ReleaseItemPos));
             }
 
             if (WhiteListItem != null)
             {
                 b1[2] = true;
-                save = true;
                 ItemIO.Save(WhiteListItem);
             }
 
             if (catchItem != null && !catchItem.IsAir)
             {
                 b1[3] = true;
-                save = true;
                 ItemIO.Save(catchItem);
             }
 
-            if (save)
-                tag.Add("MabirdValues", b1);
+            b1[7] = Active;
+            tag.Add("MabirdValues", (byte)b1);
 
             tag.Add(nameof(State), (byte)State);
             tag.Add(nameof(Timer), Timer);
@@ -454,8 +499,9 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
 
         public override void LoadData(TagCompound tag)
         {
-            if (tag.TryGet("MabirdValues", out BitsByte b1))
+            if (tag.TryGet("MabirdValues", out byte b))
             {
+                BitsByte b1 = (BitsByte)b;
                 if (b1[0])
                     GetItemPos = MabirdTarget.Load(tag, nameof(GetItemPos));
                 if (b1[1])
@@ -464,6 +510,8 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
                     WhiteListItem = ItemIO.Load(tag);
                 if (b1[3])
                     catchItem = ItemIO.Load(tag);
+
+                Active = b1[7];
             }
 
             State = (MabirdAIState)tag.Get<byte>(nameof(State));
@@ -472,6 +520,8 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
             Center = tag.Get<Vector2>(nameof(Center));
             Velocity = tag.Get<Vector2>(nameof(Velocity));
         }
+
+        #endregion
     }
 
     /// <summary>

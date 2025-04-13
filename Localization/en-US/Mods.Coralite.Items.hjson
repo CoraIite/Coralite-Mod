@@ -5793,3 +5793,18 @@ StartSkyIsland: {
 	DisplayName: Start Sky Island
 	Tooltip: ""
 }
+
+BloodmarkTopper: {
+	ExtraToolTipNone: Mods.Coralite.Items.BloodmarkTopper.ExtraToolTipNone
+	ExtraToolTipBlood: Mods.Coralite.Items.BloodmarkTopper.ExtraToolTipBlood
+	ExtraToolTipShadow: Mods.Coralite.Items.BloodmarkTopper.ExtraToolTipShadow
+	ExtraToolTipPrison: Mods.Coralite.Items.BloodmarkTopper.ExtraToolTipPrison
+	SpecialPreNameBlood: Mods.Coralite.Items.BloodmarkTopper.SpecialPreNameBlood
+	SpecialPreNameShadow: Mods.Coralite.Items.BloodmarkTopper.SpecialPreNameShadow
+	SpecialPreNamePrison: Mods.Coralite.Items.BloodmarkTopper.SpecialPreNamePrison
+	ArmorSetBlood: Mods.Coralite.Items.BloodmarkTopper.ArmorSetBlood
+	ArmorSetShadow: Mods.Coralite.Items.BloodmarkTopper.ArmorSetShadow
+	ArmorSetPrison: Mods.Coralite.Items.BloodmarkTopper.ArmorSetPrison
+	DisplayName: Bloodmark Topper
+	Tooltip: ""
+}

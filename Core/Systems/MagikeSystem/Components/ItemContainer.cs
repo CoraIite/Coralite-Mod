@@ -312,14 +312,13 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public virtual void AddItem(Item item)
         {
             int type = item.type;
-            int stack = item.stack;
 
             foreach (var i in Items.Where(i => !i.IsAir && i.type == type && i.stack < i.maxStack))
             {
-                int maxCanInsert = Math.Min(i.maxStack - i.stack, stack);
+                int maxCanInsert = Math.Min(i.maxStack - i.stack, item.stack);
                 i.stack += maxCanInsert;
-                stack -= maxCanInsert;
-                if (stack < 1)
+                item.stack -= maxCanInsert;
+                if (item.stack < 1)
                 {
                     item.TurnToAir();
                     return;

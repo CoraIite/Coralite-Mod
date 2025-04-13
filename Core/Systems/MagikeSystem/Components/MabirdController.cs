@@ -47,7 +47,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         {
             if (ContentSamples.ItemsByType[itemType].ModItem is not Mabird)
                 return false;
-            
+
             return base.CanAddItem(itemType, stack);
         }
 
@@ -120,29 +120,36 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             SetPadding(6);
 
-            this.SetSize(0, 66, 1);
+            this.SetSize(0, 80, 1);
 
             //添加物品格
             var slot = new MabirdSlot(controller, index);
+            slot.VAlign = 0.5f;
+            slot.SetTopLeft(0, 6);
             //slot.SetSize(46, 0, 0, 1);
             Append(slot);
-            float left = slot.Width.Pixels;
+            float left = slot.Left.Pixels + slot.Width.Pixels + 6;
+
+            //添加启用按钮
+            MabirdActiveButton mabirdActiveButton = new MabirdActiveButton(controller, index);
+            mabirdActiveButton.SetTopLeft(0, slot.Width.Pixels - mabirdActiveButton.Width.Pixels / 2);
+            Append(mabirdActiveButton);
 
             //添加分隔线
-            MabirdVerticalLine line = new MabirdVerticalLine(controller, index);
+            UIVerticalLine line = new UIVerticalLine();
             line.SetTopLeft(0, left);
             Append(line);
             left += line.Width.Pixels;
 
             //添加画线段按钮
             RouteDrawButton routeDrawButton = new RouteDrawButton(controller, index);
-            routeDrawButton.SetTopLeft(0, left);
+            routeDrawButton.SetTopLeft(10, left);
             Append(routeDrawButton);
-            left += routeDrawButton.Width.Pixels+6;
+            left += routeDrawButton.Width.Pixels + 6;
 
             //添加复制黏贴按钮
             CopyRouteButton copyRouteButton = new CopyRouteButton(controller, index);
-            copyRouteButton.SetTopLeft(routeDrawButton.Height.Pixels + 2, routeDrawButton.Left.Pixels + 2);
+            copyRouteButton.SetTopLeft(routeDrawButton.Top.Pixels + routeDrawButton.Height.Pixels + 2, routeDrawButton.Left.Pixels);
             Append(copyRouteButton);
 
             PasteRouteButton pasteRouteButton = new PasteRouteButton(controller, index);
@@ -152,6 +159,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             //添加白名单物品格
             WhiteListSlot whiteListSlot = new WhiteListSlot(controller, index);
+            whiteListSlot.VAlign = 0.5f;
             whiteListSlot.SetTopLeft(0, left);
             Append(whiteListSlot);
         }
@@ -174,24 +182,27 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
                 if (hasGetItemPos && hasReleaseItemPos)
                 {
-                    spriteBatch.End();
-                    spriteBatch.Begin(default, BlendState.AlphaBlend, SamplerState.PointWrap, default, default, null, Main.GameViewMatrix.TransformationMatrix);
+                    MagikeApparatusPanel.DrawExtras.Add((spriteBatch) =>
+                    {
+                        spriteBatch.End();
+                        spriteBatch.Begin(default, BlendState.AlphaBlend, SamplerState.PointWrap, default, default, null, Main.GameViewMatrix.TransformationMatrix);
 
-                    Color drawColor = Color.Lerp(Color.White, Color.Coral, (MathF.Sin((int)Main.timeForVisualEffects * 0.1f) / 2) + 0.5f);
+                        Color drawColor = Color.Lerp(Color.White, Color.Coral, (MathF.Sin((int)Main.timeForVisualEffects * 0.1f) / 2) + 0.5f);
 
-                    Vector2 selfPos = Helper.GetMagikeTileCenter(controller.Entity.Position);
-                    Vector2 getItemPos = mabird.GetItemPos.Pos;
-                    Vector2 releaseItemPos = mabird.ReleaseItemPos.Pos;
+                        Vector2 selfPos = Helper.GetMagikeTileCenter(controller.Entity.Position);
+                        Vector2 getItemPos = mabird.GetItemPos.Pos;
+                        Vector2 releaseItemPos = mabird.ReleaseItemPos.Pos;
 
-                    //绘制从鸟巢到取物品点的线
-                    MagikeSystem.DrawConnectLine(spriteBatch, selfPos, getItemPos, Main.screenPosition, drawColor);
-                    //绘制从取物品点到放物品点的线
-                    MagikeSystem.DrawConnectLine(spriteBatch, getItemPos, releaseItemPos, Main.screenPosition, drawColor);
-                    //绘制从放物品点到鸟巢的线
-                    MagikeSystem.DrawConnectLine(spriteBatch, releaseItemPos, selfPos, Main.screenPosition, drawColor);
+                        //绘制从鸟巢到取物品点的线
+                        MagikeSystem.DrawConnectLine(spriteBatch, selfPos, getItemPos, Main.screenPosition, drawColor * 0.3f);
+                        //绘制从取物品点到放物品点的线
+                        MagikeSystem.DrawConnectLine(spriteBatch, getItemPos, releaseItemPos, Main.screenPosition, drawColor);
+                        //绘制从放物品点到鸟巢的线
+                        MagikeSystem.DrawConnectLine(spriteBatch, releaseItemPos, selfPos, Main.screenPosition, drawColor * 0.3f);
 
-                    spriteBatch.End();
-                    spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.AnisotropicClamp, DepthStencilState.None, spriteBatch.GraphicsDevice.RasterizerState, null, Main.UIScaleMatrix);
+                        spriteBatch.End();
+                        spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.AnisotropicClamp, DepthStencilState.None, spriteBatch.GraphicsDevice.RasterizerState, null, Main.UIScaleMatrix);
+                    });
                 }
             }
         }
@@ -249,15 +260,18 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 return;
             }
 
-            if (!Main.mouseItem.IsAir && Main.mouseItem.ModItem is Mabird && i.IsAir) //鼠标有物品并且UI内为空，放入
+            if (!Main.mouseItem.IsAir && Main.mouseItem.ModItem is Mabird mabird2 && i.IsAir) //鼠标有物品并且UI内为空，放入
             {
+                mabird2.Reset(Helper.GetMagikeTileCenter(controller.Entity.Position));
                 controller.AddItemByIndex(Main.mouseItem, index);
                 SoundEngine.PlaySound(SoundID.Grab);
                 return;
             }
 
-            if (!Main.mouseItem.IsAir && Main.mouseItem.ModItem is Mabird && !i.IsAir) //都有物品，进行交换
+            if (!Main.mouseItem.IsAir && Main.mouseItem.ModItem is Mabird mabird1 && !i.IsAir) //都有物品，进行交换
             {
+                mabird1.Reset(Helper.GetMagikeTileCenter(controller.Entity.Position));
+
                 var temp = i;
                 controller.AddItemByIndex(Main.mouseItem, index);
                 Main.mouseItem = temp;
@@ -302,26 +316,82 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         }
     }
 
-    public class MabirdVerticalLine(MabirdController controller, int index) : UIVerticalLine()
+    //public class MabirdVerticalLine(MabirdController controller, int index) : UIVerticalLine()
+    //{
+    //    protected override void DrawSelf(SpriteBatch spriteBatch)
+    //    {
+    //        base.DrawSelf(spriteBatch);
+
+    //        Item item = controller[index];
+    //        if (!item.IsAir && item.ModItem is Mabird mabird)
+    //        {
+    //            Texture2D tex = MagikeAssets.MabirdStateButton.Value;
+
+    //            var center = GetDimensions().Center();
+    //            int frameY = 1;
+    //            if (mabird.GetItemPos != null && mabird.ReleaseItemPos != null)//有目标点时变绿色，否则为红色
+    //                frameY = 0;
+
+    //            var frameBox = tex.Frame(1, 2, 0, frameY);
+    //            spriteBatch.Draw(tex, center, frameBox, Color.White, 0, frameBox.Size() / 2, 1, 0, 0);
+    //        }
+
+    //    }
+    //}
+
+    public class MabirdActiveButton : UIElement
     {
-        protected override void DrawSelf(SpriteBatch spriteBatch)
+        private readonly MabirdController controller;
+        private readonly int index;
+
+        public MabirdActiveButton(MabirdController controller, int index)
         {
-            base.DrawSelf(spriteBatch);
+            var tex = MagikeAssets.MabirdStateButton;
+
+            Vector2 size = tex.Size();
+            size.Y /= 3;
+            this.SetSize(size);
+            this.controller = controller;
+            this.index = index;
+        }
+
+        public override void LeftClick(UIMouseEvent evt)
+        {
+            base.LeftClick(evt);
 
             Item item = controller[index];
             if (!item.IsAir && item.ModItem is Mabird mabird)
             {
-                Texture2D tex = MagikeAssets.MabirdStateButton.Value;
+                mabird.Active = !mabird.Active;
+            }
+        }
 
-                var center = GetDimensions().Center();
-                int frameY = 1;
-                if (mabird.GetItemPos != null && mabird.ReleaseItemPos != null)//有目标点时变绿色，否则为红色
-                    frameY = 0;
+        protected override void DrawSelf(SpriteBatch spriteBatch)
+        {
+            Texture2D tex = MagikeAssets.MabirdStateButton.Value;
+            var center = GetDimensions().Center();
 
-                var frameBox = tex.Frame(1, 2, 0, frameY);
-                spriteBatch.Draw(tex, center, frameBox, Color.White, 0, frameBox.Size() / 2, 1, 0, 0);
+            Item item = controller[index];
+            int frameY = 0;
+
+            if (!item.IsAir && item.ModItem is Mabird mabird)
+            {
+                if (mabird.Active)//有目标点时变绿色，否则为红色
+                    frameY = 1;
+                else
+                    frameY = 2;
+
+                if (IsMouseHovering)
+                {
+                    if (mabird.Active)
+                        UICommon.TooltipMouseText(MagikeSystem.GetUIText(MagikeSystem.UITextID.ClickToInactiveMabird));
+                    else
+                        UICommon.TooltipMouseText(MagikeSystem.GetUIText(MagikeSystem.UITextID.ClickToActiveMabird));
+                }
             }
 
+            var frameBox = tex.Frame(1, 3, 0, frameY);
+            spriteBatch.Draw(tex, center, frameBox, Color.White, 0, frameBox.Size() / 2, 1, 0, 0);
         }
     }
 
@@ -344,6 +414,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         {
             base.LeftClick(evt);
 
+            if (controller[index].IsAir)
+                return;
+
             Main.playerInventory = false;
             MagikeSystem.CloseUI();
 
@@ -358,8 +431,10 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             if (IsMouseHovering)
             {
                 _alpha = 1f;
-                UICommon.TooltipMouseText(
-                    MagikeSystem.GetUIText(MagikeSystem.UITextID.ClickToDrawRoute));
+                if (controller[index].IsAir)
+                    UICommon.TooltipMouseText(MagikeSystem.GetUIText(MagikeSystem.UITextID.NoItem));
+                else
+                    UICommon.TooltipMouseText(MagikeSystem.GetUIText(MagikeSystem.UITextID.ClickToDrawRoute));
             }
             else
                 _alpha = 0.75f;
@@ -456,7 +531,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         {
             base.LeftClick(evt);
 
-            //复制路径
+            //黏贴路径
             if (controller[index].IsAir)
             {
                 Helper.PlayPitched("UI/Error", 0.4f, 0);
@@ -465,12 +540,6 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             if (controller[index].ModItem is Mabird mabird)
             {
-                if (mabird.GetItemPos == null || mabird.ReleaseItemPos == null)
-                {
-                    Helper.PlayPitched("UI/Error", 0.4f, 0);
-                    return;
-                }
-
                 Vector2 pos = Helper.GetMagikeTileCenter(controller.Entity.Position);
                 if (mabird.CanSend(pos, Helper.GetMagikeTileCenter(CopyRouteButton.CopyGetItemPos))
                     && mabird.CanSend(pos, Helper.GetMagikeTileCenter(CopyRouteButton.CopyReleaseItemPos)))
@@ -586,6 +655,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         private Vector2 aimPos;
         private Color c;
         private bool start = true;
+        public Point RecordGetItemPos;
 
         public int Index => (int)Projectile.ai[2];
         public float State { get; set; }
@@ -609,7 +679,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             Point16 position = new((int)Projectile.ai[0], (int)Projectile.ai[1]);
             Point16 currentPoint = InMousePos.ToTileCoordinates16();// new((int)InMousePos.X / 16, (int)InMousePos.Y / 16);
-            aimPos = Helper.GetMagikeTileCenter(currentPoint);
+            aimPos = Helper.GetMagikeTileCenter_NotTopLeft(currentPoint.X, currentPoint.Y);
 
             if (!MagikeHelper.TryGetEntityWithComponent<MabirdController>(position.X, position.Y, MagikeComponentID.ItemContainer
                 , out MagikeTP controller))
@@ -647,30 +717,21 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
                         Point16 topLeft = MagikeHelper.ToTopLeft(currentPoint.X, currentPoint.Y) ?? currentPoint;
 
-                        if (HasContainer(topLeft))
+                        bool b1 = mabird.CanSend(Helper.GetMagikeTileCenter(controller.Position), aimPos);
+                        bool b2 = HasContainer(topLeft);
+
+                        if (b1 && b2)
                         {
-                            MagikeHelper.SpawnLozengeParticle_WithTopLeft(controller.Position);
-                            MagikeHelper.SpawnLozengeParticle_WithTopLeft(topLeft);
-                            MagikeHelper.SpawnDustOnSend(controller.Position, topLeft);
+                            FindPosSuccess(controller.Position, topLeft);
 
-                            Helper.PlayPitched("Fairy/CursorExpand", 0.4f, 0, Owner.Center);
-
-                            mabird.SetGetItemPos(topLeft.ToPoint());
+                            RecordGetItemPos = topLeft.ToPoint();
 
                             State = 1;
                             start = true;
                         }
                         else
                         {
-                            Helper.PlayPitched("UI/Error", 0.4f, 0, Owner.Center);
-
-                            PopupText.NewText(new AdvancedPopupRequest()
-                            {
-                                Color = Coralite.CrystallinePurple,
-                                Text = MagikeSystem.GetUIText(MagikeSystem.UITextID.ItemContainerNotFound),
-                                DurationInFrames = 60,
-                                Velocity = -Vector2.UnitY
-                            }, Main.MouseWorld - (Vector2.UnitY * 32));
+                            FailSelectPoint(b1, b2);
 
                             Projectile.Kill();
                         }
@@ -683,33 +744,50 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
                         Point16 topLeft = MagikeHelper.ToTopLeft(currentPoint.X, currentPoint.Y) ?? currentPoint;
 
-                        if (HasContainer(topLeft))
+                        bool b1 = mabird.CanSend(Helper.GetMagikeTileCenter(controller.Position), aimPos);
+                        bool b2 = HasContainer(topLeft);
+                        if (b1 && b2)
                         {
-                            MagikeHelper.SpawnLozengeParticle_WithTopLeft(controller.Position);
-                            MagikeHelper.SpawnLozengeParticle_WithTopLeft(topLeft);
-                            MagikeHelper.SpawnDustOnSend(controller.Position, topLeft);
+                            FindPosSuccess(controller.Position, topLeft);
 
-                            Helper.PlayPitched("Fairy/CursorExpand", 0.4f, 0, Owner.Center);
-
+                            mabird.SetGetItemPos(RecordGetItemPos);
                             mabird.SetReleaseItemPos(topLeft.ToPoint());
                         }
                         else
-                        {
-                            Helper.PlayPitched("UI/Error", 0.4f, 0, Owner.Center);
-
-                            PopupText.NewText(new AdvancedPopupRequest()
-                            {
-                                Color = Coralite.CrystallinePurple,
-                                Text = MagikeSystem.GetUIText(MagikeSystem.UITextID.ItemContainerNotFound),
-                                DurationInFrames = 60,
-                                Velocity = -Vector2.UnitY
-                            }, Main.MouseWorld - (Vector2.UnitY * 32));
-                        }
+                            FailSelectPoint(b1, b2);
 
                         Projectile.Kill();
                     }
                     break;
             }
+        }
+
+        private void FindPosSuccess(Point16 pos1, Point16 pos2)
+        {
+            MagikeHelper.SpawnLozengeParticle_WithTopLeft(pos1);
+            MagikeHelper.SpawnLozengeParticle_WithTopLeft(pos2);
+            MagikeHelper.SpawnDustOnSend(pos1, pos2);
+
+            Helper.PlayPitched("Fairy/CursorExpand", 0.4f, 0, Owner.Center);
+        }
+
+        private void FailSelectPoint(bool b1, bool b2)
+        {
+            Helper.PlayPitched("UI/Error", 0.4f, 0, Owner.Center);
+
+            string text = "";
+            if (b1)
+                text = MagikeSystem.GetUIText(MagikeSystem.UITextID.MabirdSendLengthTooFar);
+            if (b2)
+                text = MagikeSystem.GetUIText(MagikeSystem.UITextID.ItemContainerNotFound);
+
+            PopupText.NewText(new AdvancedPopupRequest()
+            {
+                Color = Coralite.CrystallinePurple,
+                Text = text,
+                DurationInFrames = 60,
+                Velocity = -Vector2.UnitY
+            }, Main.MouseWorld - (Vector2.UnitY * 32));
         }
 
         private static bool HasContainer(Point16 topLeft)
@@ -747,14 +825,14 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                     if (controller.TryGetComponent(MagikeComponentID.ItemContainer, out MabirdController mabirdController)
                         && mabirdController[Index].ModItem is Mabird mabird)
                     {
-                        MagikeSystem.DrawConnectLine(spriteBatch, selfPos, mabird.GetItemPos.Pos, Main.screenPosition, Coralite.CrystallinePurple);
-                        MagikeSystem.DrawConnectLine(spriteBatch, mabird.GetItemPos.Pos, aimPos, Main.screenPosition, c);
+                        Vector2 getItemPos = Helper.GetMagikeTileCenter(RecordGetItemPos);
+                        MagikeSystem.DrawConnectLine(spriteBatch, selfPos, getItemPos, Main.screenPosition, Coralite.CrystallinePurple);
+                        MagikeSystem.DrawConnectLine(spriteBatch, getItemPos, aimPos, Main.screenPosition, c);
+                        MagikeSystem.DrawConnectLine(spriteBatch, aimPos, selfPos, Main.screenPosition, c);
                     }
 
                     break;
             }
-
-            MagikeSystem.DrawConnectLine(spriteBatch, selfPos, aimPos, Main.screenPosition, c);
 
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, default, DepthStencilState.None, spriteBatch.GraphicsDevice.RasterizerState, null, Main.GameViewMatrix.TransformationMatrix);

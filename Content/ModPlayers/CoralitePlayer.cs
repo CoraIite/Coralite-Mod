@@ -5,9 +5,12 @@ using Coralite.Content.Items.Steel;
 using Coralite.Content.Items.Thunder;
 using Coralite.Content.Projectiles.Globals;
 using Coralite.Content.UI;
+using Coralite.Content.UI.MagikeApparatusPanel;
 using Coralite.Content.WorldGeneration;
 using Coralite.Core;
 using Coralite.Core.Loaders;
+using Coralite.Core.Systems.MagikeSystem;
+using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.YujianSystem;
 using Coralite.Helpers;
 using InnoVault.PRT;
@@ -20,6 +23,7 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameInput;
 using Terraria.ID;
+using Terraria.UI;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.ModPlayers
@@ -929,6 +933,30 @@ namespace Coralite.Content.ModPlayers
                 if (flag3)
                     ItemCheck_StartActualUse(item);
             }
+        }
+
+        public override bool ShiftClickSlot(Item[] inventory, int context, int slot)
+        {
+            Item i = inventory[slot];
+            if (i.IsAir)
+                return false;
+
+            if (context == ItemSlot.Context.InventoryItem)
+            {
+                var ui = UILoader.GetUIState<MagikeApparatusPanel>();
+                if (ui.visible && MagikeApparatusPanel.CurrentEntity != null
+                    && MagikeApparatusPanel.CurrentEntity.TryGetComponent(MagikeComponentID.ItemContainer, out ItemContainer container))
+                {
+                    if (container.CanAddItem(i.type,i.stack))
+                    {
+                        container.AddItem(i);
+                        Helper.PlayPitched(CoraliteSoundID.Grab);
+                        return true;
+                    }
+                }
+            }
+
+            return base.ShiftClickSlot(inventory, context, slot);
         }
 
         private void ItemCheck_StartActualUse(Item sItem)

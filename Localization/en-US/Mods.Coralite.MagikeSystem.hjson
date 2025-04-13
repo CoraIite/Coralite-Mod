@@ -221,6 +221,9 @@ MagikeSystem: {
 		NoRouteCanCopy: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.NoRouteCanCopy
 		ClickToCopyRoute: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ClickToCopyRoute
 		ClickToPasteRoute: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ClickToPasteRoute
+		ClickToActiveMabird: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ClickToActiveMabird
+		ClickToInactiveMabird: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ClickToInactiveMabird
+		MabirdSendLengthTooFar: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.MabirdSendLengthTooFar
 	}
 
 	CraftText: {
@@ -297,5 +300,9 @@ MagikeSystem: {
 	ItemDescription: {
 		PolarizedFilter: Insertable polarized filters：
 		CanInsertTo: Mods.Coralite.MagikeSystem.MagikeSystem.ItemDescription.CanInsertTo
+		MabirdSendLength: Mods.Coralite.MagikeSystem.MagikeSystem.ItemDescription.MabirdSendLength
+		MabirdFlySpeed: Mods.Coralite.MagikeSystem.MagikeSystem.ItemDescription.MabirdFlySpeed
+		MabirdCatchItemCount: Mods.Coralite.MagikeSystem.MagikeSystem.ItemDescription.MabirdCatchItemCount
+		MabirdRestTime: Mods.Coralite.MagikeSystem.MagikeSystem.ItemDescription.MabirdRestTime
 	}
 }

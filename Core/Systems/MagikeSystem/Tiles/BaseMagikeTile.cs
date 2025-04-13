@@ -133,7 +133,6 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
                 TileObjectData.newAlternate.AnchorBottom = AnchorData.Empty;
                 TileObjectData.newAlternate.DrawYOffset = 0;
                 TileObjectData.newAlternate.AnchorLeft = new AnchorData(AnchorType.SolidTile | AnchorType.SolidBottom | AnchorType.SolidSide, TileObjectData.newAlternate.Height, 0);
-                TileObjectData.newAlternate.Origin = new Point16(0, width / 2);
 
                 if (PlaceType == CoraliteSets.MagikeTileType.FourWayNormal)
                 {
@@ -141,27 +140,36 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
                     TileObjectData.newAlternate.Height = width;
                     TileObjectData.newAlternate.CoordinateHeights = new int[width];
                     Array.Fill(TileObjectData.newAlternate.CoordinateHeights, 16);
+                    TileObjectData.newAlternate.Origin = new Point16(0, width / 2);
+
                     TileObjectData.addAlternate(height * 2 / width);
                 }
                 else
+                {
+                    TileObjectData.newAlternate.Origin = new Point16(0, height / 2);
                     TileObjectData.addAlternate(2);
+                }
 
                 //放置在右边
                 TileObjectData.newAlternate.CopyFrom(TileObjectData.newTile);
                 TileObjectData.newAlternate.AnchorBottom = AnchorData.Empty;
                 TileObjectData.newAlternate.DrawYOffset = 0;
                 TileObjectData.newAlternate.AnchorRight = new AnchorData(AnchorType.SolidTile | AnchorType.SolidBottom | AnchorType.SolidSide, TileObjectData.newAlternate.Height, 0);
-                TileObjectData.newAlternate.Origin = new Point16(height - 1, width / 2);
                 if (PlaceType == CoraliteSets.MagikeTileType.FourWayNormal)
                 {
                     TileObjectData.newAlternate.Width = height;
                     TileObjectData.newAlternate.Height = width;
                     TileObjectData.newAlternate.CoordinateHeights = new int[width];
                     Array.Fill(TileObjectData.newAlternate.CoordinateHeights, 16);
+                    TileObjectData.newAlternate.Origin = new Point16(height - 1, width / 2);
+
                     TileObjectData.addAlternate((height * 2 / width) + 1);
                 }
                 else
+                {
+                    TileObjectData.newAlternate.Origin = new Point16(width - 1, height / 2);
                     TileObjectData.addAlternate(3);
+                }
             }
 
             TileObjectData.addTile(Type);

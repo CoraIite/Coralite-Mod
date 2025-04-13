@@ -1,5 +1,5 @@
 ﻿using Coralite.Content.Dusts;
-using Coralite.Content.Items.Magike.Factorys;
+using Coralite.Content.Items.MagikeSeries2;
 using Coralite.Content.Raritys;
 using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem;
@@ -8,6 +8,7 @@ using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Core.Systems.MagikeSystem.Tiles;
+using Coralite.Helpers;
 using Terraria;
 using static Terraria.ModLoader.ModContent;
 
@@ -18,6 +19,11 @@ namespace Coralite.Content.Items.Magike.ItemTransmit
     {
         public void AddMagikeCraftRecipe()
         {
+            MagikeRecipe.CreateCraftRecipe<SmoothSkarn, BasicMabirdNest>
+                (MagikeHelper.CalculateMagikeCost(MALevel.CrystallineMagike, 6, 45), 12)
+                .AddIngredient<SkarnBrick>(5)
+                .AddIngredient<CrystallineMagike>(3)
+                .Register();
         }
     }
 

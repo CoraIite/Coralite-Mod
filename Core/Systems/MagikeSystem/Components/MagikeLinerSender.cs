@@ -513,9 +513,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 spriteBatch.Draw(tex2, pos, null, Color.White, 0, origin, scale, 0, 0);
             }
 
-            if (ishover)
+            if (ishover && indexInRange)
             {
-                if (indexInRange)
+                MagikeApparatusPanel.DrawExtras.Add((spriteBatch) =>
                 {
                     spriteBatch.End();
                     spriteBatch.Begin(default, BlendState.AlphaBlend, SamplerState.PointWrap, default, default, null, Main.GameViewMatrix.TransformationMatrix);
@@ -529,9 +529,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
                     spriteBatch.End();
                     spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.AnisotropicClamp, DepthStencilState.None, spriteBatch.GraphicsDevice.RasterizerState, null, Main.UIScaleMatrix);
+                });
 
-                    UICommon.TooltipMouseText(MagikeSystem.GetUIText(MagikeSystem.UITextID.ClickToDisconnect));
-                }
+                UICommon.TooltipMouseText(MagikeSystem.GetUIText(MagikeSystem.UITextID.ClickToDisconnect));
             }
 
             //位置在右侧往左按钮的距离再一半

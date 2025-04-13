@@ -68,15 +68,23 @@ namespace Coralite.Content.CustomHooks
                 {
                     style = 2;
                     alternateData = TileObjectData.GetTileData(type, 0, style + 1);// ((List<TileObjectData>)_alternateInfo.GetValue(tileData))[style];
-                    partFrameY = (t.TileFrameY - (alternateData.CoordinateFullWidth * 2)) % alternateData.CoordinateFullHeight;
+                    partFrameY = placeType switch
+                    {
+                        CoraliteSets.MagikeTileType.FourWayNormal => (t.TileFrameY - (alternateData.CoordinateFullWidth * 2)) % alternateData.CoordinateFullHeight,
+                        _ => t.TileFrameY % tileData.CoordinateFullHeight
+                    }; 
                 }
                 else
                 {
                     style = 3;
                     alternateData = TileObjectData.GetTileData(type, 0, style + 1);// ((List<TileObjectData>)_alternateInfo.GetValue(tileData))[style];
-                    partFrameY = (t.TileFrameY - (alternateData.CoordinateFullWidth * 2)) % alternateData.CoordinateFullHeight;
+                    partFrameY = placeType switch
+                    {
+                        CoraliteSets.MagikeTileType.FourWayNormal => (t.TileFrameY - (alternateData.CoordinateFullWidth * 2)) % alternateData.CoordinateFullHeight,
+                        _ => t.TileFrameY % tileData.CoordinateFullHeight
+                    };
                 }
-
+                
                 //因为放下来的时候就是0所以不管他
                 int partFrameX = t.TileFrameX % alternateData.CoordinateFullWidth;
 

@@ -225,28 +225,36 @@ namespace Coralite.Core.Systems.MagikeSystem
 
         public static LocalizedText[] ItemDescription { get; private set; }
 
-        public class ItemDescriptionID
+        public enum ItemDescriptionID
         {
             /*
              * 物品描述部分
              *      - 能够插入哪些偏振滤镜
              */
-            public const int PolarizedFilter = 0;
-            public const int CanInsertTo = 1;
+            PolarizedFilter = 0,
+            CanInsertTo,
 
-            public const int Count = 2;
+            //魔鸟描述
+            MabirdSendLength,
+            MabirdFlySpeed,
+            MabirdCatchItemCount,
+            MabirdRestTime,
+
+            Count
         }
 
         public void LoadItemDescription()
         {
-            ItemDescription = new LocalizedText[ItemDescriptionID.Count];
+            ItemDescription = new LocalizedText[(int)ItemDescriptionID.Count];
 
-            ItemDescription[ItemDescriptionID.PolarizedFilter] = this.GetLocalization(nameof(ItemDescription) + "." + "PolarizedFilter");
-            ItemDescription[ItemDescriptionID.CanInsertTo] = this.GetLocalization(nameof(ItemDescription) + "." + "CanInsertTo");
+            for (int i = 0; i < (int)ItemDescriptionID.Count; i++)
+                ItemDescription[i] = this.GetLocalization(nameof(ItemDescription) + "." + Enum.GetName((ItemDescriptionID)i));
         }
 
-        public static string GetItemDescriptionText(int id)
-            => ItemDescription[id].Value;
+        public static string GetItemDescriptionText(ItemDescriptionID id)
+            => ItemDescription[(int)id].Value;
+        public static LocalizedText GetItemDescription(ItemDescriptionID id)
+            => ItemDescription[(int)id];
 
         #endregion
 
@@ -416,6 +424,9 @@ namespace Coralite.Core.Systems.MagikeSystem
             NoRouteCanCopy,
             ClickToCopyRoute,
             ClickToPasteRoute,
+            ClickToActiveMabird,
+            ClickToInactiveMabird,
+            MabirdSendLengthTooFar,
 
             Count
         }

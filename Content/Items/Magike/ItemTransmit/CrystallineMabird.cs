@@ -8,11 +8,10 @@ namespace Coralite.Content.Items.Magike.ItemTransmit
     {
         public override string Texture => AssetDirectory.ItemTransmits + Name;
 
-        public override int SendLength => 16*35;
-
-        public override int CatchStack => 8;
-
-        public override float Speed => 8;
+        public override int SendLength => 16 * 30;
+        public override int CatchStack => 5;
+        public override float Speed => 4;
+        public override short RestTime => 60 * 2;
 
         public override void SetDefaults()
         {
