@@ -10,6 +10,7 @@ using System.Linq;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
+using Terraria.UI.Chat;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Gels
@@ -184,11 +185,32 @@ namespace Coralite.Content.Items.Gels
                 line.Text = text;
             }
         }
+
+        public override bool PreDrawTooltipLine(DrawableTooltipLine line, ref int yOffset)
+        {
+            if (line.Mod == "Terraria" && line.Name == "ItemName")
+            {
+                Color targetColor = Color.Lerp(new Color(50, 150, 225, 20), new Color(255, 51, 234, 20), 0.5f + 0.5f * MathF.Sin(0.06f * (int)Main.timeForVisualEffects));
+                targetColor *= 0.35f;
+
+                TextSnippet[] snippets = [.. ChatManager.ParseMessage(line.Text, targetColor)];
+                ChatManager.ConvertNormalSnippets(snippets);
+
+                for (int i = 0; i < 8; i++)
+                {
+                    Vector2 offset = (i * MathHelper.TwoPi /8+ 3 * Main.GlobalTimeWrappedHourly).ToRotationVector2() * 4;
+                    ChatManager.DrawColorCodedString(Main.spriteBatch, line.Font, snippets, new Vector2(line.X, line.Y) + offset
+                        , targetColor, line.Rotation, line.Origin, line.BaseScale, out _, line.MaxWidth);
+                }
+            }
+
+            return base.PreDrawTooltipLine(line, ref yOffset);
+        }
     }
 
     public class EmperorRarity : ModRarity
     {
-        public override Color RarityColor => Color.Lerp(Coralite.MagicCrystalPink, new Color(50, 152, 225), 0.5f + 0.5f * MathF.Sin((int)Main.timeForVisualEffects * 0.1f));
+        public override Color RarityColor => Color.Lerp(new Color(180, 220, 225) , new(255, 230, 255),  0.5f + 0.5f * MathF.Sin((int)Main.timeForVisualEffects * 0.1f));
     }
 
     public class EmperorSlimeBuff:ModBuff

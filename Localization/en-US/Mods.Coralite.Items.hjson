@@ -5807,4 +5807,5 @@ BloodmarkTopper: {
 	ArmorSetPrison: Mods.Coralite.Items.BloodmarkTopper.ArmorSetPrison
 	DisplayName: Bloodmark Topper
 	Tooltip: ""
+	SetTip: Mods.Coralite.Items.BloodmarkTopper.SetTip
 }

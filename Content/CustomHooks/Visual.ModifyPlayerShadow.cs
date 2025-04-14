@@ -43,7 +43,7 @@ namespace Coralite.Content.CustomHooks
                 {
                     Vector2 offset = (i * MathHelper.PiOver2 + 3 * Main.GlobalTimeWrappedHourly).ToRotationVector2();
                     offset *= 2 + Math.Clamp(4 * cp.EmperorDefence / (float)CoralitePlayer.EmperorDefenctMax, 1, 4);
-                    Main.PlayerRenderer.DrawPlayer(camera, drawPlayer, drawPlayer.position + offset+new Vector2(0,drawPlayer.gfxOffY)
+                    Main.PlayerRenderer.DrawPlayer(camera, drawPlayer, drawPlayer.position + offset + new Vector2(0, drawPlayer.gfxOffY)
                         , drawPlayer.fullRotation, drawPlayer.fullRotationOrigin, 0.8f);
                 }
 

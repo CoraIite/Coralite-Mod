@@ -139,13 +139,13 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             UIVerticalLine line = new UIVerticalLine();
             line.SetTopLeft(0, left);
             Append(line);
-            left += line.Width.Pixels;
+            left += line.Width.Pixels+6;
 
             //添加画线段按钮
             RouteDrawButton routeDrawButton = new RouteDrawButton(controller, index);
-            routeDrawButton.SetTopLeft(10, left);
+            routeDrawButton.SetTopLeft(8, left);
             Append(routeDrawButton);
-            left += routeDrawButton.Width.Pixels + 6;
+            left += routeDrawButton.Width.Pixels + 8;
 
             //添加复制黏贴按钮
             CopyRouteButton copyRouteButton = new CopyRouteButton(controller, index);

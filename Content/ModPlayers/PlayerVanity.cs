@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Items.FlyingShields;
 using Coralite.Content.Items.LandOfTheLustrousSeries.Accessories;
+using Coralite.Content.Items.Misc_Equip;
 using Coralite.Content.Items.Misc_Magic;
 using Coralite.Content.Items.Nightmare;
 using Coralite.Content.Items.Steel;
@@ -17,15 +18,18 @@ namespace Coralite.Content.ModPlayers
         {
             if (HasEffect(nameof(BoneRing)))
                 drawInfo.drawPlayer.handon = EquipLoader.GetEquipSlot(Mod, "BoneRing", EquipType.HandsOn);
-            if (HasEffect(nameof(VioletEmblem)))
+            else if (HasEffect(nameof(VioletEmblem)))
                 drawInfo.drawPlayer.handon = EquipLoader.GetEquipSlot(Mod, "VioletEmblem", EquipType.HandsOn);
+
             if (HasEffect(nameof(HylianShield)))
                 drawInfo.drawPlayer.shield = EquipLoader.GetEquipSlot(Mod, "HylianShield", EquipType.Shield);
 
-            if (HasEffect(nameof(CharmOfIsis) + "Vanity"))
-                drawInfo.drawPlayer.head = EquipLoader.GetEquipSlot(Mod, "CharmOfIsis", EquipType.Head);
-            if (HasEffect(nameof(OsirisPillar) + "Vanity"))
-                drawInfo.drawPlayer.head = EquipLoader.GetEquipSlot(Mod, "OsirisPillar", EquipType.Head);
+            if (drawInfo.drawPlayer.armor[10].IsAir)
+            {
+                var head = OverrideHeadSlot();
+                if (head.HasValue)
+                    drawInfo.drawPlayer.head = head.Value;
+            }
 
             if (HasEffect(nameof(ConchRobe)))
                 drawInfo.drawPlayer.legs = EquipLoader.GetEquipSlot(Mod, nameof(ConchRobe), EquipType.Legs);
@@ -79,6 +83,20 @@ namespace Coralite.Content.ModPlayers
                 drawInfo.itemColor = c;
                 drawInfo.floatingTubeColor = c;
             }
+        }
+
+        private int? OverrideHeadSlot()
+        {
+            if (HasEffect(nameof(CharmOfIsis) + "Vanity"))
+                return  EquipLoader.GetEquipSlot(Mod, "CharmOfIsis", EquipType.Head);
+            else if (HasEffect(nameof(OsirisPillar) + "Vanity"))
+                 return EquipLoader.GetEquipSlot(Mod, "OsirisPillar", EquipType.Head);
+            else if (HasEffect(BloodmarkTopper.ShadowSet))
+                return EquipLoader.GetEquipSlot(Mod, BloodmarkTopper.ShadowSetVinityName, EquipType.Head);
+            else if (HasEffect(BloodmarkTopper.PrisonSet))
+                return EquipLoader.GetEquipSlot(Mod, BloodmarkTopper.PrisonSetVinityName, EquipType.Head);
+
+            return null;
         }
     }
 }

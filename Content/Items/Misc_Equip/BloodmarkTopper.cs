@@ -1,10 +1,14 @@
 ﻿using Coralite.Content.Items.Materials;
+using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Attributes;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Coralite.Helpers;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
 using static Terraria.ModLoader.ModContent;
@@ -21,12 +25,17 @@ namespace Coralite.Content.Items.Misc_Equip
         public const string BloodSet = "BloodmarkTopperA";
         /// <summary> 与暗影套触发的套装效果 </summary>
         public const string ShadowSet = "BloodmarkTopperB";
+        public const string ShadowSetVinity = $"{AssetDirectory.Misc_Equip}BloodmarkTopperShadow_Head";
+        public const string ShadowSetVinityName = "BloodmarkTopperShadow";
         /// <summary> 与黑曜石套触发的套装效果 </summary>
         public const string PrisonSet = "BloodmarkTopperC";
+        public const string PrisonSetVinity = $"{AssetDirectory.Misc_Equip}BloodmarkTopperPrison_Head";
+        public const string PrisonSetVinityName = "BloodmarkTopperPrison";
 
         public static LocalizedText[] EXToolTip { get; private set; }
         public static LocalizedText[] Bonus { get; private set; }
         public static LocalizedText[] EXName { get; private set; }
+        public static LocalizedText SetTip { get; private set; }
 
         private enum ArmorSetType
         {
@@ -49,6 +58,9 @@ namespace Coralite.Content.Items.Misc_Equip
 
         public override void Load()
         {
+            EquipLoader.AddEquipTexture(Mod, ShadowSetVinity, EquipType.Head, name: ShadowSetVinityName);
+            EquipLoader.AddEquipTexture(Mod, PrisonSetVinity, EquipType.Head, name: PrisonSetVinityName);
+
             EXToolTip = new LocalizedText[(int)EXToolTipID.Count];
             for (int i = 0; i < (int)EXToolTipID.Count; i++)
                 EXToolTip[i] = this.GetLocalization("ExtraToolTip" + Enum.GetName((EXToolTipID)i));
@@ -60,6 +72,8 @@ namespace Coralite.Content.Items.Misc_Equip
                 EXName[i] = this.GetLocalization("SpecialPreName" + Enum.GetName((ArmorSetType)i));
             for (int i = 0; i < (int)ArmorSetType.Count; i++)
                 Bonus[i] = this.GetLocalization("ArmorSet" + Enum.GetName((ArmorSetType)i));
+
+            SetTip = this.GetLocalization("SetTip");
         }
 
         public override void Unload()
@@ -67,11 +81,14 @@ namespace Coralite.Content.Items.Misc_Equip
             EXToolTip = null;
             Bonus = null;
             EXName = null;
+            SetTip = null;
         }
 
         public override void SetDefaults()
         {
-            base.SetDefaults();
+            Item.value = Item.sellPrice(gold: 5);
+            Item.rare = RarityType<BloodRarity>();
+            Item.defense = 9;
         }
 
         public void AddMagikeCraftRecipe()
@@ -82,7 +99,7 @@ namespace Coralite.Content.Items.Misc_Equip
                 .AddIngredient(ItemID.TopHat)
                 .AddIngredient<DeorcInABottle>()
                 .AddIngredient<MutatusInABottle>()
-                .AddIngredient(ItemID.SoulofNight,5)
+                .AddIngredient(ItemID.SoulofNight, 5)
                 .AddIngredient(ItemID.BloodMoonStarter)
                 .Register();
 
@@ -112,5 +129,178 @@ namespace Coralite.Content.Items.Misc_Equip
                 .AddIngredient(ItemID.BloodMoonStarter)
                 .Register();
         }
+
+        public override void UpdateEquip(Player player)
+        {
+            if (player.TryGetModPlayer(out CoralitePlayer cp))
+                cp.AddEffect(nameof(BloodmarkTopper));
+
+            //暴击率提高5%
+            player.GetCritChance(DamageClass.Generic) += 5;
+            //伤害提高8%
+            player.GetDamage(DamageClass.Generic) += 0.08f;
+        }
+
+        public override bool IsArmorSet(Item head, Item body, Item legs)
+            => CheckArmorSet(head, body, legs, out _);
+
+        private static bool CheckArmorSet(Item head, Item body, Item legs, out ArmorSetType? type)
+        {
+            type = null;
+
+            if (head.type != ItemType<BloodmarkTopper>())
+                return false;
+
+            if (body.type == ItemID.CrimsonScalemail && legs.type == ItemID.CrimsonGreaves)
+            {
+                type = ArmorSetType.Blood;
+                return true;
+            }
+
+            if (body.type is ItemID.ShadowScalemail or ItemID.AncientShadowScalemail
+                && legs.type is ItemID.ShadowGreaves or ItemID.AncientShadowGreaves)
+            {
+                type = ArmorSetType.Shadow;
+                return true;
+            }
+
+            if (body.type == ItemID.ObsidianShirt && legs.type == ItemID.ObsidianPants)
+            {
+                type = ArmorSetType.Prison;
+                return true;
+            }
+
+            return false;
+        }
+
+        public override void UpdateArmorSet(Player player)
+        {
+            CheckArmorSet(player.HeadArmor(), player.BodyArmor(), player.LegArmor(), out ArmorSetType? type);
+
+            if (player.TryGetModPlayer(out CoralitePlayer cp))
+            {
+                player.setBonus = Bonus[(int)type.Value].Value;
+
+                switch (type.Value)
+                {
+                    default:
+                    case ArmorSetType.Blood:
+                        cp.AddEffect(BloodSet);
+                        player.statDefense += 10;
+
+                        break;
+                    case ArmorSetType.Shadow:
+                        cp.AddEffect(ShadowSet);
+                        player.statDefense += 8;
+
+                        break;
+                    case ArmorSetType.Prison:
+                        cp.AddEffect(PrisonSet);
+                        player.statDefense += 6;
+                        player.whipRangeMultiplier += 0.3f;
+                        player.GetDamage(DamageClass.Summon) += 0.15f;
+                        player.GetAttackSpeed(DamageClass.SummonMeleeSpeed) += 0.15f;
+
+                        break;
+                }
+            }
+        }
+
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            if (!CheckArmorSet(Main.LocalPlayer.HeadArmor(), Main.LocalPlayer.BodyArmor(), Main.LocalPlayer.LegArmor(), out ArmorSetType? type))
+            {
+                int index2 = tooltips.FindIndex(l => l.Name == "Tooltip0");
+                if (index2 != -1)
+                {
+                    TooltipLine line3 = new TooltipLine(Mod, "SpecialToolTip", EXToolTip[0].Value);
+                    tooltips.Insert(index2+1, line3);
+                }
+
+                TooltipLine line2 = new TooltipLine(Mod, "SpecialArmorSet", SetTip.Value);
+                tooltips.Add(line2);
+                return;
+            }
+
+            string name = "ItemName";
+            TooltipLine line = tooltips.FirstOrDefault(l => l.Name == name && l.Mod == "Terraria");
+            if (line != null)
+            {
+                string text = line.Text;
+                line.Text = EXName[(int)type.Value] + " " + text;
+            }
+
+            int index = tooltips.FindIndex(l => l.Name == "Tooltip0");
+            if (index != -1)
+            {
+                TooltipLine line2 = new TooltipLine(Mod, "SpecialToolTip", EXToolTip[(int)type.Value+1].Value);
+                tooltips.Insert(index+1, line2);
+            }
+        }
+
+        public override void ArmorSetShadows(Player player)
+        {
+            if (player.TryGetModPlayer(out CoralitePlayer cp))
+            {
+                if (cp.HasEffect(ShadowSet))
+                    player.armorEffectDrawShadow = true;
+            }
+        }
+    }
+
+    public class BloodRarity : ModRarity
+    {
+        public override Color RarityColor =>
+            Color.Lerp(new Color(255, 30, 30), new(160, 14, 46), 0.5f + 0.5f * MathF.Sin((int)Main.timeForVisualEffects * 0.1f));
+    }
+
+    [AutoLoadTexture(Path = AssetDirectory.Misc_Equip)]
+    public class BloodmarkTopperProj : ModProjectile
+    {
+        public override string Texture => AssetDirectory.Misc_Equip + Name;
+
+        public static ATex ShadowTopper { get; private set; }
+        public static ATex PrisonTopper { get; private set; }
+
+        public Player Owner => Main.player[Projectile.owner];
+
+        public override void SetDefaults()
+        {
+            Projectile.width = 26;
+            Projectile.height = 32;
+
+            Projectile.tileCollide = false;
+            Projectile.friendly = true;
+
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 30;
+        }
+
+        #region AI
+
+        public override bool PreAI()
+        {
+            if (Owner.TryGetModPlayer(out CoralitePlayer cp)
+                && cp.HasEffect(nameof(BloodmarkTopper)))
+                Projectile.timeLeft = 2;
+
+            return true;
+        }
+
+        public override void AI()
+        {
+
+        }
+
+        #endregion
+
+        #region 绘制
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            return false;
+        }
+
+        #endregion
     }
 }

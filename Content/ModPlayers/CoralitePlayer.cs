@@ -36,11 +36,6 @@ namespace Coralite.Content.ModPlayers
         public int parryTime;
 
         /// <summary>
-        /// 各种效果
-        /// </summary>
-        //public HashSet<string> Effects = new();
-
-        /// <summary>
         /// 各种效果的bool
         /// </summary>
         public bool[] Effects = new bool[PlayerEffectLoader.EffectCount];
@@ -459,10 +454,19 @@ namespace Coralite.Content.ModPlayers
 
         public override void UpdateLifeRegen()
         {
-            if (HasEffect(Items.Gels.EmperorSlimeBoots.DefenceSet)&&EmperorDefence>EmperorDefenctMax/2)
+            if (HasEffect(Items.Gels.EmperorSlimeBoots.DefenceSet) && EmperorDefence > EmperorDefenctMax / 2)
                 Player.lifeRegen += 4;
 
             Player.lifeRegen = (int)(Player.lifeRegen * (1 + lifeReganBonus));
+
+            if (HasEffect(Items.Misc_Equip.BloodmarkTopper.BloodSet))
+                Player.lifeRegenTime += 1f;
+        }
+
+        public override void NaturalLifeRegen(ref float regen)
+        {
+            if (HasEffect(Items.Misc_Equip.BloodmarkTopper.BloodSet))
+                regen *= 1.5f;
         }
 
         public override void UpdateBadLifeRegen()
@@ -503,6 +507,17 @@ namespace Coralite.Content.ModPlayers
                     Player.lifeRegen -= 10 * 8;
                     Player.lifeRegenTime = 0;
                 }
+            }
+        }
+
+        public override void PostUpdateRunSpeeds()
+        {
+            if (HasEffect(Items.Misc_Equip.BloodmarkTopper.ShadowSet))
+            {
+                Player.runAcceleration *= 1.75f;
+                Player.maxRunSpeed *= 1.15f;
+                Player.accRunSpeed *= 1.15f;
+                Player.runSlowdown *= 1.75f;
             }
         }
 

@@ -5915,16 +5915,55 @@ StartSkyIsland: {
 }
 
 BloodmarkTopper: {
-	ExtraToolTipNone: Mods.Coralite.Items.BloodmarkTopper.ExtraToolTipNone
-	ExtraToolTipBlood: Mods.Coralite.Items.BloodmarkTopper.ExtraToolTipBlood
-	ExtraToolTipShadow: Mods.Coralite.Items.BloodmarkTopper.ExtraToolTipShadow
-	ExtraToolTipPrison: Mods.Coralite.Items.BloodmarkTopper.ExtraToolTipPrison
-	SpecialPreNameBlood: Mods.Coralite.Items.BloodmarkTopper.SpecialPreNameBlood
-	SpecialPreNameShadow: Mods.Coralite.Items.BloodmarkTopper.SpecialPreNameShadow
-	SpecialPreNamePrison: Mods.Coralite.Items.BloodmarkTopper.SpecialPreNamePrison
-	ArmorSetBlood: Mods.Coralite.Items.BloodmarkTopper.ArmorSetBlood
-	ArmorSetShadow: Mods.Coralite.Items.BloodmarkTopper.ArmorSetShadow
-	ArmorSetPrison: Mods.Coralite.Items.BloodmarkTopper.ArmorSetPrison
+	ExtraToolTipNone:
+		'''
+		获得[c/ed494e:血礼帽]！
+		    ▶ 生成一个血礼帽，附着在最近的敌怪头上并啃咬
+		    ▶ 啃咬一定次数后叠加礼帽，礼帽数量到达6个时将礼帽变为血滴
+		'''
+	ExtraToolTipBlood:
+		'''
+		获得[c/ed494e:血礼帽]！
+		    ▶ 生成一个血礼帽，附着在最近的敌怪头上并啃咬
+		    ▶ 啃咬一定次数后叠加礼帽，礼帽数量到达6个时将礼帽变为血滴
+		'''
+	ExtraToolTipShadow:
+		'''
+		获得[c/f148eb:影礼帽]！
+		    ▶ 生成一个影礼帽，附着在最近的敌怪头上并啃咬
+		    ▶ 啃咬一定次数后生成小影怪
+		    ▶ 小影怪命中后会回归玩家并依次增加攻击，生命上限和移动速度
+		'''
+	ExtraToolTipPrison:
+		'''
+		获得[c/665cc2:罪孽礼帽]！
+		    ▶ 生成一个罪孽礼帽，使用鞭子攻击时向最近的敌人射出铁刺，该效果有半秒CD
+		    ▶ 每5次协同攻击生成一个鱼剪，命中时减少敌人防御力
+		'''
+	SpecialPreNameBlood: 嗜血
+	SpecialPreNameShadow: 阴影
+	SpecialPreNamePrison: 提刑
+	ArmorSetBlood:
+		'''
+		+10 防御，大大提高生命再生速度
+		获得[c/ed494e:血池]！
+		    ▶ 生成血滴时为血池积累血液并吸血
+		    ▶ 使用治疗药水时消耗血池并额外回复生命值
+		'''
+	ArmorSetShadow:
+		'''
+		+8 防御，提高移动速度和加速度
+		将[c/ed494e:血礼帽]改为[c/f148eb:影礼帽]
+		'''
+	ArmorSetPrison:
+		'''
+		+6 防御，鞭子范围扩大30%，速度提高15%，+15% 召唤伤害
+		将[c/ed494e:血礼帽]改为[c/665cc2:罪孽礼帽]
+		'''
 	DisplayName: 血印礼帽
-	Tooltip: ""
+	Tooltip: +8% 伤害，+5% 暴击率
+	SetTip: 
+	'''
+	装备猩红套装 [i:793][i:794] 或暗影套装 [i:101][i:100][i:957][i:958] 或黑曜石套装 [i:3267][i:3268] 触发不同的套装效果
+	'''
 }

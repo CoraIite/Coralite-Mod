@@ -285,6 +285,7 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
         {
             if (BasePanel == null || CurrentEntity == null)
                 return;
+            DrawExtras?.Clear();
             InitBasePanel();
 
             BasePanel.RemoveAllChildren();
