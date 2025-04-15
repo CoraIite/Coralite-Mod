@@ -5809,3 +5809,10 @@ BloodmarkTopper: {
 	Tooltip: ""
 	SetTip: Mods.Coralite.Items.BloodmarkTopper.SetTip
 }
+
+MabirdLoupe: {
+	DisplayName: Mabird Loupe
+	Tooltip: ""
+	CanShowBackLines: Mods.Coralite.Items.MabirdLoupe.CanShowBackLines
+	DontShowBackLines: Mods.Coralite.Items.MabirdLoupe.DontShowBackLines
+}

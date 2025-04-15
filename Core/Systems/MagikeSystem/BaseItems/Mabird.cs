@@ -252,7 +252,9 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
             if (!t.HasTile)
                 return false;
 
-            int? whiteListType = WhiteListItem?.type;
+            int? whiteListType = null;
+            if (WhiteListItem != null && !WhiteListItem.IsAir)
+                whiteListType = WhiteListItem.type;
 
             if (MagikeHelper.TryGetEntityWithTopLeft(new Point16(p), out var magikeTP))
             {
@@ -475,7 +477,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
                 ReleaseItemPos.Save(tag, nameof(ReleaseItemPos));
             }
 
-            if (WhiteListItem != null)
+            if (WhiteListItem != null&&!WhiteListItem.IsAir)
             {
                 b1[2] = true;
                 ItemIO.Save(WhiteListItem);

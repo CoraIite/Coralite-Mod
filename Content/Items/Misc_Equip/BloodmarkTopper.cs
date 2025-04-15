@@ -5,6 +5,7 @@ using Coralite.Core.Attributes;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Coralite.Helpers;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -214,7 +215,7 @@ namespace Coralite.Content.Items.Misc_Equip
                 if (index2 != -1)
                 {
                     TooltipLine line3 = new TooltipLine(Mod, "SpecialToolTip", EXToolTip[0].Value);
-                    tooltips.Insert(index2+1, line3);
+                    tooltips.Insert(index2 + 1, line3);
                 }
 
                 TooltipLine line2 = new TooltipLine(Mod, "SpecialArmorSet", SetTip.Value);
@@ -233,8 +234,8 @@ namespace Coralite.Content.Items.Misc_Equip
             int index = tooltips.FindIndex(l => l.Name == "Tooltip0");
             if (index != -1)
             {
-                TooltipLine line2 = new TooltipLine(Mod, "SpecialToolTip", EXToolTip[(int)type.Value+1].Value);
-                tooltips.Insert(index+1, line2);
+                TooltipLine line2 = new TooltipLine(Mod, "SpecialToolTip", EXToolTip[(int)type.Value + 1].Value);
+                tooltips.Insert(index + 1, line2);
             }
         }
 
@@ -259,10 +260,48 @@ namespace Coralite.Content.Items.Misc_Equip
     {
         public override string Texture => AssetDirectory.Misc_Equip + Name;
 
+        [AutoLoadTexture(Name = "BloodmarkTopperProjShadow")]
         public static ATex ShadowTopper { get; private set; }
+        [AutoLoadTexture(Name = "BloodmarkTopperProjPrison")]
         public static ATex PrisonTopper { get; private set; }
 
         public Player Owner => Main.player[Projectile.owner];
+
+        private TopperTypes TopperType
+        {
+            get => (TopperTypes)Projectile.ai[0];
+            set => Projectile.ai[0] = (int)value;
+        }
+
+        private ref float State => ref Projectile.ai[1];
+        private ref float NPCIndex => ref Projectile.ai[2];
+
+        private ref float Timer => ref Projectile.localAI[0];
+        private ScaleTypes ScaleType
+        {
+            get => (ScaleTypes)Projectile.localAI[1];
+            set => Projectile.localAI[1] = (int)value;
+        }
+
+        private ref float ScaleTimer => ref Projectile.localAI[2];
+
+        private Vector2 Scale;
+        private int FrameX;
+
+        private enum TopperTypes
+        {
+            Error = -1,
+            None,
+            Blood,
+            Shadow,
+            Prison
+        }
+
+        private enum ScaleTypes
+        {
+            None = -1,
+            Spawn,
+        }
 
         public override void SetDefaults()
         {
@@ -278,19 +317,150 @@ namespace Coralite.Content.Items.Misc_Equip
 
         #region AI
 
-        public override bool PreAI()
-        {
-            if (Owner.TryGetModPlayer(out CoralitePlayer cp)
-                && cp.HasEffect(nameof(BloodmarkTopper)))
-                Projectile.timeLeft = 2;
-
-            return true;
-        }
-
         public override void AI()
         {
+            SetTopperType();
 
+            switch (TopperType)
+            {
+                default:
+                case TopperTypes.Error:
+                    break;
+                case TopperTypes.None:
+                    {
+                        switch (State)
+                        {
+                            default:
+                            case -1://返回玩家
+                                BackToOwner();
+                                break;
+                        }
+                    }
+                    break;
+                case TopperTypes.Blood:
+                    break;
+                case TopperTypes.Shadow:
+                    break;
+                case TopperTypes.Prison:
+                    break;
+            }
+
+            ControlScale();
         }
+
+        public void SetTopperType()
+        {
+            if (Owner.TryGetModPlayer(out CoralitePlayer cp))
+            {
+                if (cp.HasEffect(nameof(BloodmarkTopper)))
+                    Projectile.timeLeft = 2;
+                else
+                    Projectile.Kill();
+
+                TopperTypes oldType = TopperType;
+
+                if (cp.HasEffect(BloodmarkTopper.BloodSet))
+                    TopperType = TopperTypes.Blood;
+                else if (cp.HasEffect(BloodmarkTopper.ShadowSet))
+                    TopperType = TopperTypes.Shadow;
+                else if (cp.HasEffect(BloodmarkTopper.PrisonSet))
+                    TopperType = TopperTypes.Prison;
+                else
+                    TopperType = TopperTypes.None;
+
+                if (TopperType != oldType)
+                    SetToBack();
+            }
+        }
+
+        public void SetToBack()
+        {
+            State = -1;
+            NPCIndex = -1;
+
+            Timer = 0;
+        }
+
+        public void BackToOwner()
+        {
+            Vector2 pos = Owner.MountedCenter;
+            if (Vector2.Distance(pos, Projectile.Center) > 3000)
+            {
+                Projectile.Center = pos;
+                State = 0;
+                SpawnScale();
+                return;
+            }
+
+            Projectile.Center = Vector2.SmoothStep(Projectile.Center, pos, 0.25f);
+            if (Vector2.Distance(pos, Projectile.Center) < 16)
+            {
+                Projectile.Center = pos;
+                State = 0;
+            }
+        }
+
+        #region 缩放控制部分
+
+        private void ControlScale()
+        {
+            switch (ScaleType)
+            {
+                default:
+                case ScaleTypes.None:
+                    Scale = Vector2.One;
+                    break;
+                case ScaleTypes.Spawn:
+                    {
+                        if (ScaleTimer < 6)
+                            Scale.Y = Helper.Lerp(1f, 1.75f, ScaleTimer / 6);
+                        else
+                            Scale.Y = Helper.Lerp(1f, 1.75f, (ScaleTimer - 6) / 8);
+
+                        Scale.X = Helper.Lerp(0.2f, 1, ScaleTimer / 14);
+
+                        ScaleTimer++;
+
+                        if (ScaleTimer > 14)
+                        {
+                            ScaleTimer = 0;
+                            ScaleType = ScaleTypes.None;
+                        }
+                    }
+                    break;
+            }
+        }
+
+        public void SpawnScale()
+        {
+            ScaleTimer = 0;
+            ScaleType = ScaleTypes.Spawn;
+            Scale = new Vector2(0.2f, 1f);
+        }
+
+        #endregion
+
+        #region 帧图
+
+        public void FlyFrame()
+        {
+            FrameX = 0;
+            Projectile.UpdateFrameNormally(3, 7);
+        }
+
+        /// <summary>
+        /// 在调用之前将其<see cref="Projectile.frame"/>设置为1，不然将不起作用
+        /// </summary>
+        public void AttackFrame()
+        {
+            FrameX = 1;
+            if (Projectile.frame == 0)
+                return;
+
+            Projectile.UpdateFrameNormally(3, 7);
+        }
+
+        #endregion
 
         #endregion
 
@@ -298,9 +468,61 @@ namespace Coralite.Content.Items.Misc_Equip
 
         public override bool PreDraw(ref Color lightColor)
         {
+            switch (TopperType)
+            {
+                default:
+                case TopperTypes.Error:
+                case TopperTypes.None:
+                case TopperTypes.Blood:
+                    DrawTopper(Projectile.GetTexture(), lightColor);
+                    break;
+                case TopperTypes.Shadow:
+                    DrawTopper(ShadowTopper.Value, lightColor);
+                    break;
+                case TopperTypes.Prison:
+                    DrawTopper(PrisonTopper.Value, lightColor);
+                    break;
+            }
+
             return false;
         }
 
+        public void DrawTopper(Texture2D tex, Color lightColor)
+        {
+            Vector2 pos = Projectile.Center - Main.screenPosition;
+            var frameBox = tex.Frame(2, 8, FrameX, Projectile.frame);
+
+            Main.spriteBatch.Draw(tex, pos, frameBox, lightColor, Projectile.rotation, frameBox.Size() / 2, Scale
+                , Projectile.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
+        }
+
         #endregion
+    }
+
+    public class BloodBite : Particle
+    {
+        public override string Texture => AssetDirectory.Misc_Equip + Name;
+
+        private float mouseDistance;
+        private Vector2 offset;
+
+        public override void SetProperty()
+        {
+            PRTDrawMode = PRTDrawModeEnum.AlphaBlend;
+            Rotation = Main.rand.NextFloat(-0.4f, 0.4f);
+            Color = Color.White;
+        }
+
+        public override void AI()
+        {
+
+            Opacity++;
+        }
+
+        public override bool PreDraw(SpriteBatch spriteBatch)
+        {
+
+            return false;
+        }
     }
 }

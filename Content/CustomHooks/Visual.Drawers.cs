@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Items.MagikeSeries1;
+using Coralite.Content.Items.MagikeSeries2;
 using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Configs;
@@ -10,7 +11,6 @@ using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.DataStructures;
 
 namespace Coralite.Content.CustomHooks
 {
@@ -25,10 +25,15 @@ namespace Coralite.Content.CustomHooks
         public static Dictionary<Point, byte> SpecialTilesCounter = [];
 
         public static List<MagikeLinerSender> LinerSenders = new(128);
+        public static HashSet<(Vector2, Vector2, Vector2)> MabirdRoute = new();
         /// <summary>
         /// 是否绘制特殊线
         /// </summary>
         public static bool DrawLinerSenders { get; private set; }
+        /// <summary>
+        /// 是否绘制魔鸟路线
+        /// </summary>
+        public static bool DrawMabirdRoutes { get; private set; }
 
 
         public override void Load()
@@ -79,42 +84,84 @@ namespace Coralite.Content.CustomHooks
             PostDrawAdditive(spriteBatch);
         }
 
+        #region 绘制魔能部分
+
         public void DrawMagikeLines(SpriteBatch spriteBatch)
         {
-            if (Main.LocalPlayer.TryGetModPlayer(out CoralitePlayer cp) && cp.HasEffect(nameof(MagikeMonoclastic)))
+            if (Main.LocalPlayer.TryGetModPlayer(out CoralitePlayer cp))
             {
-                DrawLinerSenders = true;
+                if (cp.HasEffect(nameof(MagikeMonoclastic)))
+                    DrawSenderLine(spriteBatch);
+                else
+                    DrawLinerSenders = false;
 
-                if (LinerSenders.Count < 1)
-                    return;
-
-                spriteBatch.Begin(default, BlendState.AlphaBlend, SamplerState.PointWrap, default, default, null, Main.GameViewMatrix.TransformationMatrix);
-
-                Texture2D laserTex = MagikeSystem.GetConnectLine();
-                Color drawColor = Coralite.MagicCrystalPink * 0.6f;
-                var origin = new Vector2(0, laserTex.Height / 2);
-
-                foreach (var linerSender in LinerSenders)
-                {
-                    if (linerSender.Receivers.Count == 0)
-                        continue;
-
-                    //以上是获取线性发送器组件
-                    Vector2 selfPos = Helper.GetMagikeTileCenter(linerSender.Entity.Position);
-                    Vector2 startPos = selfPos - Main.screenPosition;
-
-                    for (int i = 0; i < linerSender.Receivers.Count; i++)
-                    {
-                        Vector2 aimPos = Helper.GetMagikeTileCenter(linerSender.Receivers[i]);
-                        MagikeSystem.DrawConnectLine(spriteBatch, selfPos, aimPos, Main.screenPosition, drawColor);
-                    }
-                }
-
-                spriteBatch.End();
-                LinerSenders.Clear();
+                if (cp.HasEffect(nameof(MabirdLoupe)))
+                    DrawMabirdRoute(spriteBatch);
+                else
+                    DrawMabirdRoutes = false;
             }
             else
+            {
                 DrawLinerSenders = false;
+                DrawMabirdRoutes = false;
+            }
+        }
+
+        private static void DrawMabirdRoute(SpriteBatch spriteBatch)
+        {
+            DrawMabirdRoutes = true;
+            if (MabirdRoute.Count < 1)
+                return;
+
+            spriteBatch.Begin(default, BlendState.AlphaBlend, SamplerState.PointWrap, default, default, null, Main.GameViewMatrix.TransformationMatrix);
+
+            Color drawColor = Coralite.CrystallinePurple * 0.75f;
+            Color drawColor2 = Coralite.CrystallinePurple * 0.15f;
+
+            bool drawBackLine = Main.LocalPlayer.TryGetModPlayer(out CoralitePlayer cp)
+                && cp.HasEffect(MabirdLoupe.ShowBackLine);
+
+            foreach (var route in MabirdRoute)
+            {
+                if (drawBackLine)
+                {
+                    MagikeSystem.DrawConnectLine(spriteBatch, route.Item1, route.Item2, Main.screenPosition, drawColor2);
+                    MagikeSystem.DrawConnectLine(spriteBatch, route.Item3, route.Item1, Main.screenPosition, drawColor2);
+                }
+
+                MagikeSystem.DrawConnectLine(spriteBatch, route.Item2, route.Item3, Main.screenPosition, drawColor);
+            }
+
+            spriteBatch.End();
+            MabirdRoute.Clear();
+        }
+
+        private static void DrawSenderLine(SpriteBatch spriteBatch)
+        {
+            DrawLinerSenders = true;
+            if (LinerSenders.Count < 1)
+                return;
+
+            spriteBatch.Begin(default, BlendState.AlphaBlend, SamplerState.PointWrap, default, default, null, Main.GameViewMatrix.TransformationMatrix);
+            Color drawColor = Coralite.MagicCrystalPink * 0.6f;
+
+            foreach (var linerSender in LinerSenders)
+            {
+                if (linerSender.Receivers.Count == 0)
+                    continue;
+
+                //以上是获取线性发送器组件
+                Vector2 selfPos = Helper.GetMagikeTileCenter(linerSender.Entity.Position);
+
+                for (int i = 0; i < linerSender.Receivers.Count; i++)
+                {
+                    Vector2 aimPos = Helper.GetMagikeTileCenter(linerSender.Receivers[i]);
+                    MagikeSystem.DrawConnectLine(spriteBatch, selfPos, aimPos, Main.screenPosition, drawColor);
+                }
+            }
+
+            spriteBatch.End();
+            LinerSenders.Clear();
         }
 
         /// <summary>
@@ -126,12 +173,22 @@ namespace Coralite.Content.CustomHooks
             if (VaultUtils.isServer || !DrawLinerSenders)//无法绘制时就返回
                 return;
 
-            Point16 p = sender.Entity.Position;
-            Vector2 size = new Vector2(sender.ConnectLength);
-
-            if (Helper.IsAreaOnScreen(p.ToWorldCoordinates() - Main.screenPosition - size / 2, size))
-                LinerSenders.Add(sender);
+            LinerSenders.Add(sender);
         }
+
+        /// <summary>
+        /// 将魔鸟路线器加入绘制列表
+        /// </summary>
+        /// <param name="sender"></param>
+        public static void AddToMabirdRouteDraw(Vector2 center, Vector2 pos1, Vector2 pos2)
+        {
+            if (VaultUtils.isServer || !DrawMabirdRoutes)//无法绘制时就返回
+                return;
+
+            MabirdRoute.Add((center, pos1, pos2));
+        }
+
+        #endregion 
 
         private static void DrawSpecialTiles(SpriteBatch spriteBatch)
         {

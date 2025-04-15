@@ -513,29 +513,29 @@ TerranascenceSwing.DisplayName: 泰拉勇者的剑
 TerranascenceTag.DisplayName: 自然水晶
 TerranascenceSpurt.DisplayName: 泰拉勇者的剑
 TourmalineSlash.DisplayName: 绯红刺击
-ZirconGrailProj.DisplayName: Zircon Grail Proj
+ZirconGrailProj.DisplayName: 无色的火彩
 BigMacExProj.DisplayName: 汉堡王中王
-BigMacHamburgerGuard.DisplayName: Big Mac Hamburger Guard
-BigMacHamburgerProj.DisplayName: Big Mac Hamburger Proj
-ZirconProj.DisplayName: Zircon Proj
-SurviveAndPerishHeldProj.DisplayName: Survive And Perish Held Proj
+BigMacHamburgerGuard.DisplayName: 汉堡王中王
+BigMacHamburgerProj.DisplayName: 汉堡王中王
+ZirconProj.DisplayName: 火彩
+SurviveAndPerishHeldProj.DisplayName: 生存与毁灭
 PerishProj.DisplayName: Perish Proj
 SurviveHeldProj.DisplayName: Survive Held Proj
 MiniDynamite.DisplayName: Mini Dynamite
 PerishMissile.DisplayName: Perish Missile
-AmberEardropProj.DisplayName: Amber Eardrop Proj
-AmberProj.DisplayName: Amber Proj
-BigAmber.DisplayName: Big Amber
-DiamondExplosion.DisplayName: Diamond Explosion
-DiamondFlowerProj.DisplayName: Diamond Flower Proj
-DiamondProj.DisplayName: Diamond Proj
+AmberEardropProj.DisplayName: 琥珀耳环
+AmberProj.DisplayName: 琥珀
+BigAmber.DisplayName: 大琥珀
+DiamondExplosion.DisplayName: 钻石绽放
+DiamondFlowerProj.DisplayName: 钻石花
+DiamondProj.DisplayName: 钻石
 ArcaneFlameDaggerProj.DisplayName: Arcane Flame Dagger Proj
 ArcaneFlameDaggerSlash.DisplayName: Arcane Flame Dagger Slash
 MagikeWorldBallProj.DisplayName: Magike World Ball Proj
 MagicCrystalBobber.DisplayName: Magic Crystal Bobber
 FilterProj.DisplayName: Filter Proj
 InfinityClusterWandProj.DisplayName: Infinity Cluster Wand Proj
-GelFiberBall.DisplayName: Gel Fiber Ball
+GelFiberBall.DisplayName: 凝胶纤维球
 TremblingElectric.DisplayName: Trembling Electric
 PlasmaBall.DisplayName: Plasma Ball
 LeafeoShield.DisplayName: Leafeo Shield
@@ -586,13 +586,13 @@ SeismicWaveStrike.DisplayName: Seismic Wave Strike
 GlaciateHeldProj.DisplayName: Glaciate Held Proj
 GlaciateWave.DisplayName: Glaciate Wave
 GlaciateIceCube.DisplayName: Glaciate Ice Cube
-LeafShieldGuard.DisplayName: Leaf Shield Guard
-LeafShieldProj.DisplayName: Leaf Shield Proj
-WoodenShieldGuard.DisplayName: Wooden Shield Guard
-WoodenShieldProj.DisplayName: Wooden Shield Proj
-AuroraArrow.DisplayName: Aurora Arrow
-AuroraArrowTag.DisplayName: Aurora Arrow Tag
-AuroraHeldProj.DisplayName: Aurora Held Proj
+LeafShieldGuard.DisplayName: 生命大叶子
+LeafShieldProj.DisplayName: 生命大叶子
+WoodenShieldGuard.DisplayName: 木盾
+WoodenShieldProj.DisplayName: 木盾
+AuroraArrow.DisplayName: 极光箭
+AuroraArrowTag.DisplayName: 极光印记
+AuroraHeldProj.DisplayName: 极光
 ThyphionArrow.DisplayName: 千气象箭
 ThyphionShadowBow.DisplayName: 气象之子
 SolunarBall.DisplayName: 同辉球
@@ -620,7 +620,8 @@ CrystallineSpikeFriendly.DisplayName: 水晶刺
 CrystallineSkyIslandCloudScreen.DisplayName: 蕴魔云雾
 CrystallineSentinelSpurtProj.DisplayName: 水晶战斗突刺
 BringerHarpy.DisplayName: 信使鸟妖
-// CrystallineHookProjectile.DisplayName: Crystalline Hook Projectile
-// WisteriaHeldProj.DisplayName: Wisteria Held Proj
-// WisteriaPetal.DisplayName: Wisteria Petal
-// MabirdRouteDrawProj.DisplayName: Mabird Route Draw Proj
+CrystallineHookProjectile.DisplayName: 蕴魔水晶钩
+WisteriaHeldProj.DisplayName: 紫藤萝
+WisteriaPetal.DisplayName: 紫藤萝花瓣
+MabirdRouteDrawProj.DisplayName: 魔鸟路线绘制
+BloodmarkTopperProj.DisplayName: 血礼帽

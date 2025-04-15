@@ -41,7 +41,7 @@ namespace Coralite.Core
         public static List<int> SpecialDraw = new List<int>();
 
         /// <summary>
-        /// 物块是否是特殊苔藓
+        /// 物块是否是魔鸟
         /// </summary>
         public static bool[] Mabird;
 
