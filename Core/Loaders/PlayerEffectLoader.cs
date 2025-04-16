@@ -32,15 +32,15 @@ namespace Coralite.Core.Loaders
                 effects.Add(name, EffectCount);
                 EffectCount++;
 
-                if(playerEffectAttribute.ExtraEffectNames != null)
+                if (playerEffectAttribute.ExtraEffectNames != null)
                     foreach (var name2 in playerEffectAttribute.ExtraEffectNames)
                     {
                         effects.Add(name2, EffectCount);
                         EffectCount++;
                     }
-                }
+            }
         }
-         
+
         public void PostSetUp(Mod Mod)
         {
             Effects = effects.ToFrozenDictionary();

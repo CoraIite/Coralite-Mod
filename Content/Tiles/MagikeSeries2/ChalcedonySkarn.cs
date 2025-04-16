@@ -81,7 +81,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData)
         {
-            if (ShouldDrawOnTop(i,j))//只有在顶部和侧面的时候才绘制在图层上方
+            if (ShouldDrawOnTop(i, j))//只有在顶部和侧面的时候才绘制在图层上方
                 Drawers.AddSpecialTile(i, j);
         }
 
@@ -99,12 +99,12 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             if (Main.drawToScreen)
                 offScreen = Vector2.Zero;
 
-            SpecialDrawMoss(i, j,offScreen , spriteBatch);
+            SpecialDrawMoss(i, j, offScreen, spriteBatch);
 
             return true;
         }
 
-        public static void SpecialDrawMoss(int i, int j, Vector2 offScreen,SpriteBatch spriteBatch)
+        public static void SpecialDrawMoss(int i, int j, Vector2 offScreen, SpriteBatch spriteBatch)
         {
             Texture2D tex = ChalcedonyMoss.Value;
             Vector2 screenPosition = Main.Camera.UnscaledPosition;
@@ -246,7 +246,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
                         return true;
                     break;
                 case 4:
-                    if (xFrame >5)
+                    if (xFrame > 5)
                         return true;
                     break;
             }
@@ -322,7 +322,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData)
         {
-            if (ChalcedonySkarn.ShouldDrawOnTop(i,j))//只有在顶部和侧面的时候才绘制在图层上方
+            if (ChalcedonySkarn.ShouldDrawOnTop(i, j))//只有在顶部和侧面的时候才绘制在图层上方
                 Drawers.AddSpecialTile(i, j);
         }
 
@@ -340,7 +340,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             if (Main.drawToScreen)
                 offScreen = Vector2.Zero;
 
-            ChalcedonySkarn.SpecialDrawMoss(i, j,offScreen , spriteBatch);
+            ChalcedonySkarn.SpecialDrawMoss(i, j, offScreen, spriteBatch);
 
             return true;
         }

@@ -2,7 +2,6 @@ using Coralite.Core;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
-using Terraria.Utilities;
 
 namespace Coralite.Content.Items.Shadow
 {

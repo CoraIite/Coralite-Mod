@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameContent.UI.Elements;
 using Terraria.ObjectData;
 using Terraria.UI;
 

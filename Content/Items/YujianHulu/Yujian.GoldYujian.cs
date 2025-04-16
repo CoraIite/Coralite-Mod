@@ -187,7 +187,7 @@ namespace Coralite.Content.Items.YujianHulu
             Projectile.friendly = true;
             Projectile.usesLocalNPCImmunity = true;
         }
-       
+
         public void Initialize()
         {
             center = Projectile.Center;

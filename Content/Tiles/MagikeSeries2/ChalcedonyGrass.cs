@@ -48,7 +48,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         public override IEnumerable<Item> GetItemDrops(int i, int j)
         {
-            return [new Item (ModContent.ItemType<CrystallineLemna>())];
+            return [new Item(ModContent.ItemType<CrystallineLemna>())];
         }
 
         //public override bool TileFrame(int i, int j, ref bool resetFrame, ref bool noBreak)
@@ -90,7 +90,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style2x2);
-            TileObjectData.newTile.CoordinateHeights = [16,16];
+            TileObjectData.newTile.CoordinateHeights = [16, 16];
             TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.newTile.StyleMultiplier = 1;
             TileObjectData.newTile.StyleHorizontal = true;

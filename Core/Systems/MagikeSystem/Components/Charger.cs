@@ -10,7 +10,6 @@ using Terraria.ModLoader.UI;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.ObjectData;
 using Terraria.UI;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components
 {
@@ -271,7 +270,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public override void ReceiveData(BinaryReader reader, int whoAmI)
         {
-            base.ReceiveData(reader,whoAmI);
+            base.ReceiveData(reader, whoAmI);
 
             ChargeItemsOnUp = reader.ReadBoolean();
             ChargePlayerItemsOnUp = reader.ReadBoolean();

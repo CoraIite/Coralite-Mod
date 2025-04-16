@@ -49,7 +49,7 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
                 knowledges.Add(item.Value);
             }
 
-            knowledges.Sort((k1,k2)=>k1.Type.CompareTo(k2.Type));
+            knowledges.Sort((k1, k2) => k1.Type.CompareTo(k2.Type));
 
             foreach (var item in knowledges)
             {

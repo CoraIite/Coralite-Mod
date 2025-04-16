@@ -1835,7 +1835,7 @@ namespace Coralite.Core
 
         /// <summary> 以太块/镒块产生时的音效 </summary>
         public static SoundStyle SpawnAetheriumBlock => SoundID.ShimmerWeak1;
-        
+
         /// <summary> 蜂蜜块/蜜蜂块产生时的音效，共3种 </summary>
         public static SoundStyle SpawnHoneyBlock => SoundID.LiquidsHoneyWater;
 
@@ -1907,7 +1907,7 @@ namespace Coralite.Core
 
         /// <summary> 在建筑内（背景墙前）的暴雪音效 </summary>
         public static SoundStyle BlizzardInsideBuildingLoop => SoundID.BlizzardInsideBuildingLoop;
-        
+
         /// <summary> 暴雪音效 </summary>
         public static SoundStyle BlizzardStrongLoop => SoundID.BlizzardStrongLoop;
 

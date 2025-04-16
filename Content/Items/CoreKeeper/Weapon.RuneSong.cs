@@ -714,7 +714,7 @@ namespace Coralite.Content.Items.CoreKeeper
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) => false;
         public override bool? CanDamage() => false;
-        
+
         public void Initialize()
         {
             var source2 = Projectile.GetSource_FromAI();

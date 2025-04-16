@@ -14,7 +14,7 @@ namespace Coralite.Content.Items.Magike.Filters.SpellFilters
 {
     public class LightSoulFilter : PackedFilterItem, IMagikeCraftable
     {
-        public override string Texture => AssetDirectory.SpellFilters+Name;
+        public override string Texture => AssetDirectory.SpellFilters + Name;
         public override Color FilterColor => Color.Pink;
 
         public LightSoulFilter() : base(Item.sellPrice(0, 0, 50), ItemRarityID.LightRed)

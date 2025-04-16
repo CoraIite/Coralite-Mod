@@ -507,7 +507,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             Projectile.tileCollide = false;
             Projectile.extraUpdates = 4;
             Projectile.penetrate = -1;
-            Projectile.timeLeft = 70*Projectile.MaxUpdates;
+            Projectile.timeLeft = 70 * Projectile.MaxUpdates;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = -1;
         }

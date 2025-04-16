@@ -222,9 +222,9 @@ namespace Coralite.Content.NPCs.Town
             foreach (var item in StandardChats)
                 chat.Add(item.Value);
             foreach (var item in CommonChats)
-                chat.Add(item.Value,3);
+                chat.Add(item.Value, 3);
             foreach (var item in RareChats)
-                chat.Add(item.Value,0.1f);
+                chat.Add(item.Value, 0.1f);
 
             return chat.Get();
         }

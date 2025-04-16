@@ -62,7 +62,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
         }
 
         public override bool? CanFallThroughPlatforms() => NPC.Center.Y < (Main.player[NPC.target].Center.Y - NPC.height);
-        
+
         public override void AI()
         {
             if (!span)

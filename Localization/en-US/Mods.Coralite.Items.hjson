@@ -5816,3 +5816,8 @@ MabirdLoupe: {
 	CanShowBackLines: Mods.Coralite.Items.MabirdLoupe.CanShowBackLines
 	DontShowBackLines: Mods.Coralite.Items.MabirdLoupe.DontShowBackLines
 }
+
+SkarnCutter: {
+	DisplayName: Skarn Cutter
+	Tooltip: ""
+}

@@ -606,7 +606,7 @@ namespace Coralite.Content.NPCs.Crystalline
 
         private void SwitchStateP2(AIStates targetState, int? overrideTime = null, bool randDirection = false)
         {
-                State = targetState;
+            State = targetState;
             Recorder = 0;
             Recorder2 = 0;
             CanHit = false;
@@ -741,7 +741,7 @@ namespace Coralite.Content.NPCs.Crystalline
         public void DrawGuard(SpriteBatch spriteBatch, Vector2 screenPos)
         {
             Texture2D guardTex = GuardTex.Value;
-            Vector2 pos = NPC.Center+new Vector2(0,-20) - screenPos;
+            Vector2 pos = NPC.Center + new Vector2(0, -20) - screenPos;
             float scale = Coralite.Instance.BezierEaseSmoother.Smoother(Recorder2);
 
             //最内层
@@ -758,7 +758,7 @@ namespace Coralite.Content.NPCs.Crystalline
                 return;
 
             framebox = guardTex.Frame(1, 3, 0, 1);
-            SpriteEffects effects = visualTimer < (12+9) ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            SpriteEffects effects = visualTimer < (12 + 9) ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
             float alpha = 0.1f + MathF.Sin(visualTimer / 18f * MathHelper.TwoPi) * 0.3f;
             spriteBatch.Draw(guardTex, pos, framebox, Color.White * alpha, 0, framebox.Size() / 2, scale, effects, 0);
         }

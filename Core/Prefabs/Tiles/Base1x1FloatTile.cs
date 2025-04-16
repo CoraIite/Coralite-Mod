@@ -6,7 +6,7 @@ using Terraria.ObjectData;
 
 namespace Coralite.Core.Prefabs.Tiles
 {
-    public class Base1x1FloatTile(Color mapColor, int dustType, string TexturePath, bool PathHasName = false) : BaseTile(TexturePath,PathHasName)
+    public class Base1x1FloatTile(Color mapColor, int dustType, string TexturePath, bool PathHasName = false) : BaseTile(TexturePath, PathHasName)
     {
         public override void SetStaticDefaults()
         {

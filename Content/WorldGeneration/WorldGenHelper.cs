@@ -465,11 +465,11 @@ namespace Coralite.Content.WorldGeneration
                                 int y2 = (int)newPos.Y + y1;
                                 if (x1 == 0 && y1 == 0 && Main.tileContainer[Main.tile[x2, y2].TileType])
                                     KillChestAndItems(x2, y2);
-                                    WorldGen.KillTile(x, y, false, false, true);
-                                    Main.tile[x, y].Clear(TileDataType.Tile);
-                                    Main.tile[x, y].Clear(TileDataType.Slope);
+                                WorldGen.KillTile(x, y, false, false, true);
+                                Main.tile[x, y].Clear(TileDataType.Tile);
+                                Main.tile[x, y].Clear(TileDataType.Slope);
 
-                                    GenerateLiquid(x2, y2, 0, true, 0, false);
+                                GenerateLiquid(x2, y2, 0, true, 0, false);
                             }
 
                         for (int x1 = 0; x1 < width; x1++)      //帧图
@@ -481,7 +481,7 @@ namespace Coralite.Content.WorldGeneration
                                 WorldGen.SquareWallFrame(x2, y2);
                             }
                     }
-                    else 
+                    else
                     {
                         WorldGen.KillTile(x, y, false, false, true);
                         Main.tile[x, y].Clear(TileDataType.Tile);
@@ -609,7 +609,7 @@ namespace Coralite.Content.WorldGeneration
         /// <param name="baseP"></param>
         /// <param name="maxCheck"></param>
         /// <returns></returns>
-        public static int CheckUpAreaEmpty(Point baseP,int maxCheck=10)
+        public static int CheckUpAreaEmpty(Point baseP, int maxCheck = 10)
         {
             int check = 0;
             for (int m = 0; m < maxCheck; m++)

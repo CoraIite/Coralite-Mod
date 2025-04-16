@@ -619,7 +619,7 @@ namespace Coralite.Content.Items.Donator
             Projectile.localNPCHitCooldown = 30;
             Projectile.extraUpdates = 1;
         }
-        
+
         public void Initialize()
         {
             Projectile.rotation = Projectile.velocity.ToRotation();

@@ -179,7 +179,7 @@ namespace Coralite.Helpers
             Point16? topleft = MagikeHelper.ToTopLeft(i, j);
 
             if (!topleft.HasValue)
-                return new Vector2(i*16+8,j*16+8);
+                return new Vector2(i * 16 + 8, j * 16 + 8);
 
             Tile tile = Framing.GetTileSafely(topleft.Value);
             TileObjectData data = TileObjectData.GetTileData(tile);

@@ -6,7 +6,7 @@ namespace Coralite.Content.WorldGeneration.Generators
     {
         public TileInfo[,] tileGen = new TileInfo[width, height];
 
-        public void Clear(int x,int y)
+        public void Clear(int x, int y)
         {
             for (int x1 = 0; x1 < width; x1++)
                 for (int y1 = 0; y1 < height; y1++)

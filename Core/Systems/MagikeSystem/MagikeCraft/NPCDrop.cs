@@ -1,7 +1,6 @@
 ﻿using Coralite.Content.Items.FlyingShields;
 using Coralite.Content.Items.Materials;
 using Coralite.Content.Items.Steel;
-using Terraria;
 using Terraria.ID;
 using static Coralite.Core.Systems.MagikeSystem.MagikeSystem;
 using static Coralite.Core.Systems.MagikeSystem.MALevel;
@@ -32,6 +31,87 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
                 .AddIngredient<MutatusInABottle>()
                 .Register();
 
+            #region 宝箱怪
+
+            int MinicCost = CalculateMagikeCost(CrystallineMagike, 6, 60 * 3);
+            //宝箱怪
+            MagikeRecipe.CreateCraftRecipe(ItemID.Chest, ItemID.DualHook, MinicCost, 3)
+                .AddIngredient(ItemID.SoulofLight)
+                .AddIngredient(ItemID.SoulofNight)
+                .RegisterNewCraft(ItemID.MagicDagger, MinicCost, 3)
+                .AddIngredient(ItemID.SoulofLight)
+                .AddIngredient(ItemID.SoulofNight)
+                .RegisterNewCraft(ItemID.PhilosophersStone, MinicCost, 3)
+                .AddIngredient(ItemID.SoulofLight)
+                .AddIngredient(ItemID.SoulofNight)
+                .RegisterNewCraft(ItemID.TitanGlove, MinicCost, 3)
+                .AddIngredient(ItemID.SoulofLight)
+                .AddIngredient(ItemID.SoulofNight)
+                .RegisterNewCraft(ItemID.StarCloak, MinicCost, 3)
+                .AddIngredient(ItemID.SoulofLight)
+                .AddIngredient(ItemID.SoulofNight)
+                .RegisterNewCraft(ItemID.CrossNecklace, MinicCost, 3)
+                .AddIngredient(ItemID.SoulofLight)
+                .AddIngredient(ItemID.SoulofNight)
+                .Register();
+
+            //金宝箱怪
+            MagikeRecipe.CreateCraftRecipe(ItemID.GoldChest, ItemID.DualHook, MinicCost, 3)
+                .AddIngredient(ItemID.SoulofLight)
+                .AddIngredient(ItemID.SoulofNight)
+                .RegisterNewCraft(ItemID.MagicDagger, MinicCost, 3)
+                .AddIngredient(ItemID.SoulofLight)
+                .AddIngredient(ItemID.SoulofNight)
+                .RegisterNewCraft(ItemID.PhilosophersStone, MinicCost, 3)
+                .AddIngredient(ItemID.SoulofLight)
+                .AddIngredient(ItemID.SoulofNight)
+                .RegisterNewCraft(ItemID.TitanGlove, MinicCost, 3)
+                .AddIngredient(ItemID.SoulofLight)
+                .AddIngredient(ItemID.SoulofNight)
+                .RegisterNewCraft(ItemID.StarCloak, MinicCost, 3)
+                .AddIngredient(ItemID.SoulofLight)
+                .AddIngredient(ItemID.SoulofNight)
+                .RegisterNewCraft(ItemID.CrossNecklace, MinicCost, 3)
+                .AddIngredient(ItemID.SoulofLight)
+                .AddIngredient(ItemID.SoulofNight)
+                .Register();
+
+            //暗影宝箱怪
+            MagikeRecipe.CreateCraftRecipe(ItemID.ShadowChest, ItemID.DualHook, MinicCost, 3)
+                .AddIngredient(ItemID.SoulofLight)
+                .AddIngredient(ItemID.SoulofNight)
+                .RegisterNewCraft(ItemID.MagicDagger, MinicCost, 3)
+                .AddIngredient(ItemID.SoulofLight)
+                .AddIngredient(ItemID.SoulofNight)
+                .RegisterNewCraft(ItemID.PhilosophersStone, MinicCost, 3)
+                .AddIngredient(ItemID.SoulofLight)
+                .AddIngredient(ItemID.SoulofNight)
+                .RegisterNewCraft(ItemID.TitanGlove, MinicCost, 3)
+                .AddIngredient(ItemID.SoulofLight)
+                .AddIngredient(ItemID.SoulofNight)
+                .RegisterNewCraft(ItemID.StarCloak, MinicCost, 3)
+                .AddIngredient(ItemID.SoulofLight)
+                .AddIngredient(ItemID.SoulofNight)
+                .RegisterNewCraft(ItemID.CrossNecklace, MinicCost, 3)
+                .AddIngredient(ItemID.SoulofLight)
+                .AddIngredient(ItemID.SoulofNight)
+                .Register();
+
+            //冰宝箱怪
+            MagikeRecipe.CreateCraftRecipe(ItemID.IceChest, ItemID.ToySled, MinicCost, 10)
+                .AddIngredient(ItemID.SoulofLight)
+                .AddIngredient(ItemID.SoulofNight)
+                .RegisterNewCraft(ItemID.Frostbrand, MinicCost, 3)
+                .AddIngredient(ItemID.SoulofLight)
+                .AddIngredient(ItemID.SoulofNight)
+                .RegisterNewCraft(ItemID.IceBow, MinicCost, 3)
+                .AddIngredient(ItemID.SoulofLight)
+                .AddIngredient(ItemID.SoulofNight)
+                .RegisterNewCraft(ItemID.FlowerofFrost, MinicCost, 3)
+                .AddIngredient(ItemID.SoulofLight)
+                .AddIngredient(ItemID.SoulofNight)
+                .Register();
+
             //大宝箱怪掉落物
             int bigChestCost = CalculateMagikeCost(CrystallineMagike, 12, 60 * 3);
             MagikeRecipe.CreateCraftRecipe(ItemID.LightKey, ItemID.DaedalusStormbow, bigChestCost, 2)
@@ -48,7 +128,7 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
                 .AddIngredient<LeohtInABottle>()
                 .Register();
 
-            //猩红
+            //猩红大宝箱怪
             MagikeRecipe.CreateCraftRecipe(ItemID.NightKey, ItemID.SoulDrain, bigChestCost, 2)
                 .AddIngredient(ItemID.Chest)
                 .AddIngredient<DeorcInABottle>()
@@ -64,7 +144,7 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
                 .RegisterNewCraft(ItemID.TendonHook, bigChestCost)
                 .AddIngredient(ItemID.Chest)
                 .AddIngredient<DeorcInABottle>()
-                //腐化
+                //腐化大宝箱怪
                 .RegisterNewCraft(ItemID.ClingerStaff, bigChestCost)
                 .AddIngredient(ItemID.Chest)
                 .AddIngredient<DeorcInABottle>()
@@ -82,6 +162,8 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
                 .AddIngredient<DeorcInABottle>()
                 .Register();
 
+            #endregion
+
             #region 友好NPC掉落
 
             int NPCWeaponCost = CalculateMagikeCost(MagicCrystal, 6, 60);
@@ -94,13 +176,13 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
 
             //染料商弯刀
             MagikeRecipe.CreateCraftRecipe(ItemID.SilverDye, ItemID.DyeTradersScimitar, NPCWeaponCost)
-                .AddIngredientGroup(RecipeGroupID.IronBar,12)
+                .AddIngredientGroup(RecipeGroupID.IronBar, 12)
                 .AddCondition(CoraliteConditions.UnlockDyeTrder)
                 .Register();
 
             //时尚剪刀
             MagikeRecipe.CreateCraftRecipe(ItemID.PinkGel, ItemID.StylistKilLaKillScissorsIWish, NPCWeaponCost)
-                .AddIngredientGroup(RecipeGroupID.IronBar,12)
+                .AddIngredientGroup(RecipeGroupID.IronBar, 12)
                 .AddCondition(CoraliteConditions.UnlockStylist)
                 .Register();
 
@@ -111,13 +193,13 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
                 .Register();
 
             //派对手雷
-            MagikeRecipe.CreateCraftRecipe(ItemID.Grenade, ItemID.PartyGirlGrenade, NPCWeaponCost,50,50)
+            MagikeRecipe.CreateCraftRecipe(ItemID.Grenade, ItemID.PartyGirlGrenade, NPCWeaponCost, 50, 50)
                 .AddIngredient(ItemID.Confetti)
                 .AddCondition(CoraliteConditions.UnlockPartyGirl)
                 .Register();
 
             //税收官手杖
-            MagikeRecipe.CreateCraftRecipe(ItemType<SteelBar>(), ItemID.TaxCollectorsStickOfDoom, NPCWeaponCost,12)
+            MagikeRecipe.CreateCraftRecipe(ItemType<SteelBar>(), ItemID.TaxCollectorsStickOfDoom, NPCWeaponCost, 12)
                 .AddCondition(CoraliteConditions.UnlockTaxCollector)
                 .Register();
 

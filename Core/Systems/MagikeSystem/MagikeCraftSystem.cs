@@ -126,7 +126,7 @@ namespace Coralite.Core.Systems.MagikeSystem
             return false;
         }
 
-        public static bool TryGetSpellRecipes( out List<MagikeRecipe> recipes)
+        public static bool TryGetSpellRecipes(out List<MagikeRecipe> recipes)
         {
             if (MagikeCraftRecipesFrozen != null && MagikeCraftRecipesFrozen.TryGetValue(-1, out List<MagikeRecipe> value))
             {
@@ -173,8 +173,8 @@ namespace Coralite.Core.Systems.MagikeSystem
             }
         }
 
-        private List<(RecipeGroup,int)> _itemGroups;
-        public List<(RecipeGroup,int)> RequiredItemGroups
+        private List<(RecipeGroup, int)> _itemGroups;
+        public List<(RecipeGroup, int)> RequiredItemGroups
         {
             get
             {
@@ -390,10 +390,10 @@ namespace Coralite.Core.Systems.MagikeSystem
         }
         public static MagikeRecipe[] CreateCraftRecipes(int[] mainItemType, int resultItemType, int magikeCost, int MainItenStack = 1, int resultItemStack = 1)
         {
-            MagikeRecipe[] recipes=new MagikeRecipe[mainItemType.Length];
+            MagikeRecipe[] recipes = new MagikeRecipe[mainItemType.Length];
             for (int i = 0; i < mainItemType.Length; i++)
             {
-                recipes[i]= new MagikeRecipe()
+                recipes[i] = new MagikeRecipe()
                 {
                     MainItem = new(mainItemType[i], MainItenStack),
                     ResultItem = new(resultItemType, resultItemStack),
@@ -552,7 +552,7 @@ namespace Coralite.Core.Systems.MagikeSystem
             if (MagikeCraftRecipes == null)
                 return;
 
-            if (MainItem!=null)
+            if (MainItem != null)
             {
                 if (MagikeCraftRecipes.TryGetValue(MainItem.type, out List<MagikeRecipe> value))
                     value.Add(this);
@@ -622,15 +622,15 @@ namespace Coralite.Core.Systems.MagikeSystem
         /// <param name="magikeCost"></param>
         /// <param name="resultItemStack"></param>
         /// <returns></returns>
-        public static void RegisterSpell< TResultItem>(int magikeCost, int resultItemStack = 1)
+        public static void RegisterSpell<TResultItem>(int magikeCost, int resultItemStack = 1)
             where TResultItem : ModItem
         {
-            var recipe= new MagikeRecipe()
+            var recipe = new MagikeRecipe()
             {
                 MainItem = null,
                 ResultItem = new(ItemType<TResultItem>(), resultItemStack),
                 magikeCost = magikeCost,
-                recipeType=RecipeType.Spell,
+                recipeType = RecipeType.Spell,
             };
 
             recipe.Register();
@@ -642,14 +642,14 @@ namespace Coralite.Core.Systems.MagikeSystem
         /// <param name="magikeCost"></param>
         /// <param name="resultItemStack"></param>
         /// <returns></returns>
-        public static void RegisterSpell(int resultItemType,int magikeCost, int resultItemStack = 1)
+        public static void RegisterSpell(int resultItemType, int magikeCost, int resultItemStack = 1)
         {
-            var recipe= new MagikeRecipe()
+            var recipe = new MagikeRecipe()
             {
                 MainItem = null,
                 ResultItem = new(resultItemType, resultItemStack),
                 magikeCost = magikeCost,
-                recipeType=RecipeType.Spell,
+                recipeType = RecipeType.Spell,
             };
 
             recipe.Register();

@@ -4,7 +4,7 @@ using Terraria;
 
 namespace Coralite.Content.Biomes
 {
-    public class CrystallineSkyIslandCloudScreen : ModProjectile,IDrawNonPremultiplied
+    public class CrystallineSkyIslandCloudScreen : ModProjectile, IDrawNonPremultiplied
     {
         public override string Texture => AssetDirectory.Blank;
 
@@ -35,7 +35,7 @@ namespace Coralite.Content.Biomes
         {
             if (!Projectile.IsOwnedByLocalPlayer())
                 return;
-        
+
             //绘制云朵
         }
     }

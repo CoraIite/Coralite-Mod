@@ -3,7 +3,6 @@ using Coralite.Core.Attributes;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -68,7 +67,7 @@ namespace Coralite.Content.Items.Misc_Melee
         }
     }
 
-    [AutoLoadTexture(Path =AssetDirectory.Misc_Melee)]
+    [AutoLoadTexture(Path = AssetDirectory.Misc_Melee)]
     public class CancerFlailProj : BaseSilkKnifeSpecialProj
     {
         public override string Texture => AssetDirectory.Misc_Melee + Name;

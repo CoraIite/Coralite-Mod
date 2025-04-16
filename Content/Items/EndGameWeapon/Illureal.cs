@@ -1,6 +1,4 @@
-﻿using Coralite.Core;
-
-namespace Coralite.Content.Items.EndGameWeapon
+﻿namespace Coralite.Content.Items.EndGameWeapon
 {
     //public class Illureal : ModItem
     //{

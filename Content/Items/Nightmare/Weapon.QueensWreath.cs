@@ -934,7 +934,7 @@ namespace Coralite.Content.Items.Nightmare
             if (CanGetNightmareEnergy && Main.player[Projectile.owner].TryGetModPlayer(out CoralitePlayer cp))
                 cp.GetNightmareEnergy(1);
         }
-        
+
         public void Initialize()
         {
             Projectile.frame = Main.rand.Next(6);

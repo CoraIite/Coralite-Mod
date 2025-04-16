@@ -1,6 +1,4 @@
-﻿using Coralite.Content.CoraliteNotes.MagikeChapter1;
-using Coralite.Content.Items.MagikeSeries1;
-using Coralite.Content.Raritys;
+﻿using Coralite.Content.Raritys;
 using Coralite.Core;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;

@@ -13,7 +13,7 @@ using Terraria.ID;
 namespace Coralite.Content.Items.MagikeSeries2
 {
     [AutoloadEquip(EquipType.Wings)]
-    public class ChalcedonyWing() : BaseAccessory(ItemRarityID.LightRed, Item.sellPrice(0, 2)),IMagikeCraftable
+    public class ChalcedonyWing() : BaseAccessory(ItemRarityID.LightRed, Item.sellPrice(0, 2)), IMagikeCraftable
     {
         public override string Texture => AssetDirectory.MagikeSeries2Item + Name;
 
@@ -83,7 +83,7 @@ namespace Coralite.Content.Items.MagikeSeries2
             for (int i = 0; i < 2; i++)
             {
                 Dust d = Dust.NewDustDirect(new Vector2(player.position.X - 8f, player.position.Y + height), player.width + 16, 4
-                    , DustID.Cloud, (0f - player.velocity.X) * 0.6f, player.velocity.Y * 0.6f, 100, default(Color), 1.5f);
+                    , DustID.Cloud, (0f - player.velocity.X) * 0.6f, player.velocity.Y * 0.6f, 100, default, 1.5f);
                 d.velocity.X = d.velocity.X * 0.5f - player.velocity.X * 0.1f;
                 d.velocity.Y = d.velocity.Y * 0.5f - player.velocity.Y * 0.3f;
 

@@ -13,7 +13,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.MagikeSeries2
 {
-    public class UnsentLetter : ModItem,IMagikeCraftable
+    public class UnsentLetter : ModItem, IMagikeCraftable
     {
         public override string Texture => AssetDirectory.MagikeSeries2Item + Name;
 
@@ -232,7 +232,7 @@ namespace Coralite.Content.Items.MagikeSeries2
 
         public void UpdateLetter()
         {
-            if (LetterFactor<1)
+            if (LetterFactor < 1)
             {
                 LetterFactor += 0.1f;
                 if (LetterFactor > 1)

@@ -474,7 +474,7 @@ namespace Coralite.Content.Items.Corruption
 
             Projectile.DamageType = DamageClass.Summon;
         }
-        
+
         public void Initialize()
         {
             Projectile.rotation = Projectile.velocity.ToRotation();

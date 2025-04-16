@@ -274,7 +274,7 @@ namespace Coralite.Content.Items.Misc_Equip
         }
 
         private ref float State => ref Projectile.ai[1];
-        private ref float NPCIndex => ref Projectile.ai[2];
+        private ref float TargetIndex => ref Projectile.ai[2];
 
         private ref float Timer => ref Projectile.localAI[0];
         private ScaleTypes ScaleType
@@ -334,6 +334,11 @@ namespace Coralite.Content.Items.Misc_Equip
                             case -1://返回玩家
                                 BackToOwner();
                                 break;
+                            case 0://寻敌
+                                {
+
+                                }
+                                break;
                         }
                     }
                     break;
@@ -376,7 +381,7 @@ namespace Coralite.Content.Items.Misc_Equip
         public void SetToBack()
         {
             State = -1;
-            NPCIndex = -1;
+            TargetIndex = -1;
 
             Timer = 0;
         }
@@ -398,6 +403,21 @@ namespace Coralite.Content.Items.Misc_Equip
                 Projectile.Center = pos;
                 State = 0;
             }
+        }
+
+        public bool FindEnemy()
+        {
+            if (Owner.HasMinionAttackTargetNPC)
+            {
+                NPC n = Main.npc[Owner.MinionAttackTargetNPC];
+                if (n.CanBeChasedBy() && Vector2.Distance(n.Center, Owner.Center) < 1500)
+                {
+                    TargetIndex = n.whoAmI;
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         #region 缩放控制部分
@@ -515,12 +535,45 @@ namespace Coralite.Content.Items.Misc_Equip
 
         public override void AI()
         {
+            if (Opacity < 6)//张嘴
+                mouseDistance += 2;
+            else if (Opacity < 10)//咬合
+                mouseDistance -= 4;
+            else//抖动加消失
+            {
+                if (Opacity % 2 == 0)
+                    offset = Helper.NextVec2Dir(2, 4);
+
+                if (Opacity > 14)
+                {
+                    Color *= 0.9f;
+                    if (Color.A < 10)
+                        active = false;
+                }
+            }
 
             Opacity++;
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch)
         {
+            Texture2D tex = TexValue;
+            Vector2 pos = Position - Main.screenPosition+offset;
+            Color c = Lighting.GetColor(Position.ToTileCoordinates(), Color);
+            Vector2 normal = (Rotation - MathHelper.PiOver2).ToRotationVector2();
+            normal *= mouseDistance;
+
+            //绘制底层
+            var frameBox = tex.Frame(2, 2, 1, 0);
+            spriteBatch.Draw(tex, pos-normal, frameBox, c, Rotation, frameBox.Size() / 2, Scale, 0, 0);
+            frameBox = tex.Frame(2, 2, 1, 1);
+            spriteBatch.Draw(tex, pos+normal, frameBox, c, Rotation, frameBox.Size() / 2, Scale, 0, 0);
+
+            //绘制顶层
+            frameBox = tex.Frame(2, 2, 2, 0);
+            spriteBatch.Draw(tex, pos - normal, frameBox, c, Rotation, frameBox.Size() / 2, Scale, 0, 0);
+            frameBox = tex.Frame(2, 2, 2, 1);
+            spriteBatch.Draw(tex, pos + normal, frameBox, c, Rotation, frameBox.Size() / 2, Scale, 0, 0);
 
             return false;
         }

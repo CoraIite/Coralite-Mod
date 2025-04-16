@@ -63,7 +63,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             Projectile.friendly = true;
             Projectile.netImportant = true;
         }
-        
+
         public void Initialize()
         {
             Dust.NewDustPerfect(Projectile.Center, ModContent.DustType<ArethusaPetal>(), -Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.4f, 0.4f)) * Main.rand.NextFloat(0.05f, 0.15f));
@@ -79,11 +79,11 @@ namespace Coralite.Content.Items.HyacinthSeries
                 span = true;
             }
 
-            if (TargetIndex ==-1)
+            if (TargetIndex == -1)
             {
                 //TODO: 改掉这里的鼠标位置
                 NPC npc = Helper.FindClosestEnemy(Main.MouseWorld, 600
-                    , n => n.CanBeChasedBy()&&Collision.CanHit(Projectile,n));
+                    , n => n.CanBeChasedBy() && Collision.CanHit(Projectile, n));
                 if (npc != null)
                     TargetIndex = npc.whoAmI;
             }
@@ -103,7 +103,7 @@ namespace Coralite.Content.Items.HyacinthSeries
                     float angle = 0.05f;
                     if (Projectile.localAI[2] > 80)
                     {
-                        angle += 0.05f + Projectile.localAI[2]/80*0.04f;
+                        angle += 0.05f + Projectile.localAI[2] / 80 * 0.04f;
                     }
 
                     rot = rot.AngleLerp(targetRot, angle);
@@ -153,7 +153,7 @@ namespace Coralite.Content.Items.HyacinthSeries
                 }
 
             Helper.PlayPitched(CoraliteSoundID.Hit_Item10, Projectile.Center);
-            Collision.HitTiles(Projectile.position, Projectile.velocity,Projectile.width,Projectile.height);
+            Collision.HitTiles(Projectile.position, Projectile.velocity, Projectile.width, Projectile.height);
 
             return true;
         }

@@ -13,7 +13,7 @@ using Terraria.ModLoader.IO;
 namespace Coralite.Content.Items.Vanity
 {
     [AutoloadEquip(EquipType.Head, EquipType.Body, EquipType.Legs, EquipType.Neck, EquipType.Back)]
-    [PlayerEffect(ExtraEffectNames = [nameof(SquirrelSet)+ "Special"])]
+    [PlayerEffect(ExtraEffectNames = [nameof(SquirrelSet) + "Special"])]
     public class SquirrelSet : ModItem, ISpecialDrawBackpacks, IMagikeCraftable
     {
         public override string Texture => AssetDirectory.Vanity + Name;

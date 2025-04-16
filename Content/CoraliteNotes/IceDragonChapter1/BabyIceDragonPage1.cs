@@ -29,7 +29,7 @@ namespace Coralite.Content.CoraliteNotes.IceDragonChapter1
             float scale1 = 0.85f;
 
             //绘制图
-            spriteBatch.Draw(tex, Bottom+new Vector2(0,-40), null, Color.White, 0, new Vector2(tex.Width/2,tex.Height),scale1, 0, 0);
+            spriteBatch.Draw(tex, Bottom + new Vector2(0, -40), null, Color.White, 0, new Vector2(tex.Width / 2, tex.Height), scale1, 0, 0);
         }
     }
 }

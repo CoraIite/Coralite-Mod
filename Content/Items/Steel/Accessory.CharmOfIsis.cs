@@ -47,7 +47,7 @@ namespace Coralite.Content.Items.Steel
             {
                 cp.AddEffect(nameof(CharmOfIsis));
                 if (!hideVisual)
-                    cp.AddEffect(nameof(CharmOfIsis)+"Vanity");
+                    cp.AddEffect(nameof(CharmOfIsis) + "Vanity");
             }
 
             player.pStone = true;

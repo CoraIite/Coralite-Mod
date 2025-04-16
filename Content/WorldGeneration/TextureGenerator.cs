@@ -55,10 +55,10 @@ namespace Coralite.Content.WorldGeneration
             int x = Center.X - Width / 2;
             int y = Center.Y - Height / 2;
 
-            GenerateByTopLeft(new Point(x, y), mainDic, wallDic,objectPlacement);
+            GenerateByTopLeft(new Point(x, y), mainDic, wallDic, objectPlacement);
         }
 
-        public void GenerateByTopLeft(Point topLeft, Dictionary<Color, int> mainDic, Dictionary<Color, int> wallDic = null,Action<Color,int,int> objectPlacement=null)
+        public void GenerateByTopLeft(Point topLeft, Dictionary<Color, int> mainDic, Dictionary<Color, int> wallDic = null, Action<Color, int, int> objectPlacement = null)
         {
             RecordTopLeft = topLeft;
             int x = topLeft.X;
@@ -113,7 +113,7 @@ namespace Coralite.Content.WorldGeneration
                 mainGenerator?.ObjectPlace(x, y, objectPlacement);
         }
 
-        public readonly void ReplaceObject( Action<Color, int, int> objectPlacement)
+        public readonly void ReplaceObject(Action<Color, int, int> objectPlacement)
         {
             int x = RecordTopLeft.X;
             int y = RecordTopLeft.Y;

@@ -1,8 +1,5 @@
 ﻿using Coralite.Core.Systems.CoraliteActorComponent;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
-using Coralite.Helpers;
-using Terraria.GameContent.UI.Elements;
-using Terraria.UI;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components.Filters
 {

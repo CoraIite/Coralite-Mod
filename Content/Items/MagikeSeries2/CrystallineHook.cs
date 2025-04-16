@@ -11,7 +11,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.MagikeSeries2
 {
-    public class CrystallineHook : ModItem,IMagikeCraftable
+    public class CrystallineHook : ModItem, IMagikeCraftable
     {
         public override string Texture => AssetDirectory.MagikeSeries2Item + Name;
 
@@ -26,7 +26,7 @@ namespace Coralite.Content.Items.MagikeSeries2
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeRecipe.CreateCraftRecipe<CrystallineSeaOats, CrystallineHook>(MagikeHelper.CalculateMagikeCost(MALevel.CrystallineMagike, 12, 60 * 3),12)
+            MagikeRecipe.CreateCraftRecipe<CrystallineSeaOats, CrystallineHook>(MagikeHelper.CalculateMagikeCost(MALevel.CrystallineMagike, 12, 60 * 3), 12)
                 .AddIngredient<MagicCrystalHook>()
                 .AddIngredient<CrystallineMagike>(3)
                 .Register();
@@ -115,14 +115,14 @@ namespace Coralite.Content.Items.MagikeSeries2
                 if (Vector2.Distance(Projectile.Center, Main.player[Projectile.owner].Center) < 16 * 8)
                 {
                     //生成特效
-                    Vector2 dir = (Projectile.rotation+1.57f).ToRotationVector2();
+                    Vector2 dir = (Projectile.rotation + 1.57f).ToRotationVector2();
                     for (int i = 0; i < 4; i++)
                     {
-                        Dust.NewDustPerfect(Projectile.Center + i*dir * 28, ModContent.DustType<CrystallineHookDust>()
+                        Dust.NewDustPerfect(Projectile.Center + i * dir * 28, ModContent.DustType<CrystallineHookDust>()
                             , -(Projectile.rotation + 1.57f).ToRotationVector2().RotateByRandom(-0.2f, 0.2f) * Main.rand.NextFloat(1, 2));
                     }
 
-                    Helper.PlayPitched(CoraliteSoundID.CrystalHit_DD2_WitherBeastCrystalImpact, Projectile.Center,pitch:-0.8f);
+                    Helper.PlayPitched(CoraliteSoundID.CrystalHit_DD2_WitherBeastCrystalImpact, Projectile.Center, pitch: -0.8f);
                     Projectile.Kill();
                 }
             }
@@ -146,7 +146,7 @@ namespace Coralite.Content.Items.MagikeSeries2
             {
                 //只绘制尖端
                 frameBox = new Rectangle(0, 0, mainTex.Width, (int)distance + 8);
-                Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, frameBox, lightColor, Projectile.rotation 
+                Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, frameBox, lightColor, Projectile.rotation
                     , new Vector2(mainTex.Width / 2, 8), Projectile.scale, 0, 0);
 
                 return false;
@@ -157,13 +157,13 @@ namespace Coralite.Content.Items.MagikeSeries2
             Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, frameBox, lightColor, Projectile.rotation
                 , new Vector2(mainTex.Width / 2, 8), Projectile.scale, 0, 0);
 
-            Vector2 dir = (Projectile.rotation-1.57f).ToRotationVector2();
+            Vector2 dir = (Projectile.rotation - 1.57f).ToRotationVector2();
             Vector2 pos = Projectile.Center - dir * (110 - 8);
             distance -= 110 - 8;
             while (distance > 0)
             {
                 frameBox = new Rectangle(0, 110, mainTex.Width, (int)(distance > 28 ? 28 : distance));
-                Main.spriteBatch.Draw(mainTex, pos - Main.screenPosition, frameBox, Lighting.GetColor(pos.ToTileCoordinates()), Projectile.rotation 
+                Main.spriteBatch.Draw(mainTex, pos - Main.screenPosition, frameBox, Lighting.GetColor(pos.ToTileCoordinates()), Projectile.rotation
                     , new Vector2(mainTex.Width / 2, 0), Projectile.scale, 0, 0);
 
                 pos -= dir * 28;
@@ -187,7 +187,7 @@ namespace Coralite.Content.Items.MagikeSeries2
         public override bool Update(Dust dust)
         {
             dust.fadeIn++;
-            if (dust.fadeIn % 2==0)
+            if (dust.fadeIn % 2 == 0)
             {
                 dust.frame.Y += Texture2D.Frame(1, 5, 0, 0).Height;
                 if (dust.frame.Height >= Texture2D.Height())
@@ -203,7 +203,7 @@ namespace Coralite.Content.Items.MagikeSeries2
         {
             var tex = Texture2D.Value;
             Main.spriteBatch.Draw(tex, dust.position - Main.screenPosition, dust.frame
-                , Lighting.GetColor(dust.position.ToTileCoordinates(), dust.color), dust.rotation+MathHelper.PiOver2 , dust.frame.Size() / 2, dust.scale, 0, 0);
+                , Lighting.GetColor(dust.position.ToTileCoordinates(), dust.color), dust.rotation + MathHelper.PiOver2, dust.frame.Size() / 2, dust.scale, 0, 0);
             return false;
         }
     }

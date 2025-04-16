@@ -2,7 +2,6 @@
 using Coralite.Content.WorldGeneration;
 using Coralite.Core.Systems.MagikeSystem;
 using Terraria;
-using Terraria.ID;
 using Terraria.Localization;
 
 namespace Coralite.Core

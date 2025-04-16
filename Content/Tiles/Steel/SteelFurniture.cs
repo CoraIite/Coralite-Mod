@@ -65,7 +65,7 @@ namespace Coralite.Content.Tiles.Steel
 
         public override void GetLight(ref float r, ref float g, ref float b)
         {
-            r = 1f; g = 1f; b =0.5f;
+            r = 1f; g = 1f; b = 0.5f;
         }
     }
 
@@ -84,7 +84,7 @@ namespace Coralite.Content.Tiles.Steel
 
         public override void GetLight(ref float r, ref float g, ref float b)
         {
-            r = 1f; g = 1f; b =0.75f;
+            r = 1f; g = 1f; b = 0.75f;
         }
     }
 
@@ -143,7 +143,7 @@ namespace Coralite.Content.Tiles.Steel
 
         public override void GetLight(ref float r, ref float g, ref float b)
         {
-            r = 1f; g = 1f; b =0.75f;
+            r = 1f; g = 1f; b = 0.75f;
         }
     }
 
@@ -155,7 +155,7 @@ namespace Coralite.Content.Tiles.Steel
 
         public override void GetLight(ref float r, ref float g, ref float b)
         {
-            r = 1f; g = 1f; b =0.75f;
+            r = 1f; g = 1f; b = 0.75f;
         }
     }
 

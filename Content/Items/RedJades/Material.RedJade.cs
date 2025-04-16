@@ -1,5 +1,4 @@
-﻿using Coralite.Content.CoraliteNotes.IceDragonChapter1;
-using Coralite.Content.CoraliteNotes.RedJade;
+﻿using Coralite.Content.CoraliteNotes.RedJade;
 using Coralite.Content.Tiles.RedJades;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;

@@ -1,7 +1,5 @@
-﻿using Coralite.Content.Bosses.DigDigDig.Stonelime;
-using Coralite.Content.Items.DigDigDig.EyeOfGlistent;
+﻿using Coralite.Content.Items.DigDigDig.EyeOfGlistent;
 using Coralite.Content.Items.LandOfTheLustrousSeries;
-using Coralite.Content.NPCs.Icicle;
 using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
@@ -246,7 +244,7 @@ namespace Coralite.Content.Bosses.DigDigDig.EyeOfGlistent
                             float num21 = (float)Math.Sqrt(num19 * num19 + num20 * num20);
                             num21 = num18 / num21;
                             Vector2 vector2 = npcCenter;
-                            Vector2 vector3 = default(Vector2);
+                            Vector2 vector3 = default;
                             vector3.X = num19 * num21;
                             vector3.Y = num20 * num21;
                             vector2.X += vector3.X * 10f;
@@ -279,9 +277,9 @@ namespace Coralite.Content.Bosses.DigDigDig.EyeOfGlistent
                     if (Main.getGoodWorld)
                         num23 += 1f;
 
-                    Vector2 vector4 = new Vector2(NPC.position.X + (float)NPC.width * 0.5f, NPC.position.Y + (float)NPC.height * 0.5f);
-                    float num24 = Target.position.X + (float)(Target.width / 2) - vector4.X;
-                    float num25 = Target.position.Y + (float)(Target.height / 2) - vector4.Y;
+                    Vector2 vector4 = new Vector2(NPC.position.X + NPC.width * 0.5f, NPC.position.Y + NPC.height * 0.5f);
+                    float num24 = Target.position.X + Target.width / 2 - vector4.X;
+                    float num25 = Target.position.Y + Target.height / 2 - vector4.Y;
                     float num26 = (float)Math.Sqrt(num24 * num24 + num25 * num25);
                     num26 = num23 / num26;
                     NPC.velocity.X = num24 * num26;
@@ -321,7 +319,7 @@ namespace Coralite.Content.Bosses.DigDigDig.EyeOfGlistent
                     if (Main.getGoodWorld)
                         num27 -= 15;
 
-                    if (NPC.ai[2] >= (float)num27)
+                    if (NPC.ai[2] >= num27)
                     {
                         NPC.ai[3] += 1f;
                         NPC.ai[2] = 0f;
@@ -381,10 +379,10 @@ namespace Coralite.Content.Bosses.DigDigDig.EyeOfGlistent
                 if (Main.getGoodWorld && NPC.life < NPC.lifeMax / 3)
                     num29 = 10;
 
-                if (Main.expertMode && NPC.ai[1] % (float)num29 == 0f)
+                if (Main.expertMode && NPC.ai[1] % num29 == 0f)
                 {
                     float num30 = 5f;
-                    Vector2 vector5 = new Vector2(NPC.position.X + (float)NPC.width * 0.5f, NPC.position.Y + (float)NPC.height * 0.5f);
+                    Vector2 vector5 = new Vector2(NPC.position.X + NPC.width * 0.5f, NPC.position.Y + NPC.height * 0.5f);
                     float num31 = Main.rand.Next(-200, 200);
                     float num32 = Main.rand.Next(-200, 200);
                     if (Main.getGoodWorld)
@@ -396,7 +394,7 @@ namespace Coralite.Content.Bosses.DigDigDig.EyeOfGlistent
                     float num33 = (float)Math.Sqrt(num31 * num31 + num32 * num32);
                     num33 = num30 / num33;
                     Vector2 vector6 = vector5;
-                    Vector2 vector7 = default(Vector2);
+                    Vector2 vector7 = default;
                     vector7.X = num31 * num33;
                     vector7.Y = num32 * num33;
                     vector6.X += vector7.X * 10f;
@@ -618,7 +616,7 @@ namespace Coralite.Content.Bosses.DigDigDig.EyeOfGlistent
                 if (Main.expertMode)
                     num49 = 90;
 
-                if (NPC.ai[2] >= (float)num49)
+                if (NPC.ai[2] >= num49)
                 {
                     NPC.ai[3] += 1f;
                     NPC.ai[2] = 0f;
@@ -660,7 +658,7 @@ namespace Coralite.Content.Bosses.DigDigDig.EyeOfGlistent
                 {
                     NPC.TargetClosest();
                     float num50 = 20f;
-                    Vector2 vector10 = new Vector2(NPC.position.X + (float)NPC.width * 0.5f, NPC.position.Y + (float)NPC.height * 0.5f);
+                    Vector2 vector10 = new Vector2(NPC.position.X + NPC.width * 0.5f, NPC.position.Y + NPC.height * 0.5f);
                     float num51 = Target.Center.X - vector10.X;
                     float num52 = Target.Center.Y - vector10.Y;
                     float num53 = Math.Abs(Target.velocity.X) + Math.Abs(Target.velocity.Y) / 4f;
@@ -682,12 +680,12 @@ namespace Coralite.Content.Bosses.DigDigDig.EyeOfGlistent
 
                     num51 -= Target.velocity.X * num53;
                     num52 -= Target.velocity.Y * num53 / 4f;
-                    num51 *= 1f + (float)Main.rand.Next(-10, 11) * 0.01f;
-                    num52 *= 1f + (float)Main.rand.Next(-10, 11) * 0.01f;
+                    num51 *= 1f + Main.rand.Next(-10, 11) * 0.01f;
+                    num52 *= 1f + Main.rand.Next(-10, 11) * 0.01f;
                     if (flag3)
                     {
-                        num51 *= 1f + (float)Main.rand.Next(-10, 11) * 0.01f;
-                        num52 *= 1f + (float)Main.rand.Next(-10, 11) * 0.01f;
+                        num51 *= 1f + Main.rand.Next(-10, 11) * 0.01f;
+                        num52 *= 1f + Main.rand.Next(-10, 11) * 0.01f;
                     }
 
                     float num54 = (float)Math.Sqrt(num51 * num51 + num52 * num52);
@@ -695,12 +693,12 @@ namespace Coralite.Content.Bosses.DigDigDig.EyeOfGlistent
                     num54 = num50 / num54;
                     NPC.velocity.X = num51 * num54;
                     NPC.velocity.Y = num52 * num54;
-                    NPC.velocity.X += (float)Main.rand.Next(-20, 21) * 0.1f;
-                    NPC.velocity.Y += (float)Main.rand.Next(-20, 21) * 0.1f;
+                    NPC.velocity.X += Main.rand.Next(-20, 21) * 0.1f;
+                    NPC.velocity.Y += Main.rand.Next(-20, 21) * 0.1f;
                     if (flag3)
                     {
-                        NPC.velocity.X += (float)Main.rand.Next(-50, 51) * 0.1f;
-                        NPC.velocity.Y += (float)Main.rand.Next(-50, 51) * 0.1f;
+                        NPC.velocity.X += Main.rand.Next(-50, 51) * 0.1f;
+                        NPC.velocity.Y += Main.rand.Next(-50, 51) * 0.1f;
                         float num56 = Math.Abs(NPC.velocity.X);
                         float num57 = Math.Abs(NPC.velocity.Y);
                         if (NPC.Center.X > Target.Center.X)
@@ -713,8 +711,8 @@ namespace Coralite.Content.Bosses.DigDigDig.EyeOfGlistent
                         NPC.velocity.Y = num56 + NPC.velocity.Y;
                         NPC.velocity.Normalize();
                         NPC.velocity *= num50;
-                        NPC.velocity.X += (float)Main.rand.Next(-20, 21) * 0.1f;
-                        NPC.velocity.Y += (float)Main.rand.Next(-20, 21) * 0.1f;
+                        NPC.velocity.X += Main.rand.Next(-20, 21) * 0.1f;
+                        NPC.velocity.Y += Main.rand.Next(-20, 21) * 0.1f;
                     }
                     else if (num55 < 100f)
                     {
@@ -810,9 +808,9 @@ namespace Coralite.Content.Bosses.DigDigDig.EyeOfGlistent
                 float num64 = 600f;
                 float num65 = 9f;
                 float num66 = 0.3f;
-                Vector2 vector11 = new Vector2(NPC.position.X + (float)NPC.width * 0.5f, NPC.position.Y + (float)NPC.height * 0.5f);
-                float num67 = Target.position.X + (float)(Target.width / 2) - vector11.X;
-                float num68 = Target.position.Y + (float)(Target.height / 2) + num64 - vector11.Y;
+                Vector2 vector11 = new Vector2(NPC.position.X + NPC.width * 0.5f, NPC.position.Y + NPC.height * 0.5f);
+                float num67 = Target.position.X + Target.width / 2 - vector11.X;
+                float num68 = Target.position.Y + Target.height / 2 + num64 - vector11.Y;
                 float num69 = (float)Math.Sqrt(num67 * num67 + num68 * num68);
                 num69 = num65 / num69;
                 num67 *= num69;

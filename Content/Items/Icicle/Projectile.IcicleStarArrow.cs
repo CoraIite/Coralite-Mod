@@ -43,7 +43,7 @@ namespace Coralite.Content.Items.Icicle
             Projectile.ignoreWater = true;
             Projectile.coldDamage = true;
         }
-        
+
         public void Initialize()
         {
             Projectile.oldPos = new Vector2[16];

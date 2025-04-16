@@ -6,7 +6,7 @@ namespace Coralite.Core.Systems.MagikeSystem
     {
         private static Dictionary<int, Dictionary<MALevel, int>> _magikeApparatusLevels;
         private static Dictionary<int, Dictionary<int, MALevel>> _magikeFrameToLevels;
-        private static Dictionary<MALevel,List<int>> _magikeLevelToType;
+        private static Dictionary<MALevel, List<int>> _magikeLevelToType;
 
         /// <summary>
         /// 

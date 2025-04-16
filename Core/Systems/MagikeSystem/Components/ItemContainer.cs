@@ -343,7 +343,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// </summary>
         /// <param name="item"></param>
         /// <param name="index"></param>
-        public virtual void AddItemByIndex(Item item,int index)
+        public virtual void AddItemByIndex(Item item, int index)
         {
             if (!Items.IndexInRange(index))
                 return;

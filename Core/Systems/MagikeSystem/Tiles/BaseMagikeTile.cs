@@ -193,7 +193,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
         public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY)
         {
             Tile t = Framing.GetTileSafely(i, j);
-            if (PlaceType==CoraliteSets.MagikeTileType.None)
+            if (PlaceType == CoraliteSets.MagikeTileType.None)
                 return;
 
             GetMagikeAlternateData(i, j, out _, out MagikeAlternateStyle alternate);
@@ -311,7 +311,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
             UILoader.GetUIState<MagikeApparatusPanel>().Recalculate();
         }
 
-        public static void PlaceItemInFrame(Player player, int i,int j,ItemContainer container)
+        public static void PlaceItemInFrame(Player player, int i, int j, ItemContainer container)
         {
             if (!player.ItemTimeIsZero)
                 return;

@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.Biomes;
 using Coralite.Content.Dusts;
 using Coralite.Content.Items.LandOfTheLustrousSeries;
+using Coralite.Content.Items.Magike.ItemTransmit;
 using Coralite.Content.Items.MagikeSeries2;
 using Coralite.Content.Particles;
 using Coralite.Core;
@@ -75,11 +76,12 @@ namespace Coralite.Content.NPCs.Crystalline
             //固定掉落矽卡岩
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<Skarn>(), 1, 2, 6));
             //随机掉落矽卡岩砖与平滑矽卡岩
-            npcLoot.Add(new CommonDrop(ModContent.ItemType<SmoothSkarn>(), 4, 2, 6,3));
-            npcLoot.Add(new CommonDrop(ModContent.ItemType<SkarnBrick>(), 5, 2, 6,2));
+            npcLoot.Add(new CommonDrop(ModContent.ItemType<SmoothSkarn>(), 4, 2, 6, 3));
+            npcLoot.Add(new CommonDrop(ModContent.ItemType<SkarnBrick>(), 5, 2, 6, 2));
 
-            //掉落魔鸟
-
+            //掉落魔鸟与魔鸟巢
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CrystallineMabird>(), 2, 1, 2));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<BasicMabirdNest>(), 5));
 
             //掉落宝石原石
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PrimaryRoughGemstone>(), 1, 2, 4));
@@ -197,7 +199,7 @@ namespace Coralite.Content.NPCs.Crystalline
                             baseOffset += new Vector2(8, (3 - (int)MabirdCount / 2) * 12);
                         }
                         else
-                            baseOffset += new Vector2(0, (3 - (int)(MabirdCount+1) / 2) * 12);
+                            baseOffset += new Vector2(0, (3 - (int)(MabirdCount + 1) / 2) * 12);
 
                         Vector2 pos = NPC.position + baseOffset;
 
@@ -208,7 +210,7 @@ namespace Coralite.Content.NPCs.Crystalline
                             Main.npc[i].velocity = new Vector2(NPC.direction * 8, 0);
                         }
 
-                        Dust d = Dust.NewDustPerfect(pos+new Vector2(NPC.direction*12,0), ModContent.DustType<CrystallineImpact>(), Vector2.Zero);
+                        Dust d = Dust.NewDustPerfect(pos + new Vector2(NPC.direction * 12, 0), ModContent.DustType<CrystallineImpact>(), Vector2.Zero);
                         d.rotation = NPC.spriteDirection > 0 ? 0 : MathHelper.Pi;
 
                         Helper.PlayPitched(CoraliteSoundID.CrystalBroken_DD2_WitherBeastDeath, NPC.Center);
@@ -656,7 +658,7 @@ namespace Coralite.Content.NPCs.Crystalline
                 for (int i = 0; i < 2; i++)
                     for (int j = 0; j < 2; j++)
                     {
-                        Tile t = Framing.GetTileSafely((NPC.BottomLeft+new Vector2(i*8,j*16)).ToTileCoordinates());
+                        Tile t = Framing.GetTileSafely((NPC.BottomLeft + new Vector2(i * 8, j * 16)).ToTileCoordinates());
                         if (t.HasUnactuatedTile && Main.tileSolid[t.TileType])
                         {
                             hasSoild = true;
@@ -743,8 +745,8 @@ namespace Coralite.Content.NPCs.Crystalline
                 for (int i = 0; i < 3; i++)
                 {
                     float r2 = r + i * MathHelper.TwoPi / 3;
-                    Dust d = Dust.NewDustPerfect(NPC.Center+r2.ToRotationVector2()*16, ModContent.DustType<CrystallineImpact>(), Vector2.Zero,Scale:Main.rand.NextFloat(1,1.5f));
-                    d.rotation =r2;
+                    Dust d = Dust.NewDustPerfect(NPC.Center + r2.ToRotationVector2() * 16, ModContent.DustType<CrystallineImpact>(), Vector2.Zero, Scale: Main.rand.NextFloat(1, 1.5f));
+                    d.rotation = r2;
                 }
             }
         }
@@ -785,7 +787,7 @@ namespace Coralite.Content.NPCs.Crystalline
         {
             if (NPC.oldPos == null || NPC.oldPos.Length != trailCachesLength)
                 return;
-            
+
             Texture2D Texture = CoraliteAssets.Trail.LightShotSPA.Value;
 
             bars ??= [];
@@ -794,7 +796,7 @@ namespace Coralite.Content.NPCs.Crystalline
             {
                 float factor = (float)i / trailCachesLength;
                 Vector2 Center = NPC.oldPos[i];
-                Vector2 normal = (NPC.oldRot[i]+1.57f).ToRotationVector2();
+                Vector2 normal = (NPC.oldRot[i] + 1.57f).ToRotationVector2();
                 Vector2 Top = Center - Main.screenPosition + (normal * 12 * factor);
                 Vector2 Bottom = Center - Main.screenPosition - (normal * 12 * factor);
 

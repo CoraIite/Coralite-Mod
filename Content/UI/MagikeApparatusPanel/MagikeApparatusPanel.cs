@@ -399,7 +399,7 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
         /// <param name="parent"></param>
         public void AddFilterController(UIElement parent)
         {
-            UIElement title = new ComponentUIElementText(() => MagikeSystem.GetUIText(MagikeSystem.UITextID.FilterController), parent,new Vector2(1.3f));
+            UIElement title = new ComponentUIElementText(() => MagikeSystem.GetUIText(MagikeSystem.UITextID.FilterController), parent, new Vector2(1.3f));
             parent.Append(title);
             UIElement Text1 = new ComponentUIElementText(() => MagikeSystem.GetUIText(MagikeSystem.UITextID.ClickToRemove), parent);
             Text1.SetTopLeft(title.Height.Pixels + 8, 0);
@@ -410,7 +410,7 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
                 grid.Add(new FilterButton(i));
 
             grid.SetSize(0, 0, 1, 1);
-            grid.SetTopLeft(Text1.Top.Pixels+title.Height.Pixels + 8, 0);
+            grid.SetTopLeft(Text1.Top.Pixels + title.Height.Pixels + 8, 0);
 
             grid.QuickInvisibleScrollbar();
 

@@ -3,7 +3,6 @@ using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
-using System.ComponentModel;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -26,19 +25,19 @@ namespace Coralite.Content.Items.Misc_Magic
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.value = Item.sellPrice(0, 1);
             Item.rare = ItemRarityID.LightRed;
-            
+
             Item.useTurn = false;
         }
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             shootCount++;
-            Helper.PlayPitched(CoraliteSoundID.MagicShoot_Item9, position,pitch:-0.5f,volume:0.6f);
+            Helper.PlayPitched(CoraliteSoundID.MagicShoot_Item9, position, pitch: -0.5f, volume: 0.6f);
 
             if (shootCount > 7)
             {
                 shootCount = 0;
-                Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<TaurusMeteor>(), (int)(damage*1.5f), knockback, player.whoAmI);
+                Projectile.NewProjectile(source, position, velocity, ModContent.ProjectileType<TaurusMeteor>(), (int)(damage * 1.5f), knockback, player.whoAmI);
                 return false;
             }
 
@@ -59,7 +58,7 @@ namespace Coralite.Content.Items.Misc_Magic
             int time = Main.rand.Next(5, 30);
             float Rot = time * 0.003f;
 
-            Projectile.NewProjectile(source, position, velocity.RotatedBy(dir * Rot)*Main.rand.NextFloat(0.9f,1.1f), type, damage, knockback, player.whoAmI, Rot, time, -dir);
+            Projectile.NewProjectile(source, position, velocity.RotatedBy(dir * Rot) * Main.rand.NextFloat(0.9f, 1.1f), type, damage, knockback, player.whoAmI, Rot, time, -dir);
         }
 
         public override Vector2? HoldoutOffset()

@@ -7,9 +7,9 @@ namespace Coralite.Content.WorldGeneration.Generators
         public readonly int tileID = -1;
         public readonly int tileStyle;
 
-        public TileInfo(Color color,int tileID, int style)
+        public TileInfo(Color color, int tileID, int style)
         {
-            this.color= color;
+            this.color = color;
             this.tileID = tileID;
             tileStyle = style;
         }

@@ -188,7 +188,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
         }
     }
 
-    [AutoLoadTexture(Path =AssetDirectory.BabyIceDragon)]
+    [AutoLoadTexture(Path = AssetDirectory.BabyIceDragon)]
     public class IceDragonEggDrawer : ModMapLayer
     {
         public static ATex IceDragonEgg_Head { get; private set; }
@@ -203,7 +203,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                 {
                     egg = Main.npc[i];
                     break;
-                }    
+                }
             }
 
             if (egg == null)
@@ -212,7 +212,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             const float scaleIfNotSelected = 1f;
             const float scaleIfSelected = scaleIfNotSelected * 2f;
 
-            if (context.Draw(IceDragonEgg_Head.Value, egg.Center/16, Color.White
+            if (context.Draw(IceDragonEgg_Head.Value, egg.Center / 16, Color.White
                 , new SpriteFrame(1, 1, 0, 0)
                 , scaleIfNotSelected, scaleIfSelected, Alignment.Center).IsMouseOver)
             {

@@ -205,11 +205,11 @@ namespace Coralite.Content.GlobalNPCs
                 case NPCID.TheDestroyer:
                     {
                         bool mechBoss1 = NPC.downedMechBoss1 || npc.type == NPCID.TheDestroyer;
-                        bool mechBoss2 = NPC.downedMechBoss2 || (npc.type == NPCID.Retinazer && !NPC.AnyNPCs(NPCID.Spazmatism)) || (npc.type == NPCID.Spazmatism&&!NPC.AnyNPCs(NPCID.Retinazer));
+                        bool mechBoss2 = NPC.downedMechBoss2 || (npc.type == NPCID.Retinazer && !NPC.AnyNPCs(NPCID.Spazmatism)) || (npc.type == NPCID.Spazmatism && !NPC.AnyNPCs(NPCID.Retinazer));
                         bool mechBoss3 = NPC.downedMechBoss3 || npc.type == NPCID.SkeletronPrime;
 
                         if (Main.netMode != NetmodeID.MultiplayerClient && Main.hardMode && mechBoss1 && mechBoss2 && mechBoss3)
-                            KnowledgeSystem.CheckForUnlock<Thunder1Knowldege>( npc.Center, Coralite.ThunderveinYellow);
+                            KnowledgeSystem.CheckForUnlock<Thunder1Knowldege>(npc.Center, Coralite.ThunderveinYellow);
                     }
 
                     break;

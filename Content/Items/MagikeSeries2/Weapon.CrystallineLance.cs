@@ -24,7 +24,7 @@ namespace Coralite.Content.Items.MagikeSeries2
             Item.useTurn = false;
             Item.rare = ModContent.RarityType<CrystallineMagikeRarity>();
             Item.value = Item.sellPrice(0, 4);
-            Item.channel = true; 
+            Item.channel = true;
 
             Item.StopAnimationOnHurt = true;
 
@@ -42,7 +42,7 @@ namespace Coralite.Content.Items.MagikeSeries2
                         , ModContent.ProjectileType<CrystallineSpikeFriendly>(), (int)(damage * (1 + player.velocity.Length() / 6f)), knockback, player.whoAmI);
             }
 
-            Helper.PlayPitched(CoraliteSoundID.Crystal_Item101,position,pitch:0.5f);
+            Helper.PlayPitched(CoraliteSoundID.Crystal_Item101, position, pitch: 0.5f);
 
             return base.Shoot(player, source, position, velocity, type, damage, knockback);
         }
@@ -98,7 +98,7 @@ namespace Coralite.Content.Items.MagikeSeries2
             {
                 default:
                 case 0://拿出来
-                    owner.SetDummyItemTime(Timer>15?15:Timer);
+                    owner.SetDummyItemTime(Timer > 15 ? 15 : Timer);
                     if (Projectile.frame < 5)
                     {
                         if (++Projectile.frameCounter > 3)
@@ -269,7 +269,7 @@ namespace Coralite.Content.Items.MagikeSeries2
             Projectile.friendly = true;
             Projectile.extraUpdates = 1;
             Projectile.timeLeft = 2 * 180;
-            Projectile.DamageType = MagikeDamage.Instance; 
+            Projectile.DamageType = MagikeDamage.Instance;
         }
 
         public override void AI()

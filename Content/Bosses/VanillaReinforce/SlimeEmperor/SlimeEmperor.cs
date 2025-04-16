@@ -41,7 +41,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
     ///                            ---————————————----
     /// </summary>
     [AutoloadBossHead]
-    [AutoLoadTexture(Path= AssetDirectory.SlimeEmperor)]
+    [AutoLoadTexture(Path = AssetDirectory.SlimeEmperor)]
     public partial class SlimeEmperor : ModNPC
     {
         public override string Texture => AssetDirectory.SlimeEmperor + Name;

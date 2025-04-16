@@ -45,7 +45,7 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
             Projectile.netImportant = true;
             Projectile.usesLocalNPCImmunity = true;
         }
-        
+
         public void Initialize()
         {
             Alpha = 1;

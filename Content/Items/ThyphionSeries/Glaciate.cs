@@ -68,7 +68,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             {
                 powerfulAttack = false;
                 sp = 2;
-                Projectile.NewProjectile(source, player.Center, velocity, ProjectileType<GlaciateIceCube>(), damage*2, knockback, player.whoAmI);
+                Projectile.NewProjectile(source, player.Center, velocity, ProjectileType<GlaciateIceCube>(), damage * 2, knockback, player.whoAmI);
             }
             else
                 Projectile.NewProjectile(source, player.Center, velocity, type, damage, knockback, player.whoAmI);
@@ -458,11 +458,11 @@ namespace Coralite.Content.Items.ThyphionSeries
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Projectile.velocity = Projectile.velocity.SafeNormalize(Vector2.Zero) * 2;
-            if (Projectile.localAI[2]==0)
+            if (Projectile.localAI[2] == 0)
             {
                 Projectile.localAI[2] = 1;
-            if (Main.player[Projectile.owner].HeldItem.ModItem is Glaciate glaciate)
-                glaciate.powerfulAttack = true;
+                if (Main.player[Projectile.owner].HeldItem.ModItem is Glaciate glaciate)
+                    glaciate.powerfulAttack = true;
             }
         }
 

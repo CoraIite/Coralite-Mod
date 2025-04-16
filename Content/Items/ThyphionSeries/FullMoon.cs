@@ -268,7 +268,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
                             Vector2 dir = Rotation.ToRotationVector2();
 
-                            if (Projectile.IsOwnedByLocalPlayer()&&VisualEffectSystem.HitEffect_ScreenShaking)
+                            if (Projectile.IsOwnedByLocalPlayer() && VisualEffectSystem.HitEffect_ScreenShaking)
                                 Main.instance.CameraModifiers.Add(new PunchCameraModifier(Projectile.Center, dir, 8, 7, 4, 800));
 
                             handOffset = -20;
@@ -590,7 +590,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             State = 1;
             Timer = 0;
 
-            if (Projectile.IsOwnedByLocalPlayer()&&VisualEffectSystem.HitEffect_ScreenShaking)
+            if (Projectile.IsOwnedByLocalPlayer() && VisualEffectSystem.HitEffect_ScreenShaking)
             {
                 Main.instance.CameraModifiers.Add(new PunchCameraModifier(Projectile.Center, Projectile.rotation.ToRotationVector2(), 10, 7, 5, 500));
             }

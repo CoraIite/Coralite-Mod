@@ -1,6 +1,5 @@
 ﻿using Coralite.Content.Tiles.MagikeSeries2;
 using Coralite.Core;
-using Terraria.ID;
 
 namespace Coralite.Content.Items.MagikeSeries2
 {
@@ -17,7 +16,7 @@ namespace Coralite.Content.Items.MagikeSeries2
         {
             CreateRecipe()
                 .AddIngredient<Skarn>(2)
-                .AddTile(TileID.HeavyWorkBench)
+                .AddTile<SkarnCutterTile>()
                 .Register();
         }
     }

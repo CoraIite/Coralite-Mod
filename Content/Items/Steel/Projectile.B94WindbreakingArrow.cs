@@ -30,7 +30,7 @@ namespace Coralite.Content.Items.Steel
 
         public override void SetDefaults()
         {
-            Projectile.DamageType = DamageClass.Ranged; 
+            Projectile.DamageType = DamageClass.Ranged;
             Projectile.width = Projectile.height = 16;
 
             Projectile.friendly = true;

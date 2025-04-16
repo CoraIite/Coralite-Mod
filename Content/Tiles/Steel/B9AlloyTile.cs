@@ -4,7 +4,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Tiles.Steel
 {
-    public class B9AlloyTile:ModTile
+    public class B9AlloyTile : ModTile
     {
         public override string Texture => AssetDirectory.SteelTiles + Name;
 

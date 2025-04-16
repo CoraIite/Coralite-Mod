@@ -40,7 +40,7 @@ namespace Coralite.Content.WorldGeneration
             nestCenter_y += 5;
 
             int whichOne = WorldGen.genRand.Next(3);
-            TextureGenerator generator=new TextureGenerator("IceNest",whichOne,AssetDirectory.IceNest);
+            TextureGenerator generator = new TextureGenerator("IceNest", whichOne, AssetDirectory.IceNest);
 
             int genOrigin_x = nestCenter_x - (generator.Width / 2);
             int genOrigin_y = nestCenter_y - (generator.Height / 2);

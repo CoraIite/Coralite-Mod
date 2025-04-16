@@ -19,7 +19,7 @@ namespace Coralite.Core.Systems.KeySystem
         public LocalizedText LockTip { get; private set; }
         public LocalizedText Description { get; private set; }
 
-        public int InnerType {  get; private set; }
+        public int InnerType { get; private set; }
 
         /// <summary>
         /// 类型

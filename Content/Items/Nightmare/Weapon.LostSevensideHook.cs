@@ -537,7 +537,7 @@ namespace Coralite.Content.Items.Nightmare
             Projectile.friendly = true;
             Projectile.netImportant = true;
         }
-        
+
         public void Initialize()
         {
             Projectile.oldPos = new Vector2[16];

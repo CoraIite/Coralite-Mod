@@ -875,6 +875,10 @@ namespace Coralite.Content.WorldGeneration
             WorldGen.AddBuriedChest(shrineTopLeft.X + 14, shrineTopLeft.Y + 15,
                 ModContent.ItemType<Reel_MagikeAdvance>(), notNearOtherChests: false, 1, trySlope: false, chestTileType);
 
+            int chestIndex = Chest.FindChestByGuessing(shrineTopLeft.X + 14, shrineTopLeft.Y + 14);
+            if (chestIndex != -1)
+                WorldGenHelper.RandChestItem(Main.chest[chestIndex], ModContent.ItemType<SkarnCutter>());
+
             //挖通道的中心点，挖主要通道
             DigSkyIslandTunnel(outerRect, shrineRect, shrineTopLeft + new Point(27, 12), 0, 1, GetTunnelLength, true);
             DigSkyIslandTunnel(outerRect, shrineRect, shrineTopLeft + new Point(0, 12), 0, -1, GetTunnelLength, true);

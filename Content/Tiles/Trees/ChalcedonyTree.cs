@@ -24,7 +24,7 @@ namespace Coralite.Content.Tiles.Trees
         public override void SetStaticDefaults()
         {
             // Makes Example Tree grow on ExampleBlock
-            GrowsOnTileId = 
+            GrowsOnTileId =
                 [
                 ModContent.TileType<SkarnTile>(),
                 ModContent.TileType<SmoothSkarnTile>(),

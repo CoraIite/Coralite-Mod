@@ -135,7 +135,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
 
                 flyingShieldGuard.TurnToDashing(this, 12, dashDirection, 35f);
                 if (!VaultUtils.isServer)
-                Main.instance.CameraModifiers.Add(new MoveModifyer(5, 40));
+                    Main.instance.CameraModifiers.Add(new MoveModifyer(5, 40));
 
                 Projectile.NewProjectile(Player.GetSource_FromAI(), Player.Center, Vector2.Zero,
                     ProjectileType<ChronoHeartSlash>(), damage, 4, Player.whoAmI, startAngle, 0, DashDir);

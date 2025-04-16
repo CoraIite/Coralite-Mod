@@ -371,7 +371,7 @@ namespace Coralite.Content.GlobalItems
             SoundEngine.PlaySound(CoraliteSoundID.Meowmere);
         }
 
-        public void ApplySpecialDamage(Player player,ref StatModifier damage)
+        public void ApplySpecialDamage(Player player, ref StatModifier damage)
         {
             if (player.TryGetModPlayer(out CoralitePlayer cp))
             {

@@ -239,7 +239,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
         #region 各种帮助方法
 
         public bool CanSend(Vector2 pos1, Vector2 pos2)
-            => pos1.Distance(pos2) < SendLength; 
+            => pos1.Distance(pos2) < SendLength;
 
         /// <summary>
         /// 抓取物品，从一个物品容器中拿物品，会直接设置<see cref="catchItem"/>
@@ -394,7 +394,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
                 , color, 0, frameBox.Size() / 2, 1, Velocity.X > 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None, 0);
 
             if (catchItem != null && !catchItem.IsAir)//绘制下面吊着的物品
-                MagikeHelper.DrawItem(spriteBatch, catchItem, Center-Main.screenPosition + new Vector2(0, 24), 48, color);
+                MagikeHelper.DrawItem(spriteBatch, catchItem, Center - Main.screenPosition + new Vector2(0, 24), 48, color);
         }
 
         public void Reset(Vector2 center)
@@ -433,7 +433,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
 
         public override ModItem Clone(Item newEntity)
         {
-            ModItem i= base.Clone(newEntity);
+            ModItem i = base.Clone(newEntity);
             if (i is Mabird mabird)
             {
                 mabird.State = State;
@@ -449,14 +449,14 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
-             tooltips.Add( new TooltipLine(Mod, "MabirdSendLength"
-                , MagikeSystem.GetItemDescription(MagikeSystem.ItemDescriptionID.MabirdSendLength).Format(SendLength/16)));
-             tooltips.Add( new TooltipLine(Mod, "MabirdSpeed"
-                , MagikeSystem.GetItemDescription(MagikeSystem.ItemDescriptionID.MabirdFlySpeed).Format(Speed/16*60)));
-             tooltips.Add( new TooltipLine(Mod, "MabirdCatchItemCount"
-                , MagikeSystem.GetItemDescription(MagikeSystem.ItemDescriptionID.MabirdCatchItemCount).Format(CatchStack)));
-             tooltips.Add( new TooltipLine(Mod, "MabirdRestTime"
-                , MagikeSystem.GetItemDescription(MagikeSystem.ItemDescriptionID.MabirdRestTime).Format(RestTime/60)));
+            tooltips.Add(new TooltipLine(Mod, "MabirdSendLength"
+               , MagikeSystem.GetItemDescription(MagikeSystem.ItemDescriptionID.MabirdSendLength).Format(SendLength / 16)));
+            tooltips.Add(new TooltipLine(Mod, "MabirdSpeed"
+               , MagikeSystem.GetItemDescription(MagikeSystem.ItemDescriptionID.MabirdFlySpeed).Format(Speed / 16 * 60)));
+            tooltips.Add(new TooltipLine(Mod, "MabirdCatchItemCount"
+               , MagikeSystem.GetItemDescription(MagikeSystem.ItemDescriptionID.MabirdCatchItemCount).Format(CatchStack)));
+            tooltips.Add(new TooltipLine(Mod, "MabirdRestTime"
+               , MagikeSystem.GetItemDescription(MagikeSystem.ItemDescriptionID.MabirdRestTime).Format(RestTime / 60)));
         }
 
         #region IO
@@ -477,7 +477,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
                 ReleaseItemPos.Save(tag, nameof(ReleaseItemPos));
             }
 
-            if (WhiteListItem != null&&!WhiteListItem.IsAir)
+            if (WhiteListItem != null && !WhiteListItem.IsAir)
             {
                 b1[2] = true;
                 ItemIO.Save(WhiteListItem);

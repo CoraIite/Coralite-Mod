@@ -20,7 +20,7 @@ namespace Coralite.Content.Items.RedJades
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 10;
         }
-       
+
         public void Initialize()
         {
             Helper.RedJadeExplosion(Projectile.Center);

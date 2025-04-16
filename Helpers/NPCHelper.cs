@@ -1,5 +1,4 @@
-﻿using Coralite.Core;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Diagnostics;
 using Terraria;
@@ -28,7 +27,7 @@ namespace Coralite.Helpers
             return TextureAssets.Npc[npc.type].Value;
         }
 
-        public static Rectangle GetFrameBox(this NPC npc,int xFrame)
+        public static Rectangle GetFrameBox(this NPC npc, int xFrame)
         {
             Texture2D tex = npc.GetTexture();
             return tex.Frame(xFrame, Main.npcFrameCount[npc.type], npc.frame.X, npc.frame.Y);

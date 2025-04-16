@@ -148,7 +148,7 @@ namespace Coralite.Content.Items.FlyingShields
 
             if (Projectile.IsOwnedByLocalPlayer())
             {
-                Vector2 dir = (Owner.Center - Main.MouseWorld).SafeNormalize(Vector2.Zero).RotateByRandom(-0.5f,0.5f);
+                Vector2 dir = (Owner.Center - Main.MouseWorld).SafeNormalize(Vector2.Zero).RotateByRandom(-0.5f, 0.5f);
 
                 Projectile.NewProjectileFromThis<HorseshoeCrabEXProj>(Projectile.Center + (dir * 16 * 10), -dir * 10, Projectile.damage, Projectile.knockBack);
             }

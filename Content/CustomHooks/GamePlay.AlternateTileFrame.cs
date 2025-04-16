@@ -72,7 +72,7 @@ namespace Coralite.Content.CustomHooks
                     {
                         CoraliteSets.MagikeTileType.FourWayNormal => (t.TileFrameY - (alternateData.CoordinateFullWidth * 2)) % alternateData.CoordinateFullHeight,
                         _ => t.TileFrameY % tileData.CoordinateFullHeight
-                    }; 
+                    };
                 }
                 else
                 {
@@ -84,7 +84,7 @@ namespace Coralite.Content.CustomHooks
                         _ => t.TileFrameY % tileData.CoordinateFullHeight
                     };
                 }
-                
+
                 //因为放下来的时候就是0所以不管他
                 int partFrameX = t.TileFrameX % alternateData.CoordinateFullWidth;
 

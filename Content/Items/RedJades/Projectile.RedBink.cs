@@ -54,7 +54,7 @@ namespace Coralite.Content.Items.RedJades
         public override bool OnTileCollide(Vector2 oldVelocity) => false;
 
         #region AI
-        
+
         public void Initialize()
         {
             originDamage = Projectile.originalDamage;

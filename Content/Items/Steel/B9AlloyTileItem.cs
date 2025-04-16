@@ -6,8 +6,8 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Steel
 {
-    public class B9AlloyTileItem():BasePlaceableItem(Item.sellPrice(0,0,20),ItemRarityID.LightRed
-        ,ModContent.TileType<B9AlloyTile>(),AssetDirectory.SteelItems)
+    public class B9AlloyTileItem() : BasePlaceableItem(Item.sellPrice(0, 0, 20), ItemRarityID.LightRed
+        , ModContent.TileType<B9AlloyTile>(), AssetDirectory.SteelItems)
     {
         public override void AddRecipes()
         {

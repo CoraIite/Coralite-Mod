@@ -237,7 +237,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                             Rotation = Rotation.AngleLerp(ToMouseA, 0.15f);
                     }
 
-                    
+
                     Owner.itemTime = Owner.itemAnimation = 2;
                     handOffset = Helper.Lerp(handOffset, 0, 0.1f);
                     SPTimer++;

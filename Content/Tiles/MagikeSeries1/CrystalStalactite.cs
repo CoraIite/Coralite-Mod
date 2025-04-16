@@ -242,7 +242,7 @@ namespace Coralite.Content.Tiles.MagikeSeries1
         {
             DefaultValues(false);
 
-            FlexibleTileWand.RubblePlacementSmall.AddVariations(ModContent.ItemType<MagicCrystal>(), Type, 0, 1, 2, 3,4,5);
+            FlexibleTileWand.RubblePlacementSmall.AddVariations(ModContent.ItemType<MagicCrystal>(), Type, 0, 1, 2, 3, 4, 5);
         }
     }
 

@@ -1,6 +1,4 @@
-﻿using Terraria;
-
-namespace Coralite.Core.Systems.FlyingShieldSystem
+﻿namespace Coralite.Core.Systems.FlyingShieldSystem
 {
     public abstract class BaseFlyingShieldPlusGuard : BaseFlyingShieldGuard
     {

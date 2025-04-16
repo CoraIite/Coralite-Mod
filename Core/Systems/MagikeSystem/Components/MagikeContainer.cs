@@ -441,7 +441,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             if (width < 84)
                 width = 84;
 
-            Width.Set(width+ LeftPaddling, 0);
+            Width.Set(width + LeftPaddling, 0);
             Height.Set(magikeSize.Y * 3.5f, 0);
         }
 
@@ -450,7 +450,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             TextSnippet[] textSnippets = [.. ChatManager.ParseMessage(value.ToString(), Color.White)];
             ChatManager.ConvertNormalSnippets(textSnippets);
 
-           return ChatManager.GetStringSize(FontAssets.MouseText.Value, textSnippets, Vector2.One*1.1f);
+            return ChatManager.GetStringSize(FontAssets.MouseText.Value, textSnippets, Vector2.One * 1.1f);
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)

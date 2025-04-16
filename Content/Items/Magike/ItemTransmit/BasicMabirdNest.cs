@@ -15,7 +15,7 @@ using static Terraria.ModLoader.ModContent;
 namespace Coralite.Content.Items.Magike.ItemTransmit
 {
     public class BasicMabirdNest() : MagikeApparatusItem(TileType<BasicMabirdNestTile>(), Item.sellPrice(silver: 5)
-        , RarityType<CrystallineMagikeRarity>(), AssetDirectory.ItemTransmits),IMagikeCraftable
+        , RarityType<CrystallineMagikeRarity>(), AssetDirectory.ItemTransmits), IMagikeCraftable
     {
         public void AddMagikeCraftRecipe()
         {

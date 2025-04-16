@@ -61,7 +61,7 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
         private readonly Func<string> text;
         private Vector2 scale;
 
-        public ComponentUIElementText(Func< string> text,  UIElement parent, Vector2? scale = null)
+        public ComponentUIElementText(Func<string> text, UIElement parent, Vector2? scale = null)
         {
             this.text = text;
 

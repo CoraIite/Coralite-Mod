@@ -5970,3 +5970,8 @@ MabirdLoupe: {
 	CanShowBackLines: 显示魔鸟的出巢与归巢路线，背包内右键关闭
 	DontShowBackLines: 不显示魔鸟的出巢与归巢路线，背包内右键启用
 }
+
+SkarnCutter: {
+	DisplayName: 矽卡复合切割机
+	Tooltip: 用于切割矽卡岩与玉髓木
+}

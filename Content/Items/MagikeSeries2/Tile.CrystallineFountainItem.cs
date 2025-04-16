@@ -6,7 +6,7 @@ using Terraria;
 
 namespace Coralite.Content.Items.MagikeSeries2
 {
-    public class CrystallineFountainItem() : BasePlaceableItem(Item.buyPrice(0,4), ModContent.RarityType<CrystallineMagikeRarity>()
+    public class CrystallineFountainItem() : BasePlaceableItem(Item.buyPrice(0, 4), ModContent.RarityType<CrystallineMagikeRarity>()
         , ModContent.TileType<CrystallineFountain>(), AssetDirectory.MagikeSeries2Item)
     {
     }

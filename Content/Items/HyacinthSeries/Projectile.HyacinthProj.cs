@@ -213,7 +213,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             switch (value)
             {
                 case (int)GunType.Wisteria://紫藤萝
-                    return new  Color(234,173,255);
+                    return new Color(234, 173, 255);
                 case (int)GunType.SuperStarCannon://超级星星炮
                     return Color.LightYellow;
                 case (int)GunType.StarCannon://星星炮

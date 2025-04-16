@@ -27,7 +27,7 @@ namespace Coralite.Content.Tiles.Steel
 
         public override void GetLight(ref float r, ref float g, ref float b)
         {
-            r = 1f; g = 1f; b =1f;
+            r = 1f; g = 1f; b = 1f;
         }
     }
 

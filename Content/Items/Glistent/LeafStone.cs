@@ -8,8 +8,9 @@ namespace Coralite.Content.Items.Glistent
 {
     public class LeafStone : BasePlaceableItem
     {
-        public LeafStone() : base( Item.sellPrice(0, 0, 0, 20), ItemRarityID.Green
-            ,ModContent.TileType<LeafStoneTile>(), AssetDirectory.GlistentItems) { }
+        public LeafStone() : base(Item.sellPrice(0, 0, 0, 20), ItemRarityID.Green
+            , ModContent.TileType<LeafStoneTile>(), AssetDirectory.GlistentItems)
+        { }
 
         public override void AddRecipes()
         {

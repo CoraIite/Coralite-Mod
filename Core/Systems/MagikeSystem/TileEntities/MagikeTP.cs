@@ -45,7 +45,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         /// <summary>
         /// 在UI中显示的主要组件，会在开启UI的时候设置
         /// </summary>
-        public abstract int MainComponentID {  get; }
+        public abstract int MainComponentID { get; }
 
         /// <summary>
         /// 获取主要组件在列表中的索引

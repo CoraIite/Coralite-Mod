@@ -286,7 +286,7 @@ namespace Coralite.Content.Items.YujianHulu
             Projectile.width = Projectile.height = 48;
             Projectile.friendly = true;
         }
-        
+
         public void Initialize()
         {
             for (int i = 0; i < 16; i++)

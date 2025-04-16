@@ -11,7 +11,6 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
-using Terraria.ID;
 
 namespace Coralite.Content.NPCs.Crystalline
 {
@@ -98,7 +97,7 @@ namespace Coralite.Content.NPCs.Crystalline
         {
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<CrystallineHummingBannerItem>();
-            
+
 
             NPC.width = 54;
             NPC.height = 54;
@@ -961,7 +960,7 @@ namespace Coralite.Content.NPCs.Crystalline
 
         public override void AI()
         {
-            if (Projectile.velocity.Y<8)
+            if (Projectile.velocity.Y < 8)
                 Projectile.velocity.Y += 0.05f;
             Projectile.rotation = Projectile.velocity.ToRotation();
             Lighting.AddLight(Projectile.Center, Coralite.CrystallinePurple.ToVector3() / 2);

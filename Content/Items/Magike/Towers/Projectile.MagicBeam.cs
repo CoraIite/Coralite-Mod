@@ -34,7 +34,7 @@ namespace Coralite.Content.Items.Magike.Towers
             Projectile.usesLocalNPCImmunity = true;
             Projectile.tileCollide = true;
         }
-        
+
         public void Initialize()
         {
             //Projectile.oldPos = new Vector2[12];

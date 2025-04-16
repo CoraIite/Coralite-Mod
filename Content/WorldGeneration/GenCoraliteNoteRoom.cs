@@ -68,7 +68,7 @@ namespace Coralite.Content.WorldGeneration
         {
             Point position = new Point(center.X - 14, center.Y - 11);
 
-            TextureGenerator generator = new TextureGenerator("CoraliteNoteRoom",path:AssetDirectory.CoraliteNoteRoom);
+            TextureGenerator generator = new TextureGenerator("CoraliteNoteRoom", path: AssetDirectory.CoraliteNoteRoom);
 
             Dictionary<Color, int> mainDic = new()
             {

@@ -3,7 +3,7 @@ using Terraria;
 
 namespace Coralite.Content.CustomHooks
 {
-    public class DoesPickTargetTransformOnKill:HookGroup
+    public class DoesPickTargetTransformOnKill : HookGroup
     {
         public override void Load()
         {
@@ -15,7 +15,7 @@ namespace Coralite.Content.CustomHooks
             if (hitCounter.AddDamage(bufferIndex, damage, updateAmount: false) >= 100 && CoraliteSets.TileSpecialMoss[tileTarget.TileType])
                 return true;
 
-            return orig.Invoke(self,hitCounter, damage, x, y,pickPower,bufferIndex, tileTarget);
+            return orig.Invoke(self, hitCounter, damage, x, y, pickPower, bufferIndex, tileTarget);
         }
 
         public override void Unload()

@@ -187,7 +187,7 @@ namespace Coralite.Content.Items.FlyingShields
         }
 
         public override bool ShouldUpdatePosition() => State > 0;
-        
+
         public void Initialize()
         {
             if (!Target.GetNPCOwner(out NPC owner, Projectile.Kill))

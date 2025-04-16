@@ -230,7 +230,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                     Projectile.timeLeft = 20;
                     Owner.itemTime = Owner.itemAnimation = 20;
                 }
-                else 
+                else
                 {
                     Release = 1;
                     if (bonus)
@@ -322,7 +322,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 Vector2 velocity = dir * 12f;
 
                 Projectile.NewProjectileFromThis<RainbowArrow>(Owner.Center, velocity
-                    ,(int)( Owner.GetDamageWithAmmo(Item)*2.6f), Projectile.knockBack, targetIndex ?? -1);
+                    , (int)(Owner.GetDamageWithAmmo(Item) * 2.6f), Projectile.knockBack, targetIndex ?? -1);
 
                 Helper.PlayPitched(CoraliteSoundID.Bow_Item5, Owner.Center, pitchAdjust: 0.5f);
                 Helper.PlayPitched(CoraliteSoundID.StrongWinds_Item66, Owner.Center, pitchAdjust: 0.2f);

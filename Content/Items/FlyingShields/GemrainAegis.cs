@@ -127,7 +127,7 @@ namespace Coralite.Content.Items.FlyingShields
                 Projectile.localAI[0] = 20;
             return false;
         }
-        
+
         public void Initialize()
         {
             Projectile.frame = (int)Projectile.ai[0];

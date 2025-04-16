@@ -59,7 +59,7 @@ namespace Coralite.Content.Items.HyacinthSeries
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            Projectile.NewProjectile(source, player.Center+new Vector2(0,-8), (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero).RotatedBy(Main.rand.NextFloat(-0.04f, 0.04f)) * 14, ProjectileType<RosemaryBullet>(), damage, knockback, player.whoAmI);
+            Projectile.NewProjectile(source, player.Center + new Vector2(0, -8), (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero).RotatedBy(Main.rand.NextFloat(-0.04f, 0.04f)) * 14, ProjectileType<RosemaryBullet>(), damage, knockback, player.whoAmI);
             Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, Vector2.Zero, ProjectileType<RosemaryHeldProj>(), damage, knockback, player.whoAmI);
 
             return false;

@@ -103,7 +103,7 @@ namespace Coralite.Content.Items.Misc_Shoot
                     }
                 }
 
-                Projectile.NewProjectileFromThis<VirgoBullet>(Projectile.Center, Projectile.velocity.SafeNormalize(Vector2.Zero) * (2.5f+Projectile.ai[0] / 4 * (2.5f / 7)),
+                Projectile.NewProjectileFromThis<VirgoBullet>(Projectile.Center, Projectile.velocity.SafeNormalize(Vector2.Zero) * (2.5f + Projectile.ai[0] / 4 * (2.5f / 7)),
                     (int)(Projectile.damage * 0.36f), Projectile.knockBack / 5);
             }
 

@@ -414,7 +414,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         {
             text = "";
 
-            if (Entity.TryGetComponent(MagikeComponentID.MagikeSender,out CheckOnlyLinerSender sender))
+            if (Entity.TryGetComponent(MagikeComponentID.MagikeSender, out CheckOnlyLinerSender sender))
                 sender.RecheckConnect();
 
             //获取物品容器
@@ -670,7 +670,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             showButton.SetTopLeft( /*+ selectButton.Width.Pixels*/ top, left);
             itemSpawnButton.SetTopLeft(top, showButton.Width.Pixels + left);
-            showRecipeButton.SetTopLeft(top, itemSpawnButton.Left.Pixels+ itemSpawnButton.Width.Pixels);
+            showRecipeButton.SetTopLeft(top, itemSpawnButton.Left.Pixels + itemSpawnButton.Width.Pixels);
             autoSelectButton.SetTopLeft(top, showRecipeButton.Left.Pixels + showRecipeButton.Width.Pixels);
 
             parent.Append(showButton);
@@ -773,7 +773,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                     dust.noGravity = true;
                 }
 
-                position = position - Main.screenPosition;
+                position -= Main.screenPosition;
                 Color c = Coralite.MagicCrystalPink;
                 if (Entity.TryGetComponent(MagikeComponentID.ApparatusInformation, out ApparatusInformation info))
                     c = MagikeSystem.GetColor(info.CurrentLevel);

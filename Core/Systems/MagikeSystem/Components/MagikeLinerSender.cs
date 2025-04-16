@@ -620,7 +620,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             {
                 box = barTex.Frame(1, 2);
                 box.Width = (int)((1 - sender.Timer / (float)sender.SendDelay) * box.Width);
-                spriteBatch.Draw(barTex,barPos, box, Color.White, 0, origin
+                spriteBatch.Draw(barTex, barPos, box, Color.White, 0, origin
                     , 1, 0, 0);
             }
 

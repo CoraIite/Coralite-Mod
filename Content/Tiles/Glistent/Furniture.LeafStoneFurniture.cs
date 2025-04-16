@@ -18,7 +18,7 @@ namespace Coralite.Content.Tiles.Glistent
             Main.tileMerge[Type][TileID.LivingWood] = true;
             Main.tileMerge[Type][TileID.LeafBlock] = true;
             Main.tileMerge[TileID.LivingWood][Type] = true;
-            Main.tileMerge[TileID.LeafBlock][Type]= true;
+            Main.tileMerge[TileID.LeafBlock][Type] = true;
 
             DustType = DustID.JungleGrass;
             HitSound = CoraliteSoundID.DigStone_Tink;

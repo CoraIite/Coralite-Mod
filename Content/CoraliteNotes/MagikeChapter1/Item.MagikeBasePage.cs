@@ -67,7 +67,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
         }
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox) => false;
-        
+
         public void Initialize()
         {
             Projectile.rotation = Main.rand.NextFloat(6.282f);

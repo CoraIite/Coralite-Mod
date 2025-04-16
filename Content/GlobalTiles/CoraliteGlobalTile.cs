@@ -262,45 +262,45 @@ namespace Coralite.Content.GlobalTiles
                 default:
                     break;
                 //case TileID.Trees:
-                    //WorldGen.GetTreeBottom(i, j, out int x, out int y);
-                    //Tile bottomTile = Framing.GetTileSafely(x, y);
-                    //TreeTypes tree = WorldGen.GetTreeType(bottomTile.TileType);
+                //WorldGen.GetTreeBottom(i, j, out int x, out int y);
+                //Tile bottomTile = Framing.GetTileSafely(x, y);
+                //TreeTypes tree = WorldGen.GetTreeType(bottomTile.TileType);
 
-                    //if (Main.hardMode && Main.rand.NextBool(1, 250))
-                    //    Item.NewItem(new EntitySource_TileBreak(i, j), new Vector2(i, j) * 16, ItemType<CrystalBlossomShards>());
+                //if (Main.hardMode && Main.rand.NextBool(1, 250))
+                //    Item.NewItem(new EntitySource_TileBreak(i, j), new Vector2(i, j) * 16, ItemType<CrystalBlossomShards>());
 
-                    //switch (tree)
-                    //{
-                    //    case TreeTypes.None:
-                    //        break;
-                    //    case TreeTypes.Forest:
-                    //        break;
-                    //    case TreeTypes.Corrupt:
-                    //        break;
-                    //    case TreeTypes.Mushroom:
-                    //        break;
-                    //    case TreeTypes.Crimson:
-                    //        break;
-                    //    case TreeTypes.Jungle:
-                    //        break;
-                    //    case TreeTypes.Snow:
-                    //        break;
-                    //    case TreeTypes.Hallowed:
-                    //        break;
-                    //    case TreeTypes.Palm:
-                    //        break;
-                    //    case TreeTypes.PalmCrimson:
-                    //        break;
-                    //    case TreeTypes.PalmCorrupt:
-                    //        break;
-                    //    case TreeTypes.PalmHallowed:
-                    //        break;
-                    //    case TreeTypes.Ash:
-                    //        break;
-                    //    default:
-                    //        break;
-                    //}
-                    //break;
+                //switch (tree)
+                //{
+                //    case TreeTypes.None:
+                //        break;
+                //    case TreeTypes.Forest:
+                //        break;
+                //    case TreeTypes.Corrupt:
+                //        break;
+                //    case TreeTypes.Mushroom:
+                //        break;
+                //    case TreeTypes.Crimson:
+                //        break;
+                //    case TreeTypes.Jungle:
+                //        break;
+                //    case TreeTypes.Snow:
+                //        break;
+                //    case TreeTypes.Hallowed:
+                //        break;
+                //    case TreeTypes.Palm:
+                //        break;
+                //    case TreeTypes.PalmCrimson:
+                //        break;
+                //    case TreeTypes.PalmCorrupt:
+                //        break;
+                //    case TreeTypes.PalmHallowed:
+                //        break;
+                //    case TreeTypes.Ash:
+                //        break;
+                //    default:
+                //        break;
+                //}
+                //break;
                 case TileID.PalmTree:
                     {
                         if (CoraliteWorld.CoralCatWorld)
@@ -331,10 +331,10 @@ namespace Coralite.Content.GlobalTiles
                     if (Main.rand.NextBool(12, 100))
                         Item.NewItem(new EntitySource_TileBreak(i, j), new Vector2(i, j) * 16, ItemType<PrimaryRoughGemstone>());
                     break;
-                //case TileID.Crystals:
-                //    if (Main.rand.NextBool(15, 100))
-                //        Item.NewItem(new EntitySource_TileBreak(i, j), new Vector2(i, j) * 16, ItemType<SeniorRoughGemstone>());
-                //    break;
+                    //case TileID.Crystals:
+                    //    if (Main.rand.NextBool(15, 100))
+                    //        Item.NewItem(new EntitySource_TileBreak(i, j), new Vector2(i, j) * 16, ItemType<SeniorRoughGemstone>());
+                    //    break;
             }
         }
 

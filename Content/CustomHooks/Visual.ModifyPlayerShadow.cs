@@ -9,7 +9,7 @@ using Terraria.Graphics.Renderers;
 
 namespace Coralite.Content.CustomHooks
 {
-    public class ModifyPlayerShadow:HookGroup
+    public class ModifyPlayerShadow : HookGroup
     {
         public override void Load()
         {

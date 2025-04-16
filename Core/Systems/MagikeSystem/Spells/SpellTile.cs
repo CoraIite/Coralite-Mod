@@ -4,9 +4,9 @@ using Terraria.DataStructures;
 
 namespace Coralite.Core.Systems.MagikeSystem.Spells
 {
-    public abstract class SpellTile(int width, int height, Color mapColor, int dustType, int minPick = 0) : BaseMagikeTile(width, height, mapColor, dustType,minPick)
+    public abstract class SpellTile(int width, int height, Color mapColor, int dustType, int minPick = 0) : BaseMagikeTile(width, height, mapColor, dustType, minPick)
     {
-        public override string Texture => AssetDirectory.MagikeSpellTiles+Name;
+        public override string Texture => AssetDirectory.MagikeSpellTiles + Name;
 
         public override CoraliteSets.MagikeTileType PlaceType => CoraliteSets.MagikeTileType.None;
 

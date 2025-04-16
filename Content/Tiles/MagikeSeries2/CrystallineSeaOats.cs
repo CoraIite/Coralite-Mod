@@ -123,7 +123,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
                     Main.tile[bottom + new Point(0, -k)].ClearTile();
             }
 
-            WorldGen.PlaceTile(bottom.X, bottom.Y, ModContent.TileType<CrystallineSeaOats1x3>(), true,style:Main.rand.Next(4));
+            WorldGen.PlaceTile(bottom.X, bottom.Y, ModContent.TileType<CrystallineSeaOats1x3>(), true, style: Main.rand.Next(4));
         }
 
         public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)

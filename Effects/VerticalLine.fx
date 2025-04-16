@@ -57,7 +57,9 @@ float Lines(float2 pos, float b)
 
 float4 PixelShaderFunction(float4 sampleColor : COLOR0, float2 coords : TEXCOORD0) : COLOR0
 {
-    float2 pos = coords * float2(7f, 8f);
+    float2 p1 = coords - float2(0.5);
+    float2 r = float2(length(p1), atan2(p1.y, p1.x)/3.141);//¼«×ø±ê±ä»»
+    float2 pos = r * float2(7f, 8f);
 
     float noiseValue = Noise(pos);
     matrix m = Rotate2D(pos, noiseValue);

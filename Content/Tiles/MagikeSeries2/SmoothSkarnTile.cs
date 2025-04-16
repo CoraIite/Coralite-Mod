@@ -15,7 +15,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             Main.tileBlockLight[Type] = true;
 
             TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
-            TileID.Sets.CanBeClearedDuringOreRunner[Type] = false; 
+            TileID.Sets.CanBeClearedDuringOreRunner[Type] = false;
 
             Main.tileMerge[Type][ModContent.TileType<SkarnTile>()] = true;
             Main.tileMerge[ModContent.TileType<SkarnTile>()][Type] = true;

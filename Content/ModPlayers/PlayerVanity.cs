@@ -88,9 +88,9 @@ namespace Coralite.Content.ModPlayers
         private int? OverrideHeadSlot()
         {
             if (HasEffect(nameof(CharmOfIsis) + "Vanity"))
-                return  EquipLoader.GetEquipSlot(Mod, "CharmOfIsis", EquipType.Head);
+                return EquipLoader.GetEquipSlot(Mod, "CharmOfIsis", EquipType.Head);
             else if (HasEffect(nameof(OsirisPillar) + "Vanity"))
-                 return EquipLoader.GetEquipSlot(Mod, "OsirisPillar", EquipType.Head);
+                return EquipLoader.GetEquipSlot(Mod, "OsirisPillar", EquipType.Head);
             else if (HasEffect(BloodmarkTopper.ShadowSet))
                 return EquipLoader.GetEquipSlot(Mod, BloodmarkTopper.ShadowSetVinityName, EquipType.Head);
             else if (HasEffect(BloodmarkTopper.PrisonSet))

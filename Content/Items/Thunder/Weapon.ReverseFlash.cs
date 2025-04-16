@@ -258,8 +258,8 @@ namespace Coralite.Content.Items.Thunder
             if (State == -1)
             {
                 for (int i = 0; i < 2; i++)
-                Projectile.NewProjectileFromThis<ReverseFlashThunder>(Projectile.Center, (Main.player[Projectile.owner].Center - Projectile.Center).SafeNormalize(Vector2.Zero) * 16,
-                    Projectile.damage*6, Projectile.knockBack);
+                    Projectile.NewProjectileFromThis<ReverseFlashThunder>(Projectile.Center, (Main.player[Projectile.owner].Center - Projectile.Center).SafeNormalize(Vector2.Zero) * 16,
+                        Projectile.damage * 6, Projectile.knockBack);
 
                 return;
             }
@@ -449,7 +449,7 @@ namespace Coralite.Content.Items.Thunder
                 {
                     Vector2 dir2 = TargetPos - Projectile.Center;
                     float length2 = dir2.Length();
-                    float angleRand = 1.57f - Math.Clamp(1-length2 / 1000, 0, 1)*0.785f;
+                    float angleRand = 1.57f - Math.Clamp(1 - length2 / 1000, 0, 1) * 0.785f;
 
                     if (length2 > 150)
                         length2 = 150;
@@ -483,7 +483,7 @@ namespace Coralite.Content.Items.Thunder
             }
 
             float distanceToOwner = Vector2.Distance(Projectile.Center, TargetPos);
-            if (distanceToOwner < speed * 2||distanceToOwner>3500)
+            if (distanceToOwner < speed * 2 || distanceToOwner > 3500)
                 Fade();
         }
 

@@ -30,14 +30,14 @@ namespace Coralite.Content.Items.Glistent
         {
             CreateRecipe(3)
                 .AddIngredient<LeafStone>(3)
-                .AddIngredient(ItemID.CrimtaneBar,3)
+                .AddIngredient(ItemID.CrimtaneBar, 3)
                 .AddIngredient(ItemID.Diamond)
                 .AddTile<MagicCraftStation>()
                 .Register();
 
             CreateRecipe(3)
                 .AddIngredient<LeafStone>(3)
-                .AddIngredient(ItemID.DemoniteBar,3)
+                .AddIngredient(ItemID.DemoniteBar, 3)
                 .AddIngredient(ItemID.Diamond)
                 .AddTile<MagicCraftStation>()
                 .Register();

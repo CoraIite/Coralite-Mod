@@ -7,7 +7,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.CustomHooks
 {
-    public class GrowLivingTree:HookGroup
+    public class GrowLivingTree : HookGroup
     {
         public override void Load()
         {

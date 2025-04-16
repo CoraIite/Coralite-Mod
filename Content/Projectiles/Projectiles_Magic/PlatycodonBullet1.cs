@@ -49,7 +49,7 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
         }
 
         public override bool? CanDamage() => canDamage;
-        
+
         public void Initialize()
         {
             Alpha = 1;

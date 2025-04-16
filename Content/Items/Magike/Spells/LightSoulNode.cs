@@ -1,7 +1,6 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Prefabs.Tiles;
-using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.Spells;
 using Terraria;
 using Terraria.ID;

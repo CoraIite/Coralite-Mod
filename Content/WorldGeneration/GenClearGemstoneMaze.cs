@@ -57,7 +57,7 @@ namespace Coralite.Content.WorldGeneration
 
                     int whichOne = WorldGen.genRand.Next(2);
 
-                    TextureGenerator generator = new TextureGenerator("ClearGemstoneMaze", whichOne,path: AssetDirectory.WorldGen + "CoreKeeper/");
+                    TextureGenerator generator = new TextureGenerator("ClearGemstoneMaze", whichOne, path: AssetDirectory.WorldGen + "CoreKeeper/");
 
                     position += new Point(-29, -33);
                     if (!WorldGen.InWorld(position.X, position.Y))

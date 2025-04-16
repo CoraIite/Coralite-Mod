@@ -139,8 +139,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                     Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Helper.NextVec2Dir() * 10, ModContent.ProjectileType<SmallGelBall>(), Projectile.damage * 2 / 3, 0, Projectile.owner);
         }
 
-        public static void DrawGelBall(Texture2D tex, Vector2 pos, Color drawColor, float ballRotation,float extraMiddleRotation, Vector2 scale
-            , bool hasHighlight = true, bool hasOutline = false,Color? outlineColor=null,bool highlightUseRot=false)
+        public static void DrawGelBall(Texture2D tex, Vector2 pos, Color drawColor, float ballRotation, float extraMiddleRotation, Vector2 scale
+            , bool hasHighlight = true, bool hasOutline = false, Color? outlineColor = null, bool highlightUseRot = false)
         {
             //绘制底层
             Rectangle frameBox = tex.Frame(1, 4, 0, 2);
@@ -164,7 +164,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             }
 
             //绘制外边缘
-            if (hasOutline&&outlineColor!=null)
+            if (hasOutline && outlineColor != null)
             {
                 frameBox = tex.Frame(1, 4, 0, 3);
 

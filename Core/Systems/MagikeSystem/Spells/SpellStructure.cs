@@ -2,7 +2,6 @@
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MTBStructure;
 using Coralite.Helpers;
-using InnoVault.TileProcessors;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -229,14 +228,14 @@ namespace Coralite.Core.Systems.MagikeSystem.Spells
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Dictionary<Point,ushort> spellTilesOrigin = (MultiblockLoader.GetMTBStructure((int)MTBID) as SpellStructure).SpellTilesOrigin;
+            Dictionary<Point, ushort> spellTilesOrigin = (MultiblockLoader.GetMTBStructure((int)MTBID) as SpellStructure).SpellTilesOrigin;
 
             Point center = Center;
 
             foreach (var item in spellTilesOrigin)
             {
-                Point p =center+ item.Key;
-                int type = item.Value ;
+                Point p = center + item.Key;
+                int type = item.Value;
 
                 Tile tile = Framing.GetTileSafely(p);
                 if (tile.HasTile)

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
-using Terraria.ModLoader;
 
 namespace Coralite.Core.Systems.MagikeSystem.BaseItems
 {
@@ -35,7 +34,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
 
             if (!Main.keyState.PressingShift())
             {
-                tooltips.Add(new TooltipLine(Mod, "MagikeCanInsert",MagikeSystem.PressShiftToShowMore.Value));
+                tooltips.Add(new TooltipLine(Mod, "MagikeCanInsert", MagikeSystem.PressShiftToShowMore.Value));
                 return;
             }
 

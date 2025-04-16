@@ -4,7 +4,7 @@ using System;
 
 namespace Coralite.Core
 {
-    public class CoraliteTileCount:ModSystem
+    public class CoraliteTileCount : ModSystem
     {
         public int CrystalCaveTileCount;
         public int CrystallineSkyIslandTileCount;

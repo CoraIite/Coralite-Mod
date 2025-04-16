@@ -70,7 +70,7 @@ namespace Coralite.Content.Items.Gels
                 .AddIngredient(ItemID.PinkSlimeBlock)
                 .Register();
 
-            MagikeRecipe.CreateCraftRecipe(ItemID.NinjaPants,ItemType<EmperorSlimeBoots>(),MagikeHelper.CalculateMagikeCost(MALevel.Emperor, 12, 60 * 4))
+            MagikeRecipe.CreateCraftRecipe(ItemID.NinjaPants, ItemType<EmperorSlimeBoots>(), MagikeHelper.CalculateMagikeCost(MALevel.Emperor, 12, 60 * 4))
                 .AddIngredient<EmperorGel>(12)
                 .AddIngredient(ItemID.HellstoneBar, 8)
                 .AddIngredient(ItemID.SlimeBlock)
@@ -96,9 +96,9 @@ namespace Coralite.Content.Items.Gels
         }
 
         public override bool IsArmorSet(Item head, Item body, Item legs)
-            => CheckArmorSet(head, body, legs,out _);
+            => CheckArmorSet(head, body, legs, out _);
 
-        private static bool CheckArmorSet(Item head, Item body, Item legs,out ArmorSetType? type)
+        private static bool CheckArmorSet(Item head, Item body, Item legs, out ArmorSetType? type)
         {
             type = null;
 
@@ -198,7 +198,7 @@ namespace Coralite.Content.Items.Gels
 
                 for (int i = 0; i < 8; i++)
                 {
-                    Vector2 offset = (i * MathHelper.TwoPi /8+ 3 * Main.GlobalTimeWrappedHourly).ToRotationVector2() * 4;
+                    Vector2 offset = (i * MathHelper.TwoPi / 8 + 3 * Main.GlobalTimeWrappedHourly).ToRotationVector2() * 4;
                     ChatManager.DrawColorCodedString(Main.spriteBatch, line.Font, snippets, new Vector2(line.X, line.Y) + offset
                         , targetColor, line.Rotation, line.Origin, line.BaseScale, out _, line.MaxWidth);
                 }
@@ -210,10 +210,10 @@ namespace Coralite.Content.Items.Gels
 
     public class EmperorRarity : ModRarity
     {
-        public override Color RarityColor => Color.Lerp(new Color(180, 220, 225) , new(255, 230, 255),  0.5f + 0.5f * MathF.Sin((int)Main.timeForVisualEffects * 0.1f));
+        public override Color RarityColor => Color.Lerp(new Color(180, 220, 225), new(255, 230, 255), 0.5f + 0.5f * MathF.Sin((int)Main.timeForVisualEffects * 0.1f));
     }
 
-    public class EmperorSlimeBuff:ModBuff
+    public class EmperorSlimeBuff : ModBuff
     {
         public override string Texture => AssetDirectory.Buffs + Name;
     }

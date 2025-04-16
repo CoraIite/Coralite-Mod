@@ -186,7 +186,7 @@ namespace Coralite.Content.Items.Nightmare
                     Projectile.NewProjectile(Projectile.GetSource_FromThis(), Owner.Center,
                     UnitToMouseV * 14, ProjectileType<LullabyBall>(), Projectile.damage, Projectile.knockBack, Projectile.owner, ai2: -1);
                 }
-                
+
                 InitializeCaches();
             }
         }
@@ -363,7 +363,7 @@ namespace Coralite.Content.Items.Nightmare
                                 (i * MathHelper.TwoPi / 7).ToRotationVector2() * 8, ProjectileType<LullabyBall>(), (int)(Projectile.damage * 0.75f), Projectile.knockBack, Projectile.owner, ai2: i);
                         }
                     }
-                    
+
                 }
             }
 

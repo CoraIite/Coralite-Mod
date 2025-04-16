@@ -1,7 +1,6 @@
 ﻿using Coralite.Content.Items.Materials;
 using Coralite.Content.ModPlayers;
 using Coralite.Content.Particles;
-using Coralite.Content.Prefixes.FairyWeaponPrefixes;
 using Coralite.Core;
 using Coralite.Core.Attributes;
 using Coralite.Core.Configs;
@@ -67,7 +66,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 for (int i = -1; i < 2; i++)
                 {
                     Projectile.NewProjectile(source, player.Center + dir.RotatedBy(i * MathHelper.PiOver2), velocity
-                        , ProjectileType<SolunarArrow>(), (int)(damage*2.5f), knockback, player.whoAmI, i + 1, dir.X, dir.Y);
+                        , ProjectileType<SolunarArrow>(), (int)(damage * 2.5f), knockback, player.whoAmI, i + 1, dir.X, dir.Y);
                 }
 
                 sp = 2;
@@ -295,7 +294,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                         {
                             for (int i = -1; i < 2; i++)
                             {
-                                int damage = i == 0 ? (int)(Owner.GetDamageWithAmmo(Item) * 9f) : Owner.GetDamageWithAmmo(Item)*2;
+                                int damage = i == 0 ? (int)(Owner.GetDamageWithAmmo(Item) * 9f) : Owner.GetDamageWithAmmo(Item) * 2;
                                 int p = Projectile.NewProjectileFromThis<SolunarStrike>(Projectile.Center, Vector2.Zero
                                      , damage, 10, Projectile.whoAmI);
 
@@ -367,7 +366,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
                             SetOwnerSPAttack();
 
-                            Projectile.NewProjectileFromThis<SolunarBallLaser>(Projectile.Center, new Vector2(0, -16), Owner.GetDamageWithAmmo(Item)*2, 0);
+                            Projectile.NewProjectileFromThis<SolunarBallLaser>(Projectile.Center, new Vector2(0, -16), Owner.GetDamageWithAmmo(Item) * 2, 0);
                             handOffset = -30;
                         }
 

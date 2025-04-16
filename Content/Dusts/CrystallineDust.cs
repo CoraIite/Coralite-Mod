@@ -20,7 +20,7 @@ namespace Coralite.Content.Dusts
     {
     }
 
-    public class ChalcedonyDust() : BaseVanillaDust(DustID.Grass, AssetDirectory.Dusts,frameCount:6)
+    public class ChalcedonyDust() : BaseVanillaDust(DustID.Grass, AssetDirectory.Dusts, frameCount: 6)
     {
     }
 }

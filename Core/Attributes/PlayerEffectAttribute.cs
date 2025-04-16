@@ -7,7 +7,7 @@ namespace Coralite.Core.Attributes
     /// 可以使用<see cref="OverrideEffectName"/>修改字符串
     /// </summary>
     [AttributeUsage(AttributeTargets.Class)]
-    public class PlayerEffectAttribute:Attribute
+    public class PlayerEffectAttribute : Attribute
     {
         /// <summary>
         /// 覆盖的效果名，写了这个就用这个，不写就用类名

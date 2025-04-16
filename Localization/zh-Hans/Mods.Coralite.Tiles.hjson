@@ -262,5 +262,6 @@ SteelSofaTile.MapEntry: 钢沙发
 SteelTableTile.MapEntry: 钢桌
 SteelWorkBenchTile.MapEntry: 钢工作台
 SkarnBrickBenchTile.MapEntry: 矽卡砖长椅
-// CrystallinePylonTile.MapEntry: Crystalline Pylon
-// CrystallineFountain.MapEntry: Crystalline Fountain
+CrystallinePylonTile.MapEntry: 蕴魔晶塔
+CrystallineFountain.MapEntry: 蕴魔喷泉
+SkarnCutterTile.MapEntry: 矽卡复合切割机

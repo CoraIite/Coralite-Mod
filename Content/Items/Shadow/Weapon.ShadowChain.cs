@@ -615,7 +615,7 @@ namespace Coralite.Content.Items.Shadow
             Projectile.friendly = true;
             Projectile.netImportant = true;
         }
-        
+
         public void Initialize()
         {
             maxTime = Main.player[Projectile.owner].itemTimeMax + 20;

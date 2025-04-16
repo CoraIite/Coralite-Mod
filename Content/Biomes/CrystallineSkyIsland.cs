@@ -25,7 +25,7 @@ namespace Coralite.Content.Biomes
             BackgroundTextureLoader.AddBackgroundTexture(Mod, AssetDirectory.Backgrounds + nameof(CrystallineSkyIslandBackground) + "0");
         }
 
-        public override string MapBackground => AssetDirectory.Backgrounds+ "CrystallineSkyIslandMap";
+        public override string MapBackground => AssetDirectory.Backgrounds + "CrystallineSkyIslandMap";
 
         //public override string BestiaryIcon => AssetDirectory.Biomes + "MagicCrystalCaveIcon";
 
@@ -87,11 +87,11 @@ namespace Coralite.Content.Biomes
                 return;
 
             for (int i = 0; i < Main.maxClouds; i++)
-                Main.cloud[i].Alpha *=0.8f;
+                Main.cloud[i].Alpha *= 0.8f;
         }
     }
 
-    public class CrystallineSkyIslandSystem:ModSystem
+    public class CrystallineSkyIslandSystem : ModSystem
     {
         public static float BiomeTimer;
         public const float BiomeTimerMax = 20000;
@@ -172,16 +172,16 @@ namespace Coralite.Content.Biomes
     [AutoLoadTexture(Path = AssetDirectory.Backgrounds)]
     public class CrystallineSkyIslandBackground : ModSurfaceBackgroundStyle
     {
-        public static ATex CrystallineSkyIslandBackground0 { get;private set; }
-        public static ATex CrystallineSkyIslandBackground1 { get;private set; }
-        public static ATex CrystallineSkyIslandBackground2 { get;private set; }
-        public static ATex CrystallineSkyIslandBackground3 { get;private set; }
-        public static ATex CrystallineSkyIslandBackground4 { get;private set; }
-        public static ATex CrystallineSkyIslandBackground5 { get;private set; }
-        public static ATex CrystallineSkyIslandBackground6 { get;private set; }
-        public static ATex CrystallineSkyIslandBackground7 { get;private set; }
+        public static ATex CrystallineSkyIslandBackground0 { get; private set; }
+        public static ATex CrystallineSkyIslandBackground1 { get; private set; }
+        public static ATex CrystallineSkyIslandBackground2 { get; private set; }
+        public static ATex CrystallineSkyIslandBackground3 { get; private set; }
+        public static ATex CrystallineSkyIslandBackground4 { get; private set; }
+        public static ATex CrystallineSkyIslandBackground5 { get; private set; }
+        public static ATex CrystallineSkyIslandBackground6 { get; private set; }
+        public static ATex CrystallineSkyIslandBackground7 { get; private set; }
 
-        public static ATex CrystallineSkyIslandBackgroundStar { get;private set; }
+        public static ATex CrystallineSkyIslandBackgroundStar { get; private set; }
 
         public override void ModifyFarFades(float[] fades, float transitionSpeed)
         {
@@ -236,13 +236,13 @@ namespace Coralite.Content.Biomes
             float yOffset = Main.screenPosition.Y;
             yOffset = -Math.Clamp((yOffset - 2000) / 15, -100, 0);
 
-            float alpha = Main.bgAlphaFrontLayer[Slot]*0.9f;
+            float alpha = Main.bgAlphaFrontLayer[Slot] * 0.9f;
             float sinTime = MathF.Sin(timeFactorTwoPI);
             float cosTime = MathF.Cos(timeFactorTwoPI);
 
             //最底下的蓝色背景层
             DrawBackgroundBack(spriteBatch, CrystallineSkyIslandBackground0.Value
-                , alpha * 0.2f, timeFactor * CrystallineSkyIslandBackground0.Width(), 60, yOffset+80);
+                , alpha * 0.2f, timeFactor * CrystallineSkyIslandBackground0.Width(), 60, yOffset + 80);
 
             DrawBackground(spriteBatch, CrystallineSkyIslandBackground1.Value
                 , alpha * 0.5f, sinTime * 100, 50, yOffset + 140);
@@ -270,7 +270,7 @@ namespace Coralite.Content.Biomes
             yOffset = -Math.Clamp((Main.screenPosition.Y - 2600) / 4, -600, 800);
 
             DrawBackground(spriteBatch, CrystallineSkyIslandBackground6.Value
-                , alpha, timeFactor * CrystallineSkyIslandBackground6.Width()*2, 12, yOffset);
+                , alpha, timeFactor * CrystallineSkyIslandBackground6.Width() * 2, 12, yOffset);
             DrawBackground(spriteBatch, CrystallineSkyIslandBackground7.Value
                 , alpha, sinTime * 150, 8, yOffset);
 
@@ -344,7 +344,7 @@ namespace Coralite.Content.Biomes
             int xOffsetInt = (int)xOffset;
 
             xOffset = 1f - (xOffset - xOffsetInt);
-            Vector2 pos = new Vector2(Main.screenWidth / 2f + xOffset*2, Main.screenHeight / 2f + yoffset);
+            Vector2 pos = new Vector2(Main.screenWidth / 2f + xOffset * 2, Main.screenHeight / 2f + yoffset);
 
             Rectangle frameBox =
                 new Rectangle(xOffsetInt, 0, Main.screenWidth, bgTex.Height);

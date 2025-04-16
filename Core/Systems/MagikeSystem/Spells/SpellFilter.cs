@@ -18,7 +18,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Spells
     /// 法术滤镜<br></br>
     /// 需要有魔能工作站的功能
     /// </summary>
-    public abstract class SpellFilter : MagikeFilter, ITimerTriggerComponent,IUIShowable
+    public abstract class SpellFilter : MagikeFilter, ITimerTriggerComponent, IUIShowable
     {
         /// <summary> 是否正在工作中 </summary>
         public bool IsWorking { get; set; }
@@ -49,7 +49,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Spells
         /// <summary>
         /// 消耗多少的百分比
         /// </summary>
-        public abstract float CostPercent { get;}
+        public abstract float CostPercent { get; }
 
         public override void Update()
         {

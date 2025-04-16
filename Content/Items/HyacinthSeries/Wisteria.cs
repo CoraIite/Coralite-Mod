@@ -92,15 +92,15 @@ namespace Coralite.Content.Items.HyacinthSeries
             float rot = Projectile.rotation + (DirSign > 0 ? 0 : MathHelper.Pi);
             float n = rot - DirSign * MathHelper.PiOver2;
 
-            Main.spriteBatch.Draw(effect, Projectile.Center + rot.ToRotationVector2() * 20 + n.ToRotationVector2() * 4 - Main.screenPosition, frameBox, Color.Lerp(lightColor,Color.White,0.5f)
-                , rot, new Vector2(0, frameBox.Height / 2), Projectile.scale*0.8f, 0, 0f);
+            Main.spriteBatch.Draw(effect, Projectile.Center + rot.ToRotationVector2() * 20 + n.ToRotationVector2() * 4 - Main.screenPosition, frameBox, Color.Lerp(lightColor, Color.White, 0.5f)
+                , rot, new Vector2(0, frameBox.Height / 2), Projectile.scale * 0.8f, 0, 0f);
             return false;
         }
     }
 
-    public class WisteriaPetal:ModProjectile
+    public class WisteriaPetal : ModProjectile
     {
-        public override string Texture => AssetDirectory.HyacinthSeriesItems+Name;
+        public override string Texture => AssetDirectory.HyacinthSeriesItems + Name;
 
         private ref float Dir => ref Projectile.ai[0];
         private ref float EXTime => ref Projectile.ai[1];

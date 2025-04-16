@@ -167,7 +167,7 @@ namespace Coralite.Content.Items.MagikeSeries2
         public override void Update(Player player, ref int buffIndex)
         {
             player.mount.SetMount(ModContent.MountType<ChalcedonySkyship>(), player);
-                player.mount._flyTime = 320;
+            player.mount._flyTime = 320;
             player.mount._fatigue = 0;
         }
     }

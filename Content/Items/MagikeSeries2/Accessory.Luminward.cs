@@ -27,9 +27,9 @@ namespace Coralite.Content.Items.MagikeSeries2
                 {
                     Helper.PlayPitched(CoraliteSoundID.BubbleGun_Item85, player.Center, volumeAdjust: 0.1f);
 
-                    var p = PRTLoader.NewParticle<LuminwardParticle>(player.Center, Vector2.Zero, Color.White , 1);
+                    var p = PRTLoader.NewParticle<LuminwardParticle>(player.Center, Vector2.Zero, Color.White, 1);
                     p.player = player;
-                    p.Rotation = Main.rand.NextFloat(-0.4f,0.4f);
+                    p.Rotation = Main.rand.NextFloat(-0.4f, 0.4f);
                     p.effect = Main.rand.NextFromList(SpriteEffects.None, SpriteEffects.FlipHorizontally);
                 }
             }
@@ -47,7 +47,7 @@ namespace Coralite.Content.Items.MagikeSeries2
         {
             Lighting.AddLight(Position, new Vector3(0.4f, 0.4f, 0.4f));
             if (player != null)
-                Position = player.Center+new Vector2(0,-8);
+                Position = player.Center + new Vector2(0, -8);
 
             if (Time % 3 == 0)
             {
@@ -64,7 +64,7 @@ namespace Coralite.Content.Items.MagikeSeries2
         }
     }
 
-    public class LuminwardParticleExplosion:Particle
+    public class LuminwardParticleExplosion : Particle
     {
         public override string Texture => AssetDirectory.MagikeSeries2Item + Name;
 

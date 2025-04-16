@@ -2,7 +2,6 @@
 using ReLogic.Utilities;
 using System;
 using System.Linq;
-using System.Security.Cryptography.Xml;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;

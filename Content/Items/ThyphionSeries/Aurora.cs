@@ -188,7 +188,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
                         Projectile.NewProjectileFromThis<AuroraArrow>(Owner.Center, ToMouse.SafeNormalize(Vector2.Zero) * 16
                             , (int)(Owner.GetDamageWithAmmo(Item) * 2.5f), Projectile.knockBack, 1);
-                        
+
                         Rotation = ToMouseA;
 
                         Vector2 dir = Rotation.ToRotationVector2();

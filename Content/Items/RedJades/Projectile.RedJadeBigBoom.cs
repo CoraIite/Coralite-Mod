@@ -23,7 +23,7 @@ namespace Coralite.Content.Items.RedJades
             Projectile.localNPCHitCooldown = 10;
 
         }
-        
+
         public void Initialize()
         {
             Helper.RedJadeBigBoom(Projectile.Center);

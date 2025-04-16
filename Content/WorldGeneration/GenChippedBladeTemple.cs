@@ -60,7 +60,7 @@ namespace Coralite.Content.WorldGeneration
                     if (tileDictionary[TileID.Dirt] + tileDictionary[TileID.Mud] + tileDictionary[TileID.JungleGrass] < 550)
                         continue; //如果不是，则返回false，这将导致调用方法尝试一个不同的origin。
 
-                    TextureGenerator generator = new TextureGenerator("ChippedBladeTemple",path: AssetDirectory.WorldGen + "CoreKeeper/");
+                    TextureGenerator generator = new TextureGenerator("ChippedBladeTemple", path: AssetDirectory.WorldGen + "CoreKeeper/");
 
                     position += new Point(-12, -13);
                     if (!WorldGen.InWorld(position.X, position.Y))

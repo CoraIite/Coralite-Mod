@@ -508,7 +508,7 @@ namespace Coralite.Content.Items.Shadow
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 15;
         }
-        
+
         public override Color? GetAlpha(Color lightColor)
         {
             if (Projectile.alpha > 160)

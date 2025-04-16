@@ -1,7 +1,6 @@
 ﻿using Coralite.Content.Items.Gels;
 using Coralite.Content.Items.Glistent;
 using Coralite.Content.Items.Materials;
-using System.Collections;
 using Terraria;
 using Terraria.ID;
 using static Coralite.Core.Systems.MagikeSystem.MagikeSystem;
@@ -288,7 +287,7 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
             //金动物
             int goldCritterCost = CalculateMagikeCost(Crimson, 6);
             MagikeRecipe.CreateCraftRecipe(ItemID.Bird, ItemID.GoldBird, goldCritterCost)
-                .AddIngredient(ItemID.GoldBar,99)
+                .AddIngredient(ItemID.GoldBar, 99)
                 .Register();
             MagikeRecipe.CreateCraftRecipe(ItemID.Bunny, ItemID.GoldBunny, goldCritterCost)
                 .AddIngredient(ItemID.GoldBar, 99)
@@ -326,31 +325,31 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
             }
 
             MagikeRecipe.CreateCraftRecipe(ItemID.Frog, ItemID.GoldFrog, goldCritterCost)
-                .AddIngredient(ItemID.GoldBar,99)
+                .AddIngredient(ItemID.GoldBar, 99)
                 .Register();
             MagikeRecipe.CreateCraftRecipe(ItemID.Goldfish, ItemID.GoldGoldfish, goldCritterCost)
-                .AddIngredient(ItemID.GoldBar,99)
+                .AddIngredient(ItemID.GoldBar, 99)
                 .Register();
             MagikeRecipe.CreateCraftRecipe(ItemID.Grasshopper, ItemID.GoldGrasshopper, goldCritterCost)
-                .AddIngredient(ItemID.GoldBar,99)
+                .AddIngredient(ItemID.GoldBar, 99)
                 .Register();
             MagikeRecipe.CreateCraftRecipe(ItemID.LadyBug, ItemID.GoldLadyBug, goldCritterCost)
-                .AddIngredient(ItemID.GoldBar,99)
+                .AddIngredient(ItemID.GoldBar, 99)
                 .Register();
             MagikeRecipe.CreateCraftRecipe(ItemID.Mouse, ItemID.GoldMouse, goldCritterCost)
-                .AddIngredient(ItemID.GoldBar,99)
+                .AddIngredient(ItemID.GoldBar, 99)
                 .Register();
             MagikeRecipe.CreateCraftRecipe(ItemID.Seahorse, ItemID.GoldSeahorse, goldCritterCost)
-                .AddIngredient(ItemID.GoldBar,99)
+                .AddIngredient(ItemID.GoldBar, 99)
                 .Register();
             MagikeRecipe.CreateCraftRecipe(ItemID.Squirrel, ItemID.SquirrelGold, goldCritterCost)
-                .AddIngredient(ItemID.GoldBar,99)
+                .AddIngredient(ItemID.GoldBar, 99)
                 .Register();
             MagikeRecipe.CreateCraftRecipe(ItemID.WaterStrider, ItemID.GoldWaterStrider, goldCritterCost)
-                .AddIngredient(ItemID.GoldBar,99)
+                .AddIngredient(ItemID.GoldBar, 99)
                 .Register();
             MagikeRecipe.CreateCraftRecipe(ItemID.Worm, ItemID.GoldWorm, goldCritterCost)
-                .AddIngredient(ItemID.GoldBar,99)
+                .AddIngredient(ItemID.GoldBar, 99)
                 .Register();
             #endregion
 

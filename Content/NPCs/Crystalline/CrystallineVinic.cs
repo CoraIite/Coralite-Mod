@@ -265,7 +265,7 @@ namespace Coralite.Content.NPCs.Crystalline
             if (Timer > 20)
             {
                 NPC.TargetClosest(false);
-                if (NPC.target >= 0 && NPC.target < 255 && !Main.player[NPC.target].dead 
+                if (NPC.target >= 0 && NPC.target < 255 && !Main.player[NPC.target].dead
                     && !(Target.invis && Target.itemAnimation == 0) && WaitingToAttackCheck(Target.Center, SpawnPoint.ToWorldCoordinates())
                     && Collision.CanHit(NPC.Center, 1, 1, Target.TopLeft, Target.width, Target.height))//玩家在8格以内开始发动攻击
                 {
@@ -285,7 +285,7 @@ namespace Coralite.Content.NPCs.Crystalline
         /// <param name="targetCenter"></param>
         /// <param name="basePoint"></param>
         /// <returns></returns>
-        public abstract bool WaitingToAttackCheck(Vector2 targetCenter,Vector2 basePoint);
+        public abstract bool WaitingToAttackCheck(Vector2 targetCenter, Vector2 basePoint);
 
         #region 攻击状态
 
@@ -361,7 +361,7 @@ namespace Coralite.Content.NPCs.Crystalline
             {
                 if (Timer < BackToTopTime)
                 {
-                    Vector2 aimPos = baseP + new Vector2(0, GetVerticalDir()*16 * 6);
+                    Vector2 aimPos = baseP + new Vector2(0, GetVerticalDir() * 16 * 6);
                     MouseRotation = MouseRotation.AngleLerp(0.3f, 0.2f);
                     NPC.velocity *= 0.8f;
                     NPC.Center = Vector2.SmoothStep(NPC.Center, aimPos, 0.2f);
@@ -528,7 +528,7 @@ namespace Coralite.Content.NPCs.Crystalline
             if (NPC.life <= 0)
             {
                 this.SpawnGore(3, 3);
-            }    
+            }
         }
 
 
@@ -563,7 +563,7 @@ namespace Coralite.Content.NPCs.Crystalline
                     1 => 30,
                     _ => -12
                 };
-                
+
                 DrawLine(spriteBatch, SpawnPoint.ToWorldCoordinates(8, offset), NPC.Center - dir, screenPos);
             }
 
@@ -575,7 +575,7 @@ namespace Coralite.Content.NPCs.Crystalline
 
             if (State == AIStates.Waiting)
             {
-                frameBox = mainTex.Frame(1, 4,0, 0);
+                frameBox = mainTex.Frame(1, 4, 0, 0);
                 spriteBatch.Draw(mainTex, pos, frameBox, drawColor, (float)rotation, frameBox.Size() / 2, NPC.scale, 0, 0);
             }
             else
@@ -650,7 +650,7 @@ namespace Coralite.Content.NPCs.Crystalline
     {
         protected override OnTileTypes OnTileType => OnTileTypes.OnBottom;
 
-        protected override int AttackLength => GetBiteLength()+16*5;
+        protected override int AttackLength => GetBiteLength() + 16 * 5;
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
@@ -991,7 +991,7 @@ namespace Coralite.Content.NPCs.Crystalline
 
     public class VinicBigImpact : ModDust
     {
-        public override string Texture => AssetDirectory.CrystallineNPCs+Name;
+        public override string Texture => AssetDirectory.CrystallineNPCs + Name;
 
         public override void OnSpawn(Dust dust)
         {
@@ -1015,7 +1015,7 @@ namespace Coralite.Content.NPCs.Crystalline
 
         public override bool PreDraw(Dust dust)
         {
-            Main.spriteBatch.Draw(Texture2D.Value, dust.position - Main.screenPosition, dust.frame, dust.color, dust.rotation+MathHelper.PiOver2, dust.frame.Size() / 2, dust.scale, 0, 0);
+            Main.spriteBatch.Draw(Texture2D.Value, dust.position - Main.screenPosition, dust.frame, dust.color, dust.rotation + MathHelper.PiOver2, dust.frame.Size() / 2, dust.scale, 0, 0);
             return false;
         }
     }

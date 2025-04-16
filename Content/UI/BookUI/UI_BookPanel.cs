@@ -85,7 +85,7 @@ namespace Coralite.Content.UI.UILib
         {
             //就只是绘制面板
             //if (!OverflowHidden)
-                DrawPanel(spriteBatch);
+            DrawPanel(spriteBatch);
         }
 
         protected override void DrawChildren(SpriteBatch spriteBatch)

@@ -21,7 +21,7 @@ namespace Coralite.Content.WorldGeneration.Generators
             int x = 0;
             int y = 0;
 
-            
+
             Texture2TileGenerator gen = new(tileTex.Width, tileTex.Height);
             for (int m = 0; m < tileData.Length; m++)
             {
@@ -30,7 +30,7 @@ namespace Coralite.Content.WorldGeneration.Generators
 
                 //如果是透明的颜色那么就清除掉
                 int tileID = GenerateType.Clear;
-                if (colorToTile.TryGetValue(tileColor,out int tileType))
+                if (colorToTile.TryGetValue(tileColor, out int tileType))
                     tileID = tileType;
                 if (tileColor == Color.Transparent)
                     tileID = GenerateType.Ignore;
@@ -43,7 +43,7 @@ namespace Coralite.Content.WorldGeneration.Generators
                     y++;
                 }
                 if (y >= tileTex.Height)
-                    break; 
+                    break;
             }
 
             return gen;

@@ -146,7 +146,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
         }
     }
 
-    public class CrystallineStalactiteFake: CrystallineStalactite
+    public class CrystallineStalactiteFake : CrystallineStalactite
     {
         public override string Texture => AssetDirectory.MagikeSeries2Tile + nameof(CrystallineStalactite);
 

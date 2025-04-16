@@ -25,7 +25,7 @@ namespace Coralite.Content.Items.RedJades
             Projectile.tileCollide = true;
             Projectile.ignoreWater = false;
         }
-        
+
         public void Initialize()
         {
             if (Main.netMode == NetmodeID.MultiplayerClient)

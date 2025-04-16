@@ -322,7 +322,7 @@ namespace Coralite.Content.WorldGeneration
             //    new Actions.SetFrames(frameNeighbors: true));
 
             //放置一个肉山圣物（肉山圣物的style是5）
-            WorldGen.PlaceObject(point2.X, point2.Y - height / 2-1, TileID.MasterTrophyBase, mute: true, 6);
+            WorldGen.PlaceObject(point2.X, point2.Y - height / 2 - 1, TileID.MasterTrophyBase, mute: true, 6);
             //Dust d=  Dust.NewDustPerfect(new Point(point2.X, point2.Y - height / 2).ToWorldCoordinates(), DustID.Torch, Vector2.Zero, Scale: 5);
             //  d.noGravity = true;
             // 将植物放置在土丘形状的草砖之上。
@@ -356,7 +356,7 @@ namespace Coralite.Content.WorldGeneration
             //d.noGravity = true;
 
             //WorldGen.KillWall(x, y-1);
-            WorldGen.PlaceTile(x, y-1 , TileID.AshPlants, mute: true);
+            WorldGen.PlaceTile(x, y - 1, TileID.AshPlants, mute: true);
 
             return UnitApply(origin, x, y, args);
         }

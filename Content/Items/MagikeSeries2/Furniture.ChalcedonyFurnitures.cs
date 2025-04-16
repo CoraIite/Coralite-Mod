@@ -18,7 +18,7 @@ namespace Coralite.Content.Items.MagikeSeries2
         {
             CreateRecipe()
                 .AddIngredient<LeafChalcedony>(12)
-                .AddTile(TileID.WorkBenches)
+                .AddTile<SkarnCutterTile>()
                 .Register();
         }
     }
@@ -30,7 +30,7 @@ namespace Coralite.Content.Items.MagikeSeries2
             CreateRecipe()
                 .AddIngredient<LeafChalcedony>(12)
                 .AddIngredient(ItemID.Silk, 12)
-                .AddTile(TileID.WorkBenches)
+                .AddTile<SkarnCutterTile>()
                 .Register();
         }
     }
@@ -42,7 +42,7 @@ namespace Coralite.Content.Items.MagikeSeries2
             CreateRecipe()
                 .AddIngredient<LeafChalcedony>(6)
                 .AddIngredient(ItemID.Torch, 4)
-                .AddTile(TileID.WorkBenches)
+                .AddTile<SkarnCutterTile>()
                 .Register();
         }
     }
@@ -54,7 +54,7 @@ namespace Coralite.Content.Items.MagikeSeries2
             CreateRecipe()
                 .AddIngredient<LeafChalcedony>(20)
                 .AddIngredient(ItemID.Book, 10)
-                .AddTile(TileID.WorkBenches)
+                .AddTile<SkarnCutterTile>()
                 .Register();
         }
     }
@@ -66,7 +66,7 @@ namespace Coralite.Content.Items.MagikeSeries2
             CreateRecipe()
                 .AddIngredient<LeafChalcedony>(8)
                 .AddIngredient(ItemID.Torch, 3)
-                .AddTile(TileID.WorkBenches)
+                .AddTile<SkarnCutterTile>()
                 .Register();
         }
     }
@@ -78,7 +78,7 @@ namespace Coralite.Content.Items.MagikeSeries2
             CreateRecipe()
                 .AddIngredient<LeafChalcedony>(4)
                 .AddIngredient(ItemID.Torch)
-                .AddTile(TileID.WorkBenches)
+                .AddTile<SkarnCutterTile>()
                 .Register();
         }
     }
@@ -89,7 +89,7 @@ namespace Coralite.Content.Items.MagikeSeries2
         {
             CreateRecipe()
                 .AddIngredient<LeafChalcedony>(4)
-                .AddTile(TileID.WorkBenches)
+                .AddTile<SkarnCutterTile>()
                 .Register();
         }
     }
@@ -102,7 +102,7 @@ namespace Coralite.Content.Items.MagikeSeries2
                 .AddIngredient<LeafChalcedony>(12)
                 .AddRecipeGroup(RecipeGroupID.IronBar, 3)
                 .AddIngredient(ItemID.Glass, 6)
-                .AddTile(TileID.WorkBenches)
+                .AddTile<SkarnCutterTile>()
                 .Register();
         }
     }
@@ -113,7 +113,7 @@ namespace Coralite.Content.Items.MagikeSeries2
         {
             CreateRecipe()
                 .AddIngredient<LeafChalcedony>(6)
-                .AddTile(TileID.WorkBenches)
+                .AddTile<SkarnCutterTile>()
                 .Register();
         }
     }
@@ -124,7 +124,7 @@ namespace Coralite.Content.Items.MagikeSeries2
         {
             CreateRecipe()
                 .AddIngredient<LeafChalcedony>(16)
-                .AddTile(TileID.WorkBenches)
+                .AddTile<SkarnCutterTile>()
                 .Register();
         }
     }
@@ -136,7 +136,7 @@ namespace Coralite.Content.Items.MagikeSeries2
             CreateRecipe()
                 .AddIngredient<LeafChalcedony>(6)
                 .AddIngredient(ItemID.Torch, 2)
-                .AddTile(TileID.WorkBenches)
+                .AddTile<SkarnCutterTile>()
                 .Register();
         }
     }
@@ -148,7 +148,7 @@ namespace Coralite.Content.Items.MagikeSeries2
             CreateRecipe()
                 .AddIngredient<LeafChalcedony>(6)
                 .AddIngredient(ItemID.Torch, 2)
-                .AddTile(TileID.WorkBenches)
+                .AddTile<SkarnCutterTile>()
                 .Register();
         }
     }
@@ -161,7 +161,7 @@ namespace Coralite.Content.Items.MagikeSeries2
                 .AddIngredient<LeafChalcedony>(12)
                 .AddIngredient(ItemID.Bone, 20)
                 .AddIngredient(ItemID.Book)
-                .AddTile(TileID.WorkBenches)
+                .AddTile<SkarnCutterTile>()
                 .Register();
         }
     }
@@ -172,7 +172,7 @@ namespace Coralite.Content.Items.MagikeSeries2
         {
             CreateRecipe(2)
                 .AddIngredient<LeafChalcedony>()
-                .AddTile(TileID.WorkBenches)
+                .AddTile<SkarnCutterTile>()
                 .Register();
         }
     }
@@ -184,7 +184,7 @@ namespace Coralite.Content.Items.MagikeSeries2
             CreateRecipe()
                 .AddIngredient<LeafChalcedony>(12)
                 .AddIngredient(ItemID.WaterBucket)
-                .AddTile(TileID.WorkBenches)
+                .AddTile<SkarnCutterTile>()
                 .Register();
         }
     }
@@ -195,7 +195,7 @@ namespace Coralite.Content.Items.MagikeSeries2
         {
             CreateRecipe()
                 .AddIngredient<LeafChalcedony>(8)
-                .AddTile(TileID.WorkBenches)
+                .AddTile<SkarnCutterTile>()
                 .Register();
         }
     }
@@ -206,7 +206,7 @@ namespace Coralite.Content.Items.MagikeSeries2
         {
             CreateRecipe()
                 .AddIngredient<LeafChalcedony>(8)
-                .AddTile(TileID.WorkBenches)
+                .AddTile<SkarnCutterTile>()
                 .Register();
         }
     }
@@ -217,7 +217,7 @@ namespace Coralite.Content.Items.MagikeSeries2
         {
             CreateRecipe()
                 .AddIngredient<LeafChalcedony>(6)
-                .AddTile(TileID.WorkBenches)
+                .AddTile<SkarnCutterTile>()
                 .Register();
         }
     }
@@ -239,7 +239,7 @@ namespace Coralite.Content.Items.MagikeSeries2
             CreateRecipe()
                 .AddIngredient<LeafChalcedony>(10)
                 .AddRecipeGroup(RecipeGroupID.IronBar, 2)
-                .AddTile(TileID.WorkBenches)
+                .AddTile<SkarnCutterTile>()
                 .Register();
         }
     }

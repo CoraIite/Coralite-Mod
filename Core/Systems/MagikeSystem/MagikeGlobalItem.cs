@@ -1,5 +1,4 @@
 ﻿using Coralite.Core.Attributes;
-using Coralite.Core.Systems.MagikeSystem.Components;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;

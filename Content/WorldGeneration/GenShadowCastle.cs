@@ -1,6 +1,5 @@
 ﻿using Coralite.Content.Items.ShadowCastle;
 using Coralite.Content.Tiles.ShadowCastle;
-using Coralite.Content.WorldGeneration.Generators;
 using Coralite.Content.WorldGeneration.ShadowCastleRooms;
 using Coralite.Core;
 using Coralite.Helpers;
@@ -10,7 +9,6 @@ using ReLogic.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Generation;

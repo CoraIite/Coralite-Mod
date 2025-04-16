@@ -19,7 +19,7 @@ namespace Coralite.Content.Items.MagikeSeries2
         {
             CreateRecipe()
                 .AddIngredient<SkarnBrick>(6)
-                .AddTile(TileID.Anvils)
+                .AddTile<SkarnCutterTile>()
                 .Register();
         }
     }
@@ -31,7 +31,7 @@ namespace Coralite.Content.Items.MagikeSeries2
             CreateRecipe()
                 .AddIngredient<SkarnBrick>(6)
                 .AddIngredient(ItemID.Silk, 12)
-                .AddTile(TileID.Anvils)
+                .AddTile<SkarnCutterTile>()
                 .Register();
         }
     }
@@ -43,7 +43,7 @@ namespace Coralite.Content.Items.MagikeSeries2
             CreateRecipe()
                 .AddIngredient<SkarnBrick>(3)
                 .AddIngredient(ItemID.Torch, 4)
-                .AddTile(TileID.Anvils)
+                .AddTile<SkarnCutterTile>()
                 .Register();
         }
     }
@@ -55,7 +55,7 @@ namespace Coralite.Content.Items.MagikeSeries2
             CreateRecipe()
                 .AddIngredient<SkarnBrick>(6)
                 .AddIngredient(ItemID.Book, 10)
-                .AddTile(TileID.Anvils)
+                .AddTile<SkarnCutterTile>()
                 .Register();
         }
     }
@@ -67,7 +67,7 @@ namespace Coralite.Content.Items.MagikeSeries2
             CreateRecipe()
                 .AddIngredient<SkarnBrick>(3)
                 .AddIngredient(ItemID.Torch, 3)
-                .AddTile(TileID.Anvils)
+                .AddTile<SkarnCutterTile>()
                 .Register();
         }
     }
@@ -79,7 +79,7 @@ namespace Coralite.Content.Items.MagikeSeries2
             CreateRecipe()
                 .AddIngredient<SkarnBrick>()
                 .AddIngredient(ItemID.Torch)
-                .AddTile(TileID.Anvils)
+                .AddTile<SkarnCutterTile>()
                 .Register();
         }
     }
@@ -90,7 +90,7 @@ namespace Coralite.Content.Items.MagikeSeries2
         {
             CreateRecipe()
                 .AddIngredient<SkarnBrick>()
-                .AddTile(TileID.Anvils)
+                .AddTile<SkarnCutterTile>()
                 .Register();
         }
     }
@@ -103,7 +103,7 @@ namespace Coralite.Content.Items.MagikeSeries2
                 .AddIngredient<SkarnBrick>(6)
                 .AddRecipeGroup(RecipeGroupID.IronBar, 3)
                 .AddIngredient(ItemID.Glass, 6)
-                .AddTile(TileID.Anvils)
+                .AddTile<SkarnCutterTile>()
                 .Register();
         }
     }
@@ -114,7 +114,7 @@ namespace Coralite.Content.Items.MagikeSeries2
         {
             CreateRecipe()
                 .AddIngredient<SkarnBrick>(3)
-                .AddTile(TileID.Anvils)
+                .AddTile<SkarnCutterTile>()
                 .Register();
         }
     }
@@ -125,7 +125,7 @@ namespace Coralite.Content.Items.MagikeSeries2
         {
             CreateRecipe()
                 .AddIngredient<SkarnBrick>(6)
-                .AddTile(TileID.Anvils)
+                .AddTile<SkarnCutterTile>()
                 .Register();
         }
     }
@@ -137,7 +137,7 @@ namespace Coralite.Content.Items.MagikeSeries2
             CreateRecipe()
                 .AddIngredient<SkarnBrick>(3)
                 .AddIngredient(ItemID.Torch, 2)
-                .AddTile(TileID.Anvils)
+                .AddTile<SkarnCutterTile>()
                 .Register();
         }
     }
@@ -149,7 +149,7 @@ namespace Coralite.Content.Items.MagikeSeries2
             CreateRecipe()
                 .AddIngredient<SkarnBrick>(3)
                 .AddIngredient(ItemID.Torch, 2)
-                .AddTile(TileID.Anvils)
+                .AddTile<SkarnCutterTile>()
                 .Register();
         }
     }
@@ -162,7 +162,7 @@ namespace Coralite.Content.Items.MagikeSeries2
                 .AddIngredient<SkarnBrick>(6)
                 .AddIngredient(ItemID.Bone, 20)
                 .AddIngredient(ItemID.Book)
-                .AddTile(TileID.Anvils)
+                .AddTile<SkarnCutterTile>()
                 .Register();
         }
     }
@@ -174,7 +174,7 @@ namespace Coralite.Content.Items.MagikeSeries2
             CreateRecipe()
                 .AddIngredient<SkarnBrick>(6)
                 .AddIngredient(ItemID.WaterBucket)
-                .AddTile(TileID.Anvils)
+                .AddTile<SkarnCutterTile>()
                 .Register();
         }
     }
@@ -185,7 +185,7 @@ namespace Coralite.Content.Items.MagikeSeries2
         {
             CreateRecipe()
                 .AddIngredient<SkarnBrick>(8)
-                .AddTile(TileID.Anvils)
+                .AddTile<SkarnCutterTile>()
                 .Register();
         }
     }
@@ -196,7 +196,7 @@ namespace Coralite.Content.Items.MagikeSeries2
         {
             CreateRecipe()
                 .AddIngredient<SkarnBrick>(8)
-                .AddTile(TileID.Anvils)
+                .AddTile<SkarnCutterTile>()
                 .Register();
         }
     }
@@ -207,7 +207,7 @@ namespace Coralite.Content.Items.MagikeSeries2
         {
             CreateRecipe()
                 .AddIngredient<SkarnBrick>(3)
-                .AddTile(TileID.Anvils)
+                .AddTile<SkarnCutterTile>()
                 .Register();
         }
     }
@@ -218,7 +218,7 @@ namespace Coralite.Content.Items.MagikeSeries2
         {
             CreateRecipe()
                 .AddIngredient<SkarnBrick>(3)
-                .AddTile(TileID.Anvils)
+                .AddTile<SkarnCutterTile>()
                 .Register();
         }
     }

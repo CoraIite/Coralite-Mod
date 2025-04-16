@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Terraria.ID;
+﻿using Coralite.Core;
 using Terraria;
-using Coralite.Core;
+using Terraria.ID;
 
 namespace Coralite.Content.Bosses.DigDigDig.EyeOfGlistent
 {
@@ -17,7 +12,7 @@ namespace Coralite.Content.Bosses.DigDigDig.EyeOfGlistent
             Projectile.width = 10;
             Projectile.height = 10;
             Projectile.friendly = false;
-            Projectile.hostile = true; 
+            Projectile.hostile = true;
             Projectile.tileCollide = false;
             Projectile.timeLeft = 120;
         }

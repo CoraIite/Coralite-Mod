@@ -314,7 +314,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                         proj.velocity *= -1;
                         float angle = proj.velocity.ToRotation();
                         proj.velocity = angle.AngleLerp(Projectile.rotation, 0.5f).ToRotationVector2() * proj.velocity.Length();
-                        proj.friendly= true;
+                        proj.friendly = true;
                         OnStrongGuard();
                     }
                     localProjectileImmunity[i] = Projectile.localNPCHitCooldown;
@@ -357,7 +357,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                 return false;
 
             if (!ProjectileLoader.ShouldUpdatePosition(proj))
-                return  false;
+                return false;
 
             return true;
         }

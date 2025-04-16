@@ -8,7 +8,7 @@ namespace Coralite.Content.Items.MagikeSeries2
 {
     public class RainbowPorpoise() : BaseQuestFish(AssetDirectory.MagikeSeries2Item)
     {
-        public override bool QuestAvailable => CoraliteWorld.HasPermission&&Main.hardMode;
+        public override bool QuestAvailable => CoraliteWorld.HasPermission && Main.hardMode;
 
         public override LocalizedText Description => DescriptionText;
 

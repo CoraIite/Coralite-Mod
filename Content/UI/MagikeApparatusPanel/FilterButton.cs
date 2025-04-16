@@ -11,7 +11,7 @@ using Terraria.UI;
 
 namespace Coralite.Content.UI.MagikeApparatusPanel
 {
-    public class FilterButton:UIElement
+    public class FilterButton : UIElement
     {
         private float _scale = 1f;
         private int _index;
@@ -72,7 +72,7 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
             else
                 _scale = Helper.Lerp(_scale, 1, 0.2f);
 
-            if (MagikeApparatusPanel.CurrentEntity.TryGetFilters(out var filter)&& filter.Count>0)
+            if (MagikeApparatusPanel.CurrentEntity.TryGetFilters(out var filter) && filter.Count > 0)
             {
                 tex = filter.Count <= _index
                      ? TextureAssets.Item[ModContent.ItemType<BasicFilter>()].Value

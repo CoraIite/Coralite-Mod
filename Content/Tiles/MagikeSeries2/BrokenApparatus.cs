@@ -90,7 +90,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             if (UseRandom)
                 TileObjectData.newTile.RandomStyleRange = Random;
             TileObjectData.newTile.LavaDeath = false;
-            TileObjectData. newTile.AnchorTop = new AnchorData(AnchorType.SolidTile | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
+            TileObjectData.newTile.AnchorTop = new AnchorData(AnchorType.SolidTile | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
             TileObjectData.newTile.AnchorBottom = AnchorData.Empty;
             TileObjectData.newTile.AnchorInvalidTiles = [TileID.Cloud, ModContent.TileType<SkarnBrickTile>(), ModContent.TileType<CrystallineBrickTile>(), ModContent.TileType<CrystallineBlockTile>()];
             TileObjectData.addTile(Type);

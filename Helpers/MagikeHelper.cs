@@ -191,7 +191,7 @@ namespace Coralite.Helpers
             Tile t = Main.tile[i, j];
             TileObjectData tileData = TileObjectData.GetTileData(t.TileType, 0, 0);
 
-            if (tileData == null||!CoraliteSets.MagikeTileTypes.TryGetValue(t.TileType,out var placeType))
+            if (tileData == null || !CoraliteSets.MagikeTileTypes.TryGetValue(t.TileType, out var placeType))
             {
                 alternateData = null;
                 alternate = 0;
@@ -534,7 +534,7 @@ namespace Coralite.Helpers
             if (reverse)
             {
                 if (bonus < 1)
-                    return new Color(128,211,255);//蓝色
+                    return new Color(128, 211, 255);//蓝色
                 else if (bonus > 1)
                     return new Color(255, 25, 25);//红色
                 else
@@ -544,7 +544,7 @@ namespace Coralite.Helpers
             if (bonus > 1)
                 return new Color(128, 211, 255);//蓝色
             else if (bonus < 1)
-                return new Color(255,25,25);//红色
+                return new Color(255, 25, 25);//红色
             else
                 return Color.White;
         }
