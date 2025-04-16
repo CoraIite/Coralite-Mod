@@ -287,6 +287,7 @@ namespace Coralite.Content.Items.Misc_Equip
 
         private Vector2 Scale;
         private int FrameX;
+        private bool init = false;
 
         private enum TopperTypes
         {
@@ -319,6 +320,12 @@ namespace Coralite.Content.Items.Misc_Equip
 
         public override void AI()
         {
+            if (init)
+            {
+                init = false;
+                TargetIndex = -1;
+            }
+
             SetTopperType();
 
             switch (TopperType)
@@ -415,6 +422,22 @@ namespace Coralite.Content.Items.Misc_Equip
                     TargetIndex = n.whoAmI;
                     return true;
                 }
+            }
+
+            if (TargetIndex.GetNPCOwner(out NPC target, SetToBack))
+            {
+                if (target.CanBeChasedBy()
+                    && Vector2.Distance(target.Center, Owner.Center) < 1500)
+                    return true;
+                else
+                    return false;
+            }
+
+            NPC n2 = Helper.FindClosestEnemy(Owner.Center, 1000, n => n.CanBeChasedBy());
+            if (n2 != null)
+            {
+                TargetIndex = n2.whoAmI;
+                return true;
             }
 
             return false;
