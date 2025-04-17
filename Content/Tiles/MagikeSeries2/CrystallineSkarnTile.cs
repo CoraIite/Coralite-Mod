@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.Dusts;
 using Coralite.Content.Items.LandOfTheLustrousSeries;
 using Coralite.Content.Items.MagikeSeries2;
+using Coralite.Content.WorldGeneration;
 using Coralite.Core;
 using System.Collections.Generic;
 using Terraria;

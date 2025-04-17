@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Dusts;
+using Coralite.Content.WorldGeneration;
 using Coralite.Core;
 using Terraria;
 using Terraria.ID;
@@ -24,5 +25,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
             AddMapEntry(Coralite.CrystallinePurple);
         }
+
+        public override bool CanExplode(int i, int j) => CoraliteWorld.HasPermission;
     }
 }

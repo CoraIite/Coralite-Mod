@@ -27,10 +27,10 @@ Conditions: {
 		UnlockPartyGirl: 需要解锁排队女孩
 		UnlockTaxCollector: 需要解救税收官
 		UnlockPrincess: 需要解锁公主
-		// SpellCraft: Mods.Coralite.Conditions.CoraliteConditions.SpellCraft
-		// InMagicCrystalCave: Mods.Coralite.Conditions.CoraliteConditions.InMagicCrystalCave
-		// InCrystallineSkyIsland: Mods.Coralite.Conditions.CoraliteConditions.InCrystallineSkyIsland
-		// UseShlimmerTranslation: Mods.Coralite.Conditions.CoraliteConditions.UseShlimmerTranslation
+		SpellCraft: 需要使用法术回路制作
+		InMagicCrystalCave: 需要处于魔力水晶洞
+		InCrystallineSkyIsland: 需要处于蕴魔空岛
+		UseShlimmerTranslation: 需要使用微光转化
 	}
 }
 
@@ -62,8 +62,8 @@ WorldGeneration: {
 		DigTheShimmer: 挖微光挖微光挖微光挖挖挖挖挖挖挖！
 		DigTheIceDragonNest: 挖冰龙巢挖冰龙巢挖冰龙巢挖挖挖挖挖挖挖！
 		DigTheDigDungeon: 挖地牢挖地牢挖地牢挖挖挖挖挖挖挖！
-		CoraliteNoteRoom: 正在安放珊瑚的遗失物
-		// CrystallineSkyIsland: Mods.Coralite.WorldGeneration.CoraliteWorld.CrystallineSkyIsland
+		CoraliteNoteRoom: 正在安放珊瑚的“遗失物”
+		CrystallineSkyIsland: 正在升起蕴魔空岛
 	}
 }
 

@@ -183,7 +183,7 @@ namespace Coralite.Content.WorldGeneration
 
             GenVars.structures.AddProtectedStructure(new Rectangle(p.X, p.Y, generator.Width, generator.Height));
 
-            AltarPos = p + new Point(generator.Width, 3);
+            AltarPos = p + new Point(generator.Width / 2 - 1, 0);
         }
 
         /// <summary>
@@ -2216,6 +2216,9 @@ namespace Coralite.Content.WorldGeneration
                 tag.Add(nameof(PlaceNightSoul), true);
             if (HasPermission)
                 tag.Add(nameof(HasPermission), true);
+
+            tag.Add(nameof(AltarPos) + "X", AltarPos.X);
+            tag.Add(nameof(AltarPos) + "Y", AltarPos.Y);
         }
 
         public static void LoadSkyIsland(TagCompound tag)
@@ -2223,6 +2226,8 @@ namespace Coralite.Content.WorldGeneration
             PlaceLightSoul = tag.ContainsKey(nameof(PlaceLightSoul));
             PlaceNightSoul = tag.ContainsKey(nameof(PlaceLightSoul));
             HasPermission = tag.ContainsKey(nameof(PlaceLightSoul));
+
+            AltarPos = new Point(tag.GetAsInt(nameof(AltarPos) + "X"), tag.GetAsInt(nameof(AltarPos) + "Y"));
         }
 
         #endregion

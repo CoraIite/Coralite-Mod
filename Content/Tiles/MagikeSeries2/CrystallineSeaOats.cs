@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Dusts;
 using Coralite.Content.Items.MagikeSeries2;
+using Coralite.Content.WorldGeneration;
 using Coralite.Core;
 using Coralite.Helpers;
 using Terraria;
@@ -49,6 +50,8 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             g = 0.35f;
             b = 0.2f;
         }
+
+        public override bool CanExplode(int i, int j) => CoraliteWorld.HasPermission;
 
         public override void RandomUpdate(int i, int j)
         {
@@ -104,6 +107,8 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             g = 0.35f;
             b = 0.2f;
         }
+
+        public override bool CanExplode(int i, int j) => CoraliteWorld.HasPermission;
 
         public override void RandomUpdate(int i, int j)
         {
@@ -187,6 +192,8 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             g = 0.35f;
             b = 0.2f;
         }
+
+        public override bool CanExplode(int i, int j) => CoraliteWorld.HasPermission;
 
         public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
         {

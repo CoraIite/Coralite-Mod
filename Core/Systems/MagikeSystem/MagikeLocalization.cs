@@ -21,6 +21,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         public static LocalizedText RightClickRemoveRecipe { get; private set; }
 
         public static LocalizedText ItemContainsMagike { get; private set; }
+        public static LocalizedText RightClickToGetPermission { get; private set; }
 
         public void LoadLocalization()
         {
@@ -34,6 +35,7 @@ namespace Coralite.Core.Systems.MagikeSystem
             RightClickStopCraft = this.GetLocalization(nameof(RightClickStopCraft));
             RightClickRemoveRecipe = this.GetLocalization(nameof(RightClickRemoveRecipe));
             ItemContainsMagike = this.GetLocalization(nameof(ItemContainsMagike));
+            RightClickToGetPermission = this.GetLocalization(nameof(RightClickToGetPermission));
 
             this.GetLocalization("PolarizedFilterTooltip");
 
@@ -61,6 +63,8 @@ namespace Coralite.Core.Systems.MagikeSystem
             CraftText = null;
             UIPanelText = null;
             MALevelText = null;
+
+            RightClickToGetPermission = null;
         }
 
         #region 魔能连接仪相关

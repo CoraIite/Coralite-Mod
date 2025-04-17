@@ -4,11 +4,11 @@ MagicCrystalCave: {
 }
 
 ShadowCastleBiome: {
-	// DisplayName: Shadow Castle Biome
-	// TownNPCDialogueName: the Shadow Castle Biome
+	DisplayName: 影之城
+	TownNPCDialogueName: 影之城
 }
 
 CrystallineSkyIsland: {
-	// DisplayName: Crystalline Sky Island
-	// TownNPCDialogueName: the Crystalline Sky Island
+	DisplayName: 蕴魔空岛
+	TownNPCDialogueName: 蕴魔空岛
 }

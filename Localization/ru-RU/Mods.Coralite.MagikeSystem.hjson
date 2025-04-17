@@ -301,4 +301,6 @@ MagikeSystem: {
 		// MabirdCatchItemCount: Mods.Coralite.MagikeSystem.MagikeSystem.ItemDescription.MabirdCatchItemCount
 		// MabirdRestTime: Mods.Coralite.MagikeSystem.MagikeSystem.ItemDescription.MabirdRestTime
 	}
+
+	// RightClickToGetPermission: Mods.Coralite.MagikeSystem.MagikeSystem.RightClickToGetPermission
 }

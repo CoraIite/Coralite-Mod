@@ -326,4 +326,6 @@ MagikeSystem: {
 		MabirdCatchItemCount: 单次运送物品数 {0}
 		MabirdRestTime: 发送后休息 {0} 秒
 	}
+
+	RightClickToGetPermission: "右键祭坛并获得许可后才能进入蕴魔空岛"
 }

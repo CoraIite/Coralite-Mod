@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Dusts;
 using Coralite.Content.Items.MagikeSeries2;
+using Coralite.Content.WorldGeneration;
 using Coralite.Core;
 using System.Collections.Generic;
 using Terraria;
@@ -58,6 +59,8 @@ namespace Coralite.Content.Tiles.MagikeSeries2
         {
             num = fail ? 1 : 3;
         }
+
+        public override bool CanExplode(int i, int j) => CoraliteWorld.HasPermission;
 
         public override IEnumerable<Item> GetItemDrops(int i, int j)
         {
@@ -137,6 +140,8 @@ namespace Coralite.Content.Tiles.MagikeSeries2
         {
             num = fail ? 1 : 3;
         }
+
+        public override bool CanExplode(int i, int j) => CoraliteWorld.HasPermission;
 
         public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
         {
