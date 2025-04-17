@@ -285,6 +285,8 @@ namespace Coralite.Content.Items.Misc_Equip
 
         private ref float ScaleTimer => ref Projectile.localAI[2];
 
+        public Vector2 IdlePos => Owner.MountedCenter + new Vector2(0, -16 * 4);
+
         private Vector2 Scale;
         private int FrameX;
         private bool init = false;
@@ -334,20 +336,7 @@ namespace Coralite.Content.Items.Misc_Equip
                 case TopperTypes.Error:
                     break;
                 case TopperTypes.None:
-                    {
-                        switch (State)
-                        {
-                            default:
-                            case -1://返回玩家
-                                BackToOwner();
-                                break;
-                            case 0://寻敌
-                                {
-
-                                }
-                                break;
-                        }
-                    }
+                    NormalAI();
                     break;
                 case TopperTypes.Blood:
                     break;
@@ -358,6 +347,69 @@ namespace Coralite.Content.Items.Misc_Equip
             }
 
             ControlScale();
+        }
+
+        private void NormalAI()
+        {
+            switch (State)
+            {
+                default:
+                case -1://返回玩家
+                    BackToOwner();
+                    FlyFrame();
+                    break;
+                case 0://寻敌
+                    {
+                        Projectile.Center = IdlePos;
+
+                        if (Projectile.IsOwnedByLocalPlayer() && Timer > 20)
+                        {
+                            Timer = 0;
+                            if (FindEnemy())
+                                StartAttack();
+                        }
+
+                        Timer++;
+                        FlyFrame();
+                    }
+                    break;
+                case 1://冲刺到敌怪头上
+                    {
+                        if (!TargetIndex.GetNPCOwner(out NPC npc, SetToBack))
+                            return;
+
+                        if (Timer < 20)//准备动作
+                        {
+                            Projectile.Center = IdlePos;
+
+                            Projectile.rotation =
+                                Projectile.rotation.AngleLerp((npc.Center - Projectile.Center).ToRotation(), 0.16f);
+                        }
+                        else if (Timer<28)//冲刺到目标头顶上
+                        {
+                            Projectile.Center = Vector2.Lerp(Projectile.Center, npc.Top, 0.5f);
+                        }
+                        else if (Timer<28+12)
+                        {
+                            Projectile.Center = npc.Top;
+                            Projectile.rotation = Projectile.rotation.AngleLerp(0, 0.2f);
+                        }
+                        else
+                        {
+                            State++;
+                            Timer = 0;
+                            return;
+                        }
+
+                        Timer++;
+                    }
+                    break;
+                case 2:
+                    {
+
+                    }
+                    break;
+            }
         }
 
         public void SetTopperType()
@@ -395,7 +447,7 @@ namespace Coralite.Content.Items.Misc_Equip
 
         public void BackToOwner()
         {
-            Vector2 pos = Owner.MountedCenter;
+            Vector2 pos = IdlePos;
             if (Vector2.Distance(pos, Projectile.Center) > 3000)
             {
                 Projectile.Center = pos;
@@ -441,6 +493,12 @@ namespace Coralite.Content.Items.Misc_Equip
             }
 
             return false;
+        }
+
+        public void StartAttack()
+        {
+            State = 1;
+            Timer =0;
         }
 
         #region 缩放控制部分
