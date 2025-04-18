@@ -16,7 +16,7 @@ namespace Coralite.Content.Biomes
     {
         public override SceneEffectPriority Priority => SceneEffectPriority.Environment;
 
-        public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Temp_CrystallineSkyIsland");
+        //public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Temp_CrystallineSkyIsland");
 
         public override void Load()
         {
@@ -65,10 +65,6 @@ namespace Coralite.Content.Biomes
     public class CrystallineSkyIslandEffect : ModSceneEffect
     {
         public override SceneEffectPriority Priority => SceneEffectPriority.Environment;
-
-        //public override ModUndergroundBackgroundStyle UndergroundBackgroundStyle => ModContent.Find<ModUndergroundBackgroundStyle>("Coralite/MagicCrystalCaveBackground");
-
-        public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Temp_CrystallineSkyIsland");
 
         public override string MapBackground => AssetDirectory.Backgrounds + "CrystallineSkyIslandMap";
 

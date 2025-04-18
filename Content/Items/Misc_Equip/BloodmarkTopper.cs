@@ -313,10 +313,10 @@ namespace Coralite.Content.Items.Misc_Equip
 
             Projectile.tileCollide = false;
             Projectile.friendly = true;
-
-            Projectile.usesLocalNPCImmunity = true;
-            Projectile.localNPCHitCooldown = 30;
         }
+
+        public override bool? CanDamage() => false;
+        public override bool? CanCutTiles() => false;
 
         #region AI
 
@@ -371,11 +371,12 @@ namespace Coralite.Content.Items.Misc_Equip
 
                         Timer++;
                         FlyFrame();
+                        IdleDirection();
                     }
                     break;
                 case 1://冲刺到敌怪头上
                     {
-                        if (!TargetIndex.GetNPCOwner(out NPC npc, SetToBack))
+                        if (!TargetIndex.GetNPCOwner(out NPC target, SetToBack))
                             return;
 
                         if (Timer < 20)//准备动作
@@ -383,30 +384,52 @@ namespace Coralite.Content.Items.Misc_Equip
                             Projectile.Center = IdlePos;
 
                             Projectile.rotation =
-                                Projectile.rotation.AngleLerp((npc.Center - Projectile.Center).ToRotation(), 0.16f);
+                                Projectile.rotation.AngleLerp((target.Center - Projectile.Center).ToRotation(), 0.16f);
                         }
-                        else if (Timer<28)//冲刺到目标头顶上
+                        else if (Timer < 28)//冲刺到目标头顶上
                         {
-                            Projectile.Center = Vector2.Lerp(Projectile.Center, npc.Top, 0.5f);
+                            Projectile.Center = Vector2.Lerp(Projectile.Center, target.Top, 0.5f);
+                            Projectile.rotation = (target.Center - Projectile.Center).ToRotation();
                         }
-                        else if (Timer<28+12)
+                        else if (Timer < 28 + 12)//摆正位置
                         {
-                            Projectile.Center = npc.Top;
+                            Projectile.Center = target.Top;
                             Projectile.rotation = Projectile.rotation.AngleLerp(0, 0.2f);
                         }
                         else
                         {
                             State++;
                             Timer = 0;
+                            Projectile.frame = 1;
                             return;
                         }
 
                         Timer++;
+                        FaceToEnemy(target);
+                        FlyFrame();
                     }
                     break;
-                case 2:
+                case 2://向下咬攻击敌怪
                     {
+                        if (!TargetIndex.GetNPCOwner(out NPC target, SetToBack))
+                            return;
 
+                        AttackFrame();
+
+                        if (Projectile.IsOwnedByLocalPlayer() && Timer == 3 * 3)
+                        {
+                            //TODO: 生成咬合弹幕
+                        }
+
+                        if (Timer > 40)
+                        {
+                            if (FindEnemy())
+                                StartAttack();
+                            else
+                                SetToBack();
+                        }
+
+                        Timer++;
                     }
                     break;
             }
@@ -448,7 +471,7 @@ namespace Coralite.Content.Items.Misc_Equip
         public void BackToOwner()
         {
             Vector2 pos = IdlePos;
-            if (Vector2.Distance(pos, Projectile.Center) > 3000)
+            if (Vector2.Distance(pos, Projectile.Center) > 3000 || Timer > 60 * 12)
             {
                 Projectile.Center = pos;
                 State = 0;
@@ -462,6 +485,8 @@ namespace Coralite.Content.Items.Misc_Equip
                 Projectile.Center = pos;
                 State = 0;
             }
+
+            Timer++;
         }
 
         public bool FindEnemy()
@@ -498,7 +523,23 @@ namespace Coralite.Content.Items.Misc_Equip
         public void StartAttack()
         {
             State = 1;
-            Timer =0;
+            Timer = 0;
+        }
+
+        public void IdleDirection()
+        {
+            float r = Owner.velocity.X;
+            if (Math.Abs(r) > 0.2f)
+                Projectile.spriteDirection = Math.Sign(r);
+            else
+                Projectile.spriteDirection = Owner.direction;
+        }
+
+        public void FaceToEnemy(NPC target)
+        {
+            float r = target.Center.X - Projectile.Center.X;
+            if (Math.Abs(r) > 8)
+                Projectile.spriteDirection = Math.Sign(r);
         }
 
         #region 缩放控制部分
@@ -600,63 +641,74 @@ namespace Coralite.Content.Items.Misc_Equip
         #endregion
     }
 
-    public class BloodBite : Particle
+    public class BloodBite : ModProjectile
     {
         public override string Texture => AssetDirectory.Misc_Equip + Name;
 
         private float mouseDistance;
         private Vector2 offset;
 
-        public override void SetProperty()
+        private ref float Timer => ref Projectile.localAI[0];
+        private Color color = Color.White;
+
+        public override void SetDefaults()
         {
-            PRTDrawMode = PRTDrawModeEnum.AlphaBlend;
-            Rotation = Main.rand.NextFloat(-0.4f, 0.4f);
-            Color = Color.White;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = -1;
+            Projectile.width = Projectile.height = 48;
+            Projectile.penetrate = -1;
+            Projectile.friendly = true;
         }
 
         public override void AI()
         {
-            if (Opacity < 6)//张嘴
+            if (Timer < 6)//张嘴
                 mouseDistance += 2;
-            else if (Opacity < 10)//咬合
+            else if (Timer < 10)//咬合
                 mouseDistance -= 4;
             else//抖动加消失
             {
-                if (Opacity % 2 == 0)
+                if (Timer % 2 == 0)
                     offset = Helper.NextVec2Dir(2, 4);
 
-                if (Opacity > 14)
+                if (Timer > 14)
                 {
-                    Color *= 0.9f;
-                    if (Color.A < 10)
-                        active = false;
+                    color *= 0.9f;
+                    if (color.A < 10)
+                        Projectile.Kill();
                 }
             }
 
-            Opacity++;
+            Timer++;
         }
 
-        public override bool PreDraw(SpriteBatch spriteBatch)
+        public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D tex = TexValue;
-            Vector2 pos = Position - Main.screenPosition+offset;
-            Color c = Lighting.GetColor(Position.ToTileCoordinates(), Color);
-            Vector2 normal = (Rotation - MathHelper.PiOver2).ToRotationVector2();
+            Texture2D tex = Projectile.GetTexture();
+            SpriteBatch spriteBatch = Main.spriteBatch;
+            Vector2 pos = Projectile.Center - Main.screenPosition + offset;
+            Color c = Lighting.GetColor(Projectile.Center.ToTileCoordinates(), color);
+            Vector2 normal = (Projectile.rotation - MathHelper.PiOver2).ToRotationVector2();
             normal *= mouseDistance;
 
             //绘制底层
             var frameBox = tex.Frame(2, 2, 1, 0);
-            spriteBatch.Draw(tex, pos-normal, frameBox, c, Rotation, frameBox.Size() / 2, Scale, 0, 0);
+            spriteBatch.Draw(tex, pos - normal, frameBox, c, Projectile.rotation, frameBox.Size() / 2, Projectile.scale, 0, 0);
             frameBox = tex.Frame(2, 2, 1, 1);
-            spriteBatch.Draw(tex, pos+normal, frameBox, c, Rotation, frameBox.Size() / 2, Scale, 0, 0);
+            spriteBatch.Draw(tex, pos + normal, frameBox, c, Projectile.rotation, frameBox.Size() / 2, Projectile.scale, 0, 0);
 
             //绘制顶层
             frameBox = tex.Frame(2, 2, 2, 0);
-            spriteBatch.Draw(tex, pos - normal, frameBox, c, Rotation, frameBox.Size() / 2, Scale, 0, 0);
+            spriteBatch.Draw(tex, pos - normal, frameBox, c, Projectile.rotation, frameBox.Size() / 2, Projectile.scale, 0, 0);
             frameBox = tex.Frame(2, 2, 2, 1);
-            spriteBatch.Draw(tex, pos + normal, frameBox, c, Rotation, frameBox.Size() / 2, Scale, 0, 0);
+            spriteBatch.Draw(tex, pos + normal, frameBox, c, Projectile.rotation, frameBox.Size() / 2, Projectile.scale, 0, 0);
 
             return false;
         }
+    }
+
+    public class ShdowBite : BloodBite
+    {
+
     }
 }

@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.GameContent;
+using Terraria.Utilities;
 
 namespace Coralite.Content.Biomes
 {
@@ -18,6 +19,8 @@ namespace Coralite.Content.Biomes
 
         public CloudData[] datas;
         private bool init = true;
+
+        public static ATex[] CloudTexs { get; private set; }
 
         public class CloudData
         {
@@ -37,7 +40,7 @@ namespace Coralite.Content.Biomes
 
             public int CloudType;
 
-            public CloudData(int x, int y)
+            public CloudData(int x, int y,WeightedRandom<int> random)
             {
                 Vector2 center = new Vector2(Main.screenWidth / 2, Main.screenHeight / 2);
                 targetScreenPosIn = new Vector2(x, y) + Main.rand.NextVector2Circular(12, 12);
@@ -48,7 +51,7 @@ namespace Coralite.Content.Biomes
                 targetScreenPosOut = targetScreenPosIn + dir * centerLength * 1.2f;
                 CurrentScreenPos = targetScreenPosOut;
 
-                CloudType = Main.rand.Next(24);
+                CloudType = random.Get();
                 Rotation = Main.rand.NextFloat(-0.1f, 0.1f);
                 effect = Main.rand.NextFromList(SpriteEffects.None, SpriteEffects.FlipHorizontally);
                 c = Color.Transparent;
@@ -64,9 +67,23 @@ namespace Coralite.Content.Biomes
 
             public void Draw(SpriteBatch spriteBatch)
             {
-                Texture2D tex = TextureAssets.Cloud[CloudType].Value;
+                Texture2D tex = CloudTexs[CloudType].Value;
                 spriteBatch.Draw(tex, CurrentScreenPos, null, c, Rotation, tex.Size() / 2, 2f, effect, 0);
             }
+        }
+
+        public override void Load()
+        {
+            if (Main.dedServ)
+                return;
+
+            for (int i = 0; i < 5; i++)
+                CloudTexs[i] = ModContent.Request<Texture2D>(AssetDirectory.Biomes + "CrystallineCloud" + (i + 1).ToString());
+        }
+
+        public override void Unload()
+        {
+            CloudTexs = null;
         }
 
         public override void SetDefaults()
@@ -128,20 +145,26 @@ namespace Coralite.Content.Biomes
 
         public void Initialize()
         {
-            const int XLength = 100;
-            const int YLength = 80;
+            const int XLength = 120;
+            const int YLength = 90;
 
             int x = Main.screenWidth / XLength;
-            x++;
+            x += 2;
             int y = Main.screenHeight / YLength;
-            y++;
+            y += 2;
 
             datas = new CloudData[x * y];
+
+            WeightedRandom<int> random = new WeightedRandom<int>();
+            random.Add(0, 2);
+            for (int i = 0; i < 4; i++)
+                random.Add(i+1, 1);
+
             int k = 0;
-            for (int i = 0; i < x; i++)
-                for (int j = 0; j < y; j++)
+            for (int i = -1; i < x; i++)
+                for (int j = -1; j < y; j++)
                 {
-                    datas[k] = new CloudData(i * XLength, j * YLength);
+                    datas[k] = new CloudData(i * XLength, j * YLength,random);
                     k++;
                 }
         }
