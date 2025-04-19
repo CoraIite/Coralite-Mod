@@ -27,7 +27,7 @@ namespace Coralite.Content.Biomes
 
         public override string MapBackground => AssetDirectory.Backgrounds + "CrystallineSkyIslandMap";
 
-        //public override string BestiaryIcon => AssetDirectory.Biomes + "MagicCrystalCaveIcon";
+        public override string BestiaryIcon => AssetDirectory.Biomes + "CrystallineSkyIslandIcon";
 
         public override ModWaterStyle WaterStyle => ModContent.GetInstance<CrystallineSkyIslandWaterStyle>();
 

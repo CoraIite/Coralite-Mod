@@ -1,17 +1,22 @@
-﻿using Coralite.Content.ModPlayers;
+﻿using Coralite.Content.Items.Materials;
+using Coralite.Content.ModPlayers;
 using Coralite.Content.Raritys;
 using Coralite.Core;
 using Coralite.Core.Attributes;
 using Coralite.Core.Prefabs.Items;
+using Coralite.Core.Systems.MagikeSystem;
+using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
+using Coralite.Helpers;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.ID;
 using Terraria.Localization;
 
 namespace Coralite.Content.Items.MagikeSeries2
 {
     [PlayerEffect(ExtraEffectNames = [ShowBackLine])]
     public class MabirdLoupe() : BaseMaterial(1, Item.sellPrice(0, 5)
-        , ModContent.RarityType<CrystallineMagikeRarity>(), AssetDirectory.MagikeSeries2Item)
+        , ModContent.RarityType<CrystallineMagikeRarity>(), AssetDirectory.MagikeSeries2Item), IMagikeCraftable
     {
         public const string ShowBackLine = "MabirdLoupeA";
 
@@ -60,6 +65,16 @@ namespace Coralite.Content.Items.MagikeSeries2
                 tooltips.Insert(index + 1, new TooltipLine(Mod, "ShowBackLine", ShowBackTexts[0].Value));
             else
                 tooltips.Insert(index + 1, new TooltipLine(Mod, "ShowBackLine", ShowBackTexts[1].Value));
+        }
+
+        public void AddMagikeCraftRecipe()
+        {
+            MagikeRecipe.CreateCraftRecipe(ItemID.Binoculars, ModContent.ItemType<MabirdLoupe>()
+                , MagikeHelper.CalculateMagikeCost(MALevel.CrystallineMagike, 6))
+                .AddIngredient(ItemID.Glass, 4)
+                .AddIngredient<FreosanInABottle>()
+                .AddIngredient<CrystallineMagike>()
+                .Register();
         }
     }
 }

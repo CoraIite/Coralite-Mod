@@ -3,13 +3,14 @@ using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.Utilities;
 
 namespace Coralite.Content.Biomes
 {
-    public class CrystallineSkyIslandCloudScreen : ModProjectile, IDrawNonPremultiplied
+    public class CrystallineSkyIslandCloudScreen : ModProjectile
     {
         public override string Texture => AssetDirectory.Blank;
 
@@ -77,6 +78,7 @@ namespace Coralite.Content.Biomes
             if (Main.dedServ)
                 return;
 
+            CloudTexs = new ATex[5];
             for (int i = 0; i < 5; i++)
                 CloudTexs[i] = ModContent.Request<Texture2D>(AssetDirectory.Biomes + "CrystallineCloud" + (i + 1).ToString());
         }
@@ -90,6 +92,7 @@ namespace Coralite.Content.Biomes
         {
             Projectile.tileCollide = false;
             Projectile.friendly = true;
+            Projectile.hide = true;
         }
 
         public override void AI()
@@ -128,7 +131,7 @@ namespace Coralite.Content.Biomes
                 return;
             }
 
-            const int MaxTime = 60 * 6;
+            const int MaxTime = 60 * 4;
             float factor = Math.Clamp(Timer / MaxTime, 0, 1);
             foreach (var cloud in datas)
                 cloud.Update(factor);
@@ -145,8 +148,8 @@ namespace Coralite.Content.Biomes
 
         public void Initialize()
         {
-            const int XLength = 120;
-            const int YLength = 90;
+            const int XLength = 190;
+            const int YLength = 130;
 
             int x = Main.screenWidth / XLength;
             x += 2;
@@ -158,27 +161,31 @@ namespace Coralite.Content.Biomes
             WeightedRandom<int> random = new WeightedRandom<int>();
             random.Add(0, 2);
             for (int i = 0; i < 4; i++)
-                random.Add(i+1, 1);
+                random.Add(i + 1, 1);
 
             int k = 0;
-            for (int i = -1; i < x; i++)
-                for (int j = -1; j < y; j++)
+            for (int i = -1; i < x-1; i++)
+                for (int j = -1; j < y-1; j++)
                 {
-                    datas[k] = new CloudData(i * XLength, j * YLength,random);
+                    datas[k] = new CloudData(i * XLength, j * YLength, random);
                     k++;
                 }
         }
 
-        public override bool PreDraw(ref Color lightColor) => false;
-
-        public void DrawNonPremultiplied(SpriteBatch spriteBatch)
+        public override bool PreDraw(ref Color lightColor)
         {
             if (!Projectile.IsOwnedByLocalPlayer())
-                return;
+                return false;
 
             //绘制云朵
             foreach (var cloud in datas)
-                cloud.Draw(spriteBatch);
+                cloud.Draw(Main.spriteBatch);
+            return false;
+        }
+
+        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
+        {
+            overWiresUI.Add(index);
         }
     }
 }

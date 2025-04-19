@@ -559,9 +559,6 @@ ThyphionTagProj.DisplayName: Thyphion Tag Proj
 ConchBubble.DisplayName: Conch Bubble
 
 PremissionProj: {
-	SoulOfLightText: Mods.Coralite.Projectiles.PremissionProj.SoulOfLightText
-	SoulOfNightText: Mods.Coralite.Projectiles.PremissionProj.SoulOfNightText
-	PremissionText: Mods.Coralite.Projectiles.PremissionProj.PremissionText
 	DisplayName: Premission Proj
 }
 
@@ -625,3 +622,5 @@ WisteriaHeldProj.DisplayName: 紫藤萝
 WisteriaPetal.DisplayName: 紫藤萝花瓣
 MabirdRouteDrawProj.DisplayName: 魔鸟路线绘制
 BloodmarkTopperProj.DisplayName: 血礼帽
+// BloodBite.DisplayName: Blood Bite
+// ShadowBite.DisplayName: Shadow Bite

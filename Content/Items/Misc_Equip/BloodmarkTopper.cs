@@ -707,7 +707,7 @@ namespace Coralite.Content.Items.Misc_Equip
         }
     }
 
-    public class ShdowBite : BloodBite
+    public class ShadowBite : BloodBite
     {
 
     }

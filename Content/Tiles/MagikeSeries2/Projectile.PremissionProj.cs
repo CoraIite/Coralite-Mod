@@ -1,8 +1,7 @@
 ﻿using Coralite.Core;
+using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 using Terraria;
-using Terraria.GameContent;
-using Terraria.Localization;
-using Terraria.UI.Chat;
 
 namespace Coralite.Content.Tiles.MagikeSeries2
 {
@@ -13,107 +12,54 @@ namespace Coralite.Content.Tiles.MagikeSeries2
         public ref float State => ref Projectile.ai[0];
         public ref float Timer => ref Projectile.ai[1];
 
-        public static LocalizedText SoulOfLightText { get; private set; }
-        public static LocalizedText SoulOfNightText { get; private set; }
-        public static LocalizedText PremissionText { get; private set; }
-
-        private TextDrawer[] textDrawers;
-
-        public override void Load()
-        {
-            if (Main.dedServ)
-                return;
-
-            SoulOfLightText = this.GetLocalization(nameof(SoulOfLightText));
-            SoulOfNightText = this.GetLocalization(nameof(SoulOfNightText));
-            PremissionText = this.GetLocalization(nameof(PremissionText));
-        }
-
-        public override void Unload()
-        {
-            if (Main.dedServ)
-                return;
-
-            SoulOfLightText = null;
-            SoulOfNightText = null;
-            PremissionText = null;
-        }
-
-        private struct TextDrawer
-        {
-            public string text;
-            public float centerX;
-            public float alpha;
-
-
-            public void Draw(float y, float factor, Color c, Color darkC)
-            {
-                Utils.DrawBorderString(Main.spriteBatch, text, new Vector2(centerX, y), c);
-            }
-        }
+        public Vector2 backLightScale;
 
         public override void SetDefaults()
         {
             Projectile.friendly = true;
             Projectile.tileCollide = false;
+            Projectile.hide = true;
         }
 
         public override void AI()
         {
-            if (Projectile.localAI[0] == 0)
+            Vector2 Scale1 = new Vector2(0.75f,4);
+            switch (State)
             {
-                Projectile.localAI[0] = 1;
-
-                string text;
-                switch (State)
-                {
-                    default:
-                        Projectile.Kill();
-                        return;
-                    case 0:
-                        text = SoulOfLightText.Value;
-                        break;
-                    case 1:
-                        text = SoulOfNightText.Value;
-                        break;
-                    case 2:
-                        text = PremissionText.Value;
-                        break;
-                }
-
-                string[] texts = text.Split(' ');
-                float[] lengths = new float[texts.Length];
-                float total = 0;
-                for (int i = 0; i < lengths.Length; i++)
-                {
-                    lengths[i] = ChatManager.GetStringSize(FontAssets.MouseText.Value, texts[i], Vector2.One).X;
-                    total += lengths[i];
-                }
-
-                total += lengths.Length * 16;
-                textDrawers = new TextDrawer[lengths.Length];
-
-                //生成文字
-                float x = Projectile.Center.X - total / 2;
-                for (int i = 0; i < textDrawers.Length; i++)
-                {
-                    textDrawers[i] = new TextDrawer()
+                default:
+                case 0://展开
                     {
-                        text = texts[i],
-                        centerX = x + lengths[i] / 2,
-                    };
+                        if (Timer < 20)
+                        {
+                            float factor = Timer / 20;
+                            factor = Coralite.Instance.HeavySmootherInstance.Smoother(factor);
+                            backLightScale = Vector2.Lerp(Vector2.Zero, Scale1, factor);
+                        }
 
-                    x += lengths[i] + 16;
-                }
+                        Timer++;
+                    }
+                    break;
+                case 1://生成光粒子
+                    {
+
+                    }
+                    break;
             }
+        }
 
-            Timer++;
-            if (Timer > 60 * 4)
-                Projectile.Kill();
+        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
+        {
+            behindNPCsAndTiles.Add(index);
         }
 
         public override bool PreDraw(ref Color lightColor)
         {
+            Texture2D backTex = CoraliteAssets.Trail.BoosterASP.Value;
+            Vector2 backOrigin = new Vector2(0, backTex.Height / 2);
+            Vector2 pos = Projectile.Center-Main.screenPosition;
+
+            Color c = Coralite.CrystallinePurple;
+            Main.spriteBatch.Draw(backTex, pos, null, c, -MathHelper.PiOver4, backOrigin, backLightScale, 0, 0);
 
             return false;
         }
