@@ -416,12 +416,17 @@ namespace Coralite.Content.Items.Misc_Equip
 
                         AttackFrame();
 
-                        if (Projectile.IsOwnedByLocalPlayer() && Timer == 3 * 3)
+                        if (Projectile.IsOwnedByLocalPlayer() && Timer == 3 * 3)//生成咬合弹幕
                         {
-                            //TODO: 生成咬合弹幕
+                            int damage = 80;
+                            if (!Owner.HeldItem.IsAir && Owner.HeldItem.damage > 0 && !Owner.HeldItem.IsTool())
+                                damage = (int)(Owner.GetDamage(Owner.HeldItem.DamageType).ApplyTo(damage));
+
+                            Projectile.NewProjectileFromThis<BloodBite>(Main.rand.NextVector2FromRectangle(target.getRect())
+                                , Vector2.Zero, damage, 0);
                         }
 
-                        if (Timer > 40)
+                        if (Timer > 40)//重设状态
                         {
                             if (FindEnemy())
                                 StartAttack();

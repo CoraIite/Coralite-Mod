@@ -9,6 +9,21 @@ namespace Coralite.Content.Particles
 
         public override string Texture => AssetDirectory.Particles + "Roaring";
 
+        /// <summary>
+        /// 控制大小每帧变大多少
+        /// </summary>
+        public float ScaleMul = 1.1f;
+
+        /// <summary>
+        /// 经过多少帧后开始消失
+        /// </summary>
+        public int SpawnTime = 15;
+
+        /// <summary>
+        /// 超过<see cref="SpawnTime"/>时每帧缩小多少
+        /// </summary>
+        public float FadePercent = 0.9f;
+
         public override void SetProperty()
         {
             PRTDrawMode = PRTDrawModeEnum.AdditiveBlend;
@@ -18,10 +33,10 @@ namespace Coralite.Content.Particles
 
         public override void AI()
         {
-            Scale *= 1.1f;
+            Scale *= ScaleMul;
 
-            if (Opacity > 15)
-                Color *= 0.9f;
+            if (Opacity > SpawnTime)
+                Color *= FadePercent;
 
             Opacity++;
             if (Color.A < 20)

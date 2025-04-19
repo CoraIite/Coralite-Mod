@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.WorldGeneration;
 using Coralite.Core;
 using Microsoft.Xna.Framework.Graphics;
+using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.ObjectInteractions;
@@ -60,7 +61,13 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             if (!CoraliteWorld.HasPermission)
             {
                 if (CoraliteWorld.PlaceNightSoul && CoraliteWorld.PlaceNightSoul)
-                    CoraliteWorld.HasPermission = true;
+                {
+                    if (!Main.projectile.Any(p=>p.type==ModContent.ProjectileType<PremissionProj>()))
+                    {
+                        Projectile.NewProjectile(new EntitySource_TileUpdate(i, j)
+                            , Helpers.Helper.GetMagikeTileCenter_NotTopLeft(i, j), Vector2.Zero, ModContent.ProjectileType<PremissionProj>(), 0, 0,Main.myPlayer);
+                    }
+                }
                 else
                     CombatText.NewText(new Rectangle(i * 16, j * 16, 1, 1), Coralite.CrystallinePurple * 1.5f, NeedSouls.Value, true);
             }

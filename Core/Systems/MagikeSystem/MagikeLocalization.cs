@@ -22,6 +22,7 @@ namespace Coralite.Core.Systems.MagikeSystem
 
         public static LocalizedText ItemContainsMagike { get; private set; }
         public static LocalizedText RightClickToGetPermission { get; private set; }
+        public static LocalizedText CrystallineSkyIslandUnlock { get; private set; }
 
         public void LoadLocalization()
         {
@@ -36,6 +37,7 @@ namespace Coralite.Core.Systems.MagikeSystem
             RightClickRemoveRecipe = this.GetLocalization(nameof(RightClickRemoveRecipe));
             ItemContainsMagike = this.GetLocalization(nameof(ItemContainsMagike));
             RightClickToGetPermission = this.GetLocalization(nameof(RightClickToGetPermission));
+            CrystallineSkyIslandUnlock = this.GetLocalization(nameof(CrystallineSkyIslandUnlock));
 
             this.GetLocalization("PolarizedFilterTooltip");
 
