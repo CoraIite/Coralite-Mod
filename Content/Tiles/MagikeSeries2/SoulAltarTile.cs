@@ -27,6 +27,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
         public override void SetStaticDefaults()
         {
             Main.tileFrameImportant[Type] = true;
+            Main.tileLighted[Type] = true;
 
             TileID.Sets.PreventsTileRemovalIfOnTopOfIt[Type] = true;
             TileID.Sets.HasOutlines[Type] = true;
@@ -41,6 +42,16 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             MinPick = 110;
 
             AddMapEntry(new Color(105, 97, 90), CreateMapEntryName());
+        }
+
+        public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+        {
+            if (CoraliteWorld.PlaceLightSoul)
+            {
+                r = 0.5f;
+                g = 0.3f;
+                b = 0.55f;
+            }
         }
 
         public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
@@ -112,6 +123,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
         public override void SetStaticDefaults()
         {
             Main.tileFrameImportant[Type] = true;
+            Main.tileLighted[Type] = true;
 
             TileID.Sets.PreventsTileRemovalIfOnTopOfIt[Type] = true;
             TileID.Sets.HasOutlines[Type] = true;
@@ -126,6 +138,16 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             MinPick = 110;
 
             AddMapEntry(new Color(105, 97, 90), CreateMapEntryName());
+        }
+
+        public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+        {
+            if (CoraliteWorld.PlaceLightSoul)
+            {
+                r = 0.5f;
+                g = 0.3f;
+                b = 0.55f;
+            }
         }
 
         public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;

@@ -328,4 +328,5 @@ MagikeSystem: {
 	}
 
 	RightClickToGetPermission: 右键祭坛并解开封印后才能进入蕴魔空岛
+	CrystallineSkyIslandUnlock: 蕴魔空岛的封印解除了
 }

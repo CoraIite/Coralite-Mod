@@ -7,9 +7,11 @@ namespace Coralite.Content.Items.Misc_Shoot
 {
     public class AstrosniperHeldProj : BaseGunHeldProj
     {
-        public AstrosniperHeldProj() : base(0.4f, 34, -6, AssetDirectory.Misc_Shoot) { }
+        public AstrosniperHeldProj() : base(0.4f, 30, -6, AssetDirectory.Misc_Shoot) { }
 
         private int dir;
+        protected override float HeldPositionY => -12;
+
         public override float Ease()
         {
             float x = 1.465f * Projectile.timeLeft / MaxTime;
@@ -18,7 +20,9 @@ namespace Coralite.Content.Items.Misc_Shoot
 
         public override void InitializeGun()
         {
-            Projectile.scale = 0.7f;
+            Projectile.timeLeft = Owner.itemTimeMax*2;
+            MaxTime = Owner.itemTimeMax * 2;
+
             float minRot = MathHelper.ToRadians(50);
             float maxRot = MathHelper.ToRadians(130);
             TargetRot = MathHelper.Clamp(ToMouseA + MathHelper.Pi, minRot, maxRot) - MathHelper.Pi;
@@ -39,7 +43,10 @@ namespace Coralite.Content.Items.Misc_Shoot
         {
             Projectile.rotation = TargetRot - (dir * factor * recoilAngle);
             HeldPositionX = heldPositionX + (factor * recoilLength);
-            Projectile.Center = Owner.Center + (dir * Projectile.rotation.ToRotationVector2() * HeldPositionX);
+            Projectile.Center = Owner.Center
+                + (dir * Projectile.rotation.ToRotationVector2() * HeldPositionX)
+                + ((Projectile.rotation + 1.57f).ToRotationVector2() * HeldPositionY);
+
         }
 
         public override void AfterAI(float factor)

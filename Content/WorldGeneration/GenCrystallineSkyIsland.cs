@@ -82,7 +82,7 @@ namespace Coralite.Content.WorldGeneration
             GenSmallIslands(mainRect, tempMain);
         }
 
-        public int GetHighestY(Point center)
+        public static int GetHighestY(Point center)
         {
             int x = center.X - 300;//设置范围
             if (x < 41)
@@ -1663,6 +1663,8 @@ namespace Coralite.Content.WorldGeneration
             //在岛屿中间放置各种小石块和云块
             CSmallIslandFloatingBalls(expandRect, avoidRects);
 
+            //生成水晶簇
+            GenCrystallineClusters(expandRect.TopLeft().ToPoint(), expandRect.Width, expandRect.Height, originMainRect);
 
             //添加平滑与种树
             CSmallIslandSlope(expandRect, avoidRects);
@@ -1705,6 +1707,82 @@ namespace Coralite.Content.WorldGeneration
             WorldGenHelper.PlaceDecorations_NoCheck2(outerRect, (ushort)ModContent.TileType<SkarnRubbles2x2>(), 5, avoidArea: avoidRect);
             WorldGenHelper.PlaceDecorations_NoCheck2(outerRect, (ushort)ModContent.TileType<SkarnRubbles2x1>(), 3, avoidArea: avoidRect);
             WorldGenHelper.PlaceDecorations_NoCheck2(outerRect, (ushort)ModContent.TileType<SkarnRubbles1x1>(), 2, avoidArea: avoidRect);
+        }
+
+        private static void GenCrystallineClusters(Point origin, int width, int height, Rectangle avoidRect)
+        {
+            ushort skarn = (ushort)ModContent.TileType<SkarnTile>();
+            ushort smoothSkarn = (ushort)ModContent.TileType<SmoothSkarnTile>();
+            ushort cSkarn = (ushort)ModContent.TileType<ChalcedonySkarn>();
+            ushort cSmoothSkarn = (ushort)ModContent.TileType<ChalcedonySmoothSkarn>();
+
+            int maxClusters = ValueByWorldSize(4, 5, 6);
+            int clustersSpawnCount = WorldGen.genRand.Next(1, maxClusters);
+
+            int clustersX = origin.X + width / 6;
+            int clustersY = origin.Y + height / 6;
+            int clustersType = ModContent.TileType<CrystallineMagikeClustersTile>();
+
+            for (int i = 0; i < clustersSpawnCount; i++)
+                for (int j = 0; j < 1000; j++)
+                {
+                    if (j == 999)
+                    {
+                        int x1 = clustersX + WorldGen.genRand.Next(0, width * 5 / 6);
+                        int y1 = clustersY + WorldGen.genRand.Next(0, height * 5 / 6);
+
+                        if (avoidRect.Contains(x1, y1))
+                            continue;
+
+                        for (int k = 0; k < 3; k++)//检测底部空间
+                            Main.tile[x1 + k, y1].ResetToType(skarn);
+
+                        for (int m = 0; m < 3; m++)//清空底部空间
+                            for (int n = -1; n > -5; n--)
+                                Main.tile[x1 + m, y1 + n].ClearTile();
+
+                        WorldGen.PlaceObject(x1 + 1, y1 - 1, clustersType);
+                    }
+
+                    int x = clustersX + WorldGen.genRand.Next(0, width * 5 / 6);
+                    int y = clustersY + WorldGen.genRand.Next(0, height * 5 / 6);
+
+                    if (avoidRect.Contains(x, y))
+                        continue;
+
+                    bool canGenerate = true;
+
+                    for (int k = 0; k < 3; k++)//检测底部空间
+                    {
+                        Tile bottonTile = Main.tile[x + k, y];
+                        if (!bottonTile.HasTile
+                            || (bottonTile.TileType != skarn && bottonTile.TileType != smoothSkarn && bottonTile.TileType != cSkarn && bottonTile.TileType != cSmoothSkarn))
+                        {
+                            canGenerate = false;
+                            break;
+                        }
+                    }
+
+                    if (!canGenerate)
+                        continue;
+
+                    for (int m = 0; m < 3; m++)//检测底部空间
+                        for (int n = -1; n > -5; n--)
+                        {
+                            Tile t = Main.tile[x + m, y + n];
+                            if (t.HasTile)
+                            {
+                                canGenerate = false;
+                                break;
+                            }
+                        }
+
+                    if (!canGenerate)
+                        continue;
+
+                    WorldGen.PlaceObject(x + 1, y - 1, clustersType);
+                    break;
+                }
         }
 
         private static void CSmallIslandWaterFall(Rectangle outerRect, List<Rectangle> avoidRect)
@@ -2227,7 +2305,8 @@ namespace Coralite.Content.WorldGeneration
             PlaceNightSoul = tag.ContainsKey(nameof(PlaceLightSoul));
             HasPermission = tag.ContainsKey(nameof(PlaceLightSoul));
 
-            AltarPos = new Point(tag.GetAsInt(nameof(AltarPos) + "X"), tag.GetAsInt(nameof(AltarPos) + "Y"));
+            if (tag.TryGet(nameof(AltarPos) + "X",out int x)&& tag.TryGet(nameof(AltarPos) + "Y", out int y))
+                AltarPos = new Point(x, y);
         }
 
         #endregion

@@ -5975,3 +5975,8 @@ SkarnCutter: {
 	DisplayName: 矽卡复合切割机
 	Tooltip: 用于切割矽卡岩与玉髓木
 }
+
+CrystallineMagikeClusters: {
+	DisplayName: 蕴魔水晶簇
+	Tooltip: 可以使用同等级的光束采集器采挖蕴魔水晶
+}

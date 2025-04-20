@@ -2,6 +2,7 @@
 using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Attributes;
+using Coralite.Core.SmoothFunctions;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Coralite.Helpers;
@@ -10,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using static Terraria.ModLoader.ModContent;
@@ -140,6 +142,15 @@ namespace Coralite.Content.Items.Misc_Equip
             player.GetCritChance(DamageClass.Generic) += 5;
             //伤害提高8%
             player.GetDamage(DamageClass.Generic) += 0.08f;
+
+            int projType = ProjectileType<BloodmarkTopperProj>();
+            int count = player.ownedProjectileCounts[projType];
+            if (count < 1)
+                Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, Vector2.Zero
+                    , projType, 0, 0, player.whoAmI);
+            else if (count > 1)
+                foreach (var proj in Main.projectile.Where(p => p.active && p.owner == player.whoAmI && p.type == projType))
+                    proj.Kill();
         }
 
         public override bool IsArmorSet(Item head, Item body, Item legs)
@@ -260,6 +271,7 @@ namespace Coralite.Content.Items.Misc_Equip
     {
         public override string Texture => AssetDirectory.Misc_Equip + Name;
 
+        public static ATex BloodTopperSpawn { get; private set; }
         [AutoLoadTexture(Name = "BloodmarkTopperProjShadow")]
         public static ATex ShadowTopper { get; private set; }
         [AutoLoadTexture(Name = "BloodmarkTopperProjPrison")]
@@ -286,6 +298,13 @@ namespace Coralite.Content.Items.Misc_Equip
         private ref float ScaleTimer => ref Projectile.localAI[2];
 
         public Vector2 IdlePos => Owner.MountedCenter + new Vector2(0, -16 * 4);
+
+        /// <summary>
+        /// 血礼帽的数量
+        /// </summary>
+        public int BloodTopperCount {  get; set; }
+
+        public List<BloodTopper> BloodToppers { get; private set; }
 
         private Vector2 Scale;
         private int FrameX;
@@ -318,6 +337,43 @@ namespace Coralite.Content.Items.Misc_Equip
         public override bool? CanDamage() => false;
         public override bool? CanCutTiles() => false;
 
+        /// <summary>
+        /// 堆叠的血礼帽
+        /// </summary>
+        public class BloodTopper
+        {
+            public SecondOrderDynamics_Vec2 posMover;
+
+            public Vector2 Pos;
+            public float Rot;
+
+            public int frame;
+            public int frameCounter;
+
+            public BloodTopper(Projectile projectile,int index)
+            {
+                Pos = projectile.Center + new Vector2(0, 8 + index * 24);
+                posMover = new SecondOrderDynamics_Vec2(0.97f - index * 0.03f, 0.5f, 0, Pos);
+            }
+
+            public void Update(Projectile projectile, int index)
+            {
+                Vector2 targetP = projectile.Center + new Vector2(0, 8 + index * 24);
+                Pos = posMover.Update(1 / 60f, targetP);
+
+            }
+
+            public void Boom(Projectile projectile)
+            {
+
+            }
+
+            public void Draw()
+            {
+
+            }
+        }
+
         #region AI
 
         public override void AI()
@@ -336,20 +392,24 @@ namespace Coralite.Content.Items.Misc_Equip
                 case TopperTypes.Error:
                     break;
                 case TopperTypes.None:
-                    NormalAI();
+                    NormalAI<BloodBite>(65, null);
                     break;
                 case TopperTypes.Blood:
+                    UpdateBloodTopper();
+                    NormalAI<BloodBite>(80, OnBloodAttack);
                     break;
                 case TopperTypes.Shadow:
+                    NormalAI<ShadowBite>(80, OnShadowAttack);
                     break;
                 case TopperTypes.Prison:
+
                     break;
             }
 
             ControlScale();
         }
 
-        private void NormalAI()
+        private void NormalAI<T>(int projDamage, Action onAttack) where T : ModProjectile
         {
             switch (State)
             {
@@ -415,21 +475,28 @@ namespace Coralite.Content.Items.Misc_Equip
                             return;
 
                         AttackFrame();
+                        Projectile.Center = target.Top;
 
-                        if (Projectile.IsOwnedByLocalPlayer() && Timer == 3 * 3)//生成咬合弹幕
+                        if (Projectile.IsOwnedByLocalPlayer() && Timer == 3 * 4)//生成咬合弹幕
                         {
-                            int damage = 80;
+                            int damage = projDamage;
                             if (!Owner.HeldItem.IsAir && Owner.HeldItem.damage > 0 && !Owner.HeldItem.IsTool())
                                 damage = (int)(Owner.GetDamage(Owner.HeldItem.DamageType).ApplyTo(damage));
 
-                            Projectile.NewProjectileFromThis<BloodBite>(Main.rand.NextVector2FromRectangle(target.getRect())
+                            Projectile.NewProjectileFromThis<T>(Main.rand.NextVector2FromRectangle(target.getRect())
                                 , Vector2.Zero, damage, 0);
+
+                            onAttack?.Invoke();
                         }
 
-                        if (Timer > 40)//重设状态
+                        if (Timer > 50)//重设状态
                         {
                             if (FindEnemy())
-                                StartAttack();
+                            {
+                                State = 2;
+                                Timer = 0;
+                                Projectile.frame = 1;
+                            }
                             else
                                 SetToBack();
                         }
@@ -439,6 +506,48 @@ namespace Coralite.Content.Items.Misc_Equip
                     break;
             }
         }
+
+        #region 血腥套装效果
+
+        public void UpdateBloodTopper()
+        {
+            BloodToppers ??= new List<BloodTopper>(8);
+
+            for (int i = 0; i < BloodToppers.Count; i++)
+                BloodToppers[i].Update(Projectile, i);
+        }
+
+        public void OnBloodAttack()
+        {
+            int count = BloodToppers.Count;
+            if (count > 7)//8个帽子再叠加就全部爆开生成血滴
+            {
+                BloodTopperCount = 0;
+                if (Projectile.IsOwnedByLocalPlayer())
+                    foreach (var bt in BloodToppers)
+                    {
+                        bt.Boom(Projectile);
+                    }
+
+                BloodToppers.Clear();
+                return;
+            }
+
+            //叠加礼帽
+
+
+        }
+
+        #endregion
+
+        #region 暗影套装效果
+
+        public void OnShadowAttack()
+        {
+            //生成小影怪
+        }
+
+        #endregion
 
         public void SetTopperType()
         {
@@ -592,7 +701,7 @@ namespace Coralite.Content.Items.Misc_Equip
         public void FlyFrame()
         {
             FrameX = 0;
-            Projectile.UpdateFrameNormally(3, 7);
+            Projectile.UpdateFrameNormally(4, 7);
         }
 
         /// <summary>
@@ -604,7 +713,7 @@ namespace Coralite.Content.Items.Misc_Equip
             if (Projectile.frame == 0)
                 return;
 
-            Projectile.UpdateFrameNormally(3, 7);
+            Projectile.UpdateFrameNormally(4, 7);
         }
 
         #endregion
@@ -654,7 +763,7 @@ namespace Coralite.Content.Items.Misc_Equip
         private Vector2 offset;
 
         private ref float Timer => ref Projectile.localAI[0];
-        private Color color = Color.White;
+        private float alpha = 1;
 
         public override void SetDefaults()
         {
@@ -667,10 +776,16 @@ namespace Coralite.Content.Items.Misc_Equip
 
         public override void AI()
         {
-            if (Timer < 6)//张嘴
-                mouseDistance += 2;
-            else if (Timer < 10)//咬合
-                mouseDistance -= 4;
+            if (Projectile.localAI[1]==0)
+            {
+                Projectile.localAI[1] = 1;
+                Projectile.localAI[2] = Main.rand.NextFloat(-0.2f, 0.2f);
+            }
+
+            if (Timer < 4)//张嘴
+                mouseDistance += 6;
+            else if (Timer < 7)//咬合
+                mouseDistance -= 7.5f;
             else//抖动加消失
             {
                 if (Timer % 2 == 0)
@@ -678,8 +793,8 @@ namespace Coralite.Content.Items.Misc_Equip
 
                 if (Timer > 14)
                 {
-                    color *= 0.9f;
-                    if (color.A < 10)
+                    alpha *= 0.8f;
+                    if (alpha<0.05f)
                         Projectile.Kill();
                 }
             }
@@ -692,21 +807,22 @@ namespace Coralite.Content.Items.Misc_Equip
             Texture2D tex = Projectile.GetTexture();
             SpriteBatch spriteBatch = Main.spriteBatch;
             Vector2 pos = Projectile.Center - Main.screenPosition + offset;
-            Color c = Lighting.GetColor(Projectile.Center.ToTileCoordinates(), color);
-            Vector2 normal = (Projectile.rotation - MathHelper.PiOver2).ToRotationVector2();
+            Color c = lightColor * alpha;
+            float rotation = Projectile.rotation + Projectile.localAI[2];
+            Vector2 normal = (rotation - MathHelper.PiOver2).ToRotationVector2();
             normal *= mouseDistance;
 
             //绘制底层
             var frameBox = tex.Frame(2, 2, 1, 0);
-            spriteBatch.Draw(tex, pos - normal, frameBox, c, Projectile.rotation, frameBox.Size() / 2, Projectile.scale, 0, 0);
+            spriteBatch.Draw(tex, pos + normal, frameBox, c * 0.5f, (float)rotation, frameBox.Size() / 2, Projectile.scale, 0, 0);
             frameBox = tex.Frame(2, 2, 1, 1);
-            spriteBatch.Draw(tex, pos + normal, frameBox, c, Projectile.rotation, frameBox.Size() / 2, Projectile.scale, 0, 0);
+            spriteBatch.Draw(tex, pos - normal, frameBox, c * 0.5f, (float)rotation, frameBox.Size() / 2, Projectile.scale, 0, 0);
 
             //绘制顶层
-            frameBox = tex.Frame(2, 2, 2, 0);
-            spriteBatch.Draw(tex, pos - normal, frameBox, c, Projectile.rotation, frameBox.Size() / 2, Projectile.scale, 0, 0);
-            frameBox = tex.Frame(2, 2, 2, 1);
-            spriteBatch.Draw(tex, pos + normal, frameBox, c, Projectile.rotation, frameBox.Size() / 2, Projectile.scale, 0, 0);
+            frameBox = tex.Frame(2, 2, 0, 0);
+            spriteBatch.Draw(tex, pos + normal, frameBox, c, (float)rotation, frameBox.Size() / 2, Projectile.scale, 0, 0);
+            frameBox = tex.Frame(2, 2, 0, 1);
+            spriteBatch.Draw(tex, pos - normal, frameBox, c, (float)rotation, frameBox.Size() / 2, Projectile.scale, 0, 0);
 
             return false;
         }

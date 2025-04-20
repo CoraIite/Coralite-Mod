@@ -97,7 +97,7 @@ namespace Coralite.Content.WorldGeneration
                 for (int j = -3; j < 0; j++)
                     Main.tile[origin.X + i, origin.Y + j].Clear(TileDataType.Tile);
 
-            GenCrystaClusters(origin, CrystalCaveRadius, CrystalCaveRadius);
+            GenCrystalClusters(origin, CrystalCaveRadius, CrystalCaveRadius);
             Point chest = MagicCrystalCaveChest(origin + new Point(0, 25));
 
             int index = Chest.FindChest(chest.X - 1, chest.Y);//往箱子里多塞一点

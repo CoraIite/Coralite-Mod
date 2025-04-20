@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.WorldGeneration;
 using Coralite.Core;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System.Linq;
 using Terraria;
@@ -38,6 +39,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
         public override void SetStaticDefaults()
         {
             Main.tileFrameImportant[Type] = true;
+            Main.tileLighted[Type] = true;
 
             TileID.Sets.PreventsTileRemovalIfOnTopOfIt[Type] = true;
             TileID.Sets.HasOutlines[Type] = true;
@@ -54,6 +56,13 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             AddMapEntry(new Color(105, 97, 90), CreateMapEntryName());
         }
 
+        public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+        {
+            r = 0.5f;
+            g = 0.3f;
+            b = 0.55f;
+        }
+
         public override bool HasSmartInteract(int i, int j, SmartInteractScanSettings settings) => true;
 
         public override bool RightClick(int i, int j)
@@ -62,14 +71,16 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             {
                 if (CoraliteWorld.PlaceNightSoul && CoraliteWorld.PlaceNightSoul)
                 {
-                    if (!Main.projectile.Any(p=>p.type==ModContent.ProjectileType<PremissionProj>()))
+                    if (!Main.projectile.Any(p => p.active&&p.type == ModContent.ProjectileType<PremissionProj>()))
                     {
                         Projectile.NewProjectile(new EntitySource_TileUpdate(i, j)
-                            , Helpers.Helper.GetMagikeTileCenter_NotTopLeft(i, j), Vector2.Zero, ModContent.ProjectileType<PremissionProj>(), 0, 0,Main.myPlayer);
+                            , Helper.GetMagikeTileCenter_NotTopLeft(i, j), Vector2.Zero, ModContent.ProjectileType<PremissionProj>(), 0, 0, Main.myPlayer);
+
+                        Helper.PlayPitched(CoraliteSoundID.IceMagic_Item28, new Vector2(i, j) * 16);
                     }
                 }
                 else
-                    CombatText.NewText(new Rectangle(i * 16, j * 16, 1, 1), Coralite.CrystallinePurple * 1.5f, NeedSouls.Value, true);
+                    CombatText.NewText(new Rectangle(i * 16, j * 16, 1, 1), Coralite.CrystallinePurple, NeedSouls.Value, true);
             }
 
             return true;

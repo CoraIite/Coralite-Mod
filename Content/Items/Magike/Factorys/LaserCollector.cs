@@ -66,6 +66,7 @@ namespace Coralite.Content.Items.Magike.Factorys
             [
                 MALevel.None,
                 MALevel.MagicCrystal,
+                MALevel.CrystallineMagike,
             ];
         }
 
@@ -106,7 +107,8 @@ namespace Coralite.Content.Items.Magike.Factorys
         {
             MagikeMaxBase = incomeLevel switch
             {
-                MALevel.MagicCrystal => 200,
+                MALevel.MagicCrystal => 35 * 10,
+                MALevel.CrystallineMagike => 450 * 10,
                 _ => 0,
             };
             LimitMagikeAmount();
@@ -346,8 +348,9 @@ namespace Coralite.Content.Items.Magike.Factorys
         {
             WorkTimeBase = incomeLevel switch
             {
-                MALevel.MagicCrystal => 8,
-                _ => 10_0000_0000 / 60,
+                MALevel.MagicCrystal => 5,
+                MALevel.CrystallineMagike => 4,
+                _ => 0,
             };
 
             WorkTimeBase *= 60;

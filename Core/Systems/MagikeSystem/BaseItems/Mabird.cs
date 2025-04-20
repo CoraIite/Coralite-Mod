@@ -480,13 +480,13 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
             if (WhiteListItem != null && !WhiteListItem.IsAir)
             {
                 b1[2] = true;
-                ItemIO.Save(WhiteListItem);
+                tag.Add("WhiteListItem", WhiteListItem);
             }
 
             if (catchItem != null && !catchItem.IsAir)
             {
                 b1[3] = true;
-                ItemIO.Save(catchItem);
+                tag.Add("CatchItem", catchItem);
             }
 
             b1[7] = Active;
@@ -508,10 +508,10 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
                     GetItemPos = MabirdTarget.Load(tag, nameof(GetItemPos));
                 if (b1[1])
                     ReleaseItemPos = MabirdTarget.Load(tag, nameof(ReleaseItemPos));
-                if (b1[2])
-                    WhiteListItem = ItemIO.Load(tag);
-                if (b1[3])
-                    catchItem = ItemIO.Load(tag);
+                if (b1[2] && tag.TryGet("WhiteListItem", out Item i1))
+                    WhiteListItem = i1;
+                if (b1[3] && tag.TryGet("CatchItem", out Item i2))
+                    catchItem = i2;
 
                 Active = b1[7];
             }

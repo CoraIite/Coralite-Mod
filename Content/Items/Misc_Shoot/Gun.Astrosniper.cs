@@ -1,3 +1,4 @@
+using Coralite.Content.DamageClasses;
 using Coralite.Core;
 using System;
 using Terraria;
@@ -22,7 +23,7 @@ namespace Coralite.Content.Items.Misc_Shoot
             Item.shootSpeed = 25f;
 
             Item.useStyle = ItemUseStyleID.Rapier;
-            Item.DamageType = DamageClass.Ranged;
+            Item.DamageType = RangedNoAttackSpeed.Instance;
             Item.value = Item.sellPrice(0, 0, 2, 0);
             Item.rare = ItemRarityID.Orange;
             Item.shoot = ProjectileID.Starfury;

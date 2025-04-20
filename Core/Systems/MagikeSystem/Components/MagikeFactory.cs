@@ -42,7 +42,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public override void Update()
         {
-            if (!IsWorking || DuringWork())
+            if (WorkTimeBase < 1 || !IsWorking || DuringWork())
                 return;
 
             IsWorking = false;

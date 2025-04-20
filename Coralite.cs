@@ -48,8 +48,8 @@ namespace Coralite
         /// <summary> 冰晶青 2bffc6 </summary>
         public static Color IcicleCyan => new(43, 255, 198);
         public static Color ShadowPurple => new(240, 168, 255);
-        /// <summary> 蕴魔紫 d787ff </summary>
-        public static Color CrystallinePurple => new(215, 135, 255);
+        /// <summary> 蕴魔紫 dc96ff </summary>
+        public static Color CrystallinePurple => new(220, 150, 255);
         public static Color HallowYellow => new(253, 236, 144);
         public static Color ThunderveinYellow => new(255, 202, 101);
         public static Color SoulCyan => new(122, 174, 188);

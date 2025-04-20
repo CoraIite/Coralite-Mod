@@ -5863,3 +5863,8 @@ SkarnCutter: {
 	// DisplayName: Skarn Cutter
 	// Tooltip: ""
 }
+
+CrystallineMagikeClusters: {
+	// DisplayName: Crystalline Magike Clusters
+	// Tooltip: ""
+}

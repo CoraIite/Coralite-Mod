@@ -208,7 +208,7 @@ namespace Coralite.Content.WorldGeneration
             //    WorldGen.PlaceTile(circleCenter.X - 1 + i, circleCenter.Y + 2, crystalBrick);
             #endregion
 
-            GenCrystaClusters(origin, width, height);
+            GenCrystalClusters(origin, width, height);
             MagicCrystalCaveChest(origin);
 
             #region 废弃内容
@@ -346,7 +346,7 @@ namespace Coralite.Content.WorldGeneration
         /// <param name="origin"></param>
         /// <param name="width"></param>
         /// <param name="height"></param>
-        private static void GenCrystaClusters(Point origin, int width, int height)
+        private static void GenCrystalClusters(Point origin, int width, int height)
         {
             ushort basalt = (ushort)ModContent.TileType<BasaltTile>();
 
@@ -371,7 +371,7 @@ namespace Coralite.Content.WorldGeneration
                             for (int n = -1; n > -5; n--)
                                 Main.tile[x1 + m, y1 + n].ClearTile();
 
-                        WorldGen.PlaceObject(x1, y1 - 1, clustersType);
+                        WorldGen.PlaceObject(x1+1, y1 - 1, clustersType);
                     }
 
                     int x = clustersX + WorldGen.genRand.Next(0, width * 5 / 6);
@@ -406,7 +406,7 @@ namespace Coralite.Content.WorldGeneration
                     if (!canGenerate)
                         continue;
 
-                    WorldGen.PlaceObject(x, y - 1, clustersType);
+                    WorldGen.PlaceObject(x+1, y - 1, clustersType);
                     break;
                 }
         }
@@ -571,7 +571,7 @@ namespace Coralite.Content.WorldGeneration
         /// <param name="basalt"></param>
         /// <param name="crystalBlock"></param>
         /// <param name="crystalBrick"></param>
-        private Point MagicCrystalCaveChest(Point origin)
+        private static Point MagicCrystalCaveChest(Point origin)
         {
             int whichOne = WorldGen.genRand.Next(5);
 
@@ -618,7 +618,7 @@ namespace Coralite.Content.WorldGeneration
             return chestPos;
         }
 
-        public void LoadCrystalCave(TagCompound tag)
+        public static void LoadCrystalCave(TagCompound tag)
         {
             MagicCrystalCaveCenters.Clear();
 
@@ -630,7 +630,7 @@ namespace Coralite.Content.WorldGeneration
             }
         }
 
-        public void SaveCrystalCave(TagCompound tag)
+        public static void SaveCrystalCave(TagCompound tag)
         {
             int i = 0;
             foreach (var pos in MagicCrystalCaveCenters)
