@@ -165,4 +165,14 @@ KnowledgeSystem: {
 			居住在云端的电之双足翼龙
 			'''
 	}
+
+	MagikeInterstitial1Knowledge: {
+		Name: 魔能残卷 间章 蕴魔空岛
+		LockTip: 右键矽卡祭坛后解锁
+		Description:
+			'''
+			记载着有关矽卡祭坛的部分信息
+			启动祭坛并解锁蕴魔空岛的封印吧
+			'''
+	}
 }

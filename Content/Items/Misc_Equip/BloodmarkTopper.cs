@@ -97,40 +97,26 @@ namespace Coralite.Content.Items.Misc_Equip
         public void AddMagikeCraftRecipe()
         {
             int magikeCost = MagikeHelper.CalculateMagikeCost(MALevel.CrystallineMagike, 12, 60 * 4);
-            MagikeRecipe.CreateCraftRecipe(ItemID.CrimsonHelmet, ItemType<BloodmarkTopper>(), magikeCost)
-                .AddIngredient<BloodyOrb>()
-                .AddIngredient(ItemID.TopHat)
-                .AddIngredient<DeorcInABottle>()
-                .AddIngredient<MutatusInABottle>()
-                .AddIngredient(ItemID.SoulofNight, 5)
-                .AddIngredient(ItemID.BloodMoonStarter)
-                .Register();
 
-            MagikeRecipe.CreateCraftRecipe(ItemID.ShadowHelmet, ItemType<BloodmarkTopper>(), magikeCost)
-                .AddIngredient<BloodyOrb>()
-                .AddIngredient(ItemID.TopHat)
-                .AddIngredient<DeorcInABottle>()
-                .AddIngredient<MutatusInABottle>()
-                .AddIngredient(ItemID.SoulofNight, 5)
-                .AddIngredient(ItemID.BloodMoonStarter)
-                .Register();
-            MagikeRecipe.CreateCraftRecipe(ItemID.AncientShadowHelmet, ItemType<BloodmarkTopper>(), magikeCost)
-                .AddIngredient<BloodyOrb>()
-                .AddIngredient(ItemID.TopHat)
-                .AddIngredient<DeorcInABottle>()
-                .AddIngredient<MutatusInABottle>()
-                .AddIngredient(ItemID.SoulofNight, 5)
-                .AddIngredient(ItemID.BloodMoonStarter)
-                .Register();
+            var recipes = MagikeRecipe.CreateCraftRecipes(
+                [
+                        ItemID.CrimsonHelmet,
+                        ItemID.ShadowHelmet,
+                        ItemID.AncientShadowHelmet,
+                        ItemID.ObsidianHelm
+                     ], ItemType<BloodmarkTopper>(), magikeCost);
 
-            MagikeRecipe.CreateCraftRecipe(ItemID.ObsidianHelm, ItemType<BloodmarkTopper>(), magikeCost)
-                .AddIngredient<BloodyOrb>()
-                .AddIngredient(ItemID.TopHat)
-                .AddIngredient<DeorcInABottle>()
-                .AddIngredient<MutatusInABottle>()
-                .AddIngredient(ItemID.SoulofNight, 5)
-                .AddIngredient(ItemID.BloodMoonStarter)
-                .Register();
+            foreach (var recipe in recipes)
+            {
+                recipe
+                    .AddIngredient<BloodyOrb>(3)
+                    .AddIngredient(ItemID.TopHat)
+                    .AddIngredient<DeorcInABottle>()
+                    .AddIngredient<MutatusInABottle>()
+                    .AddIngredient(ItemID.SoulofNight, 5)
+                    .AddIngredient(ItemID.BloodMoonStarter)
+                    .Register();
+            }
         }
 
         public override void UpdateEquip(Player player)
@@ -310,6 +296,8 @@ namespace Coralite.Content.Items.Misc_Equip
         private int FrameX;
         private bool init = false;
 
+        private SecondOrderDynamics_Float RotController = new SecondOrderDynamics_Float(0.88f, 0.25f, 0, 0);
+
         private enum TopperTypes
         {
             Error = -1,
@@ -323,6 +311,8 @@ namespace Coralite.Content.Items.Misc_Equip
         {
             None = -1,
             Spawn,
+            Attack,
+            Back,
         }
 
         public override void SetDefaults()
@@ -393,16 +383,20 @@ namespace Coralite.Content.Items.Misc_Equip
                     break;
                 case TopperTypes.None:
                     NormalAI<BloodBite>(65, null);
+                    Lighting.AddLight(Projectile.Center, Coralite.CrimsonRed.ToVector3() / 2);
                     break;
                 case TopperTypes.Blood:
                     UpdateBloodTopper();
                     NormalAI<BloodBite>(80, OnBloodAttack);
+                    Lighting.AddLight(Projectile.Center, Coralite.CrimsonRed.ToVector3() / 2);
                     break;
                 case TopperTypes.Shadow:
                     NormalAI<ShadowBite>(80, OnShadowAttack);
+                    Lighting.AddLight(Projectile.Center, Coralite.CorruptionPurple.ToVector3() / 2);
                     break;
                 case TopperTypes.Prison:
-
+                    PrisonAI();
+                    Lighting.AddLight(Projectile.Center, Color.Silver.ToVector3() / 3);
                     break;
             }
 
@@ -417,10 +411,15 @@ namespace Coralite.Content.Items.Misc_Equip
                 case -1://返回玩家
                     BackToOwner();
                     FlyFrame();
+
+                    if (Math.Abs(Owner.Center.X - Projectile.Center.X) > 18)
+                        Projectile.spriteDirection = Math.Sign(Owner.Center.X - Projectile.Center.X);
+
+                    Projectile.rotation = RotController.Update(1 / 60f, 0);
                     break;
                 case 0://寻敌
                     {
-                        Projectile.Center = IdlePos;
+                        Projectile.Center = Vector2.SmoothStep(Projectile.Center, IdlePos + new Vector2(Owner.velocity.X * 6, -Owner.velocity.Y/2), 0.4f);
 
                         if (Projectile.IsOwnedByLocalPlayer() && Timer > 20)
                         {
@@ -432,6 +431,7 @@ namespace Coralite.Content.Items.Misc_Equip
                         Timer++;
                         FlyFrame();
                         IdleDirection();
+                        Projectile.rotation = RotController.Update(1 / 60f, Owner.velocity.X / 15);
                     }
                     break;
                 case 1://冲刺到敌怪头上
@@ -441,20 +441,34 @@ namespace Coralite.Content.Items.Misc_Equip
 
                         if (Timer < 20)//准备动作
                         {
-                            Projectile.Center = IdlePos;
+                            Projectile.Center = Vector2.SmoothStep(Projectile.Center, IdlePos + new Vector2(Owner.velocity.X * 6, -Owner.velocity.Y / 2), 0.4f);
 
                             Projectile.rotation =
-                                Projectile.rotation.AngleLerp((target.Center - Projectile.Center).ToRotation(), 0.16f);
+                                Projectile.rotation.AngleLerp(
+                                    (target.Center - Projectile.Center).ToRotation() - MathHelper.PiOver2, 0.16f);
+
+                            Timer++;
                         }
-                        else if (Timer < 28)//冲刺到目标头顶上
+                        else if (Timer < 21)//冲刺到目标头顶上
                         {
-                            Projectile.Center = Vector2.Lerp(Projectile.Center, target.Top, 0.5f);
-                            Projectile.rotation = (target.Center - Projectile.Center).ToRotation();
+                            ScaleType = ScaleTypes.Attack;
+                            Projectile.velocity = (target.Top - Projectile.Center).SafeNormalize(Vector2.Zero) * 22;
+                            Projectile.rotation =
+                                Projectile.rotation.AngleLerp(
+                                    (target.Center - Projectile.Center).ToRotation() - MathHelper.PiOver2, 0.16f);
+
+                            if (Vector2.Distance(target.Top, Projectile.Center) < 24)
+                            {
+                                Timer++;
+                                Projectile.velocity = Vector2.Zero;
+                            }
                         }
-                        else if (Timer < 28 + 12)//摆正位置
+                        else if (Timer < 21 + 12)//摆正位置
                         {
+                            ScaleType = ScaleTypes.Back;
                             Projectile.Center = target.Top;
-                            Projectile.rotation = Projectile.rotation.AngleLerp(0, 0.2f);
+                            Projectile.rotation = Projectile.rotation.AngleLerp(0,0.2f);
+                            Timer++;
                         }
                         else
                         {
@@ -464,7 +478,6 @@ namespace Coralite.Content.Items.Misc_Equip
                             return;
                         }
 
-                        Timer++;
                         FaceToEnemy(target);
                         FlyFrame();
                     }
@@ -475,7 +488,9 @@ namespace Coralite.Content.Items.Misc_Equip
                             return;
 
                         AttackFrame();
+                        Projectile.spriteDirection = target.direction;
                         Projectile.Center = target.Top;
+                        Projectile.rotation = RotController.Update(1 / 60f, Math.Clamp(-target.velocity.X / 20, -0.6f, 0.6f));
 
                         if (Projectile.IsOwnedByLocalPlayer() && Timer == 3 * 4)//生成咬合弹幕
                         {
@@ -496,6 +511,75 @@ namespace Coralite.Content.Items.Misc_Equip
                                 State = 2;
                                 Timer = 0;
                                 Projectile.frame = 1;
+                            }
+                            else
+                                SetToBack();
+                        }
+
+                        Timer++;
+                    }
+                    break;
+            }
+        }
+
+        private void PrisonAI()
+        {
+            switch (State)
+            {
+                default:
+                case -1://返回玩家
+                    BackToOwner();
+                    FlyFrame();
+
+                    if (Math.Abs(Owner.Center.X - Projectile.Center.X) > 18)
+                        Projectile.spriteDirection = Math.Sign(Owner.Center.X - Projectile.Center.X);
+
+                    Projectile.rotation = RotController.Update(1 / 60f, 0);
+                    break;
+                case 0://寻敌
+                    {
+                        Projectile.Center = Vector2.SmoothStep(Projectile.Center, IdlePos + new Vector2(Owner.velocity.X * 6, -Owner.velocity.Y / 2), 0.4f);
+
+                        if (Projectile.IsOwnedByLocalPlayer() && Timer > 10)
+                        {
+                            Timer = 10;
+                            if (!Owner.ItemTimeIsZero && ProjectileID.Sets.IsAWhip[Owner.HeldItem.shoot])
+                                StartAttack();
+                        }
+
+                        Timer++;
+                        FlyFrame();
+                        IdleDirection();
+                        Projectile.rotation = RotController.Update(1 / 60f, Owner.velocity.X / 15);
+                    }
+                    break;
+                case 1://寻找目标
+                    {
+                        FindEnemy();
+                        if (TargetIndex.GetNPCOwner(out NPC target))
+                        {
+                            FaceToEnemy(target);
+                        }
+
+                        State = 2;
+                        Projectile.frame = 1;
+                    }
+                    break;
+                case 2://向下咬攻击敌怪
+                    {
+                        if (TargetIndex.GetNPCOwner(out NPC target))
+                        {
+
+                        }
+
+                        AttackFrame();
+
+                        if (Timer > 40)//重设状态
+                        {
+                            if (!Owner.ItemTimeIsZero && ProjectileID.Sets.IsAWhip[Owner.HeldItem.shoot])
+                            {
+                                State = 1;
+                                Timer = 0;
                             }
                             else
                                 SetToBack();
@@ -576,7 +660,8 @@ namespace Coralite.Content.Items.Misc_Equip
 
         public void SetToBack()
         {
-            State = -1;
+            if (State != -1 && State != 0)
+                State = -1;
             TargetIndex = -1;
 
             Timer = 0;
@@ -587,16 +672,14 @@ namespace Coralite.Content.Items.Misc_Equip
             Vector2 pos = IdlePos;
             if (Vector2.Distance(pos, Projectile.Center) > 3000 || Timer > 60 * 12)
             {
-                Projectile.Center = pos;
                 State = 0;
                 SpawnScale();
                 return;
             }
 
             Projectile.Center = Vector2.SmoothStep(Projectile.Center, pos, 0.25f);
-            if (Vector2.Distance(pos, Projectile.Center) < 16)
+            if (Vector2.Distance(pos, Projectile.Center) < 48)
             {
-                Projectile.Center = pos;
                 State = 0;
             }
 
@@ -621,7 +704,10 @@ namespace Coralite.Content.Items.Misc_Equip
                     && Vector2.Distance(target.Center, Owner.Center) < 1500)
                     return true;
                 else
+                {
+                    TargetIndex = -1;
                     return false;
+                }
             }
 
             NPC n2 = Helper.FindClosestEnemy(Owner.Center, 1000, n => n.CanBeChasedBy());
@@ -668,21 +754,35 @@ namespace Coralite.Content.Items.Misc_Equip
                     break;
                 case ScaleTypes.Spawn:
                     {
-                        if (ScaleTimer < 6)
-                            Scale.Y = Helper.Lerp(1f, 1.75f, ScaleTimer / 6);
+                        if (ScaleTimer < 4)
+                            Scale.Y = Helper.Lerp(1f, 2.75f, ScaleTimer / 4);
                         else
-                            Scale.Y = Helper.Lerp(1f, 1.75f, (ScaleTimer - 6) / 8);
+                            Scale.Y = Helper.Lerp(2.75f, 1f, (ScaleTimer - 4) / 4);
 
-                        Scale.X = Helper.Lerp(0.2f, 1, ScaleTimer / 14);
+                        Scale.X = Helper.Lerp(0.2f, 1, ScaleTimer / 8);
 
                         ScaleTimer++;
 
-                        if (ScaleTimer > 14)
+                        if (ScaleTimer > 8)
                         {
                             ScaleTimer = 0;
                             ScaleType = ScaleTypes.None;
                         }
                     }
+                    break;
+                case ScaleTypes.Attack:
+                    Scale = Vector2.Lerp(Scale, new Vector2(0.75f, 1.3f), 0.2f);
+                    break;
+                case ScaleTypes.Back:
+                    Scale = Vector2.Lerp(Scale, Vector2.One, 0.2f);
+                    ScaleTimer++;
+
+                    if (ScaleTimer > 20)
+                    {
+                        ScaleTimer = 0;
+                        ScaleType = ScaleTypes.None;
+                    }
+
                     break;
             }
         }
@@ -701,7 +801,7 @@ namespace Coralite.Content.Items.Misc_Equip
         public void FlyFrame()
         {
             FrameX = 0;
-            Projectile.UpdateFrameNormally(4, 7);
+            Projectile.UpdateFrameNormally(5, 7);
         }
 
         /// <summary>
@@ -772,6 +872,7 @@ namespace Coralite.Content.Items.Misc_Equip
             Projectile.width = Projectile.height = 48;
             Projectile.penetrate = -1;
             Projectile.friendly = true;
+            Projectile.tileCollide = false;
         }
 
         public override void AI()
@@ -782,24 +883,35 @@ namespace Coralite.Content.Items.Misc_Equip
                 Projectile.localAI[2] = Main.rand.NextFloat(-0.2f, 0.2f);
             }
 
-            if (Timer < 4)//张嘴
-                mouseDistance += 6;
-            else if (Timer < 7)//咬合
-                mouseDistance -= 7.5f;
+            if (Timer < 5)//张嘴
+                mouseDistance += 6.5f;
+            else if (Timer < 9)//咬合
+                mouseDistance -= 8f;
+            else if (Timer == 9)
+                SpawnDustOnBite();
             else//抖动加消失
             {
                 if (Timer % 2 == 0)
                     offset = Helper.NextVec2Dir(2, 4);
 
-                if (Timer > 14)
+                if (Timer > 16)
                 {
                     alpha *= 0.8f;
-                    if (alpha<0.05f)
+                    if (alpha < 0.05f)
                         Projectile.Kill();
                 }
             }
 
             Timer++;
+        }
+
+        public virtual void SpawnDustOnBite()
+        {
+            for (int i = 0; i < 6; i++)
+            {
+                Helper.SpawnDirDustJet(Projectile.Center + Main.rand.NextVector2Circular(32, 8)
+                    , () => Helper.NextVec2Dir(), 1, 7, i => 0.5f + i * 0.35f, DustID.Blood, Scale: Main.rand.NextFloat(1f, 2f), noGravity: false);
+            }
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -814,9 +926,9 @@ namespace Coralite.Content.Items.Misc_Equip
 
             //绘制底层
             var frameBox = tex.Frame(2, 2, 1, 0);
-            spriteBatch.Draw(tex, pos + normal, frameBox, c * 0.5f, (float)rotation, frameBox.Size() / 2, Projectile.scale, 0, 0);
+            spriteBatch.Draw(tex, pos + normal, frameBox, c * 0.4f, (float)rotation, frameBox.Size() / 2, Projectile.scale, 0, 0);
             frameBox = tex.Frame(2, 2, 1, 1);
-            spriteBatch.Draw(tex, pos - normal, frameBox, c * 0.5f, (float)rotation, frameBox.Size() / 2, Projectile.scale, 0, 0);
+            spriteBatch.Draw(tex, pos - normal, frameBox, c * 0.4f, (float)rotation, frameBox.Size() / 2, Projectile.scale, 0, 0);
 
             //绘制顶层
             frameBox = tex.Frame(2, 2, 0, 0);
@@ -829,6 +941,24 @@ namespace Coralite.Content.Items.Misc_Equip
     }
 
     public class ShadowBite : BloodBite
+    {
+        public override void SpawnDustOnBite()
+        {
+            for (int i = 0; i < 24; i++)
+            {
+                Dust d = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(32, 8)
+                    , DustID.Shadowflame, Helper.NextVec2Dir(2, 8), Scale: Main.rand.NextFloat(1, 2f));
+                d.noGravity = true;
+            }
+        }
+    }
+
+    public class BloodTearProj
+    {
+
+    }
+
+    public class BloodPool
     {
 
     }

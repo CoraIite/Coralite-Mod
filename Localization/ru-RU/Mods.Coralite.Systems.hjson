@@ -145,4 +145,10 @@ KnowledgeSystem: {
 		// LockTip: Mods.Coralite.Systems.KnowledgeSystem.Thunder1Knowldege.LockTip
 		// Description: Mods.Coralite.Systems.KnowledgeSystem.Thunder1Knowldege.Description
 	}
+
+	MagikeInterstitial1Knowledge: {
+		// Name: Mods.Coralite.Systems.KnowledgeSystem.MagikeInterstitial1Knowledge.Name
+		// LockTip: Mods.Coralite.Systems.KnowledgeSystem.MagikeInterstitial1Knowledge.LockTip
+		// Description: Mods.Coralite.Systems.KnowledgeSystem.MagikeInterstitial1Knowledge.Description
+	}
 }

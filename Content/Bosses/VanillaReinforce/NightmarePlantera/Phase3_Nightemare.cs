@@ -1522,8 +1522,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 3 => P3_RandomBite2(),
                 4 => Main.rand.Next(0, 2) switch
                 {
-                    0 => (int)AIStates.superHookSlash,
-                    _ => (int)AIStates.vineSpurt,
+                    _ => (int)AIStates.superHookSlash,
+                     //=> (int)AIStates.vineSpurt,
                 },
                 5 => P3_RandomBite(),
                 6 => (int)AIStates.P3_SpikesAndSparkles,

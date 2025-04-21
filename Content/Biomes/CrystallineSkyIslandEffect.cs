@@ -1,5 +1,7 @@
-﻿using Coralite.Content.WorldGeneration;
+﻿using Coralite.Content.CoraliteNotes.MagikeInterstitial1;
+using Coralite.Content.WorldGeneration;
 using Coralite.Core;
+using Coralite.Core.Systems.KeySystem;
 using Coralite.Core.Systems.MagikeSystem;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -126,6 +128,7 @@ namespace Coralite.Content.Biomes
                     Main.NewText(MagikeSystem.RightClickToGetPermission.Value, Coralite.CrystallinePurple);
 
                     //TODO：获得蕴魔空岛解锁的知识
+                    KnowledgeSystem.CheckForUnlock<MagikeInterstitial1Knowledge>(Owner.Center, Coralite.CrystallinePurple);
                 }
 
                 return;
@@ -139,7 +142,10 @@ namespace Coralite.Content.Biomes
             //Main.NewText(Timer);
             if (Timer > MaxTime && Teleport == 0)//传送
             {
-                Owner.Teleport(CoraliteWorld.AltarPos.ToWorldCoordinates());
+                if (CoraliteWorld.AltarPos==default)
+                    Owner.Teleport(new Point(Main.spawnTileX,Main.spawnTileY).ToWorldCoordinates());
+                else
+                    Owner.Teleport(CoraliteWorld.AltarPos.ToWorldCoordinates());
                 Teleport = 1;
             }
 

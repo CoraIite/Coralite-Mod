@@ -1,5 +1,7 @@
-﻿using Coralite.Content.WorldGeneration;
+﻿using Coralite.Content.CoraliteNotes.MagikeInterstitial1;
+using Coralite.Content.WorldGeneration;
 using Coralite.Core;
+using Coralite.Core.Systems.KeySystem;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
@@ -60,10 +62,11 @@ namespace Coralite.Content.Tiles.MagikeSeries2
         {
             if (!CoraliteWorld.PlaceLightSoul)
             {
+                KnowledgeSystem.CheckForUnlock<MagikeInterstitial1Knowledge>(new Vector2(i, j ) * 16, Coralite.CrystallinePurple);
                 if (Main.LocalPlayer.ConsumeItem(ItemID.SoulofLight, includeVoidBag: true))
                     CoraliteWorld.PlaceLightSoul = true;
                 else
-                    CombatText.NewText(new Rectangle(i * 16, j * 16, 1, 1), Coralite.CrystallinePurple, NeedSouls.Value);
+                    Main.NewText(NeedSouls.Value, Coralite.CrystallinePurple);
             }
 
             return true;
@@ -156,10 +159,12 @@ namespace Coralite.Content.Tiles.MagikeSeries2
         {
             if (!CoraliteWorld.PlaceNightSoul)
             {
+                KnowledgeSystem.CheckForUnlock<MagikeInterstitial1Knowledge>(new Vector2(i, j) * 16, Coralite.CrystallinePurple);
+
                 if (Main.LocalPlayer.ConsumeItem(ItemID.SoulofNight, includeVoidBag: true))
                     CoraliteWorld.PlaceNightSoul = true;
                 else
-                    CombatText.NewText(new Rectangle(i * 16, j * 16, 1, 1), Coralite.CrystallinePurple, NeedSouls.Value);
+                    Main.NewText(NeedSouls.Value, Coralite.CrystallinePurple);
             }
 
             return true;

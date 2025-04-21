@@ -14,8 +14,7 @@ namespace Coralite.Content.Items.MagikeSeries2
         public override void AddRecipes()
         {
             CreateRecipe(2)
-                .AddIngredient<LeafChalcedony>()
-                .AddTile(TileID.WorkBenches)
+                .AddIngredient<SkarnBrick>()
                 .Register();
         }
     }

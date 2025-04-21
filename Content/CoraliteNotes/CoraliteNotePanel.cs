@@ -20,6 +20,7 @@ namespace Coralite.Content.CoraliteNotes
                     new Readfragment.GroupReadfragment(),
                     new RedJade.GroupRedJade(),
                     new MagikeChapter1.GroupMagikeChapter1(),
+                    new MagikeInterstitial1.GroupMagikeInterstitial1(),
                     new IceDragonChapter1.GroupIceDragonChapter1(),
                     new SlimeChapter1.GroupSlimeChapter1(),
                     new ThunderChapter1.GroupThunderChapter1(),

@@ -362,34 +362,34 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// </summary>
         /// <param name="linerSender"></param>
         /// <returns></returns>
-        private static List<Item> FillOtherItemList(MagikeLinerSender linerSender)
-        {
-            List<Item> otherItems = [];
+        //private static List<Item> FillOtherItemList(MagikeLinerSender linerSender)
+        //{
+        //    List<Item> otherItems = [];
 
-            foreach (var pos in linerSender.Receivers)
-            {
-                if (!MagikeHelper.TryGetEntityWithTopLeft(pos, out MagikeTP entity))
-                    continue;
+        //    foreach (var pos in linerSender.Receivers)
+        //    {
+        //        if (!MagikeHelper.TryGetEntityWithTopLeft(pos, out MagikeTP entity))
+        //            continue;
 
-                Item[] tempItems = null;
+        //        Item[] tempItems = null;
 
-                if (entity.TryGetComponent(MagikeComponentID.ItemContainer, out ItemContainer container2))
-                    tempItems = container2.Items;
+        //        if (entity.TryGetComponent(MagikeComponentID.ItemContainer, out ItemContainer container2))
+        //            tempItems = container2.Items;
 
-                if (entity.TryGetComponent(MagikeComponentID.ItemGetOnlyContainer, out GetOnlyItemContainer container3))
-                    tempItems = container3.Items;
+        //        if (entity.TryGetComponent(MagikeComponentID.ItemGetOnlyContainer, out GetOnlyItemContainer container3))
+        //            tempItems = container3.Items;
 
-                if (tempItems == null)
-                    continue;
+        //        if (tempItems == null)
+        //            continue;
 
-                //添加物品
-                foreach (var tempitem in tempItems)
-                    if (!tempitem.IsAir)
-                        otherItems.Add(tempitem);
-            }
+        //        //添加物品
+        //        foreach (var tempitem in tempItems)
+        //            if (!tempitem.IsAir)
+        //                otherItems.Add(tempitem);
+        //    }
 
-            return otherItems;
-        }
+        //    return otherItems;
+        //}
 
         /// <summary>
         /// STOP！

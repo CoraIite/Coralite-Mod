@@ -256,3 +256,8 @@ ThunderveinDragonPage1: {
 	Title: Mods.Coralite.Knowledges.ThunderveinDragonPage1.Title
 	LightningRodsDescription: Mods.Coralite.Knowledges.ThunderveinDragonPage1.LightningRodsDescription
 }
+
+MagikeInterstitial1Page: {
+	Title: Mods.Coralite.Knowledges.MagikeInterstitial1Page.Title
+	Description: Mods.Coralite.Knowledges.MagikeInterstitial1Page.Description
+}

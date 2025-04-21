@@ -32,7 +32,7 @@ namespace Coralite.Core.Loaders
             foreach (var property in properties)
             {
                 if (property.PropertyType != typeof(ATex))
-                    return;
+                    continue;
 
                 //获取贴图路径与贴图名，然后赋值
                 string p = texPath;

@@ -1,5 +1,7 @@
-﻿using Coralite.Content.WorldGeneration;
+﻿using Coralite.Content.CoraliteNotes.MagikeInterstitial1;
+using Coralite.Content.WorldGeneration;
 using Coralite.Core;
+using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System.Linq;
@@ -69,9 +71,11 @@ namespace Coralite.Content.Tiles.MagikeSeries2
         {
             if (!CoraliteWorld.HasPermission)
             {
+                KnowledgeSystem.CheckForUnlock<MagikeInterstitial1Knowledge>(new Vector2(i, j ) * 16, Coralite.CrystallinePurple);
+
                 if (CoraliteWorld.PlaceNightSoul && CoraliteWorld.PlaceNightSoul)
                 {
-                    if (!Main.projectile.Any(p => p.active&&p.type == ModContent.ProjectileType<PremissionProj>()))
+                    if (!Main.projectile.Any(p => p.active && p.type == ModContent.ProjectileType<PremissionProj>()))
                     {
                         Projectile.NewProjectile(new EntitySource_TileUpdate(i, j)
                             , Helper.GetMagikeTileCenter_NotTopLeft(i, j), Vector2.Zero, ModContent.ProjectileType<PremissionProj>(), 0, 0, Main.myPlayer);
@@ -80,7 +84,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
                     }
                 }
                 else
-                    CombatText.NewText(new Rectangle(i * 16, j * 16, 1, 1), Coralite.CrystallinePurple, NeedSouls.Value, true);
+                    Main.NewText(NeedSouls.Value, Coralite.CrystallinePurple);
             }
 
             return true;
