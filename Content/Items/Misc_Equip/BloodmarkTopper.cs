@@ -333,6 +333,7 @@ namespace Coralite.Content.Items.Misc_Equip
         public class BloodTopper
         {
             public SecondOrderDynamics_Vec2 posMover;
+            public SecondOrderDynamics_Float rotMover;
 
             public Vector2 Pos;
             public float Rot;
@@ -340,17 +341,28 @@ namespace Coralite.Content.Items.Misc_Equip
             public int frame;
             public int frameCounter;
 
-            public BloodTopper(Projectile projectile,int index)
+            public BloodTopper(Projectile projectile, int index)
             {
-                Pos = projectile.Center + new Vector2(0, 8 + index * 24);
-                posMover = new SecondOrderDynamics_Vec2(0.97f - index * 0.03f, 0.5f, 0, Pos);
+                Pos = projectile.Top;
+                float f = 0.75f + Coralite.Instance.X3Smoother.Smoother(1 - index / 6f) * 10;
+                //Main.NewText(f);
+                posMover = new SecondOrderDynamics_Vec2(f, 0.9f - index * 0.05f, 0, Pos);
+                Rot = Main.rand.NextFromList(-0.5f, 0.5f);
+                rotMover = new SecondOrderDynamics_Float(0.88f - index * 0.05f, 0.5f - index * 0.05f, 0.5f, Rot);
             }
 
             public void Update(Projectile projectile, int index)
             {
-                Vector2 targetP = projectile.Center + new Vector2(0, 8 + index * 24);
+                Vector2 targetP = projectile.Top + new Vector2(0, -8 - index * 20);
                 Pos = posMover.Update(1 / 60f, targetP);
+                Rot = rotMover.Update(1 / 60f, projectile.rotation - Math.Clamp((projectile.Center.X - Pos.X) / 40, -0.5f, 0.5f));
 
+                if (++frameCounter > 4)
+                {
+                    frameCounter = 0;
+                    if (++frame > 5)
+                        frame = 5;
+                }
             }
 
             public void Boom(Projectile projectile)
@@ -358,9 +370,13 @@ namespace Coralite.Content.Items.Misc_Equip
 
             }
 
-            public void Draw()
+            public void Draw(SpriteEffects effect)
             {
+                Texture2D tex = BloodTopperSpawn.Value;
+                Color drawColor= Lighting.GetColor(Pos.ToTileCoordinates());
+                var frameBox = tex.Frame(1, 6, 0, frame);
 
+                Main.spriteBatch.Draw(tex, Pos - Main.screenPosition, frameBox, drawColor, Rot, frameBox.Size() / 2, 1, effect, 0);
             }
         }
 
@@ -386,9 +402,11 @@ namespace Coralite.Content.Items.Misc_Equip
                     Lighting.AddLight(Projectile.Center, Coralite.CrimsonRed.ToVector3() / 2);
                     break;
                 case TopperTypes.Blood:
-                    UpdateBloodTopper();
+                    BloodToppers ??= new List<BloodTopper>(8);
                     NormalAI<BloodBite>(80, OnBloodAttack);
                     Lighting.AddLight(Projectile.Center, Coralite.CrimsonRed.ToVector3() / 2);
+                    UpdateBloodTopper();
+
                     break;
                 case TopperTypes.Shadow:
                     NormalAI<ShadowBite>(80, OnShadowAttack);
@@ -595,8 +613,6 @@ namespace Coralite.Content.Items.Misc_Equip
 
         public void UpdateBloodTopper()
         {
-            BloodToppers ??= new List<BloodTopper>(8);
-
             for (int i = 0; i < BloodToppers.Count; i++)
                 BloodToppers[i].Update(Projectile, i);
         }
@@ -604,7 +620,7 @@ namespace Coralite.Content.Items.Misc_Equip
         public void OnBloodAttack()
         {
             int count = BloodToppers.Count;
-            if (count > 7)//8个帽子再叠加就全部爆开生成血滴
+            if (count > 6)//8个帽子再叠加就全部爆开生成血滴
             {
                 BloodTopperCount = 0;
                 if (Projectile.IsOwnedByLocalPlayer())
@@ -618,8 +634,8 @@ namespace Coralite.Content.Items.Misc_Equip
             }
 
             //叠加礼帽
-
-
+            BloodToppers.Add(new BloodTopper(Projectile, BloodToppers.Count));
+            BloodTopperCount++;
         }
 
         #endregion
@@ -654,7 +670,10 @@ namespace Coralite.Content.Items.Misc_Equip
                     TopperType = TopperTypes.None;
 
                 if (TopperType != oldType)
+                {
+                    BloodToppers = null;
                     SetToBack();
+                }
             }
         }
 
@@ -669,6 +688,7 @@ namespace Coralite.Content.Items.Misc_Equip
 
         public void BackToOwner()
         {
+            Projectile.velocity = Vector2.Zero;
             Vector2 pos = IdlePos;
             if (Vector2.Distance(pos, Projectile.Center) > 3000 || Timer > 60 * 12)
             {
@@ -680,6 +700,7 @@ namespace Coralite.Content.Items.Misc_Equip
             Projectile.Center = Vector2.SmoothStep(Projectile.Center, pos, 0.25f);
             if (Vector2.Distance(pos, Projectile.Center) < 48)
             {
+                ScaleType = ScaleTypes.Back;
                 State = 0;
             }
 
@@ -829,8 +850,15 @@ namespace Coralite.Content.Items.Misc_Equip
                 default:
                 case TopperTypes.Error:
                 case TopperTypes.None:
+                    DrawTopper(Projectile.GetTexture(), lightColor);
+                    break;
                 case TopperTypes.Blood:
                     DrawTopper(Projectile.GetTexture(), lightColor);
+
+                    var effect = Projectile.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+                    if (BloodToppers != null)
+                        foreach (var bt in BloodToppers)
+                            bt.Draw(effect);
                     break;
                 case TopperTypes.Shadow:
                     DrawTopper(ShadowTopper.Value, lightColor);
@@ -877,7 +905,7 @@ namespace Coralite.Content.Items.Misc_Equip
 
         public override void AI()
         {
-            if (Projectile.localAI[1]==0)
+            if (Projectile.localAI[1] == 0)
             {
                 Projectile.localAI[1] = 1;
                 Projectile.localAI[2] = Main.rand.NextFloat(-0.2f, 0.2f);
@@ -907,7 +935,13 @@ namespace Coralite.Content.Items.Misc_Equip
 
         public virtual void SpawnDustOnBite()
         {
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < 24; i++)
+            {
+                Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(32, 8)
+                    , DustID.Blood, Helper.NextVec2Dir(2, 5), Scale: Main.rand.NextFloat(1, 2f));
+            }
+
+            for (int i = 0; i < 2; i++)
             {
                 Helper.SpawnDirDustJet(Projectile.Center + Main.rand.NextVector2Circular(32, 8)
                     , () => Helper.NextVec2Dir(), 1, 7, i => 0.5f + i * 0.35f, DustID.Blood, Scale: Main.rand.NextFloat(1f, 2f), noGravity: false);
@@ -919,7 +953,7 @@ namespace Coralite.Content.Items.Misc_Equip
             Texture2D tex = Projectile.GetTexture();
             SpriteBatch spriteBatch = Main.spriteBatch;
             Vector2 pos = Projectile.Center - Main.screenPosition + offset;
-            Color c = lightColor * alpha;
+            Color c = Color.White * alpha;
             float rotation = Projectile.rotation + Projectile.localAI[2];
             Vector2 normal = (rotation - MathHelper.PiOver2).ToRotationVector2();
             normal *= mouseDistance;
@@ -953,13 +987,180 @@ namespace Coralite.Content.Items.Misc_Equip
         }
     }
 
-    public class BloodTearProj
+    public class BloodTearProj:ModProjectile
     {
+        public override string Texture => AssetDirectory.Blank ;
 
+        public ref float State => ref Projectile.ai[0];
+        public ref float Timer => ref Projectile.ai[1];
+        public ref float Target => ref Projectile.ai[2];
+
+        public override void SetStaticDefaults()
+        {
+            Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 12);
+        }
+
+        public override void SetDefaults()
+        {
+            Projectile.tileCollide = false;
+            Projectile.friendly = true;
+            Projectile.width = Projectile.height = 24;
+        }
+
+        public override void AI()
+        {
+            switch (State)
+            {
+                default:
+                case 0://下落
+                    {
+                        if (Projectile.velocity.Y < 5)
+                            Projectile.velocity.Y += 0.15f;
+
+                        Timer++;
+                        if (Timer > 60)
+                        {
+                            if (Helper.TryFindClosestEnemy(Projectile.Center, 1000, n => n.CanBeChasedBy() && Collision.CanHit(Projectile, n), out NPC target))
+                            {
+                                Target = target.whoAmI;
+                                State = 1;
+                                Projectile.timeLeft = 600;
+                                Projectile.extraUpdates = 1;
+                                State++;
+                            }
+
+                            Projectile.tileCollide = true;
+                        }
+                    }
+                    break;
+                case 1://追踪
+                    {
+                        if (!Target.GetNPCOwner(out NPC target))
+                        {
+                            Timer = 0;
+                            State = 1;
+
+                            return;
+                        }
+
+                        float num481 = 12f;
+                        Vector2 center = Projectile.Center;
+                        Vector2 targetCenter = target.Center;
+                        Vector2 dir = targetCenter - center;
+                        float length = dir.Length();
+                        if (length < 100f)
+                            num481 = 10f;
+
+                        length = num481 / length;
+                        dir *= length;
+                        Projectile.velocity.X = ((Projectile.velocity.X * 19f) + dir.X) / 20f;
+                        Projectile.velocity.Y = ((Projectile.velocity.Y * 19f) + dir.Y) / 20f;
+                        Projectile.rotation = Projectile.velocity.ToRotation();
+                    }
+                    break;
+            }
+
+            for (int i = 0; i < 4; i++)
+            {
+                Dust d = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(12, 12)
+                    , DustID.Blood, Helper.NextVec2Dir(2, 4), Scale: Main.rand.NextFloat(1, 1.75f));
+                d.noGravity = i < 2;
+            }
+
+            Projectile.rotation = Projectile.velocity.ToRotation();
+        }
+
+        public override void OnKill(int timeLeft)
+        {
+            if (Projectile.IsOwnedByLocalPlayer())
+            {
+                Projectile.NewProjectileFromThis(Projectile.Center, Vector2.Zero, ProjectileID.VampireHeal
+                    , 0, 0f, Projectile.owner, Projectile.owner, 1);
+
+                if (Main.player[Projectile.owner].TryGetModPlayer(out CoralitePlayer cp))
+                {
+
+                }
+            }
+        }
+
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Vector2 pos = Projectile.Center - Main.screenPosition;
+            Helper.DrawPrettyLine(1, 0, pos, Color.Red with { A = 100 }, Color.Red
+                , 0.5f, 0, 0.5f, 0.5f, 1, Projectile.rotation, 1, new Vector2(0.5f, 2f));
+
+            Vector2 offset = Projectile.Size / 2 - Main.screenPosition;
+            for (int i = 0; i < 12; i++)
+            {
+                float factor = 1 - i / 12f;
+                Helper.DrawPrettyLine(1, 0, Projectile.oldPos[i] + offset, (Color.Red * factor) with { A = 100 }, Color.Red * factor
+                    , 0.5f, 0, 0.5f, 0.5f, 1, Projectile.rotation, 1, new Vector2(0.5f, 1f));
+            }
+
+            return false;
+        }
     }
 
-    public class BloodPool
+    public class BloodPool : ModProjectile,IDrawNonPremultiplied
     {
+        public override string Texture => AssetDirectory.Misc_Equip + Name;
 
+        private SecondOrderDynamics_Vec2 PosController;
+
+        public override bool ShouldUpdatePosition() => false;
+
+        public override void SetDefaults()
+        {
+            Projectile.tileCollide = false;
+            Projectile.friendly = true;
+            Projectile.width = Projectile.height = 24;
+        }
+
+        public override void AI()
+        {
+            PosController ??= new SecondOrderDynamics_Vec2(0.8f, 0.5f, 0, Projectile.Center);
+
+            Player owner = Main.player[Projectile.owner];
+            Projectile.Center = PosController.Update(1 / 60f
+                , owner.MountedCenter + new Vector2(-owner.direction * 20, -16 * 2.5f));
+
+            Projectile.UpdateFrameNormally(4, 8);
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            return false;
+        }
+
+        public void DrawNonPremultiplied(SpriteBatch spriteBatch)
+        {
+            Texture2D tex = Projectile.GetTexture();
+
+
+        }
+    }
+
+    public class LittleShadowMonster:ModProjectile
+    {
+        public override string Texture => AssetDirectory.Misc_Equip + Name;
+
+        public override void SetDefaults()
+        {
+        }
+
+        public override void AI()
+        {
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            return false;
+        }
     }
 }

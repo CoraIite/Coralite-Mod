@@ -288,8 +288,8 @@ MagikeInterstitial1Page: {
 		'''
 }
 
-MagikeInterstitial1Page2.Description: 
-'''
-    小心！蕴魔空岛上存在很多强大的敌怪！
-    但是因为它们由植物和水晶或是废弃的魔能仪器组成，所以只会进行简单的行为，并且无法识破隐身。
-'''
+MagikeInterstitial1Page2.Description:
+	'''
+	    小心！蕴魔空岛上存在很多强大的敌怪！
+	    但是因为它们由植物和水晶或是废弃的魔能仪器组成，所以只会进行简单的行为，并且无法识破隐身。
+	'''
