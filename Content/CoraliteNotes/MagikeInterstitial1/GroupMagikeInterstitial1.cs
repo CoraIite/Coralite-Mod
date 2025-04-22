@@ -10,7 +10,8 @@ namespace Coralite.Content.CoraliteNotes.MagikeInterstitial1
         public override void InitPages()
         {
             Pages = [
-                new MagikeInterstitial1Page()
+                new MagikeInterstitial1Page(),
+                new MagikeInterstitial1Page2(),
                 ];
         }
     }
