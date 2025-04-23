@@ -263,8 +263,32 @@ namespace Coralite.Helpers
         /// <param name="proj"></param>
         /// <param name="frameCountMax"></param>
         /// <param name="frameMax"></param>
-        public static void UpdateFrameNormally(this Projectile proj, int frameCountMax, int frameMax)
+        public static void UpdateFrameNormally(this Projectile proj, int frameCountMax, int frameMax, bool pingpong = false)
         {
+            if (pingpong)
+            {
+                if (proj.frameCounter > 0)
+                {
+                    if (++proj.frameCounter > frameCountMax + 1)
+                    {
+                        proj.frameCounter = 1;
+                        if (++proj.frame > frameMax)
+                            proj.frameCounter = -1;
+                    }
+                }
+                else
+                {
+                    if (--proj.frameCounter < -(frameCountMax + 1))
+                    {
+                        proj.frameCounter = -1;
+                        if (--proj.frame < 1)
+                            proj.frameCounter = 1;
+                    }
+                }
+
+                return;
+            }
+
             if (++proj.frameCounter > frameCountMax)
             {
                 proj.frameCounter = 0;

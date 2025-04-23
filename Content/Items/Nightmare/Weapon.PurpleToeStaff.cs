@@ -160,7 +160,7 @@ namespace Coralite.Content.Items.Nightmare
 
                 if (Main.rand.NextBool(10))
                     StartAttack(false);
-                return;
+                goto UpdateTentacle;
             }
 
             if (Timer == -1f)
@@ -194,7 +194,7 @@ namespace Coralite.Content.Items.Nightmare
                     Target = 0f;
                 }
 
-                return;
+                goto UpdateTentacle;
             }
 
             NPC target = null;
@@ -229,7 +229,7 @@ namespace Coralite.Content.Items.Nightmare
                     Timer--;
                     if (Vector2.Distance(idlePos, Projectile.Center) < 30 || Timer < -40)
                         StartAttack();
-                    return;
+                    goto UpdateTentacle;
                 }
 
                 Timer -= 1f;
@@ -271,6 +271,8 @@ namespace Coralite.Content.Items.Nightmare
                     StartAttack(onAttack: true);
                 }
             }
+
+        UpdateTentacle:
 
             if (tentacle == null)
             {

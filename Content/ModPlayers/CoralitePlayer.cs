@@ -75,6 +75,17 @@ namespace Coralite.Content.ModPlayers
         public short nightmareEnergyMax;
 
         /// <summary>
+        /// 血池的血量
+        /// </summary>
+        public int bloodPoolCount;
+        public const int BloodPoolCountMax = 50;
+
+        public short shadowBonusTime;
+        public short shadowAttackBonus;
+        public short shadowLifeMaxBonus;
+        public short shadowDefenceBonus;
+
+        /// <summary>
         /// 距离上次受伤的时间
         /// </summary>
         public int HurtTimer;
@@ -146,6 +157,9 @@ namespace Coralite.Content.ModPlayers
             inventoryCraftStations.Clear();
             //Effects.Clear();
 
+            if (bloodPoolCount>BloodPoolCountMax)
+                bloodPoolCount = BloodPoolCountMax;
+
             if (CrystallineSkyIslandEffect > 0)
                 CrystallineSkyIslandEffect--;
 
@@ -204,6 +218,7 @@ namespace Coralite.Content.ModPlayers
             HurtTimer = 0;
             nightmareCount = 0;
             nightmareEnergy = 0;
+            bloodPoolCount = 0;
             TempYujians = new Item[BaseHulu.slotCount];
         }
 
@@ -863,6 +878,11 @@ namespace Coralite.Content.ModPlayers
 
         #endregion
 
+        public override void GetHealLife(Item item, bool quickHeal, ref int healValue)
+        {
+            if (HasEffect(Items.Misc_Equip.BloodmarkTopper.BloodSet))
+                healValue += bloodPoolCount;
+        }
 
         public override bool PreKill(double damage, int hitDirection, bool pvp, ref bool playSound, ref bool genDust, ref PlayerDeathReason damageSource)
         {
@@ -885,6 +905,13 @@ namespace Coralite.Content.ModPlayers
                 if (nightmareEnergy > nightmareEnergyMax)
                     nightmareEnergy = nightmareEnergyMax;
             }
+        }
+
+        public void GetBloodPool(int howMany)
+        {
+            bloodPoolCount += howMany;
+            if (bloodPoolCount > BloodPoolCountMax)
+                bloodPoolCount = BloodPoolCountMax;
         }
 
         /// <summary>
