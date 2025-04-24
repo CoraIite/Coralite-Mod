@@ -4,6 +4,7 @@ using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Attributes;
 using Coralite.Core.Loaders;
+using Coralite.Core.Prefabs.Particles;
 using Coralite.Core.SmoothFunctions;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
@@ -279,7 +280,7 @@ namespace Coralite.Content.Items.Misc_Equip
         {
             if (player.TryGetModPlayer(out CoralitePlayer cp))
             {
-                if (cp.HasEffect(ShadowSet) && cp.shadowDefenceBonus >3)
+                if (cp.HasEffect(ShadowSet) && cp.shadowDefenceBonus > 3)
                     player.armorEffectDrawShadow = true;
             }
         }
@@ -697,7 +698,7 @@ namespace Coralite.Content.Items.Misc_Equip
                 , 25, 2, ShadowBiteType);
 
             ShadowBiteType++;
-            if (ShadowBiteType>2)
+            if (ShadowBiteType > 2)
             {
                 ShadowBiteType = 0;
             }
@@ -1045,7 +1046,7 @@ namespace Coralite.Content.Items.Misc_Equip
 
     public class BloodTearProj : ModProjectile
     {
-        public override string Texture => AssetDirectory.Misc_Equip+Name;
+        public override string Texture => AssetDirectory.Misc_Equip + Name;
 
         public ref float State => ref Projectile.ai[0];
         public ref float Timer => ref Projectile.ai[1];
@@ -1229,7 +1230,7 @@ namespace Coralite.Content.Items.Misc_Equip
                 float tentacleLength = distance * 0.8f / 10f;
 
                 tentacle.SetValue(Projectile.Center, Owner.Center, Projectile.rotation);
-                tentacle.UpdateTentacle(tentacleLength,0.75f);
+                tentacle.UpdateTentacle(tentacleLength, 0.75f);
 
                 group ??= [];
 
@@ -1268,12 +1269,12 @@ namespace Coralite.Content.Items.Misc_Equip
                 - owner.direction * Math.Clamp(Projectile.Center.Y + 16 * 3.5f - owner.Center.Y, 0, 2f));
 
             Projectile.UpdateFrameNormally(7, 8, true);
-            Lighting.AddLight(Projectile.Center, Color.Red.ToVector3() / 2*Scale);
+            Lighting.AddLight(Projectile.Center, Color.Red.ToVector3() / 2 * Scale);
         }
 
         public Color TentacleColor(float factor)
         {
-            return Color.Lerp(Color.Transparent, Color.Red * Scale,  MathF.Sin(factor * MathHelper.Pi));
+            return Color.Lerp(Color.Transparent, Color.Red * Scale, MathF.Sin(factor * MathHelper.Pi));
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -1440,7 +1441,7 @@ namespace Coralite.Content.Items.Misc_Equip
     {
         public override string Texture => AssetDirectory.Misc_Equip + Name;
 
-        public ref float ShadowType => ref Projectile.ai[0];
+        public ref float ShadowStyle => ref Projectile.ai[0];
         public ref float State => ref Projectile.ai[1];
         public ref float Timer => ref Projectile.localAI[0];
         public ref float Target => ref Projectile.ai[2];
@@ -1462,7 +1463,7 @@ namespace Coralite.Content.Items.Misc_Equip
 
         public override bool? CanDamage()
         {
-            if (State!=1)
+            if (State != 1)
             {
                 return false;
             }
@@ -1480,7 +1481,7 @@ namespace Coralite.Content.Items.Misc_Equip
                 case 0://飞
                     {
                         Timer++;
-                        Projectile.velocity = Projectile.velocity.RotatedBy((ShadowType - 1) * 0.08f);
+                        Projectile.velocity = Projectile.velocity.RotatedBy((ShadowStyle - 1) * 0.08f);
                         if (Timer > 20)
                         {
                             if (Helper.TryFindClosestEnemy(Projectile.Center, 600, n => n.CanBeChasedBy() && Collision.CanHit(Projectile, n), out NPC target))
@@ -1536,13 +1537,13 @@ namespace Coralite.Content.Items.Misc_Equip
                         Projectile.velocity.X = ((Projectile.velocity.X * 19f) + dir.X) / 20f;
                         Projectile.velocity.Y = ((Projectile.velocity.Y * 19f) + dir.Y) / 20f;
 
-                        if (Vector2.Distance(Projectile.Center,targetCenter)<20)
+                        if (Vector2.Distance(Projectile.Center, targetCenter) < 20)
                         {
                             Projectile.Kill();
                             if (Main.player[Projectile.owner].TryGetModPlayer(out CoralitePlayer cp))
                             {
                                 cp.shadowBonusTime = 0;
-                                switch (ShadowType)
+                                switch (ShadowStyle)
                                 {
                                     default:
                                     case 0:
@@ -1569,7 +1570,7 @@ namespace Coralite.Content.Items.Misc_Equip
             for (int i = 0; i < 2; i++)
             {
                 Dust d = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(6, 6)
-                    , DustID.Granite, Vector2.Zero,Alpha:150);
+                    , DustID.Granite, Vector2.Zero, Alpha: 150);
                 d.noGravity = true;
             }
 
@@ -1598,6 +1599,8 @@ namespace Coralite.Content.Items.Misc_Equip
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             State = 2;
+            PRTLoader.NewParticle<ShadowMonsterHitParticle>(Vector2.Lerp(Projectile.Center, target.Center, 0.5f) + Main.rand.NextVector2Circular(12, 12)
+                , Vector2.Zero);
         }
 
         public override void OnKill(int timeLeft)
@@ -1605,7 +1608,7 @@ namespace Coralite.Content.Items.Misc_Equip
             for (int i = 0; i < 6; i++)
             {
                 Dust d2 = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(6, 6)
-                    , DustID.Granite, Helper.NextVec2Dir(1,3), Alpha: 150);
+                    , DustID.Granite, Helper.NextVec2Dir(1, 3), Alpha: 150);
                 d2.noGravity = true;
             }
         }
@@ -1613,13 +1616,90 @@ namespace Coralite.Content.Items.Misc_Equip
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D mainTex = Projectile.GetTexture();
-            var frameBox = mainTex.Frame(3, 4, (int)ShadowType, Projectile.frame);
+            var frameBox = mainTex.Frame(3, 4, (int)ShadowStyle, Projectile.frame);
 
             Projectile.DrawShadowTrails(Color.Magenta, 0.3f, 0.3f / 12, 1, 12, 1
-                ,0.03f , frameBox, 0,-1);
+                , 0.03f, frameBox, 0, -1);
             Projectile.QuickDraw(frameBox, Color.White * 0.8f, 0);
 
             return false;
         }
+    }
+
+    public class ShadowMonsterHitParticle() : BaseFrameParticle(4, 5, 4, randRot: true)
+    {
+
+    }
+
+    public class PrisonProj : ModProjectile
+    {
+        public override string Texture => AssetDirectory.Misc_Equip + Name;
+
+        public ref float ProjStyle => ref Projectile.ai[0];
+        public ref float Timer => ref Projectile.ai[1];
+
+        public override void SetStaticDefaults()
+        {
+            Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 8);
+        }
+
+        public override void SetDefaults()
+        {
+            Projectile.tileCollide = true;
+            Projectile.friendly = true;
+            Projectile.width = Projectile.height = 14;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = -1;
+        }
+
+        public override void AI()
+        {
+            Timer++;
+
+            if (ProjStyle == 0)
+                Projectile.rotation = Projectile.velocity.ToRotation();
+            else
+                Projectile.rotation += Math.Sign(Projectile.velocity.X) * Projectile.velocity.Length() / 10;
+
+            if (Timer > 45)
+            {
+                if (Projectile.velocity.Y < 7)
+                    Projectile.velocity.Y += 0.15f;
+
+                Projectile.velocity.X *= 0.95f;
+            }
+        }
+
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            PRTLoader.NewParticle<ShadowMonsterHitParticle>(Vector2.Lerp(Projectile.Center, target.Center, 0.5f) + Main.rand.NextVector2Circular(12, 12)
+                , Vector2.Zero);
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Texture2D mainTex = Projectile.GetTexture();
+            var frameBox = mainTex.Frame(3, 4, (int)ProjStyle, Projectile.frame);
+
+            Projectile.DrawShadowTrails(Color.DarkRed, 0.4f, 0.4f / 8, 1, 12, 1
+                , Projectile.scale, frameBox, 0);
+            Projectile.QuickDraw(frameBox, lightColor, 0);
+
+            return false;
+        }
+    }
+
+    public class FishScissors
+    {
+
+    }
+
+    public class PrisonShootParticle() : BaseFrameParticle(4, 4, 4)
+    {
+
+    }
+    public class PrisonHitParticle() : BaseFrameParticle(4, 3, 4, randRot: true)
+    {
+
     }
 }
