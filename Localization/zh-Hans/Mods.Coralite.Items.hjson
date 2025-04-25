@@ -5937,7 +5937,7 @@ BloodmarkTopper: {
 		'''
 		获得[c/665cc2:罪孽礼帽]！
 		    ▶ 生成一个罪孽礼帽，使用鞭子攻击时向最近的敌人射出铁刺
-		    ▶ 每5次协同攻击生成一个鱼剪，命中时减少敌人防御力
+		    ▶ 每5次攻击生成一个鱼剪，命中时降低目标8防御力
 		'''
 	SpecialPreNameBlood: 嗜血
 	SpecialPreNameShadow: 阴影

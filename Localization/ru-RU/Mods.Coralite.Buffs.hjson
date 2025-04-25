@@ -245,3 +245,8 @@ BringerHarpyBuff: {
 	// DisplayName: Bringer Harpy Buff
 	// Description: Mods.Coralite.Buffs.BringerHarpyBuff.Description
 }
+
+PrisonBuff: {
+	// DisplayName: Prison Buff
+	// Description: Mods.Coralite.Buffs.PrisonBuff.Description
+}

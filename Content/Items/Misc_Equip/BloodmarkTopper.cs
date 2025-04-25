@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
+using Coralite.Content.GlobalNPCs;
 using Coralite.Content.Items.Materials;
 using Coralite.Content.ModPlayers;
 using Coralite.Core;
@@ -325,7 +326,8 @@ namespace Coralite.Content.Items.Misc_Equip
 
         public Vector2 IdlePos => Owner.MountedCenter + new Vector2(0, -16 * 4);
 
-        public int ShadowBiteType;
+        public byte ShadowMonsterType;
+        public byte PrisonShootCount;
 
         public List<BloodTopper> BloodToppers { get; private set; }
 
@@ -641,6 +643,28 @@ namespace Coralite.Content.Items.Misc_Equip
                             if (Math.Abs(r) > 8)
                                 Projectile.spriteDirection = Math.Sign(r);
 
+                            if (PrisonShootCount == 4)
+                            {
+                                if (Timer == 4 * 4)
+                                {
+                                    int damage = 70;
+                                    if (!Owner.HeldItem.IsAir && Owner.HeldItem.damage > 0 && !Owner.HeldItem.IsTool())
+                                        damage = (int)(Owner.GetDamage(Owner.HeldItem.DamageType).ApplyTo(damage));
+
+                                    Vector2 dir = (pos - Projectile.Center).SafeNormalize(Vector2.Zero);
+                                    Projectile.NewProjectileFromThis<FishScissors>(Projectile.Center
+                                        , dir * Main.rand.NextFloat(10, 12)
+                                        , damage, 2);
+
+                                    var p = PRTLoader.NewParticle<PrisonShootParticle>(Projectile.Center + new Vector2(Projectile.spriteDirection * 20, 0) + Main.rand.NextVector2Circular(6, 2)
+                                         , dir * 2);
+                                    p.Effects = Projectile.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+
+                                    Helper.PlayPitched(CoraliteSoundID.Stinger_Item17, Projectile.Center, pitchAdjust: 0.5f);
+                                    Helper.PlayPitched(CoraliteSoundID.Metal_NPCHit4, Projectile.Center, pitchAdjust: -0.6f, volumeAdjust: -0.7f);
+                                }
+                            }
+                            else
                             if (Timer is 4 * 2 or 4 * 3 or 4 * 4)
                             {
                                 int damage = 25;
@@ -657,8 +681,8 @@ namespace Coralite.Content.Items.Misc_Equip
 
                                 p.Effects = Projectile.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
-                                Helper.PlayPitched(CoraliteSoundID.Stinger_Item17, Projectile.Center,pitchAdjust:0.5f);
-                                Helper.PlayPitched(CoraliteSoundID.Metal_NPCHit4, Projectile.Center,pitchAdjust:-0.6f,volumeAdjust:-0.7f);
+                                Helper.PlayPitched(CoraliteSoundID.Stinger_Item17, Projectile.Center, pitchAdjust: 0.5f);
+                                Helper.PlayPitched(CoraliteSoundID.Metal_NPCHit4, Projectile.Center, pitchAdjust: -0.6f, volumeAdjust: -0.7f);
                             }
                         }
 
@@ -666,6 +690,10 @@ namespace Coralite.Content.Items.Misc_Equip
 
                         if (Timer > 40)//重设状态
                         {
+                            PrisonShootCount++;
+                            if (PrisonShootCount > 4)
+                                PrisonShootCount = 0;
+
                             if (!Owner.ItemTimeIsZero && ProjectileID.Sets.IsAWhip[Owner.HeldItem.shoot])
                             {
                                 State = 1;
@@ -723,13 +751,11 @@ namespace Coralite.Content.Items.Misc_Equip
         {
             //生成小影怪
             Projectile.NewProjectileFromThis<LittleShadowMonster>(Projectile.Center, new Vector2(0, -8).RotateByRandom(-0.3f, 0.3f)
-                , 25, 2, ShadowBiteType);
+                , 25, 2, ShadowMonsterType);
 
-            ShadowBiteType++;
-            if (ShadowBiteType > 2)
-            {
-                ShadowBiteType = 0;
-            }
+            ShadowMonsterType++;
+            if (ShadowMonsterType > 2)
+                ShadowMonsterType = 0;
         }
 
         #endregion
@@ -1702,7 +1728,7 @@ namespace Coralite.Content.Items.Misc_Equip
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             PRTLoader.NewParticle<PrisonHitParticle>(Vector2.Lerp(Projectile.Center, target.Center, 0.5f) + Main.rand.NextVector2Circular(12, 12)
-                , Vector2.Zero,Scale:Main.rand.NextFloat(1, 1.5f));
+                , Vector2.Zero, Scale: Main.rand.NextFloat(1, 1.5f));
 
             for (int i = 0; i < 8; i++)
             {
@@ -1736,7 +1762,7 @@ namespace Coralite.Content.Items.Misc_Equip
         }
     }
 
-    public class FishScissors:ModProjectile
+    public class FishScissors : ModProjectile
     {
         public override string Texture => AssetDirectory.Misc_Equip + Name;
 
@@ -1747,7 +1773,7 @@ namespace Coralite.Content.Items.Misc_Equip
 
         public override void SetDefaults()
         {
-            Projectile.tileCollide = true;
+            Projectile.tileCollide = false;
             Projectile.friendly = true;
             Projectile.width = Projectile.height = 60;
             Projectile.usesLocalNPCImmunity = true;
@@ -1763,31 +1789,106 @@ namespace Coralite.Content.Items.Misc_Equip
                 default:
                 case 0://刚生成
                     {
+                        Alpha += 0.1f;
+                        if (Alpha > 1)
+                            Alpha = 1;
+                        Timer++;
+                        Projectile.rotation = Projectile.velocity.ToRotation();
 
+                        if (Timer > 10)
+                        {
+                            State++;
+                            Timer = 0;
+                            Projectile.tileCollide = true;
+                        }
                     }
                     break;
-                case 1://命中目标开始剪
+                case 1://飞
                     {
+                        Timer++;
+                        Projectile.rotation = Projectile.velocity.ToRotation();
 
+                        if (Timer > 80)
+                        {
+                            Timer = 0;
+                            State = 3;
+                        }
                     }
                     break;
-                case 2://消失
+                case 2://命中目标开始剪
                     {
+                        if (Timer < 20)
+                            ExRot += 0.04f;
+                        else if (Timer < 25)
+                            ExRot -= 0.04f * 2f;
+                        else if (Timer == 25)
+                        {
+                            ExRot = 0;
+                            Projectile.StartAttack();
+                            for (int i = 0; i < 24; i++)
+                            {
+                                Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(32, 8)
+                                    , DustID.Blood, Helper.NextVec2Dir(1, 3), Scale: Main.rand.NextFloat(1, 2f));
+                            }
 
+                            for (int i = 0; i < 2; i++)
+                            {
+                                Helper.SpawnDirDustJet(Projectile.Center + Main.rand.NextVector2Circular(32, 8)
+                                    , () => Helper.NextVec2Dir(), 1, 7, i => 0.5f + i * 0.35f, DustID.Blood, Scale: Main.rand.NextFloat(1f, 2f), noGravity: false);
+                            }
+                        }
+                        else
+                        {
+                            State = 3;
+                            Timer = 0;
+                            Projectile.tileCollide = false;
+                        }
+
+                        Timer++;
                     }
                     break;
+                case 3://消失
+                    {
+                        for (int i = 0; i < 2; i++)
+                        {
+                            Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(32, 8)
+                                , DustID.Blood, Helper.NextVec2Dir(1, 3), Scale: Main.rand.NextFloat(1, 2f));
+                        }
 
+                        Alpha -= 0.1f;
+                        if (Timer > 10)
+                            Projectile.Kill();
+                        Projectile.rotation = Projectile.velocity.ToRotation();
+
+
+                        Timer++;
+                    }
+                    break;
             }
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            base.OnHitNPC(target, hit, damageDone);
+            if (State < 2)
+            {
+                State = 2;
+                Projectile.velocity *= 0.1f;
+                Timer = 0;
+
+                for (int i = 0; i < 8; i++)
+                {
+                    Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(32, 8)
+                        , DustID.Blood, Helper.NextVec2Dir(1, 3), Scale: Main.rand.NextFloat(1, 2f));
+                }
+            }
+
+            target.AddBuff(BuffType<PrisonBuff>(), 60 * 8);
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            State = 2;
+            State = 3;
+            Timer = 0;
             Projectile.tileCollide = false;
             return false;
         }
@@ -1798,11 +1899,22 @@ namespace Coralite.Content.Items.Misc_Equip
             var frameBox = mainTex.Frame(1, 2, 0, 0);
 
             lightColor *= Alpha;
-            Projectile.QuickDraw(frameBox,lightColor, MathHelper.PiOver4 - ExRot);
-            frameBox = mainTex.Frame(1, 2, 0, 1);
             Projectile.QuickDraw(frameBox, lightColor, MathHelper.PiOver4 + ExRot);
+            frameBox = mainTex.Frame(1, 2, 0, 1);
+            Projectile.QuickDraw(frameBox, lightColor, MathHelper.PiOver4 - ExRot);
 
             return false;
+        }
+    }
+
+    public class PrisonBuff:ModBuff
+    {
+        public override string Texture => AssetDirectory.Buffs + "Buff";
+
+        public override void Update(NPC npc, ref int buffIndex)
+        {
+            if (npc.TryGetGlobalNPC(out CoraliteGlobalNPC cnpc))
+                cnpc.PrisonArmorBreak = true;
         }
     }
 

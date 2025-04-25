@@ -23,6 +23,10 @@ namespace Coralite.Content.GlobalNPCs
         public bool EuphorbiaPoison;
         public bool ThunderElectrified;
         public bool PollenFire;
+        /// <summary>
+        /// 血印礼帽的黑曜石套装效果造成的护甲破坏
+        /// </summary>
+        public bool PrisonArmorBreak;
 
         public bool StopHitPlayer;
         public float SlowDownPercent;
@@ -116,6 +120,7 @@ namespace Coralite.Content.GlobalNPCs
             ThunderElectrified = false;
             PollenFire = false;
             StopHitPlayer = false;
+            PrisonArmorBreak = false;
             SlowDownPercent = 0;
         }
 
@@ -139,6 +144,9 @@ namespace Coralite.Content.GlobalNPCs
 
         public override void ModifyHitByProjectile(NPC npc, Projectile projectile, ref NPC.HitModifiers modifiers)
         {
+            if (PrisonArmorBreak)
+                modifiers.ArmorPenetration += 8;
+
             if (projectile.npcProj || projectile.trap || !projectile.IsMinionOrSentryRelated)
                 return;
 
@@ -169,6 +177,12 @@ namespace Coralite.Content.GlobalNPCs
                         (i) => i * 0.7f * Main.rand.NextFloat(0.7f, 1.1f), DustType<NightmarePetal>(), newColor: NightmarePlantera.nightmareRed, Scale: Main.rand.NextFloat(0.6f, 0.8f), noGravity: false, extraRandRot: 0.2f);
                 }
             }
+        }
+
+        public override void ModifyHitByItem(NPC npc, Player player, Item item, ref NPC.HitModifiers modifiers)
+        {
+            if (PrisonArmorBreak)
+                modifiers.ArmorPenetration += 8;
         }
 
         public override void EditSpawnPool(IDictionary<int, float> pool, NPCSpawnInfo spawnInfo)
@@ -214,6 +228,15 @@ namespace Coralite.Content.GlobalNPCs
 
                     break;
             }
+        }
+
+
+        public override Color? GetAlpha(NPC npc, Color drawColor)
+        {
+            if (PrisonArmorBreak)
+                return new Color(102, 92, 194);
+
+            return base.GetAlpha(npc, drawColor);
         }
     }
 }

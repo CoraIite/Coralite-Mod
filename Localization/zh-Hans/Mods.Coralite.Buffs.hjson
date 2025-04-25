@@ -249,3 +249,8 @@ BringerHarpyBuff: {
 		绝对不会把信弄丢的！
 		'''
 }
+
+PrisonBuff: {
+	// DisplayName: Prison Buff
+	// Description: Mods.Coralite.Buffs.PrisonBuff.Description
+}
