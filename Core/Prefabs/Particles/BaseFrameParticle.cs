@@ -29,6 +29,7 @@ namespace Coralite.Core.Prefabs.Particles
             }
 
             Frame = new Rectangle(frameX, frameY, 0, 0);
+            Color = Color.White;
         }
 
         public override void AI()

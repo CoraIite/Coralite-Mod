@@ -20,11 +20,11 @@ namespace Coralite.Content.Items.FairyCatcher
     {
         public override void AddRecipes()
         {
-            CreateRecipe()
-                .AddIngredient<BotanicusPowder>(10)
-                .AddIngredient<HardBasalt>(6)
-                .AddTile<MagicCraftStation>()
-                .Register();
+            //CreateRecipe()
+            //    .AddIngredient<BotanicusPowder>(10)
+            //    .AddIngredient<HardBasalt>(6)
+            //    .AddTile<MagicCraftStation>()
+            //    .Register();
         }
     }
 

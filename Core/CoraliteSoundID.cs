@@ -69,7 +69,7 @@ namespace Coralite.Core
         /// <summary> 太空海豚枪，狙击步枪使用的音效 </summary>
         public static SoundStyle Gun2_Item40 => SoundID.Item40;
 
-        /// <summary>一些机枪和手枪使用的音效，比如凤凰冲击波 </summary>
+        /// <summary> 一些机枪和手枪使用的音效，比如凤凰冲击波 </summary>
         public static SoundStyle Gun3_Item41 => SoundID.Item41;
 
         /// <summary> 外星泡泡枪的声音</summary>
@@ -78,13 +78,13 @@ namespace Coralite.Core
         /// <summary> 外星泡泡枪射击的声音 </summary>
         public static SoundStyle Xenopopper_BubbleBroke_Item96 => SoundID.Item96;
 
-        /// <summary>飞镖手枪射击的声音</summary>
+        /// <summary> 飞镖手枪射击的声音</summary>
         public static SoundStyle DartPistol_Item98 => SoundID.Item98;
 
-        /// <summary>飞镖步枪射击的声音</summary>
+        /// <summary> 飞镖步枪射击的声音</summary>
         public static SoundStyle DartRifle_Item99 => SoundID.Item99;
 
-        /// <summary>钉枪射击的声音</summary>
+        /// <summary> 钉枪射击的声音</summary>
         public static SoundStyle NailGun_Item108 => SoundID.Item108;
 
 
