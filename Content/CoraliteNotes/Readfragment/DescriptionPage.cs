@@ -23,10 +23,10 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
             spriteBatch.Draw(mainTex, Center + new Vector2(0, -180), null, Color.White, 0, mainTex.Size() / 2, 2, 0, 0);
 
             Helper.DrawText(spriteBatch, Description.Value, PageWidth, Center, Vector2.One / 2, Vector2.One
-                , new Color(40, 40, 40), Coralite.MagicCrystalPink, out Vector2 size);
+                , Coralite.TextShadowColor, Coralite.MagicCrystalPink, out Vector2 size);
 
             Helper.DrawText(spriteBatch, HowToUse.Value, PageWidth, Center + new Vector2(0, size.Y + 80), Vector2.One / 2, Vector2.One
-                , new Color(40, 40, 40), Coralite.MagicCrystalPink, out _);
+                , Coralite.TextShadowColor, Coralite.MagicCrystalPink, out _);
         }
     }
 }

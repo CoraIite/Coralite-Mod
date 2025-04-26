@@ -28,7 +28,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             foreach (var item in Items)
             {
                 if (!item.IsAir && CoraliteSets.Mabird[item.type])
-                    (item.ModItem as Mabird).UpdateMabird(center);
+                    (item.ModItem as Mabird).UpdateMabird(Entity.Position, center);
             }
         }
 

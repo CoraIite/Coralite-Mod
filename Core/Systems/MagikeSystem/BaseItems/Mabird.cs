@@ -82,7 +82,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
             CoraliteSets.IsMabird.Add(Type);
         }
 
-        public void UpdateMabird(Vector2 center)
+        public void UpdateMabird(Point16 selfPoint,Vector2 center)
         {
             try
             {
@@ -95,7 +95,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
                         if (Timer > RestTime)
                         {
                             Timer = 0;
-                            TurnToGetItem(center);
+                            TurnToGetItem(selfPoint.ToPoint(), center);
                         }
                         return;
                     case MabirdAIState.FlyToGetItem://飞向目标点1
@@ -195,9 +195,9 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
 
         #region 状态切换
 
-        public void TurnToGetItem(Vector2 center)
+        public void TurnToGetItem(Point selfPoint,Vector2 center)
         {
-            if (GetItemPos == null || ReleaseItemPos == null)
+            if (GetItemPos == null || ReleaseItemPos == null|| GetItemPos.TopLeft==selfPoint)
             {
                 Timer = RestTime;
                 return;

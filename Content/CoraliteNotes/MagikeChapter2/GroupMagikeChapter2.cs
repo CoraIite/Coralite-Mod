@@ -17,6 +17,8 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter2
                     //P1：神奇的小鸟物流
                     new ItemTransportation(),
                     new MabirdNestUI(),
+                    new MabirdNestConnect(),
+                    new MabirdLoupe(),
                 ];
         }
     }

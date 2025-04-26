@@ -25,10 +25,10 @@ namespace Coralite.Content.Items.Magike.Filters.SpellFilters
 
         public void AddMagikeCraftRecipe()
         {
-            MagikeRecipe.CreateCraftRecipe<BasicFilter, LightSoulFilter>(MagikeHelper.CalculateMagikeCost(MALevel.CrystallineMagike, 3, 60))
-                .AddIngredient<LeohtInABottle>()
-                .AddIngredient(ItemID.SoulofLight)
-                .Register();
+            //MagikeRecipe.CreateCraftRecipe<BasicFilter, LightSoulFilter>(MagikeHelper.CalculateMagikeCost(MALevel.CrystallineMagike, 3, 60))
+            //    .AddIngredient<LeohtInABottle>()
+            //    .AddIngredient(ItemID.SoulofLight)
+            //    .Register();
 
             MagikeRecipe.RegisterSpell(ItemID.SoulofLight, MagikeHelper.CalculateMagikeCost(MALevel.CrystallineMagike, 6, 20));
         }

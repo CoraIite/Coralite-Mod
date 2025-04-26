@@ -56,6 +56,8 @@ namespace Coralite
         public static Color FeatherLime => new(122, 161, 82);
         public static Color SplendorMagicoreLightBlue => new(190, 225, 235);
 
+        public static Color TextShadowColor => new Color(20, 20, 20);
+
         private static Coralite _instance;
 
         //单例模式！

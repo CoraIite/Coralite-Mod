@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
+using Terraria.ModLoader.IO;
 
 namespace Coralite.Content.Items.MagikeSeries2
 {
@@ -75,6 +76,18 @@ namespace Coralite.Content.Items.MagikeSeries2
                 .AddIngredient<FreosanInABottle>()
                 .AddIngredient<CrystallineMagike>()
                 .Register();
+        }
+
+        public override void SaveData(TagCompound tag)
+        {
+            if (CanShowBackLine)
+                tag.Add(nameof(CanShowBackLine), true);
+        }
+
+        public override void LoadData(TagCompound tag)
+        {
+            if (tag.ContainsKey(nameof(CanShowBackLine)))
+                CanShowBackLine = true;
         }
     }
 }

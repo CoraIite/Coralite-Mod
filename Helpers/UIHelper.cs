@@ -6,6 +6,7 @@ using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
 using Terraria.UI;
 using Terraria.UI.Chat;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Coralite.Helpers
 {
@@ -99,8 +100,12 @@ namespace Coralite.Helpers
 
             foreach (Vector2 direction in ChatManager.ShadowDirections)
             {
+                //ChatManager.DrawColorCodedStringShadow(spriteBatch, FontAssets.MouseText.Value, textSnippets, position,
+                //shadowColor, 0f, origin, scale, maxWidth, 2f);
                 ChatManager.DrawColorCodedStringShadow(spriteBatch, FontAssets.MouseText.Value, textSnippets, position + direction,
-                    shadowColor, 0f, origin, scale, maxWidth);
+                        shadowColor, 0f, origin, scale, maxWidth, 1.5f);
+                //ChatManager.DrawColorCodedStringShadow(spriteBatch, FontAssets.MouseText.Value, textSnippets, position,
+                //    shadowColor, 0f, origin, scale, maxWidth, 1f);
             }
 
             ChatManager.DrawColorCodedString(spriteBatch, FontAssets.MouseText.Value, textSnippets,
@@ -113,7 +118,7 @@ namespace Coralite.Helpers
         public static void DrawTextParagraph(SpriteBatch spriteBatch, string originText, float maxWidth, Vector2 position, out Vector2 textSize, Vector2? scale = null, Color? shadowColor = null, Color? textColor = null)
           => DrawText(spriteBatch, originText, maxWidth, position, Vector2.Zero
                 , scale ?? Vector2.One
-                , shadowColor ?? new Color(40, 40, 40)
+                , shadowColor ?? Coralite.TextShadowColor
                 , textColor ?? Color.White
                 , out textSize);
 

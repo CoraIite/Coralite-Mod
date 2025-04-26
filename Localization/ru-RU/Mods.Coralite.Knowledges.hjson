@@ -262,3 +262,11 @@ ItemTransportation: {
 }
 
 // MabirdNestUI.UIDescription: Mods.Coralite.Knowledges.MabirdNestUI.UIDescription
+
+MabirdNestConnect: {
+	// ConnectDescription: Mods.Coralite.Knowledges.MabirdNestConnect.ConnectDescription
+	// ConnectDescription2: Mods.Coralite.Knowledges.MabirdNestConnect.ConnectDescription2
+	// ConnectDescription3: Mods.Coralite.Knowledges.MabirdNestConnect.ConnectDescription3
+}
+
+// MabirdLoupe.LoupeDescription: Mods.Coralite.Knowledges.MabirdLoupe.LoupeDescription
