@@ -632,6 +632,8 @@ namespace Coralite.Content.Items.Misc_Equip
                 case 2://射弹幕
                     {
                         Projectile.Center = Vector2.SmoothStep(Projectile.Center, IdlePos + new Vector2(Owner.velocity.X * 6, -Owner.velocity.Y / 2), 0.4f);
+                        Projectile.rotation = Projectile.rotation.AngleLerp(0, 0.02f);
+
                         if (Projectile.IsOwnedByLocalPlayer())
                         {
                             Vector2 pos = Main.MouseWorld;

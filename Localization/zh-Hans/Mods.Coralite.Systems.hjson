@@ -108,7 +108,7 @@ BisketyController: {
 KnowledgeSystem: {
 	MagikeS1Knowledge: {
 		Name: "[c/ffbeec:魔能残卷 其一]"
-		LockTip: 去地下的魔力水晶洞寻找“书页：魔能基础”吧！
+		LockTip: 去地下的魔力水晶洞寻找“魔能基础残页”吧！
 		Description:
 			'''
 			记载着魔能的基础使用方法
@@ -177,8 +177,12 @@ KnowledgeSystem: {
 	}
 
 	MagikeS2Knowledge: {
-		Name: Mods.Coralite.Systems.KnowledgeSystem.MagikeS2Knowledge.Name
-		LockTip: Mods.Coralite.Systems.KnowledgeSystem.MagikeS2Knowledge.LockTip
-		Description: Mods.Coralite.Systems.KnowledgeSystem.MagikeS2Knowledge.Description
+		Name: "[c/dc96ff:魔能残卷 其二]"
+		LockTip: 去丛林上方的蕴魔空岛寻找“魔能进阶残卷”吧！
+		Description:
+			'''
+			记载着魔能的进阶使用方法
+			其上会教你如何制造更多仪器
+			'''
 	}
 }

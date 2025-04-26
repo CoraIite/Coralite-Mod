@@ -1,5 +1,7 @@
-﻿using Coralite.Content.Raritys;
+﻿using Coralite.Content.CoraliteNotes.MagikeChapter2;
+using Coralite.Content.Raritys;
 using Coralite.Core;
+using Coralite.Core.Systems.KeySystem;
 using Coralite.Core.Systems.MagikeSystem;
 using Terraria;
 using Terraria.ID;
@@ -9,12 +11,6 @@ namespace Coralite.Content.Items.MagikeSeries2
     public class Reel_MagikeAdvance : ModItem
     {
         public override string Texture => AssetDirectory.MagikeSeries2Item + Name;
-
-        //public void AddMagikeCraftRecipe()
-        //{
-        //    MagikeSystem.AddRemodelRecipe<CrystallineMagike, Reel_MagikeAdvance>(MagikeHelper.CalculateMagikeCost(MALevel.CrystallineMagike, 12, 60 * 10)
-        //        , 5, conditions: Condition.Hardmode);
-        //}
 
         public override void SetDefaults()
         {
@@ -27,7 +23,8 @@ namespace Coralite.Content.Items.MagikeSeries2
         public override bool CanUseItem(Player player)
         {
             MagikeSystem.learnedMagikeAdvanced = true;
-            //NPCLoader.CanTownNPCSpawn(4);
+            KnowledgeSystem.CheckForUnlock<MagikeS2Knowledge>(player.Top, Coralite.CrystallinePurple);
+
             return base.CanUseItem(player);
         }
     }

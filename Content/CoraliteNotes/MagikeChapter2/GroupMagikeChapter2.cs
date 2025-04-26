@@ -12,9 +12,11 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter2
             Pages =
                 [
                     new GetMagikeKnowledge2Page(),
-                    //new PartJumpPage(),
+                    new PartJumpPage2(),
 
-                    //P1：物流系统
+                    //P1：神奇的小鸟物流
+                    new ItemTransportation(),
+                    new MabirdNestUI(),
                 ];
         }
     }

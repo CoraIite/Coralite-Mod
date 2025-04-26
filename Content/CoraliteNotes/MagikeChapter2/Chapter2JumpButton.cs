@@ -15,8 +15,8 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter2
         public Chapter2Jump(LocalizedText text, Func<int> GetPage) : base(() => CoraliteNoteUIState.BookPanel, GetPage)
         {
             Text = text;
-            SetImage(ModContent.Request<Texture2D>(AssetDirectory.NoteMagikeS1 + "MagikeButton"));
-            SetHoverImage(ModContent.Request<Texture2D>(AssetDirectory.NoteMagikeS1 + "MagikeButton_Outline"));
+            SetImage(ModContent.Request<Texture2D>(AssetDirectory.NoteMagikeS2 + "MagikeButton"));
+            SetHoverImage(ModContent.Request<Texture2D>(AssetDirectory.NoteMagikeS2 + "MagikeButton_Outline"));
 
             OnSuccessChangePage += Chapter1Jump_OnSuccessChangePage;
 

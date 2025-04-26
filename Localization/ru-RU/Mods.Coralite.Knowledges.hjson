@@ -248,3 +248,17 @@ MagikeInterstitial1Page: {
 }
 
 // MagikeInterstitial1Page2.Description: Mods.Coralite.Knowledges.MagikeInterstitial1Page2.Description
+
+GetMagikeKnowledge2Page: {
+	// Title: Mods.Coralite.Knowledges.GetMagikeKnowledge2Page.Title
+	// Welcome: Mods.Coralite.Knowledges.GetMagikeKnowledge2Page.Welcome
+}
+
+// PartJumpPage2.P1Title: Mods.Coralite.Knowledges.PartJumpPage2.P1Title
+
+ItemTransportation: {
+	// Title: Mods.Coralite.Knowledges.ItemTransportation.Title
+	// MabirdDescription: Mods.Coralite.Knowledges.ItemTransportation.MabirdDescription
+}
+
+// MabirdNestUI.UIDescription: Mods.Coralite.Knowledges.MabirdNestUI.UIDescription

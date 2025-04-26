@@ -1395,10 +1395,10 @@ MagikeMonoclastic: {
 }
 
 Reel_MagikeAdvance: {
-	DisplayName: 卷轴：进阶魔能
+	DisplayName: 魔能进阶残卷
 	Tooltip:
 		'''
-		在丛林上方某处的蕴魔空岛中发现它
+		在丛林上方的蕴魔空岛中发现它
 		包含一些进阶的魔能知识
 		'''
 }

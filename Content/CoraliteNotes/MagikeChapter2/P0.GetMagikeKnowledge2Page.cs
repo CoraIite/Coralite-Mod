@@ -18,7 +18,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter2
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            Utils.DrawBorderStringBig(spriteBatch, Title.Value, Center + new Vector2(0, -PageWidth / 2), Coralite.MagicCrystalPink, 1, 0.5f, 0.5f);
+            Utils.DrawBorderStringBig(spriteBatch, Title.Value, Center + new Vector2(0, -PageWidth / 2), Coralite.CrystallinePurple, 1, 0.5f, 0.5f);
 
             Vector2 pos = Position + new Vector2(0, 140);
             Helper.DrawText(spriteBatch, Welcome.Value, PageWidth, pos, Vector2.Zero, Vector2.One

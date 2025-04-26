@@ -18,7 +18,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
         public static LocalizedText HarvestTheProduct { get; private set; }
 
         private ScaleController _scale1 = new ScaleController(1.4f, 0.2f);
-        private ScaleController _scale2 = new ScaleController(1f, 0.2f);
+        private ScaleController _scale2 = new ScaleController(0.4f, 0.05f);
 
         public override void OnInitialize()
         {
@@ -30,7 +30,6 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
 
         public override void Recalculate()
         {
-            _scale2 = new ScaleController(0.4f, 0.05f);
             _scale1.ResetScale();
             _scale2.ResetScale();
 

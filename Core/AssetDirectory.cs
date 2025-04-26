@@ -238,6 +238,7 @@ namespace Coralite.Core
         public const string KeyKnowledgeIcon = CoraliteNote + "KeyKnowledgeIcons/";
         public const string NoteReadfragment = CoraliteNote + "Readfragment/";
         public const string NoteMagikeS1 = CoraliteNote + "MagikeS1/";
+        public const string NoteMagikeS2 = CoraliteNote + "MagikeS2/";
         public const string NoteRedJade = CoraliteNote + "RedJade/";
         public const string NoteIceDragon1 = CoraliteNote + "IceDragon1/";
         public const string NoteSlime1 = CoraliteNote + "Slime1/";
