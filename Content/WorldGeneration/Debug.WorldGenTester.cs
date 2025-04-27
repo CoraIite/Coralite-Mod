@@ -1,4 +1,5 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Biomes;
+using Coralite.Core;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Generation;
@@ -33,9 +34,7 @@ namespace Coralite.Content.WorldGeneration
         {
             Vector2 myVector = Main.MouseWorld;
             Point p = myVector.ToTileCoordinates();
-
             //ExampleStructure(p);
-            var a = Main.chest[0];
 
 
             //Main.AnglerQuestSwap();
@@ -254,6 +253,16 @@ namespace Coralite.Content.WorldGeneration
 
         public void ExampleStructure(Point origin)
         {
+            WorldUtils.Gen(
+                origin,
+                new Shapes.Circle(10),
+                Actions.Chain(
+                    new Actions.ClearTile(),
+                    new Actions.PlaceTile(TileID.Coralstone)
+                    )
+                );
+
+            return;
             int width = 13;
             int height = 26;
 

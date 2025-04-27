@@ -399,7 +399,7 @@ namespace Coralite.Content.WorldGeneration
 
         public static bool KillChestAndItems(int x, int y)
         {
-            for (int i = 0; i < 1000; i++)
+            for (int i = 0; i < Main.maxChests; i++)
             {
                 if (Main.chest[i] != null && Main.chest[i].x == x && Main.chest[i].y == y)
                 {

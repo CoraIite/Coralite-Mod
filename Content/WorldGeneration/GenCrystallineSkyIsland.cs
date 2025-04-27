@@ -4,6 +4,7 @@ using Coralite.Content.Tiles.MagikeSeries2;
 using Coralite.Content.Walls.Magike;
 using Coralite.Core;
 using Coralite.Helpers;
+using Iced.Intel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -130,9 +131,25 @@ namespace Coralite.Content.WorldGeneration
                 for (int j = 0; j < 500; j++)//向下遍历，找到地面
                 {
                     Tile t = Main.tile[p2.X, p2.Y];
-                    if ((t.HasTile && Main.tileSolid[t.TileType] && t.TileType is not TileID.ClayBlock or TileID.Dirt or TileID.Grass or TileID.RainCloud or TileID.Cloud)
-                        || (!CoralCatWorld && t.LiquidAmount > 0))//找到实心方块
+                    if ((t.HasTile && Main.tileSolid[t.TileType] && t.TileType != TileID.ClayBlock && t.TileType != TileID.Dirt && t.TileType != TileID.Grass && t.TileType != TileID.RainCloud && t.TileType != TileID.Cloud && t.TileType != TileID.Sunplate))//找到实心方块
                         break;
+
+                    if (!CoralCatWorld && t.LiquidAmount > 0)
+                    {
+                        bool groundWater = false;//检测是否是地面上的水，向下遍历找到水底的物块
+                        for (int k = 0; k < 50; k++)
+                        {
+                            Tile t2 = Main.tile[p2.X, p2.Y + k];
+                            if (t2.HasTile)
+                            {
+                                groundWater = t2.TileType != TileID.ClayBlock && t2.TileType != TileID.Dirt && t2.TileType != TileID.Grass && t2.TileType != TileID.RainCloud && t2.TileType != TileID.Cloud && t2.TileType != TileID.Sunplate;
+                                break;
+                            }
+                        }
+
+                        if (groundWater)
+                            break;
+                    }
 
                     p2.Y++;
                 }

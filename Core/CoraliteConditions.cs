@@ -70,9 +70,9 @@ namespace Coralite.Core
                 , () => false);
 
             InMagicCrystalCave = new(this.GetLocalization(nameof(InMagicCrystalCave))
-                , Main.LocalPlayer.InModBiome<MagicCrystalCave>);
-            InCrystallineSkyIsland = new(this.GetLocalization(nameof(InCrystallineSkyIsland))
-                , Main.LocalPlayer.InModBiome<CrystallineSkyIsland>);
+                , () => Main.LocalPlayer.InModBiome<MagicCrystalCave>());
+            InCrystallineSkyIsland = new Condition(this.GetLocalization(nameof(InCrystallineSkyIsland))
+                , () => Main.LocalPlayer.InModBiome<CrystallineSkyIsland>());
 
 
             UseMultiBlockStructure = new(this.GetLocalization(nameof(UseMultiBlockStructure))
