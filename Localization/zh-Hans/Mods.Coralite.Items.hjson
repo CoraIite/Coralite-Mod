@@ -3801,7 +3801,7 @@ CrystallineSkarn: {
 
 Skarn: {
 	DisplayName: 矽卡岩
-	Tooltip: 暂时通过玄武岩重塑获得
+	Tooltip: ""
 }
 
 AmberEardrop: {
