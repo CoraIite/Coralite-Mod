@@ -10,10 +10,27 @@ MaragonHead.DisplayName: Maragon Head
 MaragonTrail.DisplayName: Maragon Trail
 ShadowGolem.DisplayName: Shadow Golem
 ShadowGuard.DisplayName: Shadow Guard
-CrystalFairy.DisplayName: Crystal Fairy
-CrystalSpirit.DisplayName: Crystal Spirit
-CrystalGolem.DisplayName: Crystal Golem
-CrystalEye.DisplayName: Crystal Eye
+
+CrystalFairy: {
+	DisplayName: Crystal Fairy
+	BestiaryDescription: Mods.Coralite.NPCs.CrystalFairy.BestiaryDescription
+}
+
+CrystalSpirit: {
+	DisplayName: Crystal Spirit
+	BestiaryDescription: Mods.Coralite.NPCs.CrystalSpirit.BestiaryDescription
+}
+
+CrystalGolem: {
+	DisplayName: Crystal Golem
+	BestiaryDescription: Mods.Coralite.NPCs.CrystalGolem.BestiaryDescription
+}
+
+CrystalEye: {
+	DisplayName: Crystal Eye
+	BestiaryDescription: Mods.Coralite.NPCs.CrystalEye.BestiaryDescription
+}
+
 SlimeEmperor.DisplayName: Slime Emperor
 ElasticGelBall.DisplayName: Elastic Gel Ball
 SlimeAvatar.DisplayName: Slime Avatar
@@ -136,9 +153,30 @@ StoneSmallime.DisplayName: Stone Smallime
 ZacurrentDragon.DisplayName: Zacurrent Wyvern
 EyeOfGlistent.DisplayName: Eye Of Glistent
 ServantOfGlistent.DisplayName: Servant Of Glistent
-CrystallineHumming.DisplayName: Crystalline Humming
-CrystallineVinicColumn.DisplayName: Crystalline Vinic Column
-CrystallineVinicLaser.DisplayName: Crystalline Vinic Laser
+
+CrystallineHumming: {
+	DisplayName: Crystalline Humming
+	BestiaryDescription: Mods.Coralite.NPCs.CrystallineHumming.BestiaryDescription
+}
+
+CrystallineVinicColumn: {
+	DisplayName: Crystalline Vinic Column
+	BestiaryDescription: Mods.Coralite.NPCs.CrystallineVinicColumn.BestiaryDescription
+}
+
+CrystallineVinicLaser: {
+	DisplayName: Crystalline Vinic Laser
+	BestiaryDescription: Mods.Coralite.NPCs.CrystallineVinicLaser.BestiaryDescription
+}
+
 CrystallineSentinel.DisplayName: Crystalline Sentinel
-WildMabird.DisplayName: Wild Mabird
-WildMabirdNest.DisplayName: Wild Mabird Nest
+
+WildMabird: {
+	DisplayName: Wild Mabird
+	BestiaryDescription: Mods.Coralite.NPCs.WildMabird.BestiaryDescription
+}
+
+WildMabirdNest: {
+	DisplayName: Wild Mabird Nest
+	BestiaryDescription: Mods.Coralite.NPCs.WildMabirdNest.BestiaryDescription
+}

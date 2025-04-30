@@ -2,6 +2,7 @@
 using Coralite.Content.Items.Materials;
 using Coralite.Core;
 using Coralite.Core.Prefabs.NPCs;
+using Coralite.Helpers;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -94,6 +95,11 @@ namespace Coralite.Content.NPCs.OtherNPC
     {
         public override string Texture => AssetDirectory.OtherNPC + Name;
 
+        public override void SetStaticDefaults()
+        {
+            NPC.SetHideInBestiary();
+        }
+
         public override void SetDefaults()
         {
             NPC.width = 22;
@@ -110,12 +116,16 @@ namespace Coralite.Content.NPCs.OtherNPC
             NPC.noTileCollide = false;
             NPC.behindTiles = true;
         }
-
     }
 
     public class MaragonTrail : Maragon
     {
         public override string Texture => AssetDirectory.OtherNPC + Name;
+
+        public override void SetStaticDefaults()
+        {
+            NPC.SetHideInBestiary();
+        }
 
         public override void SetDefaults()
         {

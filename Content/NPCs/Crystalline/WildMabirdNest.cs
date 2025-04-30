@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Biomes;
 using Coralite.Content.Dusts;
+using Coralite.Content.Items.Banner;
 using Coralite.Content.Items.LandOfTheLustrousSeries;
 using Coralite.Content.Items.Magike.ItemTransmit;
 using Coralite.Content.Items.MagikeSeries2;
@@ -12,6 +13,7 @@ using System.Collections.Generic;
 using System.IO;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 
 namespace Coralite.Content.NPCs.Crystalline
@@ -53,6 +55,7 @@ namespace Coralite.Content.NPCs.Crystalline
         public override void Load()
         {
             this.LoadGore(3);
+            this.RegisterBestiaryDescription();
         }
 
         public override void SetDefaults()
@@ -69,6 +72,17 @@ namespace Coralite.Content.NPCs.Crystalline
             NPC.DeathSound = CoraliteSoundID.StoneBurst_Item70;
             NPC.noGravity = false;
             NPC.value = Item.buyPrice(0, 2);
+
+            Banner = NPC.type;
+            BannerItem = ModContent.ItemType<WildMabirdNestBannerItem>();
+            SpawnModBiomes = [ModContent.GetInstance<CrystallineSkyIsland>().Type];
+        }
+
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            bestiaryEntry.AddTags(
+                this.GetBestiaryDescription()
+                );
         }
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
@@ -331,6 +345,11 @@ namespace Coralite.Content.NPCs.Crystalline
             Main.npcFrameCount[Type] = 12;
         }
 
+        public override void Load()
+        {
+            this.RegisterBestiaryDescription();
+        }
+
         public override void SetDefaults()
         {
             NPC.width = 24;
@@ -345,6 +364,17 @@ namespace Coralite.Content.NPCs.Crystalline
             NPC.DeathSound = CoraliteSoundID.CrystalBroken_DD2_WitherBeastDeath;
             NPC.noGravity = true;
             NPC.value = 0;
+
+            Banner = NPC.type;
+            BannerItem = ModContent.ItemType<WildMabirdBannerItem>();
+            SpawnModBiomes = [ModContent.GetInstance<CrystallineSkyIsland>().Type];
+        }
+
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            bestiaryEntry.AddTags(
+                this.GetBestiaryDescription()
+                );
         }
 
         public override bool? CanFallThroughPlatforms() => true;

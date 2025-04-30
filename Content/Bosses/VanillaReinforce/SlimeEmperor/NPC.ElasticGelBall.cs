@@ -1,4 +1,5 @@
 ﻿using Coralite.Core;
+using Coralite.Core.Attributes;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -13,15 +14,24 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
     /// <summary>
     /// 弹弹凝胶球NPC
     /// </summary>
+    [AutoLoadTexture(Path =AssetDirectory.SlimeEmperor)]
     public class ElasticGelBall : ModNPC
     {
         public override string Texture => AssetDirectory.SlimeEmperor + Name;
 
         public ref float State => ref NPC.ai[0];
 
+        [AutoLoadTexture(Name = "ElasticGelBallTop")]
+        public static ATex TopTex { get;private set; }
+        [AutoLoadTexture(Name = "ElasticGelBallMiddle")]
+        public static ATex MiddleTex { get;private set; }
+        [AutoLoadTexture(Name = "ElasticGelBallBottom")]
+        public static ATex BottomTex { get;private set; }
+
         public override void SetStaticDefaults()
         {
-            Main.npcFrameCount[Type] = 7;
+            NPC.SetHideInBestiary();
+            Main.npcFrameCount[Type] = 8;
         }
 
         public override void SetDefaults()
@@ -107,6 +117,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                     if (Vector2.Distance(NPC.Center, Target.Center) < NPC.width)
                     {
                         State = 2;
+                        NPC.rotation = Main.rand.NextFloat(6.282f);
                         Vector2 dir = (Target.Center - NPC.Center).SafeNormalize(Vector2.Zero);
                         Target.velocity.X = dir.X * 12;
                         Target.velocity.Y = dir.Y * 16;
@@ -114,15 +125,19 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                         SoundEngine.PlaySound(CoraliteSoundID.QueenSlime_Item154, NPC.Center);
                     }
                     if (NPC.ai[3] > 1800)
+                    {
+                        NPC.rotation = Main.rand.NextFloat(6.282f);
                         State = 2;
+                    }
                     break;
                 case 2:
+                    NPC.scale -= 0.02f;
                     NPC.frameCounter++;
                     if (NPC.frameCounter > 3)
                     {
                         NPC.frameCounter = 0;
                         NPC.frame.Y++;
-                        if (NPC.frame.Y > 6)
+                        if (NPC.frame.Y > 7)
                             NPC.Kill();
                     }
                     break;
@@ -145,6 +160,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             if (State < 2)
             {
                 State = 2;
+                NPC.rotation = Main.rand.NextFloat(6.282f);
                 NPC.life = 1;
                 return false;
             }
@@ -154,13 +170,20 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)
         {
-            Texture2D mainTex = TextureAssets.Npc[Type].Value;
-            var frameBox = mainTex.Frame(1, 7, 0, NPC.frame.Y);
-            var origin = frameBox.Size() / 2;
             if (Main.zenithWorld)
                 drawColor = SlimeEmperor.BlackSlimeColor;
 
-            spriteBatch.Draw(mainTex, NPC.Center - screenPos, frameBox, drawColor * NPC.ai[2], NPC.rotation, origin, NPC.ai[2], 0, 0);
+            Vector2 pos = NPC.Center - screenPos;
+            Color c = drawColor * NPC.ai[2];
+            Rectangle frame = new Rectangle(0, NPC.frame.Y, 1, Main.npcFrameCount[NPC.type]);
+            float scale = NPC.ai[2] * NPC.scale;
+            float exRot = State > 1 ? NPC.rotation : (Main.GlobalTimeWrappedHourly * 2 + NPC.whoAmI * 1.5f);
+            float exRot2 = State > 1 ? NPC.rotation : (-Main.GlobalTimeWrappedHourly * 3 + NPC.whoAmI * 1.5f);
+
+            BottomTex.Value.QuickCenteredDraw(spriteBatch, frame, pos, c * 0.45f, exRot, scale);
+            MiddleTex.Value.QuickCenteredDraw(spriteBatch, frame, pos, c * 0.75f, exRot2, scale);
+            TopTex.Value.QuickCenteredDraw(spriteBatch, frame, pos, c, NPC.rotation, scale);
+
             return false;
         }
     }

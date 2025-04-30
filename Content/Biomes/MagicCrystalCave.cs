@@ -12,7 +12,11 @@ namespace Coralite.Content.Biomes
 
         public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/CrystalCave");
 
+        public override string MapBackground => AssetDirectory.Backgrounds + "MagicCrystalCaveMap";
+
         public override string BestiaryIcon => AssetDirectory.Biomes + "MagicCrystalCaveIcon";
+
+        public override string BackgroundPath => AssetDirectory.Backgrounds + "MagicCrystalCaveMap";
 
         public override bool IsBiomeActive(Player player)
         {

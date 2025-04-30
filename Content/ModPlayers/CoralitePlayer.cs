@@ -4,13 +4,8 @@ using Coralite.Content.Items.RedJades;
 using Coralite.Content.Items.Steel;
 using Coralite.Content.Items.Thunder;
 using Coralite.Content.Projectiles.Globals;
-using Coralite.Content.UI;
-using Coralite.Content.UI.MagikeApparatusPanel;
 using Coralite.Content.WorldGeneration;
 using Coralite.Core;
-using Coralite.Core.Loaders;
-using Coralite.Core.Systems.MagikeSystem;
-using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.YujianSystem;
 using Coralite.Helpers;
 using InnoVault.PRT;
@@ -23,7 +18,7 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameInput;
 using Terraria.ID;
-using Terraria.UI;
+using Terraria.Localization;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.ModPlayers
@@ -33,13 +28,10 @@ namespace Coralite.Content.ModPlayers
         public string LocalizationCategory => "Players";
 
         public int rightClickReuseDelay = 0;
-        public int parryTime;
 
-        /// <summary>
-        /// 各种效果的bool
-        /// </summary>
-        public bool[] Effects = new bool[PlayerEffectLoader.EffectCount];
         public List<IInventoryCraftStation> inventoryCraftStations = new();
+
+        public static LocalizedText CoreKeeperDodgeText { get; private set; }
 
         #region 装备类字段
 
@@ -69,34 +61,11 @@ namespace Coralite.Content.ModPlayers
         public int Concertration;
         #endregion
 
-        public int nightmareCount;
-        /// <summary> 使用梦魇之花的噩梦能量 </summary>
-        public short nightmareEnergy;
-        public short nightmareEnergyMax;
-
-        /// <summary>
-        /// 血池的血量
-        /// </summary>
-        public int bloodPoolCount;
-        public const int BloodPoolCountMax = 50;
-
-        public short shadowBonusTime;
-        public short shadowAttackBonus;
-        public short shadowLifeMaxBonus;
-        public short shadowDefenceBonus;
-
         /// <summary>
         /// 距离上次受伤的时间
         /// </summary>
         public int HurtTimer;
         public int CrystallineSkyIslandEffect;
-
-        /// <summary> 皇帝凝胶鞋的CD </summary>
-        public byte EmperorArmorCD;
-        /// <summary> 皇帝凝胶鞋的粘液覆层 </summary>
-        public short EmperorDefence;
-        public bool SlimeDraw;
-        public const short EmperorDefenctMax = 30;
 
         /// <summary> 爆伤加成 </summary>
         public float critDamageBonus;
@@ -134,37 +103,31 @@ namespace Coralite.Content.ModPlayers
 
         public override void Load()
         {
+            if (Main.dedServ)
+                return;
+
+            CoreKeeperDodgeText = this.GetLocalization(nameof(CoreKeeperDodgeText));
             LoadDeathReasons();
         }
 
         public override void Unload()
         {
+            CoreKeeperDodgeText = null;
             UnloadDeathReasons();
         }
 
         public override void ResetEffects()
         {
-            //Effects ??= new HashSet<string>();
-            //防止出现各种各样的奇葩问题
-            if (Effects.Length != PlayerEffectLoader.EffectCount)
-                Effects = new bool[Effects.Length];
-
-            for (int i = 0; i < Effects.Length; i++)
-                Effects[i] = false;
+            ResetCoraliteEffects();
 
             inventoryCraftStations ??= new List<IInventoryCraftStation>();
-
             inventoryCraftStations.Clear();
-            //Effects.Clear();
 
-            if (bloodPoolCount>BloodPoolCountMax)
-                bloodPoolCount = BloodPoolCountMax;
+            CheckBloodPool();
+            UpdateEmerorSlimeBoots();
 
             if (CrystallineSkyIslandEffect > 0)
                 CrystallineSkyIslandEffect--;
-
-            if (EmperorArmorCD > 0)
-                EmperorArmorCD--;
 
             pirateKingSoul = 0;
             if (pirateKingSoulCD > 0)
@@ -186,38 +149,18 @@ namespace Coralite.Content.ModPlayers
             deliciousDamageBonus = new StatModifier();
             GemWeaponAttSpeedBonus = new StatModifier();
 
-            ResetFlyingShieldSets();
-
             coreKeeperDodge = 0;
-
-            nightmareEnergyMax = 7;
-
-            if (parryTime > 0)
-            {
-                parryTime--;
-                if (parryTime <= 0)
-                {
-                    SoundEngine.PlaySound(CoraliteSoundID.MaxMana, Player.Center);
-                    float rot = Main.rand.NextFloat(6.282f);
-                    for (int i = 0; i < 8; i++)
-                    {
-                        Dust dust = Dust.NewDustPerfect(Player.Center, DustID.Clentaminator_Red, (rot + (i * MathHelper.TwoPi / 8)).ToRotationVector2() * 3,
-                            255, Scale: Main.rand.Next(20, 26) * 0.1f);
-                        dust.noLight = true;
-                        dust.noGravity = true;
-                    }
-                }
-            }
-
+            ResetNightmareEnergy();
+            ResetFlyingShieldSets();
+            UpdateParry();
             ResetDahsSets();
         }
 
         public override void OnRespawn()
         {
-            EmperorDefence = 0;
+            ResetEmperorBoots();
             HurtTimer = 0;
-            nightmareCount = 0;
-            nightmareEnergy = 0;
+            ResetNightmare_Respawn();
             bloodPoolCount = 0;
             TempYujians = new Item[BaseHulu.slotCount];
         }
@@ -242,8 +185,7 @@ namespace Coralite.Content.ModPlayers
 
         public override void PreUpdate()
         {
-            nianliRegain = BaseNianliRegain;
-            nianliMax = BaseNianliMax;
+            ResetYujianNianli();
         }
 
         public override void PreUpdateMovement()
@@ -252,100 +194,6 @@ namespace Coralite.Content.ModPlayers
             if (HasEffect(nameof(Items.Gels.EmperorSlimeBoots))
                 && !Player.mount.Active && Player.grappling[0] == -1 && !Player.tongued && !Player.shimmering)
                 EmperorSlimeMove();
-        }
-
-        private void EmperorSlimeMove()
-        {
-            int hitX = -1;
-            int hitY = -1;
-            bool spawnDust = false;
-
-            List<Point> xHits = null;
-
-            #region X方向撞墙检测，只有冲刺时触发
-
-            if (!Collision.IsClearSpotTest(Player.position + Player.velocity, 16f, Player.width, Player.height, fallThrough: false, fall2: false, (int)Player.gravDir, checkCardinals: true, checkSlopes: true))
-                xHits = Collision.FindCollisionTile(Player.velocity.X > 0 ? 0 : 1, Player.position + Player.velocity, 16f, Player.width, Player.height, fallThrough: false, fall2: false, (int)Player.gravDir, checkCardinals: true);
-
-            if ((Player.dashDelay < 0 || DashTimer != 0)
-                && xHits != null && xHits.Count != 0)
-                foreach (var tilePoint in xHits)
-                {
-                    Tile tile = Main.tile[tilePoint.X, tilePoint.Y];
-                    if (!tile.HasUnactuatedTile || !Main.tileSolid[tile.TileType] || tile.BlockType != BlockType.Solid)
-                        continue;
-
-                    Vector2 center = tilePoint.ToWorldCoordinates();
-
-                    if (center.Y > Player.position.Y && center.Y < Player.position.Y + Player.height
-                        && (center.X < Player.position.X + 8 || center.X > Player.position.X + Player.width - 8))
-                    {
-                        hitX = tilePoint.X;
-                        break;
-                    }
-                }
-
-            #endregion
-
-            #region Y方向撞墙检测
-
-            if (Player.TouchedTiles.Count != 0)
-                foreach (var tilePoint in Player.TouchedTiles)
-                {
-                    Tile tile = Main.tile[tilePoint.X, tilePoint.Y];
-                    if (!tile.HasUnactuatedTile || !Main.tileSolid[tile.TileType] || tile.BlockType != BlockType.Solid)
-                        continue;
-
-                    Vector2 center = tilePoint.ToWorldCoordinates();
-                    if (center.X > Player.position.X && center.X < Player.position.X + Player.width
-                        && center.Y > Player.position.Y + Player.height)
-                    {
-                        hitY = tilePoint.Y;
-                        break;
-                    }
-                }
-
-            #endregion
-
-            float bounceF = -0.7f;//弹力系数
-            if (Player.controlDown)
-                bounceF = -0.15f;//按住下键减少弹性
-            else if (hitX != -1 && MathF.Abs(Player.velocity.X) > 4f)
-            {
-                Player.velocity.X *= bounceF;
-                OnBouncy();
-            }
-
-            if (hitY != -1 && MathF.Abs(Player.velocity.Y) > 4f)
-            {
-                Player.velocity.Y *= bounceF;
-                Player.RefreshMovementAbilities();
-                OnBouncy();
-            }
-
-            if (spawnDust)
-            {
-                Vector2 dir = Player.velocity.SafeNormalize(Vector2.Zero);
-                for (int i = 0; i < 16; i++)
-                {
-                    Dust.NewDustPerfect(Main.rand.NextVector2FromRectangle(Player.Hitbox)
-                        , DustID.t_Slime, dir.RotateByRandom(-0.3f, 0.3f) * Main.rand.NextFloat(1, 5), 150, new Color(50, 150, 225, 50), Main.rand.NextFloat(1f, 1.5f));
-                }
-
-                Helper.PlayPitched(CoraliteSoundID.QueenSlime_Item154, Player.Center, pitch: 0.3f);
-            }
-
-            //弹起时触发，生成粒子，并触发套装效果
-            void OnBouncy()
-            {
-                spawnDust = true;
-
-                if (HasEffect(Items.Gels.EmperorSlimeBoots.DefenceSet) && Player.velocity.Length() > 6.5f)
-                    AddEmperorDefence();
-
-                if (HasEffect(Items.Gels.EmperorSlimeBoots.AttackSet))
-                    Player.AddBuff(BuffType<Items.Gels.EmperorSlimeBuff>(), 60 * 20);
-            }
         }
 
         public override void PreUpdateBuffs()
@@ -377,40 +225,15 @@ namespace Coralite.Content.ModPlayers
             if (Player.HeldItem.ModItem is IEquipHeldItem ehi)
                 ehi.UpdateEquipHeldItem(Player);
 
-            if (ownedYujianProj)
-            {
-                bool justCompleteCharge = nianli < nianliMax;
-                nianli += nianliRegain;
-                nianli = Math.Clamp(nianli, 0f, nianliMax);
-                if (nianli == nianliMax && justCompleteCharge)      //蓄力完成的时刻发出声音
-                    SoundEngine.PlaySound(SoundID.Item4);
-            }
-            else
-                nianli = 0f;
+            UpdateNianli();
 
-            if (nightmareEnergy > nightmareEnergyMax)
-                nightmareEnergy = nightmareEnergyMax;
+            LimitNightmareEnergy();
         }
+
 
         public override void PostUpdateMiscEffects()
         {
-            //有御剑弹幕那就让透明度增加，没有御剑减小透明度直到为0
-            if (ownedYujianProj)
-            {
-                if (yujianUIAlpha < 1f)
-                {
-                    yujianUIAlpha += 0.035f;
-                    yujianUIAlpha = MathHelper.Clamp(yujianUIAlpha, 0f, 1f);
-                    NianliChargingBar.visible = true;
-                }
-            }
-            else if (yujianUIAlpha > 0f)
-            {
-                yujianUIAlpha -= 0.035f;
-                yujianUIAlpha = MathHelper.Clamp(yujianUIAlpha, 0f, 1f);
-                if (yujianUIAlpha <= 0f)
-                    NianliChargingBar.visible = false;
-            }
+            UpdateNianliUI();
 
             if (HasEffect(nameof(MedalOfLife)) && Player.statLifeMax2 - Player.statLife < 20)
             {
@@ -488,8 +311,7 @@ namespace Coralite.Content.ModPlayers
         {
             if (HasEffect(nameof(ThunderElectrified)))
             {
-                if (Player.lifeRegen > 0)
-                    Player.lifeRegen = 0;
+                ClearGoodLifeRegan();
 
                 Player.lifeRegenTime = 0;
                 int damage = (int)(3 + (Player.velocity.Length() * 1.5f));
@@ -502,8 +324,7 @@ namespace Coralite.Content.ModPlayers
 
             if (HasEffect(nameof(LifePulseDevice)))
             {
-                if (Player.lifeRegen > 0)
-                    Player.lifeRegen = 0;
+                ClearGoodLifeRegan();
 
                 if (Player.statLife > 38)
                 {
@@ -514,8 +335,7 @@ namespace Coralite.Content.ModPlayers
 
             if (HasEffect(nameof(OsirisPillar)))
             {
-                if (Player.lifeRegen > 0)
-                    Player.lifeRegen = 0;
+                ClearGoodLifeRegan();
 
                 if (Player.statLife > 80)
                 {
@@ -523,6 +343,12 @@ namespace Coralite.Content.ModPlayers
                     Player.lifeRegenTime = 0;
                 }
             }
+        }
+
+        private void ClearGoodLifeRegan()
+        {
+            if (Player.lifeRegen > 0)
+                Player.lifeRegen = 0;
         }
 
         public override void PostUpdateRunSpeeds()
@@ -541,7 +367,7 @@ namespace Coralite.Content.ModPlayers
             if (rightClickReuseDelay > 0)
                 rightClickReuseDelay--;
 
-            nianli = Math.Clamp(nianli, 0f, nianliMax);  //只是防止意外发生
+            LimitNianli();
             oldOldVelocity = oldVelocity;
             oldVelocity = Player.velocity;
 
@@ -549,13 +375,10 @@ namespace Coralite.Content.ModPlayers
             oldCenter = Player.Center;
         }
 
+
         public override void UpdateDead()
         {
-            if (yujianUIAlpha > 0f)
-            {
-                yujianUIAlpha -= 0.035f;
-                yujianUIAlpha = MathHelper.Clamp(yujianUIAlpha, 0f, 1f);
-            }
+            NianliUIFade();
 
             rightClickReuseDelay = 0;
         }
@@ -593,9 +416,7 @@ namespace Coralite.Content.ModPlayers
             int tempHurtTime = HurtTimer;
             HurtTimer = 0;
 
-            EmperorDefence -= 5;
-            if (EmperorDefence < 0)
-                EmperorDefence = 0;
+            EmperorBootsHurt();
 
             modifiers.ModifyHurtInfo += Post;
 
@@ -683,27 +504,7 @@ namespace Coralite.Content.ModPlayers
                 modifiers.SourceDamage += 0.01f * Math.Clamp(defence / 4, 0, 30);
             }
 
-            if (target.HasBuff(BuffID.Slimed) && EmperorArmorCD == 0)
-            {
-                if (HasEffect(Items.Gels.EmperorSlimeBoots.DefenceSet))//凝胶防御套
-                {
-                    EmperorArmorCD = 30;
-                    AddEmperorDefence();
-                }
-                else if (HasEffect(Items.Gels.EmperorSlimeBoots.AttackSet))//凝胶攻击套
-                {
-                    EmperorArmorCD = 30;
-                    Vector2 dir = Helper.NextVec2Dir();
-
-                    int damage = 44;
-                    if (Player.HeldItem.damage > 0)
-                        damage = (int)Player.GetTotalDamage(Player.HeldItem.DamageType).ApplyTo(damage);
-
-                    Projectile.NewProjectile(Player.GetSource_FromThis(), target.Center + (dir * Main.rand.NextFloat(60, 80)),
-                        dir * Main.rand.NextFloat(2, 4), ProjectileType<Items.Gels.GelChaser>(), damage
-                        , 2, -1, ai1: target.Center.X, ai2: target.Center.Y);
-                }
-            }
+            EmperorSlimeBootsHitNPC(target);
 
             if (Player.HasBuff<Items.Gels.EmperorSlimeBuff>())
                 target.AddBuff(BuffID.Slimed, 60 * 5);
@@ -851,7 +652,7 @@ namespace Coralite.Content.ModPlayers
             if (info.Dodgeable && Main.rand.NextBool((int)(coreKeeperDodge * 100), 100))
             {
                 CombatText.NewText(new Rectangle((int)Player.Top.X, (int)Player.Top.Y, 1, 1)
-                    , Color.White, "闪避");
+                    , Color.White, CoreKeeperDodgeText.Value);
                 Player.AddImmuneTime(ImmunityCooldownID.General, 20);
                 Player.immune = true;
                 return true;
@@ -897,52 +698,6 @@ namespace Coralite.Content.ModPlayers
             return true;
         }
 
-        public void GetNightmareEnergy(short howMany)
-        {
-            if (nightmareEnergy < nightmareEnergyMax)
-            {
-                nightmareEnergy += howMany;
-                if (nightmareEnergy > nightmareEnergyMax)
-                    nightmareEnergy = nightmareEnergyMax;
-            }
-        }
-
-        public void GetBloodPool(int howMany)
-        {
-            bloodPoolCount += howMany;
-            if (bloodPoolCount > BloodPoolCountMax)
-                bloodPoolCount = BloodPoolCountMax;
-        }
-
-        /// <summary>
-        /// 玩家是否有某个效果，建议使用<see cref="nameof"/>来获取字符串
-        /// </summary>
-        /// <param name="effectName"></param>
-        /// <returns></returns>
-        public bool HasEffect(string effectName) //=> Effects.Contains(effectName);
-        {
-            if (PlayerEffectLoader.Effects.TryGetValue(effectName, out var index))
-                return Effects[index];
-
-            return false;
-        }
-
-        /// <summary>
-        /// 为玩家添加某个效果，建议使用<see cref="nameof"/>来获取字符串
-        /// </summary>
-        /// <param name="effectName"></param>
-        /// <returns></returns>
-        public bool AddEffect(string effectName) //=> Effects.Add(effectName);
-        {
-            if (PlayerEffectLoader.Effects.TryGetValue(effectName, out var index))
-            {
-                Effects[index] = true;
-                return true;
-            }
-
-            return false;
-        }
-
         public override void ProcessTriggers(TriggersSet triggersSet)
         {
             if (Core.Loaders.KeybindLoader.ArmorBonus.JustPressed && Main.myPlayer == Player.whoAmI)
@@ -977,30 +732,6 @@ namespace Coralite.Content.ModPlayers
             }
         }
 
-        public override bool ShiftClickSlot(Item[] inventory, int context, int slot)
-        {
-            Item i = inventory[slot];
-            if (i.IsAir)
-                return false;
-
-            if (context == ItemSlot.Context.InventoryItem)
-            {
-                var ui = UILoader.GetUIState<MagikeApparatusPanel>();
-                if (ui.visible && MagikeApparatusPanel.CurrentEntity != null
-                    && MagikeApparatusPanel.CurrentEntity.TryGetComponent(MagikeComponentID.ItemContainer, out ItemContainer container))
-                {
-                    if (container.CanAddItem(i.type, i.stack))
-                    {
-                        container.AddItem(i);
-                        Helper.PlayPitched(CoraliteSoundID.Grab);
-                        return true;
-                    }
-                }
-            }
-
-            return base.ShiftClickSlot(inventory, context, slot);
-        }
-
         private void ItemCheck_StartActualUse(Item sItem)
         {
             bool flag = sItem.type == ItemID.GravediggerShovel;
@@ -1026,13 +757,6 @@ namespace Coralite.Content.ModPlayers
                 SoundEngine.PlaySound(sItem.UseSound, Player.Center);
         }
 
-        public void AddEmperorDefence()
-        {
-            EmperorDefence++;
-            if (EmperorDefence > EmperorDefenctMax)
-                EmperorDefence = EmperorDefenctMax;
-        }
-
         #region 多人同步
 
         public override void SendClientChanges(ModPlayer clientPlayer)
@@ -1052,7 +776,7 @@ namespace Coralite.Content.ModPlayers
             if (CoraliteWorld.CoralCatWorld)
                 Player.QuickSpawnItem(Player.GetSource_FromThis(), ItemID.Meowmere);
 
-            Main.NewText(CoralteSystem.OnEnterWorld.Value, Color.Coral);
+            Main.NewText(CoraliteSystem.OnEnterWorld.Value, Color.Coral);
         }
     }
 }

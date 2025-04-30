@@ -10,6 +10,7 @@ using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
+using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 
 namespace Coralite.Content.NPCs.Crystalline
@@ -91,6 +92,7 @@ namespace Coralite.Content.NPCs.Crystalline
         public override void Load()
         {
             this.LoadGore(4);
+            this.RegisterBestiaryDescription();
         }
 
         public override void SetDefaults()
@@ -111,6 +113,8 @@ namespace Coralite.Content.NPCs.Crystalline
             NPC.DeathSound = CoraliteSoundID.CrystalBroken_DD2_WitherBeastDeath;
             NPC.noGravity = true;
             NPC.value = Item.buyPrice(0, 0, 25, 0);
+
+            SpawnModBiomes = [ModContent.GetInstance<CrystallineSkyIsland>().Type];
         }
 
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
@@ -121,6 +125,13 @@ namespace Coralite.Content.NPCs.Crystalline
                 NPC.width = (int)(NPC.width * NPC.scale);
                 NPC.height = (int)(NPC.height * NPC.scale);
             }
+        }
+
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            bestiaryEntry.AddTags(                
+                this.GetBestiaryDescription()
+                );
         }
 
         public override bool ModifyCollisionData(Rectangle victimHitbox, ref int immunityCooldownSlot, ref MultipliableFloat damageMultiplier, ref Rectangle npcHitbox)
@@ -143,7 +154,7 @@ namespace Coralite.Content.NPCs.Crystalline
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CrystallineMagike>(), 1, 2, 5));
 
             //小概率掉落锋芒
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CrystallineLance>(), 80));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<CrystallineLance>(), 20));
 
             //掉落宝石原石
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<PrimaryRoughGemstone>(), 3, 1, 3));

@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Biomes;
 using Coralite.Content.Dusts;
+using Coralite.Content.Items.Banner;
 using Coralite.Content.Items.LandOfTheLustrousSeries;
 using Coralite.Content.Items.Magike.Refractors;
 using Coralite.Content.Items.MagikeSeries2;
@@ -14,6 +15,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.Drawing;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -81,6 +83,7 @@ namespace Coralite.Content.NPCs.Crystalline
         public override void Load()
         {
             this.LoadGore(3);
+            this.RegisterBestiaryDescription();
         }
 
         public override void SetDefaults()
@@ -97,6 +100,15 @@ namespace Coralite.Content.NPCs.Crystalline
             NPC.noGravity = true;
             NPC.noTileCollide = true;
             NPC.value = Item.buyPrice(0, 0, 25, 0);
+
+            SpawnModBiomes = [ModContent.GetInstance<CrystallineSkyIsland>().Type];
+        }
+
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            bestiaryEntry.AddTags(
+                this.GetBestiaryDescription()
+                );
         }
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
@@ -652,6 +664,25 @@ namespace Coralite.Content.NPCs.Crystalline
 
         protected override int AttackLength => GetBiteLength() + 16 * 5;
 
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+            var drawModifier = new NPCID.Sets.NPCBestiaryDrawModifiers()
+            { // Influences how the NPC looks in the Bestiary
+                CustomTexturePath = Texture + "_Bestiary",
+                //Position = new Vector2(40f, 24f),
+                PortraitPositionXOverride = 0f,
+            };
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, drawModifier);
+        }
+
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Banner = NPC.type;
+            BannerItem = ModContent.ItemType<CrystallineVinicColumnBannerItem>();
+        }
+
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             NormalDrop(ref npcLoot);
@@ -800,6 +831,25 @@ namespace Coralite.Content.NPCs.Crystalline
         protected override int AttackLength => 16 * 40;
 
         private ref float LaserShootCount => ref NPC.localAI[2];
+
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+            var drawModifier = new NPCID.Sets.NPCBestiaryDrawModifiers()
+            { // Influences how the NPC looks in the Bestiary
+                CustomTexturePath = Texture + "_Bestiary",
+                //Position = new Vector2(40f, 24f),
+                PortraitPositionXOverride = 0f,
+            };
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, drawModifier);
+        }
+
+        public override void SetDefaults()
+        {
+            base.SetDefaults();
+            Banner = NPC.type;
+            BannerItem = ModContent.ItemType<CrystallineVinicLaserBannerItem>();
+        }
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {

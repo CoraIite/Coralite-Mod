@@ -129,14 +129,8 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void Initialize()
         {
-            Projectile.oldPos = new Vector2[trailCachesLength];
-            Projectile.oldRot = new float[trailCachesLength];
-
-            for (int i = 0; i < trailCachesLength; i++)
-            {
-                Projectile.oldPos[i] = Projectile.Center;
-                Projectile.oldRot[i] = Projectile.rotation;
-            }
+            Projectile.InitOldPosCache(trailCachesLength);
+            Projectile.InitOldRotCache(trailCachesLength);
         }
 
         public override void AI()

@@ -135,8 +135,8 @@ namespace Coralite.Core.Systems.YujianSystem
             {
                 SourceYujian = yujianSource.Yujian;
             }
-            Projectile.oldPos = new Vector2[trailCacheLength];
-            Projectile.oldRot = new float[trailCacheLength];
+            Projectile.InitOldPosCache(trailCacheLength);
+            Projectile.InitOldRotCache(trailCacheLength);
 
             InitTrailCaches();
         }

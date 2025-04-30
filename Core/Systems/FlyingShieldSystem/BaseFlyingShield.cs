@@ -108,14 +108,9 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
                 Timer = flyingTime;
 
                 Projectile.velocity = Projectile.velocity.SafeNormalize(Vector2.Zero) * shootSpeed;
-                Projectile.oldPos = new Vector2[trailCachesLength];
-                Projectile.oldRot = new float[trailCachesLength];
                 Projectile.rotation = Projectile.velocity.ToRotation();
-                for (int i = 0; i < trailCachesLength; i++)
-                {
-                    Projectile.oldPos[i] = Projectile.Center;
-                    Projectile.oldRot[i] = Projectile.rotation;
-                }
+                Projectile.InitOldPosCache(trailCachesLength);
+                Projectile.InitOldRotCache(trailCachesLength);
                 State = (int)FlyingShieldStates.Shooting;
                 recordTileCollide = Projectile.tileCollide;
             }

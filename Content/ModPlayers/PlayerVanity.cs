@@ -24,7 +24,7 @@ namespace Coralite.Content.ModPlayers
             if (HasEffect(nameof(HylianShield)))
                 drawInfo.drawPlayer.shield = EquipLoader.GetEquipSlot(Mod, "HylianShield", EquipType.Shield);
 
-            if (drawInfo.drawPlayer.armor[10].IsAir)
+            //if (drawInfo.drawPlayer.armor[10].IsAir)
             {
                 var head = OverrideHeadSlot();
                 if (head.HasValue)
@@ -87,14 +87,14 @@ namespace Coralite.Content.ModPlayers
 
         private int? OverrideHeadSlot()
         {
-            if (HasEffect(nameof(CharmOfIsis) + "Vanity"))
+            if (HasEffect(CharmOfIsis.Vanity))
                 return EquipLoader.GetEquipSlot(Mod, "CharmOfIsis", EquipType.Head);
-            else if (HasEffect(nameof(OsirisPillar) + "Vanity"))
+            else if (HasEffect(OsirisPillar.Vanity))
                 return EquipLoader.GetEquipSlot(Mod, "OsirisPillar", EquipType.Head);
-            else if (HasEffect(BloodmarkTopper.ShadowSet))
-                return EquipLoader.GetEquipSlot(Mod, BloodmarkTopper.ShadowSetVinityName, EquipType.Head);
-            else if (HasEffect(BloodmarkTopper.PrisonSet))
-                return EquipLoader.GetEquipSlot(Mod, BloodmarkTopper.PrisonSetVinityName, EquipType.Head);
+            else if (HasEffect(BloodmarkTopper.ShadowSet) || HasEffect(BloodmarkTopper.ShadowSetVanityName))
+                return EquipLoader.GetEquipSlot(Mod, BloodmarkTopper.ShadowSetVanityName, EquipType.Head);
+            else if (HasEffect(BloodmarkTopper.PrisonSet) || HasEffect(BloodmarkTopper.PrisonSetVanityName))
+                return EquipLoader.GetEquipSlot(Mod, BloodmarkTopper.PrisonSetVanityName, EquipType.Head);
 
             return null;
         }

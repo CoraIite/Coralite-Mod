@@ -142,6 +142,11 @@ namespace Coralite.Content.Biskety
             DamageShowTexts = null;
         }
 
+        public override void SetStaticDefaults()
+        {
+            NPC.SetHideInBestiary();
+        }
+
         public override void SetDefaults()
         {
             NPC.lifeMax = 10_0000_0000;

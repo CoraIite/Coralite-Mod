@@ -32,6 +32,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         {
             NPCID.Sets.ProjectileNPC[Type] = true;
             NPCID.Sets.MustAlwaysDraw[Type] = true;
+            NPC.SetHideInBestiary();
         }
 
         public override void SetDefaults()

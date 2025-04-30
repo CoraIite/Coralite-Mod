@@ -35,9 +35,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public override void Initialize()
         {
-            Projectile.oldPos = new Vector2[20];
-            for (int i = 0; i < 20; i++)
-                Projectile.oldPos[i] = Projectile.Center;
+            Projectile.InitOldPosCache(20);
         }
 
         public override void AI()

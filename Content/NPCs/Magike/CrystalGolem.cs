@@ -4,12 +4,14 @@ using Coralite.Content.Items.Banner;
 using Coralite.Content.Items.LandOfTheLustrousSeries;
 using Coralite.Content.Items.MagikeSeries1;
 using Coralite.Core;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
+using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.Graphics.CameraModifiers;
 using Terraria.ID;
@@ -28,13 +30,14 @@ namespace Coralite.Content.NPCs.Magike
         public ref float TargetLineLength => ref NPC.localAI[0];
         public ref float FreezeTime => ref NPC.localAI[1];
 
-        public static Asset<Texture2D> WarningLineTex;
-        public static Asset<Texture2D> WarningLineSideTex;
+        public static ATex WarningLineTex;
+        public static ATex WarningLineSideTex;
         public const int FrameHeight = 848 / 8;
 
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[Type] = 8;
+            this.RegisterBestiaryDescription();
         }
 
         public override void SetDefaults()
@@ -55,6 +58,15 @@ namespace Coralite.Content.NPCs.Magike
             NPC.knockBackResist = 0f;
             NPC.noGravity = false;
             NPC.value = Item.buyPrice(0, 0, 20, 0);
+
+            SpawnModBiomes = [ModContent.GetInstance<MagicCrystalCave>().Type];
+        }
+
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            bestiaryEntry.AddTags(
+                this.GetBestiaryDescription()
+                );
         }
 
         public override void Load()

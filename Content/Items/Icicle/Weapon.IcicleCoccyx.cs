@@ -318,13 +318,9 @@ namespace Coralite.Content.Items.Icicle
                 SoundEngine.PlaySound(CoraliteSoundID.Swing_Item1, Projectile.Center);
                 FinalRotationOffset = SwingAngle * ((int)TimeMax / 2);
                 Projectile.timeLeft = (int)TimeMax;
-                Projectile.oldPos = new Vector2[CACHE_LENGTH];
-                Projectile.oldRot = new float[CACHE_LENGTH];
-                for (int i = 0; i < CACHE_LENGTH; i++)
-                {
-                    Projectile.oldPos[i] = Owner.Center;
-                    Projectile.oldRot[i] = Projectile.rotation;
-                }
+                Projectile.InitOldPosCache(CACHE_LENGTH);
+                Projectile.InitOldRotCache(CACHE_LENGTH);
+
                 PerPartLength = 0.1f;
                 initialize = false;
             }

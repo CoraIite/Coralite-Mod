@@ -5,6 +5,7 @@ using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
+using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader.Exceptions;
 using Terraria.ModLoader.IO;
@@ -163,14 +164,30 @@ namespace Coralite.Core.Systems.MagikeSystem
             }
         }
 
-        private List<Item> _items;
-        public List<Item> RequiredItems
+        private List<RequiredItem> _requiredItems;
+        public List<RequiredItem> RequiredItems
         {
             get
             {
-                _items ??= [];
-                return _items;
+                _requiredItems ??= [];
+                return _requiredItems;
             }
+        }
+
+        /// <summary>
+        /// 是否有次要物品
+        /// </summary>
+        public bool HasRequiredItem => _requiredItems != null && _requiredItems.Count > 0;
+
+        /// <summary>
+        /// 次要物品结构体
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="stack"></param>
+        public readonly struct RequiredItem(int type, int stack)
+        {
+            public readonly int type = type;
+            public readonly int stack = stack;
         }
 
         private List<(RecipeGroup, int)> _itemGroups;
@@ -182,6 +199,11 @@ namespace Coralite.Core.Systems.MagikeSystem
                 return _itemGroups;
             }
         }
+
+        /// <summary>
+        /// 是否有次要合成组
+        /// </summary>
+        public bool HasRequiredItemGroup => _itemGroups != null && _itemGroups.Count > 0;
 
         public Action<Item, Item> onCraft;
 
@@ -195,7 +217,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         /// </summary>
         public RecipeType recipeType = RecipeType.MagikeCraft;
 
-        public enum RecipeType
+        public enum RecipeType : byte
         {
             /// <summary>
             /// 魔能合成
@@ -305,7 +327,7 @@ namespace Coralite.Core.Systems.MagikeSystem
                     else
                     {
                         attempt.otherItemNotEnough = true;
-                        attempt.lackItemName = requireItem.Name;
+                        attempt.lackItemName =ContentSamples.ItemsByType[ requireItem.type].Name;
                         attempt.lackAmount = requireItem.stack - currentStack;
                         break;
                     }
@@ -472,7 +494,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         /// <returns></returns>
         public MagikeRecipe AddIngredient(int itemID, int stack = 1)
         {
-            RequiredItems.Add(new Item(itemID, stack));
+            RequiredItems.Add(new RequiredItem(itemID, stack));
             return this;
         }
 
@@ -484,7 +506,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         /// <returns></returns>
         public MagikeRecipe AddIngredient<T>(int stack = 1) where T : ModItem
         {
-            RequiredItems.Add(new Item(ItemType<T>(), stack));
+            RequiredItems.Add(new RequiredItem(ItemType<T>(), stack));
             return this;
         }
 
@@ -582,7 +604,7 @@ namespace Coralite.Core.Systems.MagikeSystem
             if (MainItem != null)
                 recipe.AddIngredient(MainItem.type, MainItem.stack);
 
-            if (_items != null)
+            if (_requiredItems != null)
                 foreach (var item in RequiredItems)
                     recipe.AddIngredient(item.type, item.stack);
 

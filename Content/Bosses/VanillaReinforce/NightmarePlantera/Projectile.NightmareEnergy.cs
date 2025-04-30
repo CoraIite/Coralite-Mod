@@ -167,10 +167,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 drawColor = NightmarePlantera.phantomColors[c];
             }
             Projectile.rotation = Projectile.velocity.ToRotation();
-
-            Projectile.oldPos = new Vector2[TrailLength];
-            for (int i = 0; i < TrailLength; i++)
-                Projectile.oldPos[i] = Projectile.Center;
+            Projectile.InitOldPosCache(TrailLength);
         }
 
         public override void AI()

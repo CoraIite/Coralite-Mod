@@ -557,7 +557,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                         if (recipe.recipeType != MagikeRecipe.RecipeType.MagikeCraft)//必须得是魔能合成的合成表
                             continue;
 
-                        if (recipe.RequiredItems == null || recipe.RequiredItems.Count == 0)
+                        if (!recipe.HasRequiredItem)
                         {
                             remodelRecipes.Add(recipe);
                             continue;
@@ -803,7 +803,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 for (int i = 0; i < total; i++)
                 {
                     float rot = Main.GlobalTimeWrappedHourly + (float)i / total * MathHelper.TwoPi;
-                    DrawItem(spriteBatch, ChosenResipe.RequiredItems[i], position + rot.ToRotationVector2() * Length * 0.9f, 48, c);
+                    DrawItem(spriteBatch, ContentSamples.ItemsByType[ChosenResipe.RequiredItems[i].type], position + rot.ToRotationVector2() * Length * 0.9f, 48, c);
                 }
             }
         }
@@ -1468,7 +1468,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             //grid.Add(new CraftMaagikeBar(recipe));
             grid.Add(new UIVerticalLine());
 
-            if (recipe.RequiredItems.Count > 0)
+            if (recipe.HasRequiredItem)
                 for (int i = 0; i < recipe.RequiredItems.Count; i++)
                 {
                     slot = new CraftSlot(recipe, CraftSlot.SlotType.RequiredItem, i);
@@ -1476,7 +1476,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                     grid.Add(slot);
                 }
 
-            if (recipe.RequiredItemGroups.Count > 0)
+            if (recipe.HasRequiredItemGroup)
                 for (int i = 0; i < recipe.RequiredItemGroups.Count; i++)
                 {
                     slot = new CraftSlot(recipe, CraftSlot.SlotType.GroupItem, i);
@@ -1530,7 +1530,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                     showItem = recipe.ResultItem.Clone();
                     break;
                 case SlotType.RequiredItem:
-                    showItem = recipe.RequiredItems[requiredIndex].Clone();
+                    showItem = ContentSamples.ItemsByType[recipe.RequiredItems[requiredIndex].type].Clone();
                     break;
                 case SlotType.GroupItem:
                     var i = new Item(recipe.RequiredItemGroups[requiredIndex].Item1.IconicItemId, recipe.RequiredItemGroups[requiredIndex].Item2);

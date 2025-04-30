@@ -10,7 +10,12 @@ DamageClasses: {
 	// RangedNoAttackSpeed.DisplayName: Ranged No Attack Speed
 }
 
-Players.CoralitePlayer.ThunderElectrifiedDeath: Убит молнией
+Players: {
+	CoralitePlayer: {
+		ThunderElectrifiedDeath: Убит молнией
+		// CoreKeeperDodgeText: Mods.Coralite.Players.CoralitePlayer.CoreKeeperDodgeText
+	}
+}
 
 Conditions: {
 	CoraliteConditions: {
@@ -32,6 +37,7 @@ Conditions: {
 		// InMagicCrystalCave: Mods.Coralite.Conditions.CoraliteConditions.InMagicCrystalCave
 		// InCrystallineSkyIsland: Mods.Coralite.Conditions.CoraliteConditions.InCrystallineSkyIsland
 		// UseShlimmerTranslation: Mods.Coralite.Conditions.CoraliteConditions.UseShlimmerTranslation
+		// UseRuneParchment: Mods.Coralite.Conditions.CoraliteConditions.UseRuneParchment
 	}
 }
 
@@ -68,12 +74,4 @@ WorldGeneration: {
 	}
 }
 
-Important.CoralteSystem.OnEnterWorld:
-	'''
-	Coralite v0.2.1.x Разрушительные советы по обновлению
-	一一一一一一一一
-	Из-за некоторых деструктивных модификаций, магические аппараты, которые существовали в мирах до версии 0.2.1, теперь непригодны для использования.
-	Приносим свои извинения за доставленные неудобства.
-	Способ исправить это – разрушить его и поставить снова, но фильтры внутри не вернутся.
-	一一一一一一一一
-	'''
+Important.CoraliteSystem.OnEnterWorld: ""

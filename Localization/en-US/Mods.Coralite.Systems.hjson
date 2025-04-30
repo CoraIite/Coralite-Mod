@@ -154,3 +154,5 @@ KnowledgeSystem: {
 		Description: Mods.Coralite.Systems.KnowledgeSystem.MagikeS2Knowledge.Description
 	}
 }
+
+CoraliteBeatiaryDatabase.CrystallineSkyIsland: Mods.Coralite.Systems.CoraliteBeatiaryDatabase.CrystallineSkyIsland

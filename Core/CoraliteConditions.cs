@@ -22,6 +22,8 @@ namespace Coralite.Core
         public static Condition InMagicCrystalCave { get; private set; }
         public static Condition InCrystallineSkyIsland { get; private set; }
 
+        public static Condition UseRuneParchment { get; private set; }
+
         /// <summary>
         /// 解锁染料商
         /// </summary>
@@ -64,15 +66,20 @@ namespace Coralite.Core
             NotInDigDigDig = new(this.GetLocalization(nameof(NotInDigDigDig))
                 , () => !CoraliteWorld.DigDigDigWorld);
 
+
             MagikeCraft = new(this.GetLocalization(nameof(MagikeCraft))
                 , () => false);
             SpellCraft = new(this.GetLocalization(nameof(SpellCraft))
                 , () => false);
+            UseRuneParchment = new Condition(this.GetLocalization(nameof(UseRuneParchment))
+                , () => false);
+
 
             InMagicCrystalCave = new(this.GetLocalization(nameof(InMagicCrystalCave))
                 , () => Main.LocalPlayer.InModBiome<MagicCrystalCave>());
             InCrystallineSkyIsland = new Condition(this.GetLocalization(nameof(InCrystallineSkyIsland))
                 , () => Main.LocalPlayer.InModBiome<CrystallineSkyIsland>());
+
 
 
             UseMultiBlockStructure = new(this.GetLocalization(nameof(UseMultiBlockStructure))

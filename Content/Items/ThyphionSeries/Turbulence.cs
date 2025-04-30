@@ -3,6 +3,7 @@ using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Attributes;
 using Coralite.Core.Configs;
+using Coralite.Core.Loaders;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.CameraSystem;
@@ -721,7 +722,6 @@ namespace Coralite.Content.Items.ThyphionSeries
     {
         public override string Texture => AssetDirectory.Particles + "CyanLine";
 
-        static BasicEffect effect;
         public TurbulenceHeldProj proj;
         public float zRot;
         public float alpha = 0;
@@ -729,19 +729,6 @@ namespace Coralite.Content.Items.ThyphionSeries
         public float startRot;
 
         public static float MaxRotateSpeed = 0.25f;
-
-        public TurbulenceCircle()
-        {
-            if (Main.dedServ)
-                return;
-
-            Main.QueueMainThreadAction(() =>
-            {
-                effect = new BasicEffect(Main.instance.GraphicsDevice);
-                effect.VertexColorEnabled = true;
-                effect.TextureEnabled = true;
-            });
-        }
 
         public override void SetProperty()
         {
@@ -836,20 +823,16 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public override void DrawPrimitive()
         {
-            if (effect == null)
-                return;
-
             Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
             Matrix view = Main.GameViewMatrix.TransformationMatrix;
             Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
-            //effect.Texture = Texture2D.Value;
-            effect.World = world;
-            effect.View = view;
-            effect.Projection = projection;
-            effect.Texture = TexValue;
+            EffectLoader.TextureColorEffect.World = world;
+            EffectLoader.TextureColorEffect.View = view;
+            EffectLoader.ColorOnlyEffect.Projection = projection;
+            EffectLoader.TextureColorEffect.Texture = TexValue;
 
-            trail?.DrawTrail(effect);
+            trail?.DrawTrail(EffectLoader.TextureColorEffect);
         }
     }
 

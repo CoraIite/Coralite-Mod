@@ -21,12 +21,13 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
+using Terraria.ModLoader.IO;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Misc_Equip
 {
     [AutoloadEquip(EquipType.Head)]
-    [PlayerEffect(ExtraEffectNames = [BloodSet, ShadowSet, PrisonSet])]
+    [PlayerEffect(ExtraEffectNames = [BloodSet, ShadowSet, PrisonSet, ShadowSetVanityName, PrisonSetVanityName])]
     public class BloodmarkTopper : ModItem, IMagikeCraftable
     {
         public override string Texture => AssetDirectory.Misc_Equip + Name;
@@ -35,19 +36,21 @@ namespace Coralite.Content.Items.Misc_Equip
         public const string BloodSet = "BloodmarkTopperA";
         /// <summary> 与暗影套触发的套装效果 </summary>
         public const string ShadowSet = "BloodmarkTopperB";
-        public const string ShadowSetVinity = $"{AssetDirectory.Misc_Equip}BloodmarkTopperShadow_Head";
-        public const string ShadowSetVinityName = "BloodmarkTopperShadow";
+        public const string ShadowSetVanity = $"{AssetDirectory.Misc_Equip}BloodmarkTopperShadow_Head";
+        public const string ShadowSetVanityName = "BloodmarkTopperShadow";
         /// <summary> 与黑曜石套触发的套装效果 </summary>
         public const string PrisonSet = "BloodmarkTopperC";
-        public const string PrisonSetVinity = $"{AssetDirectory.Misc_Equip}BloodmarkTopperPrison_Head";
-        public const string PrisonSetVinityName = "BloodmarkTopperPrison";
+        public const string PrisonSetVanity = $"{AssetDirectory.Misc_Equip}BloodmarkTopperPrison_Head";
+        public const string PrisonSetVanityName = "BloodmarkTopperPrison";
 
         public static LocalizedText[] EXToolTip { get; private set; }
         public static LocalizedText[] Bonus { get; private set; }
         public static LocalizedText[] EXName { get; private set; }
         public static LocalizedText SetTip { get; private set; }
 
-        private enum ArmorSetType
+        private ArmorSetType vanityType=ArmorSetType.Blood;
+
+        private enum ArmorSetType : byte
         {
             Blood,
             Shadow,
@@ -56,7 +59,7 @@ namespace Coralite.Content.Items.Misc_Equip
             Count
         }
 
-        private enum EXToolTipID//额外的物品提示
+        private enum EXToolTipID : byte//额外的物品提示
         {
             None,
             Blood,
@@ -68,8 +71,8 @@ namespace Coralite.Content.Items.Misc_Equip
 
         public override void Load()
         {
-            EquipLoader.AddEquipTexture(Mod, ShadowSetVinity, EquipType.Head, name: ShadowSetVinityName);
-            EquipLoader.AddEquipTexture(Mod, PrisonSetVinity, EquipType.Head, name: PrisonSetVinityName);
+            EquipLoader.AddEquipTexture(Mod, ShadowSetVanity, EquipType.Head, name: ShadowSetVanityName);
+            EquipLoader.AddEquipTexture(Mod, PrisonSetVanity, EquipType.Head, name: PrisonSetVanityName);
 
             EXToolTip = new LocalizedText[(int)EXToolTipID.Count];
             for (int i = 0; i < (int)EXToolTipID.Count; i++)
@@ -100,6 +103,17 @@ namespace Coralite.Content.Items.Misc_Equip
             Item.rare = RarityType<BloodRarity>();
             Item.defense = 9;
         }
+
+        public override bool CanRightClick() => true;
+
+        public override void RightClick(Player player)
+        {
+            vanityType++;
+            if (vanityType > ArmorSetType.Prison)
+                vanityType = ArmorSetType.Blood;
+        }
+
+        public override bool ConsumeItem(Player player) => false;
 
         public void AddMagikeCraftRecipe()
         {
@@ -144,6 +158,22 @@ namespace Coralite.Content.Items.Misc_Equip
             else if (count > 1)
                 foreach (var proj in Main.projectile.Where(p => p.active && p.owner == player.whoAmI && p.type == projType))
                     proj.Kill();
+        }
+
+        public override bool IsVanitySet(int head, int body, int legs)
+        {
+            return true;
+        }
+
+        public override void UpdateVanitySet(Player player)
+        {
+            if (!player.armor[10].IsAir&& player.armor[10].ModItem is BloodmarkTopper bt && player.TryGetModPlayer(out CoralitePlayer cp))
+            {
+                if (bt.vanityType == ArmorSetType.Shadow)
+                    cp.AddEffect(ShadowSetVanityName);
+                else if (bt.vanityType == ArmorSetType.Prison)
+                    cp.AddEffect(PrisonSetVanityName);
+            }
         }
 
         public override bool IsArmorSet(Item head, Item body, Item legs)
@@ -208,17 +238,7 @@ namespace Coralite.Content.Items.Misc_Equip
                         cp.AddEffect(ShadowSet);
                         player.statDefense += 6;
 
-                        cp.shadowBonusTime++;
-                        if (cp.shadowBonusTime > 60 * 12)
-                        {
-                            cp.shadowBonusTime = 0;
-                            if (cp.shadowAttackBonus > 0)
-                                cp.shadowAttackBonus--;
-                            if (cp.shadowLifeMaxBonus > 0)
-                                cp.shadowLifeMaxBonus--;
-                            if (cp.shadowDefenceBonus > 0)
-                                cp.shadowDefenceBonus--;
-                        }
+                        cp.UpdateShadowTopper();
 
                         player.GetDamage(DamageClass.Generic) += cp.shadowAttackBonus * 0.03f;
                         cp.LifeMaxModifyer.Flat += 5 * cp.shadowLifeMaxBonus;
@@ -284,6 +304,17 @@ namespace Coralite.Content.Items.Misc_Equip
                 if (cp.HasEffect(ShadowSet) && cp.shadowDefenceBonus > 3)
                     player.armorEffectDrawShadow = true;
             }
+        }
+
+        public override void SaveData(TagCompound tag)
+        {
+            tag.Add(nameof(vanityType), (byte)vanityType);
+        }
+
+        public override void LoadData(TagCompound tag)
+        {
+            if (tag.TryGet(nameof(vanityType), out byte b1))
+                vanityType = (ArmorSetType)b1;
         }
     }
 
@@ -406,6 +437,8 @@ namespace Coralite.Content.Items.Misc_Equip
 
             public void Boom(Projectile projectile, int damage)
             {
+                PRTLoader.NewParticle<BloodStrike>(Pos, Vector2.Zero);
+
                 for (int i = 0; i < 10; i++)
                 {
                     Dust d = Dust.NewDustPerfect(Pos, DustID.Blood, Helper.NextVec2Dir(2, 4), Scale: Main.rand.NextFloat(1f, 1.5f));
@@ -558,10 +591,7 @@ namespace Coralite.Content.Items.Misc_Equip
 
                         if (Projectile.IsOwnedByLocalPlayer() && Timer == 3 * 4)//生成咬合弹幕
                         {
-                            int damage = projDamage;
-                            if (!Owner.HeldItem.IsAir && Owner.HeldItem.damage > 0 && !Owner.HeldItem.IsTool())
-                                damage = (int)(Owner.GetDamage(Owner.HeldItem.DamageType).ApplyTo(damage));
-
+                            int damage = Owner.GetDamageByHeldItem(projDamage);
                             Projectile.NewProjectileFromThis<T>(Main.rand.NextVector2FromRectangle(target.getRect())
                                 , Vector2.Zero, damage, 0);
 
@@ -649,9 +679,7 @@ namespace Coralite.Content.Items.Misc_Equip
                             {
                                 if (Timer == 4 * 4)
                                 {
-                                    int damage = 70;
-                                    if (!Owner.HeldItem.IsAir && Owner.HeldItem.damage > 0 && !Owner.HeldItem.IsTool())
-                                        damage = (int)(Owner.GetDamage(Owner.HeldItem.DamageType).ApplyTo(damage));
+                                    int damage = Owner.GetDamageByHeldItem(70);
 
                                     Vector2 dir = (pos - Projectile.Center).SafeNormalize(Vector2.Zero);
                                     Projectile.NewProjectileFromThis<FishScissors>(Projectile.Center
@@ -669,9 +697,7 @@ namespace Coralite.Content.Items.Misc_Equip
                             else
                             if (Timer is 4 * 2 or 4 * 3 or 4 * 4)
                             {
-                                int damage = 25;
-                                if (!Owner.HeldItem.IsAir && Owner.HeldItem.damage > 0 && !Owner.HeldItem.IsTool())
-                                    damage = (int)(Owner.GetDamage(Owner.HeldItem.DamageType).ApplyTo(damage));
+                                int damage = Owner.GetDamageByHeldItem (25);
 
                                 Vector2 dir = (pos - Projectile.Center).SafeNormalize(Vector2.Zero);
                                 Projectile.NewProjectileFromThis<PrisonProj>(Projectile.Center
@@ -726,13 +752,9 @@ namespace Coralite.Content.Items.Misc_Equip
             {
                 if (Projectile.IsOwnedByLocalPlayer())
                 {
-                    int damage = 25;
-                    if (!Owner.HeldItem.IsAir && Owner.HeldItem.damage > 0 && !Owner.HeldItem.IsTool())
-                        damage = (int)(Owner.GetDamage(Owner.HeldItem.DamageType).ApplyTo(damage));
+                    int damage = Owner.GetDamageByHeldItem(25);
                     foreach (var bt in BloodToppers)
-                    {
                         bt.Boom(Projectile, damage);
-                    }
 
                     Helper.PlayPitched(CoraliteSoundID.Fleshy_NPCDeath1, Projectile.Center);
                 }
@@ -1493,6 +1515,11 @@ namespace Coralite.Content.Items.Misc_Equip
         }
     }
 
+    public class BloodStrike() : BaseFrameParticle(4, 5, 3)
+    {
+        public override string Texture => AssetDirectory.Misc_Equip + Name;
+    }
+
     public class LittleShadowMonster : ModProjectile
     {
         public override string Texture => AssetDirectory.Misc_Equip + Name;
@@ -1598,21 +1625,18 @@ namespace Coralite.Content.Items.Misc_Equip
                             Projectile.Kill();
                             if (Main.player[Projectile.owner].TryGetModPlayer(out CoralitePlayer cp))
                             {
-                                cp.shadowBonusTime = 0;
+                                cp.ResetShadowTopperTime();
                                 switch (ShadowStyle)
                                 {
                                     default:
                                     case 0:
-                                        if (cp.shadowAttackBonus < 5)
-                                            cp.shadowAttackBonus++;
+                                        cp.GetShadowAttackBonus();
                                         break;
                                     case 1:
-                                        if (cp.shadowLifeMaxBonus < 5)
-                                            cp.shadowLifeMaxBonus++;
+                                        cp.GetShadowLifeMaxBonus();
                                         break;
                                     case 2:
-                                        if (cp.shadowDefenceBonus < 5)
-                                            cp.shadowDefenceBonus++;
+                                        cp.GetshadowDefenceBonus();
                                         break;
                                 }
                             }
@@ -1909,7 +1933,7 @@ namespace Coralite.Content.Items.Misc_Equip
         }
     }
 
-    public class PrisonBuff:ModBuff
+    public class PrisonBuff : ModBuff
     {
         public override string Texture => AssetDirectory.Buffs + "Buff";
 

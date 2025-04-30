@@ -3,7 +3,9 @@ using Coralite.Content.Items.Banner;
 using Coralite.Content.Items.LandOfTheLustrousSeries;
 using Coralite.Content.Items.MagikeSeries1;
 using Coralite.Core;
+using Coralite.Helpers;
 using Terraria;
+using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 
@@ -16,6 +18,12 @@ namespace Coralite.Content.NPCs.Magike
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[Type] = 2;
+            this.RegisterBestiaryDescription();
+
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, new NPCID.Sets.NPCBestiaryDrawModifiers()
+            {
+                PortraitPositionYOverride = -24
+            });
         }
 
         public override void SetDefaults()
@@ -29,6 +37,16 @@ namespace Coralite.Content.NPCs.Magike
 
             NPC.HitSound = CoraliteSoundID.DigStone_Tink;
             NPC.DeathSound = CoraliteSoundID.GlassBroken_Shatter;
+
+            SpawnModBiomes = [ModContent.GetInstance<MagicCrystalCave>().Type];
+        }
+
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            bestiaryEntry.AddTags(
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.NightTime,
+                this.GetBestiaryDescription()
+                );
         }
 
         public override void AI()

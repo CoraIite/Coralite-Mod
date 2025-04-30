@@ -112,9 +112,7 @@ namespace Coralite.Content.Items.RedJades
 
         public override void Initialize()
         {
-            Projectile.oldPos = new Vector2[14];
-            for (int i = 0; i < 14; i++)
-                Projectile.oldPos[i] = Projectile.Center;
+            Projectile.InitOldPosCache(14);
         }
 
         public override void AI()

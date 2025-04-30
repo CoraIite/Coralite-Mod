@@ -116,10 +116,21 @@ GamePlayConfig: {
 	Headers: {
 		Magike: 魔能系统
 		Misc: 杂项
+		Dash: 冲刺
 	}
 
 	SelectSize: {
 		Label: 选区尺寸
 		Tooltip: 改变各类滤镜等的最大选取尺寸
+	}
+
+	OnlyDashKey: {
+		Label: 仅使用冲刺按键
+		Tooltip:
+			'''
+			启用后只能使用冲刺按键触发冲刺
+			双击将不再能冲刺
+			可在模组控件中修改冲刺按键
+			'''
 	}
 }

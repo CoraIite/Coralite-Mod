@@ -296,13 +296,8 @@ namespace Coralite.Content.Items.Nightmare
                 TimeMax = 30;
                 FinalRotationOffset = -0.17f;
                 Projectile.timeLeft = (int)TimeMax;
-                Projectile.oldPos = new Vector2[CACHE_LENGTH];
-                Projectile.oldRot = new float[CACHE_LENGTH];
-                for (int i = 0; i < CACHE_LENGTH; i++)
-                {
-                    Projectile.oldPos[i] = Owner.Center;
-                    Projectile.oldRot[i] = FinalRotationOffset;
-                }
+                Projectile.InitOldPosCache(CACHE_LENGTH);
+                Projectile.InitOldRotCache(CACHE_LENGTH);
                 PerPartLength = 0.1f;
                 initialize = false;
             }

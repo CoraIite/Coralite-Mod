@@ -1,6 +1,7 @@
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Configs;
+using Coralite.Core.Loaders;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using InnoVault.Trails;
@@ -15,23 +16,8 @@ namespace Coralite.Content.Items.Icicle
     {
         public override string Texture => AssetDirectory.IcicleItems + "IceStarLight";
 
-        BasicEffect effect;
         private Trail trail;
         private bool span;
-
-        public IcicleStarArrow()
-        {
-            if (Main.dedServ)
-            {
-                return;
-            }
-
-            Main.QueueMainThreadAction(() =>
-            {
-                effect = new BasicEffect(Main.instance.GraphicsDevice);
-                effect.VertexColorEnabled = true;
-            });
-        }
 
         public override void SetDefaults()
         {
@@ -46,9 +32,7 @@ namespace Coralite.Content.Items.Icicle
 
         public void Initialize()
         {
-            Projectile.oldPos = new Vector2[16];
-            for (int i = 0; i < 16; i++)
-                Projectile.oldPos[i] = Projectile.Center;
+            Projectile.InitOldPosCache(16);
         }
 
         public override void AI()
@@ -107,18 +91,15 @@ namespace Coralite.Content.Items.Icicle
 
         public void DrawPrimitives()
         {
-            if (effect == null)
-                return;
-
             Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
             Matrix view = Main.GameViewMatrix.TransformationMatrix;
             Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
-            effect.World = world;
-            effect.View = view;
-            effect.Projection = projection;
+            EffectLoader.ColorOnlyEffect.World = world;
+            EffectLoader.ColorOnlyEffect.View = view;
+            EffectLoader.ColorOnlyEffect.Projection = projection;
 
-            trail?.DrawTrail(effect);
+            trail?.DrawTrail(EffectLoader.ColorOnlyEffect);
         }
 
         public void DrawAdditive(SpriteBatch spriteBatch)

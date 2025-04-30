@@ -10,7 +10,10 @@ namespace Coralite.Content.Items.Banner
     public class CrystalGolemBannerItem() : BaseBannerItem(Item.sellPrice(0, 0, 2), ModContent.RarityType<MagicCrystalRarity>()
         , ModContent.TileType<CrystalGolemBanner>())
     {
-
+        public override void SetStaticDefaults()
+        {
+            ItemID.Sets.KillsToBanner[Type] = 15;
+        }
     }
 
     public class CrystalGolemBanner() : BaseBannerTile(Coralite.MagicCrystalPink, DustID.PinkCrystalShard)

@@ -1,7 +1,7 @@
-﻿using Coralite.Content.ModPlayers;
+﻿using Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor;
+using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Helpers;
-using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -93,7 +93,7 @@ namespace Coralite.Content.Items.Gels
 
         public override void SetStaticDefaults()
         {
-            Main.projFrames[Type] = 7;
+            Main.projFrames[Type] = 8;
         }
 
         public override void SetDefaults()
@@ -102,8 +102,8 @@ namespace Coralite.Content.Items.Gels
             Projectile.aiStyle = -1;
             Projectile.timeLeft = 300;
             Projectile.penetrate = -1;
-            Projectile.usesIDStaticNPCImmunity = true;
-            Projectile.idStaticNPCHitCooldown = 30;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 30;
             Projectile.tileCollide = false;
             Projectile.friendly = true;
 
@@ -138,6 +138,7 @@ namespace Coralite.Content.Items.Gels
                     if (Vector2.Distance(Projectile.Center, Owner.Center) < 64)//玩家在附近，md跟你爆了
                     {
                         State = 2;
+                        Projectile.rotation = Main.rand.NextFloat(6.282f);
                         Vector2 dir = (Owner.Center - Projectile.Center).SafeNormalize(Vector2.Zero);
                         Owner.velocity.X = dir.X * 12;
                         Owner.velocity.Y = dir.Y * 16;
@@ -148,16 +149,18 @@ namespace Coralite.Content.Items.Gels
                     {
                         SoundEngine.PlaySound(CoraliteSoundID.QueenSlime_Item154, Projectile.Center);
                         State = 2;
+                        Projectile.rotation = Main.rand.NextFloat(6.282f);
                     }
                     break;
                 case 2:
+                    Projectile.scale -= 0.02f;
                     Projectile.velocity = Vector2.Zero;
                     Projectile.frameCounter++;
                     if (Projectile.frameCounter > 2)
                     {
                         Projectile.frameCounter = 0;
                         Projectile.frame++;
-                        if (Projectile.frame > 6)
+                        if (Projectile.frame > 7)
                             Projectile.Kill();
                     }
                     break;
@@ -191,6 +194,7 @@ namespace Coralite.Content.Items.Gels
             {
                 Projectile.tileCollide = false;
                 State = 2;
+                Projectile.rotation = Main.rand.NextFloat(6.282f);
             }
 
             return false;
@@ -200,6 +204,7 @@ namespace Coralite.Content.Items.Gels
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             State = 2;
+            Projectile.rotation = Main.rand.NextFloat(6.282f);
         }
 
         public override bool? CanDamage()
@@ -211,11 +216,16 @@ namespace Coralite.Content.Items.Gels
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D mainTex = Projectile.GetTexture();
-            var frameBox = mainTex.Frame(1, 7, 0, Projectile.frame);
-            var origin = frameBox.Size() / 2;
+            Vector2 pos = Projectile.Center - Main.screenPosition;
+            Color c = lightColor * Projectile.ai[2];
+            Rectangle frame = new Rectangle(0, Projectile.frame, 1, Main.projFrames[Projectile.type]);
+            float scale = Projectile.ai[2] * Projectile.scale;
+            float exRot = State > 1 ? Projectile.rotation : (Main.GlobalTimeWrappedHourly * 2 + Projectile.whoAmI * 1.5f);
+            float exRot2 = State > 1 ? Projectile.rotation : (-Main.GlobalTimeWrappedHourly * 3 + Projectile.whoAmI *1.5f);
 
-            Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, frameBox, lightColor * Projectile.ai[2], Projectile.rotation, origin, Projectile.ai[2], 0, 0);
+            ElasticGelBall.BottomTex.Value.QuickCenteredDraw(Main.spriteBatch, frame, pos, c * 0.45f, exRot,scale );
+            ElasticGelBall.MiddleTex.Value.QuickCenteredDraw(Main.spriteBatch, frame, pos, c * 0.75f, exRot2, scale);
+            ElasticGelBall.TopTex.Value.QuickCenteredDraw(Main.spriteBatch, frame, pos, c, Projectile.rotation, scale);
             return false;
         }
     }

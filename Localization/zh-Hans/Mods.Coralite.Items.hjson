@@ -280,7 +280,7 @@ IcicleBow: {
 	Tooltip:
 		'''
 		将箭矢转化为冰晶箭
-		双击方向键进行滑步，滑步期间短暂无敌
+		冲刺效果：进行滑步，滑步期间短暂无敌
 		滑步时按住鼠标左键汇聚冰魔法，之后松开左键射出冰光箭
 		'''
 }
@@ -712,7 +712,7 @@ IcicleCoccyx: {
 	Tooltip:
 		'''
 		左键挥动一定次数后获得充能
-		充能完成后双击A/D键冲刺
+		充能完成后可进行冲刺
 		充能完成后右键释放冰晶龙卷风
 		'''
 }
@@ -1283,10 +1283,10 @@ QueensWreath: {
 		每3次射击射出一个锁链花瓣箭，命中后获得1个[c/fa0064:梦魇光能]
 		射箭时右键消耗1个[c/fa0064:梦魇光能]进行二次射击
 
-		双击A或D进行横向冲刺，冲刺途中如果与弹幕或敌怪碰撞则能够射出3个花瓣箭，之后下一次普通射击直接射出锁链花瓣箭
+		横向冲刺：冲刺途中如果与弹幕或敌怪碰撞则能够射出3个花瓣箭，之后下一次普通射击直接射出锁链花瓣箭
 		未发生碰撞则射出1个花瓣箭
-		双击S消耗2个[c/fa0064:梦魇光能]瞄准下方的敌人向下冲刺，冲刺途中与弹幕或敌怪发生碰撞则向上弹起之后射出一些箭矢
-		双击W消耗1个[c/fa0064:梦魇光能]向上冲刺，之射出3个从天上坠落的花瓣箭
+		向下冲刺：消耗2个[c/fa0064:梦魇光能]瞄准下方的敌人，冲刺途中与弹幕或敌怪发生碰撞则向上弹起之后射出一些箭矢
+		向上冲刺：消耗1个[c/fa0064:梦魇光能]，之射出3个从天上坠落的花瓣箭
 		'''
 }
 
@@ -1385,7 +1385,7 @@ SlimeSceptre: {
 		'''
 		使用时射出弹力凝胶球
 		装备后 +4% 伤害，+8% 移动速度
-		手持或装备时双击任意方向键召唤弹力凝胶球将自身弹出
+		冲刺效果：手持或装备时召唤弹力凝胶球将自身弹出
 		'''
 }
 
@@ -1597,6 +1597,7 @@ RuneParchment: {
 			击败世纪之花后由旅商售卖
 			请放置在快捷栏内使用，无法在鼠标上使用该物品！
 		'''
+	OnCraft: 得到了{0}！
 }
 
 CraftLock: {
@@ -2020,7 +2021,7 @@ TortoiseshellFortress: {
 	Tooltip:
 		'''
 		一块相当重的盾牌，可以很好地保护你
-		双击方向键以成为丛林之王
+		冲刺效果：成为丛林之王
 		'''
 }
 
@@ -2616,7 +2617,7 @@ Illureal: {
 
 ThunderveinBlade: {
 	DisplayName: 雷鸣刃
-	Tooltip: 双击方向键使用闪电突袭
+	Tooltip: 冲刺效果：闪电突袭，可操控方向键连续突袭3次
 }
 
 PirateKingCoat: {
@@ -2784,9 +2785,7 @@ FlamingLamps: {
 	DisplayName: 烈焰灯
 	Tooltip:
 		'''
-		[c/8aebff:手持飞盾或完全举起盾牌时双击方向键可进行盾冲]
-		[c/8aebff:盾冲过程中会持续给予基于盾牌属性的伤害减免效果]
-		冲刺过程中无视击退
+		{$Mods.Coralite.Systems.FlyingShieldSystem.DamageReduceDash}
 		冲刺命中第一个敌人时产生火焰爆破
 		'''
 }
@@ -2795,9 +2794,7 @@ LavaLamp: {
 	DisplayName: 狱炎灯
 	Tooltip:
 		'''
-		[c/8aebff:手持飞盾或完全举起盾牌时双击方向键可进行盾冲]
-		[c/8aebff:盾冲过程中会持续给予基于盾牌属性的伤害减免效果]
-		冲刺过程中无视击退
+		{$Mods.Coralite.Systems.FlyingShieldSystem.DamageReduceDash}
 		冲刺命中第一个敌人时产生岩浆喷发
 		'''
 }
@@ -2806,9 +2803,7 @@ PiezoArmorPanel: {
 	DisplayName: 压电装甲板
 	Tooltip:
 		'''
-		[c/8aebff:手持飞盾或完全举起盾牌时双击方向键可进行盾冲]
-		[c/8aebff:盾冲过程中会持续给予基于盾牌属性的伤害减免效果]
-		冲刺过程中无视击退
+		{$Mods.Coralite.Systems.FlyingShieldSystem.DamageReduceDash}
 		冲刺命中第一个敌人时产生电圈，并提升冲刺速度，延长冲刺时间
 		最多产生两个电圈
 		'''
@@ -2846,9 +2841,7 @@ ForbiddenLamp: {
 	DisplayName: 忘却之灯芯
 	Tooltip:
 		'''
-		[c/8aebff:手持飞盾或完全举起盾牌时双击方向键可进行盾冲]
-		[c/8aebff:盾冲过程中会持续给予基于盾牌属性的伤害减免效果]
-		冲刺过程中无视击退
+		{$Mods.Coralite.Systems.FlyingShieldSystem.DamageReduceDash}
 		冲刺命中敌人时产生灯火爆破和鎏金碎片
 		'''
 }
@@ -2857,9 +2850,7 @@ SolarTwinkle: {
 	DisplayName: 太阳的闪烁
 	Tooltip:
 		'''
-		[c/8aebff:手持飞盾或完全举起盾牌时双击方向键可进行盾冲]
-		[c/8aebff:盾冲过程中会持续给予基于盾牌属性的伤害减免效果]
-		冲刺过程中无视击退
+		{$Mods.Coralite.Systems.FlyingShieldSystem.DamageReduceDash}
 		冲刺命中敌人时产生太阳爆破
 		冲刺时使用日耀能量进行斩击
 		'''
@@ -2869,9 +2860,7 @@ OniMask: {
 	DisplayName: 骸骨面具
 	Tooltip:
 		'''
-		[c/8aebff:手持飞盾或完全举起盾牌时双击方向键可进行盾冲]
-		[c/8aebff:盾冲命中后会将自身弹回，并触发盾牌格挡效果]
-		[c/8aebff:如果佩戴了完美格挡相关饰品能在刚开始盾冲时触发效果]
+		{$Mods.Coralite.Systems.FlyingShieldSystem.ParryDash}
 		冲刺开始时丢出骨头
 		“或许戴上后能够变为一般系”
 		'''
@@ -2881,9 +2870,7 @@ KamonFlag: {
 	DisplayName: 忍者氏族旗
 	Tooltip:
 		'''
-		[c/8aebff:手持飞盾或完全举起盾牌时双击方向键可进行盾冲]
-		[c/8aebff:盾冲命中后会将自身弹回，并触发盾牌格挡效果]
-		[c/8aebff:如果佩戴了完美格挡相关饰品能在刚开始盾冲时触发效果]
+		{$Mods.Coralite.Systems.FlyingShieldSystem.ParryDash}
 		冲刺开始时生成灰黑冤魂
 		'''
 }
@@ -2892,9 +2879,7 @@ SolarPanel: {
 	DisplayName: 太阳能护板
 	Tooltip:
 		'''
-		[c/8aebff:手持飞盾或完全举起盾牌时双击方向键可进行盾冲]
-		[c/8aebff:盾冲命中后会将自身弹回，并触发盾牌格挡效果]
-		[c/8aebff:如果佩戴了完美格挡相关饰品能在刚开始盾冲时触发效果]
+		{$Mods.Coralite.Systems.FlyingShieldSystem.ParryDash}
 		冲刺途中生成带电爆破弹
 		'''
 }
@@ -2908,9 +2893,7 @@ OldClockwork: {
 	DisplayName: 旧发条
 	Tooltip:
 		'''
-		[c/8aebff:手持飞盾或完全举起盾牌时双击方向键可进行盾冲]
-		[c/8aebff:盾冲命中后会将自身弹回，并触发盾牌格挡效果]
-		[c/8aebff:如果佩戴了完美格挡相关饰品能在刚开始盾冲时触发效果]
+		{$Mods.Coralite.Systems.FlyingShieldSystem.ParryDash}
 		冲刺命中后给予“拧紧发条”BUFF
 		“博士，这个什么时候才能拿掉呢？”
 		'''
@@ -2920,9 +2903,7 @@ ChronoHeart: {
 	DisplayName: 时轮之心
 	Tooltip:
 		'''
-		[c/8aebff:手持飞盾或完全举起盾牌时双击方向键可进行盾冲]
-		[c/8aebff:盾冲命中后会将自身弹回，并触发盾牌格挡效果]
-		[c/8aebff:如果佩戴了完美格挡相关饰品能在刚开始盾冲时触发效果]
+		{$Mods.Coralite.Systems.FlyingShieldSystem.ParryDash}
 		冲刺时生成时针
 		“你听得到时间的心跳”
 		'''
@@ -2967,7 +2948,7 @@ ReverseFlash: {
 	Tooltip:
 		'''
 		射击时从远处朝玩家生成一道电光
-		双击方向键进行伏闪，之后生成一道逆闪电
+		冲刺效果：进行伏闪，之后生成一道逆闪电
 		[c/fbf236:电闪雷鸣]
 		'''
 }
@@ -3170,7 +3151,7 @@ HylianShield: {
 	Tooltip:
 		'''
 		手持时增加25防御
-		举起盾牌后双击方向键使用盾滑
+		冲刺效果：举起盾牌后使用盾滑
 		举盾瞬间可进行盾反，格挡时能够将弹幕弹回去
 		“伴随着持有它的勇者的传说，自古从海拉鲁王族流传下来的盾。”
 		“以其他盾无法企及的压倒性的防御力和耐久性为傲。”
@@ -3770,7 +3751,7 @@ Afterglow: {
 	DisplayName: 晚霞
 	Tooltip:
 		'''
-		双击方向键进行冲刺，期间摩擦地面引燃木箭
+		冲刺效果：冲刺期间摩擦地面引燃木箭
 		冰块能擦出霜火
 		[c/c2370d:"落日余晖"]
 		'''
@@ -4330,11 +4311,11 @@ GelFiberHelmet: {
 }
 
 SymbolOfMagike: {
-	DisplayName: 魔能徽记
+	DisplayName: 魔能
 	Tooltip:
 		'''
 		该合成表仅供查看，该物品无法获得
-		请使用魔能合成坛进行魔能合成
+		请使用魔能仪器合成
 		'''
 	MagikeNeed: "魔能需求量 "
 }
@@ -4361,7 +4342,7 @@ FarAwaySky: {
 	DisplayName: 遥远青空
 	Tooltip:
 		'''
-		双击方向键冲刺，之后射出云箭为自身增加攻击和移动速度
+		冲刺效果：冲刺后射出云箭为自身增加攻击和移动速度
 		[c/61c3e7:“雨过天晴”]
 		'''
 }
@@ -4408,7 +4389,8 @@ RadiantSun: {
 	DisplayName: 旭日
 	Tooltip:
 		'''
-		双击方向键滑步，之后射出旭日箭对鼠标位置发动流星闪击
+		冲刺效果：冲刺后射出旭日箭对鼠标位置发动流星闪击
+		冲刺期间有短暂无敌
 		[c/ffe021:“银白的巨狮在天空中奔跑，为世间带来阳光”]
 		'''
 }
@@ -4955,9 +4937,9 @@ HorizonArc: {
 	DisplayName: 环彩弧
 	Tooltip:
 		'''
-		双击方向键冲刺，并射出环彩箭
+		冲刺效果：射出环彩箭
 		冲刺时穿过敌对目标会使环彩的光辉更加耀眼
-		冲刺过程中具有短暂无敌
+		冲刺过程中有短暂无敌
 		'''
 }
 
@@ -4970,9 +4952,9 @@ Turbulence: {
 	DisplayName: 乱流
 	Tooltip:
 		'''
-		双击方向键冲刺，并射出乱流箭贯穿敌人
+		冲刺效果：射出乱流箭贯穿敌人
 		右键射出乱流针
-		冲刺过程中具有短暂无敌
+		冲刺过程中有短暂无敌
 		[c/68c7dd:"穿梭于云间"]
 		'''
 }
@@ -4991,7 +4973,7 @@ FullMoon: {
 	DisplayName: 暗月
 	Tooltip:
 		'''
-		双击方向键冲刺，冲撞到敌对目标后弹回并释放暗影之光
+		冲刺效果：冲撞到敌对目标后弹回并释放暗影之光
 		暗影之光能目标无视一定防御力
 		[c/8a43ff:“暗紫的巨蝠在空中飞翔，为世间带来月光”]
 		'''
@@ -5001,7 +4983,7 @@ SeismicWave: {
 	DisplayName: 震波
 	Tooltip:
 		'''
-		双击下键冲刺，命中敌怪或是地面后产生冲击波
+		冲刺效果：只能向下冲刺，命中敌怪或是地面后产生冲击波
 		下冲命中敌怪后弹起并重置飞行时间
 		[c/bac1ce:来自地下深处的震动]
 		'''
@@ -5022,7 +5004,7 @@ Glaciate: {
 	DisplayName: 冰封世界
 	Tooltip:
 		'''
-		双击方向键冲刺，之后射出冰霜波并强化下一次攻击
+		冲刺效果：射出冰霜波并强化下一次攻击
 		冰块命中冰霜波会爆出冰刺
 		'''
 }
@@ -5041,7 +5023,7 @@ Aurora: {
 	DisplayName: 极光
 	Tooltip:
 		'''
-		双击方向键冲刺，之后射出标记箭
+		冲刺效果：射出标记箭
 		极光箭命中被标记的敌怪增加标记层数
 		标记箭一段时间后根据标记层数造成伤害
 		'''
@@ -5961,7 +5943,11 @@ BloodmarkTopper: {
 		将 [c/ed494e:血礼帽] 改为 [c/665cc2:罪孽礼帽]
 		'''
 	DisplayName: 血印礼帽
-	Tooltip: +8% 伤害，+5% 暴击率
+	Tooltip:
+		'''
+		+8% 伤害，+5% 暴击率
+		背包内右键切换作为时装时的外观
+		'''
 	SetTip: 装备猩红套装 [i:793][i:794] 或暗影套装 [i:101][i:100][i:957][i:958] 或黑曜石套装 [i:3267][i:3268] 触发不同的套装效果
 }
 
@@ -5980,4 +5966,9 @@ SkarnCutter: {
 CrystallineMagikeClusters: {
 	DisplayName: 蕴魔水晶簇
 	Tooltip: 可以使用同等级的光束采集器采挖蕴魔水晶
+}
+
+BloodWorm: {
+	DisplayName: 血蛭
+	Tooltip: 在血月时必定钓上敌怪
 }

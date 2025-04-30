@@ -21,7 +21,7 @@ namespace Coralite.Content.Items.MagikeSeries2
     {
         public const string ShowBackLine = "MabirdLoupeA";
 
-        private bool CanShowBackLine = true;
+        private bool CanShowBackLine = false;
 
         public static LocalizedText[] ShowBackTexts;
 

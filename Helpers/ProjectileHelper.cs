@@ -780,7 +780,12 @@ namespace Coralite.Helpers
 
         public static void InitOldPosCache(this Projectile projectile, int trailCount, bool useCenter = true)
         {
-            projectile.oldPos = new Vector2[trailCount];
+            if (projectile.oldPos.Length != trailCount)
+                Array.Resize(ref projectile.oldPos, trailCount);
+            if (projectile.oldRot.Length != trailCount)
+                Array.Resize(ref projectile.oldRot, trailCount);
+            if (projectile.oldSpriteDirection.Length != trailCount)
+                Array.Resize(ref projectile.oldSpriteDirection, trailCount);
 
             for (int i = 0; i < trailCount; i++)
             {
@@ -793,12 +798,15 @@ namespace Coralite.Helpers
 
         public static void InitOldRotCache(this Projectile projectile, int trailCount)
         {
-            projectile.oldRot = new float[trailCount];
+            if (projectile.oldPos.Length != trailCount)
+                Array.Resize(ref projectile.oldPos, trailCount);
+            if (projectile.oldRot.Length != trailCount)
+                Array.Resize(ref projectile.oldRot, trailCount);
+            if (projectile.oldSpriteDirection.Length != trailCount)
+                Array.Resize(ref projectile.oldSpriteDirection, trailCount);
 
             for (int i = 0; i < trailCount; i++)
-            {
                 projectile.oldRot[i] = projectile.rotation;
-            }
         }
 
         public static void UpdateOldPosCache(this Projectile projectile, bool useCenter = true, bool addVelocity = true)

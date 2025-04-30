@@ -32,6 +32,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         private bool canDrawWarp = false;
         private float warpScale = 0;
 
+        public override void SetStaticDefaults()
+        {
+            NPC.SetHideInBestiary();
+        }
+
         public override void SetDefaults()
         {
             NPC.lifeMax = 1;

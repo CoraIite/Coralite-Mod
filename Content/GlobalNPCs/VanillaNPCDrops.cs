@@ -5,6 +5,7 @@ using Coralite.Content.Items.FlyingShields.Accessories;
 using Coralite.Content.Items.LandOfTheLustrousSeries;
 using Coralite.Content.Items.LandOfTheLustrousSeries.Accessories;
 using Coralite.Content.Items.Materials;
+using Coralite.Content.Items.Misc;
 using Coralite.Content.Items.Placeable;
 using Coralite.Content.Items.ThyphionSeries;
 using Coralite.Content.Items.YujianHulu;
@@ -51,6 +52,9 @@ namespace Coralite.Content.GlobalNPCs
                 case NPCID.BloodCrawler:
                 case NPCID.CrimsonGoldfish:
                     npcLoot.Add(ItemDropRule.Common(ItemType<AncientCrimtaneYujian>(), 100));
+                    break;
+                case NPCID.LeechHead://血蛭掉落血蛭
+                    npcLoot.Add(ItemDropRule.Common(ItemType<BloodWorm>()));
                     break;
                 case NPCID.Mimic://eek的盾
                     npcLoot.Add(ItemDropRule.ByCondition(new Conditions.NotRemixSeed(), ItemType<EekShield>(), 10));

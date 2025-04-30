@@ -9,12 +9,14 @@ using Terraria.ID;
 namespace Coralite.Content.Items.Steel
 {
     [AutoloadEquip(EquipType.Head)]
-    [PlayerEffect(ExtraEffectNames = [nameof(CharmOfIsis) + "Vanity"])]
+    [PlayerEffect(ExtraEffectNames = [Vanity])]
     public class CharmOfIsis : BaseAccessory, ISpecialDrawHead
     {
         public override string Texture => AssetDirectory.SteelItems + Name;
 
         public Vector2 ExtraOffset => new Vector2(0, 8);
+
+        public const string Vanity = nameof(CharmOfIsis) + "Vanity";
 
         public CharmOfIsis() : base(ItemRarityID.Pink, Item.sellPrice(0, 6, 0, 0))
         {
@@ -41,13 +43,19 @@ namespace Coralite.Content.Items.Steel
                 && incomingItem.type == ModContent.ItemType<CharmOfIsis>());
         }
 
+        public override void UpdateVanity(Player player)
+        {
+            if (player.TryGetModPlayer(out CoralitePlayer cp))
+                cp.AddEffect(Vanity);
+        }
+
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             if (player.TryGetModPlayer(out CoralitePlayer cp))
             {
                 cp.AddEffect(nameof(CharmOfIsis));
                 if (!hideVisual)
-                    cp.AddEffect(nameof(CharmOfIsis) + "Vanity");
+                    cp.AddEffect(Vanity);
             }
 
             player.pStone = true;

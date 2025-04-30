@@ -3,6 +3,7 @@ using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
+using System.IO;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ModLoader.IO;
@@ -82,7 +83,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
             CoraliteSets.IsMabird.Add(Type);
         }
 
-        public void UpdateMabird(Point16 selfPoint,Vector2 center)
+        public void UpdateMabird(Point16 selfPoint, Vector2 center)
         {
             try
             {
@@ -195,9 +196,9 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
 
         #region 状态切换
 
-        public void TurnToGetItem(Point selfPoint,Vector2 center)
+        public void TurnToGetItem(Point selfPoint, Vector2 center)
         {
-            if (GetItemPos == null || ReleaseItemPos == null|| GetItemPos.TopLeft==selfPoint)
+            if (GetItemPos == null || ReleaseItemPos == null || GetItemPos.TopLeft == selfPoint)
             {
                 Timer = RestTime;
                 return;
@@ -436,6 +437,8 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
             ModItem i = base.Clone(newEntity);
             if (i is Mabird mabird)
             {
+                mabird.Center = Center;
+                mabird.Velocity = Velocity;
                 mabird.State = State;
                 mabird.Timer = Timer;
                 mabird.GetItemPos = GetItemPos;
@@ -445,6 +448,49 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
             }
 
             return i;
+        }
+
+        public override void NetSend(BinaryWriter writer)
+        {
+            writer.WriteVector2(Center);
+            writer.WriteVector2(Velocity);
+            writer.Write((byte)State);
+            writer.Write(Timer);
+
+            BitsByte b = new BitsByte();
+            b[0] = GetItemPos != null;
+            b[1] = ReleaseItemPos != null;
+            b[2] = WhiteListItem != null;
+            b[3] = catchItem != null;
+
+            writer.Write(b);
+
+            if (GetItemPos != null)
+                writer.WritePoint16(new Point16(GetItemPos.TopLeft));
+            if (ReleaseItemPos != null)
+                writer.WritePoint16(new Point16(ReleaseItemPos.TopLeft));
+            if (WhiteListItem != null)
+                ItemIO.Send(WhiteListItem, writer);
+            if (catchItem != null)
+                ItemIO.Send(catchItem, writer);
+        }
+
+        public override void NetReceive(BinaryReader reader)
+        {
+            Center = reader.ReadVector2();
+            Velocity = reader.ReadVector2();
+            State = (MabirdAIState)reader.ReadByte();
+            Timer = reader.ReadInt16();
+
+            BitsByte b = reader.ReadBitsByte();
+            if (b[0])
+                GetItemPos = new MabirdTarget(reader.ReadPoint16().ToPoint());
+            if (b[1])
+                ReleaseItemPos = new MabirdTarget(reader.ReadPoint16().ToPoint());
+            if (b[2])
+                ItemIO.Receive(WhiteListItem, reader);
+            if (b[3])
+                ItemIO.Receive(catchItem, reader);
         }
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)

@@ -112,10 +112,16 @@ GamePlayConfig: {
 	Headers: {
 		Magike: Magike
 		Misc: Misc
+		Dash: Dash Header
 	}
 
 	SelectSize: {
 		Label: Select Size
 		Tooltip: Change the maximum selection size for each type of filter, etc
+	}
+
+	OnlyDashKey: {
+		Label: Only Dash Key
+		Tooltip: ""
 	}
 }

@@ -16,6 +16,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 
         public ref float Boss => ref NPC.ai[0];
 
+        public override void SetStaticDefaults()
+        {
+            NPC.SetHideInBestiary();
+        }
+
         public override void SetDefaults()
         {
             NPC.damage = 1;

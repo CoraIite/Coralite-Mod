@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.WorldGeneration;
 using Coralite.Core;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.GameContent;
@@ -12,6 +13,11 @@ namespace Coralite.Content.Bosses.DigDigDig.Stonelime
         public override string Texture => AssetDirectory.OtherProjectiles + "White32x32";
 
         public int frame = 1;
+
+        public override void SetStaticDefaults()
+        {
+            NPC.SetHideInBestiary();
+        }
 
         public override void SetDefaults()
         {

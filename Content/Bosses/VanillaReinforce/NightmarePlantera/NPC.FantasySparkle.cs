@@ -41,6 +41,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         public float circleSparkleScale;
         public int timer;
 
+        public override void SetStaticDefaults()
+        {
+            NPC.SetHideInBestiary();
+        }
+
         public override void SetDefaults()
         {
             NPC.noGravity = true;

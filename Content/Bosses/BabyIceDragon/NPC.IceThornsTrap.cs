@@ -28,6 +28,11 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             }
         }
 
+        public override void SetStaticDefaults()
+        {
+            NPC.SetHideInBestiary();
+        }
+
         public override void SetDefaults()
         {
             NPC.lifeMax = 100;

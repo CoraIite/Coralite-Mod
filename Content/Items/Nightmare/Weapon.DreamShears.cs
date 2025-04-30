@@ -674,11 +674,7 @@ namespace Coralite.Content.Items.Nightmare
                 }
 
                 if (!VaultUtils.isServer)
-                {
-                    Projectile.oldPos = new Vector2[16];
-                    for (int i = 0; i < 16; i++)
-                        Projectile.oldPos[i] = Projectile.Center;
-                }
+                    Projectile.InitOldPosCache(16);
 
                 init = false;
             }

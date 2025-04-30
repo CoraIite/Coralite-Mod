@@ -16,8 +16,8 @@ namespace Coralite.Content.Items.Materials
         {
             MagikeRecipe.CreateCraftRecipe(ModContent.ItemType<MagicalPowder>(), ItemID.EnchantedSword, MagikeHelper.CalculateMagikeCost(MALevel.MagicCrystal, 3, 120)
                 , MainItenStack: 40)
-                .RegisterNewCraft(ItemID.FallenStar, MagikeHelper.CalculateMagikeCost(MALevel.MagicCrystal, 1, 20)).SetMainStack(5)
-                .RegisterNewCraft(ItemID.ManaCrystal, MagikeHelper.CalculateMagikeCost(MALevel.MagicCrystal, 3, 20)).SetMainStack(25)
+                .RegisterNewCraft(ItemID.FallenStar, MagikeHelper.CalculateMagikeCost(MALevel.MagicCrystal, 1, 40)).SetMainStack(1)
+                .RegisterNewCraft(ItemID.ManaCrystal, MagikeHelper.CalculateMagikeCost(MALevel.MagicCrystal, 3, 40)).SetMainStack(3)
                 .Register();
         }
     }

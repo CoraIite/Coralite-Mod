@@ -4,12 +4,23 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 
 namespace Coralite.Content.Items.CoreKeeper
 {
     public class RuneParchment : ModItem
     {
         public override string Texture => AssetDirectory.CoreKeeperItems + Name;
+
+        public static LocalizedText OnCraftText { get; private set; }
+
+        public override void Load()
+        {
+            if (!Main.dedServ)
+            {
+                OnCraftText = this.GetLocalization("OnCraft");
+            }
+        }
 
         public override void SetDefaults()
         {
@@ -69,7 +80,7 @@ namespace Coralite.Content.Items.CoreKeeper
             for (int i = 0; i < 50; i++)
                 p.ConsumeItem(ItemID.IronBar);
 
-            Main.NewText(this.GetLocalization("OnCraft", () => "得到了") + Item.Name + " !", new Color(243, 180, 65, 255));
+            Main.NewText(OnCraftText.Format(ContentSamples.ItemsByType[ModContent.ItemType<RuneSong>()].Name), new Color(243, 180, 65, 255));
             //PopupText.NewText(new AdvancedPopupRequest() { Text = Item.Name
             //    , Color = new Color(243, 180, 65, 255)
             //    , DurationInFrames = 2 * 60 }, p.Top+new Vector2(0,20));

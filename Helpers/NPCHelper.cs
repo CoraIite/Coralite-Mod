@@ -4,8 +4,10 @@ using System.Diagnostics;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
+using Terraria.Localization;
 
 namespace Coralite.Helpers
 {
@@ -31,6 +33,38 @@ namespace Coralite.Helpers
         {
             Texture2D tex = npc.GetTexture();
             return tex.Frame(xFrame, Main.npcFrameCount[npc.type], npc.frame.X, npc.frame.Y);
+        }
+
+        /// <summary>
+        /// 获取NPC的图鉴描述信息
+        /// </summary>
+        /// <param name="npc"></param>
+        /// <returns></returns>
+        public static FlavorTextBestiaryInfoElement GetBestiaryDescription(this ModNPC npc)
+            => new FlavorTextBestiaryInfoElement(npc.GetLocalizationKey("BestiaryDescription"));
+
+        /// <summary>
+        /// 在图鉴里隐藏该NPC
+        /// </summary>
+        /// <param name="npc"></param>
+        public static void SetHideInBestiary(this NPC npc)
+        {
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(npc.type, new NPCID.Sets.NPCBestiaryDrawModifiers()
+            {
+                Hide = true
+            });
+        }
+
+        /// <summary>
+        /// 注册NPC的图鉴描述信息
+        /// </summary>
+        /// <param name="npc"></param>
+        /// <returns></returns>
+        public static void RegisterBestiaryDescription(this ModNPC npc)
+        {
+            if (Main.dedServ)
+                return;
+            npc.GetLocalization("BestiaryDescription");
         }
 
         public static void QuickDraw(this NPC npc, SpriteBatch spriteBatch, Vector2 screenPos, Color lightColor, Rectangle? frameBox = null, SpriteEffects effect = SpriteEffects.None, float exRot = 0)

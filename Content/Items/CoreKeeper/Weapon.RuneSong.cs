@@ -138,12 +138,12 @@ namespace Coralite.Content.Items.CoreKeeper
         {
             CreateRecipe()
                 .AddIngredient<RuneParchment>()
-                .AddIngredient<CraftLock>()
                 .AddIngredient<ChippedBlade>()
                 .AddIngredient<BrokenHandle>()
                 .AddIngredient<ClearGemstone>()
                 .AddIngredient<AncientGemstone>(10)
                 .AddIngredient(ItemID.IronBar, 50)
+                .AddCondition(CoraliteConditions.UseRuneParchment)
                 .Register();
         }
 

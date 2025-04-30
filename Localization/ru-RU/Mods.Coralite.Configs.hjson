@@ -117,10 +117,16 @@ GamePlayConfig: {
 	Headers: {
 		Magike: Система магической энергии
 		Misc: Разное
+		// Dash: Dash Header
 	}
 
 	SelectSize: {
 		Label: Размер выделения
 		Tooltip: Изменяет максимальный размер выделения для различных фильтров и эффектов.
+	}
+
+	OnlyDashKey: {
+		// Label: Only Dash Key
+		// Tooltip: ""
 	}
 }

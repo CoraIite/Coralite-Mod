@@ -7,7 +7,7 @@ namespace Coralite
     /// 用于处理各类“重要事项”，比如版本更新时的进入世界跳字等<br></br>
     /// 在不同版本此类中的内容可能有较大程度的变化
     /// </summary>
-    public class CoralteSystem : ModSystem, ILocalizedModType
+    public class CoraliteSystem : ModSystem, ILocalizedModType
     {
         public string LocalizationCategory => "Important";
 

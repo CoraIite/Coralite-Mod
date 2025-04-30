@@ -10,7 +10,12 @@ DamageClasses: {
 	RangedNoAttackSpeed.DisplayName: Ranged No Attack Speed
 }
 
-Players.CoralitePlayer.ThunderElectrifiedDeath: killed by lightning
+Players: {
+	CoralitePlayer: {
+		ThunderElectrifiedDeath: killed by lightning
+		CoreKeeperDodgeText: Mods.Coralite.Players.CoralitePlayer.CoreKeeperDodgeText
+	}
+}
 
 Conditions: {
 	CoraliteConditions: {
@@ -32,6 +37,7 @@ Conditions: {
 		InMagicCrystalCave: Mods.Coralite.Conditions.CoraliteConditions.InMagicCrystalCave
 		InCrystallineSkyIsland: Mods.Coralite.Conditions.CoraliteConditions.InCrystallineSkyIsland
 		UseShlimmerTranslation: Mods.Coralite.Conditions.CoraliteConditions.UseShlimmerTranslation
+		UseRuneParchment: Mods.Coralite.Conditions.CoraliteConditions.UseRuneParchment
 	}
 }
 
@@ -68,12 +74,4 @@ WorldGeneration: {
 	}
 }
 
-Important.CoralteSystem.OnEnterWorld:
-	'''
-	Coralite v0.2.1.x Destructive Update Tips
-	一一一一一一一一
-	Due to some destructive modifications, magike apparatus that existed in worlds prior to version 0.2.1 are now unusable.
-	We apologize for any inconvenience caused.
-	The way to fix it is to destroy it and put it again, but the filters inside will not be returned.
-	一一一一一一一一
-	'''
+Important.CoraliteSystem.OnEnterWorld: ""

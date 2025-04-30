@@ -1,4 +1,5 @@
 ﻿using Coralite.Core;
+using Coralite.Core.Loaders;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
@@ -54,8 +55,8 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
                 if (CheckCanCraft != null && CheckCanCraft(Owner))
                 {
                     OnCraft?.Invoke(Owner);
-                    particles.NewParticle<OnCraftLightShot>(Owner.Bottom, Vector2.Zero);
-                    particles.NewParticle<OnCraftLightExpand>(Owner.Center, Vector2.Zero);
+                    PRTLoader.NewParticle<OnCraftLightShot>(Owner.Bottom, Vector2.Zero);
+                    PRTLoader.NewParticle<OnCraftLightExpand>(Owner.Center, Vector2.Zero);
                 }
 
                 if (SoundEngine.TryGetActiveSound(slotID, out ActiveSound result))
@@ -141,21 +142,6 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
     {
         public override string Texture => AssetDirectory.Blank;
 
-        static BasicEffect effect;
-
-        public SpecialCraftParticle()
-        {
-            if (Main.dedServ)
-            {
-                return;
-            }
-            Main.QueueMainThreadAction(() =>
-            {
-                effect = new BasicEffect(Main.instance.GraphicsDevice);
-                effect.VertexColorEnabled = true;
-            });
-        }
-
         public override void SetProperty()
         {
             Color = Main.rand.Next(2) switch
@@ -226,19 +212,16 @@ namespace Coralite.Content.Items.CoreKeeper.Bases
 
         public override void DrawPrimitive()
         {
-            if (effect == null)
-                return;
-
             Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
             Matrix view = Main.GameViewMatrix.TransformationMatrix;
             Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
 
             //effect.Texture = Texture2D.Value;
-            effect.World = world;
-            effect.View = view;
-            effect.Projection = projection;
+            EffectLoader.ColorOnlyEffect.World = world;
+            EffectLoader.ColorOnlyEffect.View = view;
+            EffectLoader.ColorOnlyEffect.Projection = projection;
 
-            trail?.DrawTrail(effect);
+            trail?.DrawTrail(EffectLoader.ColorOnlyEffect);
         }
     }
 

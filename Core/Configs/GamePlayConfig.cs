@@ -12,9 +12,12 @@ namespace Coralite.Core.Configs
         [Range(1, 50)]
         public int SelectSize;
 
-        [Header("Misc")]
+        [Header("Dash")]
         [DefaultValue(true)]
         public bool SpecialDashFirst;
+
+        [DefaultValue(false)]
+        public bool OnlyDashKey;
 
         public override void OnChanged()
         {
@@ -25,6 +28,7 @@ namespace Coralite.Core.Configs
         {
             GamePlaySystem.SpecialDashFirst = SpecialDashFirst;
             GamePlaySystem.SelectSize = SelectSize;
+            GamePlaySystem.OnlyDashKey = OnlyDashKey;
         }
     }
 
@@ -32,5 +36,6 @@ namespace Coralite.Core.Configs
     {
         public static bool SpecialDashFirst = true;
         public static int SelectSize = 20;
+        public static bool OnlyDashKey = false;
     }
 }

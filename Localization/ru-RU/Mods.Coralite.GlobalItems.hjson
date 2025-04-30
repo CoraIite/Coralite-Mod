@@ -11,6 +11,7 @@ CoraliteGlobalItem: {
 	DashPriorityLevel2: Средний
 	DashPriorityLevel3: Низкий
 	DashPriorityLevel4: Самый низкий
+	// Dashable: Mods.Coralite.GlobalItems.CoraliteGlobalItem.Dashable
 }
 
 DigDigDigGItem: {

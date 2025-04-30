@@ -47,9 +47,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 
         public override void Initialize()
         {
-            Projectile.oldPos = new Vector2[12];
-            for (int i = 0; i < 12; i++)
-                Projectile.oldPos[i] = Projectile.Center;
+            Projectile.InitOldPosCache(12);
         }
 
         public override void AI()

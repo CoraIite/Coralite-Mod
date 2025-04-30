@@ -9,10 +9,12 @@ using Terraria.ID;
 namespace Coralite.Content.Items.Steel
 {
     [AutoloadEquip(EquipType.Head)]
-    [PlayerEffect(ExtraEffectNames = [nameof(OsirisPillar) + "Vanity"])]
+    [PlayerEffect(ExtraEffectNames = [Vanity])]
     public class OsirisPillar : BaseAccessory, ISpecialDrawHead
     {
         public override string Texture => AssetDirectory.SteelItems + Name;
+
+        public const string Vanity = nameof(OsirisPillar) + "Vanity";
 
         public override void SetStaticDefaults()
         {
@@ -32,6 +34,12 @@ namespace Coralite.Content.Items.Steel
                 && incomingItem.type == ModContent.ItemType<OsirisPillar>());
         }
 
+        public override void UpdateVanity(Player player)
+        {
+            if (player.TryGetModPlayer(out CoralitePlayer cp))
+                cp.AddEffect(Vanity);
+        }
+
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             if (player.TryGetModPlayer(out CoralitePlayer cp))
@@ -39,7 +47,7 @@ namespace Coralite.Content.Items.Steel
                 cp.AddEffect(nameof(OsirisPillar));
 
                 if (!hideVisual)
-                    cp.AddEffect(nameof(OsirisPillar) + "Vanity");
+                    cp.AddEffect(Vanity);
             }
 
             player.statManaMax2 += 20;

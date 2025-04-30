@@ -284,6 +284,14 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
                 .AddIngredient(ItemID.FallenStar)
                 .Register();
 
+            //附魔夜行者
+            MagikeRecipe.CreateCraftRecipe(ItemID.Worm, ItemID.EnchantedNightcrawler, critterCost, resultItemStack: 3)
+                .AddIngredient(ItemID.FallenStar)
+                .Register();
+            MagikeRecipe.CreateCraftRecipe(ItemID.Worm, ItemID.EnchantedNightcrawler, critterCost, resultItemStack: 2)
+                .AddIngredient<MagicalPowder>()
+                .Register();
+
             //金动物
             int goldCritterCost = CalculateMagikeCost(Crimson, 6);
             MagikeRecipe.CreateCraftRecipe(ItemID.Bird, ItemID.GoldBird, goldCritterCost)
@@ -292,6 +300,7 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
             MagikeRecipe.CreateCraftRecipe(ItemID.Bunny, ItemID.GoldBunny, goldCritterCost)
                 .AddIngredient(ItemID.GoldBar, 99)
                 .Register();
+
             var butterflys = MagikeRecipe.CreateCraftRecipes([
                 ItemID.JuliaButterfly,
               ItemID.MonarchButterfly,
@@ -351,12 +360,16 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
             MagikeRecipe.CreateCraftRecipe(ItemID.Worm, ItemID.GoldWorm, goldCritterCost)
                 .AddIngredient(ItemID.GoldBar, 99)
                 .Register();
+
             #endregion
 
             //黑墨水
             MagikeRecipe.CreateCraftRecipe(ItemID.Bottle, ItemID.BlackInk, CalculateMagikeCost(MagicCrystal, 6))
                 .AddIngredient(ItemID.BlackThread)
                 .Register();
+
+            //破布
+            AddRemodelRecipe(ItemID.Silk, ItemID.TatteredCloth, CalculateMagikeCost(MagicCrystal, 3, 30));
         }
     }
 }

@@ -105,11 +105,9 @@ namespace Coralite.Content.Items.Stars
             {
                 OnChannelComplete(1500, 15);
                 Projectile.Center = Owner.Center;
-                Projectile.oldPos = new Vector2[20];
+                Projectile.InitOldPosCache(20);
                 Projectile.damage = (int)(Projectile.damage * 1.5f);
                 Helper.PlayPitched("Stars/StarsSpawn", 0.3f, 0f, Projectile.Center);
-                for (int i = 0; i < 20; i++)
-                    Projectile.oldPos[i] = Projectile.Center;
                 return;
             }
 

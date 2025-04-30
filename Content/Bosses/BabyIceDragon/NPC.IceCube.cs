@@ -26,6 +26,11 @@ namespace Coralite.Content.Bosses.BabyIceDragon
         public override bool CanHitNPC(NPC target)/* tModPorter Suggestion: Return true instead of null */ => false;
         public override bool CanHitPlayer(Player target, ref int cooldownSlot) => false;
 
+        public override void SetStaticDefaults()
+        {
+            NPC.SetHideInBestiary();
+        }
+
         public override void SetDefaults()
         {
             NPC.width = 68;

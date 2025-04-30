@@ -3,7 +3,9 @@ using Coralite.Content.Items.Banner;
 using Coralite.Content.Items.LandOfTheLustrousSeries;
 using Coralite.Content.Items.MagikeSeries1;
 using Coralite.Core;
+using Coralite.Helpers;
 using Terraria;
+using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 
@@ -16,6 +18,7 @@ namespace Coralite.Content.NPCs.Magike
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[Type] = 10;
+            this.RegisterBestiaryDescription();
         }
 
         public override void SetDefaults()
@@ -35,6 +38,16 @@ namespace Coralite.Content.NPCs.Magike
             NPC.knockBackResist = 0.8f;
             NPC.noGravity = true;
             NPC.value = Item.buyPrice(0, 0, 3, 0);
+
+            SpawnModBiomes = [ModContent.GetInstance<MagicCrystalCave>().Type];
+        }
+
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            bestiaryEntry.AddTags(
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.NightTime,
+                this.GetBestiaryDescription()
+                );
         }
 
         public override void AI()

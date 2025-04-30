@@ -10,10 +10,27 @@ MaragonHead.DisplayName: 魔龙头
 MaragonTrail.DisplayName: 魔龙尾
 ShadowGolem.DisplayName: 影子巨像
 ShadowGuard.DisplayName: 影子守卫
-CrystalFairy.DisplayName: 晶体仙灵
-CrystalSpirit.DisplayName: 晶体妖精
-CrystalGolem.DisplayName: 晶体巨人
-CrystalEye.DisplayName: 晶体眼球
+
+CrystalFairy: {
+	DisplayName: 晶体仙灵
+	BestiaryDescription: 来自魔力水晶洞的小精灵！非常喜欢吃魔力晶体。在野外发现魔力晶体时会尝试带会水晶洞，人们根据这个习性制作出了魔力诱饵来寻找水晶洞。
+}
+
+CrystalSpirit: {
+	DisplayName: 晶体妖精
+	BestiaryDescription: 头部是圆润的魔力水晶，会发出魔能波来探测周围的敌人。
+}
+
+CrystalGolem: {
+	DisplayName: 晶体巨人
+	BestiaryDescription: 大块的魔力水晶十分稀有，由它构成的晶体巨人就更加稀有了！晶体巨人每一步都会引起轻微的地震，它还会将魔能凝聚到头部并发射激光来攻击敌人。
+}
+
+CrystalEye: {
+	DisplayName: 晶体眼球
+	BestiaryDescription: 完全晶体化的恶魔眼，白天的强光会损伤它脆弱的透镜晶状体，所以只在晚上出现。
+}
+
 SlimeEmperor.DisplayName: 史莱姆皇帝
 ElasticGelBall.DisplayName: 弹力凝胶球
 SlimeAvatar.DisplayName: 史莱姆分身
@@ -136,9 +153,30 @@ StoneSmallime.DisplayName: 石莱姆
 ZacurrentDragon.DisplayName: 兹雷龙
 EyeOfGlistent.DisplayName: 晶莹之眼
 ServantOfGlistent.DisplayName: 晶莹之仆从
-CrystallineHumming.DisplayName: 蕴魔蜂鸟
-CrystallineVinicColumn.DisplayName: 蕴魔仿藤
-CrystallineVinicLaser.DisplayName: 蕴魔仿藤
+
+CrystallineHumming: {
+	DisplayName: 蕴魔蜂鸟
+	BestiaryDescription: 由蕴魔水晶组成的鸟型生物，据推测可能和丛林中的青苔黄蜂有着共同的祖先。
+}
+
+CrystallineVinicColumn: {
+	DisplayName: 蕴魔仿藤
+	BestiaryDescription: 遗弃的水晶柱被蕴魔浮萍寄生后形成的生物，平时会一动不动地伪装成水晶柱。一旦靠近就会突然发起进攻，锋利的水晶让它的啃咬能轻易穿透护甲。
+}
+
+CrystallineVinicLaser: {
+	DisplayName: 蕴魔仿藤
+	BestiaryDescription: 遗弃的激光器被蕴魔浮萍寄生后形成的生物，平时会一动不动地伪装成激光器。一旦靠近就会突然发起进攻，激光器核心赋予了它射出光束的能力。
+}
+
 CrystallineSentinel.DisplayName: 结晶战斗体
-WildMabird.DisplayName: 野生魔鸟
-WildMabirdNest.DisplayName: 野生魔鸟巢
+
+WildMabird: {
+	DisplayName: 野生魔鸟
+	BestiaryDescription: 曾经是人造的机械，但是在漫长的岁月和魔能的浸染下成为了生物。会对目标进行俯冲攻击
+}
+
+WildMabirdNest: {
+	DisplayName: 野生魔鸟巢
+	BestiaryDescription: 野生魔鸟搭建的巢穴，会不断地孵化新的野生魔鸟。发现目标是会将内部的魔鸟弹射出去。
+}

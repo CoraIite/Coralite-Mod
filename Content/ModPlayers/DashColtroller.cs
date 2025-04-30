@@ -201,6 +201,36 @@ namespace Coralite.Content.ModPlayers
         /// </summary>
         public void ResetDahsSets()
         {
+            DashDelayModifyer = StatModifier.Default;
+            DashDir = -1;
+
+            if (Core.Loaders.KeybindLoader.Dash.JustReleased)
+            {
+                if (Player.controlUp)//上下优先
+                {
+                    DashDir = DashUp;
+                    return;
+                }
+                else if (Player.controlDown)
+                {
+                    DashDir = DashDown;
+                    return;
+                }
+                else if (Player.controlLeft)
+                {
+                    DashDir = DashLeft;
+                    return;
+                }
+                else if (Player.controlRight)
+                {
+                    DashDir = DashRight;
+                    return;
+                }
+            }
+
+            if (GamePlaySystem.OnlyDashKey)//仅使用冲刺按键控制冲刺，屏蔽下方双击冲刺
+                return;
+            
             if (Player.controlDown && Player.releaseDown && Player.doubleTapCardinalTimer[DashDown] < 15)
                 DashDir = DashDown;
             else if (Player.controlUp && Player.releaseUp && Player.doubleTapCardinalTimer[DashUp] < 15)
@@ -209,10 +239,6 @@ namespace Coralite.Content.ModPlayers
                 DashDir = DashRight;
             else if (Player.controlLeft && Player.releaseLeft && Player.doubleTapCardinalTimer[DashLeft] < 15)
                 DashDir = DashLeft;
-            else
-                DashDir = -1;
-
-            DashDelayModifyer = StatModifier.Default;
         }
 
         public void SpawnDashRechargeDusts()

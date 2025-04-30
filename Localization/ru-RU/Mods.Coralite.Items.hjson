@@ -1592,6 +1592,7 @@ RuneParchment: {
 			Продаётся торговцем после победы над Плантерой
 			Держите в горячей панели для использования, предмет нельзя использовать в руках!
 		'''
+	// OnCraft: Mods.Coralite.Items.RuneParchment.OnCraft
 }
 
 CraftLock: {
@@ -5866,5 +5867,10 @@ SkarnCutter: {
 
 CrystallineMagikeClusters: {
 	// DisplayName: Crystalline Magike Clusters
+	// Tooltip: ""
+}
+
+BloodWorm: {
+	// DisplayName: Blood Worm
 	// Tooltip: ""
 }

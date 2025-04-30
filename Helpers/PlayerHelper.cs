@@ -32,5 +32,19 @@ namespace Coralite.Helpers
             => player.armor[1];
         public static Item LegArmor(this Player player)
             => player.armor[2];
+
+        /// <summary>
+        /// 根据玩家手持物品的伤害类型来决定伤害增幅
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="damage"></param>
+        /// <returns></returns>
+        public static int GetDamageByHeldItem(this Player player, int damage, bool skipToolCheck = false)
+        {
+            if (!player.HeldItem.IsAir && player.HeldItem.damage > 0 && (skipToolCheck || !player.HeldItem.IsTool()))
+                damage = (int)player.GetTotalDamage(player.HeldItem.DamageType).ApplyTo(damage);
+
+            return damage;
+        }
     }
 }

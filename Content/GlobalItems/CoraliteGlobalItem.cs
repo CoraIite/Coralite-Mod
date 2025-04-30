@@ -21,6 +21,7 @@ namespace Coralite.Content.GlobalItems
         public static LocalizedText RainBowCoralCat;
 
         public static LocalizedText DashPriority;
+        public static LocalizedText Dashable;
         public static LocalizedText[] DashPriorityLevel;
 
         /// <summary>
@@ -34,6 +35,9 @@ namespace Coralite.Content.GlobalItems
 
         public override void Load()
         {
+            if (Main.dedServ)
+                return;
+
             CopperCoralCat = this.GetLocalization("CopperCoralCat", () => "铜质猫猫币");
             RubyCoralCat = this.GetLocalization("RubyCoralCat", () => "红玉猫猫币");
             TerraCoralCat = this.GetLocalization("TerraCoralCat", () => "泰拉猫猫币");
@@ -42,6 +46,7 @@ namespace Coralite.Content.GlobalItems
             Edible = this.GetLocalization("Edible", () => "[c/f0d0b7:可食用]");
 
             DashPriority = this.GetLocalization("DashPriority");
+            Dashable = this.GetLocalization("Dashable");
             DashPriorityLevel = new LocalizedText[5];
             for (int i = 0; i < 5; i++)
                 DashPriorityLevel[i] = this.GetLocalization("DashPriorityLevel" + i);
@@ -57,6 +62,7 @@ namespace Coralite.Content.GlobalItems
             Edible = null;
             DashPriority = null;
             DashPriorityLevel = null;
+            Dashable = null;
         }
 
         public override void SetDefaults(Item item)
@@ -271,6 +277,9 @@ namespace Coralite.Content.GlobalItems
 
             if (item.ModItem is IDashable dash)
             {
+                TooltipLine line2 = new TooltipLine(Mod, "Dashable", Dashable.Value);
+                tooltips.Add(line2);
+
                 float priority = dash.Priority;
 
                 string level = priority switch

@@ -29,11 +29,11 @@ namespace Coralite.Content.Biomes
 
         public override string BestiaryIcon => AssetDirectory.Biomes + "CrystallineSkyIslandIcon";
 
+        public override string BackgroundPath => AssetDirectory.Backgrounds + "CrystallineSkyIslandMap";
+
         public override ModWaterStyle WaterStyle => ModContent.GetInstance<CrystallineSkyIslandWaterStyle>();
 
         public override ModSurfaceBackgroundStyle SurfaceBackgroundStyle => ModContent.GetInstance<CrystallineSkyIslandBackground>();
-
-        public override Color? BackgroundColor => Color.DeepSkyBlue;
 
         public override bool IsBiomeActive(Player player)
         {

@@ -10,7 +10,12 @@ DamageClasses: {
 	RangedNoAttackSpeed.DisplayName: 远程伤害
 }
 
-Players.CoralitePlayer.ThunderElectrifiedDeath: 被雷劈死了
+Players: {
+	CoralitePlayer: {
+		ThunderElectrifiedDeath: 被雷劈死了
+		// CoreKeeperDodgeText: Mods.Coralite.Players.CoralitePlayer.CoreKeeperDodgeText
+	}
+}
 
 Conditions: {
 	CoraliteConditions: {
@@ -32,6 +37,7 @@ Conditions: {
 		InMagicCrystalCave: 需要处于魔力水晶洞
 		InCrystallineSkyIsland: 需要处于蕴魔空岛
 		UseShlimmerTranslation: 需要使用微光转化
+		UseRuneParchment: 在快捷栏左键使用符文羊皮纸来合成
 	}
 }
 
@@ -68,4 +74,4 @@ WorldGeneration: {
 	}
 }
 
-Important.CoralteSystem.OnEnterWorld: ""
+Important.CoraliteSystem.OnEnterWorld: ""

@@ -11,6 +11,11 @@ CoraliteGlobalItem: {
 	DashPriorityLevel2: 中
 	DashPriorityLevel3: 较低
 	DashPriorityLevel4: 最低
+	Dashable:
+		'''
+		获得冲刺！双击方向键或使用冲刺按键进行冲刺
+		▶ 可在模组配置中调整与原版冲刺的优先级和冲刺触发方式
+		'''
 }
 
 DigDigDigGItem: {

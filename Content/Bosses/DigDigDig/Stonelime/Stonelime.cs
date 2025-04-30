@@ -25,6 +25,7 @@ namespace Coralite.Content.Bosses.DigDigDig.Stonelime
         {
             NPCID.Sets.MPAllowedEnemies[Type] = true;
             NPCID.Sets.BossBestiaryPriority.Add(Type);
+            NPC.SetHideInBestiary();
         }
 
         public override void SetDefaults()

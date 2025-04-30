@@ -69,18 +69,18 @@ namespace Coralite.Content.Items.Icicle
                 if (Timer < DashTime + 2)
                 {
                     Rotation += 0.3141f; //1/10 Pi
-                    Projectile.timeLeft = 4;
+                    Projectile.timeLeft = 15;
 
                     Owner.itemTime = Owner.itemAnimation = 2;
                     break;
                 }
 
-                if (!DownLeft)
+                if (!DownLeft&& Projectile.localAI[2] == 0)
                 {
                     if (Projectile.IsOwnedByLocalPlayer())
                     {
                         Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
-                        Rotation = Rotation.AngleLerp((Main.MouseWorld - Owner.MountedCenter).ToRotation(), 0.25f);
+                        Rotation = Rotation.AngleLerp(ToMouseA, 0.25f);
                         Projectile.netUpdate = true;
 
                         if (Main.rand.NextBool(20))
@@ -89,20 +89,21 @@ namespace Coralite.Content.Items.Icicle
                             PRTLoader.NewParticle(Owner.Center + (dir * 16) + Main.rand.NextVector2Circular(8, 8), dir * 1.2f, CoraliteContent.ParticleType<HorizontalStar>(), Coralite.IcicleCyan, Main.rand.NextFloat(0.1f, 0.15f));
                         }
                     }
-                    Projectile.timeLeft = 4;
+                    Projectile.timeLeft = 15;
                     Owner.itemTime = Owner.itemAnimation = 2;
                 }
                 else
                 {
-                    if (Projectile.IsOwnedByLocalPlayer())
+                    if (Projectile.localAI[2] == 0 && Projectile.IsOwnedByLocalPlayer())
                     {
                         Projectile.NewProjectile(Projectile.GetSource_FromAI(), Owner.Center, (Main.MouseWorld - Owner.MountedCenter).SafeNormalize(Vector2.One) * 9.5f
                             , ModContent.ProjectileType<IcicleStarArrow>(), (int)(Owner.GetDamageWithAmmo(Item) * 2.3f), Projectile.knockBack, Projectile.owner);
                         SoundEngine.PlaySound(CoraliteSoundID.Bow_Item5, Owner.Center);
                     }
 
+                    Rotation = Rotation.AngleLerp(ToMouseA, 0.25f);
                     Owner.itemTime = Owner.itemAnimation = 2;
-                    if (Projectile.localAI[2] > 10)
+                    if (Projectile.localAI[2] > 15)
                         Projectile.Kill();
 
                     Projectile.localAI[2]++;
@@ -124,7 +125,7 @@ namespace Coralite.Content.Items.Icicle
 
             Main.spriteBatch.Draw(mainTex, center, null, lightColor, Projectile.rotation, mainTex.Size() / 2, 1.1f, DirSign > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0f);
 
-            if (Alpha > 0.001f)
+            if (Alpha > 0.001f && Projectile.localAI[2] == 0)
             {
                 Texture2D starTex = ModContent.Request<Texture2D>(AssetDirectory.IcicleItems + "IcicleStarArrow").Value;
                 float factor = Timer % 80 / 80;

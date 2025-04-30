@@ -1215,9 +1215,7 @@ namespace Coralite.Content.Items.Nightmare
 
         public override void Initialize()
         {
-            Projectile.oldPos = new Vector2[24];
-            for (int i = 0; i < 24; i++)
-                Projectile.oldPos[i] = Projectile.Center;
+            Projectile.InitOldPosCache(24);
         }
 
         public override bool ShouldUpdatePosition() => Timer >= 0;

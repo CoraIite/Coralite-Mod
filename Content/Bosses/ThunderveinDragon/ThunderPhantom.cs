@@ -20,6 +20,11 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         Player Target => Main.player[NPC.target];
 
+        public override void SetStaticDefaults()
+        {
+            NPC.SetHideInBestiary();
+        }
+
         public override void SetDefaults()
         {
             NPC.width = 130;

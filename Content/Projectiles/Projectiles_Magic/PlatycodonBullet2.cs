@@ -50,9 +50,7 @@ namespace Coralite.Content.Projectiles.Projectiles_Magic
         {
             Alpha = 1;
             Projectile.rotation = Projectile.velocity.ToRotation();
-            Projectile.oldPos = new Vector2[14];
-            for (int i = 0; i < 14; i++)
-                Projectile.oldPos[i] = Projectile.Center;
+            Projectile.InitOldPosCache(14);
         }
 
         public override bool? CanDamage() => canDamage;
