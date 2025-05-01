@@ -137,7 +137,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             float rot = Projectile.rotation + (DirSign > 0 ? 0 : MathHelper.Pi);
             float n = rot - DirSign * MathHelper.PiOver2;
 
-            Main.spriteBatch.Draw(effect, Projectile.Center + rot.ToRotationVector2() * 34 /*+ n.ToRotationVector2() * 4*/ - Main.screenPosition, frameBox, Color.Lerp(lightColor, Color.White, 0.5f)
+            Main.spriteBatch.Draw(effect, Projectile.Center + rot.ToRotationVector2() * 34 - n.ToRotationVector2() * 4 - Main.screenPosition, frameBox, Color.Lerp(lightColor, Color.White, 0.5f)
                 , rot, new Vector2(0, frameBox.Height / 2), Projectile.scale * 0.8f, 0, 0f);
             return false;
         }
@@ -172,7 +172,7 @@ namespace Coralite.Content.Items.HyacinthSeries
                 case 0://飞行
                     {
                         Timer++;
-                        if (Timer > 30)
+                        if (Timer > 20)
                         {
                             Timer = 0;
                             State = 1;
@@ -189,14 +189,20 @@ namespace Coralite.Content.Items.HyacinthSeries
                 case 1://生成分裂弹幕
                     {
                         //分裂6个
-                        float totalAngle = 6 * 0.2f;
+                        float totalAngle = 6 * 0.15f;
                         Vector2 dir = Projectile.velocity.SafeNormalize(Vector2.Zero).RotatedBy(-totalAngle / 2);
                         int damage = (int)(Projectile.damage * 0.75f);
                         if (Projectile.IsOwnedByLocalPlayer())
                             for (int i = 0; i < 6; i++)
                             {
+                                int i2 = i switch//一个比较愚蠢的写法，总之是让中间的弹幕非得更远
+                                {
+                                    0 or 5 => 4,
+                                    1 or 4 => -5,
+                                    _ => -10,
+                                };
                                 Projectile.NewProjectileFromThis<QueenOfNightSmallProj>(Projectile.Center
-                                    , dir * 12, damage, Projectile.knockBack / 2);
+                                    , dir * 12, damage, Projectile.knockBack / 2,i2);
                                 dir = dir.RotatedBy(totalAngle / 6);
                             }
                         SpilitDust();
@@ -235,7 +241,7 @@ namespace Coralite.Content.Items.HyacinthSeries
 
             for (int i = 0; i < 8; i++)
             {
-                var p = LightTrailParticle_NoPrimitive.Spawn(Projectile.Center, dir.RotateByRandom(-0.5f, 0.5f) * Main.rand.NextFloat(2f, 5f),
+                var p = LightTrailParticle_NoPrimitive.Spawn(Projectile.Center, dir.RotateByRandom(-0.6f, 0.6f) * Main.rand.NextFloat(2f, 5f),
                      Color.DarkRed, Main.rand.NextFloat(0.1f, 0.2f));
 
                 p.targetColor = Color.DarkRed with { A=0};
@@ -290,7 +296,7 @@ namespace Coralite.Content.Items.HyacinthSeries
     {
         public override string Texture => AssetDirectory.HyacinthSeriesItems + "QueenOfNightSpilitProj";
 
-        public ref float Timer => ref Projectile.ai[1];
+        public ref float Timer => ref Projectile.ai[0];
 
         public override void SetDefaults()
         {
@@ -309,14 +315,38 @@ namespace Coralite.Content.Items.HyacinthSeries
         {
             Projectile.rotation = Projectile.velocity.ToRotation();
             Timer++;
-            if (Timer == 12)
+
+            for (int i = 0; i < 2; i++)
+            {
+                Projectile.SpawnTrailDust(DustID.Granite, Main.rand.NextFloat(-0.2f, 0.4f), 100);
+                Projectile.SpawnTrailDust(4f, DustID.RedTorch, Main.rand.NextFloat(-0.1f, 0.1f));
+            }
+
+            if (Timer == 16)
             {
                 //分裂
+                if (Projectile.IsOwnedByLocalPlayer())
+                {
+                    Main.player[Projectile.owner].PickAmmo(ContentSamples.ItemsByType[ItemType<QueenOfNight>()]
+                        , out int projType, out float speed, out int damage, out float knockback, out _, true);
 
+                    Vector2 dir = Projectile.velocity.SafeNormalize(Vector2.Zero);
+                    for (int i = -1; i < 2; i += 2)
+                    {
+                        Projectile.NewProjectileFromThis(Projectile.Center, dir.RotatedBy(i * 0.2f) * speed, projType
+                            , (int)(damage * 0.3f), knockback);
+                    }
+                }
 
-                Projectile.Resize(40, 40);
+                Projectile.Resize(50, 50);
                 Projectile.timeLeft = 2;
             }
+        }
+
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            if (Timer<15)
+                Timer = 15;
         }
 
         public override void OnKill(int timeLeft)
