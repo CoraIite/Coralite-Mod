@@ -19,7 +19,7 @@ namespace Coralite.Content.Items.FlyingShields
             Item.shoot = ModContent.ProjectileType<LeafShieldProj>();
             Item.knockBack = 2;
             Item.shootSpeed = 12.5f;
-            Item.damage = 19;
+            Item.damage = 17;
         }
 
         public override void AddRecipes()

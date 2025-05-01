@@ -83,6 +83,8 @@ FlyingShieldSystem: {
 		Can block enemies or hostile barrages
 		The backswing of some left-click attacks can be canceled by raising the shield
 		'''
+	DamageReduceDash: ""
+	ParryDash: ""
 }
 
 WoodenBowGroup.Name: Mods.Coralite.Systems.WoodenBowGroup.Name

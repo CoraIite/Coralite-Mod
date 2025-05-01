@@ -83,6 +83,8 @@ FlyingShieldSystem: {
 		Щит может блокировать атаки врагов или враждебные снаряды
 		Может отменять часть анимации атак с оружием
 		'''
+	// DamageReduceDash: ""
+	// ParryDash: ""
 }
 
 WoodenBowGroup.Name: Любой деревянный лук

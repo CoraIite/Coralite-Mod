@@ -83,6 +83,18 @@ FlyingShieldSystem: {
 		可以格挡敌怪或敌对弹幕
 		可以通过举盾来取消部分左键攻击的后摇
 		'''
+	DamageReduceDash:
+		'''
+		[c/8aebff:未举盾或完全举起盾牌时可进行盾冲]
+		[c/8aebff:盾冲过程中会给予基于盾牌属性的伤害减免效果]
+		[c/8aebff:冲刺过程中无视击退]
+		'''
+	ParryDash:
+		'''
+		[c/8aebff:未举盾或完全举起盾牌时双击方向键可进行盾冲]
+		[c/8aebff:盾冲命中后弹回，并触发盾牌格挡效果]
+		[c/8aebff:开始盾冲时能触发完美格挡类饰品的效果]
+		'''
 }
 
 WoodenBowGroup.Name: 任意 木弓
