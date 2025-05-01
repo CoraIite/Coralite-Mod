@@ -2,7 +2,7 @@
 
 namespace Coralite.Content.Items.LandOfTheLustrousSeries
 {
-    public class BaseGemWeaponProj<T> : BaseHeldProj where T : ModItem
+    public abstract class BaseGemWeaponProj<T> : BaseHeldProj where T : ModItem
     {
         private bool init = true;
 

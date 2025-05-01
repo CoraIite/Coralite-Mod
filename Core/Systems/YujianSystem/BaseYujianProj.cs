@@ -15,7 +15,7 @@ namespace Coralite.Core.Systems.YujianSystem
     /// <summary>
     /// 御剑弹幕基类，请确保所有的御剑弹幕都继承自这个基类
     /// </summary>
-    public class BaseYujianProj : BaseHeldProj, IDrawNonPremultiplied, IDrawAdditive, IDrawPrimitive
+    public abstract class BaseYujianProj : BaseHeldProj, IDrawNonPremultiplied, IDrawAdditive, IDrawPrimitive
     {
         public readonly Color color1;
         public readonly Color color2;

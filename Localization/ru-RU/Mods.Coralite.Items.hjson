@@ -5874,3 +5874,8 @@ BloodWorm: {
 	// DisplayName: Blood Worm
 	// Tooltip: ""
 }
+
+QueenOfNight: {
+	// DisplayName: Queen Of Night
+	// Tooltip: ""
+}

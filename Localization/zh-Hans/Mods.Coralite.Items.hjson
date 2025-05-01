@@ -5972,3 +5972,8 @@ BloodWorm: {
 	DisplayName: 血蛭
 	Tooltip: 在血月时必定钓上敌怪
 }
+
+QueenOfNight: {
+	DisplayName: 夜皇后
+	Tooltip: 诡秘之死
+}

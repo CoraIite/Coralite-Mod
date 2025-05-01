@@ -675,19 +675,10 @@ namespace Coralite.Helpers
         /// <returns></returns>
         public static bool ByTopLeftnGetTP(Point16 topLeft, out TileProcessor tileProcessor)
         {
-            tileProcessor = null;
-            // 遍历世界中的所有模块，查找与指定ID和坐标匹配的模块
-            foreach (var inds in TileProcessorLoader.TP_InWorld)
-            {
-                if (inds.Position == topLeft)
-                {
-                    tileProcessor = inds;
-                    return true;
-                }
-            }
+            if (TileProcessorLoader.ByPositionGetTP(topLeft.X, topLeft.Y, out tileProcessor))
+                return true;
             return false;
         }
-
 
         //public static void SpawnDustOnSend(int selfWidth, int selfHeight, Point16 Position, IMagikeContainer container, Color dustColor, int dustType = DustID.Teleporter)
         //{

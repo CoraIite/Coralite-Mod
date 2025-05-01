@@ -703,6 +703,14 @@ namespace Coralite.Helpers
                 frameBox.Size() / 2, projectile.scale, 0, 0);
         }
 
+        public static void QuickDraw(this Projectile projectile, Rectangle frameBox, Color lightColor, float exRot,float scaleMult)
+        {
+            Texture2D mainTex = projectile.GetTexture();
+
+            Main.spriteBatch.Draw(mainTex, projectile.Center - Main.screenPosition, frameBox, lightColor, projectile.rotation + exRot,
+                frameBox.Size() / 2, projectile.scale*scaleMult, 0, 0);
+        }
+
         public static void QuickDraw(this Projectile projectile, Rectangle frameBox, SpriteEffects effect, Color lightColor, float exRot)
         {
             Texture2D mainTex = projectile.GetTexture();

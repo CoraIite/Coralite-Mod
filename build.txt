@@ -1,7 +1,7 @@
 displayName = 珊瑚石
 author = 瓶中微光
-version = 0.2.2.5
+version = 0.2.2.6
 hideResources = true
-modReferences = InnoVault@1.8
+modReferences = InnoVault@1.9.10
 sortAfter = InnoVault,DDmod
 buildIgnore = MysteryFiles/*,OldAssets/*
