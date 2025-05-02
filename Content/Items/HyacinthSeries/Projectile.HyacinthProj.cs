@@ -78,7 +78,9 @@ namespace Coralite.Content.Items.HyacinthSeries
             Lycoris,
             ShadowWave,
             Floette,
-            EternalBloom
+            EternalBloom,
+            QueenOfNight,
+            Shotgun,
         }
 
         public override void AI()
@@ -218,10 +220,14 @@ namespace Coralite.Content.Items.HyacinthSeries
                     return Color.LightYellow;
                 case (int)GunType.StarCannon://星星炮
                     return Color.Yellow;
+                case (int)GunType.Shotgun://霰弹枪
+                    return Color.Brown;
                 case (int)GunType.OnyxBlaster://玛瑙爆破枪
                     return Color.Purple;
                 //case (int)GunType.VenusMagnum://维纳斯万能枪
                 //    return new Color(140, 255, 102);
+                case (int)GunType.QueenOfNight://维纳斯万能枪
+                    return Color.DarkRed;
                 case (int)GunType.ChainGun://链式机枪
                     return new Color(196, 17, 18);
                 case (int)GunType.Xenopopper://外星泡泡枪
@@ -230,7 +236,7 @@ namespace Coralite.Content.Items.HyacinthSeries
                     return new Color(0, 242, 170);
                 case (int)GunType.SDMG://太空海豚机枪
                     return new Color(147, 227, 236);
-                case (int)GunType.ThunderDukeVine:
+                case (int)GunType.ThunderDukeVine://雷公藤
                     return Coralite.ThunderveinYellow;
                 case (int)GunType.StarsBreath://满天星
                     return Color.White;
@@ -254,9 +260,9 @@ namespace Coralite.Content.Items.HyacinthSeries
                     return NightmarePlantera.nightmareRed;
                 case (int)GunType.ShadowWave://月影
                     return new Color(189, 109, 255);
-                case (int)GunType.Floette://月影
+                case (int)GunType.Floette://花叶蒂
                     return Color.Lime;
-                case (int)GunType.EternalBloom://月影
+                case (int)GunType.EternalBloom://永恒绽放
                     return Color.Pink;
                 default:
                     break;
@@ -487,8 +493,12 @@ namespace Coralite.Content.Items.HyacinthSeries
                     return ItemID.SuperStarCannon;
                 case (int)GunType.StarCannon://星星炮
                     return ItemID.StarCannon;
+                case (int)GunType.Shotgun://霰弹枪
+                    return ItemID.Shotgun;
                 case (int)GunType.OnyxBlaster://玛瑙爆破枪
                     return ItemID.OnyxBlaster;
+                case (int)GunType.QueenOfNight://夜皇后
+                    return ModContent.ItemType<QueenOfNight>();
                 //case (int)GunType.VenusMagnum://维纳斯万能枪
                 //    return ItemID.VenusMagnum;
                 case (int)GunType.ChainGun://链式机枪
@@ -499,8 +509,8 @@ namespace Coralite.Content.Items.HyacinthSeries
                     return ItemID.VortexBeater;
                 case (int)GunType.SDMG://太空海豚机枪
                     return ItemID.SDMG;
-                case (int)GunType.ThunderDukeVine:
-                    return ModContent.ItemType<ThunderDukeVine>();//曾经是邓氏鱼 ，现在替换为雷公藤
+                case (int)GunType.ThunderDukeVine://雷公藤
+                    return ModContent.ItemType<ThunderDukeVine>();
                 case (int)GunType.StarsBreath://满天星
                     return ModContent.ItemType<StarsBreath>();
                 case (int)GunType.Snowdrop://雪花莲
@@ -523,9 +533,9 @@ namespace Coralite.Content.Items.HyacinthSeries
                     return ModContent.ItemType<Lycoris>();
                 case (int)GunType.ShadowWave://月影
                     return ModContent.ItemType<ShadowWave>();
-                case (int)GunType.Floette://月影
+                case (int)GunType.Floette://花叶蒂
                     return ModContent.ItemType<Floette>();
-                case (int)GunType.EternalBloom://月影
+                case (int)GunType.EternalBloom://永恒绽放
                     return ModContent.ItemType<EternalBloom>();
             }
 

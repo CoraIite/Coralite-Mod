@@ -53,7 +53,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Particles
             spriteBatch.Draw(mainTex, Position - Main.screenPosition, frame, Color, Rotation, origin, Scale, SpriteEffects.None, 0f);
 
             frame = mainTex.Frame(1, 15, 0, 0);
-            Color c2 = new(255, 255, 255, Color.A / 2);
+            Color c2 = Color;
+            c2.A /= 2;
             spriteBatch.Draw(mainTex, Position - Main.screenPosition, frame, c2, Rotation, origin, Scale, SpriteEffects.None, 0f);
 
             return false;

@@ -64,21 +64,21 @@
         public void GetShadowAttackBonus(byte howMany = 1)
         {
             shadowAttackBonus += howMany;
-            if (shadowAttackBonus < 5)
+            if (shadowAttackBonus > 5)
                 shadowAttackBonus = 5;
         }
 
         public void GetShadowLifeMaxBonus(byte howMany = 1)
         {
             shadowLifeMaxBonus += howMany;
-            if (shadowLifeMaxBonus < 5)
+            if (shadowLifeMaxBonus > 5)
                 shadowLifeMaxBonus = 5;
         }
 
         public void GetshadowDefenceBonus(byte howMany = 1)
         {
             shadowDefenceBonus += howMany;
-            if (shadowDefenceBonus < 5)
+            if (shadowDefenceBonus > 5)
                 shadowDefenceBonus = 5;
         }
     }

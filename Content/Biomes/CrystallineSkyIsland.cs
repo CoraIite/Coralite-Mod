@@ -16,7 +16,7 @@ namespace Coralite.Content.Biomes
     {
         public override SceneEffectPriority Priority => SceneEffectPriority.Environment;
 
-        //public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/Temp_CrystallineSkyIsland");
+        //public override int Music => MusicLoader.GetMusicSlot(Mod, "Sounds/Music/CrystallineSkyIslandDay");
 
         public override void Load()
         {
