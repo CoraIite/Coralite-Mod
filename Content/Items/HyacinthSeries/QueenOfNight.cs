@@ -21,7 +21,7 @@ namespace Coralite.Content.Items.HyacinthSeries
 
         public override void SetDefaults()
         {
-            Item.SetWeaponValues(76, 2, 6);
+            Item.SetWeaponValues(76, 2);
             Item.DefaultToRangedWeapon(ProjectileType<QueenOfNightSpilitProj>(), AmmoID.Bullet, 46, 5f, true);
 
             Item.useStyle = ItemUseStyleID.Rapier;
@@ -210,7 +210,7 @@ namespace Coralite.Content.Items.HyacinthSeries
                 case 0://飞行
                     {
                         Timer++;
-                        if (Timer > 36)
+                        if (Timer > 40)
                         {
                             Timer = 0;
                             State = 1;
@@ -241,7 +241,7 @@ namespace Coralite.Content.Items.HyacinthSeries
                             exRot2 += MathHelper.TwoPi / 3;
                             exRot2 %= MathHelper.TwoPi;
                             velocity = dir.RotatedBy(exRot2) * r;
-                            d = Dust.NewDustPerfect(center + velocity * 3, DustID.Clentaminator_Red, velocity, Alpha: 100, Scale: Main.rand.NextFloat(0.8f, 1f));
+                            d = Dust.NewDustPerfect(center + velocity * 3, DustID.CrimsonSpray, velocity, Alpha: 100, Scale: Main.rand.NextFloat(0.8f, 1f));
                             d.noGravity = true;
                         }
                     }
@@ -287,17 +287,17 @@ namespace Coralite.Content.Items.HyacinthSeries
         {
             Vector2 dir = Projectile.velocity.SafeNormalize(Vector2.Zero);
 
-            for (int i = 0; i < 24; i++)
+            for (int i = 0; i < 40; i++)
             {
                 Dust d = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(12, 12)
-                     , DustID.RedTorch, Helper.NextVec2Dir() * Main.rand.NextFloat(5, 9), Scale: Main.rand.NextFloat(1, 2));
+                     , DustID.RedTorch, Helper.NextVec2Dir() * Main.rand.NextFloat(5f, 8.5f), Scale: Main.rand.NextFloat(1.5f, 2.5f));
 
                 d.noGravity = true;
                 d = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(12, 12)
-                     , DustID.Granite, Helper.NextVec2Dir() * Main.rand.NextFloat(2, 5), Alpha: 100, Scale: Main.rand.NextFloat(1, 1.5f));
+                     , DustID.Smoke, Helper.NextVec2Dir() * Main.rand.NextFloat(2, 5), Alpha: 0,Color.Black, Scale: Main.rand.NextFloat(1, 2f));
                 d.noGravity = true;
                 d = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(4, 4)
-                     , DustID.Clentaminator_Red, Helper.NextVec2Dir() * Main.rand.NextFloat(1, 2), Alpha: 100, Scale: Main.rand.NextFloat(0.8f, 1f));
+                     , DustID.Clentaminator_Red, Helper.NextVec2Dir() * Main.rand.NextFloat(1, 2), Alpha: 100, Scale: Main.rand.NextFloat(1f, 1.5f));
                 d.noGravity = true;
             }
 
@@ -309,10 +309,10 @@ namespace Coralite.Content.Items.HyacinthSeries
                 d.noGravity = true;
             }
 
-            var p2 = PRTLoader.NewParticle<MagikeLozengeParticle>(Projectile.Center, Vector2.Zero, Color.DarkRed, 0.6f);
+            var p2 = PRTLoader.NewParticle<MagikeLozengeParticle>(Projectile.Center, Vector2.Zero, Color.DarkRed, 0.75f);
             p2.Rotation = Projectile.rotation+MathHelper.PiOver2;
 
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < 8; i++)
             {
                 var p = LightTrailParticle_NoPrimitive.Spawn(Projectile.Center, dir.RotateByRandom(-0.8f, 0.8f) * Main.rand.NextFloat(2f, 5f),
                      Color.DarkRed, Main.rand.NextFloat(0.1f, 0.2f));
@@ -329,8 +329,9 @@ namespace Coralite.Content.Items.HyacinthSeries
 
             SpilitDust();
             Projectile.velocity = Vector2.Zero;
-            int size = 120;
+            int size = 165;
             Projectile.Resize(size, size);
+            Helper.PlayPitched(CoraliteSoundID.Boom_Item14, Projectile.Center);
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
@@ -417,6 +418,7 @@ namespace Coralite.Content.Items.HyacinthSeries
                     }
                 }
 
+                Helper.PlayPitched(CoraliteSoundID.LiteBoom_Item118 , Projectile.Center);
                 Projectile.Resize(50, 50);
                 Projectile.timeLeft = 2;
             }

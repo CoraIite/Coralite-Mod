@@ -57,8 +57,8 @@ namespace Coralite.Content.Items.HyacinthSeries
         public enum GunType
         {
             Wisteria = 1,
-            SuperStarCannon,
-            StarCannon,
+            //SuperStarCannon,
+            //StarCannon,
             OnyxBlaster,
             //VenusMagnum,
             ChainGun,
@@ -81,6 +81,9 @@ namespace Coralite.Content.Items.HyacinthSeries
             EternalBloom,
             QueenOfNight,
             Shotgun,
+            ClockworkAssaultRifle,
+            Datura,
+            Boomstick,
         }
 
         public override void AI()
@@ -216,18 +219,20 @@ namespace Coralite.Content.Items.HyacinthSeries
             {
                 case (int)GunType.Wisteria://紫藤萝
                     return new Color(234, 173, 255);
-                case (int)GunType.SuperStarCannon://超级星星炮
-                    return Color.LightYellow;
-                case (int)GunType.StarCannon://星星炮
-                    return Color.Yellow;
+                //case (int)GunType.SuperStarCannon://超级星星炮
+                //    return Color.LightYellow;
+                //case (int)GunType.StarCannon://星星炮
+                //    return Color.Yellow;
                 case (int)GunType.Shotgun://霰弹枪
                     return Color.Brown;
                 case (int)GunType.OnyxBlaster://玛瑙爆破枪
                     return Color.Purple;
                 //case (int)GunType.VenusMagnum://维纳斯万能枪
                 //    return new Color(140, 255, 102);
-                case (int)GunType.QueenOfNight://维纳斯万能枪
+                case (int)GunType.QueenOfNight://夜皇后
                     return Color.DarkRed;
+                case (int)GunType.ClockworkAssaultRifle://发条枪
+                    return Color.DarkOrange;
                 case (int)GunType.ChainGun://链式机枪
                     return new Color(196, 17, 18);
                 case (int)GunType.Xenopopper://外星泡泡枪
@@ -264,6 +269,10 @@ namespace Coralite.Content.Items.HyacinthSeries
                     return Color.Lime;
                 case (int)GunType.EternalBloom://永恒绽放
                     return Color.Pink;
+                case (int)GunType.Datura://曼陀罗
+                    return Color.LightGoldenrodYellow;
+                case (int)GunType.Boomstick://三发猎枪
+                    return Color.Silver;
                 default:
                     break;
             }
@@ -489,10 +498,10 @@ namespace Coralite.Content.Items.HyacinthSeries
                 default: break;
                 case (int)GunType.Wisteria://紫藤萝
                     return ModContent.ItemType<Wisteria>();
-                case (int)GunType.SuperStarCannon://超级星星炮
-                    return ItemID.SuperStarCannon;
-                case (int)GunType.StarCannon://星星炮
-                    return ItemID.StarCannon;
+                //case (int)GunType.SuperStarCannon://超级星星炮
+                //    return ItemID.SuperStarCannon;
+                //case (int)GunType.StarCannon://星星炮
+                //    return ItemID.StarCannon;
                 case (int)GunType.Shotgun://霰弹枪
                     return ItemID.Shotgun;
                 case (int)GunType.OnyxBlaster://玛瑙爆破枪
@@ -503,6 +512,8 @@ namespace Coralite.Content.Items.HyacinthSeries
                 //    return ItemID.VenusMagnum;
                 case (int)GunType.ChainGun://链式机枪
                     return ItemID.ChainGun;
+                case (int)GunType.ClockworkAssaultRifle://发条枪
+                    return ItemID.ClockworkAssaultRifle;
                 case (int)GunType.Xenopopper://外星泡泡枪
                     return ItemID.Xenopopper;
                 case (int)GunType.VortexBeater://星旋机枪
@@ -537,6 +548,10 @@ namespace Coralite.Content.Items.HyacinthSeries
                     return ModContent.ItemType<Floette>();
                 case (int)GunType.EternalBloom://永恒绽放
                     return ModContent.ItemType<EternalBloom>();
+                case (int)GunType.Datura://曼陀罗
+                    return ModContent.ItemType<Datura>();
+                case (int)GunType.Boomstick://三发猎枪
+                    return ItemID.Boomstick;
             }
 
             return (int)Projectile.ai[0];

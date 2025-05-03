@@ -21,7 +21,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             AddMapEntry(new Color(214, 245, 212));
 
             MinPick = 110;
-            MineResist = 7;
+            MineResist = 6;
         }
 
         public override void NumDust(int i, int j, bool fail, ref int num)

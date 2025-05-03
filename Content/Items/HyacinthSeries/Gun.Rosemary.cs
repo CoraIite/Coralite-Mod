@@ -69,21 +69,21 @@ namespace Coralite.Content.Items.HyacinthSeries
         {
             CreateRecipe()
             .AddIngredient<Arethusa>()
-            .AddIngredient(ItemID.SoulofNight, 5)
+            .AddIngredient(ItemID.ClockworkAssaultRifle)
             .AddIngredient(ItemID.SoulofSight, 5)
             .AddTile(TileID.MythrilAnvil)
             .Register();
 
             CreateRecipe()
             .AddIngredient<Arethusa>()
-            .AddIngredient(ItemID.SoulofNight, 5)
+            .AddIngredient(ItemID.ClockworkAssaultRifle)
             .AddIngredient(ItemID.SoulofMight, 5)
             .AddTile(TileID.MythrilAnvil)
             .Register();
 
             CreateRecipe()
             .AddIngredient<Arethusa>()
-            .AddIngredient(ItemID.SoulofNight, 5)
+            .AddIngredient(ItemID.ClockworkAssaultRifle)
             .AddIngredient(ItemID.SoulofFright, 5)
             .AddTile(TileID.MythrilAnvil)
             .Register();

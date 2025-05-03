@@ -5977,3 +5977,8 @@ QueenOfNight: {
 	DisplayName: 夜皇后
 	Tooltip: 诡秘之死
 }
+
+Datura: {
+	DisplayName: 曼陀罗
+	Tooltip: ""
+}

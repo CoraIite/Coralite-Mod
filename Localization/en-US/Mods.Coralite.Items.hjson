@@ -5837,3 +5837,8 @@ QueenOfNight: {
 	DisplayName: Queen Of Night
 	Tooltip: ""
 }
+
+Datura: {
+	DisplayName: Datura
+	Tooltip: ""
+}
