@@ -80,10 +80,11 @@ namespace Coralite.Content.CustomHooks
             CoraliteWorld.CoralCatWorld = false;
             CoraliteWorld.DigDigDigWorld = false;
 
-            if (processedSeed.ToLower() == "the chaos" || processedSeed.ToLower() == "thechaos")
+            string seed = processedSeed.ToLower();
+            if (seed == "the chaos" || seed == "thechaos")
                 CoraliteWorld.chaosWorld = true;
 
-            if (processedSeed.ToLower() == "coral cat" || processedSeed.ToLower() == "coralcat")
+            if (seed == "coral cat" || seed == "coralcat")
             {
                 CoraliteWorld.CoralCatWorld = true;
 

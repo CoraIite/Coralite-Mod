@@ -24,7 +24,9 @@ namespace Coralite.Content.Items.HyacinthSeries
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.value = Item.sellPrice(0, 4, 0, 0);
             Item.rare = ItemRarityID.LightRed;
-            Item.UseSound = CoraliteSoundID.Shotgun2_Item38;
+            var st = CoraliteSoundID.Shotgun2_Item38;
+            st.Pitch = 0.9f;
+            Item.UseSound =st;
 
             Item.useTurn = false;
             Item.noUseGraphic = true;
@@ -99,7 +101,7 @@ namespace Coralite.Content.Items.HyacinthSeries
 
             Texture2D effect = DaturaFire.Value;
             Rectangle frameBox = effect.Frame(4, 7, FrameX, Projectile.frame);
-            SpriteEffects effects = DirSign > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            //SpriteEffects effects = DirSign > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
             float rot = Projectile.rotation + (DirSign > 0 ? 0 : MathHelper.Pi);
             float n = rot - DirSign * MathHelper.PiOver2;
@@ -190,6 +192,7 @@ namespace Coralite.Content.Items.HyacinthSeries
                                 size = 60;
 
                             Projectile.Resize(size, size);
+                            Helper.PlayPitched(CoraliteSoundID.FireBallExplosion_DD2_BetsyFireballImpact, Projectile.Center, pitch: -0.8f);
                             return;
                         }
 
@@ -198,13 +201,17 @@ namespace Coralite.Content.Items.HyacinthSeries
                         if (currTime < 20)
                             scaleMult += 0.01f;
 
-                        Projectile.rotation += Projectile.velocity.Length() / 30;
                         Projectile.velocity *= 0.86f;
 
-                        if (currTime>3*3&&currTime<3*9&&Main.rand.NextBool(3))
+                        if (currTime == 3 * 4)
+                            Projectile.rotation = Main.rand.NextFloat(MathHelper.TwoPi);
+                        else if (currTime > 3 * 4)
+                            Projectile.rotation += Projectile.velocity.Length() / 25;
+ 
+                        if (currTime > 3 * 3 && currTime < 3 * 9 && Main.rand.NextBool(3))
                             PRTLoader.NewParticle<TwistFog>(Projectile.Center + Helper.NextVec2Dir(Projectile.width * 0.1f, Projectile.width * 0.3f)
                                 , Helper.NextVec2Dir(0.2f, 0.4f)
-                                ,Main.rand.NextFromList( Color.DarkGoldenrod,Color.Gold) with { A = 100 }, Main.rand.NextFloat(0.3f, 0.8f));
+                                , Main.rand.NextFromList(Color.DarkGoldenrod, Color.Gold) with { A = 100 }, Main.rand.NextFloat(0.3f, 0.8f));
 
                         //for (int i = 0; i < 2; i++)
                         if (Main.rand.NextBool(2))
@@ -260,7 +267,10 @@ namespace Coralite.Content.Items.HyacinthSeries
             }
 
             if (Timer < maxTime)
+            {
+                Helper.PlayPitched(CoraliteSoundID.FireBallExplosion_DD2_BetsyFireballImpact, Projectile.Center,pitch:-0.8f);
                 Timer = maxTime;
+            }
             if (Projectile.width != size)
                 Projectile.Resize(size, size);
         }

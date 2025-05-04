@@ -36,17 +36,19 @@ namespace Coralite.Content.ModPlayers
         #region 装备类字段
 
         /// <summary> 花粉火药计时器 </summary>
-        public int PollenGunpowderEffect = 60;
+        public byte PollenGunpowderEffect = 60;
         /// <summary> 玫瑰火药计时器 </summary>
-        public int RoseGunpowderEffect = 90;
+        public byte RoseGunpowderEffect = 90;
+        /// <summary> 迈达斯灰烬火药计时器 </summary>
+        public byte MidasGunpowderEffect = 90;
 
         /// <summary> 海盗王之魂 </summary>
-        public int pirateKingSoul;
+        public byte pirateKingSoul;
         /// <summary> 海盗王之魂的效果CD </summary>
-        public int pirateKingSoulCD;
+        public byte pirateKingSoulCD;
 
         /// <summary> 幸运星 </summary>
-        public int luckyStar;
+        public byte luckyStar;
 
         /// <summary> 美杜莎之魂 </summary>
         public int medusaSoul;
@@ -389,6 +391,8 @@ namespace Coralite.Content.ModPlayers
             {
                 if (PollenGunpowderEffect == 0)
                 {
+                    if (damage > 60)
+                        damage = 60;
                     Projectile.NewProjectile(source, position, velocity.RotateByRandom(-0.1f, 0.1f),
                         ProjectileType<Items.HyacinthSeries.PollenGunpowderProj>(), damage, knockback, Player.whoAmI);
                     PollenGunpowderEffect = 60;
@@ -396,9 +400,24 @@ namespace Coralite.Content.ModPlayers
 
                 if (RoseGunpowderEffect == 0)
                 {
+                    damage = (int)(damage * 1.35f);
+                    if (damage > 110)
+                        damage = 110;
+
                     Projectile.NewProjectile(source, position, velocity.RotateByRandom(-0.05f, 0.05f),
-                        ProjectileType<Items.HyacinthSeries.RoseGunpowderProj>(), (int)(damage * 1.35f), knockback, Player.whoAmI);
+                        ProjectileType<Items.HyacinthSeries.RoseGunpowderProj>(), damage, knockback, Player.whoAmI);
                     RoseGunpowderEffect = 90;
+                }
+
+                if (MidasGunpowderEffect == 0)
+                {
+                    damage = (int)(damage * 1.35f);
+                    if (damage > 185)
+                        damage = 185;
+
+                    Projectile.NewProjectile(source, position, velocity*1.2f,
+                        ProjectileType<Items.HyacinthSeries.MidasGunpowderProj>(), damage, knockback, Player.whoAmI);
+                    MidasGunpowderEffect = 90;
                 }
             }
 
@@ -550,7 +569,7 @@ namespace Coralite.Content.ModPlayers
                         Item.NewItem(new EntitySource_OnHit(Player, target), target.Center, itemtype);
                     }
 
-                    pirateKingSoulCD = CD;
+                    pirateKingSoulCD = (byte)CD;
                 }
             }
 

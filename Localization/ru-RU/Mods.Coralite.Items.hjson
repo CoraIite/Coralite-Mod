@@ -5884,3 +5884,8 @@ Datura: {
 	// DisplayName: Datura
 	// Tooltip: ""
 }
+
+MidasGunpowder: {
+	// DisplayName: Midas Gunpowder
+	// Tooltip: ""
+}

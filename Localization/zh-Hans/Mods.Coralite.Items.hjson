@@ -5980,5 +5980,15 @@ QueenOfNight: {
 
 Datura: {
 	DisplayName: 曼陀罗
-	Tooltip: ""
+	Tooltip: 天生幸运
+}
+
+MidasGunpowder: {
+	DisplayName: 迈达斯灰烬
+	Tooltip: 
+		'''
+		枪类伤害增加15%
+		远程击退增加15%
+		枪在射击时额外射出迈达斯火花，该效果有1.5秒CD
+		'''
 }

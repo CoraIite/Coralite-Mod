@@ -10,38 +10,38 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.HyacinthSeries
 {
-    public class RoseGunpowder : BaseAccessory
+    public class MidasGunpowder : BaseAccessory
     {
         public override string Texture => AssetDirectory.HyacinthSeriesItems + Name;
 
-        public RoseGunpowder() : base(ItemRarityID.LightRed, Item.sellPrice(0, 6))
+        public MidasGunpowder() : base(ItemRarityID.Yellow, Item.sellPrice(0, 10))
         {
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetKnockback(DamageClass.Ranged) += 0.1f;
-            player.bulletDamage *= 1.1f;
+            player.GetKnockback(DamageClass.Ranged) += 0.15f;
+            player.bulletDamage *= 1.15f;
 
             if (player.TryGetModPlayer(out CoralitePlayer cp))
             {
-                if (cp.RoseGunpowderEffect > 0)
-                    cp.RoseGunpowderEffect--;
+                if (cp.MidasGunpowderEffect > 0)
+                    cp.MidasGunpowderEffect--;
             }
         }
 
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient<PollenGunpowder>()
-                .AddIngredient(ItemID.JungleRose)
-                .AddIngredient(ItemID.ExplosivePowder, 12)
+                .AddIngredient<RoseGunpowder>()
+                .AddIngredient(ItemID.BlackFairyDust)
+                .AddIngredient(ItemID.GoldDust, 10)
                 .AddTile(TileID.CrystalBall)
                 .Register();
         }
     }
 
-    public class RoseGunpowderProj : ModProjectile
+    public class MidasGunpowderProj : ModProjectile
     {
         public override string Texture => AssetDirectory.Blank;
 
@@ -58,30 +58,25 @@ namespace Coralite.Content.Items.HyacinthSeries
 
         public override void AI()
         {
-            if (Projectile.velocity.Y < 8)
-            {
-                Projectile.velocity.Y += 0.03f;
-            }
-
             if (Main.rand.NextBool(6))
             {
-                Projectile.SpawnTrailDust(DustID.Torch, Main.rand.NextFloat(0.1f, 0.3f), noGravity: false);
+                Projectile.SpawnTrailDust(DustID.GoldCoin, Main.rand.NextFloat(0.1f, 0.3f),Scale:Main.rand.NextFloat(1,1.5f), noGravity: false);
 
                 Color c = Main.rand.Next(3) switch
                 {
-                    0 => Color.DarkRed,
-                    1 => Color.IndianRed,
-                    _ => new Color(121, 114, 193)
+                    0 => Color.Gold,
+                    1 => Color.DarkGoldenrod,
+                    _ => Color.Goldenrod
                 };
                 Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(8, 8), ModContent.DustType<GlowBall>(),
                     Helper.NextVec2Dir(1, 2), 0, c, 0.25f);
             }
 
-            Projectile.SpawnTrailDust(DustID.PurpleTorch, Main.rand.NextFloat(-0.1f, 0.1f), noGravity: !Main.rand.NextBool(3));
+            Projectile.SpawnTrailDust(DustID.CorruptTorch, Main.rand.NextFloat(-0.1f, 0.1f), noGravity: !Main.rand.NextBool(3));
             for (int i = 0; i < 3; i++)
             {
                 Dust dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(4, 4) - (Projectile.velocity / 3 * i)
-                    , DustID.RedTorch, Vector2.Zero, Scale: Main.rand.NextFloat(0.6f, 0.8f));
+                    , DustID.YellowTorch, Vector2.Zero, Scale: Main.rand.NextFloat(0.6f, 1.2f));
                 dust.noGravity = Main.rand.NextBool(5);
                 dust.velocity = -Projectile.velocity * Main.rand.NextFloat(-0.05f, 0.05f);
             }
@@ -89,34 +84,35 @@ namespace Coralite.Content.Items.HyacinthSeries
 
         public override void OnKill(int timeLeft)
         {
-            int howmany = Main.rand.Next(3, 5);
-            for (int i = 0; i < howmany; i++)
+            Vector2 dir = Helper.NextVec2Dir();
+            for (int i = 0; i < 6; i++)
             {
-                Projectile.NewProjectileFromThis<RoseGunpowderProj2>(Projectile.Center, Helper.NextVec2Dir(8, 10)
+                Projectile.NewProjectileFromThis<MidasGunpowdeProj2>(Projectile.Center, dir.RotatedBy(MathHelper.TwoPi/6*i)*Main.rand.NextFloat(8,10)
                     , (int)(Projectile.damage * 0.6f), Projectile.knockBack);
             }
 
             for (int i = 0; i < 8; i++)
-                Dust.NewDustPerfect(Projectile.Center + Helper.NextVec2Dir(5, 12), DustID.Firework_Red, Helper.NextVec2Dir(1, 2));
+                Dust.NewDustPerfect(Projectile.Center + Helper.NextVec2Dir(5, 12), DustID.FireworkFountain_Yellow, Helper.NextVec2Dir(1, 2));
 
             for (int i = 0; i < 8; i++)
-                Dust.NewDustPerfect(Projectile.Center + Helper.NextVec2Dir(5, 12), DustID.RedTorch, Helper.NextVec2Dir(0.3f, 1.5f), Scale: Main.rand.NextFloat(0.8f, 1f));
+                Dust.NewDustPerfect(Projectile.Center + Helper.NextVec2Dir(5, 12), DustID.CorruptTorch, Helper.NextVec2Dir(0.3f, 1.5f), Scale: Main.rand.NextFloat(0.8f, 1f));
 
             for (int i = 0; i < 4; i++)
-                Dust.NewDustPerfect(Projectile.Center + Helper.NextVec2Dir(5, 12), DustID.Torch, Helper.NextVec2Dir(1, 1.5f), Scale: Main.rand.NextFloat(1, 2f));
+                Dust.NewDustPerfect(Projectile.Center + Helper.NextVec2Dir(5, 12), DustID.GoldCoin, Helper.NextVec2Dir(1, 1.5f), Scale: Main.rand.NextFloat(1, 2f));
 
             SoundEngine.PlaySound(CoraliteSoundID.FireBallDrath_NPCDeath3, Projectile.Center);
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
+            target.AddBuff(BuffID.Midas, 60 * 5);
             target.AddBuff(ModContent.BuffType<PollenFire>(), 60 * 4);
         }
 
         public override bool PreDraw(ref Color lightColor) => false;
     }
 
-    public class RoseGunpowderProj2 : ModProjectile
+    public class MidasGunpowdeProj2 : ModProjectile
     {
         public override string Texture => AssetDirectory.Blank;
 
@@ -134,24 +130,27 @@ namespace Coralite.Content.Items.HyacinthSeries
 
         public override void AI()
         {
-            if (Projectile.timeLeft > 6)
-                LightTrailParticle.Spawn(Projectile.Center, Projectile.velocity.RotateByRandom(-0.2f, 0.2f) * Main.rand.NextFloat(0.3f, 0.5f),
-                    Color.DarkRed, Main.rand.NextFloat(0.2f, 0.4f));
+            if (Projectile.timeLeft > 7)
+            {
+               LightTrailParticle.Spawn(Projectile.Center, Projectile.velocity.RotateByRandom(-0.2f, 0.2f) * Main.rand.NextFloat(0.3f, 0.5f),
+                    Color.DarkGoldenrod, Main.rand.NextFloat(0.2f, 0.4f),Color.Purple with { A=0});
+            }
         }
 
         public override void OnKill(int timeLeft)
         {
-            for (int i = 0; i < 3; i++)
-                Dust.NewDustPerfect(Projectile.Center + Helper.NextVec2Dir(5, 12), DustID.Firework_Red, Helper.NextVec2Dir(1, 2));
+            for (int i = 0; i < 2; i++)
+                Dust.NewDustPerfect(Projectile.Center + Helper.NextVec2Dir(5, 12), DustID.FireworkFountain_Yellow, Helper.NextVec2Dir(1, 2));
 
             for (int i = 0; i < 3; i++)
-                Dust.NewDustPerfect(Projectile.Center + Helper.NextVec2Dir(5, 12), DustID.RedTorch, Helper.NextVec2Dir(0.3f, 0.8f), Scale: Main.rand.NextFloat(0.8f, 1f));
+                Dust.NewDustPerfect(Projectile.Center + Helper.NextVec2Dir(5, 12), DustID.CorruptTorch, Helper.NextVec2Dir(0.3f, 0.8f), Scale: Main.rand.NextFloat(0.8f, 1f));
 
             SoundEngine.PlaySound(CoraliteSoundID.FireBallDrath_NPCDeath3, Projectile.Center);
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
+            target.AddBuff(BuffID.Midas, 60 * 5);
             target.AddBuff(ModContent.BuffType<PollenFire>(), 60 * 4);
         }
 
