@@ -4674,6 +4674,8 @@ TreasureLens: {
 BrilliantScanner: {
 	DisplayName: Великолепный сканер
 	Tooltip: Помещен в инвентарь, позволяет отслеживать потоки магической энергии и состояние приборов
+	// CanShowLines: Mods.Coralite.Items.BrilliantScanner.CanShowLines
+	// DontShowLines: Mods.Coralite.Items.BrilliantScanner.DontShowLines
 }
 
 SkarnBrick: {
@@ -5858,6 +5860,7 @@ MabirdLoupe: {
 	// Tooltip: ""
 	// CanShowBackLines: Mods.Coralite.Items.MabirdLoupe.CanShowBackLines
 	// DontShowBackLines: Mods.Coralite.Items.MabirdLoupe.DontShowBackLines
+	// ShowNothing: Mods.Coralite.Items.MabirdLoupe.ShowNothing
 }
 
 SkarnCutter: {

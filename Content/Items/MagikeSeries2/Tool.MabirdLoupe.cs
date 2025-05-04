@@ -21,7 +21,10 @@ namespace Coralite.Content.Items.MagikeSeries2
     {
         public const string ShowBackLine = "MabirdLoupeA";
 
-        private bool CanShowBackLine = false;
+        /// <summary>
+        /// 0 不显示，1 显示传输，2 显示全部
+        /// </summary>
+        private byte ShowLineStyle = 0;
 
         public static LocalizedText[] ShowBackTexts;
 
@@ -30,42 +33,46 @@ namespace Coralite.Content.Items.MagikeSeries2
             if (Main.dedServ)
                 return;
 
-            ShowBackTexts = [this.GetLocalization("CanShowBackLines"), this.GetLocalization("DontShowBackLines")];
+            ShowBackTexts =
+                [
+                this.GetLocalization("ShowNothing")
+                , this.GetLocalization("DontShowBackLines")
+                ,this.GetLocalization("CanShowBackLines")
+                ];
         }
 
         public override void UpdateInventory(Player player)
         {
             if (player.TryGetModPlayer(out CoralitePlayer cp))
             {
-                cp.AddEffect(nameof(MabirdLoupe));
-                if (CanShowBackLine)
+                if (ShowLineStyle > 0)
+                    cp.AddEffect(nameof(MabirdLoupe));
+                if (ShowLineStyle > 1)
                     cp.AddEffect(ShowBackLine);
             }
         }
 
-        public override bool CanRightClick()
-        {
-            return true;
-        }
+        public override bool CanRightClick() => true;   
 
         public override void RightClick(Player player)
         {
-            CanShowBackLine = !CanShowBackLine;
+            ShowLineStyle++;
+            if (ShowLineStyle > 2)
+                ShowLineStyle = 0;
         }
 
-        public override bool ConsumeItem(Player player)
-        {
-            return false;
-        }
+        public override bool ConsumeItem(Player player) => false;
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
             int index = tooltips.FindIndex(l => l.Name == "Tooltip0");
 
-            if (CanShowBackLine)
+            if (ShowLineStyle == 0)
                 tooltips.Insert(index + 1, new TooltipLine(Mod, "ShowBackLine", ShowBackTexts[0].Value));
-            else
+            else if (ShowLineStyle == 1)
                 tooltips.Insert(index + 1, new TooltipLine(Mod, "ShowBackLine", ShowBackTexts[1].Value));
+            else
+                tooltips.Insert(index + 1, new TooltipLine(Mod, "ShowBackLine", ShowBackTexts[2].Value));
         }
 
         public void AddMagikeCraftRecipe()
@@ -80,14 +87,14 @@ namespace Coralite.Content.Items.MagikeSeries2
 
         public override void SaveData(TagCompound tag)
         {
-            if (CanShowBackLine)
-                tag.Add(nameof(CanShowBackLine), true);
+            if (ShowLineStyle != 0)
+                tag.Add(nameof(ShowLineStyle), ShowLineStyle);
         }
 
         public override void LoadData(TagCompound tag)
         {
-            if (tag.ContainsKey(nameof(CanShowBackLine)))
-                CanShowBackLine = true;
+            if (tag.TryGet(nameof(ShowLineStyle), out byte b))
+                ShowLineStyle = b;
         }
     }
 }

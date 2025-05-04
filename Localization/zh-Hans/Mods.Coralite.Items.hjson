@@ -4667,6 +4667,8 @@ TreasureLens: {
 BrilliantScanner: {
 	DisplayName: 璀璨扫描镜
 	Tooltip: 放在背包内时可以观测到魔能流动以及仪器情况
+	CanShowLines: ○ 显示魔能流动，背包内右键关闭
+	DontShowLines: × 不显示魔能流动，背包内右键开启
 }
 
 SkarnBrick: {
@@ -5954,8 +5956,9 @@ BloodmarkTopper: {
 MabirdLoupe: {
 	DisplayName: 魔鸟观察镜
 	Tooltip: 放在背包内可以看到魔鸟的路线
-	CanShowBackLines: 显示魔鸟的出巢与归巢路线，背包内右键关闭
-	DontShowBackLines: 不显示魔鸟的出巢与归巢路线，背包内右键启用
+	CanShowBackLines: ○ 显示全部路线，包括物品搬运与出巢归巢路线，背包内右键切换
+	DontShowBackLines: △ 仅显示物品搬运路线，背包内右键启用
+	ShowNothing: × 不显示魔鸟路线，背包内右键切换
 }
 
 SkarnCutter: {
@@ -5985,7 +5988,7 @@ Datura: {
 
 MidasGunpowder: {
 	DisplayName: 迈达斯灰烬
-	Tooltip: 
+	Tooltip:
 		'''
 		枪类伤害增加15%
 		远程击退增加15%

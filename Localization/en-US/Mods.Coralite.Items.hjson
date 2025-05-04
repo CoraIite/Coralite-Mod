@@ -4629,6 +4629,8 @@ TreasureLens: {
 BrilliantScanner: {
 	DisplayName: Brilliant Scanner
 	Tooltip: Keeping it in inventory allows you to observe the flow of magike and check the status of the Magike Apparatus
+	CanShowLines: Mods.Coralite.Items.BrilliantScanner.CanShowLines
+	DontShowLines: Mods.Coralite.Items.BrilliantScanner.DontShowLines
 }
 
 SkarnBrick: {
@@ -5816,6 +5818,7 @@ MabirdLoupe: {
 	Tooltip: ""
 	CanShowBackLines: Mods.Coralite.Items.MabirdLoupe.CanShowBackLines
 	DontShowBackLines: Mods.Coralite.Items.MabirdLoupe.DontShowBackLines
+	ShowNothing: Mods.Coralite.Items.MabirdLoupe.ShowNothing
 }
 
 SkarnCutter: {

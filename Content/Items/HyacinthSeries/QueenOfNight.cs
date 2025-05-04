@@ -210,7 +210,7 @@ namespace Coralite.Content.Items.HyacinthSeries
                 case 0://飞行
                     {
                         Timer++;
-                        if (Timer > 40)
+                        if (Timer > 46)
                         {
                             Timer = 0;
                             State = 1;
