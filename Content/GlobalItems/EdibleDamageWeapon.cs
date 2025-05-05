@@ -6,7 +6,11 @@ namespace Coralite.Content.GlobalItems
 {
     public partial class CoraliteGlobalItem
     {
-        public bool EdibleDamage;
+        public bool EdibleDamage
+        {
+            get => bit1[2];
+            set => bit1[2] = value;
+        }
 
         public static LocalizedText Edible;
 

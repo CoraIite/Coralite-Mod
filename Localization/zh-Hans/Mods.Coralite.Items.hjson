@@ -5995,3 +5995,8 @@ MidasGunpowder: {
 		枪在射击时额外射出迈达斯火花，该效果有1.5秒CD
 		'''
 }
+
+GhostPipe: {
+	DisplayName: 水晶兰
+	Tooltip: "纯洁之灵"
+}

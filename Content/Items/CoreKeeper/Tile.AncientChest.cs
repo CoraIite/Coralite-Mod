@@ -28,6 +28,7 @@ namespace Coralite.Content.Items.CoreKeeper
         public override void SetStaticDefaults()
         {
             TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
+            TileID.Sets.GeneralPlacementTiles[Type] = false;
             Main.tileSpelunker[Type] = true;
             Main.tileContainer[Type] = true;
             Main.tileFrameImportant[Type] = true;

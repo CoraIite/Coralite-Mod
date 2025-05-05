@@ -10,6 +10,9 @@ namespace Coralite.Content.Tiles.ShadowCastle
         public override void SetStaticDefaults()
         {
             WallID.Sets.CannotBeReplacedByWallSpread[Type] = true;
+
+            CoraliteSets.Walls.ShadowCastle[Type] = true;
+
             DustType = DustID.Shadowflame;
             AddMapEntry(new Microsoft.Xna.Framework.Color(48, 18, 37));
 

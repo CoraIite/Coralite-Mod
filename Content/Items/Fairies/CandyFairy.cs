@@ -1,4 +1,5 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.GlobalItems;
+using Coralite.Core;
 using Coralite.Core.Systems.FairyCatcherSystem;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using Coralite.Helpers;
@@ -19,11 +20,12 @@ namespace Coralite.Content.Items.Fairies
             Item.rare = ItemRarityID.Blue;
             Item.value = Item.sellPrice(0, 0, 5);
             //Item.shoot = ModContent.ProjectileType<GreenFairyProj>();
+            Item.damage = 2;
         }
 
-        public override void SetFairyDefault(FairyGlobalItem fairyItem)
+        public override void SetFairyDefault(CoraliteGlobalItem fairyItem)
         {
-            fairyItem.FairyItemSets(2, 10, 220);
+            fairyItem.FairyItemSets( 10, 220);
         }
     }
 

@@ -35,7 +35,7 @@ namespace Coralite.Content.CustomHooks
                 int num3 = (int)vector.X;
                 int num4 = (int)vector.Y;
                 int type = Main.tile[num3, num4].TileType;
-                if (self.whoAmI == Main.myPlayer && CoraliteSets.TileSticky.IndexInRange(type) && CoraliteSets.TileSticky[type] && (self.velocity.X != 0f || self.velocity.Y != 0f))
+                if (self.whoAmI == Main.myPlayer && /*CoraliteSets.Tiles.Sticky.IndexInRange(type) &&*/ CoraliteSets.Tiles.Sticky[type] && (self.velocity.X != 0f || self.velocity.Y != 0f))
                 {
                     self.stickyBreak++;
                     if (self.stickyBreak > Main.rand.Next(20, 100) || flag)
@@ -181,7 +181,7 @@ namespace Coralite.Content.CustomHooks
                     if (tile == null || !tile.HasTile || tile.IsActuated)
                         continue;
 
-                    if (CoraliteSets.TileSticky.IndexInRange(tile.TileType) && CoraliteSets.TileSticky[tile.TileType])
+                    if (/*CoraliteSets.TileSticky.IndexInRange(tile.TileType) &&*/ CoraliteSets.Tiles.Sticky[tile.TileType])
                     {
                         int num5 = 0;
                         vector2.X = i * 16;

@@ -425,6 +425,7 @@ namespace Coralite.Core.Prefabs.Tiles
             TileID.Sets.HasOutlines[tile.Type] = true;
             TileID.Sets.BasicChest[tile.Type] = true;
             TileID.Sets.DisableSmartCursor[tile.Type] = true;
+            TileID.Sets.GeneralPlacementTiles[tile.Type] = false;
 
             tile.DustType = dustType;
             tile.AdjTiles = new int[] { TileID.Containers };

@@ -35,8 +35,12 @@ namespace Coralite.Content.WorldGeneration
             Vector2 myVector = Main.MouseWorld;
             Point p = myVector.ToTileCoordinates();
             //ExampleStructure(p);
+            //Main.NewText(TileLoader.GetTile(860).Name);
+            //WorldGen.destroyObject = false;
 
-
+            //WorldGen.KillTile(p.X, p.Y, false, false, true);
+            //Main.tile[p.X, p.Y].Clear(TileDataType.Tile);
+            //WorldGen.PlaceTile(p.X, p.Y, TileID.Dirt, true, true, -1);    //放置有帧图的物块
             //Main.AnglerQuestSwap();
             //Point p = Main.MouseWorld.ToTileCoordinates();
             //Tile t = Main.tile[p];

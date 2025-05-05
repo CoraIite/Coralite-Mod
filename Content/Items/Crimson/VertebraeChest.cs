@@ -27,6 +27,7 @@ namespace Coralite.Content.Items.Crimson
         {
             TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
             TileID.Sets.CanBeClearedDuringGeneration[TileID.CrimtaneBrick] = false;
+            TileID.Sets.GeneralPlacementTiles[Type] = false;
 
             Main.tileSpelunker[Type] = true;
             Main.tileContainer[Type] = true;

@@ -33,6 +33,7 @@ namespace Coralite.Core.Prefabs.Tiles
             TileID.Sets.InteractibleByNPCs[Type] = true;
             TileID.Sets.IsAContainer[Type] = true;
             TileID.Sets.FriendlyFairyCanLureTo[Type] = true;
+            TileID.Sets.GeneralPlacementTiles[Type] = false;
 
             DustType = DustID.Crimson;
             AdjTiles = new int[] { TileID.Containers };

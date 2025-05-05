@@ -40,6 +40,8 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
             TileID.Sets.CanBeClearedDuringOreRunner[Type] = false;
 
+            CoraliteSets.Tiles.SpecialMoss[Type] = true;
+
             DustType = ModContent.DustType<ChalcedonyDust>();
             HitSound = CoraliteSoundID.Grass;
             AddMapEntry(new Color(147, 186, 84));
@@ -280,6 +282,8 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileID.Sets.ChecksForMerge[Type] = true;
             TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
             TileID.Sets.CanBeClearedDuringOreRunner[Type] = false;
+
+            CoraliteSets.Tiles.SpecialMoss[Type] = true;
 
             DustType = ModContent.DustType<ChalcedonyDust>();
             HitSound = CoraliteSoundID.Grass;

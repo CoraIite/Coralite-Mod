@@ -16,6 +16,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
             Main.tileBlockLight[Type] = true;
 
             TileID.Sets.TileCutIgnore.IgnoreDontHurtNature[Type] = false;
+
+            CoraliteSets.Tiles.Sticky[Type] = true;
+
             HitSound = CoraliteSoundID.Grass;
         }
 

@@ -50,6 +50,7 @@ namespace Coralite.Content.Items.HyacinthSeries
         {
             CreateRecipe()
                 .AddIngredient(ItemID.OnyxBlaster)
+                .AddIngredient(ItemID.QuadBarrelShotgun)
                 .AddIngredient<FragmentsOfLight>()
                 .AddTile(TileID.MythrilAnvil)
                 .Register();

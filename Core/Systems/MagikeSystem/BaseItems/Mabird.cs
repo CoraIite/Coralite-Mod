@@ -80,7 +80,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
 
         public override void SetStaticDefaults()
         {
-            CoraliteSets.IsMabird.Add(Type);
+            CoraliteSets.Items.IsMabird[Type]=true;
         }
 
         public void UpdateMabird(Point16 selfPoint, Vector2 center)

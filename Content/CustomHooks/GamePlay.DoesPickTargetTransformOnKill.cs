@@ -12,7 +12,7 @@ namespace Coralite.Content.CustomHooks
 
         private bool On_Player_DoesPickTargetTransformOnKill(On_Player.orig_DoesPickTargetTransformOnKill orig, Player self, HitTile hitCounter, int damage, int x, int y, int pickPower, int bufferIndex, Tile tileTarget)
         {
-            if (hitCounter.AddDamage(bufferIndex, damage, updateAmount: false) >= 100 && CoraliteSets.TileSpecialMoss[tileTarget.TileType])
+            if (hitCounter.AddDamage(bufferIndex, damage, updateAmount: false) >= 100 && CoraliteSets.Tiles.SpecialMoss[tileTarget.TileType])
                 return true;
 
             return orig.Invoke(self, hitCounter, damage, x, y, pickPower, bufferIndex, tileTarget);

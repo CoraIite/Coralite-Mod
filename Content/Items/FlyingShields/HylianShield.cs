@@ -456,7 +456,7 @@ namespace Coralite.Content.Items.FlyingShields
             {
                 Projectile proj = Main.projectile[i];
                 //检测脚下是否有炸弹
-                if (proj.active && State == 5 && CoraliteSets.ProjectileExplosible[proj.type] && proj.Colliding(proj.getRect(), rect))
+                if (proj.active && State == 5 && ProjectileID.Sets.Explosive[proj.type] && proj.Colliding(proj.getRect(), rect))
                 {
                     proj.timeLeft = 2;
                     index = i;

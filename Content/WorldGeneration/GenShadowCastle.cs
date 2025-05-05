@@ -264,7 +264,7 @@ namespace Coralite.Content.WorldGeneration
                     //}
 
                     tile = Framing.GetTileSafely(current_x, current_y);
-                    if (tile.HasTile || !CoraliteSets.WallShadowCastle[tile.WallType])
+                    if (tile.HasTile || !CoraliteSets.Walls.ShadowCastle[tile.WallType])
                         goto over1;
 
                     //for (int m = 0; m < width; m++)
@@ -4708,7 +4708,7 @@ namespace Coralite.Content.WorldGeneration
                         if (!tile.HasTile || tile.Slope is SlopeType.SlopeUpLeft or SlopeType.SlopeUpRight)
                             goto over1;
 
-                        if (!CoraliteSets.TileShadowCastle[tile.TileType])
+                        if (!CoraliteSets.Tiles.ShadowCastle[tile.TileType])
                             goto over1;
                     }
 
@@ -4716,7 +4716,7 @@ namespace Coralite.Content.WorldGeneration
                         for (int n = 0; n < height; n++)
                         {
                             tile = Framing.GetTileSafely(current_x + m, current_y + n);
-                            if (tile.HasTile || !CoraliteSets.WallShadowCastle[tile.WallType])
+                            if (tile.HasTile || !CoraliteSets.Walls.ShadowCastle[tile.WallType])
                                 goto over1;
                         }
 

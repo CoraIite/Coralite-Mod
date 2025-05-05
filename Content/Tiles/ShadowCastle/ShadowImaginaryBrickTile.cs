@@ -20,6 +20,9 @@ namespace Coralite.Content.Tiles.ShadowCastle
             //Main.tileMerge[ModContent.TileType<ShadowQuadrelTile>()][Type] = true;
 
             TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
+
+            CoraliteSets.Tiles.ShadowCastle[Type] = true;
+
             MinPick = 100;
             DustType = DustID.Shadowflame;
             MineResist = 2f;

@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.DamageClasses;
+using Coralite.Content.GlobalItems;
 using Coralite.Core.Systems.FairyCatcherSystem;
 using System.Collections.Generic;
 using Terraria;
@@ -20,7 +21,7 @@ namespace Coralite.Content.Prefixes.FairyWeaponPrefixes
 
         public override void Apply(Item item)
         {
-            if (item.TryGetGlobalItem(out FairyGlobalItem fgi))
+            if (item.TryGetGlobalItem(out CoraliteGlobalItem fgi))
                 fgi.CatchPowerMult = catchPowerMult;
         }
 

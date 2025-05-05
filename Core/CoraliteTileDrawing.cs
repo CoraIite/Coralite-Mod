@@ -75,7 +75,7 @@ namespace Coralite.Core
                 Tile tile = Main.tile[x, y];
                 if (tile != null && tile.HasTile)
                 {
-                    if (CoraliteSets.TileSpecialDraw[tile.TileType])
+                    if (CoraliteSets.Tiles.SpecialDraw[tile.TileType])
                     {
                         TileLoader.SpecialDraw(tile.TileType, x, y, Main.spriteBatch);
                         continue;

@@ -8,7 +8,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
     {
         public override string Texture => AssetDirectory.MagikeFactoryTiles + Name;
 
-        public override CoraliteSets.MagikeTileType PlaceType => CoraliteSets.MagikeTileType.None;
+        public override CoraliteSetsSystem.MagikeTileType PlaceType => CoraliteSetsSystem.MagikeTileType.None;
 
         public override void QuickLoadAsset(MALevel level) { }
         public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) { }

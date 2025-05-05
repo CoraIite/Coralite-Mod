@@ -156,8 +156,8 @@ namespace Coralite.Helpers
             if (data == null)
                 return new Point16(i, j);
 
-            if (CoraliteSets.MagikeTileTypes.TryGetValue(tile.TileType, out var placeType)
-                && placeType != CoraliteSets.MagikeTileType.None)
+            if (CoraliteSetsSystem.MagikeTileTypes.TryGetValue(tile.TileType, out var placeType)
+                && placeType != CoraliteSetsSystem.MagikeTileType.None)
                 GetMagikeAlternateData(i, j, out data, out _);
 
             int frameX = tile.TileFrameX;
@@ -191,14 +191,14 @@ namespace Coralite.Helpers
             Tile t = Main.tile[i, j];
             TileObjectData tileData = TileObjectData.GetTileData(t.TileType, 0, 0);
 
-            if (tileData == null || !CoraliteSets.MagikeTileTypes.TryGetValue(t.TileType, out var placeType))
+            if (tileData == null || !CoraliteSetsSystem.MagikeTileTypes.TryGetValue(t.TileType, out var placeType))
             {
                 alternateData = null;
                 alternate = 0;
                 return;
             }
 
-            if (placeType == CoraliteSets.MagikeTileType.None)
+            if (placeType == CoraliteSetsSystem.MagikeTileType.None)
             {
                 alternateData = tileData;
                 alternate = MagikeAlternateStyle.None;
@@ -211,7 +211,7 @@ namespace Coralite.Helpers
 
             int leftHeight = placeType switch
             {
-                CoraliteSets.MagikeTileType.FourWayNormal => (height * 2) + width,
+                CoraliteSetsSystem.MagikeTileType.FourWayNormal => (height * 2) + width,
                 _ => height * 3
             };
 

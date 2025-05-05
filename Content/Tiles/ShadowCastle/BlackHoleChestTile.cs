@@ -35,6 +35,7 @@ namespace Coralite.Content.Tiles.ShadowCastle
             TileID.Sets.HasOutlines[Type] = true;
             TileID.Sets.BasicChest[Type] = true;
             TileID.Sets.DisableSmartCursor[Type] = true;
+            TileID.Sets.GeneralPlacementTiles[Type] = false;
 
             DustType = DustID.Granite;
             AdjTiles = new int[] { TileID.Containers };

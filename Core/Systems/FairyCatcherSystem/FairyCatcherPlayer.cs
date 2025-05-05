@@ -1,4 +1,5 @@
-﻿using Coralite.Core.Systems.FairyCatcherSystem.Bases;
+﻿using Coralite.Content.GlobalItems;
+using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using Terraria;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem
@@ -141,7 +142,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         {
             int basePower = 1;
             float exBonus = 0f;
-            if (Player.HeldItem.TryGetGlobalItem(out FairyGlobalItem fgi))
+            if (Player.HeldItem.TryGetGlobalItem(out CoraliteGlobalItem fgi))
             {
                 basePower = fgi.CatchPower;
                 exBonus = fgi.CatchPowerMult - 1f;
@@ -173,7 +174,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             StatModifier modifyer = fairyCatchPowerBonus;
             float exBonus = 0f;
 
-            if (catcherItem.TryGetGlobalItem(out FairyGlobalItem fgi))
+            if (catcherItem.TryGetGlobalItem(out CoraliteGlobalItem fgi))
                 exBonus = fgi.CatchPowerMult - 1f;
 
             modifyer += exBonus;
@@ -191,7 +192,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             StatModifier modifyer = fairyCatchPowerBonus;
             float exBonus = 0f;
 
-            if (item.TryGetGlobalItem(out FairyGlobalItem fgi))
+            if (item.TryGetGlobalItem(out CoraliteGlobalItem fgi))
                 exBonus = fgi.CatchPowerMult - 1f;
 
             modifyer += exBonus;

@@ -392,21 +392,29 @@ namespace Coralite.Content.WorldGeneration
                         ObjectPlace(current_x, current_y, tileType, currentStyle);
                     }
 
-                over1: continue;             //<--因为不知道有没有什么办法直接跳出2层for，索性写了个goto
+                over1: 
+                    continue;             //<--因为不知道有没有什么办法直接跳出2层for，索性写了个goto
                 }
         }
 
 
         public static bool KillChestAndItems(int x, int y)
         {
-            for (int i = 0; i < Main.maxChests; i++)
+            Tile t = Main.tile[x, y];
+            TileObjectData data = TileObjectData.GetTileData(t);
+            int i = Chest.FindChest(x, y);
+            if (i != -1)
             {
-                if (Main.chest[i] != null && Main.chest[i].x == x && Main.chest[i].y == y)
-                {
-                    Main.chest[i] = null;
-                    return true;
-                }
+                Chest.DestroyChestDirect(x, y, i);
+                return true;
             }
+
+            for (int m = 0; m < data.Width; m++)
+                for (int n = 0; n < data.Height; n++)
+                {
+                    Main.tile[x + m, y + n].Clear(TileDataType.Tile);
+                }
+
             return false;
         }
 
@@ -451,44 +459,7 @@ namespace Coralite.Content.WorldGeneration
 
                 if (tileType != GenerateType.Ignore)
                 {
-                    WorldGen.destroyObject = true;
-                    if (width > 1 || height > 1)
-                    {
-                        int xs = x;
-                        int ys = y;
-                        Vector2 newPos = Helper.FindTopLeft(xs, ys);    //找到左上角
-
-                        for (int x1 = 0; x1 < width; x1++)      //把原有物块清了
-                            for (int y1 = 0; y1 < height; y1++)
-                            {
-                                int x2 = (int)newPos.X + x1;
-                                int y2 = (int)newPos.Y + y1;
-                                if (x1 == 0 && y1 == 0 && Main.tileContainer[Main.tile[x2, y2].TileType])
-                                    KillChestAndItems(x2, y2);
-                                WorldGen.KillTile(x, y, false, false, true);
-                                Main.tile[x, y].Clear(TileDataType.Tile);
-                                Main.tile[x, y].Clear(TileDataType.Slope);
-
-                                GenerateLiquid(x2, y2, 0, true, 0, false);
-                            }
-
-                        for (int x1 = 0; x1 < width; x1++)      //帧图
-                            for (int y1 = 0; y1 < height; y1++)
-                            {
-                                int x2 = (int)newPos.X + x1;
-                                int y2 = (int)newPos.Y + y1;
-                                WorldGen.SquareTileFrame(x2, y2);
-                                WorldGen.SquareWallFrame(x2, y2);
-                            }
-                    }
-                    else
-                    {
-                        WorldGen.KillTile(x, y, false, false, true);
-                        Main.tile[x, y].Clear(TileDataType.Tile);
-                        Main.tile[x, y].Clear(TileDataType.Slope);
-                    }
-
-                    WorldGen.destroyObject = false;
+                    ClearTile(x, y, width, height);
 
                     if (active)
                     {
@@ -503,9 +474,16 @@ namespace Coralite.Content.WorldGeneration
                             for (int x1 = 0; x1 < tileWidth; x1++)
                                 for (int y1 = 0; y1 < tileHeight; y1++)
                                 {
+                                    Point p3 = Helper.FindTopLeftPoint(x + x1, y + y1);
+                                    Main.tile[p3].Clear(TileDataType.Tile);
+                                    Main.tile[p3].Clear(TileDataType.Slope);
+                                    if (Main.tileContainer[Main.tile[p3].TileType])//这总不能有问题了吧
+                                        KillChestAndItems(x, y);
+
                                     WorldGen.KillTile(x + x1, y + y1, false, false, true);
-                                    Main.tile[x + x1, y + y1].Clear(TileDataType.Tile);
-                                    Main.tile[x + x1, y + y1].Clear(TileDataType.Slope);
+
+                                    Main.tile[x, y].Clear(TileDataType.Tile);
+                                    Main.tile[x, y].Clear(TileDataType.Slope);
                                 }
 
                             WorldGen.destroyObject = false;
@@ -532,6 +510,56 @@ namespace Coralite.Content.WorldGeneration
             {
                 DEBUGHelper.LogFancy("Coralite:TILEGEN ERROR:", e);
             }
+        }
+
+        /// <summary>
+        /// 清除指定位置的物块，会先找到左上角然后从左上角开始清除所有的物块
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        private static void ClearTile(int x, int y, int width, int height)
+        {
+            WorldGen.destroyObject = true;
+            if (width > 1 || height > 1)
+            {
+                int xs = x;
+                int ys = y;
+                Point newPos = Helper.FindTopLeftPoint(xs, ys);    //找到左上角
+
+                for (int x1 = 0; x1 < width; x1++)      //把原有物块清了
+                    for (int y1 = 0; y1 < height; y1++)
+                    {
+                        int x2 = newPos.X + x1;
+                        int y2 = newPos.Y + y1;
+                        if (x1 == 0 && y1 == 0 && Main.tileContainer[Main.tile[x2, y2].TileType])
+                            KillChestAndItems(x2, y2);
+                        Main.tile[x, y].Clear(TileDataType.Tile);
+                        Main.tile[x, y].Clear(TileDataType.Slope);
+
+                        //在考虑这个东西是否有保留的必要
+                        WorldGen.KillTile(x, y, false, false, true);
+                        GenerateLiquid(x2, y2, 0, true, 0, false);
+                    }
+
+                for (int x1 = 0; x1 < width; x1++)      //帧图
+                    for (int y1 = 0; y1 < height; y1++)
+                    {
+                        int x2 = (int)newPos.X + x1;
+                        int y2 = (int)newPos.Y + y1;
+                        WorldGen.SquareTileFrame(x2, y2);
+                        WorldGen.SquareWallFrame(x2, y2);
+                    }
+            }
+            else
+            {
+                WorldGen.KillTile(x, y, false, false, true);
+                Main.tile[x, y].Clear(TileDataType.Tile);
+                Main.tile[x, y].Clear(TileDataType.Slope);
+            }
+
+            WorldGen.destroyObject = false;
         }
 
         public static void Texture2WallGenerate(int x, int y, int wall)

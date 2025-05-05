@@ -25,9 +25,20 @@ namespace Coralite.Content.GlobalItems
         public static LocalizedText[] DashPriorityLevel;
 
         /// <summary>
+        /// 0：特殊使用<br></br>
+        /// 1：寒冷伤害<br></br>
+        /// 2：美味伤害
+        /// </summary>
+        private BitsByte bit1;
+
+        /// <summary>
         /// 是否能通过特殊攻击键来使用武器
         /// </summary>
-        public bool SpecialUse;
+        public bool SpecialUse
+        {
+            get => bit1[0];
+            set => bit1[0] = value;
+        }
 
         public override bool InstancePerEntity => true;
 
@@ -274,6 +285,8 @@ namespace Coralite.Content.GlobalItems
                     damage.Text = string.Concat([.. newText]);
                 }
             }
+
+            ModifyFairyTooltips(item,tooltips);
 
             if (item.ModItem is IDashable dash)
             {

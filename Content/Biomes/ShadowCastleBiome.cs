@@ -11,7 +11,7 @@ namespace Coralite.Content.Biomes
 
         public override bool IsBiomeActive(Player player)
         {
-            bool b1 = CoraliteSets.WallShadowCastle[Framing.GetTileSafely(player.position.ToTileCoordinates()).WallType];
+            bool b1 = CoraliteSets.Walls.ShadowCastle[Framing.GetTileSafely(player.position.ToTileCoordinates()).WallType];
 
             bool b2 = player.ZoneDirtLayerHeight || player.ZoneRockLayerHeight;
 

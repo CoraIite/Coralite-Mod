@@ -39,8 +39,8 @@ namespace Coralite.Content.CustomHooks
             if (tileData == null)
                 return;
 
-            if (CoraliteSets.MagikeTileTypes.TryGetValue(type, out var placeType)
-                && placeType != CoraliteSets.MagikeTileType.None)
+            if (CoraliteSetsSystem.MagikeTileTypes.TryGetValue(type, out var placeType)
+                && placeType != CoraliteSetsSystem.MagikeTileType.None)
             {
                 Tile t = Main.tile[i, j];
                 int width = tileData.Width;
@@ -53,7 +53,7 @@ namespace Coralite.Content.CustomHooks
 
                 int leftHeight = placeType switch
                 {
-                    CoraliteSets.MagikeTileType.FourWayNormal => (height * 2) + width,
+                    CoraliteSetsSystem.MagikeTileType.FourWayNormal => (height * 2) + width,
                     _ => height * 3
                 };
 
@@ -70,7 +70,7 @@ namespace Coralite.Content.CustomHooks
                     alternateData = TileObjectData.GetTileData(type, 0, style + 1);// ((List<TileObjectData>)_alternateInfo.GetValue(tileData))[style];
                     partFrameY = placeType switch
                     {
-                        CoraliteSets.MagikeTileType.FourWayNormal => (t.TileFrameY - (alternateData.CoordinateFullWidth * 2)) % alternateData.CoordinateFullHeight,
+                        CoraliteSetsSystem.MagikeTileType.FourWayNormal => (t.TileFrameY - (alternateData.CoordinateFullWidth * 2)) % alternateData.CoordinateFullHeight,
                         _ => t.TileFrameY % tileData.CoordinateFullHeight
                     };
                 }
@@ -80,7 +80,7 @@ namespace Coralite.Content.CustomHooks
                     alternateData = TileObjectData.GetTileData(type, 0, style + 1);// ((List<TileObjectData>)_alternateInfo.GetValue(tileData))[style];
                     partFrameY = placeType switch
                     {
-                        CoraliteSets.MagikeTileType.FourWayNormal => (t.TileFrameY - (alternateData.CoordinateFullWidth * 2)) % alternateData.CoordinateFullHeight,
+                        CoraliteSetsSystem.MagikeTileType.FourWayNormal => (t.TileFrameY - (alternateData.CoordinateFullWidth * 2)) % alternateData.CoordinateFullHeight,
                         _ => t.TileFrameY % tileData.CoordinateFullHeight
                     };
                 }

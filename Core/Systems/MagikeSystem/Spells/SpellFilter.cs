@@ -197,8 +197,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Spells
 
             if (data != null)
             {
-                if (CoraliteSets.MagikeTileTypes.TryGetValue(tile.TileType, out var placeType)
-                    && placeType != CoraliteSets.MagikeTileType.None)
+                if (CoraliteSetsSystem.MagikeTileTypes.TryGetValue(tile.TileType, out var placeType)
+                    && placeType != CoraliteSetsSystem.MagikeTileType.None)
                     MagikeHelper.GetMagikeAlternateData(p.X, p.Y, out data, out _);
 
                 int x = data == null ? 1 : data.Width;

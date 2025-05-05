@@ -25,6 +25,7 @@ namespace Coralite.Content.Tiles.MagikeSeries1
             TileID.Sets.HasOutlines[Type] = true;
             TileID.Sets.BasicChest[Type] = true;
             TileID.Sets.DisableSmartCursor[Type] = true;
+            TileID.Sets.GeneralPlacementTiles[Type] = false;
 
             DustType = DustID.CrystalSerpent_Pink;
             AdjTiles = new int[] { TileID.Containers };

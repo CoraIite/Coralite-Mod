@@ -49,6 +49,11 @@ namespace Coralite.Content.Items.MagikeSeries1
         public ref float State => ref Projectile.ai[0];
         public ref float Timer => ref Projectile.ai[1];
 
+        public override void SetStaticDefaults()
+        {
+            ProjectileID.Sets.Explosive[Type] = true;
+        }
+
         public override void SetDefaults()
         {
             Projectile.width = Projectile.height = 16;

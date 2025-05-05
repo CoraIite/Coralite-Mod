@@ -7,6 +7,7 @@ using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Coralite.Helpers;
+using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
@@ -15,11 +16,15 @@ using Terraria.ModLoader.IO;
 
 namespace Coralite.Content.Items.MagikeSeries2
 {
+    [AutoLoadTexture(Path =AssetDirectory.MagikeSeries2Item)]
     [PlayerEffect(ExtraEffectNames = [ShowBackLine])]
     public class MabirdLoupe() : BaseMaterial(1, Item.sellPrice(0, 5)
         , ModContent.RarityType<CrystallineMagikeRarity>(), AssetDirectory.MagikeSeries2Item), IMagikeCraftable
     {
         public const string ShowBackLine = "MabirdLoupeA";
+
+        [AutoLoadTexture(Name = "MabirdLoupeClose")]
+        public static ATex CloseTex {  get;private set; }
 
         /// <summary>
         /// 0 不显示，1 显示传输，2 显示全部
@@ -95,6 +100,28 @@ namespace Coralite.Content.Items.MagikeSeries2
         {
             if (tag.TryGet(nameof(ShowLineStyle), out byte b))
                 ShowLineStyle = b;
+        }
+
+        public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
+        {
+            if (ShowLineStyle==0)
+            {
+                spriteBatch.Draw(CloseTex.Value, position, frame, drawColor, 0, origin, scale, 0, 0);
+                return false;
+            }
+
+            return true;
+        }
+
+        public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
+        {
+            if (ShowLineStyle == 0)
+            {
+                spriteBatch.Draw(CloseTex.Value, Item.Center, null, lightColor, rotation, CloseTex.Size() / 2, scale, 0, 0);
+                return false;
+            }
+
+            return true;
         }
     }
 }

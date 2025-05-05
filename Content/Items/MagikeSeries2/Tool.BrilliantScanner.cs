@@ -3,9 +3,11 @@ using Coralite.Content.Items.Materials;
 using Coralite.Content.ModPlayers;
 using Coralite.Content.Raritys;
 using Coralite.Core;
+using Coralite.Core.Attributes;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Coralite.Helpers;
+using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Localization;
@@ -13,12 +15,15 @@ using Terraria.ModLoader.IO;
 
 namespace Coralite.Content.Items.MagikeSeries2
 {
+    [AutoLoadTexture(Path = AssetDirectory.MagikeSeries2Item)]
     public class BrilliantScanner : ModItem, IMagikeCraftable
     {
         public override string Texture => AssetDirectory.MagikeSeries2Item + Name;
 
         private bool ShowLineStyle = true;
 
+        [AutoLoadTexture(Name = "BrilliantScannerClose")]
+        public static ATex CloseTex { get; private set; }
         public static LocalizedText[] ShowTexts;
 
         public override void Load()
@@ -89,6 +94,28 @@ namespace Coralite.Content.Items.MagikeSeries2
         {
             if (tag.TryGet(nameof(ShowLineStyle), out bool b))
                 ShowLineStyle = b;
+        }
+
+        public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
+        {
+            if (!ShowLineStyle)
+            {
+                spriteBatch.Draw(CloseTex.Value, position, frame, drawColor, 0, origin, scale, 0, 0);
+                return false;
+            }
+
+            return true;
+        }
+
+        public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
+        {
+            if (!ShowLineStyle)
+            {
+                spriteBatch.Draw(CloseTex.Value, Item.Center, null, lightColor, rotation, CloseTex.Size() / 2, scale, 0, 0);
+                return false;
+            }
+
+            return true;
         }
     }
 }

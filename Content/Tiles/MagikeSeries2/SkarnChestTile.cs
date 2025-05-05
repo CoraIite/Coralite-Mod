@@ -22,6 +22,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
         {
             TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
             TileID.Sets.CanBeClearedDuringOreRunner[Type] = false;
+            TileID.Sets.GeneralPlacementTiles[Type] = false;
 
             Main.tileSpelunker[Type] = true;
             Main.tileContainer[Type] = true;

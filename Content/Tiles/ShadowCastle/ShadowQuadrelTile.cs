@@ -18,6 +18,9 @@ namespace Coralite.Content.Tiles.ShadowCastle
             Main.tileLavaDeath[Type] = false;
 
             TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
+
+            CoraliteSets.Tiles.ShadowCastle[Type] = true;
+
             MinPick = 100;
             DustType = DustID.SilverCoin;
             MineResist = 2f;

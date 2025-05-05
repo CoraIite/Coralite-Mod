@@ -19,7 +19,7 @@ namespace Coralite.Content.Items.HyacinthSeries
         public override void SetDefaults()
         {
             Item.SetWeaponValues(24, 2);
-            Item.DefaultToRangedWeapon(ProjectileType<QueenOfNightSpilitProj>(), AmmoID.Bullet, 21, 11f, true);
+            Item.DefaultToRangedWeapon(ProjectileType<DaturaProj>(), AmmoID.Bullet, 21, 11f, true);
 
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.value = Item.sellPrice(0, 4, 0, 0);

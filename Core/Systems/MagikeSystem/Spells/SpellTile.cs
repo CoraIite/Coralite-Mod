@@ -8,7 +8,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Spells
     {
         public override string Texture => AssetDirectory.MagikeSpellTiles + Name;
 
-        public override CoraliteSets.MagikeTileType PlaceType => CoraliteSets.MagikeTileType.None;
+        public override CoraliteSetsSystem.MagikeTileType PlaceType => CoraliteSetsSystem.MagikeTileType.None;
 
         public override void Load()
         {

@@ -5892,3 +5892,8 @@ MidasGunpowder: {
 	// DisplayName: Midas Gunpowder
 	// Tooltip: ""
 }
+
+GhostPipe: {
+	// DisplayName: Ghost Pipe
+	// Tooltip: ""
+}

@@ -1,52 +1,79 @@
-﻿using Coralite.Content.Bosses.Rediancie;
-using Coralite.Content.Items.RedJades;
-using System;
+﻿using Coralite.Helpers;
 using System.Collections.Generic;
-using Terraria;
 using Terraria.ID;
-using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Core
 {
-    public class CoraliteSets : ModSystem
+    public static class CoraliteSets
     {
         /// <summary>
         /// 爆破弹幕
         /// </summary>
-        public static bool[] ProjectileExplosible;
+        //public static bool[] ProjectileExplosible;
+        [ReinitializeDuringResizeArrays]
+        public static class Items
+        {
+            /// <summary>
+            /// 标记物品是魔鸟
+            /// </summary>
+            public static bool[] IsMabird = ItemID.Sets.Factory.CreateCoraliteSet(nameof(IsMabird))
+                .Description("标记物品是魔鸟")
+                .RegisterBoolSet(false);
 
-        /// <summary>
-        /// 粘性物块
-        /// </summary>
-        public static bool[] TileSticky;
+            /// <summary>
+            /// 标记物品是仙灵
+            /// </summary>
+            public static bool[] IsFairy = ItemID.Sets.Factory.CreateCoraliteSet(nameof(IsFairy))
+                .Description("标记物品是仙灵")
+                .RegisterBoolSet(false);
+        }
 
-        /// <summary>
-        /// 会被判定为影之城环境
-        /// </summary>
-        public static bool[] WallShadowCastle;
-        /// <summary>
-        /// 会被判定为影子物块
-        /// </summary>
-        public static bool[] TileShadowCastle;
-        /// <summary>
-        /// 特殊绘制
-        /// </summary>
-        public static bool[] TileSpecialDraw;
+        [ReinitializeDuringResizeArrays]
+        public static class Tiles
+        {
+            /// <summary>
+            /// 粘性物块
+            /// </summary>
+            public static bool[] Sticky = TileID.Sets.Factory.CreateCoraliteSet(nameof(Sticky))
+                .Description("让物块具有蜘蛛网的粘性")
+                .RegisterBoolSet(false, TileID.Cobweb);
 
-        /// <summary>
-        /// 物块是否是特殊苔藓
-        /// </summary>
-        public static bool[] TileSpecialMoss;
+            /// <summary>
+            /// 会被判定为影子物块，在这上面才能生成影之城的敌怪
+            /// </summary>
+            public static bool[] ShadowCastle = TileID.Sets.Factory.CreateCoraliteSet(nameof(ShadowCastle))
+                .Description("使物块作为敌怪生成的环境判定：影之城")
+                .RegisterBoolSet(false);
 
-        public static List<int> SpecialDraw = new List<int>();
+            /// <summary>
+            /// 特殊绘制
+            /// </summary>
+            public static bool[] SpecialDraw = TileID.Sets.Factory.CreateCoraliteSet(nameof(SpecialDraw))
+                .Description("让物块使用特殊的绘制方式")
+                .RegisterBoolSet(false);
 
-        /// <summary>
-        /// 物块是否是魔鸟
-        /// </summary>
-        public static bool[] Mabird;
+            /// <summary>
+            /// 物块是否是特殊苔藓
+            /// </summary>
+            public static bool[] SpecialMoss = TileID.Sets.Factory.CreateCoraliteSet(nameof(SpecialMoss))
+                .Description("特殊苔藓，挖掉后会放置苔藓下的物块")
+                .RegisterBoolSet(false);
+        }
 
-        public static List<int> IsMabird = new List<int>();
+        [ReinitializeDuringResizeArrays]
+        public static class Walls
+        {
+            /// <summary>
+            /// 会被判定为影子墙壁，在墙前才判定为影之城环境
+            /// </summary>
+            public static bool[] ShadowCastle = WallID.Sets.Factory.CreateCoraliteSet(nameof(ShadowCastle))
+                .Description("使墙壁作为环境判定：影之城")
+                .RegisterBoolSet(false);
+        }
+    }
 
+    public class CoraliteSetsSystem : ModSystem
+    {
         /// <summary>
         /// 魔能物块的摆放方式
         /// </summary>
@@ -66,94 +93,6 @@ namespace Coralite.Core
             /// 不支持四向放置
             /// </summary>
             None
-        }
-
-        public override void PostSetupContent()
-        {
-            InitAll();
-
-            #region 爆炸弹幕
-            ProjectileExplosible[ProjectileID.Bomb] = true;
-            ProjectileExplosible[ProjectileID.BouncyBomb] = true;
-            ProjectileExplosible[ProjectileID.StickyBomb] = true;
-            ProjectileExplosible[ProjectileID.ScarabBomb] = true;
-            ProjectileExplosible[ProjectileID.Dynamite] = true;
-            ProjectileExplosible[ProjectileID.BouncyDynamite] = true;
-            ProjectileExplosible[ProjectileID.StickyDynamite] = true;
-            ProjectileExplosible[ProjectileID.Grenade] = true;
-            ProjectileExplosible[ProjectileID.BouncyGrenade] = true;
-            ProjectileExplosible[ProjectileID.StickyGrenade] = true;
-            ProjectileExplosible[ProjectileID.Beenade] = true;
-
-            //由于不清楚加载顺序的问题....不知道这个到底该怎么写比较好
-            ProjectileExplosible[ProjectileType<Rediancie_BigBoom>()] = true;
-            ProjectileExplosible[ProjectileType<Rediancie_Explosion>()] = true;
-            ProjectileExplosible[ProjectileType<RedJadeBigBoom>()] = true;
-            ProjectileExplosible[ProjectileType<RedJadeBoom>()] = true;
-
-            //后面的暂时懒得写了
-
-            #endregion
-
-            #region 粘性物块
-            TileSticky[TileID.Cobweb] = true;
-            TileSticky[TileType<Content.Bosses.VanillaReinforce.SlimeEmperor.StickyGelTile>()] = true;
-            #endregion
-
-            #region 影之城墙壁
-            WallShadowCastle[WallType<Content.Tiles.ShadowCastle.BlackHoleWall>()] = true;
-            WallShadowCastle[WallType<Content.Tiles.ShadowCastle.ShadowBrickWall>()] = true;
-            #endregion
-
-            #region 影之城物块
-            TileShadowCastle[TileType<Content.Tiles.ShadowCastle.ShadowBrickTile>()] = true;
-            TileShadowCastle[TileType<Content.Tiles.ShadowCastle.ShadowImaginaryBrickTile>()] = true;
-            TileShadowCastle[TileType<Content.Tiles.ShadowCastle.ShadowQuadrelTile>()] = true;
-            TileShadowCastle[TileType<Content.Tiles.ShadowCastle.MercuryPlatformTile>()] = true;
-            #endregion
-
-            TileSpecialMoss[TileType<Content.Tiles.MagikeSeries2.ChalcedonySkarn>()] = true;
-            TileSpecialMoss[TileType<Content.Tiles.MagikeSeries2.ChalcedonySmoothSkarn>()] = true;
-            TileSpecialMoss[TileType<Content.Tiles.MagikeSeries2.CrystallineSeaOats1x2>()] = true;
-            TileSpecialMoss[TileType<Content.Tiles.MagikeSeries2.CrystallineSeaOats1x3>()] = true;
-
-            foreach (var type in SpecialDraw)
-            {
-                if (TileSpecialDraw.IndexInRange(type))
-                    TileSpecialDraw[type] = true;
-            }
-
-            foreach (var type in IsMabird)
-            {
-                if (Mabird.IndexInRange(type))
-                    Mabird[type] = true;
-            }
-
-            TileID.Sets.CanBeClearedDuringOreRunner[TileID.Chain] = false;
-        }
-
-        private void InitAll()
-        {
-            ProjectileExplosible = new bool[ProjectileLoader.ProjectileCount];
-            Array.Fill(ProjectileExplosible, false);
-
-            TileSticky = new bool[TileLoader.TileCount];
-            Array.Fill(TileSticky, false);
-
-            WallShadowCastle = new bool[WallLoader.WallCount];
-            Array.Fill(WallShadowCastle, false);
-
-            TileShadowCastle = new bool[TileLoader.TileCount];
-            Array.Fill(TileShadowCastle, false);
-
-            TileSpecialDraw = new bool[TileLoader.TileCount];
-            Array.Fill(TileSpecialDraw, false);
-
-            TileSpecialMoss = new bool[TileLoader.TileCount];
-            Array.Fill(TileSpecialMoss, false);
-
-            Mabird = new bool[ItemLoader.ItemCount];
-            Array.Fill(Mabird, false);
         }
     }
 }

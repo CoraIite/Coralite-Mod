@@ -6,7 +6,11 @@ namespace Coralite.Content.GlobalItems
 {
     public partial class CoraliteGlobalItem
     {
-        public bool ColdDamage;
+        public bool ColdDamage
+        {
+            get => bit1[1];
+            set => bit1[1] = value;
+        }
         //public static HashSet<int> ColdDamageWeapon = new HashSet<int>();
 
         public static LocalizedText Cold;

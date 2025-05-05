@@ -27,7 +27,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             foreach (var item in Items)
             {
-                if (!item.IsAir && CoraliteSets.Mabird[item.type])
+                if (!item.IsAir && CoraliteSets.Items.IsMabird[item.type])
                     (item.ModItem as Mabird).UpdateMabird(Entity.Position, center);
             }
         }
@@ -46,7 +46,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public override bool CanAddItem(int itemType, int stack)
         {
-            if (!CoraliteSets.Mabird[itemType])
+            if (!CoraliteSets.Items.IsMabird[itemType])
                 return false;
 
             return base.CanAddItem(itemType, stack);

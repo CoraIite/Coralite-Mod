@@ -23,6 +23,8 @@ namespace Coralite.Content.Tiles.ShadowCastle
             TileID.Sets.Platforms[Type] = true;
             TileID.Sets.DisableSmartCursor[Type] = true;
 
+            CoraliteSets.Tiles.ShadowCastle[Type] = true;
+
             AddToArray(ref TileID.Sets.RoomNeeds.CountsAsDoor);
 
             DustType = DustID.SilverCoin;

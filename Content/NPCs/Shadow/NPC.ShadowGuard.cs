@@ -106,7 +106,7 @@ namespace Coralite.Content.NPCs.Shadow
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.Player.InModBiome<ShadowCastleBiome>() && CoraliteSets.TileShadowCastle[spawnInfo.SpawnTileType])
+            if (spawnInfo.Player.InModBiome<ShadowCastleBiome>() && CoraliteSets.Tiles.ShadowCastle[spawnInfo.SpawnTileType])
                 return 0.1f;
             return 0f;
         }

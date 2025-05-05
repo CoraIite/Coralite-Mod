@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Coralite.Content.GlobalItems;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -42,7 +43,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// <summary>
         /// 受到个体值加成过的仙灵自身的伤害
         /// </summary>
-        public float FairyDamage => fairyData.damageBonus.ApplyTo(Item.GetGlobalItem<FairyGlobalItem>().baseDamage);
+        public float FairyDamage => fairyData.damageBonus.ApplyTo(Item.damage);
         /// <summary>
         /// 受到个体值加成过的仙灵自身的大小
         /// </summary>
@@ -50,7 +51,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         {
             get
             {
-                float scale = fairyData.scaleBonus * Item.GetGlobalItem<FairyGlobalItem>().baseScale;
+                float scale = fairyData.scaleBonus * Item.GetGlobalItem<CoraliteGlobalItem>().baseScale;
                 scale = Math.Clamp(scale, 0.5f, 2.5f);
                 return scale;
             }
@@ -58,22 +59,27 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// <summary>
         /// 受到个体值加成过的仙灵自身的防御
         /// </summary>
-        public float FairyDefence => fairyData.defenceBonus.ApplyTo(Item.GetGlobalItem<FairyGlobalItem>().baseDefence);
+        public float FairyDefence => fairyData.defenceBonus.ApplyTo(Item.GetGlobalItem<CoraliteGlobalItem>().baseDefence);
         /// <summary>
         /// 受到个体值加成过的仙灵自身的生命值上限
         /// </summary>
-        public float FairyLifeMax => fairyData.lifeMaxBonus.ApplyTo(Item.GetGlobalItem<FairyGlobalItem>().baseLifeMax);
+        public float FairyLifeMax => fairyData.lifeMaxBonus.ApplyTo(Item.GetGlobalItem<CoraliteGlobalItem>().baseLifeMax);
 
         public bool IsOut { get; set; }
+
+        public override void SetStaticDefaults()
+        {
+            CoraliteSets.Items.IsFairy[Type] = true;
+        }
 
         public sealed override void SetDefaults()
         {
             IsOut = false;
+            Item.DamageType = Content.DamageClasses.FairyDamage.Instance;
 
             SetOtherDefaults();
-            if (Item.TryGetGlobalItem(out FairyGlobalItem fairyItem))
+            if (Item.TryGetGlobalItem(out CoraliteGlobalItem fairyItem))
             {
-                fairyItem.IsFairy = true;
                 SetFairyDefault(fairyItem);
                 life = fairyItem.baseLifeMax;
             }
@@ -90,7 +96,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// 等字段
         /// </summary>
         /// <param name="fairyItem"></param>
-        public virtual void SetFairyDefault(FairyGlobalItem fairyItem) { }
+        public virtual void SetFairyDefault(CoraliteGlobalItem fairyItem) { }
 
         public override ModItem Clone(Item newEntity)
         {
@@ -191,6 +197,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             resurrectionTime = 0;
         }
 
+        public override bool CanReforge() => false;
+
         #region 描述相关
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
@@ -261,7 +269,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public virtual TooltipLine LifeMaxeBonusDescription()
         {
-            float @base = Item.GetGlobalItem<FairyGlobalItem>().baseLifeMax;
+            float @base = Item.GetGlobalItem<CoraliteGlobalItem>().baseLifeMax;
             float bonused = FairyLifeMax;
             (Color, LocalizedText) group = FairyIVAppraise.FairyLifeMaxAppraise.GetAppraiseResult(@base, bonused);
 
@@ -273,7 +281,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public virtual TooltipLine DamageBonusDescription()
         {
-            float @base = Item.GetGlobalItem<FairyGlobalItem>().baseDamage;
+            float @base = Item.damage;
             float bonused = FairyDamage;
             (Color, LocalizedText) group = FairyIVAppraise.FairyDamageAppraise.GetAppraiseResult(@base, bonused);
 
@@ -285,7 +293,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public virtual TooltipLine DefenceBonusDescription()
         {
-            float @base = Item.GetGlobalItem<FairyGlobalItem>().baseDefence;
+            float @base = Item.GetGlobalItem<CoraliteGlobalItem>().baseDefence;
             float bonused = FairyDefence;
             (Color, LocalizedText) group = FairyIVAppraise.FairyDefenceAppraise.GetAppraiseResult(@base, bonused);
 
@@ -297,7 +305,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public virtual TooltipLine ScaleBonusDescription()
         {
-            float @base = Item.GetGlobalItem<FairyGlobalItem>().baseScale;
+            float @base = Item.GetGlobalItem<CoraliteGlobalItem>().baseScale;
             float bonused = MathF.Round(FairyScale, 2);
 
             TooltipLine line = new(Mod, "ScaleBonus"
@@ -343,9 +351,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public void DrawRaderChart(Vector2 center, float factor, float baseLength)
         {
-            float damageFactor = FairyDamage / Item.GetGlobalItem<FairyGlobalItem>().baseDamage;
-            float defenceFactor = FairyDefence / Item.GetGlobalItem<FairyGlobalItem>().baseDefence;
-            float lifeMaxFactor = FairyLifeMax / Item.GetGlobalItem<FairyGlobalItem>().baseLifeMax;
+            float damageFactor = FairyDamage / Item.damage;
+            float defenceFactor = FairyDefence / Item.GetGlobalItem<CoraliteGlobalItem>().baseDefence;
+            float lifeMaxFactor = FairyLifeMax / Item.GetGlobalItem<CoraliteGlobalItem>().baseLifeMax;
             float scaleFactor = FairyScale;
 
             GetScaledFactor(ref damageFactor, FairyIVAppraise.FairyDamageAppraise.AppraiseLevels[^2].Item1);

@@ -1,4 +1,6 @@
 ﻿using Coralite.Content.DamageClasses;
+using Coralite.Core;
+using Coralite.Core.Systems.FairyCatcherSystem;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,12 +9,10 @@ using Terraria.Audio;
 using Terraria.ModLoader.IO;
 using Terraria.Utilities;
 
-namespace Coralite.Core.Systems.FairyCatcherSystem
+namespace Coralite.Content.GlobalItems
 {
-    public class FairyGlobalItem : GlobalItem
+    public partial class CoraliteGlobalItem
     {
-        public override bool InstancePerEntity => true;
-
         #region Fields
 
         /// <summary>
@@ -26,19 +26,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public float CatchPowerMult = 1;
 
         /// <summary>
-        /// 是否是一个仙灵，如果是的话能够放入仙灵瓶中
-        /// </summary>
-        public bool IsFairy;
-
-        /// <summary>
         /// 仙灵弹幕的基础大小，默认1
         /// </summary>
         public float baseScale = 1;
-        /// <summary>
-        /// 仙灵弹幕的基础伤害<br></br>
-        /// 默认0
-        /// </summary>
-        public float baseDamage;
 
         /// <summary>
         /// 仙灵弹幕的默认防御，1防御能够抵挡1伤害<br></br>
@@ -65,22 +55,18 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <param name="baseDefence"></param>
         /// <param name="baseLifeMax"></param>
         /// <param name="baseScale"></param>
-        public static void FairyItemSets(Item item, int baseDamage, int baseDefence, int baseLifeMax, float baseScale = 1)
+        public static void FairyItemSets(Item item, int baseDefence, int baseLifeMax, float baseScale = 1)
         {
-            if (item.TryGetGlobalItem(out FairyGlobalItem fi))
+            if (item.TryGetGlobalItem(out CoraliteGlobalItem fi))
             {
-                fi.IsFairy = true;
-                fi.baseDamage = baseDamage;
                 fi.baseDefence = baseDefence;
                 fi.baseLifeMax = baseLifeMax;
                 fi.baseScale = baseScale;
             }
         }
 
-        public void FairyItemSets(int baseDamage, int baseDefence, int baseLifeMax, float baseScale = 1)
+        public void FairyItemSets(int baseDefence, int baseLifeMax, float baseScale = 1)
         {
-            IsFairy = true;
-            this.baseDamage = baseDamage;
             this.baseDefence = baseDefence;
             this.baseLifeMax = baseLifeMax;
             this.baseScale = baseScale;
@@ -91,7 +77,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public override bool CanPickup(Item item, Player player)
         {
             //自身是仙灵物品并且身上有空的仙灵瓶
-            if (item.TryGetGlobalItem(out FairyGlobalItem fgi) && fgi.IsFairy)
+            if (item.TryGetGlobalItem(out CoraliteGlobalItem fgi) && CoraliteSets.Items.IsFairy[item.type])
             {
                 if (player.TryGetModPlayer(out FairyCatcherPlayer fcp)
                     && fcp.FairyCatch_GetEmptyFairyBottle(out IFairyBottle bottle, out int emptySlot))
@@ -142,7 +128,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             return prefix;
         }
 
-        public override void ModifyTooltips(Item item, List<TooltipLine> tooltips)
+        public void ModifyFairyTooltips(Item item, List<TooltipLine> tooltips)
         {
             if (item.DamageType == FairyDamage.Instance)
             {
@@ -171,5 +157,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         }
 
         #endregion
+
     }
 }

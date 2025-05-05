@@ -5,6 +5,7 @@ using System.Linq;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.ID;
 using Terraria.Utilities;
 
 namespace Coralite.Helpers
@@ -488,5 +489,8 @@ namespace Coralite.Helpers
                 , itemIn.Clone());
             itemIn.TurnToAir();
         }
+
+        public static SetFactory.NamedSetKey CreateCoraliteSet(this SetFactory f, string name)
+            => f.CreateNamedSet(nameof(Coralite), name);
     }
 }

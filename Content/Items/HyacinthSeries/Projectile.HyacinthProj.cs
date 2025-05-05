@@ -9,6 +9,7 @@ using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
 using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
+using Steamworks;
 using System;
 using System.IO;
 using Terraria;
@@ -61,7 +62,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             //StarCannon,
             OnyxBlaster,
             //VenusMagnum,
-            ChainGun,
+            //ChainGun,
             Xenopopper,
             VortexBeater,
             SDMG,
@@ -84,6 +85,9 @@ namespace Coralite.Content.Items.HyacinthSeries
             ClockworkAssaultRifle,
             Datura,
             Boomstick,
+            QuadBarrelShotgun,
+            FlintlockPistol,
+            GhostPipe,
         }
 
         public override void AI()
@@ -233,8 +237,8 @@ namespace Coralite.Content.Items.HyacinthSeries
                     return Color.DarkRed;
                 case (int)GunType.ClockworkAssaultRifle://发条枪
                     return Color.DarkOrange;
-                case (int)GunType.ChainGun://链式机枪
-                    return new Color(196, 17, 18);
+                //case (int)GunType.ChainGun://链式机枪
+                //    return new Color(196, 17, 18);
                 case (int)GunType.Xenopopper://外星泡泡枪
                     return new Color(233, 148, 248);
                 case (int)GunType.VortexBeater://星旋机枪
@@ -273,6 +277,12 @@ namespace Coralite.Content.Items.HyacinthSeries
                     return Color.LightGoldenrodYellow;
                 case (int)GunType.Boomstick://三发猎枪
                     return Color.Silver;
+                case (int)GunType.QuadBarrelShotgun://四管霰弹枪
+                    return Color.DarkGray;
+                case (int)GunType.FlintlockPistol://燧发枪
+                    return Color.WhiteSmoke;
+                case (int)GunType.GhostPipe://水晶兰
+                    return Color.Lime;
                 default:
                     break;
             }
@@ -510,8 +520,8 @@ namespace Coralite.Content.Items.HyacinthSeries
                     return ModContent.ItemType<QueenOfNight>();
                 //case (int)GunType.VenusMagnum://维纳斯万能枪
                 //    return ItemID.VenusMagnum;
-                case (int)GunType.ChainGun://链式机枪
-                    return ItemID.ChainGun;
+                //case (int)GunType.ChainGun://链式机枪
+                //    return ItemID.ChainGun;
                 case (int)GunType.ClockworkAssaultRifle://发条枪
                     return ItemID.ClockworkAssaultRifle;
                 case (int)GunType.Xenopopper://外星泡泡枪
@@ -552,6 +562,10 @@ namespace Coralite.Content.Items.HyacinthSeries
                     return ModContent.ItemType<Datura>();
                 case (int)GunType.Boomstick://三发猎枪
                     return ItemID.Boomstick;
+                case (int)GunType.QuadBarrelShotgun://四管霰弹枪
+                    return ItemID.QuadBarrelShotgun;
+                case (int)GunType.GhostPipe://水晶兰
+                    return ModContent.ItemType<GhostPipe>();
             }
 
             return (int)Projectile.ai[0];

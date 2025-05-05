@@ -81,6 +81,8 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileID.Sets.SwaysInWindBasic[Type] = true;
             TileID.Sets.AllowLightInWater[Type] = true;
 
+            CoraliteSets.Tiles.SpecialMoss[Type] = true;
+
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2);
             TileObjectData.newTile.StyleMultiplier = 1;
             TileObjectData.newTile.StyleHorizontal = true;
@@ -164,6 +166,8 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
             TileID.Sets.SwaysInWindBasic[Type] = true;
             TileID.Sets.AllowLightInWater[Type] = true;
+
+            CoraliteSets.Tiles.SpecialMoss[Type] = true;
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1xX);
             TileObjectData.newTile.StyleMultiplier = 1;

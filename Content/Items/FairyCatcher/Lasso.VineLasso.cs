@@ -1,4 +1,5 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.GlobalItems;
+using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.FairyCatcherSystem;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
@@ -24,7 +25,7 @@ namespace Coralite.Content.Items.FairyCatcher
             Item.shootSpeed = 8;
             Item.SetWeaponValues(8, 3);
             Item.SetShopValues(ItemRarityColor.White0, Item.sellPrice(0, 0, 20));
-            Item.GetGlobalItem<FairyGlobalItem>().CatchPower = 5;
+            Item.GetGlobalItem<CoraliteGlobalItem>().CatchPower = 5;
         }
 
         public override void AddRecipes()
