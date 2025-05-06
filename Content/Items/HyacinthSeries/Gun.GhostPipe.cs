@@ -1,10 +1,14 @@
 ﻿using Coralite.Content.Items.ThyphionSeries;
+using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Attributes;
 using Coralite.Core.Prefabs.Projectiles;
+using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
+using System;
+using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Graphics.Effects;
@@ -22,7 +26,7 @@ namespace Coralite.Content.Items.HyacinthSeries
         public override void SetDefaults()
         {
             Item.SetWeaponValues(24, 2);
-            Item.DefaultToRangedWeapon(ProjectileType<QueenOfNightSpilitProj>(), AmmoID.Bullet, 15, 11f, true);
+            Item.DefaultToRangedWeapon(ProjectileType<QueenOfNightSpilitProj>(), AmmoID.Bullet, 13, 11.5f, true);
 
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.value = Item.sellPrice(0, 4, 0, 0);
@@ -35,7 +39,7 @@ namespace Coralite.Content.Items.HyacinthSeries
 
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
         {
-            position += new Vector2(0, -4);
+            position += new Vector2(0, -6);
         }
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
@@ -83,7 +87,7 @@ namespace Coralite.Content.Items.HyacinthSeries
         public override void ModifyAI(float factor)
         {
             Lighting.AddLight(Projectile.Center, Color.Lime.ToVector3() / 3);
-            if (Projectile.timeLeft != MaxTime && Projectile.timeLeft % 2 == 0)
+            if (Projectile.timeLeft != MaxTime && Projectile.timeLeft % 3 == 0)
             {
                 Projectile.frame++;
             }
@@ -103,13 +107,14 @@ namespace Coralite.Content.Items.HyacinthSeries
             float rot = Projectile.rotation + (DirSign > 0 ? 0 : MathHelper.Pi);
             float n = rot - DirSign * MathHelper.PiOver2;
 
-            Main.spriteBatch.Draw(effect, Projectile.Center + rot.ToRotationVector2() * 20 + n.ToRotationVector2() * 4 - Main.screenPosition, frameBox, Color.Lerp(lightColor, Color.White, 0.5f)
-                , rot, new Vector2(0, frameBox.Height / 2), Projectile.scale * 0.8f, 0, 0f);
+            Main.spriteBatch.Draw(effect, Projectile.Center + rot.ToRotationVector2() * 32 + n.ToRotationVector2() * 4 - Main.screenPosition, frameBox, Color.Lerp(lightColor, Color.White, 0.5f)
+                , rot, new Vector2(0, frameBox.Height / 2), Projectile.scale, 0, 0f);
             return false;
         }
     }
 
-    public class GhostPipeBullet : ModProjectile
+    [AutoLoadTexture(Path = AssetDirectory.HyacinthSeriesItems)]
+    public class GhostPipeBullet : ModProjectile,IDrawPrimitive
     {
         public override string Texture => AssetDirectory.Blank;
 
@@ -120,25 +125,19 @@ namespace Coralite.Content.Items.HyacinthSeries
 
         public ref float State => ref Projectile.ai[0];
         public ref float Timer => ref Projectile.ai[1];
-        public int trailCount = 10;
-        public int trailWidth = 8;
+        public int trailCount = 8;
+        public int trailWidth = 10;
         public float trailAlpha = 1;
-
-        public ref float FadeTimer => ref Projectile.localAI[0];
 
         public override void SetDefaults()
         {
-            Projectile.width = Projectile.height = 28;
+            Projectile.width = Projectile.height = 16;
             Projectile.extraUpdates = 3;
             Projectile.friendly = true;
             Projectile.timeLeft = 60 * Projectile.MaxUpdates * 4;
-            Projectile.penetrate = -1;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = -1;
         }
-
-        public override bool? CanDamage()
-            => FadeTimer < 1;
 
         public override void AI()
         {
@@ -148,20 +147,6 @@ namespace Coralite.Content.Items.HyacinthSeries
             Timer++;
 
             UpdateOldPos();
-
-            if (FadeTimer > 0)
-            {
-                FadeTimer++;
-
-                Projectile.velocity *= 0.85f;
-                trailAlpha = 1 - FadeTimer / 25;
-
-                if (FadeTimer > 25)
-                    Projectile.Kill();
-
-                return;
-            }
-
             SpawnDust();
         }
 
@@ -195,7 +180,7 @@ namespace Coralite.Content.Items.HyacinthSeries
                         pos2[i] = Projectile.oldPos[i] + Projectile.velocity;
 
                     Vector2 dir = Projectile.rotation.ToRotationVector2();
-                    int exLength =  4 ;
+                    int exLength = 4;
 
                     for (int i = 1; i < 5; i++)
                         pos2[trailCount + i - 1] = Projectile.oldPos[^1] + dir * i * exLength + Projectile.velocity;
@@ -207,12 +192,12 @@ namespace Coralite.Content.Items.HyacinthSeries
 
         private void SpawnDust()
         {
-            if (Main.rand.NextBool(3))
+            if (Main.rand.NextBool(2))
             {
-                int width = 8 ;
+                int width = 8;
 
                 Dust d = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(width, width), DustID.CursedTorch
-                    , Projectile.velocity * Main.rand.NextFloat(0.4f, 0.8f), 75, Scale: Main.rand.NextFloat(1, 1.4f));
+                    , Projectile.velocity * Main.rand.NextFloat(-0.4f, 0.8f), 75, Scale: Main.rand.NextFloat(1, 1.4f));
                 d.noGravity = true;
             }
         }
@@ -225,6 +210,40 @@ namespace Coralite.Content.Items.HyacinthSeries
                 1 => new Color(134, 229, 251),
                 _ => new Color(125, 190, 255)
             };
+        }
+
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            Projectile p = Main.projectile.FirstOrDefault(p => p.active && p.friendly
+                && (int)p.ai[2]== target.whoAmI&&p.type == ProjectileType<GhostPipeParasitic>() && p.ai[0] < 8, null);
+
+            if (p == null)//没有寄生弹幕，生成一个
+            {
+                Vector2 pos = Vector2.Lerp(Projectile.Center, target.Center, 0.25f);
+
+                //pos += (pos - target.Center).SafeNormalize(Vector2.Zero) * 32;
+                Vector2 dir = pos - target.Center;
+               dir= dir.RotateByRandom(-MathHelper.Pi, MathHelper.Pi);
+
+
+                Projectile.NewProjectileFromThis<GhostPipeParasitic>(pos, dir, Projectile.damage, Projectile.knockBack, ai2: target.whoAmI);
+            }
+            else//有弹幕，加能量
+            {
+                (p.ModProjectile as GhostPipeParasitic).GetEnergy();
+            }
+        }
+
+        public override void OnKill(int timeLeft)
+        {
+            Vector2 dir = -Projectile.rotation.ToRotationVector2();
+            for (int i = 0; i < 8; i++)
+            {
+                Dust d = Dust.NewDustPerfect(Projectile.Center, DustID.CursedTorch, dir.RotateByRandom(-0.3f, 0.3f) * Main.rand.NextFloat(1, 5)
+                    , Scale: Main.rand.NextFloat(1, 1.5f));
+
+                d.noGravity = true;
+            }
         }
 
         public void DrawPrimitives()
@@ -247,6 +266,370 @@ namespace Coralite.Content.Items.HyacinthSeries
             trail?.DrawTrail(effect);
             Main.graphics.GraphicsDevice.BlendState = BlendState.Additive;
             trail?.DrawTrail(effect);
+
+            Main.graphics.GraphicsDevice.BlendState = BlendState.AlphaBlend;
+        }
+    }
+
+    /// <summary>
+    /// 使用ai0判断能量
+    /// </summary>
+    public class GhostPipeParasitic : ModProjectile
+    {
+        public override string Texture => AssetDirectory.HyacinthSeriesItems + Name;
+
+        public ref float Energy => ref Projectile.ai[0];
+        public ref float State => ref Projectile.ai[1];
+        public ref float Target => ref Projectile.ai[2];
+
+        public ref float Timer => ref Projectile.localAI[0];
+        public ref float Alpha => ref Projectile.localAI[1];
+        public ref float Scale => ref Projectile.localAI[2];
+
+        private bool init = false;
+        private Vector2 Offset => Projectile.velocity;
+        private bool canDamage;
+
+        public override void SetDefaults()
+        {
+            Projectile.friendly = true;
+            Projectile.tileCollide = false;
+            Projectile.width = Projectile.height = 50;
+
+            Projectile.DamageType = DamageClass.Ranged;
+            Projectile.penetrate = -1;
+
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = -1;
+        }
+
+        public override bool ShouldUpdatePosition() => false;
+        public override bool? CanDamage()
+        {
+            if (canDamage)
+                return null;
+
+            return false;
+        }
+
+        public override void AI()
+        {
+            if (!Target.GetNPCOwner(out NPC npc, Projectile.Kill))
+                return;
+
+            if (init)
+                Initialize();
+
+            Projectile.Center = npc.Center + Offset;
+            Projectile.rotation = Offset.ToRotation();
+
+            switch (State)
+            {
+                default:
+                case 0://出现
+                    {
+                        Timer++;
+
+                        Alpha += 0.15f;
+                        if (Alpha > 1)
+                            Alpha = 1;
+
+                        const int MaxTimer = 20;
+                        Scale = 0.5f * Coralite.Instance.HeavySmootherInstance.Smoother(Timer / MaxTimer);
+
+                        if (Timer > MaxTimer)
+                        {
+                            Timer = 0;
+                            State = 1;
+                        }
+                    }
+                    break;
+                case 1://等待开放
+                    {
+                        Timer++;
+
+                        Scale = Helper.Lerp(Scale, 0.5f + Energy/8*0.5f, 0.25f);
+
+                        //生成一些粒子
+
+                        if (Timer > 60 * 8)//8秒都没开就消失了
+                            Projectile.Kill();
+                    }
+                    break;
+                case 2://开放，并生成火球
+                    {
+                        Timer++;
+
+                        if (Timer < 20)
+                            Scale += 0.005f;
+
+
+                        if (Timer == 59)
+                        {
+                            canDamage = true;
+                        }
+                        if (Timer > 60)
+                        {
+                            Vector2 dir = Projectile.velocity.SafeNormalize(Vector2.Zero);
+                            Projectile.NewProjectileFromThis<GhostPipeFireBall>(Projectile.Center + dir * 25, dir * 14
+                                , Projectile.damage, Projectile.knockBack);
+                            Projectile.Kill();
+                        }
+                    }
+                    break;
+            }
+        }
+
+        private void Initialize()
+        {
+            init = false;
+
+            Projectile.rotation = Offset.ToRotation();
+        }
+
+        public void GetEnergy()
+        {
+            Energy++;
+            if (Energy >= 8)//8个能量直接开放
+            {
+                Energy = 8;
+                State = 2;
+                Timer = 0;
+            }
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Texture2D mainTex = Projectile.GetTexture();
+            Vector2 pos = Projectile.Center - Main.screenPosition;
+            Color c = lightColor * Alpha;
+
+            if (State < 2)
+                DrawNotBloom(mainTex,pos,c);
+            else
+                DrawBloom(mainTex,pos,c);
+
+            return false;
+        }
+
+        public void DrawNotBloom(Texture2D tex, Vector2 pos,Color c)
+        {
+            c *= 0.75f;
+            tex.QuickCenteredDraw(Main.spriteBatch, new Rectangle(0, 4, 1, 5), pos, c, Projectile.rotation, Scale);
+            tex.QuickCenteredDraw(Main.spriteBatch, new Rectangle(0, 4, 1, 5), pos, (c*0.25f) with { A=0}, Projectile.rotation, Scale);
+        }
+
+        public void DrawBloom(Texture2D tex, Vector2 pos, Color c)
+        {
+            Color c2 = c * 0.5f;
+            c2.A /= 2;
+
+            //绘制花瓣
+            tex.QuickCenteredDraw(Main.spriteBatch, new Rectangle(0, 0, 1, 5)
+                , pos, c2, Projectile.rotation, Scale);
+            tex.QuickCenteredDraw(Main.spriteBatch, new Rectangle(0, 1, 1, 5)
+                , pos, c2, Projectile.rotation, Scale);
+
+            //绘制本体
+            tex.QuickCenteredDraw(Main.spriteBatch, new Rectangle(0, 2, 1, 5)
+                , pos, c*0.75f, Projectile.rotation, Scale);
+            tex.QuickCenteredDraw(Main.spriteBatch, new Rectangle(0, 2, 1, 5)
+                , pos, (c * 0.25f) with { A = 0 }, Projectile.rotation, Scale);
+
+            //绘制上面的花瓣
+            tex.QuickCenteredDraw(Main.spriteBatch, new Rectangle(0, 3, 1, 5)
+                , pos, c2, Projectile.rotation, Scale);
+        }
+    }
+
+    public class GhostPipeFireBall : ModProjectile, IDrawAdditive, IDrawPrimitive
+    {
+        public override string Texture => AssetDirectory.Blank;
+
+        public static Color highlightC = Color.White;
+        public static Color brightC = new(96, 248, 2);
+        public static Color darkC = new(138, 130, 218);
+
+        ref float State => ref Projectile.ai[0];
+        ref float Timer => ref Projectile.ai[1];
+        ref float FlyingTime => ref Projectile.localAI[2];
+
+        private PrimitivePRTGroup fireParticles;
+        private Trail trail;
+        private readonly int trailPoint = 12;
+
+        private int chaseTime;
+
+        public override void SetDefaults()
+        {
+            Projectile.DamageType = DamageClass.Ranged;
+            Projectile.friendly = true;
+            Projectile.timeLeft = 400;
+            Projectile.width = Projectile.height = 26;
+            Projectile.penetrate = 2;
+            Projectile.tileCollide = false;
+            Projectile.localNPCHitCooldown = 3;
+            Projectile.usesLocalNPCImmunity = true;
+        }
+
+        public override bool? CanDamage()
+        {
+            if (State > 1)
+                return false;
+            return base.CanDamage();
+        }
+
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            Projectile.tileCollide = false;
+            Projectile.velocity *= 0;
+            State = 2;
+            return false;
+        }
+
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            chaseTime = 0;
+            if (Projectile.penetrate < 2)
+            {
+                State = 2;
+                Projectile.velocity *= 0;
+                Projectile.penetrate = -1;
+            }
+        }
+
+        public override void AI()
+        {
+            if (fireParticles == null)
+            {
+                fireParticles = new PrimitivePRTGroup();
+                Projectile.InitOldPosCache(trailPoint);
+                Projectile.localAI[1] = Main.rand.NextFloat(-0.01f, 0.01f);
+                FlyingTime = 20 * 5;
+            }
+
+            trail ??= new Trail(Main.instance.GraphicsDevice, trailPoint, new EmptyMeshGenerator(), factor =>
+            {
+                if (factor < 0.8f)
+                    return Helper.Lerp(4, 6, factor / 0.8f);
+
+                return Helper.Lerp(10, 0, (factor - 0.8f) / 0.2f);
+            }, ColorFunc1);
+
+            switch (State)
+            {
+                default:
+                case 0://下落
+                    {
+                        Lighting.AddLight(Projectile.Center, new Vector3(0.5f));
+                        if (Helper.TryFindClosestEnemy(Projectile.Center, 1000, n => n.CanBeChasedBy() && Projectile.localNPCImmunity.IndexInRange(n.whoAmI) && Projectile.localNPCImmunity[n.whoAmI] == 0, out NPC target))
+                        {
+                            float selfAngle = Projectile.velocity.ToRotation();
+                            float targetAngle = (target.Center - Projectile.Center).ToRotation();
+
+                            Projectile.velocity = selfAngle.AngleLerp(targetAngle, 0.2f + (0.8f * Math.Clamp((chaseTime - 30) / 30, 0, 1f))).ToRotationVector2() * Projectile.velocity.Length();
+                        }
+
+                        SpawnDusts(1 - (0.3f * Timer / FlyingTime));
+
+                        Timer++;
+                        chaseTime++;
+
+                        if (Timer > FlyingTime)
+                        {
+                            State = 1;
+                            Timer = 0;
+                        }
+                    }
+                    break;
+                case 1:
+                    {
+                        Projectile.localAI[0] += Projectile.localAI[1];
+                        Projectile.velocity = Projectile.velocity.RotatedBy(Projectile.localAI[0]);
+                        Projectile.velocity *= 0.97f;
+
+                        SpawnDusts(0.7f);
+
+                        Lighting.AddLight(Projectile.Center, new Vector3(0.5f));
+                        Timer++;
+                        if (Timer > 15)
+                        {
+                            Projectile.velocity *= 0;
+                            State++;
+                        }
+                    }
+                    break;
+                case 2://他紫砂了
+                    {
+                        if (!fireParticles.Any())
+                        {
+                            Projectile.Kill();
+                            return;
+                        }
+                    }
+                    break;
+            }
+
+            Projectile.UpdateOldPosCache();
+            trail.TrailPositions = Projectile.oldPos;
+            fireParticles.Update();
+        }
+
+        public static Color ColorFunc1(Vector2 factor)
+        {
+            if (factor.X < 0.7f)
+            {
+                return Color.Lerp(new Color(0, 0, 0, 0), brightC, factor.X / 0.7f);
+            }
+
+            return Color.Lerp(brightC, highlightC, (factor.X - 0.7f) / 0.3f);
+        }
+
+        public void SpawnDusts(float factor)
+        {
+            Color c;
+            int type;
+            type = DustID.CursedTorch;
+            c = Main.rand.Next(3) switch
+            {
+                1 => darkC,
+                _ => brightC,
+            };
+
+            Projectile.SpawnTrailDust(type, Main.rand.NextFloat(0.2f, 0.6f), Scale: Main.rand.NextFloat(1f, 2f));
+
+            float angle = Projectile.velocity.AngleFrom(Projectile.oldVelocity);
+            float rate = MathHelper.Clamp(0.4f - (Math.Abs(angle) / 5), 0, 0.4f);
+            if (Main.rand.NextBool())
+            {
+                var p = fireParticles.NewParticle<FireParticle>(Projectile.Center + Main.rand.NextVector2Circular(8, 8),
+                     (Projectile.velocity * factor * Main.rand.NextFloat(rate * 0.7f, (rate * 1.3f) + 0.001f)).RotatedBy(Main.rand.NextFloat(-0.05f, 0.05f))
+                    , c, Main.rand.NextFloat(0.2f, 0.5f));
+                p.MaxFrameCount = 2;
+            }
+        }
+
+        public override bool PreDraw(ref Color lightColor) => false;
+
+        public void DrawAdditive(SpriteBatch spriteBatch)
+        {
+            fireParticles?.Draw(Main.spriteBatch);
+        }
+
+        public void DrawPrimitives()
+        {
+            if (State == 2 || trail == null)
+                return;
+
+            Effect effect = Filters.Scene["Flow2"].GetShader().Shader;
+
+            effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly * 5);
+            effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
+            effect.Parameters["uTextImage"].SetValue(Request<Texture2D>(AssetDirectory.OtherProjectiles + "ExtraLaserFlow").Value);
+
+            Main.graphics.GraphicsDevice.BlendState = BlendState.Additive;
+
+            trail.DrawTrail(effect);
 
             Main.graphics.GraphicsDevice.BlendState = BlendState.AlphaBlend;
         }

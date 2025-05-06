@@ -162,7 +162,7 @@ namespace Coralite.Content.Items.HyacinthSeries
                 float n = rot - DirSign * MathHelper.PiOver2;
 
                 Main.spriteBatch.Draw(effect, Projectile.Center + rot.ToRotationVector2() * 34 - n.ToRotationVector2() * 4 - Main.screenPosition, frameBox, Color.Lerp(lightColor, Color.White, 0.8f)
-                    , rot, new Vector2(0, frameBox.Height / 2), Projectile.scale * 0.8f, 0, 0f);
+                    , rot, new Vector2(0, frameBox.Height / 2), Projectile.scale, 0, 0f);
             }
 
             if (frame3 < 6)
@@ -174,7 +174,7 @@ namespace Coralite.Content.Items.HyacinthSeries
                 float n = rot - DirSign * MathHelper.PiOver2;
 
                 Main.spriteBatch.Draw(effect, Projectile.Center - rot.ToRotationVector2() * 38 - n.ToRotationVector2() * 4 - Main.screenPosition, frameBox, Color.Lerp(lightColor, Color.White, 0.8f)
-                    , rot, new Vector2(0, frameBox.Height / 2), Projectile.scale * 0.8f, 0, 0f);
+                    , rot, new Vector2(0, frameBox.Height / 2), Projectile.scale, 0, 0f);
             }
             return false;
         }

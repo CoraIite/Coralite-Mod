@@ -788,6 +788,7 @@ namespace Coralite.Helpers
 
         public static void InitOldPosCache(this Projectile projectile, int trailCount, bool useCenter = true)
         {
+            //必须保证这三个数组长度相等
             if (projectile.oldPos.Length != trailCount)
                 Array.Resize(ref projectile.oldPos, trailCount);
             if (projectile.oldRot.Length != trailCount)
