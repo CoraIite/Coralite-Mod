@@ -88,6 +88,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             QuadBarrelShotgun,
             FlintlockPistol,
             GhostPipe,
+            SunflowerGun,
         }
 
         public override void AI()
@@ -282,6 +283,8 @@ namespace Coralite.Content.Items.HyacinthSeries
                 case (int)GunType.FlintlockPistol://燧发枪
                     return Color.WhiteSmoke;
                 case (int)GunType.GhostPipe://水晶兰
+                    return Color.Lime;
+                case (int)GunType.SunflowerGun://向阳花
                     return Color.Lime;
                 default:
                     break;
@@ -566,6 +569,8 @@ namespace Coralite.Content.Items.HyacinthSeries
                     return ItemID.QuadBarrelShotgun;
                 case (int)GunType.GhostPipe://水晶兰
                     return ModContent.ItemType<GhostPipe>();
+                case (int)GunType.SunflowerGun://向阳花
+                    return ModContent.ItemType<SunflowerGun>();
             }
 
             return (int)Projectile.ai[0];

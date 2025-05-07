@@ -70,7 +70,7 @@ namespace Coralite.Content.Items.HyacinthSeries
         {
             CreateRecipe()
             .AddIngredient<ShadowWave>()
-            .AddIngredient<WoodWax>()
+            .AddIngredient<SunflowerGun>()
             .AddIngredient(ItemID.Musket)
             .AddIngredient(ItemID.Moonglow, 5)
             .AddTile(TileID.Anvils)
@@ -78,7 +78,7 @@ namespace Coralite.Content.Items.HyacinthSeries
 
             CreateRecipe()
             .AddIngredient(ItemID.PhoenixBlaster)
-            .AddIngredient<WoodWax>()
+            .AddIngredient<SunflowerGun>()
             .AddIngredient(ItemID.Musket)
             .AddIngredient(ItemID.Moonglow, 5)
             .AddTile(TileID.Anvils)
@@ -86,7 +86,7 @@ namespace Coralite.Content.Items.HyacinthSeries
 
             CreateRecipe()
             .AddIngredient<ShadowWave>()
-            .AddIngredient<WoodWax>()
+            .AddIngredient<SunflowerGun>()
             .AddIngredient(ItemID.TheUndertaker)
             .AddIngredient(ItemID.Moonglow, 5)
             .AddTile(TileID.Anvils)
@@ -94,7 +94,7 @@ namespace Coralite.Content.Items.HyacinthSeries
 
             CreateRecipe()
             .AddIngredient(ItemID.PhoenixBlaster)
-            .AddIngredient<WoodWax>()
+            .AddIngredient<SunflowerGun>()
             .AddIngredient(ItemID.TheUndertaker)
             .AddIngredient(ItemID.Moonglow, 5)
             .AddTile(TileID.Anvils)

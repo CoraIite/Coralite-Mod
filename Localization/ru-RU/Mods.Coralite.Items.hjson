@@ -5897,3 +5897,8 @@ GhostPipe: {
 	// DisplayName: Ghost Pipe
 	// Tooltip: ""
 }
+
+SunflowerGun: {
+	// DisplayName: Sunflower Gun
+	// Tooltip: ""
+}

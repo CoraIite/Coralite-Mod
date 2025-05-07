@@ -1,10 +1,12 @@
-﻿using Coralite.Content.Items.ThyphionSeries;
+﻿using Coralite.Content.Dusts;
+using Coralite.Content.Items.ThyphionSeries;
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Attributes;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -50,7 +52,13 @@ namespace Coralite.Content.Items.HyacinthSeries
             if (shootCount > 3)
                 shootCount = 0;
             else
+            {
+                Vector2 dir = -velocity.SafeNormalize(Vector2.Zero);
+                Dust.NewDustPerfect(player.Center, DustType<GhostPipePetal>()
+                    , dir.RotatedBy(Main.rand.NextFloat(-0.2f, 0.2f)) * Main.rand.NextFloat(1, 3)
+                    , Scale: Main.rand.NextFloat(0.8f, 1.2f));
                 type = ProjectileType<GhostPipeBullet>();
+            }
 
             Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, 1);
 
@@ -62,7 +70,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             CreateRecipe()
                 .AddIngredient(ItemID.FlintlockPistol)
                 .AddIngredient(ItemID.SoulofNight, 5)
-                .AddIngredient(ItemID.CursedFlame, 15)
+                .AddIngredient(ItemID.CursedFlame, 8)
                 .AddTile(TileID.Anvils)
                 .Register();
         }
@@ -137,6 +145,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             Projectile.timeLeft = 60 * Projectile.MaxUpdates * 4;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = -1;
+            Projectile.penetrate = 5;
         }
 
         public override void AI()
@@ -215,7 +224,7 @@ namespace Coralite.Content.Items.HyacinthSeries
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Projectile p = Main.projectile.FirstOrDefault(p => p.active && p.friendly
-                && (int)p.ai[2]== target.whoAmI&&p.type == ProjectileType<GhostPipeParasitic>() && p.ai[0] < 8, null);
+                && (int)p.ai[2]== target.whoAmI&&p.type == ProjectileType<GhostPipeParasitic>() && p.ai[0] < 6, null);
 
             if (p == null)//没有寄生弹幕，生成一个
             {
@@ -289,6 +298,8 @@ namespace Coralite.Content.Items.HyacinthSeries
         private bool init = false;
         private Vector2 Offset => Projectile.velocity;
         private bool canDamage;
+        private float exRot;
+        private float exAlpha;
 
         public override void SetDefaults()
         {
@@ -312,6 +323,14 @@ namespace Coralite.Content.Items.HyacinthSeries
             return false;
         }
 
+        public override bool? CanHitNPC(NPC target)
+        {
+            if (target.whoAmI == (int)Target)
+                return base.CanHitNPC(target);
+
+            return false;
+        }
+
         public override void AI()
         {
             if (!Target.GetNPCOwner(out NPC npc, Projectile.Kill))
@@ -322,6 +341,7 @@ namespace Coralite.Content.Items.HyacinthSeries
 
             Projectile.Center = npc.Center + Offset;
             Projectile.rotation = Offset.ToRotation();
+            Lighting.AddLight(Projectile.Center, Color.MediumPurple.ToVector3());
 
             switch (State)
             {
@@ -334,8 +354,13 @@ namespace Coralite.Content.Items.HyacinthSeries
                         if (Alpha > 1)
                             Alpha = 1;
 
-                        const int MaxTimer = 20;
-                        Scale = 0.5f * Coralite.Instance.HeavySmootherInstance.Smoother(Timer / MaxTimer);
+                        const int MaxTimer = 15;
+                        float factor = Timer / MaxTimer;
+                        Scale = 0.5f * Coralite.Instance.HeavySmootherInstance.Smoother(factor);
+
+                        exRot = factor * MathF.Sin(factor * MathHelper.TwoPi * 1.5f) * 0.35f;
+
+                        BallDust();
 
                         if (Timer > MaxTimer)
                         {
@@ -348,12 +373,31 @@ namespace Coralite.Content.Items.HyacinthSeries
                     {
                         Timer++;
 
-                        Scale = Helper.Lerp(Scale, 0.5f + Energy/8*0.5f, 0.25f);
+                        Scale = Helper.Lerp(Scale, 0.5f + Energy / 6 * 0.5f, 0.25f);
+                        exRot = MathF.Sin((int)Main.timeForVisualEffects * 0.1f) * 0.2f;
 
-                        //生成一些粒子
+                        //生成一些花雾粒子
+                        if (Main.rand.NextBool(3))
+                            FogParticle();
 
-                        if (Timer > 60 * 8)//8秒都没开就消失了
+                        if (Timer == 60 * 15)
+                        {
+                            canDamage = true;
+                            Projectile.damage /= 2;
+                            for (int i = 0; i < 8; i++)
+                            {
+                                Dust d = Dust.NewDustPerfect(Projectile.Center, DustID.CursedTorch, Helper.NextVec2Dir(2, 6)
+                                    , Scale: Main.rand.NextFloat(1, 1.5f));
+                                d.noGravity = true;
+                            }
+
+                            for (int i = 0; i < 4; i++)
+                                FogParticle();
+                        }
+                        if (Timer > 60 * 15)//15秒都没开就消失了
+                        {
                             Projectile.Kill();
+                        }
                     }
                     break;
                 case 2://开放，并生成火球
@@ -361,23 +405,65 @@ namespace Coralite.Content.Items.HyacinthSeries
                         Timer++;
 
                         if (Timer < 20)
-                            Scale += 0.005f;
-
-
-                        if (Timer == 59)
                         {
-                            canDamage = true;
+                            Scale += 0.005f;
+                            BallDust();
                         }
-                        if (Timer > 60)
+                        else
+                            Scale -= 0.01f;
+
+                        exAlpha += 0.1f;
+                        if (exAlpha > 1)
+                            exAlpha = 1;
+
+                        const int MaxTimer = 45;
+                        float factor = Timer / MaxTimer;
+
+                        exRot = factor * MathF.Sin(factor * MathHelper.TwoPi * 1.5f) * 0.35f;
+
+                        if (Timer == MaxTimer - 1)
+                        {
+                            Helper.PlayPitched(CoraliteSoundID.FireBallHit_NPCHit3, Projectile.Center);
+
+                            canDamage = true;
+                            for (int i = 0; i < 16; i++)
+                            {
+                                Dust d = Dust.NewDustPerfect(Projectile.Center, DustID.CursedTorch, Helper.NextVec2Dir(2, 6)
+                                    , Scale: Main.rand.NextFloat(1, 1.5f));
+                                d.noGravity = true;
+                            }
+
+                            for (int i = 0; i < 4; i++)
+                                FogParticle();
+                        }
+                        if (Timer > MaxTimer)
                         {
                             Vector2 dir = Projectile.velocity.SafeNormalize(Vector2.Zero);
                             Projectile.NewProjectileFromThis<GhostPipeFireBall>(Projectile.Center + dir * 25, dir * 14
-                                , Projectile.damage, Projectile.knockBack);
+                                , Projectile.damage * 3, Projectile.knockBack);
                             Projectile.Kill();
                         }
                     }
                     break;
             }
+        }
+
+        private void FogParticle()
+        {
+            PRTLoader.NewParticle(Projectile.Center, Offset.SafeNormalize(Vector2.Zero).RotatedBy(Main.rand.NextFloat(-0.5f, 0.5f)) * Main.rand.NextFloat(1, 2)
+                , CoraliteContent.ParticleType<Fog>(), new Color(209, 174, 255, 80), Main.rand.NextFloat(0.5f, 0.7f));
+        }
+
+        private void BallDust()
+        {
+            Color c = Main.rand.Next(3) switch
+            {
+                0 => new Color(209, 174, 255),
+                1 => Color.LimeGreen,
+                _ => new Color(95, 91, 176),
+            };
+            Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(8, 8), DustType<GlowBall>(),
+                (Projectile.rotation + Main.rand.NextFloat(-0.3f, 0.3f)).ToRotationVector2() * Main.rand.NextFloat(1, 3), 0, c, 0.25f);
         }
 
         private void Initialize()
@@ -390,12 +476,28 @@ namespace Coralite.Content.Items.HyacinthSeries
         public void GetEnergy()
         {
             Energy++;
-            if (Energy >= 8)//8个能量直接开放
+            if (Energy >= 6)//6个能量直接开放
             {
-                Energy = 8;
+                Energy = 6;
                 State = 2;
-                Timer = 0;
+
+                for (int i = 0; i < 5; i++)
+                {
+                    Dust.NewDustPerfect(Projectile.Center, DustType<GhostPipePetal>()
+                        , Offset.SafeNormalize(Vector2.Zero).RotatedBy(Main.rand.NextFloat(-0.4f, 0.4f)) * Main.rand.NextFloat(0.5f, 3)
+                        , Scale: Main.rand.NextFloat(0.8f, 1.2f));
+                }
             }
+
+            Timer = 0;
+        }
+
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            if (Energy >= 6)
+                target.AddBuff(BuffID.CursedInferno, 60 * 4);
+
+            modifiers.SourceDamage += Energy * 0.5f;
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -415,30 +517,34 @@ namespace Coralite.Content.Items.HyacinthSeries
         public void DrawNotBloom(Texture2D tex, Vector2 pos,Color c)
         {
             c *= 0.75f;
-            tex.QuickCenteredDraw(Main.spriteBatch, new Rectangle(0, 4, 1, 5), pos, c, Projectile.rotation, Scale);
-            tex.QuickCenteredDraw(Main.spriteBatch, new Rectangle(0, 4, 1, 5), pos, (c*0.25f) with { A=0}, Projectile.rotation, Scale);
+            float rotation = Projectile.rotation + exRot;
+
+            tex.QuickCenteredDraw(Main.spriteBatch, new Rectangle(0, 4, 1, 5), pos, c, rotation, Scale);
+            tex.QuickCenteredDraw(Main.spriteBatch, new Rectangle(0, 4, 1, 5), pos, (c*0.25f) with { A=0}, rotation, Scale);
         }
 
         public void DrawBloom(Texture2D tex, Vector2 pos, Color c)
         {
-            Color c2 = c * 0.5f;
+            Color c2 = c * 0.5f * exAlpha;
             c2.A /= 2;
 
             //绘制花瓣
+            float rotation = Projectile.rotation+exRot;
+            float t = (int)Main.timeForVisualEffects*0.1f;
             tex.QuickCenteredDraw(Main.spriteBatch, new Rectangle(0, 0, 1, 5)
-                , pos, c2, Projectile.rotation, Scale);
+                , pos, c2, rotation+MathF.Sin(t+MathHelper.PiOver2)*0.2f, Scale);
             tex.QuickCenteredDraw(Main.spriteBatch, new Rectangle(0, 1, 1, 5)
-                , pos, c2, Projectile.rotation, Scale);
+                , pos, c2, rotation+MathF.Sin(t) * 0.2f, Scale);
 
             //绘制本体
             tex.QuickCenteredDraw(Main.spriteBatch, new Rectangle(0, 2, 1, 5)
-                , pos, c*0.75f, Projectile.rotation, Scale);
+                , pos, c*0.75f, rotation, Scale);
             tex.QuickCenteredDraw(Main.spriteBatch, new Rectangle(0, 2, 1, 5)
-                , pos, (c * 0.25f) with { A = 0 }, Projectile.rotation, Scale);
+                , pos, (c * 0.25f) with { A = 0 }, rotation, Scale);
 
             //绘制上面的花瓣
             tex.QuickCenteredDraw(Main.spriteBatch, new Rectangle(0, 3, 1, 5)
-                , pos, c2, Projectile.rotation, Scale);
+                , pos, c2, rotation + MathF.Sin(t - MathHelper.PiOver2) * 0.2f, Scale);
         }
     }
 
@@ -468,7 +574,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             Projectile.width = Projectile.height = 26;
             Projectile.penetrate = 2;
             Projectile.tileCollide = false;
-            Projectile.localNPCHitCooldown = 3;
+            Projectile.localNPCHitCooldown = -1;
             Projectile.usesLocalNPCImmunity = true;
         }
 
@@ -489,13 +595,12 @@ namespace Coralite.Content.Items.HyacinthSeries
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
+            target.AddBuff(BuffID.CursedInferno, 60 * 4);
+
             chaseTime = 0;
-            if (Projectile.penetrate < 2)
-            {
-                State = 2;
-                Projectile.velocity *= 0;
-                Projectile.penetrate = -1;
-            }
+            State = 2;
+            Projectile.velocity *= 0;
+            Projectile.penetrate = -1;
         }
 
         public override void AI()
@@ -634,4 +739,48 @@ namespace Coralite.Content.Items.HyacinthSeries
             Main.graphics.GraphicsDevice.BlendState = BlendState.AlphaBlend;
         }
     }
+
+    public class GhostPipePetal : ModDust
+    {
+        public override string Texture => AssetDirectory.HyacinthSeriesItems + Name;
+
+        public override void OnSpawn(Dust dust)
+        {
+            dust.rotation = Main.rand.NextFloat(MathHelper.TwoPi);
+            dust.frame = new Rectangle(0, Main.rand.Next(3), 1, 3);
+            dust.color = Color.White*0.75f;
+        }
+
+        public override bool Update(Dust dust)
+        {
+            Lighting.AddLight(dust.position, new Vector3(0.1f, 0.15f, 0.1f));
+            dust.position += dust.velocity;
+            dust.rotation += 0.1f;
+            dust.velocity *= 0.99f;
+            dust.velocity.Y += 0.02f;
+
+            if (dust.fadeIn > 30)
+                dust.color *= 0.84f;
+
+            if (!dust.noGravity && dust.velocity.Y < 5)
+            {
+                dust.velocity.Y += 0.05f;
+            }
+
+            dust.fadeIn++;
+            if (dust.fadeIn > 45)
+                dust.active = false;
+            return false;
+        }
+
+        public override bool PreDraw(Dust dust)
+        {
+            Color c = Lighting.GetColor(dust.position.ToTileCoordinates());
+            c *= dust.color.A / 255f;
+            Texture2D.Value.QuickCenteredDraw(Main.spriteBatch, dust.frame, dust.position - Main.screenPosition, c, dust.rotation, scale: dust.scale);
+
+            return false;
+        }
+    }
+
 }

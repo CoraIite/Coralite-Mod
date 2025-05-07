@@ -370,6 +370,10 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
 
             //破布
             AddRemodelRecipe(ItemID.Silk, ItemID.TatteredCloth, CalculateMagikeCost(MagicCrystal, 3, 30));
+
+            //咒火与灵液相互转换
+            AddRemodelRecipe(ItemID.CursedFlame, ItemID.Ichor, CalculateMagikeCost(CrystallineMagike, 1, 5));
+            AddRemodelRecipe(ItemID.Ichor, ItemID.CursedFlame, CalculateMagikeCost(CrystallineMagike, 1, 5));
         }
     }
 }

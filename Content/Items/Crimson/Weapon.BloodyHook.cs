@@ -290,7 +290,7 @@ namespace Coralite.Content.Items.Crimson
         {
             if ((int)Timer == 0)
             {
-                Owner.immuneTime = 30;
+                Owner.AddImmuneTime(ImmunityCooldownID.General, 30);
                 Owner.immune = true;
             }
 

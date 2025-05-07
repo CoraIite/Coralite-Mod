@@ -5204,7 +5204,7 @@ WindSpeedArrows: {
 	Tooltip:
 		'''
 		+6% 移动速度
-		根据移速增加远程伤害，最高20%
+		根据移速增加箭矢伤害，最高20%
 		'''
 }
 
@@ -5999,4 +5999,9 @@ MidasGunpowder: {
 GhostPipe: {
 	DisplayName: 水晶兰
 	Tooltip: 纯洁之灵
+}
+
+SunflowerGun: {
+	DisplayName: 向阳花
+	Tooltip: "深爱与守望"
 }

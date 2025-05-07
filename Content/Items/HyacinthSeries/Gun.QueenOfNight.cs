@@ -21,7 +21,7 @@ namespace Coralite.Content.Items.HyacinthSeries
 
         public override void SetDefaults()
         {
-            Item.SetWeaponValues(76, 2);
+            Item.SetWeaponValues(80, 2);
             Item.DefaultToRangedWeapon(ProjectileType<QueenOfNightSpilitProj>(), AmmoID.Bullet, 46, 5f, true);
 
             Item.useStyle = ItemUseStyleID.Rapier;

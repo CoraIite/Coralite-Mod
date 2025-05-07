@@ -61,7 +61,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             CreateRecipe()
                 .AddIngredient(ItemID.Boomstick)
                 .AddIngredient(ItemID.SoulofNight, 5)
-                .AddIngredient(ItemID.Ichor, 15)
+                .AddIngredient(ItemID.Ichor, 8)
                 .AddTile(TileID.Anvils)
                 .Register();
         }
