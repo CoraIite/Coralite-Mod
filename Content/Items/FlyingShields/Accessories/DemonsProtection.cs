@@ -59,7 +59,6 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
                 if (cp.parryTime < 100)
                 {
                     Owner.AddImmuneTime(ImmunityCooldownID.General, 25);
-                    Owner.immune = true;
                 }
 
                 int damage = (int)(projectile.Owner.GetWeaponDamage(Item) * (1.2f - (0.15f * cp.parryTime / 280f)));

@@ -88,6 +88,8 @@ namespace Coralite.Content.Items.HyacinthSeries
             FlintlockPistol,
             GhostPipe,
             SunflowerGun,
+            Gatligator,
+            Aloe,
         }
 
         public override void AI()
@@ -284,7 +286,11 @@ namespace Coralite.Content.Items.HyacinthSeries
                 case (int)GunType.GhostPipe://水晶兰
                     return Color.Lime;
                 case (int)GunType.SunflowerGun://向阳花
-                    return Color.Lime;
+                    return Color.Yellow;
+                case (int)GunType.Gatligator://鳄鱼机关枪
+                    return Color.SandyBrown;
+                case (int)GunType.Aloe://芦荟
+                    return new Color(125,180,145);
                 default:
                     break;
             }
@@ -570,6 +576,10 @@ namespace Coralite.Content.Items.HyacinthSeries
                     return ModContent.ItemType<GhostPipe>();
                 case (int)GunType.SunflowerGun://向阳花
                     return ModContent.ItemType<SunflowerGun>();
+                case (int)GunType.Gatligator://鳄鱼机关枪
+                    return ItemID.Gatligator;
+                case (int)GunType.Aloe://芦荟
+                    return ModContent.ItemType<Aloe>();
             }
 
             return (int)Projectile.ai[0];

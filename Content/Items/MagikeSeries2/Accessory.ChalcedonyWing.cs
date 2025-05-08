@@ -56,7 +56,7 @@ namespace Coralite.Content.Items.MagikeSeries2
 
         public override float GetDurationMultiplier(Player player)
         {
-            return 0.4f;
+            return 0.6f;
         }
 
         public override void UpdateHorizontalSpeeds(Player player)

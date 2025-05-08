@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Coralite.Helpers;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 
 namespace Coralite.Core.Prefabs.Particles
@@ -14,6 +15,8 @@ namespace Coralite.Core.Prefabs.Particles
     public abstract class BaseFrameParticle(int frameXCount, int frameYCount, int frameCounterMax, bool frameDirVertical = true, bool randRot = false) : Particle
     {
         public SpriteEffects Effects { get; set; }
+
+        public int FollowProjIndex=-1;
 
         public override void SetProperty()
         {
@@ -34,12 +37,15 @@ namespace Coralite.Core.Prefabs.Particles
 
         public override void AI()
         {
-            if (++Opacity>frameCounterMax)
+            if (FollowProjIndex.GetProjectileOwner(out Projectile proj))
+                Position += (proj.position - proj.oldPosition);
+
+            if (++Opacity > frameCounterMax)
             {
                 Opacity = 0;
                 if (frameDirVertical)
                 {
-                    if (++Frame.Y>=frameYCount)
+                    if (++Frame.Y >= frameYCount)
                         active = false;
                 }
                 else

@@ -37,7 +37,7 @@ namespace Coralite.Content.WorldGeneration
             //ExampleStructure(p);
             //Main.NewText(TileLoader.GetTile(860).Name);
             //WorldGen.destroyObject = false;
-
+            //Main.tile[p].Clear(TileDataType.Wall);
             //WorldGen.KillTile(p.X, p.Y, false, false, true);
             //Main.tile[p.X, p.Y].Clear(TileDataType.Tile);
             //WorldGen.PlaceTile(p.X, p.Y, TileID.Dirt, true, true, -1);    //放置有帧图的物块

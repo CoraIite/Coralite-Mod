@@ -37,7 +37,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             Projectile.NewProjectile(source, player.Center, targetDir * Main.rand.NextFloat(6f, 8f), ProjectileType<SunflowerGunBullet>(), (int)(damage * (5 / 12f)), knockback / 2, player.whoAmI);
 
             for (int i = 0; i < 2; i++)
-                Projectile.NewProjectile(source, player.Center, targetDir.RotatedBy(Main.rand.NextFloat(-0.2f, 0.2f)) * Main.rand.NextFloat(6f, 8f), ProjectileType<SunflowerGunBullet>(), (int)(damage * (5 / 12f)), knockback / 2, player.whoAmI);
+                Projectile.NewProjectile(source, player.Center, targetDir.RotatedBy(Main.rand.NextFloat(-0.1f, 0.1f)) * Main.rand.NextFloat(6f, 8f), ProjectileType<SunflowerGunBullet>(), (int)(damage * (5 / 12f)), knockback / 2, player.whoAmI);
 
             Helper.PlayPitched(CoraliteSoundID.Gun2_Item40, player.Center);
             return false;

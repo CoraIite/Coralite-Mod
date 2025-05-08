@@ -185,6 +185,9 @@ namespace Coralite.Content.Items.Materials
                 .AddCondition(Condition.DownedSkeletron)
                 .RegisterNewCraft(ItemID.HunterCloak, 150)
                 .SetMainStack(4 * 15)
+                .RegisterNewCraft(ItemID.Gatligator, 1000)
+                .SetMainStack(100)
+                .AddConditions(Condition.Hardmode)
                 .Register();
             //AddRemodelRecipe<TravelJournaling>(, ItemID., mainStack: 4 * 15);
             //AddRemodelRecipe<TravelJournaling>(150, ItemID.WinterCape, mainStack: 4 * 5);

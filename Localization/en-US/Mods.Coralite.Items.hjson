@@ -5865,3 +5865,8 @@ InfinityMagikePoint: {
 	DisplayName: Infinity Magike Point
 	Tooltip: ""
 }
+
+Aloe: {
+	DisplayName: Aloe
+	Tooltip: ""
+}

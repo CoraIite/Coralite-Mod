@@ -135,7 +135,6 @@ namespace Coralite.Content.Items.HyacinthSeries
         public ref float Timer => ref Projectile.ai[1];
         public int trailCount = 8;
         public int trailWidth = 10;
-        public float trailAlpha = 1;
 
         public override void SetDefaults()
         {
@@ -169,7 +168,7 @@ namespace Coralite.Content.Items.HyacinthSeries
                 {
                     Projectile.InitOldPosCache(trailCount);
                     trail = new Trail(Main.instance.GraphicsDevice, trailCount + 4, new EmptyMeshGenerator()
-                        , f => trailWidth * trailAlpha, f => new Color(255, 255, 255, 170));//=> Color.Lerp(Color.Transparent, Color.White,f.X));
+                        , f => trailWidth, f => new Color(255, 255, 255, 170));//=> Color.Lerp(Color.Transparent, Color.White,f.X));
                 }
             }
         }
@@ -497,7 +496,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             if (Energy >= 6)
                 target.AddBuff(BuffID.CursedInferno, 60 * 4);
 
-            modifiers.SourceDamage += Energy * 0.5f;
+            modifiers.SourceDamage += Energy * 0.4f;
         }
 
         public override bool PreDraw(ref Color lightColor)

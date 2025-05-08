@@ -6008,5 +6008,10 @@ SunflowerGun: {
 
 InfinityMagikePoint: {
 	DisplayName: 无限魔能节点
-	Tooltip: ""
+	Tooltip: 提供无限的魔能
+}
+
+Aloe: {
+	DisplayName: 芦荟
+	Tooltip: 洁身自爱
 }

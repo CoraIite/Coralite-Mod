@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Particles;
 using Coralite.Core;
+using Coralite.Core.Attributes;
 using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
@@ -11,9 +12,12 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.HyacinthSeries
 {
+    [AutoLoadTexture(Path = AssetDirectory.HyacinthSeriesItems)]
     public class RosemaryHeldProj : BaseGunHeldProj
     {
         public RosemaryHeldProj() : base(0.05f, 14, -2, AssetDirectory.HyacinthSeriesItems) { }
+
+        public static ATex RosemaryFire { get; private set; }
 
         public override void InitializeGun()
         {
@@ -26,7 +30,8 @@ namespace Coralite.Content.Items.HyacinthSeries
                 if (TargetRot == 0f)
                     TargetRot = 0.0001f;
             }
-
+            if (Projectile.localAI[1] > 1)
+                Projectile.frame = 0;
             Projectile.netUpdate = true;
         }
 
@@ -36,6 +41,29 @@ namespace Coralite.Content.Items.HyacinthSeries
                 return;
             if (Projectile.timeLeft < 2)
                 InitializeGun();
+
+            if (Projectile.timeLeft != MaxTime)
+            {
+                Projectile.frame++;
+            }
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            base.PreDraw(ref lightColor);
+
+            if (Projectile.frame > 4)
+                return false;
+
+            Texture2D effect = RosemaryFire.Value;
+            Rectangle frameBox = effect.Frame(1, 5, 0, Projectile.frame);
+
+            float rot = Projectile.rotation + (DirSign > 0 ? 0 : MathHelper.Pi);
+            float n = rot - DirSign * MathHelper.PiOver2;
+
+            Main.spriteBatch.Draw(effect, Projectile.Center + rot.ToRotationVector2() * 24 + n.ToRotationVector2() * 6 - Main.screenPosition, frameBox, Color.Lerp(lightColor, Color.White, 0.5f)
+                , rot, new Vector2(0, frameBox.Height / 2), Projectile.scale, 0, 0f);
+            return false;
         }
     }
 

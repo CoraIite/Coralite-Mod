@@ -1,4 +1,5 @@
 ﻿using Coralite.Core;
+using Coralite.Core.Attributes;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
@@ -9,13 +10,38 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.HyacinthSeries
 {
+    [AutoLoadTexture(Path = AssetDirectory.HyacinthSeriesItems)]
     public class EternalBloomHeldProj : BaseGunHeldProj
     {
         public EternalBloomHeldProj() : base(0.2f, 16, -8, AssetDirectory.HyacinthSeriesItems) { }
 
+        public static ATex EternalBloomFire { get; private set; }
+
         public override void ModifyAI(float factor)
         {
             Lighting.AddLight(Projectile.Center, new Vector3(0.1f, 0.6f, 0.1f));
+            if (Projectile.timeLeft != MaxTime && Projectile.timeLeft % 2 == 0)
+            {
+                Projectile.frame++;
+            }
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            base.PreDraw(ref lightColor);
+
+            if (Projectile.frame > 4)
+                return false;
+
+            Texture2D effect = EternalBloomFire.Value;
+            Rectangle frameBox = effect.Frame(1, 5, 0, Projectile.frame);
+
+            float rot = Projectile.rotation + (DirSign > 0 ? 0 : MathHelper.Pi);
+            float n = rot - DirSign * MathHelper.PiOver2;
+
+            Main.spriteBatch.Draw(effect, Projectile.Center + rot.ToRotationVector2() * 38 + n.ToRotationVector2() * 8 - Main.screenPosition, frameBox, Color.Lerp(lightColor, Color.White, 0.5f)
+                , rot, new Vector2(0, frameBox.Height / 2), Projectile.scale, 0, 0f);
+            return false;
         }
     }
 
