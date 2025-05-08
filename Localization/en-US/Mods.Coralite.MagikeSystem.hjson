@@ -292,6 +292,7 @@ MagikeSystem: {
 		BloodJade: BloodJade
 		EternalFlame: EternalFlame
 		Shroomite: Shroomite
+		SourceCluster: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.SourceCluster
 	}
 
 	ItemContainsMagike: Contains magike

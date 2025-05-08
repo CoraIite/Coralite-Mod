@@ -198,7 +198,7 @@ namespace Coralite.Core.Systems.MagikeSystem
 
             tag.Add("ConnectLineType", (int)CurrentConnectLineType);
 
-            SaveData_2_1(Knowledge);
+            //SaveData_2_1(Knowledge);
             SaveUI(tag);
 
             tag.Add("Knowledge", Knowledge);
@@ -212,7 +212,7 @@ namespace Coralite.Core.Systems.MagikeSystem
 
             CurrentConnectLineType = (ConnectLineType)tag.GetInt("ConnectLineType");
 
-            LoadData_2_1(list);
+            //LoadData_2_1(list);
             LoadUI(tag);
         }
     }

@@ -88,7 +88,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// <param name="container"></param>
         /// <param name="amount"></param>
         /// <returns></returns>
-        public bool GetSendAmount(MagikeContainer container, out int amount)
+        public virtual bool GetSendAmount(MagikeContainer container, out int amount)
         {
             amount = 0;
             //没有魔能直接返回
@@ -114,7 +114,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// <summary>
         /// 发送魔能
         /// </summary>
-        public void Send(MagikeContainer selfMagikeContainer, Point16 position, int amount)
+        public virtual void Send(MagikeContainer selfMagikeContainer, Point16 position, int amount)
         {
             //如果无法获取物块实体就移除
             if (!MagikeHelper.TryGetEntityWithTopLeft(position, out MagikeTP receiverEntity))

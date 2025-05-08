@@ -363,11 +363,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
 
             //  魔能量 / 魔能上限
             //  对于上限，如果大于基础魔能上限显示为绿色，否则显示为红色
-            if (entity.HasComponent(MagikeComponentID.MagikeContainer))
-            {
-                string amountText = MagikeAmountText((MagikeContainer)entity.GetSingleComponent(MagikeComponentID.MagikeContainer));
-                text = amountText;
-            }
+            text = MagikeAmountText(entity);
 
             //连接显示
             if (entity.HasComponent(MagikeComponentID.MagikeSender)
@@ -413,12 +409,18 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
         /// </summary>
         /// <param name="container"></param>
         /// <returns></returns>
-        public virtual string MagikeAmountText(MagikeContainer container)
+        public virtual string MagikeAmountText(MagikeTP entity)
         {
-            string colorCode = GetBonusColorCode(container.MagikeMaxBonus);
+            if (entity.HasComponent(MagikeComponentID.MagikeContainer))
+            {
+                var container = entity.GetMagikeContainer();
+                string colorCode = GetBonusColorCode(container.MagikeMaxBonus);
 
-            return string.Concat(MagikeSystem.GetApparatusDescriptionText(MagikeSystem.ApparatusDescriptionID.MagikeAmount)
+                return string.Concat(MagikeSystem.GetApparatusDescriptionText(MagikeSystem.ApparatusDescriptionID.MagikeAmount)
                 , $"{container.Magike} / [c/{colorCode}:{container.MagikeMax}]");
+            }
+
+            return "";
         }
 
         public virtual string LinerConnectText(MagikeLinerSender sender)

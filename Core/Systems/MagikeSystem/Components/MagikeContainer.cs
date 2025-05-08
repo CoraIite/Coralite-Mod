@@ -167,7 +167,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         #region UI
 
-        public void ShowInUI(UIElement parent)
+        public virtual void ShowInUI(UIElement parent)
         {
             //添加显示在最上面的组件名称
             UIElement title = this.AddTitle(MagikeSystem.UITextID.MagikeContainerName, parent);
@@ -360,7 +360,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             //绘制底层
             spriteBatch.Draw(tex, pos, frameBox, Color.White);
 
-            float percent = container.MagikeMax > 1 ? ((float)container.Magike / container.MagikeMax) : 0;
+            float percent = container.MagikeMax > 0 ? ((float)container.Magike / container.MagikeMax) : 0;
 
             Vector2 drawPos = pos + new Vector2(0, frameBox.Height);
             for (int i = 0; i < frameBox.Width / 2; i++)

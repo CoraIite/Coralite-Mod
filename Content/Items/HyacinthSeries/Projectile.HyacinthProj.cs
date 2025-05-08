@@ -9,7 +9,6 @@ using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
 using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
-using Steamworks;
 using System;
 using System.IO;
 using Terraria;

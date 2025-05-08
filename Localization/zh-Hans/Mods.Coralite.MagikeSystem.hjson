@@ -313,6 +313,7 @@ MagikeSystem: {
 		BloodJade: 赤血玉
 		EternalFlame: 薪火
 		Shroomite: 蘑菇
+		SourceCluster: 魔源晶簇
 	}
 
 	ItemContainsMagike: 存储魔能

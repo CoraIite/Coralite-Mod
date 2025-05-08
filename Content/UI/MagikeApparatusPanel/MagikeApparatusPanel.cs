@@ -341,9 +341,12 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
             //{
             ComponentList.Clear();
 
-            var filterButton = new ComponentButton(-1);
-            filterButton.HAlign = 0.3f;
-            ComponentList.Add(filterButton);
+            if (CurrentEntity.ExtendFilterCapacity>0)
+            {
+                var filterButton = new ComponentButton(-1);
+                filterButton.HAlign = 0.3f;
+                ComponentList.Add(filterButton);
+            }
 
             for (int i = 0; i < CurrentEntity.ComponentsCache.Count; i++)
             {

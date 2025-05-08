@@ -288,6 +288,7 @@ MagikeSystem: {
 		BloodJade: Кровавый нефрит
 		EternalFlame: Вечный огонь
 		Shroomite: Грибной сплав
+		// SourceCluster: Mods.Coralite.MagikeSystem.MagikeSystem.MALevelText.SourceCluster
 	}
 
 	ItemContainsMagike: Содержит магическую энергию

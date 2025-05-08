@@ -5902,3 +5902,8 @@ SunflowerGun: {
 	// DisplayName: Sunflower Gun
 	// Tooltip: ""
 }
+
+InfinityMagikePoint: {
+	// DisplayName: Infinity Magike Point
+	// Tooltip: ""
+}

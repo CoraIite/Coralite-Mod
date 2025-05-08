@@ -573,7 +573,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             Projectile.timeLeft = 400;
             Projectile.width = Projectile.height = 26;
             Projectile.penetrate = 2;
-            Projectile.tileCollide = false;
+            Projectile.tileCollide = true;
             Projectile.localNPCHitCooldown = -1;
             Projectile.usesLocalNPCImmunity = true;
         }

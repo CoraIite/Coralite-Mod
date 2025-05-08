@@ -6003,5 +6003,10 @@ GhostPipe: {
 
 SunflowerGun: {
 	DisplayName: 向阳花
-	Tooltip: "深爱与守望"
+	Tooltip: 深爱与守望
+}
+
+InfinityMagikePoint: {
+	DisplayName: 无限魔能节点
+	Tooltip: ""
 }
