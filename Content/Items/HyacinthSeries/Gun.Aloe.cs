@@ -41,7 +41,7 @@ namespace Coralite.Content.Items.HyacinthSeries
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, velocity, ProjectileType<AloeHeldProj>(), 0, knockback, player.whoAmI);
-            Helper.PlayPitched(CoraliteSoundID.Gun3_Item41, player.Center);
+            Helper.PlayPitched(CoraliteSoundID.Gun3_Item41, player.Center, volumeAdjust: -0.5f);
 
             return true;
         }
@@ -130,11 +130,11 @@ namespace Coralite.Content.Items.HyacinthSeries
                 //射弹幕
                 if (Owner.PickAmmo(Owner.HeldItem, out int projType, out float speed, out int damage, out float kb, out _))
                 {
-                    Helper.PlayPitched(CoraliteSoundID.Gun3_Item41, Projectile.Center);
+                    Helper.PlayPitched(CoraliteSoundID.Gun3_Item41, Projectile.Center, volumeAdjust: -0.5f);
                     if (ShootCount >= MaxShootCount)//特殊追踪芦荟子弹
                     {
                         float angle = MathF.Sin(0.1f + ShootCount * 1.4f) * 0.25f;
-                        Vector2 dir2 = UnitToMouseV.RotatedBy( angle);
+                        Vector2 dir2 = UnitToMouseV.RotatedBy(angle);
                         Vector2 pos = Projectile.Center + Main.rand.NextVector2Circular(8, 8);
 
                         var p2 = PRTLoader.NewParticle<AloeParticle>(pos + dir2 * 60, Vector2.Zero);
@@ -147,7 +147,8 @@ namespace Coralite.Content.Items.HyacinthSeries
                     }
 
                     Projectile.NewProjectileFromThis(Owner.Center, UnitToMouseV * speed, projType, damage, kb);
-                    Dust.NewDustPerfect(Projectile.Center, DustType<AloePetal>(), -dir.RotateByRandom(-0.2f, 0.2f) * Main.rand.NextFloat());
+                    //生成弹壳
+                    Dust.NewDustPerfect(Projectile.Center - dir * 20, DustType<AloePetal>(), -dir.RotateByRandom(-0.2f, 0.2f) * Main.rand.NextFloat());
                 }
                 else
                     Projectile.Kill();
@@ -218,6 +219,9 @@ namespace Coralite.Content.Items.HyacinthSeries
         {
             base.PreDraw(ref lightColor);
 
+            if (ShootCount < MaxShootCount)
+                return false;
+            
             Texture2D effect = AloeFire.Value;
             Rectangle frameBox = effect.Frame(1, 16, 0, Projectile.frame);
 

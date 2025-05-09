@@ -1,13 +1,14 @@
 ﻿using Coralite.Core;
+using Coralite.Core.Attributes;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 
 namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 {
+    [AutoLoadTexture(Path=AssetDirectory.ZacurrentDragon)]
     public partial class ZacurrentDragon : ModNPC
     {
         public override string Texture => AssetDirectory.ZacurrentDragon + Name;
@@ -23,7 +24,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
         /// </summary>
         public bool canDrawShadows;
         /// <summary>
-        /// 是否绘制冲刺是的特殊贴图
+        /// 是否绘制冲刺是的特殊贴图，如果为true会按照特殊的方式绘制自身
         /// </summary>
         public bool isDashing;
 
@@ -33,32 +34,22 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
         public bool currentSurrounding;
         public float selfAlpha = 1f;
 
-        internal static Asset<Texture2D> GlowTex;
+        [AutoLoadTexture(Name = "ZacurrentDragon_Highlight")]
+        internal static ATex GlowTex { get;private set; }
         internal static Color ThunderveinYellow = new(255, 202, 101);
         internal static Color ZacurrentPurple = new(135, 94, 255);
         internal static Color ThunderveinOrange = new(219, 114, 22);
 
+        /// <summary>
+        /// 头部帧图
+        /// </summary>
+        private byte headFrame;
+
         #region tmlHooks
-
-        public override void Load()
-        {
-            if (Main.dedServ)
-                return;
-
-            GlowTex = ModContent.Request<Texture2D>(Texture + "_Highlight");
-        }
-
-        public override void Unload()
-        {
-            if (Main.dedServ)
-                return;
-
-            GlowTex = null;
-        }
 
         public override void SetStaticDefaults()
         {
-            Main.npcFrameCount[Type] = 8;
+            Main.npcFrameCount[Type] = 9;
             NPCID.Sets.MPAllowedEnemies[Type] = true;
             NPCID.Sets.BossBestiaryPriority.Add(Type);
         }
@@ -210,10 +201,10 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             if (Main.zenithWorld)
                 drawColor *= 0.2f;
 
-            DrawSelf(spriteBatch, mainTex, pos, 4, drawColor, effects);//后面的翅膀
-            DrawSelf(spriteBatch, mainTex, pos, 3, drawColor, effects);//身体
-            DrawSelf(spriteBatch, mainTex, pos, 2, drawColor, effects);//头
-            DrawSelf(spriteBatch, mainTex, pos, 1, drawColor, effects);//前面的翅膀
+            //DrawSelf(spriteBatch, mainTex, pos, 4, drawColor, effects);//后面的翅膀
+            //DrawSelf(spriteBatch, mainTex, pos, 3, drawColor, effects);//身体
+            //DrawSelf(spriteBatch, mainTex, pos, 2, drawColor, effects);//头
+            //DrawSelf(spriteBatch, mainTex, pos, 1, drawColor, effects);//前面的翅膀
 
             //绘制冲刺时的特效
             if (isDashing)
@@ -240,16 +231,15 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             return false;
         }
 
-        public void DrawSelf(SpriteBatch spriteBatch, Texture2D mainTex, Vector2 pos, int frameX, Color drawColor, SpriteEffects effects)
+        public void DrawBackWing(SpriteBatch spriteBatch, Texture2D mainTex, Vector2 pos, int frameX, Color drawColor, SpriteEffects effects)
         {
-            var frameBox = mainTex.Frame(5, 8, frameX, NPC.frame.Y);
-            var origin = frameBox.Size() / 2;
-
             float rot = NPC.rotation;
+            Rectangle frameBox = new(0, NPC.frame.Y, 4, Main.npcFrameCount[NPC.type]);
 
-            spriteBatch.Draw(mainTex, pos, frameBox, drawColor * selfAlpha, rot, origin, NPC.scale, effects, 0);
+            //绘制本体
+            mainTex.QuickCenteredDraw(spriteBatch, frameBox, pos, effects, drawColor, rot, NPC.scale);
             //绘制glow
-            spriteBatch.Draw(GlowTex.Value, pos, frameBox, Color.White * selfAlpha, rot, origin, NPC.scale, effects, 0);
+            GlowTex.Value.QuickCenteredDraw(spriteBatch, frameBox, pos, effects, Color.White * selfAlpha, rot, NPC.scale);
         }
 
         #endregion

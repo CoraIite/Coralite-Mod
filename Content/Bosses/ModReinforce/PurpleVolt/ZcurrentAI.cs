@@ -3,11 +3,16 @@
     public partial class ZacurrentDragon
     {
         /// <summary>
+        /// 连招，有一部分连招只有单段
+        /// </summary>
+        internal int Combo {  get; set; }
+
+        /// <summary>
         /// 用于记录当前的攻击状态
         /// </summary>
         internal ref float State => ref NPC.ai[0];
         /// <summary>
-        /// 阶段内部使用，用于处理连招
+        /// 阶段内部使用
         /// </summary>
         internal ref float SonState => ref NPC.ai[1];
         internal ref float RecorderAI => ref NPC.ai[2];
@@ -20,7 +25,7 @@
 
         #region AI控制部分
 
-        private enum AIStates
+        private enum Combos
         {
             //动画阶段
             onSpawnAnmi = 1,
