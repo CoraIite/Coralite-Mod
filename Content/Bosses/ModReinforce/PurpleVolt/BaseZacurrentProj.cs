@@ -3,9 +3,12 @@ using InnoVault.GameContent.BaseEntity;
 using System;
 using Terraria;
 
-namespace Coralite.Content.Bosses.ThunderveinDragon
+namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 {
-    public abstract class BaseThunderProj : BaseHeldProj
+    /// <summary>
+    /// ai2控制点距离，localai1控制闪电宽度，localai2控制闪电透明度
+    /// </summary>
+    public abstract class BaseZacurrentProj : BaseHeldProj
     {
         public ref float PointDistance => ref Projectile.ai[2];
         public override bool CanFire => true;
@@ -17,14 +20,14 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             return MathF.Sin(factor * MathHelper.Pi) * ThunderWidth;
         }
 
-        public virtual Color ThunderColorFunc_Yellow(float factor)
+        public virtual Color ThunderColorFunc_Purple(float factor)
         {
-            return ThunderveinDragon.ThunderveinYellow;
+            return ZacurrentDragon.ZacurrentPurple;
         }
 
-        public virtual Color ThunderColorFunc2_Orange(float factor)
+        public virtual Color ThunderColorFunc2_Pink(float factor)
         {
-            return ThunderveinDragon.ThunderveinOrange;
+            return ZacurrentDragon.ZacurrentPink;
         }
 
         public virtual float GetAlpha(float factor)

@@ -287,6 +287,16 @@ namespace Coralite.Core
             /// 主要用于溶解的贴图，类似时空隧道的样子
             /// </summary>
             public static ATex Tunnel { get; private set; }
+
+            /// <summary> 
+            /// 闪电激光
+            /// </summary>
+            public static ATex LightingBody { get; private set; }
+
+            /// <summary> 
+            /// 更加闪电的闪电激光
+            /// </summary>
+            public static ATex LightingBody2 { get; private set; }
         }
 
         /// <summary>

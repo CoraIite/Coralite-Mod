@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Items.Thunder;
+﻿using Coralite.Content.Bosses.ModReinforce.PurpleVolt;
+using Coralite.Content.Items.Thunder;
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Systems.BossSystems;
@@ -464,7 +465,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             if (!VaultUtils.isServer && currentSurrounding && Main.rand.NextBool(3))
             {
                 Vector2 offset = Main.rand.NextVector2Circular(100 * NPC.scale, 70 * NPC.scale);
-                ElectricParticle_Follow.Spawn(NPC.Center, offset, () => NPC.Center, Main.rand.NextFloat(0.75f, 1f));
+                ElectricParticle_PurpleFollow.Spawn(NPC.Center, offset, () => NPC.Center, Main.rand.NextFloat(0.75f, 1f));
             }
         }
 
