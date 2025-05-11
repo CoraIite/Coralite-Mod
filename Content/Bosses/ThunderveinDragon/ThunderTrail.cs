@@ -163,7 +163,6 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                     * (RandomlyPositions[i + 1].Y - RandomlyPositions[i - 1].Y))
                     + RandomlyPositions[i - 1].Y;
 
-
                 float angle = MathF.Acos(Vector2.Dot(dirToBack, dirToTront) / (dirToTront.Length() * dirToBack.Length()));//Helpers.Helper.AngleRad(dirToBack, dirToTront);
 
                 //normal = (RandomlyPositions[i - 1].SafeNormalize(Vector2.One) + RandomlyPositions[i + 1].SafeNormalize(Vector2.One)).SafeNormalize(Vector2.One);
@@ -310,6 +309,8 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
             graphicsDevice.Textures[0] = Texture;
             BlendState state = graphicsDevice.BlendState;
+            SamplerState sp = graphicsDevice.SamplerStates[0];
+            graphicsDevice.SamplerStates[0] = SamplerState.PointWrap;
 
             if (UseNonOrAdd)
                 graphicsDevice.BlendState = BlendState.NonPremultiplied;
@@ -322,6 +323,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             graphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars2Bottom.ToArray(), 0, bars2Top.Count - 2);
 
             graphicsDevice.BlendState = state;
+            graphicsDevice.SamplerStates[0] = sp;
 
             if (drawInTip)
             {

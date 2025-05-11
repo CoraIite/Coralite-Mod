@@ -8,6 +8,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 {
+    [AutoloadBossHead]
     [AutoLoadTexture(Path = AssetDirectory.ZacurrentDragon)]
     public partial class ZacurrentDragon : ModNPC
     {
@@ -52,12 +53,10 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
         [AutoLoadTexture(Name = "ZacurrentDragon_Highlight")]
         public static ATex GlowTex { get; private set; }
-        internal static Color ThunderveinYellow = new(255, 202, 101);
         internal static Color ZacurrentPurple = new(135, 94, 255);
-        internal static Color ZacurrentPink = new(255, 153, 230);
+        internal static Color ZacurrentPink = new(255, 115, 226);
         internal static Color ZacurrentPurpleAlpha = new(135, 94, 255,0);
-        internal static Color ZacurrentPinkAlpha = new(255, 153, 230,0);
-        internal static Color ThunderveinOrange = new(219, 114, 22);
+        internal static Color ZacurrentPinkAlpha = new(255, 115, 226, 0);
 
         /// <summary>
         /// 残影的透明度
@@ -174,6 +173,14 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             return true;
         }
 
+        public override bool CanHitPlayer(Player target, ref int cooldownSlot)
+        {
+            if (!IsDashing && currentSurrounding)
+                return true;
+
+            return false;
+        }
+
         #endregion
 
         #region 绘制部分
@@ -196,14 +203,18 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             if (canDrawShadows)
             {
                 Color shadowColor = ZacurrentPurple;
-                shadowColor.A = 50;
-                shadowColor *= shadowAlpha;
+                //shadowColor.A = 50;
+                //shadowColor *= shadowAlpha;
                 for (int i = 0; i < trailCacheLength; i++)
                 {
                     Vector2 oldPos = NPC.oldPos[i] - screenPos;
                     float oldrot = NPC.oldRot[i];
                     float factor = (float)i / trailCacheLength;
                     if (PurpleVolt)
+                    {
+
+                    }
+                    else
                     {
                         Color c1 = ZacurrentPurpleAlpha with { A = 50 };
                         Color c2 = ZacurrentPinkAlpha with { A = 50 };

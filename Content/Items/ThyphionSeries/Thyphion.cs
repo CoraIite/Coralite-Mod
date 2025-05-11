@@ -335,7 +335,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                     ShowArrow = true;
                     if (Timer == DashTime)
                     {
-                        Owner.velocity = new Vector2(Owner.velocity.X * 0.5f, Owner.velocity.Y);
+                        Owner.velocity = new Vector2(Owner.velocity.X * 0.75f, Owner.velocity.Y);
                     }
                     break;
                 }

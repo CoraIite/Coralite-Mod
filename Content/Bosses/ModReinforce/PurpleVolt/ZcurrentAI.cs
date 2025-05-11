@@ -4,6 +4,7 @@ using System;
 using Terraria;
 using Terraria.Graphics.Effects;
 using Terraria.Utilities;
+using static Coralite.Content.UI.FairyBottleUI;
 
 namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 {
@@ -32,7 +33,12 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
         internal ref float Recorder => ref NPC.localAI[0];
         internal ref float Recorder2 => ref NPC.localAI[1];
-        internal ref float StateRecorder => ref NPC.localAI[2];
+        internal AIStates StateRecorder
+        {
+            get => (AIStates)NPC.localAI[2];
+            set => NPC.localAI[2] = (int)value;
+        }
+
         internal ref float UseMoveCount => ref NPC.localAI[3];
 
         public Point[] oldFrame;
@@ -61,11 +67,18 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             //单招
             /// <summary> 闪电突袭，先短冲后进行一次长冲 </summary>
             LightningRaid,
+            /// <summary> 电流吐息，小 </summary>
+            ElectricBreathSmall,
             /// <summary> 闪电链， </summary>
             ThunderChain,
 
             //连段
 
+            //调整身位用招式
+            SmallDash,
+
+            //其他
+            Roar
         }
 
         public override void AI()
@@ -104,8 +117,28 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                     break;
                 case AIStates.ThunderChain:
                     break;
+                case AIStates.SmallDash:
+                    if (SmallDash())
+                    {
+                        ResetFields();
+                        ChangeState();
+                    }
+                    break;
+                case AIStates.Roar:
+                    if (Roar())
+                    {
+                        ResetFields();
+                        ChangeState();
+                    }
+                    break;
+                case AIStates.ElectricBreathSmall:
+                    if (ElectricBreathSmall())
+                    {
+                        ResetFields();
+                        ChangeState();
+                    }
+                    break;
             }
-
         }
 
         public bool CheckTarget()
@@ -149,10 +182,14 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
         {
             oldSpriteDirection = NPC.spriteDirection;
 
-            if (!VaultUtils.isServer && currentSurrounding && Main.rand.NextBool(3))
+            if (!VaultUtils.isServer && currentSurrounding )
             {
-                Vector2 offset = Main.rand.NextVector2Circular(100 * NPC.scale, 70 * NPC.scale);
-                ElectricParticle_Follow.Spawn(NPC.Center, offset, () => NPC.Center, Main.rand.NextFloat(0.75f, 1f));
+                Lighting.AddLight(NPC.Center, ZacurrentPink.ToVector3());
+                if (Main.rand.NextBool(3))
+                {
+                    Vector2 offset = Main.rand.NextVector2Circular(100 * NPC.scale, 70 * NPC.scale);
+                    ElectricParticle_PurpleFollow.Spawn(NPC.Center, offset, () => NPC.Center, Main.rand.NextFloat(0.75f, 1f));
+                }
             }
         }
 
@@ -171,6 +208,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             Recorder = 0;
             Recorder2 = 0;
 
+            OpenMouse = false;
             IsDashing = false;
             canDrawShadows = false;
         }
@@ -180,20 +218,30 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
         /// </summary>
         public void ChangeState()
         {
+            StateRecorder = State;
             WeightedRandom<AIStates> rand = new WeightedRandom<AIStates>();
 
             if (PurpleVolt)//紫电状态的切换阶段
             {
-
+                SetStateStartValues();
                 return;
             }
 
             //正常状态的阶段切换
 
             rand.Add(AIStates.LightningRaid);
+            rand.Add(AIStates.SmallDash);
+            //rand.Add(AIStates.Roar);
+            rand.Add(AIStates.ElectricBreathSmall);
 
+            rand.elements.RemoveAll(p => p.Item1 == StateRecorder);
             State = rand.Get();
+            //State = AIStates.ElectricBreathSmall;
+            SetStateStartValues();
+        }
 
+        private void SetStateStartValues()
+        {
             switch (State)
             {
                 case AIStates.Waiting:
@@ -207,6 +255,11 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                 case AIStates.LightningRaid:
                     LightningRaidSetStartValue();
                     break;
+                case AIStates.ThunderChain:
+                    break;
+                case AIStates.SmallDash:
+                    SmallDashSetStartValue();
+                    break;
                 default:
                     break;
             }
@@ -216,10 +269,54 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
         #region 各种helper
 
+        public void GetLengthToTargetPos(Vector2 targetPos, out float xLength, out float yLength)
+        {
+            xLength = NPC.Center.X - targetPos.X;
+            yLength = NPC.Center.Y - targetPos.Y;
+
+            xLength = Math.Abs(xLength);
+            yLength = Math.Abs(yLength);
+        }
+
+        /// <summary>
+        /// 向上飞，会改变Y速度
+        /// </summary>
+        /// <param name="acc">加速度</param>
+        /// <param name="velMax">速度最大值</param>
+        /// <param name="slowDownPercent">减速率</param>
+        public void FlyingUp(float acc, float velMax, float slowDownPercent)
+        {
+            FlyingFrame();
+
+            if (NPC.frame.Y <= 4)
+            {
+                NPC.velocity.Y -= acc;
+                if (NPC.velocity.Y > velMax)
+                    NPC.velocity.Y = velMax;
+            }
+            else
+                NPC.velocity.Y *= slowDownPercent;
+        }
+
+        /// <summary>
+        /// 获取嘴巴的位置
+        /// </summary>
+        /// <returns></returns>
+        public Vector2 GetMousePos()
+        {
+            return NPC.Center + ((NPC.rotation + (NPC.direction * 0.07f)).ToRotationVector2() * 60 * NPC.scale);
+        }
 
         public void FlyingFrame()
         {
-            if (++NPC.frameCounter > 4)
+            int frameCounterMax = 4;
+            float speed = NPC.velocity.Length();
+            if (speed > 8)
+                frameCounterMax--;
+            if (speed > 14)
+                frameCounterMax--;
+
+            if (++NPC.frameCounter > frameCounterMax)
             {
                 NPC.frameCounter = 0;
                 if (++NPC.frame.Y > 7)
@@ -233,7 +330,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
         public void SetRotationNormally(float rate = 0.08f)
         {
             if (NPC.spriteDirection != oldSpriteDirection)
-                NPC.rotation += 3.141f;
+                NPC.rotation += MathHelper.Pi;
             float targetRot = (NPC.velocity.Y * 0.05f * NPC.spriteDirection) + (NPC.spriteDirection > 0 ? 0 : MathHelper.Pi);
             NPC.rotation = NPC.rotation.AngleLerp(targetRot, rate);
         }

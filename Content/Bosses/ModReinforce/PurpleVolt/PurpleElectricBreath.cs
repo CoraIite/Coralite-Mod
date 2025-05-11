@@ -1,27 +1,42 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Bosses.ThunderveinDragon;
+using Coralite.Core;
 using Coralite.Helpers;
-using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
 
-namespace Coralite.Content.Bosses.ThunderveinDragon
+namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 {
-    /// <summary>
-    /// 使用ai0传入冲刺时间，ai1传入主人
-    /// 使用ai2传入闪电每个点间的间隔
-    /// 使用速度传入中心点的位置，位置传入末端的位置
-    /// </summary>
-    public class LightingBreath : LightningDash
+    public class PurpleElectricBreath : BaseZacurrentProj
     {
-        const int DelayTime = 30;
+        public override string Texture => AssetDirectory.Blank;
+
+        public ref float DashTime => ref Projectile.ai[0];
+        public ref float OwnerIndex => ref Projectile.ai[1];
+        public ref float Timer => ref Projectile.localAI[0];
+
+        const int DelayTime = 20;
+        public float fade = 0;
+
+        protected ThunderTrail[] thunderTrails;
+        protected Vector2[] randPos;
 
         public override void SetStaticDefaults()
         {
             ProjectileID.Sets.DrawScreenCheckFluff[Type] = 2800;
         }
+
+        public override void SetDefaults()
+        {
+            Projectile.hostile = true;
+            Projectile.width = Projectile.height = 40;
+            Projectile.tileCollide = false;
+            Projectile.penetrate = -1;
+        }
+
+        public override bool ShouldUpdatePosition() => false;
 
         public override bool? CanDamage()
         {
@@ -31,40 +46,31 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             return null;
         }
 
+        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
+        {
+            float a = 0;
+            return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.velocity, Projectile.Center, Projectile.width, ref a);
+        }
+
         public override void AI()
         {
-            if (!OwnerIndex.GetNPCOwner<ThunderveinDragon>(out NPC owner, Projectile.Kill))
+            if (!OwnerIndex.GetNPCOwner<ZacurrentDragon>(out NPC owner, Projectile.Kill))
                 return;
-
-            if (thunderTrails == null)
-            {
-                Projectile.Resize((int)PointDistance, 40);
-
-                thunderTrails = new ThunderTrail[3];
-                for (int i = 0; i < 3; i++)
-                {
-                    thunderTrails[i] = new ThunderTrail(ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "ThunderTrailB2")
-                        , ThunderWidthFunc_Sin, ThunderColorFunc_Yellow, GetAlpha);
-                    thunderTrails[i].CanDraw = false;
-                    thunderTrails[i].SetRange((5, 20));
-                    thunderTrails[i].BasePositions =
-                    [
-                    Projectile.Center,Projectile.Center,Projectile.Center
-                    ];
-                }
-            }
 
             if (Timer < DashTime)
             {
                 SpawnDusts();
+                Projectile.velocity = (owner.ModNPC as ZacurrentDragon).GetMousePos();
+                Lighting.AddLight(Projectile.velocity, ZacurrentDragon.ZacurrentPurple.ToVector3());
+
                 Vector2 pos2 = Projectile.velocity;
                 Vector2 normal = (Projectile.velocity - Projectile.Center).SafeNormalize(Vector2.Zero).RotatedBy(1.57f);
 
                 List<Vector2> pos = new()
                 {
-                    Projectile.velocity
+                    pos2
                 };
-                if (Vector2.Distance(Projectile.velocity, Projectile.Center) < PointDistance)
+                if (Vector2.Distance(pos2, Projectile.Center) < PointDistance)
                     pos.Add(Projectile.Center);
                 else
                     for (int i = 0; i < 40; i++)
@@ -84,10 +90,11 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         }
                     }
 
-                foreach (var trail in thunderTrails)
+                for (int i = 0; i < thunderTrails.Length; i++)
                 {
+                    var trail = thunderTrails[i];
                     trail.BasePositions = [.. pos];
-                    trail.SetExpandWidth(4);
+                    trail.BasePositions[^1] += randPos[i];
                 }
 
                 if (Timer % 4 == 0)
@@ -102,21 +109,15 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 float factor = Timer / DashTime;
                 float sinFactor = MathF.Sin(factor * MathHelper.Pi);
 
-                ThunderWidth = 30 + (sinFactor * 30);
-                ThunderAlpha = Timer / DashTime;
-            }
-            else if ((int)Timer == (int)DashTime)
-            {
-                foreach (var trail in thunderTrails)
-                {
-                    trail.CanDraw = Main.rand.NextBool();
-                    trail.RandomThunder();
-                }
+                ThunderWidth = 20 + (sinFactor * 20);
+                ThunderAlpha = factor;
             }
             else
             {
                 float factor = (Timer - DashTime) / DelayTime;
-                ThunderWidth = 30 * (1 - factor);
+                fade = Coralite.Instance.X2Smoother.Smoother(factor);
+
+                ThunderWidth = 20 * (1 - factor);
                 ThunderAlpha = 1 - Coralite.Instance.X2Smoother.Smoother(factor);
 
                 foreach (var trail in thunderTrails)
@@ -138,21 +139,44 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             Timer++;
         }
 
-        public override void SpawnDusts()
+        public override void Initialize()
+        {
+            Projectile.Resize((int)PointDistance, 40);
+
+            thunderTrails = new ThunderTrail[3];
+            randPos = new Vector2[3];
+            for (int i = 0; i < 3; i++)
+            {
+                thunderTrails[i] = new ThunderTrail(ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "ThunderTrailB2")
+                    , f => MathF.Sqrt(f) * ThunderWidth, i == 0 ? ThunderColorFunc2_Pink : ThunderColorFunc_Purple, GetAlpha);
+                thunderTrails[i].CanDraw = false;
+                thunderTrails[i].SetRange((5, 20));
+                thunderTrails[i].SetExpandWidth(4);
+                thunderTrails[i].BasePositions =
+                [
+                Projectile.Center,Projectile.Center,Projectile.Center
+                ];
+
+                randPos[i] = Main.rand.NextVector2CircularEdge(30,30);
+            }
+        }
+
+        public void SpawnDusts()
         {
             if (Main.rand.NextBool())
             {
                 Vector2 pos = Vector2.Lerp(Projectile.velocity, Projectile.Center, Main.rand.NextFloat(0.1f, 0.9f))
                     + Main.rand.NextVector2Circular(Projectile.width / 2, Projectile.width / 2);
-                if (Main.rand.NextBool())
-                {
-                    PRTLoader.NewParticle(pos, Vector2.Zero, CoraliteContent.ParticleType<ElectricParticle>(), Scale: Main.rand.NextFloat(0.7f, 1.1f));
-                }
-                else
-                {
-                    Dust.NewDustPerfect(pos, ModContent.DustType<LightningShineBall>(), Vector2.Zero, newColor: ThunderveinDragon.ThunderveinYellowAlpha, Scale: Main.rand.NextFloat(0.1f, 0.3f));
-                }
+                ZacurrentDragon.PurpleElectricParticle(pos);
             }
+        }
+
+        public override float GetAlpha(float factor)
+        {
+            if (factor < fade)
+                return 0;
+
+            return ThunderAlpha * (factor - fade) / (1 - fade);
         }
 
         public virtual (float, float) GetRange(float factor)
@@ -166,33 +190,14 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
         {
             return (1 - factor) * PointDistance / 3;
         }
-    }
 
-    /// <summary>
-    /// 使用ai0传入冲刺时间，ai1传入主人
-    /// 使用ai2传入闪电每个点间的间隔
-    /// 使用速度传入中心点的位置，位置传入末端的位置
-    /// </summary>
-    public class StrongerLightingBreath : LightingBreath
-    {
-        public override Color ThunderColorFunc_Yellow(float factor)
+        public override bool PreDraw(ref Color lightColor)
         {
-            return Color.Lerp(ThunderveinDragon.ThunderveinPurpleAlpha, ThunderveinDragon.ThunderveinYellowAlpha, MathF.Sin(factor * MathHelper.Pi)) * ThunderAlpha;
-        }
+            if (thunderTrails != null)
+                foreach (var trail in thunderTrails)
+                    trail?.DrawThunder(Main.instance.GraphicsDevice);
 
-        public override Color ThunderColorFunc2_Orange(float factor)
-        {
-            return Color.Lerp(ThunderveinDragon.ThunderveinPurpleAlpha, ThunderveinDragon.ThunderveinOrangeAlpha, MathF.Sin(factor * MathHelper.Pi)) * ThunderAlpha;
-        }
-
-        public override (float, float) GetRange(float factor)
-        {
-            return (0, 5 + ((1 - factor) * PointDistance / 3));
-        }
-
-        public override float GetExpandWidth(float factor)
-        {
-            return (1 - factor) * PointDistance / 4;
+            return false;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Bosses.ThunderveinDragon;
+using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Helpers;
 using InnoVault.PRT;
@@ -20,7 +21,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
         }
 
         /// <summary>
-        /// 使用<see cref="Recorder"/> 记录第一次短冲的冲刺次数，<see cref="Recorder2"/>记录是否有2次冲刺
+        /// 使用<see cref="Recorder"/> 记录第一次短冲的冲刺次数，<see cref="Recorder2"/>记录多次冲刺
         /// </summary>
         /// <returns></returns>
         public bool LightningRaidNoraml()
@@ -41,7 +42,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                             //生成弹幕并随机速度方向
                             int damage = Helper.GetProjDamage(20, 30, 70);
                             NPC.NewProjectileDirectInAI<PurpleDash>(NPC.Center, Vector2.Zero, damage, 0
-                                , NPC.target, smallDashTime-1, NPC.whoAmI, 10);
+                                , NPC.target, smallDashTime - 1, NPC.whoAmI, 10);
 
                             SoundEngine.PlaySound(CoraliteSoundID.NoUse_Electric_Item93, NPC.Center);
                             float targetrot = (Target.Center - NPC.Center).ToRotation();
@@ -159,10 +160,16 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                             NPC.direction = NPC.spriteDirection = Math.Sign(NPC.velocity.X);
                             IsDashing = true;
                             //SetBackgroundLight(0.4f, bigDashTime - 3, 8);
-                            var modifyer = new PunchCameraModifier(NPC.Center, dir * 2.3f, 16, 5, 20, 1000);
-                            Main.instance.CameraModifiers.Add(modifyer);
+                            if (!VaultUtils.isServer)
+                            {
+                                var modifyer = new PunchCameraModifier(NPC.Center, dir * 2.3f, 16, 5, 20, 1000);
+                                Main.instance.CameraModifiers.Add(modifyer);
+
+                                WindCircle.Spawn(NPC.Center, -dir * 2, dir.ToRotation(), ZacurrentPurple
+                                    , 0.6f, 3f, new Vector2(1.25f, 1f));
+                            }
                         }
-                        else if (Timer > bigDashTime *0.4f && Timer < bigDashTime * 0.8f)//根据目标位置偏移一下
+                        else if (Timer > bigDashTime * 0.4f && Timer < bigDashTime * 0.8f)//根据目标位置偏移一下
                         {
                             float distance = NPC.Center.Distance(Target.Center);
                             float factor = Math.Clamp(distance / 1000, 0.01f, 1);
@@ -225,7 +232,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             }
         }
 
-        private static void PurpleElectricParticle(Vector2 pos)
+        public static void PurpleElectricParticle(Vector2 pos)
         {
             if (Main.rand.NextBool())
                 PRTLoader.NewParticle(pos, Vector2.Zero, CoraliteContent.ParticleType<ElectricParticle_Purple>(), Scale: Main.rand.NextFloat(0.7f, 1.1f));
