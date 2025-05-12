@@ -1,10 +1,7 @@
-﻿using Coralite.Content.Bosses.ThunderveinDragon;
-using Coralite.Helpers;
+﻿using Coralite.Helpers;
 using System;
 using Terraria;
-using Terraria.Graphics.Effects;
 using Terraria.Utilities;
-using static Coralite.Content.UI.FairyBottleUI;
 
 namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 {
@@ -46,7 +43,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
         public int oldSpriteDirection;
 
-        private bool init=true;
+        private bool init = true;
 
         #region AI控制部分
 
@@ -69,6 +66,12 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             LightningRaid,
             /// <summary> 电流吐息，小 </summary>
             ElectricBreathSmall,
+            /// <summary> 电流吐息，中 </summary>
+            ElectricBreathMiddle,
+            /// <summary> 电球 </summary>
+            ElectricBall,
+            /// <summary> 冲刺放电 </summary>
+            DashDischarging,
             /// <summary> 闪电链， </summary>
             ThunderChain,
 
@@ -133,6 +136,27 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                     break;
                 case AIStates.ElectricBreathSmall:
                     if (ElectricBreathSmall())
+                    {
+                        ResetFields();
+                        ChangeState();
+                    }
+                    break;
+                case AIStates.ElectricBreathMiddle:
+                    if (ElectricBreathMiddle())
+                    {
+                        ResetFields();
+                        ChangeState();
+                    }
+                    break;
+                case AIStates.ElectricBall:
+                    if (ElectricBall())
+                    {
+                        ResetFields();
+                        ChangeState();
+                    }
+                    break;
+                case AIStates.DashDischarging:
+                    if (DashDischarging())
                     {
                         ResetFields();
                         ChangeState();
@@ -211,6 +235,9 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             OpenMouse = false;
             IsDashing = false;
             canDrawShadows = false;
+
+            shadowScale = 1;
+            shadowAlpha = 1;
         }
 
         /// <summary>
@@ -218,7 +245,12 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
         /// </summary>
         public void ChangeState()
         {
-            StateRecorder = State;
+            //记录旧状态，不包括短冲
+            if (State is not AIStates.SmallDash)
+            {
+                StateRecorder = State;
+            }
+
             WeightedRandom<AIStates> rand = new WeightedRandom<AIStates>();
 
             if (PurpleVolt)//紫电状态的切换阶段
@@ -228,15 +260,24 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             }
 
             //正常状态的阶段切换
-
             rand.Add(AIStates.LightningRaid);
             rand.Add(AIStates.SmallDash);
-            //rand.Add(AIStates.Roar);
+            rand.Add(AIStates.Roar);
             rand.Add(AIStates.ElectricBreathSmall);
+            rand.Add(AIStates.ElectricBreathMiddle);
+            rand.Add(AIStates.ElectricBall);
+            rand.Add(AIStates.DashDischarging);
 
             rand.elements.RemoveAll(p => p.Item1 == StateRecorder);
+
+            //防止复读短冲
+            if (State == AIStates.SmallDash)
+            {
+                rand.elements.RemoveAll(p => p.Item1 == AIStates.SmallDash);
+            }
+
             State = rand.Get();
-            //State = AIStates.ElectricBreathSmall;
+            State = AIStates.ElectricBreathMiddle;
             SetStateStartValues();
         }
 
@@ -244,8 +285,6 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
         {
             switch (State)
             {
-                case AIStates.Waiting:
-                    break;
                 case AIStates.onSpawnAnmi:
                     break;
                 case AIStates.onKillAnim:
@@ -260,6 +299,12 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                 case AIStates.SmallDash:
                     SmallDashSetStartValue();
                     break;
+                case AIStates.ElectricBreathMiddle:
+                    ElectricBreathMiddleSetStartValue();
+                    break;
+                case AIStates.ElectricBall:
+                    LightingBallSetStartValue();
+                    break;
                 default:
                     break;
             }
@@ -268,6 +313,11 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
         #endregion
 
         #region 各种helper
+
+        public void ElectricSound()
+        {
+            Helper.PlayPitched("Electric/ElectricStrike" + Main.rand.NextFromList(0,2).ToString(), 0.4f, -0.2f, NPC.Center);
+        }
 
         public void GetLengthToTargetPos(Vector2 targetPos, out float xLength, out float yLength)
         {
@@ -345,6 +395,12 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                 NPC.rotation += 3.141f;
 
             NPC.rotation = NPC.rotation.AngleLerp(NPC.spriteDirection > 0 ? 0 : MathHelper.Pi, rate);
+        }
+
+        private void SetSpriteDirectionFoTarget()
+        {
+            if (MathF.Abs(Target.Center.X - NPC.Center.X) > 48)
+                NPC.spriteDirection = Target.Center.X > NPC.Center.X ? 1 : -1;
         }
 
         public void InitOldFrame()

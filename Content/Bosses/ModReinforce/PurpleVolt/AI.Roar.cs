@@ -40,7 +40,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                     var modifyer = new PunchCameraModifier(NPC.Center, Helper.NextVec2Dir(), 8, 12, 20, 1000);
                     Main.instance.CameraModifiers.Add(modifyer);
                     var p = PRTLoader.NewParticle<RoaringWave>(pos, Vector2.Zero, ZacurrentPurple, 0.2f);
-                    p.ScaleMul = 1.2f;
+                    p.ScaleMul = 1.15f;
                 }
                 if ((int)Timer % 20 == 0)
                     PRTLoader.NewParticle(pos, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), ZacurrentPink, 0.2f);

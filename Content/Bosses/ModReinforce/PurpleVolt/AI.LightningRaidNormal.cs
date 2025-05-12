@@ -44,7 +44,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                             NPC.NewProjectileDirectInAI<PurpleDash>(NPC.Center, Vector2.Zero, damage, 0
                                 , NPC.target, smallDashTime - 1, NPC.whoAmI, 10);
 
-                            SoundEngine.PlaySound(CoraliteSoundID.NoUse_Electric_Item93, NPC.Center);
+                            ElectricSound();
                             float targetrot = (Target.Center - NPC.Center).ToRotation();
 
                             //距离小于700那就不会朝向玩家冲刺
@@ -247,7 +247,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
         {
             //根据与玩家的距离增加短突的次数
 
-            Recorder = Main.rand.Next(1, 4);
+            Recorder = Main.rand.Next(2, 4);
 
             float distance = Vector2.Distance(NPC.Center, Target.Center);
             if (distance > 700)
@@ -256,7 +256,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                 Recorder++;
 
             //最多随机使用3次
-            Recorder2 = Main.rand.Next(3);
+            Recorder2 = Main.rand.Next(4);
 
             ResetAllOldCaches();
             canDrawShadows = true;

@@ -24,7 +24,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                 NPC.NewProjectileDirectInAI<PurpleDash>(NPC.Center, Vector2.Zero, damage, 0
                     , NPC.target, smallDashTime - 1, NPC.whoAmI, 10);
 
-                SoundEngine.PlaySound(CoraliteSoundID.NoUse_Electric_Item93, NPC.Center);
+                ElectricSound();
                 float targetrot = (Target.Center - NPC.Center).ToRotation();
 
                 //距离小于700那就不会朝向玩家冲刺

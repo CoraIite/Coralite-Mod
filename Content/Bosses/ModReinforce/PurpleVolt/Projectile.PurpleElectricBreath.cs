@@ -60,7 +60,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             if (Timer < DashTime)
             {
                 SpawnDusts();
-                Projectile.velocity = (owner.ModNPC as ZacurrentDragon).GetMousePos();
+                SetStartPos(owner);
                 Lighting.AddLight(Projectile.velocity, ZacurrentDragon.ZacurrentPurple.ToVector3());
 
                 Vector2 pos2 = Projectile.velocity;
@@ -137,6 +137,11 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             }
 
             Timer++;
+        }
+
+        public virtual void SetStartPos(NPC owner)
+        {
+            Projectile.velocity = (owner.ModNPC as ZacurrentDragon).GetMousePos();
         }
 
         public override void Initialize()

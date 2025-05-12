@@ -21,75 +21,8 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                     {
                         const int maxTime = 60 * 6;
 
-                        if (Timer == 0)
-                            Recorder = (Target.Center - NPC.Center).ToRotation();
-
-                        Recorder = Recorder.AngleTowards((Target.Center - NPC.Center).ToRotation(), 0.08f);
-
-                        Vector2 targetPos = Target.Center + new Vector2(Recorder2 > 0 ? -400 : 400, - MathF.Sin(MathF.Sqrt( Timer / maxTime) * MathHelper.Pi) * 200);
-
-                        //追踪玩家
-                        GetLengthToTargetPos(targetPos, out float xLength, out float yLength);
-
-                        NPC.direction = targetPos.X > NPC.Center.X ? 1 : -1;
-                        NPC.directionY = targetPos.Y > NPC.Center.Y ? 1 : -1;
-                        if (MathF.Abs(Target.Center.X - NPC.Center.X) > 16)
-                            NPC.spriteDirection = Target.Center.X > NPC.Center.X ? 1 : -1;
-
-                        SetRotationNormally();
-
-                        if (xLength > 300)
-                            Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 24f, 0.4f, 0.6f, 0.95f);
-                        else if (xLength < 100)
-                            Helper.Movement_SimpleOneLine(ref NPC.velocity.X, -NPC.direction, 24f, 0.4f, 0.6f, 0.95f);
-                        else
-                        {
-                            NPC.velocity.X *= 0.92f;
-                            Timer += 20;
-                        }
-
-                        if (NPC.directionY < 0)
-                            FlyingUp(0.9f, 20, 0.85f);
-                        else if (yLength > 50)
-                        {
-                            Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 20f, 0.45f, 1f, 0.95f);
-                            FlyingFrame();
-                        }
-                        else
-                        {
-                            NPC.velocity.Y *= 0.9f;
-                            FlyingFrame();
-                        }
-
-                        if (NPC.Distance(Target.Center) < 750)
-                        {
-                            OpenMouse = true;
-                            BreathMouseDust();
-                            if (Timer % 2 == 0 && Main.rand.NextBool(3))
-                                ElectricParticle_PurpleFollow.Spawn(targetPos, Main.rand.NextVector2CircularEdge(28, 28)
-                                    , () =>
-                                    {
-                                        Vector2 pos = GetMousePos();
-                                        Vector2 dir = Recorder.ToRotationVector2();
-                                        return targetPos = pos + dir * ((Target.Center - pos).Length() + 200);
-                                    });
-                        }
-                        else
-                            OpenMouse = false;
-
-                        Timer++;
-                        if (Timer > maxTime)
-                        {
-                            //如果距离太远就直接结束阶段
-                            if (NPC.Distance(Target.Center) > 1400)
-                                return true;
-
-                            SonState = 1;
-                            Timer = 0;
-                            OpenMouse = true;
-                        }
+                        return ElectricBreathFly(maxTime, -MathF.Sin(MathF.Sqrt(Timer / maxTime) * MathHelper.Pi) * 200);
                     }
-                    return false;
                 case 1://吐息
                     {
                         SetRotationNormally();
@@ -107,7 +40,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                                 NPC.velocity += (Target.Center - NPC.Center).SafeNormalize(Vector2.Zero) * 0.65f;
                         }
                         else
-                            NPC.velocity *= 0.95f;
+                            NPC.velocity *= 0.9f;
 
                         int ReadyTime = Helper.ScaleValueForDiffMode(35, 33, 29, 26);
 
@@ -120,17 +53,17 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                         {
                             BreathMouseDust();
                             FlyingFrame();
-                            if (Timer%3==0)
+                            if (Timer % 5 == 0)
                             {
-                                PurpleThunderParticle.Spawn(GetMousePos, (Recorder + Main.rand.NextFloat(-0.4f, 0.4f)).ToRotationVector2() * Main.rand.NextFloat(12,18)
-                                    , 9, 15, 9, 20);
+                                PurpleThunderParticle.Spawn(GetMousePos, (Recorder + Main.rand.NextFloat(-0.4f, 0.4f)).ToRotationVector2() * Main.rand.NextFloat(12, 18)
+                                    , 9, 15, 9, 20, Main.rand.NextFromList(ZacurrentPurple, ZacurrentPink));
                             }
                         }
                         else if (Timer == ReadyTime)
                         {
                             currentSurrounding = true;
                             //吐息
-                            SoundEngine.PlaySound(CoraliteSoundID.NoUse_Electric_Item93, NPC.Center);
+                            ElectricSound();
                             SoundEngine.PlaySound(CoraliteSoundID.BubbleShield_Electric_NPCHit43, NPC.Center);
                             if (!VaultUtils.isServer)
                             {
@@ -174,6 +107,78 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             }
         }
 
+        private bool ElectricBreathFly(int maxTime,float targetY, bool mouseDust = true)
+        {
+            if (Timer == 0)
+                Recorder = (Target.Center - NPC.Center).ToRotation();
+
+            Recorder = Recorder.AngleTowards((Target.Center - NPC.Center).ToRotation(), 0.08f);
+
+            Vector2 targetPos = Target.Center + new Vector2(Recorder2 > 0 ? -400 : 400, targetY);
+
+            //追踪玩家
+            GetLengthToTargetPos(targetPos, out float xLength, out float yLength);
+
+            NPC.direction = targetPos.X > NPC.Center.X ? 1 : -1;
+            NPC.directionY = targetPos.Y > NPC.Center.Y ? 1 : -1;
+            SetSpriteDirectionFoTarget();
+
+            SetRotationNormally();
+
+            if (xLength > 300)
+                Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 24f, 0.4f, 0.6f, 0.95f);
+            else if (xLength < 100)
+                Helper.Movement_SimpleOneLine(ref NPC.velocity.X, -NPC.direction, 24f, 0.4f, 0.6f, 0.95f);
+            else
+            {
+                NPC.velocity.X *= 0.92f;
+                Timer += 20;
+            }
+
+            if (NPC.directionY < 0)
+                FlyingUp(0.9f, 20, 0.85f);
+            else if (yLength > 50)
+            {
+                Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 16f, 0.45f, 1f, 0.95f);
+                FlyingFrame();
+            }
+            else
+            {
+                NPC.velocity.Y *= 0.9f;
+                FlyingFrame();
+            }
+
+            if (mouseDust && NPC.Distance(Target.Center) < 750)
+            {
+                OpenMouse = true;
+                BreathMouseDust();
+                if (Timer % 2 == 0 && Main.rand.NextBool(3))
+                    ElectricParticle_PurpleFollow.Spawn(targetPos, Main.rand.NextVector2CircularEdge(28, 28)
+                        , () =>
+                        {
+                            Vector2 pos = GetMousePos();
+                            Vector2 dir = Recorder.ToRotationVector2();
+                            return targetPos = pos + dir * ((Target.Center - pos).Length() + 200);
+                        });
+            }
+            else
+                OpenMouse = false;
+
+            Timer++;
+            if (Timer > maxTime)
+            {
+                //如果距离太远就直接结束阶段
+                if (NPC.Distance(Target.Center) > 1400)
+                    return true;
+
+                SonState = 1;
+                Timer = 0;
+                OpenMouse = true;
+            }
+
+            return false;
+        }
+
         /// <summary>
         /// 吐息时的嘴巴粒子
         /// </summary>
@@ -186,27 +191,26 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             Vector2 dir = Recorder.ToRotationVector2();
             Vector2 targetPos = pos + dir * ((Target.Center - pos).Length() + 200);
             //for (int i = 0; i < 2; i++)
+            //{
+            if (Main.rand.NextBool())
             {
                 Dust d = Dust.NewDustPerfect(pos + dir * Main.rand.NextFloat(20f, 150f), DustID.PortalBoltTrail
-                    , dir.RotateByRandom(-0.3f, 0.3f) * Main.rand.NextFloat(2f, 6f), newColor: new Color(233,195,255),
-                    Scale: Main.rand.NextFloat(1f, 1.5f));
+                        , dir.RotateByRandom(-0.3f, 0.3f) * Main.rand.NextFloat(2f, 6f), newColor: ZacurrentDustPurple,
+                        Scale: Main.rand.NextFloat(1f, 1.5f));
                 d.noGravity = true;
+            }
 
-                //if (Main.rand.NextBool())
-                //    ElectricParticle_PurpleFollow.Spawn(targetPos, Main.rand.NextVector2CircularEdge(28, 28)
-                //        , () =>
-                //        {
-                //            Vector2 pos = GetMousePos();
-                //            Vector2 dir = Recorder.ToRotationVector2();
-                //            return targetPos = pos + dir * ((Target.Center - pos).Length() + 200);
-                //        });
-                //PurpleElectricParticle(targetPos+ Recorder.ToRotationVector2());
-                d = Dust.NewDustPerfect(targetPos +Main.rand.NextVector2Circular(32,32), DustID.PortalBoltTrail
-                    , -dir.RotateByRandom(-0.3f, 0.3f) * Main.rand.NextFloat(2f, 6f), newColor: new Color(233, 195, 255)
+            if (Main.rand.NextBool())
+            {
+
+                Dust d = Dust.NewDustPerfect(targetPos + Main.rand.NextVector2Circular(32, 32), DustID.PortalBoltTrail
+                    , -dir.RotateByRandom(-0.3f, 0.3f) * Main.rand.NextFloat(2f, 6f), newColor: ZacurrentDustPurple
 ,
                     Scale: Main.rand.NextFloat(1f, 1.5f));
                 d.noGravity = true;
             }
+
+            //}
         }
     }
 }

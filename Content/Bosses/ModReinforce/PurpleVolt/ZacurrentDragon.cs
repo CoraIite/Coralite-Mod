@@ -53,6 +53,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
         [AutoLoadTexture(Name = "ZacurrentDragon_Highlight")]
         public static ATex GlowTex { get; private set; }
+        internal static Color ZacurrentDustPurple = new Color(233, 195, 255);
         internal static Color ZacurrentPurple = new(135, 94, 255);
         internal static Color ZacurrentPink = new(255, 115, 226);
         internal static Color ZacurrentPurpleAlpha = new(135, 94, 255,0);

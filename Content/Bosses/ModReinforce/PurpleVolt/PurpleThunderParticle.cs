@@ -35,6 +35,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                 if (Opacity > MaxTime + FadeTime)
                 {
                     active = false;
+                    GetPos = null;
                     return;
                 }
             }
@@ -56,26 +57,27 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
             if (Opacity % 4 == 0)
             {
-                thunderTrail.CanDraw = Main.rand.NextBool();
+                //thunderTrail.CanDraw = Main.rand.NextBool();
                 thunderTrail.RandomThunder();
             }
         }
 
-        public static void Spawn(Func<Vector2> GetPos, Vector2 velocity, int maxTime, int fadeTime, int pointCount, float thunderWidth)
+        public static void Spawn(Func<Vector2> GetPos, Vector2 velocity, int maxTime, int fadeTime, int pointCount, float thunderWidth,Color c)
         {
             if (VaultUtils.isServer)
                 return;
 
-            var p = PRTLoader.NewParticle<PurpleThunderParticle>(Vector2.Zero, velocity, Color.White, 1);
+            var p = PRTLoader.NewParticle<PurpleThunderParticle>(Vector2.Zero, velocity, c, 1);
             p.GetPos = GetPos;
             p.thunderWidth = thunderWidth;
             p.thunderTrail = new ThunderTrail(CoraliteAssets.Laser.LightingBody2
                 , factor => MathF.Sin(factor * MathHelper.Pi) * p.thunderWidth
-                , f => ZacurrentDragon.ZacurrentPurple
+                , f => p.Color
                 , p.GetAlpha);
 
             p.thunderTrail.SetExpandWidth(velocity.Length() / 2);
             p.thunderTrail.SetRange((0, 4));
+            p.thunderTrail.CanDraw=true;
             Vector2 pos = GetPos();
             p.thunderTrail.BasePositions = [pos, pos];
             p.MaxTime = maxTime;
