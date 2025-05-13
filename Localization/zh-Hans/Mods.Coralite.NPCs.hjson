@@ -180,3 +180,5 @@ WildMabirdNest: {
 	DisplayName: 野生魔鸟巢
 	BestiaryDescription: 野生魔鸟搭建的巢穴，会不断地孵化新的野生魔鸟。发现目标是会将内部的魔鸟弹射出去。
 }
+
+// PurpleVoltBall.DisplayName: Purple Volt Ball

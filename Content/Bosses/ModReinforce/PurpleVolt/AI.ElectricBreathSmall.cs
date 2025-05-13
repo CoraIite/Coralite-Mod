@@ -17,12 +17,14 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             switch (SonState)
             {
                 default:
+                case 2:
                 case 0://飞得靠近玩家
                     {
                         const int maxTime = 60 * 6;
 
                         return ElectricBreathFly(maxTime, -MathF.Sin(MathF.Sqrt(Timer / maxTime) * MathHelper.Pi) * 200);
                     }
+                case 3:
                 case 1://吐息
                     {
                         SetRotationNormally();
@@ -94,14 +96,13 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                             currentSurrounding = false;
                             OpenMouse = false;
                             //只能使用2次
-                            Recorder2++;
-                            if (Recorder2 > 1)
+                            Recorder2 = -Recorder2;
+                            if (SonState > 2)
                                 return true;
 
                             Timer = 0;
                             SonState = 0;
                         }
-
                     }
                     return false;
             }
@@ -211,6 +212,11 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             }
 
             //}
+        }
+
+        public void ElectricBreathSmallSetStartValue()
+        {
+            Recorder2 = -MathF.Sign(Target.Center.X - NPC.Center.X);
         }
     }
 }

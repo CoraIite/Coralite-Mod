@@ -58,7 +58,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
         internal static Color ZacurrentPink = new(255, 115, 226);
         internal static Color ZacurrentPurpleAlpha = new(135, 94, 255,0);
         internal static Color ZacurrentPinkAlpha = new(255, 115, 226, 0);
-
+        internal static Color ZacurrentRed = new(255, 38, 110);
         /// <summary>
         /// 残影的透明度
         /// </summary>

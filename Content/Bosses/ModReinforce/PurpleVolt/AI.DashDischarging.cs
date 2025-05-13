@@ -1,4 +1,6 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Particles;
+using Coralite.Content.Prefixes.FairyWeaponPrefixes;
+using Coralite.Core;
 using Coralite.Helpers;
 using System;
 using Terraria;
@@ -45,13 +47,18 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                                 canDrawShadows = true;
                                 shadowScale = 1.2f;
 
+                                Helper.PlayPitched("Electric/ElectricShoot", 0.4f, 0, NPC.Center);
                                 SoundEngine.PlaySound(CoraliteSoundID.NoUse_ElectricMagic_Item122, NPC.Center);
                                 IsDashing = true;
 
-                                NPC.velocity = (Target.Center - NPC.Center).SafeNormalize(Vector2.Zero) * 40;
+                                Vector2 dir = (Target.Center - NPC.Center).SafeNormalize(Vector2.Zero);
+                                NPC.velocity = dir * 50;
                                 NPC.rotation = NPC.velocity.ToRotation();
                                 NPC.direction = NPC.spriteDirection = Math.Sign(NPC.velocity.X);
                                 //SetBackgroundLight(0.4f, bigDashTime - 3, 8);
+
+                                WindCircle.Spawn(NPC.Center, -dir * 2, dir.ToRotation(), ZacurrentPurple
+                                    , 0.6f, 3f, new Vector2(1.25f, 1f));
                             }
                         }
                     }
@@ -63,7 +70,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                         if (xLength > 100)
                             NPC.QuickSetDirection();
 
-                        NPC.velocity = (Target.Center - NPC.Center).SafeNormalize(Vector2.Zero) * 40;
+                        NPC.velocity = (Target.Center - NPC.Center).SafeNormalize(Vector2.Zero) * 50;
                         NPC.rotation = NPC.velocity.ToRotation();
 
                         Timer++;
@@ -75,6 +82,8 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                             NPC.frame.Y = 0;
                             NPC.frameCounter = 0;
                             IsDashing = false;
+
+                            Helper.PlayPitched("Electric/Charge", 1f, 0, NPC.Center);
                         }
                     }
                     return false;
@@ -86,16 +95,16 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                         TurnToNoRot(0.2f);
 
                         if (xLength > 100)
-                            Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 6.9f, 0.28f, 0.6f, 0.95f);
+                            Helper.Movement_SimpleOneLine(ref NPC.velocity.X, NPC.direction, 7.3f, 0.28f, 0.6f, 0.95f);
                         else
                             NPC.velocity.X *= 0.95f;
 
                         if (yLength > 70)
-                            Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 4f, 0.3f, 0.5f, 0.95f);
+                            Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 5f, 0.3f, 0.5f, 0.95f);
                         else
                             NPC.velocity.Y *= 0.95f;
 
-                        const int maxTime = (7 * 4) + 10;
+                        const int maxTime = (7 * 4) + 20;
                         Timer++;
                         float edge = 150 + ((540 - 150) * Math.Clamp(Timer / maxTime, 0, 1));
                         edge /= 2;
@@ -179,7 +188,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                             {
                                 Vector2 dir = (Recorder + (i * MathHelper.TwoPi / 5)).ToRotationVector2();
                                 Vector2 pos = NPC.Center + (dir * 300);
-                                NPC.NewProjectileInAI<PurpleElectricBallThunder>(pos + (dir * 600), pos, damage, 0, NPC.whoAmI,15,
+                                NPC.NewProjectileInAI<PurpleElectricBallThunder>(pos + (dir * 600), pos, damage, 0, NPC.target,15,
                                     NPC.whoAmI, 70);
                             }
 

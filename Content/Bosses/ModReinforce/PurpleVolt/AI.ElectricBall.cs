@@ -243,6 +243,9 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             }
         }
 
+        /// <summary>
+        /// 电球初始值设置
+        /// </summary>
         public void LightingBallSetStartValue()
         {
             Recorder = Main.rand.Next(3);

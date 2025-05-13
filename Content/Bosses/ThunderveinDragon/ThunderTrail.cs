@@ -104,6 +104,22 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             RandomlyPositions[^1] = BasePositions[^1];
         }
 
+        public void UpdateThunderToNewPosition(Vector2[] newPosition)
+        {
+            if (RandomlyPositions != null && newPosition.Length == RandomlyPositions.Length)
+            {
+                for (int i = 0; i < RandomlyPositions.Length; i++)
+                    RandomlyPositions[i] = newPosition[i] + (RandomlyPositions[i] - BasePositions[i]);
+
+                BasePositions = newPosition;
+            }
+            else
+            {
+                BasePositions = newPosition;
+                RandomThunder();
+            }
+        }
+
         public void DrawThunder(GraphicsDevice graphicsDevice)
         {
             if (!CanDraw || RandomlyPositions == null)
@@ -309,6 +325,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
             graphicsDevice.Textures[0] = Texture;
             BlendState state = graphicsDevice.BlendState;
+            //修改采样模式，这样才能正确的循环贴图
             SamplerState sp = graphicsDevice.SamplerStates[0];
             graphicsDevice.SamplerStates[0] = SamplerState.PointWrap;
 

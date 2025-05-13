@@ -30,6 +30,11 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             return ZacurrentDragon.ZacurrentPink;
         }
 
+        public virtual Color ThunderColorFunc_Red(float factor)
+        {
+            return ZacurrentDragon.ZacurrentRed;
+        }
+
         public virtual float GetAlpha(float factor)
         {
             return ThunderAlpha;

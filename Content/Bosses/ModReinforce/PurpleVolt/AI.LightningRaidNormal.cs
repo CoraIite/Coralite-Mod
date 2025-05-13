@@ -246,7 +246,6 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
         public void LightningRaidSetStartValue()
         {
             //根据与玩家的距离增加短突的次数
-
             Recorder = Main.rand.Next(2, 4);
 
             float distance = Vector2.Distance(NPC.Center, Target.Center);

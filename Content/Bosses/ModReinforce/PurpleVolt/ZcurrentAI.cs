@@ -1,4 +1,5 @@
-﻿using Coralite.Helpers;
+﻿using Coralite.Content.Items.FlyingShields.Accessories;
+using Coralite.Helpers;
 using System;
 using Terraria;
 using Terraria.Utilities;
@@ -30,6 +31,9 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
         internal ref float Recorder => ref NPC.localAI[0];
         internal ref float Recorder2 => ref NPC.localAI[1];
+        /// <summary>
+        /// 上一个状态，记录这个防止复读
+        /// </summary>
         internal AIStates StateRecorder
         {
             get => (AIStates)NPC.localAI[2];
@@ -37,6 +41,11 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
         }
 
         internal ref float UseMoveCount => ref NPC.localAI[3];
+
+        /// <summary>
+        /// 紫电计数
+        /// </summary>
+        public int PurpleVoltCount {  get; set; }
 
         public Point[] oldFrame;
         public int[] oldDirection;
@@ -76,12 +85,27 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             ThunderChain,
 
             //连段
+            /// <summary>
+            /// 吼叫=》电球=》引力电球=》电磁炮=》聚集电流
+            /// </summary>
+            NormalRoarCombo1,
+            /// <summary>
+            /// 吼叫=》闪电链=》闪电突袭=》聚集电流
+            /// </summary>
+            NormalRoarCombo2,
+            /// <summary>
+            /// 闪电链=》落雷=》冲刺放电=》聚集电流
+            /// </summary>
+            NormalChainCombo,
+            /// <summary>
+            /// 指针电球=》闪电链=》电流吐息（中）=》落雷=》聚集电流
+            /// </summary>
+            NormalPointerCombo,
 
             //调整身位用招式
             SmallDash,
 
             //其他
-            Roar
         }
 
         public override void AI()
@@ -110,6 +134,8 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                 case AIStates.onKillAnim:
                     break;
                 case AIStates.PurpleVoltExchange:
+                    ResetFields();
+                    ChangeState();
                     break;
                 case AIStates.LightningRaid:
                     if (LightningRaidNoraml())
@@ -122,13 +148,6 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                     break;
                 case AIStates.SmallDash:
                     if (SmallDash())
-                    {
-                        ResetFields();
-                        ChangeState();
-                    }
-                    break;
-                case AIStates.Roar:
-                    if (Roar())
                     {
                         ResetFields();
                         ChangeState();
@@ -161,6 +180,97 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                         ResetFields();
                         ChangeState();
                     }
+                    break;
+                case AIStates.NormalRoarCombo1:
+                    switch (Combo)
+                    {
+                        default:
+                        case 0:
+                            if (Roar())
+                            {
+                                ResetFields();
+                                LightingBallSetStartValue();
+                                Combo = 1;
+                            }
+                            break;
+                        case 1:
+                            if (ElectricBall())
+                            {
+                                ResetFields();
+                                Combo = 2;
+                                ChangeState();
+                            }
+                            break;
+                    }
+                    break;
+                case AIStates.NormalRoarCombo2:
+                    switch (Combo)
+                    {
+                        default:
+                        case 0:
+                            if (Roar())
+                            {
+                                ResetFields();
+                                Combo = 1;
+                            }
+                            break;
+                        case 1:
+                            if (ElectricChain(160))
+                            {
+                                ResetFields();
+                                Combo = 2;
+                                LightningRaidSetStartValue();
+                                Recorder2 = 3;//必定进行3次长冲
+                            }
+                            break;
+                        case 2:
+                            if (LightningRaidNoraml())
+                            {
+                                ResetFields();
+                                Combo = 3;
+                            }
+                            break;
+                        case 3:
+                            if (GatherCurrent())
+                            {
+                                ResetFields();
+                                ChangeState();
+                            }
+                            break;
+                    }
+                    break;
+                case AIStates.NormalChainCombo:
+                    switch (Combo)
+                    {
+                        default:
+                        case 0:
+                            if (ElectricChain(300))
+                            {
+                                ResetFields();
+                                LightningRaidSetStartValue();
+                                Recorder2 = 3;//必定进行3次长冲
+                                Combo = 1;
+                            }
+                            break;
+                        case 1:
+                            //if (LightningRaidNoraml())
+                            //{
+                            //    ResetFields();
+                            //    Combo = 2;
+                            //}
+                            break;
+                        case 2:
+                            if (DashDischarging())
+                            {
+                                ResetFields();
+                                ChangeState();
+
+                                Combo = 3;
+                            }
+                            break;
+                    }
+                    break;
+                case AIStates.NormalPointerCombo:
                     break;
             }
         }
@@ -247,8 +357,14 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
         {
             //记录旧状态，不包括短冲
             if (State is not AIStates.SmallDash)
-            {
                 StateRecorder = State;
+
+            //进入紫伏状态
+            if (PurpleVoltCount == GetPurpleVoltMax())
+            {
+                //State = AIStates.PurpleVoltExchange;
+
+                //return;
             }
 
             WeightedRandom<AIStates> rand = new WeightedRandom<AIStates>();
@@ -260,13 +376,15 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             }
 
             //正常状态的阶段切换
-            rand.Add(AIStates.LightningRaid);
             rand.Add(AIStates.SmallDash);
-            rand.Add(AIStates.Roar);
+
+            rand.Add(AIStates.LightningRaid);
             rand.Add(AIStates.ElectricBreathSmall);
             rand.Add(AIStates.ElectricBreathMiddle);
             rand.Add(AIStates.ElectricBall);
             rand.Add(AIStates.DashDischarging);
+
+            rand.Add(AIStates.NormalRoarCombo2);
 
             rand.elements.RemoveAll(p => p.Item1 == StateRecorder);
 
@@ -277,7 +395,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             }
 
             State = rand.Get();
-            State = AIStates.ElectricBreathMiddle;
+            State = AIStates.NormalRoarCombo2;
             SetStateStartValues();
         }
 
@@ -299,6 +417,9 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                 case AIStates.SmallDash:
                     SmallDashSetStartValue();
                     break;
+                case AIStates.ElectricBreathSmall:
+                    ElectricBreathSmallSetStartValue();
+                    break;
                 case AIStates.ElectricBreathMiddle:
                     ElectricBreathMiddleSetStartValue();
                     break;
@@ -309,6 +430,31 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                     break;
             }
         }
+
+        /// <summary>
+        /// 获得紫电
+        /// </summary>
+        /// <param name="red"></param>
+        public void GetPurpleVolt(bool red)
+        {
+            /*
+             * 默认此阶段DPS有3800
+             * 平均2-3次蓄电即可进入紫伏状态，如果一个电球都没打碎那么只需要1次
+             * 
+             * 红色电流提供1/3的单次蓄电量，每次有6个红色电
+             * 每次有24个紫色电球
+             * 难度越高上限越高，同时越难打破
+             */
+            int count = red ? Helper.ScaleValueForDiffMode(30, 40, 50, 80)
+                : Helper.ScaleValueForDiffMode(15, 20, 25, 40);
+
+            PurpleVoltCount += count;
+            if (PurpleVoltCount>GetPurpleVoltMax())
+                PurpleVoltCount = GetPurpleVoltMax();
+        }
+
+        public int GetPurpleVoltMax()
+            => Helper.ScaleValueForDiffMode(30, 40, 50, 80) * 3 * 6;
 
         #endregion
 
