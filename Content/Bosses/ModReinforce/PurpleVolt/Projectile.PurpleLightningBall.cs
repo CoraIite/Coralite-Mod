@@ -216,6 +216,8 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
         public override bool PreDraw(ref Color lightColor)
         {
+            PurpleElectricBall.BallBack.Value.QuickCenteredDraw(Main.spriteBatch, Projectile.Center - Main.screenPosition
+                , Color.Black * 0.6f * ThunderAlpha, 0, Projectile.scale * 0.5f);
             Projectile.QuickDraw(Color.White, 0f);
 
             if (circles != null)
@@ -546,6 +548,10 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
         public override bool PreDraw(ref Color lightColor)
         {
+            PurpleElectricBall.BallBack.Value.QuickCenteredDraw(Main.spriteBatch, Projectile.Center + ballVec - Main.screenPosition
+                , Color.Black * 0.6f * ThunderAlpha, 0, Projectile.scale * 0.5f);
+            PurpleElectricBall.BallBack.Value.QuickCenteredDraw(Main.spriteBatch, Projectile.Center - ballVec - Main.screenPosition
+                , Color.Black * 0.6f * ThunderAlpha, 0, Projectile.scale * 0.5f);
             Projectile.QuickDraw(Projectile.Center + ballVec, Color.White, 0f);
             Projectile.QuickDraw(Projectile.Center - ballVec, Color.White, 0f);
 

@@ -64,7 +64,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                             if (Timer % 10 == 0)
                             {
                                 Recorder += MathHelper.TwoPi / 6 + 0.15f;
-                                int length = Main.rand.Next(400, 650);
+                                int length = Main.rand.Next(800, 900);
 
                                 Vector2 pos = NPC.Center + Recorder.ToRotationVector2() * length;
 

@@ -143,6 +143,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                             {
                                 var modifyer = new PunchCameraModifier(NPC.Center, Recorder.ToRotationVector2(), 75, 25, 20, 1000);
                                 Main.instance.CameraModifiers.Add(modifyer);
+                                SetBackgroundLight(0.4f, 25, 8);
                             }
 
                             Vector2 dir = Recorder.ToRotationVector2();

@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.ID;
 
 namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 {
@@ -33,8 +34,8 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
         public override void SetDefaults()
         {
-            NPC.width = 40;
-            NPC.height = 40;
+            NPC.width = 55;
+            NPC.height = 55;
             NPC.damage = 100;
             NPC.defense = 0;
             NPC.lifeMax = 5000;
@@ -47,7 +48,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.lifeMax = 800;
+            NPC.lifeMax = 500;
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
@@ -101,8 +102,16 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                     break;
                 case 1:
                     {
-                        if (NPC.velocity.Length() < 0.4f)
-                            NPC.velocity += (owner.Center - NPC.Center).SafeNormalize(Vector2.Zero) * 0.05f;
+                        float speed = NPC.velocity.Length();
+                        float factor = Timer / (60 * 5);
+
+                        if (speed < 4f-factor*3)
+                            speed += 0.05f;
+                        else
+                            speed -= 0.05f;
+
+                        Vector2 targetDir = (owner.Center - NPC.Center).SafeNormalize(Vector2.Zero);
+                        NPC.velocity = targetDir.RotatedBy(2f*MathF.Sin(factor * MathHelper.TwoPi) * (1 - factor)) * speed;
 
                         NPC.rotation = NPC.velocity.ToRotation();
 
@@ -112,6 +121,11 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                                 () => NPC.Center, Main.rand.NextFloat(0.5f, 0.75f));
                         }
 
+                        Dust dust = Dust.NewDustPerfect(NPC.Center + Main.rand.NextVector2Circular(30, 30), DustID.PortalBoltTrail
+                            , Vector2.Zero, newColor: ZacurrentDragon.ZacurrentDustPurple, Scale: Main.rand.NextFloat(1f, 1.3f));
+                        dust.noGravity = true;
+                        dust.velocity = -NPC.velocity * Main.rand.NextFloat(1, 2);
+
                         Timer++;
                         if (Timer > 60 * 5)
                         {
@@ -119,6 +133,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                             Timer = 0;
 
                             NPC.dontTakeDamage = true;
+                            Helper.PlayPitched(CoraliteSoundID.QuietElectric_DD2_LightningAuraZap, NPC.Center);
 
                             ATex trailTex = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "ThunderTrailB2");
                             trail = new ThunderTrail(trailTex, ThunderWidthFunc_Sin, ThunderColorFunc, GetAlpha)
@@ -169,6 +184,8 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             }
         }
 
+        public override bool PreKill() => false;
+
         public override void HitEffect(NPC.HitInfo hit)
         {
             //增加兹雷龙的紫伏值
@@ -200,8 +217,13 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
                 Vector2 position = NPC.Center - screenPos;
 
+                PurpleElectricBall.BallBack.Value.QuickCenteredDraw(Main.spriteBatch, position
+                    , Color.Black*0.6f *Alpha, 0,  0.3f);
+
                 Main.spriteBatch.Draw(mainTex, position, null, c, 0,
                     mainTex.Size() / 2, 0.2f, 0, 0);
+                Main.spriteBatch.Draw(mainTex, position, null, c, 0,
+                    mainTex.Size() / 2, 0.3f, 0, 0);
 
                 Texture2D exTex = HorizontalStar.Value;
 
@@ -292,6 +314,8 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                     {
                         if (Projectile.velocity.Length() < 1f)
                             Projectile.velocity += (owner.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * 0.05f;
+
+
                         Projectile.rotation = Projectile.velocity.ToRotation();
 
                         if (Timer % 4 == 0)
@@ -382,6 +406,9 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                 c *= Alpha;
 
                 Vector2 position = Projectile.Center - Main.screenPosition;
+
+                PurpleElectricBall.BallBack.Value.QuickCenteredDraw(Main.spriteBatch, position
+                    , Color.Black * 0.6f * Alpha, 0, Projectile.scale * 0.2f);
 
                 Main.spriteBatch.Draw(mainTex, position, null, c, 0,
                     mainTex.Size() / 2, 0.25f, 0, 0);

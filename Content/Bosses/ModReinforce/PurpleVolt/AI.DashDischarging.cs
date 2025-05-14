@@ -148,7 +148,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                                 OpenMouse = true;
                                 canDrawShadows = true;
                                 currentSurrounding = true;
-                                //SetBackgroundLight(0.5f, burstTime - 3, 8);
+                                SetBackgroundLight(0.5f, 25, 8);
 
                                 ResetAllOldCaches();
                             }

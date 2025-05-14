@@ -4,6 +4,7 @@ using Coralite.Core;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
+using Steamworks;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -229,6 +230,8 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
         public override bool PreDraw(ref Color lightColor)
         {
+            PurpleElectricBall.BallBack.Value.QuickCenteredDraw(Main.spriteBatch, Projectile.Center - Main.screenPosition
+                , Color.Black * 0.6f * ThunderAlpha, 0, Projectile.scale * 0.5f);
             Projectile.QuickDraw(Projectile.Center , Color.White, 0f);
 
             if (circles != null)

@@ -166,7 +166,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             }
         }
 
-        public void SpawnDusts()
+        public virtual void SpawnDusts()
         {
             if (Main.rand.NextBool())
             {

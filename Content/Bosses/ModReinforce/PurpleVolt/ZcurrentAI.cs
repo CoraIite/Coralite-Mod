@@ -1,7 +1,7 @@
-﻿using Coralite.Content.Items.FlyingShields.Accessories;
-using Coralite.Helpers;
+﻿using Coralite.Helpers;
 using System;
 using Terraria;
+using Terraria.Graphics.Effects;
 using Terraria.Utilities;
 
 namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
@@ -119,6 +119,8 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             if (CheckTarget())
                 return;
 
+            UpdateSky();
+
             switch (State)
             {
                 default:
@@ -189,7 +191,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                             if (Roar())
                             {
                                 ResetFields();
-                                LightingBallSetStartValue();
+                                ElectricBallSetStartValue();
                                 Combo = 1;
                             }
                             break;
@@ -198,6 +200,26 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                             {
                                 ResetFields();
                                 Combo = 2;
+                            }
+                            break;
+                        case 2:
+                            if (GravitationThunder())
+                            {
+                                ResetFields();
+                                Combo = 3;
+                            }
+                            break;
+                        case 3:
+                            if (ElectromagneticCannon())
+                            {
+                                ResetFields();
+                                Combo = 4;
+                            }
+                            break;
+                        case 4:
+                            if (GatherCurrent())
+                            {
+                                ResetFields();
                                 ChangeState();
                             }
                             break;
@@ -215,7 +237,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                             }
                             break;
                         case 1:
-                            if (ElectricChain(160))
+                            if (ElectricChain(100))
                             {
                                 ResetFields();
                                 Combo = 2;
@@ -305,10 +327,10 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             State = AIStates.onSpawnAnmi;
             NPC.netUpdate = true;
 
-            //if (!VaultUtils.isServer && !SkyManager.Instance["ThunderveinSky"].IsActive())//如果这个天空没激活
-            //{
-            //    SkyManager.Instance.Activate("ThunderveinSky");
-            //}
+            if (!VaultUtils.isServer && !SkyManager.Instance["ZacurrentSky"].IsActive())//如果这个天空没激活
+            {
+                SkyManager.Instance.Activate("ZacurrentSky");
+            }
         }
 
 
@@ -325,6 +347,30 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                     ElectricParticle_PurpleFollow.Spawn(NPC.Center, offset, () => NPC.Center, Main.rand.NextFloat(0.75f, 1f));
                 }
             }
+        }
+
+        public static void UpdateSky()
+        {
+            if (VaultUtils.isServer)
+                return;
+
+            ZacurrentSky sky = (ZacurrentSky)SkyManager.Instance["ZacurrentSky"];
+            if (sky.Timeleft < 100)
+                sky.Timeleft += 2;
+            if (sky.Timeleft > 100)
+                sky.Timeleft = 100;
+        }
+
+        public static void SetBackgroundLight(float light, int fadeTime, int exchangeTime = 5)
+        {
+            if (VaultUtils.isServer)
+                return;
+
+            ZacurrentSky sky = (ZacurrentSky)SkyManager.Instance["ZacurrentSky"];
+            sky.ExchangeTime = sky.MaxExchangeTime = exchangeTime;
+            sky.targetLight = light;
+            sky.oldLight = sky.light;
+            sky.LightTime = fadeTime;
         }
 
         #endregion
@@ -384,6 +430,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             rand.Add(AIStates.ElectricBall);
             rand.Add(AIStates.DashDischarging);
 
+            rand.Add(AIStates.NormalRoarCombo1);
             rand.Add(AIStates.NormalRoarCombo2);
 
             rand.elements.RemoveAll(p => p.Item1 == StateRecorder);
@@ -395,7 +442,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             }
 
             State = rand.Get();
-            State = AIStates.NormalRoarCombo2;
+            //State = AIStates.NormalRoarCombo1;
             SetStateStartValues();
         }
 
@@ -424,7 +471,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                     ElectricBreathMiddleSetStartValue();
                     break;
                 case AIStates.ElectricBall:
-                    LightingBallSetStartValue();
+                    ElectricBallSetStartValue();
                     break;
                 default:
                     break;
@@ -454,7 +501,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
         }
 
         public int GetPurpleVoltMax()
-            => Helper.ScaleValueForDiffMode(30, 40, 50, 80) * 3 * 6;
+            => Helper.ScaleValueForDiffMode(30, 40, 50, 80) * 3 * 6*2;
 
         #endregion
 

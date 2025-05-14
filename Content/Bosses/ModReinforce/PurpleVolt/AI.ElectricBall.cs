@@ -208,6 +208,8 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                                 var modifyer = new PunchCameraModifier(NPC.Center
                                     , dir, 20, 15, 20, 1000);
                                 Main.instance.CameraModifiers.Add(modifyer);
+
+                                SetBackgroundLight(0.4f, 25, 8);
                             }
                         }
                         else if (Timer > readyTime + 30)
@@ -246,7 +248,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
         /// <summary>
         /// 电球初始值设置
         /// </summary>
-        public void LightingBallSetStartValue()
+        public void ElectricBallSetStartValue()
         {
             Recorder = Main.rand.Next(3);
         }

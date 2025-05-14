@@ -297,6 +297,11 @@ namespace Coralite.Core
             /// 更加闪电的闪电激光
             /// </summary>
             public static ATex LightingBody2 { get; private set; }
+
+            /// <summary> 
+            /// 闪电
+            /// </summary>
+            public static ATex ThunderTrail { get; private set; }
         }
 
         /// <summary>

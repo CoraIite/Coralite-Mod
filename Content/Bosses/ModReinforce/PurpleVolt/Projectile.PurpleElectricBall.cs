@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.Bosses.ThunderveinDragon;
 using Coralite.Content.Particles;
 using Coralite.Core;
+using Coralite.Core.Attributes;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
@@ -10,6 +11,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 {
+    [AutoLoadTexture(Path=AssetDirectory.ZacurrentDragon)]
     public class PurpleElectricBall : BaseZacurrentProj, IDrawAdditive
     {
         public override string Texture => AssetDirectory.ThunderveinDragon + "LightingBall";
@@ -19,6 +21,8 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
         public ref float OwnerIndex => ref Projectile.ai[0];
         public ref float Angle => ref Projectile.ai[1];
         public ref float Timer => ref Projectile.localAI[0];
+
+        public static ATex BallBack { get; set; }
 
         public override void SetDefaults()
         {
@@ -198,6 +202,8 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
         public override bool PreDraw(ref Color lightColor)
         {
+            BallBack.Value.QuickCenteredDraw(Main.spriteBatch, Projectile.Center - Main.screenPosition
+                , Color.Black * 0.6f * ThunderAlpha, 0, Projectile.scale*0.5f);
             Projectile.QuickDraw(Color.White, 0f);
 
             if (circles != null)

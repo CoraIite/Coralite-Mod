@@ -71,6 +71,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                             {
                                 var modifyer = new PunchCameraModifier(NPC.Center, Recorder.ToRotationVector2(), 20, 20, 20, 1000);
                                 Main.instance.CameraModifiers.Add(modifyer);
+                                SetBackgroundLight(0.25f, 25, 8);
                             }
 
                             Vector2 dir = Recorder.ToRotationVector2();
@@ -101,7 +102,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                                 return true;
 
                             Timer = 0;
-                            SonState = 0;
+                            SonState ++;
                         }
                     }
                     return false;
@@ -172,7 +173,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                 if (NPC.Distance(Target.Center) > 1400)
                     return true;
 
-                SonState = 1;
+                SonState ++;
                 Timer = 0;
                 OpenMouse = true;
             }

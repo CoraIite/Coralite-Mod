@@ -46,11 +46,11 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                                 SoundEngine.PlaySound(CoraliteSoundID.NoUse_ElectricMagic_Item122, NPC.Center);
                                 IsDashing = true;
 
-                                Vector2 dir = (Target.Center - NPC.Center).SafeNormalize(Vector2.Zero);
+                                Vector2 dir = (Target.Center+ Recorder2.ToRotationVector2()*500-NPC.Center).SafeNormalize(Vector2.Zero);
                                 NPC.velocity = dir * 50;
                                 NPC.rotation = NPC.velocity.ToRotation();
                                 NPC.direction = NPC.spriteDirection = Math.Sign(NPC.velocity.X);
-                                //SetBackgroundLight(0.4f, bigDashTime - 3, 8);
+                                SetBackgroundLight(0.4f, 25, 8);
 
                                 WindCircle.Spawn(NPC.Center, -dir * 2, dir.ToRotation(), ZacurrentPurple
                                     , 0.6f, 3f, new Vector2(1.25f, 1f));
@@ -67,7 +67,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
                         const int RollingTime = 60;
                         float factor = Timer / RollingTime;
-                        float currentRot = Recorder2 + (factor * MathHelper.TwoPi*1.5f);
+                        float currentRot = Recorder2 + (factor * MathHelper.TwoPi * 1.5f);
 
                         float length = 550 + factor * 200;
                         Vector2 center = Target.Center + (currentRot.ToRotationVector2() * 600);

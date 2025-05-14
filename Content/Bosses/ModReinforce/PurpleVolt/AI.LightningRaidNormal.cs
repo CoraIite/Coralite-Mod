@@ -159,7 +159,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                             NPC.rotation = NPC.velocity.ToRotation();
                             NPC.direction = NPC.spriteDirection = Math.Sign(NPC.velocity.X);
                             IsDashing = true;
-                            //SetBackgroundLight(0.4f, bigDashTime - 3, 8);
+                            SetBackgroundLight(0.4f, bigDashTime - 3, 8);
                             if (!VaultUtils.isServer)
                             {
                                 var modifyer = new PunchCameraModifier(NPC.Center, dir * 2.3f, 16, 5, 20, 1000);

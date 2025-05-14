@@ -34,7 +34,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             }
             else if (Timer > 15 && Timer < 130 && !VaultUtils.isServer)
             {
-                Vector2 pos =GetMousePos();
+                Vector2 pos = GetMousePos();
                 if ((int)Timer % 10 == 0)
                 {
                     var modifyer = new PunchCameraModifier(NPC.Center, Helper.NextVec2Dir(), 8, 12, 20, 1000);
@@ -44,6 +44,8 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                 }
                 if ((int)Timer % 20 == 0)
                     PRTLoader.NewParticle(pos, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), ZacurrentPink, 0.2f);
+
+                SetBackgroundLight(0.3f, 30, 40);
             }
 
             Timer++;
