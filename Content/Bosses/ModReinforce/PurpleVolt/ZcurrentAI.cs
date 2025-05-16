@@ -266,28 +266,31 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                     {
                         default:
                         case 0:
-                            if (ElectricChain(300))
+                            if (ElectricChain(100))
                             {
                                 ResetFields();
-                                LightningRaidSetStartValue();
-                                Recorder2 = 3;//必定进行3次长冲
                                 Combo = 1;
                             }
                             break;
                         case 1:
-                            //if (LightningRaidNoraml())
-                            //{
-                            //    ResetFields();
-                            //    Combo = 2;
-                            //}
+                            if (FallingThunder())
+                            {
+                                ResetFields();
+                                Combo = 2;
+                            }
                             break;
                         case 2:
                             if (DashDischarging())
                             {
                                 ResetFields();
-                                ChangeState();
-
                                 Combo = 3;
+                            }
+                            break;
+                        case 3:
+                            if (GatherCurrent())
+                            {
+                                ResetFields();
+                                ChangeState();
                             }
                             break;
                     }
@@ -432,6 +435,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
             rand.Add(AIStates.NormalRoarCombo1);
             rand.Add(AIStates.NormalRoarCombo2);
+            rand.Add(AIStates.NormalChainCombo);
 
             rand.elements.RemoveAll(p => p.Item1 == StateRecorder);
 
@@ -442,7 +446,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             }
 
             State = rand.Get();
-            //State = AIStates.NormalRoarCombo1;
+            State = AIStates.NormalChainCombo;
             SetStateStartValues();
         }
 
@@ -590,10 +594,11 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             NPC.rotation = NPC.rotation.AngleLerp(NPC.spriteDirection > 0 ? 0 : MathHelper.Pi, rate);
         }
 
-        private void SetSpriteDirectionFoTarget()
+        private void SetSpriteDirectionFoTarget(Vector2? targetPos=null,float limit=48)
         {
-            if (MathF.Abs(Target.Center.X - NPC.Center.X) > 48)
-                NPC.spriteDirection = Target.Center.X > NPC.Center.X ? 1 : -1;
+            Vector2 p = targetPos ?? Target.Center;
+            if (MathF.Abs(p.X - NPC.Center.X) > limit)
+                NPC.spriteDirection = p.X > NPC.Center.X ? 1 : -1;
         }
 
         public void InitOldFrame()

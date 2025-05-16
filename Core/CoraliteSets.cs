@@ -6,10 +6,6 @@ namespace Coralite.Core
 {
     public static class CoraliteSets
     {
-        /// <summary>
-        /// 爆破弹幕
-        /// </summary>
-        //public static bool[] ProjectileExplosible;
         [ReinitializeDuringResizeArrays]
         public static class Items
         {

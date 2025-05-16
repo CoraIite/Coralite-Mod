@@ -122,7 +122,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
         public void DrawThunder(GraphicsDevice graphicsDevice)
         {
-            if (!CanDraw || RandomlyPositions == null)
+            if (!CanDraw || RandomlyPositions == null|| RandomlyPositions.Length<2)
                 return;
 
             Texture2D Texture = ThunderTex.Value;

@@ -147,9 +147,10 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                 case 3://吐息
                     {
                         UpdateAllOldCaches();
-                        SetSpriteDirectionFoTarget();
+                        //专门调整一下转向，防止转向太过突然
+                        SetSpriteDirectionFoTarget(GetMousePos() + Recorder.ToRotationVector2() * 2000, 80);
                         TurnToNoRot(1);
-                        Recorder = Recorder.AngleTowards((Target.Center - GetMousePos()).ToRotation(), 0.016f);
+                        Recorder = Recorder.AngleTowards((Target.Center - GetMousePos()).ToRotation(), 0.017f);
                         FlyingFrame();
                         float factor = Coralite.Instance.SqrtSmoother.Smoother(Timer / burstTime);
                         shadowScale = Helper.Lerp(1f, 2f, factor);

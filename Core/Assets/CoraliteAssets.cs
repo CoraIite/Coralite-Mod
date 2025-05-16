@@ -317,6 +317,13 @@ namespace Coralite.Core
             public static ATex Cross { get; private set; }
 
             /// <summary> 
+            /// 标准十字闪光<br></br>
+            /// 横竖纵向<br></br>
+            /// 特殊透明度
+            /// </summary>
+            public static ATex CrossSPA { get; private set; }
+
+            /// <summary> 
             /// 横向光外加一些散光束<br></br>
             /// 透明底
             /// </summary>
