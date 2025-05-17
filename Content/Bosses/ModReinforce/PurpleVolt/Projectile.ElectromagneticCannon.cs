@@ -59,7 +59,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             {
                 Projectile.Center = dragon.GetMousePos();
                 Projectile.velocity = Projectile.Center + (dragon.Recorder.ToRotationVector2() * 2000);
-                Projectile.rotation = (Projectile.Center - Projectile.velocity).ToRotation();
+                Projectile.rotation = (Projectile.velocity-Projectile.Center ).ToRotation();
 
                 SpawnDusts();
 

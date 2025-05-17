@@ -60,7 +60,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                             shadowScale = 1.15f;
                             shadowAlpha = 1;
 
-                            NPC.velocity = new Vector2(0, -6);
+                            NPC.velocity = new Vector2(0, 20);
                         }
                     }
                     return false;
@@ -111,17 +111,28 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                             if (Target.velocity.Length() > 4)
                                 pos += Target.velocity.SafeNormalize(Vector2.Zero) * 250;
 
-                            pos += new Vector2(((Timer / 45) % 2 == 0 ? -1 : 1) * 200, 260);
+                            pos += new Vector2(((Timer / 45) % 2 == 0 ? -1 : 1) * Timer * 2, 260);
                             pos += Main.rand.NextVector2CircularEdge(80, 80);
 
                             int damage = Helper.GetProjDamage(100, 150, 200);
                             NPC.NewProjectileDirectInAI<PurpleSmallThunderFall>(pos, Vector2.Zero
-                                , damage, 0, NPC.target, 80, NPC.whoAmI,65);
+                                , damage, 0, NPC.target, 75, NPC.whoAmI, 65);
+
+                            Helper.PlayPitched(CoraliteSoundID.Ding_Item4, NPC.Center, pitch: 0.3f);
                         }
-                        
+
+                        if (Timer % 60 == 0 && Timer < ChasingTime)
+                        {
+                            int damage = Helper.GetProjDamage(100, 150, 200);
+                            NPC.NewProjectileDirectInAI<PurpleSmallThunderFall>(Target.Center, Vector2.Zero
+                                , damage, 0, NPC.target, 60, NPC.whoAmI, 65);
+
+                            Helper.PlayPitched(CoraliteSoundID.Ding_Item4, NPC.Center, pitch: 0.3f);
+                        }
+
                         if (Timer < ChasingTime)
                         {
-                            float factor1 = Timer / 50;
+                            float factor1 = Timer / 80;
                             Vector2 targetPos = Target.Center + (Target.velocity * 28 * factor1);
                             targetPos = new Vector2(Recorder, Recorder2).MoveTowards(targetPos, 20);
                             Recorder = targetPos.X;
@@ -175,7 +186,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                             Timer = 0;
                             //生成闪电弹幕
                             Vector2 targetPos = new(Recorder, Recorder2);
-                            int damage = Helper.GetProjDamage(70, 80, 90);
+                            int damage = Helper.GetProjDamage(180, 200, 260);
 
                             NPC.velocity = new Vector2(0, UpLength / (float)SmashDownTime);
                             NPC.rotation = NPC.velocity.ToRotation();
@@ -234,7 +245,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                             shadowScale = Helper.Lerp(1f, 2.5f, factor);
                             shadowAlpha = Helper.Lerp(1f, 0f, factor);
                         }
-                        else if (Timer < SmashDownTime + 30 + 50)
+                        else if (Timer < SmashDownTime + 30 + 20)
                             FlyingFrame();
                         else
                             return true;

@@ -5,6 +5,11 @@ using System;
 
 namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 {
+    public class ElectricParticle_Red : ElectricParticle
+    {
+        public override string Texture => AssetDirectory.ThunderveinDragon + "ElectricParticle_Red";
+    }
+
     public class ElectricParticle_PurpleFollow : ElectricParticle
     {
         public override string Texture => AssetDirectory.ThunderveinDragon + "ElectricParticle_Purple";

@@ -5,11 +5,11 @@ using InnoVault.PRT;
 using Terraria;
 using Terraria.Audio;
 
-namespace Coralite.Content.Bosses.ThunderveinDragon
+namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 {
-    public partial class ThunderveinDragon
+    public partial  class  ZacurrentDragon
     {
-        public void ExchangeP1_P2()
+        public bool PurpleVoltExchange()
         {
             const int BurstTime = 40;
             const int RoaringTime = 60;
@@ -17,8 +17,6 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             switch (SonState)
             {
                 default:
-                    ResetStates();
-                    break;
                 case 0://收起翅膀准备
                     {
                         NPC.velocity *= 0.8f;
@@ -27,7 +25,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         if (Timer < 2 && NPC.frame.Y != 4)
                         {
                             FlyingFrame();
-                            return;
+                            return false;
                         }
 
                         if (Timer < 2)
@@ -60,7 +58,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                             SonState++;
                             Timer = 0;
                             NPC.frame.Y = 0;
-                            NPC.frame.X = 1;
+                            OpenMouse = true;
 
                             shadowScale = 1.2f;
                             Helper.PlayPitched(CoraliteSoundID.LightningOrb_Item121, NPC.Center, pitch: 0.4f);
@@ -68,12 +66,12 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
                             if (!VaultUtils.isClient)
                             {
-                                NPC.NewProjectileDirectInAI<ThunderveinExchangePhaseAnmi>(NPC.Center, Vector2.Zero, 1, 0, NPC.target,
+                                NPC.NewProjectileDirectInAI<ZacurrentExchangeAnmi>(NPC.Center, Vector2.Zero, 1, 0, NPC.target,
                                 BurstTime, NPC.whoAmI);
                             }
                         }
                     }
-                    break;
+                    return false;
                 case 1://吼叫并生成电粒子
                     {
                         UpdateAllOldCaches();
@@ -88,7 +86,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                                 for (int i = 0; i < 5; i++)
                                 {
                                     PRTLoader.NewParticle(NPC.Center + Main.rand.NextVector2CircularEdge(length, length),
-                                        Vector2.Zero, CoraliteContent.ParticleType<ElectricParticle>(), Scale: Main.rand.NextFloat(0.9f, 1.3f));
+                                        Vector2.Zero, CoraliteContent.ParticleType<ElectricParticle_Red>(), Scale: Main.rand.NextFloat(0.9f, 1.3f));
                                 }
                             }
 
@@ -99,7 +97,10 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                                 shadowAlpha = Helper.Lerp(1f, 0f, factor);
                                 Vector2 pos = NPC.Center + (NPC.rotation.ToRotationVector2() * 60);
                                 if ((int)Timer % 10 == 0)
-                                    PRTLoader.NewParticle(pos, Vector2.Zero, CoraliteContent.ParticleType<RoaringWave>(), Coralite.ThunderveinYellow, 0.2f);
+                                {
+                                    var p = PRTLoader.NewParticle<RoaringWave>(pos, Vector2.Zero, ZacurrentPurple, 0.2f);
+                                    p.ScaleMul = 1.15f;
+                                }
                                 if ((int)Timer % 20 == 0)
                                     PRTLoader.NewParticle(pos, Vector2.Zero, CoraliteContent.ParticleType<RoaringLine>(), Color.White, 0.2f);
                             }
@@ -107,9 +108,9 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
 
                         Timer++;
                         if (Timer > RoaringTime + 25)
-                            ResetStates();
+                            return true;
                     }
-                    break;
+                    return false;
             }
         }
     }

@@ -63,7 +63,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                 for (int i = 0; i < 2; i++)
                 {
                     Vector2 dir = -Vector2.UnitY;
-                    Dust d = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(6, 6) + (dir * Main.rand.NextFloat(20, 1600)), DustID.PortalBoltTrail
+                    Dust d = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(6, 6) + (dir * Main.rand.NextFloat(20, 1600*Timer/ReadyTime)), DustID.PortalBoltTrail
                         , dir.RotateByRandom(-0.3f, 0.3f) * Main.rand.NextFloat(2f, 6f), newColor: ZacurrentDragon.ZacurrentDustPurple,
                         Scale: Main.rand.NextFloat(1f, 1.5f));
                     d.noGravity = true;
@@ -74,6 +74,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             else if (Timer == ReadyTime)
             {
                 InitThunder();
+                Helper.PlayPitched("Electric/ElectricStrike" + Main.rand.NextFromList(0, 2).ToString(), 0.4f, -0.2f, Projectile.Center);
             }
             else
             {
@@ -82,7 +83,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                 float factor = (Timer - ReadyTime) / DelayTime;
                 fade = Coralite.Instance.X2Smoother.Smoother(factor);
 
-                ThunderWidth = 20 * (1 - factor);
+                ThunderWidth = 40 * (1 - factor);
                 ThunderAlpha = 1 - Coralite.Instance.X2Smoother.Smoother(factor);
 
                 foreach (var trail in thunderTrails)
@@ -182,11 +183,16 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                 float factor = Timer / ReadyTime;
                 float factor2 = Coralite.Instance.SqrtSmoother.Smoother(factor);
                 float rot = Projectile.whoAmI + MathHelper.TwoPi / 3 + factor2 * MathHelper.TwoPi;
-                float scale = 0.3f - factor * 0.3f;
+                float scale = 0.2f - factor * 0.2f;
                 CoraliteAssets.Sparkle.CrossSPA.Value.QuickCenteredDraw(Main.spriteBatch, p
                     , ZacurrentDragon.ZacurrentPurple, rot, scale);
                 CoraliteAssets.Sparkle.CrossSPA.Value.QuickCenteredDraw(Main.spriteBatch, p
                     , Color.White, rot, scale * 0.6f);
+
+                CoraliteAssets.Sparkle.CrossSPA.Value.QuickCenteredDraw(Main.spriteBatch, p
+                    , ZacurrentDragon.ZacurrentPink, rot + MathHelper.PiOver4, scale * 0.6f);
+                CoraliteAssets.Sparkle.CrossSPA.Value.QuickCenteredDraw(Main.spriteBatch, p
+                    , Color.White, rot + MathHelper.PiOver4, scale * 0.3f);
             }
 
             if (thunderTrails != null)

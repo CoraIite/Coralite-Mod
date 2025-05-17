@@ -3,7 +3,6 @@ using Coralite.Core;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
-using Steamworks;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -148,7 +147,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
             thunderRange = Helper.Lerp(110, 30, Timer / chasingTime);
             Projectile.SpawnTrailDust(30f, DustID.PortalBoltTrail, Main.rand.NextFloat(0.1f, 0.4f),
-                newColor: Coralite.ThunderveinYellow, Scale: Main.rand.NextFloat(1f, 1.3f));
+                newColor: ZacurrentDragon.ZacurrentDustPurple, Scale: Main.rand.NextFloat(1f, 1.3f));
         }
 
         public override void Initialize()

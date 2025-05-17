@@ -113,14 +113,14 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             float factor = Timeleft / 100f;
             if (owner.ai[0] == 1)
             {
-                Main.maxRaining = Math.Clamp(0.5f * factor, 0f, 1f);
+                //Main.maxRaining = Math.Clamp(0.5f * factor, 0f, 1f);
                 Main.cloudAlpha = Main.maxRaining;
                 Main.windSpeedCurrent = 0;
                 Main.windSpeedTarget = 0;
             }
             else
             {
-                Main.maxRaining = Math.Clamp(0.8f * factor, 0f, 1f);
+                //Main.maxRaining = Math.Clamp(0.8f * factor, 0f, 1f);
                 Main.cloudAlpha = Main.maxRaining;
                 Main.windSpeedCurrent = 0;
                 Main.windSpeedTarget = 0;

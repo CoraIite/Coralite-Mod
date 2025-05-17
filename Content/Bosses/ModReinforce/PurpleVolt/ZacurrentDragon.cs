@@ -190,9 +190,8 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
         {
             Texture2D mainTex = NPC.GetTexture();
 
-            var frameBox = mainTex.Frame(5, 8, 0, NPC.frame.Y);
+            drawColor *= selfAlpha;
             var pos = NPC.Center - screenPos;
-            var origin = frameBox.Size() / 2;
             float rot = NPC.rotation;
 
             SpriteEffects effects = SpriteEffects.None;
@@ -213,7 +212,10 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                     float factor = (float)i / trailCacheLength;
                     if (PurpleVolt)
                     {
-
+                        Color c1 = ZacurrentPurpleAlpha with { A = 50 };
+                        Color c2 = ZacurrentRed with { A = 50 };
+                        shadowColor = Color.Lerp(c2, c1, factor);
+                        shadowColor *= shadowAlpha;
                     }
                     else
                     {

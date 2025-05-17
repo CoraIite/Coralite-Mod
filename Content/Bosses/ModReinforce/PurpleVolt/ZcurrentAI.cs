@@ -1,5 +1,6 @@
 ﻿using Coralite.Helpers;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Graphics.Effects;
 using Terraria.Utilities;
@@ -45,7 +46,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
         /// <summary>
         /// 紫电计数
         /// </summary>
-        public int PurpleVoltCount {  get; set; }
+        public int PurpleVoltCount { get; set; }
 
         public Point[] oldFrame;
         public int[] oldDirection;
@@ -53,6 +54,8 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
         public int oldSpriteDirection;
 
         private bool init = true;
+
+        private HashSet<AIStates> comboRecords;
 
         #region AI控制部分
 
@@ -136,8 +139,12 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                 case AIStates.onKillAnim:
                     break;
                 case AIStates.PurpleVoltExchange:
-                    ResetFields();
-                    ChangeState();
+                    if (PurpleVoltExchange())
+                    {
+                        ResetFields();
+                        PurpleVolt = true;
+                        ChangeState();
+                    }
                     break;
                 case AIStates.LightningRaid:
                     if (LightningRaidNoraml())
@@ -266,7 +273,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                     {
                         default:
                         case 0:
-                            if (ElectricChain(100))
+                            if (ElectricChain(60))
                             {
                                 ResetFields();
                                 Combo = 1;
@@ -296,27 +303,70 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                     }
                     break;
                 case AIStates.NormalPointerCombo:
+                    switch (Combo)
+                    {
+                        default:
+                        case 0:
+                            if (AimThunderBall(90))
+                            {
+                                ResetFields();
+                                Combo = 1;
+                            }
+                            break;
+                        case 1:
+                            if (ElectricChain(300))
+                            {
+                                ResetFields();
+                                Combo = 2;
+                            }
+                            break;
+                        case 2:
+                            if (ElectricBreathMiddle())
+                            {
+                                ResetFields();
+                                Combo = 3;
+                            }
+                            break;
+                        case 3:
+                            if (FallingThunder())
+                            {
+                                ResetFields();
+                                Combo = 4;
+                            }
+                            break;
+                        case 4:
+                            if (GatherCurrent())
+                            {
+                                ResetFields();
+                                ChangeState();
+                            }
+                            break;
+                    }
                     break;
             }
         }
 
         public bool CheckTarget()
         {
-            if (NPC.target < 0 || NPC.target == 255 || Target.dead || !Target.active || Target.Distance(NPC.Center) > 3000)
+            if (NPC.target < 0 || NPC.target == 255 || Target.dead || !Target.active || Target.Distance(NPC.Center) > 3000 || Main.dayTime)
             {
                 NPC.TargetClosest();
 
-                if (Target.dead || !Target.active || Target.Distance(NPC.Center) > 4500)//没有玩家存活时离开
+                if (Target.dead || !Target.active || Target.Distance(NPC.Center) > 4500 || Main.dayTime)//没有玩家存活时离开
                 {
-                    NPC.dontTakeDamage = false;
+                    NPC.dontTakeDamage = true;
                     canDrawShadows = false;
-                    IsDashing = false;
+                    IsDashing = true;
                     State = AIStates.LightningRaid;
-                    NPC.spriteDirection = 1;
-                    NPC.rotation = NPC.rotation.AngleTowards(0f, 0.14f);
                     NPC.velocity.X *= 0.98f;
+                    NPC.velocity.Y = -60;
+                    NPC.rotation = NPC.velocity.ToRotation();
                     //FlyingUp(0.3f, 20, 0.9f);
                     NPC.EncourageDespawn(30);
+
+                    State = AIStates.SmallDash;
+                    Timer = 0;
+                    SonState = 0;
                     return true;
                 }
             }
@@ -341,7 +391,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
         {
             oldSpriteDirection = NPC.spriteDirection;
 
-            if (!VaultUtils.isServer && currentSurrounding )
+            if (!VaultUtils.isServer && currentSurrounding)
             {
                 Lighting.AddLight(NPC.Center, ZacurrentPink.ToVector3());
                 if (Main.rand.NextBool(3))
@@ -397,6 +447,8 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
             shadowScale = 1;
             shadowAlpha = 1;
+
+            NPC.dontTakeDamage = false;
         }
 
         /// <summary>
@@ -411,43 +463,81 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             //进入紫伏状态
             if (PurpleVoltCount == GetPurpleVoltMax())
             {
-                //State = AIStates.PurpleVoltExchange;
-
-                //return;
+                State = AIStates.PurpleVoltExchange;
+                return;
             }
 
             WeightedRandom<AIStates> rand = new WeightedRandom<AIStates>();
 
             if (PurpleVolt)//紫电状态的切换阶段
             {
-                SetStateStartValues();
-                return;
             }
+            else
+                NormalMoveExchange(rand);//正常状态的阶段切换
 
-            //正常状态的阶段切换
-            rand.Add(AIStates.SmallDash);
+            State = AIStates.PurpleVoltExchange;
+            SetStateStartValues();
+        }
 
-            rand.Add(AIStates.LightningRaid);
+        private void NormalMoveExchange(WeightedRandom<AIStates> rand)
+        {
+            //防止复读短冲
+            if (State != AIStates.SmallDash)
+                rand.Add(AIStates.SmallDash, 3);
+
             rand.Add(AIStates.ElectricBreathSmall);
-            rand.Add(AIStates.ElectricBreathMiddle);
-            rand.Add(AIStates.ElectricBall);
-            rand.Add(AIStates.DashDischarging);
 
-            rand.Add(AIStates.NormalRoarCombo1);
-            rand.Add(AIStates.NormalRoarCombo2);
-            rand.Add(AIStates.NormalChainCombo);
+            //在玩家上下区域的时候减少概率
+            bool upOrDown
+                = MathF.Abs(Target.Center.X - NPC.Center.X) < 16 * 8
+                && MathF.Abs(Target.Center.Y - NPC.Center.Y) > 16 * 6;
+            rand.Add(AIStates.ElectricBreathMiddle, upOrDown ? 0.4f : 1);
+            rand.Add(AIStates.ElectricBall);
+
+            //距离远的时候提升使用概率
+            bool farAway = NPC.Distance(Target.Center) > 650;
+            float farawayPercent = farAway
+               ? (1.5f + (NPC.Distance(Target.Center) - 650) / 400)
+               : 1;
+            rand.Add(AIStates.DashDischarging, farawayPercent);
+            rand.Add(AIStates.LightningRaid, farawayPercent);
+
+            UseMoveCount++;
+            if (UseMoveCount > Helper.ScaleValueForDiffMode(5, 4, 3, 2))
+            {
+                AddCombo(rand, AIStates.NormalRoarCombo1);
+                AddCombo(rand, AIStates.NormalRoarCombo2);
+                AddCombo(rand, AIStates.NormalChainCombo);
+                AddCombo(rand, AIStates.NormalPointerCombo);
+            }
 
             rand.elements.RemoveAll(p => p.Item1 == StateRecorder);
 
-            //防止复读短冲
-            if (State == AIStates.SmallDash)
-            {
-                rand.elements.RemoveAll(p => p.Item1 == AIStates.SmallDash);
-            }
-
             State = rand.Get();
-            State = AIStates.NormalChainCombo;
-            SetStateStartValues();
+            RecordCombo();
+        }
+
+        private void RecordCombo()
+        {
+            if (State is AIStates.NormalChainCombo or AIStates.NormalRoarCombo1 or AIStates.NormalRoarCombo2 or AIStates.NormalPointerCombo)
+            {
+                comboRecords.Add(State);
+                UseMoveCount = 0;
+            }
+        }
+
+        /// <summary>
+        /// 添加一个连招
+        /// </summary>
+        /// <param name="rand"></param>
+        /// <param name="combo"></param>
+        private void AddCombo(WeightedRandom<AIStates> rand, AIStates combo)
+        {
+            comboRecords ??= new HashSet<AIStates>();
+            if (comboRecords.Count > 2)
+                comboRecords.Clear();
+            if (!comboRecords.Contains(combo))//没用过的连招才行
+                rand.Add(combo, UseMoveCount / Helper.ScaleValueForDiffMode(6, 5, 4, 3));
         }
 
         private void SetStateStartValues()
@@ -500,12 +590,12 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                 : Helper.ScaleValueForDiffMode(15, 20, 25, 40);
 
             PurpleVoltCount += count;
-            if (PurpleVoltCount>GetPurpleVoltMax())
+            if (PurpleVoltCount > GetPurpleVoltMax())
                 PurpleVoltCount = GetPurpleVoltMax();
         }
 
         public int GetPurpleVoltMax()
-            => Helper.ScaleValueForDiffMode(30, 40, 50, 80) * 3 * 6*2;
+            => Helper.ScaleValueForDiffMode(30, 40, 50, 80) * 3 * 5 * 2;
 
         #endregion
 
@@ -513,7 +603,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
         public void ElectricSound()
         {
-            Helper.PlayPitched("Electric/ElectricStrike" + Main.rand.NextFromList(0,2).ToString(), 0.4f, -0.2f, NPC.Center);
+            Helper.PlayPitched("Electric/ElectricStrike" + Main.rand.NextFromList(0, 2).ToString(), 0.4f, -0.2f, NPC.Center);
         }
 
         public void GetLengthToTargetPos(Vector2 targetPos, out float xLength, out float yLength)
@@ -594,7 +684,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             NPC.rotation = NPC.rotation.AngleLerp(NPC.spriteDirection > 0 ? 0 : MathHelper.Pi, rate);
         }
 
-        private void SetSpriteDirectionFoTarget(Vector2? targetPos=null,float limit=48)
+        private void SetSpriteDirectionFoTarget(Vector2? targetPos = null, float limit = 48)
         {
             Vector2 p = targetPos ?? Target.Center;
             if (MathF.Abs(p.X - NPC.Center.X) > limit)
