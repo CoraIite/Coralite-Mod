@@ -481,10 +481,6 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
         private void NormalMoveExchange(WeightedRandom<AIStates> rand)
         {
-            //防止复读短冲
-            if (State != AIStates.SmallDash)
-                rand.Add(AIStates.SmallDash, 3);
-
             rand.Add(AIStates.ElectricBreathSmall);
 
             //在玩家上下区域的时候减少概率
@@ -501,6 +497,9 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                : 1;
             rand.Add(AIStates.DashDischarging, farawayPercent);
             rand.Add(AIStates.LightningRaid, farawayPercent);
+            //防止复读短冲
+            if (State != AIStates.SmallDash)
+                rand.Add(AIStates.SmallDash, farawayPercent + 1.5f);
 
             UseMoveCount++;
             if (UseMoveCount > Helper.ScaleValueForDiffMode(5, 4, 3, 2))
