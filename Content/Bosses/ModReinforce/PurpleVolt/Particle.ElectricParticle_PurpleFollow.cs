@@ -7,7 +7,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 {
     public class ElectricParticle_Red : ElectricParticle
     {
-        public override string Texture => AssetDirectory.ThunderveinDragon + "ElectricParticle_Red";
+        public override string Texture => AssetDirectory.ZacurrentDragon + "ElectricParticle_Red";
     }
 
     public class ElectricParticle_PurpleFollow : ElectricParticle

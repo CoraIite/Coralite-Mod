@@ -340,6 +340,16 @@ namespace Coralite.Core
             /// 透明底
             /// </summary>
             public static ATex ShotLineSPA { get; private set; }
+
+            /// <summary> 
+            /// 三条光线<br></br>
+            /// </summary>
+            public static ATex ThreeShot { get; private set; }
+            /// <summary> 
+            /// 三条光线<br></br>
+            /// 透明底
+            /// </summary>
+            public static ATex ThreeShotSPA { get; private set; }
         }
 
         /// <summary>
@@ -418,6 +428,11 @@ namespace Coralite.Core
             /// 受击扩散效果
             /// </summary>
             public static ATex ImpactA { get; private set; }
+
+            /// <summary> 
+            /// 扩散2
+            /// </summary>
+            public static ATex LightFog { get; private set; }
         }
 
         /// <summary>

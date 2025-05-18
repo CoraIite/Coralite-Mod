@@ -111,7 +111,7 @@ namespace Coralite.Content.Items.MagikeSeries2
         {
             if (!ShowLineStyle)
             {
-                spriteBatch.Draw(CloseTex.Value, Item.Center, null, lightColor, rotation, CloseTex.Size() / 2, scale, 0, 0);
+                spriteBatch.Draw(CloseTex.Value, Item.Center - Main.screenPosition, null, lightColor, rotation, CloseTex.Size() / 2, scale, 0, 0);
                 return false;
             }
 

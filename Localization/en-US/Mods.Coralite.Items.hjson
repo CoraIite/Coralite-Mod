@@ -5870,3 +5870,8 @@ Aloe: {
 	DisplayName: Aloe
 	Tooltip: ""
 }
+
+CrystallineMusicBox: {
+	DisplayName: Crystalline Music Box
+	Tooltip: ""
+}

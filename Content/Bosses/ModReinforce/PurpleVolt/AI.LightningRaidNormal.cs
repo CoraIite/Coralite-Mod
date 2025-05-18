@@ -16,7 +16,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
         {
             SmallDash,
             ReadyBigDash,
-            Flashing,
+            //Flashing,
             BigDash
         }
 

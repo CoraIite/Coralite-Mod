@@ -213,13 +213,9 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             {
                 Vector2 pos = Projectile.Center + Main.rand.NextVector2Circular(Projectile.width / 2, Projectile.width / 2);
                 if (Main.rand.NextBool())
-                {
                     PRTLoader.NewParticle(pos, Vector2.Zero, CoraliteContent.ParticleType<ElectricParticle_Purple>(), Scale: Main.rand.NextFloat(0.7f, 1.1f));
-                }
                 else
-                {
                     Dust.NewDustPerfect(pos, ModContent.DustType<LightningShineBall>(), Vector2.Zero, newColor: ZacurrentDragon.ZacurrentPurple, Scale: Main.rand.NextFloat(0.1f, 0.3f));
-                }
             }
         }
 
@@ -233,6 +229,33 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                 }
             }
             return false;
+        }
+    }
+
+    /// <summary>
+    /// 使用ai2传入一共多少点
+    /// </summary>
+    public class RedDash: PurpleDash
+    {
+        public override void SpawnDusts()
+        {
+            if (Main.rand.NextBool())
+            {
+                Vector2 pos = Projectile.Center + Main.rand.NextVector2Circular(Projectile.width / 2, Projectile.width / 2);
+                if (Main.rand.NextBool())
+                    PRTLoader.NewParticle(pos, Vector2.Zero, CoraliteContent.ParticleType<ElectricParticle_Red>(), Scale: Main.rand.NextFloat(0.7f, 1.1f));
+                else
+                    Dust.NewDustPerfect(pos, ModContent.DustType<LightningShineBall>(), Vector2.Zero, newColor: ZacurrentDragon.ZacurrentRed, Scale: Main.rand.NextFloat(0.1f, 0.3f));
+            }
+        }
+        public override Color ThunderColorFunc_Purple(float factor)
+        {
+            return Color.Lerp(ZacurrentDragon.ZacurrentPurple, ZacurrentDragon.ZacurrentRed, factor);
+        }
+
+        public override Color ThunderColorFunc2_Pink(float factor)
+        {
+            return ZacurrentDragon.ZacurrentRed;
         }
     }
 }

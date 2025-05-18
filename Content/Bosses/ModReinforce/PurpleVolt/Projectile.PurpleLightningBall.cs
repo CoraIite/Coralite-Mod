@@ -91,7 +91,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             }
         }
 
-        private void UpdateThunder()
+        public virtual void UpdateThunder()
         {
             foreach (var circle in circles)
                 circle.UpdateTrail(Projectile.velocity);
@@ -99,7 +99,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                 trail.UpdateTrail(Projectile.velocity);
         }
 
-        private void RandTrail()
+        public virtual void RandTrail()
         {
             if (Timer % 5 == 0)
             {
@@ -230,9 +230,9 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             return false;
         }
 
-        public void DrawAdditive(SpriteBatch spriteBatch)
+        public virtual void DrawAdditive(SpriteBatch spriteBatch)
         {
-            Texture2D exTex = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "LightFog").Value;
+            Texture2D exTex = CoraliteAssets.Halo.LightFog.Value;
 
             Vector2 pos = Projectile.Center - Main.screenPosition;
             Color c = ZacurrentDragon.ZacurrentPinkAlpha;
@@ -568,9 +568,9 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             return false;
         }
 
-        public void DrawAdditive(SpriteBatch spriteBatch)
+        public virtual void DrawAdditive(SpriteBatch spriteBatch)
         {
-            Texture2D exTex = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "LightFog").Value;
+            Texture2D exTex = CoraliteAssets.Halo.LightFog.Value;
 
             Vector2 pos = Projectile.Center - Main.screenPosition;
             Color c = ZacurrentDragon.ZacurrentPinkAlpha;
@@ -586,4 +586,113 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
         }
     }
 
+    public class RedLightningBall: PurpleLightningBall
+    {
+        public override string Texture => AssetDirectory.ZacurrentDragon + "RedVoltBall";
+
+        public override Color ThunderColorFunc_Purple(float factor)
+        {
+            return Color.Lerp(ZacurrentDragon.ZacurrentPurpleAlpha, ZacurrentDragon.ZacurrentRed, MathF.Sin(factor * MathHelper.Pi));
+        }
+
+        public override Color ThunderColorFunc2_Pink(float factor)
+        {
+            return ZacurrentDragon.ZacurrentRed;
+        }
+
+        public override void AI()
+        {
+            base.AI();
+
+            if (Timer % 15 == 0)
+            {
+                int dir = Timer % 30 == 0 ? 1 : -1;
+                Projectile.velocity = Projectile.velocity.RotatedBy(dir * MathF.Sin(Timer * 0.05f) * 0.8f);
+            }
+
+            Projectile.UpdateOldPosCache();
+        }
+
+        public override void Initialize()
+        {
+            base.Initialize();
+            Projectile.InitOldPosCache(10);
+        }
+
+        public override void RandTrail()
+        {
+            if (Timer % 5 == 0)
+            {
+                float cacheLength = Projectile.velocity.Length() * 0.55f;
+
+                foreach (var trail in trails)
+                {
+                    if (cacheLength < 3)
+                        trail.CanDraw = false;
+                    else
+                    {
+                        trail.CanDraw = Main.rand.NextBool();
+                        if (trail.CanDraw)
+                        {
+                            trail.RandomThunder();
+                        }
+                    }
+                }
+            }
+        }
+
+        public override void UpdateThunder()
+        {
+            foreach (var circle in circles)
+                circle.UpdateTrail(Projectile.velocity);
+            foreach (var trail in trails)
+                trail.UpdateThunderToNewPosition(Projectile.oldPos);
+        }
+
+        public override void DrawAdditive(SpriteBatch spriteBatch)
+        {
+            Texture2D exTex = CoraliteAssets.Halo.LightFog.Value;
+
+            Vector2 pos = Projectile.Center - Main.screenPosition;
+            Color c = ZacurrentDragon.ZacurrentRed;
+            c.A = (byte)(ThunderAlpha * 250);
+            var origin = exTex.Size() / 2;
+            var scale = Projectile.scale * 0.5f;
+
+            spriteBatch.Draw(exTex, pos, null, c, Projectile.rotation + Main.GlobalTimeWrappedHourly, origin, scale, 0, 0);
+            spriteBatch.Draw(exTex, pos, null, c * 0.5f, Projectile.rotation - (Main.GlobalTimeWrappedHourly / 2), origin, scale, 0, 0);
+        }
+    }
+
+    public class RedChainBall: ZacurrentChainBall
+    {
+        public override string Texture => AssetDirectory.ZacurrentDragon + "RedVoltBall";
+
+        public override Color ThunderColorFunc_Purple(float factor)
+        {
+            return Color.Lerp(ZacurrentDragon.ZacurrentPurpleAlpha, ZacurrentDragon.ZacurrentRed, MathF.Sin(factor * MathHelper.Pi));
+        }
+
+        public override Color ThunderColorFunc2_Pink(float factor)
+        {
+            return ZacurrentDragon.ZacurrentRed;
+        }
+
+        public override void DrawAdditive(SpriteBatch spriteBatch)
+        {
+            Texture2D exTex = CoraliteAssets.Halo.LightFog.Value;
+
+            Vector2 pos = Projectile.Center - Main.screenPosition;
+            Color c = ZacurrentDragon.ZacurrentPinkAlpha;
+            c.A = (byte)(ThunderAlpha * 250);
+            var origin = exTex.Size() / 2;
+            var scale = Projectile.scale * 0.5f;
+
+            spriteBatch.Draw(exTex, pos + ballVec, null, c, Projectile.rotation + Main.GlobalTimeWrappedHourly, origin, scale, 0, 0);
+            spriteBatch.Draw(exTex, pos + ballVec, null, c * 0.5f, Projectile.rotation - (Main.GlobalTimeWrappedHourly / 2), origin, scale, 0, 0);
+
+            spriteBatch.Draw(exTex, pos - ballVec, null, c, Projectile.rotation + Main.GlobalTimeWrappedHourly, origin, scale, 0, 0);
+            spriteBatch.Draw(exTex, pos - ballVec, null, c * 0.5f, Projectile.rotation - (Main.GlobalTimeWrappedHourly / 2), origin, scale, 0, 0);
+        }
+    }
 }

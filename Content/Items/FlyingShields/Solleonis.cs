@@ -21,7 +21,7 @@ namespace Coralite.Content.Items.FlyingShields
             Item.shoot = ModContent.ProjectileType<SolleonisProj>();
             Item.knockBack = 8;
             Item.shootSpeed = 18;
-            Item.damage = 78;
+            Item.damage = 80;
         }
 
         public override void AddRecipes()
@@ -63,7 +63,7 @@ namespace Coralite.Content.Items.FlyingShields
                 //射流星
                 Projectile.NewProjectileFromThis<SolleonisMeteor>(Projectile.Center
                     , (Projectile.extraUpdates + 1) * Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.25f, 0.25f)) * Main.rand.NextFloat(0.8f, 1.2f),
-                    (int)(Projectile.damage * 0.72f), Projectile.knockBack);
+                    (int)(Projectile.damage * 0.78f), Projectile.knockBack);
             }
         }
 

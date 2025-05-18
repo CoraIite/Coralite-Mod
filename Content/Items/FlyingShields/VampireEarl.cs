@@ -20,7 +20,7 @@ namespace Coralite.Content.Items.FlyingShields
             Item.shoot = ModContent.ProjectileType<VampireEarlProj>();
             Item.knockBack = 6.5f;
             Item.shootSpeed = 20 / 2;
-            Item.damage = 115;
+            Item.damage = 85;
         }
 
         public override void AddRecipes()
@@ -79,7 +79,7 @@ namespace Coralite.Content.Items.FlyingShields
                 if (Helper.TryFindClosestEnemy(Projectile.Center, 600, n => n.CanBeChasedBy(), out _))
                     Projectile.NewProjectileFromThis<VampireEarlBat>(Projectile.Center
                     , Projectile.velocity.SafeNormalize(Vector2.Zero).RotatedBy(3.141f + Main.rand.NextFloat(-0.8f, 0.8f)) * Main.rand.NextFloat(3f, 12f),
-                    (int)(Projectile.damage * 0.8f), Projectile.knockBack);
+                    (int)(Projectile.damage * 0.5f), Projectile.knockBack);
             }
         }
 

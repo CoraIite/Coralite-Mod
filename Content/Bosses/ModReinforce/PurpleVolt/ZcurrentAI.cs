@@ -1,7 +1,12 @@
-﻿using Coralite.Helpers;
+﻿using Coralite.Content.Bosses.ThunderveinDragon;
+using Coralite.Content.Particles;
+using Coralite.Core;
+using Coralite.Helpers;
+using InnoVault.PRT;
 using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.Audio;
 using Terraria.Graphics.Effects;
 using Terraria.Utilities;
 
@@ -75,7 +80,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
             //单招
             /// <summary> 闪电突袭，先短冲后进行一次长冲 </summary>
-            LightningRaid,
+            LightningRaidNormal,
             /// <summary> 电流吐息，小 </summary>
             ElectricBreathSmall,
             /// <summary> 电流吐息，中 </summary>
@@ -86,6 +91,12 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             DashDischarging,
             /// <summary> 闪电链， </summary>
             ThunderChain,
+
+            //2阶段单招
+            /// <summary> 2阶段指针电球 </summary>
+            PointerBall,
+            /// <summary> 2阶段指针电球 </summary>
+            LightningRaidVolt,
 
             //连段
             /// <summary>
@@ -105,10 +116,30 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             /// </summary>
             NormalPointerCombo,
 
+            /// <summary>
+            /// 二阶段超长连段<br></br>
+            /// 吼叫=》闪电链=》 循环x3（  指针电球=》闪电突袭x1  ）=》引力电球（超长持续时间）<br></br>
+			/// =》电流吐息（中）=》Z电球 =》电伏击穿 =》落雷
+            /// </summary>
+            VoltBigCombo,
+            /// <summary>
+            /// 二阶段短连招：闪电链=》电伏击穿=》电流吐息（中）
+            /// </summary>
+            VoltChainCombo,
+            /// <summary>
+            /// Z电球=》闪电突袭=》电伏击穿=》指针电流=》落雷
+            /// </summary>
+            VoltElectricSlashChainCombo,
+
             //调整身位用招式
             SmallDash,
+            SmallDashVolt,
 
             //其他
+            /// <summary>
+            /// 从紫伏状态回归，给玩家一些输出时间
+            /// </summary>
+            Break
         }
 
         public override void AI()
@@ -118,25 +149,65 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                 Initialize();
                 init = false;
             }
-
+            
             if (CheckTarget())
                 return;
 
             UpdateSky();
-
+            Main.NewText(PurpleVoltCount);
             switch (State)
             {
                 default:
                 case AIStates.Waiting:
-                    State = AIStates.LightningRaid;
+                    State = AIStates.LightningRaidNormal;
                     NPC.TargetClosest();
                     break;
                 case AIStates.onSpawnAnmi:
-                    State = AIStates.LightningRaid;
-                    NPC.TargetClosest();
-
+                    ResetFields();
+                    ChangeState();
                     break;
                 case AIStates.onKillAnim:
+                    break;
+                case AIStates.Break:
+                    {
+                        int time = Helper.ScaleValueForDiffMode(60 * 4, 60 * 3, 60 * 3, 10);
+                        if (Timer == 0)
+                        {
+                            Vector2 f() => GetMousePos() + new Vector2(0, -50);
+                            DizzyStar.Spawn(NPC.Center, -1.57f, time, 10, f);
+                            DizzyStar.Spawn(NPC.Center, 1.57f, time, 10, f);
+
+                            Helper.PlayPitched(CoraliteSoundID.NoUse_ElectricMagic_Item122, NPC.Center);
+                            if (!VaultUtils.isServer)
+                            {
+                                for (int i = 0; i < 30; i++)
+                                {
+                                    float factor = i / 30f;
+                                    float length = Helper.Lerp(80, 400, factor);
+
+                                    for (int j = 0; j < 5; j++)
+                                    {
+                                        PRTLoader.NewParticle(NPC.Center + Main.rand.NextVector2CircularEdge(length, length),
+                                            Vector2.Zero, CoraliteContent.ParticleType<ElectricParticle_Purple>(), Scale: Main.rand.NextFloat(0.9f, 1.3f));
+                                    }
+                                }
+                            }
+
+                            SoundEngine.PlaySound(CoraliteSoundID.NoUse_ElectricMagic_Item122, NPC.Center);
+                            SoundEngine.PlaySound(CoraliteSoundID.BigBOOM_Item62, NPC.Center);
+                        }
+
+                        NPC.velocity *= 0.9f;
+                        FlyingFrame();
+                        TurnToNoRot();
+                        Timer++;
+                        if (Timer > time)
+                        {
+                            ResetFields();
+                            PurpleVolt = false;
+                            ChangeState();
+                        }
+                    }
                     break;
                 case AIStates.PurpleVoltExchange:
                     if (PurpleVoltExchange())
@@ -146,7 +217,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                         ChangeState();
                     }
                     break;
-                case AIStates.LightningRaid:
+                case AIStates.LightningRaidNormal:
                     if (LightningRaidNoraml())
                     {
                         ResetFields();
@@ -156,7 +227,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                 case AIStates.ThunderChain:
                     break;
                 case AIStates.SmallDash:
-                    if (SmallDash())
+                    if (SmallDash<PurpleDash>())
                     {
                         ResetFields();
                         ChangeState();
@@ -343,6 +414,89 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                             break;
                     }
                     break;
+                case AIStates.PointerBall:
+                    if (PointerBallP2(120))
+                    {
+                        ResetFields();
+                        ChangeState();
+                    }
+                    break;
+                case AIStates.LightningRaidVolt:
+                    if (LightningRaidVolt())
+                    {
+                        ResetFields();
+                        ChangeState();
+                    }
+                    break;
+                case AIStates.SmallDashVolt:
+                    if (SmallDash<RedDash>(8, 60))
+                    {
+                        ResetFields();
+                        ChangeState();
+                    }
+                    break;
+                case AIStates.VoltBigCombo:
+                    switch (Combo)
+                    {
+                        default:
+                        case 0:
+                            if (Roar())
+                            {
+                                ResetFields();
+                                Combo = 1;
+                            }
+                            break;
+                        case 1:
+                            if (ElectricChain(120))
+                            {
+                                ResetFields();
+                                Combo = 2;
+                            }
+                            break;
+                        case 2:
+                        case 4:
+                        case 6:
+                            if (PointerBallP2(120))
+                            {
+                                ResetFields(false);
+                                LightningRaidSetStartValue();
+                                Recorder2 = 1;
+                                Combo++;
+                            }
+                            break;
+                        case 3:
+                        case 5:
+                        case 7:
+                            if (LightningRaidVolt())
+                            {
+                                ResetFields(false);
+                                Combo++;
+                            }
+                            break;
+                        case 8:
+                            if (GravitationThunder(60 * 6))
+                            {
+                                ResetFields(false);
+                                Combo++;
+                            }
+                            break;
+                        case 9:
+                            if (ElectricBreathMiddle(2))
+                            {
+                                ResetFields(false);
+                                Combo++;
+                                ZThunderBallSetStartValue();
+                            }
+                            break;
+                        case 10:
+                            if (ZThunderBall())
+                            {
+                                ResetFields();
+                                ChangeState();
+                            }
+                            break;
+                    }
+                    break;
             }
         }
 
@@ -357,7 +511,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                     NPC.dontTakeDamage = true;
                     canDrawShadows = false;
                     IsDashing = true;
-                    State = AIStates.LightningRaid;
+                    State = AIStates.LightningRaidNormal;
                     NPC.velocity.X *= 0.98f;
                     NPC.velocity.Y = -60;
                     NPC.rotation = NPC.velocity.ToRotation();
@@ -433,8 +587,9 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
         /// <summary>
         /// 重新设置各类与状态相关的数值
         /// </summary>
-        public void ResetFields()
+        public void ResetFields(bool resetCombo=true)
         {
+            if (resetCombo)
             Combo = 0;
             SonState = 0;
             Timer = 0;
@@ -461,7 +616,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                 StateRecorder = State;
 
             //进入紫伏状态
-            if (PurpleVoltCount == GetPurpleVoltMax())
+            if (!PurpleVolt && PurpleVoltCount == GetPurpleVoltMax())
             {
                 State = AIStates.PurpleVoltExchange;
                 return;
@@ -470,13 +625,50 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             WeightedRandom<AIStates> rand = new WeightedRandom<AIStates>();
 
             if (PurpleVolt)//紫电状态的切换阶段
-            {
-            }
+                PurpleVoltMoveExchange(rand);
             else
                 NormalMoveExchange(rand);//正常状态的阶段切换
 
-            State = AIStates.PurpleVoltExchange;
+            //State = AIStates.VoltBigCombo;
             SetStateStartValues();
+        }
+
+        private void PurpleVoltMoveExchange(WeightedRandom<AIStates> rand)
+        {
+            rand.Add(AIStates.ElectricBreathSmall);
+
+            //在玩家上下区域的时候减少概率
+            bool upOrDown
+                = MathF.Abs(Target.Center.X - NPC.Center.X) < 16 * 8
+                && MathF.Abs(Target.Center.Y - NPC.Center.Y) > 16 * 6;
+            rand.Add(AIStates.ElectricBreathMiddle, upOrDown ? 0.4f : 1);
+
+            rand.Add(AIStates.ElectricBall);
+            rand.Add(AIStates.PointerBall);
+
+            //距离远的时候提升使用概率
+            bool farAway = NPC.Distance(Target.Center) > 650;
+            float farawayPercent = farAway
+               ? (1.5f + (NPC.Distance(Target.Center) - 650) / 400)
+               : 1;
+            rand.Add(AIStates.DashDischarging, farawayPercent);
+            rand.Add(AIStates.LightningRaidVolt, farawayPercent);
+            //防止复读短冲
+            if (State != AIStates.SmallDashVolt)
+                rand.Add(AIStates.SmallDashVolt, farawayPercent + 1.5f);
+
+            UseMoveCount++;
+            if (UseMoveCount > Helper.ScaleValueForDiffMode(5, 4, 3, 2))
+            {
+                AddCombo(rand, AIStates.VoltBigCombo);
+                AddCombo(rand, AIStates.VoltChainCombo);
+                AddCombo(rand, AIStates.VoltElectricSlashChainCombo);
+            }
+
+            rand.elements.RemoveAll(p => p.Item1 == StateRecorder);
+
+            State = rand.Get();
+            RecordCombo();
         }
 
         private void NormalMoveExchange(WeightedRandom<AIStates> rand)
@@ -496,7 +688,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                ? (1.5f + (NPC.Distance(Target.Center) - 650) / 400)
                : 1;
             rand.Add(AIStates.DashDischarging, farawayPercent);
-            rand.Add(AIStates.LightningRaid, farawayPercent);
+            rand.Add(AIStates.LightningRaidNormal, farawayPercent);
             //防止复读短冲
             if (State != AIStates.SmallDash)
                 rand.Add(AIStates.SmallDash, farawayPercent + 1.5f);
@@ -549,7 +741,8 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                     break;
                 case AIStates.PurpleVoltExchange:
                     break;
-                case AIStates.LightningRaid:
+                case AIStates.LightningRaidNormal:
+                case AIStates.LightningRaidVolt:
                     LightningRaidSetStartValue();
                     break;
                 case AIStates.ThunderChain:

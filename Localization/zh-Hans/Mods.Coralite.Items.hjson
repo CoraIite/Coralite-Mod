@@ -6015,3 +6015,8 @@ Aloe: {
 	DisplayName: 芦荟
 	Tooltip: 洁身自爱
 }
+
+CrystallineMusicBox: {
+	DisplayName: 八音盒（蕴魔奇观）
+	Tooltip: ""
+}

@@ -10,6 +10,9 @@ using Terraria.ID;
 
 namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 {
+    /// <summary>
+    /// 使用ai0控制持续时间
+    /// </summary>
     public class PurpleGravitationThunderBall : BaseZacurrentProj, IPostDrawAdditive
     {
         public override string Texture => AssetDirectory.ZacurrentDragon + "LightingBall";
@@ -19,6 +22,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
         public const int chasingTime = 70;
 
+        public ref float MaxTime => ref Projectile.ai[0];
         public ref float Timer => ref Projectile.localAI[0];
 
         private float thunderRange = 110;
@@ -129,7 +133,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                     }
                 }
 
-                if (Timer > chasingTime + 50 + (60 * 5))
+                if (Timer > chasingTime + 50 + MaxTime)
                     Projectile.Kill();
             }
         }

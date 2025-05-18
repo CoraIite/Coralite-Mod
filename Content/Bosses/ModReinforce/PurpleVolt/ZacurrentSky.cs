@@ -23,6 +23,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
         public const float BaseLight = 0.07f;
         //亮度
         public float light = 0.1f;
+        public float c = 0.3f;
         public float oldLight = BaseLight;
         public float targetLight = BaseLight;
         public int LightTime;
@@ -63,6 +64,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                 e.Parameters["iTime"].SetValue(Main.GlobalTimeWrappedHourly*2);
                 e.Parameters["bright"].SetValue(0.1f+light );
                 e.Parameters["divide"].SetValue(4.5f/10);
+                e.Parameters["c"].SetValue(c);
                 e.Parameters["worldSize"].SetValue(new Vector2(Main.screenWidth, Main.screenHeight));
                 e.Parameters["noise"].SetValue(BGNoise.Value);
 
@@ -110,18 +112,22 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             if (!OwnerIndex.GetNPCOwner<ZacurrentDragon>(out NPC owner))
                 return;
 
+            c = (owner.ModNPC as ZacurrentDragon).PurpleVolt
+                ? Helper.Lerp(c, -0.3f, 0.008f)
+                : Helper.Lerp(c, 0.3f, 0.008f);
+
             float factor = Timeleft / 100f;
             if (owner.ai[0] == 1)
             {
                 //Main.maxRaining = Math.Clamp(0.5f * factor, 0f, 1f);
-                Main.cloudAlpha = Main.maxRaining;
+                //Main.cloudAlpha = Math.Clamp(0.5f * factor, 0f, 1f);
                 Main.windSpeedCurrent = 0;
                 Main.windSpeedTarget = 0;
             }
             else
             {
                 //Main.maxRaining = Math.Clamp(0.8f * factor, 0f, 1f);
-                Main.cloudAlpha = Main.maxRaining;
+                //Main.cloudAlpha = Math.Clamp(0.8f * factor, 0f, 1f);
                 Main.windSpeedCurrent = 0;
                 Main.windSpeedTarget = 0;
             }

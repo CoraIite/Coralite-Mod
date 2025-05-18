@@ -3,6 +3,7 @@
 float iTime;
 float bright;
 float divide;
+float c;
 float2 worldSize;
 texture noise;
 
@@ -87,7 +88,7 @@ float4 PixelShaderFunction(float4 color:COLOR0,float2 coords : TEXCOORD0) : COLO
 	
     float f4 = f2 * smoothstep(0.0, 1., uv.y);
 	
-    float3 clouds = lerp(float3(-0.4, -0.4, -0.15), float3(1.5, 1.3, 1.6), f4 * f);
+    float3 clouds = lerp(float3(-0.4, -0.4, -0.15), float3(1.8 - c, 1.3, 1.3 + c), f4 * f);
 
     float2 moonp = float2(0.5, 0.8);
     float moon = smoothstep(0.95, 0.956, 1. - length(uv - moonp));

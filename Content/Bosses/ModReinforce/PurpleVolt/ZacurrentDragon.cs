@@ -58,7 +58,8 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
         internal static Color ZacurrentPink = new(255, 115, 226);
         internal static Color ZacurrentPurpleAlpha = new(135, 94, 255,0);
         internal static Color ZacurrentPinkAlpha = new(255, 115, 226, 0);
-        internal static Color ZacurrentRed = new(255, 38, 110);
+        internal static Color ZacurrentRed = new(255, 28, 110);
+        internal static Color ZacurrentDustRed = new(255, 113, 160);
         /// <summary>
         /// 残影的透明度
         /// </summary>
@@ -131,7 +132,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
                 if (Main.zenithWorld)
                 {
-                    NPC.scale = 2.4f;
+                    NPC.scale = 1.6f;
                 }
 
                 return;
@@ -180,6 +181,46 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                 return true;
 
             return false;
+        }
+
+        public override void ModifyHitByProjectile(Projectile projectile, ref NPC.HitModifiers modifiers)
+        {
+            if (projectile.Colliding(projectile.getRect(), HeadHitBox()))
+                modifiers.SourceDamage += 0.25f;
+
+            if (projectile.hostile)
+                modifiers.SourceDamage -= 0.5f;
+        }
+
+        public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
+        {
+            if (PurpleVolt)
+            {
+                modifiers.SourceDamage -= 0.98f;
+                modifiers.ModifyHitInfo += Modifiers_ModifyHitInfo;
+            }
+
+            if (currentSurrounding)
+            {
+                modifiers.SourceDamage -= 0.5f;
+            }
+        }
+
+        public Rectangle HeadHitBox()
+        {
+            return Utils.CenteredRectangle(GetMousePos(), new Vector2(50, 50));
+        }
+
+        private void Modifiers_ModifyHitInfo(ref NPC.HitInfo info)
+        {
+            PurpleVoltCount -= info.Damage;
+            if (PurpleVoltCount < 0)
+            {
+                ResetFields();
+                State = AIStates.Break;
+                PurpleVolt = false;
+                PurpleVoltCount = 0;
+            }
         }
 
         #endregion

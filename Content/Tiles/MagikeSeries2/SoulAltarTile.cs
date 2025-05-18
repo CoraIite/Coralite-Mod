@@ -32,6 +32,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             Main.tileLighted[Type] = true;
 
             TileID.Sets.PreventsTileRemovalIfOnTopOfIt[Type] = true;
+            TileID.Sets.PreventsTileHammeringIfOnTopOfIt[Type] = true;
             TileID.Sets.HasOutlines[Type] = true;
             TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
             TileID.Sets.CanBeClearedDuringOreRunner[Type] = false;
@@ -129,6 +130,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             Main.tileLighted[Type] = true;
 
             TileID.Sets.PreventsTileRemovalIfOnTopOfIt[Type] = true;
+            TileID.Sets.PreventsTileHammeringIfOnTopOfIt[Type] = true;
             TileID.Sets.HasOutlines[Type] = true;
             TileID.Sets.CanBeClearedDuringGeneration[Type] = false;
             TileID.Sets.CanBeClearedDuringOreRunner[Type] = false;

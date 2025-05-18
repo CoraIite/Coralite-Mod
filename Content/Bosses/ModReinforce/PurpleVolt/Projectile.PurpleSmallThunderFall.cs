@@ -182,17 +182,18 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                 Vector2 p = Projectile.Center - Main.screenPosition;
                 float factor = Timer / ReadyTime;
                 float factor2 = Coralite.Instance.SqrtSmoother.Smoother(factor);
-                float rot = Projectile.whoAmI + MathHelper.TwoPi / 3 + factor2 * MathHelper.TwoPi;
-                float scale = 0.2f - factor * 0.2f;
-                CoraliteAssets.Sparkle.CrossSPA.Value.QuickCenteredDraw(Main.spriteBatch, p
+                float rot = Projectile.whoAmI * MathHelper.TwoPi / 3 + factor2 * MathHelper.TwoPi;
+                float scale = 0.8f - factor * 0.8f;
+                CoraliteAssets.Sparkle.ThreeShotSPA.Value.QuickCenteredDraw(Main.spriteBatch, p
                     , ZacurrentDragon.ZacurrentPurple, rot, scale);
-                CoraliteAssets.Sparkle.CrossSPA.Value.QuickCenteredDraw(Main.spriteBatch, p
+                CoraliteAssets.Sparkle.ThreeShotSPA.Value.QuickCenteredDraw(Main.spriteBatch, p
                     , Color.White, rot, scale * 0.6f);
 
-                CoraliteAssets.Sparkle.CrossSPA.Value.QuickCenteredDraw(Main.spriteBatch, p
-                    , ZacurrentDragon.ZacurrentPink, rot + MathHelper.PiOver4, scale * 0.6f);
-                CoraliteAssets.Sparkle.CrossSPA.Value.QuickCenteredDraw(Main.spriteBatch, p
-                    , Color.White, rot + MathHelper.PiOver4, scale * 0.3f);
+                float rotadd = MathHelper.TwoPi / 6;
+                CoraliteAssets.Sparkle.ThreeShotSPA.Value.QuickCenteredDraw(Main.spriteBatch, p
+                    , ZacurrentDragon.ZacurrentPink, rot + rotadd, scale * 0.6f);
+                CoraliteAssets.Sparkle.ThreeShotSPA.Value.QuickCenteredDraw(Main.spriteBatch, p
+                    , Color.White, rot + rotadd, scale * 0.3f);
             }
 
             if (thunderTrails != null)

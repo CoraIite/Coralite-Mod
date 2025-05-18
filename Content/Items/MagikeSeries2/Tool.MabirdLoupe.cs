@@ -10,6 +10,7 @@ using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader.IO;
@@ -25,6 +26,8 @@ namespace Coralite.Content.Items.MagikeSeries2
 
         [AutoLoadTexture(Name = "MabirdLoupeClose")]
         public static ATex CloseTex {  get;private set; }
+        [AutoLoadTexture(Name = "MabirdLoupeClose2")]
+        public static ATex CloseTex2 {  get;private set; }
 
         /// <summary>
         /// 0 不显示，1 显示传输，2 显示全部
@@ -104,12 +107,16 @@ namespace Coralite.Content.Items.MagikeSeries2
 
         public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
         {
-            if (ShowLineStyle==0)
+            if (ShowLineStyle == 0)
             {
                 spriteBatch.Draw(CloseTex.Value, position, frame, drawColor, 0, origin, scale, 0, 0);
                 return false;
             }
-
+            else if (ShowLineStyle == 1)
+            {
+                spriteBatch.Draw(CloseTex2.Value, position, frame, drawColor, 0, origin, scale, 0, 0);
+                return false;
+            }
             return true;
         }
 
@@ -117,11 +124,19 @@ namespace Coralite.Content.Items.MagikeSeries2
         {
             if (ShowLineStyle == 0)
             {
-                spriteBatch.Draw(CloseTex.Value, Item.Center, null, lightColor, rotation, CloseTex.Size() / 2, scale, 0, 0);
+                spriteBatch.Draw(CloseTex.Value, Item.Center-Main.screenPosition, null, lightColor, rotation, CloseTex.Size() / 2, scale, 0, 0);
                 return false;
             }
-
-            return true;
+            else if (ShowLineStyle == 1)
+            {
+                spriteBatch.Draw(CloseTex2.Value, Item.Center - Main.screenPosition, null, lightColor, rotation, CloseTex.Size() / 2, scale, 0, 0);
+                return false;
+            }
+            else
+            {
+                spriteBatch.Draw(TextureAssets.Item[Item.type].Value, new Vector2(0,1)+Item.Center - Main.screenPosition, null, lightColor, rotation, CloseTex.Size() / 2, scale, 0, 0);
+                return false;
+            }
         }
     }
 }

@@ -2,6 +2,8 @@
 using Coralite.Content.Items.MagikeSeries2;
 using Coralite.Core;
 using Terraria;
+using Terraria.DataStructures;
+using Terraria.Enums;
 using Terraria.Localization;
 using Terraria.ObjectData;
 
@@ -18,11 +20,17 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             Main.tileLighted[Type] = true;
             Main.tileFrameImportant[Type] = true;
 
-            TileObjectData.newTile.CopyFrom(TileObjectData.Style4x2);
+            TileObjectData.newTile.Width = 4;
+            TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.SolidWithTop | AnchorType.SolidSide, TileObjectData.newTile.Width, 0);
+            TileObjectData.newTile.UsesCustomCanPlace = true;
+
+            TileObjectData.newTile.CoordinateWidth = 16;
+            TileObjectData.newTile.CoordinatePadding = 2;
+
             TileObjectData.newTile.Height = 5;
             TileObjectData.newTile.CoordinateHeights = [16, 16, 16, 16, 18];
             TileObjectData.newTile.LavaDeath = false;
-            TileObjectData.newTile.Origin = new Terraria.DataStructures.Point16(2, 4);
+            TileObjectData.newTile.Origin = new Point16(2, 4);
 
             AnimationFrameHeight = TileObjectData.newTile.CoordinateFullHeight;
 

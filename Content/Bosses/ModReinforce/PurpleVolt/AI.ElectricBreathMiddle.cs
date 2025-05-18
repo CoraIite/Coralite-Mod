@@ -11,7 +11,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
         /// 使用record2控制飞在玩家左边还是右边
         /// </summary>
         /// <returns></returns>
-        public bool ElectricBreathMiddle()
+        public bool ElectricBreathMiddle(int? RestTime=null)
         {
             const int BreathTime = 60;
 
@@ -165,7 +165,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                     return false;
                 case 3://吐息
                     {
-                        int restTime = Helper.ScaleValueForDiffMode(40, 35, 30, 20);
+                        int restTime = RestTime?? Helper.ScaleValueForDiffMode(40, 35, 30, 20);
 
                         Timer++;
                         if (Timer < BreathTime + 10)

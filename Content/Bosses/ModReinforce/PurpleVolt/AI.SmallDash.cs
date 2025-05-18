@@ -12,16 +12,13 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
         /// 使用<see cref="Recorder"/> 记录第一次短冲的冲刺次数
         /// </summary>
         /// <returns></returns>
-        public bool SmallDash()
+        public bool SmallDash<TProj>(int smallDashTime=10, int smallDashSpeed = 45) where TProj:ModProjectile
         {
-            const int smallDashTime = 10;
-            const int smallDashSpeed = 45;
-
             if (Timer == 0)
             {
                 //生成弹幕并随机速度方向
                 int damage = Helper.GetProjDamage(20, 30, 70);
-                NPC.NewProjectileDirectInAI<PurpleDash>(NPC.Center, Vector2.Zero, damage, 0
+                NPC.NewProjectileDirectInAI<TProj>(NPC.Center, Vector2.Zero, damage, 0
                     , NPC.target, smallDashTime - 1, NPC.whoAmI, 10);
 
                 ElectricSound();
@@ -44,7 +41,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
                     //目标方向
                     float targetDir = (Target.Center - NPC.Center).ToRotation() + MathHelper.Pi;
-                    float velocityDir = NPC.velocity.ToRotation().AngleTowards(targetDir, 0.2f * factor);
+                    float velocityDir = NPC.velocity.ToRotation().AngleTowards(targetDir, (0.2f +(smallDashSpeed-45)/200)* factor);
                     NPC.velocity = velocityDir.ToRotationVector2() * smallDashSpeed;
                     NPC.rotation = velocityDir;
                 }

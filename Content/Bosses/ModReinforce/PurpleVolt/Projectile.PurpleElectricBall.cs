@@ -11,7 +11,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 {
-    [AutoLoadTexture(Path=AssetDirectory.ZacurrentDragon)]
+    [AutoLoadTexture(Path = AssetDirectory.ZacurrentDragon)]
     public class PurpleElectricBall : BaseZacurrentProj, IDrawAdditive
     {
         public override string Texture => AssetDirectory.ThunderveinDragon + "LightingBall";
@@ -157,7 +157,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             float length = Helper.Lerp(20, 1000, factor);
             for (int i = 0; i < 5; i++)
             {
-                Vector2 dir = (Angle + (i * MathHelper.TwoPi/5)).ToRotationVector2();
+                Vector2 dir = (Angle + (i * MathHelper.TwoPi / 5)).ToRotationVector2();
                 Dust d = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(6, 6) + (dir * Main.rand.NextFloat(20, length)), DustID.PortalBoltTrail
                     , dir.RotateByRandom(-0.3f, 0.3f) * Main.rand.NextFloat(2f, 6f), newColor: ZacurrentDragon.ZacurrentDustPurple,
                     Scale: Main.rand.NextFloat(1f, 1.5f));
@@ -169,7 +169,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
         {
             for (int i = 0; i < 5; i++)
             {
-                Vector2 dir = (Angle + (i * MathHelper.TwoPi/5)).ToRotationVector2();
+                Vector2 dir = (Angle + (i * MathHelper.TwoPi / 5)).ToRotationVector2();
                 Vector2 pos = Projectile.Center + (dir * 40);
                 Projectile.NewProjectileFromThis<PurpleElectricBallThunder>(pos + (dir * 1000), pos, Projectile.damage, 0, 15,
                     (int)OwnerIndex, 70);
@@ -203,7 +203,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
         public override bool PreDraw(ref Color lightColor)
         {
             BallBack.Value.QuickCenteredDraw(Main.spriteBatch, Projectile.Center - Main.screenPosition
-                , Color.Black * 0.6f * ThunderAlpha, 0, Projectile.scale*0.5f);
+                , Color.Black * 0.6f * ThunderAlpha, 0, Projectile.scale * 0.5f);
             Projectile.QuickDraw(Color.White, 0f);
 
             if (circles != null)
@@ -229,7 +229,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
     }
 
-    public class PurpleElectricBallThunder: PurpleElectricBreath
+    public class PurpleElectricBallThunder : PurpleElectricBreath
     {
         public override void SetStartPos(NPC owner)
         {
