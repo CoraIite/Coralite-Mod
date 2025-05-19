@@ -51,7 +51,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
         /// <summary>
         /// 紫电计数
         /// </summary>
-        public int PurpleVoltCount { get; set; }
+        public float PurpleVoltCount { get; set; }
 
         public Point[] oldFrame;
         public int[] oldDirection;
@@ -129,7 +129,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             /// <summary>
             /// Z电球=》闪电突袭=》电伏击穿=》指针电流=》落雷
             /// </summary>
-            VoltElectricSlashChainCombo,
+            VoltZBallChainCombo,
 
             //调整身位用招式
             SmallDash,
@@ -447,7 +447,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                             }
                             break;
                         case 1:
-                            if (ElectricChain(120))
+                            if (ElectricChain(80))
                             {
                                 ResetFields();
                                 Combo = 2;
@@ -490,6 +490,93 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                             break;
                         case 10:
                             if (ZThunderBall())
+                            {
+                                ResetFields(false);
+                                VoltBreakSetStartValue();
+                                Combo++;
+                            }
+                            break;
+                        case 11:
+                            if (VoltBreak())
+                            {
+                                ResetFields(false);
+                                Combo++;
+                            }
+                            break;
+                        case 12:
+                            if (FallingThunder())
+                            {
+                                ResetFields();
+                                ChangeState();
+                            }
+                            break;
+                    }
+                    break;
+                case AIStates.VoltChainCombo:
+                    switch (Combo)
+                    {
+                        default:
+                        case 0:
+                            if (ElectricChain(140))
+                            {
+                                ResetFields(false);
+                                VoltBreakSetStartValue();
+                                Combo++;
+                            }
+                            break;
+                        case 1:
+                            if (VoltBreak())
+                            {
+                                ResetFields(false);
+                                Combo++;
+                            }
+                            break;
+                        case 2:
+                            if (ElectricBreathMiddle())
+                            {
+                                ResetFields();
+                                ChangeState();
+                            }
+                            break;
+                    }
+                    break;
+                case AIStates.VoltZBallChainCombo:
+                    switch (Combo)
+                    {
+                        default:
+                        case 0:
+                            if (ZThunderBall())
+                            {
+                                ResetFields(false);
+                                LightningRaidSetStartValue();
+                                Recorder2 = 3;
+                                Combo++;
+                            }
+                            break;
+                        case 1:
+                            if (LightningRaidVolt())
+                            {
+                                ResetFields(false);
+                                VoltBreakSetStartValue();
+                                Combo++;
+                            }
+                            break;
+                        case 2:
+                            if (VoltBreak())
+                            {
+                                ResetFields(false);
+                                Combo++;
+                            }
+                            break;
+                        case 3:
+                            if (PointerBallP2(180))
+                            {
+                                ResetFields(false);
+                                Combo++;
+                            }
+                            break;
+                        case 4:
+                            if (FallingThunder())
                             {
                                 ResetFields();
                                 ChangeState();
@@ -635,7 +722,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
         private void PurpleVoltMoveExchange(WeightedRandom<AIStates> rand)
         {
-            rand.Add(AIStates.ElectricBreathSmall);
+            rand.Add(AIStates.ElectricBreathSmall,0.5f);//小吐息概率降低
 
             //在玩家上下区域的时候减少概率
             bool upOrDown
@@ -643,7 +730,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                 && MathF.Abs(Target.Center.Y - NPC.Center.Y) > 16 * 6;
             rand.Add(AIStates.ElectricBreathMiddle, upOrDown ? 0.4f : 1);
 
-            rand.Add(AIStates.ElectricBall);
+            rand.Add(AIStates.ElectricBall,0.5f);//普通电球概率降低
             rand.Add(AIStates.PointerBall);
 
             //距离远的时候提升使用概率
@@ -655,14 +742,14 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             rand.Add(AIStates.LightningRaidVolt, farawayPercent);
             //防止复读短冲
             if (State != AIStates.SmallDashVolt)
-                rand.Add(AIStates.SmallDashVolt, farawayPercent + 1.5f);
+                rand.Add(AIStates.SmallDashVolt, farawayPercent + 3f);
 
             UseMoveCount++;
             if (UseMoveCount > Helper.ScaleValueForDiffMode(5, 4, 3, 2))
             {
                 AddCombo(rand, AIStates.VoltBigCombo);
                 AddCombo(rand, AIStates.VoltChainCombo);
-                AddCombo(rand, AIStates.VoltElectricSlashChainCombo);
+                AddCombo(rand, AIStates.VoltZBallChainCombo);
             }
 
             rand.elements.RemoveAll(p => p.Item1 == StateRecorder);
@@ -710,7 +797,8 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
         private void RecordCombo()
         {
-            if (State is AIStates.NormalChainCombo or AIStates.NormalRoarCombo1 or AIStates.NormalRoarCombo2 or AIStates.NormalPointerCombo)
+            if (State is AIStates.NormalChainCombo or AIStates.NormalRoarCombo1 or AIStates.NormalRoarCombo2 or AIStates.NormalPointerCombo
+                or AIStates.VoltBigCombo or AIStates.VoltChainCombo or AIStates.VoltZBallChainCombo)
             {
                 comboRecords.Add(State);
                 UseMoveCount = 0;

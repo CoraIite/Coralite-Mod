@@ -63,7 +63,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                         {
                             int count = 3;
 
-                            int damage = Helper.GetProjDamage(80, 140, 180);
+                            int damage = Helper.GetProjDamage(80, 140, 150);
                             for (int i = 0; i < count; i++)
                             {
                                 Vector2 dir = (Recorder + Timer * 0.08f + i * MathHelper.TwoPi / count + Main.rand.NextFloat(-0.2f, 0.2f)).ToRotationVector2();

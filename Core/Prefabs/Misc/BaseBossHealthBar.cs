@@ -138,7 +138,7 @@ namespace Coralite.Core.Prefabs.Misc
             Vector2 stretchScale = new(currentBarLength / (float)barFrame.Width, 1f);
             Color barColor = npc.dontTakeDamage ? DontTakeDamageColor : Color.White;
 
-            DrawBar(spriteBatch, barTexture, barTopLeft, barFrame, barColor, stretchScale);
+            DrawBar(spriteBatch, barTexture, barTopLeft, barFrame, barColor, stretchScale,npc);
             #endregion
 
             #region 顶端的绘制
@@ -203,7 +203,7 @@ namespace Coralite.Core.Prefabs.Misc
                     Utils.DrawBorderStringFourWay(spriteBatch, font, text, center.X, center.Y, Color.White, Color.Black, textSize / 2);
                 }
                 else
-                    BigProgressBarHelper.DrawHealthText(spriteBatch, barPosition, drawParams.TextOffset, life, lifeMax);
+                    DrawNumber(spriteBatch, drawParams, life, lifeMax, barPosition,npc);
             }
 
             oldLife = npc.life;
@@ -212,12 +212,17 @@ namespace Coralite.Core.Prefabs.Misc
             return false;
         }
 
+        public virtual void DrawNumber(SpriteBatch spriteBatch, BossBarDrawParams drawParams, float life, float lifeMax, Rectangle barPosition,NPC npc)
+        {
+            BigProgressBarHelper.DrawHealthText(spriteBatch, barPosition, drawParams.TextOffset, life, lifeMax);
+        }
+
         public virtual void DrawBackground(SpriteBatch spriteBatch, Texture2D barTexture, Vector2 topLeft, Rectangle backFrame)
         {
             spriteBatch.Draw(barTexture, topLeft + offset, backFrame, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
         }
 
-        public virtual void DrawBar(SpriteBatch spriteBatch, Texture2D barTexture, Vector2 barTopLeft, Rectangle barFrame, Color barColor, Vector2 stretchScale)
+        public virtual void DrawBar(SpriteBatch spriteBatch, Texture2D barTexture, Vector2 barTopLeft, Rectangle barFrame, Color barColor, Vector2 stretchScale,NPC npc)
         {
             spriteBatch.Draw(barTexture, barTopLeft + offset, barFrame, barColor, 0f, Vector2.Zero, stretchScale, SpriteEffects.None, 0f);
         }

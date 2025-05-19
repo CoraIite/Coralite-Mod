@@ -91,7 +91,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             NPC.scale = 1.2f;
             NPC.aiStyle = -1;
             NPC.npcSlots = 10f;
-            NPC.value = Item.buyPrice(0, 20, 0, 0);
+            NPC.value = Item.buyPrice(0, 45, 0, 0);
 
             NPC.noGravity = true;
             NPC.noTileCollide = true;
@@ -108,26 +108,32 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
+            int expertBaseLife = 101254;
+            int masterBaseLife = 123854;
+
+            int expertAddLife = 20395;
+            int masterAddLife = 28485;
+
             if (Helper.GetJourneyModeStrangth(out float journeyScale, out NPCStrengthHelper nPCStrengthHelper))
             {
                 if (nPCStrengthHelper.IsExpertMode)
                 {
-                    NPC.lifeMax = (int)((79000 + (numPlayers * 15500)) / journeyScale);
+                    NPC.lifeMax = (int)((expertBaseLife + (numPlayers * expertAddLife)) / journeyScale);
                     NPC.damage = 66;
-                    NPC.defense = 50;
+                    NPC.defense = 45;
                 }
 
                 if (nPCStrengthHelper.IsMasterMode)
                 {
-                    NPC.lifeMax = (int)((85500 + (numPlayers * 19550)) / journeyScale);
+                    NPC.lifeMax = (int)((masterBaseLife + (numPlayers * masterAddLife)) / journeyScale);
                     NPC.damage = 72;
-                    NPC.defense = 50;
+                    NPC.defense = 45;
                 }
 
                 if (Main.getGoodWorld)
                 {
                     NPC.damage = 80;
-                    NPC.defense = 50;
+                    NPC.defense = 45;
                 }
 
                 if (Main.zenithWorld)
@@ -138,22 +144,22 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                 return;
             }
 
-            NPC.lifeMax = 79000 + (numPlayers * 15500);
+            NPC.lifeMax = expertBaseLife + (numPlayers * expertAddLife);
             NPC.damage = 66;
-            NPC.defense = 50;
+            NPC.defense = 45;
 
             if (Main.masterMode)
             {
-                NPC.lifeMax = 85500 + (numPlayers * 19550);
+                NPC.lifeMax = masterBaseLife + (numPlayers * masterAddLife);
                 NPC.damage = 72;
-                NPC.defense = 50;
+                NPC.defense = 45;
             }
 
             if (Main.getGoodWorld)
             {
                 NPC.lifeMax = 92000 + (numPlayers * 25850);
                 NPC.damage = 80;
-                NPC.defense = 50;
+                NPC.defense = 45;
             }
 
             if (Main.zenithWorld)
@@ -213,7 +219,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
         private void Modifiers_ModifyHitInfo(ref NPC.HitInfo info)
         {
-            PurpleVoltCount -= info.Damage;
+            PurpleVoltCount -= info.Damage * Helper.ScaleValueForDiffMode(1, 1, 0.5f, 0.25f);
             if (PurpleVoltCount < 0)
             {
                 ResetFields();

@@ -9,6 +9,9 @@ using Terraria.ID;
 
 namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 {
+    /// <summary>
+    /// ai0传入准备时间
+    /// </summary>
     public class PurpleSmallThunderFall : BaseZacurrentProj
     {
         public override string Texture => AssetDirectory.Blank;

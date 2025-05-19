@@ -82,6 +82,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
             if (Timer > 30)
             {
+                if (Main.rand.NextBool())
                 Projectile.SpawnTrailDust(30f, DustID.PortalBoltTrail, Main.rand.NextFloat(0.1f, 0.4f),
                     newColor: ZacurrentDragon.ZacurrentDustPurple, Scale: Main.rand.NextFloat(1f, 1.3f));
                 ThunderWidth = Main.rand.NextFloat(20, 30);

@@ -36,7 +36,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
         {
             NPC.width = 55;
             NPC.height = 55;
-            NPC.damage = 100;
+            NPC.damage = 30;
             NPC.defense = 0;
             NPC.lifeMax = 5000;
             NPC.knockBackResist = 0f;
@@ -48,7 +48,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
-            NPC.lifeMax = 500;
+            NPC.lifeMax = 750;
         }
 
         public override bool CanHitPlayer(Player target, ref int cooldownSlot)
@@ -121,10 +121,13 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                                 () => NPC.Center, Main.rand.NextFloat(0.5f, 0.75f));
                         }
 
-                        Dust dust = Dust.NewDustPerfect(NPC.Center + Main.rand.NextVector2Circular(30, 30), DustID.PortalBoltTrail
+                        if (Main.rand.NextBool())
+                        {
+                            Dust dust = Dust.NewDustPerfect(NPC.Center + Main.rand.NextVector2Circular(30, 30), DustID.PortalBoltTrail
                             , Vector2.Zero, newColor: ZacurrentDragon.ZacurrentDustPurple, Scale: Main.rand.NextFloat(1f, 1.3f));
-                        dust.noGravity = true;
-                        dust.velocity = -NPC.velocity * Main.rand.NextFloat(1, 2);
+                            dust.noGravity = true;
+                            dust.velocity = -NPC.velocity * Main.rand.NextFloat(1, 2);
+                        }
 
                         Timer++;
                         if (Timer > 60 * 5)

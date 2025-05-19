@@ -37,6 +37,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                                 OpenMouse = true;
                                 ResetAllOldCaches();
                                 canDrawShadows = true;
+                                currentSurrounding = true;
 
                                 NPC.velocity = Vector2.Zero;
 

@@ -126,6 +126,9 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                             RedElectricParticle(pos);
                         }
 
+                        shadowScale = Helper.Lerp(1, 2.5f, Timer / maxTime);
+                        shadowAlpha = Helper.Lerp(1, 0, Timer / maxTime);
+
                         Timer++;
                         if (Timer > maxTime || NPC.frame.Y < 1)
                         {
@@ -145,6 +148,9 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                             NPC.direction = NPC.spriteDirection = Math.Sign(NPC.velocity.X);
                             IsDashing = true;
                             SetBackgroundLight(0.4f, bigDashTime - 3, 8);
+                            shadowScale = 1.1f;
+                            shadowAlpha = 1;
+
                             if (!VaultUtils.isServer)
                             {
                                 var modifyer = new PunchCameraModifier(NPC.Center, dir * 2.3f, 16, 5, 20, 1000);
