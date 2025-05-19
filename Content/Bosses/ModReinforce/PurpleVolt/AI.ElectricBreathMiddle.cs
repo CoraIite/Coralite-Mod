@@ -151,7 +151,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                             if (!VaultUtils.isClient)
                             {
                                 Vector2 pos = GetMousePos();
-                                int damage = Helper.GetProjDamage(90, 110, 130);
+                                int damage = Helper.GetProjDamage(180, 200, 240);
 
                                 NPC.NewProjectileDirectInAI<PurpleElectricBreath>(pos + dir * ((Target.Center - pos).Length() + 350), pos, damage, 0, NPC.target
                                 , BreathTime, NPC.whoAmI, 70);

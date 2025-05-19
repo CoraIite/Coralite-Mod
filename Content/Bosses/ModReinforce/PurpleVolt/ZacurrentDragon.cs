@@ -53,6 +53,8 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
         [AutoLoadTexture(Name = "ZacurrentDragon_Highlight")]
         public static ATex GlowTex { get; private set; }
+        [AutoLoadTexture(Name = "ZacurrentDragonWhite")]
+        public static ATex WhiteTex { get; private set; }
         internal static Color ZacurrentDustPurple = new Color(233, 195, 255);
         internal static Color ZacurrentPurple = new(135, 94, 255);
         internal static Color ZacurrentPink = new(255, 115, 226);
@@ -114,26 +116,24 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             int expertAddLife = 20395;
             int masterAddLife = 28485;
 
+            NPC.defDamage = 55;
             if (Helper.GetJourneyModeStrangth(out float journeyScale, out NPCStrengthHelper nPCStrengthHelper))
             {
                 if (nPCStrengthHelper.IsExpertMode)
                 {
                     NPC.lifeMax = (int)((expertBaseLife + (numPlayers * expertAddLife)) / journeyScale);
                     NPC.damage = 66;
-                    NPC.defense = 45;
                 }
 
                 if (nPCStrengthHelper.IsMasterMode)
                 {
                     NPC.lifeMax = (int)((masterBaseLife + (numPlayers * masterAddLife)) / journeyScale);
                     NPC.damage = 72;
-                    NPC.defense = 45;
                 }
 
                 if (Main.getGoodWorld)
                 {
                     NPC.damage = 80;
-                    NPC.defense = 45;
                 }
 
                 if (Main.zenithWorld)
@@ -146,20 +146,17 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
             NPC.lifeMax = expertBaseLife + (numPlayers * expertAddLife);
             NPC.damage = 66;
-            NPC.defense = 45;
 
             if (Main.masterMode)
             {
                 NPC.lifeMax = masterBaseLife + (numPlayers * masterAddLife);
                 NPC.damage = 72;
-                NPC.defense = 45;
             }
 
             if (Main.getGoodWorld)
             {
                 NPC.lifeMax = 92000 + (numPlayers * 25850);
                 NPC.damage = 80;
-                NPC.defense = 45;
             }
 
             if (Main.zenithWorld)
@@ -227,6 +224,26 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                 PurpleVolt = false;
                 PurpleVoltCount = 0;
             }
+        }
+
+        public override bool? CanFallThroughPlatforms() => true;
+
+        public override bool CheckDead()
+        {
+            if (State != AIStates.onKillAnim)
+            {
+                State = AIStates.onKillAnim;
+                SonState = 0;
+                Timer = 0;
+                NPC.dontTakeDamage = true;
+                currentSurrounding = true;
+                canDrawShadows = false;
+                IsDashing = false;
+                NPC.life = 1;
+                return false;
+            }
+
+            return true;
         }
 
         #endregion
@@ -315,6 +332,17 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                 DrawBody(spriteBatch, mainTex,0, pos, drawColor, NPC.rotation, NPC.scale, effects);
                 DrawHead(spriteBatch, mainTex, OpenMouse ? 1 : 0, pos, drawColor, NPC.rotation, NPC.scale, effects);
                 DrawFrontWing(spriteBatch, mainTex, NPC.frame.Y, pos, drawColor, NPC.rotation, NPC.scale, effects);
+            }
+
+            if (State == AIStates.onKillAnim)
+            {
+                Color whiteC = Color.White * shadowAlpha;
+                DrawBackWing(spriteBatch, WhiteTex.Value, NPC.frame.Y, pos, whiteC, NPC.rotation, NPC.scale, effects);
+                DrawBody(spriteBatch, WhiteTex.Value, 0, pos, whiteC, NPC.rotation, NPC.scale, effects);
+                DrawHead(spriteBatch, WhiteTex.Value, OpenMouse ? 1 : 0, pos, whiteC, NPC.rotation, NPC.scale, effects);
+                DrawFrontWing(spriteBatch, WhiteTex.Value, NPC.frame.Y, pos, whiteC, NPC.rotation, NPC.scale, effects);
+
+                return false;
             }
 
             //if (State == (int)AIStates.onKillAnim)

@@ -89,8 +89,6 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             ElectricBall,
             /// <summary> 冲刺放电 </summary>
             DashDischarging,
-            /// <summary> 闪电链， </summary>
-            ThunderChain,
 
             //2阶段单招
             /// <summary> 2阶段指针电球 </summary>
@@ -154,7 +152,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                 return;
 
             UpdateSky();
-            Main.NewText(PurpleVoltCount);
+            //Main.NewText(PurpleVoltCount);
             switch (State)
             {
                 default:
@@ -167,6 +165,43 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                     ChangeState();
                     break;
                 case AIStates.onKillAnim:
+                    {
+                        NPC.velocity = new Vector2(0, -2);
+                        IsDashing = false;
+
+                        shadowAlpha =Math.Clamp( Timer / 60f,0,1);
+
+                        if (Timer % 4 == 0)
+                        {
+                            float speed = Main.rand.NextFloat(45, 60);
+                            Vector2 dir = Helper.NextVec2Dir();
+                            PurpleThunderParticle.Spawn(() => NPC.Center, dir * speed
+                                , 14, 7, 7, 70, ZacurrentRed);
+                        }
+
+                        Timer++;
+                        if (Timer > 120)
+                        {
+                            Helper.PlayPitched(CoraliteSoundID.NoUse_ElectricMagic_Item122, NPC.Center);
+                            if (!VaultUtils.isServer)
+                            {
+                                for (int i = 0; i < 30; i++)
+                                {
+                                    float factor = i / 30f;
+                                    float length = Helper.Lerp(80, 600, factor);
+
+                                    for (int j = 0; j < 4; j++)
+                                    {
+                                        PRTLoader.NewParticle(NPC.Center + Main.rand.NextVector2CircularEdge(length, length),
+                                            Vector2.Zero, CoraliteContent.ParticleType<ElectricParticle_Red>(), Scale: Main.rand.NextFloat(0.9f, 1.3f));
+                                    }
+                                }
+                            }
+
+                            SoundEngine.PlaySound(CoraliteSoundID.BigBOOM_Item62, NPC.Center);
+                            NPC.Kill();
+                        }
+                    }
                     break;
                 case AIStates.Break:
                     {
@@ -183,17 +218,16 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                                 for (int i = 0; i < 30; i++)
                                 {
                                     float factor = i / 30f;
-                                    float length = Helper.Lerp(80, 400, factor);
+                                    float length = Helper.Lerp(80, 600, factor);
 
-                                    for (int j = 0; j < 5; j++)
+                                    for (int j = 0; j < 4; j++)
                                     {
                                         PRTLoader.NewParticle(NPC.Center + Main.rand.NextVector2CircularEdge(length, length),
-                                            Vector2.Zero, CoraliteContent.ParticleType<ElectricParticle_Purple>(), Scale: Main.rand.NextFloat(0.9f, 1.3f));
+                                            Vector2.Zero, CoraliteContent.ParticleType<ElectricParticle_Red>(), Scale: Main.rand.NextFloat(0.9f, 1.3f));
                                     }
                                 }
                             }
 
-                            SoundEngine.PlaySound(CoraliteSoundID.NoUse_ElectricMagic_Item122, NPC.Center);
                             SoundEngine.PlaySound(CoraliteSoundID.BigBOOM_Item62, NPC.Center);
                         }
 
@@ -223,8 +257,6 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                         ResetFields();
                         ChangeState();
                     }
-                    break;
-                case AIStates.ThunderChain:
                     break;
                 case AIStates.SmallDash:
                     if (SmallDash<PurpleDash>())
@@ -816,24 +848,16 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             if (comboRecords.Count > 2)
                 comboRecords.Clear();
             if (!comboRecords.Contains(combo))//没用过的连招才行
-                rand.Add(combo, UseMoveCount / Helper.ScaleValueForDiffMode(6, 5, 4, 3));
+                rand.Add(combo, UseMoveCount);
         }
 
         private void SetStateStartValues()
         {
             switch (State)
             {
-                case AIStates.onSpawnAnmi:
-                    break;
-                case AIStates.onKillAnim:
-                    break;
-                case AIStates.PurpleVoltExchange:
-                    break;
                 case AIStates.LightningRaidNormal:
                 case AIStates.LightningRaidVolt:
                     LightningRaidSetStartValue();
-                    break;
-                case AIStates.ThunderChain:
                     break;
                 case AIStates.SmallDash:
                     SmallDashSetStartValue();

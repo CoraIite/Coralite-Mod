@@ -60,7 +60,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
         {
             Vector2? targetP = null;
 
-            if (ChainProjIndex.GetProjectileOwner(out Projectile p, () =>
+            if (ChainProjIndex.GetProjectileOwner<ElectricChain>(out Projectile p, () =>
             {
                 ChainProjIndex = -1;
                 if (chains != null)

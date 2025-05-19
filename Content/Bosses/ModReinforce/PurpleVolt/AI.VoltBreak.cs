@@ -33,7 +33,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                         SetRotationNormally();
                         FlyingFrame();
                         Timer++;
-                        if (Timer>60*3||Vector2.Distance(targetPos, NPC.Center) < 60)
+                        if (Timer > 60 * 3 || Vector2.Distance(targetPos, NPC.Center) < 80)
                         {
                             SonState = 1;
                             Timer = 0;
@@ -64,7 +64,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                                 if (NPC.directionY < 0)
                                     FlyingUp(0.35f, 15, 0.9f);
                                 else if (yLength > 70)
-                                    Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 5f, 0.3f, 0.5f, 0.95f);
+                                    Helper.Movement_SimpleOneLine(ref NPC.velocity.Y, NPC.directionY, 8f, 0.3f, 0.5f, 0.95f);
                                 else
                                     NPC.velocity.Y *= 0.95f;
                             }

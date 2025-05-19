@@ -2,6 +2,7 @@
 using Coralite.Helpers;
 using Terraria;
 using Terraria.Audio;
+using Terraria.ID;
 
 namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 {
@@ -60,6 +61,27 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                         shadowAlpha = Helper.Lerp(1f, 0f, (factor * 20) % 1);
 
                         Timer++;
+                        if (Timer % 3 == 0)
+                        {
+                            float length2 = 800 - Timer / maxTime * 600;
+                            Vector2 dir = Helper.NextVec2Dir();
+                            Dust d = Dust.NewDustPerfect(NPC.Center + dir * (length2 + Main.rand.Next(1, 80))
+                                , DustID.PortalBoltTrail, -dir * Main.rand.NextFloat(4, 8), newColor: ZacurrentDustRed, Scale: Main.rand.NextFloat(1.5f, 2f));
+                            d.noGravity = true;
+                        }
+
+                        if (Timer%30==0)
+                        {
+                            float length2 = 800 - Timer / maxTime * 700;
+                            for (int i = 0; i < 70; i++)
+                            {
+                                Vector2 dir = (i * MathHelper.TwoPi / 70).ToRotationVector2();
+                                Dust d = Dust.NewDustPerfect(NPC.Center + dir * (length2 + Main.rand.Next(1, 80))
+                                    , DustID.PortalBoltTrail, -dir * Main.rand.NextFloat(2, 5), newColor: ZacurrentDustPurple, Scale: Main.rand.NextFloat(1f, 1.5f));
+                                d.noGravity = true;
+                            }
+                        }
+
                         if (Timer < spawnTime)
                         {
                             if (Timer % 10 == 0)

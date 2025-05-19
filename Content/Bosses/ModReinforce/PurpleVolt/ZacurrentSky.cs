@@ -69,7 +69,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                 e.Parameters["noise"].SetValue(BGNoise.Value);
 
                 spriteBatch.End();
-                spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, e);
+                spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, e);
 
                 //VertexPositionColorTexture[] bar = new VertexPositionColorTexture[4];
                 //bar[0] = new(Vector3.Zero, Color.White, new Vector2(0, 0));
