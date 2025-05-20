@@ -134,7 +134,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 case 1://让天空闪烁一下，同时让分身就位
                     {
                         Timer++;
-                        float factor = Coralite.Instance.SqrtSmoother.Smoother((int)Timer, 75);
+                        float factor = Helper.SqrtEase(Timer/ 75);
                         PhantomDistance = factor * 220;
                         if (Timer > 75)
                         {

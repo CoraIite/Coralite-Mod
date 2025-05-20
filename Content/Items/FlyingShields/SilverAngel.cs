@@ -251,7 +251,7 @@ namespace Coralite.Content.Items.FlyingShields
                         const int FlowTime = 20;
 
                         float factor = Timer / FlowTime;
-                        float sqrtFactor = Coralite.Instance.SqrtSmoother.Smoother(factor);
+                        float sqrtFactor = Helper.SqrtEase(factor);
 
                         distanceToTarget = Helper.Lerp(-20, -180, sqrtFactor);
                         alpha = Helper.Lerp(0.3f, 1f, sqrtFactor);

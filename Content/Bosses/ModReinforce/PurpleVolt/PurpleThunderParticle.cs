@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Bosses.ThunderveinDragon;
 using Coralite.Core;
+using Coralite.Helpers;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -30,7 +31,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             if (Opacity > MaxTime)
             {
                 Velocity = Vector2.Zero;
-                fade = Coralite.Instance.X2Smoother.Smoother((Opacity - MaxTime) / FadeTime);
+                fade = Helper.X2Ease((Opacity - MaxTime) / FadeTime);
 
                 if (Opacity > MaxTime + FadeTime)
                 {

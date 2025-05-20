@@ -1011,8 +1011,8 @@ namespace Coralite.Content.Items.ShieldPlus
         protected override void OnSlash()
         {
             distanceToOwner = -45 + (Smoother.Smoother((int)Timer, maxTime) * 58);
-            distanceToOwner2 = -15 + (Coralite.Instance.SqrtSmoother.Smoother((int)Timer, maxTime) * 60);
-            yScale = Coralite.Instance.SqrtSmoother.Smoother((int)Timer, maxTime);
+            distanceToOwner2 = -15 + (Helper.SqrtEase((int)Timer, maxTime) * 60);
+            yScale = Helper.SqrtEase((int)Timer, maxTime);
 
             if (alpha < 1)
             {

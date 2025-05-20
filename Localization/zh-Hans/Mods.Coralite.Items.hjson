@@ -354,7 +354,7 @@ MushroomStaff: {
 
 SlimeSapling: {
 	DisplayName: 史莱姆树苗
-	Tooltip: 只能种在凝胶块上
+	Tooltip: 只能种在{$ItemName.SlimeBlock}上
 }
 
 MagicCraftStation: {
@@ -611,11 +611,6 @@ Snowdrop: {
 StarsBreath: {
 	DisplayName: 满天星
 	Tooltip: “一切美好的祝愿”
-}
-
-WoodWax: {
-	DisplayName: 木蜡
-	Tooltip: 孢子喷发
 }
 
 CatClaws: {

@@ -153,7 +153,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             if (AttackTime > 0)
             {
-                scale.Y = Helper.Lerp(0.2f, 1f, Coralite.Instance.SqrtSmoother.Smoother(1 - (AttackTime / Owner.itemTimeMax)));
+                scale.Y = Helper.Lerp(0.2f, 1f, Helper.SqrtEase(1 - (AttackTime / Owner.itemTimeMax)));
                 AttackTime--;
             }
         }
@@ -300,7 +300,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             float factor = distance / mainTex.Width;
             float factor2 = 1 - (Timer / RecordTimer);
 
-            Vector2 scale = new Vector2(0.1f * factor, factor) * Coralite.Instance.SqrtSmoother.Smoother(factor2);
+            Vector2 scale = new Vector2(0.1f * factor, factor) * Helper.SqrtEase(factor2);
 
             Color c1 = darkC * 0.6f;
             c1.A = 0;

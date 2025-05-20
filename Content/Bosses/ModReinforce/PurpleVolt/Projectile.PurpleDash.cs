@@ -112,7 +112,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                             float factor = Timer  / DelayTime;
                             float sinFactor = MathF.Sin(factor * MathHelper.Pi);
                             ThunderWidth = 30 + (sinFactor * 40);
-                            ThunderAlpha = 1 - Coralite.Instance.X2Smoother.Smoother(factor);
+                            ThunderAlpha = 1 - Helper.X2Ease(factor);
 
                             if (Timer % 6 == 0)
                                 foreach (var trail in thunderTrails)
@@ -127,7 +127,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                                     }
                                 }
 
-                            fade = Coralite.Instance.X2Smoother.Smoother(factor);
+                            fade = Helper.X2Ease(factor);
                         }
 
                         Timer++;

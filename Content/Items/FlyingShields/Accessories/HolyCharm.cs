@@ -120,7 +120,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
             const int MaxTime = 25;
 
             float factor = Timer / MaxTime;
-            float sqrtFactor = Coralite.Instance.SqrtSmoother.Smoother(factor);
+            float sqrtFactor = Helper.SqrtEase(factor);
 
             scale = Helper.Lerp(0.8f, 1.2f, sqrtFactor);
 

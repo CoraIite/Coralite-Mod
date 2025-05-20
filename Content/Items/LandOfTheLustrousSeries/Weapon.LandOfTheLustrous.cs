@@ -154,7 +154,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     scale += 0.03f;
                 }
                 else
-                    scale = 0.2f + (0.8f * Coralite.Instance.SqrtSmoother.Smoother(timer, 60));
+                    scale = 0.2f + (0.8f * Helper.SqrtEase(timer, 60));
 
                 if (timer > 80)
                     active = false;
@@ -548,7 +548,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                         Timer--;
 
                         if (Timer > 0)
-                            alpha = Coralite.Instance.X2Smoother.Smoother(1 - (Timer / FlyTime));
+                            alpha = Helper.X2Ease(1 - (Timer / FlyTime));
 
                         if (Timer < 0)
                         {
@@ -579,7 +579,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                         if (Target.GetNPCOwner(out NPC target))
                         {
                             targetCenter = Vector2.SmoothStep(targetCenter, target.Center
-                                , Math.Clamp(Coralite.Instance.BezierEaseSmoother.Smoother(Timer / (Projectile.MaxUpdates * 55)), 0, 1));
+                                , Math.Clamp(Helper.BezierEase(Timer / (Projectile.MaxUpdates * 55)), 0, 1));
                         }
                         else
                             Target = -1;
@@ -589,7 +589,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                         if (Timer < 8 * Projectile.MaxUpdates)
                             targetCenter = Projectile.Center + Projectile.velocity.RotatedBy(1f) * 4;
                         else if (Timer < 15 * Projectile.MaxUpdates)
-                            slowTime = Coralite.Instance.X2Smoother.Smoother(Timer / (15 * Projectile.MaxUpdates));
+                            slowTime = Helper.X2Ease(Timer / (15 * Projectile.MaxUpdates));
 
                         slowTime = Helper.Lerp(130, 28, slowTime);
 

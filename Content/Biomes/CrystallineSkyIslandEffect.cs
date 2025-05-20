@@ -3,6 +3,7 @@ using Coralite.Content.WorldGeneration;
 using Coralite.Core;
 using Coralite.Core.Systems.KeySystem;
 using Coralite.Core.Systems.MagikeSystem;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -65,7 +66,7 @@ namespace Coralite.Content.Biomes
             public void Update(float factor)
             {
                 CurrentScreenPos = Vector2.SmoothStep(targetScreenPosOut, targetScreenPosIn, factor);
-                c = Color.Lerp(Color.Transparent, TargetColor, Coralite.Instance.SqrtSmoother.Smoother(factor));
+                c = Color.Lerp(Color.Transparent, TargetColor, Helper.SqrtEase(factor));
             }
 
             public void Draw(SpriteBatch spriteBatch)

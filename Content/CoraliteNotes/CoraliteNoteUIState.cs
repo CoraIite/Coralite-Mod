@@ -119,7 +119,7 @@ namespace Coralite.Content.CoraliteNotes
                 return true;
             }
 
-            float factor = Coralite.Instance.SqrtSmoother.Smoother(Timer / 30f);
+            float factor = Helper.SqrtEase(Timer / 30f);
             BookPanel.Top.Percent = Helper.Lerp(-1f, 0.5f, factor);
             BookPanel.alpha = Helper.Lerp(0, 1, factor);
 

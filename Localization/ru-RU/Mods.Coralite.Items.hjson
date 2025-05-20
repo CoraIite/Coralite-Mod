@@ -617,11 +617,6 @@ StarsBreath: {
 	Tooltip: Все лучшие пожелания
 }
 
-WoodWax: {
-	DisplayName: Древесный воск
-	Tooltip: Извержение спор
-}
-
 CatClaws: {
 	DisplayName: Кошачьи когти
 	Tooltip:

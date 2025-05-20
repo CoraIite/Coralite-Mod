@@ -480,7 +480,7 @@ namespace Coralite.Content.Items.Misc_Shoot
 
                         float alpha = 1;
                         if (factor > 0.8f)
-                            alpha = Coralite.Instance.X3Smoother.Smoother(1 - (factor - 0.8f) / 0.2f);
+                            alpha = Helper.X3Ease(1 - (factor - 0.8f) / 0.2f);
 
                         mainTex = SpecialAttackTex.Value;
                         var SPframeBox = mainTex.Frame(1, 20, 0, Projectile.frame);

@@ -1,5 +1,6 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Attributes;
+using Coralite.Core.Systems.BossSystems;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -244,6 +245,11 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             }
 
             return true;
+        }
+
+        public override void OnKill()
+        {
+            DownedBossSystem.DownZacurrentDragon();
         }
 
         #endregion

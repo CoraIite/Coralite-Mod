@@ -115,10 +115,10 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             else
             {
                 float factor = (Timer - DashTime) / DelayTime;
-                fade = Coralite.Instance.X2Smoother.Smoother(factor);
+                fade = Helper.X2Ease(factor);
 
                 ThunderWidth = 20 * (1 - factor);
-                ThunderAlpha = 1 - Coralite.Instance.X2Smoother.Smoother(factor);
+                ThunderAlpha = 1 - Helper.X2Ease(factor);
 
                 foreach (var trail in thunderTrails)
                 {

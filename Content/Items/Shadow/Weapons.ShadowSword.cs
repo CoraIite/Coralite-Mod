@@ -160,7 +160,7 @@ namespace Coralite.Content.Items.Shadow
             {
                 default:
                 case 0:
-                    alpha = (int)(Coralite.Instance.X2Smoother.Smoother(timer, maxTime - minTime) * 140) + 100;
+                    alpha = (int)(Helper.X2Ease(timer, maxTime - minTime) * 140) + 100;
                     Projectile.scale = Helper.EllipticalEase(2.8f - (4.8f * Smoother.Smoother(timer, maxTime - minTime)), 0.8f, 1.2f);
                     break;
             }

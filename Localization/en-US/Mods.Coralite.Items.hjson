@@ -620,11 +620,6 @@ StarsBreath: {
 	Tooltip: All good wishes
 }
 
-WoodWax: {
-	DisplayName: Wood Wax
-	Tooltip: Spore Eruption
-}
-
 CatClaws: {
 	DisplayName: Cat Claws
 	Tooltip:

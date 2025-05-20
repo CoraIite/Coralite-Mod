@@ -174,7 +174,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         {
                             float factor = (Timer - ChannelTime) / (ShouryuukennTime - ChannelTime);
 
-                            NPC.velocity.Y = -40 * (1.1f - Coralite.Instance.SqrtSmoother.Smoother(factor));
+                            NPC.velocity.Y = -40 * (1.1f - Helper.SqrtEase(factor));
                             NPC.velocity.X *= 0.97f;
                         }
                         else
@@ -389,7 +389,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                             float velAngle = NPC.velocity.ToRotation();
 
                             NPC.velocity = velAngle.AngleLerp(targetAngle, 0.4f).ToRotationVector2()
-                                * (1 - Coralite.Instance.SqrtSmoother.Smoother(factor)) * 12;
+                                * (1 - Helper.SqrtEase(factor)) * 12;
                         }
                         else if (Timer == SlashTime)
                         {

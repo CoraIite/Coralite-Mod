@@ -79,9 +79,12 @@ namespace Coralite.Content.Items.HyacinthSeries
     [AutoLoadTexture(Path = AssetDirectory.HyacinthSeriesItems)]
     public class GhostPipeHeldProj : BaseGunHeldProj
     {
+        public override string Texture => AssetDirectory.HyacinthSeriesItems + Name;
+
         public GhostPipeHeldProj() : base(0.1f, 24, -6, AssetDirectory.HyacinthSeriesItems) { }
 
         public static ATex GhostPipeFire { get; private set; }
+        public static ATex GhostPipeChain { get; private set; }
 
         protected override float HeldPositionY => -2;
 
@@ -103,6 +106,17 @@ namespace Coralite.Content.Items.HyacinthSeries
 
         public override bool PreDraw(ref Color lightColor)
         {
+            float rot = Projectile.rotation + (DirSign > 0 ? 0 : MathHelper.Pi);
+            float n = rot - DirSign * MathHelper.PiOver2;
+
+            Vector2 chainPos = Projectile.Center 
+                - rot.ToRotationVector2() * 34 
+                 - Main.screenPosition;
+
+            Texture2D chain = GhostPipeChain.Value;
+            Main.spriteBatch.Draw(chain, chainPos, null, lightColor
+                , Owner.velocity.X/15, new Vector2(chain.Width/2, 0), Projectile.scale, 0, 0f);
+
             base.PreDraw(ref lightColor);
 
             if (Projectile.frame > 2)
@@ -111,9 +125,6 @@ namespace Coralite.Content.Items.HyacinthSeries
             Texture2D effect = GhostPipeFire.Value;
             Rectangle frameBox = effect.Frame(4, 3, FrameX, Projectile.frame);
             //SpriteEffects effects = DirSign > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
-
-            float rot = Projectile.rotation + (DirSign > 0 ? 0 : MathHelper.Pi);
-            float n = rot - DirSign * MathHelper.PiOver2;
 
             Main.spriteBatch.Draw(effect, Projectile.Center + rot.ToRotationVector2() * 32 + n.ToRotationVector2() * 4 - Main.screenPosition, frameBox, Color.Lerp(lightColor, Color.White, 0.5f)
                 , rot, new Vector2(0, frameBox.Height / 2), Projectile.scale, 0, 0f);
@@ -355,7 +366,7 @@ namespace Coralite.Content.Items.HyacinthSeries
 
                         const int MaxTimer = 15;
                         float factor = Timer / MaxTimer;
-                        Scale = 0.5f * Coralite.Instance.HeavySmootherInstance.Smoother(factor);
+                        Scale = 0.5f * Helper.HeavyEase(factor);
 
                         exRot = factor * MathF.Sin(factor * MathHelper.TwoPi * 1.5f) * 0.35f;
 

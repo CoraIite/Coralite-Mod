@@ -78,6 +78,12 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             return MathF.Sin(factor * MathHelper.Pi) * ThunderWidth;
         }
 
+        public override void ModifyHitByProjectile(Projectile projectile, ref NPC.HitModifiers modifiers)
+        {
+            if (ProjectileID.Sets.CultistIsResistantTo[projectile.type])
+                modifiers.SourceDamage -= 0.35f;
+        }
+
         public override void AI()
         {
             if (!OwnerIndex.GetNPCOwner<ZacurrentDragon>(out NPC owner, NPC.Kill))

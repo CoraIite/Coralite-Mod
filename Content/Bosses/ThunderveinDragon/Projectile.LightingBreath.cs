@@ -117,7 +117,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             {
                 float factor = (Timer - DashTime) / DelayTime;
                 ThunderWidth = 30 * (1 - factor);
-                ThunderAlpha = 1 - Coralite.Instance.X2Smoother.Smoother(factor);
+                ThunderAlpha = 1 - Helper.X2Ease(factor);
 
                 foreach (var trail in thunderTrails)
                 {

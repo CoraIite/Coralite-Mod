@@ -186,7 +186,7 @@ namespace Coralite.Content.Items.Nightmare
             dust.noGravity = true;
 
             int timer = (int)Timer - minTime;
-            alpha = (int)(Coralite.Instance.BezierEaseSmoother.Smoother(timer, maxTime - minTime) * 200) + 50;
+            alpha = (int)(Helper.BezierEase(timer, maxTime - minTime) * 200) + 50;
 
             switch ((int)Combo)
             {
@@ -424,7 +424,7 @@ namespace Coralite.Content.Items.Nightmare
                         dust.noGravity = true;
                     }
 
-                    Projectile.rotation = startAngle + (Coralite.Instance.BezierEaseSmoother.Smoother(Timer, rolllingTime) * totalAngle);
+                    Projectile.rotation = startAngle + (Helper.BezierEase(Timer, rolllingTime) * totalAngle);
                     if (Timer < 35)
                     {
                         DistanceToOwner = Helper.Lerp(0, 150, Timer / 35f);

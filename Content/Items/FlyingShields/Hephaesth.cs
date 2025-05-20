@@ -938,7 +938,7 @@ namespace Coralite.Content.Items.FlyingShields
     //        const int MaxTime = 25;
 
     //        float factor = Timer / MaxTime;
-    //        float sqrtFactor = Coralite.Instance.SqrtSmoother.Smoother(factor);
+    //        float sqrtFactor = Helper.SqrtEase(factor);
 
     //        scale = Helper.Lerp(0.8f, 1.2f, sqrtFactor);
 
@@ -1130,7 +1130,7 @@ namespace Coralite.Content.Items.FlyingShields
                     {
                         const int RollingTime = 9;
                         float factor = Timer / RollingTime;
-                        factor = Coralite.Instance.SqrtSmoother.Smoother(factor);
+                        factor = Helper.SqrtEase(factor);
 
                         if (alpha < 0.9f)
                         {
@@ -1189,7 +1189,7 @@ namespace Coralite.Content.Items.FlyingShields
                         //if (Projectile.scale < 1.2f)
                         //    Projectile.scale += 0.1f;
                         //float factor = Timer / BurstTime;
-                        //factor = Coralite.Instance.SqrtSmoother.Smoother(factor);
+                        //factor = Helper.SqrtEase(factor);
 
                         //alpha = Helper.Lerp(1, 0, factor);
                         Timer++;

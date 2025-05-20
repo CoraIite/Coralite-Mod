@@ -188,7 +188,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                 streamerFactors = new SecondOrderDynamics_Vec2[20];
                 for (int i = 0; i < streamerFactors.Length; i++)
                     streamerFactors[i] = new SecondOrderDynamics_Vec2(
-                        1.25f + Coralite.Instance.X3Smoother.Smoother(i, 20) * 10f, 0.75f, 0, Projectile.Center);
+                        1.25f + Helper.X3Ease(i, 20) * 10f, 0.75f, 0, Projectile.Center);
 
                 streamerPos = new Vector2[20];
                 Array.Fill(streamerPos, Projectile.Center);
@@ -535,7 +535,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                             Vector2 targetPos = center + dir.RotatedBy(-y) * k * 8;
 
                             streamerPos[i] = streamerFactors[i].Update(1 / 60f, targetPos);
-                            streamerPos[i] = Vector2.Lerp(streamerPos[i], targetPos, Coralite.Instance.X3Smoother.Smoother(i, 20));
+                            streamerPos[i] = Vector2.Lerp(streamerPos[i], targetPos, Helper.X3Ease(i, 20));
                         }
 
                         streamer.TrailPositions = streamerPos;

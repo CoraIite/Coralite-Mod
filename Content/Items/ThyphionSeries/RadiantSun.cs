@@ -175,7 +175,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             {
                 Owner.itemTime = Owner.itemAnimation = 2;
 
-                Rotation = Helper.Lerp(RecordAngle, DirSign > 0 ? -1.3f : (3.141f + 1.3f), Coralite.Instance.HeavySmootherInstance.Smoother(Timer / DashTime));
+                Rotation = Helper.Lerp(RecordAngle, DirSign > 0 ? -1.3f : (3.141f + 1.3f), Helper.HeavyEase(Timer / DashTime));
                 ExAlpha = Helper.Lerp(0, 1, Math.Clamp(Timer / DashTime, 0, 1));
                 handOffset = Helper.Lerp(4, 28, Math.Clamp(Timer / DashTime, 0, 1));
 
@@ -451,14 +451,14 @@ namespace Coralite.Content.Items.ThyphionSeries
 
                 if (Timer < ReadyTime + 5)
                 {
-                    float factor = Coralite.Instance.SqrtSmoother.Smoother((Timer - ReadyTime) / 5);
+                    float factor = Helper.SqrtEase((Timer - ReadyTime) / 5);
                     LaserHeight = Helper.Lerp(0.5f, height, factor);
                     break;
                 }
 
                 if (Timer < ReadyTime + 16)
                 {
-                    float factor = Coralite.Instance.SqrtSmoother.Smoother((Timer - ReadyTime - 5) / 11);
+                    float factor = Helper.SqrtEase((Timer - ReadyTime - 5) / 11);
                     LaserHeight = Helper.Lerp(height, 0, factor);
                     break;
                 }

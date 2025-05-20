@@ -123,7 +123,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         protected override void OnSlash()
         {
             float factor = (Timer - minTime) / shootTime;
-            factor = Coralite.Instance.X2Smoother.Smoother(factor);
+            factor = Helper.X2Ease(factor);
             _Rotation = startAngle.AngleLerp(totalAngle, factor);
             distanceToOwner = Helper.Lerp(minDistance, maxDistance, factor);
             Slasher();
@@ -132,7 +132,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         protected override void AfterSlash()
         {
             float factor = (Timer - maxTime) / delayTime;
-            distanceToOwner = Helper.Lerp(maxDistance, 0, Coralite.Instance.SqrtSmoother.Smoother(factor));
+            distanceToOwner = Helper.Lerp(maxDistance, 0, Helper.SqrtEase(factor));
             _Rotation += DirSign * 0.02f;
 
             if ((int)Timer == maxTime + trailCount + 1)

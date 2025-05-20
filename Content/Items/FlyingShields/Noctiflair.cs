@@ -261,7 +261,7 @@ namespace Coralite.Content.Items.FlyingShields
                         const int FlowTime = 15;
 
                         float factor = Timer / FlowTime;
-                        float sqrtFactor = Coralite.Instance.SqrtSmoother.Smoother(factor);
+                        float sqrtFactor = Helper.SqrtEase(factor);
 
                         distanceToTarget = Helper.Lerp(-20, -230, sqrtFactor);
                         alpha = Helper.Lerp(0f, 0.5f, sqrtFactor);
@@ -285,7 +285,7 @@ namespace Coralite.Content.Items.FlyingShields
                         const int FlyTine = 25;
 
                         float factor = Timer / FlyTine;
-                        float x2Factor = Coralite.Instance.SqrtSmoother.Smoother(factor);
+                        float x2Factor = Helper.SqrtEase(factor);
 
                         Projectile.rotation = Helper.Lerp(0, 1.6f, x2Factor);
 
@@ -358,7 +358,7 @@ namespace Coralite.Content.Items.FlyingShields
                             Scale: Main.rand.NextFloat(0.9f, 1.3f));
 
                         float length = Projectile.velocity.Length();
-                        float factor = Coralite.Instance.X2Smoother.Smoother(Projectile.timeLeft / 80f);
+                        float factor = Helper.X2Ease(Projectile.timeLeft / 80f);
                         Projectile.velocity = Projectile.rotation.AngleLerp((owner.Center - Projectile.Center).ToRotation(), 1 - factor)
                             .ToRotationVector2() * length;
                         Projectile.rotation = Projectile.velocity.ToRotation();

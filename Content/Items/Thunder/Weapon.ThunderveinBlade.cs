@@ -333,7 +333,7 @@ namespace Coralite.Content.Items.Thunder
                         * Smoother.Smoother(timer, maxTime - minTime)), 0.8f, 1.8f);
                     break;
             }
-            alpha = (int)(Coralite.Instance.X2Smoother.Smoother(timer, maxTime - minTime) * 50) + 200;
+            alpha = (int)(Helper.X2Ease(timer, maxTime - minTime) * 50) + 200;
             base.OnSlash();
         }
 
@@ -609,7 +609,7 @@ namespace Coralite.Content.Items.Thunder
                 float factor = (Timer - DashTime) / DelayTime;
                 float sinFactor = MathF.Sin(factor * MathHelper.Pi);
                 ThunderWidth = 20 + (sinFactor * 30);
-                ThunderAlpha = 1 - Coralite.Instance.X2Smoother.Smoother(factor);
+                ThunderAlpha = 1 - Helper.X2Ease(factor);
 
                 foreach (var trail in thunderTrails)
                 {
@@ -623,7 +623,7 @@ namespace Coralite.Content.Items.Thunder
                     }
                 }
 
-                fade = Coralite.Instance.X2Smoother.Smoother((int)(Timer - DashTime), DelayTime);
+                fade = Helper.X2Ease((int)(Timer - DashTime), DelayTime);
 
                 if (Timer > DashTime + DelayTime)
                     Projectile.Kill();

@@ -47,7 +47,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
                         if (Timer < 30)
                         {
                             float factor = Timer / 30;
-                            factor = Coralite.Instance.HeavySmootherInstance.Smoother(factor);
+                            factor = Helper.HeavyEase(factor);
                             backLightScale = Vector2.Lerp(Vector2.Zero, Scale1, factor);
                             sparkleScale = factor*2;
                         }
@@ -73,7 +73,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
                         {
                             float factor = (Timer - 60) / 40;
 
-                            factor = Coralite.Instance.HeavySmootherInstance.Smoother(1 - factor);
+                            factor = Helper.HeavyEase(1 - factor);
                             backLightScale = Vector2.Lerp(Scale2, Scale1, factor);
                             sparkleScale = factor*2;
 

@@ -449,7 +449,7 @@ namespace Coralite.Content.Items.Nightmare
             }
 
             int timer = (int)Timer - minTime;
-            alpha = (int)(Coralite.Instance.SinSmoother.Smoother(timer, maxTime - minTime) * 175) + 75;
+            alpha = (int)(Helper.SinEase(timer, maxTime - minTime) * 175) + 75;
 
             switch ((int)Combo)
             {
@@ -459,8 +459,8 @@ namespace Coralite.Content.Items.Nightmare
                     distanceToOwner = (-Projectile.height / 2) + (Smoother.Smoother(timer, maxTime - minTime) * 180);
                     break;
                 case 2 when innerCombo == 0://下挥1 小幅度转圈
-                    distanceToOwner = (-Projectile.height / 2) + (Coralite.Instance.SqrtSmoother.Smoother(timer, maxTime - minTime) * 40);
-                    Projectile.scale = 1 + (Coralite.Instance.SinSmoother.Smoother(timer, maxTime - minTime) * 0.3f);
+                    distanceToOwner = (-Projectile.height / 2) + (Helper.SqrtEase(timer, maxTime - minTime) * 40);
+                    Projectile.scale = 1 + (Helper.SinEase(timer, maxTime - minTime) * 0.3f);
                     if (timer == Owner.itemTimeMax && Projectile.IsOwnedByLocalPlayer())
                     {
                         float start = nextStartAngle + (DirSign * 2.4f);

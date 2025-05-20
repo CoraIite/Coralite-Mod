@@ -1,4 +1,5 @@
 ﻿using Coralite.Core;
+using Coralite.Core.Attributes;
 using Coralite.Core.Configs;
 using Coralite.Core.Loaders;
 using Coralite.Core.Prefabs.Projectiles;
@@ -12,9 +13,40 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.HyacinthSeries
 {
+    [AutoLoadTexture(Path = AssetDirectory.HyacinthSeriesItems)]
     public class ArethusaHeldProj : BaseGunHeldProj
     {
-        public ArethusaHeldProj() : base(0.4f, 6, -6, AssetDirectory.HyacinthSeriesItems) { }
+        public ref float FireType => ref Projectile.ai[2];
+
+        public ArethusaHeldProj() : base(0.2f, 10, -6, AssetDirectory.HyacinthSeriesItems) { }
+
+        public static ATex ArethusaFire { get; private set; }
+
+        public override void ModifyAI(float factor)
+        {
+            if (Projectile.timeLeft != MaxTime && Projectile.timeLeft % 2 == 0)
+            {
+                Projectile.frame++;
+            }
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            base.PreDraw(ref lightColor);
+
+            if (Projectile.frame > 3)
+                return false;
+
+            Texture2D effect = ArethusaFire.Value;
+            Rectangle frameBox = effect.Frame(2, 4, (int)FireType, Projectile.frame);
+
+            float rot = Projectile.rotation + (DirSign > 0 ? 0 : MathHelper.Pi);
+            float n = rot - DirSign * MathHelper.PiOver2;
+
+            Main.spriteBatch.Draw(effect, Projectile.Center + rot.ToRotationVector2() * 36 + n.ToRotationVector2() * 4 - Main.screenPosition, frameBox, Color.Lerp(lightColor, Color.White, 0.5f)
+                , rot, new Vector2(0, frameBox.Height / 2), Projectile.scale, 0, 0f);
+            return false;
+        }
     }
 
     public class ArethusaBullet : BaseHeldProj, IDrawPrimitive, IDrawNonPremultiplied

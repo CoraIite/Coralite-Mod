@@ -311,7 +311,7 @@ namespace Coralite.Content.Items.CoreKeeper
         {
             int timer = (int)Timer - minTime;
             float scale = 1f;
-            alpha = (int)(Coralite.Instance.SinSmoother.Smoother(timer, maxTime - minTime) * 250);
+            alpha = (int)(Helper.SinEase(timer, maxTime - minTime) * 250);
 
             Vector2 dir = RotateVec2.RotatedBy(1.57f * Math.Sign(totalAngle));
             int a = Main.rand.Next(5);

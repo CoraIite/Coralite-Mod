@@ -48,7 +48,7 @@
 //                else if (factor > 0.7f)
 //                    alpha = Helper.Lerp(1, 0, (factor - 0.7f) / 0.3f);
 
-//                factor = Coralite.Instance.BezierEaseSmoother.Smoother(Opacity / _totalTime);
+//                factor = Helper.BezierEase(Opacity / _totalTime);
 //                Rotation = factor * MathHelper.TwoPi * 10;
 //                Length = 12 + factor * 44;
 
@@ -99,8 +99,8 @@
 //            if (Opacity < 0)
 //            {
 //                float factor = -Opacity / 20;
-//                float factor2 = Coralite.Instance.SqrtSmoother.Smoother(factor);
-//                float factor3 = Coralite.Instance.X2Smoother.Smoother(factor);
+//                float factor2 = Helper.SqrtEase(factor);
+//                float factor3 = Helper.X2Ease(factor);
 
 //                Length = 12 + factor2 * 50;
 //                alpha = 1 - factor3;

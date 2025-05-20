@@ -180,7 +180,7 @@ namespace Coralite.Content.Items.FlyingShields
                             Projectile.timeLeft = 10;
                         }
                         float length = Projectile.velocity.Length();
-                        float factor = Coralite.Instance.X2Smoother.Smoother(Projectile.timeLeft / 200f);
+                        float factor = Helper.X2Ease(Projectile.timeLeft / 200f);
                         Projectile.velocity = Projectile.rotation.AngleLerp((target.Center - Projectile.Center).ToRotation(), 1 - factor)
                             .ToRotationVector2() * length;
                     }

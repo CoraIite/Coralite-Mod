@@ -757,7 +757,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
                 Vector2 position = Helper.GetMagikeTileCenter(pos.X, pos.Y) + altartile.GetFloatingOffset(rotation, level.Value);
                 Texture2D mainTex = CoraliteAssets.Halo.CircleSPA.Value;
-                float factor = Coralite.Instance.BezierEaseSmoother.Smoother((float)RequiredMagike / ChosenResipe.magikeCost);
+                float factor = Helper.BezierEase((float)RequiredMagike / ChosenResipe.magikeCost);
                 float Length = 12 + factor * 44;
                 float alpha = 1;
                 if (factor < 0.1f)

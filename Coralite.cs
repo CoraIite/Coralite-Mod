@@ -211,6 +211,13 @@ namespace Coralite
                 "血咒精" or
                 "bloodiancie"
                     => DownedBossSystem.downedBloodiancie,
+                "兹雷龙" or
+                "紫伏闪荒雷龙" or
+                "紫伏闪·荒雷龙" or
+                "紫伏闪" or
+                "zacurrentdragon" or
+                "zacurrent dragon"
+                    => DownedBossSystem.downedZacurrentDragon,
                 "梦魇之花" or
                 "梦界主世纪之花" or
                 "梦界主·世纪之花" or

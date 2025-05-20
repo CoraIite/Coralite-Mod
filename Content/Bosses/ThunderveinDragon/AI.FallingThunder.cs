@@ -249,7 +249,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                                 Dust.NewDustPerfect(pos, ModContent.DustType<LightningShineBall>(), Vector2.Zero, newColor: ThunderveinYellowAlpha, Scale: Main.rand.NextFloat(0.1f, 0.3f));
                             }
 
-                            float factor = Coralite.Instance.SqrtSmoother.Smoother((Timer - SmashDownTime) / 30);
+                            float factor = Helper.SqrtEase((Timer - SmashDownTime) / 30);
                             shadowScale = Helper.Lerp(1f, 2.5f, factor);
                             shadowAlpha = Helper.Lerp(1f, 0f, factor);
                         }
@@ -552,7 +552,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                                 Dust.NewDustPerfect(pos, ModContent.DustType<LightningShineBall>(), Vector2.Zero, newColor: ThunderveinYellowAlpha, Scale: Main.rand.NextFloat(0.1f, 0.3f));
                             }
 
-                            float factor = Coralite.Instance.SqrtSmoother.Smoother((Timer - SmashDownTime) / 30);
+                            float factor = Helper.SqrtEase((Timer - SmashDownTime) / 30);
                             shadowScale = Helper.Lerp(1f, 2.5f, factor);
                             shadowAlpha = Helper.Lerp(1f, 0f, factor);
                         }

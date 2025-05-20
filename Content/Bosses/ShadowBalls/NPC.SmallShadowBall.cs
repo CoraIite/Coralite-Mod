@@ -215,7 +215,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         float factor = Timer / RollingTime;
 
                         //增加旋转，此状态中的记录者代表初始的自身相对于主人的角度
-                        float currentRot = Recorder + (Coralite.Instance.BezierEaseSmoother.Smoother(factor) * ((MathHelper.TwoPi * 1.5f) + 0.5f));
+                        float currentRot = Recorder + (Helper.BezierEase(factor) * ((MathHelper.TwoPi * 1.5f) + 0.5f));
 
                         NPC.Center = owner.Center + (currentRot.ToRotationVector2() * ReadyLength);
                         NPC.rotation = NPC.rotation.AngleLerp((NPC.Center - owner.Center).ToRotation(), 0.5f);
@@ -237,7 +237,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
                         float factor = Timer / SmallTime;
 
-                        float length = Helper.Lerp(ReadyLength, ShrinkLength, Coralite.Instance.SqrtSmoother.Smoother(factor));
+                        float length = Helper.Lerp(ReadyLength, ShrinkLength, Helper.SqrtEase(factor));
 
                         float currentRot = Recorder2;
                         NPC.Center = owner.Center + (currentRot.ToRotationVector2() * length);
@@ -270,7 +270,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                             float factor = Timer / ReadyShootTime;
 
                             float currentRot = Recorder2;
-                            float targetLength = Helper.Lerp(Recorder, ReadyShootLength, Coralite.Instance.SqrtSmoother.Smoother(factor));
+                            float targetLength = Helper.Lerp(Recorder, ReadyShootLength, Helper.SqrtEase(factor));
 
                             NPC.Center = owner.Center + (currentRot.ToRotationVector2() * targetLength);
                             NPC.rotation = currentRot;
@@ -292,7 +292,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                             float factor = (Timer - ReadyShootTime) / ShootTime;
 
                             float currentRot = Recorder2;
-                            float targetLength = Helper.Lerp(ReadyShootLength, RecoilLength, Coralite.Instance.SqrtSmoother.Smoother(factor));
+                            float targetLength = Helper.Lerp(ReadyShootLength, RecoilLength, Helper.SqrtEase(factor));
 
                             NPC.Center = owner.Center + (currentRot.ToRotationVector2() * targetLength);
                             NPC.rotation = currentRot;
@@ -409,7 +409,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         Vector2 aimDir = toConvergeCenter.ToRotationVector2();
                         Vector2 targetPos = owner.Center
                            + (aimDir * Helper.Lerp(ConvergeCenterLength, ConvergeCenterLengthOnChannel,
-                                Coralite.Instance.SqrtSmoother.Smoother(factor))) //到汇聚中心的向量
+                                Helper.SqrtEase(factor))) //到汇聚中心的向量
                            + ((dir + toConvergeCenter).ToRotationVector2() * Helper.EllipticalEase(dir + 1.57f, ReadyShortAxis, ReadyLongAxis));
                         //         👆 额外的椭圆形旋转，这次不像赤玉灵就先不搞什么3D了
 
@@ -443,7 +443,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         if (Timer < ReadyShootTime)//准备射，与主人距离拉远
                         {
                             float factor = Timer / ReadyShootTime;
-                            float targetLength = Helper.Lerp(ConvergeCenterLengthOnChannel, ConvergeCenterLengthOnShoot, Coralite.Instance.SqrtSmoother.Smoother(factor));
+                            float targetLength = Helper.Lerp(ConvergeCenterLengthOnChannel, ConvergeCenterLengthOnShoot, Helper.SqrtEase(factor));
                             float dir = owner.rotation + (index * MathHelper.TwoPi / totalIndexes);
 
                             Vector2 aimDir = Recorder.ToRotationVector2();
@@ -467,7 +467,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         else if (Timer < ShootTime)//后坐力，与主人距离逐渐减小
                         {
                             float factor = (Timer - ReadyShootTime) / ShootTime;
-                            float targetLength = Helper.Lerp(ConvergeCenterLengthOnShoot, ConvergeCenterLength, Coralite.Instance.SqrtSmoother.Smoother(factor));
+                            float targetLength = Helper.Lerp(ConvergeCenterLengthOnShoot, ConvergeCenterLength, Helper.SqrtEase(factor));
                             float dir = owner.rotation + (index * MathHelper.TwoPi / totalIndexes);
 
                             Vector2 aimDir = Recorder.ToRotationVector2();
@@ -825,7 +825,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         if (Timer <= ReadyTime)
                         {
                             factor = Timer / ReadyTime;
-                            length2 = Helper.Lerp(ReadyLength, ReadyShootLength, Coralite.Instance.SqrtSmoother.Smoother(factor));
+                            length2 = Helper.Lerp(ReadyLength, ReadyShootLength, Helper.SqrtEase(factor));
                             if (Timer == ReadyTime)
                             {
                                 int damage = Helper.ScaleValueForDiffMode(40, 35, 35, 30);
@@ -836,7 +836,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                         else if (Timer < ReadyTime + ShootTime)
                         {
                             factor = (Timer - ReadyTime) / ShootTime;
-                            length2 = Helper.Lerp(ReadyShootLength, RecoilLength, Coralite.Instance.SqrtSmoother.Smoother(factor));
+                            length2 = Helper.Lerp(ReadyShootLength, RecoilLength, Helper.SqrtEase(factor));
                         }
                         else
                         {

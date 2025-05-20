@@ -327,7 +327,7 @@ namespace Coralite.Content.Items.Thunder
             else
             {
                 float factor = (Timer - LightingTime) / DelayTime;
-                float x2Factor = Coralite.Instance.X2Smoother.Smoother(factor);
+                float x2Factor = Helper.X2Ease(factor);
 
                 ThunderWidth = (1 - x2Factor) * 25;
                 ThunderAlpha = 1 - x2Factor;

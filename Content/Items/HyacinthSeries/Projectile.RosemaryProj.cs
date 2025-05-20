@@ -15,9 +15,12 @@ namespace Coralite.Content.Items.HyacinthSeries
     [AutoLoadTexture(Path = AssetDirectory.HyacinthSeriesItems)]
     public class RosemaryHeldProj : BaseGunHeldProj
     {
+        public override string Texture => AssetDirectory.HyacinthSeriesItems + Name;
+
         public RosemaryHeldProj() : base(0.05f, 14, -2, AssetDirectory.HyacinthSeriesItems) { }
 
         public static ATex RosemaryFire { get; private set; }
+        public static ATex RosemaryChain { get; private set; }
 
         public override void InitializeGun()
         {
@@ -50,6 +53,17 @@ namespace Coralite.Content.Items.HyacinthSeries
 
         public override bool PreDraw(ref Color lightColor)
         {
+            float rot = Projectile.rotation + (DirSign > 0 ? 0 : MathHelper.Pi);
+            float n = rot - DirSign * MathHelper.PiOver2;
+
+            Vector2 chainPos = Projectile.Center
+                + rot.ToRotationVector2() * 2
+                - n.ToRotationVector2() * 5
+                - Main.screenPosition;
+
+            Texture2D chain = RosemaryChain.Value;
+            Main.spriteBatch.Draw(chain, chainPos, null, lightColor
+                , Owner.velocity.X / 15, new Vector2(chain.Width / 2, 0), Projectile.scale, 0, 0f);
             base.PreDraw(ref lightColor);
 
             if (Projectile.frame > 4)
@@ -57,9 +71,6 @@ namespace Coralite.Content.Items.HyacinthSeries
 
             Texture2D effect = RosemaryFire.Value;
             Rectangle frameBox = effect.Frame(1, 5, 0, Projectile.frame);
-
-            float rot = Projectile.rotation + (DirSign > 0 ? 0 : MathHelper.Pi);
-            float n = rot - DirSign * MathHelper.PiOver2;
 
             Main.spriteBatch.Draw(effect, Projectile.Center + rot.ToRotationVector2() * 24 + n.ToRotationVector2() * 6 - Main.screenPosition, frameBox, Color.Lerp(lightColor, Color.White, 0.5f)
                 , rot, new Vector2(0, frameBox.Height / 2), Projectile.scale, 0, 0f);

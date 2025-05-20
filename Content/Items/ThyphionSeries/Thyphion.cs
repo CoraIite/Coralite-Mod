@@ -1218,7 +1218,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             Vector2 origin = texture.Size() / 2f;
             SpriteEffects effects = PhantomPlayer.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically;
-            Color color = Data.ArrowColor * 0.3f * Coralite.Instance.SqrtSmoother.Smoother(Projectile.Opacity);
+            Color color = Data.ArrowColor * 0.3f * Helper.SqrtEase(Projectile.Opacity);
             float length = (2 + (1 - Projectile.Opacity) * 36);
             for (int i = 0; i < 4; i++)
             {

@@ -211,7 +211,7 @@ namespace Coralite.Content.Items.Thunder
                 float factor = (Timer - DashTime) / DelayTime;
                 float sinFactor = MathF.Sin(factor * MathHelper.Pi);
                 ThunderWidth = 14 + (sinFactor * 10);
-                ThunderAlpha = 1 - Coralite.Instance.X2Smoother.Smoother(factor);
+                ThunderAlpha = 1 - Helper.X2Ease(factor);
 
                 foreach (var trail in thunderTrails)
                 {

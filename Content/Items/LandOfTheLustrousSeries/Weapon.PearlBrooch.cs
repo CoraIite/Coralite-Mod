@@ -462,19 +462,19 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             if (Timer < halfTime)
             {
                 float factor = Timer / halfTime;
-                float sqrtF = Coralite.Instance.SqrtSmoother.Smoother(factor);
+                float sqrtF = Helper.SqrtEase(factor);
 
                 scale1 = Helper.Lerp(0, 0.3f, sqrtF);
-                scale2 = Helper.Lerp(0, 0.2f, Coralite.Instance.X2Smoother.Smoother(factor));
+                scale2 = Helper.Lerp(0, 0.2f, Helper.X2Ease(factor));
                 Projectile.alpha = (int)Helper.Lerp(0, 200, sqrtF);
             }
             else if (Timer < totalTime)
             {
                 float factor = (Timer - halfTime) / (totalTime - halfTime);
-                float x2F = Coralite.Instance.X2Smoother.Smoother(factor);
+                float x2F = Helper.X2Ease(factor);
 
                 scale1 = Helper.Lerp(0.3f, 0, x2F);
-                scale2 = Helper.Lerp(0.2f, 0, Coralite.Instance.SqrtSmoother.Smoother(factor));
+                scale2 = Helper.Lerp(0.2f, 0, Helper.SqrtEase(factor));
                 Projectile.alpha = (int)Helper.Lerp(200, 0, x2F);
             }
             else

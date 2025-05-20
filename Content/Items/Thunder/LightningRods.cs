@@ -3,6 +3,7 @@ using Coralite.Content.Tiles.RedJades;
 using Coralite.Content.Tiles.Thunder;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
@@ -132,7 +133,7 @@ namespace Coralite.Content.Items.Thunder
                 float factor = (Timer - LightingTime) / DelayTime;
                 float sinFactor = MathF.Sin(factor * MathHelper.Pi);
                 ThunderWidth = 20 + ((1 - factor) * 60);
-                ThunderAlpha = 1 - Coralite.Instance.X2Smoother.Smoother(factor);
+                ThunderAlpha = 1 - Helper.X2Ease(factor);
 
                 foreach (var trail in thunderTrails)
                 {

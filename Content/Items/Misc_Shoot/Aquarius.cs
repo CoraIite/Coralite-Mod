@@ -42,7 +42,7 @@ namespace Coralite.Content.Items.Misc_Shoot
             if (length > 800)
                 length = 800;
 
-            float lengthFactor = Coralite.Instance.X2Smoother.Smoother(length / 800) / 2;
+            float lengthFactor = Helper.X2Ease(length / 800) / 2;
 
             float angle = target.ToRotation();
 
@@ -53,7 +53,7 @@ namespace Coralite.Content.Items.Misc_Shoot
             {
                 //与0的距离
                 float percent = MathF.Abs(angle) / MathHelper.PiOver2;
-                percent = Coralite.Instance.SqrtSmoother.Smoother(percent);
+                percent = Helper.SqrtEase(percent);
                 if (angle < 0)
                     percent = Helper.Lerp(lengthFactor, percent, percent);
 
@@ -62,7 +62,7 @@ namespace Coralite.Content.Items.Misc_Shoot
             else//左边
             {
                 float percent = MathF.Abs((MathF.Abs(angle) - MathHelper.Pi) / MathHelper.PiOver2);
-                percent = Coralite.Instance.SqrtSmoother.Smoother(percent);
+                percent = Helper.SqrtEase(percent);
                 if (angle > MathHelper.Pi)
                     percent = Helper.Lerp(lengthFactor, percent, percent);
 

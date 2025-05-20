@@ -374,7 +374,7 @@ namespace Coralite.Content.Items.ShadowCastle
             else
                 Projectile.Kill();
 
-            alpha = (int)(Coralite.Instance.X2Smoother.Smoother(timer, maxTime - minTime) * 140) + 100;
+            alpha = (int)(Helper.X2Ease(timer, maxTime - minTime) * 140) + 100;
 
             Projectile.scale = scale * Helper.EllipticalEase(recordStartAngle + extraScaleAngle - (recordTotalAngle * Smoother.Smoother(timer, maxTime - minTime)), minScale, maxScale);
 

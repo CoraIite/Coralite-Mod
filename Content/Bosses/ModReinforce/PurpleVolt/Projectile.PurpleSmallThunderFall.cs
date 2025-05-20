@@ -84,10 +84,10 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                 SpawnDusts();
 
                 float factor = (Timer - ReadyTime) / DelayTime;
-                fade = Coralite.Instance.X2Smoother.Smoother(factor);
+                fade = Helper.X2Ease(factor);
 
                 ThunderWidth = 40 * (1 - factor);
-                ThunderAlpha = 1 - Coralite.Instance.X2Smoother.Smoother(factor);
+                ThunderAlpha = 1 - Helper.X2Ease(factor);
 
                 foreach (var trail in thunderTrails)
                 {
@@ -184,7 +184,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             {
                 Vector2 p = Projectile.Center - Main.screenPosition;
                 float factor = Timer / ReadyTime;
-                float factor2 = Coralite.Instance.SqrtSmoother.Smoother(factor);
+                float factor2 = Helper.SqrtEase(factor);
                 float rot = Projectile.whoAmI * MathHelper.TwoPi / 3 + factor2 * MathHelper.TwoPi;
                 float scale = 0.8f - factor * 0.8f;
                 CoraliteAssets.Sparkle.ThreeShotSPA.Value.QuickCenteredDraw(Main.spriteBatch, p

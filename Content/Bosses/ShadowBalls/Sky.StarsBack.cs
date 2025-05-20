@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.WorldGeneration;
 using Coralite.Core;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -56,13 +57,13 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 //if (Timer < 40)
                 //{
                 //    float factor = Timer / 40;
-                //    factor = Coralite.Instance.SqrtSmoother.Smoother(factor);
+                //    factor = Helper.SqrtEase(factor);
                 //    scale = Vector2.Lerp(Vector2.Zero, new Vector2(0.5f, 0.5f), factor);
                 //}
                 //else if (Timer < 70)
                 //{
                 //    float factor = (Timer-40) / 30;
-                //    factor = Coralite.Instance.SqrtSmoother.Smoother(factor);
+                //    factor = Helper.SqrtEase(factor);
 
                 //    scale = Vector2.Lerp(new Vector2(0.5f, 0.5f)
                 //        , new Vector2(0.05f, 0.05f), factor);
@@ -70,7 +71,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 if (Timer < 30)
                 {
                     float factor = Timer / 30f;
-                    factor = Coralite.Instance.BezierEaseSmoother.Smoother(factor);
+                    factor = Helper.BezierEase(factor);
 
                     scale = Vector2.Lerp(Vector2.Zero/*new Vector2(0.5f, 0.5f)*/, Vector2.One * 1.3f, factor/*(Timer - 70) / 15*/);
                 }

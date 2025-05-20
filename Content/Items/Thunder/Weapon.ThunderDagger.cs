@@ -262,7 +262,7 @@ namespace Coralite.Content.Items.Thunder
                         * Smoother.Smoother(timer, maxTime - minTime)), 0.8f, 1.8f);
                     break;
             }
-            alpha = (int)(Coralite.Instance.X2Smoother.Smoother(timer, maxTime - minTime) * 50) + 200;
+            alpha = (int)(Helper.X2Ease(timer, maxTime - minTime) * 50) + 200;
             base.OnSlash();
         }
 

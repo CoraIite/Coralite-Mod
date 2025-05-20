@@ -181,8 +181,8 @@ namespace Coralite.Content.Items.ThyphionSeries
                 case 2://后摇，闪电逐渐消失
                     {
                         Timer++;
-                        fade = Coralite.Instance.X2Smoother.Smoother((int)Timer, 30);
-                        ThunderWidth = Coralite.Instance.X2Smoother.Smoother(60 - (int)Timer, 60) * 14;
+                        fade = Helper.X2Ease((int)Timer, 30);
+                        ThunderWidth = Helper.X2Ease(60 - (int)Timer, 60) * 14;
 
                         float factor = Timer / 30;
                         float sinFactor = MathF.Sin(factor * MathHelper.Pi);

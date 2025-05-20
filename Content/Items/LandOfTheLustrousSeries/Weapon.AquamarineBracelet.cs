@@ -326,7 +326,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             float angle = Projectile.velocity.ToRotation();
             float speed = Projectile.velocity.Length();
 
-            angle = angle.AngleTowards(-1.57f, Coralite.Instance.X2Smoother.Smoother(Math.Clamp(Timer / 40, 0, 1)));
+            angle = angle.AngleTowards(-1.57f, Helper.X2Ease(Math.Clamp(Timer / 40, 0, 1)));
 
             if (Timer > ChaseTime)//开始追踪阶段
             {

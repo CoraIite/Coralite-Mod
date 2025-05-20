@@ -610,7 +610,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                         Timer++;
 
                         float factor = Timer / 30;
-                        Distance = Coralite.Instance.X2Smoother.Smoother(factor) * 20;
+                        Distance = Helper.X2Ease(factor) * 20;
 
                         if (Timer > 30)
                         {
@@ -644,7 +644,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
                 if (Timer < 5)
                 {
-                    float factor = Coralite.Instance.SqrtSmoother.Smoother(Timer / 5);
+                    float factor = Helper.SqrtEase(Timer / 5);
                     LaserHeight = Helper.Lerp(0, height, factor);
 
                     if (Timer % 4 == 0)
@@ -658,17 +658,17 @@ namespace Coralite.Content.Items.ThyphionSeries
 
                 if (Timer < 18)
                 {
-                    float factor = Coralite.Instance.SqrtSmoother.Smoother((Timer - 5) / 18);
+                    float factor = Helper.SqrtEase((Timer - 5) / 18);
                     LaserHeight = Helper.Lerp(height, 1, factor);
 
-                    ExAngle = 0.2f - 0.2f * Coralite.Instance.BezierEaseSmoother.Smoother(factor);
+                    ExAngle = 0.2f - 0.2f * Helper.BezierEase(factor);
 
                     break;
                 }
 
                 if (Timer < 18 + 8)
                 {
-                    float factor = Coralite.Instance.SqrtSmoother.Smoother((Timer - 18) / 8);
+                    float factor = Helper.SqrtEase((Timer - 18) / 8);
                     ExAngle = 0;
                     LaserHeight = Helper.Lerp(1, 0, factor);
 

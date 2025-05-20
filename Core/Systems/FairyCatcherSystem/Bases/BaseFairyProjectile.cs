@@ -111,7 +111,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         public virtual void Backing_LerpToOwner()
         {
             Projectile.velocity = (Owner.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * 2;
-            Projectile.Center = Vector2.SmoothStep(Projectile.Center, Owner.Center, Coralite.Instance.SqrtSmoother.Smoother(Timer * 0.00075f));
+            Projectile.Center = Vector2.SmoothStep(Projectile.Center, Owner.Center, Helper.SqrtEase(Timer * 0.00075f));
 
             if (Vector2.Distance(Projectile.Center, Owner.Center) < 24)
                 Projectile.Kill();

@@ -154,7 +154,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                     {
                         UpdateAllOldCaches();
 
-                        float factor = Coralite.Instance.SqrtSmoother.Smoother(Timer / burstTime);
+                        float factor = Helper.SqrtEase(Timer / burstTime);
                         shadowScale = Helper.Lerp(1f, 2f, factor);
                         shadowAlpha = Helper.Lerp(1f, 0f, factor);
 
@@ -351,7 +351,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         FlyingFrame(true);
                         Recorder = Recorder.AngleTowards((Target.Center - GetMousePos()).ToRotation(), 0.015f);
 
-                        float factor = Coralite.Instance.SqrtSmoother.Smoother(Timer / burstTime);
+                        float factor = Helper.SqrtEase(Timer / burstTime);
                         shadowScale = Helper.Lerp(1f, 2f, factor);
                         shadowAlpha = Helper.Lerp(1f, 0f, factor);
 

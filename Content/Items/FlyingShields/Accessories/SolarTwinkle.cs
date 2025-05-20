@@ -279,7 +279,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
 
             if (timer < minTime + 8)
             {
-                alpha = (int)(Coralite.Instance.X2Smoother.Smoother(timer - minTime, 8) * 255);
+                alpha = (int)(Helper.X2Ease(timer - minTime, 8) * 255);
             }
             else
                 alpha = 255;

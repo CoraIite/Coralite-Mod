@@ -359,8 +359,8 @@ namespace Coralite.Content.Items.ThyphionSeries
                 case 0://刚射出，减速
                     {
                         float factor = Timer / 40;
-                        scale = Vector2.Lerp(new Vector2(1.5f, 0.2f), Vector2.One, Coralite.Instance.BezierEaseSmoother.Smoother(factor));
-                        Alpha = Coralite.Instance.SqrtSmoother.Smoother(factor);
+                        scale = Vector2.Lerp(new Vector2(1.5f, 0.2f), Vector2.One, Helper.BezierEase(factor));
+                        Alpha = Helper.SqrtEase(factor);
 
                         if (Timer > 40)
                         {

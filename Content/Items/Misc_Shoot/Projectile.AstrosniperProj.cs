@@ -1,16 +1,21 @@
 using Coralite.Core;
+using Coralite.Core.Attributes;
 using Coralite.Core.Prefabs.Projectiles;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 
 namespace Coralite.Content.Items.Misc_Shoot
 {
+    [AutoLoadTexture(Path = AssetDirectory.Misc_Shoot)]
     public class AstrosniperHeldProj : BaseGunHeldProj
     {
         public AstrosniperHeldProj() : base(0.4f, 30, -6, AssetDirectory.Misc_Shoot) { }
 
         private int dir;
         protected override float HeldPositionY => -12;
+
+        public static ATex AstrosniperFire { get; private set; }
 
         public override float Ease()
         {
@@ -37,6 +42,10 @@ namespace Coralite.Content.Items.Misc_Shoot
         public override void ModifyAI(float factor)
         {
             Owner.direction = dir;
+            if (Projectile.timeLeft != MaxTime && Projectile.timeLeft % 2 == 0)
+            {
+                Projectile.frame++;
+            }
         }
 
         public override void ApplyRecoil(float factor)
@@ -58,6 +67,18 @@ namespace Coralite.Content.Items.Misc_Shoot
         public override bool PreDraw(ref Color lightColor)
         {
             base.PreDraw(ref lightColor);
+
+            if (Projectile.frame > 3)
+                return false;
+
+            Texture2D effect = AstrosniperFire.Value;
+            Rectangle frameBox = effect.Frame(1, 4, 0, Projectile.frame);
+
+            float rot = Projectile.rotation + (DirSign > 0 ? 0 : MathHelper.Pi);
+            float n = rot - DirSign * MathHelper.PiOver2;
+
+            Main.spriteBatch.Draw(effect, Projectile.Center + rot.ToRotationVector2() * 48 + n.ToRotationVector2() * 2 - Main.screenPosition, frameBox, Color.Lerp(lightColor, Color.White, 0.5f)
+                , rot, new Vector2(0, frameBox.Height / 2), Projectile.scale, 0, 0f);
             return false;
         }
     }

@@ -713,7 +713,7 @@ namespace Coralite.Content.NPCs.Crystalline
                     NPC.rotation = (NPC.Center - baseP).ToRotation();
 
                     //设置嘴的张开角度
-                    MouseRotation = MouseRotation.AngleLerp(BiteMouseAngle * Coralite.Instance.SqrtSmoother.Smoother(Timer / ReadyTime), 0.3f);
+                    MouseRotation = MouseRotation.AngleLerp(BiteMouseAngle * Helper.SqrtEase(Timer / ReadyTime), 0.3f);
 
                     //粒子
                     if (Timer % 3 == 0 && Timer < ReadyTime / 2)
@@ -777,7 +777,7 @@ namespace Coralite.Content.NPCs.Crystalline
                 if (Timer < ReadyTime + 1 + BiteTime)//攻击最后一下咬合（虽然没什么用处但是看着很合理）
                 {
                     float factor = (Timer - ReadyTime - 1) / BiteTime;
-                    MouseRotation = BiteMouseAngle * (1 - Coralite.Instance.HeavySmootherInstance.Smoother(factor));
+                    MouseRotation = BiteMouseAngle * (1 - Helper.HeavyEase(factor));
                     NPC.knockBackResist = 0.2f;
 
                     if (Timer == ReadyTime + 1 + BiteTime / 2)//咬合的粒子效果和音效

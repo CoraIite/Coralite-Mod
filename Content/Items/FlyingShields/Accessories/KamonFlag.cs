@@ -166,7 +166,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
                     {
                         speed += 0.5f;
                     }
-                    Projectile.velocity = selfAngle.AngleLerp(targetAngle, Math.Clamp(Coralite.Instance.X2Smoother.Smoother(Timer / flyingTime), 0, 1f)).ToRotationVector2() * speed;
+                    Projectile.velocity = selfAngle.AngleLerp(targetAngle, Math.Clamp(Helper.X2Ease(Timer / flyingTime), 0, 1f)).ToRotationVector2() * speed;
                 }
 
                 Projectile.rotation = Projectile.velocity.ToRotation();

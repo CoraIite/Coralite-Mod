@@ -277,22 +277,22 @@ namespace Coralite.Content.Items.Thunder
                     Projectile.scale = scale * Helper.EllipticalEase(
                         recordStartAngle + extraScaleAngle - (recordTotalAngle
                         * Smoother.Smoother(timer, maxTime - minTime)), 1.1f, 1.3f);
-                    distanceToOwner = -68 + (40 * Coralite.Instance.SinSmoother.Smoother(timer, maxTime - minTime));
+                    distanceToOwner = -68 + (40 * Helper.SinEase(timer, maxTime - minTime));
 
                     break;
                 case 1:
                     Projectile.scale = scale * Helper.EllipticalEase(
                         recordStartAngle + extraScaleAngle - (recordTotalAngle
                         * Smoother.Smoother(timer, maxTime - minTime)), 1.2f, 1.5f);
-                    distanceToOwner = -68 + (40 * Coralite.Instance.SinSmoother.Smoother(timer, maxTime - minTime));
+                    distanceToOwner = -68 + (40 * Helper.SinEase(timer, maxTime - minTime));
 
                     break;
                 case 2:
                     Projectile.scale = scale * 1.3f;
-                    distanceToOwner = -68 + (40 * Coralite.Instance.SinSmoother.Smoother(timer, maxTime - minTime));
+                    distanceToOwner = -68 + (40 * Helper.SinEase(timer, maxTime - minTime));
                     break;
             }
-            alpha = (int)(Coralite.Instance.X2Smoother.Smoother(timer, maxTime - minTime) * 100) + 150;
+            alpha = (int)(Helper.X2Ease(timer, maxTime - minTime) * 100) + 150;
             base.OnSlash();
         }
 

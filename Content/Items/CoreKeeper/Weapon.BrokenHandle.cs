@@ -198,7 +198,7 @@ namespace Coralite.Content.Items.CoreKeeper
         protected override void OnSlash()
         {
             int timer = (int)Timer - minTime;
-            alpha = (int)(Coralite.Instance.X2Smoother.Smoother(timer, maxTime - minTime) * 140) + 100;
+            alpha = (int)(Helper.X2Ease(timer, maxTime - minTime) * 140) + 100;
             float scale = 1f;
             if (Item.type == ItemType<RuneSong>())
                 scale = Owner.GetAdjustedItemScale(Item);

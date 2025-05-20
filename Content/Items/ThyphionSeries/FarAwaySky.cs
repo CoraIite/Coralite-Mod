@@ -159,7 +159,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             {
                 Owner.itemTime = Owner.itemAnimation = 2;
 
-                Rotation = Helper.Lerp(RecordAngle, DirSign > 0 ? -1f : (3.141f + 1f), Coralite.Instance.HeavySmootherInstance.Smoother(Timer / DashTime));
+                Rotation = Helper.Lerp(RecordAngle, DirSign > 0 ? -1f : (3.141f + 1f), Helper.HeavyEase(Timer / DashTime));
                 return;
             }
 

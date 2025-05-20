@@ -320,7 +320,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             {
                 if (factor < 0.2f)
                 {
-                    float sqrtFactor = Coralite.Instance.SqrtSmoother.Smoother(factor / 0.2f);
+                    float sqrtFactor = Helper.SqrtEase(factor / 0.2f);
                     alpha = Helper.Lerp(0, 1, sqrtFactor);
                     WeaponTexLength = Helper.Lerp(0, 80, sqrtFactor);
                     scale = Helper.Lerp(0, 0.3f, sqrtFactor);

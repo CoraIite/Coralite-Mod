@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Bosses.ThunderveinDragon;
 using Coralite.Core;
+using Coralite.Core.Attributes;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
 using InnoVault.PRT;
@@ -13,6 +14,7 @@ using Terraria.DataStructures;
 using Terraria.Graphics.CameraModifiers;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
+using Terraria.IO;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Thunder
@@ -90,20 +92,56 @@ namespace Coralite.Content.Items.Thunder
         }
     }
 
+    [AutoLoadTexture(Path = AssetDirectory.ThunderItems)]
     public class ThunderDukeVineHeldProj : BaseGunHeldProj
     {
         public override string Texture => AssetDirectory.ThunderItems + "ThunderDukeVineProj";
 
         ref float Frame => ref Projectile.ai[2];
+        int frameX;
+
+        public static ATex ThunderDukeVineFire { get; private set; }
 
         public ThunderDukeVineHeldProj() : base(0.15f, 13, -8, AssetDirectory.ThunderItems)
         {
+        }
+
+        public override void InitializeGun()
+        {
+            base.InitializeGun();
+            frameX = Main.rand.Next(4);
+        }
+
+        public override void ModifyAI(float factor)
+        {
+            if (Projectile.timeLeft != MaxTime && Projectile.timeLeft % 2 == 0)
+            {
+                Projectile.frame++;
+            }
         }
 
         public override void GetFrame(Texture2D mainTex, out Rectangle? frame, out Vector2 origin)
         {
             frame = mainTex.Frame(1, 15, 0, (int)Frame);
             origin = frame.Value.Size() / 2;
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            base.PreDraw(ref lightColor);
+
+            if (Projectile.frame > 3)
+                return false;
+
+            Texture2D effect = ThunderDukeVineFire.Value;
+            Rectangle frameBox = effect.Frame(4, 4, frameX, Projectile.frame);
+
+            float rot = Projectile.rotation + (DirSign > 0 ? 0 : MathHelper.Pi);
+            float n = rot - DirSign * MathHelper.PiOver2;
+
+            Main.spriteBatch.Draw(effect, Projectile.Center + rot.ToRotationVector2() * 42 + n.ToRotationVector2() * 4 - Main.screenPosition, frameBox, Color.Lerp(lightColor, Color.White, 0.5f)
+                , rot, new Vector2(0, frameBox.Height / 2), Projectile.scale, 0, 0f);
+            return false;
         }
     }
 
@@ -294,7 +332,7 @@ namespace Coralite.Content.Items.Thunder
 
                 float factor = (Timer - DashTime) / DelayTime;
                 ThunderWidth = 30 * (1 - factor);
-                ThunderAlpha = 1 - Coralite.Instance.X2Smoother.Smoother(factor);
+                ThunderAlpha = 1 - Helper.X2Ease(factor);
 
                 foreach (var trail in thunderTrails)
                 {

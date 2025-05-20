@@ -157,7 +157,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                         TurnToNoRot(1);
                         Recorder = Recorder.AngleTowards((Target.Center - GetMousePos()).ToRotation(), 0.014f);
                         FlyingFrame(true);
-                        float factor = Coralite.Instance.SqrtSmoother.Smoother(Timer / burstTime);
+                        float factor = Helper.SqrtEase(Timer / burstTime);
                         shadowScale = Helper.Lerp(1f, 2f, factor);
                         shadowAlpha = Helper.Lerp(1f, 0f, factor);
 

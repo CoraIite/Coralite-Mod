@@ -414,7 +414,7 @@ namespace Coralite.Content.Items.Misc_Equip
             public BloodTopper(Projectile projectile, int index)
             {
                 Pos = projectile.Top;
-                float f = 1.5f + Coralite.Instance.X3Smoother.Smoother(1 - index / 5f) * 10;
+                float f = 1.5f + Helper.X3Ease(1 - index / 5f) * 10;
                 //Main.NewText(f);
                 posMover = new SecondOrderDynamics_Vec2(f, 0.9f - index * 0.05f, 0, Pos);
                 Rot = Main.rand.NextFromList(-0.5f, 0.5f);

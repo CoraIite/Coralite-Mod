@@ -212,7 +212,7 @@ namespace Coralite.Content.Items.Nightmare
                    dir * Main.rand.NextFloat(0.5f, 2f));
             dust.noGravity = true;
             int timer = (int)Timer - minTime;
-            alpha = (int)(Coralite.Instance.SinSmoother.Smoother(timer, maxTime - minTime) * 200) + 50;
+            alpha = (int)(Helper.SinEase(timer, maxTime - minTime) * 200) + 50;
 
             switch ((int)Combo)
             {

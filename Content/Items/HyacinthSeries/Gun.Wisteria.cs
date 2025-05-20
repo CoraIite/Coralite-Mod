@@ -126,7 +126,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             Timer++;
             if (Timer > 24)
             {
-                float factor = 0.3f * Coralite.Instance.BezierEaseSmoother.Smoother(Math.Clamp((Timer - 24) / 40, 0, 1));
+                float factor = 0.3f * Helper.BezierEase(Math.Clamp((Timer - 24) / 40, 0, 1));
                 Projectile.velocity = Projectile.velocity.RotatedBy(Dir * factor);
             }
             else

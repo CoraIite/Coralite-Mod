@@ -257,7 +257,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public override void AI()
         {
-            Scale = Coralite.Instance.X2Smoother.Smoother(Timer / 16f) * 2;
+            Scale = Helper.X2Ease(Timer / 16f) * 2;
             Timer++;
 
             if (Timer < 6)

@@ -208,7 +208,7 @@ namespace Coralite.Content.Items.Nightmare
                     break;
             }
 
-            alpha = (int)(Coralite.Instance.SqrtSmoother.Smoother(timer, maxTime - minTime) * 80) + 160;
+            alpha = (int)(Helper.SqrtEase(timer, maxTime - minTime) * 80) + 160;
             base.OnSlash();
         }
 
@@ -335,7 +335,7 @@ namespace Coralite.Content.Items.Nightmare
             //dust.noGravity = true;
 
             int timer = (int)Timer - minTime;
-            alpha = (int)(Coralite.Instance.BezierEaseSmoother.Smoother(timer, maxTime - minTime) * 200) + 50;
+            alpha = (int)(Helper.BezierEase(timer, maxTime - minTime) * 200) + 50;
 
             base.OnSlash();
         }

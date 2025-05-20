@@ -277,7 +277,7 @@ namespace Coralite.Content.Items.Shadow
                    dir * Main.rand.NextFloat(0.5f, 2f));
             dust.noGravity = true;
             int timer = (int)Timer - minTime;
-            alpha = (int)(Coralite.Instance.SinSmoother.Smoother(timer, maxTime - minTime) * 50) + 200;
+            alpha = (int)(Helper.SinEase(timer, maxTime - minTime) * 50) + 200;
             int halfTime = (maxTime - minTime) / 2;
 
             switch ((int)Combo)

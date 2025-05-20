@@ -159,7 +159,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                     {
                         UpdateAllOldCaches();
                         TurnToNoRot(0.2f);
-                        float factor = Coralite.Instance.SqrtSmoother.Smoother(Timer / burstTime);
+                        float factor = Helper.SqrtEase(Timer / burstTime);
                         shadowScale = Helper.Lerp(1f, 2.5f, (factor*3)%1);
                         shadowAlpha = Helper.Lerp(1f, 0f, factor);
 

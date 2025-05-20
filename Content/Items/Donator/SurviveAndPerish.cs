@@ -504,8 +504,8 @@ namespace Coralite.Content.Items.Donator
             if (!Target.GetNPCOwner(out NPC target, () => Target = -1))
                 return;
 
-            float slowTime = Timer < 60 ? Coralite.Instance.X2Smoother.Smoother(Timer / 60) : 1;
-            float speed = Timer < 20 ? Coralite.Instance.X2Smoother.Smoother(Timer / 20) : 1;
+            float slowTime = Timer < 60 ? Helper.X2Ease(Timer / 60) : 1;
+            float speed = Timer < 20 ? Helper.X2Ease(Timer / 20) : 1;
             slowTime = Helper.Lerp(chaseFactor, 20, slowTime);
             speed = Helper.Lerp(6, 24, speed);
 

@@ -167,7 +167,7 @@ namespace Coralite.Core.Systems.MagikeSystem
                 Rectangle frameBox = barTex.Frame(1, 2, 0, 1);
                 Vector2 pos = new(line.OriginalX, line.OriginalY + frameBox.Y / 2);
 
-                //float factor = Coralite.Instance.BezierEaseSmoother.Smoother(MagikeBarTimer, 20);
+                //float factor = Helper.BezierEase(MagikeBarTimer, 20);
                 //绘制底部条
                 //frameBox.Width = (int)(frameBox.Width * factor);
                 Main.spriteBatch.Draw(barTex, pos, frameBox, Color.White, 0, new Vector2(0, frameBox.Height / 2), scale, 0, 0);

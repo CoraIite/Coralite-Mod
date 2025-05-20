@@ -236,15 +236,15 @@ namespace Coralite.Content.Items.Icicle
             {
                 default:
                 case 0:
-                    alpha = (int)(Coralite.Instance.X2Smoother.Smoother(timer, maxTime - minTime) * 140) + 100;
+                    alpha = (int)(Helper.X2Ease(timer, maxTime - minTime) * 140) + 100;
                     Projectile.scale = Helper.EllipticalEase(2.3f - (4.6f * Smoother.Smoother(timer, maxTime - minTime)), 0.8f, 1.2f);
                     break;
                 case 2:
-                    alpha = (int)(Coralite.Instance.SqrtSmoother.Smoother(timer, maxTime - minTime) * 80) + 160;
+                    alpha = (int)(Helper.SqrtEase(timer, maxTime - minTime) * 80) + 160;
                     Projectile.scale = Helper.EllipticalEase(3f - (5.6f * Smoother.Smoother(timer, maxTime - minTime)), 1.1f, 1.6f);
                     break;
                 case 3:
-                    alpha = (int)(Coralite.Instance.SqrtSmoother.Smoother(timer, maxTime - minTime) * 140) + 100;
+                    alpha = (int)(Helper.SqrtEase(timer, maxTime - minTime) * 140) + 100;
                     Projectile.scale = Helper.EllipticalEase(1.6f - (4.6f * Smoother.Smoother(timer, maxTime - minTime)), 1.1f, 1.6f);
                     break;
             }
@@ -504,12 +504,12 @@ namespace Coralite.Content.Items.Icicle
             {
                 default:
                 case 1:
-                    alpha = (int)(Coralite.Instance.X2Smoother.Smoother(timer, maxTime - minTime) * 200) + 50;
+                    alpha = (int)(Helper.X2Ease(timer, maxTime - minTime) * 200) + 50;
                     Projectile.scale = Helper.EllipticalEase(-1.4f + (4.3f * Smoother.Smoother(timer, maxTime - minTime)), 0.6f, 1.5f);
                     //Main.NewText(Projectile.scale);
                     break;
                 case 4:
-                    alpha = (int)(Coralite.Instance.X2Smoother.Smoother(timer, maxTime - minTime) * 200) + 50;
+                    alpha = (int)(Helper.X2Ease(timer, maxTime - minTime) * 200) + 50;
                     Projectile.scale = Helper.EllipticalEase(2.8f - (5.6f * Smoother.Smoother(timer, maxTime - minTime)), 0.8f, 2.5f);
                     break;
             }
@@ -697,7 +697,7 @@ namespace Coralite.Content.Items.Icicle
             int timer = (int)Timer - minTime;
             FrostySwordSlash.FrostDustsOnSlash(Top, RotateVec2, totalAngle);
 
-            alpha = (int)(Coralite.Instance.SqrtSmoother.Smoother(timer, maxTime - minTime) * 80) + 160;
+            alpha = (int)(Helper.SqrtEase(timer, maxTime - minTime) * 80) + 160;
             Projectile.scale = Helper.EllipticalEase(2.8f - (5.6f * Smoother.Smoother(timer, maxTime - minTime)), 0.8f, 1f);
             base.OnSlash();
         }

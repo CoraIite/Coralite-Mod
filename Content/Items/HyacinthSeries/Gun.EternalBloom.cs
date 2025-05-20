@@ -23,7 +23,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             Item.DamageType = DamageClass.Ranged;
             Item.value = Item.sellPrice(0, 5, 0, 0);
             Item.rare = ItemRarityID.Lime;
-            Item.shoot = ProjectileType<WoodWaxHeldProj>();
+            Item.shoot = ProjectileType<EternalBloomHeldProj>();
             Item.useAmmo = AmmoID.Bullet;
             Item.UseSound = CoraliteSoundID.Gun3_Item41;
 
@@ -47,6 +47,12 @@ namespace Coralite.Content.Items.HyacinthSeries
 
                 Projectile.NewProjectile(source, position, velocity
                      , type, damage, knockback, player.whoAmI);
+                return false;
+            }
+            else if (Main.rand.NextBool(4))
+            {
+                Projectile.NewProjectile(source, position, velocity
+                     , ProjectileType<ThornBall>(), damage, knockback, player.whoAmI);
                 return false;
             }
 

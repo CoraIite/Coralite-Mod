@@ -70,7 +70,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             Snowdrop,
             Rosemary,
             Arethusa,
-            WoodWax,
+            //WoodWax,
             Musket,
             TheUndertaker,
             PhoenixBlaster,
@@ -257,8 +257,8 @@ namespace Coralite.Content.Items.HyacinthSeries
                     return new Color(235, 141, 207);
                 case (int)GunType.Arethusa://幽兰
                     return new Color(95, 120, 233);
-                case (int)GunType.WoodWax://木蜡
-                    return new Color(125, 165, 79);
+                //case (int)GunType.WoodWax://木蜡
+                //    return new Color(125, 165, 79);
                 case (int)GunType.Musket://火枪
                     return new Color(165, 165, 165);
                 case (int)GunType.TheUndertaker://夺命枪
@@ -548,8 +548,8 @@ namespace Coralite.Content.Items.HyacinthSeries
                     return ModContent.ItemType<Rosemary>();
                 case (int)GunType.Arethusa://幽兰
                     return ModContent.ItemType<Arethusa>();
-                case (int)GunType.WoodWax://木蜡
-                    return ModContent.ItemType<WoodWax>();
+                //case (int)GunType.WoodWax://木蜡
+                //    return ModContent.ItemType<WoodWax>();
                 case (int)GunType.Musket://火枪
                     return ItemID.Musket;
                 case (int)GunType.TheUndertaker://夺命枪

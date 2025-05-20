@@ -432,7 +432,7 @@ namespace Coralite.Content.Items.CoreKeeper
             }
             else
             {
-                alpha = (int)(Coralite.Instance.X2Smoother.Smoother(timer, maxTime - minTime) * 100) + 100;
+                alpha = (int)(Helper.X2Ease(timer, maxTime - minTime) * 100) + 100;
             }
             if (Item.type == ItemType<RuneSong>())
             {

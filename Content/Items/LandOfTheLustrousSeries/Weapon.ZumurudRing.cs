@@ -153,7 +153,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             if (AttackTime > 0)
             {
-                Projectile.rotation = Helper.Lerp(0, MathHelper.Pi, Coralite.Instance.SqrtSmoother.Smoother(1 - (AttackTime / Owner.itemTimeMax)));
+                Projectile.rotation = Helper.Lerp(0, MathHelper.Pi, Helper.SqrtEase(1 - (AttackTime / Owner.itemTimeMax)));
 
                 if (AttackTime == 1 && Projectile.IsOwnedByLocalPlayer())
                 {

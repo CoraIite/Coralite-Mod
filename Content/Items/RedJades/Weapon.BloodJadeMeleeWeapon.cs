@@ -241,16 +241,16 @@ namespace Coralite.Content.Items.RedJades
                 default:
                 case 0:
                 case 1:
-                    alpha = (int)(Coralite.Instance.X2Smoother.Smoother(timer, maxTime - minTime) * 140) + 100;
+                    alpha = (int)(Helper.X2Ease(timer, maxTime - minTime) * 140) + 100;
                     //Projectile.scale = Helper.EllipticalEase(2.3f - 4.6f * Smoother.Smoother(timer, maxTime - minTime), 0.8f, 1.2f);
                     break;
                 case 2:
-                    alpha = (int)(Coralite.Instance.SqrtSmoother.Smoother(timer, maxTime - minTime) * 140) + 100;
+                    alpha = (int)(Helper.SqrtEase(timer, maxTime - minTime) * 140) + 100;
                     Projectile.scale = Helper.EllipticalEase(1.2f - (4.2f * Smoother.Smoother(timer, maxTime - minTime)), 1.2f, 1.4f);
                     break;
                 case 3:
                 case 4:
-                    alpha = (int)(Coralite.Instance.SqrtSmoother.Smoother(timer, maxTime - minTime) * 80) + 160;
+                    alpha = (int)(Helper.SqrtEase(timer, maxTime - minTime) * 80) + 160;
                     Projectile.scale = Helper.EllipticalEase(2.6f + (4.6f * Smoother.Smoother(timer, maxTime - minTime)), 1.4f, 1.8f);
                     break;
             }

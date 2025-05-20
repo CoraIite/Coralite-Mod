@@ -146,7 +146,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             else
             {
                 float factor = (Timer - LightingTime) / DelayTime;
-                float x2Factor = Coralite.Instance.X2Smoother.Smoother(factor);
+                float x2Factor = Helper.X2Ease(factor);
 
                 ThunderWidth = (1 - x2Factor) * 30;
                 ThunderAlpha = 1 - x2Factor;

@@ -286,7 +286,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                 case (int)ComboType.SmashDown_Shouryuukenn:
                 case (int)ComboType.SmashDown_Rolling:
                     {
-                        Projectile.scale = Helper.Lerp(0, 0.8f, Coralite.Instance.SqrtSmoother.Smoother(Timer / minTime));
+                        Projectile.scale = Helper.Lerp(0, 0.8f, Helper.SqrtEase(Timer / minTime));
                         if ((int)Timer == minTime)
                         {
                             Helper.PlayPitched("Misc/Swing", 0.4f, 0f, Owner.Center);
@@ -296,7 +296,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     break;
                 case (int)ComboType.VerticalRolling:
                     {
-                        Projectile.scale = Helper.Lerp(0, 1f, Coralite.Instance.SqrtSmoother.Smoother(Timer / minTime));
+                        Projectile.scale = Helper.Lerp(0, 1f, Helper.SqrtEase(Timer / minTime));
                         if ((int)Timer == minTime)
                         {
                             Helper.PlayPitched("Misc/Swing", 0.4f, 0f, Owner.Center);
@@ -317,7 +317,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
                     break;
                 case (int)ComboType.NightmareKingDash:
                     {
-                        Projectile.scale = Helper.Lerp(0, 0.8f, Coralite.Instance.SqrtSmoother.Smoother(Timer / minTime));
+                        Projectile.scale = Helper.Lerp(0, 0.8f, Helper.SqrtEase(Timer / minTime));
                         if ((int)Timer == minTime)
                         {
                             Helper.PlayPitched("Misc/Swing", 0.4f, 0f, Owner.Center);
@@ -482,7 +482,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             if (!GetOwner(out _))
                 return;
 
-            Projectile.scale = Helper.Lerp(0, 1f, Coralite.Instance.SqrtSmoother.Smoother(Timer / minTime));
+            Projectile.scale = Helper.Lerp(0, 1f, Helper.SqrtEase(Timer / minTime));
 
             _Rotation = startAngle;
             Slasher();
@@ -512,7 +512,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
         protected override void AfterSlash()
         {
-            Projectile.scale = Helper.Lerp(1f, 0, Coralite.Instance.SqrtSmoother.Smoother((Timer - maxTime) / delay));
+            Projectile.scale = Helper.Lerp(1f, 0, Helper.SqrtEase((Timer - maxTime) / delay));
 
             if (Timer > maxTime + delay)
                 Projectile.Kill();

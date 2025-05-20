@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.GlobalItems;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -344,7 +345,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public static void DrawRaderBack(Vector2 center, float factor, Texture2D backgroundTex)
         {
-            factor = Coralite.Instance.SqrtSmoother.Smoother(factor);
+            factor = Helper.SqrtEase(factor);
 
             Main.spriteBatch.Draw(backgroundTex, center, null, Color.White * factor, 0, backgroundTex.Size() / 2, factor, 0, 0);
         }

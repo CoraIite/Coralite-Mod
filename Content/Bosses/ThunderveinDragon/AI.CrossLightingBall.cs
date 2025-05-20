@@ -100,7 +100,7 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
                 case 2://射🐍🐍🐍🐍🐍🐍🐍🐍🐍🐍🐍🐍🐍🐍🐍🐍🐍🐍🐍🐍🐍🐍🐍🐍🐍🐍🐍🐍🐍🐍
                     {
                         UpdateAllOldCaches();
-                        float factor = Coralite.Instance.SqrtSmoother.Smoother(Timer / burstTime);
+                        float factor = Helper.SqrtEase(Timer / burstTime);
                         shadowScale = Helper.Lerp(1f, 1.5f, factor);
                         shadowAlpha = Helper.Lerp(1f, 0f, factor);
 

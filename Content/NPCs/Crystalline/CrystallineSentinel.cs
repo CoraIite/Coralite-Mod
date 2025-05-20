@@ -742,11 +742,11 @@ namespace Coralite.Content.NPCs.Crystalline
         {
             Texture2D guardTex = GuardTex.Value;
             Vector2 pos = NPC.Center + new Vector2(0, -20) - screenPos;
-            float scale = Coralite.Instance.BezierEaseSmoother.Smoother(Recorder2);
+            float scale = Helper.BezierEase(Recorder2);
 
             //最内层
             var framebox = guardTex.Frame(1, 3, 0, 0);
-            spriteBatch.Draw(guardTex, pos, framebox, Color.White, Coralite.Instance.SqrtSmoother.Smoother(Recorder2) * MathHelper.TwoPi, framebox.Size() / 2, scale, 0, 0);
+            spriteBatch.Draw(guardTex, pos, framebox, Color.White, Helper.SqrtEase(Recorder2) * MathHelper.TwoPi, framebox.Size() / 2, scale, 0, 0);
 
             //外层
             framebox = guardTex.Frame(1, 3, 0, 2);

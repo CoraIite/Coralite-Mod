@@ -29,6 +29,7 @@ namespace Coralite.Content.Particles
             Frame = new Rectangle(0, 0, 22, 26);
             Scale = 1f;
             InitializeCaches(12);
+            ShouldKillWhenOffScreen = false;
             trail = new Trail(Main.instance.GraphicsDevice, 12, new EmptyMeshGenerator(), factor => 2, factor => Color.Lerp(new Color(0, 0, 0, 0), Color.Yellow, factor.X));
         }
 

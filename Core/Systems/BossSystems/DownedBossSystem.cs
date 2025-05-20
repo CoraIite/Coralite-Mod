@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.BossSystems
@@ -10,6 +12,7 @@ namespace Coralite.Core.Systems.BossSystems
         public static bool downedSlimeEmperor;
         public static bool downedBloodiancie;
         public static bool downedThunderveinDragon;
+        public static bool downedZacurrentDragon;
         public static bool downedNightmarePlantera;
 
         public override void PostWorldGen()
@@ -17,6 +20,9 @@ namespace Coralite.Core.Systems.BossSystems
             downedRediancie = false;
             downedBabyIceDragon = false;
             downedSlimeEmperor = false;
+            downedBloodiancie = false;
+            downedThunderveinDragon = false;
+            downedZacurrentDragon = false;
             downedNightmarePlantera = false;
         }
 
@@ -38,6 +44,9 @@ namespace Coralite.Core.Systems.BossSystems
             if (downedThunderveinDragon)
                 downed.Add("ThunderveinDragon");
 
+            if (downedZacurrentDragon)
+                downed.Add("ZacurrentDragon");
+
             if (downedNightmarePlantera)
                 downed.Add("NightmarePlantera");
 
@@ -52,27 +61,33 @@ namespace Coralite.Core.Systems.BossSystems
             downedSlimeEmperor = list.Contains("SlimeEmperor");
             downedBloodiancie = list.Contains("Bloodiancie");
             downedThunderveinDragon = list.Contains("ThunderveinDragon");
+            downedZacurrentDragon = list.Contains("ZacurrentDragon");
             downedNightmarePlantera = list.Contains("NightmarePlantera");
         }
 
         public static void DownSlimeEmperor()
         {
-            downedSlimeEmperor = true;
+            NPC.SetEventFlagCleared(ref downedSlimeEmperor, -1);
         }
 
         public static void DownBloodiancie()
         {
-            downedBloodiancie = true;
+            NPC.SetEventFlagCleared(ref downedBloodiancie, -1);
         }
 
         public static void DownThunderveinDragon()
         {
-            downedThunderveinDragon = true;
+            NPC.SetEventFlagCleared(ref downedThunderveinDragon, -1);
+        }
+
+        public static void DownZacurrentDragon()
+        {
+            NPC.SetEventFlagCleared(ref downedZacurrentDragon, -1);
         }
 
         public static void DownNightmarePlantera()
         {
-            downedNightmarePlantera = true;
+            NPC.SetEventFlagCleared(ref downedNightmarePlantera, -1);
         }
     }
 }
