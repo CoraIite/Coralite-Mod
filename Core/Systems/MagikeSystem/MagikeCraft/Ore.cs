@@ -284,7 +284,7 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
             cost = CalculateMagikeCost(Hallow, 6, 15);
             MagikeRecipe.CreateCraftRecipe(ItemID.HallowedBar, ItemID.ChlorophyteBar, cost, 2)
                 .AddIngredient(ItemID.JungleGrassSeeds)
-                .AddIngredient(ItemID.MudBlock, 8)
+                .AddIngredient(ItemID.MudBlock, 2)
                 .AddCondition(Condition.DownedMechBossAll)
                 .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();

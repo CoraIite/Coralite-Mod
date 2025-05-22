@@ -31,6 +31,14 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
                 .AddIngredient<MutatusInABottle>()
                 .Register();
 
+            //对打球
+            MagikeRecipe.CreateCraftRecipe(ItemID.SilverBar, ItemID.Rally, CalculateMagikeCost(MagicCrystal, 3), 15)
+                .AddIngredient(ItemID.Blinkroot)
+                .Register();
+            MagikeRecipe.CreateCraftRecipe(ItemID.TungstenBar, ItemID.Rally, CalculateMagikeCost(MagicCrystal, 3), 15)
+                .AddIngredient(ItemID.Blinkroot)
+                .Register();
+
             #region 宝箱怪
 
             int MinicCost = CalculateMagikeCost(CrystallineMagike, 6, 60 * 3);
@@ -210,6 +218,47 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
                 .Register();
 
             #endregion
+
+            #region 装甲步兵
+            MagikeRecipe.CreateCraftRecipe(ItemID.TinBar, ItemID.Javelin, CalculateMagikeCost(MagicCrystal, 2, 30), 1, 50)
+                .AddIngredient(ItemID.Marble)
+                .Register();
+            MagikeRecipe.CreateCraftRecipe(ItemID.CopperBar, ItemID.Javelin, CalculateMagikeCost(MagicCrystal, 2, 30), 1, 50)
+                .AddIngredient(ItemID.Marble)
+                .Register();
+
+            //角斗士套装
+            MagikeRecipe.CreateCraftRecipe(ItemID.TinBar, ItemID.GladiatorHelmet, CalculateMagikeCost(MagicCrystal, 6), 12)
+                .AddIngredient(ItemID.Marble,8)
+                .Register();
+            MagikeRecipe.CreateCraftRecipe(ItemID.TinBar, ItemID.GladiatorBreastplate, CalculateMagikeCost(MagicCrystal, 6), 16)
+                .AddIngredient(ItemID.Marble,8)
+                .Register();
+            MagikeRecipe.CreateCraftRecipe(ItemID.TinBar, ItemID.GladiatorLeggings, CalculateMagikeCost(MagicCrystal, 6), 12)
+                .AddIngredient(ItemID.Marble,8)
+                .Register();
+            MagikeRecipe.CreateCraftRecipe(ItemID.CopperBar, ItemID.GladiatorHelmet, CalculateMagikeCost(MagicCrystal, 6), 12)
+                .AddIngredient(ItemID.Marble,8)
+                .Register();
+            MagikeRecipe.CreateCraftRecipe(ItemID.CopperBar, ItemID.GladiatorBreastplate, CalculateMagikeCost(MagicCrystal, 6), 16)
+                .AddIngredient(ItemID.Marble,8)
+                .Register();
+            MagikeRecipe.CreateCraftRecipe(ItemID.CopperBar, ItemID.GladiatorLeggings, CalculateMagikeCost(MagicCrystal, 6), 12)
+                .AddIngredient(ItemID.Marble,8)
+                .Register();
+
+            //罗马短剑
+            MagikeRecipe.CreateCraftRecipe(ItemID.TinBar, ItemID.Gladius, CalculateMagikeCost(MagicCrystal, 4), 4)
+                .AddIngredientGroup(RecipeGroupID.IronBar,10)
+                .AddIngredient(ItemID.Marble)
+                .Register();
+            MagikeRecipe.CreateCraftRecipe(ItemID.CopperBar, ItemID.Gladius, CalculateMagikeCost(MagicCrystal, 4), 4)
+                .AddIngredientGroup(RecipeGroupID.IronBar, 10)
+                .AddIngredient(ItemID.Marble)
+                .Register();
+
+            #endregion
+
         }
     }
 }

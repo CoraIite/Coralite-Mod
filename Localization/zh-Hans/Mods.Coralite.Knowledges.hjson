@@ -131,15 +131,15 @@ ActivatedTheMachine: {
 }
 
 ReadPage: {
-	Description:
-		'''
-			右侧的书页中存储着所有的知识
-			点击知识可以跳转到对应的章节
-		'''
+	Description: 点击书本左上角的标签回到此页
 	HowToUse: 收集所有的知识碎片吧！
 }
 
-FragmentPage.ClickToJump: 点击后跳转到对应章节
+FragmentPage: {
+	ClickToJump: 点击后跳转到对应章节
+	TerrariaJourney: 泰拉游记
+	WonderKnowledge: 奇妙见闻
+}
 
 CraftAltar: {
 	RemodelPolymerizeAndMagikeCraft: 重塑！聚合！魔能合成！

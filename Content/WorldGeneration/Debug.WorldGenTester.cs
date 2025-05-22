@@ -34,6 +34,11 @@ namespace Coralite.Content.WorldGeneration
         {
             Vector2 myVector = Main.MouseWorld;
             Point p = myVector.ToTileCoordinates();
+
+            //WorldGen.paintTile();
+            //WorldGen.paintWall();
+            //WorldGen.SlopeTile(p.X, p.Y,(int)SlopeType.SlopeDownLeft);
+            //WorldGen.PoundTile();
             //ExampleStructure(p);
             //Main.NewText(TileLoader.GetTile(860).Name);
             //WorldGen.destroyObject = false;

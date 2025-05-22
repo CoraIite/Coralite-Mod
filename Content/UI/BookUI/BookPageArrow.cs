@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.UI.UILib;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.UI;
 
@@ -57,15 +58,20 @@ namespace Coralite.Content.UI.BookUI
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
+            Vector2 pos = GetDimensions().Center();
             switch (arrowType)
             {
                 case ArrowType.Left:
                     if (bookPanel.CurrentDrawingPage == 0)
                         return;
+                    if (IsMouseHovering)
+                        pos.X -= MathF.Sin((int)Main.timeForVisualEffects * 0.1f) * 10;
                     break;
                 case ArrowType.Right:
                     if (bookPanel.CurrentDrawingPage >= bookPanel.Pages.Count - 2)
                         return;
+                    if (IsMouseHovering)
+                        pos.X += MathF.Sin((int)Main.timeForVisualEffects * 0.1f) * 10;
                     break;
                 default:
                     break;
@@ -76,7 +82,7 @@ namespace Coralite.Content.UI.BookUI
             if (IsMouseHovering)
                 alpha = 1;
 
-            spriteBatch.Draw(ArrowTex.Value, GetDimensions().Center(), null, Color.White * alpha, 0, ArrowTex.Size() / 2, 1, 0, 0);
+            spriteBatch.Draw(ArrowTex.Value,pos, null, Color.White * alpha, 0, ArrowTex.Size() / 2, 1, 0, 0);
         }
     }
 }

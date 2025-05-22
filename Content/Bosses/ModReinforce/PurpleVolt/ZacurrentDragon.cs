@@ -112,9 +112,9 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
         {
             int expertBaseLife = 101254;
-            int masterBaseLife = 123854;
+            int masterBaseLife = 116854;
 
-            int expertAddLife = 20395;
+            int expertAddLife = 17395;
             int masterAddLife = 28485;
 
             NPC.defDamage = 55;
@@ -217,7 +217,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
         private void Modifiers_ModifyHitInfo(ref NPC.HitInfo info)
         {
-            PurpleVoltCount -= info.Damage * Helper.ScaleValueForDiffMode(1, 1, 0.5f, 0.25f);
+            PurpleVoltCount -= info.Damage * Helper.ScaleValueForDiffMode(1, 1, 0.75f, 0.5f);
             if (PurpleVoltCount < 0)
             {
                 ResetFields();

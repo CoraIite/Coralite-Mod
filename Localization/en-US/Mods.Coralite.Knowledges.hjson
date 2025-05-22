@@ -142,7 +142,11 @@ ReadPage: {
 	HowToUse: Collect all the pieces of knowledge!
 }
 
-FragmentPage.ClickToJump: Click to jump to the corresponding chapter
+FragmentPage: {
+	ClickToJump: Click to jump to the corresponding chapter
+	TerrariaJourney: Mods.Coralite.Knowledges.FragmentPage.TerrariaJourney
+	WonderKnowledge: Mods.Coralite.Knowledges.FragmentPage.WonderKnowledge
+}
 
 CraftAltar: {
 	RemodelPolymerizeAndMagikeCraft: Remodel! Polymerize! Magike Craft!

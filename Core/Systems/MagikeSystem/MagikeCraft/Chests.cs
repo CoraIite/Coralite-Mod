@@ -45,7 +45,7 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
                 .Register();
 
             //地牢金箱子
-            int dungeonChestCost = CalculateMagikeCost(Bone, 6, 60 * 3);
+            int dungeonChestCost = CalculateMagikeCost(Bone, 4, 60 * 3);
             MagikeRecipe.CreateCraftRecipe(ItemID.GoldChest, ItemID.Muramasa, dungeonChestCost)
                 .AddIngredient(ItemID.GoldenKey)
                 .AddCondition(Condition.DownedSkeletron)
@@ -106,8 +106,24 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
                 .RegisterNewCraft(ItemID.IceMachine, goldChectCost)
                 .Register();
 
+            //水中箱
+            MagikeRecipe.CreateCraftRecipe(ItemID.WaterChest, ItemID.BreathingReed, goldChectCost, 3)
+                .RegisterNewCraft(ItemID.Flipper, goldChectCost)
+                .RegisterNewCraft(ItemID.Trident, goldChectCost)
+                .RegisterNewCraft(ItemID.FloatingTube, goldChectCost)
+                .RegisterNewCraft(ItemID.WaterWalkingBoots, goldChectCost)
+                .RegisterNewCraft(ItemID.BeachBall, goldChectCost)
+                .RegisterNewCraft(ItemID.SandcastleBucket, goldChectCost)
+                .RegisterNewCraft(ItemID.SharkBait, goldChectCost)
+                .Register();
+
+            MagikeRecipe.CreateCraftRecipe(ItemID.Chest, ItemID.WaterChest, CalculateMagikeCost(MagicCrystal, 1))
+                .AddIngredient(ItemID.Coral)
+                .AddIngredient(ItemID.WaterBucket)
+                .Register();
+
             //天空箱子
-            int skyChestCost = CalculateMagikeCost(Glistent, 6, 180);
+            int skyChestCost = CalculateMagikeCost(Glistent, 4, 180);
             MagikeRecipe.CreateCraftRecipe(ItemID.SkywareChest, ItemID.ShinyRedBalloon, skyChestCost)
                 .RegisterNewCraft(ItemID.Starfury, skyChestCost)
                 .RegisterNewCraft(ItemID.LuckyHorseshoe, skyChestCost)
@@ -136,7 +152,7 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
                 .Register();
 
             //暗影箱
-            int shadowChestCost = CalculateMagikeCost(Shadow, 6, 60 * 3);
+            int shadowChestCost = CalculateMagikeCost(Shadow, 4, 60 * 3);
             MagikeRecipe.CreateCraftRecipe(ItemID.ShadowChest, ItemID.Sunfury, shadowChestCost, 3)
                 .RegisterNewCraft(ItemID.FlowerofFire, shadowChestCost)
                 .AddCondition(Condition.NotRemixWorld)

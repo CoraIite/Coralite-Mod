@@ -14,29 +14,71 @@ using Terraria.UI;
 
 namespace Coralite.Content.CoraliteNotes.Readfragment
 {
+    [AutoLoadTexture(Path =AssetDirectory.NoteReadfragment)]
     public class FragmentPage : KnowledgePage
     {
         public static LocalizedText ClickToJump { get; set; }
+        public static LocalizedText TerrariaJourney { get; set; }
+        public static LocalizedText WonderKnowledge { get; set; }
 
-        public FixedUIGrid SlotGrid;
+        public static ATex TerrariaJourneyTex { get; set; }
+        public static ATex WonderKnowledgeTex { get; set; }
+
+        public FixedUIGrid SlotGrid1;
+        public FixedUIGrid SlotGrid2;
 
         public override void OnInitialize()
         {
             ClickToJump = this.GetLocalization(nameof(ClickToJump));
-            SlotGrid = new FixedUIGrid();
-            SlotGrid.QuickInvisibleScrollbar();
+            TerrariaJourney = this.GetLocalization(nameof(TerrariaJourney));
+            WonderKnowledge = this.GetLocalization(nameof(WonderKnowledge));
+            SlotGrid1 = new FixedUIGrid();
+            SlotGrid2 = new FixedUIGrid();
         }
 
         public override void Recalculate()
         {
             RemoveAllChildren();
-            SlotGrid.SetSize(-30, -60, 1, 1);
-            SlotGrid.SetTopLeft(30, 15);
-            SlotGrid.Clear();
-            AddFragments(SlotGrid);
-            Append(SlotGrid);
+
+            int height = Math.Max(TerrariaJourneyTex.Height(), WonderKnowledgeTex.Height());
+            height += 20;
+
+            float halfPageHeight = PageHeight / 2;
+
+            var t = new TitleElement(TerrariaJourneyTex, TerrariaJourney, height, new Vector2(), Color.LightCoral);
+            Append(t);
+
+            AddTerrariaJourneyButton();
+            SlotGrid1.SetSize(new Vector2(0, halfPageHeight - height), 1, 0);
+            SlotGrid1.SetTopLeft(height, 0);
+            Append(SlotGrid1);
+
+            t = new TitleElement(WonderKnowledgeTex, WonderKnowledge, height, new Vector2(), Color.LightCoral);
+            t.SetTopLeft(halfPageHeight, 0);
+            Append(t);
+
+            AddWonderKnowledgeButton();
+            SlotGrid2.SetSize(new Vector2(0, halfPageHeight - height), 1, 0);
+            SlotGrid2.SetTopLeft(halfPageHeight+height, 0);
+            Append(SlotGrid2);
 
             base.Recalculate();
+        }
+
+        public void AddTerrariaJourneyButton()
+        {
+            SlotGrid1.Clear();
+
+            SlotGrid1.Add(new KnowledgeButten<RedJade.RedJadeKnowledge>(KnowledgeButtonType.Wild));
+            SlotGrid1.Add(new KnowledgeButten<IceDragonChapter1.IceDragon1Knowledge>(KnowledgeButtonType.Wild));
+            SlotGrid1.Add(new KnowledgeButten<ThunderChapter1.Thunder1Knowldege>(KnowledgeButtonType.Wild));
+        }
+
+        public void AddWonderKnowledgeButton()
+        {
+            SlotGrid2.Clear();
+
+            SlotGrid2.Add(new KnowledgeButten<SlimeChapter1.Slime1Knowledge>(KnowledgeButtonType.Ball));
         }
 
         public static void AddFragments(FixedUIGrid grid)

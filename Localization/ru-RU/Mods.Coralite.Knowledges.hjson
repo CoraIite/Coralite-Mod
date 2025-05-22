@@ -139,7 +139,11 @@ ReadPage: {
 	HowToUse: Собирайте все фрагменты знаний!
 }
 
-FragmentPage.ClickToJump: Щёлкните, чтобы перейти к соответствующей главе
+FragmentPage: {
+	ClickToJump: Щёлкните, чтобы перейти к соответствующей главе
+	// TerrariaJourney: Mods.Coralite.Knowledges.FragmentPage.TerrariaJourney
+	// WonderKnowledge: Mods.Coralite.Knowledges.FragmentPage.WonderKnowledge
+}
 
 CraftAltar: {
 	RemodelPolymerizeAndMagikeCraft: Переработка! Полимеризация! Магическая синтезия!

@@ -38,7 +38,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             NPC.height = 55;
             NPC.damage = 30;
             NPC.defense = 0;
-            NPC.lifeMax = 5000;
+            NPC.lifeMax = 750;
             NPC.knockBackResist = 0f;
             NPC.aiStyle = -1;
 

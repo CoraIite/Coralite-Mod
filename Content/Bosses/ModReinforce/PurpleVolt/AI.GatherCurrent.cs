@@ -47,6 +47,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
                                 Recorder = Main.rand.NextFloat(MathHelper.TwoPi);
                                 Recorder2 = Main.rand.NextFloat(MathHelper.TwoPi);
+                                NPC.dontTakeDamage = true;
                             }
                         }
                     }
@@ -70,7 +71,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                             d.noGravity = true;
                         }
 
-                        if (Timer%30==0)
+                        if (Timer % 30 == 0)
                         {
                             float length2 = 800 - Timer / maxTime * 700;
                             for (int i = 0; i < 70; i++)
@@ -80,6 +81,11 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                                     , DustID.PortalBoltTrail, -dir * Main.rand.NextFloat(2, 5), newColor: ZacurrentDustPurple, Scale: Main.rand.NextFloat(1f, 1.5f));
                                 d.noGravity = true;
                             }
+                        }
+
+                        if (Timer == spawnTime - 60)
+                        {
+                            NPC.dontTakeDamage = false;
                         }
 
                         if (Timer < spawnTime)

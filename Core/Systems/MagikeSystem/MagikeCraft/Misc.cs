@@ -374,6 +374,10 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
             //咒火与灵液相互转换
             AddRemodelRecipe(ItemID.CursedFlame, ItemID.Ichor, CalculateMagikeCost(CrystallineMagike, 1, 5));
             AddRemodelRecipe(ItemID.Ichor, ItemID.CursedFlame, CalculateMagikeCost(CrystallineMagike, 1, 5));
+
+            //抓钩
+            AddRemodelRecipe(ItemID.IronBar, ItemID.Hook, CalculateMagikeCost(MagicCrystal, 2, 30),8);
+            AddRemodelRecipe(ItemID.LeadBar, ItemID.Hook, CalculateMagikeCost(MagicCrystal, 2, 30),8);
         }
     }
 }

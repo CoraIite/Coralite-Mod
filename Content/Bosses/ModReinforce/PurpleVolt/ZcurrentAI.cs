@@ -479,7 +479,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                             }
                             break;
                         case 1:
-                            if (ElectricChain(80))
+                            if (ElectricChain(10))
                             {
                                 ResetFields();
                                 Combo = 2;
