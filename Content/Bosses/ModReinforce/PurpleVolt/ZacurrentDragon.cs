@@ -199,10 +199,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
         public override void ModifyIncomingHit(ref NPC.HitModifiers modifiers)
         {
             if (PurpleVolt)
-            {
-                modifiers.SourceDamage -= 0.98f;
                 modifiers.ModifyHitInfo += Modifiers_ModifyHitInfo;
-            }
 
             if (currentSurrounding)
             {
@@ -212,11 +209,12 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
         public Rectangle HeadHitBox()
         {
-            return Utils.CenteredRectangle(GetMousePos(), new Vector2(50, 50));
+            return Utils.CenteredRectangle(GetMousePos(), new Vector2(60, 60));
         }
 
         private void Modifiers_ModifyHitInfo(ref NPC.HitInfo info)
         {
+            info.Damage = (int)(info.Damage * 0.965f);
             PurpleVoltCount -= info.Damage * Helper.ScaleValueForDiffMode(1, 1, 0.75f, 0.5f);
             if (PurpleVoltCount < 0)
             {
@@ -350,6 +348,11 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
                 return false;
             }
+
+            //var box = HeadHitBox();
+            //var texxx = ModContent.Request<Texture2D>(AssetDirectory.DefaultItem).Value;
+            //spriteBatch.Draw(texxx, box.TopLeft() - screenPos
+            //    , null, Color.White * 0.5f, 0, Vector2.Zero,new Vector2( (float)box.Width / texxx.Width, (float)box.Height / texxx.Height), 0, 0);
 
             //if (State == (int)AIStates.onKillAnim)
             //{

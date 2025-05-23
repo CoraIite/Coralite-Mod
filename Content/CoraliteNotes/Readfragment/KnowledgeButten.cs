@@ -96,7 +96,7 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
 
             //绘制对应的图标
             Texture2D iconTex = knowledge.Texture2D.Value;
-            spriteBatch.Draw(iconTex, position, null, c, 0, iconTex.Size() / 2, IsMouseHovering ? 1.4f : 1, 0, 0);
+            spriteBatch.Draw(iconTex, position, null, c, 0, iconTex.Size() / 2, IsMouseHovering ? 1.3f : 1, 0, 0);
 
             if (IsMouseHovering)
             {

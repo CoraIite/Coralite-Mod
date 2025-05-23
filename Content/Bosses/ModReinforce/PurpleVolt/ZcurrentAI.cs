@@ -152,7 +152,12 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                 return;
 
             UpdateSky();
+
+            //NPC.velocity = Vector2.Zero;
+            //currentSurrounding = true;
+            //return;
             //Main.NewText(PurpleVoltCount);
+
             switch (State)
             {
                 default:

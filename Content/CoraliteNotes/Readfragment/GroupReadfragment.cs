@@ -14,6 +14,7 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
                     new DescriptionPage(),
                     new ReadPage(),
                     new FragmentPage(),
+                    new FragmentPage2(),
                 ];
         }
     }
