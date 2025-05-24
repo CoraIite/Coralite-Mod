@@ -6,11 +6,12 @@ using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.Localization;
 using Terraria.ModLoader.UI;
 using Terraria.UI;
+using Terraria.UI.Chat;
 
 namespace Coralite.Content.CoraliteNotes.Readfragment
 {
@@ -19,86 +20,74 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
     {
         public static LocalizedText ClickToJump { get; set; }
         public static LocalizedText TerrariaJourney { get; set; }
-        public static LocalizedText WonderKnowledge { get; set; }
+        public static LocalizedText TerrariaJourneyDescription { get; set; }
 
         public static ATex TerrariaJourneyTex { get; set; }
-        public static ATex WonderKnowledgeTex { get; set; }
 
-        public FixedUIGrid SlotGrid1;
-        public FixedUIGrid SlotGrid2;
+        public FixedUIGrid SlotGrid;
 
         public override void OnInitialize()
         {
             ClickToJump = this.GetLocalization(nameof(ClickToJump));
             TerrariaJourney = this.GetLocalization(nameof(TerrariaJourney));
-            WonderKnowledge = this.GetLocalization(nameof(WonderKnowledge));
-            SlotGrid1 = new FixedUIGrid();
-            SlotGrid2 = new FixedUIGrid();
+            TerrariaJourneyDescription = this.GetLocalization(nameof(TerrariaJourneyDescription));
+            SlotGrid = new FixedUIGrid();
+            AddTerrariaJourneyButton();
         }
 
         public override void Recalculate()
         {
             RemoveAllChildren();
 
-            int height = Math.Max(TerrariaJourneyTex.Height(), WonderKnowledgeTex.Height());
+            int height = TerrariaJourneyTex.Height();
             height += 20;
-
-            float halfPageHeight = PageHeight / 2;
 
             var t = new TitleElement(TerrariaJourneyTex, TerrariaJourney, height, new Vector2(), Color.LightCoral);
             Append(t);
 
-            AddTerrariaJourneyButton();
-            SlotGrid1.SetSize(new Vector2(0, halfPageHeight - height), 1, 0);
-            SlotGrid1.SetTopLeft(height, 0);
-            Append(SlotGrid1);
+            Vector2 textSize = ChatManager.GetStringSize(FontAssets.MouseText.Value, TerrariaJourneyDescription.Value, Vector2.One, PageWidth);
 
-            t = new TitleElement(WonderKnowledgeTex, WonderKnowledge, height, new Vector2(), Color.LightCoral);
-            t.SetTopLeft(halfPageHeight, 0);
-            Append(t);
-
-            AddWonderKnowledgeButton();
-            SlotGrid2.SetSize(new Vector2(0, halfPageHeight - height), 1, 0);
-            SlotGrid2.SetTopLeft(halfPageHeight+height, 0);
-            Append(SlotGrid2);
+            SlotGrid.SetSize(new Vector2(0, PageHeight - height - textSize.Y-20), 1, 0);
+            SlotGrid.SetTopLeft(height + textSize.Y + 20, 0);
+            Append(SlotGrid);
 
             base.Recalculate();
         }
 
         public void AddTerrariaJourneyButton()
         {
-            SlotGrid1.Clear();
+            SlotGrid.Clear();
 
-            SlotGrid1.Add(new KnowledgeButten<RedJade.RedJadeKnowledge>(KnowledgeButtonType.Wild));
-            SlotGrid1.Add(new KnowledgeButten<IceDragonChapter1.IceDragon1Knowledge>(KnowledgeButtonType.Wild));
-            SlotGrid1.Add(new KnowledgeButten<ThunderChapter1.Thunder1Knowldege>(KnowledgeButtonType.Wild));
+            SlotGrid.Add(new KnowledgeButten<RedJade.RedJadeKnowledge>(KnowledgeButtonType.Wild));
+            SlotGrid.Add(new KnowledgeButten<IceDragonChapter1.IceDragon1Knowledge>(KnowledgeButtonType.Wild));
+            SlotGrid.Add(new KnowledgeButten<ThunderChapter1.Thunder1Knowldege>(KnowledgeButtonType.Wild));
         }
 
-        public void AddWonderKnowledgeButton()
+        protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            SlotGrid2.Clear();
+            Vector2 pos = PageTop + new Vector2(0, TerrariaJourneyTex.Height() + 30);
 
-            SlotGrid2.Add(new KnowledgeButten<SlimeChapter1.Slime1Knowledge>(KnowledgeButtonType.Ball));
+            Utils.DrawBorderString(spriteBatch, TerrariaJourneyDescription.Value, pos, Color.White, anchorx: 0.5f, anchory: 0f);
         }
 
-        public static void AddFragments(FixedUIGrid grid)
-        {
-            //遍历知识，把所有的知识都加入进去
-            List<KeyKnowledge> knowledges = [];
+        //public static void AddFragments(FixedUIGrid grid)
+        //{
+        //    //遍历知识，把所有的知识都加入进去
+        //    List<KeyKnowledge> knowledges = [];
 
-            foreach (var item in KeyKnowledgeLoader.knowledgesF)
-            {
-                knowledges.Add(item.Value);
-            }
+        //    foreach (var item in KeyKnowledgeLoader.knowledgesF)
+        //    {
+        //        knowledges.Add(item.Value);
+        //    }
 
-            knowledges.Sort((k1, k2) => k1.Type.CompareTo(k2.Type));
+        //    knowledges.Sort((k1, k2) => k1.Type.CompareTo(k2.Type));
 
-            foreach (var item in knowledges)
-            {
-                var slot = new FragmentSlot(item.InnerType);
-                grid.Add(slot);
-            }
-        }
+        //    foreach (var item in knowledges)
+        //    {
+        //        var slot = new FragmentSlot(item.InnerType);
+        //        grid.Add(slot);
+        //    }
+        //}
     }
 
     [AutoLoadTexture(Path = AssetDirectory.NoteReadfragment)]

@@ -23,17 +23,27 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            IconPage.Value.QuickCenteredDraw(spriteBatch, Center+new Vector2(0,-30),scale:1.2f);
+            IconPage.Value.QuickCenteredDraw(spriteBatch, Center,scale:1.2f);
 
             Texture2D mainTex = ModContent.Request<Texture2D>("Coralite/icon").Value;
 
-            spriteBatch.Draw(mainTex, Center + new Vector2(0, -145), null, Color.White, 0, mainTex.Size() / 2, 2f, 0, 0);
+            spriteBatch.Draw(mainTex, Center + new Vector2(0, -115), null, Color.White, 0, mainTex.Size() / 2, 2f, 0, 0);
 
-            Helper.DrawText(spriteBatch, Description.Value, PageWidth, Center+new Vector2(0,40), Vector2.One / 2, Vector2.One
+            Vector2 pos = Center + new Vector2(0, 70);
+            Helper.DrawText(spriteBatch, Description.Value, PageWidth, pos, Vector2.One / 2, Vector2.One
                 , Coralite.TextShadowColor, Coralite.MagicCrystalPink, out Vector2 size);
 
-            Helper.DrawText(spriteBatch, HowToUse.Value, PageWidth, Center + new Vector2(0, size.Y + 60), Vector2.One / 2, Vector2.One
+            pos.Y += size.Y + 20;
+            Helper.DrawText(spriteBatch, HowToUse.Value, PageWidth, pos, Vector2.One / 2, Vector2.One
                 , Coralite.TextShadowColor, Coralite.MagicCrystalPink, out _);
+
+            //测试用代码
+            //Terraria.UI.CalculatedStyle calculatedStyle = GetDimensions();
+            //Vector2 pos = calculatedStyle.Position();
+            //var tex = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "White32x32").Value;
+
+            //spriteBatch.Draw(tex, pos, null, Color.White * 0.75f, 0, Vector2.Zero
+            //   , new Vector2(calculatedStyle.Width / tex.Width, calculatedStyle.Height / tex.Height), 0, 0);
         }
     }
 }

@@ -22,14 +22,13 @@ namespace Coralite.Core.Systems.KeySystem
         public int InnerType { get; private set; }
 
         /// <summary>
-        /// 类型
-        /// </summary>
-        public abstract int Type { get; }
-
-        /// <summary>
         /// 该知识是否解锁
         /// </summary>
         public bool Unlock { get; set; }
+        /// <summary>
+        /// 玩家是否在珊瑚笔记中查看过这条知识，仅限客户端使用
+        /// </summary>
+        public bool ReadKnowledge { get; set; }
 
         public string LocalizationCategory => "Systems.KnowledgeSystem";
 
@@ -84,12 +83,16 @@ namespace Coralite.Core.Systems.KeySystem
         {
             if (Unlock)
                 tag.Add(Name + nameof(Unlock), true);
+            if (ReadKnowledge)
+                tag.Add(Name + nameof(ReadKnowledge), true);
+
             SaveWorldData(tag);
         }
 
         public void LoadSelfData(TagCompound tag)
         {
             Unlock = tag.ContainsKey(Name + nameof(Unlock));
+            ReadKnowledge = tag.ContainsKey(Name + nameof(ReadKnowledge));
             LoadWorldData(tag);
         }
 

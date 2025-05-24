@@ -15,9 +15,6 @@ namespace Coralite.Content.Items.BossSummons
 
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("赤色果实");
-            // Tooltip.SetDefault("偶尔生长在水晶树上，能吸引一块奇异的赤色石头\n召唤赤玉灵");
-
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
             ItemID.Sets.SortingPriorityBossSpawns[Type] = 12;
 
@@ -32,7 +29,7 @@ namespace Coralite.Content.Items.BossSummons
             Item.useAnimation = 30;
             Item.useTime = 30;
             Item.value = Item.sellPrice(0, 0, 5, 0);
-            Item.useStyle = ItemUseStyleID.HoldUp;
+            Item.useStyle = ItemUseStyleID.EatFood;
             Item.rare = ItemRarityID.Blue;
             Item.consumable = true;
         }

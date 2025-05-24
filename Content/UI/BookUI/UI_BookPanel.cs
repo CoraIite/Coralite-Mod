@@ -267,10 +267,10 @@ namespace Coralite.Content.UI.UILib
             for (int i = 0; i < Pages.Count; i++)
             {
                 //设置尺寸及上下的内页边距
-                Pages[i].Width.Set(halfPage, 0f);
-                Pages[i].Height.Set(pageHeigh, 0f);
-                Pages[i].PaddingTop = topPageMargins;
-                Pages[i].PaddingBottom = topPageMargins;
+                Pages[i].Width.Set(halfPage-leftPageMargins-rightPageMargins, 0f);
+                Pages[i].Height.Set(pageHeigh-topPageMargins-bottomPageMargins, 0f);
+                Pages[i].MarginTop = topPageMargins;
+                Pages[i].MarginBottom = bottomPageMargins;
 
                 Pages[i].Top.Set(0, 0f);
 
@@ -278,15 +278,15 @@ namespace Coralite.Content.UI.UILib
                 {
                     //设置左侧的位置以及内页边距
                     Pages[i].Left.Set(0, 0f);
-                    Pages[i].PaddingLeft = leftPageMargins;
-                    Pages[i].PaddingRight = rightPageMargins;
+                    Pages[i].MarginLeft = leftPageMargins;
+                    Pages[i].MarginRight = rightPageMargins;
                 }
                 else
                 {
                     //右侧的页数要反一下
                     Pages[i].Left.Set(halfPage, 0f);
-                    Pages[i].PaddingRight = leftPageMargins;
-                    Pages[i].PaddingLeft = rightPageMargins;
+                    Pages[i].MarginRight = leftPageMargins;
+                    Pages[i].MarginLeft = rightPageMargins;
                 }
             }
         }

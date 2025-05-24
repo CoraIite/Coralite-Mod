@@ -129,7 +129,7 @@ KnowledgeSystem: {
 	}
 
 	RedJadeKnowledge: {
-		Name: "[c/d33232:赤玉残卷-上半]"
+		Name: "[c/d33232:赤玉残卷]"
 		LockTip: 获得 “隐藏的赤色” 或 “赤色果实” 后解锁
 		Description:
 			'''
@@ -141,7 +141,7 @@ KnowledgeSystem: {
 	NewKnowledgeUnlock: 珊瑚笔记中解锁了新的章节！
 
 	IceDragon1Knowledge: {
-		Name: "[c/2bffc6:冰龙残卷-上半]"
+		Name: "[c/2bffc6:冰龙残卷]"
 		LockTip:
 			'''
 			在冰雪地下宝箱中发现 “冰雪的新生”
@@ -155,7 +155,7 @@ KnowledgeSystem: {
 	}
 
 	Slime1Knowledge: {
-		Name: "[c/639bff:粘液残卷-上半]"
+		Name: "[c/639bff:粘液残卷]"
 		LockTip:
 			'''
 			在史莱姆身上偶尔携带史莱姆树苗
@@ -169,7 +169,7 @@ KnowledgeSystem: {
 	}
 
 	Thunder1Knowldege: {
-		Name: "[c/639bff:雷龙残卷-上半]"
+		Name: "[c/639bff:雷龙残卷]"
 		LockTip: 在困难模式中击败 “双子魔眼” ，“机械骷髅王” 和 “毁灭者” 后解锁
 		Description:
 			'''

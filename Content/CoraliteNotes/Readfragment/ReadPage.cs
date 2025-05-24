@@ -36,7 +36,6 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
 
             spriteBatch.Draw(ReadPageTex.Value, Bottom+new Vector2(0,-50), null, Color.White, 0, new Vector2(ReadPageTex.Width() / 2, ReadPageTex.Height())
                 , 1.1f, 0, 0);
-            
         }
     }
 }

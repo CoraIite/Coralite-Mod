@@ -6,6 +6,7 @@ using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
+using Terraria.GameContent.Biomes;
 using Terraria.ModLoader.UI;
 using Terraria.UI;
 
@@ -31,12 +32,13 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
         public static ATex KnowledgeButtenReel { get; private set; }
         public static ATex KnowledgeButtenBall { get; private set; }
         public static ATex KnowledgeButtenCoral { get; private set; }
+
+        public static ATex NewKnowledge { get; private set; }
     }
 
     public class KnowledgeButten<T> : UIElement where T : KeyKnowledge
     {
-
-
+        private float _scale = 1f;
         private KnowledgeButtonType buttonType;
         public const string Line = "一一一一一一一";
 
@@ -50,8 +52,10 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
         {
             base.LeftClick(evt);
             KeyKnowledge knowledge = CoraliteContent.GetKKnowledge<T>();
+
             if (knowledge.Unlock)
             {
+                knowledge.ReadKnowledge = true;
                 int index = knowledge.FirstPageInCoraliteNote;
                 if (index >= 0)
                 {
@@ -88,15 +92,14 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
 
             var frameBox = BackTex.Frame(2, 1, 1);
 
-            Vector2 position = GetDimensions().Center();
+            CalculatedStyle calculatedStyle = GetDimensions();
+            Vector2 position = calculatedStyle.Center();
             spriteBatch.Draw(BackTex, position, frameBox, Color.White * 0.3f, 0, frameBox.Size() / 2, 1, 0, 0);
 
             KeyKnowledge knowledge = CoraliteContent.GetKKnowledge<T>();
             Color c = knowledge.Unlock ? Color.White : Color.Black*0.75f;
 
-            //绘制对应的图标
-            Texture2D iconTex = knowledge.Texture2D.Value;
-            spriteBatch.Draw(iconTex, position, null, c, 0, iconTex.Size() / 2, IsMouseHovering ? 1.3f : 1, 0, 0);
+            float iconRot = 0;
 
             if (IsMouseHovering)
             {
@@ -110,10 +113,27 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
                         , knowledge.LockTip.Value);
 
                 UICommon.TooltipMouseText(mouseText);
-            }
 
+                _scale = Helper.Lerp(_scale, 1.3f, 0.25f);
+                iconRot = MathF.Sin(Main.GlobalTimeWrappedHourly) * 0.1f;
+            }
+            else
+                _scale = Helper.Lerp(_scale, 1f, 0.25f);
+
+            //绘制对应的图标
+            Texture2D iconTex = knowledge.Texture2D.Value;
+            spriteBatch.Draw(iconTex, position, null, c, iconRot, iconTex.Size() / 2, _scale, 0, 0);
+
+            //绘制顶部的框
             frameBox = BackTex.Frame(2, 1);
             spriteBatch.Draw(BackTex, position, frameBox, Color.White, 0, frameBox.Size() / 2, 1, 0, 0);
+
+            if (knowledge.Unlock && !knowledge.ReadKnowledge)
+            {
+                Vector2 pos = position + new Vector2(calculatedStyle.Width / 4, -calculatedStyle.Height / 4);
+                KnowledgeButtenTex.NewKnowledge.Value.QuickCenteredDraw(spriteBatch, new Rectangle(0, (Main.timeForVisualEffects % 20) > 10 ? 0 : 1, 1, 2)
+                    , pos, Color.White, 0, 1.1f + MathF.Cos(Main.GlobalTimeWrappedHourly*4) * 0.15f);
+            }
         }
     }
 }

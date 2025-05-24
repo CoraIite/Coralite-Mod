@@ -139,6 +139,7 @@ FragmentPage: {
 	ClickToJump: 点击后跳转到对应章节
 	TerrariaJourney: 泰拉游记
 	WonderKnowledge: 奇妙见闻
+	TerrariaJourneyDescription: 在此记录了所有主线BOSS的知识
 }
 
 CraftAltar: {
@@ -188,12 +189,14 @@ ExpandProductionLine: {
 }
 
 RedJadePage: {
-	Title: 赤玉残卷-上半
+	Title: 赤玉残卷
 	RedBerryDescription:
 		'''
-		    赤色果实：看上去是某种宝石形成的球形果实，偶尔生长在宝石树上。
-		    据说吃掉后就会在体内爆炸，能用它吸引来一只巨大的石头怪物。
-		    这只石头怪物和赤色果实有着相同的外观，并且能够使用相同的爆炸，但是爆炸的能量似乎是凭空产生的。
+		    赤色果实：看上去是某种宝石形成的球形果实，不久之前在宝石树上发现的新品种，现在还不清楚它到底是怎么产生的。
+		    
+		    我尝试吃了一个赤色果实，味道还不错！就是突然出现了一个石头怪物，这只石头怪物和赤色果实有着相同的外观，还能产生爆炸！
+		    
+		    吃下赤色果实后发生了很多奇怪事，院子里种的树在某天早上突然变成宝石树了。 算了，管他呢，有赤色果实吃就行。
 		'''
 }
 
@@ -237,7 +240,7 @@ INeedMoreMagike: {
 }
 
 BabyIceDragonPage1: {
-	Title: 冰龙残卷-上半
+	Title: 冰龙残卷
 	Description:
 		'''
 		    在冰雪地的地表能够找到一个造型奇特的地方，正中央有一个突出的平台。 根据古书记载，这就是冰龙的巢穴。
@@ -246,7 +249,7 @@ BabyIceDragonPage1: {
 }
 
 SlimePage1: {
-	Title: 粘液残卷-上半
+	Title: 粘液残卷
 	SlimeTreeDescription:
 		'''
 		    黏糊糊的枝干，加上富有弹性的球状叶子，只能在粘液块上生长，是史莱姆树的显著特征。
@@ -269,7 +272,7 @@ SlimePage2.GelInvitationDescription:
 	'''
 
 ThunderveinDragonPage1: {
-	Title: 雷龙残卷-上半
+	Title: 雷龙残卷
 	LightningRodsDescription:
 		'''
 		    使用机械BOSS们掉落的魂魄加上一些神圣锭就能制成质地特殊的引雷针。 尖端会不断地放电，接触它后就会将大量的电荷释放到空中，能够引来一只居住在云中的双足飞龙。
@@ -338,4 +341,17 @@ MabirdLoupe.LoupeDescription:
 	    魔能学家们都用魔鸟观察镜，快去做一个！
 	    将其放在背包内就会显示魔鸟路线，可以在背包内右键关闭魔鸟路线与魔鸟巢之间的连线。
 	'''
-FragmentPage2.MagikeGeneration: 魔能时代
+
+FragmentPage3: {
+	MagikeGeneration: 魔能时代
+	MagikeGenerationDescription: 在此记录了所有魔能知识
+}
+
+FragmentPage2: {
+	WonderKnowledge: 奇妙见闻
+	WonderKnowledgeDescription:
+		'''
+		             在此记录了所有支线BOSS的知识
+		注意！它们大多实力强大，请做好万全的准备再挑战！
+		'''
+}

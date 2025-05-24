@@ -54,6 +54,7 @@ namespace Coralite.Content.CoraliteNotes
         public override void Recalculate()
         {
             //BookPanel = new();
+            //Init();
             //BookPanel.SetPosition();
             //BookPanel.InitSize();
             BookPanel?.SetPosition();

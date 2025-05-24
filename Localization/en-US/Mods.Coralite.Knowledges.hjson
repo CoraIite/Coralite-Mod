@@ -146,6 +146,7 @@ FragmentPage: {
 	ClickToJump: Click to jump to the corresponding chapter
 	TerrariaJourney: Mods.Coralite.Knowledges.FragmentPage.TerrariaJourney
 	WonderKnowledge: Mods.Coralite.Knowledges.FragmentPage.WonderKnowledge
+	TerrariaJourneyDescription: Mods.Coralite.Knowledges.FragmentPage.TerrariaJourneyDescription
 }
 
 CraftAltar: {
@@ -289,4 +290,13 @@ MabirdNestConnect: {
 }
 
 MabirdLoupe.LoupeDescription: Mods.Coralite.Knowledges.MabirdLoupe.LoupeDescription
-FragmentPage2.MagikeGeneration: Mods.Coralite.Knowledges.FragmentPage2.MagikeGeneration
+
+FragmentPage3: {
+	MagikeGeneration: Mods.Coralite.Knowledges.FragmentPage3.MagikeGeneration
+	MagikeGenerationDescription: Mods.Coralite.Knowledges.FragmentPage3.MagikeGenerationDescription
+}
+
+FragmentPage2: {
+	WonderKnowledge: Mods.Coralite.Knowledges.FragmentPage2.WonderKnowledge
+	WonderKnowledgeDescription: Mods.Coralite.Knowledges.FragmentPage2.WonderKnowledgeDescription
+}

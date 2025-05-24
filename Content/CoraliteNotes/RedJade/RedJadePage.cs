@@ -31,17 +31,23 @@ namespace Coralite.Content.CoraliteNotes.RedJade
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            Utils.DrawBorderStringBig(spriteBatch, Title.Value, Center + new Vector2(0, -PageWidth / 2), Coralite.RedJadeRed, 1, 0.5f, 0.5f);
+            float scale1 = 1f;
 
-            Vector2 pos = Position + new Vector2(PageWidth / 2, 140);
+            Texture2D tex = CoraliteAssets.RedJade.Rediancie.Value;
+
+            //绘制图2
+            Vector2 pos = Bottom;
+            spriteBatch.Draw(tex, pos, null, Color.White, 0, new Vector2(tex.Width / 2, tex.Height), scale1, 0, 0);
+
+            Utils.DrawBorderStringBig(spriteBatch, Title.Value, PageTop+new Vector2(0,20), Coralite.RedJadeRed, 1, 0.5f, 0f);
+
+             pos = Position + new Vector2(PageWidth / 2, CoraliteNotePanel.TitleHeight);
+            Helper.DrawTextParagraph(spriteBatch, RedBerryDescription.Value, PageWidth, new Vector2(Position.X, pos.Y), out Vector2 textSize);
 
             #region 绘制赤玉
-            Texture2D tex = TextureAssets.Item[ModContent.ItemType<RedBerry>()].Value;
+            tex = TextureAssets.Item[ModContent.ItemType<RedBerry>()].Value;
 
-            float width = PageWidth - 60 - tex.Width * 3;
-            Helper.DrawTextParagraph(spriteBatch, RedBerryDescription.Value, width, new Vector2(Position.X + 80 + tex.Width * 3, pos.Y), out Vector2 textSize);
-
-            Vector2 picturePos = new Vector2(pos.X - 180 - tex.Width / 2 * 3, pos.Y + textSize.Y / 2);
+            Vector2 picturePos =Position+ new Vector2(475, PageHeight-180);
 
             Rectangle rect = Utils.CenteredRectangle(picturePos, tex.Size() * 5f);
             if (rect.MouseScreenInRect())
@@ -55,14 +61,6 @@ namespace Coralite.Content.CoraliteNotes.RedJade
 
             Helper.DrawMouseOverScaleTex(spriteBatch, tex, picturePos, _scale1, 5, new Color(40, 40, 40) * 0.5f, true);
             #endregion
-
-            float scale1 = 1f;
-
-            tex = CoraliteAssets.RedJade.Rediancie.Value;
-
-            //绘制图2
-            pos = Position + new Vector2(PageWidth / 2, PageHeight - 80 - tex.Height * scale1 / 2);
-            tex.QuickCenteredDraw(spriteBatch, pos, scale: scale1);
         }
     }
 }
