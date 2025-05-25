@@ -3,8 +3,6 @@ using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.GameContent;
-using Terraria.ID;
 using Terraria.Localization;
 
 namespace Coralite.Content.CoraliteNotes.RedJade
@@ -37,29 +35,18 @@ namespace Coralite.Content.CoraliteNotes.RedJade
 
             //绘制图2
             Vector2 pos = Bottom;
-            spriteBatch.Draw(tex, pos, null, Color.White, 0, new Vector2(tex.Width / 2, tex.Height), scale1, 0, 0);
+            tex.QuickBottomDraw(spriteBatch, pos, scale: scale1);
 
-            Utils.DrawBorderStringBig(spriteBatch, Title.Value, PageTop+new Vector2(0,20), Coralite.RedJadeRed, 1, 0.5f, 0f);
+            DrawTitle(spriteBatch, Title, Coralite.RedJadeRed);
 
-             pos = Position + new Vector2(PageWidth / 2, CoraliteNotePanel.TitleHeight);
-            Helper.DrawTextParagraph(spriteBatch, RedBerryDescription.Value, PageWidth, new Vector2(Position.X, pos.Y), out Vector2 textSize);
+            pos = Position + new Vector2(PageWidth / 2, TitleHeight);
+            DrawParaNormal(spriteBatch, RedBerryDescription, pos.Y, out _);
 
             #region 绘制赤玉
-            tex = TextureAssets.Item[ModContent.ItemType<RedBerry>()].Value;
+            Vector2 picturePos = Position + new Vector2(475, PageHeight - 180);
 
-            Vector2 picturePos =Position+ new Vector2(475, PageHeight-180);
-
-            Rectangle rect = Utils.CenteredRectangle(picturePos, tex.Size() * 5f);
-            if (rect.MouseScreenInRect())
-            {
-                _scale1.ToBigSize();
-                Main.HoverItem = ContentSamples.ItemsByType[ModContent.ItemType<RedBerry>()].Clone();
-                Main.hoverItemName = "a";
-            }
-            else
-                _scale1.ToNormalSize();
-
-            Helper.DrawMouseOverScaleTex(spriteBatch, tex, picturePos, _scale1, 5, new Color(40, 40, 40) * 0.5f, true);
+            Helper.DrawMouseOverScaleTex<RedBerry>(spriteBatch, picturePos
+                , ref _scale1, 4, 5, fadeWithOriginScale: true);
             #endregion
         }
     }

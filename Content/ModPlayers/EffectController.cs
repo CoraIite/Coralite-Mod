@@ -1,4 +1,5 @@
 ﻿using Coralite.Core.Loaders;
+using Terraria;
 
 namespace Coralite.Content.ModPlayers
 {
@@ -30,7 +31,7 @@ namespace Coralite.Content.ModPlayers
         public bool HasEffect(string effectName) //=> Effects.Contains(effectName);
         {
             if (PlayerEffectLoader.Effects.TryGetValue(effectName, out var index))
-                return Effects[index];
+                return Effects.IndexInRange(index) && Effects[index];
 
             return false;
         }

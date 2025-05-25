@@ -273,6 +273,7 @@ namespace Coralite.Content.UI.UILib
                 Pages[i].MarginBottom = bottomPageMargins;
 
                 Pages[i].Top.Set(0, 0f);
+                //Pages[i].OverrideSamplerState=SamplerState.LinearClamp;
 
                 if (i % 2 == 0)
                 {

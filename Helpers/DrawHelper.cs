@@ -39,6 +39,11 @@ namespace Coralite.Helpers
             spriteBatch.Draw(tex, pos, null, selfColor ?? Color.White, rotation, tex.Size() / 2, scale, 0, 0);
         }
 
+        public static void QuickBottomDraw(this Texture2D tex, SpriteBatch spriteBatch, Vector2 pos, Color? selfColor = null, float rotation = 0, float scale = 1)
+        {
+            spriteBatch.Draw(tex, pos, null, selfColor ?? Color.White, rotation, new Vector2(tex.Width/2,tex.Height), scale, 0, 0);
+        }
+
         /// <summary>
         /// 快速绘制
         /// </summary>

@@ -210,7 +210,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                     break;
                 case AIStates.Break:
                     {
-                        int time = Helper.ScaleValueForDiffMode(60 * 4, 60 * 3, 60 * 3, 10);
+                        int time = Helper.ScaleValueForDiffMode(60 * 8, 60 * 6, 60 * 5, 60);
                         if (Timer == 0)
                         {
                             Vector2 f() => GetMousePos() + new Vector2(0, -50);

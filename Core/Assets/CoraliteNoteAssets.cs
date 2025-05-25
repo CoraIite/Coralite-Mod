@@ -60,7 +60,6 @@ namespace Coralite.Core
         [AutoLoadTexture(NoteSlime1)]
         public class Slime1
         {
-            public static ATex SlimeTree { get; private set; }
             public static ATex SlimeEmperor { get; private set; }
         }
 

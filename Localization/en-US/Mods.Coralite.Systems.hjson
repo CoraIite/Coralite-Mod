@@ -155,6 +155,12 @@ KnowledgeSystem: {
 		LockTip: Mods.Coralite.Systems.KnowledgeSystem.MagikeS2Knowledge.LockTip
 		Description: Mods.Coralite.Systems.KnowledgeSystem.MagikeS2Knowledge.Description
 	}
+
+	NightmareKnowledge: {
+		Name: Mods.Coralite.Systems.KnowledgeSystem.NightmareKnowledge.Name
+		LockTip: Mods.Coralite.Systems.KnowledgeSystem.NightmareKnowledge.LockTip
+		Description: Mods.Coralite.Systems.KnowledgeSystem.NightmareKnowledge.Description
+	}
 }
 
 CoraliteBeatiaryDatabase.CrystallineSkyIsland: Mods.Coralite.Systems.CoraliteBeatiaryDatabase.CrystallineSkyIsland

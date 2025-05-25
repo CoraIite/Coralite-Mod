@@ -285,3 +285,8 @@ FragmentPage2: {
 	// WonderKnowledge: Mods.Coralite.Knowledges.FragmentPage2.WonderKnowledge
 	// WonderKnowledgeDescription: Mods.Coralite.Knowledges.FragmentPage2.WonderKnowledgeDescription
 }
+
+NightmarePage: {
+	// Title: Mods.Coralite.Knowledges.NightmarePage.Title
+	// Description: Mods.Coralite.Knowledges.NightmarePage.Description
+}

@@ -163,7 +163,7 @@ KnowledgeSystem: {
 			'''
 		Description:
 			'''
-			记载着一位帝王的信息
+			记载着一位至高帝的信息
 			来自史莱姆之国
 			'''
 	}
@@ -196,6 +196,16 @@ KnowledgeSystem: {
 			记载着魔能的进阶使用方法
 			其上会教你如何制造更多仪器
 			'''
+	}
+
+	NightmareKnowledge: {
+		Name: 梦魇残卷
+		LockTip: 击败月球领主后解锁
+		Description: 
+		'''
+		沉睡吧... ...
+		在梦中挑战梦界主
+		'''
 	}
 }
 

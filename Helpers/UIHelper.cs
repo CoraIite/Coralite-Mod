@@ -1,12 +1,15 @@
 ﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.Items.BossSummons;
 using Coralite.Content.UI;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
+using Terraria.ID;
 using Terraria.UI;
 using Terraria.UI.Chat;
 using static System.Net.Mime.MediaTypeNames;
+using static Terraria.GameContent.Animations.IL_Actions.Sprites;
 
 namespace Coralite.Helpers
 {
@@ -131,6 +134,46 @@ namespace Coralite.Helpers
         {
             Vector2 pos = Main.MouseWorld - Main.screenPosition;
             return rect.Contains((int)pos.X, (int)pos.Y);
+        }
+
+        /// <summary>
+        /// 绘制一个鼠标放上去会变大的物品图标
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="spriteBatch"></param>
+        /// <param name="pos">中心点</param>
+        /// <param name="scale"></param>
+        /// <param name="rangeMult"></param>
+        /// <param name="offset"></param>
+        /// <param name="darkColor"></param>
+        /// <param name="fadeWithOriginScale"></param>
+        /// <param name="selfColor"></param>
+        public static void DrawMouseOverScaleTex<T>(SpriteBatch spriteBatch, Vector2 pos
+            , ref ScaleController scale, float rangeMult, float offset, Color? darkColor = null, bool fadeWithOriginScale = false, Color? selfColor = null)
+            where T : ModItem
+        {
+            DrawMouseOverScaleTex(spriteBatch, pos, ModContent.ItemType<T>(), ref scale, rangeMult, offset, darkColor, fadeWithOriginScale, selfColor);
+        }
+
+        public static void DrawMouseOverScaleTex(SpriteBatch spriteBatch, Vector2 pos, int itemType
+            , ref ScaleController scale, float rangeMult, float offset, Color? darkColor = null, bool fadeWithOriginScale = false, Color? selfColor = null)
+        {
+            GetItemTexAndFrame(itemType, out Texture2D tex, out Rectangle frame);
+
+            Rectangle rect = Utils.CenteredRectangle(pos, tex.Size() * rangeMult);
+            if (rect.MouseScreenInRect())
+            {
+                scale.ToBigSize();
+                Main.HoverItem = ContentSamples.ItemsByType[itemType].Clone();
+                Main.hoverItemName = "a";
+            }
+            else
+                scale.ToNormalSize();
+
+            Vector2 origin = tex.Size() / 2;
+            spriteBatch.Draw(tex, pos + Vector2.One * Lerp(0, offset, scale.ScalePercent), null,
+               darkColor ?? new Color(40, 40, 40) * 0.5f, 0, origin, fadeWithOriginScale ? scale.targetScale : scale.Scale, 0, 0);
+            spriteBatch.Draw(tex, pos, null, selfColor ?? Color.White, 0, origin, scale.Scale, 0, 0);
         }
 
         public static void DrawMouseOverScaleTex(SpriteBatch spriteBatch, Texture2D tex, Vector2 pos, ScaleController scale, float offset, Color darkColor, bool fadeWithOriginScale = false, Color? selfColor = null)

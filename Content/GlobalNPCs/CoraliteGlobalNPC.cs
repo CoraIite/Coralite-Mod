@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Biomes;
 using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
+using Coralite.Content.CoraliteNotes.NightmareChapter;
 using Coralite.Content.CoraliteNotes.ThunderChapter1;
 using Coralite.Content.Items.Donator;
 using Coralite.Content.Items.Gels;
@@ -226,6 +227,10 @@ namespace Coralite.Content.GlobalNPCs
                             KnowledgeSystem.CheckForUnlock<Thunder1Knowldege>(npc.Center, Coralite.ThunderveinYellow);
                     }
 
+                    break;
+                case NPCID.MoonLordCore:
+                    if (Main.netMode != NetmodeID.MultiplayerClient)
+                        KnowledgeSystem.CheckForUnlock<NightmareKnowledge>(npc.Center, NightmarePlantera.nightPurple);
                     break;
             }
         }

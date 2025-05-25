@@ -39,7 +39,7 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
             Append(t);
 
             Vector2 textSize = ChatManager.GetStringSize(FontAssets.MouseText.Value, WonderKnowledgeDescription.Value, Vector2.One, PageWidth);
-
+            
             SlotGrid.SetSize(new Vector2(0, PageHeight - height - textSize.Y - 20), 1, 0);
             SlotGrid.SetTopLeft(height + textSize.Y + 20, 0);
             Append(SlotGrid);
@@ -52,6 +52,7 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
             SlotGrid.Clear();
 
             SlotGrid.Add(new KnowledgeButten<SlimeChapter1.Slime1Knowledge>(KnowledgeButtonType.Ball));
+            SlotGrid.Add(new KnowledgeButten<NightmareChapter.NightmareKnowledge>(KnowledgeButtonType.Ball));
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)

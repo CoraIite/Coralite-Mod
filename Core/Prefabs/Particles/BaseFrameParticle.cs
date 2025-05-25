@@ -56,6 +56,9 @@ namespace Coralite.Core.Prefabs.Particles
             }
         }
 
+        public virtual Color GetColor()
+            => Lighting.GetColor(Position.ToTileCoordinates(), Color);
+
         public override bool PreDraw(SpriteBatch spriteBatch)
         {
             Texture2D tex = TexValue;
@@ -63,7 +66,7 @@ namespace Coralite.Core.Prefabs.Particles
             var frameBox = tex.Frame(frameXCount, frameYCount, Frame.X, Frame.Y);
 
             spriteBatch.Draw(tex, Position - Main.screenPosition, frameBox
-                , Lighting.GetColor(Position.ToTileCoordinates(), Color), Rotation, frameBox.Size() / 2, Scale, Effects, 0);
+                , GetColor(), Rotation, frameBox.Size() / 2, Scale, Effects, 0);
 
             return false;
         }

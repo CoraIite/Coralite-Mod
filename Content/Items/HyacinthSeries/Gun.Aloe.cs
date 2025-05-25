@@ -374,10 +374,20 @@ namespace Coralite.Content.Items.HyacinthSeries
     public class AloeParticle() : BaseFrameParticle(4, 3, 2)
     {
         public override string Texture => AssetDirectory.HyacinthSeriesItems + Name;
+
+        public override Color GetColor()
+        {
+            return Color;
+        }
     }
     public class AloeBigParticle() : BaseFrameParticle(4, 3, 2)
     {
         public override string Texture => AssetDirectory.HyacinthSeriesItems + Name;
+
+        public override Color GetColor()
+        {
+            return Color;
+        }
     }
     public class AloeGelBallParticle() : BaseFrameParticle(4, 5, 3)
     {

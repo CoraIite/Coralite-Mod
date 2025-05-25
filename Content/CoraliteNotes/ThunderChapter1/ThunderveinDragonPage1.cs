@@ -2,9 +2,6 @@
 using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria;
-using Terraria.GameContent;
-using Terraria.ID;
 using Terraria.Localization;
 
 namespace Coralite.Content.CoraliteNotes.ThunderChapter1
@@ -31,38 +28,21 @@ namespace Coralite.Content.CoraliteNotes.ThunderChapter1
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            Utils.DrawBorderStringBig(spriteBatch, Title.Value, Center + new Vector2(0, -PageWidth / 2), Coralite.ThunderveinYellow, 1, 0.5f, 0.5f);
+            DrawTitle(spriteBatch, Title, Coralite.ThunderveinYellow);
 
-            Vector2 pos = Position + new Vector2(PageWidth / 2, 140);
+            //绘制图
+            CoraliteAssets.Thunder1
+                .ThunderveidDragon.Value.QuickBottomDraw(spriteBatch, Bottom+new Vector2(0,-10));
 
-            #region 绘制
-            Texture2D tex = TextureAssets.Item[ModContent.ItemType<LightningRods>()].Value;
+            DrawParaNormal(spriteBatch, LightningRodsDescription,Position.Y+ TitleHeight, out _);
 
-            float width = PageWidth - 60 - tex.Width * 3;
-            Helper.DrawTextParagraph(spriteBatch, LightningRodsDescription.Value, width, new Vector2(Position.X + 60 + tex.Width * 3, pos.Y), out Vector2 textSize);
+            #region 绘制避雷针
 
-            Vector2 picturePos = new Vector2(pos.X - 220 - tex.Width / 2 * 3, pos.Y + textSize.Y / 2);
+            Vector2 picturePos = new Vector2(Center.X +75, Center.Y + 305);
+            Helper.DrawMouseOverScaleTex<LightningRods>(spriteBatch, picturePos
+                , ref _scale1, 4, 5, fadeWithOriginScale: true);
 
-            Rectangle rect = Utils.CenteredRectangle(picturePos, tex.Size() * 5f);
-            if (rect.MouseScreenInRect())
-            {
-                _scale1.ToBigSize();
-                Main.HoverItem = ContentSamples.ItemsByType[ModContent.ItemType<LightningRods>()].Clone();
-                Main.hoverItemName = "a";
-            }
-            else
-                _scale1.ToNormalSize();
-
-            Helper.DrawMouseOverScaleTex(spriteBatch, tex, picturePos, _scale1, 5, new Color(40, 40, 40) * 0.5f, true);
             #endregion
-
-            float scale1 = 1f;
-
-            tex = CoraliteAssets.Thunder1.ThunderveidDragon.Value;
-
-            //绘制图2
-            pos = Position + new Vector2(PageWidth / 2, PageHeight - 40 - tex.Height * scale1 / 2);
-            tex.QuickCenteredDraw(spriteBatch, pos, scale: scale1);
         }
     }
 }

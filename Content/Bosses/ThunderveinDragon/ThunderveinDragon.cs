@@ -127,10 +127,9 @@ namespace Coralite.Content.Bosses.ThunderveinDragon
             ModContent.GetInstance<ThunderveinDragonBossBar>().Reset(NPC);
             InitOldFrame();
 
-            //BGM：暂无
-            //if (!Main.dedServ)
-            //    Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/IcyColdStream");
-            Music = MusicID.OtherworldlyTowers;
+            //BGM：雷龙
+            if (!Main.dedServ)
+                Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/ThunderDragon");
         }
 
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)

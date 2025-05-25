@@ -104,9 +104,8 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             ModContent.GetInstance<ZacurrentDragonBossBar>().Reset(NPC);
 
             //BGM：暂无
-            //if (!Main.dedServ)
-            //    Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/IcyColdStream");
-            Music = MusicID.OtherworldlyTowers;
+            if (!Main.dedServ)
+                Music = MusicLoader.GetMusicSlot(Mod, "Sounds/Music/ThunderDragon");
         }
 
         public override void ApplyDifficultyAndPlayerScaling(int numPlayers, float balance, float bossAdjustment)
@@ -214,8 +213,8 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
         private void Modifiers_ModifyHitInfo(ref NPC.HitInfo info)
         {
-            info.Damage = (int)(info.Damage * 0.965f);
-            PurpleVoltCount -= info.Damage * Helper.ScaleValueForDiffMode(1, 1, 0.75f, 0.5f);
+            info.Damage = (int)(info.Damage * 0.05f);
+            PurpleVoltCount -= info.Damage * Helper.ScaleValueForDiffMode(1, 1, 0.6f, 0.4f);
             if (PurpleVoltCount < 0)
             {
                 ResetFields();
