@@ -114,8 +114,8 @@ namespace Coralite.Content.Items.Magike.SpecialLens
             switch (incomeLevel)
             {
                 default:
-                    ProductionDelayBase = 1_0000_0000 / 60;//随便填个大数
-                    ThroughputBase = 1;
+                    ProductionDelayBase = -1;
+                    ThroughputBase = 0;
                     break;
                 case MALevel.Hallow:
                     ProductionDelayBase = 8;
@@ -136,8 +136,9 @@ namespace Coralite.Content.Items.Magike.SpecialLens
             UIList list =
             [
                 //生产时间
-                this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.ProduceTime), parent),
-                this.NewTextBar(ProductionDelayText,parent),
+                new ProduceBar(this),
+                //this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.ProduceTime), parent),
+                //this.NewTextBar(ProductionDelayText,parent),
 
                 //生产量
                 this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.ProduceAmount), parent),

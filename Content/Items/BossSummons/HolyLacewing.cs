@@ -58,14 +58,14 @@ namespace Coralite.Content.Items.BossSummons
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ItemID.EmpressButterfly, 3)
-                .AddIngredient(ItemID.SoulofLight, 15)
+                .AddIngredient(ItemID.EmpressButterfly, 2)
+                .AddIngredient(ItemID.SoulofLight, 10)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
 
             CreateRecipe()
                 .AddIngredient(ItemID.LightningBug, 3)
-                .AddIngredient(ItemID.ButterflyDust)
+                .AddIngredient(ItemID.Ectoplasm,5)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
         }

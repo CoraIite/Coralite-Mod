@@ -21,6 +21,8 @@ namespace Coralite.Content.Items.FlyingShields
         {
         }
 
+        public override bool DrawTips { get => true; }
+
         public override bool Dash(Player Player, int DashDir)
         {
             float dashDirection;

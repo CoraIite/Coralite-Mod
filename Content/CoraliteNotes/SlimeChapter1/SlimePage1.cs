@@ -37,11 +37,11 @@ namespace Coralite.Content.CoraliteNotes.SlimeChapter1
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            DrawTitle(spriteBatch, Title, Color.SkyBlue);
+            DrawTitleH1(spriteBatch, Title, Color.SkyBlue);
             float posY = Position.Y + TitleHeight;
 
             //绘制史莱姆树
-            SlimeTree.Value.QuickBottomDraw(spriteBatch, Bottom + new Vector2(0, -10));
+            SlimeTree.Value.QuickBottomDraw(spriteBatch, Bottom - new Vector2(0, 10));
 
             DrawParaNormal(spriteBatch, SlimeTreeDescription, posY, out Vector2 textSize);
 

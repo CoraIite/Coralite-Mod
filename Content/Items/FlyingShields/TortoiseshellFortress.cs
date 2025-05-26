@@ -17,6 +17,8 @@ namespace Coralite.Content.Items.FlyingShields
         public TortoiseshellFortress() : base(Item.sellPrice(0, 2, 0, 0), ItemRarityID.Lime, AssetDirectory.FlyingShieldItems)
         { }
 
+        public override bool DrawTips { get => true; }
+
         public override void SetDefaults2()
         {
             Item.useTime = Item.useAnimation = 15;

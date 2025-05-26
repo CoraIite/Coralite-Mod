@@ -9,6 +9,8 @@ namespace Coralite.Core
         /// </summary>
         float Priority { get; }
 
+        virtual bool DrawTips { get => true; }
+
         /// <summary>
         /// 优先度最高：手持物品
         /// </summary>

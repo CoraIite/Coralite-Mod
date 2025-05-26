@@ -39,7 +39,7 @@ namespace Coralite.Content.WorldGeneration
             //WorldGen.paintWall();
             //WorldGen.SlopeTile(p.X, p.Y,(int)SlopeType.SlopeDownLeft);
             //WorldGen.PoundTile();
-            //ExampleStructure(p);
+            ExampleStructure(p);
             //Main.NewText(TileLoader.GetTile(860).Name);
             //WorldGen.destroyObject = false;
             //Main.tile[p].Clear(TileDataType.Wall);
@@ -262,49 +262,47 @@ namespace Coralite.Content.WorldGeneration
 
         public void ExampleStructure(Point origin)
         {
-            WorldUtils.Gen(
-                origin,
-                new Shapes.Circle(10),
-                Actions.Chain(
-                    new Actions.ClearTile(),
-                    new Actions.PlaceTile(TileID.Coralstone)
-                    )
-                );
+            //WorldUtils.Gen(
+            //    origin,
+            //    new Shapes.Circle(10),
+            //    Actions.Chain(
+            //        new Actions.ClearTile(),
+            //        new Actions.PlaceTile(TileID.Coralstone)
+            //        )
+            //    );
 
-            return;
+            //return;
             int width = 13;
             int height = 26;
 
-            ShapeData slimeShapeData = new ShapeData();
+            ShapeData circleData = new ShapeData();
             ShapeData moundShapeData = new ShapeData();
-            Point point = new Point(origin.X, origin.Y);
             Point point2 = new Point(origin.X, origin.Y + height / 3);
 
             WorldUtils.Gen(
-                point,
-                new Shapes.Circle(20),//new Shapes.Slime(20, 0.8f, 1f),
-                Actions.Chain(
-                    //new Modifiers.Blotches(2, 0.4),
-                    new Actions.ClearTile(frameNeighbors: true).Output(slimeShapeData)));
+                origin,
+                new Shapes.Circle(20),
+                new Actions.ClearTile(frameNeighbors: true).Output(circleData));
+
+            //WorldUtils.Gen(
+            //    point2,
+            //    new Shapes.Rectangle(new Rectangle(-width / 2, -height / 2, width, height)),//new Shapes.Mound(14, 14),
+            //    Actions.Chain(
+            //        //new Modifiers.Blotches(2, 1, 0.8),
+            //        new Actions.SetTile(TileID.Ash),
+            //        new Actions.SetFrames(frameNeighbors: true).Output(moundShapeData)));
 
             WorldUtils.Gen(
-                point2,
-                new Shapes.Rectangle(new Rectangle(-width / 2, -height / 2, width, height)),//new Shapes.Mound(14, 14),
-                Actions.Chain(
-                    //new Modifiers.Blotches(2, 1, 0.8),
-                    new Actions.SetTile(TileID.Ash),
-                    new Actions.SetFrames(frameNeighbors: true).Output(moundShapeData)));
-
-            WorldUtils.Gen(
-                point,
-                new ModShapes.OuterOutline(slimeShapeData),
+                origin,
+                new ModShapes.OuterOutline(circleData),
                 Actions.Chain(
                     new Modifiers.RectangleMask(-40, 40, 0, 40),
                     new Modifiers.Expand(1),
                     new Modifiers.IsEmpty(),
                     new Actions.PlaceTile(TileID.HellstoneBrick)));
 
-            slimeShapeData.Subtract(moundShapeData, point, point2);
+            return;
+            circleData.Subtract(moundShapeData, origin, point2);
 
             WorldUtils.Gen(
                 point2,
@@ -316,8 +314,8 @@ namespace Coralite.Content.WorldGeneration
 
 
             WorldUtils.Gen(
-                point,
-                new ModShapes.All(slimeShapeData),
+                origin,
+                new ModShapes.All(circleData),
                 Actions.Chain(
                     new Modifiers.RectangleMask(-40, 40, 0, 40),
                     new Modifiers.IsEmpty(),
@@ -354,8 +352,8 @@ namespace Coralite.Content.WorldGeneration
                     new ActionAshGrass()));
 
             WorldUtils.Gen(
-                point,
-                new ModShapes.All(slimeShapeData),
+                origin,
+                new ModShapes.All(circleData),
                 Actions.Chain(
                     new Actions.PlaceWall(WallID.HellstoneBrick),
                     new Modifiers.OnlyTiles(TileID.Ash),

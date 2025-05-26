@@ -160,13 +160,30 @@ namespace Coralite.Helpers
         {
             GetItemTexAndFrame(itemType, out Texture2D tex, out Rectangle frame);
 
-            Rectangle rect = Utils.CenteredRectangle(pos, tex.Size() * rangeMult);
+            Color itemC = ContentSamples.ItemsByType[itemType].GetAlpha(selfColor ?? Color.White);
+
+            Rectangle rect = Utils.CenteredRectangle(pos, frame.Size() * rangeMult);
             if (rect.MouseScreenInRect())
             {
                 scale.ToBigSize();
                 Main.HoverItem = ContentSamples.ItemsByType[itemType].Clone();
                 Main.hoverItemName = "a";
             }
+            else
+                scale.ToNormalSize();
+
+            Vector2 origin = frame.Size() / 2;
+            spriteBatch.Draw(tex, pos + Vector2.One * Lerp(0, offset, scale.ScalePercent), frame,
+               darkColor ?? new Color(40, 40, 40) * 0.5f, 0, origin, fadeWithOriginScale ? scale.targetScale : scale.Scale, 0, 0);
+            spriteBatch.Draw(tex, pos, frame, itemC, 0, origin, scale.Scale, 0, 0);
+        }
+
+        public static void DrawMouseOverScaleTex(SpriteBatch spriteBatch, Texture2D tex, Vector2 pos
+            , ref ScaleController scale, float offset, Color? darkColor=null, bool fadeWithOriginScale = false, Color? selfColor = null)
+        {
+            Rectangle rect = Utils.CenteredRectangle(pos, tex.Size());
+            if (rect.MouseScreenInRect())
+                scale.ToBigSize();
             else
                 scale.ToNormalSize();
 

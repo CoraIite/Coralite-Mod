@@ -288,7 +288,7 @@ namespace Coralite.Content.GlobalItems
 
             ModifyFairyTooltips(item,tooltips);
 
-            if (item.ModItem is IDashable dash)
+            if (item.ModItem is IDashable dash&&dash.DrawTips)
             {
                 TooltipLine line2 = new TooltipLine(Mod, "Dashable", Dashable.Value);
                 tooltips.Add(line2);

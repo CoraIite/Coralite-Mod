@@ -41,7 +41,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
             RemoveAllChildren();
 
             buttonList.SetSize(-20, -40, 1, 1);
-            buttonList.SetTopLeft(0, 10);
+            buttonList.SetTopLeft(20, 10);
             float width = PageWidth;
             FixedUIScrollbar scrollbar = new FixedUIScrollbar(UILoader.GetUserInterface<CoraliteNoteUIState>());
             scrollbar.SetTopLeft(20, 0);

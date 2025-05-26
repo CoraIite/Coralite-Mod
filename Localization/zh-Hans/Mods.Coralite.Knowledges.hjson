@@ -16,7 +16,11 @@ GetMagikeKnowledge1Page: {
 
 		    本卷的目的是帮助你了解 [c/ffbeec:魔能] 相关最基础的知识，并且通过实践建造出属于你的 [c/ffbeec:魔能] 产线。
 		'''
-	ContiuneRead: "    你已经获得了 [c/ffbeec:魔能基础知识] ！跟随章节内容开始你的 [c/ffbeec:魔能] 之旅吧！"
+	ContiuneRead:
+		'''
+		    你已经获得了 [c/ffbeec:魔能基础知识] ！
+		    跟随章节内容开始你的 [c/ffbeec:魔能] 之旅吧！
+		'''
 	ClickButton: "    如果你准备好了，就按下此页下方的按钮并开始阅读本章节吧！"
 }
 
@@ -45,15 +49,14 @@ PlaceFirstLens: {
 		'''
 }
 
-PlacePolarizedFilter: {
-	NeedPolarizedFilter:
-		'''
-		    要让你的仪器正常工作还需要一个关键道具，魔能学家们将其称作 [c/ffbeec:偏振滤镜] 。
-		    先制作一个最基础的 偏振滤镜-晶体 吧！请注意不要做错成其他类型的滤镜了。
-		'''
-	HowToUsePolarizedFilter: "    将偏振滤镜插入仪器的方法也很简单，只需要使用偏振滤镜物品进行框选，松开左键后就可以消耗手中的物品并放入偏振滤镜。"
-	SeeItemToolTip: "    在之后的流程中你会制作更多等级的偏振滤镜，需要注意的是并非所有的偏振滤镜都能顺利插入仪器之中。 请仔细阅读魔能仪器的物品描述，能插入的偏振滤镜均会标出。"
-}
+PlacePolarizedFilter.NeedPolarizedFilter:
+	'''
+	    大多数仪器还需要一个关键道具才能工作，
+	        魔能学家们将其称作 [c/ffbeec:偏振滤镜] 。
+
+	    先制作一个最基础的 [c/ffbeec:偏振滤镜-晶体] 吧！
+	    请注意不要做错成其他类型的滤镜了。
+	'''
 
 PutItemIn: {
 	WhatIsItemWithMagike:
@@ -359,10 +362,20 @@ FragmentPage2: {
 
 NightmarePage: {
 	Title: 梦魇残卷
-	Description: 
-	'''
-	      逃避只会更加受伤，直面梦魇吧.......
+	Description:
+		'''
+		      逃避只会更加受伤，直面梦魇吧.......
 
-	                                    美梦的种子藏在噩梦中......
-	'''
+		                                    美梦的种子藏在噩梦中......
+		'''
+}
+
+PlacePolarizedFilter2: {
+	HowToUsePolarizedFilter: "    使用偏振滤镜物品左键框选，松开左键后就可以消耗手中的物品将偏振滤镜插入选区内的所有仪器。 框选的最大范围可以在模组配置中调整。"
+	SeeItemToolTip:
+		'''
+		    在之后的流程中你会制作更多等级的偏振滤镜，需要注意的是并非所有的偏振滤镜都能顺利插入仪器之中。
+
+		    请仔细阅读魔能仪器的物品描述，能插入的偏振滤镜均会标出。 偏振滤镜的描述中也会显示能插入的仪器。
+		'''
 }

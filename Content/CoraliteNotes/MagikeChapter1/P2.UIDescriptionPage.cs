@@ -3,6 +3,7 @@ using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Localization;
+using static Coralite.Core.Systems.FairyCatcherSystem.FairySystem;
 
 namespace Coralite.Content.CoraliteNotes.MagikeChapter1
 {
@@ -19,18 +20,17 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            Vector2 pos = PageTop + new Vector2(0, 20);
+            Vector2 pos = TitlePos;
             //描述段1
-            Helper.DrawTextParagraph(spriteBatch, OpenUI.Value, PageWidth, new Vector2(Position.X, pos.Y), out Vector2 textSize);
+            DrawParaNormal(spriteBatch, OpenUI, pos.Y, out Vector2 textSize);
 
             var tex = CoraliteAssets.MagikeChapter1.UIDescription.Value;
             pos.Y += textSize.Y + tex.Height / 2 + 20;
             //UI图片，不带缩放功能
-            Vector2 origin = tex.Size() / 2;
-            spriteBatch.Draw(tex, pos, null, Color.White, 0, origin, 1, 0, 0);
+            tex.QuickCenteredDraw(spriteBatch, pos);
 
             pos.Y += tex.Height / 2 + 20;
-            Helper.DrawTextParagraph(spriteBatch, UIDescription.Value, PageWidth, new Vector2(Position.X, pos.Y), out _);
+            DrawParaNormal(spriteBatch, UIDescription, pos.Y, out _);
         }
     }
 }

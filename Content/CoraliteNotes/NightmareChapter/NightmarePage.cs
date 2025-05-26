@@ -32,18 +32,17 @@ namespace Coralite.Content.CoraliteNotes.NightmareChapter
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            DrawTitle(spriteBatch, Title, Bosses.VanillaReinforce.NightmarePlantera.NightmarePlantera.nightmareRed);
+            DrawTitleH1(spriteBatch, Title, Bosses.VanillaReinforce.NightmarePlantera.NightmarePlantera.nightmareRed);
             DrawParaNormal(spriteBatch, Description, Position.Y + TitleHeight, out _);
 
             Texture2D tex = NightmarePlantera.Value;
 
             //绘制图2
-
             SamplerState anisotropicClamp = SamplerState.AnisotropicClamp;
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, OverrideSamplerState ?? anisotropicClamp, DepthStencilState.None, OverflowHiddenRasterizerState, null, Main.UIScaleMatrix);
 
-            tex.QuickBottomDraw(spriteBatch, Bottom + new Vector2(0, -10));
+            tex.QuickBottomDraw(spriteBatch, Bottom - new Vector2(0, 10));
 
             spriteBatch.End();
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, anisotropicClamp, DepthStencilState.None, OverflowHiddenRasterizerState, null, Main.UIScaleMatrix);

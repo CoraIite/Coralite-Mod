@@ -20,15 +20,9 @@ namespace Coralite.Content.CoraliteNotes.MagikeInterstitial1
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            Vector2 pos = Position + new Vector2(PageWidth / 2, 20);
+            DrawParaNormal(spriteBatch, Description, TitlePos.Y, out _);
 
-            Helper.DrawTextParagraph(spriteBatch, Description.Value, PageWidth, new Vector2(Position.X, pos.Y), out _);
-
-            Texture2D tex = SkyIslandEnemyWarn.Value;
-            float scale1 = 1.15f;
-
-            //绘制图
-            spriteBatch.Draw(tex, Bottom + new Vector2(0, -40), null, Color.White, 0, new Vector2(tex.Width / 2, tex.Height), scale1, 0, 0);
+            SkyIslandEnemyWarn.Value.QuickBottomDraw(spriteBatch, Bottom - new Vector2(0, 10), scale: 1.15f);
         }
     }
 }

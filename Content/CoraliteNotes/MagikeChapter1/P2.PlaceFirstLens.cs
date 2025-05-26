@@ -6,6 +6,7 @@ using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.Localization;
+using static Coralite.Core.Systems.FairyCatcherSystem.FairySystem;
 
 namespace Coralite.Content.CoraliteNotes.MagikeChapter1
 {
@@ -36,13 +37,10 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            Vector2 pos = PageTop + new Vector2(0, 60);
-            //标题
-            Utils.DrawBorderStringBig(spriteBatch, BuildYourFirstMagike.Value, pos, Coralite.MagicCrystalPink
-                , 0.8f, 0.5f, 0.5f);
-            pos += new Vector2(0, 60);
+            DrawTitleH2(spriteBatch, BuildYourFirstMagike, Coralite.MagicCrystalPink);
+            Vector2 pos = PageTop + new Vector2(0, TitleHeight);
 
-            Helper.DrawTextParagraph(spriteBatch, ExtractLens.Value, PageWidth, new Vector2(Position.X, pos.Y), out Vector2 textSize);
+            DrawParaNormal(spriteBatch, ExtractLens, pos.Y, out Vector2 textSize);
 
             var tex1 = TextureAssets.Item[ModContent.ItemType<BasicExtractLens>()].Value;
             var tex2 = CoraliteAssets.MagikeChapter1.PlaceFirstLens.Value;
@@ -50,38 +48,19 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
 
             Vector2 picturePos = new Vector2(Position.X + (PageWidth - tex2.Width) / 2, pos.Y);
 
-            #region 绘制左边的透镜贴图
-            Rectangle rect = Utils.CenteredRectangle(picturePos, tex1.Size() * 4f);
-            if (rect.MouseScreenInRect())
-            {
-                _scale1.ToBigSize();
-                Main.HoverItem = ContentSamples.ItemsByType[ModContent.ItemType<BasicExtractLens>()].Clone();
-                Main.hoverItemName = "a";
-            }
-            else
-                _scale1.ToNormalSize();
-
-            Helper.DrawMouseOverScaleTex(spriteBatch, tex1, picturePos, _scale1, 5, new Color(40, 40, 40) * 0.5f, true);
-
+            //绘制左边的透镜贴图
+            Helper.DrawMouseOverScaleTex<BasicExtractLens>(spriteBatch, picturePos,ref _scale1
+                ,3, 5, fadeWithOriginScale: true);
             Utils.DrawBorderString(spriteBatch, TryMouseHover.Value, picturePos + new Vector2(0, -tex1.Height * 1.5f), Coralite.MagicCrystalPink
                 , 1f, 0.5f, 0.5f);
 
-            #endregion
-
             picturePos.X = Position.X + PageWidth - tex2.Width / 2;
 
-            #region 绘制右边的图片
-            rect = Utils.CenteredRectangle(picturePos, tex2.Size());
-            if (rect.MouseScreenInRect())
-                _scale2.ToBigSize();
-            else
-                _scale2.ToNormalSize();
-
-            Helper.DrawMouseOverScaleTex(spriteBatch, tex2, picturePos, _scale2, 10, Color.DarkGray * 0.75f);
-            #endregion
+            //绘制右边的图片
+            Helper.DrawMouseOverScaleTex(spriteBatch, tex2, picturePos,ref _scale2, 10);
 
             pos += new Vector2(0, tex2.Height / 2 + 20);
-            Helper.DrawTextParagraph(spriteBatch, FourWayPlace.Value, PageWidth, new Vector2(Position.X, pos.Y), out _);
+            DrawParaNormal(spriteBatch, FourWayPlace, pos.Y, out _);
         }
     }
 }

@@ -27,13 +27,13 @@ namespace Coralite.Content.CoraliteNotes.SlimeChapter1
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
             Vector2 pos = TitlePos;
-            DrawParaNormal(spriteBatch, GelInvitationDescription, pos.Y, out Vector2 textSize);
+            DrawParaNormal(spriteBatch, GelInvitationDescription, pos.Y, out _);
 
             float scale1 = 1f;
             Texture2D tex = CoraliteAssets.Slime1.SlimeEmperor.Value;
 
             //绘制图2
-            tex.QuickBottomDraw(spriteBatch, Bottom + new Vector2(0, -10), scale: scale1);
+            tex.QuickBottomDraw(spriteBatch, Bottom - new Vector2(0, 10), scale: scale1);
 
             #region 绘制凝胶邀请函
 

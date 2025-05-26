@@ -1,7 +1,13 @@
-﻿using Coralite.Helpers;
+﻿using Coralite.Core.Attributes;
+using Coralite.Helpers;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.IO;
+using Terraria.GameContent;
+using Terraria;
 using Terraria.ModLoader.IO;
+using Terraria.UI.Chat;
+using Terraria.UI;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components.Producers
 {
@@ -13,7 +19,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Producers
         public float ProductionDelayBonus { get => DelayBonus; set => DelayBonus = value; }
 
         /// <summary> 生产时间 </summary>
-        public int ProductionDelay => (this as ITimerTriggerComponent).Delay;
+        public int ProductionDelay => Math.Clamp((int)(DelayBase * DelayBonus), -1, int.MaxValue);
 
         public int DelayBase { get; set; }
         public float DelayBonus { get; set; } = 1f;
@@ -46,7 +52,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Producers
         public sealed override void Update()
         {
             //生产时间限制
-            if (!CheckTime())
+            if (ProductionDelayBase < 0 || !CheckTime())
                 return;
 
             this.SendTimerComponentTime(this);
@@ -59,15 +65,15 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Producers
 
         #region UI部分
 
-        public virtual string ProductionDelayText(MagikeActiveProducer p)
-        {
-            float timer = MathF.Round(p.Timer / 60f, 1);
-            float delay = MathF.Round(p.ProductionDelay / 60f, 1);
-            float delayBase = MathF.Round(p.ProductionDelayBase / 60f, 1);
-            float DelayBonus = p.ProductionDelayBonus;
+        //public virtual string ProductionDelayText(MagikeActiveProducer p)
+        //{
+        //    float timer = MathF.Round(p.Timer / 60f, 1);
+        //    float delay = MathF.Round(p.ProductionDelay / 60f, 1);
+        //    float delayBase = MathF.Round(p.ProductionDelayBase / 60f, 1);
+        //    float DelayBonus = p.ProductionDelayBonus;
 
-            return $"  ▶ {timer} / {MagikeHelper.BonusColoredText(delay.ToString(), DelayBonus, true)} ({delayBase} * {MagikeHelper.BonusColoredText(DelayBonus.ToString(), DelayBonus, true)})";
-        }
+        //    return $"  ▶ {timer} / {MagikeHelper.BonusColoredText(delay.ToString(), DelayBonus, true)} ({delayBase} * {MagikeHelper.BonusColoredText(DelayBonus.ToString(), DelayBonus, true)})";
+        //}
 
         public virtual string ThroughputText(MagikeActiveProducer p)
             => $"  ▶ {MagikeHelper.BonusColoredText(p.Throughput.ToString(), p.ThroughputBonus)} ({p.ThroughputBase} * {MagikeHelper.BonusColoredText(p.ThroughputBonus.ToString(), p.ThroughputBonus)})";
@@ -117,5 +123,98 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Producers
         }
 
         #endregion
+    }
+
+    [AutoLoadTexture(Path = AssetDirectory.MagikeUI)]
+    public class ProduceBar : UIElement
+    {
+        public static ATex ProgressBar { get; private set; }
+
+        protected MagikeActiveProducer producer;
+
+        private const int LeftPaddling = 10;
+
+        public ProduceBar(MagikeActiveProducer producer)
+        {
+            this.producer = producer;
+
+            ResetSize();
+        }
+
+        public void ResetSize()
+        {
+            Vector2 timerSize = GetStringSize(producer.Timer);
+            Vector2 sendDelaySize = GetStringSize(producer.ProductionDelay);
+
+            float width = timerSize.X + 10;
+            if (sendDelaySize.X + 10 > width)
+                width = sendDelaySize.X + 10;
+            if (ProgressBar.Width() + 10 > width)
+                width = ProgressBar.Width() + 10;
+
+            Width.Set(width + LeftPaddling, 0);
+            Height.Set(timerSize.Y * 3f + ProgressBar.Height() / 2, 0);
+        }
+
+        private static Vector2 GetStringSize(int value)
+        {
+            TextSnippet[] textSnippets = [.. ChatManager.ParseMessage(value.ToString(), Color.White)];
+            ChatManager.ConvertNormalSnippets(textSnippets);
+
+            return ChatManager.GetStringSize(FontAssets.MouseText.Value, textSnippets, Vector2.One * 1.1f);
+        }
+
+        protected override void DrawSelf(SpriteBatch spriteBatch)
+        {
+            Rectangle size = GetDimensions().ToRectangle();
+
+            float per = (size.Height - ProgressBar.Height() / 2) / 3f;
+            int width = size.Width - LeftPaddling;
+            Vector2 topLeft = size.TopLeft();
+            Vector2 pos = topLeft + new Vector2(30 + width / 2, per / 2);
+
+            //绘制时间
+            int productionDelay = producer.ProductionDelay;
+            Utils.DrawBorderString(spriteBatch, (productionDelay < 0 ? 0 : MathF.Round((1 - producer.Timer / (float)productionDelay) * 100)).ToString() + " %", pos + new Vector2(0, 4), Color.White
+                , 1.1f, anchorx: 0.5f, anchory: 0.5f);
+
+            //绘制中间的进度条
+            Texture2D barTex = ProgressBar.Value;
+
+            Rectangle box = barTex.Frame(1, 2, 0, 1);
+
+            pos += new Vector2(0, per / 2 + box.Height / 2);
+
+            Vector2 barPos = pos - new Vector2(width / 2 - 4, 0);
+            Vector2 origin = new Vector2(0, box.Height / 2);
+            spriteBatch.Draw(barTex, barPos, box, Color.White, 0, origin
+                , 1, 0, 0);
+
+            int delay = productionDelay;
+            if (productionDelay <= 0)
+            {
+                delay = 0;
+            }
+            else
+            {
+                box = barTex.Frame(1, 2);
+                box.Width = (int)((1 - producer.Timer / (float)productionDelay) * box.Width);
+                spriteBatch.Draw(barTex, barPos, box, Color.White, 0, origin
+                    , 1, 0, 0);
+            }
+
+            pos += new Vector2(0, per / 2 + box.Height / 2);
+
+            //绘制倒计时
+            Color color = MagikeHelper.GetBonusColor(producer.ProductionDelayBase < 0 ? 1 : producer.ProductionDelayBase, true);
+            Utils.DrawBorderString(spriteBatch, MathF.Round(delay / 60f, 1).ToString() + " " + MagikeSystem.GetUIText(MagikeSystem.UITextID.Second), pos + new Vector2(0, 4), color
+                , 1.1f, anchorx: 0.5f, anchory: 0.5f);
+
+            pos += new Vector2(0, per);
+
+            //绘制倒计时加成
+            Utils.DrawBorderString(spriteBatch, $"< × {producer.ProductionDelayBonus} >", pos + new Vector2(0, 4), color
+                , 1, anchorx: 0.5f, anchory: 0.5f);
+        }
     }
 }

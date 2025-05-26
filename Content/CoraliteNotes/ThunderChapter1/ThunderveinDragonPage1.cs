@@ -28,7 +28,7 @@ namespace Coralite.Content.CoraliteNotes.ThunderChapter1
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            DrawTitle(spriteBatch, Title, Coralite.ThunderveinYellow);
+            DrawTitleH1(spriteBatch, Title, Coralite.ThunderveinYellow);
 
             //绘制图
             CoraliteAssets.Thunder1

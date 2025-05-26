@@ -18,7 +18,7 @@ namespace Coralite.Content.CoraliteNotes.IceDragonChapter1
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            DrawTitle(spriteBatch, Title, Coralite.IcicleCyan);
+            DrawTitleH1(spriteBatch, Title, Coralite.IcicleCyan);
 
             Vector2 pos = Position + new Vector2(PageWidth / 2, TitleHeight);
 

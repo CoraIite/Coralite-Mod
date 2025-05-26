@@ -23,7 +23,7 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            IconPage.Value.QuickCenteredDraw(spriteBatch, Center,scale:1.2f);
+            IconPage.Value.QuickCenteredDraw(spriteBatch, Center, scale: 1.2f);
 
             Texture2D mainTex = ModContent.Request<Texture2D>("Coralite/icon").Value;
 
@@ -36,8 +36,6 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
             pos.Y += size.Y + 20;
             Helper.DrawText(spriteBatch, HowToUse.Value, PageWidth, pos, Vector2.One / 2, Vector2.One
                 , Coralite.TextShadowColor, Coralite.MagicCrystalPink, out _);
-
-            //测试用代码
         }
     }
 }

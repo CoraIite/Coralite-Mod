@@ -201,11 +201,11 @@ KnowledgeSystem: {
 	NightmareKnowledge: {
 		Name: 梦魇残卷
 		LockTip: 击败月球领主后解锁
-		Description: 
-		'''
-		沉睡吧... ...
-		在梦中挑战梦界主
-		'''
+		Description:
+			'''
+			沉睡吧... ...
+			在梦中挑战梦界主
+			'''
 	}
 }
 

@@ -23,7 +23,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Producers
         public float ThroughputBonus { get; set; } = 1f;
 
         /// <summary> 生产量 </summary>
-        public virtual int Throughput { get => Math.Clamp((int)(ThroughputBase * ThroughputBonus), 1, int.MaxValue); }
+        public virtual int Throughput { get => Math.Clamp((int)(ThroughputBase * ThroughputBonus), 0, int.MaxValue); }
 
         /// <summary>
         /// 是否能生产，同时对应物块悬浮状态

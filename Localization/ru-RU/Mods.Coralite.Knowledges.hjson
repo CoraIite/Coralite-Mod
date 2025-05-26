@@ -45,15 +45,11 @@ PlaceFirstLens: {
 		'''
 }
 
-PlacePolarizedFilter: {
-	NeedPolarizedFilter:
-		'''
-		Чтобы ваш прибор работал нормально, вам понадобится важный элемент, который магистры магической энергии называют [c/ffbeec:Поляризационный фильтр].
-		Сделайте базовый поляризационный фильтр-кристалл! Обратите внимание, чтобы не перепутать его с другими типами фильтров.
-		'''
-	HowToUsePolarizedFilter: "    Установить поляризационный фильтр в прибор очень просто. Для этого просто выберите поляризационный фильтр и, отпустив левую кнопку мыши, поместите его в прибор."
-	SeeItemToolTip: "    В будущем вы будете создавать более высококачественные поляризационные фильтры. Помните, что не все поляризационные фильтры могут быть установлены в прибор. Пожалуйста, читайте описание предметов магических приборов — те фильтры, которые могут быть вставлены, будут отмечены."
-}
+PlacePolarizedFilter.NeedPolarizedFilter:
+	'''
+	Чтобы ваш прибор работал нормально, вам понадобится важный элемент, который магистры магической энергии называют [c/ffbeec:Поляризационный фильтр].
+	Сделайте базовый поляризационный фильтр-кристалл! Обратите внимание, чтобы не перепутать его с другими типами фильтров.
+	'''
 
 PutItemIn: {
 	WhatIsItemWithMagike:
@@ -289,4 +285,9 @@ FragmentPage2: {
 NightmarePage: {
 	// Title: Mods.Coralite.Knowledges.NightmarePage.Title
 	// Description: Mods.Coralite.Knowledges.NightmarePage.Description
+}
+
+PlacePolarizedFilter2: {
+	// HowToUsePolarizedFilter: "    It's easy to insertthe polarized filter, you only need to use the polarized filter item to select the frame, and release left click, then consume the item and put the polarized filter in."
+	// SeeItemToolTip: "    You will make more polarized filters later, it's important to note that not all polarized filters can be successfully inserted. Please read the item description of the magike apparatus."
 }

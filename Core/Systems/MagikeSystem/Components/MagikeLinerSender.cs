@@ -317,14 +317,14 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 new SendProgressBar(this),
 
                 //发送量
-                this.NewTextBar(c =>MagikeSystem.GetUIText(MagikeSystem.UITextID.MagikeSendAmount), parent),
+                this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.MagikeSendAmount), parent),
                 this.NewTextBar(UnitDeliveryText, parent),
 
                 //连接距离
-                this.NewTextBar(c =>MagikeSystem.GetUIText(MagikeSystem.UITextID.MagikeConnectLength), parent),
+                this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.MagikeConnectLength), parent),
                 this.NewTextBar(ConnectLengthText, parent),
 
-                this.NewTextBar(c =>MagikeSystem.GetUIText(MagikeSystem.UITextID.CurrentConnect),parent)
+                this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.CurrentConnect),parent)
             ];
 
             list.SetSize(0, -title.Height.Pixels, 1, 1);
@@ -596,7 +596,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             Vector2 pos = topLeft + new Vector2(30 + width / 2, per / 2);
 
             //绘制时间
-            Utils.DrawBorderString(spriteBatch, MathF.Round((1 - sender.Timer / (float)sender.SendDelay) * 100).ToString() + " %", pos + new Vector2(0, 4), Color.White
+            int sendDelay = sender.SendDelay;
+            Utils.DrawBorderString(spriteBatch, (sendDelay < 0 ? 0 : MathF.Round((1 - sender.Timer / (float)sendDelay) * 100)).ToString() + " %", pos + new Vector2(0, 4), Color.White
                 , 1.1f, anchorx: 0.5f, anchory: 0.5f);
 
             //绘制中间的进度条
@@ -611,15 +612,15 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             spriteBatch.Draw(barTex, barPos, box, Color.White, 0, origin
                 , 1, 0, 0);
 
-            int delay = sender.SendDelay;
-            if (sender.SendDelay <= 0)
+            int delay = sendDelay;
+            if (sendDelay <= 0)
             {
                 delay = 0;
             }
             else
             {
                 box = barTex.Frame(1, 2);
-                box.Width = (int)((1 - sender.Timer / (float)sender.SendDelay) * box.Width);
+                box.Width = (int)((1 - sender.Timer / (float)sendDelay) * box.Width);
                 spriteBatch.Draw(barTex, barPos, box, Color.White, 0, origin
                     , 1, 0, 0);
             }

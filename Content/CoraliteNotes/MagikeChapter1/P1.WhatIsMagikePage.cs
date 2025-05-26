@@ -1,7 +1,6 @@
 ﻿using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria;
 using Terraria.Localization;
 
 namespace Coralite.Content.CoraliteNotes.MagikeChapter1
@@ -27,27 +26,17 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            Vector2 pos = PageTop + new Vector2(0, 60);
-            //标题
-            Utils.DrawBorderStringBig(spriteBatch, Title.Value, pos, Coralite.MagicCrystalPink
-                , 0.8f, 0.5f, 0.5f);
-
-            pos += new Vector2(0, 60);
+            DrawTitleH2(spriteBatch, Title, Coralite.MagicCrystalPink);
+            Vector2 pos = PageTop+new Vector2(0, TitleHeight);
 
             //描述段
-            Helper.DrawTextParagraph(spriteBatch, Description.Value, PageWidth, new Vector2(Position.X, pos.Y), out Vector2 textSize);
+            DrawParaNormal(spriteBatch, Description, pos.Y, out Vector2 textSize);
 
             var tex = CoraliteAssets.MagikeChapter1.WhatIsMagike.Value;
             pos.Y += textSize.Y + 20 + tex.Height / 2;
 
             //绘制图片
-            Rectangle rect = Utils.CenteredRectangle(pos, tex.Size());
-            if (rect.MouseScreenInRect())
-                _scale.ToBigSize();
-            else
-                _scale.ToNormalSize();
-
-            Helper.DrawMouseOverScaleTex(spriteBatch, tex, pos, _scale, 20, Color.DarkGray * 0.75f);
+            Helper.DrawMouseOverScaleTex(spriteBatch, tex, pos,ref _scale, 20);
         }
     }
 }

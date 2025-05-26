@@ -18,6 +18,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
         public override string Texture => (TexturePath ?? base.Texture) + (PathHasName ? "" : Name);
 
         public virtual float Priority => IDashable.HeldItemDash;
+        public virtual bool DrawTips { get => false; }
 
         public override void SetStaticDefaults()
         {

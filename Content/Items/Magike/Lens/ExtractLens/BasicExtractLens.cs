@@ -146,7 +146,7 @@ namespace Coralite.Content.Items.Magike.Lens.ExtractLens
                 or MALevel.Soul
                 or MALevel.Feather
                 or MALevel.SplendorMagicore => 10,
-                _ => 1_0000_0000 / 60,//随便填个大数
+                _ => -1,
             } * 60;
 
             Timer = ProductionDelayBase;

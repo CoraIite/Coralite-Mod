@@ -142,8 +142,8 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
             switch (incomeLevel)
             {
                 default:
-                    ProductionDelayBase = 1_0000_0000 / 60;//随便填个大数
-                    ThroughputBase = 1;
+                    ProductionDelayBase = -1;
+                    ThroughputBase = 0;
                     break;
                 case MALevel.Emperor:
                     ProductionDelayBase = 9;

@@ -34,12 +34,11 @@ namespace Coralite.Content.CoraliteNotes.RedJade
             Texture2D tex = CoraliteAssets.RedJade.Rediancie.Value;
 
             //绘制图2
-            Vector2 pos = Bottom;
-            tex.QuickBottomDraw(spriteBatch, pos, scale: scale1);
+            tex.QuickBottomDraw(spriteBatch, Bottom, scale: scale1);
 
-            DrawTitle(spriteBatch, Title, Coralite.RedJadeRed);
+            DrawTitleH1(spriteBatch, Title, Coralite.RedJadeRed);
 
-            pos = Position + new Vector2(PageWidth / 2, TitleHeight);
+            Vector2 pos = Position + new Vector2(PageWidth / 2, TitleHeight);
             DrawParaNormal(spriteBatch, RedBerryDescription, pos.Y, out _);
 
             #region 绘制赤玉

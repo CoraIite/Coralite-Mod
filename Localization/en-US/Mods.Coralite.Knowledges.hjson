@@ -49,15 +49,11 @@ PlaceFirstLens: {
 		'''
 }
 
-PlacePolarizedFilter: {
-	NeedPolarizedFilter:
-		'''
-		    To make your apparatus work, you also need a key item, which pundits call [c/ffbeec: Polarized filter].
-		    Let's make a magic crystal polarized filter first! Be careful not to make a mistake with other types of filters.
-		'''
-	HowToUsePolarizedFilter: "    It's easy to insertthe polarized filter, you only need to use the polarized filter item to select the frame, and release left click, then consume the item and put the polarized filter in."
-	SeeItemToolTip: "    You will make more polarized filters later, it's important to note that not all polarized filters can be successfully inserted. Please read the item description of the magike apparatus."
-}
+PlacePolarizedFilter.NeedPolarizedFilter:
+	'''
+	    To make your apparatus work, you also need a key item, which pundits call [c/ffbeec: Polarized filter].
+	    Let's make a magic crystal polarized filter first! Be careful not to make a mistake with other types of filters.
+	'''
 
 PutItemIn: {
 	WhatIsItemWithMagike:
@@ -304,4 +300,9 @@ FragmentPage2: {
 NightmarePage: {
 	Title: Mods.Coralite.Knowledges.NightmarePage.Title
 	Description: Mods.Coralite.Knowledges.NightmarePage.Description
+}
+
+PlacePolarizedFilter2: {
+	HowToUsePolarizedFilter: "    It's easy to insertthe polarized filter, you only need to use the polarized filter item to select the frame, and release left click, then consume the item and put the polarized filter in."
+	SeeItemToolTip: "    You will make more polarized filters later, it's important to note that not all polarized filters can be successfully inserted. Please read the item description of the magike apparatus."
 }
