@@ -183,7 +183,7 @@ MagikeSystem: {
 		FactoryWorkTime: ◇ 工作计时
 		StoneMakerName: 地质再生祭坛
 		StoneMakerOutPut: ◇ 产出
-		ItemWithValue: "需要放入至少价值1银币的物品"
+		ItemWithValue: 需要放入至少价值1银币的物品
 		TresureLensName: 财宝透镜
 		LaserCollectorName: 光束采集器
 		LaserCollectorOutPut: ◇ 产出

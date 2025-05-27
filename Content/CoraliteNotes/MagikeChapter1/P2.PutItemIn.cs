@@ -29,8 +29,8 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
         {
             _scale1.ResetScale();
             _scale2.ResetScale();
+            _scale3 = new ScaleController(0.6f, 0.1f);
             _scale3.ResetScale();
-            _scale4 = new ScaleController(1.4f, 0.2f);
             _scale4.ResetScale();
 
             base.Recalculate();
@@ -38,9 +38,10 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            Vector2 pos = PageTop + new Vector2(0, 20);
+            Vector2 pos = TitlePos;
+
             //描述段1
-            Helper.DrawTextParagraph(spriteBatch, WhatIsItemWithMagike.Value, PageWidth, new Vector2(Position.X, pos.Y), out Vector2 textSize);
+            DrawParaNormal(spriteBatch,WhatIsItemWithMagike,pos.Y, out Vector2 textSize);
 
             var tex1 = TextureAssets.Item[ModContent.ItemType<MagicCrystal>()].Value;
             var tex11 = TextureAssets.Item[ModContent.ItemType<MagicCrystalBlock>()].Value;
@@ -50,63 +51,34 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
             float width = PageWidth - tex2.Width;
             Vector2 picturePos = new Vector2(Position.X + width / 2, pos.Y);
 
-            #region 绘制左边的物品贴图
+            // 绘制左边的物品贴图
             picturePos.X -= tex1.Width * 5 / 2;
-            Rectangle rect = Utils.CenteredRectangle(picturePos, tex1.Size() * 5f);
-            if (rect.MouseScreenInRect())
-            {
-                _scale1.ToBigSize();
-                Main.HoverItem = ContentSamples.ItemsByType[ModContent.ItemType<MagicCrystal>()].Clone();
-                Main.hoverItemName = "a";
-            }
-            else
-                _scale1.ToNormalSize();
 
-            Helper.DrawMouseOverScaleTex(spriteBatch, tex1, picturePos, _scale1, 5, new Color(40, 40, 40) * 0.5f, true);
-            #endregion
+            Helper.DrawMouseOverScaleTex<MagicCrystal>(spriteBatch, picturePos
+                ,ref _scale1, 5,5, fadeWithOriginScale: true);
 
-            #region 绘制左边的物品贴图2
+            // 绘制左边的物品贴图2
             picturePos.X = Position.X + width / 2 + tex11.Width * 5 / 2;
-            rect = Utils.CenteredRectangle(picturePos, tex11.Size() * 5f);
-            if (rect.MouseScreenInRect())
-            {
-                _scale4.ToBigSize();
-                Main.HoverItem = ContentSamples.ItemsByType[ModContent.ItemType<MagicCrystalBlock>()].Clone();
-                Main.hoverItemName = "a";
-            }
-            else
-                _scale4.ToNormalSize();
-
-            Helper.DrawMouseOverScaleTex(spriteBatch, tex11, picturePos, _scale4, 5, new Color(40, 40, 40) * 0.5f, true);
-            #endregion
+            Helper.DrawMouseOverScaleTex<MagicCrystalBlock>(spriteBatch, picturePos
+                , ref _scale4, 5, 5, fadeWithOriginScale: true);
 
             picturePos.X = Position.X + PageWidth - tex2.Width / 2;
 
-            #region 绘制右边的图片
-            rect = Utils.CenteredRectangle(picturePos, tex2.Size());
-            if (rect.MouseScreenInRect())
-                _scale2.ToBigSize();
-            else
-                _scale2.ToNormalSize();
-
-            Helper.DrawMouseOverScaleTex(spriteBatch, tex2, picturePos, _scale2, 6, Color.DarkGray * 0.5f);
-            #endregion
+            // 绘制右边的图片
+            Helper.DrawMouseOverScaleTex(spriteBatch, tex2, picturePos,ref _scale2, 6);
 
             pos += new Vector2(0, tex2.Height / 2 + 20);
+
+            //文字段2
+            DrawParaNormal(spriteBatch, TurnToMagikeProducer, pos.Y, out textSize);
 
             Helper.DrawTextParagraph(spriteBatch, TurnToMagikeProducer.Value, PageWidth, new Vector2(Position.X, pos.Y), out textSize);
             tex2 = CoraliteAssets.MagikeChapter1.TurnToMagikeProducerUI.Value;
 
-            pos.Y += textSize.Y + tex2.Height / 2 * 1.2f;
-            #region 绘制右边的图片
-            rect = Utils.CenteredRectangle(pos, tex2.Size() * 1.2f);
-            if (rect.MouseScreenInRect())
-                _scale3.ToBigSize();
-            else
-                _scale3.ToNormalSize();
+            pos.Y += textSize.Y + tex2.Height / 2 *0.7f+20;
 
-            Helper.DrawMouseOverScaleTex(spriteBatch, tex2, pos, _scale3, 6, Color.DarkGray * 0.5f);
-            #endregion
+            // 绘制下边的图片
+            Helper.DrawMouseOverScaleTex(spriteBatch, tex2, pos,ref _scale3, 6);
         }
     }
 }

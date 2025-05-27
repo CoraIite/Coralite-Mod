@@ -272,25 +272,14 @@ namespace Coralite.Content.WorldGeneration
             //    );
 
             //return;
-            int width = 13;
-            int height = 26;
 
             ShapeData circleData = new ShapeData();
-            ShapeData moundShapeData = new ShapeData();
-            Point point2 = new Point(origin.X, origin.Y + height / 3);
+            ShapeData ashRectData = new ShapeData();
 
             WorldUtils.Gen(
                 origin,
                 new Shapes.Circle(20),
                 new Actions.ClearTile(frameNeighbors: true).Output(circleData));
-
-            //WorldUtils.Gen(
-            //    point2,
-            //    new Shapes.Rectangle(new Rectangle(-width / 2, -height / 2, width, height)),//new Shapes.Mound(14, 14),
-            //    Actions.Chain(
-            //        //new Modifiers.Blotches(2, 1, 0.8),
-            //        new Actions.SetTile(TileID.Ash),
-            //        new Actions.SetFrames(frameNeighbors: true).Output(moundShapeData)));
 
             WorldUtils.Gen(
                 origin,
@@ -301,17 +290,28 @@ namespace Coralite.Content.WorldGeneration
                     new Modifiers.IsEmpty(),
                     new Actions.PlaceTile(TileID.HellstoneBrick)));
 
-            return;
-            circleData.Subtract(moundShapeData, origin, point2);
+            int width = 13;
+            int height = 26;
+            Point origin2 = new Point(origin.X, origin.Y + height / 3);
 
             WorldUtils.Gen(
-                point2,
-                new ModShapes.InnerOutline(moundShapeData),
+                origin2,
+                new Shapes.Rectangle(new Rectangle(-width / 2, -height / 2, width, height)),
+                Actions.Chain(
+                    new Actions.SetTile(TileID.Ash),
+                    new Actions.SetFrames(frameNeighbors: true).Output(ashRectData)));
+
+            WorldUtils.Gen(
+                origin2,
+                new ModShapes.InnerOutline(ashRectData),
                 Actions.Chain(
                     new Modifiers.IsSolid(),
                     new Actions.SetTile(TileID.AshGrass),
                     new Actions.SetFrames(frameNeighbors: true)));
 
+            return;
+
+            circleData.Subtract(ashRectData, origin, origin2);
 
             WorldUtils.Gen(
                 origin,
@@ -338,13 +338,13 @@ namespace Coralite.Content.WorldGeneration
             //    new Actions.SetFrames(frameNeighbors: true));
 
             //放置一个肉山圣物（肉山圣物的style是5）
-            WorldGen.PlaceObject(point2.X, point2.Y - height / 2 - 1, TileID.MasterTrophyBase, mute: true, 6);
+            WorldGen.PlaceObject(origin2.X, origin2.Y - height / 2 - 1, TileID.MasterTrophyBase, mute: true, 6);
             //Dust d=  Dust.NewDustPerfect(new Point(point2.X, point2.Y - height / 2).ToWorldCoordinates(), DustID.Torch, Vector2.Zero, Scale: 5);
             //  d.noGravity = true;
             // 将植物放置在土丘形状的草砖之上。
             WorldUtils.Gen(
-                point2,
-                new ModShapes.All(moundShapeData),
+                origin2,
+                new ModShapes.All(ashRectData),
                 Actions.Chain(
                     new Modifiers.Offset(0, -1),
                     new Modifiers.OnlyTiles(TileID.AshGrass),

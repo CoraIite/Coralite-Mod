@@ -206,7 +206,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Producers
             pos += new Vector2(0, per / 2 + box.Height / 2);
 
             //绘制倒计时
-            Color color = MagikeHelper.GetBonusColor(producer.ProductionDelayBase < 0 ? 1 : producer.ProductionDelayBase, true);
+            Color color = MagikeHelper.GetBonusColor(producer.ProductionDelayBonus, true);
             Utils.DrawBorderString(spriteBatch, MathF.Round(delay / 60f, 1).ToString() + " " + MagikeSystem.GetUIText(MagikeSystem.UITextID.Second), pos + new Vector2(0, 4), color
                 , 1.1f, anchorx: 0.5f, anchory: 0.5f);
 

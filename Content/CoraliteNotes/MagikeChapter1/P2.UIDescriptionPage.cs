@@ -25,11 +25,11 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
             DrawParaNormal(spriteBatch, OpenUI, pos.Y, out Vector2 textSize);
 
             var tex = CoraliteAssets.MagikeChapter1.UIDescription.Value;
-            pos.Y += textSize.Y + tex.Height / 2 + 20;
+            pos.Y += textSize.Y + tex.Height / 2 + 30;
             //UI图片，不带缩放功能
             tex.QuickCenteredDraw(spriteBatch, pos);
 
-            pos.Y += tex.Height / 2 + 20;
+            pos.Y += tex.Height / 2 + 30;
             DrawParaNormal(spriteBatch, UIDescription, pos.Y, out _);
         }
     }
