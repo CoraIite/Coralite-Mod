@@ -306,3 +306,8 @@ PlacePolarizedFilter2: {
 	HowToUsePolarizedFilter: "    It's easy to insertthe polarized filter, you only need to use the polarized filter item to select the frame, and release left click, then consume the item and put the polarized filter in."
 	SeeItemToolTip: "    You will make more polarized filters later, it's important to note that not all polarized filters can be successfully inserted. Please read the item description of the magike apparatus."
 }
+
+ActivatedTheMachine2: {
+	WorkingBeLike: Mods.Coralite.Knowledges.ActivatedTheMachine2.WorkingBeLike
+	HarvestTheProduct: Mods.Coralite.Knowledges.ActivatedTheMachine2.HarvestTheProduct
+}

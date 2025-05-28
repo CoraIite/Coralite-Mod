@@ -4,6 +4,8 @@ using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Generation;
 using Terraria.ID;
+using Terraria.IO;
+using Terraria.ObjectData;
 using Terraria.WorldBuilding;
 
 namespace Coralite.Content.WorldGeneration
@@ -39,7 +41,7 @@ namespace Coralite.Content.WorldGeneration
             //WorldGen.paintWall();
             //WorldGen.SlopeTile(p.X, p.Y,(int)SlopeType.SlopeDownLeft);
             //WorldGen.PoundTile();
-            ExampleStructure(p);
+            //ExampleStructure(p);
             //Main.NewText(TileLoader.GetTile(860).Name);
             //WorldGen.destroyObject = false;
             //Main.tile[p].Clear(TileDataType.Wall);
@@ -260,20 +262,44 @@ namespace Coralite.Content.WorldGeneration
                     Main.tile[i, j].Clear(TileDataType.All);
         }
 
-        public void ExampleStructure(Point origin)
+        public static void ExampleStructure(GenerationProgress progress, GameConfiguration configuration)
         {
-            //WorldUtils.Gen(
-            //    origin,
-            //    new Shapes.Circle(10),
-            //    Actions.Chain(
-            //        new Actions.ClearTile(),
-            //        new Actions.PlaceTile(TileID.Coralstone)
-            //        )
-            //    );
+            //随机选择X位置，最小80是为了防止出地图或是触碰世界边界导致报错
+            int x = Main.rand.Next(80, 300);
+            int y = 200;
 
-            //return;
+            //地狱就200格高
+            for (int i = 30; i < 200; i++)
+            {
+                //获取物块
+                Tile t = Main.tile[x, Main.maxTilesY - i];
+
+                //如果当前位置有实心物块或者有液体（判断一下岩浆）就继续想上找
+                if ((t.HasTile && Main.tileSolid[t.TileType]) || t.LiquidAmount > 0)
+                    continue;
+                
+                bool empty = true;
+                for (int j = 1; j < 8; j++)
+                {
+                    Tile t2 = Main.tile[x, Main.maxTilesY - i - j];
+                    if ((t2.HasTile && Main.tileSolid[t2.TileType]) || t2.LiquidAmount > 0)
+                    {
+                        empty = false;
+                        break;
+                    }
+                }
+
+                if (empty)
+                {
+                    y = i;
+                    break;
+                }
+            }
+
+            Point origin = new Point(x, Main.maxTilesY - y);
 
             ShapeData circleData = new ShapeData();
+            ShapeData circleExpandData = new ShapeData();
             ShapeData ashRectData = new ShapeData();
 
             WorldUtils.Gen(
@@ -288,7 +314,7 @@ namespace Coralite.Content.WorldGeneration
                     new Modifiers.RectangleMask(-40, 40, 0, 40),
                     new Modifiers.Expand(1),
                     new Modifiers.IsEmpty(),
-                    new Actions.PlaceTile(TileID.HellstoneBrick)));
+                    new Actions.PlaceTile(TileID.HellstoneBrick).Output(circleExpandData)));
 
             int width = 13;
             int height = 26;
@@ -309,9 +335,8 @@ namespace Coralite.Content.WorldGeneration
                     new Actions.SetTile(TileID.AshGrass),
                     new Actions.SetFrames(frameNeighbors: true)));
 
-            return;
-
             circleData.Subtract(ashRectData, origin, origin2);
+            circleData.Subtract(circleExpandData, origin, origin);
 
             WorldUtils.Gen(
                 origin,
@@ -338,7 +363,8 @@ namespace Coralite.Content.WorldGeneration
             //    new Actions.SetFrames(frameNeighbors: true));
 
             //放置一个肉山圣物（肉山圣物的style是5）
-            WorldGen.PlaceObject(origin2.X, origin2.Y - height / 2 - 1, TileID.MasterTrophyBase, mute: true, 6);
+            WorldGen.PlaceObject(origin2.X, origin2.Y - height / 2 - 1, TileID.MasterTrophyBase, true, 6);
+            
             //Dust d=  Dust.NewDustPerfect(new Point(point2.X, point2.Y - height / 2).ToWorldCoordinates(), DustID.Torch, Vector2.Zero, Scale: 5);
             //  d.noGravity = true;
             // 将植物放置在土丘形状的草砖之上。
@@ -351,14 +377,14 @@ namespace Coralite.Content.WorldGeneration
                     //new Modifiers.Offset(0, -1),
                     new ActionAshGrass()));
 
+            
+
             WorldUtils.Gen(
                 origin,
                 new ModShapes.All(circleData),
-                Actions.Chain(
-                    new Actions.PlaceWall(WallID.HellstoneBrick),
-                    new Modifiers.OnlyTiles(TileID.Ash),
-                    new Modifiers.Offset(0, 1),
-                    new ActionVines(3, 5)));
+                new Actions.PlaceWall(WallID.HellstoneBrick));
+
+            return;
         }
     }
 
@@ -366,16 +392,22 @@ namespace Coralite.Content.WorldGeneration
     {
         public override bool Apply(Point origin, int x, int y, params object[] args)
         {
+            //这个_tiles引用的就是Main.tile
+            //如果自身这一格没有物块或者顶上的一格有物块就跳过
             if (!_tiles[x, y].HasTile || _tiles[x, y - 1].HasTile)
                 return false;
+
+            //下面这个是我用来测试的代码
             //Dust d = Dust.NewDustPerfect(new Point(x, y).ToWorldCoordinates(), DustID.Torch, Vector2.Zero, Scale: 5);
             //d.noGravity = true;
 
-            //WorldGen.KillWall(x, y-1);
+            //放置灰烬草，PlaceTile的参数和PlaceObject类似
+            //但是PlaceTile更适合用来放单格物块，虽然放多物块也行就是不太好用
+            //具体参数是干什么的看一下它的注释吧
             WorldGen.PlaceTile(x, y - 1, TileID.AshPlants, mute: true);
 
+            //要用这个哦，不然输出图形会出问题
             return UnitApply(origin, x, y, args);
         }
     }
-
 }

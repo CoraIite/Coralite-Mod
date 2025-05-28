@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Terraria;
 using Terraria.GameContent.Generation;
 using Terraria.ID;
 using Terraria.Localization;
+using Terraria.ModLoader.Default;
 using Terraria.ModLoader.IO;
 using Terraria.WorldBuilding;
 
@@ -95,6 +97,12 @@ namespace Coralite.Content.WorldGeneration
 
             //放置风石碑牌
             AddGenPass(tasks, VanillaGenPassName.PlaceFallenLog, "Coralite Wind Stone Tablet", GenWindStoneTablet);
+
+            //int settleLiquids = tasks.FindIndex(genpass => genpass.Name.Equals("Settle Liquids"));
+            //if (settleLiquids != -1)
+            //{
+            //    tasks.Insert(settleLiquids + 1, new PassLegacy("MyStructure", WorldGenTester.ExampleStructure));
+            //}
 
             int Dungeon = tasks.FindIndex(genpass => genpass.Name.Equals("Dungeon"));
             bool shadowCastle = ShadowCastle;
