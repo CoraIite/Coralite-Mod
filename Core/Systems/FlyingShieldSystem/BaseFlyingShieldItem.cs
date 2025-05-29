@@ -23,6 +23,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
         public override void SetStaticDefaults()
         {
             ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
+            CoraliteSets.Items.IsFlyingShield[Type] = true;
         }
 
         public sealed override void SetDefaults()

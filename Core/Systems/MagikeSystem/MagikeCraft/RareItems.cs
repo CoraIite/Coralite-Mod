@@ -54,7 +54,7 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
                 .Register();
 
             //指南针
-            MagikeRecipe.CreateCraftRecipe(ItemID.CelestialMagnet, ItemID.DepthMeter, CalculateMagikeCost(RedJade, 12, 60 * 3), 4)
+            MagikeRecipe.CreateCraftRecipe(ItemID.CelestialMagnet, ItemID.Compass, CalculateMagikeCost(RedJade, 12, 60 * 3))
                 .AddIngredientGroup(RecipeGroupID.IronBar, 12)
                 .Register();
 
@@ -63,9 +63,13 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
                 .AddIngredientGroup(RecipeGroupID.IronBar, 12)
                 .AddIngredient(ItemID.GoldBar, 4)
                 .Register();
+            MagikeRecipe.CreateCraftRecipe(ItemID.Bone, ItemID.TallyCounter, CalculateMagikeCost(Bone, 12, 60 * 3), 25)
+                .AddIngredientGroup(RecipeGroupID.IronBar, 12)
+                .AddIngredient(ItemID.PlatinumBar, 4)
+                .Register();
 
             //金属探测仪
-            MagikeRecipe.CreateCraftRecipe(ItemID.Diamond, ItemID.MetalDetector, CalculateMagikeCost(RedJade, 12, 60 * 3), 25)
+            MagikeRecipe.CreateCraftRecipe(ItemID.Diamond, ItemID.MetalDetector, CalculateMagikeCost(RedJade, 12, 60 * 3), 5)
                 .AddIngredientGroup(RecipeGroupID.IronBar, 12)
                 .Register();
 

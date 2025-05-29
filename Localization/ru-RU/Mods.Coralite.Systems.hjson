@@ -165,6 +165,12 @@ KnowledgeSystem: {
 		// LockTip: Mods.Coralite.Systems.KnowledgeSystem.NightmareKnowledge.LockTip
 		// Description: Mods.Coralite.Systems.KnowledgeSystem.NightmareKnowledge.Description
 	}
+
+	FlyingShieldKnowledge: {
+		// Name: Mods.Coralite.Systems.KnowledgeSystem.FlyingShieldKnowledge.Name
+		// LockTip: Mods.Coralite.Systems.KnowledgeSystem.FlyingShieldKnowledge.LockTip
+		// Description: Mods.Coralite.Systems.KnowledgeSystem.FlyingShieldKnowledge.Description
+	}
 }
 
 // CoraliteBeatiaryDatabase.CrystallineSkyIsland: Mods.Coralite.Systems.CoraliteBeatiaryDatabase.CrystallineSkyIsland

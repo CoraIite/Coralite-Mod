@@ -207,6 +207,16 @@ KnowledgeSystem: {
 			在梦中挑战梦界主
 			'''
 	}
+
+	FlyingShieldKnowledge: {
+		Name: 飞盾残卷
+		LockTip: 制作任意飞盾后解锁
+		Description:
+			'''
+			丢出盾牌！
+			防御攻击！
+			'''
+	}
 }
 
 CoraliteBeatiaryDatabase.CrystallineSkyIsland: 蕴魔空岛

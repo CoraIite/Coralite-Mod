@@ -244,6 +244,7 @@ namespace Coralite.Core
         public const string NoteSlime1 = CoraliteNote + "Slime1/";
         public const string NoteThunder1 = CoraliteNote + "Thunder1/";
         public const string NoteNightmare = CoraliteNote + "Nightmare/";
+        public const string NoteWeapons = CoraliteNote + "Weapons/";
 
         #endregion
 

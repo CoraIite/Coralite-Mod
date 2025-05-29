@@ -1,4 +1,8 @@
-﻿using Terraria.Localization;
+﻿using Coralite.Content.CoraliteNotes.FlyingShieldChapter;
+using Coralite.Core.Systems.KeySystem;
+using System.Collections.Generic;
+using Terraria;
+using Terraria.Localization;
 
 namespace Coralite.Core.Systems.FlyingShieldSystem
 {
@@ -21,6 +25,20 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
             ShieldPlusDescriptionShort = this.GetLocalization("ShieldPlusDescriptionShort", () => "盾+（按shift查看更多）");
             ShieldPlusDescriptionLong = this.GetLocalization("ShieldPlusDescriptionLong",
                 () => "左键正常使用武器，右键进行防御，特殊攻击键丢出盾牌\n成功防御时会根据盾牌属性以及饰品加成获得短暂伤害减免\n可以格挡敌怪或敌对弹幕\n可以通过举盾来取消部分左键攻击的后摇");
+        }
+
+        public override void PostSetupRecipes()
+        {
+            foreach (var recipe in Main.recipe)
+            {
+                if (CoraliteSets.Items.IsFlyingShield[recipe.createItem.type])
+                    recipe.AddOnCraftCallback(UnlockFlyingShieldKnowledge);
+            }
+        }
+
+        public void UnlockFlyingShieldKnowledge(Recipe recipe, Item item, List<Item> consumedItems, Item destinationStack)
+        {
+            KnowledgeSystem.CheckForUnlock<FlyingShieldKnowledge>(Main.LocalPlayer.Center, Color.LightSteelBlue);
         }
 
         public override void Unload()

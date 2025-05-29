@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Items.Gels;
 using Coralite.Content.Items.Glistent;
+using Coralite.Content.Items.Icicle;
 using Coralite.Content.Items.Materials;
 using Terraria;
 using Terraria.ID;
@@ -378,6 +379,51 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
             //抓钩
             AddRemodelRecipe(ItemID.IronBar, ItemID.Hook, CalculateMagikeCost(MagicCrystal, 2, 30),8);
             AddRemodelRecipe(ItemID.LeadBar, ItemID.Hook, CalculateMagikeCost(MagicCrystal, 2, 30),8);
+
+            //金虫网
+            MagikeRecipe.CreateCraftRecipe(ItemID.BugNet, ItemID.GoldenBugNet, CalculateMagikeCost(Icicle, 8,60*2))
+                .AddIngredient(ItemID.GoldBar,49)
+                .AddIngredient<FreosanInABottle>()
+                .Register();
+            MagikeRecipe.CreateCraftRecipe(ItemID.BugNet, ItemID.GoldenBugNet, CalculateMagikeCost(Icicle, 8,60*2))
+                .AddIngredient(ItemID.PlatinumBar,49)
+                .AddIngredient<FreosanInABottle>()
+                .Register();
+
+            //钓鱼线
+            MagikeRecipe.CreateCraftRecipe(ItemID.WhiteString, ItemID.HighTestFishingLine, CalculateMagikeCost(Glistent, 6, 60 * 2))
+                .AddIngredientGroup(RecipeGroupID.IronBar, 10)
+                .AddIngredient<ConcileInABottle>()
+                .Register();
+            //渔夫耳环
+            MagikeRecipe.CreateCraftRecipe(ItemID.FishingPotion, ItemID.AnglerEarring, CalculateMagikeCost(Glistent, 6, 60 * 2))
+                .AddIngredientGroup(RecipeGroupID.IronBar, 10)
+                .AddIngredient<HeatanInABottle>()
+                .Register();
+            //渔具盒
+            MagikeRecipe.CreateCraftRecipe(ItemID.Chest, ItemID.TackleBox, CalculateMagikeCost(Glistent, 6, 60 * 2))
+                .AddIngredient<ConcileInABottle>()
+                .AddIngredient<HeatanInABottle>()
+                .AddIngredient<FreosanInABottle>()
+                .Register();
+
+            //渔民袖珍宝典
+            MagikeRecipe.CreateCraftRecipe(ItemID.Book, ItemID.FishermansGuide, CalculateMagikeCost(Glistent, 6, 60 * 2))
+                .AddIngredient(ItemID.SonarPotion)
+                .Register();
+            //天气收音机
+            MagikeRecipe.CreateCraftRecipe(ItemID.IceMachine, ItemID.WeatherRadio, CalculateMagikeCost(Glistent, 6, 60 * 2))
+                .AddIngredient<DryIce>()
+                .Register();
+            //六分仪
+            MagikeRecipe.CreateCraftRecipe(ItemID.GoldBar, ItemID.Sextant, CalculateMagikeCost(Glistent, 6, 60 * 2),15)
+                .Register();
+            MagikeRecipe.CreateCraftRecipe(ItemID.PlatinumBar, ItemID.Sextant, CalculateMagikeCost(Glistent, 6, 60 * 2),15)
+                .Register();
+            //钓鱼钩
+            MagikeRecipe.CreateCraftRecipe(ItemID.Hook, ItemID.FishingBobber, CalculateMagikeCost(Glistent, 6, 60 * 2))
+                .AddIngredient(ItemID.CratePotion)
+                .Register();
         }
     }
 }

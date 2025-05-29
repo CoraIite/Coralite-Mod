@@ -311,3 +311,13 @@ ActivatedTheMachine2: {
 	WorkingBeLike: Mods.Coralite.Knowledges.ActivatedTheMachine2.WorkingBeLike
 	HarvestTheProduct: Mods.Coralite.Knowledges.ActivatedTheMachine2.HarvestTheProduct
 }
+
+FragmentPage4: {
+	CollectJourney: Mods.Coralite.Knowledges.FragmentPage4.CollectJourney
+	CollectJourneyDescription: Mods.Coralite.Knowledges.FragmentPage4.CollectJourneyDescription
+}
+
+FlyingShieldPage: {
+	Title: Mods.Coralite.Knowledges.FlyingShieldPage.Title
+	Description: Mods.Coralite.Knowledges.FlyingShieldPage.Description
+}

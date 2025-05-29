@@ -30,6 +30,8 @@ namespace Coralite.Content.CoraliteNotes
                     new MagikeChapter1.GroupMagikeChapter1(),
                     new MagikeInterstitial1.GroupMagikeInterstitial1(),
                     new MagikeChapter2.GroupMagikeChapter2(),
+
+                    new FlyingShieldChapter.GroupFlyingShield(),
                 ];
         }
 
@@ -41,7 +43,6 @@ namespace Coralite.Content.CoraliteNotes
 
             spriteBatch.Draw(tex, pos, null, Color.White * 0.75f, 0, Vector2.Zero
                , new Vector2(calculatedStyle.Width / tex.Width, calculatedStyle.Height / tex.Height), 0, 0);
-
         }
     }
 }

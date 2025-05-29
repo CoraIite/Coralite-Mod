@@ -25,13 +25,13 @@ namespace Coralite.Content.Items.Materials
         public void AddMagikeCraftRecipe()
         {
             MagikeRecipe.CreateCraftRecipe(ItemID.Bottle, ModContent.ItemType<MutatusInABottle>(), MagikeHelper.CalculateMagikeCost(MALevel.Crimson, 6))
-                .AddIngredient(ItemID.EbonstoneBlock, 24)
-                .AddIngredient(ItemID.ShadowScale, 4)
+                .AddIngredient(ItemID.EbonstoneBlock, 10)
+                .AddIngredient(ItemID.ShadowScale)
                 .Register();
 
             MagikeRecipe.CreateCraftRecipe(ItemID.Bottle, ModContent.ItemType<MutatusInABottle>(), MagikeHelper.CalculateMagikeCost(MALevel.Crimson, 6))
-                .AddIngredient(ItemID.CrimstoneBlock, 24)
-                .AddIngredient(ItemID.TissueSample, 4)
+                .AddIngredient(ItemID.CrimstoneBlock, 10)
+                .AddIngredient(ItemID.TissueSample)
                 .Register();
         }
     }

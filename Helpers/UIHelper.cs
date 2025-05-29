@@ -1,5 +1,4 @@
 ﻿using Coralite.Content.CoraliteNotes;
-using Coralite.Content.Items.BossSummons;
 using Coralite.Content.UI;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -8,8 +7,6 @@ using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
 using Terraria.UI;
 using Terraria.UI.Chat;
-using static System.Net.Mime.MediaTypeNames;
-using static Terraria.GameContent.Animations.IL_Actions.Sprites;
 
 namespace Coralite.Helpers
 {

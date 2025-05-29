@@ -1,5 +1,7 @@
-﻿using Coralite.Content.UI.BookUI;
+﻿using Coralite.Content.CoraliteNotes.Readfragment;
+using Coralite.Content.UI.BookUI;
 using Coralite.Core;
+using Coralite.Core.Loaders;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
@@ -13,6 +15,8 @@ namespace Coralite.Content.CoraliteNotes
         /// <summary> 是否可见 </summary>
         public override bool Visible { get => visible; set => visible = value; }
         public override int UILayer(List<GameInterfaceLayer> layers) => layers.FindIndex(layer => layer.Name.Equals("Vanilla: Inventory"));
+
+        public static BackToDirectoryButton backButton;
 
         public static CoraliteNotePanel BookPanel = new();
 
@@ -36,6 +40,7 @@ namespace Coralite.Content.CoraliteNotes
 
         public void Init()
         {
+            BookPanel.RemoveAllChildren();
             BookPanel.InitSize();
             BookPanel.SetPosition();
             BookPanel.InitPageGroups();
@@ -43,12 +48,17 @@ namespace Coralite.Content.CoraliteNotes
             BookPanel.InitArrows(ModContent.Request<Texture2D>(AssetDirectory.UI + "PageArrowLeft", ReLogic.Content.AssetRequestMode.ImmediateLoad)
                 , ModContent.Request<Texture2D>(AssetDirectory.UI + "PageArrowRight", ReLogic.Content.AssetRequestMode.ImmediateLoad));
             BookPanel.OnScrollWheel += PlaySound;
+
             Append(BookPanel);
+
+            backButton = new BackToDirectoryButton();
+            backButton.SetTopLeft(0, 0, 0.5f, 0.5f);
+            Append(backButton);
         }
 
         private void PlaySound(UIScrollWheelEvent evt, UIElement listeningElement)
         {
-            Helper.PlayPitched("Misc/Pages", 0.4f, 0f, Main.LocalPlayer.Center);
+            Helper.PlayPitched("Misc/Pages", 0.05f, 0f);
         }
 
         public override void Recalculate()
@@ -58,6 +68,8 @@ namespace Coralite.Content.CoraliteNotes
             //BookPanel.SetPosition();
             //BookPanel.InitSize();
             BookPanel?.SetPosition();
+            backButton?.SetTopLeft(-300, -800, 0.5f, 0.5f);
+
             //BookPanel.InitPageGroups();
             //BookPanel.InitGroups();
             //BookPanel.InitArrows(ModContent.Request<Texture2D>(AssetDirectory.UI + "PageArrowLeft", ReLogic.Content.AssetRequestMode.ImmediateLoad)
@@ -79,6 +91,16 @@ namespace Coralite.Content.CoraliteNotes
                 UpdateClosingAnmi();
 
             base.Update(gameTime);
+        }
+
+        protected override void DrawChildren(SpriteBatch spriteBatch)
+        {
+            if (!openingBook&&!closeingBook)
+            {
+                backButton?.Draw(spriteBatch);
+            }
+
+            BookPanel?.Draw(spriteBatch);
         }
 
         public void UpdateVisualEffect()
@@ -208,6 +230,56 @@ namespace Coralite.Content.CoraliteNotes
             closeingBook = false;
             visible = true;
             drawExtra = true;
+        }
+    }
+
+    public class BackToDirectoryButton : UIElement
+    {
+        public static ATex BackButton { get; private set; }
+
+        private float f;
+
+        public BackToDirectoryButton()
+        {
+            BackButton = ModContent.Request<Texture2D>(AssetDirectory.CoraliteNote + "BackButton", ReLogic.Content.AssetRequestMode.ImmediateLoad);
+            var ve2 = BackButton.Size();
+            ve2.X *=0.75f;
+            this.SetSize(ve2);
+        }
+
+        public override void LeftClick(UIMouseEvent evt)
+        {
+            base.LeftClick(evt);
+
+            CoraliteNoteUIState.BookPanel.CurrentDrawingPage = CoraliteNoteUIState.BookPanel.GetPageIndex<FragmentPage>();
+            Helper.PlayPitched("Misc/Pages", 0.4f, 0f);
+
+            UILoader.GetUIState<CoraliteNoteUIState>().Recalculate();
+        }
+
+        public override void MouseOver(UIMouseEvent evt)
+        {
+            Helper.PlayPitched(CoraliteSoundID.MenuTick);
+            base.MouseOver(evt);
+        }
+
+        protected override void DrawSelf(SpriteBatch spriteBatch)
+        {
+            Vector2 pos = GetDimensions().Center();
+
+            if (IsMouseHovering)
+            {
+                f += 0.1f;
+                Main.LocalPlayer.mouseInterface = true;
+            }
+            else
+                f -= 0.1f;
+
+            f = Helper.Clamp(f, 0, 1);
+
+            pos.X +=100 -f * 40;
+
+            BackButton.Value.QuickCenteredDraw(spriteBatch, pos);
         }
     }
 }
