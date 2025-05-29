@@ -1,4 +1,5 @@
-﻿using Coralite.Helpers;
+﻿using Coralite.Core.Attributes;
+using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -9,6 +10,7 @@ using Terraria.GameContent;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 {
+    [AutoLoadTexture(Path =AssetDirectory.Misc)]
     public abstract class BaseFairyCatcherProj : BaseHeldProj
     {
         public override string Texture => AssetDirectory.FairyCatcherItems + Name;
@@ -20,6 +22,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         public Rectangle CursorBox => cursorRect;
         public int CursorWidth = 8;
         public int CursorHeight = 8;
+
+        public static ATex TwistTex {  get;private set; }
 
         public static Asset<Texture2D> CircleTexture;
         public static Asset<Texture2D> BackCircleTexture;
