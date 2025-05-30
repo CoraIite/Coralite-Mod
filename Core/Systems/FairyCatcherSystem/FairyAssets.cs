@@ -1,20 +1,21 @@
 ﻿using Coralite.Core.Loaders;
+using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem
 {
     public partial class FairySystem
     {
-        public static Asset<Texture2D>[] FairyAssets;
+        public static ATex[] FairyAssets;
+        public static ATex[] FairyCatcherCoreAssets;
 
-        public static Asset<Texture2D> FairySlotBorder;
-        public static Asset<Texture2D> FairySlotHoverBorder;
-        public static Asset<Texture2D> FairySlotBackground;
+        public static ATex FairySlotBorder;
+        public static ATex FairySlotHoverBorder;
+        public static ATex FairySlotBackground;
 
-        public void LoadFairyTexture()
+        public static void LoadFairyTexture()
         {
-            FairyAssets = new Asset<Texture2D>[FairyLoader.FairyCount];
+            FairyAssets = new ATex[FairyLoader.FairyCount];
             for (int i = 0; i < FairyLoader.FairyCount; i++)
             {
                 Fairy fairy = FairyLoader.GetFairy(i);
@@ -22,15 +23,22 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                     FairyAssets[i] = ModContent.Request<Texture2D>(fairy.Texture);
             }
 
+            FairyCatcherCoreAssets = new ATex[FairyCatcherCoreLoader.FairyCatcherCoreCount];
+            for (int i = 0; i < FairyCatcherCoreLoader.FairyCatcherCoreCount; i++)
+            {
+                FairyCatcherCore f = FairyCatcherCoreLoader.GetFairyCatcherCore(i);
+                if (f != null)
+                    FairyCatcherCoreAssets[i] = ModContent.Request<Texture2D>(f.Texture);
+            }
+
             FairySlotBorder = ModContent.Request<Texture2D>(AssetDirectory.UI + "FairySlotBorder");
             FairySlotHoverBorder = ModContent.Request<Texture2D>(AssetDirectory.UI + "FairySlotHoverBorder");
             FairySlotBackground = ModContent.Request<Texture2D>(AssetDirectory.UI + "FairySlotBackground");
         }
 
-        public void UnloadFairyTexture()
+        public static void UnloadFairyTexture()
         {
             FairyAssets = null;
         }
-
     }
 }

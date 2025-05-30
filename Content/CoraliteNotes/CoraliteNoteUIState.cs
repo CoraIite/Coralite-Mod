@@ -17,6 +17,7 @@ namespace Coralite.Content.CoraliteNotes
         public override int UILayer(List<GameInterfaceLayer> layers) => layers.FindIndex(layer => layer.Name.Equals("Vanilla: Inventory"));
 
         public static BackToDirectoryButton backButton;
+        public static NoteCloseButton closeButton;
 
         public static CoraliteNotePanel BookPanel = new();
 
@@ -52,13 +53,14 @@ namespace Coralite.Content.CoraliteNotes
             Append(BookPanel);
 
             backButton = new BackToDirectoryButton();
-            backButton.SetTopLeft(0, 0, 0.5f, 0.5f);
             Append(backButton);
+            closeButton = new ();
+            Append(closeButton);
         }
 
         private void PlaySound(UIScrollWheelEvent evt, UIElement listeningElement)
         {
-            Helper.PlayPitched("Misc/Pages", 0.05f, 0f);
+            Helper.PlayPitched("Misc/Pages", 0.4f, 0f);
         }
 
         public override void Recalculate()
@@ -68,7 +70,8 @@ namespace Coralite.Content.CoraliteNotes
             //BookPanel.SetPosition();
             //BookPanel.InitSize();
             BookPanel?.SetPosition();
-            backButton?.SetTopLeft(-300, -800, 0.5f, 0.5f);
+            closeButton?.SetTopLeft(-300 , -775, 0.5f, 0.5f);
+            backButton?.SetTopLeft(-300 + closeButton.Height.Pixels + 20, -800, 0.5f, 0.5f);
 
             //BookPanel.InitPageGroups();
             //BookPanel.InitGroups();
@@ -98,6 +101,7 @@ namespace Coralite.Content.CoraliteNotes
             if (!openingBook&&!closeingBook)
             {
                 backButton?.Draw(spriteBatch);
+                closeButton?.Draw(spriteBatch);
             }
 
             BookPanel?.Draw(spriteBatch);
@@ -127,6 +131,7 @@ namespace Coralite.Content.CoraliteNotes
             if (!openingBook)
                 return true;
 
+            closeingBook = false;
             //bookWidth += 25;
             //BookPanel.Width.Set(bookWidth, 0f);
 
@@ -157,6 +162,7 @@ namespace Coralite.Content.CoraliteNotes
             if (!closeingBook)//关闭书本时的效果
                 return;
 
+            openingBook = false;
             BookPanel.alpha -= 0.05f;
             BookPanel.Top.Pixels += 80;
             if (BookPanel.alpha < 0.01f)
@@ -278,6 +284,58 @@ namespace Coralite.Content.CoraliteNotes
             f = Helper.Clamp(f, 0, 1);
 
             pos.X +=100 -f * 40;
+
+            BackButton.Value.QuickCenteredDraw(spriteBatch, pos);
+        }
+    }
+
+    public class NoteCloseButton : UIElement
+    {
+        public static ATex BackButton { get; private set; }
+
+        private float f;
+
+        public NoteCloseButton()
+        {
+            BackButton = ModContent.Request<Texture2D>(AssetDirectory.CoraliteNote + "CloseButton", ReLogic.Content.AssetRequestMode.ImmediateLoad);
+            var ve2 = BackButton.Size();
+            ve2.X *= 0.75f;
+            this.SetSize(ve2);
+        }
+
+        public override void LeftClick(UIMouseEvent evt)
+        {
+            base.LeftClick(evt);
+
+            CoraliteNoteUIState coraliteNoteUIState = UILoader.GetUIState<CoraliteNoteUIState>();
+            if (!coraliteNoteUIState.closeingBook)
+            {
+                coraliteNoteUIState.closeingBook = true;
+                coraliteNoteUIState.Recalculate();
+            }
+        }
+
+        public override void MouseOver(UIMouseEvent evt)
+        {
+            Helper.PlayPitched(CoraliteSoundID.MenuTick);
+            base.MouseOver(evt);
+        }
+
+        protected override void DrawSelf(SpriteBatch spriteBatch)
+        {
+            Vector2 pos = GetDimensions().Center();
+
+            if (IsMouseHovering)
+            {
+                f += 0.1f;
+                Main.LocalPlayer.mouseInterface = true;
+            }
+            else
+                f -= 0.1f;
+
+            f = Helper.Clamp(f, 0, 1);
+
+            pos.X += 100 - f * 40;
 
             BackButton.Value.QuickCenteredDraw(spriteBatch, pos);
         }

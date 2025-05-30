@@ -146,9 +146,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <summary>
         /// 在捕捉器内的行为
         /// </summary>
-        public void UpdateInCatcher(BaseFairyCatcherProj catcher)
+        public void UpdateInCatcher(FairyCatcherProj catcher)
         {
-            AI_InCatcher(catcher.GetCursorBox(), catcher);
+            //AI_InCatcher(catcher.GetCursorBox(), catcher);
 
             if (ShouldUpdatePosition())
                 position += velocity;
@@ -174,18 +174,18 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                             return;
                         }
 
-                        if (catcher.CursorBox.Intersects(HitBox) && Main.mouseLeft)//开始捕捉
-                        {
-                            State = AIState.Catching;
-                            alpha = 1;
-                        }
+                        //if (catcher.CursorBox.Intersects(HitBox) && Main.mouseLeft)//开始捕捉
+                        //{
+                        //    State = AIState.Catching;
+                        //    alpha = 1;
+                        //}
                     }
                     break;
                 case AIState.Catching:
                     {
-                        if (catcher.CursorBox.Intersects(HitBox))//鼠标接触到了
+                        //if (catcher.CursorBox.Intersects(HitBox))//鼠标接触到了
                         {
-                            catcher.cursorIntersects = true;
+                            //catcher.cursorIntersects = true;
                             cursorIntersects = false;
 
                             if (Main.mouseLeft)
@@ -200,7 +200,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                                 }
                             }
                         }
-                        else//鼠标没碰到，并且正在捕捉中，那么减少条
+                        //else//鼠标没碰到，并且正在捕捉中，那么减少条
                         {
                             cursorIntersects = false;
                             ReduceProgress();
@@ -220,7 +220,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <summary>
         /// 在捕捉器内的AI
         /// </summary>
-        public virtual void AI_InCatcher(Rectangle cursor, BaseFairyCatcherProj catcher)
+        public virtual void AI_InCatcher(Rectangle cursor, FairyCatcherProj catcher)
         {
             PreAI_InCatcher();
 
@@ -268,11 +268,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <summary>
         /// 在被捕捉时调用
         /// </summary>
-        public virtual void Catching(Rectangle cursor, BaseFairyCatcherProj catcher) { }
+        public virtual void Catching(Rectangle cursor, FairyCatcherProj catcher) { }
         /// <summary>
         /// 在捕捉时并且鼠标接触的时候调用
         /// </summary>
-        public virtual void OnCursorIntersects(Rectangle cursor, BaseFairyCatcherProj catcher) { }
+        public virtual void OnCursorIntersects(Rectangle cursor, FairyCatcherProj catcher) { }
         /// <summary>
         /// 在没被捕捉的时候调用
         /// </summary>

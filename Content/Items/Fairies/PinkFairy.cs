@@ -43,7 +43,7 @@ namespace Coralite.Content.Items.Fairies
                 .RegisterToWall();
         }
 
-        public override void Catching(Rectangle cursor, BaseFairyCatcherProj catcher)
+        public override void Catching(Rectangle cursor, FairyCatcherProj catcher)
         {
             Timer--;
             if (Timer % 40 == 0)
@@ -67,7 +67,7 @@ namespace Coralite.Content.Items.Fairies
             }
         }
 
-        public override void OnCursorIntersects(Rectangle cursor, BaseFairyCatcherProj catcher)
+        public override void OnCursorIntersects(Rectangle cursor, FairyCatcherProj catcher)
         {
             if (Main.rand.NextBool(3))
             {

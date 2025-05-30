@@ -1,11 +1,9 @@
 ﻿using Coralite.Content.GlobalItems;
 using Coralite.Core;
+using Coralite.Core.Attributes;
 using Coralite.Core.Prefabs.Projectiles;
-using Coralite.Core.Systems.FairyCatcherSystem;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
-using Coralite.Core.Systems.FairyCatcherSystem.CursorAIs;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using Terraria;
 using Terraria.Enums;
 using Terraria.ID;
@@ -20,7 +18,7 @@ namespace Coralite.Content.Items.FairyCatcher
 
         public override void SetOtherDefaults()
         {
-            Item.shoot = ModContent.ProjectileType<DevilsYokeCatcher>();
+            Item.shoot = ModContent.ProjectileType<DevilsYokeSwing>();
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.useTime = Item.useAnimation = 22;
             Item.shootSpeed = 9;
@@ -39,9 +37,12 @@ namespace Coralite.Content.Items.FairyCatcher
         }
     }
 
+    [AutoLoadTexture(Path = AssetDirectory.FairyCatcherItems)]
     public class DevilsYokeSwing() : BaseLassoSwing(4)
     {
         public override string Texture => AssetDirectory.FairyCatcherItems + "DevilsYokeCatcher";
+
+        public static ATex PurpleChain { get; set; }
 
         public override void SetSwingProperty()
         {
@@ -52,7 +53,7 @@ namespace Coralite.Content.Items.FairyCatcher
             DrawOriginOffsetX = 8;
         }
 
-        public override Texture2D GetStringTex() => DevilsYokeCatcher.LineTex.Value;
+        public override Texture2D GetStringTex() => PurpleChain.Value;
         public override Color GetStringColor(Vector2 pos) => Lighting.GetColor((int)pos.X / 16, (int)(pos.Y / 16f));
 
         public override Vector2 GetStringTipPos(Texture2D cursorTex)
@@ -61,43 +62,42 @@ namespace Coralite.Content.Items.FairyCatcher
         }
     }
 
-    public class DevilsYokeCatcher : BaseFairyCatcherProj
-    {
-        public static Asset<Texture2D> LineTex;
+    //public class DevilsYokeCatcher : BaseFairyCatcherProj
+    //{
 
-        public override void Load()
-        {
-            if (Main.dedServ)
-                return;
+    //    public override void Load()
+    //    {
+    //        if (Main.dedServ)
+    //            return;
 
-            LineTex = ModContent.Request<Texture2D>(AssetDirectory.FairyCatcherItems + "PurpleChain");
-        }
+    //        LineTex = ModContent.Request<Texture2D>(AssetDirectory.FairyCatcherItems + "PurpleChain");
+    //    }
 
-        public override void Unload()
-        {
-            LineTex = null;
-        }
+    //    public override void Unload()
+    //    {
+    //        LineTex = null;
+    //    }
 
-        public override void SetOtherDefaults()
-        {
-            CursorWidth = 16;
-            CursorHeight = 16;
-            cursorMovement = new NormalCursor(5, 0.24f, 0.3f, 0.8f, 16);
-            DrawOriginOffsetX = 10;
-            DrawOriginOffsetY = -18;
-        }
+    //    public override void SetOtherDefaults()
+    //    {
+    //        CursorWidth = 16;
+    //        CursorHeight = 16;
+    //        cursorMovement = new NormalCursor(5, 0.24f, 0.3f, 0.8f, 16);
+    //        DrawOriginOffsetX = 10;
+    //        DrawOriginOffsetY = -18;
+    //    }
 
-        public override void SetOwnerItemLocation()
-        {
-            Owner.itemLocation = Owner.Center + new Vector2(Owner.direction * 18, -6);
-        }
+    //    public override void SetOwnerItemLocation()
+    //    {
+    //        Owner.itemLocation = Owner.Center + new Vector2(Owner.direction * 18, -6);
+    //    }
 
-        public override Texture2D GetStringTex() => LineTex.Value;
-        public override Color GetStringColor(Vector2 pos) => Lighting.GetColor((int)pos.X / 16, (int)(pos.Y / 16f));
+    //    public override Texture2D GetStringTex() => LineTex.Value;
+    //    public override Color GetStringColor(Vector2 pos) => Lighting.GetColor((int)pos.X / 16, (int)(pos.Y / 16f));
 
-        public override Vector2 GetStringTipPos(Texture2D cursorTex)
-        {
-            return cursorCenter - new Vector2(cursorScale * cursorTex.Width / 2, 0).RotatedBy(cursorRotation);
-        }
-    }
+    //    public override Vector2 GetStringTipPos(Texture2D cursorTex)
+    //    {
+    //        return cursorCenter - new Vector2(cursorScale * cursorTex.Width / 2, 0).RotatedBy(cursorRotation);
+    //    }
+    //}
 }

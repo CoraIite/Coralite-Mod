@@ -1,5 +1,6 @@
 ﻿using Coralite.Core.Loaders;
 using Coralite.Core.Systems.FairyCatcherSystem;
+using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using Coralite.Core.Systems.KeySystem;
 using Coralite.Core.Systems.MTBStructure;
 using InnoVault.PRT;
@@ -14,6 +15,13 @@ namespace Coralite.Core
         public static int ParticleType<T>() where T : Particle => PRTLoader.GetParticleID<T>();
 
         public static int FairyType<T>() where T : Fairy => ModContent.GetInstance<T>()?.Type ?? 0;
+
+        public static FairyCatcherCore FairyCatcherCoreType<T>() where T : FairyCatcherCore
+            => ModContent.GetInstance<T>();
+        public static FairyCatcherCore GetFairyCatcherCore<T>() where T : FairyCatcherCore 
+            => ModContent.GetInstance<T>();
+        public static FairyCatcherCore GetFairyCatcherCore(int type) 
+            => FairyCatcherCoreLoader.GetFairyCatcherCore(type);
 
         public static int MTBSType<T>() where T : Multiblock => ModContent.GetInstance<T>()?.Type ?? 0;
 

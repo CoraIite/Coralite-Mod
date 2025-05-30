@@ -20,7 +20,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         /// <summary>
         /// 仙灵捕捉器指针的大小，用于对于其进行缩放<br></br>
-        /// 捕捉器默认大小由贴图决定，查看<see cref="BaseFairyCatcherProj.GetCursorBox"/>以了解更多
+        /// 捕捉器默认大小由贴图决定，查看<see cref="FairyCatcherProj.GetCursorBox"/>以了解更多
         /// </summary>
         public StatModifier cursorSizeBonus;
         /// <summary>
@@ -43,11 +43,13 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public FairyIVRandomModifyer lifeMaxRamdom;
         public (float, float) ScaleRange;
 
-        public Color CatcherCircleColor;
-        public Color CatcherBackColor;
+        /// <summary> 核心的类型，使用<see cref="CoraliteContent.FairyCatcherCoreType"/>设置 </summary>
+        public int FairyCatcherCoreType {  get; set; }
 
         public override void ResetEffects()
         {
+            FairyCatcherCoreType = -1;
+
             cursorSizeBonus = new StatModifier();
             fairyCatchPowerBonus = new StatModifier();
             fairyResurrectionTimeBous = new StatModifier();
@@ -84,9 +86,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
             spawnFairyCount = 1;
             fairyCatcherRadius = 7 * 16;
-
-            CatcherCircleColor = Color.White;
-            CatcherBackColor = Color.DarkSlateBlue * 0.7f;
         }
 
         /// <summary>

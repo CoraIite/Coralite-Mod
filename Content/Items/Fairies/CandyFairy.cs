@@ -46,7 +46,7 @@ namespace Coralite.Content.Items.Fairies
                 .RegisterToWallGroup(FairySpawnController.WallGroupType.Gem);
         }
 
-        public override void Catching(Rectangle cursor, BaseFairyCatcherProj catcher)
+        public override void Catching(Rectangle cursor, FairyCatcherProj catcher)
         {
             Timer--;
             if (RandomRolling)
@@ -74,7 +74,7 @@ namespace Coralite.Content.Items.Fairies
             }
         }
 
-        public override void OnCursorIntersects(Rectangle cursor, BaseFairyCatcherProj catcher)
+        public override void OnCursorIntersects(Rectangle cursor, FairyCatcherProj catcher)
         {
             if (Main.rand.NextBool(3))
             {

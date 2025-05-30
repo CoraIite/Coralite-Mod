@@ -104,6 +104,7 @@ namespace Coralite.Core
         public const string FairyCatcherItems = Items + "FairyCatcher/";
         public const string FairyCatcherAccessories = FairyCatcherItems + "Accessories/";
         public const string FairyBottleItems = Items + "FairyBottle/";
+        public const string FairyCatcherCore = FairyCatcherItems + "CatcherCore/";
 
         public const string MachineItems = Items + "Machines/";
         public const string BotanicalItems = Items + "Botanical/";
