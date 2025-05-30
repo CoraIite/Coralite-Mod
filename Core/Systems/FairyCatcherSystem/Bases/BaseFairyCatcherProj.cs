@@ -2,15 +2,15 @@
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent;
+using Terraria.Graphics.Effects;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 {
-    [AutoLoadTexture(Path =AssetDirectory.Misc)]
+    [AutoLoadTexture(Path = AssetDirectory.Misc)]
     public abstract class BaseFairyCatcherProj : BaseHeldProj
     {
         public override string Texture => AssetDirectory.FairyCatcherItems + Name;
@@ -23,31 +23,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         public int CursorWidth = 8;
         public int CursorHeight = 8;
 
-        public static ATex TwistTex {  get;private set; }
+        public static ATex TwistTex { get; private set; }
 
-        public static Asset<Texture2D> CircleTexture;
-        public static Asset<Texture2D> BackCircleTexture;
-        public static Asset<Texture2D> TileTexture;
-
-        public override void Load()
-        {
-            if (Main.dedServ)
-                return;
-
-            CircleTexture = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "FairyCatcherCircle");
-            BackCircleTexture = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "FairyCatcherBackCircle");
-            TileTexture = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "White32x32");
-        }
-
-        public override void Unload()
-        {
-            if (Main.dedServ)
-                return;
-
-            CircleTexture = null;
-            BackCircleTexture = null;
-            TileTexture = null;
-        }
+        [AutoLoadTexture(Path = AssetDirectory.OtherProjectiles,Name = "White32x32")]
+        public static ATex TileTexture { get; private set; }
 
         #region 字段
 
@@ -601,11 +580,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 }
 
                 //绘制背景
-                DrawBack(circlePos, backColor);
+                DrawBack(circlePos, circleColor, backColor);
                 //绘制标红的物块
                 DrawBlockedTile(circlePos);
-                //绘制圆圈
-                DrawCircle(circlePos, circleColor);
 
                 //绘制仙灵
                 if (Fairies != null)
@@ -626,12 +603,32 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             return false;
         }
 
-        public virtual void DrawBack(Vector2 pos, Color backColor)
+        public virtual void DrawBack(Vector2 pos, Color circleColor, Color backColor)
         {
-            Texture2D backTex = BackCircleTexture.Value;
+            Texture2D texture = TwistTex.Value;
+            Effect shader = Filters.Scene["FairyCircle"].GetShader().Shader;
 
-            float scale = webRadius / (backTex.Width / 2);
-            Main.spriteBatch.Draw(backTex, pos, null, backColor, 0, backTex.Size() / 2, scale, 0, 0);
+            float dia = webRadius;
+            if (Owner.TryGetModPlayer(out FairyCatcherPlayer fcp))
+                dia = fcp.fairyCatcherRadius * 2+50;
+
+            shader.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly / 10);
+            shader.Parameters["r"].SetValue(webRadius);
+            shader.Parameters["dia"].SetValue(dia);
+            shader.Parameters["edgeColor"].SetValue(Color.SkyBlue.ToVector4());
+            shader.Parameters["innerColor"].SetValue(Color.DarkBlue.ToVector4() * 0.5f);
+
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap,
+                            Main.spriteBatch.GraphicsDevice.DepthStencilState, RasterizerState.CullNone, shader, Main.GameViewMatrix.TransformationMatrix);
+
+            float scale = dia / texture.Width;
+            Main.spriteBatch.Draw(texture, Projectile.Center - Main.screenPosition
+                , null, Color.White, 0, texture.Size() / 2, scale, 0, 0);
+
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin(SpriteSortMode.Deferred, Main.spriteBatch.GraphicsDevice.BlendState, Main.spriteBatch.GraphicsDevice.SamplerStates[0],
+                            Main.spriteBatch.GraphicsDevice.DepthStencilState, Main.spriteBatch.GraphicsDevice.RasterizerState, null, Main.GameViewMatrix.TransformationMatrix);
         }
 
         public virtual void DrawBlockedTile(Vector2 center)
@@ -657,14 +654,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
                     Main.spriteBatch.Draw(tex, worldPos, null, c, 0, Vector2.Zero, 0.5f, 0, 0);
                 }
-        }
-
-        public virtual void DrawCircle(Vector2 pos, Color circleColor)
-        {
-            Texture2D circleTex = CircleTexture.Value;
-
-            float scale = webRadius / (circleTex.Width / 2);
-            Main.spriteBatch.Draw(circleTex, pos, null, circleColor, 0, circleTex.Size() / 2, scale, 0, 0);
         }
 
         #endregion

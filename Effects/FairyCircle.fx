@@ -2,7 +2,7 @@ sampler twistTex : register(s0);
 
 float uTime;
 float r;
-float tr;
+float dia;
 float4 edgeColor;
 float4 innerColor;
 
@@ -16,7 +16,7 @@ float2 RectToPolar(float2 uv, float2 centerUV)
 
 float4 PixelShaderFunction(float2 coords : TEXCOORD0) : COLOR0
 {
-    coords = (coords * tr * 2 - coords * tr * 2 % 2) / (tr * 2);
+    coords = (coords * dia - coords * dia % 2) / dia;
     
     // 直角坐标转极坐标
     float2 thetaR = RectToPolar(coords, float2(0.5, 0.5));
@@ -32,18 +32,18 @@ float4 PixelShaderFunction(float2 coords : TEXCOORD0) : COLOR0
     float2 uvt = (twist.xy - float2(0.5, 0.5)) * 6;
     
     //计算扭曲后的新uv
-    float2 newuv = coords * tr * 2 + uvt;
+    float2 newuv = coords * dia + uvt;
     
-    newuv = newuv / (tr * 2); //(newuv - newuv % 2) / (tr * 2);
+    newuv = newuv / dia; //(newuv - newuv % 2) / (tr * 2);
     
     thetaR = RectToPolar(newuv, float2(0.5, 0.5));
     polarUV = float2(
         thetaR.x / 3.141593 * 0.5 + 0.5, // θ从[-π, π]映射到[0, 1]
         thetaR.y);
         
-    float cuL = polarUV.y * 2 * tr;
+    float cuL = polarUV.y * dia;
     if (cuL < r - 2)
-        return innerColor;
+        return innerColor * (0.25 + polarUV.y / 0.5 * 0.75);
     if (cuL < r)
         return edgeColor;
 
