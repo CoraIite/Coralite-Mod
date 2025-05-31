@@ -11,7 +11,8 @@ namespace Coralite.Content.CoraliteNotes.FlyingShieldChapter
         {
             Pages =
                 [
-                    new FlyingShieldPage()
+                    new FlyingShieldPage(),
+                    new FlyingShieldCollect(),
                 ];
         }
     }

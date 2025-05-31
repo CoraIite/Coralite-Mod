@@ -174,3 +174,11 @@ KnowledgeSystem: {
 }
 
 // CoraliteBeatiaryDatabase.CrystallineSkyIsland: Mods.Coralite.Systems.CoraliteBeatiaryDatabase.CrystallineSkyIsland
+
+CoraliteNoteSystem: {
+	// CollectProgress: Mods.Coralite.Systems.CoraliteNoteSystem.CollectProgress
+	// AllCollect: Mods.Coralite.Systems.CoraliteNoteSystem.AllCollect
+	// CollectAllItems: Mods.Coralite.Systems.CoraliteNoteSystem.CollectAllItems
+	// ClickGetReward: Mods.Coralite.Systems.CoraliteNoteSystem.ClickGetReward
+	// RewardCollected: Mods.Coralite.Systems.CoraliteNoteSystem.RewardCollected
+}

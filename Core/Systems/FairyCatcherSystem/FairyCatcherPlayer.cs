@@ -31,7 +31,12 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// 仙灵复活时间的增幅（应该减少数值）
         /// </summary>
         public StatModifier fairyResurrectionTimeBous;
-        public float fairyCatcherRadius;
+
+        private readonly int FairyCatcherBaseRadius = 16 * 6;
+        public float FairyCatcherRadiusBonus {  get;private set; }
+
+        /// <summary> 仙灵捕捉器的半径 </summary>
+        public float FairyCatcherRadius { get => FairyCatcherBaseRadius +FairyCatcherRadiusBonus; }
 
         /// <summary>
         /// 每次生成仙灵时会生成多少个
@@ -85,7 +90,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             ScaleRange = (0.9f, 1.1f);
 
             spawnFairyCount = 1;
-            fairyCatcherRadius = 7 * 16;
+            FairyCatcherRadiusBonus = 0;
         }
 
         /// <summary>

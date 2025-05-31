@@ -6,6 +6,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.ModLoader.IO;
 using Terraria.Utilities;
 
 namespace Coralite.Helpers
@@ -428,5 +429,65 @@ namespace Coralite.Helpers
 
         public static SetFactory.NamedSetKey CreateCoraliteSet(this SetFactory f, string name)
             => f.CreateNamedSet(nameof(Coralite), name);
+
+        public static void SaveBools(this TagCompound tag, bool[] bools,string name)
+        {
+            int length = bools.Length;
+            int count = length / 8 + 1;
+
+            int k = 0;
+
+            for (int i = 0; i < count; i++)
+            {
+                BitsByte b = new BitsByte();
+                for (int j = 0; j < 8; j++)
+                {
+                    b[j] = bools[k];
+                    k++;
+                    if (k > length - 1)
+                    {
+                        tag.Add(name + i.ToString(), (byte)b);
+                        goto over;
+                    }
+                }
+
+                tag.Add(name + i.ToString(), (byte)b);
+            }
+
+        over: 
+            Array.Fill(bools, false);
+        }
+
+        /// <summary>
+        /// 需要提前设置好bools
+        /// </summary>
+        /// <param name="tag"></param>
+        /// <param name="bools"></param>
+        /// <param name="name"></param>
+        public static void LoadBools(this TagCompound tag, bool[] bools, string name)
+        {
+            Array.Fill(bools, false);
+
+            int length = bools.Length;
+            int count = length / 8 + 1;
+
+            int k = 0;
+
+            for (int i = 0; i < count; i++)
+            {
+                if (!tag.TryGet(name + i.ToString(),out byte b1))
+                    continue;
+
+                BitsByte b = b1;
+
+                for (int j = 0; j < 8; j++)
+                {
+                    bools[k] = b[j];
+                    k++;
+                    if (k > length - 1)
+                        return;
+                }
+            }
+        }
     }
 }

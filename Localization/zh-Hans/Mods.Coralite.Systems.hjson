@@ -220,3 +220,11 @@ KnowledgeSystem: {
 }
 
 CoraliteBeatiaryDatabase.CrystallineSkyIsland: 蕴魔空岛
+
+CoraliteNoteSystem: {
+	CollectProgress: 收集中...
+	AllCollect: 全收集！
+	CollectAllItems: 收集所有物品吧！
+	ClickGetReward: 点击获取奖励
+	RewardCollected: 奖励已获得
+}

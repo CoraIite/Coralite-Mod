@@ -3,6 +3,7 @@ using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
+using System.Threading;
 using Terraria;
 using Terraria.Graphics.Effects;
 
@@ -13,7 +14,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
     {
         public override string Texture => AssetDirectory.FairyCatcherCore + "DefaultCatcher";
 
-        public ref float SpawnTimer => ref Projectile.localAI[0];
+        public ref float SpawnTimer => ref Projectile.ai[0];
+        public ref float Timer => ref Projectile.localAI[0];
 
         public static ATex TwistTex { get; private set; }
 
@@ -68,7 +70,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         public override void Initialize()
         {
-            webCenter = InMousePos;
+            webCenter = InMousePos.ToTileCoordinates().ToWorldCoordinates();
         }
 
         public override void AI()
@@ -82,9 +84,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                     Projectile.Kill();
                     break;
                 case AIStates.Shooting:
-                    {
                         Shooting();
-                    }
                     break;
                 case AIStates.Catching:
                     {
@@ -137,6 +137,12 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             //指针射向初始位置
             Projectile.velocity = (aimPos - Projectile.Center).SafeNormalize(Vector2.Zero) * speed;
 
+            //到时间或者到目标位置就展开
+            if (Timer > 60 * 3 || Vector2.Distance(aimPos, Projectile.Center) < speed * 1.5f)
+                TurnToCatching();
+
+            Timer++;
+
             //玩家距离过远进入回收阶段
             if (Vector2.Distance(Owner.Center, Projectile.Center) > 1000)
                 TrunToBacking();
@@ -148,6 +154,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public void TurnToCatching()
         {
             State = AIStates.Catching;
+            Timer = 0;
 
             Projectile.tileCollide = false;
             Projectile.velocity *= 0;
@@ -158,6 +165,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public void TrunToBacking()
         {
             State = AIStates.Backing;
+            Timer = 0;
 
             Projectile.timeLeft = 60 * 10;
 
@@ -228,7 +236,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         {
             WebAlpha = MathHelper.Lerp(WebAlpha, 1, 0.05f);
             if (Owner.TryGetModPlayer(out FairyCatcherPlayer fcp))
-                webRadius = MathHelper.Lerp(webRadius, fcp.fairyCatcherRadius, 0.1f);
+                webRadius = MathHelper.Lerp(webRadius, fcp.FairyCatcherRadius, 0.1f);
         }
 
         public void UpdateWebVisualEffect_Backing()
@@ -244,7 +252,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             switch (State)
             {
                 default: return false;
-                case AIStates.Shooting://射击时撞墙直接返回
+                case AIStates.Shooting://射击时撞墙直接开启
                     TurnToCatching();
                     return false;
                 case AIStates.Catching:
@@ -320,7 +328,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
             float dia = webRadius;
             if (Owner.TryGetModPlayer(out FairyCatcherPlayer fcp))
-                dia = fcp.fairyCatcherRadius * 2 + 50;
+                dia = fcp.FairyCatcherRadius * 2 + 50;
 
             shader.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly / 10);
             shader.Parameters["r"].SetValue(webRadius);

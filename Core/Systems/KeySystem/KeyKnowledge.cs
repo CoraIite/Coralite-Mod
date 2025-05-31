@@ -87,6 +87,9 @@ namespace Coralite.Core.Systems.KeySystem
                 tag.Add(Name + nameof(ReadKnowledge), true);
 
             SaveWorldData(tag);
+
+            Unlock = false;
+            ReadKnowledge = false;
         }
 
         public void LoadSelfData(TagCompound tag)
