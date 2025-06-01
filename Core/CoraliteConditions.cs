@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Biomes;
 using Coralite.Content.WorldGeneration;
+using Coralite.Core.Systems.BossSystems;
 using Coralite.Core.Systems.MagikeSystem;
 using Terraria;
 using Terraria.Localization;
@@ -23,6 +24,8 @@ namespace Coralite.Core
         public static Condition InCrystallineSkyIsland { get; private set; }
 
         public static Condition UseRuneParchment { get; private set; }
+
+        public static Condition DownedRediancie { get; private set; }
 
         /// <summary>
         /// 解锁染料商
@@ -73,6 +76,10 @@ namespace Coralite.Core
                 , () => false);
             UseRuneParchment = new Condition(this.GetLocalization(nameof(UseRuneParchment))
                 , () => false);
+
+
+            DownedRediancie = new Condition(this.GetLocalization(nameof(DownedRediancie))
+                , () => DownedBossSystem.downedRediancie);
 
 
             InMagicCrystalCave = new(this.GetLocalization(nameof(InMagicCrystalCave))

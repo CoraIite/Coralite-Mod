@@ -38,6 +38,7 @@ Conditions: {
 		InCrystallineSkyIsland: Mods.Coralite.Conditions.CoraliteConditions.InCrystallineSkyIsland
 		UseShlimmerTranslation: Mods.Coralite.Conditions.CoraliteConditions.UseShlimmerTranslation
 		UseRuneParchment: Mods.Coralite.Conditions.CoraliteConditions.UseRuneParchment
+		DownedRediancie: Mods.Coralite.Conditions.CoraliteConditions.DownedRediancie
 	}
 }
 

@@ -39,7 +39,7 @@ namespace Coralite.Content.Items.FlyingShields
 
     public class AncientFurnaceTile : ModTile
     {
-        public override string Texture => AssetDirectory.FlyingShieldItems + Name;
+        public override string Texture => AssetDirectory.MiscTiles + Name;
 
         public override void SetStaticDefaults()
         {

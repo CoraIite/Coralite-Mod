@@ -95,6 +95,11 @@ namespace Coralite.Core.Prefabs.Tiles
             //获取初始绘制参数
             Texture2D texture = RelicTexture.Value;
 
+            DrawRelicTop(spriteBatch, texture, offScreen, p, tile);
+        }
+
+        public virtual void DrawRelicTop(SpriteBatch spriteBatch, Texture2D texture, Vector2 offScreen, Point p, Tile tile)
+        {
             // Picks the frame on the sheet based on the placeStyle of the item 根据项目的地点样式拾取图纸上的框架
             int frameY = tile.TileFrameX / FrameWidth;
             Rectangle frame = texture.Frame(HorizontalFrames, VerticalFrames, 0, frameY);

@@ -13,7 +13,7 @@ DamageClasses: {
 Players: {
 	CoralitePlayer: {
 		ThunderElectrifiedDeath: 被雷劈死了
-		// CoreKeeperDodgeText: Mods.Coralite.Players.CoralitePlayer.CoreKeeperDodgeText
+		CoreKeeperDodgeText: 闪避！
 	}
 }
 
@@ -38,6 +38,7 @@ Conditions: {
 		InCrystallineSkyIsland: 需要处于蕴魔空岛
 		UseShlimmerTranslation: 需要使用微光转化
 		UseRuneParchment: 在快捷栏左键使用符文羊皮纸来合成
+		DownedRediancie: 需要击败赤玉灵
 	}
 }
 

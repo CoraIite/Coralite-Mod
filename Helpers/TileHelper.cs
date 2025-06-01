@@ -62,15 +62,13 @@ namespace Coralite.Helpers
 
         public static void DrawMultWine(int i, int j, int sizeX, int sizeY, float? windRotOffset = 1f)
         {
-            float windCycle = Main.instance.TilesRenderer.GetWindCycle(i, j, CoraliteTileDrawing.sunflowerWindCounter);
+            float windCycle = Main.instance.TilesRenderer.GetWindCycle(i, j, Main.instance.TilesRenderer._sunflowerWindCounter);
             Vector2 screenPosition = Main.Camera.UnscaledPosition;
 
             float num = windCycle;
             int totalPushTime = 60;
             float pushForcePerFrame = 1.26f;
-            float highestWindGridPushComplex = 0f;
-            if (CoraliteTileDrawing.GetHighestWindGridPushComplex != null)
-                highestWindGridPushComplex = CoraliteTileDrawing.GetHighestWindGridPushComplex(Main.instance.TilesRenderer, i, j, sizeX, sizeY, totalPushTime, pushForcePerFrame, 3, true);
+            float highestWindGridPushComplex =  Main.instance.TilesRenderer.GetHighestWindGridPushComplex(i, j, sizeX, sizeY, totalPushTime, pushForcePerFrame, 3, true);
 
             windCycle += highestWindGridPushComplex;
             Vector2 vector = new((i * 16) - (int)screenPosition.X + (sizeX * 16f * 0.5f), (j * 16) - (int)screenPosition.Y);

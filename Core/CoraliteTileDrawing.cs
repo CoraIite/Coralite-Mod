@@ -9,34 +9,16 @@ namespace Coralite.Core
 {
     public class CoraliteTileDrawing : ModSystem
     {
-        public static double sunflowerWindCounter;
-        //public static bool shouldShowInvisibleBlocks;
-
         public static MethodInfo DrawMultiTileVinesInWind_Info;
         public static Action<TileDrawing, Vector2, Vector2, int, int, int, int> DrawMultiTileVinesInWind;
-        public static MethodInfo GetHighestWindGridPushComplex_Info;
-        public static Func<TileDrawing, int, int, int, int, int, float, int, bool, float> GetHighestWindGridPushComplex;
 
         public FieldInfo specialPositions_Info;
         public FieldInfo specialsCount_Info;
-
-        //public void AddSpecialPoint(int x, int y, TileCounterType type)
-        //{
-        //    Point[][] _specialPositions = (Point[][])specialPositions_Info?.GetValue(Main.instance.TilesRenderer);
-        //    int[] _specialsCount = (int[])specialsCount_Info?.GetValue(Main.instance.TilesRenderer);
-
-        //    if (_specialPositions != null && _specialsCount != null)
-        //        _specialPositions[(int)type][_specialsCount[(int)type]++] = new Point(x, y);
-        //}
 
         public override void Load()
         {
             if (Main.dedServ)
                 return;
-
-            GetHighestWindGridPushComplex_Info = Main.instance.TilesRenderer.GetType().GetMethod("GetHighestWindGridPushComplex", BindingFlags.NonPublic | BindingFlags.Instance);
-            GetHighestWindGridPushComplex = (Func<TileDrawing, int, int, int, int, int, float, int, bool, float>)Delegate.CreateDelegate(
-                typeof(Func<TileDrawing, int, int, int, int, int, float, int, bool, float>), GetHighestWindGridPushComplex_Info);
 
             DrawMultiTileVinesInWind_Info = Main.instance.TilesRenderer.GetType().GetMethod("DrawMultiTileVinesInWind", BindingFlags.NonPublic | BindingFlags.Instance);
             DrawMultiTileVinesInWind = (Action<TileDrawing, Vector2, Vector2, int, int, int, int>)Delegate.CreateDelegate(
@@ -129,18 +111,6 @@ namespace Coralite.Core
 
                     DrawMultiTileVinesInWind(self, unscaledPosition, zero, x, y, sizeX, sizeY);
                 }
-            }
-        }
-
-        public override void PostUpdateEverything()
-        {
-            if (!Main.dedServ)
-            {
-                double num = Math.Abs(Main.WindForVisuals);
-                num = Utils.GetLerpValue(0.08f, 1.2f, (float)num, clamped: true);
-                sunflowerWindCounter += (1.0 / 420.0) + (1.0 / 420.0 * num * 5.0);
-                //shouldShowInvisibleBlocks = Main.ShouldShowInvisibleWalls();
-
             }
         }
 
