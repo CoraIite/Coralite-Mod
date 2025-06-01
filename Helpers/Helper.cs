@@ -454,8 +454,8 @@ namespace Coralite.Helpers
                 tag.Add(name + i.ToString(), (byte)b);
             }
 
-        over: 
-            Array.Fill(bools, false);
+        over:
+            ;
         }
 
         /// <summary>
@@ -466,8 +466,6 @@ namespace Coralite.Helpers
         /// <param name="name"></param>
         public static void LoadBools(this TagCompound tag, bool[] bools, string name)
         {
-            Array.Fill(bools, false);
-
             int length = bools.Length;
             int count = length / 8 + 1;
 
@@ -488,6 +486,20 @@ namespace Coralite.Helpers
                         return;
                 }
             }
+        }
+
+        /// <summary>
+        /// 一个bool数组内是否全部为true
+        /// </summary>
+        /// <param name="bools"></param>
+        /// <returns></returns>
+        public static bool AllTrue(this bool[] bools)
+        {
+            foreach (var c in bools)
+                if (!c)
+                    return false;
+
+            return true;
         }
     }
 }

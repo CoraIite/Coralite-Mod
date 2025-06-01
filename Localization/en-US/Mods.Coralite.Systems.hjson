@@ -167,6 +167,12 @@ KnowledgeSystem: {
 		LockTip: Mods.Coralite.Systems.KnowledgeSystem.FlyingShieldKnowledge.LockTip
 		Description: Mods.Coralite.Systems.KnowledgeSystem.FlyingShieldKnowledge.Description
 	}
+
+	FlowerGunKnowledge: {
+		Name: Mods.Coralite.Systems.KnowledgeSystem.FlowerGunKnowledge.Name
+		LockTip: Mods.Coralite.Systems.KnowledgeSystem.FlowerGunKnowledge.LockTip
+		Description: Mods.Coralite.Systems.KnowledgeSystem.FlowerGunKnowledge.Description
+	}
 }
 
 CoraliteBeatiaryDatabase.CrystallineSkyIsland: Mods.Coralite.Systems.CoraliteBeatiaryDatabase.CrystallineSkyIsland
@@ -177,4 +183,5 @@ CoraliteNoteSystem: {
 	CollectAllItems: Mods.Coralite.Systems.CoraliteNoteSystem.CollectAllItems
 	ClickGetReward: Mods.Coralite.Systems.CoraliteNoteSystem.ClickGetReward
 	RewardCollected: Mods.Coralite.Systems.CoraliteNoteSystem.RewardCollected
+	HowToCollect: Mods.Coralite.Systems.CoraliteNoteSystem.HowToCollect
 }

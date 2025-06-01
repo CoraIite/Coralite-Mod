@@ -51,9 +51,8 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
         {
             SlotGrid.Clear();
 
-            SlotGrid.Add(new KnowledgeButten<FlyingShieldChapter.FlyingShieldKnowledge>(KnowledgeButtonType.Rune));
-            //SlotGrid.Add(new KnowledgeButten<MagikeInterstitial1.MagikeInterstitial1Knowledge>(KnowledgeButtonType.Coral));
-            //SlotGrid.Add(new KnowledgeButten<MagikeChapter2.MagikeS2Knowledge>(KnowledgeButtonType.Reel));
+            SlotGrid.Add(new KnowledgeButten<FlyingShieldChapter.FlyingShieldKnowledge>(KnowledgeButtonType.Normal));
+            //SlotGrid.Add(new KnowledgeButten<FlowerGunChapter.FlowerGunKnowledge>(KnowledgeButtonType.Normal));
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)

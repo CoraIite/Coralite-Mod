@@ -5,7 +5,7 @@ using Coralite.Core.Attributes;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.ID;
+using Terraria.ModLoader.Default;
 using Terraria.ModLoader.IO;
 using static Terraria.ModLoader.ModContent;
 
@@ -38,11 +38,6 @@ namespace Coralite.Content.CoraliteNotes.FlyingShieldChapter
             Noctiflair,
             Hephaesth,
             Count,
-        }
-
-        public override void OnInitialize()
-        {
-            base.OnInitialize();
         }
 
         public override void Recalculate()
@@ -135,6 +130,8 @@ namespace Coralite.Content.CoraliteNotes.FlyingShieldChapter
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
             HephaesthCollect.Value.QuickCenteredDraw(spriteBatch, Center);
+
+            DrawCollectTip(spriteBatch, Unlocks);
 
             Vector2 pos = Bottom + new Vector2(0, -30);
             DrawCollectText(spriteBatch, Unlocks, pos + new Vector2(-150, 0));

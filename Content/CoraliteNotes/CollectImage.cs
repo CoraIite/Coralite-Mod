@@ -128,13 +128,7 @@ namespace Coralite.Content.CoraliteNotes
         {
             base.LeftClick(evt);
 
-            bool allCollect = true;
-            foreach (var c in _collects)
-                if (!c)
-                {
-                    allCollect = false;
-                    break;
-                }
+            bool allCollect = _collects.AllTrue();
 
             //奖励已领取
             if (CoraliteNoteSystem.CollectRewards[(int)_rewardType])
@@ -154,13 +148,7 @@ namespace Coralite.Content.CoraliteNotes
             Vector2 pos = GetDimensions().Center();
             int yFrame = 0;
 
-            bool allCollect = true;
-            foreach (var c in _collects)
-                if (!c)
-                {
-                    allCollect = false;
-                    break;
-                }
+            bool allCollect = _collects.AllTrue();
             if (CoraliteNoteSystem.CollectRewards[(int)_rewardType])
                 yFrame = 2;
             else if (allCollect)

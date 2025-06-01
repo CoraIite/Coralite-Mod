@@ -44,7 +44,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             if (Main.myPlayer == player.whoAmI)
             {
                 List<int> textureList = new();
-                for (int i = 1; i < 24; i++)
+                for (int i = 1; i < (int)HyacinthBullet.GunType.Count; i++)
                     textureList.Add(-i);
 
                 for (int i = 0; i < 3; i++)     //生成环绕的幻影枪弹幕
