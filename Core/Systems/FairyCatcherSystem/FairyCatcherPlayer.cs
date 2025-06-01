@@ -1,5 +1,4 @@
-﻿using Coralite.Content.GlobalItems;
-using Coralite.Core.Systems.FairyCatcherSystem.Bases;
+﻿using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using Terraria;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem
@@ -33,10 +32,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public StatModifier fairyResurrectionTimeBous;
 
         private readonly int FairyCatcherBaseRadius = 16 * 6;
-        public float FairyCatcherRadiusBonus {  get;private set; }
+        public float FairyCatcherRadiusBonus { get; private set; }
 
         /// <summary> 仙灵捕捉器的半径 </summary>
-        public float FairyCatcherRadius { get => FairyCatcherBaseRadius +FairyCatcherRadiusBonus; }
+        public float FairyCatcherRadius { get => FairyCatcherBaseRadius + FairyCatcherRadiusBonus; }
 
         /// <summary>
         /// 每次生成仙灵时会生成多少个
@@ -48,8 +47,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public FairyIVRandomModifyer lifeMaxRamdom;
         public (float, float) ScaleRange;
 
+        public int currentFairyIndex;
+
         /// <summary> 核心的类型，使用<see cref="CoraliteContent.FairyCatcherCoreType"/>设置 </summary>
-        public int FairyCatcherCoreType {  get; set; }
+        public int FairyCatcherCoreType { get; set; }
 
         public override void ResetEffects()
         {
@@ -142,26 +143,22 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// 获取仙灵捕捉力，默认使用玩家手持物品进行计算，如果手持物品不是仙灵捕手则返回一个增幅倍率
         /// </summary>
         /// <returns></returns>
-        public int FairyCatch_GetCatchPower()
+        public int GetCatchPowerByHeldItem()
         {
             int basePower = 1;
-            float exBonus = 0f;
-            if (Player.HeldItem.TryGetGlobalItem(out CoraliteGlobalItem fgi))
+            float exBonus = 1f;
+            if (Player.HeldItem.ModItem is BaseFairyCatcher baseFairyCatcher)
             {
-                basePower = fgi.CatchPower;
-                exBonus = fgi.CatchPowerMult - 1f;
+                basePower = baseFairyCatcher.CatchPower;
+                exBonus = baseFairyCatcher.CatchPowerMult;
             }
-            StatModifier modifyer = fairyCatchPowerBonus;
 
-            modifyer += exBonus;
-
-            return (int)modifyer.ApplyTo(basePower);
+            return GetBonusedCatchPower(basePower, exBonus);
         }
 
         public int GetBonusedCatchPower(int baseCatchPower, float mult = 1)
         {
             StatModifier modifyer = fairyCatchPowerBonus;
-
             modifyer += mult - 1;
 
             return (int)modifyer.ApplyTo(baseCatchPower);
@@ -178,30 +175,12 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             StatModifier modifyer = fairyCatchPowerBonus;
             float exBonus = 0f;
 
-            if (catcherItem.TryGetGlobalItem(out CoraliteGlobalItem fgi))
-                exBonus = fgi.CatchPowerMult - 1f;
+            if (catcherItem.ModItem is BaseFairyCatcher baseFairyCatcher)
+                exBonus = baseFairyCatcher.CatchPowerMult - 1f;
 
             modifyer += exBonus;
 
             @base = modifyer.ApplyTo(@base);
-        }
-
-        /// <summary>
-        /// 仙灵伤害加成，使用仙灵捕获力增强幅度来增幅伤害
-        /// </summary>
-        /// <param name="damage"></param>
-        /// <returns></returns>
-        public float FairyDamageBonus(Item item, float damage)
-        {
-            StatModifier modifyer = fairyCatchPowerBonus;
-            float exBonus = 0f;
-
-            if (item.TryGetGlobalItem(out CoraliteGlobalItem fgi))
-                exBonus = fgi.CatchPowerMult - 1f;
-
-            modifyer += exBonus;
-
-            return modifyer.ApplyTo(damage);
         }
 
         public bool FairyCatch_GetEmptyFairyBottle(out IFairyBottle fairyBottle, out int emptySlot)

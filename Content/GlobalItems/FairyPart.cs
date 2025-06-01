@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
-using Terraria.ModLoader.IO;
 using Terraria.Utilities;
 
 namespace Coralite.Content.GlobalItems
@@ -14,16 +13,6 @@ namespace Coralite.Content.GlobalItems
     public partial class CoraliteGlobalItem
     {
         #region Fields
-
-        /// <summary>
-        /// 捕捉力
-        /// </summary>
-        public int CatchPower;
-
-        /// <summary>
-        /// 前缀的捕捉力加成
-        /// </summary>
-        public float CatchPowerMult = 1;
 
         /// <summary>
         /// 仙灵弹幕的基础大小，默认1
@@ -130,33 +119,19 @@ namespace Coralite.Content.GlobalItems
 
         public void ModifyFairyTooltips(Item item, List<TooltipLine> tooltips)
         {
-            if (item.DamageType == FairyDamage.Instance)
+            if (item.DamageType == FairyDamage.Instance&& item.ModItem is BaseFairyCatcher bfc)
             {
                 int index = tooltips.FindIndex(line => line.Name == "Damage");
                 if (index != -1)
                 {
                     TooltipLine catchPowerLine =
                         new(Mod, "CatchPower",
-                        FairySystem.CatchPowerMult.Format(Main.LocalPlayer.GetModPlayer<FairyCatcherPlayer>().GetBonusedCatchPower(CatchPower, CatchPowerMult).ToString() + " "));
+                        FairySystem.CatchPowerMult.Format(Main.LocalPlayer.GetModPlayer<FairyCatcherPlayer>()
+                        .GetBonusedCatchPower(bfc.CatchPower, bfc.CatchPowerMult).ToString() + " "));
 
                     tooltips.Insert(index + 1, catchPowerLine);
                 }
             }
         }
-
-        #region IO
-
-        public override void SaveData(Item item, TagCompound tag)
-        {
-            tag.Add("CatchPowerMult", CatchPowerMult);
-        }
-
-        public override void LoadData(Item item, TagCompound tag)
-        {
-            CatchPowerMult = tag.GetFloat("CatchPowerMult");
-        }
-
-        #endregion
-
     }
 }

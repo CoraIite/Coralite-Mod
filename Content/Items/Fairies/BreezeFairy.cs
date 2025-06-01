@@ -55,7 +55,7 @@ namespace Coralite.Content.Items.Fairies
                 Timer = Main.rand.Next(60, 100);
                 if (Main.rand.NextBool(3))
                     Helper.PlayPitched("Fairy/FairyMove" + Main.rand.Next(2), 0.3f, 0, position);
-                Vector2 webCenter = catcher.webCenter.ToWorldCoordinates();
+                Vector2 webCenter = catcher.webCenter;
                 Vector2 dir;
                 if (Vector2.Distance(Center, webCenter) > catcher.webRadius * 2 / 3)
                     dir = (webCenter - Center)

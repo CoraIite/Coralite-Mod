@@ -165,7 +165,6 @@ namespace Coralite.Core.Prefabs.Projectiles
                 float speed = heldItem.shootSpeed;
                 Vector2 velocity = oldRotate[^1].ToRotationVector2() * speed;
                 Vector2 center = Projectile.Center;
-                catcher.ModifyFairyStats(Owner, ref center, ref velocity);
 
                 if (Owner.TryGetModPlayer(out FairyCatcherPlayer fcp) && fcp.FairyShoot_GetFairyBottle(out IFairyBottle bottle))
                 {
@@ -173,19 +172,19 @@ namespace Coralite.Core.Prefabs.Projectiles
                     fcp.TotalCatchPowerBonus(ref damage, heldItem);
                     Item[] fairies = bottle.Fairies;
 
-                    for (int i = 0; i < fairies.Length; i++)
-                    {
-                        catcher.currentFairyIndex++;
-                        if (catcher.currentFairyIndex > fairies.Length - 1)
-                            catcher.currentFairyIndex = 0;
+                    //for (int i = 0; i < fairies.Length; i++)
+                    //{
+                    //    catcher.currentFairyIndex++;
+                    //    if (catcher.currentFairyIndex > fairies.Length - 1)
+                    //        catcher.currentFairyIndex = 0;
 
-                        if (bottle.CanShootFairy(catcher.currentFairyIndex, out IFairyItem fairyItem))
-                        {
-                            if (bottle.ShootFairy(catcher.currentFairyIndex, Owner, new EntitySource_ItemUse_WithAmmo(Owner, heldItem, 0)
-                                , center, velocity, (int)damage + (int)fairyItem.FairyDamage, Owner.GetWeaponKnockback(heldItem)))
-                                break;
-                        }
-                    }
+                    //    if (bottle.CanShootFairy(catcher.currentFairyIndex, out IFairyItem fairyItem))
+                    //    {
+                    //        if (bottle.ShootFairy(catcher.currentFairyIndex, Owner, new EntitySource_ItemUse_WithAmmo(Owner, heldItem, 0)
+                    //            , center, velocity, (int)damage + (int)fairyItem.FairyDamage, Owner.GetWeaponKnockback(heldItem)))
+                    //            break;
+                    //    }
+                    //}
                 }
             }
         }

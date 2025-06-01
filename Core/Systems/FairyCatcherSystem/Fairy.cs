@@ -26,11 +26,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public bool active;
 
         /// <summary>
-        /// 和鼠标接触
-        /// </summary>
-        public bool cursorIntersects;
-
-        /// <summary>
         /// 0-100的捕获进度，到达100则表示捉到，初始值为20
         /// </summary>
         public float catchProgress = 20f;
@@ -154,7 +149,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                 position += velocity;
 
             //限制不能出圈
-            Vector2 webCenter = catcher.webCenter.ToWorldCoordinates();
+            Vector2 webCenter = catcher.webCenter;
             if (Vector2.Distance(Center, webCenter) > catcher.webRadius)
                 Center = webCenter + ((Center - webCenter).SafeNormalize(Vector2.Zero) * catcher.webRadius);
 
@@ -186,11 +181,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                         //if (catcher.CursorBox.Intersects(HitBox))//鼠标接触到了
                         {
                             //catcher.cursorIntersects = true;
-                            cursorIntersects = false;
 
                             if (Main.mouseLeft)
                             {
-                                cursorIntersects = true;
                                 if (canBeCaught)
                                 {
                                     float progressAdder = ProgressAdder;
@@ -202,7 +195,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                         }
                         //else//鼠标没碰到，并且正在捕捉中，那么减少条
                         {
-                            cursorIntersects = false;
                             ReduceProgress();
                         }
 
@@ -220,7 +212,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <summary>
         /// 在捕捉器内的AI
         /// </summary>
-        public virtual void AI_InCatcher(Rectangle cursor, FairyCatcherProj catcher)
+        public virtual void AI_InCatcher(FairyCatcherProj catcher)
         {
             PreAI_InCatcher();
 
@@ -234,10 +226,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                     break;
                 case AIState.Catching:
                     {
-                        if (cursorIntersects)
-                            OnCursorIntersects(cursor, catcher);
-
-                        Catching(cursor, catcher);
+                        //Catching(cursor, catcher);
                     }
                     break;
                 default:

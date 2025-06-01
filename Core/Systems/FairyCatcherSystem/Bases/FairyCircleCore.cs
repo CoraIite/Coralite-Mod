@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 {
-    public abstract class FairyCatcherCore : ModTexturedType
+    public abstract class FairyCircleCore : ModTexturedType
     {
         public int Type { get; internal set; }
 
-        public override string Texture => AssetDirectory.FairyCatcherCore + Name;
+        public override string Texture => AssetDirectory.FairyCircleCore + Name;
 
         /// <summary>
         /// 边缘线的颜色
@@ -20,10 +20,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         protected override void Register()
         {
-            ModTypeLookup<FairyCatcherCore>.Register(this);
+            ModTypeLookup<FairyCircleCore>.Register(this);
 
-            FairyCatcherCoreLoader.cores ??= new List<FairyCatcherCore>();
-            FairyCatcherCoreLoader.cores.Add(this);
+            FairyCircleCoreLoader.cores ??= new List<FairyCircleCore>();
+            FairyCircleCoreLoader.cores.Add(this);
 
             Type = FairyLoader.ReserveFairyID();
         }

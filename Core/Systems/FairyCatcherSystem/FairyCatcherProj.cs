@@ -1,9 +1,9 @@
-﻿using Coralite.Core.Attributes;
+﻿using Coralite.Content.ModPlayers;
+using Coralite.Core.Attributes;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
-using System.Threading;
 using Terraria;
 using Terraria.Graphics.Effects;
 
@@ -12,7 +12,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
     [AutoLoadTexture(Path = AssetDirectory.Misc)]
     public class FairyCatcherProj : BaseHeldProj
     {
-        public override string Texture => AssetDirectory.FairyCatcherCore + "DefaultCatcher";
+        public override string Texture => AssetDirectory.FairyCircleCore + "DefaultCatcher";
 
         public ref float SpawnTimer => ref Projectile.ai[0];
         public ref float Timer => ref Projectile.localAI[0];
@@ -24,7 +24,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         #region 字段
 
-        public List<Fairy> Fairies;
+        public List<Fairy> Fairies { get; private set; }
 
         /// <summary>
         /// 状态，使用<see cref="AIStates"/>来判断
@@ -84,10 +84,12 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                     Projectile.Kill();
                     break;
                 case AIStates.Shooting:
-                        Shooting();
+                    Shooting();
                     break;
                 case AIStates.Catching:
                     {
+                        if (Timer < 60)
+                            Timer++;
                         Fairies ??= new List<Fairy>();
 
                         Projectile.timeLeft = 100;
@@ -99,6 +101,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                         {
                             Fairy fairy = Fairies[i];
                             fairy.UpdateInCatcher(this);
+                            fairy.AI_InCatcher(this);
                             if (!fairy.active)
                                 Fairies.Remove(fairy);
                         }
@@ -106,9 +109,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                         //随机刷新仙灵
                         UpdateFairySpawn();
 
-                        //右键一下就结束捕捉
-                        if (DownRight)
+                        //特殊攻击键结束捕捉
+                        if (Timer > 60 && Projectile.IsOwnedByLocalPlayer() && Owner.TryGetModPlayer(out CoralitePlayer cp)
+                            && cp.useSpecialAttack)
                             TrunToBacking();
+
                         //玩家距离过远进入回收阶段
                         if (Vector2.Distance(Owner.Center, Projectile.Center) > 1000)
                             TrunToBacking();
@@ -122,9 +127,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                         Projectile.Center = Vector2.Lerp(Projectile.Center, Owner.Center, 0.3f);
 
                         if (Vector2.Distance(Projectile.Center, Owner.Center) < 48)
-                        {
                             Projectile.Kill();
-                        }
                     }
                     break;
             }
@@ -156,6 +159,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             State = AIStates.Catching;
             Timer = 0;
 
+            Projectile.Center = webCenter;
             Projectile.tileCollide = false;
             Projectile.velocity *= 0;
 
@@ -289,11 +293,16 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         #region 绘制
 
+        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
+        {
+            behindProjectiles.Add(index);
+        }
+
         public override bool PreDraw(ref Color lightColor)
         {
-            if (State != (int)AIStates.Shooting)
+            if (State != AIStates.Shooting)
             {
-                Vector2 circlePos = webCenter.ToWorldCoordinates() - Main.screenPosition;
+                Vector2 circlePos = webCenter - Main.screenPosition;
 
                 Color edgeColor = Color.White;
                 Color innerColor = Color.DarkSlateBlue * 0.7f;
@@ -309,9 +318,13 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                 DrawBack(circlePos, edgeColor, innerColor);
                 //绘制标红的物块
                 DrawBlockedTile(circlePos);
-                //绘制中心指针
-                DrawCatcherCore(lightColor);
+            }
 
+            //绘制中心指针
+            DrawCatcherCore(lightColor);
+
+            if (State == AIStates.Catching)
+            {
                 //绘制仙灵
                 if (Fairies != null)
                     foreach (var fairy in Fairies)

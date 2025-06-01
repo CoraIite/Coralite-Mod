@@ -1,5 +1,4 @@
-﻿using Coralite.Content.GlobalItems;
-using Coralite.Core;
+﻿using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using Microsoft.Xna.Framework.Graphics;
@@ -9,11 +8,12 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.FairyCatcher
 {
-    public class VineLasso : BaseLassoItem
+    public class VineLasso : BaseFairyCatcher
     {
         public override string Texture => AssetDirectory.FairyCatcherItems + Name;
 
-        public override int LassoProjType => ModContent.ProjectileType<VineLassoSwing>();
+        public override int CatchPower => 5;
+        public override int RightProjType => ModContent.ProjectileType<VineLassoSwing>();
 
         public override void SetOtherDefaults()
         {
@@ -23,7 +23,6 @@ namespace Coralite.Content.Items.FairyCatcher
             Item.shootSpeed = 8;
             Item.SetWeaponValues(8, 3);
             Item.SetShopValues(ItemRarityColor.White0, Item.sellPrice(0, 0, 20));
-            Item.GetGlobalItem<CoraliteGlobalItem>().CatchPower = 5;
         }
 
         public override void AddRecipes()
@@ -59,35 +58,4 @@ namespace Coralite.Content.Items.FairyCatcher
             return CursorCenter - new Vector2(cursorTex.Width / 2, 0).RotatedBy(cursorRotation);
         }
     }
-
-    //public class VineLassoCatcher : BaseFairyCatcherProj
-    //{
-    //    public override void SetOtherDefaults()
-    //    {
-    //        CursorWidth = 16;
-    //        CursorHeight = 16;
-    //        cursorMovement = new NormalCursor(3, 0.15f, 0.2f, 0.85f, 20);
-    //        DrawOriginOffsetX = 8;
-    //        DrawOriginOffsetY = -8;
-    //    }
-
-    //    public override void SetOwnerItemLocation()
-    //    {
-    //        Owner.itemLocation = Owner.Center + new Vector2(Owner.direction * 15, 0);
-    //    }
-
-    //    public override Color GetStringColor(Vector2 pos)
-    //    {
-    //        Color c = Color.Green;
-    //        c.A = (byte)(c.A * 0.4f);
-    //        c = Lighting.GetColor((int)pos.X / 16, (int)(pos.Y / 16f), c);
-    //        c *= 0.5f;
-    //        return c;
-    //    }
-
-    //    public override Vector2 GetStringTipPos(Texture2D cursorTex)
-    //    {
-    //        return cursorCenter - new Vector2(cursorScale * cursorTex.Width / 2, 0).RotatedBy(cursorRotation);
-    //    }
-    //}
 }

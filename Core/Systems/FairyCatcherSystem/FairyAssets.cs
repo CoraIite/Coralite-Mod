@@ -23,10 +23,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                     FairyAssets[i] = ModContent.Request<Texture2D>(fairy.Texture);
             }
 
-            FairyCatcherCoreAssets = new ATex[FairyCatcherCoreLoader.FairyCatcherCoreCount];
-            for (int i = 0; i < FairyCatcherCoreLoader.FairyCatcherCoreCount; i++)
+            FairyCatcherCoreAssets = new ATex[FairyCircleCoreLoader.FairyCircleCoreCount];
+            for (int i = 0; i < FairyCircleCoreLoader.FairyCircleCoreCount; i++)
             {
-                FairyCatcherCore f = FairyCatcherCoreLoader.GetFairyCatcherCore(i);
+                FairyCircleCore f = FairyCircleCoreLoader.GetFairyCatcherCore(i);
                 if (f != null)
                     FairyCatcherCoreAssets[i] = ModContent.Request<Texture2D>(f.Texture);
             }

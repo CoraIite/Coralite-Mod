@@ -1,4 +1,5 @@
 ﻿using Coralite.Core;
+using Coralite.Core.Systems.FairyCatcherSystem;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
@@ -288,8 +289,8 @@ namespace Coralite.Content.UI
             Item Item = FairyBottleUI.bottle.Fairies[index];
 
             Texture2D backTex = TextureAssets.InventoryBack15.Value;
-            if (Main.LocalPlayer.HeldItem.ModItem is BaseFairyCatcher catcher
-                && catcher.currentFairyIndex == index)
+            if (Main.LocalPlayer.TryGetModPlayer(out FairyCatcherPlayer fcp)
+                && fcp.currentFairyIndex == index)
             {
                 backTex = TextureAssets.InventoryBack14.Value;
             }

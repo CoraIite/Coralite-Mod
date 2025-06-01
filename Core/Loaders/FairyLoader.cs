@@ -36,24 +36,24 @@ namespace Coralite.Core.Loaders
         }
     }
 
-    public class FairyCatcherCoreLoader
+    public class FairyCircleCoreLoader
     {
-        internal static IList<FairyCatcherCore> cores;
-        internal static int FairyCatcherCoreCount { get; private set; } = 0;
+        internal static IList<FairyCircleCore> cores;
+        internal static int FairyCircleCoreCount { get; private set; } = 0;
 
         /// <summary>
         /// 根据类型获取仙灵
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        public static FairyCatcherCore GetFairyCatcherCore(int type)
-                 => type < FairyCatcherCoreCount ? cores[type] : null;
+        public static FairyCircleCore GetFairyCatcherCore(int type)
+                 => type < FairyCircleCoreCount ? cores[type] : null;
 
         /// <summary>
         /// 设置ID
         /// </summary>
         /// <returns></returns>
-        public static int ReserveID() => FairyCatcherCoreCount++;
+        public static int ReserveID() => FairyCircleCoreCount++;
 
         internal static void Unload()
         {
@@ -64,7 +64,7 @@ namespace Coralite.Core.Loaders
 
             cores.Clear();
             cores = null;
-            FairyCatcherCoreCount = 0;
+            FairyCircleCoreCount = 0;
         }
     }
 }

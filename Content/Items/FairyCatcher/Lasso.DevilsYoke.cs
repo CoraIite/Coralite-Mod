@@ -10,11 +10,12 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.FairyCatcher
 {
-    public class DevilsYoke : BaseLassoItem
+    public class DevilsYoke : BaseFairyCatcher
     {
         public override string Texture => AssetDirectory.FairyCatcherItems + Name;
 
-        public override int LassoProjType => ModContent.ProjectileType<DevilsYokeSwing>();
+        public override int RightProjType => ModContent.ProjectileType<DevilsYokeSwing>();
+        public override int CatchPower => 30;
 
         public override void SetOtherDefaults()
         {
@@ -24,16 +25,7 @@ namespace Coralite.Content.Items.FairyCatcher
             Item.shootSpeed = 9;
             Item.SetWeaponValues(25, 3);
             Item.SetShopValues(ItemRarityColor.Orange3, Item.sellPrice(0, 1));
-            Item.GetGlobalItem<CoraliteGlobalItem>().CatchPower = 30;
             Item.autoReuse = true;
-        }
-
-        public override void AddRecipes()
-        {
-            //CreateRecipe()
-            //    .AddIngredient(ItemID.VineRope, 8)
-            //    .AddTile(TileID.WorkBenches)
-            //    .Register();
         }
     }
 
@@ -61,43 +53,4 @@ namespace Coralite.Content.Items.FairyCatcher
             return CursorCenter - new Vector2(cursorTex.Width / 2, 0).RotatedBy(cursorRotation);
         }
     }
-
-    //public class DevilsYokeCatcher : BaseFairyCatcherProj
-    //{
-
-    //    public override void Load()
-    //    {
-    //        if (Main.dedServ)
-    //            return;
-
-    //        LineTex = ModContent.Request<Texture2D>(AssetDirectory.FairyCatcherItems + "PurpleChain");
-    //    }
-
-    //    public override void Unload()
-    //    {
-    //        LineTex = null;
-    //    }
-
-    //    public override void SetOtherDefaults()
-    //    {
-    //        CursorWidth = 16;
-    //        CursorHeight = 16;
-    //        cursorMovement = new NormalCursor(5, 0.24f, 0.3f, 0.8f, 16);
-    //        DrawOriginOffsetX = 10;
-    //        DrawOriginOffsetY = -18;
-    //    }
-
-    //    public override void SetOwnerItemLocation()
-    //    {
-    //        Owner.itemLocation = Owner.Center + new Vector2(Owner.direction * 18, -6);
-    //    }
-
-    //    public override Texture2D GetStringTex() => LineTex.Value;
-    //    public override Color GetStringColor(Vector2 pos) => Lighting.GetColor((int)pos.X / 16, (int)(pos.Y / 16f));
-
-    //    public override Vector2 GetStringTipPos(Texture2D cursorTex)
-    //    {
-    //        return cursorCenter - new Vector2(cursorScale * cursorTex.Width / 2, 0).RotatedBy(cursorRotation);
-    //    }
-    //}
 }
