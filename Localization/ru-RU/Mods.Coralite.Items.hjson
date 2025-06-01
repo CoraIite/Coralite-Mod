@@ -5912,3 +5912,8 @@ CrystallineMusicBox: {
 	// DisplayName: Crystalline Music Box
 	// Tooltip: ""
 }
+
+HephaesthRelic: {
+	// DisplayName: Hephaesth Relic
+	// Tooltip: ""
+}

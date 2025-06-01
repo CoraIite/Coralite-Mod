@@ -6016,3 +6016,8 @@ CrystallineMusicBox: {
 	DisplayName: 八音盒（蕴魔奇观）
 	Tooltip: ""
 }
+
+HephaesthRelic: {
+	DisplayName: 炼心城圣物
+	Tooltip: 可作为远古锻造炉制作站
+}

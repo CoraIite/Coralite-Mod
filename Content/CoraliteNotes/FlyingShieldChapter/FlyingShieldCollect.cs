@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Items.FlyingShields;
+using Coralite.Content.Items.RedJades;
 using Coralite.Core;
 using Coralite.Core.Attributes;
 using Coralite.Helpers;
@@ -21,6 +22,7 @@ namespace Coralite.Content.CoraliteNotes.FlyingShieldChapter
         {
             TrashCanLid,
             GlassShield,
+            RedJadeShield,
             GlazeBulwark,
             GemrainAegis,
             GoldenSamurai,
@@ -55,11 +57,13 @@ namespace Coralite.Content.CoraliteNotes.FlyingShieldChapter
         {
             int y = -200;
             Vector2 center = new Vector2(PageWidth / 2, PageHeight / 2 - 80);
-            //最上面一排4个
-            NewImage<TrashCanLid>(center + new Vector2(66, y + 20), null
-                , KeyFlyingShields.TrashCanLid, CollectImage.LockIconType.Small);
+            //最上面一排5个
+            NewImage<TrashCanLid>(center + new Vector2(0, y), null
+                , KeyFlyingShields.TrashCanLid, CollectImage.LockIconType.Small, 1.1f);
+            NewImage<RedJadeShield>(center + new Vector2(66, y + 20), CoraliteConditions.DownedRediancie
+                , KeyFlyingShields.RedJadeShield, CollectImage.LockIconType.Small,1.1f);
             NewImage<GlassShield>(center + new Vector2(-66, y + 20), null
-                , KeyFlyingShields.GlassShield, CollectImage.LockIconType.Small);
+                , KeyFlyingShields.GlassShield, CollectImage.LockIconType.Small, 1.1f);
             NewImage<SilverAngel>(center + new Vector2(-200, y), Condition.DownedEowOrBoc
                 , KeyFlyingShields.SilverAngel, CollectImage.LockIconType.Small);
             NewImage<GlazeBulwark>(center + new Vector2(200, y), Condition.DownedEowOrBoc
@@ -102,7 +106,7 @@ namespace Coralite.Content.CoraliteNotes.FlyingShieldChapter
             NewImage<Hephaesth>(center, Condition.DownedMoonLord
                 , KeyFlyingShields.Hephaesth, CollectImage.LockIconType.Big, 3);
 
-            var button = new CollectButton(ItemID.Zenith, Unlocks, CoraliteNoteSystem.RewardType.FlyingShield);
+            var button = new CollectButton(ItemType<HephaesthRelic>(), Unlocks, CoraliteNoteSystem.RewardType.FlyingShield);
             button.SetCenter(new Vector2(PageWidth / 2, PageHeight - 40));
             Append(button);
         }

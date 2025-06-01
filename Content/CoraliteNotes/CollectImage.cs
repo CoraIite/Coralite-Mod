@@ -171,7 +171,7 @@ namespace Coralite.Content.CoraliteNotes
 
             if (yFrame == 1)
             {
-                CollectLight.Value.QuickCenteredDraw(spriteBatch, pos + new Vector2(0, -15)
+                CollectLight.Value.QuickCenteredDraw(spriteBatch, pos + new Vector2(0, -10)
                     , Color.White, 0, 1f + 0.1f * MathF.Sin((int)Main.timeForVisualEffects * 0.2f));
             }
             else if (yFrame == 2)
