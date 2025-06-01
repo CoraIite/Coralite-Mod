@@ -39,6 +39,8 @@ Conditions: {
 		UseShlimmerTranslation: 需要使用微光转化
 		UseRuneParchment: 在快捷栏左键使用符文羊皮纸来合成
 		DownedRediancie: 需要击败赤玉灵
+		// DownedThunderveinDragon: Mods.Coralite.Conditions.CoraliteConditions.DownedThunderveinDragon
+		// DownedNightmarePlantera: Mods.Coralite.Conditions.CoraliteConditions.DownedNightmarePlantera
 	}
 }
 
