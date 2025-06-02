@@ -1,6 +1,8 @@
-﻿using Coralite.Content.Tiles.MagikeSeries1;
+﻿using Coralite.Content.Items.HyacinthSeries;
+using Coralite.Content.Tiles.MagikeSeries1;
 using Coralite.Content.Tiles.MagikeSeries2;
 using System;
+using Terraria;
 
 namespace Coralite.Core
 {
@@ -27,6 +29,11 @@ namespace Coralite.Core
             CrystallineSkyIslandTileCount += tileCounts[ModContent.TileType<CrystallineSkarnTile>()];
             CrystallineSkyIslandTileCount += tileCounts[ModContent.TileType<ChalcedonySkarn>()];
             CrystallineSkyIslandTileCount += tileCounts[ModContent.TileType<ChalcedonySmoothSkarn>()];
+
+            if (tileCounts[ModContent.TileType<HyacinthRelicTile>()]>0)
+            {
+                Main.SceneMetrics.GraveyardTileCount = 0;
+            }
 
             CrystallineSkyIslandEffect = tileCounts[ModContent.TileType<CrystallineFountain>()] > 0;
         }

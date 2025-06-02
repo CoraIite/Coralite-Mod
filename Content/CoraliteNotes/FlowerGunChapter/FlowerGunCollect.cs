@@ -1,5 +1,4 @@
-﻿using Coralite.Content.Items.FlyingShields;
-using Coralite.Content.Items.HyacinthSeries;
+﻿using Coralite.Content.Items.HyacinthSeries;
 using Coralite.Content.Items.Nightmare;
 using Coralite.Content.Items.Thunder;
 using Coralite.Core;
@@ -16,7 +15,10 @@ namespace Coralite.Content.CoraliteNotes.FlowerGunChapter
     {
         public static bool[] Unlocks = new bool[(int)KeyFlowerGuns.Count];
 
-        public static ATex Test { get; private set; }
+        public static ATex HyacinthCollect { get; private set; }
+
+        public static ATex FlowerGunCollectButton { get; private set; }
+        public static ATex FlowerGunCollectButtonLight { get; private set; }
 
         public enum KeyFlowerGuns
         {
@@ -54,63 +56,49 @@ namespace Coralite.Content.CoraliteNotes.FlowerGunChapter
 
         public void AddImages()
         {
-            const float TwoPiOver3 = MathHelper.TwoPi / 3;
-            const float lengthReduce = 33;
-            const float rotAdd = MathHelper.TwoPi / 12 + 0.1f;
-
-            float rot = -MathHelper.PiOver2;
-            float length = 265;
-
             Vector2 center = new Vector2(PageWidth / 2, PageHeight / 2);
 
-            NewImage<Wisteria>(center + rot.ToRotationVector2() * length, null
+            NewImage<Wisteria>(center + new Vector2(77,140), null
                 , KeyFlowerGuns.Wisteria, CollectImage.LockIconType.Small, 1.1f);
-            NewImage<SunflowerGun>(center + (rot + TwoPiOver3).ToRotationVector2() * length, null
+            NewImage<SunflowerGun>(center + new Vector2(-192, -184), null
                 , KeyFlowerGuns.SunflowerGun, CollectImage.LockIconType.Small, 1.1f);
-            NewImage<Floette>(center + (rot + TwoPiOver3 * 2).ToRotationVector2() * length, Condition.DownedEyeOfCthulhu
+            NewImage<Floette>(center + new Vector2(163, 224), Condition.DownedEyeOfCthulhu
                 , KeyFlowerGuns.Floette, CollectImage.LockIconType.Small, 1.1f);
 
-            rot += rotAdd;
-            length -= lengthReduce;
-            NewImage<Arethusa>(center + rot.ToRotationVector2() * length, Condition.DownedSkeletron
-                , KeyFlowerGuns.Wisteria);
-            NewImage<Datura>(center + (rot + TwoPiOver3).ToRotationVector2() * length, Condition.Hardmode
+            NewImage<Arethusa>(center + new Vector2(132, -185), Condition.DownedSkeletron
+                , KeyFlowerGuns.Arethusa);
+            NewImage<Datura>(center + new Vector2(-16, -215), Condition.Hardmode
                 , KeyFlowerGuns.Datura);
-            NewImage<GhostPipe>(center + (rot + TwoPiOver3 * 2).ToRotationVector2() * length, Condition.Hardmode
+            NewImage<GhostPipe>(center + new Vector2(-46, 115), Condition.Hardmode
                 , KeyFlowerGuns.GhostPipe);
 
-            rot += rotAdd;
-            length -= lengthReduce;
-            NewImage<Aloe>(center + rot.ToRotationVector2() * length, Condition.DownedQueenSlime
+            NewImage<Aloe>(center + new Vector2(170, -65), Condition.DownedQueenSlime
                 , KeyFlowerGuns.Aloe);
-            NewImage<Rosemary>(center + (rot + TwoPiOver3).ToRotationVector2() * length, Condition.DownedMechBossAny
+            NewImage<Rosemary>(center + new Vector2(82, -120), Condition.DownedMechBossAny
                 , KeyFlowerGuns.Rosemary);
-            NewImage<Snowdrop>(center + (rot + TwoPiOver3 * 2).ToRotationVector2() * length, Condition.DownedMechBossAll
+            NewImage<Snowdrop>(center + new Vector2(-152, -114), Condition.DownedMechBossAll
                 , KeyFlowerGuns.Snowdrop);
 
-            rot += rotAdd;
-            length -= lengthReduce;
-            NewImage<ThunderDukeVine>(center + rot.ToRotationVector2() * length, CoraliteConditions.DownedThunderveinDragon
+            NewImage<ThunderDukeVine>(center + new Vector2(118, 60), CoraliteConditions.DownedThunderveinDragon
                 , KeyFlowerGuns.ThunderDukeVine);
-            NewImage<EternalBloom>(center + (rot + TwoPiOver3).ToRotationVector2() * length, Condition.DownedPlantera
+            NewImage<EternalBloom>(center + new Vector2(188, 148), Condition.DownedPlantera
                 , KeyFlowerGuns.EternalBloom);
-            NewImage<StarsBreath>(center + (rot + TwoPiOver3 * 2).ToRotationVector2() * length, Condition.DownedPlantera
+            NewImage<StarsBreath>(center + new Vector2(-178, -4), Condition.DownedPlantera
                 , KeyFlowerGuns.StarsBreath);
 
-            rot += rotAdd;
-            length -= lengthReduce;
-            NewImage<QueenOfNight>(center + rot.ToRotationVector2() * length, Condition.DownedEmpressOfLight
+            NewImage<QueenOfNight>(center + new Vector2(-32, -145), Condition.DownedEmpressOfLight
                 , KeyFlowerGuns.QueenOfNight);
-            NewImage<Lycoris>(center + (rot + TwoPiOver3).ToRotationVector2() * length, CoraliteConditions.DownedNightmarePlantera
+            NewImage<Lycoris>(center + new Vector2(-182, 98), CoraliteConditions.DownedNightmarePlantera
                 , KeyFlowerGuns.Lycoris);
             //NewImage<Lycoris>(center + (rot + TwoPiOver3 * 2).ToRotationVector2() * length, null
             //    , KeyFlowerGuns.Lycoris);
 
-            NewImage<Hyacinth>(center, CoraliteConditions.DownedNightmarePlantera
+            NewImage<Hyacinth>(center+new Vector2(-15,-4), CoraliteConditions.DownedNightmarePlantera
                 , KeyFlowerGuns.Hyacinth, CollectImage.LockIconType.Middle, 1.75f);
 
-            var button = new CollectButton(ModContent.ItemType<HephaesthRelic>(), Unlocks, CoraliteNoteSystem.RewardType.FlowerGun);
-            button.SetCenter(new Vector2(PageWidth / 2, PageHeight - 40));
+            var button = new CollectButton(FlowerGunCollectButton, FlowerGunCollectButtonLight
+                , new Vector2(0, -20), ModContent.ItemType<HyacinthRelic>(), Unlocks, CoraliteNoteSystem.RewardType.FlowerGun);
+            button.SetCenter(new Vector2(PageWidth / 2 - 105, PageHeight - 58));
             Append(button);
         }
 
@@ -137,12 +125,12 @@ namespace Coralite.Content.CoraliteNotes.FlowerGunChapter
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            Test.Value.QuickCenteredDraw(spriteBatch, Center);
+            HyacinthCollect.Value.QuickCenteredDraw(spriteBatch, Center);
 
             DrawCollectTip(spriteBatch, Unlocks);
             Vector2 pos = Bottom + new Vector2(0, -30);
-            DrawCollectText(spriteBatch, Unlocks, pos + new Vector2(-150, 0));
-            DrawCollectProgress(spriteBatch, Unlocks, pos + new Vector2(150, 0));
+            DrawCollectText(spriteBatch, Unlocks, pos + new Vector2(160, -30));
+            DrawCollectProgress(spriteBatch, Unlocks, pos + new Vector2(150, 5));
         }
     }
 }

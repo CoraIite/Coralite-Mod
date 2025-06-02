@@ -68,6 +68,7 @@ namespace Coralite.Content.CoraliteNotes
         {
             tag.SaveBools(CollectRewards, nameof(CollectRewards));
             FlyingShieldChapter.FlyingShieldCollect.Save(tag);
+            FlowerGunChapter.FlowerGunCollect.Save(tag);
         }
 
         public override void OnWorldLoad()
@@ -81,6 +82,7 @@ namespace Coralite.Content.CoraliteNotes
         {
             tag.LoadBools(CollectRewards, nameof(CollectRewards));
             FlyingShieldChapter.FlyingShieldCollect.Load(tag);
+            FlowerGunChapter.FlowerGunCollect.Load(tag);
         }
     }
 }
