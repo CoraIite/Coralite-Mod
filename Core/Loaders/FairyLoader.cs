@@ -46,7 +46,7 @@ namespace Coralite.Core.Loaders
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
-        public static FairyCircleCore GetFairyCatcherCore(int type)
+        public static FairyCircleCore GetFairyCircleCore(int type)
                  => type < FairyCircleCoreCount ? cores[type] : null;
 
         /// <summary>

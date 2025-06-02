@@ -63,6 +63,7 @@ FairySystem: {
 	SortByRarityText: Сортировать по редкости
 	SortByCaughtText: Сортировать по пойманным
 	FairyTradeCondition: Используйте портал фейри для торговли
+	// CircleRadiusBonus: Mods.Coralite.Systems.FairySystem.CircleRadiusBonus
 }
 
 BossBarSystem.DontTakeDamage: Невозможно атаковать!

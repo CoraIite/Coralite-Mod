@@ -63,6 +63,7 @@ FairySystem: {
 	SortByRarityText: 按稀有度排序
 	SortByCaughtText: 按是否捕获排序
 	FairyTradeCondition: 使用妖精传送门进行交易
+	CircleRadiusBonus: 仙灵捕捉环半径增加 {0} 格
 }
 
 BossBarSystem.DontTakeDamage: 不可攻击！

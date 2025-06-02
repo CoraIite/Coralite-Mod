@@ -12,11 +12,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// <summary>
         /// 边缘线的颜色
         /// </summary>
-        public abstract Color EdgeColor { get; }
+        public virtual Color? EdgeColor { get => null; }
         /// <summary>
         /// 内部的颜色
         /// </summary>
-        public abstract Color InnerColor { get; }
+        public virtual Color? InnerColor { get=> null; }
 
         protected override void Register()
         {
@@ -25,7 +25,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             FairyCircleCoreLoader.cores ??= new List<FairyCircleCore>();
             FairyCircleCoreLoader.cores.Add(this);
 
-            Type = FairyLoader.ReserveFairyID();
+            Type = FairyCircleCoreLoader.ReserveID();
         }
     }
 }

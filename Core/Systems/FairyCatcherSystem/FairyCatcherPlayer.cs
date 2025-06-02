@@ -1,5 +1,6 @@
 ﻿using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using Terraria;
+using Terraria.ModLoader.UI.ModBrowser;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem
 {
@@ -17,11 +18,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             public float multiplicative_Max;
         }
 
-        /// <summary>
-        /// 仙灵捕捉器指针的大小，用于对于其进行缩放<br></br>
-        /// 捕捉器默认大小由贴图决定，查看<see cref="FairyCatcherProj.GetCursorBox"/>以了解更多
-        /// </summary>
-        public StatModifier cursorSizeBonus;
         /// <summary>
         /// 仙灵捕捉器的捕捉力增幅
         /// </summary>
@@ -49,14 +45,13 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         public int currentFairyIndex;
 
-        /// <summary> 核心的类型，使用<see cref="CoraliteContent.FairyCatcherCoreType"/>设置 </summary>
-        public int FairyCatcherCoreType { get; set; }
+        /// <summary> 核心的类型，使用<see cref="CoraliteContent.FairyCircleCoreType"/>设置 </summary>
+        public int FairyCircleCoreType { get; set; }
 
         public override void ResetEffects()
         {
-            FairyCatcherCoreType = -1;
+            FairyCircleCoreType = -1;
 
-            cursorSizeBonus = new StatModifier();
             fairyCatchPowerBonus = new StatModifier();
             fairyResurrectionTimeBous = new StatModifier();
 
@@ -121,6 +116,17 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                     break;
                 }
             }
+        }
+
+        /// <summary>
+        /// 增加捕捉环半径，单位：像素<br></br>
+        /// 该加成不叠加，取最高效果
+        /// </summary>
+        /// <param name="howMany"></param>
+        public void AddCircleRadius(int howMany)
+        {
+            if (FairyCatcherRadiusBonus < howMany)
+                FairyCatcherRadiusBonus = howMany;
         }
 
         public bool FairyShoot_GetFairyBottle(out IFairyBottle bottle)

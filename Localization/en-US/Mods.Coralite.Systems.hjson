@@ -63,6 +63,7 @@ FairySystem: {
 	SortByRarityText: Sort by rarity
 	SortByCaughtText: Sort by unlocked
 	FairyTradeCondition: Use fairy teleporter for trading
+	CircleRadiusBonus: Mods.Coralite.Systems.FairySystem.CircleRadiusBonus
 }
 
 BossBarSystem.DontTakeDamage: Cant attack!！

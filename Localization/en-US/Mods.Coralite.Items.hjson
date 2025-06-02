@@ -878,11 +878,6 @@ BloodyHook: {
 		'''
 }
 
-DemoniteEnchantPool: {
-	DisplayName: Demonite Enchant Pool
-	Tooltip: Allows extra enhancement for your equipments
-}
-
 CopperRing: {
 	DisplayName: Copper Ring
 	Tooltip: 6% decreased damage

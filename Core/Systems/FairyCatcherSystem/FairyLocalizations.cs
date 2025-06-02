@@ -65,6 +65,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public static LocalizedText SortByCaughtText;
         public static LocalizedText FairyTradeCondition;
 
+        public static LocalizedText CircleRadiusBonus;
+
         public void LoadLocalization()
         {
             WeakLevel = this.GetLocalization("WeakLevel", () => "软弱：{0}（基础 {1}）");
@@ -121,6 +123,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             SortByRarityText = this.GetLocalization("SortByRarityText", () => "按稀有度排序");
             SortByCaughtText = this.GetLocalization("SortByCaughtText", () => "按是否捕获排序");
             FairyTradeCondition = this.GetLocalization("FairyTradeCondition", () => "使用妖精传送门进行交易");
+            CircleRadiusBonus = this.GetLocalization("CircleRadiusBonus");
         }
 
         public static void UnloadLocalization()
@@ -160,6 +163,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             SortByRarityText = null;
             SortByCaughtText = null;
             FairyTradeCondition = null;
+            CircleRadiusBonus = null;
         }
 
         public static string FormatIVDescription(LocalizedText pre, LocalizedText levelText, float @base, float bonused)

@@ -307,11 +307,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                 Color edgeColor = Color.White;
                 Color innerColor = Color.DarkSlateBlue * 0.7f;
 
-                if (Owner.TryGetModPlayer(out FairyCatcherPlayer fcp) && fcp.FairyCatcherCoreType > -1)
+                if (Owner.TryGetModPlayer(out FairyCatcherPlayer fcp) && fcp.FairyCircleCoreType > -1)
                 {
-                    var core = CoraliteContent.GetFairyCatcherCore(fcp.FairyCatcherCoreType);
-                    edgeColor = core.EdgeColor;
-                    innerColor = core.InnerColor;
+                    var core = CoraliteContent.GetFairyCircleCore(fcp.FairyCircleCoreType);
+                    edgeColor = core.EdgeColor ?? edgeColor;
+                    innerColor = core.InnerColor ?? innerColor;
                 }
 
                 //绘制背景
@@ -392,9 +392,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             Vector2 pos = Projectile.Center - Main.screenPosition;
 
             Texture2D tex = Projectile.GetTexture();
-            if (Owner.TryGetModPlayer(out FairyCatcherPlayer fcp) && fcp.FairyCatcherCoreType > -1)
+            if (Owner.TryGetModPlayer(out FairyCatcherPlayer fcp) && fcp.FairyCircleCoreType > -1)
             {
-                var core = CoraliteContent.GetFairyCatcherCore(fcp.FairyCatcherCoreType);
+                var core = CoraliteContent.GetFairyCircleCore(fcp.FairyCircleCoreType);
                 tex = FairySystem.FairyCatcherCoreAssets[core.Type].Value;
             }
 

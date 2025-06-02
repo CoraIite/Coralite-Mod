@@ -887,11 +887,6 @@ BloodyHook: {
 		'''
 }
 
-DemoniteEnchantPool: {
-	DisplayName: Демоническая магическая чаша
-	Tooltip: Добавляет дополнительные усиления к твоему снаряжению
-}
-
 CopperRing: {
 	DisplayName: Медное кольцо
 	Tooltip: Атака -6%

@@ -883,19 +883,14 @@ BloodyHook: {
 		'''
 }
 
-DemoniteEnchantPool: {
-	DisplayName: 魔化注魔池
-	Tooltip: 为你的装备带来额外的强化
-}
-
 CopperRing: {
 	DisplayName: 铜戒指
-	Tooltip: 攻击 -6%
+	Tooltip: ""
 }
 
 TinRing: {
 	DisplayName: 锡戒指
-	Tooltip: 攻击 -6%
+	Tooltip: ""
 }
 
 IronRing: {

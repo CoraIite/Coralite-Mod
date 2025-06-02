@@ -16,12 +16,12 @@ namespace Coralite.Core
 
         public static int FairyType<T>() where T : Fairy => ModContent.GetInstance<T>()?.Type ?? 0;
 
-        public static FairyCircleCore FairyCatcherCoreType<T>() where T : FairyCircleCore
+        public static int FairyCircleCoreType<T>() where T : FairyCircleCore
+            => ModContent.GetInstance<T>().Type;
+        public static FairyCircleCore GetFairyCircleCore<T>() where T : FairyCircleCore 
             => ModContent.GetInstance<T>();
-        public static FairyCircleCore GetFairyCatcherCore<T>() where T : FairyCircleCore 
-            => ModContent.GetInstance<T>();
-        public static FairyCircleCore GetFairyCatcherCore(int type) 
-            => FairyCircleCoreLoader.GetFairyCatcherCore(type);
+        public static FairyCircleCore GetFairyCircleCore(int type) 
+            => FairyCircleCoreLoader.GetFairyCircleCore(type);
 
         public static int MTBSType<T>() where T : Multiblock => ModContent.GetInstance<T>()?.Type ?? 0;
 
