@@ -405,7 +405,7 @@ FragmentPage4: {
 }
 
 FlyingShieldPage: {
-	Title: 飞盾残卷
+	Title: 飞盾
 	Description:
 		'''
 		    “把盾牌丢出去攻击敌人！” 似乎从很久以前开始，老师就教我这么做。 我一直很好奇这样的战斗方式是如何流传下来的，直到某天偶然间在一本古书上看到了相关内容。
@@ -419,4 +419,9 @@ FlyingShieldPage: {
 FlowerGunPage: {
 	Title: 花之枪
 	Description: " \n  "
+}
+
+LandOfTheLustrousPage: {
+	Title: 宝石之国
+	Description: a
 }

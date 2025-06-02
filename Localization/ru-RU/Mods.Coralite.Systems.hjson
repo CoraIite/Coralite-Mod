@@ -177,6 +177,12 @@ KnowledgeSystem: {
 		// LockTip: Mods.Coralite.Systems.KnowledgeSystem.FlowerGunKnowledge.LockTip
 		// Description: Mods.Coralite.Systems.KnowledgeSystem.FlowerGunKnowledge.Description
 	}
+
+	LandOfTheLustrousKnowledge: {
+		// Name: Mods.Coralite.Systems.KnowledgeSystem.LandOfTheLustrousKnowledge.Name
+		// LockTip: Mods.Coralite.Systems.KnowledgeSystem.LandOfTheLustrousKnowledge.LockTip
+		// Description: Mods.Coralite.Systems.KnowledgeSystem.LandOfTheLustrousKnowledge.Description
+	}
 }
 
 // CoraliteBeatiaryDatabase.CrystallineSkyIsland: Mods.Coralite.Systems.CoraliteBeatiaryDatabase.CrystallineSkyIsland

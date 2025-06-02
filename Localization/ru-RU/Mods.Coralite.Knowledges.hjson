@@ -311,3 +311,8 @@ FlowerGunPage: {
 	// Title: Mods.Coralite.Knowledges.FlowerGunPage.Title
 	// Description: Mods.Coralite.Knowledges.FlowerGunPage.Description
 }
+
+LandOfTheLustrousPage: {
+	// Title: Mods.Coralite.Knowledges.LandOfTheLustrousPage.Title
+	// Description: Mods.Coralite.Knowledges.LandOfTheLustrousPage.Description
+}
