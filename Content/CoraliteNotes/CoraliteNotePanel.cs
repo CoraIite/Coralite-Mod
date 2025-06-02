@@ -33,6 +33,7 @@ namespace Coralite.Content.CoraliteNotes
 
                     new FlyingShieldChapter.GroupFlyingShield(),
                     new FlowerGunChapter.GroupFlowerGun(),
+                    new LandOfTheLustrousChapter.GroupLandOfTheLustrous(),
                 ];
         }
 

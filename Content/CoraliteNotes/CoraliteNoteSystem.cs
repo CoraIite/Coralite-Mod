@@ -32,6 +32,7 @@ namespace Coralite.Content.CoraliteNotes
         {
             FlyingShield,
             FlowerGun,
+            LandOfTheLustrous,
 
             Count,
         }
@@ -69,6 +70,7 @@ namespace Coralite.Content.CoraliteNotes
             tag.SaveBools(CollectRewards, nameof(CollectRewards));
             FlyingShieldChapter.FlyingShieldCollect.Save(tag);
             FlowerGunChapter.FlowerGunCollect.Save(tag);
+            LandOfTheLustrousChapter.LandOfTheLustrousCollect.Save(tag);
         }
 
         public override void OnWorldLoad()
@@ -76,6 +78,7 @@ namespace Coralite.Content.CoraliteNotes
             Array.Fill(CollectRewards, false);
             Array.Fill(FlyingShieldChapter.FlyingShieldCollect.Unlocks, false);
             Array.Fill(FlowerGunChapter.FlowerGunCollect.Unlocks, false);
+            Array.Fill(LandOfTheLustrousChapter.LandOfTheLustrousCollect.Unlocks, false);
         }
 
         public override void LoadWorldData(TagCompound tag)
@@ -83,6 +86,7 @@ namespace Coralite.Content.CoraliteNotes
             tag.LoadBools(CollectRewards, nameof(CollectRewards));
             FlyingShieldChapter.FlyingShieldCollect.Load(tag);
             FlowerGunChapter.FlowerGunCollect.Load(tag);
+            LandOfTheLustrousChapter.LandOfTheLustrousCollect.Load(tag);
         }
     }
 }
