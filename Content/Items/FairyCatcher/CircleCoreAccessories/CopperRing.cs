@@ -8,5 +8,6 @@ namespace Coralite.Content.Items.FairyCatcher.CircleCoreAccessories
 {
     public class CopperRing
     {
+
     }
 }

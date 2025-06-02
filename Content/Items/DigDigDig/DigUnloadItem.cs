@@ -87,7 +87,8 @@ namespace Coralite.Content.Items.DigDigDig
 
         public override void LoadData(TagCompound tag)
         {
-            containsItem = tag.Get<Item>("ContainsItem");
+            if (tag.TryGet("ContainsItem", out Item i))
+                containsItem = i;
         }
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)

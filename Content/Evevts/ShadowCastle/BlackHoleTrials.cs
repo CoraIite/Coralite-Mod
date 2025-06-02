@@ -22,7 +22,8 @@ namespace Coralite.Content.Evevts.ShadowCastle
 
         public override void LoadWorldData(TagCompound tag)
         {
-            DownedBlackHoleTrails = tag.Get<bool>("DownedBlackHoleTrails");
+            if (tag.TryGet("DownedBlackHoleTrails",out bool b))
+                DownedBlackHoleTrails = b;
         }
     }
 
