@@ -90,6 +90,8 @@ namespace Coralite.Content.Items.HyacinthSeries
             SunflowerGun,
             Gatligator,
             Aloe,
+
+            Count,
         }
 
         public override void AI()
@@ -292,10 +294,8 @@ namespace Coralite.Content.Items.HyacinthSeries
                 case (int)GunType.Aloe://芦荟
                     return new Color(125,180,145);
                 default:
-                    break;
+                    return Color.White;
             }
-
-            return Color.White;
         }
 
         public override void SendExtraAI(BinaryWriter writer)
@@ -513,7 +513,8 @@ namespace Coralite.Content.Items.HyacinthSeries
         {
             switch (-(int)Projectile.ai[0])
             {
-                default: break;
+                default:
+                    return (int)Projectile.ai[0];
                 case (int)GunType.Wisteria://紫藤萝
                     return ModContent.ItemType<Wisteria>();
                 //case (int)GunType.SuperStarCannon://超级星星炮
@@ -581,8 +582,6 @@ namespace Coralite.Content.Items.HyacinthSeries
                 case (int)GunType.Aloe://芦荟
                     return ModContent.ItemType<Aloe>();
             }
-
-            return (int)Projectile.ai[0];
         }
 
         public override void NetHeldSend(BinaryWriter writer)

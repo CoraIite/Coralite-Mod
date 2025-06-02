@@ -26,6 +26,8 @@ namespace Coralite.Core
         public static Condition UseRuneParchment { get; private set; }
 
         public static Condition DownedRediancie { get; private set; }
+        public static Condition DownedThunderveinDragon { get; private set; }
+        public static Condition DownedNightmarePlantera { get; private set; }
 
         /// <summary>
         /// 解锁染料商
@@ -80,6 +82,10 @@ namespace Coralite.Core
 
             DownedRediancie = new Condition(this.GetLocalization(nameof(DownedRediancie))
                 , () => DownedBossSystem.downedRediancie);
+            DownedThunderveinDragon = new Condition(this.GetLocalization(nameof(DownedThunderveinDragon))
+                , () => DownedBossSystem.downedThunderveinDragon);
+            DownedNightmarePlantera = new Condition(this.GetLocalization(nameof(DownedNightmarePlantera))
+                , () => DownedBossSystem.downedNightmarePlantera);
 
 
             InMagicCrystalCave = new(this.GetLocalization(nameof(InMagicCrystalCave))

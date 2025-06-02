@@ -96,23 +96,27 @@ namespace Coralite.Content.CoraliteNotes
         }
     }
 
-    [AutoLoadTexture(Path = AssetDirectory.CoraliteNote)]
     public class CollectButton : UIElement
     {
-        public static ATex Collect { get; private set; }
-        public static ATex CollectLight { get; private set; }
 
         private readonly int _rewardItemType;
         private readonly bool[] _collects;
         private readonly CoraliteNoteSystem.RewardType _rewardType;
 
-        public CollectButton(int rewardItemType, bool[] collects, CoraliteNoteSystem.RewardType rewardType)
+        private readonly ATex buttonTex;
+        private readonly ATex sparkleTex;
+        private readonly Vector2 sparkleOffset;
+
+        public CollectButton(ATex buttonTex,ATex sparkleTex,Vector2 sparkleOffset,int rewardItemType, bool[] collects, CoraliteNoteSystem.RewardType rewardType)
         {
             _rewardItemType = rewardItemType;
             _collects = collects;
             _rewardType = rewardType;
+            this.buttonTex = buttonTex;
+            this.sparkleTex = sparkleTex;
+            this.sparkleOffset=sparkleOffset;
 
-            Vector2 size = Collect.Size();
+            Vector2 size = buttonTex.Size();
             size.Y /= 3;
             this.SetSize(size);
         }
@@ -128,13 +132,7 @@ namespace Coralite.Content.CoraliteNotes
         {
             base.LeftClick(evt);
 
-            bool allCollect = true;
-            foreach (var c in _collects)
-                if (!c)
-                {
-                    allCollect = false;
-                    break;
-                }
+            bool allCollect = _collects.AllTrue();
 
             //奖励已领取
             if (CoraliteNoteSystem.CollectRewards[(int)_rewardType])
@@ -154,24 +152,18 @@ namespace Coralite.Content.CoraliteNotes
             Vector2 pos = GetDimensions().Center();
             int yFrame = 0;
 
-            bool allCollect = true;
-            foreach (var c in _collects)
-                if (!c)
-                {
-                    allCollect = false;
-                    break;
-                }
+            bool allCollect = _collects.AllTrue();
             if (CoraliteNoteSystem.CollectRewards[(int)_rewardType])
                 yFrame = 2;
             else if (allCollect)
                 yFrame = 1;
 
-            Collect.Value.QuickCenteredDraw(spriteBatch, new Rectangle(0, yFrame, 1, 3)
+            buttonTex.Value.QuickCenteredDraw(spriteBatch, new Rectangle(0, yFrame, 1, 3)
                 , pos, IsMouseHovering ? Color.White : Color.White * 0.75f);
 
             if (yFrame == 1)
             {
-                CollectLight.Value.QuickCenteredDraw(spriteBatch, pos + new Vector2(0, -10)
+                sparkleTex.Value.QuickCenteredDraw(spriteBatch, pos + sparkleOffset
                     , Color.White, 0, 1f + 0.1f * MathF.Sin((int)Main.timeForVisualEffects * 0.2f));
             }
             else if (yFrame == 2)

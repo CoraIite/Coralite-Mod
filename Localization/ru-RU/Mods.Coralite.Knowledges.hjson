@@ -306,3 +306,8 @@ FlyingShieldPage: {
 	// Title: Mods.Coralite.Knowledges.FlyingShieldPage.Title
 	// Description: Mods.Coralite.Knowledges.FlyingShieldPage.Description
 }
+
+FlowerGunPage: {
+	// Title: Mods.Coralite.Knowledges.FlowerGunPage.Title
+	// Description: Mods.Coralite.Knowledges.FlowerGunPage.Description
+}

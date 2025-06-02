@@ -6021,3 +6021,8 @@ HephaesthRelic: {
 	DisplayName: 炼心城圣物
 	Tooltip: 可作为远古锻造炉制作站
 }
+
+HyacinthRelic: {
+	DisplayName: 风信子圣物
+	Tooltip: 净化环境
+}

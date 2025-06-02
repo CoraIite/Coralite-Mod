@@ -40,11 +40,11 @@ namespace Coralite.Content.CoraliteNotes.MagikeInterstitial1
             SkyIslandUnlockGuide.Value.QuickBottomDraw(spriteBatch, Bottom - new Vector2(0, 10));
 
             //绘制光暗魂
-            Vector2 picturePos = new Vector2(Center.X - 60, Center.Y + 100);
+            Vector2 picturePos = new Vector2(Center.X - 57, Center.Y + 103);
             Helper.DrawMouseOverScaleTex(spriteBatch, picturePos,ItemID.SoulofLight
                 , ref _scale1, 3, 5, fadeWithOriginScale: true);
 
-            picturePos = new Vector2(Center.X - 198, Center.Y + 70);
+            picturePos = new Vector2(Center.X - 197, Center.Y + 70);
             Helper.DrawMouseOverScaleTex(spriteBatch, picturePos,ItemID.SoulofNight
                 , ref _scale2, 3, 5, fadeWithOriginScale: true);
         }

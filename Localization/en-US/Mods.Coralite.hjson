@@ -39,6 +39,8 @@ Conditions: {
 		UseShlimmerTranslation: Mods.Coralite.Conditions.CoraliteConditions.UseShlimmerTranslation
 		UseRuneParchment: Mods.Coralite.Conditions.CoraliteConditions.UseRuneParchment
 		DownedRediancie: Mods.Coralite.Conditions.CoraliteConditions.DownedRediancie
+		DownedThunderveinDragon: Mods.Coralite.Conditions.CoraliteConditions.DownedThunderveinDragon
+		DownedNightmarePlantera: Mods.Coralite.Conditions.CoraliteConditions.DownedNightmarePlantera
 	}
 }
 

@@ -6,7 +6,6 @@ using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
-using Terraria.GameContent.Biomes;
 using Terraria.ModLoader.UI;
 using Terraria.UI;
 
@@ -22,6 +21,7 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
         Reel,
         Ball,
         Coral,
+        Normal,
     }
 
     [AutoLoadTexture(Path = AssetDirectory.NoteReadfragment)]
@@ -32,6 +32,7 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
         public static ATex KnowledgeButtenReel { get; private set; }
         public static ATex KnowledgeButtenBall { get; private set; }
         public static ATex KnowledgeButtenCoral { get; private set; }
+        public static ATex KnowledgeButtenNormal { get; private set; }
 
         public static ATex NewKnowledge { get; private set; }
     }
@@ -87,6 +88,7 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
                 KnowledgeButtonType.Reel => KnowledgeButtenTex.KnowledgeButtenReel.Value,
                 KnowledgeButtonType.Ball => KnowledgeButtenTex.KnowledgeButtenBall.Value,
                 KnowledgeButtonType.Coral => KnowledgeButtenTex.KnowledgeButtenCoral.Value,
+                KnowledgeButtonType.Normal => KnowledgeButtenTex.KnowledgeButtenNormal.Value,
                 _ => KnowledgeButtenTex.KnowledgeButtenRune.Value,
             };
 

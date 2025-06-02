@@ -3,7 +3,7 @@ DescriptionPage: {
 	HowToUse:
 		'''
 		点击页面下边缘的按钮或使用鼠标滚轮翻页
-		    再次使用珊瑚笔记或按下背包键关闭
+		   点击左上角关闭标签或按下背包键关闭
 		'''
 }
 
@@ -414,4 +414,9 @@ FlyingShieldPage: {
 		    
 		    这简直太不可思议了！!
 		'''
+}
+
+FlowerGunPage: {
+	Title: 花之枪
+	Description: " \n  "
 }

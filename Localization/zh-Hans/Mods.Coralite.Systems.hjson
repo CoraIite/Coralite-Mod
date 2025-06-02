@@ -217,6 +217,12 @@ KnowledgeSystem: {
 			防御攻击！
 			'''
 	}
+
+	FlowerGunKnowledge: {
+		Name: 花之枪
+		LockTip: 获得任意使用子弹作为弹药的武器后解锁
+		Description: 在掌中绽放的毁灭性力量
+	}
 }
 
 CoraliteBeatiaryDatabase.CrystallineSkyIsland: 蕴魔空岛
@@ -227,4 +233,5 @@ CoraliteNoteSystem: {
 	CollectAllItems: 收集所有物品吧！
 	ClickGetReward: 点击获取奖励
 	RewardCollected: 奖励已获得
+	HowToCollect: 获得物品后需要打开此页面才能记录收集进度
 }

@@ -1,4 +1,5 @@
 ﻿using Coralite.Helpers;
+using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Localization;
@@ -22,11 +23,15 @@ namespace Coralite.Content.CoraliteNotes
         /// <summary> 奖励已收集 </summary>
         public static LocalizedText RewardCollected;
 
+        /// <summary> 收集提示 </summary>
+        public static LocalizedText HowToCollect;
+
         public string LocalizationCategory => "Systems";
 
         public enum RewardType
         {
             FlyingShield,
+            FlowerGun,
 
             Count,
         }
@@ -38,9 +43,12 @@ namespace Coralite.Content.CoraliteNotes
 
             CollectProgress = this.GetLocalization(nameof(CollectProgress));
             AllCollect = this.GetLocalization(nameof(AllCollect));
+
             CollectAllItems = this.GetLocalization(nameof(CollectAllItems));
             ClickGetReward = this.GetLocalization(nameof(ClickGetReward));
             RewardCollected = this.GetLocalization(nameof(RewardCollected));
+
+            HowToCollect = this.GetLocalization(nameof(HowToCollect));
         }
 
         /// <summary>
@@ -60,12 +68,21 @@ namespace Coralite.Content.CoraliteNotes
         {
             tag.SaveBools(CollectRewards, nameof(CollectRewards));
             FlyingShieldChapter.FlyingShieldCollect.Save(tag);
+            FlowerGunChapter.FlowerGunCollect.Save(tag);
+        }
+
+        public override void OnWorldLoad()
+        {
+            Array.Fill(CollectRewards, false);
+            Array.Fill(FlyingShieldChapter.FlyingShieldCollect.Unlocks, false);
+            Array.Fill(FlowerGunChapter.FlowerGunCollect.Unlocks, false);
         }
 
         public override void LoadWorldData(TagCompound tag)
         {
             tag.LoadBools(CollectRewards, nameof(CollectRewards));
             FlyingShieldChapter.FlyingShieldCollect.Load(tag);
+            FlowerGunChapter.FlowerGunCollect.Load(tag);
         }
     }
 }

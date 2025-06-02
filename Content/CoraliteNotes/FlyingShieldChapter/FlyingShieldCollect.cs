@@ -5,7 +5,6 @@ using Coralite.Core.Attributes;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader.IO;
 using static Terraria.ModLoader.ModContent;
 
@@ -17,6 +16,8 @@ namespace Coralite.Content.CoraliteNotes.FlyingShieldChapter
         public static bool[] Unlocks = new bool[(int)KeyFlyingShields.Count];
 
         public static ATex HephaesthCollect { get; private set; }
+        public static ATex FlyingShieldCollectButton { get; private set; }
+        public static ATex FlyingShieldCollectButtonLight { get; private set; }
 
         public enum KeyFlyingShields
         {
@@ -38,11 +39,6 @@ namespace Coralite.Content.CoraliteNotes.FlyingShieldChapter
             Noctiflair,
             Hephaesth,
             Count,
-        }
-
-        public override void OnInitialize()
-        {
-            base.OnInitialize();
         }
 
         public override void Recalculate()
@@ -106,7 +102,8 @@ namespace Coralite.Content.CoraliteNotes.FlyingShieldChapter
             NewImage<Hephaesth>(center, Condition.DownedMoonLord
                 , KeyFlyingShields.Hephaesth, CollectImage.LockIconType.Big, 3);
 
-            var button = new CollectButton(ItemType<HephaesthRelic>(), Unlocks, CoraliteNoteSystem.RewardType.FlyingShield);
+            var button = new CollectButton(FlyingShieldCollectButton, FlyingShieldCollectButtonLight
+                , new Vector2(0, -10), ItemType<HephaesthRelic>(), Unlocks, CoraliteNoteSystem.RewardType.FlyingShield);
             button.SetCenter(new Vector2(PageWidth / 2, PageHeight - 40));
             Append(button);
         }
@@ -135,6 +132,8 @@ namespace Coralite.Content.CoraliteNotes.FlyingShieldChapter
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
             HephaesthCollect.Value.QuickCenteredDraw(spriteBatch, Center);
+
+            DrawCollectTip(spriteBatch, Unlocks);
 
             Vector2 pos = Bottom + new Vector2(0, -30);
             DrawCollectText(spriteBatch, Unlocks, pos + new Vector2(-150, 0));

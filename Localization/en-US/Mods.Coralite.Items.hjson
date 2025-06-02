@@ -5875,3 +5875,8 @@ HephaesthRelic: {
 	DisplayName: Hephaesth Relic
 	Tooltip: ""
 }
+
+HyacinthRelic: {
+	DisplayName: Hyacinth Relic
+	Tooltip: ""
+}
