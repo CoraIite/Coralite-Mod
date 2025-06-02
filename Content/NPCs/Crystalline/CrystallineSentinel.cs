@@ -29,8 +29,16 @@ namespace Coralite.Content.NPCs.Crystalline
         [AutoLoadTexture(Name = "CrystallineSentinelExchange")]
         public static ATex ExchangeTex { get; private set; }
 
+        [AutoLoadTexture(Name = "CrystallineSentinelP2")]
+        public static ATex P2Head { get; private set; }
+        [AutoLoadTexture(Name = "CrystallineSentinelP2Float")]
+        public static ATex P2Float { get; private set; }
+
         private SecondOrderDynamics_Vec2[] FloatStoneMoves;
         private Vector2[] FloatStonePos;
+
+        private SecondOrderDynamics_Vec2 P2FloatMover;
+        private Vector2 P2FloatCenter;
 
         private AIStates State
         {
@@ -238,6 +246,7 @@ namespace Coralite.Content.NPCs.Crystalline
                     Exchange();
                     break;
                 case AIStates.P2Idle:
+                    P2Idle();
                     break;
                 case AIStates.P2Rolling:
                     break;
@@ -536,6 +545,31 @@ namespace Coralite.Content.NPCs.Crystalline
 
         #endregion
 
+        #region 二阶段非攻击状态
+
+        public void P2Idle()
+        {
+            if (++NPC.frameCounter>3)
+            {
+                NPC.frameCounter = 0;
+                if (++NPC.frame.Y > 7)
+                    NPC.frame.Y = 0;
+            }
+
+            P2FloatCenter = P2FloatMover.Update(1 / 60f, GetP2FloatPos);
+
+            Timer++;
+            if (Timer > 180)
+            {
+                Timer = 0;
+                SwitchStateP1(AIStates.Exchange);
+            }
+        }
+
+        #endregion
+
+        public Vector2 GetP2FloatPos => NPC.Center + new Vector2(-NPC.spriteDirection*4, 18);
+
         public void Exchange()
         {
             NPC.velocity.X *= 0;
@@ -549,6 +583,12 @@ namespace Coralite.Content.NPCs.Crystalline
             if (Timer > 5 * 18)
             {
                 SwitchStateP2(AIStates.P2Idle, 60);
+
+                SetFrame(0, 0);
+                P2FloatCenter = GetP2FloatPos;
+                P2FloatMover = new SecondOrderDynamics_Vec2(0.6f, 0.8f, 0, GetP2FloatPos);
+
+
                 return;
             }
 
@@ -721,11 +761,13 @@ namespace Coralite.Content.NPCs.Crystalline
 
                         Rectangle frameBox = tex.Frame(1, 19, NPC.frame.X, NPC.frame.Y);
 
-                        spriteBatch.Draw(tex, NPC.Center - screenPos + new Vector2(NPC.spriteDirection * 0, -22), frameBox, drawColor
+                        spriteBatch.Draw(tex, NPC.Center - screenPos + new Vector2(0, -22), frameBox, drawColor
                             , NPC.rotation, frameBox.Size() / 2, NPC.scale, effect, 0);
                     }
                     break;
                 case AIStates.P2Idle:
+                    DrawP2Float(spriteBatch, screenPos, effect, drawColor);
+                    DrawP2Head(spriteBatch, screenPos, effect, drawColor);
                     break;
                 case AIStates.P2Rolling:
                     break;
@@ -736,6 +778,22 @@ namespace Coralite.Content.NPCs.Crystalline
             }
 
             return false;
+        }
+
+        public void DrawP2Float(SpriteBatch spriteBatch, Vector2 screenPos, SpriteEffects effect, Color drawColor)
+        {
+            Texture2D tex = P2Float.Value;
+
+            Rectangle frameBox = tex.Frame(1, 8, 0, NPC.frame.Y);
+
+            spriteBatch.Draw(tex, P2FloatCenter - screenPos, frameBox, drawColor
+                , 0, frameBox.Size() / 2, NPC.scale, effect, 0);
+        }
+
+        public void DrawP2Head(SpriteBatch spriteBatch,Vector2 screenPos,SpriteEffects effect,Color drawColor)
+        {
+            spriteBatch.Draw(P2Head.Value, NPC.Center - screenPos + new Vector2(0, -10), null, drawColor
+                , NPC.rotation, P2Head.Size() / 2, NPC.scale, effect, 0);
         }
 
         public void DrawGuard(SpriteBatch spriteBatch, Vector2 screenPos)

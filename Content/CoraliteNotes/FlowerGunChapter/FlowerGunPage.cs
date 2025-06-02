@@ -22,7 +22,7 @@ namespace Coralite.Content.CoraliteNotes.FlowerGunChapter
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            DrawTitleH1(spriteBatch, Title, Color.LightSteelBlue);
+            DrawTitleH1(spriteBatch, Title, Color.Red);
             DrawParaNormal(spriteBatch, Description, Position.Y + TitleHeight, out _);
 
             Texture2D tex = FlowerGun.Value;

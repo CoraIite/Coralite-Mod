@@ -32,6 +32,7 @@ namespace Coralite.Content.CoraliteNotes
                     new MagikeChapter2.GroupMagikeChapter2(),
 
                     new FlyingShieldChapter.GroupFlyingShield(),
+                    new FlowerGunChapter.GroupFlowerGun(),
                 ];
         }
 

@@ -52,7 +52,7 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
             SlotGrid.Clear();
 
             SlotGrid.Add(new KnowledgeButten<FlyingShieldChapter.FlyingShieldKnowledge>(KnowledgeButtonType.Normal));
-            //SlotGrid.Add(new KnowledgeButten<FlowerGunChapter.FlowerGunKnowledge>(KnowledgeButtonType.Normal));
+            SlotGrid.Add(new KnowledgeButten<FlowerGunChapter.FlowerGunKnowledge>(KnowledgeButtonType.Normal));
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)

@@ -10,7 +10,7 @@ using Terraria.UI.Chat;
 
 namespace Coralite.Content.CoraliteNotes.Readfragment
 {
-    [AutoLoadTexture(Path =AssetDirectory.NoteReadfragment)]
+    [AutoLoadTexture(Path = AssetDirectory.NoteReadfragment)]
     public class FragmentPage : KnowledgePage
     {
         public static LocalizedText ClickToJump { get; set; }

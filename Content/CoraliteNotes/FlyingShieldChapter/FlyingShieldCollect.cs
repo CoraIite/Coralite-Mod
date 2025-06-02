@@ -5,7 +5,6 @@ using Coralite.Core.Attributes;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.ModLoader.Default;
 using Terraria.ModLoader.IO;
 using static Terraria.ModLoader.ModContent;
 
@@ -17,6 +16,8 @@ namespace Coralite.Content.CoraliteNotes.FlyingShieldChapter
         public static bool[] Unlocks = new bool[(int)KeyFlyingShields.Count];
 
         public static ATex HephaesthCollect { get; private set; }
+        public static ATex FlyingShieldCollectButton { get; private set; }
+        public static ATex FlyingShieldCollectButtonLight { get; private set; }
 
         public enum KeyFlyingShields
         {
@@ -101,7 +102,8 @@ namespace Coralite.Content.CoraliteNotes.FlyingShieldChapter
             NewImage<Hephaesth>(center, Condition.DownedMoonLord
                 , KeyFlyingShields.Hephaesth, CollectImage.LockIconType.Big, 3);
 
-            var button = new CollectButton(ItemType<HephaesthRelic>(), Unlocks, CoraliteNoteSystem.RewardType.FlyingShield);
+            var button = new CollectButton(FlyingShieldCollectButton, FlyingShieldCollectButtonLight
+                , new Vector2(0, -10), ItemType<HephaesthRelic>(), Unlocks, CoraliteNoteSystem.RewardType.FlyingShield);
             button.SetCenter(new Vector2(PageWidth / 2, PageHeight - 40));
             Append(button);
         }

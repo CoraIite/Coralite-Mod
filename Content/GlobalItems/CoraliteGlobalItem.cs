@@ -1,8 +1,10 @@
+using Coralite.Content.CoraliteNotes.FlowerGunChapter;
 using Coralite.Content.Items.Materials;
 using Coralite.Content.Items.Misc_Melee;
 using Coralite.Content.ModPlayers;
 using Coralite.Content.WorldGeneration;
 using Coralite.Core;
+using Coralite.Core.Systems.KeySystem;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;
@@ -316,6 +318,8 @@ namespace Coralite.Content.GlobalItems
         public override void UpdateInventory(Item item, Player player)
         {
             CoralCatWorldTransForm(item);
+            if (item.useAmmo == AmmoID.Bullet)
+                KnowledgeSystem.CheckForUnlock<FlowerGunKnowledge>(player.Center, Color.Red);
         }
 
         public override void Update(Item item, ref float gravity, ref float maxFallSpeed)

@@ -219,9 +219,9 @@ KnowledgeSystem: {
 	}
 
 	FlowerGunKnowledge: {
-		// Name: Mods.Coralite.Systems.KnowledgeSystem.FlowerGunKnowledge.Name
-		// LockTip: Mods.Coralite.Systems.KnowledgeSystem.FlowerGunKnowledge.LockTip
-		// Description: Mods.Coralite.Systems.KnowledgeSystem.FlowerGunKnowledge.Description
+		Name: 花之枪
+		LockTip: 获得任意使用子弹作为弹药的武器后解锁
+		Description: 在掌中绽放的毁灭性力量
 	}
 }
 
