@@ -26,9 +26,13 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public bool active;
 
         /// <summary>
-        /// 0-100的捕获进度，到达100则表示捉到，初始值为20
+        /// 捕捉最大值
         /// </summary>
-        public float catchProgress = 20f;
+        public float CatchProgressMax;
+        /// <summary>
+        /// 捕捉进度
+        /// </summary>
+        public float catchProgress;
 
         public Vector2 position;
         public Vector2 velocity;
@@ -52,6 +56,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             Catching,
             Fading
         }
+
 
         /// <summary>
         /// 为false时就不会能被捉，进度不会涨
