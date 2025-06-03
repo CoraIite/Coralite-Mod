@@ -34,11 +34,23 @@ namespace Coralite.Content.NPCs.Crystalline
         [AutoLoadTexture(Name = "CrystallineSentinelP2Float")]
         public static ATex P2Float { get; private set; }
 
+        [AutoLoadTexture(Name = "CrystallineSentinelHand")]
+        public static ATex HandTex { get; private set; }
+        [AutoLoadTexture(Name = "CrystallineSentinelP2Spurt")]
+        public static ATex P2SpurtTex { get; private set; }
+
         private SecondOrderDynamics_Vec2[] FloatStoneMoves;
         private Vector2[] FloatStonePos;
 
         private SecondOrderDynamics_Vec2 P2FloatMover;
         private Vector2 P2FloatCenter;
+
+        private SecondOrderDynamics_Vec2[] P2HandMover;
+        private Vector2[] P2HandCenter;
+        private int[] P2HandFrame;
+        private int[] P2HandFrameCounter;
+
+        private const int MaxHandFrame=12;
 
         private AIStates State
         {
@@ -556,7 +568,11 @@ namespace Coralite.Content.NPCs.Crystalline
                     NPC.frame.Y = 0;
             }
 
+            NPC.direction = Target.Center.X > NPC.Center.X ? 1 : -1;
+            NPC.spriteDirection = NPC.direction;
+
             P2FloatCenter = P2FloatMover.Update(1 / 60f, GetP2FloatPos);
+            UpdateP2HandPosNormally();
 
             Timer++;
             if (Timer > 180)
@@ -569,6 +585,14 @@ namespace Coralite.Content.NPCs.Crystalline
         #endregion
 
         public Vector2 GetP2FloatPos => NPC.Center + new Vector2(-NPC.spriteDirection*4, 18);
+        public Vector2 P2LeftHandPos => NPC.Center + new Vector2(-2, -24);
+        public Vector2 P2RightHandPos => NPC.Center + new Vector2(-4, -23);
+
+        public void UpdateP2HandPosNormally()
+        {
+            P2HandCenter[0] = P2HandMover[0].Update(1 / 60f, P2LeftHandPos);
+            P2HandCenter[1] = P2HandMover[1].Update(1 / 60f, P2RightHandPos);
+        }
 
         public void Exchange()
         {
@@ -588,6 +612,17 @@ namespace Coralite.Content.NPCs.Crystalline
                 P2FloatCenter = GetP2FloatPos;
                 P2FloatMover = new SecondOrderDynamics_Vec2(0.6f, 0.8f, 0, GetP2FloatPos);
 
+                P2HandCenter = [
+                    P2LeftHandPos,
+                    P2RightHandPos,
+                    ];
+                P2HandMover = [
+                    new SecondOrderDynamics_Vec2(0.8f, 0.8f, 0, P2LeftHandPos),
+                    new SecondOrderDynamics_Vec2(0.8f, 0.8f, 0, P2RightHandPos),
+                    ];
+
+                P2HandFrame = [MaxHandFrame, MaxHandFrame];
+                P2HandFrameCounter = [0, 0];
 
                 return;
             }
@@ -766,8 +801,22 @@ namespace Coralite.Content.NPCs.Crystalline
                     }
                     break;
                 case AIStates.P2Idle:
+
+                    bool faceLeft = NPC.spriteDirection < 0;
+
+                    if (faceLeft)
+                        DrawP2Hand(spriteBatch, screenPos, effect, drawColor,0);
+                    else
+                        DrawP2Hand(spriteBatch, screenPos, effect, drawColor, 1);
+
                     DrawP2Float(spriteBatch, screenPos, effect, drawColor);
                     DrawP2Head(spriteBatch, screenPos, effect, drawColor);
+
+                    if (faceLeft)
+                        DrawP2Hand(spriteBatch, screenPos, effect, drawColor, 1);
+                    else
+                        DrawP2Hand(spriteBatch, screenPos, effect, drawColor, 0);
+
                     break;
                 case AIStates.P2Rolling:
                     break;
@@ -778,6 +827,24 @@ namespace Coralite.Content.NPCs.Crystalline
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// 0左手，1右手
+        /// </summary>
+        /// <param name="spriteBatch"></param>
+        /// <param name="screenPos"></param>
+        /// <param name="effect"></param>
+        /// <param name="drawColor"></param>
+        /// <param name="leftOrRight"></param>
+        public void DrawP2Hand(SpriteBatch spriteBatch, Vector2 screenPos, SpriteEffects effect, Color drawColor,int leftOrRight)
+        {
+            Texture2D tex = HandTex.Value;
+
+            Rectangle frameBox = tex.Frame(2, 13, leftOrRight, P2HandFrame[leftOrRight]);
+
+            spriteBatch.Draw(tex, P2HandCenter[leftOrRight] - screenPos, frameBox, drawColor
+                , 0, frameBox.Size() / 2, NPC.scale, effect, 0);
         }
 
         public void DrawP2Float(SpriteBatch spriteBatch, Vector2 screenPos, SpriteEffects effect, Color drawColor)
