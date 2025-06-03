@@ -1,13 +1,13 @@
-﻿using Coralite.Core.Attributes;
-using Coralite.Core;
+﻿using Coralite.Core;
+using Coralite.Core.Attributes;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader.UI;
 using Terraria.UI;
-using System;
 
 namespace Coralite.Content.CoraliteNotes
 {
@@ -159,7 +159,7 @@ namespace Coralite.Content.CoraliteNotes
                 yFrame = 1;
 
             buttonTex.Value.QuickCenteredDraw(spriteBatch, new Rectangle(0, yFrame, 1, 3)
-                , pos, IsMouseHovering ? Color.White : Color.White * 0.75f);
+                , pos, IsMouseHovering ? Color.White : Color.White * (allCollect ? 1 : 0.65f));
 
             if (yFrame == 1)
             {
