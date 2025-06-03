@@ -71,14 +71,17 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             //获取魔能容器并检测能否发送魔能
             MagikeContainer container = Entity.GetMagikeContainer();
             if (!GetSendAmount(container, out int amount))
+            {
+                RecheckConnect();
                 return;
+            }
 
             //直接发送
             for (int i = 0; i < _receivers.Count; i++)
             {
-                if (!container.HasMagike)//自身没魔能了就跳出
-                    break;
                 Send(container, _receivers[i], amount);
+                //if (!container.HasMagike)//自身没魔能了就跳出  //2025.6.3：不需要这东西
+                //    break;
             }
         }
 
@@ -517,6 +520,10 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             {
                 MagikeApparatusPanel.DrawExtras.Add((spriteBatch) =>
                 {
+                    bool indexInRange = _sender.Receivers.IndexInRange(_index);
+                    if (!indexInRange)
+                        return;
+
                     spriteBatch.End();
                     spriteBatch.Begin(default, BlendState.AlphaBlend, SamplerState.PointWrap, default, default, null, Main.GameViewMatrix.TransformationMatrix);
 
