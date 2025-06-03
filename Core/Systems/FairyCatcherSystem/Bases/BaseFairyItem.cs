@@ -32,7 +32,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         private static int showRadarCount;
 
         public abstract int FairyType { get; }
-        public abstract FairyAttempt.Rarity Rarity { get; }
+        public abstract FairyRarity Rarity { get; }
         public FairyData IV { get => fairyData; set => fairyData = value; }
         public bool IsDead => dead;
         public int Life { get => life; set => life = value; }
@@ -470,7 +470,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         public float FairyLifeMax { get; }
         public int FairyType { get; }
         public float FairyDamage { get; }
-        public FairyAttempt.Rarity Rarity { get; }
+        public FairyRarity Rarity { get; }
 
         /// <summary>
         /// 返回值是仙灵是否死亡

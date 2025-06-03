@@ -219,7 +219,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                 attempt.Y = (int)spawnPos.Y / 16;
                 attempt.Player = Owner;
 
-                attempt.rarity = SetFairyAttemptRarity();
+                //attempt.rarity = SetFairyAttemptRarity();
 
                 fcp.FairyCatch_GetBait(out Item bait);
                 if (bait != null)
@@ -268,23 +268,23 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         #region 子类可用方法
 
-        public FairyAttempt.Rarity SetFairyAttemptRarity()
+        public FairyRarity SetFairyAttemptRarity()
         {
-            FairyAttempt.Rarity rarity;
+            FairyRarity rarity;
             int randomNumber = Owner.RollLuck(1000);
 
             if (randomNumber == 999)//0.1%概率为UR
-                rarity = FairyAttempt.Rarity.UR;
+                rarity = FairyRarity.UR;
             else if (randomNumber > 999 - 10)//1%概率为SR
-                rarity = FairyAttempt.Rarity.SR;
+                rarity = FairyRarity.SR;
             else if (randomNumber > 999 - 10 - 50)//5%概率为RR
-                rarity = FairyAttempt.Rarity.RR;
+                rarity = FairyRarity.RR;
             else if (randomNumber > 999 - 10 - 50 - 100)//10%概率为RR
-                rarity = FairyAttempt.Rarity.R;
+                rarity = FairyRarity.R;
             else if (randomNumber > 999 - 10 - 50 - 100 - 150)//15%概率为RR
-                rarity = FairyAttempt.Rarity.U;
+                rarity = FairyRarity.U;
             else//其他时候为C
-                rarity = FairyAttempt.Rarity.C;
+                rarity = FairyRarity.C;
 
             return rarity;
         }

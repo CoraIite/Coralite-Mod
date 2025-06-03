@@ -11,7 +11,7 @@ namespace Coralite.Content.Items.Fairies
     public class CandyFairyItem : BaseFairyItem
     {
         public override int FairyType => CoraliteContent.FairyType<CandyFairy>();
-        public override FairyAttempt.Rarity Rarity => FairyAttempt.Rarity.U;
+        public override FairyRarity Rarity => FairyRarity.U;
 
         public override int MaxResurrectionTime => 90 * 60;
 
@@ -34,7 +34,7 @@ namespace Coralite.Content.Items.Fairies
         public override int ItemType => ModContent.ItemType<CandyFairyItem>();
         public override int VerticalFrames => 4;
 
-        public override FairyAttempt.Rarity Rarity => FairyAttempt.Rarity.U;
+        public override FairyRarity Rarity => FairyRarity.U;
 
         public bool RandomRolling;
 

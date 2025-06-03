@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using FairyRarity = Coralite.Core.Systems.FairyCatcherSystem.FairyAttempt.Rarity;
+using FairyRarity = Coralite.Core.Systems.FairyCatcherSystem.FairyRarity;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem
 {

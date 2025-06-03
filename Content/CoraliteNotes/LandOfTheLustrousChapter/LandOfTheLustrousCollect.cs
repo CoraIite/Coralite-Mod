@@ -49,7 +49,6 @@ namespace Coralite.Content.CoraliteNotes.LandOfTheLustrousChapter
 
         public void AddImages()
         {
-            int y = -400;
             Vector2 center = new Vector2(PageWidth / 2, PageHeight / 2 - 80);
 
             NewImage<PyropeCrown>(center + new Vector2(-10, 310), null

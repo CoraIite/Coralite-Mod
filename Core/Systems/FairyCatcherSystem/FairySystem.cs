@@ -120,7 +120,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             FairyCaught[fairy.Type] = true;
         }
 
-        public static string GetRarityDescription(Rarity rarity)
+        public static string GetRarityDescription(FairyRarity rarity)
         {
             if (RarityText.TryGetValue(rarity, out Terraria.Localization.LocalizedText value))
                 return value.Value;
@@ -128,7 +128,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             return Rarity_SP.Value;//特殊
         }
 
-        public static Color GetRarityColor(Rarity rarity)
+        public static Color GetRarityColor(FairyRarity rarity)
         {
             if (RarityColors.TryGetValue(rarity, out Color value))
                 return value;

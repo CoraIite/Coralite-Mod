@@ -13,7 +13,7 @@ namespace Coralite.Content.Items.Fairies
     public class GreenFairyItem : BaseFairyItem
     {
         public override int FairyType => CoraliteContent.FairyType<GreenFairy>();
-        public override FairyAttempt.Rarity Rarity => FairyAttempt.Rarity.C;
+        public override FairyRarity Rarity => FairyRarity.C;
 
         public override int MaxResurrectionTime => 60 * 60;
 

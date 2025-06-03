@@ -11,7 +11,7 @@ namespace Coralite.Content.Items.Fairies
     public class PinkFairyItem : BaseFairyItem
     {
         public override int FairyType => CoraliteContent.FairyType<PinkFairy>();
-        public override FairyAttempt.Rarity Rarity => FairyAttempt.Rarity.R;
+        public override FairyRarity Rarity => FairyRarity.R;
 
         public override int MaxResurrectionTime => 60 * 60;
 
@@ -34,7 +34,7 @@ namespace Coralite.Content.Items.Fairies
         public override int ItemType => ModContent.ItemType<PinkFairyItem>();
         public override int VerticalFrames => 4;
 
-        public override FairyAttempt.Rarity Rarity => FairyAttempt.Rarity.R;
+        public override FairyRarity Rarity => FairyRarity.R;
 
         public override void RegisterSpawn()
         {

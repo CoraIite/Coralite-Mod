@@ -9,9 +9,9 @@ using Terraria.UI;
 
 namespace Coralite.Content.UI.FairyEncyclopedia
 {
-    public class SelectButton(Asset<Texture2D> texture, FairyAttempt.Rarity? rarity) : UIImageButton(texture)
+    public class SelectButton(Asset<Texture2D> texture, FairyRarity? rarity) : UIImageButton(texture)
     {
-        private readonly FairyAttempt.Rarity? _rarity = rarity;
+        private readonly FairyRarity? _rarity = rarity;
 
         public override void LeftClick(UIMouseEvent evt)
         {

@@ -24,6 +24,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// 是否存活，在捕捉器内使用
         /// </summary>
         public bool active;
+        /// <summary>
+        /// BOSS级仙灵，会阻止其他仙灵生成
+        /// </summary>
+        public bool BOSS;
 
         /// <summary>
         /// 捕捉最大值
@@ -76,9 +80,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         /// <summary>
         /// 自身的稀有度，请与出现条件中的相对应
-        /// <br>默认<see cref=" FairyAttempt.Rarity.C"/></br>
+        /// <br>默认<see cref=" FairyRarity.C"/></br>
         /// </summary>
-        public virtual FairyAttempt.Rarity Rarity => FairyAttempt.Rarity.C;
+        public virtual FairyRarity Rarity => FairyRarity.C;
         /// <summary>
         /// 物品类型
         /// </summary>

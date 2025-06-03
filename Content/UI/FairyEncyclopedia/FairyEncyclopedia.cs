@@ -75,7 +75,7 @@ namespace Coralite.Content.UI.FairyEncyclopedia
         public static UpdateState State;
         public static SortStyle CurrentSortStyle;
 
-        public static Rarity? selectType = null;
+        public static FairyRarity? selectType = null;
 
         private List<Fairy> fairies;
 
@@ -220,11 +220,11 @@ namespace Coralite.Content.UI.FairyEncyclopedia
             SelectButton AllButton = new(circleButtonTex, null);//生成默认按钮
             AllButton.SetHoverImage(circleButtonHoverTex);
             buttonsGrid.Add(AllButton);
-            SelectButton SPButton = new(circleButtonTex, (Rarity)(-1));
+            SelectButton SPButton = new(circleButtonTex, (FairyRarity)(-1));
             SPButton.SetHoverImage(circleButtonHoverTex);
             buttonsGrid.Add(SPButton);
 
-            Rarity[] rarities = Enum.GetValues<Rarity>();//生成所有的稀有度按钮
+            FairyRarity[] rarities = Enum.GetValues<FairyRarity>();//生成所有的稀有度按钮
 
             foreach (var rairty in rarities)
             {
@@ -433,7 +433,7 @@ namespace Coralite.Content.UI.FairyEncyclopedia
         /// 传入小于0的数时为选择除了已有的稀有度以外的特别稀有度
         /// </summary>
         /// <param name="targetRarity"></param>
-        public void Select(FairyAttempt.Rarity? targetRarity)
+        public void Select(FairyRarity? targetRarity)
         {
             selectType = targetRarity;
             fairies.Clear();
