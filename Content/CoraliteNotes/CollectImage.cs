@@ -98,7 +98,7 @@ namespace Coralite.Content.CoraliteNotes
 
     public class CollectButton : UIElement
     {
-
+        public Vector2 ItemPosOffset;
         private readonly int _rewardItemType;
         private readonly bool[] _collects;
         private readonly CoraliteNoteSystem.RewardType _rewardType;
@@ -170,7 +170,7 @@ namespace Coralite.Content.CoraliteNotes
             {
                 Helper.GetItemTexAndFrame(_rewardItemType, out Texture2D itemTex, out Rectangle frameBox);
 
-                spriteBatch.Draw(itemTex, pos, frameBox, Color.White, 0, frameBox.Size() / 2, 1, 0, 0);
+                spriteBatch.Draw(itemTex, pos+ItemPosOffset, frameBox, Color.White, 0, frameBox.Size() / 2, 1, 0, 0);
             }
 
             if (IsMouseHovering)

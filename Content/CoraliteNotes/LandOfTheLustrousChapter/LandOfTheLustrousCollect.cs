@@ -84,6 +84,7 @@ namespace Coralite.Content.CoraliteNotes.LandOfTheLustrousChapter
 
             var button = new CollectButton(LandOfTheLustrousCollectButton, LandOfTheLustrousCollectButtonLight
                 , new Vector2(0, -10), ItemType<LandOfTheLustrousRelic>(), Unlocks, CoraliteNoteSystem.RewardType.LandOfTheLustrous);
+            button.ItemPosOffset = new Vector2(0, -10);
             button.SetCenter(new Vector2(PageWidth / 2, 188));
             Append(button);
         }
@@ -115,9 +116,9 @@ namespace Coralite.Content.CoraliteNotes.LandOfTheLustrousChapter
 
             DrawCollectTip(spriteBatch, Unlocks);
 
-            Vector2 pos = PageTop + new Vector2(0, 132);
-            DrawCollectText(spriteBatch, Unlocks, pos + new Vector2(7, -17));
-            DrawCollectProgress(spriteBatch, Unlocks, pos + new Vector2(0, 17));
+            Vector2 pos = PageTop + new Vector2(0, 120);
+            DrawCollectText(spriteBatch, Unlocks, pos + new Vector2(7, -15));
+            DrawCollectProgress(spriteBatch, Unlocks, pos + new Vector2(0, 15));
         }
     }
 }

@@ -28,7 +28,7 @@ namespace Coralite.Content.CoraliteNotes.FlowerGunChapter
             Texture2D tex = FlowerGun.Value;
 
             //绘制图2
-            tex.QuickBottomDraw(spriteBatch, Bottom - new Vector2(0, 10));
+            tex.QuickBottomDraw(spriteBatch, Bottom - new Vector2(0, 5));
         }
     }
 }
