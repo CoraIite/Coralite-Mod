@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Biomes;
 using Coralite.Core;
+using Coralite.Core.Systems.BossSystems;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Generation;
@@ -36,6 +37,21 @@ namespace Coralite.Content.WorldGeneration
         {
             Vector2 myVector = Main.MouseWorld;
             Point p = myVector.ToTileCoordinates();
+
+            NPC.downedBoss1 = true;
+            NPC.downedBoss2 = true;
+            NPC.downedGolemBoss = true;
+            NPC.downedPlantBoss = true;
+            NPC.downedMartians = true;
+            NPC.downedMoonlord = true;
+            NPC.downedTowerNebula = true;
+            NPC.downedBoss3 = true;
+            NPC.downedQueenSlime = true;
+            NPC.downedMechBoss1 = true;
+            NPC.downedMechBoss2 = true;
+            NPC.downedMechBoss3 = true;
+            Main.hardMode = true;
+            DownedBossSystem.downedNightmarePlantera = true;
 
             //WorldGen.paintTile();
             //WorldGen.paintWall();

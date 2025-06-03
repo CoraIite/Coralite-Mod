@@ -5917,3 +5917,8 @@ HyacinthRelic: {
 	// DisplayName: Hyacinth Relic
 	// Tooltip: ""
 }
+
+LandOfTheLustrousRelic: {
+	// DisplayName: Land Of The Lustrous Relic
+	// Tooltip: ""
+}

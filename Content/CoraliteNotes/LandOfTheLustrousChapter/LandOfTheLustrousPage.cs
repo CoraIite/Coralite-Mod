@@ -22,7 +22,7 @@ namespace Coralite.Content.CoraliteNotes.LandOfTheLustrousChapter
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            DrawTitleH1(spriteBatch, Title, Color.LightSteelBlue);
+            DrawTitleH1(spriteBatch, Title, new Color(247, 239, 208));
             DrawParaNormal(spriteBatch, Description, Position.Y + TitleHeight, out _);
 
             Texture2D tex = LandOfTheLustrous.Value;

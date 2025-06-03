@@ -196,7 +196,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             if ((int)Main.timeForVisualEffects % 20 == 0 && Main.rand.NextBool(2))
             {
                 float length = Main.rand.NextFloat(32, 64);
-                Color c = Main.rand.NextFromList(Color.White, Main.DiscoColor * 1.5f);
+                Color c = Main.rand.NextFromList(Color.White, Main.hslToRgb(Main.GlobalTimeWrappedHourly % 1, 1, 0.7f));
                 var p = PRTLoader.NewParticle<HexagramParticle>(Projectile.Center + Main.rand.NextVector2CircularEdge(length, length),
                      Vector2.UnitX, c, Scale: Main.rand.NextFloat(0.1f, 0.15f));
                 p.follow = () => Projectile.position - Projectile.oldPos[1];

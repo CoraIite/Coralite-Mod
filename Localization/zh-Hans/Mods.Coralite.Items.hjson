@@ -6021,3 +6021,8 @@ HyacinthRelic: {
 	DisplayName: 风信子圣物
 	Tooltip: 净化环境
 }
+
+LandOfTheLustrousRelic: {
+	DisplayName: 宝石之国圣物
+	Tooltip: 从月球上收集宝石尘埃后生成宝石动物
+}
