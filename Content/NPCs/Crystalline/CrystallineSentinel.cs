@@ -557,11 +557,11 @@ namespace Coralite.Content.NPCs.Crystalline
 
         #endregion
 
-        #region 二阶段非攻击状态
+        #region 二阶段
 
         public void P2Idle()
         {
-            if (++NPC.frameCounter>3)
+            if (++NPC.frameCounter > 3)
             {
                 NPC.frameCounter = 0;
                 if (++NPC.frame.Y > 7)
@@ -574,12 +574,16 @@ namespace Coralite.Content.NPCs.Crystalline
             P2FloatCenter = P2FloatMover.Update(1 / 60f, GetP2FloatPos);
             UpdateP2HandPosNormally();
 
-            Timer++;
-            if (Timer > 180)
-            {
-                Timer = 0;
-                SwitchStateP1(AIStates.Exchange);
-            }
+            NPC.velocity *= 0.95f;
+
+            Timer--;
+            //if (Timer < 0)
+            //    TryTurnToAttack();
+        }
+
+        public void P2Rolling()
+        {
+
         }
 
         #endregion
@@ -610,19 +614,22 @@ namespace Coralite.Content.NPCs.Crystalline
 
                 SetFrame(0, 0);
                 P2FloatCenter = GetP2FloatPos;
-                P2FloatMover = new SecondOrderDynamics_Vec2(0.6f, 0.8f, 0, GetP2FloatPos);
+                P2FloatMover = new SecondOrderDynamics_Vec2(0.9f, 0.8f, 0, GetP2FloatPos);
 
                 P2HandCenter = [
                     P2LeftHandPos,
                     P2RightHandPos,
                     ];
                 P2HandMover = [
-                    new SecondOrderDynamics_Vec2(0.8f, 0.8f, 0, P2LeftHandPos),
-                    new SecondOrderDynamics_Vec2(0.8f, 0.8f, 0, P2RightHandPos),
+                    new SecondOrderDynamics_Vec2(0.9f, 0.8f, 0, P2LeftHandPos),
+                    new SecondOrderDynamics_Vec2(0.9f, 0.8f, 0, P2RightHandPos),
                     ];
 
                 P2HandFrame = [MaxHandFrame, MaxHandFrame];
                 P2HandFrameCounter = [0, 0];
+
+                Timer = 20;
+                NPC.velocity = new Vector2(0, -1);
 
                 return;
             }
