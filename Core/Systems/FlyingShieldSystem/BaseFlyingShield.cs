@@ -215,6 +215,10 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
 
                 Projectile.velocity = angle.AngleLerp(targetAngle, factor).ToRotationVector2() * backSpeed;
             }
+            else if (Timer == backTime)
+            {
+                Projectile.damage /= 4;
+            }
             else
             {
                 if (Owner.GetModPlayer<CoralitePlayer>().FlyingShieldAccBack && Timer > backTime + 14)
@@ -234,7 +238,6 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
         {
             State = (int)FlyingShieldStates.Backing;
             Timer = 0;
-            Projectile.damage /= 4;
             Projectile.tileCollide = false;
         }
 
