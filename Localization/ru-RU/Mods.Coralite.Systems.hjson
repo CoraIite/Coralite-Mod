@@ -183,6 +183,12 @@ KnowledgeSystem: {
 		// LockTip: Mods.Coralite.Systems.KnowledgeSystem.LandOfTheLustrousKnowledge.LockTip
 		// Description: Mods.Coralite.Systems.KnowledgeSystem.LandOfTheLustrousKnowledge.Description
 	}
+
+	DashBowKnowledge: {
+		// Name: Mods.Coralite.Systems.KnowledgeSystem.DashBowKnowledge.Name
+		// LockTip: Mods.Coralite.Systems.KnowledgeSystem.DashBowKnowledge.LockTip
+		// Description: Mods.Coralite.Systems.KnowledgeSystem.DashBowKnowledge.Description
+	}
 }
 
 // CoraliteBeatiaryDatabase.CrystallineSkyIsland: Mods.Coralite.Systems.CoraliteBeatiaryDatabase.CrystallineSkyIsland

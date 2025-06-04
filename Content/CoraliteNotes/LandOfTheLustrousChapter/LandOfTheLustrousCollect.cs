@@ -52,40 +52,40 @@ namespace Coralite.Content.CoraliteNotes.LandOfTheLustrousChapter
             int y = -400;
             Vector2 center = new Vector2(PageWidth / 2, PageHeight / 2 - 80);
 
-            NewImage<PyropeCrown>(center + new Vector2(-10, 310), null
-                , GemWeapons.PyropeCrown, CollectImage.LockIconType.Small,1.2f);
-            NewImage<AmethystNecklace>(center + new Vector2(164, 285), Condition.DownedEyeOfCthulhu
-                , GemWeapons.AmethystNecklace, CollectImage.LockIconType.Small, 1.2f);
-            NewImage<AquamarineBracelet>(center + new Vector2(-132, 315), Condition.DownedEowOrBoc
-                , GemWeapons.AquamarineBracelet, CollectImage.LockIconType.Small, 1.2f);
-            NewImage<PinkDiamondRose>(center + new Vector2(202, 239), Condition.DownedSkeletron
-                , GemWeapons.PinkDiamondRose, CollectImage.LockIconType.Small, 1.2f);
-            NewImage<ZumurudRing>(center + new Vector2(-244, -6), Condition.Hardmode
+            NewImage<PyropeCrown>(center + new Vector2(-16, 310), null
+                , GemWeapons.PyropeCrown, CollectImage.LockIconType.Small,1.25f);
+            NewImage<AmethystNecklace>(center + new Vector2(152, 285), Condition.DownedEyeOfCthulhu
+                , GemWeapons.AmethystNecklace, CollectImage.LockIconType.Small, 1.3f);
+            NewImage<AquamarineBracelet>(center + new Vector2(-127, 312), Condition.DownedEowOrBoc
+                , GemWeapons.AquamarineBracelet, CollectImage.LockIconType.Small, 1.3f);
+            NewImage<PinkDiamondRose>(center + new Vector2(194, 237), Condition.DownedSkeletron
+                , GemWeapons.PinkDiamondRose, CollectImage.LockIconType.Small, 1.3f);
+            NewImage<ZumurudRing>(center + new Vector2(-230, -2), Condition.Hardmode
                 , GemWeapons.ZumurudRing, CollectImage.LockIconType.Small, 1.3f);
-            NewImage<PearlBrooch>(center + new Vector2(260, -64), Condition.DownedQueenSlime
-                , GemWeapons.PearlBrooch, CollectImage.LockIconType.Small, 1.2f);
-            NewImage<RubyScepter>(center + new Vector2(-216, 254), Condition.DownedMechBossAll
+            NewImage<PearlBrooch>(center + new Vector2(250, -54), Condition.DownedQueenSlime
+                , GemWeapons.PearlBrooch, CollectImage.LockIconType.Small, 1.3f);
+            NewImage<RubyScepter>(center + new Vector2(-208, 254), Condition.DownedMechBossAll
                 , GemWeapons.RubyScepter, CollectImage.LockIconType.Small, 1.2f);
-            NewImage<PeridotTalisman>(center + new Vector2(-270, -60), Condition.DownedPlantera
+            NewImage<PeridotTalisman>(center + new Vector2(-260, -52), Condition.DownedPlantera
                 , GemWeapons.PeridotTalisman, CollectImage.LockIconType.Small, 1.2f);
-            NewImage<SapphireHairpin>(center + new Vector2(252, -7), Condition.DownedMartians
+            NewImage<SapphireHairpin>(center + new Vector2(244, 4), Condition.DownedMartians
                 , GemWeapons.SapphireHairpin, CollectImage.LockIconType.Small, 1.2f);
-            NewImage<TourmalineMonoclastic>(center + new Vector2(98, 54), Condition.DownedNebulaPillar
-                , GemWeapons.TourmalineMonoclastic, CollectImage.LockIconType.Small);
-            NewImage<TopazMirror>(center + new Vector2(-100, 234), Condition.DownedMoonLord
-                , GemWeapons.TopazMirror);
-            NewImage<ZirconGrail>(center + new Vector2(110, 182), Condition.DownedMoonLord
-                , GemWeapons.ZirconGrail);
-            NewImage<Phosphophyllite>(center + new Vector2(12, 388), CoraliteConditions.DownedNightmarePlantera
+            NewImage<TourmalineMonoclastic>(center + new Vector2(92, 58), Condition.DownedNebulaPillar
+                , GemWeapons.TourmalineMonoclastic, CollectImage.LockIconType.Small,1.1f);
+            NewImage<TopazMirror>(center + new Vector2(-100, 228), Condition.DownedMoonLord
+                , GemWeapons.TopazMirror,scale:1.1f);
+            NewImage<ZirconGrail>(center + new Vector2(108, 180), Condition.DownedMoonLord
+                , GemWeapons.ZirconGrail,scale:1.35f);
+            NewImage<Phosphophyllite>(center + new Vector2(12, 382), CoraliteConditions.DownedNightmarePlantera
                 , GemWeapons.Phosphophyllite, CollectImage.LockIconType.Small, 1.3f);
 
-            NewImage<LandOfTheLustrous>(center+new Vector2(-60,56), CoraliteConditions.DownedNightmarePlantera
+            NewImage<LandOfTheLustrous>(center+new Vector2(-57,62), CoraliteConditions.DownedNightmarePlantera
                 , GemWeapons.LandOfTheLustrous, CollectImage.LockIconType.Big, 2);
 
             var button = new CollectButton(LandOfTheLustrousCollectButton, LandOfTheLustrousCollectButtonLight
                 , new Vector2(0, -10), ItemType<LandOfTheLustrousRelic>(), Unlocks, CoraliteNoteSystem.RewardType.LandOfTheLustrous);
             button.ItemPosOffset = new Vector2(0, -10);
-            button.SetCenter(new Vector2(PageWidth / 2, 188));
+            button.SetCenter(new Vector2(PageWidth / 2, 196));
             Append(button);
         }
 
@@ -116,7 +116,7 @@ namespace Coralite.Content.CoraliteNotes.LandOfTheLustrousChapter
 
             DrawCollectTip(spriteBatch, Unlocks);
 
-            Vector2 pos = PageTop + new Vector2(0, 120);
+            Vector2 pos = PageTop + new Vector2(0, 132);
             DrawCollectText(spriteBatch, Unlocks, pos + new Vector2(7, -15));
             DrawCollectProgress(spriteBatch, Unlocks, pos + new Vector2(0, 15));
         }

@@ -439,3 +439,8 @@ LandOfTheLustrousPage: {
 		    “在遥远的未来，我们成为了 『 宝石 』 。 ” 
 		'''
 }
+
+DashBowPage: {
+	Title: 万千气象之弓
+	Description: a
+}

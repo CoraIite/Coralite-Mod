@@ -229,6 +229,12 @@ KnowledgeSystem: {
 		LockTip: 提炼任意宝石原石后解锁
 		Description: 镜面之波
 	}
+
+	DashBowKnowledge: {
+		Name: 万千气象之弓
+		LockTip: 获得任意使用箭作为弹药的武器后解锁
+		Description: 探寻世间的千万色彩
+	}
 }
 
 CoraliteBeatiaryDatabase.CrystallineSkyIsland: 蕴魔空岛
