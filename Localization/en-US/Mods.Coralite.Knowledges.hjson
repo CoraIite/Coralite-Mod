@@ -331,3 +331,8 @@ LandOfTheLustrousPage: {
 	Title: Mods.Coralite.Knowledges.LandOfTheLustrousPage.Title
 	Description: Mods.Coralite.Knowledges.LandOfTheLustrousPage.Description
 }
+
+DashBowPage: {
+	Title: Mods.Coralite.Knowledges.DashBowPage.Title
+	Description: Mods.Coralite.Knowledges.DashBowPage.Description
+}

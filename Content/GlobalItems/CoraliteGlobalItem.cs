@@ -1,3 +1,4 @@
+using Coralite.Content.CoraliteNotes.DashBowChapter;
 using Coralite.Content.CoraliteNotes.FlowerGunChapter;
 using Coralite.Content.Items.Materials;
 using Coralite.Content.Items.Misc_Melee;
@@ -320,6 +321,8 @@ namespace Coralite.Content.GlobalItems
             CoralCatWorldTransForm(item);
             if (item.useAmmo == AmmoID.Bullet)
                 KnowledgeSystem.CheckForUnlock<FlowerGunKnowledge>(player.Center, Color.Red);
+            else if (item.useAmmo == AmmoID.Arrow)
+                KnowledgeSystem.CheckForUnlock<DashBowKnowledge>(player.Center, new Color(0,228,205));
         }
 
         public override void Update(Item item, ref float gravity, ref float maxFallSpeed)
