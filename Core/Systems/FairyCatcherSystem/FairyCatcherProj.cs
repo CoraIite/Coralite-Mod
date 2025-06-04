@@ -101,7 +101,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                         {
                             Fairy fairy = Fairies[i];
                             fairy.UpdateInCatcher(this);
-                            fairy.AI_InCatcher(this);
                             if (!fairy.active)
                                 Fairies.Remove(fairy);
                         }

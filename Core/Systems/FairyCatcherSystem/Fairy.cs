@@ -137,7 +137,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             alpha = 0;
             Timer = 60;
 
-            OnSpawn();
+            OnSpawn(attempt);
         }
 
         /// <summary>
@@ -145,22 +145,20 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// 默认<see cref="width"/><see cref="height "/>为8<br></br>
         /// 默认<see cref="Timer"/>为60，会逐渐减小
         /// </summary>
-        public virtual void OnSpawn() { }
+        public virtual void OnSpawn(FairyAttempt attempt) { }
 
         /// <summary>
         /// 在捕捉器内的行为
         /// </summary>
         public void UpdateInCatcher(FairyCatcherProj catcher)
         {
-            //AI_InCatcher(catcher.GetCursorBox(), catcher);
+            AI_InCatcher(catcher);
 
             if (ShouldUpdatePosition())
                 position += velocity;
 
             //限制不能出圈
-            Vector2 webCenter = catcher.webCenter;
-            if (Vector2.Distance(Center, webCenter) > catcher.webRadius)
-                Center = webCenter + ((Center - webCenter).SafeNormalize(Vector2.Zero) * catcher.webRadius);
+            CircleLimit(catcher);
 
             switch (State)
             {
@@ -178,11 +176,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                             return;
                         }
 
-                        //if (catcher.CursorBox.Intersects(HitBox) && Main.mouseLeft)//开始捕捉
-                        //{
-                        //    State = AIState.Catching;
-                        //    alpha = 1;
-                        //}
+                        if (catcher.CursorBox.Intersects(HitBox) && Main.mouseLeft)//开始捕捉
+                        {
+                            State = AIState.Catching;
+                            alpha = 1;
+                        }
                     }
                     break;
                 case AIState.Catching:
@@ -216,6 +214,13 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                     }
                     break;
             }
+        }
+
+        private void CircleLimit(FairyCatcherProj catcher)
+        {
+            Vector2 webCenter = catcher.webCenter;
+            if (Vector2.Distance(Center, webCenter) > catcher.webRadius)
+                Center = webCenter + ((Center - webCenter).SafeNormalize(Vector2.Zero) * catcher.webRadius);
         }
 
         /// <summary>
@@ -369,15 +374,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         }
 
         #endregion
-
-        /// <summary>
-        /// 在仙灵瓶物块中的AI
-        /// </summary>
-        /// <param name="limit"></param>
-        public virtual void AI_InBottle(Rectangle limit)
-        {
-
-        }
 
         #region 绘制
 
