@@ -207,25 +207,23 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                 if (!WorldGen.InWorld((int)spawnPos.X / 16, (int)spawnPos.Y / 16))
                     continue;
 
-                Tile spawnTile = Framing.GetTileSafely(spawnPos);
+                Point point = spawnPos.ToTileCoordinates();
+                Tile spawnTile = Framing.GetTileSafely(point);
+
                 //不能有物块，虽然这个限制没啥意义
-                if (spawnTile.HasUnactuatedTile)
+                if (Helper.HasSolidTile(spawnTile))
                     continue;
 
-                FairyAttempt attempt = new();
-                attempt.wallType = spawnTile.WallType;
-                attempt.X = (int)spawnPos.X / 16;
-                attempt.Y = (int)spawnPos.Y / 16;
-                attempt.Player = Owner;
+                FairyAttempt attempt = FairyAttempt.CreateFairyAttempt(this, point.X, point.Y, spawnTile.WallType);
 
-                //attempt.rarity = SetFairyAttemptRarity();
-
-                fcp.FairyCatch_GetBait(out Item bait);
-                if (bait != null)
+                fcp.FairyCatch_GetBait(out Item powder);
+                if (powder != null)
                 {
-                    attempt.baitItem = bait;
-                    if (bait.ModItem is IFairyBait fairybait)
-                        fairybait.EditFiashingAttempt(attempt);
+                    attempt.baitItem = powder;
+                    FairySystem.VanillaFairyPowder(ref attempt, powder);
+
+                    if (powder.ModItem is IFairyPowder fairypowder)
+                        fairypowder.EditFairyAttempt(ref attempt);
                 }
 
                 if (FairySystem.SpawnFairy(attempt, out Fairy fairy))
@@ -264,31 +262,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                     return true;
             }
         }
-
-        #region 子类可用方法
-
-        public FairyRarity SetFairyAttemptRarity()
-        {
-            FairyRarity rarity;
-            int randomNumber = Owner.RollLuck(1000);
-
-            if (randomNumber == 999)//0.1%概率为UR
-                rarity = FairyRarity.UR;
-            else if (randomNumber > 999 - 10)//1%概率为SR
-                rarity = FairyRarity.SR;
-            else if (randomNumber > 999 - 10 - 50)//5%概率为RR
-                rarity = FairyRarity.RR;
-            else if (randomNumber > 999 - 10 - 50 - 100)//10%概率为RR
-                rarity = FairyRarity.R;
-            else if (randomNumber > 999 - 10 - 50 - 100 - 150)//15%概率为RR
-                rarity = FairyRarity.U;
-            else//其他时候为C
-                rarity = FairyRarity.C;
-
-            return rarity;
-        }
-
-        #endregion
 
         #region 绘制
 

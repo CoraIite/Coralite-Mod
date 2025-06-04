@@ -15,7 +15,6 @@ using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader.UI.Elements;
 using Terraria.UI;
-using static Coralite.Core.Systems.FairyCatcherSystem.FairyAttempt;
 
 namespace Coralite.Content.UI.FairyEncyclopedia
 {

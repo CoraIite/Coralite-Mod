@@ -4,7 +4,6 @@ using ReLogic.Content;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader.IO;
-using static Coralite.Core.Systems.FairyCatcherSystem.FairyAttempt;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem
 {
@@ -134,6 +133,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                 return value;
 
             return RaritySP_Purple;//特殊
+        }
+
+        public static void VanillaFairyPowder(ref FairyAttempt attempt,Item powder)
+        {
+
         }
     }
 }

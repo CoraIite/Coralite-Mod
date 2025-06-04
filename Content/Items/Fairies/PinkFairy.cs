@@ -45,13 +45,13 @@ namespace Coralite.Content.Items.Fairies
 
         public override void Catching(Rectangle cursor, FairyCatcherProj catcher)
         {
-            Timer--;
-            if (Timer % 40 == 0)
+            FairyTimer--;
+            if (FairyTimer % 40 == 0)
                 velocity = velocity.RotateByRandom(-MathHelper.PiOver4 / 2, MathHelper.PiOver4 / 2);
 
-            if (Timer < 1)
+            if (FairyTimer < 1)
             {
-                Timer = Main.rand.Next(60, 90);
+                FairyTimer = Main.rand.Next(60, 90);
                 if (Main.rand.NextBool(3))
                     Helper.PlayPitched("Fairy/FairyMove" + Main.rand.Next(2), 0.3f, 0, position);
                 Vector2 webCenter = catcher.webCenter;
@@ -80,11 +80,11 @@ namespace Coralite.Content.Items.Fairies
 
         public override void FreeMoving()
         {
-            Timer--;
-            if (Timer < 1)
+            FairyTimer--;
+            if (FairyTimer < 1)
             {
                 velocity = Helper.NextVec2Dir(0.5f, 1f);
-                Timer = Main.rand.Next(70, 110);
+                FairyTimer = Main.rand.Next(70, 110);
             }
         }
 

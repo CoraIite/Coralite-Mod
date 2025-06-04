@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Terraria;
+using Terraria.Utilities;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem
 {
@@ -22,9 +23,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         /// <summary>
         /// 存储概率的字典<br></br>
-        /// 负数代表具体仙灵的类型，正数代表稀有度
+        /// 负数代表具体仙灵的类型，正数代表稀有度<br></br>
+        /// 默认UR 5，SR 30，RR 75，R 150，U 250，C 490，总和1000
         /// </summary>
-        public Dictionary<int, int> percentDict;
+        public static Dictionary<int, int> percentDict;
+        public static WeightedRandom<int> fairyRand;
 
         /// <summary>
         /// 玩家
@@ -57,19 +60,36 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <param name="y"></param>
         /// <param name="wallType"></param>
         /// <returns></returns>
-        public FairyAttempt CreateFairyAttempt(FairyCatcherProj catcherProj, int x, int y, int wallType)
-            => new FairyAttempt()
+        public static FairyAttempt CreateFairyAttempt(FairyCatcherProj catcherProj, int x, int y, int wallType)
+        {
+            percentDict ??= new Dictionary<int, int>();
+            percentDict.Clear();
+
+            //添加默认的生成
+            AddNormalSpawnPool();
+
+            fairyRand = new WeightedRandom<int>();
+            fairyRand.Clear();
+
+            return new FairyAttempt()
             {
                 catcherProj = catcherProj,
                 X = x,
                 Y = y,
                 wallType = wallType,
                 Player = catcherProj.Owner,
-                percentDict = new Dictionary<int, int>()
             };
+        }
 
-
-
+        private static void AddNormalSpawnPool()
+        {
+            percentDict.Add((int)FairyRarity.UR, 5);
+            percentDict.Add((int)FairyRarity.SR, 30);
+            percentDict.Add((int)FairyRarity.RR, 75);
+            percentDict.Add((int)FairyRarity.R, 150);
+            percentDict.Add((int)FairyRarity.U, 250);
+            percentDict.Add((int)FairyRarity.C, 490);
+        }
     }
 
     public enum FairyRarity

@@ -32,11 +32,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <summary>
         /// 捕捉最大值
         /// </summary>
-        public float CatchProgressMax;
+        public float CatchProgressMax { get; } = 10;
         /// <summary>
         /// 捕捉进度
         /// </summary>
-        public float catchProgress;
+        public float CatchProgress {  get; set; }
 
         public Vector2 position;
         public Vector2 velocity;
@@ -50,7 +50,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public Rectangle frame;
         public int spriteDirection = 1;
 
-        public int Timer;
+        public int FairyTimer;
         private AIState State;
 
         private enum AIState
@@ -70,13 +70,16 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <summary>
         /// 未进入捕捉状态而自由移动的时间，大于一定值后直接消失
         /// </summary>
-        public int freeMoveTimer;
-        public int despawnTime = 60 * 20;
+        public int freeMoveTimer = 10 * 60;
+        /// <summary>
+        /// 捕捉时间，在开始捕捉时设置为<see cref="MaxCatchTime"/> ，为0时逃走
+        /// </summary>
+        public int CatchTime;
 
         /// <summary>
-        /// 当被捕捉时的进度增加量，默认从0加到100需要15秒
+        /// 最大捕捉时间
         /// </summary>
-        public virtual float ProgressAdder { get => 100f / (60 * 15f); }
+        public int MaxCatchTime { get; }
 
         /// <summary>
         /// 自身的稀有度，请与出现条件中的相对应
@@ -101,6 +104,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         }
 
         public Rectangle HitBox => new((int)position.X, (int)position.Y, width, height);
+
+        /// <summary>
+        /// 在开始捕捉的时候调用
+        /// </summary>
+        public event Action OnStartCatch;
 
         protected sealed override void Register()
         {
@@ -135,17 +143,17 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             height = 8;
             position = new Vector2(attempt.X, attempt.Y) * 16;
             alpha = 0;
-            Timer = 60;
+            FairyTimer = 60;
 
-            OnSpawn(attempt);
+            OnSpawnAndSetDefault(attempt);
         }
 
         /// <summary>
         /// 设置初始值<br></br>
         /// 默认<see cref="width"/><see cref="height "/>为8<br></br>
-        /// 默认<see cref="Timer"/>为60，会逐渐减小
+        /// 默认<see cref="FairyTimer"/>为60，会逐渐减小
         /// </summary>
-        public virtual void OnSpawn(FairyAttempt attempt) { }
+        public virtual void OnSpawnAndSetDefault(FairyAttempt attempt) { }
 
         /// <summary>
         /// 在捕捉器内的行为
@@ -169,47 +177,22 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
                 case AIState.FreeMoving://没开始捕捉的时候，到点就消失
                     {
-                        freeMoveTimer++;
-                        if (freeMoveTimer > despawnTime)
+                        freeMoveTimer--;
+                        if (freeMoveTimer <0)
                         {
                             TurnToFading();
                             return;
-                        }
-
-                        if (catcher.CursorBox.Intersects(HitBox) && Main.mouseLeft)//开始捕捉
-                        {
-                            State = AIState.Catching;
-                            alpha = 1;
                         }
                     }
                     break;
                 case AIState.Catching:
                     {
-                        //if (catcher.CursorBox.Intersects(HitBox))//鼠标接触到了
-                        {
-                            //catcher.cursorIntersects = true;
-
-                            if (Main.mouseLeft)
-                            {
-                                if (canBeCaught)
-                                {
-                                    float progressAdder = ProgressAdder;
-                                    if (catcher.Owner.TryGetModPlayer(out FairyCatcherPlayer fcp))
-                                        fcp.TotalCatchPowerBonus(ref progressAdder, catcher.Owner.HeldItem);
-                                    catchProgress += progressAdder;
-                                }
-                            }
-                        }
-                        //else//鼠标没碰到，并且正在捕捉中，那么减少条
-                        {
-                            ReduceProgress();
-                        }
-
+                        CatchTime--;
                         //如果减小到0就消失
-                        if (catchProgress <= 0)
+                        if (CatchTime <= 0)
                             TurnToFading();
-                        else if (catchProgress > 100)//捕捉
-                            Catch(catcher.Owner);
+                        else if (CatchProgress>CatchProgressMax)//捕捉
+                            BeCaught(catcher.Owner);
 
                     }
                     break;
@@ -240,7 +223,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                     break;
                 case AIState.Catching:
                     {
-                        //Catching(cursor, catcher);
+                        //Catching(catcher);
                     }
                     break;
                 default:
@@ -260,12 +243,12 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         public virtual void Spawning()
         {
-            Timer--;
+            FairyTimer--;
 
-            if (Timer < 1)
+            if (FairyTimer < 1)
                 State = AIState.FreeMoving;
 
-            alpha = 1 - (Timer / 60f);
+            alpha = 1 - (FairyTimer / 60f);
         }
 
         /// <summary>
@@ -285,16 +268,16 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// </summary>
         public virtual void Fading()
         {
-            Timer++;
+            FairyTimer++;
             alpha -= 1 / 60f;
-            if (Timer > 60)
+            if (FairyTimer > 60)
                 Despawn();
         }
 
         public virtual void TurnToFading()
         {
             State = AIState.Fading;
-            Timer = 0;
+            FairyTimer = 0;
         }
 
         public void Despawn()
@@ -311,18 +294,26 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public virtual bool ShouldUpdatePosition() => true;
 
         /// <summary>
-        /// 正在捕捉的时候并且玩家未左键或者指针没接触，这是和减少捕捉进度<br></br>
-        /// 默认25秒从100减到0
+        /// 在被捕捉事调用
         /// </summary>
-        public virtual void ReduceProgress()
+        public virtual void Catch(int catchPower)
         {
-            catchProgress -= 100f / (60 * 25f);
+            if (State == AIState.FreeMoving)
+            {
+                State = AIState.Catching;
+                alpha = 1;
+                CatchTime = MaxCatchTime;
+                OnStartCatch?.Invoke();
+                OnStartCatch = null;
+            }
+
+            CatchProgress += catchPower;
         }
 
         /// <summary>
-        /// 被捕获时执行
+        /// 被捕获时执行，生成物品
         /// </summary>
-        public void Catch(Player player)
+        public void BeCaught(Player player)
         {
             active = false;
 
@@ -337,7 +328,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             }
 
             //调用onCatch
-            OnCatch(player, i);
+            OnBeCaught(player, i);
 
             //在玩家处生成物品
             player.QuickSpawnItem(player.GetSource_FairyCatch(this), i);
@@ -350,7 +341,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// 在捕获时调用
         /// </summary>
         /// <param name="player"></param>
-        public virtual void OnCatch(Player player, Item fairyItem) { }
+        public virtual void OnBeCaught(Player player, Item fairyItem) { }
 
         #endregion
 
@@ -395,7 +386,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public virtual void DrawProgressBar()
         {
             if (State == AIState.Catching)
-                DrawFairyProgressBar(Bottom.X, Bottom.Y + 14, (int)catchProgress, 100, 0.9f, 0.75f);
+                DrawFairyProgressBar(Bottom.X, Bottom.Y + 14, (int)CatchProgress, 100, 0.9f, 0.75f);
         }
 
         /// <summary>

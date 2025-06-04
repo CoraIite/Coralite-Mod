@@ -33,7 +33,6 @@ namespace Coralite.Content.UI.FairyEncyclopedia
             for (int i = 0; i < _fairies.Length; i++)
             {
                 _fairies[i] = FairyLoader.GetFairy(fairyType).NewInstance();
-                _fairies[i].OnSpawn();
                 _fairies[i].Center = new Vector2(style.X + Main.rand.NextFloat(0, style.Width), style.Y + Main.rand.NextFloat(0, style.Height)) + Main.screenPosition;
             }
 
