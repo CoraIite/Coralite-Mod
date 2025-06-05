@@ -573,6 +573,8 @@ namespace Coralite.Content.Items.HyacinthSeries
                     return ItemID.Boomstick;
                 case (int)GunType.QuadBarrelShotgun://四管霰弹枪
                     return ItemID.QuadBarrelShotgun;
+                case (int)GunType.FlintlockPistol://燧发枪
+                    return ItemID.FlintlockPistol;
                 case (int)GunType.GhostPipe://水晶兰
                     return ModContent.ItemType<GhostPipe>();
                 case (int)GunType.SunflowerGun://向阳花

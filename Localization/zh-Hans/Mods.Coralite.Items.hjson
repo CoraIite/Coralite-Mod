@@ -6026,3 +6026,13 @@ LandOfTheLustrousRelic: {
 	DisplayName: 宝石之国圣物
 	Tooltip: 从月球上收集宝石尘埃后生成宝石动物
 }
+
+ThyphionRelic: {
+	Tooltip: 放置后右键切换千气象形态
+	DisplayName: 千气象圣物
+}
+
+ZacurrentRod: {
+	// DisplayName: Zacurrent Rod
+	// Tooltip: ""
+}

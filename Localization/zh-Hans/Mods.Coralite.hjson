@@ -41,6 +41,7 @@ Conditions: {
 		DownedRediancie: 需要击败赤玉灵
 		DownedThunderveinDragon: 需要击败荒雷龙
 		DownedNightmarePlantera: 需要击败梦魇之花
+		// DownedBabyIceDragon: Mods.Coralite.Conditions.CoraliteConditions.DownedBabyIceDragon
 	}
 }
 

@@ -28,6 +28,8 @@ namespace Coralite.Content.Items.ThyphionSeries
 {
     public class Thyphion : ModItem, IDashable
     {
+        public static bool Skin;
+
         public static Color ThyphionColor1 = new Color(66, 152, 201);
         public static Color ThyphionColor3 = new Color(103, 244, 194);
 
@@ -176,6 +178,37 @@ namespace Coralite.Content.Items.ThyphionSeries
                 .AddTile<AncientFurnaceTile>()
                 .Register();
         }
+
+        public override bool PreDrawInInventory(SpriteBatch spriteBatch, Vector2 position, Rectangle frame, Color drawColor, Color itemColor, Vector2 origin, float scale)
+        {
+            if (Skin)
+            {
+                Texture2D value = ThyphionHeldProj.SkinTex.Value;
+                Rectangle rectangle = value.Frame(1, 25);
+                spriteBatch.Draw(value
+                    , position, rectangle, drawColor, 0, rectangle.Size() / 2, scale, 0, 0);
+                return false;
+            }
+
+            return base.PreDrawInInventory(spriteBatch, position, frame, drawColor, itemColor, origin, scale);
+        }
+
+        public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
+        {
+            if (Skin)
+            {
+                Texture2D value = ThyphionHeldProj.SkinTex.Value;
+                Rectangle rectangle = value.Frame(1, 25, 0, (Item.timeSinceItemSpawned / 3 % 25));
+                Vector2 origin = new Vector2(rectangle.Width/2,rectangle.Height);
+                spriteBatch.Draw(value
+                    , Item.Bottom - Main.screenPosition, rectangle, lightColor, 0, origin, scale, 0, 0);
+                spriteBatch.Draw(ThyphionHeldProj.SkinGlowTex.Value
+                    , Item.Bottom - Main.screenPosition, rectangle, lightColor, 0, origin, scale, 0, 0);
+                return false;
+            }
+
+            return base.PreDrawInWorld(spriteBatch, lightColor, alphaColor, ref rotation, ref scale, whoAmI);
+        }
     }
 
     public class ThyphionTagProj : BaseHeldProj
@@ -242,30 +275,47 @@ namespace Coralite.Content.Items.ThyphionSeries
         public override string Texture => AssetDirectory.ThyphionSeriesItems + "Thyphion";
 
         public ref float Timer => ref Projectile.localAI[0];
-
-        public float ReleaseTimer;
         public ref float Release => ref Projectile.localAI[1];
-
         public ref float RecordAngle => ref Projectile.localAI[2];
 
+        public float ReleaseTimer;
         public float handOffset = 0;
-
         public bool ShowArrow = false;
 
         [AutoLoadTexture(Name = "Thyphion_glow")]
         public static ATex GlowTex { get; private set; }
+        [AutoLoadTexture(Name = "Thyphion_Skin")]
+        public static ATex SkinTex { get; private set; }
+        [AutoLoadTexture(Name = "Thyphion_SkinGlow")]
+        public static ATex SkinGlowTex { get; private set; }
 
         public int projectile;
+
+        public static int SkinTimer;
 
         public override int GetItemType()
             => ItemType<Thyphion>();
 
         public override Vector2 GetOffset()
-            => new(34 + handOffset, -12);
+        {
+            if (Thyphion.Skin)
+                return new(26 + handOffset, -26);
+
+            return new(34 + handOffset, -12);
+        }
 
         public override void InitializeDashBow()
         {
             RecordAngle = Rotation;
+        }
+
+        public override void AIBefore()
+        {
+            if (Thyphion.Skin)
+            {
+                if (++SkinTimer > 24 * 2)
+                    SkinTimer = 0;
+            }
         }
 
         public override void NormalShootAI()
@@ -433,8 +483,18 @@ namespace Coralite.Content.Items.ThyphionSeries
             var effect = DirSign > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically;
             var origin = mainTex.Size() / 2;
 
-            Main.spriteBatch.Draw(mainTex, center, null, lightColor, Projectile.rotation, origin, 1, effect, 0f);
-            Main.spriteBatch.Draw(GlowTex.Value, center, null, Color.White, Projectile.rotation, origin, 1, effect, 0f);
+            if (Thyphion.Skin)
+            {
+                mainTex = SkinTex.Value;
+                var rect = SkinTex.Frame(1, 25, 0, SkinTimer / 2);
+                Main.spriteBatch.Draw(mainTex, center, rect, lightColor, Projectile.rotation, origin, 1, effect, 0f);
+                Main.spriteBatch.Draw(SkinGlowTex.Value, center, rect, Color.White, Projectile.rotation, origin, 1, effect, 0f);
+            }
+            else
+            {
+                Main.spriteBatch.Draw(mainTex, center, null, lightColor, Projectile.rotation, origin, 1, effect, 0f);
+                Main.spriteBatch.Draw(GlowTex.Value, center, null, Color.White, Projectile.rotation, origin, 1, effect, 0f);
+            }
 
             if (ShowArrow)
             {

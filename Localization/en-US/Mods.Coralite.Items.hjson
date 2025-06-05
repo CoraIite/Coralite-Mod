@@ -5880,3 +5880,13 @@ LandOfTheLustrousRelic: {
 	DisplayName: Land Of The Lustrous Relic
 	Tooltip: ""
 }
+
+ThyphionRelic: {
+	Tooltip: ""
+	DisplayName: Thyphion Relic
+}
+
+ZacurrentRod: {
+	DisplayName: Zacurrent Rod
+	Tooltip: ""
+}

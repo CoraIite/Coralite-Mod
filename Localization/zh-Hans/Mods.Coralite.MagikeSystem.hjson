@@ -139,7 +139,7 @@ MagikeSystem: {
 			▶ 需要在冰雪墙前
 			'''
 		MoonlightLensName: 月光透镜
-		MoonlightCondition: "  ▶ 需要月光"
+		MoonlightCondition: "  ▶ 需要月光照射"
 		LavaLensName: 熔岩透镜
 		LavaCondition:
 			'''

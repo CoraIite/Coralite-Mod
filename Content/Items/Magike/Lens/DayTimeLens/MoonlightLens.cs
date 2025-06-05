@@ -119,7 +119,19 @@ namespace Coralite.Content.Items.Magike.Lens.DayTimeLens
         public override MagikeSystem.UITextID ProduceCondition()
             => MagikeSystem.UITextID.MoonlightCondition;
 
-        public override int Throughput => base.Throughput + (Main.bloodMoon ? 7 : 0);
+        public override int Throughput
+        {
+            get
+            {
+                int i = base.Throughput;
+                if (Main.bloodMoon)
+                    i = (int)(i * 2f);
+                if (Main.moonType == (int)MoonPhase.Full)
+                    i = (int)(i * 2f);
+
+                return i;
+            }
+        }
 
         public override bool CheckDayTime()
         {

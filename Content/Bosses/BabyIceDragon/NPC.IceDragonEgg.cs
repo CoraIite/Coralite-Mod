@@ -116,6 +116,19 @@ namespace Coralite.Content.Bosses.BabyIceDragon
         {
             //受击时摇晃一下
             NPC.ai[0] += 6.282f;
+
+            if (NPC.life <= 0 && Main.netMode != NetmodeID.Server)
+            {
+                //生成蛋壳gore
+                Gore.NewGoreDirect(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), Main.rand.NextVector2Circular(3, 3), Mod.Find<ModGore>("IceDragonEgg_Gore0").Type);
+                for (int i = 0; i < 5; i++)
+                {
+                    Gore.NewGoreDirect(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), Main.rand.NextVector2Circular(3, 3), Mod.Find<ModGore>("IceDragonEgg_Gore1").Type);
+                    Gore.NewGoreDirect(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), Main.rand.NextVector2Circular(3, 3), Mod.Find<ModGore>("IceDragonEgg_Gore2").Type);
+                }
+                for (int i = 0; i < 3; i++)
+                    Gore.NewGoreDirect(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), Main.rand.NextVector2Circular(3, 3), Mod.Find<ModGore>("IceDragonEgg_Gore3").Type);
+            }
         }
 
         public override bool CheckActive()
@@ -141,22 +154,11 @@ namespace Coralite.Content.Bosses.BabyIceDragon
         public override void OnKill()
         {
             //生成冰龙宝宝
-            NPC.NewNPCDirect(NPC.GetSource_FromThis(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<BabyIceDragon>());
-            //生成蛋壳gore
-            if (Main.netMode != NetmodeID.Server)
+            if (NPC.lastInteraction != 255)
             {
-                Gore.NewGoreDirect(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), Main.rand.NextVector2Circular(3, 3), Mod.Find<ModGore>("IceDragonEgg_Gore0").Type);
-                for (int i = 0; i < 5; i++)
-                {
-                    Gore.NewGoreDirect(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), Main.rand.NextVector2Circular(3, 3), Mod.Find<ModGore>("IceDragonEgg_Gore1").Type);
-                    Gore.NewGoreDirect(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), Main.rand.NextVector2Circular(3, 3), Mod.Find<ModGore>("IceDragonEgg_Gore2").Type);
-                }
-                for (int i = 0; i < 3; i++)
-                    Gore.NewGoreDirect(NPC.GetSource_Death(), NPC.position + new Vector2(Main.rand.Next(NPC.width), Main.rand.Next(NPC.height)), Main.rand.NextVector2Circular(3, 3), Mod.Find<ModGore>("IceDragonEgg_Gore3").Type);
-
-            }
-            if (Main.netMode != NetmodeID.MultiplayerClient)
+                NPC.NewNPCDirect(NPC.GetSource_FromThis(), (int)NPC.Center.X, (int)NPC.Center.Y, ModContent.NPCType<BabyIceDragon>());
                 IceEggSpawner.EggDestroyed();
+            }
         }
 
         public override bool PreDraw(SpriteBatch spriteBatch, Vector2 screenPos, Color drawColor)

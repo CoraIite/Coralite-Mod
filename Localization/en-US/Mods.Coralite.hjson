@@ -41,6 +41,7 @@ Conditions: {
 		DownedRediancie: Mods.Coralite.Conditions.CoraliteConditions.DownedRediancie
 		DownedThunderveinDragon: Mods.Coralite.Conditions.CoraliteConditions.DownedThunderveinDragon
 		DownedNightmarePlantera: Mods.Coralite.Conditions.CoraliteConditions.DownedNightmarePlantera
+		DownedBabyIceDragon: Mods.Coralite.Conditions.CoraliteConditions.DownedBabyIceDragon
 	}
 }
 
