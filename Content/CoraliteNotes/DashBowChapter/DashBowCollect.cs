@@ -53,7 +53,6 @@ namespace Coralite.Content.CoraliteNotes.DashBowChapter
 
         public void AddImages()
         {
-            int y = -400;
             Vector2 center = new Vector2(PageWidth / 2, PageHeight / 2 - 80);
 
             NewImage<Afterglow>(center + new Vector2(-240, 126), null
@@ -125,7 +124,6 @@ namespace Coralite.Content.CoraliteNotes.DashBowChapter
 
             DrawCollectTip(spriteBatch, Unlocks);
 
-            Vector2 pos = PageTop + new Vector2(0, 132);
             DrawCollectText(spriteBatch, Unlocks, PageTop + new Vector2(115, 40));
             DrawCollectProgress(spriteBatch, Unlocks, PageTop + new Vector2(210, 39));
         }

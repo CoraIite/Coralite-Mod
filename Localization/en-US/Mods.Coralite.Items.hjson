@@ -5890,3 +5890,8 @@ ThyphionRelic: {
 	Tooltip: ""
 	DisplayName: Thyphion Relic
 }
+
+ZacurrentRod: {
+	DisplayName: Zacurrent Rod
+	Tooltip: ""
+}
