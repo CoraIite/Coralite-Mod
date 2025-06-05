@@ -16,13 +16,14 @@ namespace Coralite.Content.CoraliteNotes
     {
         private readonly int _itemType;
         private readonly Condition _lockCondition;
-        private readonly float _scale;
+        protected readonly float _scale;
         private readonly bool[] _locks;
         private readonly int _index;
         private readonly LockIconType _lockIconType;
 
+        public float? LockIconScale = null;
 
-        private float scale;
+        protected float scale;
 
         public static ATex LockedIcon { get; private set; }
 
@@ -76,7 +77,7 @@ namespace Coralite.Content.CoraliteNotes
             {
                 spriteBatch.Draw(tex, center, frameBox, new Color(32, 20, 13), 0, frameBox.Size() / 2, scale, 0, 0);
                 LockedIcon.Value.QuickCenteredDraw(spriteBatch, new Rectangle((int)_lockIconType, 0, 3, 1), center
-                    , rotation: IsMouseHovering ? MathF.Sin(Main.GlobalTimeWrappedHourly) * 0.2f : 0, scale: 0.8f);
+                    , rotation: IsMouseHovering ? MathF.Sin(Main.GlobalTimeWrappedHourly) * 0.2f : 0, scale: LockIconScale ?? 1);
 
                 if (IsMouseHovering)
                     UICommon.TooltipMouseText($"???\n{_lockCondition.Description.Value}");

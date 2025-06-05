@@ -5885,3 +5885,8 @@ LandOfTheLustrousRelic: {
 	DisplayName: Land Of The Lustrous Relic
 	Tooltip: ""
 }
+
+ThyphionRelic: {
+	Tooltip: ""
+	DisplayName: Thyphion Relic
+}

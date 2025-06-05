@@ -26,6 +26,7 @@ namespace Coralite.Core
         public static Condition UseRuneParchment { get; private set; }
 
         public static Condition DownedRediancie { get; private set; }
+        public static Condition DownedBabyIceDragon { get; private set; }
         public static Condition DownedThunderveinDragon { get; private set; }
         public static Condition DownedNightmarePlantera { get; private set; }
 
@@ -82,6 +83,8 @@ namespace Coralite.Core
 
             DownedRediancie = new Condition(this.GetLocalization(nameof(DownedRediancie))
                 , () => DownedBossSystem.downedRediancie);
+            DownedBabyIceDragon = new Condition(this.GetLocalization(nameof(DownedBabyIceDragon))
+                , () => DownedBossSystem.downedBabyIceDragon);
             DownedThunderveinDragon = new Condition(this.GetLocalization(nameof(DownedThunderveinDragon))
                 , () => DownedBossSystem.downedThunderveinDragon);
             DownedNightmarePlantera = new Condition(this.GetLocalization(nameof(DownedNightmarePlantera))

@@ -50,6 +50,7 @@ namespace Coralite.Content.WorldGeneration
             NPC.downedMechBoss1 = true;
             NPC.downedMechBoss2 = true;
             NPC.downedMechBoss3 = true;
+            NPC.downedChristmasIceQueen = true;
             Main.hardMode = true;
             DownedBossSystem.downedNightmarePlantera = true;
 
