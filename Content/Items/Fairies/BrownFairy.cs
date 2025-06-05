@@ -43,7 +43,7 @@ namespace Coralite.Content.Items.Fairies
                 .RegisterToWall();
         }
 
-        public override void Catching(Rectangle cursor, FairyCatcherProj catcher)
+        public override void Catching(FairyCatcherProj catcher)
         {
             FairyTimer--;
             if (FairyTimer < 1)
@@ -57,23 +57,23 @@ namespace Coralite.Content.Items.Fairies
                     dir = (webCenter - Center)
                         .SafeNormalize(Vector2.Zero).RotateByRandom(-0.2f, 0.2f);
                 else
-                    dir = (Center - cursor.Center.ToVector2())
+                    dir = (Center - catcher.Owner.Center)
                             .SafeNormalize(Vector2.Zero).RotateByRandom(-0.2f, 0.2f);
 
                 velocity = dir * Main.rand.NextFloat(0.3f, 0.8f);
             }
         }
 
-        public override void OnCursorIntersects(Rectangle cursor, FairyCatcherProj catcher)
-        {
-            if (Main.rand.NextBool(3))
-            {
-                Dust d = Dust.NewDustPerfect(Center, DustID.BrownMoss, Helper.NextVec2Dir(0.5f, 1.5f), 150);
-                d.noGravity = true;
-            }
-            else if (Main.rand.NextBool())
-                this.SpawnTrailDust(DustID.BrownMoss, Main.rand.NextFloat(0.05f, 0.5f), 150);
-        }
+        //public override void OnCursorIntersects(Rectangle cursor, FairyCatcherProj catcher)
+        //{
+        //    if (Main.rand.NextBool(3))
+        //    {
+        //        Dust d = Dust.NewDustPerfect(Center, DustID.BrownMoss, Helper.NextVec2Dir(0.5f, 1.5f), 150);
+        //        d.noGravity = true;
+        //    }
+        //    else if (Main.rand.NextBool())
+        //        this.SpawnTrailDust(DustID.BrownMoss, Main.rand.NextFloat(0.05f, 0.5f), 150);
+        //}
 
         public override void FreeMoving()
         {

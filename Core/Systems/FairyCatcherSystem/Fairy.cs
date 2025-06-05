@@ -106,6 +106,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public Rectangle HitBox => new((int)position.X, (int)position.Y, width, height);
 
         /// <summary>
+        /// 仙灵是否在上一次更新中超出了捕捉圈
+        /// </summary>
+        public bool OutOfCircle { get; set; }
+
+        /// <summary>
         /// 在开始捕捉的时候调用
         /// </summary>
         public event Action OnStartCatch;
@@ -114,7 +119,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         {
             ModTypeLookup<Fairy>.Register(this);
 
-            FairyLoader.fairys ??= new List<Fairy>();
+            FairyLoader.fairys ??= [];
             FairyLoader.fairys.Add(this);
 
             Type = FairyLoader.ReserveFairyID();
@@ -134,6 +139,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         #region 捕获器中的AI
 
+        /// <summary>
+        /// 设置仙灵的各种默认值
+        /// </summary>
+        /// <param name="attempt"></param>
         public void Spawn(FairyAttempt attempt)
         {
             active = true;
@@ -178,7 +187,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                 case AIState.FreeMoving://没开始捕捉的时候，到点就消失
                     {
                         freeMoveTimer--;
-                        if (freeMoveTimer <0)
+                        if (freeMoveTimer < 0)
                         {
                             TurnToFading();
                             return;
@@ -193,17 +202,25 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                             TurnToFading();
                         else if (CatchProgress>CatchProgressMax)//捕捉
                             BeCaught(catcher.Owner);
-
                     }
                     break;
             }
         }
 
-        private void CircleLimit(FairyCatcherProj catcher)
+        /// <summary>
+        /// 限制仙灵的位置，让它不会出捕捉圈
+        /// </summary>
+        /// <param name="catcher"></param>
+        public virtual void CircleLimit(FairyCatcherProj catcher)
         {
             Vector2 webCenter = catcher.webCenter;
             if (Vector2.Distance(Center, webCenter) > catcher.webRadius)
+            {
+                OutOfCircle = true;
                 Center = webCenter + ((Center - webCenter).SafeNormalize(Vector2.Zero) * catcher.webRadius);
+            }
+            else
+                OutOfCircle = false;    
         }
 
         /// <summary>
@@ -222,9 +239,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                     FreeMoving();
                     break;
                 case AIState.Catching:
-                    {
-                        //Catching(catcher);
-                    }
+                    Catching(catcher);
                     break;
                 default:
                 case AIState.Fading:
@@ -241,6 +256,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public virtual void PreAI_InCatcher() { }
         public virtual void PostAI_InCatcher() { }
 
+        /// <summary>
+        /// 生成中，1秒钟时间的渐入效果
+        /// </summary>
         public virtual void Spawning()
         {
             FairyTimer--;
@@ -254,17 +272,14 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <summary>
         /// 在被捕捉时调用
         /// </summary>
-        public virtual void Catching(Rectangle cursor, FairyCatcherProj catcher) { }
+        public virtual void Catching(FairyCatcherProj catcher) { }
+
         /// <summary>
-        /// 在捕捉时并且鼠标接触的时候调用
-        /// </summary>
-        public virtual void OnCursorIntersects(Rectangle cursor, FairyCatcherProj catcher) { }
-        /// <summary>
-        /// 在没被捕捉的时候调用
+        /// 在捕捉环内自由移动时调用
         /// </summary>
         public virtual void FreeMoving() { }
         /// <summary>
-        /// 在消失时调用
+        /// 在消失时调用，1秒钟淡出
         /// </summary>
         public virtual void Fading()
         {
@@ -291,10 +306,14 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// </summary>
         public virtual void OnDespawn() { }
 
+        /// <summary>
+        /// 是否会根据<see cref="velocity"/>更新<see cref="position"/>
+        /// </summary>
+        /// <returns></returns>
         public virtual bool ShouldUpdatePosition() => true;
 
         /// <summary>
-        /// 在被捕捉事调用
+        /// 在被捕捉时调用
         /// </summary>
         public virtual void Catch(int catchPower)
         {

@@ -1,6 +1,5 @@
 ﻿using Coralite.Core.Loaders;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader.IO;
@@ -9,8 +8,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 {
     public partial class FairySystem : ModSystem, ILocalizedModType
     {
-        public static Asset<Texture2D> ProgressBarOuter;
-        public static Asset<Texture2D> ProgressBarInner;
+        public static ATex ProgressBarOuter;
+        public static ATex ProgressBarInner;
 
         /// <summary>
         /// 键值是墙壁的type，-1表示没有墙壁

@@ -1,6 +1,6 @@
 ﻿using Coralite.Core.Systems.FairyCatcherSystem.Bases;
+using System.Collections.Generic;
 using Terraria;
-using Terraria.ModLoader.UI.ModBrowser;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem
 {
@@ -48,9 +48,13 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <summary> 核心的类型，使用<see cref="CoraliteContent.FairyCircleCoreType"/>设置 </summary>
         public int FairyCircleCoreType { get; set; }
 
+        public List<IFairyAccessory> fairyAccessories;
+
         public override void ResetEffects()
         {
             FairyCircleCoreType = -1;
+
+            fairyAccessories?.Clear();
 
             fairyCatchPowerBonus = new StatModifier();
             fairyResurrectionTimeBous = new StatModifier();
@@ -222,30 +226,41 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <returns></returns>
         public FairyData RollFairyIndividualValues(BaseFairyItem faityItem)
         {
-            FairyData data = new();
+            FairyData data = new()
+            {
+                damageBonus = new StatModifier(
+                    Main.rand.NextFloat(damageRamdom.additive_Min, damageRamdom.additive_Max),
+                    Main.rand.NextFloat(damageRamdom.multiplicative_Min, damageRamdom.multiplicative_Max),
+                    Main.rand.NextFloat(damageRamdom.Flat_Min, damageRamdom.Flat_Max),
+                    Main.rand.NextFloat(damageRamdom.base_Min, damageRamdom.base_Max)
+                    ),
+                defenceBonus = new StatModifier(
+                    Main.rand.NextFloat(defenceRamdom.additive_Min, defenceRamdom.additive_Max),
+                    Main.rand.NextFloat(defenceRamdom.multiplicative_Min, defenceRamdom.multiplicative_Max),
+                    Main.rand.NextFloat(defenceRamdom.Flat_Min, defenceRamdom.Flat_Max),
+                    Main.rand.NextFloat(defenceRamdom.base_Min, defenceRamdom.base_Max)
+                    ),
+                lifeMaxBonus = new StatModifier(
+                    Main.rand.NextFloat(lifeMaxRamdom.additive_Min, lifeMaxRamdom.additive_Max),
+                    Main.rand.NextFloat(lifeMaxRamdom.multiplicative_Min, lifeMaxRamdom.multiplicative_Max),
+                    Main.rand.NextFloat(lifeMaxRamdom.Flat_Min, lifeMaxRamdom.Flat_Max),
+                    Main.rand.NextFloat(lifeMaxRamdom.base_Min, lifeMaxRamdom.base_Max)
+                    ),
 
-            data.damageBonus = new StatModifier(
-                Main.rand.NextFloat(damageRamdom.additive_Min, damageRamdom.additive_Max),
-                Main.rand.NextFloat(damageRamdom.multiplicative_Min, damageRamdom.multiplicative_Max),
-                Main.rand.NextFloat(damageRamdom.Flat_Min, damageRamdom.Flat_Max),
-                Main.rand.NextFloat(damageRamdom.base_Min, damageRamdom.base_Max)
-                );
-            data.defenceBonus = new StatModifier(
-                Main.rand.NextFloat(defenceRamdom.additive_Min, defenceRamdom.additive_Max),
-                Main.rand.NextFloat(defenceRamdom.multiplicative_Min, defenceRamdom.multiplicative_Max),
-                Main.rand.NextFloat(defenceRamdom.Flat_Min, defenceRamdom.Flat_Max),
-                Main.rand.NextFloat(defenceRamdom.base_Min, defenceRamdom.base_Max)
-                );
-            data.lifeMaxBonus = new StatModifier(
-                Main.rand.NextFloat(lifeMaxRamdom.additive_Min, lifeMaxRamdom.additive_Max),
-                Main.rand.NextFloat(lifeMaxRamdom.multiplicative_Min, lifeMaxRamdom.multiplicative_Max),
-                Main.rand.NextFloat(lifeMaxRamdom.Flat_Min, lifeMaxRamdom.Flat_Max),
-                Main.rand.NextFloat(lifeMaxRamdom.base_Min, lifeMaxRamdom.base_Max)
-                );
-
-            data.scaleBonus = Main.rand.NextFloat(ScaleRange.Item1, ScaleRange.Item2);
+                scaleBonus = Main.rand.NextFloat(ScaleRange.Item1, ScaleRange.Item2)
+            };
 
             return data;
+        }
+
+        /// <summary>
+        /// 将仙灵饰品添加到列表中
+        /// </summary>
+        /// <param name="acc"></param>
+        public void AddFairyAccessory(IFairyAccessory acc)
+        {
+            fairyAccessories ??= [];
+            fairyAccessories.Add(acc);
         }
     }
 }
