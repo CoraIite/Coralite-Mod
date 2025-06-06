@@ -4,7 +4,9 @@ using Coralite.Core;
 using Coralite.Core.Prefabs.NPCs;
 using Coralite.Helpers;
 using Terraria;
+using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
+using Terraria.GameContent.Personalities;
 using Terraria.ID;
 
 namespace Coralite.Content.NPCs.OtherNPC
@@ -33,6 +35,8 @@ namespace Coralite.Content.NPCs.OtherNPC
 
             }
         }
+
+        public override bool? CanFallThroughPlatforms() => true;
     }
 
     public class MaragonHead : Maragon
@@ -41,14 +45,16 @@ namespace Coralite.Content.NPCs.OtherNPC
 
         public override void SetStaticDefaults()
         {
-            //var drawModifier = new NPCID.Sets.NPCBestiaryDrawModifiers(0)
-            //{ // Influences how the NPC looks in the Bestiary
-            //    CustomTexturePath = "ExampleMod/Content/NPCs/ExampleWorm_Bestiary", 
-            //    Position = new Vector2(40f, 24f),
-            //    PortraitPositionXOverride = 0f,
-            //    PortraitPositionYOverride = 12f
-            //};
-            //NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, drawModifier);
+            var drawModifier = new NPCID.Sets.NPCBestiaryDrawModifiers()
+            {
+                CustomTexturePath = Texture + "_Bestiary",
+                Position = new Vector2(10, 24f),
+                PortraitPositionXOverride = 0f,
+                PortraitPositionYOverride = 12f
+            };
+            NPCID.Sets.NPCBestiaryDrawOffset.Add(NPC.type, drawModifier);
+
+            this.RegisterBestiaryDescription();
         }
 
         public override void SetDefaults()
@@ -77,6 +83,15 @@ namespace Coralite.Content.NPCs.OtherNPC
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
             npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<MagicalPowder>(), 2, 3, 6));
+        }
+
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            bestiaryEntry.AddTags(
+                this.GetBestiaryDescription(),
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Times.NightTime,
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface
+                );
         }
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
@@ -115,6 +130,7 @@ namespace Coralite.Content.NPCs.OtherNPC
             NPC.noGravity = true;
             NPC.noTileCollide = false;
             NPC.behindTiles = true;
+            NPC.npcSlots = 0;
         }
     }
 
@@ -142,6 +158,7 @@ namespace Coralite.Content.NPCs.OtherNPC
             NPC.noGravity = true;
             NPC.noTileCollide = false;
             NPC.behindTiles = true;
+            NPC.npcSlots = 0;
         }
 
         public override void Init()

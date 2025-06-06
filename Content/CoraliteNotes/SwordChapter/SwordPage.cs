@@ -4,10 +4,10 @@ using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.Localization;
 
-namespace Coralite.Content.CoraliteNotes.DashBowChapter
+namespace Coralite.Content.CoraliteNotes.SwordChapter
 {
     [AutoLoadTexture(Path = AssetDirectory.NoteWeapons)]
-    public class DashBowPage : KnowledgePage
+    public class SwordPage : KnowledgePage
     {
         public static LocalizedText Title { get; private set; }
         public static LocalizedText Description { get; private set; }
@@ -24,7 +24,7 @@ namespace Coralite.Content.CoraliteNotes.DashBowChapter
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            DrawTitleH1(spriteBatch, Title, new Color(0, 228, 205));
+            DrawTitleH1(spriteBatch, Title, new Color(178, 165, 226));
             DrawParaNormal(spriteBatch, Description, Position.Y + TitleHeight, out _);
 
             Texture2D tex = DashBow.Value;

@@ -1,8 +1,10 @@
 ﻿using Coralite.Content.Items.Banner;
 using Coralite.Content.Items.Materials;
 using Coralite.Core;
+using Coralite.Helpers;
 using System;
 using Terraria;
+using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 
@@ -15,6 +17,7 @@ namespace Coralite.Content.NPCs.Elemental
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[Type] = 4;
+            this.RegisterBestiaryDescription();
         }
 
         public override void SetDefaults()
@@ -34,6 +37,29 @@ namespace Coralite.Content.NPCs.Elemental
 
             NPC.HitSound = CoraliteSoundID.Fairy_NPCHit5;
             NPC.DeathSound = CoraliteSoundID.FairyDeath_NPCDeath7;
+        }
+
+        public override float SpawnChance(NPCSpawnInfo spawnInfo)
+        {
+            if (spawnInfo.Player.townNPCs > 2f)
+                return 0;
+
+            if (Main.dayTime && spawnInfo.Player.ZonePurity && !spawnInfo.Player.ZoneSkyHeight)
+                return 0.02f;
+            return 0f;
+        }
+
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            bestiaryEntry.AddTags(
+                this.GetBestiaryDescription(),
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface
+                );
+        }
+
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<MagicalPowder>(), 2, 1, 3));
         }
 
         public override void AI()
@@ -285,21 +311,6 @@ namespace Coralite.Content.NPCs.Elemental
                     Scale: Main.rand.NextFloat(1, 1.4f));
                 d.noGravity = true;
             }
-        }
-
-        public override float SpawnChance(NPCSpawnInfo spawnInfo)
-        {
-            if (spawnInfo.Player.townNPCs > 2f)
-                return 0;
-
-            if (Main.dayTime && spawnInfo.Player.ZonePurity && !spawnInfo.Player.ZoneSkyHeight)
-                return 0.02f;
-            return 0f;
-        }
-
-        public override void ModifyNPCLoot(NPCLoot npcLoot)
-        {
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<MagicalPowder>(), 2, 1, 3));
         }
     }
 }

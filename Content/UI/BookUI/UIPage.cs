@@ -19,6 +19,11 @@ namespace Coralite.Content.UI.UILib
         /// </summary>
         public abstract bool CanShowInBook { get; }
 
+        /// <summary>
+        /// 是否和下一页连起来组成双页，是的话就会强制让这一页显示在左边
+        /// </summary>
+        public virtual bool DoublePageWithNext { get; }
+
         public float PageWidth => GetInnerDimensions().Width;
         public float PageHeight => GetInnerDimensions().Height;
         public Vector2 Center => GetInnerDimensions().Center();

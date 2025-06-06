@@ -28,8 +28,8 @@ namespace Coralite.Content.Tiles.Thunder
             TileID.Sets.DisableSmartCursor[Type] = true;
             TileID.Sets.HasOutlines[Type] = true;
 
-            DustType = DustID.YellowTorch;
-            AddMapEntry(Coralite.ThunderveinYellow);
+            DustType = DustID.PurpleTorch;
+            AddMapEntry(ZacurrentDragon.ZacurrentPurple);
 
             TileObjectData.newTile.CopyFrom(TileObjectData.Style1x2);
             TileObjectData.newTile.Width = 2;

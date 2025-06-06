@@ -18,10 +18,9 @@ namespace Coralite.Content.Bosses.Rediancie
 
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("小赤玉灵");
+            NPC.SetHideInBestiary();
 
             Main.npcFrameCount[Type] = 1;
-            NPCID.Sets.MPAllowedEnemies[Type] = true;
         }
 
         public override void SetDefaults()

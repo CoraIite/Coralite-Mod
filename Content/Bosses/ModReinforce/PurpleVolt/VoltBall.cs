@@ -32,6 +32,11 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
         public static ATex HorizontalStar { get; private set; }
 
+        public override void SetStaticDefaults()
+        {
+            base.SetStaticDefaults();
+        }
+
         public override void SetDefaults()
         {
             NPC.width = 55;

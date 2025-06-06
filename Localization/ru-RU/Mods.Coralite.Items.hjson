@@ -5937,3 +5937,8 @@ ZacurrentRod: {
 	// DisplayName: Zacurrent Rod
 	// Tooltip: ""
 }
+
+ZacurrentRelic: {
+	// DisplayName: Zacurrent Relic
+	// Tooltip: ""
+}

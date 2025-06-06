@@ -4,10 +4,20 @@ IceDragonEgg.DisplayName: 冰龙蛋
 IceThornsTrap.DisplayName: 冰刺陷阱
 Rediancie.DisplayName: 赤玉灵
 RediancieMinion.DisplayName: 小赤玉灵
-IcicleSpirit.DisplayName: 霜灵
-MaragonBody.DisplayName: 魔龙身体
-MaragonHead.DisplayName: 魔龙头
-MaragonTrail.DisplayName: 魔龙尾
+
+IcicleSpirit: {
+	DisplayName: 霜灵
+	BestiaryDescription: "冰龙宝宝的冰之魔力扩散到地下后形成的精灵。 相比冰龙宝宝来说操控冰之魔法的能力弱上许多。"
+}
+
+MaragonBody.DisplayName: 魔龙
+
+MaragonHead: {
+	DisplayName: 魔龙
+	BestiaryDescription: "魔法灰尘聚集在一起形成的生物，据推测它们攻击人可能是把人当成了移动的魔力水晶。"
+}
+
+MaragonTrail.DisplayName: 魔龙
 ShadowGolem.DisplayName: 影子巨像
 ShadowGuard.DisplayName: 影子守卫
 
@@ -87,6 +97,7 @@ CrystalRobot: {
 	RareDialogue1: 妖精与仙灵，强大且充满智慧。
 	RareDialogue2: 珊瑚... ... 资料未解锁。
 	RareDialogue3: 古代的龙们，穿过时间来到这里。
+	BestiaryDescription: "使用魔能驱动的小型机器人，需要定期食用魔力晶体。 带给它魔力晶体后它会很乐意为你制作各种魔能工具。"
 }
 
 Bloodiancie.DisplayName: 赤血玉灵
@@ -106,7 +117,11 @@ Biskety: {
 ThunderveinDragon.DisplayName: 荒雷龙
 ThunderPhantom.DisplayName: 荒雷幻影
 ShadowVilliger.DisplayName: 影子
-MagicElemental.DisplayName: 魔力精
+
+MagicElemental: {
+	DisplayName: 魔力精
+	BestiaryDescription: "魔法灰尘聚集在一起形成的精灵，通常会漫无目的地移动。"
+}
 
 ElfRanger: {
 	Name1: 埃芙
@@ -181,4 +196,4 @@ WildMabirdNest: {
 	BestiaryDescription: 野生魔鸟搭建的巢穴，会不断地孵化新的野生魔鸟。发现目标是会将内部的魔鸟弹射出去。
 }
 
-// PurpleVoltBall.DisplayName: Purple Volt Ball
+PurpleVoltBall.DisplayName: 紫电球

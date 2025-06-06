@@ -4,15 +4,19 @@ using Coralite.Content.Items.MagikeSeries2;
 using Coralite.Content.Items.ThyphionSeries;
 using Coralite.Core;
 using Coralite.Core.Attributes;
+using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.SmoothFunctions;
 using Coralite.Core.Systems.MagikeSystem.Particles;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
+using ReLogic.Content;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.ItemDropRules;
+using Terraria.Graphics.Effects;
 using Terraria.ID;
 
 namespace Coralite.Content.NPCs.Crystalline
@@ -49,6 +53,8 @@ namespace Coralite.Content.NPCs.Crystalline
         private Vector2[] P2HandCenter;
         private int[] P2HandFrame;
         private int[] P2HandFrameCounter;
+
+
 
         private const int MaxHandFrame=12;
 
@@ -581,6 +587,11 @@ namespace Coralite.Content.NPCs.Crystalline
             //    TryTurnToAttack();
         }
 
+        public void P2Swing()
+        {
+
+        }
+
         public void P2Rolling()
         {
 
@@ -933,5 +944,159 @@ namespace Coralite.Content.NPCs.Crystalline
         }
 
         public override bool PreDraw(ref Color lightColor) => false;
+    }
+
+    [AutoLoadTexture(Path = AssetDirectory.CrystallineNPCs)]
+    public class CrystallineSentinelSwing : BaseSwingProj
+    {
+        public override string Texture => AssetDirectory.CrystallineNPCs + Name;
+
+        public ref float LeftOrRight => ref Projectile.ai[1];
+        public ref float OwnerIndex => ref Projectile.ai[1];
+        [AutoLoadTexture(Name = "CrystallineSentinelGradient")]
+        public static ATex GradientTexture { get; set; }
+
+        public CrystallineSentinelSwing() : base(0.785f, trailCount: 48) { }
+
+        public int delay;
+        public int alpha;
+
+        public Vector2 offsetToOwner;
+        public Vector2 velocity;
+
+        public override void SetSwingProperty()
+        {
+            Projectile.friendly = false;
+            Projectile.hostile = true;
+            Projectile.width = 40;
+            Projectile.height = 85;
+            trailTopWidth = 0;
+            distanceToOwner = 8;
+            minTime = 0;
+            onHitFreeze = 0;
+            useSlashTrail = true;
+            Projectile.hide = true;
+        }
+
+        protected override float ControlTrailBottomWidth(float factor)
+        {
+            return 85 * Projectile.scale;
+        }
+
+        protected override void InitializeSwing()
+        {
+            if (OwnerIndex.GetNPCOwner<CrystallineSentinel>(out NPC npc, Projectile.Kill))
+                velocity = (Projectile.Center - npc.Center).SafeNormalize(Vector2.Zero);
+
+                Projectile.extraUpdates = 2;
+            alpha = 0;
+            startAngle = 0f;
+            totalAngle = 30.5f;
+            maxTime = 90 * 4;
+            Smoother = Coralite.Instance.BezierEaseSmoother;
+            delay = 20;
+            Projectile.localNPCHitCooldown = 60;
+
+            base.InitializeSwing();
+        }
+
+        protected override void AIBefore()
+        {
+            Lighting.AddLight(Projectile.Center, 0.3f, 0.3f, 1f);
+        }
+
+        protected override void OnSlash()
+        {
+            int timer = (int)Timer - minTime;
+
+            if (alpha < 255)
+                alpha += 2;
+            if (timer % 30 == 0)
+                onHitTimer = 0;
+
+
+
+            base.OnSlash();
+        }
+
+        protected override void AfterSlash()
+        {
+            if (alpha > 20)
+                alpha -= 10;
+            if (Projectile.scale > 0.8f)
+            {
+                Projectile.scale *= 0.999f;
+            }
+
+            Slasher();
+            if (Timer > maxTime + delay)
+                Projectile.Kill();
+        }
+
+        protected override void AIAfter()
+        {
+            Top = Projectile.Center + (RotateVec2 * ((Projectile.scale * Projectile.height / 2) + trailTopWidth));
+            Bottom = Projectile.Center - (RotateVec2 * (Projectile.scale * Projectile.height / 2));//弹幕的底端和顶端计算，用于检测碰撞以及绘制
+
+            if (useShadowTrail || useSlashTrail)
+                UpdateCaches();
+        }
+
+        protected override Vector2 OwnerCenter()
+        {
+            if (OwnerIndex.GetNPCOwner<CrystallineSentinel>(out NPC npc, Projectile.Kill))
+                return npc.Center+offsetToOwner;
+
+            return base.OwnerCenter();
+        }
+
+        protected override void DrawSlashTrail()
+        {
+            if (oldRotate == null)
+                return;
+            List<VertexPositionColorTexture> bars = new();
+            GetCurrentTrailCount(out float count);
+
+            for (int i = 0; i < count; i++)
+            {
+                if (oldRotate[i] == 100f)
+                    continue;
+
+                float factor = 1f - (i / count);
+                Vector2 Center = GetCenter(i);
+                Vector2 Top = Center + (oldRotate[i].ToRotationVector2() * (oldLength[i] + trailTopWidth + oldDistanceToOwner[i]));
+                Vector2 Bottom = Center + (oldRotate[i].ToRotationVector2() * (oldLength[i] - ControlTrailBottomWidth(factor) + oldDistanceToOwner[i]));
+
+                var topColor = Color.Lerp(new Color(238, 218, 130, alpha), new Color(167, 127, 95, 0), 1 - factor);
+                var bottomColor = Color.Lerp(new Color(109, 73, 86, alpha), new Color(83, 16, 85, 0), 1 - factor);
+                bars.Add(new(Top.Vec3(), topColor, new Vector2(factor, 0)));
+                bars.Add(new(Bottom.Vec3(), bottomColor, new Vector2(factor, 1)));
+            }
+
+            if (bars.Count > 2)
+            {
+                Helper.DrawTrail(Main.graphics.GraphicsDevice, () =>
+                {
+                    Effect effect = Filters.Scene["NoHLGradientTrail"].GetShader().Shader;
+
+                    effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
+                    effect.Parameters["sampleTexture"].SetValue(CoraliteAssets.Trail.SlashFlatBlurSmall.Value);
+                    effect.Parameters["gradientTexture"].SetValue(GradientTexture.Value);
+
+                    foreach (EffectPass pass in effect.CurrentTechnique.Passes) //应用shader，并绘制顶点
+                    {
+                        pass.Apply();
+                        Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars.ToArray(), 0, bars.Count - 2);
+                        Main.graphics.GraphicsDevice.BlendState = BlendState.Additive;
+                        Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars.ToArray(), 0, bars.Count - 2);
+                    }
+                }, BlendState.NonPremultiplied, SamplerState.PointWrap, RasterizerState.CullNone);
+
+                Main.spriteBatch.End();
+                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.Transform);
+                Main.spriteBatch.End();
+                Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.Transform);
+            }
+        }
     }
 }

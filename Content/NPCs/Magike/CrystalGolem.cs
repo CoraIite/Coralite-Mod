@@ -6,7 +6,6 @@ using Coralite.Content.Items.MagikeSeries1;
 using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -58,6 +57,8 @@ namespace Coralite.Content.NPCs.Magike
             NPC.knockBackResist = 0f;
             NPC.noGravity = false;
             NPC.value = Item.buyPrice(0, 0, 20, 0);
+
+            NPC.rarity = 1;
 
             SpawnModBiomes = [ModContent.GetInstance<MagicCrystalCave>().Type];
         }

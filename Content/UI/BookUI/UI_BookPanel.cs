@@ -1,4 +1,5 @@
-﻿using Coralite.Content.UI.BookUI;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Content.UI.BookUI;
 using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
@@ -154,7 +155,15 @@ namespace Coralite.Content.UI.UILib
                     continue;
                 for (int j = 0; j < pageGroups[i].Pages.Length; j++)
                     if (pageGroups[i].Pages[j].CanShowInBook)
-                        AppendPage(pageGroups[i].Pages[j]);
+                    {
+                        if (pageGroups[i].Pages[j].DoublePageWithNext && Pages.Count % 2 != 0)
+                        {
+                            AppendPage(new EmptyPage());
+                            AppendPage(pageGroups[i].Pages[j]);
+                        }
+                        else
+                            AppendPage(pageGroups[i].Pages[j]);
+                    }
             }
 
             //防止出现越界的情况

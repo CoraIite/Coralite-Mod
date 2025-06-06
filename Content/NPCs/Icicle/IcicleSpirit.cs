@@ -8,6 +8,7 @@ using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
+using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 
@@ -25,6 +26,7 @@ namespace Coralite.Content.NPCs.Icicle
         public override void SetStaticDefaults()
         {
             Main.npcFrameCount[Type] = 5;
+            this.RegisterBestiaryDescription();
         }
 
         public override void SetDefaults()
@@ -36,7 +38,6 @@ namespace Coralite.Content.NPCs.Icicle
             NPC.knockBackResist = 0.5f;
             NPC.aiStyle = -1;
             NPC.value = Item.buyPrice(0, 1);
-            //NPCID.Sets.TrailCacheLength[Type] = 1;
             NPC.rarity = 3;
 
             NPC.noGravity = true;
@@ -45,6 +46,14 @@ namespace Coralite.Content.NPCs.Icicle
         }
 
         public override bool? CanFallThroughPlatforms() => true;
+
+        public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
+        {
+            bestiaryEntry.AddTags(
+                this.GetBestiaryDescription(),
+                BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.UndergroundSnow
+                );
+        }
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
@@ -55,7 +64,7 @@ namespace Coralite.Content.NPCs.Icicle
 
         public override void ModifyNPCLoot(NPCLoot npcLoot)
         {
-            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<IcicleCrystal>(), 2, 1, 2));
+            npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<IcicleCrystal>(), 1, 1, 2));
         }
 
         public override void AI()

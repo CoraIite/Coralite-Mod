@@ -15,6 +15,8 @@ namespace Coralite.Content.CoraliteNotes.SlimeChapter1
         public static LocalizedText SlimeTreeDescription { get; private set; }
         public static LocalizedText GelFiberDescription { get; private set; }
 
+        public override bool DoublePageWithNext => true;
+
         public static ATex SlimeTree {  get; private set; }
 
         private ScaleController _scale1 = new ScaleController(1.5f, 0.2f);

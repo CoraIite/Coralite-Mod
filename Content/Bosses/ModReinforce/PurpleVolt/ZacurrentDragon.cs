@@ -1,10 +1,12 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Items.Thunder;
+using Coralite.Core;
 using Coralite.Core.Attributes;
 using Coralite.Core.Systems.BossSystems;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 
 namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
@@ -163,6 +165,11 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             {
                 NPC.scale = 2.4f;
             }
+        }
+
+        public override void ModifyNPCLoot(NPCLoot npcLoot)
+        {
+            npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<ZacurrentRelic>()));
         }
 
         public override void BossLoot(ref string name, ref int potionType)
