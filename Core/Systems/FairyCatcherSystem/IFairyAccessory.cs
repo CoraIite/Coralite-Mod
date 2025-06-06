@@ -7,7 +7,7 @@
         /// </summary>
         /// <param name="catcherProj"></param>
         /// <param name="attempt"></param>
-        void ModifyFairySpawn(FairyCatcherProj catcherProj,ref FairyAttempt attempt)
+        void ModifyFairySpawn(ref FairyAttempt attempt)
         {
 
         }

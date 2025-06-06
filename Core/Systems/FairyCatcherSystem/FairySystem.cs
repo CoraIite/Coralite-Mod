@@ -86,29 +86,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         }
 
 
-        public static bool SpawnFairy(FairyAttempt attempt, out Fairy fairy)
-        {
-            fairy = null;
-
-            if (fairySpawnConditions.ContainsKey(attempt.wallType) && fairySpawnConditions[attempt.wallType] != null)
-            {
-                List<FairySpawnController> currentCondition = new();
-                List<FairySpawnController> totalCondition = fairySpawnConditions[attempt.wallType];
-                foreach (var condition in totalCondition)
-                    if (condition.CheckCondition(attempt) //稀有度是额外判定的
-                        && attempt.rarity == FairyLoader.GetFairy(condition.fairyType).Rarity)
-                        currentCondition.Add(condition);
-
-                if (currentCondition.Count == 0)
-                    return false;
-
-                fairy = Main.rand.NextFromList(currentCondition.ToArray()).SpawnFairy(attempt);
-                return true;
-            }
-
-            return false;
-        }
-
         /// <summary>
         /// 设置捕捉的bool
         /// </summary>

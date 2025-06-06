@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Coralite.Core.Loaders;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Utilities;
 
@@ -10,11 +11,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// 墙壁类型
         /// </summary>
         public int wallType;
-
-        /// <summary>
-        /// 稀有度
-        /// </summary>
-        public FairyRarity rarity;
 
         /// <summary>
         /// 捕捉器弹幕
@@ -68,9 +64,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             //添加默认的生成
             AddNormalSpawnPool();
 
-            fairyRand = new WeightedRandom<int>();
-            fairyRand.Clear();
-
             return new FairyAttempt()
             {
                 catcherProj = catcherProj,
@@ -90,12 +83,60 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             percentDict.Add((int)FairyRarity.U, 250);
             percentDict.Add((int)FairyRarity.C, 490);
         }
+
+        public bool SpawnFairy(out Fairy fairy)
+        {
+            fairy = null;
+            int result = GetRandResult();
+
+            //直接生成的仙灵
+            if (result <= 0)
+            {
+                fairy = FairyLoader.GetFairy(-result);
+                return true;
+            }
+
+            FairyRarity rarity = (FairyRarity)result;
+
+            if (FairySystem.fairySpawnConditions.TryGetValue(wallType, out List<FairySpawnController> totalController) && totalController != null)
+            {
+                List<FairySpawnController> currentController = new();
+
+                //将所有可生成的仙灵添加到列表中
+                foreach (var controller in totalController)
+                    if (rarity == FairyLoader.GetFairy(controller.fairyType).Rarity && controller.CheckCondition(this))
+                        currentController.Add(controller);
+
+                if (currentController.Count == 0)
+                    return false;
+
+                fairy = Main.rand.NextFromList(currentController.ToArray()).SpawnFairy(this);
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// 获得结果，0和负数表示仙灵ID，正数是仙灵稀有度
+        /// </summary>
+        /// <returns></returns>
+        public static int GetRandResult()
+        {
+            fairyRand = new WeightedRandom<int>();
+            fairyRand.Clear();
+
+            foreach (var item in percentDict)
+                fairyRand.Add(item.Key, item.Value);
+
+            return fairyRand.Get();
+        }
     }
 
     public enum FairyRarity
     {
         /// <summary> 常见的，淡黄色 </summary>
-        C = 0,
+        C = 1,
         /// <summary> 不常见，青绿色 </summary>
         U = 10,
         /// <summary> 稀有，天蓝色 </summary>

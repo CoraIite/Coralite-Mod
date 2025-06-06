@@ -3,7 +3,6 @@ using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
 using Terraria;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem

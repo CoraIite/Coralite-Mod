@@ -197,40 +197,39 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             if (!Owner.TryGetModPlayer(out FairyCatcherPlayer fcp))
                 return;
 
-            int spawnCount = fcp.spawnFairyCount;
+            //随机生成点
+            Vector2 spawnPos = webCenter + Helper.NextVec2Dir(0, webRadius);
+            //不在世界里就重新尝试
+            if (!WorldGen.InWorld((int)spawnPos.X / 16, (int)spawnPos.Y / 16))
+                return;
 
-            for (int i = 0; i < spawnCount; i++)
+            Point point = spawnPos.ToTileCoordinates();
+            Tile spawnTile = Framing.GetTileSafely(point);
+
+            //不能有物块
+            if (Helper.HasSolidTile(spawnTile))
+                return;
+
+            FairyAttempt attempt = FairyAttempt.CreateFairyAttempt(this, point.X, point.Y, spawnTile.WallType);
+
+            fcp.FairyCatch_GetBait(out Item powder);
+            if (powder != null)
             {
-                //随机生成点
-                Vector2 spawnPos = webCenter + Helper.NextVec2Dir(0, webRadius);
-                //不在世界里就重新尝试
-                if (!WorldGen.InWorld((int)spawnPos.X / 16, (int)spawnPos.Y / 16))
-                    continue;
+                attempt.baitItem = powder;
+                FairySystem.VanillaFairyPowder(ref attempt, powder);
 
-                Point point = spawnPos.ToTileCoordinates();
-                Tile spawnTile = Framing.GetTileSafely(point);
-
-                //不能有物块，虽然这个限制没啥意义
-                if (Helper.HasSolidTile(spawnTile))
-                    continue;
-
-                FairyAttempt attempt = FairyAttempt.CreateFairyAttempt(this, point.X, point.Y, spawnTile.WallType);
-
-                fcp.FairyCatch_GetBait(out Item powder);
-                if (powder != null)
-                {
-                    attempt.baitItem = powder;
-                    FairySystem.VanillaFairyPowder(ref attempt, powder);
-
-                    if (powder.ModItem is IFairyPowder fairypowder)
-                        fairypowder.EditFairyAttempt(ref attempt);
-                }
-
-                if (FairySystem.SpawnFairy(attempt, out Fairy fairy))
-                {
-                    Fairies.Add(fairy);
-                }
+                if (powder.ModItem is IFairyPowder fairypowder)
+                    fairypowder.EditFairyAttempt(ref attempt);
             }
+
+            if (fcp.fairyAccessories != null && fcp.fairyAccessories.Count > 0)
+                foreach (var acc in fcp.fairyAccessories)
+                {
+                    acc.ModifyFairySpawn(ref attempt);
+                }
+
+            if (attempt.SpawnFairy(out Fairy fairy))
+                Fairies.Add(fairy);
         }
 
         public void UpdateWebVisualEffect_Catching()
@@ -254,6 +253,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             {
                 default: return false;
                 case AIStates.Shooting://射击时撞墙直接开启
+                    webCenter = Projectile.Center.ToTileCoordinates().ToWorldCoordinates();
                     TurnToCatching();
                     return false;
                 case AIStates.Catching:

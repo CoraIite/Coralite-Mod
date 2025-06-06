@@ -33,11 +33,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <summary> 仙灵捕捉器的半径 </summary>
         public float FairyCatcherRadius { get => FairyCatcherBaseRadius + FairyCatcherRadiusBonus; }
 
-        /// <summary>
-        /// 每次生成仙灵时会生成多少个
-        /// </summary>
-        public int spawnFairyCount;
-
         public FairyIVRandomModifyer damageRamdom;
         public FairyIVRandomModifyer defenceRamdom;
         public FairyIVRandomModifyer lifeMaxRamdom;
@@ -89,7 +84,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             //默认大小区间0.9-1.1
             ScaleRange = (0.9f, 1.1f);
 
-            spawnFairyCount = 1;
             FairyCatcherRadiusBonus = 0;
         }
 
