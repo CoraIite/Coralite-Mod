@@ -75,14 +75,13 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public override void SendData(ModPacket data)
         {
-            data.Write((int)CurrentLevel);
+            data.Write((byte)CurrentLevel);
             ItemIO.Send(SelfItem, data);
-            data.Write(SelfItem.type);
         }
 
         public override void ReceiveData(BinaryReader reader, int whoAmI)
         {
-            CurrentLevel = (MALevel)reader.ReadInt32();
+            CurrentLevel = (MALevel)reader.ReadByte();
             SelfItem = ItemIO.Receive(reader);
         }
 

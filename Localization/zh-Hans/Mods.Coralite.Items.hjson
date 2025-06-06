@@ -835,7 +835,7 @@ ForestLens: {
 	DisplayName: 森林透镜
 	Tooltip:
 		'''
-		在森林生产魔能，只能放置在草块上
+		在森林并且再草墙或花墙前生产魔能，只能放置在草块上
 		{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}
 		'''
 }
@@ -4396,6 +4396,7 @@ MoonlightLens: {
 	Tooltip:
 		'''
 		在月光照射时生产魔能
+		满月和血月产量提升，新月时停止生产
 		{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}
 		'''
 }
@@ -4414,7 +4415,7 @@ HellLens: {
 	DisplayName: 地狱透镜
 	Tooltip:
 		'''
-		在地狱生产魔能，需要将底座放置在灰烬或地狱建筑方块上
+		在地狱生产魔能，需要放置在灰烬或地狱建筑方块上
 		{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}
 		'''
 }
@@ -4519,7 +4520,7 @@ DungeonLens: {
 	DisplayName: 地牢透镜
 	Tooltip:
 		'''
-		在地牢生产魔能，只能放置在地牢砖上
+		在地牢并且在地牢墙前生产魔能，只能放置在地牢砖上
 		{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}
 		'''
 }
@@ -6033,6 +6034,11 @@ ThyphionRelic: {
 }
 
 ZacurrentRod: {
-	// DisplayName: Zacurrent Rod
-	// Tooltip: ""
+	DisplayName: 紫伏引雷针
+	Tooltip: 放置后在晚上右键召唤兹雷龙
+}
+
+ZacurrentRelic: {
+	DisplayName: 束电塔
+	Tooltip: ""
 }

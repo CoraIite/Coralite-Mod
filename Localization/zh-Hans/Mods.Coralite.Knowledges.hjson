@@ -444,3 +444,8 @@ DashBowPage: {
 	Title: 万千气象之弓
 	Description: a
 }
+
+SwordPage: {
+	Title: 超越无极之剑
+	Description: Mods.Coralite.Knowledges.SwordPage.Description
+}

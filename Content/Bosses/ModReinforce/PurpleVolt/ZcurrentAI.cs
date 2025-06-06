@@ -166,8 +166,13 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                     NPC.TargetClosest();
                     break;
                 case AIStates.onSpawnAnmi:
+
+                    NPC.Center = Target.Center + new Vector2(0, -1500);
+
                     ResetFields();
-                    ChangeState();
+                    State = AIStates.LightningRaidNormal;
+                    LightningRaidSetStartValue();
+                    Recorder2 = 1;
                     break;
                 case AIStates.onKillAnim:
                     {

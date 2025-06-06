@@ -12,10 +12,17 @@ namespace Coralite.Core.Systems.MagikeSystem
     {
         public static List<MagikeNetPack> MagikeNetPacks = new List<MagikeNetPack>();
 
-        internal const string GUID = "CoraliteMod_GUIDValue-YI58-FA38-GN58";
+        internal const string GUID = "CoraliteMagikeUpdate";
+
+        private int SendTime;
 
         public override void PostUpdateEverything()
         {
+            SendTime++;
+            if (SendTime < 60)//最多每秒发一次包
+                return;
+
+            SendTime = 0;
             if (MagikeNetPacks.Count < 1 || !VaultUtils.isServer)//只有服务器应该执行该操作
                 return;
 
@@ -23,7 +30,7 @@ namespace Coralite.Core.Systems.MagikeSystem
             MagikeNetPacks.Clear();
         }
 
-        public void SendMagikePack()
+        public static void SendMagikePack()
         {
             ModPacket modPacket = Coralite.Instance.GetPacket();
             modPacket.Write((byte)CoraliteNetWorkEnum.MagikeSystem);

@@ -3,6 +3,7 @@ using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using System;
 using System.IO;
+using System.Linq;
 using Terraria.DataStructures;
 
 namespace Coralite.Helpers
@@ -18,6 +19,14 @@ namespace Coralite.Helpers
         {
             if (VaultUtils.isServer)
             {
+                //只有特定类型的才会移除旧的然后再添加新的以减少发送的内容
+                if (packType is not MagikeNetPackType.ItemContainer_IndexedItem)
+                {
+                    var oldPack = MagikeSystem.MagikeNetPacks.FirstOrDefault(p => p.Position == mp.Entity.Position && p.PackType == packType, new MagikeNetPack());
+                    if (oldPack.Position != Point16.NegativeOne)
+                        MagikeSystem.MagikeNetPacks.Remove(oldPack);
+                }
+
                 var pack = new MagikeNetPack(mp.Entity.Position, packType);
 
                 if (writeSpecial != null)

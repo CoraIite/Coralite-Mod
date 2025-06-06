@@ -34,6 +34,7 @@ namespace Coralite.Content.CoraliteNotes
             FlowerGun,
             LandOfTheLustrous,
             DashBow,
+            Sword,
 
             Count,
         }
@@ -73,6 +74,7 @@ namespace Coralite.Content.CoraliteNotes
             FlowerGunChapter.FlowerGunCollect.Save(tag);
             LandOfTheLustrousChapter.LandOfTheLustrousCollect.Save(tag);
             DashBowChapter.DashBowCollect.Save(tag);
+            SwordChapter.SwordCollect.Save(tag);
         }
 
         public override void OnWorldLoad()
@@ -82,6 +84,7 @@ namespace Coralite.Content.CoraliteNotes
             Array.Fill(FlowerGunChapter.FlowerGunCollect.Unlocks, false);
             Array.Fill(LandOfTheLustrousChapter.LandOfTheLustrousCollect.Unlocks, false);
             Array.Fill(DashBowChapter.DashBowCollect.Unlocks, false);
+            Array.Fill(SwordChapter.SwordCollect.Unlocks, false);
         }
 
         public override void LoadWorldData(TagCompound tag)
@@ -91,6 +94,7 @@ namespace Coralite.Content.CoraliteNotes
             FlowerGunChapter.FlowerGunCollect.Load(tag);
             LandOfTheLustrousChapter.LandOfTheLustrousCollect.Load(tag);
             DashBowChapter.DashBowCollect.Load(tag);
+            SwordChapter.SwordCollect.Load(tag);
         }
     }
 }

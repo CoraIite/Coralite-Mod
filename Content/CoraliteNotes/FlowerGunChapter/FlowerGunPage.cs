@@ -12,6 +12,8 @@ namespace Coralite.Content.CoraliteNotes.FlowerGunChapter
         public static LocalizedText Title { get; private set; }
         public static LocalizedText Description { get; private set; }
 
+        public override bool DoublePageWithNext => true;
+
         public static ATex FlowerGun { get; private set; }
 
         public override void OnInitialize()

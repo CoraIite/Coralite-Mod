@@ -31,6 +31,7 @@ namespace Coralite.Content.CoraliteNotes
                     new MagikeInterstitial1.GroupMagikeInterstitial1(),
                     new MagikeChapter2.GroupMagikeChapter2(),
 
+                    new SwordChapter.GroupSwordChapter(),
                     new FlyingShieldChapter.GroupFlyingShield(),
                     new FlowerGunChapter.GroupFlowerGun(),
                     new DashBowChapter.GroupDashBowChapter(),

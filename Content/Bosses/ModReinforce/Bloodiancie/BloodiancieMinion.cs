@@ -25,6 +25,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
         {
             Main.npcFrameCount[Type] = 1;
             NPCID.Sets.MPAllowedEnemies[Type] = true;
+            NPC.SetHideInBestiary();
         }
 
         public override void SetDefaults()

@@ -1,5 +1,7 @@
-﻿using Terraria;
+﻿using Coralite.Content.Items.ThyphionSeries;
+using Terraria;
 using Terraria.Localization;
+using Terraria.ModLoader.IO;
 
 namespace Coralite
 {
@@ -25,6 +27,24 @@ namespace Coralite
         public override void Unload()
         {
             OnEnterWorld = null;
+        }
+
+        public override void SaveWorldData(TagCompound tag)
+        {
+            //不知道写哪所以写这里了
+            if (Thyphion.Skin)
+                tag.Add("ThyphionSkin", true);
+        }
+
+        public override void OnWorldLoad()
+        {
+            Thyphion.Skin = false;
+        }
+
+        public override void LoadWorldData(TagCompound tag)
+        {
+            if (tag.TryGet("ThyphionSkin", out bool b))
+                Thyphion.Skin = b;
         }
     }
 }

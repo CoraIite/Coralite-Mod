@@ -321,3 +321,8 @@ DashBowPage: {
 	// Title: Mods.Coralite.Knowledges.DashBowPage.Title
 	// Description: Mods.Coralite.Knowledges.DashBowPage.Description
 }
+
+SwordPage: {
+	// Title: Mods.Coralite.Knowledges.SwordPage.Title
+	// Description: Mods.Coralite.Knowledges.SwordPage.Description
+}

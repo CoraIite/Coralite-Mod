@@ -5,6 +5,7 @@ using Coralite.Content.Items.MagikeSeries1;
 using Coralite.Core;
 using Coralite.Core.Loaders;
 using Coralite.Core.Systems.MagikeSystem;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -66,7 +67,7 @@ namespace Coralite.Content.NPCs.Town
                 this.GetLocalization("RareDialogue3", () => "古代的龙们，穿过时间来到这里。"),
                 ];
 
-
+            this.RegisterBestiaryDescription();
         }
 
         public override void Unload()
@@ -123,23 +124,14 @@ namespace Coralite.Content.NPCs.Town
             NPC.knockBackResist = 0.5f;
 
             AnimationType = NPCID.Guide;
+            SpawnModBiomes = [ModContent.GetInstance<MagicCrystalCave>().Type];
         }
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
-            // We can use AddRange instead of calling Add multiple times in order to add multiple items at once
-            bestiaryEntry.Info.AddRange(new IBestiaryInfoElement[] {
-				// Sets the preferred biomes of this town NPC listed in the bestiary.
-				// With Town NPCs, you usually set this to what biome it likes the most in regards to NPC happiness.
-				BestiaryDatabaseNPCsPopulator.CommonTags.SpawnConditions.Biomes.Surface,
-
-				// Sets your NPC's flavor text in the bestiary.
-				//new FlavorTextBestiaryInfoElement("."),
-
-				//// You can add multiple elements if you really wanted to
-				//// You can also use localization keys (see Localization/en-US.lang)
-				//new FlavorTextBestiaryInfoElement("Mods.ExampleMod.Bestiary.ExamplePerson")
-            });
+            bestiaryEntry.AddTags(
+                this.GetBestiaryDescription()
+                );
         }
 
         // The PreDraw hook is useful for drawing things before our sprite is drawn or running code before the sprite is drawn
@@ -248,21 +240,11 @@ namespace Coralite.Content.NPCs.Town
         {
             var npcShop = new NPCShop(Type, ShopName);
             int magicCrystalCurrencyID = CurrencyLoader.GetCurrencyID<MagicCrystalCurrency>();
-            //npcShop.Add(new Item(ModContent.ItemType<MagikeGuideBook>())//魔能辞典
-            //{
-            //    shopCustomPrice = 15,
-            //    shopSpecialCurrency = magicCrystalCurrencyID
-            //});
             npcShop.Add(new Item(ModContent.ItemType<MagikeMonoclastic>())//单片镜
             {
                 shopCustomPrice = 10,
                 shopSpecialCurrency = magicCrystalCurrencyID
             });
-            //npcShop.Add(new Item(ModContent.ItemType<OpalTower>())//单片镜
-            //{
-            //    shopCustomPrice = 25,
-            //    shopSpecialCurrency = magicCrystalCurrencyID
-            //});
             npcShop.Add(new Item(ModContent.ItemType<MagConnectStaff>())//连接杖
             {
                 shopCustomPrice = 10,
@@ -273,7 +255,7 @@ namespace Coralite.Content.NPCs.Town
                 shopCustomPrice = 8,
                 shopSpecialCurrency = magicCrystalCurrencyID
             });
-            npcShop.Add(new Item(ModContent.ItemType<OpticalPathCalibrator>())//激活杖
+            npcShop.Add(new Item(ModContent.ItemType<OpticalPathCalibrator>())//同步杖
             {
                 shopCustomPrice = 8,
                 shopSpecialCurrency = magicCrystalCurrencyID

@@ -38,14 +38,13 @@ namespace Coralite.Content.UI.MagikeApparatusPanel
             if (filter.Count <= _index)
                 return;
 
-            MagikeApparatusPanel.CurrentEntity.RemoveComponent(filter[_index]);
-
             Helper.PlayPitched("UI/Tick", 0.4f, 0);
-            UILoader.GetUIState<MagikeApparatusPanel>().Recalculate();
             if (VaultUtils.isClient)
-            {
                 Send_LeftClick_Data(MagikeApparatusPanel.CurrentEntity, (filter[_index] as MagikeFilter).whoAmI);
-            }
+            else
+                MagikeApparatusPanel.CurrentEntity.RemoveComponent(filter[_index]);
+
+            UILoader.GetUIState<MagikeApparatusPanel>().Recalculate();
         }
 
         internal void Send_LeftClick_Data(MagikeTP tP, int whoAmI)
