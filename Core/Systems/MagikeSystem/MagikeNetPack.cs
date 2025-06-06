@@ -5,6 +5,11 @@ namespace Coralite.Core.Systems.MagikeSystem
 {
     public struct MagikeNetPack
     {
+        public MagikeNetPack()
+        {
+            Position = Point16.NegativeOne;
+        }
+
         public MagikeNetPack(Point16 position, MagikeNetPackType packType)
         {
             Position = position;

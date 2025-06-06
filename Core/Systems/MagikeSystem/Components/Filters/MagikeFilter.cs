@@ -172,12 +172,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             {
                 MagikeFilter _filter = null;
                 foreach (var components in magikeTP.ComponentsCache)
-                {
                     if (components is MagikeFilter filter && filter.whoAmI == filterWhoAmI)
-                    {
                         _filter = filter;
-                    }
-                }
+
                 if (_filter != null)
                 {
                     magikeTP.RemoveComponent(_filter);
@@ -191,6 +188,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                         modPacket.Write(filterWhoAmI);
                         modPacket.Send(-1, whoAmI);
                     }
+                    else
+                        UILoader.GetUIState<MagikeApparatusPanel>().Recalculate();
                 }
             }
         }

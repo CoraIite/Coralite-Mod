@@ -3,7 +3,7 @@
     /// <summary>
     /// MA 是 MagikeApparatus 的缩写，记录魔能仪器的等级
     /// </summary>
-    public enum MALevel
+    public enum MALevel:byte
     {
         //啥都莫有
         None = 0,

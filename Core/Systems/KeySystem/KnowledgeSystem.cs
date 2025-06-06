@@ -45,6 +45,12 @@ namespace Coralite.Core.Systems.KeySystem
         public static void CheckForUnlock(int id, Vector2 position, Color color)
         {
             KeyKnowledge keyKnowledge = CoraliteContent.GetKKnowledge(id);
+
+            if (VaultUtils.isClient)
+            {
+
+            }
+
             if (!keyKnowledge.Unlock)
             {
                 keyKnowledge.UnlockKnowledge();

@@ -204,7 +204,7 @@ namespace Coralite.Content.ModPlayers
             DashDelayModifyer = StatModifier.Default;
             DashDir = -1;
 
-            if (Core.Loaders.KeybindLoader.Dash.JustReleased)
+            if (!VaultUtils.isServer && Core.Loaders.KeybindLoader.Dash.JustReleased)
             {
                 if (Player.controlUp)//上下优先
                 {
