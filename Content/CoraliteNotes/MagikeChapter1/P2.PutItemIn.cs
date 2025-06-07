@@ -2,9 +2,7 @@
 using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria;
 using Terraria.GameContent;
-using Terraria.ID;
 using Terraria.Localization;
 
 namespace Coralite.Content.CoraliteNotes.MagikeChapter1
@@ -41,7 +39,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
             Vector2 pos = TitlePos;
 
             //描述段1
-            DrawParaNormal(spriteBatch,WhatIsItemWithMagike,pos.Y, out Vector2 textSize);
+            DrawParaNormal(spriteBatch, WhatIsItemWithMagike, pos.Y, out Vector2 textSize);
 
             var tex1 = TextureAssets.Item[ModContent.ItemType<MagicCrystal>()].Value;
             var tex11 = TextureAssets.Item[ModContent.ItemType<MagicCrystalBlock>()].Value;
@@ -55,7 +53,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
             picturePos.X -= tex1.Width * 5 / 2;
 
             Helper.DrawMouseOverScaleTex<MagicCrystal>(spriteBatch, picturePos
-                ,ref _scale1, 5,5, fadeWithOriginScale: true);
+                , ref _scale1, 5, 5, fadeWithOriginScale: true);
 
             // 绘制左边的物品贴图2
             picturePos.X = Position.X + width / 2 + tex11.Width * 5 / 2;
@@ -65,7 +63,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
             picturePos.X = Position.X + PageWidth - tex2.Width / 2;
 
             // 绘制右边的图片
-            Helper.DrawMouseOverScaleTex(spriteBatch, tex2, picturePos,ref _scale2, 6);
+            Helper.DrawMouseOverScaleTex(spriteBatch, tex2, picturePos, ref _scale2, 6);
 
             pos += new Vector2(0, tex2.Height / 2 + 20);
 
@@ -75,10 +73,10 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
             Helper.DrawTextParagraph(spriteBatch, TurnToMagikeProducer.Value, PageWidth, new Vector2(Position.X, pos.Y), out textSize);
             tex2 = CoraliteAssets.MagikeChapter1.TurnToMagikeProducerUI.Value;
 
-            pos.Y += textSize.Y + tex2.Height / 2 *0.7f+20;
+            pos.Y += textSize.Y + tex2.Height / 2 * 0.7f + 20;
 
             // 绘制下边的图片
-            Helper.DrawMouseOverScaleTex(spriteBatch, tex2, pos,ref _scale3, 6);
+            Helper.DrawMouseOverScaleTex(spriteBatch, tex2, pos, ref _scale3, 6);
         }
     }
 }

@@ -4069,12 +4069,12 @@ GelFiberHammer: {
 }
 
 MagicElementalBannerItem: {
-	DisplayName: Magic Elemental Banner Item
+	DisplayName: Magic Elemental Banner
 	Tooltip: ""
 }
 
 MaragonBannerItem: {
-	DisplayName: Maragon Banner Item
+	DisplayName: Maragon Banner
 	Tooltip: ""
 }
 
@@ -4784,7 +4784,7 @@ SmoothSkarn: {
 }
 
 SmoothSkarnWallItem: {
-	DisplayName: Smooth Skarn Wall Item
+	DisplayName: Smooth Skarn Wall
 	Tooltip: ""
 }
 
@@ -5110,44 +5110,60 @@ Solunar: {
 }
 
 BasicCharger: {
-	DisplayName: Basic Charger
-	Tooltip: ""
+	DisplayName: Basic Charging Station
+	Tooltip:
+		'''
+		Charges contained items when activated. Toggle UI to charge either placed items or equipped player items.
+		{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}
+		'''
 }
 
 CrystalBomb: {
 	DisplayName: Crystal Bomb
-	Tooltip: ""
+	Tooltip: Consumes 5 Magike to throw explosive crystal charges
 }
 
 PlatinumMagshield: {
-	DisplayName: Platinum Magshield
-	Tooltip: ""
+	DisplayName: Platinum Magishield
+	Tooltip:
+		'''
+		Performs perfect blocks. On perfect block, consumes 3 Magike or 80 mana to release energy shockwave
+		[c/ffbeec:Too much platinum ore...]
+		'''
 }
 
 ApothecaryTable: {
-	NotHavePotion: Mods.Coralite.Items.ApothecaryTable.NotHavePotion
-	DisplayName: Apothecary Table
-	Tooltip: ""
+	NotHavePotion: No Potion Inserted!
+	DisplayName: Magike Alchemy Station
+	Tooltip:
+		'''
+		When activated, consumes all Magike to apply stored potion effects to nearby player
+		{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}
+		'''
 }
 
 Aquarius: {
 	DisplayName: Aquarius
-	Tooltip: ""
+	Tooltip: Fires water spheres that burst mid-flight to release arrows
 }
 
 IcicleMusicBox: {
-	DisplayName: Icicle Music Box
+	DisplayName: Music Box (Icy Cold Stream)
 	Tooltip: ""
 }
 
 RedJadeMusicBox: {
-	DisplayName: Red Jade Music Box
+	DisplayName: Music Box (Red Torrent)
 	Tooltip: ""
 }
 
 WindSpeedArrows: {
-	DisplayName: Wind Speed Arrows
-	Tooltip: ""
+	DisplayName: Gale-Fletched Arrows
+	Tooltip:
+		'''
+		+6% movement speed
+		Arrow damage increases with movement speed (up to +20%)
+		'''
 }
 
 Taurus: {
@@ -5156,18 +5172,18 @@ Taurus: {
 }
 
 B94WindbreakingArrowItem: {
-	DisplayName: B94 Windbreaking Arrow Item
-	Tooltip: ""
+	DisplayName: B9-4 Windbreaker Arrow
+	Tooltip: Locks onto nearby enemies for homing trajectory
 }
 
 B94WindbreakingCompoundBow: {
-	DisplayName: B94 Windbreaking Compound Bow
-	Tooltip: ""
+	DisplayName: B9-4 Windbreaker Compound Bow
+	Tooltip: Converts Wooden Arrows into B9-4 Windbreaker Arrows
 }
 
 B9Alloy: {
 	DisplayName: B9 Alloy
-	Tooltip: ""
+	Tooltip: Ultra-light heat-resistant alloy ideal for ranged weaponry
 }
 
 SkarnChest: {
@@ -5181,28 +5197,33 @@ CrystallineBlock: {
 }
 
 WildChalcedonyWallItem: {
-	DisplayName: Wild Chalcedony Wall Item
+	DisplayName: Wild Chalcedony Wall
 	Tooltip: ""
 }
 
 CrackedSkarnWallItem: {
-	DisplayName: Cracked Skarn Wall Item
+	DisplayName: Cracked Skarn Wall
 	Tooltip: ""
 }
 
 WindrangerQuiver: {
 	DisplayName: Windranger Quiver
-	Tooltip: ""
+	Tooltip:
+		'''
+		Increases arrow damage based on movement speed
+		Extends invincibility frames after taking damage
+		Boosts arrow velocity
+		'''
 }
 
 CrystallineLemna: {
-	DisplayName: Crystalline Lemna
-	Tooltip: ""
+	DisplayName: Crystalline Lemna Sapling
+	Tooltip: Plant on Skarn or Polished Skarn to grow Crystalline Lemna
 }
 
 FocusPotion: {
 	DisplayName: Focus Potion
-	Tooltip: ""
+	Tooltip: Makes your mouse cursor glow!
 }
 
 CrystallineSeaOats: {
@@ -5211,8 +5232,12 @@ CrystallineSeaOats: {
 }
 
 CrystallineSeaOatsSeed: {
-	DisplayName: Crystalline Sea Oats Seed
-	Tooltip: ""
+	DisplayName: Crystalline Sea Oats Sapling
+	Tooltip:
+		'''
+		Plant on Silicate blocks to grow Crystalline Sea Oats Mother Plant
+		Sea Oats will grow in nearby water around the mother plant
+		'''
 }
 
 LightSoulCatalyst: {
@@ -5232,17 +5257,22 @@ LightSoulFilter: {
 
 ChalcedonySapling: {
 	DisplayName: Chalcedony Sapling
-	Tooltip: ""
+	Tooltip: Can be planted on Skarn
 }
 
 PossessedChest: {
-	DisplayName: Possessed Chest
-	Tooltip: ""
+	DisplayName: Phantom Breastplate
+	Tooltip: Grants one-time 30 damage reduction when shield dashing
 }
 
 Luminward: {
 	DisplayName: Luminward
-	Tooltip: ""
+	Tooltip:
+		'''
+		Gain invisibility after 10 seconds without taking damage
+		While invisible: +5% critical chance and one-time 20% damage reduction
+		Damage reduction doesn't trigger for hits below 30 damage
+		'''
 }
 
 B9AlloyBathtub: {
@@ -5336,7 +5366,7 @@ B9AlloyTable: {
 }
 
 B9AlloyTileItem: {
-	DisplayName: B9 Alloy Tile Item
+	DisplayName: B9 Alloy Tile
 	Tooltip: ""
 }
 
@@ -5346,7 +5376,7 @@ B9AlloyToilet: {
 }
 
 B9AlloyWallItem: {
-	DisplayName: B9 Alloy Wall Item
+	DisplayName: B9 Alloy Wall
 	Tooltip: ""
 }
 
@@ -5356,47 +5386,78 @@ B9AlloyWorkBench: {
 }
 
 CrystallineCrate: {
-	DisplayName: Crystalline Crate
-	Tooltip: ""
+	DisplayName: Enchanted Crystal Crate
+	Tooltip: Right click to open
 }
 
 SkyshipInABottle: {
-	DisplayName: Skyship In A Bottle
-	Tooltip: ""
+	DisplayName: Skyship in a Bottle
+	Tooltip: Summons a chalcedony ship to sail the cloud seas
 }
 
 CrystallineLance: {
-	DisplayName: Crystalline Lance
-	Tooltip: ""
+	DisplayName: The Cutting Edge
+	Tooltip:
+		'''
+		Builds momentum to increase attack power
+		Consumes 40 Magike to fire tail spikes
+		'''
 }
 
 EmperorSlimeBoots: {
-	DisplayName: Emperor Slime Boots
-	Tooltip: ""
-	ExtraTooltip: Mods.Coralite.Items.EmperorSlimeBoots.ExtraTooltip
-	ArmorBonusGelFiber: Mods.Coralite.Items.EmperorSlimeBoots.ArmorBonusGelFiber
-	ArmorBonusNinja: Mods.Coralite.Items.EmperorSlimeBoots.ArmorBonusNinja
-	SpecialNameGelFiber: Mods.Coralite.Items.EmperorSlimeBoots.SpecialNameGelFiber
-	SpecialNameNinja: Mods.Coralite.Items.EmperorSlimeBoots.SpecialNameNinja
+	DisplayName: Emperor's Bouncy Boots
+	Tooltip:
+		'''
+		Grants [c/3298e1:Bouncy Slime]!
+		    ▶ Bounce on landing, rebound when dashing into walls
+		    ▶ Hold DOWN to reduce bounce height
+		Immunity to fall damage, increased jump height
+		'''
+	ExtraTooltip: Equip Gel Fiber Armor [i:Coralite/GelFiberHelmet][i:Coralite/GelFiberBreastplate] or Ninja Armor [i:256][i:257] for set bonuses
+	ArmorBonusGelFiber:
+		'''
+		+12 defense
+		Gain Slime Coating when hitting slimed enemies (0.5s cooldown)
+		Gain Slime Coating when triggering [c/3298e1:Bouncy Slime] at high speed
+		一一一一一一
+		Each layer: +1.5 HP (rounded down, max 30 stacks)
+		+Life regen when above 15 layers
+		一一一一一一
+		Lose 5 layers when hitted
+		Convert Slime debuff into Slime Coating
+		'''
+	ArmorBonusNinja:
+		'''
+		+6 defense, +4% crit chance, +15% movement speed
+		Spawn Royal Gel Orbs when hitting slimed enemies
+		Gain Slime's Blessing when triggering [c/3298e1:Bouncy Slime]
+		Applies Slime debuff on hit (0.5s cooldown)
+		'''
+	SpecialNameGelFiber: Supreme
+	SpecialNameNinja: Expedition
 }
 
 ChalcedonyWing: {
-	DisplayName: Chalcedony Wing
-	Tooltip: ""
+	DisplayName: Chalcedony Wings
+	Tooltip:
+		'''
+		Allows flight and slow fall
+		Grants powerful cloud jumping
+		'''
 }
 
 CrystallineHummingBannerItem: {
-	DisplayName: Crystalline Humming Banner Item
+	DisplayName: Crystalline Humming Banner
 	Tooltip: ""
 }
 
 CrystallineVinicColumnBannerItem: {
-	DisplayName: Crystalline Vinic Column Banner Item
+	DisplayName: Crystalline Vinic Column Banner
 	Tooltip: ""
 }
 
 CrystallineVinicLaserBannerItem: {
-	DisplayName: Crystalline Vinic Laser Banner Item
+	DisplayName: Crystalline Vinic Laser Banner
 	Tooltip: ""
 }
 
@@ -5501,7 +5562,7 @@ LeafStoneToilet: {
 }
 
 LeafStoneWallItem: {
-	DisplayName: Leaf Stone Wall Item
+	DisplayName: Leaf Stone Wall
 	Tooltip: ""
 }
 
@@ -5631,7 +5692,7 @@ SteelBrick: {
 }
 
 SteelBrickWallItem: {
-	DisplayName: Steel Brick Wall Item
+	DisplayName: Steel Brick Wall
 	Tooltip: ""
 }
 
@@ -5722,59 +5783,63 @@ SkarnBrickBench: {
 
 LuminDye: {
 	DisplayName: Lumin Dye
-	Tooltip: ""
+	Tooltip: Occasionally makes your clothing semi-transparent!
 }
 
 GlassCat: {
 	DisplayName: Glass Cat
-	Tooltip: ""
+	Tooltip: Internal organs visible through its translucent body!
 }
 
 CrystallinePylon: {
-	DisplayName: Crystalline Pylon
-	Tooltip: ""
+	DisplayName: Enchanted Pylon
+	Tooltip: Teleports to another pylon when two villagers are nearby
 }
 
 CrystallineSentinelBannerItem: {
-	DisplayName: Crystalline Sentinel Banner Item
+	DisplayName: Crystalline Sentinel Banner
 	Tooltip: ""
 }
 
 WildMabirdBannerItem: {
-	DisplayName: Wild Mabird Banner Item
+	DisplayName: Wild Mabird Banner
 	Tooltip: ""
 }
 
 WildMabirdNestBannerItem: {
-	DisplayName: Wild Mabird Nest Banner Item
+	DisplayName: Wild Mabird Nest Banner
 	Tooltip: ""
 }
 
 UnsentLetter: {
 	DisplayName: Unsent Letter
-	Tooltip: ""
+	Tooltip: Summons a Messenger Harpy that collects distant items for you
 }
 
 CrystallineFountainItem: {
-	DisplayName: Crystalline Fountain Item
+	DisplayName: Crystalline Fountain
 	Tooltip: ""
 }
 
 RainbowPorpoise: {
-	Description: Mods.Coralite.Items.RainbowPorpoise.Description
-	CatchLocation: Mods.Coralite.Items.RainbowPorpoise.CatchLocation
+	Description: Dolphins are cute, but rainbow porpoises are cuter! Can you fly to that sky island? Perfect, go catch me a rainbow porpoise! Not a dolphin, a rainbow porpoise! Go now!
+	CatchLocation: Catch Location: Crystalline Sky Island
 	DisplayName: Rainbow Porpoise
 	Tooltip: ""
 }
 
 CrystallineHook: {
-	DisplayName: Crystalline Hook
-	Tooltip: ""
+	DisplayName: Enchanted Grappling Hook
+	Tooltip: Pulls player to maximum range before releasing
 }
 
 Wisteria: {
 	DisplayName: Wisteria
-	Tooltip: ""
+	Tooltip:
+		'''
+		Fires petal projectiles
+		"Obsessive Love"
+		'''
 }
 
 BasicMabirdNest: {
@@ -5793,110 +5858,161 @@ StartSkyIsland: {
 }
 
 BloodmarkTopper: {
-	ExtraToolTipNone: Mods.Coralite.Items.BloodmarkTopper.ExtraToolTipNone
-	ExtraToolTipBlood: Mods.Coralite.Items.BloodmarkTopper.ExtraToolTipBlood
-	ExtraToolTipShadow: Mods.Coralite.Items.BloodmarkTopper.ExtraToolTipShadow
-	ExtraToolTipPrison: Mods.Coralite.Items.BloodmarkTopper.ExtraToolTipPrison
-	SpecialPreNameBlood: Mods.Coralite.Items.BloodmarkTopper.SpecialPreNameBlood
-	SpecialPreNameShadow: Mods.Coralite.Items.BloodmarkTopper.SpecialPreNameShadow
-	SpecialPreNamePrison: Mods.Coralite.Items.BloodmarkTopper.SpecialPreNamePrison
-	ArmorSetBlood: Mods.Coralite.Items.BloodmarkTopper.ArmorSetBlood
-	ArmorSetShadow: Mods.Coralite.Items.BloodmarkTopper.ArmorSetShadow
-	ArmorSetPrison: Mods.Coralite.Items.BloodmarkTopper.ArmorSetPrison
+	ExtraToolTipNone:
+		'''
+		Grants [c/ed494e:Blood Top Hat]!
+		    ▶ Summons a Blood Top Hat that latches onto nearest enemy and bites
+		'''
+	ExtraToolTipBlood:
+		'''
+		Grants [c/ed494e:Blood Top Hat]!
+		    ▶ Summons a Blood Top Hat that latches onto nearest enemy and bites
+		'''
+	ExtraToolTipShadow:
+		'''
+		Grants [c/f148eb:Shadow Top Hat]!
+		    ▶ Summons a Shadow Top Hat that bites enemies and spawns Shadowlings
+		    ▶ Shadowlings return after attacking, granting stacks that boost:
+		      Attack +3% per stack (max 15%)
+		      Max HP +5 per stack (max 25)
+		      Defense +1 per stack (max 5)
+		    ▶ Lose one stack every 12 seconds
+		'''
+	ExtraToolTipPrison:
+		'''
+		Grants [c/665cc2:Sin Top Hat]!
+		    ▶ Summons a Sin Top Hat that shoots iron spikes when whipping
+		    ▶ Every 5 attacks spawns pincers that reduce target defense by 8
+		'''
+	SpecialPreNameBlood: Bloodthirsty
+	SpecialPreNameShadow: Shadow
+	SpecialPreNamePrison: Executioner
+	ArmorSetBlood:
+		'''
+		+10 defense, greatly increased life regeneration
+		Grants [c/ed494e:Blood Pool]!
+		    ▶ Blood Top Hat bites build stacks (max 5), converting to blood droplets
+		    ▶ Droplets add 2 blood to pool (max 50) and lifesteal on hit
+		    ▶ Healing potions consume blood pool for bonus healing
+		'''
+	ArmorSetShadow:
+		'''
+		+6 defense, increased movement speed and acceleration
+		Replaces [c/ed494e:Blood Top Hat] with [c/f148eb:Shadow Top Hat]
+		'''
+	ArmorSetPrison:
+		'''
+		+6 defense, +30% whip range, +15% whip speed, +15% summon damage
+		Replaces [c/ed494e:Blood Top Hat] with [c/665cc2:Sin Top Hat]
+		'''
 	DisplayName: Bloodmark Topper
-	Tooltip: ""
-	SetTip: Mods.Coralite.Items.BloodmarkTopper.SetTip
+	Tooltip:
+		'''
+		+8% damage, +5% critical strike chance
+		Right-click in inventory to toggle cosmetic appearance
+		'''
+	SetTip: Equip Crimson [i:793][i:794], Shadow [i:101][i:100][i:957][i:958], or Obsidian [i:3267][i:3268] armor for set bonuses
 }
 
 MabirdLoupe: {
-	DisplayName: Mabird Loupe
-	Tooltip: ""
-	CanShowBackLines: Mods.Coralite.Items.MabirdLoupe.CanShowBackLines
-	DontShowBackLines: Mods.Coralite.Items.MabirdLoupe.DontShowBackLines
-	ShowNothing: Mods.Coralite.Items.MabirdLoupe.ShowNothing
+	DisplayName: Magibird Loupe
+	Tooltip: Reveals magibird paths when carried in inventory
+	CanShowBackLines: ○ Show all paths (item routes & nest flights) - right-click to toggle
+	DontShowBackLines: △ Show only item routes - right-click to enable
+	ShowNothing: × Hide magibird paths - right-click to toggle
 }
 
 SkarnCutter: {
-	DisplayName: Skarn Cutter
-	Tooltip: ""
+	DisplayName: Skarn Compound Cutter
+	Tooltip: Cuts Skarn and Chalcedony
 }
 
 CrystallineMagikeClusters: {
 	DisplayName: Crystalline Magike Clusters
-	Tooltip: ""
+	Tooltip: Mineable with same-tier Beam Harvesters
 }
 
 BloodWorm: {
-	DisplayName: Blood Worm
-	Tooltip: ""
+	DisplayName: Blood Leech
+	Tooltip: Guaranteed to catch enemies during Blood Moon
 }
 
 QueenOfNight: {
-	DisplayName: Queen Of Night
-	Tooltip: ""
+	DisplayName: Queen of the Night
+	Tooltip: Mysterious Demise
 }
 
 Datura: {
 	DisplayName: Datura
-	Tooltip: ""
+	Tooltip: Innate Luck
 }
 
 MidasGunpowder: {
 	DisplayName: Midas Gunpowder
-	Tooltip: ""
+	Tooltip:
+		'''
+		+15% gun damage
+		+15% ranged knockback
+		Guns fire Midas Sparks (1.5s cooldown)
+		'''
 }
 
 GhostPipe: {
 	DisplayName: Ghost Pipe
-	Tooltip: ""
+	Tooltip: Spirit of Purity
 }
 
 SunflowerGun: {
 	DisplayName: Sunflower Gun
-	Tooltip: ""
+	Tooltip: Devotion and Vigil
 }
 
 InfinityMagikePoint: {
-	DisplayName: Infinity Magike Point
-	Tooltip: ""
+	DisplayName: Infinite Magike Node
+	Tooltip: Provides unlimited Magike
 }
 
 Aloe: {
 	DisplayName: Aloe
-	Tooltip: ""
+	Tooltip: Self-Preservation
 }
 
 CrystallineMusicBox: {
-	DisplayName: Crystalline Music Box
+	DisplayName: Music Box (Enchanted Miracle)
 	Tooltip: ""
 }
 
 HephaesthRelic: {
 	DisplayName: Hephaesth Relic
-	Tooltip: ""
+	Tooltip: Functions as Ancient Forge crafting station
 }
 
 HyacinthRelic: {
 	DisplayName: Hyacinth Relic
-	Tooltip: ""
+	Tooltip: Purifies surrounding environment
 }
 
 LandOfTheLustrousRelic: {
-	DisplayName: Land Of The Lustrous Relic
-	Tooltip: ""
+	DisplayName: Land of the Lustrous Relic
+	Tooltip: Spawns gemstone creatures from collected lunar dust
 }
 
 ThyphionRelic: {
-	Tooltip: ""
+	Tooltip: Right-click to cycle through Thyphion forms
 	DisplayName: Thyphion Relic
 }
 
 ZacurrentRod: {
-	DisplayName: Zacurrent Rod
-	Tooltip: ""
+	DisplayName: Violet Lightning Rod
+	Tooltip: Place and right-click at night to summon Thunder Dragon
 }
 
 ZacurrentRelic: {
-	DisplayName: Zacurrent Relic
+	DisplayName: Lightning Spire
+	Tooltip: ""
+}
+
+ZenithRelic: {
+	DisplayName: Zenith Relic
 	Tooltip: ""
 }

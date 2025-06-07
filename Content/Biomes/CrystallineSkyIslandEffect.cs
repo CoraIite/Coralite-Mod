@@ -8,7 +8,6 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.GameContent;
 using Terraria.Utilities;
 
 namespace Coralite.Content.Biomes
@@ -44,7 +43,7 @@ namespace Coralite.Content.Biomes
 
             public int CloudType;
 
-            public CloudData(int x, int y,WeightedRandom<int> random)
+            public CloudData(int x, int y, WeightedRandom<int> random)
             {
                 Vector2 center = new Vector2(Main.screenWidth / 2, Main.screenHeight / 2);
                 targetScreenPosIn = new Vector2(x, y) + Main.rand.NextVector2Circular(12, 12);
@@ -143,8 +142,8 @@ namespace Coralite.Content.Biomes
             //Main.NewText(Timer);
             if (Timer > MaxTime && Teleport == 0)//传送
             {
-                if (CoraliteWorld.AltarPos==default)
-                    Owner.Teleport(new Point(Main.spawnTileX,Main.spawnTileY).ToWorldCoordinates());
+                if (CoraliteWorld.AltarPos == default)
+                    Owner.Teleport(new Point(Main.spawnTileX, Main.spawnTileY).ToWorldCoordinates());
                 else
                     Owner.Teleport(CoraliteWorld.AltarPos.ToWorldCoordinates());
                 Teleport = 1;
@@ -171,8 +170,8 @@ namespace Coralite.Content.Biomes
                 random.Add(i + 1, 1);
 
             int k = 0;
-            for (int i = -1; i < x-1; i++)
-                for (int j = -1; j < y-1; j++)
+            for (int i = -1; i < x - 1; i++)
+                for (int j = -1; j < y - 1; j++)
                 {
                     datas[k] = new CloudData(i * XLength, j * YLength, random);
                     k++;

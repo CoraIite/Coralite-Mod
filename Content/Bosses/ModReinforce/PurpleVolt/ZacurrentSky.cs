@@ -2,16 +2,15 @@
 using Coralite.Core.Attributes;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using Terraria;
 using Terraria.Graphics.Effects;
 
 namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 {
-    [AutoLoadTexture(Path =AssetDirectory.ZacurrentDragon)]
+    [AutoLoadTexture(Path = AssetDirectory.ZacurrentDragon)]
     public class ZacurrentSky : CustomSky
     {
-        public static ATex BGNoise {  get; set; }
+        public static ATex BGNoise { get; set; }
 
         private bool _isActive;
 
@@ -61,9 +60,9 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
                 Rectangle screen = new(0, 0, Main.screenWidth, Main.screenHeight);
                 Effect e = Filters.Scene["ZacurrentBackground"].GetShader().Shader;
-                e.Parameters["iTime"].SetValue(Main.GlobalTimeWrappedHourly*2);
-                e.Parameters["bright"].SetValue(0.1f+light );
-                e.Parameters["divide"].SetValue(4.5f/10);
+                e.Parameters["iTime"].SetValue(Main.GlobalTimeWrappedHourly * 2);
+                e.Parameters["bright"].SetValue(0.1f + light);
+                e.Parameters["divide"].SetValue(4.5f / 10);
                 e.Parameters["c"].SetValue(c);
                 e.Parameters["worldSize"].SetValue(new Vector2(Main.screenWidth, Main.screenHeight));
                 e.Parameters["noise"].SetValue(BGNoise.Value);
@@ -79,7 +78,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
                 //Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bar, 0, 2);
 
-                spriteBatch.Draw(sky, screen, Color.White* (Timeleft / 100f));
+                spriteBatch.Draw(sky, screen, Color.White * (Timeleft / 100f));
 
                 spriteBatch.End();
                 spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, default, default, default, null, Main.BackgroundViewMatrix.ZoomMatrix);

@@ -1,7 +1,6 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Prefabs.Misc;
 using Microsoft.Xna.Framework.Graphics;
-using Steamworks;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.UI.BigProgressBar;

@@ -199,7 +199,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             {
                 Texture2D value = ThyphionHeldProj.SkinTex.Value;
                 Rectangle rectangle = value.Frame(1, 25, 0, (Item.timeSinceItemSpawned / 3 % 25));
-                Vector2 origin = new Vector2(rectangle.Width/2,rectangle.Height);
+                Vector2 origin = new Vector2(rectangle.Width / 2, rectangle.Height);
                 spriteBatch.Draw(value
                     , Item.Bottom - Main.screenPosition, rectangle, lightColor, 0, origin, scale, 0, 0);
                 spriteBatch.Draw(ThyphionHeldProj.SkinGlowTex.Value

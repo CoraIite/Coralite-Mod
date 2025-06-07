@@ -5,7 +5,6 @@ using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using Terraria;

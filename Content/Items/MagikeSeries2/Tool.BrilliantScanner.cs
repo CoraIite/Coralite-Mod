@@ -69,7 +69,7 @@ namespace Coralite.Content.Items.MagikeSeries2
 
         public override void RightClick(Player player)
         {
-            ShowLineStyle=!ShowLineStyle;
+            ShowLineStyle = !ShowLineStyle;
         }
 
         public override bool ConsumeItem(Player player) => false;

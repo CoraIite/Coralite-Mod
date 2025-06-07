@@ -67,11 +67,11 @@ namespace Coralite.Content.Items.Magike.Lens.DayTimeLens
                     //AntiMagikeMaxBase = 0;
                     break;
                 case MALevel.Glistent:
-                    MagikeMaxBase = 126;
+                    MagikeMaxBase = 100;
                     //AntiMagikeMaxBase = MagikeMaxBase * 3;
                     break;
                 case MALevel.Hallow:
-                    MagikeMaxBase = 956;
+                    MagikeMaxBase = 1000;
                     //AntiMagikeMaxBase = MagikeMaxBase * 2;
                     break;
                 case MALevel.HolyLight:
@@ -90,7 +90,7 @@ namespace Coralite.Content.Items.Magike.Lens.DayTimeLens
         public override void Upgrade(MALevel incomeLevel)
         {
             MaxConnectBase = 1;
-            ConnectLengthBase = 4 * 16;
+            ConnectLengthBase = 6 * 16;
 
             switch (incomeLevel)
             {
@@ -101,20 +101,19 @@ namespace Coralite.Content.Items.Magike.Lens.DayTimeLens
                     ConnectLengthBase = 0;
                     break;
                 case MALevel.Glistent:
-                    UnitDeliveryBase = 42;
-                    SendDelayBase = 10;
+                    UnitDeliveryBase = 50;
+                    SendDelayBase = 5 * 60;
                     break;
                 case MALevel.Hallow:
-                    UnitDeliveryBase = 256;
-                    SendDelayBase = 8;
+                    UnitDeliveryBase = 400;
+                    SendDelayBase = 4 * 60;
                     break;
                 case MALevel.HolyLight:
-                    UnitDeliveryBase = 450;
-                    SendDelayBase = 7;
+                    UnitDeliveryBase = 675;
+                    SendDelayBase = 3 * 60 + 30;
                     break;
             }
 
-            SendDelayBase *= 60;
             RecheckConnect();
         }
     }
@@ -141,20 +140,19 @@ namespace Coralite.Content.Items.Magike.Lens.DayTimeLens
                     ThroughputBase = 0;
                     break;
                 case MALevel.Glistent:
-                    ProductionDelayBase = 10;
-                    ThroughputBase = 14;
+                    ProductionDelayBase = 5 * 60;
+                    ThroughputBase = 10;
                     break;
                 case MALevel.Hallow:
-                    ProductionDelayBase = 8;
-                    ThroughputBase = 85;
+                    ProductionDelayBase = 4 * 60;
+                    ThroughputBase = 80;
                     break;
                 case MALevel.HolyLight:
-                    ProductionDelayBase = 7;
-                    ThroughputBase = 150;
+                    ProductionDelayBase = 3 * 60 + 30;
+                    ThroughputBase = 135;
                     break;
             }
 
-            ProductionDelayBase *= 60;
             Timer = ProductionDelayBase;
         }
     }

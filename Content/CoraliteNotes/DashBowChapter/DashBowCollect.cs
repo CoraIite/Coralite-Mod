@@ -6,7 +6,6 @@ using Coralite.Core.Attributes;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader.IO;
 using static Terraria.ModLoader.ModContent;
 
@@ -58,7 +57,7 @@ namespace Coralite.Content.CoraliteNotes.DashBowChapter
             NewImage<Afterglow>(center + new Vector2(-240, 126), null
                 , DashBows.Afterglow, CollectImage.LockIconType.Small);
             NewImage<TremblingBow>(center + new Vector2(-166, 316), null
-                , DashBows.TremblingBow, CollectImage.LockIconType.Small,0.9f);
+                , DashBows.TremblingBow, CollectImage.LockIconType.Small, 0.9f);
             NewImage<FarAwaySky>(center + new Vector2(174, 302), Condition.DownedEyeOfCthulhu
                 , DashBows.FarAwaySky, CollectImage.LockIconType.Small);
             NewImage<IcicleBow>(center + new Vector2(-240, -88), CoraliteConditions.DownedBabyIceDragon
@@ -74,11 +73,11 @@ namespace Coralite.Content.CoraliteNotes.DashBowChapter
             NewImage<HorizonArc>(center + new Vector2(214, 212), Condition.DownedTwins
                 , DashBows.HorizonArc, CollectImage.LockIconType.Small);
             NewImage<SeismicWave>(center + new Vector2(-190, 216), Condition.DownedDestroyer
-                , DashBows.SeismicWave,scale: 0.85f);
+                , DashBows.SeismicWave, scale: 0.85f);
             NewImage<ReverseFlash>(center + new Vector2(6, 370), CoraliteConditions.DownedThunderveinDragon
-                , DashBows.ReversedFlash, CollectImage.LockIconType.Small,1.1f);
+                , DashBows.ReversedFlash, CollectImage.LockIconType.Small, 1.1f);
             NewImage<Solunar>(center + new Vector2(28, -100), Condition.DownedPlantera
-                , DashBows.Solunar,scale:0.9f);
+                , DashBows.Solunar, scale: 0.9f);
             NewImage<Glaciate>(center + new Vector2(-144, -32), Condition.DownedIceQueen
                 , DashBows.Glaciate);
             NewImage<Aurora>(center + new Vector2(126, -26), Condition.DownedMoonLord
@@ -93,7 +92,7 @@ namespace Coralite.Content.CoraliteNotes.DashBowChapter
             var button2 = new CollectButton(DashBowCollectButton, DashBowCollectLight
                 , new Vector2(0, 0), ItemType<ThyphionRelic>(), Unlocks, CoraliteNoteSystem.RewardType.DashBow);
             button2.ItemPosOffset = new Vector2(0, 0);
-            button2.SetCenter(new Vector2(PageWidth / 2+158, 100));
+            button2.SetCenter(new Vector2(PageWidth / 2 + 158, 100));
             Append(button2);
         }
 
@@ -124,8 +123,8 @@ namespace Coralite.Content.CoraliteNotes.DashBowChapter
 
             DrawCollectTip(spriteBatch, Unlocks);
 
-            DrawCollectText(spriteBatch, Unlocks, PageTop + new Vector2(115, 40));
-            DrawCollectProgress(spriteBatch, Unlocks, PageTop + new Vector2(210, 39));
+            DrawCollectText(spriteBatch, Unlocks, PageTop + new Vector2(-242, 24));
+            DrawCollectProgress(spriteBatch, Unlocks, PageTop + new Vector2(-226, 82));
         }
     }
 }

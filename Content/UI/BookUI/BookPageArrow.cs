@@ -82,7 +82,7 @@ namespace Coralite.Content.UI.BookUI
             if (IsMouseHovering)
                 alpha = 1;
 
-            spriteBatch.Draw(ArrowTex.Value,pos, null, Color.White * alpha, 0, ArrowTex.Size() / 2, 1, 0, 0);
+            spriteBatch.Draw(ArrowTex.Value, pos, null, Color.White * alpha, 0, ArrowTex.Size() / 2, 1, 0, 0);
         }
     }
 }

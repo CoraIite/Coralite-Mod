@@ -63,7 +63,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
         {
             if (!CoraliteWorld.PlaceLightSoul)
             {
-                KnowledgeSystem.CheckForUnlock<MagikeInterstitial1Knowledge>(new Vector2(i, j ) * 16, Coralite.CrystallinePurple);
+                KnowledgeSystem.CheckForUnlock<MagikeInterstitial1Knowledge>(new Vector2(i, j) * 16, Coralite.CrystallinePurple);
                 if (Main.LocalPlayer.ConsumeItem(ItemID.SoulofLight, includeVoidBag: true))
                     CoraliteWorld.PlaceLightSoul = true;
                 else

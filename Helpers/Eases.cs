@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 
 namespace Coralite.Helpers
@@ -19,7 +15,7 @@ namespace Coralite.Helpers
             return time * time / ((2f * ((time * time) - time)) + 1f);
         }
 
-        public static float BezierEase(int t,int maxTime)
+        public static float BezierEase(int t, int maxTime)
         {
             float time = (float)t / maxTime;
             return time * time / ((2f * ((time * time) - time)) + 1f);

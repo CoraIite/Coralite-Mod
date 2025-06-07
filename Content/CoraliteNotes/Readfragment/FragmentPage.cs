@@ -42,7 +42,7 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
 
             Vector2 textSize = ChatManager.GetStringSize(FontAssets.MouseText.Value, TerrariaJourneyDescription.Value, Vector2.One, PageWidth);
 
-            SlotGrid.SetSize(new Vector2(0, PageHeight - height - textSize.Y-20), 1, 0);
+            SlotGrid.SetSize(new Vector2(0, PageHeight - height - textSize.Y - 20), 1, 0);
             SlotGrid.SetTopLeft(height + textSize.Y + 20, 0);
             Append(SlotGrid);
 
@@ -55,7 +55,7 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
 
             SlotGrid.Add(new KnowledgeButten<RedJade.RedJadeKnowledge>(KnowledgeButtonType.Wild));
             SlotGrid.Add(new KnowledgeButten<IceDragonChapter1.IceDragon1Knowledge>(KnowledgeButtonType.Wild));
-            SlotGrid.Add(new KnowledgeButten<ThunderChapter1.Thunder1Knowldege>(KnowledgeButtonType.Wild));
+            SlotGrid.Add(new KnowledgeButten<ThunderChapter1.Thunder1Knowledge>(KnowledgeButtonType.Wild));
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)

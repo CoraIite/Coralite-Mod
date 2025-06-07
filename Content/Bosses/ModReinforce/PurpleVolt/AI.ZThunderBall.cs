@@ -99,7 +99,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                             Helper.PlayPitched(CoraliteSoundID.TeslaTurret_Electric_NPCHit53, NPC.Center);
                             int damage = Helper.GetProjDamage(60, 80, 120);
                             Vector2 mousePos = GetMousePos();
-                            NPC.NewProjectileDirectInAI<RedLightningBall>(mousePos, (Target.Center - mousePos).SafeNormalize(Vector2.Zero).RotateByRandom(-0.2f,0.2f) * 4
+                            NPC.NewProjectileDirectInAI<RedLightningBall>(mousePos, (Target.Center - mousePos).SafeNormalize(Vector2.Zero).RotateByRandom(-0.2f, 0.2f) * 4
                                 , damage, 0, NPC.target);
                             NPC.velocity -= (Target.Center - NPC.Center).SafeNormalize(Vector2.Zero) * 2;
                         }

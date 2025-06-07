@@ -61,7 +61,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
         internal static Color ZacurrentDustPurple = new Color(233, 195, 255);
         internal static Color ZacurrentPurple = new(135, 94, 255);
         internal static Color ZacurrentPink = new(255, 115, 226);
-        internal static Color ZacurrentPurpleAlpha = new(135, 94, 255,0);
+        internal static Color ZacurrentPurpleAlpha = new(135, 94, 255, 0);
         internal static Color ZacurrentPinkAlpha = new(255, 115, 226, 0);
         internal static Color ZacurrentRed = new(255, 28, 110);
         internal static Color ZacurrentDustRed = new(255, 113, 160);
@@ -338,8 +338,8 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             }
             else
             {
-                DrawBackWing(spriteBatch, mainTex,NPC.frame.Y, pos, drawColor, NPC.rotation, NPC.scale, effects);
-                DrawBody(spriteBatch, mainTex,0, pos, drawColor, NPC.rotation, NPC.scale, effects);
+                DrawBackWing(spriteBatch, mainTex, NPC.frame.Y, pos, drawColor, NPC.rotation, NPC.scale, effects);
+                DrawBody(spriteBatch, mainTex, 0, pos, drawColor, NPC.rotation, NPC.scale, effects);
                 DrawHead(spriteBatch, mainTex, OpenMouse ? 1 : 0, pos, drawColor, NPC.rotation, NPC.scale, effects);
                 DrawFrontWing(spriteBatch, mainTex, NPC.frame.Y, pos, drawColor, NPC.rotation, NPC.scale, effects);
             }
@@ -379,14 +379,14 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
         /// <param name="frameX"></param>
         /// <param name="drawColor"></param>
         /// <param name="effects"></param>
-        public void DrawBackWing(SpriteBatch spriteBatch, Texture2D mainTex,int frameY, Vector2 pos, Color drawColor, float rot,float scale,SpriteEffects effects)
+        public void DrawBackWing(SpriteBatch spriteBatch, Texture2D mainTex, int frameY, Vector2 pos, Color drawColor, float rot, float scale, SpriteEffects effects)
         {
             Rectangle frameBox = new(0, frameY, 4, Main.npcFrameCount[NPC.type]);
 
             //绘制本体
             mainTex.QuickCenteredDraw(spriteBatch, frameBox, pos, effects, drawColor, rot, scale);
             //绘制glow
-            GlowTex.Value.QuickCenteredDraw(spriteBatch, frameBox, pos, effects, Color.White * selfAlpha*(drawColor.A/255f), rot, scale);
+            GlowTex.Value.QuickCenteredDraw(spriteBatch, frameBox, pos, effects, Color.White * selfAlpha * (drawColor.A / 255f), rot, scale);
         }
 
         /// <summary>
@@ -403,7 +403,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             Rectangle frameBox = new(1, frameY, 4, Main.npcFrameCount[NPC.type]);
 
             //绘制本体
-            mainTex.QuickCenteredDraw(spriteBatch, frameBox, pos, effects, drawColor, rot,scale);
+            mainTex.QuickCenteredDraw(spriteBatch, frameBox, pos, effects, drawColor, rot, scale);
             //绘制glow
             GlowTex.Value.QuickCenteredDraw(spriteBatch, frameBox, pos, effects, Color.White * selfAlpha * (drawColor.A / 255f), rot, scale);
         }

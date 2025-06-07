@@ -36,7 +36,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     spriteBatch.Draw(sky, screen, Color.White);
 
                     spriteBatch.End();
-                    spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend,default,default,default,null, Main.BackgroundViewMatrix.NormalizedTransformationmatrix);
+                    spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, default, default, default, null, Main.BackgroundViewMatrix.NormalizedTransformationmatrix);
                 }
                 else
                     spriteBatch.Draw(sky, screen, color * (Timeleft / 100f));

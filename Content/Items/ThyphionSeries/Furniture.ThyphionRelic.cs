@@ -40,7 +40,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             float ease = (MathF.Sin(MathF.Cos(time) + 0.7f) + 0.29552f) / 1.29552f;
 
-            return (1-ease)*MathHelper.TwoPi;
+            return (1 - ease) * MathHelper.TwoPi;
         }
 
         public override void DrawRelicTop(SpriteBatch spriteBatch, Texture2D texture, Vector2 offScreen, Point p, Tile tile)
@@ -62,14 +62,13 @@ namespace Coralite.Content.Items.ThyphionSeries
             Vector2 drawPos = worldPos + offScreen - Main.screenPosition + new Vector2(0f, -38f);
 
             //绘制云/树枝
-            spriteBatch.Draw(texture, drawPos , frame, color, 0, origin, 1f, effects, 0f);
+            spriteBatch.Draw(texture, drawPos + new Vector2((effects == 0 ? 1 : -1) * 2, 4), frame, color, 0, origin, 1f, effects, 0f);
             drawPos += new Vector2(0f, offset * 4f);
 
             frame = texture.Frame(3, 1, 0, 0);
             // 绘制球体
-            spriteBatch.Draw(texture, drawPos+new Vector2(-2,0), frame, color, GetRot(), origin, 1f, effects, 0f);
+            spriteBatch.Draw(texture, drawPos + new Vector2(0, 0), frame, color, GetRot(), origin, 1f, effects, 0f);
             frame = texture.Frame(3, 1, 1, 0);
-
 
             spriteBatch.Draw(texture, drawPos, frame, color, 0f, origin, 1f, effects, 0f);
 

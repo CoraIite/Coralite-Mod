@@ -89,7 +89,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                 {
                     light.CanDraw = Main.rand.NextBool();
                     if (light.CanDraw)
-                    light.RandomThunder();
+                        light.RandomThunder();
                 }
 
                 if (Timer % (4 * 8) == 0)

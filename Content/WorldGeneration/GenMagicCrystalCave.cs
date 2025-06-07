@@ -371,7 +371,7 @@ namespace Coralite.Content.WorldGeneration
                             for (int n = -1; n > -5; n--)
                                 Main.tile[x1 + m, y1 + n].ClearTile();
 
-                        WorldGen.PlaceObject(x1+1, y1 - 1, clustersType);
+                        WorldGen.PlaceObject(x1 + 1, y1 - 1, clustersType);
                     }
 
                     int x = clustersX + WorldGen.genRand.Next(0, width * 5 / 6);
@@ -406,7 +406,7 @@ namespace Coralite.Content.WorldGeneration
                     if (!canGenerate)
                         continue;
 
-                    WorldGen.PlaceObject(x+1, y - 1, clustersType);
+                    WorldGen.PlaceObject(x + 1, y - 1, clustersType);
                     break;
                 }
         }

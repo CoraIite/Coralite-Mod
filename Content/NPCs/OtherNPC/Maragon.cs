@@ -6,7 +6,6 @@ using Coralite.Helpers;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.ItemDropRules;
-using Terraria.GameContent.Personalities;
 using Terraria.ID;
 
 namespace Coralite.Content.NPCs.OtherNPC

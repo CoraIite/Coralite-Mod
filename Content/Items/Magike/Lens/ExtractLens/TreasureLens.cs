@@ -66,7 +66,7 @@ namespace Coralite.Content.Items.Magike.Lens.ExtractLens
         {
             MagikeMaxBase = incomeLevel switch
             {
-                MALevel.CrystallineMagike => 1125,
+                MALevel.CrystallineMagike => 625,
                 _ => 0,
             };
             LimitMagikeAmount();
@@ -81,7 +81,7 @@ namespace Coralite.Content.Items.Magike.Lens.ExtractLens
         public override void Upgrade(MALevel incomeLevel)
         {
             MaxConnectBase = 1;
-            ConnectLengthBase = 4 * 16;
+            ConnectLengthBase = 6 * 16;
             switch (incomeLevel)
             {
                 default:
@@ -91,7 +91,7 @@ namespace Coralite.Content.Items.Magike.Lens.ExtractLens
                     ConnectLengthBase = 0;
                     break;
                 case MALevel.CrystallineMagike:
-                    UnitDeliveryBase = 300;
+                    UnitDeliveryBase = 500;
                     SendDelayBase = 8;
                     break;
             }

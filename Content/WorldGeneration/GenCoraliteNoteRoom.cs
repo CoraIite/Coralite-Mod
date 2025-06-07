@@ -25,7 +25,7 @@ namespace Coralite.Content.WorldGeneration
             {
                 try
                 {
-                    int y = WorldGen.genRand.Next(32, 38);
+                    int y = WorldGen.genRand.Next(30, 35);
 
                     Point position = spawnPoint + new Point(WorldGen.genRand.Next(-120, 120), y);
 

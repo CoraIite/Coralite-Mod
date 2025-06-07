@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using Terraria;
 using Terraria.GameContent.Generation;
 using Terraria.ID;
 using Terraria.Localization;
-using Terraria.ModLoader.Default;
 using Terraria.ModLoader.IO;
 using Terraria.WorldBuilding;
 

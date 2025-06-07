@@ -143,7 +143,7 @@ namespace Coralite.Content.Items.HyacinthSeries
 
                         int? targetIndex = FindEnemy(dir2);
                         Projectile.NewProjectileFromThis<AloeChaseProj>(Owner.Center, dir2 * 14
-                            , (int)(damage*0.6f), Projectile.knockBack, targetIndex ?? -1);
+                            , (int)(damage * 0.6f), Projectile.knockBack, targetIndex ?? -1);
                     }
 
                     Projectile.NewProjectileFromThis(Owner.Center, UnitToMouseV * speed, projType, damage, kb);
@@ -221,7 +221,7 @@ namespace Coralite.Content.Items.HyacinthSeries
 
             if (ShootCount < MaxShootCount)
                 return false;
-            
+
             Texture2D effect = AloeFire.Value;
             Rectangle frameBox = effect.Frame(1, 16, 0, Projectile.frame);
 

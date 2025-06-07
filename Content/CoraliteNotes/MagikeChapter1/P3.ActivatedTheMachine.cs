@@ -50,7 +50,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
 
             //描述段1
             DrawParaNormal(spriteBatch, BuyActivateStaff, pos.Y, out Vector2 textSize);
-            pos.Y += ActivateMachine.Value.Height / 2 * _scale3.targetScale + textSize.Y+30;
+            pos.Y += ActivateMachine.Value.Height / 2 * _scale3.targetScale + textSize.Y + 30;
 
             Helper.DrawMouseOverScaleTex(spriteBatch, ActivateMachine.Value
                 , pos, ref _scale3, 10);

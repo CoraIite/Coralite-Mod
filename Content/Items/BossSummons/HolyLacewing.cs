@@ -65,7 +65,7 @@ namespace Coralite.Content.Items.BossSummons
 
             CreateRecipe()
                 .AddIngredient(ItemID.LightningBug, 3)
-                .AddIngredient(ItemID.Ectoplasm,5)
+                .AddIngredient(ItemID.Ectoplasm, 5)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
         }

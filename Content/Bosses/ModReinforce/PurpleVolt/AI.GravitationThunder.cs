@@ -9,7 +9,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 {
     public partial class ZacurrentDragon
     {
-        public bool GravitationThunder(int maxTime=60*5)
+        public bool GravitationThunder(int maxTime = 60 * 5)
         {
             const int burstTime = 40;
             switch (SonState)
@@ -81,7 +81,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
                                 if (!VaultUtils.isClient)
                                     NPC.NewProjectileDirectInAI<PurpleGravitationThunderBall>(GetMousePos(), (Target.Center - GetMousePos()).SafeNormalize(Vector2.Zero) * 2
-                                        , damage, 0, NPC.target,maxTime);
+                                        , damage, 0, NPC.target, maxTime);
 
                                 SoundEngine.PlaySound(CoraliteSoundID.NoUse_Electric_Item93, NPC.Center);
                                 canDrawShadows = true;

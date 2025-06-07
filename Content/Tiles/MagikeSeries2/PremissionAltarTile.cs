@@ -72,7 +72,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
         {
             if (!CoraliteWorld.HasPermission)
             {
-                KnowledgeSystem.CheckForUnlock<MagikeInterstitial1Knowledge>(new Vector2(i, j ) * 16, Coralite.CrystallinePurple);
+                KnowledgeSystem.CheckForUnlock<MagikeInterstitial1Knowledge>(new Vector2(i, j) * 16, Coralite.CrystallinePurple);
 
                 if (CoraliteWorld.PlaceNightSoul && CoraliteWorld.PlaceNightSoul)
                 {

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Coralite.Core.Systems.MagikeSystem
+﻿namespace Coralite.Core.Systems.MagikeSystem
 {
     public partial class MagikeSystem
     {

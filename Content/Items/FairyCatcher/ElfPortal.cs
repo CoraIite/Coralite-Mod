@@ -1,7 +1,4 @@
-﻿using Coralite.Content.Items.MagikeSeries1;
-using Coralite.Content.Items.Materials;
-using Coralite.Content.Tiles.RedJades;
-using Coralite.Core;
+﻿using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.FairyCatcherSystem;
 using Coralite.Helpers;

@@ -39,7 +39,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter2
 
             //描述段2
             Helper.DrawTextParagraph(spriteBatch, ConnectDescription2.Value, PageWidth, new Vector2(Position.X, pos.Y), out textSize);
-            
+
             scale = 0.5f;
             pos.Y += textSize.Y + MabirdNestConnectTex2.Height() / 2 * scale;
 

@@ -11,7 +11,11 @@ CoraliteGlobalItem: {
 	DashPriorityLevel2: Middle
 	DashPriorityLevel3: Lower
 	DashPriorityLevel4: Minimum
-	Dashable: Mods.Coralite.GlobalItems.CoraliteGlobalItem.Dashable
+	Dashable:
+		'''
+		Grants dash ability! Double-tap direction keys or press dash button to dash
+		▶ Priority over vanilla dash and activation method adjustable in mod config
+		'''
 }
 
 DigDigDigGItem: {

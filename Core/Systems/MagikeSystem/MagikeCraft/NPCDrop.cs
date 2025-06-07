@@ -229,27 +229,27 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
 
             //角斗士套装
             MagikeRecipe.CreateCraftRecipe(ItemID.TinBar, ItemID.GladiatorHelmet, CalculateMagikeCost(MagicCrystal, 6), 12)
-                .AddIngredient(ItemID.Marble,8)
+                .AddIngredient(ItemID.Marble, 8)
                 .Register();
             MagikeRecipe.CreateCraftRecipe(ItemID.TinBar, ItemID.GladiatorBreastplate, CalculateMagikeCost(MagicCrystal, 6), 16)
-                .AddIngredient(ItemID.Marble,8)
+                .AddIngredient(ItemID.Marble, 8)
                 .Register();
             MagikeRecipe.CreateCraftRecipe(ItemID.TinBar, ItemID.GladiatorLeggings, CalculateMagikeCost(MagicCrystal, 6), 12)
-                .AddIngredient(ItemID.Marble,8)
+                .AddIngredient(ItemID.Marble, 8)
                 .Register();
             MagikeRecipe.CreateCraftRecipe(ItemID.CopperBar, ItemID.GladiatorHelmet, CalculateMagikeCost(MagicCrystal, 6), 12)
-                .AddIngredient(ItemID.Marble,8)
+                .AddIngredient(ItemID.Marble, 8)
                 .Register();
             MagikeRecipe.CreateCraftRecipe(ItemID.CopperBar, ItemID.GladiatorBreastplate, CalculateMagikeCost(MagicCrystal, 6), 16)
-                .AddIngredient(ItemID.Marble,8)
+                .AddIngredient(ItemID.Marble, 8)
                 .Register();
             MagikeRecipe.CreateCraftRecipe(ItemID.CopperBar, ItemID.GladiatorLeggings, CalculateMagikeCost(MagicCrystal, 6), 12)
-                .AddIngredient(ItemID.Marble,8)
+                .AddIngredient(ItemID.Marble, 8)
                 .Register();
 
             //罗马短剑
             MagikeRecipe.CreateCraftRecipe(ItemID.TinBar, ItemID.Gladius, CalculateMagikeCost(MagicCrystal, 4), 4)
-                .AddIngredientGroup(RecipeGroupID.IronBar,10)
+                .AddIngredientGroup(RecipeGroupID.IronBar, 10)
                 .AddIngredient(ItemID.Marble)
                 .Register();
             MagikeRecipe.CreateCraftRecipe(ItemID.CopperBar, ItemID.Gladius, CalculateMagikeCost(MagicCrystal, 4), 4)

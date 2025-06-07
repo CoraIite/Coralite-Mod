@@ -34,8 +34,8 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         public override void AI()
         {
-            Vector2 Scale1 = new Vector2( 0.6f, 0.25f);
-            Vector2 Scale2 = new Vector2(2.5f,0 );
+            Vector2 Scale1 = new Vector2(0.6f, 0.25f);
+            Vector2 Scale2 = new Vector2(2.5f, 0);
 
             Lighting.AddLight(Projectile.Center, Coralite.CrystallinePurple.ToVector3());
 
@@ -49,7 +49,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
                             float factor = Timer / 30;
                             factor = Helper.HeavyEase(factor);
                             backLightScale = Vector2.Lerp(Vector2.Zero, Scale1, factor);
-                            sparkleScale = factor*2;
+                            sparkleScale = factor * 2;
                         }
                         else
                         {
@@ -75,7 +75,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
                             factor = Helper.HeavyEase(1 - factor);
                             backLightScale = Vector2.Lerp(Scale2, Scale1, factor);
-                            sparkleScale = factor*2;
+                            sparkleScale = factor * 2;
 
                             if (Timer > 60 + 40)
                             {
@@ -89,13 +89,13 @@ namespace Coralite.Content.Tiles.MagikeSeries2
                                          , Alpha: 100, Scale: Main.rand.NextFloat(1, 2));
                                     d.noGravity = true;
 
-                                     d = Dust.NewDustPerfect(Projectile.Center, DustID.Clentaminator_Purple
-                                         , (i * MathHelper.TwoPi / 30).ToRotationVector2() * Main.rand.NextFloat(6, 7)
-                                         , Alpha: 100, Scale: Main.rand.NextFloat(1, 2));
+                                    d = Dust.NewDustPerfect(Projectile.Center, DustID.Clentaminator_Purple
+                                        , (i * MathHelper.TwoPi / 30).ToRotationVector2() * Main.rand.NextFloat(6, 7)
+                                        , Alpha: 100, Scale: Main.rand.NextFloat(1, 2));
                                     d.noGravity = true;
                                 }
 
-                                Vector2 pos = Projectile.Center - new Vector2(0, 16 );
+                                Vector2 pos = Projectile.Center - new Vector2(0, 16);
                                 CombatText.NewText(new Rectangle((int)pos.X, (int)pos.Y, 1, 1), Coralite.CrystallinePurple
                                     , MagikeSystem.CrystallineSkyIslandUnlock.Value, true);
 
@@ -131,7 +131,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             Main.spriteBatch.Draw(backTex, pos + new Vector2(0, 60), null
                 , (c * 0.3f) with { A = 0 }, MathHelper.PiOver2, backOrigin, backLightScale, 0, 0);
             Main.spriteBatch.Draw(backTex, pos + new Vector2(0, 60), null
-                , (c * 0.3f) with { A = 0 }, MathHelper.PiOver2, backOrigin, new Vector2(backLightScale.X,backLightScale.Y*0.5f), 0, 0);
+                , (c * 0.3f) with { A = 0 }, MathHelper.PiOver2, backOrigin, new Vector2(backLightScale.X, backLightScale.Y * 0.5f), 0, 0);
 
             float time = Main.GlobalTimeWrappedHourly * 8;
             float timer = ((int)Main.timeForVisualEffects / 240f) + (time * 0.04f);
@@ -143,16 +143,16 @@ namespace Coralite.Content.Tiles.MagikeSeries2
                 time = 2f - time;
             time = (time * 0.5f) + 0.5f;
 
-            Vector2 drawPos = pos + new Vector2(0, -16 );
+            Vector2 drawPos = pos + new Vector2(0, -16);
             Color c2 = Coralite.CrystallinePurple;
             c2.A = 50;
-            Helper.DrawPrettyStarSparkle(1, 0, drawPos, c2, Coralite.CrystallinePurple ,
-                time, 0, 0.3f, 0.7f, 1, timer * MathHelper.TwoPi, (timer * MathHelper.TwoPi).ToRotationVector2() * sparkleScale, Vector2.One/2);
+            Helper.DrawPrettyStarSparkle(1, 0, drawPos, c2, Coralite.CrystallinePurple,
+                time, 0, 0.3f, 0.7f, 1, timer * MathHelper.TwoPi, (timer * MathHelper.TwoPi).ToRotationVector2() * sparkleScale, Vector2.One / 2);
             Helper.DrawPrettyStarSparkle(1, 0, drawPos, c2, Coralite.CrystallinePurple,
                 0.4f + (time * 0.2f), 0, 0.3f, 0.7f, 1, -timer * MathHelper.Pi, new Vector2(2, 2) * sparkleScale, Vector2.One);
 
             Helper.DrawPrettyStarSparkle(1, 0, drawPos, c2 * 0.7f, Coralite.CrystallinePurple,
-                0.4f + (time * 0.2f), 0, 0.5f, 0.5f, 1, 0, Vector2.One * sparkleScale, Vector2.One *0.75f);
+                0.4f + (time * 0.2f), 0, 0.5f, 0.5f, 1, 0, Vector2.One * sparkleScale, Vector2.One * 0.75f);
 
             return false;
         }
@@ -181,7 +181,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         public override void AI()
         {
-            if (PosMove==null)
+            if (PosMove == null)
             {
                 PosMove = new SecondOrderDynamics_Vec2(0.95f, 0.5f, 0, Position);
                 TargetPos = Position;
@@ -265,7 +265,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
             spriteBatch.Draw(ballTex, Position - Main.screenPosition, null, Color
                 , (float)Main.timeForVisualEffects * 0.1f, ballTex.Size() / 2, 0.05f * scale, SpriteEffects.None, 0f);
-            spriteBatch.Draw(ballTex, Position - Main.screenPosition, null, Color.White with { A=150}
+            spriteBatch.Draw(ballTex, Position - Main.screenPosition, null, Color.White with { A = 150 }
                 , (float)Main.timeForVisualEffects * 0.1f, ballTex.Size() / 2, 0.05f * scale, SpriteEffects.None, 0f);
 
             return false;

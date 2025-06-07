@@ -1,5 +1,4 @@
 ﻿using Coralite.Content.Particles;
-using Coralite.Content.Prefixes.FairyWeaponPrefixes;
 using Coralite.Core;
 using Coralite.Helpers;
 using System;
@@ -41,7 +40,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                             NPC.frame.Y++;
                             if (NPC.frame.Y > 7)
                             {
-                                SonState=1;
+                                SonState = 1;
                                 Timer = 0;
                                 ResetAllOldCaches();
                                 canDrawShadows = true;
@@ -160,7 +159,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                         UpdateAllOldCaches();
                         TurnToNoRot(0.2f);
                         float factor = Helper.SqrtEase(Timer / burstTime);
-                        shadowScale = Helper.Lerp(1f, 2.5f, (factor*3)%1);
+                        shadowScale = Helper.Lerp(1f, 2.5f, (factor * 3) % 1);
                         shadowAlpha = Helper.Lerp(1f, 0f, factor);
 
                         NPC.velocity *= 0.985f;
@@ -188,7 +187,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                             {
                                 Vector2 dir = (Recorder + (i * MathHelper.TwoPi / 5)).ToRotationVector2();
                                 Vector2 pos = NPC.Center + (dir * 300);
-                                NPC.NewProjectileInAI<PurpleElectricBallThunder>(pos + (dir * 600), pos, damage, 0, NPC.target,15,
+                                NPC.NewProjectileInAI<PurpleElectricBallThunder>(pos + (dir * 600), pos, damage, 0, NPC.target, 15,
                                     NPC.whoAmI, 70);
                             }
 

@@ -17,7 +17,7 @@ using Terraria.ModLoader.IO;
 
 namespace Coralite.Content.Items.MagikeSeries2
 {
-    [AutoLoadTexture(Path =AssetDirectory.MagikeSeries2Item)]
+    [AutoLoadTexture(Path = AssetDirectory.MagikeSeries2Item)]
     [PlayerEffect(ExtraEffectNames = [ShowBackLine])]
     public class MabirdLoupe() : BaseMaterial(1, Item.sellPrice(0, 5)
         , ModContent.RarityType<CrystallineMagikeRarity>(), AssetDirectory.MagikeSeries2Item), IMagikeCraftable
@@ -25,9 +25,9 @@ namespace Coralite.Content.Items.MagikeSeries2
         public const string ShowBackLine = "MabirdLoupeA";
 
         [AutoLoadTexture(Name = "MabirdLoupeClose")]
-        public static ATex CloseTex {  get;private set; }
+        public static ATex CloseTex { get; private set; }
         [AutoLoadTexture(Name = "MabirdLoupeClose2")]
-        public static ATex CloseTex2 {  get;private set; }
+        public static ATex CloseTex2 { get; private set; }
 
         /// <summary>
         /// 0 不显示，1 显示传输，2 显示全部
@@ -60,7 +60,7 @@ namespace Coralite.Content.Items.MagikeSeries2
             }
         }
 
-        public override bool CanRightClick() => true;   
+        public override bool CanRightClick() => true;
 
         public override void RightClick(Player player)
         {
@@ -124,7 +124,7 @@ namespace Coralite.Content.Items.MagikeSeries2
         {
             if (ShowLineStyle == 0)
             {
-                spriteBatch.Draw(CloseTex.Value, Item.Center-Main.screenPosition, null, lightColor, rotation, CloseTex.Size() / 2, scale, 0, 0);
+                spriteBatch.Draw(CloseTex.Value, Item.Center - Main.screenPosition, null, lightColor, rotation, CloseTex.Size() / 2, scale, 0, 0);
                 return false;
             }
             else if (ShowLineStyle == 1)
@@ -134,7 +134,7 @@ namespace Coralite.Content.Items.MagikeSeries2
             }
             else
             {
-                spriteBatch.Draw(TextureAssets.Item[Item.type].Value, new Vector2(0,1)+Item.Center - Main.screenPosition, null, lightColor, rotation, CloseTex.Size() / 2, scale, 0, 0);
+                spriteBatch.Draw(TextureAssets.Item[Item.type].Value, new Vector2(0, 1) + Item.Center - Main.screenPosition, null, lightColor, rotation, CloseTex.Size() / 2, scale, 0, 0);
                 return false;
             }
         }

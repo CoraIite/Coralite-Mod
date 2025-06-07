@@ -1,6 +1,6 @@
 ﻿displayName = 珊瑚石
 author = 瓶中微光
-version = 0.2.2.1600
+version = 0.2.2.1700
 hideResources = true
 modReferences = InnoVault
 sortAfter = InnoVault,DDmod

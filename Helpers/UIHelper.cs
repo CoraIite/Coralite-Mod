@@ -176,7 +176,7 @@ namespace Coralite.Helpers
         }
 
         public static void DrawMouseOverScaleTex(SpriteBatch spriteBatch, Texture2D tex, Vector2 pos
-            , ref ScaleController scale, float offset, Color? darkColor=null, bool fadeWithOriginScale = false, Color? selfColor = null)
+            , ref ScaleController scale, float offset, Color? darkColor = null, bool fadeWithOriginScale = false, Color? selfColor = null)
         {
             Rectangle rect = Utils.CenteredRectangle(pos, tex.Size());
             if (rect.MouseScreenInRect())

@@ -392,7 +392,7 @@ namespace Coralite.Content.WorldGeneration
                         ObjectPlace(current_x, current_y, tileType, currentStyle);
                     }
 
-                over1: 
+                over1:
                     continue;             //<--因为不知道有没有什么办法直接跳出2层for，索性写了个goto
                 }
         }
@@ -546,8 +546,8 @@ namespace Coralite.Content.WorldGeneration
                 for (int x1 = 0; x1 < width; x1++)      //帧图
                     for (int y1 = 0; y1 < height; y1++)
                     {
-                        int x2 = (int)newPos.X + x1;
-                        int y2 = (int)newPos.Y + y1;
+                        int x2 = newPos.X + x1;
+                        int y2 = newPos.Y + y1;
                         WorldGen.SquareTileFrame(x2, y2);
                         WorldGen.SquareWallFrame(x2, y2);
                     }

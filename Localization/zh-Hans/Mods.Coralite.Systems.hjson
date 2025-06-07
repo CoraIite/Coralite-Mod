@@ -168,7 +168,7 @@ KnowledgeSystem: {
 			'''
 	}
 
-	Thunder1Knowldege: {
+	Thunder1Knowledge: {
 		Name: "[c/639bff:雷龙残卷]"
 		LockTip: 在困难模式中击败 “双子魔眼” ，“机械骷髅王” 和 “毁灭者” 后解锁
 		Description:

@@ -1,8 +1,6 @@
-﻿using Coralite.Core;
-using Coralite.Helpers;
+﻿using Coralite.Helpers;
 using System;
 using Terraria;
-using Terraria.Audio;
 
 namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 {
@@ -12,7 +10,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
         /// 使用<see cref="Recorder"/> 记录第一次短冲的冲刺次数
         /// </summary>
         /// <returns></returns>
-        public bool SmallDash<TProj>(int smallDashTime=10, int smallDashSpeed = 45) where TProj:ModProjectile
+        public bool SmallDash<TProj>(int smallDashTime = 10, int smallDashSpeed = 45) where TProj : ModProjectile
         {
             if (Timer == 0)
             {
@@ -41,7 +39,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
                     //目标方向
                     float targetDir = (Target.Center - NPC.Center).ToRotation() + MathHelper.Pi;
-                    float velocityDir = NPC.velocity.ToRotation().AngleTowards(targetDir, (0.2f +(smallDashSpeed-45)/200)* factor);
+                    float velocityDir = NPC.velocity.ToRotation().AngleTowards(targetDir, (0.2f + (smallDashSpeed - 45) / 200) * factor);
                     NPC.velocity = velocityDir.ToRotationVector2() * smallDashSpeed;
                     NPC.rotation = velocityDir;
                 }

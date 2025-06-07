@@ -64,14 +64,14 @@ namespace Coralite.Content.Items.Magike.Refractors
         {
             MagikeMaxBase = incomeLevel switch
             {
-                MALevel.MagicCrystal => 1920,
+                MALevel.MagicCrystal => 2700,
                 MALevel.Crimson
                 or MALevel.Corruption
-                or MALevel.Icicle => 11520,
-                MALevel.CrystallineMagike => 24800,
+                or MALevel.Icicle => 12000,
+                MALevel.CrystallineMagike => 43200,
                 MALevel.Soul
-                or MALevel.Feather => 172800,
-                MALevel.SplendorMagicore => 560000,
+                or MALevel.Feather => 12_0000,
+                MALevel.SplendorMagicore => 54_0000,
                 _ => 0,
             };
             LimitMagikeAmount();
@@ -86,8 +86,8 @@ namespace Coralite.Content.Items.Magike.Refractors
         public override void Upgrade(MALevel incomeLevel)
         {
             MaxConnectBase = 1;
-            ConnectLengthBase = 6 * 16;
-            SendDelayBase = 60 * 5;
+            ConnectLengthBase = 7 * 16;
+            SendDelayBase = 60 * 3;
 
             switch (incomeLevel)
             {
@@ -99,22 +99,22 @@ namespace Coralite.Content.Items.Magike.Refractors
                     ConnectLengthBase = 0;
                     break;
                 case MALevel.MagicCrystal:
-                    UnitDeliveryBase = 80;
+                    UnitDeliveryBase = 180;
                     break;
                 case MALevel.Crimson:
                 case MALevel.Corruption:
                 case MALevel.Icicle:
-                    UnitDeliveryBase = 360;
+                    UnitDeliveryBase = 600;
                     break;
                 case MALevel.CrystallineMagike:
-                    UnitDeliveryBase = 620;
+                    UnitDeliveryBase = 1440;
                     break;
                 case MALevel.Soul:
                 case MALevel.Feather:
-                    UnitDeliveryBase = 3600;
+                    UnitDeliveryBase = 2400;
                     break;
                 case MALevel.SplendorMagicore:
-                    UnitDeliveryBase = 10000;
+                    UnitDeliveryBase = 6000;
                     break;
             }
 

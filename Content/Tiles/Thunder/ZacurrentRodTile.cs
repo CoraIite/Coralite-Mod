@@ -53,7 +53,7 @@ namespace Coralite.Content.Tiles.Thunder
         {
             int npcType = ModContent.NPCType<ZacurrentDragon>();
 
-            if (!Main.dayTime&&!NPC.AnyNPCs(npcType)
+            if (!Main.dayTime && !NPC.AnyNPCs(npcType)
                 && !Main.projectile.Any(p => p.active && p.type == ModContent.ProjectileType<ZacurrentSpawn>()))
             {
                 SoundEngine.PlaySound(CoraliteSoundID.FireBallExplosion_Item74, Main.LocalPlayer.position);

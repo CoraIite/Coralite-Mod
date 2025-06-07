@@ -83,8 +83,8 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             if (Timer > 30)
             {
                 if (Main.rand.NextBool())
-                Projectile.SpawnTrailDust(30f, DustID.PortalBoltTrail, Main.rand.NextFloat(0.1f, 0.4f),
-                    newColor: ZacurrentDragon.ZacurrentDustPurple, Scale: Main.rand.NextFloat(1f, 1.3f));
+                    Projectile.SpawnTrailDust(30f, DustID.PortalBoltTrail, Main.rand.NextFloat(0.1f, 0.4f),
+                        newColor: ZacurrentDragon.ZacurrentDustPurple, Scale: Main.rand.NextFloat(1f, 1.3f));
                 ThunderWidth = Main.rand.NextFloat(20, 30);
 
                 if (Projectile.velocity.Length() < 27)
@@ -587,7 +587,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
         }
     }
 
-    public class RedLightningBall: PurpleLightningBall
+    public class RedLightningBall : PurpleLightningBall
     {
         public override string Texture => AssetDirectory.ZacurrentDragon + "RedVoltBall";
 
@@ -665,7 +665,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
         }
     }
 
-    public class RedChainBall: ZacurrentChainBall
+    public class RedChainBall : ZacurrentChainBall
     {
         public override string Texture => AssetDirectory.ZacurrentDragon + "RedVoltBall";
 

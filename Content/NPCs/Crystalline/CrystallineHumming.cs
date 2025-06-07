@@ -129,7 +129,7 @@ namespace Coralite.Content.NPCs.Crystalline
 
         public override void SetBestiary(BestiaryDatabase database, BestiaryEntry bestiaryEntry)
         {
-            bestiaryEntry.AddTags(                
+            bestiaryEntry.AddTags(
                 this.GetBestiaryDescription()
                 );
         }

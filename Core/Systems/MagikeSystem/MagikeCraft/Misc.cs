@@ -377,16 +377,16 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
             AddRemodelRecipe(ItemID.Ichor, ItemID.CursedFlame, CalculateMagikeCost(CrystallineMagike, 1, 5));
 
             //抓钩
-            AddRemodelRecipe(ItemID.IronBar, ItemID.Hook, CalculateMagikeCost(MagicCrystal, 2, 30),8);
-            AddRemodelRecipe(ItemID.LeadBar, ItemID.Hook, CalculateMagikeCost(MagicCrystal, 2, 30),8);
+            AddRemodelRecipe(ItemID.IronBar, ItemID.Hook, CalculateMagikeCost(MagicCrystal, 2, 30), 8);
+            AddRemodelRecipe(ItemID.LeadBar, ItemID.Hook, CalculateMagikeCost(MagicCrystal, 2, 30), 8);
 
             //金虫网
-            MagikeRecipe.CreateCraftRecipe(ItemID.BugNet, ItemID.GoldenBugNet, CalculateMagikeCost(Icicle, 8,60*2))
-                .AddIngredient(ItemID.GoldBar,49)
+            MagikeRecipe.CreateCraftRecipe(ItemID.BugNet, ItemID.GoldenBugNet, CalculateMagikeCost(Icicle, 8, 60 * 2))
+                .AddIngredient(ItemID.GoldBar, 49)
                 .AddIngredient<FreosanInABottle>()
                 .Register();
-            MagikeRecipe.CreateCraftRecipe(ItemID.BugNet, ItemID.GoldenBugNet, CalculateMagikeCost(Icicle, 8,60*2))
-                .AddIngredient(ItemID.PlatinumBar,49)
+            MagikeRecipe.CreateCraftRecipe(ItemID.BugNet, ItemID.GoldenBugNet, CalculateMagikeCost(Icicle, 8, 60 * 2))
+                .AddIngredient(ItemID.PlatinumBar, 49)
                 .AddIngredient<FreosanInABottle>()
                 .Register();
 
@@ -416,9 +416,9 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
                 .AddIngredient<DryIce>()
                 .Register();
             //六分仪
-            MagikeRecipe.CreateCraftRecipe(ItemID.GoldBar, ItemID.Sextant, CalculateMagikeCost(Glistent, 6, 60 * 2),15)
+            MagikeRecipe.CreateCraftRecipe(ItemID.GoldBar, ItemID.Sextant, CalculateMagikeCost(Glistent, 6, 60 * 2), 15)
                 .Register();
-            MagikeRecipe.CreateCraftRecipe(ItemID.PlatinumBar, ItemID.Sextant, CalculateMagikeCost(Glistent, 6, 60 * 2),15)
+            MagikeRecipe.CreateCraftRecipe(ItemID.PlatinumBar, ItemID.Sextant, CalculateMagikeCost(Glistent, 6, 60 * 2), 15)
                 .Register();
             //钓鱼钩
             MagikeRecipe.CreateCraftRecipe(ItemID.Hook, ItemID.FishingBobber, CalculateMagikeCost(Glistent, 6, 60 * 2))

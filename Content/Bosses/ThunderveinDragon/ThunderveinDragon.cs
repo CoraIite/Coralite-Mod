@@ -1,5 +1,4 @@
-﻿using Coralite.Content.Bosses.ModReinforce.PurpleVolt;
-using Coralite.Content.Items.Thunder;
+﻿using Coralite.Content.Items.Thunder;
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Systems.BossSystems;

@@ -730,7 +730,7 @@ namespace Coralite.Helpers
         public static void SpawnDustOnProduce(Point16 Position, Color dustColor, int dustType = DustID.LastPrism)
         {
             Vector2 position = Helper.GetMagikeTileCenter(Position);
-            if (!Helper.IsPointOnScreen(position-Main.screenPosition))
+            if (!Helper.IsPointOnScreen(position - Main.screenPosition))
                 return;
             for (int i = 0; i < 16; i++)
             {

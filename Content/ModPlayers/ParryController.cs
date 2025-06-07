@@ -5,7 +5,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.ModPlayers
 {
-    public partial class  CoralitePlayer
+    public partial class CoralitePlayer
     {
         /// <summary>
         /// 完美格挡时间，在格挡时增加，每帧递减

@@ -81,7 +81,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                         if (Timer < maxTime / 2)
                         {
                             Vector2 pos = NPC.Center + Main.rand.NextVector2Circular(NPC.width / 2, NPC.width / 2);
-                            pos += Timer / (maxTime / 2) * new Vector2(-Recorder,0) * 1000;
+                            pos += Timer / (maxTime / 2) * new Vector2(-Recorder, 0) * 1000;
                             RedElectricParticle(pos);
                         }
 
@@ -110,7 +110,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                             SoundEngine.PlaySound(CoraliteSoundID.NoUse_ElectricMagic_Item122, NPC.Center);
 
                             Vector2 dir = (Target.Center - NPC.Center).SafeNormalize(Vector2.Zero);
-                            NPC.velocity = new Vector2(-Recorder * BigDashSpeed,0);
+                            NPC.velocity = new Vector2(-Recorder * BigDashSpeed, 0);
                             NPC.rotation = NPC.velocity.ToRotation();
                             NPC.direction = NPC.spriteDirection = Math.Sign(NPC.velocity.X);
                             IsDashing = true;
@@ -158,7 +158,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                             }
 
                             NPC.rotation = NPC.velocity.ToRotation();
-                            if (Timer%3==0)
+                            if (Timer % 3 == 0)
                             {
                                 int damage = Helper.GetProjDamage(100, 150, 200);
                                 NPC.NewProjectileDirectInAI<PurpleSmallThunderFall>(NPC.Center + new Vector2(0, 400), Vector2.Zero

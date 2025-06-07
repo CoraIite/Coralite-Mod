@@ -71,14 +71,14 @@ namespace Coralite.Content.Items.Magike.Lens.ExtractLens
         {
             MagikeMaxBase = incomeLevel switch
             {
-                MALevel.MagicCrystal => 120,
+                MALevel.MagicCrystal => 240,
                 MALevel.Crimson
                 or MALevel.Corruption
-                or MALevel.Icicle => 600,
-                MALevel.CrystallineMagike => 1800,
+                or MALevel.Icicle => 240,
+                MALevel.CrystallineMagike => 3750,
                 MALevel.Soul
-                or MALevel.Feather => 7500,
-                MALevel.SplendorMagicore => 18000,
+                or MALevel.Feather => 3750,
+                MALevel.SplendorMagicore => 48000,
                 _ => 0,
             };
             LimitMagikeAmount();
@@ -93,7 +93,7 @@ namespace Coralite.Content.Items.Magike.Lens.ExtractLens
         public override void Upgrade(MALevel incomeLevel)
         {
             MaxConnectBase = 1;
-            ConnectLengthBase = 4 * 16;
+            ConnectLengthBase = 6 * 16;
             switch (incomeLevel)
             {
                 default:
@@ -103,26 +103,26 @@ namespace Coralite.Content.Items.Magike.Lens.ExtractLens
                     ConnectLengthBase = 0;
                     break;
                 case MALevel.MagicCrystal:
-                    UnitDeliveryBase = 10;
+                    UnitDeliveryBase = 60;
                     SendDelayBase = 5;
                     break;
                 case MALevel.Crimson:
                 case MALevel.Corruption:
                 case MALevel.Icicle:
-                    UnitDeliveryBase = 50;
+                    UnitDeliveryBase = 60;
                     SendDelayBase = 5;
                     break;
                 case MALevel.CrystallineMagike:
-                    UnitDeliveryBase = 120;
+                    UnitDeliveryBase = 750;
                     SendDelayBase = 4;
                     break;
                 case MALevel.Soul:
                 case MALevel.Feather:
-                    UnitDeliveryBase = 500;
+                    UnitDeliveryBase = 750;
                     SendDelayBase = 4;
                     break;
                 case MALevel.SplendorMagicore:
-                    UnitDeliveryBase = 900;
+                    UnitDeliveryBase = 7200;
                     SendDelayBase = 3;
                     break;
             }
@@ -138,14 +138,14 @@ namespace Coralite.Content.Items.Magike.Lens.ExtractLens
         {
             ProductionDelayBase = incomeLevel switch
             {
-                MALevel.MagicCrystal
-                or MALevel.Crimson
+                MALevel.MagicCrystal => 5,
+                MALevel.Crimson
                 or MALevel.Corruption
-                or MALevel.Icicle
-                or MALevel.CrystallineMagike
-                or MALevel.Soul
-                or MALevel.Feather
-                or MALevel.SplendorMagicore => 10,
+                or MALevel.Icicle => 4,
+                MALevel.CrystallineMagike => 4,
+                MALevel.Soul
+                or MALevel.Feather => 3,
+                MALevel.SplendorMagicore => 3,
                 _ => -1,
             } * 60;
 

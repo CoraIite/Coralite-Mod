@@ -32,13 +32,13 @@ namespace Coralite.Content.CoraliteNotes.ThunderChapter1
 
             //绘制图
             CoraliteAssets.Thunder1
-                .ThunderveidDragon.Value.QuickBottomDraw(spriteBatch, Bottom+new Vector2(0,-10));
+                .ThunderveidDragon.Value.QuickBottomDraw(spriteBatch, Bottom + new Vector2(0, -10));
 
-            DrawParaNormal(spriteBatch, LightningRodsDescription,Position.Y+ TitleHeight, out _);
+            DrawParaNormal(spriteBatch, LightningRodsDescription, Position.Y + TitleHeight, out _);
 
             #region 绘制避雷针
 
-            Vector2 picturePos = new Vector2(Center.X +75, Center.Y + 305);
+            Vector2 picturePos = new Vector2(Center.X + 75, Center.Y + 305);
             Helper.DrawMouseOverScaleTex<LightningRods>(spriteBatch, picturePos
                 , ref _scale1, 4, 5, fadeWithOriginScale: true);
 

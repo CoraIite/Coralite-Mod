@@ -35,10 +35,10 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void NearbyEffects(int i, int j, bool closer)
         {
-            if (closer )
+            if (closer)
             {
                 Point p = Helper.FindTopLeftPoint(i, j);
-                if (i == p.X && j == p.Y && (int)Main.timeForVisualEffects % 30 <5 && Main.rand.NextBool(5))
+                if (i == p.X && j == p.Y && (int)Main.timeForVisualEffects % 30 < 5 && Main.rand.NextBool(5))
                 {
                     const float length = 16 * 2;
                     Color c = Main.rand.NextFromList(Color.White, Main.hslToRgb(Main.GlobalTimeWrappedHourly % 1, 1, 0.7f));
@@ -102,12 +102,12 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
                 //我是超级打表王
                 short type = Main.rand.NextFromList(
-                    NPCID.GemBunnyAmber, 
+                    NPCID.GemBunnyAmber,
                     NPCID.GemBunnyAmethyst,
-                    NPCID.GemBunnyDiamond, 
-                    NPCID.GemBunnyEmerald, 
-                    NPCID.GemBunnyRuby, 
-                    NPCID.GemBunnySapphire, 
+                    NPCID.GemBunnyDiamond,
+                    NPCID.GemBunnyEmerald,
+                    NPCID.GemBunnyRuby,
+                    NPCID.GemBunnySapphire,
                     NPCID.GemBunnyTopaz,
 
                     NPCID.GemSquirrelAmber,
@@ -120,7 +120,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     );
 
                 NPC.NewNPC(new EntitySource_TileUpdate(Position.X, Position.Y)
-                    , (int)(PosInWorld.X + 16), (int)(PosInWorld.Y + 3*16), type);
+                    , (int)(PosInWorld.X + 16), (int)(PosInWorld.Y + 3 * 16), type);
             }
         }
     }

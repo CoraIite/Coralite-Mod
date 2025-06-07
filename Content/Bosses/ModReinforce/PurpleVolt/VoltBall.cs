@@ -116,13 +116,13 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                         float speed = NPC.velocity.Length();
                         float factor = Timer / (60 * 5);
 
-                        if (speed < 4f-factor*3)
+                        if (speed < 4f - factor * 3)
                             speed += 0.05f;
                         else
                             speed -= 0.05f;
 
                         Vector2 targetDir = (owner.Center - NPC.Center).SafeNormalize(Vector2.Zero);
-                        NPC.velocity = targetDir.RotatedBy(2f*MathF.Sin(factor * MathHelper.TwoPi) * (1 - factor)) * speed;
+                        NPC.velocity = targetDir.RotatedBy(2f * MathF.Sin(factor * MathHelper.TwoPi) * (1 - factor)) * speed;
 
                         NPC.rotation = NPC.velocity.ToRotation();
 
@@ -188,7 +188,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                         Timer++;
 
                         float factor = Timer / 15;
-                        Fade =1- factor;
+                        Fade = 1 - factor;
                         ThunderWidth = (1 - factor) * 45;
 
                         if (Timer > 15)
@@ -232,7 +232,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                 Vector2 position = NPC.Center - screenPos;
 
                 PurpleElectricBall.BallBack.Value.QuickCenteredDraw(Main.spriteBatch, position
-                    , Color.Black*0.6f *Alpha, 0,  0.3f);
+                    , Color.Black * 0.6f * Alpha, 0, 0.3f);
 
                 Main.spriteBatch.Draw(mainTex, position, null, c, 0,
                     mainTex.Size() / 2, 0.2f, 0, 0);
@@ -250,7 +250,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                 c *= Alpha;
                 Main.spriteBatch.Draw(exTex, position, null, c, 0,
                     origin, 0.75f, 0, 0);
-                Main.spriteBatch.Draw(tex2, position, null, Color.White*Alpha, NPC.rotation,
+                Main.spriteBatch.Draw(tex2, position, null, Color.White * Alpha, NPC.rotation,
                     tex2.Size() / 2, 1f, 0, 0);
             }
 
@@ -383,7 +383,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                         Timer++;
                         float factor = Timer / 15;
 
-                        Fade =1- factor;
+                        Fade = 1 - factor;
                         ThunderWidth = (1 - factor) * 45;
 
                         if (Timer > 15)
@@ -438,7 +438,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                 c *= Alpha;
                 Main.spriteBatch.Draw(exTex, position, null, c, 0,
                     origin, 0.75f, 0, 0);
-                Main.spriteBatch.Draw(tex2, position, null, Color.White*Alpha, Projectile.rotation,
+                Main.spriteBatch.Draw(tex2, position, null, Color.White * Alpha, Projectile.rotation,
                     tex2.Size() / 2, 1f, 0, 0);
             }
 

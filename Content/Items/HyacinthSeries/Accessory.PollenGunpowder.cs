@@ -16,7 +16,7 @@ namespace Coralite.Content.Items.HyacinthSeries
     {
         public override string Texture => AssetDirectory.HyacinthSeriesItems + Name;
 
-        public PollenGunpowder() : base(ItemRarityID.Blue, Item.sellPrice(0, 0,50))
+        public PollenGunpowder() : base(ItemRarityID.Blue, Item.sellPrice(0, 0, 50))
         {
         }
 

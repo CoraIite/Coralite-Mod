@@ -30,7 +30,7 @@ namespace Coralite.Core
             CrystallineSkyIslandTileCount += tileCounts[ModContent.TileType<ChalcedonySkarn>()];
             CrystallineSkyIslandTileCount += tileCounts[ModContent.TileType<ChalcedonySmoothSkarn>()];
 
-            if (tileCounts[ModContent.TileType<HyacinthRelicTile>()]>0)
+            if (tileCounts[ModContent.TileType<HyacinthRelicTile>()] > 0)
             {
                 Main.SceneMetrics.GraveyardTileCount = 0;
             }

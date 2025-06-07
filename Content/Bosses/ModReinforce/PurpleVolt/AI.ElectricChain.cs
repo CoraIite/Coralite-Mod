@@ -37,7 +37,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                             {
                                 SonState = 1;
                                 Timer = 0;
-                                Recorder2 = (NPC.Center - Target.Center).ToRotation()+MathHelper.PiOver4;
+                                Recorder2 = (NPC.Center - Target.Center).ToRotation() + MathHelper.PiOver4;
                                 ResetAllOldCaches();
                                 canDrawShadows = true;
                                 shadowScale = 1.2f;
@@ -46,7 +46,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                                 SoundEngine.PlaySound(CoraliteSoundID.NoUse_ElectricMagic_Item122, NPC.Center);
                                 IsDashing = true;
 
-                                Vector2 dir = (Target.Center+ Recorder2.ToRotationVector2()*500-NPC.Center).SafeNormalize(Vector2.Zero);
+                                Vector2 dir = (Target.Center + Recorder2.ToRotationVector2() * 500 - NPC.Center).SafeNormalize(Vector2.Zero);
                                 NPC.velocity = dir * 50;
                                 NPC.rotation = NPC.velocity.ToRotation();
                                 NPC.direction = NPC.spriteDirection = Math.Sign(NPC.velocity.X);

@@ -1,5 +1,5 @@
-﻿using Coralite.Core.Attributes;
-using Coralite.Core;
+﻿using Coralite.Core;
+using Coralite.Core.Attributes;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -35,7 +35,7 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
             Helper.DrawText(spriteBatch, HowToUse.Value, PageWidth, pos, Vector2.One / 2, Vector2.One
                 , Coralite.TextShadowColor, Main.DiscoColor, out _, true);
 
-            ReadPageTex.Value.QuickBottomDraw(spriteBatch, Bottom-new Vector2(0,10), scale: 1.1f);
+            ReadPageTex.Value.QuickBottomDraw(spriteBatch, Bottom - new Vector2(0, 10), scale: 1.1f);
         }
     }
 }

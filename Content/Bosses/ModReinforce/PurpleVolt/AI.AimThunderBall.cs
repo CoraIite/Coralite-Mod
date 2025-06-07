@@ -25,7 +25,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                         SetSpriteDirectionFoTarget();
                         SetRotationNormally(0.2f);
 
-                        float factor = Timer  / 55;
+                        float factor = Timer / 55;
                         float length = Helper.Lerp(80, 750, factor);
 
                         for (int i = 0; i < 2; i++)

@@ -102,14 +102,14 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                                 return true;
 
                             Timer = 0;
-                            SonState ++;
+                            SonState++;
                         }
                     }
                     return false;
             }
         }
 
-        private bool ElectricBreathFly(int maxTime,float targetY, bool mouseDust = true)
+        private bool ElectricBreathFly(int maxTime, float targetY, bool mouseDust = true)
         {
             if (Timer == 0)
                 Recorder = (Target.Center - NPC.Center).ToRotation();
@@ -173,7 +173,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                 if (NPC.Distance(Target.Center) > 1400)
                     return true;
 
-                SonState ++;
+                SonState++;
                 Timer = 0;
                 OpenMouse = true;
             }

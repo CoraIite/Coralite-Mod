@@ -237,7 +237,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
         public float rotation;
         public float flowAlpha;
         public float perLength;
-        public float RepeatCount=1;
+        public float RepeatCount = 1;
 
         private readonly int pointCount;
 
@@ -351,7 +351,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 Vector2 Bottom = Center - (normal * width);
 
                 var color = colorFunc.Invoke(1 - factor);
-                bars.Add(new(Top.Vec3(), color, new Vector2(factor*RepeatCount, 0)));
+                bars.Add(new(Top.Vec3(), color, new Vector2(factor * RepeatCount, 0)));
                 bars.Add(new(Bottom.Vec3(), color, new Vector2(factor * RepeatCount, 1)));
             }
 

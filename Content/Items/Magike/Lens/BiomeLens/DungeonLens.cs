@@ -87,12 +87,6 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
     {
         public override void Upgrade(MALevel incomeLevel)
         {
-            MagikeMaxBase = incomeLevel switch
-            {
-                MALevel.Bone => 27,
-                MALevel.Soul => 250,
-                _ => 0,
-            };
             switch (incomeLevel)
             {
                 default:
@@ -100,11 +94,11 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     //AntiMagikeMaxBase = 0;
                     break;
                 case MALevel.Bone:
-                    MagikeMaxBase = 180;
+                    MagikeMaxBase = 100;
                     //AntiMagikeMaxBase = MagikeMaxBase * 3;
                     break;
                 case MALevel.Soul:
-                    MagikeMaxBase = 1350;
+                    MagikeMaxBase = 757;
                     //AntiMagikeMaxBase = MagikeMaxBase * 2;
                     break;
             }
@@ -119,7 +113,7 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
         public override void Upgrade(MALevel incomeLevel)
         {
             MaxConnectBase = 1;
-            ConnectLengthBase = 4 * 16;
+            ConnectLengthBase = 6 * 16;
 
             switch (incomeLevel)
             {
@@ -130,16 +124,15 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     ConnectLengthBase = 0;
                     break;
                 case MALevel.Bone:
-                    UnitDeliveryBase = 54;
-                    SendDelayBase = 9;
+                    UnitDeliveryBase = 45;
+                    SendDelayBase = 4 * 60 + 30;
                     break;
                 case MALevel.Soul:
-                    UnitDeliveryBase = 315;
-                    SendDelayBase = 7;
+                    UnitDeliveryBase = 265;
+                    SendDelayBase = 3 * 60 + 30;
                     break;
             }
 
-            SendDelayBase *= 60;
             RecheckConnect();
         }
     }
@@ -169,16 +162,15 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     ThroughputBase = 0;
                     break;
                 case MALevel.Bone:
-                    ProductionDelayBase = 9;
-                    ThroughputBase = 18;
+                    ProductionDelayBase = 4 * 60 + 30;
+                    ThroughputBase = 8;
                     break;
                 case MALevel.Soul:
-                    ProductionDelayBase = 7;
-                    ThroughputBase = 105;
+                    ProductionDelayBase = 3 * 60 + 30;
+                    ThroughputBase = 53;
                     break;
             }
 
-            ProductionDelayBase *= 60;
             Timer = ProductionDelayBase;
         }
     }

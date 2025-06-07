@@ -79,11 +79,11 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     //AntiMagikeMaxBase = 0;
                     break;
                 case MALevel.Emperor:
-                    MagikeMaxBase = 140;
+                    MagikeMaxBase = 78;
                     //AntiMagikeMaxBase = MagikeMaxBase * 3;
                     break;
                 case MALevel.Shroomite:
-                    MagikeMaxBase = 1285;
+                    MagikeMaxBase = 714;
                     //AntiMagikeMaxBase = MagikeMaxBase * 2;
                     break;
             }
@@ -98,7 +98,7 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
         public override void Upgrade(MALevel incomeLevel)
         {
             MaxConnectBase = 1;
-            ConnectLengthBase = 4 * 16;
+            ConnectLengthBase = 6 * 16;
 
             switch (incomeLevel)
             {
@@ -109,16 +109,15 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     ConnectLengthBase = 0;
                     break;
                 case MALevel.Emperor:
-                    UnitDeliveryBase = 42;
-                    SendDelayBase = 9;
+                    UnitDeliveryBase = 35;
+                    SendDelayBase = 4 * 60 + 30;
                     break;
                 case MALevel.Shroomite:
-                    UnitDeliveryBase = 300;
-                    SendDelayBase = 7;
+                    UnitDeliveryBase = 250;
+                    SendDelayBase = 3 * 60 + 30;
                     break;
             }
 
-            SendDelayBase *= 60;
             RecheckConnect();
         }
     }
@@ -146,16 +145,15 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     ThroughputBase = 0;
                     break;
                 case MALevel.Emperor:
-                    ProductionDelayBase = 9;
-                    ThroughputBase = 14;
+                    ProductionDelayBase = 4 * 60 + 30;
+                    ThroughputBase = 7;
                     break;
                 case MALevel.Shroomite:
-                    ProductionDelayBase = 7;
-                    ThroughputBase = 100;
+                    ProductionDelayBase = 3 * 60 + 30;
+                    ThroughputBase = 25;
                     break;
             }
 
-            ProductionDelayBase *= 60;
             Timer = ProductionDelayBase;
         }
     }

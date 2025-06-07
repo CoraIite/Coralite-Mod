@@ -68,7 +68,7 @@ namespace Coralite.Content.Items.Magike.SpecialLens
                     //AntiMagikeMaxBase = 0;
                     break;
                 case MALevel.Hallow:
-                    MagikeMaxBase = 787;
+                    MagikeMaxBase = 437;
                     //AntiMagikeMaxBase = MagikeMaxBase * 3;
                     break;
             }
@@ -83,7 +83,7 @@ namespace Coralite.Content.Items.Magike.SpecialLens
         public override void Upgrade(MALevel incomeLevel)
         {
             MaxConnectBase = 1;
-            ConnectLengthBase = 4 * 16;
+            ConnectLengthBase = 6 * 16;
 
             switch (incomeLevel)
             {
@@ -94,8 +94,8 @@ namespace Coralite.Content.Items.Magike.SpecialLens
                     ConnectLengthBase = 0;
                     break;
                 case MALevel.Hallow:
-                    UnitDeliveryBase = 210;
-                    SendDelayBase = 8;
+                    UnitDeliveryBase = 175;
+                    SendDelayBase = 4;
                     break;
             }
 
@@ -118,8 +118,8 @@ namespace Coralite.Content.Items.Magike.SpecialLens
                     ThroughputBase = 0;
                     break;
                 case MALevel.Hallow:
-                    ProductionDelayBase = 8;
-                    ThroughputBase = 70;
+                    ProductionDelayBase = 4;
+                    ThroughputBase = 35;
                     break;
             }
 

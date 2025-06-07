@@ -5,7 +5,7 @@ using Terraria.Localization;
 
 namespace Coralite.Content.CoraliteNotes.MagikeChapter1
 {
-    public class ActivatedTheMachine2:KnowledgePage
+    public class ActivatedTheMachine2 : KnowledgePage
     {
         public static LocalizedText WorkingBeLike { get; private set; }
         public static LocalizedText HarvestTheProduct { get; private set; }
@@ -37,7 +37,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
             DrawParaNormal(spriteBatch, WorkingBeLike, pos.Y, out Vector2 textSize);
 
             Texture2D tex = CoraliteAssets.MagikeChapter1.Working.Value;
-            pos.Y += textSize.Y + tex.Height / 2 * _scale.targetScale+20;
+            pos.Y += textSize.Y + tex.Height / 2 * _scale.targetScale + 20;
 
             Helper.DrawMouseOverScaleTex(spriteBatch, tex
                 , pos, ref _scale, 10);

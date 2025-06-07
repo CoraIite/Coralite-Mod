@@ -109,7 +109,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
                         if (!VaultUtils.isServer)
                         {
-                            float factor = Timer  / DelayTime;
+                            float factor = Timer / DelayTime;
                             float sinFactor = MathF.Sin(factor * MathHelper.Pi);
                             ThunderWidth = 30 + (sinFactor * 40);
                             ThunderAlpha = 1 - Helper.X2Ease(factor);
@@ -235,7 +235,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
     /// <summary>
     /// 使用ai2传入一共多少点
     /// </summary>
-    public class RedDash: PurpleDash
+    public class RedDash : PurpleDash
     {
         public override void SpawnDusts()
         {

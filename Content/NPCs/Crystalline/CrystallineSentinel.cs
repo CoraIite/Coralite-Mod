@@ -10,7 +10,6 @@ using Coralite.Core.Systems.MagikeSystem.Particles;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -56,7 +55,7 @@ namespace Coralite.Content.NPCs.Crystalline
 
 
 
-        private const int MaxHandFrame=12;
+        private const int MaxHandFrame = 12;
 
         private AIStates State
         {
@@ -599,7 +598,7 @@ namespace Coralite.Content.NPCs.Crystalline
 
         #endregion
 
-        public Vector2 GetP2FloatPos => NPC.Center + new Vector2(-NPC.spriteDirection*4, 18);
+        public Vector2 GetP2FloatPos => NPC.Center + new Vector2(-NPC.spriteDirection * 4, 18);
         public Vector2 P2LeftHandPos => NPC.Center + new Vector2(-2, -24);
         public Vector2 P2RightHandPos => NPC.Center + new Vector2(-4, -23);
 
@@ -823,7 +822,7 @@ namespace Coralite.Content.NPCs.Crystalline
                     bool faceLeft = NPC.spriteDirection < 0;
 
                     if (faceLeft)
-                        DrawP2Hand(spriteBatch, screenPos, effect, drawColor,0);
+                        DrawP2Hand(spriteBatch, screenPos, effect, drawColor, 0);
                     else
                         DrawP2Hand(spriteBatch, screenPos, effect, drawColor, 1);
 
@@ -855,7 +854,7 @@ namespace Coralite.Content.NPCs.Crystalline
         /// <param name="effect"></param>
         /// <param name="drawColor"></param>
         /// <param name="leftOrRight"></param>
-        public void DrawP2Hand(SpriteBatch spriteBatch, Vector2 screenPos, SpriteEffects effect, Color drawColor,int leftOrRight)
+        public void DrawP2Hand(SpriteBatch spriteBatch, Vector2 screenPos, SpriteEffects effect, Color drawColor, int leftOrRight)
         {
             Texture2D tex = HandTex.Value;
 
@@ -875,7 +874,7 @@ namespace Coralite.Content.NPCs.Crystalline
                 , 0, frameBox.Size() / 2, NPC.scale, effect, 0);
         }
 
-        public void DrawP2Head(SpriteBatch spriteBatch,Vector2 screenPos,SpriteEffects effect,Color drawColor)
+        public void DrawP2Head(SpriteBatch spriteBatch, Vector2 screenPos, SpriteEffects effect, Color drawColor)
         {
             spriteBatch.Draw(P2Head.Value, NPC.Center - screenPos + new Vector2(0, -10), null, drawColor
                 , NPC.rotation, P2Head.Size() / 2, NPC.scale, effect, 0);
@@ -988,7 +987,7 @@ namespace Coralite.Content.NPCs.Crystalline
             if (OwnerIndex.GetNPCOwner<CrystallineSentinel>(out NPC npc, Projectile.Kill))
                 velocity = (Projectile.Center - npc.Center).SafeNormalize(Vector2.Zero);
 
-                Projectile.extraUpdates = 2;
+            Projectile.extraUpdates = 2;
             alpha = 0;
             startAngle = 0f;
             totalAngle = 30.5f;
@@ -1045,7 +1044,7 @@ namespace Coralite.Content.NPCs.Crystalline
         protected override Vector2 OwnerCenter()
         {
             if (OwnerIndex.GetNPCOwner<CrystallineSentinel>(out NPC npc, Projectile.Kill))
-                return npc.Center+offsetToOwner;
+                return npc.Center + offsetToOwner;
 
             return base.OwnerCenter();
         }

@@ -13,7 +13,7 @@ namespace Coralite.Content.Bosses.DigDigDig.Stonelime
 
         public override Point BarSize => new(412, 20);
 
-        public override void DrawBar(SpriteBatch spriteBatch, Texture2D barTexture, Vector2 barTopLeft, Rectangle barFrame, Color barColor, Vector2 stretchScale,NPC npc )
+        public override void DrawBar(SpriteBatch spriteBatch, Texture2D barTexture, Vector2 barTopLeft, Rectangle barFrame, Color barColor, Vector2 stretchScale, NPC npc)
         {
             barTopLeft += offset;
 

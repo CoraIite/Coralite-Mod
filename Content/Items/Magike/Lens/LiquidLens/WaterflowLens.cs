@@ -66,11 +66,11 @@ namespace Coralite.Content.Items.Magike.Lens.LiquidLens
                     //AntiMagikeMaxBase = 0;
                     break;
                 case MALevel.Glistent:
-                    MagikeMaxBase = 180;
+                    MagikeMaxBase = 100;
                     //AntiMagikeMaxBase = MagikeMaxBase * 3;
                     break;
                 case MALevel.Pelagic:
-                    MagikeMaxBase = 1012;
+                    MagikeMaxBase = 562;
                     //AntiMagikeMaxBase = MagikeMaxBase * 2;
                     break;
             }
@@ -85,7 +85,7 @@ namespace Coralite.Content.Items.Magike.Lens.LiquidLens
         public override void Upgrade(MALevel incomeLevel)
         {
             MaxConnectBase = 1;
-            ConnectLengthBase = 4 * 16;
+            ConnectLengthBase = 6 * 16;
 
             switch (incomeLevel)
             {
@@ -96,12 +96,12 @@ namespace Coralite.Content.Items.Magike.Lens.LiquidLens
                     ConnectLengthBase = 0;
                     break;
                 case MALevel.Glistent:
-                    UnitDeliveryBase = 60;
-                    SendDelayBase = 10;
+                    UnitDeliveryBase = 50;
+                    SendDelayBase = 5;
                     break;
                 case MALevel.Pelagic:
-                    UnitDeliveryBase = 270;
-                    SendDelayBase = 8;
+                    UnitDeliveryBase = 225;
+                    SendDelayBase = 4;
                     break;
             }
 
@@ -129,12 +129,12 @@ namespace Coralite.Content.Items.Magike.Lens.LiquidLens
                     ThroughputBase = 0;
                     break;
                 case MALevel.Glistent:
-                    ProductionDelayBase = 10;
-                    ThroughputBase = 20;
+                    ProductionDelayBase = 5;
+                    ThroughputBase = 10;
                     break;
                 case MALevel.Pelagic:
-                    ProductionDelayBase = 8;
-                    ThroughputBase = 90;
+                    ProductionDelayBase = 4;
+                    ThroughputBase = 45;
                     break;
             }
 

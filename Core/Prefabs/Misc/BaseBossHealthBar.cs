@@ -138,7 +138,7 @@ namespace Coralite.Core.Prefabs.Misc
             Vector2 stretchScale = new(currentBarLength / (float)barFrame.Width, 1f);
             Color barColor = npc.dontTakeDamage ? DontTakeDamageColor : Color.White;
 
-            DrawBar(spriteBatch, barTexture, barTopLeft, barFrame, barColor, stretchScale,npc);
+            DrawBar(spriteBatch, barTexture, barTopLeft, barFrame, barColor, stretchScale, npc);
             #endregion
 
             #region 顶端的绘制
@@ -203,7 +203,7 @@ namespace Coralite.Core.Prefabs.Misc
                     Utils.DrawBorderStringFourWay(spriteBatch, font, text, center.X, center.Y, Color.White, Color.Black, textSize / 2);
                 }
                 else
-                    DrawNumber(spriteBatch, drawParams, life, lifeMax, barPosition,npc);
+                    DrawNumber(spriteBatch, drawParams, life, lifeMax, barPosition, npc);
             }
 
             oldLife = npc.life;
@@ -212,7 +212,7 @@ namespace Coralite.Core.Prefabs.Misc
             return false;
         }
 
-        public virtual void DrawNumber(SpriteBatch spriteBatch, BossBarDrawParams drawParams, float life, float lifeMax, Rectangle barPosition,NPC npc)
+        public virtual void DrawNumber(SpriteBatch spriteBatch, BossBarDrawParams drawParams, float life, float lifeMax, Rectangle barPosition, NPC npc)
         {
             BigProgressBarHelper.DrawHealthText(spriteBatch, barPosition, drawParams.TextOffset, life, lifeMax);
         }
@@ -222,7 +222,7 @@ namespace Coralite.Core.Prefabs.Misc
             spriteBatch.Draw(barTexture, topLeft + offset, backFrame, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
         }
 
-        public virtual void DrawBar(SpriteBatch spriteBatch, Texture2D barTexture, Vector2 barTopLeft, Rectangle barFrame, Color barColor, Vector2 stretchScale,NPC npc)
+        public virtual void DrawBar(SpriteBatch spriteBatch, Texture2D barTexture, Vector2 barTopLeft, Rectangle barFrame, Color barColor, Vector2 stretchScale, NPC npc)
         {
             spriteBatch.Draw(barTexture, barTopLeft + offset, barFrame, barColor, 0f, Vector2.Zero, stretchScale, SpriteEffects.None, 0f);
         }

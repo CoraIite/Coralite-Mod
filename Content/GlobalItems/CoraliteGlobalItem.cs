@@ -289,9 +289,9 @@ namespace Coralite.Content.GlobalItems
                 }
             }
 
-            ModifyFairyTooltips(item,tooltips);
+            ModifyFairyTooltips(item, tooltips);
 
-            if (item.ModItem is IDashable dash&&dash.DrawTips)
+            if (item.ModItem is IDashable dash && dash.DrawTips)
             {
                 TooltipLine line2 = new TooltipLine(Mod, "Dashable", Dashable.Value);
                 tooltips.Add(line2);
@@ -322,7 +322,7 @@ namespace Coralite.Content.GlobalItems
             if (item.useAmmo == AmmoID.Bullet)
                 KnowledgeSystem.CheckForUnlock<FlowerGunKnowledge>(player.Center, Color.Red);
             else if (item.useAmmo == AmmoID.Arrow)
-                KnowledgeSystem.CheckForUnlock<DashBowKnowledge>(player.Center, new Color(0,228,205));
+                KnowledgeSystem.CheckForUnlock<DashBowKnowledge>(player.Center, new Color(0, 228, 205));
         }
 
         public override void Update(Item item, ref float gravity, ref float maxFallSpeed)

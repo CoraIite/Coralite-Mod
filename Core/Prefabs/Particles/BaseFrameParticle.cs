@@ -16,7 +16,7 @@ namespace Coralite.Core.Prefabs.Particles
     {
         public SpriteEffects Effects { get; set; }
 
-        public int FollowProjIndex=-1;
+        public int FollowProjIndex = -1;
 
         public override void SetProperty()
         {

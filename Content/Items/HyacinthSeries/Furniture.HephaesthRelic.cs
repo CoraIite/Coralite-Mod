@@ -15,9 +15,9 @@ namespace Coralite.Content.Items.HyacinthSeries
         public HyacinthRelic() : base(ModContent.TileType<HyacinthRelicTile>(), AssetDirectory.HyacinthSeriesItems) { }
     }
 
-    public class HyacinthRelicDust:ModDust
+    public class HyacinthRelicDust : ModDust
     {
-        public override string Texture => AssetDirectory.HyacinthSeriesItems+Name;
+        public override string Texture => AssetDirectory.HyacinthSeriesItems + Name;
 
         public override bool Update(Dust dust)
         {
@@ -34,7 +34,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             dust.rotation += dust.velocity.X / 5;
 
             //检测碰撞
-            if (Collision.SolidCollision(dust.position - Vector2.One * 5f, 10, 10,true))
+            if (Collision.SolidCollision(dust.position - Vector2.One * 5f, 10, 10, true))
             {
                 dust.scale *= 0.96f;
                 dust.velocity *= 0.25f;
@@ -48,7 +48,7 @@ namespace Coralite.Content.Items.HyacinthSeries
         public override bool PreDraw(Dust dust)
         {
             Color c = Lighting.GetColor(dust.position.ToTileCoordinates());
-            if (dust.fadeIn<10)
+            if (dust.fadeIn < 10)
             {
                 c *= dust.fadeIn / 10;
             }
@@ -70,7 +70,7 @@ namespace Coralite.Content.Items.HyacinthSeries
         {
             TileID.Sets.CorruptBiome[Type] = -300;
             TileID.Sets.CrimsonBiome[Type] = -300;
-            TileID.Sets.HallowBiome[Type] = -300; 
+            TileID.Sets.HallowBiome[Type] = -300;
             base.SetStaticDefaults();
         }
 
@@ -115,7 +115,7 @@ namespace Coralite.Content.Items.HyacinthSeries
 
             bool direction = tile.TileFrameY / FrameHeight != 0;
             SpriteEffects effects = direction ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
-            Vector2 drawPos = worldPos + offScreen - Main.screenPosition+new Vector2(0,-40);
+            Vector2 drawPos = worldPos + offScreen - Main.screenPosition + new Vector2(0, -40);
 
             // 绘制底座
             spriteBatch.Draw(texture, drawPos, frame, color, 0f, origin, 1f, effects, 0f);

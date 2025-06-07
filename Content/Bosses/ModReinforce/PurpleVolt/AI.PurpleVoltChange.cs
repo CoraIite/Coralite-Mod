@@ -7,7 +7,7 @@ using Terraria.Audio;
 
 namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 {
-    public partial  class  ZacurrentDragon
+    public partial class ZacurrentDragon
     {
         public bool PurpleVoltExchange()
         {
