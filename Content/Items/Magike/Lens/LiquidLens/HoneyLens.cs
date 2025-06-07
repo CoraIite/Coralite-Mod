@@ -67,15 +67,15 @@ namespace Coralite.Content.Items.Magike.Lens.LiquidLens
                     //AntiMagikeMaxBase = 0;
                     break;
                 case MALevel.Beeswax:
-                    MagikeMaxBase = 320;
+                    MagikeMaxBase = 178;
                     //AntiMagikeMaxBase = MagikeMaxBase * 3;
                     break;
                 case MALevel.CrystallineMagike:
-                    MagikeMaxBase = 675;
+                    MagikeMaxBase = 500;
                     //AntiMagikeMaxBase = MagikeMaxBase * 2;
                     break;
                 case MALevel.Feather:
-                    MagikeMaxBase = 1800;
+                    MagikeMaxBase = 1000;
                     //AntiMagikeMaxBase = MagikeMaxBase * 2;
                     break;
             }
@@ -90,7 +90,7 @@ namespace Coralite.Content.Items.Magike.Lens.LiquidLens
         public override void Upgrade(MALevel incomeLevel)
         {
             MaxConnectBase = 1;
-            ConnectLengthBase = 4 * 16;
+            ConnectLengthBase = 6 * 16;
 
             switch (incomeLevel)
             {
@@ -101,20 +101,19 @@ namespace Coralite.Content.Items.Magike.Lens.LiquidLens
                     ConnectLengthBase = 0;
                     break;
                 case MALevel.Beeswax:
-                    UnitDeliveryBase = 96;
-                    SendDelayBase = 9;
+                    UnitDeliveryBase = 80;
+                    SendDelayBase = 4 * 60 + 30;
                     break;
                 case MALevel.CrystallineMagike:
-                    UnitDeliveryBase = 180;
-                    SendDelayBase = 8;
+                    UnitDeliveryBase = 200;
+                    SendDelayBase = 4 * 60;
                     break;
                 case MALevel.Feather:
-                    UnitDeliveryBase = 420;
-                    SendDelayBase = 7;
+                    UnitDeliveryBase = 350;
+                    SendDelayBase = 3 * 60 + 30;
                     break;
             }
 
-            SendDelayBase *= 60;
             RecheckConnect();
         }
     }
@@ -138,20 +137,19 @@ namespace Coralite.Content.Items.Magike.Lens.LiquidLens
                     ThroughputBase = 0;
                     break;
                 case MALevel.Beeswax:
-                    ProductionDelayBase = 9;
-                    ThroughputBase = 32;
+                    ProductionDelayBase = 4 * 60 + 30;
+                    ThroughputBase = 16;
                     break;
                 case MALevel.CrystallineMagike:
-                    ProductionDelayBase = 8;
-                    ThroughputBase = 60;
+                    ProductionDelayBase = 4 * 60;
+                    ThroughputBase = 40;
                     break;
                 case MALevel.Feather:
-                    ProductionDelayBase = 7;
-                    ThroughputBase = 140;
+                    ProductionDelayBase = 3 * 60 + 30;
+                    ThroughputBase = 70;
                     break;
             }
 
-            ProductionDelayBase *= 60;
             Timer = ProductionDelayBase;
         }
     }

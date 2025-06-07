@@ -8,7 +8,7 @@ using Coralite.Helpers;
 
 namespace Coralite.Content.Items.Magike.ItemTransmit
 {
-    public class CrystallineMabird : Mabird,IMagikeCraftable
+    public class CrystallineMabird : Mabird, IMagikeCraftable
     {
         public override string Texture => AssetDirectory.ItemTransmits + Name;
 

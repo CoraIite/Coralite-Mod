@@ -66,7 +66,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                 for (int i = 0; i < 2; i++)
                 {
                     Vector2 dir = -Vector2.UnitY;
-                    Dust d = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(6, 6) + (dir * Main.rand.NextFloat(20, 1600*Timer/ReadyTime)), DustID.PortalBoltTrail
+                    Dust d = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(6, 6) + (dir * Main.rand.NextFloat(20, 1600 * Timer / ReadyTime)), DustID.PortalBoltTrail
                         , dir.RotateByRandom(-0.3f, 0.3f) * Main.rand.NextFloat(2f, 6f), newColor: ZacurrentDragon.ZacurrentDustPurple,
                         Scale: Main.rand.NextFloat(1f, 1.5f));
                     d.noGravity = true;

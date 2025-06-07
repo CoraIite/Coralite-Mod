@@ -108,14 +108,14 @@ namespace Coralite.Content.CoraliteNotes
         private readonly ATex sparkleTex;
         private readonly Vector2 sparkleOffset;
 
-        public CollectButton(ATex buttonTex,ATex sparkleTex,Vector2 sparkleOffset,int rewardItemType, bool[] collects, CoraliteNoteSystem.RewardType rewardType)
+        public CollectButton(ATex buttonTex, ATex sparkleTex, Vector2 sparkleOffset, int rewardItemType, bool[] collects, CoraliteNoteSystem.RewardType rewardType)
         {
             _rewardItemType = rewardItemType;
             _collects = collects;
             _rewardType = rewardType;
             this.buttonTex = buttonTex;
             this.sparkleTex = sparkleTex;
-            this.sparkleOffset=sparkleOffset;
+            this.sparkleOffset = sparkleOffset;
 
             Vector2 size = buttonTex.Size();
             size.Y /= 3;
@@ -171,7 +171,7 @@ namespace Coralite.Content.CoraliteNotes
             {
                 Helper.GetItemTexAndFrame(_rewardItemType, out Texture2D itemTex, out Rectangle frameBox);
 
-                spriteBatch.Draw(itemTex, pos+ItemPosOffset, frameBox, Color.White, 0, frameBox.Size() / 2, 1, 0, 0);
+                spriteBatch.Draw(itemTex, pos + ItemPosOffset, frameBox, Color.White, 0, frameBox.Size() / 2, 1, 0, 0);
             }
 
             if (IsMouseHovering)

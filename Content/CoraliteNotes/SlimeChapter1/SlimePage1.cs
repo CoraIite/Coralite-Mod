@@ -8,7 +8,7 @@ using Terraria.Localization;
 
 namespace Coralite.Content.CoraliteNotes.SlimeChapter1
 {
-    [AutoLoadTexture(Path =AssetDirectory.NoteSlime1)]
+    [AutoLoadTexture(Path = AssetDirectory.NoteSlime1)]
     public class SlimePage1 : KnowledgePage
     {
         public static LocalizedText Title { get; private set; }
@@ -17,7 +17,7 @@ namespace Coralite.Content.CoraliteNotes.SlimeChapter1
 
         public override bool DoublePageWithNext => true;
 
-        public static ATex SlimeTree {  get; private set; }
+        public static ATex SlimeTree { get; private set; }
 
         private ScaleController _scale1 = new ScaleController(1.5f, 0.2f);
         private ScaleController _scale2 = new ScaleController(1.5f, 0.2f);
@@ -47,7 +47,7 @@ namespace Coralite.Content.CoraliteNotes.SlimeChapter1
 
             DrawParaNormal(spriteBatch, SlimeTreeDescription, posY, out Vector2 textSize);
 
-            posY += textSize.Y+20;
+            posY += textSize.Y + 20;
 
             DrawParaNormal(spriteBatch, GelFiberDescription, posY, out _);
 

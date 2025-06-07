@@ -105,7 +105,7 @@ namespace Coralite.Content.Items.HyacinthSeries
                 if (Projectile.frame < 20)
                 {
                     Projectile.frame++;
-                    if (Projectile.frame ==9)
+                    if (Projectile.frame == 9)
                     {
                         Vector2 dir = Projectile.velocity.SafeNormalize(Vector2.Zero);
                         for (int i = 0; i < 5; i++)
@@ -295,7 +295,7 @@ namespace Coralite.Content.Items.HyacinthSeries
 
                 d.noGravity = true;
                 d = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(12, 12)
-                     , DustID.Smoke, Helper.NextVec2Dir() * Main.rand.NextFloat(2, 5), Alpha: 0,Color.Black, Scale: Main.rand.NextFloat(1, 2f));
+                     , DustID.Smoke, Helper.NextVec2Dir() * Main.rand.NextFloat(2, 5), Alpha: 0, Color.Black, Scale: Main.rand.NextFloat(1, 2f));
                 d.noGravity = true;
                 d = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(4, 4)
                      , DustID.Clentaminator_Red, Helper.NextVec2Dir() * Main.rand.NextFloat(1, 2), Alpha: 100, Scale: Main.rand.NextFloat(1f, 1.5f));
@@ -311,7 +311,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             }
 
             var p2 = PRTLoader.NewParticle<MagikeLozengeParticle>(Projectile.Center, Vector2.Zero, Color.DarkRed, 0.75f);
-            p2.Rotation = Projectile.rotation+MathHelper.PiOver2;
+            p2.Rotation = Projectile.rotation + MathHelper.PiOver2;
 
             for (int i = 0; i < 8; i++)
             {
@@ -419,7 +419,7 @@ namespace Coralite.Content.Items.HyacinthSeries
                     }
                 }
 
-                Helper.PlayPitched(CoraliteSoundID.LiteBoom_Item118 , Projectile.Center);
+                Helper.PlayPitched(CoraliteSoundID.LiteBoom_Item118, Projectile.Center);
                 Projectile.Resize(50, 50);
                 Projectile.timeLeft = 2;
             }
@@ -558,7 +558,7 @@ namespace Coralite.Content.Items.HyacinthSeries
         {
             Color c = Lighting.GetColor(dust.position.ToTileCoordinates());
             c *= dust.color.A / 255f;
-            Texture2D.Value.QuickCenteredDraw(Main.spriteBatch, dust.frame, dust.position - Main.screenPosition, c, dust.rotation,scale:dust.scale);
+            Texture2D.Value.QuickCenteredDraw(Main.spriteBatch, dust.frame, dust.position - Main.screenPosition, c, dust.rotation, scale: dust.scale);
 
             return false;
         }

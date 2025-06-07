@@ -27,7 +27,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
             DrawTitleH2(spriteBatch, Title, Coralite.MagicCrystalPink);
-            Vector2 pos = PageTop+new Vector2(0, TitleHeight);
+            Vector2 pos = PageTop + new Vector2(0, TitleHeight);
 
             //描述段
             DrawParaNormal(spriteBatch, Description, pos.Y, out Vector2 textSize);
@@ -36,7 +36,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
             pos.Y += textSize.Y + 20 + tex.Height / 2;
 
             //绘制图片
-            Helper.DrawMouseOverScaleTex(spriteBatch, tex, pos,ref _scale, 20);
+            Helper.DrawMouseOverScaleTex(spriteBatch, tex, pos, ref _scale, 20);
         }
     }
 }

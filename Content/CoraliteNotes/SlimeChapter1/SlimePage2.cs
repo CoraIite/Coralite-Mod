@@ -37,7 +37,7 @@ namespace Coralite.Content.CoraliteNotes.SlimeChapter1
 
             #region 绘制凝胶邀请函
 
-            Vector2 picturePos = new Vector2(pos.X - 170, pos.Y+ 505);
+            Vector2 picturePos = new Vector2(pos.X - 170, pos.Y + 505);
             Helper.DrawMouseOverScaleTex<GelInvitation>(spriteBatch, picturePos
                 , ref _scale1, 4, 5, fadeWithOriginScale: true);
 

@@ -4220,6 +4220,7 @@ DesertLens: {
 	Tooltip:
 		'''
 		在沙漠生产魔能，只能放置在沙块上
+		沙尘暴期间产量增加
 		{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}
 		'''
 }
@@ -4315,7 +4316,7 @@ SnowfieldLens: {
 	DisplayName: 雪原透镜
 	Tooltip:
 		'''
-		在雪原生产魔能，只能放置在冰雪块上
+		在雪原并且处于冰雪墙前生产魔能，只能放置在冰雪块上
 		{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}
 		'''
 }
@@ -6040,5 +6041,10 @@ ZacurrentRod: {
 
 ZacurrentRelic: {
 	DisplayName: 束电塔
+	Tooltip: ""
+}
+
+ZenithRelic: {
+	DisplayName: 天顶剑圣物
 	Tooltip: ""
 }

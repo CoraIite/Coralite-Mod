@@ -1,4 +1,5 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Items.Misc_Melee;
+using Coralite.Core;
 using Coralite.Core.Attributes;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
@@ -13,9 +14,9 @@ namespace Coralite.Content.CoraliteNotes.SwordChapter
     {
         public static bool[] Unlocks = new bool[(int)Swords.Count];
 
-        public static ATex Test { get; private set; }
-        //public static ATex DashBowCollectButton { get; private set; }
-        //public static ATex DashBowCollectLight { get; private set; }
+        public static ATex ZenithCollect { get; private set; }
+        public static ATex SwordCollectButton { get; private set; }
+        public static ATex SwordCollectButtonLight { get; private set; }
 
         public enum Swords
         {
@@ -57,61 +58,61 @@ namespace Coralite.Content.CoraliteNotes.SwordChapter
         {
             Vector2 center = new Vector2(PageWidth / 2, PageHeight / 2 - 80);
 
-            NewImage(ItemID.CopperShortsword,center + new Vector2(-240, 126), null
-                , Swords.CopperShortsword, CollectImage.LockIconType.Small);
-            NewImage(ItemID.EnchantedSword, center + new Vector2(-166, 316), null
-                , Swords.EnchantedSword, CollectImage.LockIconType.Small);
-            NewImage(ItemID.BeeKeeper, center + new Vector2(174, 302), Condition.DownedEyeOfCthulhu
-                , Swords.BeeKeeper, CollectImage.LockIconType.Small);
-            NewImage(ItemID.Starfury, center + new Vector2(-240, -88), CoraliteConditions.DownedBabyIceDragon
-                , Swords.Starfury, CollectImage.LockIconType.Small);
-            NewImage(ItemID.Seedler, center + new Vector2(155, 86), Condition.DownedSkeletron
+            NewImage(ItemID.CopperShortsword, center + new Vector2(-200, 146), null
+                , Swords.CopperShortsword, CollectImage.LockIconType.Small, 1.2f);
+            NewImage(ItemID.EnchantedSword, center + new Vector2(-140, 104), null
+                , Swords.EnchantedSword, CollectImage.LockIconType.Small, 1.3f);
+            NewImage(ItemID.BeeKeeper, center + new Vector2(16, 296), Condition.DownedQueenBee
+                , Swords.BeeKeeper, CollectImage.LockIconType.Small, 1.2f);
+            NewImage(ItemID.Starfury, center + new Vector2(106, 262), null
+                , Swords.Starfury, CollectImage.LockIconType.Small, 1.1f);
+            NewImage(ItemID.Seedler, center + new Vector2(230, 86), Condition.DownedPlantera
                 , Swords.Seedler, CollectImage.LockIconType.Small);
-            NewImage(ItemID.TheHorsemansBlade, center + new Vector2(-135, -190), Condition.Hardmode
-                , Swords.TheHorsemansBlade);
-            NewImage(ItemID.InfluxWaver, center + new Vector2(-60, -150), Condition.Hardmode
-                , Swords.InfluxWaver, CollectImage.LockIconType.Small);
-            NewImage(ItemID.StarWrath, center + new Vector2(24, 260), Condition.DownedSkeletronPrime
-                , Swords.StarWrath, CollectImage.LockIconType.Small);
-            NewImage(ItemID.Meowmere, center + new Vector2(214, 212), Condition.DownedTwins
-                , Swords.Meowmere, CollectImage.LockIconType.Small);
-            NewImage(ItemID.LightsBane, center + new Vector2(-190, 216), Condition.DownedDestroyer
-                , Swords.LightsBane);
-            NewImage(ItemID.BloodButcherer, center + new Vector2(6, 370), CoraliteConditions.DownedThunderveinDragon
-                , Swords.BloodButcherer, CollectImage.LockIconType.Small,1.1f);
-            NewImage(ItemID.FieryGreatsword, center + new Vector2(128, -100), Condition.DownedPlantera
+            NewImage(ItemID.TheHorsemansBlade, center + new Vector2(180, 326), Condition.DownedPumpking
+                , Swords.TheHorsemansBlade, scale: 1.1f);
+            NewImage(ItemID.InfluxWaver, center + new Vector2(210, 256), Condition.DownedMartians
+                , Swords.InfluxWaver, scale: 1.1f);
+            NewImage(ItemID.StarWrath, center + new Vector2(74, -60), Condition.DownedMoonLord
+                , Swords.StarWrath, scale: 1.2f);
+            NewImage(ItemID.Meowmere, center + new Vector2(156, -50), Condition.DownedMoonLord
+                , Swords.Meowmere, scale: 1.2f);
+            NewImage(ItemID.LightsBane, center + new Vector2(-192, 280), Condition.DownedEowOrBoc
+                , Swords.LightsBane, CollectImage.LockIconType.Small, 1.05f);
+            NewImage(ItemID.BloodButcherer, center + new Vector2(-122, 268), Condition.DownedEowOrBoc
+                , Swords.BloodButcherer, CollectImage.LockIconType.Small, 1.05f);
+            NewImage(ItemID.BladeofGrass, center + new Vector2(-128, 200), null
+                , Swords.BladeOfGrass, CollectImage.LockIconType.Small);
+            NewImage(ItemID.FieryGreatsword, center + new Vector2(-40, 118), Condition.DownedEowOrBoc
                 , Swords.Volcano);
-            NewImage(ItemID.Muramasa, center + new Vector2(-144, -32), Condition.DownedIceQueen
-                , Swords.Muramasa);
-            NewImage(ItemID.BladeofGrass, center + new Vector2(126, -26), Condition.DownedMoonLord
-                , Swords.BladeOfGrass);
-            NewImage(ItemID.NightsEdge, center + new Vector2(26, -26), Condition.DownedMoonLord
-                , Swords.NightsEdge);
-            NewImage(ItemID.TrueNightsEdge, center + new Vector2(26, -126), Condition.DownedMoonLord
-                , Swords.TrueNightsEdge);
-            NewImage(ItemID.BrokenHeroSword, center + new Vector2(26, -226), Condition.DownedMoonLord
-                , Swords.BrokenHeroSword);
-            NewImage(ItemID.Excalibur, center + new Vector2(126, -226), Condition.DownedMoonLord
-                , Swords.Excalibur);
-            NewImage(ItemID.TrueExcalibur, center + new Vector2(226, -226), Condition.DownedMoonLord
-                , Swords.TrueExcalibur);
-            NewImage(ItemID.TerraBlade, center + new Vector2(226, -326), Condition.DownedMoonLord
-                , Swords.TerraBlade);
+            NewImage(ItemID.Muramasa, center + new Vector2(-50, 206), Condition.DownedSkeletron
+                , Swords.Muramasa, CollectImage.LockIconType.Small);
+            NewImage(ItemID.NightsEdge, center + new Vector2(20, 128), Condition.DownedSkeletron
+                , Swords.NightsEdge, scale: 1.3f);
+            NewImage(ItemID.TrueNightsEdge, center + new Vector2(60, 38), Condition.DownedMechBossAll
+                , Swords.TrueNightsEdge, scale: 1.3f);
+            NewImage(ItemID.BrokenHeroSword, center + new Vector2(146, 116), Condition.DownedPlantera
+                , Swords.BrokenHeroSword, CollectImage.LockIconType.Small, 1.2f);
+            NewImage(ItemID.Excalibur, center + new Vector2(-180, 14), Condition.DownedMechBossAny
+                , Swords.Excalibur, CollectImage.LockIconType.Small, 1.1f);
+            NewImage(ItemID.TrueExcalibur, center + new Vector2(-114, -44), Condition.DownedMechBossAll
+                , Swords.TrueExcalibur, CollectImage.LockIconType.Small, 1.15f);
+            NewImage(ItemID.TerraBlade, center + new Vector2(-4, -8), Condition.DownedPlantera
+                , Swords.TerraBlade, scale: 1.2f);
 
-            var b = new CollectImage(ItemID.Zenith, CoraliteConditions.DownedNightmarePlantera
-                , Unlocks, (int)Swords.Zenith, 2f, CollectImage.LockIconType.Big);
-            b.SetCenter(center + new Vector2(-2, 103));
-            b.LockIconScale = 1.5f;
+            var b = new CollectImage(ItemID.Zenith, Condition.DownedMoonLord
+                , Unlocks, (int)Swords.Zenith, 1.75f, CollectImage.LockIconType.Big);
+            b.SetCenter(center + new Vector2(188, -142));
+            b.LockIconScale = 0.8f;
             Append(b);
 
-            //var button2 = new CollectButton(DashBowCollectButton, DashBowCollectLight
-            //    , new Vector2(0, 0), ItemType<ThyphionRelic>(), Unlocks, CoraliteNoteSystem.RewardType.Sword);
-            //button2.ItemPosOffset = new Vector2(0, 0);
-            //button2.SetCenter(new Vector2(PageWidth / 2+158, 100));
-            //Append(button2);
+            var button2 = new CollectButton(SwordCollectButton, SwordCollectButtonLight
+                , new Vector2(7, -15), ModContent.ItemType<ZenithRelic>(), Unlocks, CoraliteNoteSystem.RewardType.Sword);
+            button2.ItemPosOffset = new Vector2(10, 6);
+            button2.SetCenter(new Vector2(PageWidth / 2 - 140, 64));
+            Append(button2);
         }
 
-        public void NewImage(int itemType,Vector2 pos, Condition condition, Swords type
+        public void NewImage(int itemType, Vector2 pos, Condition condition, Swords type
             , CollectImage.LockIconType lockType = CollectImage.LockIconType.Middle, float scale = 1f)
         {
             var button = new CollectImage(itemType, condition, Unlocks, (int)type, scale, lockType);
@@ -134,12 +135,12 @@ namespace Coralite.Content.CoraliteNotes.SwordChapter
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            Test.Value.QuickCenteredDraw(spriteBatch, Center);
+            ZenithCollect.Value.QuickCenteredDraw(spriteBatch, Center);
 
             DrawCollectTip(spriteBatch, Unlocks);
 
-            //DrawCollectText(spriteBatch, Unlocks, PageTop + new Vector2(115, 40));
-            //DrawCollectProgress(spriteBatch, Unlocks, PageTop + new Vector2(210, 39));
+            DrawCollectText(spriteBatch, Unlocks, PageTop + new Vector2(45, 40));
+            DrawCollectProgress(spriteBatch, Unlocks, PageTop + new Vector2(130, 39));
         }
     }
 }

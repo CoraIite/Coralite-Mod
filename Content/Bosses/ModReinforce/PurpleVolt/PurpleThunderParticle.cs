@@ -63,7 +63,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             }
         }
 
-        public static void Spawn(Func<Vector2> GetPos, Vector2 velocity, int maxTime, int fadeTime, int pointCount, float thunderWidth,Color c)
+        public static void Spawn(Func<Vector2> GetPos, Vector2 velocity, int maxTime, int fadeTime, int pointCount, float thunderWidth, Color c)
         {
             if (VaultUtils.isServer)
                 return;
@@ -78,7 +78,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
             p.thunderTrail.SetExpandWidth(velocity.Length() / 2);
             p.thunderTrail.SetRange((0, 4));
-            p.thunderTrail.CanDraw=true;
+            p.thunderTrail.CanDraw = true;
             Vector2 pos = GetPos();
             p.thunderTrail.BasePositions = [pos, pos];
             p.MaxTime = maxTime;

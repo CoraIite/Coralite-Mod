@@ -117,7 +117,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             float pushForcePerFrame = 1.26f;
 
             float windCycle = Main.instance.TilesRenderer.GetWindCycle(i, j, Main.instance.TilesRenderer._sunflowerWindCounter);
-            float highestWindGridPushComplex = Main.instance.TilesRenderer.GetHighestWindGridPushComplex( i, j, 1, 1, totalPushTime, pushForcePerFrame, 3, true);
+            float highestWindGridPushComplex = Main.instance.TilesRenderer.GetHighestWindGridPushComplex(i, j, 1, 1, totalPushTime, pushForcePerFrame, 3, true);
 
             windCycle += highestWindGridPushComplex;
 

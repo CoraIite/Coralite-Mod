@@ -1,5 +1,4 @@
-﻿using Coralite.Content.Bosses.ThunderveinDragon;
-using Coralite.Core;
+﻿using Coralite.Core;
 using Coralite.Helpers;
 using System;
 using Terraria;
@@ -8,7 +7,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 {
-    public partial class  ZacurrentDragon
+    public partial class ZacurrentDragon
     {
         /// <summary>
         /// 使用<see cref="Recorder"/>记录使用电球的样子
@@ -59,7 +58,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                         Timer++;
                         if (NPC.frame.Y == 0 && Timer > ReadyTime)
                         {
-                            SonState=1;
+                            SonState = 1;
                             Timer = 0;
                         }
                     }
@@ -147,7 +146,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
                             //预判
                             Vector2 targetPos = Target.Center;
-                            if (Target.velocity.Length()>4)
+                            if (Target.velocity.Length() > 4)
                                 targetPos += Target.velocity.SafeNormalize(Vector2.Zero) * 340;
                             Vector2 dir = (targetPos - GetMousePos()).SafeNormalize(Vector2.Zero);
 

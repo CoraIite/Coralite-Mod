@@ -1,5 +1,4 @@
 ﻿using Coralite.Content.Items.Magike.Spells;
-using Coralite.Content.Items.Materials;
 using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;

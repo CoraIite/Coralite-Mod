@@ -1,11 +1,6 @@
-﻿using Coralite.Content.Items.Magike.Altars;
-using Coralite.Core;
+﻿using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using Terraria;
-using Terraria.GameContent;
-using Terraria.ID;
 using Terraria.Localization;
 
 namespace Coralite.Content.CoraliteNotes.MagikeChapter1
@@ -39,7 +34,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
             //标题
             DrawTitleH1(spriteBatch, UseMagikeToDoSomething, Coralite.MagicCrystalPink);
 
-            Vector2 pos = PageTop+new Vector2(0,TitleHeight);
+            Vector2 pos = PageTop + new Vector2(0, TitleHeight);
 
             //绘制造石机
             Vector2 picturePos = new Vector2(pos.X, pos.Y + 40);
@@ -58,7 +53,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
             pos.Y += textSize.Y + tex.Height * 0.6f / 2;
 
             Helper.DrawMouseOverScaleTex(spriteBatch, tex, pos, ref _scale2, 8);
-            pos.Y += tex.Height * 0.6f / 2+10;
+            pos.Y += tex.Height * 0.6f / 2 + 10;
 
             //描述段2
             DrawParaNormal(spriteBatch, InsertPolarizedFilter, pos.Y, out _);

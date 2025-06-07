@@ -25,7 +25,7 @@ namespace Coralite.Content.Items.Misc_Shoot
 
         public override void InitializeGun()
         {
-            Projectile.timeLeft = Owner.itemTimeMax*2;
+            Projectile.timeLeft = Owner.itemTimeMax * 2;
             MaxTime = Owner.itemTimeMax * 2;
 
             float minRot = MathHelper.ToRadians(50);

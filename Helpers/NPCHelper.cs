@@ -7,7 +7,6 @@ using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.Creative;
 using Terraria.ID;
-using Terraria.Localization;
 
 namespace Coralite.Helpers
 {

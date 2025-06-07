@@ -67,11 +67,11 @@ namespace Coralite.Content.Items.Magike.Lens.DayTimeLens
                     //AntiMagikeMaxBase = 0;
                     break;
                 case MALevel.MagicCrystal:
-                    MagikeMaxBase = 18;
+                    MagikeMaxBase = 20;
                     //AntiMagikeMaxBase = MagikeMaxBase * 3;
                     break;
                 case MALevel.BloodJade:
-                    MagikeMaxBase = 956;
+                    MagikeMaxBase = 1000;
                     //AntiMagikeMaxBase = MagikeMaxBase * 2;
                     break;
             }
@@ -86,7 +86,7 @@ namespace Coralite.Content.Items.Magike.Lens.DayTimeLens
         public override void Upgrade(MALevel incomeLevel)
         {
             MaxConnectBase = 1;
-            ConnectLengthBase = 4 * 16;
+            ConnectLengthBase = 6 * 16;
 
             switch (incomeLevel)
             {
@@ -97,12 +97,12 @@ namespace Coralite.Content.Items.Magike.Lens.DayTimeLens
                     ConnectLengthBase = 0;
                     break;
                 case MALevel.MagicCrystal:
-                    UnitDeliveryBase = 6;
-                    SendDelayBase = 10;
+                    UnitDeliveryBase = 10;
+                    SendDelayBase = 5;
                     break;
                 case MALevel.BloodJade:
-                    UnitDeliveryBase = 256;
-                    SendDelayBase = 8;
+                    UnitDeliveryBase = 400;
+                    SendDelayBase = 4;
                     break;
             }
 
@@ -147,12 +147,12 @@ namespace Coralite.Content.Items.Magike.Lens.DayTimeLens
                     ThroughputBase = 0;
                     break;
                 case MALevel.MagicCrystal:
-                    ProductionDelayBase = 10;
+                    ProductionDelayBase = 5;
                     ThroughputBase = 2;
                     break;
                 case MALevel.BloodJade:
-                    ProductionDelayBase = 8;
-                    ThroughputBase = 85;
+                    ProductionDelayBase = 4;
+                    ThroughputBase = 80;
                     break;
             }
 

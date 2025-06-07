@@ -13,7 +13,7 @@ DamageClasses: {
 Players: {
 	CoralitePlayer: {
 		ThunderElectrifiedDeath: Убит молнией
-		// CoreKeeperDodgeText: Mods.Coralite.Players.CoralitePlayer.CoreKeeperDodgeText
+		// CoreKeeperDodgeText: Dodge!
 	}
 }
 
@@ -27,21 +27,21 @@ Conditions: {
 		NotInDigDigDig: Требуется не находиться в мире DigDigDig
 		UseMultiBlockStructure: Использовать многоблочные структуры для создания
 		DownedGolemCondition: Требуется победить Каменного голема
-		// UnlockDyeTrder: Mods.Coralite.Conditions.CoraliteConditions.UnlockDyeTrder
-		// UnlockStylist: Mods.Coralite.Conditions.CoraliteConditions.UnlockStylist
-		// UnlockMechanic: Mods.Coralite.Conditions.CoraliteConditions.UnlockMechanic
-		// UnlockPartyGirl: Mods.Coralite.Conditions.CoraliteConditions.UnlockPartyGirl
-		// UnlockTaxCollector: Mods.Coralite.Conditions.CoraliteConditions.UnlockTaxCollector
-		// UnlockPrincess: Mods.Coralite.Conditions.CoraliteConditions.UnlockPrincess
-		// SpellCraft: Mods.Coralite.Conditions.CoraliteConditions.SpellCraft
-		// InMagicCrystalCave: Mods.Coralite.Conditions.CoraliteConditions.InMagicCrystalCave
-		// InCrystallineSkyIsland: Mods.Coralite.Conditions.CoraliteConditions.InCrystallineSkyIsland
-		// UseShlimmerTranslation: Mods.Coralite.Conditions.CoraliteConditions.UseShlimmerTranslation
-		// UseRuneParchment: Mods.Coralite.Conditions.CoraliteConditions.UseRuneParchment
-		// DownedRediancie: Mods.Coralite.Conditions.CoraliteConditions.DownedRediancie
-		// DownedThunderveinDragon: Mods.Coralite.Conditions.CoraliteConditions.DownedThunderveinDragon
-		// DownedNightmarePlantera: Mods.Coralite.Conditions.CoraliteConditions.DownedNightmarePlantera
-		// DownedBabyIceDragon: Mods.Coralite.Conditions.CoraliteConditions.DownedBabyIceDragon
+		// UnlockDyeTrder: Requires unlocking Dye Trader
+		// UnlockStylist: Requires rescuing Stylist
+		// UnlockMechanic: Requires rescuing Mechanic
+		// UnlockPartyGirl: Requires unlocking Party Girl
+		// UnlockTaxCollector: Requires rescuing Tax Collector
+		// UnlockPrincess: Requires unlocking Princess
+		// SpellCraft: Requires Spell Circuit crafting
+		// InMagicCrystalCave: Must be in Magic Crystal Cave
+		// InCrystallineSkyIsland: Must be in Crystalline Sky Island
+		// UseShlimmerTranslation: Requires Shimmer transmutation
+		// UseRuneParchment: Left-click Rune Parchment in hotbar to craft
+		// DownedRediancie: Requires defeating Rediancie
+		// DownedThunderveinDragon: Requires defeating Thundervein Wyvern
+		// DownedNightmarePlantera: Requires defeating Nightmare Plantera
+		// DownedBabyIceDragon: Requires defeating Baby Ice Dragon
 	}
 }
 
@@ -74,7 +74,7 @@ WorldGeneration: {
 		DigTheIceDragonNest: Копаем гнездо ледяного дракона, копаем гнездо ледяного дракона, копаем, копаем, копаем, копаем!
 		DigTheDigDungeon: Копаем подземелье, копаем подземелье, копаем, копаем, копаем, копаем!
 		CoraliteNoteRoom: Размещаем утраченные предметы кораллов
-		// CrystallineSkyIsland: Mods.Coralite.WorldGeneration.CoraliteWorld.CrystallineSkyIsland
+		// CrystallineSkyIsland: Raising Crystalline Sky Island
 	}
 }
 

@@ -18,7 +18,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
     /// 使用速度传入中心点的位置，位置传入末端的位置
     /// 激光长度2000，激光旋转跟随recorder1;
     /// </summary>
-    [AutoLoadTexture(Path =AssetDirectory.ZacurrentDragon)]
+    [AutoLoadTexture(Path = AssetDirectory.ZacurrentDragon)]
     public class PurpleElectromagneticCannon : PurpleElectricBreath
     {
         const int DelayTime = 30;
@@ -59,7 +59,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             {
                 Projectile.Center = dragon.GetMousePos();
                 Projectile.velocity = Projectile.Center + (dragon.Recorder.ToRotationVector2() * 2000);
-                Projectile.rotation = (Projectile.velocity-Projectile.Center ).ToRotation();
+                Projectile.rotation = (Projectile.velocity - Projectile.Center).ToRotation();
 
                 SpawnDusts();
 

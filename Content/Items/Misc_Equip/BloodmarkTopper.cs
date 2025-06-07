@@ -48,7 +48,7 @@ namespace Coralite.Content.Items.Misc_Equip
         public static LocalizedText[] EXName { get; private set; }
         public static LocalizedText SetTip { get; private set; }
 
-        private ArmorSetType vanityType=ArmorSetType.Blood;
+        private ArmorSetType vanityType = ArmorSetType.Blood;
 
         private enum ArmorSetType : byte
         {
@@ -167,7 +167,7 @@ namespace Coralite.Content.Items.Misc_Equip
 
         public override void UpdateVanitySet(Player player)
         {
-            if (!player.armor[10].IsAir&& player.armor[10].ModItem is BloodmarkTopper bt && player.TryGetModPlayer(out CoralitePlayer cp))
+            if (!player.armor[10].IsAir && player.armor[10].ModItem is BloodmarkTopper bt && player.TryGetModPlayer(out CoralitePlayer cp))
             {
                 if (bt.vanityType == ArmorSetType.Shadow)
                     cp.AddEffect(ShadowSetVanityName);
@@ -697,7 +697,7 @@ namespace Coralite.Content.Items.Misc_Equip
                             else
                             if (Timer is 4 * 2 or 4 * 3 or 4 * 4)
                             {
-                                int damage = Owner.GetDamageByHeldItem (25);
+                                int damage = Owner.GetDamageByHeldItem(25);
 
                                 Vector2 dir = (pos - Projectile.Center).SafeNormalize(Vector2.Zero);
                                 Projectile.NewProjectileFromThis<PrisonProj>(Projectile.Center

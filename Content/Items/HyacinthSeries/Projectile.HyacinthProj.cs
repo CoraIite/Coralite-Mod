@@ -292,7 +292,7 @@ namespace Coralite.Content.Items.HyacinthSeries
                 case (int)GunType.Gatligator://鳄鱼机关枪
                     return Color.SandyBrown;
                 case (int)GunType.Aloe://芦荟
-                    return new Color(125,180,145);
+                    return new Color(125, 180, 145);
                 default:
                     return Color.White;
             }

@@ -1,15 +1,10 @@
 ﻿using Coralite.Content.Items.HyacinthSeries;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Terraria;
 using Terraria.Enums;
 
 namespace Coralite.Content.CustomHooks
 {
-    public class PureRoom:HookGroup
+    public class PureRoom : HookGroup
     {
         public override void Load()
         {

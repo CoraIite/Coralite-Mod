@@ -5,12 +5,11 @@ using Coralite.Core.Attributes;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.GameContent;
 using Terraria.Localization;
 
 namespace Coralite.Content.CoraliteNotes.MagikeChapter1
 {
-    [AutoLoadTexture(Path =AssetDirectory.NoteMagikeS1)]
+    [AutoLoadTexture(Path = AssetDirectory.NoteMagikeS1)]
     public class PlacePolarizedFilter : KnowledgePage
     {
         public static LocalizedText NeedPolarizedFilter { get; private set; }
@@ -18,7 +17,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
         private ScaleController _scale1 = new ScaleController(1.4f, 0.2f);
         private ScaleController _scale2 = new ScaleController(1.4f, 0.2f);
 
-        public static ATex PolarizedFilterStructure {  get; private set; }
+        public static ATex PolarizedFilterStructure { get; private set; }
 
         public override void OnInitialize()
         {
@@ -35,7 +34,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
             //绘制下面的图
-            PolarizedFilterStructure.Value.QuickBottomDraw(spriteBatch, Bottom+new Vector2(0,-20));
+            PolarizedFilterStructure.Value.QuickBottomDraw(spriteBatch, Bottom + new Vector2(0, -20));
 
             var ArrowTex = CoraliteAssets.MagikeChapter1.PlacePolarizedFilterArrow.Value;
 

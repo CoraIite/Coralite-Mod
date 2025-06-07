@@ -47,7 +47,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
         public override bool? CanDamage()
         {
-            if (State==0)
+            if (State == 0)
                 return false;
             return base.CanDamage();
         }
@@ -292,7 +292,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
         }
     }
 
-    public class AimThunderBallRed: AimThunderBall
+    public class AimThunderBallRed : AimThunderBall
     {
         public override string Texture => AssetDirectory.ZacurrentDragon + "RedVoltBall";
 

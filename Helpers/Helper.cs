@@ -430,7 +430,7 @@ namespace Coralite.Helpers
         public static SetFactory.NamedSetKey CreateCoraliteSet(this SetFactory f, string name)
             => f.CreateNamedSet(nameof(Coralite), name);
 
-        public static void SaveBools(this TagCompound tag, bool[] bools,string name)
+        public static void SaveBools(this TagCompound tag, bool[] bools, string name)
         {
             int length = bools.Length;
             int count = length / 8 + 1;
@@ -473,7 +473,7 @@ namespace Coralite.Helpers
 
             for (int i = 0; i < count; i++)
             {
-                if (!tag.TryGet(name + i.ToString(),out byte b1))
+                if (!tag.TryGet(name + i.ToString(), out byte b1))
                     continue;
 
                 BitsByte b = b1;

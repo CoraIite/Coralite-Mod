@@ -24,13 +24,12 @@ namespace Coralite.Content.CoraliteNotes.FlowerGunChapter
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            DrawTitleH1(spriteBatch, Title, Color.Red);
-            DrawParaNormal(spriteBatch, Description, Position.Y + TitleHeight, out _);
-
             Texture2D tex = FlowerGun.Value;
 
-            //绘制图2
             tex.QuickBottomDraw(spriteBatch, Bottom - new Vector2(0, 5));
+
+            DrawTitleH1(spriteBatch, Title, Color.Red);
+            DrawParaNormal(spriteBatch, Description, Position.Y + TitleHeight, out _);
         }
     }
 }

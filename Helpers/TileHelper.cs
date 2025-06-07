@@ -68,7 +68,7 @@ namespace Coralite.Helpers
             float num = windCycle;
             int totalPushTime = 60;
             float pushForcePerFrame = 1.26f;
-            float highestWindGridPushComplex =  Main.instance.TilesRenderer.GetHighestWindGridPushComplex(i, j, sizeX, sizeY, totalPushTime, pushForcePerFrame, 3, true);
+            float highestWindGridPushComplex = Main.instance.TilesRenderer.GetHighestWindGridPushComplex(i, j, sizeX, sizeY, totalPushTime, pushForcePerFrame, 3, true);
 
             windCycle += highestWindGridPushComplex;
             Vector2 vector = new((i * 16) - (int)screenPosition.X + (sizeX * 16f * 0.5f), (j * 16) - (int)screenPosition.Y);

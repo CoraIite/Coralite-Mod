@@ -137,9 +137,9 @@ ReadPage: {
 
 FragmentPage: {
 	ClickToJump: Щёлкните, чтобы перейти к соответствующей главе
-	// TerrariaJourney: Mods.Coralite.Knowledges.FragmentPage.TerrariaJourney
-	// WonderKnowledge: Mods.Coralite.Knowledges.FragmentPage.WonderKnowledge
-	// TerrariaJourneyDescription: Mods.Coralite.Knowledges.FragmentPage.TerrariaJourneyDescription
+	// TerrariaJourney: Terraria Journey
+	// WonderKnowledge: Curious Encounters
+	// TerrariaJourneyDescription: Archives all main boss knowledge
 }
 
 CraftAltar: {
@@ -192,9 +192,11 @@ RedJadePage: {
 	Title: Красный нефритовый фрагмент
 	/* RedBerryDescription:
 		'''
-		    Red Berry: Appears to be a spherical fruit formed by some kind of gemstone, occasionally growing on gem trees.
-		    It is said that when eaten, it explodes inside its body, and it can be used to attract a huge stone monster.
-		    This stone monster has the same appearance as the Red Fruit and is capable of using the same explosion, but the energy of the explosion appears to be generated out of thin air.
+		    Red Berry: A spherical fruit seemingly formed from gemstones, recently discovered as a new variety on gem trees. Its exact origin remains unknown.
+
+		    I sampled one - surprisingly delicious! But moments later, a stone monster appeared, charging at me while constantly exploding!
+
+		    After consuming the berry, bizarre occurrences followed: overnight, trees in my yard transformed into gem trees. Oh well, who cares? More red berries for me!
 		''' */
 }
 
@@ -226,103 +228,194 @@ INeedMoreMagike: {
 }
 
 BabyIceDragonPage1: {
-	// Title: Mods.Coralite.Knowledges.BabyIceDragonPage1.Title
-	// Description: Mods.Coralite.Knowledges.BabyIceDragonPage1.Description
+	// Title: Ice Dragon Fragment
+	/* Description:
+		'''
+		    An unusual structure with a central platform can be found on ice biome surfaces. Ancient texts identify this as an ice dragon nest.
+		    After defeating the Eye of Cthulhu, ice magic converges here, eventually forming an egg. If attacked enough to crack its shell, the baby ice dragon inside will "greet" you personally.
+		''' */
 }
 
 SlimePage1: {
-	// Title: Mods.Coralite.Knowledges.SlimePage1.Title
-	// SlimeTreeDescription: Mods.Coralite.Knowledges.SlimePage1.SlimeTreeDescription
-	// GelFiberDescription: Mods.Coralite.Knowledges.SlimePage1.GelFiberDescription
+	// Title: Slime Fragment
+	/* SlimeTreeDescription:
+		'''
+		    Slime trees feature sticky branches and elastic spherical leaves, growing exclusively on {$ItemName.SlimeBlock}.
+		    Abundant in the Slime Kingdom, slimes adore these trees and often carry saplings. Wild slimes sometimes nest in them, where rare Pink Gel and Slime Staffs can be found.
+		''' */
+	/* GelFiberDescription:
+		'''
+		    Fibrous slime tree branches, harder and more flexible than regular wood.
+		    Royal envelopes in the Slime Kingdom are crafted from premium gel fiber.
+		''' */
 }
 
-// SlimePage2.GelInvitationDescription: Mods.Coralite.Knowledges.SlimePage2.GelInvitationDescription
+/* SlimePage2.GelInvitationDescription:
+	'''
+	    Using royal symbols with gel and gel fiber, Magike can create special Slime Kingdom invitations.
+
+	    The Slime Kingdom comprises multiple states. Once, a ninja swallowed by a Slime King helped govern them. One prominent state is ruled by the "Slime Emperor", also called the "Supreme Sovereign".
+	    A slimy invitation might summon it, though the Emperor may demand combat first.
+
+	    Legends speak of a secret Slime Sanctuary within the Emperor's domain, where the long-lost Slime Princess has been sighted.
+	''' */
 
 ThunderveinDragonPage1: {
-	// Title: Mods.Coralite.Knowledges.ThunderveinDragonPage1.Title
-	// LightningRodsDescription: Mods.Coralite.Knowledges.ThunderveinDragonPage1.LightningRodsDescription
+	// Title: Thunder Dragon Fragment
+	/* LightningRodsDescription:
+		'''
+		    Lightning rods crafted from mechanical boss souls and Hallowed Bars discharge constantly. Touching one releases massive charges skyward, attracting a cloud-dwelling wyvern.
+		    Rare sightings describe a pitch-black wyvern with glowing yellow parts. Appearing only during thunderstorms with yellow lightning, it's called the Desolate Thunder Dragon.
+		    One warrior in lightning-resistant armor fought it until purple currents emerged. The dragon unleashed electromagnetic orbs and fired a devastating cannon, instantly defeating the challenger.
+		''' */
 }
 
 MagikeInterstitial1Page: {
-	// Title: Mods.Coralite.Knowledges.MagikeInterstitial1Page.Title
-	// Description: Mods.Coralite.Knowledges.MagikeInterstitial1Page.Description
+	// Title: Crystalline Sky Island
+	/* Description:
+		'''
+		    At one timeline convergence, Silicate Stone broke through earth to form massive sky islands above jungles.
+		    Over time, Magike instruments there crumbled. Leaking Magike energy crystallized into clusters while mutating local life.
+		    Now cloud-veiled, only offering ancient Light and Dark Souls to surface Silica Altars can lift the islands' seals.
+		''' */
 }
 
-// MagikeInterstitial1Page2.Description: Mods.Coralite.Knowledges.MagikeInterstitial1Page2.Description
+/* MagikeInterstitial1Page2.Description:
+	'''
+	    Beware! Enchanted Sky Islands harbor powerful enemies!
+	    Composed of plants, crystals, or broken Magike instruments, they exhibit simple behaviors and cannot detect invisibility.
+	''' */
 
 GetMagikeKnowledge2Page: {
-	// Title: Mods.Coralite.Knowledges.GetMagikeKnowledge2Page.Title
-	// Welcome: Mods.Coralite.Knowledges.GetMagikeKnowledge2Page.Welcome
+	// Title: Magike Fragment Part Two
+	/* Welcome:
+		'''
+		    Greetings, novice Magike scholar. You shall learn advanced Magike principles.
+		    Apply this knowledge to expand and optimize your production lines!
+		''' */
 }
 
-// PartJumpPage2.P1Title: Mods.Coralite.Knowledges.PartJumpPage2.P1Title
+// PartJumpPage2.P1Title: "{$ItemTransportation.Title}"
 
 ItemTransportation: {
-	// Title: Mods.Coralite.Knowledges.ItemTransportation.Title
-	// MabirdDescription: Mods.Coralite.Knowledges.ItemTransportation.MabirdDescription
+	// Title: Marvelous Bird Logistics
+	/* MabirdDescription:
+		'''
+		    Manual item handling in Magike production proved inefficient. Scholars studied forest birds, using Enchanted Crystals to create avian replicas called "Magibirds" for transport.
+		    When Silicate ascended, this technology remained sealed on sky islands. Over eons, artificial Magibirds formed aggressive colonies there.
+		    Artificial nests can retame them for your service.
+		''' */
 }
 
-// MabirdNestUI.UIDescription: Mods.Coralite.Knowledges.MabirdNestUI.UIDescription
+/* MabirdNestUI.UIDescription:
+	'''
+	① Place Magibird here. Diamond button controls activity (unavailable when bird is out).
+	② Top buttons draw routes. Bottom buttons copy/paste routes.
+	③ Hold item and click to set whitelist (birds only carry this item). Right-click to clear.
+	Example: A Magibird exclusively transporting Souls of Light.
+	''' */
 
 MabirdNestConnect: {
-	// ConnectDescription: Mods.Coralite.Knowledges.MabirdNestConnect.ConnectDescription
-	// ConnectDescription2: Mods.Coralite.Knowledges.MabirdNestConnect.ConnectDescription2
-	// ConnectDescription3: Mods.Coralite.Knowledges.MabirdNestConnect.ConnectDescription3
+	// ConnectDescription: Click route-drawing button in nest, then:
+	// ConnectDescription2: Step 1: Select source - left-click chest or Magike container.
+	// ConnectDescription3: Step 2: Select destination. Birds return items if destination is full. If source is also full, items are dropped.
 }
 
-// MabirdLoupe.LoupeDescription: Mods.Coralite.Knowledges.MabirdLoupe.LoupeDescription
+// MabirdLoupe.LoupeDescription: "    Every Magike scholar needs a loupe! Carry it to reveal Magibird paths. Right-click in inventory to toggle nest connections."
 
 FragmentPage3: {
-	// MagikeGeneration: Mods.Coralite.Knowledges.FragmentPage3.MagikeGeneration
-	// MagikeGenerationDescription: Mods.Coralite.Knowledges.FragmentPage3.MagikeGenerationDescription
+	// MagikeGeneration: Magike Era
+	// MagikeGenerationDescription: Archives all Magike knowledge
 }
 
 FragmentPage2: {
-	// WonderKnowledge: Mods.Coralite.Knowledges.FragmentPage2.WonderKnowledge
-	// WonderKnowledgeDescription: Mods.Coralite.Knowledges.FragmentPage2.WonderKnowledgeDescription
+	// WonderKnowledge: Curious Encounters
+	/* WonderKnowledgeDescription:
+		'''
+		          Archives optional boss knowledge
+		Warning! Most are extremely powerful - prepare thoroughly!
+		''' */
 }
 
 NightmarePage: {
-	// Title: Mods.Coralite.Knowledges.NightmarePage.Title
-	// Description: Mods.Coralite.Knowledges.NightmarePage.Description
+	// Title: Nightmare Fragment
+	/* Description:
+		'''
+		      Avoiding nightmares worsens pain... Face them head-on......
+		      
+		                         Seeds of sweet dreams hide within nightmares......
+		''' */
 }
 
 PlacePolarizedFilter2: {
-	// HowToUsePolarizedFilter: "    It's easy to insertthe polarized filter, you only need to use the polarized filter item to select the frame, and release left click, then consume the item and put the polarized filter in."
-	// SeeItemToolTip: "    You will make more polarized filters later, it's important to note that not all polarized filters can be successfully inserted. Please read the item description of the magike apparatus."
+	// HowToUsePolarizedFilter: Left-click drag to select area. Releasing inserts held Polarized Filters into all devices within range (adjust max range in mod config).
+	/* SeeItemToolTip:
+		'''
+		    Higher-tier filters become available later. Note: Not all devices accept every filter.
+
+		    Check device tooltips for compatible filters. Filter tooltips list compatible devices.
+		''' */
 }
 
 ActivatedTheMachine2: {
-	// WorkingBeLike: Mods.Coralite.Knowledges.ActivatedTheMachine2.WorkingBeLike
-	// HarvestTheProduct: Mods.Coralite.Knowledges.ActivatedTheMachine2.HarvestTheProduct
+	// WorkingBeLike: "    A functioning Georegeneration Altar should appear like this."
+	// HarvestTheProduct: "    Harvest products via UI after completion. Shift+left-click quick-transfers to inventory. Shift+right-click blocks retrieves items."
 }
 
 FragmentPage4: {
-	// CollectJourney: Mods.Coralite.Knowledges.FragmentPage4.CollectJourney
-	// CollectJourneyDescription: Mods.Coralite.Knowledges.FragmentPage4.CollectJourneyDescription
+	// CollectJourney: Collection Journey
+	// CollectJourneyDescription: Gather the world's wonders!
 }
 
 FlyingShieldPage: {
-	// Title: Mods.Coralite.Knowledges.FlyingShieldPage.Title
-	// Description: Mods.Coralite.Knowledges.FlyingShieldPage.Description
+	// Title: Flying Shield
+	/* Description:
+		'''
+		    "Throw your shield at enemies!" My mentor taught me this ancient technique. Its origins remained mysterious until I discovered an ancient text.
+
+		    "The colossal Forgeheart furnace crafted auto-returning shields... It also produced peculiar accessories that enhanced shield speed, multiplied shields, and granted dash or perfect block capabilities..."
+
+		    Utterly extraordinary!!
+		''' */
 }
 
 FlowerGunPage: {
-	// Title: Mods.Coralite.Knowledges.FlowerGunPage.Title
-	// Description: Mods.Coralite.Knowledges.FlowerGunPage.Description
+	// Title: Blossom Gun
+	/* Description:
+		'''
+		    Today the Arms Dealer demonstrated the Minishark's craftsmanship - an excellent gun, despite lingering fish odors. This inspired a revelation.
+
+		    This land abounds with extraordinary flora, some defying natural laws. Rumors even speak of giant carnivorous plants deep in jungles. Perhaps botanical materials could forge unique firearms, while pollen-based powders might create accessories boosting gun performance.
+
+		    May these blossom guns unleash beautiful sparks.
+		''' */
 }
 
 LandOfTheLustrousPage: {
-	// Title: Mods.Coralite.Knowledges.LandOfTheLustrousPage.Title
-	// Description: Mods.Coralite.Knowledges.LandOfTheLustrousPage.Description
+	// Title: Land of the Lustrous
+	/* Description:
+		'''
+		    Gems embody luck, power, and wisdom. Weapons crafted from them possess miraculous energies.
+
+		    Octagonal cutting enhances gem brilliance, sometimes achieving "radiance" that drastically improves attributes. Gem refining may also yield accessories that amplify gem weapons.
+
+		    "In the distant future, we became 『 Lustrous 』." 
+		''' */
 }
 
 DashBowPage: {
-	// Title: Mods.Coralite.Knowledges.DashBowPage.Title
-	// Description: Mods.Coralite.Knowledges.DashBowPage.Description
+	// Title: Bow of Myriad Weather
+	/* Description:
+		'''
+		    During past journeys, I witnessed fairies wielding extraordinary weapons - bending meteorological forces through spatial manipulation to forge colossal bows from wind, clouds, thunder, and rain to combat foes.
+
+		    Since arriving here, I've endeavored to replicate this art. Partial success came in crafting lightweight bows wieldable by humans, harnessing spatial winds for high-velocity movement.
+
+		    Yet the true fusion of weather phenomena into weaponry remains elusive. These experiments must end here, for greater endeavors await.
+		''' */
 }
 
 SwordPage: {
-	// Title: Mods.Coralite.Knowledges.SwordPage.Title
-	// Description: Mods.Coralite.Knowledges.SwordPage.Description
+	// Title: Sword Beyond Infinity
+	// Description: "    Do you enjoy swordplay?"
 }

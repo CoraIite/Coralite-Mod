@@ -82,15 +82,15 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     //AntiMagikeMaxBase = 0;
                     break;
                 case MALevel.Glistent:
-                    MagikeMaxBase = 90;
+                    MagikeMaxBase = 50;
                     //AntiMagikeMaxBase = MagikeMaxBase * 3;
                     break;
                 case MALevel.CrystallineMagike:
-                    MagikeMaxBase = 483;
+                    MagikeMaxBase = 275;
                     //AntiMagikeMaxBase = MagikeMaxBase * 2;
                     break;
                 case MALevel.SplendorMagicore:
-                    MagikeMaxBase = 4500;
+                    MagikeMaxBase = 2500;
                     //AntiMagikeMaxBase = MagikeMaxBase * 3;
                     break;
             }
@@ -105,7 +105,7 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
         public override void Upgrade(MALevel incomeLevel)
         {
             MaxConnectBase = 1;
-            ConnectLengthBase = 4 * 16;
+            ConnectLengthBase = 6 * 16;
 
             switch (incomeLevel)
             {
@@ -116,16 +116,16 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     ConnectLengthBase = 0;
                     break;
                 case MALevel.Glistent:
-                    UnitDeliveryBase = 30;
-                    SendDelayBase = 10;
+                    UnitDeliveryBase = 25;
+                    SendDelayBase = 5;
                     break;
                 case MALevel.CrystallineMagike:
-                    UnitDeliveryBase = 129;
-                    SendDelayBase = 8;
+                    UnitDeliveryBase = 110;
+                    SendDelayBase = 4;
                     break;
                 case MALevel.SplendorMagicore:
-                    UnitDeliveryBase = 900;
-                    SendDelayBase = 6;
+                    UnitDeliveryBase = 750;
+                    SendDelayBase = 3;
                     break;
             }
 
@@ -157,16 +157,16 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     ThroughputBase = 0;
                     break;
                 case MALevel.Glistent:
-                    ProductionDelayBase = 10;
-                    ThroughputBase = 10;
+                    ProductionDelayBase = 5;
+                    ThroughputBase = 5;
                     break;
                 case MALevel.CrystallineMagike:
-                    ProductionDelayBase = 8;
-                    ThroughputBase = 43;
+                    ProductionDelayBase = 4;
+                    ThroughputBase = 22;
                     break;
                 case MALevel.SplendorMagicore:
-                    ProductionDelayBase = 6;
-                    ThroughputBase = 300;
+                    ProductionDelayBase = 3;
+                    ThroughputBase = 150;
                     break;
             }
 

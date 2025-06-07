@@ -162,7 +162,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                 Projectile.Center,Projectile.Center,Projectile.Center
                 ];
 
-                randPos[i] = Main.rand.NextVector2CircularEdge(30,30);
+                randPos[i] = Main.rand.NextVector2CircularEdge(30, 30);
             }
         }
 

@@ -52,7 +52,7 @@ namespace Coralite.Content.CoraliteNotes.LandOfTheLustrousChapter
             Vector2 center = new Vector2(PageWidth / 2, PageHeight / 2 - 80);
 
             NewImage<PyropeCrown>(center + new Vector2(-16, 310), null
-                , GemWeapons.PyropeCrown, CollectImage.LockIconType.Small,1.25f);
+                , GemWeapons.PyropeCrown, CollectImage.LockIconType.Small, 1.25f);
             NewImage<AmethystNecklace>(center + new Vector2(152, 285), Condition.DownedEyeOfCthulhu
                 , GemWeapons.AmethystNecklace, CollectImage.LockIconType.Small, 1.3f);
             NewImage<AquamarineBracelet>(center + new Vector2(-127, 312), Condition.DownedEowOrBoc
@@ -70,15 +70,15 @@ namespace Coralite.Content.CoraliteNotes.LandOfTheLustrousChapter
             NewImage<SapphireHairpin>(center + new Vector2(244, 4), Condition.DownedMartians
                 , GemWeapons.SapphireHairpin, CollectImage.LockIconType.Small, 1.2f);
             NewImage<TourmalineMonoclastic>(center + new Vector2(92, 58), Condition.DownedNebulaPillar
-                , GemWeapons.TourmalineMonoclastic, CollectImage.LockIconType.Small,1.1f);
+                , GemWeapons.TourmalineMonoclastic, CollectImage.LockIconType.Small, 1.1f);
             NewImage<TopazMirror>(center + new Vector2(-100, 228), Condition.DownedMoonLord
-                , GemWeapons.TopazMirror,scale:1.1f);
+                , GemWeapons.TopazMirror, scale: 1.1f);
             NewImage<ZirconGrail>(center + new Vector2(108, 180), Condition.DownedMoonLord
-                , GemWeapons.ZirconGrail,scale:1.35f);
+                , GemWeapons.ZirconGrail, scale: 1.35f);
             NewImage<Phosphophyllite>(center + new Vector2(12, 382), CoraliteConditions.DownedNightmarePlantera
                 , GemWeapons.Phosphophyllite, CollectImage.LockIconType.Small, 1.3f);
 
-            NewImage<LandOfTheLustrous>(center+new Vector2(-57,62), CoraliteConditions.DownedNightmarePlantera
+            NewImage<LandOfTheLustrous>(center + new Vector2(-57, 62), CoraliteConditions.DownedNightmarePlantera
                 , GemWeapons.LandOfTheLustrous, CollectImage.LockIconType.Big, 2);
 
             var button = new CollectButton(LandOfTheLustrousCollectButton, LandOfTheLustrousCollectButtonLight

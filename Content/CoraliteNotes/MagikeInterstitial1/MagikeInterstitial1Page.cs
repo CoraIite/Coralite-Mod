@@ -34,18 +34,18 @@ namespace Coralite.Content.CoraliteNotes.MagikeInterstitial1
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
             DrawTitleH1(spriteBatch, Title, Coralite.CrystallinePurple);
-            DrawParaNormal(spriteBatch, Description, Position.Y + TitleHeight,out _);
+            DrawParaNormal(spriteBatch, Description, Position.Y + TitleHeight, out _);
 
             //绘制图
             SkyIslandUnlockGuide.Value.QuickBottomDraw(spriteBatch, Bottom - new Vector2(0, 10));
 
             //绘制光暗魂
             Vector2 picturePos = new Vector2(Center.X - 57, Center.Y + 103);
-            Helper.DrawMouseOverScaleTex(spriteBatch, picturePos,ItemID.SoulofLight
+            Helper.DrawMouseOverScaleTex(spriteBatch, picturePos, ItemID.SoulofLight
                 , ref _scale1, 3, 5, fadeWithOriginScale: true);
 
             picturePos = new Vector2(Center.X - 197, Center.Y + 70);
-            Helper.DrawMouseOverScaleTex(spriteBatch, picturePos,ItemID.SoulofNight
+            Helper.DrawMouseOverScaleTex(spriteBatch, picturePos, ItemID.SoulofNight
                 , ref _scale2, 3, 5, fadeWithOriginScale: true);
         }
     }

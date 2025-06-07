@@ -3,11 +3,11 @@ using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.IO;
-using Terraria.GameContent;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.ModLoader.IO;
-using Terraria.UI.Chat;
 using Terraria.UI;
+using Terraria.UI.Chat;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components.Producers
 {

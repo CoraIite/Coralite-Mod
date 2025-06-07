@@ -80,7 +80,7 @@ namespace Coralite.Content.Items.FlyingShields
 
             bool direction = tile.TileFrameY / FrameHeight != 0;
             SpriteEffects effects = direction ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
-            Vector2 drawPos = worldPos + offScreen - Main.screenPosition+new Vector2(0,-40);
+            Vector2 drawPos = worldPos + offScreen - Main.screenPosition + new Vector2(0, -40);
 
             // 绘制底座
             spriteBatch.Draw(texture, drawPos, frame, color, 0f, origin, 1f, effects, 0f);

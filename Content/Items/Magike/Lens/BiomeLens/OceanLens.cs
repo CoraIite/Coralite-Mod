@@ -79,11 +79,11 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     //AntiMagikeMaxBase = 0;
                     break;
                 case MALevel.Seashore:
-                    MagikeMaxBase = 18;
+                    MagikeMaxBase = 10;
                     //AntiMagikeMaxBase = MagikeMaxBase * 3;
                     break;
                 case MALevel.Pelagic:
-                    MagikeMaxBase = 675;
+                    MagikeMaxBase = 300;
                     //AntiMagikeMaxBase = MagikeMaxBase * 2;
                     break;
             }
@@ -98,23 +98,23 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
         public override void Upgrade(MALevel incomeLevel)
         {
             MaxConnectBase = 1;
-            ConnectLengthBase = 4 * 16;
+            ConnectLengthBase = 6 * 16;
 
             switch (incomeLevel)
             {
                 default:
                     MaxConnectBase = 0;
                     UnitDeliveryBase = 0;
-                    SendDelayBase = 1_0000_0000 / 60;//随便填个大数
+                    SendDelayBase = -1;
                     ConnectLengthBase = 0;
                     break;
                 case MALevel.Seashore:
-                    UnitDeliveryBase = 6;
-                    SendDelayBase = 10;
+                    UnitDeliveryBase = 5;
+                    SendDelayBase = 5;
                     break;
                 case MALevel.Pelagic:
-                    UnitDeliveryBase = 180;
-                    SendDelayBase = 8;
+                    UnitDeliveryBase = 120;
+                    SendDelayBase = 4;
                     break;
             }
 
@@ -146,12 +146,12 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     ThroughputBase = 0;
                     break;
                 case MALevel.Seashore:
-                    ProductionDelayBase = 10;
-                    ThroughputBase = 2;
+                    ProductionDelayBase = 5;
+                    ThroughputBase = 1;
                     break;
                 case MALevel.Pelagic:
-                    ProductionDelayBase = 8;
-                    ThroughputBase = 60;
+                    ProductionDelayBase = 4;
+                    ThroughputBase = 24;
                     break;
             }
 

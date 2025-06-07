@@ -76,7 +76,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                         {
                             NPC.velocity = new Vector2(0, -50);
                             NPC.rotation = -MathHelper.PiOver2;
-                            IsDashing=true;
+                            IsDashing = true;
                         }
                         else
                         {
@@ -149,7 +149,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                                         , newColor: ZacurrentPurple, Scale: Main.rand.NextFloat(1f, 1.5f));
                                     d.noGravity = true;
                                 }
-                                 
+
                                 if (Main.rand.NextBool())
                                     ElectricParticle_PurpleFollow.Spawn(targetPos, Main.rand.NextVector2Circular(30, 30),
                                         () => new Vector2(Recorder, Recorder2), Main.rand.NextFloat(0.5f, 0.75f));

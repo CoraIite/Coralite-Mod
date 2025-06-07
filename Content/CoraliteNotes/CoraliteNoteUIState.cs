@@ -54,7 +54,7 @@ namespace Coralite.Content.CoraliteNotes
 
             backButton = new BackToDirectoryButton();
             Append(backButton);
-            closeButton = new ();
+            closeButton = new();
             Append(closeButton);
         }
 
@@ -71,7 +71,7 @@ namespace Coralite.Content.CoraliteNotes
             //BookPanel.SetPosition();
             //BookPanel.InitSize();
             BookPanel?.SetPosition();
-            closeButton?.SetTopLeft(-300 , -775, 0.5f, 0.5f);
+            closeButton?.SetTopLeft(-300, -775, 0.5f, 0.5f);
             backButton?.SetTopLeft(-300 + closeButton.Height.Pixels + 20, -800, 0.5f, 0.5f);
 
             //BookPanel.InitPageGroups();
@@ -99,7 +99,7 @@ namespace Coralite.Content.CoraliteNotes
 
         protected override void DrawChildren(SpriteBatch spriteBatch)
         {
-            if (!openingBook&&!closeingBook)
+            if (!openingBook && !closeingBook)
             {
                 backButton?.Draw(spriteBatch);
                 closeButton?.Draw(spriteBatch);
@@ -250,7 +250,7 @@ namespace Coralite.Content.CoraliteNotes
         {
             BackButton = ModContent.Request<Texture2D>(AssetDirectory.CoraliteNote + "BackButton", ReLogic.Content.AssetRequestMode.ImmediateLoad);
             var ve2 = BackButton.Size();
-            ve2.X *=0.75f;
+            ve2.X *= 0.75f;
             this.SetSize(ve2);
         }
 
@@ -284,7 +284,7 @@ namespace Coralite.Content.CoraliteNotes
 
             f = Helper.Clamp(f, 0, 1);
 
-            pos.X +=100 -f * 40;
+            pos.X += 100 - f * 40;
 
             BackButton.Value.QuickCenteredDraw(spriteBatch, pos);
         }

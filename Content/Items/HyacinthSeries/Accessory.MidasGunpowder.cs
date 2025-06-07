@@ -60,7 +60,7 @@ namespace Coralite.Content.Items.HyacinthSeries
         {
             if (Main.rand.NextBool(6))
             {
-                Projectile.SpawnTrailDust(DustID.GoldCoin, Main.rand.NextFloat(0.1f, 0.3f),Scale:Main.rand.NextFloat(1,1.5f), noGravity: false);
+                Projectile.SpawnTrailDust(DustID.GoldCoin, Main.rand.NextFloat(0.1f, 0.3f), Scale: Main.rand.NextFloat(1, 1.5f), noGravity: false);
 
                 Color c = Main.rand.Next(3) switch
                 {
@@ -87,7 +87,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             Vector2 dir = Helper.NextVec2Dir();
             for (int i = 0; i < 6; i++)
             {
-                Projectile.NewProjectileFromThis<MidasGunpowdeProj2>(Projectile.Center, dir.RotatedBy(MathHelper.TwoPi/6*i)*Main.rand.NextFloat(8,10)
+                Projectile.NewProjectileFromThis<MidasGunpowdeProj2>(Projectile.Center, dir.RotatedBy(MathHelper.TwoPi / 6 * i) * Main.rand.NextFloat(8, 10)
                     , (int)(Projectile.damage * 0.6f), Projectile.knockBack);
             }
 
@@ -132,8 +132,8 @@ namespace Coralite.Content.Items.HyacinthSeries
         {
             if (Projectile.timeLeft > 7)
             {
-               LightTrailParticle.Spawn(Projectile.Center, Projectile.velocity.RotateByRandom(-0.2f, 0.2f) * Main.rand.NextFloat(0.3f, 0.5f),
-                    Color.DarkGoldenrod, Main.rand.NextFloat(0.2f, 0.4f),Color.Purple with { A=0});
+                LightTrailParticle.Spawn(Projectile.Center, Projectile.velocity.RotateByRandom(-0.2f, 0.2f) * Main.rand.NextFloat(0.3f, 0.5f),
+                     Color.DarkGoldenrod, Main.rand.NextFloat(0.2f, 0.4f), Color.Purple with { A = 0 });
             }
         }
 

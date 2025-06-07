@@ -2321,7 +2321,7 @@ namespace Coralite.Content.WorldGeneration
             PlaceNightSoul = tag.ContainsKey(nameof(PlaceLightSoul));
             HasPermission = tag.ContainsKey(nameof(PlaceLightSoul));
 
-            if (tag.TryGet(nameof(AltarPos) + "X",out int x)&& tag.TryGet(nameof(AltarPos) + "Y", out int y))
+            if (tag.TryGet(nameof(AltarPos) + "X", out int x) && tag.TryGet(nameof(AltarPos) + "Y", out int y))
                 AltarPos = new Point(x, y);
         }
 

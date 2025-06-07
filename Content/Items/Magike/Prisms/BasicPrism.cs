@@ -63,15 +63,15 @@ namespace Coralite.Content.Items.Magike.Refractors
         {
             MagikeMaxBase = incomeLevel switch
             {
-                MALevel.MagicCrystal => 128,
-                MALevel.Glistent => 256,
+                MALevel.MagicCrystal => 240,
+                MALevel.Glistent => 720,
                 MALevel.Crimson
                 or MALevel.Corruption
-                or MALevel.Icicle => 960,
-                MALevel.CrystallineMagike => 2700,
-                MALevel.Hallow => 5040,
-                MALevel.HolyLight => 15000,
-                MALevel.SplendorMagicore => 42000,
+                or MALevel.Icicle => 1440,
+                MALevel.CrystallineMagike => 5760,
+                MALevel.Hallow => 7200,
+                MALevel.HolyLight => 20480,
+                MALevel.SplendorMagicore => 90000,
                 _ => 0,
             };
             LimitMagikeAmount();
@@ -97,46 +97,46 @@ namespace Coralite.Content.Items.Magike.Refractors
                     ConnectLengthBase = 0;
                     break;
                 case MALevel.MagicCrystal:
-                    UnitDeliveryBase = 16;
-                    SendDelayBase = 60 * 5;
-                    ConnectLengthBase = 8 * 16;
+                    UnitDeliveryBase = 18;
+                    SendDelayBase = 60 * 3;
+                    ConnectLengthBase = 10 * 16;
                     break;
                 case MALevel.Glistent:
                     MaxConnectBase = 3;
-                    UnitDeliveryBase = 32;
-                    SendDelayBase = 60 * 5;
-                    ConnectLengthBase = 8 * 16;
+                    UnitDeliveryBase = 36;
+                    SendDelayBase = 60 * 3;
+                    ConnectLengthBase = 10 * 16;
                     break;
                 case MALevel.Crimson:
                 case MALevel.Corruption:
                 case MALevel.Icicle:
                     MaxConnectBase = 3;
-                    UnitDeliveryBase = 64;
-                    SendDelayBase = 60 * 5;
-                    ConnectLengthBase = 8 * 16;
+                    UnitDeliveryBase = 72;
+                    SendDelayBase = 60 * 3;
+                    ConnectLengthBase = 10 * 16;
                     break;
                 case MALevel.CrystallineMagike:
-                    MaxConnectBase = 3;
+                    MaxConnectBase = 4;
                     UnitDeliveryBase = 144;
-                    SendDelayBase = 60 * 4;
-                    ConnectLengthBase = 10 * 16;
+                    SendDelayBase = 60 * 2;
+                    ConnectLengthBase = 12 * 16;
                     break;
                 case MALevel.Hallow:
                     MaxConnectBase = 4;
-                    UnitDeliveryBase = 168;
-                    SendDelayBase = 60 * 4;
+                    UnitDeliveryBase = 180;
+                    SendDelayBase = 60 * 2;
                     ConnectLengthBase = 10 * 16;
                     break;
                 case MALevel.HolyLight:
                     MaxConnectBase = 4;
-                    UnitDeliveryBase = 500;
-                    SendDelayBase = 60 * 4;
+                    UnitDeliveryBase = 512;
+                    SendDelayBase = 60 * 2;
                     ConnectLengthBase = 10 * 16;
                     break;
                 case MALevel.SplendorMagicore:
                     MaxConnectBase = 4;
-                    UnitDeliveryBase = 700;
-                    SendDelayBase = 60 * 3;
+                    UnitDeliveryBase = 900;
+                    SendDelayBase = 60 * 1;
                     ConnectLengthBase = 12 * 16;
                     break;
             }

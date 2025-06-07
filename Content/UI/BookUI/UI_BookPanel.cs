@@ -276,8 +276,8 @@ namespace Coralite.Content.UI.UILib
             for (int i = 0; i < Pages.Count; i++)
             {
                 //设置尺寸及上下的内页边距
-                Pages[i].Width.Set(halfPage-leftPageMargins-rightPageMargins, 0f);
-                Pages[i].Height.Set(pageHeigh-topPageMargins-bottomPageMargins, 0f);
+                Pages[i].Width.Set(halfPage - leftPageMargins - rightPageMargins, 0f);
+                Pages[i].Height.Set(pageHeigh - topPageMargins - bottomPageMargins, 0f);
                 Pages[i].MarginTop = topPageMargins;
                 Pages[i].MarginBottom = bottomPageMargins;
 

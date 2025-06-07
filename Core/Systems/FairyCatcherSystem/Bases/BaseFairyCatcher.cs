@@ -41,7 +41,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         #region 攻击部分
 
         /// <summary> 右键的弹幕ID </summary>
-        public abstract int RightProjType {  get; }
+        public abstract int RightProjType { get; }
 
         public override bool AltFunctionUse(Player player) => true;
 
@@ -74,16 +74,16 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         public virtual void ShootCircle(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position)
         {
             int type = ModContent.ProjectileType<FairyCatcherProj>();
-            if (player.ownedProjectileCounts[type]>0)
+            if (player.ownedProjectileCounts[type] > 0)
             {
-                foreach (var proj in Main.projectile.Where(p=>p.active&&p.owner==player.whoAmI&&p.type==type))
+                foreach (var proj in Main.projectile.Where(p => p.active && p.owner == player.whoAmI && p.type == type))
                     (proj.ModProjectile as FairyCatcherProj).TrunToBacking();
 
                 return;
             }
 
             Projectile.NewProjectile(source, position, (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero) * 16
-                ,type, 0, 0, player.whoAmI);
+                , type, 0, 0, player.whoAmI);
         }
 
         /// <summary>

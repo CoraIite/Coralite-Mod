@@ -415,7 +415,7 @@ namespace Coralite.Content.ModPlayers
                     if (damage > 185)
                         damage = 185;
 
-                    Projectile.NewProjectile(source, position, velocity*1.2f,
+                    Projectile.NewProjectile(source, position, velocity * 1.2f,
                         ProjectileType<Items.HyacinthSeries.MidasGunpowderProj>(), damage, knockback, Player.whoAmI);
                     MidasGunpowderEffect = 90;
                 }

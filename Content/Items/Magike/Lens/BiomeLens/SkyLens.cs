@@ -80,15 +80,15 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     //AntiMagikeMaxBase = 0;
                     break;
                 case MALevel.Eiderdown:
-                    MagikeMaxBase = 45;
+                    MagikeMaxBase = 30;
                     //AntiMagikeMaxBase = MagikeMaxBase * 3;
                     break;
                 case MALevel.Flight:
-                    MagikeMaxBase = 730;
+                    MagikeMaxBase = 412;
                     //AntiMagikeMaxBase = MagikeMaxBase * 2;
                     break;
                 case MALevel.Feather:
-                    MagikeMaxBase = 1285;
+                    MagikeMaxBase = 714;
                     //AntiMagikeMaxBase = MagikeMaxBase * 2;
                     break;
             }
@@ -103,7 +103,7 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
         public override void Upgrade(MALevel incomeLevel)
         {
             MaxConnectBase = 1;
-            ConnectLengthBase = 4 * 16;
+            ConnectLengthBase = 6 * 16;
 
             switch (incomeLevel)
             {
@@ -115,19 +115,18 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     break;
                 case MALevel.Eiderdown:
                     UnitDeliveryBase = 15;
-                    SendDelayBase = 10;
+                    SendDelayBase = 5 * 60;
                     break;
                 case MALevel.Flight:
-                    UnitDeliveryBase = 195;
-                    SendDelayBase = 8;
+                    UnitDeliveryBase = 165;
+                    SendDelayBase = 4 * 60;
                     break;
                 case MALevel.Feather:
-                    UnitDeliveryBase = 300;
-                    SendDelayBase = 7;
+                    UnitDeliveryBase = 250;
+                    SendDelayBase = 3 * 60 + 30;
                     break;
             }
 
-            SendDelayBase *= 60;
             RecheckConnect();
         }
     }
@@ -155,20 +154,19 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     ThroughputBase = 0;
                     break;
                 case MALevel.Eiderdown:
-                    ProductionDelayBase = 10;
-                    ThroughputBase = 5;
+                    ProductionDelayBase = 5 * 60;
+                    ThroughputBase = 3;
                     break;
                 case MALevel.Flight:
-                    ProductionDelayBase = 8;
-                    ThroughputBase = 65;
+                    ProductionDelayBase = 4 * 60;
+                    ThroughputBase = 33;
                     break;
                 case MALevel.Feather:
-                    ProductionDelayBase = 7;
-                    ThroughputBase = 100;
+                    ProductionDelayBase = 3 * 60 + 30;
+                    ThroughputBase = 50;
                     break;
             }
 
-            ProductionDelayBase *= 60;
             Timer = ProductionDelayBase;
         }
     }

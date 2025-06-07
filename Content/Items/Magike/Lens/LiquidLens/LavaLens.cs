@@ -67,11 +67,11 @@ namespace Coralite.Content.Items.Magike.Lens.LiquidLens
                     //AntiMagikeMaxBase = 0;
                     break;
                 case MALevel.Hellstone:
-                    MagikeMaxBase = 300;
+                    MagikeMaxBase = 167;
                     //AntiMagikeMaxBase = MagikeMaxBase * 3;
                     break;
                 case MALevel.EternalFlame:
-                    MagikeMaxBase = 1350;
+                    MagikeMaxBase = 750;
                     //AntiMagikeMaxBase = MagikeMaxBase * 2;
                     break;
             }
@@ -86,7 +86,7 @@ namespace Coralite.Content.Items.Magike.Lens.LiquidLens
         public override void Upgrade(MALevel incomeLevel)
         {
             MaxConnectBase = 1;
-            ConnectLengthBase = 4 * 16;
+            ConnectLengthBase = 6 * 16;
 
             switch (incomeLevel)
             {
@@ -97,16 +97,15 @@ namespace Coralite.Content.Items.Magike.Lens.LiquidLens
                     ConnectLengthBase = 0;
                     break;
                 case MALevel.Hellstone:
-                    UnitDeliveryBase = 90;
-                    SendDelayBase = 9;
+                    UnitDeliveryBase = 75;
+                    SendDelayBase = 4 * 60 + 30;
                     break;
                 case MALevel.EternalFlame:
-                    UnitDeliveryBase = 360;
-                    SendDelayBase = 8;
+                    UnitDeliveryBase = 300;
+                    SendDelayBase = 4 * 60;
                     break;
             }
 
-            SendDelayBase *= 60;
             RecheckConnect();
         }
     }
@@ -130,16 +129,15 @@ namespace Coralite.Content.Items.Magike.Lens.LiquidLens
                     ThroughputBase = 0;
                     break;
                 case MALevel.Hellstone:
-                    ProductionDelayBase = 9;
-                    ThroughputBase = 30;
+                    ProductionDelayBase = 4 * 60 + 30;
+                    ThroughputBase = 15;
                     break;
                 case MALevel.EternalFlame:
-                    ProductionDelayBase = 8;
-                    ThroughputBase = 120;
+                    ProductionDelayBase = 4 * 60;
+                    ThroughputBase = 60;
                     break;
             }
 
-            ProductionDelayBase *= 60;
             Timer = ProductionDelayBase;
         }
     }

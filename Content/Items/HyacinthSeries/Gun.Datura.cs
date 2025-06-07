@@ -26,7 +26,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             Item.rare = ItemRarityID.LightRed;
             var st = CoraliteSoundID.Shotgun2_Item38;
             st.Pitch = 0.9f;
-            Item.UseSound =st;
+            Item.UseSound = st;
 
             Item.useTurn = false;
             Item.noUseGraphic = true;
@@ -207,7 +207,7 @@ namespace Coralite.Content.Items.HyacinthSeries
                             Projectile.rotation = Main.rand.NextFloat(MathHelper.TwoPi);
                         else if (currTime > 3 * 4)
                             Projectile.rotation += Projectile.velocity.Length() / 25;
- 
+
                         if (currTime > 3 * 3 && currTime < 3 * 9 && Main.rand.NextBool(3))
                             PRTLoader.NewParticle<TwistFog>(Projectile.Center + Helper.NextVec2Dir(Projectile.width * 0.1f, Projectile.width * 0.3f)
                                 , Helper.NextVec2Dir(0.2f, 0.4f)
@@ -268,7 +268,7 @@ namespace Coralite.Content.Items.HyacinthSeries
 
             if (Timer < maxTime)
             {
-                Helper.PlayPitched(CoraliteSoundID.FireBallExplosion_DD2_BetsyFireballImpact, Projectile.Center,pitch:-0.8f);
+                Helper.PlayPitched(CoraliteSoundID.FireBallExplosion_DD2_BetsyFireballImpact, Projectile.Center, pitch: -0.8f);
                 Timer = maxTime;
             }
             if (Projectile.width != size)

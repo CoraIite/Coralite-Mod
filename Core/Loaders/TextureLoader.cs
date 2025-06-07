@@ -23,7 +23,7 @@ namespace Coralite.Core.Loaders
 
             //获取类内部所有的静态属性
             PropertyInfo[] properties = type.GetProperties(BindingFlags.Public | BindingFlags.Static);
-            
+
             if (properties.Length < 1)
                 return;
 

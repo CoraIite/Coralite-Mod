@@ -119,7 +119,7 @@ namespace Coralite.Content.GlobalItems
 
         public void ModifyFairyTooltips(Item item, List<TooltipLine> tooltips)
         {
-            if (item.DamageType == FairyDamage.Instance&& item.ModItem is BaseFairyCatcher bfc)
+            if (item.DamageType == FairyDamage.Instance && item.ModItem is BaseFairyCatcher bfc)
             {
                 int index = tooltips.FindIndex(line => line.Name == "Damage");
                 if (index != -1)

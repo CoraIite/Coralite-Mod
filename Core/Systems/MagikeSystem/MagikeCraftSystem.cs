@@ -327,7 +327,7 @@ namespace Coralite.Core.Systems.MagikeSystem
                     else
                     {
                         attempt.otherItemNotEnough = true;
-                        attempt.lackItemName =ContentSamples.ItemsByType[ requireItem.type].Name;
+                        attempt.lackItemName = ContentSamples.ItemsByType[requireItem.type].Name;
                         attempt.lackAmount = requireItem.stack - currentStack;
                         break;
                     }

@@ -109,13 +109,13 @@ namespace Coralite.Content.Items.HyacinthSeries
             float rot = Projectile.rotation + (DirSign > 0 ? 0 : MathHelper.Pi);
             float n = rot - DirSign * MathHelper.PiOver2;
 
-            Vector2 chainPos = Projectile.Center 
-                - rot.ToRotationVector2() * 34 
+            Vector2 chainPos = Projectile.Center
+                - rot.ToRotationVector2() * 34
                  - Main.screenPosition;
 
             Texture2D chain = GhostPipeChain.Value;
             Main.spriteBatch.Draw(chain, chainPos, null, lightColor
-                , Owner.velocity.X/15, new Vector2(chain.Width/2, 0), Projectile.scale, 0, 0f);
+                , Owner.velocity.X / 15, new Vector2(chain.Width / 2, 0), Projectile.scale, 0, 0f);
 
             base.PreDraw(ref lightColor);
 
@@ -133,7 +133,7 @@ namespace Coralite.Content.Items.HyacinthSeries
     }
 
     [AutoLoadTexture(Path = AssetDirectory.HyacinthSeriesItems)]
-    public class GhostPipeBullet : ModProjectile,IDrawPrimitive
+    public class GhostPipeBullet : ModProjectile, IDrawPrimitive
     {
         public override string Texture => AssetDirectory.Blank;
 
@@ -234,7 +234,7 @@ namespace Coralite.Content.Items.HyacinthSeries
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Projectile p = Main.projectile.FirstOrDefault(p => p.active && p.friendly
-                && (int)p.ai[2]== target.whoAmI&&p.type == ProjectileType<GhostPipeParasitic>() && p.ai[0] < 6, null);
+                && (int)p.ai[2] == target.whoAmI && p.type == ProjectileType<GhostPipeParasitic>() && p.ai[0] < 6, null);
 
             if (p == null)//没有寄生弹幕，生成一个
             {
@@ -242,7 +242,7 @@ namespace Coralite.Content.Items.HyacinthSeries
 
                 //pos += (pos - target.Center).SafeNormalize(Vector2.Zero) * 32;
                 Vector2 dir = pos - target.Center;
-               dir= dir.RotateByRandom(-MathHelper.Pi, MathHelper.Pi);
+                dir = dir.RotateByRandom(-MathHelper.Pi, MathHelper.Pi);
 
 
                 Projectile.NewProjectileFromThis<GhostPipeParasitic>(pos, dir, Projectile.damage, Projectile.knockBack, ai2: target.whoAmI);
@@ -517,20 +517,20 @@ namespace Coralite.Content.Items.HyacinthSeries
             Color c = lightColor * Alpha;
 
             if (State < 2)
-                DrawNotBloom(mainTex,pos,c);
+                DrawNotBloom(mainTex, pos, c);
             else
-                DrawBloom(mainTex,pos,c);
+                DrawBloom(mainTex, pos, c);
 
             return false;
         }
 
-        public void DrawNotBloom(Texture2D tex, Vector2 pos,Color c)
+        public void DrawNotBloom(Texture2D tex, Vector2 pos, Color c)
         {
             c *= 0.75f;
             float rotation = Projectile.rotation + exRot;
 
             tex.QuickCenteredDraw(Main.spriteBatch, new Rectangle(0, 4, 1, 5), pos, c, rotation, Scale);
-            tex.QuickCenteredDraw(Main.spriteBatch, new Rectangle(0, 4, 1, 5), pos, (c*0.25f) with { A=0}, rotation, Scale);
+            tex.QuickCenteredDraw(Main.spriteBatch, new Rectangle(0, 4, 1, 5), pos, (c * 0.25f) with { A = 0 }, rotation, Scale);
         }
 
         public void DrawBloom(Texture2D tex, Vector2 pos, Color c)
@@ -539,16 +539,16 @@ namespace Coralite.Content.Items.HyacinthSeries
             c2.A /= 2;
 
             //绘制花瓣
-            float rotation = Projectile.rotation+exRot;
-            float t = (int)Main.timeForVisualEffects*0.1f;
+            float rotation = Projectile.rotation + exRot;
+            float t = (int)Main.timeForVisualEffects * 0.1f;
             tex.QuickCenteredDraw(Main.spriteBatch, new Rectangle(0, 0, 1, 5)
-                , pos, c2, rotation+MathF.Sin(t+MathHelper.PiOver2)*0.2f, Scale);
+                , pos, c2, rotation + MathF.Sin(t + MathHelper.PiOver2) * 0.2f, Scale);
             tex.QuickCenteredDraw(Main.spriteBatch, new Rectangle(0, 1, 1, 5)
-                , pos, c2, rotation+MathF.Sin(t) * 0.2f, Scale);
+                , pos, c2, rotation + MathF.Sin(t) * 0.2f, Scale);
 
             //绘制本体
             tex.QuickCenteredDraw(Main.spriteBatch, new Rectangle(0, 2, 1, 5)
-                , pos, c*0.75f, rotation, Scale);
+                , pos, c * 0.75f, rotation, Scale);
             tex.QuickCenteredDraw(Main.spriteBatch, new Rectangle(0, 2, 1, 5)
                 , pos, (c * 0.25f) with { A = 0 }, rotation, Scale);
 
@@ -758,7 +758,7 @@ namespace Coralite.Content.Items.HyacinthSeries
         {
             dust.rotation = Main.rand.NextFloat(MathHelper.TwoPi);
             dust.frame = new Rectangle(0, Main.rand.Next(3), 1, 3);
-            dust.color = Color.White*0.75f;
+            dust.color = Color.White * 0.75f;
         }
 
         public override bool Update(Dust dust)

@@ -6,7 +6,6 @@ using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.GameContent;
 using Terraria.ID;
 
 namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
@@ -14,7 +13,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
     /// <summary>
     /// 弹弹凝胶球NPC
     /// </summary>
-    [AutoLoadTexture(Path =AssetDirectory.SlimeEmperor)]
+    [AutoLoadTexture(Path = AssetDirectory.SlimeEmperor)]
     public class ElasticGelBall : ModNPC
     {
         public override string Texture => AssetDirectory.SlimeEmperor + Name;
@@ -22,11 +21,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
         public ref float State => ref NPC.ai[0];
 
         [AutoLoadTexture(Name = "ElasticGelBallTop")]
-        public static ATex TopTex { get;private set; }
+        public static ATex TopTex { get; private set; }
         [AutoLoadTexture(Name = "ElasticGelBallMiddle")]
-        public static ATex MiddleTex { get;private set; }
+        public static ATex MiddleTex { get; private set; }
         [AutoLoadTexture(Name = "ElasticGelBallBottom")]
-        public static ATex BottomTex { get;private set; }
+        public static ATex BottomTex { get; private set; }
 
         public override void SetStaticDefaults()
         {

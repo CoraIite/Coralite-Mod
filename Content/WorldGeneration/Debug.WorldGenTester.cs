@@ -1,12 +1,9 @@
-﻿using Coralite.Content.Biomes;
-using Coralite.Core;
+﻿using Coralite.Core;
 using Coralite.Core.Systems.BossSystems;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameContent.Generation;
 using Terraria.ID;
 using Terraria.IO;
-using Terraria.ObjectData;
 using Terraria.WorldBuilding;
 
 namespace Coralite.Content.WorldGeneration
@@ -51,6 +48,8 @@ namespace Coralite.Content.WorldGeneration
             NPC.downedMechBoss2 = true;
             NPC.downedMechBoss3 = true;
             NPC.downedChristmasIceQueen = true;
+            NPC.downedQueenBee = true;
+            NPC.downedHalloweenKing = true;
             Main.hardMode = true;
             DownedBossSystem.downedNightmarePlantera = true;
 
@@ -294,7 +293,7 @@ namespace Coralite.Content.WorldGeneration
                 //如果当前位置有实心物块或者有液体（判断一下岩浆）就继续想上找
                 if ((t.HasTile && Main.tileSolid[t.TileType]) || t.LiquidAmount > 0)
                     continue;
-                
+
                 bool empty = true;
                 for (int j = 1; j < 8; j++)
                 {
@@ -381,7 +380,7 @@ namespace Coralite.Content.WorldGeneration
 
             //放置一个肉山圣物（肉山圣物的style是5）
             WorldGen.PlaceObject(origin2.X, origin2.Y - height / 2 - 1, TileID.MasterTrophyBase, true, 6);
-            
+
             //Dust d=  Dust.NewDustPerfect(new Point(point2.X, point2.Y - height / 2).ToWorldCoordinates(), DustID.Torch, Vector2.Zero, Scale: 5);
             //  d.noGravity = true;
             // 将植物放置在土丘形状的草砖之上。
@@ -394,7 +393,7 @@ namespace Coralite.Content.WorldGeneration
                     //new Modifiers.Offset(0, -1),
                     new ActionAshGrass()));
 
-            
+
 
             WorldUtils.Gen(
                 origin,

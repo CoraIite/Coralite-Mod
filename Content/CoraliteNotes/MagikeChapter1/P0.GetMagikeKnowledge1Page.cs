@@ -1,19 +1,20 @@
 ﻿using Coralite.Core;
-using Coralite.Core.Systems.MagikeSystem;
+using Coralite.Core.Attributes;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria;
 using Terraria.Localization;
-using Terraria.UI;
 
 namespace Coralite.Content.CoraliteNotes.MagikeChapter1
 {
+    [AutoLoadTexture(Path = AssetDirectory.NoteMagikeS1)]
     public class GetMagikeKnowledge1Page : KnowledgePage
     {
         public static LocalizedText Title { get; private set; }
         public static LocalizedText Welcome { get; private set; }
         public static LocalizedText ClickButton { get; private set; }
         public static LocalizedText ContiuneRead { get; private set; }
+
+        public static ATex MagikePage { get; private set; }
 
         public override void OnInitialize()
         {
@@ -40,6 +41,8 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
             pos += textSize.Y + 30;
 
             DrawParaNormal(spriteBatch, ContiuneRead, pos, out _);
+
+            MagikePage.Value.QuickBottomDraw(spriteBatch, Bottom + new Vector2(0, -10));
         }
     }
 

@@ -49,7 +49,7 @@ namespace Coralite.Content.Items.HyacinthSeries
         {
             if (Main.myPlayer == player.whoAmI)
             {
-                Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, Vector2.Zero, ProjectileType<ArethusaHeldProj>(), damage, knockback, player.whoAmI,ai2: shootCount > 3?1:0);
+                Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, Vector2.Zero, ProjectileType<ArethusaHeldProj>(), damage, knockback, player.whoAmI, ai2: shootCount > 3 ? 1 : 0);
                 if (shootCount > 3)
                 {
                     Vector2 targetDir = (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero);

@@ -45,7 +45,7 @@ namespace Coralite.Content.ModPlayers
                     return;
                 }
 
-                if (  Player.ZoneBeach && !attempt.crate)
+                if (Player.ZoneBeach && !attempt.crate)
                 {
                     if (attempt.common)
                     {
@@ -123,7 +123,7 @@ namespace Coralite.Content.ModPlayers
                 if (!attempt.rare && !attempt.veryrare && !attempt.legendary && attempt.uncommon && Main.rand.NextBool())
                 {
                     itemDrop = ItemType<CrystallineCrate>();//蕴魔水晶匣子
-                    return; 
+                    return;
                 }
             }
             else

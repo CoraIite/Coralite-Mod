@@ -12,7 +12,7 @@ namespace Coralite.Content.CoraliteNotes
                 return;
 
             Utils.DrawBorderString(spriteBatch, CoraliteNoteSystem.HowToCollect.Value
-                , PageTop + new Vector2(0, 10), Main.hslToRgb(Main.GlobalTimeWrappedHourly/2 % 1, 1f, 0.95f), anchorx: 0.5f, anchory: 0.5f);
+                , PageTop + new Vector2(0, 10), Main.hslToRgb(Main.GlobalTimeWrappedHourly / 2 % 1, 1f, 0.95f), anchorx: 0.5f, anchory: 0.5f);
         }
 
         public void DrawCollectText(SpriteBatch spriteBatch, bool[] collects, Vector2 center)

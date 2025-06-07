@@ -35,7 +35,7 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
             MagikeRecipe.CreateCraftRecipe(ItemID.FlinxFur, ItemID.EskimoHood, CalculateMagikeCost(MagicCrystal, 3, 60))
                 .AddIngredient(ItemID.BlueString)
                 .Register();
-            MagikeRecipe.CreateCraftRecipe(ItemID.FlinxFur, ItemID.EskimoCoat, CalculateMagikeCost(MagicCrystal, 3, 60),2)
+            MagikeRecipe.CreateCraftRecipe(ItemID.FlinxFur, ItemID.EskimoCoat, CalculateMagikeCost(MagicCrystal, 3, 60), 2)
                 .AddIngredient(ItemID.BlueString)
                 .Register();
             MagikeRecipe.CreateCraftRecipe(ItemID.FlinxFur, ItemID.EskimoPants, CalculateMagikeCost(MagicCrystal, 3, 60))
@@ -43,13 +43,13 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
                 .Register();
 
             //渔夫套装
-            MagikeRecipe.CreateCraftRecipe(ItemID.Silk, ItemID.AnglerHat, CalculateMagikeCost(MagicCrystal, 6, 60),5)
+            MagikeRecipe.CreateCraftRecipe(ItemID.Silk, ItemID.AnglerHat, CalculateMagikeCost(MagicCrystal, 6, 60), 5)
                 .AddIngredient(ItemID.ApprenticeBait)
                 .Register();
             MagikeRecipe.CreateCraftRecipe(ItemID.Silk, ItemID.AnglerVest, CalculateMagikeCost(MagicCrystal, 6, 60), 10)
                 .AddIngredient(ItemID.ApprenticeBait)
                 .Register();
-            MagikeRecipe.CreateCraftRecipe(ItemID.Silk, ItemID.AnglerPants, CalculateMagikeCost(MagicCrystal, 6, 60),5)
+            MagikeRecipe.CreateCraftRecipe(ItemID.Silk, ItemID.AnglerPants, CalculateMagikeCost(MagicCrystal, 6, 60), 5)
                 .AddIngredient(ItemID.ApprenticeBait)
                 .Register();
         }

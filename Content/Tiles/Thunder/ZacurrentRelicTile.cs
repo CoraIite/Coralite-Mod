@@ -21,7 +21,7 @@ namespace Coralite.Content.Tiles.Thunder
             TileObjectData.newTile.Height = 5;
             TileObjectData.newTile.CoordinateHeights = [16, 16, 16, 16, 16];
             TileObjectData.newTile.LavaDeath = false;
-            TileObjectData.newTile.Origin = new Terraria.DataStructures.Point16(1,4);
+            TileObjectData.newTile.Origin = new Terraria.DataStructures.Point16(1, 4);
             TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.newTile.Direction = TileObjectDirection.PlaceLeft;
             TileObjectData.newTile.StyleHorizontal = false;

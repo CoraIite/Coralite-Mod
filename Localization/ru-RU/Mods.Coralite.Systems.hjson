@@ -132,79 +132,115 @@ KnowledgeSystem: {
 	NewKnowledgeUnlock: Новый раздел разблокирован в коралловом блокноте!
 
 	IceDragon1Knowledge: {
-		// Name: Mods.Coralite.Systems.KnowledgeSystem.IceDragon1Knowledge.Name
-		// LockTip: Mods.Coralite.Systems.KnowledgeSystem.IceDragon1Knowledge.LockTip
-		// Description: Mods.Coralite.Systems.KnowledgeSystem.IceDragon1Knowledge.Description
+		// Name: "[c/2bffc6:Ice Dragon Fragment]"
+		/* LockTip:
+			'''
+			Unlocked when discovering "Rebirth of Ice" in Frozen Underground Chests
+			or finding Ice Dragon Egg in Surface Ice Dragon Nest
+			''' */
+		/* Description:
+			'''
+			Records partial information about Ice Dragons
+			Eggs in dragon nests contain unusual ice magic
+			''' */
 	}
 
 	Slime1Knowledge: {
-		// Name: Mods.Coralite.Systems.KnowledgeSystem.Slime1Knowledge.Name
-		// LockTip: Mods.Coralite.Systems.KnowledgeSystem.Slime1Knowledge.LockTip
-		// Description: Mods.Coralite.Systems.KnowledgeSystem.Slime1Knowledge.Description
+		// Name: "[c/639bff:Slime Fragment]"
+		/* LockTip:
+			'''
+			Unlocked when obtaining "Slime Sapling" from Slimes
+			and completing "Magike Fragment - Part One"
+			''' */
+		/* Description:
+			'''
+			Records information about a Supreme Emperor
+			from the Slime Kingdom
+			''' */
 	}
 
-	Thunder1Knowldege: {
-		// Name: Mods.Coralite.Systems.KnowledgeSystem.Thunder1Knowldege.Name
-		// LockTip: Mods.Coralite.Systems.KnowledgeSystem.Thunder1Knowldege.LockTip
-		// Description: Mods.Coralite.Systems.KnowledgeSystem.Thunder1Knowldege.Description
+	Thunder1Knowledge: {
+		// Name: "[c/639bff:Thunder Dragon Fragment]"
+		// LockTip: Unlocked after defeating The Twins, Skeletron Prime, and The Destroyer in Hardmode
+		/* Description:
+			'''
+			Records partial information about Thunder Dragons
+			Lightning Wyverns inhabiting cloud realms
+			''' */
 	}
 
 	MagikeInterstitial1Knowledge: {
-		// Name: Mods.Coralite.Systems.KnowledgeSystem.MagikeInterstitial1Knowledge.Name
-		// LockTip: Mods.Coralite.Systems.KnowledgeSystem.MagikeInterstitial1Knowledge.LockTip
-		// Description: Mods.Coralite.Systems.KnowledgeSystem.MagikeInterstitial1Knowledge.Description
+		// Name: Magike Fragment: Interstitial - Crystalline Sky Island
+		// LockTip: Unlocked after right-clicking Skarn Altar
+		/* Description:
+			'''
+			Records partial information about Skarn Altar
+			Activate the altar to unlock the Crystalline Sky Island
+			''' */
 	}
 
 	MagikeS2Knowledge: {
-		// Name: Mods.Coralite.Systems.KnowledgeSystem.MagikeS2Knowledge.Name
-		// LockTip: Mods.Coralite.Systems.KnowledgeSystem.MagikeS2Knowledge.LockTip
-		// Description: Mods.Coralite.Systems.KnowledgeSystem.MagikeS2Knowledge.Description
+		// Name: "[c/dc96ff:Magike Fragment - Part Two]"
+		// LockTip: Search for "Advanced Magike Fragment" in the Enchanted Sky Island above Jungle!
+		/* Description:
+			'''
+			Records advanced applications of Magike
+			Teaches crafting recipes for more instruments
+			''' */
 	}
 
 	NightmareKnowledge: {
-		// Name: Mods.Coralite.Systems.KnowledgeSystem.NightmareKnowledge.Name
-		// LockTip: Mods.Coralite.Systems.KnowledgeSystem.NightmareKnowledge.LockTip
-		// Description: Mods.Coralite.Systems.KnowledgeSystem.NightmareKnowledge.Description
+		// Name: Nightmare Fragment
+		// LockTip: Unlocked after defeating Moon Lord
+		/* Description:
+			'''
+			Slumber... ...
+			Challenge the Dream Sovereign in your dreams
+			''' */
 	}
 
 	FlyingShieldKnowledge: {
-		// Name: Mods.Coralite.Systems.KnowledgeSystem.FlyingShieldKnowledge.Name
-		// LockTip: Mods.Coralite.Systems.KnowledgeSystem.FlyingShieldKnowledge.LockTip
-		// Description: Mods.Coralite.Systems.KnowledgeSystem.FlyingShieldKnowledge.Description
+		// Name: Flying Shield
+		// LockTip: Unlocked after crafting any Flying Shield
+		/* Description:
+			'''
+			Hurl your shield!
+			Defend against attacks!
+			''' */
 	}
 
 	FlowerGunKnowledge: {
-		// Name: Mods.Coralite.Systems.KnowledgeSystem.FlowerGunKnowledge.Name
-		// LockTip: Mods.Coralite.Systems.KnowledgeSystem.FlowerGunKnowledge.LockTip
-		// Description: Mods.Coralite.Systems.KnowledgeSystem.FlowerGunKnowledge.Description
+		// Name: Blossom Gun
+		// LockTip: Unlocked when obtaining any bullet-based weapon
+		// Description: Destructive power blooming in your palm
 	}
 
 	LandOfTheLustrousKnowledge: {
-		// Name: Mods.Coralite.Systems.KnowledgeSystem.LandOfTheLustrousKnowledge.Name
-		// LockTip: Mods.Coralite.Systems.KnowledgeSystem.LandOfTheLustrousKnowledge.LockTip
-		// Description: Mods.Coralite.Systems.KnowledgeSystem.LandOfTheLustrousKnowledge.Description
+		// Name: Land of the Lustrous
+		// LockTip: Unlocked after refining any Gem Ore
+		// Description: Ripples in the mirror surface
 	}
 
 	DashBowKnowledge: {
-		// Name: Mods.Coralite.Systems.KnowledgeSystem.DashBowKnowledge.Name
-		// LockTip: Mods.Coralite.Systems.KnowledgeSystem.DashBowKnowledge.LockTip
-		// Description: Mods.Coralite.Systems.KnowledgeSystem.DashBowKnowledge.Description
+		// Name: Bow of Myriad Weather
+		// LockTip: Unlocked when obtaining any arrow-based weapon
+		// Description: Seek the myriad colors of the world
 	}
 
 	SwordKnowledge: {
-		// Name: Mods.Coralite.Systems.KnowledgeSystem.SwordKnowledge.Name
-		// LockTip: Mods.Coralite.Systems.KnowledgeSystem.SwordKnowledge.LockTip
-		// Description: Mods.Coralite.Systems.KnowledgeSystem.SwordKnowledge.Description
+		// Name: Sword Beyond Infinity
+		// LockTip: BUG DETECTED! Please report to mod author if you see this
+		// Description: The ultimate blade forged from journey's pinnacle moments
 	}
 }
 
-// CoraliteBeatiaryDatabase.CrystallineSkyIsland: Mods.Coralite.Systems.CoraliteBeatiaryDatabase.CrystallineSkyIsland
+// CoraliteBeatiaryDatabase.CrystallineSkyIsland: Crystalline Sky Island
 
 CoraliteNoteSystem: {
-	// CollectProgress: Mods.Coralite.Systems.CoraliteNoteSystem.CollectProgress
-	// AllCollect: Mods.Coralite.Systems.CoraliteNoteSystem.AllCollect
-	// CollectAllItems: Mods.Coralite.Systems.CoraliteNoteSystem.CollectAllItems
-	// ClickGetReward: Mods.Coralite.Systems.CoraliteNoteSystem.ClickGetReward
-	// RewardCollected: Mods.Coralite.Systems.CoraliteNoteSystem.RewardCollected
-	// HowToCollect: Mods.Coralite.Systems.CoraliteNoteSystem.HowToCollect
+	// CollectProgress: Collecting...
+	// AllCollect: Full Collect!
+	// CollectAllItems: Collect all items!
+	// ClickGetReward: Click to Get Reward
+	// RewardCollected: Reward Collected
+	// HowToCollect: Collection progress will be recorded after opening this page upon obtaining items
 }

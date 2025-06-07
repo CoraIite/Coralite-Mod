@@ -16,7 +16,7 @@ namespace Coralite.Content.CoraliteNotes.NightmareChapter
 
         private ScaleController _scale1 = new ScaleController(1f, 0.2f);
 
-        public static ATex NightmarePlantera {  get; private set; }
+        public static ATex NightmarePlantera { get; private set; }
 
         public override void OnInitialize()
         {

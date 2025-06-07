@@ -221,9 +221,9 @@ namespace Coralite.Content.Items.Gels
             Rectangle frame = new Rectangle(0, Projectile.frame, 1, Main.projFrames[Projectile.type]);
             float scale = Projectile.ai[2] * Projectile.scale;
             float exRot = State > 1 ? Projectile.rotation : (Main.GlobalTimeWrappedHourly * 2 + Projectile.whoAmI * 1.5f);
-            float exRot2 = State > 1 ? Projectile.rotation : (-Main.GlobalTimeWrappedHourly * 3 + Projectile.whoAmI *1.5f);
+            float exRot2 = State > 1 ? Projectile.rotation : (-Main.GlobalTimeWrappedHourly * 3 + Projectile.whoAmI * 1.5f);
 
-            ElasticGelBall.BottomTex.Value.QuickCenteredDraw(Main.spriteBatch, frame, pos, c * 0.45f, exRot,scale );
+            ElasticGelBall.BottomTex.Value.QuickCenteredDraw(Main.spriteBatch, frame, pos, c * 0.45f, exRot, scale);
             ElasticGelBall.MiddleTex.Value.QuickCenteredDraw(Main.spriteBatch, frame, pos, c * 0.75f, exRot2, scale);
             ElasticGelBall.TopTex.Value.QuickCenteredDraw(Main.spriteBatch, frame, pos, c, Projectile.rotation, scale);
             return false;

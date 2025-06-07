@@ -58,7 +58,7 @@ namespace Coralite.Content.ModPlayers
                     EmperorArmorCD = 30;
                     Vector2 dir = Helper.NextVec2Dir();
 
-                    int damage = Player.GetDamageByHeldItem( 44);
+                    int damage = Player.GetDamageByHeldItem(44);
                     Projectile.NewProjectile(Player.GetSource_FromThis(), target.Center + (dir * Main.rand.NextFloat(60, 80)),
                         dir * Main.rand.NextFloat(2, 4), ModContent.ProjectileType<Items.Gels.GelChaser>(), damage
                         , 2, -1, ai1: target.Center.X, ai2: target.Center.Y);

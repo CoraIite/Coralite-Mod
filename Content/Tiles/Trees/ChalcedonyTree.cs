@@ -140,7 +140,7 @@ namespace Coralite.Content.Tiles.Trees
             {
                 Vector2 vector3 = new Vector2(gore.velocity.X, -0.2f);
                 int num = 4;
-                num = (int)((float)num * 0.9f);
+                num = (int)(num * 0.9f);
                 Point point = (new Vector2(num, num) / 2f + vector).ToTileCoordinates();
                 if (!WorldGen.InWorld(point.X, point.Y))
                 {
@@ -156,7 +156,7 @@ namespace Coralite.Content.Tiles.Trees
                 }
 
                 int num2 = 6;
-                Rectangle rectangle = new Rectangle(point.X * 16, point.Y * 16 + (int)tile.LiquidAmount / 16, 16, 16 - (int)tile.LiquidAmount / 16);
+                Rectangle rectangle = new Rectangle(point.X * 16, point.Y * 16 + tile.LiquidAmount / 16, 16, 16 - tile.LiquidAmount / 16);
                 Rectangle value = new Rectangle((int)vector.X, (int)vector.Y + num2, num, num);
                 bool flag = tile != null && tile.LiquidAmount > 0 && rectangle.Intersects(value);
                 if (flag)
@@ -237,7 +237,7 @@ namespace Coralite.Content.Tiles.Trees
             }
 
             int num4 = 6;
-            Rectangle rectangle2 = new Rectangle(point2.X * 16, point2.Y * 16 + (int)tile2.LiquidAmount / 16, 16, 16 - (int)tile2.LiquidAmount / 16);
+            Rectangle rectangle2 = new Rectangle(point2.X * 16, point2.Y * 16 + tile2.LiquidAmount / 16, 16, 16 - tile2.LiquidAmount / 16);
             Rectangle value2 = new Rectangle((int)vector.X, (int)vector.Y + num4, num3, num3);
             if (tile2 != null && tile2.LiquidAmount > 0 && rectangle2.Intersects(value2))
                 gore.velocity.Y = -1f;

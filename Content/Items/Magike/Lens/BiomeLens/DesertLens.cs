@@ -80,11 +80,11 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     //AntiMagikeMaxBase = 0;
                     break;
                 case MALevel.Quicksand:
-                    MagikeMaxBase = 230;
+                    MagikeMaxBase = 122;
                     //AntiMagikeMaxBase = MagikeMaxBase * 3;
                     break;
                 case MALevel.Forbidden:
-                    MagikeMaxBase = 730;
+                    MagikeMaxBase = 375;
                     //AntiMagikeMaxBase = MagikeMaxBase * 2;
                     break;
             }
@@ -99,7 +99,7 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
         public override void Upgrade(MALevel incomeLevel)
         {
             MaxConnectBase = 1;
-            ConnectLengthBase = 4 * 16;
+            ConnectLengthBase = 6 * 16;
 
             switch (incomeLevel)
             {
@@ -110,16 +110,15 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     ConnectLengthBase = 0;
                     break;
                 case MALevel.Quicksand:
-                    UnitDeliveryBase = 69;
-                    SendDelayBase = 9;
+                    UnitDeliveryBase = 55;
+                    SendDelayBase = 4 * 60 + 30;
                     break;
                 case MALevel.Forbidden:
-                    UnitDeliveryBase = 195;
-                    SendDelayBase = 8;
+                    UnitDeliveryBase = 150;
+                    SendDelayBase = 4 * 60;
                     break;
             }
 
-            SendDelayBase *= 60;
             RecheckConnect();
         }
     }
@@ -135,7 +134,15 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
         public override bool CheckTile(Tile tile)
             => tile.TileType is TileID.Sand or TileID.Sandstone or TileID.SandstoneBrick;
 
-        public override int Throughput => base.Throughput + (Sandstorm.Happening ? 5 : 0);
+        public override int Throughput
+        {
+            get
+            {
+                if (Sandstorm.Happening)
+                    return (int)(base.Throughput * 1.5f);
+                return base.Throughput;
+            }
+        }
 
         public override bool CheckWall(Tile tile)
             => true;
@@ -149,16 +156,15 @@ namespace Coralite.Content.Items.Magike.Lens.BiomeLens
                     ThroughputBase = 0;
                     break;
                 case MALevel.Quicksand:
-                    ProductionDelayBase = 9;
-                    ThroughputBase = 23;
+                    ProductionDelayBase = 4 * 60 + 30;
+                    ThroughputBase = 11;
                     break;
                 case MALevel.Forbidden:
-                    ProductionDelayBase = 8;
-                    ThroughputBase = 65;
+                    ProductionDelayBase = 4 * 60;
+                    ThroughputBase = 30;
                     break;
             }
 
-            ProductionDelayBase *= 60;
             Timer = ProductionDelayBase;
         }
     }

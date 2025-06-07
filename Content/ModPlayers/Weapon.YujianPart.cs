@@ -2,7 +2,6 @@
 using Coralite.Core;
 using System;
 using Terraria.Audio;
-using Terraria.ID;
 
 namespace Coralite.Content.ModPlayers
 {

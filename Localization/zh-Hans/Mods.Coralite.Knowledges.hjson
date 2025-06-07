@@ -442,10 +442,17 @@ LandOfTheLustrousPage: {
 
 DashBowPage: {
 	Title: 万千气象之弓
-	Description: a
+	Description:
+		'''
+		    在之前的旅程中，我曾经目睹过妖精使用一种奇特的武器，他们使用空间的力量扭曲气象，把风云雷雨化作一把巨大的弓箭，借此对抗敌人。
+
+		    来到这边后，我一直在尝试复原这种技艺，并取得了一定的进展，那是可以被正常人类手持，并能借用空间之风高速移动的轻盈弓箭。
+
+		    但是过去所见到的，各种气象融合而成的那种武器，却一直没有头绪，这方面的尝试大概就到此为止吧，我还有更重要的事情要做。
+		'''
 }
 
 SwordPage: {
 	Title: 超越无极之剑
-	Description: Mods.Coralite.Knowledges.SwordPage.Description
+	Description: "    你喜欢挥剑吗？"
 }

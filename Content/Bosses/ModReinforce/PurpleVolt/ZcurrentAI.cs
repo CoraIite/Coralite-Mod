@@ -1,5 +1,4 @@
-﻿using Coralite.Content.Bosses.ThunderveinDragon;
-using Coralite.Content.Particles;
+﻿using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Helpers;
 using InnoVault.PRT;
@@ -147,7 +146,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                 Initialize();
                 init = false;
             }
-            
+
             if (CheckTarget())
                 return;
 
@@ -179,7 +178,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                         NPC.velocity = new Vector2(0, -2);
                         IsDashing = false;
 
-                        shadowAlpha =Math.Clamp( Timer / 60f,0,1);
+                        shadowAlpha = Math.Clamp(Timer / 60f, 0, 1);
 
                         if (Timer % 4 == 0)
                         {
@@ -716,10 +715,10 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
         /// <summary>
         /// 重新设置各类与状态相关的数值
         /// </summary>
-        public void ResetFields(bool resetCombo=true)
+        public void ResetFields(bool resetCombo = true)
         {
             if (resetCombo)
-            Combo = 0;
+                Combo = 0;
             SonState = 0;
             Timer = 0;
             Recorder = 0;
@@ -764,7 +763,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
         private void PurpleVoltMoveExchange(WeightedRandom<AIStates> rand)
         {
-            rand.Add(AIStates.ElectricBreathSmall,0.5f);//小吐息概率降低
+            rand.Add(AIStates.ElectricBreathSmall, 0.5f);//小吐息概率降低
 
             //在玩家上下区域的时候减少概率
             bool upOrDown
@@ -772,7 +771,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                 && MathF.Abs(Target.Center.Y - NPC.Center.Y) > 16 * 6;
             rand.Add(AIStates.ElectricBreathMiddle, upOrDown ? 0.4f : 1);
 
-            rand.Add(AIStates.ElectricBall,0.5f);//普通电球概率降低
+            rand.Add(AIStates.ElectricBall, 0.5f);//普通电球概率降低
             rand.Add(AIStates.PointerBall);
 
             //距离远的时候提升使用概率

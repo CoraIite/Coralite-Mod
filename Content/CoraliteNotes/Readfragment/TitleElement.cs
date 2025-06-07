@@ -30,7 +30,7 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
 
             Texture2D tex = _tex.Value;
 
-            spriteBatch.Draw(tex, pos + new Vector2(calculatedStyle.Width / 2, calculatedStyle.Height-5), null, Color.White, 0, new Vector2(tex.Width / 2, tex.Height), 1.1f, 0, 0);
+            spriteBatch.Draw(tex, pos + new Vector2(calculatedStyle.Width / 2, calculatedStyle.Height - 5), null, Color.White, 0, new Vector2(tex.Width / 2, tex.Height), 1.1f, 0, 0);
 
             Utils.DrawBorderStringBig(spriteBatch, _text.Value, pos + _textOffset + new Vector2(calculatedStyle.Width / 2, calculatedStyle.Height / 2)
                 , _textColor, 0.65f, 0.5f, 0.5f);

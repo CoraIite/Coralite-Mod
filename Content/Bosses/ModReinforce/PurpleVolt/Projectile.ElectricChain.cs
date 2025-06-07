@@ -1,14 +1,11 @@
 ﻿using Coralite.Content.Bosses.ThunderveinDragon;
-using Coralite.Content.Items.Thunder;
 using Coralite.Core;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
-using Steamworks;
 using System;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.ID;
 
 namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 {
@@ -143,7 +140,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                 trail.UpdateTrail(Projectile.velocity);
         }
 
-        public void RandomTrails(Vector2?  targetPos)
+        public void RandomTrails(Vector2? targetPos)
         {
             if (targetPos.HasValue)
             {
@@ -232,7 +229,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
         {
             PurpleElectricBall.BallBack.Value.QuickCenteredDraw(Main.spriteBatch, Projectile.Center - Main.screenPosition
                 , Color.Black * 0.6f * ThunderAlpha, 0, Projectile.scale * 0.5f);
-            Projectile.QuickDraw(Projectile.Center , Color.White, 0f);
+            Projectile.QuickDraw(Projectile.Center, Color.White, 0f);
 
             if (circles != null)
                 foreach (var circle in circles)
@@ -254,7 +251,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             var origin = exTex.Size() / 2;
             var scale = Projectile.scale * 0.5f;
 
-            spriteBatch.Draw(exTex, pos , null, c, Projectile.rotation + Main.GlobalTimeWrappedHourly, origin, scale, 0, 0);
+            spriteBatch.Draw(exTex, pos, null, c, Projectile.rotation + Main.GlobalTimeWrappedHourly, origin, scale, 0, 0);
             spriteBatch.Draw(exTex, pos, null, c * 0.5f, Projectile.rotation - (Main.GlobalTimeWrappedHourly / 2), origin, scale, 0, 0);
         }
     }

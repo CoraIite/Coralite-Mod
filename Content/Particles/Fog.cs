@@ -1,8 +1,6 @@
 ﻿using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
-using System.Reflection.Metadata.Ecma335;
-using System.Runtime.Serialization;
 using Terraria;
 
 namespace Coralite.Content.Particles

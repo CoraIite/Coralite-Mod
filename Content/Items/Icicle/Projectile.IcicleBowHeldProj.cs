@@ -75,7 +75,7 @@ namespace Coralite.Content.Items.Icicle
                     break;
                 }
 
-                if (!DownLeft&& Projectile.localAI[2] == 0)
+                if (!DownLeft && Projectile.localAI[2] == 0)
                 {
                     if (Projectile.IsOwnedByLocalPlayer())
                     {

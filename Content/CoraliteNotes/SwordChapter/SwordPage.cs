@@ -14,7 +14,7 @@ namespace Coralite.Content.CoraliteNotes.SwordChapter
 
         public override bool DoublePageWithNext => true;
 
-        public static ATex DashBow { get; private set; }
+        public static ATex Sword { get; private set; }
 
         public override void OnInitialize()
         {
@@ -27,7 +27,7 @@ namespace Coralite.Content.CoraliteNotes.SwordChapter
             DrawTitleH1(spriteBatch, Title, new Color(178, 165, 226));
             DrawParaNormal(spriteBatch, Description, Position.Y + TitleHeight, out _);
 
-            Texture2D tex = DashBow.Value;
+            Texture2D tex = Sword.Value;
 
             //绘制图2
             tex.QuickBottomDraw(spriteBatch, Bottom - new Vector2(0, 10));

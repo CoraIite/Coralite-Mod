@@ -58,7 +58,7 @@ namespace Coralite.Content.CoraliteNotes.FlowerGunChapter
         {
             Vector2 center = new Vector2(PageWidth / 2, PageHeight / 2);
 
-            NewImage<Wisteria>(center + new Vector2(77,140), null
+            NewImage<Wisteria>(center + new Vector2(77, 140), null
                 , KeyFlowerGuns.Wisteria, CollectImage.LockIconType.Small, 1.1f);
             NewImage<SunflowerGun>(center + new Vector2(-192, -184), null
                 , KeyFlowerGuns.SunflowerGun, CollectImage.LockIconType.Small, 1.1f);
@@ -93,7 +93,7 @@ namespace Coralite.Content.CoraliteNotes.FlowerGunChapter
             //NewImage<Lycoris>(center + (rot + TwoPiOver3 * 2).ToRotationVector2() * length, null
             //    , KeyFlowerGuns.Lycoris);
 
-            NewImage<Hyacinth>(center+new Vector2(-15,-4), CoraliteConditions.DownedNightmarePlantera
+            NewImage<Hyacinth>(center + new Vector2(-15, -4), CoraliteConditions.DownedNightmarePlantera
                 , KeyFlowerGuns.Hyacinth, CollectImage.LockIconType.Middle, 1.75f);
 
             var button = new CollectButton(FlowerGunCollectButton, FlowerGunCollectButtonLight

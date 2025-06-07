@@ -27,7 +27,7 @@ namespace Coralite.Content.Items.Fairies
 
         public override void SetFairyDefault(CoraliteGlobalItem fairyItem)
         {
-            fairyItem.FairyItemSets( 8, 300);
+            fairyItem.FairyItemSets(8, 300);
         }
     }
 

@@ -83,7 +83,7 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
             //绘制背景板
             Texture2D BackTex = buttonType switch
             {
-                KnowledgeButtonType.Rune => KnowledgeButtenTex. KnowledgeButtenRune.Value,
+                KnowledgeButtonType.Rune => KnowledgeButtenTex.KnowledgeButtenRune.Value,
                 KnowledgeButtonType.Wild => KnowledgeButtenTex.KnowledgeButtenWild.Value,
                 KnowledgeButtonType.Reel => KnowledgeButtenTex.KnowledgeButtenReel.Value,
                 KnowledgeButtonType.Ball => KnowledgeButtenTex.KnowledgeButtenBall.Value,
@@ -99,7 +99,7 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
             spriteBatch.Draw(BackTex, position, frameBox, Color.White * 0.3f, 0, frameBox.Size() / 2, 1, 0, 0);
 
             KeyKnowledge knowledge = CoraliteContent.GetKKnowledge<T>();
-            Color c = knowledge.Unlock ? Color.White : Color.Black*0.75f;
+            Color c = knowledge.Unlock ? Color.White : Color.Black * 0.75f;
 
             float iconRot = 0;
 
@@ -134,7 +134,7 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
             {
                 Vector2 pos = position + new Vector2(calculatedStyle.Width / 4, -calculatedStyle.Height / 4);
                 KnowledgeButtenTex.NewKnowledge.Value.QuickCenteredDraw(spriteBatch, new Rectangle(0, (Main.timeForVisualEffects % 20) > 10 ? 0 : 1, 1, 2)
-                    , pos, Color.White, 0, 1.1f + MathF.Cos(Main.GlobalTimeWrappedHourly*4) * 0.15f);
+                    , pos, Color.White, 0, 1.1f + MathF.Cos(Main.GlobalTimeWrappedHourly * 4) * 0.15f);
             }
         }
     }

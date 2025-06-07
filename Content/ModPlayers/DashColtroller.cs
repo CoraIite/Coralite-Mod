@@ -230,7 +230,7 @@ namespace Coralite.Content.ModPlayers
 
             if (GamePlaySystem.OnlyDashKey)//仅使用冲刺按键控制冲刺，屏蔽下方双击冲刺
                 return;
-            
+
             if (Player.controlDown && Player.releaseDown && Player.doubleTapCardinalTimer[DashDown] < 15)
                 DashDir = DashDown;
             else if (Player.controlUp && Player.releaseUp && Player.doubleTapCardinalTimer[DashUp] < 15)

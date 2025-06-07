@@ -2,12 +2,8 @@
 using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using Terraria;
-using Terraria.GameContent;
-using Terraria.ID;
 using Terraria.Localization;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Coralite.Content.CoraliteNotes.MagikeChapter1
 {
@@ -39,14 +35,14 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
             //标题
             DrawTitleH1(spriteBatch, RemodelPolymerizeAndMagikeCraft, Coralite.MagicCrystalPink);
 
-            Vector2 pos = PageTop+new Vector2(0,TitleHeight);
+            Vector2 pos = PageTop + new Vector2(0, TitleHeight);
 
             //绘制左边的合成坛
 
-            Vector2 picturePos = new Vector2(pos.X , pos.Y + 40);
+            Vector2 picturePos = new Vector2(pos.X, pos.Y + 40);
 
             Helper.DrawMouseOverScaleTex<BasicAltar>(spriteBatch, picturePos
-                ,ref _scale1,4, 5 , fadeWithOriginScale: true);
+                , ref _scale1, 4, 5, fadeWithOriginScale: true);
 
             pos.Y += 120;
 
@@ -54,12 +50,12 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
             DrawParaNormal(spriteBatch, CraftACraftAltar, pos.Y, out Vector2 textSize);
 
             float scale = 0.7f;
-            pos.Y += textSize.Y+ CoraliteAssets.MagikeChapter1.CraftAltarUI.Height() / 2* scale + 20;
+            pos.Y += textSize.Y + CoraliteAssets.MagikeChapter1.CraftAltarUI.Height() / 2 * scale + 20;
 
             //绘制下图
-            CoraliteAssets.MagikeChapter1.CraftAltarUI.Value.QuickCenteredDraw(spriteBatch, pos,scale: scale);
+            CoraliteAssets.MagikeChapter1.CraftAltarUI.Value.QuickCenteredDraw(spriteBatch, pos, scale: scale);
 
-            pos.Y += CoraliteAssets.MagikeChapter1.CraftAltarUI.Height() / 2* scale + 20;
+            pos.Y += CoraliteAssets.MagikeChapter1.CraftAltarUI.Height() / 2 * scale + 20;
 
             DrawParaNormal(spriteBatch, AltarUI, pos.Y, out _);
         }
