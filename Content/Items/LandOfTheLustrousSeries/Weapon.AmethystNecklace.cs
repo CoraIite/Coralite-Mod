@@ -8,6 +8,7 @@ using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Utilities;
+using System.IO;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
@@ -137,7 +138,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public ref float AttackCD => ref Projectile.ai[1];
         public ref float LengthToCenter => ref Projectile.ai[2];
         public ref float Rot => ref Projectile.localAI[2];
-        public override bool CanFire => true;
+        public override bool CanFire => AttackTime > 0 || AttackCD > 0;
         private float factorTop;
         private float factorBottom;
 
@@ -193,9 +194,13 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             if (AttackTime > 0)
             {
-                factorTop = 1 - (AttackTime / Owner.itemTimeMax);
-                LengthToCenter = Helper.Lerp(54, 32, factorTop);
-                Rot += 0.05f + ((1 - factorTop) * 0.2f);
+                if (Projectile.IsOwnedByLocalPlayer())
+                {
+                    factorTop = 1 - (AttackTime / Owner.itemTimeMax);
+                    LengthToCenter = Helper.Lerp(54, 32, factorTop);
+                    Rot += 0.05f + ((1 - factorTop) * 0.2f);
+                    Projectile.netUpdate = true;
+                }
                 Projectile.rotation = Projectile.rotation.AngleLerp((InMousePos - Projectile.Center).ToRotation(), 0.2f);
                 if (AttackTime == 1)//生成射线
                 {
@@ -233,6 +238,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             if (AttackCD > 0)
                 return;
 
+            Projectile.netUpdate = true;
             AttackTime = Owner.itemTimeMax;
             AttackCD = AmethystLaser.TotalAttackTime + AmethystLaser.delayTime;
             factorTop = 0;
@@ -242,6 +248,23 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public void TurnToDelay()
         {
             AttackCD = AmethystLaser.delayTime;
+            Projectile.netUpdate = true;
+        }
+
+        public override void NetHeldSend(BinaryWriter writer)
+        {
+            writer.Write(Projectile.rotation);
+            writer.Write(Rot);
+            writer.Write(factorTop);
+            writer.Write(factorBottom);
+        }
+
+        public override void NetHeldReceive(BinaryReader reader)
+        {
+            Projectile.rotation = reader.ReadSingle();
+            Rot = reader.ReadSingle();
+            factorTop = reader.ReadSingle();
+            factorBottom = reader.ReadSingle();
         }
 
         public void GetCrystalDrawData(int index, out Vector2 pos, out float scale)
