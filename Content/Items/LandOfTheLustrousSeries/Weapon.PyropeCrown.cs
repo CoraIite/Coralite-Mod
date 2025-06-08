@@ -93,6 +93,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         private Vector2 scale = Vector2.One;
 
+        public override bool CanFire => AttackTime!=0;
+
         public override void SetStaticDefaults()
         {
             Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 4);
@@ -133,13 +135,12 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             if (AttackTime != 0)
             {
-                Vector2 dir = Main.MouseWorld - Projectile.Center;
+                Vector2 dir = InMousePos - Projectile.Center;
 
                 if (dir.Length() < 48)
                     idlePos += dir;
                 else
                     idlePos += dir.SafeNormalize(Vector2.Zero) * 48;
-
             }
 
             TargetPos = Vector2.Lerp(TargetPos, idlePos, 0.1f);
@@ -157,7 +158,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 else
                     scale = Vector2.SmoothStep(new Vector2(0.5f, 0.7f), new Vector2(1.5f, 1.5f), (factor - 0.8f) / 0.2f);
 
-                if (AttackTime == 1 && Projectile.IsOwnedByLocalPlayer())
+                if (AttackTime == 1 && !VaultUtils.isServer)//弹幕只在本地端生成，其他效果在所有客户端运行
                 {
                     Projectile.NewProjectileFromThis<PyropeProj>(Projectile.Center,
                         (Main.MouseWorld - Projectile.Center).SafeNormalize(Vector2.Zero) * 6.5f, Owner.GetWeaponDamage(Item), Projectile.knockBack);
@@ -226,6 +227,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public override void AI()
         {
             const int trailCount = 14;
+            if (VaultUtils.isServer)
+                return;
+
             trail ??= new Trail(Main.graphics.GraphicsDevice, trailCount, new EmptyMeshGenerator(), factor => Helper.Lerp(0, 12, factor),
                  factor =>
                  {
