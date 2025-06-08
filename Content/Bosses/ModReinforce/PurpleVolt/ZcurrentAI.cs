@@ -747,6 +747,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             if (!PurpleVolt && PurpleVoltCount == GetPurpleVoltMax())
             {
                 State = AIStates.PurpleVoltExchange;
+                comboRecords?.Clear();
                 return;
             }
 
@@ -788,7 +789,8 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             UseMoveCount++;
             if (UseMoveCount > Helper.ScaleValueForDiffMode(5, 4, 3, 2))
             {
-                AddCombo(rand, AIStates.VoltBigCombo);
+                if (comboRecords != null && comboRecords.Count > 1)
+                    AddCombo(rand, AIStates.VoltBigCombo);
                 AddCombo(rand, AIStates.VoltChainCombo);
                 AddCombo(rand, AIStates.VoltZBallChainCombo);
             }

@@ -1,8 +1,11 @@
 ﻿using Coralite.Content.Bosses.ModReinforce.PurpleVolt;
 using Coralite.Content.Bosses.ThunderveinDragon;
+using Coralite.Content.Items.Materials;
 using Coralite.Content.Tiles.Thunder;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Items;
+using Coralite.Core.Systems.MagikeSystem;
+using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -12,10 +15,18 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Thunder
 {
-    public class ZacurrentRod : BasePlaceableItem
+    public class ZacurrentRod : BasePlaceableItem,IMagikeCraftable
     {
         public ZacurrentRod() : base(Item.sellPrice(0, 1), ItemRarityID.Purple, ModContent.TileType<ZacurrentRodTile>(), AssetDirectory.ThunderItems)
         {
+        }
+
+        public void AddMagikeCraftRecipe()
+        {
+            MagikeRecipe.CreateCraftRecipe<LightningRods, ZacurrentRod>(MagikeHelper.CalculateMagikeCost(MALevel.HolyLight, 12, 60 * 4))
+                .AddIngredient<FragmentsOfLight>()
+                .AddIngredient<DukeFishronSkin>()
+                .Register();
         }
     }
 

@@ -154,7 +154,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
         public virtual void SpawnThunderDusts(float factor)
         {
-            float length = Helper.Lerp(20, 1000, factor);
+            float length = Helper.Lerp(20, 1200, factor);
             for (int i = 0; i < 5; i++)
             {
                 Vector2 dir = (Angle + (i * MathHelper.TwoPi / 5)).ToRotationVector2();

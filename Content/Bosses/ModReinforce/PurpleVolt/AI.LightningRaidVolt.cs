@@ -136,7 +136,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                             Timer = 0;
 
                             IsDashing = true;
-                            int damage = Helper.GetProjDamage(125, 150, 175);
+                            int damage = Helper.GetProjDamage(150, 175, 200);
                             NPC.NewProjectileDirectInAI<RedDash>(NPC.Center, Vector2.Zero, damage, 0
                                 , NPC.target, bigDashTime, NPC.whoAmI, 14);
 

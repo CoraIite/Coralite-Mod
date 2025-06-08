@@ -30,6 +30,9 @@ namespace Coralite.Compat.BossCheckList
                 //荒雷龙
                 AddThunderveinDragon(bcl);
 
+                //兹雷龙
+                AddZacurrentDragon(bcl);
+
                 //梦魇之花
                 AddNightmarePlantera(bcl);
             }
@@ -194,6 +197,39 @@ namespace Coralite.Compat.BossCheckList
                     ["spawnItems"] = ItemType<Content.Items.Thunder.LightningRods>(),
                     ["customPortrait"] = ThunderveinDragonPortrait.DrawPortrait,
                     ["collectibles"] = ThunderveinDragonCollection
+                });
+        }
+
+        public static void AddZacurrentDragon(Mod bcl)
+        {
+            List<int> ThunderveinDragonCollection = new()
+                {
+                    //ItemType<Content.Items.Thunder.ZapCrystal>(),
+                    //ItemType<Content.Items.Thunder.ThunderveinDragonBossBag>(),
+                    //ItemType<Content.Items.Thunder.ElectrificationWing>(),
+                    //ItemType<Content.Items.Thunder.InsulationCortex>(),
+                    //ItemType<Content.Items.Thunder.ThunderveinSoulStone>(),
+                    //ItemType<Content.Items.Thunder.ThunderveinDragonMask>(),
+                    //ItemType<Content.Items.Thunder.ThunderveinDragonTrophy>(),
+                    ItemType<Content.Items.Thunder.ZacurrentRelic>(),
+                };
+
+            string ThunderveinDragonInfo = "长期生活在高能雷云中，能够掌控过载状态的的荒雷龙，或许可以叫它“紫伏闪·荒雷龙”。";
+            bcl.Call(
+                "LogBoss",
+                Coralite.Instance,
+                "兹雷龙",
+                15.1f,
+                () => DownedBossSystem.downedZacurrentDragon,
+                NPCType<Content.Bosses.ModReinforce.PurpleVolt.ZacurrentDragon>(),
+                new Dictionary<string, object>()
+                {
+                    ["spawnInfo"] = Language.GetOrRegister($"Mods.Coralite.Compat.BossChecklist.ZacurrentDragon.SpawnInfo", () => ThunderveinDragonInfo),
+                    ["despawnMessage"] = Language.GetOrRegister($"Mods.Coralite.Compat.BossChecklist.ZacurrentDragon.Despawn", () => "兹雷龙如闪电般离去"),
+                    ["spawnItems"] = ItemType<Content.Items.Thunder.ZacurrentRod>(),
+                    ["customPortrait"] = ZacurrentDragonPortrait.DrawPortrait,
+                    ["collectibles"] = ThunderveinDragonCollection,
+                    ["availability"] = () => MagikeSystem.learnedMagikeAdvanced
                 });
         }
 

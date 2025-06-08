@@ -164,6 +164,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         public override void AddRecipes()
         {
             CreateRecipe()
+                .AddIngredient<Turbulence>()
                 .AddIngredient<Solunar>()
                 .AddIngredient<HorizonArc>()
                 .AddIngredient<SeismicWave>()

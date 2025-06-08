@@ -27,3 +27,8 @@ ThunderveinDragon: {
 	SpawnInfo: 掌控雷电魔法的双足飞龙种，体内储存着十分庞大的电能。
 	Despawn: 荒雷龙如闪电般离去
 }
+
+ZacurrentDragon: {
+	// SpawnInfo: 长期生活在高能雷云中，能够掌控过载状态的的荒雷龙，或许可以叫它“紫伏闪·荒雷龙”。
+	// Despawn: 兹雷龙如闪电般离去
+}
