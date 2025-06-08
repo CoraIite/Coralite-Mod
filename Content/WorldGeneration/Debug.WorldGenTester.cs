@@ -19,6 +19,10 @@ namespace Coralite.Content.WorldGeneration
             //Item.shoot = 1;
         }
 
+        public override void UpdateAccessory(Player player, bool hideVisual)
+        {
+        }
+
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             //if (Main.myPlayer == player.whoAmI)
