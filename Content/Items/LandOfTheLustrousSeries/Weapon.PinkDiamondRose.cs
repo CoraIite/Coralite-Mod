@@ -95,6 +95,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         private PrimitivePRTGroup group;
         private Vector2 offset;
 
+        public override bool CanFire => AttackTime>0;
+
         public override void SetStaticDefaults()
         {
             Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 4);
@@ -102,6 +104,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void BeforeMove()
         {
+            if (VaultUtils.isServer)
+                return;
+
             group ??= new PrimitivePRTGroup();
             if (AttackTime < 1 && Main.rand.NextBool(6))
             {
@@ -121,7 +126,6 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 Dust d = Dust.NewDustPerfect(pos, DustID.PinkTorch, Helper.NextVec2Dir(1f, 3f));
                 d.noGravity = true;
             }
-
             if ((int)Main.timeForVisualEffects % 20 == 0 && Main.rand.NextBool(2))
             {
                 float length = Main.rand.NextFloat(16, 24);
@@ -156,8 +160,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             if (AttackTime > 0)
             {
-                idlePos += (Main.MouseWorld - Projectile.Center).SafeNormalize(Vector2.Zero) * 64;
+                idlePos += (InMousePos - Projectile.Center).SafeNormalize(Vector2.Zero) * 64;
                 idlePos += offset;
+                Projectile.netUpdate = true;
             }
 
             TargetPos = Vector2.SmoothStep(TargetPos, idlePos, 0.3f);
@@ -179,8 +184,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 }
                 else
                 {
-                    Projectile.rotation = Projectile.rotation.AngleTowards((Main.MouseWorld - Projectile.Center).ToRotation() + 1.57f, MathHelper.TwoPi / halfTime);
-                    if (AttackTime == 1)
+                    Projectile.rotation = Projectile.rotation.AngleTowards((InMousePos - Projectile.Center).ToRotation() + 1.57f, MathHelper.TwoPi / halfTime);
+                    if (!VaultUtils.isServer&&AttackTime == 1)
                     {
                         Vector2 dir = (Projectile.rotation - 1.57f).ToRotationVector2();
                         offset = -dir * 128;
@@ -244,6 +249,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void AI()
         {
+            if (VaultUtils.isServer)
+                return;
+
             Projectile.rotation = Projectile.velocity.ToRotation();
 
             if (Projectile.timeLeft % 2 == 0)
@@ -279,7 +287,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void OnKill(int timeLeft)
         {
-            if (Projectile.owner == Main.myPlayer)
+            if (!VaultUtils.isServer)
             {
                 Projectile.NewProjectileFromThis<PinkDiamondExplosion>(Projectile.Center, Vector2.Zero
                     , Projectile.damage, Projectile.knockBack, Main.rand.NextFloat(6.282f));
@@ -508,6 +516,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Projectile.damage = (int)(Projectile.damage * 0.9f);
+            Projectile.netUpdate = true;
         }
 
         public override bool PreDraw(ref Color lightColor)

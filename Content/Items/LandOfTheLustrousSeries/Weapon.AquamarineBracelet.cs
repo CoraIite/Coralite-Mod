@@ -32,12 +32,6 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (Main.myPlayer != player.whoAmI)
-                return false;
-
-            if (player.altFunctionUse == 2)
-                return false;
-
             if (player.ownedProjectileCounts[type] < 1)
                 Projectile.NewProjectile(source, position, Vector2.Zero, type, 0, knockback, player.whoAmI);
             else
@@ -142,7 +136,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void BeforeMove()
         {
-            if ((int)Main.timeForVisualEffects % 20 == 0 && Main.rand.NextBool(2))
+            if (!VaultUtils.isServer&&(int)Main.timeForVisualEffects % 20 == 0 && Main.rand.NextBool(2))
             {
                 float length = Main.rand.NextFloat(16, 32);
                 Color c = Main.rand.NextFromList(Color.White, AquamarineProj.brightC, AquamarineProj.highlightC);
@@ -172,11 +166,12 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             if (AttackTime > 0)
             {
-                Vector2 dir = Main.MouseWorld - Projectile.Center;
+                Vector2 dir = InMousePos - Projectile.Center;
                 if (dir.Length() < 48)
                     idlePos += dir;
                 else
                     idlePos += dir.SafeNormalize(Vector2.Zero) * 48;
+                Projectile.netUpdate = true;
             }
 
             TargetPos = Vector2.SmoothStep(TargetPos, idlePos, 0.3f);
@@ -189,7 +184,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             if (AttackTime > 0)
             {
-                if (AttackTime % 7 == 0)
+                if (!VaultUtils.isServer && AttackTime % 7 == 0)
                 {
                     Color c = Main.rand.NextFromList(AquamarineProj.brightC, AquamarineProj.highlightC, Main.DiscoColor);
                     LightLine ll = LightLine.Spwan(Projectile.Center + ((Projectile.rotation + MathHelper.PiOver2).ToRotationVector2() * 10), Vector2.Zero, c,
@@ -203,7 +198,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 }
 
                 Projectile.rotation = MathF.Sin((1 - (AttackTime / Owner.itemTimeMax)) * MathHelper.TwoPi) * 0.5f;
-                if ((int)AttackTime % (Owner.itemTimeMax / 3) == 0 && Owner.CheckMana(Item.mana, true))
+                if (!VaultUtils.isServer && (int)AttackTime % (Owner.itemTimeMax / 3) == 0 && Owner.CheckMana(Item.mana, true))
                 {
                     Owner.manaRegenDelay = 40;
 
@@ -278,7 +273,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void AI()
         {
-            if (trail == null)
+            if (!VaultUtils.isServer&&trail == null)
             {
                 const int maxPoint = 12;
                 trail ??= new Trail(Main.graphics.GraphicsDevice, maxPoint, new EmptyMeshGenerator()
@@ -307,6 +302,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                         Projectile.Kill();
                     break;
             }
+
+            if (VaultUtils.isServer)
+                return;
 
             if (Projectile.timeLeft % 3 == 0)
                 SpawnTriangleParticle(Projectile.Center + Main.rand.NextVector2Circular(12, 12), Projectile.velocity * Main.rand.NextFloat(0.2f, 0.4f));
@@ -414,6 +412,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             if (Projectile.velocity.Y != oldVelocity.Y)
                 Projectile.velocity.Y = oldVelocity.Y * -0.8f;
+
+            Projectile.netUpdate = true;
             return false;
         }
 
