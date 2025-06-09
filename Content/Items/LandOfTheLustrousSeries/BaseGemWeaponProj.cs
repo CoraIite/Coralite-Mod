@@ -63,6 +63,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public virtual void StartAttack()
         {
             AttackTime = Owner.itemTimeMax;
+            Projectile.netUpdate = true;
         }
     }
 }

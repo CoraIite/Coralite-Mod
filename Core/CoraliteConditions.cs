@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Biomes;
+using Coralite.Content.CoraliteNotes;
 using Coralite.Content.WorldGeneration;
 using Coralite.Core.Systems.BossSystems;
 using Coralite.Core.Systems.MagikeSystem;
@@ -19,6 +20,7 @@ namespace Coralite.Core
         public static Condition NotInDigDigDig { get; private set; }
         public static Condition UseMultiBlockStructure { get; private set; }
         public static Condition UseShlimmerTranslation { get; private set; }
+        public static Condition FullCollectHephaesth { get; private set; }
 
         public static Condition InMagicCrystalCave { get; private set; }
         public static Condition InCrystallineSkyIsland { get; private set; }
@@ -102,6 +104,8 @@ namespace Coralite.Core
                 , () => false);
             UseShlimmerTranslation = new(this.GetLocalization(nameof(UseShlimmerTranslation))
                 , () => false);
+            FullCollectHephaesth = new(this.GetLocalization(nameof(FullCollectHephaesth))
+                , () => CoraliteNoteSystem.CollectRewards[(int)CoraliteNoteSystem.RewardType.FlyingShield]);
 
             UnlockDyeTrder = new(this.GetLocalization(nameof(UnlockDyeTrder))
                 , () => NPC.unlockedDyeTraderSpawn);

@@ -42,6 +42,7 @@ Conditions: {
 		DownedThunderveinDragon: Requires defeating Thundervein Wyvern
 		DownedNightmarePlantera: Requires defeating Nightmare Plantera
 		DownedBabyIceDragon: Requires defeating Baby Ice Dragon
+		FullCollectHephaesth: Mods.Coralite.Conditions.CoraliteConditions.FullCollectHephaesth
 	}
 }
 

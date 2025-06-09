@@ -6048,3 +6048,18 @@ ZenithRelic: {
 	DisplayName: 天顶剑圣物
 	Tooltip: ""
 }
+
+HephaesthChestplate: {
+	DisplayName: 心炉装甲
+	Tooltip: “胸口如太阳般炽热！”
+}
+
+HephaesthGreave: {
+	DisplayName: 心炉护胫
+	Tooltip: “保温效果极佳”
+}
+
+HephaesthHelmet: {
+	DisplayName: 心炉重盔
+	Tooltip: “除了视物孔，其他地方严丝合缝”
+}

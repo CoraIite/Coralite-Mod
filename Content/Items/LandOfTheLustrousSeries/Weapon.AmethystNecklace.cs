@@ -194,13 +194,13 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             if (AttackTime > 0)
             {
+                factorTop = 1 - (AttackTime / Owner.itemTimeMax);
+                LengthToCenter = Helper.Lerp(54, 32, factorTop);
+                Rot += 0.05f + ((1 - factorTop) * 0.2f);
+
                 if (Projectile.IsOwnedByLocalPlayer())
-                {
-                    factorTop = 1 - (AttackTime / Owner.itemTimeMax);
-                    LengthToCenter = Helper.Lerp(54, 32, factorTop);
-                    Rot += 0.05f + ((1 - factorTop) * 0.2f);
                     Projectile.netUpdate = true;
-                }
+
                 Projectile.rotation = Projectile.rotation.AngleLerp((InMousePos - Projectile.Center).ToRotation(), 0.2f);
                 if (AttackTime == 1)//生成射线
                 {

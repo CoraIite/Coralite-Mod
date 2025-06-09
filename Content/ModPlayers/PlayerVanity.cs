@@ -53,6 +53,9 @@ namespace Coralite.Content.ModPlayers
                 }
             }
 
+            if (HasEffect(nameof(HephaesthChestplate)))
+                drawInfo.bodyGlowColor = Color.White * (0.7f + MathF.Sin(Main.GlobalTimeWrappedHourly*3) * 0.3f);
+
             if (SlimeDraw)//傻逼中的傻逼写法
             {
                 Color targetColor = Color.Lerp(new Color(50, 150, 225, 80), new Color(255, 51, 234, 80), 0.5f + 0.5f * MathF.Sin(0.06f * (int)Main.timeForVisualEffects));

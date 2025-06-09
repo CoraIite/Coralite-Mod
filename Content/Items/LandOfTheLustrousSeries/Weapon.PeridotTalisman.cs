@@ -92,6 +92,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
     {
         public override string Texture => AssetDirectory.LandOfTheLustrousSeriesItems + Name;
 
+        public override bool CanFire => AttackTime > 0;
+
         public override void SetStaticDefaults()
         {
             Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 4);
@@ -130,14 +132,15 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     idlePos += new Vector2(0, -4);
             }
 
-            if (AttackTime != 0)
+            if (AttackTime > 0)
             {
-                Vector2 dir = Main.MouseWorld - Projectile.Center;
+                Vector2 dir = InMousePos - Projectile.Center;
 
                 if (dir.Length() < 80)
                     idlePos += dir;
                 else
                     idlePos += dir.SafeNormalize(Vector2.Zero) * 80;
+                Projectile.netUpdate = true;
             }
 
             TargetPos = Vector2.Lerp(TargetPos, idlePos, 0.3f);
@@ -196,15 +199,15 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public static Color darkC = new(70, 126, 0);
 
         public ref float State => ref Projectile.ai[0];
-        public ref float Timer => ref Projectile.ai[1];
+        public ref float Timer => ref Projectile.localAI[0];
 
         public Vector2 TargetPos
         {
-            get => new(Projectile.localAI[0], Projectile.localAI[1]);
+            get => new(Projectile.ai[1], Projectile.ai[2]);
             set
             {
-                Projectile.localAI[0] = value.X;
-                Projectile.localAI[1] = value.Y;
+                Projectile.ai[1] = value.X;
+                Projectile.ai[2] = value.Y;
             }
         }
 
@@ -246,7 +249,11 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 if (Timer > 10)
                 {
                     State = 1;
-                    TargetPos = Main.MouseWorld;
+                    if (Projectile.IsOwnedByLocalPlayer())
+                    {
+                        Projectile.netUpdate = true;
+                        TargetPos = Main.MouseWorld;
+                    }
                 }
             }
             else
@@ -439,6 +446,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                                 Projectile.timeLeft = 600;
                                 Projectile.extraUpdates = 1;
                                 Alpha = 1;
+                                Projectile.netUpdate = true;
                             }
 
                             Alpha -= 1 / 60f;

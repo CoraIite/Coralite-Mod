@@ -34,12 +34,6 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (Main.myPlayer != player.whoAmI)
-                return false;
-
-            if (player.altFunctionUse == 2)
-                return false;
-
             if (player.ownedProjectileCounts[type] < 1)
                 Projectile.NewProjectile(source, position, Vector2.Zero, type, 0, knockback, player.whoAmI);
             else
@@ -97,6 +91,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
     {
         public override string Texture => AssetDirectory.LandOfTheLustrousSeriesItems + Name;
 
+        public override bool CanFire => AttackTime>0;
+
         public Vector2 scale = Vector2.One;
 
         public override void SetStaticDefaults()
@@ -136,11 +132,12 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             if (AttackTime > 0)
             {
-                Vector2 dir = Main.MouseWorld - Projectile.Center;
+                Vector2 dir = InMousePos - Projectile.Center;
                 if (dir.Length() < 48)
                     idlePos += dir;
                 else
                     idlePos += dir.SafeNormalize(Vector2.Zero) * 48;
+                Projectile.netUpdate = true;
             }
 
             TargetPos = Vector2.SmoothStep(TargetPos, idlePos, 0.3f);

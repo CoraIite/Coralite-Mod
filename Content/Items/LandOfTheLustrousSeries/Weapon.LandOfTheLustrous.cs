@@ -7,11 +7,13 @@ using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.SmoothFunctions;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using InnoVault.PRT;
 using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
@@ -122,7 +124,11 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
     {
         public override string Texture => AssetDirectory.LandOfTheLustrousSeriesItems + Name;
 
+        public override bool CanFire => AttackTime>0;
+
         public int itemType;
+
+        private bool netNewDrawer;
 
         public static ATex HaloTex;
         public ref float Scale => ref Projectile.localAI[2];
@@ -187,6 +193,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             positionSmoother ??= new SecondOrderDynamics_Vec2(1f, 0.5f, 0, Projectile.Center);
             rotationSmoother ??= new SecondOrderDynamics_Float(1f, 0.75f, 0, 0);
+            
             if (oldDirections == null)
             {
                 oldDirections = new int[30];
@@ -265,8 +272,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             else
             {
                 selfRot = selfRot.AngleLerp(0, 0.2f);
-                idlePos += (Main.MouseWorld - Owner.Center).SafeNormalize(Vector2.Zero) * 16;
-                direction = Math.Sign(Main.MouseWorld.X - Projectile.Center.X);
+                idlePos += (InMousePos - Owner.Center).SafeNormalize(Vector2.Zero) * 16;
+                direction = Math.Sign(InMousePos.X - Projectile.Center.X);
+                Projectile.netUpdate = true;
             }
 
             TargetPos = Vector2.Lerp(TargetPos, idlePos, 0.3f);
@@ -291,7 +299,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 int per = Owner.itemTimeMax / 3;
                 if ((int)AttackTime % per == 0 && AttackTime > 0)
                 {
-                    if (Projectile.IsOwnedByLocalPlayer())
+                    if (!VaultUtils.isServer)
                     {
                         float angle = Projectile.rotation;
                         int time = 3 - (int)(AttackTime / per);
@@ -342,7 +350,29 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public override void StartAttack()
         {
             base.StartAttack();
+            netNewDrawer = true;
             Draws.Add(new LandOfTheLustrousData(Projectile.rotation + 1));
+        }
+
+        public override BitsByte SandBitsByte(BitsByte flags)
+        {
+            var b = base.SandBitsByte(flags);
+            b[2] = netNewDrawer;
+            netNewDrawer = false;
+
+            return b;
+        }
+
+        public override void ReceiveBitsByte(BitsByte flags)
+        {
+            base.ReceiveBitsByte(flags);
+            netNewDrawer = flags[2];
+
+            if (netNewDrawer && VaultUtils.isClient)
+            {
+                Draws.Add(new LandOfTheLustrousData(Projectile.rotation + 1));
+                netNewDrawer = false;
+            }
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -392,7 +422,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
     /// <summary>
     /// 使用ai0传入贴图类型，ai1为1时表示为闪光弹幕，ai2传入主人
     /// </summary>
-    public class LustrousProj : ModProjectile, IDrawPrimitive, IDrawNonPremultiplied
+    public class LustrousProj : BaseHeldProj, IDrawPrimitive, IDrawNonPremultiplied
     {
         public override string Texture => AssetDirectory.Blank;
 
@@ -574,7 +604,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                             }
                         }
 
-                        Vector2 targetCenter = Main.MouseWorld;
+                        Vector2 targetCenter = InMousePos;
 
                         if (Target.GetNPCOwner(out NPC target))
                         {
@@ -646,7 +676,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Projectile.UpdateFrameNormally(8, 19);
         }
 
-        public void Initialize()
+        public override void Initialize()
         {
             if (init)
             {

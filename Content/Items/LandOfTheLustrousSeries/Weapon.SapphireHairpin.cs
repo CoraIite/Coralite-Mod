@@ -94,6 +94,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
     {
         public override string Texture => AssetDirectory.LandOfTheLustrousSeriesItems + Name;
 
+        public override bool CanFire => AttackTime > 0;
+
         public override void SetStaticDefaults()
         {
             Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 4);
@@ -134,12 +136,13 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             if (AttackTime != 0)
             {
-                Vector2 dir = Main.MouseWorld - Projectile.Center;
+                Vector2 dir = InMousePos - Projectile.Center;
 
                 if (dir.Length() < 80)
                     idlePos += dir;
                 else
                     idlePos += dir.SafeNormalize(Vector2.Zero) * 80;
+                Projectile.netUpdate = true;
             }
 
             TargetPos = Vector2.Lerp(TargetPos, idlePos, 0.3f);
@@ -473,7 +476,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public override void AI()
         {
             const int TrailCount = 24;
-            if (trail == null)
+            if (!VaultUtils.isServer && trail == null)
             {
                 oldPos2 = new Vector2[TrailCount];
                 _vertexStrip = new VertexStrip();
@@ -537,6 +540,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     }
                     break;
             }
+
+            if (VaultUtils.isServer)
+                return;
 
             if (Projectile.timeLeft % 4 == 0)
                 SapphireProj.SpawnTriangleParticle(Projectile.Center + Main.rand.NextVector2Circular(12, 12), Projectile.velocity * Main.rand.NextFloat(0.2f, 0.4f));

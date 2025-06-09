@@ -668,7 +668,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             Item i = controller[index];
 
             //设置白名单物品
-            if (!i.IsAir && i.ModItem is Mabird mabird)
+            if (!i.IsAir && i.ModItem is Mabird mabird && mabird.WhiteListItem != null)
             {
                 Helper.PlayPitched(CoraliteSoundID.Grab);
                 mabird.WhiteListItem.TurnToAir();

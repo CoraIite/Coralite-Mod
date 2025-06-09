@@ -29,9 +29,6 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (Main.myPlayer != player.whoAmI)
-                return false;
-
             if (player.ownedProjectileCounts[type] < 1)
                 Projectile.NewProjectile(source, position, Vector2.Zero, type, 0, knockback, player.whoAmI);
             else
@@ -103,6 +100,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void BeforeMove()
         {
+            if (VaultUtils.isServer)
+                return;
+
             if ((int)Main.timeForVisualEffects % 30 == 0 && Main.rand.NextBool(2))
             {
                 float length = Main.rand.NextFloat(24, 32);
@@ -136,12 +136,13 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             if (AttackTime != 0)
             {
-                Vector2 dir = Main.MouseWorld - Projectile.Center;
+                Vector2 dir = InMousePos- Projectile.Center;
 
                 if (dir.Length() < 48)
                     idlePos += dir;
                 else
                     idlePos += dir.SafeNormalize(Vector2.Zero) * 48;
+                Projectile.netUpdate = true;
             }
 
             TargetPos = Vector2.Lerp(TargetPos, idlePos, 0.3f);
@@ -155,7 +156,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             {
                 Projectile.rotation = Helper.Lerp(0, MathHelper.Pi, Helper.SqrtEase(1 - (AttackTime / Owner.itemTimeMax)));
 
-                if (AttackTime == 1 && Projectile.IsOwnedByLocalPlayer())
+                if (AttackTime == 1 && !VaultUtils.isServer)
                 {
                     Projectile.NewProjectileFromThis<ZumurudProj>(Projectile.Center,
                         (Main.MouseWorld - Projectile.Center).SafeNormalize(Vector2.Zero) * 9.5f, Owner.GetWeaponDamage(Item), Projectile.knockBack);
@@ -219,7 +220,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void AI()
         {
-            if (Projectile.localAI[0] == 0)
+            if (!VaultUtils.isServer&&Projectile.localAI[0] == 0)
             {
                 Projectile.InitOldPosCache(16);
                 Projectile.InitOldRotCache(16);
@@ -248,6 +249,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 }
             }
 
+            if (VaultUtils.isServer)
+                return;
+
             if (Projectile.timeLeft % 4 == 0)
                 SpawnTriangleParticle(Projectile.Center + Main.rand.NextVector2Circular(12, 12), Projectile.velocity * Main.rand.NextFloat(0.2f, 0.4f));
             if (Main.rand.NextBool(6))
@@ -274,6 +278,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             Hit = 1;
             Projectile.velocity = Projectile.velocity.RotateByRandom(MathHelper.Pi - 0.5f, MathHelper.Pi + 0.5f) * Main.rand.NextFloat(0.6f, 0.8f);
+            Projectile.netUpdate = true;
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)
@@ -285,6 +290,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             if (Projectile.velocity.Y != oldVelocity.Y)
                 Projectile.velocity.Y = oldVelocity.Y * -0.8f;
+
+            Projectile.netUpdate = true;
 
             return false;
         }
@@ -432,6 +439,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             if (Projectile.velocity.Y != oldVelocity.Y)
                 Projectile.velocity.Y = oldVelocity.Y * -0.8f;
+
+            Projectile.netUpdate = true;
 
             return false;
         }
