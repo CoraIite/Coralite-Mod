@@ -6016,3 +6016,18 @@ ZenithRelic: {
 	DisplayName: Zenith Relic
 	Tooltip: ""
 }
+
+HephaesthChestplate: {
+	DisplayName: Furnace Chestplate
+	Tooltip: "'My heart is like the sun!'"
+}
+
+HephaesthGreave: {
+	DisplayName: Furnace Greave
+	Tooltip: "'Excellent insulation effect'"
+}
+
+HephaesthHelmet: {
+	DisplayName: Furnace Helmet
+	Tooltip: "'It's tightly sealed except the sight hole'"
+}

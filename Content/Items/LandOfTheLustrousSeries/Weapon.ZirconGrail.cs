@@ -95,6 +95,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
     {
         public override string Texture => AssetDirectory.LandOfTheLustrousSeriesItems + "ZirconGrail";
 
+        public override bool CanFire => AttackTime>0;
+
         public override void SetStaticDefaults()
         {
             Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 4);
@@ -132,11 +134,12 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             if (AttackTime > 0)
             {
-                Vector2 dir = Main.MouseWorld - Projectile.Center;
+                Vector2 dir = InMousePos - Projectile.Center;
                 if (dir.Length() < 48)
                     idlePos += dir;
                 else
                     idlePos += dir.SafeNormalize(Vector2.Zero) * 48;
+                Projectile.netUpdate = true;
             }
 
             TargetPos = Vector2.SmoothStep(TargetPos, idlePos, 0.3f);
@@ -153,7 +156,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     DustID.Torch, -Vector2.UnitY * Main.rand.NextFloat(3, 6));
                 d.noGravity = true;
 
-                if (AttackTime == 1)
+                if (Projectile.IsOwnedByLocalPlayer()&&AttackTime == 1)
                 {
                     for (int i = 0; i < 3; i++)
                     {
@@ -246,32 +249,35 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 State = 2;
                 Projectile.velocity *= 0;
             }
+
+            Projectile.netUpdate = true;
         }
 
         public override void AI()
         {
-            if (fireParticles == null)
+            if (!VaultUtils.isServer && fireParticles == null)
             {
                 fireParticles = new PrimitivePRTGroup();
                 Projectile.InitOldPosCache(trailPoint);
-                Projectile.localAI[1] = Main.rand.NextFloat(-0.01f, 0.01f);
+                Projectile.ai[2] = Main.rand.NextFloat(-0.01f, 0.01f);
                 FlyingTime = 20 * 5;
+                Projectile.netUpdate = true;
             }
 
-            trail ??= new Trail(Main.instance.GraphicsDevice, trailPoint, new EmptyMeshGenerator(), factor =>
-            {
-                if (factor < 0.8f)
-                    return Helper.Lerp(6, 8, factor / 0.8f);
+            if (!VaultUtils.isServer)
+                trail ??= new Trail(Main.instance.GraphicsDevice, trailPoint, new EmptyMeshGenerator(), factor =>
+                {
+                    if (factor < 0.8f)
+                        return Helper.Lerp(6, 8, factor / 0.8f);
 
-                return Helper.Lerp(12, 0, (factor - 0.8f) / 0.2f);
-            }, ColorFunc1);
+                    return Helper.Lerp(12, 0, (factor - 0.8f) / 0.2f);
+                }, ColorFunc1);
 
             switch (State)
             {
                 default:
                 case 0://下落
                     {
-                        Lighting.AddLight(Projectile.Center, new Vector3(0.5f));
                         if (Helper.TryFindClosestEnemy(Projectile.Center, 1000, n => n.CanBeChasedBy() && Projectile.localNPCImmunity.IndexInRange(n.whoAmI) && Projectile.localNPCImmunity[n.whoAmI] == 0, out NPC target))
                         {
                             float selfAngle = Projectile.velocity.ToRotation();
@@ -280,7 +286,11 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                             Projectile.velocity = selfAngle.AngleLerp(targetAngle, 0.2f + (0.8f * Math.Clamp((chaseTime - 30) / 30, 0, 1f))).ToRotationVector2() * Projectile.velocity.Length();
                         }
 
-                        SpawnDusts(1 - (0.3f * Timer / FlyingTime));
+                        if (!VaultUtils.isServer)
+                        {
+                            Lighting.AddLight(Projectile.Center, new Vector3(0.5f));
+                            SpawnDusts(1 - (0.3f * Timer / FlyingTime));
+                        }
 
                         Timer++;
                         chaseTime++;
@@ -294,13 +304,17 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     break;
                 case 1:
                     {
-                        Projectile.localAI[0] += Projectile.localAI[1];
+                        Projectile.localAI[0] += Projectile.ai[2];
                         Projectile.velocity = Projectile.velocity.RotatedBy(Projectile.localAI[0]);
                         Projectile.velocity *= 0.97f;
 
-                        SpawnDusts(0.7f);
+                        if (!VaultUtils.isServer)
+                        {
+                            SpawnDusts(0.7f);
 
-                        Lighting.AddLight(Projectile.Center, new Vector3(0.5f));
+                            Lighting.AddLight(Projectile.Center, new Vector3(0.5f));
+                        }
+
                         Timer++;
                         if (Timer > 15)
                         {
@@ -311,7 +325,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     break;
                 case 2://他紫砂了
                     {
-                        if (!fireParticles.Any())
+                        if (!VaultUtils.isServer&&!fireParticles.Any())
                         {
                             Projectile.Kill();
                             return;
@@ -319,6 +333,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     }
                     break;
             }
+
+            if (VaultUtils.isServer)
+                return;
 
             Projectile.UpdateOldPosCache();
             trail.TrailPositions = Projectile.oldPos;

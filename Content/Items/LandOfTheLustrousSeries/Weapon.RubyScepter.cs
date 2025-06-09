@@ -32,9 +32,6 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (Main.myPlayer != player.whoAmI)
-                return false;
-
             if (player.ownedProjectileCounts[type] < 1)
                 Projectile.NewProjectile(source, position, Vector2.Zero, type, 0, knockback, player.whoAmI);
             else
@@ -92,6 +89,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
     {
         public override string Texture => AssetDirectory.LandOfTheLustrousSeriesItems + "RubyScepter";
 
+        public override bool CanFire => AttackTime > 0;
+
         public override void SetStaticDefaults()
         {
             Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 4);
@@ -132,12 +131,13 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             if (AttackTime != 0)
             {
-                Vector2 dir = Main.MouseWorld - Projectile.Center;
+                Vector2 dir = InMousePos - Projectile.Center;
 
                 if (dir.Length() < 48)
                     idlePos += dir;
                 else
                     idlePos += dir.SafeNormalize(Vector2.Zero) * 48;
+                Projectile.netUpdate = true;
             }
 
             TargetPos = Vector2.Lerp(TargetPos, idlePos, 0.3f);
@@ -149,9 +149,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             if (AttackTime > 0)
             {
-                if (AttackTime == 1 && Projectile.IsOwnedByLocalPlayer())
+                if (AttackTime == 1 && !VaultUtils.isServer)
                 {
-                    Vector2 dir2 = (Main.MouseWorld - Projectile.Center).SafeNormalize(Vector2.Zero);
+                    Vector2 dir2 = (InMousePos - Projectile.Center).SafeNormalize(Vector2.Zero);
 
                     Projectile.NewProjectileFromThis<RubyLaser>(Projectile.Center,
                            Vector2.Zero, Owner.GetWeaponDamage(Item)
@@ -233,7 +233,11 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 return;
 
             Projectile.Center = owner.Center + new Vector2(0, -16);
-            LaserRotation = LaserRotation.AngleLerp((Main.MouseWorld - Projectile.Center).ToRotation(), 0.08f);
+            if (Projectile.IsOwnedByLocalPlayer())
+            {
+                Projectile.netUpdate = true;
+                LaserRotation = LaserRotation.AngleLerp((Main.MouseWorld - Projectile.Center).ToRotation(), 0.08f);
+            }
 
             GetEndPoint(90);
             LaserAI();
@@ -351,6 +355,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             Projectile.damage = (int)(Projectile.damage * 0.85f);
+            Projectile.netUpdate = true;
         }
 
         public override bool PreDraw(ref Color lightColor) => false;
@@ -463,7 +468,11 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 Projectile.tileCollide = true;
                 Timer--;
                 Projectile.rotation += Projectile.velocity.X / 8;
-                LaserRotation = LaserRotation.AngleLerp((Main.MouseWorld - Projectile.Center).ToRotation(), 0.14f);
+                if (Projectile.IsOwnedByLocalPlayer())
+                {
+                    Projectile.netUpdate = true;
+                    LaserRotation = LaserRotation.AngleLerp((Main.MouseWorld - Projectile.Center).ToRotation(), 0.14f);
+                }
 
                 if (Timer < 1)
                 {
@@ -483,7 +492,12 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             }
             else
             {
-                LaserRotation = LaserRotation.AngleLerp((Main.MouseWorld - Projectile.Center).ToRotation(), 0.02f);
+                if (Projectile.IsOwnedByLocalPlayer())
+                {
+                    Projectile.netUpdate = true;
+                    LaserRotation = LaserRotation.AngleLerp((Main.MouseWorld - Projectile.Center).ToRotation(), 0.02f);
+                }
+
                 GetEndPoint(40);
                 LaserAI();
             }
@@ -506,6 +520,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             if (Projectile.velocity.Y != oldVelocity.Y)
                 Projectile.velocity.Y = oldVelocity.Y * -0.8f;
 
+            Projectile.netUpdate = true;
             return false;
         }
 

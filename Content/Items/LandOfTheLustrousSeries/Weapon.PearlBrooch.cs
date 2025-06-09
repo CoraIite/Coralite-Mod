@@ -135,6 +135,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public ref float ShootAngle => ref Projectile.ai[1];
 
+        public override bool CanFire => AttackTime>0;
+
         public override void SetStaticDefaults()
         {
             Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 5);
@@ -175,7 +177,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             if (AttackTime != 0)
             {
-                Vector2 dir = Main.MouseWorld - Owner.Center;
+                Vector2 dir = InMousePos - Owner.Center;
                 Vector2 dirN = dir.SafeNormalize(Vector2.Zero);
 
                 if (dir.Length() < 128 / 16 * 4)
@@ -188,6 +190,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
                         idlePos += dirN * 4;
                     }
+
+                Projectile.netUpdate = true;
             }
             else
             {
@@ -204,7 +208,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             if (AttackTime > 0)
             {
                 Projectile.rotation = MathF.Sin((1 - (AttackTime / Owner.itemTimeMax)) * MathHelper.TwoPi) * 0.3f;
-                if ((int)AttackTime == 1)
+                if ((int)AttackTime == 1&&!VaultUtils.isServer)
                 {
                     ShootAngle++;
                     float factor = MathF.Sin(ShootAngle * 0.7f);
@@ -286,7 +290,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void AI()
         {
-            if (Projectile.localAI[2] == 0)
+            if (!VaultUtils.isServer&&Projectile.localAI[2] == 0)
             {
                 _vertexStrip = new VertexStrip();
                 Projectile.localAI[2] = 1;
@@ -306,23 +310,28 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     break;
                 case 1://下落
                     {
-                        float xLength = Main.MouseWorld.X - Projectile.Center.X;
-                        float yLength = Main.MouseWorld.Y - Projectile.Center.Y;
-                        int dir = Math.Sign(xLength);
-                        int diry = Math.Sign(yLength);
+                        if (Projectile.IsOwnedByLocalPlayer())
+                        {
+                            float xLength = Main.MouseWorld.X - Projectile.Center.X;
+                            float yLength = Main.MouseWorld.Y - Projectile.Center.Y;
+                            int dir = Math.Sign(xLength);
+                            int diry = Math.Sign(yLength);
 
-                        if (Math.Abs(xLength) < 24)
-                            Projectile.velocity.X *= 0.85f;
-                        else
-                            Helper.Movement_SimpleOneLine(ref Projectile.velocity.X, dir, 14f, 0.35f, 0.65f, 0.97f);
+                            if (Math.Abs(xLength) < 24)
+                                Projectile.velocity.X *= 0.85f;
+                            else
+                                Helper.Movement_SimpleOneLine(ref Projectile.velocity.X, dir, 14f, 0.35f, 0.65f, 0.97f);
 
-                        if (Math.Abs(yLength) < 24)
-                            Projectile.velocity.X *= 0.99f;
-                        else
-                            Helper.Movement_SimpleOneLine(ref Projectile.velocity.Y, diry, 10f, 0.3f, 0.6f, 0.97f);
+                            if (Math.Abs(yLength) < 24)
+                                Projectile.velocity.X *= 0.99f;
+                            else
+                                Helper.Movement_SimpleOneLine(ref Projectile.velocity.Y, diry, 10f, 0.3f, 0.6f, 0.97f);
 
-                        if (Vector2.Distance(Main.MouseWorld, Projectile.Center) < 128)
-                            Timer++;
+                            if (Vector2.Distance(Main.MouseWorld, Projectile.Center) < 128)
+                                Timer++;
+
+                            Projectile.netUpdate = true;
+                        }
 
                         if (Timer > 20)
                             Projectile.Kill();
@@ -359,6 +368,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
                 if (Projectile.velocity.Y != oldVelocity.Y)
                     Projectile.velocity.Y = oldVelocity.Y * -0.8f;
+
+                Projectile.netUpdate = true;
 
                 return false;
             }
