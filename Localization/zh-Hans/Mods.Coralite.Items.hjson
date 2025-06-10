@@ -895,11 +895,7 @@ TinRing: {
 
 IronRing: {
 	DisplayName: 铁戒指
-	Tooltip:
-		'''
-		伤害减免 +4%
-		移动速度 -10%
-		'''
+	Tooltip: +1 仙灵捕捉力
 }
 
 LeadRing: {
@@ -907,8 +903,7 @@ LeadRing: {
 	Tooltip:
 		'''
 		“你确定要用这种金属做首饰？”
-		伤害减免 +4%
-		移动速度 -10%
+		+1 仙灵捕捉力
 		'''
 }
 
@@ -3446,7 +3441,7 @@ OpalTower: {
 
 ElfEmblem: {
 	DisplayName: 妖精徽章
-	Tooltip: 捕捉力增加15%
+	Tooltip: 妖精伤害增加15%
 }
 
 DryIce: {
@@ -6062,4 +6057,24 @@ HephaesthGreave: {
 HephaesthHelmet: {
 	DisplayName: 心炉重盔
 	Tooltip: “除了视物孔，其他地方严丝合缝”
+}
+
+GoldRing: {
+	DisplayName: 金戒指
+	Tooltip: "+3 仙灵捕捉力"
+}
+
+PlatinumRing: {
+	DisplayName: 铂金戒指
+	Tooltip: "+3 仙灵捕捉力"
+}
+
+SilverRing: {
+	DisplayName: 银戒指
+	Tooltip: "+2 仙灵捕捉力"
+}
+
+TungstenRing: {
+	DisplayName: 钨戒指
+	Tooltip: "+2 仙灵捕捉力"
 }

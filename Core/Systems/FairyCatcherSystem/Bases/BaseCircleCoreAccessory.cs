@@ -7,11 +7,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
     /// <summary>
     /// 自定义捕捉环饰品的基类
     /// </summary>
-    public abstract class BaseCircleCoreAccessory : ModItem
+    public abstract class BaseCircleCoreAccessory<T> : ModItem where T : FairyCircleCore
     {
         public override string Texture => AssetDirectory.FairyCircleCore + Name;
 
-        public abstract int CircleCoreType { get; }
+        public virtual int CircleCoreType { get => CoraliteContent.FairyCircleCoreType<T>(); }
         public virtual int CircleRadiusBonus => 0;
 
         public sealed override void SetDefaults()

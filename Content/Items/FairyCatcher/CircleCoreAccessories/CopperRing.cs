@@ -1,13 +1,10 @@
-﻿using Coralite.Core;
-using Coralite.Core.Systems.FairyCatcherSystem;
-using Coralite.Core.Systems.FairyCatcherSystem.Bases;
+﻿using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using Terraria;
 
 namespace Coralite.Content.Items.FairyCatcher.CircleCoreAccessories
 {
-    public class CopperRing : BaseCircleCoreAccessory
+    public class CopperRing : BaseCircleCoreAccessory<CopperCircleCore>
     {
-        public override int CircleCoreType => CoraliteContent.FairyCircleCoreType<CopperCircleCore>();
         public override int CircleRadiusBonus => 16;
 
         public override void SetDefaultsSafely()

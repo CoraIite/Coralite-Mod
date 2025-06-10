@@ -6068,3 +6068,23 @@ HephaesthHelmet: {
 	// DisplayName: Furnace Helmet
 	// Tooltip: "'It's tightly sealed except the sight hole'"
 }
+
+GoldRing: {
+	// DisplayName: Gold Ring
+	// Tooltip: ""
+}
+
+PlatinumRing: {
+	// DisplayName: Platinum Ring
+	// Tooltip: ""
+}
+
+SilverRing: {
+	// DisplayName: Silver Ring
+	// Tooltip: ""
+}
+
+TungstenRing: {
+	// DisplayName: Tungsten Ring
+	// Tooltip: ""
+}
