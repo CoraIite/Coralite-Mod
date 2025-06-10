@@ -1,14 +1,14 @@
 ﻿using Coralite.Content.DamageClasses;
-using Coralite.Core.Systems.FairyCatcherSystem;
-using Coralite.Core.Systems.FairyCatcherSystem.Bases;
+using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
 
-namespace Coralite.Core.Prefabs.Projectiles
+namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 {
     public abstract class BaseLassoSwing(short TrailLength) : BaseSwingProj(trailCount: TrailLength)
     {
@@ -18,9 +18,26 @@ namespace Coralite.Core.Prefabs.Projectiles
         /// 仙灵物品的type
         /// </summary>
         public ref float ItemType => ref Projectile.ai[0];
+        /// <summary>
+        /// 为1时会在挥动时执行捕捉功能
+        /// </summary>
+        public ref float Catch => ref Projectile.ai[1];
+
+        /// <summary>
+        /// 每次射出多少只仙灵
+        /// </summary>
+        public virtual int HowManyPerShoot { get => 2; }
+        /// <summary>
+        /// 连线的绘制有多少个点，越多越平滑
+        /// </summary>
+        public virtual int LinePointCount { get => 10; }
 
         public Vector2 CursorCenter => Projectile.Center;
-        public float cursorRotation;
+
+        /// <summary>
+        /// 用于控制线条的贝塞尔曲线绘制的点
+        /// </summary>
+        public Vector2 middlePos;
 
         /// <summary>
         /// 甩动时距离玩家的距离
@@ -41,6 +58,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             Projectile.width = 30;
             Projectile.height = 30;
             Projectile.hide = true;
+            Projectile.extraUpdates = 2;
             distanceToOwner = minDistance / 2;
             minTime = 0;
             useShadowTrail = true;
@@ -62,18 +80,18 @@ namespace Coralite.Core.Prefabs.Projectiles
             if (Projectile.IsOwnedByLocalPlayer())
                 Owner.direction = Main.MouseWorld.X > Owner.Center.X ? 1 : -1;
 
-            Projectile.extraUpdates = 2;
             delayTime *= Projectile.extraUpdates + 1;
             shootTime *= Projectile.extraUpdates + 1;
             startAngle = 1.57f;
             minTime = Owner.itemTimeMax * (Projectile.extraUpdates + 1);
             maxTime = minTime + shootTime;
             Smoother = Coralite.Instance.NoSmootherInstance;
+            middlePos = Projectile.Center;
 
             Projectile.velocity *= 0f;
             if (Owner.whoAmI == Main.myPlayer)
             {
-                _Rotation = GetStartAngle() - (DirSign * startAngle);//设定起始角度
+                _Rotation = GetStartAngle() - DirSign * startAngle;//设定起始角度
             }
 
             Smoother.ReCalculate(maxTime - minTime);
@@ -108,24 +126,40 @@ namespace Coralite.Core.Prefabs.Projectiles
         protected override void BeforeSlash()
         {
             //Projectile.Kill();
-            _Rotation = GetStartAngle() - (DirSign * (startAngle + (MathF.Sin(Timer / minTime * 2.5f * MathHelper.Pi) * 0.55f)));
-            distanceToOwner = Helper.Lerp(minDistance / 2, minDistance, Timer / minTime);
+            float factor = Timer / minTime;
+            _Rotation = GetStartAngle() - DirSign * (startAngle + factor * MathF.Sin(factor * 2.5f * MathHelper.Pi) * 1f);
+            distanceToOwner = Helper.Lerp(minDistance / 2, minDistance, factor);
             Slasher();
+
+            middlePos = OwnerCenter() + (GetStartAngle() - DirSign * (startAngle + factor * MathF.Sin(factor * 2.5f * MathHelper.Pi) * 0.75f)).ToRotationVector2() * distanceToOwner * factor;
 
             if ((int)Timer == minTime)
             {
                 startAngle = _Rotation;
-                totalAngle = (Main.MouseWorld - Owner.Center).ToRotation();
+                totalAngle = (InMousePos - Owner.Center).ToRotation();
             }
         }
 
         protected override void OnSlash()
         {
             float factor = (Timer - minTime) / shootTime;
-            factor = Helper.X2Ease(factor);
-            _Rotation = startAngle.AngleLerp(totalAngle, factor);
+            factor = Helper.X3Ease(factor);
+
+            //第一，二象限时不改变角度
+            int i = 1;
+            if (totalAngle < 0)
+                i = 0;
+            float trueTargetangle = totalAngle + Owner.direction * MathHelper.TwoPi * i;
+
+            _Rotation = startAngle.AngleLerp(trueTargetangle, factor);
             distanceToOwner = Helper.Lerp(minDistance, maxDistance, factor);
             Slasher();
+
+            middlePos = OwnerCenter()
+                + startAngle.AngleLerp(trueTargetangle, Helper.Lerp(factor,Helper.SqrtEase(factor),0.35f)).ToRotationVector2() * distanceToOwner * (0.5f + 0.5f * (1 - factor));
+
+            if (Catch == 1)
+                Helper.CheckCollideWithFairyCircle(Owner, Projectile.getRect());
         }
 
         protected override void AfterSlash()
@@ -138,6 +172,11 @@ namespace Coralite.Core.Prefabs.Projectiles
                 ShootFairy();
 
             Slasher();
+            middlePos = OwnerCenter() + _Rotation.ToRotationVector2() * distanceToOwner*0.5f;
+
+            if (Catch == 1)
+                Helper.CheckCollideWithFairyCircle(Owner, Projectile.getRect());
+
             if (Timer > maxTime + delayTime)
                 Projectile.Kill();
         }
@@ -145,10 +184,9 @@ namespace Coralite.Core.Prefabs.Projectiles
         protected override void Slasher()
         {
             RotateVec2 = _Rotation.ToRotationVector2();
-            Projectile.Center = OwnerCenter() + (oldRotate[^1].ToRotationVector2() * oldDistanceToOwner[^1]);
+            Projectile.Center = OwnerCenter() + oldRotate[^1].ToRotationVector2() * oldDistanceToOwner[^1];
             Projectile.rotation = _Rotation;
-            cursorRotation = oldRotate[^1];
-            Owner.itemLocation = Owner.Center + (RotateVec2 * 15);
+            Owner.itemLocation = Owner.Center + RotateVec2 * 15;
         }
 
         protected virtual void ShootFairy()
@@ -211,7 +249,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         /// <returns></returns>
         public virtual Vector2 GetHandlePos(Texture2D handleTex)
         {
-            return Owner.itemLocation + (RotateVec2 * DrawOriginOffsetX);
+            return Owner.itemLocation + RotateVec2 * handleTex.Size().Length() / 2;
         }
 
         /// <summary>
@@ -226,131 +264,65 @@ namespace Coralite.Core.Prefabs.Projectiles
         /// <summary>
         /// 绘制指针与手持物品间的连线
         /// </summary>
-        public virtual void DrawLine(Vector2 handlePos, Vector2 stringTipPos)
+        public virtual void DrawLine(Vector2 handlePos, Vector2 stringTipPos,out float rot)
         {
-            bool flag = true;
-            handlePos.Y += Owner.gfxOffY;
-
-            float distanceX = stringTipPos.X - handlePos.X;
-            float distanceY = stringTipPos.Y - handlePos.Y;
-            bool flag2 = true;
-            float rot = (float)Math.Atan2(distanceY, distanceX) - 1.57f;
-
             Texture2D stringTex = GetStringTex();
+            rot = 0;
 
-            float halfWidth = stringTex.Width / 2;
-            float halfHeight = stringTex.Height / 2;
-            Vector2 origin = new(halfWidth, 0f);
+            float halfLineWidth = stringTex.Height / 2;
 
-            if (distanceX == 0f && distanceY == 0f)
+            List<ColoredVertex> bars = new();
+
+            Vector2 recordPos = handlePos - Main.screenPosition;
+            float recordUV = 0;
+
+            //贝塞尔曲线
+            for (int i = 0; i < LinePointCount + 1; i++)
             {
-                flag = false;
+                float factor = (float)i / LinePointCount;
+
+                Vector2 P1 = Vector2.Lerp(handlePos, middlePos, factor);
+                Vector2 P2 = Vector2.Lerp(middlePos, stringTipPos, factor);
+
+                Vector2 Center = Vector2.Lerp(P1, P2, factor);
+                var Color = GetStringColor(Center);
+                Center -= Main.screenPosition;
+
+                Vector2 normal = (P2 - P1).SafeNormalize(Vector2.One).RotatedBy(MathHelper.PiOver2);
+                Vector2 Top = Center + normal * halfLineWidth;
+                Vector2 Bottom = Center - normal * halfLineWidth;
+
+                bars.Add(new(Top, Color, new Vector3(recordUV, 0, 1)));
+                bars.Add(new(Bottom, Color, new Vector3(recordUV, 1, 1)));
+
+                recordUV += (Center - recordPos).Length() / stringTex.Width;
+
+                if (i == LinePointCount)
+                    rot = (Center - recordPos).ToRotation();
+
+                recordPos = Center;
             }
-            else
-            {
-                float distance = (float)Math.Sqrt((distanceX * distanceX) + (distanceY * distanceY));
-                distance = stringTex.Height / distance;
-                distanceX *= distance;
-                distanceY *= distance;
-                handlePos.X -= distanceX * 0.1f;
-                handlePos.Y -= distanceY * 0.1f;
-                distanceX = stringTipPos.X - handlePos.X;
-                distanceY = stringTipPos.Y - handlePos.Y;
-            }
 
-            while (flag)
-            {
-                float sourceHeight = stringTex.Height;
-                float distance1 = (float)Math.Sqrt((distanceX * distanceX) + (distanceY * distanceY));
-                float distance2 = distance1;
-                if (float.IsNaN(distance1) || float.IsNaN(distance2))
-                {
-                    flag = false;
-                    continue;
-                }
-
-                if (distance1 < stringTex.Height + 8)
-                {
-                    sourceHeight = distance1 - 8f;
-                    flag = false;
-                }
-
-                distance1 = stringTex.Height / distance1;
-                distanceX *= distance1;
-                distanceY *= distance1;
-                if (flag2)
-                {
-                    flag2 = false;
-                }
-                else
-                {
-                    handlePos.X += distanceX;
-                    handlePos.Y += distanceY;
-                }
-
-                distanceX = stringTipPos.X - handlePos.X;
-                distanceY = stringTipPos.Y - handlePos.Y;
-                if (distance2 > stringTex.Height)
-                {
-                    float num9 = 0.3f;
-                    float num10 = Math.Abs(Owner.velocity.X) + Math.Abs(Owner.velocity.Y);
-                    if (num10 > 16f)
-                        num10 = 16f;
-
-                    num10 = 1f - (num10 / 16f);
-                    num9 *= num10;
-                    num10 = distance2 / 80f;
-                    if (num10 > 1f)
-                        num10 = 1f;
-
-                    num9 *= num10;
-                    if (num9 < 0f)
-                        num9 = 0f;
-
-                    num9 *= num10;
-                    num9 *= 0.5f;
-                    if (distanceY > 0f)
-                    {
-                        distanceY *= 1f + num9;
-                        distanceX *= 1f - num9;
-                    }
-                    else
-                    {
-                        num10 = Math.Abs(Owner.velocity.X) / 3f;
-                        if (num10 > 1f)
-                            num10 = 1f;
-
-                        num10 -= 0.5f;
-                        num9 *= num10;
-                        if (num9 > 0f)
-                            num9 *= 2f;
-
-                        distanceY *= 1f + num9;
-                        distanceX *= 1f - num9;
-                    }
-                }
-
-                rot = (float)Math.Atan2(distanceY, distanceX) - 1.57f;
-                Color c = GetStringColor(handlePos);
-
-                Main.EntitySpriteDraw(
-                    color: c, texture: stringTex,
-                    position: handlePos - Main.screenPosition + new Vector2(0, halfHeight), sourceRectangle: new Rectangle(0, 0, stringTex.Width, (int)sourceHeight), rotation: rot, origin: origin, scale: 1f, effects: SpriteEffects.None);
-            }
+            var state = Main.graphics.GraphicsDevice.SamplerStates[0];
+            Main.graphics.GraphicsDevice.Textures[0] = stringTex;
+            Main.graphics.GraphicsDevice.SamplerStates[0]=SamplerState.PointWrap;
+            Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars.ToArray(), 0, bars.Count - 2);
+            Main.graphics.GraphicsDevice.SamplerStates[0] = state;
         }
 
-        public virtual void DrawCursor(Texture2D cursorTex)
+        public virtual void DrawCursor(Texture2D cursorTex, float rotation)
         {
             var pos = CursorCenter - Main.screenPosition;
-            var origin = cursorTex.Size() / 2;
+            var origin = new Vector2(0, cursorTex.Height / 2);
+
             Main.spriteBatch.Draw(cursorTex, pos, null,
-                Lighting.GetColor(CursorCenter.ToTileCoordinates()), cursorRotation, origin, 1, 0, 0);
+                Lighting.GetColor(CursorCenter.ToTileCoordinates()), rotation, origin, 1, 0, 0);
         }
 
         public virtual void DrawHandle(Texture2D HandleTex)
         {
             Main.spriteBatch.Draw(HandleTex, Owner.itemLocation - Main.screenPosition, null,
-                Lighting.GetColor(Owner.Center.ToTileCoordinates()), _Rotation + (DirSign * spriteRotation), HandleTex.Size() / 2, 1f, Owner.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
+                Lighting.GetColor(Owner.Center.ToTileCoordinates()), _Rotation + DirSign * spriteRotation, HandleTex.Size() / 2, 1f, Owner.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
         }
 
         public virtual Color GetStringColor(Vector2 pos)
@@ -362,7 +334,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             return c;
         }
 
-        public virtual Texture2D GetStringTex() => TextureAssets.FishingLine.Value;
+        public virtual Texture2D GetStringTex() => FairySystem.DefaultLine.Value;
 
         public virtual void DrawFairyItem()
         {
@@ -390,10 +362,10 @@ namespace Coralite.Core.Prefabs.Projectiles
             Texture2D cursorTex = mainTex;
 
             //绘制连线
-            DrawLine(GetHandlePos(handleTex), GetStringTipPos(handleTex));
+            DrawLine(GetHandlePos(handleTex), GetStringTipPos(handleTex),out float rot);
 
             //绘制指针
-            DrawCursor(cursorTex);
+            DrawCursor(cursorTex,rot);
 
             //绘制仙灵物品
             if (Timer < maxTime && ItemType > 0)

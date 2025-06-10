@@ -130,6 +130,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                     }
                     break;
             }
+
+            if (Owner.TryGetModPlayer(out FairyCatcherPlayer fcp))
+                fcp.FairyCircleProj = Projectile.whoAmI;
         }
 
         private void Shooting()
@@ -243,6 +246,24 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         {
             WebAlpha = MathHelper.Lerp(WebAlpha, 0, 0.2f);
             webRadius = MathHelper.Lerp(webRadius, 0, 0.2f);
+        }
+
+        /// <summary>
+        /// 获取仙灵的碰撞箱
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<(Rectangle,Fairy)> GetFairyCollides()
+        {
+            if (Fairies.Count > 0)
+            {
+                for (int i = 0; i < Fairies.Count; i++)
+                {
+                    Fairy fairy = Fairies[i];
+                    yield return (new Rectangle((int)fairy.position.X, (int)fairy.position.Y, fairy.width, fairy.height),fairy);
+                }
+            }
+
+            yield break;
         }
 
         #endregion

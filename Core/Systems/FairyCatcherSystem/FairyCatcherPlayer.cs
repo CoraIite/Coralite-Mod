@@ -42,11 +42,16 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         /// <summary> 核心的类型，使用<see cref="CoraliteContent.FairyCircleCoreType"/>设置 </summary>
         public int FairyCircleCoreType { get; set; }
+        /// <summary>
+        /// 玩家当前持有的仙灵捕捉环的弹幕索引
+        /// </summary>
+        public int FairyCircleProj {  get; set; }
 
         public List<IFairyAccessory> fairyAccessories;
 
         public override void ResetEffects()
         {
+            FairyCircleCoreType = -1;
             FairyCircleCoreType = -1;
 
             fairyAccessories?.Clear();

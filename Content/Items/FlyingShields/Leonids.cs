@@ -183,10 +183,10 @@ namespace Coralite.Content.Items.FlyingShields
             for (int i = 0; i < trailCachesLength; i++)
             {
                 float factor = (float)i / trailCachesLength;
-                Vector2 Center = Projectile.oldPos[i];
+                Vector2 Center = Projectile.oldPos[i] - Main.screenPosition;
                 Vector2 normal = (Projectile.oldRot[i] + MathHelper.PiOver2).ToRotationVector2();
-                Vector2 Top = Center - Main.screenPosition + (normal * 5 * factor);
-                Vector2 Bottom = Center - Main.screenPosition - (normal * 5 * factor);
+                Vector2 Top = Center + (normal * 5 * factor);
+                Vector2 Bottom = Center - (normal * 5 * factor);
 
                 var Color = new Color(20, 255, 199, 0) * factor;
                 bars.Add(new(Top, Color, new Vector3(factor, 0, 1)));

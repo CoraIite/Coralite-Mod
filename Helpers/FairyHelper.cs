@@ -61,5 +61,35 @@ namespace Coralite.Helpers
                 frame.Size() / 2, overrideScale, fairy.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
         }
 
+        /// <summary>
+        /// 检测传入的矩形与仙灵捕捉环的碰撞，发生碰撞后自动增加捕捉进度
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="selfRect"></param>
+        public static bool CheckCollideWithFairyCircle(Player player, Rectangle selfRect)
+        {
+            if (!player.TryGetModPlayer(out FairyCatcherPlayer fcp))
+                return false;
+
+            if (!Main.projectile.IndexInRange(fcp.FairyCircleProj))
+                return false;
+
+            if (Main.projectile[fcp.FairyCircleProj].ModProjectile is not FairyCatcherProj fcproj)
+                return false;
+
+            int catchPower = fcp.GetCatchPowerByHeldItem();
+            bool caught = false;
+
+            foreach (var fairyRect in fcproj.GetFairyCollides())
+            {
+                if (selfRect.Intersects(fairyRect.Item1))
+                {
+                    fairyRect.Item2.Catch(catchPower);
+                    caught = true;
+                }
+            }
+
+            return caught;
+        }
     }
 }

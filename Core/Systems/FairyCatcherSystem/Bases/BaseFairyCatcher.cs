@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.DamageClasses;
 using Coralite.Content.ModPlayers;
 using System.Linq;
+using System.Reflection.Metadata;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -8,6 +9,9 @@ using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 {
+    /// <summary>
+    /// 注意！弹幕ai0固定传入仙灵瓶槽位，弹幕ai1固定传入是否为捕捉攻击
+    /// </summary>
     public abstract class BaseFairyCatcher : ModItem
     {
         public override string Texture => AssetDirectory.FairyCatcherItems + Name;
@@ -41,7 +45,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         #region 攻击部分
 
         /// <summary> 右键的弹幕ID </summary>
-        public abstract int RightProjType { get; }
+        public virtual int? RightProjType { get=>null; }
 
         public override bool AltFunctionUse(Player player) => true;
 
@@ -55,10 +59,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
             if (player.altFunctionUse == 2)
             {
-                ShootCatcher(player, source, position, velocity, RightProjType);
+                ShootCatcher(player, source, position, velocity, RightProjType??type);
                 return false;
             }
 
+            NormalAttack(player, source, position, velocity, type,damage);
 
             return false;
         }
@@ -87,7 +92,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         }
 
         /// <summary>
-        /// 右键使用时发射捕捉器的弹幕
+        /// 右键使用时发射捕捉器的弹幕<br></br>
+        /// 固定在ai1输入1
         /// </summary>
         /// <param name="player"></param>
         /// <param name="source"></param>
@@ -96,7 +102,20 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// <param name="type"></param>
         public virtual void ShootCatcher(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type)
         {
-            Projectile.NewProjectile(source, position, velocity, type, 0, 0, player.whoAmI);
+            Projectile.NewProjectile(source, position, velocity, type, 0, 0, player.whoAmI,ai1:1);
+        }
+
+        /// <summary>
+        /// 左键使用，固定在ai0输入仙灵瓶栏位
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="source"></param>
+        /// <param name="position"></param>
+        /// <param name="velocity"></param>
+        /// <param name="type"></param>
+        public virtual void NormalAttack(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type,int damage)
+        {
+            Projectile.NewProjectile(source, position, velocity, type, damage, 0, player.whoAmI, ai0:0);
         }
 
         /// <summary>

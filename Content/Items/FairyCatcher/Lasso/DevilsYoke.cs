@@ -1,19 +1,17 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Attributes;
-using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Enums;
 using Terraria.ID;
 
-namespace Coralite.Content.Items.FairyCatcher
+namespace Coralite.Content.Items.FairyCatcher.Lasso
 {
     public class DevilsYoke : BaseFairyCatcher
     {
-        public override string Texture => AssetDirectory.FairyCatcherItems + Name;
+        public override string Texture => AssetDirectory.FairyCatcherLasso + Name;
 
-        public override int RightProjType => ModContent.ProjectileType<DevilsYokeSwing>();
         public override int CatchPower => 30;
 
         public override void SetOtherDefaults()
@@ -28,10 +26,10 @@ namespace Coralite.Content.Items.FairyCatcher
         }
     }
 
-    [AutoLoadTexture(Path = AssetDirectory.FairyCatcherItems)]
+    [AutoLoadTexture(Path = AssetDirectory.FairyCatcherLasso)]
     public class DevilsYokeSwing() : BaseLassoSwing(4)
     {
-        public override string Texture => AssetDirectory.FairyCatcherItems + "DevilsYokeCatcher";
+        public override string Texture => AssetDirectory.FairyCatcherLasso + "DevilsYokeCatcher";
 
         public static ATex PurpleChain { get; set; }
 
@@ -46,10 +44,5 @@ namespace Coralite.Content.Items.FairyCatcher
 
         public override Texture2D GetStringTex() => PurpleChain.Value;
         public override Color GetStringColor(Vector2 pos) => Lighting.GetColor((int)pos.X / 16, (int)(pos.Y / 16f));
-
-        public override Vector2 GetStringTipPos(Texture2D cursorTex)
-        {
-            return CursorCenter - new Vector2(cursorTex.Width / 2, 0).RotatedBy(cursorRotation);
-        }
     }
 }

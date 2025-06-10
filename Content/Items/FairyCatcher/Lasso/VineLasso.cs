@@ -1,19 +1,17 @@
 ﻿using Coralite.Core;
-using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Enums;
 using Terraria.ID;
 
-namespace Coralite.Content.Items.FairyCatcher
+namespace Coralite.Content.Items.FairyCatcher.Lasso
 {
     public class VineLasso : BaseFairyCatcher
     {
-        public override string Texture => AssetDirectory.FairyCatcherItems + Name;
+        public override string Texture => AssetDirectory.FairyCatcherLasso + Name;
 
         public override int CatchPower => 5;
-        public override int RightProjType => ModContent.ProjectileType<VineLassoSwing>();
 
         public override void SetOtherDefaults()
         {
@@ -36,7 +34,7 @@ namespace Coralite.Content.Items.FairyCatcher
 
     public class VineLassoSwing() : BaseLassoSwing(4)
     {
-        public override string Texture => AssetDirectory.FairyCatcherItems + "VineLassoCatcher";
+        public override string Texture => AssetDirectory.FairyCatcherLasso + "VineLassoCatcher";
 
         public override void SetSwingProperty()
         {
@@ -47,15 +45,8 @@ namespace Coralite.Content.Items.FairyCatcher
         public override Color GetStringColor(Vector2 pos)
         {
             Color c = Color.Green;
-            c.A = (byte)(c.A * 0.4f);
             c = Lighting.GetColor((int)pos.X / 16, (int)(pos.Y / 16f), c);
-            c *= 0.5f;
             return c;
-        }
-
-        public override Vector2 GetStringTipPos(Texture2D cursorTex)
-        {
-            return CursorCenter - new Vector2(cursorTex.Width / 2, 0).RotatedBy(cursorRotation);
         }
     }
 }
