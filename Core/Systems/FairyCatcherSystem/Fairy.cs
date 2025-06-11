@@ -31,7 +31,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <summary>
         /// 捕捉最大值
         /// </summary>
-        public float CatchProgressMax { get; } = 10;
+        public float CatchProgressMax { get; } = 60;
         /// <summary>
         /// 捕捉进度
         /// </summary>
@@ -40,8 +40,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public Vector2 position;
         public Vector2 velocity;
         public float rotation;
-        public int width = 8;
-        public int height = 8;
+        public int width = 12;
+        public int height = 12;
         public float scale = 1;
         public float alpha = 1;
 
@@ -51,6 +51,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         public int FairyTimer;
         private AIState State;
+
+        /// <summary>
+        /// 在捕捉器内的ID
+        /// </summary>
+        public int IDInCatcher {  get;private set; }
 
         private enum AIState
         {
@@ -78,7 +83,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <summary>
         /// 最大捕捉时间
         /// </summary>
-        public int MaxCatchTime { get; }
+        public virtual int MaxCatchTime { get => 60 * 15; }
 
         /// <summary>
         /// 自身的稀有度，请与出现条件中的相对应
@@ -147,11 +152,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             active = true;
             canBeCaught = true;
             scale = 1;
-            width = 8;
-            height = 8;
             position = new Vector2(attempt.X, attempt.Y) * 16;
             alpha = 0;
             FairyTimer = 60;
+
+            IDInCatcher = attempt.catcherProj.GetFairyID();
 
             OnSpawnAndSetDefault(attempt);
         }
@@ -199,7 +204,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                         //如果减小到0就消失
                         if (CatchTime <= 0)
                             TurnToFading();
-                        else if (CatchProgress>CatchProgressMax)//捕捉
+                        else if (CatchProgress > CatchProgressMax)//捕捉
                             BeCaught(catcher.Owner);
                     }
                     break;
@@ -404,23 +409,23 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public virtual void DrawProgressBar()
         {
             if (State == AIState.Catching)
-                DrawFairyProgressBar(Bottom.X, Bottom.Y + 14, (int)CatchProgress, 100, 0.9f, 0.75f);
+                DrawFairyProgressBar(Bottom + new Vector2(0, 14), CatchProgress, CatchProgressMax);
         }
 
-        /// <summary>
-        /// 在仙灵瓶里的绘制
-        /// </summary>
-        public virtual void Draw_InBottle()
-        {
-            Texture2D mainTex = ModContent.Request<Texture2D>(Texture).Value;
-            var frame = mainTex.Frame(HorizontalFrames, VerticalFrames, this.frame.X, this.frame.Y);
+        ///// <summary>
+        ///// 在仙灵瓶里的绘制
+        ///// </summary>
+        //public virtual void Draw_InBottle()
+        //{
+        //    Texture2D mainTex = ModContent.Request<Texture2D>(Texture).Value;
+        //    var frame = mainTex.Frame(HorizontalFrames, VerticalFrames, this.frame.X, this.frame.Y);
 
-            Main.spriteBatch.Draw(mainTex, Center - Main.screenPosition, frame, Color.White, rotation, frame.Size() / 2, scale, spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
-        }
+        //    Main.spriteBatch.Draw(mainTex, Center - Main.screenPosition, frame, Color.White, rotation, frame.Size() / 2, scale, spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
+        //}
 
         //public Texture2D GetTexture() => ModContent.Request<Texture2D>(Texture).Value;
 
-        public static void DrawFairyProgressBar(float X, float Y, int Health, int MaxHealth, float alpha, float scale = 1f)
+        public void DrawFairyProgressBar(Vector2 center, float Health, float MaxHealth, float alpha = 0.9f)
         {
             if (Health <= 0)
                 return;
@@ -431,23 +436,65 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
             Color backColor = Color.DarkGreen;
             Color barColor = Color.LawnGreen;
+            float totalBarLength = width * 3f;
 
+
+            if (BOSS)//boss仙灵特殊颜色
+            {
+                backColor = Color.DarkGoldenrod;
+                barColor = Color.LightGoldenrodYellow;
+                totalBarLength = width * 4;
+            }
+
+            ModifyProgressBarDraw(ref center,ref backColor, ref barColor, ref totalBarLength);
+
+            Texture2D tex = CoraliteAssets.Sparkle.BarSPA.Value;
+
+            float scale = totalBarLength / tex.Width * this.scale;
             backColor *= alpha;
-            barColor *= alpha;
+            barColor *= alpha * factor;
 
-            Vector2 center = new Vector2(X, Y) - Main.screenPosition;
+            barColor.A = 0;
 
-            //绘制条的背景
-            Main.spriteBatch.Draw(FairySystem.ProgressBarOuter.Value, center, null, backColor,
-                0f, FairySystem.ProgressBarOuter.Size() / 2, scale, SpriteEffects.None, 0f);
+            center -= Main.screenPosition;
 
-            Texture2D innerTex = FairySystem.ProgressBarInner.Value;
-            var topLeft = new Vector2(center.X - (innerTex.Width * scale / 2), center.Y - (innerTex.Height * scale / 2));
 
-            var source = new Rectangle(0, 0, (int)(innerTex.Width * factor), innerTex.Height);
+            //绘制底部条，固定绘制一个横杠
+            tex.QuickCenteredDraw(Main.spriteBatch, center, backColor, scale: scale);
 
-            Main.spriteBatch.Draw(innerTex, topLeft, source, barColor,
-                0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
+            //绘制顶部，裁剪矩形绘制
+            Rectangle rect = new Rectangle(0, 0, (int)(factor * tex.Width), tex.Height);
+            Main.spriteBatch.Draw(tex, center + new Vector2(-scale * tex.Width / 2, 0), rect, barColor, 0, new Vector2(0, tex.Height / 2), scale, 0, 0);
+
+            //绘制指针
+            tex = CoraliteAssets.Sparkle.ShotLineSPA.Value;
+            scale = totalBarLength / tex.Width * this.scale;
+            Vector2 pos = center + new Vector2(-scale * tex.Width / 2 + factor * scale * tex.Width, 0);
+
+            Vector2 scale1 = new(scale * tex.Height / tex.Width * 0.66f, scale);
+            Main.spriteBatch.Draw(tex, pos, null, backColor
+                , MathHelper.PiOver2, tex.Size() / 2, scale1, 0, 0);
+            Main.spriteBatch.Draw(tex, pos, null, barColor
+                , MathHelper.PiOver2, tex.Size() / 2, scale1, 0, 0);
+
+            //return;
+
+            ////绘制条的背景
+            //Main.spriteBatch.Draw(FairySystem.ProgressBarOuter.Value, center, null, backColor,
+            //    0f, FairySystem.ProgressBarOuter.Size() / 2, scale, SpriteEffects.None, 0f);
+
+            //Texture2D innerTex = FairySystem.ProgressBarInner.Value;
+            //var topLeft = new Vector2(center.X - (innerTex.Width * scale / 2), center.Y - (innerTex.Height * scale / 2));
+
+            //var source = new Rectangle(0, 0, (int)(innerTex.Width * factor), innerTex.Height);
+
+            //Main.spriteBatch.Draw(innerTex, topLeft, source, barColor,
+            //    0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
+        }
+
+        public virtual void ModifyProgressBarDraw(ref Vector2 center,ref Color backColor,ref Color barColor,ref float totalBarLength)
+        {
+
         }
 
         #endregion

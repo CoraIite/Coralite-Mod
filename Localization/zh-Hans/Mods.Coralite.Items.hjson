@@ -6061,20 +6061,20 @@ HephaesthHelmet: {
 
 GoldRing: {
 	DisplayName: 金戒指
-	Tooltip: "+3 仙灵捕捉力"
+	Tooltip: +3 仙灵捕捉力
 }
 
 PlatinumRing: {
 	DisplayName: 铂金戒指
-	Tooltip: "+3 仙灵捕捉力"
+	Tooltip: +3 仙灵捕捉力
 }
 
 SilverRing: {
 	DisplayName: 银戒指
-	Tooltip: "+2 仙灵捕捉力"
+	Tooltip: +2 仙灵捕捉力
 }
 
 TungstenRing: {
 	DisplayName: 钨戒指
-	Tooltip: "+2 仙灵捕捉力"
+	Tooltip: +2 仙灵捕捉力
 }

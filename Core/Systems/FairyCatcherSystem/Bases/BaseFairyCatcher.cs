@@ -1,7 +1,6 @@
 ﻿using Coralite.Content.DamageClasses;
 using Coralite.Content.ModPlayers;
 using System.Linq;
-using System.Reflection.Metadata;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;

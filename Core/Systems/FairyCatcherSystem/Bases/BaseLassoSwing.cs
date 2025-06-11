@@ -43,13 +43,31 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// 甩动时距离玩家的距离
         /// </summary>
         public float minDistance = 48;
+
+        private float _maxDistance = 100;
+
         /// <summary>
-        /// 投出时距离玩家的距离
+        /// 投出时距离玩家的距离<br></br>
+        /// 使用<see cref="SetMaxDistance"/>设置
         /// </summary>
-        public float maxDistance = 100;
+        public float MaxDistance
+        {
+            get => _maxDistance;
+            set
+            {
+                float length = (Owner.Center - InMousePos).Length();
+
+                if (value > length)
+                    _maxDistance = length < minDistance ? minDistance : length;
+                else
+                    _maxDistance = value;
+            }
+        }
 
         public int delayTime = 8;
         public int shootTime = 12;
+
+        private HashSet<int> IDs;
 
         public override void SetSwingProperty()
         {
@@ -137,8 +155,14 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             {
                 startAngle = _Rotation;
                 totalAngle = (InMousePos - Owner.Center).ToRotation();
+                SetMaxDistance();
             }
         }
+
+        /// <summary>
+        /// 用这个东西来设置最大长度
+        /// </summary>
+        public virtual void SetMaxDistance() { }
 
         protected override void OnSlash()
         {
@@ -152,20 +176,20 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             float trueTargetangle = totalAngle + Owner.direction * MathHelper.TwoPi * i;
 
             _Rotation = startAngle.AngleLerp(trueTargetangle, factor);
-            distanceToOwner = Helper.Lerp(minDistance, maxDistance, factor);
+            distanceToOwner = Helper.Lerp(minDistance, MaxDistance,Helper.X2Ease( factor));
             Slasher();
 
             middlePos = OwnerCenter()
                 + startAngle.AngleLerp(trueTargetangle, Helper.Lerp(factor,Helper.SqrtEase(factor),0.35f)).ToRotationVector2() * distanceToOwner * (0.5f + 0.5f * (1 - factor));
 
             if (Catch == 1)
-                Helper.CheckCollideWithFairyCircle(Owner, Projectile.getRect());
+                Helper.CheckCollideWithFairyCircle(Owner, Projectile.getRect(), ref IDs);
         }
 
         protected override void AfterSlash()
         {
             float factor = (Timer - maxTime) / delayTime;
-            distanceToOwner = Helper.Lerp(maxDistance, 0, Helper.SqrtEase(factor));
+            distanceToOwner = Helper.Lerp(MaxDistance, 0, Helper.SqrtEase(factor));
             _Rotation += DirSign * 0.02f;
 
             if ((int)Timer == maxTime + trailCount + 1)
@@ -175,7 +199,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             middlePos = OwnerCenter() + _Rotation.ToRotationVector2() * distanceToOwner*0.5f;
 
             if (Catch == 1)
-                Helper.CheckCollideWithFairyCircle(Owner, Projectile.getRect());
+                Helper.CheckCollideWithFairyCircle(Owner, Projectile.getRect(),ref IDs);
 
             if (Timer > maxTime + delayTime)
                 Projectile.Kill();
@@ -292,10 +316,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 Vector2 Top = Center + normal * halfLineWidth;
                 Vector2 Bottom = Center - normal * halfLineWidth;
 
+                recordUV += (Center - recordPos).Length() / stringTex.Width;
+
                 bars.Add(new(Top, Color, new Vector3(recordUV, 0, 1)));
                 bars.Add(new(Bottom, Color, new Vector3(recordUV, 1, 1)));
-
-                recordUV += (Center - recordPos).Length() / stringTex.Width;
 
                 if (i == LinePointCount)
                     rot = (Center - recordPos).ToRotation();

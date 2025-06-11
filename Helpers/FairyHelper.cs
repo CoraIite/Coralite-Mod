@@ -1,5 +1,6 @@
 ﻿using Coralite.Core.Systems.FairyCatcherSystem;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 using Terraria;
 
 namespace Coralite.Helpers
@@ -66,7 +67,7 @@ namespace Coralite.Helpers
         /// </summary>
         /// <param name="player"></param>
         /// <param name="selfRect"></param>
-        public static bool CheckCollideWithFairyCircle(Player player, Rectangle selfRect)
+        public static bool CheckCollideWithFairyCircle(Player player, Rectangle selfRect,ref HashSet<int> IDs)
         {
             if (!player.TryGetModPlayer(out FairyCatcherPlayer fcp))
                 return false;
@@ -82,8 +83,10 @@ namespace Coralite.Helpers
 
             foreach (var fairyRect in fcproj.GetFairyCollides())
             {
-                if (selfRect.Intersects(fairyRect.Item1))
+                if (selfRect.Intersects(fairyRect.Item1) && (IDs == null || !IDs.Contains(fairyRect.Item2.IDInCatcher)))
                 {
+                    IDs ??= [];
+                    IDs.Add(fairyRect.Item2.IDInCatcher);
                     fairyRect.Item2.Catch(catchPower);
                     caught = true;
                 }

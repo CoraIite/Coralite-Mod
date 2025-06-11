@@ -16,6 +16,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         public ref float SpawnTimer => ref Projectile.ai[0];
         public ref float Timer => ref Projectile.localAI[0];
+        public ref float IDs => ref Projectile.localAI[1];
 
         public static ATex TwistTex { get; private set; }
 
@@ -266,6 +267,16 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             yield break;
         }
 
+        /// <summary>
+        /// 生成仙灵时获取仙灵的ID
+        /// </summary>
+        /// <returns></returns>
+        public int GetFairyID()
+        {
+            IDs++;
+            return (int)IDs;
+        }
+
         #endregion
 
         public override bool OnTileCollide(Vector2 oldVelocity)
@@ -314,7 +325,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             }
 
             //绘制中心指针
-            DrawCatcherCore(lightColor);
+            DrawCatcherCore(Lighting.GetColor(webCenter.ToTileCoordinates()));
 
             if (State == AIStates.Catching)
             {

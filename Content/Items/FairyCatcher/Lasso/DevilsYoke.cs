@@ -36,10 +36,18 @@ namespace Coralite.Content.Items.FairyCatcher.Lasso
         public override void SetSwingProperty()
         {
             minDistance = 48;
-            maxDistance = 128;
+            shootTime = 18;
 
             base.SetSwingProperty();
+
+            Projectile.width = Projectile.height = 40;
+            Projectile.extraUpdates = 4;
             DrawOriginOffsetX = 8;
+        }
+
+        public override void SetMaxDistance()
+        {
+            MaxDistance = 168;
         }
 
         public override Texture2D GetStringTex() => PurpleChain.Value;

@@ -350,6 +350,9 @@ namespace Coralite.Core
             /// 透明底
             /// </summary>
             public static ATex ThreeShotSPA { get; private set; }
+
+
+            public static ATex BarSPA { get; private set; }
         }
 
         /// <summary>
