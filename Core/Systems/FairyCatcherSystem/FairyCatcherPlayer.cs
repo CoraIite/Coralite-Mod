@@ -223,34 +223,34 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// </summary>
         /// <param name="faityItem"></param>
         /// <returns></returns>
-        public FairyData RollFairyIndividualValues(BaseFairyItem faityItem)
-        {
-            FairyData data = new()
-            {
-                damageBonus = new StatModifier(
-                    Main.rand.NextFloat(damageRamdom.additive_Min, damageRamdom.additive_Max),
-                    Main.rand.NextFloat(damageRamdom.multiplicative_Min, damageRamdom.multiplicative_Max),
-                    Main.rand.NextFloat(damageRamdom.Flat_Min, damageRamdom.Flat_Max),
-                    Main.rand.NextFloat(damageRamdom.base_Min, damageRamdom.base_Max)
-                    ),
-                defenceBonus = new StatModifier(
-                    Main.rand.NextFloat(defenceRamdom.additive_Min, defenceRamdom.additive_Max),
-                    Main.rand.NextFloat(defenceRamdom.multiplicative_Min, defenceRamdom.multiplicative_Max),
-                    Main.rand.NextFloat(defenceRamdom.Flat_Min, defenceRamdom.Flat_Max),
-                    Main.rand.NextFloat(defenceRamdom.base_Min, defenceRamdom.base_Max)
-                    ),
-                lifeMaxBonus = new StatModifier(
-                    Main.rand.NextFloat(lifeMaxRamdom.additive_Min, lifeMaxRamdom.additive_Max),
-                    Main.rand.NextFloat(lifeMaxRamdom.multiplicative_Min, lifeMaxRamdom.multiplicative_Max),
-                    Main.rand.NextFloat(lifeMaxRamdom.Flat_Min, lifeMaxRamdom.Flat_Max),
-                    Main.rand.NextFloat(lifeMaxRamdom.base_Min, lifeMaxRamdom.base_Max)
-                    ),
+        //public FairyData RollFairyIndividualValues(BaseFairyItem faityItem)
+        //{
+        //    FairyData data = new()
+        //    {
+        //        damageBonus = new StatModifier(
+        //            Main.rand.NextFloat(damageRamdom.additive_Min, damageRamdom.additive_Max),
+        //            Main.rand.NextFloat(damageRamdom.multiplicative_Min, damageRamdom.multiplicative_Max),
+        //            Main.rand.NextFloat(damageRamdom.Flat_Min, damageRamdom.Flat_Max),
+        //            Main.rand.NextFloat(damageRamdom.base_Min, damageRamdom.base_Max)
+        //            ),
+        //        defenceBonus = new StatModifier(
+        //            Main.rand.NextFloat(defenceRamdom.additive_Min, defenceRamdom.additive_Max),
+        //            Main.rand.NextFloat(defenceRamdom.multiplicative_Min, defenceRamdom.multiplicative_Max),
+        //            Main.rand.NextFloat(defenceRamdom.Flat_Min, defenceRamdom.Flat_Max),
+        //            Main.rand.NextFloat(defenceRamdom.base_Min, defenceRamdom.base_Max)
+        //            ),
+        //        lifeMaxBonus = new StatModifier(
+        //            Main.rand.NextFloat(lifeMaxRamdom.additive_Min, lifeMaxRamdom.additive_Max),
+        //            Main.rand.NextFloat(lifeMaxRamdom.multiplicative_Min, lifeMaxRamdom.multiplicative_Max),
+        //            Main.rand.NextFloat(lifeMaxRamdom.Flat_Min, lifeMaxRamdom.Flat_Max),
+        //            Main.rand.NextFloat(lifeMaxRamdom.base_Min, lifeMaxRamdom.base_Max)
+        //            ),
 
-                scaleBonus = Main.rand.NextFloat(ScaleRange.Item1, ScaleRange.Item2)
-            };
+        //        scaleBonus = Main.rand.NextFloat(ScaleRange.Item1, ScaleRange.Item2)
+        //    };
 
-            return data;
-        }
+        //    return data;
+        //}
 
         /// <summary>
         /// 将仙灵饰品添加到列表中

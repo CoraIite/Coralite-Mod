@@ -226,8 +226,8 @@ namespace Coralite.Content.UI
             Item Item = items[index];
             bool canInsert = true;
 
-            if (!Main.mouseItem.IsAir)
-                canInsert = Main.mouseItem.ModItem is IFairyItem;
+            //if (!Main.mouseItem.IsAir)
+            //    canInsert = Main.mouseItem.ModItem is IFairyItem;
             if (Item is null)
                 return;
 
@@ -294,10 +294,10 @@ namespace Coralite.Content.UI
             {
                 backTex = TextureAssets.InventoryBack14.Value;
             }
-            else if (Item.ModItem is IFairyItem fairyItem && fairyItem.IsDead)
-            {
-                backTex = TextureAssets.InventoryBack11.Value;
-            }
+            //else if (Item.ModItem is IFairyItem fairyItem && fairyItem.IsDead)
+            //{
+            //    backTex = TextureAssets.InventoryBack11.Value;
+            //}
 
             spriteBatch.Draw(backTex, center, null, Color.White, 0, backTex.Size() / 2, 1, SpriteEffects.None, 0);
 

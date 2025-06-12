@@ -1,0 +1,410 @@
+{
+  "BlueFairy": {
+    "LifeMax": {
+      "Weak": 100,
+      "WeakCommon": 0,
+      "Common": 0,
+      "Uncommon": 0,
+      "Rare": 0,
+      "Epic": 0,
+      "Lagendary": 0,
+      "Eternal": 0,
+      "Over": 0
+    },
+    "Damage": {
+      "Weak": 0,
+      "WeakCommon": 0,
+      "Common": 0,
+      "Uncommon": 0,
+      "Rare": 0,
+      "Epic": 0,
+      "Lagendary": 0,
+      "Eternal": 0,
+      "Over": 0
+    },
+    "Defence": {
+      "Weak": 0,
+      "WeakCommon": 0,
+      "Common": 0,
+      "Uncommon": 0,
+      "Rare": 0,
+      "Epic": 0,
+      "Lagendary": 0,
+      "Eternal": 0,
+      "Over": 0
+    },
+    "Speed": {
+      "Weak": 0,
+      "WeakCommon": 0,
+      "Common": 0,
+      "Uncommon": 0,
+      "Rare": 0,
+      "Epic": 0,
+      "Lagendary": 0,
+      "Eternal": 0,
+      "Over": 0
+    },
+    "SkillLevel": {
+      "Weak": 0,
+      "WeakCommon": 0,
+      "Common": 0,
+      "Uncommon": 0,
+      "Rare": 0,
+      "Epic": 0,
+      "Lagendary": 0,
+      "Eternal": 0,
+      "Over": 0
+    },
+    "Stamina": {
+      "Weak": 0,
+      "WeakCommon": 0,
+      "Common": 0,
+      "Uncommon": 0,
+      "Rare": 0,
+      "Epic": 0,
+      "Lagendary": 0,
+      "Eternal": 0,
+      "Over": 0
+    }
+  },
+  "BreezeFairy": {
+    "LifeMax": {
+      "Weak": 0,
+      "WeakCommon": 0,
+      "Common": 0,
+      "Uncommon": 0,
+      "Rare": 0,
+      "Epic": 0,
+      "Lagendary": 0,
+      "Eternal": 0,
+      "Over": 0
+    },
+    "Damage": {
+      "Weak": 0,
+      "WeakCommon": 0,
+      "Common": 0,
+      "Uncommon": 0,
+      "Rare": 0,
+      "Epic": 0,
+      "Lagendary": 0,
+      "Eternal": 0,
+      "Over": 0
+    },
+    "Defence": {
+      "Weak": 0,
+      "WeakCommon": 0,
+      "Common": 0,
+      "Uncommon": 0,
+      "Rare": 0,
+      "Epic": 0,
+      "Lagendary": 0,
+      "Eternal": 0,
+      "Over": 0
+    },
+    "Speed": {
+      "Weak": 0,
+      "WeakCommon": 0,
+      "Common": 0,
+      "Uncommon": 0,
+      "Rare": 0,
+      "Epic": 0,
+      "Lagendary": 0,
+      "Eternal": 0,
+      "Over": 0
+    },
+    "SkillLevel": {
+      "Weak": 0,
+      "WeakCommon": 0,
+      "Common": 0,
+      "Uncommon": 0,
+      "Rare": 0,
+      "Epic": 0,
+      "Lagendary": 0,
+      "Eternal": 0,
+      "Over": 0
+    },
+    "Stamina": {
+      "Weak": 0,
+      "WeakCommon": 0,
+      "Common": 0,
+      "Uncommon": 0,
+      "Rare": 0,
+      "Epic": 0,
+      "Lagendary": 0,
+      "Eternal": 0,
+      "Over": 0
+    }
+  },
+  "BrownFairy": {
+    "LifeMax": {
+      "Weak": 0,
+      "WeakCommon": 0,
+      "Common": 0,
+      "Uncommon": 0,
+      "Rare": 0,
+      "Epic": 0,
+      "Lagendary": 0,
+      "Eternal": 0,
+      "Over": 0
+    },
+    "Damage": {
+      "Weak": 0,
+      "WeakCommon": 0,
+      "Common": 0,
+      "Uncommon": 0,
+      "Rare": 0,
+      "Epic": 0,
+      "Lagendary": 0,
+      "Eternal": 0,
+      "Over": 0
+    },
+    "Defence": {
+      "Weak": 0,
+      "WeakCommon": 0,
+      "Common": 0,
+      "Uncommon": 0,
+      "Rare": 0,
+      "Epic": 0,
+      "Lagendary": 0,
+      "Eternal": 0,
+      "Over": 0
+    },
+    "Speed": {
+      "Weak": 0,
+      "WeakCommon": 0,
+      "Common": 0,
+      "Uncommon": 0,
+      "Rare": 0,
+      "Epic": 0,
+      "Lagendary": 0,
+      "Eternal": 0,
+      "Over": 0
+    },
+    "SkillLevel": {
+      "Weak": 0,
+      "WeakCommon": 0,
+      "Common": 0,
+      "Uncommon": 0,
+      "Rare": 0,
+      "Epic": 0,
+      "Lagendary": 0,
+      "Eternal": 0,
+      "Over": 0
+    },
+    "Stamina": {
+      "Weak": 0,
+      "WeakCommon": 0,
+      "Common": 0,
+      "Uncommon": 0,
+      "Rare": 0,
+      "Epic": 0,
+      "Lagendary": 0,
+      "Eternal": 0,
+      "Over": 0
+    }
+  },
+  "CandyFairy": {
+    "LifeMax": {
+      "Weak": 0,
+      "WeakCommon": 0,
+      "Common": 0,
+      "Uncommon": 0,
+      "Rare": 0,
+      "Epic": 0,
+      "Lagendary": 0,
+      "Eternal": 0,
+      "Over": 0
+    },
+    "Damage": {
+      "Weak": 0,
+      "WeakCommon": 0,
+      "Common": 0,
+      "Uncommon": 0,
+      "Rare": 0,
+      "Epic": 0,
+      "Lagendary": 0,
+      "Eternal": 0,
+      "Over": 0
+    },
+    "Defence": {
+      "Weak": 0,
+      "WeakCommon": 0,
+      "Common": 0,
+      "Uncommon": 0,
+      "Rare": 0,
+      "Epic": 0,
+      "Lagendary": 0,
+      "Eternal": 0,
+      "Over": 0
+    },
+    "Speed": {
+      "Weak": 0,
+      "WeakCommon": 0,
+      "Common": 0,
+      "Uncommon": 0,
+      "Rare": 0,
+      "Epic": 0,
+      "Lagendary": 0,
+      "Eternal": 0,
+      "Over": 0
+    },
+    "SkillLevel": {
+      "Weak": 0,
+      "WeakCommon": 0,
+      "Common": 0,
+      "Uncommon": 0,
+      "Rare": 0,
+      "Epic": 0,
+      "Lagendary": 0,
+      "Eternal": 0,
+      "Over": 0
+    },
+    "Stamina": {
+      "Weak": 0,
+      "WeakCommon": 0,
+      "Common": 0,
+      "Uncommon": 0,
+      "Rare": 0,
+      "Epic": 0,
+      "Lagendary": 0,
+      "Eternal": 0,
+      "Over": 0
+    }
+  },
+  "GreenFairy": {
+    "LifeMax": {
+      "Weak": 0,
+      "WeakCommon": 0,
+      "Common": 0,
+      "Uncommon": 0,
+      "Rare": 0,
+      "Epic": 0,
+      "Lagendary": 0,
+      "Eternal": 0,
+      "Over": 0
+    },
+    "Damage": {
+      "Weak": 0,
+      "WeakCommon": 0,
+      "Common": 0,
+      "Uncommon": 0,
+      "Rare": 0,
+      "Epic": 0,
+      "Lagendary": 0,
+      "Eternal": 0,
+      "Over": 0
+    },
+    "Defence": {
+      "Weak": 0,
+      "WeakCommon": 0,
+      "Common": 0,
+      "Uncommon": 0,
+      "Rare": 0,
+      "Epic": 0,
+      "Lagendary": 0,
+      "Eternal": 0,
+      "Over": 0
+    },
+    "Speed": {
+      "Weak": 0,
+      "WeakCommon": 0,
+      "Common": 0,
+      "Uncommon": 0,
+      "Rare": 0,
+      "Epic": 0,
+      "Lagendary": 0,
+      "Eternal": 0,
+      "Over": 0
+    },
+    "SkillLevel": {
+      "Weak": 0,
+      "WeakCommon": 0,
+      "Common": 0,
+      "Uncommon": 0,
+      "Rare": 0,
+      "Epic": 0,
+      "Lagendary": 0,
+      "Eternal": 0,
+      "Over": 0
+    },
+    "Stamina": {
+      "Weak": 0,
+      "WeakCommon": 0,
+      "Common": 0,
+      "Uncommon": 0,
+      "Rare": 0,
+      "Epic": 0,
+      "Lagendary": 0,
+      "Eternal": 0,
+      "Over": 0
+    }
+  },
+  "PinkFairy": {
+    "LifeMax": {
+      "Weak": 0,
+      "WeakCommon": 0,
+      "Common": 0,
+      "Uncommon": 0,
+      "Rare": 0,
+      "Epic": 0,
+      "Lagendary": 0,
+      "Eternal": 0,
+      "Over": 0
+    },
+    "Damage": {
+      "Weak": 0,
+      "WeakCommon": 0,
+      "Common": 0,
+      "Uncommon": 0,
+      "Rare": 0,
+      "Epic": 0,
+      "Lagendary": 0,
+      "Eternal": 0,
+      "Over": 0
+    },
+    "Defence": {
+      "Weak": 0,
+      "WeakCommon": 0,
+      "Common": 0,
+      "Uncommon": 0,
+      "Rare": 0,
+      "Epic": 0,
+      "Lagendary": 0,
+      "Eternal": 0,
+      "Over": 0
+    },
+    "Speed": {
+      "Weak": 0,
+      "WeakCommon": 0,
+      "Common": 0,
+      "Uncommon": 0,
+      "Rare": 0,
+      "Epic": 0,
+      "Lagendary": 0,
+      "Eternal": 0,
+      "Over": 0
+    },
+    "SkillLevel": {
+      "Weak": 0,
+      "WeakCommon": 0,
+      "Common": 0,
+      "Uncommon": 0,
+      "Rare": 0,
+      "Epic": 0,
+      "Lagendary": 0,
+      "Eternal": 0,
+      "Over": 0
+    },
+    "Stamina": {
+      "Weak": 0,
+      "WeakCommon": 0,
+      "Common": 0,
+      "Uncommon": 0,
+      "Rare": 0,
+      "Epic": 0,
+      "Lagendary": 0,
+      "Eternal": 0,
+      "Over": 0
+    }
+  }
+}

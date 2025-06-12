@@ -8,7 +8,7 @@ using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 {
-    public abstract class BaseFairyBottle : ModItem, IFairyBottle
+    public abstract class BaseFairyBottle : ModItem//, IFairyBottle
     {
         public override string Texture => AssetDirectory.FairyBottleItems + Name;
 
@@ -63,7 +63,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public override void RightClick(Player player)
         {
-            UILoader.GetUIState<FairyBottleUI>().ShowUI(this);
+            //UILoader.GetUIState<FairyBottleUI>().ShowUI(this);
         }
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
@@ -98,10 +98,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             return base.Clone(newEntity);
         }
 
-        public bool ShootFairy(int index, Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int damage, float knockback)
-        {
-            return (fairies[index].ModItem as IFairyItem).ShootFairy(player, source, position, velocity, damage, knockback);
-        }
+        //public bool ShootFairy(int index, Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int damage, float knockback)
+        //{
+        //    return (fairies[index].ModItem as IFairyItem).ShootFairy(player, source, position, velocity, damage, knockback);
+        //}
     }
 
     public interface IFairyBottle
@@ -110,17 +110,17 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public Item[] Fairies { get; set; }
 
-        public virtual bool CanShootFairy(int index, out IFairyItem fairyItem)
-        {
-            if (Fairies[index].ModItem is IFairyItem fairyItem2 && !fairyItem2.IsOut)
-            {
-                fairyItem = fairyItem2;
-                return true;
-            }
+        //public virtual bool CanShootFairy(int index, out IFairyItem fairyItem)
+        //{
+        //    if (Fairies[index].ModItem is IFairyItem fairyItem2 && !fairyItem2.IsOut)
+        //    {
+        //        fairyItem = fairyItem2;
+        //        return true;
+        //    }
 
-            fairyItem = null;
-            return false;
-        }
+        //    fairyItem = null;
+        //    return false;
+        //}
 
         bool ShootFairy(int index, Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int damage, float knockback);
     }

@@ -5,6 +5,12 @@ namespace Coralite.Core
     {
         public const string Assets = "Coralite/Assets/";
 
+        #region 数据
+
+        public const string Datas = "Datas/";
+
+        #endregion
+
         #region Boss部分！
 
         public const string Bosses = Assets + "Bosses/";

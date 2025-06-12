@@ -6,17 +6,17 @@ using Terraria.Localization;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 {
-    public abstract class BaseFairyProjectile : ModProjectile, IFairyProjectile
+    public abstract class BaseFairyProjectile : ModProjectile//, IFairyProjectile
     {
-        protected IFairyItem selfItem;
+        //protected IFairyItem selfItem;
 
-        public IFairyItem FairyItem { get => selfItem; set => selfItem = value; }
+        //public IFairyItem FairyItem { get => selfItem; set => selfItem = value; }
         public Player Owner => Main.player[Projectile.owner];
 
         public int State;
         public int Timer;
-        protected int LifeMax => (int)FairyItem.FairyLifeMax;
-        protected int Life => FairyItem.Life;
+        //protected int LifeMax => (int)FairyItem.FairyLifeMax;
+        //protected int Life => FairyItem.Life;
         protected virtual string SkillName => "";
         protected virtual int FrameX => 1;
         protected virtual int FrameY => 1;
@@ -126,11 +126,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public bool CheckSelfItem()
         {
-            if (FairyItem is null)
-            {
-                Projectile.Kill();
-                return false;
-            }
+            //if (FairyItem is null)
+            //{
+            //    Projectile.Kill();
+            //    return false;
+            //}
 
             return true;
         }
@@ -156,13 +156,13 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             //自身受伤
-            if (FairyItem != null)
-                if (FairyItem.Hurt(Owner, target, hit, damageDone))
-                {
-                    Projectile.Kill();
-                    OnKillByNPC(target);
-                    return;
-                }
+            //if (FairyItem != null)
+            //    if (FairyItem.Hurt(Owner, target, hit, damageDone))
+            //    {
+            //        Projectile.Kill();
+            //        OnKillByNPC(target);
+            //        return;
+            //    }
         }
 
         public virtual void ExchangeToBack()
@@ -209,7 +209,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public override void OnKill(int timeLeft)
         {
-            FairyItem.IsOut = false;
+            //FairyItem.IsOut = false;
         }
 
         /// <summary>
@@ -244,12 +244,12 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public virtual void DrawHealthBar()
         {
-            Main.instance.DrawHealthBar(Projectile.Bottom.X, Projectile.Bottom.Y + 12, Life, LifeMax, 1, 1);
+            //Main.instance.DrawHealthBar(Projectile.Bottom.X, Projectile.Bottom.Y + 12, Life, LifeMax, 1, 1);
         }
     }
 
     public interface IFairyProjectile
     {
-        public IFairyItem FairyItem { get; set; }
+        //public IFairyItem FairyItem { get; set; }
     }
 }
