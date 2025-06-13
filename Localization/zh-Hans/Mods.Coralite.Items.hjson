@@ -6078,3 +6078,8 @@ TungstenRing: {
 	DisplayName: 钨戒指
 	Tooltip: +2 仙灵捕捉力
 }
+
+GlowMushroomLantern: {
+	DisplayName: 夜光蘑菇提灯
+	Tooltip: 发射会分裂的蘑菇火花
+}

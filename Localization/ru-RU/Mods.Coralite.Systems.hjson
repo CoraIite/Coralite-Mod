@@ -12,14 +12,6 @@ MagikeSystem: {
 
 FairySystem: {
 	ZoneForest: Поймано в лесу на поверхности
-	WeakLevel: Слабый: {0} (Базовый {1})
-	VeryCommonLevel: Обычный: {0} (Базовый {1})
-	CommonLevel: Обычный: {0} (Базовый {1})
-	UncommonLevel: Редкий: {0} (Базовый {1})
-	RareLevel: Редкий: {0} (Базовый {1})
-	SpecialLevel: Уникальный: {0} (Базовый {1})
-	UniqueLevel: Единственный: {0} (Базовый {1})
-	TimelessLevel: Вечный: {0} (Базовый {1})
 	FairyLifeMax: "[i:58]Здоровье "
 	FairyDamage: "[i:3507]Урон "
 	FairyDefence: "[i:3811]Защита "
@@ -43,7 +35,6 @@ FairySystem: {
 	ZoneRockLayer: Появляется в пещерах
 	ZoneBeach: Появляется на пляже
 	CatchPowerMult: "{0} Мощность ловли"
-	EternalLevel: Вечный: {0} (Базовый {1})
 	UncaughtMouseText:
 		'''
 		???
@@ -64,6 +55,18 @@ FairySystem: {
 	SortByCaughtText: Сортировать по пойманным
 	FairyTradeCondition: Используйте портал фейри для торговли
 	// CircleRadiusBonus: Mods.Coralite.Systems.FairySystem.CircleRadiusBonus
+	WeakLevel: Слабый: {0} (Базовый {1})
+	// WeakCommonLevel: Mods.Coralite.Systems.FairySystem.WeakCommonLevel
+	CommonLevel: Обычный: {0} (Базовый {1})
+	UncommonLevel: Редкий: {0} (Базовый {1})
+	RareLevel: Редкий: {0} (Базовый {1})
+	// EpicLevel: Mods.Coralite.Systems.FairySystem.EpicLevel
+	// LegendaryLevel: Mods.Coralite.Systems.FairySystem.LegendaryLevel
+	EternalLevel: Вечный: {0} (Базовый {1})
+	// OverLevel: Mods.Coralite.Systems.FairySystem.OverLevel
+	// FairySpeed: Mods.Coralite.Systems.FairySystem.FairySpeed
+	// FairySkillLevel: Mods.Coralite.Systems.FairySystem.FairySkillLevel
+	// FairyStamina: Mods.Coralite.Systems.FairySystem.FairyStamina
 }
 
 BossBarSystem.DontTakeDamage: Невозможно атаковать!

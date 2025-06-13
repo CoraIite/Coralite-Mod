@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using Terraria.Localization;
-using FairyRarity = Coralite.Core.Systems.FairyCatcherSystem.FairyRarity;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem
 {
@@ -10,15 +9,15 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         //         个体值评级的本地化
         //-----------------------------------
         public static LocalizedText WeakLevel;
-        public static LocalizedText VeryCommonLevel;
+        public static LocalizedText WeakCommonLevel;
         public static LocalizedText CommonLevel;
         public static LocalizedText UncommonLevel;
         public static LocalizedText RareLevel;
-        public static LocalizedText SpecialLevel;
-        public static LocalizedText UniqueLevel;
+        public static LocalizedText EpicLevel;
+        public static LocalizedText LegendaryLevel;
         public static LocalizedText EternalLevel;
 
-        public static LocalizedText NotHaveLevel;
+        public static LocalizedText OverLevel;
 
         //-----------------------------------
         //         个体描述的本地化
@@ -26,6 +25,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public static LocalizedText FairyLifeMax;
         public static LocalizedText FairyDamage;
         public static LocalizedText FairyDefence;
+        public static LocalizedText FairySpeed;
+        public static LocalizedText FairySkillLevel;
+        public static LocalizedText FairyStamina;
         public static LocalizedText FairyScale;
 
         //-----------------------------------
@@ -69,21 +71,24 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         public void LoadLocalization()
         {
-            WeakLevel = this.GetLocalization("WeakLevel", () => "软弱：{0}（基础 {1}）");
-            VeryCommonLevel = this.GetLocalization("VeryCommonLevel", () => "普通：{0}（基础 {1}）");
-            CommonLevel = this.GetLocalization("CommonLevel", () => "普通：{0}（基础 {1}）");
-            UncommonLevel = this.GetLocalization("UncommonLevel", () => "少见：{0}（基础 {1}）");
-            RareLevel = this.GetLocalization("RareLevel", () => "稀有：{0}（基础 {1}）");
-            SpecialLevel = this.GetLocalization("SpecialLevel", () => "独特：{0}（基础 {1}）");
-            UniqueLevel = this.GetLocalization("UniqueLevel", () => "唯一：{0}（基础 {1}）");
-            EternalLevel = this.GetLocalization("EternalLevel", () => "永恒：{0}（基础 {1}）");
+            WeakLevel = this.GetLocalization("WeakLevel");
+            WeakCommonLevel = this.GetLocalization("WeakCommonLevel");
+            CommonLevel = this.GetLocalization("CommonLevel");
+            UncommonLevel = this.GetLocalization("UncommonLevel");
+            RareLevel = this.GetLocalization("RareLevel");
+            EpicLevel = this.GetLocalization("EpicLevel");
+            LegendaryLevel = this.GetLocalization("LegendaryLevel");
+            EternalLevel = this.GetLocalization("EternalLevel");
 
-            NotHaveLevel = this.GetLocalization("NotHaveLevel", () => "无：{0}（基础 {1}）");
+            OverLevel = this.GetLocalization("OverLevel");
 
-            FairyLifeMax = this.GetLocalization("FairyLifeMax", () => "血量 ");
-            FairyDamage = this.GetLocalization("FairyDamage", () => "伤害 ");
-            FairyDefence = this.GetLocalization("FairyDefence", () => "防御 ");
-            FairyScale = this.GetLocalization("FairyScale", () => "大小 ");
+            FairyLifeMax = this.GetLocalization("FairyLifeMax");
+            FairyDamage = this.GetLocalization("FairyDamage");
+            FairyDefence = this.GetLocalization("FairyDefence");
+            FairySpeed = this.GetLocalization("FairySpeed");
+            FairySkillLevel = this.GetLocalization("FairySkillLevel");
+            FairyStamina = this.GetLocalization("FairyStamina");
+            FairyScale = this.GetLocalization("FairyScale");
 
             RarityText = new Dictionary<FairyRarity, LocalizedText>
             {
@@ -129,15 +134,15 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public static void UnloadLocalization()
         {
             WeakLevel = null;
-            VeryCommonLevel = null;
+            WeakCommonLevel = null;
             CommonLevel = null;
             UncommonLevel = null;
             RareLevel = null;
-            SpecialLevel = null;
-            UniqueLevel = null;
+            EpicLevel = null;
+            LegendaryLevel = null;
             EternalLevel = null;
 
-            NotHaveLevel = null;
+            OverLevel = null;
 
             FairyLifeMax = null;
             FairyDamage = null;
@@ -169,6 +174,23 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public static string FormatIVDescription(LocalizedText pre, LocalizedText levelText, float @base, float bonused)
         {
             return pre.Value + levelText.Format(bonused, @base);
+        }
+
+        public static string GetIVLevel(int level,float value)
+        {
+            return level switch
+            {
+                FairyIVLevelID.Weak => WeakLevel.Format(value),
+                FairyIVLevelID.WeakCommon => WeakCommonLevel.Format(value),
+                FairyIVLevelID.Common => CommonLevel.Format(value),
+                FairyIVLevelID.Uncommon => UncommonLevel.Format(value),
+                FairyIVLevelID.Rare => RareLevel.Format(value),
+                FairyIVLevelID.Epic => EpicLevel.Format(value),
+                FairyIVLevelID.Lagendary => LegendaryLevel.Format(value),
+                FairyIVLevelID.Eternal => EternalLevel.Format(value),
+                >= 100 => OverLevel.Format(value),
+                _ => EternalLevel.Format(value),
+            };
         }
     }
 }

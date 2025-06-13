@@ -19,13 +19,6 @@ namespace Coralite.Content.Items.Fairies
         {
             Item.rare = ItemRarityID.White;
             Item.value = Item.sellPrice(0, 0, 3);
-            //Item.shoot = ModContent.ProjectileType<PinkFairyProj>();
-            Item.damage = 9;
-        }
-
-        public override void SetFairyDefault(CoraliteGlobalItem fairyItem)
-        {
-            fairyItem.FairyItemSets(8, 400);
         }
     }
 

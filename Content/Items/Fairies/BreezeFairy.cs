@@ -1,5 +1,4 @@
 ﻿using Coralite.Content.DamageClasses;
-using Coralite.Content.GlobalItems;
 using Coralite.Core;
 using Coralite.Core.Systems.FairyCatcherSystem;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
@@ -24,11 +23,6 @@ namespace Coralite.Content.Items.Fairies
             Item.value = Item.sellPrice(0, 0, 5);
             Item.shoot = ModContent.ProjectileType<BreezeFairyProj>();
             Item.damage = 2;
-        }
-
-        public override void SetFairyDefault(CoraliteGlobalItem fairyItem)
-        {
-            fairyItem.FairyItemSets(6, 200);
         }
     }
 

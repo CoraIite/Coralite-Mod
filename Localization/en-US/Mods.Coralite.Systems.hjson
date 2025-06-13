@@ -12,14 +12,6 @@ MagikeSystem: {
 
 FairySystem: {
 	ZoneForest: Capture in surface forests
-	WeakLevel: Weak：{0}（Base {1}）
-	VeryCommonLevel: Common：{0}（Base {1}）
-	CommonLevel: Common：{0}（Base {1}）
-	UncommonLevel: Uncommon：{0}（Base {1}）
-	RareLevel: Rare：{0}（Base {1}）
-	SpecialLevel: Epic：{0}（Base {1}）
-	UniqueLevel: Legendary：{0}（Base {1}）
-	TimelessLevel: Eternal：{0}（Base {1}）
 	FairyLifeMax: "Health "
 	FairyDamage: "Damage "
 	FairyDefence: "Defense "
@@ -43,7 +35,6 @@ FairySystem: {
 	ZoneRockLayer: Appears in caves
 	ZoneBeach: Appears at the beach
 	CatchPowerMult: "{0} Catch Power"
-	EternalLevel: Eternal：{0}（Base {1}）
 	UncaughtMouseText:
 		'''
 		???
@@ -64,6 +55,18 @@ FairySystem: {
 	SortByCaughtText: Sort by unlocked
 	FairyTradeCondition: Use fairy teleporter for trading
 	CircleRadiusBonus: Mods.Coralite.Systems.FairySystem.CircleRadiusBonus
+	WeakLevel: Mods.Coralite.Systems.FairySystem.WeakLevel
+	WeakCommonLevel: Mods.Coralite.Systems.FairySystem.WeakCommonLevel
+	CommonLevel: Mods.Coralite.Systems.FairySystem.CommonLevel
+	UncommonLevel: Mods.Coralite.Systems.FairySystem.UncommonLevel
+	RareLevel: Mods.Coralite.Systems.FairySystem.RareLevel
+	EpicLevel: Mods.Coralite.Systems.FairySystem.EpicLevel
+	LegendaryLevel: Mods.Coralite.Systems.FairySystem.LegendaryLevel
+	EternalLevel: Mods.Coralite.Systems.FairySystem.EternalLevel
+	OverLevel: Mods.Coralite.Systems.FairySystem.OverLevel
+	FairySpeed: Mods.Coralite.Systems.FairySystem.FairySpeed
+	FairySkillLevel: Mods.Coralite.Systems.FairySystem.FairySkillLevel
+	FairyStamina: Mods.Coralite.Systems.FairySystem.FairyStamina
 }
 
 BossBarSystem.DontTakeDamage: Cant attack!！

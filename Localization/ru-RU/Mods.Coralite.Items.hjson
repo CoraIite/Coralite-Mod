@@ -6088,3 +6088,8 @@ TungstenRing: {
 	// DisplayName: Tungsten Ring
 	// Tooltip: ""
 }
+
+GlowMushroomLantern: {
+	// DisplayName: Glow Mushroom Lantern
+	// Tooltip: ""
+}

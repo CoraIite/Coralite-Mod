@@ -452,6 +452,15 @@ namespace Coralite.Core
             public static ATex BallA { get; private set; }
         }
 
+        [AutoLoadTexture(MiscVFX)]
+        public class Misc
+        {
+            /// <summary>
+            /// 纯白贴图32x32
+            /// </summary>
+            public static ATex White32x32 { get; private set; }
+        }
+
         public void Load()
         {
             if (Main.dedServ)

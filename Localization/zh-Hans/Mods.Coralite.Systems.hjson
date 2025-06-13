@@ -12,14 +12,6 @@ MagikeSystem: {
 
 FairySystem: {
 	ZoneForest: 在地表森林捕获
-	WeakLevel: 软弱：{0}（基础 {1}）
-	VeryCommonLevel: 普通：{0}（基础 {1}）
-	CommonLevel: 普通：{0}（基础 {1}）
-	UncommonLevel: 少见：{0}（基础 {1}）
-	RareLevel: 稀有：{0}（基础 {1}）
-	SpecialLevel: 独特：{0}（基础 {1}）
-	UniqueLevel: 唯一：{0}（基础 {1}）
-	TimelessLevel: 永恒：{0}（基础 {1}）
 	FairyLifeMax: "[i:58]血量 "
 	FairyDamage: "[i:3507]伤害 "
 	FairyDefence: "[i:3811]防御 "
@@ -42,8 +34,7 @@ FairySystem: {
 	SeeMore: 按上键以查看雷达图（游戏暂停时无法使用）
 	ZoneRockLayer: 在洞穴中出现
 	ZoneBeach: 在海边出现
-	CatchPowerMult: "{0}捕捉力"
-	EternalLevel: 永恒：{0}（基础 {1}）
+	CatchPowerMult: "{0} 仙灵捕捉力"
 	UncaughtMouseText:
 		'''
 		???
@@ -64,6 +55,18 @@ FairySystem: {
 	SortByCaughtText: 按是否捕获排序
 	FairyTradeCondition: 使用妖精传送门进行交易
 	CircleRadiusBonus: 仙灵捕捉环半径增加 {0} 格
+	WeakLevel: 低劣
+	WeakCommonLevel: 弱小
+	CommonLevel: 普通
+	UncommonLevel: 不寻常
+	RareLevel: 稀有
+	EpicLevel: 史诗
+	LegendaryLevel: 传说
+	EternalLevel: 永恒
+	OverLevel: 超越
+	FairySpeed: 速度
+	FairySkillLevel: 技能等级
+	FairyStamina: 耐力
 }
 
 BossBarSystem.DontTakeDamage: 不可攻击！

@@ -24,11 +24,6 @@ namespace Coralite.Content.Items.Fairies
             Item.shoot = ModContent.ProjectileType<BrownFairyProj>();
             Item.damage = 6;
         }
-
-        public override void SetFairyDefault(CoraliteGlobalItem fairyItem)
-        {
-            fairyItem.FairyItemSets(8, 300);
-        }
     }
 
     public class BrownFairy : Fairy

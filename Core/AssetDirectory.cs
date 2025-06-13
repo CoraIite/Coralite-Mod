@@ -106,6 +106,7 @@ namespace Coralite.Core
         public const string Misc_Equip = Items + "Misc_Equip/";
         public const string PetItems = Items + "Pets/";
         public const string YujianHulu = Items + "YujianHulu/";
+        public const string Lantern = Items + "Lantern/";
         public const string FairyItems = Items + "Fairy/";
         public const string FairyCatcherItems = Items + "FairyCatcher/";
         public const string FairyCatcherLasso = FairyCatcherItems + "Lasso/";
@@ -267,6 +268,7 @@ namespace Coralite.Core
         public const string Sparkles = VFX + "Sparkle/";
         public const string LightBalls = VFX + "LightBall/";
         public const string Halos = VFX + "Halo/";
+        public const string MiscVFX = VFX + "Misc/";
 
         #endregion
 

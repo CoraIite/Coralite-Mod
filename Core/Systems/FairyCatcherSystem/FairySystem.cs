@@ -1,13 +1,9 @@
 ﻿using Coralite.Core.Loaders;
-using Microsoft.Xna.Framework.Graphics;
 using Newtonsoft.Json.Linq;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using Terraria;
 using Terraria.ModLoader.IO;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem
 {
@@ -38,9 +34,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         public override void Load()
         {
-            //ProgressBarOuter = ModContent.Request<Texture2D>(AssetDirectory.Misc + "ProgressBarOuter");
-            //ProgressBarInner = ModContent.Request<Texture2D>(AssetDirectory.Misc + "ProgressBarInner");
-
             LoadLocalization();
         }
 

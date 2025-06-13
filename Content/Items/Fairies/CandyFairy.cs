@@ -22,11 +22,6 @@ namespace Coralite.Content.Items.Fairies
             //Item.shoot = ModContent.ProjectileType<GreenFairyProj>();
             Item.damage = 2;
         }
-
-        public override void SetFairyDefault(CoraliteGlobalItem fairyItem)
-        {
-            fairyItem.FairyItemSets(10, 220);
-        }
     }
 
     public class CandyFairy : Fairy
