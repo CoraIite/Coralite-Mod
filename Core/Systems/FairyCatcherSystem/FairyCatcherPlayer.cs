@@ -1,4 +1,5 @@
 ﻿using Coralite.Core.Systems.FairyCatcherSystem.Bases;
+using System;
 using System.Collections.Generic;
 using Terraria;
 
@@ -6,20 +7,29 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 {
     public class FairyCatcherPlayer : ModPlayer
     {
-        public struct FairyIVRandomModifyer
+        public struct FairyIVRandom
         {
-            public float base_Min;
-            public float base_Max;
-            public float Flat_Min;
-            public float Flat_Max;
-            public float additive_Min;
-            public float additive_Max;
-            public float multiplicative_Min;
-            public float multiplicative_Max;
+            /// <summary>
+            /// 基础值，可以说是中心点
+            /// </summary>
+            public float BaseValue;
+            /// <summary>
+            /// 基础值向下浮动的范围
+            /// </summary>
+            public float Sub;
+            /// <summary>
+            /// 基础值向上浮动的范围
+            /// </summary>
+            public float Add;
+
+            /// <summary>
+            /// 获取随机的值
+            /// </summary>
+            public readonly float RandValue => Main.rand.NextFloat(Math.Clamp(BaseValue - Sub, 0, float.MaxValue), BaseValue + Add);
         }
 
         /// <summary>
-        /// 仙灵捕捉器的捕捉力增幅
+        /// 仙灵捕捉力增幅
         /// </summary>
         public StatModifier fairyCatchPowerBonus;
         /// <summary>
@@ -27,25 +37,41 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// </summary>
         public StatModifier fairyResurrectionTimeBous;
 
-        private readonly int FairyCatcherBaseRadius = 16 * 6;
-        public float FairyCatcherRadiusBonus { get; private set; }
-
-        /// <summary> 仙灵捕捉器的半径 </summary>
-        public float FairyCatcherRadius { get => FairyCatcherBaseRadius + FairyCatcherRadiusBonus; }
-
-        public FairyIVRandomModifyer damageRamdom;
-        public FairyIVRandomModifyer defenceRamdom;
-        public FairyIVRandomModifyer lifeMaxRamdom;
-        public (float, float) ScaleRange;
 
         public int currentFairyIndex;
 
+        #region 捕捉环相关数值
+
+        /// <summary> 基础环大小 </summary>
+        private const int FairyCatcherBaseRadius = 16 * 6;
+        /// <summary> 仙灵捕捉环的加成 </summary>
+        public float FairyCatcherRadiusBonus { get; private set; }
+
+        /// <summary> 加成后的仙灵捕捉器的半径 </summary>
+        public float FairyCatcherRadius { get => FairyCatcherBaseRadius + FairyCatcherRadiusBonus; }
+
         /// <summary> 核心的类型，使用<see cref="CoraliteContent.FairyCircleCoreType"/>设置 </summary>
         public int FairyCircleCoreType { get; set; }
-        /// <summary>
-        /// 玩家当前持有的仙灵捕捉环的弹幕索引
-        /// </summary>
+        /// <summary> 玩家当前持有的仙灵捕捉环的弹幕索引 </summary>
         public int FairyCircleProj {  get; set; }
+
+        #endregion
+
+        #region 仙灵个体值增幅相关数值
+
+        private FairyIVRandom lifeMaxRand;
+        /// <summary> 仙灵生命值随机量 </summary>
+        public ref FairyIVRandom LifeMaxRand => ref lifeMaxRand;
+
+        private FairyIVRandom damageRand;
+        /// <summary> 仙灵伤害随机量 </summary>
+        public ref FairyIVRandom DamageRand => ref damageRand;
+
+        private FairyIVRandom defenceRand;
+        /// <summary> 仙灵防御随机量 </summary>
+        public ref FairyIVRandom DefenceRand => ref defenceRand;
+
+        #endregion
 
         public List<IFairyAccessory> fairyAccessories;
 
@@ -58,36 +84,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
             fairyCatchPowerBonus = new StatModifier();
             fairyResurrectionTimeBous = new StatModifier();
-
-            //默认伤害区间为0.8-1.2
-            damageRamdom = new FairyIVRandomModifyer()
-            {
-                additive_Min = 0.8f,
-                additive_Max = 1.2f,
-                multiplicative_Min = 1,
-                multiplicative_Max = 1.01f,
-            };
-
-            //默认防御区间为0.8-1.15
-            defenceRamdom = new FairyIVRandomModifyer()
-            {
-                additive_Min = 0.9f,
-                additive_Max = 1.15f,
-                multiplicative_Min = 1,
-                multiplicative_Max = 1.01f,
-            };
-
-            //默认血量区间为0.8-1.3
-            lifeMaxRamdom = new FairyIVRandomModifyer()
-            {
-                additive_Min = 0.8f,
-                additive_Max = 1.3f,
-                multiplicative_Min = 1,
-                multiplicative_Max = 1.01f,
-            };
-
-            //默认大小区间0.9-1.1
-            ScaleRange = (0.9f, 1.1f);
 
             FairyCatcherRadiusBonus = 0;
         }
