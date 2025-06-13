@@ -1,13 +1,8 @@
-﻿using Coralite.Content.GlobalItems;
-using Coralite.Helpers;
+﻿using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.Localization;
-using Terraria.ModLoader.IO;
-using Terraria.UI.Chat;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 {
@@ -15,13 +10,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
     {
         public override string Texture => AssetDirectory.FairyItems + Name;
 
-        /// <summary>
-        /// 仙灵的个体数据，用于存放各类增幅
-        /// </summary>
-        //protected FairyData fairyData = new();
+        /// <summary> 仙灵的个体数据，用于存放各类增幅 </summary>
+        public FairyIV FairyIV { get; set; }
 
-        /// <summary> 仙灵的实际血量 </summary>
-        protected int life;
         /// <summary> 仙灵是否存活 </summary>
         protected bool dead;
         /// <summary>
@@ -33,38 +24,16 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public abstract int FairyType { get; }
         public abstract FairyRarity Rarity { get; }
-        //public FairyData IV { get => fairyData; set => fairyData = value; }
         public bool IsDead => dead;
-        public int Life { get => life; set => life = value; }
+        public int Life { get; private set; }
         /// <summary>
         /// 复活时间，默认3分钟（3*60*60）
         /// </summary>
         public virtual int MaxResurrectionTime => 60 * 60 * 3;
 
-        /// <summary>
-        /// 受到个体值加成过的仙灵自身的伤害
-        /// </summary>
-        //public float FairyDamage => fairyData.damageBonus.ApplyTo(Item.damage);
-        /// <summary>
-        /// 受到个体值加成过的仙灵自身的大小
-        /// </summary>
-        //public float FairyScale
-        //{
-        //    get
-        //    {
-        //        float scale = fairyData.scaleBonus * Item.GetGlobalItem<CoraliteGlobalItem>().baseScale;
-        //        scale = Math.Clamp(scale, 0.5f, 2.5f);
-        //        return scale;
-        //    }
-        //}
-        /// <summary>
-        /// 受到个体值加成过的仙灵自身的防御
-        /// </summary>
-        //public float FairyDefence => fairyData.defenceBonus.ApplyTo(Item.GetGlobalItem<CoraliteGlobalItem>().baseDefence);
-        /// <summary>
-        /// 受到个体值加成过的仙灵自身的生命值上限
-        /// </summary>
-        //public float FairyLifeMax => fairyData.lifeMaxBonus.ApplyTo(Item.GetGlobalItem<CoraliteGlobalItem>().baseLifeMax);
+
+        ///用于记录仙灵的弹幕的唯一ID，如果没有就在能够再次射出仙灵
+        private int _fairyProjUUID = -1;
 
         public bool IsOut { get; set; }
 
@@ -79,25 +48,19 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             Item.DamageType = Content.DamageClasses.FairyDamage.Instance;
 
             SetOtherDefaults();
-            if (Item.TryGetGlobalItem(out CoraliteGlobalItem fairyItem))
-            {
-                SetFairyDefault(fairyItem);
-                life = fairyItem.baseLifeMax;
-            }
+        }
+
+        /// <summary>
+        /// 初始化仙灵的各项数值
+        /// </summary>
+        /// <param name="fairyIV"></param>
+        public void Initialize(FairyIV fairyIV)
+        {
+            FairyIV = fairyIV;
+            Life = fairyIV.LifeMax;
         }
 
         public virtual void SetOtherDefaults() { }
-
-        /// <summary>
-        /// 在这里设置仙灵的<br></br>
-        /// <see cref="FairyGlobalItem.baseDamage"/><br></br>
-        /// <see cref="FairyGlobalItem.baseDefence"/><br></br>
-        /// <see cref="FairyGlobalItem.baseLifeMax"/><br></br>
-        /// <see cref="FairyGlobalItem.baseLifeMax"/><br></br>
-        /// 等字段
-        /// </summary>
-        /// <param name="fairyItem"></param>
-        public virtual void SetFairyDefault(CoraliteGlobalItem fairyItem) { }
 
         //public override ModItem Clone(Item newEntity)
         //{
@@ -117,8 +80,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             if (damage < 1)
                 damage = 1;
 
-            life -= damage;
-            if (life <= 0)
+            Life -= damage;
+            if (Life <= 0)
                 Dead(owner, target);
             LimitLife();
 
@@ -187,7 +150,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 return;
             }
 
-            life += lifeRegan;
+            Life += lifeRegan;
             LimitLife();
         }
 

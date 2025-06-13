@@ -9,28 +9,25 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
     {
         public struct FairyIVRandom
         {
-            /// <summary>
-            /// 基础值，可以说是中心点
-            /// </summary>
+            /// <summary> 基础值，可以说是中心点 </summary>
             public float BaseValue;
-            /// <summary>
-            /// 基础值向下浮动的范围
-            /// </summary>
+            /// <summary> 基础值向下浮动的范围 </summary>
             public float Sub;
-            /// <summary>
-            /// 基础值向上浮动的范围
-            /// </summary>
+            /// <summary> 基础值向上浮动的范围 </summary>
             public float Add;
 
-            /// <summary>
-            /// 获取随机的值
-            /// </summary>
+            /// <summary> 获取随机的值 </summary>
             public readonly float RandValue => Main.rand.NextFloat(Math.Clamp(BaseValue - Sub, 0, float.MaxValue), BaseValue + Add);
+
+            public void Reset()
+            {
+                BaseValue= FairyIVLevelID.Common;
+                Sub = 2;//默认能降到0也就是弱小
+                Add = 1;//默认增加到3也就是不寻常
+            }
         }
 
-        /// <summary>
-        /// 仙灵捕捉力增幅
-        /// </summary>
+        /// <summary> 仙灵捕捉力增幅 </summary>
         public StatModifier fairyCatchPowerBonus;
         /// <summary>
         /// 仙灵复活时间的增幅（应该减少数值）
@@ -71,6 +68,22 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <summary> 仙灵防御随机量 </summary>
         public ref FairyIVRandom DefenceRand => ref defenceRand;
 
+        private FairyIVRandom speedRand;
+        /// <summary> 仙灵速度随机量 </summary>
+        public ref FairyIVRandom SpeedRand => ref speedRand;
+
+        private FairyIVRandom skillLevelRand;
+        /// <summary> 仙灵技能等级随机量 </summary>
+        public ref FairyIVRandom SkillLevelRand => ref skillLevelRand;
+
+        private FairyIVRandom staminaRand;
+        /// <summary> 仙灵速度随机量 </summary>
+        public ref FairyIVRandom StaminaRand => ref staminaRand;
+
+        private FairyIVRandom scaleRand;
+        /// <summary> 仙灵速度随机量 </summary>
+        public ref FairyIVRandom ScaleRand => ref scaleRand;
+
         #endregion
 
         public List<IFairyAccessory> fairyAccessories;
@@ -79,11 +92,18 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         {
             FairyCircleCoreType = -1;
             FairyCircleCoreType = -1;
-
             fairyAccessories?.Clear();
 
             fairyCatchPowerBonus = new StatModifier();
             fairyResurrectionTimeBous = new StatModifier();
+
+            LifeMaxRand.Reset();
+            DamageRand.Reset();
+            DefenceRand.Reset();
+            SpeedRand.Reset();
+            SkillLevelRand.Reset();
+            StaminaRand.Reset();
+            ScaleRand.Reset();
 
             FairyCatcherRadiusBonus = 0;
         }
@@ -213,40 +233,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
             return false;
         }
-
-        /// <summary>
-        /// 随机仙灵的个体值
-        /// </summary>
-        /// <param name="faityItem"></param>
-        /// <returns></returns>
-        //public FairyData RollFairyIndividualValues(BaseFairyItem faityItem)
-        //{
-        //    FairyData data = new()
-        //    {
-        //        damageBonus = new StatModifier(
-        //            Main.rand.NextFloat(damageRamdom.additive_Min, damageRamdom.additive_Max),
-        //            Main.rand.NextFloat(damageRamdom.multiplicative_Min, damageRamdom.multiplicative_Max),
-        //            Main.rand.NextFloat(damageRamdom.Flat_Min, damageRamdom.Flat_Max),
-        //            Main.rand.NextFloat(damageRamdom.base_Min, damageRamdom.base_Max)
-        //            ),
-        //        defenceBonus = new StatModifier(
-        //            Main.rand.NextFloat(defenceRamdom.additive_Min, defenceRamdom.additive_Max),
-        //            Main.rand.NextFloat(defenceRamdom.multiplicative_Min, defenceRamdom.multiplicative_Max),
-        //            Main.rand.NextFloat(defenceRamdom.Flat_Min, defenceRamdom.Flat_Max),
-        //            Main.rand.NextFloat(defenceRamdom.base_Min, defenceRamdom.base_Max)
-        //            ),
-        //        lifeMaxBonus = new StatModifier(
-        //            Main.rand.NextFloat(lifeMaxRamdom.additive_Min, lifeMaxRamdom.additive_Max),
-        //            Main.rand.NextFloat(lifeMaxRamdom.multiplicative_Min, lifeMaxRamdom.multiplicative_Max),
-        //            Main.rand.NextFloat(lifeMaxRamdom.Flat_Min, lifeMaxRamdom.Flat_Max),
-        //            Main.rand.NextFloat(lifeMaxRamdom.base_Min, lifeMaxRamdom.base_Max)
-        //            ),
-
-        //        scaleBonus = Main.rand.NextFloat(ScaleRange.Item1, ScaleRange.Item2)
-        //    };
-
-        //    return data;
-        //}
 
         /// <summary>
         /// 将仙灵饰品添加到列表中

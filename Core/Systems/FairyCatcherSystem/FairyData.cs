@@ -4,67 +4,46 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 {
     public record FairyData
     {
-        /// <summary>
-        /// 存储生命值上限
-        /// </summary>
+        /// <summary> 生命值上限数据 </summary>
         public List<int> LifeMaxData;
+        /// <summary> 伤害数据 </summary>
         public List<int> DamageData;
+        /// <summary> 防御数据 </summary>
         public List<int> DefenceData;
+        /// <summary> 速度数据 </summary>
         public List<float> SpeedData;
+        /// <summary> 技能等级数据 </summary>
         public List<int> SkillLevelData;
+        /// <summary> 耐力数据 </summary>
         public List<int> StaminaData;
 
+        /// <summary> 生命值上限最大值 </summary>
         public int OverLifeMax;
+        /// <summary> 伤害最大值 </summary>
         public int OverDamage;
+        /// <summary> 防御最大值 </summary>
         public int OverDefence;
+        /// <summary> 速度最大值 </summary>
         public float OverSpeed;
+        /// <summary> 技能等级最大值 </summary>
         public int OverSkillLevel;
+        /// <summary> 耐力最大值 </summary>
         public int OverStamina;
+    }
 
-        //public float scaleBonus = 1f;
-        //public StatModifier damageBonus = new();
-        //public StatModifier lifeMaxBonus = new();
-        //public StatModifier defenceBonus = new();
-
-        //public FairyData()
-        //{
-
-        //}
-
-        //public readonly void SaveData(TagCompound tag)
-        //{
-        //    tag.Add("scaleBonus", scaleBonus);
-        //    SaveStatModifyer(nameof(damageBonus), damageBonus, tag);
-        //    SaveStatModifyer(nameof(lifeMaxBonus), lifeMaxBonus, tag);
-        //    SaveStatModifyer(nameof(defenceBonus), defenceBonus, tag);
-        //}
-
-        //public void LoadData(TagCompound tag)
-        //{
-        //    if (tag.ContainsKey("scaleBonus"))
-        //        scaleBonus = tag.GetFloat("scaleBonus");
-        //    LoadStatModifyer(nameof(damageBonus), ref damageBonus, tag);
-        //    LoadStatModifyer(nameof(lifeMaxBonus), ref lifeMaxBonus, tag);
-        //    LoadStatModifyer(nameof(defenceBonus), ref defenceBonus, tag);
-        //}
-
-        //public static void SaveStatModifyer(string name, StatModifier modifyer, TagCompound tag)
-        //{
-        //    tag.Add(name + "Base", modifyer.Base);
-        //    tag.Add(name + "Flat", modifyer.Flat);
-        //    tag.Add(name + "Additive", modifyer.Additive);
-        //    tag.Add(name + "Multiplicative", modifyer.Multiplicative);
-        //}
-
-        //public static void LoadStatModifyer(string name, ref StatModifier targetModifyer, TagCompound tag)
-        //{
-        //    if (tag.TryGet(name + "Additive", out float additive)
-        //        && tag.TryGet(name + "Multiplicative", out float multiplicative)
-        //        && tag.TryGet(name + "Flat", out float flat)
-        //        && tag.TryGet(name + "Base", out float @base))
-        //    {
-        //        targetModifyer = new StatModifier(additive, multiplicative, flat, @base);
-        //    }
-        //}
+    public class FairyIVLevelID
+    {
+        public const int Weak = 0;
+        public const int WeakCommon = 1;
+        public const int Common = 2;
+        public const int Uncommon = 3;
+        public const int Rare = 4;
+        public const int Epic = 5;
+        public const int Lagendary = 6;
+        public const int Eternal = 7;
+        /// <summary>
+        /// 一般不会出现的最大上限
+        /// </summary>
+        public const int Over = 8;
     }
 }

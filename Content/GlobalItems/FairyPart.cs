@@ -12,57 +12,6 @@ namespace Coralite.Content.GlobalItems
 {
     public partial class CoraliteGlobalItem
     {
-        #region Fields
-
-        /// <summary>
-        /// 仙灵弹幕的基础大小，默认1
-        /// </summary>
-        public float baseScale = 1;
-
-        /// <summary>
-        /// 仙灵弹幕的默认防御，1防御能够抵挡1伤害<br></br>
-        /// 默认0
-        /// </summary>
-        public int baseDefence;
-
-        /// <summary>
-        /// 仙灵弹幕的基础血量，默认10
-        /// </summary>
-        public int baseLifeMax = 10;
-
-        #endregion
-
-
-        #region HelperMethods
-
-        /// <summary>
-        /// 将物品标记为仙灵物品，之后可以将仙灵放入仙灵瓶或者射出
-        /// </summary>
-        /// <param name="item">自身物品</param>
-        /// <param name="fairyProjType"></param>
-        /// <param name="baseDamage"></param>
-        /// <param name="baseDefence"></param>
-        /// <param name="baseLifeMax"></param>
-        /// <param name="baseScale"></param>
-        public static void FairyItemSets(Item item, int baseDefence, int baseLifeMax, float baseScale = 1)
-        {
-            if (item.TryGetGlobalItem(out CoraliteGlobalItem fi))
-            {
-                fi.baseDefence = baseDefence;
-                fi.baseLifeMax = baseLifeMax;
-                fi.baseScale = baseScale;
-            }
-        }
-
-        public void FairyItemSets(int baseDefence, int baseLifeMax, float baseScale = 1)
-        {
-            this.baseDefence = baseDefence;
-            this.baseLifeMax = baseLifeMax;
-            this.baseScale = baseScale;
-        }
-
-        #endregion
-
         public override bool CanPickup(Item item, Player player)
         {
             //自身是仙灵物品并且身上有空的仙灵瓶
@@ -102,9 +51,7 @@ namespace Coralite.Content.GlobalItems
             {
                 IReadOnlyList<ModPrefix> list = PrefixLoader.GetPrefixesInCategory(PrefixCategory.Custom);
                 foreach (ModPrefix modPrefix in list.Where(x => x.CanRoll(item)))
-                {
                     wr.Add(modPrefix.Type, modPrefix.RollChance(item));
-                }
             }
 
             AddCategory();
