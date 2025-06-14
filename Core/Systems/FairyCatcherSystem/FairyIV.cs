@@ -1,6 +1,7 @@
 ﻿using Coralite.Helpers;
 using System;
 using System.Collections.Generic;
+using Terraria.Localization;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem
 {
@@ -28,43 +29,43 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// 生命值上限等级<br></br>
         /// 使用<see cref=""/>获取对应本地化名称
         /// </summary>
-        public short LifeMaxLevel { get; private set; }
+        public float LifeMaxLevel { get; private set; }
 
         /// <summary> 
         /// 伤害等级<br></br>
         /// 使用<see cref=""/>获取对应本地化名称
         /// </summary>
-        public short DamageLevel { get; private set; }
+        public float DamageLevel { get; private set; }
 
         /// <summary> 
         /// 防御等级<br></br>
         /// 使用<see cref=""/>获取对应本地化名称
         /// </summary>
-        public short DefenceLevel { get; private set; }
+        public float DefenceLevel { get; private set; }
 
         /// <summary> 
         /// 速度等级<br></br>
         /// 使用<see cref=""/>获取对应本地化名称
         /// </summary>
-        public short SpeedLevel { get; private set; }
+        public float SpeedLevel { get; private set; }
 
         /// <summary> 
         /// 技能等级的等级<br></br>
         /// 使用<see cref=""/>获取对应本地化名称
         /// </summary>
-        public short SkillLevelLevel { get; private set; }
+        public float SkillLevelLevel { get; private set; }
 
         /// <summary> 
         /// 耐力的等级<br></br>
         /// 使用<see cref=""/>获取对应本地化名称
         /// </summary>
-        public short StaminaLevel { get; private set; }
+        public float StaminaLevel { get; private set; }
 
         /// <summary> 
         /// 尺寸等级<br></br>
         /// 使用<see cref=""/>获取对应本地化名称
         /// </summary>
-        public short ScaleLevel { get; private set; }
+        public float ScaleLevel { get; private set; }
 
         /// <summary>
         /// 根据仙灵类型和玩家的加成随机一个仙灵的六维个体值
@@ -72,9 +73,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <param name="fairyType"></param>
         /// <param name="player"></param>
         /// <returns></returns>
-        public static FairyIV GetFairyIV(int fairyType, FairyCatcherPlayer player)
+        public static FairyIV GetFairyIV(Fairy fairy, FairyCatcherPlayer player)
         {
-            if (!FairySystem.fairyDatas.TryGetValue(fairyType, out FairyData data))
+            if (!FairySystem.fairyDatas.TryGetValue(fairy.Type, out FairyData data))
                 return default(FairyIV);
 
             FairyIV iv = new FairyIV();
@@ -94,6 +95,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             //大小
             GetScaleIV(player, ref iv);
 
+            fairy.ModifyIV(ref iv,player);
 
             return iv;
         }
@@ -101,7 +103,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public static void GetLifeMaxIV(FairyCatcherPlayer player, FairyData data, ref FairyIV iv)
         {
             float level = player.LifeMaxRand.RandValue;
-            iv.LifeMaxLevel = (short)level;
+            iv.LifeMaxLevel = level;
 
             //数值高于永恒，从永恒到最大值之间缩放
             if ((int)level > data.LifeMaxData.Count - 1)
@@ -119,7 +121,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public static void GetDamageIV(FairyCatcherPlayer player, FairyData data, ref FairyIV iv)
         {
             float level = player.DamageRand.RandValue;
-            iv.DamageLevel = (short)level;
+            iv.DamageLevel = level;
             //数值高于永恒，从永恒到最大值之间缩放
             if ((int)level > data.DamageData.Count - 1)
                 iv.Damage = (int)Helper.Lerp(
@@ -136,7 +138,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public static void GetDefenceIV(FairyCatcherPlayer player, FairyData data, ref FairyIV iv)
         {
             float level = player.DefenceRand.RandValue;
-            iv.DefenceLevel = (short)level;
+            iv.DefenceLevel = level;
             //数值高于永恒，从永恒到最大值之间缩放
             if ((int)level > data.DefenceData.Count - 1)
                 iv.Defence = (int)Helper.Lerp(
@@ -153,7 +155,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public static void GetSpeedIV(FairyCatcherPlayer player, FairyData data, ref FairyIV iv)
         {
             float level = player.SpeedRand.RandValue;
-            iv.SpeedLevel = (short)level;
+            iv.SpeedLevel = level;
             //数值高于永恒，从永恒到最大值之间缩放
             if ((int)level > data.SpeedData.Count - 1)
                 iv.Speed = Helper.Lerp(
@@ -175,7 +177,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public static void GetSkillLevelIV(FairyCatcherPlayer player, FairyData data, ref FairyIV iv)
         {
             float level = player.SkillLevelRand.RandValue;
-            iv.SkillLevelLevel = (short)level;
+            iv.SkillLevelLevel = level;
             //数值高于永恒，从永恒到最大值之间缩放
             if ((int)level > data.SkillLevelData.Count - 1)
                 iv.SkillLevel = (int)Helper.Lerp(
@@ -192,7 +194,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public static void GetStaminaIV(FairyCatcherPlayer player, FairyData data, ref FairyIV iv)
         {
             float level = player.StaminaRand.RandValue;
-            iv.StaminaLevel = (short)level;
+            iv.StaminaLevel = level;
             //数值高于永恒，从永恒到最大值之间缩放
             if ((int)level > data.StaminaData.Count - 1)
                 iv.Stamina = (int)Helper.Lerp(
@@ -209,7 +211,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         private static void GetScaleIV(FairyCatcherPlayer player, ref FairyIV iv)
         {
             float level = player.ScaleRand.RandValue;
-            iv.ScaleLevel = (short)level;
+            iv.ScaleLevel = level;
             //数值高于永恒，从永恒到最大值之间缩放
 
         }
@@ -222,6 +224,30 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             int more = dataList[(int)level + 1];
 
             return (int)MathF.Round(Helper.Lerp(less, more, Math.Clamp(Helper.X2Ease(level - (int)level), 0, 1)), MidpointRounding.AwayFromZero);
+        }
+
+        public static (Color, LocalizedText) GetFairyLocalize(float level)
+        {
+            return level switch
+            {
+                > FairyIVLevelID.Weak and < FairyIVLevelID.WeakCommon
+                    => (Color.Gray, FairySystem.WeakLevel),
+                >= FairyIVLevelID.WeakCommon and < FairyIVLevelID.Common
+                    => (FairySystem.VeryCommonLevel_Brown, FairySystem.WeakCommonLevel),
+                >= FairyIVLevelID.Common and < FairyIVLevelID.Uncommon
+                    => (Color.White, FairySystem.CommonLevel),
+                >= FairyIVLevelID.Uncommon and < FairyIVLevelID.Rare
+                    => (Color.LawnGreen, FairySystem.UncommonLevel),
+                >= FairyIVLevelID.Rare and < FairyIVLevelID.Epic
+                    => (Color.DodgerBlue, FairySystem.RareLevel),
+                >= FairyIVLevelID.Epic and < FairyIVLevelID.Legendary
+                    => (Color.Yellow, FairySystem.EpicLevel),
+                >= FairyIVLevelID.Legendary and < FairyIVLevelID.Eternal
+                    => (Color.HotPink, FairySystem.LegendaryLevel),
+                >= FairyIVLevelID.Eternal and < FairyIVLevelID.Over
+                    => (Color.Orange, FairySystem.EternalLevel),
+                _=> (Color.Coral, FairySystem.OverLevel)
+            };
         }
     }
 }

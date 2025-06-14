@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.Localization;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 {
@@ -178,7 +179,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                     showRadarCount += 2;
 
                 tooltips.Add(new TooltipLine(Mod, "RaderChart"
-                    , "                        \n\n\n\n\n"));
+                    , "                        \n\n\n\n\n\n"));
 
                 showRadarCount--;
 
@@ -191,7 +192,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                     showRadarCount = 2;
 
                 //各种增幅数值
-                //tooltips.Add(LifeMaxeBonusDescription());
+                tooltips.Add(LifeMaxeBonusDescription());
                 //tooltips.Add(DamageBonusDescription());
                 //tooltips.Add(DefenceBonusDescription());
                 //tooltips.Add(ScaleBonusDescription());
@@ -231,17 +232,15 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         //    return line;
         //}
 
-        //public virtual TooltipLine LifeMaxeBonusDescription()
-        //{
-        //    float @base = Item.GetGlobalItem<CoraliteGlobalItem>().baseLifeMax;
-        //    float bonused = FairyLifeMax;
-        //    (Color, LocalizedText) group = FairyIVAppraise.FairyLifeMaxAppraise.GetAppraiseResult(@base, bonused);
+        public virtual TooltipLine LifeMaxeBonusDescription()
+        {
+            (Color c, LocalizedText text) = FairyIV.GetFairyLocalize(FairyIV.LifeMaxLevel);
 
-        //    TooltipLine line = new(Mod, "LifeMaxBonus"
-        //        , FairySystem.FormatIVDescription(FairySystem.FairyLifeMax, group.Item2, @base, (int)bonused));
-        //    line.OverrideColor = group.Item1;
-        //    return line;
-        //}
+            TooltipLine line = new(Mod, "FairyLifeMax"
+                , FairySystem.FormatIVDescription(FairySystem.FairyLifeMax, text, FairyIV.LifeMax));
+            line.OverrideColor = c;
+            return line;
+        }
 
         //public virtual TooltipLine DamageBonusDescription()
         //{

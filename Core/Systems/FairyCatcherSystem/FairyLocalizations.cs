@@ -171,9 +171,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             CircleRadiusBonus = null;
         }
 
-        public static string FormatIVDescription(LocalizedText pre, LocalizedText levelText, float @base, float bonused)
+        public static string FormatIVDescription(LocalizedText pre, LocalizedText levelText, float value)
         {
-            return pre.Value + levelText.Format(bonused, @base);
+            return pre.Value + levelText.Format(value);
         }
 
         public static string GetIVLevel(int level,float value)
@@ -186,7 +186,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                 FairyIVLevelID.Uncommon => UncommonLevel.Format(value),
                 FairyIVLevelID.Rare => RareLevel.Format(value),
                 FairyIVLevelID.Epic => EpicLevel.Format(value),
-                FairyIVLevelID.Lagendary => LegendaryLevel.Format(value),
+                FairyIVLevelID.Legendary => LegendaryLevel.Format(value),
                 FairyIVLevelID.Eternal => EternalLevel.Format(value),
                 >= 100 => OverLevel.Format(value),
                 _ => EternalLevel.Format(value),

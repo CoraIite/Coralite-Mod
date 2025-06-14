@@ -345,7 +345,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
             //为物品的字段赋值，如果这个物品不是一个仙灵那么就跳过
             if (i.ModItem is BaseFairyItem fairyitem && player.TryGetModPlayer(out FairyCatcherPlayer fcp))
-                fairyitem.Initialize(FairyIV.GetFairyIV(Type, fcp));
+                fairyitem.Initialize(FairyIV.GetFairyIV(this, fcp));
 
             //调用onCatch
             OnBeCaught(player, i);
@@ -362,6 +362,12 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// </summary>
         /// <param name="player"></param>
         public virtual void OnBeCaught(Player player, Item fairyItem) { }
+
+        /// <summary>
+        /// 自定义仙灵的个体值，例如某些仙灵固定个体值等
+        /// </summary>
+        /// <param name="fairyIV"></param>
+        public virtual void ModifyIV(ref FairyIV fairyIV,FairyCatcherPlayer fcp) { }
 
         #endregion
 

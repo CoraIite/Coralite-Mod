@@ -56,14 +56,14 @@ FairySystem: {
 	FairyTradeCondition: Используйте портал фейри для торговли
 	// CircleRadiusBonus: Mods.Coralite.Systems.FairySystem.CircleRadiusBonus
 	WeakLevel: Слабый: {0} (Базовый {1})
-	// WeakCommonLevel: Mods.Coralite.Systems.FairySystem.WeakCommonLevel
+	// WeakCommonLevel: "{0} Weak"
 	CommonLevel: Обычный: {0} (Базовый {1})
 	UncommonLevel: Редкий: {0} (Базовый {1})
 	RareLevel: Редкий: {0} (Базовый {1})
-	// EpicLevel: Mods.Coralite.Systems.FairySystem.EpicLevel
-	// LegendaryLevel: Mods.Coralite.Systems.FairySystem.LegendaryLevel
+	// EpicLevel: "{0} EpicLevel"
+	// LegendaryLevel: "{0} Legendary"
 	EternalLevel: Вечный: {0} (Базовый {1})
-	// OverLevel: Mods.Coralite.Systems.FairySystem.OverLevel
+	// OverLevel: "{0} Over"
 	// FairySpeed: Mods.Coralite.Systems.FairySystem.FairySpeed
 	// FairySkillLevel: Mods.Coralite.Systems.FairySystem.FairySkillLevel
 	// FairyStamina: Mods.Coralite.Systems.FairySystem.FairyStamina

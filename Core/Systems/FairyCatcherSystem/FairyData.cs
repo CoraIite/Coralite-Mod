@@ -39,11 +39,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public const int Uncommon = 3;
         public const int Rare = 4;
         public const int Epic = 5;
-        public const int Lagendary = 6;
+        public const int Legendary = 6;
         public const int Eternal = 7;
         /// <summary>
         /// 一般不会出现的最大上限
         /// </summary>
-        public const int Over = 8;
+        public const int Over = 100;
     }
 }

@@ -55,15 +55,15 @@ FairySystem: {
 	SortByCaughtText: 按是否捕获排序
 	FairyTradeCondition: 使用妖精传送门进行交易
 	CircleRadiusBonus: 仙灵捕捉环半径增加 {0} 格
-	WeakLevel: 低劣
-	WeakCommonLevel: 弱小
-	CommonLevel: 普通
-	UncommonLevel: 不寻常
-	RareLevel: 稀有
-	EpicLevel: 史诗
-	LegendaryLevel: 传说
-	EternalLevel: 永恒
-	OverLevel: 超越
+	WeakLevel: "{0} 低劣"
+	WeakCommonLevel: "{0} 弱小"
+	CommonLevel: "{0} 普通"
+	UncommonLevel: "{0} 不寻常"
+	RareLevel: "{0} 稀有"
+	EpicLevel: "{0} 史诗"
+	LegendaryLevel: "{0} 传说"
+	EternalLevel: "{0} 永恒"
+	OverLevel: "{0} 超越"
 	FairySpeed: 速度
 	FairySkillLevel: 技能等级
 	FairyStamina: 耐力

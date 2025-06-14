@@ -55,15 +55,15 @@ FairySystem: {
 	SortByCaughtText: Sort by unlocked
 	FairyTradeCondition: Use fairy teleporter for trading
 	CircleRadiusBonus: Mods.Coralite.Systems.FairySystem.CircleRadiusBonus
-	WeakLevel: Mods.Coralite.Systems.FairySystem.WeakLevel
-	WeakCommonLevel: Mods.Coralite.Systems.FairySystem.WeakCommonLevel
-	CommonLevel: Mods.Coralite.Systems.FairySystem.CommonLevel
-	UncommonLevel: Mods.Coralite.Systems.FairySystem.UncommonLevel
-	RareLevel: Mods.Coralite.Systems.FairySystem.RareLevel
-	EpicLevel: Mods.Coralite.Systems.FairySystem.EpicLevel
-	LegendaryLevel: Mods.Coralite.Systems.FairySystem.LegendaryLevel
-	EternalLevel: Mods.Coralite.Systems.FairySystem.EternalLevel
-	OverLevel: Mods.Coralite.Systems.FairySystem.OverLevel
+	WeakLevel: "{0} Weak"
+	WeakCommonLevel: "{0} Weak"
+	CommonLevel: "{0} Common"
+	UncommonLevel: "{0} Uncommon"
+	RareLevel: "{0} Rare"
+	EpicLevel: "{0} EpicLevel"
+	LegendaryLevel: "{0} Legendary"
+	EternalLevel: "{0} Eternal"
+	OverLevel: "{0} Over"
 	FairySpeed: Mods.Coralite.Systems.FairySystem.FairySpeed
 	FairySkillLevel: Mods.Coralite.Systems.FairySystem.FairySkillLevel
 	FairyStamina: Mods.Coralite.Systems.FairySystem.FairyStamina

@@ -9,9 +9,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 {
     public partial class FairySystem : ModSystem, ILocalizedModType
     {
-        //public static ATex ProgressBarOuter;
-        //public static ATex ProgressBarInner;
-
         /// <summary>
         /// 键值是墙壁的type，-1表示没有墙壁
         /// </summary>
@@ -150,7 +147,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                 "Uncommon",
                 "Rare",
                 "Epic",
-                "Lagendary",
+                "Legendary",
                 "Eternal",
                 "Over",
                 ];
