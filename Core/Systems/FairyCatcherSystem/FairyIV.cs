@@ -1,5 +1,6 @@
 ﻿using Coralite.Helpers;
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using Terraria.Localization;
 
@@ -67,6 +68,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// </summary>
         public float ScaleLevel { get; private set; }
 
+
+        private const int EternalToOver = FairyIVLevelID.Over - FairyIVLevelID.Eternal;
+
         /// <summary>
         /// 根据仙灵类型和玩家的加成随机一个仙灵的六维个体值
         /// </summary>
@@ -110,7 +114,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                 iv.LifeMax = (int)Helper.Lerp(
                     data.LifeMaxData[^1],
                     data.OverLifeMax,
-                    Math.Clamp((level - data.LifeMaxData.Count - 1), 0, 100) / 100);
+                    Math.Clamp((level - FairyIVLevelID.Eternal), 0, EternalToOver) / EternalToOver);
             else
             {
                 //在二者间使用X2插值(四舍五入)
@@ -127,7 +131,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                 iv.Damage = (int)Helper.Lerp(
                     data.DamageData[^1],
                     data.OverDamage,
-                    Math.Clamp((level - data.DamageData.Count - 1), 0, 100) / 100);
+                    Math.Clamp((level - FairyIVLevelID.Eternal), 0, EternalToOver) / EternalToOver);
             else
             {
                 //在二者间使用X2插值(四舍五入)
@@ -144,7 +148,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                 iv.Defence = (int)Helper.Lerp(
                     data.DefenceData[^1],
                     data.OverDefence,
-                    Math.Clamp((level - data.DefenceData.Count - 1), 0, 100) / 100);
+                    Math.Clamp((level - FairyIVLevelID.Eternal), 0, EternalToOver) / EternalToOver);
             else
             {
                 //在二者间使用X2插值(四舍五入)
@@ -161,7 +165,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                 iv.Speed = Helper.Lerp(
                     data.SpeedData[^1],
                     data.OverSpeed,
-                    Math.Clamp((level - data.SpeedData.Count - 1), 0, 100) / 100);
+                    Math.Clamp((level - FairyIVLevelID.Eternal), 0, EternalToOver) / EternalToOver);
             else
             {
                 //在二者间使用X2插值(四舍五入)
@@ -183,7 +187,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                 iv.SkillLevel = (int)Helper.Lerp(
                     data.SkillLevelData[^1],
                     data.OverSkillLevel,
-                    Math.Clamp((level - data.SkillLevelData.Count - 1), 0, 100) / 100);
+                    Math.Clamp((level - FairyIVLevelID.Eternal), 0, EternalToOver) / EternalToOver);
             else
             {
                 //在二者间使用X2插值(四舍五入)
@@ -200,7 +204,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                 iv.Stamina = (int)Helper.Lerp(
                     data.StaminaData[^1],
                     data.OverStamina,
-                    Math.Clamp((level - data.StaminaData.Count - 1), 0, 100) / 100);
+                    Math.Clamp((level - FairyIVLevelID.Eternal), 0, EternalToOver) / EternalToOver);
             else
             {
                 //在二者间使用X2插值(四舍五入)
