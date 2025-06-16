@@ -1,5 +1,5 @@
-﻿using Coralite.Content.Items.Icicle;
-using Coralite.Content.ModPlayers;
+﻿using Coralite.Content.ModPlayers;
+using Coralite.Core;
 using Terraria;
 using Terraria.ID;
 
@@ -14,49 +14,39 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.defense = 2;
+            Item.vanity = true;
+            Item.useStyle = ItemUseStyleID.HoldUp;
+            Item.useTime = Item.useAnimation = 20;
+            Item.UseSound = CoraliteSoundID.Knock_Item37;
         }
 
-        public override bool CanAccessoryBeEquippedWith(Item equippedItem, Item incomingItem, Player player)
-        {
-            return !((equippedItem.type == ModContent.ItemType<PowerliftExoskeleton>()//上位
-                || equippedItem.type == ModContent.ItemType<BeetleLimbStrap>())//上位
-
-                && incomingItem.type == ModContent.ItemType<ShieldbearersBand>());
-        }
-
-        public override void UpdateAccessory(Player player, bool hideVisual)
+        public override bool CanUseItem(Player player)
         {
             if (player.TryGetModPlayer(out CoralitePlayer cp))
             {
-                cp.MaxFlyingShield = 2;
+                if (cp.ExtraShield1)
+                    return false;
+
+                cp.ExtraShield1 = true;
+
+                return true;
             }
+
+            return false;
         }
 
         public override void AddRecipes()
         {
             CreateRecipe()
                 .AddIngredient(ItemID.Leather)
-                .AddIngredient(ItemID.ShadowScale, 5)
-                .AddTile(TileID.TinkerersWorkbench)
+                .AddIngredient(ItemID.GoldBar, 12)
+                .AddTile(TileID.Anvils)
                 .Register();
 
             CreateRecipe()
                 .AddIngredient(ItemID.Vertebrae, 5)
-                .AddIngredient(ItemID.TissueSample, 5)
-                .AddTile(TileID.TinkerersWorkbench)
-                .Register();
-
-            CreateRecipe()
-                .AddIngredient(ItemID.Vertebrae, 5)
-                .AddIngredient<IcicleScale>(3)
-                .AddTile(TileID.TinkerersWorkbench)
-                .Register();
-
-            CreateRecipe()
-                .AddIngredient(ItemID.Leather, 5)
-                .AddIngredient<IcicleScale>(3)
-                .AddTile(TileID.TinkerersWorkbench)
+                .AddIngredient(ItemID.PlatinumBar, 12)
+                .AddTile(TileID.Anvils)
                 .Register();
         }
     }

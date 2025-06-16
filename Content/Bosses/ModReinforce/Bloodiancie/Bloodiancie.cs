@@ -175,6 +175,12 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
             OnHit(hit.Damage);
         }
 
+        public override void ModifyHitByItem(Player player, Item item, ref NPC.HitModifiers modifiers)
+        {
+            if (item.pick > 0)
+                modifiers.SourceDamage.Flat += item.pick;
+        }
+
         public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone)
         {
             OnHit(hit.Damage);

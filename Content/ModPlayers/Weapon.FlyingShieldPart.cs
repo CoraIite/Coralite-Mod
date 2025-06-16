@@ -2,11 +2,19 @@
 using Coralite.Core.Systems.FlyingShieldSystem;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.ModLoader.IO;
 
 namespace Coralite.Content.ModPlayers
 {
     public partial class CoralitePlayer
     {
+        /// <summary> +1个额外盾牌 </summary>
+        public bool ExtraShield1 { get; internal set; }
+        /// <summary> +1个额外盾牌 </summary>
+        public bool ExtraShield2 { get; internal set; }
+        /// <summary> +1个额外盾牌 </summary>
+        public bool ExtraShield3 { get; internal set; }
+
         /// <summary>
         /// 同时存在的飞盾弹幕数量
         /// </summary>
@@ -75,6 +83,16 @@ namespace Coralite.Content.ModPlayers
             }
         }
 
+        public void UpdateFlyingShield()
+        {
+            if (ExtraShield1)
+                MaxFlyingShield++;
+            if (ExtraShield2)
+                MaxFlyingShield++;
+            if (ExtraShield3)
+                MaxFlyingShield++;
+        }
+
         /// <summary>
         /// 防御效果，为玩家添加伤害减免
         /// </summary>
@@ -123,6 +141,23 @@ namespace Coralite.Content.ModPlayers
 
                 Helpers.Helper.PlayPitched(CoraliteSoundID.Metal_NPCHit4, Player.Center);
             }
+        }
+
+        public void SaveFlyingShield(TagCompound tag)
+        {
+            if (ExtraShield1)
+                tag.Add(nameof(ExtraShield1), ExtraShield1);
+            if (ExtraShield2)
+                tag.Add(nameof(ExtraShield2), ExtraShield2);
+            if (ExtraShield3)
+                tag.Add(nameof(ExtraShield3), ExtraShield3);
+        }
+
+        public void LoadFlyingShield(TagCompound tag)
+        {
+            ExtraShield1 = tag.ContainsKey(nameof(ExtraShield1));
+            ExtraShield2 = tag.ContainsKey(nameof(ExtraShield2));
+            ExtraShield3 = tag.ContainsKey(nameof(ExtraShield3));
         }
     }
 }

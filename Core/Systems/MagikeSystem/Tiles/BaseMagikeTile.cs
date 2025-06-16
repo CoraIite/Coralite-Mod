@@ -286,8 +286,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
                 //放入物品
                 //有物品容器，同时可以放入物品，就直接塞进去
                 Player localPlayer = Main.LocalPlayer;
-                Item item = localPlayer.inventory[localPlayer.selectedItem];
-                if (!item.IsAir && !item.favorited
+                Item item = localPlayer.HeldItem;//localPlayer.inventory[localPlayer.selectedItem];
+                if (localPlayer.selectedItem == 58&&!item.IsAir && !item.favorited
                     && container.CanAddItem(item.type, item.stack))
                 {
                     localPlayer.GamepadEnableGrappleCooldown();
