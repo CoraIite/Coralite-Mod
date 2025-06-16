@@ -1,9 +1,11 @@
 ﻿using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Localization;
+using Terraria.ModLoader;
 using Terraria.UI.Chat;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
@@ -38,6 +40,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         private int _fairyProjUUID = -1;
 
         public bool IsOut { get; set; }
+
+
+        private static int[] indexes = [0, 1, 2, 0, 2, 3, 0, 3, 4, 0, 4, 5, 0, 5, 6, 0, 6, 7];
 
         public override void SetStaticDefaults()
         {
@@ -174,7 +179,13 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             //当前血量
             //tooltips.Add(SurvivalStatus());
 
-            if (showLineValueCount > 15)
+            if (Main.keyState.PressingShift())
+                showLineValueCount += 2;
+
+            showLineValueCount--;
+            showLineValueCount = Math.Clamp(showLineValueCount, 0, 10);
+
+            if (showLineValueCount >= 10)
             {
                 //各种增幅数值
                 tooltips.Add(LifeMaxDescription());
@@ -184,22 +195,12 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 tooltips.Add(SkillLevelDescription());
                 tooltips.Add(StaminaDescription());
                 tooltips.Add(ScaleBonusDescription());
-
-                if (Main.keyState.PressingShift())
-                    showLineValueCount = 16;
             }
             else
             {
-                if (Main.keyState.PressingShift())
-                    showLineValueCount += 2;
-
-                showLineValueCount--;
-
-                if (showLineValueCount > 15)
-                    showLineValueCount = 15;
 
                 tooltips.Add(new TooltipLine(Mod, "RaderChart"
-                    , "                        \n\n\n\n\n\n"));
+                    , "                                \n\n\n\n\n\n\n\n"));
 
                 tooltips.Add(new TooltipLine(Mod, "SeeMore", FairySystem.SeeMore.Value));
             }
@@ -310,38 +311,84 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public override void PostDrawTooltipLine(DrawableTooltipLine line)
         {
-            if (showLineValueCount > 0 && line.Name == "RaderChart")
+            if (showLineValueCount >= 0 && line.Name == "RaderChart")
             {
                 Vector2 topLeft = new(line.OriginalX, line.OriginalY);
-                float factor = 1 - showLineValueCount / 15f;
+                float factor = Helper.SqrtEase(1 - showLineValueCount / 10f);
 
                 Vector2 size = ChatManager.GetStringSize(line.Font, line.Text, line.BaseScale);
                 Vector2 center = topLeft + (size / 2);
 
-                float length = factor * 80;
+                float length = factor * 7*12;
+
+                SpriteBatch spriteBatch = Main.spriteBatch;
+
+                spriteBatch.End();
+                spriteBatch.Begin(SpriteSortMode.Deferred, spriteBatch.GraphicsDevice.BlendState, spriteBatch.GraphicsDevice.SamplerStates[0],
+                                spriteBatch.GraphicsDevice.DepthStencilState, spriteBatch.GraphicsDevice.RasterizerState, null, Main.UIScaleMatrix);
 
                 //绘制底层
-                //DrawRaderBack(center, factor, backgroundTex);
+                DrawRaderBack(center, length, new Color(99, 155, 255) * 0.7f);
+                DrawRaderBack(center, factor * 5 * 12, new Color(36, 88, 179) * 0.85f);
+                DrawRaderBack(center, factor * 3 * 12, new Color(28, 60, 116));
+
                 //绘制雷达图
                 DrawRaderChart(center, length);
 
-                length = factor * 80;
+                spriteBatch.End();
+                spriteBatch.Begin(SpriteSortMode.Deferred, spriteBatch.GraphicsDevice.BlendState, spriteBatch.GraphicsDevice.SamplerStates[0],
+                                spriteBatch.GraphicsDevice.DepthStencilState, spriteBatch.GraphicsDevice.RasterizerState, null, Main.UIScaleMatrix);
+
+                length = factor * (7 * 12 + 24);
                 const float HexAngle = MathHelper.TwoPi / 6;
 
                 //绘制上层图标
                 //生命值
-                DrawRaderIcon((-MathHelper.PiOver2).ToRotationVector2() * length, "[i:58]", FairyIV.LifeMax,FairyIV.LifeMaxLevel);
-                //攻击力
-                DrawRaderIcon((-MathHelper.PiOver2+HexAngle).ToRotationVector2() * length, "[i:3811]", FairyIV.Defence, FairyIV.Defence);
-                //攻击3507
+                DrawRaderIcon(center + (-MathHelper.PiOver2).ToRotationVector2() * length, "[i:58]", FairyIV.LifeMax, FairyIV.LifeMaxLevel);
+                //防御
+                DrawRaderIcon(center + (-MathHelper.PiOver2 + HexAngle).ToRotationVector2() * length, "[i:156]", FairyIV.Defence, FairyIV.DefenceLevel);
+                //耐力
+                DrawRaderIcon(center + (-MathHelper.PiOver2 + HexAngle * 2).ToRotationVector2() * length, "[i:4031]", FairyIV.Stamina, FairyIV.StaminaLevel);
+                //速度
+                DrawRaderIcon(center + (-MathHelper.PiOver2 + HexAngle * 3).ToRotationVector2() * length, "[i:761]", FairyIV.Speed, FairyIV.SpeedLevel);
+                //等级
+                DrawRaderIcon(center + (-MathHelper.PiOver2 + HexAngle * 4).ToRotationVector2() * length, "[i:149]", FairyIV.SkillLevel, FairyIV.SkillLevelLevel);
+                //攻击
+                DrawRaderIcon(center + (-MathHelper.PiOver2 + HexAngle * 5).ToRotationVector2() * length, "[i:3507]", FairyIV.Damage, FairyIV.DamageLevel);
             }
         }
 
-        public static void DrawRaderBack(Vector2 center, float factor, Texture2D backgroundTex)
+        public static void DrawRaderBack(Vector2 center, float length,Color c)
         {
-            factor = Helper.SqrtEase(factor);
+            Texture2D Texture = CoraliteAssets.Misc.WToT32x.Value;
 
-            Main.spriteBatch.Draw(backgroundTex, center, null, Color.White * factor, 0, backgroundTex.Size() / 2, factor, 0, 0);
+            ColoredVertex centerVertex = new ColoredVertex(center, c, new Vector3(0, 1, 1));
+
+            const float HexAngle = MathHelper.TwoPi / 6;
+
+            ColoredVertex[] bars =
+            [
+                    centerVertex,
+                new(center + (-MathHelper.PiOver2).ToRotationVector2()*length,
+                    c, new Vector3(0, 0, 1)),
+                new(center + (-MathHelper.PiOver2+HexAngle).ToRotationVector2()*length,
+                    c, new Vector3(1 / 6f, 0, 1)),
+                new(center + (-MathHelper.PiOver2+HexAngle*2).ToRotationVector2()*length,
+                    c, new Vector3(2 / 6f, 0, 1)),
+                new(center + (-MathHelper.PiOver2+HexAngle*3).ToRotationVector2()*length,
+                    c, new Vector3(3 / 6f, 0, 1)),
+                new(center + (-MathHelper.PiOver2+HexAngle*4).ToRotationVector2()*length,
+                    c, new Vector3(4 / 6f, 0, 1)),
+                new(center + (-MathHelper.PiOver2+HexAngle*5).ToRotationVector2()*length,
+                    c, new Vector3(5 / 6f, 0, 1)),
+                new(center + (-MathHelper.PiOver2).ToRotationVector2()*length,
+                    c, new Vector3(1, 0, 1)),
+            ];
+
+
+            Main.spriteBatch.GraphicsDevice.Textures[0] = Texture;
+            Main.spriteBatch.GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, bars, 0, 8
+                ,indexes,0,6);
         }
 
         public void DrawRaderChart(Vector2 center, float baseLength)
@@ -355,7 +402,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
             Texture2D Texture = CoraliteAssets.Misc.White32x32.Value;
 
-            ColoredVertex centerVertex= new ColoredVertex(center,Color.DarkGoldenrod,new Vector3(0,1,1));
+            ColoredVertex centerVertex = new ColoredVertex(center, Color.DarkCyan * 0.8f, new Vector3(0, 1, 1));
 
             const float HexAngle = MathHelper.TwoPi / 6;
 
@@ -366,32 +413,21 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                     GetLevelColor(FairyIV.LifeMaxLevel), new Vector3(0, 0, 1)),
                 new(center + (-MathHelper.PiOver2+HexAngle).ToRotationVector2()*defenceLength,
                     GetLevelColor(FairyIV.DefenceLevel), new Vector3(1 / 6f, 0, 1)),
-                    centerVertex,
                 new(center + (-MathHelper.PiOver2+HexAngle*2).ToRotationVector2()*staminaLength,
                     GetLevelColor(FairyIV.StaminaLevel), new Vector3(2 / 6f, 0, 1)),
-                new(center + (-MathHelper.PiOver2+HexAngle*3).ToRotationVector2()*skillLevelLength,
-                    GetLevelColor(FairyIV.SkillLevelLevel), new Vector3(3 / 6f, 0, 1)),
-                    centerVertex,
-                new(center + (-MathHelper.PiOver2+HexAngle*4).ToRotationVector2()*speedLength,
+                new(center + (-MathHelper.PiOver2+HexAngle*3).ToRotationVector2()*speedLength,
                     GetLevelColor(FairyIV.SpeedLevel), new Vector3(4 / 6f, 0, 1)),
+                new(center + (-MathHelper.PiOver2+HexAngle*4).ToRotationVector2()*skillLevelLength,
+                    GetLevelColor(FairyIV.SkillLevelLevel), new Vector3(3 / 6f, 0, 1)),
                 new(center + (-MathHelper.PiOver2+HexAngle*5).ToRotationVector2()*damageLength,
                     GetLevelColor(FairyIV.DamageLevel), new Vector3(5 / 6f, 0, 1)),
-                    centerVertex,
                 new(center + (-MathHelper.PiOver2).ToRotationVector2()*lifeMaxLength,
-                    GetLevelColor(FairyIV.LifeMaxLevel), new Vector3(0, 0, 1)),
+                    GetLevelColor(FairyIV.LifeMaxLevel), new Vector3(1, 0, 1)),
             ];
-            SpriteBatch spriteBatch = Main.spriteBatch;
-
-            spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, spriteBatch.GraphicsDevice.BlendState, spriteBatch.GraphicsDevice.SamplerStates[0],
-                            spriteBatch.GraphicsDevice.DepthStencilState, spriteBatch.GraphicsDevice.RasterizerState, null, Main.UIScaleMatrix);
 
             Main.spriteBatch.GraphicsDevice.Textures[0] = Texture;
-            Main.spriteBatch.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleList, bars, 0, 6);
-
-            spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, spriteBatch.GraphicsDevice.BlendState, spriteBatch.GraphicsDevice.SamplerStates[0],
-                            spriteBatch.GraphicsDevice.DepthStencilState, spriteBatch.GraphicsDevice.RasterizerState, null, Main.UIScaleMatrix);
+            Main.spriteBatch.GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, bars, 0, 8
+                , indexes, 0, 6);
         }
 
         private static float GetLevelLength(float baseLength, float level)
@@ -405,9 +441,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         private static Color GetLevelColor(float level)
         {
             if (level < FairyIVLevelID.Eternal)
-                return Color.Lerp(Color.DarkGoldenrod, Color.LightGoldenrodYellow, level / FairyIVLevelID.Eternal);
+                return Color.Lerp(Color.DarkCyan * 0.7f, Color.LightCyan*0.7f, level / FairyIVLevelID.Eternal);
             else
-                return Color.LightGoldenrodYellow;
+                return Color.LightCyan * 0.7f;
         }
 
         public static void GetScaledFactor(ref float baseValue, float maxValue)
@@ -429,12 +465,12 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         public static void DrawRaderIcon(Vector2 pos, string text, float value, float level)
         {
             //绘制图标
-            Utils.DrawBorderString(Main.spriteBatch, text, pos + new Vector2(0, -8), Color.White, 1, 0.5f, 0.5f);
+            Utils.DrawBorderString(Main.spriteBatch, text, pos + new Vector2(-11, -20), Color.White, 1, 0.5f, 0.5f);
 
             (Color c, _) = FairyIV.GetFairyLocalize(level);
 
             //绘制数字
-            Utils.DrawBorderString(Main.spriteBatch, text, pos + new Vector2(0, 8), c, 1, 0.5f, 0.5f);
+            Utils.DrawBorderString(Main.spriteBatch, value.ToString(), pos + new Vector2(0, 18), c, 1, 0.5f, 0.5f);
         }
 
         #endregion

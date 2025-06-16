@@ -12,10 +12,10 @@ MagikeSystem: {
 
 FairySystem: {
 	ZoneForest: 在地表森林捕获
-	FairyLifeMax: "[i:58]血量 "
-	FairyDamage: "[i:3507]伤害 "
-	FairyDefence: "[i:3811]防御 "
-	FairyScale: "[i:486]大小 "
+	FairyLifeMax: "[i:58]血量 ▶ "
+	FairyDamage: "[i:3507]伤害 ▶ "
+	FairyDefence: "[i:156]防御 ▶ "
+	FairyScale: "[i:486]大小 ▶ "
 	CurrentLife: 当前生命值：{0} / {1}
 	ResurrectionTime: 复活时间：{0}
 	RarityC: 常见
@@ -34,7 +34,7 @@ FairySystem: {
 	SeeMore: 按上键以查看雷达图（游戏暂停时无法使用）
 	ZoneRockLayer: 在洞穴中出现
 	ZoneBeach: 在海边出现
-	CatchPowerMult: "{0} 仙灵捕捉力"
+	CatchPowerMult: "{0}仙灵捕捉力"
 	UncaughtMouseText:
 		'''
 		???
@@ -64,9 +64,9 @@ FairySystem: {
 	LegendaryLevel: "{0} 传说"
 	EternalLevel: "{0} 永恒"
 	OverLevel: "{0} 超越"
-	FairySpeed: 速度
-	FairySkillLevel: 技能等级
-	FairyStamina: 耐力
+	FairySpeed: "[i:761]速度 ▶ "
+	FairySkillLevel: "[i:149]等级 ▶ "
+	FairyStamina: "[i:4031]耐力 ▶ "
 }
 
 BossBarSystem.DontTakeDamage: 不可攻击！

@@ -459,6 +459,11 @@ namespace Coralite.Core
             /// 纯白贴图32x32
             /// </summary>
             public static ATex White32x32 { get; private set; }
+
+            /// <summary>
+            /// 从上到下由白到透明，适用于alphablend透明度
+            /// </summary>
+            public static ATex WToT32x { get; private set; }
         }
 
         public void Load()

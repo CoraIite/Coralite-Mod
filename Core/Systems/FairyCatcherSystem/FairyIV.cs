@@ -100,7 +100,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             GetScaleIV(player, ref iv);
 
             fairy.ModifyIV(ref iv,player);
-
             return iv;
         }
 
@@ -174,7 +173,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                 //大一个等级的值
                 float more = data.SpeedData[(int)level + 1];
 
-                iv.Speed= MathF.Round(Helper.Lerp(less, more, Math.Clamp(Helper.X2Ease(level - (int)level), 0, 1)), MidpointRounding.AwayFromZero);
+                iv.Speed = MathF.Round(Helper.Lerp(less, more, Math.Clamp(Helper.X2Ease(level - (int)level), 0, 1)), 1, MidpointRounding.AwayFromZero);
             }
         }
 
