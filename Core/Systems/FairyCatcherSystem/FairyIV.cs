@@ -100,6 +100,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             GetScaleIV(player, ref iv);
 
             fairy.ModifyIV(ref iv,player);
+            iv.DamageLevel = 1000;
+            iv.DefenceLevel = 50;
+            iv.LifeMaxLevel = 25;
             return iv;
         }
 

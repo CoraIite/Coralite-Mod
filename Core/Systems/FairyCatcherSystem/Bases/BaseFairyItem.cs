@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Localization;
-using Terraria.ModLoader;
 using Terraria.UI.Chat;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
@@ -43,6 +42,14 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
 
         private static int[] indexes = [0, 1, 2, 0, 2, 3, 0, 3, 4, 0, 4, 5, 0, 5, 6, 0, 6, 7];
+        private const string FairyLifeMax = "FairyLifeMax";
+        private const string FairyDamage = "FairyDamage";
+        private const string FairyDefence = "FairyDefence";
+        private const string FairySpeed = "FairySpeed";
+        private const string FairySkillLevel = "FairySkillLevel";
+        private const string FairyStamina = "FairyStamina";
+        private const string FairyScale = "FairyScale";
+
 
         public override void SetStaticDefaults()
         {
@@ -199,10 +206,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             else
             {
 
-                tooltips.Add(new TooltipLine(Mod, "RaderChart"
-                    , "                                \n\n\n\n\n\n\n\n"));
-
                 tooltips.Add(new TooltipLine(Mod, "SeeMore", FairySystem.SeeMore.Value));
+
+                tooltips.Add(new TooltipLine(Mod, "RaderChart"
+                    , "                                \n\n\n\n\n\n\n\n\n\n"));
             }
         }
 
@@ -242,7 +249,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         {
             (Color c, LocalizedText text) = FairyIV.GetFairyLocalize(FairyIV.LifeMaxLevel);
 
-            TooltipLine line = new(Mod, "FairyLifeMax"
+            TooltipLine line = new(Mod, FairyLifeMax
                 , FairySystem.FormatIVDescription(FairySystem.FairyLifeMax, text, FairyIV.LifeMax));
             line.OverrideColor = c;
             return line;
@@ -252,7 +259,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         {
             (Color c, LocalizedText text) = FairyIV.GetFairyLocalize(FairyIV.DamageLevel);
 
-            TooltipLine line = new(Mod, "FairyDamage"
+            TooltipLine line = new(Mod, FairyDamage
                 , FairySystem.FormatIVDescription(FairySystem.FairyDamage, text, FairyIV.Damage));
             line.OverrideColor = c;
 
@@ -263,7 +270,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         {
             (Color c, LocalizedText text) = FairyIV.GetFairyLocalize(FairyIV.DefenceLevel);
 
-            TooltipLine line = new(Mod, "FairyDefence"
+            TooltipLine line = new(Mod, FairyDefence
                 , FairySystem.FormatIVDescription(FairySystem.FairyDefence, text, FairyIV.Defence));
             line.OverrideColor = c;
             return line;
@@ -273,7 +280,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         {
             (Color c, LocalizedText text) = FairyIV.GetFairyLocalize(FairyIV.SpeedLevel);
 
-            TooltipLine line = new(Mod, "FairySpeed"
+            TooltipLine line = new(Mod, FairySpeed
                 , FairySystem.FormatIVDescription(FairySystem.FairySpeed, text, FairyIV.Speed));
             line.OverrideColor = c;
             return line;
@@ -283,7 +290,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         {
             (Color c, LocalizedText text) = FairyIV.GetFairyLocalize(FairyIV.SkillLevelLevel);
 
-            TooltipLine line = new(Mod, "FairySkillLevel"
+            TooltipLine line = new(Mod, FairySkillLevel
                 , FairySystem.FormatIVDescription(FairySystem.FairySkillLevel, text, FairyIV.SkillLevel));
             line.OverrideColor = c;
             return line;
@@ -293,7 +300,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         {
             (Color c, LocalizedText text) = FairyIV.GetFairyLocalize(FairyIV.StaminaLevel);
 
-            TooltipLine line = new(Mod, "FairyStamina"
+            TooltipLine line = new(Mod, FairyStamina
                 , FairySystem.FormatIVDescription(FairySystem.FairyStamina, text, FairyIV.Stamina));
             line.OverrideColor = c;
             return line;
@@ -303,7 +310,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         {
             (Color c, LocalizedText text) = FairyIV.GetFairyLocalize(FairyIV.ScaleLevel);
 
-            TooltipLine line = new(Mod, "FairyScale"
+            TooltipLine line = new(Mod, FairyScale
                 , FairySystem.FormatIVDescription(FairySystem.FairyScale, text, FairyIV.Scale));
             line.OverrideColor = c;
             return line;
@@ -319,7 +326,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 Vector2 size = ChatManager.GetStringSize(line.Font, line.Text, line.BaseScale);
                 Vector2 center = topLeft + (size / 2);
 
-                float length = factor * 7*12;
+                float length = factor * 7 * 12;
 
                 SpriteBatch spriteBatch = Main.spriteBatch;
 
@@ -339,23 +346,43 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 spriteBatch.Begin(SpriteSortMode.Deferred, spriteBatch.GraphicsDevice.BlendState, spriteBatch.GraphicsDevice.SamplerStates[0],
                                 spriteBatch.GraphicsDevice.DepthStencilState, spriteBatch.GraphicsDevice.RasterizerState, null, Main.UIScaleMatrix);
 
-                length = factor * (7 * 12 + 24);
+                length = factor * (7 * 12 + 30);
                 const float HexAngle = MathHelper.TwoPi / 6;
 
                 //绘制上层图标
                 //生命值
-                DrawRaderIcon(center + (-MathHelper.PiOver2).ToRotationVector2() * length, "[i:58]", FairyIV.LifeMax, FairyIV.LifeMaxLevel);
+                DrawRaderIcon(center + (-MathHelper.PiOver2).ToRotationVector2() * length, 0, FairyIV.LifeMax, FairyIV.LifeMaxLevel);
                 //防御
-                DrawRaderIcon(center + (-MathHelper.PiOver2 + HexAngle).ToRotationVector2() * length, "[i:156]", FairyIV.Defence, FairyIV.DefenceLevel);
+                DrawRaderIcon(center + (-MathHelper.PiOver2 + HexAngle).ToRotationVector2() * length, 2, FairyIV.Defence, FairyIV.DefenceLevel);
                 //耐力
-                DrawRaderIcon(center + (-MathHelper.PiOver2 + HexAngle * 2).ToRotationVector2() * length, "[i:4031]", FairyIV.Stamina, FairyIV.StaminaLevel);
+                DrawRaderIcon(center + (-MathHelper.PiOver2 + HexAngle * 2).ToRotationVector2() * length, 5, FairyIV.Stamina, FairyIV.StaminaLevel);
                 //速度
-                DrawRaderIcon(center + (-MathHelper.PiOver2 + HexAngle * 3).ToRotationVector2() * length, "[i:761]", FairyIV.Speed, FairyIV.SpeedLevel);
+                DrawRaderIcon(center + (-MathHelper.PiOver2 + HexAngle * 3).ToRotationVector2() * length, 3, FairyIV.Speed, FairyIV.SpeedLevel);
                 //等级
-                DrawRaderIcon(center + (-MathHelper.PiOver2 + HexAngle * 4).ToRotationVector2() * length, "[i:149]", FairyIV.SkillLevel, FairyIV.SkillLevelLevel);
+                DrawRaderIcon(center + (-MathHelper.PiOver2 + HexAngle * 4).ToRotationVector2() * length, 4, FairyIV.SkillLevel, FairyIV.SkillLevelLevel);
                 //攻击
-                DrawRaderIcon(center + (-MathHelper.PiOver2 + HexAngle * 5).ToRotationVector2() * length, "[i:3507]", FairyIV.Damage, FairyIV.DamageLevel);
+                DrawRaderIcon(center + (-MathHelper.PiOver2 + HexAngle * 5).ToRotationVector2() * length, 1, FairyIV.Damage, FairyIV.DamageLevel);
             }
+            else if (line.Name == FairyLifeMax)
+                DrawIVIcon(0, new Vector2(line.X + 10, line.Y + 10));
+            else if (line.Name == FairyDamage)
+                DrawIVIcon(1, new Vector2(line.X + 10, line.Y + 10));
+            else if (line.Name == FairyDefence)
+                DrawIVIcon(2, new Vector2(line.X + 10, line.Y + 10));
+            else if (line.Name == FairySpeed)
+                DrawIVIcon(3, new Vector2(line.X + 10, line.Y + 10));
+            else if (line.Name == FairySkillLevel)
+                DrawIVIcon(4, new Vector2(line.X + 10, line.Y + 10));
+            else if (line.Name == FairyStamina)
+                DrawIVIcon(5, new Vector2(line.X + 10, line.Y + 10));
+            else if (line.Name == FairyScale)
+                DrawIVIcon(6, new Vector2(line.X + 10, line.Y + 10));
+        }
+
+        private static void DrawIVIcon(int frame, Vector2 center)
+        {
+            FairySystem.FairyIVIcon.Value.QuickCenteredDraw(Main.spriteBatch, new Rectangle(0, frame, 1, 8),
+                center,scale:0.8f);
         }
 
         public static void DrawRaderBack(Vector2 center, float length,Color c)
@@ -435,7 +462,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             if (level < FairyIVLevelID.Eternal)
                 return baseLength * level / FairyIVLevelID.Eternal;
             else
-                return baseLength + baseLength * (level - FairyIVLevelID.Eternal) / (FairyIVLevelID.Over - FairyIVLevelID.Eternal);
+                return baseLength + baseLength * Math.Clamp( (level - FairyIVLevelID.Eternal) / (FairyIVLevelID.Over - FairyIVLevelID.Eternal),0,1);
         }
 
         private static Color GetLevelColor(float level)
@@ -462,10 +489,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             baseValue = 0.3f + (0.7f * (baseValue - 1) / (maxValue - 1));
         }
 
-        public static void DrawRaderIcon(Vector2 pos, string text, float value, float level)
+        public static void DrawRaderIcon(Vector2 pos, int frame, float value, float level)
         {
             //绘制图标
-            Utils.DrawBorderString(Main.spriteBatch, text, pos + new Vector2(-11, -20), Color.White, 1, 0.5f, 0.5f);
+            DrawIVIcon(frame,pos + new Vector2(0, -12));
 
             (Color c, _) = FairyIV.GetFairyLocalize(level);
 
