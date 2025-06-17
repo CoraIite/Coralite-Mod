@@ -22,7 +22,7 @@ namespace Coralite.Content.Items.RedJades
         public override void SetDefaults()
         {
             Item.width = Item.height = 40;
-            Item.damage = 100;
+            Item.damage = 400;
             Item.useTime = 27;
             Item.useAnimation = 27;
             Item.knockBack = 2f;
@@ -106,11 +106,11 @@ namespace Coralite.Content.Items.RedJades
                     Projectile.tileCollide = true;
                     Projectile.timeLeft = 120;
                     Owner.itemAnimation = Owner.itemTime = 2;
-
+                    Projectile.extraUpdates = 1;
                     soundSlot = Helper.PlayPitched("Misc/Whistle", 0.4f, 0f, Projectile.Center);
                 }
 
-                if (Timer < 220)
+                if (Timer < 120 + 40)
                 {
                     if (!release)
                     {
@@ -152,13 +152,14 @@ namespace Coralite.Content.Items.RedJades
         {
             if (SoundEngine.TryGetActiveSound(soundSlot, out ActiveSound sound))
                 sound.Stop();
-            if (Projectile.IsOwnedByLocalPlayer() && Timer > 120)
-            {
-                var source = Projectile.GetSource_FromAI();
 
-                Projectile p = Projectile.NewProjectileDirect(source, Projectile.Center, Vector2.Zero, ProjectileType<Bloodiancie_BigBoom>()
-                      , Helper.ScaleValueForDiffMode(100, 100, 90, 80), 5f);
-                p.friendly = true;
+            if (Projectile.IsOwnedByLocalPlayer())
+            {
+                int p = Projectile.NewProjectileFromThis<Bloodiancie_BigBoom>(Projectile.Center, Vector2.Zero
+                      , Projectile.damage * 2, 5f);
+                Main.projectile[p].friendly = true;
+                Main.projectile[p].usesLocalNPCImmunity = true;
+                Main.projectile[p].localNPCHitCooldown = 20;
 
                 int timeleft = 8;
 
@@ -168,9 +169,11 @@ namespace Coralite.Content.Items.RedJades
                     int howMany = Main.rand.Next(3, 6);
                     for (int i = 0; i < howMany; i++)
                     {
-                        p = Projectile.NewProjectileDirect(source, Projectile.Center, rot.ToRotationVector2() * 12, ProjectileType<RedFirework>(),
+                        p = Projectile.NewProjectileFromThis<RedFirework>(Projectile.Center, rot.ToRotationVector2() * 12,
                              Projectile.damage / 4, 5f, ai1: timeleft + (j * 8));
-                        p.friendly = true;
+                        Main.projectile[p].friendly = true;
+                        Main.projectile[p].usesLocalNPCImmunity = true;
+                        Main.projectile[p].localNPCHitCooldown = 20;
                         rot += MathHelper.TwoPi / howMany;
                     }
                 }

@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.CustomHooks;
 using Coralite.Content.ModPlayers;
+using Coralite.Core;
 using Terraria;
 using Terraria.ID;
 
@@ -14,23 +15,25 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
         public override void SetDefaults()
         {
             base.SetDefaults();
-            Item.defense = 8;
+            Item.vanity = true;
+            Item.useStyle = ItemUseStyleID.HoldUp;
+            Item.useTime = Item.useAnimation = 20;
+            Item.UseSound = CoraliteSoundID.Knock_Item37;
         }
 
-        public override bool CanAccessoryBeEquippedWith(Item equippedItem, Item incomingItem, Player player)
-        {
-            return !((equippedItem.type == ModContent.ItemType<ShieldbearersBand>()//下位
-                || equippedItem.type == ModContent.ItemType<PowerliftExoskeleton>())//下位
-
-                && incomingItem.type == ModContent.ItemType<BeetleLimbStrap>());
-        }
-
-        public override void UpdateAccessory(Player player, bool hideVisual)
+        public override bool CanUseItem(Player player)
         {
             if (player.TryGetModPlayer(out CoralitePlayer cp))
             {
-                cp.MaxFlyingShield = 4;
+                if (cp.ExtraShield3)
+                    return false;
+
+                cp.ExtraShield3 = true;
+
+                return true;
             }
+
+            return false;
         }
 
         public override void AddRecipes()

@@ -1512,7 +1512,12 @@ BloodiancieRelic: {
 
 Whistle: {
 	DisplayName: 赤玉窜天猴
-	Tooltip: 和窜天猴一起上天吧
+	Tooltip:
+		'''
+		长按点燃窜天猴，之后和窜天猴一起飞行，此时松开攻击键让窜天猴自由飞翔
+		注意！提前引爆窜天猴或未即使释放都会炸伤你自己！
+		和窜天猴一起上天吧
+		'''
 }
 
 BloodJadeRangesWeapon: {
@@ -2012,7 +2017,7 @@ TortoiseshellFortress: {
 
 ShieldbearersBand: {
 	DisplayName: 额外背带
-	Tooltip: +1 同时存在的飞盾数量
+	Tooltip: 使用后 +1 能丢出的飞盾数量
 }
 
 RustedShield: {
@@ -2024,7 +2029,7 @@ BeetleLimbStrap: {
 	DisplayName: 甲虫附肢
 	Tooltip:
 		'''
-		+3 同时存在的飞盾数量
+		使用后 +1 能丢出的飞盾数量，可与下位材料效果叠加
 		很多昆虫都能举起几倍与自身体重的物品，这个附肢也是如此
 		'''
 }
@@ -2033,7 +2038,7 @@ PowerliftExoskeleton: {
 	DisplayName: 外骨骼
 	Tooltip:
 		'''
-		+2 同时存在的飞盾数量
+		使用后 +1 能丢出的飞盾数量，可与下位材料效果叠加
 		一个强有力的机械臂，能够让你多携带几块盾牌
 		'''
 }

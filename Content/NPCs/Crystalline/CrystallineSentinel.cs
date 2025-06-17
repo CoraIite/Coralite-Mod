@@ -573,6 +573,22 @@ namespace Coralite.Content.NPCs.Crystalline
                     NPC.frame.Y = 0;
             }
 
+            //检查玩家
+            if (Timer % 30 == 0)
+                TryTurnToAttack();
+
+            if (Timer % 60 == 0)
+            {
+                NPC.velocity = NPC.velocity.RotateByRandom(-0.9f, 0.9f);
+            }
+
+            Timer++;
+
+            //撞墙反飞
+            CollideSpeed();
+            SpeedUp(2, 0.05f);
+
+
             NPC.direction = Target.Center.X > NPC.Center.X ? 1 : -1;
             NPC.spriteDirection = NPC.direction;
 
@@ -581,9 +597,38 @@ namespace Coralite.Content.NPCs.Crystalline
 
             NPC.velocity *= 0.95f;
 
-            Timer--;
-            //if (Timer < 0)
-            //    TryTurnToAttack();
+            Timer++;
+        }
+
+        /// <summary>
+        /// 撞墙反方向飞
+        /// </summary>
+        public void CollideSpeed()
+        {
+            if (NPC.collideX)
+            {
+                NPC.netUpdate = true;
+                NPC.velocity.X = NPC.oldVelocity.X * -0.4f;
+            }
+
+            if (NPC.collideY)
+            {
+                NPC.netUpdate = true;
+                NPC.velocity.Y = NPC.oldVelocity.Y * -0.4f;
+            }
+        }
+
+        //将速度加到目标速度
+        public void SpeedUp(float maxSpeed, float acc, float blurSpeed = 1f)
+        {
+            float speed = NPC.velocity.Length();
+            if (speed < maxSpeed)
+            {
+                speed += acc;
+                NPC.velocity = NPC.velocity.SafeNormalize(Vector2.Zero) * speed;
+            }
+            else if (speed > maxSpeed + blurSpeed)
+                NPC.velocity = NPC.velocity * 0.97f;
         }
 
         public void P2Swing()

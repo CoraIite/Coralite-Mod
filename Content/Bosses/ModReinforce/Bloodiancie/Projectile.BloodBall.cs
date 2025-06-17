@@ -127,6 +127,8 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
     {
         public override string Texture => AssetDirectory.Bloodiancie + "RedArrow";
 
+        private bool span;
+
         public override void SetStaticDefaults()
         {
             Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 8);
@@ -142,7 +144,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
             Projectile.friendly = false;
             Projectile.hostile = true;
         }
-        bool span;
+
         public void Initialize()
         {
             Projectile.rotation = Projectile.velocity.ToRotation();
@@ -154,7 +156,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
 
         public override void AI()
         {
-            if (span)
+            if (!span)
             {
                 Initialize();
                 span = true;

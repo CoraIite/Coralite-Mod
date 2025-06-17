@@ -19,6 +19,7 @@ using Terraria.DataStructures;
 using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.Localization;
+using Terraria.ModLoader.IO;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.ModPlayers
@@ -228,6 +229,7 @@ namespace Coralite.Content.ModPlayers
                 ehi.UpdateEquipHeldItem(Player);
 
             UpdateNianli();
+            UpdateFlyingShield();
 
             LimitNightmareEnergy();
         }
@@ -786,6 +788,20 @@ namespace Coralite.Content.ModPlayers
         public override void CopyClientState(ModPlayer targetCopy)
         {
 
+        }
+
+        #endregion
+
+        #region IO
+
+        public override void SaveData(TagCompound tag)
+        {
+            SaveFlyingShield(tag);
+        }
+
+        public override void LoadData(TagCompound tag)
+        {
+            LoadFlyingShield(tag);
         }
 
         #endregion

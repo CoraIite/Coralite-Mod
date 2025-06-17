@@ -13,7 +13,6 @@ using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
@@ -354,9 +353,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Draws.Add(new LandOfTheLustrousData(Projectile.rotation + 1));
         }
 
-        public override BitsByte SandBitsByte(BitsByte flags)
+        public override BitsByte SendBitsByte(BitsByte flags)
         {
-            var b = base.SandBitsByte(flags);
+            var b = base.SendBitsByte(flags);
             b[2] = netNewDrawer;
             netNewDrawer = false;
 
