@@ -155,9 +155,11 @@ namespace Coralite.Content.Items.RedJades
 
             if (Projectile.IsOwnedByLocalPlayer())
             {
+                bool attack = Timer > 120;
+
                 int p = Projectile.NewProjectileFromThis<Bloodiancie_BigBoom>(Projectile.Center, Vector2.Zero
                       , Projectile.damage * 2, 5f);
-                Main.projectile[p].friendly = true;
+                Main.projectile[p].friendly = attack;
                 Main.projectile[p].usesLocalNPCImmunity = true;
                 Main.projectile[p].localNPCHitCooldown = 20;
 
@@ -171,7 +173,7 @@ namespace Coralite.Content.Items.RedJades
                     {
                         p = Projectile.NewProjectileFromThis<RedFirework>(Projectile.Center, rot.ToRotationVector2() * 12,
                              Projectile.damage / 4, 5f, ai1: timeleft + (j * 8));
-                        Main.projectile[p].friendly = true;
+                        Main.projectile[p].friendly = attack;
                         Main.projectile[p].usesLocalNPCImmunity = true;
                         Main.projectile[p].localNPCHitCooldown = 20;
                         rot += MathHelper.TwoPi / howMany;
