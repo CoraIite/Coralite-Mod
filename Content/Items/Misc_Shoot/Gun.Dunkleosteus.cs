@@ -59,7 +59,8 @@ namespace Coralite.Content.Items.Misc_Shoot
 
                         break;
                 }
-                Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, Vector2.Zero, ProjectileType<DunkleosteusHeldProj>(), damage, knockback, player.whoAmI, shootStyle);
+                Projectile.NewProjectile(new EntitySource_ItemUse(player, Item)
+                    , player.Center, Vector2.Zero, ProjectileType<DunkleosteusHeldProj>(), damage, knockback, player.whoAmI, shootStyle);
                 shootStyle = Main.rand.NextBool(5) ? 1 : 0;
             }
             return false;
