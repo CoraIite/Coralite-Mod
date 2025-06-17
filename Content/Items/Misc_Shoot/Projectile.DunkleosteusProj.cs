@@ -1,6 +1,8 @@
 using Coralite.Core;
+using Coralite.Core.Prefabs.Particles;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -32,17 +34,38 @@ namespace Coralite.Content.Items.Misc_Shoot
 
         public override bool? CanDamage() => false;
         public override bool ShouldUpdatePosition() => false;
+
         public override void Initialize()
         {
             Projectile.timeLeft = Owner.itemAnimation;
             MaxTime = Owner.itemAnimation;
             Owner.direction = InMousePos.X > Owner.Center.X ? 1 : -1;
             TargetRot = (InMousePos - Owner.Center).ToRotation() + (Owner.gravDir * Owner.direction > 0 ? 0f : MathHelper.Pi);
+
             if (TargetRot == 0f)
                 TargetRot = 0.0001f;
+
             HeldPositionX = HELD_LENGTH;
             Projectile.netUpdate = true;
+
+            Vector2 dir = UnitToMouseV;
+
+            if (Projectile.ai[0] == 0)
+            {
+                var p1 = PRTLoader.NewParticle<DunkleosteusParticle>(Projectile.Center + dir * 80
+                    , Vector2.Zero);
+                p1.Rotation = ToMouseA;
+                p1.FollowProjIndex = Projectile.whoAmI;
+            }
+            else
+            {
+                var p1 = PRTLoader.NewParticle<DunkleosteusBigParticle>(Projectile.Center + dir * 80
+                    , Vector2.Zero);
+                p1.Rotation = ToMouseA;
+                p1.FollowProjIndex = Projectile.whoAmI;
+            }
         }
+
         public sealed override void AI()
         {
             float x = 1.772f * Projectile.timeLeft / MaxTime;
@@ -64,7 +87,6 @@ namespace Coralite.Content.Items.Misc_Shoot
                     dust.noGravity = true;
                     break;
             }
-
             Projectile.Center = Owner.Center + (Owner.gravDir * Owner.direction * Projectile.rotation.ToRotationVector2() * HeldPositionX);
 
             SetHeld();
@@ -87,6 +109,25 @@ namespace Coralite.Content.Items.Misc_Shoot
             }
 
             return false;
+        }
+    }
+
+    public class DunkleosteusBigParticle() : BaseFrameParticle(4, 5, 1)
+    {
+        public override string Texture => AssetDirectory.Misc_Shoot + Name;
+
+        public override Color GetColor()
+        {
+            return Color;
+        }
+    }
+    public class DunkleosteusParticle() : BaseFrameParticle(4, 3, 1)
+    {
+        public override string Texture => AssetDirectory.Misc_Shoot + Name;
+
+        public override Color GetColor()
+        {
+            return Color;
         }
     }
 }
