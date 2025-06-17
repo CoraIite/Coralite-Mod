@@ -145,11 +145,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         {
             //Projectile.Kill();
             float factor = Timer / minTime;
-            _Rotation = GetStartAngle() - DirSign * (startAngle + factor * MathF.Sin(factor * 2.5f * MathHelper.Pi) * 1f);
+            _Rotation = GetStartAngle() - DirSign * (startAngle + factor * MathF.Sin(-factor * 1.5f * MathHelper.Pi) * 1.2f);
             distanceToOwner = Helper.Lerp(minDistance / 2, minDistance, factor);
             Slasher();
 
-            middlePos = OwnerCenter() + (GetStartAngle() - DirSign * (startAngle + factor * MathF.Sin(factor * 2.5f * MathHelper.Pi) * 0.75f)).ToRotationVector2() * distanceToOwner * factor;
+            middlePos = OwnerCenter() + (GetStartAngle() - DirSign * (startAngle + factor * MathF.Sin(-factor * 1.5f * MathHelper.Pi) * 0.75f)).ToRotationVector2() * distanceToOwner/2 * factor;
 
             if ((int)Timer == minTime)
             {
@@ -176,7 +176,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             float trueTargetangle = totalAngle + Owner.direction * MathHelper.TwoPi * i;
 
             _Rotation = startAngle.AngleLerp(trueTargetangle, factor);
-            distanceToOwner = Helper.Lerp(minDistance, MaxDistance,Helper.X2Ease( factor));
+            distanceToOwner = Helper.Lerp(minDistance, MaxDistance, Helper.X3Ease(factor)*factor);
             Slasher();
 
             middlePos = OwnerCenter()
@@ -194,7 +194,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
             if ((int)Timer == maxTime + trailCount + 1)
                 ShootFairy();
-
+            Main.maxChests
             Slasher();
             middlePos = OwnerCenter() + _Rotation.ToRotationVector2() * distanceToOwner*0.5f;
 

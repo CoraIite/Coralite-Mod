@@ -1,6 +1,5 @@
 ﻿using Coralite.Helpers;
 using System;
-using System.CodeDom;
 using System.Collections.Generic;
 using Terraria.Localization;
 
@@ -12,61 +11,61 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
     public struct FairyIV
     {
         /// <summary> 生命值上限 </summary>
-        public int LifeMax { get; private set; }
+        public int LifeMax { get; set; }
         /// <summary> 攻击 </summary>
-        public int Damage { get; private set; }
+        public int Damage { get; set; }
         /// <summary> 防御 </summary>
-        public int Defence { get; private set; }
+        public int Defence { get; set; }
         /// <summary> 速度 </summary>
-        public float Speed { get; private set; }
+        public float Speed { get; set; }
         /// <summary> 技能等级 </summary>
-        public int SkillLevel { get; private set; }
+        public int SkillLevel { get; set; }
         /// <summary> 耐力，决定单次射出能够使用多少次技能 </summary>
-        public int Stamina { get; private set; }
+        public int Stamina { get; set; }
         /// <summary> 没什么大用的尺寸属性 </summary>
-        public int Scale { get; private set; }
+        public int Scale { get; set; }
 
         /// <summary> 
         /// 生命值上限等级<br></br>
         /// 使用<see cref=""/>获取对应本地化名称
         /// </summary>
-        public float LifeMaxLevel { get; private set; }
+        public float LifeMaxLevel { get; set; }
 
         /// <summary> 
         /// 伤害等级<br></br>
         /// 使用<see cref=""/>获取对应本地化名称
         /// </summary>
-        public float DamageLevel { get; private set; }
+        public float DamageLevel { get; set; }
 
         /// <summary> 
         /// 防御等级<br></br>
         /// 使用<see cref=""/>获取对应本地化名称
         /// </summary>
-        public float DefenceLevel { get; private set; }
+        public float DefenceLevel { get; set; }
 
         /// <summary> 
         /// 速度等级<br></br>
         /// 使用<see cref=""/>获取对应本地化名称
         /// </summary>
-        public float SpeedLevel { get; private set; }
+        public float SpeedLevel { get; set; }
 
         /// <summary> 
         /// 技能等级的等级<br></br>
         /// 使用<see cref=""/>获取对应本地化名称
         /// </summary>
-        public float SkillLevelLevel { get; private set; }
+        public float SkillLevelLevel { get; set; }
 
         /// <summary> 
         /// 耐力的等级<br></br>
         /// 使用<see cref=""/>获取对应本地化名称
         /// </summary>
-        public float StaminaLevel { get; private set; }
+        public float StaminaLevel { get; set; }
 
         /// <summary> 
         /// 尺寸等级<br></br>
         /// 使用<see cref=""/>获取对应本地化名称
         /// </summary>
-        public float ScaleLevel { get; private set; }
+        public float ScaleLevel { get; set; }
 
 
         private const int EternalToOver = FairyIVLevelID.Over - FairyIVLevelID.Eternal;
@@ -84,8 +83,12 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
             FairyIV iv = new FairyIV();
 
+            SetLevels(player, ref iv);
+
+            fairy.ModifyIVLevel(ref iv, player);
+
             //生命值上限
-            GetLifeMaxIV(player, data, ref iv);
+            GetLifeMaxIV(data, ref iv);
             //伤害
             GetDamageIV(player, data, ref iv);
             //防御
@@ -99,125 +102,119 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             //大小
             GetScaleIV(player, ref iv);
 
-            fairy.ModifyIV(ref iv,player);
-            iv.DamageLevel = 1000;
-            iv.DefenceLevel = 50;
-            iv.LifeMaxLevel = 25;
+            fairy.PostModifyIV(ref iv, player);
             return iv;
         }
 
-        public static void GetLifeMaxIV(FairyCatcherPlayer player, FairyData data, ref FairyIV iv)
+        private static void SetLevels(FairyCatcherPlayer player, ref FairyIV iv)
         {
-            float level = player.LifeMaxRand.RandValue;
-            iv.LifeMaxLevel = level;
+            iv.LifeMaxLevel = player.LifeMaxRand.RandValue;
+            iv.DamageLevel = player.DamageRand.RandValue;
+            iv.DefenceLevel = player.DefenceRand.RandValue;
+            iv.SkillLevelLevel = player.SkillLevelRand.RandValue;
+            iv.SpeedLevel = player.SpeedRand.RandValue;
+            iv.StaminaLevel = player.StaminaRand.RandValue;
+            iv.ScaleLevel = player.ScaleRand.RandValue;
+        }
 
+
+        public static void GetLifeMaxIV(FairyData data, ref FairyIV iv)
+        {
             //数值高于永恒，从永恒到最大值之间缩放
-            if ((int)level > data.LifeMaxData.Count - 1)
+            if ((int)iv.LifeMaxLevel > data.LifeMaxData.Count - 1)
                 iv.LifeMax = (int)Helper.Lerp(
                     data.LifeMaxData[^1],
                     data.OverLifeMax,
-                    Math.Clamp((level - FairyIVLevelID.Eternal), 0, EternalToOver) / EternalToOver);
+                    Math.Clamp((iv.LifeMaxLevel - FairyIVLevelID.Eternal), 0, EternalToOver) / EternalToOver);
             else
             {
                 //在二者间使用X2插值(四舍五入)
-                iv.LifeMax = GetLerpIVValue(data.LifeMaxData, level);
+                iv.LifeMax = GetLerpIVValue(data.LifeMaxData, iv.LifeMaxLevel);
             }
         }
 
         public static void GetDamageIV(FairyCatcherPlayer player, FairyData data, ref FairyIV iv)
         {
-            float level = player.DamageRand.RandValue;
-            iv.DamageLevel = level;
             //数值高于永恒，从永恒到最大值之间缩放
-            if ((int)level > data.DamageData.Count - 1)
+            if ((int)iv.DamageLevel > data.DamageData.Count - 1)
                 iv.Damage = (int)Helper.Lerp(
                     data.DamageData[^1],
                     data.OverDamage,
-                    Math.Clamp((level - FairyIVLevelID.Eternal), 0, EternalToOver) / EternalToOver);
+                    Math.Clamp((iv.DamageLevel - FairyIVLevelID.Eternal), 0, EternalToOver) / EternalToOver);
             else
             {
                 //在二者间使用X2插值(四舍五入)
-                iv.Damage = GetLerpIVValue(data.DamageData, level);
+                iv.Damage = GetLerpIVValue(data.DamageData, iv.DamageLevel);
             }
         }
 
         public static void GetDefenceIV(FairyCatcherPlayer player, FairyData data, ref FairyIV iv)
         {
-            float level = player.DefenceRand.RandValue;
-            iv.DefenceLevel = level;
             //数值高于永恒，从永恒到最大值之间缩放
-            if ((int)level > data.DefenceData.Count - 1)
+            if ((int)iv.DefenceLevel > data.DefenceData.Count - 1)
                 iv.Defence = (int)Helper.Lerp(
                     data.DefenceData[^1],
                     data.OverDefence,
-                    Math.Clamp((level - FairyIVLevelID.Eternal), 0, EternalToOver) / EternalToOver);
+                    Math.Clamp((iv.DefenceLevel - FairyIVLevelID.Eternal), 0, EternalToOver) / EternalToOver);
             else
             {
                 //在二者间使用X2插值(四舍五入)
-                iv.Defence = GetLerpIVValue(data.DefenceData, level);
+                iv.Defence = GetLerpIVValue(data.DefenceData, iv.DefenceLevel);
             }
         }
 
         public static void GetSpeedIV(FairyCatcherPlayer player, FairyData data, ref FairyIV iv)
         {
-            float level = player.SpeedRand.RandValue;
-            iv.SpeedLevel = level;
             //数值高于永恒，从永恒到最大值之间缩放
-            if ((int)level > data.SpeedData.Count - 1)
-                iv.Speed = Helper.Lerp(
+            if ((int)iv.SpeedLevel > data.SpeedData.Count - 1)
+                iv.Speed = MathF.Round(Helper.Lerp(
                     data.SpeedData[^1],
                     data.OverSpeed,
-                    Math.Clamp((level - FairyIVLevelID.Eternal), 0, EternalToOver) / EternalToOver);
+                    Math.Clamp((iv.SpeedLevel - FairyIVLevelID.Eternal), 0, EternalToOver) / EternalToOver), 1, MidpointRounding.AwayFromZero);
             else
             {
                 //在二者间使用X2插值(四舍五入)
                 //小一个等级的值
-                float less = data.SpeedData[(int)level];
+                float less = data.SpeedData[(int)iv.SpeedLevel];
                 //大一个等级的值
-                float more = data.SpeedData[(int)level + 1];
+                float more = data.SpeedData[(int)iv.SpeedLevel + 1];
 
-                iv.Speed = MathF.Round(Helper.Lerp(less, more, Math.Clamp(Helper.X2Ease(level - (int)level), 0, 1)), 1, MidpointRounding.AwayFromZero);
+                iv.Speed = MathF.Round(Helper.Lerp(less, more, Math.Clamp(Helper.X2Ease(iv.SpeedLevel - (int)iv.SpeedLevel), 0, 1)), 1, MidpointRounding.AwayFromZero);
             }
         }
 
         public static void GetSkillLevelIV(FairyCatcherPlayer player, FairyData data, ref FairyIV iv)
         {
-            float level = player.SkillLevelRand.RandValue;
-            iv.SkillLevelLevel = level;
             //数值高于永恒，从永恒到最大值之间缩放
-            if ((int)level > data.SkillLevelData.Count - 1)
+            if ((int)iv.SkillLevelLevel > data.SkillLevelData.Count - 1)
                 iv.SkillLevel = (int)Helper.Lerp(
                     data.SkillLevelData[^1],
                     data.OverSkillLevel,
-                    Math.Clamp((level - FairyIVLevelID.Eternal), 0, EternalToOver) / EternalToOver);
+                    Math.Clamp((iv.SkillLevelLevel - FairyIVLevelID.Eternal), 0, EternalToOver) / EternalToOver);
             else
             {
                 //在二者间使用X2插值(四舍五入)
-                iv.SkillLevel = GetLerpIVValue(data.SkillLevelData, level);
+                iv.SkillLevel = GetLerpIVValue(data.SkillLevelData, iv.SkillLevelLevel);
             }
         }
 
         public static void GetStaminaIV(FairyCatcherPlayer player, FairyData data, ref FairyIV iv)
         {
-            float level = player.StaminaRand.RandValue;
-            iv.StaminaLevel = level;
             //数值高于永恒，从永恒到最大值之间缩放
-            if ((int)level > data.StaminaData.Count - 1)
+            if ((int)iv.StaminaLevel > data.StaminaData.Count - 1)
                 iv.Stamina = (int)Helper.Lerp(
                     data.StaminaData[^1],
                     data.OverStamina,
-                    Math.Clamp((level - FairyIVLevelID.Eternal), 0, EternalToOver) / EternalToOver);
+                    Math.Clamp((iv.StaminaLevel - FairyIVLevelID.Eternal), 0, EternalToOver) / EternalToOver);
             else
             {
                 //在二者间使用X2插值(四舍五入)
-                iv.Stamina = GetLerpIVValue(data.StaminaData, level);
+                iv.Stamina = GetLerpIVValue(data.StaminaData, iv.StaminaLevel);
             }
         }
 
         private static void GetScaleIV(FairyCatcherPlayer player, ref FairyIV iv)
         {
-            float level = player.ScaleRand.RandValue;
-            iv.ScaleLevel = level;
             //数值高于永恒，从永恒到最大值之间缩放
 
         }
@@ -252,7 +249,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                     => (Color.HotPink, FairySystem.LegendaryLevel),
                 >= FairyIVLevelID.Eternal and < FairyIVLevelID.Over
                     => (Color.Orange, FairySystem.EternalLevel),
-                _=> (Color.Coral, FairySystem.OverLevel)
+                _ => (Color.Coral, FairySystem.OverLevel)
             };
         }
     }

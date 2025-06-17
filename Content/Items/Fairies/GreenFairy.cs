@@ -38,6 +38,16 @@ namespace Coralite.Content.Items.Fairies
                 .RegisterToWall();
         }
 
+        public override void ModifyIVLevel(ref FairyIV fairyIV, FairyCatcherPlayer fcp)
+        {
+            fairyIV.DefenceLevel = 200;
+            fairyIV.LifeMaxLevel = 200;
+            fairyIV.SkillLevelLevel = 200;
+            fairyIV.DamageLevel = 200;
+            fairyIV.StaminaLevel = 200;
+            fairyIV.SpeedLevel = 200;
+        }
+
         public override void Catching(FairyCatcherProj catcher)
         {
             FairyTimer--;

@@ -364,10 +364,15 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public virtual void OnBeCaught(Player player, Item fairyItem) { }
 
         /// <summary>
+        /// 自定义仙灵的个体值等级
+        /// </summary>
+        /// <param name="fairyIV"></param>
+        public virtual void ModifyIVLevel(ref FairyIV fairyIV,FairyCatcherPlayer fcp) { }
+        /// <summary>
         /// 自定义仙灵的个体值，例如某些仙灵固定个体值等
         /// </summary>
         /// <param name="fairyIV"></param>
-        public virtual void ModifyIV(ref FairyIV fairyIV,FairyCatcherPlayer fcp) { }
+        public virtual void PostModifyIV(ref FairyIV fairyIV,FairyCatcherPlayer fcp) { }
 
         #endregion
 
