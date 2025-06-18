@@ -130,3 +130,17 @@ GamePlayConfig: {
 		// Tooltip: ""
 	}
 }
+
+UIConfig: {
+	// DisplayName: U I Config
+
+	nianliUI_X: {
+		// Label: nianli U I_ X
+		// Tooltip: ""
+	}
+
+	nianliUI_Y: {
+		// Label: nianli U I_ Y
+		// Tooltip: ""
+	}
+}

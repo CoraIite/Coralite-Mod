@@ -18,9 +18,10 @@ namespace Coralite.Content.GlobalItems
             if (item.TryGetGlobalItem(out CoraliteGlobalItem fgi) && CoraliteSets.Items.IsFairy[item.type])
             {
                 if (player.TryGetModPlayer(out FairyCatcherPlayer fcp)
-                    && fcp.FairyCatch_GetEmptyFairyBottle(out IFairyBottle bottle, out int emptySlot))
+                    && fcp.FairyCatch_GetEmptyFairyBottle(out BaseFairyBottle bottle, out int emptySlot))
                 {
-                    bottle.Fairies[emptySlot] = item.Clone();
+                    //TODO：添加适配战斗仙灵
+                    bottle.ContainFairies[emptySlot] = item.Clone();
 
                     PopupText.NewText(PopupTextContext.RegularItemPickup, item, item.stack, noStack: true, longText: false);
 

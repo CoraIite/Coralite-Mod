@@ -1,9 +1,6 @@
-﻿using Coralite.Content.UI;
-using Coralite.Core.Loaders;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
@@ -15,14 +12,22 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// <summary>
         /// 仙灵物品数组
         /// </summary>
-        private Item[] fairies;
+        private Item[] fightFairies;
+        private Item[] containFairies;
 
         /// <summary>
-        /// 仙灵瓶的容量，默认10
+        /// 战斗仙灵的容量，默认3
         /// </summary>
-        public virtual int Capacity => 10;
+        public virtual int FightCapacity => 3;
+        /// <summary>
+        /// 捕捉仙灵的容量，默认30
+        /// </summary>
+        public virtual int ContainCapacity => 30;
 
-        public Item[] Fairies { get => fairies; set => fairies = value; }
+        /// <summary> 战斗仙灵，用于出战 </summary>
+        public Item[] FightFairies { get => fightFairies; set => fightFairies = value; }
+        /// <summary> 容纳的仙灵，捕捉后会抓到这里 </summary>
+        public Item[] ContainFairies { get => containFairies; set => containFairies = value; }
 
         /// <summary>
         /// 每次回血回多少，默认1
@@ -37,9 +42,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public BaseFairyBottle()
         {
-            fairies = new Item[Capacity];
-            for (int i = 0; i < Capacity; i++)
-                fairies[i] = new Item();
+            fightFairies = new Item[ContainCapacity];
+            for (int i = 0; i < ContainCapacity; i++)
+                fightFairies[i] = new Item();
         }
 
         public override void UpdateInventory(Player player)
@@ -51,49 +56,43 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 lifeRegan = FairyLifeRegan;
             }
 
-            foreach (var fairy in fairies)
+            foreach (var fairy in fightFairies)
             {
                 if (fairy.ModItem is BaseFairyItem fairyItem)
                     fairyItem.LifeRegan(lifeRegan);
             }
         }
 
-        public override bool CanRightClick() => true;
-        public override bool ConsumeItem(Player player) => false;
-
-        public override void RightClick(Player player)
-        {
-            //UILoader.GetUIState<FairyBottleUI>().ShowUI(this);
-        }
-
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
             TooltipLine line = new(Mod, "Capacity",
-                FairySystem.BottleCapacity.Format(fairies.Count(i => !i.IsAir), Capacity));
+                FairySystem.BottleCapacity.Format(fightFairies.Count(i => !i.IsAir), FightCapacity));
         }
 
         public override void SaveData(TagCompound tag)
         {
-            for (int i = 0; i < Capacity; i++)
-                tag.Add("Fairies" + i, fairies[i]);
+            for (int i = 0; i < ContainCapacity; i++)
+                tag.Add("Fairies" + i, fightFairies[i]);
         }
 
         public override void LoadData(TagCompound tag)
         {
-            for (int i = 0; i < Capacity; i++)
+            for (int i = 0; i < ContainCapacity; i++)
             {
                 if (tag.TryGet("Fairies" + i, out Item fairy))
-                    fairies[i] = fairy;
+                    fightFairies[i] = fairy;
                 else
-                    fairies[i] = new Item();
+                    fightFairies[i] = new Item();
             }
         }
 
         public override ModItem Clone(Item newEntity)
         {
-            if (newEntity.ModItem is IFairyBottle newBottle)
+            ModItem item = base.Clone(newEntity);
+            if (item is BaseFairyBottle newBottle)
             {
-                newBottle.Fairies = fairies;
+                for (int i = 0; i < FightFairies.Length; i++)
+                    newBottle.FightFairies[i] = fightFairies[i].Clone();
             }
             return base.Clone(newEntity);
         }
@@ -104,24 +103,24 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         //}
     }
 
-    public interface IFairyBottle
-    {
-        int Capacity { get; }
+    //public interface IFairyBottle
+    //{
+    //    int Capacity { get; }
 
-        public Item[] Fairies { get; set; }
+    //    public Item[] Fairies { get; set; }
 
-        //public virtual bool CanShootFairy(int index, out IFairyItem fairyItem)
-        //{
-        //    if (Fairies[index].ModItem is IFairyItem fairyItem2 && !fairyItem2.IsOut)
-        //    {
-        //        fairyItem = fairyItem2;
-        //        return true;
-        //    }
+    //    //public virtual bool CanShootFairy(int index, out IFairyItem fairyItem)
+    //    //{
+    //    //    if (Fairies[index].ModItem is IFairyItem fairyItem2 && !fairyItem2.IsOut)
+    //    //    {
+    //    //        fairyItem = fairyItem2;
+    //    //        return true;
+    //    //    }
 
-        //    fairyItem = null;
-        //    return false;
-        //}
+    //    //    fairyItem = null;
+    //    //    return false;
+    //    //}
 
-        bool ShootFairy(int index, Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int damage, float knockback);
-    }
+    //    bool ShootFairy(int index, Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int damage, float knockback);
+    //}
 }

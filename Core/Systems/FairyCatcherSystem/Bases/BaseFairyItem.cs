@@ -41,7 +41,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         public bool IsOut { get; set; }
 
 
-        private static int[] indexes = [0, 1, 2, 0, 2, 3, 0, 3, 4, 0, 4, 5, 0, 5, 6, 0, 6, 7];
+        private static readonly int[] indexes = [0, 1, 2, 0, 2, 3, 0, 3, 4, 0, 4, 5, 0, 5, 6, 0, 6, 7];
         private const string FairyLifeMax = "FairyLifeMax";
         private const string FairyDamage = "FairyDamage";
         private const string FairyDefence = "FairyDefence";
@@ -76,14 +76,14 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public virtual void SetOtherDefaults() { }
 
-        //public override ModItem Clone(Item newEntity)
-        //{
-        //    ModItem modItem = base.Clone(newEntity);
-        //    if (modItem != null)
-        //        (modItem as IFairyItem).IV = IV;
+        public override ModItem Clone(Item newEntity)
+        {
+            ModItem modItem = base.Clone(newEntity);
+            if (modItem != null)
+                (modItem as BaseFairyItem).FairyIV = FairyIV;
 
-        //    return modItem;
-        //}
+            return modItem;
+        }
 
         public virtual bool Hurt(Player owner, NPC target, NPC.HitInfo hit, int damageDone)
         {

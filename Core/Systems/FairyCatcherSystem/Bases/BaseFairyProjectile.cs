@@ -8,15 +8,13 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 {
     public abstract class BaseFairyProjectile : ModProjectile//, IFairyProjectile
     {
-        //protected IFairyItem selfItem;
-
-        //public IFairyItem FairyItem { get => selfItem; set => selfItem = value; }
         public Player Owner => Main.player[Projectile.owner];
 
         public int State;
         public int Timer;
         //protected int LifeMax => (int)FairyItem.FairyLifeMax;
         //protected int Life => FairyItem.Life;
+
         protected virtual string SkillName => "";
         protected virtual int FrameX => 1;
         protected virtual int FrameY => 1;
@@ -53,9 +51,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public sealed override void AI()
         {
-            if (!CheckSelfItem())
-                return;
-
             if (init)
                 Initilize();
 
@@ -122,17 +117,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             ModProjectile m = ModContent.GetModProjectile(Projectile.type);
             CombatText.NewText(Projectile.getRect(), color,
                 (m as BaseFairyProjectile).SkillText.Value);
-        }
-
-        public bool CheckSelfItem()
-        {
-            //if (FairyItem is null)
-            //{
-            //    Projectile.Kill();
-            //    return false;
-            //}
-
-            return true;
         }
 
         public void UpdateFrameY(int spacing)
@@ -246,10 +230,5 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         {
             //Main.instance.DrawHealthBar(Projectile.Bottom.X, Projectile.Bottom.Y + 12, Life, LifeMax, 1, 1);
         }
-    }
-
-    public interface IFairyProjectile
-    {
-        //public IFairyItem FairyItem { get; set; }
     }
 }

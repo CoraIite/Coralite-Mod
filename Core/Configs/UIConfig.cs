@@ -7,7 +7,7 @@ namespace Coralite.Core.Configs
 {
     //[BackgroundColor(51,179,189)]
     //[Label("念力值显示位置")]
-    public class NianliUIConfig : ModConfig
+    public class UIConfig : ModConfig
     {
         public override ConfigScope Mode => ConfigScope.ClientSide;
 
@@ -25,14 +25,23 @@ namespace Coralite.Core.Configs
         [Slider]
         public int nianliUI_Y;
 
+        //[Range(0, 300)]
+        //[Increment(1)]
+        //[DefaultValue(0)]
+        //[Slider]
+        //public int fairyBottleX;
+
         public override void OnChanged()
         {
             if (UILoader.UIStates is not null)
             {
                 try
                 {
-                    NianliChargingBar.basePos = new Microsoft.Xna.Framework.Vector2(nianliUI_X, nianliUI_Y);
+                    NianliChargingBar.basePos = new Vector2(nianliUI_X, nianliUI_Y);
                     UILoader.GetUIState<NianliChargingBar>().Recalculate();
+
+                    //FairyBottleUI.basePos = new Vector2(nianliUI_X, nianliUI_Y);
+                    //UILoader.GetUIState<NianliChargingBar>().Recalculate();
                 }
                 catch (System.Exception)
                 { }

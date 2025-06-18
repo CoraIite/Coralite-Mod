@@ -194,7 +194,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
             if ((int)Timer == maxTime + trailCount + 1)
                 ShootFairy();
-            Main.maxChests
+            
             Slasher();
             middlePos = OwnerCenter() + _Rotation.ToRotationVector2() * distanceToOwner*0.5f;
 
@@ -227,11 +227,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 Vector2 velocity = oldRotate[^1].ToRotationVector2() * speed;
                 Vector2 center = Projectile.Center;
 
-                if (Owner.TryGetModPlayer(out FairyCatcherPlayer fcp) && fcp.FairyShoot_GetFairyBottle(out IFairyBottle bottle))
+                if (Owner.TryGetModPlayer(out FairyCatcherPlayer fcp) && fcp.FairyShoot_GetFairyBottle(out BaseFairyBottle bottle))
                 {
                     float damage = Owner.GetWeaponDamage(heldItem);
                     fcp.TotalCatchPowerBonus(ref damage, heldItem);
-                    Item[] fairies = bottle.Fairies;
+                    Item[] fairies = bottle.FightFairies;
 
                     //for (int i = 0; i < fairies.Length; i++)
                     //{

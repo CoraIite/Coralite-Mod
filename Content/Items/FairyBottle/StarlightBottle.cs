@@ -4,7 +4,7 @@ namespace Coralite.Content.Items.FairyBottle
 {
     public class StarlightBottle : BaseFairyBottle
     {
-        public override int Capacity => 10;
+        public override int FightCapacity => 10;
 
         public override void SetDefaults()
         {

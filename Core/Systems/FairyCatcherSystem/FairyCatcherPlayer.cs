@@ -148,13 +148,13 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                 FairyCatcherRadiusBonus = howMany;
         }
 
-        public bool FairyShoot_GetFairyBottle(out IFairyBottle bottle)
+        public bool FairyShoot_GetFairyBottle(out BaseFairyBottle bottle)
         {
             bottle = null;
 
             for (int j = 0; j < 50; j++)
             {
-                if (Player.inventory[j].stack > 0 && Player.inventory[j].ModItem is IFairyBottle fairyBottle)
+                if (Player.inventory[j].stack > 0 && Player.inventory[j].ModItem is BaseFairyBottle fairyBottle)
                 {
                     bottle = fairyBottle;
                     return true;
@@ -208,20 +208,30 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             @base = modifyer.ApplyTo(@base);
         }
 
-        public bool FairyCatch_GetEmptyFairyBottle(out IFairyBottle fairyBottle, out int emptySlot)
+        public bool FairyCatch_GetEmptyFairyBottle(out BaseFairyBottle fairyBottle, out int emptySlot)
         {
             fairyBottle = null;
             emptySlot = -1;
 
             for (int j = 0; j < 50; j++)
             {
-                if (Player.inventory[j].stack > 0 && Player.inventory[j].ModItem is IFairyBottle)
+                if (Player.inventory[j].stack > 0 && Player.inventory[j].ModItem is BaseFairyBottle)
                 {
-                    fairyBottle = Player.inventory[j].ModItem as IFairyBottle;
+                    fairyBottle = Player.inventory[j].ModItem as BaseFairyBottle;
 
-                    for (int i = 0; i < fairyBottle.Fairies.Length; i++)
+                    for (int i = 0; i < fairyBottle.FightFairies.Length; i++)
                     {
-                        Item item = fairyBottle.Fairies[i];
+                        Item item = fairyBottle.FightFairies[i];
+                        if (item.IsAir)
+                        {
+                            emptySlot = i;
+                            return true;
+                        }
+                    }
+
+                    for (int i = 0; i < fairyBottle.ContainFairies.Length; i++)
+                    {
+                        Item item = fairyBottle.ContainFairies[i];
                         if (item.IsAir)
                         {
                             emptySlot = i;
