@@ -1,4 +1,5 @@
 ﻿using Coralite.Core;
+using Coralite.Core.Attributes;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
@@ -19,6 +20,7 @@ namespace Coralite.Content.UI
 
         public override void OnInitialize()
         {
+
         }
 
         public void CloseUI(UIMouseEvent evt, UIElement listeningElement)
@@ -56,8 +58,33 @@ namespace Coralite.Content.UI
     /// <summary>
     /// 吊着仙灵瓶的藤蔓
     /// </summary>
-    public class FairyBottleHang
+    [AutoLoadTexture(Path = AssetDirectory.UI)]
+    public class FairyBottleHang : UIElement
     {
+        public static ATex Vine { get; set; }
 
+        public override void MouseOver(UIMouseEvent evt)
+        {
+            base.MouseOver(evt);
+
+            Helper.PlayPitched("Fairy/ButtonTick", 0.4f, 0);
+        }
+
+        protected override void DrawSelf(SpriteBatch spriteBatch)
+        {
+            //绘制藤蔓线
+            Texture2D vineTex = Vine.Value;
+            var d = GetDimensions();
+            Vector2 p = d.Center() + new Vector2(0, -d.Height / 2);
+
+            Rectangle rect = new Rectangle((int)(d.X), -20, vineTex.Width, (int)(d.Height + 20));
+
+            spriteBatch.Draw(vineTex, rect, Color.White);
+
+            //绘制仙灵环
+
+            //绘制仙灵瓶物品
+
+        }
     }
 }

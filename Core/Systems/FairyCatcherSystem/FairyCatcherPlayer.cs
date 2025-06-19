@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem
 {
@@ -41,6 +42,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         /// <summary> 基础环大小 </summary>
         private const int FairyCatcherBaseRadius = 16 * 6;
+
         /// <summary> 仙灵捕捉环的加成 </summary>
         public float FairyCatcherRadiusBonus { get; private set; }
 
@@ -49,6 +51,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         /// <summary> 核心的类型，使用<see cref="CoraliteContent.FairyCircleCoreType"/>设置 </summary>
         public int FairyCircleCoreType { get; set; }
+
         /// <summary> 玩家当前持有的仙灵捕捉环的弹幕索引 </summary>
         public int FairyCircleProj {  get; set; }
 
@@ -88,6 +91,21 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         public List<IFairyAccessory> fairyAccessories;
 
+        private Item _bottleItem;
+
+        /// <summary>
+        /// 存储了仙灵瓶物品
+        /// </summary>
+        public Item BottleItem
+        {
+            get
+            {
+                _bottleItem ??= new Item();
+                return _bottleItem;
+            }
+            set { _bottleItem = value; }
+        }
+        
         public override void ResetEffects()
         {
             FairyCircleCoreType = -1;
@@ -252,6 +270,18 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         {
             fairyAccessories ??= [];
             fairyAccessories.Add(acc);
+        }
+
+        public override void SaveData(TagCompound tag)
+        {
+            if (BottleItem.IsAir)
+                tag.Add(nameof(BottleItem), BottleItem);
+        }
+
+        public override void LoadData(TagCompound tag)
+        {
+            if (tag.TryGet(nameof(BottleItem), out Item i))
+                BottleItem = i;
         }
     }
 }
