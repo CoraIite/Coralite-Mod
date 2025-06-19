@@ -546,7 +546,7 @@ namespace Coralite.Core.Systems.FlyingShieldSystem
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D mainTex = Projectile.GetTexture();
-            var pos = Projectile.Center - Main.screenPosition;
+            var pos = Projectile.Center + new Vector2(0, Owner.gfxOffY) - Main.screenPosition;
 
             Vector2 scale = new(1 - (DistanceToOwner / (Projectile.width * scalePercent)), 1);
             scale *= Projectile.scale;

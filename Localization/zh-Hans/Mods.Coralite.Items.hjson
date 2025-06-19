@@ -6073,3 +6073,8 @@ HephaesthHelmet: {
 	DisplayName: 心炉重盔
 	Tooltip: “除了视物孔，其他地方严丝合缝”
 }
+
+MeteorFireball: {
+	DisplayName: 火流星
+	Tooltip: ""
+}

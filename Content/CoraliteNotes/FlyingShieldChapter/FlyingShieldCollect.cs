@@ -23,7 +23,7 @@ namespace Coralite.Content.CoraliteNotes.FlyingShieldChapter
         {
             TrashCanLid,
             GlassShield,
-            RedJadeShield,
+            MeteorFireball,
             GlazeBulwark,
             GemrainAegis,
             GoldenSamurai,
@@ -56,8 +56,8 @@ namespace Coralite.Content.CoraliteNotes.FlyingShieldChapter
             //最上面一排5个
             NewImage<TrashCanLid>(center + new Vector2(0, y), null
                 , KeyFlyingShields.TrashCanLid, CollectImage.LockIconType.Small, 1.1f);
-            NewImage<RedJadeShield>(center + new Vector2(66, y + 20), CoraliteConditions.DownedRediancie
-                , KeyFlyingShields.RedJadeShield, CollectImage.LockIconType.Small, 1.1f);
+            NewImage<MeteorFireball>(center + new Vector2(69, y + 20), null
+                , KeyFlyingShields.MeteorFireball, CollectImage.LockIconType.Small, 1.1f);
             NewImage<GlassShield>(center + new Vector2(-66, y + 20), null
                 , KeyFlyingShields.GlassShield, CollectImage.LockIconType.Small, 1.1f);
             NewImage<SilverAngel>(center + new Vector2(-200, y), Condition.DownedEowOrBoc

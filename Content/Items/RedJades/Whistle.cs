@@ -110,7 +110,7 @@ namespace Coralite.Content.Items.RedJades
                     soundSlot = Helper.PlayPitched("Misc/Whistle", 0.4f, 0f, Projectile.Center);
                 }
 
-                if (Timer < 120 + 40)
+                if (Timer < 120 + 50)
                 {
                     if (!release)
                     {
@@ -155,13 +155,13 @@ namespace Coralite.Content.Items.RedJades
 
             if (Projectile.IsOwnedByLocalPlayer())
             {
-                bool attack = Timer > 120;
+                int damage = Timer > 120 ? Projectile.damage : Helper.GetProjDamage(50,50,50);
 
                 int p = Projectile.NewProjectileFromThis<Bloodiancie_BigBoom>(Projectile.Center, Vector2.Zero
-                      , Projectile.damage * 2, 5f);
-                Main.projectile[p].friendly = attack;
+                      , damage * 3, 5f);
+                Main.projectile[p].friendly = true;
                 Main.projectile[p].usesLocalNPCImmunity = true;
-                Main.projectile[p].localNPCHitCooldown = 20;
+                Main.projectile[p].localNPCHitCooldown = -1;
 
                 int timeleft = 8;
 
@@ -172,10 +172,10 @@ namespace Coralite.Content.Items.RedJades
                     for (int i = 0; i < howMany; i++)
                     {
                         p = Projectile.NewProjectileFromThis<RedFirework>(Projectile.Center, rot.ToRotationVector2() * 12,
-                             Projectile.damage / 4, 5f, ai1: timeleft + (j * 8));
-                        Main.projectile[p].friendly = attack;
+                             damage / 4, 5f, ai1: timeleft + (j * 8));
+                        Main.projectile[p].friendly = true;
                         Main.projectile[p].usesLocalNPCImmunity = true;
-                        Main.projectile[p].localNPCHitCooldown = 20;
+                        Main.projectile[p].localNPCHitCooldown = -1;
                         rot += MathHelper.TwoPi / howMany;
                     }
                 }

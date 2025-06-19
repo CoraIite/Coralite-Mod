@@ -6031,3 +6031,8 @@ HephaesthHelmet: {
 	DisplayName: Furnace Helmet
 	Tooltip: "'It's tightly sealed except the sight hole'"
 }
+
+MeteorFireball: {
+	DisplayName: Meteor Fireball
+	Tooltip: ""
+}

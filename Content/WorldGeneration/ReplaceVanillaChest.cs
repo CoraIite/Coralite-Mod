@@ -10,6 +10,7 @@ using Coralite.Content.Items.MagikeSeries2;
 using Coralite.Content.Items.ThyphionSeries;
 using Coralite.Content.Tiles.MagikeSeries1;
 using Coralite.Content.Tiles.MagikeSeries2;
+using Coralite.Helpers;
 using Terraria;
 using Terraria.ID;
 using Terraria.IO;
@@ -148,6 +149,9 @@ namespace Coralite.Content.WorldGeneration
                         }
                         break;
                 }
+
+                if (chest.Contains(ItemID.Starfury))
+                    WorldGenHelper.RandChestItem(chest, ModContent.ItemType<MeteorFireball>());
             }
         }
     }
