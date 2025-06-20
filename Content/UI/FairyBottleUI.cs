@@ -1,9 +1,12 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Attributes;
+using Coralite.Core.Systems.FairyCatcherSystem;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
+using Terraria;
+using Terraria.GameContent.UI.Elements;
 using Terraria.UI;
 
 namespace Coralite.Content.UI
@@ -15,23 +18,27 @@ namespace Coralite.Content.UI
         public bool visible;
         public override bool Visible => visible;
 
-        public static BaseFairyBottle bottle;
         public static float OffsetX = 0;
+
+        public UIPanel ContainFairyPanel;
 
         public override void OnInitialize()
         {
-
+            ContainFairyPanel = new UIPanel(ModContent.Request<Texture2D>(AssetDirectory.UI + "MagikePanelBackground"),
+                ModContent.Request<Texture2D>(AssetDirectory.UI + "MagikePanelBorder"));
+            ContainFairyPanel.BackgroundColor = Color.Cyan * 0.5f;
+            ContainFairyPanel.BorderColor = Color.LightCyan * 0.75f;
         }
-
-        public void CloseUI(UIMouseEvent evt, UIElement listeningElement)
-        {
-        }
-
 
         public override void Update(GameTime gameTime)
         {
-
             base.Update(gameTime);
+
+            if (!Main.playerInventory)
+            {
+                visible = false;
+                Recalculate();
+            }
         }
 
         public override void Recalculate()
@@ -39,10 +46,9 @@ namespace Coralite.Content.UI
             base.Recalculate();
         }
 
-        public void ShowUI(BaseFairyBottle bottle)
+        public void ShowUI()
         {
             visible = true;
-            FairyBottleUI.bottle = bottle;
 
             Helper.PlayPitched("Fairy/CursorExpand", 0.4f, 0);
 
@@ -68,6 +74,19 @@ namespace Coralite.Content.UI
             base.MouseOver(evt);
 
             Helper.PlayPitched("Fairy/ButtonTick", 0.4f, 0);
+        }
+
+        public override void LeftClick(UIMouseEvent evt)
+        {
+            base.LeftClick(evt);
+
+            Player p = Main.LocalPlayer;
+            
+            if (p.selectedItem == 58 && p.HeldItem.ModItem is BaseFairyBottle && p.TryGetModPlayer(out FairyCatcherPlayer fcp))
+            {
+                fcp.BottleItem = p.HeldItem.Clone();
+                p.HeldItem.TurnToAir();
+            }
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
