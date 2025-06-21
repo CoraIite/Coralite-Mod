@@ -56,14 +56,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             CoraliteSets.Items.IsFairy[Type] = true;
         }
 
-        public sealed override void SetDefaults()
-        {
-            IsOut = false;
-            Item.DamageType = Content.DamageClasses.FairyDamage.Instance;
-
-            SetOtherDefaults();
-        }
-
         /// <summary>
         /// 初始化仙灵的各项数值
         /// </summary>
@@ -73,8 +65,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             FairyIV = fairyIV;
             Life = fairyIV.LifeMax;
         }
-
-        public virtual void SetOtherDefaults() { }
 
         public override ModItem Clone(Item newEntity)
         {
@@ -139,11 +129,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             //生成仙灵弹幕
             Projectile proj = Projectile.NewProjectileDirect(source, position, velocity, Item.shoot, catcherDamage, knockBack, player.whoAmI);
             //将弹幕的item赋值为自身
-            if (proj.ModProjectile is IFairyProjectile fairyProjectile)
-            {
-                //fairyProjectile.FairyItem = this;
-                //proj.scale = FairyScale;
-            }
+            //if (proj.ModProjectile is IFairyProjectile fairyProjectile)
+            //{
+            //    //fairyProjectile.FairyItem = this;
+            //    //proj.scale = FairyScale;
+            //}
 
             IsOut = true;
             return true;

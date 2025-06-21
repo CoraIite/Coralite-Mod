@@ -184,7 +184,14 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
             if (Catch == 1)
                 Helper.CheckCollideWithFairyCircle(Owner, Projectile.getRect(), ref IDs);
+            else
+                OnAttackSwing();
         }
+
+        /// <summary>
+        /// 在挥舞时并且不是捕捉时调用
+        /// </summary>
+        public virtual void OnAttackSwing() { }
 
         protected override void AfterSlash()
         {
@@ -200,10 +207,17 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
             if (Catch == 1)
                 Helper.CheckCollideWithFairyCircle(Owner, Projectile.getRect(),ref IDs);
+            else
+                OnAttackBack();
 
             if (Timer > maxTime + delayTime)
                 Projectile.Kill();
         }
+
+        /// <summary>
+        /// 在挥舞收回时并且不是捕捉时调用
+        /// </summary>
+        public virtual void OnAttackBack() { }
 
         protected override void Slasher()
         {

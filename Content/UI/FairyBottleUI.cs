@@ -15,12 +15,19 @@ namespace Coralite.Content.UI
     {
         public override int UILayer(List<GameInterfaceLayer> layers) => layers.FindIndex(layer => layer.Name.Equals("Vanilla: Inventory"));
 
-        public bool visible;
-        public override bool Visible => visible;
+        public override bool Visible => true;
 
         public static float OffsetX = 0;
 
         public UIPanel ContainFairyPanel;
+        public FairyBottleHang bottleHang;
+
+        /// <summary>
+        /// 是否显示容纳的仙灵
+        /// </summary>
+        public bool ShowContains;
+
+        private int time;
 
         public override void OnInitialize()
         {
@@ -36,8 +43,12 @@ namespace Coralite.Content.UI
 
             if (!Main.playerInventory)
             {
-                visible = false;
-                Recalculate();
+                if (time>0)
+                {
+
+                    time++;
+                    Recalculate();
+                }
             }
         }
 
@@ -48,7 +59,6 @@ namespace Coralite.Content.UI
 
         public void ShowUI()
         {
-            visible = true;
 
             Helper.PlayPitched("Fairy/CursorExpand", 0.4f, 0);
 
@@ -69,6 +79,27 @@ namespace Coralite.Content.UI
     {
         public static ATex Vine { get; set; }
 
+        public FairyBottleHang()
+        {
+            this.SetSize(52, 60);
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            base.Update(gameTime);
+
+            if (!Main.playerInventory && GetDimensions().Y > -20)
+            {
+                Top.Set(Top.Pixels - 4, 0);
+                Recalculate();
+            }
+            else if (Main.playerInventory && GetDimensions().Y < 60)
+            {
+                Top.Set(Top.Pixels + 4, 0);
+                Recalculate();
+            }
+        }
+
         public override void MouseOver(UIMouseEvent evt)
         {
             base.MouseOver(evt);
@@ -81,12 +112,49 @@ namespace Coralite.Content.UI
             base.LeftClick(evt);
 
             Player p = Main.LocalPlayer;
-            
-            if (p.selectedItem == 58 && p.HeldItem.ModItem is BaseFairyBottle && p.TryGetModPlayer(out FairyCatcherPlayer fcp))
+
+            if (!p.TryGetModPlayer(out FairyCatcherPlayer fcp) || p.selectedItem != 58 || !p.ItemTimeIsZero)
+                return;
+
+            //放入
+            if (fcp.BottleItem.IsAir && !p.HeldItem.IsAir && p.HeldItem.ModItem is BaseFairyBottle)
             {
                 fcp.BottleItem = p.HeldItem.Clone();
                 p.HeldItem.TurnToAir();
+                return;
             }
+
+            //取出
+            if (p.HeldItem.IsAir && !fcp.BottleItem.IsAir)
+            {
+                p.inventory[58] = fcp.BottleItem.Clone();
+                fcp.BottleItem.TurnToAir();
+                return;
+            }
+
+            //交换
+            if (!p.HeldItem.IsAir && !fcp.BottleItem.IsAir && p.HeldItem.ModItem is BaseFairyBottle)
+            {
+                Item i = fcp.BottleItem;
+                fcp.BottleItem = p.HeldItem;
+                p.inventory[58] = i;
+                return;
+            }
+        }
+
+        public override void RightClick(UIMouseEvent evt)
+        {
+            base.RightClick(evt);
+
+            Player p = Main.LocalPlayer;
+
+            if (!p.TryGetModPlayer(out FairyCatcherPlayer fcp))
+                return;
+
+            if (fcp.BottleItem.IsAir)
+                return;
+
+
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
@@ -94,16 +162,26 @@ namespace Coralite.Content.UI
             //绘制藤蔓线
             Texture2D vineTex = Vine.Value;
             var d = GetDimensions();
-            Vector2 p = d.Center() + new Vector2(0, -d.Height / 2);
+            Vector2 pos = d.Center() + new Vector2(0, -d.Height / 2);
 
             Rectangle rect = new Rectangle((int)(d.X), -20, vineTex.Width, (int)(d.Height + 20));
 
             spriteBatch.Draw(vineTex, rect, Color.White);
 
+            Player p = Main.LocalPlayer;
+
+            if (!p.TryGetModPlayer(out FairyCatcherPlayer fcp))
+                return;
+
             //绘制仙灵环
+            if (fcp.BottleItem.IsAir)
+            {
 
-            //绘制仙灵瓶物品
+            }
+            else //绘制仙灵瓶物品
+            {
 
+            }
         }
     }
 }

@@ -6093,3 +6093,8 @@ GlowMushroomLantern: {
 	// DisplayName: Glow Mushroom Lantern
 	// Tooltip: ""
 }
+
+MeteorFireball: {
+	// DisplayName: Meteor Fireball
+	// Tooltip: ""
+}

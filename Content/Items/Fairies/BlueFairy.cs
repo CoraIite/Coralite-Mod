@@ -1,5 +1,4 @@
 ﻿using Coralite.Content.DamageClasses;
-using Coralite.Content.GlobalItems;
 using Coralite.Core;
 using Coralite.Core.Systems.FairyCatcherSystem;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
@@ -17,12 +16,11 @@ namespace Coralite.Content.Items.Fairies
 
         public override int MaxResurrectionTime => 60 * 60;
 
-        public override void SetOtherDefaults()
+        public override void SetDefaults()
         {
             Item.rare = ItemRarityID.White;
             Item.value = Item.sellPrice(0, 0, 3);
             Item.shoot = ModContent.ProjectileType<BlueFairyProj>();
-            Item.damage = 8;
         }
     }
 

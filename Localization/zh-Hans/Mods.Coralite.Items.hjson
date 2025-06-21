@@ -6088,3 +6088,8 @@ GlowMushroomLantern: {
 	DisplayName: 夜光蘑菇提灯
 	Tooltip: 发射会分裂的蘑菇火花
 }
+
+MeteorFireball: {
+	// DisplayName: Meteor Fireball
+	// Tooltip: ""
+}

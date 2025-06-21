@@ -17,12 +17,11 @@ namespace Coralite.Content.Items.Fairies
 
         public override int MaxResurrectionTime => 60 * 60;
 
-        public override void SetOtherDefaults()
+        public override void SetDefaults()
         {
             Item.rare = ItemRarityID.White;
             Item.value = Item.sellPrice(0, 0, 3);
             Item.shoot = ModContent.ProjectileType<GreenFairyProj>();
-            Item.damage = 6;
         }
     }
 

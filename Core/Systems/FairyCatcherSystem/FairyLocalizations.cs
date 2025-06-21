@@ -55,7 +55,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         //-----------------------------------
         public static LocalizedText CurrentLife;
         public static LocalizedText ResurrectionTime;
-        public static LocalizedText BottleCapacity;
+        public static LocalizedText BottleFightCapacity;
+        public static LocalizedText BottleContainCapacity;
         public static LocalizedText SeeMore;
         public static LocalizedText CatchPowerMult;
         public static LocalizedText UncaughtMouseText;
@@ -117,7 +118,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
             CurrentLife = this.GetLocalization("CurrentLife", () => "当前生命值：{0} / {1}");
             ResurrectionTime = this.GetLocalization("ResurrectionTime", () => "复活时间：{0}");
-            BottleCapacity = this.GetLocalization("BottleCapacity", () => "容量 {0} / {1}");
+            BottleFightCapacity = this.GetLocalization("BottleCapacity", () => "出战仙灵 {0} / {1}");
+            BottleContainCapacity = this.GetLocalization("BottleCapacity", () => "容纳仙灵 {0} / {1}");
             SeeMore = this.GetLocalization("SeeMore", () => "按上键以查看雷达图（游戏暂停时无法使用）");
             CatchPowerMult = this.GetLocalization("CatchPowerMult", () => "{0} 捕捉力");
             UncaughtMouseText = this.GetLocalization("UncaughtMouseText", () => "???\n点击以查看捕获条件");
@@ -157,7 +159,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
             CurrentLife = null;
             ResurrectionTime = null;
-            BottleCapacity = null;
+            BottleFightCapacity = null;
             SeeMore = null;
             CatchPowerMult = null;
             UncaughtMouseText = null;
