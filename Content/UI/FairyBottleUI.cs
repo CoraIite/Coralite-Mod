@@ -19,6 +19,7 @@ namespace Coralite.Content.UI
 
         public static float OffsetX = 0;
 
+        public UIPanel FightFairyPanel;
         public UIPanel ContainFairyPanel;
         public FairyBottleHang bottleHang;
 
@@ -28,9 +29,15 @@ namespace Coralite.Content.UI
         public bool ShowContains;
 
         private int time;
+        private bool init;
 
         public override void OnInitialize()
         {
+            FightFairyPanel = new UIPanel(ModContent.Request<Texture2D>(AssetDirectory.UI + "MagikePanelBackground"),
+                ModContent.Request<Texture2D>(AssetDirectory.UI + "MagikePanelBorder"));
+            FightFairyPanel.BackgroundColor = Color.OrangeRed * 0.5f;
+            FightFairyPanel.BorderColor = Color.LightCoral * 0.75f;
+
             ContainFairyPanel = new UIPanel(ModContent.Request<Texture2D>(AssetDirectory.UI + "MagikePanelBackground"),
                 ModContent.Request<Texture2D>(AssetDirectory.UI + "MagikePanelBorder"));
             ContainFairyPanel.BackgroundColor = Color.Cyan * 0.5f;
@@ -45,8 +52,17 @@ namespace Coralite.Content.UI
             {
                 if (time>0)
                 {
-
                     time++;
+                    Recalculate();
+                }
+            }
+            else
+            {
+                //init = false;
+
+                if (!init)
+                {
+                    init = true;
                     Recalculate();
                 }
             }
@@ -55,13 +71,25 @@ namespace Coralite.Content.UI
         public override void Recalculate()
         {
             base.Recalculate();
+
+            RemoveAllChildren();
+
+            bottleHang ??= new FairyBottleHang();
+            bottleHang.SetCenter(new Vector2(620, 0));
+
+            Append(bottleHang);
         }
 
         public void ShowUI()
         {
-
             Helper.PlayPitched("Fairy/CursorExpand", 0.4f, 0);
 
+            Recalculate();
+        }
+
+        public void CloseBottlePanel()
+        {
+            ShowContains = false;
             Recalculate();
         }
 
@@ -164,7 +192,8 @@ namespace Coralite.Content.UI
             var d = GetDimensions();
             Vector2 pos = d.Center() + new Vector2(0, -d.Height / 2);
 
-            Rectangle rect = new Rectangle((int)(d.X), -20, vineTex.Width, (int)(d.Height + 20));
+            int height = (int)(d.Height + 20);
+            Rectangle rect = new Rectangle((int)(pos.X), (int)(pos.Y - height), vineTex.Width, height);
 
             spriteBatch.Draw(vineTex, rect, Color.White);
 
