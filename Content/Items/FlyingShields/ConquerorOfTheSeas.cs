@@ -1,7 +1,9 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Particles;
+using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.FlyingShieldSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
@@ -19,10 +21,10 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void SetDefaults2()
         {
-            Item.useTime = Item.useAnimation = 20;
+            Item.useTime = Item.useAnimation = 30;
             Item.shoot = ModContent.ProjectileType<ConquerorOfTheSeasProj>();
             Item.knockBack = 2;
-            Item.shootSpeed = 12;
+            Item.shootSpeed = 12.5f;
             Item.damage = 225;
             Item.crit = 6;
         }
@@ -31,6 +33,8 @@ namespace Coralite.Content.Items.FlyingShields
     public class ConquerorOfTheSeasProj : BaseFlyingShield
     {
         public override string Texture => AssetDirectory.FlyingShieldItems + "ConquerorOfTheSeas";
+
+        private bool hited;
 
         public override void SetDefaults()
         {
@@ -55,6 +59,23 @@ namespace Coralite.Content.Items.FlyingShields
         public override Color GetColor(float factor)
         {
             return new Color(122, 122, 156) * factor;
+        }
+
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            base.OnHitNPC(target, hit, damageDone);
+
+            if (!hited && Projectile.IsOwnedByLocalPlayer())
+            {
+                if (State == (int)FlyingShieldStates.Shooting)
+                {
+                    Projectile.NewProjectileFromThis<ConquerorShipAnchor>(Projectile.Center
+                        , Projectile.velocity.SafeNormalize(Vector2.Zero) * 16, Projectile.damage, Projectile.knockBack);
+                }
+
+                Projectile.NewProjectileFromThis<ConquerorWaterWave>(Projectile.Center
+                    , Vector2.Zero, Projectile.damage, Projectile.knockBack);
+            }
         }
     }
 
@@ -501,6 +522,105 @@ namespace Coralite.Content.Items.FlyingShields
 
             Main.spriteBatch.Draw(mainTex, pos, null, lightColor, Projectile.rotation, mainTex.Size() / 2, Projectile.scale, 0, 0);
             Main.spriteBatch.Draw(mainTex, pos, null, new Color(92, 202, 158, 0), Projectile.rotation, mainTex.Size() / 2, Projectile.scale * 1.2f, 0, 0);
+
+            return false;
+        }
+    }
+
+    public class ConquerorWaterWave : ModProjectile,IDrawNonPremultiplied,IPostDrawAdditive
+    {
+        public override void SetStaticDefaults()
+        {
+            Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 12);
+        }
+
+        public override void SetDefaults()
+        {
+            Projectile.DamageType = DamageClass.Melee;
+            Projectile.penetrate = -1;
+            Projectile.tileCollide = false;
+            Projectile.width = Projectile.height = 160;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = -1;
+        }
+
+        public override void AI()
+        {
+            if (Projectile.ai[0]==0)
+            {
+                Projectile.ai[0] = 1;
+                Projectile.rotation = Main.rand.NextFloat(6.282f);
+            }
+
+            Projectile.frame++;
+            if (Projectile.frame>15)
+                Projectile.Kill();
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            return false;
+        }
+
+        public void DrawNonPremultiplied(SpriteBatch spriteBatch)
+        {
+            Projectile.QuickDraw(new Rectangle(0, Projectile.frame, 1, 16), Color.White, 0);
+        }
+
+        public void DrawAdditive(SpriteBatch spriteBatch)
+        {
+            Projectile.QuickDraw(new Rectangle(0, Projectile.frame, 1, 16), Color.White, MathHelper.TwoPi / 3);
+            Projectile.QuickDraw(new Rectangle(0, Projectile.frame, 1, 16), Color.White, MathHelper.TwoPi * 2 / 3);
+        }
+    }
+
+    public class ConquerorShipAnchor : ModProjectile
+    {
+        public override string Texture => AssetDirectory.FlyingShieldItems + "ConquerorOfTheSeasProj2";
+
+        public ref float Timer => ref Projectile.ai[0];
+
+        public override void SetStaticDefaults()
+        {
+            Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 12);
+        }
+
+        public override void SetDefaults()
+        {
+            Projectile.DamageType = DamageClass.Melee;
+            Projectile.penetrate = -1;
+            Projectile.tileCollide = false;
+            Projectile.width = Projectile.height = 48;
+            Projectile.extraUpdates = 1;
+        }
+
+        public override void AI()
+        {
+            Projectile.velocity *= 0.97f;
+            Timer++;
+
+            if (Timer % 2 == 0 && Main.rand.NextBool(2))
+            {
+                PRTLoader.NewParticle<SpeedLine>(Projectile.Center + Main.rand.NextVector2Circular(12, 12)
+                    , Projectile.velocity.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(1, 2), Color.LightSteelBlue, Main.rand.NextFloat());
+            }
+
+            if (Timer > 25)
+            {
+                Projectile.Kill();
+            }
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            if (Timer > 10)
+            {
+                lightColor *= 1 - (Timer - 10) / 15;
+            }
+
+            Projectile.DrawShadowTrails(lightColor * 0.5f, 1, 1 / 12f, 1, 12, 1, 1 / 12f, -1.57f, 1);
+
+            Projectile.QuickDraw(lightColor, -1.57f);
 
             return false;
         }
