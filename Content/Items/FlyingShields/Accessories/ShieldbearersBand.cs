@@ -48,6 +48,18 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
                 .AddIngredient(ItemID.PlatinumBar, 12)
                 .AddTile(TileID.Anvils)
                 .Register();
+
+            CreateRecipe()
+                .AddIngredient(ItemID.Leather)
+                .AddIngredient(ItemID.PlatinumBar, 12)
+                .AddTile(TileID.Anvils)
+                .Register();
+
+            CreateRecipe()
+                .AddIngredient(ItemID.Vertebrae, 5)
+                .AddIngredient(ItemID.GoldBar, 12)
+                .AddTile(TileID.Anvils)
+                .Register();
         }
     }
 }
