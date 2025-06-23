@@ -1,4 +1,5 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.CoraliteNotes;
+using Coralite.Core;
 using Coralite.Core.Attributes;
 using Coralite.Core.Systems.FairyCatcherSystem;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
@@ -75,8 +76,9 @@ namespace Coralite.Content.UI
             RemoveAllChildren();
 
             bottleHang ??= new FairyBottleHang();
-            bottleHang.SetCenter(new Vector2(620, 0));
+            bottleHang.SetCenter(new Vector2(610 + OffsetX, 0));
 
+            FightFairyPanel.SetCenter(new Vector2(bottleHang.Left.Pixels + bottleHang.Width.Pixels + 10, 20));
             Append(bottleHang);
         }
 
@@ -116,14 +118,14 @@ namespace Coralite.Content.UI
         {
             base.Update(gameTime);
 
-            if (!Main.playerInventory && GetDimensions().Y > -20)
+            if (!Main.playerInventory && GetDimensions().Y > -80)
             {
-                Top.Set(Top.Pixels - 4, 0);
+                Top.Set(Helper.Lerp(Top.Pixels,-80,0.15f), 0);
                 Recalculate();
             }
-            else if (Main.playerInventory && GetDimensions().Y < 60)
+            else if (Main.playerInventory && GetDimensions().Y < 62)
             {
-                Top.Set(Top.Pixels + 4, 0);
+                Top.Set(Helper.Lerp(Top.Pixels, 62, 0.15f), 0);
                 Recalculate();
             }
         }
@@ -141,31 +143,41 @@ namespace Coralite.Content.UI
 
             Player p = Main.LocalPlayer;
 
-            if (!p.TryGetModPlayer(out FairyCatcherPlayer fcp) || p.selectedItem != 58 || !p.ItemTimeIsZero)
+            if (!p.TryGetModPlayer(out FairyCatcherPlayer fcp) || !p.ItemTimeIsZero)
                 return;
 
             //放入
-            if (fcp.BottleItem.IsAir && !p.HeldItem.IsAir && p.HeldItem.ModItem is BaseFairyBottle)
+            if (p.selectedItem == 58 && fcp.BottleItem.IsAir && !p.HeldItem.IsAir && p.HeldItem.ModItem is BaseFairyBottle)
             {
                 fcp.BottleItem = p.HeldItem.Clone();
                 p.HeldItem.TurnToAir();
+                Main.mouseItem.TurnToAir();
+
+                Helper.PlayPitched("Fairy/FairyBottleClick2", 0.4f, 0);
                 return;
             }
 
             //取出
-            if (p.HeldItem.IsAir && !fcp.BottleItem.IsAir)
+            if (p.inventory[58].IsAir && !fcp.BottleItem.IsAir)
             {
                 p.inventory[58] = fcp.BottleItem.Clone();
+                Main.mouseItem = fcp.BottleItem.Clone();
+
                 fcp.BottleItem.TurnToAir();
+                Helper.PlayPitched("Fairy/FairyBottleClick2", 0.4f, 0);
+
                 return;
             }
 
             //交换
-            if (!p.HeldItem.IsAir && !fcp.BottleItem.IsAir && p.HeldItem.ModItem is BaseFairyBottle)
+            if (p.selectedItem == 58 && !p.HeldItem.IsAir && !fcp.BottleItem.IsAir && p.HeldItem.ModItem is BaseFairyBottle)
             {
                 Item i = fcp.BottleItem;
                 fcp.BottleItem = p.HeldItem;
                 p.inventory[58] = i;
+                Main.mouseItem = i.Clone();
+                Helper.PlayPitched("Fairy/FairyBottleClick2", 0.4f, 0);
+
                 return;
             }
         }
@@ -187,30 +199,36 @@ namespace Coralite.Content.UI
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
+            if (IsMouseHovering)
+                Main.LocalPlayer.mouseInterface = true;
+
             //绘制藤蔓线
             Texture2D vineTex = Vine.Value;
             var d = GetDimensions();
             Vector2 pos = d.Center() + new Vector2(0, -d.Height / 2);
 
-            int height = (int)(d.Height + 20);
-            Rectangle rect = new Rectangle((int)(pos.X), (int)(pos.Y - height), vineTex.Width, height);
-
-            spriteBatch.Draw(vineTex, rect, Color.White);
+            spriteBatch.Draw(vineTex, pos+new Vector2(0,-65),null, Color.White,0,new Vector2(vineTex.Width/2,0),1,0,0);
 
             Player p = Main.LocalPlayer;
 
             if (!p.TryGetModPlayer(out FairyCatcherPlayer fcp))
                 return;
 
-            //绘制仙灵环
-            if (fcp.BottleItem.IsAir)
+            //绘制仙灵瓶物品
+            if (!fcp.BottleItem.IsAir)
             {
+                Helper.GetItemTexAndFrame(fcp.BottleItem.type, out Texture2D tex, out Rectangle frameBox);
 
-            }
-            else //绘制仙灵瓶物品
-            {
+                spriteBatch.Draw(tex, d.Center(), frameBox, Color.White, 0, frameBox.Size() / 2, 1, 0, 0);
 
+                if (IsMouseHovering)
+                {
+                    Main.HoverItem = fcp.BottleItem.Clone();
+                    Main.hoverItemName = "a";
+                }
             }
+
+            //CoraliteNotePanel.DrawDebugFrame(this, spriteBatch);
         }
     }
 }
