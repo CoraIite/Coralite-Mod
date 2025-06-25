@@ -1,5 +1,6 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Attributes;
+using Coralite.Core.Loaders;
 using Coralite.Core.Systems.FairyCatcherSystem;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using Coralite.Helpers;
@@ -50,11 +51,11 @@ namespace Coralite.Content.UI
 
             if (!Main.playerInventory)
             {
-                if (time>0)
-                {
-                    time++;
-                    Recalculate();
-                }
+                //if (time > 0)
+                //{
+                //    time++;
+                //    Recalculate();
+                //}
             }
             else
             {
@@ -75,10 +76,21 @@ namespace Coralite.Content.UI
             RemoveAllChildren();
 
             bottleHang ??= new FairyBottleHang();
-            bottleHang.SetCenter(new Vector2(610 + OffsetX, -80));
+            bottleHang?.SetCenter(new Vector2(610 + OffsetX, -80));
 
-            FightFairyPanel?.SetCenter(new Vector2(bottleHang.Left.Pixels + bottleHang.Width.Pixels + 10, 20));
             Append(bottleHang);
+
+            Player p = Main.LocalPlayer;
+
+            if (ShowContains&& p.TryGetModPlayer(out FairyCatcherPlayer fcp)&&!fcp.BottleItem.IsAir
+                &&fcp.BottleItem.ModItem is BaseFairyBottle bottle)
+            {
+                FightFairyPanel?.SetCenter(new Vector2(bottleHang.Left.Pixels + bottleHang.Width.Pixels + 10, 30));
+
+                int count = bottle.FightCapacity;
+                int maxwidth = count > 10 ? 10 : 10;
+                Append(FightFairyPanel);
+            }
         }
 
         public void ShowUI()
@@ -106,7 +118,7 @@ namespace Coralite.Content.UI
     [AutoLoadTexture(Path = AssetDirectory.UI)]
     public class FairyBottleHang : UIElement
     {
-        public static int VineType=1;
+        public static int VineType=0;
 
         public static ATex Vine { get; set; }
         public static ATex Vine2 { get; set; }
@@ -196,7 +208,8 @@ namespace Coralite.Content.UI
             if (fcp.BottleItem.IsAir)
                 return;
 
-
+            UILoader.GetUIState<FairyBottleUI>().ShowContains = true;
+            UILoader.GetUIState<FairyBottleUI>().Recalculate();
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
