@@ -424,6 +424,30 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
             MagikeRecipe.CreateCraftRecipe(ItemID.Hook, ItemID.FishingBobber, CalculateMagikeCost(Glistent, 6, 60 * 2))
                 .AddIngredient(ItemID.CratePotion)
                 .Register();
+
+
+            //电线
+            MagikeRecipe.CreateCraftRecipe(ItemID.CopperBar, ItemID.Wire, CalculateMagikeCost(MagicCrystal, 3, 15),3)
+                .AddIngredient(ItemID.Gel)
+                .Register();
+            MagikeRecipe.CreateCraftRecipe(ItemID.TinBar, ItemID.Wire, CalculateMagikeCost(MagicCrystal, 3, 15),3)
+                .AddIngredient(ItemID.Gel)
+                .Register();
+
+            //红扳手
+            MagikeRecipe.CreateCraftRecipe(ItemID.IronBar, ItemID.Wrench, CalculateMagikeCost(MagicCrystal, 3, 15), 5)
+                .AddIngredient(ItemID.Gel)
+                .Register();
+            MagikeRecipe.CreateCraftRecipe(ItemID.LeadBar, ItemID.Wrench, CalculateMagikeCost(MagicCrystal, 3, 15), 5)
+                .AddIngredient(ItemID.Gel)
+                .Register();
+            //剪线钳
+            MagikeRecipe.CreateCraftRecipe(ItemID.GoldBar, ItemID.WireCutter, CalculateMagikeCost(MagicCrystal, 3, 15), 10)
+                .AddIngredient(ItemID.Gel)
+                .Register();
+            MagikeRecipe.CreateCraftRecipe(ItemID.PlatinumBar, ItemID.WireCutter, CalculateMagikeCost(MagicCrystal, 3, 15), 10)
+                .AddIngredient(ItemID.Gel)
+                .Register();
         }
     }
 }

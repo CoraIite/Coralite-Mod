@@ -79,4 +79,8 @@ WorldGeneration: {
 	}
 }
 
-Important.CoraliteSystem.OnEnterWorld: ""
+Important.CoraliteSystem.OnEnterWorld:
+	'''
+	Обновление Coralite v0.2.2.21
+	 - Аксессуары, увеличивающие количество Летающих Щитов, теперь дают постоянный бонус при использовании (ЛКМ)
+	'''

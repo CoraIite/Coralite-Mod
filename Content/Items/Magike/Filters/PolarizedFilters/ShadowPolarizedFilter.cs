@@ -23,7 +23,7 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
         {
             CreateRecipe()
                 .AddIngredient<BasicFilter>()
-                .AddIngredient<ShadowEnergy>(5)
+                .AddIngredient<ShadowEnergy>(2)
                 .DisableDecraft()
                 .AddTile(TileID.Anvils)
                 .AddCondition(CoraliteConditions.NotInDigDigDig)
@@ -55,7 +55,7 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
 
             CreateRecipe()
                 .AddIngredient<GlistentPolarizedFilter>()
-                .AddIngredient<ShadowEnergy>(3)
+                .AddIngredient<ShadowEnergy>(2)
                 .AddTile(TileID.Anvils)
                 .DisableDecraft()
                 .AddCondition(CoraliteConditions.NotInDigDigDig)
@@ -63,7 +63,7 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
 
             CreateRecipe()
                 .AddIngredient<MagicCrystalPolarizedFilter>()
-                .AddIngredient<ShadowEnergy>(4)
+                .AddIngredient<ShadowEnergy>(2)
                 .DisableDecraft()
                 .AddTile(TileID.Anvils)
                 .AddCondition(CoraliteConditions.NotInDigDigDig)

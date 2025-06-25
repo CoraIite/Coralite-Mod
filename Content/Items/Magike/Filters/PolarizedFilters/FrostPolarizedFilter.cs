@@ -20,8 +20,8 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
 
         public override void AddRecipes()
         {
-            CreateRecipe()
-                .AddIngredient<IciclePolarizedFilter>()
+            CreateRecipe(2)
+                .AddIngredient<IciclePolarizedFilter>(2)
                 .AddIngredient(ItemID.FrostCore)
                 .AddTile(TileID.WorkBenches)
                 .AddCondition(CoraliteConditions.NotInDigDigDig)

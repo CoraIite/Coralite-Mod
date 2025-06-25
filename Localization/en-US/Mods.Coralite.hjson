@@ -79,4 +79,8 @@ WorldGeneration: {
 	}
 }
 
-Important.CoraliteSystem.OnEnterWorld: ""
+Important.CoraliteSystem.OnEnterWorld:
+	'''
+	Coralite v0.2.2.21 Update Notes
+	 - Accessories that increase Flying Shield capacity now grant permanent bonuses when used (left-click)
+	'''

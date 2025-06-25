@@ -97,10 +97,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
         /// <returns></returns>
         public virtual ApparatusInformation AddInformation()
         {
-            int tileType = TargetTileID;
-            int itemType = TileLoader.GetItemDropFromTypeAndStyle(tileType);
-            Item i = ContentSamples.ItemsByType[itemType].Clone();
-            return new ApparatusInformation() { SelfItem = i };
+            return new ApparatusInformation();
         }
 
         /// <summary>

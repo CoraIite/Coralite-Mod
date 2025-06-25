@@ -33,6 +33,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
                     //P4：重塑！聚合！魔能合成！
                     new CraftAltar(),
                     new RemodelP1(),
+                    new RemodelP2(),
                     new CraftAltar2(),
                     new PolymerizeCraft(),
                     new PolymerizeCraft2(),
