@@ -1,5 +1,4 @@
-﻿using Coralite.Content.CoraliteNotes;
-using Coralite.Core;
+﻿using Coralite.Core;
 using Coralite.Core.Attributes;
 using Coralite.Core.Systems.FairyCatcherSystem;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
@@ -76,9 +75,9 @@ namespace Coralite.Content.UI
             RemoveAllChildren();
 
             bottleHang ??= new FairyBottleHang();
-            bottleHang.SetCenter(new Vector2(610 + OffsetX, 0));
+            bottleHang.SetCenter(new Vector2(610 + OffsetX, -80));
 
-            FightFairyPanel.SetCenter(new Vector2(bottleHang.Left.Pixels + bottleHang.Width.Pixels + 10, 20));
+            FightFairyPanel?.SetCenter(new Vector2(bottleHang.Left.Pixels + bottleHang.Width.Pixels + 10, 20));
             Append(bottleHang);
         }
 
@@ -107,7 +106,10 @@ namespace Coralite.Content.UI
     [AutoLoadTexture(Path = AssetDirectory.UI)]
     public class FairyBottleHang : UIElement
     {
+        public static int VineType=1;
+
         public static ATex Vine { get; set; }
+        public static ATex Vine2 { get; set; }
 
         public FairyBottleHang()
         {
@@ -203,7 +205,12 @@ namespace Coralite.Content.UI
                 Main.LocalPlayer.mouseInterface = true;
 
             //绘制藤蔓线
-            Texture2D vineTex = Vine.Value;
+            Texture2D vineTex = VineType switch
+            {
+                0 => Vine.Value,
+                _ => Vine2.Value,
+            };
+            
             var d = GetDimensions();
             Vector2 pos = d.Center() + new Vector2(0, -d.Height / 2);
 

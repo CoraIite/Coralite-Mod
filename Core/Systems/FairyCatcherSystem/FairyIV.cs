@@ -1,7 +1,11 @@
 ﻿using Coralite.Helpers;
+using log4net.Core;
 using System;
 using System.Collections.Generic;
+using System.Formats.Asn1;
+using Terraria;
 using Terraria.Localization;
+using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem
 {
@@ -115,6 +119,75 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             iv.SpeedLevel = player.SpeedRand.RandValue;
             iv.StaminaLevel = player.StaminaRand.RandValue;
             iv.ScaleLevel = player.ScaleRand.RandValue;
+        }
+
+        /// <summary>
+        /// 存储仙灵个体值
+        /// </summary>
+        /// <param name="tag"></param>
+        public readonly void Save(TagCompound tag)
+        {
+            const string preName = "IV_";
+
+            tag.Add(preName + nameof(LifeMax),LifeMax);
+            tag.Add(preName + nameof(Damage), Damage);
+            tag.Add(preName + nameof(Defence), Defence);
+            tag.Add(preName + nameof(Speed), Speed);
+            tag.Add(preName + nameof(SkillLevel), SkillLevel);
+            tag.Add(preName + nameof(Stamina), Stamina);
+            tag.Add(preName + nameof(Scale), Scale);
+
+            tag.Add(preName + nameof(LifeMaxLevel), LifeMaxLevel);
+            tag.Add(preName + nameof(DamageLevel), DamageLevel);
+            tag.Add(preName + nameof(DefenceLevel), DefenceLevel);
+            tag.Add(preName + nameof(SpeedLevel), SpeedLevel);
+            tag.Add(preName + nameof(SkillLevelLevel), SkillLevelLevel);
+            tag.Add(preName + nameof(StaminaLevel), StaminaLevel);
+            tag.Add(preName + nameof(ScaleLevel), ScaleLevel);
+        }
+
+        public static FairyIV Load(Item item, TagCompound tag)
+        {
+            const string preName = "IV_";
+            if (tag.TryGet(preName + nameof(LifeMax), out int lifemax)
+                && tag.TryGet(preName + nameof(Damage), out int damage)
+                && tag.TryGet(preName + nameof(Defence), out int defence)
+                && tag.TryGet(preName + nameof(Speed), out float speed)
+                && tag.TryGet(preName + nameof(SkillLevel), out int skillLevel)
+                && tag.TryGet(preName + nameof(Stamina), out int stamina)
+                && tag.TryGet(preName + nameof(Scale), out int scale)
+                && tag.TryGet(preName + nameof(LifeMaxLevel), out float lifeMaxLevel)
+                && tag.TryGet(preName + nameof(DamageLevel), out float damageLevel)
+                && tag.TryGet(preName + nameof(DefenceLevel), out float defenceLevel)
+                && tag.TryGet(preName + nameof(SpeedLevel), out float speedLevel)
+                && tag.TryGet(preName + nameof(SkillLevelLevel), out float skillLevelLevel)
+                && tag.TryGet(preName + nameof(StaminaLevel), out float staminaLevel)
+                && tag.TryGet(preName + nameof(ScaleLevel), out float scaleLevel)
+                )
+            {
+                return new FairyIV
+                {
+                    LifeMax = lifemax,
+                    Damage = damage,
+                    Defence = defence,
+                    Speed = speed,
+                    SkillLevel = skillLevel,
+                    Stamina = stamina,
+                    Scale = scale,
+                    LifeMaxLevel = lifeMaxLevel,
+                    DamageLevel = damageLevel,
+                    DefenceLevel = defenceLevel,
+                    SpeedLevel = speedLevel,
+                    SkillLevelLevel = skillLevelLevel,
+                    StaminaLevel = staminaLevel,
+                    ScaleLevel = scaleLevel,
+                };
+            }
+            else
+            {
+                $"数据读取异常，物品名{item.Name}".Dump();
+                return default;
+            }
         }
 
 

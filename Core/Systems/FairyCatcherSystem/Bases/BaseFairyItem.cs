@@ -5,11 +5,12 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Localization;
+using Terraria.ModLoader.IO;
 using Terraria.UI.Chat;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 {
-    public abstract class BaseFairyItem : ModItem//, IFairyItem
+    public abstract class BaseFairyItem : ModItem
     {
         public override string Texture => AssetDirectory.FairyItems + Name;
 
@@ -492,50 +493,14 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         #endregion
 
-        //public override void SaveData(TagCompound tag)
-        //{
-        //    fairyData.SaveData(tag);
-        //    tag.Add("Life", life);
-        //    if (dead)
-        //        tag.Add("ResurrectionTime", resurrectionTime);
+        public override void SaveData(TagCompound tag)
+        {
+            FairyIV.Save(tag);
+        }
 
-        //    IsOut = false;
-        //}
-
-        //public override void LoadData(TagCompound tag)
-        //{
-        //    fairyData = new FairyData();
-        //    fairyData.LoadData(tag);
-        //    life = tag.GetInt("Life");
-        //    if (tag.TryGet("ResurrectionTime", out int time))
-        //    {
-        //        dead = true;
-        //        resurrectionTime = time;
-        //    }
-
-        //    IsOut = false;
-        //}
+        public override void LoadData(TagCompound tag)
+        {
+            FairyIV = FairyIV.Load(Item, tag);
+        }
     }
-
-    //public interface IFairyItem
-    //{
-    //    public bool IsDead { get; }
-    //    public bool IsOut { get; set; }
-    //    public FairyData IV { get; set; }
-    //    public int Life { get; set; }
-    //    public float FairyLifeMax { get; }
-    //    public int FairyType { get; }
-    //    public float FairyDamage { get; }
-    //    public FairyRarity Rarity { get; }
-
-    //    /// <summary>
-    //    /// 返回值是仙灵是否死亡
-    //    /// </summary>
-    //    /// <param name="target"></param>
-    //    /// <param name="hit"></param>
-    //    /// <param name="damageDon"></param>
-    //    /// <returns></returns>
-    //    public bool Hurt(Player owner, NPC target, NPC.HitInfo hit, int damageDon);
-    //    public bool ShootFairy(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int catcherDamage, float knockBack);
-    //}
 }
