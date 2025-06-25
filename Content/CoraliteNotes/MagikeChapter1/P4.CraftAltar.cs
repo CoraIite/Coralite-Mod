@@ -13,7 +13,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
         public static LocalizedText CraftACraftAltar { get; private set; }
         public static LocalizedText AltarUI { get; private set; }
 
-        private ScaleController _scale1 = new ScaleController(1.2f, 0.2f);
+        private ScaleController _scale1 = new ScaleController(1.5f, 0.2f);
 
         public override void OnInitialize()
         {
@@ -24,7 +24,6 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
 
         public override void Recalculate()
         {
-            _scale1 = new ScaleController(1.5f, 0.2f);
             _scale1.ResetScale();
 
             base.Recalculate();
@@ -37,8 +36,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
 
             Vector2 pos = PageTop + new Vector2(0, TitleHeight);
 
-            //绘制左边的合成坛
-
+            //绘制合成坛
             Vector2 picturePos = new Vector2(pos.X, pos.Y + 40);
 
             Helper.DrawMouseOverScaleTex<BasicAltar>(spriteBatch, picturePos
