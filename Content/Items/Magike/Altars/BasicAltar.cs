@@ -149,7 +149,7 @@ namespace Coralite.Content.Items.Magike.Altars
                 MALevel.CrystallineMagike => 0.35f,
                 MALevel.Hallow => 0.3f,
                 MALevel.HolyLight => 0.25f,
-                _ => 10_0000_0000 / 60,
+                _ => -1,
             };
 
             CostPercent = incomeLevel switch

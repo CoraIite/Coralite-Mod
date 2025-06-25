@@ -216,7 +216,11 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
         {
             OnTileKilled(i, j);
             if (TryGetEntityWithTopLeft(new Point16(i, j), out MagikeTP entity))
+            {
                 entity.Kill();
+                MagikeApparatusPanel.CurrentEntity = null;
+                UILoader.GetUIState<MagikeApparatusPanel>().visible=false;
+            }
         }
 
         public override void NumDust(int i, int j, bool fail, ref int num)

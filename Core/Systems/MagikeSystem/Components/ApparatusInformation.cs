@@ -1,9 +1,11 @@
-﻿using Coralite.Content.UI.MagikeApparatusPanel;
+﻿using Coralite.Content.UI;
+using Coralite.Content.UI.MagikeApparatusPanel;
 using Coralite.Core.Systems.CoraliteActorComponent;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader.IO;
 using Terraria.UI;
 
@@ -17,10 +19,11 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// 当前仪器的等级，用于显示名字
         /// </summary>
         public MALevel CurrentLevel { get; private set; }
+
         /// <summary>
-        /// 自身物品类型
+        /// 是否显示需要插入偏振滤镜
         /// </summary>
-        public Item SelfItem { get; set; }
+        public virtual bool ShowPolarizedTip { get; } = true;
 
         public sealed override void Update() { }
 
@@ -46,7 +49,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public void ShowInUI(UIElement parent)
         {
             //标题
-            Item i = SelfItem;
+            Item i = ContentSamples.ItemsByType[TileLoader.GetItemDropFromTypeAndStyle(Framing.GetTileSafely(Entity.Position).TileType)];
             UIElement title = new ComponentUIElementText<ApparatusInformation>(c =>
                  i.Name, this, parent, new Vector2(1.3f));
             parent.Append(title);
@@ -54,7 +57,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             //当前等级
             UIElement text = this.NewTextBar(c =>
             {
-                if (c.CurrentLevel == MALevel.None)
+                if (ShowPolarizedTip && c.CurrentLevel == MALevel.None)
                     return MagikeSystem.GetUIText(MagikeSystem.UITextID.NeedPolarizedFilter);
                 else
                     return MagikeSystem.GetUIText(MagikeSystem.UITextID.CurrentLevel) + MagikeSystem.GetMALevelText(c.CurrentLevel);
@@ -67,8 +70,36 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             ShowOnlySlot slot = new ShowOnlySlot(this);
             slot.SetTopLeft(text.Top.Pixels + text.Height.Pixels + 8, 0);
             parent.Append(slot);
+
+            if (Entity.ExtendFilterCapacity > 0)
+                AddFilterController(parent, slot.Top.Pixels + slot.Height.Pixels);
         }
 
+        /// <summary>
+        /// 添加滤镜控制器
+        /// </summary>
+        /// <param name="parent"></param>
+        public void AddFilterController(UIElement parent,float height)
+        {
+            UIElement title = new ComponentUIElementText(() => MagikeSystem.GetUIText(MagikeSystem.UITextID.FilterController), parent, new Vector2(1.3f));
+            title.SetTopLeft(height + 10, 0);
+
+            parent.Append(title);
+            UIElement Text1 = new ComponentUIElementText(() => MagikeSystem.GetUIText(MagikeSystem.UITextID.ClickToRemove), parent);
+            Text1.SetTopLeft(title.Top.Pixels + title.Height.Pixels + 8, 0);
+            parent.Append(Text1);
+
+            FixedUIGrid grid = new FixedUIGrid();
+            for (int i = 0; i < Entity.ExtendFilterCapacity; i++)
+                grid.Add(new FilterButton(i));
+
+            grid.SetSize(0, 0, 1, 1);
+            grid.SetTopLeft(Text1.Top.Pixels + title.Height.Pixels + 8, 0);
+
+            grid.QuickInvisibleScrollbar();
+
+            parent.Append(grid);
+        }
         #endregion
 
         #region 网络同步
@@ -76,13 +107,11 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public override void SendData(ModPacket data)
         {
             data.Write((byte)CurrentLevel);
-            ItemIO.Send(SelfItem, data);
         }
 
         public override void ReceiveData(BinaryReader reader, int whoAmI)
         {
             CurrentLevel = (MALevel)reader.ReadByte();
-            SelfItem = ItemIO.Receive(reader);
         }
 
         #endregion
@@ -92,16 +121,19 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public override void SaveData(string preName, TagCompound tag)
         {
             tag.Add(preName + nameof(CurrentLevel), (int)CurrentLevel);
-            tag.Add(preName + nameof(SelfItem), SelfItem);
         }
 
         public override void LoadData(string preName, TagCompound tag)
         {
             CurrentLevel = (MALevel)tag.GetInt(preName + nameof(CurrentLevel));
-            SelfItem = tag.Get<Item>(preName + nameof(SelfItem));
         }
 
         #endregion
+    }
+
+    public class ApparatusInformation_NoPolar : ApparatusInformation
+    {
+        public override bool ShowPolarizedTip => false;
     }
 
     public class ShowOnlySlot : UIElement
@@ -123,7 +155,11 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            Item i = _Component.SelfItem.Clone();
+            Tile tile = Framing.GetTileSafely(_Component.Entity.Position);
+            if (!tile.HasTile)
+                return;
+
+            Item i = ContentSamples.ItemsByType[TileLoader.GetItemDropFromTypeAndStyle(tile.TileType)].Clone();
 
             if (IsMouseHovering)
             {

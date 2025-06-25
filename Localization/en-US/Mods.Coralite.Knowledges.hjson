@@ -436,3 +436,4 @@ SwordPage: {
 }
 
 RemodelP1.PutMainItemIntoAltar: Mods.Coralite.Knowledges.RemodelP1.PutMainItemIntoAltar
+RemodelP2.SelectCraftRecipe: Mods.Coralite.Knowledges.RemodelP2.SelectCraftRecipe

@@ -23,7 +23,7 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
         {
             CreateRecipe()
                 .AddIngredient<RedJadePolarizedFilter>()
-                .AddIngredient<BloodJade>(3)
+                .AddIngredient<BloodJade>(2)
                 .AddTile(TileID.Anvils)
                 .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();

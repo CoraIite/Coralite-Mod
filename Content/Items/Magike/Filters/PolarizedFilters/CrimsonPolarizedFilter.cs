@@ -22,8 +22,8 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
         {
             CreateRecipe()
                 .AddIngredient<BasicFilter>()
-                .AddIngredient(ItemID.TissueSample, 4)
-                .AddIngredient(ItemID.CrimtaneBar, 5)
+                .AddIngredient(ItemID.TissueSample, 2)
+                .AddIngredient(ItemID.CrimtaneBar)
                 .DisableDecraft()
                 .AddTile(TileID.Anvils)
                 .AddCondition(CoraliteConditions.NotInDigDigDig)
@@ -31,7 +31,8 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
 
             CreateRecipe()
                 .AddIngredient<GlistentPolarizedFilter>()
-                .AddIngredient(ItemID.TissueSample, 3)
+                .AddIngredient(ItemID.TissueSample, 2)
+                .AddIngredient(ItemID.CrimtaneBar)
                 .AddTile(TileID.Anvils)
                 .DisableDecraft()
                 .AddCondition(CoraliteConditions.NotInDigDigDig)
@@ -39,8 +40,8 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
 
             CreateRecipe()
                 .AddIngredient<MagicCrystalPolarizedFilter>()
-                .AddIngredient(ItemID.TissueSample, 3)
-                .AddIngredient(ItemID.CrimtaneBar, 2)
+                .AddIngredient(ItemID.TissueSample, 2)
+                .AddIngredient(ItemID.CrimtaneBar)
                 .DisableDecraft()
                 .AddTile(TileID.Anvils)
                 .AddCondition(CoraliteConditions.NotInDigDigDig)

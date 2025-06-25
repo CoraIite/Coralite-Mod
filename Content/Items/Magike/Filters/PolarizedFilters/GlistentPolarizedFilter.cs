@@ -23,7 +23,7 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
         {
             CreateRecipe()
                 .AddIngredient<BasicFilter>()
-                .AddIngredient<GlistentBar>(3)
+                .AddIngredient<GlistentBar>(2)
                 .AddTile(TileID.Anvils)
                 .DisableDecraft()
                 .AddCondition(CoraliteConditions.NotInDigDigDig)

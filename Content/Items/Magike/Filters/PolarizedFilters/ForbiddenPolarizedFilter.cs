@@ -20,8 +20,8 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
 
         public override void AddRecipes()
         {
-            CreateRecipe()
-                .AddIngredient<QuicksandPolarizedFilter>()
+            CreateRecipe(2)
+                .AddIngredient<QuicksandPolarizedFilter>(2)
                 .AddIngredient(ItemID.AncientBattleArmorMaterial)
                 .AddTile(TileID.MythrilAnvil)
                 .AddCondition(CoraliteConditions.NotInDigDigDig)

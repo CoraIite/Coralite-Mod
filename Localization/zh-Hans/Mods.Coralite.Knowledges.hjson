@@ -464,4 +464,9 @@ SwordPage: {
 		'''
 }
 
-RemodelP1.PutMainItemIntoAltar: "    第一步，将主要物品：木头放入左上的物品格中。 主要物品是指合成表中除 “魔能” 以外的第一个物品。"
+RemodelP1.PutMainItemIntoAltar:
+	'''
+	    第一步，将主要物品：木头放入左上的物品格中。
+	    主要物品是指合成表中除 “魔能” 以外的第一个物品。
+	'''
+RemodelP2.SelectCraftRecipe: "    第二步，点击右侧按钮选择合成表。"

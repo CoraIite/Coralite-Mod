@@ -24,8 +24,8 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
         {
             CreateRecipe()
                 .AddIngredient<BasicFilter>()
-                .AddIngredient<MagicCrystal>(4)
-                .AddIngredient<Basalt>(2)
+                .AddIngredient<MagicCrystal>(2)
+                .AddIngredient<Basalt>()
                 .AddTile(TileID.Anvils)
                 .DisableDecraft()
                 .AddCondition(CoraliteConditions.NotInDigDigDig)
