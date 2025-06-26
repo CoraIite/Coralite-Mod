@@ -251,4 +251,129 @@ namespace Coralite.Content.UI
             //CoraliteNotePanel.DrawDebugFrame(this, spriteBatch);
         }
     }
+
+    public class FairyBottleSlot : UIElement
+    {
+        /// <summary>
+        /// 判断是否是战斗仙灵，是的话就用战斗仙灵的
+        /// </summary>
+        private bool fight;
+        private readonly int _index;
+        private float _scale = 1f;
+
+        public FairyBottleSlot(bool fight, int index)
+        {
+            this.fight = fight;
+            _index = index;
+            this.SetSize(54, 54);
+        }
+
+        public bool TryGetItem(out Item item)
+        {
+            Player p = Main.LocalPlayer;
+
+            item = null;
+            if (p.TryGetModPlayer(out FairyCatcherPlayer fcp)&&!fcp.BottleItem.IsAir
+                &&fcp.BottleItem.ModItem is BaseFairyBottle bottle)
+            {
+                if (fight)
+                {
+                    if (bottle.FightFairies.IndexInRange(_index))
+                    {
+                        item = bottle.FightFairies[_index];
+                        if (item == null)
+                        {
+                            UILoader.GetUIState<FairyBottleUI>().Recalculate();
+                            return false;
+                        }
+                    }
+                }
+                else
+                {
+                    if (bottle.ContainFairies.IndexInRange(_index))
+                    {
+                        item = bottle.ContainFairies[_index];
+                        if (item == null)
+                        {
+                            UILoader.GetUIState<FairyBottleUI>().Recalculate();
+                            return false;
+                        }
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        public override void MouseOver(UIMouseEvent evt)
+        {
+            base.MouseOver(evt);
+            Helper.PlayPitched("Fairy/FairyBottleClick", 0.3f, 0.4f);
+        }
+
+        private void HandleItemSlotLogic()
+        {
+            if (IsMouseHovering)
+            {
+                Player p = Main.LocalPlayer;
+
+                if (p.TryGetModPlayer(out FairyCatcherPlayer fcp) && !fcp.BottleItem.IsAir
+                    && fcp.BottleItem.ModItem is BaseFairyBottle bottle)
+                {
+                    if (fight)
+                    {
+                        if (bottle.FightFairies.IndexInRange(_index))
+                        {
+                            Item inv = bottle.FightFairies[_index];
+                            Main.LocalPlayer.mouseInterface = true;
+                            ItemSlot.OverrideHover(ref inv, ItemSlot.Context.VoidItem);
+                            ItemSlot.LeftClick(ref inv, ItemSlot.Context.VoidItem);
+                            ItemSlot.RightClick(ref inv, ItemSlot.Context.VoidItem);
+                            ItemSlot.MouseHover(ref inv, ItemSlot.Context.VoidItem);
+                            bottle.FightFairies[_index] = inv;
+                        }
+                    }
+                    else
+                    {
+                        if (bottle.ContainFairies.IndexInRange(_index))
+                        {
+                            Item inv = bottle.ContainFairies[_index];
+                            Main.LocalPlayer.mouseInterface = true;
+                            ItemSlot.OverrideHover(ref inv, ItemSlot.Context.VoidItem);
+                            ItemSlot.LeftClick(ref inv, ItemSlot.Context.VoidItem);
+                            ItemSlot.RightClick(ref inv, ItemSlot.Context.VoidItem);
+                            ItemSlot.MouseHover(ref inv, ItemSlot.Context.VoidItem);
+                            bottle.ContainFairies[_index] = inv;
+                        }
+                    }
+                }
+
+                _scale = Helper.Lerp(_scale, 1.05f, 0.2f);
+
+                //if ((Main.mouseRightRelease && Main.mouseRight) || (Main.mouseLeftRelease && Main.mouseLeft))
+                //{
+                //    SendData();
+                //}
+            }
+            else
+                _scale = Helper.Lerp(_scale, 1f, 0.2f);
+        }
+
+        protected override void DrawSelf(SpriteBatch spriteBatch)
+        {
+            if (!TryGetItem(out Item inv))
+                return;
+
+            HandleItemSlotLogic();
+
+            float scale = Main.inventoryScale;
+            Main.inventoryScale = _scale;
+
+            Vector2 position = GetDimensions().Center() + (new Vector2(52f, 52f) * -0.5f * Main.inventoryScale);
+            ItemSlot.Draw(spriteBatch, ref inv, ItemSlot.Context.VoidItem, position, Color.White);
+
+            Main.inventoryScale = scale;
+        }
+    }
+
 }
