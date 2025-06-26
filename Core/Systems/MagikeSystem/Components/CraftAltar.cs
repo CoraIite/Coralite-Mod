@@ -404,6 +404,23 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             Entity.GetMagikeContainer().AddMagike((ChosenResipe.magikeCost - RequiredMagike) / 2);
 
+            if(ChosenResipe != null)
+            {
+                if (ChosenResipe.HasRequiredItem)
+                    foreach (var r in ChosenResipe.RequiredItems)
+                    {
+                        Main.LocalPlayer.QuickSpawnItem(new EntitySource_TileInteraction(Main.LocalPlayer, Entity.Position.X, Entity.Position.Y)
+                            , r.type, r.stack);
+                    }
+
+                if (ChosenResipe.HasRequiredItemGroup)
+                    foreach (var r in ChosenResipe.RequiredItemGroups)
+                    {
+                        Main.LocalPlayer.QuickSpawnItem(new EntitySource_TileInteraction(Main.LocalPlayer, Entity.Position.X, Entity.Position.Y)
+                            , r.Item1.IconicItemId, r.Item2);
+                    }
+            }
+
             RequiredMagike = 0;
             PerCost = 0;
         }
@@ -968,7 +985,6 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 ItemSlot.Draw(spriteBatch, ref i, ItemSlot.Context.ShopItem, position, Color.White);
                 Main.inventoryScale = scale;
             }
-
         }
     }
 
@@ -1531,6 +1547,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                     break;
                 case SlotType.RequiredItem:
                     showItem = ContentSamples.ItemsByType[recipe.RequiredItems[requiredIndex].type].Clone();
+                    showItem.stack = recipe.RequiredItems[requiredIndex].stack;
                     break;
                 case SlotType.GroupItem:
                     var i = new Item(recipe.RequiredItemGroups[requiredIndex].Item1.IconicItemId, recipe.RequiredItemGroups[requiredIndex].Item2);
