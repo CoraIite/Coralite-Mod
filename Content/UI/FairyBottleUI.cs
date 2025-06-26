@@ -36,13 +36,13 @@ namespace Coralite.Content.UI
         {
             FightFairyPanel = new UIPanel(ModContent.Request<Texture2D>(AssetDirectory.UI + "MagikePanelBackground"),
                 ModContent.Request<Texture2D>(AssetDirectory.UI + "MagikePanelBorder"));
-            FightFairyPanel.BackgroundColor = Color.OrangeRed * 0.5f;
-            FightFairyPanel.BorderColor = Color.LightCoral * 0.75f;
+            FightFairyPanel.BackgroundColor = (Color.Coral * 0.3f) with { A = 75 };
+            FightFairyPanel.BorderColor = new Color(255, 200, 200) * 0.75f;
 
             ContainFairyPanel = new UIPanel(ModContent.Request<Texture2D>(AssetDirectory.UI + "MagikePanelBackground"),
                 ModContent.Request<Texture2D>(AssetDirectory.UI + "MagikePanelBorder"));
-            ContainFairyPanel.BackgroundColor = Color.Cyan * 0.5f;
-            ContainFairyPanel.BorderColor = Color.LightCyan * 0.75f;
+            ContainFairyPanel.BackgroundColor = (Color.DarkBlue * 0.3f) with { A = 75 };
+            ContainFairyPanel.BorderColor = Color.SkyBlue * 0.75f;
         }
 
         public override void Update(GameTime gameTime)
@@ -51,6 +51,11 @@ namespace Coralite.Content.UI
 
             if (!Main.playerInventory)
             {
+                if (ShowContains)
+                {
+                    ShowContains = false;
+                    Recalculate();
+                }
                 //if (time > 0)
                 //{
                 //    time++;
@@ -75,22 +80,70 @@ namespace Coralite.Content.UI
 
             RemoveAllChildren();
 
-            bottleHang ??= new FairyBottleHang();
-            bottleHang?.SetCenter(new Vector2(610 + OffsetX, -80));
+            if (bottleHang == null)
+            {
+                bottleHang = new FairyBottleHang();
+                bottleHang.SetCenter(new Vector2(610 + OffsetX, -80));
+            }
+            else
+                bottleHang.SetCenter(new Vector2(610 + OffsetX, bottleHang.Top.Pixels + bottleHang.Height.Pixels/2-5));
 
             Append(bottleHang);
 
             Player p = Main.LocalPlayer;
 
-            if (ShowContains&& p.TryGetModPlayer(out FairyCatcherPlayer fcp)&&!fcp.BottleItem.IsAir
-                &&fcp.BottleItem.ModItem is BaseFairyBottle bottle)
+            if (ShowContains && p.TryGetModPlayer(out FairyCatcherPlayer fcp) && !fcp.BottleItem.IsAir
+                && fcp.BottleItem.ModItem is BaseFairyBottle bottle)
             {
-                FightFairyPanel?.SetCenter(new Vector2(bottleHang.Left.Pixels + bottleHang.Width.Pixels + 10, 30));
-
-                int count = bottle.FightCapacity;
-                int maxwidth = count > 10 ? 10 : 10;
-                Append(FightFairyPanel);
+                AddFightPanel(bottle);
+                AddContainPanel(bottle);
             }
+        }
+
+        /// <summary>
+        /// 在此加入战斗仙灵的面板
+        /// </summary>
+        /// <param name="bottle"></param>
+        private void AddFightPanel(BaseFairyBottle bottle)
+        {
+            FightFairyPanel?.SetTopLeft(30, bottleHang.Left.Pixels + bottleHang.Width.Pixels + 10);
+            FightFairyPanel?.RemoveAllChildren();
+
+            int count = bottle.FightCapacity;
+            //面板宽度，固定
+            int width = 10 * 46;
+            //面板高度，动态变化
+            int height = (count / 10 + (count % 10 > 0 ? 1 : 0)) * 50 + 18;
+            FightFairyPanel?.SetSize(width, height);
+            var grid = new FixedUIGrid();
+            for (int i = 0; i < count; i++)
+                grid.Add(new FairyBottleSlot(true, i));
+
+            grid.SetSize(0, 0, 1, 1);
+            FightFairyPanel?.Append(grid);
+
+            Append(FightFairyPanel);
+        }
+
+        private void AddContainPanel(BaseFairyBottle bottle)
+        {
+            ContainFairyPanel?.SetTopLeft(10 + FightFairyPanel.Top.Pixels + FightFairyPanel.Height.Pixels, bottleHang.Left.Pixels + bottleHang.Width.Pixels + 10);
+            ContainFairyPanel?.RemoveAllChildren();
+
+            int count = bottle.ContainCapacity;
+            //面板宽度，固定
+            int width = 10 * 46;
+            //面板高度，动态变化
+            int height = (count / 10 + (count % 10 > 0 ? 1 : 0)) * 50 + 18;
+            ContainFairyPanel?.SetSize(width, height);
+            var grid = new FixedUIGrid();
+            for (int i = 0; i < count; i++)
+                grid.Add(new FairyBottleSlot(false, i));
+
+            grid.SetSize(0, 0, 1, 1);
+            ContainFairyPanel?.Append(grid);
+
+            Append(ContainFairyPanel);
         }
 
         public void ShowUI()
@@ -168,7 +221,7 @@ namespace Coralite.Content.UI
                 Main.mouseItem.TurnToAir();
 
                 Helper.PlayPitched("Fairy/FairyBottleClick2", 0.4f, 0);
-                return;
+                goto over;
             }
 
             //取出
@@ -180,7 +233,7 @@ namespace Coralite.Content.UI
                 fcp.BottleItem.TurnToAir();
                 Helper.PlayPitched("Fairy/FairyBottleClick2", 0.4f, 0);
 
-                return;
+                goto over;
             }
 
             //交换
@@ -192,7 +245,21 @@ namespace Coralite.Content.UI
                 Main.mouseItem = i.Clone();
                 Helper.PlayPitched("Fairy/FairyBottleClick2", 0.4f, 0);
 
-                return;
+                goto over;
+            }
+
+        over:
+            if (fcp.BottleItem.IsAir)
+            {
+                FairyBottleUI fairyBottleUI = UILoader.GetUIState<FairyBottleUI>();
+                fairyBottleUI.ShowContains = false;
+                fairyBottleUI.Recalculate();
+            }
+        else
+            {
+                FairyBottleUI fairyBottleUI = UILoader.GetUIState<FairyBottleUI>();
+                fairyBottleUI.ShowContains = true;
+                fairyBottleUI.Recalculate();
             }
         }
 
@@ -208,8 +275,10 @@ namespace Coralite.Content.UI
             if (fcp.BottleItem.IsAir)
                 return;
 
-            UILoader.GetUIState<FairyBottleUI>().ShowContains = true;
-            UILoader.GetUIState<FairyBottleUI>().Recalculate();
+            FairyBottleUI fairyBottleUI = UILoader.GetUIState<FairyBottleUI>();
+            fairyBottleUI.ShowContains = !fairyBottleUI.ShowContains;
+            fairyBottleUI.Recalculate();
+            Helper.PlayPitched("Fairy/FairyBottleClick2", 0.4f, 0);
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
@@ -265,7 +334,7 @@ namespace Coralite.Content.UI
         {
             this.fight = fight;
             _index = index;
-            this.SetSize(54, 54);
+            this.SetSize(44, 44);
         }
 
         public bool TryGetItem(out Item item)
@@ -315,40 +384,52 @@ namespace Coralite.Content.UI
         {
             if (IsMouseHovering)
             {
+                Main.LocalPlayer.mouseInterface = true;
                 Player p = Main.LocalPlayer;
 
                 if (p.TryGetModPlayer(out FairyCatcherPlayer fcp) && !fcp.BottleItem.IsAir
                     && fcp.BottleItem.ModItem is BaseFairyBottle bottle)
                 {
+                    Main.LocalPlayer.mouseInterface = true;
+
                     if (fight)
                     {
+                        Item inv = bottle.FightFairies[_index];
+
                         if (bottle.FightFairies.IndexInRange(_index))
                         {
-                            Item inv = bottle.FightFairies[_index];
-                            Main.LocalPlayer.mouseInterface = true;
                             ItemSlot.OverrideHover(ref inv, ItemSlot.Context.VoidItem);
-                            ItemSlot.LeftClick(ref inv, ItemSlot.Context.VoidItem);
-                            ItemSlot.RightClick(ref inv, ItemSlot.Context.VoidItem);
                             ItemSlot.MouseHover(ref inv, ItemSlot.Context.VoidItem);
+
+                            if (Main.mouseItem.IsAir || Main.mouseItem.ModItem is BaseFairyItem)
+                            {
+                                ItemSlot.LeftClick(ref inv, ItemSlot.Context.VoidItem);
+                                ItemSlot.RightClick(ref inv, ItemSlot.Context.VoidItem);
+                            }
                             bottle.FightFairies[_index] = inv;
                         }
                     }
                     else
                     {
+                        Item inv = bottle.ContainFairies[_index];
+
                         if (bottle.ContainFairies.IndexInRange(_index))
                         {
-                            Item inv = bottle.ContainFairies[_index];
-                            Main.LocalPlayer.mouseInterface = true;
                             ItemSlot.OverrideHover(ref inv, ItemSlot.Context.VoidItem);
-                            ItemSlot.LeftClick(ref inv, ItemSlot.Context.VoidItem);
-                            ItemSlot.RightClick(ref inv, ItemSlot.Context.VoidItem);
                             ItemSlot.MouseHover(ref inv, ItemSlot.Context.VoidItem);
+
+                            if (Main.mouseItem.IsAir || Main.mouseItem.ModItem is BaseFairyItem)
+                            {
+                                ItemSlot.LeftClick(ref inv, ItemSlot.Context.VoidItem);
+                                ItemSlot.RightClick(ref inv, ItemSlot.Context.VoidItem);
+                            }
+
                             bottle.ContainFairies[_index] = inv;
                         }
                     }
                 }
 
-                _scale = Helper.Lerp(_scale, 1.05f, 0.2f);
+                _scale = Helper.Lerp(_scale, 0.8f, 0.2f);
 
                 //if ((Main.mouseRightRelease && Main.mouseRight) || (Main.mouseLeftRelease && Main.mouseLeft))
                 //{
@@ -356,7 +437,7 @@ namespace Coralite.Content.UI
                 //}
             }
             else
-                _scale = Helper.Lerp(_scale, 1f, 0.2f);
+                _scale = Helper.Lerp(_scale, 0.75f, 0.2f);
         }
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
@@ -370,10 +451,10 @@ namespace Coralite.Content.UI
             Main.inventoryScale = _scale;
 
             Vector2 position = GetDimensions().Center() + (new Vector2(52f, 52f) * -0.5f * Main.inventoryScale);
-            ItemSlot.Draw(spriteBatch, ref inv, ItemSlot.Context.VoidItem, position, Color.White);
+            if (inv != null)
+                ItemSlot.Draw(spriteBatch, ref inv, fight ? ItemSlot.Context.VoidItem : ItemSlot.Context.InventoryCoin, position, Color.White);
 
             Main.inventoryScale = scale;
         }
     }
-
 }
