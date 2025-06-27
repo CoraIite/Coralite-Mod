@@ -67,6 +67,9 @@ FairySystem: {
 	FairySpeed: Mods.Coralite.Systems.FairySystem.FairySpeed
 	FairySkillLevel: Mods.Coralite.Systems.FairySystem.FairySkillLevel
 	FairyStamina: Mods.Coralite.Systems.FairySystem.FairyStamina
+	FightFairy: Mods.Coralite.Systems.FairySystem.FightFairy
+	ContainsFairy: Mods.Coralite.Systems.FairySystem.ContainsFairy
+	PutFairyBottleIn: Mods.Coralite.Systems.FairySystem.PutFairyBottleIn
 }
 
 BossBarSystem.DontTakeDamage: Cant attack!！

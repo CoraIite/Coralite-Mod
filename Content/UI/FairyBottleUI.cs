@@ -22,6 +22,9 @@ namespace Coralite.Content.UI
 
         public UIPanel FightFairyPanel;
         public UIPanel ContainFairyPanel;
+        public UIInformationIcon FightIcon;
+        public UIInformationIcon ContainIcon;
+
         public FairyBottleHang bottleHang;
 
         /// <summary>
@@ -36,13 +39,16 @@ namespace Coralite.Content.UI
         {
             FightFairyPanel = new UIPanel(ModContent.Request<Texture2D>(AssetDirectory.UI + "MagikePanelBackground"),
                 ModContent.Request<Texture2D>(AssetDirectory.UI + "MagikePanelBorder"));
-            FightFairyPanel.BackgroundColor = (Color.Coral * 0.3f) with { A = 75 };
+            FightFairyPanel.BackgroundColor = (Color.Coral * 0.25f) with { A = 75 };
             FightFairyPanel.BorderColor = new Color(255, 200, 200) * 0.75f;
 
             ContainFairyPanel = new UIPanel(ModContent.Request<Texture2D>(AssetDirectory.UI + "MagikePanelBackground"),
                 ModContent.Request<Texture2D>(AssetDirectory.UI + "MagikePanelBorder"));
-            ContainFairyPanel.BackgroundColor = (Color.DarkBlue * 0.3f) with { A = 75 };
+            ContainFairyPanel.BackgroundColor = (Color.DarkBlue * 0.25f) with { A = 75 };
             ContainFairyPanel.BorderColor = Color.SkyBlue * 0.75f;
+
+            FightIcon = new UIInformationIcon(ModContent.Request<Texture2D>(AssetDirectory.UI + "FightFairyIcon"));
+            ContainIcon = new UIInformationIcon(ModContent.Request<Texture2D>(AssetDirectory.UI + "ContainFairyIcon"));
         }
 
         public override void Update(GameTime gameTime)
@@ -106,7 +112,7 @@ namespace Coralite.Content.UI
         /// <param name="bottle"></param>
         private void AddFightPanel(BaseFairyBottle bottle)
         {
-            FightFairyPanel?.SetTopLeft(30, bottleHang.Left.Pixels + bottleHang.Width.Pixels + 10);
+            FightFairyPanel?.SetTopLeft(30, bottleHang.Left.Pixels + bottleHang.Width.Pixels + 15);
             FightFairyPanel?.RemoveAllChildren();
 
             int count = bottle.FightCapacity;
@@ -123,11 +129,16 @@ namespace Coralite.Content.UI
             FightFairyPanel?.Append(grid);
 
             Append(FightFairyPanel);
+
+            FightIcon.SetSize();
+            FightIcon.SetCenter(new Vector2(FightFairyPanel.Left.Pixels, FightFairyPanel.Top.Pixels));
+            FightIcon.SetText(FairySystem.FightFairy);
+            Append(FightIcon);
         }
 
         private void AddContainPanel(BaseFairyBottle bottle)
         {
-            ContainFairyPanel?.SetTopLeft(10 + FightFairyPanel.Top.Pixels + FightFairyPanel.Height.Pixels, bottleHang.Left.Pixels + bottleHang.Width.Pixels + 10);
+            ContainFairyPanel?.SetTopLeft(10 + FightFairyPanel.Top.Pixels + FightFairyPanel.Height.Pixels, bottleHang.Left.Pixels + bottleHang.Width.Pixels + 15);
             ContainFairyPanel?.RemoveAllChildren();
 
             int count = bottle.ContainCapacity;
@@ -144,6 +155,11 @@ namespace Coralite.Content.UI
             ContainFairyPanel?.Append(grid);
 
             Append(ContainFairyPanel);
+
+            ContainIcon.SetSize();
+            ContainIcon.SetCenter(new Vector2(ContainFairyPanel.Left.Pixels, ContainFairyPanel.Top.Pixels));
+            ContainIcon.SetText(FairySystem.ContainsFairy);
+            Append(ContainIcon);
         }
 
         public void ShowUI()
@@ -456,5 +472,10 @@ namespace Coralite.Content.UI
 
             Main.inventoryScale = scale;
         }
+    }
+
+    public class SortButton:UIElement
+    {
+
     }
 }

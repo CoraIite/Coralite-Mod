@@ -274,7 +274,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         public override void SaveData(TagCompound tag)
         {
-            if (BottleItem.IsAir)
+            if (!BottleItem.IsAir)
                 tag.Add(nameof(BottleItem), BottleItem);
         }
 

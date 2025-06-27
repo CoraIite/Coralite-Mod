@@ -67,6 +67,17 @@ FairySystem: {
 	FairySpeed: "    速度 ▶ "
 	FairySkillLevel: "    等级 ▶ "
 	FairyStamina: "    耐力 ▶ "
+	FightFairy:
+		'''
+		出战仙灵
+		将仙灵放入其中后才能被发射出去
+		'''
+	ContainsFairy: 
+	'''
+	容纳仙灵
+	捕捉到的仙灵将会自动存入仙灵瓶
+	'''
+	PutFairyBottleIn: 护灵员职业专用，需要放入仙灵瓶
 }
 
 BossBarSystem.DontTakeDamage: 不可攻击！

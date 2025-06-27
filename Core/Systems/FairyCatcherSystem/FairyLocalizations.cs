@@ -69,6 +69,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public static LocalizedText FairyTradeCondition;
 
         public static LocalizedText CircleRadiusBonus;
+        public static LocalizedText FightFairy;
+        public static LocalizedText ContainsFairy;
+        public static LocalizedText PutFairyBottleIn;
 
         public void LoadLocalization()
         {
@@ -131,6 +134,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             SortByCaughtText = this.GetLocalization("SortByCaughtText", () => "按是否捕获排序");
             FairyTradeCondition = this.GetLocalization("FairyTradeCondition", () => "使用妖精传送门进行交易");
             CircleRadiusBonus = this.GetLocalization("CircleRadiusBonus");
+
+            FightFairy = this.GetLocalization("FightFairy");
+            ContainsFairy = this.GetLocalization("ContainsFairy");
+            PutFairyBottleIn = this.GetLocalization("PutFairyBottleIn");
         }
 
         public static void UnloadLocalization()

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.ModLoader.IO;
@@ -122,5 +123,136 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         //{
         //    return (fairies[index].ModItem as IFairyItem).ShootFairy(player, source, position, velocity, damage, knockback);
         //}
+
+        #region 整理部分
+
+        public enum SortStyle
+        {
+            /// <summary> 根据稀有度排序 </summary>
+            ByRarity,
+            /// <summary> 根据最大生命值等级排序 </summary>
+            ByLifeMaxLevel,
+            /// <summary> 根据伤害等级排序 </summary>
+            ByDamageLevel,
+            /// <summary> 根据防御力等级排序 </summary>
+            ByDefenceLevel,
+            /// <summary> 根据速度等级排序 </summary>
+            BySpeedLevel,
+            /// <summary> 根据技能等级排序 </summary>
+            BySkillLevelLevel,
+            /// <summary> 根据耐力等级排序 </summary>
+            ByStaminaLevel,
+        }
+
+        public void Sort(SortStyle style)
+        {
+            //拿出来
+            List<Item> temp = new List<Item>();
+            for (int i = 0; i < ContainCapacity; i++)
+            {
+                Item item = containFairies[i];
+                if (!item.IsAir)
+                    temp.Add(item);
+            }
+
+            //整理
+            Comparison<Item> compare = style switch
+            {
+                SortStyle.ByLifeMaxLevel => LifeMaxSort,
+                SortStyle.ByDamageLevel => DamageSort,
+                SortStyle.ByDefenceLevel => DefenceSort,
+                SortStyle.BySpeedLevel => SpeedSort,
+                SortStyle.BySkillLevelLevel => SkillLevelSort,
+                SortStyle.ByStaminaLevel => StaminaSort,
+                _ => RaritySort,
+            };
+
+            temp.Sort(compare);
+            
+            //重新存回去
+            int count = 0;
+            for (int i = temp.Count - 1; i > -1; i++)
+            {
+                containFairies[count]=temp[i];
+                count++;
+            }
+
+            for (int i = 0; i < ContainCapacity; i++)
+            {
+                containFairies[count] = new Item();
+            }
+        }
+
+        private int RaritySort(Item i1, Item i2)
+        {
+            if (i1.ModItem is BaseFairyItem f1 && i2.ModItem is BaseFairyItem f2)
+            {
+                return f1.Rarity.CompareTo(f2.Rarity);
+            }
+
+            return 0;
+        }
+
+        private int LifeMaxSort(Item i1, Item i2)
+        {
+            if (i1.ModItem is BaseFairyItem f1 && i2.ModItem is BaseFairyItem f2)
+            {
+                return f1.FairyIV.LifeMaxLevel.CompareTo(f2.FairyIV.LifeMaxLevel);
+            }
+
+            return 0;
+        }
+
+        private int DamageSort(Item i1, Item i2)
+        {
+            if (i1.ModItem is BaseFairyItem f1 && i2.ModItem is BaseFairyItem f2)
+            {
+                return f1.FairyIV.DamageLevel.CompareTo(f2.FairyIV.DamageLevel);
+            }
+
+            return 0;
+        }
+
+        private int DefenceSort(Item i1, Item i2)
+        {
+            if (i1.ModItem is BaseFairyItem f1 && i2.ModItem is BaseFairyItem f2)
+            {
+                return f1.FairyIV.DefenceLevel.CompareTo(f2.FairyIV.DefenceLevel);
+            }
+
+            return 0;
+        }
+
+        private int SpeedSort(Item i1, Item i2)
+        {
+            if (i1.ModItem is BaseFairyItem f1 && i2.ModItem is BaseFairyItem f2)
+            {
+                return f1.FairyIV.SpeedLevel.CompareTo(f2.FairyIV.SpeedLevel);
+            }
+
+            return 0;
+        }
+
+        private int SkillLevelSort(Item i1, Item i2)
+        {
+            if (i1.ModItem is BaseFairyItem f1 && i2.ModItem is BaseFairyItem f2)
+            {
+                return f1.FairyIV.SkillLevelLevel.CompareTo(f2.FairyIV.SkillLevelLevel);
+            }
+
+            return 0;
+        }
+
+        private int StaminaSort(Item i1, Item i2)
+        {
+            if (i1.ModItem is BaseFairyItem f1 && i2.ModItem is BaseFairyItem f2)
+            {
+                return f1.FairyIV.StaminaLevel.CompareTo(f2.FairyIV.StaminaLevel);
+            }
+
+            return 0;
+        }
+
+        #endregion
     }
 }
