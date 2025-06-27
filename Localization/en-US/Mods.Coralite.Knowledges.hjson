@@ -151,15 +151,6 @@ CraftAltar: {
 	AltarUI: "    Craft altar's UI, which seems to be a bit complicated. Next, we will use wood to craft coal as an example to explain how it work."
 }
 
-CraftAltar2: {
-	ActiveAltar:
-		'''
-		    Step: Activate it. I know you might be confused, like, “Doesn't it need the magike in the apparatus enough for the recipe to activate?”
-		    Well... It used to be true, but now it doesn't need to.
-		'''
-	GetResult: "  Finally, wait for consuming magike, and then harvest in slot below."
-}
-
 PolymerizeCraft: {
 	ALotOfOtherItems: "    Many magike recipe require secondary items in addition to the primary item, so let's take a look at how these recipe work."
 	WhatIsPedestal:
@@ -432,5 +423,14 @@ SwordPage: {
 
 RemodelP1.PutMainItemIntoAltar: "    First, put main item, wood, in top left slot. The primary item is the first item in the recipe, other than the “Magike”."
 RemodelP2.SelectCraftRecipe: "    Step 2: Click the button on right to select the recipe. The craft altar has rudimentary auto-selection function, which can be dispensed with for items that only have one recipe."
-RemodelP3.ActiveAltar: Mods.Coralite.Knowledges.RemodelP3.ActiveAltar
-RemodelP4.HavestCoal: Mods.Coralite.Knowledges.RemodelP4.HavestCoal
+RemodelP3.ActiveAltar:
+	'''
+	    Step 3: Active the altar 
+	    You can use the activator staff or circuit mentioned on the previous pages.
+	'''
+RemodelP4.HavestCoal:
+	'''
+	    Finally, provide magike to the Altar.
+	       The Altar will gradually consume the magike inside to increase the crafting progress, and the right click progress bar will cancel the crafting and return the item.
+	       After completion, collect the product in the item slot below.
+	'''
