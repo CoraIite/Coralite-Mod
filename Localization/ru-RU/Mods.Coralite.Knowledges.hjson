@@ -422,3 +422,5 @@ SwordPage: {
 
 // RemodelP1.PutMainItemIntoAltar: Mods.Coralite.Knowledges.RemodelP1.PutMainItemIntoAltar
 // RemodelP2.SelectCraftRecipe: Mods.Coralite.Knowledges.RemodelP2.SelectCraftRecipe
+// RemodelP3.ActiveAltar: Mods.Coralite.Knowledges.RemodelP3.ActiveAltar
+// RemodelP4.HavestCoal: Mods.Coralite.Knowledges.RemodelP4.HavestCoal

@@ -34,7 +34,8 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
                     new CraftAltar(),
                     new RemodelP1(),
                     new RemodelP2(),
-                    new CraftAltar2(),
+                    new RemodelP3(),
+                    new RemodelP4(),
                     new PolymerizeCraft(),
                     new PolymerizeCraft2(),
 

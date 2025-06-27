@@ -151,11 +151,6 @@ CraftAltar: {
 	AltarUI: "    Craft altar's UI, which seems to be a bit complicated. Next, we will use wood to craft coal as an example to explain how it work."
 }
 
-PutMainItemAndSelectRecipe: {
-	PutMainItemIntoAltar: "    First, put main item, wood, in top left slot. The primary item is the first item in the recipe, other than the “Magike Emblem”."
-	SelectRecipe: "    Step 2: Click the button on right to select the recipe. The craft altar has rudimentary auto-selection function, which can be dispensed with for items that only have one recipe."
-}
-
 CraftAltar2: {
 	ActiveAltar:
 		'''
@@ -435,5 +430,7 @@ SwordPage: {
 	Description: "    Do you enjoy swordplay?"
 }
 
-RemodelP1.PutMainItemIntoAltar: Mods.Coralite.Knowledges.RemodelP1.PutMainItemIntoAltar
-RemodelP2.SelectCraftRecipe: Mods.Coralite.Knowledges.RemodelP2.SelectCraftRecipe
+RemodelP1.PutMainItemIntoAltar: "    First, put main item, wood, in top left slot. The primary item is the first item in the recipe, other than the “Magike”."
+RemodelP2.SelectCraftRecipe: "    Step 2: Click the button on right to select the recipe. The craft altar has rudimentary auto-selection function, which can be dispensed with for items that only have one recipe."
+RemodelP3.ActiveAltar: Mods.Coralite.Knowledges.RemodelP3.ActiveAltar
+RemodelP4.HavestCoal: Mods.Coralite.Knowledges.RemodelP4.HavestCoal

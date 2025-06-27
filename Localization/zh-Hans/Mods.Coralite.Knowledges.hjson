@@ -165,11 +165,6 @@ CraftAltar: {
 		'''
 }
 
-PutMainItemAndSelectRecipe: {
-	PutMainItemIntoAltar: "    第一步，将主要物品：木头放入左上的物品格中。 主要物品是指合成表中除“魔能徽记”以外的第一个物品。"
-	SelectRecipe: "    第二步，点击右侧按钮选择合成表。 魔能合成坛具有比较初级的自动选择功能，对于只有一种合成表的物品可以不需要这一步。"
-}
-
 CraftAltar2: {
 	ActiveAltar:
 		'''
@@ -470,3 +465,14 @@ RemodelP1.PutMainItemIntoAltar:
 	    主要物品是指合成表中除 “魔能” 以外的第一个物品。
 	'''
 RemodelP2.SelectCraftRecipe: "    第二步，点击右侧按钮选择合成表。"
+RemodelP3.ActiveAltar: 
+'''
+    第三步，激活合成坛。 
+    可以使用前几页提到的激活杖或是电路。
+'''
+RemodelP4.HavestCoal: 
+'''
+    最后，向合成坛提供魔能。
+    合成坛会逐渐消耗内部的魔能来增加制作进度，右键进度条会取消合成并返还物品。
+    完成后在下方物品格内收取产物。
+'''
