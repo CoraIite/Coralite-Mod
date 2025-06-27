@@ -148,20 +148,6 @@ CraftAltar: {
 	AltarUI: "    Вот интерфейс алтаря магической синтезии, он может показаться сложным. Давайте разберём его, используя пример с синтезом угля из дерева."
 }
 
-PutMainItemAndSelectRecipe: {
-	PutMainItemIntoAltar: "    Шаг 1: Поместите основной предмет: дерево, в левый верхний слот. Основной предмет — это первый предмет в рецепте синтеза, за исключением ‘Магического знака’."
-	SelectRecipe: "    Шаг 2: Нажмите правую кнопку, чтобы выбрать рецепт. Алтарь магической синтезии имеет базовую функцию автоматического выбора, если существует только один рецепт."
-}
-
-CraftAltar2: {
-	ActiveAltar:
-		'''
-		    Шаг 3: Используйте активационную палочку, чтобы активировать блок. Может быть, вы удивитесь: “Разве для активации не требуется, чтобы магической энергии было достаточно в соответствии с рецептом?”
-		    Да, так было раньше, но сейчас этого не нужно.
-		'''
-	GetResult: "    Наконец, подождите, пока алтарь использует магическую энергию, и заберите результат из нижнего слота."
-}
-
 PolymerizeCraft: {
 	ALotOfOtherItems: "    Многие рецепты синтеза требуют дополнительных предметов, помимо основного. Давайте рассмотрим эти рецепты."
 	WhatIsPedestal:
@@ -420,5 +406,16 @@ SwordPage: {
 	// Description: "    Do you enjoy swordplay?"
 }
 
-// RemodelP1.PutMainItemIntoAltar: Mods.Coralite.Knowledges.RemodelP1.PutMainItemIntoAltar
-// RemodelP2.SelectCraftRecipe: Mods.Coralite.Knowledges.RemodelP2.SelectCraftRecipe
+// RemodelP1.PutMainItemIntoAltar: "    First, put main item, wood, in top left slot. The primary item is the first item in the recipe, other than the “Magike”."
+// RemodelP2.SelectCraftRecipe: "    Step 2: Click the button on right to select the recipe. The craft altar has rudimentary auto-selection function, which can be dispensed with for items that only have one recipe."
+/* RemodelP3.ActiveAltar:
+	'''
+	    Step 3: Active the altar 
+	    You can use the activator staff or circuit mentioned on the previous pages.
+	''' */
+/* RemodelP4.HavestCoal:
+	'''
+	    Finally, provide magike to the Altar.
+	       The Altar will gradually consume the magike inside to increase the crafting progress, and the right click progress bar will cancel the crafting and return the item.
+	       After completion, collect the product in the item slot below.
+	''' */

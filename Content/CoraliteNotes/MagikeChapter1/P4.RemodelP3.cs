@@ -7,16 +7,16 @@ using Terraria.Localization;
 namespace Coralite.Content.CoraliteNotes.MagikeChapter1
 {
     [AutoLoadTexture(Path = AssetDirectory.NoteMagikeS1)]
-    public class RemodelP2 : KnowledgePage
+    public class RemodelP3 : KnowledgePage
     {
-        public static LocalizedText SelectCraftRecipe { get; private set; }
+        public static LocalizedText ActiveAltar { get; private set; }
         private ScaleController _scale1 = new ScaleController(0.9f, 0.05f);
 
-        public static ATex SelectCraftRecipeTex { get; private set; }
+        public static ATex ActiveAltarTex { get; private set; }
 
         public override void OnInitialize()
         {
-            SelectCraftRecipe = this.GetLocalization(nameof(SelectCraftRecipe));
+            ActiveAltar = this.GetLocalization(nameof(ActiveAltar));
         }
 
         public override void Recalculate()
@@ -33,8 +33,8 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
             float scale1 = 0.9f;
 
             //描述段1
-            Helper.DrawTextParagraph(spriteBatch, SelectCraftRecipe.Value, PageWidth, new Vector2(Position.X, pos.Y), out Vector2 textSize);
-            Texture2D tex = SelectCraftRecipeTex.Value;
+            Helper.DrawTextParagraph(spriteBatch, ActiveAltar.Value, PageWidth, new Vector2(Position.X, pos.Y), out Vector2 textSize);
+            Texture2D tex = ActiveAltarTex.Value;
             pos.Y += textSize.Y + 40 + tex.Height * scale1 / 2;
 
             //绘制图1
