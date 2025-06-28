@@ -148,16 +148,6 @@ CraftAltar: {
 	AltarUI: "    Вот интерфейс алтаря магической синтезии, он может показаться сложным. Давайте разберём его, используя пример с синтезом угля из дерева."
 }
 
-PolymerizeCraft: {
-	ALotOfOtherItems: "    Многие рецепты синтеза требуют дополнительных предметов, помимо основного. Давайте рассмотрим эти рецепты."
-	WhatIsPedestal:
-		'''
-		    Базовая подставка для предметов — это хороший контейнер для хранения предметов. Сделайте несколько таких подставок рядом с алтарём синтеза.
-		    Она не требует поляризационного фильтра, но может изменить свой внешний вид с его использованием.
-		'''
-	PlacePedestal: "    Вот как это будет выглядеть при размещении предметов на подставке."
-}
-
 PolymerizeCraft2: {
 	ConnectToPedestal: "    Теперь используйте соединитель, чтобы соединить алтарь синтеза с подставкой, будьте внимательны, не перепутайте."
 	CheckAltar: "    Проверьте алтарь синтеза, если он стал синим, значит, предметы были собраны. Далее следуйте ранее описанному процессу."
@@ -419,3 +409,5 @@ SwordPage: {
 	       The Altar will gradually consume the magike inside to increase the crafting progress, and the right click progress bar will cancel the crafting and return the item.
 	       After completion, collect the product in the item slot below.
 	''' */
+// PolymerizeRecipe.PolymerizeRecipeLike: Mods.Coralite.Knowledges.PolymerizeRecipe.PolymerizeRecipeLike
+// Pedestal.PlacePedestal: Mods.Coralite.Knowledges.Pedestal.PlacePedestal
