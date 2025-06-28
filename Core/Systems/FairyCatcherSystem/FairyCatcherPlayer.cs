@@ -35,8 +35,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// </summary>
         public StatModifier fairyResurrectionTimeBous;
 
-
-        public int currentFairyIndex;
+        /// <summary>
+        /// 当前的仙灵索引，仅用于部分武器的绘制仙灵
+        /// </summary>
+        public int CurrentFairyIndex { get; set; } = -1;
 
         #region 捕捉环相关数值
 
@@ -53,7 +55,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public int FairyCircleCoreType { get; set; }
 
         /// <summary> 玩家当前持有的仙灵捕捉环的弹幕索引 </summary>
-        public int FairyCircleProj {  get; set; }
+        public int FairyCircleProj { get; set; }
 
         #endregion
 
@@ -126,6 +128,12 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             FairyCatcherRadiusBonus = 0;
         }
 
+        public override void PostUpdateEquips()
+        {
+            if (!BottleItem.IsAir&&BottleItem.ModItem is BaseFairyBottle bottle)
+                bottle.UpdateBottle(Player);
+        }
+
         /// <summary>
         /// 遍历玩家背包获取仙灵饵料
         /// </summary>
@@ -164,22 +172,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         {
             if (FairyCatcherRadiusBonus < howMany)
                 FairyCatcherRadiusBonus = howMany;
-        }
-
-        public bool FairyShoot_GetFairyBottle(out BaseFairyBottle bottle)
-        {
-            bottle = null;
-
-            for (int j = 0; j < 50; j++)
-            {
-                if (Player.inventory[j].stack > 0 && Player.inventory[j].ModItem is BaseFairyBottle fairyBottle)
-                {
-                    bottle = fairyBottle;
-                    return true;
-                }
-            }
-
-            return false;
         }
 
         /// <summary>
@@ -224,42 +216,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             modifyer += exBonus;
 
             @base = modifyer.ApplyTo(@base);
-        }
-
-        public bool FairyCatch_GetEmptyFairyBottle(out BaseFairyBottle fairyBottle, out int emptySlot)
-        {
-            fairyBottle = null;
-            emptySlot = -1;
-
-            for (int j = 0; j < 50; j++)
-            {
-                if (Player.inventory[j].stack > 0 && Player.inventory[j].ModItem is BaseFairyBottle)
-                {
-                    fairyBottle = Player.inventory[j].ModItem as BaseFairyBottle;
-
-                    for (int i = 0; i < fairyBottle.FightFairies.Length; i++)
-                    {
-                        Item item = fairyBottle.FightFairies[i];
-                        if (item.IsAir)
-                        {
-                            emptySlot = i;
-                            return true;
-                        }
-                    }
-
-                    for (int i = 0; i < fairyBottle.ContainFairies.Length; i++)
-                    {
-                        Item item = fairyBottle.ContainFairies[i];
-                        if (item.IsAir)
-                        {
-                            emptySlot = i;
-                            return true;
-                        }
-                    }
-                }
-            }
-
-            return false;
         }
 
         /// <summary>

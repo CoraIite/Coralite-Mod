@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent.UI.Elements;
+using Terraria.ModLoader.UI;
 using Terraria.UI;
 
 namespace Coralite.Content.UI
@@ -24,6 +25,8 @@ namespace Coralite.Content.UI
         public UIPanel ContainFairyPanel;
         public UIInformationIcon FightIcon;
         public UIInformationIcon ContainIcon;
+
+        public SortButton sortButton;
 
         public FairyBottleHang bottleHang;
 
@@ -49,6 +52,7 @@ namespace Coralite.Content.UI
 
             FightIcon = new UIInformationIcon(ModContent.Request<Texture2D>(AssetDirectory.UI + "FightFairyIcon"));
             ContainIcon = new UIInformationIcon(ModContent.Request<Texture2D>(AssetDirectory.UI + "ContainFairyIcon"));
+            sortButton = new SortButton(); 
         }
 
         public override void Update(GameTime gameTime)
@@ -92,7 +96,7 @@ namespace Coralite.Content.UI
                 bottleHang.SetCenter(new Vector2(610 + OffsetX, -80));
             }
             else
-                bottleHang.SetCenter(new Vector2(610 + OffsetX, bottleHang.Top.Pixels + bottleHang.Height.Pixels/2-5));
+                bottleHang.SetCenter(new Vector2(610 + OffsetX, bottleHang.Top.Pixels + bottleHang.Height.Pixels / 2 - 5));
 
             Append(bottleHang);
 
@@ -147,6 +151,7 @@ namespace Coralite.Content.UI
             //面板高度，动态变化
             int height = (count / 10 + (count % 10 > 0 ? 1 : 0)) * 50 + 18;
             ContainFairyPanel?.SetSize(width, height);
+
             var grid = new FixedUIGrid();
             for (int i = 0; i < count; i++)
                 grid.Add(new FairyBottleSlot(false, i));
@@ -160,6 +165,11 @@ namespace Coralite.Content.UI
             ContainIcon.SetCenter(new Vector2(ContainFairyPanel.Left.Pixels, ContainFairyPanel.Top.Pixels));
             ContainIcon.SetText(FairySystem.ContainsFairy);
             Append(ContainIcon);
+
+            sortButton.SetSize();
+            sortButton.SetCenter(new Vector2(ContainFairyPanel.Left.Pixels
+                , ContainFairyPanel.Top.Pixels + ContainIcon.Height.Pixels / 2 + 10 + sortButton.Height.Pixels / 2));
+            Append(sortButton);
         }
 
         public void ShowUI()
@@ -187,7 +197,7 @@ namespace Coralite.Content.UI
     [AutoLoadTexture(Path = AssetDirectory.UI)]
     public class FairyBottleHang : UIElement
     {
-        public static int VineType=0;
+        public static int VineType = 0;
 
         public static ATex Vine { get; set; }
         public static ATex Vine2 { get; set; }
@@ -203,7 +213,7 @@ namespace Coralite.Content.UI
 
             if (!Main.playerInventory && GetDimensions().Y > -80)
             {
-                Top.Set(Helper.Lerp(Top.Pixels,-80,0.15f), 0);
+                Top.Set(Helper.Lerp(Top.Pixels, -80, 0.15f), 0);
                 Recalculate();
             }
             else if (Main.playerInventory && GetDimensions().Y < 62)
@@ -271,7 +281,7 @@ namespace Coralite.Content.UI
                 fairyBottleUI.ShowContains = false;
                 fairyBottleUI.Recalculate();
             }
-        else
+            else
             {
                 FairyBottleUI fairyBottleUI = UILoader.GetUIState<FairyBottleUI>();
                 fairyBottleUI.ShowContains = true;
@@ -308,11 +318,11 @@ namespace Coralite.Content.UI
                 0 => Vine.Value,
                 _ => Vine2.Value,
             };
-            
+
             var d = GetDimensions();
             Vector2 pos = d.Center() + new Vector2(0, -d.Height / 2);
 
-            spriteBatch.Draw(vineTex, pos+new Vector2(0,-65),null, Color.White,0,new Vector2(vineTex.Width/2,0),1,0,0);
+            spriteBatch.Draw(vineTex, pos + new Vector2(0, -65), null, Color.White, 0, new Vector2(vineTex.Width / 2, 0), 1, 0, 0);
 
             Player p = Main.LocalPlayer;
 
@@ -342,7 +352,7 @@ namespace Coralite.Content.UI
         /// <summary>
         /// 判断是否是战斗仙灵，是的话就用战斗仙灵的
         /// </summary>
-        private bool fight;
+        private readonly bool fight;
         private readonly int _index;
         private float _scale = 1f;
 
@@ -353,13 +363,21 @@ namespace Coralite.Content.UI
             this.SetSize(44, 44);
         }
 
+        public override int CompareTo(object obj)
+        {
+            if (obj is FairyBottleSlot slot)
+                return _index.CompareTo(slot._index);
+
+            return 0;
+        }
+
         public bool TryGetItem(out Item item)
         {
             Player p = Main.LocalPlayer;
 
             item = null;
-            if (p.TryGetModPlayer(out FairyCatcherPlayer fcp)&&!fcp.BottleItem.IsAir
-                &&fcp.BottleItem.ModItem is BaseFairyBottle bottle)
+            if (p.TryGetModPlayer(out FairyCatcherPlayer fcp) && !fcp.BottleItem.IsAir
+                && fcp.BottleItem.ModItem is BaseFairyBottle bottle)
             {
                 if (fight)
                 {
@@ -474,8 +492,73 @@ namespace Coralite.Content.UI
         }
     }
 
-    public class SortButton:UIElement
+    public class SortButton : UIElement
     {
+        private readonly ATex _tex;
+        private static BaseFairyBottle.SortStyle _sortStyle;
 
+        public SortButton()
+        {
+            _tex = ModContent.Request<Texture2D>(AssetDirectory.UI + "FairySortButton");
+        }
+
+        public void SetSize()
+        {
+            this.SetSize(_tex.Width(), _tex.Height() / 7);
+        }
+
+        public override void LeftClick(UIMouseEvent evt)
+        {
+            base.LeftClick(evt);
+            Player p = Main.LocalPlayer;
+
+            if (p.TryGetModPlayer(out FairyCatcherPlayer fcp) && !fcp.BottleItem.IsAir
+                && fcp.BottleItem.ModItem is BaseFairyBottle bottle)
+            {
+                bottle.Sort(_sortStyle);
+                Helper.PlayPitched("Fairy/FairyBottleClick2", 0.4f, 0);
+            }
+        }
+
+        public override void RightClick(UIMouseEvent evt)
+        {
+            base.RightClick(evt);
+
+            _sortStyle++;
+            if (_sortStyle>BaseFairyBottle.SortStyle.ByStaminaLevel)
+                _sortStyle = BaseFairyBottle.SortStyle.ByRarity;
+
+            Player p = Main.LocalPlayer;
+
+            if (p.TryGetModPlayer(out FairyCatcherPlayer fcp) && !fcp.BottleItem.IsAir
+                && fcp.BottleItem.ModItem is BaseFairyBottle bottle)
+            {
+                bottle.Sort(_sortStyle);
+                Helper.PlayPitched("Fairy/FairyBottleClick2", 0.4f, 0);
+            }
+        }
+
+        protected override void DrawSelf(SpriteBatch spriteBatch)
+        {
+            _tex.Value.QuickCenteredDraw(spriteBatch, new Rectangle(0,(int)_sortStyle,1,7),GetDimensions().Center(), Color.White, scale: IsMouseHovering ? 0.85f : 0.8f);
+            
+            if (IsMouseHovering)
+            {
+                Main.LocalPlayer.mouseInterface = true;
+                string text = _sortStyle switch
+                {
+                    BaseFairyBottle.SortStyle.ByLifeMaxLevel => FairySystem.SortByLifeMax.Value,
+                    BaseFairyBottle.SortStyle.ByDamageLevel => FairySystem.SortByDamage.Value,
+                    BaseFairyBottle.SortStyle.ByDefenceLevel => FairySystem.SortByDefence.Value,
+                    BaseFairyBottle.SortStyle.BySpeedLevel => FairySystem.SortBySpeed.Value,
+                    BaseFairyBottle.SortStyle.BySkillLevelLevel => FairySystem.SortBySkillLevel.Value,
+                    BaseFairyBottle.SortStyle.ByStaminaLevel => FairySystem.SortByStamina.Value,
+                    _ => FairySystem.SortByRarity.Value
+                };
+
+                text += "\n" + FairySystem.HowToSort.Value;
+                UICommon.TooltipMouseText(text);
+            }
+        }
     }
 }

@@ -35,11 +35,19 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// </summary>
         public virtual int MaxResurrectionTime => 60 * 60 * 3;
 
-
-        ///用于记录仙灵的弹幕的唯一ID，如果没有就在能够再次射出仙灵
+        /// <summary>
+        /// 用于记录仙灵弹幕的索引，便于查找
+        /// </summary>
+        private int _fairyProjIndex = -1;
+        /// <summary>
+        /// 用于记录仙灵的弹幕的唯一ID，如果没有就在能够再次射出仙灵
+        /// </summary>
         private int _fairyProjUUID = -1;
 
-        public bool IsOut { get; set; }
+        /// <summary>
+        /// 仙林是否外出
+        /// </summary>
+        public bool IsOut {  get; private set; }
 
 
         private static readonly int[] indexes = [0, 1, 2, 0, 2, 3, 0, 3, 4, 0, 4, 5, 0, 5, 6, 0, 6, 7];
@@ -167,6 +175,61 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         }
 
         public override bool CanReforge() => false;
+
+        #region 仙灵出动相关逻辑
+
+        /// <summary>
+        /// 放入仙灵瓶时调用（仅本地端调用）
+        /// </summary>
+        public void OnBottleActive()
+        {
+            _fairyProjIndex = -1;
+            _fairyProjUUID = -1;
+        }
+
+        /// <summary>
+        /// 在仙灵瓶内更新，检测仙灵弹幕是否存在
+        /// </summary>
+        public void UpdateInBottle_Inner(BaseFairyBottle bottle,Player player)
+        {
+            if (Main.projectile.IndexInRange(_fairyProjIndex))
+            {
+                Projectile p = Main.projectile[_fairyProjIndex];
+                if (!p.active || p.owner != player.whoAmI || p.projUUID != _fairyProjUUID)
+                {
+                    IsOut = false;
+                    _fairyProjIndex = -1;
+                    _fairyProjUUID = -1;
+                }
+            }
+
+            UpdateInBottle(bottle ,player);
+        }
+
+        /// <summary>
+        /// 在仙灵瓶内更新，执行各种特殊操作
+        /// </summary>
+        /// <param name="player"></param>
+        public virtual void UpdateInBottle(BaseFairyBottle bottle,Player player) { }
+
+        /// <summary>
+        /// 仙灵瓶被取出时调用
+        /// </summary>
+        public void OnBottleInactive(Player player)
+        {
+            if (Main.projectile.IndexInRange(_fairyProjIndex))
+            {
+                Projectile p = Main.projectile[_fairyProjIndex];
+                if (p.active && p.owner != player.whoAmI && p.projUUID == _fairyProjUUID)
+                {
+                    p.Kill();
+                    _fairyProjIndex = -1;
+                    _fairyProjUUID = -1;
+                }
+            }
+        }
+
+        #endregion
 
         #region 描述相关
 
@@ -373,10 +436,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         private static void DrawIVIcon(int frame, Vector2 center)
         {
             FairySystem.FairyIVIcon.Value.QuickCenteredDraw(Main.spriteBatch, new Rectangle(0, frame, 1, 8),
-                center,scale:0.8f);
+                center, scale: 0.8f);
         }
 
-        public static void DrawRaderBack(Vector2 center, float length,Color c)
+        public static void DrawRaderBack(Vector2 center, float length, Color c)
         {
             Texture2D Texture = CoraliteAssets.Misc.WToT32x.Value;
 
@@ -406,7 +469,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
             Main.spriteBatch.GraphicsDevice.Textures[0] = Texture;
             Main.spriteBatch.GraphicsDevice.DrawUserIndexedPrimitives(PrimitiveType.TriangleList, bars, 0, 8
-                ,indexes,0,6);
+                , indexes, 0, 6);
         }
 
         public void DrawRaderChart(Vector2 center, float baseLength)
@@ -453,13 +516,13 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             if (level < FairyIVLevelID.Eternal)
                 return baseLength * level / FairyIVLevelID.Eternal;
             else
-                return baseLength + baseLength * Math.Clamp( (level - FairyIVLevelID.Eternal) / (FairyIVLevelID.Over - FairyIVLevelID.Eternal),0,1);
+                return baseLength + baseLength * Math.Clamp((level - FairyIVLevelID.Eternal) / (FairyIVLevelID.Over - FairyIVLevelID.Eternal), 0, 1);
         }
 
         private static Color GetLevelColor(float level)
         {
             if (level < FairyIVLevelID.Eternal)
-                return Color.Lerp(Color.DarkCyan * 0.7f, Color.LightCyan*0.7f, level / FairyIVLevelID.Eternal);
+                return Color.Lerp(Color.DarkCyan * 0.7f, Color.LightCyan * 0.7f, level / FairyIVLevelID.Eternal);
             else
                 return Color.LightCyan * 0.7f;
         }
@@ -483,7 +546,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         public static void DrawRaderIcon(Vector2 pos, int frame, float value, float level)
         {
             //绘制图标
-            DrawIVIcon(frame,pos + new Vector2(0, -12));
+            DrawIVIcon(frame, pos + new Vector2(0, -12));
 
             (Color c, _) = FairyIV.GetFairyLocalize(level);
 

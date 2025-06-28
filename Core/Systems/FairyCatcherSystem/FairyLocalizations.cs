@@ -73,6 +73,15 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public static LocalizedText ContainsFairy;
         public static LocalizedText PutFairyBottleIn;
 
+        public static LocalizedText HowToSort;
+        public static LocalizedText SortByRarity;
+        public static LocalizedText SortByLifeMax;
+        public static LocalizedText SortByDamage;
+        public static LocalizedText SortByDefence;
+        public static LocalizedText SortBySpeed;
+        public static LocalizedText SortBySkillLevel;
+        public static LocalizedText SortByStamina;
+
         public void LoadLocalization()
         {
             WeakLevel = this.GetLocalization("WeakLevel");
@@ -138,6 +147,15 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             FightFairy = this.GetLocalization("FightFairy");
             ContainsFairy = this.GetLocalization("ContainsFairy");
             PutFairyBottleIn = this.GetLocalization("PutFairyBottleIn");
+
+            HowToSort = this.GetLocalization("HowToSort");
+            SortByRarity = this.GetLocalization("SortByRarity");
+            SortByLifeMax = this.GetLocalization("SortByLifeMax");
+            SortByDamage = this.GetLocalization("SortByDamage");
+            SortByDefence = this.GetLocalization("SortByDefence");
+            SortBySpeed = this.GetLocalization("SortBySpeed");
+            SortBySkillLevel = this.GetLocalization("SortBySkillLevel");
+            SortByStamina = this.GetLocalization("SortByStamina");
         }
 
         public static void UnloadLocalization()

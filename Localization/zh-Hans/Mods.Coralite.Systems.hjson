@@ -72,12 +72,20 @@ FairySystem: {
 		出战仙灵
 		将仙灵放入其中后才能被发射出去
 		'''
-	ContainsFairy: 
-	'''
-	容纳仙灵
-	捕捉到的仙灵将会自动存入仙灵瓶
-	'''
+	ContainsFairy:
+		'''
+		容纳仙灵
+		捕捉到的仙灵将会自动存入仙灵瓶
+		'''
 	PutFairyBottleIn: 护灵员职业专用，需要放入仙灵瓶
+	HowToSort: 左键点击整理，右键点击切换整理方式
+	SortByRarity: 按稀有度整理
+	SortByLifeMax: 按血量品质整理
+	SortByDamage: 按伤害品质整理
+	SortByDefence: 按防御品质整理
+	SortBySpeed: 按速度品质整理
+	SortBySkillLevel: 按等级品质整理
+	SortByStamina: 按耐力品质整理
 }
 
 BossBarSystem.DontTakeDamage: 不可攻击！

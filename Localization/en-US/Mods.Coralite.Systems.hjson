@@ -70,6 +70,14 @@ FairySystem: {
 	FightFairy: Mods.Coralite.Systems.FairySystem.FightFairy
 	ContainsFairy: Mods.Coralite.Systems.FairySystem.ContainsFairy
 	PutFairyBottleIn: Mods.Coralite.Systems.FairySystem.PutFairyBottleIn
+	HowToSort: Mods.Coralite.Systems.FairySystem.HowToSort
+	SortByRarity: Mods.Coralite.Systems.FairySystem.SortByRarity
+	SortByLifeMax: Mods.Coralite.Systems.FairySystem.SortByLifeMax
+	SortByDamage: Mods.Coralite.Systems.FairySystem.SortByDamage
+	SortByDefence: Mods.Coralite.Systems.FairySystem.SortByDefence
+	SortBySpeed: Mods.Coralite.Systems.FairySystem.SortBySpeed
+	SortBySkillLevel: Mods.Coralite.Systems.FairySystem.SortBySkillLevel
+	SortByStamina: Mods.Coralite.Systems.FairySystem.SortByStamina
 }
 
 BossBarSystem.DontTakeDamage: Cant attack!！
