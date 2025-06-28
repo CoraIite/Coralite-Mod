@@ -151,16 +151,6 @@ CraftAltar: {
 	AltarUI: "    Craft altar's UI, which seems to be a bit complicated. Next, we will use wood to craft coal as an example to explain how it work."
 }
 
-PolymerizeCraft: {
-	ALotOfOtherItems: "    Many magike recipe require secondary items in addition to the primary item, so let's take a look at how these recipe work."
-	WhatIsPedestal:
-		'''
-		    The basic pedestal is a great container for items. Make more and put them next to the craft altar.
-		    It doesn't need polarized filter, but it can change its appearance.
-		'''
-	PlacePedestal: "    What it looks like to put items in the pedestal."
-}
-
 PolymerizeCraft2: {
 	ConnectToPedestal: "    After that, use connect staff to connect craft altar to the pedestal, taking care not to reverse it."
 	CheckAltar: "    Check the altar, the display has turned blue, which means the item is enough. Next steps will not be demonstrated, please refer to the previous pages."
@@ -434,3 +424,5 @@ RemodelP4.HavestCoal:
 	       The Altar will gradually consume the magike inside to increase the crafting progress, and the right click progress bar will cancel the crafting and return the item.
 	       After completion, collect the product in the item slot below.
 	'''
+PolymerizeRecipe.PolymerizeRecipeLike: Mods.Coralite.Knowledges.PolymerizeRecipe.PolymerizeRecipeLike
+Pedestal.PlacePedestal: Mods.Coralite.Knowledges.Pedestal.PlacePedestal
