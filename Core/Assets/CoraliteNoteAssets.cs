@@ -38,7 +38,7 @@ namespace Coralite.Core
             public static ATex BigColumn { get; private set; }
             public static ATex PrismLevels { get; private set; }
         }
-
+        
         [AutoLoadTexture(NoteRedJade)]
         public class RedJade
         {
