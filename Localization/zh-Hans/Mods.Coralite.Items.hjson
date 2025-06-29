@@ -4799,6 +4799,15 @@ Buttermilk: {
 	Tooltip: "{$CommonItemTooltip.MajorStats}"
 }
 
+Butter: {
+	DisplayName: 黄油
+	Tooltip:
+		'''
+		远程暴击率+5%
+		玉米糖造成伤害 +25% 且有概率迟缓敌人行动并阻止敌人造成伤害
+		'''
+}
+
 RoyalKonjac: {
 	DisplayName: 王室蒟蒻
 	Tooltip: "{$CommonItemTooltip.MajorStats}"

@@ -651,6 +651,7 @@ namespace Coralite.Content.ModPlayers
         {
             if (HasEffect(nameof(FlaskOfThunderBuff)) && item.DamageType.CountsAsClass(DamageClass.Melee))
                 target.AddBuff(BuffType<ThunderElectrified>(), 6 * 60);
+
             if (HasEffect(nameof(FlaskOfRedJadeBuff)) && item.DamageType.CountsAsClass(DamageClass.Melee) && Main.rand.NextBool(4))
                 Projectile.NewProjectile(Player.GetSource_FromThis(), target.Center, Vector2.Zero,
                     ProjectileType<RedJadeBoom>(), (item.damage * 0.75f) > 80 ? 80 : (int)(item.damage * 0.75f), 0, Player.whoAmI);
@@ -660,9 +661,17 @@ namespace Coralite.Content.ModPlayers
         {
             if (HasEffect(nameof(FlaskOfThunderBuff)) && proj.DamageType == DamageClass.Melee)
                 target.AddBuff(BuffType<ThunderElectrified>(), 6 * 60);
+
             if (HasEffect(nameof(FlaskOfRedJadeBuff)) && proj.DamageType == DamageClass.Melee && Main.rand.NextBool(4))
                 Projectile.NewProjectile(Player.GetSource_FromThis(), target.Center, Vector2.Zero,
                     ProjectileType<RedJadeBoom>(), (proj.damage * 0.75f) > 80 ? 80 : (int)(proj.damage * 0.75f), 0, Player.whoAmI);
+
+            if (proj.type == ProjectileID.CandyCorn && HasEffect(nameof(Items.Misc_Equip.Butter)))
+            {
+                modifiers.SourceDamage *= 1.25f;
+                if (Main.rand.NextBool(6) && !target.HasBuff<Items.Misc_Equip.ButterDebuff>())
+                    target.AddBuff(BuffType<Items.Misc_Equip.ButterDebuff>(), 60*3);
+            }
         }
 
         public override bool FreeDodge(Player.HurtInfo info)
