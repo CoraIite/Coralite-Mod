@@ -107,7 +107,19 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             }
             set { _bottleItem = value; }
         }
-        
+
+        public bool TryGetFairyBottle(out BaseFairyBottle bottle)
+        {
+            bottle = null;
+            if (!BottleItem.IsAir && BottleItem.ModItem is BaseFairyBottle b2)
+            {
+                bottle = b2;
+                return true;
+            }
+
+            return false;
+        }
+
         public override void ResetEffects()
         {
             FairyCircleCoreType = -1;
@@ -130,7 +142,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         public override void PostUpdateEquips()
         {
-            if (!BottleItem.IsAir&&BottleItem.ModItem is BaseFairyBottle bottle)
+            if (TryGetFairyBottle(out BaseFairyBottle bottle))
                 bottle.UpdateBottle(Player);
         }
 

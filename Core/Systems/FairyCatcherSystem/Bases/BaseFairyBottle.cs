@@ -211,6 +211,27 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             }
         }
 
+        /// <summary>
+        /// 向仙灵瓶内加入物品，用于自动拾取
+        /// </summary>
+        /// <param name="i"></param>
+        /// <returns></returns>
+        public bool AddItem(Item item)
+        {
+            for (int i = 0; i < ContainCapacity; i++)
+            {
+                Item cItem = containFairies[i];
+                if (cItem.IsAir)
+                {
+                    containFairies[i] = item.Clone();
+                    item.TurnToAir();
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         #endregion
 
         #region 整理部分

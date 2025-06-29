@@ -15,13 +15,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         public virtual string HandleTexture => Texture + "Handle";
 
         /// <summary>
-        /// 仙灵物品的type
-        /// </summary>
-        public ref float ItemType => ref Projectile.ai[0];
-        /// <summary>
         /// 为1时会在挥动时执行捕捉功能
         /// </summary>
-        public ref float Catch => ref Projectile.ai[1];
+        public ref float Catch => ref Projectile.ai[0];
 
         /// <summary>
         /// 每次射出多少只仙灵
@@ -143,7 +139,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         protected override void BeforeSlash()
         {
-            //Projectile.Kill();
             float factor = Timer / minTime;
             _Rotation = GetStartAngle() - DirSign * (startAngle + factor * MathF.Sin(-factor * 1.5f * MathHelper.Pi) * 1.2f);
             distanceToOwner = Helper.Lerp(minDistance / 2, minDistance, factor);
@@ -199,7 +194,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             distanceToOwner = Helper.Lerp(MaxDistance, 0, Helper.SqrtEase(factor));
             _Rotation += DirSign * 0.02f;
 
-            if ((int)Timer == maxTime + trailCount + 1)
+            if ((int)Timer == maxTime + trailCount + 1 && Catch == 0)
                 ShootFairy();
             
             Slasher();
@@ -231,9 +226,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         {
             OnShootFairy();
 
-            if (ItemType < 1)
-                return;
-
             Item heldItem = Item;
             if (heldItem.ModItem is BaseFairyCatcher catcher)
             {
@@ -241,25 +233,22 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 Vector2 velocity = oldRotate[^1].ToRotationVector2() * speed;
                 Vector2 center = Projectile.Center;
 
-                if (Owner.TryGetModPlayer(out FairyCatcherPlayer fcp) && fcp.FairyShoot_GetFairyBottle(out BaseFairyBottle bottle))
+                if (Owner.TryGetModPlayer(out FairyCatcherPlayer fcp) 
+                    && fcp.TryGetFairyBottle(out BaseFairyBottle bottle))
                 {
                     float damage = Owner.GetWeaponDamage(heldItem);
                     fcp.TotalCatchPowerBonus(ref damage, heldItem);
-                    Item[] fairies = bottle.FightFairies;
 
-                    //for (int i = 0; i < fairies.Length; i++)
-                    //{
-                    //    catcher.currentFairyIndex++;
-                    //    if (catcher.currentFairyIndex > fairies.Length - 1)
-                    //        catcher.currentFairyIndex = 0;
+                    int count = 0;
+                    foreach (var item in bottle.GetShootableFairy(Owner))
+                    {
+                        item.ShootFairy(Owner, Projectile.GetSource_FromAI(), center, velocity, Projectile.knockBack);
 
-                    //    if (bottle.CanShootFairy(catcher.currentFairyIndex, out IFairyItem fairyItem))
-                    //    {
-                    //        if (bottle.ShootFairy(catcher.currentFairyIndex, Owner, new EntitySource_ItemUse_WithAmmo(Owner, heldItem, 0)
-                    //            , center, velocity, (int)damage + (int)fairyItem.FairyDamage, Owner.GetWeaponKnockback(heldItem)))
-                    //            break;
-                    //    }
-                    //}
+                        count++;
+                        velocity *= 0.9f;
+                        if (count >= HowManyPerShoot)
+                            break;
+                    }
                 }
             }
         }
@@ -374,24 +363,27 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public virtual Texture2D GetStringTex() => FairySystem.DefaultLine.Value;
 
-        public virtual void DrawFairyItem()
+        public virtual void DrawFairyItem(Vector2 drawPos)
         {
-            Vector2 center = CursorCenter - Main.screenPosition;
+            if (Owner.TryGetModPlayer(out FairyCatcherPlayer fcp)
+                && fcp.CurrentFairyIndex != -1
+                &&fcp.TryGetFairyBottle(out BaseFairyBottle bottle))
+            {
+                int itemType = bottle.FightFairies[fcp.CurrentFairyIndex].type;
+                Texture2D mainTex = TextureAssets.Item[itemType].Value;
+                Rectangle rectangle2;
+                Color c = Lighting.GetColor(CursorCenter.ToTileCoordinates());
 
-            int itemType = (int)ItemType;
-            Main.instance.LoadItem(itemType);
-            Texture2D mainTex = TextureAssets.Item[itemType].Value;
-            Rectangle rectangle2;
-            Color c = Lighting.GetColor(CursorCenter.ToTileCoordinates());
+                if (Main.itemAnimations[itemType] != null)
+                    rectangle2 = Main.itemAnimations[itemType].GetFrame(mainTex, -1);
+                else
+                    rectangle2 = mainTex.Frame();
 
-            if (Main.itemAnimations[itemType] != null)
-                rectangle2 = Main.itemAnimations[itemType].GetFrame(mainTex, -1);
-            else
-                rectangle2 = mainTex.Frame();
+                float itemScale = 1f;
 
-            float itemScale = 1f;
-
-            Main.spriteBatch.Draw(mainTex, center, new Rectangle?(rectangle2), c, 0f, rectangle2.Size() / 2, itemScale, Owner.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+                Main.spriteBatch.Draw(mainTex, drawPos, rectangle2
+                    , c, 0f, rectangle2.Size() / 2, itemScale, Owner.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+            }
         }
 
         protected override void DrawSelf(Texture2D mainTex, Vector2 origin, Color lightColor, float extraRot)
@@ -399,18 +391,18 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             Texture2D handleTex = ModContent.Request<Texture2D>(HandleTexture).Value;
             Texture2D cursorTex = mainTex;
 
+            Vector2 cursorpos = GetStringTipPos(handleTex);
             //绘制连线
-            DrawLine(GetHandlePos(handleTex), GetStringTipPos(handleTex),out float rot);
+            DrawLine(GetHandlePos(handleTex), cursorpos, out float rot);
 
             //绘制指针
-            DrawCursor(cursorTex,rot);
+            DrawCursor(cursorTex, rot);
 
             //绘制仙灵物品
-            if (Timer < maxTime && ItemType > 0)
-                DrawFairyItem();
+            if (Timer < maxTime && Catch == 0)
+                DrawFairyItem(cursorpos - Main.screenPosition + rot.ToRotationVector2() * cursorTex.Width / 2);
             //绘制手持
             DrawHandle(handleTex);
-
         }
 
         protected override void DrawShadowTrail(Texture2D mainTex, Vector2 origin, Color lightColor, float extraRot) { }

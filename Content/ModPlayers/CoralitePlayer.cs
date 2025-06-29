@@ -670,7 +670,7 @@ namespace Coralite.Content.ModPlayers
             {
                 modifiers.SourceDamage *= 1.25f;
                 if (Main.rand.NextBool(6) && !target.HasBuff<Items.Misc_Equip.ButterDebuff>())
-                    target.AddBuff(BuffType<Items.Misc_Equip.ButterDebuff>(), 60*3);
+                    target.AddBuff(BuffType<Items.Misc_Equip.ButterDebuff>(), 60 * 3);
             }
         }
 

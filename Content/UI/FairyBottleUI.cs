@@ -102,8 +102,8 @@ namespace Coralite.Content.UI
 
             Player p = Main.LocalPlayer;
 
-            if (ShowContains && p.TryGetModPlayer(out FairyCatcherPlayer fcp) && !fcp.BottleItem.IsAir
-                && fcp.BottleItem.ModItem is BaseFairyBottle bottle)
+            if (ShowContains && p.TryGetModPlayer(out FairyCatcherPlayer fcp) 
+                && fcp.TryGetFairyBottle(out BaseFairyBottle bottle))
             {
                 AddFightPanel(bottle);
                 AddContainPanel(bottle);
@@ -240,10 +240,9 @@ namespace Coralite.Content.UI
                 return;
 
             //放入
-            if (p.selectedItem == 58 && fcp.BottleItem.IsAir && !p.HeldItem.IsAir && p.HeldItem.ModItem is BaseFairyBottle)
+            if ( fcp.BottleItem.IsAir && !Main.mouseItem.IsAir && Main.mouseItem.ModItem is BaseFairyBottle)
             {
-                fcp.BottleItem = p.HeldItem.Clone();
-                p.HeldItem.TurnToAir();
+                fcp.BottleItem = Main.mouseItem.Clone();
                 Main.mouseItem.TurnToAir();
 
                 Helper.PlayPitched("Fairy/FairyBottleClick2", 0.4f, 0);
@@ -251,9 +250,8 @@ namespace Coralite.Content.UI
             }
 
             //取出
-            if (p.inventory[58].IsAir && !fcp.BottleItem.IsAir)
+            if (Main.mouseItem.IsAir && !fcp.BottleItem.IsAir)
             {
-                p.inventory[58] = fcp.BottleItem.Clone();
                 Main.mouseItem = fcp.BottleItem.Clone();
 
                 fcp.BottleItem.TurnToAir();
@@ -263,30 +261,20 @@ namespace Coralite.Content.UI
             }
 
             //交换
-            if (p.selectedItem == 58 && !p.HeldItem.IsAir && !fcp.BottleItem.IsAir && p.HeldItem.ModItem is BaseFairyBottle)
+            if (!Main.mouseItem.IsAir && !fcp.BottleItem.IsAir && Main.mouseItem.ModItem is BaseFairyBottle)
             {
                 Item i = fcp.BottleItem;
-                fcp.BottleItem = p.HeldItem;
-                p.inventory[58] = i;
-                Main.mouseItem = i.Clone();
+                fcp.BottleItem = Main.mouseItem;
+                Main.mouseItem = i;
                 Helper.PlayPitched("Fairy/FairyBottleClick2", 0.4f, 0);
 
                 goto over;
             }
 
         over:
-            if (fcp.BottleItem.IsAir)
-            {
-                FairyBottleUI fairyBottleUI = UILoader.GetUIState<FairyBottleUI>();
-                fairyBottleUI.ShowContains = false;
-                fairyBottleUI.Recalculate();
-            }
-            else
-            {
-                FairyBottleUI fairyBottleUI = UILoader.GetUIState<FairyBottleUI>();
-                fairyBottleUI.ShowContains = true;
-                fairyBottleUI.Recalculate();
-            }
+            FairyBottleUI fairyBottleUI = UILoader.GetUIState<FairyBottleUI>();
+            fairyBottleUI.ShowContains = !fcp.BottleItem.IsAir;
+            fairyBottleUI.Recalculate();
         }
 
         public override void RightClick(UIMouseEvent evt)
@@ -376,8 +364,7 @@ namespace Coralite.Content.UI
             Player p = Main.LocalPlayer;
 
             item = null;
-            if (p.TryGetModPlayer(out FairyCatcherPlayer fcp) && !fcp.BottleItem.IsAir
-                && fcp.BottleItem.ModItem is BaseFairyBottle bottle)
+            if (p.TryGetModPlayer(out FairyCatcherPlayer fcp) && fcp.TryGetFairyBottle(out BaseFairyBottle bottle))
             {
                 if (fight)
                 {

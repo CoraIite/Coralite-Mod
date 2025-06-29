@@ -1,5 +1,7 @@
 ﻿using Coralite.Content.DamageClasses;
+using Coralite.Content.UI;
 using Coralite.Core;
+using Coralite.Core.Loaders;
 using Coralite.Core.Systems.FairyCatcherSystem;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using System.Collections.Generic;
@@ -18,20 +20,17 @@ namespace Coralite.Content.GlobalItems
             if (item.TryGetGlobalItem(out CoraliteGlobalItem fgi) && CoraliteSets.Items.IsFairy[item.type])
             {
                 if (player.TryGetModPlayer(out FairyCatcherPlayer fcp)
-                    && fcp.FairyCatch_GetEmptyFairyBottle(out BaseFairyBottle bottle, out int emptySlot))
+                    && fcp.TryGetFairyBottle(out BaseFairyBottle bottle))
                 {
-                    //TODO：添加适配战斗仙灵
-                    bottle.ContainFairies[emptySlot] = item.Clone();
+                    if (!bottle.AddItem(item))
+                        return true;
 
                     PopupText.NewText(PopupTextContext.RegularItemPickup, item, item.stack, noStack: true, longText: false);
 
                     item.TurnToAir();
                     SoundEngine.PlaySound(CoraliteSoundID.Grab, player.Center);
 
-                    //if (UILoader.GetUIState<FairyBottleUI>().visible)
-                    //{
-                    //UILoader.GetUIState<FairyBottleUI>().Recalculate();
-                    //}
+                    UILoader.GetUIState<FairyBottleUI>().Recalculate();
 
                     return false;
                 }

@@ -58,11 +58,14 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
             if (player.altFunctionUse == 2)
             {
-                ShootCatcher(player, source, position, velocity, RightProjType??type);
+                ShootCatcher(player, source, position, velocity, RightProjType ?? type);
                 return false;
             }
 
-            NormalAttack(player, source, position, velocity, type,damage);
+            if (player.TryGetModPlayer(out FairyCatcherPlayer fcp) && fcp.TryGetFairyBottle(out BaseFairyBottle bottle))
+                bottle.SetIndex(player);
+
+            NormalAttack(player, source, position, velocity, type, damage);
 
             return false;
         }
@@ -92,7 +95,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         /// <summary>
         /// 右键使用时发射捕捉器的弹幕<br></br>
-        /// 固定在ai1输入1
+        /// 固定在ai0输入1
         /// </summary>
         /// <param name="player"></param>
         /// <param name="source"></param>
@@ -101,7 +104,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// <param name="type"></param>
         public virtual void ShootCatcher(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type)
         {
-            Projectile.NewProjectile(source, position, velocity, type, 0, 0, player.whoAmI,ai1:1);
+            Projectile.NewProjectile(source, position, velocity, type, 0, 0, player.whoAmI,ai0:1);
         }
 
         /// <summary>
@@ -114,7 +117,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// <param name="type"></param>
         public virtual void NormalAttack(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type,int damage)
         {
-            Projectile.NewProjectile(source, position, velocity, type, damage, 0, player.whoAmI, ai0:0);
+            Projectile.NewProjectile(source, position, velocity, type, damage, 0, player.whoAmI);
         }
 
         /// <summary>

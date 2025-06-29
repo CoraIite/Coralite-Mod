@@ -128,15 +128,15 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// 将仙灵发射出去
         /// </summary>
         /// <returns></returns>
-        public virtual bool ShootFairy(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int catcherDamage, float knockBack)
+        public virtual bool ShootFairy(Player player, IEntitySource source, Vector2 position, Vector2 velocity, float knockBack)
         {
-            if (dead)
-                return false;
-
-            //catcherDamage += (int)FairyDamage;
-
             //生成仙灵弹幕
-            Projectile proj = Projectile.NewProjectileDirect(source, position, velocity, Item.shoot, catcherDamage, knockBack, player.whoAmI);
+            Projectile proj = Projectile.NewProjectileDirect(source, position, velocity, Item.shoot
+                , FairyIV.Damage, knockBack, player.whoAmI);
+
+            _fairyProjIndex = proj.identity;
+            _fairyProjUUID = proj.projUUID;
+
             //将弹幕的item赋值为自身
             //if (proj.ModProjectile is IFairyProjectile fairyProjectile)
             //{
@@ -190,20 +190,25 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// <summary>
         /// 在仙灵瓶内更新，检测仙灵弹幕是否存在
         /// </summary>
-        public void UpdateInBottle_Inner(BaseFairyBottle bottle,Player player)
+        public void UpdateInBottle_Inner(BaseFairyBottle bottle, Player player)
         {
-            if (Main.projectile.IndexInRange(_fairyProjIndex))
+            if (IsOut)
             {
-                Projectile p = Main.projectile[_fairyProjIndex];
-                if (!p.active || p.owner != player.whoAmI || p.projUUID != _fairyProjUUID)
+                if (Main.projectile.IndexInRange(_fairyProjIndex))
                 {
-                    IsOut = false;
-                    _fairyProjIndex = -1;
-                    _fairyProjUUID = -1;
+                    Projectile p = Main.projectile[_fairyProjIndex];
+                    if (!p.active || p.owner != player.whoAmI || p.projUUID != _fairyProjUUID)
+                    {
+                        IsOut = false;
+                        _fairyProjIndex = -1;
+                        _fairyProjUUID = -1;
+                    }
                 }
+                else
+                    IsOut = false;
             }
 
-            UpdateInBottle(bottle ,player);
+            UpdateInBottle(bottle, player);
         }
 
         /// <summary>
