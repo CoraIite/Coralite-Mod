@@ -135,10 +135,8 @@ namespace Coralite.Content.GlobalNPCs
 
         public override bool CanHitPlayer(NPC npc, Player target, ref int cooldownSlot)
         {
-            if (StopHitPlayer)
-            {
+            if (!npc.boss && StopHitPlayer)
                 return false;
-            }
 
             return base.CanHitPlayer(npc, target, ref cooldownSlot);
         }

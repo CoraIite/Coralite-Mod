@@ -250,3 +250,8 @@ PrisonBuff: {
 	// DisplayName: Prison Buff
 	// Description: Mods.Coralite.Buffs.PrisonBuff.Description
 }
+
+ButterDebuff: {
+	// DisplayName: Butter Debuff
+	// Description: Mods.Coralite.Buffs.ButterDebuff.Description
+}

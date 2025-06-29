@@ -6,6 +6,7 @@ using Coralite.Content.Items.LandOfTheLustrousSeries;
 using Coralite.Content.Items.LandOfTheLustrousSeries.Accessories;
 using Coralite.Content.Items.Materials;
 using Coralite.Content.Items.Misc;
+using Coralite.Content.Items.Misc_Equip;
 using Coralite.Content.Items.Placeable;
 using Coralite.Content.Items.ThyphionSeries;
 using Coralite.Content.Items.YujianHulu;
@@ -224,6 +225,9 @@ namespace Coralite.Content.GlobalNPCs
                 case NPCID.LavaSlime:
                 case NPCID.Lavabat:
                     npcLoot.Add(ItemDropRule.Common(ItemType<FriedShrimpWhip>(), 100));
+                    break;
+                case NPCID.Pumpking://南瓜王掉落黄油
+                    npcLoot.Add(ItemDropRule.Common(ItemType<Butter>(), 3));
                     break;
             }
 

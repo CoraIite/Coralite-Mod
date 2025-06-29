@@ -4763,6 +4763,11 @@ Buttermilk: {
 	Tooltip: "{$CommonItemTooltip.MajorStats}"
 }
 
+Butter: {
+	DisplayName: Butter
+	Tooltip: ""
+}
+
 RoyalKonjac: {
 	DisplayName: Royal Konjac
 	Tooltip: "{$CommonItemTooltip.MajorStats}"
