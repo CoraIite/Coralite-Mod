@@ -91,7 +91,7 @@ namespace Coralite.Content.Items.Fairies
         public override string Texture => AssetDirectory.FairyItems + "GreenFairy";
         protected override int FrameY => 4;
 
-        protected override string SkillName => "撞击！";
+        //protected override string SkillName => "撞击！";
 
         public override void SetDefaults()
         {
@@ -126,7 +126,7 @@ namespace Coralite.Content.Items.Fairies
                 ExchangeToAction();
         }
 
-        public override void Action()
+        public override void Skill()
         {
             Projectile.timeLeft = 20;
             Projectile.SpawnTrailDust(DustID.GreenFairy, Main.rand.NextFloat(0.1f, 0.5f), 200);
@@ -161,7 +161,7 @@ namespace Coralite.Content.Items.Fairies
                 RestartAction();
             else
             {
-                Backing_LerpToOwner();
+                //Backing_LerpToOwner();
                 if (Main.rand.NextBool())
                     Projectile.SpawnTrailDust(DustID.GreenFairy, Main.rand.NextFloat(0.1f, 0.5f), 200);
             }
@@ -171,7 +171,7 @@ namespace Coralite.Content.Items.Fairies
 
         public override void OnExchangeToAction(NPC target)
         {
-            SpawnSkillText(Color.LawnGreen);
+            //SpawnSkillText(Color.LawnGreen);
             SoundEngine.PlaySound(CoraliteSoundID.Fairy_NPCHit5, Projectile.Center);
 
             Projectile.velocity = (target.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * 2;

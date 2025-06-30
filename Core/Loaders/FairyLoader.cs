@@ -9,6 +9,12 @@ namespace Coralite.Core.Loaders
         internal static IList<Fairy> fairys;
         internal static int FairyCount { get; private set; } = 0;
 
+        internal static IList<FairyCircleCore> cores;
+        internal static int FairyCircleCoreCount { get; private set; } = 0;
+
+        internal static IList<FairySkill> skills;
+        internal static int FairySkillCount { get; private set; } = 0;
+
         /// <summary>
         /// 根据类型获取仙灵
         /// </summary>
@@ -18,31 +24,7 @@ namespace Coralite.Core.Loaders
                  => type < FairyCount ? fairys[type] : null;
 
         /// <summary>
-        /// 设置ID
-        /// </summary>
-        /// <returns></returns>
-        public static int ReserveFairyID() => FairyCount++;
-
-        internal static void Unload()
-        {
-            foreach (var item in fairys)
-            {
-                item.Unload();
-            }
-
-            fairys.Clear();
-            fairys = null;
-            FairyCount = 0;
-        }
-    }
-
-    public class FairyCircleCoreLoader
-    {
-        internal static IList<FairyCircleCore> cores;
-        internal static int FairyCircleCoreCount { get; private set; } = 0;
-
-        /// <summary>
-        /// 根据类型获取仙灵
+        /// 根据类型获取仙灵核心
         /// </summary>
         /// <param name="type"></param>
         /// <returns></returns>
@@ -50,21 +32,53 @@ namespace Coralite.Core.Loaders
                  => type < FairyCircleCoreCount ? cores[type] : null;
 
         /// <summary>
+        /// 根据类型获取仙灵技能
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static FairySkill GetFairySkill(int type)
+                 => type < FairySkillCount ? skills[type] : null;
+
+        /// <summary>
         /// 设置ID
         /// </summary>
         /// <returns></returns>
-        public static int ReserveID() => FairyCircleCoreCount++;
+        public static int ReserveFairyID() => FairyCount++;
+
+        /// <summary>
+        /// 设置ID
+        /// </summary>
+        /// <returns></returns>
+        public static int ReserveFairyCoreID() => FairyCircleCoreCount++;
+
+        /// <summary>
+        /// 设置ID
+        /// </summary>
+        /// <returns></returns>
+        public static int ReserveFairySkillID() => FairySkillCount++;
 
         internal static void Unload()
         {
-            foreach (var item in cores)
-            {
+            foreach (var item in fairys)
                 item.Unload();
-            }
+
+            fairys.Clear();
+            fairys = null;
+            FairyCount = 0;
+
+            foreach (var item in cores)
+                item.Unload();
 
             cores.Clear();
             cores = null;
             FairyCircleCoreCount = 0;
+
+            foreach (var item in skills)
+                item.Unload();
+
+            skills.Clear();
+            skills = null;
+            FairySkillCount = 0;
         }
     }
 }

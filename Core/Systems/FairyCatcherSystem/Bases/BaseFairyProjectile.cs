@@ -2,11 +2,10 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
-using Terraria.Localization;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 {
-    public abstract class BaseFairyProjectile : ModProjectile//, IFairyProjectile
+    public abstract class BaseFairyProjectile : ModProjectile
     {
         public Player Owner => Main.player[Projectile.owner];
 
@@ -15,9 +14,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         //protected int LifeMax => (int)FairyItem.FairyLifeMax;
         //protected int Life => FairyItem.Life;
 
-        protected virtual string SkillName => "";
+        //protected virtual string SkillName => "";
         protected virtual int FrameX => 1;
-        protected virtual int FrameY => 1;
+        protected virtual int FrameY => 4;
         /// <summary>
         /// 能够开始攻击的距离
         /// </summary>
@@ -26,12 +25,12 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         private bool init = true;
         protected bool canDamage;
 
-        public LocalizedText SkillText;
+        //public LocalizedText SkillText;
 
-        public override void Load()
-        {
-            SkillText = this.GetLocalization("SkillText", () => SkillName);
-        }
+        //public override void Load()
+        //{
+        //    SkillText = this.GetLocalization("SkillText", () => SkillName);
+        //}
 
         public enum AIStates
         {
@@ -42,7 +41,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             /// <summary>
             /// 执行自身的特定AI
             /// </summary>
-            Action,
+            Skill,
+            /// <summary>
+            /// 释放技能后的后摇
+            /// </summary>
+            Rest,
             /// <summary>
             /// 返回自身，此时无敌
             /// </summary>
@@ -57,21 +60,16 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             switch (State)
             {
                 default:
-                    Projectile.Kill(); break;
-                case (int)AIStates.Shooting:
-                    {
-                        Shooting();
-                    }
+                    Projectile.Kill(); 
                     break;
-                case (int)AIStates.Action:
-                    {
-                        Action();
-                    }
+                case (int)AIStates.Shooting:
+                        Shooting();
+                    break;
+                case (int)AIStates.Skill:
+                        Skill();
                     break;
                 case (int)AIStates.Backing:
-                    {
                         Backing();
-                    }
                     break;
             }
         }
@@ -93,7 +91,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         }
 
-        public virtual void Action()
+        public virtual void Skill()
         {
 
         }
@@ -103,21 +101,21 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         }
 
-        public virtual void Backing_LerpToOwner()
-        {
-            Projectile.velocity = (Owner.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * 2;
-            Projectile.Center = Vector2.SmoothStep(Projectile.Center, Owner.Center, Helper.SqrtEase(Timer * 0.00075f));
+        //public virtual void Backing_LerpToOwner()
+        //{
+        //    Projectile.velocity = (Owner.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * 2;
+        //    Projectile.Center = Vector2.SmoothStep(Projectile.Center, Owner.Center, Helper.SqrtEase(Timer * 0.00075f));
 
-            if (Vector2.Distance(Projectile.Center, Owner.Center) < 24)
-                Projectile.Kill();
-        }
+        //    if (Vector2.Distance(Projectile.Center, Owner.Center) < 24)
+        //        Projectile.Kill();
+        //}
 
-        public virtual void SpawnSkillText(Color color)
-        {
-            ModProjectile m = ModContent.GetModProjectile(Projectile.type);
-            CombatText.NewText(Projectile.getRect(), color,
-                (m as BaseFairyProjectile).SkillText.Value);
-        }
+        //public virtual void SpawnSkillText(Color color)
+        //{
+        //    ModProjectile m = ModContent.GetModProjectile(Projectile.type);
+        //    CombatText.NewText(Projectile.getRect(), color,
+        //        (m as BaseFairyProjectile).SkillText.Value);
+        //}
 
         public void UpdateFrameY(int spacing)
         {
@@ -162,7 +160,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         {
             if (Helper.TryFindClosestEnemy(Projectile.Center, AttackDistance, n => n.CanBeChasedBy() && Collision.CanHit(Projectile, n), out NPC target))
             {
-                State = (int)AIStates.Action;
+                State = (int)AIStates.Skill;
                 OnExchangeToAction(target);
                 Timer = 0;
                 canDamage = true;
@@ -175,7 +173,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         {
             if (Helper.TryFindClosestEnemy(Projectile.Center, AttackDistance, n => n.CanBeChasedBy() && Collision.CanHit(Projectile, n), out NPC target))
             {
-                State = (int)AIStates.Action;
+                State = (int)AIStates.Skill;
                 OnExchangeToAction(target);
                 Timer = 0;
                 canDamage = true;

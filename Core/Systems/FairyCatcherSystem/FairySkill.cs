@@ -1,16 +1,53 @@
-﻿using System;
+﻿using Coralite.Core.Loaders;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Terraria.Localization;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem
 {
     /// <summary>
     /// 仙灵技能
     /// </summary>
-    public abstract class FairySkill
+    public abstract class FairySkill : ModType
     {
+        public int Type { get; internal set; }
 
+        /// <summary>
+        /// 仅在<see cref="FairyLoader"/>内存储的实例才能使用该属性，其余时候均为null
+        /// </summary>
+        public LocalizedText SkillName { get; private set; }
+
+        protected override void Register()
+        {
+            ModTypeLookup<FairySkill>.Register(this);
+
+            FairyLoader.skills ??= new List<FairySkill>();
+            FairyLoader.skills.Add(this);
+
+            Type = FairyLoader.ReserveFairyCoreID();
+        }
+
+        public virtual FairySkill NewInstance()
+        {
+            var inst = (FairySkill)Activator.CreateInstance(GetType(), true);
+            inst.Type = Type;
+            return inst;
+        }
+
+        /// <summary>
+        /// 开始攻击时调用，用于初始化
+        /// </summary>
+        public void OnStartAttack()
+        {
+
+        }
+
+        /// <summary>
+        /// 更新仙灵
+        /// </summary>
+        public void Update()
+        {
+
+        }
     }
 }

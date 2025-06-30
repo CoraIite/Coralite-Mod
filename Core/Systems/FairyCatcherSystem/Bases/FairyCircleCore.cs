@@ -22,10 +22,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         {
             ModTypeLookup<FairyCircleCore>.Register(this);
 
-            FairyCircleCoreLoader.cores ??= new List<FairyCircleCore>();
-            FairyCircleCoreLoader.cores.Add(this);
+            FairyLoader.cores ??= new List<FairyCircleCore>();
+            FairyLoader.cores.Add(this);
 
-            Type = FairyCircleCoreLoader.ReserveID();
+            Type = FairyLoader.ReserveFairyCoreID();
         }
     }
 }

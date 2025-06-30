@@ -95,7 +95,7 @@ namespace Coralite.Content.Items.Fairies
         public override string Texture => AssetDirectory.FairyItems + "BreezeFairy";
         protected override int FrameY => 4;
 
-        protected override string SkillName => "吹散！";
+        //protected override string SkillName => "吹散！";
 
         public override void SetDefaults()
         {
@@ -132,7 +132,7 @@ namespace Coralite.Content.Items.Fairies
                 ExchangeToAction();
         }
 
-        public override void Action()
+        public override void Skill()
         {
             Projectile.timeLeft = 20;
             Projectile.SpawnTrailDust(DustID.AncientLight, Main.rand.NextFloat(0.1f, 0.5f));
@@ -202,7 +202,7 @@ namespace Coralite.Content.Items.Fairies
                 RestartAction();
             else
             {
-                Backing_LerpToOwner();
+                //Backing_LerpToOwner();
                 if (Main.rand.NextBool())
                     Projectile.SpawnTrailDust(DustID.Cloud, Main.rand.NextFloat(0.1f, 0.5f), 100);
             }
@@ -212,7 +212,7 @@ namespace Coralite.Content.Items.Fairies
 
         public override void OnExchangeToAction(NPC target)
         {
-            SpawnSkillText(Color.Blue);
+            //SpawnSkillText(Color.Blue);
             SoundEngine.PlaySound(CoraliteSoundID.Fairy_NPCHit5, Projectile.Center);
         }
 

@@ -19,10 +19,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         /// <summary> 仙灵是否存活 </summary>
         protected bool dead;
-        /// <summary>
-        /// 复活时间
-        /// </summary>
-        protected int resurrectionTime;
 
         private static int showLineValueCount;
 
@@ -30,10 +26,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         public abstract FairyRarity Rarity { get; }
         public bool IsDead => dead;
         public int Life { get; private set; }
-        /// <summary>
-        /// 复活时间，默认3分钟（3*60*60）
-        /// </summary>
-        public virtual int MaxResurrectionTime => 60 * 60 * 3;
 
         /// <summary>
         /// 用于记录仙灵弹幕的索引，便于查找
@@ -105,11 +97,17 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         {
             dead = true;
 
-            int time = MaxResurrectionTime;
-            if (owner.TryGetModPlayer(out FairyCatcherPlayer fcp))
-                fcp.fairyResurrectionTimeBous.ApplyTo(time);
-
-            resurrectionTime = time;
+            //杀掉仙灵弹幕
+            if (Main.projectile.IndexInRange(_fairyProjIndex))
+            {
+                Projectile p = Main.projectile[_fairyProjIndex];
+                if (!p.active || p.owner != owner.whoAmI || p.projUUID != _fairyProjUUID)
+                {
+                    IsOut = false;
+                    _fairyProjIndex = -1;
+                    _fairyProjUUID = -1;
+                }
+            }
 
             OnDead(owner, target);
         }
@@ -154,24 +152,15 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// <param name="lifeRegan"></param>
         public virtual void LifeRegan(int lifeRegan, int resurrectionTimeReduce = 1)
         {
-            if (dead)
-            {
-                resurrectionTime -= resurrectionTimeReduce;
-                if (resurrectionTime <= 0)
-                    Resurrection();
-
-                return;
-            }
-
             Life += lifeRegan;
             LimitLife();
-        }
 
-        public virtual void Resurrection()
-        {
-            dead = false;
-            //life = (int)FairyLifeMax;
-            resurrectionTime = 0;
+            if (dead)
+            {
+                if (Life == FairyIV.LifeMax)
+                    dead = false;
+                return;
+            }
         }
 
         public override bool CanReforge() => false;
