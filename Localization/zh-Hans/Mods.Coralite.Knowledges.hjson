@@ -472,3 +472,8 @@ Pedestal.PlacePedestal:
 	    打开UI就可以将物品放入其中了。
 	    或是手持物品直接右键置物台物块放入。
 	'''
+PolymerizeOtherItem.ConnectPedestal: 
+'''
+    之后使用连接仪将合成坛连接到置物台上，请注意不要连反了。
+    满足数量需求的物品在合成坛UI中会变成蓝色。
+'''
