@@ -426,3 +426,4 @@ RemodelP4.HavestCoal:
 	'''
 PolymerizeRecipe.PolymerizeRecipeLike: Mods.Coralite.Knowledges.PolymerizeRecipe.PolymerizeRecipeLike
 Pedestal.PlacePedestal: Mods.Coralite.Knowledges.Pedestal.PlacePedestal
+PolymerizeOtherItem.ConnectPedestal: Mods.Coralite.Knowledges.PolymerizeOtherItem.ConnectPedestal
