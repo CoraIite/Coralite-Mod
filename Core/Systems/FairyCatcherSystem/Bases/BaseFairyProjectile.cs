@@ -9,12 +9,29 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
     {
         public Player Owner => Main.player[Projectile.owner];
 
-        public int State;
-        public int Timer;
-        //protected int LifeMax => (int)FairyItem.FairyLifeMax;
-        //protected int Life => FairyItem.Life;
+        /// <summary>
+        /// 生成时间，生成仙灵时传入
+        /// </summary>
+        public ref float SpawnTime => ref Projectile.ai[0];
+        /// <summary>
+        /// 当前使用技能的索引
+        /// </summary>
+        public ref float UseSkillIndex => ref Projectile.ai[1];
+        /// <summary>
+        /// 目标敌怪的索引
+        /// </summary>
+        public ref float TargetIndex => ref Projectile.ai[2];
 
-        //protected virtual string SkillName => "";
+        public AIStates State {  get; set; }
+        public int Timer {  get; set; }
+
+        /// <summary>
+        /// 受击后无敌时间
+        /// </summary>
+        public int ImmuneTimer {  get; set; }
+
+
+
         protected virtual int FrameX => 1;
         protected virtual int FrameY => 4;
         /// <summary>
@@ -25,12 +42,15 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         private bool init = true;
         protected bool canDamage;
 
-        //public LocalizedText SkillText;
+        /// <summary>
+        /// 存储所有的仙灵技能
+        /// </summary>
+        private FairySkill[] _skills;
 
-        //public override void Load()
-        //{
-        //    SkillText = this.GetLocalization("SkillText", () => SkillName);
-        //}
+        /// <summary>
+        /// 仅本地端可用！用它获取仙灵个体值以及执行仙灵掉血等操作
+        /// </summary>
+        public BaseFairyItem BaseFairyItem { get; set; }
 
         public enum AIStates
         {
@@ -60,16 +80,18 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             switch (State)
             {
                 default:
-                    Projectile.Kill(); 
+                    Projectile.Kill();
                     break;
-                case (int)AIStates.Shooting:
-                        Shooting();
+                case AIStates.Shooting:
+                    Shooting();
                     break;
-                case (int)AIStates.Skill:
-                        Skill();
+                case AIStates.Skill:
+                    Skill();
                     break;
-                case (int)AIStates.Backing:
-                        Backing();
+                case AIStates.Rest:
+                    break;
+                case AIStates.Backing:
+                    Backing();
                     break;
             }
         }
@@ -77,18 +99,41 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         public void Initilize()
         {
             init = false;
+            TargetIndex = -1;
 
-            Projectile.width = (int)(Projectile.width * Projectile.scale);
-            Projectile.height = (int)(Projectile.height * Projectile.scale);
+            Projectile.Resize((int)(Projectile.width * Projectile.scale), (int)(Projectile.height * Projectile.scale));
+
+            //初始化技能
+            var skill = InitSkill();
+            if (skill != null && skill.Length > 0)
+                _skills = skill;
+            else
+                "仙灵必须有至少一个技能！！".Dump();
 
             OnInitialize();
         }
+
+        /// <summary>
+        /// 初始化仙灵技能
+        /// </summary>
+        /// <returns></returns>
+        public abstract FairySkill[] InitSkill();
+
+        /// <summary>
+        /// 帮助方法，获取技能
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static FairySkill NewSkill<T>() where T : FairySkill
+            => ModContent.GetInstance<T>().NewInstance();
 
         public virtual void OnInitialize() { }
 
         public virtual void Shooting()
         {
-
+            Timer++;
+            if (Timer > SpawnTime)
+                TryExchangeToAttack();
         }
 
         public virtual void Skill()
@@ -150,33 +195,39 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         public virtual void ExchangeToBack()
         {
             Timer = 0;
-            State = (int)AIStates.Backing;
+            State = AIStates.Backing;
             canDamage = false;
             Projectile.timeLeft = 1200;
             Projectile.tileCollide = false;
         }
 
-        public virtual void ExchangeToAction()
+        /// <summary>
+        /// 尝试开始攻击，如果没有那么就进入休息阶段
+        /// </summary>
+        public virtual void TryExchangeToAttack()
         {
-            if (Helper.TryFindClosestEnemy(Projectile.Center, AttackDistance, n => n.CanBeChasedBy() && Collision.CanHit(Projectile, n), out NPC target))
+            if (Helper.TryFindClosestEnemy(Projectile.Center, AttackDistance
+                , n => n.CanBeChasedBy() && Collision.CanHit(Projectile, n), out NPC target))
             {
-                State = (int)AIStates.Skill;
-                OnExchangeToAction(target);
+                TargetIndex = target.whoAmI;
+                State = AIStates.Skill;
                 Timer = 0;
+
+                OnExchangeToAction(target);
                 canDamage = true;
             }
             else
                 ExchangeToBack();
         }
 
-        public virtual void RestartAction()
+        public virtual void RestartAttack()
         {
             if (Helper.TryFindClosestEnemy(Projectile.Center, AttackDistance, n => n.CanBeChasedBy() && Collision.CanHit(Projectile, n), out NPC target))
             {
-                State = (int)AIStates.Skill;
-                OnExchangeToAction(target);
+                State = AIStates.Skill;
                 Timer = 0;
-                canDamage = true;
+
+                OnExchangeToAction(target);
             }
         }
 
@@ -185,7 +236,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
             if (State == (int)AIStates.Shooting)
-                ExchangeToAction();
+                TryExchangeToAttack();
             return false;
         }
 

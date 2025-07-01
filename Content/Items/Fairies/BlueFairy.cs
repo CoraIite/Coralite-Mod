@@ -122,7 +122,7 @@ namespace Coralite.Content.Items.Fairies
                 Projectile.SpawnTrailDust(DustID.BlueFairy, Main.rand.NextFloat(0.1f, 0.5f), 200);
 
             if (Timer < 1)
-                ExchangeToAction();
+                TryExchangeToAttack();
         }
 
         public override void Skill()
@@ -160,7 +160,7 @@ namespace Coralite.Content.Items.Fairies
                     Projectile.SpawnTrailDust(DustID.BlueFairy, Main.rand.NextFloat(0.1f, 0.5f), 200);
             }
             else if (Timer == 40 + 120)
-                RestartAction();
+                RestartAttack();
             else
             {
                 //Backing_LerpToOwner();

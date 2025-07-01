@@ -240,9 +240,10 @@ namespace Coralite.Content.UI
                 return;
 
             //放入
-            if ( fcp.BottleItem.IsAir && !Main.mouseItem.IsAir && Main.mouseItem.ModItem is BaseFairyBottle)
+            if (fcp.BottleItem.IsAir && !Main.mouseItem.IsAir && Main.mouseItem.ModItem is BaseFairyBottle)
             {
                 fcp.BottleItem = Main.mouseItem.Clone();
+                (fcp.BottleItem.ModItem as BaseFairyBottle).OnBottleActive();
                 Main.mouseItem.TurnToAir();
 
                 Helper.PlayPitched("Fairy/FairyBottleClick2", 0.4f, 0);
@@ -252,6 +253,7 @@ namespace Coralite.Content.UI
             //取出
             if (Main.mouseItem.IsAir && !fcp.BottleItem.IsAir)
             {
+                (fcp.BottleItem.ModItem as BaseFairyBottle).OnBottleInactive(p);
                 Main.mouseItem = fcp.BottleItem.Clone();
 
                 fcp.BottleItem.TurnToAir();
@@ -264,7 +266,10 @@ namespace Coralite.Content.UI
             if (!Main.mouseItem.IsAir && !fcp.BottleItem.IsAir && Main.mouseItem.ModItem is BaseFairyBottle)
             {
                 Item i = fcp.BottleItem;
+
+                (fcp.BottleItem.ModItem as BaseFairyBottle).OnBottleInactive(p);
                 fcp.BottleItem = Main.mouseItem;
+                (fcp.BottleItem.ModItem as BaseFairyBottle).OnBottleActive();
                 Main.mouseItem = i;
                 Helper.PlayPitched("Fairy/FairyBottleClick2", 0.4f, 0);
 

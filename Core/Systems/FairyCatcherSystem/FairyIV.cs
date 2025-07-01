@@ -1,8 +1,6 @@
 ﻿using Coralite.Helpers;
-using log4net.Core;
 using System;
 using System.Collections.Generic;
-using System.Formats.Asn1;
 using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader.IO;
@@ -120,6 +118,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             iv.StaminaLevel = player.StaminaRand.RandValue;
             iv.ScaleLevel = player.ScaleRand.RandValue;
         }
+
+
 
         /// <summary>
         /// 存储仙灵个体值

@@ -97,6 +97,32 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             }
         }
 
+        #region 存入取出部分
+
+        /// <summary>
+        /// 在仙灵瓶放入UI的时候调用，初始化仙灵物品内的值
+        /// </summary>
+        public virtual void OnBottleActive()
+        {
+            foreach (var item in fightFairies)
+                if (!item.IsAir&&item.ModItem is BaseFairyItem bfi)
+                    bfi.OnBottleActive();
+        }
+
+        /// <summary>
+        /// 在仙灵瓶取出UI的时候调用，清除弹幕
+        /// </summary>
+        /// <param name="player"></param>
+        public virtual void  OnBottleInactive(Player player)
+        {
+            foreach (var item in fightFairies)
+                if (!item.IsAir && item.ModItem is BaseFairyItem bfi)
+                    bfi.OnBottleInactive(player);
+        }
+
+
+        #endregion
+
         #region 获取瓶中仙灵部分
 
         /// <summary>

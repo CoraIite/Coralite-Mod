@@ -8,7 +8,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
     /// <summary>
     /// 仙灵技能
     /// </summary>
-    public abstract class FairySkill : ModType
+    public abstract class FairySkill : ModType,ILocalizedModType
     {
         public int Type { get; internal set; }
 
@@ -16,6 +16,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// 仅在<see cref="FairyLoader"/>内存储的实例才能使用该属性，其余时候均为null
         /// </summary>
         public LocalizedText SkillName { get; private set; }
+
+        public string LocalizationCategory => "Systems.FairySkill";
 
         protected override void Register()
         {
@@ -25,6 +27,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             FairyLoader.skills.Add(this);
 
             Type = FairyLoader.ReserveFairyCoreID();
+
+            SkillName = this.GetLocalization("SkillName");
         }
 
         public virtual FairySkill NewInstance()
@@ -37,7 +41,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <summary>
         /// 开始攻击时调用，用于初始化
         /// </summary>
-        public void OnStartAttack()
+        public virtual void OnStartAttack()
         {
 
         }
@@ -45,7 +49,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <summary>
         /// 更新仙灵
         /// </summary>
-        public void Update()
+        public virtual void Update()
         {
 
         }
