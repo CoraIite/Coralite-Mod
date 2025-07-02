@@ -403,9 +403,9 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         #region 同步
 
-        public override BitsByte SandBitsByte(BitsByte flags)
+        public override BitsByte SendBitsByte(BitsByte flags)
         {
-            flags = base.SandBitsByte(flags);
+            flags = base.SendBitsByte(flags);
 
             flags[2] = onStart;
             flags[3] = netSendBasicValues;

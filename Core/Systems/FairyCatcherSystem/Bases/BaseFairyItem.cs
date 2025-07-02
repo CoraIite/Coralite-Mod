@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader.IO;
 using Terraria.UI.Chat;
@@ -76,24 +77,62 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             return modItem;
         }
 
-        public virtual bool Hurt(Player owner, NPC target, NPC.HitInfo hit, int damageDone)
+        public virtual void HurtByProjectile(BaseFairyProjectile proj, Projectile target)
         {
+            //使用默认模式的伤害量，放置一些特殊修改把NPC伤害改的太夸张
             int damage = target.damage;
 
-            //damage -= (int)FairyDefence;
-
+            //防御计算与限制
+            damage -= FairyIV.Defence;
             if (damage < 1)
                 damage = 1;
 
             Life -= damage;
-            if (Life <= 0)
-                Dead(owner, target);
             LimitLife();
+            proj.ImmuneTimer = proj.Projectile.localNPCHitCooldown;
 
-            return dead;
+            //死亡判定
+            if (Life <= 0)
+            {
+                Dead(proj.Owner);
+
+                proj.Projectile.Kill();
+            }
         }
 
-        public void Dead(Player owner, NPC target)
+        /// <summary>
+        /// 仙灵受到NPC攻击时调用
+        /// </summary>
+        /// <param name="proj"></param>
+        /// <param name="owner"></param>
+        /// <param name="target"></param>
+        /// <param name="hit"></param>
+        /// <param name="damageDone"></param>
+        public virtual void HurtByNPC(BaseFairyProjectile proj, NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            //使用默认模式的伤害量，放置一些特殊修改把NPC伤害改的太夸张
+            int damage = ContentSamples.NpcsByNetId[target.type].damage;
+
+            //防御计算与限制
+            damage -= FairyIV.Defence;
+            if (damage < 1)
+                damage = 1;
+
+            Life -= damage;
+            LimitLife();
+            proj.ImmuneTimer = proj.Projectile.localNPCHitCooldown;
+
+            //死亡判定
+            if (Life <= 0)
+            {
+                Dead(proj.Owner);
+
+                proj.Projectile.Kill();
+                proj.OnKillByNPC(target);
+            }
+        }
+
+        public void Dead(Player owner)
         {
             dead = true;
 
@@ -109,17 +148,17 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 }
             }
 
-            OnDead(owner, target);
+            OnDead(owner);
         }
 
-        public virtual void OnDead(Player owner, NPC target) { }
+        public virtual void OnDead(Player owner) { }
 
         /// <summary>
         /// 将生命值限制在0-最大值之间
         /// </summary>
         public void LimitLife()
         {
-            //life = Math.Clamp(life, 0, (int)FairyLifeMax);
+            Life = Math.Clamp(Life, 0, FairyIV.LifeMax);
         }
 
         /// <summary>
@@ -136,11 +175,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             _fairyProjUUID = proj.projUUID;
 
             //将弹幕的item赋值为自身
-            //if (proj.ModProjectile is IFairyProjectile fairyProjectile)
-            //{
-            //    //fairyProjectile.FairyItem = this;
-            //    //proj.scale = FairyScale;
-            //}
+            if (proj.ModProjectile is BaseFairyProjectile fairyProjectile)
+            {
+                fairyProjectile.FairyItem = this;
+            }
 
             IsOut = true;
             return true;

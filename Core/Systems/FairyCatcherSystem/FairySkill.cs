@@ -1,6 +1,8 @@
 ﻿using Coralite.Core.Loaders;
+using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using System;
 using System.Collections.Generic;
+using Terraria;
 using Terraria.Localization;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem
@@ -18,6 +20,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public LocalizedText SkillName { get; private set; }
 
         public string LocalizationCategory => "Systems.FairySkill";
+
+        public virtual Color SkillTextColor { get; set; }= Color.White;
 
         protected override void Register()
         {
@@ -39,6 +43,16 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         }
 
         /// <summary>
+        /// 生成仙灵技能名称文本
+        /// </summary>
+        /// <param name="pos"></param>
+        public virtual void SpawnSkillText(Vector2 pos)
+        {
+            CombatText.NewText(Utils.CenteredRectangle(pos,Vector2.One), SkillTextColor,
+                SkillName.Value);
+        }
+
+        /// <summary>
         /// 开始攻击时调用，用于初始化
         /// </summary>
         public virtual void OnStartAttack()
@@ -47,9 +61,18 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         }
 
         /// <summary>
-        /// 更新仙灵
+        /// 更新仙灵，返回 <see cref="true"/> 表示技能使用结束
         /// </summary>
-        public virtual void Update()
+        public virtual bool Update(BaseFairyProjectile fairyProj)
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// 在仙灵死亡时调用
+        /// </summary>
+        /// <param name="fairyProj"></param>
+        public virtual void OnFairyKill(BaseFairyProjectile fairyProj)
         {
 
         }

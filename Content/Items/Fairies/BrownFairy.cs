@@ -3,6 +3,7 @@ using Coralite.Content.GlobalItems;
 using Coralite.Core;
 using Coralite.Core.Systems.FairyCatcherSystem;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
+using Coralite.Core.Systems.FairyCatcherSystem.NormalSkills;
 using Coralite.Helpers;
 using Terraria;
 using Terraria.Audio;
@@ -14,8 +15,6 @@ namespace Coralite.Content.Items.Fairies
     {
         public override int FairyType => CoraliteContent.FairyType<BrownFairy>();
         public override FairyRarity Rarity => FairyRarity.C;
-
-        public override int MaxResurrectionTime => 60 * 60;
 
         public override void SetDefaults()
         {
@@ -89,9 +88,11 @@ namespace Coralite.Content.Items.Fairies
     public class BrownFairyProj : BaseFairyProjectile
     {
         public override string Texture => AssetDirectory.FairyItems + "BrownFairy";
-        protected override int FrameY => 4;
 
-        //protected override string SkillName => "撞击！";
+        public override FairySkill[] InitSkill()
+            => [
+                NewSkill<Tackle>()
+                ];
 
         public override void SetDefaults()
         {

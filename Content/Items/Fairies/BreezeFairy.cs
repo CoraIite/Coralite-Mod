@@ -2,6 +2,7 @@
 using Coralite.Core;
 using Coralite.Core.Systems.FairyCatcherSystem;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
+using Coralite.Core.Systems.FairyCatcherSystem.NormalSkills;
 using Coralite.Helpers;
 using System;
 using Terraria;
@@ -14,8 +15,6 @@ namespace Coralite.Content.Items.Fairies
     {
         public override int FairyType => CoraliteContent.FairyType<BreezeFairy>();
         public override FairyRarity Rarity => FairyRarity.U;
-
-        public override int MaxResurrectionTime => 90 * 60;
 
         public override void SetDefaults()
         {
@@ -93,9 +92,11 @@ namespace Coralite.Content.Items.Fairies
     public class BreezeFairyProj : BaseFairyProjectile
     {
         public override string Texture => AssetDirectory.FairyItems + "BreezeFairy";
-        protected override int FrameY => 4;
 
-        //protected override string SkillName => "吹散！";
+        public override FairySkill[] InitSkill()
+            => [
+                NewSkill<Tackle>()
+                ];
 
         public override void SetDefaults()
         {

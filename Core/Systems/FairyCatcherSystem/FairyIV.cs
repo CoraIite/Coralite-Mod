@@ -1,9 +1,11 @@
 ﻿using Coralite.Helpers;
+using log4net.Core;
 using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader.IO;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem
 {
@@ -25,7 +27,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <summary> 耐力，决定单次射出能够使用多少次技能 </summary>
         public int Stamina { get; set; }
         /// <summary> 没什么大用的尺寸属性 </summary>
-        public int Scale { get; set; }
+        public float Scale { get; set; }
 
         /// <summary> 
         /// 生命值上限等级<br></br>
@@ -289,7 +291,16 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         private static void GetScaleIV(FairyCatcherPlayer player, ref FairyIV iv)
         {
             //数值高于永恒，从永恒到最大值之间缩放
-
+            if ((int)iv.ScaleLevel > 8 - 1)
+                iv.Stamina = (int)Helper.Lerp(
+                    2f,
+                    3,
+                    Math.Clamp((iv.ScaleLevel - FairyIVLevelID.Eternal), 0, EternalToOver) / EternalToOver);
+            else
+            {
+                //在二者间使用X2插值(四舍五入)
+                iv.Scale = (int)MathF.Round(Helper.Lerp(0.9f, 2f, Math.Clamp(iv.ScaleLevel / 7, 0, 1)), MidpointRounding.AwayFromZero);
+            }
         }
 
         private static int GetLerpIVValue(List<int> dataList, float level)

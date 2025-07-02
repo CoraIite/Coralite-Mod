@@ -12,8 +12,6 @@ namespace Coralite.Content.Items.Fairies
         public override int FairyType => CoraliteContent.FairyType<PinkFairy>();
         public override FairyRarity Rarity => FairyRarity.R;
 
-        public override int MaxResurrectionTime => 60 * 60;
-
         public override void SetDefaults()
         {
             Item.rare = ItemRarityID.White;
