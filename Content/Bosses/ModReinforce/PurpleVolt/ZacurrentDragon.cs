@@ -172,7 +172,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
             npcLoot.Add(ItemDropRule.MasterModeCommonDrop(ModContent.ItemType<ZacurrentRelic>()));
         }
 
-        public override void BossLoot(ref string name, ref int potionType)
+        public override void BossLoot(ref int potionType)
         {
             potionType = ItemID.GreaterHealingPotion;
         }

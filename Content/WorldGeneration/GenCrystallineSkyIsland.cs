@@ -194,7 +194,7 @@ namespace Coralite.Content.WorldGeneration
             Dictionary<Color, int> wallDic = new()
             {
                 [new Color(85, 183, 206)] = ModContent.WallType<SmoothSkarnWallUnsafe>(),//55b7ce
-                [new Color(29, 30, 28)] = ModContent.WallType<Walls.Magike.HardBasaltWall>(),//1d1e1c
+                [new Color(29, 30, 28)] = ModContent.WallType<Walls.Magike.HardBasaltWallUnsafe>(),//1d1e1c
             };
 
             generator.GenerateByTopLeft(p, mainDic, wallDic);
@@ -892,7 +892,7 @@ namespace Coralite.Content.WorldGeneration
                 [new Color(64, 77, 100)] = ModContent.WallType<CrackedSkarnWallUnsafe>(),//404d64
                 [new Color(152, 158, 149)] = ModContent.WallType<ChalcedonyWallUnsafe>(),//989e95
 
-                [new Color(54, 52, 58)] = ModContent.WallType<HardBasaltWall>(),//36343a
+                [new Color(54, 52, 58)] = ModContent.WallType<HardBasaltWallUnsafe>(),//36343a
 
                 [new Color(189, 202, 222)] = WallID.Cloud,//bdcade
             };
@@ -1577,7 +1577,7 @@ namespace Coralite.Content.WorldGeneration
                 [new Color(64, 77, 100)] = ModContent.WallType<CrackedSkarnWallUnsafe>(),//404d64
                 [new Color(152, 158, 149)] = ModContent.WallType<ChalcedonyWallUnsafe>(),//989e95
 
-                [new Color(54, 52, 58)] = ModContent.WallType<HardBasaltWall>(),//36343a
+                [new Color(54, 52, 58)] = ModContent.WallType<HardBasaltWallUnsafe>(),//36343a
 
                 [new Color(189, 202, 222)] = WallID.Cloud,//bdcade
             };

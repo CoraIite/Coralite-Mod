@@ -151,11 +151,6 @@ CraftAltar: {
 	AltarUI: "    Craft altar's UI, which seems to be a bit complicated. Next, we will use wood to craft coal as an example to explain how it work."
 }
 
-PolymerizeCraft2: {
-	ConnectToPedestal: "    After that, use connect staff to connect craft altar to the pedestal, taking care not to reverse it."
-	CheckAltar: "    Check the altar, the display has turned blue, which means the item is enough. Next steps will not be demonstrated, please refer to the previous pages."
-}
-
 ExpandProductionLine: {
 	Title: Expand the production line!
 	Awkward:
@@ -427,3 +422,4 @@ RemodelP4.HavestCoal:
 PolymerizeRecipe.PolymerizeRecipeLike: Mods.Coralite.Knowledges.PolymerizeRecipe.PolymerizeRecipeLike
 Pedestal.PlacePedestal: Mods.Coralite.Knowledges.Pedestal.PlacePedestal
 PolymerizeOtherItem.ConnectPedestal: Mods.Coralite.Knowledges.PolymerizeOtherItem.ConnectPedestal
+PolymerizeFinal.NotRepeat: Mods.Coralite.Knowledges.PolymerizeFinal.NotRepeat

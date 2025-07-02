@@ -127,7 +127,7 @@ namespace Coralite.Content.WorldGeneration
                     else
                     {
                         Main.tile[item.X, item.Y].Clear(Terraria.DataStructures.TileDataType.Wall);
-                        WorldGen.PlaceWall(item.X, item.Y, ModContent.WallType<HardBasaltWall>());
+                        WorldGen.PlaceWall(item.X, item.Y, ModContent.WallType<HardBasaltWallUnsafe>());
 
                         {
                             Point item2 = new(item.X - 1, item.Y);

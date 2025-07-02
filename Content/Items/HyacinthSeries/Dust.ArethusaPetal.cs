@@ -9,6 +9,7 @@ namespace Coralite.Content.Items.HyacinthSeries
 
         public override void OnSpawn(Dust dust)
         {
+            dust.rotation = Main.rand.NextFloat(6.282f);
             dust.frame = new Rectangle(0, Main.rand.Next(8) * 14, 10, 14);
             dust.color = Color.White;
         }

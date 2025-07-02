@@ -148,11 +148,6 @@ CraftAltar: {
 	AltarUI: "    Вот интерфейс алтаря магической синтезии, он может показаться сложным. Давайте разберём его, используя пример с синтезом угля из дерева."
 }
 
-PolymerizeCraft2: {
-	ConnectToPedestal: "    Теперь используйте соединитель, чтобы соединить алтарь синтеза с подставкой, будьте внимательны, не перепутайте."
-	CheckAltar: "    Проверьте алтарь синтеза, если он стал синим, значит, предметы были собраны. Далее следуйте ранее описанному процессу."
-}
-
 ExpandProductionLine: {
 	Title: Расширение производственной линии!
 	Awkward:
@@ -412,3 +407,4 @@ SwordPage: {
 // PolymerizeRecipe.PolymerizeRecipeLike: Mods.Coralite.Knowledges.PolymerizeRecipe.PolymerizeRecipeLike
 // Pedestal.PlacePedestal: Mods.Coralite.Knowledges.Pedestal.PlacePedestal
 // PolymerizeOtherItem.ConnectPedestal: Mods.Coralite.Knowledges.PolymerizeOtherItem.ConnectPedestal
+// PolymerizeFinal.NotRepeat: Mods.Coralite.Knowledges.PolymerizeFinal.NotRepeat
