@@ -22,7 +22,7 @@ namespace Coralite.Content.Items.HyacinthSeries
 
         public override void SetDefaults()
         {
-            Item.SetWeaponValues(28, 2);
+            Item.SetWeaponValues(27, 2);
             Item.DefaultToRangedWeapon(ProjectileType<DaturaProj>(), AmmoID.Bullet, 30, 11f, true);
 
             Item.useStyle = ItemUseStyleID.Rapier;

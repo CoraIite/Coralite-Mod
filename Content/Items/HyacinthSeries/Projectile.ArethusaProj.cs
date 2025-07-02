@@ -113,8 +113,12 @@ namespace Coralite.Content.Items.HyacinthSeries
             if (Main.netMode != NetmodeID.MultiplayerClient)
                 Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<ArethusaExplosion>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
             if (VisualEffectSystem.HitEffect_Dusts)
+            {
                 for (int j = 0; j < 8; j++)
-                    Dust.NewDustPerfect(Projectile.Center, ModContent.DustType<ArethusaPetal>(), (j * 0.785f).ToRotationVector2() * Main.rand.NextFloat(0.5f, 1.5f));
+                    Dust.NewDustPerfect(Projectile.Center, ModContent.DustType<ArethusaPetal>(), (j * 0.785f).ToRotationVector2() * Main.rand.NextFloat(0.25f, 1.5f));
+                for (int j = 0; j < 8; j++)
+                    Dust.NewDustPerfect(Projectile.Center, ModContent.DustType<ArethusaPetal>(), Helper.NextVec2Dir(0.25f,2.5f));
+            }
 
             SoundEngine.PlaySound(CoraliteSoundID.FireBall_Item45, Projectile.Center);
         }
@@ -154,7 +158,8 @@ namespace Coralite.Content.Items.HyacinthSeries
 
         public override void SetDefaults()
         {
-            Projectile.width = Projectile.height = 100;
+            Projectile.DamageType = DamageClass.Ranged;
+            Projectile.width = Projectile.height = 150;
             Projectile.timeLeft = 14;
             Projectile.penetrate = -1;
             Projectile.aiStyle = -1;
@@ -177,7 +182,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             }
 
             Alpha -= 0.068f;
-            Scale += 0.068f;
+            Scale += 0.095f;
             Projectile.rotation += 0.04f;
             Lighting.AddLight(Projectile.Center, new Vector3(0.4f, 0.4f, 0.8f));
         }
@@ -186,6 +191,7 @@ namespace Coralite.Content.Items.HyacinthSeries
         {
             Texture2D mainTex = Projectile.GetTexture();
 
+            Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, null, Color.White * Alpha*0.5f, 0, new Vector2(35, 45), Scale, SpriteEffects.None, 0f);
             Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, null, Color.White * Alpha, Projectile.rotation, new Vector2(35, 45), Scale, SpriteEffects.None, 0f);
             return false;
         }

@@ -165,11 +165,6 @@ CraftAltar: {
 		'''
 }
 
-PolymerizeCraft2: {
-	ConnectToPedestal: "    之后使用连接仪将合成坛连接到置物台上，请注意不要连反了。"
-	CheckAltar: "    查看合成坛，可以发现显示变蓝了，代表物品已经足够。 后续的步骤就不演示了，请参考前几页的流程。"
-}
-
 ExpandProductionLine: {
 	Title: 扩大生产线！
 	Awkward:
@@ -472,8 +467,9 @@ Pedestal.PlacePedestal:
 	    打开UI就可以将物品放入其中了。
 	    或是手持物品直接右键置物台物块放入。
 	'''
-PolymerizeOtherItem.ConnectPedestal: 
-'''
-    之后使用连接仪将合成坛连接到置物台上，请注意不要连反了。
-    满足数量需求的物品在合成坛UI中会变成蓝色。
-'''
+PolymerizeOtherItem.ConnectPedestal:
+	'''
+	    之后使用连接仪将合成坛连接到置物台上，请注意不要连反了。
+	    满足数量需求的物品在合成坛UI中会变成蓝色。
+	'''
+PolymerizeFinal.NotRepeat: "    之后的操作重复前几页中的第三、 四步，不再赘述。"

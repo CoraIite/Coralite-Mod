@@ -39,7 +39,7 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
                     new PolymerizeRecipe(),
                     new Pedestal(),
                     new PolymerizeOtherItem(),
-                    new PolymerizeCraft2(),
+                    new PolymerizeFinal(),
 
                     //P5：扩大生产线！
                     new ExpandProductionLine(),
