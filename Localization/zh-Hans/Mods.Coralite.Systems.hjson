@@ -277,4 +277,4 @@ CoraliteNoteSystem: {
 	HowToCollect: 获得物品后需要打开此页面才能记录收集进度
 }
 
-// FairySkill.Tackle.SkillName: Mods.Coralite.Systems.FairySkill.Tackle.SkillName
+FairySkill.Tackle.SkillName: 撞击！

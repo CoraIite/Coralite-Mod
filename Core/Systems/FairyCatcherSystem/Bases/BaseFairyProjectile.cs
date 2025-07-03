@@ -109,13 +109,16 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                     Projectile.Kill();
                     break;
                 case AIStates.Shooting:
+                    Projectile.timeLeft = 2;
                     Shooting();
                     SpawnFairyDust();
                     break;
                 case AIStates.Skill:
+                    Projectile.timeLeft = 2;
                     Skill();
                     break;
                 case AIStates.Rest:
+                    Projectile.timeLeft = 2;
                     Timer++;
                     if (Timer > 60 * 3 - IVSpeed * 2)
                         RestartAttack();
@@ -161,6 +164,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                         break;
                     }
                 }
+
+            if (ImmuneTimer>0)
+            {
+                ImmuneTimer--;
+            }
         }
 
         public void Initilize()
@@ -378,7 +386,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 OnExchangeToAction(target);
             }
             else
-                ExchangeToRest();
+                ExchangeToBack();
         }
 
         public virtual void OnExchangeToAction(NPC target) { }
@@ -411,10 +419,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             int damage = ContentSamples.NpcsByNetId[target.type].damage;
 
             if (State == AIStates.Skill)
-                _skills[(int)UseSkillIndex].ModifyHitNPC_Active(this, target, modifiers, ref damage);
+                _skills[(int)UseSkillIndex].ModifyHitNPC_Active(this, target, ref modifiers, ref damage);
 
             foreach (var skill in _skills)
-                skill.ModifyHitNPC_Inactive(this, target, modifiers, ref damage);
+                skill.ModifyHitNPC_Inactive(this, target, ref modifiers, ref damage);
 
             FairyItem?.HurtByNPC(this, target, modifiers, damage);
         }
@@ -456,7 +464,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 _skills[(int)UseSkillIndex].PostDrawSpecial(lightColor);
 
             if (Projectile.IsOwnedByLocalPlayer() && FairyItem != null)
-                DrawHealthBar(Projectile.Bottom + new Vector2(0, -12), FairyItem.Life, FairyItem.FairyIV.LifeMax);
+                DrawHealthBar(Projectile.Bottom + new Vector2(0, 12), FairyItem.Life, FairyItem.FairyIV.LifeMax);
             
             return false;
         }
@@ -472,7 +480,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             Texture2D mainTex = Projectile.GetTexture();
             var frame = mainTex.Frame(FrameX, FrameY, 0, Projectile.frame);
 
-            if (ImmuneTimer != 0 && ImmuneTimer % 5 < 2)
+            if (ImmuneTimer != 0 && (ImmuneTimer % 8) < 4)
                 lightColor *= 0.4f;
 
             spriteBatch.Draw(mainTex, Projectile.Center - screenPos, frame, lightColor, Projectile.rotation, frame.Size() / 2,

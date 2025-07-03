@@ -11,7 +11,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
     /// <summary>
     /// 仙灵技能
     /// </summary>
-    public abstract class FairySkill : ModType,ILocalizedModType
+    public abstract class FairySkill : ModType, ILocalizedModType
     {
         public int Type { get; internal set; }
 
@@ -22,7 +22,12 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         public string LocalizationCategory => "Systems.FairySkill";
 
-        public virtual Color SkillTextColor { get; set; }= Color.White;
+        public virtual Color SkillTextColor { get; set; } = Color.White;
+
+        /// <summary>
+        /// 技能计时器
+        /// </summary>
+        protected int SkillTimer { get; set; }
 
         protected override void Register()
         {
@@ -49,8 +54,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <param name="pos"></param>
         public virtual void SpawnSkillText(Vector2 pos)
         {
-            CombatText.NewText(Utils.CenteredRectangle(pos,Vector2.One), SkillTextColor,
-                SkillName.Value);
+            CombatText.NewText(Utils.CenteredRectangle(pos, Vector2.One), SkillTextColor,
+                FairyLoader.GetFairySkill(Type).SkillName.Value);
         }
 
         /// <summary>
@@ -78,7 +83,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         }
 
-        public virtual void ModifyHitByProj(BaseFairyProjectile fairyProj,Projectile proj,ref int damage)
+        public virtual void ModifyHitByProj(BaseFairyProjectile fairyProj, Projectile proj, ref int damage)
         {
 
         }
@@ -90,7 +95,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <param name="target"></param>
         /// <param name="hitModifier"></param>
         /// <param name="npcDamage"></param>
-        public virtual void ModifyHitNPC_Active(BaseFairyProjectile fairyProj,NPC target,NPC.HitModifiers hitModifier,ref int npcDamage)
+        public virtual void ModifyHitNPC_Active(BaseFairyProjectile fairyProj, NPC target, ref NPC.HitModifiers hitModifier, ref int npcDamage)
         {
 
         }
@@ -102,7 +107,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <param name="target"></param>
         /// <param name="hitModifier"></param>
         /// <param name="npcDamage"></param>
-        public virtual void ModifyHitNPC_Inactive(BaseFairyProjectile fairyProj,NPC target,NPC.HitModifiers hitModifier, ref int npcDamage)
+        public virtual void ModifyHitNPC_Inactive(BaseFairyProjectile fairyProj, NPC target, ref NPC.HitModifiers hitModifier, ref int npcDamage)
         {
 
         }
@@ -115,7 +120,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public virtual void OnTileCollide(BaseFairyProjectile fairyProj, Vector2 oldVelocity)
         {
 
-        } 
+        }
 
         public virtual void PreDrawSpecial(ref Color lightColor)
         {

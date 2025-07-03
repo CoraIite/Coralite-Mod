@@ -31,7 +31,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.NormalSkills
             //设置最大穿透数
             MaxPenetrate = fairyProj.IVSkillLevel / 3;
             //技能等级越高冲刺时间越长
-            fairyProj.Timer = 20 + fairyProj.IVSkillLevel * 4;
+            SkillTimer = 30 + fairyProj.IVSkillLevel * 4;
             fairyProj.Projectile.tileCollide = true;
 
             float speed = fairyProj.IVSpeed;
@@ -49,11 +49,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.NormalSkills
         public override bool Update(BaseFairyProjectile fairyProj)
         {
             //只是计时
-            fairyProj.Timer--;
-            if (fairyProj.Timer < 1)
+            SkillTimer--;
+            if (SkillTimer < 1)
             {
                 fairyProj.Projectile.velocity *= 0.9f;
-                if (fairyProj.Timer < -60)
+                if (SkillTimer < -60)
                     return true;
 
                 return false;
@@ -69,17 +69,17 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.NormalSkills
 
         public override void OnTileCollide(BaseFairyProjectile fairyProj, Vector2 oldVelocity)
         {
-            fairyProj.Timer = 0;
+            SkillTimer = 0;
             fairyProj.Projectile.velocity = -oldVelocity.SafeNormalize(Vector2.Zero) * 4;
         }
 
-        public override void ModifyHitNPC_Active(BaseFairyProjectile fairyProj, NPC target, NPC.HitModifiers hitModifier, ref int npcDamage)
+        public override void ModifyHitNPC_Active(BaseFairyProjectile fairyProj, NPC target,ref NPC.HitModifiers hitModifier, ref int npcDamage)
         {
             _penetrate++;
             if (_penetrate > MaxPenetrate)
             {
                 //结束技能
-                fairyProj.Timer = 0;
+                SkillTimer = 0;
                 fairyProj.Projectile.velocity = -fairyProj.Projectile.velocity.SafeNormalize(Vector2.Zero) * 4;
             }
 

@@ -98,32 +98,16 @@ namespace Coralite.Content.Items.Fairies
             Projectile.width = Projectile.height = 16;
         }
 
-        public override void OnInitialize()
-        {
-            Projectile.velocity = Projectile.velocity.RotateByRandom(-0.3f, 0.3f);
-            Timer = Main.rand.Next(30, 45);
-        }
-
-        public override void Shooting()
-        {
-            Timer--;
-            Projectile.timeLeft = 20;
-            Projectile.velocity *= 0.98f;
-
-            if (Timer < 1)
-                TryExchangeToAttack();
-        }
-
         public override void SpawnFairyDust()
         {
             switch (State)
             {
                 case AIStates.Shooting:
+                case AIStates.Rest:
+                case AIStates.Backing:
                     if (Main.rand.NextBool(3))
                         Projectile.SpawnTrailDust(DustID.GreenFairy, Main.rand.NextFloat(0.1f, 0.5f), 200);
                     break;
-                case AIStates.Rest:
-                case AIStates.Backing:
                 case AIStates.Skill:
                 default:
                     Projectile.SpawnTrailDust(DustID.GreenFairy, Main.rand.NextFloat(0.1f, 0.5f), 200);
