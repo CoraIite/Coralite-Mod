@@ -3,6 +3,7 @@ using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.Localization;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem
@@ -30,7 +31,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             FairyLoader.skills ??= new List<FairySkill>();
             FairyLoader.skills.Add(this);
 
-            Type = FairyLoader.ReserveFairyCoreID();
+            Type = FairyLoader.ReserveFairySkillID();
 
             SkillName = this.GetLocalization("SkillName");
         }
@@ -73,6 +74,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// </summary>
         /// <param name="fairyProj"></param>
         public virtual void OnFairyKill(BaseFairyProjectile fairyProj)
+        {
+
+        }
+
+        public virtual void ModifyHitByProj(BaseFairyProjectile fairyProj,Projectile proj,ref int damage)
         {
 
         }

@@ -81,11 +81,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             return modItem;
         }
 
-        public virtual void HurtByProjectile(BaseFairyProjectile proj, Projectile target)
+        public virtual void HurtByProjectile(BaseFairyProjectile proj, Projectile target,int damage)
         {
-            //使用默认模式的伤害量，放置一些特殊修改把NPC伤害改的太夸张
-            int damage = target.damage;
-
             //防御计算与限制
             damage -= FairyIV.Defence;
             if (damage < 1)
@@ -115,11 +112,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         public virtual void HurtByNPC(BaseFairyProjectile proj, NPC target, NPC.HitModifiers hit,int adjustedDamage)
         {
             //防御计算与限制
-            damage -= FairyIV.Defence;
-            if (damage < 1)
-                damage = 1;
+            adjustedDamage -= FairyIV.Defence;
+            if (adjustedDamage < 1)
+                adjustedDamage = 1;
 
-            Life -= damage;
+            Life -= adjustedDamage;
             LimitLife();
             proj.ImmuneTimer = proj.Projectile.localNPCHitCooldown;
 

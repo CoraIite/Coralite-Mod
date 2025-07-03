@@ -254,3 +254,5 @@ CoraliteNoteSystem: {
 	RewardCollected: Reward Collected
 	HowToCollect: Collection progress will be recorded after opening this page upon obtaining items
 }
+
+FairySkill.Tackle.SkillName: Mods.Coralite.Systems.FairySkill.Tackle.SkillName

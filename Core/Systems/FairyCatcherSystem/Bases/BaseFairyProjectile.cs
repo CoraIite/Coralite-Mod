@@ -148,7 +148,13 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 {
                     if (proj.Colliding(proj.getRect(), Projectile.getRect()))
                     {
-                        FairyItem?.HurtByProjectile(this, proj);
+                        int damage = proj.damage;
+
+                        foreach (var skill in _skills)
+                            skill.ModifyHitByProj(this, proj, ref damage);
+
+                        FairyItem?.HurtByProjectile(this, proj, damage);
+
                         if (State == AIStates.Rest)//仅在休息阶段会有受击的击退效果
                             Projectile.velocity += (Projectile.Center - proj.Center).SafeNormalize(Vector2.Zero) * proj.knockBack;
 
@@ -238,6 +244,25 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public virtual void Rest()
         {
+            Vector2 restSpeed = GetRestSpeed();
+            if (TargetIndex.GetNPCOwner(out NPC target, () => TargetIndex = -1) && Vector2.Distance(target.Center, Projectile.Center) > 450)
+            {
+                restSpeed += (target.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * IVSpeed;
+            }
+
+            float slowTime = 20;
+
+            Projectile.velocity.X = ((Projectile.velocity.X * slowTime) + restSpeed.X) / (slowTime + 1);
+            Projectile.velocity.Y = ((Projectile.velocity.Y * slowTime) + restSpeed.Y) / (slowTime + 1);
+        }
+
+        /// <summary>
+        /// 获取后摇时的原地转圈速度
+        /// </summary>
+        /// <returns></returns>
+        public virtual Vector2 GetRestSpeed()
+        {
+            return Vector2.Zero;
         }
 
         /// <summary>

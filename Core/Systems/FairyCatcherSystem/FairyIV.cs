@@ -157,7 +157,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                 && tag.TryGet(preName + nameof(Speed), out float speed)
                 && tag.TryGet(preName + nameof(SkillLevel), out int skillLevel)
                 && tag.TryGet(preName + nameof(Stamina), out int stamina)
-                && tag.TryGet(preName + nameof(Scale), out int scale)
+                && tag.TryGet(preName + nameof(Scale), out float scale)
                 && tag.TryGet(preName + nameof(LifeMaxLevel), out float lifeMaxLevel)
                 && tag.TryGet(preName + nameof(DamageLevel), out float damageLevel)
                 && tag.TryGet(preName + nameof(DefenceLevel), out float defenceLevel)

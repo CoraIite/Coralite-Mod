@@ -136,32 +136,9 @@ namespace Coralite.Content.Items.Fairies
             Lighting.AddLight(Projectile.Center, 0, 0.2f, 0);
         }
 
-        public override void Backing()
+        public override Vector2 GetRestSpeed()
         {
-
-            Timer++;
-            if (Timer < 40)
-            {
-                Projectile.velocity *= 0.95f;
-            }
-            else if (Timer == 40)
-            {
-                Projectile.velocity = Helper.NextVec2Dir(4, 6);
-            }
-            else if (Timer < 40 + 120)
-            {
-                Projectile.velocity = Projectile.velocity.RotateByRandom(0.05f, 0.17f);
-                if (Main.rand.NextBool())
-                    Projectile.SpawnTrailDust(DustID.GreenFairy, Main.rand.NextFloat(0.1f, 0.5f), 200);
-            }
-            else if (Timer == 40 + 120)
-                RestartAttack();
-            else
-            {
-                //Backing_LerpToOwner();
-                if (Main.rand.NextBool())
-                    Projectile.SpawnTrailDust(DustID.GreenFairy, Main.rand.NextFloat(0.1f, 0.5f), 200);
-            }
+            return (Timer * 0.1f).ToRotationVector2() * 2;
         }
 
         public override void OnExchangeToAction(NPC target)
