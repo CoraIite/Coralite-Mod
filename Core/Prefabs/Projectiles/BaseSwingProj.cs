@@ -6,7 +6,9 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Net;
 using Terraria;
+using Terraria.Enums;
 using Terraria.Graphics.Effects;
 using static Terraria.ModLoader.ModContent;
 
@@ -154,6 +156,13 @@ namespace Coralite.Core.Prefabs.Projectiles
         }
 
         public override bool ShouldUpdatePosition() => false;
+        public override bool? CanCutTiles() => false;
+
+        /// <summary>
+        /// 是否能破坏特殊物块，默认判断伤害>0可破坏
+        /// </summary>
+        /// <returns></returns>
+        public virtual bool CanCutTiles_Sp() => Projectile.damage > 0;
 
         #region AI
 
@@ -195,6 +204,13 @@ namespace Coralite.Core.Prefabs.Projectiles
             {
                 OnSlash();
                 SpawnDustOnSlash();
+                if (Projectile.IsOwnedByLocalPlayer() && CanCutTiles_Sp())
+                {
+                    bool[] tileCutIgnorance = Owner.GetTileCutIgnorance(allowRegrowth: false, false);
+                    DelegateMethods.tilecut_0 = TileCuttingContext.AttackProjectile;
+                    DelegateMethods.tileCutIgnore = tileCutIgnorance;
+                    Utils.PlotTileLine(Top, Bottom, Projectile.width, new Utils.TileActionAttempt(DelegateMethods.CutTiles));
+                }
             }
             else
                 AfterSlash();
