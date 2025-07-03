@@ -1,6 +1,4 @@
-﻿using Coralite.Content.DamageClasses;
-using Coralite.Content.GlobalItems;
-using Coralite.Core;
+﻿using Coralite.Core;
 using Coralite.Core.Systems.FairyCatcherSystem;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using Coralite.Core.Systems.FairyCatcherSystem.NormalSkills;
@@ -96,17 +94,8 @@ namespace Coralite.Content.Items.Fairies
 
         public override void SetDefaults()
         {
-            Projectile.tileCollide = true;
+            base.SetDefaults();
             Projectile.width = Projectile.height = 16;
-            Projectile.friendly = true;
-            Projectile.DamageType = FairyDamage.Instance;
-            Projectile.penetrate = -1;
-        }
-
-        public override void PostAI()
-        {
-            SetDirectionNormally();
-            UpdateFrameY(6);
         }
 
         public override void OnInitialize()
@@ -120,29 +109,36 @@ namespace Coralite.Content.Items.Fairies
             Timer--;
             Projectile.timeLeft = 20;
             Projectile.velocity *= 0.98f;
-            if (Main.rand.NextBool(3))
-                Projectile.SpawnTrailDust(DustID.GreenFairy, Main.rand.NextFloat(0.1f, 0.5f), 200);
 
             if (Timer < 1)
                 TryExchangeToAttack();
         }
 
-        public override void Skill()
+        public override void SpawnFairyDust()
         {
-            Projectile.timeLeft = 20;
-            Projectile.SpawnTrailDust(DustID.GreenFairy, Main.rand.NextFloat(0.1f, 0.5f), 200);
+            switch (State)
+            {
+                case AIStates.Shooting:
+                    if (Main.rand.NextBool(3))
+                        Projectile.SpawnTrailDust(DustID.GreenFairy, Main.rand.NextFloat(0.1f, 0.5f), 200);
+                    break;
+                case AIStates.Rest:
+                case AIStates.Backing:
+                case AIStates.Skill:
+                default:
+                    Projectile.SpawnTrailDust(DustID.GreenFairy, Main.rand.NextFloat(0.1f, 0.5f), 200);
+                    break;
+            }
+        }
+
+        public override void AIAfter()
+        {
             Lighting.AddLight(Projectile.Center, 0, 0.2f, 0);
-
-            if (Projectile.velocity.Length() < 10)
-                Projectile.velocity = (Projectile.velocity.Length() + 0.4f) * Projectile.velocity.SafeNormalize(Vector2.Zero);
-
-            Timer++;
-            if (Timer > 50)
-                ExchangeToBack();
         }
 
         public override void Backing()
         {
+
             Timer++;
             if (Timer < 40)
             {
@@ -166,24 +162,11 @@ namespace Coralite.Content.Items.Fairies
                 if (Main.rand.NextBool())
                     Projectile.SpawnTrailDust(DustID.GreenFairy, Main.rand.NextFloat(0.1f, 0.5f), 200);
             }
-
-            Lighting.AddLight(Projectile.Center, 0, 0.2f, 0);
         }
 
         public override void OnExchangeToAction(NPC target)
         {
-            //SpawnSkillText(Color.LawnGreen);
             SoundEngine.PlaySound(CoraliteSoundID.Fairy_NPCHit5, Projectile.Center);
-
-            Projectile.velocity = (target.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * 2;
-        }
-
-        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
-        {
-            base.OnHitNPC(target, hit, damageDone);
-            Projectile.velocity = (Projectile.Center - target.Center).SafeNormalize(Vector2.Zero)
-                .RotateByRandom(-0.3f, 0.3f) * Main.rand.NextFloat(2f, 5f);
-            ExchangeToBack();
         }
     }
 }

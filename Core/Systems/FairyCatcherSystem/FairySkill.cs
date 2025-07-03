@@ -55,7 +55,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <summary>
         /// 开始攻击时调用，用于初始化
         /// </summary>
-        public virtual void OnStartAttack()
+        public virtual void OnStartAttack(BaseFairyProjectile fairyProj)
         {
 
         }
@@ -73,6 +73,50 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// </summary>
         /// <param name="fairyProj"></param>
         public virtual void OnFairyKill(BaseFairyProjectile fairyProj)
+        {
+
+        }
+
+        /// <summary>
+        /// 命中NPC后调用，主动效果，只有在使用该技能的时候才会触发
+        /// </summary>
+        /// <param name="fairyProj"></param>
+        /// <param name="target"></param>
+        /// <param name="hitModifier"></param>
+        /// <param name="npcDamage"></param>
+        public virtual void ModifyHitNPC_Active(BaseFairyProjectile fairyProj,NPC target,NPC.HitModifiers hitModifier,ref int npcDamage)
+        {
+
+        }
+
+        /// <summary>
+        /// 命中NPC后调用，被动效果，每次攻击到NPC都会触发
+        /// </summary>
+        /// <param name="fairyProj"></param>
+        /// <param name="target"></param>
+        /// <param name="hitModifier"></param>
+        /// <param name="npcDamage"></param>
+        public virtual void ModifyHitNPC_Inactive(BaseFairyProjectile fairyProj,NPC target,NPC.HitModifiers hitModifier, ref int npcDamage)
+        {
+
+        }
+
+        /// <summary>
+        /// 在与墙壁发生碰撞时调用
+        /// <param name="fairyProj"></param>
+        /// <param name="oldVelocity"></param>
+        /// </summary>
+        public virtual void OnTileCollide(BaseFairyProjectile fairyProj, Vector2 oldVelocity)
+        {
+
+        } 
+
+        public virtual void PreDrawSpecial(ref Color lightColor)
+        {
+
+        }
+
+        public virtual void PostDrawSpecial(Color lightColor)
         {
 
         }

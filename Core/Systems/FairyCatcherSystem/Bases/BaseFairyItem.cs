@@ -40,7 +40,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// <summary>
         /// 仙林是否外出
         /// </summary>
-        public bool IsOut {  get; private set; }
+        public bool IsOut { get; private set; }
 
 
         private static readonly int[] indexes = [0, 1, 2, 0, 2, 3, 0, 3, 4, 0, 4, 5, 0, 5, 6, 0, 6, 7];
@@ -71,8 +71,12 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         public override ModItem Clone(Item newEntity)
         {
             ModItem modItem = base.Clone(newEntity);
-            if (modItem != null)
-                (modItem as BaseFairyItem).FairyIV = FairyIV;
+            if (modItem != null&& modItem is BaseFairyItem bfi)
+            {
+                bfi.FairyIV = FairyIV;
+                bfi.Life= Life;
+                bfi.dead = dead;
+            }
 
             return modItem;
         }
@@ -108,11 +112,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// <param name="target"></param>
         /// <param name="hit"></param>
         /// <param name="damageDone"></param>
-        public virtual void HurtByNPC(BaseFairyProjectile proj, NPC target, NPC.HitInfo hit, int damageDone)
+        public virtual void HurtByNPC(BaseFairyProjectile proj, NPC target, NPC.HitModifiers hit,int adjustedDamage)
         {
-            //使用默认模式的伤害量，放置一些特殊修改把NPC伤害改的太夸张
-            int damage = ContentSamples.NpcsByNetId[target.type].damage;
-
             //防御计算与限制
             damage -= FairyIV.Defence;
             if (damage < 1)
@@ -242,7 +243,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// 在仙灵瓶内更新，执行各种特殊操作
         /// </summary>
         /// <param name="player"></param>
-        public virtual void UpdateInBottle(BaseFairyBottle bottle,Player player) { }
+        public virtual void UpdateInBottle(BaseFairyBottle bottle, Player player) { }
 
         /// <summary>
         /// 仙灵瓶被取出时调用
@@ -591,11 +592,17 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         public override void SaveData(TagCompound tag)
         {
             FairyIV.Save(tag);
+            if (IsDead)
+                tag.Add(nameof(IsDead), IsDead);
+            tag.Add(nameof(Life), Life);
         }
 
         public override void LoadData(TagCompound tag)
         {
             FairyIV = FairyIV.Load(Item, tag);
+            dead = tag.ContainsKey(nameof(IsDead));
+            if (tag.TryGet(nameof(Life), out int l))
+                Life = l;
         }
     }
 }

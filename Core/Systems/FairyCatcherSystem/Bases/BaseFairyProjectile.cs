@@ -5,6 +5,7 @@ using System;
 using System.IO;
 using System.Linq;
 using Terraria;
+using Terraria.ID;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 {
@@ -41,6 +42,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// 由本地端同步给其他端的速度，无需使用仙灵物品获取速度个体值
         /// </summary>
         public float IVSpeed {  get; set; }
+        /// <summary>
+        /// 由本地端同步给其他端的技能等级，无需使用仙灵物品获取速度个体值
+        /// </summary>
+        public int IVSkillLevel {  get; set; }
 
         protected virtual int FrameX => 1;
         protected virtual int FrameY => 4;
@@ -86,8 +91,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         {
             Projectile.DamageType = FairyDamage.Instance;
             Projectile.tileCollide = true;
+            Projectile.friendly = true;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 30;
+
+            Projectile.penetrate = -1;
         }
 
         public sealed override void AI()
@@ -102,37 +110,51 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                     break;
                 case AIStates.Shooting:
                     Shooting();
+                    SpawnFairyDust();
                     break;
                 case AIStates.Skill:
                     Skill();
                     break;
                 case AIStates.Rest:
+                    Timer++;
+                    if (Timer > 60 * 3 - IVSpeed * 2)
+                        RestartAttack();
 
+                    Rest();
+                    SpawnFairyDust();
                     break;
                 case AIStates.Backing:
                     Backing();
+                    SpawnFairyDust();
                     break;
             }
+
+            AIAfter();
         }
+
+        /// <summary>
+        /// 用于发光等特殊效果
+        /// </summary>
+        public virtual void AIAfter() { }
 
         public override void PostAI()
         {
+            SetDirectionNormally();
+            UpdateFrameY(6);
+
             //检测与弹幕间的碰撞
-            if (Projectile.IsOwnedByLocalPlayer()&&ImmuneTimer <= 0)
+            if (Projectile.IsOwnedByLocalPlayer() && ImmuneTimer <= 0)
                 foreach (var proj in Main.projectile.Where(p => p.active && p.hostile))
                 {
                     if (proj.Colliding(proj.getRect(), Projectile.getRect()))
                     {
                         FairyItem?.HurtByProjectile(this, proj);
                         if (State == AIStates.Rest)//仅在休息阶段会有受击的击退效果
-                        {
+                            Projectile.velocity += (Projectile.Center - proj.Center).SafeNormalize(Vector2.Zero) * proj.knockBack;
 
-                        }
                         break;
                     }
                 }
-
-            //受击后改变运动
         }
 
         public void Initilize()
@@ -146,6 +168,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                     , (int)(Projectile.height * FairyItem.FairyIV.Scale));
 
                 IVSpeed = FairyItem.FairyIV.Speed;
+                IVSkillLevel = FairyItem.FairyIV.SkillLevel;
                 Projectile.netUpdate = true;
             }
 
@@ -176,6 +199,14 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         public virtual void OnInitialize() { }
 
         /// <summary>
+        /// 生成粒子，使用<see cref="State"/>判断当前的状态
+        /// </summary>
+        public virtual void SpawnFairyDust()
+        {
+
+        }
+
+        /// <summary>
         /// 在刚射出时执行，飞行指定时间后开始攻击
         /// </summary>
         public virtual void Shooting()
@@ -195,7 +226,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             {
                 Timer = 1;
                 _skills[(int)UseSkillIndex].SpawnSkillText(Projectile.Top);
-                _skills[(int)UseSkillIndex].OnStartAttack();
+                _skills[(int)UseSkillIndex].OnStartAttack(this);
             }
 
             //更新招式
@@ -205,21 +236,33 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             }
         }
 
+        public virtual void Rest()
+        {
+        }
+
         /// <summary>
         /// 返回玩家，根据仙灵的速度个体值，一段时间后逐渐加速
         /// </summary>
         public virtual void Backing()
         {
+            Projectile.tileCollide = false;
+            float speed = IVSpeed;
+            Vector2 dir = (Owner.Center - Projectile.Center).SafeNormalize(Vector2.Zero);
+
+            Timer++;
+            //速度越快加速回归的速度越快
+            if (Timer > 60 * 4 - IVSpeed * 4)
+            {
+                speed = Projectile.velocity.Length();
+                speed *= 1.01f;
+                Projectile.velocity = dir * speed;
+            }
+            else
+                Projectile.velocity = dir * speed;
+
+            if (Vector2.Distance(Projectile.Center, Owner.Center) < speed * 2)
+                Projectile.Kill();
         }
-
-        //public virtual void Backing_LerpToOwner()
-        //{
-        //    Projectile.velocity = (Owner.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * 2;
-        //    Projectile.Center = Vector2.SmoothStep(Projectile.Center, Owner.Center, Helper.SqrtEase(Timer * 0.00075f));
-
-        //    if (Vector2.Distance(Projectile.Center, Owner.Center) < 24)
-        //        Projectile.Kill();
-        //}
 
         public void UpdateFrameY(int spacing)
         {
@@ -233,7 +276,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public override bool? CanDamage()
         {
-            if (ImmuneTimer == 0 && canDamage)
+            if (canDamage)
                 return null;
 
             return false;
@@ -336,11 +379,19 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// <param name="target"></param>
         public virtual void OnKillByNPC(NPC target) { }
 
-        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             //自身受伤
-            FairyItem?.HurtByNPC(this, target, hit, damageDone);
+            //使用默认模式的伤害量，防止一些特殊修改把NPC伤害改的太夸张
+            int damage = ContentSamples.NpcsByNetId[target.type].damage;
 
+            if (State == AIStates.Skill)
+                _skills[(int)UseSkillIndex].ModifyHitNPC_Active(this, target, modifiers, ref damage);
+
+            foreach (var skill in _skills)
+                skill.ModifyHitNPC_Inactive(this, target, modifiers, ref damage);
+
+            FairyItem?.HurtByNPC(this, target, modifiers, damage);
         }
 
         #endregion
@@ -361,6 +412,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
+            if (State == AIStates.Skill)
+                _skills[(int)UseSkillIndex].OnTileCollide(this, oldVelocity);
+
             return false;
         }
 
@@ -368,10 +422,17 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public override bool PreDraw(ref Color lightColor)
         {
+            if (State == AIStates.Skill)
+                _skills[(int)UseSkillIndex].PreDrawSpecial(ref lightColor);
+
             DrawSelf(Main.spriteBatch, Main.screenPosition, lightColor);
+
+            if (State == AIStates.Skill)
+                _skills[(int)UseSkillIndex].PostDrawSpecial(lightColor);
 
             if (Projectile.IsOwnedByLocalPlayer() && FairyItem != null)
                 DrawHealthBar(Projectile.Bottom + new Vector2(0, -12), FairyItem.Life, FairyItem.FairyIV.LifeMax);
+            
             return false;
         }
 

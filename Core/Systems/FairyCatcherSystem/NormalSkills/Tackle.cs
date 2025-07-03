@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Coralite.Core.Systems.FairyCatcherSystem.Bases;
+using Coralite.Helpers;
+using System;
+using Terraria;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem.NormalSkills
 {
@@ -11,5 +10,80 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.NormalSkills
     /// </summary>
     public class Tackle : FairySkill
     {
+        /// <summary>
+        /// 基础冲撞时间
+        /// </summary>
+        protected virtual int DashTime { get; } = 30;
+
+        /// <summary>
+        /// 穿透数
+        /// </summary>
+        private int _penetrate;
+
+        /// <summary>
+        /// 最大穿透数，在开始攻击时初始化
+        /// </summary>
+        protected int MaxPenetrate { get; set; }
+
+        public override void OnStartAttack(BaseFairyProjectile fairyProj)
+        {
+            _penetrate = 0;
+            //设置最大穿透数
+            MaxPenetrate = fairyProj.IVSkillLevel / 3;
+            //技能等级越高冲刺时间越长
+            fairyProj.Timer = 20 + fairyProj.IVSkillLevel * 4;
+            fairyProj.Projectile.tileCollide = true;
+
+            float speed = fairyProj.IVSpeed;
+
+            //根据技能等级增幅撞击速度
+            speed *= Helper.Lerp(1, 1.75f, Helper.X2Ease(Math.Clamp(fairyProj.IVSkillLevel / 15, 0, 1)));
+
+            if (fairyProj.TargetIndex.GetNPCOwner(out NPC target))
+            {
+                fairyProj.Projectile.velocity =
+                    (target.Center - fairyProj.Projectile.Center).SafeNormalize(Vector2.Zero) * speed;
+            }
+        }
+
+        public override bool Update(BaseFairyProjectile fairyProj)
+        {
+            //只是计时
+            fairyProj.Timer--;
+            if (fairyProj.Timer < 1)
+            {
+                fairyProj.Projectile.velocity *= 0.9f;
+                if (fairyProj.Timer < -60)
+                    return true;
+
+                return false;
+            }
+
+            //技能等级>6拥有追踪功能
+
+
+            fairyProj.SpawnFairyDust();
+
+            return false;
+        }
+
+        public override void OnTileCollide(BaseFairyProjectile fairyProj, Vector2 oldVelocity)
+        {
+            fairyProj.Timer = 0;
+            fairyProj.Projectile.velocity = -oldVelocity.SafeNormalize(Vector2.Zero) * 4;
+        }
+
+        public override void ModifyHitNPC_Active(BaseFairyProjectile fairyProj, NPC target, NPC.HitModifiers hitModifier, ref int npcDamage)
+        {
+            _penetrate++;
+            if (_penetrate > MaxPenetrate)
+            {
+                //结束技能
+                fairyProj.Timer = 0;
+                fairyProj.Projectile.velocity = -fairyProj.Projectile.velocity.SafeNormalize(Vector2.Zero) * 4;
+            }
+
+            hitModifier.SourceDamage += (1 + fairyProj.IVSkillLevel * 0.1f);
+        }
     }
 }

@@ -35,7 +35,6 @@ namespace Coralite.Content.UI
         /// </summary>
         public bool ShowContains;
 
-        private int time;
         private bool init;
 
         public override void OnInitialize()
@@ -66,15 +65,10 @@ namespace Coralite.Content.UI
                     ShowContains = false;
                     Recalculate();
                 }
-                //if (time > 0)
-                //{
-                //    time++;
-                //    Recalculate();
-                //}
             }
             else
             {
-                //init = false;
+                //init = false;//测试用
 
                 if (!init)
                 {
