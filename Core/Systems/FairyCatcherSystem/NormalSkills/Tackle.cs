@@ -30,11 +30,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.NormalSkills
             _penetrate = 0;
             //设置最大穿透数
             MaxPenetrate = fairyProj.IVSkillLevel / 3;
-            //技能等级越高冲刺时间越长
-            SkillTimer = 30 + fairyProj.IVSkillLevel * 4;
             fairyProj.Projectile.tileCollide = true;
 
-            float speed = fairyProj.IVSpeed;
+            float speed = fairyProj.IVSpeed * (1.25f + fairyProj.IVSkillLevel * 0.03f);
 
             //根据技能等级增幅撞击速度
             speed *= Helper.Lerp(1, 1.75f, Helper.X2Ease(Math.Clamp(fairyProj.IVSkillLevel / 15, 0, 1)));
@@ -43,6 +41,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.NormalSkills
             {
                 fairyProj.Projectile.velocity =
                     (target.Center - fairyProj.Projectile.Center).SafeNormalize(Vector2.Zero) * speed;
+
+                //技能等级越高冲刺时间越长
+                SkillTimer = (int)(Vector2.Distance(target.Center, fairyProj.Projectile.Center) / speed)
+                    + 5 + fairyProj.IVSkillLevel * 10;
             }
         }
 
@@ -52,8 +54,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.NormalSkills
             SkillTimer--;
             if (SkillTimer < 1)
             {
-                fairyProj.Projectile.velocity *= 0.9f;
-                if (SkillTimer < -60)
+                fairyProj.Projectile.velocity *= 0.95f;
+                if (SkillTimer < -45)
                     return true;
 
                 return false;

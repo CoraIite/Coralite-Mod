@@ -229,6 +229,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             Timer++;
             if (Timer > SpawnTime)
                 TryExchangeToAttack();
+
+            float speed = Projectile.velocity.Length();
+            if (speed>IVSpeed)
+                Projectile.velocity = Projectile.velocity.SafeNormalize(Vector2.Zero) * Helper.Lerp(speed, IVSpeed, 0.08f);
         }
 
         /// <summary>

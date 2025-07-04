@@ -166,7 +166,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         {
             //生成仙灵弹幕
             Projectile proj = Projectile.NewProjectileDirect(source, position, velocity, Item.shoot
-                , FairyIV.Damage, knockBack, player.whoAmI);
+                , FairyIV.Damage, knockBack, player.whoAmI,flyTime);
 
             _fairyProjIndex = proj.identity;
             _fairyProjUUID = proj.projUUID;
