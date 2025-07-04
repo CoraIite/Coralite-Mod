@@ -27,6 +27,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// 连线的绘制有多少个点，越多越平滑
         /// </summary>
         public virtual int LinePointCount { get => 10; }
+        /// <summary>
+        /// 射出的仙灵能够飞行多少时间
+        /// </summary>
+        public virtual int FairyFlyTime { get => 25; }
 
         public Vector2 CursorCenter => Projectile.Center;
 
@@ -64,6 +68,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         public int shootTime = 12;
 
         private HashSet<int> IDs;
+
+        public override bool? CanCutTiles() => null;
+        public override bool CanCutTiles_Sp() => false;
 
         public override void SetSwingProperty()
         {
@@ -226,29 +233,29 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         {
             OnShootFairy();
 
+            if (!Projectile.IsOwnedByLocalPlayer())
+                return;
+
             Item heldItem = Item;
-            if (heldItem.ModItem is BaseFairyCatcher catcher)
+            float speed = heldItem.shootSpeed;
+            Vector2 velocity = oldRotate[^1].ToRotationVector2() * speed;
+            Vector2 center = Projectile.Center;
+
+            if (Owner.TryGetModPlayer(out FairyCatcherPlayer fcp)
+                && fcp.TryGetFairyBottle(out BaseFairyBottle bottle))
             {
-                float speed = heldItem.shootSpeed;
-                Vector2 velocity = oldRotate[^1].ToRotationVector2() * speed;
-                Vector2 center = Projectile.Center;
+                float damage = Owner.GetWeaponDamage(heldItem);
+                fcp.TotalCatchPowerBonus(ref damage, heldItem);
 
-                if (Owner.TryGetModPlayer(out FairyCatcherPlayer fcp) 
-                    && fcp.TryGetFairyBottle(out BaseFairyBottle bottle))
+                int count = 0;
+                foreach (var item in bottle.GetShootableFairy(Owner))
                 {
-                    float damage = Owner.GetWeaponDamage(heldItem);
-                    fcp.TotalCatchPowerBonus(ref damage, heldItem);
+                    item.ShootFairy(Owner, Projectile.GetSource_FromAI(), center, velocity, Projectile.knockBack,FairyFlyTime);
 
-                    int count = 0;
-                    foreach (var item in bottle.GetShootableFairy(Owner))
-                    {
-                        item.ShootFairy(Owner, Projectile.GetSource_FromAI(), center, velocity, Projectile.knockBack);
-
-                        count++;
-                        velocity *= 0.9f;
-                        if (count >= HowManyPerShoot)
-                            break;
-                    }
+                    count++;
+                    velocity *= 0.9f;
+                    if (count >= HowManyPerShoot)
+                        break;
                 }
             }
         }

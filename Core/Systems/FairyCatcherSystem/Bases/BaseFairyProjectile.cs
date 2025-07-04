@@ -55,7 +55,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         protected float AttackDistance = 400;
 
         private bool init = true;
-        protected bool canDamage;
+        protected bool canDamage = true;
 
         /// <summary>
         /// 存储所有的仙灵技能
@@ -120,7 +120,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 case AIStates.Rest:
                     Projectile.timeLeft = 2;
                     Timer++;
-                    if (Timer > 60 * 3 - IVSpeed * 2)
+                    if (Timer > 60 * 3 - IVSpeed * 4)
                         RestartAttack();
 
                     Rest();
@@ -158,7 +158,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
                         FairyItem?.HurtByProjectile(this, proj, damage);
 
-                        if (State == AIStates.Rest)//仅在休息阶段会有受击的击退效果
+                        if (State is AIStates.Rest or AIStates.Shooting)//仅在休息阶段会有受击的击退效果
                             Projectile.velocity += (Projectile.Center - proj.Center).SafeNormalize(Vector2.Zero) * proj.knockBack;
 
                         break;
@@ -183,6 +183,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
                 IVSpeed = FairyItem.FairyIV.Speed;
                 IVSkillLevel = FairyItem.FairyIV.SkillLevel;
+                AttackDistance = 325 + IVSkillLevel * 75;
                 Projectile.netUpdate = true;
             }
 
@@ -378,8 +379,20 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 return;
             }
 
-            if (Helper.TryFindClosestEnemy(Projectile.Center, AttackDistance, n => n.CanBeChasedBy() && Collision.CanHit(Projectile, n), out NPC target))
+            //持续索敌，妹找到那就尝试换个目标
+            if (TargetIndex.GetNPCOwner(out NPC target1,()=>TargetIndex=-1))
             {
+                State = AIStates.Skill;
+                Timer = 0;
+
+                OnExchangeToAction(target1);
+                return;
+            }
+
+            if (Helper.TryFindClosestEnemy(Projectile.Center, AttackDistance
+                , n => n.CanBeChasedBy() && Collision.CanHit(Projectile, n), out NPC target))
+            {
+                TargetIndex = target.whoAmI;
                 State = AIStates.Skill;
                 Timer = 0;
 
@@ -425,6 +438,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 skill.ModifyHitNPC_Inactive(this, target, ref modifiers, ref damage);
 
             FairyItem?.HurtByNPC(this, target, modifiers, damage);
+            if (State is AIStates.Rest or AIStates.Shooting)//仅在休息阶段会有受击的击退效果
+                Projectile.velocity += (Projectile.Center - target.Center).SafeNormalize(Vector2.Zero) * 2;
         }
 
         #endregion
