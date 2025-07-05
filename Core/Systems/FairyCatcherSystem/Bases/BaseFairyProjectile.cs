@@ -181,6 +181,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 Projectile.Resize((int)(Projectile.width * FairyItem.FairyIV.Scale)
                     , (int)(Projectile.height * FairyItem.FairyIV.Scale));
 
+                Projectile.scale = FairyItem.FairyIV.Scale;
                 IVSpeed = FairyItem.FairyIV.Speed;
                 IVSkillLevel = FairyItem.FairyIV.SkillLevel;
                 AttackDistance = 325 + IVSkillLevel * 75;
@@ -299,7 +300,14 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 Projectile.velocity = dir * speed;
 
             if (Vector2.Distance(Projectile.Center, Owner.Center) < speed * 2)
+            {
+                if (Owner.TryGetModPlayer(out FairyCatcherPlayer fcp)
+                     && fcp.TryGetFairyBottle(out BaseFairyBottle bottle)
+                     && FairyItem != null)
+                    bottle.OnFairyBack(Owner, FairyItem);
+
                 Projectile.Kill();
+            }
         }
 
         public void UpdateFrameY(int spacing)
@@ -364,7 +372,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 State = AIStates.Skill;
                 Timer = 0;
 
-                OnExchangeToAction(target);
+                OnStartUseSkill(target);
                 canDamage = true;
             }
             else
@@ -389,7 +397,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 State = AIStates.Skill;
                 Timer = 0;
 
-                OnExchangeToAction(target1);
+                OnStartUseSkill(target1);
                 return;
             }
 
@@ -400,13 +408,17 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 State = AIStates.Skill;
                 Timer = 0;
 
-                OnExchangeToAction(target);
+                OnStartUseSkill(target);
             }
             else
                 ExchangeToBack();
         }
 
-        public virtual void OnExchangeToAction(NPC target) { }
+        /// <summary>
+        /// 在开始使用技能时调用
+        /// </summary>
+        /// <param name="target"></param>
+        public virtual void OnStartUseSkill(NPC target) { }
 
         #endregion
 
@@ -415,11 +427,17 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         public sealed override void OnKill(int timeLeft)
         {
             if (FairyItem != null && FairyItem.IsDead)
+            {
                 foreach (var skill in _skills)
                     skill.OnFairyKill(this);
 
+                OnKill_DeadEffect();
+            }
+
             OnKill_OtherEffect(timeLeft);
         }
+
+        public virtual void OnKill_DeadEffect() { }
 
         public virtual void OnKill_OtherEffect(int timeleft) { }
 
@@ -516,7 +534,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 factor = 1f;
 
             Color backColor = Color.Lerp(Color.DarkRed, Color.DarkGreen, factor);
-            Color barColor = Color.Lerp(Color.Red, Color.LawnGreen, factor);
+            Color barColor = Color.Lerp(Color.OrangeRed, Color.LawnGreen, factor);
             float totalBarLength = 12 * 3f;
 
             Texture2D tex = CoraliteAssets.Sparkle.BarSPA.Value;
@@ -537,15 +555,16 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             Main.spriteBatch.Draw(tex, center + new Vector2(-scale * tex.Width / 2, 0), rect, barColor, 0, new Vector2(0, tex.Height / 2), scale, 0, 0);
 
             //绘制指针
-            tex = CoraliteAssets.Sparkle.ShotLineSPA.Value;
-            scale = totalBarLength / tex.Width;
+            Texture2D tex2 = CoraliteAssets.Sparkle.ShotLineSPA.Value;
+            //scale = totalBarLength / tex.Width;
+
             Vector2 pos = center + new Vector2(-scale * tex.Width / 2 + factor * scale * tex.Width, 0);
 
-            Vector2 scale1 = new(scale * tex.Height / tex.Width * 0.66f, scale);
-            Main.spriteBatch.Draw(tex, pos, null, backColor
-                , MathHelper.PiOver2, tex.Size() / 2, scale1, 0, 0);
-            Main.spriteBatch.Draw(tex, pos, null, barColor
-                , MathHelper.PiOver2, tex.Size() / 2, scale1, 0, 0);
+            Vector2 scale1 = new Vector2(scale * tex2.Height / tex2.Width * 0.75f, scale) * 0.55f;
+            Main.spriteBatch.Draw(tex2, pos, null, backColor
+                , MathHelper.PiOver2, tex2.Size() / 2, scale1, 0, 0);
+            Main.spriteBatch.Draw(tex2, pos, null, barColor
+                , MathHelper.PiOver2, tex2.Size() / 2, scale1, 0, 0);
         }
 
         #endregion

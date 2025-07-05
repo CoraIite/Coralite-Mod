@@ -196,7 +196,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public static void GetLifeMaxIV(FairyData data, ref FairyIV iv)
         {
             //数值高于永恒，从永恒到最大值之间缩放
-            if ((int)iv.LifeMaxLevel > data.LifeMaxData.Count - 1)
+            if ((int)iv.LifeMaxLevel >= data.LifeMaxData.Count - 1)
                 iv.LifeMax = (int)Helper.Lerp(
                     data.LifeMaxData[^1],
                     data.OverLifeMax,
@@ -211,7 +211,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public static void GetDamageIV(FairyCatcherPlayer player, FairyData data, ref FairyIV iv)
         {
             //数值高于永恒，从永恒到最大值之间缩放
-            if ((int)iv.DamageLevel > data.DamageData.Count - 1)
+            if ((int)iv.DamageLevel >= data.DamageData.Count - 1)
                 iv.Damage = (int)Helper.Lerp(
                     data.DamageData[^1],
                     data.OverDamage,
@@ -226,7 +226,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public static void GetDefenceIV(FairyCatcherPlayer player, FairyData data, ref FairyIV iv)
         {
             //数值高于永恒，从永恒到最大值之间缩放
-            if ((int)iv.DefenceLevel > data.DefenceData.Count - 1)
+            if ((int)iv.DefenceLevel >= data.DefenceData.Count - 1)
                 iv.Defence = (int)Helper.Lerp(
                     data.DefenceData[^1],
                     data.OverDefence,
@@ -241,7 +241,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public static void GetSpeedIV(FairyCatcherPlayer player, FairyData data, ref FairyIV iv)
         {
             //数值高于永恒，从永恒到最大值之间缩放
-            if ((int)iv.SpeedLevel > data.SpeedData.Count - 1)
+            if ((int)iv.SpeedLevel >= data.SpeedData.Count - 1)
                 iv.Speed = MathF.Round(Helper.Lerp(
                     data.SpeedData[^1],
                     data.OverSpeed,
@@ -261,7 +261,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public static void GetSkillLevelIV(FairyCatcherPlayer player, FairyData data, ref FairyIV iv)
         {
             //数值高于永恒，从永恒到最大值之间缩放
-            if ((int)iv.SkillLevelLevel > data.SkillLevelData.Count - 1)
+            if ((int)iv.SkillLevelLevel >= data.SkillLevelData.Count - 1)
                 iv.SkillLevel = (int)Helper.Lerp(
                     data.SkillLevelData[^1],
                     data.OverSkillLevel,
@@ -276,7 +276,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public static void GetStaminaIV(FairyCatcherPlayer player, FairyData data, ref FairyIV iv)
         {
             //数值高于永恒，从永恒到最大值之间缩放
-            if ((int)iv.StaminaLevel > data.StaminaData.Count - 1)
+            if ((int)iv.StaminaLevel >= data.StaminaData.Count - 1)
                 iv.Stamina = (int)Helper.Lerp(
                     data.StaminaData[^1],
                     data.OverStamina,
@@ -291,15 +291,15 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         private static void GetScaleIV(FairyCatcherPlayer player, ref FairyIV iv)
         {
             //数值高于永恒，从永恒到最大值之间缩放
-            if ((int)iv.ScaleLevel > 8 - 1)
-                iv.Stamina = (int)Helper.Lerp(
-                    2f,
-                    3,
+            if ((int)iv.ScaleLevel >= 8 - 1)
+                iv.Scale = Helper.Lerp(
+                    1.5f,
+                    2,
                     Math.Clamp((iv.ScaleLevel - FairyIVLevelID.Eternal), 0, EternalToOver) / EternalToOver);
             else
             {
                 //在二者间使用X2插值(四舍五入)
-                iv.Scale = (int)MathF.Round(Helper.Lerp(0.9f, 2f, Math.Clamp(iv.ScaleLevel / 7, 0, 1)), MidpointRounding.AwayFromZero);
+                iv.Scale = MathF.Round(Helper.Lerp(0.8f, 1.5f, Math.Clamp(iv.ScaleLevel / 7, 0, 1)),1, MidpointRounding.AwayFromZero);
             }
         }
 

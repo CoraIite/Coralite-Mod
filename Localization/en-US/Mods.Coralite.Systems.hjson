@@ -78,6 +78,7 @@ FairySystem: {
 	SortBySpeed: Mods.Coralite.Systems.FairySystem.SortBySpeed
 	SortBySkillLevel: Mods.Coralite.Systems.FairySystem.SortBySkillLevel
 	SortByStamina: Mods.Coralite.Systems.FairySystem.SortByStamina
+	BottleHeal: Mods.Coralite.Systems.FairySystem.BottleHeal
 }
 
 BossBarSystem.DontTakeDamage: Cant attack!！

@@ -115,7 +115,7 @@ namespace Coralite.Content.UI
 
             int count = bottle.FightCapacity;
             //面板宽度，固定
-            int width = 10 * 46;
+            int width = 10 * 51;
             //面板高度，动态变化
             int height = (count / 10 + (count % 10 > 0 ? 1 : 0)) * 50 + 18;
             FightFairyPanel?.SetSize(width, height);
@@ -141,7 +141,7 @@ namespace Coralite.Content.UI
 
             int count = bottle.ContainCapacity;
             //面板宽度，固定
-            int width = 10 * 46;
+            int width = 10 * 51;
             //面板高度，动态变化
             int height = (count / 10 + (count % 10 > 0 ? 1 : 0)) * 50 + 18;
             ContainFairyPanel?.SetSize(width, height);

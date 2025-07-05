@@ -81,6 +81,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public static LocalizedText SortBySpeed;
         public static LocalizedText SortBySkillLevel;
         public static LocalizedText SortByStamina;
+        public static LocalizedText BottleHeal;
 
         public void LoadLocalization()
         {
@@ -156,6 +157,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             SortBySpeed = this.GetLocalization("SortBySpeed");
             SortBySkillLevel = this.GetLocalization("SortBySkillLevel");
             SortByStamina = this.GetLocalization("SortByStamina");
+            BottleHeal = this.GetLocalization("BottleHeal");
         }
 
         public static void UnloadLocalization()

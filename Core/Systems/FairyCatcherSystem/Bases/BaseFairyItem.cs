@@ -20,7 +20,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// <summary> 仙灵是否存活 </summary>
         protected bool dead;
 
-        private static int showLineValueCount;
+        //private static int showLineValueCount;
 
         public abstract int FairyType { get; }
         public abstract FairyRarity Rarity { get; }
@@ -70,17 +70,17 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         public override ModItem Clone(Item newEntity)
         {
             ModItem modItem = base.Clone(newEntity);
-            if (modItem != null&& modItem is BaseFairyItem bfi)
+            if (modItem != null && modItem is BaseFairyItem bfi)
             {
                 bfi.FairyIV = FairyIV;
-                bfi.Life= Life;
+                bfi.Life = Life;
                 bfi.dead = dead;
             }
 
             return modItem;
         }
 
-        public virtual void HurtByProjectile(BaseFairyProjectile proj, Projectile target,int damage)
+        public virtual void HurtByProjectile(BaseFairyProjectile proj, Projectile target, int damage)
         {
             //防御计算与限制
             damage -= FairyIV.Defence;
@@ -108,7 +108,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// <param name="target"></param>
         /// <param name="hit"></param>
         /// <param name="damageDone"></param>
-        public virtual void HurtByNPC(BaseFairyProjectile proj, NPC target, NPC.HitModifiers hit,int adjustedDamage)
+        public virtual void HurtByNPC(BaseFairyProjectile proj, NPC target, NPC.HitModifiers hit, int adjustedDamage)
         {
             //防御计算与限制
             adjustedDamage -= FairyIV.Defence;
@@ -162,11 +162,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// 将仙灵发射出去
         /// </summary>
         /// <returns></returns>
-        public virtual bool ShootFairy(Player player, IEntitySource source, Vector2 position, Vector2 velocity, float knockBack,float flyTime)
+        public virtual bool ShootFairy(Player player, IEntitySource source, Vector2 position, Vector2 velocity, float knockBack, float flyTime)
         {
             //生成仙灵弹幕
             Projectile proj = Projectile.NewProjectileDirect(source, position, velocity, Item.shoot
-                , FairyIV.Damage, knockBack, player.whoAmI,flyTime);
+                , FairyIV.Damage, knockBack, player.whoAmI, flyTime);
 
             _fairyProjIndex = proj.identity;
             _fairyProjUUID = proj.projUUID;
@@ -180,17 +180,27 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         }
 
         /// <summary>
-        /// 回血或者执行复活
+        /// 治疗仙灵，如果仙灵死掉了会根据仙灵等级增加治疗量，回满血后复活
         /// </summary>
-        /// <param name="lifeRegan"></param>
-        public virtual void LifeRegan(int lifeRegan, int resurrectionTimeReduce = 1)
+        /// <param name="percent"></param>
+        /// <param name="healValue"></param>
+        public virtual void HealFairy(float percent, int healValue)
         {
-            Life += lifeRegan;
+            //基础治疗数值，数+血量百分比
+            float heal = healValue + percent * FairyIV.LifeMax;
+
+            //挂掉的时候根据等级提升治疗量
+            if (dead)
+            {
+                heal *= 1 + FairyIV.ScaleLevel * 0.075f;
+            }
+
+            Life += (int)heal;
             LimitLife();
 
             if (dead)
             {
-                if (Life == FairyIV.LifeMax)
+                if (Life >= FairyIV.LifeMax)
                     dead = false;
                 return;
             }
@@ -265,33 +275,36 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             //稀有度
             tooltips.Add(RarityDescription());
             //当前血量
-            //tooltips.Add(SurvivalStatus());
+            tooltips.Add(SurvivalStatus());
 
-            if (Main.keyState.PressingShift())
-                showLineValueCount += 2;
+            //if (Main.keyState.PressingShift())
+            //    showLineValueCount += 2;
 
-            showLineValueCount--;
-            showLineValueCount = Math.Clamp(showLineValueCount, 0, 10);
+            //showLineValueCount--;
+            //showLineValueCount = Math.Clamp(showLineValueCount, 0, 10);
 
-            if (showLineValueCount >= 10)
-            {
-                //各种增幅数值
-                tooltips.Add(LifeMaxDescription());
-                tooltips.Add(DamageDescription());
-                tooltips.Add(DefenceDescription());
-                tooltips.Add(SpeedDescription());
-                tooltips.Add(SkillLevelDescription());
-                tooltips.Add(StaminaDescription());
-                tooltips.Add(ScaleBonusDescription());
-            }
-            else
-            {
+            //if (showLineValueCount >= 10)
+            //{
+            //各种增幅数值
+            tooltips.Add(new TooltipLine(Mod, "RaderChart"
+                , "一一一一一                                        "));
 
-                tooltips.Add(new TooltipLine(Mod, "SeeMore", FairySystem.SeeMore.Value));
+            tooltips.Add(LifeMaxDescription());
+            tooltips.Add(DamageDescription());
+            tooltips.Add(DefenceDescription());
+            tooltips.Add(SpeedDescription());
+            tooltips.Add(SkillLevelDescription());
+            tooltips.Add(StaminaDescription());
+            tooltips.Add(ScaleBonusDescription());
+            ////}
+            //else
+            //{
 
-                tooltips.Add(new TooltipLine(Mod, "RaderChart"
-                    , "                                \n\n\n\n\n\n\n\n\n\n"));
-            }
+            //    tooltips.Add(new TooltipLine(Mod, "SeeMore", FairySystem.SeeMore.Value));
+
+            //    tooltips.Add(new TooltipLine(Mod, "RaderChart"
+            //        , "                                \n\n\n\n\n\n\n\n\n\n"));
+            //}
         }
 
         public TooltipLine RarityDescription()
@@ -305,26 +318,26 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             return line;
         }
 
-        //public TooltipLine SurvivalStatus()
-        //{
-        //    string status;
-        //    Color newColor;
-        //    if (dead)
-        //    {
-        //        newColor = Color.OrangeRed;
-        //        status = FairySystem.ResurrectionTime.Format($"{resurrectionTime / (60 * 60)}:{resurrectionTime / 60 % 60}");
-        //    }
-        //    else
-        //    {
-        //        newColor = Color.LightGreen;
-        //        status = FairySystem.CurrentLife.Format(life, (int)FairyLifeMax);
-        //    }
+        public TooltipLine SurvivalStatus()
+        {
+            string status;
+            Color newColor;
+            if (dead)
+            {
+                newColor = Color.OrangeRed;
+                status = FairySystem.ResurrectionTime.Format(Life, FairyIV.LifeMax);
+            }
+            else
+            {
+                newColor = Color.Lerp(Color.OrangeRed, Color.LawnGreen, Life / (float)FairyIV.LifeMax);
+                status = FairySystem.CurrentLife.Format(Life, FairyIV.LifeMax);
+            }
 
-        //    TooltipLine line = new(Mod, "SurvivalStatus", status);
-        //    line.OverrideColor = newColor;
+            TooltipLine line = new(Mod, "SurvivalStatus", status);
+            line.OverrideColor = newColor;
 
-        //    return line;
-        //}
+            return line;
+        }
 
         public virtual TooltipLine LifeMaxDescription()
         {
@@ -399,15 +412,16 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public override void PostDrawTooltipLine(DrawableTooltipLine line)
         {
-            if (showLineValueCount >= 0 && line.Name == "RaderChart")
+            if (/*showLineValueCount >= 0 && */line.Name == "RaderChart")
             {
                 Vector2 topLeft = new(line.OriginalX, line.OriginalY);
-                float factor = Helper.SqrtEase(1 - showLineValueCount / 10f);
+                float factor = 1;/*Helper.SqrtEase(1 - showLineValueCount / 10f)*/;
 
                 Vector2 size = ChatManager.GetStringSize(line.Font, line.Text, line.BaseScale);
-                Vector2 center = topLeft + (size / 2);
+                size.Y *= 8;
+                Vector2 center = topLeft + new Vector2(size.X - 7 * 9 - 30, size.Y / 2);
 
-                float length = factor * 7 * 12;
+                float length = factor * 7 * 9;
 
                 SpriteBatch spriteBatch = Main.spriteBatch;
 
@@ -417,8 +431,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
                 //绘制底层
                 DrawRaderBack(center, length, new Color(99, 155, 255) * 0.7f);
-                DrawRaderBack(center, factor * 5 * 12, new Color(36, 88, 179) * 0.85f);
-                DrawRaderBack(center, factor * 3 * 12, new Color(28, 60, 116));
+                DrawRaderBack(center, factor * 5 * 9, new Color(36, 88, 179) * 0.85f);
+                DrawRaderBack(center, factor * 3 * 9, new Color(28, 60, 116));
 
                 //绘制雷达图
                 DrawRaderChart(center, length);
@@ -427,7 +441,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 spriteBatch.Begin(SpriteSortMode.Deferred, spriteBatch.GraphicsDevice.BlendState, spriteBatch.GraphicsDevice.SamplerStates[0],
                                 spriteBatch.GraphicsDevice.DepthStencilState, spriteBatch.GraphicsDevice.RasterizerState, null, Main.UIScaleMatrix);
 
-                length = factor * (7 * 12 + 30);
+                length = factor * (7 * 9 + 26);
                 const float HexAngle = MathHelper.TwoPi / 6;
 
                 //绘制上层图标
@@ -463,7 +477,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         private static void DrawIVIcon(int frame, Vector2 center)
         {
             FairySystem.FairyIVIcon.Value.QuickCenteredDraw(Main.spriteBatch, new Rectangle(0, frame, 1, 8),
-                center, scale: 0.8f);
+                center, scale: 0.76f);
         }
 
         public static void DrawRaderBack(Vector2 center, float length, Color c)
@@ -573,12 +587,12 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         public static void DrawRaderIcon(Vector2 pos, int frame, float value, float level)
         {
             //绘制图标
-            DrawIVIcon(frame, pos + new Vector2(0, -12));
+            DrawIVIcon(frame, pos /*+ new Vector2(0, -12)*/);
 
             (Color c, _) = FairyIV.GetFairyLocalize(level);
 
             //绘制数字
-            Utils.DrawBorderString(Main.spriteBatch, value.ToString(), pos + new Vector2(0, 18), c, 1, 0.5f, 0.5f);
+            //Utils.DrawBorderString(Main.spriteBatch, value.ToString(), pos + new Vector2(0, 18), c, 1, 0.5f, 0.5f);
         }
 
         #endregion

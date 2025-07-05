@@ -171,7 +171,7 @@ namespace Coralite.Content.Items.Fairies
             Lighting.AddLight(Projectile.Center, 0.2f, 0.2f, 0);
         }
 
-        public override void OnExchangeToAction(NPC target)
+        public override void OnStartUseSkill(NPC target)
         {
             //SpawnSkillText(Color.SandyBrown);
             SoundEngine.PlaySound(CoraliteSoundID.Fairy_NPCHit5, Projectile.Center);

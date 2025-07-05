@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.ModLoader.IO;
-using Terraria.UI;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 {
-    public abstract class BaseFairyBottle : ModItem//, IFairyBottle
+    public abstract class BaseFairyBottle : ModItem
     {
         public override string Texture => AssetDirectory.FairyBottleItems + Name;
 
@@ -19,7 +18,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// <summary> 战斗仙灵的容量，默认3 </summary>
         public virtual int FightCapacity => 3;
         /// <summary> 捕捉仙灵的容量，默认30 </summary>
-        public virtual int ContainCapacity => 30;
+        public virtual int ContainCapacity => 20;
 
         /// <summary> 战斗仙灵，用于出战 </summary>
         public Item[] FightFairies { get => fightFairies; set => fightFairies = value; }
@@ -29,13 +28,13 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// <summary>
         /// 每次回血回多少，默认1
         /// </summary>
-        public virtual int FairyLifeRegan => 1;
+        public virtual (float, int) FairyHeal => (0.00_5f, 3);
         /// <summary>
         /// 多少帧回一次血，默认1秒
         /// </summary>
-        public virtual int FairyLifeReganSpacing => 60;
+        public virtual int FairyHealSpacing => 30;
 
-        private int lifeReganTime;
+        private int _healTime;
 
         public BaseFairyBottle()
         {
@@ -48,25 +47,13 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 containFairies[i] = new Item();
         }
 
-        //public override void UpdateInventory(Player player)
-        //{
-        //    int lifeRegan = 0;
-        //    if (++lifeReganTime > FairyLifeReganSpacing)
-        //    {
-        //        lifeReganTime = 0;
-        //        lifeRegan = FairyLifeRegan;
-        //    }
-
-        //    foreach (var fairy in fightFairies)
-        //    {
-        //        if (fairy.ModItem is BaseFairyItem fairyItem)
-        //            fairyItem.LifeRegan(lifeRegan);
-        //    }
-        //}
-
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
-            TooltipLine line = new(Mod, "FightCapacity",
+            TooltipLine line = new(Mod, "HealValue",
+                FairySystem.BottleHeal.Format(Math.Round(FairyHealSpacing / 60f, 1), FairyHeal.Item1 * 100, FairyHeal.Item2));
+            tooltips.Add(line);
+
+            line = new(Mod, "FightCapacity",
                 FairySystem.BottleFightCapacity.Format(fightFairies.Count(i => !i.IsAir), FightCapacity));
             tooltips.Add(line);
 
@@ -75,27 +62,32 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             tooltips.Add(line);
         }
 
-
-        //public bool GetNextFairy
-
-        //public bool ShootFairy(int index, Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int damage, float knockback)
-        //{
-        //    return (fairies[index].ModItem as IFairyItem).ShootFairy(player, source, position, velocity, damage, knockback);
-        //}
-
         /// <summary>
         /// 每帧更新仙灵瓶中的仙灵
         /// </summary>
         public virtual void UpdateBottle(Player player)
         {
+            bool heal = false;
+            if (++_healTime>FairyHealSpacing)
+            {
+                heal = true;
+                _healTime = 0;
+            }
+
             foreach (var item in fightFairies)
             {
                 if (!item.IsAir && item.ModItem is BaseFairyItem bfi)
                 {
                     bfi.UpdateInBottle_Inner(this, player);
+                    if (heal)
+                    {
+                        bfi.HealFairy(FairyHeal.Item1, FairyHeal.Item2);
+                    }
                 }
             }
         }
+
+        public virtual void OnFairyBack(Player player,BaseFairyItem fairyItem) { }
 
         #region 存入取出部分
 

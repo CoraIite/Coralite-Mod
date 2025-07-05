@@ -76,6 +76,17 @@ namespace Coralite.Content.Items.Fairies
             }
         }
 
+        public override void ModifyIVLevel(ref FairyIV fairyIV, FairyCatcherPlayer fcp)
+        {
+            //fairyIV.LifeMaxLevel = 7;
+            //fairyIV.DamageLevel = 7;
+            //fairyIV.DefenceLevel = 7;
+            //fairyIV.SkillLevelLevel = 7;
+            //fairyIV.StaminaLevel = 7;
+            //fairyIV.SpeedLevel = 7;
+            //fairyIV.ScaleLevel = 7;
+        }
+
         public override void PreAI_InCatcher()
         {
             SetDirectionNormally();
@@ -125,9 +136,20 @@ namespace Coralite.Content.Items.Fairies
             return (Timer * 0.1f).ToRotationVector2() * 2;
         }
 
-        public override void OnExchangeToAction(NPC target)
+        public override void OnStartUseSkill(NPC target)
         {
             SoundEngine.PlaySound(CoraliteSoundID.Fairy_NPCHit5, Projectile.Center);
+        }
+
+        public override void OnKill_DeadEffect()
+        {
+            SoundEngine.PlaySound(CoraliteSoundID.Fairy_NPCHit5, Projectile.Center);
+
+            for (int i = 0; i < 12; i++)
+            {
+                Dust d = Dust.NewDustPerfect(Projectile.Center, DustID.GreenFairy, Helper.NextVec2Dir(1, 2), 200);
+                d.noGravity = true;
+            }
         }
     }
 }

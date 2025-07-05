@@ -16,8 +16,8 @@ FairySystem: {
 	FairyDamage: "    伤害 ▶ "
 	FairyDefence: "    防御 ▶ "
 	FairyScale: "    大小 ▶ "
-	CurrentLife: 当前生命值：{0} / {1}
-	ResurrectionTime: 复活时间：{0}
+	CurrentLife: 当前血量：{0} / {1}
+	ResurrectionTime: 濒死，回复中：{0} / {1}
 	RarityC: 常见
 	RarityU: 不常见
 	RarityR: 稀有
@@ -86,6 +86,7 @@ FairySystem: {
 	SortBySpeed: 按速度品质整理
 	SortBySkillLevel: 按等级品质整理
 	SortByStamina: 按耐力品质整理
+	BottleHeal: "每 {0} 秒为出战仙灵回复 {1}% + {2} 血量"
 }
 
 BossBarSystem.DontTakeDamage: 不可攻击！
