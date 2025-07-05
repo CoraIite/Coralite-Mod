@@ -202,7 +202,7 @@ namespace Coralite.Content.Items.FlyingShields
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Projectile.NewProjectileFromThis(target.Center, Vector2.Zero, ProjectileID.SolarWhipSwordExplosion
-                , (int)(Projectile.damage * 0.55f), 10f, 0f, 0.85f + (Main.rand.NextFloat() * 1.15f));
+                , (int)(Projectile.damage * 0.53f), 10f, 0f, 0.85f + (Main.rand.NextFloat() * 1.15f));
 
             for (int i = 0; i < 3; i++)
             {
