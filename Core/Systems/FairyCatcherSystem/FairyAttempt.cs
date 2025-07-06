@@ -98,23 +98,28 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
             FairyRarity rarity = (FairyRarity)result;
 
-            if (FairySystem.fairySpawnConditions.TryGetValue(wallType, out List<FairySpawnController> totalController) && totalController != null)
+            List<FairySpawnController> currentController = new();
+            if (wallType != 0 && FairySystem.fairySpawnConditions.TryGetValue(0, out List<FairySpawnController> totalController))//不是无墙壁，添加所有的无墙壁仙灵
             {
-                List<FairySpawnController> currentController = new();
-
-                //将所有可生成的仙灵添加到列表中
                 foreach (var controller in totalController)
                     if (rarity == FairyLoader.GetFairy(controller.fairyType).Rarity && controller.CheckCondition(this))
                         currentController.Add(controller);
-
-                if (currentController.Count == 0)
-                    return false;
-
-                fairy = Main.rand.NextFromList(currentController.ToArray()).SpawnFairy(this);
-                return true;
             }
 
-            return false;
+            if (FairySystem.fairySpawnConditions.TryGetValue(wallType, out List<FairySpawnController> totalController1)
+                && totalController1 != null)
+            {
+                //将所有可生成的仙灵添加到列表中
+                foreach (var controller in totalController1)
+                    if (rarity == FairyLoader.GetFairy(controller.fairyType).Rarity && controller.CheckCondition(this))
+                        currentController.Add(controller);
+            }
+
+            if (currentController.Count == 0)
+                return false;
+
+            fairy = Main.rand.NextFromList(currentController.ToArray()).SpawnFairy(this);
+            return true;
         }
 
         /// <summary>

@@ -1,9 +1,9 @@
-﻿using Coralite.Content.DamageClasses;
-using Coralite.Core;
+﻿using Coralite.Core;
 using Coralite.Core.Systems.FairyCatcherSystem;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using Coralite.Core.Systems.FairyCatcherSystem.NormalSkills;
 using Coralite.Helpers;
+using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -88,104 +88,52 @@ namespace Coralite.Content.Items.Fairies
     {
         public override string Texture => AssetDirectory.FairyItems + "BlueFairy";
 
-        public override void SetDefaults()
-        {
-            Projectile.tileCollide = true;
-            Projectile.width = Projectile.height = 16;
-            Projectile.friendly = true;
-            Projectile.DamageType = FairyDamage.Instance;
-            Projectile.penetrate = -1;
-        }
-
-        public override void PostAI()
-        {
-            SetDirectionNormally();
-            UpdateFrameY(6);
-        }
-
-        public override void OnInitialize()
-        {
-            Projectile.velocity = Projectile.velocity.RotateByRandom(-0.3f, 0.3f);
-            Timer = Main.rand.Next(30, 45);
-        }
-
-        public override void Shooting()
-        {
-            Timer--;
-            Projectile.timeLeft = 20;
-            Projectile.velocity *= 0.98f;
-            if (Main.rand.NextBool(3))
-                Projectile.SpawnTrailDust(DustID.BlueFairy, Main.rand.NextFloat(0.1f, 0.5f), 200);
-
-            if (Timer < 1)
-                TryExchangeToAttack();
-        }
-
-        public override void Skill()
-        {
-            Projectile.timeLeft = 20;
-            Projectile.SpawnTrailDust(DustID.BlueFairy, Main.rand.NextFloat(0.1f, 0.5f), 200);
-            Lighting.AddLight(Projectile.Center, 0, 0.2f, 0);
-
-            if (Projectile.velocity.Length() < 10)
-                Projectile.velocity = (Projectile.velocity.Length() + 0.4f) * Projectile.velocity.SafeNormalize(Vector2.Zero);
-
-            Timer++;
-            if (Timer > 50)
-                ExchangeToBack();
-        }
-
-        public override void Backing()
-        {
-            Timer++;
-            if (Timer < 40)
-            {
-                Projectile.velocity *= 0.95f;
-            }
-            else if (Timer == 40)
-            {
-                Projectile.velocity = Helper.NextVec2Dir(4, 6);
-            }
-            else if (Timer < 40 + 120)
-            {
-                if (Timer % 20 == 0)
-                    Projectile.velocity = Projectile.velocity.RotatedBy(-1.5f);
-
-                Projectile.velocity = Projectile.velocity.RotateByRandom(0.08f, 0.17f);
-                if (Main.rand.NextBool())
-                    Projectile.SpawnTrailDust(DustID.BlueFairy, Main.rand.NextFloat(0.1f, 0.5f), 200);
-            }
-            else if (Timer == 40 + 120)
-                RestartAttack();
-            else
-            {
-                //Backing_LerpToOwner();
-                if (Main.rand.NextBool())
-                    Projectile.SpawnTrailDust(DustID.BlueFairy, Main.rand.NextFloat(0.1f, 0.5f), 200);
-            }
-
-            Lighting.AddLight(Projectile.Center, 0.2f, 0.2f, 0);
-        }
-
-        public override void OnStartUseSkill(NPC target)
-        {
-            //SpawnSkillText(Color.Blue);
-            SoundEngine.PlaySound(CoraliteSoundID.Fairy_NPCHit5, Projectile.Center);
-
-            Projectile.velocity = (target.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * 2;
-        }
-
-        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
-        {
-            base.OnHitNPC(target, hit, damageDone);
-            Projectile.velocity = (Projectile.Center - target.Center).SafeNormalize(Vector2.Zero)
-                .RotateByRandom(-0.3f, 0.3f) * Main.rand.NextFloat(2f, 5f);
-            ExchangeToBack();
-        }
-
         public override FairySkill[] InitSkill()
             => [
                 NewSkill<Tackle>()
                 ];
+
+        public override void SpawnFairyDust()
+        {
+            switch (State)
+            {
+                case AIStates.Shooting:
+                case AIStates.Rest:
+                case AIStates.Backing:
+                    if (Main.rand.NextBool(3))
+                        Projectile.SpawnTrailDust(DustID.BlueFairy, Main.rand.NextFloat(0.1f, 0.5f), 200);
+                    break;
+                case AIStates.Skill:
+                default:
+                    Projectile.SpawnTrailDust(DustID.BlueFairy, Main.rand.NextFloat(0.1f, 0.5f), 200);
+                    break;
+            }
+        }
+
+        public override void AIAfter()
+        {
+            Lighting.AddLight(Projectile.Center, 0.1f, 0.1f, 0.05f);
+        }
+
+        public override Vector2 GetRestSpeed()
+        {
+            return (Timer * 0.1f + Projectile.identity * MathHelper.TwoPi / 6).ToRotationVector2() * Math.Clamp(Timer / 120f, 0, 1) * 3;
+        }
+
+        public override void OnStartUseSkill(NPC target)
+        {
+            SoundEngine.PlaySound(CoraliteSoundID.Fairy_NPCHit5, Projectile.Center);
+        }
+
+        public override void OnKill_DeadEffect()
+        {
+            SoundEngine.PlaySound(CoraliteSoundID.Fairy_NPCHit5, Projectile.Center);
+
+            for (int i = 0; i < 12; i++)
+            {
+                Dust d = Dust.NewDustPerfect(Projectile.Center, DustID.BlueFairy, Helper.NextVec2Dir(1, 2), 200);
+                d.noGravity = true;
+            }
+        }
     }
 }

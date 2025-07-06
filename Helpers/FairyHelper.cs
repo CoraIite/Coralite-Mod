@@ -1,6 +1,7 @@
 ﻿using Coralite.Core.Systems.FairyCatcherSystem;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
+using System.Linq;
 using Terraria;
 
 namespace Coralite.Helpers
@@ -83,13 +84,16 @@ namespace Coralite.Helpers
 
             foreach (var fairyRect in fcproj.GetFairyCollides())
             {
-                if (selfRect.Intersects(fairyRect.Item1) && (IDs == null || !IDs.Contains(fairyRect.Item2.IDInCatcher)))
+                if (selfRect.Intersects(fairyRect.Item1))
                 {
                     IDs ??= [];
-                    IDs.Add(fairyRect.Item2.IDInCatcher);
-                    fairyRect.Item2.Catch(catchPower);
-                    Main.NewText(fairyRect.Item2.IDInCatcher);
-                    caught = true;
+                    if (!IDs.Contains(fairyRect.Item2.IDInCatcher))
+                        if(fairyRect.Item2.Catch(catchPower))
+                        {
+                            IDs.Add(fairyRect.Item2.IDInCatcher);
+                            //Main.NewText(fairyRect.Item2.IDInCatcher);
+                            caught = true;
+                        }
                 }
             }
 

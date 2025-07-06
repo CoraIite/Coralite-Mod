@@ -109,6 +109,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 30;
 
+            Projectile.width = Projectile.height = 16;
+
             Projectile.penetrate = -1;
         }
 
@@ -268,6 +270,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                     SkillLevel = fcp.FairySkillBonus[skill.Type].ModifyLevel(IVSkillLevel);
 
                 Timer = 1;
+                Projectile.StartAttack();
                 skill.SpawnSkillText(Projectile.Top);
                 skill.OnStartAttack(this);
                 _netState = NetState.Skill;

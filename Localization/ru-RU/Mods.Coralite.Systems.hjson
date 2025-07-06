@@ -79,6 +79,13 @@ FairySystem: {
 	// SortBySkillLevel: Mods.Coralite.Systems.FairySystem.SortBySkillLevel
 	// SortByStamina: Mods.Coralite.Systems.FairySystem.SortByStamina
 	// BottleHeal: Mods.Coralite.Systems.FairySystem.BottleHeal
+
+	SpawnDescriptions: {
+		// ZoneForest: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.ZoneForest
+		// ZoneRockLayer: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.ZoneRockLayer
+		// ZoneBeach: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.ZoneBeach
+		// CircleR_9: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.CircleR_9
+	}
 }
 
 BossBarSystem.DontTakeDamage: Невозможно атаковать!

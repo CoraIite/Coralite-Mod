@@ -240,10 +240,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                     Spawning();
                     break;
                 case AIState.FreeMoving:
-                    FreeMoving();
+                    //FreeMoving();
                     break;
                 case AIState.Catching:
-                    Catching(catcher);
+                    //Catching(catcher);
                     break;
                 default:
                 case AIState.Fading:
@@ -319,8 +319,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <summary>
         /// 在被捕捉时调用
         /// </summary>
-        public virtual void Catch(int catchPower)
+        public virtual bool Catch(int catchPower)
         {
+            if (State == AIState.Spawning || State == AIState.Fading || !canBeCaught)
+                return false;
+
             if (State == AIState.FreeMoving)
             {
                 State = AIState.Catching;
@@ -331,6 +334,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             }
 
             CatchProgress += catchPower;
+            return true;
         }
 
         /// <summary>

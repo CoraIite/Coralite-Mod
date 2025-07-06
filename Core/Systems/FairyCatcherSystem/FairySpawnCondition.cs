@@ -111,6 +111,20 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         }
 
         /// <summary>
+        /// 加入特殊条件，尽量使用现成的
+        /// </summary>
+        /// <param name="condition"></param>
+        /// <returns></returns>
+        public FairySpawnController AddConditions(params FairySpawnCondition[] conditions)
+        {
+            Conditions ??= new List<FairySpawnCondition>();
+            foreach (var condition in conditions)
+                Conditions.Add(condition);
+
+            return this;
+        }
+
+        /// <summary>
         /// 注册到指定的墙壁
         /// </summary>
         /// <param name="wallType"></param>

@@ -103,12 +103,6 @@ namespace Coralite.Content.Items.Fairies
                 NewSkill<Tackle>()
                 ];
 
-        public override void SetDefaults()
-        {
-            base.SetDefaults();
-            Projectile.width = Projectile.height = 16;
-        }
-
         public override void SpawnFairyDust()
         {
             switch (State)

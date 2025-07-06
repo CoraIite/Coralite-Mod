@@ -87,6 +87,13 @@ FairySystem: {
 	SortBySkillLevel: 按等级品质整理
 	SortByStamina: 按耐力品质整理
 	BottleHeal: 每 {0} 秒为出战仙灵回复 {1}% + {2} 血量
+
+	SpawnDescriptions: {
+		// ZoneForest: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.ZoneForest
+		// ZoneRockLayer: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.ZoneRockLayer
+		// ZoneBeach: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.ZoneBeach
+		// CircleR_9: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.CircleR_9
+	}
 }
 
 BossBarSystem.DontTakeDamage: 不可攻击！

@@ -212,7 +212,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             middlePos = OwnerCenter() + _Rotation.ToRotationVector2() * distanceToOwner*0.5f;
 
             if (Catch == 1)
-                Helper.CheckCollideWithFairyCircle(Owner, Projectile.getRect(),ref IDs);
+            {
+                if (factor < 0.3f)
+                    Helper.CheckCollideWithFairyCircle(Owner, Projectile.getRect(), ref IDs);
+            }
             else
                 OnAttackBack();
 

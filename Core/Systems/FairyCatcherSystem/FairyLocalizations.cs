@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Terraria.GameContent.UI.Elements;
 using Terraria.Localization;
+using static Coralite.Core.Systems.MagikeSystem.MagikeSystem;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem
 {
@@ -41,13 +44,17 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         //-----------------------------------
         public static LocalizedText[] SpawnDescriptions { get; private set; }
 
-        public class DescriptionID
+        public enum DescriptionID
         {
-            public const int ZoneForest = 0;
-            public const int ZoneRockLayer = 1;
-            public const int ZoneBeach = 2;
+            ZoneForest = 0,
+            ZoneRockLayer,
+            ZoneBeach,
 
-            public const int DescriptionCount = 3;
+
+
+            CircleR_9,
+
+            Count,
         }
 
         //-----------------------------------
@@ -120,14 +127,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
             Rarity_SP = this.GetLocalization("RaritySP", () => "特殊");
 
-            SpawnDescriptions = new LocalizedText[DescriptionID.DescriptionCount];
+            SpawnDescriptions = new LocalizedText[(int)DescriptionID.Count];
 
-            SpawnDescriptions[DescriptionID.ZoneForest] = this.GetLocalization(nameof(DescriptionID.ZoneForest)
-                , () => "在地表森林出现");
-            SpawnDescriptions[DescriptionID.ZoneRockLayer] = this.GetLocalization(nameof(DescriptionID.ZoneRockLayer)
-                , () => "在洞穴中出现");
-            SpawnDescriptions[DescriptionID.ZoneBeach] = this.GetLocalization(nameof(DescriptionID.ZoneBeach)
-                , () => "在海边出现");
+            for (int i = 0; i < (int)DescriptionID.Count; i++)
+                SpawnDescriptions[i] = this.GetLocalization(nameof(SpawnDescriptions) + "." + Enum.GetName((DescriptionID)i));
 
             CurrentLife = this.GetLocalization("CurrentLife", () => "当前生命值：{0} / {1}");
             ResurrectionTime = this.GetLocalization("ResurrectionTime", () => "复活时间：{0}");
@@ -204,6 +207,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         {
             return pre.Value + levelText.Format(value);
         }
+
+        public static LocalizedText GetSpawnCondition(DescriptionID descriptionID)
+            => SpawnDescriptions[(int)descriptionID];
 
         public static string GetIVLevel(int level,float value)
         {

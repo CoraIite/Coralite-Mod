@@ -1,6 +1,5 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
-using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Enums;
 using Terraria.ID;
