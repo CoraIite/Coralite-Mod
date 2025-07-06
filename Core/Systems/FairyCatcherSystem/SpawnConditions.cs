@@ -23,7 +23,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// </summary>
         public static FairySpawnCondition CircleR_9 =
             new(() => GetSpawnCondition(DescriptionID.ZoneForest)
-                , attempt => attempt.Player.ZoneBeach);
+                , attempt => attempt.CircleRadius >= 9 * 16);
 
     }
 }

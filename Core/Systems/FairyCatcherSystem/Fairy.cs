@@ -240,10 +240,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                     Spawning();
                     break;
                 case AIState.FreeMoving:
-                    //FreeMoving();
+                    FreeMoving();
                     break;
                 case AIState.Catching:
-                    //Catching(catcher);
+                    Catching(catcher);
                     break;
                 default:
                 case AIState.Fading:

@@ -49,6 +49,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public int Y;
 
         /// <summary>
+        /// 捕捉环半径
+        /// </summary>
+        public float CircleRadius;
+
+        /// <summary>
         /// 创建一个仙灵捕获尝试
         /// </summary>
         /// <param name="catcherProj"></param>
@@ -71,6 +76,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                 Y = y,
                 wallType = wallType,
                 Player = catcherProj.Owner,
+                CircleRadius= catcherProj.Owner.GetModPlayer<FairyCatcherPlayer>().FairyCatcherRadius
             };
         }
 

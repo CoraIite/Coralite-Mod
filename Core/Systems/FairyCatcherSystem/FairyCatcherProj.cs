@@ -184,7 +184,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             if (Fairies.Count > webRadius / 16)
                 return;
 
-            SpawnTimer += 10;//Main.rand.Next(1, 3);
+            SpawnTimer += Main.rand.Next(1, 3);
 
             if (Main.rand.NextBool(60))
                 SpawnTimer += 60;
