@@ -32,7 +32,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// <summary>
         /// 多少帧回一次血，默认1秒
         /// </summary>
-        public virtual int FairyHealSpacing => 30;
+        public virtual int FairyHealSpacing => 60 * 3;
 
         private int _healTime;
 

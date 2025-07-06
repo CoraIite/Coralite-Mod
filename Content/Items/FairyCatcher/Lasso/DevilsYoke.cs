@@ -37,6 +37,8 @@ namespace Coralite.Content.Items.FairyCatcher.Lasso
 
         private bool shooted = false;
 
+        public override float GetShootRandAngle => Main.rand.NextFloat(-0.1f,0.1f);
+
         public override void SetSwingProperty()
         {
             minDistance = 48;

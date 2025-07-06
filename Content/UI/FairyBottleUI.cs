@@ -136,7 +136,7 @@ namespace Coralite.Content.UI
 
         private void AddContainPanel(BaseFairyBottle bottle)
         {
-            ContainFairyPanel?.SetTopLeft(10 + FightFairyPanel.Top.Pixels + FightFairyPanel.Height.Pixels, bottleHang.Left.Pixels + bottleHang.Width.Pixels + 15);
+            ContainFairyPanel?.SetTopLeft(20 + FightFairyPanel.Top.Pixels + FightFairyPanel.Height.Pixels, bottleHang.Left.Pixels + bottleHang.Width.Pixels + 15);
             ContainFairyPanel?.RemoveAllChildren();
 
             int count = bottle.ContainCapacity;

@@ -25,16 +25,18 @@ namespace Coralite.Content.Items.FairyCatcher.Lasso
 
         public override void AddRecipes()
         {
-            //CreateRecipe()
-            //    .AddIngredient(ItemID.VineRope, 8)
-            //    .AddTile(TileID.WorkBenches)
-            //    .Register();
+            CreateRecipe()
+                .AddIngredient(ItemID.VineRope, 8)
+                .AddTile(TileID.WorkBenches)
+                .Register();
         }
     }
 
     public class VineLassoSwing() : BaseLassoSwing(4)
     {
         public override string Texture => AssetDirectory.FairyCatcherLasso + "VineLassoCatcher";
+
+        public override float GetShootRandAngle => Main.rand.NextFloat(-0.2f, 0.2f);
 
         public override void SetSwingProperty()
         {

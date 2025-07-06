@@ -2,9 +2,10 @@
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Terraria;
-using Terraria.GameContent;
 using Terraria.Localization;
+using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem
 {
@@ -121,6 +122,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         {
 
         }
+
+        public virtual void SendExtra(BinaryWriter writer) { }
+
+        public virtual void ReceiveExtra(BinaryReader reader) { }
 
         public virtual void PreDrawSpecial(ref Color lightColor)
         {

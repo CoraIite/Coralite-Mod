@@ -41,11 +41,16 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// <summary>
         /// 由本地端同步给其他端的速度，无需使用仙灵物品获取速度个体值
         /// </summary>
-        public float IVSpeed {  get; set; }
+        public float IVSpeed { get; set; }
         /// <summary>
         /// 由本地端同步给其他端的技能等级，无需使用仙灵物品获取速度个体值
         /// </summary>
-        public int IVSkillLevel {  get; set; }
+        protected int IVSkillLevel { get; set; }
+
+        /// <summary>
+        /// 在开始攻击时设置，经过玩家饰品等增强过的技能等级
+        /// </summary>
+        public int SkillLevel { get; set; }
 
         protected virtual int FrameX => 1;
         protected virtual int FrameY => 4;
@@ -67,7 +72,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// </summary>
         public BaseFairyItem FairyItem { get; set; }
 
-        public enum AIStates
+        private NetState _netState;
+
+        public enum AIStates:byte
         {
             /// <summary>
             /// 刚从仙灵捕手中射出的时候
@@ -85,6 +92,13 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             /// 返回自身，此时无敌
             /// </summary>
             Backing,
+        }
+
+        private enum NetState:byte
+        {
+            None,
+            Init,
+            Skill,
         }
 
         public override void SetDefaults()
@@ -165,7 +179,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                     }
                 }
 
-            if (ImmuneTimer>0)
+            if (ImmuneTimer > 0)
             {
                 ImmuneTimer--;
             }
@@ -185,6 +199,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 IVSpeed = FairyItem.FairyIV.Speed;
                 IVSkillLevel = FairyItem.FairyIV.SkillLevel;
                 AttackDistance = 325 + IVSkillLevel * 75;
+
+                _netState = NetState.Init;
                 Projectile.netUpdate = true;
             }
 
@@ -241,17 +257,27 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// </summary>
         public virtual void Skill()
         {
+            FairySkill skill = _skills[(int)UseSkillIndex];
+
             //初始化技能
             if (Timer == 0)
             {
+                //设置增幅后的技能等级
+                SkillLevel = IVSkillLevel;
+                if (Owner.TryGetModPlayer(out FairyCatcherPlayer fcp))
+                    SkillLevel = fcp.FairySkillBonus[skill.Type].ModifyLevel(IVSkillLevel);
+
                 Timer = 1;
-                _skills[(int)UseSkillIndex].SpawnSkillText(Projectile.Top);
-                _skills[(int)UseSkillIndex].OnStartAttack(this);
+                skill.SpawnSkillText(Projectile.Top);
+                skill.OnStartAttack(this);
+                _netState = NetState.Skill;
+                Projectile.netUpdate = true;
             }
 
             //更新招式
-            if (_skills[(int)UseSkillIndex].Update(this))
+            if (skill.Update(this))
             {
+                _netState = NetState.None;
                 ExchangeToRest();
             }
         }
@@ -470,12 +496,46 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public override void SendExtraAI(BinaryWriter writer)
         {
-            writer.Write(IVSpeed);
+            writer.Write((byte)State);
+            writer.Write((byte)_netState);
+            writer.Write(UseSkillCount);
+            writer.Write(ImmuneTimer);
+
+            switch (_netState)
+            {
+                default:
+                case NetState.None:
+                    break;
+                case NetState.Init:
+                    writer.Write(IVSpeed);
+                    writer.Write(IVSkillLevel);
+                    break;
+                case NetState.Skill:
+                    _skills[(int)UseSkillIndex].SendExtra(writer);
+                    break;
+            }
         }
 
         public override void ReceiveExtraAI(BinaryReader reader)
         {
-            IVSpeed = reader.ReadSingle();
+            State = (AIStates)reader.ReadByte();
+            _netState = (NetState)reader.ReadByte();
+            UseSkillCount = reader.ReadInt32();
+            ImmuneTimer = reader.ReadInt32();
+
+            switch (_netState)
+            {
+                default:
+                case NetState.None:
+                    break;
+                case NetState.Init:
+                    IVSpeed = reader.ReadSingle();
+                    IVSpeed = reader.ReadSingle();
+                    break;
+                case NetState.Skill:
+                    _skills[(int)UseSkillIndex].ReceiveExtra(reader);
+                    break;
+            }
         }
 
         #endregion

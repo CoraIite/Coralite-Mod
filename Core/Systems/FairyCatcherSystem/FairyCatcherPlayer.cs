@@ -1,4 +1,5 @@
-﻿using Coralite.Core.Systems.FairyCatcherSystem.Bases;
+﻿using Coralite.Core.Loaders;
+using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using System;
 using System.Collections.Generic;
 using Terraria;
@@ -39,6 +40,43 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// 当前的仙灵索引，仅用于部分武器的绘制仙灵
         /// </summary>
         public int CurrentFairyIndex { get; set; } = -1;
+
+        private SkillModifyer[] _skillBonus;
+
+        /// <summary>
+        /// 仙灵技能增幅
+        /// </summary>
+        public SkillModifyer[] FairySkillBonus
+        {
+            get
+            {
+                _skillBonus ??= new SkillModifyer[FairyLoader.FairySkillCount];
+                return _skillBonus;
+            }
+        }
+
+        public struct SkillModifyer
+        {
+            /// <summary>
+            /// 最小等级
+            /// </summary>
+            public byte minLevel;
+
+            /// <summary>
+            /// 增加的等级
+            /// </summary>
+            public byte addLevel;
+
+            public readonly int ModifyLevel(int level)
+            {
+                if (level < minLevel)
+                    level = minLevel;
+
+                level += addLevel;
+
+                return level;
+            }
+        }
 
         #region 捕捉环相关数值
 
@@ -138,6 +176,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             ScaleRand.Reset();
 
             FairyCatcherRadiusBonus = 0;
+            if (_skillBonus != null)
+                Array.Fill(_skillBonus, default);
         }
 
         public override void PostUpdateEquips()

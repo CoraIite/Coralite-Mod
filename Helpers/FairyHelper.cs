@@ -88,6 +88,7 @@ namespace Coralite.Helpers
                     IDs ??= [];
                     IDs.Add(fairyRect.Item2.IDInCatcher);
                     fairyRect.Item2.Catch(catchPower);
+                    Main.NewText(fairyRect.Item2.IDInCatcher);
                     caught = true;
                 }
             }

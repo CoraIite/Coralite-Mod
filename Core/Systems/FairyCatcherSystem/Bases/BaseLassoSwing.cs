@@ -31,6 +31,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// 射出的仙灵能够飞行多少时间
         /// </summary>
         public virtual int FairyFlyTime { get => 25; }
+        /// <summary>
+        /// 射出仙灵时的随机角度
+        /// </summary>
+        public virtual float GetShootRandAngle { get => 0; }
 
         public Vector2 CursorCenter => Projectile.Center;
 
@@ -250,7 +254,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 int count = 0;
                 foreach (var item in bottle.GetShootableFairy(Owner))
                 {
-                    item.ShootFairy(Owner, Projectile.GetSource_FromAI(), center, velocity, Projectile.knockBack,FairyFlyTime);
+                    item.ShootFairy(Owner, Projectile.GetSource_FromAI(), center, velocity.RotatedBy(GetShootRandAngle), Projectile.knockBack,FairyFlyTime);
 
                     count++;
                     velocity *= 0.9f;

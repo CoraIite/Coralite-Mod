@@ -192,7 +192,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             //挂掉的时候根据等级提升治疗量
             if (dead)
             {
-                heal *= 1 + FairyIV.ScaleLevel * 0.075f;
+                heal *= 1.25f + FairyIV.ScaleLevel * 0.075f;
             }
 
             Life += (int)heal;
