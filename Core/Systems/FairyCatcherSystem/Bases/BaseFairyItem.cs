@@ -19,7 +19,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         /// <summary> 仙灵是否存活 </summary>
         protected bool dead;
-
+        /// <summary> 仅在UI中使用，不显示等级 </summary>
+        public bool DontShowIV;
         //private static int showLineValueCount;
 
         public abstract int FairyType { get; }
@@ -274,6 +275,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         {
             //稀有度
             tooltips.Add(RarityDescription());
+            if (DontShowIV)
+                return;
+
             //当前血量
             tooltips.Add(SurvivalStatus());
 

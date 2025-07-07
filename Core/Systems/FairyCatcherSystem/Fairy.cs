@@ -17,7 +17,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public override string Texture => AssetDirectory.FairyItems + Name;
 
         public virtual int HorizontalFrames { get => 1; }
-        public virtual int VerticalFrames { get => 1; }
+        public virtual int VerticalFrames { get => 4; }
 
         /// <summary>
         /// 是否存活，在捕捉器内使用

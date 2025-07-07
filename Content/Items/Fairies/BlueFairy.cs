@@ -26,7 +26,6 @@ namespace Coralite.Content.Items.Fairies
     public class BlueFairy : Fairy
     {
         public override int ItemType => ModContent.ItemType<BlueFairyItem>();
-        public override int VerticalFrames => 4;
 
         public override void RegisterSpawn()
         {

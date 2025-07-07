@@ -49,6 +49,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             ZoneForest = 0,
             ZoneRockLayer,
             ZoneBeach,
+            ZoneDesert,
 
 
 

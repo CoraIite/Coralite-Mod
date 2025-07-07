@@ -18,6 +18,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             new(() => GetSpawnCondition(DescriptionID.ZoneBeach)
                 , attempt => attempt.Player.ZoneBeach);
 
+        public static FairySpawnCondition ZoneDesert =
+            new(() => GetSpawnCondition(DescriptionID.ZoneBeach)
+                , attempt => attempt.Player.ZoneBeach);
+
         /// <summary>
         /// 仙灵捕捉环半径大于9
         /// </summary>
