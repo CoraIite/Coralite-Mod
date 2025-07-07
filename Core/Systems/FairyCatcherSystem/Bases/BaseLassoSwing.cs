@@ -205,7 +205,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             distanceToOwner = Helper.Lerp(MaxDistance, 0, Helper.SqrtEase(factor));
             _Rotation += DirSign * 0.02f;
 
-            if ((int)Timer == maxTime + trailCount + 1 && Catch == 0)
+            if ((int)Timer == maxTime + trailCount + 1 && Catch == 0&&Collision.CanHit(Projectile.Center,1,1,Owner.Center,1,1))
                 ShootFairy();
             
             Slasher();

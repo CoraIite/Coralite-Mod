@@ -171,7 +171,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                     foreach (var levelName in fairyIVLevel)
                     {
                         if (!ivObj.ContainsKey(levelName))
-                            ivObj.Add(new JProperty(levelName, 0));
+                            ivObj.Add(new JProperty(levelName, 1));
                     }
                 }
             }

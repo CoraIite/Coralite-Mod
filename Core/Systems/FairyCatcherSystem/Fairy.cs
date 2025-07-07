@@ -39,6 +39,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         public Vector2 position;
         public Vector2 velocity;
+        public Vector2 targetVelocity;
         public float rotation;
         public int width = 12;
         public int height = 12;
@@ -204,8 +205,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                         //如果减小到0就消失
                         if (CatchTime <= 0)
                             TurnToFading();
-                        else if (CatchProgress > CatchProgressMax)//捕捉
-                            BeCaught(catcher.Owner);
                     }
                     break;
             }
@@ -222,9 +221,22 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             {
                 OutOfCircle = true;
                 Center = webCenter + ((Center - webCenter).SafeNormalize(Vector2.Zero) * catcher.webRadius);
+                OnCircleCollide(catcher);
             }
             else
                 OutOfCircle = false;    
+        }
+
+        /// <summary>
+        /// 在与捕捉环碰撞时调用，默认强制改变速度
+        /// </summary>
+        /// <param name="catcher"></param>
+        public virtual void OnCircleCollide(FairyCatcherProj catcher)
+        {
+            Vector2 dir = (catcher.webCenter - Center).SafeNormalize(Vector2.Zero);
+            float speed = velocity.Length() / 2;
+            targetVelocity = dir.RotateByRandom(-0.2f, 0.2f) * speed;
+            velocity = dir * speed;
         }
 
         /// <summary>
@@ -254,11 +266,18 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             PostAI_InCatcher();
         }
 
+        public virtual void PreAI_InCatcher()
+        {
+        }
+
         /// <summary>
-        /// 可以在这里更新贴图等
+        /// 在这里更新贴图等
         /// </summary>
-        public virtual void PreAI_InCatcher() { }
-        public virtual void PostAI_InCatcher() { }
+        public virtual void PostAI_InCatcher()
+        {
+            SetDirectionNormally();
+            UpdateFrameY(6);
+        }
 
         /// <summary>
         /// 生成中，1秒钟时间的渐入效果
@@ -268,7 +287,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             FairyTimer--;
 
             if (FairyTimer < 1)
+            {
                 State = AIState.FreeMoving;
+
+                targetVelocity = Helper.NextVec2Dir(0.5f, 1f);
+            }
 
             alpha = 1 - (FairyTimer / 60f);
         }
@@ -279,9 +302,20 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public virtual void Catching(FairyCatcherProj catcher) { }
 
         /// <summary>
-        /// 在捕捉环内自由移动时调用
+        /// 在捕捉环内自由移动时调用，默认随便飞一飞
         /// </summary>
-        public virtual void FreeMoving() { }
+        public virtual void FreeMoving()
+        {
+            FairyTimer--;
+            if (FairyTimer < 1)
+            {
+                targetVelocity = Helper.NextVec2Dir(0.5f, 1.5f);
+                FairyTimer = Main.rand.Next(70, 110);
+            }
+
+            UpdateVelocity();
+        }
+
         /// <summary>
         /// 在消失时调用，1秒钟淡出
         /// </summary>
@@ -319,7 +353,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <summary>
         /// 在被捕捉时调用
         /// </summary>
-        public virtual bool Catch(int catchPower)
+        public virtual bool Catch(Player player,int catchPower)
         {
             if (State == AIState.Spawning || State == AIState.Fading || !canBeCaught)
                 return false;
@@ -333,8 +367,22 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                 OnStartCatch = null;
             }
 
+            OnCatch(player, ref catchPower);
+
             CatchProgress += catchPower;
+            if (CatchProgress > CatchProgressMax)//捕捉
+                BeCaught(player);
             return true;
+        }
+
+        /// <summary>
+        /// 被捕捉时调用
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="catchPower"></param>
+        public virtual void OnCatch(Player player,ref int catchPower)
+        {
+
         }
 
         /// <summary>
@@ -381,6 +429,52 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         #endregion
 
         #region 帮助方法
+
+        /// <summary>
+        /// 常规逃逸
+        /// </summary>
+        /// <param name="catcher"></param>
+        /// <param name="escapeTime"></param>
+        /// <param name="escapeSpeed"></param>
+        /// <param name="escapeRandAngle"></param>
+        /// <param name="rotateTime"></param>
+        /// <param name="rotateAngle"></param>
+        public void EscapeNormally(FairyCatcherProj catcher
+            ,(int, int) escapeTime,(float ,float) escapeSpeed,float escapeRandAngle=0.2f,
+            int rotateTime = 40, float rotateAngle = MathHelper.PiOver4 / 2)
+        {
+            FairyTimer--;
+            if (FairyTimer % rotateTime == 0)
+                targetVelocity = targetVelocity.RotateByRandom(-rotateAngle, rotateAngle);
+
+            if (FairyTimer < 1)
+            {
+                FairyTimer = Main.rand.Next(escapeTime.Item1, escapeTime.Item2);
+                if (Main.rand.NextBool(3))
+                    Helper.PlayPitched("Fairy/FairyMove" + Main.rand.Next(2), 0.3f, 0, position);
+                Vector2 webCenter = catcher.webCenter;
+                Vector2 dir;
+                if (Vector2.Distance(Center, webCenter) > catcher.webRadius * 2 / 3)
+                    dir = (webCenter - Center)
+                        .SafeNormalize(Vector2.Zero).RotateByRandom(-escapeRandAngle, escapeRandAngle);
+                else
+                    dir = (Center - catcher.Owner.Center)
+                            .SafeNormalize(Vector2.Zero).RotateByRandom(-escapeRandAngle, escapeRandAngle);
+
+                targetVelocity = dir * Main.rand.NextFloat(escapeSpeed.Item1, escapeSpeed.Item2);
+            }
+
+            UpdateVelocity();
+        }
+
+        /// <summary>
+        /// 根据<see cref="targetVelocity"/>更新<see cref="velocity"/>
+        /// </summary>
+        /// <param name="lerpValue"></param>
+        public virtual void UpdateVelocity(int lerpValue = 19)
+        {
+            velocity = (velocity * 19 + targetVelocity) / (19+1);
+        }
 
         public void SetDirectionNormally()
         {

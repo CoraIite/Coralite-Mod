@@ -6102,3 +6102,8 @@ MeteorFireball: {
 	// DisplayName: Meteor Fireball
 	// Tooltip: ""
 }
+
+YellowFairyItem: {
+	DisplayName: 黄仙灵
+	Tooltip: ""
+}

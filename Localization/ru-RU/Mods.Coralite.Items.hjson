@@ -6103,3 +6103,8 @@ MeteorFireball: {
 	// DisplayName: Meteor Fireball
 	// Tooltip: ""
 }
+
+YellowFairyItem: {
+	// DisplayName: Yellow Fairy Item
+	// Tooltip: ""
+}

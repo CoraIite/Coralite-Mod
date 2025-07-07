@@ -25,7 +25,6 @@ namespace Coralite.Content.Items.Fairies
     public class PinkFairy : Fairy
     {
         public override int ItemType => ModContent.ItemType<PinkFairyItem>();
-        public override int VerticalFrames => 4;
 
         public override FairyRarity Rarity => FairyRarity.R;
 
@@ -38,53 +37,18 @@ namespace Coralite.Content.Items.Fairies
 
         public override void Catching(FairyCatcherProj catcher)
         {
-            FairyTimer--;
-            if (FairyTimer % 40 == 0)
-                velocity = velocity.RotateByRandom(-MathHelper.PiOver4 / 2, MathHelper.PiOver4 / 2);
-
-            if (FairyTimer < 1)
-            {
-                FairyTimer = Main.rand.Next(60, 90);
-                if (Main.rand.NextBool(3))
-                    Helper.PlayPitched("Fairy/FairyMove" + Main.rand.Next(2), 0.3f, 0, position);
-                Vector2 webCenter = catcher.webCenter;
-                Vector2 dir;
-                if (Vector2.Distance(Center, webCenter) > catcher.webRadius * 2 / 3)
-                    dir = (webCenter - Center)
-                        .SafeNormalize(Vector2.Zero).RotateByRandom(-0.2f, 0.2f);
-                else
-                    dir = (Center - catcher.Owner.Center)
-                            .SafeNormalize(Vector2.Zero).RotateByRandom(-0.2f, 0.2f);
-
-                velocity = dir * Main.rand.NextFloat(0.6f, 1.2f);
-            }
+            EscapeNormally(catcher, (60, 90), (1, 1.6f));
         }
 
-        //public override void OnCursorIntersects(Rectangle cursor, FairyCatcherProj catcher)
-        //{
-        //    if (Main.rand.NextBool(3))
-        //    {
-        //        Dust d = Dust.NewDustPerfect(Center, DustID.PinkFairy, Helper.NextVec2Dir(0.5f, 1.5f), 200);
-        //        d.noGravity = true;
-        //    }
-        //    else if (Main.rand.NextBool())
-        //        this.SpawnTrailDust(DustID.PinkFairy, Main.rand.NextFloat(0.05f, 0.5f), 200);
-        //}
-
-        public override void FreeMoving()
+        public override void OnCatch(Player player, ref int catchPower)
         {
-            FairyTimer--;
-            if (FairyTimer < 1)
+            targetVelocity = Helper.NextVec2Dir(1.4f, 1.6f);
+
+            for (int i = 0; i < 6; i++)
             {
-                velocity = Helper.NextVec2Dir(0.5f, 1f);
-                FairyTimer = Main.rand.Next(70, 110);
+                Dust d = Dust.NewDustPerfect(Center, DustID.PinkFairy, Helper.NextVec2Dir(0.5f, 1.5f), 200);
+                d.noGravity = true;
             }
-        }
-
-        public override void PreAI_InCatcher()
-        {
-            SetDirectionNormally();
-            UpdateFrameY(6);
         }
     }
 

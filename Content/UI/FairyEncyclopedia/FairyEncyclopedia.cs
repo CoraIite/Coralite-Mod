@@ -72,7 +72,7 @@ namespace Coralite.Content.UI.FairyEncyclopedia
         public static int PageCount;
 
         public static UpdateState State;
-        public static SortStyle CurrentSortStyle;
+        public static SortStyle CurrentSortStyle = SortStyle.ByRarity;
 
         public static FairyRarity? selectType = null;
 
@@ -474,7 +474,7 @@ namespace Coralite.Content.UI.FairyEncyclopedia
                     fairies.Sort((f1, f2) => f1.Type.CompareTo(f2.Type));
                     break;
                 case SortStyle.ByRarity:
-                    fairies.Sort((f1, f2) => f1.Rarity.CompareTo(f2.Rarity));
+                    fairies.Sort((f1, f2) => -f1.Rarity.CompareTo(f2.Rarity));
                     break;
                 case SortStyle.ShowCaught:
                     fairies = [.. fairies.OrderBy(f => !FairySystem.FairyCaught[f.Type])];

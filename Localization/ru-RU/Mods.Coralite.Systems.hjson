@@ -85,6 +85,7 @@ FairySystem: {
 		// ZoneRockLayer: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.ZoneRockLayer
 		// ZoneBeach: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.ZoneBeach
 		// CircleR_9: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.CircleR_9
+		// ZoneDesert: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.ZoneDesert
 	}
 }
 

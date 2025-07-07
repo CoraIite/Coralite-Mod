@@ -36,50 +36,18 @@ namespace Coralite.Content.Items.Fairies
 
         public override void Catching(FairyCatcherProj catcher)
         {
-            FairyTimer--;
-            if (FairyTimer < 1)
-            {
-                FairyTimer = Main.rand.Next(60, 80);
-                if (Main.rand.NextBool(3))
-                    Helper.PlayPitched("Fairy/FairyMove" + Main.rand.Next(2), 0.3f, 0, position);
-                Vector2 webCenter = catcher.webCenter;
-                Vector2 dir;
-                if (Vector2.Distance(Center, webCenter) > catcher.webRadius * 2 / 3)
-                    dir = (webCenter - Center)
-                        .SafeNormalize(Vector2.Zero).RotateByRandom(-0.2f, 0.2f);
-                else
-                    dir = (Center - catcher.Owner.Center)
-                            .SafeNormalize(Vector2.Zero).RotateByRandom(-0.2f, 0.2f);
-
-                velocity = dir * Main.rand.NextFloat(0.3f, 0.8f);
-            }
+            EscapeNormally(catcher, (60, 80), (0.8f, 1.2f));
         }
 
-        //public override void OnCursorIntersects(Rectangle cursor, FairyCatcherProj catcher)
-        //{
-        //    if (Main.rand.NextBool(3))
-        //    {
-        //        Dust d = Dust.NewDustPerfect(Center, DustID.YellowFairy, Helper.NextVec2Dir(0.5f, 1.5f), 200);
-        //        d.noGravity = true;
-        //    }
-        //    else if (Main.rand.NextBool())
-        //        this.SpawnTrailDust(DustID.YellowFairy, Main.rand.NextFloat(0.05f, 0.5f), 200);
-        //}
-
-        public override void FreeMoving()
+        public override void OnCatch(Player player, ref int catchPower)
         {
-            FairyTimer--;
-            if (FairyTimer < 1)
+            targetVelocity = Helper.NextVec2Dir(0.8f, 1.2f);
+
+            for (int i = 0; i < 6; i++)
             {
-                velocity = Helper.NextVec2Dir(0.1f, 0.8f);
-                FairyTimer = Main.rand.Next(60, 80);
+                Dust d = Dust.NewDustPerfect(Center, DustID.YellowTorch, Helper.NextVec2Dir(0.5f, 1.5f), 200);
+                d.noGravity = true;
             }
-        }
-
-        public override void PreAI_InCatcher()
-        {
-            SetDirectionNormally();
-            UpdateFrameY(6);
         }
     }
 

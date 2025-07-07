@@ -88,7 +88,7 @@ namespace Coralite.Helpers
                 {
                     IDs ??= [];
                     if (!IDs.Contains(fairyRect.Item2.IDInCatcher))
-                        if(fairyRect.Item2.Catch(catchPower))
+                        if(fairyRect.Item2.Catch(player, catchPower))
                         {
                             IDs.Add(fairyRect.Item2.IDInCatcher);
                             //Main.NewText(fairyRect.Item2.IDInCatcher);

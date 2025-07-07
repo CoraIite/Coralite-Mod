@@ -333,7 +333,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             }
             else
             {
-                newColor = Color.Lerp(Color.OrangeRed, Color.LawnGreen, Life / (float)FairyIV.LifeMax);
+                float lifemax = FairyIV.LifeMax;
+                if (lifemax == 0)
+                    lifemax = 1;
+                newColor = Color.Lerp(Color.OrangeRed, Color.LawnGreen, Life / lifemax);
                 status = FairySystem.CurrentLife.Format(Life, FairyIV.LifeMax);
             }
 
