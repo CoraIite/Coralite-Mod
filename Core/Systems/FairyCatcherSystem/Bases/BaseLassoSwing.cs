@@ -205,9 +205,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             distanceToOwner = Helper.Lerp(MaxDistance, 0, Helper.SqrtEase(factor));
             _Rotation += DirSign * 0.02f;
 
-            if ((int)Timer == maxTime + trailCount + 1 && Catch == 0&&Collision.CanHit(Projectile.Center,1,1,Owner.Center,1,1))
+            if ((int)Timer == maxTime + trailCount + 1 && Catch == 0 && Collision.CanHit(Projectile.Center, 1, 1, Owner.Center, 1, 1))
                 ShootFairy();
-            
+
             Slasher();
             middlePos = OwnerCenter() + _Rotation.ToRotationVector2() * distanceToOwner*0.5f;
 
@@ -251,9 +251,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             if (Owner.TryGetModPlayer(out FairyCatcherPlayer fcp)
                 && fcp.TryGetFairyBottle(out BaseFairyBottle bottle))
             {
-                float damage = Owner.GetWeaponDamage(heldItem);
-                fcp.TotalCatchPowerBonus(ref damage, heldItem);
-
                 int count = 0;
                 foreach (var item in bottle.GetShootableFairy(Owner))
                 {

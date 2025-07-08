@@ -6107,3 +6107,8 @@ YellowFairyItem: {
 	DisplayName: 黄仙灵
 	Tooltip: ""
 }
+
+BlackGelBall: {
+	DisplayName: 黑胶球
+	Tooltip: 命中敌怪时偶尔施加困惑
+}

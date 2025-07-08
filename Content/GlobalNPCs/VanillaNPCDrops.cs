@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Items.CoreKeeper;
 using Coralite.Content.Items.Donator;
+using Coralite.Content.Items.FairyCatcher.Jar;
 using Coralite.Content.Items.FlyingShields;
 using Coralite.Content.Items.FlyingShields.Accessories;
 using Coralite.Content.Items.LandOfTheLustrousSeries;
@@ -37,6 +38,11 @@ namespace Coralite.Content.GlobalNPCs
                     break;
                 case NPCID.GiantBat:
                     npcLoot.Add(ItemDropRule.Common(ItemType<BatfangShield>(), 60, 1, 1));
+                    break;
+                case NPCID.MotherSlime://黑色的史莱姆掉落黑胶球
+                //case NPCID.BabySlime:
+                //case NPCID.BlackSlime:
+                    npcLoot.Add(ItemDropRule.Common(ItemType<BlackGelBall>(), 8));
                     break;
                 //case NPCID.DarkCaster://地牢怪掉落影子
                 //    npcLoot.Add(ItemDropRule.Common(ItemType<ShadowEnergy>(), 3, 1, 3));

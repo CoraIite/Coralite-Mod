@@ -9,7 +9,7 @@ using Terraria.ModLoader.IO;
 namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 {
     /// <summary>
-    /// 注意！弹幕ai0固定传入仙灵瓶槽位，弹幕ai1固定传入是否为捕捉攻击
+    /// 注意！弹幕ai1固定传入是否为捕捉攻击
     /// </summary>
     public abstract class BaseFairyCatcher : ModItem
     {

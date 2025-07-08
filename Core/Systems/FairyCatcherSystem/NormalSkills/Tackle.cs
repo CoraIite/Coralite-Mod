@@ -71,17 +71,19 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.NormalSkills
 
         public override void OnTileCollide(BaseFairyProjectile fairyProj, Vector2 oldVelocity)
         {
-            SkillTimer = 0;
-            fairyProj.Projectile.velocity = -oldVelocity.SafeNormalize(Vector2.Zero) * 4;
+            if (SkillTimer > 0)
+                SkillTimer = 0;
+            fairyProj.Projectile.velocity = -oldVelocity.SafeNormalize(Vector2.Zero) * 2;
         }
 
-        public override void ModifyHitNPC_Active(BaseFairyProjectile fairyProj, NPC target,ref NPC.HitModifiers hitModifier, ref int npcDamage)
+        public override void ModifyHitNPC_Active(BaseFairyProjectile fairyProj, NPC target, ref NPC.HitModifiers hitModifier, ref int npcDamage)
         {
             _penetrate++;
             if (_penetrate > MaxPenetrate)
             {
                 //结束技能
-                SkillTimer = 0;
+                if (SkillTimer > 0)
+                    SkillTimer = 0;
                 fairyProj.Projectile.velocity = -fairyProj.Projectile.velocity.SafeNormalize(Vector2.Zero) * 4;
             }
 

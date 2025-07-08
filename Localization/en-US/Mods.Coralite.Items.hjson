@@ -6066,3 +6066,8 @@ YellowFairyItem: {
 	DisplayName: Yellow Fairy Item
 	Tooltip: ""
 }
+
+BlackGelBall: {
+	DisplayName: Black Gel Ball
+	Tooltip: ""
+}

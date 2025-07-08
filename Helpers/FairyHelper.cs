@@ -99,5 +99,33 @@ namespace Coralite.Helpers
 
             return caught;
         }
+
+        /// <summary>
+        /// 检测传入的矩形与仙灵捕捉环的碰撞，发生碰撞后自动增加捕捉进度，只会对第一个命中的仙灵生效
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="selfRect"></param>
+        /// <param name="overrideCatchPower"></param>
+        /// <returns></returns>
+        public static bool CheckCollideWithFairyCircleSingle(Player player, Rectangle selfRect, int? overrideCatchPower)
+        {
+            if (!player.TryGetModPlayer(out FairyCatcherPlayer fcp))
+                return false;
+
+            if (!Main.projectile.IndexInRange(fcp.FairyCircleProj))
+                return false;
+
+            if (Main.projectile[fcp.FairyCircleProj].ModProjectile is not FairyCatcherProj fcproj)
+                return false;
+
+            int catchPower = overrideCatchPower ?? fcp.GetCatchPowerByHeldItem();
+
+            foreach (var fairyRect in fcproj.GetFairyCollides())
+                if (selfRect.Intersects(fairyRect.Item1))
+                    if (fairyRect.Item2.Catch(player, catchPower))
+                        return true;
+
+            return false;
+        }
     }
 }

@@ -226,11 +226,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                     fairypowder.EditFairyAttempt(ref attempt);
             }
 
-            if (fcp.fairyAccessories != null && fcp.fairyAccessories.Count > 0)
-                foreach (var acc in fcp.fairyAccessories)
-                {
-                    acc.ModifyFairySpawn(ref attempt);
-                }
+            foreach (var acc in fcp.FairyAccessories)
+            {
+                acc.ModifyFairySpawn(ref attempt);
+            }
 
             if (attempt.SpawnFairy(out Fairy fairy))
                 Fairies.Add(fairy);

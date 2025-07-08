@@ -129,7 +129,15 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         #endregion
 
-        public List<IFairyAccessory> fairyAccessories;
+        private List<IFairyAccessory> fairyAccessories;
+        public List<IFairyAccessory> FairyAccessories
+        {
+            get
+            {
+                fairyAccessories ??= new List<IFairyAccessory>();
+                return fairyAccessories;
+            }
+        }
 
         private Item _bottleItem;
 
@@ -145,6 +153,17 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             }
             set { _bottleItem = value; }
         }
+
+        /// <summary>
+        /// 自动丢出罐子
+        /// </summary>
+        public bool AutoShootJar;
+
+        /// <summary>
+        /// 绘制罐子瞄准线
+        /// </summary>
+        public bool DrawJarAimLine;
+
 
         public bool TryGetFairyBottle(out BaseFairyBottle bottle)
         {
