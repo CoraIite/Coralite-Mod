@@ -295,8 +295,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
             float slowTime = 20;
 
-            Projectile.velocity.X = ((Projectile.velocity.X * slowTime) + restSpeed.X) / (slowTime + 1);
-            Projectile.velocity.Y = ((Projectile.velocity.Y * slowTime) + restSpeed.Y) / (slowTime + 1);
+            Projectile.velocity = ((Projectile.velocity * slowTime) + restSpeed) / (slowTime + 1);
         }
 
         /// <summary>
@@ -318,6 +317,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             Vector2 dir = (Owner.Center - Projectile.Center).SafeNormalize(Vector2.Zero);
 
             Timer++;
+
             //速度越快加速回归的速度越快
             if (Timer > 60 * 4 - IVSpeed * 4)
             {
@@ -326,7 +326,13 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 Projectile.velocity = dir * speed;
             }
             else
-                Projectile.velocity = dir * speed;
+            {
+                int slowTime = 20 - (int)(20 * Timer / (60 * 4f));
+                if (slowTime<1)
+                    slowTime = 1;
+
+                Projectile.velocity = (Projectile.velocity*slowTime+ dir * speed)/(slowTime+1);
+            }
 
             if (Vector2.Distance(Projectile.Center, Owner.Center) < speed * 2)
             {

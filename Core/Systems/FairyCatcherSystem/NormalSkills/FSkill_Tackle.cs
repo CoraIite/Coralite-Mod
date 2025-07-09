@@ -8,7 +8,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.NormalSkills
     /// <summary>
     /// 撞击
     /// </summary>
-    public class Tackle : FairySkill
+    public class FSkill_Tackle : FairySkill
     {
         /// <summary>
         /// 基础冲撞时间

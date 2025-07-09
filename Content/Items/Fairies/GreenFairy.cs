@@ -17,7 +17,7 @@ namespace Coralite.Content.Items.Fairies
         public override void SetDefaults()
         {
             Item.rare = ItemRarityID.White;
-            Item.value = Item.sellPrice(0, 0, 3);
+            Item.value = Item.sellPrice(copper: 50);
             Item.shoot = ModContent.ProjectileType<GreenFairyProj>();
         }
     }
@@ -68,7 +68,7 @@ namespace Coralite.Content.Items.Fairies
 
         public override FairySkill[] InitSkill()
             => [
-                NewSkill<Tackle>()
+                NewSkill<FSkill_Tackle>()
                 ];
 
         public override void SpawnFairyDust()

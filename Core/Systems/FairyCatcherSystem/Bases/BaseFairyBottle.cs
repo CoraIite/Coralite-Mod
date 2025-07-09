@@ -57,8 +57,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 FairySystem.BottleFightCapacity.Format(fightFairies.Count(i => !i.IsAir), FightCapacity));
             tooltips.Add(line);
 
-            line = new(Mod, "FightCapacity",
-                 FairySystem.BottleFightCapacity.Format(containFairies.Count(i => !i.IsAir), ContainCapacity));
+            line = new(Mod, "ContainCapacity",
+                 FairySystem.BottleContainCapacity.Format(containFairies.Count(i => !i.IsAir), ContainCapacity));
             tooltips.Add(line);
         }
 

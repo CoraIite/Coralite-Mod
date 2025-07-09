@@ -111,9 +111,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 case AIStates.Held:
                     SetHeld();
                     Owner.itemTime = Owner.itemAnimation = 2;
-                    Owner.direction = (InMousePos.X - Projectile.Center.X) > 0 ? 1 : -1;
+                    if (Math.Abs(InMousePos.X - Projectile.Center.X) > 8)
+                        Owner.direction = (InMousePos.X - Projectile.Center.X) > 0 ? 1 : -1;
                     Held();
-                    
+
                     break;
                 case AIStates.Flying:
                     Flying();

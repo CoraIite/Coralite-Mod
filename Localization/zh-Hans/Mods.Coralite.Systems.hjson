@@ -11,7 +11,6 @@ MagikeSystem: {
 }
 
 FairySystem: {
-	ZoneForest: 在地表森林捕获
 	FairyLifeMax: "    血量 ▶ "
 	FairyDamage: "    伤害 ▶ "
 	FairyDefence: "    防御 ▶ "
@@ -32,8 +31,6 @@ FairySystem: {
 	BottleCapacity: 容量 {0} / {1}
 	NotHaveLevel: 无：{0}（基础 {1}）
 	SeeMore: "[c/808080:按shift查看更多]"
-	ZoneRockLayer: 在洞穴中出现
-	ZoneBeach: 在海边出现
 	CatchPowerMult: "{0}仙灵捕捉力"
 	UncaughtMouseText:
 		'''
@@ -89,11 +86,11 @@ FairySystem: {
 	BottleHeal: 每 {0} 秒为出战仙灵回复 {1}% + {2} 血量
 
 	SpawnDescriptions: {
-		// ZoneForest: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.ZoneForest
-		// ZoneRockLayer: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.ZoneRockLayer
-		// ZoneBeach: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.ZoneBeach
-		// CircleR_9: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.CircleR_9
-		// ZoneDesert: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.ZoneDesert
+		ZoneForest: 在森林出现
+		ZoneRockLayer: 在洞穴出现
+		ZoneBeach: 在海边出现
+		CircleR_9: 需要捕捉环半径大于9格
+		ZoneDesert: 在沙漠出现
 	}
 }
 
@@ -286,4 +283,7 @@ CoraliteNoteSystem: {
 	HowToCollect: 获得物品后需要打开此页面才能记录收集进度
 }
 
-FairySkill.Tackle.SkillName: 撞击！
+FairySkill: {
+	FSkill_Blow.SkillName: 吹散！
+	FSkill_Tackle.SkillName: 撞击！
+}

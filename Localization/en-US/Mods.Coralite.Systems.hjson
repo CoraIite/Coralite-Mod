@@ -11,7 +11,6 @@ MagikeSystem: {
 }
 
 FairySystem: {
-	ZoneForest: Capture in surface forests
 	FairyLifeMax: "Health "
 	FairyDamage: "Damage "
 	FairyDefence: "Defense "
@@ -32,8 +31,6 @@ FairySystem: {
 	BottleCapacity: Capacity {0} / {1}
 	NotHaveLevel: None：{0}（Base {1}）
 	SeeMore: Press the key above to view the radar map (cannot be used when paused)
-	ZoneRockLayer: Appears in caves
-	ZoneBeach: Appears at the beach
 	CatchPowerMult: "{0} Catch Power"
 	UncaughtMouseText:
 		'''
@@ -264,4 +261,7 @@ CoraliteNoteSystem: {
 	HowToCollect: Collection progress will be recorded after opening this page upon obtaining items
 }
 
-FairySkill.Tackle.SkillName: Mods.Coralite.Systems.FairySkill.Tackle.SkillName
+FairySkill: {
+	FSkill_Blow.SkillName: Mods.Coralite.Systems.FairySkill.FSkill_Blow.SkillName
+	FSkill_Tackle.SkillName: Mods.Coralite.Systems.FairySkill.FSkill_Tackle.SkillName
+}

@@ -4,6 +4,7 @@ using Coralite.Core.Systems.FairyCatcherSystem;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using Coralite.Core.Systems.FairyCatcherSystem.NormalSkills;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -19,7 +20,7 @@ namespace Coralite.Content.Items.Fairies
         public override void SetDefaults()
         {
             Item.rare = ItemRarityID.Blue;
-            Item.value = Item.sellPrice(0, 0, 5);
+            Item.value = Item.sellPrice(copper: 50);
             Item.shoot = ModContent.ProjectileType<BreezeFairyProj>();
         }
     }
@@ -27,7 +28,6 @@ namespace Coralite.Content.Items.Fairies
     public class BreezeFairy : Fairy
     {
         public override int ItemType => ModContent.ItemType<BreezeFairyItem>();
-        public override int VerticalFrames => 4;
 
         public override FairyRarity Rarity => FairyRarity.U;
 
@@ -40,52 +40,18 @@ namespace Coralite.Content.Items.Fairies
 
         public override void Catching(FairyCatcherProj catcher)
         {
-            FairyTimer--;
-            velocity = velocity.RotateByRandom(-0.08f, 0.04f);
-            if (FairyTimer <= 0)
-            {
-                FairyTimer = Main.rand.Next(60, 100);
-                if (Main.rand.NextBool(3))
-                    Helper.PlayPitched("Fairy/FairyMove" + Main.rand.Next(2), 0.3f, 0, position);
-                Vector2 webCenter = catcher.webCenter;
-                Vector2 dir;
-                if (Vector2.Distance(Center, webCenter) > catcher.webRadius * 2 / 3)
-                    dir = (webCenter - Center)
-                        .SafeNormalize(Vector2.Zero).RotateByRandom(-0.2f, 0.2f);
-                else
-                    dir = (Center - catcher.Owner.Center)
-                            .SafeNormalize(Vector2.Zero).RotateByRandom(-0.2f, 0.2f);
-
-                velocity = dir * Main.rand.NextFloat(0.4f, 0.9f);
-            }
+            EscapeNormally(catcher, (60, 100), (0.8f, 1f));
         }
 
-        //public override void OnCursorIntersects(Rectangle cursor, FairyCatcherProj catcher)
-        //{
-        //    if (Main.rand.NextBool(3))
-        //    {
-        //        Dust d = Dust.NewDustPerfect(Center, DustID.Cloud, Helper.NextVec2Dir(0.5f, 1.5f), 50);
-        //        d.noGravity = true;
-        //    }
-        //    else if (Main.rand.NextBool())
-        //        this.SpawnTrailDust(DustID.Cloud, Main.rand.NextFloat(0.05f, 0.5f), 50);
-        //}
-
-        public override void FreeMoving()
+        public override void OnCatch(Player player, ref int catchPower)
         {
-            FairyTimer--;
-            velocity = velocity.RotateByRandom(-0.02f, 0.01f);
-            if (FairyTimer < 1)
+            targetVelocity = Helper.NextVec2Dir(0.8f, 1f);
+
+            for (int i = 0; i < 6; i++)
             {
-                velocity = Helper.NextVec2Dir(0.2f, 1f);
-                FairyTimer = Main.rand.Next(60, 80);
+                Dust d = Dust.NewDustPerfect(Center, DustID.AncientLight, Helper.NextVec2Dir(0.5f, 1.5f), 200);
+                d.noGravity = true;
             }
-        }
-
-        public override void PreAI_InCatcher()
-        {
-            SetDirectionNormally();
-            UpdateFrameY(6);
         }
     }
 
@@ -95,134 +61,113 @@ namespace Coralite.Content.Items.Fairies
 
         public override FairySkill[] InitSkill()
             => [
-                NewSkill<Tackle>()
+                NewSkill<FSkill_Blow>()
                 ];
 
-        public override void SetDefaults()
+        public override void SpawnFairyDust()
         {
-            Projectile.tileCollide = true;
-            Projectile.width = Projectile.height = 18;
-            Projectile.friendly = true;
-            Projectile.DamageType = FairyDamage.Instance;
-            Projectile.penetrate = -1;
-            AttackDistance = 120;
+            switch (State)
+            {
+                case AIStates.Shooting:
+                    if (Main.rand.NextBool(3))
+                        Projectile.SpawnTrailDust(DustID.Cloud, Main.rand.NextFloat(0.1f, 0.5f), 200);
+                    break;
+                case AIStates.Rest:
+                case AIStates.Backing:
+                    if (Main.rand.NextBool(3))
+                        Projectile.SpawnTrailDust(DustID.AncientLight, Main.rand.NextFloat(0.1f, 0.5f), 200);
+                    break;
+                case AIStates.Skill:
+                default:
+                    Projectile.SpawnTrailDust(DustID.AncientLight, Main.rand.NextFloat(0.1f, 0.5f), 200);
+                    break;
+            }
         }
 
-        public override void PostAI()
+        public override void AIAfter()
         {
-            SetDirectionNormally();
-            UpdateFrameY(6);
+            Lighting.AddLight(Projectile.Center, 0.1f, 0.15f, 0.15f);
         }
 
-        public override void OnInitialize()
+        public override Vector2 GetRestSpeed()
         {
-            Projectile.velocity = Projectile.velocity.RotateByRandom(-0.3f, 0.3f);
-            Timer = Main.rand.Next(30, 45);
-        }
-
-        public override void Shooting()
-        {
-            canDamage = true;
-            Timer--;
-            Projectile.timeLeft = 20;
-            Projectile.velocity *= 0.98f;
-            if (Main.rand.NextBool(3))
-                Projectile.SpawnTrailDust(DustID.Cloud, Main.rand.NextFloat(0.1f, 0.5f), 100);
-
-            if (Timer < 1)
-                TryExchangeToAttack();
-        }
-
-        public override void Skill()
-        {
-            Projectile.timeLeft = 20;
-            Projectile.SpawnTrailDust(DustID.AncientLight, Main.rand.NextFloat(0.1f, 0.5f));
-            Lighting.AddLight(Projectile.Center, 0.2f, 0.2f, 0.2f);
-
-            Timer++;
-
-            if (Timer < 20)
-            {
-                Vector2 pos = Projectile.Center + Main.rand.NextVector2Circular(120, 120);
-                Dust d = Dust.NewDustPerfect(pos, DustID.AncientLight, (pos - Projectile.Center).SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(1f, 4f));
-                d.noGravity = true;
-                Projectile.velocity *= 0.8f;
-            }
-            else if (Timer == 20)
-            {
-                Color c = Color.SkyBlue;
-                //c.A = 50;
-                //RedJades.RedExplosionParticle.Spawn(Projectile.Center, 1.2f, c); 
-                c.A = 200;
-                RedJades.RedGlowParticle.Spawn(Projectile.Center, 1.2f, c, 0.3f);
-            }
-            else if (Timer < 20 + 10)
-            {
-                if (Timer == 25)
-                {
-                    Color c = Color.SkyBlue;
-                    c.A = 150;
-                    RedJades.RedGlowParticle.Spawn(Projectile.Center, 1.2f, c, 0.3f);
-                }
-
-                for (int i = 0; i < Main.maxNPCs; i++)
-                {
-                    NPC n = Main.npc[i];
-                    if (n.CanBeChasedBy() && Vector2.Distance(n.Center, Projectile.Center) < 120)
-                    {
-                        n.velocity += (n.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * 2 * n.knockBackResist;
-                        if (Timer == 23)
-                            n.StrikeNPC(n.CalculateHitInfo(Projectile.damage, 0, knockBack: 0, damageType: FairyDamage.Instance));
-                    }
-                }
-            }
-
-            if (Timer > 60)
-                ExchangeToBack();
-        }
-
-        public override void Backing()
-        {
-            Timer++;
-            if (Timer < 40)
-            {
-                Projectile.velocity *= 0.95f;
-            }
-            else if (Timer == 40)
-            {
-                Projectile.velocity = Helper.NextVec2Dir(4, 6);
-            }
-            else if (Timer < 40 + 120)
-            {
-                Projectile.velocity = new Vector2(0, MathF.Sin(Timer * 0.1f) * 2);
-
-                if (Main.rand.NextBool())
-                    Projectile.SpawnTrailDust(DustID.Cloud, Main.rand.NextFloat(0.1f, 0.5f), 100);
-            }
-            else if (Timer == 40 + 120)
-                RestartAttack();
-            else
-            {
-                //Backing_LerpToOwner();
-                if (Main.rand.NextBool())
-                    Projectile.SpawnTrailDust(DustID.Cloud, Main.rand.NextFloat(0.1f, 0.5f), 100);
-            }
-
-            Lighting.AddLight(Projectile.Center, 0.2f, 0.2f, 0.2f);
+            return new Vector2(0, MathF.Sin(Timer * 0.2f + Projectile.identity * MathHelper.TwoPi / 6) * 3);
         }
 
         public override void OnStartUseSkill(NPC target)
         {
-            //SpawnSkillText(Color.Blue);
             SoundEngine.PlaySound(CoraliteSoundID.Fairy_NPCHit5, Projectile.Center);
         }
 
-        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        public override void OnKill_DeadEffect()
         {
-            base.OnHitNPC(target, hit, damageDone);
-            Projectile.velocity = (Projectile.Center - target.Center).SafeNormalize(Vector2.Zero)
-                .RotateByRandom(-0.3f, 0.3f) * Main.rand.NextFloat(2f, 5f);
-            ExchangeToBack();
+            SoundEngine.PlaySound(CoraliteSoundID.Fairy_NPCHit5, Projectile.Center);
+
+            for (int i = 0; i < 12; i++)
+            {
+                Dust d = Dust.NewDustPerfect(Projectile.Center, DustID.BlueFairy, Helper.NextVec2Dir(1, 2), 200);
+                d.noGravity = true;
+            }
         }
+    }
+
+    public class BreezeBlow : BaseHeldProj
+    {
+        public override string Texture => AssetDirectory.DefaultItem;
+
+        public override void SetDefaults()
+        {
+            Projectile.DamageType = FairyDamage.Instance;
+            Projectile.friendly = true;
+            Projectile.tileCollide = false;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = -1;
+            Projectile.timeLeft = 20;
+            Projectile.width = Projectile.height = 240;
+            Projectile.penetrate = -1;
+        }
+
+        public override void Initialize()
+        {
+            Projectile.scale = 1 + Math.Clamp(Projectile.ai[0], 0, 15) * 0.05f;
+            Projectile.Resize((int)(Projectile.scale * Projectile.width), (int)(Projectile.scale * Projectile.height));
+        }
+
+        public override void AI()
+        {
+            Lighting.AddLight(Projectile.Center, 0.2f, 0.2f, 0.2f);
+            Vector2 pos = Projectile.Center + Main.rand.NextVector2Circular(120, 120);
+            Dust d = Dust.NewDustPerfect(pos, DustID.AncientLight, (pos - Projectile.Center).SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(1f, 4f));
+            d.noGravity = true;
+            Projectile.ai[2]++;
+
+            if (Projectile.ai[2] == 0)
+            {
+                Color c = Color.SkyBlue;
+                c.A = 200;
+                RedJades.RedGlowParticle.Spawn(Projectile.Center, Projectile.scale * 1.1f, c, 0.2f);
+            }
+            if (Projectile.ai[2] == 5)
+            {
+                Color c = Color.SkyBlue;
+                c.A = 125;
+                RedJades.RedGlowParticle.Spawn(Projectile.Center, Projectile.scale * 1.1f, c, 0.3f);
+            }
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            return false;
+        }
+    }
+
+    public class FSkill_Blow : FSkill_ShootProj
+    {
+        public override Color SkillTextColor => Color.SkyBlue;
+        protected override float ShootSpeed => 0;
+
+        protected override int ProjType => ModContent.ProjectileType<BreezeBlow>();
+
+        protected override float ChaseDistance => 100;
     }
 }

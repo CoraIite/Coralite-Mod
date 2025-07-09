@@ -11,7 +11,6 @@ MagikeSystem: {
 }
 
 FairySystem: {
-	ZoneForest: Поймано в лесу на поверхности
 	FairyLifeMax: "[i:58]Здоровье "
 	FairyDamage: "[i:3507]Урон "
 	FairyDefence: "[i:3811]Защита "
@@ -32,8 +31,6 @@ FairySystem: {
 	BottleCapacity: Вместимость {0} / {1}
 	NotHaveLevel: Нет: {0} (Базовый {1})
 	SeeMore: Нажмите вверх для просмотра радарной карты (не работает во время паузы)
-	ZoneRockLayer: Появляется в пещерах
-	ZoneBeach: Появляется на пляже
 	CatchPowerMult: "{0} Мощность ловли"
 	UncaughtMouseText:
 		'''
@@ -268,4 +265,7 @@ CoraliteNoteSystem: {
 	// HowToCollect: Collection progress will be recorded after opening this page upon obtaining items
 }
 
-// FairySkill.Tackle.SkillName: Mods.Coralite.Systems.FairySkill.Tackle.SkillName
+FairySkill: {
+	// FSkill_Blow.SkillName: Mods.Coralite.Systems.FairySkill.FSkill_Blow.SkillName
+	// FSkill_Tackle.SkillName: Mods.Coralite.Systems.FairySkill.FSkill_Tackle.SkillName
+}

@@ -58,7 +58,7 @@ namespace Coralite.Content.Items.Fairies
 
         public override FairySkill[] InitSkill()
             => [
-                NewSkill<Tackle>()
+                NewSkill<FSkill_Tackle>()
                 ];
 
         public override void SpawnFairyDust()

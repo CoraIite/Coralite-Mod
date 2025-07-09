@@ -23,7 +23,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         public string LocalizationCategory => "Systems.FairySkill";
 
-        public virtual Color SkillTextColor { get; set; } = Color.White;
+        public virtual Color SkillTextColor { get=> Color.White; } 
 
         /// <summary>
         /// 技能计时器
@@ -56,7 +56,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public virtual void SpawnSkillText(Vector2 pos)
         {
             CombatText.NewText(Utils.CenteredRectangle(pos, Vector2.One), SkillTextColor,
-                FairyLoader.GetFairySkill(Type).SkillName.Value);
+                FairyLoader.GetFairySkill(Type).SkillName.Value,true,true);
         }
 
         /// <summary>
