@@ -91,6 +91,7 @@ FairySystem: {
 		ZoneBeach: 在海边出现
 		CircleR_9: 需要捕捉环半径大于9格
 		ZoneDesert: 在沙漠出现
+		// ZoneHell: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.ZoneHell
 	}
 }
 
@@ -286,4 +287,5 @@ CoraliteNoteSystem: {
 FairySkill: {
 	FSkill_Blow.SkillName: 吹散！
 	FSkill_Tackle.SkillName: 撞击！
+	FSkill_HealOutside.SkillName: 治愈
 }

@@ -1,19 +1,21 @@
 ﻿using Coralite.Core.Loaders;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
 using Terraria.Localization;
-using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem
 {
     /// <summary>
     /// 仙灵技能
     /// </summary>
-    public abstract class FairySkill : ModType, ILocalizedModType
+    public abstract class FairySkill : ModTexturedType, ILocalizedModType
     {
+        public override string Texture => AssetDirectory.DefaultItem;
+
         public int Type { get; internal set; }
 
         /// <summary>
@@ -119,6 +121,32 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <param name="oldVelocity"></param>
         /// </summary>
         public virtual void OnTileCollide(BaseFairyProjectile fairyProj, Vector2 oldVelocity)
+        {
+
+        }
+
+        /// <summary>
+        /// 获取技能描述
+        /// </summary>
+        /// <param name="skillLevel"></param>
+        /// <returns></returns>
+        public virtual string GetSkillDescription(int skillLevel) => "";
+
+        /// <summary>
+        /// 获取仙灵技能描述的尺寸
+        /// </summary>
+        /// <returns></returns>
+        public Vector2 GetSkillTipSize()
+        {
+            Texture2D tex = FairySystem.FairySkillAssets[Type].Value;
+            return tex.Size();
+        }
+
+        /// <summary>
+        /// 绘制仙灵描述
+        /// </summary>
+        /// <param name="topLeft"></param>
+        public void DrawSkillTip(Vector2 topLeft)
         {
 
         }

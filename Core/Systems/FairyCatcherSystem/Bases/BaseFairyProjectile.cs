@@ -57,7 +57,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// <summary>
         /// 能够开始攻击的距离
         /// </summary>
-        protected float AttackDistance = 400;
+        public float AttackDistance = 400;
 
         private bool init = true;
         protected bool canDamage = true;
@@ -288,7 +288,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         public virtual void Rest()
         {
             Vector2 restSpeed = GetRestSpeed();
-            if (TargetIndex.GetNPCOwner(out NPC target, () => TargetIndex = -1) && Vector2.Distance(target.Center, Projectile.Center) > 450)
+            if (TargetIndex.GetNPCOwner(out NPC target, () => TargetIndex = -1)
+                && Vector2.Distance(target.Center, Projectile.Center) > AttackDistance)
             {
                 restSpeed += (target.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * IVSpeed;
             }

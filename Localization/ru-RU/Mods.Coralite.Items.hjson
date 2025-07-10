@@ -6113,3 +6113,8 @@ BlackGelBall: {
 	// DisplayName: Black Gel Ball
 	// Tooltip: ""
 }
+
+RedFairyItem: {
+	// DisplayName: Red Fairy Item
+	// Tooltip: ""
+}

@@ -1,8 +1,11 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Systems.FairyCatcherSystem;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
+using Coralite.Core.Systems.FairyCatcherSystem.NormalSkills;
 using Coralite.Helpers;
+using System;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ID;
 
 namespace Coralite.Content.Items.Fairies
@@ -15,8 +18,8 @@ namespace Coralite.Content.Items.Fairies
         public override void SetDefaults()
         {
             Item.rare = ItemRarityID.Blue;
-            Item.value = Item.sellPrice(0, 0, 5);
-            //Item.shoot = ModContent.ProjectileType<GreenFairyProj>();
+            Item.value = Item.sellPrice(0, 0, 2);
+            Item.shoot = ModContent.ProjectileType<CandyFairyProj>();
         }
     }
 
@@ -41,7 +44,7 @@ namespace Coralite.Content.Items.Fairies
         {
             FairyTimer--;
             if (RandomRolling)
-                velocity = velocity.RotateByRandom(0.06f, 0.12f);
+                targetVelocity = targetVelocity.RotateByRandom(0.06f, 0.12f);
 
             if (FairyTimer <= 0)
             {
@@ -59,38 +62,89 @@ namespace Coralite.Content.Items.Fairies
                             .SafeNormalize(Vector2.Zero).RotateByRandom(-0.2f, 0.2f);
 
                 if (RandomRolling)
-                    velocity = dir * Main.rand.NextFloat(1f, 1.5f);
+                    targetVelocity = dir * Main.rand.NextFloat(1f, 1.5f);
                 else
-                    velocity = dir * Main.rand.NextFloat(0.4f, 0.9f);
+                    targetVelocity = dir * Main.rand.NextFloat(0.6f, 0.9f);
             }
+
+            velocity = (velocity * 10 + targetVelocity) / 11;
         }
 
-        //public override void OnCursorIntersects(Rectangle cursor, FairyCatcherProj catcher)
-        //{
-        //    if (Main.rand.NextBool(3))
-        //    {
-        //        Dust d = Dust.NewDustPerfect(Center, DustID.GemRuby, Helper.NextVec2Dir(0.5f, 1.5f), 50);
-        //        d.noGravity = true;
-        //    }
-        //    else if (Main.rand.NextBool())
-        //        this.SpawnTrailDust(DustID.GemRuby, Main.rand.NextFloat(0.05f, 0.5f), 100);
-        //}
-
-        public override void FreeMoving()
+        public override void OnCatch(Player player, ref int catchPower)
         {
-            FairyTimer--;
-            velocity = velocity.RotateByRandom(-0.02f, 0.01f);
-            if (FairyTimer < 1)
+            targetVelocity = Helper.NextVec2Dir(0.6f, 0.8f);
+
+            for (int i = 0; i < 6; i++)
             {
-                velocity = Helper.NextVec2Dir(0.2f, 1f);
-                FairyTimer = Main.rand.Next(60, 80);
+                Dust d = Dust.NewDustPerfect(Center, DustID.AncientLight, Helper.NextVec2Dir(0.5f, 1.5f));
+                d.noGravity = true;
+            }
+        }
+    }
+
+    public class CandyFairyProj : BaseFairyProjectile
+    {
+        public override string Texture => AssetDirectory.FairyItems + "CandyFairy";
+
+        public override FairySkill[] InitSkill()
+            => [
+                NewSkill<FSkill_HealOutside>()
+                ];
+
+        public override void SpawnFairyDust()
+        {
+            switch (State)
+            {
+                case AIStates.Shooting:
+                case AIStates.Rest:
+                case AIStates.Backing:
+                    if (Main.rand.NextBool(3))
+                        Projectile.SpawnTrailDust(DustID.RedTorch, Main.rand.NextFloat(0.1f, 0.5f));
+                    break;
+                case AIStates.Skill:
+                default:
+                    Projectile.SpawnTrailDust(DustID.RedTorch, Main.rand.NextFloat(0.1f, 0.5f));
+                    break;
             }
         }
 
-        public override void PreAI_InCatcher()
+        public override void Rest()
         {
-            SetDirectionNormally();
-            UpdateFrameY(6);
+            Vector2 restSpeed = GetRestSpeed();
+            if (Vector2.Distance(Owner.Center, Projectile.Center) > AttackDistance)
+            {
+                restSpeed += (Owner.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * IVSpeed;
+            }
+
+            float slowTime = 20;
+
+            Projectile.velocity = ((Projectile.velocity * slowTime) + restSpeed) / (slowTime + 1);
+        }
+
+        public override void AIAfter()
+        {
+            Lighting.AddLight(Projectile.Center, 0.15f, 0.05f, 0.05f);
+        }
+
+        public override Vector2 GetRestSpeed()
+        {
+            return new Vector2(MathF.Cos(Timer * 0.2f)*3, MathF.Sin(Timer * 0.1f));
+        }
+
+        public override void OnStartUseSkill(NPC target)
+        {
+            SoundEngine.PlaySound(CoraliteSoundID.Fairy_NPCHit5, Projectile.Center);
+        }
+
+        public override void OnKill_DeadEffect()
+        {
+            SoundEngine.PlaySound(CoraliteSoundID.Fairy_NPCHit5, Projectile.Center);
+
+            for (int i = 0; i < 12; i++)
+            {
+                Dust d = Dust.NewDustPerfect(Projectile.Center, DustID.RedTorch, Helper.NextVec2Dir(1, 2));
+                d.noGravity = true;
+            }
         }
     }
 }

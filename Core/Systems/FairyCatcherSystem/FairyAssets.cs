@@ -10,6 +10,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
     {
         public static ATex[] FairyAssets;
         public static ATex[] FairyCatcherCoreAssets;
+        public static ATex[] FairySkillAssets;
 
         public static ATex FairySlotBorder;
         public static ATex FairySlotHoverBorder;
@@ -34,6 +35,14 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                 FairyCircleCore f = FairyLoader.GetFairyCircleCore(i);
                 if (f != null)
                     FairyCatcherCoreAssets[i] = ModContent.Request<Texture2D>(f.Texture);
+            }
+
+            FairySkillAssets = new ATex[FairyLoader.FairySkillCount];
+            for (int i = 0; i < FairyLoader.FairyCircleCoreCount; i++)
+            {
+                FairySkill f = FairyLoader.GetFairySkill(i);
+                if (f != null)
+                    FairySkillAssets[i] = ModContent.Request<Texture2D>(f.Texture);
             }
 
             FairySlotBorder = ModContent.Request<Texture2D>(AssetDirectory.UI + "FairySlotBorder");

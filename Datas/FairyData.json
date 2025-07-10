@@ -474,5 +474,73 @@
       "Eternal": 3,
       "Over": 3
     }
+  },
+  "RedFairy": {
+    "LifeMax": {
+      "Weak": 1,
+      "WeakCommon": 1,
+      "Common": 1,
+      "Uncommon": 1,
+      "Rare": 1,
+      "Epic": 1,
+      "Legendary": 1,
+      "Eternal": 1,
+      "Over": 1
+    },
+    "Damage": {
+      "Weak": 1,
+      "WeakCommon": 1,
+      "Common": 1,
+      "Uncommon": 1,
+      "Rare": 1,
+      "Epic": 1,
+      "Legendary": 1,
+      "Eternal": 1,
+      "Over": 1
+    },
+    "Defence": {
+      "Weak": 1,
+      "WeakCommon": 1,
+      "Common": 1,
+      "Uncommon": 1,
+      "Rare": 1,
+      "Epic": 1,
+      "Legendary": 1,
+      "Eternal": 1,
+      "Over": 1
+    },
+    "Speed": {
+      "Weak": 1,
+      "WeakCommon": 1,
+      "Common": 1,
+      "Uncommon": 1,
+      "Rare": 1,
+      "Epic": 1,
+      "Legendary": 1,
+      "Eternal": 1,
+      "Over": 1
+    },
+    "SkillLevel": {
+      "Weak": 1,
+      "WeakCommon": 1,
+      "Common": 1,
+      "Uncommon": 1,
+      "Rare": 1,
+      "Epic": 1,
+      "Legendary": 1,
+      "Eternal": 1,
+      "Over": 1
+    },
+    "Stamina": {
+      "Weak": 1,
+      "WeakCommon": 1,
+      "Common": 1,
+      "Uncommon": 1,
+      "Rare": 1,
+      "Epic": 1,
+      "Legendary": 1,
+      "Eternal": 1,
+      "Over": 1
+    }
   }
 }

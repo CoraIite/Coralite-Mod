@@ -155,6 +155,11 @@ namespace Coralite.Content.Items.Fairies
             }
         }
 
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            modifiers.HitDirectionOverride = target.Center.X - Projectile.Center.X > 0 ? 1 : -1;
+        }
+
         public override bool PreDraw(ref Color lightColor)
         {
             return false;

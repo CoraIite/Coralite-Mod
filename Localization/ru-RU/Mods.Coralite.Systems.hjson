@@ -83,6 +83,7 @@ FairySystem: {
 		// ZoneBeach: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.ZoneBeach
 		// CircleR_9: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.CircleR_9
 		// ZoneDesert: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.ZoneDesert
+		// ZoneHell: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.ZoneHell
 	}
 }
 
@@ -268,4 +269,5 @@ CoraliteNoteSystem: {
 FairySkill: {
 	// FSkill_Blow.SkillName: Mods.Coralite.Systems.FairySkill.FSkill_Blow.SkillName
 	// FSkill_Tackle.SkillName: Mods.Coralite.Systems.FairySkill.FSkill_Tackle.SkillName
+	// FSkill_HealOutside.SkillName: Mods.Coralite.Systems.FairySkill.FSkill_HealOutside.SkillName
 }

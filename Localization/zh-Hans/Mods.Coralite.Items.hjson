@@ -6112,3 +6112,8 @@ BlackGelBall: {
 	DisplayName: 黑胶球
 	Tooltip: 命中敌怪时偶尔施加困惑
 }
+
+RedFairyItem: {
+	// DisplayName: Red Fairy Item
+	// Tooltip: ""
+}
