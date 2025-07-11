@@ -26,6 +26,16 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             new(() => GetSpawnCondition(DescriptionID.ZoneDesert)
                 , attempt => attempt.Player.ZoneDesert);
 
+        /// <summary> 猩红环境 </summary>
+        public static FairySpawnCondition ZoneCrimson =
+            new(() => GetSpawnCondition(DescriptionID.ZoneCrimson)
+                , attempt => attempt.Player.ZoneCrimson);
+
+        /// <summary> 腐化环境 </summary>
+        public static FairySpawnCondition ZoneCorrupt =
+            new(() => GetSpawnCondition(DescriptionID.ZoneCorrupt)
+                , attempt => attempt.Player.ZoneCorrupt);
+
         /// <summary> 地狱环境 </summary>
         public static FairySpawnCondition ZoneHell =
             new(() => GetSpawnCondition(DescriptionID.ZoneHell)

@@ -6118,3 +6118,13 @@ RedFairyItem: {
 	// DisplayName: Red Fairy Item
 	// Tooltip: ""
 }
+
+GelWeb: {
+	// DisplayName: Gel Web
+	// Tooltip: ""
+}
+
+PurpleFairyItem: {
+	// DisplayName: Purple Fairy Item
+	// Tooltip: ""
+}

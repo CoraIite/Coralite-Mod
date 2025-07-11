@@ -12,6 +12,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.NormalSkills
     /// </summary>
     public class FSkill_HealOutside : FairySkill
     {
+        public override Color SkillTextColor => Color.Green;
+
         /// <summary>
         /// 获取治疗百分比
         /// </summary>

@@ -92,6 +92,8 @@ FairySystem: {
 		CircleR_9: 需要捕捉环半径大于9格
 		ZoneDesert: 在沙漠出现
 		// ZoneHell: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.ZoneHell
+		// ZoneCrimson: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.ZoneCrimson
+		// ZoneCorrupt: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.ZoneCorrupt
 	}
 }
 

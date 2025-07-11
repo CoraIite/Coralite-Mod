@@ -84,6 +84,8 @@ FairySystem: {
 		CircleR_9: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.CircleR_9
 		ZoneDesert: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.ZoneDesert
 		ZoneHell: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.ZoneHell
+		ZoneCrimson: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.ZoneCrimson
+		ZoneCorrupt: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.ZoneCorrupt
 	}
 }
 

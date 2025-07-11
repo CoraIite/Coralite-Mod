@@ -6114,6 +6114,16 @@ BlackGelBall: {
 }
 
 RedFairyItem: {
-	// DisplayName: Red Fairy Item
+	DisplayName: 红仙灵
+	Tooltip: ""
+}
+
+GelWeb: {
+	// DisplayName: Gel Web
+	// Tooltip: ""
+}
+
+PurpleFairyItem: {
+	// DisplayName: Purple Fairy Item
 	// Tooltip: ""
 }

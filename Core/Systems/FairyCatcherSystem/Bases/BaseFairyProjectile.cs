@@ -119,6 +119,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             if (init)
                 Initilize();
 
+            if (Vector2.Distance(Projectile.Center,Owner.Center)>4000)
+                Projectile.Kill();
+
             switch (State)
             {
                 default:

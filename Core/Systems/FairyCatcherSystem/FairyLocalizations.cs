@@ -51,6 +51,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             ZoneBeach,
             ZoneDesert,
             ZoneHell,
+            ZoneCrimson,
+            ZoneCorrupt,
 
 
 

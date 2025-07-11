@@ -1,5 +1,6 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
+using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Enums;
 using Terraria.ID;
@@ -48,6 +49,12 @@ namespace Coralite.Content.Items.FairyCatcher.Lasso
             Color c = Color.Green;
             c = Lighting.GetColor((int)pos.X / 16, (int)(pos.Y / 16f), c);
             return c;
+        }
+
+        public override void DrawHandle(Texture2D HandleTex)
+        {
+            Main.spriteBatch.Draw(HandleTex, Owner.itemLocation - Main.screenPosition + _Rotation.ToRotationVector2() * 4, null,
+                Lighting.GetColor(Owner.Center.ToTileCoordinates()), _Rotation + DirSign * spriteRotation, HandleTex.Size() / 2, 1f, Owner.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
         }
     }
 }

@@ -1,11 +1,10 @@
 ﻿using Coralite.Core.Systems.FairyCatcherSystem.Bases;
-using Mono.Cecil.Cil;
 using MonoMod.Cil;
 using Terraria;
 
 namespace Coralite.Content.CustomHooks
 {
-    public class FairySkillDraw:HookGroup
+    public class FairySkillDraw : HookGroup
     {
         public override void Load()
         {

@@ -11,6 +11,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
     /// </summary>
     public abstract class BaseJarProj : BaseHeldProj
     {
+        public override string Texture => AssetDirectory.FairyCatcherJar + Name;
+
         /// <summary>
         /// 最大蓄力时间
         /// </summary>
@@ -19,7 +21,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// <summary>
         /// 最大蓄力伤害加成
         /// </summary>
-        public float MaxChannelDamageBonus = 1.5f;
+        public float MaxChannelDamageBonus = 2.5f;
 
         /// <summary>
         /// 投出后的飞行时间，在此时间段内不会下降
@@ -75,6 +77,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             Projectile.DamageType = FairyDamage.Instance;
             Projectile.friendly = true;
             Projectile.tileCollide = false;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = -1;
         }
 
         public override bool ShouldUpdatePosition()
@@ -111,8 +115,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 case AIStates.Held:
                     SetHeld();
                     Owner.itemTime = Owner.itemAnimation = 2;
-                    if (Math.Abs(InMousePos.X - Projectile.Center.X) > 8)
-                        Owner.direction = (InMousePos.X - Projectile.Center.X) > 0 ? 1 : -1;
+                    if (Math.Abs(InMousePos.X - Owner.Center.X) > 8)
+                        Owner.direction = (InMousePos.X - Owner.Center.X) > 0 ? 1 : -1;
                     Held();
 
                     break;

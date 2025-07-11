@@ -41,7 +41,7 @@ namespace Coralite.Content.Items.FairyCatcher.Lasso
 
         public override void SetSwingProperty()
         {
-            minDistance = 48;
+            minDistance = 52;
             shootTime = 18;
 
             base.SetSwingProperty();

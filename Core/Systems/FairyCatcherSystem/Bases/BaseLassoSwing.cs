@@ -4,6 +4,7 @@ using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -12,6 +13,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 {
     public abstract class BaseLassoSwing(short TrailLength) : BaseSwingProj(trailCount: TrailLength)
     {
+        public override string Texture => AssetDirectory.FairyCatcherLasso + Name;
+
         public virtual string HandleTexture => Texture + "Handle";
 
         /// <summary>
@@ -47,6 +50,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// 甩动时距离玩家的距离
         /// </summary>
         public float minDistance = 48;
+        /// <summary>
+        /// 甩动返回时的最小距离
+        /// </summary>
+        public float overDistance = 24;
 
         private float _maxDistance = 100;
 
@@ -69,7 +76,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         }
 
         public int delayTime = 8;
-        public int shootTime = 12;
+        public int shootTime = 22;
 
         private HashSet<int> IDs;
 
@@ -155,7 +162,16 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             distanceToOwner = Helper.Lerp(minDistance / 2, minDistance, factor);
             Slasher();
 
-            middlePos = OwnerCenter() + (GetStartAngle() - DirSign * (startAngle + factor * MathF.Sin(-factor * 1.5f * MathHelper.Pi) * 0.75f)).ToRotationVector2() * distanceToOwner/2 * factor;
+            if (!VaultUtils.isServer)
+            {
+                var tex = ModContent.Request<Texture2D>(HandleTexture).Value;
+                Vector2 handlePos = GetHandlePos(tex);
+
+                float baseDis = (OwnerCenter() - handlePos).Length();
+                middlePos = handlePos +
+                    (GetStartAngle() - DirSign * (startAngle + factor * MathF.Sin(-factor * 1.5f * MathHelper.Pi) * 0.75f)).ToRotationVector2()
+                    * (distanceToOwner - baseDis) / 2 * factor;
+            }
 
             if ((int)Timer == minTime)
             {
@@ -182,11 +198,20 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             float trueTargetangle = totalAngle + Owner.direction * MathHelper.TwoPi * i;
 
             _Rotation = startAngle.AngleLerp(trueTargetangle, factor);
-            distanceToOwner = Helper.Lerp(minDistance, MaxDistance, Helper.X3Ease(factor)*factor);
+            distanceToOwner = Helper.Lerp(minDistance, MaxDistance, Helper.X3Ease(factor) * factor);
             Slasher();
 
-            middlePos = OwnerCenter()
-                + startAngle.AngleLerp(trueTargetangle, Helper.Lerp(factor,Helper.SqrtEase(factor),0.35f)).ToRotationVector2() * distanceToOwner * (0.5f + 0.5f * (1 - factor));
+            if (!VaultUtils.isServer)
+            {
+                var tex = ModContent.Request<Texture2D>(HandleTexture).Value;
+                Vector2 handlePos = GetHandlePos(tex);
+
+                float baseDis = (OwnerCenter() - handlePos).Length();
+                middlePos =Vector2.Lerp(middlePos, handlePos
+                    + startAngle.AngleLerp(trueTargetangle, Helper.Lerp(factor, Helper.SqrtEase(factor), 0.35f)).ToRotationVector2()
+                    * (distanceToOwner - baseDis) * (0.5f + 0.5f * (1 - factor)),0.3f);
+            }
+
 
             if (Catch == 1)
                 Helper.CheckCollideWithFairyCircle(Owner, Projectile.getRect(), ref IDs);
@@ -202,14 +227,21 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         protected override void AfterSlash()
         {
             float factor = (Timer - maxTime) / delayTime;
-            distanceToOwner = Helper.Lerp(MaxDistance, 0, Helper.SqrtEase(factor));
+            distanceToOwner = Helper.Lerp(MaxDistance, overDistance, Helper.SqrtEase(factor));
             _Rotation += DirSign * 0.02f;
 
             if ((int)Timer == maxTime + trailCount + 1 && Catch == 0 && Collision.CanHit(Projectile.Center, 1, 1, Owner.Center, 1, 1))
                 ShootFairy();
 
             Slasher();
-            middlePos = OwnerCenter() + _Rotation.ToRotationVector2() * distanceToOwner*0.5f;
+            if (!VaultUtils.isServer)
+            {
+                var tex = ModContent.Request<Texture2D>(HandleTexture).Value;
+                Vector2 handlePos = GetHandlePos(tex);
+
+                float baseDis = (OwnerCenter() - handlePos).Length();
+                middlePos = handlePos + _Rotation.ToRotationVector2() * (distanceToOwner - baseDis) * 0.5f;
+            }
 
             if (Catch == 1)
             {
@@ -254,7 +286,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 int count = 0;
                 foreach (var item in bottle.GetShootableFairy(Owner))
                 {
-                    item.ShootFairy(Owner, Projectile.GetSource_FromAI(), center, velocity.RotatedBy(GetShootRandAngle), Projectile.knockBack,FairyFlyTime);
+                    item.ShootFairy(Owner, Projectile.GetSource_FromAI(), center, velocity.RotatedBy(GetShootRandAngle), Projectile.knockBack, FairyFlyTime);
 
                     count++;
                     velocity *= 0.9f;
@@ -302,7 +334,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// <summary>
         /// 绘制指针与手持物品间的连线
         /// </summary>
-        public virtual void DrawLine(Vector2 handlePos, Vector2 stringTipPos,out float rot)
+        public virtual void DrawLine(Vector2 handlePos, Vector2 stringTipPos, out float rot)
         {
             Texture2D stringTex = GetStringTex();
             rot = 0;
@@ -343,7 +375,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
             var state = Main.graphics.GraphicsDevice.SamplerStates[0];
             Main.graphics.GraphicsDevice.Textures[0] = stringTex;
-            Main.graphics.GraphicsDevice.SamplerStates[0]=SamplerState.PointWrap;
+            Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointWrap;
             Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars.ToArray(), 0, bars.Count - 2);
             Main.graphics.GraphicsDevice.SamplerStates[0] = state;
         }
@@ -378,7 +410,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         {
             if (Owner.TryGetModPlayer(out FairyCatcherPlayer fcp)
                 && fcp.CurrentFairyIndex != -1
-                &&fcp.TryGetFairyBottle(out BaseFairyBottle bottle))
+                && fcp.TryGetFairyBottle(out BaseFairyBottle bottle))
             {
                 int itemType = bottle.FightFairies[fcp.CurrentFairyIndex].type;
                 Texture2D mainTex = TextureAssets.Item[itemType].Value;

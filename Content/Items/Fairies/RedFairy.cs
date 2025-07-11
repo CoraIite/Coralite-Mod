@@ -16,7 +16,7 @@ namespace Coralite.Content.Items.Fairies
 
         public override void SetDefaults()
         {
-            Item.rare = ItemRarityID.White;
+            Item.rare = ItemRarityID.Blue;
             Item.value = Item.sellPrice(copper: 50);
             Item.shoot = ModContent.ProjectileType<RedFairyProj>();
         }
@@ -30,7 +30,7 @@ namespace Coralite.Content.Items.Fairies
         public override void RegisterSpawn()
         {
             FairySpawnController.Create(Type)
-                .AddCondition(FairySpawnCondition.ZoneHell)
+                .AddCondition(FairySpawnCondition.ZoneCrimson)
                 .RegisterToWall();
         }
 
@@ -45,7 +45,7 @@ namespace Coralite.Content.Items.Fairies
 
             for (int i = 0; i < 6; i++)
             {
-                Dust d = Dust.NewDustPerfect(Center, DustID.RedTorch, Helper.NextVec2Dir(0.5f, 1.5f));
+                Dust d = Dust.NewDustPerfect(Center, DustID.CrimsonTorch, Helper.NextVec2Dir(0.5f, 1.5f));
                 d.noGravity = true;
             }
         }
@@ -68,18 +68,18 @@ namespace Coralite.Content.Items.Fairies
                 case AIStates.Rest:
                 case AIStates.Backing:
                     if (Main.rand.NextBool(3))
-                        Projectile.SpawnTrailDust(DustID.RedTorch, Main.rand.NextFloat(0.1f, 0.5f));
+                        Projectile.SpawnTrailDust(DustID.CrimsonTorch, Main.rand.NextFloat(0.1f, 0.5f));
                     break;
                 case AIStates.Skill:
                 default:
-                    Projectile.SpawnTrailDust(DustID.RedTorch, Main.rand.NextFloat(0.1f, 0.5f));
+                    Projectile.SpawnTrailDust(DustID.CrimsonTorch, Main.rand.NextFloat(0.1f, 0.5f));
                     break;
             }
         }
 
         public override void AIAfter()
         {
-            Lighting.AddLight(Projectile.Center, 0, 0.2f, 0);
+            Lighting.AddLight(Projectile.Center, 0.2f, 0, 0);
         }
 
         public override Vector2 GetRestSpeed()
@@ -98,7 +98,7 @@ namespace Coralite.Content.Items.Fairies
 
             for (int i = 0; i < 12; i++)
             {
-                Dust d = Dust.NewDustPerfect(Projectile.Center, DustID.RedTorch, Helper.NextVec2Dir(1, 2));
+                Dust d = Dust.NewDustPerfect(Projectile.Center, DustID.CrimsonTorch, Helper.NextVec2Dir(1, 2));
                 d.noGravity = true;
             }
         }
