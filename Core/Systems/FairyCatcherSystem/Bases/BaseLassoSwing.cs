@@ -207,11 +207,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 Vector2 handlePos = GetHandlePos(tex);
 
                 float baseDis = (OwnerCenter() - handlePos).Length();
-                middlePos =Vector2.Lerp(middlePos, handlePos
+                middlePos = Vector2.Lerp(middlePos, handlePos
                     + startAngle.AngleLerp(trueTargetangle, Helper.Lerp(factor, Helper.SqrtEase(factor), 0.35f)).ToRotationVector2()
-                    * (distanceToOwner - baseDis) * (0.5f + 0.5f * (1 - factor)),0.3f);
+                    * (distanceToOwner - baseDis) * (0.5f + 0.5f * (1 - factor)), 0.75f);
             }
-
 
             if (Catch == 1)
                 Helper.CheckCollideWithFairyCircle(Owner, Projectile.getRect(), ref IDs);

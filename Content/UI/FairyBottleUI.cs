@@ -191,7 +191,7 @@ namespace Coralite.Content.UI
     [AutoLoadTexture(Path = AssetDirectory.UI)]
     public class FairyBottleHang : UIElement
     {
-        public static int VineType = 0;
+        public static int VineType = 1;
 
         public static ATex Vine { get; set; }
         public static ATex Vine2 { get; set; }
@@ -299,17 +299,25 @@ namespace Coralite.Content.UI
             if (IsMouseHovering)
                 Main.LocalPlayer.mouseInterface = true;
 
-            //绘制藤蔓线
-            Texture2D vineTex = VineType switch
-            {
-                0 => Vine.Value,
-                _ => Vine2.Value,
-            };
-
             var d = GetDimensions();
             Vector2 pos = d.Center() + new Vector2(0, -d.Height / 2);
 
-            spriteBatch.Draw(vineTex, pos + new Vector2(0, -65), null, Color.White, 0, new Vector2(vineTex.Width / 2, 0), 1, 0, 0);
+            //绘制藤蔓线
+            switch (VineType)
+            {
+                default:
+                case 0:
+                    spriteBatch.Draw(Vine.Value, pos + new Vector2(0, -65)
+                        , null, Color.White, 0, new Vector2(Vine.Value.Width / 2, 0), 1, 0, 0);
+                    break;
+                case 1:
+
+                    spriteBatch.Draw(Vine2.Value, pos + new Vector2(0, -65)
+                        , Vine2.Frame(2, 1, 1, 0), Color.White * 0.4f, 0, new Vector2(Vine2.Value.Width / 4, 0), 1, 0, 0);
+                    spriteBatch.Draw(Vine2.Value, pos + new Vector2(0, -65)
+                        , Vine2.Frame(2, 1, 0, 0), Color.White, 0, new Vector2(Vine2.Value.Width / 4, 0), 1, 0, 0);
+                    break;
+            }
 
             Player p = Main.LocalPlayer;
 
