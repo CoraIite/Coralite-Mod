@@ -34,9 +34,9 @@ namespace Coralite.Helpers
         /// <param name="selfColor"></param>
         /// <param name="rotation"></param>
         /// <param name="scale"></param>
-        public static void QuickCenteredDraw(this Texture2D tex, SpriteBatch spriteBatch, Vector2 pos, Color? selfColor = null, float rotation = 0, float scale = 1)
+        public static void QuickCenteredDraw(this Texture2D tex, SpriteBatch spriteBatch, Vector2 pos, Color? selfColor = null, float rotation = 0, float scale = 1,SpriteEffects effect=SpriteEffects.None)
         {
-            spriteBatch.Draw(tex, pos, null, selfColor ?? Color.White, rotation, tex.Size() / 2, scale, 0, 0);
+            spriteBatch.Draw(tex, pos, null, selfColor ?? Color.White, rotation, tex.Size() / 2, scale, effect, 0);
         }
 
         public static void QuickBottomDraw(this Texture2D tex, SpriteBatch spriteBatch, Vector2 pos, Color? selfColor = null, float rotation = 0, float scale = 1)

@@ -3,7 +3,9 @@ using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Linq.Expressions;
 using Terraria;
+using Terraria.GameContent;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 {
@@ -108,7 +110,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
                     Flying();
 
-                    if (Catch == 1)
+                    if (Catch == 1)//捕捉
                     {
                         if (Helper.CheckCollideWithFairyCircleSingle(Owner, Projectile.getRect(), catchPower))
                             TurnToBack();
@@ -182,15 +184,14 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             Vector2 targetPos = GetHandleTipPos();
 
             float speed = Projectile.velocity.Length();
-            if (Timer>180)
+            if (Timer > 180)
                 speed *= 1.02f;
 
             Projectile.velocity = (targetPos - Projectile.Center).SafeNormalize(Vector2.Zero);
 
-            if (Vector2.Distance(Projectile.Center, targetPos) <speed*1.5f)
+            if (Vector2.Distance(Projectile.Center, targetPos) < speed * 1.5f)
                 TurnToIdle();
         }
-
 
         public void TurnToBack()
         {
@@ -261,9 +262,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         {
             Vector2 handleCenter = GetHandleCenter();
 
+            //绘制连线
+            DrawLine(GetLineTex(), GetHandleTipPos(), Projectile.Center, lightColor);
 
-
-            DrawHandle(GetHandleTex(), handleCenter);
+            DrawHandle(GetHandleTex(), handleCenter,lightColor);
             DrawTong();
 
             if (State == AIStates.Flying && Catch == 0)
@@ -284,23 +286,39 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         }
 
         public abstract Texture2D GetHandleTex();
+        public virtual Texture2D GetLineTex()
+            => FairySystem.DefaultLine.Value;
 
         /// <summary>
         /// 绘制线条
         /// </summary>
         /// <param name="c"></param>
-        public virtual void DrawLine(Texture2D tex, Vector2 startPos, Vector2 endPos)
+        public virtual void DrawLine(Texture2D tex, Vector2 startPos, Vector2 endPos,Color color)
         {
+            int width = (int)(startPos - endPos).Length();   //链条长度
 
+            var laserTarget = new Rectangle((int)startPos.X, (int)startPos.Y, width, tex.Height);  //目标矩形
+            var laserSource = new Rectangle(0, 0, width, tex.Height);   //把自身拉伸到目标矩形
+            var origin2 = new Vector2(0, tex.Height / 2);
+
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin(default, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+
+            Main.spriteBatch.Draw(tex, laserTarget, laserSource, color
+                , Projectile.rotation, origin2, 0, 0);
+
+            Main.spriteBatch.End();
+            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.Transform);
         }
 
         /// <summary>
         /// 绘制把手
         /// </summary>
         /// <param name="handleTex"></param>
-        public virtual void DrawHandle(Texture2D handleTex, Vector2 pos)
+        public virtual void DrawHandle(Texture2D handleTex, Vector2 pos, Color lightColor)
         {
-
+            handleTex.QuickCenteredDraw(Main.spriteBatch, Projectile.Center - Main.screenPosition
+                , lightColor);
         }
 
         /// <summary>
@@ -308,7 +326,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// </summary>
         public virtual void DrawTong()
         {
-
+            Texture2D tex = Projectile.GetTexture();
+            tex.QuickCenteredDraw(Main.spriteBatch, Projectile.Center - Main.screenPosition
+                , Lighting.GetColor(Projectile.Center.ToTileCoordinates()));
         }
 
         public virtual void DrawFairy()

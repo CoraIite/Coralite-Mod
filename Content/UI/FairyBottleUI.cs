@@ -311,7 +311,6 @@ namespace Coralite.Content.UI
                         , null, Color.White, 0, new Vector2(Vine.Value.Width / 2, 0), 1, 0, 0);
                     break;
                 case 1:
-
                     spriteBatch.Draw(Vine2.Value, pos + new Vector2(0, -65)
                         , Vine2.Frame(2, 1, 1, 0), Color.White * 0.4f, 0, new Vector2(Vine2.Value.Width / 4, 0), 1, 0, 0);
                     spriteBatch.Draw(Vine2.Value, pos + new Vector2(0, -65)
