@@ -79,6 +79,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             Projectile.tileCollide = false;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = -1;
+            Projectile.hide = true;
         }
 
         public override bool ShouldUpdatePosition()
@@ -180,6 +181,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// </summary>
         public virtual void OnShoot()
         {
+            Projectile.hide = false;
             State = AIStates.Flying;
             Helper.PlayPitched(CoraliteSoundID.Swing_Item1, Projectile.Center);
 

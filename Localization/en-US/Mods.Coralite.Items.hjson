@@ -6086,3 +6086,8 @@ PurpleFairyItem: {
 	DisplayName: Purple Fairy Item
 	Tooltip: ""
 }
+
+CopperTong: {
+	DisplayName: Copper Tong
+	Tooltip: ""
+}

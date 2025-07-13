@@ -28,6 +28,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         public override void SetStaticDefaults()
         {
             ItemID.Sets.CanGetPrefixes[Type] = true;
+            ItemID.Sets.ItemsThatAllowRepeatedRightClick[Type] = true;
         }
 
         public sealed override void SetDefaults()
@@ -65,7 +66,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             if (player.TryGetModPlayer(out FairyCatcherPlayer fcp) && fcp.TryGetFairyBottle(out BaseFairyBottle bottle))
                 bottle.SetIndex(player);
 
-            NormalAttack(player, source, position, velocity, type, damage);
+            NormalShoot(player, source, position, velocity, type, damage);
 
             return false;
         }
@@ -115,7 +116,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// <param name="position"></param>
         /// <param name="velocity"></param>
         /// <param name="type"></param>
-        public virtual void NormalAttack(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type,int damage)
+        public virtual void NormalShoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type,int damage)
         {
             Projectile.NewProjectile(source, position, velocity, type, damage, 0, player.whoAmI);
         }

@@ -3,7 +3,7 @@ using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Linq.Expressions;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent;
 
@@ -14,6 +14,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
     /// </summary>
     public abstract class BaseTongsProj : BaseHeldProj
     {
+        public override string Texture => AssetDirectory.FairyCatcherTong + Name;
+
         /// <summary>
         /// 把手位置的偏移量
         /// </summary>
@@ -22,12 +24,16 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// <summary>
         /// 把手的长度，决定弹幕常态位于何处
         /// </summary>
-        public abstract int HandleLength { get; }
+        public abstract Vector2 TongPosOffset { get; }
 
         /// <summary>
         /// 抓手最大飞行距离
         /// </summary>
         public abstract int MaxFlyLength { get; }
+        /// <summary>
+        /// 物品类型，手持非此物品时会沙雕弹幕
+        /// </summary>
+        public abstract int ItemType { get; }
 
         /// <summary>
         /// 抓手的距离，经过增幅后的值
@@ -70,6 +76,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             Projectile.tileCollide = false;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = -1;
+            Projectile.hide = true;
+            Projectile.penetrate = -1;
         }
 
         public override bool ShouldUpdatePosition()
@@ -89,23 +97,34 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public override void AI()
         {
+            if (Owner.HeldItem.type!=ItemType)
+            {
+                Projectile.Kill();
+                return;
+            }
+
             SetHeld();
-            HandleRot = (Projectile.Center - Owner.MountedCenter).ToRotation();
+            Projectile.timeLeft = 2;
 
             switch (State)
             {
                 default:
                 case AIStates.Idle:
+                    HandleRot = (InMousePos - Owner.MountedCenter).ToRotation();
+
                     //跟随鼠标转动
-                    if (Math.Abs(InMousePos.X - Owner.Center.X) > 8)
-                        Owner.direction = (InMousePos.X - Owner.Center.X) > 0 ? 1 : -1;
+                    //if (Math.Abs(InMousePos.X - Owner.Center.X) > 8)
+                    Owner.direction = (InMousePos.X - Owner.Center.X) > 0 ? 1 : -1;
 
                     Projectile.Center = GetHandleTipPos();
                     Projectile.rotation = HandleRot;
                     break;
                 case AIStates.Flying:
-                    Owner.itemTime = Owner.itemAnimation = 2;
-                    if (Math.Abs(Projectile.Center.X - Owner.Center.X) > 8)
+                    HandleRot = (Projectile.Center - GetHandleCenter()).ToRotation();
+                    Owner.itemTime = Owner.itemAnimation = Owner.itemTimeMax;
+
+                    //朝向弹幕位置
+                    if (Math.Abs(Projectile.Center.X - Owner.Center.X) > 14)
                         Owner.direction = (Projectile.Center.X - Owner.Center.X) > 0 ? 1 : -1;
 
                     Flying();
@@ -116,13 +135,22 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                             TurnToBack();
                     }
 
-
                     break;
                 case AIStates.Backing:
-                    Owner.itemTime = Owner.itemAnimation = 2;
+                    HandleRot = (Projectile.Center - GetHandleCenter()).ToRotation();
+                    Owner.itemTime = Owner.itemAnimation = Owner.itemTimeMax;
+
+                    if (Math.Abs(Projectile.Center.X - Owner.Center.X) > 14)
+                        Owner.direction = (Projectile.Center.X - Owner.Center.X) > 0 ? 1 : -1;
+
+                    Backing();
 
                     break;
             }
+
+            Owner.itemRotation = HandleRot + (Owner.direction > 0 ? 0 : MathHelper.Pi);
+                Owner.SetCompositeArmFront(true
+                    , Player.CompositeArmStretchAmount.Full, Owner.itemRotation - Owner.direction * MathHelper.PiOver2);
         }
 
         /// <summary>
@@ -132,13 +160,14 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         public virtual void StartAttack(int @catch, float speed, int damage)
         {
             Catch = @catch;
-            State = AIStates.Backing;
+            State = AIStates.Flying;
             Timer = 0;
             Projectile.damage = damage;
 
             Owner.direction = (InMousePos.X - Owner.Center.X) > 0 ? 1 : -1;
-
             Projectile.velocity = UnitToMouseV * speed;
+            Projectile.StartAttack();
+            Projectile.tileCollide = true;
 
             FlyLength = MaxFlyLength;
 
@@ -167,6 +196,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         {
             Timer++;
 
+            Projectile.rotation = Projectile.velocity.ToRotation();
+
             //飞行一段时间后返回
             if (Timer > 180 || Vector2.Distance(Projectile.Center, GetHandleTipPos()) > FlyLength)
             {
@@ -184,10 +215,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             Vector2 targetPos = GetHandleTipPos();
 
             float speed = Projectile.velocity.Length();
-            if (Timer > 180)
-                speed *= 1.02f;
+            if (Timer > 60)//超过一段时间后加速回归
+                speed *= 1.05f;
 
-            Projectile.velocity = (targetPos - Projectile.Center).SafeNormalize(Vector2.Zero);
+            Projectile.velocity = (targetPos - Projectile.Center).SafeNormalize(Vector2.Zero) * speed;
+            Projectile.rotation = Projectile.rotation.AngleLerp(Projectile.velocity.ToRotation() + MathHelper.Pi, 0.1f);
 
             if (Vector2.Distance(Projectile.Center, targetPos) < speed * 1.5f)
                 TurnToIdle();
@@ -197,12 +229,17 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         {
             State = AIStates.Backing;
             Timer = 0;
+            Projectile.velocity = (GetHandleTipPos() - Projectile.Center).SafeNormalize(Vector2.Zero) * Projectile.velocity.Length();
+            Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.Pi;
+            Projectile.tileCollide = false;
         }
 
         public void TurnToIdle()
         {
-            State = AIStates.Backing;
+            State = AIStates.Idle;
             Timer = 0;
+            Projectile.velocity = Vector2.Zero;
+            Projectile.tileCollide = false;
         }
 
         /// <summary>
@@ -211,11 +248,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// <returns></returns>
         public virtual Vector2 GetHandleTipPos()
         {
-            Vector2 dir = Projectile.rotation.ToRotationVector2();
+            Vector2 dir = HandleRot.ToRotationVector2();
             return Owner.MountedCenter +
-                dir * HandelOffset.X
-                + ((Projectile.rotation + 1.57f).ToRotationVector2() * HandelOffset.Y)
-                + dir * HandleLength;
+                dir * (HandelOffset.X + TongPosOffset.X)
+                + ((HandleRot + 1.57f).ToRotationVector2() * (HandelOffset.Y + TongPosOffset.Y) * Owner.direction)
+                + new Vector2(0, Owner.gfxOffY);
         }
 
         protected virtual void ShootFairy()
@@ -256,34 +293,53 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             }
         }
 
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            Projectile.velocity = oldVelocity;
+
+            if (State == AIStates.Flying)
+            {
+                TurnToBack();
+                if (Catch == 0)
+                    ShootFairy();
+            }
+
+                return false;
+        }
+
         #region 绘制部分
 
         public override bool PreDraw(ref Color lightColor)
         {
             Vector2 handleCenter = GetHandleCenter();
+            DrawHandle(GetHandleTex(), handleCenter, lightColor);
 
             //绘制连线
-            DrawLine(GetLineTex(), GetHandleTipPos(), Projectile.Center, lightColor);
+            if (State == AIStates.Flying || State == AIStates.Backing)
+                DrawLine(GetLineTex(), GetHandleTipPos() + LineDrawStartPosOffset() - Main.screenPosition, Projectile.Center - Main.screenPosition, lightColor);
 
-            DrawHandle(GetHandleTex(), handleCenter,lightColor);
             DrawTong();
 
             if (State == AIStates.Flying && Catch == 0)
-            {
-                DrawFairy();
-            }
+                DrawFairyItem();
 
             return false;
         }
 
         public virtual Vector2 GetHandleCenter()
         {
-            Vector2 dir = Projectile.rotation.ToRotationVector2();
+            Vector2 dir = HandleRot.ToRotationVector2();
             return Owner.MountedCenter +
                 dir * HandelOffset.X
-                + ((Projectile.rotation + 1.57f).ToRotationVector2() * HandelOffset.Y)
-                + dir * HandleLength;
+                + ((HandleRot + 1.57f).ToRotationVector2() * HandelOffset.Y * Owner.direction)
+                + new Vector2(0, Owner.gfxOffY);
         }
+
+        /// <summary>
+        /// 线段起点的绘制偏移量，主要用于更好的视觉效果
+        /// </summary>
+        public virtual Vector2 LineDrawStartPosOffset()
+            => Vector2.Zero;
 
         public abstract Texture2D GetHandleTex();
         public virtual Texture2D GetLineTex()
@@ -293,22 +349,67 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// 绘制线条
         /// </summary>
         /// <param name="c"></param>
-        public virtual void DrawLine(Texture2D tex, Vector2 startPos, Vector2 endPos,Color color)
+        public virtual void DrawLine(Texture2D lineTex, Vector2 startPos, Vector2 endPos, Color color)
         {
-            int width = (int)(startPos - endPos).Length();   //链条长度
+            List<ColoredVertex> bars = new();
 
-            var laserTarget = new Rectangle((int)startPos.X, (int)startPos.Y, width, tex.Height);  //目标矩形
-            var laserSource = new Rectangle(0, 0, width, tex.Height);   //把自身拉伸到目标矩形
-            var origin2 = new Vector2(0, tex.Height / 2);
+            float halfLineWidth = lineTex.Height / 2;
 
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin(default, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+            Vector2 recordPos = startPos;
+            float recordUV = 0;
 
-            Main.spriteBatch.Draw(tex, laserTarget, laserSource, color
-                , Projectile.rotation, origin2, 0, 0);
+            int lineLength = (int)(startPos - endPos).Length();   //链条长度
+            int pointCount = lineLength / 16 + 3;
+            Vector2 controlPos = endPos - Projectile.rotation.ToRotationVector2() * Vector2.Distance(startPos,endPos)/4;
 
-            Main.spriteBatch.End();
-            Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.Transform);
+            //贝塞尔曲线
+            for (int i = 0; i < pointCount; i++)
+            {
+                float factor = (float)i / pointCount;
+
+                Vector2 P1 = Vector2.Lerp(startPos, controlPos, factor);
+                Vector2 P2 = Vector2.Lerp(controlPos, endPos, factor);
+
+                Vector2 Center = Vector2.Lerp(P1, P2, factor);
+                var Color = GetStringColor(Center + Main.screenPosition);
+
+                Vector2 normal = (P2 - P1).SafeNormalize(Vector2.One).RotatedBy(MathHelper.PiOver2);
+                Vector2 Top = Center + normal * halfLineWidth;
+                Vector2 Bottom = Center - normal * halfLineWidth;
+
+                recordUV += (Center - recordPos).Length() / lineTex.Width;
+
+                bars.Add(new(Top, Color, new Vector3(recordUV, 0, 1)));
+                bars.Add(new(Bottom, Color, new Vector3(recordUV, 1, 1)));
+
+                recordPos = Center;
+            }
+
+            var state = Main.graphics.GraphicsDevice.SamplerStates[0];
+            Main.graphics.GraphicsDevice.Textures[0] = lineTex;
+            Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointWrap;
+            Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars.ToArray(), 0, bars.Count - 2);
+            Main.graphics.GraphicsDevice.SamplerStates[0] = state;
+
+            //var laserTarget = new Rectangle((int)startPos.X, (int)startPos.Y, lineLength, lineTex.Height);  //目标矩形
+            //var laserSource = new Rectangle(0, 0, lineLength, lineTex.Height);   //把自身拉伸到目标矩形
+            //var origin2 = new Vector2(0, lineTex.Height / 2);
+
+            //Main.spriteBatch.End();
+            //Main.spriteBatch.Begin(default, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
+
+            //Main.spriteBatch.Draw(lineTex, laserTarget, laserSource, color
+            //    , (endPos - startPos).ToRotation(), origin2, 0, 0);
+
+            //Main.spriteBatch.End();
+            //Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.Transform);
+            //Main.spriteBatch.End();
+            //Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.Transform);
+        }
+
+        public virtual Color GetStringColor(Vector2 pos)
+        {
+            return Lighting.GetColor((int)pos.X / 16, (int)(pos.Y / 16f), Color.White);
         }
 
         /// <summary>
@@ -317,8 +418,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// <param name="handleTex"></param>
         public virtual void DrawHandle(Texture2D handleTex, Vector2 pos, Color lightColor)
         {
-            handleTex.QuickCenteredDraw(Main.spriteBatch, Projectile.Center - Main.screenPosition
-                , lightColor);
+            handleTex.QuickCenteredDraw(Main.spriteBatch, pos - Main.screenPosition
+                , lightColor, HandleRot, effect: Owner.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically);
         }
 
         /// <summary>
@@ -328,12 +429,30 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         {
             Texture2D tex = Projectile.GetTexture();
             tex.QuickCenteredDraw(Main.spriteBatch, Projectile.Center - Main.screenPosition
-                , Lighting.GetColor(Projectile.Center.ToTileCoordinates()));
+                , Lighting.GetColor(Projectile.Center.ToTileCoordinates()), Projectile.rotation);
         }
 
-        public virtual void DrawFairy()
+        public virtual void DrawFairyItem()
         {
+            if (Owner.TryGetModPlayer(out FairyCatcherPlayer fcp)
+                && fcp.CurrentFairyIndex != -1
+                && fcp.TryGetFairyBottle(out BaseFairyBottle bottle))
+            {
+                int itemType = bottle.FightFairies[fcp.CurrentFairyIndex].type;
+                Texture2D mainTex = TextureAssets.Item[itemType].Value;
+                Rectangle rectangle2;
+                Color c = Lighting.GetColor(Projectile.Center.ToTileCoordinates());
 
+                if (Main.itemAnimations[itemType] != null)
+                    rectangle2 = Main.itemAnimations[itemType].GetFrame(mainTex, -1);
+                else
+                    rectangle2 = mainTex.Frame();
+
+                float itemScale = 1f;
+
+                Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, rectangle2
+                    , c, 0f, rectangle2.Size() / 2, itemScale, Owner.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0f);
+            }
         }
 
         #endregion
