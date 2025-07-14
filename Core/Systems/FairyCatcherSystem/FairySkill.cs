@@ -1,5 +1,6 @@
 ﻿using Coralite.Core.Loaders;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         public string LocalizationCategory => "Systems.FairySkill";
 
-        public virtual Color SkillTextColor { get=> Color.White; } 
+        public virtual Color SkillTextColor { get => Color.White; }
 
         /// <summary>
         /// 技能计时器
@@ -58,7 +59,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public virtual void SpawnSkillText(Vector2 pos)
         {
             CombatText.NewText(Utils.CenteredRectangle(pos, Vector2.One), SkillTextColor,
-                FairyLoader.GetFairySkill(Type).SkillName.Value,true,true);
+                FairyLoader.GetFairySkill(Type).SkillName.Value, true, true);
         }
 
         /// <summary>
@@ -125,32 +126,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         }
 
-        /// <summary>
-        /// 获取技能描述
-        /// </summary>
-        /// <param name="skillLevel"></param>
-        /// <returns></returns>
-        public virtual string GetSkillDescription(int skillLevel) => "";
-
-        /// <summary>
-        /// 获取仙灵技能描述的尺寸
-        /// </summary>
-        /// <returns></returns>
-        public Vector2 GetSkillTipSize()
-        {
-            Texture2D tex = FairySystem.FairySkillAssets[Type].Value;
-            return tex.Size();
-        }
-
-        /// <summary>
-        /// 绘制仙灵描述
-        /// </summary>
-        /// <param name="topLeft"></param>
-        public void DrawSkillTip(Vector2 topLeft)
-        {
-
-        }
-
         public virtual void SendExtra(BinaryWriter writer) { }
 
         public virtual void ReceiveExtra(BinaryReader reader) { }
@@ -164,5 +139,71 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         {
 
         }
+
+        #region 描述部分
+
+        /// <summary>
+        /// 获取技能描述的总大小
+        /// </summary>
+        /// <returns></returns>
+        public Vector2 GetSkillTipTotalSize(Player player, FairyIV iv,out Vector2 nameSize)
+        {
+            Texture2D tex = FairySystem.FairySkillAssets[Type].Value;
+
+            float x = tex.Width + 10;
+
+            string name = GetSkillNameTip(iv.SkillLevel);
+            nameSize = Helper.GetStringSize(name, Vector2.One * 1.1f);
+
+            string description = GetSkillTips(player, iv);
+            Vector2 describSize = Helper.GetStringSize(description, Vector2.One);
+
+            //宽度是图片宽度+10+描述的最大宽度
+            x += Math.Max(nameSize.X, describSize.X);
+            //高度是图片高度和描述高度中的最大值
+            float y = Math.Max(nameSize.Y + describSize.Y, tex.Height);
+
+            return new Vector2(x, y);
+        }
+
+        public void DrawSkillTip(Vector2 topLeft, Player player, FairyIV iv)
+        {
+            Vector2 size = GetSkillTipTotalSize(player, iv, out Vector2 nameSize);
+
+            Texture2D tex = FairySystem.FairySkillAssets[Type].Value;
+            tex.QuickCenteredDraw(Main.spriteBatch, topLeft + new Vector2(tex.Width / 2, size.Y / 2));
+
+            topLeft.X += tex.Width + 10;
+
+            int level = iv.SkillLevel;
+            if (player.TryGetModPlayer(out FairyCatcherPlayer fcp))
+                level = fcp.FairySkillBonus[Type].ModifyLevel(level);
+
+            Utils.DrawBorderString(Main.spriteBatch, GetSkillNameTip(iv.SkillLevel), topLeft
+                , FairyIV.GetFairyIVColorAndText(level).Item1, 1.1f);
+
+            topLeft.Y += nameSize.Y;
+
+            Utils.DrawBorderString(Main.spriteBatch, GetSkillTips(player, iv), topLeft
+                , Color.White, 1.1f);
+        }
+
+        /// <summary>
+        /// 获取技能名称的信息
+        /// </summary>
+        public string GetSkillNameTip(int skillLevel)
+        {
+            return FairySystem.SkillLVTips.Format(SkillName.Value, skillLevel);
+        }
+
+        /// <summary>
+        /// 获得技能描述文本
+        /// </summary>
+        public virtual string GetSkillTips(Player player,FairyIV iv)
+        {
+            return "";
+        }
+
+        #endregion
     }
 }

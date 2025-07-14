@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.CoraliteNotes;
 using Coralite.Content.UI;
+using Microsoft.CodeAnalysis.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.GameContent;
@@ -80,6 +81,14 @@ namespace Coralite.Helpers
                 frameBox = Main.itemAnimations[itemType].GetFrame(tex, -1);
             else
                 frameBox = tex.Frame();
+        }
+
+        public static Vector2 GetStringSize(string text,Vector2 scale,float maxWidth = -1)
+        {
+            TextSnippet[] textSnippets = [.. ChatManager.ParseMessage(text, Color.White)];
+            ChatManager.ConvertNormalSnippets(textSnippets);
+
+            return ChatManager.GetStringSize(FontAssets.MouseText.Value, textSnippets, scale, maxWidth);
         }
 
         /// <summary>

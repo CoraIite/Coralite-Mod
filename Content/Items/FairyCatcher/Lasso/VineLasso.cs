@@ -41,13 +41,15 @@ namespace Coralite.Content.Items.FairyCatcher.Lasso
         public override void SetSwingProperty()
         {
             base.SetSwingProperty();
-            DrawOriginOffsetX = 8;
+            //DrawOriginOffsetX = 8;
+            shootTime = 26;
         }
 
         public override Color GetStringColor(Vector2 pos)
         {
             Color c = Color.Green;
             c = Lighting.GetColor((int)pos.X / 16, (int)(pos.Y / 16f), c);
+            c.A = 180;
             return c;
         }
 

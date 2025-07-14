@@ -164,6 +164,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
             if (!VaultUtils.isServer)
             {
+                BeforeSlashSound();
+
                 var tex = ModContent.Request<Texture2D>(HandleTexture).Value;
                 Vector2 handlePos = GetHandlePos(tex);
 
@@ -179,6 +181,15 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 totalAngle = (InMousePos - Owner.Center).ToRotation();
                 SetMaxDistance();
             }
+        }
+
+        /// <summary>
+        /// 在手中挥动时的音效
+        /// </summary>
+        public virtual void BeforeSlashSound()
+        {
+            if (Timer == minTime / 2 || Timer == minTime - 1)
+                Helper.PlayPitched(CoraliteSoundID.Swing_Item1, Projectile.Center,volumeAdjust:-0.5f,pitchAdjust:0.3f);
         }
 
         /// <summary>
@@ -229,8 +240,14 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             distanceToOwner = Helper.Lerp(MaxDistance, overDistance, Helper.SqrtEase(factor));
             _Rotation += DirSign * 0.02f;
 
-            if ((int)Timer == maxTime + trailCount + 1 && Catch == 0 && Collision.CanHit(Projectile.Center, 1, 1, Owner.Center, 1, 1))
-                ShootFairy();
+
+            if ((int)Timer == maxTime + trailCount + 1)
+            {
+                OnShootFairy();
+
+                if (Catch == 0 && Collision.CanHit(Projectile.Center, 1, 1, Owner.Center, 1, 1))
+                    ShootFairy();
+            }
 
             Slasher();
             if (!VaultUtils.isServer)
@@ -269,8 +286,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         protected virtual void ShootFairy()
         {
-            OnShootFairy();
-
             if (!Projectile.IsOwnedByLocalPlayer())
                 return;
 
@@ -295,6 +310,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             }
         }
 
+        /// <summary>
+        ///注意！该方法左右键都会执行，一般用于生成音效或弹幕等
+        /// </summary>
         public virtual void OnShootFairy()
         {
             SoundEngine.PlaySound(CoraliteSoundID.WhipSwing_Item152, Projectile.Center);

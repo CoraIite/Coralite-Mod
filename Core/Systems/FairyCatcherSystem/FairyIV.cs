@@ -313,7 +313,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             return (int)MathF.Round(Helper.Lerp(less, more, Math.Clamp(Helper.X2Ease(level - (int)level), 0, 1)), MidpointRounding.AwayFromZero);
         }
 
-        public static (Color, LocalizedText) GetFairyLocalize(float level)
+        public static (Color, LocalizedText) GetFairyIVColorAndText(float level)
         {
             return level switch
             {

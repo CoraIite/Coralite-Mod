@@ -16,7 +16,7 @@ namespace Coralite.Content.CustomHooks
             IL_Main.MouseText_DrawItemTooltip -= IL_Main_MouseText_DrawItemTooltip;
         }
 
-        private void IL_Main_MouseText_DrawItemTooltip(MonoMod.Cil.ILContext il)
+        private void IL_Main_MouseText_DrawItemTooltip(ILContext il)
         {
             ILCursor cursor = new(il);
             cursor.TryGotoNext(
@@ -38,8 +38,30 @@ namespace Coralite.Content.CustomHooks
             Item i = Main.HoverItem;
             if (!i.IsAir && i.ModItem is BaseFairyItem bfi)
             {
+                int[] skills = bfi.GetFairySkills();
+                if (skills == null || skills.Length < 1)
+                    return;
 
+                //获得最大尺寸，决定绘制在哪里
+                bool drawLeft = false;
+
+                Vector2 topLeft = new Vector2(x, y);
+
+                foreach ( var skill in skills )
+                {
+
+                }
             }
+        }
+
+        private void DrawBack(Vector2 pos,Vector2 size)
+        {
+            int widthoff = 14;
+            int heightoff = 9;
+            Utils.DrawInvBG(Main.spriteBatch
+                , new Rectangle((int)pos.X - widthoff, (int)pos.Y - heightoff
+                , (int)size.X + widthoff * 2, (int)size.Y + heightoff + heightoff / 2)
+                , new Color(23, 25, 81, 255) * 0.925f);
         }
     }
 }

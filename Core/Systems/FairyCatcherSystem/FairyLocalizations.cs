@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Terraria.GameContent.UI.Elements;
 using Terraria.Localization;
-using static Coralite.Core.Systems.MagikeSystem.MagikeSystem;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem
 {
@@ -94,6 +92,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public static LocalizedText SortByStamina;
         public static LocalizedText BottleHeal;
 
+        public static LocalizedText SkillLVTips;
+
         public void LoadLocalization()
         {
             WeakLevel = this.GetLocalization("WeakLevel");
@@ -165,6 +165,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             SortBySkillLevel = this.GetLocalization("SortBySkillLevel");
             SortByStamina = this.GetLocalization("SortByStamina");
             BottleHeal = this.GetLocalization("BottleHeal");
+            SkillLVTips = this.GetLocalization("SkillLVTips");
         }
 
         public static void UnloadLocalization()
@@ -205,6 +206,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             SortByCaughtText = null;
             FairyTradeCondition = null;
             CircleRadiusBonus = null;
+
+            SkillLVTips = null;
         }
 
         public static string FormatIVDescription(LocalizedText pre, LocalizedText levelText, float value)

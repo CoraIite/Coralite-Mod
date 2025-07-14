@@ -42,7 +42,7 @@ namespace Coralite.Content.Items.FairyCatcher.Lasso
         public override void SetSwingProperty()
         {
             minDistance = 52;
-            shootTime = 18;
+            shootTime = 20;
 
             base.SetSwingProperty();
 
@@ -68,7 +68,7 @@ namespace Coralite.Content.Items.FairyCatcher.Lasso
 
         private void SpawnDust()
         {
-            if (Main.rand.NextBool(5))
+            if (Main.rand.NextBool(3))
             {
                 Dust d = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(24, 24), DustID.Shadowflame
                     , Helper.NextVec2Dir(1, 2));

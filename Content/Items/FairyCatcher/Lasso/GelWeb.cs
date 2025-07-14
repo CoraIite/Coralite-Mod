@@ -35,15 +35,15 @@ namespace Coralite.Content.Items.FairyCatcher.Lasso
         public override void SetSwingProperty()
         {
             minDistance = 52;
-
             base.SetSwingProperty();
 
-            DrawOriginOffsetX = 8;
+            //DrawOriginOffsetX = 8;
+            shootTime = 25;
         }
 
         public override void SetMaxDistance()
         {
-            MaxDistance = 120;
+            MaxDistance = 140;
         }
 
         public override Color GetStringColor(Vector2 pos)
@@ -55,10 +55,14 @@ namespace Coralite.Content.Items.FairyCatcher.Lasso
 
         public override void OnShootFairy()
         {
-            Projectile.NewProjectileFromThis<GelWebBall>(Projectile.Center,
-                (Projectile.Center - Owner.Center).SafeNormalize(Vector2.Zero) * 8, Projectile.damage / 2, 1);
+            base.OnShootFairy();
+            if (Catch == 0)
+            {
+                Projectile.NewProjectileFromThis<GelWebBall>(Projectile.Center,
+                    (Projectile.Center - Owner.Center).SafeNormalize(Vector2.Zero) * 8, Projectile.damage / 2, 1);
 
-            Helper.PlayPitched(CoraliteSoundID.Fleshy_NPCHit1, Projectile.Center, pitchAdjust: -0.1f);
+                Helper.PlayPitched(CoraliteSoundID.Fleshy_NPCHit1, Projectile.Center, pitchAdjust: -0.1f);
+            }
         }
 
         public override void DrawHandle(Texture2D HandleTex)

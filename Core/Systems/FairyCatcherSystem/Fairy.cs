@@ -41,8 +41,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public Vector2 velocity;
         public Vector2 targetVelocity;
         public float rotation;
-        public int width = 12;
-        public int height = 12;
+        public int width = 16;
+        public int height = 16;
         public float scale = 1;
         public float alpha = 1;
 

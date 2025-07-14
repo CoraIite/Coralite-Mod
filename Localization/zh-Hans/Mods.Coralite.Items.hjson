@@ -6119,16 +6119,16 @@ RedFairyItem: {
 }
 
 GelWeb: {
-	// DisplayName: Gel Web
-	// Tooltip: ""
+	DisplayName: 黏黏网
+	Tooltip: 甩动后投出凝胶球
 }
 
 PurpleFairyItem: {
-	// DisplayName: Purple Fairy Item
-	// Tooltip: ""
+	DisplayName: 紫仙灵
+	Tooltip: ""
 }
 
 CopperTong: {
-	// DisplayName: Copper Tong
-	// Tooltip: ""
+	DisplayName: 铜抓手
+	Tooltip: ""
 }

@@ -78,6 +78,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             Projectile.localNPCHitCooldown = -1;
             Projectile.hide = true;
             Projectile.penetrate = -1;
+            Projectile.width = Projectile.height = 16;
         }
 
         public override bool ShouldUpdatePosition()
@@ -97,7 +98,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public override void AI()
         {
-            if (Owner.HeldItem.type!=ItemType)
+            if (Owner.HeldItem.type != ItemType)
             {
                 Projectile.Kill();
                 return;
@@ -110,7 +111,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             {
                 default:
                 case AIStates.Idle:
-                    HandleRot = (InMousePos - Owner.MountedCenter).ToRotation();
+                    HandleRot = HandleRot.AngleLerp((InMousePos - Owner.MountedCenter).ToRotation(),0.4f);
 
                     //跟随鼠标转动
                     //if (Math.Abs(InMousePos.X - Owner.Center.X) > 8)
@@ -120,7 +121,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                     Projectile.rotation = HandleRot;
                     break;
                 case AIStates.Flying:
-                    HandleRot = (Projectile.Center - GetHandleCenter()).ToRotation();
+                    Vector2 targetPos = GetHandleCenter();
+                    if (Vector2.Distance(Projectile.Center,targetPos)<32)
+                        HandleRot = HandleRot.AngleLerp((Projectile.Center - Owner.MountedCenter).ToRotation(), 0.5f);
+                    else
+                        HandleRot = HandleRot.AngleLerp((Projectile.Center - targetPos).ToRotation(),0.5f);
                     Owner.itemTime = Owner.itemAnimation = Owner.itemTimeMax;
 
                     //朝向弹幕位置
@@ -186,7 +191,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// </summary>
         public virtual void OnStartAttack()
         {
-
+            Helper.PlayPitched(CoraliteSoundID.Blowgun_Item64, Projectile.Center);
         }
 
         /// <summary>
@@ -201,8 +206,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             //飞行一段时间后返回
             if (Timer > 180 || Vector2.Distance(Projectile.Center, GetHandleTipPos()) > FlyLength)
             {
-                TurnToBack();
                 ShootFairy();
+                TurnToBack();
             }
         }
 
@@ -230,7 +235,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             State = AIStates.Backing;
             Timer = 0;
             Projectile.velocity = (GetHandleTipPos() - Projectile.Center).SafeNormalize(Vector2.Zero) * Projectile.velocity.Length();
-            Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.Pi;
             Projectile.tileCollide = false;
         }
 
@@ -296,6 +300,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
             Projectile.velocity = oldVelocity;
+            ModifyTileHit();
 
             if (State == AIStates.Flying)
             {
@@ -305,6 +310,15 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             }
 
                 return false;
+        }
+
+        /// <summary>
+        /// 自定义碰撞物块后的效果，默认发出粒子和音效
+        /// </summary>
+        public virtual void ModifyTileHit()
+        {
+            Collision.HitTiles(Projectile.Center, Projectile.velocity, Projectile.width, Projectile.height);
+            Helper.PlayPitched(CoraliteSoundID.Hit_Item10, Projectile.Center);
         }
 
         #region 绘制部分
@@ -360,7 +374,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
             int lineLength = (int)(startPos - endPos).Length();   //链条长度
             int pointCount = lineLength / 16 + 3;
-            Vector2 controlPos = endPos - Projectile.rotation.ToRotationVector2() * Vector2.Distance(startPos,endPos)/4;
+            Vector2 controlPos = endPos - Projectile.rotation.ToRotationVector2() * Vector2.Distance(startPos, endPos) / 4;
 
             //贝塞尔曲线
             for (int i = 0; i < pointCount; i++)

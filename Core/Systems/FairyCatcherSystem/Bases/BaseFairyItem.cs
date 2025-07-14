@@ -348,7 +348,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public virtual TooltipLine LifeMaxDescription()
         {
-            (Color c, LocalizedText text) = FairyIV.GetFairyLocalize(FairyIV.LifeMaxLevel);
+            (Color c, LocalizedText text) = FairyIV.GetFairyIVColorAndText(FairyIV.LifeMaxLevel);
 
             TooltipLine line = new(Mod, FairyLifeMax
                 , FairySystem.FormatIVDescription(FairySystem.FairyLifeMax, text, FairyIV.LifeMax));
@@ -358,7 +358,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public virtual TooltipLine DamageDescription()
         {
-            (Color c, LocalizedText text) = FairyIV.GetFairyLocalize(FairyIV.DamageLevel);
+            (Color c, LocalizedText text) = FairyIV.GetFairyIVColorAndText(FairyIV.DamageLevel);
 
             TooltipLine line = new(Mod, FairyDamage
                 , FairySystem.FormatIVDescription(FairySystem.FairyDamage, text, FairyIV.Damage));
@@ -369,7 +369,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public virtual TooltipLine DefenceDescription()
         {
-            (Color c, LocalizedText text) = FairyIV.GetFairyLocalize(FairyIV.DefenceLevel);
+            (Color c, LocalizedText text) = FairyIV.GetFairyIVColorAndText(FairyIV.DefenceLevel);
 
             TooltipLine line = new(Mod, FairyDefence
                 , FairySystem.FormatIVDescription(FairySystem.FairyDefence, text, FairyIV.Defence));
@@ -379,7 +379,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public virtual TooltipLine SpeedDescription()
         {
-            (Color c, LocalizedText text) = FairyIV.GetFairyLocalize(FairyIV.SpeedLevel);
+            (Color c, LocalizedText text) = FairyIV.GetFairyIVColorAndText(FairyIV.SpeedLevel);
 
             TooltipLine line = new(Mod, FairySpeed
                 , FairySystem.FormatIVDescription(FairySystem.FairySpeed, text, FairyIV.Speed));
@@ -389,7 +389,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public virtual TooltipLine SkillLevelDescription()
         {
-            (Color c, LocalizedText text) = FairyIV.GetFairyLocalize(FairyIV.SkillLevelLevel);
+            (Color c, LocalizedText text) = FairyIV.GetFairyIVColorAndText(FairyIV.SkillLevelLevel);
 
             TooltipLine line = new(Mod, FairySkillLevel
                 , FairySystem.FormatIVDescription(FairySystem.FairySkillLevel, text, FairyIV.SkillLevel));
@@ -399,7 +399,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public virtual TooltipLine StaminaDescription()
         {
-            (Color c, LocalizedText text) = FairyIV.GetFairyLocalize(FairyIV.StaminaLevel);
+            (Color c, LocalizedText text) = FairyIV.GetFairyIVColorAndText(FairyIV.StaminaLevel);
 
             TooltipLine line = new(Mod, FairyStamina
                 , FairySystem.FormatIVDescription(FairySystem.FairyStamina, text, FairyIV.Stamina));
@@ -409,7 +409,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public virtual TooltipLine ScaleBonusDescription()
         {
-            (Color c, LocalizedText text) = FairyIV.GetFairyLocalize(FairyIV.ScaleLevel);
+            (Color c, LocalizedText text) = FairyIV.GetFairyIVColorAndText(FairyIV.ScaleLevel);
 
             TooltipLine line = new(Mod, FairyScale
                 , FairySystem.FormatIVDescription(FairySystem.FairyScale, text, FairyIV.Scale));
@@ -596,13 +596,22 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             //绘制图标
             DrawIVIcon(frame, pos /*+ new Vector2(0, -12)*/);
 
-            (Color c, _) = FairyIV.GetFairyLocalize(level);
+            (Color c, _) = FairyIV.GetFairyIVColorAndText(level);
 
             //绘制数字
             //Utils.DrawBorderString(Main.spriteBatch, value.ToString(), pos + new Vector2(0, 18), c, 1, 0.5f, 0.5f);
         }
 
         #endregion
+
+        /// <summary>
+        /// 获得仙灵技能
+        /// </summary>
+        /// <returns></returns>
+        public virtual int[] GetFairySkills()
+        {
+            return [];
+        }
 
         public override void SaveData(TagCompound tag)
         {
