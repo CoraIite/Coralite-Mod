@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.DamageClasses;
+using Coralite.Core.Systems.FairyCatcherSystem.Bases.Items;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;

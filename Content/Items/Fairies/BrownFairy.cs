@@ -2,6 +2,7 @@
 using Coralite.Core;
 using Coralite.Core.Systems.FairyCatcherSystem;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
+using Coralite.Core.Systems.FairyCatcherSystem.Bases.Items;
 using Coralite.Core.Systems.FairyCatcherSystem.NormalSkills;
 using Coralite.Helpers;
 using Terraria;
@@ -10,7 +11,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Fairies
 {
-    public class BrownFairyItem : BaseFairyItem
+    public class BrownFairyItem : TackleFairyItem
     {
         public override int FairyType => CoraliteContent.FairyType<BrownFairy>();
         public override FairyRarity Rarity => FairyRarity.C;

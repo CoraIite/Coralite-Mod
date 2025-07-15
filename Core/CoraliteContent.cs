@@ -14,10 +14,13 @@ namespace Coralite.Core
         /// </summary>
         public static int ParticleType<T>() where T : Particle => PRTLoader.GetParticleID<T>();
 
-        public static int FairyType<T>() where T : Fairy => ModContent.GetInstance<T>()?.Type ?? 0;
-
+        public static int FairyType<T>() where T : Fairy 
+            => ModContent.GetInstance<T>()?.Type ?? 0;
         public static int FairyCircleCoreType<T>() where T : FairyCircleCore
             => ModContent.GetInstance<T>().Type;
+        public static int FairySkillType<T>() where T : FairySkill
+            => ModContent.GetInstance<T>().Type;
+
         public static FairyCircleCore GetFairyCircleCore<T>() where T : FairyCircleCore 
             => ModContent.GetInstance<T>();
         public static FairyCircleCore GetFairyCircleCore(int type) 

@@ -93,6 +93,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public static LocalizedText BottleHeal;
 
         public static LocalizedText SkillLVTips;
+        public static LocalizedText SkillLVLimit;
 
         public void LoadLocalization()
         {
@@ -166,6 +167,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             SortByStamina = this.GetLocalization("SortByStamina");
             BottleHeal = this.GetLocalization("BottleHeal");
             SkillLVTips = this.GetLocalization("SkillLVTips");
+            SkillLVLimit = this.GetLocalization("SkillLVLimit");
         }
 
         public static void UnloadLocalization()

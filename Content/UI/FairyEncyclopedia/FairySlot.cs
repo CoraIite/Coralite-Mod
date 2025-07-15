@@ -1,6 +1,6 @@
 ﻿using Coralite.Core.Loaders;
 using Coralite.Core.Systems.FairyCatcherSystem;
-using Coralite.Core.Systems.FairyCatcherSystem.Bases;
+using Coralite.Core.Systems.FairyCatcherSystem.Bases.Items;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;

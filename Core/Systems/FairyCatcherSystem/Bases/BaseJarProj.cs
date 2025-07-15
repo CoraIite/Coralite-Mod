@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.DamageClasses;
+using Coralite.Core.Systems.FairyCatcherSystem.Bases.Items;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
 using System;

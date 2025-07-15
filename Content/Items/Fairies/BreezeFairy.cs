@@ -2,6 +2,7 @@
 using Coralite.Core;
 using Coralite.Core.Systems.FairyCatcherSystem;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
+using Coralite.Core.Systems.FairyCatcherSystem.Bases.Items;
 using Coralite.Core.Systems.FairyCatcherSystem.NormalSkills;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;

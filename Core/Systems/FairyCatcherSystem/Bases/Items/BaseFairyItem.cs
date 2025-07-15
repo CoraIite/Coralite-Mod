@@ -8,7 +8,7 @@ using Terraria.Localization;
 using Terraria.ModLoader.IO;
 using Terraria.UI.Chat;
 
-namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
+namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
 {
     public abstract class BaseFairyItem : ModItem
     {
@@ -20,7 +20,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// <summary> 仙灵是否存活 </summary>
         protected bool dead;
         /// <summary> 仅在UI中使用，不显示等级 </summary>
-        public bool DontShowIV;
+        public bool DontShowIV = true;
         //private static int showLineValueCount;
 
         public abstract int FairyType { get; }
@@ -66,6 +66,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         {
             FairyIV = fairyIV;
             Life = fairyIV.LifeMax;
+            DontShowIV = false;
         }
 
         public override ModItem Clone(Item newEntity)
@@ -76,6 +77,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 bfi.FairyIV = FairyIV;
                 bfi.Life = Life;
                 bfi.dead = dead;
+                bfi.DontShowIV = false;
             }
 
             return modItem;
@@ -588,7 +590,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
              * 当基础值为1到最大值时为0.3-1
              * 当基础值大于最大值时为1以上
              */
-            baseValue = 0.3f + (0.7f * (baseValue - 1) / (maxValue - 1));
+            baseValue = 0.3f + 0.7f * (baseValue - 1) / (maxValue - 1);
         }
 
         public static void DrawRaderIcon(Vector2 pos, int frame, float value, float level)
@@ -627,6 +629,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             dead = tag.ContainsKey(nameof(IsDead));
             if (tag.TryGet(nameof(Life), out int l))
                 Life = l;
+
+            DontShowIV = false;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.DamageClasses;
+using Coralite.Core.Systems.FairyCatcherSystem.Bases.Items;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
@@ -206,7 +207,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             //飞行一段时间后返回
             if (Timer > 180 || Vector2.Distance(Projectile.Center, GetHandleTipPos()) > FlyLength)
             {
-                ShootFairy();
+                if (Catch == 0)
+                    ShootFairy();
                 TurnToBack();
             }
         }

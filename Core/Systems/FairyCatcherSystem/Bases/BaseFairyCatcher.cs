@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.DamageClasses;
 using Coralite.Content.ModPlayers;
+using Coralite.Core.Systems.FairyCatcherSystem.Bases.Items;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;

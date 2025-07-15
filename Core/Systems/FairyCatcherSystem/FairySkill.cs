@@ -5,13 +5,15 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using Terraria;
 using Terraria.Localization;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem
 {
     /// <summary>
-    /// 仙灵技能
+    /// 仙灵技能<br></br>
+    /// 基类自带自动加载本地化词条<see cref="LocalizedText"/>
     /// </summary>
     public abstract class FairySkill : ModTexturedType, ILocalizedModType
     {
@@ -22,7 +24,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <summary>
         /// 仅在<see cref="FairyLoader"/>内存储的实例才能使用该属性，其余时候均为null
         /// </summary>
-        public LocalizedText SkillName { get; private set; }
+        public LocalizedText SkillName { get; set; }
 
         public string LocalizationCategory => "Systems.FairySkill";
 
@@ -42,7 +44,13 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
             Type = FairyLoader.ReserveFairySkillID();
 
-            SkillName = this.GetLocalization("SkillName");
+            PropertyInfo[] infos = GetType().GetProperties(BindingFlags.Instance | BindingFlags.GetProperty | BindingFlags.Public);
+            if (infos != null && infos.Length > 0)
+                foreach (var propinfo in infos)
+                {
+                    if (propinfo.PropertyType == typeof(LocalizedText))
+                        propinfo.SetValue(this, this.GetLocalization(propinfo.Name));
+                }
         }
 
         public virtual FairySkill NewInstance()
@@ -146,7 +154,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// 获取技能描述的总大小
         /// </summary>
         /// <returns></returns>
-        public Vector2 GetSkillTipTotalSize(Player player, FairyIV iv,out Vector2 nameSize)
+        public Vector2 GetSkillTipTotalSize(Player player, FairyIV iv, out Vector2 nameSize)
         {
             Texture2D tex = FairySystem.FairySkillAssets[Type].Value;
 
@@ -156,36 +164,42 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             nameSize = Helper.GetStringSize(name, Vector2.One * 1.1f);
 
             string description = GetSkillTips(player, iv);
-            Vector2 describSize = Helper.GetStringSize(description, Vector2.One);
+            Vector2 describSize = Helper.GetStringSize(description, Vector2.One * 0.9f);
 
             //宽度是图片宽度+10+描述的最大宽度
-            x += Math.Max(nameSize.X, describSize.X);
+            x += Math.Max(nameSize.X, describSize.X) + 8;
             //高度是图片高度和描述高度中的最大值
-            float y = Math.Max(nameSize.Y + describSize.Y, tex.Height);
+            float y = Math.Max(nameSize.Y + describSize.Y + 8, tex.Height);
 
             return new Vector2(x, y);
         }
 
-        public void DrawSkillTip(Vector2 topLeft, Player player, FairyIV iv)
+        /// <summary>
+        /// 绘制技能描述
+        /// </summary>
+        /// <param name="topLeft"></param>
+        /// <param name="player"></param>
+        /// <param name="iv"></param>
+        /// <param name="size"></param>
+        /// <param name="nameSize"></param>
+        public void DrawSkillTip(Vector2 topLeft, Player player, FairyIV iv, Vector2 size, Vector2 nameSize)
         {
-            Vector2 size = GetSkillTipTotalSize(player, iv, out Vector2 nameSize);
-
             Texture2D tex = FairySystem.FairySkillAssets[Type].Value;
             tex.QuickCenteredDraw(Main.spriteBatch, topLeft + new Vector2(tex.Width / 2, size.Y / 2));
 
             topLeft.X += tex.Width + 10;
-
-            int level = iv.SkillLevel;
-            if (player.TryGetModPlayer(out FairyCatcherPlayer fcp))
-                level = fcp.FairySkillBonus[Type].ModifyLevel(level);
+            topLeft.Y +=  4;
+            //int level = iv.SkillLevel;
+            //if (player.TryGetModPlayer(out FairyCatcherPlayer fcp))
+            //    level = fcp.FairySkillBonus[Type].ModifyLevel(level);
 
             Utils.DrawBorderString(Main.spriteBatch, GetSkillNameTip(iv.SkillLevel), topLeft
-                , FairyIV.GetFairyIVColorAndText(level).Item1, 1.1f);
+                , FairyIV.GetFairyIVColorAndText(iv.SkillLevelLevel).Item1, 1.1f);
 
-            topLeft.Y += nameSize.Y;
+            topLeft.Y += nameSize.Y+4;
 
             Utils.DrawBorderString(Main.spriteBatch, GetSkillTips(player, iv), topLeft
-                , Color.White, 1.1f);
+                , Color.White, 0.9f);
         }
 
         /// <summary>
@@ -199,7 +213,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <summary>
         /// 获得技能描述文本
         /// </summary>
-        public virtual string GetSkillTips(Player player,FairyIV iv)
+        public virtual string GetSkillTips(Player player, FairyIV iv)
         {
             return "";
         }

@@ -91,10 +91,13 @@ FairySystem: {
 		ZoneBeach: 在海边出现
 		CircleR_9: 需要捕捉环半径大于9格
 		ZoneDesert: 在沙漠出现
-		// ZoneHell: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.ZoneHell
-		// ZoneCrimson: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.ZoneCrimson
-		// ZoneCorrupt: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.ZoneCorrupt
+		ZoneHell: 在地狱出现
+		ZoneCrimson: 在猩红环境出现
+		ZoneCorrupt: 在腐化环境出现
 	}
+
+	SkillLVTips: "{0} LV {1}"
+	SkillLVLimit: "[c/808080:等级 {0} 及以上解锁]"
 }
 
 BossBarSystem.DontTakeDamage: 不可攻击！
@@ -288,6 +291,12 @@ CoraliteNoteSystem: {
 
 FairySkill: {
 	FSkill_Blow.SkillName: 吹散！
-	FSkill_Tackle.SkillName: 撞击！
+
+	FSkill_Tackle: {
+		SkillName: 撞击！
+		DashDamage: 冲刺命中伤害 {0} 倍
+		Chase: 追踪敌怪
+	}
+
 	FSkill_HealOutside.SkillName: 治愈
 }

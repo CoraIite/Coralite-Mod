@@ -1,4 +1,4 @@
-﻿using Coralite.Core.Systems.FairyCatcherSystem.Bases;
+﻿using Coralite.Core.Systems.FairyCatcherSystem.Bases.Items;
 
 namespace Coralite.Content.Items.FairyBottle
 {

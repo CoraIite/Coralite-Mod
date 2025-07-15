@@ -4,7 +4,7 @@ using System.Linq;
 using Terraria;
 using Terraria.ModLoader.IO;
 
-namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
+namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
 {
     public abstract class BaseFairyBottle : ModItem
     {

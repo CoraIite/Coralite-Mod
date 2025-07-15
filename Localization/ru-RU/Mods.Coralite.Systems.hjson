@@ -87,6 +87,9 @@ FairySystem: {
 		// ZoneCrimson: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.ZoneCrimson
 		// ZoneCorrupt: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.ZoneCorrupt
 	}
+
+	// SkillLVTips: Mods.Coralite.Systems.FairySystem.SkillLVTips
+	// SkillLVLimit: Mods.Coralite.Systems.FairySystem.SkillLVLimit
 }
 
 BossBarSystem.DontTakeDamage: Невозможно атаковать!
@@ -270,6 +273,12 @@ CoraliteNoteSystem: {
 
 FairySkill: {
 	// FSkill_Blow.SkillName: Mods.Coralite.Systems.FairySkill.FSkill_Blow.SkillName
-	// FSkill_Tackle.SkillName: Mods.Coralite.Systems.FairySkill.FSkill_Tackle.SkillName
+
+	FSkill_Tackle: {
+		// SkillName: Mods.Coralite.Systems.FairySkill.FSkill_Tackle.SkillName
+		// DashDamage: Mods.Coralite.Systems.FairySkill.FSkill_Tackle.DashDamage
+		// Chase: Mods.Coralite.Systems.FairySkill.FSkill_Tackle.Chase
+	}
+
 	// FSkill_HealOutside.SkillName: Mods.Coralite.Systems.FairySkill.FSkill_HealOutside.SkillName
 }

@@ -2,6 +2,7 @@
 using Coralite.Helpers;
 using System;
 using Terraria;
+using Terraria.Localization;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem.NormalSkills
 {
@@ -10,6 +11,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.NormalSkills
     /// </summary>
     public class FSkill_Tackle : FairySkill
     {
+        public LocalizedText DashDamage { get; set; }
+        public LocalizedText Chase { get; set; }
+
         /// <summary>
         /// 基础冲撞时间
         /// </summary>
@@ -87,7 +91,20 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.NormalSkills
                 fairyProj.Projectile.velocity = -fairyProj.Projectile.velocity.SafeNormalize(Vector2.Zero) * 4;
             }
 
-            hitModifier.SourceDamage += (1 + fairyProj.SkillLevel * 0.1f);
+            hitModifier.SourceDamage += (1.5f + fairyProj.SkillLevel * 0.15f);
+        }
+
+        public override string GetSkillTips(Player player, FairyIV iv)
+        {
+            string chase = iv.SkillLevel > 6
+                ? Chase.Value : FairySystem.SkillLVLimit.Format(7);
+
+            int level = iv.SkillLevel;
+            if (player.TryGetModPlayer(out FairyCatcherPlayer fcp))
+                level = fcp.FairySkillBonus[Type].ModifyLevel(level);
+
+            return string.Concat(DashDamage.Format(1.5f + level * 0.15f)
+                , Environment.NewLine, chase);
         }
     }
 }

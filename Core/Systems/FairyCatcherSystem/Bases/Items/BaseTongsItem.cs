@@ -1,7 +1,7 @@
 ﻿using Terraria;
 using Terraria.DataStructures;
 
-namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
+namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
 {
     public abstract class BaseTongsItem : BaseFairyCatcher
     {

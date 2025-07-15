@@ -1,5 +1,6 @@
 ﻿using Coralite.Core.Loaders;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
+using Coralite.Core.Systems.FairyCatcherSystem.Bases.Items;
 using System;
 using System.Collections.Generic;
 using Terraria;

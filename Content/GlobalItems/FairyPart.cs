@@ -4,6 +4,7 @@ using Coralite.Core;
 using Coralite.Core.Loaders;
 using Coralite.Core.Systems.FairyCatcherSystem;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
+using Coralite.Core.Systems.FairyCatcherSystem.Bases.Items;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
