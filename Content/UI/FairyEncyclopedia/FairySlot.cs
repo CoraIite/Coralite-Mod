@@ -91,6 +91,16 @@ namespace Coralite.Content.UI.FairyEncyclopedia
             Color c = FairySystem.FairyCaught[_fairy.Type] ? Color.White : Color.Black;
             c *= alpha;
 
+            var style = GetDimensions();
+            _fairy.Center = style.Center();
+            if (IsMouseHovering)
+            {
+                _fairy.scale = 1.4f;
+                _fairy.Center += new Vector2(0, style.Height / 8 * MathF.Sin(Main.GlobalTimeWrappedHourly * 3));
+            }
+            else
+                _fairy.scale = 1f;
+
             if (hovering)
             {
                 if (FairySystem.FairyCaught[_fairy.Type])
@@ -103,7 +113,7 @@ namespace Coralite.Content.UI.FairyEncyclopedia
                     Main.instance.MouseText(FairySystem.UncaughtMouseText.Value);
             }
 
-            _fairy.QuickDraw(c, 0);
+            _fairy.QuickDraw(Vector2.Zero, c, 0);
         }
 
         private void DrawBorder(SpriteBatch spriteBatch, float offset, Texture2D texture, Color color)
@@ -142,18 +152,6 @@ namespace Coralite.Content.UI.FairyEncyclopedia
                 _fairy.frameCounter = 0;
                 if (++_fairy.frame.Y >= _fairy.VerticalFrames)
                     _fairy.frame.Y = 0;
-            }
-
-            var style = GetDimensions();
-            _fairy.Center = style.Center() + Main.screenPosition;
-            if (IsMouseHovering)
-            {
-                _fairy.scale = 1.4f;
-                _fairy.Center += new Vector2(0, style.Height / 8 * MathF.Sin(Main.GlobalTimeWrappedHourly * 3));
-            }
-            else
-            {
-                _fairy.scale = 1f;
             }
         }
     }

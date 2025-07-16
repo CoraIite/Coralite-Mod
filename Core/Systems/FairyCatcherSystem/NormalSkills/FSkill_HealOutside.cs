@@ -4,6 +4,7 @@ using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System.Linq;
 using Terraria;
+using Terraria.Localization;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem.NormalSkills
 {
@@ -12,6 +13,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.NormalSkills
     /// </summary>
     public class FSkill_HealOutside : FairySkill
     {
+        public override string Texture => AssetDirectory.FairySkillIcons + "HealOutside";
+
+        public LocalizedText HealValue { get; set; }
+
         public override Color SkillTextColor => Color.Green;
 
         /// <summary>
@@ -70,6 +75,14 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.NormalSkills
             return false;
         }
 
+        public override string GetSkillTips(Player player, FairyIV iv)
+        {
+            int level = iv.SkillLevel;
+            if (player.TryGetModPlayer(out FairyCatcherPlayer fcp))
+                level = fcp.FairySkillBonus[Type].ModifyLevel(level);
+
+            return HealValue.Format(GetHealPercent(level)*100, iv.Damage);
+        }
     }
 
     public class HealParticle : Particle

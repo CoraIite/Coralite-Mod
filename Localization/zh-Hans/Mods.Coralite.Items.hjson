@@ -3357,7 +3357,7 @@ PinkFairyItem: {
 
 CandyFairyItem: {
 	DisplayName: 糖果棒灵
-	Tooltip: 糖果棒灵十分美味，它能为仙灵瓶内的仙灵们补充糖分，回复25血量
+	Tooltip: 十分美味！
 }
 
 FairyEncyclopediaItem: {

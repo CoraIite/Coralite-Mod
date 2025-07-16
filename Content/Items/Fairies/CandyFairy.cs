@@ -22,6 +22,11 @@ namespace Coralite.Content.Items.Fairies
             Item.value = Item.sellPrice(0, 0, 2);
             Item.shoot = ModContent.ProjectileType<CandyFairyProj>();
         }
+
+        public override int[] GetFairySkills()
+        {
+            return [CoraliteContent.FairySkillType<FSkill_HealOutside>()];
+        }
     }
 
     public class CandyFairy : Fairy

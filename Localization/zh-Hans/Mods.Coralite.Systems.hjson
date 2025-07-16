@@ -290,13 +290,19 @@ CoraliteNoteSystem: {
 }
 
 FairySkill: {
-	FSkill_Blow.SkillName: 吹散！
+	FSkill_Blow: {
+		SkillName: 吹散
+		Description: 释放风场造成 {0} 伤害
+	}
 
 	FSkill_Tackle: {
-		SkillName: 撞击！
+		SkillName: 撞击
 		DashDamage: 冲刺命中伤害 {0} 倍
 		Chase: 追踪敌怪
 	}
 
-	FSkill_HealOutside.SkillName: 治愈
+	FSkill_HealOutside: {
+		SkillName: 治愈
+		HealValue: 为在场仙灵回复 {0}% + {1} 血量
+	}
 }

@@ -11,6 +11,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.NormalSkills
     /// </summary>
     public class FSkill_Tackle : FairySkill
     {
+        public override string Texture => AssetDirectory.FairySkillIcons + "Tackle";
+
         public LocalizedText DashDamage { get; set; }
         public LocalizedText Chase { get; set; }
 

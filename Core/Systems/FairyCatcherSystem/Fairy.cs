@@ -502,7 +502,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// </summary>
         public virtual void Draw_InCatcher()
         {
-            this.QuickDraw(Color.White * alpha, 0);
+            this.QuickDraw(Main.screenPosition, Color.White * alpha, 0);
 
             //Texture2D mainTex = ModContent.Request<Texture2D>(Texture).Value;
             //var frame = mainTex.Frame(HorizontalFrames, VerticalFrames, this.frame.X, this.frame.Y);

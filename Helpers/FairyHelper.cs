@@ -35,17 +35,17 @@ namespace Coralite.Helpers
             return FairySystem.FairyAssets[fairy.Type].Value;
         }
 
-        public static void QuickDraw(this Fairy fairy, Color lightColor, float exRot)
+        public static void QuickDraw(this Fairy fairy, Vector2 screenPos,Color lightColor, float exRot)
         {
             Texture2D mainTex = fairy.GetTexture();
             var frame = mainTex.Frame(fairy.HorizontalFrames, fairy.VerticalFrames, fairy.frame.X, fairy.frame.Y);
-            Main.spriteBatch.Draw(mainTex, fairy.Center - Main.screenPosition,
+            Main.spriteBatch.Draw(mainTex, fairy.Center - screenPos,
                 frame, lightColor, fairy.rotation + exRot,
                 frame.Size() / 2, fairy.scale,
                 fairy.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
         }
 
-        public static void QuickDraw(this Fairy fairy, Vector2 overrideCenter, Color lightColor, float exRot)
+        public static void QuickDraw(this Fairy fairy, Vector2 overrideCenter, Vector2 screenPos, Color lightColor, float exRot)
         {
             Texture2D mainTex = fairy.GetTexture();
             var frame = mainTex.Frame(fairy.HorizontalFrames, fairy.VerticalFrames, fairy.frame.X, fairy.frame.Y);

@@ -353,11 +353,6 @@ namespace Coralite.Content.UI.FairyEncyclopedia
                     break;
             }
 
-            if (BackGround.Width.Pixels != Main.screenWidth * 0.66f)
-            {
-                Recalculate();
-            }
-
             base.Update(gameTime);
         }
 
@@ -365,7 +360,7 @@ namespace Coralite.Content.UI.FairyEncyclopedia
         {
             if (BackGround != null)
             {
-                BackGround.Width.Set(Main.ScreenSize.X * 0.66f, 0);
+                BackGround.Width.Set(Main.screenWidth * 0.66f, 0);
                 BackGround.Height.Set(Main.ScreenSize.Y * 0.7f, 0);
             }
 
@@ -483,6 +478,12 @@ namespace Coralite.Content.UI.FairyEncyclopedia
 
             SetShowGrid(0);
             Recalculate();
+        }
+
+        protected override void DrawSelf(SpriteBatch spriteBatch)
+        {
+            if (BackGround.Width.Pixels != Main.screenWidth * 0.66f)
+                Recalculate();
         }
     }
 }

@@ -268,7 +268,10 @@ CoraliteNoteSystem: {
 }
 
 FairySkill: {
-	FSkill_Blow.SkillName: Mods.Coralite.Systems.FairySkill.FSkill_Blow.SkillName
+	FSkill_Blow: {
+		SkillName: Mods.Coralite.Systems.FairySkill.FSkill_Blow.SkillName
+		Description: Mods.Coralite.Systems.FairySkill.FSkill_Blow.Description
+	}
 
 	FSkill_Tackle: {
 		SkillName: Mods.Coralite.Systems.FairySkill.FSkill_Tackle.SkillName
@@ -276,5 +279,8 @@ FairySkill: {
 		Chase: Mods.Coralite.Systems.FairySkill.FSkill_Tackle.Chase
 	}
 
-	FSkill_HealOutside.SkillName: Mods.Coralite.Systems.FairySkill.FSkill_HealOutside.SkillName
+	FSkill_HealOutside: {
+		SkillName: Mods.Coralite.Systems.FairySkill.FSkill_HealOutside.SkillName
+		HealValue: Mods.Coralite.Systems.FairySkill.FSkill_HealOutside.HealValue
+	}
 }

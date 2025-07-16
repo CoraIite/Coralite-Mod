@@ -74,7 +74,7 @@ namespace Coralite.Content.CustomHooks
 
                     DrawBack(topLeft, size);
                     fSkill.DrawSkillTip(topLeft, Main.LocalPlayer, bfi.FairyIV, size, nameSize);
-                    topLeft.Y += size.Y;
+                    topLeft.Y += size.Y+Padding/3 + HeightOff * 2;
                 }
             }
         }

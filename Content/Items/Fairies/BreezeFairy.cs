@@ -10,6 +10,7 @@ using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
+using Terraria.Localization;
 
 namespace Coralite.Content.Items.Fairies
 {
@@ -23,6 +24,13 @@ namespace Coralite.Content.Items.Fairies
             Item.rare = ItemRarityID.Blue;
             Item.value = Item.sellPrice(copper: 50);
             Item.shoot = ModContent.ProjectileType<BreezeFairyProj>();
+        }
+
+        public override int[] GetFairySkills()
+        {
+            return [
+                CoraliteContent.FairySkillType<FSkill_Blow>()
+                ];
         }
     }
 
@@ -169,11 +177,24 @@ namespace Coralite.Content.Items.Fairies
 
     public class FSkill_Blow : FSkill_ShootProj
     {
+        public override string Texture => AssetDirectory.FairySkillIcons + "Blow";
+
+        public LocalizedText Description { get; set; }
+
         public override Color SkillTextColor => Color.SkyBlue;
         protected override float ShootSpeed => 0;
 
         protected override int ProjType => ModContent.ProjectileType<BreezeBlow>();
 
         protected override float ChaseDistance => 100;
+
+        public override string GetSkillTips(Player player, FairyIV iv)
+        {
+            int level = iv.SkillLevel;
+            if (player.TryGetModPlayer(out FairyCatcherPlayer fcp))
+                level = fcp.FairySkillBonus[Type].ModifyLevel(level);
+
+            return Description.Format(GetDamageBonus(iv.Damage, level));
+        }
     }
 }

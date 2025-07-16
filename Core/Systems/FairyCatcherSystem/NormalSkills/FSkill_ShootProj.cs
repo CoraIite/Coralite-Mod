@@ -111,7 +111,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.NormalSkills
         /// <returns></returns>
         public virtual int GetDamageBonus(int baseDamage, int level)
         {
-            return (int)(baseDamage * (1 + 0.25f * Math.Clamp(level / 15f, 0, 1)));
+            return (int)(baseDamage * (1 + 2f * Math.Clamp(level / 15f, 0, 1)));
         }
 
         /// <summary>
