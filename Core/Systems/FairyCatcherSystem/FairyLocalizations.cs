@@ -214,7 +214,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         public static string FormatIVDescription(LocalizedText pre, LocalizedText levelText, float value)
         {
-            return pre.Value + levelText.Format(value);
+            return pre.Format(levelText.Value, value);
         }
 
         public static LocalizedText GetSpawnCondition(DescriptionID descriptionID)

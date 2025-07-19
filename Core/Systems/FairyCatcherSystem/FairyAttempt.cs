@@ -90,6 +90,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             percentDict.Add((int)FairyRarity.C, 490);
         }
 
+        public static void AddFairySpawn(int fairyID,int value)
+        {
+            percentDict.Add(-fairyID, value);
+        }
+
         public bool SpawnFairy(out Fairy fairy)
         {
             fairy = null;
@@ -98,7 +103,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             //直接生成的仙灵
             if (result <= 0)
             {
-                fairy = FairyLoader.GetFairy(-result);
+                fairy = FairyLoader.GetFairy(-result).NewInstance();
+                fairy.Spawn(this);
                 return true;
             }
 

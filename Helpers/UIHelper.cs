@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.CoraliteNotes;
 using Coralite.Content.UI;
+using Coralite.Core;
 using Microsoft.CodeAnalysis.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -219,6 +220,16 @@ namespace Coralite.Helpers
             var scrollbar = new UIScrollbar();
             scrollbar.SetTopLeft(5000, 5000);
             grid.SetScrollbar(scrollbar);
+        }
+
+        public static void DrawDebugFrame(this UIElement element, SpriteBatch spriteBatch)
+        {
+            CalculatedStyle calculatedStyle = element.GetDimensions();
+            Vector2 pos = calculatedStyle.Position();
+            var tex = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "White32x32").Value;
+
+            spriteBatch.Draw(tex, pos, null, Color.White * 0.75f, 0, Vector2.Zero
+               , new Vector2(calculatedStyle.Width / tex.Width, calculatedStyle.Height / tex.Height), 0, 0);
         }
     }
 }

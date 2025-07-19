@@ -2,7 +2,11 @@
 
 namespace Coralite.Core.Systems.FairyCatcherSystem
 {
-    public interface IFairyAccessory : IFairyJarAccessory, IFairyTongAccessory
+    public interface IFairyAccessory : IFairyJarAccessory, IFairyTongAccessory, IFairySpawnModifyer
+    {
+    }
+
+    public interface IFairySpawnModifyer
     {
         /// <summary>
         /// 在生成仙灵的时候自定义仙灵的概率

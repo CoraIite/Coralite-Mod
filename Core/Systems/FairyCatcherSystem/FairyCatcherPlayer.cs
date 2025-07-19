@@ -22,6 +22,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             /// <summary> 获取随机的值 </summary>
             public readonly float RandValue => Main.rand.NextFloat(Math.Clamp(BaseValue - Sub, 0, float.MaxValue), BaseValue + Add);
 
+            public readonly float MinValue => BaseValue - Sub;
+            public readonly float MaxValue => BaseValue + Add;
+
             public void Reset()
             {
                 BaseValue= FairyIVLevelID.Common;

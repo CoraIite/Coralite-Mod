@@ -512,6 +512,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             DrawProgressBar();
         }
 
+        public void Draw_InUI()
+        {
+            this.QuickDraw(Vector2.Zero, Color.White * alpha, 0);
+        }
+
         public virtual void DrawProgressBar()
         {
             if (State == AIState.Catching)

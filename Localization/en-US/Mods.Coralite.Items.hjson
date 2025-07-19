@@ -6091,3 +6091,8 @@ CopperTong: {
 	DisplayName: Copper Tong
 	Tooltip: ""
 }
+
+SunflowerRing: {
+	DisplayName: Sunflower Ring
+	Tooltip: ""
+}

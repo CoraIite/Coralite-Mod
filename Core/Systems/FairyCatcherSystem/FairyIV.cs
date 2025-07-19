@@ -110,6 +110,57 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             return iv;
         }
 
+        /// <summary>
+        /// 获取最大与最小值
+        /// </summary>
+        /// <param name="fairy"></param>
+        /// <param name="player"></param>
+        /// <param name="ivMin"></param>
+        /// <param name="ivMax"></param>
+        public static void GetIVForUI(Fairy fairy,FairyCatcherPlayer player,out FairyIV ivMin,out FairyIV ivMax)
+        {
+            ivMin = new FairyIV();
+            ivMax = new FairyIV();
+            if (!FairySystem.fairyDatas.TryGetValue(fairy.Type, out FairyData data))
+                return;
+
+            ivMin.LifeMaxLevel = player.LifeMaxRand.MinValue;
+            ivMin.DamageLevel = player.DamageRand.MinValue;
+            ivMin.DefenceLevel = player.DefenceRand.MinValue;
+            ivMin.SkillLevelLevel = player.SkillLevelRand.MinValue;
+            ivMin.SpeedLevel = player.SpeedRand.MinValue;
+            ivMin.StaminaLevel = player.StaminaRand.MinValue;
+            ivMin.ScaleLevel = player.ScaleRand.MinValue;
+
+            ivMin = SetIV(fairy, player, ivMin, data);
+
+            ivMax.LifeMaxLevel = player.LifeMaxRand.MaxValue;
+            ivMax.DamageLevel = player.DamageRand.MaxValue;
+            ivMax.DefenceLevel = player.DefenceRand.MaxValue;
+            ivMax.SkillLevelLevel = player.SkillLevelRand.MaxValue;
+            ivMax.SpeedLevel = player.SpeedRand.MaxValue;
+            ivMax.StaminaLevel = player.StaminaRand.MaxValue;
+            ivMax.ScaleLevel = player.ScaleRand.MaxValue;
+
+            ivMax = SetIV(fairy, player, ivMax, data);
+
+            static FairyIV SetIV(Fairy fairy, FairyCatcherPlayer player, FairyIV ivMin, FairyData data)
+            {
+                fairy.ModifyIVLevel(ref ivMin, player);
+
+                GetLifeMaxIV(data, ref ivMin);
+                GetDamageIV(player, data, ref ivMin);
+                GetDefenceIV(player, data, ref ivMin);
+                GetSpeedIV(player, data, ref ivMin);
+                GetSkillLevelIV(player, data, ref ivMin);
+                GetStaminaIV(player, data, ref ivMin);
+                GetScaleIV(player, ref ivMin);
+
+                fairy.PostModifyIV(ref ivMin, player);
+                return ivMin;
+            }
+        }
+
         private static void SetLevels(FairyCatcherPlayer player, ref FairyIV iv)
         {
             iv.LifeMaxLevel = player.LifeMaxRand.RandValue;
@@ -317,7 +368,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         {
             return level switch
             {
-                > FairyIVLevelID.Weak and < FairyIVLevelID.WeakCommon
+                >= FairyIVLevelID.Weak and < FairyIVLevelID.WeakCommon
                     => (Color.Gray, FairySystem.WeakLevel),
                 >= FairyIVLevelID.WeakCommon and < FairyIVLevelID.Common
                     => (FairySystem.VeryCommonLevel_Brown, FairySystem.WeakCommonLevel),

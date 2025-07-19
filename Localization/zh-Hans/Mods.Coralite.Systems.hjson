@@ -11,23 +11,23 @@ MagikeSystem: {
 }
 
 FairySystem: {
-	FairyLifeMax: "    血量 ▶ "
-	FairyDamage: "    伤害 ▶ "
-	FairyDefence: "    防御 ▶ "
-	FairyScale: "    大小 ▶ "
+	FairyLifeMax: "    血量 {0} ▶ {1}"
+	FairyDamage: "    伤害 {0} ▶ {1}"
+	FairyDefence: "    防御 {0} ▶ {1}"
+	FairyScale: "    尺寸 {0} ▶ {1}"
 	CurrentLife: 当前血量：{0} / {1}
 	ResurrectionTime: 濒死，回复中：{0} / {1}
-	RarityC: 常见
-	RarityU: 不常见
-	RarityR: 稀有
-	RarityRR: 双倍稀有
-	RaritySR: 史诗
-	RarityUR: 神话
-	RarityRRR: 三倍稀有
-	RarityHR: 传说
-	RarityAR: 异类
-	RarityMR: 秘宝
-	RaritySP: 特殊
+	RarityC: C 常见
+	RarityU: U 少见
+	RarityR: R 稀有
+	RarityRR: RR 极稀有
+	RaritySR: SR 史诗
+	RarityUR: UR 神话
+	RarityRRR: RRR 超稀有
+	RarityHR: HR 传说
+	RarityAR: AR 异变
+	RarityMR: MR 秘宝
+	RaritySP: SP 特殊
 	BottleCapacity: 容量 {0} / {1}
 	NotHaveLevel: 无：{0}（基础 {1}）
 	SeeMore: "[c/808080:按shift查看更多]"
@@ -52,18 +52,18 @@ FairySystem: {
 	SortByCaughtText: 按是否捕获排序
 	FairyTradeCondition: 使用妖精传送门进行交易
 	CircleRadiusBonus: 仙灵捕捉环半径增加 {0} 格
-	WeakLevel: "{0} 低劣"
-	WeakCommonLevel: "{0} 弱小"
-	CommonLevel: "{0} 普通"
-	UncommonLevel: "{0} 不寻常"
-	RareLevel: "{0} 稀有"
-	EpicLevel: "{0} 史诗"
-	LegendaryLevel: "{0} 传说"
-	EternalLevel: "{0} 永恒"
-	OverLevel: "{0} 超越"
-	FairySpeed: "    速度 ▶ "
-	FairySkillLevel: "    等级 ▶ "
-	FairyStamina: "    耐力 ▶ "
+	WeakLevel: 低劣
+	WeakCommonLevel: 弱小
+	CommonLevel: 普通
+	UncommonLevel: 少见
+	RareLevel: 稀有
+	EpicLevel: 史诗
+	LegendaryLevel: 传说
+	EternalLevel: 永恒
+	OverLevel: 超越
+	FairySpeed: "    速度 {0} ▶ {1}"
+	FairySkillLevel: "    等级 {0} ▶ {1}"
+	FairyStamina: "    耐力 {0} ▶ {1}"
 	FightFairy:
 		'''
 		出战仙灵

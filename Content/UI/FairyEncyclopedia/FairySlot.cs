@@ -20,8 +20,8 @@ namespace Coralite.Content.UI.FairyEncyclopedia
         public Color BorderColor = Color.Black;
         public Color BackgroundColor = new Color(63, 82, 151) * 0.85f;
 
-        public const int XCount = 12;
-        public const int YCount = 6;
+        public const int XCount = 10;
+        public const int YCount = 5;
 
         private Fairy _fairy;
         private Item _fairyItem;
@@ -137,6 +137,12 @@ namespace Coralite.Content.UI.FairyEncyclopedia
         public override void LeftClick(UIMouseEvent evt)
         {
             //切换到个体面板
+            FairyEncyclopedia e = UILoader.GetUIState<FairyEncyclopedia>();
+
+            e.ShowFairy = true;
+            FairyEncyclopedia.ShowFairyID = _fairy.Type;
+            e.Recalculate();
+            e.CircleShow.Reset();
 
             base.LeftClick(evt);
         }

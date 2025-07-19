@@ -38,15 +38,5 @@ namespace Coralite.Content.CoraliteNotes
                     new LandOfTheLustrousChapter.GroupLandOfTheLustrous(),
                 ];
         }
-
-        public static void DrawDebugFrame(UIElement element, SpriteBatch spriteBatch)
-        {
-            CalculatedStyle calculatedStyle = element.GetDimensions();
-            Vector2 pos = calculatedStyle.Position();
-            var tex = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "White32x32").Value;
-
-            spriteBatch.Draw(tex, pos, null, Color.White * 0.75f, 0, Vector2.Zero
-               , new Vector2(calculatedStyle.Width / tex.Width, calculatedStyle.Height / tex.Height), 0, 0);
-        }
     }
 }

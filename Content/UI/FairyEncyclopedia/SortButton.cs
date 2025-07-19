@@ -26,6 +26,7 @@ namespace Coralite.Content.UI.FairyEncyclopedia
             if (IsMouseHovering)
             {
                 Main.instance.MouseText(FairySystem.SortButtonMouseText.Value);
+                Main.LocalPlayer.mouseInterface = true;
             }
         }
 

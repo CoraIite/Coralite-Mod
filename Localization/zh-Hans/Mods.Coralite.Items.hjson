@@ -6132,3 +6132,8 @@ CopperTong: {
 	DisplayName: 铜抓手
 	Tooltip: ""
 }
+
+SunflowerRing: {
+	// DisplayName: Sunflower Ring
+	// Tooltip: ""
+}

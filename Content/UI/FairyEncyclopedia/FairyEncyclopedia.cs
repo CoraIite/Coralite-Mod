@@ -41,7 +41,24 @@ namespace Coralite.Content.UI.FairyEncyclopedia
         public UIImageButton SortButton;
         public UIPanel SortButtonsPanel;
 
-        public class SelectPanelButton(Asset<Texture2D> texture) : UIImageButton(texture)
+        #region 显示具体仙灵界面相关字段
+
+        public FairyCircleShow CircleShow;
+        public FairyNameDraw NameDraw;
+        public FairyIVRangeShow IVRangeShow;
+
+        /// <summary>
+        /// 是否是在显示仙灵
+        /// </summary>
+        public bool ShowFairy;
+        public bool ShowSortPanel;
+        public bool ShowSelectPanel;
+
+        public static int ShowFairyID;
+
+        #endregion
+
+        public class SelectPanelButton(ATex texture) : UIImageButton(texture)
         {
             protected override void DrawSelf(SpriteBatch spriteBatch)
             {
@@ -78,6 +95,15 @@ namespace Coralite.Content.UI.FairyEncyclopedia
 
         private List<Fairy> fairies;
 
+        /// <summary>
+        /// 主体面板宽度
+        /// </summary>
+        public float PanelWidth => Main.screenWidth * 0.6f;
+        /// <summary>
+        /// 主体面板高度
+        /// </summary>
+        public float PanelHeight => Main.screenHeight * 0.6f;
+
         public enum SortStyle
         {
             ByType,
@@ -111,6 +137,8 @@ namespace Coralite.Content.UI.FairyEncyclopedia
             InitSelectPanel();
             InitSortPanel();
 
+            InitFairyShow();
+
             MakeExitButton(this);
 
             Append(BackGround);
@@ -124,10 +152,13 @@ namespace Coralite.Content.UI.FairyEncyclopedia
             if (BackGround.HasChild(SortButtonsPanel))//有就关闭
             {
                 BackGround.RemoveChild(SortButtonsPanel);
+                ShowSortPanel = false;
+                ShowSelectPanel = false;
             }
             else//没有就打开
             {
-                BackGround.Append(SortButtonsPanel);
+                ShowSortPanel = true;
+                ShowSelectPanel = false;
                 Recalculate();
             }
         }
@@ -140,10 +171,13 @@ namespace Coralite.Content.UI.FairyEncyclopedia
             if (BackGround.HasChild(SelectButtonsPanel))//有就关闭
             {
                 BackGround.RemoveChild(SelectButtonsPanel);
+                ShowSelectPanel = false;
+                ShowSortPanel = false;
             }
             else//没有就打开
             {
-                BackGround.Append(SelectButtonsPanel);
+                ShowSelectPanel = true;
+                ShowSortPanel = false;
                 Recalculate();
             }
         }
@@ -270,11 +304,20 @@ namespace Coralite.Content.UI.FairyEncyclopedia
                 Top = StyleDimension.FromPixels(-25f)
             };
 
+            uITextPanel.OnUpdate += UITextPanel_OnUpdate;
             uITextPanel.OnMouseOver += FadedMouseOver;
             uITextPanel.OnMouseOut += FadedMouseOut;
             uITextPanel.OnLeftMouseDown += Click_GoBack;
             uITextPanel.SetSnapPoint("ExitButton", 0);
             outerContainer.Append(uITextPanel);
+        }
+
+        private void UITextPanel_OnUpdate(UIElement affectedElement)
+        {
+            if (affectedElement.IsMouseHovering)
+            {
+                Main.LocalPlayer.mouseInterface = true;
+            }
         }
 
         private void MakeSortButton(SortStyle sortStyle, Func<LocalizedText> description, UIGrid grid)
@@ -305,7 +348,32 @@ namespace Coralite.Content.UI.FairyEncyclopedia
         private void Click_GoBack(UIMouseEvent evt, UIElement listeningElement)
         {
             SoundEngine.PlaySound(CoraliteSoundID.MenuClose);
+
+            if (ShowFairy)
+            {
+                ShowFairy = false;
+
+                Recalculate();
+                return;
+            }
+
             visible = false;
+        }
+
+        /// <summary>
+        /// 初始化上半部分的仙灵本体显示
+        /// </summary>
+        public void InitFairyShow()
+        {
+            CircleShow = new FairyCircleShow();
+            CircleShow.SetCenter(new Vector2(PanelWidth / 2, PanelHeight * 3 / 5));
+
+            NameDraw = new FairyNameDraw();
+            NameDraw.SetSize(CircleShow.Width.Pixels, PanelHeight / 3);
+            NameDraw.SetTopLeft(0, CircleShow.Left.Pixels);
+
+            IVRangeShow = new FairyIVRangeShow();
+            IVRangeShow.SetSize((PanelWidth - CircleShow.Width.Pixels) / 2-10, PanelHeight);
         }
 
         #endregion
@@ -326,9 +394,6 @@ namespace Coralite.Content.UI.FairyEncyclopedia
 
         public override void Update(GameTime gameTime)
         {
-            if (BackGround.IsMouseHovering)
-                Main.LocalPlayer.mouseInterface = true;
-
             if (Main.LocalPlayer.controlInv || Main.playerInventory)
             {
                 visible = false;
@@ -341,7 +406,7 @@ namespace Coralite.Content.UI.FairyEncyclopedia
                     {
                         if (Timer < FairySlot.XCount * FairySlot.YCount)//显示过渡小动画
                         {
-                            Timer += 0.2f;
+                            Timer += 0.5f;
                         }
                     }
                     break;
@@ -358,17 +423,42 @@ namespace Coralite.Content.UI.FairyEncyclopedia
 
         public override void Recalculate()
         {
+            //设置面板尺寸
             if (BackGround != null)
             {
-                BackGround.Width.Set(Main.screenWidth * 0.66f, 0);
-                BackGround.Height.Set(Main.ScreenSize.Y * 0.7f, 0);
+                BackGround.Width.Set(PanelWidth, 0);
+                BackGround.Height.Set(PanelHeight, 0);
             }
 
-            if (FairyGrid != null)
+
+            BackGround?.RemoveAllChildren();
+
+            if (ShowFairy)//显示具体仙灵
             {
-                FairyGrid.Top.Set(40, 0);
-                FairyGrid.Width.Set(BackGround.Width.Pixels - 18, 0);
-                FairyGrid.Height.Set(BackGround.Height.Pixels - 70, 0);
+                InitFairyShow();
+                BackGround?.Append(CircleShow);
+                BackGround?.Append(NameDraw);
+                BackGround?.Append(IVRangeShow);
+            }
+            else//显示全部仙灵
+            {
+                if (FairyGrid != null)
+                {
+                    FairyGrid.Top.Set(40, 0);
+                    FairyGrid.Width.Set(BackGround.Width.Pixels - 18, 0);
+                    FairyGrid.Height.Set(BackGround.Height.Pixels - 70, 0);
+                }
+
+                BackGround?.Append(FairyGrid);
+                BackGround?.Append(PageText);
+                BackGround?.Append(SelectButton);
+                BackGround?.Append(SortButton);
+
+                if (ShowSelectPanel)
+                    BackGround.Append(SelectButtonsPanel);
+                if (ShowSortPanel)
+                    BackGround.Append(SortButtonsPanel);
+
             }
 
             Main.playerInventory = false;
@@ -376,21 +466,20 @@ namespace Coralite.Content.UI.FairyEncyclopedia
             base.Recalculate();
         }
 
+        /// <summary>
+        /// 在风石碑牌倍右键时调用，初始化所有
+        /// </summary>
         public void SetToAllShow()
         {
-            BackGround.RemoveAllChildren();
-            BackGround.Append(FairyGrid);
-            BackGround.Append(PageText);
-            BackGround.Append(SelectButton);
-            BackGround.Append(SortButton);
-
             SetShowGrid(0);
 
             State = UpdateState.ShowAll;
             selectType = null;
-            Recalculate();
-            Recalculate();
 
+            ShowFairy = false;
+            ShowFairyID = 0;
+
+            Recalculate();
         }
 
         /// <summary>
@@ -482,7 +571,10 @@ namespace Coralite.Content.UI.FairyEncyclopedia
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            if (BackGround.Width.Pixels != Main.screenWidth * 0.66f)
+            if (BackGround.IsMouseHovering)
+                Main.LocalPlayer.mouseInterface = true;
+
+            if (BackGround.Width.Pixels != PanelWidth)
                 Recalculate();
         }
     }

@@ -11,6 +11,12 @@ namespace Coralite.Core.Loaders
         public static BasicEffect ColorOnlyEffect { get; private set; }
         public static BasicEffect TextureColorEffect { get; private set; }
 
+        public static readonly RasterizerState OverflowHiddenRasterizerState = new RasterizerState
+        {
+            CullMode = CullMode.None,
+            ScissorTestEnable = true
+        };
+
         public override void Load()
         {
             if (Main.dedServ)
