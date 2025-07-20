@@ -1,24 +1,28 @@
-﻿using Coralite.Core.Loaders;
+﻿using Coralite.Core;
+using Coralite.Core.Attributes;
+using Coralite.Core.Loaders;
 using Coralite.Core.Systems.FairyCatcherSystem;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases.Items;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using System;
 using Terraria;
 using Terraria.UI;
 
 namespace Coralite.Content.UI.FairyEncyclopedia
 {
+    [AutoLoadTexture(Path = AssetDirectory.UI)]
     public class FairySlot : UIElement
     {
-        private int _cornerSize = 12;
-        private int _barSize = 4;
-        private Asset<Texture2D> _borderTexture;
-        private Asset<Texture2D> _borderHoverTexture;
-        private Asset<Texture2D> _backgroundTexture;
-        public Color BorderColor = Color.Black;
-        public Color BackgroundColor = new Color(63, 82, 151) * 0.85f;
+        public static ATex FairySlotCorner { get; set; }
+
+        private int _cornerSize = 20;
+        private int _barSize = 12;
+        private ATex _borderTexture;
+        private ATex _borderHoverTexture;
+        private ATex _backgroundTexture;
+        public Color BorderColor = Color.White;
+        public Color BackgroundColor = Color.White;//new Color(63, 82, 151) * 0.85f;
 
         public const int XCount = 10;
         public const int YCount = 5;
@@ -29,13 +33,13 @@ namespace Coralite.Content.UI.FairyEncyclopedia
         /// 自身在UIGrid里的索引
         /// </summary>
         public readonly int index;
-        private float alpha;
+        private float alpha = 1;
         private float offset;
 
         public FairySlot(int fairyType, int index)
         {
             this.index = index;
-            offset = 60;
+            //offset = 60;
             _borderTexture ??= FairySystem.FairySlotBorder;  //Main.Assets.Request<Texture2D>("Images/UI/PanelBorder");
             _borderHoverTexture ??= FairySystem.FairySlotHoverBorder;
             _backgroundTexture ??= FairySystem.FairySlotBackground;//Main.Assets.Request<Texture2D>("Images/UI/PanelBackground");
@@ -52,21 +56,21 @@ namespace Coralite.Content.UI.FairyEncyclopedia
 
         public override void Update(GameTime gameTime)
         {
-            if (alpha < 1)//滑动效果
-            {
-                if (FairyEncyclopedia.Timer >= index)
-                {
-                    alpha = FairyEncyclopedia.Timer - index;
-                    offset = 60 - (alpha * 60);
-                }
+            //if (alpha < 1)//滑动效果
+            //{
+            //    if (FairyEncyclopedia.Timer >= index)
+            //    {
+            //        alpha = FairyEncyclopedia.Timer - index;
+            //        offset = 30 - (alpha * 30);
+            //    }
 
-                if (alpha > 1)
-                {
-                    alpha = 1;
-                    offset = 0;
-                    Recalculate();
-                }
-            }
+            //    if (alpha > 1)
+            //    {
+            //        alpha = 1;
+            //        offset = 0;
+            //        Recalculate();
+            //    }
+            //}
 
             UpdateFairy();
 
@@ -112,6 +116,20 @@ namespace Coralite.Content.UI.FairyEncyclopedia
                 else
                     Main.instance.MouseText(FairySystem.UncaughtMouseText.Value);
             }
+
+            Color c2 = FairySystem.GetRarityColor(_fairy.Rarity);
+            string text = Enum.IsDefined(_fairy.Rarity) ? Enum.GetName(_fairy.Rarity) : "SP";
+
+            Utils.DrawBorderString(spriteBatch, text, GetDimensions().Position() + new Vector2(25, 29), c2,
+                anchorx: 0.5f, anchory: 0.5f);
+
+
+            CalculatedStyle dimensions = GetDimensions();
+
+            FairySlotCorner.Value.QuickCenteredDraw(spriteBatch, new Rectangle(0, 0, 2, 1)
+                , dimensions.Position() + new Vector2(30, 30), Color.White * 0.6f);
+            FairySlotCorner.Value.QuickCenteredDraw(spriteBatch, new Rectangle(1, 0, 2, 1)
+                , dimensions.Position() + new Vector2(dimensions.Width - 30, dimensions.Height - 30), Color.White * 0.6f);
 
             _fairy.QuickDraw(Vector2.Zero, c, 0);
         }

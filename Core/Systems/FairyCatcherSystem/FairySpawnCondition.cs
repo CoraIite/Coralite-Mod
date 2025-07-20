@@ -21,10 +21,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         public enum WallGroupType
         {
-            /// <summary>
-            /// 宝石晶格墙
-            /// </summary>
-            Gemspark,
+            ///// <summary>
+            ///// 宝石晶格墙
+            ///// </summary>
+            //Gemspark,
             /// <summary>
             /// 宝石石墙，是会自然生成的宝石洞的墙壁
             /// </summary>
@@ -92,7 +92,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public FairySpawnController AddCondition(LocalizedText description, Func<FairyAttempt, bool> predicate)
         {
             Conditions ??= new List<FairySpawnCondition>();
-            Conditions.Add(new FairySpawnCondition(() => description, predicate));
+            Conditions.Add(new FairySpawnCondition(() => description.Value, predicate));
 
             return this;
         }
@@ -130,6 +130,17 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <param name="wallType"></param>
         public void RegisterToWall(int wallType = 0)
         {
+            RegisterToWallInner(wallType);
+
+            FairySpawnController condition = CloneSelf();
+            if (FairySystem.GetWallTypeToItemType.TryGetValue(wallType,out int itemType))
+                condition.AddCondition(new FairySpawn_Wall(itemType));
+
+            FairySystem.fairySpawnConditions_InEncyclopedia[fairyType] = condition;
+        }
+
+        private void RegisterToWallInner(int wallType = 0)
+        {
             if (FairySystem.fairySpawnConditions == null)
                 return;
 
@@ -137,43 +148,70 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                 FairySystem.fairySpawnConditions.Add(wallType, new List<FairySpawnController>());
 
             FairySystem.fairySpawnConditions[wallType].Add(this);
-            FairySystem.fairySpawnConditions_InEncyclopedia[fairyType] = this;
         }
+
+        /// <summary>
+        /// 手动注册到仙灵图鉴中，需要传入特殊出现条件（99%的情况是墙壁组）
+        /// </summary>
+        /// <param name="specialCondition"></param>
+        public void RegisterToEncyclopedia(FairySpawnCondition specialCondition)
+        {
+            FairySpawnController condition = CloneSelf();
+            condition.AddCondition(specialCondition);
+
+            FairySystem.fairySpawnConditions_InEncyclopedia[fairyType] = condition;
+        }
+
+        /// <summary>
+        /// 克隆一份自己的副本
+        /// </summary>
+        /// <param name="fairyType"></param>
+        /// <returns></returns>
+        public FairySpawnController CloneSelf()
+        {
+            FairySpawnController condition = Create(fairyType);
+            if (Conditions != null && Conditions.Count > 0)
+                condition.Conditions = [.. Conditions];
+
+            return condition;
+        }
+
 
         public void RegisterToWallGroup(WallGroupType group)
         {
             switch (group)
             {
-                case WallGroupType.Gemspark:
-                    RegisterToWall(WallID.AmberGemspark);
-                    RegisterToWall(WallID.AmethystGemspark);
-                    RegisterToWall(WallID.DiamondGemspark);
-                    RegisterToWall(WallID.EmeraldGemspark);
-                    RegisterToWall(WallID.AmberGemsparkOff);
-                    RegisterToWall(WallID.AmethystGemsparkOff);
-                    RegisterToWall(WallID.DiamondGemsparkOff);
-                    RegisterToWall(WallID.EmeraldGemsparkOff);
-                    RegisterToWall(WallID.RubyGemsparkOff);
-                    RegisterToWall(WallID.SapphireGemsparkOff);
-                    RegisterToWall(WallID.TopazGemsparkOff);
-                    RegisterToWall(WallID.RubyGemspark);
-                    RegisterToWall(WallID.SapphireGemspark);
-                    RegisterToWall(WallID.TopazGemspark);
-                    break;
                 case WallGroupType.Gem:
-                    RegisterToWall(WallID.AmethystUnsafe);
-                    RegisterToWall(WallID.TopazUnsafe);
-                    RegisterToWall(WallID.SapphireUnsafe);
-                    RegisterToWall(WallID.EmeraldUnsafe);
-                    RegisterToWall(WallID.RubyUnsafe);
-                    RegisterToWall(WallID.DiamondUnsafe);
+                    RegisterToWallInner(WallID.AmethystUnsafe);
+                    RegisterToWallInner(WallID.TopazUnsafe);
+                    RegisterToWallInner(WallID.SapphireUnsafe);
+                    RegisterToWallInner(WallID.EmeraldUnsafe);
+                    RegisterToWallInner(WallID.RubyUnsafe);
+                    RegisterToWallInner(WallID.DiamondUnsafe);
+                    
+                    RegisterToWallInner(WallID.AmethystEcho);
+                    RegisterToWallInner(WallID.TopazEcho);
+                    RegisterToWallInner(WallID.SapphireEcho);
+                    RegisterToWallInner(WallID.EmeraldEcho);
+                    RegisterToWallInner(WallID.RubyEcho);
+                    RegisterToWallInner(WallID.DiamondEcho);
+                    
+                    RegisterToWallInner(WallID.AmberGemspark);
+                    RegisterToWallInner(WallID.AmethystGemspark);
+                    RegisterToWallInner(WallID.DiamondGemspark);
+                    RegisterToWallInner(WallID.EmeraldGemspark);
+                    RegisterToWallInner(WallID.AmberGemsparkOff);
+                    RegisterToWallInner(WallID.AmethystGemsparkOff);
+                    RegisterToWallInner(WallID.DiamondGemsparkOff);
+                    RegisterToWallInner(WallID.EmeraldGemsparkOff);
+                    RegisterToWallInner(WallID.RubyGemsparkOff);
+                    RegisterToWallInner(WallID.SapphireGemsparkOff);
+                    RegisterToWallInner(WallID.TopazGemsparkOff);
+                    RegisterToWallInner(WallID.RubyGemspark);
+                    RegisterToWallInner(WallID.SapphireGemspark);
+                    RegisterToWallInner(WallID.TopazGemspark);
 
-                    RegisterToWall(WallID.AmethystEcho);
-                    RegisterToWall(WallID.TopazEcho);
-                    RegisterToWall(WallID.SapphireEcho);
-                    RegisterToWall(WallID.EmeraldEcho);
-                    RegisterToWall(WallID.RubyEcho);
-                    RegisterToWall(WallID.DiamondEcho);
+                    RegisterToEncyclopedia(FairySpawnCondition.GemWall);
                     break;
                 default:
                     break;

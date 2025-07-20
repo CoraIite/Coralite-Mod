@@ -174,6 +174,30 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             return new Vector2(x, y);
         }
 
+        public Vector2 GetSkillTipSizeForUI()
+        {
+            Texture2D tex = FairySystem.FairySkillAssets[Type].Value;
+
+            float x = tex.Width + 10;
+
+            string name = SkillName.Value;
+            Vector2 nameSize = Helper.GetStringSize(name, Vector2.One * 1.1f);
+
+            return new Vector2(x + nameSize.X, tex.Height);
+        }
+
+        public void DrawSkillTipInUI(Vector2 topLeft, Vector2 size)
+        {
+            Texture2D tex = FairySystem.FairySkillAssets[Type].Value;
+            tex.QuickCenteredDraw(Main.spriteBatch, topLeft + new Vector2(tex.Width / 2, size.Y / 2));
+
+            topLeft.X += tex.Width + 10;
+            topLeft.Y += 4;
+
+            Utils.DrawBorderString(Main.spriteBatch, SkillName.Value, topLeft
+                , Color.White, 1.1f);
+        }
+
         /// <summary>
         /// 绘制技能描述
         /// </summary>

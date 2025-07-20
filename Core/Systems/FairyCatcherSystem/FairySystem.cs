@@ -2,6 +2,7 @@
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.IO;
+using System.Reflection;
 using Terraria;
 using Terraria.ModLoader.IO;
 
@@ -27,6 +28,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// </summary>
         public static bool[] FairyCaught;
 
+        /// <summary>
+        /// 获取tml的墙壁到物品的映射，为什么为什么为什么它不是public的！？！？！？！？！？！？！？！？！？！？
+        /// </summary>
+        public static Dictionary<int, int> GetWallTypeToItemType;
+
         public string LocalizationCategory => "Systems";
 
         public override void Load()
@@ -36,6 +42,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         public override void OnModLoad()
         {
+            GetWallTypeToItemType = (Dictionary<int, int>)typeof(WallLoader).GetField("wallTypeToItemType"
+                , BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.GetField).GetValue(null);
+
             fairySpawnConditions = new Dictionary<int, List<FairySpawnController>>();
             fairySpawnConditions_InEncyclopedia = new Dictionary<int, FairySpawnController>();
             fairyDatas = new Dictionary<int, FairyData>();

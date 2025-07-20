@@ -37,7 +37,7 @@ namespace Coralite.Content.UI.FairyEncyclopedia
             Vector2 topLeft = d.Position() + new Vector2(0, d.Height / 2 - padding * 3/*+(d.Height-padding*7)/2*/);
 
             DrawPanel(spriteBatch, tex.Value, topLeft + new Vector2(0, -padding / 2)
-                , new Vector2(d.Width, padding * 7), Color.CornflowerBlue * 0.3f);
+                , new Vector2(d.Width, padding * 7), Color.MidnightBlue * 0.3f);
 
 
             DrawLine(spriteBatch, topLeft, 0, FairySystem.FairyLifeMax

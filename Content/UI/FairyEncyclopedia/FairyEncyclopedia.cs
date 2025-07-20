@@ -25,7 +25,7 @@ namespace Coralite.Content.UI.FairyEncyclopedia
         public static bool visible;
         public override bool Visible => visible;
 
-        public static UIPanel BackGround;
+        public static FairyPanel BackGround;
 
         /// <summary>
         /// 排列的按钮
@@ -46,6 +46,8 @@ namespace Coralite.Content.UI.FairyEncyclopedia
         public FairyCircleShow CircleShow;
         public FairyNameDraw NameDraw;
         public FairyIVRangeShow IVRangeShow;
+        public UIList ConditionShow;
+        public UIList SkillShow;
 
         /// <summary>
         /// 是否是在显示仙灵
@@ -184,7 +186,7 @@ namespace Coralite.Content.UI.FairyEncyclopedia
 
         private static void InitBackground()
         {
-            BackGround = new UIPanel();
+            BackGround = new FairyPanel();
 
             //设置到屏幕中心
             BackGround.HAlign = 0.5f;
@@ -193,6 +195,7 @@ namespace Coralite.Content.UI.FairyEncyclopedia
             BackGround.Height.Set(Main.screenHeight * 0.7f, 0);
 
             BackGround.BackgroundColor = new Color(63, 107, 151) * 0.85f;
+            BackGround.BorderColor = Color.White;
         }
 
         private void InitPageText()
@@ -374,6 +377,15 @@ namespace Coralite.Content.UI.FairyEncyclopedia
 
             IVRangeShow = new FairyIVRangeShow();
             IVRangeShow.SetSize((PanelWidth - CircleShow.Width.Pixels) / 2-10, PanelHeight);
+
+            ConditionShow = new UIList();
+            ConditionShow.SetTopLeft(40, CircleShow.Left.Pixels + CircleShow.Width.Pixels + 10);
+            ConditionShow.SetSize((PanelWidth - CircleShow.Width.Pixels) / 2 - 10, (PanelHeight-40/2));
+            ConditionShow.QuickInvisibleScrollbar();
+
+            SkillShow = new UIList();
+            SkillShow.SetTopLeft(40+ConditionShow.Height.Pixels, CircleShow.Left.Pixels + CircleShow.Width.Pixels + 10);
+            SkillShow.SetSize((PanelWidth - CircleShow.Width.Pixels) / 2 - 10, (PanelHeight-40/2));
         }
 
         #endregion
@@ -439,6 +451,16 @@ namespace Coralite.Content.UI.FairyEncyclopedia
                 BackGround?.Append(CircleShow);
                 BackGround?.Append(NameDraw);
                 BackGround?.Append(IVRangeShow);
+
+                ConditionShow.Clear();
+                if (FairySystem.fairySpawnConditions_InEncyclopedia.TryGetValue(ShowFairyID
+                    , out FairySpawnController controller))
+                {
+                    foreach (var c in controller.Conditions)
+                        ConditionShow.Add(new FairySpawnBar(c, ConditionShow.Width.Pixels));
+                }
+
+                BackGround?.Append(ConditionShow);
             }
             else//显示全部仙灵
             {
@@ -472,6 +494,7 @@ namespace Coralite.Content.UI.FairyEncyclopedia
         public void SetToAllShow()
         {
             SetShowGrid(0);
+            Sort(CurrentSortStyle);
 
             State = UpdateState.ShowAll;
             selectType = null;

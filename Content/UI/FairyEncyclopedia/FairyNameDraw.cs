@@ -16,7 +16,7 @@ namespace Coralite.Content.UI.FairyEncyclopedia
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
             Fairy f = FairyLoader.GetFairy(FairyEncyclopedia.ShowFairyID);
-            Vector2 center = GetDimensions().Center() + new Vector2(0, -25);
+            Vector2 center = GetDimensions().Center() + new Vector2(0, 240-25);
 
             //FairyNameBack.Value.QuickCenteredDraw(spriteBatch, GetDimensions().Center(),Color.DarkBlue*0.5f);
             //this.DrawDebugFrame(spriteBatch);
@@ -24,7 +24,7 @@ namespace Coralite.Content.UI.FairyEncyclopedia
             {
                 Utils.DrawBorderStringBig(spriteBatch, "? ? ?"
                     , center, Color.White, 1, 0.5f, 0.5f);
-                center.Y += 60;
+                center.Y += 80;
                 Utils.DrawBorderStringBig(spriteBatch, "? ? ?"
                     , center, Color.White, 0.5f, 0.5f, 0.5f);
                 return;
@@ -36,7 +36,7 @@ namespace Coralite.Content.UI.FairyEncyclopedia
                 Utils.DrawBorderStringBig(spriteBatch, i.Name,
                     center, ItemRarity.GetColor(i.rare), 1, 0.5f, 0.5f);
 
-                center.Y += 60;
+                center.Y += 80;
 
                 Utils.DrawBorderStringBig(spriteBatch, FairySystem.GetRarityDescription(f.Rarity)
                     , center, FairySystem.GetRarityColor(f.Rarity), 0.5f, 0.5f, 0.5f);

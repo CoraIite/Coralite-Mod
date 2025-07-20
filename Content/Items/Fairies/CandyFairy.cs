@@ -41,8 +41,6 @@ namespace Coralite.Content.Items.Fairies
         public override void RegisterSpawn()
         {
             FairySpawnController.Create(Type)
-                .RegisterToWallGroup(FairySpawnController.WallGroupType.Gemspark);
-            FairySpawnController.Create(Type)
                 .RegisterToWallGroup(FairySpawnController.WallGroupType.Gem);
         }
 

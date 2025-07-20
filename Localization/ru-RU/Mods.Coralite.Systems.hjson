@@ -86,10 +86,14 @@ FairySystem: {
 		// ZoneHell: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.ZoneHell
 		// ZoneCrimson: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.ZoneCrimson
 		// ZoneCorrupt: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.ZoneCorrupt
+		// GemWall: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.GemWall
 	}
 
 	// SkillLVTips: Mods.Coralite.Systems.FairySystem.SkillLVTips
 	// SkillLVLimit: Mods.Coralite.Systems.FairySystem.SkillLVLimit
+	// FairySpawnConditionWall: Mods.Coralite.Systems.FairySystem.FairySpawnConditionWall
+	// BottleFightCapacity: Mods.Coralite.Systems.FairySystem.BottleFightCapacity
+	// BottleContainCapacity: Mods.Coralite.Systems.FairySystem.BottleContainCapacity
 }
 
 BossBarSystem.DontTakeDamage: Невозможно атаковать!
