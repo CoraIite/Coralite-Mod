@@ -16,8 +16,8 @@ namespace Coralite.Content.UI.FairyEncyclopedia
     {
         public static ATex FairySlotCorner { get; set; }
 
-        private int _cornerSize = 20;
-        private int _barSize = 12;
+        private int _cornerSize = 16;
+        private int _barSize = 10;
         private ATex _borderTexture;
         private ATex _borderHoverTexture;
         private ATex _backgroundTexture;
@@ -126,10 +126,12 @@ namespace Coralite.Content.UI.FairyEncyclopedia
 
             CalculatedStyle dimensions = GetDimensions();
 
-            FairySlotCorner.Value.QuickCenteredDraw(spriteBatch, new Rectangle(0, 0, 2, 1)
-                , dimensions.Position() + new Vector2(30, 30), Color.White * 0.6f);
-            FairySlotCorner.Value.QuickCenteredDraw(spriteBatch, new Rectangle(1, 0, 2, 1)
-                , dimensions.Position() + new Vector2(dimensions.Width - 30, dimensions.Height - 30), Color.White * 0.6f);
+            int yFrame = IsMouseHovering ? 1 : 0;
+            const int Length = 22;
+            FairySlotCorner.Value.QuickCenteredDraw(spriteBatch, new Rectangle(0, yFrame, 2, 2)
+                , dimensions.Position() + new Vector2(Length, Length), Color.White * 0.6f);
+            FairySlotCorner.Value.QuickCenteredDraw(spriteBatch, new Rectangle(1, yFrame, 2, 2)
+                , dimensions.Position() + new Vector2(dimensions.Width - Length, dimensions.Height - Length), Color.White * 0.6f);
 
             _fairy.QuickDraw(Vector2.Zero, c, 0);
         }

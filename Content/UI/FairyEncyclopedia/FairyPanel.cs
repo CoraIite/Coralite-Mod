@@ -8,12 +8,12 @@ using Terraria.UI;
 
 namespace Coralite.Content.UI.FairyEncyclopedia
 {
-    [AutoLoadTexture(Path =AssetDirectory.UI)]
-    public class FairyPanel:UIPanel
+    [AutoLoadTexture(Path = AssetDirectory.UI)]
+    public class FairyPanel : UIPanel
     {
-        public static ATex FairyPanelCorner {  get; set; }
+        public static ATex FairyPanelCorner { get; set; }
 
-        public FairyPanel(): base(ModContent.Request<Texture2D>(AssetDirectory.UI + "FairyPanelBackGround")
+        public FairyPanel() : base(ModContent.Request<Texture2D>(AssetDirectory.UI + "FairyPanelBackGround")
             , ModContent.Request<Texture2D>(AssetDirectory.UI + "FairyPanelBorder"), 12, 20)
         {
         }
@@ -23,11 +23,13 @@ namespace Coralite.Content.UI.FairyEncyclopedia
             base.DrawSelf(spriteBatch);
             CalculatedStyle dimensions = GetDimensions();
 
-            FairyPanelCorner.Value.QuickCenteredDraw(spriteBatch, new Rectangle(0, 0, 2, 1)
-                , dimensions.Position()+new Vector2(20,20), Color.White * 0.6f);
-            FairyPanelCorner.Value.QuickCenteredDraw(spriteBatch, new Rectangle(1, 0, 2, 1)
-                , dimensions.Position() + new Vector2(dimensions.Width-20, dimensions.Height-20), Color.White * 0.6f);
-        }
+            const int Length = 42;
+            const int Length2 = 52;
 
+            FairyPanelCorner.Value.QuickCenteredDraw(spriteBatch, new Rectangle(0, 0, 2, 1)
+                , dimensions.Position() + new Vector2(Length + 10, Length), Color.White * 0.6f);
+            FairyPanelCorner.Value.QuickCenteredDraw(spriteBatch, new Rectangle(1, 0, 2, 1)
+                , dimensions.Position() + new Vector2(dimensions.Width - Length2, dimensions.Height - Length2), Color.White * 0.6f);
+        }
     }
 }
