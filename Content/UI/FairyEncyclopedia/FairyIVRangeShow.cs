@@ -36,8 +36,8 @@ namespace Coralite.Content.UI.FairyEncyclopedia
 
             Vector2 topLeft = d.Position() + new Vector2(0, d.Height / 2 - padding * 3/*+(d.Height-padding*7)/2*/);
 
-            DrawPanel(spriteBatch, tex.Value, topLeft + new Vector2(0, -padding / 2)
-                , new Vector2(d.Width, padding * 7), Color.MidnightBlue * 0.3f);
+            DrawPanel(spriteBatch, tex.Value, topLeft + new Vector2(0, -padding / 2-6)
+                , new Vector2(d.Width, padding * 7+12), Color.MidnightBlue * 0.3f);
 
 
             DrawLine(spriteBatch, topLeft, 0, FairySystem.FairyLifeMax
@@ -82,37 +82,25 @@ namespace Coralite.Content.UI.FairyEncyclopedia
 
             //center.X += maxWidth / 6;
 
-            Utils.DrawBorderString(spriteBatch, pre, center + new Vector2(30, 0), Color.White, 0.9f, 0, 0.5f);
-            center.X += maxWidth / 2;
-
+            Utils.DrawBorderString(spriteBatch, pre, center + new Vector2(30, 0), Color.White, 1f, 0, 0.5f);
+            center.X += maxWidth *2/ 3;
 
             //绘制等级
             (Color c1, LocalizedText t1) = FairyIV.GetFairyIVColorAndText(minIV);
             (Color c2, LocalizedText t2) = FairyIV.GetFairyIVColorAndText(maxIV);
 
-
             Utils.DrawBorderString(spriteBatch, "~", center, Color.White, 1, 0.5f, 0.5f);
-            Vector2 size = Helper.GetStringSize("~", Vector2.One, maxWidth);
-            Vector2 size2 = Helper.GetStringSize(t1.Value, Vector2.One, maxWidth);
-            Vector2 size3 = Helper.GetStringSize(t2.Value, Vector2.One, maxWidth);
 
             Utils.DrawBorderString(spriteBatch, t1.Value
-                , center + new Vector2(-size.X / 2 - 7 - size2.X / 2, 0), c1, 1, 0.5f, 0.5f);
+                , center + new Vector2(-maxWidth / 6, -14), c1, 1, 0.5f, 0.5f);
             Utils.DrawBorderString(spriteBatch, t2.Value
-                , center + new Vector2(size.X / 2 + 7 + size3.X / 2, 0), c2, 1, 0.5f, 0.5f);
-
-            center.X += maxWidth / 3;
+                , center + new Vector2(maxWidth / 6, -14), c2, 1, 0.5f, 0.5f);
 
             //绘制数字~数字
-            Utils.DrawBorderString(spriteBatch, "~", center, Color.White, 1, 0.5f, 0.5f);
-            size2 = Helper.GetStringSize(minValue.ToString(), Vector2.One, maxWidth);
-            size3 = Helper.GetStringSize(maxValue.ToString(), Vector2.One, maxWidth);
-
             Utils.DrawBorderString(spriteBatch, minValue.ToString()
-                , center + new Vector2(-size.X / 2 - 7 - size2.X / 2, 0), c1, 1, 0.5f, 0.5f);
+                , center + new Vector2(-maxWidth / 6, 14), c1, 1, 0.5f, 0.5f);
             Utils.DrawBorderString(spriteBatch, maxValue.ToString()
-                , center + new Vector2(size.X / 2 + 7 + size3.X / 2, 0), c2, 1, 0.5f, 0.5f);
-
+                , center + new Vector2(maxWidth / 6, 14), c2, 1, 0.5f, 0.5f);
         }
 
         private void DrawPanel(SpriteBatch spriteBatch, Texture2D texture,Vector2 pos,Vector2 size, Color color)
@@ -131,6 +119,5 @@ namespace Coralite.Content.UI.FairyEncyclopedia
             spriteBatch.Draw(texture, new Rectangle(point2.X, point.Y + _cornerSize, _cornerSize, height), new Rectangle(_cornerSize + _barSize, _cornerSize, _cornerSize, _barSize), color);
             spriteBatch.Draw(texture, new Rectangle(point.X + _cornerSize, point.Y + _cornerSize, width, height), new Rectangle(_cornerSize, _cornerSize, _barSize, _barSize), color);
         }
-
     }
 }

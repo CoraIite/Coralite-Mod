@@ -2,7 +2,6 @@
 using Coralite.Core.Attributes;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
-using Terraria;
 using Terraria.GameContent.UI.Elements;
 using Terraria.UI;
 
@@ -29,7 +28,7 @@ namespace Coralite.Content.UI.FairyEncyclopedia
             FairyPanelCorner.Value.QuickCenteredDraw(spriteBatch, new Rectangle(0, 0, 2, 1)
                 , dimensions.Position() + new Vector2(Length + 10, Length), Color.White * 0.6f);
             FairyPanelCorner.Value.QuickCenteredDraw(spriteBatch, new Rectangle(1, 0, 2, 1)
-                , dimensions.Position() + new Vector2(dimensions.Width - Length2, dimensions.Height - Length2), Color.White * 0.6f);
+                , dimensions.Position() + new Vector2(dimensions.Width-4 - Length2, dimensions.Height - Length2), Color.White * 0.6f);
         }
     }
 }

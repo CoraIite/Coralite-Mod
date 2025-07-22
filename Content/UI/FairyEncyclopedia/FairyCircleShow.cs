@@ -5,7 +5,9 @@ using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.GameContent;
+using Terraria.GameContent.UI;
 using Terraria.Graphics.Effects;
+using Terraria.ID;
 using Terraria.UI;
 
 namespace Coralite.Content.UI.FairyEncyclopedia
@@ -110,6 +112,8 @@ namespace Coralite.Content.UI.FairyEncyclopedia
             if (Fairies != null)
                 foreach (var fairy in Fairies)
                     fairy?.Draw_InUI();
+
+            DrawName(spriteBatch);
         }
 
         public void DrawBack(Vector2 pos, Color circleColor, Color backColor)
@@ -150,6 +154,34 @@ namespace Coralite.Content.UI.FairyEncyclopedia
             }
 
             tex.QuickCenteredDraw(Main.spriteBatch, pos, lightColor, 0);
+        }
+
+        public void DrawName(SpriteBatch spriteBatch)
+        {
+            Fairy f = FairyLoader.GetFairy(FairyEncyclopedia.ShowFairyID);
+            Vector2 center = GetDimensions().Center() ;
+
+            const int nameOffset = -50;
+            const int rarityOffset = 60;
+
+            if (!FairySystem.FairyCaught[f.Type])//没抓到显示？？？
+            {
+                Utils.DrawBorderStringBig(spriteBatch, "? ? ?"
+                    , center + new Vector2(0, nameOffset), Color.White, 0.9f, 0.5f, 0.5f);
+                Utils.DrawBorderStringBig(spriteBatch, "? ? ?"
+                    , center + new Vector2(0, rarityOffset), Color.White, 0.4f, 0.5f, 0.5f);
+                return;
+            }
+
+            if (f != null)
+            {
+                Item i = ContentSamples.ItemsByType[f.ItemType];
+                Utils.DrawBorderStringBig(spriteBatch, i.Name,
+                    center + new Vector2(0, nameOffset), ItemRarity.GetColor(i.rare), 0.9f, 0.5f, 0.5f);
+
+                Utils.DrawBorderStringBig(spriteBatch, FairySystem.GetRarityDescription(f.Rarity)
+                    , center + new Vector2(0, rarityOffset), FairySystem.GetRarityColor(f.Rarity), 0.4f, 0.5f, 0.5f);
+            }
         }
     }
 }

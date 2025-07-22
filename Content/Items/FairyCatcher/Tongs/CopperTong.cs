@@ -22,7 +22,7 @@ namespace Coralite.Content.Items.FairyCatcher.Tongs
             Item.useTime = Item.useAnimation = 20;
             Item.shootSpeed = 10;
             Item.SetWeaponValues(12, 3);
-            Item.SetShopValues(ItemRarityColor.Orange3, Item.sellPrice(0, 0, 20));
+            Item.SetShopValues(ItemRarityColor.Blue1, Item.sellPrice(0, 0, 20));
             Item.autoReuse = true;
         }
     }

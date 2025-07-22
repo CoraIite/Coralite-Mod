@@ -294,9 +294,21 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         {
             if (State == AIStates.Flying)
             {
+                OnHitNPCFlying(target, hit, damageDone);
                 TurnToBack();
                 ShootFairy();
             }
+        }
+
+        /// <summary>
+        /// 飞行中命中NPC触发效果
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="hit"></param>
+        /// <param name="damageDone"></param>
+        public virtual void OnHitNPCFlying(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)

@@ -6138,3 +6138,8 @@ SunflowerRing: {
 	// DisplayName: Sunflower Ring
 	// Tooltip: ""
 }
+
+IcicleClaw: {
+	// DisplayName: Icicle Claw
+	// Tooltip: ""
+}

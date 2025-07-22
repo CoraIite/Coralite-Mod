@@ -1,6 +1,7 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Loaders;
 using Coralite.Core.Systems.FairyCatcherSystem;
+using Coralite.Core.Systems.FairyCatcherSystem.Bases.Items;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -33,6 +34,7 @@ namespace Coralite.Content.UI.FairyEncyclopedia
         public SortButton[] sortButtons;
         public PageText PageText;
         public UIGrid FairyGrid;
+        public UITextPanel<LocalizedText> uITextPanel;
         public static float Timer;
 
         public SelectPanelButton SelectButton;
@@ -44,7 +46,6 @@ namespace Coralite.Content.UI.FairyEncyclopedia
         #region 显示具体仙灵界面相关字段
 
         public FairyCircleShow CircleShow;
-        public FairyNameDraw NameDraw;
         public FairyIVRangeShow IVRangeShow;
         public UIList ConditionShow;
         public UIList SkillShow;
@@ -298,13 +299,13 @@ namespace Coralite.Content.UI.FairyEncyclopedia
 
         private void MakeExitButton(UIElement outerContainer)
         {
-            UITextPanel<LocalizedText> uITextPanel = new(Language.GetText("UI.Back"), 0.7f, large: true)
+            uITextPanel = new(Language.GetText("UI.Back"), 0.7f, large: true)
             {
                 Width = StyleDimension.FromPixelsAndPercent(-10f, 0.3f),
                 Height = StyleDimension.FromPixels(50f),
-                VAlign = 0.95f,
+                // VAlign = 0.95f,
                 HAlign = 0.5f,
-                Top = StyleDimension.FromPixels(-25f)
+                //Top = StyleDimension.FromPixels(-25f)
             };
 
             uITextPanel.OnUpdate += UITextPanel_OnUpdate;
@@ -369,23 +370,20 @@ namespace Coralite.Content.UI.FairyEncyclopedia
         public void InitFairyShow()
         {
             CircleShow = new FairyCircleShow();
-            CircleShow.SetCenter(new Vector2(PanelWidth / 2, PanelHeight * 3 / 5));
-
-            NameDraw = new FairyNameDraw();
-            NameDraw.SetSize(CircleShow.Width.Pixels, PanelHeight / 3);
-            NameDraw.SetTopLeft(0, CircleShow.Left.Pixels);
+            CircleShow.SetCenter(new Vector2(PanelWidth / 2, PanelHeight /2-20));
 
             IVRangeShow = new FairyIVRangeShow();
             IVRangeShow.SetSize((PanelWidth - CircleShow.Width.Pixels) / 2-10, PanelHeight);
 
             ConditionShow = new UIList();
             ConditionShow.SetTopLeft(40, CircleShow.Left.Pixels + CircleShow.Width.Pixels + 10);
-            ConditionShow.SetSize((PanelWidth - CircleShow.Width.Pixels) / 2 - 10, (PanelHeight-40/2));
+            ConditionShow.SetSize((PanelWidth - CircleShow.Width.Pixels) / 2 - 10, (PanelHeight - 40) / 2);
             ConditionShow.QuickInvisibleScrollbar();
 
             SkillShow = new UIList();
-            SkillShow.SetTopLeft(40+ConditionShow.Height.Pixels, CircleShow.Left.Pixels + CircleShow.Width.Pixels + 10);
-            SkillShow.SetSize((PanelWidth - CircleShow.Width.Pixels) / 2 - 10, (PanelHeight-40/2));
+            SkillShow.SetTopLeft(40 + ConditionShow.Height.Pixels, CircleShow.Left.Pixels + CircleShow.Width.Pixels + 10);
+            SkillShow.SetSize((PanelWidth - CircleShow.Width.Pixels) / 2 - 10, (PanelHeight - 40) / 2);
+            SkillShow.QuickInvisibleScrollbar();
         }
 
         #endregion
@@ -442,6 +440,7 @@ namespace Coralite.Content.UI.FairyEncyclopedia
                 BackGround.Height.Set(PanelHeight, 0);
             }
 
+            uITextPanel?.Top.Set(Main.screenHeight / 2 + PanelHeight / 2 + uITextPanel.Height.Pixels / 2, 0);
 
             BackGround?.RemoveAllChildren();
 
@@ -449,7 +448,6 @@ namespace Coralite.Content.UI.FairyEncyclopedia
             {
                 InitFairyShow();
                 BackGround?.Append(CircleShow);
-                BackGround?.Append(NameDraw);
                 BackGround?.Append(IVRangeShow);
 
                 ConditionShow.Clear();
@@ -459,8 +457,16 @@ namespace Coralite.Content.UI.FairyEncyclopedia
                     foreach (var c in controller.Conditions)
                         ConditionShow.Add(new FairySpawnBar(c, ConditionShow.Width.Pixels));
                 }
-
                 BackGround?.Append(ConditionShow);
+
+                SkillShow.Clear();
+                if (ContentSamples.ItemsByType[FairyLoader.GetFairy(ShowFairyID).ItemType].ModItem is BaseFairyItem bfi)
+                {
+                    foreach (var skillType in bfi.GetFairySkills())
+                        SkillShow.Add(new FairySkillBar(skillType, ConditionShow.Width.Pixels));
+                }
+
+                BackGround?.Append(SkillShow);
             }
             else//显示全部仙灵
             {

@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.Items.CoreKeeper;
 using Coralite.Content.Items.Donator;
 using Coralite.Content.Items.FairyCatcher.Jar;
+using Coralite.Content.Items.FairyCatcher.Lasso;
 using Coralite.Content.Items.FlyingShields;
 using Coralite.Content.Items.FlyingShields.Accessories;
 using Coralite.Content.Items.LandOfTheLustrousSeries;
@@ -43,6 +44,11 @@ namespace Coralite.Content.GlobalNPCs
                 //case NPCID.BabySlime:
                 //case NPCID.BlackSlime:
                     npcLoot.Add(ItemDropRule.Common(ItemType<BlackGelBall>(), 8));
+                    break;
+                case NPCID.KingSlime://史莱姆ang掉落黏黏网（暂时不打算加入宝藏袋）
+                //case NPCID.BabySlime:
+                //case NPCID.BlackSlime:
+                    npcLoot.Add(ItemDropRule.Common(ItemType<GelWeb>(), 1));
                     break;
                 //case NPCID.DarkCaster://地牢怪掉落影子
                 //    npcLoot.Add(ItemDropRule.Common(ItemType<ShadowEnergy>(), 3, 1, 3));
