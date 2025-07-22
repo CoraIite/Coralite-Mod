@@ -1,4 +1,5 @@
 ﻿using Coralite.Core;
+using Coralite.Core.Attributes;
 using Coralite.Core.Loaders;
 using Coralite.Core.Systems.FairyCatcherSystem;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases.Items;
@@ -8,6 +9,7 @@ using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -19,8 +21,16 @@ using Terraria.UI;
 
 namespace Coralite.Content.UI.FairyEncyclopedia
 {
+    [AutoLoadTexture(Path = AssetDirectory.FairyUI)]
     public class FairyEncyclopedia : BetterUIState
     {
+        public static ATex LeftButton { get; set; }
+        public static ATex RightButton { get; set; }
+        public static ATex LeftButtonHighlight { get; set; }
+        public static ATex RightButtonHighlight { get; set; }
+        public static ATex FairyPanelBorder { get; set; }
+        public static ATex FairyPanelBackGround { get; set; }
+
         public override int UILayer(List<GameInterfaceLayer> layers) => layers.FindIndex(layer => layer.Name.Equals("Vanilla: Inventory"));
 
         public static bool visible;
@@ -34,8 +44,7 @@ namespace Coralite.Content.UI.FairyEncyclopedia
         public SortButton[] sortButtons;
         public PageText PageText;
         public UIGrid FairyGrid;
-        public UITextPanel<LocalizedText> uITextPanel;
-        public static float Timer;
+        public FairyUITextPanel<LocalizedText> uITextPanel;
 
         public SelectPanelButton SelectButton;
         public UIPanel SelectButtonsPanel;
@@ -61,8 +70,13 @@ namespace Coralite.Content.UI.FairyEncyclopedia
 
         #endregion
 
-        public class SelectPanelButton(ATex texture) : UIImageButton(texture)
+        public class SelectPanelButton : UIImageButton
         {
+            public SelectPanelButton() : base(ModContent.Request<Texture2D>(AssetDirectory.FairyUI + "SelectPanelButtonTex", AssetRequestMode.ImmediateLoad))
+            {
+                SetHoverImage(ModContent.Request<Texture2D>(AssetDirectory.FairyUI + "PanelButtonHighlight", AssetRequestMode.ImmediateLoad));
+            }
+
             protected override void DrawSelf(SpriteBatch spriteBatch)
             {
                 base.DrawSelf(spriteBatch);
@@ -91,7 +105,6 @@ namespace Coralite.Content.UI.FairyEncyclopedia
         public static int PageIndex;
         public static int PageCount;
 
-        public static UpdateState State;
         public static SortStyle CurrentSortStyle = SortStyle.ByRarity;
 
         public static FairyRarity? selectType = null;
@@ -101,33 +114,17 @@ namespace Coralite.Content.UI.FairyEncyclopedia
         /// <summary>
         /// 主体面板宽度
         /// </summary>
-        public float PanelWidth => Main.screenWidth * 0.6f;
+        public static float PanelWidth => Main.screenWidth * 0.6f;
         /// <summary>
         /// 主体面板高度
         /// </summary>
-        public float PanelHeight => Main.screenHeight * 0.6f;
+        public static float PanelHeight => Main.screenHeight * 0.6f;
 
         public enum SortStyle
         {
             ByType,
             ByRarity,
             ShowCaught,
-        }
-
-        public enum UpdateState
-        {
-            /// <summary>
-            /// 显示所有的
-            /// </summary>
-            ShowAll,
-            /// <summary>
-            /// 收集换奖励界面
-            /// </summary>
-            CollectPanel,
-            /// <summary>
-            /// 单个的描述
-            /// </summary>
-            Details,
         }
 
         #region 各类初始化
@@ -202,8 +199,10 @@ namespace Coralite.Content.UI.FairyEncyclopedia
         private void InitPageText()
         {
             PageText = new PageText();
-            UIImageButton leftButton = new(ModContent.Request<Texture2D>(AssetDirectory.UI + "FairyEncyclopediaLeftButton", ReLogic.Content.AssetRequestMode.ImmediateLoad));
-            UIImageButton rightButton = new(ModContent.Request<Texture2D>(AssetDirectory.UI + "FairyEncyclopediaRightButton", ReLogic.Content.AssetRequestMode.ImmediateLoad));
+            UIImageButton leftButton = new UIImageButton(ModContent.Request<Texture2D>(AssetDirectory.FairyUI + "LeftButton", AssetRequestMode.ImmediateLoad));
+            leftButton.SetHoverImage(ModContent.Request<Texture2D>(AssetDirectory.FairyUI + "LeftButtonHighlight", AssetRequestMode.ImmediateLoad));
+            UIImageButton rightButton = new(ModContent.Request<Texture2D>(AssetDirectory.FairyUI + "RightButton", AssetRequestMode.ImmediateLoad));
+            rightButton.SetHoverImage(ModContent.Request<Texture2D>(AssetDirectory.FairyUI + "RightButtonHighlight", AssetRequestMode.ImmediateLoad));
 
             PageText.Left.Set(0, 0);
             PageText.Width.Set(100, 0);
@@ -238,8 +237,7 @@ namespace Coralite.Content.UI.FairyEncyclopedia
 
             Asset<Texture2D> circleButtonTex = TextureAssets.WireUi[0];
             Asset<Texture2D> circleButtonHoverTex = TextureAssets.WireUi[1];
-            SelectButton = new SelectPanelButton(Main.Assets.Request<Texture2D>("Images/UI/Bestiary/Button_Filtering", AssetRequestMode.ImmediateLoad));
-            SelectButton.SetHoverImage(Main.Assets.Request<Texture2D>("Images/UI/Bestiary/Button_Wide_Border"));
+            SelectButton = new SelectPanelButton();
             SelectButton.Left.Set(PageText.Width.Pixels + 10, 0);
 
             SelectButton.OnLeftClick += SelectButton_OnLeftClick;
@@ -275,8 +273,8 @@ namespace Coralite.Content.UI.FairyEncyclopedia
 
         private void InitSortPanel()
         {
-            SortButton = new UIImageButton(Main.Assets.Request<Texture2D>("Images/UI/Bestiary/Button_Sorting"));
-            SortButton.SetHoverImage(Main.Assets.Request<Texture2D>("Images/UI/Bestiary/Button_Wide_Border"));
+            SortButton = new UIImageButton(ModContent.Request<Texture2D>(AssetDirectory.FairyUI + "SortPanelButtonTex", AssetRequestMode.ImmediateLoad));
+            SortButton.SetHoverImage(ModContent.Request<Texture2D>(AssetDirectory.FairyUI + "PanelButtonHighlight", AssetRequestMode.ImmediateLoad));
             SortButton.Left.Set(SelectButton.Left.Pixels + SelectButton.Width.Pixels + 10, 0);
             SortButton.OnLeftClick += SortButton_OnLeftClick;
 
@@ -307,6 +305,9 @@ namespace Coralite.Content.UI.FairyEncyclopedia
                 HAlign = 0.5f,
                 //Top = StyleDimension.FromPixels(-25f)
             };
+
+            uITextPanel.BackgroundColor = new Color(63, 107, 151) * 0.85f;
+            uITextPanel.BorderColor = Color.White;
 
             uITextPanel.OnUpdate += UITextPanel_OnUpdate;
             uITextPanel.OnMouseOver += FadedMouseOver;
@@ -339,14 +340,14 @@ namespace Coralite.Content.UI.FairyEncyclopedia
         private void FadedMouseOver(UIMouseEvent evt, UIElement listeningElement)
         {
             Helper.PlayPitched("Fairy/ButtonTick", 0.2f, 0);
-            ((UIPanel)evt.Target).BackgroundColor = new Color(73, 94, 171);
+            ((UIPanel)evt.Target).BackgroundColor = new Color(63, 107, 151);
             ((UIPanel)evt.Target).BorderColor = Colors.FancyUIFatButtonMouseOver;
         }
 
         private void FadedMouseOut(UIMouseEvent evt, UIElement listeningElement)
         {
-            ((UIPanel)evt.Target).BackgroundColor = new Color(63, 82, 151) * 0.8f;
-            ((UIPanel)evt.Target).BorderColor = Color.Black;
+            ((UIPanel)evt.Target).BackgroundColor = new Color(63, 107, 151) * 0.85f;
+            ((UIPanel)evt.Target).BorderColor = Color.White;
         }
 
         private void Click_GoBack(UIMouseEvent evt, UIElement listeningElement)
@@ -370,10 +371,10 @@ namespace Coralite.Content.UI.FairyEncyclopedia
         public void InitFairyShow()
         {
             CircleShow = new FairyCircleShow();
-            CircleShow.SetCenter(new Vector2(PanelWidth / 2, PanelHeight /2-20));
+            CircleShow.SetCenter(new Vector2(PanelWidth / 2, PanelHeight / 2 - 20));
 
             IVRangeShow = new FairyIVRangeShow();
-            IVRangeShow.SetSize((PanelWidth - CircleShow.Width.Pixels) / 2-10, PanelHeight);
+            IVRangeShow.SetSize((PanelWidth - CircleShow.Width.Pixels) / 2 - 10, PanelHeight);
 
             ConditionShow = new UIList();
             ConditionShow.SetTopLeft(40, CircleShow.Left.Pixels + CircleShow.Width.Pixels + 10);
@@ -391,14 +392,12 @@ namespace Coralite.Content.UI.FairyEncyclopedia
         private void LeftButton_OnLeftClick(UIMouseEvent evt, UIElement listeningElement)
         {
             SetShowGrid(-1);
-            State = UpdateState.ShowAll;
             base.Recalculate();
         }
 
         private void RightButton_OnLeftClick(UIMouseEvent evt, UIElement listeningElement)
         {
             SetShowGrid(1);
-            State = UpdateState.ShowAll;
             base.Recalculate();
         }
 
@@ -408,24 +407,6 @@ namespace Coralite.Content.UI.FairyEncyclopedia
             {
                 visible = false;
                 return;
-            }
-
-            switch (State)
-            {
-                case UpdateState.ShowAll:
-                    {
-                        if (Timer < FairySlot.XCount * FairySlot.YCount)//显示过渡小动画
-                        {
-                            Timer += 0.5f;
-                        }
-                    }
-                    break;
-                case UpdateState.CollectPanel:
-                    break;
-                case UpdateState.Details:
-                    break;
-                default:
-                    break;
             }
 
             base.Update(gameTime);
@@ -500,10 +481,11 @@ namespace Coralite.Content.UI.FairyEncyclopedia
         public void SetToAllShow()
         {
             SetShowGrid(0);
+
+            selectType = null;
+            Select(null);
             Sort(CurrentSortStyle);
 
-            State = UpdateState.ShowAll;
-            selectType = null;
 
             ShowFairy = false;
             ShowFairyID = 0;
@@ -522,7 +504,6 @@ namespace Coralite.Content.UI.FairyEncyclopedia
             PageIndex = Math.Clamp(currentPage, 0, PageCount);
 
             FairyGrid.Clear();
-            Timer = 0;
             for (int i = 0; i < FairySlot.XCount * FairySlot.YCount; i++)
             {
                 int index = (PageIndex * FairySlot.XCount * FairySlot.YCount) + i;
@@ -536,6 +517,13 @@ namespace Coralite.Content.UI.FairyEncyclopedia
                 else
                     break;
             }
+
+            //for (int i = 0; i < 100; i++)
+            //{
+            //    FairySlot slot2 = new(1, fairies.Count+i);
+            //    slot2.SetSize(FairyGrid);
+            //    FairyGrid.Add(slot2);
+            //}
 
             base.Recalculate();
         }
@@ -578,7 +566,6 @@ namespace Coralite.Content.UI.FairyEncyclopedia
         public void Sort(SortStyle sortStyle)
         {
             CurrentSortStyle = sortStyle;
-            Timer = 0;
 
             switch (sortStyle)
             {

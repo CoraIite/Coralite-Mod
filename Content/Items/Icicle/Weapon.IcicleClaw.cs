@@ -27,6 +27,15 @@ namespace Coralite.Content.Items.Icicle
             Item.SetShopValues(ItemRarityColor.Orange3, Item.sellPrice(0, 0, 20));
             Item.autoReuse = true;
         }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient<IcicleCrystal>()
+                .AddIngredient<IcicleScale>(2)
+                .AddTile(TileID.IceMachine)
+                .Register();
+        }
     }
 
     [AutoLoadTexture(Path = AssetDirectory.IcicleItems)]
@@ -37,11 +46,11 @@ namespace Coralite.Content.Items.Icicle
         public static ATex IcicleClawChain { get; private set; }
         public static ATex IcicleClawHandle { get; private set; }
 
-        public override Vector2 TongPosOffset => new Vector2(24, -2);
+        public override Vector2 TongPosOffset => new Vector2(32, 2);
 
         public override int MaxFlyLength => 16 * 12;
 
-        public override Vector2 HandelOffset => new Vector2(20, -6);
+        public override Vector2 HandelOffset => new Vector2(20, -8);
 
         public override int ItemType => ModContent.ItemType<IcicleClaw>();
 
@@ -49,23 +58,20 @@ namespace Coralite.Content.Items.Icicle
         public override Texture2D GetLineTex() => IcicleClawChain.Value;
 
         public override Vector2 LineDrawStartPosOffset()
-            => -HandleRot.ToRotationVector2() * 4;
+            => -HandleRot.ToRotationVector2() * 8;
 
         public override void OnHitNPCFlying(NPC target, NPC.HitInfo hit, int damageDone)
         {
             //偷偷借用一下雪花护身符的特效弹幕
-            for (int i = -1; i < 1; i++)
-            {
-                Vector2 velocity = (Projectile.rotation + (i * 0.4f)).ToRotationVector2();
-                Projectile.NewProjectileFromThis<SnowflakeSpike>(Projectile.Center
-                    , velocity * Main.rand.NextFloat(5, 6f),
-                     (int)(Projectile.damage * 0.3f), Projectile.knockBack, ai1: Main.rand.NextFloat(8, 10));
-            }
-        }
+            Vector2 velocity = Projectile.rotation.ToRotationVector2();
 
-        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
-        {
-            base.OnHitNPC(target, hit, damageDone);
+            for (int i = -1; i < 2; i += 2)
+            {
+                Projectile.NewProjectileFromThis<SnowflakeSpike>(Projectile.Center
+                    + (Projectile.rotation + i * MathHelper.PiOver2).ToRotationVector2() * 10-velocity*40
+                    , velocity * Main.rand.NextFloat(5, 6f),
+                     (int)(Projectile.damage * 0.6f), Projectile.knockBack, ai1: Main.rand.NextFloat(8, 10));
+            }
         }
     }
 }

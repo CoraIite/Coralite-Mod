@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.DamageClasses;
+using Coralite.Content.GlobalItems;
 using Coralite.Content.ModPlayers;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases.Items;
 using System.Linq;
@@ -37,6 +38,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             Item.DamageType = FairyDamage.Instance;
             Item.noMelee = true;
             Item.noUseGraphic = true;
+
+            if (Item.TryGetGlobalItem(out CoraliteGlobalItem cgi))
+                cgi.SpecialUse = true;
 
             SetOtherDefaults();
         }

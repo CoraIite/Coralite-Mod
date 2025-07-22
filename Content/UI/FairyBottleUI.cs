@@ -49,8 +49,8 @@ namespace Coralite.Content.UI
             ContainFairyPanel.BackgroundColor = (Color.DarkBlue * 0.25f) with { A = 75 };
             ContainFairyPanel.BorderColor = Color.SkyBlue * 0.75f;
 
-            FightIcon = new UIInformationIcon(ModContent.Request<Texture2D>(AssetDirectory.UI + "FightFairyIcon"));
-            ContainIcon = new UIInformationIcon(ModContent.Request<Texture2D>(AssetDirectory.UI + "ContainFairyIcon"));
+            FightIcon = new UIInformationIcon(ModContent.Request<Texture2D>(AssetDirectory.FairyUI + "FightFairyIcon"));
+            ContainIcon = new UIInformationIcon(ModContent.Request<Texture2D>(AssetDirectory.FairyUI + "ContainFairyIcon"));
             sortButton = new SortButton(); 
         }
 
@@ -188,7 +188,7 @@ namespace Coralite.Content.UI
     /// <summary>
     /// 吊着仙灵瓶的藤蔓
     /// </summary>
-    [AutoLoadTexture(Path = AssetDirectory.UI)]
+    [AutoLoadTexture(Path = AssetDirectory.FairyUI)]
     public class FairyBottleHang : UIElement
     {
         public static int VineType = 1;
@@ -485,19 +485,15 @@ namespace Coralite.Content.UI
         }
     }
 
+    [AutoLoadTexture(Path = AssetDirectory.FairyUI)]
     public class SortButton : UIElement
     {
-        private readonly ATex _tex;
+        public static ATex FairySortButton { get; set; }
         private static BaseFairyBottle.SortStyle _sortStyle;
-
-        public SortButton()
-        {
-            _tex = ModContent.Request<Texture2D>(AssetDirectory.UI + "FairySortButton");
-        }
 
         public void SetSize()
         {
-            this.SetSize(_tex.Width(), _tex.Height() / 7);
+            this.SetSize(FairySortButton.Width(), FairySortButton.Height() / 7);
         }
 
         public override void LeftClick(UIMouseEvent evt)
@@ -533,7 +529,7 @@ namespace Coralite.Content.UI
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            _tex.Value.QuickCenteredDraw(spriteBatch, new Rectangle(0,(int)_sortStyle,1,7),GetDimensions().Center(), Color.White, scale: IsMouseHovering ? 0.85f : 0.8f);
+            FairySortButton.Value.QuickCenteredDraw(spriteBatch, new Rectangle(0,(int)_sortStyle,1,7),GetDimensions().Center(), Color.White, scale: IsMouseHovering ? 0.85f : 0.8f);
             
             if (IsMouseHovering)
             {

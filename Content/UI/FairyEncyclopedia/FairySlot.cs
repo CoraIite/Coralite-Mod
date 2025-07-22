@@ -11,16 +11,17 @@ using Terraria.UI;
 
 namespace Coralite.Content.UI.FairyEncyclopedia
 {
-    [AutoLoadTexture(Path = AssetDirectory.UI)]
+    [AutoLoadTexture(Path = AssetDirectory.FairyUI)]
     public class FairySlot : UIElement
     {
         public static ATex FairySlotCorner { get; set; }
 
+        public static ATex FairySlotBorder { get; set; }
+        public static ATex FairySlotHoverBorder { get; set; }
+        public static ATex FairySlotBackground { get; set; }
+
         private int _cornerSize = 16;
         private int _barSize = 10;
-        private ATex _borderTexture;
-        private ATex _borderHoverTexture;
-        private ATex _backgroundTexture;
         public Color BorderColor = Color.White;
         public Color BackgroundColor = Color.White;//new Color(63, 82, 151) * 0.85f;
 
@@ -33,16 +34,11 @@ namespace Coralite.Content.UI.FairyEncyclopedia
         /// 自身在UIGrid里的索引
         /// </summary>
         public readonly int index;
-        private float alpha = 1;
-        private float offset;
 
         public FairySlot(int fairyType, int index)
         {
             this.index = index;
             //offset = 60;
-            _borderTexture ??= FairySystem.FairySlotBorder;  //Main.Assets.Request<Texture2D>("Images/UI/PanelBorder");
-            _borderHoverTexture ??= FairySystem.FairySlotHoverBorder;
-            _backgroundTexture ??= FairySystem.FairySlotBackground;//Main.Assets.Request<Texture2D>("Images/UI/PanelBackground");
 
             _fairy = FairyLoader.GetFairy(fairyType).NewInstance();
             _fairyItem = new Item(_fairy.ItemType);
@@ -50,28 +46,15 @@ namespace Coralite.Content.UI.FairyEncyclopedia
 
         public void SetSize(UIElement parent)
         {
-            Width.Set((parent.Width.Pixels / XCount) - 6, 0);
-            Height.Set((parent.Height.Pixels / YCount) - 6, 0);
+            //Width.Set((FairyEncyclopedia.PanelWidth / XCount) - 6, 0);
+            //Height.Set((FairyEncyclopedia.PanelHeight / YCount) - 6, 0);
+
+            Width.Set(-5, 1f / XCount);
+            Height.Set(-5, 1f / YCount);
         }
 
         public override void Update(GameTime gameTime)
         {
-            //if (alpha < 1)//滑动效果
-            //{
-            //    if (FairyEncyclopedia.Timer >= index)
-            //    {
-            //        alpha = FairyEncyclopedia.Timer - index;
-            //        offset = 30 - (alpha * 30);
-            //    }
-
-            //    if (alpha > 1)
-            //    {
-            //        alpha = 1;
-            //        offset = 0;
-            //        Recalculate();
-            //    }
-            //}
-
             UpdateFairy();
 
             base.Update(gameTime);
@@ -80,20 +63,15 @@ namespace Coralite.Content.UI.FairyEncyclopedia
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
             bool hovering = IsMouseHovering;
-            if (_backgroundTexture != null)
-                DrawBorder(spriteBatch, offset, _backgroundTexture.Value, Color.White * alpha);
+            DrawBorder(spriteBatch, FairySlotBackground.Value, Color.White);
 
-            if (_borderTexture != null)
-            {
-                if (hovering)
-                    DrawBorder(spriteBatch, offset, _borderHoverTexture.Value, Color.White * alpha);
-                else
-                    DrawBorder(spriteBatch, offset, _borderTexture.Value, Color.White * alpha);
-            }
+            if (hovering)
+                DrawBorder(spriteBatch, FairySlotHoverBorder.Value, Color.White);
+            else
+                DrawBorder(spriteBatch, FairySlotBorder.Value, Color.White);
 
             //绘制仙灵本体
             Color c = FairySystem.FairyCaught[_fairy.Type] ? Color.White : Color.Black;
-            c *= alpha;
 
             var style = GetDimensions();
             _fairy.Center = style.Center();
@@ -136,10 +114,10 @@ namespace Coralite.Content.UI.FairyEncyclopedia
             _fairy.QuickDraw(Vector2.Zero, c, 0);
         }
 
-        private void DrawBorder(SpriteBatch spriteBatch, float offset, Texture2D texture, Color color)
+        private void DrawBorder(SpriteBatch spriteBatch, Texture2D texture, Color color)
         {
             CalculatedStyle dimensions = GetDimensions();
-            Point point = new((int)dimensions.X, (int)dimensions.Y + (int)offset);
+            Point point = new((int)dimensions.X, (int)dimensions.Y);
             Point point2 = new(point.X + (int)dimensions.Width - _cornerSize, point.Y + (int)dimensions.Height - _cornerSize);
             int width = point2.X - point.X - _cornerSize;
             int height = point2.Y - point.Y - _cornerSize;
@@ -167,18 +145,12 @@ namespace Coralite.Content.UI.FairyEncyclopedia
             base.LeftClick(evt);
         }
 
-
-
         public void UpdateFairy()
         {
             if (_fairy == null)
                 return;
-            if (++_fairy.frameCounter > 7)
-            {
-                _fairy.frameCounter = 0;
-                if (++_fairy.frame.Y >= _fairy.VerticalFrames)
-                    _fairy.frame.Y = 0;
-            }
+
+            _fairy.UpdateFrameY(IsMouseHovering ? 7 : 10);
         }
     }
 }

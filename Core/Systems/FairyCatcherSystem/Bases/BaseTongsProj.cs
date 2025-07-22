@@ -95,6 +95,12 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             return null;
         }
 
+        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
+        {
+            return projHitbox.Intersects(targetHitbox) 
+                || Utils.CenteredRectangle(GetHandleCenter(), new Vector2(Projectile.width, Projectile.height)).Intersects(targetHitbox);
+        }
+
         #region AI
 
         public override void AI()

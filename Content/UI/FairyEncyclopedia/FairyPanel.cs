@@ -7,13 +7,13 @@ using Terraria.UI;
 
 namespace Coralite.Content.UI.FairyEncyclopedia
 {
-    [AutoLoadTexture(Path = AssetDirectory.UI)]
+    [AutoLoadTexture(Path = AssetDirectory.FairyUI)]
     public class FairyPanel : UIPanel
     {
         public static ATex FairyPanelCorner { get; set; }
 
-        public FairyPanel() : base(ModContent.Request<Texture2D>(AssetDirectory.UI + "FairyPanelBackGround")
-            , ModContent.Request<Texture2D>(AssetDirectory.UI + "FairyPanelBorder"), 12, 20)
+        public FairyPanel() : base(FairyEncyclopedia.FairyPanelBackGround
+            , FairyEncyclopedia.FairyPanelBorder, 12, 20)
         {
         }
 
@@ -28,7 +28,7 @@ namespace Coralite.Content.UI.FairyEncyclopedia
             FairyPanelCorner.Value.QuickCenteredDraw(spriteBatch, new Rectangle(0, 0, 2, 1)
                 , dimensions.Position() + new Vector2(Length + 10, Length), Color.White * 0.6f);
             FairyPanelCorner.Value.QuickCenteredDraw(spriteBatch, new Rectangle(1, 0, 2, 1)
-                , dimensions.Position() + new Vector2(dimensions.Width-4 - Length2, dimensions.Height - Length2), Color.White * 0.6f);
+                , dimensions.Position() + new Vector2(dimensions.Width - 4 - Length2, dimensions.Height - Length2), Color.White * 0.6f);
         }
     }
 }

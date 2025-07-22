@@ -12,10 +12,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public static ATex[] FairyCatcherCoreAssets;
         public static ATex[] FairySkillAssets;
 
-        public static ATex FairySlotBorder;
-        public static ATex FairySlotHoverBorder;
-        public static ATex FairySlotBackground;
-
         public static ATex DefaultLine { get; set; }
         public static ATex FairyIVIcon { get; set; }
 
@@ -44,15 +40,13 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                 if (f != null)
                     FairySkillAssets[i] = ModContent.Request<Texture2D>(f.Texture);
             }
-
-            FairySlotBorder = ModContent.Request<Texture2D>(AssetDirectory.UI + "FairySlotBorder");
-            FairySlotHoverBorder = ModContent.Request<Texture2D>(AssetDirectory.UI + "FairySlotHoverBorder");
-            FairySlotBackground = ModContent.Request<Texture2D>(AssetDirectory.UI + "FairySlotBackground");
         }
 
         public static void UnloadFairyTexture()
         {
             FairyAssets = null;
+            FairyCatcherCoreAssets = null;
+            FairySkillAssets = null;
         }
     }
 }

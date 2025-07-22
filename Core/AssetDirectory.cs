@@ -248,6 +248,7 @@ namespace Coralite.Core
         public const string WorldIcon = UI + "WorldIcon/";
 
         public const string CoraliteNote = UI + "CoraliteNote/";
+        public const string FairyUI = UI + "FairyUI/";
 
         public const string KeyKnowledgeIcon = CoraliteNote + "KeyKnowledgeIcons/";
         public const string NoteReadfragment = CoraliteNote + "Readfragment/";
