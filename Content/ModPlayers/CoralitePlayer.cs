@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
+using Coralite.Content.GlobalItems;
 using Coralite.Content.Items.FlyingShields.Accessories;
 using Coralite.Content.Items.RedJades;
 using Coralite.Content.Items.Steel;
@@ -743,11 +744,12 @@ namespace Coralite.Content.ModPlayers
                     }
                 }
 
+            //特殊攻击
             useSpecialAttack = Core.Loaders.KeybindLoader.SpecialAttack.Current;
-            Item item = Player.inventory[Player.selectedItem];
+            Item item = Player.HeldItem;
 
-            if (useSpecialAttack && Player.itemAnimation == 0 && item.useStyle != ItemUseStyleID.None &&
-                (item.type < ItemID.Count || item.ModItem.Mod.Name == "Coralite" || item.ModItem.Mod is ICoralite))//放置其他模组干扰
+            if (useSpecialAttack && Player.itemAnimation == 0 && Player.ItemTimeIsZero && item.useStyle != ItemUseStyleID.None &&
+                item.TryGetGlobalItem(out CoraliteGlobalItem cgi) && cgi.SpecialUse)//防止其他模组干扰
             {
                 bool flag3 = !item.IsAir && CombinedHooks.CanUseItem(Player, item);
 
