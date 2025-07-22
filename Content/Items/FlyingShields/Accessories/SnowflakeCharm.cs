@@ -105,7 +105,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
             Projectile.penetrate = -1;
             Projectile.width = Projectile.height = 16;
             Projectile.usesLocalNPCImmunity = true;
-            Projectile.localNPCHitCooldown = 10;
+            Projectile.localNPCHitCooldown = 20;
         }
 
         public override void AI()
@@ -149,13 +149,19 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
                                 Vector2 velocity = (Projectile.rotation + 1.57f + (i * MathHelper.TwoPi / 6)).ToRotationVector2();
                                 Projectile.NewProjectileFromThis<SnowflakeSpike>(Projectile.Center
                                     , velocity * Main.rand.NextFloat(5, 6f),
-                                     (int)(Projectile.damage * 0.9f), Projectile.knockBack, ai1: Main.rand.NextFloat(8, 10));
+                                     Projectile.damage, Projectile.knockBack, ai1: Main.rand.NextFloat(8, 10));
                             }
                             Projectile.Kill();
                         }
                     }
                     break;
             }
+        }
+
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            Projectile.velocity *= 0;
+            return false;
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -294,6 +300,9 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
 
         public override bool PreDraw(ref Color lightColor)
         {
+            if (Projectile.oldPos.Length<12)
+                return false;
+
             Helper.DrawPrettyStarSparkle(Projectile.Opacity, 0, Projectile.oldPos[12] - Main.screenPosition,
                 Color.White, Color.CadetBlue, Timer / 35, 0, 0.2f, 0.6f, 1, Projectile.rotation + 1.57f,
                 new Vector2(0.1f, 2.4f), Vector2.One);
