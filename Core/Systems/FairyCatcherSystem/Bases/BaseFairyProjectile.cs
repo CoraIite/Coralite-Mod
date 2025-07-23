@@ -162,7 +162,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public override void PostAI()
         {
-            SetDirectionNormally();
+            if (State != AIStates.Skill)
+                SetDirectionNormally();
             UpdateFrameY(6);
 
             //检测与弹幕间的碰撞

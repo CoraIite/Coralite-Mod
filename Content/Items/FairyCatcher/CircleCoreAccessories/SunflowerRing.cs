@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Items.Fairies;
+using Coralite.Content.Items.Fairies.ColorSeries;
 using Coralite.Core;
 using Coralite.Core.Systems.FairyCatcherSystem;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
@@ -25,7 +26,7 @@ namespace Coralite.Content.Items.FairyCatcher.CircleCoreAccessories
 
         public void ModifyFairySpawn(ref FairyAttempt attempt)
         {
-            FairyAttempt.AddFairySpawn(CoraliteContent.FairyType<BlueFairy>(), 1000);
+            FairyAttempt.AddFairySpawn(CoraliteContent.FairyType<Sunniry>(), 150000);
         }
     }
 

@@ -62,6 +62,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.NormalSkills
 
                 fairyProj.Projectile.velocity = ((fairyProj.Projectile.velocity * slowTime) + restSpeed) / (slowTime + 1);
 
+                BeforeShoot(fairyProj);
+
                 return false;
             }
 
@@ -88,6 +90,14 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.NormalSkills
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// 在开始射击之前执行，可以用于生成粒子等
+        /// </summary>
+        public virtual void BeforeShoot(BaseFairyProjectile fairyProj)
+        {
+
         }
 
         /// <summary>

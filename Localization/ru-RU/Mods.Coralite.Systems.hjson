@@ -291,4 +291,9 @@ FairySkill: {
 		// SkillName: Mods.Coralite.Systems.FairySkill.FSkill_HealOutside.SkillName
 		// HealValue: Mods.Coralite.Systems.FairySkill.FSkill_HealOutside.HealValue
 	}
+
+	FSkill_SunnyShot: {
+		// Description: Mods.Coralite.Systems.FairySkill.FSkill_SunnyShot.Description
+		// SkillName: Mods.Coralite.Systems.FairySkill.FSkill_SunnyShot.SkillName
+	}
 }

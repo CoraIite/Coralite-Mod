@@ -6101,3 +6101,8 @@ IcicleClaw: {
 	DisplayName: Icicle Claw
 	Tooltip: ""
 }
+
+SunniryItem: {
+	DisplayName: Sunniry Item
+	Tooltip: ""
+}

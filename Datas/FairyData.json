@@ -319,24 +319,24 @@
     "SkillLevel": {
       "Weak": 1,
       "WeakCommon": 1,
-      "Common": 1,
-      "Uncommon": 1,
-      "Rare": 1,
-      "Epic": 1,
-      "Legendary": 1,
-      "Eternal": 2,
-      "Over": 2
+      "Common": 2,
+      "Uncommon": 2,
+      "Rare": 3,
+      "Epic": 3,
+      "Legendary": 4,
+      "Eternal": 5,
+      "Over": 6
     },
     "Stamina": {
       "Weak": 1,
-      "WeakCommon": 2,
+      "WeakCommon": 1,
       "Common": 2,
       "Uncommon": 2,
-      "Rare": 2,
+      "Rare": 3,
       "Epic": 3,
-      "Legendary": 3,
-      "Eternal": 3,
-      "Over": 3
+      "Legendary": 4,
+      "Eternal": 5,
+      "Over": 6
     }
   },
   "PinkFairy": {
@@ -609,6 +609,74 @@
       "Legendary": 1,
       "Eternal": 1,
       "Over": 1
+    }
+  },
+  "Sunniry": {
+    "LifeMax": {
+      "Weak": 200,
+      "WeakCommon": 240,
+      "Common": 300,
+      "Uncommon": 400,
+      "Rare": 900,
+      "Epic": 1500,
+      "Legendary": 2000,
+      "Eternal": 3000,
+      "Over": 4500
+    },
+    "Damage": {
+      "Weak": 7,
+      "WeakCommon": 9,
+      "Common": 10,
+      "Uncommon": 12,
+      "Rare": 27,
+      "Epic": 35,
+      "Legendary": 50,
+      "Eternal": 60,
+      "Over": 80
+    },
+    "Defence": {
+      "Weak": 6,
+      "WeakCommon": 8,
+      "Common": 10,
+      "Uncommon": 20,
+      "Rare": 30,
+      "Epic": 40,
+      "Legendary": 60,
+      "Eternal": 70,
+      "Over": 100
+    },
+    "Speed": {
+      "Weak": 3,
+      "WeakCommon": 3.5,
+      "Common": 4,
+      "Uncommon": 6,
+      "Rare": 7,
+      "Epic": 8,
+      "Legendary": 10,
+      "Eternal": 12,
+      "Over": 16
+    },
+    "SkillLevel": {
+      "Weak": 1,
+      "WeakCommon": 1,
+      "Common": 2,
+      "Uncommon": 2,
+      "Rare": 3,
+      "Epic": 3,
+      "Legendary": 4,
+      "Eternal": 5,
+      "Over": 6
+    },
+    "Stamina": {
+      "Weak": 1,
+      "WeakCommon": 1,
+      "Common": 2,
+      "Uncommon": 2,
+      "Rare": 3,
+      "Epic": 3,
+      "Legendary": 4,
+      "Eternal": 5,
+      "Over": 6
     }
   }
 }

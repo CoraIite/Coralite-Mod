@@ -69,7 +69,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.NormalSkills
 
             //技能等级>6拥有追踪功能
 
-
+            fairyProj. SetDirectionNormally();
             fairyProj.SpawnFairyDust();
 
             return false;

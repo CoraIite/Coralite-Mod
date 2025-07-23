@@ -309,4 +309,9 @@ FairySkill: {
 		SkillName: 治愈
 		HealValue: 为在场仙灵回复 {0}% + {1} 血量
 	}
+
+	FSkill_SunnyShot: {
+		Description: 蓄力后射出日光束造成 {0} 伤害
+		SkillName: 日光束
+	}
 }

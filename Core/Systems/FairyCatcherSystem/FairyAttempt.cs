@@ -90,6 +90,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             percentDict.Add((int)FairyRarity.C, 490);
         }
 
+        /// <summary>
+        /// 默认UR 5，SR 30，RR 75，R 150，U 250，C 490，总和1000
+        /// </summary>
         public static void AddFairySpawn(int fairyID,int value)
         {
             percentDict.Add(-fairyID, value);

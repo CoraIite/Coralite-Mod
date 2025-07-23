@@ -204,7 +204,7 @@ namespace Coralite.Content.UI
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-
+            VineType = 0;
             if (!Main.playerInventory && GetDimensions().Y > -80)
             {
                 Top.Set(Helper.Lerp(Top.Pixels, -80, 0.15f), 0);

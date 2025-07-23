@@ -9,7 +9,6 @@ using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
@@ -201,8 +200,10 @@ namespace Coralite.Content.UI.FairyEncyclopedia
             PageText = new PageText();
             UIImageButton leftButton = new UIImageButton(ModContent.Request<Texture2D>(AssetDirectory.FairyUI + "LeftButton", AssetRequestMode.ImmediateLoad));
             leftButton.SetHoverImage(ModContent.Request<Texture2D>(AssetDirectory.FairyUI + "LeftButtonHighlight", AssetRequestMode.ImmediateLoad));
+            leftButton.SetVisibility(1, 0.8f);
             UIImageButton rightButton = new(ModContent.Request<Texture2D>(AssetDirectory.FairyUI + "RightButton", AssetRequestMode.ImmediateLoad));
             rightButton.SetHoverImage(ModContent.Request<Texture2D>(AssetDirectory.FairyUI + "RightButtonHighlight", AssetRequestMode.ImmediateLoad));
+            rightButton.SetVisibility(1, 0.8f);
 
             PageText.Left.Set(0, 0);
             PageText.Width.Set(100, 0);
@@ -233,20 +234,23 @@ namespace Coralite.Content.UI.FairyEncyclopedia
 
         private void InitSelectPanel()
         {
-            SelectButtonsPanel = new UIPanel();
-
             Asset<Texture2D> circleButtonTex = TextureAssets.WireUi[0];
             Asset<Texture2D> circleButtonHoverTex = TextureAssets.WireUi[1];
             SelectButton = new SelectPanelButton();
             SelectButton.Left.Set(PageText.Width.Pixels + 10, 0);
 
+            SelectButton.SetVisibility(1, 0.8f);
+
             SelectButton.OnLeftClick += SelectButton_OnLeftClick;
 
             //SelectButtonsPanel.VAlign = 1;
+            SelectButtonsPanel = new UIPanel(FairyPanelBackGround, FairyPanelBorder, 12, 20);
             SelectButtonsPanel.Top.Set(40, 0);
             SelectButtonsPanel.Left.Set(SelectButton.Left.Pixels, 0);
             SelectButtonsPanel.Width.Set((circleButtonTex.Width() * 6) + 10, 0);
             SelectButtonsPanel.Height.Set(BackGround.Height.Pixels / 3, 0);
+            SelectButtonsPanel. BackgroundColor = new Color(63, 107, 151) * 0.85f;
+            SelectButtonsPanel.BorderColor = Color.White;
 
             UIGrid buttonsGrid = new();
             buttonsGrid.Width.Set(SelectButtonsPanel.Width.Pixels, 0);
@@ -276,13 +280,18 @@ namespace Coralite.Content.UI.FairyEncyclopedia
             SortButton = new UIImageButton(ModContent.Request<Texture2D>(AssetDirectory.FairyUI + "SortPanelButtonTex", AssetRequestMode.ImmediateLoad));
             SortButton.SetHoverImage(ModContent.Request<Texture2D>(AssetDirectory.FairyUI + "PanelButtonHighlight", AssetRequestMode.ImmediateLoad));
             SortButton.Left.Set(SelectButton.Left.Pixels + SelectButton.Width.Pixels + 10, 0);
+
+            SortButton.SetVisibility(1, 0.8f);
+
             SortButton.OnLeftClick += SortButton_OnLeftClick;
 
-            SortButtonsPanel = new UIPanel();
+            SortButtonsPanel = new UIPanel(FairyPanelBackGround, FairyPanelBorder, 12, 20);
             SortButtonsPanel.Top.Set(40, 0);
             SortButtonsPanel.Left.Set(SortButton.Left.Pixels, 0);
             SortButtonsPanel.Width.Set(BackGround.Width.Pixels / 4, 0);
             SortButtonsPanel.Height.Set(BackGround.Height.Pixels / 3, 0);
+            SortButtonsPanel.BackgroundColor = new Color(63, 107, 151) * 0.85f;
+            SortButtonsPanel.BorderColor = Color.White;
 
             UIGrid buttonsGrid = new();
             buttonsGrid.Width.Set(SelectButtonsPanel.Width.Pixels, 0);
@@ -332,7 +341,9 @@ namespace Coralite.Content.UI.FairyEncyclopedia
             sortButton.OnMouseOver += FadedMouseOver;
             sortButton.OnMouseOut += FadedMouseOut;
             sortButton.Width.Set(SortButtonsPanel.Width.Pixels, 0);
-            sortButton.Height.Set(32, 0);
+            sortButton.Height.Set(48, 0);
+            sortButton.BackgroundColor = new Color(63, 107, 151) * 0.85f;
+            sortButton.BorderColor = Color.White;
 
             grid.Add(sortButton);
         }

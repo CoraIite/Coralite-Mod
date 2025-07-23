@@ -9,7 +9,8 @@ using Terraria.UI;
 
 namespace Coralite.Content.UI.FairyEncyclopedia
 {
-    public class SortButton(FairyEncyclopedia.SortStyle sortStyle, Func<LocalizedText> description) : UIPanel
+    public class SortButton(FairyEncyclopedia.SortStyle sortStyle, Func<LocalizedText> description) : UIPanel(FairyEncyclopedia.FairyPanelBackGround
+            , FairyEncyclopedia.FairyPanelBorder, 12, 20)
     {
         public readonly FairyEncyclopedia.SortStyle sortStyle = sortStyle;
 
