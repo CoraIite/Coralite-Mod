@@ -6135,16 +6135,16 @@ CopperTong: {
 
 SunflowerRing: {
 	DisplayName: 向日花戒指
-	Tooltip: 
-	'''
-	获得 “快乐” BUFF
-	+3 仙灵捕捉力
-	'''
+	Tooltip:
+		'''
+		获得 “快乐” BUFF
+		+3 仙灵捕捉力
+		'''
 }
 
 IcicleClaw: {
 	DisplayName: 冰龙爪
-	Tooltip: "命中时生成爪击"
+	Tooltip: 命中时生成爪击
 }
 
 SunniryItem: {

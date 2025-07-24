@@ -63,6 +63,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         }
 
         public static LocalizedText FairySpawnCondition_Wall;
+        public static LocalizedText FairySpawnCondition_Circle;
 
         //-----------------------------------
         //       仙灵物品其他文本的本地化

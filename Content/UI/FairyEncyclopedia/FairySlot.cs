@@ -14,7 +14,10 @@ namespace Coralite.Content.UI.FairyEncyclopedia
     [AutoLoadTexture(Path = AssetDirectory.FairyUI)]
     public class FairySlot : UIElement
     {
-        public static ATex FairySlotCorner { get; set; }
+        public static ATex CommonCorner { get; set; }
+        public static ATex UncommonCorner { get; set; }
+        public static ATex RareCorner { get; set; }
+        public static ATex DoubleRareCorner { get; set; }
 
         public static ATex FairySlotBorder { get; set; }
         public static ATex FairySlotHoverBorder { get; set; }
@@ -63,12 +66,13 @@ namespace Coralite.Content.UI.FairyEncyclopedia
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
             bool hovering = IsMouseHovering;
-            DrawBorder(spriteBatch, FairySlotBackground.Value, Color.White);
+            Color borderColor = FairySystem.FairyCaught[_fairy.Type] ? Color.White : Color.LightGray;
+            DrawBorder(spriteBatch, FairySlotBackground.Value, borderColor);
 
             if (hovering)
-                DrawBorder(spriteBatch, FairySlotHoverBorder.Value, Color.White);
+                DrawBorder(spriteBatch, FairySlotHoverBorder.Value, borderColor);
             else
-                DrawBorder(spriteBatch, FairySlotBorder.Value, Color.White);
+                DrawBorder(spriteBatch, FairySlotBorder.Value, borderColor);
 
             //绘制仙灵本体
             Color c = FairySystem.FairyCaught[_fairy.Type] ? Color.White : Color.Black;
@@ -98,20 +102,34 @@ namespace Coralite.Content.UI.FairyEncyclopedia
             Color c2 = FairySystem.GetRarityColor(_fairy.Rarity);
             string text = Enum.IsDefined(_fairy.Rarity) ? Enum.GetName(_fairy.Rarity) : "SP";
 
-            Utils.DrawBorderString(spriteBatch, text, GetDimensions().Position() + new Vector2(25, 29), c2,
-                anchorx: 0.5f, anchory: 0.5f);
+            Utils.DrawBorderString(spriteBatch, text, GetDimensions().Position() + new Vector2(16, 27), c2,
+                anchorx: 0f, anchory: 0.5f);
 
 
             CalculatedStyle dimensions = GetDimensions();
 
-            int yFrame = IsMouseHovering ? 1 : 0;
-            const int Length = 22;
-            FairySlotCorner.Value.QuickCenteredDraw(spriteBatch, new Rectangle(0, yFrame, 2, 2)
-                , dimensions.Position() + new Vector2(Length, Length), Color.White * 0.6f);
-            FairySlotCorner.Value.QuickCenteredDraw(spriteBatch, new Rectangle(1, yFrame, 2, 2)
-                , dimensions.Position() + new Vector2(dimensions.Width - Length, dimensions.Height - Length), Color.White * 0.6f);
+            DrawCorner(spriteBatch, dimensions);
 
             _fairy.QuickDraw(Vector2.Zero, c, 0);
+        }
+
+        private void DrawCorner(SpriteBatch spriteBatch, CalculatedStyle dimensions)
+        {
+            int yFrame = IsMouseHovering ? 1 : 0;
+            const int Length = 22;
+
+            Texture2D tex = _fairy.Rarity switch
+            {
+                FairyRarity.U => UncommonCorner.Value,
+                FairyRarity.R => RareCorner.Value,
+                FairyRarity.RR or FairyRarity.RRR => DoubleRareCorner.Value,
+                _ => CommonCorner.Value
+            };
+
+            tex.QuickCenteredDraw(spriteBatch, new Rectangle(0, yFrame, 2, 2)
+                , dimensions.Position() + new Vector2(Length, Length), Color.White * 0.6f);
+            tex.QuickCenteredDraw(spriteBatch, new Rectangle(1, yFrame, 2, 2)
+                , dimensions.Position() + new Vector2(dimensions.Width - Length, dimensions.Height - Length), Color.White * 0.6f);
         }
 
         private void DrawBorder(SpriteBatch spriteBatch, Texture2D texture, Color color)

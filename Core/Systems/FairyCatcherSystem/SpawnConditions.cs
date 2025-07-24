@@ -55,8 +55,15 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
     }
 
     public record FairySpawn_Wall(int ItemType)
-        : FairySpawnCondition(() => FairySpawnCondition_Wall.Format(ContentSamples.ItemsByType[ItemType])
+        : FairySpawnCondition(() => FairySpawnCondition_Wall.Format(ContentSamples.ItemsByType[ItemType].Name)
         , fairyDatas => true)
+    {
+
+    }
+
+    public record FairySpawn_Circle(int ItemType)
+        : FairySpawnCondition(() => FairySpawnCondition_Circle.Format(ItemType, ContentSamples.ItemsByType[ItemType].Name)
+        , fairyDatas => false)
     {
 
     }

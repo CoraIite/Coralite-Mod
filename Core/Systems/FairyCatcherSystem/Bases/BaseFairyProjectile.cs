@@ -19,13 +19,17 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// </summary>
         public ref float SpawnTime => ref Projectile.ai[0];
         /// <summary>
+        /// 耐力调整，部分特殊武器会增加或减少耐力
+        /// </summary>
+        public ref float StaminaAdjust => ref Projectile.ai[1];
+        /// <summary>
         /// 当前使用技能的索引
         /// </summary>
-        public ref float UseSkillIndex => ref Projectile.ai[1];
+        public int UseSkillIndex { get; set; }
         /// <summary>
         /// 目标敌怪的索引
         /// </summary>
-        public ref float TargetIndex => ref Projectile.ai[2];
+        public int TargetIndex { get; set; }
 
         public AIStates State { get; set; }
         public int Timer { get; set; }
@@ -425,15 +429,23 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// </summary>
         public virtual void RestartAttack()
         {
-            if (Projectile.IsOwnedByLocalPlayer() && FairyItem != null
-                && UseSkillCount >= FairyItem.FairyIV.Stamina)
+            if (Projectile.IsOwnedByLocalPlayer() && FairyItem != null)
             {
-                ExchangeToBack();
-                return;
+                int stamina = FairyItem.FairyIV.Stamina;
+                stamina += (int)StaminaAdjust;
+
+                if (stamina<1)
+                    stamina = 1;
+
+                if (UseSkillCount >= stamina)
+                {
+                    ExchangeToBack();
+                    return;
+                }
             }
 
             //持续索敌，妹找到那就尝试换个目标
-            if (TargetIndex.GetNPCOwner(out NPC target1,()=>TargetIndex=-1))
+            if (TargetIndex.GetNPCOwner(out NPC target1, () => TargetIndex = -1))
             {
                 State = AIStates.Skill;
                 Timer = 0;
@@ -513,6 +525,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         {
             writer.Write((byte)State);
             writer.Write((byte)_netState);
+            writer.Write(UseSkillIndex);
+            writer.Write(TargetIndex);
             writer.Write(UseSkillCount);
             writer.Write(ImmuneTimer);
 
@@ -535,6 +549,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         {
             State = (AIStates)reader.ReadByte();
             _netState = (NetState)reader.ReadByte();
+            UseSkillIndex = reader.ReadInt32();
+            TargetIndex = reader.ReadInt32();
             UseSkillCount = reader.ReadInt32();
             ImmuneTimer = reader.ReadInt32();
 
@@ -568,12 +584,12 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         public override bool PreDraw(ref Color lightColor)
         {
             if (State == AIStates.Skill)
-                _skills[(int)UseSkillIndex].PreDrawSpecial(ref lightColor);
+                _skills[(int)UseSkillIndex].PreDrawSpecial(this,ref lightColor);
 
             DrawSelf(Main.spriteBatch, Main.screenPosition, lightColor);
 
             if (State == AIStates.Skill)
-                _skills[(int)UseSkillIndex].PostDrawSpecial(lightColor);
+                _skills[(int)UseSkillIndex].PostDrawSpecial(this, lightColor);
 
             if (Projectile.IsOwnedByLocalPlayer() && FairyItem != null)
                 DrawHealthBar(Projectile.Bottom + new Vector2(0, 12), FairyItem.Life, FairyItem.FairyIV.LifeMax);

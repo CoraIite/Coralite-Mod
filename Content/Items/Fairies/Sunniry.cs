@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.DamageClasses;
+using Coralite.Content.Items.FairyCatcher.CircleCoreAccessories;
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Attributes;
@@ -36,8 +37,8 @@ namespace Coralite.Content.Items.Fairies
         public override int[] GetFairySkills()
         {
             return [
-                CoraliteContent.FairySkillType<FSkill_SunnyShot>(),
                 CoraliteContent.FairySkillType<FSkill_Tackle>(),
+                CoraliteContent.FairySkillType<FSkill_SunnyShot>(),
                 ];
         }
     }
@@ -51,18 +52,18 @@ namespace Coralite.Content.Items.Fairies
         public override void RegisterSpawn()
         {
             FairySpawnController.Create(Type)
-                .AddCondition(FairySpawnCondition.ZoneForest)
+                .AddCondition(new FairySpawn_Circle(ModContent.ItemType<SunflowerRing>()))
                 .RegisterToWall();
         }
 
         public override void Catching(FairyCatcherProj catcher)
         {
-            EscapeNormally(catcher, (60, 100), (0.8f, 1f));
+            EscapeNormally(catcher, (60, 100), (1f, 1.5f));
         }
 
         public override void OnCatch(Player player, ref int catchPower)
         {
-            targetVelocity = Helper.NextVec2Dir(0.8f, 1f);
+            targetVelocity = Helper.NextVec2Dir(1.5f, 1.75f);
 
             for (int i = 0; i < 6; i++)
             {
@@ -78,8 +79,8 @@ namespace Coralite.Content.Items.Fairies
 
         public override FairySkill[] InitSkill()
             => [
-                NewSkill<FSkill_SunnyShot>(),
                 NewSkill<FSkill_Tackle>(),
+                NewSkill<FSkill_SunnyShot>(),
                 ];
 
         public override void SpawnFairyDust()
@@ -136,7 +137,7 @@ namespace Coralite.Content.Items.Fairies
 
         public ref float Rot => ref Projectile.ai[1];
         public ref float State => ref Projectile.ai[2];
-        public  float Timer;
+        public float Timer;
 
         public ref float Alpha => ref Projectile.localAI[0];
         public Vector2 Scale
@@ -202,7 +203,7 @@ namespace Coralite.Content.Items.Fairies
                     Alpha = Helper.Lerp(Alpha, 0.2f, 0.2f);
                     Scale = Vector2.SmoothStep(Scale, new Vector2(1f, 0.3f), 0.2f);
                     Timer++;
-                    if (Timer>6)
+                    if (Timer > 6)
                     {
                         State++;
                         Timer = 0;
@@ -233,7 +234,7 @@ namespace Coralite.Content.Items.Fairies
 
                         group.NewParticle<LaserLine>(Projectile.Center + normal * Scale.Y * 15 * Main.rand.NextFloat(-1, 1)
                             + dir * Main.rand.NextFloat(0, 150), dir * Main.rand.NextFloat(5, 12)
-                            , Main.rand.NextFromList(Color.DarkGoldenrod, Color.Gold), Scale: Main.rand.NextFloat(0.2f, 0.35f));
+                            , Main.rand.NextFromList(new Color(108, 237, 124), Color.Gold), Scale: Main.rand.NextFloat(0.2f, 0.35f));
                     }
 
                     else if (Timer < 22)
@@ -254,7 +255,7 @@ namespace Coralite.Content.Items.Fairies
                         if (Main.rand.NextBool())
                             group.NewParticle<LaserLine>(Projectile.Center + normal * Scale.Y * 15 * Main.rand.NextFloat(-1, 1)
                                 + dir * Main.rand.NextFloat(0, 150), dir * Main.rand.NextFloat(5, 12)
-                                , Main.rand.NextFromList(Color.DarkGoldenrod, Color.Gold), Scale: Main.rand.NextFloat(0.2f, 0.35f));
+                                , Main.rand.NextFromList(new Color(108, 237, 124), Color.Gold), Scale: Main.rand.NextFloat(0.2f, 0.35f));
                     }
                     else
                     {
@@ -335,12 +336,14 @@ namespace Coralite.Content.Items.Fairies
         }
     }
 
+    [AutoLoadTexture(Path = AssetDirectory.FairyItems)]
     public class FSkill_SunnyShot : FSkill_ShootProj
     {
-        public override string Texture => AssetDirectory.FairySkillIcons + "Blow";
+        public override string Texture => AssetDirectory.FairySkillIcons + "Light";
 
         protected override int ReadyTime => 180;
 
+        public static ATex SunniryGlow { get; set; }
         public LocalizedText Description { get; set; }
 
         public override Color SkillTextColor => Color.Yellow;
@@ -352,14 +355,17 @@ namespace Coralite.Content.Items.Fairies
 
         public override void BeforeShoot(BaseFairyProjectile fairyProj)
         {
-            float length = 20 + SkillTimer / (float)ReadyTime * 20;
-                Vector2 dir = Helper.NextVec2Dir(length - 10, length + 10);
+            if (Main.rand.NextBool())
+            {
+                float length = 20 + SkillTimer / (float)ReadyTime * 20;
+                Vector2 dir = Helper.NextVec2Dir(length - 5, length + 5);
                 Dust d = Dust.NewDustPerfect(fairyProj.Projectile.Center + dir, DustID.GoldCoin
-                    , -dir.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(1, 1.5f));
+                    , -dir.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(1, 1.5f), Scale: Main.rand.NextFloat(0.3f, 0.6f));
                 d.noGravity = true;
+            }
 
             if (fairyProj.TargetIndex.GetNPCOwner(out NPC owner) && Math.Abs(owner.Center.X - fairyProj.Projectile.Center.X) > 8)
-                fairyProj.Projectile.spriteDirection = (owner.Center.X-fairyProj.Projectile.Center.X) > 0 ? 1 : -1;
+                fairyProj.Projectile.spriteDirection = (owner.Center.X - fairyProj.Projectile.Center.X) > 0 ? 1 : -1;
         }
 
         public override int GetDamageBonus(int baseDamage, int level)
@@ -387,6 +393,26 @@ namespace Coralite.Content.Items.Fairies
 
                 fairyProj.Projectile.velocity = -rot.ToRotationVector2() * 2;
             }
+        }
+
+        public override void PreDrawSpecial(BaseFairyProjectile fairyProj, ref Color lightColor)
+        {
+            float factor = 1 - SkillTimer / (float)ReadyTime;
+
+            float alpha = 1;
+            if (factor < 0.2f)
+            {
+                alpha = factor / 0.2f;
+            }
+            else if (factor > 0.7f)
+            {
+                alpha = 1 - (factor - 0.7f) / 0.3f;
+            }
+
+            float scale = 1f - Helper.X2Ease(factor) * 0.8f;
+
+            SunniryGlow.Value.QuickCenteredDraw(Main.spriteBatch, fairyProj.Projectile.Center - Main.screenPosition
+                , new Color(230, 230, 230, 0) * alpha, 0, scale);
         }
     }
 }

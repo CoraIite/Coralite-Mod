@@ -138,12 +138,12 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         public virtual void ReceiveExtra(BinaryReader reader) { }
 
-        public virtual void PreDrawSpecial(ref Color lightColor)
+        public virtual void PreDrawSpecial(BaseFairyProjectile fairyProj, ref Color lightColor)
         {
 
         }
 
-        public virtual void PostDrawSpecial(Color lightColor)
+        public virtual void PostDrawSpecial(BaseFairyProjectile fairyProj, Color lightColor)
         {
 
         }

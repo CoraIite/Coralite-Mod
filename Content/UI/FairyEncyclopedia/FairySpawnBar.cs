@@ -4,7 +4,9 @@ using Coralite.Core.Loaders;
 using Coralite.Core.Systems.FairyCatcherSystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
+using Terraria.GameContent;
 using Terraria.UI;
+using Terraria.UI.Chat;
 
 namespace Coralite.Content.UI.FairyEncyclopedia
 {
@@ -32,8 +34,10 @@ namespace Coralite.Content.UI.FairyEncyclopedia
 
             spriteBatch.Draw(AlphaBar.Value, targetRect, Color.MidnightBlue * 0.5f);
 
-            Helper.DrawTextParagraph(spriteBatch, condition.Descripetion()
-                , calculatedStyle.Width - 10, pos + new Vector2(5, 9), out _,shadowColor:new Color(20,20,20,180));
+            ChatManager.DrawColorCodedStringWithShadow(spriteBatch, FontAssets.MouseText.Value
+                , condition.Descripetion(), pos + new Vector2(5, 9),Color.White,0,Vector2.Zero,Vector2.One, calculatedStyle.Width - 10);
+            //Helper.DrawTextParagraph(spriteBatch, condition.Descripetion()
+            //    , calculatedStyle.Width - 10, pos + new Vector2(5, 9), out _,shadowColor:new Color(20,20,20,180));
         }
     }
 

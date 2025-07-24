@@ -94,6 +94,7 @@ FairySystem: {
 	FairySpawnConditionWall: Mods.Coralite.Systems.FairySystem.FairySpawnConditionWall
 	BottleFightCapacity: Mods.Coralite.Systems.FairySystem.BottleFightCapacity
 	BottleContainCapacity: Mods.Coralite.Systems.FairySystem.BottleContainCapacity
+	FairySpawnConditionCircle: Mods.Coralite.Systems.FairySystem.FairySpawnConditionCircle
 }
 
 BossBarSystem.DontTakeDamage: Cant attack!！

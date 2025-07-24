@@ -102,6 +102,11 @@ FairySystem: {
 	FairySpawnConditionWall: 需要处于 {0} 前
 	BottleFightCapacity: 出战仙灵 {0} / {1}
 	BottleContainCapacity: 存储仙灵 {0} / {1}
+	FairySpawnConditionCircle: 
+	'''
+	需要佩戴 
+	   [i:{0}] {1}
+	'''
 }
 
 BossBarSystem.DontTakeDamage: 不可攻击！
