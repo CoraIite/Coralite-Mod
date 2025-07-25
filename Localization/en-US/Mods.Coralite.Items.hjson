@@ -4336,6 +4336,7 @@ BasicAltar: {
 		{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}
 		'''
 	DisplayName: Basic Altar
+	OnlyItemContainer: Craft Altar can only connected to item container!
 }
 
 RadiantSun: {

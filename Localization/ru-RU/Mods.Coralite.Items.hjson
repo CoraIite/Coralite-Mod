@@ -4381,6 +4381,7 @@ BasicAltar: {
 		{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}
 		'''
 	DisplayName: Базовый алтарь синтеза
+	// OnlyItemContainer: Craft Altar can only connected to item container!
 }
 
 RadiantSun: {
