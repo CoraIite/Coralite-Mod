@@ -293,6 +293,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                     if (receiverEntity.TryGetComponent(MagikeComponentID.ItemGetOnlyContainer, out GetOnlyItemContainer container3))
                         tempItems = container3.Items;
 
+                    if (tempItems == null)
+                        continue;
+
                     foreach (var tempitem in tempItems)
                         if (!tempitem.IsAir && tempitem.type == item.type)
                         {
@@ -331,6 +334,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
                     if (receiverEntity.TryGetComponent(MagikeComponentID.ItemGetOnlyContainer, out GetOnlyItemContainer container3))
                         tempItems = container3.Items;
+
+                    if (tempItems == null)
+                        continue;
 
                     foreach (var tempitem in tempItems)
                         if (!tempitem.IsAir && item.Item1.ContainsItem(tempitem.type))

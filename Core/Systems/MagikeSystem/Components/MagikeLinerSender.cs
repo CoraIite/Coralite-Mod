@@ -281,9 +281,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// <summary>
         /// 重新检测是否能连接，超出长度直接断开
         /// </summary>
-        public void RecheckConnect()
+        public virtual void RecheckConnect()
         {
-            if (Entity is null)
+            if (Entity == null)//不要删掉它！！！！
                 return;
 
             Timer = SendDelay;

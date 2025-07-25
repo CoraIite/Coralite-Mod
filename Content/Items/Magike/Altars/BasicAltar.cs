@@ -8,7 +8,9 @@ using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Core.Systems.MagikeSystem.Tiles;
 using Coralite.Helpers;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
+using Terraria.Localization;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.Magike.Altars
@@ -16,6 +18,13 @@ namespace Coralite.Content.Items.Magike.Altars
     public class BasicAltar() : MagikeApparatusItem(TileType<BasicAltarTile>(), Item.sellPrice(silver: 5)
         , RarityType<MagicCrystalRarity>(), AssetDirectory.MagikeAltars)
     {
+        public static LocalizedText OnlyItemContainer {  get; set; }
+
+        public override void Load()
+        {
+            OnlyItemContainer = this.GetLocalization(nameof(OnlyItemContainer));
+        }
+
         public override void AddRecipes()
         {
             CreateRecipe()
@@ -134,6 +143,41 @@ namespace Coralite.Content.Items.Magike.Altars
         {
             ConnectLengthBase = 16 * 8;
             MaxConnectBase = 12;
+        }
+
+        public override bool CanConnect_CheckHasEntity(Point16 receiverPoint, ref string failSource)
+        {
+            if (!MagikeHelper.TryGetEntityWithComponent(receiverPoint.X, receiverPoint.Y, MagikeComponentID.ItemContainer, out _)
+                && !MagikeHelper.TryGetEntityWithComponent(receiverPoint.X, receiverPoint.Y, MagikeComponentID.ItemGetOnlyContainer, out _))
+            {
+                failSource = BasicAltar.OnlyItemContainer.Value;
+                return false;
+            }
+
+            return true;
+        }
+
+        public override void RecheckConnect()
+        {
+            if (Entity == null)//不要删掉它！！！！
+                return;
+
+            Vector2 selfPos = Helper.GetMagikeTileCenter(Entity.Position);
+
+            for (int i = _receivers.Count - 1; i >= 0; i--)
+            {
+                //移除所有超出长度的，没有TP的，以及TP上没有物品容器的
+                if (i + 1 > MaxConnect || !MagikeHelper.TryGetEntity(_receivers[i].X, _receivers[i].Y, out var magikeTP)
+                    || (!magikeTP.HasComponent(MagikeComponentID.ItemContainer) && !magikeTP.HasComponent(MagikeComponentID.ItemContainer)))
+                {
+                    _receivers.RemoveAt(i);
+                    continue;
+                }
+
+                Vector2 targetPos = Helper.GetMagikeTileCenter(_receivers[i]);
+                if (Vector2.Distance(selfPos, targetPos) > ConnectLength)
+                    _receivers.RemoveAt(i);
+            }
         }
     }
 

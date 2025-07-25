@@ -4341,6 +4341,7 @@ BasicAltar: {
 		{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}
 		'''
 	DisplayName: Basic Altar
+	OnlyItemContainer: Mods.Coralite.Items.BasicAltar.OnlyItemContainer
 }
 
 RadiantSun: {

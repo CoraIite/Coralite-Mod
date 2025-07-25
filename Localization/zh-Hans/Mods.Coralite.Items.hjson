@@ -4385,6 +4385,7 @@ BasicAltar: {
 		{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}
 		'''
 	DisplayName: 基础合成坛
+	OnlyItemContainer: 合成坛只能连接物品容器！
 }
 
 RadiantSun: {

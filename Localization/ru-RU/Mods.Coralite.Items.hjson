@@ -4386,6 +4386,7 @@ BasicAltar: {
 		{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}
 		'''
 	DisplayName: Базовый алтарь синтеза
+	// OnlyItemContainer: Mods.Coralite.Items.BasicAltar.OnlyItemContainer
 }
 
 RadiantSun: {
