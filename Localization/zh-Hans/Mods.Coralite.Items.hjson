@@ -6151,3 +6151,8 @@ SunniryItem: {
 	DisplayName: 日光灵
 	Tooltip: ""
 }
+
+BloodTentacle: {
+	// DisplayName: Blood Tentacle
+	// Tooltip: ""
+}

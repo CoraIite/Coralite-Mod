@@ -165,11 +165,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
         /// 将仙灵发射出去
         /// </summary>
         /// <returns></returns>
-        public virtual bool ShootFairy(Player player, IEntitySource source, Vector2 position, Vector2 velocity, float knockBack, float flyTime)
+        public virtual bool ShootFairy(Player player, IEntitySource source, Vector2 position, Vector2 velocity, float knockBack, float flyTime, float staminaAdjust = 0, float ai2 = 0)
         {
             //生成仙灵弹幕
             Projectile proj = Projectile.NewProjectileDirect(source, position, velocity, Item.shoot
-                , FairyIV.Damage, knockBack, player.whoAmI, flyTime);
+                , FairyIV.Damage, knockBack, player.whoAmI, flyTime, staminaAdjust, ai2);
 
             _fairyProjIndex = proj.identity;
             _fairyProjUUID = proj.projUUID;

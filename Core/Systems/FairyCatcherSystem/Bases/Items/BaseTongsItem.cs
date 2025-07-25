@@ -5,14 +5,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
 {
     public abstract class BaseTongsItem : BaseFairyCatcher
     {
-        
-
-        public override void HoldStyle(Player player, Rectangle heldItemFrame)
-        {
-            if (player.ItemTimeIsZero)
-            {
-            }
-        }
+        public virtual int StaminaReduce { get; set; } = -2;
 
         public override void HoldItem(Player player)
         {

@@ -53,6 +53,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public ref float HandleRot => ref Projectile.localAI[0];
 
+        /// <summary>
+        /// 是否把手柄绘制在最顶部
+        /// </summary>
+        public virtual bool DrawHnadleOnTop { get; } = false;
 
         public enum AIStates
         {
@@ -279,9 +283,14 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             if (Owner.TryGetModPlayer(out FairyCatcherPlayer fcp)
                 && fcp.TryGetFairyBottle(out BaseFairyBottle bottle))
             {
+                int staminaR = 0;
+                if (Owner.HeldItem.ModItem is BaseTongsItem t)
+                    staminaR = t.StaminaReduce;
+
                 foreach (var item in bottle.GetShootableFairy(Owner))
                 {
-                    if (item.ShootFairy(Owner, Projectile.GetSource_FromAI(), center, GetFairyVeloity(), Projectile.knockBack, 60))
+                    if (item.ShootFairy(Owner, Projectile.GetSource_FromAI(), center
+                        , GetFairyVeloity(), Projectile.knockBack, 60, staminaR))
                         return;
                 }
             }
@@ -346,6 +355,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         public override bool PreDraw(ref Color lightColor)
         {
             Vector2 handleCenter = GetHandleCenter();
+            if(!DrawHnadleOnTop)
             DrawHandle(GetHandleTex(), handleCenter, lightColor);
 
             //绘制连线
@@ -353,6 +363,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 DrawLine(GetLineTex(), GetHandleTipPos() + LineDrawStartPosOffset() - Main.screenPosition, Projectile.Center - Main.screenPosition, lightColor);
 
             DrawTong();
+
+            if (DrawHnadleOnTop)
+                DrawHandle(GetHandleTex(), handleCenter, lightColor);
 
             if (State == AIStates.Flying && Catch == 0)
                 DrawFairyItem();
@@ -463,7 +476,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         {
             Texture2D tex = Projectile.GetTexture();
             tex.QuickCenteredDraw(Main.spriteBatch, Projectile.Center - Main.screenPosition
-                , Lighting.GetColor(Projectile.Center.ToTileCoordinates()), Projectile.rotation);
+                , Lighting.GetColor(Projectile.Center.ToTileCoordinates()), Projectile.rotation,effect: Owner.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically);
         }
 
         public virtual void DrawFairyItem()

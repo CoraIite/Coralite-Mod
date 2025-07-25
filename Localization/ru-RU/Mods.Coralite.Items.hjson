@@ -6148,3 +6148,8 @@ SunniryItem: {
 	// DisplayName: Sunniry Item
 	// Tooltip: ""
 }
+
+BloodTentacle: {
+	// DisplayName: Blood Tentacle
+	// Tooltip: ""
+}
