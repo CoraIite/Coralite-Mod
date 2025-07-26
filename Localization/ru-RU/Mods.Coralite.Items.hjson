@@ -6154,3 +6154,8 @@ BloodTentacle: {
 	// DisplayName: Blood Tentacle
 	// Tooltip: ""
 }
+
+GlistentJar: {
+	// DisplayName: Glistent Jar
+	// Tooltip: ""
+}

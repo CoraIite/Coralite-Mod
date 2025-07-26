@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Items.FlyingShields.Accessories;
+﻿using Coralite.Content.GlobalItems;
+using Coralite.Content.Items.FlyingShields.Accessories;
 using Coralite.Core;
 using Coralite.Core.Attributes;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
@@ -26,6 +27,7 @@ namespace Coralite.Content.Items.Icicle
             Item.SetWeaponValues(24, 3.5f);
             Item.SetShopValues(ItemRarityColor.Orange3, Item.sellPrice(0, 0, 20));
             Item.autoReuse = true;
+            CoraliteGlobalItem.SetColdDamage(Item);
         }
 
         public override void AddRecipes()

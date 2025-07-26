@@ -8,6 +8,7 @@ DamageClasses: {
 	CreateShovelDamage.DisplayName: Творческий урон
 	MagikeDamage.DisplayName: Урон магией
 	// RangedNoAttackSpeed.DisplayName: Ranged No Attack Speed
+	// TrueFairyDamage.DisplayName: True Fairy Damage
 }
 
 Players: {

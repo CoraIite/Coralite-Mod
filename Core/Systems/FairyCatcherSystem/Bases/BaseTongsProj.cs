@@ -52,6 +52,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         }
 
         public ref float HandleRot => ref Projectile.localAI[0];
+        public ref float RecordSpeed => ref Projectile.localAI[1];
 
         /// <summary>
         /// 是否把手柄绘制在最顶部
@@ -181,6 +182,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             Projectile.damage = damage;
 
             Owner.direction = (InMousePos.X - Owner.Center.X) > 0 ? 1 : -1;
+            RecordSpeed = speed;
             Projectile.velocity = UnitToMouseV * speed;
             Projectile.StartAttack();
             Projectile.tileCollide = true;
@@ -232,6 +234,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             Vector2 targetPos = GetHandleTipPos();
 
             float speed = Projectile.velocity.Length();
+
+            if (speed < RecordSpeed)
+                speed = RecordSpeed;
+
             if (Timer > 60)//超过一段时间后加速回归
                 speed *= 1.05f;
 
@@ -246,7 +252,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         {
             State = AIStates.Backing;
             Timer = 0;
-            Projectile.velocity = (GetHandleTipPos() - Projectile.Center).SafeNormalize(Vector2.Zero) * Projectile.velocity.Length();
+            Projectile.velocity = (GetHandleTipPos() - Projectile.Center).SafeNormalize(Vector2.Zero) * RecordSpeed;
             Projectile.tileCollide = false;
         }
 

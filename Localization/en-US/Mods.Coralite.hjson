@@ -8,6 +8,7 @@ DamageClasses: {
 	CreateShovelDamage.DisplayName: Create Shovel Damage
 	MagikeDamage.DisplayName: Magike Damage
 	RangedNoAttackSpeed.DisplayName: Ranged No Attack Speed
+	TrueFairyDamage.DisplayName: True Fairy Damage
 }
 
 Players: {

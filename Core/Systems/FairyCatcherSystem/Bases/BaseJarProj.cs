@@ -2,6 +2,7 @@
 using Coralite.Core.Systems.FairyCatcherSystem.Bases.Items;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 
@@ -55,6 +56,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         public ref float Timer => ref Projectile.ai[1];
         //public ref float VisualEffectTimer => ref Projectile.localAI[0];
 
+        /// <summary>
+        /// 是否完全蓄力
+        /// </summary>
+        public bool FullCharge {  get; set; }
+
         public AIStates State
         {
             get => (AIStates)Projectile.ai[2];
@@ -105,7 +111,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         }
 
         /// <summary>
-        /// 在此初始化各类数值
+        /// 在此初始化各类数值<br></br>
+        /// <see cref="MaxChannelTime"/> 最大蓄力时间，默认60<br></br>
+        /// <see cref="MaxChannelDamageBonus"/> 最大蓄力伤害加成，默认2.5<br></br>
+        /// <see cref="MaxFlyTime"/> 投出后的飞行时间，默认10<br></br>
+        /// <see cref="FallAcc"/> 坠落速度，默认0.25f<br></br>
         /// </summary>
         public virtual void InitFields() { }
 
@@ -150,6 +160,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
             if (Timer == MaxChannelTime)
             {
+                FullCharge = true;
                 OnChannelComplete();
             }
             else if (Timer > MaxChannelTime)
@@ -165,7 +176,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
             float rot = Helper.Lerp(-0.85f, -2f, factor);
             Owner.itemRotation = Owner.direction * rot;
-            Projectile.rotation = +(Owner.direction > 0 ? rot : -rot + MathHelper.Pi);
+            Projectile.rotation = Owner.direction > 0 ? rot : (-rot + MathHelper.Pi);
             Projectile.Center = Owner.Center + new Vector2(-Owner.direction * 4, Owner.gfxOffY) + Projectile.rotation.ToRotationVector2() * (8 + Projectile.width / 2);
         }
 
@@ -284,7 +295,16 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Projectile.QuickDraw(lightColor, 0);
+            SpriteEffects eff = SpriteEffects.None;
+            if (State == AIStates.Held)
+            {
+                eff = Owner.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically;
+            }
+
+            Texture2D tex = Projectile.GetTexture();
+
+            tex.QuickCenteredDraw(Main.spriteBatch, Projectile.Center - Main.screenPosition, lightColor, Projectile.rotation
+                , Projectile.scale, eff);
 
             if (State == AIStates.Held)
             {
@@ -310,7 +330,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                     c *= factor;
                 }
 
-                Projectile.QuickDraw(c, scale, 0);
+                tex.QuickCenteredDraw(Main.spriteBatch, Projectile.Center - Main.screenPosition, c, Projectile.rotation
+                    , scale, eff);
             }
 
             return false;

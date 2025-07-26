@@ -6111,7 +6111,7 @@ YellowFairyItem: {
 
 BlackGelBall: {
 	DisplayName: 黑胶球
-	Tooltip: 命中敌怪时偶尔施加困惑
+	Tooltip: 完全蓄力后命中造成短暂困惑
 }
 
 RedFairyItem: {
@@ -6154,6 +6154,15 @@ SunniryItem: {
 }
 
 BloodTentacle: {
-	// DisplayName: Blood Tentacle
-	// Tooltip: ""
+	DisplayName: 血触手
+	Tooltip: "命中时伸出触手攻击"
+}
+
+GlistentJar: {
+	DisplayName: 晶莹罐
+	Tooltip: 
+	'''
+	命中后产生晶莹绽放，并附加晶莹减益
+	仙灵命中带有晶莹减益的敌怪时产生晶莹绽放
+	'''
 }

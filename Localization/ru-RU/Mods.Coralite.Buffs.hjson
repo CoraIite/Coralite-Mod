@@ -255,3 +255,8 @@ ButterDebuff: {
 	// DisplayName: Butter Debuff
 	// Description: Mods.Coralite.Buffs.ButterDebuff.Description
 }
+
+GlistentJarDebuff: {
+	// DisplayName: Glistent Jar Debuff
+	// Description: Mods.Coralite.Buffs.GlistentJarDebuff.Description
+}

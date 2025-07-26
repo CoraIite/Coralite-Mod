@@ -158,7 +158,7 @@ namespace Coralite.Content.Items.Fairies
 
         public override void SetDefaults()
         {
-            Projectile.DamageType = FairyDamage.Instance;
+            Projectile.DamageType = TrueFairyDamage.Instance;
             Projectile.tileCollide = false;
             Projectile.width = Projectile.height = 16;
             Projectile.friendly = true;

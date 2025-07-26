@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using System.Collections.Generic;
+using Terraria;
 using Terraria.DataStructures;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
@@ -40,6 +41,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
                     break;
                 }
             }
+        }
+
+        public override void ModifyTooltips(List<TooltipLine> tooltips)
+        {
+            tooltips.Add(new TooltipLine(Mod, "TongStaminaReduce", FairySystem.TongStaminaReduce.Format(StaminaReduce)));
         }
     }
 }

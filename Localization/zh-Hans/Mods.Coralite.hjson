@@ -1,5 +1,5 @@
 DamageClasses: {
-	FairyDamage.DisplayName: 仙灵伤害
+	FairyDamage.DisplayName: 妖精伤害
 	CreateAxeDamage.DisplayName: 创意伤害
 	CreateDamage.DisplayName: 创意伤害
 	CreateExtraDamage.DisplayName: 创意伤害
@@ -8,6 +8,7 @@ DamageClasses: {
 	CreateShovelDamage.DisplayName: 创意伤害
 	MagikeDamage.DisplayName: 魔能伤害
 	RangedNoAttackSpeed.DisplayName: 远程伤害
+	TrueFairyDamage.DisplayName: 妖精伤害
 }
 
 Players: {

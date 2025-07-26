@@ -107,6 +107,7 @@ FairySystem: {
 		需要佩戴 
 		   [i:{0}] {1}
 		'''
+	TongStaminaReduce: 令发射的仙灵耐力 {0}
 }
 
 BossBarSystem.DontTakeDamage: 不可攻击！

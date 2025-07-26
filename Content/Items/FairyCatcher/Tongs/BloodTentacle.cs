@@ -1,10 +1,11 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.DamageClasses;
+using Coralite.Core;
 using Coralite.Core.Attributes;
+using Coralite.Core.Configs;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases.Items;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
-using SteelSeries.GameSense;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Enums;
@@ -17,6 +18,8 @@ namespace Coralite.Content.Items.FairyCatcher.Tongs
         public override string Texture => AssetDirectory.FairyCatcherTong + Name;
 
         public override int CatchPower => 5;
+
+        public int hitCount;
 
         public override void SetOtherDefaults()
         {
@@ -50,6 +53,26 @@ namespace Coralite.Content.Items.FairyCatcher.Tongs
 
         public override Vector2 LineDrawStartPosOffset()
             => -HandleRot.ToRotationVector2() * 10;
+
+        public override void OnHitNPCFlying(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            if (Owner.HeldItem.ModItem is BloodTentacle bt)
+            {
+                bt.hitCount++;
+                if (bt.hitCount > 1)
+                    bt.hitCount = 0;
+                float dir = (target.Center - Owner.Center).ToRotation() + Main.rand.NextFloat(-0.1f, 0.1f);
+                Projectile.NewProjectileFromThis<BloodTentacleSPProj>(Owner.Center, Vector2.Zero
+                    , (int)(Projectile.damage * 0.4f), Projectile.knockBack, dir, bt.hitCount==0?-1:1);
+            }
+        }
+
+        public override void Flying()
+        {
+            base.Flying();
+
+            Projectile.SpawnTrailDust(DustID.Blood, Main.rand.NextFloat(0.1f, 0.2f),Scale:Main.rand.NextFloat(1,1.5f));
+        }
     }
 
     public class BloodTentacleSPProj : ModProjectile
@@ -65,8 +88,12 @@ namespace Coralite.Content.Items.FairyCatcher.Tongs
 
         public override void SetDefaults()
         {
-            Projectile.width = Projectile.height = 28;
+            Projectile.DamageType = FairyDamage.Instance;
+            Projectile.width = Projectile.height = 20;
+            Projectile.penetrate = -1;
             Projectile.friendly = true;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = 20;
         }
 
         public override void AI()
@@ -74,31 +101,72 @@ namespace Coralite.Content.Items.FairyCatcher.Tongs
             //甩出，
             if (Timer < 15)
             {
+                //画弧线飞出
                 if (Timer == 0)
                 {
+                    Projectile.tileCollide = false;
                     Projectile.rotation = TargetDir + RandDir * 2f;
-                    Projectile.velocity = (TargetDir + RandDir * 0.4f).ToRotationVector2() * 12;
+                    Projectile.velocity = (TargetDir + RandDir * 0.9f).ToRotationVector2() * 13;
                 }
 
-                HandleLength = Helper.Lerp(30, 1, Timer / 18);
-                Projectile.velocity = Projectile.velocity.RotatedBy(RandDir * 0.4f / 15);
-            }
-            else if (Timer < 20)
-            {
+                if (Timer == 8)
+                    Projectile.tileCollide = true;
 
+                Projectile.rotation += -RandDir * 2f / 12;
+                HandleLength = Helper.Lerp(80, 40, Timer / 15);
+                Projectile.velocity = Projectile.velocity.RotatedBy(-RandDir * 1.5f / 15);
             }
+            else if (Timer < 25)
+            {
+                //伸直
+                Projectile.velocity = Projectile.velocity.RotatedBy(-RandDir * 0.5f / 10);
+                Projectile.velocity *= 0.94f;
+                Projectile.rotation += -RandDir * 1f / 10;
+                Vector2 toOwner = Owner.Center - Projectile.Center;
+
+                HandleLength = Helper.Lerp(HandleLength, toOwner.Length() / 2, 0.2f);
+            }
+            else
+            {
+                Vector2 toOwner = Owner.Center - Projectile.Center;
+
+                HandleLength = Helper.Lerp(HandleLength, toOwner.Length() / 2, 0.2f);
+                Projectile.velocity = Vector2.Lerp(Projectile.velocity, toOwner.SafeNormalize(Vector2.Zero) * (Timer / 2)
+                    , MathHelper.Clamp(Timer / 100, 0, 1));
+                Projectile.rotation = Projectile.rotation.AngleLerp((-toOwner).ToRotation() + RandDir * 0.8f, 0.05f);
+
+                if (Vector2.Distance(Owner.Center, Projectile.Center) < Projectile.velocity.Length() * 1.5f)
+                    Projectile.Kill();
+            }
+
+            if (Main.rand.NextBool())
+                Projectile.SpawnTrailDust(DustID.Blood, Main.rand.NextFloat(0.1f, 0.3f), Scale: Main.rand.NextFloat(1, 1.5f));
 
             Timer++;
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
+            if (Timer < 15)
+                Timer = 15;
             return false;
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            base.OnHitNPC(target, hit, damageDone);
+            if (Timer < 15)
+                Timer = 15;
+
+            Projectile.damage = (int)(Projectile.damage * 0.9f);
+
+            if (VisualEffectSystem.HitEffect_Dusts)
+            {
+                for (int i = 0; i < 12; i++)
+                {
+                    Dust.NewDustPerfect(Projectile.Center, DustID.Blood
+                        , Helper.NextVec2Dir(0.5f, 2f), Scale: Main.rand.NextFloat(1, 2f));
+                }
+            }
         }
 
         public virtual Color GetStringColor(Vector2 pos)
@@ -106,7 +174,7 @@ namespace Coralite.Content.Items.FairyCatcher.Tongs
             return Lighting.GetColor((int)pos.X / 16, (int)(pos.Y / 16f), Color.White);
         }
 
-        public virtual void DrawLine(Texture2D lineTex, Vector2 startPos, Vector2 endPos, Color color)
+        public virtual void DrawLine(Texture2D lineTex, Vector2 startPos, Vector2 endPos)
         {
             List<ColoredVertex> bars = new();
 
@@ -116,7 +184,7 @@ namespace Coralite.Content.Items.FairyCatcher.Tongs
             float recordUV = 0;
 
             int lineLength = (int)(startPos - endPos).Length();   //链条长度
-            int pointCount = lineLength / 16 + 3;
+            int pointCount = lineLength / 8 + 3;
             Vector2 controlPos = endPos - Projectile.rotation.ToRotationVector2() * HandleLength;
 
             //贝塞尔曲线
@@ -151,7 +219,13 @@ namespace Coralite.Content.Items.FairyCatcher.Tongs
 
         public override bool PreDraw(ref Color lightColor)
         {
-            return base.PreDraw(ref lightColor);
+            DrawLine(BloodTentacleProj.BloodTentacleChain.Value, Owner.Center - Main.screenPosition
+                , Projectile.Center - Main.screenPosition);
+
+            Projectile.GetTexture().QuickCenteredDraw(Main.spriteBatch, Projectile.Center - Main.screenPosition
+                , lightColor, Projectile.rotation, Projectile.scale, Projectile.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically);
+
+            return false;
         }
     }
 }

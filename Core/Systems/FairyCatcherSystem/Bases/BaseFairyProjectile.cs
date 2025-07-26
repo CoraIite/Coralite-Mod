@@ -108,7 +108,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public override void SetDefaults()
         {
-            Projectile.DamageType = FairyDamage.Instance;
+            Projectile.DamageType = TrueFairyDamage.Instance;
             Projectile.tileCollide = true;
             Projectile.friendly = true;
             Projectile.usesLocalNPCImmunity = true;

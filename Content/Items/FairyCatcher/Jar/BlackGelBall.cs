@@ -56,8 +56,8 @@ namespace Coralite.Content.Items.FairyCatcher.Jar
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            if (Main.rand.NextBool(5,8))
-                target.AddBuff(BuffID.Confused, 45);
+            if (FullCharge)
+                target.AddBuff(BuffID.Confused, 30);
         }
     }
 }
