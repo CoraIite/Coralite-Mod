@@ -71,7 +71,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             if (player.TryGetModPlayer(out FairyCatcherPlayer fcp) && fcp.TryGetFairyBottle(out BaseFairyBottle bottle))
                 bottle.SetIndex(player);
 
-            NormalShoot(player, source, position, velocity, type, damage);
+            NormalShoot(player, source, position, velocity, type, damage,knockback);
 
             return false;
         }
@@ -121,9 +121,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// <param name="position"></param>
         /// <param name="velocity"></param>
         /// <param name="type"></param>
-        public virtual void NormalShoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type,int damage)
+        public virtual void NormalShoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage,float knockback)
         {
-            Projectile.NewProjectile(source, position, velocity, type, damage, 0, player.whoAmI);
+            Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI);
         }
 
         /// <summary>
@@ -149,6 +149,5 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         }
 
         #endregion
-
     }
 }

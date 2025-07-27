@@ -17,7 +17,7 @@ namespace Coralite.Content.Items.FairyCatcher.Tongs
     {
         public override string Texture => AssetDirectory.FairyCatcherTong + Name;
 
-        public override int CatchPower => 5;
+        public override int CatchPower => 15;
 
         public int hitCount;
 

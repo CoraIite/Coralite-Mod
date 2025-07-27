@@ -13,7 +13,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.NormalSkills
         /// <summary>
         /// 基础准备时间
         /// </summary>
-        protected virtual int ReadyTime { get; } = 60;
+        protected virtual int ReadyTime { get; } = 45;
         /// <summary>
         /// 后摇时间，不会受到技能等级加成
         /// </summary>
@@ -44,6 +44,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.NormalSkills
             if (!fairyProj.TargetIndex.GetNPCOwner(out NPC target, () => fairyProj.TargetIndex = -1))
                 return true;
 
+            SetDirection(fairyProj, target);
             fairyProj.SpawnFairyDust();
 
             if (SkillTimer > 0)
@@ -90,6 +91,17 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.NormalSkills
             }
 
             return false;
+        }
+
+        /// <summary>
+        /// 设置仙灵的朝向
+        /// </summary>
+        /// <param name="fairyProj"></param>
+        /// <param name="target"></param>
+        public virtual void SetDirection(BaseFairyProjectile fairyProj, NPC target)
+        {
+            if (MathF.Abs(fairyProj.Projectile.Center.X - target.Center.X) > 8)
+                fairyProj.Projectile.spriteDirection = target.Center.X > fairyProj.Projectile.Center.X ? 1 : -1;
         }
 
         /// <summary>

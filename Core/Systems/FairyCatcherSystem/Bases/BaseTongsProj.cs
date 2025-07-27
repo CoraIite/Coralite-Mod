@@ -174,12 +174,13 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// 开始攻击
         /// </summary>
         /// <param name="catch">0表示抛出仙灵，1表示捕捉</param>
-        public virtual void StartAttack(int @catch, float speed, int damage)
+        public virtual void StartAttack(int @catch, float speed, int damage,float knockack)
         {
             Catch = @catch;
             State = AIStates.Flying;
             Timer = 0;
             Projectile.damage = damage;
+            Projectile.knockBack = knockack;
 
             Owner.direction = (InMousePos.X - Owner.Center.X) > 0 ? 1 : -1;
             RecordSpeed = speed;

@@ -441,7 +441,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <param name="rotateAngle"></param>
         public void EscapeNormally(FairyCatcherProj catcher
             ,(int, int) escapeTime,(float ,float) escapeSpeed,float escapeRandAngle=0.2f,
-            int rotateTime = 40, float rotateAngle = MathHelper.PiOver4 / 2)
+            int rotateTime = 40, float rotateAngle = MathHelper.PiOver4 / 2,Action onRestart =null)
         {
             FairyTimer--;
             if (FairyTimer % rotateTime == 0)
@@ -462,6 +462,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                             .SafeNormalize(Vector2.Zero).RotateByRandom(-escapeRandAngle, escapeRandAngle);
 
                 targetVelocity = dir * Main.rand.NextFloat(escapeSpeed.Item1, escapeSpeed.Item2);
+                onRestart?.Invoke();
             }
 
             UpdateVelocity();

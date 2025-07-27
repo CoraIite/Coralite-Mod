@@ -13,8 +13,8 @@ namespace Coralite.Content.Particles
     {
         public override string Texture => AssetDirectory.Blank;
 
-        private int spawnTime;
-        private float rotate;
+        protected int spawnTime;
+        protected float rotate;
 
         public override void SetProperty()
         {
@@ -67,6 +67,48 @@ namespace Coralite.Content.Particles
                 return;
             }
             FlowLine particle = PRTLoader.NewParticle<FlowLine>(center, velocity, color, 1f);
+            if (particle != null)
+            {
+                particle.Opacity = spawnTime;
+                particle.InitializePositionCache(spawnTime);
+                particle.trail = new Trail(Main.instance.GraphicsDevice, spawnTime, new EmptyMeshGenerator(), factor => trailWidth, factor =>
+                {
+                    if (factor.X > 0.5f)
+                        return Color.Lerp(particle.Color, new Color(0, 0, 0, 0), (factor.X - 0.5f) * 2);
+
+                    return Color.Lerp(new Color(0, 0, 0, 0), particle.Color, factor.X * 2);
+                });
+
+                particle.spawnTime = spawnTime;
+                particle.rotate = rotate;
+            }
+        }
+    }
+
+    public class FlowLineThin : FlowLine
+    {
+        public override string Texture => AssetDirectory.Sparkles + "ShotLineSPA";
+
+        public override void DrawPrimitive()
+        {
+            Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
+            Matrix view = Main.GameViewMatrix.TransformationMatrix;
+            Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
+
+            EffectLoader.TextureColorEffect.World = world;
+            EffectLoader.TextureColorEffect.View = view;
+            EffectLoader.TextureColorEffect.Projection = projection;
+            EffectLoader.TextureColorEffect.Texture = TexValue;
+
+            trail?.DrawTrail(EffectLoader.TextureColorEffect);
+        }
+
+        public static new void Spawn(Vector2 center, Vector2 velocity, float trailWidth, int spawnTime, float rotate, Color color = default)
+        {
+            if (VaultUtils.isServer)
+                return;
+
+            FlowLineThin particle = PRTLoader.NewParticle<FlowLineThin>(center, velocity, color, 1f);
             if (particle != null)
             {
                 particle.Opacity = spawnTime;

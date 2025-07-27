@@ -6155,14 +6155,19 @@ SunniryItem: {
 
 BloodTentacle: {
 	DisplayName: 血触手
-	Tooltip: "命中时伸出触手攻击"
+	Tooltip: 命中时伸出触手攻击
 }
 
 GlistentJar: {
 	DisplayName: 晶莹罐
-	Tooltip: 
-	'''
-	命中后产生晶莹绽放，并附加晶莹减益
-	仙灵命中带有晶莹减益的敌怪时产生晶莹绽放
-	'''
+	Tooltip:
+		'''
+		命中后产生晶莹绽放，并附加晶莹减益
+		仙灵命中带有晶莹减益的敌怪时产生晶莹绽放
+		'''
+}
+
+PopsicleFairyItem: {
+	DisplayName: 棒冰灵
+	Tooltip: ""
 }

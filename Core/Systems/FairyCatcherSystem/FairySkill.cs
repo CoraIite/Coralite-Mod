@@ -34,6 +34,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// 技能计时器
         /// </summary>
         protected int SkillTimer { get; set; }
+        /// <summary>
+        /// 每隔多久寻找一次最近的敌人
+        /// </summary>
+        public int TargetClosestTime { get => 45; }
 
         protected override void Register()
         {

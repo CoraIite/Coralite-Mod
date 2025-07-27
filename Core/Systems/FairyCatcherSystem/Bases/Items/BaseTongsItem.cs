@@ -23,13 +23,13 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
                 if (proj.active && proj.friendly && proj.owner == player.whoAmI
                     && proj.type == Item.shoot)
                 {
-                    (proj.ModProjectile as BaseTongsProj).StartAttack(1, velocity.Length(), 0);
+                    (proj.ModProjectile as BaseTongsProj).StartAttack(1, velocity.Length(), 0, 0);
                     break;
                 }
             }
         }
 
-        public override void NormalShoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage)
+        public override void NormalShoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage,float knockback)
         {
             for (int i = 0; i < Main.maxProjectiles; i++)
             {
@@ -37,7 +37,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
                 if (proj.active && proj.friendly && proj.owner == player.whoAmI
                     && proj.type == Item.shoot)
                 {
-                    (proj.ModProjectile as BaseTongsProj).StartAttack(0, velocity.Length(), damage);
+                    (proj.ModProjectile as BaseTongsProj).StartAttack(0, velocity.Length(), damage,knockback);
                     break;
                 }
             }

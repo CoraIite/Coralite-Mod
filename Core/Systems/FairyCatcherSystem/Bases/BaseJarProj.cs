@@ -18,7 +18,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// <summary>
         /// 最大蓄力时间
         /// </summary>
-        public int MaxChannelTime = 60;
+        public int MaxChannelTime = 40;
 
         /// <summary>
         /// 最大蓄力伤害加成

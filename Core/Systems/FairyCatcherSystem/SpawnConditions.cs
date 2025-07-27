@@ -27,6 +27,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             new(() => GetSpawnCondition(DescriptionID.ZoneDesert).Value
                 , attempt => attempt.Player.ZoneDesert);
 
+        /// <summary> 雪原环境 </summary>
+        public static FairySpawnCondition ZoneSnow =
+            new(() => GetSpawnCondition(DescriptionID.ZoneSnow).Value
+                , attempt => attempt.Player.ZoneSnow);
+
         /// <summary> 猩红环境 </summary>
         public static FairySpawnCondition ZoneCrimson =
             new(() => GetSpawnCondition(DescriptionID.ZoneCrimson).Value
@@ -42,10 +47,12 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             new(() => GetSpawnCondition(DescriptionID.ZoneHell).Value
                 , attempt => attempt.Player.ZoneUnderworldHeight);
 
+
         /// <summary> 仙灵捕捉环半径大于9 </summary>
         public static FairySpawnCondition CircleR_9 =
             new(() => GetSpawnCondition(DescriptionID.CircleR_9).Value
                 , attempt => attempt.CircleRadius >= 9 * 16);
+
 
         /// <summary> 处于宝石墙前 </summary>
         public static FairySpawnCondition GemWall =

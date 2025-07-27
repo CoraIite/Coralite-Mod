@@ -108,7 +108,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public override void SetDefaults()
         {
-            Projectile.DamageType = TrueFairyDamage.Instance;
+            Projectile.DamageType = FairyDamage.Instance;
             Projectile.tileCollide = true;
             Projectile.friendly = true;
             Projectile.usesLocalNPCImmunity = true;
@@ -144,7 +144,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 case AIStates.Rest:
                     Projectile.timeLeft = 2;
                     Timer++;
-                    if (Timer > 60 * 3 - IVSpeed * 4)
+                    if (Timer > 60 * 2+30 - IVSpeed * 4)
                         RestartAttack();
 
                     Rest();
@@ -278,12 +278,22 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 if (Owner.TryGetModPlayer(out FairyCatcherPlayer fcp))
                     SkillLevel = fcp.FairySkillBonus[skill.Type].ModifyLevel(IVSkillLevel);
 
-                Timer = 1;
                 Projectile.StartAttack();
                 skill.SpawnSkillText(Projectile.Top);
                 skill.OnStartAttack(this);
                 _netState = NetState.Skill;
                 Projectile.netUpdate = true;
+                Projectile.DamageType = TrueFairyDamage.Instance;
+            }
+
+            Timer++;
+            if (Timer % skill.TargetClosestTime == 0)
+            {
+                if (Helper.TryFindClosestEnemy(Projectile.Center, AttackDistance
+                    , n => n.CanBeChasedBy() && Collision.CanHit(Projectile, n) && Vector2.Distance(n.Center, Owner.Center) < 1200, out NPC target))
+                {
+                    TargetIndex = target.whoAmI;
+                }
             }
 
             //更新招式
@@ -396,6 +406,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             Timer = 0;
             State = AIStates.Rest;
 
+            Projectile.DamageType = FairyDamage.Instance;
+
             Projectile.tileCollide = false;
 
             UseSkillIndex++;
@@ -411,7 +423,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         public virtual void TryExchangeToAttack()
         {
             if (Helper.TryFindClosestEnemy(Projectile.Center, AttackDistance
-                , n => n.CanBeChasedBy() && Collision.CanHit(Projectile, n), out NPC target))
+                , n => n.CanBeChasedBy() && Collision.CanHit(Projectile, n) && Vector2.Distance(n.Center, Owner.Center) < 1200, out NPC target))
             {
                 TargetIndex = target.whoAmI;
                 State = AIStates.Skill;
@@ -434,7 +446,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 int stamina = FairyItem.FairyIV.Stamina;
                 stamina += (int)StaminaAdjust;
 
-                if (stamina<1)
+                if (stamina < 1)
                     stamina = 1;
 
                 if (UseSkillCount >= stamina)
@@ -445,17 +457,17 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             }
 
             //持续索敌，妹找到那就尝试换个目标
-            if (TargetIndex.GetNPCOwner(out NPC target1, () => TargetIndex = -1))
-            {
-                State = AIStates.Skill;
-                Timer = 0;
+            //if (TargetIndex.GetNPCOwner(out NPC target1, () => TargetIndex = -1))
+            //{
+            //    State = AIStates.Skill;
+            //    Timer = 0;
 
-                OnStartUseSkill(target1);
-                return;
-            }
+            //    OnStartUseSkill(target1);
+            //    return;
+            //}
 
             if (Helper.TryFindClosestEnemy(Projectile.Center, AttackDistance
-                , n => n.CanBeChasedBy() && Collision.CanHit(Projectile, n), out NPC target))
+                , n => n.CanBeChasedBy() && Collision.CanHit(Projectile, n) && Vector2.Distance(n.Center, Owner.Center) < 1200, out NPC target))
             {
                 TargetIndex = target.whoAmI;
                 State = AIStates.Skill;
