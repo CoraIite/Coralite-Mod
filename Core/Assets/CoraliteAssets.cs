@@ -402,6 +402,12 @@ namespace Coralite.Core
             public static ATex HighlightCircleA { get; private set; }
 
             /// <summary> 
+            /// 高亮的一圈<br></br>
+            /// 特殊透明底
+            /// </summary>
+            public static ATex HighlightCircleSPA { get; private set; }
+
+            /// <summary> 
             /// 几个光圈叠加，同时在8个方向上有光束
             /// </summary>
             public static ATex EightLightShot { get; private set; }

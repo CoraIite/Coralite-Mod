@@ -233,7 +233,6 @@ namespace Coralite.Content.Items.Icicle
                 .AddTile(TileID.Anvils)
                 .Register();
         }
-
     }
 
     [AutoloadEquip(EquipType.Legs)]

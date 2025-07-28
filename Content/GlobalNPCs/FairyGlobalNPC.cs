@@ -15,7 +15,7 @@ namespace Coralite.Content.GlobalNPCs
                 {
                     npc.DelBuff(npc.FindBuffIndex(ModContent.BuffType<GlistentJarDebuff>()));
                     projectile.NewProjectileFromThis<GlistentJarExplode>(npc.Center, Vector2.Zero
-                        , 25, 0.5f);
+                        , 12, 0.5f);
                 }
             }
         }

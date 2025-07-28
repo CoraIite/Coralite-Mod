@@ -6164,3 +6164,19 @@ PopsicleFairyItem: {
 	// DisplayName: Popsicle Fairy Item
 	// Tooltip: ""
 }
+
+GlistentHelmet: {
+	// ArmorBonus: Mods.Coralite.Items.GlistentHelmet.ArmorBonus
+	// DisplayName: Glistent Helmet
+	// Tooltip: ""
+}
+
+GlistentBreastplate: {
+	// DisplayName: Glistent Breastplate
+	// Tooltip: ""
+}
+
+GlistentLegs: {
+	// DisplayName: Glistent Legs
+	// Tooltip: ""
+}

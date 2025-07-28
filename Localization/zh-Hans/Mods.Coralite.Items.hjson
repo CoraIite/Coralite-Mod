@@ -6171,3 +6171,19 @@ PopsicleFairyItem: {
 	DisplayName: 棒冰灵
 	Tooltip: ""
 }
+
+GlistentHelmet: {
+	ArmorBonus: Mods.Coralite.Items.GlistentHelmet.ArmorBonus
+	DisplayName: 晶莹角冠
+	Tooltip: +8% 妖精伤害
+}
+
+GlistentBreastplate: {
+	DisplayName: 晶莹札甲
+	Tooltip: +10% 仙灵捕捉力
+}
+
+GlistentLegs: {
+	DisplayName: 晶莹护腿
+	Tooltip: +8% 移动速度
+}

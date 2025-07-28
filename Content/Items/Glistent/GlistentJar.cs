@@ -193,17 +193,22 @@ namespace Coralite.Content.Items.Glistent
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D tex = CoraliteAssets.Halo.CircleSPA.Value;
+            Texture2D tex2 = CoraliteAssets.Halo.HighlightCircleSPA.Value;
 
             float factor = Timer / 20;
+            float f2 = (1 - Helper.BezierEase(factor));
 
-            Color dc = Color.DarkGreen  * Helper.SinEase(factor);
-            Color lc = Color.Green * (1 - Helper.BezierEase(factor));
+            Color dc = Color.DarkGreen * Helper.SinEase(factor);
+            Color dc2 = new Color(0, 34, 9) * Helper.SinEase(factor);
+            Color lc = Color.Green * f2;
+
             float scale = Helper.HeavyEase(factor) * 0.8f;
 
             Vector2 pos = Projectile.Center - Main.screenPosition;
-            tex.QuickCenteredDraw(Main.spriteBatch, pos, dc * 0.6f, 0, scale * 0.6f);
-            tex.QuickCenteredDraw(Main.spriteBatch, pos, dc * 0.8f, 0, scale * 0.8f);
-            tex.QuickCenteredDraw(Main.spriteBatch, pos, lc * 0.8f, 0, scale);
+            tex2.QuickCenteredDraw(Main.spriteBatch, pos, dc2 * 0.55f, 0, scale * 0.85f);
+            tex2.QuickCenteredDraw(Main.spriteBatch, pos, dc * 0.65f, 0, scale * 0.6f);
+
+            tex.QuickCenteredDraw(Main.spriteBatch, pos, lc, 0, scale);
             tex = CoraliteAssets.Halo.HighlightCircle.Value;
 
             tex.QuickCenteredDraw(Main.spriteBatch, pos, (lc with { A = 0 } * 0.5f), 0, scale * 0.8f);
