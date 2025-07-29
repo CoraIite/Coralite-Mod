@@ -178,6 +178,16 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             Owner.itemRotation = Owner.direction * rot;
             Projectile.rotation = Owner.direction > 0 ? rot : (-rot + MathHelper.Pi);
             Projectile.Center = Owner.Center + new Vector2(-Owner.direction * 4, Owner.gfxOffY) + Projectile.rotation.ToRotationVector2() * (8 + Projectile.width / 2);
+
+            OnHeld();
+        }
+
+        /// <summary>
+        /// 手握时调用，用于生成粒子之类的
+        /// </summary>
+        public virtual void OnHeld()
+        {
+
         }
 
         /// <summary>

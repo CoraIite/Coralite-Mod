@@ -6187,3 +6187,8 @@ GlistentLegs: {
 	DisplayName: 晶莹护腿
 	Tooltip: +8% 移动速度
 }
+
+SmallFirecracker: {
+	DisplayName: 小爆竹
+	Tooltip: "安全第二"
+}

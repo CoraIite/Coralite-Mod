@@ -6180,3 +6180,8 @@ GlistentLegs: {
 	// DisplayName: Glistent Legs
 	// Tooltip: ""
 }
+
+SmallFirecracker: {
+	// DisplayName: Small Firecracker
+	// Tooltip: ""
+}
