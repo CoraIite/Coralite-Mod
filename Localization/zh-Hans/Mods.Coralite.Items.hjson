@@ -6190,5 +6190,10 @@ GlistentLegs: {
 
 SmallFirecracker: {
 	DisplayName: 小爆竹
-	Tooltip: "安全第二"
+	Tooltip: 安全第二
+}
+
+WoodenBowl: {
+	DisplayName: 木碗
+	Tooltip: "正好能装一只仙灵！"
 }

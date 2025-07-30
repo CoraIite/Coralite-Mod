@@ -15,6 +15,10 @@ namespace Coralite.Core.Loaders
         internal static IList<FairySkill> skills;
         internal static int FairySkillCount { get; private set; } = 0;
 
+        internal static IList<FairyBuff> buffs;
+        internal static int FairyBuffCount { get; private set; } = 0;
+
+
         /// <summary>
         /// 根据类型获取仙灵
         /// </summary>
@@ -40,6 +44,15 @@ namespace Coralite.Core.Loaders
                  => type < FairySkillCount ? skills[type] : null;
 
         /// <summary>
+        /// 根据类型获取仙灵技能
+        /// </summary>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static FairyBuff GetFairyBuff(int type)
+                 => type < FairyBuffCount ? buffs[type] : null;
+
+
+        /// <summary>
         /// 设置ID
         /// </summary>
         /// <returns></returns>
@@ -56,6 +69,12 @@ namespace Coralite.Core.Loaders
         /// </summary>
         /// <returns></returns>
         public static int ReserveFairySkillID() => FairySkillCount++;
+
+        /// <summary>
+        /// 设置ID
+        /// </summary>
+        /// <returns></returns>
+        public static int ReserveFairyBuffID() => FairyBuffCount++;
 
         internal static void Unload()
         {
@@ -78,6 +97,13 @@ namespace Coralite.Core.Loaders
 
             skills.Clear();
             skills = null;
+            FairySkillCount = 0;
+
+            foreach (var item in buffs)
+                item.Unload();
+
+            buffs.Clear();
+            buffs = null;
             FairySkillCount = 0;
         }
     }

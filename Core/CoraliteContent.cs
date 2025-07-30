@@ -26,6 +26,10 @@ namespace Coralite.Core
         public static FairyCircleCore GetFairyCircleCore(int type) 
             => FairyLoader.GetFairyCircleCore(type);
 
+        public static FairyBuff GetFairyBuff<T>() where T : FairyBuff
+            => ModContent.GetInstance<T>();
+
+
         public static int MTBSType<T>() where T : Multiblock => ModContent.GetInstance<T>()?.Type ?? 0;
 
         public static Multiblock GetMTBS<T>() where T : Multiblock => MultiblockLoader.GetMTBStructure(ModContent.GetInstance<T>()?.Type ?? 0);

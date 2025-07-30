@@ -133,7 +133,7 @@ namespace Coralite.Content.Items.RedJades
         public override void AI()
         {
             Timer++;
-            if (Timer == 5)
+            if (Timer == 6)
                 Projectile.tileCollide = true;
 
             Projectile.rotation += Math.Sign(Projectile.velocity.X)*Math.Abs( Projectile.velocity.Y) / 13;

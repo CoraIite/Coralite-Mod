@@ -3,6 +3,7 @@ using Coralite.Core.Systems.FairyCatcherSystem.Bases.Items;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Terraria;
@@ -77,6 +78,23 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// </summary>
         public BaseFairyItem FairyItem { get; set; }
 
+        public List<FairyBuff> buffs;
+
+        /// <summary>
+        /// 仙灵Buff集
+        /// </summary>
+        public List<FairyBuff> Buffs
+        {
+            get
+            {
+                buffs ??= new List<FairyBuff>();
+                return buffs;
+            }
+        }
+
+        public bool HasBuff => buffs != null && buffs.Count > 0;
+
+
         private NetState _netState;
 
         public enum AIStates:byte
@@ -124,7 +142,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             if (init)
                 Initilize();
 
-            if (Vector2.Distance(Projectile.Center,Owner.Center)>4000)
+            if (Vector2.Distance(Projectile.Center, Owner.Center) > 4000)
                 Projectile.Kill();
 
             switch (State)
@@ -156,6 +174,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                     break;
             }
 
+            if (HasBuff)
+                foreach (var buff in buffs)
+                    buff.UpdateInProj(this);
+
             AIAfter();
         }
 
@@ -181,6 +203,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                         foreach (var skill in _skills)
                             skill.ModifyHitByProj(this, proj, ref damage);
 
+                        if (HasBuff)
+                            foreach (var buff in buffs)
+                                buff.DamageReduce(this,ref  damage);
+
                         FairyItem?.HurtByProjectile(this, proj, damage);
 
                         if (State is AIStates.Rest or AIStates.Shooting)//仅在休息阶段会有受击的击退效果
@@ -191,9 +217,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 }
 
             if (ImmuneTimer > 0)
-            {
                 ImmuneTimer--;
-            }
         }
 
         public void Initilize()
@@ -487,6 +511,32 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         #endregion
 
+        public void AddBuff<T>(int time, Action<T> specialAction = null) where T : FairyBuff
+        {
+            FairyBuff newBuff = CoraliteContent.GetFairyBuff<T>().NewInstance();
+
+            newBuff.TimeRemain = time;
+            specialAction?.Invoke((T)newBuff);
+
+            //没有BUFF就直接加，有BUFF先检测是否有同类的BUFF，有就续时间，没有再加
+            if (buffs == null)
+                Buffs.Add(newBuff);
+            else
+            {
+                for (int i = buffs.Count - 1; i > -1; i--)
+                {
+                    FairyBuff buff = buffs[i];
+                    if (buff.Type == newBuff.Type && buff.IsSame(newBuff))
+                    {
+                        buff.TimeRemain = Math.Max(time, buff.TimeRemain);
+                        return;
+                    }
+                }
+
+                buffs.Add(newBuff);
+            }
+        }
+
         #region 受击部分
 
         public sealed override void OnKill(int timeLeft)
@@ -515,14 +565,18 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
             //自身受伤
-            //使用默认模式的伤害量，防止一些特殊修改把NPC伤害改的太夸张
+            //使用默认模式的伤害量，防止一些特殊修改把NPC伤害改的太夸张                                         没错，就是你😡，别给我瞎即把搞什么特殊模式！
             int damage = ContentSamples.NpcsByNetId[target.type].damage;
 
             if (State == AIStates.Skill)
-                _skills[(int)UseSkillIndex].ModifyHitNPC_Active(this, target, ref modifiers, ref damage);
+                _skills[UseSkillIndex].ModifyHitNPC_Active(this, target, ref modifiers, ref damage);
 
             foreach (var skill in _skills)
                 skill.ModifyHitNPC_Inactive(this, target, ref modifiers, ref damage);
+
+            if (HasBuff)
+                foreach (var buff in buffs)
+                    buff.DamageReduce(this, ref damage);
 
             FairyItem?.HurtByNPC(this, target, modifiers, damage);
             if (State is AIStates.Rest or AIStates.Shooting)//仅在休息阶段会有受击的击退效果
@@ -583,6 +637,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         #endregion
 
+
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
             if (State == AIStates.Skill)
@@ -596,12 +651,26 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         public override bool PreDraw(ref Color lightColor)
         {
             if (State == AIStates.Skill)
-                _skills[(int)UseSkillIndex].PreDrawSpecial(this,ref lightColor);
+                _skills[UseSkillIndex].PreDrawSpecial(this,ref lightColor);
 
-            DrawSelf(Main.spriteBatch, Main.screenPosition, lightColor);
+            float alpha = 1f;
+
+            if (ImmuneTimer != 0 && (ImmuneTimer % 8) < 4)
+                alpha = 0.4f;
+
+            if (HasBuff)
+                foreach (var buff in buffs)
+                    buff.PreDraw(Projectile.Center, Projectile.Size, ref lightColor, alpha);
+
+            DrawSelf(Main.spriteBatch, Main.screenPosition, lightColor * alpha);
+
+            if (HasBuff)
+                foreach (var buff in buffs)
+                    buff.PostDraw(Projectile.Center, Projectile.Size, lightColor, alpha);
+
 
             if (State == AIStates.Skill)
-                _skills[(int)UseSkillIndex].PostDrawSpecial(this, lightColor);
+                _skills[UseSkillIndex].PostDrawSpecial(this, lightColor);
 
             if (Projectile.IsOwnedByLocalPlayer() && FairyItem != null)
                 DrawHealthBar(Projectile.Bottom + new Vector2(0, 12), FairyItem.Life, FairyItem.FairyIV.LifeMax);
@@ -619,9 +688,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         {
             Texture2D mainTex = Projectile.GetTexture();
             var frame = mainTex.Frame(FrameX, FrameY, 0, Projectile.frame);
-
-            if (ImmuneTimer != 0 && (ImmuneTimer % 8) < 4)
-                lightColor *= 0.4f;
 
             spriteBatch.Draw(mainTex, Projectile.Center - screenPos, frame, lightColor, Projectile.rotation, frame.Size() / 2,
                 Projectile.scale, Projectile.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);

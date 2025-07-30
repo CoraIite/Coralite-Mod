@@ -6185,3 +6185,8 @@ SmallFirecracker: {
 	// DisplayName: Small Firecracker
 	// Tooltip: ""
 }
+
+WoodenBowl: {
+	// DisplayName: Wooden Bowl
+	// Tooltip: ""
+}

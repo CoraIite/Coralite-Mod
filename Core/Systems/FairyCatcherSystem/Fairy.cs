@@ -3,6 +3,7 @@ using Coralite.Core.Systems.FairyCatcherSystem.Bases.Items;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using Terraria;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem
@@ -37,21 +38,30 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// </summary>
         public float CatchProgress {  get; set; }
 
+        #region 基础字段
+
         public Vector2 position;
         public Vector2 velocity;
+        /// <summary> 目标速度，会根据这个调整速度 </summary>
         public Vector2 targetVelocity;
         public float rotation;
-        public int width = 16;
-        public int height = 16;
         public float scale = 1;
         public float alpha = 1;
+        public int width = 16;
+        public int height = 16;
 
         public int frameCounter;
-        public Rectangle frame;
         public int spriteDirection = 1;
+
+        public Rectangle frame;
 
         public int FairyTimer;
         private AIState State;
+
+        /// <summary> 为false时就不会能被捉，进度不会涨 </summary>
+        public bool canBeCaught;
+
+        #endregion
 
         /// <summary>
         /// 在捕捉器内的ID
@@ -65,12 +75,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             Catching,
             Fading
         }
-
-
-        /// <summary>
-        /// 为false时就不会能被捉，进度不会涨
-        /// </summary>
-        public bool canBeCaught;
 
         /// <summary>
         /// 未进入捕捉状态而自由移动的时间，大于一定值后直接消失
@@ -108,6 +112,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             set => position = value - new Vector2(height / 2, width);
         }
 
+        public Vector2 Size => new Vector2(width, height);
+
         public Rectangle HitBox => new((int)position.X, (int)position.Y, width, height);
 
         /// <summary>
@@ -119,6 +125,22 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// 在开始捕捉的时候调用
         /// </summary>
         public event Action OnStartCatch;
+
+        public List<FairyBuff> buffs;
+
+        /// <summary>
+        /// 仙灵Buff集
+        /// </summary>
+        public List<FairyBuff> Buffs
+        {
+            get
+            {
+                buffs ??= new List<FairyBuff>();
+                return buffs;
+            }
+        }
+
+        public bool HasBuff => buffs != null && buffs.Count > 0;
 
         protected sealed override void Register()
         {
@@ -224,7 +246,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                 OnCircleCollide(catcher);
             }
             else
-                OutOfCircle = false;    
+                OutOfCircle = false;
         }
 
         /// <summary>
@@ -256,6 +278,12 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                     break;
                 case AIState.Catching:
                     Catching(catcher);
+
+                    if (buffs != null && buffs.Count > 0)
+                        foreach (var buff in buffs)
+                            buff.UpdateInCatcher(this);
+
+                    UpdateVelocity();
                     break;
                 default:
                 case AIState.Fading:
@@ -353,7 +381,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <summary>
         /// 在被捕捉时调用
         /// </summary>
-        public virtual bool Catch(Player player,int catchPower)
+        public virtual bool Catch(Player player, int catchPower)
         {
             if (State == AIState.Spawning || State == AIState.Fading || !canBeCaught)
                 return false;
@@ -369,6 +397,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
             OnCatch(player, ref catchPower);
 
+            if (HasBuff)
+                foreach (var buff in buffs)
+                    buff.ModifyCatchPower(this, ref catchPower);
+
             CatchProgress += catchPower;
             if (CatchProgress > CatchProgressMax)//捕捉
                 BeCaught(player);
@@ -380,7 +412,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// </summary>
         /// <param name="player"></param>
         /// <param name="catchPower"></param>
-        public virtual void OnCatch(Player player,ref int catchPower)
+        public virtual void OnCatch(Player player, ref int catchPower)
         {
 
         }
@@ -419,16 +451,16 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// 自定义仙灵的个体值等级
         /// </summary>
         /// <param name="fairyIV"></param>
-        public virtual void ModifyIVLevel(ref FairyIV fairyIV,FairyCatcherPlayer fcp) { }
+        public virtual void ModifyIVLevel(ref FairyIV fairyIV, FairyCatcherPlayer fcp) { }
         /// <summary>
         /// 自定义仙灵的个体值，例如某些仙灵固定个体值等
         /// </summary>
         /// <param name="fairyIV"></param>
-        public virtual void PostModifyIV(ref FairyIV fairyIV,FairyCatcherPlayer fcp) { }
+        public virtual void PostModifyIV(ref FairyIV fairyIV, FairyCatcherPlayer fcp) { }
 
         #endregion
 
-        #region 帮助方法
+        #region AI帮助方法
 
         /// <summary>
         /// 常规逃逸
@@ -440,8 +472,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <param name="rotateTime"></param>
         /// <param name="rotateAngle"></param>
         public void EscapeNormally(FairyCatcherProj catcher
-            ,(int, int) escapeTime,(float ,float) escapeSpeed,float escapeRandAngle=0.2f,
-            int rotateTime = 40, float rotateAngle = MathHelper.PiOver4 / 2,Action onRestart =null)
+            , (int, int) escapeTime, (float, float) escapeSpeed, float escapeRandAngle = 0.2f,
+            int rotateTime = 40, float rotateAngle = MathHelper.PiOver4 / 2, Action onRestart = null)
         {
             FairyTimer--;
             if (FairyTimer % rotateTime == 0)
@@ -464,8 +496,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                 targetVelocity = dir * Main.rand.NextFloat(escapeSpeed.Item1, escapeSpeed.Item2);
                 onRestart?.Invoke();
             }
-
-            UpdateVelocity();
         }
 
         /// <summary>
@@ -474,9 +504,12 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <param name="lerpValue"></param>
         public virtual void UpdateVelocity(int lerpValue = 19)
         {
-            velocity = (velocity * 19 + targetVelocity) / (19+1);
+            velocity = (velocity * 19 + targetVelocity) / (19 + 1);
         }
 
+        /// <summary>
+        /// 将贴图朝向设置为X方向速度朝向
+        /// </summary>
         public void SetDirectionNormally()
         {
             spriteDirection = Math.Sign(velocity.X);
@@ -496,6 +529,32 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         #endregion
 
+        public void AddBuff<T>(int time, Action<T> specialAction = null) where T : FairyBuff
+        {
+            FairyBuff newBuff = CoraliteContent.GetFairyBuff<T>().NewInstance();
+
+            newBuff.TimeRemain = time;
+            specialAction?.Invoke((T)newBuff);
+
+            //没有BUFF就直接加，有BUFF先检测是否有同类的BUFF，有就续时间，没有再加
+            if (buffs == null)
+                Buffs.Add(newBuff);
+            else
+            {
+                for (int i = buffs.Count - 1; i > -1; i--)
+                {
+                    FairyBuff buff = buffs[i];
+                    if (buff.Type == newBuff.Type && buff.IsSame(newBuff))
+                    {
+                        buff.TimeRemain = Math.Max(time, buff.TimeRemain);
+                        return;
+                    }
+                }
+
+                buffs.Add(newBuff);
+            }
+        }
+
         #region 绘制
 
         /// <summary>
@@ -503,12 +562,17 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// </summary>
         public virtual void Draw_InCatcher()
         {
-            this.QuickDraw(Main.screenPosition, Color.White * alpha, 0);
+            Color drawColor = Color.White;
 
-            //Texture2D mainTex = ModContent.Request<Texture2D>(Texture).Value;
-            //var frame = mainTex.Frame(HorizontalFrames, VerticalFrames, this.frame.X, this.frame.Y);
+            if (HasBuff)
+                foreach (var buff in buffs)
+                    buff.PreDraw(Center, Size,ref drawColor,alpha);
 
-            //Main.spriteBatch.Draw(mainTex, Center - Main.screenPosition, frame, Color.White * alpha, rotation, frame.Size() / 2, scale, spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
+            this.QuickDraw(Main.screenPosition, drawColor * alpha, 0);
+
+            if (HasBuff)
+                foreach (var buff in buffs)
+                    buff.PostDraw(Center, Size, drawColor, alpha);
 
             DrawProgressBar();
         }

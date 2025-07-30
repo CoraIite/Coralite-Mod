@@ -5,6 +5,7 @@ using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
+using Terraria.GameContent;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 {
@@ -307,14 +308,15 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         {
             SpriteEffects eff = SpriteEffects.None;
             if (State == AIStates.Held)
-            {
                 eff = Owner.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically;
-            }
 
+            PreDrawSpecial(eff, ref lightColor);
             Texture2D tex = Projectile.GetTexture();
 
             tex.QuickCenteredDraw(Main.spriteBatch, Projectile.Center - Main.screenPosition, lightColor, Projectile.rotation
                 , Projectile.scale, eff);
+
+            PostDrawSpecial(eff, lightColor);
 
             if (State == AIStates.Held)
             {
@@ -347,9 +349,50 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             return false;
         }
 
+        /// <summary>
+        /// 绘制特殊内容，比如仙灵
+        /// </summary>
+        /// <param name="effect"></param>
+        /// <param name="lightColor"></param>
+        public virtual void PreDrawSpecial(SpriteEffects effect,ref Color lightColor)
+        {
+
+        }
+
+        public virtual void PostDrawSpecial(SpriteEffects effect, Color lightColor)
+        {
+
+        }
+
         public void DrawShootLine()
         {
 
+        }
+
+        /// <summary>
+        /// 一个帮助方法，绘制仙灵
+        /// </summary>
+        /// <param name="drawPos"></param>
+        public void DrawFairyItem(Vector2 drawPos, Color c, SpriteEffects effect)
+        {
+            if (Owner.TryGetModPlayer(out FairyCatcherPlayer fcp)
+                && fcp.CurrentFairyIndex != -1
+                && fcp.TryGetFairyBottle(out BaseFairyBottle bottle))
+            {
+                int itemType = bottle.FightFairies[fcp.CurrentFairyIndex].type;
+                Texture2D mainTex = TextureAssets.Item[itemType].Value;
+                Rectangle rectangle2;
+
+                if (Main.itemAnimations[itemType] != null)
+                    rectangle2 = Main.itemAnimations[itemType].GetFrame(mainTex, -1);
+                else
+                    rectangle2 = mainTex.Frame();
+
+                float itemScale = 1f;
+
+                Main.spriteBatch.Draw(mainTex, drawPos, rectangle2
+                    , c, Projectile.rotation, rectangle2.Size() / 2, itemScale, effect, 0f);
+            }
         }
 
         #endregion
