@@ -253,9 +253,17 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 Owner.itemRotation = Owner.direction * rot;
             }
 
+            FlyingRotation();
+        }
+
+        /// <summary>
+        /// 飞行过程中的旋转
+        /// </summary>
+        public virtual void FlyingRotation()
+        {
             Projectile.rotation +=
-                Math.Sign(Projectile.velocity.X) * Projectile.velocity.Length() / 50
-                + Projectile.velocity.X / 30;
+                            Math.Sign(Projectile.velocity.X) * Projectile.velocity.Length() / 50
+                            + Projectile.velocity.X / 30;
         }
 
         /// <summary>

@@ -9,7 +9,7 @@ using static Terraria.ModLoader.ModContent;
 namespace Coralite.Content.Items.Glistent
 {
     [AutoloadEquip(EquipType.Head)]
-    public class GlistentHelmet : ModItem
+    public class GlistentHelmet : ModItem,IControllableArmorBonus
     {
         public override string Texture => AssetDirectory.GlistentItems + Name;
 
@@ -55,6 +55,7 @@ namespace Coralite.Content.Items.Glistent
 
         public void UseArmorBonus(Player player)
         {
+            //没有BUFF就丢一颗寄生种子
         }
 
         public override void AddRecipes()
@@ -158,5 +159,15 @@ namespace Coralite.Content.Items.Glistent
                 .AddTile(TileID.Anvils)
                 .Register();
         }
+    }
+
+    public class LeechSeed
+    {
+
+    }
+
+    public class LeechSeedFairyBuff
+    {
+
     }
 }

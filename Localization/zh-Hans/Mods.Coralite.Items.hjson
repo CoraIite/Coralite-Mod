@@ -6195,5 +6195,10 @@ SmallFirecracker: {
 
 WoodenBowl: {
 	DisplayName: 木碗
-	Tooltip: "正好能装一只仙灵！"
+	Tooltip: 正好能装一只仙灵！
+}
+
+IchorBucket: {
+	DisplayName: 灵液桶
+	Tooltip: ""
 }

@@ -6190,3 +6190,8 @@ WoodenBowl: {
 	// DisplayName: Wooden Bowl
 	// Tooltip: ""
 }
+
+IchorBucket: {
+	// DisplayName: Ichor Bucket
+	// Tooltip: ""
+}
