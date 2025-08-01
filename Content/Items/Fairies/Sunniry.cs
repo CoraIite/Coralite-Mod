@@ -48,6 +48,7 @@ namespace Coralite.Content.Items.Fairies
         public override int ItemType => ModContent.ItemType<SunniryItem>();
 
         public override FairyRarity Rarity => FairyRarity.RRR;
+        private int state;
 
         public override void RegisterSpawn()
         {
@@ -58,7 +59,43 @@ namespace Coralite.Content.Items.Fairies
 
         public override void Catching(FairyCatcherProj catcher)
         {
-            EscapeNormally(catcher, (60, 100), (1f, 1.5f));
+            if (state < 1)
+            {
+                EscapeNormally(catcher, (60, 100), (1.5f, 1.75f)
+                    , onRestart: () =>
+                    {
+                        state = Main.rand.Next(5);
+                        if (state > 0)
+                        {
+                            velocity = targetVelocity = Helper.NextVec2Dir(1.75f, 2.2f);
+                            FairyTimer = Main.rand.Next(40, 60);
+                        }
+                    });
+            }
+            else//随机朝一个方向移动，并缓慢减速
+            {
+                FairyTimer--;
+                targetVelocity *= 0.98f;
+
+                if (Main.rand.NextBool())
+                {
+                    Dust d = Dust.NewDustPerfect(Center + Main.rand.NextVector2Circular(5, 5)
+                        , DustID.ApprenticeStorm, -velocity * Main.rand.NextFloat(0.1f, 0.35f));
+                    d.noGravity = true;
+                }
+
+                if (FairyTimer < 0)
+                {
+                    velocity = targetVelocity = Helper.NextVec2Dir(1.9f, 2.2f);
+                    state--;
+                    if (state < 1)
+                        FairyTimer = Main.rand.Next(60, 100);
+                    else
+                        FairyTimer = Main.rand.Next(40, 60);
+                }
+
+                UpdateVelocity();
+            }
         }
 
         public override void OnCatch(Player player, ref int catchPower)

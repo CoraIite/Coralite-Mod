@@ -6153,3 +6153,8 @@ IchorBucket: {
 	DisplayName: Ichor Bucket
 	Tooltip: ""
 }
+
+LeafScope: {
+	DisplayName: Leaf Scope
+	Tooltip: ""
+}

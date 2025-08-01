@@ -6202,3 +6202,12 @@ IchorBucket: {
 	DisplayName: 灵液桶
 	Tooltip: ""
 }
+
+LeafScope: {
+	DisplayName: 叶子瞄准镜
+	Tooltip:
+		'''
+		为仙灵捕手的投掷罐类武器添加瞄准线
+		“仅靠一片叶子就能瞄准目标！”
+		'''
+}

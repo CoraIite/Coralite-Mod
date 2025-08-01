@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.DamageClasses;
 using Coralite.Content.Particles;
 using Coralite.Core;
+using Coralite.Core.Attributes;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using Coralite.Helpers;
 using InnoVault.PRT;
@@ -37,9 +38,13 @@ namespace Coralite.Content.Items.Glistent
         }
     }
 
+    [AutoLoadTexture(Path = AssetDirectory.GlistentItems)]
     public class GlistentJarProj : BaseJarProj
     {
         public override string Texture => AssetDirectory.GlistentItems + "GlistentJar";
+
+        [AutoLoadTexture(Name = "GlistentJar_Highlight")]
+        public static ATex HighlightTex { get; private set; }
 
         public override void InitFields()
         {
@@ -82,6 +87,13 @@ namespace Coralite.Content.Items.Glistent
                 Projectile.NewProjectileFromThis<GlistentJarExplode>(Projectile.Center, Vector2.Zero
                     , Projectile.damage / 2, Projectile.knockBack / 2, 1);
             }
+        }
+
+        public override void DrawJar(Vector2 pos, Color lightColor, SpriteEffects eff, Texture2D tex)
+        {
+            base.DrawJar(pos, lightColor, eff, tex);
+            HighlightTex.Value.QuickCenteredDraw(Main.spriteBatch, pos, Color.White, Projectile.rotation
+                , Projectile.scale, eff);
         }
     }
 

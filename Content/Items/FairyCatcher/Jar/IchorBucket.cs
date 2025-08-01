@@ -1,9 +1,11 @@
 ﻿using Coralite.Content.DamageClasses;
 using Coralite.Content.Particles;
 using Coralite.Core;
+using Coralite.Core.Attributes;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using Coralite.Helpers;
 using InnoVault.PRT;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.Enums;
@@ -37,9 +39,13 @@ namespace Coralite.Content.Items.FairyCatcher.Jar
         }
     }
 
+    [AutoLoadTexture(Path =AssetDirectory.FairyCatcherJar)]
     public class IchorBucketProj : BaseJarProj
     {
         public override string Texture => AssetDirectory.FairyCatcherJar + "IchorBucket";
+
+        [AutoLoadTexture(Name = "IchorBucket_Highlight")]
+        public static ATex HighlightTex { get;private set; }   
 
         public override void SetDefaults()
         {
@@ -59,9 +65,27 @@ namespace Coralite.Content.Items.FairyCatcher.Jar
                             + Projectile.velocity.X / 75;
         }
 
+        public override void SpawnDustOnFlying(bool outofTime)
+        {
+            Vector2 dir = Projectile.rotation.ToRotationVector2();
+            Dust d = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(20, 20), DustID.Ichor
+                , dir * Main.rand.NextFloat(0.5f, 2f));
+            d.noGravity = Main.rand.NextBool(4, 5);
+
+            if (Main.rand.NextBool(3))
+            {
+                PRTLoader.NewParticle<AnimeFogDark>(Projectile.Center
+                    , Helper.NextVec2Dir(0.5f, 1.5f)
+                    , Main.rand.NextFromList(Color.Gold, Color.DarkGoldenrod) * 0.1f, Main.rand.NextFloat(0.2f, 0.5f));
+
+            }
+        }
+
         public override void OnKill(int timeLeft)
         {
             base.OnKill(timeLeft);
+
+            //各种粒子
             for (int i = 0; i < 24; i++)
             {
                 Dust d = Dust.NewDustPerfect(Main.rand.NextVector2FromRectangle(Projectile.getRect())
@@ -86,23 +110,32 @@ namespace Coralite.Content.Items.FairyCatcher.Jar
                     , Main.rand.NextFromList(Color.Gold, Color.DarkGoldenrod) * 0.6f, Main.rand.NextFloat(0.4f, 0.6f));
             }
 
+            //向5边生成黄金雨弹幕
             float rot = Main.rand.NextFloat(MathHelper.TwoPi);
-            for (int i = 0; i < 5; i++)
-            {
-                int p = Projectile.NewProjectileFromThis(Projectile.Center
-                     , (rot + i * MathHelper.TwoPi / 5 + Main.rand.NextFloat(-0.6f, 0.6f)).ToRotationVector2()
-                        * Main.rand.NextFloat(1.5f, 2f), ProjectileID.GoldenShowerFriendly
-                     , Projectile.damage / 5, 2);
+            if (FullCharge)
+                for (int i = 0; i < 5; i++)
+                {
+                    int p = Projectile.NewProjectileFromThis(Projectile.Center
+                         , (rot + i * MathHelper.TwoPi / 5 + Main.rand.NextFloat(-0.6f, 0.6f)).ToRotationVector2()
+                            * Main.rand.NextFloat(1.5f, 2f), ProjectileID.GoldenShowerFriendly
+                         , Projectile.damage / 5, 2);
 
-                Main.projectile[p].DamageType = FairyDamage.Instance;
-                Main.projectile[p].timeLeft = 60;
-            }
+                    Main.projectile[p].DamageType = FairyDamage.Instance;
+                    Main.projectile[p].timeLeft = 60;
+                }
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (FullCharge)
                 target.AddBuff(BuffID.Ichor, 60 * 8);
+        }
+
+        public override void DrawJar(Vector2 pos, Color lightColor, SpriteEffects eff, Texture2D tex)
+        {
+            base.DrawJar(pos,lightColor, eff, tex);
+            HighlightTex.Value.QuickCenteredDraw(Main.spriteBatch, pos, Color.White, Projectile.rotation
+                , Projectile.scale, eff);
         }
     }
 }

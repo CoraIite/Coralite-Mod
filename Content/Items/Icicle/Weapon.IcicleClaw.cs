@@ -6,6 +6,7 @@ using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases.Items;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Enums;
 using Terraria.ID;
@@ -52,7 +53,7 @@ namespace Coralite.Content.Items.Icicle
 
         public override int MaxFlyLength => 16 * 12;
 
-        public override Vector2 HandelOffset => new Vector2(20, -8);
+        public override Vector2 HandelOffset => new Vector2(10, -8);
 
         public override int ItemType => ModContent.ItemType<IcicleClaw>();
 
@@ -61,6 +62,11 @@ namespace Coralite.Content.Items.Icicle
 
         public override Vector2 LineDrawStartPosOffset()
             => -HandleRot.ToRotationVector2() * 8;
+
+        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
+        {
+            overPlayers.Add(index);
+        }
 
         public override void OnHitNPCFlying(NPC target, NPC.HitInfo hit, int damageDone)
         {

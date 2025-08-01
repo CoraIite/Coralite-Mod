@@ -14,6 +14,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         public static ATex DefaultLine { get; set; }
         public static ATex FairyIVIcon { get; set; }
+        public static ATex JarAimTarget { get; set; }
+        public static ATex JarAimLine { get; set; }
 
         public static void LoadFairyTexture()
         {

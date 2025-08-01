@@ -4,6 +4,7 @@ using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent;
 
@@ -29,7 +30,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// <summary>
         /// 投出后的飞行时间，在此时间段内不会下降
         /// </summary>
-        public int MaxFlyTime = 10;
+        protected int MaxFlyTime = 10;
 
         /// <summary>
         /// 坠落速度，默认0.25f
@@ -47,7 +48,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// <summary>
         /// 蓄力特效的闪光颜色
         /// </summary>
-        public virtual Color ShineColor { get=>Color.White; }
+        public virtual Color ShineColor { get => Color.White; }
         /// <summary>
         /// 最大掉落速度
         /// </summary>
@@ -60,7 +61,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// <summary>
         /// 是否完全蓄力
         /// </summary>
-        public bool FullCharge {  get; set; }
+        public bool FullCharge { get; set; }
 
         public AIStates State
         {
@@ -178,7 +179,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             float rot = Helper.Lerp(-0.85f, -2f, factor);
             Owner.itemRotation = Owner.direction * rot;
             Projectile.rotation = Owner.direction > 0 ? rot : (-rot + MathHelper.Pi);
-            Projectile.Center = Owner.Center + new Vector2(-Owner.direction * 4, Owner.gfxOffY) + Projectile.rotation.ToRotationVector2() * (8 + Projectile.width / 2);
+            Projectile.Center = Owner.Center + new Vector2(-Owner.direction * 4, 0) + Projectile.rotation.ToRotationVector2() * (8 + Projectile.width / 2);
 
             OnHeld();
         }
@@ -223,7 +224,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             if (Owner.TryGetModPlayer(out FairyCatcherPlayer fcp))
             {
                 foreach (var acc in fcp.FairyAccessories)
+                {
                     acc.OnJarShoot(this);
+                    acc.ModifyFlyTime(ref MaxFlyTime);
+                }
 
                 catchPower = (int)(fcp.GetCatchPowerByHeldItem() * damageBonus);
             }
@@ -321,17 +325,14 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             PreDrawSpecial(eff, ref lightColor);
             Texture2D tex = Projectile.GetTexture();
 
-            tex.QuickCenteredDraw(Main.spriteBatch, Projectile.Center - Main.screenPosition, lightColor, Projectile.rotation
-                , Projectile.scale, eff);
+            DrawJar(Projectile.Center - Main.screenPosition + new Vector2(0, Owner.gfxOffY), lightColor, eff, tex);
 
             PostDrawSpecial(eff, lightColor);
 
             if (State == AIStates.Held)
             {
                 if (Owner.TryGetModPlayer(out FairyCatcherPlayer fcp) && fcp.DrawJarAimLine)
-                {
                     DrawShootLine();
-                }
 
                 Color c = Color.White;
                 c.A = 0;
@@ -346,7 +347,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 }
                 else
                 {
-                    float factor = Math.Abs(MathF.Sin(MathHelper.PiOver2 + (Timer-MaxChannelTime) * 0.1f));
+                    float factor = Math.Abs(MathF.Sin(MathHelper.PiOver2 + (Timer - MaxChannelTime) * 0.1f));
                     c *= factor;
                 }
 
@@ -357,12 +358,19 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             return false;
         }
 
+        public virtual void DrawJar(Vector2 pos,Color lightColor, SpriteEffects eff, Texture2D tex)
+        {
+            tex.QuickCenteredDraw(Main.spriteBatch, pos
+                , lightColor, Projectile.rotation
+                , Projectile.scale, eff);
+        }
+
         /// <summary>
         /// 绘制特殊内容，比如仙灵
         /// </summary>
         /// <param name="effect"></param>
         /// <param name="lightColor"></param>
-        public virtual void PreDrawSpecial(SpriteEffects effect,ref Color lightColor)
+        public virtual void PreDrawSpecial(SpriteEffects effect, ref Color lightColor)
         {
 
         }
@@ -372,9 +380,101 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         }
 
-        public void DrawShootLine()
+        /// <summary>
+        /// 绘制瞄准线
+        /// </summary>
+        public virtual void DrawShootLine()
         {
+            Texture2D lineTex = FairySystem.JarAimLine.Value;
 
+            //获取初速度
+            (float speed, int maxFlyTime) = GetSpeed();
+            Vector2 pos = Projectile.Center + new Vector2(0, Owner.gfxOffY);
+            Vector2 velocity = UnitToMouseV * speed;
+            List<ColoredVertex> bars = new();
+
+            Color c = Color.Lerp(Color.Red, Color.Lime, Timer / MaxChannelTime) * 0.6f;
+            float recordU = -Main.GlobalTimeWrappedHourly;
+
+            //前半部分的直线飞行
+            Vector2 normal = UnitToMouseV.RotatedBy(MathHelper.PiOver2);
+            for (int i = 0; i < maxFlyTime; i++)
+            {
+                Vector2 Top = pos + normal * 1;
+                Vector2 Bottom = pos - normal * 1;
+
+                float factor = (float)i / maxFlyTime * 0.5f;
+
+                float alpha = 1;
+                if (factor < 0.4f)
+                    alpha = factor / 0.4f;
+
+                bars.Add(new(Top - Main.screenPosition, c * alpha, new Vector3(recordU, 0, 1)));
+                bars.Add(new(Bottom - Main.screenPosition, c * alpha, new Vector3(recordU, 1, 1)));
+
+                recordU += speed / lineTex.Width;
+                pos += velocity;
+                if (Helper.PointInTile(pos))
+                    goto over;
+            }
+
+            //后半部分坠机
+            int FallTime =(int)( 12*70/ speed);
+            for (int i = 0; i < FallTime; i++)
+            {
+               Vector2 normal2 = velocity.SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.PiOver2);
+
+                Vector2 Top = pos + normal2 * 1;
+                Vector2 Bottom = pos - normal2 * 1;
+
+                float factor = 0.5f + (float)i / FallTime * 0.5f;
+
+                float alpha = 1;
+                if (factor > 0.7f)
+                    alpha = 1 - (factor - 0.7f) / 0.3f;
+
+                bars.Add(new(Top - Main.screenPosition, c  * alpha, new Vector3(recordU, 0, 1)));
+                bars.Add(new(Bottom - Main.screenPosition, c * alpha, new Vector3(recordU, 1, 1)));
+
+                velocity.Y += FallAcc;
+                velocity.Y = Math.Clamp(velocity.Y, -MaxYFallSpeed, MaxYFallSpeed);
+                velocity.X *= XSlowDown;
+
+                recordU += velocity.Length() / lineTex.Width;
+
+                pos += velocity;
+                if (Helper.PointInTile(pos))
+                    goto over;
+            }
+
+
+        over:
+
+            var state = Main.graphics.GraphicsDevice.SamplerStates[0];
+            Main.graphics.GraphicsDevice.Textures[0] = lineTex;
+            Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointWrap;
+            Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars.ToArray(), 0, bars.Count - 2);
+            Main.graphics.GraphicsDevice.SamplerStates[0] = state;
+
+            FairySystem.JarAimTarget.Value.QuickCenteredDraw(Main.spriteBatch
+                , Projectile.Center - Main.screenPosition + UnitToMouseV * (Projectile.width / 2 + 16), rotation: ToMouseA);
+
+
+            (float, int) GetSpeed()
+            {
+                float factor = Math.Clamp(Helper.X2Ease(Timer / MaxChannelTime), 0, 1);
+
+                float speed = Helper.Lerp(Owner.HeldItem.shootSpeed / 2, Owner.HeldItem.shootSpeed, factor);
+                int maxFlyTime = (int)Helper.Lerp(MaxFlyTime / 2, MaxFlyTime, factor);
+                if (maxFlyTime < 1)
+                    maxFlyTime = 1;
+
+                if (Owner.TryGetModPlayer(out FairyCatcherPlayer fcp))
+                    foreach (var acc in fcp.FairyAccessories)
+                        acc.ModifyFlyTime(ref maxFlyTime);
+
+                return (speed, maxFlyTime);
+            }
         }
 
         /// <summary>
