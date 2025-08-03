@@ -401,10 +401,20 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                 foreach (var buff in buffs)
                     buff.ModifyCatchPower(this, ref catchPower);
 
+            AddCatchProgress(player, catchPower);
+            return true;
+        }
+
+        /// <summary>
+        /// 直接增加捕捉进度，进度如果满了就会触发捕捉动作
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="catchPower"></param>
+        public void AddCatchProgress(Player player, int catchPower)
+        {
             CatchProgress += catchPower;
             if (CatchProgress > CatchProgressMax)//捕捉
                 BeCaught(player);
-            return true;
         }
 
         /// <summary>

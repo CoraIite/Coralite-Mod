@@ -53,14 +53,15 @@ namespace Coralite.Content.Items.FairyCatcher.Jar
         {
             base.OnKill(timeLeft);
             for (int i = 0; i < 8; i++)
-            {
-                Dust d = Dust.NewDustPerfect(Main.rand.NextVector2FromRectangle(Projectile.getRect())
+                Dust.NewDustPerfect(Main.rand.NextVector2FromRectangle(Projectile.getRect())
                     , DustID.WoodFurniture, Helper.NextVec2Dir(0.3f, 1f));
-            }
         }
 
         public override void PostDrawSpecial(SpriteEffects effect, Color lightColor)
         {
+            if (Catch==1)
+                return;
+
             float rot = Projectile.rotation - MathHelper.PiOver2;
 
             if (State == AIStates.Held)

@@ -260,3 +260,8 @@ GlistentJarDebuff: {
 	DisplayName: Glistent Jar Debuff
 	Description: Mods.Coralite.Buffs.GlistentJarDebuff.Description
 }
+
+LeechSeedCD: {
+	DisplayName: Leech Seed C D
+	Description: Mods.Coralite.Buffs.LeechSeedCD.Description
+}

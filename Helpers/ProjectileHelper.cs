@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Items.LandOfTheLustrousSeries;
+﻿using Coralite.Content.GlobalNPCs;
+using Coralite.Content.Items.LandOfTheLustrousSeries;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -543,7 +544,18 @@ namespace Coralite.Helpers
                     , Main.rand.NextVector2Circular(speed, speed), modproj.Mod.Find<ModGore>(modproj.Name + "_Gore" + i).Type);
         }
 
+        /// <summary>
+        /// 黏附到指定NPC上
+        /// </summary>
+        /// <param name="proj"></param>
+        /// <param name="npc"></param>
+        public static bool AttatchToTarget(this Projectile proj, NPC npc)
+        {
+            if (npc.TryGetGlobalNPC(out CoraliteGlobalNPC cgnpc))
+               return cgnpc.AddAttachProj(proj);
 
+            return false;
+        }
 
         //--------------------------------------------------------------------------------------------
         //                                    以下是绘制相关部分

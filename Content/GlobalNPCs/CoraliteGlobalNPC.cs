@@ -34,6 +34,7 @@ namespace Coralite.Content.GlobalNPCs
 
         public override bool InstancePerEntity => true;
 
+
         public override void SetDefaults(NPC entity)
         {
             switch (entity.type)
@@ -131,7 +132,10 @@ namespace Coralite.Content.GlobalNPCs
             {
                 npc.velocity *= Helper.Lerp(SlowDownPercent, 1, Math.Clamp(1 - npc.knockBackResist, 0, 1));
             }
+
+            UpdateAttachProj(npc);
         }
+
 
         public override bool CanHitPlayer(NPC npc, Player target, ref int cooldownSlot)
         {
@@ -145,6 +149,8 @@ namespace Coralite.Content.GlobalNPCs
         {
             if (PrisonArmorBreak)
                 modifiers.ArmorPenetration += 8;
+
+            ModifyHitByProj_AttachProj(npc, projectile, ref modifiers);
 
             if (projectile.npcProj || projectile.trap || !projectile.IsMinionOrSentryRelated)
                 return;
