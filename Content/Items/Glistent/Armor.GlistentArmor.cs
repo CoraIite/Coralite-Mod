@@ -298,7 +298,7 @@ namespace Coralite.Content.Items.Glistent
             Player p = Main.player[projectile.owner];
 
             //造成伤害
-            npc.SimpleStrikeNPC(projectile.damage, 0, damageType: Projectile.DamageType, damageVariation: true);
+            npc.SimpleStrikeNPC(Projectile.damage, 0, damageType: FairyDamage.Instance, damageVariation: true);
 
             Vector2 dir = (p.Center - Projectile.Center).SafeNormalize(Vector2.Zero);
 

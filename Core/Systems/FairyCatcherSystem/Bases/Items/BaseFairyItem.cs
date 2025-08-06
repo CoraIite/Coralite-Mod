@@ -7,6 +7,7 @@ using Terraria.DataStructures;
 using Terraria.Localization;
 using Terraria.ModLoader.IO;
 using Terraria.UI.Chat;
+using static SDL2.SDL;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
 {
@@ -326,25 +327,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
 
         public TooltipLine SurvivalStatus()
         {
-            string status;
-            Color newColor;
-            if (dead)
-            {
-                newColor = Color.OrangeRed;
-                status = FairySystem.ResurrectionTime.Format(Life, FairyIV.LifeMax);
-            }
-            else
-            {
-                float lifemax = FairyIV.LifeMax;
-                if (lifemax == 0)
-                    lifemax = 1;
-                newColor = Color.Lerp(Color.OrangeRed, Color.LawnGreen, Life / lifemax);
-                status = FairySystem.CurrentLife.Format(Life, FairyIV.LifeMax);
-            }
-
-            TooltipLine line = new(Mod, "SurvivalStatus", status);
-            line.OverrideColor = newColor;
-
+            TooltipLine line = new(Mod, "SurvivalStatus", ".                                     ");
+            line.OverrideColor = Color.Transparent;
             return line;
         }
 
@@ -421,52 +405,13 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
 
         public override void PostDrawTooltipLine(DrawableTooltipLine line)
         {
-            if (/*showLineValueCount >= 0 && */line.Name == "RaderChart")
+            if (line.Name== "SurvivalStatus")//绘制血量条{
             {
-                Vector2 topLeft = new(line.OriginalX, line.OriginalY);
-                float factor = 1;/*Helper.SqrtEase(1 - showLineValueCount / 10f)*/;
-
-                Vector2 size = ChatManager.GetStringSize(line.Font, line.Text, line.BaseScale);
-                size.Y *= 8;
-                Vector2 center = topLeft + new Vector2(size.X - 7 * 9 - 30, size.Y / 2);
-
-                float length = factor * 7 * 9;
-
-                SpriteBatch spriteBatch = Main.spriteBatch;
-
-                spriteBatch.End();
-                spriteBatch.Begin(SpriteSortMode.Deferred, spriteBatch.GraphicsDevice.BlendState, spriteBatch.GraphicsDevice.SamplerStates[0],
-                                spriteBatch.GraphicsDevice.DepthStencilState, spriteBatch.GraphicsDevice.RasterizerState, null, Main.UIScaleMatrix);
-
-                //绘制底层
-                DrawRaderBack(center, length, new Color(99, 155, 255) * 0.7f);
-                DrawRaderBack(center, factor * 5 * 9, new Color(36, 88, 179) * 0.85f);
-                DrawRaderBack(center, factor * 3 * 9, new Color(28, 60, 116));
-
-                //绘制雷达图
-                DrawRaderChart(center, length);
-
-                spriteBatch.End();
-                spriteBatch.Begin(SpriteSortMode.Deferred, spriteBatch.GraphicsDevice.BlendState, spriteBatch.GraphicsDevice.SamplerStates[0],
-                                spriteBatch.GraphicsDevice.DepthStencilState, spriteBatch.GraphicsDevice.RasterizerState, null, Main.UIScaleMatrix);
-
-                length = factor * (7 * 9 + 26);
-                const float HexAngle = MathHelper.TwoPi / 6;
-
-                //绘制上层图标
-                //生命值
-                DrawRaderIcon(center + (-MathHelper.PiOver2).ToRotationVector2() * length, 0, FairyIV.LifeMax, FairyIV.LifeMaxLevel);
-                //防御
-                DrawRaderIcon(center + (-MathHelper.PiOver2 + HexAngle).ToRotationVector2() * length, 2, FairyIV.Defence, FairyIV.DefenceLevel);
-                //耐力
-                DrawRaderIcon(center + (-MathHelper.PiOver2 + HexAngle * 2).ToRotationVector2() * length, 5, FairyIV.Stamina, FairyIV.StaminaLevel);
-                //速度
-                DrawRaderIcon(center + (-MathHelper.PiOver2 + HexAngle * 3).ToRotationVector2() * length, 3, FairyIV.Speed, FairyIV.SpeedLevel);
-                //等级
-                DrawRaderIcon(center + (-MathHelper.PiOver2 + HexAngle * 4).ToRotationVector2() * length, 4, FairyIV.SkillLevel, FairyIV.SkillLevelLevel);
-                //攻击
-                DrawRaderIcon(center + (-MathHelper.PiOver2 + HexAngle * 5).ToRotationVector2() * length, 1, FairyIV.Damage, FairyIV.DamageLevel);
+                Vector2 size = Helper.GetStringSize(line.Text, Vector2.One);
+                DrawHealthBar(new Vector2(line.X, line.Y) + size/2, Life, FairyIV.LifeMax, size.X);
             }
+            else if (/*showLineValueCount >= 0 && */line.Name == "RaderChart")
+                DrawRaderChat(line);
             else if (line.Name == FairyLifeMax)
                 DrawIVIcon(0, new Vector2(line.X + 10, line.Y + 10));
             else if (line.Name == FairyDamage)
@@ -481,6 +426,113 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
                 DrawIVIcon(5, new Vector2(line.X + 10, line.Y + 10));
             else if (line.Name == FairyScale)
                 DrawIVIcon(6, new Vector2(line.X + 10, line.Y + 10));
+        }
+
+        private void DrawRaderChat(DrawableTooltipLine line)
+        {
+            Vector2 topLeft = new(line.OriginalX, line.OriginalY);
+            float factor = 1;/*Helper.SqrtEase(1 - showLineValueCount / 10f)*/;
+
+            Vector2 size = ChatManager.GetStringSize(line.Font, line.Text, line.BaseScale);
+            size.Y *= 8;
+            Vector2 center = topLeft + new Vector2(size.X - 7 * 9 - 30, size.Y / 2);
+
+            float length = factor * 7 * 9;
+
+            SpriteBatch spriteBatch = Main.spriteBatch;
+
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, spriteBatch.GraphicsDevice.BlendState, spriteBatch.GraphicsDevice.SamplerStates[0],
+                            spriteBatch.GraphicsDevice.DepthStencilState, spriteBatch.GraphicsDevice.RasterizerState, null, Main.UIScaleMatrix);
+
+            //绘制底层
+            DrawRaderBack(center, length, new Color(99, 155, 255) * 0.7f);
+            DrawRaderBack(center, factor * 5 * 9, new Color(36, 88, 179) * 0.85f);
+            DrawRaderBack(center, factor * 3 * 9, new Color(28, 60, 116));
+
+            //绘制雷达图
+            DrawRaderChart(center, length);
+
+            spriteBatch.End();
+            spriteBatch.Begin(SpriteSortMode.Deferred, spriteBatch.GraphicsDevice.BlendState, spriteBatch.GraphicsDevice.SamplerStates[0],
+                            spriteBatch.GraphicsDevice.DepthStencilState, spriteBatch.GraphicsDevice.RasterizerState, null, Main.UIScaleMatrix);
+
+            length = factor * (7 * 9 + 26);
+            const float HexAngle = MathHelper.TwoPi / 6;
+
+            //绘制上层图标
+            //生命值
+            DrawRaderIcon(center + (-MathHelper.PiOver2).ToRotationVector2() * length, 0, FairyIV.LifeMax, FairyIV.LifeMaxLevel);
+            //防御
+            DrawRaderIcon(center + (-MathHelper.PiOver2 + HexAngle).ToRotationVector2() * length, 2, FairyIV.Defence, FairyIV.DefenceLevel);
+            //耐力
+            DrawRaderIcon(center + (-MathHelper.PiOver2 + HexAngle * 2).ToRotationVector2() * length, 5, FairyIV.Stamina, FairyIV.StaminaLevel);
+            //速度
+            DrawRaderIcon(center + (-MathHelper.PiOver2 + HexAngle * 3).ToRotationVector2() * length, 3, FairyIV.Speed, FairyIV.SpeedLevel);
+            //等级
+            DrawRaderIcon(center + (-MathHelper.PiOver2 + HexAngle * 4).ToRotationVector2() * length, 4, FairyIV.SkillLevel, FairyIV.SkillLevelLevel);
+            //攻击
+            DrawRaderIcon(center + (-MathHelper.PiOver2 + HexAngle * 5).ToRotationVector2() * length, 1, FairyIV.Damage, FairyIV.DamageLevel);
+        }
+
+        public void DrawHealthBar(Vector2 center, float Health, float MaxHealth,float maxLength, float alpha = 0.9f)
+        {
+            if (MaxHealth == 0)
+                MaxHealth = 1;
+
+            float factor = Health / (float)MaxHealth;
+            if (factor > 1f)
+                factor = 1f;
+
+            Color newColor;
+            Color backColor;
+            string status;
+            if (dead)
+            {
+                newColor = Color.OrangeRed;
+                backColor = Color.OrangeRed;
+                status = FairySystem.ResurrectionTime.Format(Health, MaxHealth);
+            }
+            else
+            {
+                 backColor = Color.Lerp(Color.DarkRed, Color.DarkGreen, factor);
+                newColor = Color.Lerp(Color.OrangeRed, Color.LawnGreen, factor);
+                status = FairySystem.CurrentLife.Format(Health, MaxHealth);
+            }
+
+            Color barColor = newColor;
+            float totalBarLength = maxLength - 6;
+
+            Texture2D tex = CoraliteAssets.Sparkle.BarSPA.Value;
+
+            Vector2 scale =new Vector2( totalBarLength / tex.Width ,1);
+            backColor *= alpha*0.4f;
+            barColor *= alpha  * 0.4f;
+
+            barColor.A = 0;
+
+            //绘制底部条，固定绘制一个横杠
+            Main.spriteBatch.Draw(tex, center, null, backColor
+                , 0, tex.Size() / 2, scale, 0, 0);
+
+            //绘制顶部，裁剪矩形绘制
+            Rectangle rect = new Rectangle(0, 0, (int)(factor * tex.Width), tex.Height);
+            Main.spriteBatch.Draw(tex, center + new Vector2(-scale.X * tex.Width / 2, 0), rect, barColor, 0, new Vector2(0, tex.Height / 2), scale, 0, 0);
+
+            //绘制指针
+            Texture2D tex2 = CoraliteAssets.Sparkle.ShotLineSPA.Value;
+            //scale = totalBarLength / tex.Width;
+
+            Vector2 pos = center + new Vector2(-scale.X * tex.Width / 2 + factor * scale.X * tex.Width, 0);
+
+            Vector2 scale1 = new Vector2((float)tex2.Height / tex2.Width, 1) * 0.65f * 0.55f;
+            Main.spriteBatch.Draw(tex2, pos, null, barColor
+                , MathHelper.PiOver2, tex2.Size() / 2, scale1, 0, 0);
+            Main.spriteBatch.Draw(tex2, pos, null, barColor with { A = 50 }
+                , MathHelper.PiOver2, tex2.Size() / 2, scale1, 0, 0);
+
+
+            Utils.DrawBorderString(Main.spriteBatch, status, center+new Vector2(0,4), newColor, 1, 0.5f, 0.5f);
         }
 
         private static void DrawIVIcon(int frame, Vector2 center)

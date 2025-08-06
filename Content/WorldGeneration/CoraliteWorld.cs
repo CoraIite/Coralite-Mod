@@ -78,7 +78,7 @@ namespace Coralite.Content.WorldGeneration
             AddGenPass(tasks, VanillaGenPassName.Corruption, "Coralite Evil Chest", GenEvilChest);
            
             //添加仙灵门
-            AddGenPass(tasks, VanillaGenPassName.Shimmer, "Coralite Elf Portal", GenElfPortal,1);
+            AddGenPass(tasks, VanillaGenPassName.FinalCleanup, "Coralite Elf Portal", GenElfPortal,1);
 
             //在箱子中塞入更多战利品
             AddGenPass(tasks, VanillaGenPassName.FinalCleanup, "Coralite Replase Vanilla Chest", ReplaceVanillaChest);
