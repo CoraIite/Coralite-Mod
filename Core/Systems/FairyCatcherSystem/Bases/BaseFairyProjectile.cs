@@ -175,8 +175,15 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             }
 
             if (HasBuff)
-                foreach (var buff in buffs)
+                for (int i = buffs.Count-1; i >-1; i--)
+                {
+                    FairyBuff buff = buffs[i];
                     buff.UpdateInProj(this);
+
+                    buff.UpdateTimeRemain();
+                    if (buff.TimeRemain<1)
+                        buffs.RemoveAt(i);
+                }
 
             AIAfter();
         }

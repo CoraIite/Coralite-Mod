@@ -26,7 +26,7 @@ namespace Coralite.Content.Items.FairyCatcher.CircleCoreAccessories
 
         public void ModifyFairySpawn(ref FairyAttempt attempt)
         {
-            FairyAttempt.AddFairySpawn(CoraliteContent.FairyType<Sunniry>(), 150000);
+            FairyAttempt.AddFairySpawn(CoraliteContent.FairyType<Sunniry>(), 75);
         }
     }
 

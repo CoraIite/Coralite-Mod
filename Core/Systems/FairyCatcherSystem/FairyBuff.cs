@@ -39,6 +39,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <returns></returns>
         public abstract bool IsSame(FairyBuff other);
 
+        public virtual void UpdateTimeRemain()
+        {
+            TimeRemain--;
+        }
+
         #region 捕捉环内操作
 
         /// <summary>

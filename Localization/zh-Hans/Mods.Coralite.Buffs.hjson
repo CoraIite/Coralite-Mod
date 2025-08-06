@@ -267,5 +267,5 @@ GlistentJarDebuff: {
 
 LeechSeedCD: {
 	DisplayName: "[c/7fda99:寄生种子] 冷却"
-	Description: "暂时无法使用 [c/7fda99:寄生种子]"
+	Description: 暂时无法使用 [c/7fda99:寄生种子]
 }

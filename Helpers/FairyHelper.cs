@@ -1,4 +1,5 @@
 ﻿using Coralite.Core.Systems.FairyCatcherSystem;
+using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Linq;
@@ -98,6 +99,28 @@ namespace Coralite.Helpers
             }
 
             return caught;
+        }
+
+        /// <summary>
+        /// 尝试后去玩家所属的仙灵捕捉环
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="catcherProj"></param>
+        /// <returns></returns>
+        public static bool TryGetFairyCircle(Player player,out FairyCatcherProj catcherProj)
+        {
+            catcherProj = null;
+            if (!player.TryGetModPlayer(out FairyCatcherPlayer fcp))
+                return false;
+
+            if (!Main.projectile.IndexInRange(fcp.FairyCircleProj))
+                return false;
+
+            if (Main.projectile[fcp.FairyCircleProj].ModProjectile is not FairyCatcherProj fcproj)
+                return false;
+
+            catcherProj = fcproj;
+            return true;
         }
 
         /// <summary>

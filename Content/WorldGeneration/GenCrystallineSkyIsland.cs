@@ -989,7 +989,7 @@ namespace Coralite.Content.WorldGeneration
 
                         Point currP = topLeft + new Point(m, n);
 
-                        float mainNoise = MainNoise(new Vector2(x + m, y + n), new Vector2(radius * 2) * 8);
+                        float mainNoise = CrystallineMainNoise(new Vector2(x + m, y + n), new Vector2(radius * 2) * 8);
                         if (mainNoise > 0.8f)
                         {
                             if (Main.tile[currP].WallType > 0)
@@ -1093,7 +1093,7 @@ namespace Coralite.Content.WorldGeneration
                     if (!t.HasTile)
                         continue;
 
-                    float mainNoise = MainNoise(new Vector2(x + i, y + j), new Vector2(size) * 6);
+                    float mainNoise = CrystallineMainNoise(new Vector2(x + i, y + j), new Vector2(size) * 6);
                     if (mainNoise > 0.8f)
                         t.ResetToType(smoothSkarn);
                 }
@@ -1489,7 +1489,7 @@ namespace Coralite.Content.WorldGeneration
             return t * t * (3f - 2f * t);
         }
 
-        public float MainNoise(Vector2 selfPos, Vector2 size)
+        public float CrystallineMainNoise(Vector2 selfPos, Vector2 size)
         {
             Vector2 st = selfPos / size;
             st.Y *= size.Y / size.X;

@@ -8,7 +8,6 @@ using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using Coralite.Helpers;
 using System;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.Localization;
 using static Terraria.ModLoader.ModContent;
@@ -206,7 +205,7 @@ namespace Coralite.Content.Items.Glistent
         }
     }
 
-    public class LeechSeed : ModProjectile,IAttachableProjectile
+    public class LeechSeed : ModProjectile, IAttachableProjectile
     {
         public override string Texture => AssetDirectory.GlistentItems + Name;
 
@@ -248,10 +247,21 @@ namespace Coralite.Content.Items.Glistent
                 default:
                 case 0://自由飞翔
                     Timer++;
-                    if (Timer>30)
+                    if (Timer > 30)
                     {
                         if (Projectile.velocity.Y < 10)
                             Projectile.velocity.Y += 0.2f;
+                    }
+
+                    if (Helper.TryGetFairyCircle(Main.player[Projectile.owner], out FairyCatcherProj catcherProj))
+                    {
+                        Rectangle rect = Projectile.getRect();
+                        foreach (var fairyRect in catcherProj.GetFairyCollides())
+                            if (rect.Intersects(fairyRect.Item1))
+                            {
+                                fairyRect.Item2.AddBuff<LeechSeedFairyBuff>(60 * 8);
+                                Projectile.Kill();
+                            }
                     }
 
                     Projectile.rotation += MathF.Sign(Projectile.velocity.X) * Projectile.velocity.Length() / 70;
@@ -288,7 +298,7 @@ namespace Coralite.Content.Items.Glistent
             Player p = Main.player[projectile.owner];
 
             //造成伤害
-            npc.SimpleStrikeNPC(projectile.damage, 0, damageType: projectile.DamageType, damageVariation: true);
+            npc.SimpleStrikeNPC(projectile.damage, 0, damageType: Projectile.DamageType, damageVariation: true);
 
             Vector2 dir = (p.Center - Projectile.Center).SafeNormalize(Vector2.Zero);
 
@@ -353,11 +363,21 @@ namespace Coralite.Content.Items.Glistent
         {
             if (TimeRemain % 30 == 0)
                 fairy.AddCatchProgress(Main.LocalPlayer, 2);
+
+            if (TimeRemain % 2 == 0)
+            {
+                Dust d = Dust.NewDustPerfect(fairy.Center + Helper.NextVec2Dir(4, 8), DustID.GemEmerald
+                    , Helper.NextVec2Dir(0.5f, 1.5f), Scale: Main.rand.NextFloat(0.8f, 1.2f));
+                d.noGravity = true;
+            }
         }
 
         public override void PreDraw(Vector2 center, Vector2 size, ref Color drawColor, float alpha)
         {
             drawColor = Color.Lime;
+
+            LeechSeedFairyTex.Value.QuickCenteredDraw(Main.spriteBatch, center + new Vector2(0, size.Y - 40)-Main.screenPosition
+                , Color.White, MathF.Sin(Main.GlobalTimeWrappedHourly) * 0.8f);
         }
     }
 }

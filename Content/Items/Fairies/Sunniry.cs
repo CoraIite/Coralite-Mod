@@ -80,7 +80,7 @@ namespace Coralite.Content.Items.Fairies
                 if (Main.rand.NextBool())
                 {
                     Dust d = Dust.NewDustPerfect(Center + Main.rand.NextVector2Circular(5, 5)
-                        , DustID.ApprenticeStorm, -velocity * Main.rand.NextFloat(0.1f, 0.35f));
+                        , DustID.GoldCoin, -velocity * Main.rand.NextFloat(0.1f, 0.35f));
                     d.noGravity = true;
                 }
 

@@ -60,6 +60,7 @@ namespace Coralite.Content.Items.FairyCatcher
         {
             Main.tileFrameImportant[Type] = true;
             Main.tileNoAttach[Type] = true;
+            Main.tileLighted[Type] = true;
 
             TileID.Sets.PreventsTileRemovalIfOnTopOfIt[Type] = true;
             TileID.Sets.PreventsSandfall[Type] = true;
@@ -78,6 +79,13 @@ namespace Coralite.Content.Items.FairyCatcher
             AddMapEntry(Color.Purple);
 
             AnimationFrameHeight = 11 * 18;
+        }
+
+        public override void ModifyLight(int i, int j, ref float r, ref float g, ref float b)
+        {
+            r = 0.25f;
+            g = 0.1f;
+            b = 0.4f;
         }
 
         public override void NearbyEffects(int i, int j, bool closer)

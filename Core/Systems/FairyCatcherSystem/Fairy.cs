@@ -279,9 +279,16 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                 case AIState.Catching:
                     Catching(catcher);
 
-                    if (buffs != null && buffs.Count > 0)
-                        foreach (var buff in buffs)
+                    if (HasBuff)
+                        for (int i = buffs.Count - 1; i > -1; i--)
+                        {
+                            FairyBuff buff = buffs[i];
                             buff.UpdateInCatcher(this);
+
+                            buff.UpdateTimeRemain();
+                            if (buff.TimeRemain < 1)
+                                buffs.RemoveAt(i);
+                        }
 
                     UpdateVelocity();
                     break;

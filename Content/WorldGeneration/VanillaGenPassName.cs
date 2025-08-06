@@ -24,6 +24,11 @@
         public const string Dungeon = "Dungeon";
 
         /// <summary>
+        /// 生成微光湖
+        /// </summary>
+        public const string Shimmer = "Shimmer";
+
+        /// <summary>
         /// 生成湖泊
         /// </summary>
         public const string Lakes = "Lakes";
