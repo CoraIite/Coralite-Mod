@@ -8,6 +8,7 @@ using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.GameContent.Drawing;
 using Terraria.ID;
 using Terraria.ObjectData;
 
@@ -111,21 +112,28 @@ namespace Coralite.Content.Items.FairyCatcher
             {
                 Item item = Main.item[k];
 
-                if (item == null || item.IsAir || item.timeSinceItemSpawned < 60)
+                if (item == null || item.IsAir || item.timeSinceItemSpawned < 60 || item.velocity != Vector2.Zero)
                     continue;
 
                 Vector2 pos = (new Vector2(i, j) * 16) + new Vector2((16 * 6) + 4, (16 * 6) + 2);
 
-                if (Vector2.Distance(pos, item.Center) > 16 * 20)
+                if (Vector2.Distance(pos, item.Center) > 16 * 40)
                     continue;
 
                 if (FairySystem.TryGetElfPortalTrades(item.type, out _))
                 {
-                    int p = Projectile.NewProjectile(new EntitySource_TileUpdate(i, j), pos, Vector2.Zero, ModContent.ProjectileType<ElfTradeProj>()
+                    int p = Projectile.NewProjectile(new EntitySource_TileUpdate(i, j), pos, Helper.NextVec2Dir(2,3), ModContent.ProjectileType<ElfTradeProj>()
                          , 0, 0, ai0: item.type, ai1: item.stack);
 
                     (Main.projectile[p].ModProjectile as ElfTradeProj).itemCenter = item.Center;
                     Main.item[k].TurnToAir();
+                    ParticleOrchestrator.RequestParticleSpawn(clientOnly: true, ParticleOrchestraType.ShimmerArrow, new ParticleOrchestraSettings
+                    {
+                        PositionInWorld = pos,
+                        MovementVector = Vector2.Zero
+                    });
+
+                    Helper.PlayPitched(CoraliteSoundID.Fairy_NPCHit5, pos);
                 }
             }
         }
@@ -164,7 +172,27 @@ namespace Coralite.Content.Items.FairyCatcher
 
             const float TwoPi = (float)Math.PI * 2f;
             float offset = (float)Math.Sin(Main.GlobalTimeWrappedHourly * TwoPi / 5f);
-            Vector2 drawPos = worldPos + offScreen - Main.screenPosition + new Vector2(98f, 92) + new Vector2(0f, offset * 8f);
+            Vector2 toCenter = new(98f, 92);
+            Vector2 drawPos = worldPos + offScreen - Main.screenPosition + toCenter + new Vector2(0f, offset * 4f);
+
+            Vector2 offset2=Vector2.Zero;
+            
+            for (int k = 0; k < Main.maxPlayers; k++)
+            {
+                Player player = Main.player[k];
+
+                if (player.active&&!player.dead)
+                {
+                    float dis = Vector2.Distance(player.Center, worldPos + toCenter);
+                    if (dis< 1000)
+                    {
+                        offset2 = (player.Center - (worldPos + toCenter)).SafeNormalize(Vector2.Zero) * dis / 50;
+                        break;
+                    }
+                }
+            }
+
+            drawPos += offset2;
 
             // 绘制主帖图
             spriteBatch.Draw(texture, drawPos, null, Color.White, 0f, origin, 0.4f, 0, 0f);
@@ -178,6 +206,7 @@ namespace Coralite.Content.Items.FairyCatcher
         public ref float ItemType => ref Projectile.ai[0];
         public ref float ItemStack => ref Projectile.ai[1];
         public ref float State => ref Projectile.ai[2];
+        public ref float Timer => ref Projectile.localAI[1];
 
         public Vector2 itemCenter;
         public Vector2 PortalCenter;
@@ -192,6 +221,7 @@ namespace Coralite.Content.Items.FairyCatcher
         {
             Projectile.tileCollide = false;
             Projectile.friendly = true;
+            Projectile.extraUpdates = 1;
         }
 
         public override void AI()
@@ -202,37 +232,55 @@ namespace Coralite.Content.Items.FairyCatcher
                 Projectile.localAI[0] = 1;
             }
 
-            Projectile.UpdateFrameNormally(5, 4);
+            Projectile.UpdateFrameNormally(8, 4);
 
             if (State == 0)
             {
-                Vector2 targetPos = itemCenter + new Vector2(0, -20);
-                Projectile.velocity = (targetPos - Projectile.Center).SafeNormalize(Vector2.Zero) * 1.5f;
-                if (Vector2.Distance(targetPos, Projectile.Center) < 3)
+                Timer++;
+                if (Timer < 40)
                 {
-                    Projectile.Center = targetPos;
-                    State = 1;
+                    Projectile.velocity *= 0.97f;
+                }
+                else
+                {
+                    Vector2 targetPos = itemCenter + new Vector2(0, -20);
+                    Projectile.velocity = Vector2.Lerp(Projectile.velocity, (targetPos - Projectile.Center).SafeNormalize(Vector2.Zero) * 1.5f, 0.02f);
+                    if (Vector2.Distance(targetPos, Projectile.Center) < 6)
+                    {
+                        Projectile.Center = targetPos;
+                        State = 1;
+                    }
                 }
             }
             else if (State == 1)
             {
-                Projectile.velocity = (PortalCenter - Projectile.Center).SafeNormalize(Vector2.Zero) * 2;
+                Projectile.velocity = Vector2.Lerp(Projectile.velocity, (PortalCenter - Projectile.Center).SafeNormalize(Vector2.Zero) * 2, 0.02f);
                 itemCenter = Projectile.Center + Projectile.velocity + new Vector2(0, 20);
                 if (Vector2.Distance(PortalCenter, Projectile.Center) < 4)
                 {
-                    Projectile.velocity *= 0;
+                    Projectile.velocity *= 0.1f;
                     State = 2;
                 }
             }
             else
             {
-                alpha -= 0.05f;
+                alpha -= 0.025f;
                 if (alpha < 0.1f)
                 {
                     FairySystem.ElfTrade((int)ItemType, (int)ItemStack, PortalCenter);
+                    ParticleOrchestrator.RequestParticleSpawn(clientOnly: true, ParticleOrchestraType.ShimmerArrow, new ParticleOrchestraSettings
+                    {
+                        PositionInWorld = Projectile.Center,
+                        MovementVector = Vector2.Zero
+                    });
+
+                    Helper.PlayPitched(CoraliteSoundID.FairyDeath_NPCDeath7, Projectile.Center);
+
                     Projectile.Kill();
                 }
             }
+
+            Projectile.rotation = Projectile.velocity.X * 0.3f;
         }
 
         public override bool PreDraw(ref Color lightColor)
