@@ -6221,3 +6221,8 @@ LeafScope: {
 		“仅靠一片叶子就能瞄准目标！”
 		'''
 }
+
+CrabClaw: {
+	// DisplayName: Crab Claw
+	// Tooltip: ""
+}

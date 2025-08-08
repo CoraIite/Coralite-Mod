@@ -1,9 +1,9 @@
 ﻿using Coralite.Core;
+using Coralite.Core.Attributes;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.FairyCatcherSystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using System;
 using Terraria;
 using Terraria.DataStructures;
@@ -43,19 +43,13 @@ namespace Coralite.Content.Items.FairyCatcher
         }
     }
 
+    [AutoLoadTexture(Path = AssetDirectory.FairyCatcherItems)]
     public class ElfPortalTile : ModTile
     {
         public override string Texture => AssetDirectory.FairyCatcherItems + Name;
 
-        public static Asset<Texture2D> EyeTex;
-
-        public override void Load()
-        {
-            if (!Main.dedServ)
-            {
-                EyeTex = ModContent.Request<Texture2D>(AssetDirectory.FairyCatcherItems + "ElfPortalEye");
-            }
-        }
+        [AutoLoadTexture(Name = "ElfPortalEye")]
+        public static ATex EyeTex { get; set; }
 
         public override void SetStaticDefaults()
         {

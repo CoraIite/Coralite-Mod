@@ -1,8 +1,11 @@
 ﻿using Coralite.Core.Systems.FairyCatcherSystem.Bases;
+using Terraria.DataStructures;
+using Terraria;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem
 {
-    public interface IFairyAccessory : IFairyJarAccessory, IFairyTongAccessory, IFairySpawnModifyer
+    public interface IFairyAccessory : IFairyJarAccessory, IFairyTongAccessory
+        , IFairySpawnModifyer, IFairyGloveAccessory
     {
     }
 
@@ -47,5 +50,25 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// </summary>
         /// <param name="proj"></param>
         void OnTongStartAttack(BaseTongsProj proj) { }
+    }
+
+    public interface IFairyGloveAccessory
+    {
+        /// <summary>
+        /// 在手套类武器开始攻击时调用
+        /// </summary>
+        /// <param name="proj"></param>
+        void ModifyGloveInit(BaseGloveProj proj) { }
+
+        /// <summary>
+        /// 自定义手套武器在攻击时的操作
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="source"></param>
+        /// <param name="position"></param>
+        /// <param name="velocity"></param>
+        /// <param name="type"></param>
+        /// <param name="catch"></param>
+        void ModifyShootGlove(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback, int @catch) { }
     }
 }

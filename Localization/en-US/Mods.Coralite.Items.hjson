@@ -6158,3 +6158,8 @@ LeafScope: {
 	DisplayName: Leaf Scope
 	Tooltip: ""
 }
+
+CrabClaw: {
+	DisplayName: Crab Claw
+	Tooltip: ""
+}
