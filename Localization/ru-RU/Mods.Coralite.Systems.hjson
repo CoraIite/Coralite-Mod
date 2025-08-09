@@ -88,6 +88,7 @@ FairySystem: {
 		// ZoneCorrupt: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.ZoneCorrupt
 		// GemWall: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.GemWall
 		// ZoneSnow: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.ZoneSnow
+		// ZoneUndergroundJungle: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.ZoneUndergroundJungle
 	}
 
 	// SkillLVTips: Mods.Coralite.Systems.FairySystem.SkillLVTips
@@ -303,5 +304,10 @@ FairySkill: {
 	FSkill_IceFire: {
 		// Description: Mods.Coralite.Systems.FairySkill.FSkill_IceFire.Description
 		// SkillName: Mods.Coralite.Systems.FairySkill.FSkill_IceFire.SkillName
+	}
+
+	FSkill_SporeExplode: {
+		// Description: Mods.Coralite.Systems.FairySkill.FSkill_SporeExplode.Description
+		// SkillName: Mods.Coralite.Systems.FairySkill.FSkill_SporeExplode.SkillName
 	}
 }

@@ -299,7 +299,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// </summary>
         public virtual void Skill()
         {
-            FairySkill skill = _skills[(int)UseSkillIndex];
+            FairySkill skill = _skills[UseSkillIndex];
 
             //初始化技能
             if (Timer == 0)
@@ -442,6 +442,17 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             Projectile.tileCollide = false;
 
             UseSkillIndex++;
+            int currentIndex = UseSkillIndex;
+            for (int i = 0; i < _skills.Length; i++)
+            {
+                if (_skills[(i + currentIndex) % _skills.Length].CanUseSkill(this))
+                    break;
+
+                UseSkillIndex++;
+                if (UseSkillIndex >= _skills.Length)
+                    UseSkillIndex = 0;
+            }
+
             if (UseSkillIndex >= _skills.Length)
                 UseSkillIndex = 0;
 
@@ -462,6 +473,14 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
                 OnStartUseSkill(target);
                 canDamage = true;
+
+                for (int i = 0; i < _skills.Length; i++)
+                {
+                    if (_skills[i].CanUseSkill(this))
+                        break;
+
+                    UseSkillIndex++;
+                }
             }
             else
                 ExchangeToRest();

@@ -75,6 +75,16 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         }
 
         /// <summary>
+        /// 是否能使用，被动技能返回<see cref="false"/>
+        /// </summary>
+        /// <param name="fairyProj"></param>
+        /// <returns></returns>
+        public virtual bool CanUseSkill(BaseFairyProjectile fairyProj)
+        {
+            return true;
+        }
+
+        /// <summary>
         /// 开始攻击时调用，用于初始化
         /// </summary>
         public virtual void OnStartAttack(BaseFairyProjectile fairyProj)

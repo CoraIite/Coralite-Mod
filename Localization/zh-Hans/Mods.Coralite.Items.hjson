@@ -6223,6 +6223,11 @@ LeafScope: {
 }
 
 CrabClaw: {
-	// DisplayName: Crab Claw
-	// Tooltip: ""
+	DisplayName: 蟹钳
+	Tooltip: 装备后略微增加触及距离
+}
+
+SporesFairyItem: {
+	DisplayName: 种芽灵
+	Tooltip: ""
 }

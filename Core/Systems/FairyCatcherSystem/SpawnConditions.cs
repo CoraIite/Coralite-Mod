@@ -47,6 +47,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             new(() => GetSpawnCondition(DescriptionID.ZoneHell).Value
                 , attempt => attempt.Player.ZoneUnderworldHeight);
 
+        /// <summary> 地下丛林环境 </summary>
+        public static FairySpawnCondition ZoneUndergroundJungle =
+            new(() => GetSpawnCondition(DescriptionID.ZoneUndergroundJungle).Value
+                , attempt => attempt.Player.ZoneRockLayerHeight && attempt.Player.ZoneJungle);
+
 
         /// <summary> 仙灵捕捉环半径大于9 </summary>
         public static FairySpawnCondition CircleR_9 =

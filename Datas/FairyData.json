@@ -746,5 +746,73 @@
       "Eternal": 5,
       "Over": 6
     }
+  },
+  "SporesFairy": {
+    "LifeMax": {
+      "Weak": 80,
+      "WeakCommon": 90,
+      "Common": 100,
+      "Uncommon": 140,
+      "Rare": 190,
+      "Epic": 250,
+      "Legendary": 320,
+      "Eternal": 400,
+      "Over": 500
+    },
+    "Damage": {
+      "Weak": 7,
+      "WeakCommon": 9,
+      "Common": 10,
+      "Uncommon": 12,
+      "Rare": 27,
+      "Epic": 35,
+      "Legendary": 50,
+      "Eternal": 60,
+      "Over": 80
+    },
+    "Defence": {
+      "Weak": 5,
+      "WeakCommon": 7,
+      "Common": 9,
+      "Uncommon": 17,
+      "Rare": 23,
+      "Epic": 30,
+      "Legendary": 40,
+      "Eternal": 55,
+      "Over": 70
+    },
+    "Speed": {
+      "Weak": 4,
+      "WeakCommon": 4.5,
+      "Common": 5,
+      "Uncommon": 6.5,
+      "Rare": 8,
+      "Epic": 9.5,
+      "Legendary": 11,
+      "Eternal": 13,
+      "Over": 16
+    },
+    "SkillLevel": {
+      "Weak": 1,
+      "WeakCommon": 1,
+      "Common": 2,
+      "Uncommon": 2,
+      "Rare": 3,
+      "Epic": 3,
+      "Legendary": 4,
+      "Eternal": 5,
+      "Over": 6
+    },
+    "Stamina": {
+      "Weak": 2,
+      "WeakCommon": 2,
+      "Common": 3,
+      "Uncommon": 3,
+      "Rare": 4,
+      "Epic": 4,
+      "Legendary": 5,
+      "Eternal": 6,
+      "Over": 7
+    }
   }
 }

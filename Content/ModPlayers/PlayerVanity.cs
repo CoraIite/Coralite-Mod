@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Items.FlyingShields;
+﻿using Coralite.Content.Items.FairyCatcher.Glove;
+using Coralite.Content.Items.FlyingShields;
 using Coralite.Content.Items.LandOfTheLustrousSeries.Accessories;
 using Coralite.Content.Items.Misc_Equip;
 using Coralite.Content.Items.Misc_Magic;
@@ -20,6 +21,11 @@ namespace Coralite.Content.ModPlayers
                 drawInfo.drawPlayer.handon = EquipLoader.GetEquipSlot(Mod, "BoneRing", EquipType.HandsOn);
             else if (HasEffect(nameof(VioletEmblem)))
                 drawInfo.drawPlayer.handon = EquipLoader.GetEquipSlot(Mod, "VioletEmblem", EquipType.HandsOn);
+            else if (HasEffect(nameof(CrabClaw)))
+            {
+                drawInfo.usesCompositeFrontHandAcc = true;
+                drawInfo.drawPlayer.handon = EquipLoader.GetEquipSlot(Mod, nameof(CrabClaw), EquipType.HandsOn);
+            }
 
             if (HasEffect(nameof(HylianShield)))
                 drawInfo.drawPlayer.shield = EquipLoader.GetEquipSlot(Mod, "HylianShield", EquipType.Shield);
@@ -33,7 +39,6 @@ namespace Coralite.Content.ModPlayers
 
             if (HasEffect(nameof(ConchRobe)))
                 drawInfo.drawPlayer.legs = EquipLoader.GetEquipSlot(Mod, nameof(ConchRobe), EquipType.Legs);
-
             if (HasEffect(nameof(SquirrelSet)))
             {
                 drawInfo.drawPlayer.head = EquipLoader.GetEquipSlot(Mod, "SquirrelSet", EquipType.Head);

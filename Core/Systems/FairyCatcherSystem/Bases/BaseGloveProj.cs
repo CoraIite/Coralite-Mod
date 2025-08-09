@@ -26,6 +26,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         public int Direction = 1;
         /// <summary> 挥舞时间，减小则挥地更快 </summary>
         public int MaxTime = 30;
+        /// <summary> 回归速率，越小返回的越快 </summary>
+        public float BackPercent = 0.8f;
+        /// <summary> 返回总时间 </summary>
+        public float BackTimeMax = 10;
         /// <summary> 长度控制 </summary>
         public (float, float) DistanceController = (-20, 40);
 
@@ -95,7 +99,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         public override void AI()
         {
             //使用弹幕角度作为角度
-            if (Timer<=MaxTime)
+            if (Timer <= MaxTime)
             {
                 float factor = Timer / MaxTime;
 
@@ -104,12 +108,15 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
                 UpdateDistanceToCenter(factor);
                 SpawnDustOnSwing();
+
+                if (Timer < Owner.itemTimeMax)
+                    Owner.itemRotation = BaseAngle + BaseAngleOffset + (Owner.direction > 0 ? 0 : MathHelper.Pi);
             }
             else
             {
                 Projectile.Center = GetCenter() + Projectile.rotation.ToRotationVector2() * DistanceToCenter;
-                DistanceToCenter *=   0.8f;
-                alpha -= 0.1f;
+                DistanceToCenter *= BackPercent;
+                alpha -= 1f / BackTimeMax;
                 if (alpha < 0)
                     Projectile.Kill();
                 return;
@@ -154,7 +161,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         {
             Texture2D tex = Projectile.GetTexture();
 
-            Vector2 pos = Projectile.Center + Projectile.height / 2 * Projectile.rotation.ToRotationVector2() - Main.screenPosition;
+            Vector2 pos = Projectile.Center
+                + new Vector2(0, Owner.gfxOffY)
+                + Projectile.height / 2 * Projectile.rotation.ToRotationVector2()
+                - Main.screenPosition;
 
             int direction = Direction * Projectile.spriteDirection;
             float rot = Projectile.rotation + (direction > 0 ? exRot : MathHelper.Pi - exRot);

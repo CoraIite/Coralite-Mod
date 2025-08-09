@@ -6205,3 +6205,8 @@ CrabClaw: {
 	// DisplayName: Crab Claw
 	// Tooltip: ""
 }
+
+SporesFairyItem: {
+	// DisplayName: Spores Fairy Item
+	// Tooltip: ""
+}

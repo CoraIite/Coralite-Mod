@@ -53,6 +53,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             ZoneHell,
             ZoneCrimson,
             ZoneCorrupt,
+            ZoneUndergroundJungle,
 
 
 
