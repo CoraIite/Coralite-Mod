@@ -6210,3 +6210,8 @@ SporesFairyItem: {
 	// DisplayName: Spores Fairy Item
 	// Tooltip: ""
 }
+
+HallowYoke: {
+	// DisplayName: Hallow Yoke
+	// Tooltip: ""
+}

@@ -125,7 +125,7 @@ namespace Coralite.Content.Items.Fairies
 
     public class FSkill_SporeExplode : FairySkill
     {
-        public override string Texture => AssetDirectory.FairySkillIcons + "Nature";
+        public override string Texture => AssetDirectory.FairySkillIcons + "SporeExplode";
 
         public LocalizedText Description { get; set; }
 

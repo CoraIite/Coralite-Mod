@@ -28,7 +28,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
         /// <summary>
         /// 每次回血回多少，默认1
         /// </summary>
-        public virtual (float, int) FairyHeal => (0.00_5f, 3);
+        public virtual (float, int) FairyHeal => (0.00_5f, 5);
         /// <summary>
         /// 多少帧回一次血，默认1秒
         /// </summary>

@@ -10,6 +10,7 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
 using Terraria.Localization;
+using Terraria.ModLoader.IO;
 
 namespace Coralite.Content.Items.Fairies
 {
@@ -157,7 +158,7 @@ namespace Coralite.Content.Items.Fairies
 
     public class FSkill_IceFire : FSkill_ShootProj
     {
-        public override string Texture => AssetDirectory.FairySkillIcons + "Blow";
+        public override string Texture => AssetDirectory.FairySkillIcons + "Ice";
 
         public LocalizedText Description { get; set; }
 

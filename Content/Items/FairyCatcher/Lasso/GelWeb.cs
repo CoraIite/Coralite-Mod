@@ -32,6 +32,8 @@ namespace Coralite.Content.Items.FairyCatcher.Lasso
     {
         public override float GetShootRandAngle => Main.rand.NextFloat(-0.2f, 0.2f);
 
+        public override float HandleDrawOffset => 8;
+
         public override void SetSwingProperty()
         {
             minDistance = 52;
@@ -63,12 +65,6 @@ namespace Coralite.Content.Items.FairyCatcher.Lasso
 
                 Helper.PlayPitched(CoraliteSoundID.Fleshy_NPCHit1, Projectile.Center, pitchAdjust: -0.1f);
             }
-        }
-
-        public override void DrawHandle(Texture2D HandleTex)
-        {
-            Main.spriteBatch.Draw(HandleTex, Owner.itemLocation - Main.screenPosition+_Rotation.ToRotationVector2()*8, null,
-                Lighting.GetColor(Owner.Center.ToTileCoordinates()), _Rotation + DirSign * spriteRotation, HandleTex.Size() / 2, 1f, Owner.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0);
         }
     }
 

@@ -6228,6 +6228,11 @@ CrabClaw: {
 }
 
 SporesFairyItem: {
-	DisplayName: 种芽灵
+	DisplayName: 孢子灵
 	Tooltip: ""
+}
+
+HallowYoke: {
+	// DisplayName: Hallow Yoke
+	// Tooltip: ""
 }

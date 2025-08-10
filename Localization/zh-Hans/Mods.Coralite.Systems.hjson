@@ -337,7 +337,7 @@ FairySkill: {
 		Description:
 			'''
 			[c/ffdc7f:被动效果]
-			濒死时生成7个伤害为 {0} 的孢子雾
+			濒死时生成多个伤害为 {0} 的孢子雾
 			'''
 		SkillName: 孢子喷发
 	}
