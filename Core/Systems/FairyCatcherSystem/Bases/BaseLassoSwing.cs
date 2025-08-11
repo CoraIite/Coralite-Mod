@@ -79,7 +79,13 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             }
         }
 
+        /// <summary>
+        /// 后摇时间
+        /// </summary>
         public int delayTime = 8;
+        /// <summary>
+        /// 挥舞总时间
+        /// </summary>
         public int shootTime = 22;
 
         private HashSet<int> IDs;
