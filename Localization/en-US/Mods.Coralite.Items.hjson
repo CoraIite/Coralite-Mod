@@ -6170,6 +6170,16 @@ SporesFairyItem: {
 }
 
 HallowYoke: {
-	DisplayName: Hallow Yoke
+	DisplayName: Gleipnir
+	Tooltip: ""
+}
+
+TinTong: {
+	DisplayName: Tin Tong
+	Tooltip: ""
+}
+
+RedJadeTong: {
+	DisplayName: Red Jade Tong
 	Tooltip: ""
 }

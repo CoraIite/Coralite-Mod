@@ -6215,3 +6215,13 @@ HallowYoke: {
 	// DisplayName: Hallow Yoke
 	// Tooltip: ""
 }
+
+TinTong: {
+	// DisplayName: Tin Tong
+	// Tooltip: ""
+}
+
+RedJadeTong: {
+	// DisplayName: Red Jade Tong
+	// Tooltip: ""
+}

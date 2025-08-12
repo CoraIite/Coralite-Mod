@@ -81,7 +81,7 @@ namespace Coralite.Content.GlobalNPCs
     public interface IAttachableProjectile
     {
         /// <summary>
-        /// 
+        /// 该NPC受到弹幕攻击时调用
         /// </summary>
         /// <param name="npc"></param>
         /// <param name="projectile"></param>

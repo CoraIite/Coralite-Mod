@@ -10,7 +10,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.FairyCatcher.Tongs
 {
-    public class CopperTong : BaseTongsItem
+    public class TinTong : BaseTongsItem
     {
         public override string Texture => AssetDirectory.FairyCatcherTong + Name;
 
@@ -18,7 +18,7 @@ namespace Coralite.Content.Items.FairyCatcher.Tongs
 
         public override void SetOtherDefaults()
         {
-            Item.shoot = ModContent.ProjectileType<CopperTongProj>();
+            Item.shoot = ModContent.ProjectileType<TinTongProj>();
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.useTime = Item.useAnimation = 20;
             Item.shootSpeed = 10;
@@ -30,17 +30,17 @@ namespace Coralite.Content.Items.FairyCatcher.Tongs
         public override void AddRecipes()
         {
             CreateRecipe()
-                .AddIngredient(ItemID.CopperBar, 10)
+                .AddIngredient(ItemID.TinBar, 10)
                 .AddTile(TileID.Anvils)
                 .Register();
         }
     }
 
     [AutoLoadTexture(Path = AssetDirectory.FairyCatcherTong)]
-    public class CopperTongProj : BaseTongsProj
+    public class TinTongProj : BaseTongsProj
     {
         public static ATex CopperTongChain { get; private set; }
-        public static ATex CopperTongHandle { get; private set; }
+        public static ATex TinTongHandle { get; private set; }
         public static ATex CopperTongHandleHead { get; private set; }
 
         public ref float HandleHeadRot => ref Projectile.localAI[2];
@@ -51,7 +51,7 @@ namespace Coralite.Content.Items.FairyCatcher.Tongs
 
         public override Vector2 HandelOffset => new Vector2(20, -6);
 
-        public override int ItemType => ModContent.ItemType<CopperTong>();
+        public override int ItemType => ModContent.ItemType<TinTong>();
 
         public override void Flying()
         {
@@ -67,7 +67,7 @@ namespace Coralite.Content.Items.FairyCatcher.Tongs
             HandleHeadRot -= MathF.Sign(Projectile.velocity.X) * 0.66f;
         }
 
-        public override Texture2D GetHandleTex() => CopperTongHandle.Value;
+        public override Texture2D GetHandleTex() => TinTongHandle.Value;
         public override Texture2D GetLineTex() => CopperTongChain.Value;
 
         public override Vector2 LineDrawStartPosOffset()
@@ -80,7 +80,7 @@ namespace Coralite.Content.Items.FairyCatcher.Tongs
             Vector2 offset = -HandleRot.ToRotationVector2() * 11 + (HandleRot - Owner.direction * MathHelper.PiOver2).ToRotationVector2() * 4;
 
             Main.spriteBatch.Draw(CopperTongHandleHead.Value, pos - Main.screenPosition + offset
-                , null, lightColor, HandleRot + HandleHeadRot+(Owner.direction>0?0:MathHelper.Pi), new Vector2(CopperTongHandleHead.Width() / 2, CopperTongHandleHead.Height())
+                , null, lightColor, HandleRot + HandleHeadRot + (Owner.direction > 0 ? 0 : MathHelper.Pi), new Vector2(CopperTongHandleHead.Width() / 2, CopperTongHandleHead.Height())
                 , Projectile.scale, Owner.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
         }
     }

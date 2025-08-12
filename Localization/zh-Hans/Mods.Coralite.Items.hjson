@@ -6233,6 +6233,16 @@ SporesFairyItem: {
 }
 
 HallowYoke: {
-	// DisplayName: Hallow Yoke
-	// Tooltip: ""
+	DisplayName: 荒谬之锁
+	Tooltip: "甩出剑舞，对范围内仙灵施加攻击力加成"
+}
+
+TinTong: {
+	DisplayName: 锡抓手
+	Tooltip: ""
+}
+
+RedJadeTong: {
+	DisplayName: Red Jade Tong
+	Tooltip: ""
 }
