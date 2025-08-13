@@ -73,10 +73,14 @@ namespace Coralite.Helpers
         {
             float maxDis = maxDistance;
             NPC target = null;
-            foreach (var npc in Main.npc.Where(n => n.active && !n.friendly && predicate(n)))
+
+            foreach (var npc in Main.ActiveNPCs)
             {
+                if (npc.friendly)
+                    continue;
+
                 float dis = Vector2.Distance(position, npc.Center);
-                if (dis < maxDis)
+                if (dis < maxDis && predicate(npc))
                 {
                     maxDis = dis;
                     target = npc;
@@ -90,16 +94,16 @@ namespace Coralite.Helpers
         {
             float maxDis = maxDistance;
             target = null;
-            for (int i = 0; i < Main.maxNPCs; i++)
+
+            foreach (var npc in Main.ActiveNPCs)
             {
-                NPC n = Main.npc[i];
-                if (n.active && !n.friendly && predicate(n))
+                if (!npc.friendly)
                 {
-                    float dis = Vector2.Distance(position, n.Center);
-                    if (dis < maxDis)
+                    float dis = Vector2.Distance(position, npc.Center);
+                    if (dis < maxDis && predicate(npc))
                     {
                         maxDis = dis;
-                        target = n;
+                        target = npc;
                     }
 
                 }
@@ -124,12 +128,11 @@ namespace Coralite.Helpers
         {
             index = 0;
             totalIndexesInGroup = 0;
-            for (int i = 0; i < 1000; i++)
+            foreach (var projectile in Main.ActiveProjectiles)
             {
-                Projectile projectile = Main.projectile[i];
-                if (projectile.active && projectile.owner == owner && projectile.type == projType)
+                if (projectile.owner == owner && projectile.type == projType)
                 {
-                    if (whoAmI > i)
+                    if (whoAmI > projectile.whoAmI)
                         index++;
 
                     totalIndexesInGroup++;
@@ -148,12 +151,11 @@ namespace Coralite.Helpers
         {
             index = 0;
             totalIndexesInGroup = 0;
-            for (int i = 0; i < Main.maxProjectiles; i++)
+            foreach (var p in Main.ActiveProjectiles)
             {
-                Projectile p = Main.projectile[i];
-                if (p.active && p.owner == Projectile.owner && p.type == Projectile.type)
+                if (p.owner == Projectile.owner && p.type == Projectile.type)
                 {
-                    if (Projectile.whoAmI > i)
+                    if (Projectile.whoAmI > p.whoAmI)
                         index++;
 
                     totalIndexesInGroup++;
@@ -235,7 +237,7 @@ namespace Coralite.Helpers
                     return true;
                 }
             }
-
+            
             p = null;
             return false;
         }
@@ -243,19 +245,7 @@ namespace Coralite.Helpers
         [DebuggerHidden]
         public static void GetMyProjIndexWithModProj<T>(Projectile Projectile, out int index, out int totalIndexesInGroup) where T : ModProjectile
         {
-            index = 0;
-            totalIndexesInGroup = 0;
-            for (int i = 0; i < 1000; i++)
-            {
-                Projectile projectile = Main.projectile[i];
-                if (projectile.active && projectile.owner == Projectile.owner && projectile.ModProjectile is T)
-                {
-                    if (Projectile.whoAmI > i)
-                        index++;
-
-                    totalIndexesInGroup++;
-                }
-            }
+            GetMyProjIndexWithSameType(ModContent.ProjectileType<T>(), Projectile.whoAmI, Projectile.owner, out index, out totalIndexesInGroup);
         }
 
         /// <summary>

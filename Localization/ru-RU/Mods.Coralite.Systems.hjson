@@ -98,6 +98,7 @@ FairySystem: {
 	// BottleContainCapacity: Mods.Coralite.Systems.FairySystem.BottleContainCapacity
 	// FairySpawnConditionCircle: Mods.Coralite.Systems.FairySystem.FairySpawnConditionCircle
 	// TongStaminaReduce: Mods.Coralite.Systems.FairySystem.TongStaminaReduce
+	// IsFairyPowder: Mods.Coralite.Systems.FairySystem.IsFairyPowder
 }
 
 BossBarSystem.DontTakeDamage: Невозможно атаковать!

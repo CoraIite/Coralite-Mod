@@ -44,12 +44,12 @@ namespace Coralite.Content.CustomHooks
         private static bool HasWarp()
         {
             bool flag = false;
-            foreach (Projectile proj in Main.projectile)
-                if (proj.active && proj.ModProjectile is IDrawWarp)
+            foreach (Projectile proj in Main.ActiveProjectiles)
+                if (proj.ModProjectile is IDrawWarp)
                     flag = true;
 
-            foreach (NPC proj in Main.npc)
-                if (proj.active && proj.ModNPC is IDrawWarp)
+            foreach (NPC npc in Main.ActiveNPCs)
+                if (npc.ModNPC is IDrawWarp)
                     flag = true;
 
             return flag;
@@ -67,12 +67,13 @@ namespace Coralite.Content.CustomHooks
         private static void DrawWarp(SpriteBatch sb)
         {
             sb.Begin(0, BlendState.AlphaBlend, Main.DefaultSamplerState, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
-            for (int k = 0; k < Main.maxProjectiles; k++) // Projectiles.
-                if (Main.projectile[k].active && Main.projectile[k].ModProjectile is IDrawWarp warpProj)
+            
+            foreach (Projectile proj in Main.ActiveProjectiles)
+                if (proj.ModProjectile is IDrawWarp warpProj)
                     warpProj.DrawWarp();
 
-            for (int k = 0; k < Main.maxNPCs; k++) // Projectiles.
-                if (Main.npc[k].active && Main.npc[k].ModNPC is IDrawWarp warpNPC)
+            foreach (NPC npc in Main.ActiveNPCs)
+                if (npc.ModNPC is IDrawWarp warpNPC)
                     warpNPC.DrawWarp();
 
             sb.End();

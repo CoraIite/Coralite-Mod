@@ -105,6 +105,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         public static LocalizedText TongStaminaReduce;
 
+        public static LocalizedText IsFairyPowder;
+
         public void LoadLocalization()
         {
             FieldInfo[] infos = typeof(FairySystem).GetFields(BindingFlags.Static | BindingFlags.Public | BindingFlags.GetField);

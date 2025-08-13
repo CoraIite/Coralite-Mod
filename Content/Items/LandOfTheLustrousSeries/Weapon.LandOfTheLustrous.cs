@@ -277,7 +277,11 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             }
 
             TargetPos = Vector2.Lerp(TargetPos, idlePos, 0.3f);
-            Projectile.Center = positionSmoother.Update(1 / 60f, idlePos);// Vector2.Lerp(Projectile.Center, TargetPos, 0.4f);
+
+            if (Vector2.Distance(Projectile.Center, Owner.Center) > 1400)//距离太大直接传送
+                Projectile.Center = positionSmoother.xp = positionSmoother.y = Owner.Center;
+            else
+                Projectile.Center = positionSmoother.Update(1 / 60f, idlePos);// Vector2.Lerp(Projectile.Center, TargetPos, 0.4f);
             Projectile.rotation += 0.01f;
 
             if (Draws.Count > 0)

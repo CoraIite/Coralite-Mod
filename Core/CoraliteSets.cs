@@ -26,6 +26,13 @@ namespace Coralite.Core
             /// <summary>
             /// 标记物品是仙灵
             /// </summary>
+            public static bool[] IsFairyPowder = ItemID.Sets.Factory.CreateCoraliteSet(nameof(IsFairyPowder))
+                .Description("标记物品是仙灵尘")
+                .RegisterBoolSet(false, ItemID.ExplosivePowder, ItemID.PurificationPowder, ItemID.ViciousPowder, ItemID.VilePowder);
+
+            /// <summary>
+            /// 标记物品是仙灵
+            /// </summary>
             public static bool[] IsFlyingShield = ItemID.Sets.Factory.CreateCoraliteSet(nameof(IsFlyingShield))
                 .Description("标记物品是飞盾")
                 .RegisterBoolSet(false);

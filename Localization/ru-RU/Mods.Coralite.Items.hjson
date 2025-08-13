@@ -6212,7 +6212,7 @@ SporesFairyItem: {
 }
 
 HallowYoke: {
-	// DisplayName: Hallow Yoke
+	// DisplayName: Gleipnir
 	// Tooltip: ""
 }
 
@@ -6223,5 +6223,10 @@ TinTong: {
 
 RedJadeTong: {
 	// DisplayName: Red Jade Tong
+	// Tooltip: ""
+}
+
+PerfumeBottle: {
+	// DisplayName: Perfume Bottle
 	// Tooltip: ""
 }

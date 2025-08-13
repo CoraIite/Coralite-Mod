@@ -45,6 +45,66 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         #endregion
 
+        #region 圆环视觉效果
+
+        private List<CircleVisual> circleVisuals;
+        public List<CircleVisual> CircleVisuals
+        {
+            get
+            {
+                circleVisuals ??= new List<CircleVisual>();
+                return circleVisuals;
+            }
+        }
+
+        public class CircleVisual
+        {
+            public float webRadius;
+            public bool active;
+
+            public void Update(Player Owner)
+            {
+                if (Owner.TryGetModPlayer(out FairyCatcherPlayer fcp))
+                {
+                    webRadius = MathHelper.Lerp(webRadius, fcp.FairyCatcherRadius, 0.1f);
+                    if (fcp.FairyCatcherRadius - webRadius < 0.01f)
+                        active = false;
+                }
+            }
+
+            public void Draw(Player Owner, Vector2 pos, Color circleColor)
+            {
+                Texture2D texture = TwistTex.Value;
+                Effect shader = Filters.Scene["FairyCircle"].GetShader().Shader;
+
+                float dia = webRadius;
+                if (Owner.TryGetModPlayer(out FairyCatcherPlayer fcp))
+                    dia = fcp.FairyCatcherRadius * 2 + 50;
+
+                shader.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly / 10);
+                shader.Parameters["r"].SetValue(webRadius);
+                shader.Parameters["dia"].SetValue(dia);
+                shader.Parameters["edgeColor"].SetValue(circleColor.ToVector4());
+                shader.Parameters["innerColor"].SetValue(new Vector4(0, 0, 0, 0));
+
+                Main.spriteBatch.End();
+                Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap,
+                                Main.spriteBatch.GraphicsDevice.DepthStencilState, RasterizerState.CullNone, shader, Main.GameViewMatrix.TransformationMatrix);
+
+                float scale = dia / texture.Width;
+                Main.spriteBatch.Draw(texture, pos
+                    , null, Color.White, 0, texture.Size() / 2, scale, 0, 0);
+
+                Main.spriteBatch.End();
+                Main.spriteBatch.Begin(SpriteSortMode.Deferred, Main.spriteBatch.GraphicsDevice.BlendState, Main.spriteBatch.GraphicsDevice.SamplerStates[0],
+                                Main.spriteBatch.GraphicsDevice.DepthStencilState, Main.spriteBatch.GraphicsDevice.RasterizerState, null, Main.GameViewMatrix.TransformationMatrix);
+            }
+        }
+
+        #endregion
+
+
+
         public sealed override void SetDefaults()
         {
             Projectile.width = Projectile.height = 16;
@@ -117,6 +177,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                         //玩家距离过远进入回收阶段
                         if (Vector2.Distance(Owner.Center, Projectile.Center) > 1000)
                             TrunToBacking();
+
+                        UpdateCircleVisuals();
                     }
                     break;
                 case AIStates.Backing:
@@ -189,7 +251,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             if (Main.rand.NextBool(60))
                 SpawnTimer += 60;
 
-            if (SpawnTimer > 860)
+            if (SpawnTimer > 1260)
             {
                 SpawnTimer = 0;
                 SpawnFairy();
@@ -216,7 +278,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
             FairyAttempt attempt = FairyAttempt.CreateFairyAttempt(this, point.X, point.Y, spawnTile.WallType);
 
-            fcp.FairyCatch_GetBait(out Item powder);
+            fcp.FairyCatch_GetPowder(out Item powder);
             if (powder != null)
             {
                 attempt.baitItem = powder;
@@ -232,7 +294,38 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             }
 
             if (attempt.SpawnFairy(out Fairy fairy))
+            {
+                if (powder != null)//消耗仙灵尘
+                {
+                    AddCircleVisual();
+
+                    if (powder.ModItem is IFairyPowder fairypowder)
+                        fairypowder.OnCostPowder(fairy, attempt, this);
+
+                    int prob = fcp.FairyPowderCostProb;
+                    if (prob < 1)
+                        prob = 1;
+
+                    if (Main.rand.NextBool(prob, 100))//概率消失
+                    {
+                        powder.stack--;
+                        if (powder.stack < 1)
+                            powder.TurnToAir();
+                    }
+                }
                 Fairies.Add(fairy);
+            }
+        }
+
+        public void UpdateCircleVisuals()
+        {
+            if (circleVisuals == null || circleVisuals.Count == 0)
+                return;
+
+            foreach (var item in circleVisuals)
+                item.Update(Owner);
+
+            circleVisuals.RemoveAll(c => !c.active);
         }
 
         public void UpdateWebVisualEffect_Catching()
@@ -248,18 +341,26 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             webRadius = MathHelper.Lerp(webRadius, 0, 0.2f);
         }
 
+        public void AddCircleVisual()
+        {
+            CircleVisuals.Add(new CircleVisual()
+            {
+                active = true
+            });
+        }
+
         /// <summary>
         /// 获取仙灵的碰撞箱
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<(Rectangle,Fairy)> GetFairyCollides()
+        public IEnumerable<(Rectangle, Fairy)> GetFairyCollides()
         {
             if (Fairies.Count > 0)
             {
                 for (int i = 0; i < Fairies.Count; i++)
                 {
                     Fairy fairy = Fairies[i];
-                    yield return (new Rectangle((int)fairy.position.X, (int)fairy.position.Y, fairy.width, fairy.height),fairy);
+                    yield return (new Rectangle((int)fairy.position.X, (int)fairy.position.Y, fairy.width, fairy.height), fairy);
                 }
             }
 
@@ -319,6 +420,13 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
                 //绘制背景
                 DrawBack(circlePos, edgeColor, innerColor);
+
+                if (State == AIStates.Catching && circleVisuals != null)
+                {
+                    foreach (var item in circleVisuals)
+                        item.Draw(Owner, circlePos, edgeColor);
+                }
+
                 //绘制标红的物块
                 DrawBlockedTile(circlePos);
             }

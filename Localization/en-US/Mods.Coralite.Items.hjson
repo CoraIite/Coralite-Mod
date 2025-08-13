@@ -6183,3 +6183,8 @@ RedJadeTong: {
 	DisplayName: Red Jade Tong
 	Tooltip: ""
 }
+
+PerfumeBottle: {
+	DisplayName: Perfume Bottle
+	Tooltip: ""
+}

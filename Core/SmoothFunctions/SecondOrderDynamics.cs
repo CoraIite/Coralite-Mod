@@ -14,8 +14,8 @@ namespace Coralite.Core.SmoothFunctions
         /// <summary>
         /// 上一次输入
         /// </summary>
-        private Vector2 xp = x0;
-        private Vector2 y = x0, yd = Vector2.Zero;
+        public Vector2 xp = x0;
+        public Vector2 y = x0, yd = Vector2.Zero;
         /// <summary>
         /// 3个约束
         /// </summary>

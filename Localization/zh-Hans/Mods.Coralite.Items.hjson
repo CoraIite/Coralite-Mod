@@ -1021,7 +1021,11 @@ LeafStone: {
 
 MagicalPowder: {
 	DisplayName: 魔尘
-	Tooltip: 含有微弱的魔力
+	Tooltip:
+		'''
+		含有微弱的魔力
+		用作仙灵尘时对出现的仙灵施加 “弱化”，捕捉时额外 +2 捕捉进度
+		'''
 }
 
 CrystalCrate: {
@@ -6234,7 +6238,7 @@ SporesFairyItem: {
 
 HallowYoke: {
 	DisplayName: 荒谬之锁
-	Tooltip: "甩出剑舞，对范围内仙灵施加攻击力加成"
+	Tooltip: 甩出剑舞，对范围内仙灵施加攻击力加成
 }
 
 TinTong: {
@@ -6244,5 +6248,10 @@ TinTong: {
 
 RedJadeTong: {
 	DisplayName: Red Jade Tong
+	Tooltip: ""
+}
+
+PerfumeBottle: {
+	DisplayName: 妖精香水瓶
 	Tooltip: ""
 }

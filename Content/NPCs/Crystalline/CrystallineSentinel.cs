@@ -1,7 +1,6 @@
 ﻿using Coralite.Content.Biomes;
 using Coralite.Content.Items.LandOfTheLustrousSeries;
 using Coralite.Content.Items.MagikeSeries2;
-using Coralite.Content.Items.RedJades;
 using Coralite.Content.Items.ThyphionSeries;
 using Coralite.Core;
 using Coralite.Core.Attributes;
@@ -13,7 +12,6 @@ using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.ItemDropRules;

@@ -220,12 +220,12 @@ namespace Coralite.Content.CustomHooks
         {
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
 
-            for (int k = 0; k < Main.maxProjectiles; k++) //Projectiles
-                if (Main.projectile[k].active && Main.projectile[k].ModProjectile is IPostDrawAdditive add)
+            foreach (var proj in Main.ActiveProjectiles)//弹幕
+                if (proj.ModProjectile is IPostDrawAdditive add)
                     add.DrawAdditive(spriteBatch);
 
-            for (int k = 0; k < Main.maxNPCs; k++) //NPCs
-                if (Main.npc[k].active && Main.npc[k].ModNPC is IPostDrawAdditive add)
+            foreach (var npc in Main.ActiveNPCs)//弹幕
+                if (npc.ModNPC is IPostDrawAdditive add)
                     add.DrawAdditive(spriteBatch);
 
             spriteBatch.End();
@@ -235,13 +235,13 @@ namespace Coralite.Content.CustomHooks
         {
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.Additive, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
 
-            for (int k = 0; k < Main.maxProjectiles; k++) //Projectiles
-                if (Main.projectile[k].active && Main.projectile[k].ModProjectile is IDrawAdditive)
-                    (Main.projectile[k].ModProjectile as IDrawAdditive).DrawAdditive(spriteBatch);
+            foreach (var proj in Main.ActiveProjectiles)//弹幕
+                if (proj.ModProjectile is IDrawAdditive add)
+                    add.DrawAdditive(spriteBatch);
 
-            for (int k = 0; k < Main.maxNPCs; k++) //NPCs
-                if (Main.npc[k].active && Main.npc[k].ModNPC is IDrawAdditive)
-                    (Main.npc[k].ModNPC as IDrawAdditive).DrawAdditive(spriteBatch);
+            foreach (var npc in Main.ActiveNPCs)//弹幕
+                if (npc.ModNPC is IDrawAdditive add)
+                    add.DrawAdditive(spriteBatch);
 
             spriteBatch.End();
         }
@@ -250,12 +250,12 @@ namespace Coralite.Content.CustomHooks
         {
             spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.NonPremultiplied, SamplerState.PointWrap, DepthStencilState.None, RasterizerState.CullNone, null, Main.GameViewMatrix.TransformationMatrix);
 
-            for (int k = 0; k < Main.maxProjectiles; k++) //Projectiles
-                if (Main.projectile[k].active && Main.projectile[k].ModProjectile is IDrawNonPremultiplied non)
+            foreach (var proj in Main.ActiveProjectiles)//弹幕
+                if (proj.ModProjectile is IDrawNonPremultiplied non)
                     non.DrawNonPremultiplied(Main.spriteBatch);
 
-            for (int k = 0; k < Main.maxNPCs; k++) //NPCs
-                if (Main.npc[k].active && Main.npc[k].ModNPC is IDrawNonPremultiplied non)
+            foreach (var npc in Main.ActiveNPCs)//弹幕
+                if (npc.ModNPC is IDrawNonPremultiplied non)
                     non.DrawNonPremultiplied(Main.spriteBatch);
 
             spriteBatch.End();
@@ -267,17 +267,17 @@ namespace Coralite.Content.CustomHooks
 
             if (VisualEffectSystem.DrawTrail)
             {
-                foreach (var p in Main.projectile)
+                foreach (var p in Main.ActiveProjectiles)
                 {
-                    if (p.ModProjectile == null || !p.active)
+                    if (p.ModProjectile == null)
                         continue;
                     if (p.ModProjectile is IDrawPrimitive primitive)
                         primitive.DrawPrimitives();
                 }
 
-                foreach (var n in Main.npc)
+                foreach (var n in Main.ActiveNPCs)
                 {
-                    if (n.ModNPC == null || !n.active)
+                    if (n.ModNPC == null)
                         continue;
                     if (n.ModNPC is IDrawPrimitive primitive)
                         primitive.DrawPrimitives();

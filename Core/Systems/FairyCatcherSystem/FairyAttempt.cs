@@ -86,7 +86,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             percentDict.Add((int)FairyRarity.SR, 30);
             percentDict.Add((int)FairyRarity.RR, 75);
             percentDict.Add((int)FairyRarity.R, 150);
-            percentDict.Add((int)FairyRarity.U, 111111250);
+            percentDict.Add((int)FairyRarity.U, 250);
             percentDict.Add((int)FairyRarity.C, 490);
         }
 

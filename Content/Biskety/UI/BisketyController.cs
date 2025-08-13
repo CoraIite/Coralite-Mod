@@ -222,7 +222,7 @@ namespace Coralite.Content.Biskety.UI
             Main.NewText(1);
             Defence = int.Parse(text);
             Text.SetText(text);
-            foreach (var npc in Main.npc)
+            foreach (var npc in Main.ActiveNPCs)
             {
                 if (npc.type == ModContent.NPCType<Biskety>())
                     npc.defense = Defence;

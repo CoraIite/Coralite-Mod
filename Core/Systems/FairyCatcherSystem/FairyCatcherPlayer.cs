@@ -99,6 +99,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <summary> 玩家当前持有的仙灵捕捉环的弹幕索引 </summary>
         public int FairyCircleProj { get; set; }
 
+        /// <summary> 仙灵尘消耗概率 </summary>
+        public int FairyPowderCostProb { get; set; } = 100;
+
         #endregion
 
         #region 仙灵个体值增幅相关数值
@@ -185,6 +188,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         {
             FairyCircleCoreType = -1;
             FairyCircleCoreType = -1;
+            FairyPowderCostProb = 100;
             fairyAccessories?.Clear();
 
             fairyCatchPowerBonus = new StatModifier();
@@ -213,24 +217,13 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// 遍历玩家背包获取仙灵饵料
         /// </summary>
         /// <param name="bait"></param>
-        public void FairyCatch_GetBait(out Item bait)
+        public void FairyCatch_GetPowder(out Item bait)
         {
             bait = null;
-            for (int i = 54; i < 58; i++)
-            {
-                if (Player.inventory[i].stack > 0 && Player.inventory[i].bait > 0)
-                {
-                    bait = Player.inventory[i];
-                    break;
-                }
-            }
-
-            if (bait != null)
-                return;
 
             for (int j = 0; j < 50; j++)
             {
-                if (Player.inventory[j].stack > 0 && Player.inventory[j].bait > 0)
+                if (Player.inventory[j].stack > 0 && CoraliteSets.Items.IsFairyPowder[Player.inventory[j].type])
                 {
                     bait = Player.inventory[j];
                     break;

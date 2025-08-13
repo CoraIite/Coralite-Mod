@@ -194,6 +194,7 @@ namespace Coralite.Content.NPCs.Town
         public override void AddShops()
         {
             var npcShop = new NPCShop(Type, ShopName);
+            npcShop.Add<BotanicusPowder>(Condition.MoonPhaseFull);
             npcShop.Add<SandlitePowder>(Condition.MoonPhaseFirstQuarter);
             npcShop.Add<EmpyrosPowder>(Condition.MoonPhases04);
             npcShop.Add<IceyPowder>(Condition.MoonPhases15);
