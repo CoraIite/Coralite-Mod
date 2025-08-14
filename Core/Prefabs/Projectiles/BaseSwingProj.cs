@@ -688,7 +688,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             Effect effect = Filters.Scene["KEx2"].GetShader().Shader;
 
             effect.Parameters["uTransform"].SetValue(model * projection);
-            Main.graphics.GraphicsDevice.Textures[0] = FrostySwordSlash.WarpTexture.Value;
+            Main.graphics.GraphicsDevice.Textures[0] = CoraliteAssets.Trail.WarpTex.Value;
             Main.graphics.GraphicsDevice.SamplerStates[0] = SamplerState.PointWrap;
             effect.CurrentTechnique.Passes[0].Apply();
             if (bars.Count >= 3)

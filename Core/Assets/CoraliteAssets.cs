@@ -88,6 +88,11 @@ namespace Coralite.Core
             /// </summary>
             public static ATex SlashFlatFade { get; private set; }
 
+            /// <summary> 
+            /// 刀光用扭曲图<br></br>
+            /// </summary>
+            public static ATex WarpTex { get; private set; }
+
             #endregion
 
             #region 轻刀光及其变种
@@ -195,6 +200,12 @@ namespace Coralite.Core
             /// 顶部一条横线，整个刀光透明度较低，由主要几条横线组成
             /// </summary>
             public static ATex Split { get; private set; }
+
+            /// <summary> 
+            /// 顶部一条横线，整个刀光透明度较低，由主要几条横线组成<br></br>
+            /// 更加平滑
+            /// </summary>
+            public static ATex Split2 { get; private set; }
 
             /// <summary> 
             /// 类似推进器尾焰，高亮的柔和渐变

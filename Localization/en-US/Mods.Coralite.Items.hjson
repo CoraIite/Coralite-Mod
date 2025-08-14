@@ -6188,3 +6188,8 @@ PerfumeBottle: {
 	DisplayName: Perfume Bottle
 	Tooltip: ""
 }
+
+SwordOfBeherits: {
+	DisplayName: Sword Of Beherits
+	Tooltip: ""
+}

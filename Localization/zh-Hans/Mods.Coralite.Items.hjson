@@ -6255,3 +6255,8 @@ PerfumeBottle: {
 	DisplayName: 妖精香水瓶
 	Tooltip: ""
 }
+
+SwordOfBeherits: {
+	// DisplayName: Sword Of Beherits
+	// Tooltip: ""
+}

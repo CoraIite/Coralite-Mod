@@ -62,17 +62,27 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             public float webRadius;
             public bool active;
 
+            public float circleAlpha = 1;
+
+            public Color circleColor = Color.White;
+            public Color backColor = Color.White;
+
             public void Update(Player Owner)
             {
                 if (Owner.TryGetModPlayer(out FairyCatcherPlayer fcp))
                 {
                     webRadius = MathHelper.Lerp(webRadius, fcp.FairyCatcherRadius, 0.1f);
+                    circleAlpha = MathHelper.Lerp(circleAlpha, 0, 0.005f);
                     if (fcp.FairyCatcherRadius - webRadius < 0.01f)
-                        active = false;
+                    {
+                        circleAlpha -= 0.05f;
+                        if (circleAlpha < 0.01f)
+                            active = false;
+                    }
                 }
             }
 
-            public void Draw(Player Owner, Vector2 pos, Color circleColor)
+            public void Draw(Player Owner, Vector2 pos)
             {
                 Texture2D texture = TwistTex.Value;
                 Effect shader = Filters.Scene["FairyCircle"].GetShader().Shader;
@@ -84,8 +94,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                 shader.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly / 10);
                 shader.Parameters["r"].SetValue(webRadius);
                 shader.Parameters["dia"].SetValue(dia);
-                shader.Parameters["edgeColor"].SetValue(circleColor.ToVector4());
-                shader.Parameters["innerColor"].SetValue(new Vector4(0, 0, 0, 0));
+                shader.Parameters["edgeColor"].SetValue((circleColor * circleAlpha).ToVector4());
+                shader.Parameters["innerColor"].SetValue((backColor * circleAlpha).ToVector4());
 
                 Main.spriteBatch.End();
                 Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap,
@@ -297,8 +307,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             {
                 if (powder != null)//消耗仙灵尘
                 {
-                    AddCircleVisual();
-
                     if (powder.ModItem is IFairyPowder fairypowder)
                         fairypowder.OnCostPowder(fairy, attempt, this);
 
@@ -341,11 +349,13 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             webRadius = MathHelper.Lerp(webRadius, 0, 0.2f);
         }
 
-        public void AddCircleVisual()
+        public void AddCircleVisual(Color edgecolor,Color innerColor)
         {
             CircleVisuals.Add(new CircleVisual()
             {
-                active = true
+                active = true,
+                circleColor=edgecolor,
+                backColor=innerColor
             });
         }
 
@@ -404,27 +414,36 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         public override bool PreDraw(ref Color lightColor)
         {
+            Color edgeColor = Color.White;
+            Color innerColor = Color.DarkSlateBlue * 0.7f;
+
+            Texture2D coreTex = Projectile.GetTexture();
+
+            if (Owner.TryGetModPlayer(out FairyCatcherPlayer fcp) && fcp.FairyCircleCoreType > -1)
+            {
+                var core = CoraliteContent.GetFairyCircleCore(fcp.FairyCircleCoreType);
+                edgeColor = core.EdgeColor ?? edgeColor;
+                innerColor = core.InnerColor ?? innerColor;
+                coreTex = FairySystem.FairyCatcherCoreAssets[core.Type].Value;
+            }
+
             if (State != AIStates.Shooting)
             {
                 Vector2 circlePos = webCenter - Main.screenPosition;
 
-                Color edgeColor = Color.White;
-                Color innerColor = Color.DarkSlateBlue * 0.7f;
-
-                if (Owner.TryGetModPlayer(out FairyCatcherPlayer fcp) && fcp.FairyCircleCoreType > -1)
-                {
-                    var core = CoraliteContent.GetFairyCircleCore(fcp.FairyCircleCoreType);
-                    edgeColor = core.EdgeColor ?? edgeColor;
-                    innerColor = core.InnerColor ?? innerColor;
-                }
-
                 //绘制背景
-                DrawBack(circlePos, edgeColor, innerColor);
+                DrawBack(circlePos, edgeColor * WebAlpha, innerColor * WebAlpha);
 
-                if (State == AIStates.Catching && circleVisuals != null)
+                if (State == AIStates.Catching)
                 {
-                    foreach (var item in circleVisuals)
-                        item.Draw(Owner, circlePos, edgeColor);
+                    if (circleVisuals != null)//绘制视觉效果
+                        foreach (var item in circleVisuals)
+                            item.Draw(Owner, circlePos);
+
+                    fcp.FairyCatch_GetPowder(out Item powder);
+
+                    if (powder != null)//绘制粉尘物品图标
+                        DrawPowder(powder.type, circlePos + new Vector2(0, -coreTex.Height / 2 - 20), powder.stack);
                 }
 
                 //绘制标红的物块
@@ -432,7 +451,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             }
 
             //绘制中心指针
-            DrawCatcherCore(Lighting.GetColor(webCenter.ToTileCoordinates()));
+            DrawCatcherCore(coreTex,Lighting.GetColor(webCenter.ToTileCoordinates()));
 
             if (State == AIStates.Catching)
             {
@@ -498,18 +517,22 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                 }
         }
 
-        public void DrawCatcherCore(Color lightColor)
+        public void DrawCatcherCore(Texture2D coreTex, Color lightColor)
         {
             Vector2 pos = Projectile.Center - Main.screenPosition;
 
-            Texture2D tex = Projectile.GetTexture();
-            if (Owner.TryGetModPlayer(out FairyCatcherPlayer fcp) && fcp.FairyCircleCoreType > -1)
-            {
-                var core = CoraliteContent.GetFairyCircleCore(fcp.FairyCircleCoreType);
-                tex = FairySystem.FairyCatcherCoreAssets[core.Type].Value;
-            }
+            coreTex.QuickCenteredDraw(Main.spriteBatch, pos, lightColor, Projectile.rotation);
+        }
 
-            tex.QuickCenteredDraw(Main.spriteBatch, pos, lightColor, Projectile.rotation);
+        public void DrawPowder(int itemId, Vector2 drawBottom, int number)
+        {
+            Helper.GetItemTexAndFrame(itemId, out Texture2D tex, out Rectangle frameBox);
+
+            Main.spriteBatch.Draw(tex, drawBottom, frameBox, Color.White
+                , 0, new Vector2(frameBox.Width / 2, frameBox.Height), 1, 0, 0);
+
+            Utils.DrawBorderString(Main.spriteBatch, number.ToString(), drawBottom + new Vector2(-frameBox.Width / 2, 10)
+                , Color.White, 0.75f, 0, 0.5f);
         }
 
         #endregion

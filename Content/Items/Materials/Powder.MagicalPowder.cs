@@ -24,12 +24,13 @@ namespace Coralite.Content.Items.Materials
         {
             for (int i = 0; i < 16; i++)
             {
-                Dust d = Dust.NewDustPerfect(fairy.Center, DustID.Water_Corruption
-                    , Helper.NextVec2Dir(1, 2), 150);
-                d.noGravity = true;
+                Dust d = Dust.NewDustPerfect(fairy.Center, DustID.Shadowflame
+                    , Helper.NextVec2Dir(2, 4), 150);
+                //d.noGravity = true;
             }
 
             fairy.AddBuff<MagicalPowderFairyBuff>(60 * 20);
+            catcherProj.AddCircleVisual(new Color(180, 195, 255), new Color(133, 102, 255) * 0.3f);
         }
 
         public void AddMagikeCraftRecipe()

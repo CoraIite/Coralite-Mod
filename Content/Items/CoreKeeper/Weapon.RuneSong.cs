@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.ModPlayers;
 using Coralite.Core;
+using Coralite.Core.Attributes;
 using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
@@ -75,33 +76,30 @@ namespace Coralite.Content.Items.CoreKeeper
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (Main.myPlayer == player.whoAmI)
+            if (player.altFunctionUse == 2)
             {
-                if (player.altFunctionUse == 2)
-                {
-                    Projectile.NewProjectile(source, player.Center, Vector2.Zero,
-                        type, (int)(damage * 1f), knockback, player.whoAmI, 2, -1);
-                    return false;
-                }
-
-                int combo = 0;
-                if (combo == oldCombo)
-                {
-                    if (Main.rand.NextBool())
-                        useCount++;
-                    if (useCount > 3)
-                    {
-                        useCount = 0;
-                        combo = 1;
-                    }
-                }
-
-                Helper.PlayPitched("CoreKeeper/swordLegendaryAttack", 0.7f, Main.rand.NextFloat(0.2f, 0.3f), player.Center);
                 Projectile.NewProjectile(source, player.Center, Vector2.Zero,
-                    type, (int)(damage * 1.6f), knockback, player.whoAmI, combo, -1);
-
-                oldCombo = combo;
+                    type, (int)(damage * 1f), knockback, player.whoAmI, 2, -1);
+                return false;
             }
+
+            int combo = 0;
+            if (combo == oldCombo)
+            {
+                if (Main.rand.NextBool())
+                    useCount++;
+                if (useCount > 3)
+                {
+                    useCount = 0;
+                    combo = 1;
+                }
+            }
+
+            Helper.PlayPitched("CoreKeeper/swordLegendaryAttack", 0.7f, Main.rand.NextFloat(0.2f, 0.3f), player.Center);
+            Projectile.NewProjectile(source, player.Center, Vector2.Zero,
+                type, (int)(damage * 1.6f), knockback, player.whoAmI, combo, -1);
+
+            oldCombo = combo;
 
             return false;
         }
@@ -154,6 +152,7 @@ namespace Coralite.Content.Items.CoreKeeper
         }
     }
 
+    [AutoLoadTexture(Path =AssetDirectory.CoreKeeperItems)]
     public class RuneSongSlash : BaseSwingProj, IDrawWarp
     {
         public override string Texture => AssetDirectory.CoreKeeperItems + "RuneSong";
@@ -161,8 +160,8 @@ namespace Coralite.Content.Items.CoreKeeper
         public ref float Combo => ref Projectile.ai[0];
         public ref float OwnerIndex => ref Projectile.ai[1];
 
-        public static Asset<Texture2D> WarpTexture;
-        public static Asset<Texture2D> GradientTexture;
+        [AutoLoadTexture(Name = "RuneSongGradient")]
+        public static ATex GradientTexture {  get; set; }
 
         public RuneSongSlash() : base(0.785f, trailCount: 48) { }
 
@@ -180,24 +179,6 @@ namespace Coralite.Content.Items.CoreKeeper
         public const int ChannelTimeMax = 90 * 4;
 
         public SlotId soundSlot;
-
-        public override void Load()
-        {
-            if (Main.dedServ)
-                return;
-
-            WarpTexture = Request<Texture2D>(AssetDirectory.OtherProjectiles + "WarpTex");
-            GradientTexture = Request<Texture2D>(AssetDirectory.CoreKeeperItems + "RuneSongGradient");
-        }
-
-        public override void Unload()
-        {
-            if (Main.dedServ)
-                return;
-
-            WarpTexture = null;
-            GradientTexture = null;
-        }
 
         public override void SetSwingProperty()
         {
