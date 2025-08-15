@@ -19,6 +19,12 @@ namespace Coralite.Content.Items.Misc_Melee
     {
         public override string Texture => AssetDirectory.Misc_Melee + Name;
 
+        public List<int> randZrot;
+        public List<int> randEXScale;
+
+        public int combo = 1;
+        public float rot;
+
         public override void SetDefaults()
         {
             Item.width = Item.height = 40;
@@ -39,11 +45,38 @@ namespace Coralite.Content.Items.Misc_Melee
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            Helper.PlayPitched("CoreKeeper/swordLegendaryAttack", 0.7f, Main.rand.NextFloat(0.2f, 0.3f), player.Center);
+            randZrot ??= new List<int>();
+            randEXScale ??= new List<int>();
+
+            if (randZrot.Count < 1)
+                randZrot.AddRange([1, 2, 3, 4, 5]);
+            if (randEXScale.Count < 1)
+                randEXScale.AddRange([-3, -2, -1, 1, 2, 3]);
+
+            int zrot = Main.rand.NextFromList([.. randZrot]);
+            randZrot.Remove(zrot);
+            int exScale = Main.rand.NextFromList([.. randEXScale]);
+            randEXScale.Remove(exScale);
+
+            if (Main.rand.NextBool(2, 3))
+                combo *= -1;
+
+            Helper.PlayPitched("Misc/Slash", 0.5f, Main.rand.NextFloat(-0.1f, 0.1f), player.Center);
             Projectile.NewProjectile(source, player.Center, Vector2.Zero,
-                type, (int)(damage * 1.6f), knockback, player.whoAmI, Main.rand.Next(2), -1);
+                type, (int)(damage * 1.6f), knockback, player.whoAmI, combo, zrot, exScale);
 
             //player.itemTime = 8;
+
+            Vector2 posOffset = rot.ToRotationVector2() * Main.rand.NextFloat(-20,80);
+            if (Main.rand.NextBool(4))
+            {
+                posOffset += (rot + MathHelper.PiOver2).ToRotationVector2() * Main.rand.NextFloat(40, 80);
+            }
+
+            Projectile.NewProjectile(source, Main.MouseWorld+ posOffset, Vector2.Zero,
+                ProjectileType<BeheritsSpacial>(), damage, knockback, player.whoAmI, rot);
+
+            rot += Main.rand.NextFloat(MathHelper.PiOver4/2, MathHelper.Pi/3*2);
             return false;
         }
 
@@ -68,6 +101,8 @@ namespace Coralite.Content.Items.Misc_Melee
         public override string Texture => AssetDirectory.Misc_Melee + "SwordOfBeherits";
 
         public ref float Combo => ref Projectile.ai[0];
+        public ref float ZRotBase => ref Projectile.ai[1];
+        public ref float EXScaleBase => ref Projectile.ai[2];
 
         [AutoLoadTexture(Name = "SwordOfBeheritsGradient")]
         public static ATex GradientTexture { get; set; }
@@ -110,7 +145,7 @@ namespace Coralite.Content.Items.Misc_Melee
 
             Projectile.extraUpdates = 6;
             alpha = 0;
-            zRot = Main.rand.Next(0, 6) * 0.1f;
+            zRot = ZRotBase * 0.11f;
             onHitFreeze = 14;
             switch (Combo)
             {
@@ -139,10 +174,10 @@ namespace Coralite.Content.Items.Misc_Melee
 
         private void ExtraInit()
         {
-            extraScaleAngle = Main.rand.Next(-3, 4) * 0.2f;
+            extraScaleAngle = EXScaleBase * 0.13f;
             recordStartAngle = Math.Abs(startAngle);
             recordTotalAngle = Math.Abs(totalAngle);
-            Projectile.scale = Helper.EllipticalEase(recordStartAngle + extraScaleAngle - (recordTotalAngle * Smoother.Smoother(0, maxTime - minTime)), 1.05f - zRot, 1.05f + zRot*0.75f);
+            Projectile.scale = Helper.EllipticalEase(recordStartAngle + extraScaleAngle - (recordTotalAngle * Smoother.Smoother(0, maxTime - minTime)), 1.05f - zRot, 1.05f + zRot * 0.75f);
         }
 
         protected override void AIBefore()
@@ -201,8 +236,6 @@ namespace Coralite.Content.Items.Misc_Melee
                 if (Combo > 2)
                     strength = 2;
                 //float baseScale = 1;
-
-                Helper.PlayPitched("CoreKeeper/swordLegendaryImpact", 0.5f, 0, Projectile.Center);
 
                 if (VisualEffectSystem.HitEffect_ScreenShaking)
                 {
@@ -298,10 +331,94 @@ namespace Coralite.Content.Items.Misc_Melee
                 Main.spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.None, RasterizerState.CullNone, null, Main.Transform);
             }
         }
+    }
 
-        protected override void DrawSelf(Texture2D mainTex, Vector2 origin, Color lightColor, float extraRot)
+    public class BeheritsSpacial : ModProjectile, IDrawWarp, IDrawNonPremultiplied
+    {
+        public override string Texture => AssetDirectory.Dusts + "SlashBright";
+
+        public ref float Rot => ref Projectile.ai[0];
+        public ref float Width => ref Projectile.ai[1];
+        public ref float Height => ref Projectile.ai[2];
+
+        public ref float Timer => ref Projectile.localAI[0];
+
+        public override void SetDefaults()
         {
-            base.DrawSelf(mainTex, origin, lightColor, extraRot);
+            Projectile.width = Projectile.height = 16;
+            Projectile.tileCollide = false;
+            Projectile.friendly = true;
+            Projectile.DamageType = DamageClass.Melee;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = -1;
+            Projectile.penetrate = -1;
+        }
+
+        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
+        {
+            Vector2 dir = Rot.ToRotationVector2() * 380;
+            return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size()
+                , Projectile.Center + dir * Width, Projectile.Center - dir * Width);
+        }
+
+        public override void AI()
+        {
+            Timer++;
+
+            Projectile.rotation = Rot;
+            Width = Helper.SqrtEase(Timer / 20);
+            Height = Helper.SinEase(Timer / 20);
+
+            if (Timer%4==0)
+            {
+                Projectile.frame++;
+            }
+
+            if (Timer > 20)
+                Projectile.Kill();
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            return false;
+        }
+
+        public void DrawWarp()
+        {
+            Vector2 pos = Projectile.Center - Main.screenPosition;
+
+            float factor = 1 - Timer / 20;
+
+            float rot = Projectile.rotation;
+
+            float r = rot % MathHelper.TwoPi;
+            float dir = (r >= MathHelper.Pi ? (r - MathHelper.Pi) : (r + MathHelper.Pi)) / MathHelper.TwoPi;
+
+            float r2 = (rot + MathHelper.Pi) % MathHelper.TwoPi;
+            float dir2 = (r2 >= MathHelper.Pi ? (r2 - MathHelper.Pi) : (r2 + MathHelper.Pi)) / MathHelper.TwoPi;
+
+            Texture2D tex = CoraliteAssets.Sparkle.ShotLineSPA.Value;
+
+            Vector2 scale = new Vector2(Width * 3f, Height*2f);
+            Vector2 direction = (Projectile.rotation+MathHelper.PiOver2).ToRotationVector2();
+
+            Rectangle frame = tex.Frame(1, 2, 0, 0);
+            Main.spriteBatch.Draw(tex, pos - direction * 6, frame
+                , new Color(dir, 1, 0, factor), Rot, new Vector2(frame.Width / 2, frame.Height), scale, 0, 0);
+            Main.spriteBatch.Draw(tex, pos + direction * 6, tex.Frame(1, 2, 0, 1)
+                , new Color(dir2, 1, 0, factor), Rot, new Vector2(frame.Width / 2, 0), scale, 0, 0);
+        }
+
+        public void DrawNonPremultiplied(SpriteBatch spriteBatch)
+        {
+            Vector2 pos = Projectile.Center - Main.screenPosition;
+            Texture2D tex = Projectile.GetTexture();
+
+            Vector2 scale = new Vector2(Width * 1.75f, Height*0.5f);
+            Rectangle frame = tex.Frame(1, 6, 0, Projectile.frame);
+
+            Main.spriteBatch.Draw(tex, pos, frame
+                , new Color(255,80,80,255), Rot, frame.Size() / 2, scale, 0, 0);
         }
     }
 }

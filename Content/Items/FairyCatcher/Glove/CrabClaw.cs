@@ -20,6 +20,7 @@ namespace Coralite.Content.Items.FairyCatcher.Glove
             Item.shoot = ModContent.ProjectileType<CrabClawProj>();
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.useTime = Item.useAnimation = 15;
+            Item.shootSpeed = 8;
             Item.SetWeaponValues(15, 3);
             Item.SetShopValues(ItemRarityColor.Blue1, Item.sellPrice(0, 0, 30));
             Item.accessory = true;
@@ -56,7 +57,7 @@ namespace Coralite.Content.Items.FairyCatcher.Glove
         public override string Texture => AssetDirectory.FairyCatcherGlove + "CrabClaw";
         public override void SetOtherDefaults()
         {
-            Projectile.width = 30;
+            Projectile.width = 50;
             Projectile.height = 58;
             DistanceController = (-25, 8);
             OffsetAngle = 0.4f;

@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.DamageClasses;
+using Coralite.Core.Systems.FairyCatcherSystem.Bases.Items;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
@@ -34,7 +35,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         public (float, float) DistanceController = (-20, 40);
 
         /// <summary>
-        /// 是否在捕捉
+        /// 为1表示在捕捉，为2表示可以射出仙灵
         /// </summary>
         public ref float Catch => ref Projectile.ai[0];
         public ref float LengthBonus => ref Projectile.ai[1];
@@ -42,7 +43,14 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public ref float Timer => ref Projectile.localAI[0];
 
+        /// <summary>
+        /// 射出的仙灵能够飞行多少时间
+        /// </summary>
+        public virtual int FairyFlyTime { get => 25; }
+
         public float alpha=1;
+
+        private HashSet<int> IDs;
 
         public override void SetDefaults()
         {
@@ -104,9 +112,19 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 float factor = Timer / MaxTime;
 
                 Projectile.rotation = GetRotation(factor);
-                Projectile.Center = GetCenter() + Projectile.rotation.ToRotationVector2() * DistanceToCenter;
+                Projectile.Center = GetCenter() + Projectile.rotation.ToRotationVector2() * (DistanceToCenter+Projectile.height/2);
 
                 UpdateDistanceToCenter(factor);
+
+                if (Catch == 1)
+                    Helper.CheckCollideWithFairyCircle(Owner, Projectile.getRect(), ref IDs);
+
+                if (Timer == (MaxTime / 2))
+                {
+                    if (Catch == 2 && Collision.CanHit(Projectile.Center, 1, 1, Owner.Center, 1, 1))
+                        ShootFairy();
+                }
+
                 SpawnDustOnSwing();
 
                 if (Timer < Owner.itemTimeMax)
@@ -114,7 +132,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             }
             else
             {
-                Projectile.Center = GetCenter() + Projectile.rotation.ToRotationVector2() * DistanceToCenter;
+                Projectile.Center = GetCenter() + Projectile.rotation.ToRotationVector2() * (DistanceToCenter + Projectile.height / 2);
                 DistanceToCenter *= BackPercent;
                 alpha -= 1f / BackTimeMax;
                 if (alpha < 0)
@@ -123,7 +141,28 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             }
 
             Timer++;
+        }
 
+
+        protected virtual void ShootFairy()
+        {
+            if (!Projectile.IsOwnedByLocalPlayer())
+                return;
+
+            Item heldItem = Item;
+            float speed = heldItem.shootSpeed;
+            Vector2 velocity = Projectile.rotation.ToRotationVector2() * speed;
+            Vector2 center = Projectile.Center;
+
+            if (Owner.TryGetModPlayer(out FairyCatcherPlayer fcp)
+                && fcp.TryGetFairyBottle(out BaseFairyBottle bottle))
+            {
+                foreach (var item in bottle.GetShootableFairy(Owner))
+                {
+                    item.ShootFairy(Owner, Projectile.GetSource_FromAI(), center, velocity, Projectile.knockBack, FairyFlyTime);
+                    break;
+                }
+            }
         }
 
         public virtual Vector2 GetCenter()
@@ -163,7 +202,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
             Vector2 pos = Projectile.Center
                 + new Vector2(0, Owner.gfxOffY)
-                + Projectile.height / 2 * Projectile.rotation.ToRotationVector2()
                 - Main.screenPosition;
 
             int direction = Direction * Projectile.spriteDirection;

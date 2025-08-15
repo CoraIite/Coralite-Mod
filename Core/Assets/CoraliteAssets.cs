@@ -350,6 +350,12 @@ namespace Coralite.Core
             /// 横向光条<br></br>
             /// 透明底
             /// </summary>
+            public static ATex ShotLine { get; private set; }
+
+            /// <summary> 
+            /// 横向光条<br></br>
+            /// 透明底
+            /// </summary>
             public static ATex ShotLineSPA { get; private set; }
 
             /// <summary> 

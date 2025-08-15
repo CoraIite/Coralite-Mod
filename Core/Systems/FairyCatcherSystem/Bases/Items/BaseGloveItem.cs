@@ -12,6 +12,13 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
     {
         public override string Texture => AssetDirectory.FairyCatcherGlove + Name;
 
+        private int UseCount;
+
+        /// <summary>
+        /// 使用多少次攻击后会射出仙灵
+        /// </summary>
+        public virtual int HowManyUseToShootFairy { get => 4; }
+
         public override void ShootCatcher(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type)
         {
             Projectile.NewProjectile(source, position, velocity, type, 0, 0, player.whoAmI, ai0: 1);
@@ -23,7 +30,16 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
 
         public override void NormalShoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            base.NormalShoot(player, source, position, velocity, type, damage, knockback);
+            UseCount++;
+
+            int Catch = 0;
+            if (UseCount >= HowManyUseToShootFairy)
+            {
+                UseCount = 0;
+                Catch = 2;
+            }
+
+            Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, Catch);
 
             if (player.TryGetModPlayer(out FairyCatcherPlayer fcp))
                 foreach (var acc in fcp.FairyAccessories)
