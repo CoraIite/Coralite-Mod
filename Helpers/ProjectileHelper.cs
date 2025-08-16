@@ -547,6 +547,21 @@ namespace Coralite.Helpers
             return false;
         }
 
+        /// <summary>
+        /// 弹幕下落
+        /// </summary>
+        /// <param name="proj"></param>
+        public static void Falling(this Projectile proj, float maxY, float add)
+        {
+            if (maxY > 0)
+            {
+                if (proj.velocity.Y < maxY)
+                    proj.velocity.Y += add;
+            }
+            else if (proj.velocity.Y > maxY)
+                proj.velocity.Y += add;
+        }
+
         //--------------------------------------------------------------------------------------------
         //                                    以下是绘制相关部分
         //--------------------------------------------------------------------------------------------

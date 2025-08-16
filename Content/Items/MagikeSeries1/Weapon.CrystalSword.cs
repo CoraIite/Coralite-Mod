@@ -49,7 +49,7 @@ namespace Coralite.Content.Items.MagikeSeries1
     {
         public override string Texture => AssetDirectory.Blank;
 
-        private VertexStrip _vertexStrip = new();
+        private VertexStrip _vertexStrip;
 
         public override void SetStaticDefaults()
         {
@@ -67,6 +67,13 @@ namespace Coralite.Content.Items.MagikeSeries1
 
         public override void AI()
         {
+            if (Projectile.localAI[0] == 0)
+            {
+                if (!VaultUtils.isServer)
+                    _vertexStrip = new();
+                Projectile.localAI[0] = 1;
+            }
+
             if (Main.rand.NextBool())
             {
                 Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(4, 4), ModContent.DustType<GlowBall>(),
@@ -94,6 +101,9 @@ namespace Coralite.Content.Items.MagikeSeries1
 
         public override bool PreDraw(ref Color lightColor)
         {
+            if (_vertexStrip==null)
+                return false;
+
             MiscShaderData miscShaderData = GameShaders.Misc["RainbowRod"];
             miscShaderData.UseSaturation(-1.8f);
             miscShaderData.UseOpacity(2f);

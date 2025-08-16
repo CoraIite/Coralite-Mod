@@ -305,6 +305,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             Vector2 origin = mainTex.Size() / 2;
 
             Color c = Color.White * Alpha;
+            c.G = (byte)(c.G / 4);
 
             Main.spriteBatch.Draw(mainTex, pos, null, c, Projectile.rotation, origin, Scale, 0, 0);
             Main.spriteBatch.Draw(mainTex, pos, null, c, Projectile.rotation + MathHelper.TwoPi / 3, origin, Scale, 0, 0);

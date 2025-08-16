@@ -57,8 +57,13 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// 在开始攻击时设置，经过玩家饰品等增强过的技能等级
         /// </summary>
         public int SkillLevel { get; set; }
-
+        /// <summary>
+        /// X多少帧
+        /// </summary>
         protected virtual int FrameX => 1;
+        /// <summary>
+        /// Y多少帧
+        /// </summary>
         protected virtual int FrameY => 4;
         /// <summary>
         /// 能够开始攻击的距离

@@ -605,7 +605,7 @@ namespace Coralite.Content.Items.Nightmare
             float scale = 200f / warpTex.Width;
 
             Main.spriteBatch.Draw(warpTex, center, null,
-                Color.White * Alpha, SelfRot + 0.2f, origin, scale, 0, 0);
+                new Color(1f,0.25f,1,1) * Alpha, SelfRot + 0.2f, origin, scale, 0, 0);
         }
     }
 
@@ -831,8 +831,8 @@ namespace Coralite.Content.Items.Nightmare
                 Vector2 Top = Center + (up * width);
                 Vector2 Bottom = Center + (down * width);
 
-                bars.Add(new ColoredVertex(Top, new Color(dir, w, 0f, 1f), new Vector3(factor, 0f, w)));
-                bars.Add(new ColoredVertex(Bottom, new Color(dir, w, 0f, 1f), new Vector3(factor, 1f, w)));
+                bars.Add(new ColoredVertex(Top, new Color(dir, 0.25f, 0f, 1f), new Vector3(factor, 0f, w)));
+                bars.Add(new ColoredVertex(Bottom, new Color(dir, 0.25f, 0f, 1f), new Vector3(factor, 1f, w)));
             }
 
             Main.spriteBatch.End();

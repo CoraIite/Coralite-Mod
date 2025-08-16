@@ -86,17 +86,11 @@ FairySystem: {
 	BottleHeal: 每 {0} 秒为出战仙灵回复 {1}% + {2} 血量
 
 	SpawnDescriptions: {
-		ZoneForest: 在森林出现
-		ZoneRockLayer: 在洞穴出现
-		ZoneBeach: 在海边出现
 		CircleR_9: 需要捕捉环半径大于9格
-		ZoneDesert: 在沙漠出现
-		ZoneHell: 在地狱出现
-		ZoneCrimson: 在猩红环境出现
-		ZoneCorrupt: 在腐化环境出现
 		GemWall: 需要在任意宝石墙或宝石晶格墙前
 		ZoneSnow: 在雪原出现
 		ZoneUndergroundJungle: 在地下丛林出现
+		DirtWall: 需要在泥土墙前
 	}
 
 	SkillLVTips: "{0} LV {1}"
@@ -341,5 +335,26 @@ FairySkill: {
 			濒死时生成多个伤害为 {0} 的孢子雾
 			'''
 		SkillName: 孢子喷发
+	}
+
+	FSkill_ShootDirt: {
+		Description:
+			'''
+			射出 {0} 个伤害为 {1} 的泥土弹
+			[c/808080:等级大于 4 和 7 时 +1 泥土弹数量]
+			[c/808080:等级大于 10 时 +2 泥土弹数量]
+			'''
+		SkillName: 泥土弹
+	}
+
+	FSkill_ShootStar: {
+		Description:
+			'''
+			射出伤害为 {1} 的星光箭
+			命中后分裂为 {0} 个小光箭
+			[c/808080:等级大于 4 和 7 时 +1 分裂数量]
+			[c/808080:等级大于 10 时 +2 分裂数量]
+			'''
+		SkillName: 星光箭
 	}
 }

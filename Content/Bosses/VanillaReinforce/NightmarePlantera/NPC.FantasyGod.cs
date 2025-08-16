@@ -353,7 +353,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             {
                 Texture2D mainTex = BlackHole.WarpTex.Value;
 
-                Main.spriteBatch.Draw(mainTex, NPC.Center - Main.screenPosition, null, Color.White, Main.GlobalTimeWrappedHourly * 2, mainTex.Size() / 2, warpScale, 0, 0);
+                Main.spriteBatch.Draw(mainTex, NPC.Center - Main.screenPosition, null, new Color(), Main.GlobalTimeWrappedHourly * 2, mainTex.Size() / 2, warpScale, 0, 0);
             }
 
 

@@ -6257,6 +6257,16 @@ PerfumeBottle: {
 }
 
 SwordOfBeherits: {
-	// DisplayName: Sword Of Beherits
-	// Tooltip: ""
+	DisplayName: 唤水剑
+	Tooltip: ""
+}
+
+DirtiryItem: {
+	DisplayName: 脏脏灵
+	Tooltip: 很脏，但不是最脏的块
+}
+
+LightFairyItem: {
+	DisplayName: 光精灵
+	Tooltip: 小小的光
 }

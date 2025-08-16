@@ -37,7 +37,8 @@ namespace Coralite.Core
     public interface IDrawWarp
     {
         /// <summary>
-        /// 绘制扭曲，目前可以在<see cref="Terraria.Projectile"/>和<see cref="Terraria.NPC"/>中使用
+        /// 绘制扭曲，目前可以在<see cref="Terraria.Projectile"/>和<see cref="Terraria.NPC"/>中使用<br></br>
+        /// 绘制时颜色 R代表方向，0~<see cref="MathHelper.TwoPi"/>，G代表扭曲强度，0.25f为正常强度，最高1
         /// </summary>
         void DrawWarp();
     }

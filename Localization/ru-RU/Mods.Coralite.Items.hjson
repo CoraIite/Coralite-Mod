@@ -6235,3 +6235,13 @@ SwordOfBeherits: {
 	// DisplayName: Sword Of Beherits
 	// Tooltip: ""
 }
+
+DirtiryItem: {
+	// DisplayName: Dirtiry Item
+	// Tooltip: ""
+}
+
+LightFairyItem: {
+	// DisplayName: Light Fairy Item
+	// Tooltip: ""
+}

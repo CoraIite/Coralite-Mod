@@ -53,11 +53,6 @@ namespace Coralite.Content.Items.Fairies
             EscapeNormally(catcher, (60, 100), (0.8f, 1f));
         }
 
-        public override void ModifyIVLevel(ref FairyIV fairyIV, FairyCatcherPlayer fcp)
-        {
-            fairyIV.StaminaLevel = 100;
-        }
-
         public override void OnCatch(Player player, ref int catchPower)
         {
             targetVelocity = Helper.NextVec2Dir(0.8f, 1f);

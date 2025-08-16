@@ -67,7 +67,8 @@ namespace Coralite.Content.Items.Misc_Melee
 
             //player.itemTime = 8;
 
-            Vector2 posOffset = rot.ToRotationVector2() * Main.rand.NextFloat(-20,80);
+            Vector2 posOffset = rot.ToRotationVector2() * Main.rand.NextFloat(-20, 80)
+                + Helper.NextVec2Dir(0, 30);
             if (Main.rand.NextBool(4))
             {
                 posOffset += (rot + MathHelper.PiOver2).ToRotationVector2() * Main.rand.NextFloat(40, 80);
@@ -335,7 +336,7 @@ namespace Coralite.Content.Items.Misc_Melee
 
     public class BeheritsSpacial : ModProjectile, IDrawWarp, IDrawNonPremultiplied
     {
-        public override string Texture => AssetDirectory.Dusts + "SlashBright";
+        public override string Texture => AssetDirectory.Misc_Melee + Name;
 
         public ref float Rot => ref Projectile.ai[0];
         public ref float Width => ref Projectile.ai[1];
@@ -357,8 +358,9 @@ namespace Coralite.Content.Items.Misc_Melee
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
             Vector2 dir = Rot.ToRotationVector2() * 380;
+            float a = 0;
             return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size()
-                , Projectile.Center + dir * Width, Projectile.Center - dir * Width);
+                , Projectile.Center + dir * Width, Projectile.Center - dir * Width,60,ref a);
         }
 
         public override void AI()
@@ -387,7 +389,7 @@ namespace Coralite.Content.Items.Misc_Melee
         {
             Vector2 pos = Projectile.Center - Main.screenPosition;
 
-            float factor = 1 - Timer / 20;
+            float factor = 1 - (Timer / 20);
 
             float rot = Projectile.rotation;
 
@@ -399,14 +401,15 @@ namespace Coralite.Content.Items.Misc_Melee
 
             Texture2D tex = CoraliteAssets.Sparkle.ShotLineSPA.Value;
 
-            Vector2 scale = new Vector2(Width * 3f, Height*2f);
-            Vector2 direction = (Projectile.rotation+MathHelper.PiOver2).ToRotationVector2();
+            Vector2 scale = new Vector2(Width * 2f, Height * 3f);
+            Vector2 direction = (Projectile.rotation).ToRotationVector2() * 200 * factor;
+            Vector2 direction2 = (Projectile.rotation + MathHelper.PiOver2).ToRotationVector2() * 6;
 
             Rectangle frame = tex.Frame(1, 2, 0, 0);
-            Main.spriteBatch.Draw(tex, pos - direction * 6, frame
-                , new Color(dir, 1, 0, factor), Rot, new Vector2(frame.Width / 2, frame.Height), scale, 0, 0);
-            Main.spriteBatch.Draw(tex, pos + direction * 6, tex.Frame(1, 2, 0, 1)
-                , new Color(dir2, 1, 0, factor), Rot, new Vector2(frame.Width / 2, 0), scale, 0, 0);
+            Main.spriteBatch.Draw(tex, pos - direction2 - direction, frame
+                , new Color(dir, factor * 0.5f, 0, factor), Rot, new Vector2(frame.Width / 2, frame.Height), scale, 0, 0);
+            Main.spriteBatch.Draw(tex, pos + direction2 + direction, tex.Frame(1, 2, 0, 1)
+                , new Color(dir2, factor * 0.5f, 0, factor), Rot, new Vector2(frame.Width / 2, 0), scale, 0, 0);
         }
 
         public void DrawNonPremultiplied(SpriteBatch spriteBatch)
@@ -414,11 +417,11 @@ namespace Coralite.Content.Items.Misc_Melee
             Vector2 pos = Projectile.Center - Main.screenPosition;
             Texture2D tex = Projectile.GetTexture();
 
-            Vector2 scale = new Vector2(Width * 1.75f, Height*0.5f);
+            Vector2 scale = new Vector2(Width * 1.75f, Height * 0.5f);
             Rectangle frame = tex.Frame(1, 6, 0, Projectile.frame);
 
             Main.spriteBatch.Draw(tex, pos, frame
-                , new Color(255,80,80,255), Rot, frame.Size() / 2, scale, 0, 0);
+                , new Color(255, 180, 210, 255), Rot, frame.Size() / 2, scale, 0, 0);
         }
     }
 }

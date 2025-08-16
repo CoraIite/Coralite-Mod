@@ -45,21 +45,12 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         public enum DescriptionID
         {
-            ZoneForest = 0,
-            ZoneRockLayer,
-            ZoneBeach,
-            ZoneDesert,
-            ZoneSnow,
-            ZoneHell,
-            ZoneCrimson,
-            ZoneCorrupt,
             ZoneUndergroundJungle,
-
-
 
             CircleR_9,
 
             GemWall,
+            DirtWall,
 
             Count,
         }

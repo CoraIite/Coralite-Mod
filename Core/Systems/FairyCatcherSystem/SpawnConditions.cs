@@ -1,4 +1,5 @@
 ﻿using System;
+using Terraria;
 using Terraria.ID;
 using Terraria.Localization;
 using static Coralite.Core.Systems.FairyCatcherSystem.FairySystem;
@@ -9,42 +10,42 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
     {
         /// <summary> 森林环境 </summary>
         public static FairySpawnCondition ZoneForest =
-            new(() => GetSpawnCondition(DescriptionID.ZoneForest).Value
+            new(() => Condition.InShoppingZoneForest.Description.Value
                 , attempt => attempt.Player.ZoneForest);
 
         /// <summary> 洞穴环境 </summary>
         public static FairySpawnCondition ZoneRockLayerHeight =
-            new(() => GetSpawnCondition(DescriptionID.ZoneRockLayer).Value
+            new(() => Condition.InRockLayerHeight.Description.Value
                 , attempt => attempt.Player.ZoneRockLayerHeight);
 
         /// <summary> 海洋环境 </summary>
         public static FairySpawnCondition ZoneBeach =
-            new(() => GetSpawnCondition(DescriptionID.ZoneBeach).Value
+            new(() => Condition.InBeach.Description.Value
                 , attempt => attempt.Player.ZoneBeach);
 
         /// <summary> 沙漠环境 </summary>
         public static FairySpawnCondition ZoneDesert =
-            new(() => GetSpawnCondition(DescriptionID.ZoneDesert).Value
+            new(() => Condition.InDesert.Description.Value
                 , attempt => attempt.Player.ZoneDesert);
 
         /// <summary> 雪原环境 </summary>
         public static FairySpawnCondition ZoneSnow =
-            new(() => GetSpawnCondition(DescriptionID.ZoneSnow).Value
+            new(() => Condition.InSnow.Description.Value
                 , attempt => attempt.Player.ZoneSnow);
 
         /// <summary> 猩红环境 </summary>
         public static FairySpawnCondition ZoneCrimson =
-            new(() => GetSpawnCondition(DescriptionID.ZoneCrimson).Value
+            new(() => Condition.InCrimson.Description.Value
                 , attempt => attempt.Player.ZoneCrimson);
 
         /// <summary> 腐化环境 </summary>
         public static FairySpawnCondition ZoneCorrupt =
-            new(() => GetSpawnCondition(DescriptionID.ZoneCorrupt).Value
+            new(() => Condition.InCorrupt.Description.Value
                 , attempt => attempt.Player.ZoneCorrupt);
 
         /// <summary> 地狱环境 </summary>
         public static FairySpawnCondition ZoneHell =
-            new(() => GetSpawnCondition(DescriptionID.ZoneHell).Value
+            new(() => Condition.InUnderworldHeight.Description.Value
                 , attempt => attempt.Player.ZoneUnderworldHeight);
 
         /// <summary> 地下丛林环境 </summary>
@@ -62,7 +63,21 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <summary> 处于宝石墙前 </summary>
         public static FairySpawnCondition GemWall =
             new(() => GetSpawnCondition(DescriptionID.GemWall).Value
-                , attempt => attempt.CircleRadius >= 9 * 16);
+                , attempt => true);
+        /// <summary> 处于泥土墙前 </summary>
+        public static FairySpawnCondition DirtWall =
+            new(() => GetSpawnCondition(DescriptionID.DirtWall).Value
+                , attempt => true);
+
+        /// <summary> 击败史莱姆ang </summary>
+        public static FairySpawnCondition DownedSlimeKing =
+            new(() => Condition.DownedKingSlime.Description.Value
+                , attempt => NPC.downedSlimeKing);
+
+        /// <summary> 白天 </summary>
+        public static FairySpawnCondition DayTime =
+            new(() => Condition.TimeDay.Description.Value
+                , attempt => Main.dayTime);
 
     }
 

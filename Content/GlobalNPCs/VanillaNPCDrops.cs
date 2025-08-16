@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Items.CoreKeeper;
 using Coralite.Content.Items.Donator;
+using Coralite.Content.Items.FairyCatcher.Glove;
 using Coralite.Content.Items.FairyCatcher.Jar;
 using Coralite.Content.Items.FairyCatcher.Lasso;
 using Coralite.Content.Items.FlyingShields;
@@ -39,6 +40,9 @@ namespace Coralite.Content.GlobalNPCs
                     break;
                 case NPCID.GiantBat:
                     npcLoot.Add(ItemDropRule.Common(ItemType<BatfangShield>(), 60, 1, 1));
+                    break;
+                case NPCID.Crab:
+                    npcLoot.Add(ItemDropRule.Common(ItemType<CrabClaw>(), 20));
                     break;
                 case NPCID.MotherSlime://黑色的史莱姆掉落黑胶球
                 //case NPCID.BabySlime:

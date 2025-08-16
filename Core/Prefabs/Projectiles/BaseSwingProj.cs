@@ -654,7 +654,7 @@ namespace Coralite.Core.Prefabs.Projectiles
 
         #region OtherHelperMethod
 
-        public void WarpDrawer(float trailBottomExtraMult, float alpha = 1)
+        public void WarpDrawer(float trailBottomExtraMult, float alpha = 1f, float warpStrength = 0.25f)
         {
             if (Timer < minTime || oldRotate == null)
                 return;
@@ -675,8 +675,8 @@ namespace Coralite.Core.Prefabs.Projectiles
                 Vector2 Top = Center + (oldRotate[i].ToRotationVector2() * (oldLength[i] + trailTopWidth + oldDistanceToOwner[i]));
                 Vector2 Bottom = Center + (oldRotate[i].ToRotationVector2() * (oldLength[i] - (ControlTrailBottomWidth(factor) * trailBottomExtraMult) + oldDistanceToOwner[i]));
 
-                bars.Add(new ColoredVertex(Top, new Color(dir, w, 0f, alpha), new Vector3(factor, 0f, w)));
-                bars.Add(new ColoredVertex(Bottom, new Color(dir, w, 0f, alpha), new Vector3(factor, 1f, w)));
+                bars.Add(new ColoredVertex(Top, new Color(dir, warpStrength, 0f, alpha), new Vector3(factor, 0f, w)));
+                bars.Add(new ColoredVertex(Bottom, new Color(dir, warpStrength, 0f, alpha), new Vector3(factor, 1f, w)));
             }
 
             Main.spriteBatch.End();

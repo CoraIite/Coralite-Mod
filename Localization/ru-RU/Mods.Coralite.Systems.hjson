@@ -78,17 +78,11 @@ FairySystem: {
 	// BottleHeal: Mods.Coralite.Systems.FairySystem.BottleHeal
 
 	SpawnDescriptions: {
-		// ZoneForest: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.ZoneForest
-		// ZoneRockLayer: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.ZoneRockLayer
-		// ZoneBeach: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.ZoneBeach
 		// CircleR_9: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.CircleR_9
-		// ZoneDesert: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.ZoneDesert
-		// ZoneHell: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.ZoneHell
-		// ZoneCrimson: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.ZoneCrimson
-		// ZoneCorrupt: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.ZoneCorrupt
 		// GemWall: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.GemWall
 		// ZoneSnow: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.ZoneSnow
 		// ZoneUndergroundJungle: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.ZoneUndergroundJungle
+		// DirtWall: Mods.Coralite.Systems.FairySystem.SpawnDescriptions.DirtWall
 	}
 
 	// SkillLVTips: Mods.Coralite.Systems.FairySystem.SkillLVTips
@@ -310,5 +304,15 @@ FairySkill: {
 	FSkill_SporeExplode: {
 		// Description: Mods.Coralite.Systems.FairySkill.FSkill_SporeExplode.Description
 		// SkillName: Mods.Coralite.Systems.FairySkill.FSkill_SporeExplode.SkillName
+	}
+
+	FSkill_ShootDirt: {
+		// Description: Mods.Coralite.Systems.FairySkill.FSkill_ShootDirt.Description
+		// SkillName: Mods.Coralite.Systems.FairySkill.FSkill_ShootDirt.SkillName
+	}
+
+	FSkill_ShootStar: {
+		// Description: Mods.Coralite.Systems.FairySkill.FSkill_ShootStar.Description
+		// SkillName: Mods.Coralite.Systems.FairySkill.FSkill_ShootStar.SkillName
 	}
 }

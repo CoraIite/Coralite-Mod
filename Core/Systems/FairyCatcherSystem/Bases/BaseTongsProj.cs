@@ -166,8 +166,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             }
 
             Owner.itemRotation = HandleRot + (Owner.direction > 0 ? 0 : MathHelper.Pi);
-                Owner.SetCompositeArmFront(true
-                    , Player.CompositeArmStretchAmount.Full, Owner.itemRotation - Owner.direction * MathHelper.PiOver2);
+            Owner.SetCompositeArmFront(true
+                , Player.CompositeArmStretchAmount.Full, Owner.itemRotation - Owner.direction * MathHelper.PiOver2);
         }
 
         /// <summary>

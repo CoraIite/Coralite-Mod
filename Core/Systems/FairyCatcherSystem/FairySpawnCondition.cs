@@ -29,6 +29,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             /// 宝石石墙，是会自然生成的宝石洞的墙壁
             /// </summary>
             Gem,
+            /// <summary>
+            /// 泥土墙壁
+            /// </summary>
+            Dirt,
         }
 
         /// <summary>
@@ -212,6 +216,21 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                     RegisterToWallInner(WallID.TopazGemspark);
 
                     RegisterToEncyclopedia(FairySpawnCondition.GemWall);
+                    break;
+                case WallGroupType.Dirt:
+                    RegisterToWallInner(WallID.Dirt);
+                    RegisterToWallInner(WallID.Dirt1Echo);
+                    RegisterToWallInner(WallID.Dirt2Echo);
+                    RegisterToWallInner(WallID.Dirt3Echo);
+                    RegisterToWallInner(WallID.Dirt4Echo);
+
+                    RegisterToWallInner(WallID.DirtUnsafe);
+                    RegisterToWallInner(WallID.DirtUnsafe1);
+                    RegisterToWallInner(WallID.DirtUnsafe2);
+                    RegisterToWallInner(WallID.DirtUnsafe3);
+                    RegisterToWallInner(WallID.DirtUnsafe4);
+
+                    RegisterToEncyclopedia(FairySpawnCondition.DirtWall);
                     break;
                 default:
                     break;

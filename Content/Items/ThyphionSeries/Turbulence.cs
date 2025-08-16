@@ -517,7 +517,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                                 float r = (Projectile.rotation) % 6.18f;
                                 float dir = (r >= 3.14f ? r - 3.14f : r + 3.14f) / MathHelper.TwoPi;
                                 float p = 1 - f.X;
-                                return new Color(dir, p, 0f, p);
+                                return new Color(dir, p/4, 0f, p);
                             });
                 }
             }

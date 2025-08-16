@@ -42,14 +42,14 @@ namespace Coralite.Content.Items.FairyCatcher.Glove
             }
         }
 
-        //public override void AddRecipes()
-        //{
-        //    CreateRecipe()
-        //        .AddIngredient(ItemID.Gel, 8)
-        //        .AddIngredient(ItemID.BlackInk)
-        //        .AddTile(TileID.WorkBenches)
-        //        .Register();
-        //}
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient(ItemID.Coral, 5)
+                .AddIngredient(ItemID.ShellPileBlock, 10)
+                .AddTile(TileID.WorkBenches)
+                .Register();
+        }
     }
 
     public class CrabClawProj() : BaseGloveProj(1.2f)
