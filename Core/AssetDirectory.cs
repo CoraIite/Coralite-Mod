@@ -283,6 +283,7 @@ namespace Coralite.Core
         public const string Misc = Assets + "Misc/";
 
         public const string WorldGen = Assets + "WorldGeneration/";
+        public const string Menus = Assets + "Menus/";
 
         public const string IceNest = WorldGen + "IceNest/";
         public const string Shrines = WorldGen + "Shrines/";
