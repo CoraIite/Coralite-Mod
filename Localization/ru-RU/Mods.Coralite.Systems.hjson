@@ -93,6 +93,7 @@ FairySystem: {
 	// FairySpawnConditionCircle: Mods.Coralite.Systems.FairySystem.FairySpawnConditionCircle
 	// TongStaminaReduce: Mods.Coralite.Systems.FairySystem.TongStaminaReduce
 	// IsFairyPowder: Mods.Coralite.Systems.FairySystem.IsFairyPowder
+	// SkillTags: Mods.Coralite.Systems.FairySystem.SkillTags
 }
 
 BossBarSystem.DontTakeDamage: Невозможно атаковать!
@@ -316,3 +317,5 @@ FairySkill: {
 		// SkillName: Mods.Coralite.Systems.FairySkill.FSkill_ShootStar.SkillName
 	}
 }
+
+// FairySkillTag.FSTag_Impact.Text: Mods.Coralite.Systems.FairySkillTag.FSTag_Impact.Text

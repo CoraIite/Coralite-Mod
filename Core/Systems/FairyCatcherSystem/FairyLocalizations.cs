@@ -93,6 +93,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         public static LocalizedText SkillLVTips;
         public static LocalizedText SkillLVLimit;
+        public static LocalizedText SkillTags;
 
         public static LocalizedText TongStaminaReduce;
 

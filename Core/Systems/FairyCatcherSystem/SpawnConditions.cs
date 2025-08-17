@@ -1,7 +1,6 @@
 ﻿using System;
 using Terraria;
 using Terraria.ID;
-using Terraria.Localization;
 using static Coralite.Core.Systems.FairyCatcherSystem.FairySystem;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem

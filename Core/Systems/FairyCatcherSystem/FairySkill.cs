@@ -19,6 +19,12 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
     {
         public override string Texture => AssetDirectory.DefaultItem;
 
+        /// <summary>
+        /// 记录了技能的标签
+        /// </summary>
+        public static Dictionary<int, int[]> SkillWithTags { get; set; }
+
+
         public int Type { get; internal set; }
 
         /// <summary>
@@ -31,13 +37,18 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public virtual Color SkillTextColor { get => Color.White; }
 
         /// <summary>
+        /// 技能集合的Type，默认<see cref="null"/>
+        /// </summary>
+        public virtual int[] SkillTags => null;
+
+        /// <summary>
         /// 技能计时器
         /// </summary>
         protected int SkillTimer { get; set; }
         /// <summary>
         /// 每隔多久寻找一次最近的敌人
         /// </summary>
-        public int TargetClosestTime { get => 45; }
+        public virtual int TargetClosestTime { get => 45; }
 
         protected override void Register()
         {
@@ -55,6 +66,19 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                     if (propinfo.PropertyType == typeof(LocalizedText))
                         propinfo.SetValue(this, this.GetLocalization(propinfo.Name));
                 }
+        }
+
+        public sealed override void SetupContent()
+        {
+            SetStaticDefaults();
+        }
+
+        public override void SetStaticDefaults()
+        {
+            SkillWithTags ??= new Dictionary<int, int[]>();
+            int[] skillTags = SkillTags;
+            if (skillTags != null)
+                SkillWithTags.Add(Type, skillTags);
         }
 
         public virtual FairySkill NewInstance()
@@ -177,7 +201,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             string name = GetSkillNameTip(iv.SkillLevel);
             nameSize = Helper.GetStringSize(name, Vector2.One * 1.1f);
 
-            string description = GetSkillTips(player, iv);
+            string description = GetSkillTipsInner(player, iv);
             Vector2 describSize = Helper.GetStringSize(description, Vector2.One * 0.9f);
 
             //宽度是图片宽度+10+描述的最大宽度
@@ -234,9 +258,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             Utils.DrawBorderString(Main.spriteBatch, GetSkillNameTip(iv.SkillLevel), topLeft
                 , FairyIV.GetFairyIVColorAndText(iv.SkillLevelLevel).Item1, 1.1f);
 
-            topLeft.Y += nameSize.Y+4;
+            topLeft.Y += nameSize.Y + 4;
 
-            Utils.DrawBorderString(Main.spriteBatch, GetSkillTips(player, iv), topLeft
+            Utils.DrawBorderString(Main.spriteBatch, GetSkillTipsInner(player, iv), topLeft
                 , Color.White, 0.9f);
         }
 
@@ -246,6 +270,22 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public string GetSkillNameTip(int skillLevel)
         {
             return FairySystem.SkillLVTips.Format(SkillName.Value, skillLevel);
+        }
+
+        /// <summary>
+        /// 获得技能描述文本
+        /// </summary>
+        private string GetSkillTipsInner(Player player, FairyIV iv)
+        {
+            string pre = FairySystem.SkillTags.Value;
+            if (SkillWithTags.TryGetValue(Type, out int[] tags) && tags != null)
+                foreach (int tagID in tags)
+                {
+                    FairySkillTag tag = FairyLoader.GetFairySkillTag(tagID);
+                    pre = string.Concat(pre, " ", tag.Text.Value);
+                }
+
+            return string.Concat(pre, Environment.NewLine, GetSkillTips(player, iv));
         }
 
         /// <summary>

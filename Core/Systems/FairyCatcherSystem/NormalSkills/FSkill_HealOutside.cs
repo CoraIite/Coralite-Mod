@@ -80,7 +80,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.NormalSkills
         {
             int level = iv.SkillLevel;
             if (player.TryGetModPlayer(out FairyCatcherPlayer fcp))
-                level = fcp.FairySkillBonus[Type].ModifyLevel(level);
+                level = fcp.GetFairySkillBonus(Type, level);
 
             return HealValue.Format(GetHealPercent(level)*100, iv.Damage);
         }

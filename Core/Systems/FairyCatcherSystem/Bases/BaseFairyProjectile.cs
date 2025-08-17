@@ -312,7 +312,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 //设置增幅后的技能等级
                 SkillLevel = IVSkillLevel;
                 if (Owner.TryGetModPlayer(out FairyCatcherPlayer fcp))
-                    SkillLevel = fcp.FairySkillBonus[skill.Type].ModifyLevel(IVSkillLevel);
+                    SkillLevel = fcp.GetFairySkillBonus(skill.Type, IVSkillLevel);
 
                 Projectile.StartAttack();
                 skill.SpawnSkillText(Projectile.Top);

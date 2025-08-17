@@ -105,6 +105,7 @@ FairySystem: {
 		'''
 	TongStaminaReduce: 令发射的仙灵耐力 {0}
 	IsFairyPowder: 仙灵尘
+	SkillTags: 类型:
 }
 
 BossBarSystem.DontTakeDamage: 不可攻击！
@@ -358,3 +359,5 @@ FairySkill: {
 		SkillName: 星光箭
 	}
 }
+
+FairySkillTag.FSTag_Impact.Text: "[c/ffcdaf:冲击]"

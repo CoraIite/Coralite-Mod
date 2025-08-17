@@ -1,4 +1,5 @@
 ﻿using Coralite.Core.Systems.FairyCatcherSystem.Bases;
+using Coralite.Core.Systems.FairyCatcherSystem.NormalSkillTags;
 using Coralite.Helpers;
 using System;
 using Terraria;
@@ -15,6 +16,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.NormalSkills
 
         public LocalizedText DashDamage { get; set; }
         public LocalizedText Chase { get; set; }
+
+        public override int[] SkillTags => [CoraliteContent.FairySkillTagType<FSTag_Impact>()];
 
         /// <summary>
         /// 基础冲撞时间
@@ -103,9 +106,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.NormalSkills
 
             int level = iv.SkillLevel;
             if (player.TryGetModPlayer(out FairyCatcherPlayer fcp))
-                level = fcp.FairySkillBonus[Type].ModifyLevel(level);
+                level = fcp.GetFairySkillBonus(Type, level);
 
-            return string.Concat(DashDamage.Format(1.5f + level * 0.15f)
+            return string.Concat(DashDamage.Format(MathF.Round(1.5f + level * 0.15f, 1))
                 , Environment.NewLine, chase);
         }
     }

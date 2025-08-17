@@ -20,6 +20,8 @@ namespace Coralite.Core
             => ModContent.GetInstance<T>().Type;
         public static int FairySkillType<T>() where T : FairySkill
             => ModContent.GetInstance<T>().Type;
+        public static int FairySkillTagType<T>() where T : FairySkillTag
+            => ModContent.GetInstance<T>().Type;
 
         public static FairyCircleCore GetFairyCircleCore<T>() where T : FairyCircleCore 
             => ModContent.GetInstance<T>();

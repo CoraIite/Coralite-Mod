@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ModLoader.IO;
+using static System.Net.WebRequestMethods;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem
 {
@@ -54,7 +55,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         {
             get
             {
-                _skillBonus ??= new SkillModifyer[FairyLoader.FairySkillCount];
+                _skillBonus ??= new SkillModifyer[FairyLoader.FairySkillTagCount];
                 return _skillBonus;
             }
         }
@@ -229,6 +230,21 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                     break;
                 }
             }
+        }
+
+        /// <summary>
+        /// 根据技能的标签获取技能等级增幅
+        /// </summary>
+        /// <param name="baseLevel"></param>
+        /// <param name="skillType"></param>
+        /// <returns></returns>
+        public int GetFairySkillBonus(int skillType,int baseLevel)
+        {
+            if (FairySkill.SkillWithTags.TryGetValue(skillType, out int[] tags))
+                foreach (var tag in tags)
+                    baseLevel = FairySkillBonus[tag].ModifyLevel(baseLevel);
+
+            return baseLevel;
         }
 
         /// <summary>

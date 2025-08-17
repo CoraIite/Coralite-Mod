@@ -294,7 +294,7 @@ namespace Coralite.Content.Items.Fairies
         {
             int level = iv.SkillLevel;
             if (player.TryGetModPlayer(out FairyCatcherPlayer fcp))
-                level = fcp.FairySkillBonus[Type].ModifyLevel(level);
+                level = fcp.GetFairySkillBonus(Type, level);
 
             return Description.Format(GetEXProjCount(level), GetDamageBonus(iv.Damage, level));
         }
@@ -316,7 +316,7 @@ namespace Coralite.Content.Items.Fairies
         {
             int level = fairyProj.FairyItem.FairyIV.SkillLevel;
             if (fairyProj.Owner.TryGetModPlayer(out FairyCatcherPlayer fcp))
-                level = fcp.FairySkillBonus[Type].ModifyLevel(level);
+                level = fcp.GetFairySkillBonus(Type, level);
 
             int count = GetEXProjCount(level);
             int proj = fairyProj.Projectile.NewProjectileFromThis(fairyProj.Projectile.Center
