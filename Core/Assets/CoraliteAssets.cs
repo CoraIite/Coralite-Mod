@@ -11,6 +11,13 @@ namespace Coralite.Core
     {
         public float Priority => 1;
 
+        /// <summary>
+        /// 空白贴图
+        /// </summary>
+        [VaultLoaden(AssetDirectory.Blank)]
+        public static ATex Blank {  get; set; }
+
+
         [AttributeUsage(AttributeTargets.Class)]
         private class AutoLoadTextureAttribute(string texturePath) : Attribute
         {
