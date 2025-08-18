@@ -42,5 +42,7 @@ namespace Coralite.Content.Menu.CoraliteMenu
         public override int FirstLayerHeight => 10;
         public override int SecondLayerHeight => -200;
         public override int ThirdLayerHeight => -100;
+
+        public override float ScreenY => 0;
     }
 }
