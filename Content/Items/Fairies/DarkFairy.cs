@@ -1,45 +1,44 @@
 ﻿using Coralite.Content.DamageClasses;
-using Coralite.Content.Dusts;
 using Coralite.Core;
 using Coralite.Core.Systems.FairyCatcherSystem;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases.Items;
 using Coralite.Core.Systems.FairyCatcherSystem.NormalSkills;
 using Coralite.Helpers;
+using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
-using Terraria.Graphics;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.Localization;
 
 namespace Coralite.Content.Items.Fairies
 {
-    public class LightFairyItem : BaseFairyItem
+    public class DarkFairyItem : BaseFairyItem
     {
-        public override int FairyType => CoraliteContent.FairyType<LightFairy>();
+        public override int FairyType => CoraliteContent.FairyType<DarkFairy>();
         public override FairyRarity Rarity => FairyRarity.C;
 
         public override void SetDefaults()
         {
             Item.rare = ItemRarityID.Blue;
             Item.value = Item.sellPrice(copper: 50);
-            Item.shoot = ModContent.ProjectileType<LightFairyProj>();
+            Item.shoot = ModContent.ProjectileType<DarkFairyProj>();
         }
 
         public override int[] GetFairySkills()
         {
             return [
-                CoraliteContent.FairySkillType<FSkill_ShootStar>()
+                CoraliteContent.FairySkillType<FSkill_ShootDark>()
                 ];
         }
     }
 
-    public class LightFairy : Fairy
+    public class DarkFairy : Fairy
     {
-        public override int ItemType => ModContent.ItemType<LightFairyItem>();
+        public override int ItemType => ModContent.ItemType<DarkFairyItem>();
 
         public override FairyRarity Rarity => FairyRarity.C;
 
@@ -47,7 +46,7 @@ namespace Coralite.Content.Items.Fairies
         {
             FairySpawnController.Create(Type)
                 .AddCondition(FairySpawnCondition.DownedSlimeKing)
-                .AddCondition(FairySpawnCondition.DayTime)
+                .AddCondition(FairySpawnCondition.NightTime)
                 .RegisterToWall();
         }
 
@@ -62,19 +61,19 @@ namespace Coralite.Content.Items.Fairies
 
             for (int i = 0; i < 6; i++)
             {
-                Dust d = Dust.NewDustPerfect(Center, DustID.YellowStarDust, Helper.NextVec2Dir(0.5f, 1.5f), 200);
+                Dust d = Dust.NewDustPerfect(Center, DustID.Smoke, Helper.NextVec2Dir(0.5f, 1.5f), 50,Color.Black);
                 d.noGravity = true;
             }
         }
     }
 
-    public class LightFairyProj : BaseFairyProjectile
+    public class DarkFairyProj : BaseFairyProjectile
     {
-        public override string Texture => AssetDirectory.FairyItems + "LightFairy";
+        public override string Texture => AssetDirectory.FairyItems + "DarkFairy";
 
         public override FairySkill[] InitSkill()
             => [
-                NewSkill<FSkill_ShootStar>()
+                NewSkill<FSkill_ShootDark>()
                 ];
 
         public override void SpawnFairyDust()
@@ -85,11 +84,11 @@ namespace Coralite.Content.Items.Fairies
                 case AIStates.Rest:
                 case AIStates.Backing:
                     if (Main.rand.NextBool(3))
-                        Projectile.SpawnTrailDust(DustID.YellowStarDust, Main.rand.NextFloat(0.1f, 0.5f), 200);
+                        Projectile.SpawnTrailDust(DustID.Smoke, Main.rand.NextFloat(0.1f, 0.5f), 50,Color.Black);
                     break;
                 case AIStates.Skill:
                 default:
-                    Projectile.SpawnTrailDust(DustID.YellowStarDust, Main.rand.NextFloat(0.1f, 0.5f), 200);
+                    Projectile.SpawnTrailDust(DustID.Smoke, Main.rand.NextFloat(0.1f, 0.5f), 50, Color.Black);
                     break;
             }
         }
@@ -116,24 +115,19 @@ namespace Coralite.Content.Items.Fairies
 
             for (int i = 0; i < 12; i++)
             {
-                Dust d = Dust.NewDustPerfect(Projectile.Center, DustID.YellowStarDust, Helper.NextVec2Dir(1, 2), 200);
+                Dust d = Dust.NewDustPerfect(Projectile.Center, DustID.Smoke, Helper.NextVec2Dir(1, 2), 50, Color.Black);
                 d.noGravity = true;
             }
         }
     }
 
-    public class ShootStar : ModProjectile
+    public class ShootDark : BaseHeldProj
     {
-        public override string Texture => AssetDirectory.Blank;
+        public override string Texture => "Terraria/Images/Projectile_16";
 
-        private VertexStrip _vertexStrip;
+        public ref float Scale => ref Projectile.ai[0];
 
-        public ref float Count => ref Projectile.ai[0];
-
-        public override void SetStaticDefaults()
-        {
-            Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 18);
-        }
+        public const int trailCachesLength = 6;
 
         public override void SetDefaults()
         {
@@ -145,79 +139,81 @@ namespace Coralite.Content.Items.Fairies
             Projectile.width = Projectile.height = 16;
         }
 
+        public override void Initialize()
+        {
+            Projectile.InitOldPosCache(trailCachesLength);
+            Projectile.InitOldRotCache(trailCachesLength);
+        }
+
         public override void AI()
         {
-            Lighting.AddLight(Projectile.Center, new Vector3(0.2f, 0.2f, 0.1f));
+            Lighting.AddLight(Projectile.Center, Coralite.IcicleCyan.ToVector3());
 
-            if (Projectile.localAI[0] == 0)
-            {
-                if (!VaultUtils.isServer)
-                    _vertexStrip = new();
-                Projectile.localAI[0] = 1;
-            }
+            Projectile.UpdateOldPosCache(addVelocity: true);
+            Projectile.UpdateOldRotCache();
 
-            if (Main.rand.NextBool())
-            {
-                Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(4, 4), ModContent.DustType<GlowBall>(),
-                    -Projectile.velocity * 0.1f, 0, Color.LightGoldenrodYellow, 0.15f);
-            }
-
-            //int num18 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.RainbowMk2, 0f, 0f, 100, new Color(162, 42, 131), 1f);
-            //Main.dust[num18].velocity *= 0.1f;
-            //Main.dust[num18].velocity += Projectile.velocity * 0.2f;
-            //Main.dust[num18].position.X = Projectile.Center.X + 4f + Main.rand.Next(-4, 4);
-            //Main.dust[num18].position.Y = Projectile.Center.Y + Main.rand.Next(-4, 4);
-            //Main.dust[num18].noGravity = true;
-
+            Projectile.SpawnTrailDust(8f, DustID.Smoke, -Main.rand.NextFloat(0.1f, 0.4f)
+                , 50, Color.Black, Scale: Main.rand.NextFloat(0.6f, 0.8f));
             Projectile.rotation = Projectile.velocity.ToRotation();
         }
 
         public override void OnKill(int timeLeft)
         {
-            for (int i = 0; i < 8; i++)
+            for (int i = 0; i < 4; i++)
             {
-                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.YellowStarDust, Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-3, 3), 100, Coralite.MagicCrystalPink, 1f);
-                dust.noGravity = true;
+                Vector2 dir = (i * MathHelper.PiOver2).ToRotationVector2();
+                for (int j = 0; j < 6; j++)
+                {
+                    Dust d = Dust.NewDustPerfect(Projectile.Center, DustID.Smoke, dir * (1 + (j * 0.8f))
+                        , 50, Color.Black, Scale: 1.6f - (j * 0.15f));
+                    d.noGravity = true;
+                }
             }
 
-            for (int i = 0; i < Count; i++)
-            {
-                Projectile.NewProjectileFromThis<StarArrow>(Projectile.Center
-                    , (i / Count * MathHelper.TwoPi).ToRotationVector2() * (3 + Count)
-                    , (int)(Projectile.damage * 0.5f), Projectile.knockBack);
-            }
+            SoundEngine.PlaySound(CoraliteSoundID.Hit_Item10, Projectile.Center);
         }
 
         public override bool PreDraw(ref Color lightColor)
         {
-            if (_vertexStrip == null)
-                return false;
+            DrawTrails();
+            Texture2D mainTex = Projectile.GetTexture();
+            Color c = Color.Black;
 
-            MiscShaderData miscShaderData = GameShaders.Misc["RainbowRod"];
-            miscShaderData.UseSaturation(-1.8f);
-            miscShaderData.UseOpacity(2f);
-            miscShaderData.Apply();
-            _vertexStrip.PrepareStripWithProceduralPadding(Projectile.oldPos, Projectile.oldRot, StripColors, StripWidth, -Main.screenPosition + (Projectile.Size / 2f));
-            _vertexStrip.DrawTrail();
-            Main.pixelShader.CurrentTechnique.Passes[0].Apply();
+            var pos = Projectile.Center - Main.screenPosition;
+            var origin = mainTex.Size() / 2;
 
-            //ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, SpriteEffects.None, Projectile.oldPos[0]+new Vector2(8,8) - Main.screenPosition,
-            //    Color.White * 0.8f, Coralite.MagicCrystalPink, 0.5f, 0f, 0.5f, 0.5f, 0f, 0f,
-            //    new Vector2(0.5f, 0.5f), Vector2.One*0.5f);
+            Main.spriteBatch.Draw(mainTex, pos, null, c, 0, origin, 0.7f, 0, 0);
+             c = Color.Red;
+
+            Main.spriteBatch.Draw(mainTex, pos, null, c * 0.7f, MathHelper.PiOver4, origin, 0.5f, 0, 0);
             return false;
         }
 
-        private Color StripColors(float progressOnStrip)
+        public virtual void DrawTrails()
         {
-            Color result = Color.Lerp(Color.White, Color.LightGoldenrodYellow, Utils.GetLerpValue(-0.2f, 0.5f, progressOnStrip, clamped: true)) * (1f - Utils.GetLerpValue(0f, 0.98f, progressOnStrip));
-            result.A = 64;
-            return result;
-        }
+            Texture2D Texture = CoraliteAssets.Trail.CircleA.Value;
 
-        private float StripWidth(float progressOnStrip) => MathHelper.Lerp(4f, 16f, Utils.GetLerpValue(0f, 0.2f, progressOnStrip, clamped: true)) * Utils.GetLerpValue(0f, 0.07f, progressOnStrip, clamped: true);
+            List<ColoredVertex> bars = new();
+
+            for (int i = 0; i < trailCachesLength; i++)
+            {
+                float factor = (float)i / trailCachesLength;
+                Vector2 Center = Projectile.oldPos[i] - Main.screenPosition;
+                Vector2 normal = (Projectile.oldRot[i] + MathHelper.PiOver2).ToRotationVector2();
+                Vector2 Top = Center + (normal * 5 * factor);
+                Vector2 Bottom = Center - (normal * 5 * factor);
+
+                var color = Color.Black * factor;
+                bars.Add(new(Top, color, new Vector3(factor, 0, 1)));
+                bars.Add(new(Bottom, color, new Vector3(factor, 1, 1)));
+            }
+
+            Main.graphics.GraphicsDevice.Textures[0] = Texture;
+            Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars.ToArray(), 0, bars.Count - 2);
+        }
     }
 
-    public class StarArrow:ModProjectile
+    public class DarkBoom : ModProjectile
     {
         public override string Texture => AssetDirectory.Blank;
 
@@ -242,7 +238,7 @@ namespace Coralite.Content.Items.Fairies
             Projectile.velocity *= 0.92f;
             Projectile.rotation = Projectile.velocity.ToRotation();
 
-            if (Timer> 14)
+            if (Timer > 14)
                 Projectile.Kill();
         }
 
@@ -276,16 +272,16 @@ namespace Coralite.Content.Items.Fairies
         }
     }
 
-    public class FSkill_ShootStar : FSkill_ShootProj
+    public class FSkill_ShootDark : FSkill_ShootProj
     {
-        public override string Texture => AssetDirectory.FairySkillIcons + "Light";
+        public override string Texture => AssetDirectory.FairySkillIcons + "Shadow";
 
         public LocalizedText Description { get; set; }
 
-        public override Color SkillTextColor => Color.Yellow;
+        public override Color SkillTextColor => Color.DarkGray;
         protected override float ShootSpeed => 16;
 
-        protected override int ProjType => ModContent.ProjectileType<ShootStar>();
+        protected override int ProjType => ModContent.ProjectileType<ShootDark>();
 
         protected override float ChaseDistance => 300;
 
@@ -295,10 +291,10 @@ namespace Coralite.Content.Items.Fairies
             if (player.TryGetModPlayer(out FairyCatcherPlayer fcp))
                 level = fcp.GetFairySkillBonus(Type, level);
 
-            return Description.Format(GetEXProjCount(level), GetDamageBonus(iv.Damage, level));
+            return Description.Format(GetEXProjRange(level), GetDamageBonus(iv.Damage, level));
         }
 
-        public int GetEXProjCount(int level)
+        public int GetEXProjRange(int level)
         {
             int count = 4;
             if (level > 4)
@@ -317,9 +313,9 @@ namespace Coralite.Content.Items.Fairies
             if (fairyProj.Owner.TryGetModPlayer(out FairyCatcherPlayer fcp))
                 level = fcp.GetFairySkillBonus(Type, level);
 
-            int count = GetEXProjCount(level);
+            int count = GetEXProjRange(level);
             int proj = fairyProj.Projectile.NewProjectileFromThis(fairyProj.Projectile.Center
-                 , velocity, ProjType, damage, fairyProj.Projectile.knockBack,count);
+                 , velocity, ProjType, damage, fairyProj.Projectile.knockBack, count);
         }
     }
 }

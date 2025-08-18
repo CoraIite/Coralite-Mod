@@ -77,6 +77,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public static FairySpawnCondition DayTime =
             new(() => Condition.TimeDay.Description.Value
                 , attempt => Main.dayTime);
+        /// <summary> 夜晚 </summary>
+        public static FairySpawnCondition NightTime =
+            new(() => Condition.TimeNight.Description.Value
+                , attempt => !Main.dayTime);
 
     }
 

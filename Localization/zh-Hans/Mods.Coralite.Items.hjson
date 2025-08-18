@@ -6270,3 +6270,8 @@ LightFairyItem: {
 	DisplayName: 光精灵
 	Tooltip: 小小的光
 }
+
+DarkFairyItem: {
+	DisplayName: 暗精灵
+	Tooltip: "黑夜中的小精灵"
+}

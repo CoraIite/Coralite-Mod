@@ -6245,3 +6245,8 @@ LightFairyItem: {
 	// DisplayName: Light Fairy Item
 	// Tooltip: ""
 }
+
+DarkFairyItem: {
+	// DisplayName: Dark Fairy Item
+	// Tooltip: ""
+}

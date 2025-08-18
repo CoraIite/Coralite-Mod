@@ -312,6 +312,11 @@ FairySkill: {
 		Description: Mods.Coralite.Systems.FairySkill.FSkill_ShootStar.Description
 		SkillName: Mods.Coralite.Systems.FairySkill.FSkill_ShootStar.SkillName
 	}
+
+	FSkill_ShootDark: {
+		Description: Mods.Coralite.Systems.FairySkill.FSkill_ShootDark.Description
+		SkillName: Mods.Coralite.Systems.FairySkill.FSkill_ShootDark.SkillName
+	}
 }
 
 FairySkillTag.FSTag_Impact.Text: Mods.Coralite.Systems.FairySkillTag.FSTag_Impact.Text
