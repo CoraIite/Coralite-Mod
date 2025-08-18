@@ -191,6 +191,7 @@ namespace Coralite.Content.Biomes
         public virtual int FirstLayerHeight => 2000;
         public virtual int SecondLayerHeight => 2200;
         public virtual int ThirdLayerHeight => 2600;
+        public virtual float ScreenY => Main.screenPosition.Y;
 
         public override void ModifyFarFades(float[] fades, float transitionSpeed)
         {
@@ -242,7 +243,7 @@ namespace Coralite.Content.Biomes
 
             float timeFactorTwoPI = timeFactor * MathHelper.TwoPi;
 
-            float yOffset = Main.screenPosition.Y;
+            float yOffset = ScreenY;
             yOffset = -Math.Clamp((yOffset - FirstLayerHeight) / 15, -100, 0);
 
             float alpha = Main.bgAlphaFrontLayer[Slot] * 0.9f;
@@ -259,7 +260,7 @@ namespace Coralite.Content.Biomes
             DrawBackgroundStar(spriteBatch, CrystallineSkyIslandBackgroundStar.Value
                 , alpha, timeFactor * CrystallineSkyIslandBackgroundStar.Width(), 55, yOffset - 200);
 
-            yOffset = -Math.Clamp((Main.screenPosition.Y - SecondLayerHeight) / 10, -200, 1200);
+            yOffset = -Math.Clamp((ScreenY - SecondLayerHeight) / 10, -200, 1200);
 
             //小石子
             DrawBackground(spriteBatch, CrystallineSkyIslandBackground2.Value
@@ -269,14 +270,14 @@ namespace Coralite.Content.Biomes
             DrawBackground(spriteBatch, CrystallineSkyIslandBackground3.Value
                 , alpha, (1 - timeFactor) * CrystallineSkyIslandBackground3.Width(), 40, yOffset);
 
-            yOffset = -Math.Clamp((Main.screenPosition.Y - ThirdLayerHeight) / 6, -400, 1000);
+            yOffset = -Math.Clamp((ScreenY - ThirdLayerHeight) / 6, -400, 1000);
 
             DrawBackground(spriteBatch, CrystallineSkyIslandBackground4.Value
                 , alpha, -350 + sinTime * 400, 16, yOffset);
             DrawBackground(spriteBatch, CrystallineSkyIslandBackground5.Value
                 , alpha, 100 - cosTime * 100, 18, yOffset);
 
-            yOffset = -Math.Clamp((Main.screenPosition.Y - ThirdLayerHeight) / 4, -600, 800);
+            yOffset = -Math.Clamp((ScreenY - ThirdLayerHeight) / 4, -600, 800);
 
             DrawBackground(spriteBatch, CrystallineSkyIslandBackground6.Value
                 , alpha, timeFactor * CrystallineSkyIslandBackground6.Width() * 2, 12, yOffset);
