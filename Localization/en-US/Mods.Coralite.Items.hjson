@@ -6208,3 +6208,8 @@ DarkFairyItem: {
 	DisplayName: Dark Fairy Item
 	Tooltip: ""
 }
+
+SoulTeeth: {
+	DisplayName: Soul Teeth
+	Tooltip: ""
+}

@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.Items.Shadow;
 using Coralite.Content.ModPlayers;
 using Coralite.Core;
+using Coralite.Core.Loaders;
 using Coralite.Core.Systems.FlyingShieldSystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
@@ -119,8 +120,6 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
     {
         public override string Texture => AssetDirectory.Blank;
 
-        public static BlendState _multiplyBlendState;
-
         public override void SetDefaults()
         {
             Projectile.ArmorPenetration = 5; // Added by TML
@@ -193,17 +192,8 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
         {
             SpriteBatch spriteBatch = Main.spriteBatch;
             spriteBatch.End();
-            _multiplyBlendState ??= new BlendState
-            {
-                ColorBlendFunction = BlendFunction.ReverseSubtract,
-                ColorDestinationBlend = Blend.One,
-                ColorSourceBlend = Blend.SourceAlpha,
-                AlphaBlendFunction = BlendFunction.ReverseSubtract,
-                AlphaDestinationBlend = Blend.One,
-                AlphaSourceBlend = Blend.SourceAlpha
-            };
 
-            BlendState multiplyBlendState = _multiplyBlendState;
+            BlendState multiplyBlendState = EffectLoader.ReverseBlendState;
             spriteBatch.Begin(SpriteSortMode.Deferred, multiplyBlendState, Main.DefaultSamplerState, DepthStencilState.None, Main.Rasterizer, null, Main.Transform);
             Vector2 position = Projectile.Center - Main.screenPosition;
             Main.instance.LoadProjectile(ProjectileID.LightsBane);

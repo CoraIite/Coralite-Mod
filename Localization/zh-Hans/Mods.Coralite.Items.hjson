@@ -6273,5 +6273,10 @@ LightFairyItem: {
 
 DarkFairyItem: {
 	DisplayName: 暗精灵
-	Tooltip: "黑夜中的小精灵"
+	Tooltip: 黑夜中的小精灵
+}
+
+SoulTeeth: {
+	// DisplayName: Soul Teeth
+	// Tooltip: ""
 }
