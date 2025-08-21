@@ -1,11 +1,12 @@
-﻿using Coralite.Core.Loaders;
+﻿using Coralite.Content.UI;
+using Coralite.Core.Loaders;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases.Items;
 using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.Audio;
 using Terraria.ModLoader.IO;
-using static System.Net.WebRequestMethods;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem
 {
@@ -212,6 +213,29 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         {
             if (TryGetFairyBottle(out BaseFairyBottle bottle))
                 bottle.UpdateBottle(Player);
+        }
+
+        public override bool OnPickup(Item item)
+        {
+            if (CoraliteSets.Items.IsFairy[item.type])
+            {
+                if (TryGetFairyBottle(out BaseFairyBottle bottle))
+                {
+                    if (!bottle.AddItem(item))
+                        return true;
+
+                    PopupText.NewText(PopupTextContext.RegularItemPickup, item, item.stack, noStack: true, longText: false);
+
+                    item.TurnToAir();
+                    SoundEngine.PlaySound(CoraliteSoundID.Grab, Player.Center);
+
+                    UILoader.GetUIState<FairyBottleUI>().Recalculate();
+
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         /// <summary>

@@ -15,31 +15,6 @@ namespace Coralite.Content.GlobalItems
 {
     public partial class CoraliteGlobalItem
     {
-        public override bool CanPickup(Item item, Player player)
-        {
-            //自身是仙灵物品并且身上有空的仙灵瓶
-            if (item.TryGetGlobalItem(out CoraliteGlobalItem fgi) && CoraliteSets.Items.IsFairy[item.type])
-            {
-                if (player.TryGetModPlayer(out FairyCatcherPlayer fcp)
-                    && fcp.TryGetFairyBottle(out BaseFairyBottle bottle))
-                {
-                    if (!bottle.AddItem(item))
-                        return true;
-
-                    PopupText.NewText(PopupTextContext.RegularItemPickup, item, item.stack, noStack: true, longText: false);
-
-                    item.TurnToAir();
-                    SoundEngine.PlaySound(CoraliteSoundID.Grab, player.Center);
-
-                    UILoader.GetUIState<FairyBottleUI>().Recalculate();
-
-                    return false;
-                }
-            }
-
-            return base.CanPickup(item, player);
-        }
-
         public override int ChoosePrefix(Item item, UnifiedRandom rand)
         {
             if (item.DamageType != FairyDamage.Instance)

@@ -7,7 +7,6 @@ using Terraria.DataStructures;
 using Terraria.Localization;
 using Terraria.ModLoader.IO;
 using Terraria.UI.Chat;
-using static SDL2.SDL;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
 {

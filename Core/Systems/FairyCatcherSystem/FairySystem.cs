@@ -1,5 +1,6 @@
 ﻿using Coralite.Core.Loaders;
 using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
@@ -22,6 +23,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// 记录仙灵的不同等级的数值
         /// </summary>
         public static Dictionary<int, FairyData> fairyDatas;
+
+        /// <summary>
+        /// 记录<see cref="FairyRarity"/>对应的灵光生成
+        /// </summary>
+        public static Dictionary<int,Action<Vector2>> FairyAuraSpawners {  get; set; }=new Dictionary<int, Action<Vector2>>();
 
         /// <summary>
         /// 是否抓到过该仙灵
@@ -59,6 +65,25 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             LoadFairyDatas(path);
             LoadFairyTexture();
         }
+
+        public override void SetStaticDefaults()
+        {
+            FairyAuraSpawners.Add((int)FairyRarity.C,
+                pos =>
+                {
+                    if (Main.rand.NextBool(3))//三分之一概率生成
+
+                    {
+
+                    }
+                    else
+                    {
+
+                    }
+                });
+        }
+
+        #region 仙灵数据
 
         private static void LoadFairyDatas(string path)
         {
@@ -190,6 +215,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             stream.SetLength(0);
             writer.Write(obj.ToString());
         }
+
+        #endregion
 
         public override void PostAddRecipes()
         {

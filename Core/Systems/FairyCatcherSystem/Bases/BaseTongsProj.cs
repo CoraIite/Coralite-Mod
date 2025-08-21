@@ -362,8 +362,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         public override bool PreDraw(ref Color lightColor)
         {
             Vector2 handleCenter = GetHandleCenter();
-            if(!DrawHnadleOnTop)
-            DrawHandle(GetHandleTex(), handleCenter, lightColor);
+
+            PreDrawTong(handleCenter, lightColor);
+
+            if (!DrawHnadleOnTop)
+                DrawHandle(GetHandleTex(), handleCenter, lightColor);
 
             //绘制连线
             if (State == AIStates.Flying || State == AIStates.Backing)
@@ -484,6 +487,16 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             Texture2D tex = Projectile.GetTexture();
             tex.QuickCenteredDraw(Main.spriteBatch, Projectile.Center - Main.screenPosition
                 , Lighting.GetColor(Projectile.Center.ToTileCoordinates()), Projectile.rotation,effect: Owner.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically);
+        }
+
+        /// <summary>
+        /// 在绘制抓手前绘制
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <param name="lightColor"></param>
+        public virtual void PreDrawTong(Vector2 pos, Color lightColor)
+        {
+
         }
 
         public virtual void DrawFairyItem()

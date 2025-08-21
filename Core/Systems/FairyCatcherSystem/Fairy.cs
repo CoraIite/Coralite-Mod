@@ -572,6 +572,16 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             }
         }
 
+        /// <summary>
+        /// 自定义放生时的行为，返回true默认生成灵光
+        /// </summary>
+        /// <param name="pos"></param>
+        /// <returns></returns>
+        public virtual bool SpwanFairyAura(Vector2 pos)
+        {
+            return true;
+        }
+
         #region 绘制
 
         /// <summary>

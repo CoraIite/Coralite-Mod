@@ -6213,3 +6213,18 @@ SoulTeeth: {
 	DisplayName: Soul Teeth
 	Tooltip: ""
 }
+
+BrightAura: {
+	DisplayName: Bright Aura
+	Tooltip: ""
+}
+
+FaintAura: {
+	DisplayName: Faint Aura
+	Tooltip: ""
+}
+
+ShinyAura: {
+	DisplayName: Shiny Aura
+	Tooltip: ""
+}
