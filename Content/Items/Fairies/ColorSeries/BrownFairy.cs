@@ -63,7 +63,7 @@ namespace Coralite.Content.Items.Fairies.ColorSeries
                 NewSkill<FSkill_Tackle>()
                 ];
 
-        public override void SpawnFairyDust()
+        public override void SpawnFairyDust(Vector2 center, Vector2 velocity)
         {
             switch (State)
             {
@@ -71,11 +71,11 @@ namespace Coralite.Content.Items.Fairies.ColorSeries
                 case AIStates.Rest:
                 case AIStates.Backing:
                     if (Main.rand.NextBool(3))
-                        Projectile.SpawnTrailDust(DustID.BrownMoss, Main.rand.NextFloat(0.1f, 0.5f), 200);
+                        Helper.SpawnTrailDust(center, velocity, Projectile.width, DustID.BrownMoss, Main.rand.NextFloat(0.1f, 0.5f), 200);
                     break;
                 case AIStates.Skill:
                 default:
-                    Projectile.SpawnTrailDust(DustID.BrownMoss, Main.rand.NextFloat(0.1f, 0.5f), 200);
+                    Helper.SpawnTrailDust(center, velocity, Projectile.width, DustID.BrownMoss, Main.rand.NextFloat(0.1f, 0.5f), 200);
                     break;
             }
         }

@@ -51,8 +51,17 @@ namespace Coralite.Helpers
             Texture2D mainTex = fairy.GetTexture();
             var frame = mainTex.Frame(fairy.HorizontalFrames, fairy.VerticalFrames, fairy.frame.X, fairy.frame.Y);
 
-            Main.spriteBatch.Draw(mainTex, overrideCenter - Main.screenPosition, frame, lightColor, fairy.rotation + exRot,
+            Main.spriteBatch.Draw(mainTex, overrideCenter - screenPos, frame, lightColor, fairy.rotation + exRot,
                 frame.Size() / 2, fairy.scale, fairy.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
+        }
+
+        public static void QuickDraw(this Fairy fairy, Vector2 overrideCenter, Vector2 screenPos,Rectangle frame2, Color lightColor, float exRot,SpriteEffects effect)
+        {
+            Texture2D mainTex = fairy.GetTexture();
+            var frame = mainTex.Frame(fairy.HorizontalFrames, fairy.VerticalFrames, frame2.X, frame2.Y);
+
+            Main.spriteBatch.Draw(mainTex, overrideCenter - screenPos, frame, lightColor, fairy.rotation + exRot,
+                frame.Size() / 2, fairy.scale, effect, 0);
         }
 
         public static void QuickDraw(this Fairy fairy, Color lightColor, float overrideScale, float exRot)

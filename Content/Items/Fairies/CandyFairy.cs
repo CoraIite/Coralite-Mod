@@ -95,7 +95,7 @@ namespace Coralite.Content.Items.Fairies
                 NewSkill<FSkill_HealOutside>()
                 ];
 
-        public override void SpawnFairyDust()
+        public override void SpawnFairyDust(Vector2 center, Vector2 velocity)
         {
             switch (State)
             {
@@ -103,11 +103,11 @@ namespace Coralite.Content.Items.Fairies
                 case AIStates.Rest:
                 case AIStates.Backing:
                     if (Main.rand.NextBool(3))
-                        Projectile.SpawnTrailDust(DustID.RedTorch, Main.rand.NextFloat(0.1f, 0.5f));
+                        Helper.SpawnTrailDust(center, velocity, Projectile.width, DustID.RedTorch, Main.rand.NextFloat(0.1f, 0.5f));
                     break;
                 case AIStates.Skill:
                 default:
-                    Projectile.SpawnTrailDust(DustID.RedTorch, Main.rand.NextFloat(0.1f, 0.5f));
+                    Helper.SpawnTrailDust(center, velocity, Projectile.width, DustID.RedTorch, Main.rand.NextFloat(0.1f, 0.5f));
                     break;
             }
         }

@@ -111,6 +111,7 @@ namespace Coralite.Core
         public const string FairyIVRainforce = FairyItems + "FairyIVRainforce/";
         public const string ColorFairySeries = FairyItems + "ColorSeries/";
         public const string FairySkillIcons = FairyItems + "SkillIcon/";
+        public const string FairyIVBonus = FairyItems + "FairyIVBonus/";
         public const string FairyCatcherItems = Items + "FairyCatcher/";
         public const string FairyCatcherLasso = FairyCatcherItems + "Lasso/";
         public const string FairyCatcherJar = FairyCatcherItems + "Jar/";

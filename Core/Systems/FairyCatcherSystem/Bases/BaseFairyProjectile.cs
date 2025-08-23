@@ -64,7 +64,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// <summary>
         /// Y多少帧
         /// </summary>
-        protected virtual int FrameY => 4;
+        public virtual int FrameY => 4;
         /// <summary>
         /// 能够开始攻击的距离
         /// </summary>
@@ -158,7 +158,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 case AIStates.Shooting:
                     Projectile.timeLeft = 2;
                     Shooting();
-                    SpawnFairyDust();
+                    SpawnFairyDust(Projectile.Center,Projectile.velocity);
                     break;
                 case AIStates.Skill:
                     Projectile.timeLeft = 2;
@@ -171,11 +171,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                         RestartAttack();
 
                     Rest();
-                    SpawnFairyDust();
+                    SpawnFairyDust(Projectile.Center, Projectile.velocity);
                     break;
                 case AIStates.Backing:
                     Backing();
-                    SpawnFairyDust();
+                    SpawnFairyDust(Projectile.Center, Projectile.velocity);
                     break;
             }
 
@@ -280,7 +280,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// <summary>
         /// 生成粒子，使用<see cref="State"/>判断当前的状态
         /// </summary>
-        public virtual void SpawnFairyDust()
+        public virtual void SpawnFairyDust(Vector2 center, Vector2 velocity)
         {
 
         }

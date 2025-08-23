@@ -1,9 +1,11 @@
-﻿using Coralite.Helpers;
+﻿using Coralite.Core.Systems.FairyCatcherSystem.FairyFreePart;
+using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.ID;
 using Terraria.Localization;
 using Terraria.ModLoader.IO;
 using Terraria.UI.Chat;
@@ -268,6 +270,81 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
                 }
             }
         }
+
+        #endregion
+
+        #region 放生相关
+
+        public override void Update(ref float gravity, ref float maxFallSpeed)
+        {
+            if (Item.shimmerWet && !Item.shimmered && !Item.CanShimmer())
+            {
+                int num = (int)(Item.Center.X / 16f);
+                int num2 = (int)(Item.position.Y / 16f - 1f);
+                if (!WorldGen.InWorld(num, num2) || Main.tile[num, num2] == null || Main.tile[num, num2].LiquidAmount <= 0 || Main.tile[num, num2].LiquidType!=LiquidID.Shimmer)
+                    return;
+
+                if (Item.playerIndexTheItemIsReservedFor == Main.myPlayer && !VaultUtils.isClient)
+                {
+                    Item.shimmerTime += 0.02f;
+                    if (Item.shimmerTime > 0.9f)
+                    {
+                        Item.shimmerTime = 0.9f;
+                        SpawnFairyFreeProj(Item.Center);
+                        Item.TurnToAir();
+                    }
+                }
+                else
+                {
+                    Item.shimmerTime += 0.02f;
+                    if (Item.shimmerTime > 1f)
+                        Item.shimmerTime = 1f;
+                }
+            }
+        }
+
+        public void SpawnFairyFreeProj(Vector2 pos)
+        {
+            Item.ShimmerEffect(pos);
+            int owner = 255;
+            if (VaultUtils.isSinglePlayer)
+                owner = Main.myPlayer;
+            else//找到最近的玩家
+            {
+                float dis = -1;
+                foreach (var player in Main.ActivePlayers)
+                {
+                    if (dis == -1)
+                    {
+                        dis = Vector2.Distance(player.Center, pos);
+                        owner = player.whoAmI;
+                    }
+                    else
+                    {
+                        float dis2 = Vector2.Distance(player.Center, pos);
+                        if (dis2 < dis)
+                        {
+                            dis = dis2;
+                            owner = player.whoAmI;
+                        }
+                    }
+                }
+            }
+
+            Projectile.NewProjectile(new EntitySource_FairyFree(FairyType)
+                , pos, new Vector2(0, -2), ModContent.ProjectileType<FairyFreeProj>(), 0, 0, owner, FairyType, Item.shoot);
+        }
+
+        #endregion
+
+        #region 个体值增幅相关
+
+        public override bool CanRightClick()
+        {
+            return base.CanRightClick();
+        }
+
+        public override bool ConsumeItem(Player player) => false;
 
         #endregion
 

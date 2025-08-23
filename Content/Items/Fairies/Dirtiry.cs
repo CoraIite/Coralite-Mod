@@ -71,14 +71,14 @@ namespace Coralite.Content.Items.Fairies
     {
         public override string Texture => AssetDirectory.FairyItems + "Dirtiry";
 
-        protected override int FrameY => 5;
+        public override int FrameY => 5;
 
         public override FairySkill[] InitSkill()
             => [
                 NewSkill<FSkill_ShootDirt>()
                 ];
 
-        public override void SpawnFairyDust()
+        public override void SpawnFairyDust(Vector2 center, Vector2 velocity)
         {
             switch (State)
             {
@@ -86,11 +86,11 @@ namespace Coralite.Content.Items.Fairies
                 case AIStates.Rest:
                 case AIStates.Backing:
                     if (Main.rand.NextBool(3))
-                        Projectile.SpawnTrailDust(DustID.Dirt, Main.rand.NextFloat(0.1f, 0.5f), 200);
+                        Helper.SpawnTrailDust(center, velocity, Projectile.width, DustID.Dirt, Main.rand.NextFloat(0.1f, 0.5f), 200);
                     break;
                 case AIStates.Skill:
                 default:
-                    Projectile.SpawnTrailDust(DustID.Dirt, Main.rand.NextFloat(0.1f, 0.5f), 200);
+                    Helper.SpawnTrailDust(center, velocity, Projectile.width, DustID.Dirt, Main.rand.NextFloat(0.1f, 0.5f), 200);
                     break;
             }
         }

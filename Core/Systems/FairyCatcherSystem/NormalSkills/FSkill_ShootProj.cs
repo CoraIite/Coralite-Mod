@@ -45,7 +45,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.NormalSkills
                 return true;
 
             SetDirection(fairyProj, target);
-            fairyProj.SpawnFairyDust();
+            fairyProj.SpawnFairyDust(fairyProj.Projectile.Center, fairyProj.Projectile.velocity);
 
             if (SkillTimer > 0)
             {

@@ -1,11 +1,9 @@
 ﻿using Coralite.Helpers;
-using log4net.Core;
 using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Localization;
 using Terraria.ModLoader.IO;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem
 {
@@ -72,7 +70,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public float ScaleLevel { get; set; }
 
 
-        private const int EternalToOver = FairyIVLevelID.Over - FairyIVLevelID.Eternal;
+        private const int EternalToOver = FairyIVLevelID.Over - FairyIVLevelID.Eternal-1;
 
         /// <summary>
         /// 根据仙灵类型和玩家的加成随机一个仙灵的六维个体值

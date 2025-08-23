@@ -1,10 +1,14 @@
-﻿using Coralite.Core.Loaders;
+﻿using Coralite.Content.Items.Fairies.FairyIVRainforce;
+using Coralite.Content.Items.Materials;
+using Coralite.Core.Loaders;
+using Coralite.Core.Systems.FairyCatcherSystem.FairyFreePart;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using Terraria;
+using Terraria.ID;
 using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem
@@ -27,7 +31,12 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <summary>
         /// 记录<see cref="FairyRarity"/>对应的灵光生成
         /// </summary>
-        public static Dictionary<int,Action<Vector2>> FairyAuraSpawners {  get; set; }=new Dictionary<int, Action<Vector2>>();
+        public static Dictionary<int, FairyFreeInfo> RarityAuraSpawners { get; set; } = new Dictionary<int, FairyFreeInfo>();
+
+        /// <summary>
+        /// 记录仙灵自身对应的灵光生成
+        /// </summary>
+        public static Dictionary<int, FairyFreeInfo> FairyAuraSpawners { get; set; } = new Dictionary<int, FairyFreeInfo>();
 
         /// <summary>
         /// 是否抓到过该仙灵
@@ -68,19 +77,35 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         public override void SetStaticDefaults()
         {
-            FairyAuraSpawners.Add((int)FairyRarity.C,
-                pos =>
-                {
-                    if (Main.rand.NextBool(3))//三分之一概率生成
+            RarityAuraSpawners.Add((int)FairyRarity.C,
+                new FairyFreeInfo()
+                    .AddRule(FairyFree.Common<FaintAura>(4))
+                    .AddRule(FairyFree.Common<MagicalPowder>(3))
+                    .AddRule(FairyFree.Coin(Item.buyPrice(0, 0, 1)))
+                );
 
-                    {
+            foreach (var fairy in FairyLoader.fairys)
+            {
+                FairyFreeInfo? info = fairy.RegisterFairyFreeAura();
+                if (info.HasValue)
+                    FairyAuraSpawners.Add(fairy.Type, info.Value);
+            }
 
-                    }
-                    else
-                    {
+            //(fairyType, pos) =>
+            //{
+            //    int index;
+            //    if (Main.rand.NextBool(3))//三分之一概率生成
+            //        index = Item.NewItem(new EntitySource_FairyFree(fairyType), pos
+            //             , ModContent.ItemType<FaintAura>());
+            //    else if (Main.rand.NextBool(5))//三分之一概率生成
+            //        index = Item.NewItem(new EntitySource_FairyFree(fairyType), pos
+            //             , ModContent.ItemType<MagicalPowder>());
+            //    else
+            //        index = Item.NewItem(new EntitySource_FairyFree(fairyType), pos
+            //             , ItemID.SilverCoin, Main.rand.Next(1, 3));
 
-                    }
-                });
+            //    Main.item[index].shimmered = true;
+            //});
         }
 
         #region 仙灵数据

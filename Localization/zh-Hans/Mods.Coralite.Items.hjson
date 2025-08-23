@@ -6248,7 +6248,7 @@ TinTong: {
 
 RedJadeTong: {
 	DisplayName: 赤玉炮
-	Tooltip: "命中后在敌人身上留下一个延迟爆炸的赤玉弹"
+	Tooltip: 命中后在敌人身上留下一个延迟爆炸的赤玉弹
 }
 
 PerfumeBottle: {
@@ -6278,7 +6278,7 @@ DarkFairyItem: {
 
 SoulTeeth: {
 	DisplayName: 噬魂齿
-	Tooltip: "命中后撕咬敌怪"
+	Tooltip: 命中后撕咬敌怪
 }
 
 BrightAura: {

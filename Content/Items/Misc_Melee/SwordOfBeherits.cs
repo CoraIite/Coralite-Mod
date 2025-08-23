@@ -3,6 +3,7 @@ using Coralite.Core.Attributes;
 using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
+using Humanizer;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -183,13 +184,21 @@ namespace Coralite.Content.Items.Misc_Melee
 
         protected override void AIBefore()
         {
-            Lighting.AddLight(Projectile.Center, 0.3f, 0.3f, 1f);
+            Lighting.AddLight(Projectile.Center, 1f, 0.15f, 0.4f);
         }
 
         protected override void OnSlash()
         {
             int timer = (int)Timer - minTime;
             float scale = 1f;
+
+            if (Main.rand.NextBool(8))
+            {
+                Vector2 dir = RotateVec2.RotatedBy(1.57f * Math.Sign(totalAngle));
+                Dust dust = Dust.NewDustPerfect(Top - (20 * RotateVec2) + Main.rand.NextVector2Circular(18, 18), DustID.LifeDrain,
+                       dir * Main.rand.NextFloat(0.5f, 2f),255,Color.Transparent, Scale: Main.rand.NextFloat(1f, 1.5f));
+                dust.noGravity = true;
+            }
 
             alpha = (int)(Helper.X2Ease(timer, maxTime - minTime) * 100) + 100;
             if (Item.type == ItemType<SwordOfBeherits>())
@@ -264,14 +273,14 @@ namespace Coralite.Content.Items.Misc_Melee
                     for (int j = 0; j < 4; j++)
                     {
                         Vector2 dir = -RotateVec2.RotatedBy(Main.rand.NextFloat(-0.6f, 0.6f));
-                        dust = Dust.NewDustPerfect(pos, DustID.AncientLight, dir * Main.rand.NextFloat(1f, 5f), newColor: Color.Cyan * 0.5f, Scale: Main.rand.NextFloat(1f, 2f));
+                        dust = Dust.NewDustPerfect(pos, DustID.LifeDrain, dir * Main.rand.NextFloat(1f, 5f), newColor: Color.Cyan * 0.5f, Scale: Main.rand.NextFloat(1f, 2f));
                         dust.noGravity = true;
                     }
 
                     for (int i = 0; i < 6; i++)
                     {
                         Vector2 dir = RotateVec2.RotatedBy(Main.rand.NextFloat(-1.4f, 1.4f));
-                        dust = Dust.NewDustPerfect(pos, DustID.AncientLight, dir * Main.rand.NextFloat(1f, 10f), newColor: Color.Cyan * 0.5f, Scale: Main.rand.NextFloat(1.5f, 2f));
+                        dust = Dust.NewDustPerfect(pos, DustID.LifeDrain, dir * Main.rand.NextFloat(1f, 10f), newColor: Color.Cyan * 0.5f, Scale: Main.rand.NextFloat(1.5f, 2f));
                         dust.noGravity = true;
                     }
                 }
@@ -371,10 +380,18 @@ namespace Coralite.Content.Items.Misc_Melee
             Width = Helper.SqrtEase(Timer / 20);
             Height = Helper.SinEase(Timer / 20);
 
-            if (Timer%4==0)
+            if (Timer<15)
+            for (int i = 0; i < 2; i++)
             {
-                Projectile.frame++;
+                Vector2 dir = Projectile.rotation.ToRotationVector2();
+                Dust dust = Dust.NewDustPerfect(Projectile.Center + dir * Width*Main.rand.NextFloat(-300,300) + Main.rand.NextVector2Circular(6, 6)
+                    , DustID.TeleportationPotion,dir * Main.rand.NextFloat(2f, 4f)
+                    , 100, new Color(255, 0, 0, 255), Scale: Main.rand.NextFloat(1f, 1.5f));
+                dust.noGravity = true;
             }
+
+            if (Timer % 4 == 0)
+                Projectile.frame++;
 
             if (Timer > 20)
                 Projectile.Kill();

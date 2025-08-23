@@ -71,7 +71,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.NormalSkills
             }
 
             fairyProj.SetDirectionNormally();
-            fairyProj.SpawnFairyDust();
+            fairyProj.SpawnFairyDust(fairyProj.Projectile.Center,fairyProj.Projectile.velocity);
 
             return false;
         }

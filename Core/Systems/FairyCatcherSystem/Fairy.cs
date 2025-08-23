@@ -1,5 +1,6 @@
 ﻿using Coralite.Core.Loaders;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases.Items;
+using Coralite.Core.Systems.FairyCatcherSystem.FairyFreePart;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -573,13 +574,13 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         }
 
         /// <summary>
-        /// 自定义放生时的行为，返回true默认生成灵光
+        /// 注册放生时的物品生成
         /// </summary>
         /// <param name="pos"></param>
         /// <returns></returns>
-        public virtual bool SpwanFairyAura(Vector2 pos)
+        public virtual FairyFreeInfo? RegisterFairyFreeAura()
         {
-            return true;
+            return null;
         }
 
         #region 绘制

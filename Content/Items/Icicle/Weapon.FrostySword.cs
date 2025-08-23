@@ -342,7 +342,6 @@ namespace Coralite.Content.Items.Icicle
                 PRTLoader.NewParticle(Top - (RotateVec2 * 16) + Main.rand.NextVector2Circular(32, 32), dir.RotatedBy(Main.rand.NextFloat(-0.4f, 0.4f)) * Main.rand.NextFloat(1f, 2f),
                     CoraliteContent.ParticleType<SnowFlower>(), Color.White, Main.rand.NextFloat(0.15f, 0.4f));
             }
-
         }
 
         public static void FrostDustsOnHit(Projectile Projectile, Vector2 Top, Vector2 Bottom, Vector2 RotateVec2, float totalAngle, float _Rotation, float strength, float baseScale)

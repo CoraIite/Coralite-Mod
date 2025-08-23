@@ -466,6 +466,11 @@ namespace Coralite.Core
             /// 扩散2
             /// </summary>
             public static ATex LightFog { get; private set; }
+
+            /// <summary> 
+            /// 圆形线条
+            /// </summary>
+            public static ATex CircleLinesSPA { get; private set; }
         }
 
         /// <summary>
@@ -480,6 +485,8 @@ namespace Coralite.Core
             public static ATex Ball { get; private set; }
 
             public static ATex BallA { get; private set; }
+
+            public static ATex TwistBallSPA { get; private set; }
         }
 
         [AutoLoadTexture(MiscVFX)]

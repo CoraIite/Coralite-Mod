@@ -130,6 +130,16 @@ namespace Coralite.Helpers
             dust.velocity = -Projectile.velocity * velocityMult;
         }
 
+        public static void SpawnTrailDust(Vector2 pos,Vector2 velocity, float width, int type, float velocityMult, int Alpha = 0, Color newColor = default, float Scale = 1f, bool noGravity = true)
+        {
+            if (VaultUtils.isServer)
+                return;
+
+            Dust dust = Dust.NewDustPerfect(pos + Main.rand.NextVector2Circular(width, width), type, Vector2.Zero, Alpha: Alpha, newColor: newColor, Scale: Scale);
+            dust.noGravity = noGravity;
+            dust.velocity = -velocity * velocityMult;
+        }
+
 
         /// <summary>
         /// 生成随机的粒子流，随机方向
