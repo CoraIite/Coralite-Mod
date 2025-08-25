@@ -41,31 +41,31 @@ namespace Coralite.Content.UI.FairyEncyclopedia
 
 
             DrawLine(spriteBatch, topLeft, 0, FairySystem.FairyLifeMax
-                , min.LifeMaxLevel, max.LifeMaxLevel, min.LifeMax, max.LifeMax);
+                , min.LifeMaxLV, max.LifeMaxLV, min.LifeMax, max.LifeMax);
             topLeft.Y += padding;
 
             DrawLine(spriteBatch, topLeft, 1, FairySystem.FairyDamage
-                , min.DamageLevel, max.DamageLevel, min.Damage, max.Damage);
+                , min.DamageLV, max.DamageLV, min.Damage, max.Damage);
             topLeft.Y += padding;
 
             DrawLine(spriteBatch, topLeft, 2, FairySystem.FairyDefence
-                , min.DefenceLevel, max.DefenceLevel, min.Defence, max.Defence);
+                , min.DefenceLV, max.DefenceLV, min.Defence, max.Defence);
             topLeft.Y += padding;
 
             DrawLine(spriteBatch, topLeft, 3, FairySystem.FairySpeed
-                , min.SpeedLevel, max.SpeedLevel, min.Speed, max.Speed);
+                , min.SpeedLV, max.SpeedLV, min.Speed, max.Speed);
             topLeft.Y += padding;
 
             DrawLine(spriteBatch, topLeft, 4, FairySystem.FairySkillLevel
-                , min.SkillLevelLevel, max.SkillLevelLevel, min.SkillLevel, max.SkillLevel);
+                , min.SkillLevelLV, max.SkillLevelLV, min.SkillLevel, max.SkillLevel);
             topLeft.Y += padding;
 
             DrawLine(spriteBatch, topLeft, 5, FairySystem.FairyStamina
-                , min.StaminaLevel, max.StaminaLevel, min.Stamina, max.Stamina);
+                , min.StaminaLV, max.StaminaLV, min.Stamina, max.Stamina);
             topLeft.Y += padding;
 
             DrawLine(spriteBatch, topLeft, 6, FairySystem.FairyScale
-                , min.ScaleLevel, max.ScaleLevel, min.Scale, max.Scale);
+                , min.ScaleLV, max.ScaleLV, min.Scale, max.Scale);
             topLeft.Y += padding;
         }
 

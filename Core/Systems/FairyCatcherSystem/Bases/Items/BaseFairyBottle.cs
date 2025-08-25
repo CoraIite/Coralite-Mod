@@ -328,7 +328,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
         {
             if (i1.ModItem is BaseFairyItem f1 && i2.ModItem is BaseFairyItem f2)
             {
-                return f1.FairyIV.LifeMaxLevel.CompareTo(f2.FairyIV.LifeMaxLevel);
+                return f1.FairyIV.LifeMaxLV.CompareTo(f2.FairyIV.LifeMaxLV);
             }
 
             return 0;
@@ -338,7 +338,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
         {
             if (i1.ModItem is BaseFairyItem f1 && i2.ModItem is BaseFairyItem f2)
             {
-                return f1.FairyIV.DamageLevel.CompareTo(f2.FairyIV.DamageLevel);
+                return f1.FairyIV.DamageLV.CompareTo(f2.FairyIV.DamageLV);
             }
 
             return 0;
@@ -348,7 +348,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
         {
             if (i1.ModItem is BaseFairyItem f1 && i2.ModItem is BaseFairyItem f2)
             {
-                return f1.FairyIV.DefenceLevel.CompareTo(f2.FairyIV.DefenceLevel);
+                return f1.FairyIV.DefenceLV.CompareTo(f2.FairyIV.DefenceLV);
             }
 
             return 0;
@@ -358,7 +358,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
         {
             if (i1.ModItem is BaseFairyItem f1 && i2.ModItem is BaseFairyItem f2)
             {
-                return f1.FairyIV.SpeedLevel.CompareTo(f2.FairyIV.SpeedLevel);
+                return f1.FairyIV.SpeedLV.CompareTo(f2.FairyIV.SpeedLV);
             }
 
             return 0;
@@ -368,7 +368,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
         {
             if (i1.ModItem is BaseFairyItem f1 && i2.ModItem is BaseFairyItem f2)
             {
-                return f1.FairyIV.SkillLevelLevel.CompareTo(f2.FairyIV.SkillLevelLevel);
+                return f1.FairyIV.SkillLevelLV.CompareTo(f2.FairyIV.SkillLevelLV);
             }
 
             return 0;
@@ -378,7 +378,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
         {
             if (i1.ModItem is BaseFairyItem f1 && i2.ModItem is BaseFairyItem f2)
             {
-                return f1.FairyIV.StaminaLevel.CompareTo(f2.FairyIV.StaminaLevel);
+                return f1.FairyIV.StaminaLV.CompareTo(f2.FairyIV.StaminaLV);
             }
 
             return 0;

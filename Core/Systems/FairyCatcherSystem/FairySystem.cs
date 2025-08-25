@@ -132,42 +132,24 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
                 FairyData data = new FairyData()
                 {
-                    LifeMaxData = GetLevelValues(fairyData, "LifeMax", out int overLifeMax),
-                    OverLifeMax = overLifeMax,
-                    DamageData = GetLevelValues(fairyData, "Damage", out int overDamage),
-                    OverDamage = overDamage,
-                    DefenceData = GetLevelValues(fairyData, "Defence", out int overDefence),
-                    OverDefence = overDefence,
-                    SpeedData = GetLevelValues(fairyData, "Speed", out float overSpeed),
-                    OverSpeed = overSpeed,
-                    SkillLevelData = GetLevelValues(fairyData, "SkillLevel", out int overSkillLevel),
-                    OverSkillLevel = overSkillLevel,
-                    StaminaData = GetLevelValues<int>(fairyData, "Stamina", out int overStamina),
-                    OverStamina = overStamina,
+                    LifeMaxSSV = GetLevelValues(fairyData, "LifeMax"),
+                    DamageSSV = GetLevelValues(fairyData, "Damage"),
+                    DefenceSSV = GetLevelValues(fairyData, "Defence"),
+                    SpeedSSV = GetLevelValues(fairyData, "Speed"),
+                    SkillLevelSSV = GetLevelValues(fairyData, "SkillLevel"),
+                    StaminaSSV = GetLevelValues(fairyData, "Stamina"),
                 };
 
                 fairyDatas.Add(fairy.Type, data);
             }
         }
 
-        private static List<T> GetLevelValues<T>(JObject fairyData, string name, out T overValue) where T : struct
+        private static short GetLevelValues(JObject fairyData, string name)
         {
-            List<T> l = [];
+            if (fairyData[name] != null)
+                return fairyData[name].Value<short>();
 
-            overValue = default;
-
-            foreach (var item in fairyData[name])
-            {
-                if (item is JProperty p)
-                {
-                    if (p.Name == "Over")
-                        overValue = p.Value.Value<T>();
-                    else
-                        l.Add(p.Value.Value<T>());
-                }
-            }
-
-            return l;
+            return 1;
         }
 
         private static void CheckFairyData(string path)
@@ -199,18 +181,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                 "Stamina",
                 ];
 
-            string[] fairyIVLevel = [
-                "Weak",
-                "WeakCommon",
-                "Common",
-                "Uncommon",
-                "Rare",
-                "Epic",
-                "Legendary",
-                "Eternal",
-                "Over",
-                ];
-
             foreach (var fairy in FairyLoader.fairys)
             {
                 //不存在键名直接新建
@@ -222,16 +192,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                 foreach (var ivName in fairyIVs)
                 {
                     if (!fairyNameobj.ContainsKey(ivName))
-                        fairyNameobj[ivName] = new JObject();
-
-                    //查找所有的等级
-                    JObject ivObj = (JObject)fairyNameobj[ivName];
-
-                    foreach (var levelName in fairyIVLevel)
-                    {
-                        if (!ivObj.ContainsKey(levelName))
-                            ivObj.Add(new JProperty(levelName, 1));
-                    }
+                        fairyNameobj.Add(new JProperty(ivName, 50));
                 }
             }
 

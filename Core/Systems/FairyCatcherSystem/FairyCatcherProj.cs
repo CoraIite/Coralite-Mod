@@ -365,6 +365,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <returns></returns>
         public IEnumerable<(Rectangle, Fairy)> GetFairyCollides()
         {
+            if (Fairies==null)
+                yield break;
+
             if (Fairies.Count > 0)
             {
                 for (int i = 0; i < Fairies.Count; i++)

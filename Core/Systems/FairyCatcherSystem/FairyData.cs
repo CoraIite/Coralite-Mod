@@ -1,49 +1,34 @@
-﻿using System.Collections.Generic;
-
-namespace Coralite.Core.Systems.FairyCatcherSystem
+﻿namespace Coralite.Core.Systems.FairyCatcherSystem
 {
     public record FairyData
     {
-        /// <summary> 生命值上限数据 </summary>
-        public List<int> LifeMaxData;
-        /// <summary> 伤害数据 </summary>
-        public List<int> DamageData;
-        /// <summary> 防御数据 </summary>
-        public List<int> DefenceData;
-        /// <summary> 速度数据 </summary>
-        public List<float> SpeedData;
-        /// <summary> 技能等级数据 </summary>
-        public List<int> SkillLevelData;
-        /// <summary> 耐力数据 </summary>
-        public List<int> StaminaData;
-
-        /// <summary> 生命值上限最大值 </summary>
-        public int OverLifeMax;
-        /// <summary> 伤害最大值 </summary>
-        public int OverDamage;
-        /// <summary> 防御最大值 </summary>
-        public int OverDefence;
-        /// <summary> 速度最大值 </summary>
-        public float OverSpeed;
-        /// <summary> 技能等级最大值 </summary>
-        public int OverSkillLevel;
-        /// <summary> 耐力最大值 </summary>
-        public int OverStamina;
+        /// <summary> 生命值上限种族值 </summary>
+        public short LifeMaxSSV;
+        /// <summary> 伤害种族值 </summary>
+        public short DamageSSV;
+        /// <summary> 防御种族值 </summary>
+        public short DefenceSSV;
+        /// <summary> 速度种族值 </summary>
+        public short SpeedSSV;
+        /// <summary> 技能等级种族值 </summary>
+        public short SkillLevelSSV;
+        /// <summary> 耐力种族值 </summary>
+        public short StaminaSSV;
     }
 
     public class FairyIVLevelID
     {
-        public const int Weak = 0;
-        public const int WeakCommon = 1;
-        public const int Common = 2;
-        public const int Uncommon = 3;
-        public const int Rare = 4;
-        public const int Epic = 5;
-        public const int Legendary = 6;
-        public const int Eternal = 7;
+        public const int Weak = 5;
+        public const int WeakCommon = 10;
+        public const int Common = 20;
+        public const int Uncommon = 35;
+        public const int Rare = 50;
+        public const int Epic = 70;
+        public const int Legendary = 95;
+        public const int Eternal = 125;
         /// <summary>
-        /// 一般不会出现的最大上限
+        /// 最大上限
         /// </summary>
-        public const int Over = 100;
+        public const int Over = 150;
     }
 }

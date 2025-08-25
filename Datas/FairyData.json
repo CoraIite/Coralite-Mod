@@ -1,1022 +1,122 @@
 {
   "BlueFairy": {
-    "LifeMax": {
-      "Weak": 200,
-      "WeakCommon": 240,
-      "Common": 300,
-      "Uncommon": 400,
-      "Rare": 900,
-      "Epic": 1500,
-      "Legendary": 2000,
-      "Eternal": 3000,
-      "Over": 4500
-    },
-    "Damage": {
-      "Weak": 8,
-      "WeakCommon": 10,
-      "Common": 12,
-      "Uncommon": 14,
-      "Rare": 30,
-      "Epic": 40,
-      "Legendary": 60,
-      "Eternal": 70,
-      "Over": 100
-    },
-    "Defence": {
-      "Weak": 6,
-      "WeakCommon": 8,
-      "Common": 10,
-      "Uncommon": 20,
-      "Rare": 30,
-      "Epic": 40,
-      "Legendary": 60,
-      "Eternal": 70,
-      "Over": 100
-    },
-    "Speed": {
-      "Weak": 3,
-      "WeakCommon": 3.5,
-      "Common": 4,
-      "Uncommon": 6,
-      "Rare": 8,
-      "Epic": 10,
-      "Legendary": 12,
-      "Eternal": 16,
-      "Over": 18
-    },
-    "SkillLevel": {
-      "Weak": 1,
-      "WeakCommon": 1,
-      "Common": 1,
-      "Uncommon": 1,
-      "Rare": 1,
-      "Epic": 1,
-      "Legendary": 1,
-      "Eternal": 2,
-      "Over": 2
-    },
-    "Stamina": {
-      "Weak": 1,
-      "WeakCommon": 1,
-      "Common": 1,
-      "Uncommon": 1,
-      "Rare": 1,
-      "Epic": 2,
-      "Legendary": 2,
-      "Eternal": 3,
-      "Over": 3
-    }
+    "LifeMax": 50,
+    "Damage": 45,
+    "Defence": 40,
+    "Speed": 75,
+    "SkillLevel": 50,
+    "Stamina": 50
   },
   "BreezeFairy": {
-    "LifeMax": {
-      "Weak": 220,
-      "WeakCommon": 260,
-      "Common": 320,
-      "Uncommon": 440,
-      "Rare": 1000,
-      "Epic": 1700,
-      "Legendary": 2400,
-      "Eternal": 3500,
-      "Over": 4800
-    },
-    "Damage": {
-      "Weak": 10,
-      "WeakCommon": 12,
-      "Common": 14,
-      "Uncommon": 20,
-      "Rare": 30,
-      "Epic": 40,
-      "Legendary": 60,
-      "Eternal": 70,
-      "Over": 100
-    },
-    "Defence": {
-      "Weak": 6,
-      "WeakCommon": 8,
-      "Common": 10,
-      "Uncommon": 20,
-      "Rare": 30,
-      "Epic": 40,
-      "Legendary": 60,
-      "Eternal": 70,
-      "Over": 100
-    },
-    "Speed": {
-      "Weak": 3,
-      "WeakCommon": 3.5,
-      "Common": 4,
-      "Uncommon": 6,
-      "Rare": 8,
-      "Epic": 10,
-      "Legendary": 12,
-      "Eternal": 16,
-      "Over": 18
-    },
-    "SkillLevel": {
-      "Weak": 1,
-      "WeakCommon": 1,
-      "Common": 1,
-      "Uncommon": 1,
-      "Rare": 1,
-      "Epic": 1,
-      "Legendary": 1,
-      "Eternal": 2,
-      "Over": 2
-    },
-    "Stamina": {
-      "Weak": 1,
-      "WeakCommon": 1,
-      "Common": 2,
-      "Uncommon": 2,
-      "Rare": 2,
-      "Epic": 2,
-      "Legendary": 2,
-      "Eternal": 3,
-      "Over": 3
-    }
+    "LifeMax": 70,
+    "Damage": 60,
+    "Defence": 50,
+    "Speed": 65,
+    "SkillLevel": 60,
+    "Stamina": 50
   },
   "BrownFairy": {
-    "LifeMax": {
-      "Weak": 240,
-      "WeakCommon": 300,
-      "Common": 400,
-      "Uncommon": 500,
-      "Rare": 1000,
-      "Epic": 1700,
-      "Legendary": 2400,
-      "Eternal": 3500,
-      "Over": 4500
-    },
-    "Damage": {
-      "Weak": 7,
-      "WeakCommon": 9,
-      "Common": 10,
-      "Uncommon": 12,
-      "Rare": 27,
-      "Epic": 35,
-      "Legendary": 50,
-      "Eternal": 60,
-      "Over": 80
-    },
-    "Defence": {
-      "Weak": 6,
-      "WeakCommon": 8,
-      "Common": 10,
-      "Uncommon": 20,
-      "Rare": 30,
-      "Epic": 40,
-      "Legendary": 60,
-      "Eternal": 70,
-      "Over": 100
-    },
-    "Speed": {
-      "Weak": 3,
-      "WeakCommon": 3.5,
-      "Common": 4,
-      "Uncommon": 6,
-      "Rare": 7,
-      "Epic": 8,
-      "Legendary": 10,
-      "Eternal": 12,
-      "Over": 16
-    },
-    "SkillLevel": {
-      "Weak": 1,
-      "WeakCommon": 1,
-      "Common": 1,
-      "Uncommon": 1,
-      "Rare": 1,
-      "Epic": 1,
-      "Legendary": 1,
-      "Eternal": 2,
-      "Over": 2
-    },
-    "Stamina": {
-      "Weak": 1,
-      "WeakCommon": 1,
-      "Common": 1,
-      "Uncommon": 1,
-      "Rare": 1,
-      "Epic": 2,
-      "Legendary": 2,
-      "Eternal": 3,
-      "Over": 3
-    }
+    "LifeMax": 70,
+    "Damage": 50,
+    "Defence": 60,
+    "Speed": 45,
+    "SkillLevel": 50,
+    "Stamina": 50
   },
   "CandyFairy": {
-    "LifeMax": {
-      "Weak": 200,
-      "WeakCommon": 240,
-      "Common": 300,
-      "Uncommon": 400,
-      "Rare": 900,
-      "Epic": 1500,
-      "Legendary": 2000,
-      "Eternal": 3000,
-      "Over": 4500
-    },
-    "Damage": {
-      "Weak": 5,
-      "WeakCommon": 6,
-      "Common": 8,
-      "Uncommon": 10,
-      "Rare": 12,
-      "Epic": 14,
-      "Legendary": 18,
-      "Eternal": 20,
-      "Over": 25
-    },
-    "Defence": {
-      "Weak": 6,
-      "WeakCommon": 8,
-      "Common": 10,
-      "Uncommon": 20,
-      "Rare": 30,
-      "Epic": 40,
-      "Legendary": 60,
-      "Eternal": 70,
-      "Over": 100
-    },
-    "Speed": {
-      "Weak": 3,
-      "WeakCommon": 3.5,
-      "Common": 4,
-      "Uncommon": 6,
-      "Rare": 7,
-      "Epic": 8,
-      "Legendary": 10,
-      "Eternal": 12,
-      "Over": 16
-    },
-    "SkillLevel": {
-      "Weak": 1,
-      "WeakCommon": 1,
-      "Common": 1,
-      "Uncommon": 1,
-      "Rare": 1,
-      "Epic": 1,
-      "Legendary": 1,
-      "Eternal": 2,
-      "Over": 2
-    },
-    "Stamina": {
-      "Weak": 1,
-      "WeakCommon": 1,
-      "Common": 1,
-      "Uncommon": 1,
-      "Rare": 1,
-      "Epic": 1,
-      "Legendary": 1,
-      "Eternal": 2,
-      "Over": 2
-    }
+    "LifeMax": 70,
+    "Damage": 60,
+    "Defence": 50,
+    "Speed": 65,
+    "SkillLevel": 65,
+    "Stamina": 55
   },
   "GreenFairy": {
-    "LifeMax": {
-      "Weak": 200,
-      "WeakCommon": 240,
-      "Common": 300,
-      "Uncommon": 400,
-      "Rare": 900,
-      "Epic": 1500,
-      "Legendary": 2000,
-      "Eternal": 3000,
-      "Over": 4500
-    },
-    "Damage": {
-      "Weak": 7,
-      "WeakCommon": 9,
-      "Common": 10,
-      "Uncommon": 12,
-      "Rare": 27,
-      "Epic": 35,
-      "Legendary": 50,
-      "Eternal": 60,
-      "Over": 80
-    },
-    "Defence": {
-      "Weak": 6,
-      "WeakCommon": 8,
-      "Common": 10,
-      "Uncommon": 20,
-      "Rare": 30,
-      "Epic": 40,
-      "Legendary": 60,
-      "Eternal": 70,
-      "Over": 100
-    },
-    "Speed": {
-      "Weak": 3,
-      "WeakCommon": 3.5,
-      "Common": 4,
-      "Uncommon": 6,
-      "Rare": 7,
-      "Epic": 8,
-      "Legendary": 10,
-      "Eternal": 12,
-      "Over": 16
-    },
-    "SkillLevel": {
-      "Weak": 1,
-      "WeakCommon": 1,
-      "Common": 2,
-      "Uncommon": 2,
-      "Rare": 3,
-      "Epic": 3,
-      "Legendary": 4,
-      "Eternal": 5,
-      "Over": 6
-    },
-    "Stamina": {
-      "Weak": 1,
-      "WeakCommon": 1,
-      "Common": 2,
-      "Uncommon": 2,
-      "Rare": 3,
-      "Epic": 3,
-      "Legendary": 4,
-      "Eternal": 5,
-      "Over": 6
-    }
+    "LifeMax": 60,
+    "Damage": 50,
+    "Defence": 50,
+    "Speed": 50,
+    "SkillLevel": 50,
+    "Stamina": 50
   },
   "PinkFairy": {
-    "LifeMax": {
-      "Weak": 300,
-      "WeakCommon": 400,
-      "Common": 500,
-      "Uncommon": 600,
-      "Rare": 1000,
-      "Epic": 1800,
-      "Legendary": 2500,
-      "Eternal": 4000,
-      "Over": 6000
-    },
-    "Damage": {
-      "Weak": 10,
-      "WeakCommon": 11,
-      "Common": 13,
-      "Uncommon": 15,
-      "Rare": 35,
-      "Epic": 50,
-      "Legendary": 60,
-      "Eternal": 70,
-      "Over": 100
-    },
-    "Defence": {
-      "Weak": 8,
-      "WeakCommon": 10,
-      "Common": 15,
-      "Uncommon": 30,
-      "Rare": 40,
-      "Epic": 50,
-      "Legendary": 65,
-      "Eternal": 80,
-      "Over": 110
-    },
-    "Speed": {
-      "Weak": 4,
-      "WeakCommon": 4.5,
-      "Common": 5,
-      "Uncommon": 6,
-      "Rare": 8,
-      "Epic": 10,
-      "Legendary": 12,
-      "Eternal": 16,
-      "Over": 18
-    },
-    "SkillLevel": {
-      "Weak": 2,
-      "WeakCommon": 2,
-      "Common": 2,
-      "Uncommon": 2,
-      "Rare": 2,
-      "Epic": 2,
-      "Legendary": 2,
-      "Eternal": 3,
-      "Over": 3
-    },
-    "Stamina": {
-      "Weak": 2,
-      "WeakCommon": 2,
-      "Common": 2,
-      "Uncommon": 2,
-      "Rare": 2,
-      "Epic": 3,
-      "Legendary": 3,
-      "Eternal": 3,
-      "Over": 3
-    }
+    "LifeMax": 80,
+    "Damage": 80,
+    "Defence": 50,
+    "Speed": 80,
+    "SkillLevel": 65,
+    "Stamina": 65
   },
   "YellowFairy": {
-    "LifeMax": {
-      "Weak": 200,
-      "WeakCommon": 240,
-      "Common": 300,
-      "Uncommon": 400,
-      "Rare": 900,
-      "Epic": 1500,
-      "Legendary": 2000,
-      "Eternal": 3000,
-      "Over": 4500
-    },
-    "Damage": {
-      "Weak": 7,
-      "WeakCommon": 9,
-      "Common": 10,
-      "Uncommon": 12,
-      "Rare": 27,
-      "Epic": 35,
-      "Legendary": 50,
-      "Eternal": 60,
-      "Over": 80
-    },
-    "Defence": {
-      "Weak": 6,
-      "WeakCommon": 8,
-      "Common": 10,
-      "Uncommon": 20,
-      "Rare": 30,
-      "Epic": 40,
-      "Legendary": 60,
-      "Eternal": 70,
-      "Over": 100
-    },
-    "Speed": {
-      "Weak": 3,
-      "WeakCommon": 3.5,
-      "Common": 4,
-      "Uncommon": 6,
-      "Rare": 7,
-      "Epic": 8,
-      "Legendary": 10,
-      "Eternal": 12,
-      "Over": 16
-    },
-    "SkillLevel": {
-      "Weak": 1,
-      "WeakCommon": 1,
-      "Common": 1,
-      "Uncommon": 1,
-      "Rare": 1,
-      "Epic": 1,
-      "Legendary": 1,
-      "Eternal": 2,
-      "Over": 2
-    },
-    "Stamina": {
-      "Weak": 1,
-      "WeakCommon": 2,
-      "Common": 2,
-      "Uncommon": 2,
-      "Rare": 2,
-      "Epic": 3,
-      "Legendary": 3,
-      "Eternal": 3,
-      "Over": 3
-    }
+    "LifeMax": 60,
+    "Damage": 50,
+    "Defence": 50,
+    "Speed": 50,
+    "SkillLevel": 60,
+    "Stamina": 50
   },
   "RedFairy": {
-    "LifeMax": {
-      "Weak": 1,
-      "WeakCommon": 1,
-      "Common": 1,
-      "Uncommon": 1,
-      "Rare": 1,
-      "Epic": 1,
-      "Legendary": 1,
-      "Eternal": 1,
-      "Over": 1
-    },
-    "Damage": {
-      "Weak": 1,
-      "WeakCommon": 1,
-      "Common": 1,
-      "Uncommon": 1,
-      "Rare": 1,
-      "Epic": 1,
-      "Legendary": 1,
-      "Eternal": 1,
-      "Over": 1
-    },
-    "Defence": {
-      "Weak": 1,
-      "WeakCommon": 1,
-      "Common": 1,
-      "Uncommon": 1,
-      "Rare": 1,
-      "Epic": 1,
-      "Legendary": 1,
-      "Eternal": 1,
-      "Over": 1
-    },
-    "Speed": {
-      "Weak": 1,
-      "WeakCommon": 1,
-      "Common": 1,
-      "Uncommon": 1,
-      "Rare": 1,
-      "Epic": 1,
-      "Legendary": 1,
-      "Eternal": 1,
-      "Over": 1
-    },
-    "SkillLevel": {
-      "Weak": 1,
-      "WeakCommon": 1,
-      "Common": 1,
-      "Uncommon": 1,
-      "Rare": 1,
-      "Epic": 1,
-      "Legendary": 1,
-      "Eternal": 1,
-      "Over": 1
-    },
-    "Stamina": {
-      "Weak": 1,
-      "WeakCommon": 1,
-      "Common": 1,
-      "Uncommon": 1,
-      "Rare": 1,
-      "Epic": 1,
-      "Legendary": 1,
-      "Eternal": 1,
-      "Over": 1
-    }
+    "LifeMax": 60,
+    "Damage": 50,
+    "Defence": 50,
+    "Speed": 50,
+    "SkillLevel": 50,
+    "Stamina": 60
   },
   "PurpleFairy": {
-    "LifeMax": {
-      "Weak": 1,
-      "WeakCommon": 1,
-      "Common": 1,
-      "Uncommon": 1,
-      "Rare": 1,
-      "Epic": 1,
-      "Legendary": 1,
-      "Eternal": 1,
-      "Over": 1
-    },
-    "Damage": {
-      "Weak": 1,
-      "WeakCommon": 1,
-      "Common": 1,
-      "Uncommon": 1,
-      "Rare": 1,
-      "Epic": 1,
-      "Legendary": 1,
-      "Eternal": 1,
-      "Over": 1
-    },
-    "Defence": {
-      "Weak": 1,
-      "WeakCommon": 1,
-      "Common": 1,
-      "Uncommon": 1,
-      "Rare": 1,
-      "Epic": 1,
-      "Legendary": 1,
-      "Eternal": 1,
-      "Over": 1
-    },
-    "Speed": {
-      "Weak": 1,
-      "WeakCommon": 1,
-      "Common": 1,
-      "Uncommon": 1,
-      "Rare": 1,
-      "Epic": 1,
-      "Legendary": 1,
-      "Eternal": 1,
-      "Over": 1
-    },
-    "SkillLevel": {
-      "Weak": 1,
-      "WeakCommon": 1,
-      "Common": 1,
-      "Uncommon": 1,
-      "Rare": 1,
-      "Epic": 1,
-      "Legendary": 1,
-      "Eternal": 1,
-      "Over": 1
-    },
-    "Stamina": {
-      "Weak": 1,
-      "WeakCommon": 1,
-      "Common": 1,
-      "Uncommon": 1,
-      "Rare": 1,
-      "Epic": 1,
-      "Legendary": 1,
-      "Eternal": 1,
-      "Over": 1
-    }
+    "LifeMax": 60,
+    "Damage": 60,
+    "Defence": 50,
+    "Speed": 50,
+    "SkillLevel": 50,
+    "Stamina": 50
   },
   "Sunniry": {
-    "LifeMax": {
-      "Weak": 200,
-      "WeakCommon": 240,
-      "Common": 300,
-      "Uncommon": 400,
-      "Rare": 900,
-      "Epic": 1500,
-      "Legendary": 2000,
-      "Eternal": 3000,
-      "Over": 4500
-    },
-    "Damage": {
-      "Weak": 7,
-      "WeakCommon": 9,
-      "Common": 10,
-      "Uncommon": 12,
-      "Rare": 27,
-      "Epic": 35,
-      "Legendary": 50,
-      "Eternal": 60,
-      "Over": 80
-    },
-    "Defence": {
-      "Weak": 6,
-      "WeakCommon": 8,
-      "Common": 10,
-      "Uncommon": 20,
-      "Rare": 30,
-      "Epic": 40,
-      "Legendary": 60,
-      "Eternal": 70,
-      "Over": 100
-    },
-    "Speed": {
-      "Weak": 3,
-      "WeakCommon": 3.5,
-      "Common": 4,
-      "Uncommon": 6,
-      "Rare": 7,
-      "Epic": 8,
-      "Legendary": 10,
-      "Eternal": 12,
-      "Over": 16
-    },
-    "SkillLevel": {
-      "Weak": 1,
-      "WeakCommon": 1,
-      "Common": 2,
-      "Uncommon": 2,
-      "Rare": 3,
-      "Epic": 3,
-      "Legendary": 4,
-      "Eternal": 5,
-      "Over": 6
-    },
-    "Stamina": {
-      "Weak": 1,
-      "WeakCommon": 1,
-      "Common": 2,
-      "Uncommon": 2,
-      "Rare": 3,
-      "Epic": 3,
-      "Legendary": 4,
-      "Eternal": 5,
-      "Over": 6
-    }
+    "LifeMax": 80,
+    "Damage": 90,
+    "Defence": 50,
+    "Speed": 80,
+    "SkillLevel": 65,
+    "Stamina": 65
   },
   "PopsicleFairy": {
-    "LifeMax": {
-      "Weak": 200,
-      "WeakCommon": 240,
-      "Common": 300,
-      "Uncommon": 400,
-      "Rare": 900,
-      "Epic": 1500,
-      "Legendary": 2000,
-      "Eternal": 3000,
-      "Over": 4500
-    },
-    "Damage": {
-      "Weak": 7,
-      "WeakCommon": 9,
-      "Common": 10,
-      "Uncommon": 12,
-      "Rare": 27,
-      "Epic": 35,
-      "Legendary": 50,
-      "Eternal": 60,
-      "Over": 80
-    },
-    "Defence": {
-      "Weak": 6,
-      "WeakCommon": 8,
-      "Common": 10,
-      "Uncommon": 20,
-      "Rare": 30,
-      "Epic": 40,
-      "Legendary": 60,
-      "Eternal": 70,
-      "Over": 100
-    },
-    "Speed": {
-      "Weak": 3,
-      "WeakCommon": 3.5,
-      "Common": 4,
-      "Uncommon": 6,
-      "Rare": 7,
-      "Epic": 8,
-      "Legendary": 10,
-      "Eternal": 12,
-      "Over": 16
-    },
-    "SkillLevel": {
-      "Weak": 1,
-      "WeakCommon": 1,
-      "Common": 2,
-      "Uncommon": 2,
-      "Rare": 3,
-      "Epic": 3,
-      "Legendary": 4,
-      "Eternal": 5,
-      "Over": 6
-    },
-    "Stamina": {
-      "Weak": 1,
-      "WeakCommon": 1,
-      "Common": 2,
-      "Uncommon": 2,
-      "Rare": 3,
-      "Epic": 3,
-      "Legendary": 4,
-      "Eternal": 5,
-      "Over": 6
-    }
+    "LifeMax": 60,
+    "Damage": 70,
+    "Defence": 35,
+    "Speed": 60,
+    "SkillLevel": 50,
+    "Stamina": 50
   },
   "SporesFairy": {
-    "LifeMax": {
-      "Weak": 80,
-      "WeakCommon": 90,
-      "Common": 100,
-      "Uncommon": 140,
-      "Rare": 190,
-      "Epic": 250,
-      "Legendary": 320,
-      "Eternal": 400,
-      "Over": 500
-    },
-    "Damage": {
-      "Weak": 7,
-      "WeakCommon": 9,
-      "Common": 10,
-      "Uncommon": 12,
-      "Rare": 27,
-      "Epic": 35,
-      "Legendary": 50,
-      "Eternal": 60,
-      "Over": 80
-    },
-    "Defence": {
-      "Weak": 5,
-      "WeakCommon": 7,
-      "Common": 9,
-      "Uncommon": 17,
-      "Rare": 23,
-      "Epic": 30,
-      "Legendary": 40,
-      "Eternal": 55,
-      "Over": 70
-    },
-    "Speed": {
-      "Weak": 4,
-      "WeakCommon": 4.5,
-      "Common": 5,
-      "Uncommon": 6.5,
-      "Rare": 8,
-      "Epic": 9.5,
-      "Legendary": 11,
-      "Eternal": 13,
-      "Over": 16
-    },
-    "SkillLevel": {
-      "Weak": 1,
-      "WeakCommon": 1,
-      "Common": 2,
-      "Uncommon": 2,
-      "Rare": 3,
-      "Epic": 3,
-      "Legendary": 4,
-      "Eternal": 5,
-      "Over": 6
-    },
-    "Stamina": {
-      "Weak": 2,
-      "WeakCommon": 2,
-      "Common": 3,
-      "Uncommon": 3,
-      "Rare": 4,
-      "Epic": 4,
-      "Legendary": 5,
-      "Eternal": 6,
-      "Over": 7
-    }
+    "LifeMax": 20,
+    "Damage": 75,
+    "Defence": 30,
+    "Speed": 90,
+    "SkillLevel": 60,
+    "Stamina": 60
   },
   "Dirtiry": {
-    "LifeMax": {
-      "Weak": 1,
-      "WeakCommon": 1,
-      "Common": 1,
-      "Uncommon": 1,
-      "Rare": 1,
-      "Epic": 1,
-      "Legendary": 1,
-      "Eternal": 1,
-      "Over": 1
-    },
-    "Damage": {
-      "Weak": 1,
-      "WeakCommon": 1,
-      "Common": 1,
-      "Uncommon": 1,
-      "Rare": 1,
-      "Epic": 1,
-      "Legendary": 1,
-      "Eternal": 1,
-      "Over": 1
-    },
-    "Defence": {
-      "Weak": 1,
-      "WeakCommon": 1,
-      "Common": 1,
-      "Uncommon": 1,
-      "Rare": 1,
-      "Epic": 1,
-      "Legendary": 1,
-      "Eternal": 1,
-      "Over": 1
-    },
-    "Speed": {
-      "Weak": 1,
-      "WeakCommon": 1,
-      "Common": 1,
-      "Uncommon": 1,
-      "Rare": 1,
-      "Epic": 1,
-      "Legendary": 1,
-      "Eternal": 1,
-      "Over": 1
-    },
-    "SkillLevel": {
-      "Weak": 1,
-      "WeakCommon": 1,
-      "Common": 1,
-      "Uncommon": 1,
-      "Rare": 1,
-      "Epic": 1,
-      "Legendary": 1,
-      "Eternal": 1,
-      "Over": 1
-    },
-    "Stamina": {
-      "Weak": 1,
-      "WeakCommon": 1,
-      "Common": 1,
-      "Uncommon": 1,
-      "Rare": 1,
-      "Epic": 1,
-      "Legendary": 1,
-      "Eternal": 1,
-      "Over": 1
-    }
+    "LifeMax": 70,
+    "Damage": 50,
+    "Defence": 70,
+    "Speed": 60,
+    "SkillLevel": 50,
+    "Stamina": 50
   },
   "LightFairy": {
-    "LifeMax": {
-      "Weak": 1,
-      "WeakCommon": 1,
-      "Common": 1,
-      "Uncommon": 1,
-      "Rare": 1,
-      "Epic": 1,
-      "Legendary": 1,
-      "Eternal": 1,
-      "Over": 1
-    },
-    "Damage": {
-      "Weak": 1,
-      "WeakCommon": 1,
-      "Common": 1,
-      "Uncommon": 1,
-      "Rare": 1,
-      "Epic": 1,
-      "Legendary": 1,
-      "Eternal": 1,
-      "Over": 1
-    },
-    "Defence": {
-      "Weak": 1,
-      "WeakCommon": 1,
-      "Common": 1,
-      "Uncommon": 1,
-      "Rare": 1,
-      "Epic": 1,
-      "Legendary": 1,
-      "Eternal": 1,
-      "Over": 1
-    },
-    "Speed": {
-      "Weak": 1,
-      "WeakCommon": 1,
-      "Common": 1,
-      "Uncommon": 1,
-      "Rare": 1,
-      "Epic": 1,
-      "Legendary": 1,
-      "Eternal": 1,
-      "Over": 1
-    },
-    "SkillLevel": {
-      "Weak": 1,
-      "WeakCommon": 1,
-      "Common": 1,
-      "Uncommon": 1,
-      "Rare": 1,
-      "Epic": 1,
-      "Legendary": 1,
-      "Eternal": 1,
-      "Over": 1
-    },
-    "Stamina": {
-      "Weak": 1,
-      "WeakCommon": 1,
-      "Common": 1,
-      "Uncommon": 1,
-      "Rare": 1,
-      "Epic": 1,
-      "Legendary": 1,
-      "Eternal": 1,
-      "Over": 1
-    }
+    "LifeMax": 70,
+    "Damage": 70,
+    "Defence": 50,
+    "Speed": 60,
+    "SkillLevel": 50,
+    "Stamina": 50
   },
   "DarkFairy": {
-    "LifeMax": {
-      "Weak": 1,
-      "WeakCommon": 1,
-      "Common": 1,
-      "Uncommon": 1,
-      "Rare": 1,
-      "Epic": 1,
-      "Legendary": 1,
-      "Eternal": 1,
-      "Over": 1
-    },
-    "Damage": {
-      "Weak": 1,
-      "WeakCommon": 1,
-      "Common": 1,
-      "Uncommon": 1,
-      "Rare": 1,
-      "Epic": 1,
-      "Legendary": 1,
-      "Eternal": 1,
-      "Over": 1
-    },
-    "Defence": {
-      "Weak": 1,
-      "WeakCommon": 1,
-      "Common": 1,
-      "Uncommon": 1,
-      "Rare": 1,
-      "Epic": 1,
-      "Legendary": 1,
-      "Eternal": 1,
-      "Over": 1
-    },
-    "Speed": {
-      "Weak": 1,
-      "WeakCommon": 1,
-      "Common": 1,
-      "Uncommon": 1,
-      "Rare": 1,
-      "Epic": 1,
-      "Legendary": 1,
-      "Eternal": 1,
-      "Over": 1
-    },
-    "SkillLevel": {
-      "Weak": 1,
-      "WeakCommon": 1,
-      "Common": 1,
-      "Uncommon": 1,
-      "Rare": 1,
-      "Epic": 1,
-      "Legendary": 1,
-      "Eternal": 1,
-      "Over": 1
-    },
-    "Stamina": {
-      "Weak": 1,
-      "WeakCommon": 1,
-      "Common": 1,
-      "Uncommon": 1,
-      "Rare": 1,
-      "Epic": 1,
-      "Legendary": 1,
-      "Eternal": 1,
-      "Over": 1
-    }
+    "LifeMax": 70,
+    "Damage": 70,
+    "Defence": 50,
+    "Speed": 60,
+    "SkillLevel": 50,
+    "Stamina": 50
   }
 }

@@ -197,7 +197,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
             //挂掉的时候根据等级提升治疗量
             if (dead)
             {
-                heal *= 1.25f + FairyIV.ScaleLevel * 0.075f;
+                heal *= 1.25f + FairyIV.ScaleLV * 0.075f;
             }
 
             Life += (int)heal;
@@ -410,7 +410,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
 
         public virtual TooltipLine LifeMaxDescription()
         {
-            (Color c, LocalizedText text) = FairyIV.GetFairyIVColorAndText(FairyIV.LifeMaxLevel);
+            (Color c, LocalizedText text) = FairyIV.GetFairyIVColorAndText(FairyIV.LifeMaxLV);
 
             TooltipLine line = new(Mod, FairyLifeMax
                 , FairySystem.FormatIVDescription(FairySystem.FairyLifeMax, text, FairyIV.LifeMax));
@@ -420,7 +420,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
 
         public virtual TooltipLine DamageDescription()
         {
-            (Color c, LocalizedText text) = FairyIV.GetFairyIVColorAndText(FairyIV.DamageLevel);
+            (Color c, LocalizedText text) = FairyIV.GetFairyIVColorAndText(FairyIV.DamageLV);
 
             TooltipLine line = new(Mod, FairyDamage
                 , FairySystem.FormatIVDescription(FairySystem.FairyDamage, text, FairyIV.Damage));
@@ -431,7 +431,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
 
         public virtual TooltipLine DefenceDescription()
         {
-            (Color c, LocalizedText text) = FairyIV.GetFairyIVColorAndText(FairyIV.DefenceLevel);
+            (Color c, LocalizedText text) = FairyIV.GetFairyIVColorAndText(FairyIV.DefenceLV);
 
             TooltipLine line = new(Mod, FairyDefence
                 , FairySystem.FormatIVDescription(FairySystem.FairyDefence, text, FairyIV.Defence));
@@ -441,7 +441,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
 
         public virtual TooltipLine SpeedDescription()
         {
-            (Color c, LocalizedText text) = FairyIV.GetFairyIVColorAndText(FairyIV.SpeedLevel);
+            (Color c, LocalizedText text) = FairyIV.GetFairyIVColorAndText(FairyIV.SpeedLV);
 
             TooltipLine line = new(Mod, FairySpeed
                 , FairySystem.FormatIVDescription(FairySystem.FairySpeed, text, FairyIV.Speed));
@@ -451,7 +451,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
 
         public virtual TooltipLine SkillLevelDescription()
         {
-            (Color c, LocalizedText text) = FairyIV.GetFairyIVColorAndText(FairyIV.SkillLevelLevel);
+            (Color c, LocalizedText text) = FairyIV.GetFairyIVColorAndText(FairyIV.SkillLevelLV);
 
             TooltipLine line = new(Mod, FairySkillLevel
                 , FairySystem.FormatIVDescription(FairySystem.FairySkillLevel, text, FairyIV.SkillLevel));
@@ -461,7 +461,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
 
         public virtual TooltipLine StaminaDescription()
         {
-            (Color c, LocalizedText text) = FairyIV.GetFairyIVColorAndText(FairyIV.StaminaLevel);
+            (Color c, LocalizedText text) = FairyIV.GetFairyIVColorAndText(FairyIV.StaminaLV);
 
             TooltipLine line = new(Mod, FairyStamina
                 , FairySystem.FormatIVDescription(FairySystem.FairyStamina, text, FairyIV.Stamina));
@@ -471,7 +471,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
 
         public virtual TooltipLine ScaleBonusDescription()
         {
-            (Color c, LocalizedText text) = FairyIV.GetFairyIVColorAndText(FairyIV.ScaleLevel);
+            (Color c, LocalizedText text) = FairyIV.GetFairyIVColorAndText(FairyIV.ScaleLV);
 
             TooltipLine line = new(Mod, FairyScale
                 , FairySystem.FormatIVDescription(FairySystem.FairyScale, text, FairyIV.Scale));
@@ -538,17 +538,17 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
 
             //绘制上层图标
             //生命值
-            DrawRaderIcon(center + (-MathHelper.PiOver2).ToRotationVector2() * length, 0, FairyIV.LifeMax, FairyIV.LifeMaxLevel);
+            DrawRaderIcon(center + (-MathHelper.PiOver2).ToRotationVector2() * length, 0, FairyIV.LifeMax, FairyIV.LifeMaxLV);
             //防御
-            DrawRaderIcon(center + (-MathHelper.PiOver2 + HexAngle).ToRotationVector2() * length, 2, FairyIV.Defence, FairyIV.DefenceLevel);
+            DrawRaderIcon(center + (-MathHelper.PiOver2 + HexAngle).ToRotationVector2() * length, 2, FairyIV.Defence, FairyIV.DefenceLV);
             //耐力
-            DrawRaderIcon(center + (-MathHelper.PiOver2 + HexAngle * 2).ToRotationVector2() * length, 5, FairyIV.Stamina, FairyIV.StaminaLevel);
+            DrawRaderIcon(center + (-MathHelper.PiOver2 + HexAngle * 2).ToRotationVector2() * length, 5, FairyIV.Stamina, FairyIV.StaminaLV);
             //速度
-            DrawRaderIcon(center + (-MathHelper.PiOver2 + HexAngle * 3).ToRotationVector2() * length, 3, FairyIV.Speed, FairyIV.SpeedLevel);
+            DrawRaderIcon(center + (-MathHelper.PiOver2 + HexAngle * 3).ToRotationVector2() * length, 3, FairyIV.Speed, FairyIV.SpeedLV);
             //等级
-            DrawRaderIcon(center + (-MathHelper.PiOver2 + HexAngle * 4).ToRotationVector2() * length, 4, FairyIV.SkillLevel, FairyIV.SkillLevelLevel);
+            DrawRaderIcon(center + (-MathHelper.PiOver2 + HexAngle * 4).ToRotationVector2() * length, 4, FairyIV.SkillLevel, FairyIV.SkillLevelLV);
             //攻击
-            DrawRaderIcon(center + (-MathHelper.PiOver2 + HexAngle * 5).ToRotationVector2() * length, 1, FairyIV.Damage, FairyIV.DamageLevel);
+            DrawRaderIcon(center + (-MathHelper.PiOver2 + HexAngle * 5).ToRotationVector2() * length, 1, FairyIV.Damage, FairyIV.DamageLV);
         }
 
         public void DrawHealthBar(Vector2 center, float Health, float MaxHealth,float maxLength, float alpha = 0.9f)
@@ -652,12 +652,12 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
 
         public void DrawRaderChart(Vector2 center, float baseLength)
         {
-            float lifeMaxLength = GetLevelLength(baseLength, FairyIV.LifeMaxLevel);
-            float damageLength = GetLevelLength(baseLength, FairyIV.DamageLevel);
-            float defenceLength = GetLevelLength(baseLength, FairyIV.DefenceLevel);
-            float speedLength = GetLevelLength(baseLength, FairyIV.SpeedLevel);
-            float skillLevelLength = GetLevelLength(baseLength, FairyIV.SkillLevelLevel);
-            float staminaLength = GetLevelLength(baseLength, FairyIV.StaminaLevel);
+            float lifeMaxLength = GetLevelLength(baseLength, FairyIV.LifeMaxLV);
+            float damageLength = GetLevelLength(baseLength, FairyIV.DamageLV);
+            float defenceLength = GetLevelLength(baseLength, FairyIV.DefenceLV);
+            float speedLength = GetLevelLength(baseLength, FairyIV.SpeedLV);
+            float skillLevelLength = GetLevelLength(baseLength, FairyIV.SkillLevelLV);
+            float staminaLength = GetLevelLength(baseLength, FairyIV.StaminaLV);
 
             Texture2D Texture = CoraliteAssets.Misc.White32x32.Value;
 
@@ -669,19 +669,19 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
             [
                     centerVertex,
                 new(center + (-MathHelper.PiOver2).ToRotationVector2()*lifeMaxLength,
-                    GetLevelColor(FairyIV.LifeMaxLevel), new Vector3(0, 0, 1)),
+                    GetLevelColor(FairyIV.LifeMaxLV), new Vector3(0, 0, 1)),
                 new(center + (-MathHelper.PiOver2+HexAngle).ToRotationVector2()*defenceLength,
-                    GetLevelColor(FairyIV.DefenceLevel), new Vector3(1 / 6f, 0, 1)),
+                    GetLevelColor(FairyIV.DefenceLV), new Vector3(1 / 6f, 0, 1)),
                 new(center + (-MathHelper.PiOver2+HexAngle*2).ToRotationVector2()*staminaLength,
-                    GetLevelColor(FairyIV.StaminaLevel), new Vector3(2 / 6f, 0, 1)),
+                    GetLevelColor(FairyIV.StaminaLV), new Vector3(2 / 6f, 0, 1)),
                 new(center + (-MathHelper.PiOver2+HexAngle*3).ToRotationVector2()*speedLength,
-                    GetLevelColor(FairyIV.SpeedLevel), new Vector3(4 / 6f, 0, 1)),
+                    GetLevelColor(FairyIV.SpeedLV), new Vector3(4 / 6f, 0, 1)),
                 new(center + (-MathHelper.PiOver2+HexAngle*4).ToRotationVector2()*skillLevelLength,
-                    GetLevelColor(FairyIV.SkillLevelLevel), new Vector3(3 / 6f, 0, 1)),
+                    GetLevelColor(FairyIV.SkillLevelLV), new Vector3(3 / 6f, 0, 1)),
                 new(center + (-MathHelper.PiOver2+HexAngle*5).ToRotationVector2()*damageLength,
-                    GetLevelColor(FairyIV.DamageLevel), new Vector3(5 / 6f, 0, 1)),
+                    GetLevelColor(FairyIV.DamageLV), new Vector3(5 / 6f, 0, 1)),
                 new(center + (-MathHelper.PiOver2).ToRotationVector2()*lifeMaxLength,
-                    GetLevelColor(FairyIV.LifeMaxLevel), new Vector3(1, 0, 1)),
+                    GetLevelColor(FairyIV.LifeMaxLV), new Vector3(1, 0, 1)),
             ];
 
             Main.spriteBatch.GraphicsDevice.Textures[0] = Texture;
@@ -753,7 +753,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
 
         public override void LoadData(TagCompound tag)
         {
-            FairyIV = FairyIV.Load(Item, tag);
+            FairyIV = FairyIV.Load(Item, FairyType, tag);
             dead = tag.ContainsKey(nameof(IsDead));
             if (tag.TryGet(nameof(Life), out int l))
                 Life = l;

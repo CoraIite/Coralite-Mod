@@ -29,9 +29,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
             public void Reset()
             {
-                BaseValue= FairyIVLevelID.Common;
-                Sub = 2;//默认能降到0也就是弱小
-                Add = 1;//默认增加到3也就是不寻常
+                BaseValue = FairyIVLevelID.WeakCommon;
+                Sub = FairyIVLevelID.WeakCommon - FairyIVLevelID.Weak;//默认能降到0也就是弱小
+                Add = FairyIVLevelID.Common - FairyIVLevelID.WeakCommon;//默认增加到3也就是不寻常
             }
         }
 

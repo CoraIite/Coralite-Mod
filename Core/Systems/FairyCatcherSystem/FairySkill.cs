@@ -256,7 +256,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             //    level = fcp.FairySkillBonus[Type].ModifyLevel(level);
 
             Utils.DrawBorderString(Main.spriteBatch, GetSkillNameTip(iv.SkillLevel), topLeft
-                , FairyIV.GetFairyIVColorAndText(iv.SkillLevelLevel).Item1, 1.1f);
+                , FairyIV.GetFairyIVColorAndText(iv.SkillLevelLV).Item1, 1.1f);
 
             topLeft.Y += nameSize.Y + 4;
 
