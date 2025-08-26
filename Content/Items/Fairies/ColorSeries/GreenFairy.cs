@@ -52,7 +52,7 @@ namespace Coralite.Content.Items.Fairies.ColorSeries
             }
         }
 
-        public override void ModifyIVLevel(ref FairyIV fairyIV, FairyCatcherPlayer fcp)
+        public override void ModifyIVLevel(FairyIV fairyIV, FairyCatcherPlayer fcp)
         {
             //fairyIV.LifeMaxLevel = 7;
             //fairyIV.DamageLevel = 7;

@@ -6295,3 +6295,165 @@ ShinyAura: {
 	DisplayName: 闪耀灵光
 	Tooltip: ""
 }
+
+AttackDroplet: {
+	DisplayName: 攻击液滴
+	Tooltip:
+		'''
+		{$Mods.Coralite.Systems.FairySystem.HowToUseEVBonusItem}
+		+1 攻击基础点数
+		'''
+}
+
+AttackEssence: {
+	DisplayName: 攻击精华
+	Tooltip:
+		'''
+		{$Mods.Coralite.Systems.FairySystem.HowToUseEVBonusItem}
+		+3 攻击基础点数
+		'''
+}
+
+AttackNectar: {
+	DisplayName: 攻击琼浆
+	Tooltip:
+		'''
+		{$Mods.Coralite.Systems.FairySystem.HowToUseEVBonusItem}
+		+7 攻击基础点数
+		'''
+}
+
+EvolutionDroplet: {
+	DisplayName: 进化液滴
+	Tooltip:
+		'''
+		{$Mods.Coralite.Systems.FairySystem.HowToUseEVBonusItem}
+		+1 等级基础点数
+		'''
+}
+
+EvolutionEssence: {
+	DisplayName: 进化精华
+	Tooltip:
+		'''
+		{$Mods.Coralite.Systems.FairySystem.HowToUseEVBonusItem}
+		+3 等级基础点数
+		'''
+}
+
+EvolutionNectar: {
+	DisplayName: 进化琼浆
+	Tooltip:
+		'''
+		{$Mods.Coralite.Systems.FairySystem.HowToUseEVBonusItem}
+		+7 等级基础点数
+		'''
+}
+
+LifeDroplet: {
+	DisplayName: 生命液滴
+	Tooltip:
+		'''
+		{$Mods.Coralite.Systems.FairySystem.HowToUseEVBonusItem}
+		+1 血量基础点数
+		'''
+}
+
+LifeEssence: {
+	DisplayName: 生命精华
+	Tooltip:
+		'''
+		{$Mods.Coralite.Systems.FairySystem.HowToUseEVBonusItem}
+		+3 血量基础点数
+		'''
+}
+
+LifeNectar: {
+	DisplayName: 生命琼浆
+	Tooltip:
+		'''
+		{$Mods.Coralite.Systems.FairySystem.HowToUseEVBonusItem}
+		+7 血量基础点数
+		'''
+}
+
+ProtectDroplet: {
+	DisplayName: 守护液滴
+	Tooltip:
+		'''
+		{$Mods.Coralite.Systems.FairySystem.HowToUseEVBonusItem}
+		+1 防御基础点数
+		'''
+}
+
+ProtectEssence: {
+	DisplayName: 守护精华
+	Tooltip:
+		'''
+		{$Mods.Coralite.Systems.FairySystem.HowToUseEVBonusItem}
+		+3 防御基础点数
+		'''
+}
+
+ProtectNectar: {
+	DisplayName: 守护琼浆
+	Tooltip:
+		'''
+		{$Mods.Coralite.Systems.FairySystem.HowToUseEVBonusItem}
+		+7 防御基础点数
+		'''
+}
+
+StaminaDroplet: {
+	DisplayName: 耐力液滴
+	Tooltip:
+		'''
+		{$Mods.Coralite.Systems.FairySystem.HowToUseEVBonusItem}
+		+1 耐力基础点数
+		'''
+}
+
+StaminaEssence: {
+	DisplayName: 耐力精华
+	Tooltip:
+		'''
+		{$Mods.Coralite.Systems.FairySystem.HowToUseEVBonusItem}
+		+3 耐力基础点数
+		'''
+}
+
+StaminaNectar: {
+	DisplayName: 耐力琼浆
+	Tooltip:
+		'''
+		{$Mods.Coralite.Systems.FairySystem.HowToUseEVBonusItem}
+		+7 耐力基础点数
+		'''
+}
+
+SwiftDroplet: {
+	DisplayName: 加速液滴
+	Tooltip:
+		'''
+		{$Mods.Coralite.Systems.FairySystem.HowToUseEVBonusItem}
+		+1 速度基础点数
+		'''
+}
+
+SwiftEssence: {
+	DisplayName: 加速精华
+	Tooltip:
+		'''
+		{$Mods.Coralite.Systems.FairySystem.HowToUseEVBonusItem}
+		+3 速度基础点数
+		'''
+}
+
+SwiftNectar: {
+	DisplayName: 加速琼浆
+	Tooltip:
+		'''
+		{$Mods.Coralite.Systems.FairySystem.HowToUseEVBonusItem}
+		+7 速度基础点数
+		'''
+}

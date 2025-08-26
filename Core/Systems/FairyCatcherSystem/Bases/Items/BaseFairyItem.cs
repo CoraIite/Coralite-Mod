@@ -200,7 +200,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
                 heal *= 1.25f + FairyIV.ScaleLV * 0.075f;
             }
 
-            Life += (int)heal;
+             Life += (int)heal;
             LimitLife();
 
             if (dead)
@@ -281,7 +281,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
             {
                 int num = (int)(Item.Center.X / 16f);
                 int num2 = (int)(Item.position.Y / 16f - 1f);
-                if (!WorldGen.InWorld(num, num2) || Main.tile[num, num2] == null || Main.tile[num, num2].LiquidAmount <= 0 || Main.tile[num, num2].LiquidType!=LiquidID.Shimmer)
+                if (!WorldGen.InWorld(num, num2) || Main.tile[num, num2] == null || Main.tile[num, num2].LiquidAmount <= 0 || Main.tile[num, num2].LiquidType != LiquidID.Shimmer)
                     return;
 
                 if (Item.playerIndexTheItemIsReservedFor == Main.myPlayer && !VaultUtils.isClient)
@@ -341,7 +341,25 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
 
         public override bool CanRightClick()
         {
-            return base.CanRightClick();
+            return true;
+        }
+
+        public override void RightClick(Player player)
+        {
+            if (Main.mouseItem.ModItem is BaseFairyEVBonusItem bonusItem)
+            {
+                EVBonus(Main.mouseItem, bonusItem);
+            }
+        }
+
+        public void EVBonus(Item costItem, BaseFairyEVBonusItem bonusItem)
+        {
+            if (FairyIV.TryAddEV(bonusItem.BonusType, bonusItem.BonusValue, FairyType))
+            {
+                costItem.stack--;
+                if (costItem.stack < 1)
+                    costItem.TurnToAir();
+            }
         }
 
         public override bool ConsumeItem(Player player) => false;
@@ -481,27 +499,27 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
 
         public override void PostDrawTooltipLine(DrawableTooltipLine line)
         {
-            if (line.Name== "SurvivalStatus")//绘制血量条{
+            if (line.Name == "SurvivalStatus")//绘制血量条{
             {
                 Vector2 size = Helper.GetStringSize(line.Text, Vector2.One);
-                DrawHealthBar(new Vector2(line.X, line.Y) + size/2, Life, FairyIV.LifeMax, size.X);
+                DrawHealthBar(new Vector2(line.X, line.Y) + size / 2, Life, FairyIV.LifeMax, size.X);
             }
             else if (/*showLineValueCount >= 0 && */line.Name == "RaderChart")
                 DrawRaderChat(line);
             else if (line.Name == FairyLifeMax)
-                DrawIVIcon(0, new Vector2(line.X + 10, line.Y + 10));
+                DrawIVIcon(0, new Vector2(line.X + 10, line.Y + 10), FairyIV.LifeMaxEV == FairyIV.EVMax);
             else if (line.Name == FairyDamage)
-                DrawIVIcon(1, new Vector2(line.X + 10, line.Y + 10));
+                DrawIVIcon(1, new Vector2(line.X + 10, line.Y + 10), FairyIV.DamageEV == FairyIV.EVMax);
             else if (line.Name == FairyDefence)
-                DrawIVIcon(2, new Vector2(line.X + 10, line.Y + 10));
+                DrawIVIcon(2, new Vector2(line.X + 10, line.Y + 10), FairyIV.DefenceEV == FairyIV.EVMax);
             else if (line.Name == FairySpeed)
-                DrawIVIcon(3, new Vector2(line.X + 10, line.Y + 10));
+                DrawIVIcon(3, new Vector2(line.X + 10, line.Y + 10), FairyIV.SpeedEV == FairyIV.EVMax);
             else if (line.Name == FairySkillLevel)
-                DrawIVIcon(4, new Vector2(line.X + 10, line.Y + 10));
+                DrawIVIcon(4, new Vector2(line.X + 10, line.Y + 10), FairyIV.SkillLevelEV == FairyIV.EVMax);
             else if (line.Name == FairyStamina)
-                DrawIVIcon(5, new Vector2(line.X + 10, line.Y + 10));
+                DrawIVIcon(5, new Vector2(line.X + 10, line.Y + 10), FairyIV.StaminaEV == FairyIV.EVMax);
             else if (line.Name == FairyScale)
-                DrawIVIcon(6, new Vector2(line.X + 10, line.Y + 10));
+                DrawIVIcon(6, new Vector2(line.X + 10, line.Y + 10), false);
         }
 
         private void DrawRaderChat(DrawableTooltipLine line)
@@ -538,20 +556,20 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
 
             //绘制上层图标
             //生命值
-            DrawRaderIcon(center + (-MathHelper.PiOver2).ToRotationVector2() * length, 0, FairyIV.LifeMax, FairyIV.LifeMaxLV);
+            DrawRaderIcon(center + (-MathHelper.PiOver2).ToRotationVector2() * length, 0, FairyIV.LifeMaxEV == FairyIV.EVMax, FairyIV.LifeMaxLV);
             //防御
-            DrawRaderIcon(center + (-MathHelper.PiOver2 + HexAngle).ToRotationVector2() * length, 2, FairyIV.Defence, FairyIV.DefenceLV);
+            DrawRaderIcon(center + (-MathHelper.PiOver2 + HexAngle).ToRotationVector2() * length, 2, FairyIV.DefenceEV == FairyIV.EVMax, FairyIV.DefenceLV);
             //耐力
-            DrawRaderIcon(center + (-MathHelper.PiOver2 + HexAngle * 2).ToRotationVector2() * length, 5, FairyIV.Stamina, FairyIV.StaminaLV);
+            DrawRaderIcon(center + (-MathHelper.PiOver2 + HexAngle * 2).ToRotationVector2() * length, 5, FairyIV.StaminaEV == FairyIV.EVMax, FairyIV.StaminaLV);
             //速度
-            DrawRaderIcon(center + (-MathHelper.PiOver2 + HexAngle * 3).ToRotationVector2() * length, 3, FairyIV.Speed, FairyIV.SpeedLV);
+            DrawRaderIcon(center + (-MathHelper.PiOver2 + HexAngle * 3).ToRotationVector2() * length, 3, FairyIV.SpeedEV == FairyIV.EVMax, FairyIV.SpeedLV);
             //等级
-            DrawRaderIcon(center + (-MathHelper.PiOver2 + HexAngle * 4).ToRotationVector2() * length, 4, FairyIV.SkillLevel, FairyIV.SkillLevelLV);
+            DrawRaderIcon(center + (-MathHelper.PiOver2 + HexAngle * 4).ToRotationVector2() * length, 4, FairyIV.SkillLevelEV == FairyIV.EVMax, FairyIV.SkillLevelLV);
             //攻击
-            DrawRaderIcon(center + (-MathHelper.PiOver2 + HexAngle * 5).ToRotationVector2() * length, 1, FairyIV.Damage, FairyIV.DamageLV);
+            DrawRaderIcon(center + (-MathHelper.PiOver2 + HexAngle * 5).ToRotationVector2() * length, 1, FairyIV.DamageEV == FairyIV.EVMax, FairyIV.DamageLV);
         }
 
-        public void DrawHealthBar(Vector2 center, float Health, float MaxHealth,float maxLength, float alpha = 0.9f)
+        public void DrawHealthBar(Vector2 center, float Health, float MaxHealth, float maxLength, float alpha = 0.9f)
         {
             if (MaxHealth == 0)
                 MaxHealth = 1;
@@ -571,7 +589,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
             }
             else
             {
-                 backColor = Color.Lerp(Color.DarkRed, Color.DarkGreen, factor);
+                backColor = Color.Lerp(Color.DarkRed, Color.DarkGreen, factor);
                 newColor = Color.Lerp(Color.OrangeRed, Color.LawnGreen, factor);
                 status = FairySystem.CurrentLife.Format(Health, MaxHealth);
             }
@@ -581,9 +599,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
 
             Texture2D tex = CoraliteAssets.Sparkle.BarSPA.Value;
 
-            Vector2 scale =new Vector2( totalBarLength / tex.Width ,1);
-            backColor *= alpha*0.4f;
-            barColor *= alpha  * 0.4f;
+            Vector2 scale = new Vector2(totalBarLength / tex.Width, 1);
+            backColor *= alpha * 0.4f;
+            barColor *= alpha * 0.4f;
 
             barColor.A = 0;
 
@@ -608,11 +626,23 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
                 , MathHelper.PiOver2, tex2.Size() / 2, scale1, 0, 0);
 
 
-            Utils.DrawBorderString(Main.spriteBatch, status, center+new Vector2(0,4), newColor, 1, 0.5f, 0.5f);
+            Utils.DrawBorderString(Main.spriteBatch, status, center + new Vector2(0, 4), newColor, 1, 0.5f, 0.5f);
         }
 
-        private static void DrawIVIcon(int frame, Vector2 center)
+        private static void DrawIVIcon(int frame, Vector2 center, bool EVMax)
         {
+            if (EVMax)
+            {
+                float timer = MathF.Cos((float)(Main.timeForVisualEffects % 35) / 35 * MathHelper.PiOver2);
+
+                for (int i = 0; i < 3; i++)
+                    FairySystem.FairyIVIcon.Value.QuickCenteredDraw(Main.spriteBatch, new Rectangle(0, frame, 1, 8),
+                        center + (Main.GlobalTimeWrappedHourly + i * MathHelper.TwoPi / 3).ToRotationVector2() * 3
+                        , 0, Color.Goldenrod * 0.4f, scale: 0.9f);
+                FairySystem.FairyIVIcon.Value.QuickCenteredDraw(Main.spriteBatch, new Rectangle(0, frame, 1, 8),
+                    center, 0, Color.Goldenrod * timer, scale: 0.76f + (1 - timer) * 0.6f);
+            }
+
             FairySystem.FairyIVIcon.Value.QuickCenteredDraw(Main.spriteBatch, new Rectangle(0, frame, 1, 8),
                 center, scale: 0.76f);
         }
@@ -652,12 +682,12 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
 
         public void DrawRaderChart(Vector2 center, float baseLength)
         {
-            float lifeMaxLength = GetLevelLength(baseLength, FairyIV.LifeMaxLV);
-            float damageLength = GetLevelLength(baseLength, FairyIV.DamageLV);
-            float defenceLength = GetLevelLength(baseLength, FairyIV.DefenceLV);
-            float speedLength = GetLevelLength(baseLength, FairyIV.SpeedLV);
-            float skillLevelLength = GetLevelLength(baseLength, FairyIV.SkillLevelLV);
-            float staminaLength = GetLevelLength(baseLength, FairyIV.StaminaLV);
+            float lifeMaxLength = GetLevelLength(baseLength, FairyIV.LifeMaxLV + 15 * FairyIV.LifeMaxEV / FairyIV.EVMax);
+            float damageLength = GetLevelLength(baseLength, FairyIV.DamageLV + 15 * FairyIV.DamageEV / FairyIV.EVMax);
+            float defenceLength = GetLevelLength(baseLength, FairyIV.DefenceLV + 15 * FairyIV.DefenceEV / FairyIV.EVMax);
+            float speedLength = GetLevelLength(baseLength, FairyIV.SpeedLV + 15 * FairyIV.SpeedEV / FairyIV.EVMax);
+            float skillLevelLength = GetLevelLength(baseLength, FairyIV.SkillLevelLV + 15 * FairyIV.SkillLevelEV / FairyIV.EVMax);
+            float staminaLength = GetLevelLength(baseLength, FairyIV.StaminaLV + 15 * FairyIV.StaminaEV / FairyIV.EVMax);
 
             Texture2D Texture = CoraliteAssets.Misc.White32x32.Value;
 
@@ -721,10 +751,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
             baseValue = 0.3f + 0.7f * (baseValue - 1) / (maxValue - 1);
         }
 
-        public static void DrawRaderIcon(Vector2 pos, int frame, float value, float level)
+        public static void DrawRaderIcon(Vector2 pos, int frame, bool EVMax, float level)
         {
             //绘制图标
-            DrawIVIcon(frame, pos /*+ new Vector2(0, -12)*/);
+            DrawIVIcon(frame, pos, EVMax);
 
             (Color c, _) = FairyIV.GetFairyIVColorAndText(level);
 

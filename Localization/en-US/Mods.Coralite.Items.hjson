@@ -6228,3 +6228,93 @@ ShinyAura: {
 	DisplayName: Shiny Aura
 	Tooltip: ""
 }
+
+AttackDroplet: {
+	DisplayName: Attack Droplet
+	Tooltip: ""
+}
+
+AttackEssence: {
+	DisplayName: Attack Essence
+	Tooltip: ""
+}
+
+AttackNectar: {
+	DisplayName: Attack Nectar
+	Tooltip: ""
+}
+
+EvolutionDroplet: {
+	DisplayName: Evolution Droplet
+	Tooltip: ""
+}
+
+EvolutionEssence: {
+	DisplayName: Evolution Essence
+	Tooltip: ""
+}
+
+EvolutionNectar: {
+	DisplayName: Evolution Nectar
+	Tooltip: ""
+}
+
+LifeDroplet: {
+	DisplayName: Life Droplet
+	Tooltip: ""
+}
+
+LifeEssence: {
+	DisplayName: Life Essence
+	Tooltip: ""
+}
+
+LifeNectar: {
+	DisplayName: Life Nectar
+	Tooltip: ""
+}
+
+ProtectDroplet: {
+	DisplayName: Protect Droplet
+	Tooltip: ""
+}
+
+ProtectEssence: {
+	DisplayName: Protect Essence
+	Tooltip: ""
+}
+
+ProtectNectar: {
+	DisplayName: Protect Nectar
+	Tooltip: ""
+}
+
+StaminaDroplet: {
+	DisplayName: Stamina Droplet
+	Tooltip: ""
+}
+
+StaminaEssence: {
+	DisplayName: Stamina Essence
+	Tooltip: ""
+}
+
+StaminaNectar: {
+	DisplayName: Stamina Nectar
+	Tooltip: ""
+}
+
+SwiftDroplet: {
+	DisplayName: Swift Droplet
+	Tooltip: ""
+}
+
+SwiftEssence: {
+	DisplayName: Swift Essence
+	Tooltip: ""
+}
+
+SwiftNectar: {
+	DisplayName: Swift Nectar
+	Tooltip: ""
+}

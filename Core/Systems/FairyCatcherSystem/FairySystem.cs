@@ -1,4 +1,4 @@
-﻿using Coralite.Content.Items.Fairies.FairyIVRainforce;
+﻿using Coralite.Content.Items.Fairies.FairyEVBonus;
 using Coralite.Content.Items.Materials;
 using Coralite.Core.Loaders;
 using Coralite.Core.Systems.FairyCatcherSystem.FairyFreePart;

@@ -94,6 +94,7 @@ FairySystem: {
 	// TongStaminaReduce: Mods.Coralite.Systems.FairySystem.TongStaminaReduce
 	// IsFairyPowder: Mods.Coralite.Systems.FairySystem.IsFairyPowder
 	// SkillTags: Mods.Coralite.Systems.FairySystem.SkillTags
+	// HowToUseEVBonusItem: A
 }
 
 BossBarSystem.DontTakeDamage: Невозможно атаковать!

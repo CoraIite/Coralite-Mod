@@ -106,6 +106,7 @@ FairySystem: {
 	TongStaminaReduce: 令发射的仙灵耐力 {0}
 	IsFairyPowder: 仙灵尘
 	SkillTags: 类型:
+	HowToUseEVBonusItem: 鼠标持有该物品后右键点击仙灵物品为其增加基础点数
 }
 
 BossBarSystem.DontTakeDamage: 不可攻击！

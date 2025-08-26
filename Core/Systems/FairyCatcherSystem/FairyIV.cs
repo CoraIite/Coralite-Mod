@@ -9,10 +9,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
     /// <summary>
     /// 仙灵的个体值，内部仅存储各种具体数值
     /// </summary>
-    public struct FairyIV
+    public class FairyIV
     {
         public const float EVMax = 42;
-        public const int TotalEVMax = 42*3;
+        public const int TotalEVMax = 42 * 3;
 
         /// <summary> 生命值上限 </summary>
         public int LifeMax { get; set; }
@@ -45,7 +45,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <summary>
         /// 总努力值
         /// </summary>
-        public readonly int TotalEV => LifeMaxEV + DamageEV + DefenceEV + SpeedEV + SkillLevelEV + StaminaEV;
+        public int TotalEV => LifeMaxEV + DamageEV + DefenceEV + SpeedEV + SkillLevelEV + StaminaEV;
 
 
         /// <summary> 
@@ -90,7 +90,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// </summary>
         public float ScaleLV { get; set; }
 
-        public enum IVType:byte
+        public enum IVType : byte
         {
             LifeMax,
             Damage,
@@ -100,7 +100,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             Stamina,
         }
 
-        private const int EternalToOver = FairyIVLevelID.Over - FairyIVLevelID.Eternal-1;
+        private const int EternalToOver = FairyIVLevelID.Over - FairyIVLevelID.Eternal - 1;
 
         /// <summary>
         /// 根据仙灵类型和玩家的加成随机一个仙灵的六维个体值
@@ -115,16 +115,16 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
             FairyIV iv = new FairyIV();
 
-            SetLevels(player, ref iv);
+            SetLevels(player, iv);
             //仙灵自身的随机量
-            fairy.ModifyIVLevel(ref iv, player);
+            fairy.ModifyIVLevel(iv, player);
 
             //计算各种数值
-            CalculateAllIV(data, ref iv);
+            CalculateAllIV(data, iv);
             //大小
-            GetScaleIV(player, ref iv);
+            GetScaleIV(iv);
 
-            fairy.PostModifyIV(ref iv, player);
+            fairy.PostModifyIV(iv, player);
             return iv;
         }
 
@@ -135,7 +135,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <param name="player"></param>
         /// <param name="ivMin"></param>
         /// <param name="ivMax"></param>
-        public static void GetIVForUI(Fairy fairy,FairyCatcherPlayer player,out FairyIV ivMin,out FairyIV ivMax)
+        public static void GetIVForUI(Fairy fairy, FairyCatcherPlayer player, out FairyIV ivMin, out FairyIV ivMax)
         {
             ivMin = new FairyIV();
             ivMax = new FairyIV();
@@ -164,16 +164,16 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
             static FairyIV SetIV(Fairy fairy, FairyCatcherPlayer player, FairyIV iv, FairyData data)
             {
-                fairy.ModifyIVLevel(ref iv, player);
+                fairy.ModifyIVLevel(iv, player);
 
-                CalculateAllIV(data, ref iv);
+                CalculateAllIV(data, iv);
 
-                fairy.PostModifyIV(ref iv, player);
+                fairy.PostModifyIV(iv, player);
                 return iv;
             }
         }
 
-        private static void SetLevels(FairyCatcherPlayer player, ref FairyIV iv)
+        private static void SetLevels(FairyCatcherPlayer player, FairyIV iv)
         {
             iv.LifeMaxLV = player.LifeMaxRand.RandValue;
             iv.DamageLV = player.DamageRand.RandValue;
@@ -190,7 +190,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// 存储仙灵个体值
         /// </summary>
         /// <param name="tag"></param>
-        public readonly void Save(TagCompound tag)
+        public void Save(TagCompound tag)
         {
             const string preName = "IV_";
 
@@ -211,7 +211,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             tag.Add(preName + nameof(ScaleLV), ScaleLV);
         }
 
-        public static FairyIV Load(Item item,int fairyType, TagCompound tag)
+        public static FairyIV Load(Item item, int fairyType, TagCompound tag)
         {
             const string preName = "IV_";
             if (tag.TryGet(preName + nameof(LifeMaxEV), out int lifemaxEV)
@@ -230,7 +230,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                 && tag.TryGet(preName + nameof(ScaleLV), out float scaleLevel)
                 )
             {
-                var iv= new FairyIV
+                var iv = new FairyIV
                 {
                     LifeMaxEV = lifemaxEV,
                     DamageEV = damageEV,
@@ -251,7 +251,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                 if (!FairySystem.fairyDatas.TryGetValue(fairyType, out FairyData data))
                     return default;
 
-                CalculateAllIV(data, ref iv);
+                CalculateAllIV(data, iv);
                 return iv;
             }
             else
@@ -269,10 +269,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <param name="type"></param>
         /// <param name="addValue"></param>
         /// <returns></returns>
-        public bool TryAddEV(IVType type,int addValue,int fairyType)
+        public bool TryAddEV(IVType type, int addValue, int fairyType)
         {
             int total = TotalEV;
-            if (total+addValue>TotalEVMax)
+            if (total + addValue > TotalEVMax)
                 addValue = TotalEVMax - total;
 
             if (addValue < 1)
@@ -343,7 +343,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             if (!FairySystem.fairyDatas.TryGetValue(fairyType, out FairyData data))
                 return false;
 
-            CalculateAllIV(data, ref this);
+            CalculateAllIV(data, this);
 
             return true;
         }
@@ -355,7 +355,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <param name="LV">个体值</param>
         /// <param name="speciesStrength">种族值</param>
         /// <param name="EV">努力值</param>
-        public static float CalculateIV(float OffsetValue,short speciesStrength, float LV, int EV,float minValue=1)
+        public static float CalculateIV(float OffsetValue, short speciesStrength, float LV, int EV, float minValue = 1)
         {
             //计算缩放后的种族值效应
             float speciesStrengthScaled = speciesStrength;
@@ -367,9 +367,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             return minValue + (speciesStrengthScaled + 0.1f * EV / EVMax) * LV * OffsetValue;
         }
 
-        public static int CalculateIVRound(float OffsetValue, short speciesStrength, float LV, int EV,float minValue=1)
+        public static int CalculateIVRound(float OffsetValue, short speciesStrength, float LV, int EV, float minValue = 1)
         {
-            return (int)MathF.Round(CalculateIV(OffsetValue, speciesStrength, LV, EV,minValue)
+            return (int)MathF.Round(CalculateIV(OffsetValue, speciesStrength, LV, EV, minValue)
                 , MidpointRounding.AwayFromZero);
         }
 
@@ -378,17 +378,17 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// </summary>
         /// <param name="SSVData"></param>
         /// <param name="iv"></param>
-        public static void CalculateAllIV(FairyData SSVData, ref FairyIV iv)
+        public static void CalculateAllIV(FairyData SSVData, FairyIV iv)
         {
             iv.LifeMax = CalculateIVRound(20, SSVData.LifeMaxSSV, iv.LifeMaxLV, iv.LifeMaxEV, 20);
             iv.Damage = CalculateIVRound(4f, SSVData.DamageSSV, iv.DamageLV, iv.DamageEV);
             iv.Defence = CalculateIVRound(2.5f, SSVData.DefenceSSV, iv.DefenceLV, iv.DefenceEV, 4);
-            iv.Speed = MathF.Round( CalculateIV(0.15f, SSVData.SpeedSSV, iv.SpeedLV, iv.SpeedEV, 5),1);
+            iv.Speed = MathF.Round(CalculateIV(0.15f, SSVData.SpeedSSV, iv.SpeedLV, iv.SpeedEV, 5), 1);
             iv.SkillLevel = CalculateIVRound(1, SSVData.SkillLevelSSV, iv.SkillLevelLV, iv.SkillLevelEV);
             iv.Stamina = CalculateIVRound(1, SSVData.StaminaSSV, iv.StaminaLV, iv.StaminaEV);
         }
 
-        private static void GetScaleIV(FairyCatcherPlayer player, ref FairyIV iv)
+        private static void GetScaleIV(FairyIV iv)
         {
             //数值高于永恒，从永恒到最大值之间缩放
             if ((int)iv.ScaleLV >= 8 - 1)
@@ -399,7 +399,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             else
             {
                 //在二者间使用X2插值(四舍五入)
-                iv.Scale = MathF.Round(Helper.Lerp(0.8f, 1.5f, Math.Clamp(iv.ScaleLV / 7, 0, 1)),1, MidpointRounding.AwayFromZero);
+                iv.Scale = MathF.Round(Helper.Lerp(0.8f, 1.5f, Math.Clamp(iv.ScaleLV / 7, 0, 1)), 1, MidpointRounding.AwayFromZero);
             }
         }
 

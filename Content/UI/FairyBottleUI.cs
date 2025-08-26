@@ -429,10 +429,10 @@ namespace Coralite.Content.UI
                             ItemSlot.MouseHover(ref inv, ItemSlot.Context.VoidItem);
 
                             if (Main.mouseItem.IsAir || Main.mouseItem.ModItem is BaseFairyItem)
-                            {
                                 ItemSlot.LeftClick(ref inv, ItemSlot.Context.VoidItem);
-                                ItemSlot.RightClick(ref inv, ItemSlot.Context.VoidItem);
-                            }
+
+                            ItemSlot.RightClick(ref inv, ItemSlot.Context.InventoryItem);
+
                             bottle.FightFairies[_index] = inv;
                         }
                     }
@@ -446,10 +446,9 @@ namespace Coralite.Content.UI
                             ItemSlot.MouseHover(ref inv, ItemSlot.Context.VoidItem);
 
                             if (Main.mouseItem.IsAir || Main.mouseItem.ModItem is BaseFairyItem)
-                            {
                                 ItemSlot.LeftClick(ref inv, ItemSlot.Context.VoidItem);
-                                ItemSlot.RightClick(ref inv, ItemSlot.Context.VoidItem);
-                            }
+
+                            ItemSlot.RightClick(ref inv, ItemSlot.Context.InventoryItem);
 
                             bottle.ContainFairies[_index] = inv;
                         }
