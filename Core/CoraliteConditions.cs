@@ -10,6 +10,11 @@ namespace Coralite.Core
 {
     public class CoraliteConditions : ModSystem, ILocalizedModType
     {
+        /// <summary>
+        /// 永不显示
+        /// </summary>
+        public static Condition NeverMet { get; private set; }
+
         public static Condition LearnedMagikeBase { get; private set; }
         public static Condition LearnedMagikeAdvance { get; private set; }
         public static Condition CoralCat { get; private set; }
@@ -63,6 +68,9 @@ namespace Coralite.Core
 
         public override void Load()
         {
+            NeverMet = new(this.GetLocalization(nameof(NeverMet))
+                , () => false);
+
             LearnedMagikeBase = new(this.GetLocalization(nameof(LearnedMagikeBase))
                 , () => MagikeSystem.learnedMagikeBase);
             LearnedMagikeAdvance = new(this.GetLocalization(nameof(LearnedMagikeAdvance))

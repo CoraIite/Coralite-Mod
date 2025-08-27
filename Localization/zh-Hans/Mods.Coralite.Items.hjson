@@ -6457,3 +6457,8 @@ SwiftNectar: {
 		+7 速度基础点数
 		'''
 }
+
+GloomInk: {
+	DisplayName: 吸光墨滴
+	Tooltip: 鼠标持有该物品后右键点击仙灵物品清除所有基础点数
+}

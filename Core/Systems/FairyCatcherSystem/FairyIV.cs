@@ -348,6 +348,21 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             return true;
         }
 
+        public void ClearEV(int fairyType)
+        {
+            LifeMaxEV = 0;
+            DamageEV = 0;
+            DefenceEV = 0;
+            SpeedEV = 0;
+            SkillLevelEV = 0;
+            StaminaEV = 0;
+
+            if (!FairySystem.fairyDatas.TryGetValue(fairyType, out FairyData data))
+                return;
+
+            CalculateAllIV(data, this);
+        }
+
         /// <summary>
         /// 根据种族值，个体值和努力值计算具体的数值
         /// </summary>

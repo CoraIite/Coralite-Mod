@@ -1,6 +1,10 @@
-﻿using Coralite.Content.Items.FairyCatcher;
+﻿using Coralite.Content.Items.Fairies.FairyEVBonus;
+using Coralite.Content.Items.FairyCatcher;
+using Coralite.Content.Items.MagikeSeries1;
 using Coralite.Content.Items.Materials;
 using Coralite.Core;
+using Coralite.Core.Loaders;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -8,6 +12,7 @@ using Terraria;
 using Terraria.GameContent;
 using Terraria.GameContent.Bestiary;
 using Terraria.GameContent.Personalities;
+using Terraria.GameContent.UI;
 using Terraria.ID;
 using Terraria.Localization;
 using Terraria.Utilities;
@@ -138,7 +143,7 @@ namespace Coralite.Content.NPCs.Town
 
         public override bool CanTownNPCSpawn(int numTownNPCs)
         {
-            return Main.LocalPlayer.HasBuff<ElfBless>();
+            return true;
         }
 
         public override ITownNPCProfile TownNPCProfile()
@@ -193,12 +198,72 @@ namespace Coralite.Content.NPCs.Town
 
         public override void AddShops()
         {
-            var npcShop = new NPCShop(Type, ShopName);
-            npcShop.Add<BotanicusPowder>(Condition.MoonPhaseFull);
-            npcShop.Add<SandlitePowder>(Condition.MoonPhaseFirstQuarter);
-            npcShop.Add<EmpyrosPowder>(Condition.MoonPhases04);
-            npcShop.Add<IceyPowder>(Condition.MoonPhases15);
-            npcShop.Register();
+            NPCShop shop = new NPCShop(Type, ShopName).AllowFillingLastSlot();
+
+            void AddEntry<TItem, TCurrency>(int price, params Condition[] conditions)
+                where TItem : ModItem
+                where TCurrency : CustomCurrencySystem
+                =>
+                shop.Add(
+                    new NPCShop.Entry(
+                        new Item(ModContent.ItemType<TItem>()) { shopCustomPrice = price, shopSpecialCurrency = CurrencyLoader.GetCurrencyID<TCurrency>() },
+                        conditions
+                    ).ReserveSlot());
+
+            //第一排：各种仙灵尘
+            AddEntry<BotanicusPowder, FaintAuraCurrency>(6);
+            AddEntry<SandlitePowder, FaintAuraCurrency>(6);
+            AddEntry<EmpyrosPowder, FaintAuraCurrency>(6);
+            AddEntry<IceyPowder, FaintAuraCurrency>(6);
+            AddEntry<IceyPowder, FaintAuraCurrency>(5, CoraliteConditions.NeverMet);
+
+            AddEntry<IceyPowder, FaintAuraCurrency>(5, CoraliteConditions.NeverMet);
+            AddEntry<IceyPowder, FaintAuraCurrency>(5, CoraliteConditions.NeverMet);
+            AddEntry<IceyPowder, FaintAuraCurrency>(5, CoraliteConditions.NeverMet);
+            AddEntry<IceyPowder, FaintAuraCurrency>(5, CoraliteConditions.NeverMet);
+            AddEntry<IceyPowder, FaintAuraCurrency>(5, CoraliteConditions.NeverMet);
+
+            //第二排：各种液滴
+            AddEntry<LifeDroplet, FaintAuraCurrency>(3);
+            AddEntry<AttackDroplet, FaintAuraCurrency>(3);
+            AddEntry<ProtectDroplet, FaintAuraCurrency>(3);
+            AddEntry<SwiftDroplet, FaintAuraCurrency>(3);
+            AddEntry<EvolutionDroplet, FaintAuraCurrency>(3);
+
+            AddEntry<StaminaDroplet, FaintAuraCurrency>(3);
+            AddEntry<StaminaDroplet, FaintAuraCurrency>(3, CoraliteConditions.NeverMet);
+            AddEntry<StaminaDroplet, FaintAuraCurrency>(3, CoraliteConditions.NeverMet);
+            AddEntry<StaminaDroplet, FaintAuraCurrency>(3, CoraliteConditions.NeverMet);
+            AddEntry<GloomInk, BrightAuraCurrency>(5);
+
+            //第三排：各种精华
+            AddEntry<LifeEssence, BrightAuraCurrency>(3);
+            AddEntry<AttackEssence, BrightAuraCurrency>(3);
+            AddEntry<ProtectEssence, BrightAuraCurrency>(3);
+            AddEntry<SwiftEssence, BrightAuraCurrency>(3);
+            AddEntry<EvolutionEssence, BrightAuraCurrency>(3);
+
+            AddEntry<StaminaEssence, BrightAuraCurrency>(3);
+            AddEntry<StaminaEssence, BrightAuraCurrency>(3, CoraliteConditions.NeverMet);
+            AddEntry<StaminaEssence, BrightAuraCurrency>(3, CoraliteConditions.NeverMet);
+            AddEntry<StaminaEssence, BrightAuraCurrency>(3, CoraliteConditions.NeverMet);
+            AddEntry<StaminaEssence, BrightAuraCurrency>(3, CoraliteConditions.NeverMet);
+
+            //第四排：各种琼浆
+            AddEntry<LifeNectar, ShinyAuraCurrency>(3);
+            AddEntry<AttackNectar, ShinyAuraCurrency>(3);
+            AddEntry<ProtectNectar, ShinyAuraCurrency>(3);
+            AddEntry<SwiftNectar, ShinyAuraCurrency>(3);
+            AddEntry<EvolutionNectar, ShinyAuraCurrency>(3);
+
+            AddEntry<StaminaNectar, ShinyAuraCurrency>(3);
+            AddEntry<StaminaNectar, ShinyAuraCurrency>(3, CoraliteConditions.NeverMet);
+            AddEntry<StaminaNectar, ShinyAuraCurrency>(3, CoraliteConditions.NeverMet);
+            AddEntry<StaminaNectar, ShinyAuraCurrency>(3, CoraliteConditions.NeverMet);
+            AddEntry<StaminaNectar, ShinyAuraCurrency>(3, CoraliteConditions.NeverMet);
+
+            shop.Register();
+
         }
 
         public override bool CanGoToStatue(bool toKingStatue)
@@ -257,4 +322,32 @@ namespace Coralite.Content.NPCs.Town
             // SparklingBall is not affected by gravity, so gravityCorrection is left alone.
         }
     }
+
+    public class FaintAuraCurrency : CustomCurrencySingleCoin
+    {
+        public FaintAuraCurrency() : base(ModContent.ItemType<FaintAura>(), 9999)
+        {
+            CurrencyTextKey = "Mods.Coralite.Items.FaintAura.DisplayName";
+            CurrencyTextColor = Color.LightGoldenrodYellow;
+        }
+    }
+
+    public class BrightAuraCurrency : CustomCurrencySingleCoin
+    {
+        public BrightAuraCurrency() : base(ModContent.ItemType<BrightAura>(), 9999)
+        {
+            CurrencyTextKey = "Mods.Coralite.Items.BrightAura.DisplayName";
+            CurrencyTextColor = Color.LightGoldenrodYellow;
+        }
+    }
+
+    public class ShinyAuraCurrency : CustomCurrencySingleCoin
+    {
+        public ShinyAuraCurrency() : base(ModContent.ItemType<ShinyAura>(), 9999)
+        {
+            CurrencyTextKey = "Mods.Coralite.Items.ShinyAura.DisplayName";
+            CurrencyTextColor = Color.LightGoldenrodYellow;
+        }
+    }
+
 }

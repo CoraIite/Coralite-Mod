@@ -3,12 +3,10 @@ using Coralite.Content.Items.Materials;
 using Coralite.Core.Loaders;
 using Coralite.Core.Systems.FairyCatcherSystem.FairyFreePart;
 using Newtonsoft.Json.Linq;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using Terraria;
-using Terraria.ID;
 using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem
@@ -49,6 +47,16 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public static Dictionary<int, int> GetWallTypeToItemType;
 
         public string LocalizationCategory => "Systems";
+
+        /// <summary>
+        /// 洗点道具
+        /// </summary>
+        public static int EVReturnItemType => ModContent.ItemType<GloomInk>();
+
+        /// <summary>
+        /// 获取风石碑牌后解锁
+        /// </summary>
+        public static bool UnlockFairyThings;
 
         public override void Load()
         {
@@ -222,6 +230,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         public override void SaveWorldData(TagCompound tag)
         {
+            if (UnlockFairyThings)
+                tag.Add(nameof(UnlockFairyThings), true);
+
             List<string> caught = new();
 
             for (int i = 0; i < FairyLoader.FairyCount; i++)
@@ -235,6 +246,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         public override void LoadWorldData(TagCompound tag)
         {
+            UnlockFairyThings = tag.ContainsKey("UnlockFairyThings");
+
             IList<string> list = tag.GetList<string>("FairyCaught");
 
             for (int i = 0; i < FairyLoader.FairyCount; i++)

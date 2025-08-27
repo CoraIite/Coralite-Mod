@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.UI.FairyEncyclopedia;
 using Coralite.Core;
 using Coralite.Core.Loaders;
+using Coralite.Core.Systems.FairyCatcherSystem;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent.ObjectInteractions;
@@ -18,6 +19,19 @@ namespace Coralite.Content.Items.FairyCatcher
             Item.DefaultToPlaceableTile(ModContent.TileType<WindStoneTabletTile>());
             Item.maxStack = 1;
             base.SetDefaults();
+        }
+
+        public override void UpdateInventory(Player player)
+        {
+            //TODO：同步
+            FairySystem.UnlockFairyThings = true;
+        }
+
+        public override bool CanUseItem(Player player)
+        {
+            //TODO：同步
+            FairySystem.UnlockFairyThings = true;
+            return base.CanUseItem(player);
         }
     }
 

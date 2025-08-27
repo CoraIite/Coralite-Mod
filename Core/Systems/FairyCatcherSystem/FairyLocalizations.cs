@@ -99,6 +99,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         public static LocalizedText IsFairyPowder;
 
+        public static LocalizedText EVNoUse;
+
         public void LoadLocalization()
         {
             FieldInfo[] infos = typeof(FairySystem).GetFields(BindingFlags.Static | BindingFlags.Public | BindingFlags.GetField);

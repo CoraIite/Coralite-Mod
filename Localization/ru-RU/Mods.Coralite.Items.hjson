@@ -6360,3 +6360,8 @@ SwiftNectar: {
 	// DisplayName: Swift Nectar
 	// Tooltip: ""
 }
+
+GloomInk: {
+	// DisplayName: Gloom Ink
+	// Tooltip: ""
+}

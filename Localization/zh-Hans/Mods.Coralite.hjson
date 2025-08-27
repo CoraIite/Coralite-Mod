@@ -44,6 +44,7 @@ Conditions: {
 		DownedNightmarePlantera: 需要击败梦魇之花
 		DownedBabyIceDragon: 需要击败冰龙宝宝
 		FullCollectHephaesth: 需要完成珊瑚笔记飞盾章节的全收集
+		// NeverMet: Mods.Coralite.Conditions.CoraliteConditions.NeverMet
 	}
 }
 

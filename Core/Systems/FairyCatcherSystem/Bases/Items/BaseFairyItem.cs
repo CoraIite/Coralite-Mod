@@ -200,7 +200,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
                 heal *= 1.25f + FairyIV.ScaleLV * 0.075f;
             }
 
-             Life += (int)heal;
+            Life += (int)heal;
             LimitLife();
 
             if (dead)
@@ -346,20 +346,64 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
 
         public override void RightClick(Player player)
         {
+            if (Main.mouseItem.type == FairySystem.EVReturnItemType)
+            {
+                FairyIV.ClearEV(FairyType);
+                LimitLife();
+
+                Main.mouseItem.stack--;
+                if (Main.mouseItem.stack < 1)
+                    Main.mouseItem.TurnToAir();
+
+                return;
+            }
             if (Main.mouseItem.ModItem is BaseFairyEVBonusItem bonusItem)
             {
-                EVBonus(Main.mouseItem, bonusItem);
+                EVBonus(player, Main.mouseItem, bonusItem);
             }
         }
 
-        public void EVBonus(Item costItem, BaseFairyEVBonusItem bonusItem)
+        public void EVBonus(Player player, Item costItem, BaseFairyEVBonusItem bonusItem)
         {
+            int lifeMax = FairyIV.LifeMax;
+            int damage = FairyIV.Damage;
+            int def = FairyIV.Defence;
+            int level = FairyIV.SkillLevel;
+            float speed = FairyIV.Speed;
+            int stamina = FairyIV.Stamina;
             if (FairyIV.TryAddEV(bonusItem.BonusType, bonusItem.BonusValue, FairyType))
             {
                 costItem.stack--;
                 if (costItem.stack < 1)
                     costItem.TurnToAir();
+
+                string text = bonusItem.BonusType switch
+                {
+                    FairyIV.IVType.LifeMax => FairySystem.FairyLifeMax.Format(lifeMax, FairyIV.LifeMax),
+                    FairyIV.IVType.Damage => FairySystem.FairyDamage.Format(damage, FairyIV.Damage),
+                    FairyIV.IVType.Defence => FairySystem.FairyDefence.Format(def, FairyIV.Defence),
+                    FairyIV.IVType.Speed => FairySystem.FairySpeed.Format(speed, FairyIV.Speed),
+                    FairyIV.IVType.SkillLevel => FairySystem.FairySkillLevel.Format(level, FairyIV.SkillLevel),
+                    FairyIV.IVType.Stamina => FairySystem.FairyStamina.Format(stamina, FairyIV.Stamina),
+                    _ => ""
+                };
+
+                PopupText.NewText(new AdvancedPopupRequest()
+                {
+                    Text = text,
+                    Color = Color.White,
+                    DurationInFrames = 60,
+                    Velocity = -Vector2.UnitY
+                }, player.Top);
             }
+            else
+                PopupText.NewText(new AdvancedPopupRequest()
+                {
+                    Text = FairySystem.EVNoUse.Value,
+                    Color = Color.OrangeRed,
+                    DurationInFrames = 60,
+                    Velocity = -Vector2.UnitY
+                }, player.Top);
         }
 
         public override bool ConsumeItem(Player player) => false;

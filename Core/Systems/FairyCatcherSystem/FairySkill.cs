@@ -280,12 +280,14 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             string pre = "";
             if (SkillWithTags.TryGetValue(Type, out int[] tags) && tags != null)
             {
-                pre = FairySystem.SkillTags.Value+ Environment.NewLine;
+                pre = FairySystem.SkillTags.Value;
                 foreach (int tagID in tags)
                 {
                     FairySkillTag tag = FairyLoader.GetFairySkillTag(tagID);
                     pre = string.Concat(pre, " ", tag.Text.Value);
                 }
+
+                pre = string.Concat(pre, Environment.NewLine);
             }
 
             return string.Concat(pre, GetSkillTips(player, iv));
