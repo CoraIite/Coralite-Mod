@@ -89,6 +89,14 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         }
 
         /// <summary>
+        /// 获取耐力消耗
+        /// </summary>
+        public virtual int GetStaminaCost(int skilLevel)
+        {
+            return 1;
+        }
+
+        /// <summary>
         /// 生成仙灵技能名称文本
         /// </summary>
         /// <param name="pos"></param>

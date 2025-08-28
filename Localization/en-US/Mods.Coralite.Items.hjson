@@ -6323,3 +6323,8 @@ GloomInk: {
 	DisplayName: Gloom Ink
 	Tooltip: ""
 }
+
+WorldGenFix: {
+	DisplayName: World Gen Fix
+	Tooltip: ""
+}

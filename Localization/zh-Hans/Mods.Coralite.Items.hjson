@@ -6104,8 +6104,8 @@ GlowMushroomLantern: {
 }
 
 MeteorFireball: {
-	// DisplayName: Meteor Fireball
-	// Tooltip: ""
+	DisplayName: 火流星
+	Tooltip: "射出穿墙流星"
 }
 
 YellowFairyItem: {
@@ -6461,4 +6461,9 @@ SwiftNectar: {
 GloomInk: {
 	DisplayName: 吸光墨滴
 	Tooltip: 鼠标持有该物品后右键点击仙灵物品清除所有基础点数
+}
+
+WorldGenFix: {
+	DisplayName: 世界设置修复
+	Tooltip: 取消所有的模组彩蛋种子特性，需要保存退出后重新进入生效
 }

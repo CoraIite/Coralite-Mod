@@ -40,9 +40,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// </summary>
         public int ImmuneTimer { get; set; }
         /// <summary>
-        /// 使用技能的次数，如果大于 <see cref="FairyIV.Stamina"/> 就会返回玩家
+        /// 使用技能的次数，初始根据 <see cref="FairyIV.Stamina"/>设置，如果小于0就会返回玩家
         /// </summary>
-        public int UseSkillCount { get; set; }
+        public int CurrentStamina { get; set; }
 
         /// <summary>
         /// 由本地端同步给其他端的速度，无需使用仙灵物品获取速度个体值
@@ -245,6 +245,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 Projectile.scale = FairyItem.FairyIV.Scale;
                 IVSpeed = FairyItem.FairyIV.Speed;
                 IVSkillLevel = FairyItem.FairyIV.SkillLevel;
+                CurrentStamina = FairyItem.FairyIV.Stamina + (int)StaminaAdjust;
+                if (CurrentStamina < 1)
+                    CurrentStamina = 1;
+
                 AttackDistance = 325 + IVSkillLevel * 75;
 
                 _netState = NetState.Init;
@@ -446,22 +450,37 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
             Projectile.tileCollide = false;
 
+            //更新耐力
+            CurrentStamina -= _skills[UseSkillIndex].GetStaminaCost(SkillLevel);
+
             UseSkillIndex++;
             int currentIndex = UseSkillIndex;
+            int checkFailCount = 0;
             for (int i = 0; i < _skills.Length; i++)
             {
-                if (_skills[(i + currentIndex) % _skills.Length].CanUseSkill(this))
+                FairySkill skill = _skills[(i + currentIndex) % _skills.Length];
+
+                int level = IVSkillLevel;
+                if (Owner.TryGetModPlayer(out FairyCatcherPlayer fcp))
+                    level = fcp.GetFairySkillBonus(skill.Type, IVSkillLevel);
+
+                //获取技能等级，根据技能等级加成过后的耐力消耗判断是否能进行下一次攻击
+                if (skill.CanUseSkill(this) && CurrentStamina > skill.GetStaminaCost(level))
                     break;
 
                 UseSkillIndex++;
                 if (UseSkillIndex >= _skills.Length)
                     UseSkillIndex = 0;
+
+                checkFailCount++;
             }
+
+            //遍历技能后发现每一个能用的，那么就直接清空耐力然后返回玩家
+            if (checkFailCount>=_skills.Length)
+                CurrentStamina = 0;
 
             if (UseSkillIndex >= _skills.Length)
                 UseSkillIndex = 0;
-
-            UseSkillCount++;
         }
 
         /// <summary>
@@ -504,7 +523,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 if (stamina < 1)
                     stamina = 1;
 
-                if (UseSkillCount >= stamina)
+                if (CurrentStamina < stamina)
                 {
                     ExchangeToBack();
                     return;
@@ -624,7 +643,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             writer.Write((byte)_netState);
             writer.Write(UseSkillIndex);
             writer.Write(TargetIndex);
-            writer.Write(UseSkillCount);
+            writer.Write(CurrentStamina);
             writer.Write(ImmuneTimer);
 
             switch (_netState)
@@ -648,7 +667,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             _netState = (NetState)reader.ReadByte();
             UseSkillIndex = reader.ReadInt32();
             TargetIndex = reader.ReadInt32();
-            UseSkillCount = reader.ReadInt32();
+            CurrentStamina = reader.ReadInt32();
             ImmuneTimer = reader.ReadInt32();
 
             switch (_netState)
