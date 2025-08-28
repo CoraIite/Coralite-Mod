@@ -6084,3 +6084,8 @@ MeteorFireball: {
 	// DisplayName: Meteor Fireball
 	// Tooltip: ""
 }
+
+WorldGenFix: {
+	// DisplayName: World Gen Fix
+	// Tooltip: ""
+}

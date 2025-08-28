@@ -410,6 +410,27 @@ namespace Coralite.Content.WorldGeneration
         }
     }
 
+    public class WorldGenFix : ModItem
+    {
+        public override string Texture => AssetDirectory.DefaultItem;
+
+        public override void SetDefaults()
+        {
+            Item.useTime = Item.useAnimation = 15;
+            Item.useStyle = ItemUseStyleID.Swing;
+        }
+
+        public override bool CanUseItem(Player player)
+        {
+            CoraliteWorld.chaosWorld = false;
+            CoraliteWorld.CoralCatWorld = false;
+            CoraliteWorld.SuperCoralCatWorld = false;
+            CoraliteWorld.DigDigDigWorld = false;
+
+            return base.CanUseItem(player);
+        }
+    }
+
     public class ActionAshGrass : GenAction
     {
         public override bool Apply(Point origin, int x, int y, params object[] args)
