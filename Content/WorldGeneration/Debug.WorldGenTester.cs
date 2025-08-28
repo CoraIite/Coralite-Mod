@@ -36,6 +36,8 @@ namespace Coralite.Content.WorldGeneration
 
         public override bool CanUseItem(Player player)
         {
+            Main.NewText(CoraliteWorld.DigDigDigWorld);
+            return true;
             Vector2 myVector = Main.MouseWorld;
             Point p = myVector.ToTileCoordinates();
 

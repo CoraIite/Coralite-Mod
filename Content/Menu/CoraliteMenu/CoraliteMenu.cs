@@ -23,8 +23,11 @@ namespace Coralite.Content.Menu.CoraliteMenu
 
         public override void Update(bool isOnTitleScreen)
         {
-            Main.dayTime = true;
-            Main.time = Main.dayLength / 2;
+            if (!WorldGen.gen)
+            {
+                Main.dayTime = true;
+                Main.time = Main.dayLength / 2;
+            }
             for (int i = 0; i < Main.maxClouds; i++)
                 Main.cloud[i].Alpha *= 0.8f;
         }

@@ -30,15 +30,25 @@ namespace Coralite.Content.GlobalNPCs
         public bool PrisonArmorBreak;
 
         public bool StopHitPlayer;
+        public bool RainbowBonus;
         public float SlowDownPercent;
 
         public override bool InstancePerEntity => true;
 
         public override void SetDefaults(NPC entity)
         {
+            if (CoraliteWorld.CoralCatWorld)
+                CoralCatWorldChange(entity);
+        }
+
+        private void CoralCatWorldChange(NPC entity)
+        {
             switch (entity.type)
             {
                 default:
+                    break;
+                case NPCID.RainbowSlime:
+                    entity.scale = 0.5f;
                     break;
                 case NPCID.Shark:
                 case NPCID.SandShark:
@@ -46,13 +56,34 @@ namespace Coralite.Content.GlobalNPCs
                 case NPCID.SandsharkCrimson:
                 case NPCID.SandsharkHallow:
                     {
-                        if (CoraliteWorld.CoralCatWorld)
-                        {
-                            entity.scale = Main.rand.NextFloat(2, 3.5f);
-                            entity.lifeMax = (int)(entity.lifeMax * Main.rand.NextFloat(3, 5));
-                        }
+                        entity.scale = Main.rand.NextFloat(2, 3.5f);
+                        entity.lifeMax = (int)(entity.lifeMax * Main.rand.NextFloat(3, 5));
                     }
                     break;
+                case NPCID.BlueJellyfish:
+                case NPCID.PinkJellyfish:
+                case NPCID.GreenJellyfish:
+                case NPCID.Squid:
+                case NPCID.Crab:
+                case NPCID.SeaSnail:
+                    {
+                        entity.scale = Main.rand.NextFloat(0.35f, 3.5f);
+                        entity.lifeMax = (int)(entity.lifeMax * Main.rand.NextFloat(3, 5));
+                    }
+                    break;
+            }
+
+            if (!entity.boss)
+            {
+                RainbowBonus = Main.rand.NextBool(100);
+                if (RainbowBonus)
+                {
+                    entity.lifeMax *= 3;
+                    entity.damage *= 3;
+                    entity.defense *= 2;
+                    entity.value *= 10;
+                    entity.scale *= 0.75f;
+                }
             }
         }
 
@@ -193,7 +224,15 @@ namespace Coralite.Content.GlobalNPCs
                 pool[0] = 0f;
 
             if (CoraliteWorld.CoralCatWorld && spawnInfo.Player.wet && spawnInfo.Player.position.Y < Main.worldSurface * 16)
-                pool.Add(NPCID.Shark, 1);
+            {
+                pool.Add(NPCID.Shark, 0.8f);
+                pool.Add(NPCID.BlueJellyfish, 0.33f);
+                pool.Add(NPCID.GreenJellyfish, 0.33f);
+                pool.Add(NPCID.PinkJellyfish, 0.33f);
+                pool.Add(NPCID.Squid, 0.33f);
+                pool.Add(NPCID.Crab, 0.33f);
+                pool.Add(NPCID.SeaSnail, 0.33f);
+            }
         }
 
         public override bool PreKill(NPC npc)
@@ -231,6 +270,76 @@ namespace Coralite.Content.GlobalNPCs
                         KnowledgeSystem.CheckForUnlock<NightmareKnowledge>(npc.Center, NightmarePlantera.nightPurple);
                     break;
             }
+
+            if (RainbowBonus)//TODO: 同步
+            {
+                for (int i = 0; i < 3; i++)
+                    NPC.NewNPC(npc.GetSource_FromThis(), (int)npc.Center.X, (int)npc.Center.Y, NPCID.RainbowSlime);
+
+                int drop1 = Main.rand.NextFromList(ItemID.RainbowBrick
+                    , ItemID.RainbowBrickWall
+                    , ItemID.RainbowWallpaper
+                    , ItemID.RainbowTorch
+                    , ItemID.RainbowFlare
+                    , ItemID.RainbowCampfire
+                    );
+
+                Item.NewItem(npc.GetSource_FromThis(), npc.Center
+                    , drop1, Main.rand.Next(1, 100));
+
+                int drop2 = Main.rand.NextFromList(ItemID.RainbowDye
+                    , ItemID.IntenseRainbowDye
+                    , ItemID.LivingRainbowDye
+                    , ItemID.MidnightRainbowDye
+                    , ItemID.RainbowHairDye
+                    , ItemID.RainbowString
+                    );
+
+                Item.NewItem(npc.GetSource_FromThis(), npc.Center
+                    , drop2, 1);
+
+                Item.NewItem(npc.GetSource_FromThis(), npc.Center
+                    , drop2, Main.rand.Next(1, 100));
+
+                int drop3 = Main.rand.NextFromList(ItemID.RainbowCursor
+                        , ItemID.CopperShortsword, ItemID.TinShortsword
+                        , ItemID.ZombieArm, ItemID.BladedGlove, ItemID.Flymeal
+                        , ItemID.StylistKilLaKillScissorsIWish, ItemID.Ruler
+                        , ItemID.Umbrella, ItemID.TragicUmbrella, ItemID.ChainKnife
+                        , ItemID.CandyCaneSword, ItemID.BoneSword, ItemID.EnchantedSword
+                        , ItemID.FalconBlade, ItemID.Rally, ItemID.Trident
+                        , ItemID.FruitcakeChakram, ItemID.BloodyMachete, ItemID.Shroomerang
+                        , ItemID.Terragrim
+                        , ItemID.AshWoodBow, ItemID.RedRyder, ItemID.Revolver, ItemID.Minishark
+                        , ItemID.PaperAirplaneA, ItemID.PaperAirplaneB
+                        , ItemID.StarAnise, ItemID.MolotovCocktail
+                        , ItemID.Sandgun, ItemID.AleThrowingGlove
+                        , ItemID.WandofFrosting, ItemID.DemonScythe
+                        , ItemID.SlimeStaff
+                        );
+
+                if (Main.hardMode && Main.rand.NextBool(2))
+                {
+                    drop3 = Main.rand.NextFromList(ItemID.SlapHand
+                        , ItemID.Frostbrand, ItemID.BeamSword
+                        , ItemID.TitaniumSword, ItemID.Bladetongue
+                        , ItemID.HamBat
+                        , ItemID.FormatC, ItemID.HiveFive
+                        , ItemID.AdamantiteGlaive, ItemID.Bananarang, ItemID.DaoofPow
+                        , ItemID.Arkhalis, ItemID.ShadowFlameBow
+                        , ItemID.Gatligator, ItemID.Uzi
+                        , ItemID.Toxikarp, ItemID.CoinGun
+                        , ItemID.MeteorStaff, ItemID.SkyFracture
+                        , ItemID.UnholyTrident, ItemID.GoldenShower, ItemID.NimbusRod
+                        , ItemID.SpiritFlame, ItemID.MedusaHead, ItemID.SanguineStaff
+                        , ItemID.CoolWhip, ItemID.BunnyCannon
+                        , ItemID.LandMine
+                        );
+                }
+
+                Item.NewItem(npc.GetSource_FromThis(), npc.Center
+                    , drop3, 1);
+            }
         }
 
 
@@ -238,6 +347,9 @@ namespace Coralite.Content.GlobalNPCs
         {
             if (PrisonArmorBreak)
                 return new Color(102, 92, 194);
+
+            if (RainbowBonus)
+                return Main.DiscoColor;
 
             return base.GetAlpha(npc, drawColor);
         }

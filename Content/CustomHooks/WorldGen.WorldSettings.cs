@@ -78,6 +78,7 @@ namespace Coralite.Content.CustomHooks
 
             CoraliteWorld.chaosWorld = false;
             CoraliteWorld.CoralCatWorld = false;
+            CoraliteWorld.SuperCoralCatWorld = false;
             CoraliteWorld.DigDigDigWorld = false;
 
             string seed = processedSeed.ToLower();
@@ -87,6 +88,26 @@ namespace Coralite.Content.CustomHooks
             if (seed == "coral cat" || seed == "coralcat")
             {
                 CoraliteWorld.CoralCatWorld = true;
+                WorldGen.noTrapsWorldGen = true;
+
+                //if (Main.MenuUI.CurrentState is UIWorldCreation worldCreation)
+                //{
+                //    FieldInfo info = worldCreation.GetType().GetField("_optionSeed", BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.GetField);
+                //    info?.SetValue(worldCreation, Main.rand.Next().ToString());
+                //}
+            }
+            if (seed == "super coral cat" || seed == "supercoralcat")
+            {
+                CoraliteWorld.CoralCatWorld = true;
+                CoraliteWorld.SuperCoralCatWorld = true;
+
+                WorldGen.noTrapsWorldGen = true;
+                WorldGen.notTheBees = true;
+                WorldGen.getGoodWorldGen = true;
+                WorldGen.tempTenthAnniversaryWorldGen = true;
+                WorldGen.dontStarveWorldGen = true;
+                WorldGen.tempRemixWorldGen = true;
+                WorldGen.everythingWorldGen = true;
 
                 //if (Main.MenuUI.CurrentState is UIWorldCreation worldCreation)
                 //{
@@ -106,7 +127,7 @@ namespace Coralite.Content.CustomHooks
             if ((CoraliteWorld.CoralCatWorld || CoraliteWorld.DigDigDigWorld)
                 && Main.MenuUI.CurrentState is UIWorldCreation worldCreation)
             {
-                processedSeed = Main.rand.Next().ToString();
+                processedSeed  = Main.rand.Next(999999999).ToString();
             }
         }
 

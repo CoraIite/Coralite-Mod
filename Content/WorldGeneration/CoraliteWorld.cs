@@ -156,9 +156,14 @@ namespace Coralite.Content.WorldGeneration
 
             tag.Add("shadowBallsFightAreaX", shadowBallsFightArea.X);
             tag.Add("shadowBallsFightAreaY", shadowBallsFightArea.Y);
-            tag.Add("chaosWorld", chaosWorld);
-            tag.Add("coralCat", CoralCatWorld);
-            tag.Add(DigDigDigSaveKey, DigDigDigWorld);
+            if (chaosWorld)
+                tag.Add("chaosWorld", chaosWorld);
+            if (CoralCatWorld)
+                tag.Add("coralCat", CoralCatWorld);
+            if (SuperCoralCatWorld)
+                tag.Add("SuperCoralCat", SuperCoralCatWorld);
+            if (DigDigDigWorld)
+                tag.Add(DigDigDigSaveKey, DigDigDigWorld);
 
             if (DigDigDigWorld)
             {
@@ -178,9 +183,10 @@ namespace Coralite.Content.WorldGeneration
                 tag.Get<int>("shadowBallsFightAreaX"),
                 tag.Get<int>("shadowBallsFightAreaY"), 74 * 16, 59 * 16);
 
-            chaosWorld = tag.Get<bool>("chaosWorld");
-            CoralCatWorld = tag.Get<bool>("coralCat");
-            DigDigDigWorld = tag.Get<bool>(DigDigDigSaveKey);
+            chaosWorld = tag.ContainsKey("chaosWorld");
+            CoralCatWorld = tag.ContainsKey("coralCat");
+            SuperCoralCatWorld = tag.ContainsKey("SuperCoralCat");
+            DigDigDigWorld = tag.ContainsKey(DigDigDigSaveKey);
 
             if (DigDigDigWorld)
             {
