@@ -41,6 +41,19 @@ namespace Coralite.Content.GlobalNPCs
                 case NPCID.GiantBat:
                     npcLoot.Add(ItemDropRule.Common(ItemType<BatfangShield>(), 60, 1, 1));
                     break;
+                case NPCID.Crab:
+                    npcLoot.Add(ItemDropRule.Common(ItemType<CrabClaw>(), 20));
+                    break;
+                case NPCID.MotherSlime://黑色的史莱姆掉落黑胶球
+                                       //case NPCID.BabySlime:
+                                       //case NPCID.BlackSlime:
+                    npcLoot.Add(ItemDropRule.Common(ItemType<BlackGelBall>(), 8));
+                    break;
+                case NPCID.KingSlime://史莱姆ang掉落黏黏网（暂时不打算加入宝藏袋）
+                                     //case NPCID.BabySlime:
+                                     //case NPCID.BlackSlime:
+                    npcLoot.Add(ItemDropRule.Common(ItemType<GelWeb>(), 1));
+                    break;
                 case NPCID.BlueJellyfish://彩虹猫世界水母掉水母
                     npcLoot.Add(ItemDropRule.ByCondition(new InCoralCatWorld(),ItemID.BlueJellyfish, 1, 1, 4));
                     break;
