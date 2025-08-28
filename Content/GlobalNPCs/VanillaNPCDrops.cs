@@ -41,18 +41,67 @@ namespace Coralite.Content.GlobalNPCs
                 case NPCID.GiantBat:
                     npcLoot.Add(ItemDropRule.Common(ItemType<BatfangShield>(), 60, 1, 1));
                     break;
-                case NPCID.Crab:
-                    npcLoot.Add(ItemDropRule.Common(ItemType<CrabClaw>(), 20));
+                case NPCID.BlueJellyfish://彩虹猫世界水母掉水母
+                    npcLoot.Add(ItemDropRule.ByCondition(new InCoralCatWorld(),ItemID.BlueJellyfish, 1, 1, 4));
                     break;
-                case NPCID.MotherSlime://黑色的史莱姆掉落黑胶球
-                //case NPCID.BabySlime:
-                //case NPCID.BlackSlime:
-                    npcLoot.Add(ItemDropRule.Common(ItemType<BlackGelBall>(), 8));
+                case NPCID.GreenJellyfish:
+                    npcLoot.Add(ItemDropRule.ByCondition(new InCoralCatWorld(), ItemID.GreenJellyfish, 1, 1, 4));
                     break;
-                case NPCID.KingSlime://史莱姆ang掉落黏黏网（暂时不打算加入宝藏袋）
-                //case NPCID.BabySlime:
-                //case NPCID.BlackSlime:
-                    npcLoot.Add(ItemDropRule.Common(ItemType<GelWeb>(), 1));
+                case NPCID.PinkJellyfish:
+                    npcLoot.Add(ItemDropRule.ByCondition(new InCoralCatWorld(), ItemID.PinkJellyfish, 1, 1, 4));
+                    break;
+                case NPCID.Squid://斯普拉顿！乌贼掉落刷漆相关道具
+                    {
+                        npcLoot.Add(ItemDropRule.ByCondition(new InCoralCatWorld(), ItemID.PainterPaintballGun, 3));
+                        LeadingConditionRule rules = new(new InCoralCatWorld());
+                        rules.OnSuccess(ItemDropRule.OneFromOptions(1,
+                            ItemID.Paintbrush,
+                            ItemID.PaintRoller,
+                            ItemID.PaintScraper
+                            ));
+                        npcLoot.Add(rules);
+                        LeadingConditionRule rules2 = new(new InCoralCatWorld());
+                        rules2.OnSuccess(ItemDropRule.OneFromOptions(1,
+                            ItemID.RedPaint,ItemID.OrangePaint, ItemID.YellowPaint,
+                            ItemID.LimePaint,ItemID.GreenPaint, ItemID.TealPaint,
+                            ItemID.CyanPaint,ItemID.SkyBluePaint, ItemID.BluePaint,
+                            ItemID.PurplePaint,ItemID.VioletPaint, ItemID.PinkPaint,
+                            ItemID.BlackPaint,ItemID.GrayPaint, ItemID.WhitePaint,
+                            ItemID.BrownPaint,ItemID.ShadowPaint, ItemID.NegativePaint,
+                            ItemID.EchoCoating,ItemID.GlowPaint
+                            ));
+                        npcLoot.Add(rules2);
+                    }
+                    break;
+                case NPCID.SeaSnail://海蜗牛掉落各种鞋子，但是为什么？管他呢！
+                    {
+                        LeadingConditionRule rules = new(new InCoralCatWorld());
+                        rules.OnSuccess(ItemDropRule.OneFromOptions(1,
+                            ItemID.HermesBoots, ItemID.FlurryBoots, ItemID.SailfishBoots,
+                            ItemID.SandBoots, ItemID.FlowerBoots, ItemID.FlameWakerBoots
+                            ));
+                        npcLoot.Add(rules);
+                    }
+                    break;
+                case NPCID.Shark://彩虹猫世界鲨鱼掉一些有用的东西
+                    {
+                        LeadingConditionRule rules = new(new InCoralCatWorld());
+                        rules.OnSuccess(ItemDropRule.OneFromOptions(1,
+                            ItemID.AnglerTackleBag,
+                            ItemID.AnglerPants,
+                            ItemID.AnglerHat,
+                            ItemID.AnglerVest,
+                            ItemID.FishingBobberGlowingRainbow,
+                            ItemID.FloatingTube,
+                            ItemID.GoldenToilet,
+                            ItemID.FishFinder,
+                            ItemID.ReaverShark,
+                            ItemID.SawtoothShark,
+                            ItemID.Swordfish,
+                            ItemID.FrogLeg
+                            ));
+                        npcLoot.Add(rules);
+                    }
                     break;
                 //case NPCID.DarkCaster://地牢怪掉落影子
                 //    npcLoot.Add(ItemDropRule.Common(ItemType<ShadowEnergy>(), 3, 1, 3));

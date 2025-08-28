@@ -3,6 +3,10 @@
     public static class VanillaGenPassName
     {
         /// <summary>
+        /// 初始化
+        /// </summary>
+        public const string Reset = "Reset";
+        /// <summary>
         /// 生成世界中的各种遗迹
         /// </summary>
         public const string Shinies = "Shinies";
