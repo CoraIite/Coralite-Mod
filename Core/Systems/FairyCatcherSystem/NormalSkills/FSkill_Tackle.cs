@@ -109,15 +109,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.NormalSkills
 
         public override string GetSkillTips(Player player, FairyIV iv)
         {
-            string chase = iv.SkillLevel > 6
-                ? Chase.Value : FairySystem.SkillLVLimit.Format(7);
+            string chase = iv.SkillLevel >= 50
+                ? Chase.Value : FairySystem.SkillLVLimit.Format(50);
 
-            int level = iv.SkillLevel;
-            if (player.TryGetModPlayer(out FairyCatcherPlayer fcp))
-                level = fcp.GetFairySkillBonus(Type, level);
-
-            return string.Concat(DashDamage.Format(MathF.Round(1.5f + level * 0.15f, 1))
-                , Environment.NewLine, chase);
+            return string.Concat(DashDamage, Environment.NewLine, chase);
         }
     }
 }

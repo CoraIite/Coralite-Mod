@@ -225,9 +225,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
             //名称的长度
             string name = GetSkillNameTip(iv.SkillLevel);
-           Vector2 nameSize = Helper.GetStringSize(name, Vector2.One * 1.1f);
+            Vector2 nameSize = Helper.GetStringSize(name, Vector2.One * 1.1f);
 
-            //伤害/耐力消耗的长度
+            //伤害 / 耐力消耗的长度
             int skillLevel = Helper.GetBonusedSkillLevel(player, iv.SkillLevel, Type);
 
             string damage = FairySystem.SkillDamage.Value;
@@ -236,7 +236,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
             Vector2 damageSize = Helper.GetStringSize(damage, Vector2.One * 0.9f);
             Vector2 damageValueSize = Helper.GetStringSize(damageValue, Vector2.One * 0.9f);
-            
+
 
             string staminaCost = FairySystem.SkillStaminaCost.Value;
             string staminaCostValue = GetStaminaCost(skillLevel).ToString();
@@ -255,7 +255,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             //宽度是图片宽度+10+描述的最大宽度
             x += Math.Max(Math.Max(nameSize.X, describSize.X), damageSize.X + 8 + staminaCostSize.X) + 8;
             //高度是图片高度和描述高度中的最大值
-            float y = Math.Max(nameSize.Y + describSize.Y + 8, tex.Height);
+            float y = describSize.Y + 8 + tex.Height;
 
             return new TipSize()
             {
@@ -301,19 +301,21 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <param name="nameSize"></param>
         public void DrawSkillTip(Vector2 topLeft, Player player, FairyIV iv, TipSize sizes)
         {
-            Texture2D tex = FairySystem.FairySkillAssets[Type].Value;
-            tex.QuickCenteredDraw(Main.spriteBatch, topLeft + new Vector2(tex.Width / 2, sizes.totalSize.Y / 2));
+            //topLeft.Y += 4;
 
-            topLeft.X += tex.Width + 10;
-            topLeft.Y +=  4;
+            Texture2D tex = FairySystem.FairySkillAssets[Type].Value;
+            tex.QuickCenteredDraw(Main.spriteBatch, topLeft + tex.Size() / 2);
+
             //int level = iv.SkillLevel;
             //if (player.TryGetModPlayer(out FairyCatcherPlayer fcp))
             //    level = fcp.FairySkillBonus[Type].ModifyLevel(level);
 
-            Utils.DrawBorderString(Main.spriteBatch, GetSkillNameTip(iv.SkillLevel), topLeft
-                , FairyIV.GetFairyIVColorAndText(iv.SkillLevelLV).Item1, 1.1f);
+            topLeft.Y += tex.Height / 2;
 
-            topLeft.Y += sizes.nameSize.Y + 4;
+            Utils.DrawBorderString(Main.spriteBatch, GetSkillNameTip(iv.SkillLevel), topLeft + new Vector2(tex.Width + 4, 4)
+                , FairyIV.GetFairyIVColorAndText(iv.SkillLevelLV).Item1, 1.1f, 0, 0.5f);
+
+            topLeft.Y += tex.Height / 2 + 8;
 
             //绘制伤害/耐力消耗文字
             Utils.DrawBorderString(Main.spriteBatch, FairySystem.SkillDamage.Value, topLeft + new Vector2(sizes.damageSize.X / 2, 0)

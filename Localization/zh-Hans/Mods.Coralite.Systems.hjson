@@ -309,7 +309,7 @@ FairySkill: {
 
 	FSkill_Tackle: {
 		SkillName: 撞击
-		DashDamage: 冲刺命中伤害 {0} 倍
+		DashDamage: 撞向最近的敌人
 		Chase: 追踪敌怪
 	}
 
@@ -319,7 +319,7 @@ FairySkill: {
 	}
 
 	FSkill_SunnyShot: {
-		Description: 蓄力后射出日光束造成 {0} 伤害
+		Description: 蓄力后射出日光束
 		SkillName: 日光束
 	}
 

@@ -412,9 +412,7 @@ namespace Coralite.Content.Items.Fairies
 
         public override string GetSkillTips(Player player, FairyIV iv)
         {
-            int level = Helper.GetBonusedSkillLevel(player, iv.SkillLevel, iv.SkillLevel);
-
-            return Description.Format(GetDamage(iv.Damage, level));
+            return Description.Value;
         }
 
         public override void ShootProj(BaseFairyProjectile fairyProj, Vector2 center, Vector2 velocity, int damage)
