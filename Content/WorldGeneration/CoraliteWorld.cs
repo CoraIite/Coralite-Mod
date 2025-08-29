@@ -16,6 +16,8 @@ namespace Coralite.Content.WorldGeneration
 
         public const string DigDigDigSaveKey = "digdigdig";
 
+        public static bool SuperCoralCatWorld { get; set; }
+
         /// <summary>
         /// 用于生成液体的字典
         /// </summary>
