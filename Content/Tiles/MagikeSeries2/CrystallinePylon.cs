@@ -1,7 +1,6 @@
 ﻿using Coralite.Content.Dusts;
 using Coralite.Content.Items.MagikeSeries2;
 using Coralite.Core;
-using Coralite.Core.Attributes;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.DataStructures;
@@ -21,11 +20,11 @@ namespace Coralite.Content.Tiles.MagikeSeries2
 
         public const int CrystalVerticalFrameCount = 8;
 
-        [VaultLoaden("{@namespace}" + "CrystallinePylonTile_Crystal")]
+        [VaultLoaden("{@classPath}" + "CrystallinePylonTile_Crystal")]
         public static ATex CrystalTexture { get; private set; }
-        [VaultLoaden("{@namespace}" + "CrystallinePylonTile_Highlight")]
+        [VaultLoaden("{@classPath}" + "CrystallinePylonTile_Highlight")]
         public static ATex CrystalHighlightTexture { get; private set; }
-        [VaultLoaden("{@namespace}" + "CrystallinePylonTile_MapIcon")]
+        [VaultLoaden("{@classPath}" + "CrystallinePylonTile_MapIcon")]
         public static ATex MapIcon { get; private set; }
 
         public override void SetStaticDefaults()

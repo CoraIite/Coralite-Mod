@@ -180,7 +180,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         public int SPTimer;
         private MoonDustSpawner dustSpawner;
 
-        [VaultLoaden("{@namespace}" + "Solunar_Glow")]
+        [VaultLoaden("{@classPath}" + "Solunar_Glow")]
         public static ATex Glow { get; private set; }
 
         private struct MoonDustSpawner

@@ -120,7 +120,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         private Vector2 arrowPos;
 
-        [VaultLoaden("{@namespace}" + "FarAwaySkyArrow")]
+        [VaultLoaden("{@classPath}" + "FarAwaySkyArrow")]
         public static ATex ArrowTex { get; private set; }
 
         public ref float ArrowLength => ref Projectile.localAI[0];

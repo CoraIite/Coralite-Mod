@@ -127,7 +127,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         public ref float Timer => ref Projectile.localAI[1];
         public ref float RecordAngle => ref Projectile.localAI[2];
 
-        [VaultLoaden("{@namespace}" + "Aurora_Glow")]
+        [VaultLoaden("{@classPath}" + "Aurora_Glow")]
         public static ATex Flow { get; private set; }
 
         public static ATex AuroraArrow { get; private set; }

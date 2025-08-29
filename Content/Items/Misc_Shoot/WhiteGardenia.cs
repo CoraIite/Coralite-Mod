@@ -122,25 +122,25 @@ namespace Coralite.Content.Items.Misc_Shoot
     {
         public WhiteGardeniaHeldProj() : base(0.02f, 50, -10, AssetDirectory.Misc_Shoot) { }
 
-        [VaultLoaden("{@namespace}" + "WhiteGardenia_Glow")]
+        [VaultLoaden("{@classPath}" + "WhiteGardenia_Glow")]
         public static ATex Highlight { get; private set; }
 
-        [VaultLoaden("{@namespace}" + "WhiteGardeniaSpawn")]
+        [VaultLoaden("{@classPath}" + "WhiteGardeniaSpawn")]
         public static ATex SpawnAnmi { get; private set; }
 
-        [VaultLoaden("{@namespace}" + "WhiteGardeniaFade")]
+        [VaultLoaden("{@classPath}" + "WhiteGardeniaFade")]
         public static ATex KillAnmi { get; private set; }
 
-        [VaultLoaden("{@namespace}" + "WhiteGardeniaAim")]
+        [VaultLoaden("{@classPath}" + "WhiteGardeniaAim")]
         public static ATex AimMouse { get; private set; }
 
-        [VaultLoaden("{@namespace}" + "WhiteGardeniaNumber")]
+        [VaultLoaden("{@classPath}" + "WhiteGardeniaNumber")]
         public static ATex NumberTex { get; private set; }
 
-        [VaultLoaden("{@namespace}" + "WhiteGardeniaSP")]
+        [VaultLoaden("{@classPath}" + "WhiteGardeniaSP")]
         public static ATex SpecialAttackTex { get; private set; }
 
-        [VaultLoaden("{@namespace}" + "WhiteGardeniaFire")]
+        [VaultLoaden("{@classPath}" + "WhiteGardeniaFire")]
         public static ATex Fire { get; private set; }
 
         public ref float Timer => ref Projectile.localAI[0];

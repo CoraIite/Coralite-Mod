@@ -330,9 +330,9 @@ namespace Coralite.Content.Items.Misc_Equip
         public override string Texture => AssetDirectory.Misc_Equip + Name;
 
         public static ATex BloodTopperSpawn { get; private set; }
-        [VaultLoaden("{@namespace}" + "BloodmarkTopperProjShadow")]
+        [VaultLoaden("{@classPath}" + "BloodmarkTopperProjShadow")]
         public static ATex ShadowTopper { get; private set; }
-        [VaultLoaden("{@namespace}" + "BloodmarkTopperProjPrison")]
+        [VaultLoaden("{@classPath}" + "BloodmarkTopperProjPrison")]
         public static ATex PrisonTopper { get; private set; }
 
         public Player Owner => Main.player[Projectile.owner];

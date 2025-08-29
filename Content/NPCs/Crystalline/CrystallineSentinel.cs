@@ -25,21 +25,21 @@ namespace Coralite.Content.NPCs.Crystalline
     {
         public override string Texture => AssetDirectory.CrystallineNPCs + Name;
 
-        [VaultLoaden("{@namespace}" + "CrystallineSentinelFloatStone")]
+        [VaultLoaden("{@classPath}" + "CrystallineSentinelFloatStone")]
         public static ATex FloatStone { get; private set; }
-        [VaultLoaden("{@namespace}" + "CrystallineSentinelGuard")]
+        [VaultLoaden("{@classPath}" + "CrystallineSentinelGuard")]
         public static ATex GuardTex { get; private set; }
-        [VaultLoaden("{@namespace}" + "CrystallineSentinelExchange")]
+        [VaultLoaden("{@classPath}" + "CrystallineSentinelExchange")]
         public static ATex ExchangeTex { get; private set; }
 
-        [VaultLoaden("{@namespace}" + "CrystallineSentinelP2")]
+        [VaultLoaden("{@classPath}" + "CrystallineSentinelP2")]
         public static ATex P2Head { get; private set; }
-        [VaultLoaden("{@namespace}" + "CrystallineSentinelP2Float")]
+        [VaultLoaden("{@classPath}" + "CrystallineSentinelP2Float")]
         public static ATex P2Float { get; private set; }
 
-        [VaultLoaden("{@namespace}" + "CrystallineSentinelHand")]
+        [VaultLoaden("{@classPath}" + "CrystallineSentinelHand")]
         public static ATex HandTex { get; private set; }
-        [VaultLoaden("{@namespace}" + "CrystallineSentinelP2Spurt")]
+        [VaultLoaden("{@classPath}" + "CrystallineSentinelP2Spurt")]
         public static ATex P2SpurtTex { get; private set; }
 
         private SecondOrderDynamics_Vec2[] FloatStoneMoves;
@@ -997,7 +997,7 @@ namespace Coralite.Content.NPCs.Crystalline
 
         public ref float LeftOrRight => ref Projectile.ai[1];
         public ref float OwnerIndex => ref Projectile.ai[1];
-        [VaultLoaden("{@namespace}" + "CrystallineSentinelGradient")]
+        [VaultLoaden("{@classPath}" + "CrystallineSentinelGradient")]
         public static ATex GradientTexture { get; set; }
 
         public CrystallineSentinelSwing() : base(0.785f, trailCount: 48) { }

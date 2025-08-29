@@ -25,7 +25,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
         private float laserWidth;
 
         public List<Vector2> laserTrailPoints = new();
-        [VaultLoaden("{@namespace}" + "CannonGradient")]
+        [VaultLoaden("{@classPath}" + "CannonGradient")]
         public static ATex GradientTex { get; set; }
 
         public override void SetStaticDefaults()

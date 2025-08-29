@@ -54,9 +54,9 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
         public float selfAlpha = 1f;
 
-        [VaultLoaden("{@namespace}" + "ZacurrentDragon_Highlight")]
+        [VaultLoaden("{@classPath}" + "ZacurrentDragon_Highlight")]
         public static ATex GlowTex { get; private set; }
-        [VaultLoaden("{@namespace}" + "ZacurrentDragonWhite")]
+        [VaultLoaden("{@classPath}" + "ZacurrentDragonWhite")]
         public static ATex WhiteTex { get; private set; }
         internal static Color ZacurrentDustPurple = new Color(233, 195, 255);
         internal static Color ZacurrentPurple = new(135, 94, 255);

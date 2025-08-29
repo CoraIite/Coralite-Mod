@@ -110,7 +110,7 @@ namespace Coralite.Content.Items.Nightmare
 
         public ref float Combo => ref Projectile.ai[0];
 
-        [VaultLoaden("{@namespace}" + "DreamShearsGradient")]
+        [VaultLoaden("{@classPath}" + "DreamShearsGradient")]
         public static Asset<Texture2D> GradientTexture { get; private set; }
 
         public DreamShearsSlash() : base(0.785f, trailCount: 26) { }

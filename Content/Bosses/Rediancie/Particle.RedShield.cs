@@ -12,7 +12,7 @@ namespace Coralite.Content.Bosses.Rediancie
     {
         public override string Texture => AssetDirectory.Rediancie + "RedShield";
 
-        [VaultLoaden("{@namespace}" + "RedShield_Flow")]
+        [VaultLoaden("{@classPath}" + "RedShield_Flow")]
         public static ATex FlowTex { get; private set; }
 
         private Entity rediancie;

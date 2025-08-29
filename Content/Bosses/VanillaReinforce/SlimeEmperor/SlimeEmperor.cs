@@ -74,7 +74,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
         private CrownDatas crown;
         private bool span;
 
-        [VaultLoaden("{@namespace}" + "SlimeEmperorCrown")]
+        [VaultLoaden("{@classPath}" + "SlimeEmperorCrown")]
         public static ATex CrownTex { get; private set; }
         private const int WidthMax = 158;
         private const int HeightMax = 100;

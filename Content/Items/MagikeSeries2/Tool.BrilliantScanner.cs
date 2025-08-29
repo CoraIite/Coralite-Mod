@@ -22,7 +22,7 @@ namespace Coralite.Content.Items.MagikeSeries2
 
         private bool ShowLineStyle = true;
 
-        [VaultLoaden("{@namespace}" + "BrilliantScannerClose")]
+        [VaultLoaden("{@classPath}" + "BrilliantScannerClose")]
         public static ATex CloseTex { get; private set; }
         public static LocalizedText[] ShowTexts;
 

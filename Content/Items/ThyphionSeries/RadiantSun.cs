@@ -125,11 +125,11 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         private Vector2 arrowPos;
 
-        [VaultLoaden("{@namespace}" + "RadiantSun_Glow")]
+        [VaultLoaden("{@classPath}" + "RadiantSun_Glow")]
         public static ATex GlowTex { get; private set; }
-        [VaultLoaden("{@namespace}" + "RadiantSunArrow")]
+        [VaultLoaden("{@classPath}" + "RadiantSunArrow")]
         public static ATex ArrowTex { get; private set; }
-        [VaultLoaden("{@namespace}" + "RadiantSunLight")]
+        [VaultLoaden("{@classPath}" + "RadiantSunLight")]
         public static ATex LightTex { get; private set; }
 
         public ref float ArrowLength => ref Projectile.localAI[0];

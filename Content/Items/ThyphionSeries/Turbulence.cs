@@ -149,7 +149,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         public float handOffset;
         public float trailAlpha;
 
-        [VaultLoaden("{@namespace}" + "TurbulenceArrow")]
+        [VaultLoaden("{@classPath}" + "TurbulenceArrow")]
         public static ATex TurbulenceArrow1 { get; private set; }
 
         public override int GetItemType()

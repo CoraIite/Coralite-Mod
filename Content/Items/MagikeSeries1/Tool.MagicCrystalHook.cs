@@ -32,7 +32,7 @@ namespace Coralite.Content.Items.MagikeSeries1
     {
         public override string Texture => AssetDirectory.MagikeSeries1Item + Name;
 
-        [VaultLoaden("{@namespace}" + "MagicCrystalHookChain")]
+        [VaultLoaden("{@classPath}" + "MagicCrystalHookChain")]
         public static ATex ChainTexture { get; private set; }
 
         public override void SetStaticDefaults()

@@ -283,11 +283,11 @@ namespace Coralite.Content.Items.ThyphionSeries
         public float handOffset = 0;
         public bool ShowArrow = false;
 
-        [VaultLoaden("{@namespace}" + "Thyphion_glow")]
+        [VaultLoaden("{@classPath}" + "Thyphion_glow")]
         public static ATex GlowTex { get; private set; }
-        [VaultLoaden("{@namespace}" + "Thyphion_Skin")]
+        [VaultLoaden("{@classPath}" + "Thyphion_Skin")]
         public static ATex SkinTex { get; private set; }
-        [VaultLoaden("{@namespace}" + "Thyphion_SkinGlow")]
+        [VaultLoaden("{@classPath}" + "Thyphion_SkinGlow")]
         public static ATex SkinGlowTex { get; private set; }
 
         public int projectile;

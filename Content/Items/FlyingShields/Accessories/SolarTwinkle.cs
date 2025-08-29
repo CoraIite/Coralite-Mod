@@ -159,9 +159,9 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
 
         [VaultLoaden(AssetDirectory.OtherProjectiles + "WarpTex")]
         public static ATex WarpTexture { get; private set; }
-        [VaultLoaden("{@namespace}" + "SolarTwinkleGradient")]
+        [VaultLoaden("{@classPath}" + "SolarTwinkleGradient")]
         public static ATex GradientTexture { get; private set; }
-        [VaultLoaden("{@namespace}" + "SolarTwinkleProj")]
+        [VaultLoaden("{@classPath}" + "SolarTwinkleProj")]
         public static ATex HeldTex { get; private set; }
 
         public int delay;

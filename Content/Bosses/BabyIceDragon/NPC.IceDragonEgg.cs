@@ -23,7 +23,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
         private Player Target => Main.player[NPC.target];
 
-        [VaultLoaden("{@namespace}" + "IceDragonEggBurst")]
+        [VaultLoaden("{@classPath}" + "IceDragonEggBurst")]
         public static ATex BurstTex { get; private set; }
 
         public ref float State => ref NPC.ai[1];

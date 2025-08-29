@@ -24,9 +24,9 @@ namespace Coralite.Content.Items.MagikeSeries2
     {
         public const string ShowBackLine = "MabirdLoupeA";
 
-        [VaultLoaden("{@namespace}" + "MabirdLoupeClose")]
+        [VaultLoaden("{@classPath}" + "MabirdLoupeClose")]
         public static ATex CloseTex { get; private set; }
-        [VaultLoaden("{@namespace}" + "MabirdLoupeClose2")]
+        [VaultLoaden("{@classPath}" + "MabirdLoupeClose2")]
         public static ATex CloseTex2 { get; private set; }
 
         /// <summary>

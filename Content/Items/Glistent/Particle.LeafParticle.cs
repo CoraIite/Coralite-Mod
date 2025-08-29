@@ -15,7 +15,7 @@ namespace Coralite.Content.Items.Glistent
         public int LeafType;
         public float alpha;
 
-        [VaultLoaden("{@namespace}" + "LeafShield")]
+        [VaultLoaden("{@classPath}" + "LeafShield")]
         public static ATex BigLeaf { get; private set; }
 
         public override void SetProperty()

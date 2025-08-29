@@ -658,7 +658,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public const int trailPoint = 30;
 
-        [VaultLoaden("{@namespace}" + "HorizonArcGradient2")]
+        [VaultLoaden("{@classPath}" + "HorizonArcGradient2")]
         public static ATex Gradient2 { get; private set; }
 
         public override void SetDefaults()

@@ -28,7 +28,7 @@ namespace Coralite.Content.NPCs.Crystalline
     {
         public override string Texture => AssetDirectory.CrystallineNPCs + Name;
 
-        [VaultLoaden("{@namespace}" + "CrystallineVinic_Vine")]
+        [VaultLoaden("{@classPath}" + "CrystallineVinic_Vine")]
         public static ATex VineTex { get; private set; }
 
         public Point SpawnPoint

@@ -72,9 +72,9 @@ namespace Coralite.Content.Items.Misc_Melee
     {
         public override string Texture => AssetDirectory.Misc_Melee + Name;
 
-        [VaultLoaden("{@namespace}" + "CancerFlailChain")]
+        [VaultLoaden("{@classPath}" + "CancerFlailChain")]
         public static ATex ChainTex { get; private set; }
-        [VaultLoaden("{@namespace}" + "CancerFlailHandle")]
+        [VaultLoaden("{@classPath}" + "CancerFlailHandle")]
         public static ATex HandleTex { get; private set; }
 
         public ref float Combo => ref Projectile.ai[0];

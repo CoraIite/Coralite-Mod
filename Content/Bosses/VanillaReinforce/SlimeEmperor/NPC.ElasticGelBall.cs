@@ -20,11 +20,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
 
         public ref float State => ref NPC.ai[0];
 
-        [VaultLoaden("{@namespace}" + "ElasticGelBallTop")]
+        [VaultLoaden("{@classPath}" + "ElasticGelBallTop")]
         public static ATex TopTex { get; private set; }
-        [VaultLoaden("{@namespace}" + "ElasticGelBallMiddle")]
+        [VaultLoaden("{@classPath}" + "ElasticGelBallMiddle")]
         public static ATex MiddleTex { get; private set; }
-        [VaultLoaden("{@namespace}" + "ElasticGelBallBottom")]
+        [VaultLoaden("{@classPath}" + "ElasticGelBallBottom")]
         public static ATex BottomTex { get; private set; }
 
         public override void SetStaticDefaults()

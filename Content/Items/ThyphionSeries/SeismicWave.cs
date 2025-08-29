@@ -126,7 +126,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         public ref float Timer => ref Projectile.localAI[1];
         public ref float Hited => ref Projectile.localAI[2];
 
-        [VaultLoaden("{@namespace}" + "SeismicWave_Glow")]
+        [VaultLoaden("{@classPath}" + "SeismicWave_Glow")]
         public static ATex GlowTex { get; private set; }
 
         public override int GetItemType()
