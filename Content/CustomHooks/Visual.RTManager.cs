@@ -23,7 +23,7 @@ namespace Coralite.Content.CustomHooks
 
             Main.QueueMainThreadAction(() =>
             {
-                if (EndCapture.screen is null || EndCapture.screen.Width != Main.screenWidth || EndCapture.screen.Height != Main.screenHeight)
+                if (EndCapture.Screen0 is null || EndCapture.Screen0.Width != Main.screenWidth || EndCapture.Screen0.Height != Main.screenHeight)
                 {
                     EndCapture.screen = new Microsoft.Xna.Framework.Graphics.RenderTarget2D(Main.graphics.GraphicsDevice, Main.screenWidth, Main.screenHeight);
                 }
