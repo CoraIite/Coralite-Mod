@@ -7,7 +7,7 @@ using Terraria;
 
 namespace Coralite.Content.Menu.CoraliteMenu
 {
-    [AutoLoadTexture(Path = AssetDirectory.Menus)]
+    [VaultLoaden(AssetDirectory.Menus)]
     public class CoraliteMenu : ModMenu
     {
         public static ATex CoraliteLogoTex { get; set; }

@@ -6,7 +6,7 @@ using Terraria.Localization;
 
 namespace Coralite.Content.CoraliteNotes.MagikeChapter1
 {
-    [AutoLoadTexture(Path = AssetDirectory.NoteMagikeS1)]
+    [VaultLoaden(AssetDirectory.NoteMagikeS1)]
     public class RemodelP2 : KnowledgePage
     {
         public static LocalizedText SelectCraftRecipe { get; private set; }

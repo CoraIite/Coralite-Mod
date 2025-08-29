@@ -140,7 +140,7 @@ namespace Coralite.Content.Items.Misc_Shoot
         [VaultLoaden("{@namespace}" + "WhiteGardeniaSP")]
         public static ATex SpecialAttackTex { get; private set; }
 
-        [AutoLoadTexture(Name = "WhiteGardeniaFire")]
+        [VaultLoaden("{@namespace}" + "WhiteGardeniaFire")]
         public static ATex Fire { get; private set; }
 
         public ref float Timer => ref Projectile.localAI[0];

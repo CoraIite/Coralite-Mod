@@ -85,7 +85,7 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
         //}
     }
 
-    //[AutoLoadTexture(Path = AssetDirectory.NoteReadfragment)]
+    //[VaultLoaden(AssetDirectory.NoteReadfragment)]
     //public class FragmentSlot : UIElement
     //{
     //    public int KnowledgeID;
