@@ -145,7 +145,7 @@ namespace Coralite.Content.Items.Magike.Factorys
         {
             Point16 point = Entity.Position;
             Vector2 center = point.ToWorldCoordinates(16, 16);
-            Rectangle selfRect = Utils.CenteredRectangle(center, new Vector2(16 * 8));
+            Rectangle selfRect = Utils.CenteredRectangle(center, new Vector2(16 * 40));
 
             if (!Entity.TryGetComponent(MagikeComponentID.ItemContainer, out ItemContainer container))
                 return;
@@ -161,9 +161,9 @@ namespace Coralite.Content.Items.Magike.Factorys
 
             Entity.GetMagikeContainer().ClearMagike();
 
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < 50; i++)
             {
-                Dust d = Dust.NewDustPerfect(center, DustID.FireworksRGB, (i * MathHelper.TwoPi / 20).ToRotationVector2() * Main.rand.NextFloat(4, 8), newColor: Coralite.MagicCrystalPink);
+                Dust d = Dust.NewDustPerfect(center, DustID.FireworksRGB, (i * MathHelper.TwoPi / 50).ToRotationVector2() * Main.rand.NextFloat(4, 20), newColor: Coralite.MagicCrystalPink);
                 d.noGravity = true;
             }
         }
@@ -200,7 +200,7 @@ namespace Coralite.Content.Items.Magike.Factorys
 
         public void Upgrade(MALevel incomeLevel)
         {
-            WorkTimeBase = 60;
+            WorkTimeBase = 5;
         }
     }
 }

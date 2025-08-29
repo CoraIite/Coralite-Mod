@@ -62,7 +62,12 @@ namespace Coralite.Content.Bosses.Rediancie
         public override void OnKill(int timeLeft)
         {
             if (Projectile.IsOwnedByLocalPlayer())
-                Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Rediancie_Explosion>(), (int)(Projectile.damage * 0.8f), Projectile.knockBack, Projectile.owner);
+            {
+                int index = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center
+                    , Vector2.Zero, ModContent.ProjectileType<Rediancie_Explosion>(), (int)(Projectile.damage * 0.8f), Projectile.knockBack, Projectile.owner);
+                if (Projectile.friendly)
+                    Main.projectile[index].friendly = true;
+            }
         }
 
         public override bool PreDraw(ref Color lightColor)

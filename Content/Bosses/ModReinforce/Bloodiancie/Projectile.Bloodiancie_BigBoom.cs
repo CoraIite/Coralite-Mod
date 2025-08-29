@@ -12,6 +12,8 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
     {
         public override string Texture => AssetDirectory.Blank;
 
+        bool span;
+
         public override void SetDefaults()
         {
             Projectile.width = Projectile.height = 320;
@@ -23,7 +25,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
             Projectile.hostile = true;
             Projectile.tileCollide = false;
         }
-        bool span;
+        
         public virtual void Initialize()
         {
             Vector2 center = Projectile.Center;
@@ -61,6 +63,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
             }
             return false;
         }
+
         public override bool PreDraw(ref Color lightColor) => false;
 
         public override bool CanHitPlayer(Player target)

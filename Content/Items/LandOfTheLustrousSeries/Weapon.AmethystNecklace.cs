@@ -415,6 +415,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             int width = (int)(Projectile.Center - endPoint).Length();
             Vector2 dir = Vector2.UnitX.RotatedBy(LaserRotation);
             Color color = brightC;
+            Utils.PlotTileLine(Projectile.Center, endPoint, LaserHeight, new Utils.TileActionAttempt(DelegateMethods.CutTiles));
 
             do
             {

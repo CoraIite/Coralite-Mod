@@ -1,6 +1,7 @@
 ﻿using Coralite.Core;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Net.Sockets;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.Drawing;
@@ -215,5 +216,15 @@ namespace Coralite.Helpers
             return position.ToWorldCoordinates(x, y);
         }
 
+        public static bool Contains(this Chest chest,int itemID)
+        {
+            foreach (var item in chest.item)
+            {
+                if (item.type == itemID)
+                    return true;
+            }
+
+            return false;
+        }
     }
 }

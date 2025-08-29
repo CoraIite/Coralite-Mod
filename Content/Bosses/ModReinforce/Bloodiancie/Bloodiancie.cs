@@ -134,7 +134,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
             npcLoot.Add(notExpertRule);
         }
 
-        public override void BossLoot(ref string name, ref int potionType)
+        public override void BossLoot(ref int potionType)
         {
             potionType = ItemID.GreaterHealingPotion;
         }
@@ -173,6 +173,12 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
         public override void OnHitByProjectile(Projectile projectile, NPC.HitInfo hit, int damageDone)
         {
             OnHit(hit.Damage);
+        }
+
+        public override void ModifyHitByItem(Player player, Item item, ref NPC.HitModifiers modifiers)
+        {
+            if (item.pick > 0)
+                modifiers.SourceDamage.Flat += item.pick;
         }
 
         public override void OnHitByItem(Player player, Item item, NPC.HitInfo hit, int damageDone)

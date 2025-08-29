@@ -183,7 +183,7 @@ namespace Coralite.Content.Items.ShadowCastle
                             if (Owner.PickAmmo(Item, out int proj, out float speed, out int damage, out float knockBack, out _))
                                 for (int i = 0; i < 6; i++)
                                     Projectile.NewProjectileFromThis(Owner.Center, UnitToMouseV.RotatedBy(Main.rand.NextFloat(-0.15f, 0.15f)) * speed, proj,
-                                    (int)(damage * 0.55f), knockBack);
+                                    (int)(damage * 0.65f), knockBack);
 
                             State++;
                             Projectile.Kill();

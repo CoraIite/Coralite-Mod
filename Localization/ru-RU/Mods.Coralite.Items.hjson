@@ -4386,6 +4386,7 @@ BasicAltar: {
 		{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}
 		'''
 	DisplayName: Базовый алтарь синтеза
+	// OnlyItemContainer: Craft Altar can only connected to item container!
 }
 
 RadiantSun: {
@@ -4806,6 +4807,11 @@ Woodbine: {
 Buttermilk: {
 	DisplayName: Сливочное молоко
 	Tooltip: "{$CommonItemTooltip.MajorStats}"
+}
+
+Butter: {
+	// DisplayName: Butter
+	// Tooltip: ""
 }
 
 RoyalKonjac: {
@@ -6072,4 +6078,14 @@ HephaesthGreave: {
 HephaesthHelmet: {
 	// DisplayName: Furnace Helmet
 	// Tooltip: "'It's tightly sealed except the sight hole'"
+}
+
+MeteorFireball: {
+	// DisplayName: Meteor Fireball
+	// Tooltip: ""
+}
+
+WorldGenFix: {
+	// DisplayName: World Gen Fix
+	// Tooltip: ""
 }

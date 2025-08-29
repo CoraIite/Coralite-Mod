@@ -22,7 +22,7 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
         {
             CreateRecipe()
                 .AddIngredient<BasicFilter>()
-                .AddIngredient(ItemID.Coral, 3)
+                .AddIngredient(ItemID.Coral)
                 .DisableDecraft()
                 .AddTile(TileID.WorkBenches)
                 .AddCondition(CoraliteConditions.NotInDigDigDig)
@@ -30,7 +30,7 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
 
             CreateRecipe()
                 .AddIngredient<BasicFilter>()
-                .AddIngredient(ItemID.Seashell, 2)
+                .AddIngredient(ItemID.Seashell)
                 .DisableDecraft()
                 .AddTile(TileID.WorkBenches)
                 .AddCondition(CoraliteConditions.NotInDigDigDig)
@@ -38,30 +38,30 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
 
             CreateRecipe()
                 .AddIngredient<BasicFilter>()
-                .AddIngredient(ItemID.Starfish, 2)
+                .AddIngredient(ItemID.Starfish)
                 .DisableDecraft()
                 .AddTile(TileID.WorkBenches)
                 .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
 
-            CreateRecipe()
-                .AddIngredient<BasicFilter>()
+            CreateRecipe(2)
+                .AddIngredient<BasicFilter>(2)
                 .AddIngredient(ItemID.TulipShell)
                 .DisableDecraft()
                 .AddTile(TileID.WorkBenches)
                 .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
 
-            CreateRecipe()
-                .AddIngredient<BasicFilter>()
+            CreateRecipe(2)
+                .AddIngredient<BasicFilter>(2)
                 .AddIngredient(ItemID.LightningWhelkShell)
                 .DisableDecraft()
                 .AddTile(TileID.WorkBenches)
                 .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();
 
-            CreateRecipe()
-                .AddIngredient<BasicFilter>()
+            CreateRecipe(2)
+                .AddIngredient<BasicFilter>(2)
                 .AddIngredient(ItemID.JunoniaShell)
                 .DisableDecraft()
                 .AddTile(TileID.WorkBenches)

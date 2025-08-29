@@ -495,6 +495,12 @@ namespace Coralite.Content.Items.Donator
                 cgnpc.StopHitPlayer = true;
                 cgnpc.SlowDownPercent = 0.5f;
             }
+
+            if (npc.realLife != -1 && Main.npc[npc.realLife].TryGetGlobalNPC(out CoraliteGlobalNPC cgnpc2))
+            {
+                cgnpc2.StopHitPlayer = true;
+                cgnpc2.SlowDownPercent = 0.75f;
+            }
         }
     }
 }

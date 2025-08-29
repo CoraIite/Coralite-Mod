@@ -1,11 +1,14 @@
 ﻿using Coralite.Content.Dusts;
+using Coralite.Content.Prefixes.FairyWeaponPrefixes;
 using Coralite.Core;
 using Coralite.Core.Attributes;
+using Coralite.Core.Prefabs.Particles;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.SmoothFunctions;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
 using InnoVault.PRT;
+using Microsoft.Build.Tasks.Deployment.ManifestUtilities;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -137,16 +140,31 @@ namespace Coralite.Content.Items.Misc_Shoot
         [VaultLoaden("{@namespace}" + "WhiteGardeniaSP")]
         public static ATex SpecialAttackTex { get; private set; }
 
+        [AutoLoadTexture(Name = "WhiteGardeniaFire")]
+        public static ATex Fire { get; private set; }
+
         public ref float Timer => ref Projectile.localAI[0];
         public ref float State => ref Projectile.localAI[1];
         public ref float Target => ref Projectile.ai[2];
 
         public Vector2 AimPosition { get => Projectile.velocity; set => Projectile.velocity = value; }
 
+        private int frameX=-1;
+        private int frameY;
+
         public override void AI()
         {
             Projectile.timeLeft = 2;
             Owner.direction = InMousePos.X > Owner.Center.X ? 1 : -1;
+
+            if (frameX != -1)
+            {
+                if (++frameY > 12)
+                {
+                    frameY = 0;
+                    frameX = -1;
+                }
+            }
 
             switch (State)
             {
@@ -252,6 +270,8 @@ namespace Coralite.Content.Items.Misc_Shoot
 
                                 Projectile.NewProjectileFromThis<WhiteGardeniaPowerfulShoot>(Projectile.Center, (targetPos - Owner.MountedCenter).SafeNormalize(Vector2.Zero) * 16
                                     , Owner.GetDamageWithAmmo(Item) * 30, Item.knockBack);
+
+                                frameX = 4;
                             }
                         }
 
@@ -344,6 +364,8 @@ namespace Coralite.Content.Items.Misc_Shoot
 
             Projectile.netUpdate = true;
             State = 2;
+
+            frameX = Main.rand.Next(4);
         }
 
         public void SpecialAttack()
@@ -455,6 +477,8 @@ namespace Coralite.Content.Items.Misc_Shoot
                         SpriteEffects effects = DirSign > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
                         Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, frame2, Color.White
                             , Projectile.rotation, origin, Projectile.scale, effects, 0f);
+
+                        DrawFire();
                     }
                     break;
                 case 3:
@@ -487,6 +511,8 @@ namespace Coralite.Content.Items.Misc_Shoot
 
                         Main.spriteBatch.Draw(mainTex, Projectile.Center + UnitToMouseV * 80 - Main.screenPosition, SPframeBox, Color.White * alpha
                             , Projectile.rotation, SPframeBox.Size() / 2, new Vector2(1, scale), effects, 0f);
+
+                        DrawFire();
                     }
 
                     break;
@@ -520,6 +546,19 @@ namespace Coralite.Content.Items.Misc_Shoot
                 , Projectile.rotation, frameBox.Size() / 2, Projectile.scale, effects, 0f);
             lightColor.A = 200;
             Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, frameBox, lightColor * 0.5f
+                , Projectile.rotation, frameBox.Size() / 2, Projectile.scale, effects, 0f);
+        }
+
+        public void DrawFire()
+        {
+            if (frameX < 0)
+                return;
+
+            Texture2D mainTex = Fire.Value;
+            var frameBox = mainTex.Frame(5, 7, frameX, frameY/2);
+            SpriteEffects effects = DirSign > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+
+            Main.spriteBatch.Draw(mainTex, Projectile.Center + UnitToMouseV * 150 - Main.screenPosition, frameBox, Color.White * 0.8f
                 , Projectile.rotation, frameBox.Size() / 2, Projectile.scale, effects, 0f);
         }
     }
@@ -645,6 +684,13 @@ namespace Coralite.Content.Items.Misc_Shoot
 
                             Projectile.NewProjectileFromThis<WhiteGardeniaFloatLaser>(Projectile.Center, Vector2.Zero
                                 , (int)(Owner.GetDamageWithAmmo(Item) * 0.7f), Projectile.knockBack, Projectile.whoAmI, Target);
+
+                            float rot = (Main.npc[(int)Target].Center - Projectile.Center).ToRotation();
+
+                            var p1 = PRTLoader.NewParticle<WhiteGardeniaParticle>(Projectile.Center + rot.ToRotationVector2() * 20
+                                , Vector2.Zero);
+                            p1.Rotation = rot;
+                            p1.FollowProjIndex = Projectile.whoAmI;
 
                             AttackCount++;
 
@@ -889,4 +935,15 @@ namespace Coralite.Content.Items.Misc_Shoot
             return false;
         }
     }
+
+    public class WhiteGardeniaParticle() : BaseFrameParticle(4, 4, 1)
+    {
+        public override string Texture => AssetDirectory.Misc_Shoot + Name;
+
+        public override Color GetColor()
+        {
+            return Color;
+        }
+    }
+
 }

@@ -383,12 +383,12 @@ namespace Coralite.Content.Items.FlyingShields
             var origin = frameBox.Size() / 2;
             lightColor *= alpha;
 
-            if (State == 2)
+            if (State == 2 && Projectile.oldPos.Length >13)
             {
                 Texture2D exTex2 = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "VanillaStarTrail").Value;
                 var origin2 = exTex2.Size() / 2;
                 float rot2 = Projectile.rotation + 1.57f;
-                Vector2 scale = new Vector2(0.8f, 1) * Projectile.scale;
+                Vector2 scale = new Vector2(0.5f, 1) * Projectile.scale;
                 for (int i = 1; i < 14; i++)
                 {
                     Color c = Color.Lerp(new Color(64, 58, 79), new Color(83, 129, 255), i / 22f) * (0.9f * i / 14f);
@@ -397,7 +397,7 @@ namespace Coralite.Content.Items.FlyingShields
                 }
 
                 Main.spriteBatch.Draw(exTex2, pos, null, new Color(83, 129, 255, 0) * 0.8f, rot2
-                    , origin2, new Vector2(Projectile.scale * 0.6f, Projectile.scale), 0, 0);
+                    , origin2, new Vector2(Projectile.scale * 0.8f, Projectile.scale), 0, 0);
 
                 Vector2 exPos = pos + (Projectile.rotation.ToRotationVector2() * 28);
                 Helper.DrawPrettyStarSparkle(Projectile.Opacity, 0, exPos, Color.White * 0.5f, Color.DeepSkyBlue * 0.8f,
@@ -413,7 +413,7 @@ namespace Coralite.Content.Items.FlyingShields
             Helper.DrawPrettyLine(Projectile.Opacity, 0, pos, Color.White, Color.Gold,
                 Timer / 20, 0, 1, 1, 2, -1.57f, 2f, Vector2.One * 1.2f);
 
-            if (State > 0)
+            if (State > 0 && Projectile.oldPos.Length > 13)
             {
                 var frameBox2 = mainTex.Frame(3, 1, 2, 0);
 

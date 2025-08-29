@@ -27,11 +27,13 @@ namespace Coralite.Content.Items.FlyingShields
         public override void AddRecipes()
         {
             CreateRecipe()
+                .AddIngredient<MeteorFireball>()
                 .AddIngredient(ItemID.TitaniumBar, 12)
                 .AddIngredient(ItemID.SoulofFlight, 5)
                 .AddTile(TileID.MythrilAnvil)
                 .Register();
             CreateRecipe()
+                .AddIngredient<MeteorFireball>()
                 .AddIngredient(ItemID.AdamantiteBar, 12)
                 .AddIngredient(ItemID.SoulofFlight, 5)
                 .AddTile(TileID.MythrilAnvil)

@@ -1522,7 +1522,12 @@ BloodiancieRelic: {
 
 Whistle: {
 	DisplayName: 赤玉窜天猴
-	Tooltip: 和窜天猴一起上天吧
+	Tooltip:
+		'''
+		长按点燃窜天猴，之后和窜天猴一起飞行，此时松开攻击键让窜天猴自由飞翔
+		注意！提前引爆窜天猴或未及时释放都会炸伤你自己！
+		和窜天猴一起上天吧
+		'''
 }
 
 BloodJadeRangesWeapon: {
@@ -2022,7 +2027,7 @@ TortoiseshellFortress: {
 
 ShieldbearersBand: {
 	DisplayName: 额外背带
-	Tooltip: +1 同时存在的飞盾数量
+	Tooltip: 使用后 +1 能丢出的飞盾数量
 }
 
 RustedShield: {
@@ -2034,7 +2039,7 @@ BeetleLimbStrap: {
 	DisplayName: 甲虫附肢
 	Tooltip:
 		'''
-		+3 同时存在的飞盾数量
+		使用后 +1 能丢出的飞盾数量，可与下位材料效果叠加
 		很多昆虫都能举起几倍与自身体重的物品，这个附肢也是如此
 		'''
 }
@@ -2043,7 +2048,7 @@ PowerliftExoskeleton: {
 	DisplayName: 外骨骼
 	Tooltip:
 		'''
-		+2 同时存在的飞盾数量
+		使用后 +1 能丢出的飞盾数量，可与下位材料效果叠加
 		一个强有力的机械臂，能够让你多携带几块盾牌
 		'''
 }
@@ -3133,7 +3138,7 @@ FlaskOfThunder: {
 }
 
 MagicCrystalMusicBox: {
-	DisplayName: 八音盒（魔力水晶洞）
+	DisplayName: 八音盒（魔能矿脉）
 	Tooltip: ""
 }
 
@@ -4380,6 +4385,7 @@ BasicAltar: {
 		{$Mods.Coralite.MagikeSystem.MagikeSystem.NeedPolarizedFilter}
 		'''
 	DisplayName: 基础合成坛
+	OnlyItemContainer: 合成坛只能连接物品容器！
 }
 
 RadiantSun: {
@@ -4608,7 +4614,7 @@ BrilliantMagikeActivator: {
 }
 
 MagicCrystalTRFilter: {
-	DisplayName: 全反射滤镜 ◊ 晶体
+	DisplayName: 扩容滤镜 ◊ 晶体
 	Tooltip:
 		'''
 		{$Mods.Coralite.MagikeSystem.MagikeSystem.TotalReflectionFilterTooltip}
@@ -4617,7 +4623,7 @@ MagicCrystalTRFilter: {
 }
 
 MagicCrystalDiffractionFilter: {
-	DisplayName: 衍射滤镜 ◊ 晶体
+	DisplayName: 多面滤镜 ◊ 晶体
 	Tooltip:
 		'''
 		{$Mods.Coralite.MagikeSystem.MagikeSystem.DiffractionFilterFilterTooltip}
@@ -4626,7 +4632,7 @@ MagicCrystalDiffractionFilter: {
 }
 
 MagicCrystalInterferenceFilter: {
-	DisplayName: 干涉滤镜 ◊ 晶体
+	DisplayName: 多发滤镜 ◊ 晶体
 	Tooltip:
 		'''
 		{$Mods.Coralite.MagikeSystem.MagikeSystem.InterferenceFilterTooltip}
@@ -4635,7 +4641,7 @@ MagicCrystalInterferenceFilter: {
 }
 
 MagicCrystalExcitedFilter: {
-	DisplayName: 激发滤镜 ◊ 晶体
+	DisplayName: 增产滤镜 ◊ 晶体
 	Tooltip:
 		'''
 		{$Mods.Coralite.MagikeSystem.MagikeSystem.ExcitedFilterTooltip}
@@ -4644,7 +4650,7 @@ MagicCrystalExcitedFilter: {
 }
 
 MagicCrystalPulseFilter: {
-	DisplayName: 脉冲滤镜 ◊ 晶体
+	DisplayName: 加速滤镜 ◊ 晶体
 	Tooltip:
 		'''
 		{$Mods.Coralite.MagikeSystem.MagikeSystem.PulseFilterTooltip}
@@ -4802,6 +4808,15 @@ Woodbine: {
 Buttermilk: {
 	DisplayName: 玄饮酪浆
 	Tooltip: "{$CommonItemTooltip.MajorStats}"
+}
+
+Butter: {
+	DisplayName: 黄油
+	Tooltip:
+		'''
+		远程暴击率+5%
+		玉米糖造成伤害 +25% 且有概率迟缓敌人行动并阻止敌人造成伤害
+		'''
 }
 
 RoyalKonjac: {
@@ -6067,4 +6082,14 @@ HephaesthGreave: {
 HephaesthHelmet: {
 	DisplayName: 心炉重盔
 	Tooltip: “除了视物孔，其他地方严丝合缝”
+}
+
+MeteorFireball: {
+	DisplayName: 火流星
+	Tooltip: ""
+}
+
+WorldGenFix: {
+	DisplayName: 世界设置修复
+	Tooltip: 取消所有的模组彩蛋种子特性，需要保存退出后重新进入生效
 }

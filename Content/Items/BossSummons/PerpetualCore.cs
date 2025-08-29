@@ -12,9 +12,6 @@ namespace Coralite.Content.Items.BossSummons
 
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("永动的核心");
-            // Tooltip.SetDefault("来自丛林神庙的黑科技，无穷无尽地向外释放着能量\n在丛林祭坛附近召唤石巨人，不消耗");
-
             CreativeItemSacrificesCatalog.Instance.SacrificeCountNeededByItemId[Type] = 1;
             ItemID.Sets.SortingPriorityBossSpawns[Type] = 12;
 
@@ -35,7 +32,7 @@ namespace Coralite.Content.Items.BossSummons
 
         public override bool CanUseItem(Player player)
         {
-            return NPC.downedGolemBoss && !NPC.AnyNPCs(NPCID.Golem);
+            return !NPC.AnyNPCs(NPCID.Golem);
         }
 
         public override bool? UseItem(Player player)
@@ -54,7 +51,7 @@ namespace Coralite.Content.Items.BossSummons
 
             return true;
         }
-
+        
         public override void AddRecipes()
         {
             CreateRecipe()

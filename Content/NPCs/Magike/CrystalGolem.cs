@@ -199,7 +199,7 @@ namespace Coralite.Content.NPCs.Magike
                         NPC.TargetClosest(false);
                         MoveTime = 90;
                         State = 2;
-                        if (VaultUtils.isServer)
+                        if (!VaultUtils.isClient)
                             Projectile.NewProjectile(NPC.GetSource_FromAI(), GetHeadPos(), Vector2.Zero, ModContent.ProjectileType<CrystalLaser>(), 20, 8, NPC.target, TargetRot);
                     }
                     MoveTime--;

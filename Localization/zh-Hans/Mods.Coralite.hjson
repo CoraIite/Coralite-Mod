@@ -79,4 +79,8 @@ WorldGeneration: {
 	}
 }
 
-Important.CoraliteSystem.OnEnterWorld: ""
+Important.CoraliteSystem.OnEnterWorld:
+	'''
+	珊瑚石v0.2.2.21更新提示
+	 - 增加飞盾上限类饰品现在修改为左键使用后永久加成
+	'''

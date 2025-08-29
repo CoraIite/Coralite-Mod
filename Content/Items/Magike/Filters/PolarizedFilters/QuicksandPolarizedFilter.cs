@@ -22,8 +22,8 @@ namespace Coralite.Content.Items.Magike.Filters.PolarizedFilters
         {
             CreateRecipe()
                 .AddIngredient<BasicFilter>()
-                .AddIngredient(ItemID.SandBlock, 15)
-                .AddIngredient(ItemID.Bone, 5)
+                .AddIngredient(ItemID.SandBlock, 4)
+                .AddIngredient(ItemID.Bone)
                 .AddTile(TileID.Anvils)
                 .AddCondition(CoraliteConditions.NotInDigDigDig)
                 .Register();

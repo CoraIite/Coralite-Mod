@@ -50,7 +50,9 @@ namespace Coralite.Content.Particles
             Main.instance.LoadItem(ItemID.FallenStar);
             Texture2D mainTex = TextureAssets.Item[ItemID.FallenStar].Value;
 
-            spriteBatch.Draw(mainTex, Position - Main.screenPosition, Frame, Color, Rotation, new Vector2(11, 13), Scale, SpriteEffects.None, 0f);
+            Vector2 position = Position - Main.screenPosition;
+            spriteBatch.Draw(mainTex, position, Frame, Color, Rotation, new Vector2(11, 13)
+                , Scale, SpriteEffects.None, 0f);
 
             return false;
         }

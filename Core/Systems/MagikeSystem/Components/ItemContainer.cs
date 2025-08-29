@@ -390,7 +390,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             for (int i = 0; i < Items.Length; i++)
             {
                 Item item = Items[i];//有空物品或者容量足够就放入
-                if (item.IsAir || item.type == itemType && item.stack < item.maxStack - stack)
+                if (item.IsAir || item.type == itemType && item.stack <= item.maxStack - stack)
                     return true;
             }
 

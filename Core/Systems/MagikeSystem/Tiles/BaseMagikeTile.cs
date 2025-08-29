@@ -216,7 +216,11 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
         {
             OnTileKilled(i, j);
             if (TryGetEntityWithTopLeft(new Point16(i, j), out MagikeTP entity))
+            {
                 entity.Kill();
+                MagikeApparatusPanel.CurrentEntity = null;
+                UILoader.GetUIState<MagikeApparatusPanel>().visible=false;
+            }
         }
 
         public override void NumDust(int i, int j, bool fail, ref int num)
@@ -286,13 +290,15 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
                 //放入物品
                 //有物品容器，同时可以放入物品，就直接塞进去
                 Player localPlayer = Main.LocalPlayer;
-                Item item = localPlayer.inventory[localPlayer.selectedItem];
-                if (!item.IsAir && !item.favorited
+                Item item = localPlayer.HeldItem;//localPlayer.inventory[localPlayer.selectedItem];
+                if (localPlayer.selectedItem == 58 && !item.IsAir && !item.favorited
                     && container.CanAddItem(item.type, item.stack))
                 {
                     localPlayer.GamepadEnableGrappleCooldown();
                     PlaceItemInFrame(localPlayer, entity.Position.X, entity.Position.Y, container);
                     Recipe.FindRecipes();
+                    Helper.PlayPitched(CoraliteSoundID.Grab, new Vector2(i, j) * 16);
+
                     return true;
                 }
             }

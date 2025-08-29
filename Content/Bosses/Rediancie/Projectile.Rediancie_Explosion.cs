@@ -22,6 +22,8 @@ namespace Coralite.Content.Bosses.Rediancie
             Projectile.friendly = false;
             Projectile.hostile = true;
             Projectile.ignoreWater = true;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = -1;
         }
 
         public override void AI()

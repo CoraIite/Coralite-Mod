@@ -170,15 +170,15 @@ MagikeSystem: {
 		HallowCondition: "  ▶ 需要将底座放置在神圣方块上"
 		GelLensName: 凝胶透镜
 		TotalReflectionBonus: ◇ 魔能容量强化：
-		TotalReflectionFilterName: 全反射滤镜
-		InterferenceFilterName: 干涉滤镜
+		TotalReflectionFilterName: 扩容滤镜
+		InterferenceFilterName: 多发滤镜
 		InterferenceBonus: ◇ 魔能发送量强化：
-		DiffractionFilterName: 衍射滤镜
+		DiffractionFilterName: 多面滤镜
 		DiffractionBonus: ◇ 连接量强化：
 		ClickToDisconnect: 点击以取消连接
-		PulseFilterName: 脉冲滤镜
+		PulseFilterName: 加速滤镜
 		PulseBonus: ◇ 计时器CD减少：
-		ExcitedFilterName: 激发滤镜
+		ExcitedFilterName: 增产滤镜
 		ExcitedBonus: ◇ 魔能生产量强化：
 		FactoryWorkTime: ◇ 工作计时
 		StoneMakerName: 地质再生祭坛

@@ -1,12 +1,15 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Dusts;
+using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.FlyingShieldSystem;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.Graphics.Effects;
 using Terraria.ID;
 
@@ -22,7 +25,7 @@ namespace Coralite.Content.Items.FlyingShields
             Item.useTime = Item.useAnimation = 20;
             Item.shoot = ModContent.ProjectileType<ConquerorOfTheSeasProj>();
             Item.knockBack = 2;
-            Item.shootSpeed = 12;
+            Item.shootSpeed = 14f;
             Item.damage = 225;
             Item.crit = 6;
         }
@@ -32,6 +35,8 @@ namespace Coralite.Content.Items.FlyingShields
     {
         public override string Texture => AssetDirectory.FlyingShieldItems + "ConquerorOfTheSeas";
 
+        private bool hited;
+
         public override void SetDefaults()
         {
             base.SetDefaults();
@@ -40,9 +45,9 @@ namespace Coralite.Content.Items.FlyingShields
 
         public override void SetOtherValues()
         {
-            flyingTime = 15;
-            backTime = 24;
-            backSpeed = 12;
+            flyingTime = 12;
+            backTime = 14;
+            backSpeed = 14.5f;
             trailCachesLength = 8;
             trailWidth = 30 / 2;
         }
@@ -55,6 +60,32 @@ namespace Coralite.Content.Items.FlyingShields
         public override Color GetColor(float factor)
         {
             return new Color(122, 122, 156) * factor;
+        }
+
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            if (!hited && Projectile.IsOwnedByLocalPlayer())
+            {
+                hited = true;
+                int damage = (int)(Projectile.damage * 0.8f);
+                if (State == (int)FlyingShieldStates.Shooting)
+                {
+                    Projectile.NewProjectileFromThis<ConquerorShipAnchor>(Projectile.Center
+                        , Projectile.velocity.SafeNormalize(Vector2.Zero) * 20, damage, Projectile.knockBack);
+
+                    Helper.PlayPitched(CoraliteSoundID.MinecartTrack_Item52, Projectile.Center, pitch: -0.5f);
+                }
+
+                Projectile.NewProjectileFromThis<ConquerorWaterWave>(Projectile.Center
+                    , Vector2.Zero, damage, Projectile.knockBack);
+
+                for (int i = 0; i < 3; i++)
+                    ConquerorOfTheSeasGuard.TentacleDust(Projectile, (i % 2 == 0 ? 1 : -1) * i * 0.3f);
+
+                Helper.PlayPitched(CoraliteSoundID.Water_Splash, Projectile.Center,volumeAdjust:-0.2f, pitch: 0.3f);
+            }
+
+            base.OnHitNPC(target, hit, damageDone);
         }
     }
 
@@ -108,7 +139,7 @@ namespace Coralite.Content.Items.FlyingShields
                 Main.rand.Next(3), Projectile.rotation);
             int howMany = Main.rand.Next(2, 4);
             for (int i = 0; i < howMany; i++)
-                TentacleDust();
+                TentacleDust(Projectile);
         }
 
         public override void OnGuardProjectile(int projIndex)
@@ -117,15 +148,15 @@ namespace Coralite.Content.Items.FlyingShields
                 (int)(Projectile.damage * 0.85f), Projectile.knockBack);
             int howMany = Main.rand.Next(2, 4);
             for (int i = 0; i < howMany; i++)
-                TentacleDust();
+                TentacleDust(Projectile);
         }
 
-        public void TentacleDust()
+        public static void TentacleDust(Projectile Projectile, float exrot = 0)
         {
-            float baseAngle = Projectile.rotation + Main.rand.NextFloat(-0.5f, 0.5f);
+            float baseAngle = Projectile.rotation + Main.rand.NextFloat(-0.5f, 0.5f) + exrot;
             float exRot = Main.rand.NextFloat(MathHelper.TwoPi);
-            float exRot2 = Main.rand.NextFloat(0.05f, 0.25f);
-            float vel = Main.rand.NextFloat(0.4f, 1.2f);
+            float exRot2 = Main.rand.NextFloat(0.05f, 0.15f);
+            float vel = Main.rand.NextFloat(0.4f, 0.9f);
             Vector2 pos = Projectile.Center + Main.rand.NextVector2Circular(8, 8);
 
             for (int i = 0; i < 16; i++)
@@ -504,5 +535,162 @@ namespace Coralite.Content.Items.FlyingShields
 
             return false;
         }
+    }
+
+    public class ConquerorWaterWave : ModProjectile,IDrawNonPremultiplied,IPostDrawAdditive
+    {
+        public override string Texture => AssetDirectory.FlyingShieldItems + Name;
+
+        public override void SetStaticDefaults()
+        {
+            Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 12);
+        }
+
+        public override void SetDefaults()
+        {
+            Projectile.DamageType = DamageClass.Melee;
+            Projectile.penetrate = -1;
+            Projectile.friendly = true;
+            Projectile.tileCollide = false;
+            Projectile.width = Projectile.height = 80;
+            Projectile.scale = 2;
+            Projectile.usesLocalNPCImmunity = true;
+            Projectile.localNPCHitCooldown = -1;
+        }
+
+        public override void AI()
+        {
+            if (Projectile.ai[0] == 0)
+            {
+                Projectile.ai[0] = 1;
+                Projectile.rotation = Main.rand.NextFloat(6.282f);
+            }
+
+            if (Projectile.frame < 10)
+                for (int i = 0; i < 3; i++)
+                {
+                    Vector2 pos = Helper.NextVec2Dir(Projectile.frame * 3.5f, Projectile.frame * 10);
+                    Dust d = Dust.NewDustPerfect(Projectile.Center + pos, DustID.Water_Desert, pos.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(1, 3f)
+                        , 0, Color.White with { A = 0 }, Scale: Main.rand.NextFloat(0.8f, 1.2f));
+                    d.noGravity = true;
+                }
+
+            if (++Projectile.frameCounter > 1)
+            {
+                Projectile.frameCounter = 0;
+                if (++Projectile.frame > 18)
+                    Projectile.Kill();
+            }
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            return false;
+        }
+
+        public void DrawNonPremultiplied(SpriteBatch spriteBatch)
+        {
+            if (Projectile.frame < 15)
+                Projectile.QuickFrameDraw(new Rectangle(0, Projectile.frame, 1, 16), Color.White with { A = 50 }, 0);
+        }
+
+        public void DrawAdditive(SpriteBatch spriteBatch)
+        {
+            Color c = Color.White;
+            c.A = 40;
+
+            if (Projectile.frame < 15)
+                Projectile.QuickFrameDraw(new Rectangle(0, Projectile.frame, 1, 16)
+                , c, MathHelper.TwoPi / 3);
+            Projectile.QuickFrameDraw(new Rectangle(0, Projectile.frame - 3, 1, 16)
+                , c, MathHelper.TwoPi * 2 / 3, 1.5f);
+        }
+    }
+
+    public class ConquerorShipAnchor : ModProjectile
+    {
+        public override string Texture => AssetDirectory.FlyingShieldItems + "ConquerorOfTheSeasProj2";
+
+        public ref float Timer => ref Projectile.ai[0];
+
+        public override void SetStaticDefaults()
+        {
+            Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 12);
+        }
+
+        public override void SetDefaults()
+        {
+            Projectile.DamageType = DamageClass.Melee;
+            Projectile.penetrate = -1;
+            Projectile.tileCollide = false;
+            Projectile.friendly = true;
+            Projectile.width = Projectile.height = 48;
+            Projectile.extraUpdates = 2;
+        }
+
+        public override void AI()
+        {
+            Projectile.velocity *= 0.95f;
+            Timer++;
+
+            if (Timer % 2 == 0 && Main.rand.NextBool(2))
+            {
+                PRTLoader.NewParticle<PixelLine>(Projectile.Center + Main.rand.NextVector2Circular(12, 12)
+                    , Projectile.velocity.SafeNormalize(Vector2.Zero) * Main.rand.NextFloat(2, 3), Color.LightSteelBlue);
+            }
+
+            if (Timer > 50)
+            {
+                Projectile.Kill();
+            }
+
+            Projectile.rotation = Projectile.velocity.ToRotation();
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Color c = Color.LightSlateGray;
+            if (Timer > 20)
+            {
+                lightColor *= 1 - (Timer - 20) / 30;
+                c *= 1 - (Timer - 20) / 30;
+            }
+
+            DrawShadowTrails(TextureAssets.Extra[98].Value, Projectile
+                , c * 0.5f, 1, 1 / 12f, 1, 12, 1, 1 / 12f, -1.57f, 1.5f);
+
+            float rot = (Timer / 40 + Main.GlobalTimeWrappedHourly) % 1;
+            float rotation = Projectile.rotation - 1.57f;
+
+            var mainTex = Projectile.GetTexture();
+            Vector2 pos = Projectile.Center - Main.screenPosition;
+
+            Rectangle frame = mainTex.Frame(2, 1, 1, 0);
+            Vector2 origin = new Vector2(mainTex.Width / 2, mainTex.Height / 2);
+            Vector2 origin2 = new Vector2(0, mainTex.Height / 2);
+            Main.spriteBatch.Draw(mainTex, pos, frame, lightColor, rotation
+                , origin2, new Vector2(1 - rot, 1), 0, 0);
+            Main.spriteBatch.Draw(mainTex, pos, frame, lightColor, rotation
+                , origin, new Vector2(rot, 1), SpriteEffects.FlipHorizontally, 0);
+
+            frame = mainTex.Frame(2, 1, 0, 0);
+            Main.spriteBatch.Draw(mainTex, pos, frame, lightColor, rotation
+                , origin2, new Vector2(rot, 1), SpriteEffects.FlipHorizontally, 0);
+            Main.spriteBatch.Draw(mainTex, pos, frame, lightColor, rotation
+                , origin, new Vector2(1 - rot, 1), 0, 0);
+
+            return false;
+        }
+
+        public static void DrawShadowTrails(Texture2D tex,Projectile projectile,Color drawColor, float maxAlpha, float alphaStep, int start, int howMany, int step, float scaleStep, float extraRot = 0, float scale = -1)
+        {
+            Texture2D mainTex = tex;
+            Vector2 toCenter = new(projectile.width / 2, projectile.height / 2);
+
+            for (int i = start; i < howMany; i += step)
+                Main.spriteBatch.Draw(mainTex, projectile.oldPos[i] + toCenter - Main.screenPosition, null,
+                    drawColor * (maxAlpha - (i * alphaStep)), projectile.oldRot[i] + extraRot, mainTex.Size() / 2, (scale == -1 ? projectile.scale : scale) * (1 - (i * scaleStep)), 0, 0);
+        }
+
     }
 }

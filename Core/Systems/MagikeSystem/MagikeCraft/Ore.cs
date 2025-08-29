@@ -11,17 +11,17 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
         public void AddMagikeCraftRecipe()
         {
             //木头
-            AddRemodelRecipe(ItemID.Wood, ItemID.Coal, CalculateMagikeCost(MagicCrystal, 4, 15), mainStack: 6);
-            AddRemodelRecipe(ItemID.AshWood, ItemID.Coal, CalculateMagikeCost(MagicCrystal, 4, 15), mainStack: 6);
-            AddRemodelRecipe(ItemID.RichMahogany, ItemID.Coal, CalculateMagikeCost(MagicCrystal, 4, 15), mainStack: 6);
-            AddRemodelRecipe(ItemID.Ebonwood, ItemID.Coal, CalculateMagikeCost(MagicCrystal, 4, 15), mainStack: 6);
-            AddRemodelRecipe(ItemID.Shadewood, ItemID.Coal, CalculateMagikeCost(MagicCrystal, 4, 15), mainStack: 6);
-            AddRemodelRecipe(ItemID.Pearlwood, ItemID.Coal, CalculateMagikeCost(MagicCrystal, 4, 15), mainStack: 6);
-            AddRemodelRecipe(ItemID.BorealWood, ItemID.Coal, CalculateMagikeCost(MagicCrystal, 4, 15), mainStack: 6);
-            AddRemodelRecipe(ItemID.PalmWood, ItemID.Coal, CalculateMagikeCost(MagicCrystal, 4, 15), mainStack: 6);
+            AddRemodelRecipe(ItemID.Wood, ItemID.Coal, CalculateMagikeCost(MagicCrystal, 4, 15), mainStack: 4);
+            AddRemodelRecipe(ItemID.AshWood, ItemID.Coal, CalculateMagikeCost(MagicCrystal, 4, 15), mainStack: 4);
+            AddRemodelRecipe(ItemID.RichMahogany, ItemID.Coal, CalculateMagikeCost(MagicCrystal, 4, 15), mainStack: 4);
+            AddRemodelRecipe(ItemID.Ebonwood, ItemID.Coal, CalculateMagikeCost(MagicCrystal, 4, 15), mainStack: 4);
+            AddRemodelRecipe(ItemID.Shadewood, ItemID.Coal, CalculateMagikeCost(MagicCrystal, 4, 15), mainStack: 4);
+            AddRemodelRecipe(ItemID.Pearlwood, ItemID.Coal, CalculateMagikeCost(MagicCrystal, 4, 15), mainStack: 4);
+            AddRemodelRecipe(ItemID.BorealWood, ItemID.Coal, CalculateMagikeCost(MagicCrystal, 4, 15), mainStack: 4);
+            AddRemodelRecipe(ItemID.PalmWood, ItemID.Coal, CalculateMagikeCost(MagicCrystal, 4, 15), mainStack: 4);
 
             //煤
-            AddRemodelRecipe(ItemID.Coal, ItemID.Diamond, CalculateMagikeCost(RedJade, 6), mainStack: 6);
+            AddRemodelRecipe(ItemID.Coal, ItemID.Diamond, CalculateMagikeCost(RedJade, 4), mainStack: 4);
 
             //沙漠化石
             AddRemodelRecipe(ItemID.DesertFossil, ItemID.Amber, CalculateMagikeCost(MagicCrystal, 4, 15), mainStack: 10);

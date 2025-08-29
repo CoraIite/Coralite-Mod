@@ -63,7 +63,7 @@ namespace Coralite.Content.Items.FlyingShields
                 //射流星
                 Projectile.NewProjectileFromThis<SolleonisMeteor>(Projectile.Center
                     , (Projectile.extraUpdates + 1) * Projectile.velocity.RotatedBy(Main.rand.NextFloat(-0.25f, 0.25f)) * Main.rand.NextFloat(0.8f, 1.2f),
-                    (int)(Projectile.damage * 0.78f), Projectile.knockBack);
+                    (int)(Projectile.damage * 0.8f), Projectile.knockBack);
             }
         }
 
@@ -202,7 +202,7 @@ namespace Coralite.Content.Items.FlyingShields
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             Projectile.NewProjectileFromThis(target.Center, Vector2.Zero, ProjectileID.SolarWhipSwordExplosion
-                , (int)(Projectile.damage * 0.5f), 10f, 0f, 0.85f + (Main.rand.NextFloat() * 1.15f));
+                , (int)(Projectile.damage * 0.53f), 10f, 0f, 0.85f + (Main.rand.NextFloat() * 1.15f));
 
             for (int i = 0; i < 3; i++)
             {

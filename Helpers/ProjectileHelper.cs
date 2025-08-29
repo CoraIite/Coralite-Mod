@@ -703,12 +703,44 @@ namespace Coralite.Helpers
                 frameBox.Size() / 2, projectile.scale, 0, 0);
         }
 
+        /// <summary>
+        /// 使用特殊的帧盒子传入方式，长宽表示多少帧，xy表示当前处于哪一帧
+        /// </summary>
+        /// <param name="projectile"></param>
+        /// <param name="frameBox"></param>
+        /// <param name="lightColor"></param>
+        /// <param name="exRot"></param>
+        public static void QuickFrameDraw(this Projectile projectile, Rectangle frameBox, Color lightColor, float exRot)
+        {
+            Texture2D mainTex = projectile.GetTexture();
+            var rect = mainTex.Frame(frameBox.Width, frameBox.Height, frameBox.X, frameBox.Y);
+
+            Main.spriteBatch.Draw(mainTex, projectile.Center - Main.screenPosition, rect, lightColor, projectile.rotation + exRot,
+                rect.Size() / 2, projectile.scale, 0, 0);
+        }
+
         public static void QuickDraw(this Projectile projectile, Rectangle frameBox, Color lightColor, float exRot, float scaleMult)
         {
             Texture2D mainTex = projectile.GetTexture();
 
             Main.spriteBatch.Draw(mainTex, projectile.Center - Main.screenPosition, frameBox, lightColor, projectile.rotation + exRot,
                 frameBox.Size() / 2, projectile.scale * scaleMult, 0, 0);
+        }
+
+        /// <summary>
+        /// 使用特殊的帧盒子传入方式，长宽表示多少帧，xy表示当前处于哪一帧
+        /// </summary>
+        /// <param name="projectile"></param>
+        /// <param name="frameBox"></param>
+        /// <param name="lightColor"></param>
+        /// <param name="exRot"></param>
+        public static void QuickFrameDraw(this Projectile projectile, Rectangle frameBox, Color lightColor, float exRot, float scaleMult)
+        {
+            Texture2D mainTex = projectile.GetTexture();
+            var rect = mainTex.Frame(frameBox.Width, frameBox.Height, frameBox.X, frameBox.Y);
+
+            Main.spriteBatch.Draw(mainTex, projectile.Center - Main.screenPosition, rect, lightColor, projectile.rotation + exRot,
+                rect.Size() / 2, projectile.scale * scaleMult, 0, 0);
         }
 
         public static void QuickDraw(this Projectile projectile, Rectangle frameBox, SpriteEffects effect, Color lightColor, float exRot)

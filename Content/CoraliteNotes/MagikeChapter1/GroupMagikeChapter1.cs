@@ -32,10 +32,14 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
 
                     //P4：重塑！聚合！魔能合成！
                     new CraftAltar(),
-                    new PutMainItemAndSelectRecipe(),
-                    new CraftAltar2(),
-                    new PolymerizeCraft(),
-                    new PolymerizeCraft2(),
+                    new RemodelP1(),
+                    new RemodelP2(),
+                    new RemodelP3(),
+                    new RemodelP4(),
+                    new PolymerizeRecipe(),
+                    new Pedestal(),
+                    new PolymerizeOtherItem(),
+                    new PolymerizeFinal(),
 
                     //P5：扩大生产线！
                     new ExpandProductionLine(),

@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
+using Coralite.Content.GlobalItems;
 using Coralite.Content.Items.FlyingShields.Accessories;
 using Coralite.Content.Items.RedJades;
 using Coralite.Content.Items.Steel;
@@ -19,6 +20,7 @@ using Terraria.DataStructures;
 using Terraria.GameInput;
 using Terraria.ID;
 using Terraria.Localization;
+using Terraria.ModLoader.IO;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.ModPlayers
@@ -228,6 +230,7 @@ namespace Coralite.Content.ModPlayers
                 ehi.UpdateEquipHeldItem(Player);
 
             UpdateNianli();
+            UpdateFlyingShield();
 
             LimitNightmareEnergy();
         }
@@ -649,6 +652,7 @@ namespace Coralite.Content.ModPlayers
         {
             if (HasEffect(nameof(FlaskOfThunderBuff)) && item.DamageType.CountsAsClass(DamageClass.Melee))
                 target.AddBuff(BuffType<ThunderElectrified>(), 6 * 60);
+
             if (HasEffect(nameof(FlaskOfRedJadeBuff)) && item.DamageType.CountsAsClass(DamageClass.Melee) && Main.rand.NextBool(4))
                 Projectile.NewProjectile(Player.GetSource_FromThis(), target.Center, Vector2.Zero,
                     ProjectileType<RedJadeBoom>(), (item.damage * 0.75f) > 80 ? 80 : (int)(item.damage * 0.75f), 0, Player.whoAmI);
@@ -658,9 +662,17 @@ namespace Coralite.Content.ModPlayers
         {
             if (HasEffect(nameof(FlaskOfThunderBuff)) && proj.DamageType == DamageClass.Melee)
                 target.AddBuff(BuffType<ThunderElectrified>(), 6 * 60);
+
             if (HasEffect(nameof(FlaskOfRedJadeBuff)) && proj.DamageType == DamageClass.Melee && Main.rand.NextBool(4))
                 Projectile.NewProjectile(Player.GetSource_FromThis(), target.Center, Vector2.Zero,
                     ProjectileType<RedJadeBoom>(), (proj.damage * 0.75f) > 80 ? 80 : (int)(proj.damage * 0.75f), 0, Player.whoAmI);
+
+            if (proj.type == ProjectileID.CandyCorn && HasEffect(nameof(Items.Misc_Equip.Butter)))
+            {
+                modifiers.SourceDamage *= 1.25f;
+                if (Main.rand.NextBool(6) && !target.HasBuff<Items.Misc_Equip.ButterDebuff>())
+                    target.AddBuff(BuffType<Items.Misc_Equip.ButterDebuff>(), 60*3);
+            }
         }
 
         public override bool FreeDodge(Player.HurtInfo info)
@@ -732,11 +744,12 @@ namespace Coralite.Content.ModPlayers
                     }
                 }
 
+            //特殊攻击
             useSpecialAttack = Core.Loaders.KeybindLoader.SpecialAttack.Current;
-            Item item = Player.inventory[Player.selectedItem];
+            Item item = Player.HeldItem;
 
-            if (useSpecialAttack && Player.itemAnimation == 0 && item.useStyle != ItemUseStyleID.None &&
-                (item.type < ItemID.Count || item.ModItem.Mod.Name == "Coralite" || item.ModItem.Mod is ICoralite))//放置其他模组干扰
+            if (useSpecialAttack && Player.itemAnimation == 0 && Player.ItemTimeIsZero && item.useStyle != ItemUseStyleID.None &&
+                item.TryGetGlobalItem(out CoraliteGlobalItem cgi) && cgi.SpecialUse)//防止其他模组干扰
             {
                 bool flag3 = !item.IsAir && CombinedHooks.CanUseItem(Player, item);
 
@@ -790,12 +803,26 @@ namespace Coralite.Content.ModPlayers
 
         #endregion
 
+        #region IO
+
+        public override void SaveData(TagCompound tag)
+        {
+            SaveFlyingShield(tag);
+        }
+
+        public override void LoadData(TagCompound tag)
+        {
+            LoadFlyingShield(tag);
+        }
+
+        #endregion
+
         public override void OnEnterWorld()
         {
             if (CoraliteWorld.CoralCatWorld)
                 Player.QuickSpawnItem(Player.GetSource_FromThis(), ItemID.Meowmere);
 
-            //Main.NewText(CoraliteSystem.OnEnterWorld.Value, Color.Coral);
+            Main.NewText(CoraliteSystem.OnEnterWorld.Value, Color.Coral);
         }
     }
 }

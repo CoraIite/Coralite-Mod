@@ -596,7 +596,7 @@ namespace Coralite.Content.WorldGeneration
                     int current_x = x + x1;
                     int current_y = y + y1;
 
-                    Main.tile[current_x, current_y].Clear(TileDataType.Liquid);
+                    Framing.GetTileSafely(current_x, current_y).Clear(TileDataType.Liquid);
                 }
         }
 

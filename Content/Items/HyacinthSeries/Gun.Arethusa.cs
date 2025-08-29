@@ -50,10 +50,10 @@ namespace Coralite.Content.Items.HyacinthSeries
             if (Main.myPlayer == player.whoAmI)
             {
                 Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, Vector2.Zero, ProjectileType<ArethusaHeldProj>(), damage, knockback, player.whoAmI, ai2: shootCount > 3 ? 1 : 0);
-                if (shootCount > 3)
+                if (shootCount > 2)
                 {
                     Vector2 targetDir = (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero);
-                    Projectile.NewProjectile(source, player.Center, targetDir * 14, ProjectileType<ArethusaBullet>(), (int)(damage * 1.35f), knockback, player.whoAmI);
+                    Projectile.NewProjectile(source, player.Center, targetDir * 14, ProjectileType<ArethusaBullet>(), damage, knockback, player.whoAmI);
                     SoundEngine.PlaySound(CoraliteSoundID.NoUse_SuperMagicShoot_Item68, player.Center);
                     shootCount = 0;
                     return false;
