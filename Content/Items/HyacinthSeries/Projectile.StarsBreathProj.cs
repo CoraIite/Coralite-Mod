@@ -12,7 +12,7 @@ using Terraria.Audio;
 
 namespace Coralite.Content.Items.HyacinthSeries
 {
-    [AutoLoadTexture(Path = AssetDirectory.HyacinthSeriesItems)]
+    [VaultLoaden(AssetDirectory.HyacinthSeriesItems)]
     public class StarsBreathHeldProj : BaseGunHeldProj
     {
         public StarsBreathHeldProj() : base(0.1f, 22, -6, AssetDirectory.HyacinthSeriesItems) { }

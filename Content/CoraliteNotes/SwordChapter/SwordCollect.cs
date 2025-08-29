@@ -9,7 +9,7 @@ using Terraria.ModLoader.IO;
 
 namespace Coralite.Content.CoraliteNotes.SwordChapter
 {
-    [AutoLoadTexture(Path = AssetDirectory.NoteWeapons)]
+    [VaultLoaden(AssetDirectory.NoteWeapons)]
     public class SwordCollect : CollectionPage
     {
         public static bool[] Unlocks = new bool[(int)Swords.Count];

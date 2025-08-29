@@ -10,7 +10,7 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
     /// <summary>
     /// 读取的页
     /// </summary>
-    [AutoLoadTexture(Path = AssetDirectory.NoteReadfragment)]
+    [VaultLoaden(AssetDirectory.NoteReadfragment)]
     public class ReadPage : KnowledgePage
     {
         public static LocalizedText Description { get; private set; }

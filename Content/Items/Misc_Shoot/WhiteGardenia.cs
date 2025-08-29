@@ -114,27 +114,27 @@ namespace Coralite.Content.Items.Misc_Shoot
         }
     }
 
-    [AutoLoadTexture(Path = AssetDirectory.Misc_Shoot)]
+    [VaultLoaden(AssetDirectory.Misc_Shoot)]
     public class WhiteGardeniaHeldProj : BaseGunHeldProj
     {
         public WhiteGardeniaHeldProj() : base(0.02f, 50, -10, AssetDirectory.Misc_Shoot) { }
 
-        [AutoLoadTexture(Name = "WhiteGardenia_Glow")]
+        [VaultLoaden("{@namespace}" + "WhiteGardenia_Glow")]
         public static ATex Highlight { get; private set; }
 
-        [AutoLoadTexture(Name = "WhiteGardeniaSpawn")]
+        [VaultLoaden("{@namespace}" + "WhiteGardeniaSpawn")]
         public static ATex SpawnAnmi { get; private set; }
 
-        [AutoLoadTexture(Name = "WhiteGardeniaFade")]
+        [VaultLoaden("{@namespace}" + "WhiteGardeniaFade")]
         public static ATex KillAnmi { get; private set; }
 
-        [AutoLoadTexture(Name = "WhiteGardeniaAim")]
+        [VaultLoaden("{@namespace}" + "WhiteGardeniaAim")]
         public static ATex AimMouse { get; private set; }
 
-        [AutoLoadTexture(Name = "WhiteGardeniaNumber")]
+        [VaultLoaden("{@namespace}" + "WhiteGardeniaNumber")]
         public static ATex NumberTex { get; private set; }
 
-        [AutoLoadTexture(Name = "WhiteGardeniaSP")]
+        [VaultLoaden("{@namespace}" + "WhiteGardeniaSP")]
         public static ATex SpecialAttackTex { get; private set; }
 
         public ref float Timer => ref Projectile.localAI[0];

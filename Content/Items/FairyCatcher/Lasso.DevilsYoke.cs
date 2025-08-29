@@ -28,7 +28,7 @@ namespace Coralite.Content.Items.FairyCatcher
         }
     }
 
-    [AutoLoadTexture(Path = AssetDirectory.FairyCatcherItems)]
+    [VaultLoaden(AssetDirectory.FairyCatcherItems)]
     public class DevilsYokeSwing() : BaseLassoSwing(4)
     {
         public override string Texture => AssetDirectory.FairyCatcherItems + "DevilsYokeCatcher";

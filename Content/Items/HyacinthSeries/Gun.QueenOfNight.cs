@@ -57,7 +57,7 @@ namespace Coralite.Content.Items.HyacinthSeries
         }
     }
 
-    [AutoLoadTexture(Path = AssetDirectory.HyacinthSeriesItems)]
+    [VaultLoaden(AssetDirectory.HyacinthSeriesItems)]
     public class QueenOfNightHeldProj : BaseGunHeldProj
     {
         public QueenOfNightHeldProj() : base(0.45f, 24, -12, AssetDirectory.HyacinthSeriesItems) { }

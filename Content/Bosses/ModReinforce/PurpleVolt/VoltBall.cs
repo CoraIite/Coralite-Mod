@@ -14,7 +14,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
     /// <summary>
     /// 使用ai0传入持有者
     /// </summary>
-    [AutoLoadTexture(Path = AssetDirectory.Particles)]
+    [VaultLoaden(AssetDirectory.Particles)]
     public class PurpleVoltBall : ModNPC
     {
         public override string Texture => AssetDirectory.ZacurrentDragon + "LightingBall";

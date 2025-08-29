@@ -1,4 +1,4 @@
-using Coralite.Core;
+﻿using Coralite.Core;
 using Coralite.Core.Attributes;
 using Coralite.Core.Prefabs.Projectiles;
 using Microsoft.Xna.Framework.Graphics;
@@ -7,7 +7,7 @@ using Terraria;
 
 namespace Coralite.Content.Items.Misc_Shoot
 {
-    [AutoLoadTexture(Path = AssetDirectory.Misc_Shoot)]
+    [VaultLoaden(AssetDirectory.Misc_Shoot)]
     public class AstrosniperHeldProj : BaseGunHeldProj
     {
         public AstrosniperHeldProj() : base(0.4f, 30, -6, AssetDirectory.Misc_Shoot) { }

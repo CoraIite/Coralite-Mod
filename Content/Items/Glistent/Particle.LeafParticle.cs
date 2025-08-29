@@ -1,11 +1,10 @@
 ﻿using Coralite.Core;
-using Coralite.Core.Attributes;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 
 namespace Coralite.Content.Items.Glistent
 {
-    [AutoLoadTexture(Path = AssetDirectory.MagikeProjectiles)]
+    [VaultLoaden(AssetDirectory.MagikeProjectiles)]
     public abstract class LeafParticle : Particle
     {
         public override string Texture => AssetDirectory.Particles + "SmallLeafParticle";
@@ -16,7 +15,7 @@ namespace Coralite.Content.Items.Glistent
         public int LeafType;
         public float alpha;
 
-        [AutoLoadTexture(Name = "LeafShield")]
+        [VaultLoaden("{@namespace}" + "LeafShield")]
         public static ATex BigLeaf { get; private set; }
 
         public override void SetProperty()

@@ -167,7 +167,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         }
     }
 
-    [AutoLoadTexture(Path = AssetDirectory.ThyphionSeriesItems)]
+    [VaultLoaden(AssetDirectory.ThyphionSeriesItems)]
     public class SolunarHeldProj : BaseDashBow
     {
         public override string Texture => AssetDirectory.ThyphionSeriesItems + nameof(Solunar);
@@ -180,7 +180,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         public int SPTimer;
         private MoonDustSpawner dustSpawner;
 
-        [AutoLoadTexture(Name = "Solunar_Glow")]
+        [VaultLoaden("{@namespace}" + "Solunar_Glow")]
         public static ATex Glow { get; private set; }
 
         private struct MoonDustSpawner
@@ -870,7 +870,7 @@ namespace Coralite.Content.Items.ThyphionSeries
     /// <summary>
     /// ai0传入拥有者，ai1控制状态
     /// </summary>
-    [AutoLoadTexture(Path = AssetDirectory.ThyphionSeriesItems)]
+    [VaultLoaden(AssetDirectory.ThyphionSeriesItems)]
     public class SolunarStrike : BaseHeldProj, IDrawNonPremultiplied
     {
         public override string Texture => AssetDirectory.Blank;
@@ -1096,7 +1096,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         }
     }
 
-    [AutoLoadTexture(Path = AssetDirectory.ThyphionSeriesItems)]
+    [VaultLoaden(AssetDirectory.ThyphionSeriesItems)]
     public class SolunarArrow : ModProjectile, IDrawPrimitive, IDrawNonPremultiplied
     {
         public override string Texture => AssetDirectory.ThyphionSeriesItems + Name;

@@ -76,7 +76,7 @@ namespace Coralite.Content.Items.HyacinthSeries
         }
     }
 
-    [AutoLoadTexture(Path = AssetDirectory.HyacinthSeriesItems)]
+    [VaultLoaden(AssetDirectory.HyacinthSeriesItems)]
     public class GhostPipeHeldProj : BaseGunHeldProj
     {
         public override string Texture => AssetDirectory.HyacinthSeriesItems + Name;
@@ -132,7 +132,7 @@ namespace Coralite.Content.Items.HyacinthSeries
         }
     }
 
-    [AutoLoadTexture(Path = AssetDirectory.HyacinthSeriesItems)]
+    [VaultLoaden(AssetDirectory.HyacinthSeriesItems)]
     public class GhostPipeBullet : ModProjectile, IDrawPrimitive
     {
         public override string Texture => AssetDirectory.Blank;

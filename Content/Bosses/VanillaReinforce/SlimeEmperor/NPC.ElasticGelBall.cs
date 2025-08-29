@@ -13,18 +13,18 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
     /// <summary>
     /// 弹弹凝胶球NPC
     /// </summary>
-    [AutoLoadTexture(Path = AssetDirectory.SlimeEmperor)]
+    [VaultLoaden(AssetDirectory.SlimeEmperor)]
     public class ElasticGelBall : ModNPC
     {
         public override string Texture => AssetDirectory.SlimeEmperor + Name;
 
         public ref float State => ref NPC.ai[0];
 
-        [AutoLoadTexture(Name = "ElasticGelBallTop")]
+        [VaultLoaden("{@namespace}" + "ElasticGelBallTop")]
         public static ATex TopTex { get; private set; }
-        [AutoLoadTexture(Name = "ElasticGelBallMiddle")]
+        [VaultLoaden("{@namespace}" + "ElasticGelBallMiddle")]
         public static ATex MiddleTex { get; private set; }
-        [AutoLoadTexture(Name = "ElasticGelBallBottom")]
+        [VaultLoaden("{@namespace}" + "ElasticGelBallBottom")]
         public static ATex BottomTex { get; private set; }
 
         public override void SetStaticDefaults()

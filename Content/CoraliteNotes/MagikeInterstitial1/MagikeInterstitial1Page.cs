@@ -7,7 +7,7 @@ using Terraria.Localization;
 
 namespace Coralite.Content.CoraliteNotes.MagikeInterstitial1
 {
-    [AutoLoadTexture(Path = AssetDirectory.CoraliteNote + "MagikeInterstitial1/")]
+    [VaultLoaden(AssetDirectory.CoraliteNote + "MagikeInterstitial1/")]
     public class MagikeInterstitial1Page : KnowledgePage
     {
         public static LocalizedText Title { get; private set; }

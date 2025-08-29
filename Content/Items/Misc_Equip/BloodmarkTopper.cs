@@ -324,15 +324,15 @@ namespace Coralite.Content.Items.Misc_Equip
             Color.Lerp(new Color(255, 30, 30), new(160, 14, 46), 0.5f + 0.5f * MathF.Sin((int)Main.timeForVisualEffects * 0.1f));
     }
 
-    [AutoLoadTexture(Path = AssetDirectory.Misc_Equip)]
+    [VaultLoaden(AssetDirectory.Misc_Equip)]
     public class BloodmarkTopperProj : ModProjectile
     {
         public override string Texture => AssetDirectory.Misc_Equip + Name;
 
         public static ATex BloodTopperSpawn { get; private set; }
-        [AutoLoadTexture(Name = "BloodmarkTopperProjShadow")]
+        [VaultLoaden("{@namespace}" + "BloodmarkTopperProjShadow")]
         public static ATex ShadowTopper { get; private set; }
-        [AutoLoadTexture(Name = "BloodmarkTopperProjPrison")]
+        [VaultLoaden("{@namespace}" + "BloodmarkTopperProjPrison")]
         public static ATex PrisonTopper { get; private set; }
 
         public Player Owner => Main.player[Projectile.owner];

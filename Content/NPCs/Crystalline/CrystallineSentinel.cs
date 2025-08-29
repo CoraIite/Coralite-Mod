@@ -20,26 +20,26 @@ using Terraria.ID;
 
 namespace Coralite.Content.NPCs.Crystalline
 {
-    [AutoLoadTexture(Path = AssetDirectory.CrystallineNPCs)]
+    [VaultLoaden(AssetDirectory.CrystallineNPCs)]
     public class CrystallineSentinel : ModNPC
     {
         public override string Texture => AssetDirectory.CrystallineNPCs + Name;
 
-        [AutoLoadTexture(Name = "CrystallineSentinelFloatStone")]
+        [VaultLoaden("{@namespace}" + "CrystallineSentinelFloatStone")]
         public static ATex FloatStone { get; private set; }
-        [AutoLoadTexture(Name = "CrystallineSentinelGuard")]
+        [VaultLoaden("{@namespace}" + "CrystallineSentinelGuard")]
         public static ATex GuardTex { get; private set; }
-        [AutoLoadTexture(Name = "CrystallineSentinelExchange")]
+        [VaultLoaden("{@namespace}" + "CrystallineSentinelExchange")]
         public static ATex ExchangeTex { get; private set; }
 
-        [AutoLoadTexture(Name = "CrystallineSentinelP2")]
+        [VaultLoaden("{@namespace}" + "CrystallineSentinelP2")]
         public static ATex P2Head { get; private set; }
-        [AutoLoadTexture(Name = "CrystallineSentinelP2Float")]
+        [VaultLoaden("{@namespace}" + "CrystallineSentinelP2Float")]
         public static ATex P2Float { get; private set; }
 
-        [AutoLoadTexture(Name = "CrystallineSentinelHand")]
+        [VaultLoaden("{@namespace}" + "CrystallineSentinelHand")]
         public static ATex HandTex { get; private set; }
-        [AutoLoadTexture(Name = "CrystallineSentinelP2Spurt")]
+        [VaultLoaden("{@namespace}" + "CrystallineSentinelP2Spurt")]
         public static ATex P2SpurtTex { get; private set; }
 
         private SecondOrderDynamics_Vec2[] FloatStoneMoves;
@@ -945,14 +945,14 @@ namespace Coralite.Content.NPCs.Crystalline
         public override bool PreDraw(ref Color lightColor) => false;
     }
 
-    [AutoLoadTexture(Path = AssetDirectory.CrystallineNPCs)]
+    [VaultLoaden(AssetDirectory.CrystallineNPCs)]
     public class CrystallineSentinelSwing : BaseSwingProj
     {
         public override string Texture => AssetDirectory.CrystallineNPCs + Name;
 
         public ref float LeftOrRight => ref Projectile.ai[1];
         public ref float OwnerIndex => ref Projectile.ai[1];
-        [AutoLoadTexture(Name = "CrystallineSentinelGradient")]
+        [VaultLoaden("{@namespace}" + "CrystallineSentinelGradient")]
         public static ATex GradientTexture { get; set; }
 
         public CrystallineSentinelSwing() : base(0.785f, trailCount: 48) { }

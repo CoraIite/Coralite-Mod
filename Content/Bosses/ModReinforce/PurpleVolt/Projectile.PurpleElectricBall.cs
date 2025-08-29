@@ -11,7 +11,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 {
-    [AutoLoadTexture(Path = AssetDirectory.ZacurrentDragon)]
+    [VaultLoaden(AssetDirectory.ZacurrentDragon)]
     public class PurpleElectricBall : BaseZacurrentProj, IDrawAdditive
     {
         public override string Texture => AssetDirectory.ThunderveinDragon + "LightingBall";

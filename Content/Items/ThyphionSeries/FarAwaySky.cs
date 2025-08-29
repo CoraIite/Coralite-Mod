@@ -113,14 +113,14 @@ namespace Coralite.Content.Items.ThyphionSeries
         }
     }
 
-    [AutoLoadTexture(Path = AssetDirectory.ThyphionSeriesItems)]
+    [VaultLoaden(AssetDirectory.ThyphionSeriesItems)]
     public class FarAwaySkyHeldProj : BaseDashBow
     {
         public override string Texture => AssetDirectory.ThyphionSeriesItems + "FarAwaySky";
 
         private Vector2 arrowPos;
 
-        [AutoLoadTexture(Name = "FarAwaySkyArrow")]
+        [VaultLoaden("{@namespace}" + "FarAwaySkyArrow")]
         public static ATex ArrowTex { get; private set; }
 
         public ref float ArrowLength => ref Projectile.localAI[0];

@@ -6,7 +6,7 @@ using Terraria.Localization;
 
 namespace Coralite.Content.CoraliteNotes.DashBowChapter
 {
-    [AutoLoadTexture(Path = AssetDirectory.NoteWeapons)]
+    [VaultLoaden(AssetDirectory.NoteWeapons)]
     public class DashBowPage : KnowledgePage
     {
         public static LocalizedText Title { get; private set; }

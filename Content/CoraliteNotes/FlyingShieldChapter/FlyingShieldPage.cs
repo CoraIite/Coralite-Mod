@@ -6,7 +6,7 @@ using Terraria.Localization;
 
 namespace Coralite.Content.CoraliteNotes.FlyingShieldChapter
 {
-    [AutoLoadTexture(Path = AssetDirectory.NoteWeapons)]
+    [VaultLoaden(AssetDirectory.NoteWeapons)]
     public class FlyingShieldPage : KnowledgePage
     {
         public static LocalizedText Title { get; private set; }

@@ -13,7 +13,7 @@ using Terraria.ObjectData;
 
 namespace Coralite.Content.Tiles.MagikeSeries2
 {
-    [AutoLoadTexture(Path = AssetDirectory.MagikeSeries2Tile)]
+    [VaultLoaden(AssetDirectory.MagikeSeries2Tile)]
     public class ChalcedonySkarn : ModTile
     {
         public override string Texture => AssetDirectory.MagikeSeries2Tile + "SkarnTile";

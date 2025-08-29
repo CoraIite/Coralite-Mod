@@ -174,7 +174,7 @@ namespace Coralite.Content.Biomes
         //public override Asset<Texture2D> GetRainTexture() => rainTexture;
     }
 
-    [AutoLoadTexture(Path = AssetDirectory.Backgrounds)]
+    [VaultLoaden(AssetDirectory.Backgrounds)]
     public class CrystallineSkyIslandBackground : ModSurfaceBackgroundStyle
     {
         public static ATex CrystallineSkyIslandBackground0 { get; private set; }

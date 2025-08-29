@@ -23,12 +23,12 @@ using Terraria.ModLoader.IO;
 
 namespace Coralite.Content.NPCs.Crystalline
 {
-    [AutoLoadTexture(Path = AssetDirectory.CrystallineNPCs)]
+    [VaultLoaden(AssetDirectory.CrystallineNPCs)]
     public abstract class CrystallineVinic : ModNPC
     {
         public override string Texture => AssetDirectory.CrystallineNPCs + Name;
 
-        [AutoLoadTexture(Name = "CrystallineVinic_Vine")]
+        [VaultLoaden("{@namespace}" + "CrystallineVinic_Vine")]
         public static ATex VineTex { get; private set; }
 
         public Point SpawnPoint

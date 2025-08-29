@@ -13,7 +13,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.HyacinthSeries
 {
-    [AutoLoadTexture(Path = AssetDirectory.HyacinthSeriesItems)]
+    [VaultLoaden(AssetDirectory.HyacinthSeriesItems)]
     public class ArethusaHeldProj : BaseGunHeldProj
     {
         public ref float FireType => ref Projectile.ai[2];

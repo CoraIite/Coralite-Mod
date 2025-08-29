@@ -447,7 +447,7 @@ namespace Coralite.Content.Items.ThyphionSeries
     /// <summary>
     /// ai0传入拥有者，ai1控制状态
     /// </summary>
-    [AutoLoadTexture(Path = AssetDirectory.ThyphionSeriesItems)]
+    [VaultLoaden(AssetDirectory.ThyphionSeriesItems)]
     public class FullMoonStrike : BaseHeldProj, IDrawNonPremultiplied
     {
         public override string Texture => AssetDirectory.Blank;

@@ -9,7 +9,7 @@ using Terraria.Graphics.Effects;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem
 {
-    [AutoLoadTexture(Path = AssetDirectory.Misc)]
+    [VaultLoaden(AssetDirectory.Misc)]
     public class FairyCatcherProj : BaseHeldProj
     {
         public override string Texture => AssetDirectory.FairyCircleCore + "DefaultCatcher";
@@ -19,7 +19,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         public static ATex TwistTex { get; private set; }
 
-        [AutoLoadTexture(Path = AssetDirectory.OtherProjectiles, Name = "White32x32")]
+        [VaultLoaden(AssetDirectory.OtherProjectiles + "White32x32")]
         public static ATex TileTexture { get; private set; }
 
         #region 字段

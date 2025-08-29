@@ -2,10 +2,10 @@
 
 namespace Coralite.Core.Systems.MagikeSystem
 {
-    [AutoLoadTexture(Path = AssetDirectory.MagikeUI)]
+    [VaultLoaden(AssetDirectory.MagikeUI)]
     public class MagikeAssets
     {
-        [AutoLoadTexture(Path = AssetDirectory.Misc)]
+        [VaultLoaden(AssetDirectory.Misc)]
         public static ATex SelectFrame { get; private set; }
 
         public static ATex MagikeContainerBar { get; private set; }
@@ -21,11 +21,11 @@ namespace Coralite.Core.Systems.MagikeSystem
         public static ATex ChargerPlayerButton { get; private set; }
         public static ATex CanCraftShow { get; private set; }
 
-        [AutoLoadTexture(Path = AssetDirectory.UI)]
+        [VaultLoaden(AssetDirectory.UI)]
         public static ATex AlphaBar { get; private set; }
         public static ATex CraftMagikeBar { get; private set; }
 
-        [AutoLoadTexture(Path = AssetDirectory.Misc)]
+        [VaultLoaden(AssetDirectory.Misc)]
         public static ATex Mabird { get; private set; }
 
         public static ATex MabirdStateButton { get; private set; }

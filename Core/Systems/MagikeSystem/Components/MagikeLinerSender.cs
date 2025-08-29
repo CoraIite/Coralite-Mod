@@ -554,7 +554,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         }
     }
 
-    [AutoLoadTexture(Path = AssetDirectory.MagikeUI)]
+    [VaultLoaden(AssetDirectory.MagikeUI)]
     public class SendProgressBar : UIElement
     {
         public static ATex ProgressBar { get; private set; }

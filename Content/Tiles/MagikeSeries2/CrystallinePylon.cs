@@ -14,18 +14,18 @@ using Terraria.ObjectData;
 
 namespace Coralite.Content.Tiles.MagikeSeries2
 {
-    [AutoLoadTexture(Path = AssetDirectory.MagikeSeries2Tile)]
+    [VaultLoaden(AssetDirectory.MagikeSeries2Tile)]
     public class CrystallinePylonTile : ModPylon
     {
         public override string Texture => AssetDirectory.MagikeSeries2Tile + Name;
 
         public const int CrystalVerticalFrameCount = 8;
 
-        [AutoLoadTexture(Name = "CrystallinePylonTile_Crystal")]
+        [VaultLoaden("{@namespace}" + "CrystallinePylonTile_Crystal")]
         public static ATex CrystalTexture { get; private set; }
-        [AutoLoadTexture(Name = "CrystallinePylonTile_Highlight")]
+        [VaultLoaden("{@namespace}" + "CrystallinePylonTile_Highlight")]
         public static ATex CrystalHighlightTexture { get; private set; }
-        [AutoLoadTexture(Name = "CrystallinePylonTile_MapIcon")]
+        [VaultLoaden("{@namespace}" + "CrystallinePylonTile_MapIcon")]
         public static ATex MapIcon { get; private set; }
 
         public override void SetStaticDefaults()

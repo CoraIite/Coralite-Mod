@@ -58,7 +58,7 @@ namespace Coralite.Content.Items.HyacinthSeries
         }
     }
 
-    [AutoLoadTexture(Path = AssetDirectory.HyacinthSeriesItems)]
+    [VaultLoaden(AssetDirectory.HyacinthSeriesItems)]
     public class AloeHeldProj : BaseGunHeldProj
     {
         public override string Texture => AssetDirectory.HyacinthSeriesItems + Name;
@@ -234,7 +234,7 @@ namespace Coralite.Content.Items.HyacinthSeries
         }
     }
 
-    [AutoLoadTexture(Path = AssetDirectory.HyacinthSeriesItems)]
+    [VaultLoaden(AssetDirectory.HyacinthSeriesItems)]
     public class AloeChaseProj : ModProjectile, IDrawPrimitive
     {
         public override string Texture => AssetDirectory.Blank;

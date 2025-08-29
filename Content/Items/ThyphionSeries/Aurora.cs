@@ -118,7 +118,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         }
     }
 
-    [AutoLoadTexture(Path = AssetDirectory.ThyphionSeriesItems)]
+    [VaultLoaden(AssetDirectory.ThyphionSeriesItems)]
     public class AuroraHeldProj : BaseDashBow
     {
         public override string Texture => AssetDirectory.ThyphionSeriesItems + nameof(Aurora);
@@ -127,7 +127,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         public ref float Timer => ref Projectile.localAI[1];
         public ref float RecordAngle => ref Projectile.localAI[2];
 
-        [AutoLoadTexture(Name = "Aurora_Glow")]
+        [VaultLoaden("{@namespace}" + "Aurora_Glow")]
         public static ATex Flow { get; private set; }
 
         public static ATex AuroraArrow { get; private set; }

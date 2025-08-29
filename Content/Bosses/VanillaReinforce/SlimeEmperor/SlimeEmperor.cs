@@ -41,7 +41,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
     ///                            ---————————————----
     /// </summary>
     [AutoloadBossHead]
-    [AutoLoadTexture(Path = AssetDirectory.SlimeEmperor)]
+    [VaultLoaden(AssetDirectory.SlimeEmperor)]
     public partial class SlimeEmperor : ModNPC
     {
         public override string Texture => AssetDirectory.SlimeEmperor + Name;
@@ -74,7 +74,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
         private CrownDatas crown;
         private bool span;
 
-        [AutoLoadTexture(Name = "SlimeEmperorCrown")]
+        [VaultLoaden("{@namespace}" + "SlimeEmperorCrown")]
         public static ATex CrownTex { get; private set; }
         private const int WidthMax = 158;
         private const int HeightMax = 100;

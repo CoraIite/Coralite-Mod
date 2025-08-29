@@ -118,7 +118,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         }
     }
 
-    [AutoLoadTexture(Path = AssetDirectory.ThyphionSeriesItems)]
+    [VaultLoaden(AssetDirectory.ThyphionSeriesItems)]
     public class SeismicWaveHeldProj : BaseDashBow
     {
         public override string Texture => AssetDirectory.ThyphionSeriesItems + nameof(SeismicWave);
@@ -126,7 +126,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         public ref float Timer => ref Projectile.localAI[1];
         public ref float Hited => ref Projectile.localAI[2];
 
-        [AutoLoadTexture(Name = "SeismicWave_Glow")]
+        [VaultLoaden("{@namespace}" + "SeismicWave_Glow")]
         public static ATex GlowTex { get; private set; }
 
         public override int GetItemType()

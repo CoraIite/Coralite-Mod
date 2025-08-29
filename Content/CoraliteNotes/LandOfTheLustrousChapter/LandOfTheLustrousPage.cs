@@ -6,7 +6,7 @@ using Terraria.Localization;
 
 namespace Coralite.Content.CoraliteNotes.LandOfTheLustrousChapter
 {
-    [AutoLoadTexture(Path = AssetDirectory.NoteWeapons)]
+    [VaultLoaden(AssetDirectory.NoteWeapons)]
     public class LandOfTheLustrousPage : KnowledgePage
     {
         public static LocalizedText Title { get; private set; }

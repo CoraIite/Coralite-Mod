@@ -9,7 +9,7 @@ using Terraria.Localization;
 
 namespace Coralite.Content.CoraliteNotes.MagikeChapter1
 {
-    [AutoLoadTexture(Path = AssetDirectory.NoteMagikeS1)]
+    [VaultLoaden(AssetDirectory.NoteMagikeS1)]
     public class PlacePolarizedFilter : KnowledgePage
     {
         public static LocalizedText NeedPolarizedFilter { get; private set; }

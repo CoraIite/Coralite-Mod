@@ -16,14 +16,14 @@ using Terraria.UI;
 
 namespace Coralite.Content.Bosses.BabyIceDragon
 {
-    [AutoLoadTexture(Path = AssetDirectory.BabyIceDragon)]
+    [VaultLoaden(AssetDirectory.BabyIceDragon)]
     public class IceDragonEgg : ModNPC, IDrawNonPremultiplied
     {
         public override string Texture => AssetDirectory.BabyIceDragon + Name;
 
         private Player Target => Main.player[NPC.target];
 
-        [AutoLoadTexture(Name = "IceDragonEggBurst")]
+        [VaultLoaden("{@namespace}" + "IceDragonEggBurst")]
         public static ATex BurstTex { get; private set; }
 
         public ref float State => ref NPC.ai[1];
@@ -190,7 +190,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
         }
     }
 
-    [AutoLoadTexture(Path = AssetDirectory.BabyIceDragon)]
+    [VaultLoaden(AssetDirectory.BabyIceDragon)]
     public class IceDragonEggDrawer : ModMapLayer
     {
         public static ATex IceDragonEgg_Head { get; private set; }

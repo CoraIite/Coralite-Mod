@@ -54,7 +54,7 @@ namespace Coralite.Content.Items.HyacinthSeries
         }
     }
 
-    [AutoLoadTexture(Path = AssetDirectory.HyacinthSeriesItems)]
+    [VaultLoaden(AssetDirectory.HyacinthSeriesItems)]
     public class SunflowerGunHeldProj : BaseGunHeldProj
     {
         public SunflowerGunHeldProj() : base(0.6f, 20, -8, AssetDirectory.HyacinthSeriesItems) { }

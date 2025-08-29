@@ -10,7 +10,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.CoraliteNotes.FlyingShieldChapter
 {
-    [AutoLoadTexture(Path = AssetDirectory.NoteWeapons)]
+    [VaultLoaden(AssetDirectory.NoteWeapons)]
     public class FlyingShieldCollect : CollectionPage
     {
         public static bool[] Unlocks = new bool[(int)KeyFlyingShields.Count];

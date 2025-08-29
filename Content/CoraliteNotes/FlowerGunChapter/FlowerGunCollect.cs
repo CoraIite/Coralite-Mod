@@ -10,7 +10,7 @@ using Terraria.ModLoader.IO;
 
 namespace Coralite.Content.CoraliteNotes.FlowerGunChapter
 {
-    [AutoLoadTexture(Path = AssetDirectory.NoteWeapons)]
+    [VaultLoaden(AssetDirectory.NoteWeapons)]
     public class FlowerGunCollect : CollectionPage
     {
         public static bool[] Unlocks = new bool[(int)KeyFlowerGuns.Count];

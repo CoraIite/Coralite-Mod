@@ -15,14 +15,14 @@ using Terraria.ModLoader.IO;
 
 namespace Coralite.Content.Items.MagikeSeries2
 {
-    [AutoLoadTexture(Path = AssetDirectory.MagikeSeries2Item)]
+    [VaultLoaden(AssetDirectory.MagikeSeries2Item)]
     public class BrilliantScanner : ModItem, IMagikeCraftable
     {
         public override string Texture => AssetDirectory.MagikeSeries2Item + Name;
 
         private bool ShowLineStyle = true;
 
-        [AutoLoadTexture(Name = "BrilliantScannerClose")]
+        [VaultLoaden("{@namespace}" + "BrilliantScannerClose")]
         public static ATex CloseTex { get; private set; }
         public static LocalizedText[] ShowTexts;
 

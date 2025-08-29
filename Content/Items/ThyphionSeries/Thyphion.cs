@@ -270,7 +270,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         public override bool PreDraw(ref Color lightColor) => false;
     }
 
-    [AutoLoadTexture(Path = AssetDirectory.ThyphionSeriesItems)]
+    [VaultLoaden(AssetDirectory.ThyphionSeriesItems)]
     public class ThyphionHeldProj : BaseDashBow/*, IDrawPrimitive*/
     {
         public override string Texture => AssetDirectory.ThyphionSeriesItems + "Thyphion";
@@ -283,11 +283,11 @@ namespace Coralite.Content.Items.ThyphionSeries
         public float handOffset = 0;
         public bool ShowArrow = false;
 
-        [AutoLoadTexture(Name = "Thyphion_glow")]
+        [VaultLoaden("{@namespace}" + "Thyphion_glow")]
         public static ATex GlowTex { get; private set; }
-        [AutoLoadTexture(Name = "Thyphion_Skin")]
+        [VaultLoaden("{@namespace}" + "Thyphion_Skin")]
         public static ATex SkinTex { get; private set; }
-        [AutoLoadTexture(Name = "Thyphion_SkinGlow")]
+        [VaultLoaden("{@namespace}" + "Thyphion_SkinGlow")]
         public static ATex SkinGlowTex { get; private set; }
 
         public int projectile;
