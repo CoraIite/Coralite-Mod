@@ -96,6 +96,8 @@ FairySystem: {
 	SkillTags: Mods.Coralite.Systems.FairySystem.SkillTags
 	HowToUseEVBonusItem: A
 	EVNoUse: Mods.Coralite.Systems.FairySystem.EVNoUse
+	SkillDamage: Mods.Coralite.Systems.FairySystem.SkillDamage
+	SkillStaminaCost: Mods.Coralite.Systems.FairySystem.SkillStaminaCost
 }
 
 BossBarSystem.DontTakeDamage: Cant attack!！

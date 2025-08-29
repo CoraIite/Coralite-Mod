@@ -75,7 +75,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.NormalSkills
                 int damage = fairyProj.Projectile.damage;
 
                 ModifyShootProj(fairyProj, ref center, ref velocity, ref damage);
-                damage = GetDamageBonus(damage, fairyProj.SkillLevel);
+                damage = GetDamage(damage, fairyProj.SkillLevel);
 
                 ShootProj(fairyProj, center, velocity, damage);
                 SkillTimer--;
@@ -131,7 +131,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.NormalSkills
         /// <param name="baseDamage"></param>
         /// <param name="level"></param>
         /// <returns></returns>
-        public virtual int GetDamageBonus(int baseDamage, int level)
+        public override int GetDamage(int baseDamage, int level)
         {
             return (int)(baseDamage * (1 + 2f * Math.Clamp(level / 15f, 0, 1)));
         }

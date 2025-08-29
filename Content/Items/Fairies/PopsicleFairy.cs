@@ -171,11 +171,9 @@ namespace Coralite.Content.Items.Fairies
 
         public override string GetSkillTips(Player player, FairyIV iv)
         {
-            int level = iv.SkillLevel;
-            if (player.TryGetModPlayer(out FairyCatcherPlayer fcp))
-                level = fcp.GetFairySkillBonus(Type, level);
+            int level = Helper.GetBonusedSkillLevel(player, iv.SkillLevel, Type);
 
-            return Description.Format(GetProjCount(level), GetDamageBonus(iv.Damage, level));
+            return Description.Format(GetProjCount(level), GetDamage(iv.Damage, level));
         }
 
         public int GetProjCount(int level)

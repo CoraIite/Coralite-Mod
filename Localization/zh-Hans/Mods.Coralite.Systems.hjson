@@ -108,6 +108,8 @@ FairySystem: {
 	SkillTags: 类型:
 	HowToUseEVBonusItem: 鼠标持有该物品后右键点击仙灵物品为其增加基础点数
 	EVNoUse: 即使使用也没有任何效果！
+	SkillDamage: 技能伤害
+	SkillStaminaCost: 耐力消耗
 }
 
 BossBarSystem.DontTakeDamage: 不可攻击！

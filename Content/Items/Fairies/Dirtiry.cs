@@ -179,7 +179,7 @@ namespace Coralite.Content.Items.Fairies
             if (player.TryGetModPlayer(out FairyCatcherPlayer fcp))
                 level = fcp.GetFairySkillBonus(Type, level);
 
-            return Description.Format(GetProjCount(level), GetDamageBonus(iv.Damage, level));
+            return Description.Format(GetProjCount(level), GetDamage(iv.Damage, level));
         }
 
         public int GetProjCount(int level)

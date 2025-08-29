@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Particles;
+﻿using Coralite.Content.DamageClasses;
+using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Systems.FairyCatcherSystem;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
@@ -134,7 +135,7 @@ namespace Coralite.Content.Items.Fairies
             if (player.TryGetModPlayer(out FairyCatcherPlayer fcp))
                 level = fcp.GetFairySkillBonus(Type, level);
 
-            return Description.Format(GetDamageBonus(iv.Damage, level));
+            return Description.Format(GetDamage(iv.Damage, level));
         }
 
         public override bool CanUseSkill(BaseFairyProjectile fairyProj)
@@ -143,7 +144,7 @@ namespace Coralite.Content.Items.Fairies
         public override bool Update(BaseFairyProjectile fairyProj)
             => true;
 
-        public static int GetDamageBonus(int baseDamage, int level)
+        public override int GetDamage(int baseDamage, int level)
         {
             return (int)(baseDamage * (2.5f + 3f * Math.Clamp(level / 15f, 0, 1)));
         }
@@ -152,12 +153,14 @@ namespace Coralite.Content.Items.Fairies
         {
             SpawnSkillText(fairyProj.Projectile.Top);
             float rot = Main.rand.NextFloat(MathHelper.TwoPi);
+            int damage = GetDamage(fairyProj.Projectile.damage, fairyProj.SkillLevel);
+
             for (int i = 0; i < 7; i++)
             {
                 fairyProj.Projectile.NewProjectileFromThis<SporesExplode>(fairyProj.Projectile.Center
-                    , rot.ToRotationVector2() * 5, GetDamageBonus(15, fairyProj.SkillLevel), 2);
+                    , rot.ToRotationVector2() * 5, damage, 2);
                 fairyProj.Projectile.NewProjectileFromThis<SporesExplode>(fairyProj.Projectile.Center
-                    , (rot + MathHelper.TwoPi / 14).ToRotationVector2() * 2, GetDamageBonus(15, fairyProj.SkillLevel), 2,1);
+                    , (rot + MathHelper.TwoPi / 14).ToRotationVector2() * 2, GetDamage(fairyProj.Projectile.damage, fairyProj.SkillLevel), 2,1);
                 rot += MathHelper.TwoPi / 7 + Main.rand.NextFloat(-0.2f, 0.2f);
             }
         }

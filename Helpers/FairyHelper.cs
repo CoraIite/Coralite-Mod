@@ -159,5 +159,13 @@ namespace Coralite.Helpers
 
             return false;
         }
+
+        public static int GetBonusedSkillLevel(Player player, int baseLevel, int skillType)
+        {
+            if (player.TryGetModPlayer(out FairyCatcherPlayer fcp))
+                baseLevel = fcp.GetFairySkillBonus(skillType, baseLevel);
+
+            return baseLevel;
+        }
     }
 }

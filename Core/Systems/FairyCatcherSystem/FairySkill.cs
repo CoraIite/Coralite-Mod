@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using Terraria;
+using Terraria.GameContent;
 using Terraria.Localization;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem
@@ -95,6 +96,13 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         {
             return 1;
         }
+
+        /// <summary>
+        /// 技能伤害
+        /// </summary>
+        /// <param name="skillLevel"></param>
+        /// <returns></returns>
+        public abstract int GetDamage(int baseDamage, int skillLevel);
 
         /// <summary>
         /// 生成仙灵技能名称文本
@@ -196,28 +204,67 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         #region 描述部分
 
+        public struct TipSize
+        {
+            public Vector2 damageSize;
+            public Vector2 staminaCostSize;
+
+            public Vector2 totalSize;
+            public Vector2 nameSize;
+        }
+
         /// <summary>
         /// 获取技能描述的总大小
         /// </summary>
         /// <returns></returns>
-        public Vector2 GetSkillTipTotalSize(Player player, FairyIV iv, out Vector2 nameSize)
+        public TipSize GetSkillTipTotalSize(Player player, FairyIV iv)
         {
             Texture2D tex = FairySystem.FairySkillAssets[Type].Value;
 
             float x = tex.Width + 10;
 
+            //名称的长度
             string name = GetSkillNameTip(iv.SkillLevel);
-            nameSize = Helper.GetStringSize(name, Vector2.One * 1.1f);
+           Vector2 nameSize = Helper.GetStringSize(name, Vector2.One * 1.1f);
 
+            //伤害/耐力消耗的长度
+            int skillLevel = Helper.GetBonusedSkillLevel(player, iv.SkillLevel, Type);
+
+            string damage = FairySystem.SkillDamage.Value;
+            int damage2 = GetDamage(iv.Damage, skillLevel);
+            string damageValue = damage2 > 0 ? damage2.ToString() : " - ";
+
+            Vector2 damageSize = Helper.GetStringSize(damage, Vector2.One * 0.9f);
+            Vector2 damageValueSize = Helper.GetStringSize(damageValue, Vector2.One * 0.9f);
+            
+
+            string staminaCost = FairySystem.SkillStaminaCost.Value;
+            string staminaCostValue = GetStaminaCost(skillLevel).ToString();
+
+            Vector2 staminaCostSize = Helper.GetStringSize(staminaCost, Vector2.One * 0.9f);
+            Vector2 staminaCostValueSize = Helper.GetStringSize(staminaCostValue, Vector2.One * 0.9f);
+
+            damageSize = new Vector2(MathF.Max(damageSize.X, damageValueSize.X) + 20, damageSize.Y);
+            staminaCostSize = new Vector2(MathF.Max(staminaCostSize.X, staminaCostValueSize.X) + 20, staminaCostSize.Y);
+
+
+            //描述的长度
             string description = GetSkillTipsInner(player, iv);
             Vector2 describSize = Helper.GetStringSize(description, Vector2.One * 0.9f);
 
             //宽度是图片宽度+10+描述的最大宽度
-            x += Math.Max(nameSize.X, describSize.X) + 8;
+            x += Math.Max(Math.Max(nameSize.X, describSize.X), damageSize.X + 8 + staminaCostSize.X) + 8;
             //高度是图片高度和描述高度中的最大值
             float y = Math.Max(nameSize.Y + describSize.Y + 8, tex.Height);
 
-            return new Vector2(x, y);
+            return new TipSize()
+            {
+                nameSize = nameSize,
+                totalSize = new Vector2(x, y + damageSize.Y * 2),
+
+                damageSize = damageSize,
+                staminaCostSize = staminaCostSize,
+            };
         }
 
         public Vector2 GetSkillTipSizeForUI()
@@ -252,10 +299,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <param name="iv"></param>
         /// <param name="size"></param>
         /// <param name="nameSize"></param>
-        public void DrawSkillTip(Vector2 topLeft, Player player, FairyIV iv, Vector2 size, Vector2 nameSize)
+        public void DrawSkillTip(Vector2 topLeft, Player player, FairyIV iv, TipSize sizes)
         {
             Texture2D tex = FairySystem.FairySkillAssets[Type].Value;
-            tex.QuickCenteredDraw(Main.spriteBatch, topLeft + new Vector2(tex.Width / 2, size.Y / 2));
+            tex.QuickCenteredDraw(Main.spriteBatch, topLeft + new Vector2(tex.Width / 2, sizes.totalSize.Y / 2));
 
             topLeft.X += tex.Width + 10;
             topLeft.Y +=  4;
@@ -266,7 +313,41 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             Utils.DrawBorderString(Main.spriteBatch, GetSkillNameTip(iv.SkillLevel), topLeft
                 , FairyIV.GetFairyIVColorAndText(iv.SkillLevelLV).Item1, 1.1f);
 
-            topLeft.Y += nameSize.Y + 4;
+            topLeft.Y += sizes.nameSize.Y + 4;
+
+            //绘制伤害/耐力消耗文字
+            Utils.DrawBorderString(Main.spriteBatch, FairySystem.SkillDamage.Value, topLeft + new Vector2(sizes.damageSize.X / 2, 0)
+                , Color.White, 0.9f, 0.5f);
+
+            Texture2D texture = TextureAssets.FishingLine.Value;
+            Main.spriteBatch.Draw(texture, topLeft + new Vector2(sizes.damageSize.X + 4, sizes.damageSize.Y*0.8f), null
+                , Color.White, 0, texture.Size() / 2, new Vector2(1, sizes.damageSize.Y * 1.6f / texture.Height), SpriteEffects.None, 0);
+            //Utils.DrawBorderString(Main.spriteBatch, "|", topLeft + new Vector2(sizes.damageSize.X, 0)
+            //    , Color.Coral, 0.9f, 0f);
+
+            Utils.DrawBorderString(Main.spriteBatch, FairySystem.SkillStaminaCost.Value, topLeft + new Vector2(sizes.damageSize.X + 8 + sizes.staminaCostSize.X / 2, 0)
+                , Color.White, 0.9f, 0.5f);
+
+
+            topLeft.Y += sizes.damageSize.Y;
+            int skillLevel = Helper.GetBonusedSkillLevel(player, iv.SkillLevel, Type);
+
+            //绘制伤害/耐力消耗数字
+            int damage2 = GetDamage(iv.Damage, skillLevel);
+            string damageValue = damage2 > 0 ? damage2.ToString() : " - ";
+
+            Utils.DrawBorderString(Main.spriteBatch, damageValue, topLeft + new Vector2(sizes.damageSize.X / 2, 0)
+                , Color.White, 0.9f, 0.5f);
+
+            //Utils.DrawBorderString(Main.spriteBatch, "|", topLeft + new Vector2(sizes.damageSize.X, 0)
+            //    , Color.Coral, 0.9f, 0f);
+
+            Utils.DrawBorderString(Main.spriteBatch, GetStaminaCost(skillLevel).ToString(), topLeft + new Vector2(sizes.damageSize.X + 8 + sizes.staminaCostSize.X / 2, 0)
+                , Color.White, 0.9f, 0.5f);
+
+
+
+            topLeft.Y += sizes.damageSize.Y + 4;
 
             Utils.DrawBorderString(Main.spriteBatch, GetSkillTipsInner(player, iv), topLeft
                 , Color.White, 0.9f);

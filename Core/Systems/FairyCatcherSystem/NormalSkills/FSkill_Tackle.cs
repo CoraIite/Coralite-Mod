@@ -96,7 +96,15 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.NormalSkills
                 fairyProj.Projectile.velocity = -fairyProj.Projectile.velocity.SafeNormalize(Vector2.Zero) * 4;
             }
 
-            hitModifier.SourceDamage += (1.5f + fairyProj.SkillLevel * 0.15f);
+            hitModifier.SourceDamage += DamagePercent(fairyProj.SkillLevel);
+        }
+
+        private float DamagePercent(int level)
+            => 1.5f + level * 0.15f;
+
+        public override int GetDamage(int baseDamage, int skillLevel)
+        {
+            return (int)(baseDamage * DamagePercent(skillLevel));
         }
 
         public override string GetSkillTips(Player player, FairyIV iv)

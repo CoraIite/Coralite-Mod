@@ -16,8 +16,21 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
     {
         public override string Texture => AssetDirectory.FairyItems + Name;
 
+        private FairyIV _iv;
+
         /// <summary> 仙灵的个体数据，用于存放各类增幅 </summary>
-        public FairyIV FairyIV { get; set; }
+        public FairyIV FairyIV
+        {
+            get
+            {
+                _iv ??= new FairyIV();
+                return _iv;
+            }
+            set
+            {
+                _iv = value;
+            }
+        }
 
         /// <summary> 仙灵是否存活 </summary>
         protected bool dead;

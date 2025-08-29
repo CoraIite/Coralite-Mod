@@ -101,6 +101,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         public static LocalizedText EVNoUse;
 
+        public static LocalizedText SkillDamage;
+        public static LocalizedText SkillStaminaCost;
+
         public void LoadLocalization()
         {
             FieldInfo[] infos = typeof(FairySystem).GetFields(BindingFlags.Static | BindingFlags.Public | BindingFlags.GetField);

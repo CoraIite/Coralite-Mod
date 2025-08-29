@@ -56,9 +56,9 @@ namespace Coralite.Content.CustomHooks
                 foreach (var skill in skills)
                 {
                     FairySkill fSkill = FairyLoader.GetFairySkill(skill);
-                    Vector2 size = fSkill.GetSkillTipTotalSize(Main.LocalPlayer, bfi.FairyIV, out _);
-                    if (size.X > maxSkillWidth)
-                        maxSkillWidth = size.X;
+                    FairySkill.TipSize size = fSkill.GetSkillTipTotalSize(Main.LocalPlayer, bfi.FairyIV);
+                    if (size.totalSize.X > maxSkillWidth)
+                        maxSkillWidth = size.totalSize.X;
                 }
 
                 //原版左上角+原版尺寸+原版框右侧+间隔+技能框左侧+技能尺寸+技能框1右侧
@@ -70,11 +70,11 @@ namespace Coralite.Content.CustomHooks
                 foreach (var skill in skills)
                 {
                     FairySkill fSkill = FairyLoader.GetFairySkill(skill);
-                    Vector2 size = fSkill.GetSkillTipTotalSize(Main.LocalPlayer, bfi.FairyIV, out Vector2 nameSize);
+                    FairySkill.TipSize size = fSkill.GetSkillTipTotalSize(Main.LocalPlayer, bfi.FairyIV);
 
-                    DrawBack(topLeft, size);
-                    fSkill.DrawSkillTip(topLeft, Main.LocalPlayer, bfi.FairyIV, size, nameSize);
-                    topLeft.Y += size.Y+Padding/3 + HeightOff * 2;
+                    DrawBack(topLeft, size.totalSize);
+                    fSkill.DrawSkillTip(topLeft, Main.LocalPlayer, bfi.FairyIV, size);
+                    topLeft.Y += size.totalSize.Y + Padding / 3 + HeightOff * 2;
                 }
             }
         }

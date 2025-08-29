@@ -6105,7 +6105,7 @@ GlowMushroomLantern: {
 
 MeteorFireball: {
 	DisplayName: 火流星
-	Tooltip: "射出穿墙流星"
+	Tooltip: 射出穿墙流星
 }
 
 YellowFairyItem: {

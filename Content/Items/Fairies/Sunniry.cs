@@ -405,18 +405,16 @@ namespace Coralite.Content.Items.Fairies
                 fairyProj.Projectile.spriteDirection = (owner.Center.X - fairyProj.Projectile.Center.X) > 0 ? 1 : -1;
         }
 
-        public override int GetDamageBonus(int baseDamage, int level)
+        public override int GetDamage(int baseDamage, int level)
         {
             return (int)(baseDamage * (4f + 3f * Math.Clamp(level / 15f, 0, 1)));
         }
 
         public override string GetSkillTips(Player player, FairyIV iv)
         {
-            int level = iv.SkillLevel;
-            if (player.TryGetModPlayer(out FairyCatcherPlayer fcp))
-                level = fcp.GetFairySkillBonus(Type, level);
+            int level = Helper.GetBonusedSkillLevel(player, iv.SkillLevel, iv.SkillLevel);
 
-            return Description.Format(GetDamageBonus(iv.Damage, level));
+            return Description.Format(GetDamage(iv.Damage, level));
         }
 
         public override void ShootProj(BaseFairyProjectile fairyProj, Vector2 center, Vector2 velocity, int damage)

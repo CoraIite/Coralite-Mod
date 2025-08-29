@@ -28,6 +28,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.NormalSkills
             return 0.02f + level * 0.01f;
         }
 
+        public override int GetDamage(int baseDamage, int skillLevel)
+        {
+            return -1;
+        }
+
         public override void OnStartAttack(BaseFairyProjectile fairyProj)
         {
             SkillTimer = 30;
