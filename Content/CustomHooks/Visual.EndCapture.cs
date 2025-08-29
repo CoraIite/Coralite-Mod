@@ -16,6 +16,12 @@ namespace Coralite.Content.CustomHooks
         public static RenderTarget2D Screen1 => Instance.ScreenTargets[1];
         public static RenderTarget2D Screen2 => Instance.ScreenTargets[2];
         public static RenderTarget2D Screen3 => Instance.ScreenTargets[3];
+        /// <summary>
+        /// 如果没有必要，尽量避免直接访问这个屏幕中间值，可能会影响到与其他模组的交互效果，推荐在<see cref="EndCaptureDraw"/> 通过参数 screenSwap 使用它
+        /// </summary>
+        public static RenderTarget2D StaticScreenSwap => RenderHandleLoader.ScreenSwap;
+
+        public override void Load() => Instance = this;
 
         public override void EndCaptureDraw(SpriteBatch spriteBatch, GraphicsDevice graphicsDevice, RenderTarget2D screenSwap)
         {
