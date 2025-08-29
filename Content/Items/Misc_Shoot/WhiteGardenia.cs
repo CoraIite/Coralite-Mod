@@ -149,7 +149,7 @@ namespace Coralite.Content.Items.Misc_Shoot
 
         public Vector2 AimPosition { get => Projectile.velocity; set => Projectile.velocity = value; }
 
-        private int frameX=-1;
+        private int frameX = -1;
         private int frameY;
 
         public override void AI()
@@ -555,7 +555,7 @@ namespace Coralite.Content.Items.Misc_Shoot
                 return;
 
             Texture2D mainTex = Fire.Value;
-            var frameBox = mainTex.Frame(5, 7, frameX, frameY/2);
+            var frameBox = mainTex.Frame(5, 7, frameX, frameY / 2);
             SpriteEffects effects = DirSign > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
             Main.spriteBatch.Draw(mainTex, Projectile.Center + UnitToMouseV * 150 - Main.screenPosition, frameBox, Color.White * 0.8f

@@ -91,7 +91,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
     {
         public override string Texture => AssetDirectory.LandOfTheLustrousSeriesItems + Name;
 
-        public override bool CanFire => AttackTime>0;
+        public override bool CanFire => AttackTime > 0;
 
         public Vector2 scale = Vector2.One;
 

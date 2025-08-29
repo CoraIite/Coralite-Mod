@@ -95,7 +95,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
     {
         public override string Texture => AssetDirectory.LandOfTheLustrousSeriesItems + "ZirconGrail";
 
-        public override bool CanFire => AttackTime>0;
+        public override bool CanFire => AttackTime > 0;
 
         public override void SetStaticDefaults()
         {
@@ -156,7 +156,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     DustID.Torch, -Vector2.UnitY * Main.rand.NextFloat(3, 6));
                 d.noGravity = true;
 
-                if (Projectile.IsOwnedByLocalPlayer()&&AttackTime == 1)
+                if (Projectile.IsOwnedByLocalPlayer() && AttackTime == 1)
                 {
                     for (int i = 0; i < 3; i++)
                     {
@@ -325,7 +325,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                     break;
                 case 2://他紫砂了
                     {
-                        if (!VaultUtils.isServer&&!fireParticles.Any())
+                        if (!VaultUtils.isServer && !fireParticles.Any())
                         {
                             Projectile.Kill();
                             return;

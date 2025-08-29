@@ -15,7 +15,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Thunder
 {
-    public class ZacurrentRod : BasePlaceableItem,IMagikeCraftable
+    public class ZacurrentRod : BasePlaceableItem, IMagikeCraftable
     {
         public ZacurrentRod() : base(Item.sellPrice(0, 1), ItemRarityID.Purple, ModContent.TileType<ZacurrentRodTile>(), AssetDirectory.ThunderItems)
         {

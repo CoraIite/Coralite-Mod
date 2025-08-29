@@ -18,7 +18,7 @@ namespace Coralite.Content.Items.FlyingShields
     ])]
     public class HephaesthHelmet : ModItem, IMagikeCraftable
     {
-        public override string Texture => AssetDirectory.FlyingShieldItems+Name;
+        public override string Texture => AssetDirectory.FlyingShieldItems + Name;
 
         public void AddMagikeCraftRecipe()
         {
@@ -66,7 +66,7 @@ namespace Coralite.Content.Items.FlyingShields
 
             Item.value = Item.sellPrice(0, 21, 0, 0);
             Item.rare = ItemRarityID.Purple;
-            
+
             Item.vanity = true;
         }
 

@@ -120,23 +120,17 @@ namespace Coralite.Content.WorldGeneration
         public void GenGroundLock(out Point altarPoint)
         {
             //找到丛林，在地表处选择一个地方
-            Point p = default;
+            Point p = new Point(0, 0);
 
             //在丛林中心寻找一个位置
             for (int i = 0; i < 100; i++)
             {
                 Point p2 = new Point(PickAltarX(), (int)(Main.worldSurface * 0.4f));
 
-                for (int j = 0; j < 1000; j++)//向下遍历，找到地面
+                for (int j = 0; j < 500; j++)//向下遍历，找到地面
                 {
                     Tile t = Framing.GetTileSafely(p2);
-                    if ((t.HasTile && Main.tileSolid[t.TileType] 
-                        && t.TileType != TileID.ClayBlock 
-                        && t.TileType != TileID.Dirt 
-                        && t.TileType != TileID.Grass 
-                        && t.TileType != TileID.RainCloud 
-                        && t.TileType != TileID.Cloud 
-                        && t.TileType != TileID.Sunplate))//找到实心方块
+                    if ((t.HasTile && Main.tileSolid[t.TileType] && t.TileType != TileID.ClayBlock && t.TileType != TileID.Dirt && t.TileType != TileID.Grass && t.TileType != TileID.RainCloud && t.TileType != TileID.Cloud && t.TileType != TileID.Sunplate))//找到实心方块
                         break;
 
                     if (!CoralCatWorld && t.LiquidAmount > 0)
@@ -194,7 +188,7 @@ namespace Coralite.Content.WorldGeneration
             Dictionary<Color, int> wallDic = new()
             {
                 [new Color(85, 183, 206)] = ModContent.WallType<SmoothSkarnWallUnsafe>(),//55b7ce
-                [new Color(29, 30, 28)] = ModContent.WallType<Walls.Magike.HardBasaltWallUnsafe>(),//1d1e1c
+                [new Color(29, 30, 28)] = ModContent.WallType<Walls.Magike.HardBasaltWall>(),//1d1e1c
             };
 
             generator.GenerateByTopLeft(p, mainDic, wallDic);
@@ -214,14 +208,6 @@ namespace Coralite.Content.WorldGeneration
         /// <returns></returns>
         public int PickAltarX()
         {
-            if (GenVars.jungleMinX == -1 || GenVars.jungleMaxX == -1)
-            {
-                if (GenVars.dungeonSide == 1)
-                    return WorldGen.genRand.Next(500, 900);
-                else
-                    return WorldGen.genRand.Next(Main.maxTilesX - 900, Main.maxTilesX - 500);
-            }
-
             return (GenVars.jungleMinX + GenVars.jungleMaxX) / 2 + WorldGen.genRand.Next(-30, 30);
         }
 
@@ -892,7 +878,7 @@ namespace Coralite.Content.WorldGeneration
                 [new Color(64, 77, 100)] = ModContent.WallType<CrackedSkarnWallUnsafe>(),//404d64
                 [new Color(152, 158, 149)] = ModContent.WallType<ChalcedonyWallUnsafe>(),//989e95
 
-                [new Color(54, 52, 58)] = ModContent.WallType<HardBasaltWallUnsafe>(),//36343a
+                [new Color(54, 52, 58)] = ModContent.WallType<HardBasaltWall>(),//36343a
 
                 [new Color(189, 202, 222)] = WallID.Cloud,//bdcade
             };
@@ -1577,12 +1563,12 @@ namespace Coralite.Content.WorldGeneration
                 [new Color(64, 77, 100)] = ModContent.WallType<CrackedSkarnWallUnsafe>(),//404d64
                 [new Color(152, 158, 149)] = ModContent.WallType<ChalcedonyWallUnsafe>(),//989e95
 
-                [new Color(54, 52, 58)] = ModContent.WallType<HardBasaltWallUnsafe>(),//36343a
+                [new Color(54, 52, 58)] = ModContent.WallType<HardBasaltWall>(),//36343a
 
                 [new Color(189, 202, 222)] = WallID.Cloud,//bdcade
             };
 
-            List<SmallIslandType> types = [SmallIslandType.Ruins, SmallIslandType.Chest,SmallIslandType.Chest, SmallIslandType.Forest];
+            List<SmallIslandType> types = [SmallIslandType.Ruins, SmallIslandType.Chest, SmallIslandType.Forest];
             List<(SmallIslandType, int)> typesRecord = [];
 
             while (types.Count < smallIslandCount)

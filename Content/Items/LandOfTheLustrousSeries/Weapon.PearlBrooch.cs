@@ -135,7 +135,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public ref float ShootAngle => ref Projectile.ai[1];
 
-        public override bool CanFire => AttackTime>0;
+        public override bool CanFire => AttackTime > 0;
 
         public override void SetStaticDefaults()
         {
@@ -208,7 +208,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             if (AttackTime > 0)
             {
                 Projectile.rotation = MathF.Sin((1 - (AttackTime / Owner.itemTimeMax)) * MathHelper.TwoPi) * 0.3f;
-                if ((int)AttackTime == 1&&!VaultUtils.isServer)
+                if ((int)AttackTime == 1 && !VaultUtils.isServer)
                 {
                     ShootAngle++;
                     float factor = MathF.Sin(ShootAngle * 0.7f);
@@ -290,7 +290,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void AI()
         {
-            if (!VaultUtils.isServer&&Projectile.localAI[2] == 0)
+            if (!VaultUtils.isServer && Projectile.localAI[2] == 0)
             {
                 _vertexStrip = new VertexStrip();
                 Projectile.localAI[2] = 1;

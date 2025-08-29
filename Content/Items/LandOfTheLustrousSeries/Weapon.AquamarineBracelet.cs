@@ -136,7 +136,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void BeforeMove()
         {
-            if (!VaultUtils.isServer&&(int)Main.timeForVisualEffects % 20 == 0 && Main.rand.NextBool(2))
+            if (!VaultUtils.isServer && (int)Main.timeForVisualEffects % 20 == 0 && Main.rand.NextBool(2))
             {
                 float length = Main.rand.NextFloat(16, 32);
                 Color c = Main.rand.NextFromList(Color.White, AquamarineProj.brightC, AquamarineProj.highlightC);
@@ -273,7 +273,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void AI()
         {
-            if (!VaultUtils.isServer&&trail == null)
+            if (!VaultUtils.isServer && trail == null)
             {
                 const int maxPoint = 12;
                 trail ??= new Trail(Main.graphics.GraphicsDevice, maxPoint, new EmptyMeshGenerator()

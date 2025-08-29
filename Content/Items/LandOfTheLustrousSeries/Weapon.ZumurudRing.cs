@@ -136,7 +136,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
             if (AttackTime != 0)
             {
-                Vector2 dir = InMousePos- Projectile.Center;
+                Vector2 dir = InMousePos - Projectile.Center;
 
                 if (dir.Length() < 48)
                     idlePos += dir;
@@ -220,7 +220,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override void AI()
         {
-            if (!VaultUtils.isServer&&Projectile.localAI[0] == 0)
+            if (!VaultUtils.isServer && Projectile.localAI[0] == 0)
             {
                 Projectile.InitOldPosCache(16);
                 Projectile.InitOldRotCache(16);

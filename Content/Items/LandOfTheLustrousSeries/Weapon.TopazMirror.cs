@@ -373,10 +373,10 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 }
 
                 Vector2 dir = (Main.MouseWorld - pos).SafeNormalize(Vector2.Zero);
-                    int index = Projectile.NewProjectileFromThis<TopazSpike>(pos, dir
-                          , Owner.GetWeaponDamage(Item), Projectile.knockBack, 0, (Main.rand.NextFloat() * 0.5f) + 0.6f);
-                    Main.projectile[index].rotation = dir.ToRotation();
-                    Main.projectile[index].scale = 0.01f;
+                int index = Projectile.NewProjectileFromThis<TopazSpike>(pos, dir
+                      , Owner.GetWeaponDamage(Item), Projectile.knockBack, 0, (Main.rand.NextFloat() * 0.5f) + 0.6f);
+                Main.projectile[index].rotation = dir.ToRotation();
+                Main.projectile[index].scale = 0.01f;
             }
         }
 
@@ -386,9 +386,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             {
                 Vector2 pos = Main.MouseWorld + new Vector2(Main.rand.Next(-500, 500), -1200);
                 Vector2 dir = (Main.MouseWorld - pos).SafeNormalize(Vector2.Zero);
-                    int index = Projectile.NewProjectileFromThis<TopazMeteor>(pos, dir * 10
-                     , Owner.GetWeaponDamage(Item), Projectile.knockBack);
-                    Main.projectile[index].rotation = dir.ToRotation();
+                int index = Projectile.NewProjectileFromThis<TopazMeteor>(pos, dir * 10
+                 , Owner.GetWeaponDamage(Item), Projectile.knockBack);
+                Main.projectile[index].rotation = dir.ToRotation();
             }
         }
 
