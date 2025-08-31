@@ -8,7 +8,7 @@ using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.MagikeSystem
 {
-    [AutoLoadTexture(Path = AssetDirectory.MagikeUI)]
+    [VaultLoaden(AssetDirectory.MagikeUI)]
     public partial class MagikeItem : GlobalItem
     {
         public override bool AppliesToEntity(Item entity, bool lateInstantiation) => true;

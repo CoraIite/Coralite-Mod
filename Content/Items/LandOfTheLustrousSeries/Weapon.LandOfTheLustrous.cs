@@ -123,7 +123,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
     {
         public override string Texture => AssetDirectory.LandOfTheLustrousSeriesItems + Name;
 
-        public override bool CanFire => AttackTime>0;
+        public override bool CanFire => AttackTime > 0;
 
         public int itemType;
 
@@ -192,7 +192,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         {
             positionSmoother ??= new SecondOrderDynamics_Vec2(1f, 0.5f, 0, Projectile.Center);
             rotationSmoother ??= new SecondOrderDynamics_Float(1f, 0.75f, 0, 0);
-            
+
             if (oldDirections == null)
             {
                 oldDirections = new int[30];
@@ -357,9 +357,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Draws.Add(new LandOfTheLustrousData(Projectile.rotation + 1));
         }
 
-        public override BitsByte SendBitsByte(BitsByte flags)
+        public override BitsByte SandBitsByte(BitsByte flags)
         {
-            var b = base.SendBitsByte(flags);
+            var b = base.SandBitsByte(flags);
             b[2] = netNewDrawer;
             netNewDrawer = false;
 

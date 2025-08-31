@@ -27,12 +27,12 @@ namespace Coralite.Content.Items.MagikeSeries1
         }
     }
 
-    [AutoLoadTexture(Path = AssetDirectory.MagikeSeries1Item)]
+    [VaultLoaden(AssetDirectory.MagikeSeries1Item)]
     public class MagicCrystalHookProjectile : ModProjectile
     {
         public override string Texture => AssetDirectory.MagikeSeries1Item + Name;
 
-        [AutoLoadTexture(Name = "MagicCrystalHookChain")]
+        [VaultLoaden("{@classPath}" + "MagicCrystalHookChain")]
         public static ATex ChainTexture { get; private set; }
 
         public override void SetStaticDefaults()

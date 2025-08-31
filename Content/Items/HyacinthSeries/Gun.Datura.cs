@@ -67,7 +67,7 @@ namespace Coralite.Content.Items.HyacinthSeries
         }
     }
 
-    [AutoLoadTexture(Path = AssetDirectory.HyacinthSeriesItems)]
+    [VaultLoaden(AssetDirectory.HyacinthSeriesItems)]
     public class DaturaHeldProj : BaseGunHeldProj
     {
         public DaturaHeldProj() : base(0.1f, 24, -6, AssetDirectory.HyacinthSeriesItems) { }

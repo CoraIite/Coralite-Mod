@@ -10,7 +10,7 @@ using Terraria.UI.Chat;
 
 namespace Coralite.Content.CoraliteNotes.Readfragment
 {
-    [AutoLoadTexture(Path = AssetDirectory.NoteReadfragment)]
+    [VaultLoaden(AssetDirectory.NoteReadfragment)]
     public class FragmentPage : KnowledgePage
     {
         public static LocalizedText ClickToJump { get; set; }
@@ -85,7 +85,7 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
         //}
     }
 
-    //[AutoLoadTexture(Path = AssetDirectory.NoteReadfragment)]
+    //[VaultLoaden(AssetDirectory.NoteReadfragment)]
     //public class FragmentSlot : UIElement
     //{
     //    public int KnowledgeID;

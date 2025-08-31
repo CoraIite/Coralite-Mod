@@ -11,7 +11,7 @@ using Terraria.UI;
 
 namespace Coralite.Content.CoraliteNotes
 {
-    [AutoLoadTexture(Path = AssetDirectory.CoraliteNote)]
+    [VaultLoaden(AssetDirectory.CoraliteNote)]
     public class CollectImage : UIElement
     {
         private readonly int _itemType;

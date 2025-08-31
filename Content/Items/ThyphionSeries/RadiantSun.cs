@@ -118,18 +118,18 @@ namespace Coralite.Content.Items.ThyphionSeries
         }
     }
 
-    [AutoLoadTexture(Path = AssetDirectory.ThyphionSeriesItems)]
+    [VaultLoaden(AssetDirectory.ThyphionSeriesItems)]
     public class RadiantSunHeldProj : BaseDashBow, IDrawAdditive
     {
         public override string Texture => AssetDirectory.ThyphionSeriesItems + "RadiantSun";
 
         private Vector2 arrowPos;
 
-        [AutoLoadTexture(Name = "RadiantSun_Glow")]
+        [VaultLoaden("{@classPath}" + "RadiantSun_Glow")]
         public static ATex GlowTex { get; private set; }
-        [AutoLoadTexture(Name = "RadiantSunArrow")]
+        [VaultLoaden("{@classPath}" + "RadiantSunArrow")]
         public static ATex ArrowTex { get; private set; }
-        [AutoLoadTexture(Name = "RadiantSunLight")]
+        [VaultLoaden("{@classPath}" + "RadiantSunLight")]
         public static ATex LightTex { get; private set; }
 
         public ref float ArrowLength => ref Projectile.localAI[0];

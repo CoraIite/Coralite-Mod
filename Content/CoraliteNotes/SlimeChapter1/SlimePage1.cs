@@ -8,7 +8,7 @@ using Terraria.Localization;
 
 namespace Coralite.Content.CoraliteNotes.SlimeChapter1
 {
-    [AutoLoadTexture(Path = AssetDirectory.NoteSlime1)]
+    [VaultLoaden(AssetDirectory.NoteSlime1)]
     public class SlimePage1 : KnowledgePage
     {
         public static LocalizedText Title { get; private set; }

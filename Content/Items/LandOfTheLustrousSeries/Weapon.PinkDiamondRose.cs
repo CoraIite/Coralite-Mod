@@ -95,7 +95,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         private PrimitivePRTGroup group;
         private Vector2 offset;
 
-        public override bool CanFire => AttackTime>0;
+        public override bool CanFire => AttackTime > 0;
 
         public override void SetStaticDefaults()
         {
@@ -185,7 +185,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 else
                 {
                     Projectile.rotation = Projectile.rotation.AngleTowards((InMousePos - Projectile.Center).ToRotation() + 1.57f, MathHelper.TwoPi / halfTime);
-                    if (!VaultUtils.isServer&&AttackTime == 1)
+                    if (!VaultUtils.isServer && AttackTime == 1)
                     {
                         Vector2 dir = (Projectile.rotation - 1.57f).ToRotationVector2();
                         offset = -dir * 128;

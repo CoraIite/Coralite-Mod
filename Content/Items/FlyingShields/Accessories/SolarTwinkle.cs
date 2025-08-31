@@ -147,7 +147,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
     /// <summary>
     /// ai0输入初始角度
     /// </summary>
-    [AutoLoadTexture(Path = AssetDirectory.FlyingShieldAccessories)]
+    [VaultLoaden(AssetDirectory.FlyingShieldAccessories)]
     public class SolarTwinkleSlash : BaseSwingProj, IDrawWarp, IDrawAdditive, IDrawNonPremultiplied
     {
         public override string Texture => AssetDirectory.OtherProjectiles + "HorizontalLight";
@@ -157,11 +157,11 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
 
         public SolarTwinkleSlash() : base(0f, 16) { }
 
-        [AutoLoadTexture(Path = AssetDirectory.OtherProjectiles, Name = "WarpTex")]
+        [VaultLoaden(AssetDirectory.OtherProjectiles + "WarpTex")]
         public static ATex WarpTexture { get; private set; }
-        [AutoLoadTexture(Name = "SolarTwinkleGradient")]
+        [VaultLoaden("{@classPath}" + "SolarTwinkleGradient")]
         public static ATex GradientTexture { get; private set; }
-        [AutoLoadTexture(Name = "SolarTwinkleProj")]
+        [VaultLoaden("{@classPath}" + "SolarTwinkleProj")]
         public static ATex HeldTex { get; private set; }
 
         public int delay;

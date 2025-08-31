@@ -117,30 +117,30 @@ namespace Coralite.Content.Items.Misc_Shoot
         }
     }
 
-    [AutoLoadTexture(Path = AssetDirectory.Misc_Shoot)]
+    [VaultLoaden(AssetDirectory.Misc_Shoot)]
     public class WhiteGardeniaHeldProj : BaseGunHeldProj
     {
         public WhiteGardeniaHeldProj() : base(0.02f, 50, -10, AssetDirectory.Misc_Shoot) { }
 
-        [AutoLoadTexture(Name = "WhiteGardenia_Glow")]
+        [VaultLoaden("{@classPath}" + "WhiteGardenia_Glow")]
         public static ATex Highlight { get; private set; }
 
-        [AutoLoadTexture(Name = "WhiteGardeniaSpawn")]
+        [VaultLoaden("{@classPath}" + "WhiteGardeniaSpawn")]
         public static ATex SpawnAnmi { get; private set; }
 
-        [AutoLoadTexture(Name = "WhiteGardeniaFade")]
+        [VaultLoaden("{@classPath}" + "WhiteGardeniaFade")]
         public static ATex KillAnmi { get; private set; }
 
-        [AutoLoadTexture(Name = "WhiteGardeniaAim")]
+        [VaultLoaden("{@classPath}" + "WhiteGardeniaAim")]
         public static ATex AimMouse { get; private set; }
 
-        [AutoLoadTexture(Name = "WhiteGardeniaNumber")]
+        [VaultLoaden("{@classPath}" + "WhiteGardeniaNumber")]
         public static ATex NumberTex { get; private set; }
 
-        [AutoLoadTexture(Name = "WhiteGardeniaSP")]
+        [VaultLoaden("{@classPath}" + "WhiteGardeniaSP")]
         public static ATex SpecialAttackTex { get; private set; }
 
-        [AutoLoadTexture(Name = "WhiteGardeniaFire")]
+        [VaultLoaden("{@classPath}" + "WhiteGardeniaFire")]
         public static ATex Fire { get; private set; }
 
         public ref float Timer => ref Projectile.localAI[0];
@@ -149,7 +149,7 @@ namespace Coralite.Content.Items.Misc_Shoot
 
         public Vector2 AimPosition { get => Projectile.velocity; set => Projectile.velocity = value; }
 
-        private int frameX=-1;
+        private int frameX = -1;
         private int frameY;
 
         public override void AI()
@@ -555,7 +555,7 @@ namespace Coralite.Content.Items.Misc_Shoot
                 return;
 
             Texture2D mainTex = Fire.Value;
-            var frameBox = mainTex.Frame(5, 7, frameX, frameY/2);
+            var frameBox = mainTex.Frame(5, 7, frameX, frameY / 2);
             SpriteEffects effects = DirSign > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
 
             Main.spriteBatch.Draw(mainTex, Projectile.Center + UnitToMouseV * 150 - Main.screenPosition, frameBox, Color.White * 0.8f

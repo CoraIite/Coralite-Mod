@@ -7,7 +7,7 @@ using Terraria.Localization;
 
 namespace Coralite.Content.CoraliteNotes.Readfragment
 {
-    [AutoLoadTexture(Path = AssetDirectory.NoteReadfragment)]
+    [VaultLoaden(AssetDirectory.NoteReadfragment)]
     public class DescriptionPage : KnowledgePage
     {
         public static LocalizedText Description { get; private set; }

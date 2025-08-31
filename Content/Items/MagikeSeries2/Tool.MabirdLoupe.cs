@@ -17,16 +17,16 @@ using Terraria.ModLoader.IO;
 
 namespace Coralite.Content.Items.MagikeSeries2
 {
-    [AutoLoadTexture(Path = AssetDirectory.MagikeSeries2Item)]
+    [VaultLoaden(AssetDirectory.MagikeSeries2Item)]
     [PlayerEffect(ExtraEffectNames = [ShowBackLine])]
     public class MabirdLoupe() : BaseMaterial(1, Item.sellPrice(0, 5)
         , ModContent.RarityType<CrystallineMagikeRarity>(), AssetDirectory.MagikeSeries2Item), IMagikeCraftable
     {
         public const string ShowBackLine = "MabirdLoupeA";
 
-        [AutoLoadTexture(Name = "MabirdLoupeClose")]
+        [VaultLoaden("{@classPath}" + "MabirdLoupeClose")]
         public static ATex CloseTex { get; private set; }
-        [AutoLoadTexture(Name = "MabirdLoupeClose2")]
+        [VaultLoaden("{@classPath}" + "MabirdLoupeClose2")]
         public static ATex CloseTex2 { get; private set; }
 
         /// <summary>

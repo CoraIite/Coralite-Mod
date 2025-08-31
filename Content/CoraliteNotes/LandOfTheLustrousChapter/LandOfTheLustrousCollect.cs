@@ -9,7 +9,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.CoraliteNotes.LandOfTheLustrousChapter
 {
-    [AutoLoadTexture(Path = AssetDirectory.NoteWeapons)]
+    [VaultLoaden(AssetDirectory.NoteWeapons)]
     public class LandOfTheLustrousCollect : CollectionPage
     {
         public static bool[] Unlocks = new bool[(int)GemWeapons.Count];

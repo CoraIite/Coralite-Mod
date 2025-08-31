@@ -9,9 +9,9 @@ namespace Coralite.Content.Items.Misc_Equip
 {
     [PlayerEffect()]
     [AutoloadEquip(EquipType.Head)]
-    public class Butter:ModItem
+    public class Butter : ModItem
     {
-        public override string Texture => AssetDirectory.Misc_Equip+Name;
+        public override string Texture => AssetDirectory.Misc_Equip + Name;
 
         public override void SetStaticDefaults()
         {

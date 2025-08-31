@@ -54,7 +54,7 @@ namespace Coralite.Content.Items.HyacinthSeries
         }
     }
 
-    [AutoLoadTexture(Path = AssetDirectory.HyacinthSeriesItems)]
+    [VaultLoaden(AssetDirectory.HyacinthSeriesItems)]
     public class WisteriaHeldProj : BaseGunHeldProj
     {
         public WisteriaHeldProj() : base(0.2f, 15, -6, AssetDirectory.HyacinthSeriesItems) { }

@@ -12,7 +12,7 @@ using Terraria.ID;
 namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 {
     [AutoloadBossHead]
-    [AutoLoadTexture(Path = AssetDirectory.ZacurrentDragon)]
+    [VaultLoaden(AssetDirectory.ZacurrentDragon)]
     public partial class ZacurrentDragon : ModNPC
     {
         public override string Texture => AssetDirectory.ZacurrentDragon + Name;
@@ -54,9 +54,9 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
         public float selfAlpha = 1f;
 
-        [AutoLoadTexture(Name = "ZacurrentDragon_Highlight")]
+        [VaultLoaden("{@classPath}" + "ZacurrentDragon_Highlight")]
         public static ATex GlowTex { get; private set; }
-        [AutoLoadTexture(Name = "ZacurrentDragonWhite")]
+        [VaultLoaden("{@classPath}" + "ZacurrentDragonWhite")]
         public static ATex WhiteTex { get; private set; }
         internal static Color ZacurrentDustPurple = new Color(233, 195, 255);
         internal static Color ZacurrentPurple = new(135, 94, 255);

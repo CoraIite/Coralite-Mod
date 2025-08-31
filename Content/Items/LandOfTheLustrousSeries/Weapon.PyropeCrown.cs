@@ -93,7 +93,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         private Vector2 scale = Vector2.One;
 
-        public override bool CanFire => AttackTime!=0;
+        public override bool CanFire => AttackTime != 0;
 
         public override void SetStaticDefaults()
         {

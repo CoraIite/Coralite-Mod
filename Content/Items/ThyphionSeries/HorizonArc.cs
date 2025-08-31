@@ -125,7 +125,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         }
     }
 
-    [AutoLoadTexture(Path = AssetDirectory.ThyphionSeriesItems)]
+    [VaultLoaden(AssetDirectory.ThyphionSeriesItems)]
     public class HorizonArcHeldProj : BaseDashBow, IDrawPrimitive, IDrawAdditive
     {
         public override string Texture => AssetDirectory.ThyphionSeriesItems + "HorizonArc";
@@ -640,7 +640,7 @@ namespace Coralite.Content.Items.ThyphionSeries
     /// <summary>
     /// 使用ai0传入目标NPC，如果没有目标那么就会直接正常射出
     /// </summary>
-    [AutoLoadTexture(Path = AssetDirectory.ThyphionSeriesItems)]
+    [VaultLoaden(AssetDirectory.ThyphionSeriesItems)]
     public class RainbowArrow : ModProjectile, IDrawPrimitive, IDrawNonPremultiplied, IPostDrawAdditive
     {
         public override string Texture => AssetDirectory.ThyphionSeriesItems + "HorizonArcArrow";
@@ -658,7 +658,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public const int trailPoint = 30;
 
-        [AutoLoadTexture(Name = "HorizonArcGradient2")]
+        [VaultLoaden("{@classPath}" + "HorizonArcGradient2")]
         public static ATex Gradient2 { get; private set; }
 
         public override void SetDefaults()

@@ -11,7 +11,7 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.CoraliteNotes.DashBowChapter
 {
-    [AutoLoadTexture(Path = AssetDirectory.NoteWeapons)]
+    [VaultLoaden(AssetDirectory.NoteWeapons)]
     public class DashBowCollect : CollectionPage
     {
         public static bool[] Unlocks = new bool[(int)DashBows.Count];

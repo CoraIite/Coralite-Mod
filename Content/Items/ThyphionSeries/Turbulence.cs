@@ -136,7 +136,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         }
     }
 
-    [AutoLoadTexture(Path = AssetDirectory.ThyphionSeriesItems)]
+    [VaultLoaden(AssetDirectory.ThyphionSeriesItems)]
     public class TurbulenceHeldProj : BaseDashBow, IDrawPrimitive
     {
         public override string Texture => AssetDirectory.ThyphionSeriesItems + nameof(Turbulence);
@@ -149,7 +149,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         public float handOffset;
         public float trailAlpha;
 
-        [AutoLoadTexture(Name = "TurbulenceArrow")]
+        [VaultLoaden("{@classPath}" + "TurbulenceArrow")]
         public static ATex TurbulenceArrow1 { get; private set; }
 
         public override int GetItemType()
@@ -359,7 +359,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         }
     }
 
-    [AutoLoadTexture(Path = AssetDirectory.ThyphionSeriesItems)]
+    [VaultLoaden(AssetDirectory.ThyphionSeriesItems)]
     public class TurbulenceArrow : ModProjectile, IDrawPrimitive, IDrawNonPremultiplied, IDrawWarp, IPostDrawAdditive
     {
         public override string Texture => AssetDirectory.ThyphionSeriesItems + Name;
@@ -368,7 +368,7 @@ namespace Coralite.Content.Items.ThyphionSeries
         public Trail trail;
         public Trail warpTrail;
 
-        [AutoLoadTexture(Path = AssetDirectory.Particles, Name = "LightShot2")]
+        [VaultLoaden(AssetDirectory.Particles + "LightShot2")]
         public static ATex ArrowHighlight { get; private set; }
         public static ATex TurbulencePin { get; private set; }
         public static ATex TurbulenceGradient { get; private set; }

@@ -12,7 +12,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.HyacinthSeries
 {
-    [AutoLoadTexture(Path = AssetDirectory.HyacinthSeriesItems)]
+    [VaultLoaden(AssetDirectory.HyacinthSeriesItems)]
     public class RosemaryHeldProj : BaseGunHeldProj
     {
         public override string Texture => AssetDirectory.HyacinthSeriesItems + Name;

@@ -125,7 +125,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Producers
         #endregion
     }
 
-    [AutoLoadTexture(Path = AssetDirectory.MagikeUI)]
+    [VaultLoaden(AssetDirectory.MagikeUI)]
     public class ProduceBar : UIElement
     {
         public static ATex ProgressBar { get; private set; }

@@ -7,7 +7,7 @@ using Terraria.Localization;
 
 namespace Coralite.Content.CoraliteNotes.MagikeChapter2
 {
-    [AutoLoadTexture(Path = AssetDirectory.NoteMagikeS2)]
+    [VaultLoaden(AssetDirectory.NoteMagikeS2)]
     public class MabirdNestConnect : KnowledgePage
     {
         public static LocalizedText ConnectDescription { get; private set; }

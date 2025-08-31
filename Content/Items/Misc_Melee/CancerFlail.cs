@@ -67,14 +67,14 @@ namespace Coralite.Content.Items.Misc_Melee
         }
     }
 
-    [AutoLoadTexture(Path = AssetDirectory.Misc_Melee)]
+    [VaultLoaden(AssetDirectory.Misc_Melee)]
     public class CancerFlailProj : BaseSilkKnifeSpecialProj
     {
         public override string Texture => AssetDirectory.Misc_Melee + Name;
 
-        [AutoLoadTexture(Name = "CancerFlailChain")]
+        [VaultLoaden("{@classPath}" + "CancerFlailChain")]
         public static ATex ChainTex { get; private set; }
-        [AutoLoadTexture(Name = "CancerFlailHandle")]
+        [VaultLoaden("{@classPath}" + "CancerFlailHandle")]
         public static ATex HandleTex { get; private set; }
 
         public ref float Combo => ref Projectile.ai[0];

@@ -8,7 +8,7 @@ using Terraria.Localization;
 
 namespace Coralite.Content.CoraliteNotes.NightmareChapter
 {
-    [AutoLoadTexture(Path = AssetDirectory.NoteNightmare)]
+    [VaultLoaden(AssetDirectory.NoteNightmare)]
     public class NightmarePage : KnowledgePage
     {
         public static LocalizedText Title { get; private set; }

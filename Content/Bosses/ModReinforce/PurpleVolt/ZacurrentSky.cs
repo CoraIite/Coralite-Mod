@@ -7,7 +7,7 @@ using Terraria.Graphics.Effects;
 
 namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 {
-    [AutoLoadTexture(Path = AssetDirectory.ZacurrentDragon)]
+    [VaultLoaden(AssetDirectory.ZacurrentDragon)]
     public class ZacurrentSky : CustomSky
     {
         public static ATex BGNoise { get; set; }

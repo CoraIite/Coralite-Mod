@@ -24,7 +24,7 @@ namespace Coralite.Content.CoraliteNotes.Readfragment
         Normal,
     }
 
-    [AutoLoadTexture(Path = AssetDirectory.NoteReadfragment)]
+    [VaultLoaden(AssetDirectory.NoteReadfragment)]
     public class KnowledgeButtenTex
     {
         public static ATex KnowledgeButtenRune { get; private set; }

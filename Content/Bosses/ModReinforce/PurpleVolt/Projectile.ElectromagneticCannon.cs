@@ -18,14 +18,14 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
     /// 使用速度传入中心点的位置，位置传入末端的位置
     /// 激光长度2000，激光旋转跟随recorder1;
     /// </summary>
-    [AutoLoadTexture(Path = AssetDirectory.ZacurrentDragon)]
+    [VaultLoaden(AssetDirectory.ZacurrentDragon)]
     public class PurpleElectromagneticCannon : PurpleElectricBreath
     {
         const int DelayTime = 30;
         private float laserWidth;
 
         public List<Vector2> laserTrailPoints = new();
-        [AutoLoadTexture(Name = "CannonGradient")]
+        [VaultLoaden("{@classPath}" + "CannonGradient")]
         public static ATex GradientTex { get; set; }
 
         public override void SetStaticDefaults()

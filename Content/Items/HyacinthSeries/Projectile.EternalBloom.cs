@@ -10,7 +10,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.HyacinthSeries
 {
-    [AutoLoadTexture(Path = AssetDirectory.HyacinthSeriesItems)]
+    [VaultLoaden(AssetDirectory.HyacinthSeriesItems)]
     public class EternalBloomHeldProj : BaseGunHeldProj
     {
         public EternalBloomHeldProj() : base(0.2f, 16, -8, AssetDirectory.HyacinthSeriesItems) { }

@@ -1,13 +1,12 @@
 ﻿using Coralite.Content.Items.Magike.Pedestal;
 using Coralite.Core;
-using Coralite.Core.Attributes;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.Localization;
 
 namespace Coralite.Content.CoraliteNotes.MagikeChapter1
 {
-    [AutoLoadTexture(Path = AssetDirectory.NoteMagikeS1)]
+    [VaultLoaden(AssetDirectory.NoteMagikeS1)]
     public class Pedestal : KnowledgePage
     {
         public static LocalizedText PlacePedestal { get; private set; }

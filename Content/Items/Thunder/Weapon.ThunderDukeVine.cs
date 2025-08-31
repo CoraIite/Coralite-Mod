@@ -91,7 +91,7 @@ namespace Coralite.Content.Items.Thunder
         }
     }
 
-    [AutoLoadTexture(Path = AssetDirectory.ThunderItems)]
+    [VaultLoaden(AssetDirectory.ThunderItems)]
     public class ThunderDukeVineHeldProj : BaseGunHeldProj
     {
         public override string Texture => AssetDirectory.ThunderItems + "ThunderDukeVineProj";

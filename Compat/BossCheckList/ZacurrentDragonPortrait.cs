@@ -20,7 +20,7 @@ namespace Coralite.Compat.BossCheckList
 
         public static void DrawPortrait(SpriteBatch spriteBatch, Rectangle rect, Color color)
         {
-            Vector2 center = rect.Center()+new Vector2(0,-30);
+            Vector2 center = rect.Center() + new Vector2(0, -30);
 
             float scale = 1.2f;
 

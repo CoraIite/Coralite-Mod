@@ -7,12 +7,12 @@ using Terraria;
 
 namespace Coralite.Content.Bosses.Rediancie
 {
-    [AutoLoadTexture(Path = AssetDirectory.Rediancie)]
+    [VaultLoaden(AssetDirectory.Rediancie)]
     public class RedShield : Particle
     {
         public override string Texture => AssetDirectory.Rediancie + "RedShield";
 
-        [AutoLoadTexture(Name = "RedShield_Flow")]
+        [VaultLoaden("{@classPath}" + "RedShield_Flow")]
         public static ATex FlowTex { get; private set; }
 
         private Entity rediancie;

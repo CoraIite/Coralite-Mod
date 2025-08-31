@@ -598,7 +598,7 @@ namespace Coralite.Content.WorldGeneration
             };
             Dictionary<Color, int> wallDic = new()
             {
-                [new Color(255, 255, 0)] = ModContent.WallType<Walls.Magike.HardBasaltWallUnsafe>(),
+                [new Color(255, 255, 0)] = ModContent.WallType<Walls.Magike.HardBasaltWall>(),
             };
 
             generator.GenerateByTopLeft(new Point(genOrigin_x, genOrigin_y), mainDic, wallDic);

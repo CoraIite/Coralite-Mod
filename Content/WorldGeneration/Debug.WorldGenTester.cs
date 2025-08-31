@@ -36,8 +36,6 @@ namespace Coralite.Content.WorldGeneration
 
         public override bool CanUseItem(Player player)
         {
-            Main.NewText(CoraliteWorld.DigDigDigWorld);
-            return true;
             Vector2 myVector = Main.MouseWorld;
             Point p = myVector.ToTileCoordinates();
 
@@ -408,27 +406,6 @@ namespace Coralite.Content.WorldGeneration
                 new Actions.PlaceWall(WallID.HellstoneBrick));
 
             return;
-        }
-    }
-
-    public class WorldGenFix : ModItem
-    {
-        public override string Texture => AssetDirectory.DefaultItem;
-
-        public override void SetDefaults()
-        {
-            Item.useTime = Item.useAnimation = 15;
-            Item.useStyle = ItemUseStyleID.Swing;
-        }
-
-        public override bool CanUseItem(Player player)
-        {
-            CoraliteWorld.chaosWorld = false;
-            CoraliteWorld.CoralCatWorld = false;
-            CoraliteWorld.SuperCoralCatWorld = false;
-            CoraliteWorld.DigDigDigWorld = false;
-
-            return base.CanUseItem(player);
         }
     }
 
