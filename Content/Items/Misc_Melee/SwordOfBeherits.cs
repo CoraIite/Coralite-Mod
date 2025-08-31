@@ -97,7 +97,7 @@ namespace Coralite.Content.Items.Misc_Melee
         }
     }
 
-    [AutoLoadTexture(Path = AssetDirectory.Misc_Melee)]
+    [VaultLoaden(AssetDirectory.Misc_Melee)]
     public class SwordOfBeheritsSlash : BaseSwingProj, IDrawWarp
     {
         public override string Texture => AssetDirectory.Misc_Melee + "SwordOfBeherits";
@@ -106,7 +106,7 @@ namespace Coralite.Content.Items.Misc_Melee
         public ref float ZRotBase => ref Projectile.ai[1];
         public ref float EXScaleBase => ref Projectile.ai[2];
 
-        [AutoLoadTexture(Name = "SwordOfBeheritsGradient")]
+        [VaultLoaden("{@classPath}" + "SwordOfBeheritsGradient")]
         public static ATex GradientTexture { get; set; }
 
         public SwordOfBeheritsSlash() : base(0.785f, trailCount: 48) { }

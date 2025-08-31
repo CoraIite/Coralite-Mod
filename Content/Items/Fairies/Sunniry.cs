@@ -167,7 +167,7 @@ namespace Coralite.Content.Items.Fairies
     /// <summary>
     /// ai0传入拥有者，ai1传入角度
     /// </summary>
-    [AutoLoadTexture(Path = AssetDirectory.ThyphionSeriesItems)]
+    [VaultLoaden(AssetDirectory.ThyphionSeriesItems)]
     public class SunnyShot : BaseHeldProj, IDrawNonPremultiplied
     {
         public override string Texture => AssetDirectory.Blank;
@@ -373,7 +373,7 @@ namespace Coralite.Content.Items.Fairies
         }
     }
 
-    [AutoLoadTexture(Path = AssetDirectory.FairyItems)]
+    [VaultLoaden(AssetDirectory.FairyItems)]
     public class FSkill_SunnyShot : FSkill_ShootProj
     {
         public override string Texture => AssetDirectory.FairySkillIcons + "Light";

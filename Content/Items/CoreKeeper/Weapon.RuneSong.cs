@@ -1,11 +1,9 @@
 ﻿using Coralite.Content.ModPlayers;
 using Coralite.Core;
-using Coralite.Core.Attributes;
 using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
-using ReLogic.Content;
 using ReLogic.Utilities;
 using System;
 using System.Collections.Generic;
@@ -152,7 +150,7 @@ namespace Coralite.Content.Items.CoreKeeper
         }
     }
 
-    [AutoLoadTexture(Path =AssetDirectory.CoreKeeperItems)]
+    [VaultLoaden(AssetDirectory.CoreKeeperItems)]
     public class RuneSongSlash : BaseSwingProj, IDrawWarp
     {
         public override string Texture => AssetDirectory.CoreKeeperItems + "RuneSong";
@@ -160,7 +158,7 @@ namespace Coralite.Content.Items.CoreKeeper
         public ref float Combo => ref Projectile.ai[0];
         public ref float OwnerIndex => ref Projectile.ai[1];
 
-        [AutoLoadTexture(Name = "RuneSongGradient")]
+        [VaultLoaden("{@classPath}" + "RuneSongGradient")]
         public static ATex GradientTexture {  get; set; }
 
         public RuneSongSlash() : base(0.785f, trailCount: 48) { }

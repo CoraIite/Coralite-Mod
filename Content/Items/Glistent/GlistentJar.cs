@@ -38,12 +38,12 @@ namespace Coralite.Content.Items.Glistent
         }
     }
 
-    [AutoLoadTexture(Path = AssetDirectory.GlistentItems)]
+    [VaultLoaden(AssetDirectory.GlistentItems)]
     public class GlistentJarProj : BaseJarProj
     {
         public override string Texture => AssetDirectory.GlistentItems + "GlistentJar";
 
-        [AutoLoadTexture(Name = "GlistentJar_Highlight")]
+        [VaultLoaden("{@classPath}" + "GlistentJar_Highlight")]
         public static ATex HighlightTex { get; private set; }
 
         public override void InitFields()

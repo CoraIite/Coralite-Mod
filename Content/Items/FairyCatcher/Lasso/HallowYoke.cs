@@ -29,7 +29,7 @@ namespace Coralite.Content.Items.FairyCatcher.Lasso
         }
     }
 
-    [AutoLoadTexture(Path = AssetDirectory.FairyCatcherLasso)]
+    [VaultLoaden(AssetDirectory.FairyCatcherLasso)]
     public class HallowYokeSwing() : BaseLassoSwing(4)
     {
         public override string Texture => AssetDirectory.FairyCatcherLasso + "HallowYokeCatcher";
@@ -96,7 +96,7 @@ namespace Coralite.Content.Items.FairyCatcher.Lasso
         public override Color GetStringColor(Vector2 pos) => Lighting.GetColor((int)pos.X / 16, (int)(pos.Y / 16f));
     }
 
-    [AutoLoadTexture(Path = AssetDirectory.FairyCatcherLasso)]
+    [VaultLoaden(AssetDirectory.FairyCatcherLasso)]
     public class HallowYokeSlash:ModProjectile
     {
         public override string Texture => AssetDirectory.FairyCatcherLasso + "HallowYokeCatcher";

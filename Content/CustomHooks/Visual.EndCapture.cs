@@ -43,7 +43,7 @@ namespace Coralite.Content.CustomHooks
 
             Effect effect = Filters.Scene["WarpTrail"].GetShader().Shader;
             effect.Parameters["tex0"].SetValue(Main.screenTargetSwap);
-            effect.Parameters["i"].SetValue(0.02f);
+            effect.Parameters["i"].SetValue(0.08f);
             effect.CurrentTechnique.Passes[0].Apply();
             Main.spriteBatch.Draw(Screen0, Vector2.Zero, Color.White);
             Main.spriteBatch.End();

@@ -33,7 +33,7 @@ namespace Coralite.Helpers
         /// <returns></returns>
         public static Texture2D GetTexture(this Fairy fairy)
         {
-            return FairySystem.FairyAssets[fairy.Type].Value;
+            return FairyAsset.FairyAssets[fairy.Type].Value;
         }
 
         public static void QuickDraw(this Fairy fairy, Vector2 screenPos,Color lightColor, float exRot)

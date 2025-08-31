@@ -349,7 +349,7 @@ namespace Coralite.Content.Items.Glistent
         }
     }
 
-    [AutoLoadTexture(Path = AssetDirectory.GlistentItems)]
+    [VaultLoaden(AssetDirectory.GlistentItems)]
     public class LeechSeedFairyBuff : FairyBuff
     {
         public static ATex LeechSeedFairyTex { get; set; }

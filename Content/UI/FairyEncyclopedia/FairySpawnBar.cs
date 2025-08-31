@@ -1,5 +1,4 @@
 ﻿using Coralite.Core;
-using Coralite.Core.Attributes;
 using Coralite.Core.Loaders;
 using Coralite.Core.Systems.FairyCatcherSystem;
 using Coralite.Helpers;
@@ -10,7 +9,7 @@ using Terraria.UI.Chat;
 
 namespace Coralite.Content.UI.FairyEncyclopedia
 {
-    [AutoLoadTexture(Path = AssetDirectory.UI)]
+    [VaultLoaden(AssetDirectory.UI)]
     public class FairySpawnBar : UIElement
     {
         public static ATex AlphaBar { get; set; }
@@ -41,7 +40,7 @@ namespace Coralite.Content.UI.FairyEncyclopedia
         }
     }
 
-    [AutoLoadTexture(Path = AssetDirectory.UI)]
+    [VaultLoaden(AssetDirectory.UI)]
     public class FairySkillBar : UIElement
     {
         public static ATex AlphaBar { get; set; }

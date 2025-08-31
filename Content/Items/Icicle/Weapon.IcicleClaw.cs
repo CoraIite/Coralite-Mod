@@ -41,7 +41,7 @@ namespace Coralite.Content.Items.Icicle
         }
     }
 
-    [AutoLoadTexture(Path = AssetDirectory.IcicleItems)]
+    [VaultLoaden(AssetDirectory.IcicleItems)]
     public class IcicleClawProj : BaseTongsProj
     {
         public override string Texture => AssetDirectory.IcicleItems + Name;

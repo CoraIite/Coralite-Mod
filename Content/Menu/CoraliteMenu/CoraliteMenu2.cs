@@ -1,13 +1,48 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Coralite.Core;
+using Microsoft.Xna.Framework.Graphics;
+using Terraria;
 
 namespace Coralite.Content.Menu.CoraliteMenu
 {
-    public class CoraliteMenu2
+    public class CoraliteMenu2 : CoraliteMenu
     {
+        public override ModSurfaceBackgroundStyle MenuBackgroundStyle => ModContent.GetInstance<CoraliteMenuBack>();
+    }
 
+    [VaultLoaden(AssetDirectory.Menus)]
+    public class CoraliteMenuBack : ModSurfaceBackgroundStyle
+    {
+        public static ATex CoraliteMenuBackBack { get; set; }
+
+        public override void ModifyFarFades(float[] fades, float transitionSpeed)
+        {
+            for (int i = 0; i < fades.Length; i++)
+            {
+                if (i == Slot)
+                {
+                    fades[i] += transitionSpeed;
+                    if (fades[i] > 1f)
+                    {
+                        fades[i] = 1f;
+                    }
+                }
+                else
+                {
+                    fades[i] -= transitionSpeed;
+                    if (fades[i] < 0f)
+                    {
+                        fades[i] = 0f;
+                    }
+                }
+            }
+        }
+
+        public override bool PreDrawCloseBackground(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(CoraliteMenuBackBack.Value,
+                Vector2.Zero, null, Color.White, 0, Vector2.Zero, CoraliteMenuBackBack.Width() / Main.screenWidth, 0, 0);
+
+            return false;
+        }
     }
 }

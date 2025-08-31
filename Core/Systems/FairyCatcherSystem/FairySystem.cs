@@ -80,7 +80,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 #endif
 
             LoadFairyDatas(path);
-            LoadFairyTexture();
         }
 
         public override void SetStaticDefaults()
@@ -223,7 +222,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             //ProgressBarOuter = null;
             //ProgressBarInner = null;
             UnloadLocalization();
-            UnloadFairyTexture();
             FairyLoader.Unload();
             ElfPortalTrades = null;
         }

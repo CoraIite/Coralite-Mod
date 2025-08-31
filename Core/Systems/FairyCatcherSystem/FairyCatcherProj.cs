@@ -427,7 +427,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                 var core = CoraliteContent.GetFairyCircleCore(fcp.FairyCircleCoreType);
                 edgeColor = core.EdgeColor ?? edgeColor;
                 innerColor = core.InnerColor ?? innerColor;
-                coreTex = FairySystem.FairyCatcherCoreAssets[core.Type].Value;
+                coreTex = FairyAsset.FairyCatcherCoreAssets[core.Type].Value;
             }
 
             if (State != AIStates.Shooting)

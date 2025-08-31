@@ -20,7 +20,7 @@ using Terraria.UI;
 
 namespace Coralite.Content.UI.FairyEncyclopedia
 {
-    [AutoLoadTexture(Path = AssetDirectory.FairyUI)]
+    [VaultLoaden(AssetDirectory.FairyUI)]
     public class FairyEncyclopedia : BetterUIState
     {
         public static ATex LeftButton { get; set; }

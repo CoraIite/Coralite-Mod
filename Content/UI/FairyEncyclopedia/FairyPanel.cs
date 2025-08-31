@@ -7,7 +7,7 @@ using Terraria.UI;
 
 namespace Coralite.Content.UI.FairyEncyclopedia
 {
-    [AutoLoadTexture(Path = AssetDirectory.FairyUI)]
+    [VaultLoaden(AssetDirectory.FairyUI)]
     public class FairyPanel : UIPanel
     {
         public static ATex FairyPanelCorner { get; set; }

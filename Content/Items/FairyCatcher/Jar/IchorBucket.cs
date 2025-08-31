@@ -39,12 +39,12 @@ namespace Coralite.Content.Items.FairyCatcher.Jar
         }
     }
 
-    [AutoLoadTexture(Path =AssetDirectory.FairyCatcherJar)]
+    [VaultLoaden(AssetDirectory.FairyCatcherJar)]
     public class IchorBucketProj : BaseJarProj
     {
         public override string Texture => AssetDirectory.FairyCatcherJar + "IchorBucket";
 
-        [AutoLoadTexture(Name = "IchorBucket_Highlight")]
+        [VaultLoaden("{@classPath}" + "IchorBucket_Highlight")]
         public static ATex HighlightTex { get;private set; }   
 
         public override void SetDefaults()

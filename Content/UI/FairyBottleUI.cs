@@ -188,7 +188,7 @@ namespace Coralite.Content.UI
     /// <summary>
     /// 吊着仙灵瓶的藤蔓
     /// </summary>
-    [AutoLoadTexture(Path = AssetDirectory.FairyUI)]
+    [VaultLoaden(AssetDirectory.FairyUI)]
     public class FairyBottleHang : UIElement
     {
         public static int VineType = 1;
@@ -484,7 +484,7 @@ namespace Coralite.Content.UI
         }
     }
 
-    [AutoLoadTexture(Path = AssetDirectory.FairyUI)]
+    [VaultLoaden(AssetDirectory.FairyUI)]
     public class SortButton : UIElement
     {
         public static ATex FairySortButton { get; set; }

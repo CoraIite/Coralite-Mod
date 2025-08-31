@@ -219,7 +219,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <returns></returns>
         public TipSize GetSkillTipTotalSize(Player player, FairyIV iv)
         {
-            Texture2D tex = FairySystem.FairySkillAssets[Type].Value;
+            Texture2D tex = FairyAsset.FairySkillAssets[Type].Value;
 
             float x = tex.Width + 10;
 
@@ -269,7 +269,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         public Vector2 GetSkillTipSizeForUI()
         {
-            Texture2D tex = FairySystem.FairySkillAssets[Type].Value;
+            Texture2D tex = FairyAsset.FairySkillAssets[Type].Value;
 
             float x = tex.Width + 10;
 
@@ -281,7 +281,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         public void DrawSkillTipInUI(Vector2 topLeft, Vector2 size)
         {
-            Texture2D tex = FairySystem.FairySkillAssets[Type].Value;
+            Texture2D tex = FairyAsset.FairySkillAssets[Type].Value;
             tex.QuickCenteredDraw(Main.spriteBatch, topLeft + new Vector2(tex.Width / 2, size.Y / 2));
 
             topLeft.X += tex.Width + 10;
@@ -303,7 +303,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         {
             //topLeft.Y += 4;
 
-            Texture2D tex = FairySystem.FairySkillAssets[Type].Value;
+            Texture2D tex = FairyAsset.FairySkillAssets[Type].Value;
             tex.QuickCenteredDraw(Main.spriteBatch, topLeft + tex.Size() / 2);
 
             //int level = iv.SkillLevel;

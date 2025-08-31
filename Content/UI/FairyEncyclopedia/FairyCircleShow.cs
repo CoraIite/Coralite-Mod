@@ -150,7 +150,7 @@ namespace Coralite.Content.UI.FairyEncyclopedia
             if (Main.LocalPlayer.TryGetModPlayer(out FairyCatcherPlayer fcp) && fcp.FairyCircleCoreType > -1)
             {
                 var core = CoraliteContent.GetFairyCircleCore(fcp.FairyCircleCoreType);
-                tex = FairySystem.FairyCatcherCoreAssets[core.Type].Value;
+                tex = FairyAsset.FairyCatcherCoreAssets[core.Type].Value;
             }
 
             tex.QuickCenteredDraw(Main.spriteBatch, pos, lightColor, 0);

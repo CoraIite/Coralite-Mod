@@ -33,7 +33,7 @@ namespace Coralite.Content.Items.FairyCatcher.Tongs
         }
     }
 
-    [AutoLoadTexture(Path = AssetDirectory.FairyCatcherTong)]
+    [VaultLoaden(AssetDirectory.FairyCatcherTong)]
     public class BloodTentacleProj : BaseTongsProj
     {
         public static ATex BloodTentacleChain { get; private set; }

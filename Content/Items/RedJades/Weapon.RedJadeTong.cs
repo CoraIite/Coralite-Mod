@@ -38,7 +38,7 @@ namespace Coralite.Content.Items.RedJades
         }
     }
 
-    [AutoLoadTexture(Path = AssetDirectory.RedJadeItems)]
+    [VaultLoaden(AssetDirectory.RedJadeItems)]
     public class RedJadeTongProj : BaseTongsProj
     {
         public override string Texture => AssetDirectory.RedJadeItems + Name;
@@ -69,7 +69,7 @@ namespace Coralite.Content.Items.RedJades
             => -HandleRot.ToRotationVector2() * 4;
     }
 
-    [AutoLoadTexture(Path = AssetDirectory.RedJadeItems)]
+    [VaultLoaden(AssetDirectory.RedJadeItems)]
     public class RedJadeTongBomb : ModProjectile
     {
         public override string Texture => AssetDirectory.RedJadeItems + "RedJadeTongProj";

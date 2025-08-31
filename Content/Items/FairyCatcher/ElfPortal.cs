@@ -43,12 +43,12 @@ namespace Coralite.Content.Items.FairyCatcher
         }
     }
 
-    [AutoLoadTexture(Path = AssetDirectory.FairyCatcherItems)]
+    [VaultLoaden(AssetDirectory.FairyCatcherItems)]
     public class ElfPortalTile : ModTile
     {
         public override string Texture => AssetDirectory.FairyCatcherItems + Name;
 
-        [AutoLoadTexture(Name = "ElfPortalEye")]
+        [VaultLoaden("{@classPath}" + "ElfPortalEye")]
         public static ATex EyeTex { get; set; }
 
         public override void SetStaticDefaults()

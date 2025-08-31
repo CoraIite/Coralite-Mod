@@ -35,7 +35,7 @@ namespace Coralite.Content.Items.FairyCatcher.Tongs
         }
     }
 
-    [AutoLoadTexture(Path = AssetDirectory.FairyCatcherTong)]
+    [VaultLoaden(AssetDirectory.FairyCatcherTong)]
     public class SoulTeethProj : BaseTongsProj
     {
         public static ATex SoulTeethChain { get; private set; }
