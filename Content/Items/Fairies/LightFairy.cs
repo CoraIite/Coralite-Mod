@@ -1,5 +1,4 @@
 ﻿using Coralite.Content.DamageClasses;
-using Coralite.Content.Dusts;
 using Coralite.Core;
 using Coralite.Core.Systems.FairyCatcherSystem;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
@@ -10,8 +9,6 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.Audio;
-using Terraria.Graphics;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.Localization;
 
@@ -124,9 +121,7 @@ namespace Coralite.Content.Items.Fairies
 
     public class ShootStar : ModProjectile
     {
-        public override string Texture => AssetDirectory.Blank;
-
-        private VertexStrip _vertexStrip;
+        public override string Texture => AssetDirectory.Sparkles + "ShotLineSPA";
 
         public ref float Count => ref Projectile.ai[0];
 
@@ -142,6 +137,7 @@ namespace Coralite.Content.Items.Fairies
             Projectile.tileCollide = false;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = -1;
+            Projectile.extraUpdates = 1;
             Projectile.width = Projectile.height = 16;
         }
 
@@ -151,23 +147,12 @@ namespace Coralite.Content.Items.Fairies
 
             if (Projectile.localAI[0] == 0)
             {
-                if (!VaultUtils.isServer)
-                    _vertexStrip = new();
                 Projectile.localAI[0] = 1;
             }
 
             if (Main.rand.NextBool())
-            {
-                Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(4, 4), ModContent.DustType<GlowBall>(),
-                    -Projectile.velocity * 0.1f, 0, Color.LightGoldenrodYellow, 0.15f);
-            }
-
-            //int num18 = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.RainbowMk2, 0f, 0f, 100, new Color(162, 42, 131), 1f);
-            //Main.dust[num18].velocity *= 0.1f;
-            //Main.dust[num18].velocity += Projectile.velocity * 0.2f;
-            //Main.dust[num18].position.X = Projectile.Center.X + 4f + Main.rand.Next(-4, 4);
-            //Main.dust[num18].position.Y = Projectile.Center.Y + Main.rand.Next(-4, 4);
-            //Main.dust[num18].noGravity = true;
+                Projectile.SpawnTrailDust(4f, DustID.YellowStarDust, Main.rand.NextFloat(0.3f, 0.6f), 100
+                    , new Color(255, 255, 255, 40));
 
             Projectile.rotation = Projectile.velocity.ToRotation();
         }
@@ -176,7 +161,8 @@ namespace Coralite.Content.Items.Fairies
         {
             for (int i = 0; i < 8; i++)
             {
-                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.YellowStarDust, Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-3, 3), 100, Coralite.MagicCrystalPink, 1f);
+                Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.YellowStarDust, Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-3, 3)
+                    , 100, new Color(255,255,255,30), 1f);
                 dust.noGravity = true;
             }
 
@@ -190,38 +176,25 @@ namespace Coralite.Content.Items.Fairies
 
         public override bool PreDraw(ref Color lightColor)
         {
-            if (_vertexStrip == null)
-                return false;
+            Projectile.DrawShadowTrails(Color.Gold, 0.5f, 0.5f / 18, 0, 18, 1, 0.2f / 18, 0, 0.2f);
 
-            MiscShaderData miscShaderData = GameShaders.Misc["RainbowRod"];
-            miscShaderData.UseSaturation(-1.8f);
-            miscShaderData.UseOpacity(2f);
-            miscShaderData.Apply();
-            _vertexStrip.PrepareStripWithProceduralPadding(Projectile.oldPos, Projectile.oldRot, StripColors, StripWidth, -Main.screenPosition + (Projectile.Size / 2f));
-            _vertexStrip.DrawTrail();
-            Main.pixelShader.CurrentTechnique.Passes[0].Apply();
-
-            //ProjectilesHelper.DrawPrettyStarSparkle(Projectile.Opacity, SpriteEffects.None, Projectile.oldPos[0]+new Vector2(8,8) - Main.screenPosition,
-            //    Color.White * 0.8f, Coralite.MagicCrystalPink, 0.5f, 0f, 0.5f, 0.5f, 0f, 0f,
-            //    new Vector2(0.5f, 0.5f), Vector2.One*0.5f);
+            Helper.DrawPrettyStarSparkle(Projectile.Opacity, SpriteEffects.None, Projectile.oldPos[0] + new Vector2(8, 8) - Main.screenPosition,
+                Color.White * 0.8f, Color.Gold, 0.5f, 0f, 0.5f, 0.5f, 0f, 0f,
+                new Vector2(1f, 1f), Vector2.One * 0.5f);
             return false;
         }
-
-        private Color StripColors(float progressOnStrip)
-        {
-            Color result = Color.Lerp(Color.White, Color.LightGoldenrodYellow, Utils.GetLerpValue(-0.2f, 0.5f, progressOnStrip, clamped: true)) * (1f - Utils.GetLerpValue(0f, 0.98f, progressOnStrip));
-            result.A = 64;
-            return result;
-        }
-
-        private float StripWidth(float progressOnStrip) => MathHelper.Lerp(4f, 16f, Utils.GetLerpValue(0f, 0.2f, progressOnStrip, clamped: true)) * Utils.GetLerpValue(0f, 0.07f, progressOnStrip, clamped: true);
     }
 
-    public class StarArrow:ModProjectile
+    public class StarArrow : ModProjectile
     {
         public override string Texture => AssetDirectory.Blank;
 
         public ref float Timer => ref Projectile.ai[0];
+
+        public override void SetStaticDefaults()
+        {
+            Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 6);
+        }
 
         public override void SetDefaults()
         {
@@ -239,11 +212,15 @@ namespace Coralite.Content.Items.Fairies
             Lighting.AddLight(Projectile.Center, new Vector3(0.2f, 0.2f, 0.1f));
 
             Timer++;
-            Projectile.velocity *= 0.92f;
+            Projectile.velocity *= 0.94f;
             Projectile.rotation = Projectile.velocity.ToRotation();
 
-            if (Timer> 14)
+            if (Timer > 14)
                 Projectile.Kill();
+
+            if (Main.rand.NextBool())
+                Projectile.SpawnTrailDust(4f,DustID.YellowStarDust, Main.rand.NextFloat(-0.8f, -0.6f), 100
+                    , new Color(255, 255, 255, 40));
         }
 
         public override void OnKill(int timeLeft)
@@ -258,12 +235,22 @@ namespace Coralite.Content.Items.Fairies
         public override bool PreDraw(ref Color lightColor)
         {
             Texture2D tex = CoraliteAssets.Trail.ArrowSPA.Value;
+            Texture2D tex2 = CoraliteAssets.Sparkle.ShotLineSPA.Value;
 
             float alpha = 1 - Timer / 14;
             Vector2 pos = Projectile.Center - Main.screenPosition;
             Color c = Color.LightGoldenrodYellow * 0.75f * alpha;
             float scale = Projectile.scale * 0.4f;
             Vector2 Scale = new Vector2(0.8f, alpha) * scale;
+
+            Vector2 toCenter = Projectile.Size / 2 - Main.screenPosition;
+            for (int i = 0; i < 5; i++)
+            {
+                Main.spriteBatch.Draw(tex2, Projectile.oldPos[i] + toCenter, null,
+                    c * (0.5f - (i * 0.5f / 5)), Projectile.oldRot[i], tex2.Size() / 2, Scale * (1 - (i * 0.1f)), 0, 0);
+            }
+
+            c = Color.Gold * 0.75f * alpha;
 
             Main.spriteBatch.Draw(tex, pos, null, c, Projectile.rotation, tex.Size() / 2
                 , Scale, 0, 0);
@@ -319,7 +306,7 @@ namespace Coralite.Content.Items.Fairies
 
             int count = GetEXProjCount(level);
             int proj = fairyProj.Projectile.NewProjectileFromThis(fairyProj.Projectile.Center
-                 , velocity, ProjType, damage, fairyProj.Projectile.knockBack,count);
+                 , velocity, ProjType, damage, fairyProj.Projectile.knockBack, count);
         }
     }
 }

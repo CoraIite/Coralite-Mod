@@ -27,8 +27,14 @@ namespace Coralite.Content.UI.FairyEncyclopedia
         public static ATex RightButton { get; set; }
         public static ATex LeftButtonHighlight { get; set; }
         public static ATex RightButtonHighlight { get; set; }
-        public static ATex FairyPanelBorder { get; set; }
-        public static ATex FairyPanelBackGround { get; set; }
+        public static ATex FairyPanelBorder
+        {
+            get => ModContent.Request<Texture2D>(AssetDirectory.FairyUI + "FairyPanelBorder");
+        }
+        public static ATex FairyPanelBackGround
+        {
+            get => ModContent.Request<Texture2D>(AssetDirectory.FairyUI + "FairyPanelBackGround");
+        }
 
         public override int UILayer(List<GameInterfaceLayer> layers) => layers.FindIndex(layer => layer.Name.Equals("Vanilla: Inventory"));
 
@@ -55,6 +61,10 @@ namespace Coralite.Content.UI.FairyEncyclopedia
 
         public FairyCircleShow CircleShow;
         public FairyIVRangeShow IVRangeShow;
+
+        public FairyTitle ConditionTitle;
+        public FairyTitle SkillTitle;
+
         public UIList ConditionShow;
         public UIList SkillShow;
 
@@ -387,14 +397,22 @@ namespace Coralite.Content.UI.FairyEncyclopedia
             IVRangeShow = new FairyIVRangeShow();
             IVRangeShow.SetSize((PanelWidth - CircleShow.Width.Pixels) / 2 - 10, PanelHeight);
 
+            ConditionTitle = new FairyTitle(0);
+            ConditionTitle.SetTopLeft(0, CircleShow.Left.Pixels + CircleShow.Width.Pixels + 10);
+            ConditionTitle.SetSize((PanelWidth - CircleShow.Width.Pixels) / 2 - 10, 40);
+
             ConditionShow = new UIList();
-            ConditionShow.SetTopLeft(40, CircleShow.Left.Pixels + CircleShow.Width.Pixels + 10);
-            ConditionShow.SetSize((PanelWidth - CircleShow.Width.Pixels) / 2 - 10, (PanelHeight - 40) / 2);
+            ConditionShow.SetTopLeft(40, ConditionTitle.Left.Pixels);
+            ConditionShow.SetSize((PanelWidth - CircleShow.Width.Pixels) / 2 - 10, (PanelHeight - 80) / 2);
             ConditionShow.QuickInvisibleScrollbar();
 
+            SkillTitle = new FairyTitle(1);
+            SkillTitle.SetTopLeft(40 + ConditionShow.Height.Pixels, ConditionTitle.Left.Pixels);
+            SkillTitle.SetSize((PanelWidth - CircleShow.Width.Pixels) / 2 - 10, 40);
+
             SkillShow = new UIList();
-            SkillShow.SetTopLeft(40 + ConditionShow.Height.Pixels, CircleShow.Left.Pixels + CircleShow.Width.Pixels + 10);
-            SkillShow.SetSize((PanelWidth - CircleShow.Width.Pixels) / 2 - 10, (PanelHeight - 40) / 2);
+            SkillShow.SetTopLeft(80 + ConditionShow.Height.Pixels, ConditionTitle.Left.Pixels);
+            SkillShow.SetSize((PanelWidth - CircleShow.Width.Pixels) / 2 - 10, (PanelHeight - 80) / 2);
             SkillShow.QuickInvisibleScrollbar();
         }
 
@@ -441,6 +459,8 @@ namespace Coralite.Content.UI.FairyEncyclopedia
                 InitFairyShow();
                 BackGround?.Append(CircleShow);
                 BackGround?.Append(IVRangeShow);
+                BackGround?.Append(ConditionTitle);
+                BackGround?.Append(SkillTitle);
 
                 ConditionShow.Clear();
                 if (FairySystem.fairySpawnConditions_InEncyclopedia.TryGetValue(ShowFairyID

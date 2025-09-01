@@ -110,6 +110,8 @@ FairySystem: {
 	EVNoUse: 即使使用也没有任何效果！
 	SkillDamage: 技能伤害
 	SkillStaminaCost: 耐力消耗
+	UIConditionTitle: 出现条件
+	UISkillTitle: 技能
 }
 
 BossBarSystem.DontTakeDamage: 不可攻击！

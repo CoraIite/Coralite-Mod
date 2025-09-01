@@ -98,6 +98,8 @@ FairySystem: {
 	EVNoUse: Mods.Coralite.Systems.FairySystem.EVNoUse
 	SkillDamage: Mods.Coralite.Systems.FairySystem.SkillDamage
 	SkillStaminaCost: Mods.Coralite.Systems.FairySystem.SkillStaminaCost
+	UIConditionTitle: Mods.Coralite.Systems.FairySystem.UIConditionTitle
+	UISkillTitle: Mods.Coralite.Systems.FairySystem.UISkillTitle
 }
 
 BossBarSystem.DontTakeDamage: Cant attack!！
