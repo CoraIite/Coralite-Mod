@@ -375,6 +375,16 @@ FairySkill: {
 			'''
 		SkillName: 黑暗箭
 	}
+
+	FSkill_Dash: {
+		SkillName: 连续冲刺
+		DashDamage:
+			'''
+			连续冲向敌人 {0} 次
+			每次冲刺都会消耗一次耐力
+			[c/808080:每25等级增加1次冲刺次数]
+			'''
+	}
 }
 
 FairySkillTag.FSTag_Impact.Text: "[c/ffcdaf:冲击]"

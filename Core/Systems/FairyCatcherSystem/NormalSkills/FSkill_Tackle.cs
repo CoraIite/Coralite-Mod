@@ -41,10 +41,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.NormalSkills
             MaxPenetrate = fairyProj.SkillLevel / 3;
             fairyProj.Projectile.tileCollide = true;
 
-            float speed = fairyProj.IVSpeed * (1.25f + fairyProj.SkillLevel * 0.03f);
+            float speed = fairyProj.IVSpeed;
 
             //根据技能等级增幅撞击速度
-            speed *= Helper.Lerp(1, 1.75f, Helper.X2Ease(Math.Clamp(fairyProj.SkillLevel / 15, 0, 1)));
+            speed *= Helper.Lerp(1.25f, 2f, Helper.X2Ease(Math.Clamp(fairyProj.SkillLevel / 100f, 0, 1)));
 
             if (fairyProj.TargetIndex.GetNPCOwner(out NPC target))
             {

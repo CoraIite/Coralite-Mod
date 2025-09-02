@@ -202,6 +202,22 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         }
 
+        #region 帮助方法
+
+        /// <summary>
+        /// 设置仙灵的朝向
+        /// </summary>
+        /// <param name="fairyProj"></param>
+        /// <param name="target"></param>
+        public virtual void SetDirection(BaseFairyProjectile fairyProj, NPC target)
+        {
+            if (MathF.Abs(fairyProj.Projectile.Center.X - target.Center.X) > 8)
+                fairyProj.Projectile.spriteDirection = target.Center.X > fairyProj.Projectile.Center.X ? 1 : -1;
+        }
+
+        #endregion
+
+
         #region 描述部分
 
         public struct TipSize
@@ -285,10 +301,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             tex.QuickCenteredDraw(Main.spriteBatch, topLeft + new Vector2(tex.Width / 2, size.Y / 2));
 
             topLeft.X += tex.Width + 10;
-            topLeft.Y += 4;
+            topLeft.Y +=size.Y/2+4;
 
             Utils.DrawBorderString(Main.spriteBatch, SkillName.Value, topLeft
-                , Color.White, 1.1f);
+                , Color.White, 1.1f,0,0.5f);
         }
 
         /// <summary>

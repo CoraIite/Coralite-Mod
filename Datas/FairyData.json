@@ -118,5 +118,13 @@
     "Speed": 60,
     "SkillLevel": 50,
     "Stamina": 50
+  },
+  "LensFairy": {
+    "LifeMax": 65,
+    "Damage": 60,
+    "Defence": 60,
+    "Speed": 60,
+    "SkillLevel": 55,
+    "Stamina": 55
   }
 }

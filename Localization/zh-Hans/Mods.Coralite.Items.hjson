@@ -6467,3 +6467,8 @@ WorldGenFix: {
 	DisplayName: 世界设置修复
 	Tooltip: 取消所有的模组彩蛋种子特性，需要保存退出后重新进入生效
 }
+
+LensFairyItem: {
+	DisplayName: 眼晶灵
+	Tooltip: ""
+}

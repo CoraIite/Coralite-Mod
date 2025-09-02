@@ -73,6 +73,11 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             new(() => Condition.DownedKingSlime.Description.Value
                 , attempt => NPC.downedSlimeKing);
 
+        /// <summary> 击败克眼 </summary>
+        public static FairySpawnCondition DownedEOC =
+            new(() => Condition.DownedEyeOfCthulhu.Description.Value
+                , attempt => NPC.downedBoss1);
+
         /// <summary> 白天 </summary>
         public static FairySpawnCondition DayTime =
             new(() => Condition.TimeDay.Description.Value

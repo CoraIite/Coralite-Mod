@@ -406,7 +406,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         private static void GetScaleIV(FairyIV iv)
         {
             //数值高于永恒，从永恒到最大值之间缩放
-            if ((int)iv.ScaleLV >= 8 - 1)
+            if ((int)iv.ScaleLV >= FairyIVLevelID.Eternal)
                 iv.Scale = Helper.Lerp(
                     1.5f,
                     2,
@@ -414,7 +414,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             else
             {
                 //在二者间使用X2插值(四舍五入)
-                iv.Scale = MathF.Round(Helper.Lerp(0.8f, 1.5f, Math.Clamp(iv.ScaleLV / 7, 0, 1)), 1, MidpointRounding.AwayFromZero);
+                iv.Scale = MathF.Round(Helper.Lerp(0.8f, 1.5f, Math.Clamp(iv.ScaleLV / FairyIVLevelID.Eternal, 0, 1)), 1, MidpointRounding.AwayFromZero);
             }
         }
 

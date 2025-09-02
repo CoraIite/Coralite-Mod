@@ -467,7 +467,7 @@ namespace Coralite.Content.UI.FairyEncyclopedia
                     , out FairySpawnController controller))
                 {
                     foreach (var c in controller.Conditions)
-                        ConditionShow.Add(new FairySpawnBar(c, ConditionShow.Width.Pixels));
+                        ConditionShow.Add(new FairySpawnBar(c, ConditionShow.Width.Pixels-24));
                 }
                 BackGround?.Append(ConditionShow);
 
@@ -475,7 +475,7 @@ namespace Coralite.Content.UI.FairyEncyclopedia
                 if (ContentSamples.ItemsByType[FairyLoader.GetFairy(ShowFairyID).ItemType].ModItem is BaseFairyItem bfi)
                 {
                     foreach (var skillType in bfi.GetFairySkills())
-                        SkillShow.Add(new FairySkillBar(skillType, ConditionShow.Width.Pixels));
+                        SkillShow.Add(new FairySkillBar(skillType, ConditionShow.Width.Pixels-24));
                 }
 
                 BackGround?.Append(SkillShow);

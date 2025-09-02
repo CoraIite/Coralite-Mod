@@ -94,17 +94,6 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.NormalSkills
         }
 
         /// <summary>
-        /// 设置仙灵的朝向
-        /// </summary>
-        /// <param name="fairyProj"></param>
-        /// <param name="target"></param>
-        public virtual void SetDirection(BaseFairyProjectile fairyProj, NPC target)
-        {
-            if (MathF.Abs(fairyProj.Projectile.Center.X - target.Center.X) > 8)
-                fairyProj.Projectile.spriteDirection = target.Center.X > fairyProj.Projectile.Center.X ? 1 : -1;
-        }
-
-        /// <summary>
         /// 在开始射击之前执行，可以用于生成粒子等
         /// </summary>
         public virtual void BeforeShoot(BaseFairyProjectile fairyProj)

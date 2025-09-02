@@ -6370,3 +6370,8 @@ WorldGenFix: {
 	// DisplayName: World Gen Fix
 	// Tooltip: ""
 }
+
+LensFairyItem: {
+	// DisplayName: Lens Fairy Item
+	// Tooltip: ""
+}
