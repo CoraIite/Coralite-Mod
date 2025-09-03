@@ -389,6 +389,11 @@ namespace Coralite.Content.Items.Fairies
 
         protected override float ChaseDistance => 220;
 
+        public override int GetStaminaCost(int skilLevel)
+        {
+            return 3;
+        }
+
         public override void BeforeShoot(BaseFairyProjectile fairyProj)
         {
             if (Main.rand.NextBool())
@@ -406,7 +411,7 @@ namespace Coralite.Content.Items.Fairies
 
         public override int GetDamage(int baseDamage, int level)
         {
-            return (int)(baseDamage * (4f + 3f * Math.Clamp(level / 15f, 0, 1)));
+            return (int)(baseDamage * (4f + 5f * Math.Clamp(level / 100f, 0, 1)));
         }
 
         public override string GetSkillTips(Player player, FairyIV iv)

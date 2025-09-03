@@ -96,6 +96,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public static LocalizedText SkillTags;
 
         public static LocalizedText TongStaminaReduce;
+        public static LocalizedText GlovePerShoot;
 
         public static LocalizedText IsFairyPowder;
 

@@ -6375,3 +6375,13 @@ LensFairyItem: {
 	// DisplayName: Lens Fairy Item
 	// Tooltip: ""
 }
+
+StrokeGlove: {
+	// DisplayName: Stroke Glove
+	// Tooltip: ""
+}
+
+EyeInHand: {
+	// DisplayName: Eye In Hand
+	// Tooltip: ""
+}

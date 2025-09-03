@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.DamageClasses;
+using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases.Items;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
@@ -27,19 +28,22 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         public int Direction = 1;
         /// <summary> 挥舞时间，减小则挥地更快 </summary>
         public int MaxTime = 30;
-        /// <summary> 回归速率，越小返回的越快 </summary>
+        /// <summary> 回归速率，越小返回的越快，默认0.8f </summary>
         public float BackPercent = 0.8f;
         /// <summary> 返回总时间 </summary>
         public float BackTimeMax = 10;
         /// <summary> 长度控制 </summary>
         public (float, float) DistanceController = (-20, 40);
 
+        /// <summary> 挥出的时候使用的，默认heavy </summary>
+        public ISmoother smoother = Coralite.Instance.HeavySmootherInstance;
+
         /// <summary>
         /// 为1表示在捕捉，为2表示可以射出仙灵
         /// </summary>
         public ref float Catch => ref Projectile.ai[0];
-        public ref float LengthBonus => ref Projectile.ai[1];
-        public ref float AlphaModify => ref Projectile.ai[2];
+        //public ref float LengthBonus => ref Projectile.ai[1];
+        //public ref float AlphaModify => ref Projectile.ai[2];
 
         public ref float Timer => ref Projectile.localAI[0];
 
@@ -81,9 +85,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
             float a = 0;
+            Vector2 rot = Projectile.rotation.ToRotationVector2();
             return Collision.CanHit(Owner.MountedCenter, 1, 1, targetHitbox.Center(), 1, 1)
-                && Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center
-                , Projectile.Center + Projectile.rotation.ToRotationVector2() * Projectile.height, Projectile.width / 2,ref a);
+                && Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center-rot*Projectile.height/2
+                , Projectile.Center + rot * Projectile.height/2, Projectile.width / 2,ref a);
         }
 
         public override void Initialize()
@@ -98,10 +103,20 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                     acc.ModifyGloveInit(this);
 
             if (BaseAngleOffset == 0)
-                BaseAngleOffset = Main.rand.NextFloat(-0.3f, 0.3f);//TODO: 需要同步
+                BaseAngleOffset = Main.rand.NextFloat(-0.3f - Owner.direction * OffsetAngle/2, 0.3f - Owner.direction * OffsetAngle/2);//TODO: 需要同步
 
             DistanceToCenter = DistanceController.Item1;
             Projectile.spriteDirection = Owner.direction;
+
+            PostInitialize();
+        }
+
+        /// <summary>
+        /// 初始化后执行，可以在此根据ai更改各种参数
+        /// </summary>
+        public virtual void PostInitialize()
+        {
+
         }
 
         public override void AI()
@@ -112,7 +127,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 float factor = Timer / MaxTime;
 
                 Projectile.rotation = GetRotation(factor);
-                Projectile.Center = GetCenter() + Projectile.rotation.ToRotationVector2() * (DistanceToCenter+Projectile.height/2);
+                Projectile.Center = GetCenter() + Projectile.rotation.ToRotationVector2() * (DistanceToCenter + Projectile.height / 2);
 
                 UpdateDistanceToCenter(factor);
 
@@ -128,7 +143,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 SpawnDustOnSwing();
 
                 if (Timer < Owner.itemTimeMax)
-                    Owner.itemRotation = BaseAngle + BaseAngleOffset + (Owner.direction > 0 ? 0 : MathHelper.Pi);
+                    Owner.itemRotation = BaseAngle + BaseAngleOffset  + (Owner.direction > 0 ? 0 : MathHelper.Pi);
             }
             else
             {
@@ -182,7 +197,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public virtual void UpdateDistanceToCenter(float factor)
         {
-            factor = Helper.HeavyEase(factor);
+            factor = smoother.Smoother(factor);
             DistanceToCenter = Helper.Lerp(DistanceController.Item1, DistanceController.Item2, factor);
         }
 

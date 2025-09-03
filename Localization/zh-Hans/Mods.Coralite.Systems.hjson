@@ -112,6 +112,7 @@ FairySystem: {
 	SkillStaminaCost: 耐力消耗
 	UIConditionTitle: 出现条件
 	UISkillTitle: 技能
+	GlovePerShoot: 每 {0} 次挥舞发射一次仙灵
 }
 
 BossBarSystem.DontTakeDamage: 不可攻击！
@@ -377,7 +378,7 @@ FairySkill: {
 	}
 
 	FSkill_Dash: {
-		SkillName: 连续冲刺
+		SkillName: 迅击
 		DashDamage:
 			'''
 			连续冲向敌人 {0} 次

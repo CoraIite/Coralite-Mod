@@ -6472,3 +6472,13 @@ LensFairyItem: {
 	DisplayName: 眼晶灵
 	Tooltip: ""
 }
+
+StrokeGlove: {
+	DisplayName: 摸摸手套
+	Tooltip: ""
+}
+
+EyeInHand: {
+	DisplayName: 掌中眼
+	Tooltip: ""
+}
