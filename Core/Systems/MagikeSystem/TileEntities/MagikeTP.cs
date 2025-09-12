@@ -11,7 +11,6 @@ using System.IO;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.ID;
 using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.MagikeSystem.TileEntities
@@ -66,22 +65,27 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
             return ((List<MagikeComponent>)Components[MagikeComponentID.MagikeFilter]).Count < ExtendFilterCapacity;
         }
 
-        public static bool Call_IsMagikeContainer(Point16 point, out MagikeContainer reset) {
+        public static bool Call_IsMagikeContainer(Point16 point, out MagikeContainer reset)
+        {
             reset = null;
 
-            if (!VaultUtils.SafeGetTopLeft(point.X, point.Y, out var newPoint)) {
+            if (!VaultUtils.SafeGetTopLeft(point.X, point.Y, out var newPoint))
+            {
                 return false;
             }
 
-            if (!TileProcessorLoader.ByPositionGetTP(newPoint, out TileProcessor tp)) {
+            if (!TileProcessorLoader.ByPositionGetTP(newPoint, out TileProcessor tp))
+            {
                 return false;
             }
 
-            if (tp is not MagikeTP magikeTP) {
+            if (tp is not MagikeTP magikeTP)
+            {
                 return false;
             }
 
-            if (magikeTP.IsMagikeContainer()) {
+            if (magikeTP.IsMagikeContainer())
+            {
                 reset = magikeTP.GetMagikeContainer();
                 return true;
             }
@@ -91,23 +95,28 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
 
         public static bool Call_AddMagike(Point16 point, int amount)
         {
-            if (!Call_IsMagikeContainer(point, out MagikeContainer reset)) {
+            if (!Call_IsMagikeContainer(point, out MagikeContainer reset))
+            {
                 return false;
             }
             reset.AddMagike(amount);
             return true;
         }
 
-        public static bool Call_ReduceMagike(Point16 point, int amount) {
-            if (!Call_IsMagikeContainer(point, out MagikeContainer reset)) {
+        public static bool Call_ReduceMagike(Point16 point, int amount)
+        {
+            if (!Call_IsMagikeContainer(point, out MagikeContainer reset))
+            {
                 return false;
             }
             reset.ReduceMagike(amount);
             return true;
         }
 
-        public static MagikeContainerData Call_GetMagikeContainerData(Point16 point) {
-            if (!Call_IsMagikeContainer(point, out MagikeContainer reset)) {
+        public static MagikeContainerData Call_GetMagikeContainerData(Point16 point)
+        {
+            if (!Call_IsMagikeContainer(point, out MagikeContainer reset))
+            {
                 return default;
             }
             MagikeContainerData magikeContainerData = new()
