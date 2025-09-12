@@ -9,12 +9,14 @@ using Coralite.Compat.BossCheckList;
 using Coralite.Core;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.BossSystems;
+using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using Terraria;
+using Terraria.DataStructures;
 using static Coralite.Core.Systems.MagikeSystem.MagikeSystem;
 
 namespace Coralite
@@ -146,7 +148,8 @@ namespace Coralite
             try
             {
                 string methodName = args[0] as string;
-
+                Point16 point;
+                int amount;
                 switch (methodName)
                 {
                     default: break;
@@ -167,6 +170,26 @@ namespace Coralite
                         remodelRecipe.conditions = (Condition[])args[6];
                         RemodelRecipeByActions.Add(remodelRecipe);
                         break;
+                    case "MagikeTP:AddMagike":
+                        point = (Point16)args[1];
+                        amount = (int)args[2];
+                        return MagikeTP.Call_AddMagike(point, amount);
+                    case "MagikeTP:ReduceMagike":
+                        point = (Point16)args[1];
+                        amount = (int)args[2];
+                        return MagikeTP.Call_ReduceMagike(point, amount);
+                    case "MagikeTP:GetMagikeContainerData":
+                        point = (Point16)args[1];
+                        var data = MagikeTP.Call_GetMagikeContainerData(point);
+                        List<object> list = [];
+                        list.Add(data.Magike);
+                        list.Add(data.MagikeMax);
+                        list.Add(data.MagikeMaxBase);
+                        list.Add(data.MagikeMaxBonus);
+                        return list;
+                    case "MagikeTP:IsMagikeContainer":
+                        point = (Point16)args[1];
+                        return MagikeTP.Call_IsMagikeContainer(point, out _);
                 }
             }
             catch (Exception e)
