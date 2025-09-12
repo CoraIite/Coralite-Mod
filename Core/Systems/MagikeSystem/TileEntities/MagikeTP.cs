@@ -22,7 +22,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
 
         internal static int playerInWorldTime;
 
-        internal const string GUID = "CoraliteMod_GUIDValue-XZ90-UO98-MK87";
+        internal const string GUID = "UO98-MK87";
 
         /// <summary>
         /// 存储各类组件的地方<br></br>
