@@ -188,6 +188,11 @@ namespace Coralite.Content.WorldGeneration
                 tag.Get<int>("shadowBallsFightAreaX"),
                 tag.Get<int>("shadowBallsFightAreaY"), 74 * 16, 59 * 16);
 
+            chaosWorld = false;
+            CoralCatWorld = false;
+            SuperCoralCatWorld = false;
+            DigDigDigWorld = false;
+
             if (tag.TryGet("chaosWorld", out bool b1))
                 chaosWorld = b1;
             if (tag.TryGet("coralCat", out bool b2))

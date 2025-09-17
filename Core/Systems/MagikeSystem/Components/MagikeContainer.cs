@@ -14,6 +14,18 @@ using Terraria.UI.Chat;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components
 {
+    public struct MagikeContainerData
+    {
+        /// <summary> 当前内部的魔能量 </summary>
+        public int Magike;
+        /// <summary> 自身魔能基础容量，可以通过升级来变化 </summary>
+        public int MagikeMaxBase;
+        /// <summary> 额外魔能量，通过扩展膜附加的魔能容量 </summary>
+        public float MagikeMaxBonus;
+        /// <summary> 当前的魔能上限 </summary>
+        public int MagikeMax;
+    }
+
     public class MagikeContainer : MagikeComponent, IUIShowable
     {
         public sealed override int ID => MagikeComponentID.MagikeContainer;
