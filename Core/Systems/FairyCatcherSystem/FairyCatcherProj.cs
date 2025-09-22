@@ -1,5 +1,4 @@
 ﻿using Coralite.Content.ModPlayers;
-using Coralite.Core.Attributes;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;

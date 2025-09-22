@@ -9,7 +9,7 @@ namespace Coralite.Content.Items.RedJades
     {
         public override string Texture => AssetDirectory.OtherProjectiles + "LightFog";
 
-        private float scaleAdder;
+        internal float scaleAdder;
 
         public override bool ShouldUpdatePosition() => false;
 
@@ -53,7 +53,7 @@ namespace Coralite.Content.Items.RedJades
     {
         public override string Texture => AssetDirectory.Rediancie + "RedShield_Flow";
 
-        private float scaleAdder;
+        internal float scaleAdder;
 
         public override bool ShouldUpdatePosition() => false;
 

@@ -1,4 +1,6 @@
 ﻿using Coralite.Content.DamageClasses;
+using Coralite.Content.Items.RedJades;
+using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Systems.FairyCatcherSystem;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
@@ -6,6 +8,7 @@ using Coralite.Core.Systems.FairyCatcherSystem.Bases.Items;
 using Coralite.Core.Systems.FairyCatcherSystem.NormalSkills;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -147,14 +150,19 @@ namespace Coralite.Content.Items.Fairies
 
         public override void AI()
         {
-            Lighting.AddLight(Projectile.Center, Coralite.IcicleCyan.ToVector3());
-
             Projectile.UpdateOldPosCache(addVelocity: true);
             Projectile.UpdateOldRotCache();
 
             Projectile.SpawnTrailDust(8f, DustID.Smoke, -Main.rand.NextFloat(0.1f, 0.4f)
                 , 50, Color.Black, Scale: Main.rand.NextFloat(0.6f, 0.8f));
             Projectile.rotation = Projectile.velocity.ToRotation();
+
+            if (Main.rand.NextBool(5))
+            {
+                PRTLoader.NewParticle<HorizontalStar>(Projectile.Center
+                    , -Projectile.velocity.SafeNormalize(Vector2.Zero).RotateByRandom(-0.2f, 0.2f) * Main.rand.NextFloat(1, 2), Color.Black
+                    , Main.rand.NextFloat(0.2f,0.3f));
+            }
         }
 
         public override void OnKill(int timeLeft)
@@ -171,6 +179,8 @@ namespace Coralite.Content.Items.Fairies
             }
 
             SoundEngine.PlaySound(CoraliteSoundID.Hit_Item10, Projectile.Center);
+
+            Projectile.NewProjectileFromThis<DarkBoom>(Projectile.Center, Vector2.Zero, Projectile.damage, 0, Scale);
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -217,7 +227,8 @@ namespace Coralite.Content.Items.Fairies
     {
         public override string Texture => AssetDirectory.Blank;
 
-        public ref float Timer => ref Projectile.ai[0];
+        public ref float Scale => ref Projectile.ai[0];
+        public ref float Timer => ref Projectile.ai[1];
 
         public override void SetDefaults()
         {
@@ -226,25 +237,55 @@ namespace Coralite.Content.Items.Fairies
             Projectile.tileCollide = false;
             Projectile.usesIDStaticNPCImmunity = true;
             Projectile.idStaticNPCHitCooldown = 15;
-            Projectile.width = Projectile.height = 40;
+            Projectile.width = Projectile.height = 80;
             Projectile.penetrate = -1;
         }
 
         public override void AI()
         {
-            Lighting.AddLight(Projectile.Center, new Vector3(0.2f, 0.2f, 0.1f));
+            if (Timer==0)
+            {
+                Timer = 1;
+                Projectile.scale = Scale;
+                int width = (int)(Projectile.width * Scale);
+                Projectile.Resize(width, width);
 
-            Timer++;
-            Projectile.velocity *= 0.92f;
-            Projectile.rotation = Projectile.velocity.ToRotation();
+                if (VaultUtils.isServer)
+                    return;
 
-            if (Timer > 14)
-                Projectile.Kill();
+                Color black =Color.Black;
+                Vector2 center = Projectile.Center;
+                int type = CoraliteContent.ParticleType<LightBall>();
+
+                for (int i = 0; i < 2; i++)
+                {
+                    PRTLoader.NewParticle(center, Helper.NextVec2Dir() * Main.rand.NextFloat(16, 18)*Scale,
+                        type, black, Main.rand.NextFloat(0.1f, 0.15f));
+                }
+                for (int i = 0; i < 5; i++)
+                {
+                    PRTLoader.NewParticle(center, Helper.NextVec2Dir() * Main.rand.NextFloat(10, 14)*Scale
+                        , type, black, Main.rand.NextFloat(0.1f, 0.15f));
+                    PRTLoader.NewParticle(center, Helper.NextVec2Dir() * Main.rand.NextFloat(10, 14) * Scale
+                        , type, Color.White, Main.rand.NextFloat(0.05f, 0.1f));
+                    Dust dust = Dust.NewDustPerfect(center, DustID.Smoke, Helper.NextVec2Dir() * Main.rand.NextFloat(4, 8)*Scale
+                        , Scale: Main.rand.NextFloat(1.6f, 1.8f));
+                    dust.noGravity = true;
+                }
+
+                RedExplosionParticle particle = PRTLoader.NewParticle<RedExplosionParticle>(center, Vector2.Zero, Color.Black, 0);
+                particle.scaleAdder = 0.4f * Scale / 8;
+                particle.PRTDrawMode = PRTDrawModeEnum.NonPremultiplied;
+
+                RedGlowParticle particle2 = PRTLoader.NewParticle<RedGlowParticle>(center, Vector2.Zero, Color.Black, 0.2f);
+                particle2.scaleAdder = (0.35f - 0.2f) / 6;
+                particle2.PRTDrawMode = PRTDrawModeEnum.NonPremultiplied;
+
+                particle2 = PRTLoader.NewParticle<RedGlowParticle>(center, Vector2.Zero, Color.White, 0.2f);
+                particle2.scaleAdder = (0.35f - 0.2f) / 6;
+            }
         }
 
-        public override void OnKill(int timeLeft)
-        {
-        }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
@@ -253,20 +294,20 @@ namespace Coralite.Content.Items.Fairies
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D tex = CoraliteAssets.Trail.ArrowSPA.Value;
+            //Texture2D tex = CoraliteAssets.Trail.ArrowSPA.Value;
 
-            float alpha = 1 - Timer / 14;
-            Vector2 pos = Projectile.Center - Main.screenPosition;
-            Color c = Color.LightGoldenrodYellow * 0.75f * alpha;
-            float scale = Projectile.scale * 0.4f;
-            Vector2 Scale = new Vector2(0.8f, alpha) * scale;
+            //float alpha = 1 - Timer / 14;
+            //Vector2 pos = Projectile.Center - Main.screenPosition;
+            //Color c = Color.LightGoldenrodYellow * 0.75f * alpha;
+            //float scale = Projectile.scale * 0.4f;
+            //Vector2 Scale = new Vector2(0.8f, alpha) * scale;
 
-            Main.spriteBatch.Draw(tex, pos, null, c, Projectile.rotation, tex.Size() / 2
-                , Scale, 0, 0);
+            //Main.spriteBatch.Draw(tex, pos, null, c, Projectile.rotation, tex.Size() / 2
+            //    , Scale, 0, 0);
 
-            c.A = 0;
-            Main.spriteBatch.Draw(tex, pos, null, c, Projectile.rotation, tex.Size() / 2
-                , Scale, 0, 0);
+            //c.A = 0;
+            //Main.spriteBatch.Draw(tex, pos, null, c, Projectile.rotation, tex.Size() / 2
+            //    , Scale, 0, 0);
 
             return false;
         }
@@ -291,20 +332,15 @@ namespace Coralite.Content.Items.Fairies
             if (player.TryGetModPlayer(out FairyCatcherPlayer fcp))
                 level = fcp.GetFairySkillBonus(Type, level);
 
-            return Description.Format(GetEXProjRange(level), GetDamage(iv.Damage, level));
+            return Description.Format(GetProjScale(level), GetDamage(iv.Damage, level));
         }
 
-        public int GetEXProjRange(int level)
+        public float GetProjScale(int level)
         {
-            int count = 4;
-            if (level > 4)
-                count++;
-            if (level > 7)
-                count++;
-            if (level > 10)
-                count += 2;
+            if (level<100)
+                return 1 + 1.5f*Helper.X2Ease(level / 100f);
 
-            return count;
+            return 1 + 1.5f;
         }
 
         public override void ShootProj(BaseFairyProjectile fairyProj, Vector2 center, Vector2 velocity, int damage)
@@ -313,9 +349,9 @@ namespace Coralite.Content.Items.Fairies
             if (fairyProj.Owner.TryGetModPlayer(out FairyCatcherPlayer fcp))
                 level = fcp.GetFairySkillBonus(Type, level);
 
-            int count = GetEXProjRange(level);
+            float scale = GetProjScale(level);
             int proj = fairyProj.Projectile.NewProjectileFromThis(fairyProj.Projectile.Center
-                 , velocity, ProjType, damage, fairyProj.Projectile.knockBack, count);
+                 , velocity, ProjType, damage, fairyProj.Projectile.knockBack, scale);
         }
     }
 }
