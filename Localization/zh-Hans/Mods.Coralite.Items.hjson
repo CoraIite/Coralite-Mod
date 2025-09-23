@@ -6482,3 +6482,8 @@ EyeInHand: {
 	DisplayName: 掌中眼
 	Tooltip: ""
 }
+
+PunctureFairyItem: {
+	DisplayName: 穿刺灵
+	Tooltip: ""
+}

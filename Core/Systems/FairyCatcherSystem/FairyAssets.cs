@@ -38,7 +38,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             }
 
             FairySkillAssets = new ATex[FairyLoader.FairySkillCount];
-            for (int i = 0; i < FairyLoader.FairyCircleCoreCount; i++)
+            for (int i = 0; i < FairyLoader.FairySkillCount; i++)
             {
                 FairySkill f = FairyLoader.GetFairySkill(i);
                 if (f != null)

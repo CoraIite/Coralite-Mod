@@ -329,6 +329,11 @@ FairySkill: {
 		SkillName: Mods.Coralite.Systems.FairySkill.FSkill_Dash.SkillName
 		DashDamage: Mods.Coralite.Systems.FairySkill.FSkill_Dash.DashDamage
 	}
+
+	FSkill_ShootDrill: {
+		Description: Mods.Coralite.Systems.FairySkill.FSkill_ShootDrill.Description
+		SkillName: Mods.Coralite.Systems.FairySkill.FSkill_ShootDrill.SkillName
+	}
 }
 
 FairySkillTag.FSTag_Impact.Text: Mods.Coralite.Systems.FairySkillTag.FSTag_Impact.Text

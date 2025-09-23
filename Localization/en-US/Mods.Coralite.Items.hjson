@@ -6343,3 +6343,8 @@ EyeInHand: {
 	DisplayName: Eye In Hand
 	Tooltip: ""
 }
+
+PunctureFairyItem: {
+	DisplayName: Puncture Fairy Item
+	Tooltip: ""
+}

@@ -386,6 +386,15 @@ FairySkill: {
 			[c/808080:每25等级增加1次冲刺次数]
 			'''
 	}
+
+	FSkill_ShootDrill: {
+		Description: 
+			'''
+			射出钻头，命中 {0} 次后消失
+			[c/808080:每10等级增加1次钻击次数]
+			'''
+		SkillName: 直冲钻
+	}
 }
 
 FairySkillTag.FSTag_Impact.Text: "[c/ffcdaf:冲击]"

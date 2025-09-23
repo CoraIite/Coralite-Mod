@@ -28,7 +28,8 @@ namespace Coralite.Content.Items.Fairies
         public override int[] GetFairySkills()
         {
             return [
-                CoraliteContent.FairySkillType<FSkill_IceFire>()
+                CoraliteContent.FairySkillType<FSkill_Tackle>(),
+                CoraliteContent.FairySkillType<FSkill_ShootDrill>()
                 ];
         }
     }
@@ -108,7 +109,8 @@ namespace Coralite.Content.Items.Fairies
 
         public override FairySkill[] InitSkill()
             => [
-                NewSkill<FSkill_IceFire>()
+                NewSkill<FSkill_Tackle>(),
+                NewSkill<FSkill_ShootDrill>()
                 ];
 
         public override void SpawnFairyDust(Vector2 center, Vector2 velocity)
@@ -155,6 +157,88 @@ namespace Coralite.Content.Items.Fairies
         }
     }
 
+    public class PunctureDrill : ModProjectile
+    {
+        public override string Texture => AssetDirectory.FairyItems + Name;
+
+        public ref float ReflectCount => ref Projectile.ai[0];
+        public ref float SlowTime => ref Projectile.ai[1];
+        public ref float Speed => ref Projectile.ai[2];
+
+        public override void SetStaticDefaults()
+        {
+            Projectile.QuickTrailSets(Helper.TrailingMode.RecordAll, 8);
+        }
+
+        public override void SetDefaults()
+        {
+            Projectile.friendly = true;
+            Projectile.width = Projectile.height = 18;
+            Projectile.tileCollide = true;
+            Projectile.penetrate = -1;
+            Projectile.DamageType = TrueFairyDamage.Instance;
+        }
+
+        public override void AI()
+        {
+            if (Projectile.localAI[0] == 0)
+            {
+                Projectile.localAI[0] = 1;
+                Speed = Projectile.velocity.Length();
+            }
+
+            if (SlowTime > 0)
+            {
+                SlowTime--;
+
+                Projectile.velocity = Projectile.velocity.SafeNormalize(Vector2.Zero) * Speed / 2;
+            }
+            else
+                Projectile.velocity = Projectile.velocity.SafeNormalize(Vector2.Zero) * Speed;
+
+            Projectile.UpdateFrameNormally(4, 4);
+        }
+
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            ReflectCount--;
+            if (ReflectCount < 1)
+                Projectile.Kill();
+            else
+            {
+                SlowTime = 45;
+            }
+        }
+
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            bool top = oldVelocity.Y < 0 && Math.Sign(oldVelocity.Y + Projectile.velocity.X) < 0;
+            float newVelX = Math.Abs(Projectile.velocity.X);
+            float newVelY = Math.Abs(Projectile.velocity.Y);
+            float oldVelX = Math.Abs(oldVelocity.X);
+            float oldVelY = Math.Abs(oldVelocity.Y);
+            if (oldVelX > newVelX)
+                Projectile.velocity.X = -oldVelX * 0.7f;
+            if (oldVelY > newVelY)
+                Projectile.velocity.Y = -oldVelY * 0.7f;
+            if (top)
+                Projectile.velocity.Y *= -1;
+
+            ReflectCount--;
+            if (ReflectCount < 1)
+                return true;
+
+            return false;
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Projectile.QuickFrameDraw(new Rectangle(0, Projectile.frame, 1, 4), lightColor, 0);
+
+            return false;
+        }
+    }
+
     public class FSkill_ShootDrill : FSkill_ShootProj
     {
         public override string Texture => AssetDirectory.FairySkillIcons + "Misc";
@@ -164,7 +248,7 @@ namespace Coralite.Content.Items.Fairies
         public override Color SkillTextColor => Color.LightGray;
         protected override float ShootSpeed => 9;
 
-        protected override int ProjType => ProjectileID.WandOfFrostingFrost;
+        protected override int ProjType => ModContent.ProjectileType<PunctureDrill>();
 
         protected override float ChaseDistance => 240;
 
@@ -188,28 +272,9 @@ namespace Coralite.Content.Items.Fairies
             if (fairyProj.Owner.TryGetModPlayer(out FairyCatcherPlayer fcp))
                 level = fcp.GetFairySkillBonus(Type, level);
 
-            int count = GetProjReflectCount(level);
-            if (count > 1)
-            {
-                float v = (count - 1) / 2f;
-                for (float i = -v; i <= v; i++)
-                {
-                    int proj = fairyProj.Projectile.NewProjectileFromThis(fairyProj.Projectile.Center
-                         , velocity.RotatedBy(i * 0.2f), ProjType, damage, fairyProj.Projectile.knockBack);
-                    Main.projectile[proj].DamageType = TrueFairyDamage.Instance;
-                    Main.projectile[proj].usesIDStaticNPCImmunity = true;
-                    Main.projectile[proj].idStaticNPCHitCooldown = 20;
-                }
-            }
-            else
-            {
-                int proj = fairyProj.Projectile.NewProjectileFromThis(fairyProj.Projectile.Center
-                     , velocity, ProjType, damage, fairyProj.Projectile.knockBack);
-                Main.projectile[proj].DamageType = TrueFairyDamage.Instance;
-                Main.projectile[proj].usesIDStaticNPCImmunity = true;
-                Main.projectile[proj].idStaticNPCHitCooldown = 20;
-            }
+            ;
+            fairyProj.Projectile.NewProjectileFromThis(fairyProj.Projectile.Center
+                 , velocity, ProjType, damage, fairyProj.Projectile.knockBack, GetProjReflectCount(level));
         }
     }
-
 }

@@ -126,5 +126,13 @@
     "Speed": 60,
     "SkillLevel": 55,
     "Stamina": 55
+  },
+  "PunctureFairy": {
+    "LifeMax": 50,
+    "Damage": 50,
+    "Defence": 50,
+    "Speed": 50,
+    "SkillLevel": 50,
+    "Stamina": 50
   }
 }
