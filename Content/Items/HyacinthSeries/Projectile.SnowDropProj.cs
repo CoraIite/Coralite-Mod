@@ -124,6 +124,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             Projectile.tileCollide = false;
             Projectile.friendly = true;
             Projectile.netImportant = true;
+            Projectile.DamageType = DamageClass.Ranged;
         }
 
         public override bool? CanDamage() => false;

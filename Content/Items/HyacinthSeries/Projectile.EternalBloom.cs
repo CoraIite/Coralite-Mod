@@ -58,6 +58,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             Projectile.penetrate = 2;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 20;
+            Projectile.DamageType = DamageClass.Ranged;
         }
 
         public override void AI()
@@ -115,6 +116,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             Projectile.penetrate = 30;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 20;
+            Projectile.DamageType = DamageClass.Ranged;
         }
 
         public override void AI()

@@ -1,6 +1,5 @@
 ﻿using Coralite.Content.Particles;
 using Coralite.Core;
-using Coralite.Core.Attributes;
 using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
@@ -86,6 +85,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             Projectile.friendly = true;
             Projectile.netImportant = true;
             Projectile.usesLocalNPCImmunity = true;
+            Projectile.DamageType = DamageClass.Ranged;
         }
 
         public override void Initialize()
@@ -197,6 +197,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             Projectile.friendly = true;
             Projectile.netImportant = true;
             Projectile.usesLocalNPCImmunity = true;
+            Projectile.DamageType = DamageClass.Ranged;
         }
 
         public override void AI()
