@@ -52,6 +52,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             Projectile.netImportant = true;
             Projectile.tileCollide = false;
             Projectile.usesLocalNPCImmunity = true;
+            Projectile.DamageType = DamageClass.Ranged;
         }
 
         public enum GunType
@@ -328,6 +329,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             Projectile.ignoreWater = true;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 15;
+            Projectile.DamageType = DamageClass.Ranged;
         }
 
         public override Color? GetAlpha(Color lightColor)

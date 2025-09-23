@@ -52,6 +52,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             Projectile.hostile = false;
             Projectile.friendly = true;
             Projectile.aiStyle = -1;
+            Projectile.DamageType = DamageClass.Ranged;
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)

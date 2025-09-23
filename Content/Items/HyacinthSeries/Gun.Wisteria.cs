@@ -1,6 +1,5 @@
 ﻿using Coralite.Content.Items.Glistent;
 using Coralite.Core;
-using Coralite.Core.Attributes;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
@@ -103,7 +102,7 @@ namespace Coralite.Content.Items.HyacinthSeries
         public override string Texture => AssetDirectory.HyacinthSeriesItems + Name;
 
         private ref float Dir => ref Projectile.ai[0];
-        private ref float EXTime => ref Projectile.ai[1];
+        //private ref float EXTime => ref Projectile.ai[1];
         private ref float Timer => ref Projectile.ai[2];
 
         public override void SetStaticDefaults()
