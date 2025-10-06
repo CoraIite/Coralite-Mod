@@ -8,6 +8,7 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.GameContent;
+using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 
 namespace Coralite.Content.Items.Misc_Melee
@@ -77,7 +78,7 @@ namespace Coralite.Content.Items.Misc_Melee
                 .AddIngredient(ItemID.LunarBar, 4)
                 .AddTile(TileID.LunarCraftingStation)
                 .AddCondition(CoraliteConditions.CoralCat)
-                .AddDecraftCondition(CoraliteConditions.CoralCat)
+                .AddDecraftCondition(CoraliteConditions.CoralCat, Condition.DownedMoonLord)
                 .Register();
         }
 

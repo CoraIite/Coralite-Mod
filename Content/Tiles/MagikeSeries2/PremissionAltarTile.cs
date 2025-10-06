@@ -74,7 +74,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
             {
                 KnowledgeSystem.CheckForUnlock<MagikeInterstitial1Knowledge>(new Vector2(i, j) * 16, Coralite.CrystallinePurple);
 
-                if (CoraliteWorld.PlaceNightSoul && CoraliteWorld.PlaceNightSoul)
+                if (CoraliteWorld.PlaceNightSoul && CoraliteWorld.PlaceLightSoul)
                 {
                     if (!Main.projectile.Any(p => p.active && p.type == ModContent.ProjectileType<PremissionProj>()))
                     {

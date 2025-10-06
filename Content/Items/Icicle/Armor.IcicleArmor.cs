@@ -84,7 +84,7 @@ namespace Coralite.Content.Items.Icicle
             if (Main.netMode != NetmodeID.MultiplayerClient)
                 for (int i = -1; i < 1; i++)
                 {
-                    int damage = 25;
+                    int damage = 65;
                     int index = Projectile.NewProjectile(player.GetSource_FromThis(), pos, targetDir.RotatedBy(i * 0.05f) * (6f + (j * 2)), ProjectileType<IceBreath>(), damage, 5f);
                     Projectile p = Main.projectile[index];
                     p.DamageType = DamageClass.Magic;
@@ -134,7 +134,7 @@ namespace Coralite.Content.Items.Icicle
             {
                 Vector2 position = new((position_X * 16) + 8, (position_Y * 16) - 8);
                 Vector2 velocity = new Vector2(0f, -1f).RotatedBy(whichOne * dir * 0.7f * ((float)Math.PI / 4f / howMany));
-                int damage = 35;
+                int damage = 80;
                 int index = Projectile.NewProjectile(player.GetSource_FromAI(), position, velocity, ProjectileID.DeerclopsIceSpike, damage, 0f, player.whoAmI, 0f, 0.4f + scaleOffset + (xOffset * 1.1f / howMany));
                 Projectile p = Main.projectile[index];
                 p.DamageType = DamageClass.Melee;

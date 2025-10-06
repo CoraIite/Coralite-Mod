@@ -133,6 +133,8 @@ namespace Coralite.Content.WorldGeneration
 
             //if (DigDigDigWorld)
             //    ModifyDigdigdigWorldGen(tasks, ref totalWeight);
+
+            tasks.Add(new PassLegacy("Coralite Final Frame Set", FinalFrameSet));
         }
 
         public override void ModifyHardmodeTasks(List<GenPass> list)

@@ -88,9 +88,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             if (PrefixLegacy.ItemSets.ItemsThatCanHaveLegendary2[Item.type]) // Fix #3688, Rather than mess with the PrefixCategory enum and Item.GetPrefixCategory at this time and risk compatibility issues, manually support this until a redesign.
                 wr.Add(PrefixID.Legendary2, 1);
 
-            float w = 0.1f;
+            float w = 0.4f;
             if (Main.LocalPlayer.GetModPlayer<CoralitePlayer>().HasEffect(nameof(EightsquareHand)))
-                w = 0.3f;
+                w = 1f;
 
             wr.Add(ModContent.PrefixType<Vibrant>(), w);
 
