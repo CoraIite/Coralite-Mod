@@ -1,6 +1,5 @@
 ﻿using Coralite.Content.Bosses.ThunderveinDragon;
 using Coralite.Core;
-using Coralite.Core.Attributes;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;

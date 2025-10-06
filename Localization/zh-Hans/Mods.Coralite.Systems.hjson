@@ -388,7 +388,7 @@ FairySkill: {
 	}
 
 	FSkill_ShootDrill: {
-		Description: 
+		Description:
 			'''
 			射出钻头，命中 {0} 次后消失
 			[c/808080:每10等级增加1次钻击次数]
