@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.WorldGeneration;
 using Coralite.Core;
+using Coralite.Core.Loaders;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
@@ -244,7 +245,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             if (bars.Count > 2)
             {
-                Effect effect = Filters.Scene["ShadowLaser"].GetShader().Shader;
+                Effect effect = ShaderLoader.GetShader("ShadowLaser");
 
                 Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
                 Matrix view = Main.GameViewMatrix.TransformationMatrix;
@@ -378,7 +379,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
 
             if (bars.Count > 2)
             {
-                Effect effect = Filters.Scene["ShadowLaser"].GetShader().Shader;
+                Effect effect = ShaderLoader.GetShader("ShadowLaser");
 
                 Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
                 Matrix view = Main.GameViewMatrix.TransformationMatrix;

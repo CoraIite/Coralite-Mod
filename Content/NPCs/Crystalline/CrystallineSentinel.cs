@@ -4,6 +4,7 @@ using Coralite.Content.Items.MagikeSeries2;
 using Coralite.Content.Items.ThyphionSeries;
 using Coralite.Core;
 using Coralite.Core.Attributes;
+using Coralite.Core.Loaders;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.SmoothFunctions;
 using Coralite.Core.Systems.MagikeSystem.Particles;
@@ -1121,7 +1122,7 @@ namespace Coralite.Content.NPCs.Crystalline
             {
                 Helper.DrawTrail(Main.graphics.GraphicsDevice, () =>
                 {
-                    Effect effect = Filters.Scene["NoHLGradientTrail"].GetShader().Shader;
+                    Effect effect = ShaderLoader.GetShader("NoHLGradientTrail");
 
                     effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
                     effect.Parameters["sampleTexture"].SetValue(CoraliteAssets.Trail.SlashFlatBlurSmall.Value);

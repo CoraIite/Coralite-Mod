@@ -3,6 +3,7 @@ using Coralite.Content.Items.ThyphionSeries;
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Attributes;
+using Coralite.Core.Loaders;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
@@ -271,7 +272,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             if (trail == null)
                 return;
 
-            Effect effect = Filters.Scene["TurbulenceArrow"].GetShader().Shader;
+            Effect effect = ShaderLoader.GetShader("TurbulenceArrow");
 
             effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * 0.08f);
@@ -737,7 +738,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             if (State == 2 || trail == null)
                 return;
 
-            Effect effect = Filters.Scene["Flow2"].GetShader().Shader;
+            Effect effect = ShaderLoader.GetShader("Flow2");
 
             effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly * 5);
             effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());

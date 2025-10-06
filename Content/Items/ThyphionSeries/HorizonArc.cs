@@ -3,6 +3,7 @@ using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Attributes;
 using Coralite.Core.Configs;
+using Coralite.Core.Loaders;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.SmoothFunctions;
 using Coralite.Core.Systems.CameraSystem;
@@ -583,7 +584,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             if (streamer == null)
                 return;
 
-            Effect effect = Filters.Scene["ArcRainbow"].GetShader().Shader;
+            Effect effect = ShaderLoader.GetShader("ArcRainbow");
 
             effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * 0.02f);
@@ -606,7 +607,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             Vector2 pos = Projectile.Center + Rotation.ToRotationVector2() * 12;
             Vector2 origin = tex.Size() / 2;
 
-            Effect effect = Filters.Scene["ArcRainbow"].GetShader().Shader;
+            Effect effect = ShaderLoader.GetShader("ArcRainbow");
 
             effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * 0.02f);
@@ -908,7 +909,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             if (trail == null)
                 return;
 
-            Effect effect = Filters.Scene["ArcRainbow"].GetShader().Shader;
+            Effect effect = ShaderLoader.GetShader("ArcRainbow");
 
             effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * 0.03f);
@@ -936,7 +937,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             Vector2 pos = Projectile.Center - Projectile.rotation.ToRotationVector2() * 20;
             Vector2 origin = tex.Size() / 2;
 
-            Effect effect = Filters.Scene["ArcRainbow"].GetShader().Shader;
+            Effect effect = ShaderLoader.GetShader("ArcRainbow");
 
             effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * 0.02f);

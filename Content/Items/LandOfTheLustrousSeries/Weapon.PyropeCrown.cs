@@ -2,6 +2,7 @@
 using Coralite.Content.Items.Materials;
 using Coralite.Core;
 using Coralite.Core.Configs;
+using Coralite.Core.Loaders;
 using Coralite.Helpers;
 using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
@@ -299,7 +300,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public void DrawPrimitives()
         {
-            Effect effect = Filters.Scene["Flow2"].GetShader().Shader;
+            Effect effect = ShaderLoader.GetShader("Flow2");
 
             Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
             Matrix view = Main.GameViewMatrix.ZoomMatrix;

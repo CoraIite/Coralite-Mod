@@ -315,7 +315,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             Vector2 scale = new Vector2(0.8f, 0.75f * trailAlpha) * 0.55f;
             Vector2 pos = Projectile.Center + Main.rand.NextVector2Circular(1, 1) - Projectile.rotation.ToRotationVector2() * 8;
-            Effect effect = Filters.Scene["TurbulenceArrow"].GetShader().Shader;
+            Effect effect = ShaderLoader.GetShader("TurbulenceArrow");
 
             effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * 0.03f);
@@ -589,7 +589,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             if (trail == null)
                 return;
 
-            Effect effect = Filters.Scene["TurbulenceArrow"].GetShader().Shader;
+            Effect effect = ShaderLoader.GetShader("TurbulenceArrow");
 
             effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * 0.08f);
@@ -622,7 +622,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             if (State == 0 || warpTrail == null)
                 return;
 
-            Effect effect = Filters.Scene["TurbulenceWarp"].GetShader().Shader;
+            Effect effect = ShaderLoader.GetShader("TurbulenceWarp");
 
             effect.Parameters["uBaseImage"].SetValue(CoraliteAssets.Trail.LightShot.Value);
             effect.Parameters["uFlow"].SetValue(TurbulenceFlow.Value);
@@ -641,7 +641,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             Vector2 scale = new Vector2(0.8f, 0.55f * trailAlpha) * 0.65f;
             Vector2 pos = Projectile.Center - Projectile.rotation.ToRotationVector2() * 12;
-            Effect effect = Filters.Scene["TurbulenceArrow"].GetShader().Shader;
+            Effect effect = ShaderLoader.GetShader("TurbulenceArrow");
 
             effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * 0.03f);

@@ -2,6 +2,7 @@
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Attributes;
+using Coralite.Core.Loaders;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.CameraSystem;
 using Coralite.Helpers;
@@ -516,7 +517,8 @@ namespace Coralite.Content.Items.ThyphionSeries
 
                     Color color = Color.Coral;
 
-                    Effect effect = Filters.Scene["GlowingDust"].GetShader().Shader;
+                    Effect effect = ShaderLoader.GetShader("GlowingDust");
+
                     effect.Parameters["uColor"].SetValue(color.ToVector3());
                     effect.Parameters["uOpacity"].SetValue(1);
 

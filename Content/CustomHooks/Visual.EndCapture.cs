@@ -1,5 +1,6 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Configs;
+using Coralite.Core.Loaders;
 using InnoVault.RenderHandles;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -41,7 +42,8 @@ namespace Coralite.Content.CustomHooks
             graphicsDevice.Clear(Color.Transparent);
             Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend);
 
-            Effect effect = Filters.Scene["WarpTrail"].GetShader().Shader;
+            Effect effect = ShaderLoader.GetShader("WarpTrail");
+
             effect.Parameters["tex0"].SetValue(Main.screenTargetSwap);
             effect.Parameters["i"].SetValue(0.02f);
             effect.CurrentTechnique.Passes[0].Apply();

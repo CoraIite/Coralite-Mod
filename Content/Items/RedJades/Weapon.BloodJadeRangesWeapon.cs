@@ -2,6 +2,7 @@
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Configs;
+using Coralite.Core.Loaders;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
 using InnoVault.PRT;
@@ -264,7 +265,7 @@ namespace Coralite.Content.Items.RedJades
 
         public void DrawPrimitives()
         {
-            Effect effect = Filters.Scene["SimpleTrailNoHL"].GetShader().Shader;
+            Effect effect = ShaderLoader.GetShader("SimpleTrailNoHL");
 
             Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
             Matrix view = Main.GameViewMatrix.TransformationMatrix;

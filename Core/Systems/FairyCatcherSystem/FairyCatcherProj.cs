@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.ModPlayers;
 using Coralite.Core.Attributes;
+using Coralite.Core.Loaders;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
@@ -337,7 +338,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public void DrawBack(Vector2 pos, Color circleColor, Color backColor)
         {
             Texture2D texture = TwistTex.Value;
-            Effect shader = Filters.Scene["FairyCircle"].GetShader().Shader;
+            Effect shader = ShaderLoader.GetShader("FairyCircle");
 
             float dia = webRadius;
             if (Owner.TryGetModPlayer(out FairyCatcherPlayer fcp))

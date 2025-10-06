@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Items.Icicle;
 using Coralite.Core.Configs;
+using Coralite.Core.Loaders;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
@@ -685,7 +686,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             Matrix projection = Matrix.CreateOrthographicOffCenter(0f, Main.screenWidth, Main.screenHeight, 0f, 0f, 1f);
             Matrix model = Matrix.CreateTranslation(new Vector3(-Main.screenPosition.X, -Main.screenPosition.Y, 0f)) * Main.GameViewMatrix.TransformationMatrix;
 
-            Effect effect = Filters.Scene["KEx2"].GetShader().Shader;
+            Effect effect = ShaderLoader.GetShader("KEx2");
 
             effect.Parameters["uTransform"].SetValue(model * projection);
             Main.graphics.GraphicsDevice.Textures[0] = FrostySwordSlash.WarpTexture.Value;

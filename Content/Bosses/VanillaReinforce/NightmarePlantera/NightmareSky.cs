@@ -1,5 +1,6 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Configs;
+using Coralite.Core.Loaders;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
@@ -25,7 +26,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 Rectangle screen = new(0, 0, Main.screenWidth, Main.screenHeight);
                 if (VisualEffectSystem.UseNightmareSky)
                 {
-                    Effect e = Filters.Scene["GlowingMarblingBlack2"].GetShader().Shader;
+                    Effect e = ShaderLoader.GetShader("GlowingMarblingBlack2");
+
                     e.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly / 8);
                     e.Parameters["viewRange"].SetValue(0.7f + (MathF.Sin(Main.GlobalTimeWrappedHourly / 2) * 0.2f));
                     e.Parameters["uC1"].SetValue((color * (Timeleft / 100f)).ToVector3());

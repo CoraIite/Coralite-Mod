@@ -3,6 +3,7 @@ using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Attributes;
 using Coralite.Core.Configs;
+using Coralite.Core.Loaders;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
 using InnoVault.Trails;
@@ -439,7 +440,7 @@ namespace Coralite.Content.Items.Nightmare
             if (trail == null)
                 return;
 
-            Effect effect = Filters.Scene["AlphaGradientTrail"].GetShader().Shader;
+            Effect effect = ShaderLoader.GetShader("AlphaGradientTrail");
 
             Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
             Matrix view = Main.GameViewMatrix.TransformationMatrix;

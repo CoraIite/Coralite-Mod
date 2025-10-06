@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.Tiles.RedJades;
 using Coralite.Core;
 using Coralite.Core.Configs;
+using Coralite.Core.Loaders;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -50,7 +51,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public override void DrawGemName(DrawableTooltipLine line)
         {
             SpriteBatch sb = Main.spriteBatch;
-            Effect effect = Filters.Scene["Crystal"].GetShader().Shader;
+            Effect effect = ShaderLoader.GetShader("Crystal");
 
             rand.X += 0.6f;
             rand.Y += 0.1f;
@@ -505,7 +506,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public override bool PreDraw(ref Color lightColor)
         {
             rand.X += 1;
-            Effect effect = Filters.Scene["Crystal"].GetShader().Shader;
+            Effect effect = ShaderLoader.GetShader("Crystal");
 
             Texture2D noiseTex = GemTextures.CellNoise2.Value;//[(int)(Main.timeForVisualEffects / 7) % 20].Value;
 

@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.Items.LandOfTheLustrousSeries;
+using Coralite.Core.Loaders;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -868,7 +869,7 @@ namespace Coralite.Helpers
             , Color highlightC, Color brightC, Color darkC, Action doDraw, Action<SpriteBatch> endSpriteBatch
             , float lightRange = 0.2f, float lightLimit = 0.35f, float addC = 0.75f)
         {
-            Effect effect = Filters.Scene["Crystal"].GetShader().Shader;
+            Effect effect = ShaderLoader.GetShader("Crystal");
 
             Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
             Matrix view = Main.GameViewMatrix.TransformationMatrix;

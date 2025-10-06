@@ -5,7 +5,6 @@ using Coralite.Content.Items.LandOfTheLustrousSeries;
 using Coralite.Content.Items.Magike.Refractors;
 using Coralite.Content.Items.MagikeSeries2;
 using Coralite.Core;
-using Coralite.Core.Attributes;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
@@ -135,7 +134,7 @@ namespace Coralite.Content.NPCs.Crystalline
                 if (Helper.IsPointOnScreen(new Vector2(spawnInfo.SpawnTileX, tileY) * 16 - Main.screenPosition))
                     return 0;
                 else
-                    return 0.03f;
+                    return 0.06f;
             }
 
             return 0;

@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera;
 using Coralite.Core;
 using Coralite.Core.Configs;
+using Coralite.Core.Loaders;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
 using InnoVault.Trails;
@@ -254,7 +255,7 @@ namespace Coralite.Content.Items.Nightmare
                 Main.spriteBatch.End();
                 Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, default, Main.GameViewMatrix.ZoomMatrix);
 
-                Effect effect = Filters.Scene["SimpleGradientTrail"].GetShader().Shader;
+                Effect effect = ShaderLoader.GetShader("SimpleGradientTrail");
 
                 Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
                 Matrix view = Main.GameViewMatrix.TransformationMatrix;
@@ -404,7 +405,7 @@ namespace Coralite.Content.Items.Nightmare
                 Main.spriteBatch.End();
                 Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, default, Main.GameViewMatrix.ZoomMatrix);
 
-                Effect effect = Filters.Scene["NoHLGradientTrail"].GetShader().Shader;
+                Effect effect = ShaderLoader.GetShader("NoHLGradientTrail");
 
                 Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
                 Matrix view = Main.GameViewMatrix.TransformationMatrix;
@@ -642,7 +643,7 @@ namespace Coralite.Content.Items.Nightmare
             if (trail == null)
                 return;
 
-            Effect effect = Filters.Scene["FantasyTentacle"].GetShader().Shader;
+            Effect effect = ShaderLoader.GetShader("FantasyTentacle");
 
             Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
             Matrix view = Main.GameViewMatrix.TransformationMatrix;

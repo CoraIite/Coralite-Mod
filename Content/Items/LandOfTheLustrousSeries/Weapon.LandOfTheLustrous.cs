@@ -5,6 +5,7 @@ using Coralite.Content.Items.MagikeSeries2;
 using Coralite.Content.WorldGeneration;
 using Coralite.Core;
 using Coralite.Core.Configs;
+using Coralite.Core.Loaders;
 using Coralite.Core.SmoothFunctions;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
@@ -951,7 +952,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             if (!Shiny || trail == null)
                 return;
 
-            Effect effect = Filters.Scene["CrystalTrail"].GetShader().Shader;
+            Effect effect = ShaderLoader.GetShader("CrystalTrail");
             Texture2D noiseTex = GemTextures.CrystalNoises[Projectile.frame].Value;
 
             effect.Parameters["noiseTexture"].SetValue(noiseTex);

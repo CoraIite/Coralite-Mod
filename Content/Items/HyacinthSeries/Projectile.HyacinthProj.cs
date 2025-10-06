@@ -4,6 +4,7 @@ using Coralite.Content.Items.Nightmare;
 using Coralite.Content.Items.ShadowCastle;
 using Coralite.Content.Items.Thunder;
 using Coralite.Core;
+using Coralite.Core.Loaders;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
@@ -656,7 +657,7 @@ namespace Coralite.Content.Items.HyacinthSeries
             if (Projectile.timeLeft > 390)
                 return;
 
-            Effect effect = Filters.Scene["SimpleTrail"].GetShader().Shader;
+            Effect effect = ShaderLoader.GetShader("SimpleTrail");
 
             Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
             Matrix view = Main.GameViewMatrix.TransformationMatrix;

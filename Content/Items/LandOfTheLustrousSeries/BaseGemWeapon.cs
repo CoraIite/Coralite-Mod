@@ -2,6 +2,7 @@
 using Coralite.Content.ModPlayers;
 using Coralite.Content.Prefixes.GemWeaponPrefixes;
 using Coralite.Core;
+using Coralite.Core.Loaders;
 using Coralite.Core.Systems.ParticleSystem;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -120,7 +121,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public static void DrawGemNameNormally(DrawableTooltipLine line, Action<Effect> setEffect, float flowXadder = 0.2f, Action<Effect> setBackEffect = null, Texture2D backTex = null, Point? extraSize = null)
         {
             SpriteBatch sb = Main.spriteBatch;
-            Effect effect = Filters.Scene["Crystal"].GetShader().Shader;
+            Effect effect = ShaderLoader.GetShader("Crystal");
 
             rand.X += flowXadder * Main.GameZoomTarget;
             rand.Y += 0.01f * Main.GameZoomTarget;

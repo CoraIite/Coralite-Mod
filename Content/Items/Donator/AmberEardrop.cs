@@ -5,6 +5,7 @@ using Coralite.Content.Items.LandOfTheLustrousSeries;
 using Coralite.Content.Tiles.RedJades;
 using Coralite.Core;
 using Coralite.Core.Configs;
+using Coralite.Core.Loaders;
 using Coralite.Helpers;
 using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
@@ -57,7 +58,7 @@ namespace Coralite.Content.Items.Donator
         public override void DrawGemName(DrawableTooltipLine line)
         {
             SpriteBatch sb = Main.spriteBatch;
-            Effect effect = Filters.Scene["Crystal"].GetShader().Shader;
+            Effect effect = ShaderLoader.GetShader("Crystal");
 
             rand.X += 0.6f;
             rand.Y += 0.01f;
@@ -430,7 +431,7 @@ namespace Coralite.Content.Items.Donator
                 return;
 
             rand -= Projectile.velocity / 10;
-            Effect effect = Filters.Scene["CrystalTrail"].GetShader().Shader;
+            Effect effect = ShaderLoader.GetShader("CrystalTrail");
 
             Texture2D noiseTex = GemTextures.CellNoise.Value;//[(int)(Main.timeForVisualEffects / 7) % 20].Value;
 

@@ -1,4 +1,5 @@
 ﻿using Coralite.Core;
+using Coralite.Core.Loaders;
 using Coralite.Helpers;
 using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
@@ -293,7 +294,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             if (trail == null)
                 return;
 
-            Effect effect = Filters.Scene["NightmareTentacle"].GetShader().Shader;
+            Effect effect = ShaderLoader.GetShader("NightmareTentacle");
 
             Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
             Matrix view = Main.GameViewMatrix.TransformationMatrix;

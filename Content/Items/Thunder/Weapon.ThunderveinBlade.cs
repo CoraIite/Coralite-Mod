@@ -3,6 +3,7 @@ using Coralite.Content.Items.Gels;
 using Coralite.Content.ModPlayers;
 using Coralite.Core;
 using Coralite.Core.Configs;
+using Coralite.Core.Loaders;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.CameraSystem;
 using Coralite.Helpers;
@@ -430,7 +431,7 @@ namespace Coralite.Content.Items.Thunder
             {
                 Helper.DrawTrail(Main.graphics.GraphicsDevice, () =>
                 {
-                    Effect effect = Filters.Scene["SimpleGradientTrail"].GetShader().Shader;
+                    Effect effect = ShaderLoader.GetShader("SimpleGradientTrail");
 
                     effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
                     effect.Parameters["sampleTexture"].SetValue(CoraliteAssets.Trail.SlashFlatFade.Value);

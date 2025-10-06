@@ -1,5 +1,6 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Configs;
+using Coralite.Core.Loaders;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.SlashBladeSystem;
 using Coralite.Helpers;
@@ -511,7 +512,7 @@ namespace Coralite.Content.Items.ShadowCastle
                 Main.spriteBatch.End();
                 Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, default, Main.GameViewMatrix.ZoomMatrix);
 
-                Effect effect = Filters.Scene["StarsTrail"].GetShader().Shader;
+                Effect effect = ShaderLoader.GetShader("StarsTrail");
 
                 Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
                 Matrix view = Main.GameViewMatrix.TransformationMatrix;
