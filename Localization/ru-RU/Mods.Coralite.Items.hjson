@@ -6089,3 +6089,8 @@ WorldGenFix: {
 	// DisplayName: World Gen Fix
 	// Tooltip: ""
 }
+
+ThunderveinMusicBox: {
+	// DisplayName: Thundervein Music Box
+	// Tooltip: ""
+}

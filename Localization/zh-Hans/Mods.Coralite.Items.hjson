@@ -6099,3 +6099,8 @@ WorldGenFix: {
 	DisplayName: 世界设置修复
 	Tooltip: 取消所有的模组彩蛋种子特性，需要保存退出后重新进入生效
 }
+
+ThunderveinMusicBox: {
+	DisplayName: 八音盒（荒雷轰鸣）
+	Tooltip: ""
+}

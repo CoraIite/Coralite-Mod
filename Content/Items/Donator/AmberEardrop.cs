@@ -312,7 +312,7 @@ namespace Coralite.Content.Items.Donator
             if (TileCollide == 0)
             {
                 Tile t = Framing.GetTileSafely(Projectile.Center);
-                if (t.HasSolidTile())
+                if (t.HasReallySolidTile())
                 {
 
                     TileCollide = 1;

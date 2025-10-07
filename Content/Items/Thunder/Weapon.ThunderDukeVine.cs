@@ -215,7 +215,7 @@ namespace Coralite.Content.Items.Thunder
                 Tile tile = Framing.GetTileSafely(posCheck);
                 laserTrailPoints.Add(posCheck);
 
-                if (tile.HasSolidTile() || k == 139)
+                if (tile.HasReallySolidTile() || k == 139)
                 {
                     endPoint = posCheck;
                     break;

@@ -190,7 +190,7 @@ namespace Coralite.Content.Items.HyacinthSeries
 
             if (Projectile.timeLeft > 60)
             {
-                if (Framing.GetTileSafely(Projectile.Center).HasSolidTile())
+                if (Framing.GetTileSafely(Projectile.Center).HasReallySolidTile())
                 {
                     Projectile.timeLeft = 60;
                     Projectile.netUpdate = true;

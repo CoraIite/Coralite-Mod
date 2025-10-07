@@ -225,7 +225,7 @@ namespace Coralite.Content.Items.YujianHulu
                 Vector2 targetDir = Projectile.rotation.ToRotationVector2();
                 for (int i = 0; i < 4; i++)
                 {
-                    if (Framing.GetTileSafely(Projectile.Center + (targetDir * i * 16)).HasSolidTile())
+                    if (Framing.GetTileSafely(Projectile.Center + (targetDir * i * 16)).HasReallySolidTile())
                     {
                         Projectile.timeLeft = 10;
                         canDamage = false;

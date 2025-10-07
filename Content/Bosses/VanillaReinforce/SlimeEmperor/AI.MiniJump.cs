@@ -173,7 +173,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor
                 for (int i = 0; i < NPC.width; i += 16) //如果脚下有方块且速度小于一定值，那么判断为在地上
                 {
                     Tile tile = Framing.GetTileSafely(NPC.BottomLeft + new Vector2(i, 0));
-                    if (tile.HasSolidTile())
+                    if (tile.HasReallySolidTile())
                     {
                         JumpState = (int)JumpStates.ReadyToJump;
                         NPC.frame.Y = 0;

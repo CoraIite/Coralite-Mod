@@ -26,7 +26,7 @@ namespace Coralite.Helpers
         /// </summary>
         /// <param name="tile"></param>
         /// <returns></returns>
-        public static bool HasSolidTile(this Tile tile)
+        public static bool HasReallySolidTile(this Tile tile)
         {
             return tile.HasUnactuatedTile && Main.tileSolid[tile.TileType] && !Main.tileSolidTop[tile.TileType];
         }

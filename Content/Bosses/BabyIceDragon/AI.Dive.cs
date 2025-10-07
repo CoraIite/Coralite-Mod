@@ -72,7 +72,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                             {
                                 Vector2 position = mouseCenter + (i * 16 * targetDir.RotatedBy(1.57f));
                                 Tile tile = Framing.GetTileSafely(position);
-                                if (tile.HasSolidTile())
+                                if (tile.HasReallySolidTile())
                                 {
                                     Dizzy(300);
                                     return;

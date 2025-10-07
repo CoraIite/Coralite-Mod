@@ -641,7 +641,7 @@ namespace Coralite.Content.NPCs.Crystalline
             for (int i = 0; i < findCount; i++)
             {
                 Tile t = Framing.GetTileSafely(p + new Point(0, i));
-                if (t.HasSolidTile())
+                if (t.HasReallySolidTile())
                     return true;
             }
 

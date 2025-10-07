@@ -358,7 +358,7 @@ namespace Coralite.Content.NPCs.Crystalline
                 for (int j = 0; j < 2; j++)
                 {
                     Tile t = Framing.GetTileSafely(pos + new Vector2(NPC.direction * i * 16, j * 16));
-                    if (t.HasSolidTile())
+                    if (t.HasReallySolidTile())
                     {
                         hasTile = true;
                         break;

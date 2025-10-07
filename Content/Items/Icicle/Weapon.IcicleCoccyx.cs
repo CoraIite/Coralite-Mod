@@ -507,7 +507,7 @@ namespace Coralite.Content.Items.Icicle
                     {
                         Vector2 position = targetCenter + (j * 16 * dashDir.RotatedBy(1.57f));
                         Tile tile = Framing.GetTileSafely(position);
-                        if (tile.HasSolidTile())
+                        if (tile.HasReallySolidTile())
                         {
                             targetCenter -= dashDir * 32;
                             goto checkEnd;
@@ -521,7 +521,7 @@ namespace Coralite.Content.Items.Icicle
                 {
                     Vector2 position = targetCenter + (dashDir * 16) + (j * 16 * dashDir.RotatedBy(1.57f));
                     Tile tile = Framing.GetTileSafely(position);
-                    if (tile.HasSolidTile())
+                    if (tile.HasReallySolidTile())
                         targetCenter -= dashDir * 32;
                 }
 
