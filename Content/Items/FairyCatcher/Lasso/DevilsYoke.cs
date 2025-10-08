@@ -1,6 +1,5 @@
 ﻿using Coralite.Content.DamageClasses;
 using Coralite.Core;
-using Coralite.Core.Attributes;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
@@ -37,7 +36,7 @@ namespace Coralite.Content.Items.FairyCatcher.Lasso
 
         private bool shooted = false;
 
-        public override float GetShootRandAngle => Main.rand.NextFloat(-0.1f,0.1f);
+        public override float GetShootRandAngle => Main.rand.NextFloat(-0.1f, 0.1f);
 
         public override void SetSwingProperty()
         {
@@ -117,7 +116,7 @@ namespace Coralite.Content.Items.FairyCatcher.Lasso
             if (Timer == 5 && SpawnCount < 5)
             {
                 Projectile.NewProjectileFromThis<DevilsYokeChainProj>(Projectile.Center + Angle.ToRotationVector2() * 24
-                    , Vector2.Zero, Projectile.damage, Projectile.knockBack, Angle+Main.rand.NextFloat(-0.2f,0.2f), SpawnCount + 1);
+                    , Vector2.Zero, Projectile.damage, Projectile.knockBack, Angle + Main.rand.NextFloat(-0.2f, 0.2f), SpawnCount + 1);
             }
             else if (Timer > 30)
                 Projectile.Kill();

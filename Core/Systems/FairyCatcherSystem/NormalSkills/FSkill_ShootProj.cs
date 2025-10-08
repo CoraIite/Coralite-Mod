@@ -25,7 +25,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.NormalSkills
         /// <summary>
         /// 追踪距离
         /// </summary>
-        protected abstract  float ChaseDistance { get; }
+        protected abstract float ChaseDistance { get; }
 
         /// <summary>
         /// 射击的弹幕类型
@@ -109,7 +109,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.NormalSkills
         /// <param name="velocity"></param>
         /// <param name="baseDamage"></param>
         /// <param name=""></param>
-        public virtual void ModifyShootProj(BaseFairyProjectile fairyProj,ref Vector2 center,ref Vector2 velocity,ref int baseDamage)
+        public virtual void ModifyShootProj(BaseFairyProjectile fairyProj, ref Vector2 center, ref Vector2 velocity, ref int baseDamage)
         {
 
         }
@@ -132,10 +132,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.NormalSkills
         /// <param name="center"></param>
         /// <param name="velocity"></param>
         /// <param name="damage"></param>
-        public virtual void ShootProj(BaseFairyProjectile fairyProj,Vector2 center,Vector2 velocity,int damage)
+        public virtual void ShootProj(BaseFairyProjectile fairyProj, Vector2 center, Vector2 velocity, int damage)
         {
             fairyProj.Projectile.NewProjectileFromThis(fairyProj.Projectile.Center
-                , velocity, ProjType, damage, fairyProj.Projectile.knockBack,fairyProj.SkillLevel);
+                , velocity, ProjType, damage, fairyProj.Projectile.knockBack, fairyProj.SkillLevel);
         }
     }
 }

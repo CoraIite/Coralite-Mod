@@ -1,6 +1,5 @@
 ﻿using Coralite.Content.DamageClasses;
 using Coralite.Core;
-using Coralite.Core.Attributes;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases.Items;
 using Coralite.Helpers;
@@ -151,7 +150,7 @@ namespace Coralite.Content.Items.RedJades
 
             float factor = Timer / (60 * 4);
 
-            Color c = Color.Lerp(Color.Transparent, Color.White*0.5f,
+            Color c = Color.Lerp(Color.Transparent, Color.White * 0.5f,
                 Math.Abs(Helper.SinEase(Helper.X3Ease(factor) * MathHelper.TwoPi * 2)));
 
             Vector2 pos = Projectile.Center - Main.screenPosition;

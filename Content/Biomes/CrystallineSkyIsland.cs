@@ -1,7 +1,6 @@
 ﻿using Coralite.Content.ModPlayers;
 using Coralite.Content.WorldGeneration;
 using Coralite.Core;
-using Coralite.Core.Attributes;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Linq;

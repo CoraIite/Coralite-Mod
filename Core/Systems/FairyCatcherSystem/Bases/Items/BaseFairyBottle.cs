@@ -68,7 +68,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
         public virtual void UpdateBottle(Player player)
         {
             bool heal = false;
-            if (++_healTime>FairyHealSpacing)
+            if (++_healTime > FairyHealSpacing)
             {
                 heal = true;
                 _healTime = 0;
@@ -87,7 +87,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
             }
         }
 
-        public virtual void OnFairyBack(Player player,BaseFairyItem fairyItem) { }
+        public virtual void OnFairyBack(Player player, BaseFairyItem fairyItem) { }
 
         #region 存入取出部分
 
@@ -97,7 +97,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
         public virtual void OnBottleActive()
         {
             foreach (var item in fightFairies)
-                if (!item.IsAir&&item.ModItem is BaseFairyItem bfi)
+                if (!item.IsAir && item.ModItem is BaseFairyItem bfi)
                     bfi.OnBottleActive();
         }
 
@@ -105,7 +105,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
         /// 在仙灵瓶取出UI的时候调用，清除弹幕
         /// </summary>
         /// <param name="player"></param>
-        public virtual void  OnBottleInactive(Player player)
+        public virtual void OnBottleInactive(Player player)
         {
             foreach (var item in fightFairies)
                 if (!item.IsAir && item.ModItem is BaseFairyItem bfi)

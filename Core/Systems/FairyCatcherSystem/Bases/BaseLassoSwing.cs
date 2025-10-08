@@ -199,7 +199,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         public virtual void BeforeSlashSound()
         {
             if (Timer == minTime / 2 || Timer == minTime - 1)
-                Helper.PlayPitched(CoraliteSoundID.Swing_Item1, Projectile.Center,volumeAdjust:-0.5f,pitchAdjust:0.3f);
+                Helper.PlayPitched(CoraliteSoundID.Swing_Item1, Projectile.Center, volumeAdjust: -0.5f, pitchAdjust: 0.3f);
         }
 
         /// <summary>

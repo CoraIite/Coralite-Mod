@@ -1,6 +1,5 @@
 ﻿using Coralite.Content.Items.Misc_Melee;
 using Coralite.Core;
-using Coralite.Core.Attributes;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;

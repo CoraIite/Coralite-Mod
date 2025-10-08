@@ -34,7 +34,7 @@ namespace Coralite.Content.Items.Fairies.ColorSeries
         public override void RegisterSpawn()
         {
             FairySpawnController.Create(Type)
-                .AddConditions(FairySpawnCondition.ZoneForest,FairySpawnCondition.CircleR_9)
+                .AddConditions(FairySpawnCondition.ZoneForest, FairySpawnCondition.CircleR_9)
                 .RegisterToWall();
         }
 

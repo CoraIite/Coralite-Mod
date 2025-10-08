@@ -12,7 +12,6 @@ using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
-using Terraria.Graphics.Effects;
 using Terraria.ID;
 
 namespace Coralite.Content.Items.YujianHulu

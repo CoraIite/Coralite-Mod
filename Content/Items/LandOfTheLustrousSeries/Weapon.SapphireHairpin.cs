@@ -12,7 +12,6 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.Graphics;
-using Terraria.Graphics.Effects;
 using Terraria.Graphics.Shaders;
 using Terraria.ID;
 
@@ -422,7 +421,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 , ((float)Main.timeForVisualEffects * 0.02f) + (Projectile.whoAmI / 3f)
                 , highlightC, brightC, darkC, () =>
                 {
-                    Texture2D exTex = TextureAssets.Extra[98].Value;
+                    Texture2D exTex = TextureAssets.Extra[ExtrasID.SharpTears].Value;
 
                     Vector2 toCenter = new(Projectile.width / 2, Projectile.height / 2);
                     var origin = exTex.Size() / 2;
@@ -655,7 +654,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             _vertexStrip.PrepareStripWithProceduralPadding(Projectile.oldPos, Projectile.oldRot, StripColors, StripWidth, -Main.screenPosition + (Projectile.Size / 2));
             _vertexStrip.DrawTrail();
 
-            Texture2D mainTex = TextureAssets.Extra[57].Value;
+            Texture2D mainTex = TextureAssets.Extra[ExtrasID.AncientLight].Value;
             var pos = Projectile.Center - Main.screenPosition;
             var origin = mainTex.Size() / 2;
 

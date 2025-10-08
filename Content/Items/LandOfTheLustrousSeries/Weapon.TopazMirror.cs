@@ -463,7 +463,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             var weaponOrigin = tex.Size() / 2;
             Texture2D circleTex = TextureAssets.Projectile[ProjectileID.CultistRitual].Value;
             var circleOrigin = circleTex.Size() / 2;
-            Texture2D circleTex2 = TextureAssets.Extra[34].Value;
+            Texture2D circleTex2 = TextureAssets.Extra[ExtrasID.CultistRitual].Value;
             var circleOrigin2 = circleTex2.Size() / 2;
 
             rand.Y += 0.2f;

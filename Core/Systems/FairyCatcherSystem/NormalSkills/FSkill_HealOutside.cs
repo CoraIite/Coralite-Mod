@@ -76,7 +76,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.NormalSkills
             }
 
             fairyProj.SetDirectionNormally();
-            fairyProj.SpawnFairyDust(fairyProj.Projectile.Center,fairyProj.Projectile.velocity);
+            fairyProj.SpawnFairyDust(fairyProj.Projectile.Center, fairyProj.Projectile.velocity);
 
             return false;
         }
@@ -87,7 +87,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.NormalSkills
             if (player.TryGetModPlayer(out FairyCatcherPlayer fcp))
                 level = fcp.GetFairySkillBonus(Type, level);
 
-            return HealValue.Format(GetHealPercent(level)*100, iv.Damage);
+            return HealValue.Format(GetHealPercent(level) * 100, iv.Damage);
         }
     }
 

@@ -101,7 +101,7 @@ namespace Coralite.Content.Items.MagikeSeries1
 
         public override bool PreDraw(ref Color lightColor)
         {
-            if (_vertexStrip==null)
+            if (_vertexStrip == null)
                 return false;
 
             MiscShaderData miscShaderData = GameShaders.Misc["RainbowRod"];

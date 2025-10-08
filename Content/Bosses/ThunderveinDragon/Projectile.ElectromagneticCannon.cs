@@ -7,7 +7,6 @@ using ReLogic.Content;
 using System;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.Graphics.Effects;
 using Terraria.ID;
 
 namespace Coralite.Content.Bosses.ThunderveinDragon

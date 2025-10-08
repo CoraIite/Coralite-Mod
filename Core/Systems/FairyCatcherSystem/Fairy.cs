@@ -37,7 +37,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <summary>
         /// 捕捉进度
         /// </summary>
-        public float CatchProgress {  get; set; }
+        public float CatchProgress { get; set; }
 
         #region 基础字段
 
@@ -67,7 +67,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <summary>
         /// 在捕捉器内的ID
         /// </summary>
-        public int IDInCatcher {  get;private set; }
+        public int IDInCatcher { get; private set; }
 
         private enum AIState
         {
@@ -594,7 +594,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
             if (HasBuff)
                 foreach (var buff in buffs)
-                    buff.PreDraw(Center, Size,ref drawColor,alpha);
+                    buff.PreDraw(Center, Size, ref drawColor, alpha);
 
             this.QuickDraw(Main.screenPosition, drawColor * alpha, 0);
 
@@ -650,7 +650,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                 totalBarLength = width * 4;
             }
 
-            ModifyProgressBarDraw(ref center,ref backColor, ref barColor, ref totalBarLength);
+            ModifyProgressBarDraw(ref center, ref backColor, ref barColor, ref totalBarLength);
 
             Texture2D tex = CoraliteAssets.Sparkle.BarSPA.Value;
 
@@ -696,7 +696,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             //    0f, Vector2.Zero, scale, SpriteEffects.None, 0f);
         }
 
-        public virtual void ModifyProgressBarDraw(ref Vector2 center,ref Color backColor,ref Color barColor,ref float totalBarLength)
+        public virtual void ModifyProgressBarDraw(ref Vector2 center, ref Color backColor, ref Color barColor, ref float totalBarLength)
         {
 
         }

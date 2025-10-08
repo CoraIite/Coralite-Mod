@@ -71,8 +71,8 @@ namespace Coralite.Content.Items.RedJades
             Vector2 dir = (Projectile.rotation - MathHelper.PiOver2).ToRotationVector2();
             Vector2 pos = Projectile.Center + dir * 12;
 
-            Dust d = Dust.NewDustPerfect(pos+Main.rand.NextVector2Circular(4,4), DustID.Torch
-                , dir.RotateByRandom(-0.2f, 0.2f)*Main.rand.NextFloat(0.8f,1.5f));
+            Dust d = Dust.NewDustPerfect(pos + Main.rand.NextVector2Circular(4, 4), DustID.Torch
+                , dir.RotateByRandom(-0.2f, 0.2f) * Main.rand.NextFloat(0.8f, 1.5f));
             d.noGravity = Main.rand.NextBool(2);
         }
 
@@ -99,7 +99,7 @@ namespace Coralite.Content.Items.RedJades
 
             if (Catch == 0 && FullCharge)//完全蓄力后生成小炸弹
             {
-                Projectile.NewProjectileFromThis<TinyFirecrackerProj>(Projectile.Center, new Vector2(Projectile.direction*0.25f, -6),
+                Projectile.NewProjectileFromThis<TinyFirecrackerProj>(Projectile.Center, new Vector2(Projectile.direction * 0.25f, -6),
                     Projectile.damage / 2, Projectile.knockBack);
             }
         }
@@ -136,7 +136,7 @@ namespace Coralite.Content.Items.RedJades
             if (Timer == 6)
                 Projectile.tileCollide = true;
 
-            Projectile.rotation += Math.Sign(Projectile.velocity.X)*Math.Abs( Projectile.velocity.Y) / 13;
+            Projectile.rotation += Math.Sign(Projectile.velocity.X) * Math.Abs(Projectile.velocity.Y) / 13;
 
             if (Projectile.velocity.Y < 10)
                 Projectile.velocity.Y += 0.15f;

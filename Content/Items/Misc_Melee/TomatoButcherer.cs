@@ -187,7 +187,7 @@ namespace Coralite.Content.Items.Misc_Melee
                 Vector2 spinningpoint = (target.Center - vector) * 0.8f;
                 spinningpoint = spinningpoint.RotatedBy(Main.rand.NextFloatDirection() * (float)Math.PI * 0.25f);
                 int num = Projectile.NewProjectile(Projectile.GetSource_FromAI(), vector.X, vector.Y
-                    , spinningpoint.X, spinningpoint.Y, 975, Projectile.damage, Projectile.knockBack, Projectile.owner, 1f, target.whoAmI);
+                    , spinningpoint.X, spinningpoint.Y, ProjectileID.BloodButcherer, Projectile.damage, Projectile.knockBack, Projectile.owner, 1f, target.whoAmI);
                 Main.projectile[num].StatusNPC(target.whoAmI);
                 Projectile.KillOldestJavelin(num, 975, target.whoAmI, new Point[5]);
                 hited = false;

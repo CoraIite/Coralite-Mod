@@ -141,13 +141,13 @@ namespace Coralite.Content.Items.Fairies
         {
             Projectile.Falling(8, 0.2f);
             Projectile.SpawnTrailDust(DustID.Dirt, Main.rand.NextFloat(0.2f, 0.4f));
-            Projectile.rotation += MathF.Sign(Projectile.velocity.X)*Projectile.velocity.Length()/65;
+            Projectile.rotation += MathF.Sign(Projectile.velocity.X) * Projectile.velocity.Length() / 65;
         }
 
         public override void OnKill(int timeLeft)
         {
             for (int i = 0; i < 12; i++)
-                 Dust.NewDustPerfect(Projectile.Center, DustID.Dirt, Helper.NextVec2Dir(1, 2));
+                Dust.NewDustPerfect(Projectile.Center, DustID.Dirt, Helper.NextVec2Dir(1, 2));
         }
 
         public override bool PreDraw(ref Color lightColor)

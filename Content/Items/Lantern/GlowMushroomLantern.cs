@@ -67,15 +67,15 @@ namespace Coralite.Content.Items.Lantern
         {
             CreateRecipe()
                 .AddIngredient(ItemID.WandofSparking)
-                .AddIngredient(ItemID.MushroomTorch,15)
-                .AddIngredient(ItemID.SilverBar,5)
+                .AddIngredient(ItemID.MushroomTorch, 15)
+                .AddIngredient(ItemID.SilverBar, 5)
                 .AddTile(TileID.WorkBenches)
                 .Register();
 
             CreateRecipe()
                 .AddIngredient(ItemID.WandofSparking)
-                .AddIngredient(ItemID.MushroomTorch,15)
-                .AddIngredient(ItemID.TungstenBar,5)
+                .AddIngredient(ItemID.MushroomTorch, 15)
+                .AddIngredient(ItemID.TungstenBar, 5)
                 .AddTile(TileID.WorkBenches)
                 .Register();
         }
@@ -96,7 +96,7 @@ namespace Coralite.Content.Items.Lantern
 
         public override void SetDefaults()
         {
-            Projectile.usesLocalNPCImmunity= true;
+            Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 30;
             Projectile.width = Projectile.height = 14;
             Projectile.DamageType = DamageClass.Magic;
@@ -139,7 +139,7 @@ namespace Coralite.Content.Items.Lantern
                 for (int i = -1; i < 2; i++)
                 {
                     Projectile.NewProjectileFromThis<GlowMushroomLanternGrow>(Projectile.Center
-                        , -Vector2.UnitY.RotateByRandom(i * 1f - 0.75f, i + 1f + 0.75f) * Main.rand.NextFloat(2,6.5f), damage, Projectile.knockBack);
+                        , -Vector2.UnitY.RotateByRandom(i * 1f - 0.75f, i + 1f + 0.75f) * Main.rand.NextFloat(2, 6.5f), damage, Projectile.knockBack);
                 }
             }
 
@@ -149,7 +149,7 @@ namespace Coralite.Content.Items.Lantern
                 for (int i = 0; i < 8; i++)
                 {
                     Dust d = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(4, 4)
-                        , DustID.MushroomTorch, Helper.NextVec2Dir(2, 3.5f), Scale:Main.rand.NextFloat(1.5f,2f));
+                        , DustID.MushroomTorch, Helper.NextVec2Dir(2, 3.5f), Scale: Main.rand.NextFloat(1.5f, 2f));
 
                     d.noGravity = true;
 
@@ -234,7 +234,7 @@ namespace Coralite.Content.Items.Lantern
 
             for (int i = 0; i < 5; i++)
             {
-                Color c = Main.rand.NextFromList(new Color(25,142,196), new Color(20, 78, 129)) * 0.5f;
+                Color c = Main.rand.NextFromList(new Color(25, 142, 196), new Color(20, 78, 129)) * 0.5f;
                 PRTLoader.NewParticle<Fog>(Projectile.Center + Main.rand.NextVector2Circular(12, 12)
                     , Helper.NextVec2Dir(0.25f, 0.6f), c, Main.rand.NextFloat(0.3f, 0.7f));
 
@@ -256,7 +256,7 @@ namespace Coralite.Content.Items.Lantern
 
             List<ColoredVertex> bars = new();
 
-            if (Projectile.oldPos.Length==14)
+            if (Projectile.oldPos.Length == 14)
             {
                 for (int i = 0; i < 14; i++)
                 {
@@ -266,7 +266,7 @@ namespace Coralite.Content.Items.Lantern
                     Vector2 Top = Center + (normal * 2f);
                     Vector2 Bottom = Center - (normal * 2f);
 
-                    var color = /*Color.Lerp(new Color(20, 78, 129), , factor)*/ new Color(23, 231, 255) * factor*0.75f;
+                    var color = /*Color.Lerp(new Color(20, 78, 129), , factor)*/ new Color(23, 231, 255) * factor * 0.75f;
                     bars.Add(new(Top, color, new Vector3(factor, 0, 1)));
                     bars.Add(new(Bottom, color, new Vector3(factor, 1, 1)));
                 }
@@ -275,7 +275,7 @@ namespace Coralite.Content.Items.Lantern
                 Main.graphics.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars.ToArray(), 0, bars.Count - 2);
             }
 
-            Projectile.QuickDraw(lightColor with { A=125}, 0);
+            Projectile.QuickDraw(lightColor with { A = 125 }, 0);
 
             return false;
         }

@@ -15,7 +15,7 @@ namespace Coralite.Core
         /// 空白贴图
         /// </summary>
         [VaultLoaden(AssetDirectory.Blank)]
-        public static ATex Blank {  get; set; }
+        public static ATex Blank { get; set; }
 
 
         [AttributeUsage(AttributeTargets.Class)]

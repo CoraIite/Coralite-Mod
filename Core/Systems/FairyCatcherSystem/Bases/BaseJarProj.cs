@@ -358,7 +358,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             return false;
         }
 
-        public virtual void DrawJar(Vector2 pos,Color lightColor, SpriteEffects eff, Texture2D tex)
+        public virtual void DrawJar(Vector2 pos, Color lightColor, SpriteEffects eff, Texture2D tex)
         {
             tex.QuickCenteredDraw(Main.spriteBatch, pos
                 , lightColor, Projectile.rotation
@@ -419,10 +419,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             }
 
             //后半部分坠机
-            int FallTime =(int)( 12*70/ speed);
+            int FallTime = (int)(12 * 70 / speed);
             for (int i = 0; i < FallTime; i++)
             {
-               Vector2 normal2 = velocity.SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.PiOver2);
+                Vector2 normal2 = velocity.SafeNormalize(Vector2.Zero).RotatedBy(MathHelper.PiOver2);
 
                 Vector2 Top = pos + normal2 * 1;
                 Vector2 Bottom = pos - normal2 * 1;
@@ -433,7 +433,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 if (factor > 0.7f)
                     alpha = 1 - (factor - 0.7f) / 0.3f;
 
-                bars.Add(new(Top - Main.screenPosition, c  * alpha, new Vector3(recordU, 0, 1)));
+                bars.Add(new(Top - Main.screenPosition, c * alpha, new Vector3(recordU, 0, 1)));
                 bars.Add(new(Bottom - Main.screenPosition, c * alpha, new Vector3(recordU, 1, 1)));
 
                 velocity.Y += FallAcc;

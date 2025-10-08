@@ -534,7 +534,7 @@ namespace Coralite.Content.Bosses.DigDigDig.Stonelime
                     DrawStone(spriteBatch, mainTex, scale, bottom + new Vector2(-fullWidth / 2 + 16 * i, -fullWidth + 16 * j) * scale, new Rectangle(18 * xFrame, 18, 16, 16));
                 }
 
-            Texture2D crownTex = TextureAssets.Extra[39].Value;
+            Texture2D crownTex = TextureAssets.Extra[ExtrasID.KingSlimeCrown].Value;
             Vector2 crownOrigin = new Vector2(crownTex.Width / 2, crownTex.Height);
             Vector2 crownPos = crown.Bottom - screenPos;
             //绘制王冠

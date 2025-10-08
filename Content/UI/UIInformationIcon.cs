@@ -1,5 +1,4 @@
-﻿using Coralite.Content.CoraliteNotes;
-using Coralite.Helpers;
+﻿using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Localization;

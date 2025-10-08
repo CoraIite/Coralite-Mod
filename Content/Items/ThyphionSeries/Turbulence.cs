@@ -1,7 +1,6 @@
 ﻿using Coralite.Content.ModPlayers;
 using Coralite.Content.Particles;
 using Coralite.Core;
-using Coralite.Core.Attributes;
 using Coralite.Core.Configs;
 using Coralite.Core.Loaders;
 using Coralite.Core.Prefabs.Items;
@@ -17,7 +16,6 @@ using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Graphics.CameraModifiers;
-using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ObjectData;
 using static Terraria.ModLoader.ModContent;
@@ -517,7 +515,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                                 float r = (Projectile.rotation) % 6.18f;
                                 float dir = (r >= 3.14f ? r - 3.14f : r + 3.14f) / MathHelper.TwoPi;
                                 float p = 1 - f.X;
-                                return new Color(dir, p/4, 0f, p);
+                                return new Color(dir, p / 4, 0f, p);
                             });
                 }
             }

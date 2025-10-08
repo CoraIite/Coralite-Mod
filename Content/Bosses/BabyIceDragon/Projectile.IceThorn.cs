@@ -91,7 +91,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
         {
             for (float i = 0f; i < 1f; i += 0.25f)
             {
-                Dust dust = Dust.NewDustPerfect(Projectile.Center + (Main.rand.NextVector2Circular(16f, 16f) * Projectile.scale) + (Projectile.velocity.SafeNormalize(Vector2.UnitY) * i * 200f * Projectile.scale), 16, Main.rand.NextVector2Circular(3f, 3f));
+                Dust dust = Dust.NewDustPerfect(Projectile.Center + (Main.rand.NextVector2Circular(16f, 16f) * Projectile.scale) + (Projectile.velocity.SafeNormalize(Vector2.UnitY) * i * 200f * Projectile.scale), DustID.Cloud, Main.rand.NextVector2Circular(3f, 3f));
                 dust.velocity.Y += -0.3f;
                 dust.velocity += Projectile.velocity * 0.2f;
                 dust.scale = 1f;
@@ -119,8 +119,8 @@ namespace Coralite.Content.Bosses.BabyIceDragon
             Vector4 color_2 = new Color(67, 17, 17).ToVector4();
             color_2 *= color_1;
 
-            Main.EntitySpriteDraw(TextureAssets.Extra[98].Value, Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY) - (Projectile.velocity * Projectile.scale * 0.5f), null,
-                Projectile.GetAlpha(new Color(color_2.X, color_2.Y, color_2.Z, color_2.W)) * 1f, Projectile.rotation + ((float)Math.PI / 2f), TextureAssets.Extra[98].Value.Size() / 2f, Projectile.scale * 0.9f, effects, 0);
+            Main.EntitySpriteDraw(TextureAssets.Extra[ExtrasID.SharpTears].Value, Projectile.Center - Main.screenPosition + new Vector2(0f, Projectile.gfxOffY) - (Projectile.velocity * Projectile.scale * 0.5f), null,
+                Projectile.GetAlpha(new Color(color_2.X, color_2.Y, color_2.Z, color_2.W)) * 1f, Projectile.rotation + ((float)Math.PI / 2f), TextureAssets.Extra[ExtrasID.SharpTears].Value.Size() / 2f, Projectile.scale * 0.9f, effects, 0);
             Color color_3 = Projectile.GetAlpha(Color.White) * Utils.Remap(Timer, 0f, 20f, 0.5f, 0f);
             color_3.A = 0;
             for (int i = 0; i < 4; i++)

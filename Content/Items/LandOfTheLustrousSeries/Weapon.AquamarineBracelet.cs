@@ -11,7 +11,6 @@ using System;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.Graphics.Effects;
 using Terraria.ID;
 
 namespace Coralite.Content.Items.LandOfTheLustrousSeries

@@ -50,7 +50,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             if (CircleRadiusBonus != 0)
             {
                 int index = tooltips.FindIndex(l => l.Name == "Equipable");
-                TooltipLine line = new(Mod, "FairyCircleRadiusBonus", FairySystem.CircleRadiusBonus.Format(Math.Round(CircleRadiusBonus/16f,1)));
+                TooltipLine line = new(Mod, "FairyCircleRadiusBonus", FairySystem.CircleRadiusBonus.Format(Math.Round(CircleRadiusBonus / 16f, 1)));
                 if (index != -1)
                     tooltips.Insert(index + 1, line);
                 else

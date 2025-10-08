@@ -2,7 +2,6 @@
 using Coralite.Content.GlobalNPCs;
 using Coralite.Content.Particles;
 using Coralite.Core;
-using Coralite.Core.Attributes;
 using Coralite.Core.Systems.FairyCatcherSystem;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using Coralite.Helpers;
@@ -376,7 +375,7 @@ namespace Coralite.Content.Items.Glistent
         {
             drawColor = Color.Lime;
 
-            LeechSeedFairyTex.Value.QuickCenteredDraw(Main.spriteBatch, center + new Vector2(0, size.Y - 40)-Main.screenPosition
+            LeechSeedFairyTex.Value.QuickCenteredDraw(Main.spriteBatch, center + new Vector2(0, size.Y - 40) - Main.screenPosition
                 , Color.White, MathF.Sin(Main.GlobalTimeWrappedHourly) * 0.8f);
         }
     }

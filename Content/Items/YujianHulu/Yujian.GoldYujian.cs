@@ -242,7 +242,7 @@ namespace Coralite.Content.Items.YujianHulu
             if (Projectile.timeLeft > 12)
                 return false;
 
-            Texture2D mainTex = TextureAssets.Extra[98].Value;
+            Texture2D mainTex = TextureAssets.Extra[ExtrasID.SharpTears].Value;
             Vector2 scale = new(Width / mainTex.Width, (Projectile.Center - center).Length() / mainTex.Height);
 
             Main.spriteBatch.Draw(mainTex, center - Projectile.velocity - Main.screenPosition, null, Color.Gold * Alpha, Projectile.rotation + 3.141f, new Vector2(mainTex.Width / 2, 0), scale, SpriteEffects.None, 0);

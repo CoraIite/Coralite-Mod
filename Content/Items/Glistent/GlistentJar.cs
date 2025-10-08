@@ -1,7 +1,6 @@
 ﻿using Coralite.Content.DamageClasses;
 using Coralite.Content.Particles;
 using Coralite.Core;
-using Coralite.Core.Attributes;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using Coralite.Helpers;
 using InnoVault.PRT;

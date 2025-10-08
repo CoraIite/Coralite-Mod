@@ -1,5 +1,4 @@
 ﻿using Coralite.Core;
-using Coralite.Core.Attributes;
 using Coralite.Core.Loaders;
 using Coralite.Core.Systems.FairyCatcherSystem;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases.Items;

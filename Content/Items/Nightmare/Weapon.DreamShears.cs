@@ -2,7 +2,6 @@
 using Coralite.Content.Items.Icicle;
 using Coralite.Content.ModPlayers;
 using Coralite.Core;
-using Coralite.Core.Attributes;
 using Coralite.Core.Configs;
 using Coralite.Core.Loaders;
 using Coralite.Core.Prefabs.Projectiles;
@@ -18,7 +17,6 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Graphics.CameraModifiers;
-using Terraria.Graphics.Effects;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
 
@@ -606,7 +604,7 @@ namespace Coralite.Content.Items.Nightmare
             float scale = 200f / warpTex.Width;
 
             Main.spriteBatch.Draw(warpTex, center, null,
-                new Color(1f,0.25f,1,1) * Alpha, SelfRot + 0.2f, origin, scale, 0, 0);
+                new Color(1f, 0.25f, 1, 1) * Alpha, SelfRot + 0.2f, origin, scale, 0, 0);
         }
     }
 

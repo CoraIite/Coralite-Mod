@@ -1,7 +1,4 @@
-﻿using Terraria;
-using Terraria.ID;
-
-namespace Coralite.Core.Systems.FairyCatcherSystem.FairyFreePart
+﻿namespace Coralite.Core.Systems.FairyCatcherSystem.FairyFreePart
 {
     public class OneFromOptions(int chanceDenominator, int chanceNumerator = 1, params int[] options) : IFairyFreeRule
     {

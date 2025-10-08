@@ -4,10 +4,7 @@ using Coralite.Core;
 using Coralite.Core.Attributes;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
-using Microsoft.Xna.Framework.Graphics;
-using System;
 using Terraria;
-using Terraria.GameContent;
 using Terraria.ID;
 
 namespace Coralite.Content.Items.FlyingShields

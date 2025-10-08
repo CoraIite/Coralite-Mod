@@ -3,7 +3,6 @@ using Coralite.Content.Items.Materials;
 using Coralite.Content.ModPlayers;
 using Coralite.Content.Raritys;
 using Coralite.Core;
-using Coralite.Core.Attributes;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;
 using Coralite.Helpers;

@@ -32,8 +32,8 @@ namespace Coralite.Content.Items.FairyCatcher.Jar
                 .Register();
         }
     }
-    
-    public class BlackGelBallProj: BaseJarProj
+
+    public class BlackGelBallProj : BaseJarProj
     {
         public override string Texture => AssetDirectory.FairyCatcherJar + "BlackGelBall";
 

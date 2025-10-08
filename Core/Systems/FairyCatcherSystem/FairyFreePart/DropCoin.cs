@@ -40,7 +40,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.FairyFreePart
             money /= 100;
             int plat = (int)money;
 
-            if (copper > 0) 
+            if (copper > 0)
                 yield return (ItemID.CopperCoin, copper);
             if (silver > 0)
                 yield return (ItemID.SilverCoin, silver);

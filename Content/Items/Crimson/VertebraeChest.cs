@@ -261,7 +261,7 @@ namespace Coralite.Content.Items.Crimson
             if (player.cursorItemIconText == "")
             {
                 player.cursorItemIconEnabled = false;
-                player.cursorItemIconID = 0;
+                player.cursorItemIconID = ItemID.None;
             }
         }
     }

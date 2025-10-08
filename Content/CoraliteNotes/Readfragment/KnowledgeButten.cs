@@ -1,5 +1,4 @@
 ﻿using Coralite.Core;
-using Coralite.Core.Attributes;
 using Coralite.Core.Loaders;
 using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;

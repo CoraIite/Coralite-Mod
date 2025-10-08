@@ -40,7 +40,7 @@ namespace Coralite.Content.Menu.CoraliteMenu
         public override bool PreDrawCloseBackground(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(CoraliteMenuBackBack.Value,
-                Vector2.Zero, null, Color.White, 0, Vector2.Zero, Main.ScreenSize.X / (float)CoraliteMenuBackBack.Width() , 0, 0);
+                Vector2.Zero, null, Color.White, 0, Vector2.Zero, Main.ScreenSize.X / (float)CoraliteMenuBackBack.Width(), 0, 0);
 
             return false;
         }

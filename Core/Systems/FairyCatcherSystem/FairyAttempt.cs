@@ -76,7 +76,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                 Y = y,
                 wallType = wallType,
                 Player = catcherProj.Owner,
-                CircleRadius= catcherProj.Owner.GetModPlayer<FairyCatcherPlayer>().FairyCatcherRadius
+                CircleRadius = catcherProj.Owner.GetModPlayer<FairyCatcherPlayer>().FairyCatcherRadius
             };
         }
 
@@ -93,7 +93,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <summary>
         /// 默认UR 5，SR 30，RR 75，R 150，U 250，C 490，总和1000
         /// </summary>
-        public static void AddFairySpawn(int fairyID,int value)
+        public static void AddFairySpawn(int fairyID, int value)
         {
             percentDict.Add(-fairyID, value);
         }

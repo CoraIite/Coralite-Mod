@@ -383,7 +383,7 @@ namespace Coralite.Content.Items.FlyingShields
             var origin = frameBox.Size() / 2;
             lightColor *= alpha;
 
-            if (State == 2 && Projectile.oldPos.Length >13)
+            if (State == 2 && Projectile.oldPos.Length > 13)
             {
                 Texture2D exTex2 = ModContent.Request<Texture2D>(AssetDirectory.OtherProjectiles + "VanillaStarTrail").Value;
                 var origin2 = exTex2.Size() / 2;

@@ -2,7 +2,7 @@
 {
     public abstract class BaseFairyEVBonusItem : ModItem
     {
-        public override string Texture => AssetDirectory.FairyEVBonus+Name;
+        public override string Texture => AssetDirectory.FairyEVBonus + Name;
 
         /// <summary>
         /// 能为哪种属性提供努力值

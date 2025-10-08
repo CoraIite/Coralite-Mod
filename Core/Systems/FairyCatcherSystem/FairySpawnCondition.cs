@@ -137,7 +137,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             RegisterToWallInner(wallType);
 
             FairySpawnController condition = CloneSelf();
-            if (FairySystem.GetWallTypeToItemType.TryGetValue(wallType,out int itemType))
+            if (FairySystem.GetWallTypeToItemType.TryGetValue(wallType, out int itemType))
                 condition.AddCondition(new FairySpawn_Wall(itemType));
 
             FairySystem.fairySpawnConditions_InEncyclopedia[fairyType] = condition;
@@ -192,14 +192,14 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                     RegisterToWallInner(WallID.EmeraldUnsafe);
                     RegisterToWallInner(WallID.RubyUnsafe);
                     RegisterToWallInner(WallID.DiamondUnsafe);
-                    
+
                     RegisterToWallInner(WallID.AmethystEcho);
                     RegisterToWallInner(WallID.TopazEcho);
                     RegisterToWallInner(WallID.SapphireEcho);
                     RegisterToWallInner(WallID.EmeraldEcho);
                     RegisterToWallInner(WallID.RubyEcho);
                     RegisterToWallInner(WallID.DiamondEcho);
-                    
+
                     RegisterToWallInner(WallID.AmberGemspark);
                     RegisterToWallInner(WallID.AmethystGemspark);
                     RegisterToWallInner(WallID.DiamondGemspark);

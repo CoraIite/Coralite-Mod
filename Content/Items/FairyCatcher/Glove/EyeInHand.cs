@@ -52,7 +52,7 @@ namespace Coralite.Content.Items.FairyCatcher.Glove
         public override void PostInitialize()
         {
             Direction = (int)DirectionControl;
-            BaseAngleOffset = -Owner.direction*Direction * 0.3f;
+            BaseAngleOffset = -Owner.direction * Direction * 0.3f;
         }
     }
 }

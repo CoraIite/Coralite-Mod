@@ -5,7 +5,6 @@ using Coralite.Content.Items.Thunder;
 using Coralite.Content.ModPlayers;
 using Coralite.Content.Particles;
 using Coralite.Core;
-using Coralite.Core.Attributes;
 using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.CameraSystem;
@@ -792,7 +791,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             else
                 colorFactor = Timer > 60 ? 1 : ((Timer - 25) / 35);
 
-            Texture2D flowTex = TextureAssets.Extra[98].Value;
+            Texture2D flowTex = TextureAssets.Extra[ExtrasID.SharpTears].Value;
             Vector2 ArrowSize = new Vector2(1, 7) * 0.3f * Projectile.scale;
 
             Vector2 origin = flowTex.Size() / 2f;
@@ -827,7 +826,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
             rotation += MathHelper.PiOver2;
 
-            Texture2D flowTex = TextureAssets.Extra[98].Value;
+            Texture2D flowTex = TextureAssets.Extra[ExtrasID.SharpTears].Value;
             Vector2 ArrowSize = new Vector2(1, 7) * 0.3f * scale;
             Vector2 InnerSize = ArrowSize;
             Vector2 SecondLayerSize = ArrowSize * 1.5f;

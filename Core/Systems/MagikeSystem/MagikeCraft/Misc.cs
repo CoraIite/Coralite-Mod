@@ -427,10 +427,10 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
 
 
             //电线
-            MagikeRecipe.CreateCraftRecipe(ItemID.CopperBar, ItemID.Wire, CalculateMagikeCost(MagicCrystal, 3, 15),3)
+            MagikeRecipe.CreateCraftRecipe(ItemID.CopperBar, ItemID.Wire, CalculateMagikeCost(MagicCrystal, 3, 15), 3)
                 .AddIngredient(ItemID.Gel)
                 .Register();
-            MagikeRecipe.CreateCraftRecipe(ItemID.TinBar, ItemID.Wire, CalculateMagikeCost(MagicCrystal, 3, 15),3)
+            MagikeRecipe.CreateCraftRecipe(ItemID.TinBar, ItemID.Wire, CalculateMagikeCost(MagicCrystal, 3, 15), 3)
                 .AddIngredient(ItemID.Gel)
                 .Register();
 

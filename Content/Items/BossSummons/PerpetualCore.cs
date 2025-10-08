@@ -51,7 +51,7 @@ namespace Coralite.Content.Items.BossSummons
 
             return true;
         }
-        
+
         public override void AddRecipes()
         {
             CreateRecipe()

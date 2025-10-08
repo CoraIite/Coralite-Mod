@@ -1,6 +1,6 @@
 ﻿using Coralite.Core.Systems.FairyCatcherSystem.Bases;
-using Terraria.DataStructures;
 using Terraria;
+using Terraria.DataStructures;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem
 {

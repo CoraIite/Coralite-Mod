@@ -52,7 +52,7 @@ namespace Coralite.Content.Items.FairyCatcher.Lasso
         {
             Color c = Color.SkyBlue;
             c = Lighting.GetColor((int)pos.X / 16, (int)(pos.Y / 16f), c);
-            return c*0.8f;
+            return c * 0.8f;
         }
 
         public override void OnShootFairy()
@@ -141,7 +141,7 @@ namespace Coralite.Content.Items.FairyCatcher.Lasso
             }
 
             HitTileCount++;
-            if (HitTileCount>5)
+            if (HitTileCount > 5)
                 return true;
 
             return false;

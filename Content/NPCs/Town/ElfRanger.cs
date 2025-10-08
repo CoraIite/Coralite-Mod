@@ -1,10 +1,7 @@
 ﻿using Coralite.Content.Items.Fairies.FairyEVBonus;
-using Coralite.Content.Items.FairyCatcher;
-using Coralite.Content.Items.MagikeSeries1;
 using Coralite.Content.Items.Materials;
 using Coralite.Core;
 using Coralite.Core.Loaders;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;

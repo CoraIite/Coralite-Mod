@@ -1,6 +1,5 @@
 ﻿using Coralite.Content.Items.Thunder;
 using Coralite.Core;
-using Coralite.Core.Attributes;
 using Coralite.Core.Systems.BossSystems;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;

@@ -9,7 +9,6 @@ using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.Audio;
-using Terraria.Graphics.Effects;
 using Terraria.ID;
 
 namespace Coralite.Content.Items.FlyingShields.Accessories
@@ -301,7 +300,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
 
         public override bool PreDraw(ref Color lightColor)
         {
-            if (Projectile.oldPos.Length<12)
+            if (Projectile.oldPos.Length < 12)
                 return false;
 
             Helper.DrawPrettyStarSparkle(Projectile.Opacity, 0, Projectile.oldPos[12] - Main.screenPosition,

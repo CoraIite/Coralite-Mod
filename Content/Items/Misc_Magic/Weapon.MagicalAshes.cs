@@ -77,13 +77,13 @@ namespace Coralite.Content.Items.Misc_Magic
                     for (int j = 0; j < 2; j++)
                     {
                         Dust dust = Dust.NewDustPerfect(pos + Main.rand.NextVector2Circular(14, 14)
-                            , 261, -rotDir * Main.rand.NextFromList(1, 2), 0, default, Main.rand.NextFloat(1, 1.5f));
+                            , DustID.AncientLight, -rotDir * Main.rand.NextFromList(1, 2), 0, default, Main.rand.NextFloat(1, 1.5f));
                         dust.noGravity = true;
                     }
                 }
 
                 Dust dust3 = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(4 + 4 * Stoped, 4 + 4 * Stoped)
-                    , 261, -Projectile.velocity.SafeNormalize(Vector2.UnitX).RotatedByRandom(1f) * 2f, 0, default, Main.rand.NextFloat(1, 1.5f));
+                    , DustID.AncientLight, -Projectile.velocity.SafeNormalize(Vector2.UnitX).RotatedByRandom(1f) * 2f, 0, default, Main.rand.NextFloat(1, 1.5f));
                 dust3.noGravity = true;
                 return;
             }
@@ -91,18 +91,18 @@ namespace Coralite.Content.Items.Misc_Magic
             for (int i = 0; i < 2; i++)
             {
                 Dust dust = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(4 + 8 * Stoped, 4 + 8 * Stoped)
-                    , 261, -Projectile.velocity.SafeNormalize(Vector2.UnitX).RotatedByRandom(1f) * 2f, 0, default, Main.rand.NextFloat(1, 1.5f));
+                    , DustID.AncientLight, -Projectile.velocity.SafeNormalize(Vector2.UnitX).RotatedByRandom(1f) * 2f, 0, default, Main.rand.NextFloat(1, 1.5f));
                 dust.noGravity = true;
             }
 
             Dust dust2 = Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(4 + 8 * Stoped, 4 + 8 * Stoped)
-                , 261, Projectile.velocity.SafeNormalize(Vector2.UnitX).RotatedByRandom(1f) * 2f, 0, default, Main.rand.NextFloat(1, 1.5f));
+                , DustID.AncientLight, Projectile.velocity.SafeNormalize(Vector2.UnitX).RotatedByRandom(1f) * 2f, 0, default, Main.rand.NextFloat(1, 1.5f));
             dust2.noGravity = true;
 
             if (Projectile.timeLeft % 3 == 0)
             {
                 Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(4 + 8 * Stoped, 4 + 8 * Stoped)
-                   , 261, -Projectile.velocity.SafeNormalize(Vector2.UnitX).RotatedByRandom(1f) * 2f, 0, default, Main.rand.NextFloat(1, 1.5f));
+                   , DustID.AncientLight, -Projectile.velocity.SafeNormalize(Vector2.UnitX).RotatedByRandom(1f) * 2f, 0, default, Main.rand.NextFloat(1, 1.5f));
             }
 
             Projectile.velocity *= 0.94f;
@@ -128,7 +128,7 @@ namespace Coralite.Content.Items.Misc_Magic
                 FinishFttack();
 
             for (int i = 0; i < 3; i++)
-                Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(32, 32), 261, -Projectile.velocity.SafeNormalize(Vector2.UnitX).RotatedByRandom(1f), 0, default, Main.rand.Next(1, 3));
+                Dust.NewDustPerfect(Projectile.Center + Main.rand.NextVector2Circular(32, 32), DustID.AncientLight, -Projectile.velocity.SafeNormalize(Vector2.UnitX).RotatedByRandom(1f), 0, default, Main.rand.Next(1, 3));
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)

@@ -1,6 +1,5 @@
 ﻿using Coralite.Core.Prefabs.Items;
 using System.Collections.Generic;
-using Terraria;
 
 namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
 {
@@ -35,7 +34,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
             int index = tooltips.FindIndex(l => l.Name == "Consumable");
             if (index != -1)
             {
-                tooltips.Insert(index+1,new TooltipLine(Mod, "FairyPowder", FairySystem.IsFairyPowder.Value));
+                tooltips.Insert(index + 1, new TooltipLine(Mod, "FairyPowder", FairySystem.IsFairyPowder.Value));
                 return;
             }
 

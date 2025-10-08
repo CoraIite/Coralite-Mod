@@ -1,6 +1,5 @@
 ﻿using Coralite.Content.DamageClasses;
 using Coralite.Core;
-using Coralite.Core.Attributes;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
@@ -88,7 +87,7 @@ namespace Coralite.Content.Items.FairyCatcher.Lasso
                 Projectile.NewProjectileFromThis<HallowYokeSlash>(Projectile.Center,
                     (Projectile.Center - Owner.Center).SafeNormalize(Vector2.Zero) * 8, Projectile.damage / 2, 1);
 
-                Helper.PlayPitched(CoraliteSoundID.StarFalling_Item105, Projectile.Center, pitchAdjust: -0.2f,volumeAdjust:-0.4f);
+                Helper.PlayPitched(CoraliteSoundID.StarFalling_Item105, Projectile.Center, pitchAdjust: -0.2f, volumeAdjust: -0.4f);
             }
         }
 
@@ -97,7 +96,7 @@ namespace Coralite.Content.Items.FairyCatcher.Lasso
     }
 
     [VaultLoaden(AssetDirectory.FairyCatcherLasso)]
-    public class HallowYokeSlash:ModProjectile
+    public class HallowYokeSlash : ModProjectile
     {
         public override string Texture => AssetDirectory.FairyCatcherLasso + "HallowYokeCatcher";
 
@@ -215,18 +214,18 @@ namespace Coralite.Content.Items.FairyCatcher.Lasso
             for (int i = 0; i < 4; i++)
             {
                 Vector2 dir = rot.ToRotationVector2();
-                Vector2 SwordPos = Projectile.Center + dir * (6 + SwordScale * 10)-Main.screenPosition;
-                Vector2 lightPos = Projectile.Center + dir * (-6+SwordScale * 10)-Main.screenPosition;
+                Vector2 SwordPos = Projectile.Center + dir * (6 + SwordScale * 10) - Main.screenPosition;
+                Vector2 lightPos = Projectile.Center + dir * (-6 + SwordScale * 10) - Main.screenPosition;
 
                 Color c = Color.PaleGoldenrod * 0.4f;
                 c.A = 0;
 
                 Vector2 origin = new(lightShotSPA.Width, lightShotSPA.Height / 2);
-                Vector2 lightScale = new Vector2(1,1.5f) * SwordScale * 0.4f;
+                Vector2 lightScale = new Vector2(1, 1.5f) * SwordScale * 0.4f;
                 Main.spriteBatch.Draw(lightShotSPA, lightPos, null, c, rot + MathHelper.Pi
                     , origin, lightScale, 0, 0);
                 Main.spriteBatch.Draw(lightShotSPA, lightPos, null, (Color.White * 0.2f) with { A = 0 }, rot + MathHelper.Pi
-                    , origin,lightScale, 0, 0);
+                    , origin, lightScale, 0, 0);
 
                 Main.spriteBatch.Draw(swordTex, SwordPos, null, Color.PaleGoldenrod * 0.3f, rot + MathHelper.PiOver4
                     , new Vector2(0, swordTex.Height), SwordScale, 0, 0);

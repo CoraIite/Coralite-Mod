@@ -289,7 +289,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Vector2 dir = target.Center - owner.Center;
             float distance = dir.Length();
 
-            Texture2D mainTex = TextureAssets.Extra[98].Value;
+            Texture2D mainTex = TextureAssets.Extra[ExtrasID.SharpTears].Value;
             var origin = new Vector2(mainTex.Width / 2, mainTex.Height);
             var pos = Projectile.Center - Main.screenPosition;
 

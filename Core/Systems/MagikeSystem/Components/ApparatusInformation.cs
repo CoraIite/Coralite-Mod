@@ -79,7 +79,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// 添加滤镜控制器
         /// </summary>
         /// <param name="parent"></param>
-        public void AddFilterController(UIElement parent,float height)
+        public void AddFilterController(UIElement parent, float height)
         {
             UIElement title = new ComponentUIElementText(() => MagikeSystem.GetUIText(MagikeSystem.UITextID.FilterController), parent, new Vector2(1.3f));
             title.SetTopLeft(height + 10, 0);

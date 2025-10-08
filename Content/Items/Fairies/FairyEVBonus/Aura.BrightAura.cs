@@ -27,7 +27,7 @@ namespace Coralite.Content.Items.Fairies.FairyEVBonus
 
                 Color c = Main.hslToRgb(new Vector3((Main.GlobalTimeWrappedHourly + i / 4f) % 1, 0.8f, 0.8f)) * 0.15f;
                 c.A = 0;
-                tex.QuickCenteredDraw(spriteBatch, pos, c,0,scale);
+                tex.QuickCenteredDraw(spriteBatch, pos, c, 0, scale);
 
                 rot += MathHelper.TwoPi / 4;
             }

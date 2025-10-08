@@ -111,7 +111,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public static FairyIV GetFairyIV(Fairy fairy, FairyCatcherPlayer player)
         {
             if (!FairySystem.fairyDatas.TryGetValue(fairy.Type, out FairyData data))
-                return default(FairyIV);
+                return default;
 
             FairyIV iv = new FairyIV();
 

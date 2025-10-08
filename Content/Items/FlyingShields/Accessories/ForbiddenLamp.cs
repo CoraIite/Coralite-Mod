@@ -277,7 +277,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D extraTex = TextureAssets.Extra[98].Value;
+            Texture2D extraTex = TextureAssets.Extra[ExtrasID.SharpTears].Value;
             Main.instance.LoadProjectile(931);
 
             Texture2D mainTex = TextureAssets.Projectile[931].Value;

@@ -18,7 +18,7 @@ namespace Coralite.Content.Items.Magike.Altars
     public class BasicAltar() : MagikeApparatusItem(TileType<BasicAltarTile>(), Item.sellPrice(silver: 5)
         , RarityType<MagicCrystalRarity>(), AssetDirectory.MagikeAltars)
     {
-        public static LocalizedText OnlyItemContainer {  get; set; }
+        public static LocalizedText OnlyItemContainer { get; set; }
 
         public override void Load()
         {

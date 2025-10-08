@@ -11,7 +11,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <summary>
         /// 技能标签名，用于技能描述
         /// </summary>
-        public LocalizedText Text {  get; set; }
+        public LocalizedText Text { get; set; }
 
         public int Type { get; internal set; }
 

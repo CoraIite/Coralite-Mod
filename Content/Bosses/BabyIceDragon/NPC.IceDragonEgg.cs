@@ -1,7 +1,6 @@
 ﻿using Coralite.Content.CoraliteNotes.IceDragonChapter1;
 using Coralite.Content.Items.Icicle;
 using Coralite.Core;
-using Coralite.Core.Attributes;
 using Coralite.Core.Systems.KeySystem;
 using Coralite.Helpers;
 using InnoVault.PRT;

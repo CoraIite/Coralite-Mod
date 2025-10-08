@@ -1,5 +1,4 @@
 ﻿using Coralite.Core;
-using Coralite.Core.Attributes;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Systems.FairyCatcherSystem;
 using Coralite.Helpers;
@@ -116,7 +115,7 @@ namespace Coralite.Content.Items.FairyCatcher
 
                 if (FairySystem.TryGetElfPortalTrades(item.type, out _))
                 {
-                    int p = Projectile.NewProjectile(new EntitySource_TileUpdate(i, j), pos, Helper.NextVec2Dir(2,3), ModContent.ProjectileType<ElfTradeProj>()
+                    int p = Projectile.NewProjectile(new EntitySource_TileUpdate(i, j), pos, Helper.NextVec2Dir(2, 3), ModContent.ProjectileType<ElfTradeProj>()
                          , 0, 0, ai0: item.type, ai1: item.stack);
 
                     (Main.projectile[p].ModProjectile as ElfTradeProj).itemCenter = item.Center;
@@ -169,16 +168,16 @@ namespace Coralite.Content.Items.FairyCatcher
             Vector2 toCenter = new(98f, 92);
             Vector2 drawPos = worldPos + offScreen - Main.screenPosition + toCenter + new Vector2(0f, offset * 4f);
 
-            Vector2 offset2=Vector2.Zero;
-            
+            Vector2 offset2 = Vector2.Zero;
+
             for (int k = 0; k < Main.maxPlayers; k++)
             {
                 Player player = Main.player[k];
 
-                if (player.active&&!player.dead)
+                if (player.active && !player.dead)
                 {
                     float dis = Vector2.Distance(player.Center, worldPos + toCenter);
-                    if (dis< 1000)
+                    if (dis < 1000)
                     {
                         offset2 = (player.Center - (worldPos + toCenter)).SafeNormalize(Vector2.Zero) * dis / 50;
                         break;

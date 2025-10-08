@@ -1,7 +1,6 @@
 ﻿using Coralite.Content.Items.Magike;
 using Coralite.Content.Items.Magike.Filters.PolarizedFilters;
 using Coralite.Core;
-using Coralite.Core.Attributes;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;

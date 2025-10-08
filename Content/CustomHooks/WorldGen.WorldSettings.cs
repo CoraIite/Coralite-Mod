@@ -127,7 +127,7 @@ namespace Coralite.Content.CustomHooks
             if ((CoraliteWorld.CoralCatWorld || CoraliteWorld.DigDigDigWorld)
                 && Main.MenuUI.CurrentState is UIWorldCreation worldCreation)
             {
-                processedSeed  = Main.rand.Next(999999999).ToString();
+                processedSeed = Main.rand.Next(999999999).ToString();
             }
         }
 

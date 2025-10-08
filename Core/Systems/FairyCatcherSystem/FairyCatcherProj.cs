@@ -282,7 +282,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             Tile spawnTile = Framing.GetTileSafely(point);
 
             //不能有物块
-            if (Helper.HasSolidTile(spawnTile))
+            if (Helper.HasReallySolidTile(spawnTile))
                 return;
 
             FairyAttempt attempt = FairyAttempt.CreateFairyAttempt(this, point.X, point.Y, spawnTile.WallType);
@@ -348,13 +348,13 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             webRadius = MathHelper.Lerp(webRadius, 0, 0.2f);
         }
 
-        public void AddCircleVisual(Color edgecolor,Color innerColor)
+        public void AddCircleVisual(Color edgecolor, Color innerColor)
         {
             CircleVisuals.Add(new CircleVisual()
             {
                 active = true,
-                circleColor=edgecolor,
-                backColor=innerColor
+                circleColor = edgecolor,
+                backColor = innerColor
             });
         }
 
@@ -364,7 +364,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <returns></returns>
         public IEnumerable<(Rectangle, Fairy)> GetFairyCollides()
         {
-            if (Fairies==null)
+            if (Fairies == null)
                 yield break;
 
             if (Fairies.Count > 0)
@@ -453,7 +453,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             }
 
             //绘制中心指针
-            DrawCatcherCore(coreTex,Lighting.GetColor(webCenter.ToTileCoordinates()));
+            DrawCatcherCore(coreTex, Lighting.GetColor(webCenter.ToTileCoordinates()));
 
             if (State == AIStates.Catching)
             {

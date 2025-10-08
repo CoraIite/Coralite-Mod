@@ -1,5 +1,4 @@
-﻿using Coralite.Content.Items.Icicle;
-using Coralite.Core.Configs;
+﻿using Coralite.Core.Configs;
 using Coralite.Core.Loaders;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
@@ -290,7 +289,7 @@ namespace Coralite.Core.Prefabs.Projectiles
         {
             Timer++;
         }
-        
+
         #region 关于挥舞
 
         /// <summary>

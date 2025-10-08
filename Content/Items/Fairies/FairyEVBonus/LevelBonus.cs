@@ -1,7 +1,7 @@
 ﻿using Coralite.Core.Systems.FairyCatcherSystem;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases.Items;
-using Terraria.ID;
 using Terraria;
+using Terraria.ID;
 
 namespace Coralite.Content.Items.Fairies.FairyEVBonus
 {

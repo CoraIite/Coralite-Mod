@@ -175,8 +175,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
             float num2 = Projectile.localAI[0] / 36f * 3f;
             if (num2 >= 0f && num2 <= 1.5f)
             {
-                Dust dust = Dust.NewDustPerfect(Vector2.Lerp(Projectile.Center - (vector * num), Projectile.Center + (vector * num), Projectile.localAI[0] / 36f), 278
-                    , vector.RotatedBy((float)Math.PI * 2f * Main.rand.NextFloatDirection() * 0.02f) * 6f * Main.rand.NextFloat(), 0
+                Dust dust = Dust.NewDustPerfect(Vector2.Lerp(Projectile.Center - (vector * num), Projectile.Center + (vector * num), Projectile.localAI[0] / 36f), DustID.FireworksRGB, vector.RotatedBy((float)Math.PI * 2f * Main.rand.NextFloatDirection() * 0.02f) * 6f * Main.rand.NextFloat(), 0
                     , Main.rand.NextBool(3) ? new Color(60, 0, 150) : new Color(150, 0, 40), 0.6f * num2);
                 dust.noGravity = true;
                 dust.noLight = dust.noLightEmittence = true;

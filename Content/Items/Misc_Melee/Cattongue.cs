@@ -177,7 +177,7 @@ namespace Coralite.Content.Items.Misc_Melee
             Vector2 vector2 = p.Center;
             vector2 = (vector2 + (target.Center * 2f)) / 3f;
             Projectile.NewProjectile(Projectile.GetSource_FromAI(),
-                vector2, vector, 524, (int)(damageDone * 0.5f), Projectile.knockBack * 0.7f, Projectile.owner);
+                vector2, vector, ProjectileID.IchorSplash, (int)(damageDone * 0.5f), Projectile.knockBack * 0.7f, Projectile.owner);
         }
     }
 }

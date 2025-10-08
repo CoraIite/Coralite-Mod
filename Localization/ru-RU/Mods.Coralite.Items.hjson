@@ -6390,3 +6390,8 @@ PunctureFairyItem: {
 	// DisplayName: Puncture Fairy Item
 	// Tooltip: ""
 }
+
+ThunderveinMusicBox: {
+	// DisplayName: Thundervein Music Box
+	// Tooltip: ""
+}

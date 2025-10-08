@@ -1,5 +1,4 @@
 ﻿using Coralite.Core;
-using Coralite.Core.Attributes;
 using Coralite.Core.Configs;
 using Coralite.Core.Loaders;
 using Coralite.Core.Prefabs.Projectiles;
@@ -117,7 +116,7 @@ namespace Coralite.Content.Items.HyacinthSeries
                 for (int j = 0; j < 8; j++)
                     Dust.NewDustPerfect(Projectile.Center, ModContent.DustType<ArethusaPetal>(), (j * 0.785f).ToRotationVector2() * Main.rand.NextFloat(0.25f, 1.5f));
                 for (int j = 0; j < 8; j++)
-                    Dust.NewDustPerfect(Projectile.Center, ModContent.DustType<ArethusaPetal>(), Helper.NextVec2Dir(0.25f,2.5f));
+                    Dust.NewDustPerfect(Projectile.Center, ModContent.DustType<ArethusaPetal>(), Helper.NextVec2Dir(0.25f, 2.5f));
             }
 
             SoundEngine.PlaySound(CoraliteSoundID.FireBall_Item45, Projectile.Center);
@@ -191,7 +190,7 @@ namespace Coralite.Content.Items.HyacinthSeries
         {
             Texture2D mainTex = Projectile.GetTexture();
 
-            Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, null, Color.White * Alpha*0.5f, 0, new Vector2(35, 45), Scale, SpriteEffects.None, 0f);
+            Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, null, Color.White * Alpha * 0.5f, 0, new Vector2(35, 45), Scale, SpriteEffects.None, 0f);
             Main.spriteBatch.Draw(mainTex, Projectile.Center - Main.screenPosition, null, Color.White * Alpha, Projectile.rotation, new Vector2(35, 45), Scale, SpriteEffects.None, 0f);
             return false;
         }

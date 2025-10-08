@@ -181,7 +181,7 @@ namespace Coralite.Content.CustomHooks
 
                 if (drawinfo.drawPlayer.yoraiz0rDarkness)
                 {
-                    drawData = new DrawData(TextureAssets.Extra[67].Value, new Vector2((int)(drawinfo.Position.X - Main.screenPosition.X - (drawinfo.drawPlayer.bodyFrame.Width / 2) + (drawinfo.drawPlayer.width / 2)), (int)(drawinfo.Position.Y - Main.screenPosition.Y + drawinfo.drawPlayer.height - drawinfo.drawPlayer.bodyFrame.Height + 4f)) + drawinfo.drawPlayer.headPosition + drawinfo.headVect, drawinfo.drawPlayer.bodyFrame, drawinfo.colorHead, drawinfo.drawPlayer.headRotation, drawinfo.headVect, 1f, drawinfo.playerEffect);
+                    drawData = new DrawData(TextureAssets.Extra[ExtrasID.Yoraiz0rDarkness].Value, new Vector2((int)(drawinfo.Position.X - Main.screenPosition.X - (drawinfo.drawPlayer.bodyFrame.Width / 2) + (drawinfo.drawPlayer.width / 2)), (int)(drawinfo.Position.Y - Main.screenPosition.Y + drawinfo.drawPlayer.height - drawinfo.drawPlayer.bodyFrame.Height + 4f)) + drawinfo.drawPlayer.headPosition + drawinfo.headVect, drawinfo.drawPlayer.bodyFrame, drawinfo.colorHead, drawinfo.drawPlayer.headRotation, drawinfo.headVect, 1f, drawinfo.playerEffect);
                     drawData.shader = drawinfo.skinDyePacked;
                     item = drawData;
                     drawinfo.DrawDataCache.Add(item);

@@ -1,7 +1,6 @@
 ﻿using Coralite.Content.GlobalItems;
 using Coralite.Content.Items.FlyingShields.Accessories;
 using Coralite.Core;
-using Coralite.Core.Attributes;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases.Items;
 using Coralite.Helpers;
@@ -76,7 +75,7 @@ namespace Coralite.Content.Items.Icicle
             for (int i = -1; i < 2; i += 2)
             {
                 Projectile.NewProjectileFromThis<SnowflakeSpike>(Projectile.Center
-                    + (Projectile.rotation + i * MathHelper.PiOver2).ToRotationVector2() * 10-velocity*40
+                    + (Projectile.rotation + i * MathHelper.PiOver2).ToRotationVector2() * 10 - velocity * 40
                     , velocity * Main.rand.NextFloat(5, 6f),
                      (int)(Projectile.damage * 0.6f), Projectile.knockBack, ai1: Main.rand.NextFloat(8, 10));
             }

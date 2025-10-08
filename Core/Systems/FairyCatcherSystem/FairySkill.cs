@@ -301,10 +301,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             tex.QuickCenteredDraw(Main.spriteBatch, topLeft + new Vector2(tex.Width / 2, size.Y / 2));
 
             topLeft.X += tex.Width + 10;
-            topLeft.Y +=size.Y/2+4;
+            topLeft.Y += size.Y / 2 + 4;
 
             Utils.DrawBorderString(Main.spriteBatch, SkillName.Value, topLeft
-                , Color.White, 1.1f,0,0.5f);
+                , Color.White, 1.1f, 0, 0.5f);
         }
 
         /// <summary>
@@ -338,7 +338,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
                 , Color.White, 0.9f, 0.5f);
 
             Texture2D texture = TextureAssets.FishingLine.Value;
-            Main.spriteBatch.Draw(texture, topLeft + new Vector2(sizes.damageSize.X + 4, sizes.damageSize.Y*0.8f), null
+            Main.spriteBatch.Draw(texture, topLeft + new Vector2(sizes.damageSize.X + 4, sizes.damageSize.Y * 0.8f), null
                 , Color.White, 0, texture.Size() / 2, new Vector2(1, sizes.damageSize.Y * 1.6f / texture.Height), SpriteEffects.None, 0);
             //Utils.DrawBorderString(Main.spriteBatch, "|", topLeft + new Vector2(sizes.damageSize.X, 0)
             //    , Color.Coral, 0.9f, 0f);

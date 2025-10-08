@@ -133,13 +133,13 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
             if (Main.rand.NextFloat() * 2f < Projectile.Opacity)
             {
                 Dust dust2 = Dust.NewDustPerfect(Projectile.Center + (num8.ToRotationVector2() * ((Main.rand.NextFloat() * 80f * Projectile.scale) + (20f * Projectile.scale)))
-                    , 278, vector3 * 1f, 100, Color.Lerp(Color.Gold, Color.White, Main.rand.NextFloat() * 0.3f), 0.4f);
+                    , DustID.FireworksRGB, vector3 * 1f, 100, Color.Lerp(Color.Gold, Color.White, Main.rand.NextFloat() * 0.3f), 0.4f);
                 dust2.fadeIn = 0.4f + (Main.rand.NextFloat() * 0.15f);
                 dust2.noGravity = true;
             }
 
             if (Main.rand.NextFloat() * 1.5f < Projectile.Opacity)
-                Dust.NewDustPerfect(vector2, 43, vector3 * 1f, 100, Color.White * Projectile.Opacity, 1.2f * Projectile.Opacity);
+                Dust.NewDustPerfect(vector2, DustID.TintableDustLighted, vector3 * 1f, 100, Color.White * Projectile.Opacity, 1.2f * Projectile.Opacity);
             Vector2 dir = (Projectile.rotation + 1.57f).ToRotationVector2();
             Vector2 pos = Projectile.Center + (Projectile.rotation.ToRotationVector2() * 32);
 

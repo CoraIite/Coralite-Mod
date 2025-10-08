@@ -69,7 +69,7 @@ namespace Coralite.Content.Items.FlyingShields
                 {
                     Owner.lifeSteal -= num * 1.5f;
                     int num2 = Projectile.owner;
-                    Projectile.NewProjectile(Projectile.GetSource_OnHit(target), Projectile.Center, Vector2.Zero, 305, 0, 0f, Projectile.owner, num2, num);
+                    Projectile.NewProjectile(Projectile.GetSource_OnHit(target), Projectile.Center, Vector2.Zero, ProjectileID.VampireHeal, 0, 0f, Projectile.owner, num2, num);
                 }
             }
 
@@ -111,7 +111,7 @@ namespace Coralite.Content.Items.FlyingShields
                 {
                     Owner.lifeSteal -= num * 1.5f;
                     int num2 = Projectile.owner;
-                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, 305, 0, 0f, Projectile.owner, num2, num);
+                    Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, Vector2.Zero, ProjectileID.VampireHeal, 0, 0f, Projectile.owner, num2, num);
                 }
             }
         }
@@ -126,7 +126,7 @@ namespace Coralite.Content.Items.FlyingShields
                 {
                     Owner.lifeSteal -= num * 1.5f;
                     int num2 = Projectile.owner;
-                    Projectile.NewProjectile(Projectile.GetSource_OnHit(target), Projectile.Center, Vector2.Zero, 305, 0, 0f, Projectile.owner, num2, num);
+                    Projectile.NewProjectile(Projectile.GetSource_OnHit(target), Projectile.Center, Vector2.Zero, ProjectileID.VampireHeal, 0, 0f, Projectile.owner, num2, num);
                 }
             }
 

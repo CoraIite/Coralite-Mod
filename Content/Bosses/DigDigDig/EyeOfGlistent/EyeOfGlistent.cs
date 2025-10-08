@@ -8,7 +8,6 @@ using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent.ItemDropRules;
-using Terraria.Graphics.Effects;
 using Terraria.ID;
 
 namespace Coralite.Content.Bosses.DigDigDig.EyeOfGlistent

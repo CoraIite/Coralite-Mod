@@ -102,7 +102,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
-            return projHitbox.Intersects(targetHitbox) 
+            return projHitbox.Intersects(targetHitbox)
                 || Utils.CenteredRectangle(GetHandleCenter(), new Vector2(Projectile.width, Projectile.height)).Intersects(targetHitbox);
         }
 
@@ -123,7 +123,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             {
                 default:
                 case AIStates.Idle:
-                    HandleRot = HandleRot.AngleLerp((InMousePos - Owner.MountedCenter).ToRotation(),0.4f);
+                    HandleRot = HandleRot.AngleLerp((InMousePos - Owner.MountedCenter).ToRotation(), 0.4f);
 
                     //跟随鼠标转动
                     //if (Math.Abs(InMousePos.X - Owner.Center.X) > 8)
@@ -134,10 +134,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                     break;
                 case AIStates.Flying:
                     Vector2 targetPos = GetHandleCenter();
-                    if (Vector2.Distance(Projectile.Center,targetPos)<32)
+                    if (Vector2.Distance(Projectile.Center, targetPos) < 32)
                         HandleRot = HandleRot.AngleLerp((Projectile.Center - Owner.MountedCenter).ToRotation(), 0.5f);
                     else
-                        HandleRot = HandleRot.AngleLerp((Projectile.Center - targetPos).ToRotation(),0.5f);
+                        HandleRot = HandleRot.AngleLerp((Projectile.Center - targetPos).ToRotation(), 0.5f);
                     Owner.itemTime = Owner.itemAnimation = Owner.itemTimeMax;
 
                     //朝向弹幕位置
@@ -174,7 +174,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// 开始攻击
         /// </summary>
         /// <param name="catch">0表示抛出仙灵，1表示捕捉</param>
-        public virtual void StartAttack(int @catch, float speed, int damage,float knockack)
+        public virtual void StartAttack(int @catch, float speed, int damage, float knockack)
         {
             Catch = @catch;
             State = AIStates.Flying;
@@ -345,7 +345,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                     ShootFairy();
             }
 
-                return false;
+            return false;
         }
 
         /// <summary>
@@ -486,7 +486,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         {
             Texture2D tex = Projectile.GetTexture();
             tex.QuickCenteredDraw(Main.spriteBatch, Projectile.Center - Main.screenPosition
-                , Lighting.GetColor(Projectile.Center.ToTileCoordinates()), Projectile.rotation,effect: Owner.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically);
+                , Lighting.GetColor(Projectile.Center.ToTileCoordinates()), Projectile.rotation, effect: Owner.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically);
         }
 
         /// <summary>

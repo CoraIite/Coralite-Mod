@@ -479,10 +479,10 @@ namespace Coralite.Content.Items.FlyingShields
 
                     //如果不应该瞎JB乱该这东西的速度那就跳过
                     if (proj.aiStyle == 4 || proj.aiStyle == 38 || proj.aiStyle == 84 || proj.aiStyle == 148 ||
-                        (proj.aiStyle == 7 && proj.ai[0] == 2f) || ((proj.type == 440 || proj.type == 449 ||
-                        proj.type == 606) && proj.ai[1] == 1f) || (proj.aiStyle == 93 && proj.ai[0] < 0f) ||
-                        proj.type == 540 || proj.type == 756 || proj.type == 818 || proj.type == 856 ||
-                        proj.type == 961 || proj.type == 933 || ProjectileID.Sets.IsAGolfBall[proj.type])
+                        (proj.aiStyle == 7 && proj.ai[0] == 2f) || ((proj.type == ProjectileID.LaserMachinegunLaser || proj.type == ProjectileID.SaucerLaser ||
+                        proj.type == ProjectileID.ScutlixLaser) && proj.ai[1] == 1f) || (proj.aiStyle == 93 && proj.ai[0] < 0f) ||
+                        proj.type == ProjectileID.StardustTowerMark || proj.type == ProjectileID.SharpTears || proj.type == ProjectileID.WhiteTigerPounce || proj.type == ProjectileID.SparkleGuitar ||
+                        proj.type == ProjectileID.DeerclopsIceSpike || proj.type == ProjectileID.FinalFractal || ProjectileID.Sets.IsAGolfBall[proj.type])
                         goto over;
 
                     if (!ProjectileLoader.ShouldUpdatePosition(proj))

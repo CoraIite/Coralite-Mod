@@ -340,7 +340,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D exTex = TextureAssets.Extra[98].Value;
+            Texture2D exTex = TextureAssets.Extra[ExtrasID.SharpTears].Value;
 
             Vector2 toCenter = new(Projectile.width / 2, Projectile.height / 2);
             var origin = exTex.Size() / 2;

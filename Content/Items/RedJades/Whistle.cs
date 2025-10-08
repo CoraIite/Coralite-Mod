@@ -155,7 +155,7 @@ namespace Coralite.Content.Items.RedJades
 
             if (Projectile.IsOwnedByLocalPlayer())
             {
-                int damage = Timer > 120 ? Projectile.damage : Helper.GetProjDamage(50,50,50);
+                int damage = Timer > 120 ? Projectile.damage : Helper.GetProjDamage(50, 50, 50);
 
                 int p = Projectile.NewProjectileFromThis<Bloodiancie_BigBoom>(Projectile.Center, Vector2.Zero
                       , damage * 3, 5f);

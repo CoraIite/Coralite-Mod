@@ -1,5 +1,4 @@
 ﻿using Coralite.Content.Items.Fairies;
-using Coralite.Content.Items.Fairies.ColorSeries;
 using Coralite.Core;
 using Coralite.Core.Systems.FairyCatcherSystem;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;

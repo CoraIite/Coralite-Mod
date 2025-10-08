@@ -25,7 +25,7 @@ namespace Coralite.Content.Bosses.ModReinforce.Bloodiancie
             Projectile.hostile = true;
             Projectile.tileCollide = false;
         }
-        
+
         public virtual void Initialize()
         {
             Vector2 center = Projectile.Center;

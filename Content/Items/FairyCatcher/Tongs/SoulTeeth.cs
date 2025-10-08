@@ -1,15 +1,11 @@
 ﻿using Coralite.Content.DamageClasses;
 using Coralite.Core;
-using Coralite.Core.Attributes;
-using Coralite.Core.Loaders;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases.Items;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Runtime.InteropServices;
 using Terraria;
-using Terraria.DataStructures;
 using Terraria.Enums;
 using Terraria.ID;
 
@@ -71,10 +67,10 @@ namespace Coralite.Content.Items.FairyCatcher.Tongs
 
                     Vector2 pos = Projectile.Center
                         + dir * (i * 15 - 50)
-                        + dir.RotatedBy(MathHelper.PiOver2 * -dir2) * (35+i*10);
+                        + dir.RotatedBy(MathHelper.PiOver2 * -dir2) * (35 + i * 10);
 
 
-                    Projectile.NewProjectileFromThis<SoulTeethBite>(pos, dir * (5+i*1f)
+                    Projectile.NewProjectileFromThis<SoulTeethBite>(pos, dir * (5 + i * 1f)
                         , (int)(Projectile.damage * 0.25f), Projectile.knockBack, dir2 * 0.1f);
                 }
             }
@@ -151,7 +147,7 @@ namespace Coralite.Content.Items.FairyCatcher.Tongs
             }
 
             if (Main.rand.NextBool())
-                Projectile.SpawnTrailDust(Projectile.width*0.4f,DustID.ShadowbeamStaff, Main.rand.NextFloat(0.4f, -0.4f)
+                Projectile.SpawnTrailDust(Projectile.width * 0.4f, DustID.ShadowbeamStaff, Main.rand.NextFloat(0.4f, -0.4f)
                     , 50);
 
             Timer++;
@@ -176,12 +172,12 @@ namespace Coralite.Content.Items.FairyCatcher.Tongs
             float scale = Projectile.scale * 0.7f;
             SpriteEffects effect = dir > 0 ? SpriteEffects.None : SpriteEffects.FlipVertically;
 
-            Color c1 = new Color(123,89,234) * Alpha * 0.7f;
-            Color c2 = new Color(169, 139, 231) * Alpha*0.8f;
+            Color c1 = new Color(123, 89, 234) * Alpha * 0.7f;
+            Color c2 = new Color(169, 139, 231) * Alpha * 0.8f;
             c2.A = 0;
 
             tex.QuickCenteredDraw(spriteBatch, pos, c1 * 0.4f, rot, scale * 1.8f, effect);
-            tex.QuickCenteredDraw(spriteBatch, pos, c1 , rot, scale * 1.4f, effect);
+            tex.QuickCenteredDraw(spriteBatch, pos, c1, rot, scale * 1.4f, effect);
 
             tex.QuickCenteredDraw(spriteBatch, pos, c1, rot, scale, effect);
             //tex.QuickCenteredDraw(spriteBatch, pos, c2, rot, Projectile.scale, effect);

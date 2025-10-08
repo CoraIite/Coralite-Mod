@@ -1,7 +1,6 @@
 ﻿using Coralite.Content.Items.Gels;
 using Coralite.Content.Items.Placeable;
 using Coralite.Core;
-using Coralite.Core.Attributes;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria.Localization;

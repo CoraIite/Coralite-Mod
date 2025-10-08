@@ -1,14 +1,9 @@
 ﻿using Coralite.Content.DamageClasses;
-using Coralite.Content.UI;
-using Coralite.Core;
-using Coralite.Core.Loaders;
 using Coralite.Core.Systems.FairyCatcherSystem;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
-using Coralite.Core.Systems.FairyCatcherSystem.Bases.Items;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
-using Terraria.Audio;
 using Terraria.Utilities;
 
 namespace Coralite.Content.GlobalItems

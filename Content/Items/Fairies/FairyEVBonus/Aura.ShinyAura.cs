@@ -40,7 +40,7 @@ namespace Coralite.Content.Items.Fairies.FairyEVBonus
             Texture2D tex = TextureAssets.Item[Item.type].Value;
 
             Vector2 pos2 = Item.Center - Main.screenPosition;
-            float rot = Main.GlobalTimeWrappedHourly*2;
+            float rot = Main.GlobalTimeWrappedHourly * 2;
             for (int i = 0; i < 6; i++)
             {
                 Vector2 pos = pos2 + rot.ToRotationVector2() * 2;

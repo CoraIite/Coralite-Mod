@@ -55,7 +55,7 @@ namespace Coralite.Content.GlobalNPCs
                     npcLoot.Add(ItemDropRule.Common(ItemType<GelWeb>(), 1));
                     break;
                 case NPCID.BlueJellyfish://彩虹猫世界水母掉水母
-                    npcLoot.Add(ItemDropRule.ByCondition(new InCoralCatWorld(),ItemID.BlueJellyfish, 1, 1, 4));
+                    npcLoot.Add(ItemDropRule.ByCondition(new InCoralCatWorld(), ItemID.BlueJellyfish, 1, 1, 4));
                     break;
                 case NPCID.GreenJellyfish:
                     npcLoot.Add(ItemDropRule.ByCondition(new InCoralCatWorld(), ItemID.GreenJellyfish, 1, 1, 4));
@@ -75,13 +75,13 @@ namespace Coralite.Content.GlobalNPCs
                         npcLoot.Add(rules);
                         LeadingConditionRule rules2 = new(new InCoralCatWorld());
                         rules2.OnSuccess(ItemDropRule.OneFromOptions(1,
-                            ItemID.RedPaint,ItemID.OrangePaint, ItemID.YellowPaint,
-                            ItemID.LimePaint,ItemID.GreenPaint, ItemID.TealPaint,
-                            ItemID.CyanPaint,ItemID.SkyBluePaint, ItemID.BluePaint,
-                            ItemID.PurplePaint,ItemID.VioletPaint, ItemID.PinkPaint,
-                            ItemID.BlackPaint,ItemID.GrayPaint, ItemID.WhitePaint,
-                            ItemID.BrownPaint,ItemID.ShadowPaint, ItemID.NegativePaint,
-                            ItemID.EchoCoating,ItemID.GlowPaint
+                            ItemID.RedPaint, ItemID.OrangePaint, ItemID.YellowPaint,
+                            ItemID.LimePaint, ItemID.GreenPaint, ItemID.TealPaint,
+                            ItemID.CyanPaint, ItemID.SkyBluePaint, ItemID.BluePaint,
+                            ItemID.PurplePaint, ItemID.VioletPaint, ItemID.PinkPaint,
+                            ItemID.BlackPaint, ItemID.GrayPaint, ItemID.WhitePaint,
+                            ItemID.BrownPaint, ItemID.ShadowPaint, ItemID.NegativePaint,
+                            ItemID.EchoCoating, ItemID.GlowPaint
                             ));
                         npcLoot.Add(rules2);
                     }

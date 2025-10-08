@@ -159,7 +159,7 @@ namespace Coralite.Content.UI.FairyEncyclopedia
         public void DrawName(SpriteBatch spriteBatch)
         {
             Fairy f = FairyLoader.GetFairy(FairyEncyclopedia.ShowFairyID);
-            Vector2 center = GetDimensions().Center() ;
+            Vector2 center = GetDimensions().Center();
 
             const int nameOffset = -50;
             const int rarityOffset = 60;

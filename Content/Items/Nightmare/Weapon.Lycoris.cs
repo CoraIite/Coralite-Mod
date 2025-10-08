@@ -311,7 +311,7 @@ namespace Coralite.Content.Items.Nightmare
                 Projectile.alpha = num5;
                 for (int i = 0; i < 3; i++)
                 {
-                    Dust dust = Dust.NewDustPerfect(Projectile.Center, 267, Main.rand.NextVector2CircularEdge(3f, 3f) * ((Main.rand.NextFloat() * 0.5f) + 0.5f), 0, C);
+                    Dust dust = Dust.NewDustPerfect(Projectile.Center, DustID.RainbowMk2, Main.rand.NextVector2CircularEdge(3f, 3f) * ((Main.rand.NextFloat() * 0.5f) + 0.5f), 0, C);
                     dust.scale *= 1.2f;
                     dust.noGravity = true;
                 }
@@ -447,7 +447,7 @@ namespace Coralite.Content.Items.Nightmare
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D extraTex = TextureAssets.Extra[98].Value;
+            Texture2D extraTex = TextureAssets.Extra[ExtrasID.SharpTears].Value;
             Main.instance.LoadProjectile(931);
 
             Texture2D mainTex = TextureAssets.Projectile[931].Value;

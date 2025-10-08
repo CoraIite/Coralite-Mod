@@ -4,7 +4,6 @@ using Coralite.Core.Loaders;
 using InnoVault.RenderHandles;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
-using Terraria.Graphics.Effects;
 
 namespace Coralite.Content.CustomHooks
 {

@@ -1,7 +1,6 @@
 ﻿using Coralite.Content.DamageClasses;
 using Coralite.Content.Particles;
 using Coralite.Core;
-using Coralite.Core.Attributes;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using Coralite.Helpers;
 using InnoVault.PRT;
@@ -33,7 +32,7 @@ namespace Coralite.Content.Items.FairyCatcher.Jar
         {
             CreateRecipe()
                 .AddIngredient(ItemID.EmptyBucket)
-                .AddIngredient(ItemID.Ichor,12)
+                .AddIngredient(ItemID.Ichor, 12)
                 .AddTile(TileID.WorkBenches)
                 .Register();
         }
@@ -45,7 +44,7 @@ namespace Coralite.Content.Items.FairyCatcher.Jar
         public override string Texture => AssetDirectory.FairyCatcherJar + "IchorBucket";
 
         [VaultLoaden("{@classPath}" + "IchorBucket_Highlight")]
-        public static ATex HighlightTex { get;private set; }   
+        public static ATex HighlightTex { get; private set; }
 
         public override void SetDefaults()
         {
@@ -90,7 +89,7 @@ namespace Coralite.Content.Items.FairyCatcher.Jar
             {
                 Dust d = Dust.NewDustPerfect(Main.rand.NextVector2FromRectangle(Projectile.getRect())
                     , DustID.Ichor, Helper.NextVec2Dir(0.75f, 3f), 50, Color.DarkGray, Main.rand.NextFloat(0.5f, 1f));
-                d.noGravity = Main.rand.NextBool(2,3);
+                d.noGravity = Main.rand.NextBool(2, 3);
             }
 
             Helper.PlayPitched(CoraliteSoundID.IDontKnow_ShimmerWeak2
@@ -101,8 +100,8 @@ namespace Coralite.Content.Items.FairyCatcher.Jar
             Vector2 dir = -Projectile.velocity.SafeNormalize(Vector2.Zero);
             for (int i = 0; i < 5; i++)
             {
-                PRTLoader.NewParticle<AnimeFogDark>(Projectile.Center 
-                    , Helper.NextVec2Dir(0.5f,1.5f)
+                PRTLoader.NewParticle<AnimeFogDark>(Projectile.Center
+                    , Helper.NextVec2Dir(0.5f, 1.5f)
                     , Main.rand.NextFromList(Color.Gold, Color.DarkGoldenrod) * 0.2f, Main.rand.NextFloat(0.4f, 0.8f));
 
                 PRTLoader.NewParticle<TwistFog>(Projectile.Center + Main.rand.NextVector2Circular(18, 18)
@@ -133,7 +132,7 @@ namespace Coralite.Content.Items.FairyCatcher.Jar
 
         public override void DrawJar(Vector2 pos, Color lightColor, SpriteEffects eff, Texture2D tex)
         {
-            base.DrawJar(pos,lightColor, eff, tex);
+            base.DrawJar(pos, lightColor, eff, tex);
             HighlightTex.Value.QuickCenteredDraw(Main.spriteBatch, pos, Color.White, Projectile.rotation
                 , Projectile.scale, eff);
         }

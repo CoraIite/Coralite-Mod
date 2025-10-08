@@ -102,7 +102,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
         private NetState _netState;
 
-        public enum AIStates:byte
+        public enum AIStates : byte
         {
             /// <summary>
             /// 刚从仙灵捕手中射出的时候
@@ -122,7 +122,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             Backing,
         }
 
-        private enum NetState:byte
+        private enum NetState : byte
         {
             None,
             Init,
@@ -158,7 +158,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 case AIStates.Shooting:
                     Projectile.timeLeft = 2;
                     Shooting();
-                    SpawnFairyDust(Projectile.Center,Projectile.velocity);
+                    SpawnFairyDust(Projectile.Center, Projectile.velocity);
                     break;
                 case AIStates.Skill:
                     Projectile.timeLeft = 2;
@@ -167,7 +167,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 case AIStates.Rest:
                     Projectile.timeLeft = 2;
                     Timer++;
-                    if (Timer > 60 * 2+30 - IVSpeed * 4)
+                    if (Timer > 60 * 2 + 30 - IVSpeed * 4)
                         RestartAttack();
 
                     Rest();
@@ -180,13 +180,13 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             }
 
             if (HasBuff)
-                for (int i = buffs.Count-1; i >-1; i--)
+                for (int i = buffs.Count - 1; i > -1; i--)
                 {
                     FairyBuff buff = buffs[i];
                     buff.UpdateInProj(this);
 
                     buff.UpdateTimeRemain();
-                    if (buff.TimeRemain<1)
+                    if (buff.TimeRemain < 1)
                         buffs.RemoveAt(i);
                 }
 
@@ -217,7 +217,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
                         if (HasBuff)
                             foreach (var buff in buffs)
-                                buff.DamageReduce(this,ref  damage);
+                                buff.DamageReduce(this, ref damage);
 
                         FairyItem?.HurtByProjectile(this, proj, damage);
 
@@ -299,7 +299,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 TryExchangeToAttack();
 
             float speed = Projectile.velocity.Length();
-            if (speed>IVSpeed)
+            if (speed > IVSpeed)
                 Projectile.velocity = Projectile.velocity.SafeNormalize(Vector2.Zero) * Helper.Lerp(speed, IVSpeed, 0.08f);
         }
 
@@ -388,10 +388,10 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             else
             {
                 int slowTime = 20 - (int)(20 * Timer / (60 * 4f));
-                if (slowTime<1)
+                if (slowTime < 1)
                     slowTime = 1;
 
-                Projectile.velocity = (Projectile.velocity*slowTime+ dir * speed)/(slowTime+1);
+                Projectile.velocity = (Projectile.velocity * slowTime + dir * speed) / (slowTime + 1);
             }
 
             if (Vector2.Distance(Projectile.Center, Owner.Center) < speed * 2)
@@ -476,7 +476,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             }
 
             //遍历技能后发现每一个能用的，那么就直接清空耐力然后返回玩家
-            if (checkFailCount>=_skills.Length)
+            if (checkFailCount >= _skills.Length)
                 CurrentStamina = 0;
 
             if (UseSkillIndex >= _skills.Length)
@@ -656,7 +656,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                     writer.Write(IVSkillLevel);
                     break;
                 case NetState.Skill:
-                    _skills[(int)UseSkillIndex].SendExtra(writer);
+                    _skills[UseSkillIndex].SendExtra(writer);
                     break;
             }
         }
@@ -680,7 +680,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                     IVSpeed = reader.ReadSingle();
                     break;
                 case NetState.Skill:
-                    _skills[(int)UseSkillIndex].ReceiveExtra(reader);
+                    _skills[UseSkillIndex].ReceiveExtra(reader);
                     break;
             }
         }
@@ -691,7 +691,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
             if (State == AIStates.Skill)
-                _skills[(int)UseSkillIndex].OnTileCollide(this, oldVelocity);
+                _skills[UseSkillIndex].OnTileCollide(this, oldVelocity);
 
             return false;
         }
@@ -701,7 +701,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         public override bool PreDraw(ref Color lightColor)
         {
             if (State == AIStates.Skill)
-                _skills[UseSkillIndex].PreDrawSpecial(this,ref lightColor);
+                _skills[UseSkillIndex].PreDrawSpecial(this, ref lightColor);
 
             float alpha = 1f;
 
@@ -724,7 +724,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
 
             if (Projectile.IsOwnedByLocalPlayer() && FairyItem != null)
                 DrawHealthBar(Projectile.Bottom + new Vector2(0, 12), FairyItem.Life, FairyItem.FairyIV.LifeMax);
-            
+
             return false;
         }
 

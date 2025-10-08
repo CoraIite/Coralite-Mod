@@ -1,7 +1,5 @@
 ﻿using Coralite.Content.Items.FlyingShields;
-using Coralite.Content.Items.RedJades;
 using Coralite.Core;
-using Coralite.Core.Attributes;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;

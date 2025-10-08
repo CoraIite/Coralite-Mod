@@ -15,7 +15,6 @@ using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.GameContent;
-using Terraria.Graphics.Effects;
 using Terraria.ID;
 using static Coralite.Content.Items.HyacinthSeries.HyacinthBullet;
 
@@ -789,7 +788,7 @@ namespace Coralite.Content.Items.HyacinthSeries
         public void DrawWarp()
         {
             Texture2D warpTex = Projectile.GetTexture();
-            Color warpColor = new Color(45, 45/4, 45) * Projectile.ai[1];
+            Color warpColor = new Color(45, 45 / 4, 45) * Projectile.ai[1];
             for (int i = 0; i < 3; i++)
             {
                 Main.spriteBatch.Draw(warpTex, Projectile.Center - Main.screenPosition, null, warpColor, Projectile.ai[0] + (i * 2f), warpTex.Size() / 2, Projectile.localAI[0], SpriteEffects.None, 0f);

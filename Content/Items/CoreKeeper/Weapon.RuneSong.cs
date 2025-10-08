@@ -14,7 +14,6 @@ using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent.Drawing;
 using Terraria.Graphics.CameraModifiers;
-using Terraria.Graphics.Effects;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
 
@@ -160,7 +159,7 @@ namespace Coralite.Content.Items.CoreKeeper
         public ref float OwnerIndex => ref Projectile.ai[1];
 
         [VaultLoaden("{@classPath}" + "RuneSongGradient")]
-        public static ATex GradientTexture {  get; set; }
+        public static ATex GradientTexture { get; set; }
 
         public RuneSongSlash() : base(0.785f, trailCount: 48) { }
 

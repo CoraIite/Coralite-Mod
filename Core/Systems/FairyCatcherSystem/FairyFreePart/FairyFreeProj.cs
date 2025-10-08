@@ -49,8 +49,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.FairyFreePart
                         Timer++;
                         if (Timer > 30)
                         {
-                            State = Main.rand.Next(2,4);
-                            Timer = Main.rand.Next(-20,20);
+                            State = Main.rand.Next(2, 4);
+                            Timer = Main.rand.Next(-20, 20);
                         }
                     }
                     break;
@@ -122,7 +122,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.FairyFreePart
 
             if (p.ModProjectile is BaseFairyProjectile fproj)
             {
-                fproj.SpawnFairyDust(Projectile.Center,Projectile.velocity);
+                fproj.SpawnFairyDust(Projectile.Center, Projectile.velocity);
                 Projectile.UpdateFrameNormally(6, fproj.FrameY - 1);
             }
         }
@@ -134,7 +134,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.FairyFreePart
             if (fairy == null)
                 return false;
 
-            fairy.QuickDraw(Projectile.Center, Main.screenPosition, new Rectangle(0,Projectile.frame,1,1),lightColor, 0
+            fairy.QuickDraw(Projectile.Center, Main.screenPosition, new Rectangle(0, Projectile.frame, 1, 1), lightColor, 0
                 , Projectile.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally);
 
             return false;

@@ -1,6 +1,5 @@
 ﻿using Coralite.Content.Items.ThyphionSeries;
 using Coralite.Core;
-using Coralite.Core.Attributes;
 using Coralite.Core.Loaders;
 using Coralite.Core.Prefabs.Particles;
 using Coralite.Core.Prefabs.Projectiles;
@@ -11,7 +10,6 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.Graphics.Effects;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
 

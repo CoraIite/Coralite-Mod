@@ -130,7 +130,7 @@ namespace Coralite.Helpers
             dust.velocity = -Projectile.velocity * velocityMult;
         }
 
-        public static void SpawnTrailDust(Vector2 pos,Vector2 velocity, float width, int type, float velocityMult, int Alpha = 0, Color newColor = default, float Scale = 1f, bool noGravity = true)
+        public static void SpawnTrailDust(Vector2 pos, Vector2 velocity, float width, int type, float velocityMult, int Alpha = 0, Color newColor = default, float Scale = 1f, bool noGravity = true)
         {
             if (VaultUtils.isServer)
                 return;

@@ -11,9 +11,9 @@ namespace Coralite.Core.Loaders
         public static BasicEffect ColorOnlyEffect { get; private set; }
         public static BasicEffect TextureColorEffect { get; private set; }
 
-        public static  RasterizerState OverflowHiddenRasterizerState {  get; private set; }
+        public static RasterizerState OverflowHiddenRasterizerState { get; private set; }
 
-        public static  BlendState ReverseBlendState {  get; private set; }
+        public static BlendState ReverseBlendState { get; private set; }
 
         public override void Load()
         {

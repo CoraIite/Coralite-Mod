@@ -1,9 +1,7 @@
 ﻿using Coralite.Core;
-using Coralite.Core.Attributes;
 using Coralite.Core.Configs;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
-using Humanizer;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -75,10 +73,10 @@ namespace Coralite.Content.Items.Misc_Melee
                 posOffset += (rot + MathHelper.PiOver2).ToRotationVector2() * Main.rand.NextFloat(40, 80);
             }
 
-            Projectile.NewProjectile(source, Main.MouseWorld+ posOffset, Vector2.Zero,
+            Projectile.NewProjectile(source, Main.MouseWorld + posOffset, Vector2.Zero,
                 ProjectileType<BeheritsSpacial>(), damage, knockback, player.whoAmI, rot);
 
-            rot += Main.rand.NextFloat(MathHelper.PiOver4/2, MathHelper.Pi/3*2);
+            rot += Main.rand.NextFloat(MathHelper.PiOver4 / 2, MathHelper.Pi / 3 * 2);
             return false;
         }
 
@@ -196,7 +194,7 @@ namespace Coralite.Content.Items.Misc_Melee
             {
                 Vector2 dir = RotateVec2.RotatedBy(1.57f * Math.Sign(totalAngle));
                 Dust dust = Dust.NewDustPerfect(Top - (20 * RotateVec2) + Main.rand.NextVector2Circular(18, 18), DustID.LifeDrain,
-                       dir * Main.rand.NextFloat(0.5f, 2f),255,Color.Transparent, Scale: Main.rand.NextFloat(1f, 1.5f));
+                       dir * Main.rand.NextFloat(0.5f, 2f), 255, Color.Transparent, Scale: Main.rand.NextFloat(1f, 1.5f));
                 dust.noGravity = true;
             }
 
@@ -369,7 +367,7 @@ namespace Coralite.Content.Items.Misc_Melee
             Vector2 dir = Rot.ToRotationVector2() * 380;
             float a = 0;
             return Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size()
-                , Projectile.Center + dir * Width, Projectile.Center - dir * Width,60,ref a);
+                , Projectile.Center + dir * Width, Projectile.Center - dir * Width, 60, ref a);
         }
 
         public override void AI()
@@ -380,15 +378,15 @@ namespace Coralite.Content.Items.Misc_Melee
             Width = Helper.SqrtEase(Timer / 20);
             Height = Helper.SinEase(Timer / 20);
 
-            if (Timer<15)
-            for (int i = 0; i < 2; i++)
-            {
-                Vector2 dir = Projectile.rotation.ToRotationVector2();
-                Dust dust = Dust.NewDustPerfect(Projectile.Center + dir * Width*Main.rand.NextFloat(-300,300) + Main.rand.NextVector2Circular(6, 6)
-                    , DustID.TeleportationPotion,dir * Main.rand.NextFloat(2f, 4f)
-                    , 100, new Color(255, 0, 0, 255), Scale: Main.rand.NextFloat(1f, 1.5f));
-                dust.noGravity = true;
-            }
+            if (Timer < 15)
+                for (int i = 0; i < 2; i++)
+                {
+                    Vector2 dir = Projectile.rotation.ToRotationVector2();
+                    Dust dust = Dust.NewDustPerfect(Projectile.Center + dir * Width * Main.rand.NextFloat(-300, 300) + Main.rand.NextVector2Circular(6, 6)
+                        , DustID.TeleportationPotion, dir * Main.rand.NextFloat(2f, 4f)
+                        , 100, new Color(255, 0, 0, 255), Scale: Main.rand.NextFloat(1f, 1.5f));
+                    dust.noGravity = true;
+                }
 
             if (Timer % 4 == 0)
                 Projectile.frame++;

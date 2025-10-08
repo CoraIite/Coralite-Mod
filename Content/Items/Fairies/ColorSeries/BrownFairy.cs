@@ -1,5 +1,4 @@
-﻿using Coralite.Content.DamageClasses;
-using Coralite.Core;
+﻿using Coralite.Core;
 using Coralite.Core.Systems.FairyCatcherSystem;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases.Items;

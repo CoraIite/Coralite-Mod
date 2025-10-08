@@ -36,7 +36,7 @@ namespace Coralite.Content.UI.FairyEncyclopedia
                             , null, Color.White, 0, new Vector2(tex.Width / 2, tex.Height), 0.3f, 0, 0);
 
                         Utils.DrawBorderString(spriteBatch, FairySystem.UIConditionTitle.Value
-                            , GetDimensions().Center()+new Vector2(0,4), Color.White, 1.2f, 0.5f, 0.5f);
+                            , GetDimensions().Center() + new Vector2(0, 4), Color.White, 1.2f, 0.5f, 0.5f);
 
                     }
                     break;
@@ -46,7 +46,7 @@ namespace Coralite.Content.UI.FairyEncyclopedia
 
                         spriteBatch.Draw(tex, GetDimensions().Position() + new Vector2(width / 2, height)
                             , null, Color.White, 0, new Vector2(tex.Width / 2, tex.Height), 0.3f, 0, 0);
-                     
+
                         Utils.DrawBorderString(spriteBatch, FairySystem.UISkillTitle.Value
                             , GetDimensions().Center() + new Vector2(0, 4), Color.White, 1.2f, 0.5f, 0.5f);
                     }

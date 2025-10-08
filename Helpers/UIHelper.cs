@@ -1,7 +1,6 @@
 ﻿using Coralite.Content.CoraliteNotes;
 using Coralite.Content.UI;
 using Coralite.Core;
-using Microsoft.CodeAnalysis.Text;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.GameContent;
@@ -84,7 +83,7 @@ namespace Coralite.Helpers
                 frameBox = tex.Frame();
         }
 
-        public static Vector2 GetStringSize(string text,Vector2 scale,float maxWidth = -1)
+        public static Vector2 GetStringSize(string text, Vector2 scale, float maxWidth = -1)
         {
             TextSnippet[] textSnippets = [.. ChatManager.ParseMessage(text, Color.White)];
             ChatManager.ConvertNormalSnippets(textSnippets);

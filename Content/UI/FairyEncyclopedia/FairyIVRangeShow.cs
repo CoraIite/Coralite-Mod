@@ -36,8 +36,8 @@ namespace Coralite.Content.UI.FairyEncyclopedia
 
             Vector2 topLeft = d.Position() + new Vector2(0, d.Height / 2 - padding * 3/*+(d.Height-padding*7)/2*/);
 
-            DrawPanel(spriteBatch, tex.Value, topLeft + new Vector2(0, -padding / 2-6)
-                , new Vector2(d.Width, padding * 7+12), Color.MidnightBlue * 0.3f);
+            DrawPanel(spriteBatch, tex.Value, topLeft + new Vector2(0, -padding / 2 - 6)
+                , new Vector2(d.Width, padding * 7 + 12), Color.MidnightBlue * 0.3f);
 
 
             DrawLine(spriteBatch, topLeft, 0, FairySystem.FairyLifeMax
@@ -69,13 +69,13 @@ namespace Coralite.Content.UI.FairyEncyclopedia
             topLeft.Y += padding;
         }
 
-        public void DrawLine(SpriteBatch spriteBatch, Vector2 center, int iconFrame, LocalizedText mainText, float minIV, float maxIV,float minValue,float maxValue)
+        public void DrawLine(SpriteBatch spriteBatch, Vector2 center, int iconFrame, LocalizedText mainText, float minIV, float maxIV, float minValue, float maxValue)
         {
             float maxWidth = GetDimensions().Width;
 
             //绘制图标
             FairySystem.FairyIVIcon.Value.QuickCenteredDraw(Main.spriteBatch, new Rectangle(0, iconFrame, 1, 8),
-                center + new Vector2(25, -4), scale:1.2f);
+                center + new Vector2(25, -4), scale: 1.2f);
 
             //绘制名称
             string pre = mainText.Format("", "");
@@ -83,7 +83,7 @@ namespace Coralite.Content.UI.FairyEncyclopedia
             //center.X += maxWidth / 6;
 
             Utils.DrawBorderString(spriteBatch, pre, center + new Vector2(30, 0), Color.White, 1f, 0, 0.5f);
-            center.X += maxWidth *2/ 3;
+            center.X += maxWidth * 2 / 3;
 
             //绘制等级
             (Color c1, LocalizedText t1) = FairyIV.GetFairyIVColorAndText(minIV);
@@ -103,7 +103,7 @@ namespace Coralite.Content.UI.FairyEncyclopedia
                 , center + new Vector2(maxWidth / 6, 14), c2, 1, 0.5f, 0.5f);
         }
 
-        private void DrawPanel(SpriteBatch spriteBatch, Texture2D texture,Vector2 pos,Vector2 size, Color color)
+        private void DrawPanel(SpriteBatch spriteBatch, Texture2D texture, Vector2 pos, Vector2 size, Color color)
         {
             Point point = new Point((int)pos.X, (int)pos.Y);
             Point point2 = new Point(point.X + (int)size.X - _cornerSize, point.Y + (int)size.Y - _cornerSize);

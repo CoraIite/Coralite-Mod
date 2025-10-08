@@ -64,7 +64,7 @@ namespace Coralite.Content.Items.Fairies
 
             for (int i = 0; i < 6; i++)
             {
-                Dust d = Dust.NewDustPerfect(Center, DustID.Smoke, Helper.NextVec2Dir(0.5f, 1.5f), 50,Color.Black);
+                Dust d = Dust.NewDustPerfect(Center, DustID.Smoke, Helper.NextVec2Dir(0.5f, 1.5f), 50, Color.Black);
                 d.noGravity = true;
             }
         }
@@ -79,7 +79,7 @@ namespace Coralite.Content.Items.Fairies
                 NewSkill<FSkill_ShootDark>()
                 ];
 
-        public override void SpawnFairyDust(Vector2 center,Vector2 velocity)
+        public override void SpawnFairyDust(Vector2 center, Vector2 velocity)
         {
             switch (State)
             {
@@ -161,7 +161,7 @@ namespace Coralite.Content.Items.Fairies
             {
                 PRTLoader.NewParticle<HorizontalStar>(Projectile.Center
                     , -Projectile.velocity.SafeNormalize(Vector2.Zero).RotateByRandom(-0.2f, 0.2f) * Main.rand.NextFloat(1, 2), Color.Black
-                    , Main.rand.NextFloat(0.2f,0.3f));
+                    , Main.rand.NextFloat(0.2f, 0.3f));
             }
         }
 
@@ -193,7 +193,7 @@ namespace Coralite.Content.Items.Fairies
             var origin = mainTex.Size() / 2;
 
             Main.spriteBatch.Draw(mainTex, pos, null, c, 0, origin, 0.7f, 0, 0);
-             c = Color.Red;
+            c = Color.Red;
 
             Main.spriteBatch.Draw(mainTex, pos, null, c * 0.7f, MathHelper.PiOver4, origin, 0.5f, 0, 0);
             return false;
@@ -243,7 +243,7 @@ namespace Coralite.Content.Items.Fairies
 
         public override void AI()
         {
-            if (Timer==0)
+            if (Timer == 0)
             {
                 Timer = 1;
                 Projectile.scale = Scale;
@@ -253,22 +253,22 @@ namespace Coralite.Content.Items.Fairies
                 if (VaultUtils.isServer)
                     return;
 
-                Color black =Color.Black;
+                Color black = Color.Black;
                 Vector2 center = Projectile.Center;
                 int type = CoraliteContent.ParticleType<LightBall>();
 
                 for (int i = 0; i < 2; i++)
                 {
-                    PRTLoader.NewParticle(center, Helper.NextVec2Dir() * Main.rand.NextFloat(16, 18)*Scale,
+                    PRTLoader.NewParticle(center, Helper.NextVec2Dir() * Main.rand.NextFloat(16, 18) * Scale,
                         type, black, Main.rand.NextFloat(0.1f, 0.15f));
                 }
                 for (int i = 0; i < 5; i++)
                 {
-                    PRTLoader.NewParticle(center, Helper.NextVec2Dir() * Main.rand.NextFloat(10, 14)*Scale
+                    PRTLoader.NewParticle(center, Helper.NextVec2Dir() * Main.rand.NextFloat(10, 14) * Scale
                         , type, black, Main.rand.NextFloat(0.1f, 0.15f));
                     PRTLoader.NewParticle(center, Helper.NextVec2Dir() * Main.rand.NextFloat(10, 14) * Scale
                         , type, Color.White, Main.rand.NextFloat(0.05f, 0.1f));
-                    Dust dust = Dust.NewDustPerfect(center, DustID.Smoke, Helper.NextVec2Dir() * Main.rand.NextFloat(4, 8)*Scale
+                    Dust dust = Dust.NewDustPerfect(center, DustID.Smoke, Helper.NextVec2Dir() * Main.rand.NextFloat(4, 8) * Scale
                         , Scale: Main.rand.NextFloat(1.6f, 1.8f));
                     dust.noGravity = true;
                 }
@@ -337,8 +337,8 @@ namespace Coralite.Content.Items.Fairies
 
         public float GetProjScale(int level)
         {
-            if (level<100)
-                return 1 + 1.5f*Helper.X2Ease(level / 100f);
+            if (level < 100)
+                return 1 + 1.5f * Helper.X2Ease(level / 100f);
 
             return 1 + 1.5f;
         }

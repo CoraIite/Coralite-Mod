@@ -1,6 +1,5 @@
 ﻿using Coralite.Content.DamageClasses;
 using Coralite.Core;
-using Coralite.Core.Attributes;
 using Coralite.Core.Configs;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases.Items;
@@ -63,7 +62,7 @@ namespace Coralite.Content.Items.FairyCatcher.Tongs
                     bt.hitCount = 0;
                 float dir = (target.Center - Owner.Center).ToRotation() + Main.rand.NextFloat(-0.1f, 0.1f);
                 Projectile.NewProjectileFromThis<BloodTentacleSPProj>(Owner.Center, Vector2.Zero
-                    , (int)(Projectile.damage * 0.4f), Projectile.knockBack, dir, bt.hitCount==0?-1:1);
+                    , (int)(Projectile.damage * 0.4f), Projectile.knockBack, dir, bt.hitCount == 0 ? -1 : 1);
             }
         }
 
@@ -71,7 +70,7 @@ namespace Coralite.Content.Items.FairyCatcher.Tongs
         {
             base.Flying();
 
-            Projectile.SpawnTrailDust(DustID.Blood, Main.rand.NextFloat(0.1f, 0.2f),Scale:Main.rand.NextFloat(1,1.5f));
+            Projectile.SpawnTrailDust(DustID.Blood, Main.rand.NextFloat(0.1f, 0.2f), Scale: Main.rand.NextFloat(1, 1.5f));
         }
     }
 
@@ -81,10 +80,10 @@ namespace Coralite.Content.Items.FairyCatcher.Tongs
 
         public Player Owner => Main.player[Projectile.owner];
 
-        public ref float TargetDir => ref Projectile.ai[0]; 
-        public ref float RandDir => ref Projectile.ai[1]; 
-        public ref float Timer => ref Projectile.ai[2]; 
-        public ref float HandleLength => ref Projectile.localAI[2]; 
+        public ref float TargetDir => ref Projectile.ai[0];
+        public ref float RandDir => ref Projectile.ai[1];
+        public ref float Timer => ref Projectile.ai[2];
+        public ref float HandleLength => ref Projectile.localAI[2];
 
         public override void SetDefaults()
         {

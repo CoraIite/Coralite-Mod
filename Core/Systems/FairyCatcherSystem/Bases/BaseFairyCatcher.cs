@@ -50,7 +50,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         #region 攻击部分
 
         /// <summary> 右键的弹幕ID </summary>
-        public virtual int? RightProjType { get=>null; }
+        public virtual int? RightProjType { get => null; }
 
         public override bool AltFunctionUse(Player player) => true;
 
@@ -71,7 +71,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             if (player.TryGetModPlayer(out FairyCatcherPlayer fcp) && fcp.TryGetFairyBottle(out BaseFairyBottle bottle))
                 bottle.SetIndex(player);
 
-            NormalShoot(player, source, position, velocity, type, damage,knockback);
+            NormalShoot(player, source, position, velocity, type, damage, knockback);
 
             return false;
         }
@@ -110,7 +110,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// <param name="type"></param>
         public virtual void ShootCatcher(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type)
         {
-            Projectile.NewProjectile(source, position, velocity, type, 0, 0, player.whoAmI,ai0:1);
+            Projectile.NewProjectile(source, position, velocity, type, 0, 0, player.whoAmI, ai0: 1);
         }
 
         /// <summary>
@@ -121,7 +121,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// <param name="position"></param>
         /// <param name="velocity"></param>
         /// <param name="type"></param>
-        public virtual void NormalShoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage,float knockback)
+        public virtual void NormalShoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI);
         }

@@ -410,7 +410,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             Entity.GetMagikeContainer().AddMagike((ChosenResipe.magikeCost - RequiredMagike) / 2);
 
-            if(ChosenResipe != null)
+            if (ChosenResipe != null)
             {
                 if (ChosenResipe.HasRequiredItem)
                     foreach (var r in ChosenResipe.RequiredItems)

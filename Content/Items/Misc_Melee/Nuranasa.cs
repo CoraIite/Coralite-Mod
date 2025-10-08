@@ -201,7 +201,7 @@ namespace Coralite.Content.Items.Misc_Melee
 
                     vector3 += nPC.velocity * num9;
                     Projectile.NewProjectile(Projectile.GetSource_FromAI(), vector3
-                        , spinningpoint, 977, (int)(hit.SourceDamage * 0.5f), 0f, Projectile.owner, num6);
+                        , spinningpoint, ProjectileID.Muramasa, (int)(hit.SourceDamage * 0.5f), 0f, Projectile.owner, num6);
                 }
 
                 hited = false;

@@ -1,14 +1,11 @@
 ﻿using Coralite.Content.Dusts;
-using Coralite.Content.Prefixes.FairyWeaponPrefixes;
 using Coralite.Core;
-using Coralite.Core.Attributes;
 using Coralite.Core.Prefabs.Particles;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.SmoothFunctions;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
 using InnoVault.PRT;
-using Microsoft.Build.Tasks.Deployment.ManifestUtilities;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;

@@ -112,7 +112,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         {
             FieldInfo[] infos = typeof(FairySystem).GetFields(BindingFlags.Static | BindingFlags.Public | BindingFlags.GetField);
             foreach (var info in infos)
-                if (info.FieldType==typeof(LocalizedText))
+                if (info.FieldType == typeof(LocalizedText))
                     info.SetValue(null
                         , this.GetLocalization(info.Name.Replace("_", "")));
 
@@ -155,7 +155,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public static LocalizedText GetSpawnCondition(DescriptionID descriptionID)
             => SpawnDescriptions[(int)descriptionID];
 
-        public static string GetIVLevel(int level,float value)
+        public static string GetIVLevel(int level, float value)
         {
             return level switch
             {

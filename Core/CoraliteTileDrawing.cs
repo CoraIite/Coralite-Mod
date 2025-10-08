@@ -65,36 +65,36 @@ namespace Coralite.Core
 
                     switch (Main.tile[x, y].TileType)
                     {
-                        case 34:
+                        case TileID.Chandeliers:
                             sizeX = 3;
                             sizeY = 3;
                             break;
-                        case 454:
+                        case TileID.Pigronata:
                             sizeX = 4;
                             sizeY = 3;
                             break;
-                        case 42:
-                        case 270:
-                        case 271:
-                        case 572:
-                        case 581:
-                        case 660:
+                        case TileID.HangingLanterns:
+                        case TileID.FireflyinaBottle:
+                        case TileID.LightningBuginaBottle:
+                        case TileID.SoulBottles:
+                        case TileID.LavaflyinaBottle:
+                        case TileID.ShimmerflyinaBottle:
                             sizeX = 1;
                             sizeY = 2;
                             break;
-                        case 91:
+                        case TileID.Banners:
                             sizeX = 1;
                             sizeY = 3;
                             break;
-                        case 95:
-                        case 126:
-                        case 444:
+                        case TileID.ChineseLanterns:
+                        case TileID.DiscoBall:
+                        case TileID.BeeHive:
                             sizeX = 2;
                             sizeY = 2;
                             break;
-                        case 465:
-                        case 591:
-                        case 592:
+                        case TileID.WarTableBanner:
+                        case TileID.PotsSuspended:
+                        case TileID.BrazierSuspended:
                             sizeX = 2;
                             sizeY = 3;
                             break;

@@ -57,7 +57,7 @@ namespace Coralite.Content.Tiles.ShadowCastle
             if (Player.GetClosestRollLuck(i, j, range) == 0f)
             {
                 if (Main.netMode != NetmodeID.MultiplayerClient)
-                    Projectile.NewProjectile(GetProjectileSource_TileBreak(i, j), (i * 16) + 16, (j * 16) + 16, 0f, -12f, 518, 0, 0f, Main.myPlayer);
+                    Projectile.NewProjectile(GetProjectileSource_TileBreak(i, j), (i * 16) + 16, (j * 16) + 16, 0f, -12f, ProjectileID.CoinPortal, 0, 0f, Main.myPlayer);
 
                 return;
             }
@@ -70,7 +70,7 @@ namespace Coralite.Content.Tiles.ShadowCastle
 
             if (Main.getGoodWorld && WorldGen.genRand.NextBool(6))
             {
-                Projectile.NewProjectile(GetProjectileSource_TileBreak(i, j), (i * 16) + 16, (j * 16) + 8, Main.rand.Next(-100, 101) * 0.002f, 0f, 28, 0, 0f, Main.myPlayer, 16f, 16f);
+                Projectile.NewProjectile(GetProjectileSource_TileBreak(i, j), (i * 16) + 16, (j * 16) + 8, Main.rand.Next(-100, 101) * 0.002f, 0f, ProjectileID.Bomb, 0, 0f, Main.myPlayer, 16f, 16f);
                 return;
             }
 

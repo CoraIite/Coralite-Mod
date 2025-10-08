@@ -52,7 +52,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// </summary>
         public virtual int FairyFlyTime { get => 25; }
 
-        public float alpha=1;
+        public float alpha = 1;
 
         private HashSet<int> IDs;
 
@@ -87,8 +87,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
             float a = 0;
             Vector2 rot = Projectile.rotation.ToRotationVector2();
             return Collision.CanHit(Owner.MountedCenter, 1, 1, targetHitbox.Center(), 1, 1)
-                && Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center-rot*Projectile.height/2
-                , Projectile.Center + rot * Projectile.height/2, Projectile.width / 2,ref a);
+                && Collision.CheckAABBvLineCollision(targetHitbox.TopLeft(), targetHitbox.Size(), Projectile.Center - rot * Projectile.height / 2
+                , Projectile.Center + rot * Projectile.height / 2, Projectile.width / 2, ref a);
         }
 
         public override void Initialize()
@@ -103,7 +103,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                     acc.ModifyGloveInit(this);
 
             if (BaseAngleOffset == 0)
-                BaseAngleOffset = Main.rand.NextFloat(-0.3f - Owner.direction * OffsetAngle/2, 0.3f - Owner.direction * OffsetAngle/2);//TODO: 需要同步
+                BaseAngleOffset = Main.rand.NextFloat(-0.3f - Owner.direction * OffsetAngle / 2, 0.3f - Owner.direction * OffsetAngle / 2);//TODO: 需要同步
 
             DistanceToCenter = DistanceController.Item1;
             Projectile.spriteDirection = Owner.direction;
@@ -143,7 +143,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
                 SpawnDustOnSwing();
 
                 if (Timer < Owner.itemTimeMax)
-                    Owner.itemRotation = BaseAngle + BaseAngleOffset  + (Owner.direction > 0 ? 0 : MathHelper.Pi);
+                    Owner.itemRotation = BaseAngle + BaseAngleOffset + (Owner.direction > 0 ? 0 : MathHelper.Pi);
             }
             else
             {

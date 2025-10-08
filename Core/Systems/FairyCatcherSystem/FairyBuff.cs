@@ -60,7 +60,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// </summary>
         /// <param name="fairy"></param>
         /// <param name="catchPower"></param>
-        public virtual void ModifyCatchPower(Fairy fairy,ref int catchPower)
+        public virtual void ModifyCatchPower(Fairy fairy, ref int catchPower)
         {
 
         }
@@ -84,7 +84,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// </summary>
         /// <param name="baseFairyProjectile"></param>
         /// <param name="damage"></param>
-        public virtual void DamageReduce(BaseFairyProjectile baseFairyProjectile,ref int damage)
+        public virtual void DamageReduce(BaseFairyProjectile baseFairyProjectile, ref int damage)
         {
 
         }

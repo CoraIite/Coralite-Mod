@@ -16,7 +16,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// <summary>
         /// 内部的颜色
         /// </summary>
-        public virtual Color? InnerColor { get=> null; }
+        public virtual Color? InnerColor { get => null; }
 
         protected override void Register()
         {

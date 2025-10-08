@@ -59,7 +59,7 @@ namespace Coralite.Content.Items.FairyCatcher.Jar
 
         public override void PostDrawSpecial(SpriteEffects effect, Color lightColor)
         {
-            if (Catch==1)
+            if (Catch == 1)
                 return;
 
             float rot = Projectile.rotation - MathHelper.PiOver2;

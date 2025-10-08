@@ -17,14 +17,14 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
 
         public override void ShootCatcher(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type)
         {
-            ShootGlove(player, source, position, velocity, type,0,0,1);
+            ShootGlove(player, source, position, velocity, type, 0, 0, 1);
 
             if (player.TryGetModPlayer(out FairyCatcherPlayer fcp))
                 foreach (var acc in fcp.FairyAccessories)
                     acc.ModifyShootGlove(player, source, position, velocity, type, 0, 0, 1);
         }
 
-        public virtual void ShootGlove(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback,int @catch)
+        public virtual void ShootGlove(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback, int @catch)
         {
             Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI, @catch);
         }

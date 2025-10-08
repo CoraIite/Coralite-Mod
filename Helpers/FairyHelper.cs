@@ -1,8 +1,6 @@
 ﻿using Coralite.Core.Systems.FairyCatcherSystem;
-using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
-using System.Linq;
 using Terraria;
 
 namespace Coralite.Helpers
@@ -36,7 +34,7 @@ namespace Coralite.Helpers
             return FairyAsset.FairyAssets[fairy.Type].Value;
         }
 
-        public static void QuickDraw(this Fairy fairy, Vector2 screenPos,Color lightColor, float exRot)
+        public static void QuickDraw(this Fairy fairy, Vector2 screenPos, Color lightColor, float exRot)
         {
             Texture2D mainTex = fairy.GetTexture();
             var frame = mainTex.Frame(fairy.HorizontalFrames, fairy.VerticalFrames, fairy.frame.X, fairy.frame.Y);
@@ -55,7 +53,7 @@ namespace Coralite.Helpers
                 frame.Size() / 2, fairy.scale, fairy.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
         }
 
-        public static void QuickDraw(this Fairy fairy, Vector2 overrideCenter, Vector2 screenPos,Rectangle frame2, Color lightColor, float exRot,SpriteEffects effect)
+        public static void QuickDraw(this Fairy fairy, Vector2 overrideCenter, Vector2 screenPos, Rectangle frame2, Color lightColor, float exRot, SpriteEffects effect)
         {
             Texture2D mainTex = fairy.GetTexture();
             var frame = mainTex.Frame(fairy.HorizontalFrames, fairy.VerticalFrames, frame2.X, frame2.Y);
@@ -78,7 +76,7 @@ namespace Coralite.Helpers
         /// </summary>
         /// <param name="player"></param>
         /// <param name="selfRect"></param>
-        public static bool CheckCollideWithFairyCircle(Player player, Rectangle selfRect,ref HashSet<int> IDs)
+        public static bool CheckCollideWithFairyCircle(Player player, Rectangle selfRect, ref HashSet<int> IDs)
         {
             if (!player.TryGetModPlayer(out FairyCatcherPlayer fcp))
                 return false;
@@ -98,7 +96,7 @@ namespace Coralite.Helpers
                 {
                     IDs ??= [];
                     if (!IDs.Contains(fairyRect.Item2.IDInCatcher))
-                        if(fairyRect.Item2.Catch(player, catchPower))
+                        if (fairyRect.Item2.Catch(player, catchPower))
                         {
                             IDs.Add(fairyRect.Item2.IDInCatcher);
                             //Main.NewText(fairyRect.Item2.IDInCatcher);
@@ -116,7 +114,7 @@ namespace Coralite.Helpers
         /// <param name="player"></param>
         /// <param name="catcherProj"></param>
         /// <returns></returns>
-        public static bool TryGetFairyCircle(Player player,out FairyCatcherProj catcherProj)
+        public static bool TryGetFairyCircle(Player player, out FairyCatcherProj catcherProj)
         {
             catcherProj = null;
             if (!player.TryGetModPlayer(out FairyCatcherPlayer fcp))

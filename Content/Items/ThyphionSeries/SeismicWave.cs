@@ -2,7 +2,6 @@
 using Coralite.Content.Items.Steel;
 using Coralite.Content.ModPlayers;
 using Coralite.Core;
-using Coralite.Core.Attributes;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.CameraSystem;
 using Coralite.Helpers;

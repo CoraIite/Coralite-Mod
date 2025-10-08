@@ -1,5 +1,4 @@
-﻿using Coralite.Content.DamageClasses;
-using Coralite.Content.Particles;
+﻿using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Systems.FairyCatcherSystem;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
@@ -100,7 +99,7 @@ namespace Coralite.Content.Items.Fairies
 
         public override Vector2 GetRestSpeed()
         {
-            float f =Timer * 0.1f + Projectile.identity * MathHelper.TwoPi / 6;
+            float f = Timer * 0.1f + Projectile.identity * MathHelper.TwoPi / 6;
             return new Vector2(MathF.Sin(f) * 3, MathF.Cos(f) * 1.5f);
         }
 
@@ -160,7 +159,7 @@ namespace Coralite.Content.Items.Fairies
                 fairyProj.Projectile.NewProjectileFromThis<SporesExplode>(fairyProj.Projectile.Center
                     , rot.ToRotationVector2() * 5, damage, 2);
                 fairyProj.Projectile.NewProjectileFromThis<SporesExplode>(fairyProj.Projectile.Center
-                    , (rot + MathHelper.TwoPi / 14).ToRotationVector2() * 2, GetDamage(fairyProj.Projectile.damage, fairyProj.SkillLevel), 2,1);
+                    , (rot + MathHelper.TwoPi / 14).ToRotationVector2() * 2, GetDamage(fairyProj.Projectile.damage, fairyProj.SkillLevel), 2, 1);
                 rot += MathHelper.TwoPi / 7 + Main.rand.NextFloat(-0.2f, 0.2f);
             }
         }
@@ -283,7 +282,7 @@ namespace Coralite.Content.Items.Fairies
                             Projectile.frame++;
                         }
 
-                        if (currTime > 4*10)
+                        if (currTime > 4 * 10)
                             Projectile.Kill();
                     }
                     break;

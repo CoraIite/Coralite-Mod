@@ -1,6 +1,4 @@
-﻿using Coralite.Core.Attributes;
-
-namespace Coralite.Core.Systems.MagikeSystem
+﻿namespace Coralite.Core.Systems.MagikeSystem
 {
     [VaultLoaden(AssetDirectory.MagikeUI)]
     public class MagikeAssets

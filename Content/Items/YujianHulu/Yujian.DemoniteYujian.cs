@@ -264,7 +264,7 @@ namespace Coralite.Content.Items.YujianHulu
             if (Projectile.timeLeft > 12)
                 return false;
 
-            Texture2D mainTex = TextureAssets.Extra[98].Value;
+            Texture2D mainTex = TextureAssets.Extra[ExtrasID.SharpTears].Value;
             Vector2 scale = new(Width / mainTex.Width, (Projectile.Center - center).Length() / mainTex.Height);
             Vector2 Center = center - Projectile.velocity - Main.screenPosition;
             Vector2 origin = new(mainTex.Width / 2, 0);
@@ -326,7 +326,7 @@ namespace Coralite.Content.Items.YujianHulu
 
         public override bool PreDraw(ref Color lightColor)
         {
-            Texture2D mainTex = TextureAssets.Extra[98].Value;
+            Texture2D mainTex = TextureAssets.Extra[ExtrasID.SharpTears].Value;
             Vector2 scale = new(Projectile.ai[0] / mainTex.Width, Projectile.localAI[0] / mainTex.Height);
             Vector2 Center = Projectile.Center - Main.screenPosition;
             Vector2 origin = mainTex.Size() / 2;

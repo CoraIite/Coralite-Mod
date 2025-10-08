@@ -190,8 +190,7 @@ namespace Coralite.Content.Items.Misc_Melee
             {
                 Vector2 center = target.Center;
                 int num = 2;
-                Projectile.NewProjectile(Projectile.GetSource_FromAI(), center.X, center.Y, 0f, -1f * Main.player[Projectile.owner].gravDir, 978
-                    , (int)(Projectile.damage * 0.75f), Projectile.knockBack, Projectile.owner, 0f, num);
+                Projectile.NewProjectile(Projectile.GetSource_FromAI(), center.X, center.Y, 0f, -1f * Main.player[Projectile.owner].gravDir, ProjectileID.Volcano, (int)(Projectile.damage * 0.75f), Projectile.knockBack, Projectile.owner, 0f, num);
 
                 hited = false;
             }

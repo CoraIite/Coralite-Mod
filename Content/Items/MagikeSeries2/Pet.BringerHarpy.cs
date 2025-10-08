@@ -1,6 +1,5 @@
 ﻿using Coralite.Content.Raritys;
 using Coralite.Core;
-using Coralite.Core.Attributes;
 using Coralite.Core.SmoothFunctions;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.MagikeCraft;

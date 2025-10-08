@@ -1,5 +1,4 @@
 ﻿using Coralite.Core;
-using Coralite.Core.Attributes;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System.Linq;

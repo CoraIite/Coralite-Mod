@@ -167,7 +167,7 @@ namespace Coralite.Content.Items.Nightmare
                 float num5 = MathHelper.Lerp(0.8f, 0f, Math.Abs(num4 - half) * 10f);
                 Color c = NightmarePlantera.nightmareRed;
                 c.A = (byte)(num5 * 255 / 2f);
-                spriteBatch.Draw(ringTex.Value, Owner.Center - Main.screenPosition + new Vector2(0,Owner.gfxOffY), null, c, Rot + (MathHelper.Pi / 3f * j), ringTex.Size() / 2, num4, SpriteEffects.None, 0f);
+                spriteBatch.Draw(ringTex.Value, Owner.Center - Main.screenPosition + new Vector2(0, Owner.gfxOffY), null, c, Rot + (MathHelper.Pi / 3f * j), ringTex.Size() / 2, num4, SpriteEffects.None, 0f);
             }
         }
     }

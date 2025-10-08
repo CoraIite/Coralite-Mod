@@ -24,7 +24,7 @@ namespace Coralite.Content.WorldGeneration
             ShapeData OutCircleData = new ShapeData();
 
             WorldUtils.Gen(origin
-                , new Shapes.Circle(35,25)
+                , new Shapes.Circle(35, 25)
                 , Actions.Chain(
                     new Actions.ClearTile()
                     , new Actions.PlaceTile(TileID.Stone)
@@ -37,8 +37,8 @@ namespace Coralite.Content.WorldGeneration
                 , Actions.Chain(
                     new Actions.ClearTile()
                     , new Actions.SetFrames(true).Output(slimeData)
-                    ,new Modifiers.Expand(2)
-                    ,new Modifiers.Blotches(5)));
+                    , new Modifiers.Expand(2)
+                    , new Modifiers.Blotches(5)));
 
             //通道的矩形
             //ShapeData tunnelRectData = new ShapeData();

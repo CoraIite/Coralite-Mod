@@ -1,5 +1,4 @@
 ﻿using Coralite.Core;
-using Coralite.Core.Attributes;
 using Coralite.Core.Loaders;
 using Coralite.Core.Systems.FairyCatcherSystem;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases.Items;
@@ -259,7 +258,7 @@ namespace Coralite.Content.UI.FairyEncyclopedia
             SelectButtonsPanel.Left.Set(SelectButton.Left.Pixels, 0);
             SelectButtonsPanel.Width.Set((circleButtonTex.Width() * 6) + 10, 0);
             SelectButtonsPanel.Height.Set(BackGround.Height.Pixels / 3, 0);
-            SelectButtonsPanel. BackgroundColor = new Color(63, 107, 151) * 0.85f;
+            SelectButtonsPanel.BackgroundColor = new Color(63, 107, 151) * 0.85f;
             SelectButtonsPanel.BorderColor = Color.White;
 
             UIGrid buttonsGrid = new();
@@ -467,7 +466,7 @@ namespace Coralite.Content.UI.FairyEncyclopedia
                     , out FairySpawnController controller))
                 {
                     foreach (var c in controller.Conditions)
-                        ConditionShow.Add(new FairySpawnBar(c, ConditionShow.Width.Pixels-24));
+                        ConditionShow.Add(new FairySpawnBar(c, ConditionShow.Width.Pixels - 24));
                 }
                 BackGround?.Append(ConditionShow);
 
@@ -475,7 +474,7 @@ namespace Coralite.Content.UI.FairyEncyclopedia
                 if (ContentSamples.ItemsByType[FairyLoader.GetFairy(ShowFairyID).ItemType].ModItem is BaseFairyItem bfi)
                 {
                     foreach (var skillType in bfi.GetFairySkills())
-                        SkillShow.Add(new FairySkillBar(skillType, ConditionShow.Width.Pixels-24));
+                        SkillShow.Add(new FairySkillBar(skillType, ConditionShow.Width.Pixels - 24));
                 }
 
                 BackGround?.Append(SkillShow);

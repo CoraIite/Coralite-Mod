@@ -1,5 +1,4 @@
 ﻿using Coralite.Core;
-using Coralite.Core.Attributes;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases.Items;
 using Microsoft.Xna.Framework.Graphics;
@@ -80,7 +79,7 @@ namespace Coralite.Content.Items.FairyCatcher.Tongs
             Vector2 offset = -HandleRot.ToRotationVector2() * 11 + (HandleRot - Owner.direction * MathHelper.PiOver2).ToRotationVector2() * 4;
 
             Main.spriteBatch.Draw(CopperTongHandleHead.Value, pos - Main.screenPosition + offset
-                , null, lightColor, HandleRot + HandleHeadRot+(Owner.direction>0?0:MathHelper.Pi), new Vector2(CopperTongHandleHead.Width() / 2, CopperTongHandleHead.Height())
+                , null, lightColor, HandleRot + HandleHeadRot + (Owner.direction > 0 ? 0 : MathHelper.Pi), new Vector2(CopperTongHandleHead.Width() / 2, CopperTongHandleHead.Height())
                 , Projectile.scale, Owner.direction > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally, 0);
         }
     }

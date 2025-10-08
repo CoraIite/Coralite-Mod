@@ -86,7 +86,7 @@ namespace Coralite.Content.Items.Fairies.ColorSeries
 
         public override Vector2 GetRestSpeed()
         {
-            int dir = (Timer + Projectile.identity * 3) % 40 < 20 
+            int dir = (Timer + Projectile.identity * 3) % 40 < 20
                 ? 1 : -1;
             return new Vector2(dir * 2, 0);
         }

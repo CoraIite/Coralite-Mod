@@ -120,7 +120,7 @@ namespace Coralite.Content.Items.Fairies
 
     public class FSkill_Dash : FairySkill
     {
-        public override string Texture => AssetDirectory.FairySkillIcons+ "Tackle";
+        public override string Texture => AssetDirectory.FairySkillIcons + "Tackle";
 
         private int DashCount;
         private int RecordDashTime;
@@ -179,7 +179,7 @@ namespace Coralite.Content.Items.Fairies
                 fairyProj.Projectile.velocity = fairyProj.Projectile.velocity =
                     (target.Center - fairyProj.Projectile.Center).SafeNormalize(Vector2.Zero) * speed;
 
-                fairyProj.Projectile.rotation = (target.Center - fairyProj.Projectile.Center).ToRotation()+MathHelper.PiOver2;
+                fairyProj.Projectile.rotation = (target.Center - fairyProj.Projectile.Center).ToRotation() + MathHelper.PiOver2;
 
                 if (length / speed + 10 < RecordDashTime)
                     DashTime = (int)(length / speed + 10);

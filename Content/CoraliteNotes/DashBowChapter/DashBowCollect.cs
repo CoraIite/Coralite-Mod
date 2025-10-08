@@ -2,7 +2,6 @@
 using Coralite.Content.Items.Thunder;
 using Coralite.Content.Items.ThyphionSeries;
 using Coralite.Core;
-using Coralite.Core.Attributes;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;

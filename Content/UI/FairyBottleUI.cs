@@ -1,5 +1,4 @@
 ﻿using Coralite.Core;
-using Coralite.Core.Attributes;
 using Coralite.Core.Loaders;
 using Coralite.Core.Systems.FairyCatcherSystem;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases.Items;
@@ -51,7 +50,7 @@ namespace Coralite.Content.UI
 
             FightIcon = new UIInformationIcon(ModContent.Request<Texture2D>(AssetDirectory.FairyUI + "FightFairyIcon"));
             ContainIcon = new UIInformationIcon(ModContent.Request<Texture2D>(AssetDirectory.FairyUI + "ContainFairyIcon"));
-            sortButton = new SortButton(); 
+            sortButton = new SortButton();
         }
 
         public override void Update(GameTime gameTime)
@@ -96,7 +95,7 @@ namespace Coralite.Content.UI
 
             Player p = Main.LocalPlayer;
 
-            if (ShowContains && p.TryGetModPlayer(out FairyCatcherPlayer fcp) 
+            if (ShowContains && p.TryGetModPlayer(out FairyCatcherPlayer fcp)
                 && fcp.TryGetFairyBottle(out BaseFairyBottle bottle))
             {
                 AddFightPanel(bottle);
@@ -513,7 +512,7 @@ namespace Coralite.Content.UI
             base.RightClick(evt);
 
             _sortStyle++;
-            if (_sortStyle>BaseFairyBottle.SortStyle.ByStaminaLevel)
+            if (_sortStyle > BaseFairyBottle.SortStyle.ByStaminaLevel)
                 _sortStyle = BaseFairyBottle.SortStyle.ByRarity;
 
             Player p = Main.LocalPlayer;
@@ -528,8 +527,8 @@ namespace Coralite.Content.UI
 
         protected override void DrawSelf(SpriteBatch spriteBatch)
         {
-            FairySortButton.Value.QuickCenteredDraw(spriteBatch, new Rectangle(0,(int)_sortStyle,1,7),GetDimensions().Center(), Color.White, scale: IsMouseHovering ? 0.85f : 0.8f);
-            
+            FairySortButton.Value.QuickCenteredDraw(spriteBatch, new Rectangle(0, (int)_sortStyle, 1, 7), GetDimensions().Center(), Color.White, scale: IsMouseHovering ? 0.85f : 0.8f);
+
             if (IsMouseHovering)
             {
                 Main.LocalPlayer.mouseInterface = true;

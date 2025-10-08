@@ -219,7 +219,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
             {
                 entity.Kill();
                 MagikeApparatusPanel.CurrentEntity = null;
-                UILoader.GetUIState<MagikeApparatusPanel>().visible=false;
+                UILoader.GetUIState<MagikeApparatusPanel>().visible = false;
             }
         }
 

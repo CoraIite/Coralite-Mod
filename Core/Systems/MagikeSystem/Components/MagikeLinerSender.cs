@@ -1,6 +1,5 @@
 ﻿using Coralite.Content.CustomHooks;
 using Coralite.Content.UI.MagikeApparatusPanel;
-using Coralite.Core.Attributes;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;

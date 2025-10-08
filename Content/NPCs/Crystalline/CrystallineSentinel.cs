@@ -19,7 +19,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.NPCs.Crystalline
 {
-    [VaultLoaden( AssetDirectory.CrystallineNPCs)]
+    [VaultLoaden(AssetDirectory.CrystallineNPCs)]
     public class CrystallineSentinel : ModNPC
     {
         public override string Texture => AssetDirectory.CrystallineNPCs + Name;
@@ -357,7 +357,7 @@ namespace Coralite.Content.NPCs.Crystalline
                 for (int j = 0; j < 2; j++)
                 {
                     Tile t = Framing.GetTileSafely(pos + new Vector2(NPC.direction * i * 16, j * 16));
-                    if (t.HasReallySolidTile())
+                    if (t.HasSolidTile())
                     {
                         hasTile = true;
                         break;
@@ -646,7 +646,7 @@ namespace Coralite.Content.NPCs.Crystalline
 
             const int readyTime = 3 * 6 + 1;
             const int idleTime = 100;
-            const int delayTime = 3*7;
+            const int delayTime = 3 * 7;
 
             if (Timer < readyTime)
             {
@@ -658,7 +658,7 @@ namespace Coralite.Content.NPCs.Crystalline
             }
             else if (Timer == readyTime)
             {
-                NPC.NewProjectileDirectInAI<CrystallineSentinelSwing>(NPC.Center+ (Target.Center - NPC.Center).SafeNormalize(Vector2.Zero)
+                NPC.NewProjectileDirectInAI<CrystallineSentinelSwing>(NPC.Center + (Target.Center - NPC.Center).SafeNormalize(Vector2.Zero)
                     , Vector2.Zero, Helper.GetProjDamage(120, 140, 180)
                     , 1, NPC.target, NPC.whoAmI);
             }
@@ -1038,7 +1038,7 @@ namespace Coralite.Content.NPCs.Crystalline
         public override bool PreDraw(ref Color lightColor) => false;
     }
 
-    [VaultLoaden( AssetDirectory.CrystallineNPCs)]
+    [VaultLoaden(AssetDirectory.CrystallineNPCs)]
     public class CrystallineSentinelSwing : BaseSwingProj
     {
         public override string Texture => AssetDirectory.CrystallineNPCs + Name;
@@ -1139,7 +1139,7 @@ namespace Coralite.Content.NPCs.Crystalline
         protected override Vector2 OwnerCenter()
         {
             if (OwnerIndex.GetNPCOwner<CrystallineSentinel>(out NPC npc, Projectile.Kill))
-                return npc.Center + dir.ToRotationVector2()*offsetLength;
+                return npc.Center + dir.ToRotationVector2() * offsetLength;
 
             return base.OwnerCenter();
         }
@@ -1163,9 +1163,9 @@ namespace Coralite.Content.NPCs.Crystalline
                     continue;
 
                 float factor = 1f - (i / count);
-                Vector2 Center = GetCenter(i)-Main.screenPosition;
+                Vector2 Center = GetCenter(i) - Main.screenPosition;
                 Vector2 Top = Center + (oldRotate[i].ToRotationVector2() * (oldLength[i] + trailTopWidth + oldDistanceToOwner[i]));
-                Vector2 Bottom = Center+ (oldRotate[i].ToRotationVector2() * (oldLength[i] - ControlTrailBottomWidth(factor) + oldDistanceToOwner[i]));
+                Vector2 Bottom = Center + (oldRotate[i].ToRotationVector2() * (oldLength[i] - ControlTrailBottomWidth(factor) + oldDistanceToOwner[i]));
 
                 var topColor = Color.Lerp(new Color(238, 218, 130, alpha), new Color(167, 127, 95, 0), 1 - factor);
                 var bottomColor = Color.Lerp(new Color(109, 73, 86, alpha), new Color(83, 16, 85, 0), 1 - factor);

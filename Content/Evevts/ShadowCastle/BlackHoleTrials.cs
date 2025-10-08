@@ -6,7 +6,6 @@ using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;
-using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.ModLoader.IO;
 
@@ -23,7 +22,7 @@ namespace Coralite.Content.Evevts.ShadowCastle
 
         public override void LoadWorldData(TagCompound tag)
         {
-            if (tag.TryGet("DownedBlackHoleTrails",out bool b))
+            if (tag.TryGet("DownedBlackHoleTrails", out bool b))
                 DownedBlackHoleTrails = b;
         }
     }

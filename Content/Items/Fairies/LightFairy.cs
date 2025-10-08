@@ -162,7 +162,7 @@ namespace Coralite.Content.Items.Fairies
             for (int i = 0; i < 8; i++)
             {
                 Dust dust = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.YellowStarDust, Main.rand.NextFloat(-3, 3), Main.rand.NextFloat(-3, 3)
-                    , 100, new Color(255,255,255,30), 1f);
+                    , 100, new Color(255, 255, 255, 30), 1f);
                 dust.noGravity = true;
             }
 
@@ -219,7 +219,7 @@ namespace Coralite.Content.Items.Fairies
                 Projectile.Kill();
 
             if (Main.rand.NextBool())
-                Projectile.SpawnTrailDust(4f,DustID.YellowStarDust, Main.rand.NextFloat(-0.8f, -0.6f), 100
+                Projectile.SpawnTrailDust(4f, DustID.YellowStarDust, Main.rand.NextFloat(-0.8f, -0.6f), 100
                     , new Color(255, 255, 255, 40));
         }
 

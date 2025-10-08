@@ -11,7 +11,6 @@ using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.GameContent;
-using Terraria.Graphics.Effects;
 using Terraria.ID;
 
 namespace Coralite.Content.Items.FlyingShields
@@ -83,7 +82,7 @@ namespace Coralite.Content.Items.FlyingShields
                 for (int i = 0; i < 3; i++)
                     ConquerorOfTheSeasGuard.TentacleDust(Projectile, (i % 2 == 0 ? 1 : -1) * i * 0.3f);
 
-                Helper.PlayPitched(CoraliteSoundID.Water_Splash, Projectile.Center,volumeAdjust:-0.2f, pitch: 0.3f);
+                Helper.PlayPitched(CoraliteSoundID.Water_Splash, Projectile.Center, volumeAdjust: -0.2f, pitch: 0.3f);
             }
 
             base.OnHitNPC(target, hit, damageDone);
@@ -538,7 +537,7 @@ namespace Coralite.Content.Items.FlyingShields
         }
     }
 
-    public class ConquerorWaterWave : ModProjectile,IDrawNonPremultiplied,IPostDrawAdditive
+    public class ConquerorWaterWave : ModProjectile, IDrawNonPremultiplied, IPostDrawAdditive
     {
         public override string Texture => AssetDirectory.FlyingShieldItems + Name;
 
@@ -657,7 +656,7 @@ namespace Coralite.Content.Items.FlyingShields
                 c *= 1 - (Timer - 20) / 30;
             }
 
-            DrawShadowTrails(TextureAssets.Extra[98].Value, Projectile
+            DrawShadowTrails(TextureAssets.Extra[ExtrasID.SharpTears].Value, Projectile
                 , c * 0.5f, 1, 1 / 12f, 1, 12, 1, 1 / 12f, -1.57f, 1.5f);
 
             float rot = (Timer / 40 + Main.GlobalTimeWrappedHourly) % 1;
@@ -683,7 +682,7 @@ namespace Coralite.Content.Items.FlyingShields
             return false;
         }
 
-        public static void DrawShadowTrails(Texture2D tex,Projectile projectile,Color drawColor, float maxAlpha, float alphaStep, int start, int howMany, int step, float scaleStep, float extraRot = 0, float scale = -1)
+        public static void DrawShadowTrails(Texture2D tex, Projectile projectile, Color drawColor, float maxAlpha, float alphaStep, int start, int howMany, int step, float scaleStep, float extraRot = 0, float scale = -1)
         {
             Texture2D mainTex = tex;
             Vector2 toCenter = new(projectile.width / 2, projectile.height / 2);

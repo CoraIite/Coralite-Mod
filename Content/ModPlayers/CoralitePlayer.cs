@@ -28,7 +28,7 @@ namespace Coralite.Content.ModPlayers
     public partial class CoralitePlayer : ModPlayer, ILocalizedModType
     {
         public string LocalizationCategory => "Players";
-        
+
         public int rightClickReuseDelay = 0;
 
         public List<IInventoryCraftStation> inventoryCraftStations = new();
@@ -64,7 +64,7 @@ namespace Coralite.Content.ModPlayers
         /// <summary> 绝对专注 </summary>
         public int Concertration;
         #endregion
-        
+
         /// <summary>
         /// 距离上次受伤的时间
         /// </summary>

@@ -262,7 +262,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <param name="baseLevel"></param>
         /// <param name="skillType"></param>
         /// <returns></returns>
-        public int GetFairySkillBonus(int skillType,int baseLevel)
+        public int GetFairySkillBonus(int skillType, int baseLevel)
         {
             if (FairySkill.SkillWithTags.TryGetValue(skillType, out int[] tags))
                 foreach (var tag in tags)
