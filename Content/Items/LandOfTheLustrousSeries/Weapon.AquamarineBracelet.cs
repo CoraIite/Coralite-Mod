@@ -3,6 +3,7 @@ using Coralite.Content.Particles;
 using Coralite.Content.Tiles.RedJades;
 using Coralite.Core;
 using Coralite.Core.Configs;
+using Coralite.Core.Loaders;
 using Coralite.Helpers;
 using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
@@ -424,7 +425,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             if (trail == null)
                 return;
 
-            Effect effect = Filters.Scene["CrystalTrail"].GetShader().Shader;
+            Effect effect = ShaderLoader.GetShader("CrystalTrail");
 
             Texture2D noiseTex = GemTextures.CrystalNoises[Projectile.frame].Value;
 

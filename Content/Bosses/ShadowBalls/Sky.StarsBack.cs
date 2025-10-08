@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.WorldGeneration;
 using Coralite.Core;
+using Coralite.Core.Loaders;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -130,7 +131,7 @@ namespace Coralite.Content.Bosses.ShadowBalls
             if (!(minDepth < 0 && maxDepth > 2))
                 return;
 
-            Effect effect = Filters.Scene["ShadowStars"].GetShader().Shader;
+            Effect effect = ShaderLoader.GetShader("ShadowStars");
 
             Texture2D mainTex = ModContent.Request<Texture2D>(AssetDirectory.ShadowBalls + "BallBack").Value;
             var pos = CoraliteWorld.shadowBallsFightArea.Center.ToVector2() - Main.screenPosition;

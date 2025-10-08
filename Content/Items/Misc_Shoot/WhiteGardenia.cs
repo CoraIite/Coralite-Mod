@@ -312,7 +312,7 @@ namespace Coralite.Content.Items.Misc_Shoot
                     Vector2 pos = basePos + dir * i;
                     Tile t = Framing.GetTileSafely(pos);
 
-                    if (t.HasSolidTile())
+                    if (t.HasReallySolidTile())
                     {
                         AimPosition = pos;
                         collide = true;

@@ -5,6 +5,7 @@ using Coralite.Content.ModPlayers;
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Configs;
+using Coralite.Core.Loaders;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
@@ -747,7 +748,7 @@ namespace Coralite.Content.Items.Nightmare
             {
                 Helper.DrawTrail(Main.graphics.GraphicsDevice, () =>
                 {
-                    Effect effect = Filters.Scene["NoHLGradientTrail"].GetShader().Shader;
+                    Effect effect = ShaderLoader.GetShader("NoHLGradientTrail");
 
                     effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
                     effect.Parameters["sampleTexture"].SetValue(CoraliteAssets.Trail.SlashFlat.Value);
@@ -1311,7 +1312,7 @@ namespace Coralite.Content.Items.Nightmare
             if (trail == null || Timer < 0)
                 return;
 
-            Effect effect = Filters.Scene["AlphaGradientTrail"].GetShader().Shader;
+            Effect effect = ShaderLoader.GetShader("AlphaGradientTrail");
 
             Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
             Matrix view = Main.GameViewMatrix.TransformationMatrix;
@@ -1357,7 +1358,7 @@ namespace Coralite.Content.Items.Nightmare
             Matrix projection = Matrix.CreateOrthographicOffCenter(0f, Main.screenWidth, Main.screenHeight, 0f, 0f, 1f);
             Matrix model = Matrix.CreateTranslation(new Vector3(-Main.screenPosition.X, -Main.screenPosition.Y, 0f)) * Main.GameViewMatrix.TransformationMatrix;
 
-            Effect effect = Filters.Scene["KEx"].GetShader().Shader;
+            Effect effect = ShaderLoader.GetShader("KEx");
 
             effect.Parameters["uTransform"].SetValue(model * projection);
             Main.graphics.GraphicsDevice.Textures[0] = FrostySwordSlash.WarpTexture.Value;

@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.Items.DigDigDig.EyeOfGlistent;
 using Coralite.Content.Items.LandOfTheLustrousSeries;
 using Coralite.Core;
+using Coralite.Core.Loaders;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -911,7 +912,7 @@ namespace Coralite.Content.Bosses.DigDigDig.EyeOfGlistent
             Texture2D mainTex = NPC.GetTexture();
             Rectangle frameBox = mainTex.Frame(1, 6, 0, NPC.frame.Y);
 
-            Effect effect = Filters.Scene["Crystal"].GetShader().Shader;
+            Effect effect = ShaderLoader.GetShader("Crystal");
 
             effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["basePos"].SetValue((NPC.Center + rand - Main.screenPosition) * Main.GameZoomTarget);

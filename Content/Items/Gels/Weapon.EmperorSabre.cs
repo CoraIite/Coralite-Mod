@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.Bosses.VanillaReinforce.SlimeEmperor;
 using Coralite.Core;
 using Coralite.Core.Configs;
+using Coralite.Core.Loaders;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
@@ -362,7 +363,7 @@ namespace Coralite.Content.Items.Gels
             {
                 Helper.DrawTrail(Main.graphics.GraphicsDevice, () =>
                 {
-                    Effect effect = Filters.Scene["SimpleGradientTrail"].GetShader().Shader;
+                    Effect effect = ShaderLoader.GetShader("SimpleGradientTrail");
 
                     effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
                     effect.Parameters["sampleTexture"].SetValue(CoraliteAssets.Trail.SlashFlatFade.Value);
@@ -582,7 +583,7 @@ namespace Coralite.Content.Items.Gels
             {
                 Helper.DrawTrail(Main.graphics.GraphicsDevice, () =>
                 {
-                    Effect effect = Filters.Scene["SimpleGradientTrail"].GetShader().Shader;
+                    Effect effect = ShaderLoader.GetShader("SimpleGradientTrail");
 
                     effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
                     effect.Parameters["sampleTexture"].SetValue(CoraliteAssets.Trail.SlashFlatFade.Value);

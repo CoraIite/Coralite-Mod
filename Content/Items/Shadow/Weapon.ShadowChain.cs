@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.Items.Misc_Melee;
 using Coralite.Core;
 using Coralite.Core.Configs;
+using Coralite.Core.Loaders;
 using Coralite.Core.Prefabs.Items;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
@@ -456,7 +457,7 @@ namespace Coralite.Content.Items.Shadow
             {
                 Helper.DrawTrail(Main.graphics.GraphicsDevice, () =>
                 {
-                    Effect effect = Filters.Scene["StarsTrail"].GetShader().Shader;
+                    Effect effect = ShaderLoader.GetShader("StarsTrail");
 
                     effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
                     effect.Parameters["sampleTexture"].SetValue(CoraliteAssets.Trail.SlashFlatBright.Value);

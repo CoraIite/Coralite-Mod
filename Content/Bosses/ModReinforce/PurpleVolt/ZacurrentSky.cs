@@ -1,5 +1,6 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Attributes;
+using Coralite.Core.Loaders;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -59,7 +60,8 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
                 Texture2D sky = ModContent.Request<Texture2D>(AssetDirectory.DefaultItem).Value;
 
                 Rectangle screen = new(0, 0, Main.screenWidth, Main.screenHeight);
-                Effect e = Filters.Scene["ZacurrentBackground"].GetShader().Shader;
+                Effect e = ShaderLoader.GetShader("ZacurrentBackground");
+
                 e.Parameters["iTime"].SetValue(Main.GlobalTimeWrappedHourly * 2);
                 e.Parameters["bright"].SetValue(0.1f + light);
                 e.Parameters["divide"].SetValue(4.5f / 10);

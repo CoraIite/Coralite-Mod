@@ -1,4 +1,5 @@
 ﻿using Coralite.Core;
+using Coralite.Core.Loaders;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
 using InnoVault.Trails;
@@ -464,7 +465,7 @@ namespace Coralite.Content.Evevts.ShadowCastle
 
         public void DrawPrimitives()
         {
-            Effect effect = Filters.Scene["Flow2"].GetShader().Shader;
+            Effect effect = ShaderLoader.GetShader("Flow2");
 
             Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
             Matrix view = Main.GameViewMatrix.ZoomMatrix;

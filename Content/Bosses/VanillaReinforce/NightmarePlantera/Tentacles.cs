@@ -1,4 +1,5 @@
-﻿using Coralite.Core.Systems.IKSystem;
+﻿using Coralite.Core.Loaders;
+using Coralite.Core.Systems.IKSystem;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
@@ -93,7 +94,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 Main.spriteBatch.End();
                 Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, default, Main.GameViewMatrix.ZoomMatrix);
 
-                Effect effect = Filters.Scene["NightmareTentacle"].GetShader().Shader;
+                Effect effect = ShaderLoader.GetShader("NightmareTentacle");
 
                 Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
                 Matrix view = Main.GameViewMatrix.TransformationMatrix;
@@ -150,7 +151,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             if (bars.Count > 2)
             {
-                Effect effect = Filters.Scene["NightmareTentacle"].GetShader().Shader;
+                Effect effect = ShaderLoader.GetShader("NightmareTentacle");
 
                 Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
                 Matrix view = Main.GameViewMatrix.TransformationMatrix;
@@ -204,7 +205,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             if (bars.Count > 2)
             {
-                Effect effect = Filters.Scene["NightmareTentacle"].GetShader().Shader;
+                Effect effect = ShaderLoader.GetShader("NightmareTentacle");
 
                 Matrix view = Main.GameViewMatrix.ZoomMatrix;
                 Matrix projection = Matrix.CreateOrthographicOffCenter(0, Main.screenWidth, Main.screenHeight, 0, -1, 1);
@@ -360,7 +361,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 Main.spriteBatch.End();
                 Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, default, Main.GameViewMatrix.ZoomMatrix);
 
-                Effect effect = Filters.Scene["NightmareTentacle"].GetShader().Shader;
+                Effect effect = ShaderLoader.GetShader("NightmareTentacle");
 
                 Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
                 Matrix view = Main.GameViewMatrix.TransformationMatrix;
@@ -416,7 +417,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             if (bars.Count > 2)
             {
-                Effect effect = Filters.Scene["NightmareTentacle"].GetShader().Shader;
+                Effect effect = ShaderLoader.GetShader("NightmareTentacle");
 
                 Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
                 Matrix view = Main.GameViewMatrix.TransformationMatrix;
@@ -548,7 +549,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 Main.spriteBatch.End();
                 Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, default, Main.GameViewMatrix.ZoomMatrix);
 
-                Effect effect = Filters.Scene["FantasyTentacle"].GetShader().Shader;
+                Effect effect = ShaderLoader.GetShader("FantasyTentacle");
 
                 Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
                 Matrix view = Main.GameViewMatrix.TransformationMatrix;
@@ -660,7 +661,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                 Main.spriteBatch.End();
                 Main.spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, default, Main.GameViewMatrix.ZoomMatrix);
 
-                Effect effect = Filters.Scene["NightmareTentacle"].GetShader().Shader;
+                Effect effect = ShaderLoader.GetShader("NightmareTentacle");
 
                 Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
                 Matrix view = Main.GameViewMatrix.TransformationMatrix;

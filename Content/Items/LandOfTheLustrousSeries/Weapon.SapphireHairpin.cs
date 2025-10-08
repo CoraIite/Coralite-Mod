@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.Tiles.RedJades;
 using Coralite.Core;
 using Coralite.Core.Configs;
+using Coralite.Core.Loaders;
 using Coralite.Helpers;
 using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
@@ -635,7 +636,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             if (trail == null || Projectile.localAI[0] > 0)
                 return;
 
-            Effect effect = Filters.Scene["SimpleTrailNoHL"].GetShader().Shader;
+            Effect effect = ShaderLoader.GetShader("SimpleTrailNoHL");
 
             Main.graphics.GraphicsDevice.BlendState = BlendState.Additive;
             effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());

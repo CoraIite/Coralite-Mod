@@ -177,7 +177,7 @@ namespace Coralite.Content.Items.ThyphionSeries
                             {
                                 Tile t = Framing.GetTileSafely(pos + new Point16(0, i));
 
-                                if (t.HasSolidTile() && (TileID.Sets.Ices[t.TileType] || TileID.Sets.IcesSnow[t.TileType]))
+                                if (t.HasReallySolidTile() && (TileID.Sets.Ices[t.TileType] || TileID.Sets.IcesSnow[t.TileType]))
                                 {
                                     Helper.PlayPitched(CoraliteSoundID.IceMagic_Item28, Projectile.Center, pitch: 0.2f);
                                     CurrentArrowType = (int)ArrowType.iceFire;

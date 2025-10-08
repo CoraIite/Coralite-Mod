@@ -1,4 +1,5 @@
 ﻿using Coralite.Core;
+using Coralite.Core.Loaders;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.YujianSystem;
 using Coralite.Core.Systems.YujianSystem.YujianAIs;
@@ -161,7 +162,7 @@ namespace Coralite.Content.Items.YujianHulu
             if (!canSlash || time > SlashTime || time < yujianProj.trailCacheLength || smoother.Smoother(time, SlashTime) > 0.99f)
                 return;
 
-            Effect effect = Filters.Scene["SimpleTrail"].GetShader().Shader;
+            Effect effect = ShaderLoader.GetShader("SimpleTrail");
 
             Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
             Matrix view = Main.GameViewMatrix.TransformationMatrix;
@@ -224,7 +225,7 @@ namespace Coralite.Content.Items.YujianHulu
                 Vector2 targetDir = Projectile.rotation.ToRotationVector2();
                 for (int i = 0; i < 4; i++)
                 {
-                    if (Framing.GetTileSafely(Projectile.Center + (targetDir * i * 16)).HasSolidTile())
+                    if (Framing.GetTileSafely(Projectile.Center + (targetDir * i * 16)).HasReallySolidTile())
                     {
                         Projectile.timeLeft = 10;
                         canDamage = false;

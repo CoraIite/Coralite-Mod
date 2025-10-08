@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.Items.Icicle;
 using Coralite.Content.Particles;
 using Coralite.Core;
+using Coralite.Core.Loaders;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
@@ -314,7 +315,7 @@ namespace Coralite.Content.Items.Misc_Melee
             if (trail == null || Timer < 0)
                 return;
 
-            Effect effect = Filters.Scene["AlphaGradientTrail"].GetShader().Shader;
+            Effect effect = ShaderLoader.GetShader("AlphaGradientTrail");
 
             effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["sampleTexture"].SetValue(Projectile.GetTexture());
@@ -356,7 +357,7 @@ namespace Coralite.Content.Items.Misc_Melee
             Matrix projection = Matrix.CreateOrthographicOffCenter(0f, Main.screenWidth, Main.screenHeight, 0f, 0f, 1f);
             Matrix model = Matrix.CreateTranslation(new Vector3(-Main.screenPosition.X, -Main.screenPosition.Y, 0f)) * Main.GameViewMatrix.TransformationMatrix;
 
-            Effect effect = Filters.Scene["KEx"].GetShader().Shader;
+            Effect effect = ShaderLoader.GetShader("KEx");
 
             effect.Parameters["uTransform"].SetValue(model * projection);
             Main.graphics.GraphicsDevice.Textures[0] = FrostySwordSlash.WarpTexture.Value;

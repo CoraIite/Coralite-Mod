@@ -1,5 +1,5 @@
-﻿using Coralite.Content.GlobalNPCs;
-using Coralite.Content.Items.LandOfTheLustrousSeries;
+﻿using Coralite.Content.Items.LandOfTheLustrousSeries;
+using Coralite.Core.Loaders;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -73,14 +73,10 @@ namespace Coralite.Helpers
         {
             float maxDis = maxDistance;
             NPC target = null;
-
-            foreach (var npc in Main.ActiveNPCs)
+            foreach (var npc in Main.npc.Where(n => n.active && !n.friendly && predicate(n)))
             {
-                if (npc.friendly)
-                    continue;
-
                 float dis = Vector2.Distance(position, npc.Center);
-                if (dis < maxDis && predicate(npc))
+                if (dis < maxDis)
                 {
                     maxDis = dis;
                     target = npc;
@@ -94,16 +90,16 @@ namespace Coralite.Helpers
         {
             float maxDis = maxDistance;
             target = null;
-
-            foreach (var npc in Main.ActiveNPCs)
+            for (int i = 0; i < Main.maxNPCs; i++)
             {
-                if (!npc.friendly)
+                NPC n = Main.npc[i];
+                if (n.active && !n.friendly && predicate(n))
                 {
-                    float dis = Vector2.Distance(position, npc.Center);
-                    if (dis < maxDis && predicate(npc))
+                    float dis = Vector2.Distance(position, n.Center);
+                    if (dis < maxDis)
                     {
                         maxDis = dis;
-                        target = npc;
+                        target = n;
                     }
 
                 }
@@ -128,11 +124,12 @@ namespace Coralite.Helpers
         {
             index = 0;
             totalIndexesInGroup = 0;
-            foreach (var projectile in Main.ActiveProjectiles)
+            for (int i = 0; i < 1000; i++)
             {
-                if (projectile.owner == owner && projectile.type == projType)
+                Projectile projectile = Main.projectile[i];
+                if (projectile.active && projectile.owner == owner && projectile.type == projType)
                 {
-                    if (whoAmI > projectile.whoAmI)
+                    if (whoAmI > i)
                         index++;
 
                     totalIndexesInGroup++;
@@ -151,11 +148,12 @@ namespace Coralite.Helpers
         {
             index = 0;
             totalIndexesInGroup = 0;
-            foreach (var p in Main.ActiveProjectiles)
+            for (int i = 0; i < Main.maxProjectiles; i++)
             {
-                if (p.owner == Projectile.owner && p.type == Projectile.type)
+                Projectile p = Main.projectile[i];
+                if (p.active && p.owner == Projectile.owner && p.type == Projectile.type)
                 {
-                    if (Projectile.whoAmI > p.whoAmI)
+                    if (Projectile.whoAmI > i)
                         index++;
 
                     totalIndexesInGroup++;
@@ -237,7 +235,7 @@ namespace Coralite.Helpers
                     return true;
                 }
             }
-            
+
             p = null;
             return false;
         }
@@ -245,7 +243,19 @@ namespace Coralite.Helpers
         [DebuggerHidden]
         public static void GetMyProjIndexWithModProj<T>(Projectile Projectile, out int index, out int totalIndexesInGroup) where T : ModProjectile
         {
-            GetMyProjIndexWithSameType(ModContent.ProjectileType<T>(), Projectile.whoAmI, Projectile.owner, out index, out totalIndexesInGroup);
+            index = 0;
+            totalIndexesInGroup = 0;
+            for (int i = 0; i < 1000; i++)
+            {
+                Projectile projectile = Main.projectile[i];
+                if (projectile.active && projectile.owner == Projectile.owner && projectile.ModProjectile is T)
+                {
+                    if (Projectile.whoAmI > i)
+                        index++;
+
+                    totalIndexesInGroup++;
+                }
+            }
         }
 
         /// <summary>
@@ -520,47 +530,8 @@ namespace Coralite.Helpers
             return true;
         }
 
-        public static void LoadGore(this ModProjectile modproj, int count)
-        {
-            for (int i = 0; i < count; i++)
-                GoreLoader.AddGoreFromTexture<SimpleModGore>(modproj.Mod, modproj.Texture + "_Gore" + i);
-        }
 
-        public static void SpawnGore(this ModProjectile modproj, int count, float speed = 1)
-        {
-            for (int i = 0; i < count; i++)
-                Gore.NewGoreDirect(modproj.Projectile.GetSource_Death()
-                    , Main.rand.NextVector2FromRectangle(modproj.Projectile.Hitbox)
-                    , Main.rand.NextVector2Circular(speed, speed), modproj.Mod.Find<ModGore>(modproj.Name + "_Gore" + i).Type);
-        }
 
-        /// <summary>
-        /// 黏附到指定NPC上
-        /// </summary>
-        /// <param name="proj"></param>
-        /// <param name="npc"></param>
-        public static bool AttatchToTarget(this Projectile proj, NPC npc)
-        {
-            if (npc.TryGetGlobalNPC(out CoraliteGlobalNPC cgnpc))
-               return cgnpc.AddAttachProj(proj);
-
-            return false;
-        }
-
-        /// <summary>
-        /// 弹幕下落
-        /// </summary>
-        /// <param name="proj"></param>
-        public static void Falling(this Projectile proj, float maxY, float add)
-        {
-            if (maxY > 0)
-            {
-                if (proj.velocity.Y < maxY)
-                    proj.velocity.Y += add;
-            }
-            else if (proj.velocity.Y > maxY)
-                proj.velocity.Y += add;
-        }
 
         //--------------------------------------------------------------------------------------------
         //                                    以下是绘制相关部分
@@ -898,7 +869,7 @@ namespace Coralite.Helpers
             , Color highlightC, Color brightC, Color darkC, Action doDraw, Action<SpriteBatch> endSpriteBatch
             , float lightRange = 0.2f, float lightLimit = 0.35f, float addC = 0.75f)
         {
-            Effect effect = Filters.Scene["Crystal"].GetShader().Shader;
+            Effect effect = ShaderLoader.GetShader("Crystal");
 
             Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
             Matrix view = Main.GameViewMatrix.TransformationMatrix;

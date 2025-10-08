@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.Particles;
 using Coralite.Content.Tiles.RedJades;
 using Coralite.Core;
+using Coralite.Core.Loaders;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
 using InnoVault.Trails;
@@ -388,7 +389,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             if (State == 2 || trail == null)
                 return;
 
-            Effect effect = Filters.Scene["Flow2"].GetShader().Shader;
+            Effect effect = ShaderLoader.GetShader("Flow2");
 
             effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly * 5);
             effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());

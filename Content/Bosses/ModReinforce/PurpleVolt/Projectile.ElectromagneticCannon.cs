@@ -1,5 +1,7 @@
 ﻿using Coralite.Content.Bosses.ThunderveinDragon;
 using Coralite.Core;
+using Coralite.Core.Attributes;
+using Coralite.Core.Loaders;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
@@ -273,7 +275,7 @@ namespace Coralite.Content.Bosses.ModReinforce.PurpleVolt
 
             if (bars.Count > 2)
             {
-                Effect effect = Filters.Scene["LaserAlpha"].GetShader().Shader;
+                Effect effect = ShaderLoader.GetShader("LaserAlpha");
 
                 Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
                 Matrix view = Main.GameViewMatrix.TransformationMatrix;

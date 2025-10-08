@@ -59,7 +59,7 @@ namespace Coralite.Content.Biskety
 
         public static void SendSpawnBiskety(Player player, Item item, Mod mod)
         {
-            Vector2 spanPos = new Vector2((int)Main.MouseWorld.X - Biskety.Width / 2, (int)Main.MouseWorld.Y - Biskety.Height / 2);
+            Vector2 spanPos = new Vector2((int)Main.MouseWorld.X, (int)Main.MouseWorld.Y + Biskety.Height / 2);
             if (VaultUtils.isSinglePlayer)
             {
                 NPC.NewNPC(new EntitySource_ItemUse(player, item), (int)spanPos.X, (int)spanPos.Y, ModContent.NPCType<Biskety>(), Target: player.whoAmI);

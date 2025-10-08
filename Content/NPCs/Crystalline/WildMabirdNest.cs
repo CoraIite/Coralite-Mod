@@ -123,7 +123,7 @@ namespace Coralite.Content.NPCs.Crystalline
                 if (Helper.IsPointOnScreen(new Vector2(spawnInfo.SpawnTileX, tileY) * 16 - Main.screenPosition))
                     return 0;
                 else
-                    return 0.03f;
+                    return 0.08f;
             }
 
             return 0;
@@ -641,7 +641,7 @@ namespace Coralite.Content.NPCs.Crystalline
             for (int i = 0; i < findCount; i++)
             {
                 Tile t = Framing.GetTileSafely(p + new Point(0, i));
-                if (t.HasSolidTile())
+                if (t.HasReallySolidTile())
                     return true;
             }
 

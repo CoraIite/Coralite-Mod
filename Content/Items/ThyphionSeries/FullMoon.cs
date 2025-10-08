@@ -3,6 +3,7 @@ using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Attributes;
 using Coralite.Core.Configs;
+using Coralite.Core.Loaders;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.CameraSystem;
 using Coralite.Helpers;
@@ -627,7 +628,7 @@ namespace Coralite.Content.Items.ThyphionSeries
             Vector2 scale = Scale;
 
             SpriteBatch spriteBatch = Main.spriteBatch;
-            Effect effect = Filters.Scene["TurbulenceArrow"].GetShader().Shader;
+            Effect effect = ShaderLoader.GetShader("TurbulenceArrow");
 
             effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["uTime"].SetValue((float)Main.timeForVisualEffects * 0.03f);

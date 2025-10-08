@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.GlobalItems;
 using Coralite.Content.ModPlayers;
 using Coralite.Core;
+using Coralite.Core.Loaders;
 using Coralite.Core.Systems.FlyingShieldSystem;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
@@ -284,7 +285,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
             if (trail == null || Timer < 0)
                 return;
 
-            Effect effect = Filters.Scene["AlphaNoHLGradientTrail"].GetShader().Shader;
+            Effect effect = ShaderLoader.GetShader("AlphaNoHLGradientTrail");
 
             Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
             Matrix view = Main.GameViewMatrix.TransformationMatrix;

@@ -1,15 +1,14 @@
 ﻿using Coralite.Content.Items.Icicle;
 using Coralite.Core.Configs;
+using Coralite.Core.Loaders;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Net;
 using Terraria;
 using Terraria.Enums;
-using Terraria.Graphics.Effects;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Core.Prefabs.Projectiles
@@ -685,7 +684,7 @@ namespace Coralite.Core.Prefabs.Projectiles
             Matrix projection = Matrix.CreateOrthographicOffCenter(0f, Main.screenWidth, Main.screenHeight, 0f, 0f, 1f);
             Matrix model = Matrix.CreateTranslation(new Vector3(-Main.screenPosition.X, -Main.screenPosition.Y, 0f)) * Main.GameViewMatrix.TransformationMatrix;
 
-            Effect effect = Filters.Scene["KEx2"].GetShader().Shader;
+            Effect effect = ShaderLoader.GetShader("KEx2");
 
             effect.Parameters["uTransform"].SetValue(model * projection);
             Main.graphics.GraphicsDevice.Textures[0] = CoraliteAssets.Trail.WarpTex.Value;

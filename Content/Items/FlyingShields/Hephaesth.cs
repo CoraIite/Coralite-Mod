@@ -3,6 +3,7 @@ using Coralite.Content.ModPlayers;
 using Coralite.Content.Particles;
 using Coralite.Content.WorldGeneration;
 using Coralite.Core;
+using Coralite.Core.Loaders;
 using Coralite.Core.Systems.FlyingShieldSystem;
 using Coralite.Core.Systems.ParticleSystem;
 using Coralite.Helpers;
@@ -642,7 +643,7 @@ namespace Coralite.Content.Items.FlyingShields
             if (State == 2 || trail == null)
                 return;
 
-            Effect effect = Filters.Scene["Flow2"].GetShader().Shader;
+            Effect effect = ShaderLoader.GetShader("Flow2");
 
             Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
             Matrix view = Main.GameViewMatrix.TransformationMatrix;

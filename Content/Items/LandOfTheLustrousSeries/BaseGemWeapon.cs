@@ -2,6 +2,7 @@
 using Coralite.Content.ModPlayers;
 using Coralite.Content.Prefixes.GemWeaponPrefixes;
 using Coralite.Core;
+using Coralite.Core.Loaders;
 using Coralite.Core.Systems.ParticleSystem;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -87,9 +88,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             if (PrefixLegacy.ItemSets.ItemsThatCanHaveLegendary2[Item.type]) // Fix #3688, Rather than mess with the PrefixCategory enum and Item.GetPrefixCategory at this time and risk compatibility issues, manually support this until a redesign.
                 wr.Add(PrefixID.Legendary2, 1);
 
-            float w = 0.1f;
+            float w = 0.4f;
             if (Main.LocalPlayer.GetModPlayer<CoralitePlayer>().HasEffect(nameof(EightsquareHand)))
-                w = 0.3f;
+                w = 1f;
 
             wr.Add(ModContent.PrefixType<Vibrant>(), w);
 
@@ -120,7 +121,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public static void DrawGemNameNormally(DrawableTooltipLine line, Action<Effect> setEffect, float flowXadder = 0.2f, Action<Effect> setBackEffect = null, Texture2D backTex = null, Point? extraSize = null)
         {
             SpriteBatch sb = Main.spriteBatch;
-            Effect effect = Filters.Scene["Crystal"].GetShader().Shader;
+            Effect effect = ShaderLoader.GetShader("Crystal");
 
             rand.X += flowXadder * Main.GameZoomTarget;
             rand.Y += 0.01f * Main.GameZoomTarget;

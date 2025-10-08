@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.Bosses.ThunderveinDragon;
 using Coralite.Core;
 using Coralite.Core.Attributes;
+using Coralite.Core.Loaders;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Helpers;
 using InnoVault.PRT;
@@ -214,7 +215,7 @@ namespace Coralite.Content.Items.Thunder
                 Tile tile = Framing.GetTileSafely(posCheck);
                 laserTrailPoints.Add(posCheck);
 
-                if (tile.HasSolidTile() || k == 139)
+                if (tile.HasReallySolidTile() || k == 139)
                 {
                     endPoint = posCheck;
                     break;
@@ -489,7 +490,7 @@ namespace Coralite.Content.Items.Thunder
 
             if (bars.Count > 2)
             {
-                Effect effect = Filters.Scene["LaserAlpha"].GetShader().Shader;
+                Effect effect = ShaderLoader.GetShader("LaserAlpha");
 
                 Matrix world = Matrix.CreateTranslation(-Main.screenPosition.Vec3());
                 Matrix view = Main.GameViewMatrix.TransformationMatrix;

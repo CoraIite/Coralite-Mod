@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Particles;
 using Coralite.Core;
+using Coralite.Core.Loaders;
 using Coralite.Helpers;
 using InnoVault.GameContent.BaseEntity;
 using InnoVault.PRT;
@@ -135,7 +136,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             if (trail == null)
                 return;
 
-            Effect effect = Filters.Scene["FantasyTentacle"].GetShader().Shader;
+            Effect effect = ShaderLoader.GetShader("FantasyTentacle");
 
             effect.Parameters["transformMatrix"].SetValue(VaultUtils.GetTransfromMatrix());
             effect.Parameters["uTime"].SetValue(Main.GlobalTimeWrappedHourly / 2);
