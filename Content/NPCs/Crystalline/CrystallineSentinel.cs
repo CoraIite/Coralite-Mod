@@ -3,7 +3,6 @@ using Coralite.Content.Items.LandOfTheLustrousSeries;
 using Coralite.Content.Items.MagikeSeries2;
 using Coralite.Content.Items.ThyphionSeries;
 using Coralite.Core;
-using Coralite.Core.Attributes;
 using Coralite.Core.Loaders;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.SmoothFunctions;
@@ -16,7 +15,6 @@ using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent.ItemDropRules;
-using Terraria.Graphics.Effects;
 using Terraria.ID;
 
 namespace Coralite.Content.NPCs.Crystalline

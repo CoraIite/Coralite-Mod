@@ -7,10 +7,8 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Net;
 using Terraria;
 using Terraria.Enums;
-using Terraria.Graphics.Effects;
 using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Core.Prefabs.Projectiles
