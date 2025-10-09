@@ -1088,7 +1088,7 @@ namespace Coralite.Content.NPCs.Crystalline
             maxTime = 90 * 3;
             Smoother = Coralite.Instance.BezierEaseSmoother;
             delay = 20;
-            distanceToOwner = 0;
+            distanceToOwner =-Projectile.height/2;
             Projectile.localNPCHitCooldown = 60;
 
             base.InitializeSwing();
@@ -1109,7 +1109,6 @@ namespace Coralite.Content.NPCs.Crystalline
                 onHitTimer = 0;
 
             offsetLength = Helper.SinEase(timer, maxTime) * 450;
-
             base.OnSlash();
         }
 
