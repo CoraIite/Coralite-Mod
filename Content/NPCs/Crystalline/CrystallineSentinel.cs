@@ -575,14 +575,15 @@ namespace Coralite.Content.NPCs.Crystalline
 
             //检查玩家
             if (Timer % 30 == 0)
-                TryTurnToAttack();
+            {
+                if (TryTurnToAttack())
+                    return;
+            }
 
             if (Timer % 60 == 0)
             {
                 NPC.velocity = NPC.velocity.RotateByRandom(-0.9f, 0.9f);
             }
-
-            Timer++;
 
             //撞墙反飞
             CollideSpeed();
@@ -633,6 +634,12 @@ namespace Coralite.Content.NPCs.Crystalline
 
         public void P2Swing()
         {
+            if (Timer == 0)
+            {
+                int whichHand = Recorder > 0 ? 1 : 0;
+                P2HandFrame[whichHand] = 0;
+            }
+
             Timer++;
 
             NPC.velocity *= 0.98f;
@@ -797,8 +804,8 @@ namespace Coralite.Content.NPCs.Crystalline
             if (targetState == AIStates.P2Swing)
                 Recorder = Main.rand.NextFromList(-1, 1);
 
-            P2HandFrame[0] = 0;
-            P2HandFrame[1] = 0;
+            P2HandFrame[0] = 12;
+            P2HandFrame[1] = 12;
             if (!VaultUtils.isClient)
             {
                 Timer = overrideTime ?? 0;
@@ -814,13 +821,18 @@ namespace Coralite.Content.NPCs.Crystalline
             }
         }
 
-        private void TryTurnToAttack()
+        private bool TryTurnToAttack()
         {
             NPC.TargetClosest(false);
 
             //找到玩家了就转向攻击阶段
             if (NPC.target >= 0 && NPC.target < 255 && !Main.player[NPC.target].dead && CanHitTarget())//不攻击隐身玩家
+            {
                 StartAttack();
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -915,19 +927,20 @@ namespace Coralite.Content.NPCs.Crystalline
                 case AIStates.P2Swing:
 
                     bool faceLeft = NPC.spriteDirection < 0;
+                    SpriteEffects effect2 = NPC.spriteDirection > 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
 
                     if (faceLeft)
-                        DrawP2Hand(spriteBatch, screenPos, effect, drawColor, 0);
+                        DrawP2Hand(spriteBatch, screenPos, effect, drawColor, 0, 0);
                     else
-                        DrawP2Hand(spriteBatch, screenPos, effect, drawColor, 1);
+                        DrawP2Hand(spriteBatch, screenPos, effect, drawColor, 0, 1);
 
                     DrawP2Float(spriteBatch, screenPos, effect, drawColor);
                     DrawP2Head(spriteBatch, screenPos, effect, drawColor);
 
                     if (faceLeft)
-                        DrawP2Hand(spriteBatch, screenPos, effect, drawColor, 1);
+                        DrawP2Hand(spriteBatch, screenPos, effect, drawColor, 1, 1);
                     else
-                        DrawP2Hand(spriteBatch, screenPos, effect, drawColor, 0);
+                        DrawP2Hand(spriteBatch, screenPos, effect, drawColor, 1, 0);
 
                     break;
                 case AIStates.P2Rolling:
@@ -947,11 +960,11 @@ namespace Coralite.Content.NPCs.Crystalline
         /// <param name="effect"></param>
         /// <param name="drawColor"></param>
         /// <param name="leftOrRight"></param>
-        public void DrawP2Hand(SpriteBatch spriteBatch, Vector2 screenPos, SpriteEffects effect, Color drawColor, int leftOrRight)
+        public void DrawP2Hand(SpriteBatch spriteBatch, Vector2 screenPos, SpriteEffects effect, Color drawColor, int leftOrRight,int texLorR)
         {
             Texture2D tex = HandTex.Value;
 
-            Rectangle frameBox = tex.Frame(2, 13, leftOrRight, P2HandFrame[leftOrRight]);
+            Rectangle frameBox = tex.Frame(2, 13, texLorR, P2HandFrame[leftOrRight]);
 
             spriteBatch.Draw(tex, P2HandCenter[leftOrRight] - screenPos, frameBox, drawColor
                 , 0, frameBox.Size() / 2, NPC.scale, effect, 0);
