@@ -12,6 +12,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 {
     public class FairyCatcherPlayer : ModPlayer
     {
+        public bool UnlockFairyCatcherUse;
+
         public struct FairyIVRandom
         {
             /// <summary> 基础值，可以说是中心点 </summary>
@@ -340,12 +342,17 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         {
             if (!BottleItem.IsAir)
                 tag.Add(nameof(BottleItem), BottleItem);
+
+            if (UnlockFairyCatcherUse)
+                tag.Add(nameof(UnlockFairyCatcherUse), true);
         }
 
         public override void LoadData(TagCompound tag)
         {
             if (tag.TryGet(nameof(BottleItem), out Item i))
                 BottleItem = i;
+
+            UnlockFairyCatcherUse = tag.ContainsKey(nameof(UnlockFairyCatcherUse));
         }
     }
 }

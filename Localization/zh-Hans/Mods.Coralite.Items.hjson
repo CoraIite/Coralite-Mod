@@ -4983,7 +4983,7 @@ FullMoon: {
 	Tooltip:
 		'''
 		冲刺效果：冲撞到敌对目标后弹回并释放暗影之光
-		暗影之光能目标无视一定防御力
+		暗影之光能无视目标一定防御力
 		[c/8a43ff:“暗紫的巨蝠在空中飞翔，为世间带来月光”]
 		'''
 }
@@ -6258,7 +6258,7 @@ PerfumeBottle: {
 
 SwordOfBeherits: {
 	DisplayName: 唤水剑
-	Tooltip: ""
+	Tooltip: 未实现内容
 }
 
 DirtiryItem: {
@@ -6475,20 +6475,20 @@ LensFairyItem: {
 
 StrokeGlove: {
 	DisplayName: 摸摸手套
-	Tooltip: ""
+	Tooltip: 未实现内容
 }
 
 EyeInHand: {
 	DisplayName: 掌中眼
-	Tooltip: ""
+	Tooltip: 未实现内容
 }
 
 PunctureFairyItem: {
 	DisplayName: 穿刺灵
-	Tooltip: ""
+	Tooltip: 未实现内容
 }
 
 ThunderveinMusicBox: {
-	// DisplayName: Thundervein Music Box
-	// Tooltip: ""
+	DisplayName: 音乐盒（荒雷轰鸣）
+	Tooltip: ""
 }

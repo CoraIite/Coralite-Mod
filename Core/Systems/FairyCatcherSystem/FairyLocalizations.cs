@@ -108,6 +108,8 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         public static LocalizedText UIConditionTitle;
         public static LocalizedText UISkillTitle;
 
+        public static LocalizedText UIBottleVineDescription;
+
         public void LoadLocalization()
         {
             FieldInfo[] infos = typeof(FairySystem).GetFields(BindingFlags.Static | BindingFlags.Public | BindingFlags.GetField);

@@ -625,104 +625,104 @@ WisteriaHeldProj.DisplayName: 紫藤萝
 WisteriaPetal.DisplayName: 紫藤萝花瓣
 MabirdRouteDrawProj.DisplayName: 魔鸟路线绘制
 BloodmarkTopperProj.DisplayName: 血礼帽
-// BloodBite.DisplayName: Blood Bite
-// ShadowBite.DisplayName: Shadow Bite
-// BloodPool.DisplayName: Blood Pool
-// BloodTearProj.DisplayName: Blood Tear Proj
-// LittleShadowMonster.DisplayName: Little Shadow Monster
-// PrisonProj.DisplayName: Prison Proj
-// FishScissors.DisplayName: Fish Scissors
-// QueenOfNightHeldProj.DisplayName: Queen Of Night Held Proj
-// QueenOfNightSpilitProj.DisplayName: Queen Of Night Spilit Proj
-// QueenOfNightSmallProj.DisplayName: Queen Of Night Small Proj
-// DaturaHeldProj.DisplayName: Datura Held Proj
-// DaturaProj.DisplayName: Datura Proj
-// MidasGunpowdeProj2.DisplayName: Midas Gunpowde Proj2
-// MidasGunpowderProj.DisplayName: Midas Gunpowder Proj
-// GhostPipeBullet.DisplayName: Ghost Pipe Bullet
-// GhostPipeHeldProj.DisplayName: Ghost Pipe Held Proj
-// GhostPipeFireBall.DisplayName: Ghost Pipe Fire Ball
-// GhostPipeParasitic.DisplayName: Ghost Pipe Parasitic
-// SunflowerGunBullet.DisplayName: Sunflower Gun Bullet
-// SunflowerGunHeldProj.DisplayName: Sunflower Gun Held Proj
-// AloeChaseProj.DisplayName: Aloe Chase Proj
-// AloeHeldProj.DisplayName: Aloe Held Proj
-// PurpleElectricBreath.DisplayName: Purple Electric Breath
-// PurpleElectricBall.DisplayName: Purple Electric Ball
-// PurpleElectricBallThunder.DisplayName: Purple Electric Ball Thunder
-// PurpleLightningBall.DisplayName: Purple Lightning Ball
-// ZacurrentChainBall.DisplayName: Zacurrent Chain Ball
-// PurpleDischargingBurst.DisplayName: Purple Discharging Burst
-// ElectricChain.DisplayName: Electric Chain
-// RedVoltBall.DisplayName: Red Volt Ball
-// PurpleElectromagneticCannon.DisplayName: Purple Electromagnetic Cannon
-// PurpleGravitationThunderBall.DisplayName: Purple Gravitation Thunder Ball
-// PurpleSmallThunderFall.DisplayName: Purple Small Thunder Fall
-// PurpleThunderFalling.DisplayName: Purple Thunder Falling
-// AimThunderBall.DisplayName: Aim Thunder Ball
-// ZacurrentExchangeAnmi.DisplayName: Zacurrent Exchange Anmi
-// ThunderveinExchangePhaseAnmi.DisplayName: Thundervein Exchange Phase Anmi
-// AimThunderBallRed.DisplayName: Aim Thunder Ball Red
-// RedDash.DisplayName: Red Dash
-// RedChainBall.DisplayName: Red Chain Ball
-// RedLightningBall.DisplayName: Red Lightning Ball
-// FairyCatcherProj.DisplayName: Fairy Catcher Proj
-// ZacurrentSpawn.DisplayName: Zacurrent Spawn
-// CrystallineSentinelSwing.DisplayName: Crystalline Sentinel Swing
-// GlowMushroomLanternFire.DisplayName: Glow Mushroom Lantern Fire
-// GlowMushroomLanternGrow.DisplayName: Glow Mushroom Lantern Grow
-// DevilsYokeChainProj.DisplayName: Devils Yoke Chain Proj
-// MeteorFireballGuard.DisplayName: Meteor Fireball Guard
-// MeteorFireballMeteor.DisplayName: Meteor Fireball Meteor
-// MeteorFireballProj.DisplayName: Meteor Fireball Proj
-// ConquerorShipAnchor.DisplayName: Conqueror Ship Anchor
-// ConquerorWaterWave.DisplayName: Conqueror Water Wave
-// PinkFairyProj.DisplayName: Pink Fairy Proj
-// YellowFairyProj.DisplayName: Yellow Fairy Proj
-// BlackGelBallProj.DisplayName: Black Gel Ball Proj
-// BreezeBlow.DisplayName: Breeze Blow
-// CandyFairyProj.DisplayName: Candy Fairy Proj
-// RedFairyProj.DisplayName: Red Fairy Proj
-// GelWebBall.DisplayName: Gel Web Ball
-// GelWebCatcher.DisplayName: Gel Web Catcher
-// PurpleFairyProj.DisplayName: Purple Fairy Proj
-// CopperTongProj.DisplayName: Copper Tong Proj
-// IcicleClawProj.DisplayName: Icicle Claw Proj
-// SunniryProj.DisplayName: Sunniry Proj
-// SunnyShot.DisplayName: Sunny Shot
-// BloodTentacleProj.DisplayName: Blood Tentacle Proj
-// BloodTentacleSPProj.DisplayName: Blood Tentacle S P Proj
-// GlistentJarExplode.DisplayName: Glistent Jar Explode
-// GlistentJarProj.DisplayName: Glistent Jar Proj
-// PopsicleFairyProj.DisplayName: Popsicle Fairy Proj
-// SmallFirecrackerProj.DisplayName: Small Firecracker Proj
-// TinyFirecrackerProj.DisplayName: Tiny Firecracker Proj
-// WoodenBowlProj.DisplayName: Wooden Bowl Proj
-// IchorBucketProj.DisplayName: Ichor Bucket Proj
-// LeechSeed.DisplayName: Leech Seed
-// CrabClawProj.DisplayName: Crab Claw Proj
-// SporesFairyProj.DisplayName: Spores Fairy Proj
-// HallowYokeSlash.DisplayName: Hallow Yoke Slash
-// HallowYokeSwing.DisplayName: Hallow Yoke Swing
-// SporesExplode.DisplayName: Spores Explode
-// TinTongProj.DisplayName: Tin Tong Proj
-// RedJadeTongBomb.DisplayName: Red Jade Tong Bomb
-// RedJadeTongProj.DisplayName: Red Jade Tong Proj
-// SwordOfBeheritsSlash.DisplayName: Sword Of Beherits Slash
-// BeheritsSpacial.DisplayName: Beherits Spacial
-// DirtiryProj.DisplayName: Dirtiry Proj
-// ShootDirt.DisplayName: Shoot Dirt
-// LightFairyProj.DisplayName: Light Fairy Proj
-// ShootStar.DisplayName: Shoot Star
-// StarArrow.DisplayName: Star Arrow
-// DarkBoom.DisplayName: Dark Boom
-// DarkFairyProj.DisplayName: Dark Fairy Proj
-// ShootDark.DisplayName: Shoot Dark
-// SoulTeethBite.DisplayName: Soul Teeth Bite
-// SoulTeethProj.DisplayName: Soul Teeth Proj
-// FairyFreeProj.DisplayName: Fairy Free Proj
-// LensFairyProj.DisplayName: Lens Fairy Proj
-// StrokeGloveProj.DisplayName: Stroke Glove Proj
-// EyeInHandProj.DisplayName: Eye In Hand Proj
-// PunctureDrill.DisplayName: Puncture Drill
-// PunctureFairyProj.DisplayName: Puncture Fairy Proj
+BloodBite.DisplayName: 猩红啃咬
+ShadowBite.DisplayName: 暗影啃咬
+BloodPool.DisplayName: 血池
+BloodTearProj.DisplayName: 血喷泉
+LittleShadowMonster.DisplayName: 小影怪
+PrisonProj.DisplayName: 处刑
+FishScissors.DisplayName: 碎鱼剪
+QueenOfNightHeldProj.DisplayName: 夜皇后
+QueenOfNightSpilitProj.DisplayName: 夜皇后花蕊
+QueenOfNightSmallProj.DisplayName: 夜皇后花瓣
+DaturaHeldProj.DisplayName: 曼陀罗
+DaturaProj.DisplayName: 曼陀罗花粉
+MidasGunpowdeProj2.DisplayName: 迈达斯花火
+MidasGunpowderProj.DisplayName: 迈达斯灰烬
+GhostPipeBullet.DisplayName: 水晶兰子弹
+GhostPipeHeldProj.DisplayName: 水晶兰
+GhostPipeFireBall.DisplayName: 水晶兰火球
+GhostPipeParasitic.DisplayName: 水晶兰寄生花苞
+SunflowerGunBullet.DisplayName: 瓜子
+SunflowerGunHeldProj.DisplayName: 向阳花
+AloeChaseProj.DisplayName: 芦荟弹
+AloeHeldProj.DisplayName: 芦荟
+PurpleElectricBreath.DisplayName: 紫电吐息
+PurpleElectricBall.DisplayName: 紫电球
+PurpleElectricBallThunder.DisplayName: 紫电球
+PurpleLightningBall.DisplayName: 紫电球
+ZacurrentChainBall.DisplayName: 紫伏闪电链
+PurpleDischargingBurst.DisplayName: 紫伏放电
+ElectricChain.DisplayName: 闪电链
+RedVoltBall.DisplayName: 红雷
+PurpleElectromagneticCannon.DisplayName: 紫伏电磁炮
+PurpleGravitationThunderBall.DisplayName: 紫伏引力电球
+PurpleSmallThunderFall.DisplayName: 紫雷
+PurpleThunderFalling.DisplayName: 紫伏落雷
+AimThunderBall.DisplayName: 紫电球
+ZacurrentExchangeAnmi.DisplayName: 紫伏闪状态切换
+ThunderveinExchangePhaseAnmi.DisplayName: 闪电状态切换
+AimThunderBallRed.DisplayName: 红雷
+RedDash.DisplayName: 红之一闪
+RedChainBall.DisplayName: 红雷链
+RedLightningBall.DisplayName: 红雷
+FairyCatcherProj.DisplayName: 仙灵捕捉环
+ZacurrentSpawn.DisplayName: 紫伏闪生成
+CrystallineSentinelSwing.DisplayName: Crystalline Sentinel Swing
+GlowMushroomLanternFire.DisplayName: Glow Mushroom Lantern Fire
+GlowMushroomLanternGrow.DisplayName: Glow Mushroom Lantern Grow
+DevilsYokeChainProj.DisplayName: 恶魔枷锁
+MeteorFireballGuard.DisplayName: 火流星
+MeteorFireballMeteor.DisplayName: 火流星
+MeteorFireballProj.DisplayName: 火流星
+ConquerorShipAnchor.DisplayName: 破浪船锚
+ConquerorWaterWave.DisplayName: 翻涌海浪
+PinkFairyProj.DisplayName: 粉仙灵
+YellowFairyProj.DisplayName: 黄仙灵
+BlackGelBallProj.DisplayName: 黑胶球
+BreezeBlow.DisplayName: 吹散
+CandyFairyProj.DisplayName: 糖果灵
+RedFairyProj.DisplayName: 红仙灵
+GelWebBall.DisplayName: Gel Web Ball
+GelWebCatcher.DisplayName: Gel Web Catcher
+PurpleFairyProj.DisplayName: Purple Fairy Proj
+CopperTongProj.DisplayName: Copper Tong Proj
+IcicleClawProj.DisplayName: Icicle Claw Proj
+SunniryProj.DisplayName: Sunniry Proj
+SunnyShot.DisplayName: Sunny Shot
+BloodTentacleProj.DisplayName: Blood Tentacle Proj
+BloodTentacleSPProj.DisplayName: Blood Tentacle S P Proj
+GlistentJarExplode.DisplayName: Glistent Jar Explode
+GlistentJarProj.DisplayName: Glistent Jar Proj
+PopsicleFairyProj.DisplayName: Popsicle Fairy Proj
+SmallFirecrackerProj.DisplayName: Small Firecracker Proj
+TinyFirecrackerProj.DisplayName: Tiny Firecracker Proj
+WoodenBowlProj.DisplayName: 木碗
+IchorBucketProj.DisplayName: 灵液桶
+LeechSeed.DisplayName: Leech Seed
+CrabClawProj.DisplayName: Crab Claw Proj
+SporesFairyProj.DisplayName: Spores Fairy Proj
+HallowYokeSlash.DisplayName: Hallow Yoke Slash
+HallowYokeSwing.DisplayName: Hallow Yoke Swing
+SporesExplode.DisplayName: Spores Explode
+TinTongProj.DisplayName: Tin Tong Proj
+RedJadeTongBomb.DisplayName: Red Jade Tong Bomb
+RedJadeTongProj.DisplayName: Red Jade Tong Proj
+SwordOfBeheritsSlash.DisplayName: Sword Of Beherits Slash
+BeheritsSpacial.DisplayName: Beherits Spacial
+DirtiryProj.DisplayName: Dirtiry Proj
+ShootDirt.DisplayName: Shoot Dirt
+LightFairyProj.DisplayName: 光精灵
+ShootStar.DisplayName: Shoot Star
+StarArrow.DisplayName: 星光箭
+DarkBoom.DisplayName: 暗黑爆破
+DarkFairyProj.DisplayName: 暗影灵
+ShootDark.DisplayName: Shoot Dark
+SoulTeethBite.DisplayName: Soul Teeth Bite
+SoulTeethProj.DisplayName: Soul Teeth Proj
+FairyFreeProj.DisplayName: Fairy Free Proj
+LensFairyProj.DisplayName: Lens Fairy Proj
+StrokeGloveProj.DisplayName: Stroke Glove Proj
+EyeInHandProj.DisplayName: Eye In Hand Proj
+PunctureDrill.DisplayName: Puncture Drill
+PunctureFairyProj.DisplayName: Puncture Fairy Proj

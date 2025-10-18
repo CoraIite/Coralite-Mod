@@ -119,7 +119,7 @@ namespace Coralite.Content.UI.FairyEncyclopedia
         public void DrawBack(Vector2 pos, Color circleColor, Color backColor)
         {
             Texture2D texture = FairyCatcherProj.TwistTex.Value;
-            Effect shader = Filters.Scene["FairyCircle"].GetShader().Shader;
+            Effect shader = ShaderLoader.GetShader("FairyCircle");
 
             float dia = 9 * 2 * 15 + 50;
 

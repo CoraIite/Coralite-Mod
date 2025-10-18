@@ -208,7 +208,7 @@ namespace Coralite.Content.NPCs.Crystalline
 
         public override bool? DrawHealthBar(byte hbPosition, ref float scale, ref Vector2 position)
         {
-            if (State == AIStates.P1Guard)//防御状态不绘制血条
+            if (State == AIStates.P1Guard && Recorder is 1 or 2)//防御状态不绘制血条
                 return false;
 
             return null;
@@ -216,7 +216,7 @@ namespace Coralite.Content.NPCs.Crystalline
 
         public override void ModifyHoverBoundingBox(ref Rectangle boundingBox)
         {
-            if (State == AIStates.P1Guard)//防御状态鼠标移上去没效果
+            if (State == AIStates.P1Guard && Recorder is 1 or 2)//防御状态鼠标移上去没效果
             {
                 boundingBox = default;
                 return;
@@ -659,11 +659,20 @@ namespace Coralite.Content.NPCs.Crystalline
             UpdateP2HandPosNormally();
 
             const int readyTime = 3 * 6 + 1;
-            const int idleTime = 100;
+            const int idleTime = 200;
             const int delayTime = 3 * 7;
 
             if (Timer < readyTime)
             {
+                if (Vector2.Distance(NPC.Center, Target.Center) < 300)
+                {
+                    NPC.velocity += (NPC.Center - Target.Center).SafeNormalize(Vector2.Zero) * 0.2f;
+                    if (NPC.velocity.Length() > 12)
+                        NPC.velocity = NPC.velocity.SafeNormalize(Vector2.Zero) * 12;
+                }
+                else
+                    NPC.velocity *= 0.9f;
+
                 if (Timer % 3 == 0)
                 {
                     int whichHand = Recorder > 0 ? 1 : 0;
@@ -672,6 +681,8 @@ namespace Coralite.Content.NPCs.Crystalline
             }
             else if (Timer == readyTime)
             {
+                NPC.velocity *= 0.5f;
+
                 NPC.NewProjectileDirectInAI<CrystallineSentinelSwing>((Recorder > 0 ? P2LeftHandPos : P2RightHandPos)
                     , (Target.Center-NPC.Center).SafeNormalize(Vector2.Zero), Helper.GetProjDamage(120, 140, 180)
                     , 1, NPC.target, NPC.whoAmI);
@@ -681,6 +692,8 @@ namespace Coralite.Content.NPCs.Crystalline
             }
             else if (Timer < readyTime + idleTime + delayTime)
             {
+                NPC.velocity *= 0.9f;
+
                 if (Timer % 3 == 0)
                 {
                     int whichHand = Recorder > 0 ? 1 : 0;
@@ -1135,9 +1148,7 @@ namespace Coralite.Content.NPCs.Crystalline
 
             alpha = (int)(Helper.SinEase(timer, maxTime) * 255);
             if (timer < maxTime / 2)
-            {
                 offsetLength = Helper.SqrtEase(timer, maxTime / 2) * maxLength;
-            }
             else
                 offsetLength = Helper.SinEase(timer, maxTime) * maxLength;
             base.OnSlash();

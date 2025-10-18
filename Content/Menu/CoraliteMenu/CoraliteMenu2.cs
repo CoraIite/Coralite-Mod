@@ -4,11 +4,13 @@ using Terraria;
 
 namespace Coralite.Content.Menu.CoraliteMenu
 {
+#if DEBUG
     public class CoraliteMenu2 : CoraliteMenu
     {
         public override ModSurfaceBackgroundStyle MenuBackgroundStyle => ModContent.GetInstance<CoraliteMenuBack>();
     }
 
+#endif
     [VaultLoaden(AssetDirectory.Menus)]
     public class CoraliteMenuBack : ModSurfaceBackgroundStyle
     {

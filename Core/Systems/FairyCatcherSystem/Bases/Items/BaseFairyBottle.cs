@@ -89,6 +89,18 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases.Items
 
         public virtual void OnFairyBack(Player player, BaseFairyItem fairyItem) { }
 
+        public sealed override void UpdateInventory(Player player)
+        {
+            if (player.TryGetModPlayer(out FairyCatcherPlayer fcp))
+            {
+                if (!fcp.UnlockFairyCatcherUse)
+                {
+                    fcp.UnlockFairyCatcherUse = true;
+                    //TODO: 解锁珊瑚笔记内容
+                }
+            }
+        }
+
         #region 存入取出部分
 
         /// <summary>

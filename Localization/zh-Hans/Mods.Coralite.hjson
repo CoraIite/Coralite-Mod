@@ -44,7 +44,7 @@ Conditions: {
 		DownedNightmarePlantera: 需要击败梦魇之花
 		DownedBabyIceDragon: 需要击败冰龙宝宝
 		FullCollectHephaesth: 需要完成珊瑚笔记飞盾章节的全收集
-		// NeverMet: Mods.Coralite.Conditions.CoraliteConditions.NeverMet
+		NeverMet: 无法达成条件
 	}
 }
 
@@ -83,6 +83,6 @@ WorldGeneration: {
 
 Important.CoraliteSystem.OnEnterWorld:
 	'''
-	珊瑚石v0.2.2.21更新提示
-	 - 增加飞盾上限类饰品现在修改为左键使用后永久加成
+	v0.2.3 更新提示
+	仙灵捕手相关内容还在制作与调试中
 	'''

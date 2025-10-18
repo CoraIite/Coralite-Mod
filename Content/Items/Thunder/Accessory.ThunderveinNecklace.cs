@@ -1,11 +1,13 @@
 ﻿using Coralite.Content.ModPlayers;
 using Coralite.Core;
+using Coralite.Core.Attributes;
 using Terraria;
 using Terraria.ID;
 
 namespace Coralite.Content.Items.Thunder
 {
     [AutoloadEquip(EquipType.Neck)]
+    [PlayerEffect]
     public class ThunderveinNecklace : ModItem
     {
         public override string Texture => AssetDirectory.ThunderItems + Name;

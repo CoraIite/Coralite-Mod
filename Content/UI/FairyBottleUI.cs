@@ -190,7 +190,7 @@ namespace Coralite.Content.UI
     [VaultLoaden(AssetDirectory.FairyUI)]
     public class FairyBottleHang : UIElement
     {
-        public static int VineType = 1;
+        public static int VineType = 0;
 
         public static ATex Vine { get; set; }
         public static ATex Vine2 { get; set; }
@@ -203,7 +203,19 @@ namespace Coralite.Content.UI
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            VineType = 0;
+
+            if (Main.LocalPlayer.TryGetModPlayer(out FairyCatcherPlayer fcp)
+                && !fcp.UnlockFairyCatcherUse)
+            {
+                if (GetDimensions().Y > -80)
+                {
+                    Top.Set(Helper.Lerp(Top.Pixels, -80, 0.15f), 0);
+                    Recalculate();
+                }
+
+                return;
+            }
+
             if (!Main.playerInventory && GetDimensions().Y > -80)
             {
                 Top.Set(Helper.Lerp(Top.Pixels, -80, 0.15f), 0);
@@ -334,6 +346,11 @@ namespace Coralite.Content.UI
                     Main.HoverItem = fcp.BottleItem.Clone();
                     Main.hoverItemName = "a";
                 }
+            }
+            else
+            {
+                if (IsMouseHovering)
+                    UICommon.TooltipMouseText(FairySystem.UIBottleVineDescription.Value);
             }
 
             //CoraliteNotePanel.DrawDebugFrame(this, spriteBatch);

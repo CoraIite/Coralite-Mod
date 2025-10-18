@@ -87,7 +87,7 @@ namespace Coralite.Content.Items.FairyCatcher
             if (!closer)
                 return;
 
-            Main.LocalPlayer.AddBuff(ModContent.BuffType<ElfBless>(), 60);
+            //Main.LocalPlayer.AddBuff(ModContent.BuffType<ElfBless>(), 60);
 
             Tile t = Framing.GetTileSafely(i, j);
             if (t.TileFrameX != 0 || t.TileFrameY != 0)
@@ -105,7 +105,8 @@ namespace Coralite.Content.Items.FairyCatcher
             {
                 Item item = Main.item[k];
 
-                if (item == null || item.IsAir || item.timeSinceItemSpawned < 60 || item.velocity != Vector2.Zero)
+                if (item == null || item.IsAir || item.timeSinceItemSpawned < 60
+                    || item.velocity != Vector2.Zero || item.shimmered)
                     continue;
 
                 Vector2 pos = (new Vector2(i, j) * 16) + new Vector2((16 * 6) + 4, (16 * 6) + 2);

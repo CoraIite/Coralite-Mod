@@ -101,6 +101,7 @@ FairySystem: {
 	// UIConditionTitle: Mods.Coralite.Systems.FairySystem.UIConditionTitle
 	// UISkillTitle: Mods.Coralite.Systems.FairySystem.UISkillTitle
 	// GlovePerShoot: Mods.Coralite.Systems.FairySystem.GlovePerShoot
+	// UIBottleVineDescription: Mods.Coralite.Systems.FairySystem.UIBottleVineDescription
 }
 
 BossBarSystem.DontTakeDamage: Невозможно атаковать!
