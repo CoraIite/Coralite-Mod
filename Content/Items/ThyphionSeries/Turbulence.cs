@@ -263,6 +263,9 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public void SpawnCircleParticle()
         {
+            if (VaultUtils.isServer)
+                return;
+
             if (Timer % 16 == 0)
             {
                 float r = 20 + Main.rand.Next(2) * 8;

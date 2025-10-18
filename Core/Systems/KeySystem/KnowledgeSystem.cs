@@ -32,6 +32,9 @@ namespace Coralite.Core.Systems.KeySystem
         /// <param name="color"></param>
         public static void SpawnKnowledgeUnlockText(Vector2 position, Color color)
         {
+            if (VaultUtils.isServer)
+                return;
+
             CombatText.NewText(new Rectangle((int)position.X, (int)position.Y, 1, 1)
                 , color, NewKnowledgeUnlock.Value, true);
         }

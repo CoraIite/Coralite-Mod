@@ -37,6 +37,9 @@ namespace Coralite.Content.Items.Icicle
 
         public override void AI()
         {
+            if (VaultUtils.isServer)
+                return;
+
             if (!span)
             {
                 Initialize();
