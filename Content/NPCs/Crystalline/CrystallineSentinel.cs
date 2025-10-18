@@ -575,14 +575,15 @@ namespace Coralite.Content.NPCs.Crystalline
 
             //检查玩家
             if (Timer % 30 == 0)
-                TryTurnToAttack();
+            {
+                if (TryTurnToAttack())
+                    return;
+            }
 
             if (Timer % 60 == 0)
             {
                 NPC.velocity = NPC.velocity.RotateByRandom(-0.9f, 0.9f);
             }
-
-            Timer++;
 
             //撞墙反飞
             CollideSpeed();
@@ -633,6 +634,19 @@ namespace Coralite.Content.NPCs.Crystalline
 
         public void P2Swing()
         {
+            if (Timer == 0)
+            {
+                int whichHand = Recorder > 0 ? 1 : 0;
+                P2HandFrame[whichHand] = 0;
+            }
+
+            if (++NPC.frameCounter > 3)
+            {
+                NPC.frameCounter = 0;
+                if (++NPC.frame.Y > 7)
+                    NPC.frame.Y = 0;
+            }
+
             Timer++;
 
             NPC.velocity *= 0.98f;
@@ -658,8 +672,8 @@ namespace Coralite.Content.NPCs.Crystalline
             }
             else if (Timer == readyTime)
             {
-                NPC.NewProjectileDirectInAI<CrystallineSentinelSwing>(NPC.Center + (Target.Center - NPC.Center).SafeNormalize(Vector2.Zero)
-                    , Vector2.Zero, Helper.GetProjDamage(120, 140, 180)
+                NPC.NewProjectileDirectInAI<CrystallineSentinelSwing>((Recorder > 0 ? P2LeftHandPos : P2RightHandPos)
+                    , (Target.Center-NPC.Center).SafeNormalize(Vector2.Zero), Helper.GetProjDamage(120, 140, 180)
                     , 1, NPC.target, NPC.whoAmI);
             }
             else if (Timer < readyTime + idleTime)
@@ -797,8 +811,8 @@ namespace Coralite.Content.NPCs.Crystalline
             if (targetState == AIStates.P2Swing)
                 Recorder = Main.rand.NextFromList(-1, 1);
 
-            P2HandFrame[0] = 0;
-            P2HandFrame[1] = 0;
+            P2HandFrame[0] = 12;
+            P2HandFrame[1] = 12;
             if (!VaultUtils.isClient)
             {
                 Timer = overrideTime ?? 0;
@@ -814,13 +828,18 @@ namespace Coralite.Content.NPCs.Crystalline
             }
         }
 
-        private void TryTurnToAttack()
+        private bool TryTurnToAttack()
         {
             NPC.TargetClosest(false);
 
             //找到玩家了就转向攻击阶段
             if (NPC.target >= 0 && NPC.target < 255 && !Main.player[NPC.target].dead && CanHitTarget())//不攻击隐身玩家
+            {
                 StartAttack();
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -915,19 +934,20 @@ namespace Coralite.Content.NPCs.Crystalline
                 case AIStates.P2Swing:
 
                     bool faceLeft = NPC.spriteDirection < 0;
+                    SpriteEffects effect2 = NPC.spriteDirection > 0 ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
 
                     if (faceLeft)
-                        DrawP2Hand(spriteBatch, screenPos, effect, drawColor, 0);
+                        DrawP2Hand(spriteBatch, screenPos, effect, drawColor, 0, 0);
                     else
-                        DrawP2Hand(spriteBatch, screenPos, effect, drawColor, 1);
+                        DrawP2Hand(spriteBatch, screenPos, effect, drawColor, 0, 1);
 
                     DrawP2Float(spriteBatch, screenPos, effect, drawColor);
                     DrawP2Head(spriteBatch, screenPos, effect, drawColor);
 
                     if (faceLeft)
-                        DrawP2Hand(spriteBatch, screenPos, effect, drawColor, 1);
+                        DrawP2Hand(spriteBatch, screenPos, effect, drawColor, 1, 1);
                     else
-                        DrawP2Hand(spriteBatch, screenPos, effect, drawColor, 0);
+                        DrawP2Hand(spriteBatch, screenPos, effect, drawColor, 1, 0);
 
                     break;
                 case AIStates.P2Rolling:
@@ -947,11 +967,11 @@ namespace Coralite.Content.NPCs.Crystalline
         /// <param name="effect"></param>
         /// <param name="drawColor"></param>
         /// <param name="leftOrRight"></param>
-        public void DrawP2Hand(SpriteBatch spriteBatch, Vector2 screenPos, SpriteEffects effect, Color drawColor, int leftOrRight)
+        public void DrawP2Hand(SpriteBatch spriteBatch, Vector2 screenPos, SpriteEffects effect, Color drawColor, int leftOrRight,int texLorR)
         {
             Texture2D tex = HandTex.Value;
 
-            Rectangle frameBox = tex.Frame(2, 13, leftOrRight, P2HandFrame[leftOrRight]);
+            Rectangle frameBox = tex.Frame(2, 13, texLorR, P2HandFrame[leftOrRight]);
 
             spriteBatch.Draw(tex, P2HandCenter[leftOrRight] - screenPos, frameBox, drawColor
                 , 0, frameBox.Size() / 2, NPC.scale, effect, 0);
@@ -1056,6 +1076,7 @@ namespace Coralite.Content.NPCs.Crystalline
 
         public float dir;
         public float offsetLength;
+        public float maxLength;
         public Vector2 velocity;
 
         public override void SetSwingProperty()
@@ -1064,7 +1085,7 @@ namespace Coralite.Content.NPCs.Crystalline
             Projectile.hostile = true;
             Projectile.width = 40;
             Projectile.height = 85;
-            trailTopWidth = 0;
+            trailTopWidth = 20;
             distanceToOwner = 8;
             minTime = 0;
             onHitFreeze = 0;
@@ -1073,22 +1094,28 @@ namespace Coralite.Content.NPCs.Crystalline
 
         protected override float ControlTrailBottomWidth(float factor)
         {
-            return 85 * Projectile.scale;
+            return 30 * Projectile.scale;
         }
 
         protected override void InitializeSwing()
         {
             if (OwnerIndex.GetNPCOwner<CrystallineSentinel>(out NPC npc, Projectile.Kill))
-                dir = (Projectile.Center - npc.Center).ToRotation();
+            {
+                dir = Projectile.velocity.ToRotation();//(Projectile.Center - npc.Center).ToRotation();
+                maxLength = Vector2.Distance(Main.player[npc.target].Center, npc.Center) + 140;
+
+                if (maxLength > 480)
+                    maxLength = 480;
+            }
 
             Projectile.extraUpdates = 2;
             alpha = 0;
             startAngle = 0f;
-            totalAngle = 30.5f;
+            totalAngle = 40.5f;
             maxTime = 90 * 3;
             Smoother = Coralite.Instance.BezierEaseSmoother;
             delay = 20;
-            distanceToOwner = 0;
+            distanceToOwner = -Projectile.height / 2;
             Projectile.localNPCHitCooldown = 60;
 
             base.InitializeSwing();
@@ -1103,13 +1130,16 @@ namespace Coralite.Content.NPCs.Crystalline
         {
             int timer = (int)Timer - minTime;
 
-            if (alpha < 255)
-                alpha += 2;
             if (timer % 30 == 0)
                 onHitTimer = 0;
 
-            offsetLength = Helper.SinEase(timer, maxTime) * 450;
-
+            alpha = (int)(Helper.SinEase(timer, maxTime) * 255);
+            if (timer < maxTime / 2)
+            {
+                offsetLength = Helper.SqrtEase(timer, maxTime / 2) * maxLength;
+            }
+            else
+                offsetLength = Helper.SinEase(timer, maxTime) * maxLength;
             base.OnSlash();
         }
 
@@ -1139,7 +1169,12 @@ namespace Coralite.Content.NPCs.Crystalline
         protected override Vector2 OwnerCenter()
         {
             if (OwnerIndex.GetNPCOwner<CrystallineSentinel>(out NPC npc, Projectile.Kill))
-                return npc.Center + dir.ToRotationVector2() * offsetLength;
+            {
+                CrystallineSentinel cs = npc.ModNPC as CrystallineSentinel;
+                Vector2 pos = (npc.ai[2] > 0 ? cs.P2LeftHandPos : cs.P2RightHandPos);
+
+                return pos + dir.ToRotationVector2() * offsetLength;
+            }
 
             return base.OwnerCenter();
         }
@@ -1163,7 +1198,7 @@ namespace Coralite.Content.NPCs.Crystalline
                     continue;
 
                 float factor = 1f - (i / count);
-                Vector2 Center = GetCenter(i) - Main.screenPosition;
+                Vector2 Center = GetCenter(i) ;
                 Vector2 Top = Center + (oldRotate[i].ToRotationVector2() * (oldLength[i] + trailTopWidth + oldDistanceToOwner[i]));
                 Vector2 Bottom = Center + (oldRotate[i].ToRotationVector2() * (oldLength[i] - ControlTrailBottomWidth(factor) + oldDistanceToOwner[i]));
 
