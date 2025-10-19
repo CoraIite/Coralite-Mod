@@ -69,7 +69,6 @@ namespace Coralite.Content.Items.Nightmare
 
             return false;
         }
-
     }
 
     public class LycorisHeldProj : BaseGunHeldProj
@@ -198,7 +197,7 @@ namespace Coralite.Content.Items.Nightmare
             CanSpawnSmallBullet = false;
         }
 
-        public override void OnKill(int timeLeft)
+        public override bool PreKill(int timeLeft)
         {
             if (CanSpawnSmallBullet || State == 1)//能生成或者是强化状态时才会生成小弹幕
             {
@@ -219,42 +218,50 @@ namespace Coralite.Content.Items.Nightmare
                     for (int i = 0; i < howMany; i++)
                     {
                         Vector2 dir = rot.ToRotationVector2();
-                        Projectile.NewProjectile(Projectile.GetSource_FromAI(), Projectile.Center, dir * 4,
-                            ProjectileType<LycorisSmallBullet>(), damage, 0, Projectile.owner);
+                        Projectile.NewProjectileFromThis<LycorisSmallBullet>(Projectile.Center, dir * 4
+                            , damage, 0);
 
-                        FlowLine.Spawn(Projectile.Center, dir.RotatedByRandom(0.2f) * Main.rand.NextFloat(10, 18), 2, 10, Main.rand.NextFloat(0.3f, 0.4f), NightmarePlantera.nightmareRed);
-                        FlowLine.Spawn(Projectile.Center, dir.RotatedByRandom(-0.2f) * Main.rand.NextFloat(10, 18), 2, 10, Main.rand.NextFloat(0.3f, 0.4f), NightmarePlantera.nightmareRed);
+                        if (!VaultUtils.isServer)
+                        {
+                            FlowLine.Spawn(Projectile.Center, dir.RotatedByRandom(0.2f) * Main.rand.NextFloat(10, 18), 2, 10, Main.rand.NextFloat(0.3f, 0.4f), NightmarePlantera.nightmareRed);
+                            FlowLine.Spawn(Projectile.Center, dir.RotatedByRandom(-0.2f) * Main.rand.NextFloat(10, 18), 2, 10, Main.rand.NextFloat(0.3f, 0.4f), NightmarePlantera.nightmareRed);
 
-                        FlowLine.Spawn(Projectile.Center, dir.RotatedByRandom(0.2f) * Main.rand.NextFloat(6, 10), 2, 10, Main.rand.NextFloat(0.1f, 0.2f), Color.DarkRed);
-                        FlowLine.Spawn(Projectile.Center, dir.RotatedByRandom(-0.2f) * Main.rand.NextFloat(6, 10), 2, 10, Main.rand.NextFloat(0.1f, 0.2f), Color.DarkRed);
+                            FlowLine.Spawn(Projectile.Center, dir.RotatedByRandom(0.2f) * Main.rand.NextFloat(6, 10), 2, 10, Main.rand.NextFloat(0.1f, 0.2f), Color.DarkRed);
+                            FlowLine.Spawn(Projectile.Center, dir.RotatedByRandom(-0.2f) * Main.rand.NextFloat(6, 10), 2, 10, Main.rand.NextFloat(0.1f, 0.2f), Color.DarkRed);
+                        }
 
                         rot += MathHelper.TwoPi / howMany;
                     }
                 }
-            }
-            else
-            {
-                int howMany = Main.rand.Next(5, 8);
-                Vector2 center = Projectile.Center;
-                float baseRot = Main.rand.NextFloat(6.282f);
-                float vel = 1.5f;
-                for (int i = 0; i < howMany; i++)
-                {
-                    Vector2 dir = baseRot.ToRotationVector2();
-                    for (int j = 0; j < 3; j++)
-                    {
-                        Color c = NightmarePlantera.nightmareRed;
-                        if (j > 1)
-                            c = Color.DarkRed;
-                        Dust dust = Dust.NewDustPerfect(center, DustType<NightmareStar>(), dir.RotatedBy(Main.rand.NextFloat(-0.1f, 0.1f)) * j * vel,
-                            200, c, Scale: Main.rand.NextFloat(0.8f, 1.4f));
-                        dust.noGravity = true;
-                        dust.rotation = dust.velocity.ToRotation() + MathHelper.PiOver2;
-                    }
 
-                    baseRot += MathHelper.TwoPi / howMany;
-                }
+                return true;
             }
+
+            if (VaultUtils.isServer)
+                return true;
+
+            int howMany2 = Main.rand.Next(5, 8);
+            Vector2 center = Projectile.Center;
+            float baseRot = Main.rand.NextFloat(6.282f);
+            float vel = 1.5f;
+            for (int i = 0; i < howMany2; i++)
+            {
+                Vector2 dir = baseRot.ToRotationVector2();
+                for (int j = 0; j < 3; j++)
+                {
+                    Color c = NightmarePlantera.nightmareRed;
+                    if (j > 1)
+                        c = Color.DarkRed;
+                    Dust dust = Dust.NewDustPerfect(center, DustType<NightmareStar>(), dir.RotatedBy(Main.rand.NextFloat(-0.1f, 0.1f)) * j * vel,
+                        200, c, Scale: Main.rand.NextFloat(0.8f, 1.4f));
+                    dust.noGravity = true;
+                    dust.rotation = dust.velocity.ToRotation() + MathHelper.PiOver2;
+                }
+
+                baseRot += MathHelper.TwoPi / howMany2;
+            }
+
+            return true;
         }
 
         public override bool PreDraw(ref Color lightColor)

@@ -4,6 +4,7 @@ using Coralite.Core.Configs;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
+using Terraria.ID;
 
 namespace Coralite.Content.ModPlayers
 {
@@ -48,6 +49,9 @@ namespace Coralite.Content.ModPlayers
 
         public void UpdateDash()
         {
+            if (Main.myPlayer!=Player.whoAmI)
+                return;
+
             if (DashDelay == 0 && DashDir != -1 && DashControllers.Count > 0 && CanDashSpecialCondition)
                 do
                 {
@@ -142,6 +146,7 @@ namespace Coralite.Content.ModPlayers
                 if (controller.Dash(Player, DashDir))
                 {
                     DashDelay = (int)(DashDelay * DashDelayModifyer.ApplyTo(1));
+                    NetMessage.SendData(MessageID.PlayerControls, -1, Main.myPlayer, null, Player.whoAmI);
                     return true;
                 }
             }

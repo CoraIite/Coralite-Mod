@@ -107,11 +107,11 @@ namespace Coralite.Content.Items.HyacinthSeries
             trail.TrailPositions = Projectile.oldPos;
         }
 
-        public override void OnKill(int timeLeft)
+        public override bool PreKill(int timeLeft)
         {
-            if (Main.netMode != NetmodeID.MultiplayerClient)
-                Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<ArethusaExplosion>(), Projectile.damage, Projectile.knockBack, Projectile.owner);
-            if (VisualEffectSystem.HitEffect_Dusts)
+            Projectile.NewProjectileFromThis<ArethusaExplosion>(Projectile.Center, Vector2.Zero
+                , Projectile.damage, Projectile.knockBack);
+            if (VisualEffectSystem.HitEffect_Dusts && !VaultUtils.isServer)
             {
                 for (int j = 0; j < 8; j++)
                     Dust.NewDustPerfect(Projectile.Center, ModContent.DustType<ArethusaPetal>(), (j * 0.785f).ToRotationVector2() * Main.rand.NextFloat(0.25f, 1.5f));
@@ -119,6 +119,11 @@ namespace Coralite.Content.Items.HyacinthSeries
                     Dust.NewDustPerfect(Projectile.Center, ModContent.DustType<ArethusaPetal>(), Helper.NextVec2Dir(0.25f, 2.5f));
             }
 
+            return true;
+        }
+
+        public override void OnKill(int timeLeft)
+        {
             SoundEngine.PlaySound(CoraliteSoundID.FireBall_Item45, Projectile.Center);
         }
 

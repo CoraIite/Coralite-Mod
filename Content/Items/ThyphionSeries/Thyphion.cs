@@ -938,7 +938,8 @@ namespace Coralite.Content.Items.ThyphionSeries
         {
             Projectile.localAI[2] = -1;
             hasInit = true;
-            Main.instance.LoadItem(Data.ItemType);
+            if (!VaultUtils.isServer)
+                Main.instance.LoadItem(Data.ItemType);
             Rotation = StartAngle;
             InitPhantomPlayer();
         }
