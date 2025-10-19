@@ -1,5 +1,5 @@
 ﻿displayName = 珊瑚石
-author = 瓶中微光
+author = 珊瑚石的开发者们
 version = 0.2.3.1
 hideResources = true
 modReferences = InnoVault
