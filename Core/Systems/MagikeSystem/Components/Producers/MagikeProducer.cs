@@ -35,7 +35,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Producers
         /// </summary>
         public virtual void Produce()
         {
-            Entity.GetMagikeContainer().AddMagike(ThroughputBase);
+            Entity.GetMagikeContainer().AddMagike(Throughput);
             MagikeHelper.SpawnDustOnProduce(Entity.Position, Coralite.MagicCrystalPink);
         }
 
