@@ -709,6 +709,25 @@ namespace Coralite.Content.NPCs.Crystalline
 
         public void P2Rolling()
         {
+            if (Timer == 0)
+            {
+                P2HandFrame[0] = 0;
+                Timer++;
+                return;
+            }
+
+            if (Timer==1)
+            {
+                if (++NPC.frameCounter > 3)
+                {
+                    NPC.frameCounter = 0;
+                    if (++NPC.frame.Y > 4)
+                        Timer++;
+                }
+
+                return;
+            }
+
 
         }
 

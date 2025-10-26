@@ -134,5 +134,93 @@
     "Speed": 50,
     "SkillLevel": 50,
     "Stamina": 50
+  },
+  "BoneFairy": {
+    "LifeMax": 50,
+    "Damage": 50,
+    "Defence": 50,
+    "Speed": 50,
+    "SkillLevel": 50,
+    "Stamina": 50
+  },
+  "BubbleFairy": {
+    "LifeMax": 50,
+    "Damage": 50,
+    "Defence": 50,
+    "Speed": 50,
+    "SkillLevel": 50,
+    "Stamina": 50
+  },
+  "Seedling": {
+    "LifeMax": 50,
+    "Damage": 50,
+    "Defence": 50,
+    "Speed": 50,
+    "SkillLevel": 50,
+    "Stamina": 50
+  },
+  "SpiderFairy": {
+    "LifeMax": 50,
+    "Damage": 50,
+    "Defence": 50,
+    "Speed": 50,
+    "SkillLevel": 50,
+    "Stamina": 50
+  },
+  "BudsFairy": {
+    "LifeMax": 50,
+    "Damage": 50,
+    "Defence": 50,
+    "Speed": 50,
+    "SkillLevel": 50,
+    "Stamina": 50
+  },
+  "BlackHoleFairy": {
+    "LifeMax": 50,
+    "Damage": 50,
+    "Defence": 50,
+    "Speed": 50,
+    "SkillLevel": 50,
+    "Stamina": 50
+  },
+  "BlackHoleFairyAR": {
+    "LifeMax": 50,
+    "Damage": 50,
+    "Defence": 50,
+    "Speed": 50,
+    "SkillLevel": 50,
+    "Stamina": 50
+  },
+  "DemonriteFairy": {
+    "LifeMax": 50,
+    "Damage": 50,
+    "Defence": 50,
+    "Speed": 50,
+    "SkillLevel": 50,
+    "Stamina": 50
+  },
+  "Ghosty": {
+    "LifeMax": 50,
+    "Damage": 50,
+    "Defence": 50,
+    "Speed": 50,
+    "SkillLevel": 50,
+    "Stamina": 50
+  },
+  "IcicleFairy": {
+    "LifeMax": 50,
+    "Damage": 50,
+    "Defence": 50,
+    "Speed": 50,
+    "SkillLevel": 50,
+    "Stamina": 50
+  },
+  "Smeltiry": {
+    "LifeMax": 50,
+    "Damage": 50,
+    "Defence": 50,
+    "Speed": 50,
+    "SkillLevel": 50,
+    "Stamina": 50
   }
 }

@@ -35,10 +35,11 @@ namespace Coralite.Content.WorldGeneration
 
         public override bool CanUseItem(Player player)
         {
+            Main.hardMode = false;
             Vector2 myVector = Main.MouseWorld;
             Point p = myVector.ToTileCoordinates();
 
-            CoraliteWorld.GenGenFairyPortal_AcutallyGen(p);
+            //CoraliteWorld.GenGenFairyPortal_AcutallyGen(p);
             //NPC.downedBoss1 = true;
             //NPC.downedBoss2 = true;
             //NPC.downedGolemBoss = true;

@@ -6353,3 +6353,58 @@ ThunderveinMusicBox: {
 	DisplayName: Thundervein Music Box
 	Tooltip: ""
 }
+
+BoneFairyItem: {
+	DisplayName: Bone Fairy Item
+	Tooltip: ""
+}
+
+BubbleFairyItem: {
+	DisplayName: Bubble Fairy Item
+	Tooltip: ""
+}
+
+SeedlingItem: {
+	DisplayName: Seedling Item
+	Tooltip: ""
+}
+
+SpiderFairyItem: {
+	DisplayName: Spider Fairy Item
+	Tooltip: ""
+}
+
+BudsFairyItem: {
+	DisplayName: Buds Fairy Item
+	Tooltip: ""
+}
+
+BlackHoleFairyARItem: {
+	DisplayName: Black Hole Fairy A R Item
+	Tooltip: ""
+}
+
+BlackHoleFairyItem: {
+	DisplayName: Black Hole Fairy Item
+	Tooltip: ""
+}
+
+DemonriteFairyItem: {
+	DisplayName: Demonrite Fairy Item
+	Tooltip: ""
+}
+
+GhostyItem: {
+	DisplayName: Ghosty Item
+	Tooltip: ""
+}
+
+IcicleFairyItem: {
+	DisplayName: Icicle Fairy Item
+	Tooltip: ""
+}
+
+SmeltiryItem: {
+	DisplayName: Smeltiry Item
+	Tooltip: ""
+}

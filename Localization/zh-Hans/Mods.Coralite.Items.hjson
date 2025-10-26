@@ -6492,3 +6492,58 @@ ThunderveinMusicBox: {
 	DisplayName: 音乐盒（荒雷轰鸣）
 	Tooltip: ""
 }
+
+BoneFairyItem: {
+	DisplayName: 寄骨灵
+	Tooltip: 未完成
+}
+
+BubbleFairyItem: {
+	DisplayName: 泡泡灵
+	Tooltip: 未完成
+}
+
+SeedlingItem: {
+	DisplayName: 种芽灵
+	Tooltip: 未完成
+}
+
+SpiderFairyItem: {
+	DisplayName: 八脚灵
+	Tooltip: 未完成
+}
+
+BudsFairyItem: {
+	DisplayName: 花苞灵
+	Tooltip: 未完成
+}
+
+BlackHoleFairyARItem: {
+	DisplayName: 黑洞灵
+	Tooltip: 未完成
+}
+
+BlackHoleFairyItem: {
+	DisplayName: 黑洞灵
+	Tooltip: 未完成
+}
+
+DemonriteFairyItem: {
+	DisplayName: 魔矿灵
+	Tooltip: 未完成
+}
+
+GhostyItem: {
+	DisplayName: 鬼火灵
+	Tooltip: 未完成
+}
+
+IcicleFairyItem: {
+	DisplayName: 冰锥灵
+	Tooltip: 未完成
+}
+
+SmeltiryItem: {
+	DisplayName: 融金灵
+	Tooltip: 未完成
+}
