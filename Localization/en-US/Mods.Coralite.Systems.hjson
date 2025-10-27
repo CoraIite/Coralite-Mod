@@ -102,6 +102,11 @@ FairySystem: {
 	UISkillTitle: Mods.Coralite.Systems.FairySystem.UISkillTitle
 	GlovePerShoot: Mods.Coralite.Systems.FairySystem.GlovePerShoot
 	UIBottleVineDescription: Mods.Coralite.Systems.FairySystem.UIBottleVineDescription
+	FairyJar: Mods.Coralite.Systems.FairySystem.FairyJar
+	JarChannelSpeedVerySlow: Mods.Coralite.Systems.FairySystem.JarChannelSpeedVerySlow
+	JarChannelSpeedSlow: Mods.Coralite.Systems.FairySystem.JarChannelSpeedSlow
+	JarChannelSpeedMiddle: Mods.Coralite.Systems.FairySystem.JarChannelSpeedMiddle
+	JarChannelSpeedFast: Mods.Coralite.Systems.FairySystem.JarChannelSpeedFast
 }
 
 BossBarSystem.DontTakeDamage: Cant attack!！

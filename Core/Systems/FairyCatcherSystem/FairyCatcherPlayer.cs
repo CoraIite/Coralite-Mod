@@ -206,6 +206,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             StaminaRand.Reset();
             ScaleRand.Reset();
 
+            AutoShootJar = false;
+            DrawJarAimLine = false;
+
             FairyCatcherRadiusBonus = 0;
             if (_skillBonus != null)
                 Array.Fill(_skillBonus, default);

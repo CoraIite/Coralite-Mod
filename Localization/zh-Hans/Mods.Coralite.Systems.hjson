@@ -114,6 +114,11 @@ FairySystem: {
 	UISkillTitle: 技能
 	GlovePerShoot: 每 {0} 次挥舞发射一次仙灵
 	UIBottleVineDescription: 仙灵捕手职业专用，需要放入任意仙灵瓶
+	FairyJar: "[c/c9ff5c:{ 仙灵投掷罐 }]"
+	JarChannelSpeedVerySlow: "[c/c9ff5c:蓄力 蜗牛速度]"
+	JarChannelSpeedSlow: "[c/c9ff5c:蓄力 慢速度]"
+	JarChannelSpeedMiddle: "[c/c9ff5c:蓄力 普通速度]"
+	JarChannelSpeedFast: "[c/c9ff5c:蓄力 很快速度]"
 }
 
 BossBarSystem.DontTakeDamage: 不可攻击！
