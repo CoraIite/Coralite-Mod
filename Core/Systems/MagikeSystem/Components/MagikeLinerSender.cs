@@ -316,7 +316,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 //发送时间
                 //this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.MagikeSendTime), parent),
                 //this.NewTextBar(SendDelayText, parent),
-                new SendProgressBar(this),
+                new TimerProgressBar(this),
 
                 //发送量
                 this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.MagikeSendAmount), parent),

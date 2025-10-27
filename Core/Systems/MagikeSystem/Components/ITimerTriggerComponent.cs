@@ -14,9 +14,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// </summary>
         bool TimeResetable { get; }
 
-        int Delay
+        public int Delay
         {
-            get => Math.Clamp((int)(DelayBase * DelayBonus), 1, int.MaxValue);
+            get => Math.Clamp((int)(DelayBase * DelayBonus), -1, int.MaxValue);
         }
 
         int Timer { get; set; }

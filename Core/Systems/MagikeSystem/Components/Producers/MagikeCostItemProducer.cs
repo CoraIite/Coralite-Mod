@@ -90,7 +90,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Producers
             return grid;
         }
 
-        public void ShowInUI(UIElement parent)
+        public virtual void ShowInUI(UIElement parent)
         {
             UIElement title = this.AddTitle(NameText, parent);
 
@@ -100,7 +100,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Producers
             UIList list =
             [
                 //生产时间
-                new ProduceBar(this),
+                new TimerProgressBar(this),
                 //this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.ProduceTime), parent),
                 //this.NewTextBar(ProductionDelayText, parent),
 

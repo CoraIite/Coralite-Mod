@@ -136,7 +136,7 @@ namespace Coralite.Content.Items.Magike.SpecialLens
             UIList list =
             [
                 //生产时间
-                new ProduceBar(this),
+                new TimerProgressBar(this),
                 //this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.ProduceTime), parent),
                 //this.NewTextBar(ProductionDelayText,parent),
 

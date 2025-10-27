@@ -150,14 +150,14 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Producers
 
         #region UI部分
 
-        public void ShowInUI(UIElement parent)
+        public virtual void ShowInUI(UIElement parent)
         {
             UIElement title = this.AddTitle(ApparatusName(), parent);
 
             UIList list =
             [
                 //生产时间
-                new ProduceBar(this),
+                new TimerProgressBar(this),
                 //this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.ProduceTime), parent),
                 //this.NewTextBar(ProductionDelayText,parent),
 

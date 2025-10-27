@@ -72,7 +72,6 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// <returns></returns>
         public bool Activation(out string text)
         {
-            text = "";
             if (IsWorking)
             {
                 text = MagikeSystem.GetApparatusDescriptionText(MagikeSystem.ApparatusDescriptionID.IsWorking);

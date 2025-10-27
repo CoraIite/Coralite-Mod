@@ -167,7 +167,6 @@ MagikeSystem: {
 			'''
 		HallowLensName: Hallow Lens
 		HallowCondition: "  ▶ The bottom needs to be placed on the Hallowed Block"
-		GelLensName: Gel Lens
 		TotalReflectionBonus: ◇ Magike volumn bonus：
 		TotalReflectionFilterName: Total Reflection Filter
 		InterferenceFilterName: Interference Filter

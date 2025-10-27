@@ -35,7 +35,7 @@ namespace Coralite.Content.WorldGeneration
 
         public override bool CanUseItem(Player player)
         {
-            Main.hardMode = false;
+            Main.hardMode = true;
             Vector2 myVector = Main.MouseWorld;
             Point p = myVector.ToTileCoordinates();
 

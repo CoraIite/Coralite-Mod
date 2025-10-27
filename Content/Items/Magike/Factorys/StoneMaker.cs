@@ -175,7 +175,7 @@ namespace Coralite.Content.Items.Magike.Factorys
             WorkTimeBase = incomeLevel switch
             {
                 MALevel.MagicCrystal => 10,
-                _ => 10_0000_0000 / 60,
+                _ => -1,
             };
 
             WorkCost = incomeLevel switch
@@ -360,8 +360,9 @@ namespace Coralite.Content.Items.Magike.Factorys
             UIList list =
             [
                 //工作时间
-                this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.FactoryWorkTime) , parent),
-                this.NewTextBar(SendDelayText , parent),
+                //this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.FactoryWorkTime) , parent),
+                //this.NewTextBar(SendDelayText , parent),
+                new TimerProgressBar(this),
 
                 //生产物品
                 this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.StoneMakerOutPut), parent),
