@@ -2,6 +2,7 @@
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
+using Coralite.Core.Systems.FairyCatcherSystem.Bases.Items;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
@@ -12,11 +13,13 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.FairyCatcher.Jar
 {
-    public class IchorBucket : BaseFairyCatcher
+    public class IchorBucket : BaseFairyJar
     {
         public override string Texture => AssetDirectory.FairyCatcherJar + Name;
 
         public override int CatchPower => 40;
+
+        public override ChannelSpeeds ChannelSpeed => ChannelSpeeds.Slow;
 
         public override void SetOtherDefaults()
         {
@@ -54,6 +57,8 @@ namespace Coralite.Content.Items.FairyCatcher.Jar
 
         public override void InitFields()
         {
+            MaxChannelTime = 60 + 30;
+            MaxChannelDamageBonus = 3.5f;
             MaxFlyTime = 20;
         }
 

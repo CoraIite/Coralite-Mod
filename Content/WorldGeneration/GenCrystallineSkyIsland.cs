@@ -893,7 +893,7 @@ namespace Coralite.Content.WorldGeneration
 
             int chestIndex = Chest.FindChestByGuessing(shrineTopLeft.X + 14, shrineTopLeft.Y + 14);
             if (chestIndex != -1)
-                WorldGenHelper.RandChestItem(Main.chest[chestIndex], ModContent.ItemType<SkarnCutter>());
+                Main.chest[chestIndex].RandAddItem<SkarnCutter>();
 
             //挖通道的中心点，挖主要通道
             DigSkyIslandTunnel(outerRect, shrineRect, shrineTopLeft + new Point(27, 12), 0, 1, GetTunnelLength, true);

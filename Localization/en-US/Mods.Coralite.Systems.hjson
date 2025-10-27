@@ -338,3 +338,4 @@ FairySkill: {
 }
 
 FairySkillTag.FSTag_Impact.Text: Mods.Coralite.Systems.FairySkillTag.FSTag_Impact.Text
+PressurePlateGroup.Name: Mods.Coralite.Systems.PressurePlateGroup.Name

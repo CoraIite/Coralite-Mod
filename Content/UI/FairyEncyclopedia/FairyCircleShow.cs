@@ -6,7 +6,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Terraria;
 using Terraria.GameContent;
 using Terraria.GameContent.UI;
-using Terraria.Graphics.Effects;
 using Terraria.ID;
 using Terraria.UI;
 

@@ -463,7 +463,7 @@ namespace Coralite.Content.UI.FairyEncyclopedia
 
                 ConditionShow.Clear();
                 if (FairySystem.fairySpawnConditions_InEncyclopedia.TryGetValue(ShowFairyID
-                    , out FairySpawnController controller))
+                    , out FairySpawnController controller)&&controller.Conditions!=null)
                 {
                     foreach (var c in controller.Conditions)
                         ConditionShow.Add(new FairySpawnBar(c, ConditionShow.Width.Pixels - 24));

@@ -1,4 +1,5 @@
-﻿using Coralite.Content.Items.FlyingShields;
+﻿using Coralite.Content.Items.FairyCatcher.Accessories;
+using Coralite.Content.Items.FlyingShields;
 using Coralite.Content.Items.FlyingShields.Accessories;
 using Coralite.Content.Items.Magike.Filters.DiffractionFilters;
 using Coralite.Content.Items.Magike.Filters.ExcitedFilters;
@@ -104,6 +105,12 @@ namespace Coralite.Content.WorldGeneration
                                         chest.AddItem<LeafShield>();
                                 }
                                 break;
+                            case 17 * 18 * 2://水中箱
+                                {
+                                    if (WorldGen.genRand.NextBool(5, 7))//放置能量饮料
+                                        chest.RandAddItem<EnergyDrink>();
+                                }
+                                break;
                         }
                         break;
                     case TileID.Containers2:
@@ -125,33 +132,37 @@ namespace Coralite.Content.WorldGeneration
                                 chest.AddItem<WarpMirror>();
 
                             for (int i = 0; i < 2; i++)//添加偏振滤镜
-                                WorldGenHelper.RandChestItem(chest, ModContent.ItemType<MagicCrystalPolarizedFilter>(), WorldGen.genRand.Next(1, 2));
+                                chest.RandAddItem<MagicCrystalPolarizedFilter>( WorldGen.genRand.Next(1, 2));
 
                             if (WorldGen.genRand.NextBool(3))//添加其他滤镜
-                                WorldGenHelper.RandChestItem(chest, ModContent.ItemType<MagicCrystalDiffractionFilter>(), 1);
+                                chest.RandAddItem<MagicCrystalDiffractionFilter>();
                             if (WorldGen.genRand.NextBool(3))//添加其他滤镜
-                                WorldGenHelper.RandChestItem(chest, ModContent.ItemType<MagicCrystalExcitedFilter>(), 1);
+                                chest.RandAddItem<MagicCrystalExcitedFilter>();
                             if (WorldGen.genRand.NextBool(3))//添加其他滤镜
-                                WorldGenHelper.RandChestItem(chest, ModContent.ItemType<MagicCrystalInterferenceFilter>(), 1);
+                                chest.RandAddItem<MagicCrystalInterferenceFilter>();
                             if (WorldGen.genRand.NextBool(3))//添加其他滤镜
-                                WorldGenHelper.RandChestItem(chest, ModContent.ItemType<MagicCrystalPulseFilter>(), 1);
+                                chest.RandAddItem<MagicCrystalPulseFilter>();
                         }
                         else if (tile.TileType == ModContent.TileType<SkarnChestTile>())
                         {
                             for (int i = 0; i < 3; i++)//放隐身药水
-                                WorldGenHelper.RandChestItem(chest, ItemID.InvisibilityPotion, WorldGen.genRand.Next(1, 5));
+                                chest.RandAddItem(ItemID.InvisibilityPotion, WorldGen.genRand.Next(1, 5));
 
                             //放偏振滤镜
-                            WorldGenHelper.RandChestItem(chest, ModContent.ItemType<CrystallineMagikePolarizedFilter>(), WorldGen.genRand.Next(1, 2));
+                            chest.RandAddItem<CrystallineMagikePolarizedFilter>( WorldGen.genRand.Next(1, 2));
                             //放染料
                             if (WorldGen.genRand.NextBool(3))
-                                WorldGenHelper.RandChestItem(chest, ModContent.ItemType<LuminDye>(), 1);
+                                chest.RandAddItem<LuminDye>();
                         }
                         break;
                 }
 
+                //考虑到有些地图的 空岛箱子会被替换，所以单独特判
                 if (chest.Contains(ItemID.Starfury))
-                    WorldGenHelper.RandChestItem(chest, ModContent.ItemType<MeteorFireball>());
+                    chest.RandAddItem<MeteorFireball>();
+
+                if (chest.Contains(ItemID.ShinyRedBalloon))
+                    chest.RandAddItem<SpaceFloatingBall>();
             }
         }
     }

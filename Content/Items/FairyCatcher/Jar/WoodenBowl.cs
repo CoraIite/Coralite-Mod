@@ -1,5 +1,6 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
+using Coralite.Core.Systems.FairyCatcherSystem.Bases.Items;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -8,11 +9,13 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.FairyCatcher.Jar
 {
-    public class WoodenBowl : BaseFairyCatcher
+    public class WoodenBowl : BaseFairyJar
     {
         public override string Texture => AssetDirectory.FairyCatcherJar + Name;
 
         public override int CatchPower => 3;
+
+        public override ChannelSpeeds ChannelSpeed => ChannelSpeeds.Fast;
 
         public override void SetOtherDefaults()
         {
@@ -45,7 +48,8 @@ namespace Coralite.Content.Items.FairyCatcher.Jar
 
         public override void InitFields()
         {
-            MaxChannelTime = 40;
+            MaxChannelTime = 35;
+            MaxChannelDamageBonus = 2f;
             MaxFlyTime = 9;
         }
 

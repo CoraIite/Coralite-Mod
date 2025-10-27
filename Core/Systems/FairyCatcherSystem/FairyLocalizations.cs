@@ -110,6 +110,12 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
         public static LocalizedText UIBottleVineDescription;
 
+        public static LocalizedText FairyJar;
+        public static LocalizedText JarChannelSpeedVerySlow;
+        public static LocalizedText JarChannelSpeedSlow;
+        public static LocalizedText JarChannelSpeedMiddle;
+        public static LocalizedText JarChannelSpeedFast;
+
         public void LoadLocalization()
         {
             FieldInfo[] infos = typeof(FairySystem).GetFields(BindingFlags.Static | BindingFlags.Public | BindingFlags.GetField);

@@ -30,7 +30,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem.Bases
         /// <summary>
         /// 投出后的飞行时间，在此时间段内不会下降
         /// </summary>
-        protected int MaxFlyTime = 10;
+        public int MaxFlyTime = 10;
 
         /// <summary>
         /// 坠落速度，默认0.25f

@@ -18,7 +18,7 @@ namespace Coralite.Content.WorldGeneration
         /// <param name="chest"></param>
         /// <param name="itemtype"></param>
         /// <param name="stack"></param>
-        public static void RandChestItem(Chest chest, int itemtype, int stack = 1)
+        public static void RandAddItem(this Chest chest, int itemtype, int stack = 1)
         {
             int itemIndex = WorldGen.genRand.Next(0, chest.item.Length);
             int limit = 0;
@@ -29,6 +29,27 @@ namespace Coralite.Content.WorldGeneration
             }
 
             chest.item[itemIndex].SetDefaults(itemtype);
+            chest.item[itemIndex].stack = stack;
+        }
+
+        /// <summary>
+        /// 向箱子中的随机位置添加物品
+        /// </summary>
+        /// <param name="chest"></param>
+        /// <param name="itemtype"></param>
+        /// <param name="stack"></param>
+        public static void RandAddItem<T>(this Chest chest, int stack = 1)
+            where T:ModItem
+        {
+            int itemIndex = WorldGen.genRand.Next(0, chest.item.Length);
+            int limit = 0;
+            while (!chest.item[itemIndex].IsAir && limit < chest.item.Length * 2)
+            {
+                limit++;
+                itemIndex = WorldGen.genRand.Next(0, chest.item.Length);
+            }
+
+            chest.item[itemIndex].SetDefaults(ModContent.ItemType<T>());
             chest.item[itemIndex].stack = stack;
         }
 

@@ -223,6 +223,7 @@ MagikeSystem: {
 		ClickToActiveMabird: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ClickToActiveMabird
 		ClickToInactiveMabird: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ClickToInactiveMabird
 		MabirdSendLengthTooFar: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.MabirdSendLengthTooFar
+		GelLensName: 凝胶透镜
 	}
 
 	CraftText: {

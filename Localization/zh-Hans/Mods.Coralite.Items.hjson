@@ -6547,3 +6547,42 @@ SmeltiryItem: {
 	DisplayName: 融金灵
 	Tooltip: 未完成
 }
+
+EnergyDrink: {
+	DisplayName: 能量饮料
+	Tooltip: 
+	'''
+	略微加快仙灵投掷罐的蓄力时间和满蓄力伤害
+	'''
+}
+
+ReboundButton: {
+	DisplayName: 回弹按钮
+	Tooltip: "仙灵投掷罐完成蓄力后自动投出"
+}
+
+SpaceFloatingBall: {
+	DisplayName: 空间悬浮球
+	Tooltip: "略微增加仙灵投掷罐的无重力飞行时间"
+}
+
+SuperChargeWristband: {
+	DisplayName: 超蓄力护腕
+	Tooltip: 
+	'''
+	加快仙灵投掷罐的蓄力时间和满蓄力伤害
+	并且完成蓄力后自动投出
+	小概率立即完成50%的蓄力
+	'''
+}
+
+ThorwChampion: {
+	DisplayName: 投掷冠军
+	Tooltip: 
+	'''
+	大幅增加仙灵投掷罐蓄力时间，满蓄力伤害和无重力飞行时间
+	蓄力完成后自动投出，并且显示飞行路径
+	中等概率立即完成50%的蓄力
+	[c/8e8e8e:“我是最强的！”]
+	'''
+}

@@ -168,7 +168,6 @@ MagikeSystem: {
 			'''
 		HallowLensName: 神圣透镜
 		HallowCondition: "  ▶ 需要将底座放置在神圣方块上"
-		GelLensName: 凝胶透镜
 		TotalReflectionBonus: ◇ 魔能容量强化：
 		TotalReflectionFilterName: 扩容滤镜
 		InterferenceFilterName: 多发滤镜
@@ -245,6 +244,7 @@ MagikeSystem: {
 		ClickToActiveMabird: 点击启用魔鸟
 		ClickToInactiveMabird: 点击禁用魔鸟
 		MabirdSendLengthTooFar: 超出魔鸟飞行范围
+		GelLensName: 凝胶透镜
 	}
 
 	CraftText: {

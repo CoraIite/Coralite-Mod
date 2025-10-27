@@ -6408,3 +6408,28 @@ SmeltiryItem: {
 	DisplayName: Smeltiry Item
 	Tooltip: ""
 }
+
+EnergyDrink: {
+	DisplayName: Energy Drink
+	Tooltip: ""
+}
+
+ReboundButton: {
+	DisplayName: Rebound Button
+	Tooltip: ""
+}
+
+SpaceFloatingBall: {
+	DisplayName: Space Floating Ball
+	Tooltip: ""
+}
+
+SuperChargeWristband: {
+	DisplayName: Super Charge Wristband
+	Tooltip: ""
+}
+
+ThorwChampion: {
+	DisplayName: Thorw Champion
+	Tooltip: ""
+}

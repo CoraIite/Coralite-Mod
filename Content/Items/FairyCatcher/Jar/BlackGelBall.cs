@@ -1,5 +1,6 @@
 ﻿using Coralite.Core;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
+using Coralite.Core.Systems.FairyCatcherSystem.Bases.Items;
 using Coralite.Helpers;
 using Terraria;
 using Terraria.Enums;
@@ -7,11 +8,13 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.FairyCatcher.Jar
 {
-    public class BlackGelBall : BaseFairyCatcher
+    public class BlackGelBall : BaseFairyJar
     {
         public override string Texture => AssetDirectory.FairyCatcherJar + Name;
 
         public override int CatchPower => 3;
+
+        public override ChannelSpeeds ChannelSpeed => ChannelSpeeds.VerySlow;
 
         public override void SetOtherDefaults()
         {
@@ -41,6 +44,12 @@ namespace Coralite.Content.Items.FairyCatcher.Jar
         {
             base.SetDefaults();
             Projectile.width = Projectile.height = 22;
+        }
+
+        public override void InitFields()
+        {
+            MaxChannelTime = 60 * 2 + 30;
+            MaxChannelDamageBonus = 6;
         }
 
         public override void OnKill(int timeLeft)

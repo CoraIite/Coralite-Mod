@@ -163,7 +163,6 @@ MagikeSystem: {
 			'''
 		HallowLensName: Линза святой земли
 		HallowCondition: "  ▶ Необходимо разместить основание на священном блоке"
-		GelLensName: Линза геля
 		TotalReflectionBonus: ◇ Усиление магической энергии:
 		TotalReflectionFilterName: Фильтр полного отражения
 		InterferenceFilterName: Фильтр интерференции
@@ -220,6 +219,7 @@ MagikeSystem: {
 		// ClickToActiveMabird: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ClickToActiveMabird
 		// ClickToInactiveMabird: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ClickToInactiveMabird
 		// MabirdSendLengthTooFar: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.MabirdSendLengthTooFar
+		GelLensName: Линза геля
 	}
 
 	CraftText: {
