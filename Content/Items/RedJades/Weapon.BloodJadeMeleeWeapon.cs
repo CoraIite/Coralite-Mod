@@ -51,26 +51,23 @@ namespace Coralite.Content.Items.RedJades
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (Main.myPlayer == player.whoAmI)
+            if (player.altFunctionUse == 2)
             {
-                if (player.altFunctionUse == 2)
-                {
-                    Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<BloodJadeParry>(), damage, knockback, player.whoAmI);
-                    return false;
-                }
+                Projectile.NewProjectile(source, player.Center, Vector2.Zero, ProjectileType<BloodJadeParry>(), damage, knockback, player.whoAmI);
+                return false;
+            }
 
-                switch (useCount)
-                {
-                    default:
-                    case 0:
-                    case 1:
-                    case 2:
-                        Projectile.NewProjectile(source, player.Center, Vector2.Zero, type, damage, knockback, player.whoAmI, useCount);
-                        break;
-                    case 3:
-                        Projectile.NewProjectile(source, player.Center, Vector2.Zero, type, (int)(damage * 1.15f), knockback, player.whoAmI, useCount);
-                        break;
-                }
+            switch (useCount)
+            {
+                default:
+                case 0:
+                case 1:
+                case 2:
+                    Projectile.NewProjectile(source, player.Center, Vector2.Zero, type, damage, knockback, player.whoAmI, useCount);
+                    break;
+                case 3:
+                    Projectile.NewProjectile(source, player.Center, Vector2.Zero, type, (int)(damage * 1.15f), knockback, player.whoAmI, useCount);
+                    break;
             }
 
             useCount++;

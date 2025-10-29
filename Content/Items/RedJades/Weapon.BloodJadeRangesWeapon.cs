@@ -44,21 +44,18 @@ namespace Coralite.Content.Items.RedJades
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (Main.myPlayer == player.whoAmI)
+            if (player.altFunctionUse == 2)
             {
-                if (player.altFunctionUse == 2)
-                {
-                    Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, Vector2.Zero, ProjectileType<BloodJadeFrisbeeParry>(), damage, knockback, player.whoAmI);
-                    return false;
-                }
+                Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, Vector2.Zero, ProjectileType<BloodJadeFrisbeeParry>(), damage, knockback, player.whoAmI);
+                return false;
+            }
 
-                int powerful = player.HasBuff<BloodJadeBuff>() ? 1 : 0;
+            int powerful = player.HasBuff<BloodJadeBuff>() ? 1 : 0;
 
-                if (player.ownedProjectileCounts[type] < 6)
-                {
-                    //Main.NewText(player.ownedProjectileCounts[type]);
-                    Projectile.NewProjectile(source, player.Center, (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero).RotatedBy(Main.rand.NextFloat(-0.04f, 0.04f)) * 11, type, damage, knockback, player.whoAmI, powerful);
-                }
+            if (player.ownedProjectileCounts[type] < 6)
+            {
+                //Main.NewText(player.ownedProjectileCounts[type]);
+                Projectile.NewProjectile(source, player.Center, (Main.MouseWorld - player.Center).SafeNormalize(Vector2.Zero).RotatedBy(Main.rand.NextFloat(-0.04f, 0.04f)) * 11, type, damage, knockback, player.whoAmI, powerful);
             }
 
             return false;

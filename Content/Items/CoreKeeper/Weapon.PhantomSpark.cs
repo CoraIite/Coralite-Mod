@@ -7,9 +7,11 @@ using static Terraria.ModLoader.ModContent;
 
 namespace Coralite.Content.Items.CoreKeeper
 {
-    public class PhantomSpark : ModItem
+    public class PhantomSpark : ModItem,IDashable
     {
         public override string Texture => AssetDirectory.CoreKeeperItems + Name;
+
+        public float Priority => IDashable.HeldItemDash;
 
         public int useCount;
         public int oldCombo;
@@ -18,10 +20,9 @@ namespace Coralite.Content.Items.CoreKeeper
         public override void SetDefaults()
         {
             Item.width = Item.height = 40;
-            Item.damage = 216;
+            Item.SetWeaponValues(216, 5, 12);
             Item.useTime = 26;
             Item.useAnimation = 26;
-            Item.knockBack = 4f;
 
             Item.useStyle = ItemUseStyleID.Rapier;
             Item.DamageType = DamageClass.Ranged;
@@ -47,7 +48,23 @@ namespace Coralite.Content.Items.CoreKeeper
                     , "-", ((int)(Item.damage * 1.098f)).ToString(), tip);
             }
         }
+
+        public bool Dash(Player Player, int DashDir)
+        {
+            return false;
+        }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient<GlyphParchment>()
+                .AddIngredient<ChannelingGemstone>()
+                .AddIngredient<FracturedLimbs>()
+                .AddIngredient<EnergyString>()
+                .AddIngredient(ItemID.HallowedBar, 100)
+                .AddIngredient<AncientGemstone>(20)
+                .AddCondition(CoraliteConditions.UseRuneParchment)
+                .Register();
+        }
     }
-
-
 }

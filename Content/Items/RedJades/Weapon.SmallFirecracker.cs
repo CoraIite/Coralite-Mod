@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.DamageClasses;
 using Coralite.Core;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
+using Coralite.Core.Systems.FairyCatcherSystem.Bases.Items;
 using Coralite.Helpers;
 using System;
 using Terraria;
@@ -9,11 +10,13 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.RedJades
 {
-    public class SmallFirecracker : BaseFairyCatcher
+    public class SmallFirecracker : BaseFairyJar
     {
         public override string Texture => AssetDirectory.RedJadeItems + Name;
 
         public override int CatchPower => 8;
+
+        public override ChannelSpeeds ChannelSpeed => ChannelSpeeds.Middle;
 
         public override void SetOtherDefaults()
         {
@@ -40,7 +43,7 @@ namespace Coralite.Content.Items.RedJades
 
         public override void InitFields()
         {
-            MaxChannelTime = 50;
+            MaxChannelTime = 58;
             MaxFlyTime = 12;
         }
 

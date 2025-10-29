@@ -6475,3 +6475,10 @@ ThorwChampion: {
 	// DisplayName: Thorw Champion
 	// Tooltip: ""
 }
+
+GlyphParchment: {
+	// OnCraft: Mods.Coralite.Items.GlyphParchment.OnCraft
+	// CraftLock: Mods.Coralite.Items.GlyphParchment.CraftLock
+	// DisplayName: Glyph Parchment
+	// Tooltip: ""
+}

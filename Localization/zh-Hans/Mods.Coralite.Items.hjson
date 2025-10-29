@@ -6550,17 +6550,17 @@ SmeltiryItem: {
 
 EnergyDrink: {
 	DisplayName: 能量饮料
-	Tooltip: 略微加快仙灵投掷罐的蓄力时间和满蓄力伤害（贴图未完成）
+	Tooltip: 略微加快仙灵投掷罐的蓄力时间和满蓄力伤害
 }
 
 ReboundButton: {
 	DisplayName: 回弹按钮
-	Tooltip: 仙灵投掷罐完成蓄力后自动投出（贴图未完成）
+	Tooltip: 仙灵投掷罐完成蓄力后自动投出
 }
 
 SpaceFloatingBall: {
-	DisplayName: 空间悬浮球
-	Tooltip: 略微增加仙灵投掷罐的无重力飞行时间（贴图未完成）
+	DisplayName: 日盘悬浮球
+	Tooltip: 略微增加仙灵投掷罐的无重力飞行时间
 }
 
 SuperChargeWristband: {
@@ -6569,7 +6569,7 @@ SuperChargeWristband: {
 		'''
 		加快仙灵投掷罐的蓄力时间和满蓄力伤害
 		并且完成蓄力后自动投出
-		小概率立即完成50%的蓄力（贴图未完成）
+		小概率立即完成50%的蓄力
 		'''
 }
 
@@ -6579,7 +6579,20 @@ ThorwChampion: {
 		'''
 		大幅增加仙灵投掷罐蓄力时间，满蓄力伤害和无重力飞行时间
 		蓄力完成后自动投出，并且显示飞行路径
-		中等概率立即完成50%的蓄力（贴图未完成）
+		中等概率立即完成50%的蓄力
 		[c/8e8e8e:“我是最强的！”]
+		'''
+}
+
+GlyphParchment: {
+	OnCraft: 得到了{0}！
+	CraftLock: 该物品已被一个强大的丛林生物诅咒，击败它以解放上古的力量
+	DisplayName: 象形文字羊皮纸
+	Tooltip: 
+		'''
+		[c/8e8e8e:上古时代遗留下来的一张保存得异常完好的纸。]
+		[c/8e8e8e:纸上画着一些象形文字和团，能让你掌握某件强力上古武器的铸造方法。]
+			击败世纪之花后由旅商售卖
+			请放置在快捷栏内使用，无法在鼠标上使用该物品！
 		'''
 }

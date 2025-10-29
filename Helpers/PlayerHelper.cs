@@ -46,5 +46,72 @@ namespace Coralite.Helpers
 
             return damage;
         }
+
+        /// <summary>
+        /// 用于<see cref="ModItem.CanAccessoryBeEquippedWith(Item, Item, Player)"/>
+        /// </summary>
+        /// <param name="equippedItem">装备的物品</param>
+        /// <param name="incomeItem">放入的物品</param>
+        /// <param name="selftype">自身类型</param>
+        /// <param name="cantEquipTypes">传入类型</param>
+        /// <returns></returns>
+        public static bool CanBeEquipedWith(Item equippedItem, Item incomeItem, int selftype, params int[] cantEquipTypes)
+        {
+            if (equippedItem.type == selftype)//自身装备了该物品
+            {
+                for (int i = 0; i < cantEquipTypes.Length; i++)
+                    if (incomeItem.type == cantEquipTypes[i])//装备里有不让带的东西
+                        return false;
+
+                return true;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// 用于<see cref="ModItem.CanAccessoryBeEquippedWith(Item, Item, Player)"/>
+        /// </summary>
+        /// <param name="equippedItem">装备的物品</param>
+        /// <param name="incomeItem">放入的物品</param>
+        /// <param name="selftype">自身类型</param>
+        /// <param name="cantEquipTypes">传入类型</param>
+        /// <returns></returns>
+        public static bool CanBeEquipedWith<T>(Item equippedItem, Item incomeItem, params int[] cantEquipTypes)
+            where T : ModItem
+        {
+            if (equippedItem.type == ModContent.ItemType<T>())//自身装备了该物品
+            {
+                for (int i = 0; i < cantEquipTypes.Length; i++)
+                    if (incomeItem.type == cantEquipTypes[i])//装备里有不让带的东西
+                        return false;
+
+                return true;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// 用于<see cref="ModItem.CanAccessoryBeEquippedWith(Item, Item, Player)"/>
+        /// </summary>
+        /// <param name="equippedItem">装备的物品</param>
+        /// <param name="incomeItem">放入的物品</param>
+        /// <param name="selftype">自身类型</param>
+        /// <param name="cantEquipTypes">传入类型</param>
+        /// <returns></returns>
+        public static bool CanBeEquipedWith(this ModItem item, Item equippedItem, Item incomeItem, params int[] cantEquipTypes)
+        {
+            if (equippedItem.type == item.Type)//自身装备了该物品
+            {
+                for (int i = 0; i < cantEquipTypes.Length; i++)
+                    if (incomeItem.type == cantEquipTypes[i])//装备里有不让带的东西
+                        return false;
+
+                return true;
+            }
+
+            return true;
+        }
     }
 }

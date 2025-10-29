@@ -8,6 +8,9 @@ using Terraria;
 
 namespace Coralite.Content.WorldGeneration
 {
+    /// <summary>
+    /// 默认：黑色意味需要清除原有物块，透明色忽略
+    /// </summary>
     public struct TextureGenerator
     {
         public string BasePath { get; private set; }

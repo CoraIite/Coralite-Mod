@@ -88,9 +88,10 @@ namespace Coralite.Content.WorldGeneration
             //珊瑚笔记
             AddGenPass(tasks, VanillaGenPassName.FinalCleanup, "Coralite Note Room", GenCoraliteNoteRoom, 0);
 
-            //符文之歌相关地形
+            //地心护核者相关地形
             AddGenPass(tasks, VanillaGenPassName.FinalCleanup, "CoreKeeper Clear Gemstone Maze", GenClearGemstoneMaze, 0);
             AddGenPass(tasks, VanillaGenPassName.FinalCleanup, "CoreKeeper Chipped Blade Temple", GenChippedBladeTemple, 0);
+            AddGenPass(tasks, VanillaGenPassName.FinalCleanup, "CoreKeeper Ocean Shrine", GenOceanShrine, 0);
 
             //添加蕴魔空岛
             AddGenPass(tasks, VanillaGenPassName.FinalCleanup, "Coralite Crystalline Sky Island", GenCrystallineSkyIsland);

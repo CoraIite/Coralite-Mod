@@ -34,10 +34,6 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
                 cp.FlyingShieldAccessories?.Add(this);
                 cp.AddDash(this);
             }
-
-            if (isDashing)
-            {
-            }
         }
 
         public void OnDashing(BaseFlyingShieldGuard projectile)

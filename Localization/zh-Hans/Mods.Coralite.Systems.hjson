@@ -404,4 +404,4 @@ FairySkill: {
 }
 
 FairySkillTag.FSTag_Impact.Text: "[c/ffcdaf:冲击]"
-// PressurePlateGroup.Name: Mods.Coralite.Systems.PressurePlateGroup.Name
+PressurePlateGroup.Name: 任意 压力板

@@ -5,12 +5,19 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.FairyCatcher.Accessories
 {
-    public class SpaceFloatingBall() : BaseFairyAccessory(ItemRarityID.Green, Item.sellPrice(0, 0, 20)), IFairyAccessory
+    public class SpaceFloatingBall() : BaseFairyAccessory(ItemRarityID.Green, Item.sellPrice(0, 1)), IFairyAccessory
     {
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             if (player.TryGetModPlayer(out FairyCatcherPlayer fcp))
                 fcp.FairyAccessories.Add(this);
+        }
+
+        public override bool CanAccessoryBeEquippedWith(Item equippedItem, Item incomingItem, Player player)
+        {
+            return Helpers.Helper.CanBeEquipedWith<SpaceFloatingBall>(equippedItem, incomingItem
+                , ModContent.ItemType<ThorwChampion>()
+                );
         }
 
         public override void AddRecipes()
@@ -19,6 +26,7 @@ namespace Coralite.Content.Items.FairyCatcher.Accessories
                 .AddIngredient(ItemID.SunplateBlock, 10)
                 .AddIngredient(ItemID.MeteoriteBar, 5)
                 .AddTile(TileID.WorkBenches)
+                .DisableDecraft()
                 .Register();
         }
 

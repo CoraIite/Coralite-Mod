@@ -14,8 +14,8 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
 
         public override bool CanAccessoryBeEquippedWith(Item equippedItem, Item incomingItem, Player player)
         {
-            return !(equippedItem.type == ModContent.ItemType<FloralHarmonyMedallion>()
-                && incomingItem.type == ModContent.ItemType<LevitationBlossom>());
+            return Helpers.Helper.CanBeEquipedWith<LevitationBlossom>(equippedItem, incomingItem
+                , ModContent.ItemType<FloralHarmonyMedallion>());
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)

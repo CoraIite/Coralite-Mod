@@ -1,12 +1,13 @@
 ﻿using Coralite.Content.ModPlayers;
 using Coralite.Core.Systems.FairyCatcherSystem;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
+using Coralite.Helpers;
 using Terraria;
 using Terraria.ID;
 
 namespace Coralite.Content.Items.FairyCatcher.Accessories
 {
-    public class ThorwChampion() : BaseFairyAccessory(ItemRarityID.Green, Item.sellPrice(0, 0, 20)), IFairyAccessory
+    public class ThorwChampion() : BaseFairyAccessory(ItemRarityID.LightRed, Item.sellPrice(0, 2, 50)), IFairyAccessory
     {
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
@@ -19,6 +20,15 @@ namespace Coralite.Content.Items.FairyCatcher.Accessories
 
             if (player.TryGetModPlayer(out CoralitePlayer cp))
                 cp.AddEffect(nameof(EnergyDrink));
+        }
+
+        public override bool CanAccessoryBeEquippedWith(Item equippedItem, Item incomingItem, Player player)
+        {
+            return this.CanBeEquipedWith(equippedItem, incomingItem
+                , ModContent.ItemType<SuperChargeWristband>()
+                , ModContent.ItemType<SpaceFloatingBall>()
+                , ModContent.ItemType<EnergyDrink>()
+                );
         }
 
         public override void AddRecipes()

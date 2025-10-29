@@ -2,6 +2,7 @@
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Systems.FairyCatcherSystem.Bases;
+using Coralite.Core.Systems.FairyCatcherSystem.Bases.Items;
 using Coralite.Helpers;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
@@ -11,11 +12,13 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.Glistent
 {
-    public class GlistentJar : BaseFairyCatcher
+    public class GlistentJar : BaseFairyJar
     {
         public override string Texture => AssetDirectory.GlistentItems + Name;
 
         public override int CatchPower => 8;
+
+        public override ChannelSpeeds ChannelSpeed => ChannelSpeeds.Middle;
 
         public override void SetOtherDefaults()
         {
@@ -47,7 +50,6 @@ namespace Coralite.Content.Items.Glistent
 
         public override void InitFields()
         {
-            MaxChannelTime = 50;
             MaxFlyTime = 15;
         }
 

@@ -75,16 +75,19 @@ namespace Coralite.Content.GlobalNPCs
                     i++;
                     if (i >= items.Length)
                         return;
-
                 }
 
-                if (NPC.downedPlantBoss)//花后获取符文羊皮纸
+                if (NPC.downedPlantBoss)//花后获取符文羊皮纸，象形文字羊皮纸
                 {
                     items[i] = new Item(ItemType<RuneParchment>());
                     i++;
                     if (i >= items.Length)
                         return;
 
+                    items[i] = new Item(ItemType<GlyphParchment>());
+                    i++;
+                    if (i >= items.Length)
+                        return;
                 }
 
                 if (NPC.downedMoonlord)//月后卖海盾

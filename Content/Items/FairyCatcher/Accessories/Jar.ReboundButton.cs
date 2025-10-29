@@ -5,7 +5,7 @@ using Terraria.ID;
 
 namespace Coralite.Content.Items.FairyCatcher.Accessories
 {
-    public class ReboundButton() : BaseFairyAccessory(ItemRarityID.Blue, Item.sellPrice(0, 0, 20))
+    public class ReboundButton() : BaseFairyAccessory(ItemRarityID.Blue, Item.sellPrice(0, 0, 40))
     {
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
