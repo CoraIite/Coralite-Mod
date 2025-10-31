@@ -6588,7 +6588,7 @@ GlyphParchment: {
 	OnCraft: 得到了{0}！
 	CraftLock: 该物品已被一个强大的丛林生物诅咒，击败它以解放上古的力量
 	DisplayName: 象形文字羊皮纸
-	Tooltip: 
+	Tooltip:
 		'''
 		[c/8e8e8e:上古时代遗留下来的一张保存得异常完好的纸。]
 		[c/8e8e8e:纸上画着一些象形文字和团，能让你掌握某件强力上古武器的铸造方法。]
