@@ -7,6 +7,7 @@ using Terraria.WorldBuilding;
 
 namespace Coralite.Content.WorldGeneration
 {
+#if DEBUG
     public class WorldGenTester : ModItem
     {
         public override string Texture => AssetDirectory.DefaultItem;
@@ -431,4 +432,5 @@ namespace Coralite.Content.WorldGeneration
             return UnitApply(origin, x, y, args);
         }
     }
+#endif
 }

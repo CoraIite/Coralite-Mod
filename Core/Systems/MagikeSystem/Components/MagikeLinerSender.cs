@@ -36,21 +36,25 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public int ConnectLength { get => ConnectLengthBase + ConnectLengthExtra; }
 
         /// <summary> 当前连接者数量 </summary>
-        public int CurrentConnector => _receivers.Count;
+        public int CurrentConnector => _relativePoses.Count;
 
-        protected List<Point16> _receivers = [];
+        //protected List<Point16> _receivers = [];
+        /// <summary>
+        /// 记录接收者的相对位置
+        /// </summary>
+        protected List<Point8> _relativePoses = [];
 
         /// <summary>
         /// 仅供获取使用，那么为什么不用private set 呢，因为懒得改了，反正区别不大
         /// </summary>
-        public List<Point16> Receivers { get => _receivers; }
+        public List<Point8> Receivers { get => _relativePoses; }
 
         public int LengthExtra { get; set; }
         public int LengthBase { get; set; }
 
         public MagikeLinerSender()
         {
-            _receivers = new List<Point16>(MaxConnect);
+            _relativePoses = new List<Point8>(MaxConnect);
         }
 
         #region 发送工作相关
@@ -60,7 +64,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             if (SendDelayBase < 0)
                 return;
 
-            if (_receivers.Count < 1)
+            if (_relativePoses.Count < 1)
                 return;
 
             //发送时间限制
@@ -76,9 +80,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             }
 
             //直接发送
-            for (int i = 0; i < _receivers.Count; i++)
+            for (int i = 0; i < _relativePoses.Count; i++)
             {
-                Send(container, _receivers[i], amount);
+                Send(container, _relativePoses[i], amount);
                 //if (!container.HasMagike)//自身没魔能了就跳出  //2025.6.3：不需要这东西
                 //    break;
             }
@@ -116,10 +120,12 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// <summary>
         /// 发送魔能
         /// </summary>
-        public virtual void Send(MagikeContainer selfMagikeContainer, Point16 position, int amount)
+        public virtual void Send(MagikeContainer selfMagikeContainer, Point8 position, int amount)
         {
             //如果无法获取物块实体就移除
-            if (!MagikeHelper.TryGetEntityWithTopLeft(position, out MagikeTP receiverEntity))
+            Point16 targetPos = Entity.Position + position;
+
+            if (!MagikeHelper.TryGetEntityWithTopLeft(targetPos, out MagikeTP receiverEntity))
                 goto remove;
 
             //如果不是魔能容器那么就丢掉喽
@@ -143,7 +149,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             receiver.AddMagike(amount);
             selfMagikeContainer.ReduceMagike(amount);
-            OnSend(Entity.Position, position);
+            OnSend(Entity.Position, targetPos);
 
             return;
         remove:
@@ -201,7 +207,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public virtual bool CanConnect_CheckConnected(Point16 receiverPoint, ref string failSource)
         {
-            if (Receivers.Contains(receiverPoint))
+            if (Receivers.Contains(new Point8(receiverPoint.X - Entity.Position.X, receiverPoint.Y - Entity.Position.Y)))
             {
                 failSource = MagikeSystem.GetConnectStaffText(MagikeSystem.StaffTextID.ChooseReceiver_AlreadyConnect);
                 return false;
@@ -250,32 +256,32 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public void Connect(Point16 receiverPoint)
         {
-            _receivers.Add(receiverPoint);
+            _relativePoses.Add(new Point8(receiverPoint.X - Entity.Position.X, receiverPoint.Y - Entity.Position.Y));
         }
 
         /// <summary>
         /// 移除接收者
         /// </summary>
         /// <param name="receiverPoint"></param>
-        public void RemoveReceiver(Point16 receiverPoint) => _receivers.Remove(receiverPoint);
+        public void RemoveReceiver(Point8 receiverPoint) => _relativePoses.Remove(receiverPoint);
 
         /// <summary>
         /// 是否已经装满
         /// </summary>
         /// <returns></returns>
-        public bool FillUp() => MaxConnect <= _receivers.Count;
+        public bool FillUp() => MaxConnect <= _relativePoses.Count;
 
         /// <summary>
         /// 啥也没链接
         /// </summary>
         /// <returns></returns>
-        public bool IsEmpty() => _receivers.Count == 0;
+        public bool IsEmpty() => _relativePoses.Count == 0;
 
         /// <summary>
         /// 第一个连接者，请自行判断是否有这么一个
         /// </summary>
         /// <returns></returns>
-        public Point16 FirstConnector() => _receivers[0];
+        public Point16 FirstConnector() => Entity.Position + _relativePoses[0];
 
         /// <summary>
         /// 重新检测是否能连接，超出长度直接断开
@@ -288,17 +294,18 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             Timer = SendDelay;
             Vector2 selfPos = Helper.GetMagikeTileCenter(Entity.Position);
 
-            for (int i = _receivers.Count - 1; i >= 0; i--)
+            for (int i = _relativePoses.Count - 1; i >= 0; i--)
             {
-                if (i + 1 > MaxConnect || !MagikeHelper.ByTopLeftnGetTP(_receivers[i], out _))
+                Point16 pos = Entity.Position + _relativePoses[i];
+                if (i + 1 > MaxConnect || !MagikeHelper.ByTopLeftnGetTP(pos, out _))
                 {
-                    _receivers.RemoveAt(i);
+                    _relativePoses.RemoveAt(i);
                     continue;
                 }
 
-                Vector2 targetPos = Helper.GetMagikeTileCenter(_receivers[i]);
+                Vector2 targetPos = Helper.GetMagikeTileCenter(pos);
                 if (Vector2.Distance(selfPos, targetPos) > ConnectLength)
-                    _receivers.RemoveAt(i);
+                    _relativePoses.RemoveAt(i);
             }
         }
 
@@ -387,11 +394,11 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             data.Write(ConnectLengthBase);
             data.Write(ConnectLengthExtra);
 
-            data.Write(_receivers.Count);
-            for (int i = 0; i < _receivers.Count; i++)
+            data.Write(_relativePoses.Count);
+            for (int i = 0; i < _relativePoses.Count; i++)
             {
-                data.Write(_receivers[i].X);
-                data.Write(_receivers[i].Y);
+                data.Write(_relativePoses[i].X);
+                data.Write(_relativePoses[i].Y);
             }
         }
 
@@ -406,10 +413,10 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             ConnectLengthExtra = reader.ReadInt32();
 
             int length = reader.ReadInt32();
-            _receivers = new List<Point16>(MaxConnect);
+            _relativePoses ??= new List<Point8>(MaxConnect);
 
             for (int i = 0; i < length; i++)
-                _receivers[i] = new Point16(reader.ReadInt16(), reader.ReadInt16());
+                _relativePoses[i] = new Point8(reader.ReadByte(), reader.ReadByte());
         }
 
         #region 数据存储
@@ -429,10 +436,10 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             tag.Add(preName + nameof(ConnectLengthBase), ConnectLengthBase);
             tag.Add(preName + nameof(ConnectLengthExtra), ConnectLengthExtra);
 
-            for (int i = 0; i < _receivers.Count; i++)
+            for (int i = 0; i < _relativePoses.Count; i++)
             {
-                tag.Add(string.Concat(preName, nameof(_receivers), i.ToString(), "X"), _receivers[i].X);
-                tag.Add(string.Concat(preName, nameof(_receivers), i.ToString(), "Y"), _receivers[i].Y);
+                tag.Add(string.Concat(preName, nameof(_relativePoses), i.ToString(), "X"), (byte)_relativePoses[i].X);
+                tag.Add(string.Concat(preName, nameof(_relativePoses), i.ToString(), "Y"), (byte)_relativePoses[i].Y);
             }
         }
 
@@ -460,9 +467,16 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             int i = 0;
 
-            while (tag.TryGet(string.Concat(preName, nameof(_receivers), i.ToString(), "X"), out short X))
+            while (tag.TryGet(string.Concat(preName, "_receivers", i.ToString(), "X"), out short X))
             {
-                _receivers.Add(new Point16(X, tag.GetShort(string.Concat(preName, nameof(_receivers), i.ToString(), "Y"))));
+                _relativePoses.Add(new Point8(X - Entity.Position.X, tag.GetShort(string.Concat(preName, "_receivers", i.ToString(), "Y")) - Entity.Position.Y));
+                i++;
+            }
+
+            i = 0;
+            while (tag.TryGet(string.Concat(preName, nameof(_relativePoses), i.ToString(), "X"), out byte X))
+            {
+                _relativePoses.Add(new Point8(X, tag.GetByte(string.Concat(preName, nameof(_relativePoses), i.ToString(), "Y"))));
                 i++;
             }
         }
@@ -529,7 +543,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                     Color drawColor = Color.Lerp(Color.White, Color.Coral, (MathF.Sin((int)Main.timeForVisualEffects * 0.1f) / 2) + 0.5f);
 
                     Vector2 selfPos = Helper.GetMagikeTileCenter(MagikeApparatusPanel.CurrentEntity.Position);
-                    Vector2 aimPos = Helper.GetMagikeTileCenter(_sender.Receivers[_index]);
+                    Vector2 aimPos = Helper.GetMagikeTileCenter(_sender.Entity.Position + _sender.Receivers[_index]);
 
                     MagikeSystem.DrawConnectLine(spriteBatch, selfPos, aimPos, Main.screenPosition, drawColor);
 

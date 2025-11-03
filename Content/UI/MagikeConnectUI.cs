@@ -109,7 +109,7 @@ namespace Coralite.Content.UI
         }
     }
 
-    public class MagikeConnectButton(Asset<Texture2D> texture) : UIImageButton(texture)
+    public class MagikeConnectButton(ATex texture) : UIImageButton(texture)
     {
         public int index;
 
@@ -144,7 +144,7 @@ namespace Coralite.Content.UI
             if (MagikeConnectUI.sender is null)
                 return;
 
-            Point16 p = MagikeConnectUI.sender.Receivers[index];
+            Point16 p = MagikeConnectUI.sender.Entity.Position + MagikeConnectUI.sender.Receivers[index];
 
             if (IsMouseHovering)
             {

@@ -5,6 +5,7 @@ using Coralite.Content.UI.MagikeApparatusPanel;
 using Coralite.Core.Loaders;
 using Coralite.Core.Systems.CoraliteActorComponent;
 using Coralite.Core.Systems.MagikeSystem.Components;
+using Coralite.Core.Systems.MagikeSystem.Components.Filters;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
@@ -64,7 +65,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
         /// </summary>
         /// <returns></returns>
         public virtual int[] GetAnchorValidTiles() => null;
-
+        
         public override void SetStaticDefaults()
         {
             Main.tileFrameImportant[Type] = true;
@@ -187,9 +188,6 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
             MagikeSystem.RegisterApparatusLevel(Type, levels);
         }
 
-        [Obsolete("由于更换了新的结构所以这个东西已弃用")]
-        public virtual MagikeTP GetEntityInstance() => null;
-
         public override void SetDrawPositions(int i, int j, ref int width, ref int offsetY, ref int height, ref short tileFrameX, ref short tileFrameY)
         {
             Tile t = Framing.GetTileSafely(i, j);
@@ -252,6 +250,30 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
         public override IEnumerable<Item> GetItemDrops(int i, int j)
         {
             return [new Item(DropItemType)];
+        }
+
+        public override void PlaceInWorld(int i, int j, Item item)
+        {
+            if (TryGetEntity(i, j, out MagikeTP tp))
+            {
+                if (!MagikeSystem.MagikeFrameToLevels.TryGetValue(Main.tile[i, j].TileType
+                    , out var keyValuePairs))//获取帧图-》等级的键值对
+                    return;
+
+                if (keyValuePairs.Count < 1)//对于只有一个等级的就不动它
+                    return;
+
+                if (keyValuePairs[0] != MALevel.None)//初始等级不是无的不动它                                         
+                    return;
+
+                MALevel level = keyValuePairs[1];
+                PolarizedFilter.ChangeTileFrame(level, tp);
+                foreach (var component in tp.ComponentsCache)
+                {
+                    if (component is IUpgradeable upgrade)
+                        upgrade.Upgrade(level);
+                }
+            }
         }
 
         public override bool RightClick(int i, int j)
@@ -423,7 +445,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
                 string colorCode = GetBonusColorCode(container.MagikeMaxBonus);
 
                 return string.Concat(MagikeSystem.GetApparatusDescriptionText(MagikeSystem.ApparatusDescriptionID.MagikeAmount)
-                , $"{container.Magike} / [c/{colorCode}:{container.MagikeMax}]");
+                , $"{container.MagikeText} / [c/{colorCode}:{container.MagikeMaxText}]");
             }
 
             return "";

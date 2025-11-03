@@ -77,6 +77,9 @@ namespace Coralite.Content.Items.Magike.Tools
         public override bool FullMagike => true;
         public override bool HasMagike => true;
 
+        public override string MagikeText => "∞";
+        public override string MagikeMaxText => "∞";
+
         public override void ShowInUI(UIElement parent)
         {
             //添加显示在最上面的组件名称
@@ -186,10 +189,12 @@ namespace Coralite.Content.Items.Magike.Tools
             return true;
         }
 
-        public override void Send(MagikeContainer selfMagikeContainer, Point16 position, int amount)
+        public override void Send(MagikeContainer selfMagikeContainer, Point8 position, int amount)
         {
+            Point16 targetPos = Entity.Position + position;
+
             //如果无法获取物块实体就移除
-            if (!MagikeHelper.TryGetEntityWithTopLeft(position, out MagikeTP receiverEntity))
+            if (!MagikeHelper.TryGetEntityWithTopLeft(targetPos, out MagikeTP receiverEntity))
                 goto remove;
 
             //如果不是魔能容器那么就丢掉喽
@@ -201,7 +206,7 @@ namespace Coralite.Content.Items.Magike.Tools
                 return;
 
             receiver.FullChargeMagike();
-            OnSend(Entity.Position, position);
+            OnSend(Entity.Position, targetPos);
 
             return;
         remove:

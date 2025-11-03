@@ -282,7 +282,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
                 foreach (var pos in linerSender.Receivers)
                 {
-                    if (!TryGetEntityWithTopLeft(pos, out MagikeTP receiverEntity))
+                    if (!TryGetEntityWithTopLeft(linerSender.Entity.Position+pos, out MagikeTP receiverEntity))
                         continue;
 
                     Item[] tempItems = null;
@@ -324,7 +324,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
                 foreach (var pos in linerSender.Receivers)
                 {
-                    if (!TryGetEntityWithTopLeft(pos, out MagikeTP receiverEntity))
+                    if (!TryGetEntityWithTopLeft(linerSender.Entity.Position + pos, out MagikeTP receiverEntity))
                         continue;
 
                     Item[] tempItems = null;
@@ -521,7 +521,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             foreach (var pos in linerSender.Receivers)
             {
-                if (!MagikeHelper.TryGetEntityWithTopLeft(pos, out MagikeTP entity))
+                if (!MagikeHelper.TryGetEntityWithTopLeft(linerSender.Entity.Position + pos, out MagikeTP entity))
                     continue;
 
                 Item[] tempItems = null;
@@ -973,7 +973,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                         ItemSlot.MouseHover(ref i, ItemSlot.Context.InventoryItem);
 
                         text = _altar.ChosenResipe.ResultItem.Name;
-                        text = string.Concat(text, Environment.NewLine, _altar.Entity.GetMagikeContainer().Magike, "/", _altar.ChosenResipe.magikeCost, Environment.NewLine, MagikeSystem.RightClickRemoveRecipe.Value);
+                        text = string.Concat(text, Environment.NewLine, _altar.Entity.GetMagikeContainer().MagikeText, "/", _altar.ChosenResipe.magikeCost, Environment.NewLine, MagikeSystem.RightClickRemoveRecipe.Value);
                     }
                     else
                     {

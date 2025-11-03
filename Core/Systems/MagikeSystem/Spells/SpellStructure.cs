@@ -105,7 +105,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Spells
                     return false;
                 }
 
-                if (!sender.Receivers.Contains(new Point16(center + item.Item2)))
+                if (!sender.Receivers.Contains(new Point8(item.Item2)))
                     return false;
             }
 

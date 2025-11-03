@@ -78,6 +78,7 @@ WorldGeneration: {
 		DigTheDigDungeon: Копаем подземелье, копаем подземелье, копаем, копаем, копаем, копаем!
 		CoraliteNoteRoom: Размещаем утраченные предметы кораллов
 		// CrystallineSkyIsland: Raising Crystalline Sky Island
+		// MagikeShrinesText: Mods.Coralite.WorldGeneration.CoraliteWorld.MagikeShrinesText
 	}
 }
 

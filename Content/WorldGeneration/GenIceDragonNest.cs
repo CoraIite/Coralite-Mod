@@ -27,15 +27,7 @@ namespace Coralite.Content.WorldGeneration
                 + (WorldGen.genRand.Next(GenVars.snowOriginRight - GenVars.snowOriginLeft) / 3);
             int nestCenter_y = (int)(Main.worldSurface * 0.4f);
 
-            for (; nestCenter_y < Main.worldSurface; nestCenter_y++)
-            {
-                Tile tile = Framing.GetTileSafely(nestCenter_x, nestCenter_y);
-                if (tile.HasTile && tile.TileType != TileID.Cloud
-                    && tile.TileType != TileID.RainCloud && tile.TileType != TileID.Sunplate
-                    && tile.TileType != TileID.Containers && tile.TileType != TileID.Dirt
-                    && tile.TileType != TileID.Grass && !TileID.Sets.Ore[tile.TileType])
-                    break;
-            }
+            nestCenter_y = WorldGenHelper.GoDownAndFindGround(nestCenter_x, nestCenter_y);
 
             nestCenter_y += 5;
 

@@ -87,6 +87,8 @@ namespace Coralite.Content.WorldGeneration
 
             //珊瑚笔记
             AddGenPass(tasks, VanillaGenPassName.FinalCleanup, "Coralite Note Room", GenCoraliteNoteRoom, 0);
+            //魔能遗迹
+            AddGenPass(tasks, VanillaGenPassName.FinalCleanup, "Coralite Magike Shrines", GenMagikeShrines, 0);
 
             //地心护核者相关地形
             AddGenPass(tasks, VanillaGenPassName.FinalCleanup, "CoreKeeper Clear Gemstone Maze", GenClearGemstoneMaze, 0);

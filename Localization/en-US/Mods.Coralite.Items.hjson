@@ -6440,3 +6440,8 @@ GlyphParchment: {
 	DisplayName: Glyph Parchment
 	Tooltip: ""
 }
+
+DataSaver: {
+	DisplayName: Data Saver
+	Tooltip: ""
+}

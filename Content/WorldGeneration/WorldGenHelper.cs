@@ -13,6 +13,48 @@ namespace Coralite.Content.WorldGeneration
     public static class WorldGenHelper
     {
         /// <summary>
+        /// 向下寻找到空地，会停止在岩石层
+        /// </summary>
+        /// <param name="nestCenter_x"></param>
+        /// <param name="nestCenter_y"></param>
+        /// <returns></returns>
+        public static int GoDownAndFindGround(int nestCenter_x, int nestCenter_y)
+        {
+            for (; nestCenter_y < Main.worldSurface; nestCenter_y++)
+            {
+                Tile tile = Framing.GetTileSafely(nestCenter_x, nestCenter_y);
+                if (tile.HasTile && Main.tileSolid[tile.TileType] && tile.TileType != TileID.Cloud
+                    && tile.TileType != TileID.RainCloud && tile.TileType != TileID.Sunplate
+                    && tile.TileType != TileID.Containers && tile.TileType != TileID.Dirt
+                    && tile.TileType != TileID.Grass && !TileID.Sets.Ore[tile.TileType])
+                    break;
+            }
+
+            return nestCenter_y;
+        }
+
+        /// <summary>
+        /// 向下寻找到空地，会停止在岩石层
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        public static int GoUpAndFindGround(int x, int y, out int tileType)
+        {
+            for (; y > (Main.worldSurface * 0.4f); y--)
+            {
+                Tile tile = Framing.GetTileSafely(x, y);
+
+                if ((!tile.HasTile || !Main.tileSolid[tile.TileType]) && tile.WallType == WallID.None)
+                    break;
+            }
+
+            tileType = Framing.GetTileSafely(x, y + 1).TileType;
+
+            return y;
+        }
+
+        /// <summary>
         /// 向箱子中的随机位置添加物品
         /// </summary>
         /// <param name="chest"></param>

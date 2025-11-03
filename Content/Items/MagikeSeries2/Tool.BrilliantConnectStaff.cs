@@ -574,7 +574,6 @@ namespace Coralite.Content.Items.MagikeSeries2
                     if (!MagikeHelper.TryGetEntityWithComponent<MagikeLinerSender>(currentTopLeft.Value.X, currentTopLeft.Value.Y, MagikeComponentID.MagikeSender, out MagikeTP entity))
                         continue;
 
-                    //能插入就插，不能就提供失败原因
                     MagikeLinerSender sender = entity.GetSingleComponent<MagikeLinerSender>(MagikeComponentID.MagikeSender);
                     sender.Receivers.Clear();
 

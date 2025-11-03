@@ -21,6 +21,8 @@ namespace Coralite.Content.WorldGeneration
             Point spawnPoint = new Point(Main.spawnTileX, Main.spawnTileY);
             bool spawn = false;
 
+            Dictionary<ushort, int> tileDictionary = new();
+
             for (int i = 0; i < 200; i++)
             {
                 try
@@ -29,7 +31,6 @@ namespace Coralite.Content.WorldGeneration
 
                     Point position = spawnPoint + new Point(WorldGen.genRand.Next(-120, 120), y);
 
-                    Dictionary<ushort, int> tileDictionary = new();
                     if (!WorldGen.InWorld(position.X - 14, position.Y - 11) || !WorldGen.InWorld(position.X + 14, position.Y + 11))
                         continue;
                     WorldUtils.Gen(
@@ -41,6 +42,8 @@ namespace Coralite.Content.WorldGeneration
 
                     foreach (var item in tileDictionary)
                         tileCount += item.Value;
+
+                    tileDictionary.Clear();
 
                     if (tileCount < 20 * 20)
                         continue; //如果物块太少那就换个地方

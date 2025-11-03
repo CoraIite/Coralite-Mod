@@ -95,7 +95,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             //获取魔能容器并检测能否发送魔能
             MagikeContainer container = Entity.GetMagikeContainer();
-            if (container.Magike < 1)
+            if (!container.HasMagike)
                 return;
 
             Point16? p = TryFindReceiver(out var targetContainer, out Point16 center);

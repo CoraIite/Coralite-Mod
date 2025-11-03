@@ -155,7 +155,7 @@ namespace Coralite.Content.CustomHooks
 
                 for (int i = 0; i < linerSender.Receivers.Count; i++)
                 {
-                    Vector2 aimPos = Helper.GetMagikeTileCenter(linerSender.Receivers[i]);
+                    Vector2 aimPos = Helper.GetMagikeTileCenter(linerSender.Entity.Position + linerSender.Receivers[i]);
                     MagikeSystem.DrawConnectLine(spriteBatch, selfPos, aimPos, Main.screenPosition, drawColor);
                 }
             }

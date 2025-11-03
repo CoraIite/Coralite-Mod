@@ -31,7 +31,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public sealed override int ID => MagikeComponentID.MagikeContainer;
 
         /// <summary> 当前内部的魔能量 </summary>
-        public int Magike { get; set; }
+        public int Magike { get; protected set; }
 
         /// <summary> 自身魔能基础容量，可以通过升级来变化 </summary>
         public int MagikeMaxBase { get; protected set; }
@@ -178,6 +178,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         #endregion
 
         #region UI
+
+        public virtual string MagikeText => Magike.ToString();
+        public virtual string MagikeMaxText => MagikeMax.ToString();
 
         public virtual void ShowInUI(UIElement parent)
         {
@@ -443,8 +446,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public void ResetSize()
         {
-            Vector2 magikeSize = GetStringSize(container.Magike);
-            Vector2 magikeMaxSize = GetStringSize(container.MagikeMax);
+            Vector2 magikeSize = GetStringSize(container.MagikeText);
+            Vector2 magikeMaxSize = GetStringSize(container.MagikeMaxText);
 
             float width = magikeSize.X + 10;
             if (magikeMaxSize.X + 10 > width)
@@ -457,9 +460,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             Height.Set(magikeSize.Y * 3.5f, 0);
         }
 
-        private static Vector2 GetStringSize(int value)
+        private static Vector2 GetStringSize(string value)
         {
-            TextSnippet[] textSnippets = [.. ChatManager.ParseMessage(value.ToString(), Color.White)];
+            TextSnippet[] textSnippets = [.. ChatManager.ParseMessage(value, Color.White)];
             ChatManager.ConvertNormalSnippets(textSnippets);
 
             return ChatManager.GetStringSize(FontAssets.MouseText.Value, textSnippets, Vector2.One * 1.1f);

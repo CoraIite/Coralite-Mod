@@ -266,6 +266,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
                 }
 
                 var component = (MagikeComponent)Activator.CreateInstance(t);
+                component.Entity = this;
                 component.LoadData(SaveName + i.ToString(), tag);
                 i++;
 

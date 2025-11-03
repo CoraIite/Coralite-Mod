@@ -1,4 +1,5 @@
-﻿using Coralite.Core.Systems.MagikeSystem.Components;
+﻿using Coralite.Content.Items.Magike.Refractors;
+using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
@@ -27,7 +28,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Spells
 
             foreach (var targetP in Receivers)
             {
-                Vector2 targetPos = Helper.GetMagikeTileCenter(targetP) - Main.screenPosition;
+                Vector2 targetPos = Helper.GetMagikeTileCenter(Entity.Position + targetP) - Main.screenPosition;
                 int width = (int)(selfPos - targetPos).Length();   //这个就是激光长度
                 var origin = new Vector2(0, laserTex.Height / 2);
 

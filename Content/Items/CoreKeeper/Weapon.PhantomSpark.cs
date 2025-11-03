@@ -1,5 +1,6 @@
 ﻿using Coralite.Core;
 using Coralite.Helpers;
+using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
@@ -16,21 +17,14 @@ namespace Coralite.Content.Items.CoreKeeper
      * 【普通形态】
      * 左键右键都是平平无奇射击，射速比较慢
      * 冲刺是闪现，如果位移过程闪避了攻击则会进入超级强化状态
-     *  如果没有则会进入普通强化状态，并获得水晶
-     *  如果水晶大于等于5则会小号血量召唤魂灵
-     * 特殊攻击键消耗血量凝聚水晶，水晶到5时消耗并生成魂灵
+     *  如果没有则会进入普通强化状态
      * 
      * 【普通强化状态】
      * 左键散射，右键射出追踪箭
-     * 特殊攻击键
-     * 没有5水晶就消耗血量获得2水晶
-     * 消耗5水晶进入超级强化状态
-     *  同时命令场上的所有魂灵立即攻击一次
      * 
      * 【超级强化状态】
      * 左键射出扩散箭，并且箭矢会产生爆炸
      * 右键射出追踪箭（也会爆炸）与几颗小水晶，小水晶命中后会弹回并再次追踪（有次数限制）
-     * 特殊攻击键消耗所有魂灵并回血，如果没有魂灵则会获得4水晶
      */
     public class PhantomSpark : ModItem, IDashable
     {
@@ -98,11 +92,6 @@ namespace Coralite.Content.Items.CoreKeeper
         }
     }
 
-    public class PhantomSparkCrystal
-    {
-
-    }
-
     /// <summary>
     /// ai0输入1表示追踪，ai1输入1表示会发生爆炸
     /// </summary>
@@ -115,7 +104,7 @@ namespace Coralite.Content.Items.CoreKeeper
         public ref float Target => ref Projectile.ai[2];
         public ref float Timer => ref Projectile.localAI[0];
 
-        public bool init=true;
+        public bool init = true;
 
         public override void SetDefaults()
         {
@@ -178,20 +167,58 @@ namespace Coralite.Content.Items.CoreKeeper
 
     }
 
-    public class PhantomSparkCrystalArrow
+    public class PhantomSparkPhantomNPC : ModProjectile
     {
+        public override string Texture => AssetDirectory.CoreKeeperItems + Name;
 
-    }
+        public ref float State => ref Projectile.ai[0];
+        public ref float Timer => ref Projectile.ai[1];
+        public ref float Target => ref Projectile.ai[2];
 
-    public class PhantomSparkPhantomNPC
-    {
+        private int frameY;
 
+        public override void SetDefaults()
+        {
+            Projectile.friendly = true;
+            Projectile.width = Projectile.height = 48;
+            Projectile.tileCollide = false;
+            Projectile.penetrate = -1;
+        }
+
+        public override bool? CanDamage() => false;
+
+        public override void AI()
+        {
+            switch (State)
+            {
+                case 0://Idle状态，跟随玩家
+                    {
+                        if (Projectile.frame > 5)
+                            Projectile.frame = 0;
+                        Projectile.UpdateFrameNormally(4, 5);
+
+                        if (Projectile.velocity.Length() < 1)
+                            frameY = 0;
+                        else
+                            frameY = 2;
+                    }
+                    break;
+            }
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Rectangle frame = new(Projectile.frame, frameY, 8, 3);
+            SpriteEffects effect = Projectile.spriteDirection > 0 ? SpriteEffects.None : SpriteEffects.FlipHorizontally;
+            Projectile.QuickFrameDraw(frame, Color.White * 0.75f, 0, effect);
+            Projectile.QuickFrameDraw(frame, Color.White * 0.75f, 0, effect);
+
+            return false;
+        }
     }
 
     public class PhantomSparkPhantomMagicBall
     {
 
     }
-
-
 }

@@ -217,10 +217,10 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             {
                 UICommon.TooltipMouseText(MagikeSystem.GetUIText(MagikeSystem.UITextID.ClickToRemove));
                 frame = 1;
-                _scale = Helpers.Helper.Lerp(_scale, 1.1f, 0.2f);
+                _scale = Helper.Lerp(_scale, 1.1f, 0.2f);
             }
             else
-                _scale = Helpers.Helper.Lerp(_scale, 1, 0.2f);
+                _scale = Helper.Lerp(_scale, 1, 0.2f);
 
             var frameBox = tex.Frame(1, 2, 0, frame);
             spriteBatch.Draw(tex, position, frameBox, Color.White, 0, frameBox.Size() / 2, _scale, 0, 0);

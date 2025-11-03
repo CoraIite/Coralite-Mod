@@ -164,19 +164,19 @@ namespace Coralite.Content.Items.Magike.Altars
 
             Vector2 selfPos = Helper.GetMagikeTileCenter(Entity.Position);
 
-            for (int i = _receivers.Count - 1; i >= 0; i--)
+            for (int i = _relativePoses.Count - 1; i >= 0; i--)
             {
                 //移除所有超出长度的，没有TP的，以及TP上没有物品容器的
-                if (i + 1 > MaxConnect || !MagikeHelper.TryGetEntity(_receivers[i].X, _receivers[i].Y, out var magikeTP)
+                if (i + 1 > MaxConnect || !MagikeHelper.TryGetEntityWithTopLeft(Entity.Position + _relativePoses[i], out var magikeTP)
                     || (!magikeTP.HasComponent(MagikeComponentID.ItemContainer) && !magikeTP.HasComponent(MagikeComponentID.ItemContainer)))
                 {
-                    _receivers.RemoveAt(i);
+                    _relativePoses.RemoveAt(i);
                     continue;
                 }
 
-                Vector2 targetPos = Helper.GetMagikeTileCenter(_receivers[i]);
+                Vector2 targetPos = Helper.GetMagikeTileCenter(Entity.Position + _relativePoses[i]);
                 if (Vector2.Distance(selfPos, targetPos) > ConnectLength)
-                    _receivers.RemoveAt(i);
+                    _relativePoses.RemoveAt(i);
             }
         }
     }

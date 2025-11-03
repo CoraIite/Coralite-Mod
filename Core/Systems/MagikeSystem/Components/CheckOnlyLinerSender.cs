@@ -74,11 +74,11 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             data.Write(ConnectLengthBase);
             data.Write(ConnectLengthExtra);
 
-            data.Write(_receivers.Count);
-            for (int i = 0; i < _receivers.Count; i++)
+            data.Write(_relativePoses.Count);
+            for (int i = 0; i < _relativePoses.Count; i++)
             {
-                data.Write(_receivers[i].X);
-                data.Write(_receivers[i].Y);
+                data.Write(_relativePoses[i].X);
+                data.Write(_relativePoses[i].Y);
             }
         }
 
@@ -91,10 +91,10 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             ConnectLengthExtra = reader.ReadInt32();
 
             int length = reader.ReadInt32();
-            _receivers = new List<Point16>(MaxConnect);
+            _relativePoses ??= new List<Point8>(MaxConnect);
 
             for (int i = 0; i < length; i++)
-                _receivers[i] = new Point16(reader.ReadInt16(), reader.ReadInt16());
+                _relativePoses[i] = new Point8(reader.ReadByte(), reader.ReadByte());
         }
 
         public override void SaveData(string preName, TagCompound tag)

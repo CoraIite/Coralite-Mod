@@ -78,6 +78,7 @@ WorldGeneration: {
 		DigTheDigDungeon: Dig the dungeon! Dig the dungeon! Dig! Dig! Dig! Dig! Dig!
 		CoraliteNoteRoom: Coral lost items are being placed
 		CrystallineSkyIsland: Raising Crystalline Sky Island
+		MagikeShrinesText: Mods.Coralite.WorldGeneration.CoraliteWorld.MagikeShrinesText
 	}
 }
 

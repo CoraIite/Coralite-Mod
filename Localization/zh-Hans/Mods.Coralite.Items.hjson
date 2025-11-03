@@ -6602,3 +6602,8 @@ GlyphParchment: {
 			请放置在快捷栏内使用，无法在鼠标上使用该物品！
 		'''
 }
+
+DataSaver: {
+	// DisplayName: Data Saver
+	// Tooltip: ""
+}

@@ -5,6 +5,7 @@ using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
@@ -90,8 +91,34 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Filters
 
         public override void OnRemove(MagikeTP entity)
         {
-            ChangeTileFrame(MALevel.None, entity);
-            base.OnRemove(entity);
+            if (!MagikeSystem.MagikeFrameToLevels.TryGetValue(Main.tile[Entity.Position].TileType
+                , out var keyValuePairs))//获取帧图-》等级的键值对
+                return;
+
+            MALevel level;
+
+            if (keyValuePairs.Count < 1)//对于只有一个等级的就不动它
+            {
+                level = keyValuePairs[0];
+                goto over;
+            }
+
+            if (keyValuePairs[0] != MALevel.None)//初始等级不是无的不动它
+            {
+                level = keyValuePairs[0];
+                goto over;
+            }
+
+            level = keyValuePairs[1];
+
+        over:
+            ChangeTileFrame(level, entity);
+
+            for (int i = 0; i < entity.ComponentsCache.Count; i++)
+                if (entity.ComponentsCache[i] is IUpgradeable upgrade)
+                    upgrade.Upgrade(level);
+
+            SpawnItem(entity);
         }
 
         public static void ChangeTileFrame(MALevel level, MagikeTP entity)
@@ -119,12 +146,6 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Filters
         {
             if (component is IUpgradeable upgrade)
                 upgrade.Upgrade(Level);
-        }
-
-        public override void RestoreComponentValues(MagikeComponent component)
-        {
-            if (component is IUpgradeable upgrade)
-                upgrade.Upgrade(MALevel.None);
         }
 
         #endregion

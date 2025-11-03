@@ -78,6 +78,7 @@ WorldGeneration: {
 		DigTheDigDungeon: 挖地牢挖地牢挖地牢挖挖挖挖挖挖挖！
 		CoraliteNoteRoom: 正在安放珊瑚的“遗失物”
 		CrystallineSkyIsland: 正在升起蕴魔空岛
+		// MagikeShrinesText: Mods.Coralite.WorldGeneration.CoraliteWorld.MagikeShrinesText
 	}
 }
 
