@@ -35,7 +35,7 @@ namespace Coralite.Content.Tiles.Thunder
             TileObjectData.newTile.AnchorBottom = new AnchorData(AnchorType.SolidTile | AnchorType.PlanterBox | AnchorType.SolidWithTop, TileObjectData.newTile.Width, 0);
 
             TileObjectData.newTile.Origin = new Point16(0, 1);
-            TileObjectData.newTile.DrawYOffset = 0;
+            TileObjectData.newTile.DrawYOffset = 2;
             TileObjectData.newTile.StyleHorizontal = true;
             TileObjectData.newTile.UsesCustomCanPlace = true;
             TileObjectData.newTile.LavaDeath = false;

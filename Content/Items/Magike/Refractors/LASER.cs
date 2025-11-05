@@ -89,7 +89,7 @@ namespace Coralite.Content.Items.Magike.Refractors
             frameBox = tex.Frame(2, 1, 1);
             spriteBatch.Draw(tex, drawPos + dir, frameBox, lightColor, rot2, origin, 1f, 0, 0f);
 
-            if (senderComponent.DoSend && factor < 0.8f)//生成粒子
+            if (!Main.gamePaused && senderComponent.DoSend && factor < 0.8f)//生成粒子
             {
                 rotation -= 1.57f;
                 drawPos = selfCenter - rotation.ToRotationVector2() * (tileRect.Height / 2 - 8);

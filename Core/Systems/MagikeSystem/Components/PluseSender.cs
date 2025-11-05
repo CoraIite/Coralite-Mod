@@ -9,6 +9,9 @@ using Terraria.UI;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components
 {
+    /// <summary>
+    /// 一次性发送所有魔能的仪器
+    /// </summary>
     public abstract class PluseSender : MagikeSender, IConnectLengthModify, IUIShowable
     {
         /// <summary>

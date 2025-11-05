@@ -1,12 +1,12 @@
-﻿using Coralite.Content.WorldGeneration.MagikeShrineDatas;
+﻿using Coralite.Content.Tiles.Magike;
 using Coralite.Core;
 using Terraria;
 using Terraria.ID;
 
-namespace Coralite.Datas.StructureDatas
+namespace Coralite.Content.WorldGeneration.MagikeShrineDatas
 {
 #if DEBUG
-    public class DataSaver : ModItem
+    public class BrokenLensPlacer : ModItem
     {
         public override string Texture => AssetDirectory.DefaultItem;
 
@@ -14,12 +14,8 @@ namespace Coralite.Datas.StructureDatas
         {
             Item.useTime = Item.useAnimation = 20;
             Item.useStyle = ItemUseStyleID.HoldUp;
-        }
-
-        public override bool CanUseItem(Player player)
-        {
-            ForestLensData.DoSave<ForestLensData>();
-            return base.CanUseItem(player);
+            Item.placeStyle = 0;
+            Item.createTile = ModContent.TileType<BrokenLensUp>();
         }
     }
 #endif

@@ -16,7 +16,7 @@ namespace Coralite.Content.WorldGeneration.MagikeShrineDatas
         public override void Load() => Mod.EnsureFileFromMod("Datas/StructureDatas/ForestLensData.nbt", SavePath);
 #if DEBUG
         public override void SaveData(TagCompound tag)
-            => SaveRegion(tag, new Point16(2281, 107).GetRectangleFromPoints(new Point16(2315, 155)));
+            => SaveRegion(tag, new Point16(2281, 107).GetRectangleFromPoints(new Point16(2315, 168)));
 #endif
         public override void LoadData(TagCompound tag)
         {
@@ -32,8 +32,8 @@ namespace Coralite.Content.WorldGeneration.MagikeShrineDatas
 
                     if (Math.Abs(Main.spawnTileX - x) < 20)
                         continue;
-                    
-                    int y = WorldGenHelper.GoUpAndFindGround(x, (int)(Main.worldSurface-60),out int tileType);
+
+                    int y = WorldGenHelper.GoUpAndFindGround(x, (int)(Main.worldSurface - 60), out int tileType);
 
                     if (tileType != TileID.Grass)
                         continue;
@@ -43,7 +43,7 @@ namespace Coralite.Content.WorldGeneration.MagikeShrineDatas
 
                     WorldUtils.Gen(
                         new Point(x, y),
-                        new Shapes.Rectangle(new Rectangle(- 14, -5, 28, 20)),
+                        new Shapes.Rectangle(new Rectangle(-14, -5, 28, 20)),
                         new Actions.TileScanner(TileID.Dirt, TileID.Grass, TileID.ClayBlock).Output(tileDictionary));
 
                     if (tileDictionary[TileID.Grass] < 6)
@@ -61,7 +61,7 @@ namespace Coralite.Content.WorldGeneration.MagikeShrineDatas
                     if (tileCount < 20 * 13)
                         continue; //如果物块太少那就换个地方
 
-                    region.ApplyToWorld((short)(x - region.Size.X / 2), (short)(y - region.Size.Y + Main.rand.Next(7, 10)));
+                    region.ApplyToWorld((short)(x - region.Size.X / 2), (short)(y - region.Size.Y + Main.rand.Next(9, 12)));
                     break;
                 }
                 catch

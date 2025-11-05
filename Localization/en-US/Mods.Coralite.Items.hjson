@@ -6445,3 +6445,8 @@ DataSaver: {
 	DisplayName: Data Saver
 	Tooltip: ""
 }
+
+BrokenLensPlacer: {
+	DisplayName: Broken Lens Placer
+	Tooltip: ""
+}

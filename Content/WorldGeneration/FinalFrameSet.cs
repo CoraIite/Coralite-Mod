@@ -1,4 +1,5 @@
-﻿using Terraria;
+﻿using Coralite.Content.Tiles;
+using Terraria;
 using Terraria.IO;
 using Terraria.WorldBuilding;
 
@@ -13,6 +14,8 @@ namespace Coralite.Content.WorldGeneration
                 {
                     if (Main.tile[i, j].HasTile)
                     {
+                        if (Main.tile[i, j].TileType == ModContent.TileType<StructureBlank>())
+                            Main.tile[i, j].ClearTile();
                         WorldGen.TileFrame(i, j, true, true);
                     }
                 }

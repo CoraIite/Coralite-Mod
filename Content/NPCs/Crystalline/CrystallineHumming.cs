@@ -100,7 +100,6 @@ namespace Coralite.Content.NPCs.Crystalline
             Banner = NPC.type;
             BannerItem = ModContent.ItemType<CrystallineHummingBannerItem>();
 
-
             NPC.width = 54;
             NPC.height = 54;
             NPC.damage = 70;
