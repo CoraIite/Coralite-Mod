@@ -53,6 +53,23 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             return UpdateTime();
         }
 
+        /// <summary>
+        /// 从一个容器向另一个容器发送魔能
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="receiver"></param>
+        /// <param name="amount"></param>
+        public virtual void SendMagike(MagikeContainer self, MagikeContainer receiver, int amount)
+        {
+            //增加对面的
+            receiver.LimitReceiveOverflow(ref amount);
+            receiver.AddMagike(amount);
+
+            //减少自己的
+            self.ReduceMagike(amount);
+            OnSend(Entity.Position, receiver.Entity.Position);
+        }
+
         public virtual void OnSend(Point16 selfPoint, Point16 ReceiverPoint)
         {
             bool selfOnScreen = VaultUtils.IsPointOnScreen(selfPoint.ToWorldCoordinates() - Main.screenPosition);
@@ -76,6 +93,35 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             if (MagikeHelper.TryGetMagikeApparatusLevel(TopLeft, out MALevel level))
                 MagikeLozengeParticle2.Spawn(Helper.GetMagikeTileCenter(TopLeft), size, MagikeSystem.GetColor(level));
+        }
+
+        
+        /// <summary>
+        /// 获取具体发送多少，最少为剩余量除以所有连接数量
+        /// </summary>
+        /// <param name="container"></param>
+        /// <param name="amount"></param>
+        /// <returns></returns>
+        public virtual bool GetSendAmount(MagikeContainer container, out int amount)
+        {
+            amount = 0;
+            //没有魔能直接返回
+            if (!container.HasMagike)
+                return false;
+
+            int currentMagike = container.Magike;
+
+            //设置初始发送量
+            amount = UnitDelivery;
+
+            if (currentMagike < amount)
+                amount = currentMagike;
+
+            //防止小于1
+            if (amount < 1)
+                amount = 1;
+
+            return true;
         }
 
         public override void SendData(ModPacket data)

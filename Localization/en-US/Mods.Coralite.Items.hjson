@@ -6450,3 +6450,8 @@ BrokenLensPlacer: {
 	DisplayName: Broken Lens Placer
 	Tooltip: ""
 }
+
+FresnelMirror: {
+	DisplayName: Fresnel Mirror
+	Tooltip: ""
+}

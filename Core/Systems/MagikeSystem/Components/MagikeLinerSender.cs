@@ -88,13 +88,14 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             }
         }
 
+
         /// <summary>
         /// 获取具体发送多少，最少为剩余量除以所有连接数量
         /// </summary>
         /// <param name="container"></param>
         /// <param name="amount"></param>
         /// <returns></returns>
-        public virtual bool GetSendAmount(MagikeContainer container, out int amount)
+        public override bool GetSendAmount(MagikeContainer container, out int amount)
         {
             amount = 0;
             //没有魔能直接返回
@@ -145,13 +146,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 return;
 
             //限制不溢出
-            receiver.LimitReceiveOverflow(ref amount);
-
-            receiver.AddMagike(amount);
-            selfMagikeContainer.ReduceMagike(amount);
-            OnSend(Entity.Position, targetPos);
-
+            SendMagike(selfMagikeContainer, receiver, amount);
             return;
+
         remove:
             RemoveReceiver(position);
         }
