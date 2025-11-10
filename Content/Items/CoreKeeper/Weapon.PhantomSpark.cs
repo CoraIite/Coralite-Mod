@@ -1,10 +1,12 @@
 ﻿using Coralite.Core;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent;
 using Terraria.ID;
 using static Terraria.ModLoader.ModContent;
 
@@ -129,9 +131,7 @@ namespace Coralite.Content.Items.CoreKeeper
             if (Chase)
             {
                 if (Target.GetNPCOwner(out NPC target, () => Target = -1))
-                {
                     return;
-                }
 
                 Timer++;
                 if (Timer > 40)
@@ -189,6 +189,8 @@ namespace Coralite.Content.Items.CoreKeeper
 
         public override void AI()
         {
+            Player owner = Main.player[Projectile.owner];
+
             switch (State)
             {
                 case 0://Idle状态，跟随玩家
@@ -201,10 +203,80 @@ namespace Coralite.Content.Items.CoreKeeper
                             frameY = 0;
                         else
                             frameY = 2;
+
+                        FlyMovement(owner);
+                    }
+                    break;
+                    case 1:
+                    {
+
                     }
                     break;
             }
         }
+
+        private void FlyMovement(Player player)
+        {
+            Projectile.tileCollide = false;
+            float acc = 0.12f;//加速度
+            float num18 = 10f;
+            int num19 = 200;
+            if (num18 < Math.Abs(player.velocity.X) + Math.Abs(player.velocity.Y))
+                num18 = Math.Abs(player.velocity.X) + Math.Abs(player.velocity.Y);
+
+            Vector2 toPlayer = player.Center - Projectile.Center;
+            float lengthToPlayer = toPlayer.Length();
+            if (lengthToPlayer > 500&&Projectile.IsOwnedByLocalPlayer())
+            {
+                Vector2 center= Projectile.Center;
+                Projectile.Center = player.Center+Main.rand.NextVector2CircularEdge(48,48);
+                Projectile.netUpdate = true;
+
+                //传送特效
+
+            }
+
+            if (lengthToPlayer < num19 && player.velocity.Y == 0f && Projectile.position.Y + Projectile.height <= player.position.Y + player.height && !Collision.SolidCollision(Projectile.position, Projectile.width, Projectile.height))
+            {
+                Projectile.netUpdate = true;
+                if (Projectile.velocity.Y < -6f)
+                    Projectile.velocity.Y = -6f;
+            }
+
+            if (!(lengthToPlayer < 60f))
+            {
+                toPlayer.SafeNormalize(Vector2.Zero);
+                toPlayer *= num18;
+                if (Projectile.velocity.X < toPlayer.X)
+                {
+                    Projectile.velocity.X += acc;
+                    if (Projectile.velocity.X < 0f)
+                        Projectile.velocity.X += acc * 2.2f;
+                }
+
+                if (Projectile.velocity.X > toPlayer.X)
+                {
+                    Projectile.velocity.X -= acc;
+                    if (Projectile.velocity.X > 0f)
+                        Projectile.velocity.X -= acc * 2.2f;
+                }
+
+                if (Projectile.velocity.Y < toPlayer.Y)
+                {
+                    Projectile.velocity.Y += acc;
+                    if (Projectile.velocity.Y < 0f)
+                        Projectile.velocity.Y += acc * 4.2f;
+                }
+
+                if (Projectile.velocity.Y > toPlayer.Y)
+                {
+                    Projectile.velocity.Y -= acc;
+                    if (Projectile.velocity.Y > 0f)
+                        Projectile.velocity.Y -= acc * 4.2f;
+                }
+            }
+        }
+
 
         public override bool PreDraw(ref Color lightColor)
         {

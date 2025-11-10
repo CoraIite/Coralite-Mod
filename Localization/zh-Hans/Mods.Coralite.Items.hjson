@@ -6614,6 +6614,6 @@ BrokenLensPlacer: {
 }
 
 FresnelMirror: {
-	// DisplayName: Fresnel Mirror
-	// Tooltip: ""
+	DisplayName: 菲涅尔魔镜
+	Tooltip: 将魔能发送到正方形范围内的所有仪器中
 }

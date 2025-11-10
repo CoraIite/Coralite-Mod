@@ -220,6 +220,8 @@ MagikeSystem: {
 		// ClickToInactiveMabird: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.ClickToInactiveMabird
 		// MabirdSendLengthTooFar: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.MabirdSendLengthTooFar
 		GelLensName: Линза геля
+		// FresnelConnectLength: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.FresnelConnectLength
+		// FresnelMirrorSenderName: Mods.Coralite.MagikeSystem.MagikeSystem.UIText.FresnelMirrorSenderName
 	}
 
 	CraftText: {

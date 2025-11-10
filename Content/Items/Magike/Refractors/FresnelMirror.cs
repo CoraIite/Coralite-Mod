@@ -1,17 +1,20 @@
-﻿using Coralite.Content.NPCs.Elemental;
-using Coralite.Content.Raritys;
+﻿using Coralite.Content.Raritys;
 using Coralite.Core;
+using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Core.Systems.MagikeSystem.Tiles;
 using Coralite.Helpers;
+using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.GameContent;
+using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
 using Terraria.UI;
 using static Terraria.ModLoader.ModContent;
@@ -25,7 +28,7 @@ namespace Coralite.Content.Items.Magike.Refractors
     }
 
     public class FresnelMirrorTile() : BaseMagikeTile
-    (3, 3, Coralite.MagicCrystalPink, DustID.CorruptionThorns)
+    (3, 3, Coralite.MagicCrystalPink, DustID.CorruptionThorns,0,true)
     {
         public override string Texture => AssetDirectory.MagikeRefractorTiles + Name;
         public override int DropItemType => ItemType<FresnelMirror>();
@@ -49,15 +52,15 @@ namespace Coralite.Content.Items.Magike.Refractors
             Vector2 drawPos = selfCenter + offset+new Vector2(0,2);
 
             //虽然一般不会没有 但是还是检测一下
-            if (!entity.TryGetComponent(MagikeComponentID.MagikeSender, out MagikeLinerSender sender))
+            if (!entity.TryGetComponent(MagikeComponentID.MagikeSender, out FresnelMirrorSender sender))
                 return;
 
             //绘制旋转的框框
             tex.QuickCenteredDraw(spriteBatch, new Rectangle(0, 0, 3, 1)
-                , drawPos, lightColor, (float)(Main.timeForVisualEffects * 0.1f));
+                , drawPos, lightColor, (float)(Main.timeForVisualEffects * 0.05f));
             //绘制旋转的框框的高光
             tex.QuickCenteredDraw(spriteBatch, new Rectangle(1, 0, 3, 1)
-                , drawPos, lightColor, MathF.Sin((float)(Main.timeForVisualEffects * 0.1f)));
+                , drawPos, lightColor, 0.1f*MathF.Sin((float)(Main.timeForVisualEffects * 0.1f)));
             //绘制外边的框框
             tex.QuickCenteredDraw(spriteBatch, new Rectangle(2, 0, 3, 1)
                 , drawPos, lightColor, 0);
@@ -73,7 +76,7 @@ namespace Coralite.Content.Items.Magike.Refractors
         public override void InitializeBeginningComponent()
         {
             AddComponent(new FresnelMirrorContainer());
-            AddComponent(new LASERSender());
+            AddComponent(new FresnelMirrorSender());
         }
     }
 
@@ -89,7 +92,7 @@ namespace Coralite.Content.Items.Magike.Refractors
                 MALevel.Hallow => 7200,
                 MALevel.Feather => 20480,
                 _ => 0,
-            };
+            } * 2;
             LimitMagikeAmount();
         }
     }
@@ -114,6 +117,34 @@ namespace Coralite.Content.Items.Magike.Refractors
 
         public void ShowInUI(UIElement parent)
         {
+            UIElement title = this.AddTitle(MagikeSystem.UITextID.FresnelMirrorSenderName, parent);
+            UIList list =
+            [
+                //发送时间
+                new TimerProgressBar(this),
+
+                //发送量
+                this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.MagikeSendAmount), parent),
+                this.NewTextBar(UnitDeliveryText, parent),
+
+                //连接距离
+                this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.FresnelConnectLength), parent),
+                this.NewTextBar(FresnelLengthText, parent),
+            ];
+
+            list.SetSize(0, -title.Height.Pixels, 1, 1);
+            list.SetTopLeft(title.Height.Pixels + 8, 0);
+
+            list.QuickInvisibleScrollbar();
+
+            parent.Append(list);
+        }
+
+        public virtual string FresnelLengthText(FresnelMirrorSender s)
+        {
+            int length = SendRadius;
+
+            return $"  ▶ {length}";
         }
 
         public void Upgrade(MALevel incomeLevel)
@@ -159,11 +190,38 @@ namespace Coralite.Content.Items.Magike.Refractors
             if (!CanSend())
                 return;
 
-            MagikeContainer container = Entity.GetMagikeContainer();
-            if (!container.HasMagike)
-                return;
-
             FresnelSend(container);
+        }
+
+        public override bool CanSend()
+        {
+            if (!Container.HasMagike)
+                return false;
+
+            bool can=base.CanSend();
+
+            if (Timer % (SendDelay / 3) == 0)
+            {
+                Vector2 center = Helper.GetMagikeTileCenter(Entity.Position);
+                Color c = Color.White;
+                if (MagikeHelper.TryGetMagikeApparatusLevel(Entity.Position, out MALevel level))
+                    c = MagikeSystem.GetColor(level);
+
+                FresnelRectParticle p = PRTLoader.NewParticle<FresnelRectParticle>(center, Vector2.Zero, c);
+                p.CurrentRadius = p.MinRadius = 16 + 8;
+                p.TargetRadius = SendRadius * 16 + 8;
+                p.MaxTime = Timer;
+
+                int t = Timer / (SendDelay / 3);
+                if (t==3)
+                    p.smoother = Coralite.Instance.SqrtSmoother;
+                else if (t == 2)
+                    p.smoother = Coralite.Instance.NoSmootherInstance;
+                else
+                    p.smoother = Coralite.Instance.X2Smoother;
+            }
+
+            return can;
         }
 
         /// <summary>
@@ -208,4 +266,76 @@ namespace Coralite.Content.Items.Magike.Refractors
         }
     }
 
+    public class FresnelRectParticle : Particle
+    {
+        public override string Texture => AssetDirectory.Particles+Name;
+
+        public int MaxTime;
+        public int TargetRadius;
+        public int MinRadius;
+        public float CurrentRadius;
+        public float alpha;
+
+        public ISmoother smoother;
+
+        public override void AI()
+        {
+            Opacity++;
+
+            if (Opacity < MaxTime)
+            {
+                if (smoother != null)
+                    CurrentRadius = Helper.Lerp(MinRadius, TargetRadius, smoother.Smoother(Opacity / MaxTime));
+                if (alpha < 1)
+                {
+                    alpha += 0.05f;
+                    if (alpha > 1)
+                    {
+                        alpha = 1;
+                    }
+                }
+                return;
+            }
+
+            if (Opacity < MaxTime+20)
+            {
+                alpha -= 1 / 20f;
+                return;
+            }
+
+            active = false;
+        }
+
+        public override bool PreDraw(SpriteBatch spriteBatch)
+        {
+            Vector2 topLeft = Position - Main.screenPosition + new Vector2(-CurrentRadius);
+            Texture2D tex = TexValue;
+            Color c = Color * 0.6f * alpha;
+
+            DrawRect(spriteBatch, topLeft, tex, c);
+            c *= 0.2f;
+            c.A = 0;
+            DrawRect(spriteBatch, topLeft, tex, c);
+
+            return false;
+                
+            void DrawRect(SpriteBatch spriteBatch, Vector2 topLeft, Texture2D tex, Color c)
+            {
+                //绘制左边的
+                spriteBatch.Draw(tex, new Rectangle((int)topLeft.X, (int)topLeft.Y, tex.Width
+                    , (int)(CurrentRadius * 2)), c);
+                //绘制上边
+                spriteBatch.Draw(tex, new Rectangle((int)topLeft.X, (int)topLeft.Y
+                    , tex.Width, (int)(CurrentRadius * 2)), null, c, MathHelper.PiOver2, new Vector2(0, tex.Height), 0, 0);
+
+                Vector2 bottomRight = Position - Main.screenPosition + new Vector2(CurrentRadius);
+                //绘制右边
+                spriteBatch.Draw(tex, new Rectangle((int)bottomRight.X - tex.Width, (int)(bottomRight.Y - CurrentRadius * 2)
+                    , tex.Width, (int)(CurrentRadius * 2)), null, c, MathHelper.Pi, new Vector2(tex.Width, tex.Height), SpriteEffects.FlipVertically, 0);
+                //绘制下边的
+                spriteBatch.Draw(tex, new Rectangle((int)(bottomRight.X - CurrentRadius * 2), (int)bottomRight.Y - tex.Width
+                   , tex.Width, (int)(CurrentRadius * 2)), null, c, -MathHelper.PiOver2, new Vector2(tex.Width, 0), 0, 0);
+            }
+        }
+    }
 }

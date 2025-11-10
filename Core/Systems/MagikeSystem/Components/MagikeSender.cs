@@ -36,6 +36,19 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public bool TimeResetable => true;
 
+        protected MagikeContainer container;
+        /// <summary>
+        /// 魔能容器
+        /// </summary>
+        protected MagikeContainer Container
+        {
+            get
+            {
+                container ??= Entity.GetMagikeContainer();
+                return container;
+            }
+        }
+
         public virtual bool UpdateTime()
         {
             Timer--;
@@ -50,6 +63,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public virtual bool CanSend()
         {
+            if (!Container.HasMagike)
+                return false;
+
             return UpdateTime();
         }
 
@@ -70,6 +86,11 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             OnSend(Entity.Position, receiver.Entity.Position);
         }
 
+        /// <summary>
+        /// 发送魔能时调用，默认用于生成粒子
+        /// </summary>
+        /// <param name="selfPoint"></param>
+        /// <param name="ReceiverPoint"></param>
         public virtual void OnSend(Point16 selfPoint, Point16 ReceiverPoint)
         {
             bool selfOnScreen = VaultUtils.IsPointOnScreen(selfPoint.ToWorldCoordinates() - Main.screenPosition);
@@ -123,6 +144,9 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             return true;
         }
+
+        public virtual string UnitDeliveryText(MagikeSender s)
+            => $"\n  ▶ {MagikeHelper.BonusColoredText(s.UnitDelivery.ToString(), UnitDeliveryBonus)} ({s.UnitDeliveryBase} * {MagikeHelper.BonusColoredText(s.UnitDeliveryBonus.ToString(), UnitDeliveryBonus)})";
 
         public override void SendData(ModPacket data)
         {

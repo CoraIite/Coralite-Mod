@@ -245,6 +245,8 @@ MagikeSystem: {
 		ClickToInactiveMabird: 点击禁用魔鸟
 		MabirdSendLengthTooFar: 超出魔鸟飞行范围
 		GelLensName: 凝胶透镜
+		FresnelConnectLength: 发送半径
+		FresnelMirrorSenderName: 菲涅尔魔镜
 	}
 
 	CraftText: {

@@ -81,8 +81,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
                 bool old = DoSend;
 
-                DoSend = Entity.GetMagikeContainer().Magike > 0 && p.HasValue && !container.FullMagike;
-
+                DoSend = Container.Magike > 0 && p.HasValue && !container.FullMagike;
 
                 return old && DoSend;
             }
@@ -97,8 +96,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 return;
 
             //获取魔能容器并检测能否发送魔能
-            MagikeContainer container = Entity.GetMagikeContainer();
-            if (!container.HasMagike)
+            if (!Container.HasMagike)
                 return;
 
             Point16? p = TryFindReceiver(out var targetContainer, out Point16 center);
@@ -108,10 +106,10 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             if (targetContainer.FullMagike)//如果满了就不发送
                 return;
 
-            int sendCount = Math.Min(container.Magike, targetContainer.MagikeMax - targetContainer.Magike);
+            int sendCount = Math.Min(Container.Magike, targetContainer.MagikeMax - targetContainer.Magike);
 
             targetContainer.AddMagike(sendCount);
-            container.ReduceMagike(sendCount);
+            Container.ReduceMagike(sendCount);
 
             DoSend = Entity.GetMagikeContainer().Magike > 0 && !targetContainer.FullMagike;
 

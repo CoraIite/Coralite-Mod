@@ -473,11 +473,13 @@ namespace Coralite.Helpers
             Vector2 targetCenter = Helper.GetTileCenter(targetPos);
 
             Vector2 dir = (targetCenter - selfCenter).SafeNormalize(Vector2.Zero);
+            Vector2 normal = dir.RotatedBy(MathHelper.PiOver2);
             float length = Vector2.Distance(selfCenter, targetCenter);
 
             while (length > 0)
             {
-                Dust dust = Dust.NewDustPerfect(selfCenter + (dir * length), dustType, dir * 0.2f, newColor: dustColor);
+                Dust dust = Dust.NewDustPerfect(selfCenter + (dir * length), dustType
+                    , normal * MathF.Sin(length * 0.06f) * 1f, newColor: dustColor,Scale:1.4f);
                 dust.noGravity = true;
                 length -= 8;
             }

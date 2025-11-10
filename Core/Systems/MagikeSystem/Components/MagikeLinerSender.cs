@@ -72,8 +72,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 return;
 
             //获取魔能容器并检测能否发送魔能
-            MagikeContainer container = Entity.GetMagikeContainer();
-            if (!GetSendAmount(container, out int amount))
+            if (!GetSendAmount(Container, out int amount))
             {
                 RecheckConnect();
                 return;
@@ -82,7 +81,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             //直接发送
             for (int i = 0; i < _relativePoses.Count; i++)
             {
-                Send(container, _relativePoses[i], amount);
+                Send(Container, _relativePoses[i], amount);
                 //if (!container.HasMagike)//自身没魔能了就跳出  //2025.6.3：不需要这东西
                 //    break;
             }
@@ -354,9 +353,6 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             return $"  ▶ {timer} / {MagikeHelper.BonusColoredText(delay.ToString(), DelayBonus, true)} ({delayBase} * {MagikeHelper.BonusColoredText(DelayBonus.ToString(), DelayBonus, true)})";
         }
 
-        public virtual string UnitDeliveryText(MagikeLinerSender s)
-            => $"\n  ▶ {MagikeHelper.BonusColoredText(s.UnitDelivery.ToString(), UnitDeliveryBonus)} ({s.UnitDeliveryBase} * {MagikeHelper.BonusColoredText(s.UnitDeliveryBonus.ToString(), UnitDeliveryBonus)})";
-
         public virtual string ConnectLengthText(MagikeLinerSender s)
         {
             float length = MathF.Round(s.ConnectLength / 16f, 1);
@@ -379,7 +375,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// </summary>
         /// <returns></returns>
         public int GetMagikeAmount()
-            => Entity.GetMagikeContainer().Magike;
+            => Container.Magike;
 
         public override void SendData(ModPacket data)
         {

@@ -33,6 +33,24 @@ namespace Coralite.Core.Systems.MTBStructure
         /// </summary>
         public virtual int[,] StructureLiquid { get; } = null;
 
+        public struct MultiBlockInfo
+        {
+            public short tileType;
+            public short wallType;
+            public short liquidType;
+            public short liquidAmount;
+
+            public MultiBlockInfo(short tileType, short wallType)
+            {
+
+            }
+
+            public void Kill()
+            {
+
+            }
+        }
+
         /// <summary>
         /// 检测建筑，成功就触发<see cref="OnSuccess"/>
         /// </summary>
