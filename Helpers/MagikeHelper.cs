@@ -142,6 +142,22 @@ namespace Coralite.Helpers
         /// 使用两个位置数位置获取物块左上角的位置
         /// 只在没有物块时返回<see cref="null"/>
         /// </summary>
+        /// <param name="p"></param>
+        /// <returns></returns>
+        public static Point16? ToTopLeft(Point16 p)
+           => ToTopLeft(p.X, p.Y);
+        /// <summary>
+        /// 使用两个位置数位置获取物块左上角的位置
+        /// 只在没有物块时返回<see cref="null"/>
+        /// </summary>
+        /// <param name="p"></param>
+        /// <returns></returns>
+        public static Point16? ToTopLeft(Point p)
+           => ToTopLeft(p.X, p.Y);
+        /// <summary>
+        /// 使用两个位置数位置获取物块左上角的位置
+        /// 只在没有物块时返回<see cref="null"/>
+        /// </summary>
         /// <param name="i"></param>
         /// <param name="j"></param>
         /// <returns></returns>
@@ -313,7 +329,7 @@ namespace Coralite.Helpers
         /// <param name="pos"></param>
         public static void SpawnLozengeParticle(Point16 pos)
         {
-            Point16? topLeft = ToTopLeft(pos.X, pos.Y);
+            Point16? topLeft = ToTopLeft(pos);
             if (topLeft.HasValue)
             {
                 GetMagikeAlternateData(pos.X, pos.Y, out TileObjectData data, out _);

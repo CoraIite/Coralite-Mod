@@ -11,6 +11,7 @@ using System.IO;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.ModLoader.Core;
 using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.MagikeSystem.TileEntities
@@ -258,10 +259,21 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
             int i = 0;
             while (tag.TryGet(SaveName + i.ToString(), out string fullName))
             {
-                var t = System.Type.GetType(fullName);
+                Type t;
+                string modName = fullName.Split('.')[0];
+
+                if (modName == nameof(Coralite))  //本模组直接就获取类型
+                    t = Type.GetType(fullName);
+                else                              //其他模组从别的模组中获取
+                {
+                    ModLoader.TryGetMod(modName, out Mod mod);
+                    t = mod.Code.GetType(fullName);
+                }
+
                 if (t is null)
                 {
                     i++;
+                    $"未找到指定类型{fullName}！".Dump();
                     continue;
                 }
 

@@ -422,13 +422,13 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
         /// <param name="p"></param>
         public void SetGetItemPos(Point p)
         {
-            Point16? p2 = MagikeHelper.ToTopLeft(p.X, p.Y);
+            Point16? p2 = MagikeHelper.ToTopLeft(p);
             GetItemPos = new MabirdTarget(p2 == null ? p : p2.Value.ToPoint());
         }
 
         public void SetReleaseItemPos(Point p)
         {
-            Point16? p2 = MagikeHelper.ToTopLeft(p.X, p.Y);
+            Point16? p2 = MagikeHelper.ToTopLeft(p);
             ReleaseItemPos = new MabirdTarget(p2 == null ? p : p2.Value.ToPoint());
         }
 

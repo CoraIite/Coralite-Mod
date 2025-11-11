@@ -6454,4 +6454,10 @@ BrokenLensPlacer: {
 FresnelMirror: {
 	DisplayName: Fresnel Mirror
 	Tooltip: ""
+	SpecialCraft: Mods.Coralite.Items.FresnelMirror.SpecialCraft
+}
+
+GiantLens: {
+	DisplayName: Giant Lens
+	Tooltip: ""
 }

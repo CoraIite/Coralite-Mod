@@ -91,7 +91,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Filters
 
         public override void OnRemove(MagikeTP entity)
         {
-            if (!MagikeSystem.MagikeFrameToLevels.TryGetValue(Main.tile[Entity.Position].TileType
+            if (!MagikeSystem.MagikeFrameToLevels.TryGetValue(Entity.TargetTileID
                 , out var keyValuePairs))//获取帧图-》等级的键值对
                 return;
 

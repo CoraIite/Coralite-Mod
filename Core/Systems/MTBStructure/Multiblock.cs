@@ -3,6 +3,7 @@ using Coralite.Core.Systems.MagikeSystem.Particles;
 using InnoVault.PRT;
 using System.Collections.Generic;
 using Terraria;
+using Terraria.DataStructures;
 
 namespace Coralite.Core.Systems.MTBStructure
 {
@@ -33,21 +34,43 @@ namespace Coralite.Core.Systems.MTBStructure
         /// </summary>
         public virtual int[,] StructureLiquid { get; } = null;
 
+        public Dictionary<Point16, Multiblock> BlkockInfos;
+        public List<Point16> BlkockPosLists;
+
+        /// <summary>
+        /// 多方块信息
+        /// </summary>
         public struct MultiBlockInfo
         {
+            public bool checkTile;
             public short tileType;
             public short wallType;
             public short liquidType;
             public short liquidAmount;
 
-            public MultiBlockInfo(short tileType, short wallType)
+            public MultiBlockInfo(bool checkTile,short tileType, short wallType,short liquidType,short liquidAmount)
             {
-
+                this.checkTile = checkTile;
+                this.tileType = tileType;
+                this.wallType = wallType;
+                this.liquidType = liquidType;
+                this.liquidAmount = liquidAmount;
             }
 
-            public void Kill()
+            public MultiBlockInfo(bool checkTile, short tileType, short wallType)
             {
+                this.checkTile = checkTile;
+                this.tileType = tileType;
+                this.wallType = wallType;
+            }
 
+            public MultiBlockInfo(short tileType)
+            {
+                this.checkTile = true;
+                this.tileType = tileType;
+                this.wallType = 0;
+                this.liquidType = 0;
+                this.liquidAmount = 0;
             }
         }
 

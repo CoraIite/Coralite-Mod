@@ -37,7 +37,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
 
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
-            player.GetDamage(DamageClass.Melee) += 0.12f;
+            player.GetDamage(DamageClass.Melee) += 0.15f;
             player.GetAttackSpeed(DamageClass.Melee) += 0.07f;
             if (player.TryGetModPlayer(out CoralitePlayer cp))
             {

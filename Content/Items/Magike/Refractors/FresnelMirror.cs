@@ -11,11 +11,13 @@ using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameContent;
 using Terraria.GameContent.UI.Elements;
 using Terraria.ID;
+using Terraria.Localization;
+using Terraria.ModLoader.IO;
 using Terraria.UI;
 using static Terraria.ModLoader.ModContent;
 
@@ -24,7 +26,27 @@ namespace Coralite.Content.Items.Magike.Refractors
     public class FresnelMirror() : MagikeApparatusItem(TileType<FresnelMirrorTile>(), Item.sellPrice(silver: 5)
             , RarityType<MagicCrystalRarity>(), AssetDirectory.MagikeRefractors)
     {
+        public static LocalizedText SpecialCraft;
 
+        public override void Load()
+        {
+            if (!Main.dedServ)
+                SpecialCraft = this.GetLocalization(nameof(SpecialCraft));
+        }
+
+        public override void Unload()
+        {
+            SpecialCraft = null;
+        }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient<GiantLens>()
+                .AddIngredient<BasicColumn>()
+                .AddCondition(SpecialCraft, () => false)
+                .Register();
+        }
     }
 
     public class FresnelMirrorTile() : BaseMagikeTile
@@ -103,7 +125,7 @@ namespace Coralite.Content.Items.Magike.Refractors
         /// 发送半径，一个正方形<br></br>
         /// 与其他的半径不一样，这个以格为单位
         /// </summary>
-        public int SendRadius { get;private set; }
+        public byte SendRadius { get;private set; }
 
         private static List<Point16> recordPoints=new List<Point16>();
 
@@ -263,6 +285,34 @@ namespace Coralite.Content.Items.Magike.Refractors
 
             Over:
             recordPoints.Clear();
+        }
+
+        public override void LoadData(string preName, TagCompound tag)
+        {
+            base.LoadData(preName, tag);
+            if (tag.TryGet(preName + nameof(SendRadius),out byte r))
+                SendRadius = r;
+        }
+
+        public override void SaveData(string preName, TagCompound tag)
+        {
+            base.SaveData(preName, tag);
+
+            tag.Add(preName + nameof(SendRadius), SendRadius);
+        }
+
+        public override void SendData(ModPacket data)
+        {
+            base.SendData(data);
+
+            data.Write(SendRadius);
+        }
+
+        public override void ReceiveData(BinaryReader reader, int whoAmI)
+        {
+            base.ReceiveData(reader, whoAmI);
+
+            SendRadius = reader.ReadByte();
         }
     }
 

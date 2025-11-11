@@ -3965,7 +3965,7 @@ CelestialHeart: {
 	Tooltip:
 		'''
 		招来末日的心脏
-		召唤月球领主，不消耗
+		在没有任何天界柱存在时召唤月球领主，不消耗
 		'''
 }
 
@@ -6616,4 +6616,15 @@ BrokenLensPlacer: {
 FresnelMirror: {
 	DisplayName: 菲涅尔魔镜
 	Tooltip: 将魔能发送到正方形范围内的所有仪器中
+	SpecialCraft: 使用巨大镜片左键基础水晶柱物块来转化
+}
+
+GiantLens: {
+	DisplayName: 巨大镜片
+	Tooltip:
+		'''
+		手持右键基础水晶柱后将其变为菲涅尔魔镜
+		[c/8e8e8e:一块刻录了由小到大的同心圆的巨型镜片，能够轻易将魔能发送到周围]
+		[c/8e8e8e:有些人将其称作 “魔力水晶掺杂的晶圆”]
+		'''
 }
