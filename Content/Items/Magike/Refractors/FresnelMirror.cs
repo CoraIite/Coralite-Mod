@@ -164,7 +164,9 @@ namespace Coralite.Content.Items.Magike.Refractors
 
         public virtual string FresnelLengthText(FresnelMirrorSender s)
         {
-            int length = SendRadius;
+            int length = SendRadius - 1;
+            if (length < 1)
+                length = 0;
 
             return $"  ▶ {length}";
         }

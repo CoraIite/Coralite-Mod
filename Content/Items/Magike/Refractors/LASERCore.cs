@@ -47,7 +47,7 @@ namespace Coralite.Content.Items.Magike.Refractors
 
         public override bool RightClick(int i, int j)
         {
-            CoraliteContent.GetMTBS<LASERMultiblock>().CheckStructure(new Point(i, j - 1));
+            CoraliteContent.GetMTBS<LASERMultiblock>().CheckStructure(new Point16(i, j));
 
             return true;
         }
@@ -62,42 +62,35 @@ namespace Coralite.Content.Items.Magike.Refractors
 
     public class LASERMultiblock : PreviewMultiblock
     {
-        /// <summary>
-        /// 魔力水晶块
-        /// </summary>
-        private int cb => TileType<MagicCrystalBlockTile>();
-        /// <summary>
-        /// 硬化玄武岩
-        /// </summary>
-        private int h => TileType<HardBasaltTile>();
-        /// <summary>
-        /// 玄武岩
-        /// </summary>
-        private int b => TileType<BasaltTile>();
-        /// <summary>
-        /// 铜
-        /// </summary>
-        private int cp => TileID.CopperPlating;
-        /// <summary>
-        /// 核心
-        /// </summary>
-        private int core => TileType<LASERCoreTile>();
+        public override void Load()
+        {
+            //{h, h,  -1,  h, h },
+            //{b, -1, cb, -1, b },
+            //{b, -1, cb, -1, b },
+            //{cp,cp,core,cp,cp },
+            //{h, h,  h,  h,  h },
+            int CrystalBlock = TileType<MagicCrystalBlockTile>();
+            int HardBasalt = TileType<HardBasaltTile>();
+            int Basalt = TileType<BasaltTile>();
+            int CopperPlating = TileID.CopperPlating;
+            int core = TileType<LASERCoreTile>();
 
-        public override int[,] StructureTile =>
-            new int[5, 5]
-            {
-                {h, h,  -1,  h, h },
-                {b, -1, cb, -1, b },
-                {b, -1, cb, -1, b },
-                {cp,cp,core,cp,cp },
-                {h, h,  h,  h,  h },
-            };
+            AddTile(new (-2, -3), HardBasalt); AddTile(new (-1, -3), HardBasalt);
+                    AddTile(new (1, -3), HardBasalt);AddTile(new (2, -3), HardBasalt);
 
-        public override void OnSuccess(Point origin)
+            AddTile(new (-2, -2), HardBasalt); AddTile(new (-1, -2), HardBasalt);
+                    AddTile(new (1, -3), HardBasalt);AddTile(new (2, -3), HardBasalt);
+
+
+        }
+
+        public override void OnSuccess(Point16 origin)
         {
             base.OnSuccess(origin);
 
             KillAll(origin);
+
+
 
             Item.NewItem(new EntitySource_TileBreak(origin.X, origin.Y), origin.ToWorldCoordinates()
                 , ItemType<LASER>());

@@ -1,5 +1,6 @@
 ﻿using Coralite.Core.Loaders;
 using Coralite.Core.Systems.MagikeSystem.Particles;
+using Coralite.Helpers;
 using InnoVault.PRT;
 using System.Collections.Generic;
 using Terraria;
@@ -22,34 +23,26 @@ namespace Coralite.Core.Systems.MTBStructure
         }
 
         /// <summary>
-        /// 结构的物块
+        /// 多方块结构的信息
         /// </summary>
-        public abstract int[,] StructureTile { get; }
-        /// <summary>
-        /// 结构的墙壁
-        /// </summary>
-        public virtual int[,] StructureWall { get; } = null;
-        /// <summary>
-        /// 结构的液体
-        /// </summary>
-        public virtual int[,] StructureLiquid { get; } = null;
-
-        public Dictionary<Point16, Multiblock> BlkockInfos;
-        public List<Point16> BlkockPosLists;
+        public List<MultiBlockInfo> Infos;
 
         /// <summary>
         /// 多方块信息
         /// </summary>
-        public struct MultiBlockInfo
+        public class MultiBlockInfo
         {
+            public Point16 point;
+
             public bool checkTile;
             public short tileType;
             public short wallType;
             public short liquidType;
-            public short liquidAmount;
+            public byte liquidAmount;
 
-            public MultiBlockInfo(bool checkTile,short tileType, short wallType,short liquidType,short liquidAmount)
+            public MultiBlockInfo(Point16 point,bool checkTile,short tileType, short wallType,short liquidType, byte liquidAmount)
             {
+                this.point = point;
                 this.checkTile = checkTile;
                 this.tileType = tileType;
                 this.wallType = wallType;
@@ -57,30 +50,74 @@ namespace Coralite.Core.Systems.MTBStructure
                 this.liquidAmount = liquidAmount;
             }
 
-            public MultiBlockInfo(bool checkTile, short tileType, short wallType)
+            public MultiBlockInfo(Point16 point, short wallType, bool noTileCheck)
             {
-                this.checkTile = checkTile;
-                this.tileType = tileType;
+                this.point = point;
+                checkTile = false;
                 this.wallType = wallType;
             }
 
-            public MultiBlockInfo(short tileType)
+            public MultiBlockInfo(Point16 point, short tileType)
             {
-                this.checkTile = true;
+                this.point = point;
+                checkTile = true;
                 this.tileType = tileType;
-                this.wallType = 0;
-                this.liquidType = 0;
-                this.liquidAmount = 0;
+                wallType = 0;
+                liquidType = 0;
+                liquidAmount = 0;
             }
+        }
+
+        /// <summary>
+        /// 添加物块
+        /// </summary>
+        /// <param name="tileType"></param>
+        public void AddTile(Point16 pos,int tileType)
+        {
+            Infos ??= new List<MultiBlockInfo>();
+
+            MultiBlockInfo oldInfo = Infos.Find(info => info.point == pos);
+            if (oldInfo != null)
+            {
+                if (oldInfo.checkTile && oldInfo.tileType != tileType)
+                    "你在同一位置重复向多方块结构添加物块，请确认你的代码是否正确！".Dump();
+
+                oldInfo.tileType = (short)tileType;
+                oldInfo.checkTile = true;
+                return;
+            }
+
+            Infos.Add(new MultiBlockInfo(pos, (short)tileType));
+        }
+
+        /// <summary>
+        /// 添加墙壁
+        /// </summary>
+        /// <param name="tileType"></param>
+        public void AddWallCheck(Point16 pos,int wallType)
+        {
+            Infos ??= new List<MultiBlockInfo>();
+
+            MultiBlockInfo oldInfo = Infos.Find(info => info.point == pos);
+            if (oldInfo != null)
+            {
+                if (oldInfo.wallType != wallType)
+                    "你在同一位置重复向多方块结构添加墙壁，请确认你的代码是否正确！".Dump();
+
+                oldInfo.wallType = (short)wallType;
+                return;
+            }
+
+            Infos.Add(new MultiBlockInfo(pos, (short)wallType,true));
         }
 
         /// <summary>
         /// 检测建筑，成功就触发<see cref="OnSuccess"/>
         /// </summary>
         /// <param name="origin"></param>
-        public virtual void CheckStructure(Point origin)
+        public virtual void CheckStructure(Point16 origin)
         {
-            if (!CheckStructureInner(origin, out Point failPoint))
+            if (!CheckStructureInner(origin, out Point16 failPoint))
             {
                 PopupText.NewText(new AdvancedPopupRequest()
                 {
@@ -102,58 +139,43 @@ namespace Coralite.Core.Systems.MTBStructure
         /// </summary>
         /// <param name="origin"></param>
         /// <returns></returns>
-        protected bool CheckStructureInner(Point origin, out Point failPoint)
+        protected bool CheckStructureInner(Point16 origin, out Point16 failPoint)
         {
-            int[,] structureTile = StructureTile;
-            int width = structureTile.GetLength(1);
-            int height = structureTile.GetLength(0);
+            failPoint = origin;
+            foreach (var info in Infos)
+            {
+                Point16 p = origin + info.point;
 
-            Point topleft = origin - new Point(width / 2, height / 2);
+                Tile t = Framing.GetTileSafely(p);
 
-            for (int i = 0; i < height; i++)
-                for (int j = 0; j < width; j++)
-                {
-                    Point p = new Point(topleft.X + j, topleft.Y + i);
-                    Tile tile = Framing.GetTileSafely(p);
-                    int type = structureTile[i, j];
-
-                    if (type >= 0)
-                        if (tile.TileType != type)//检测物块类型
-                        {
-                            failPoint = p;
-                            return false;
-                        }
-
-                    if (StructureWall != null)
+                //检测物块
+                if (info.checkTile)
+                    if (t.TileType != info.tileType)//检测物块类型
                     {
-                        int wallType = StructureWall[i, j];
-
-                        if (wallType >= 0)
-                            if (tile.WallType != wallType)//检测墙壁类型
-                            {
-                                failPoint = p;
-                                return false;
-                            }
+                        failPoint = p;
+                        return false;
                     }
 
-                    if (StructureLiquid != null)
+                //检测墙壁
+                if (info.wallType>0)
+                    if (t.WallType != info.wallType)//检测墙壁类型
                     {
-                        int liquidType = StructureLiquid[i, j];
-
-                        if (liquidType >= 0)
-                            if (tile.WallType != liquidType)//检测墙壁类型
-                            {
-                                failPoint = p;
-                                return false;
-                            }
+                        failPoint = p;
+                        return false;
                     }
-                }
+                //检测液体
+                if (info.liquidAmount > 0)
+                    if (t.LiquidType != info.liquidType || t.LiquidAmount < info.liquidAmount)//检测墙壁类型
+                    {
+                        failPoint = p;
+                        return false;
+                    }
+            }
 
-            failPoint = Point.Zero;
             return true;
         }
 
-        public virtual void Fail(Point failPoint)
+        public virtual void Fail(Point16 failPoint)
         {
             PRTLoader.NewParticle<TileHightlight>(failPoint.ToWorldCoordinates(), Vector2.Zero, Color.Red);
         }
@@ -162,7 +184,7 @@ namespace Coralite.Core.Systems.MTBStructure
         /// 成功检测多方块结构后调用
         /// </summary>
         /// <param name="origin"></param>
-        public virtual void OnSuccess(Point origin)
+        public virtual void OnSuccess(Point16 origin)
         {
 
         }
@@ -171,24 +193,23 @@ namespace Coralite.Core.Systems.MTBStructure
         /// 将多方块结构中的所有物块清除掉
         /// </summary>
         /// <param name="origin"></param>
-        protected void KillAll(Point origin)
+        protected void KillAll(Point16 origin)
         {
-            int[,] structureTile = StructureTile;
-            int width = structureTile.GetLength(1);
-            int height = structureTile.GetLength(0);
+            foreach (var info in Infos)
+            {
+                Point16 p = origin + info.point;
 
-            Point topleft = origin - new Point(width / 2, height / 2);
-            for (int i = 0; i < height; i++)
-                for (int j = 0; j < width; j++)
-                {
-                    Point p = new Point(topleft.X + j, topleft.Y + i);
-                    int type = structureTile[i, j];
+                Tile t = Framing.GetTileSafely(p);
+                if (info.checkTile)
+                    t.ClearTile();
 
-                    if (type >= 0)
-                    {
-                        WorldGen.KillTile(p.X, p.Y, noItem: true);
-                    }
-                }
+                //检测墙壁
+                if (info.wallType > 0)
+                    t.Clear(TileDataType.Wall);
+                //检测液体
+                if (info.liquidAmount > 0)
+                    t.LiquidAmount-= info.liquidAmount;
+            }
         }
     }
 }
