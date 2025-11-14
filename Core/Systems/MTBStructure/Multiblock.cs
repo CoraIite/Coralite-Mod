@@ -5,6 +5,7 @@ using InnoVault.PRT;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.ObjectData;
 
 namespace Coralite.Core.Systems.MTBStructure
 {
@@ -20,6 +21,11 @@ namespace Coralite.Core.Systems.MTBStructure
             MultiblockLoader.structures.Add(this);
 
             Type = MultiblockLoader.ReserveMTBStructureID();
+        }
+
+        public sealed override void SetupContent()
+        {
+            SetStaticDefaults();
         }
 
         /// <summary>
@@ -66,6 +72,16 @@ namespace Coralite.Core.Systems.MTBStructure
                 liquidType = 0;
                 liquidAmount = 0;
             }
+        }
+
+        /// <summary>
+        /// 添加多个物块
+        /// </summary>
+        /// <param name="posTileTypes"></param>
+        public void AddTiles(params (int, int, int)[] posTileTypes)
+        {
+            foreach (var data in posTileTypes)
+                AddTile(new Point16(data.Item1, data.Item2), data.Item3);
         }
 
         /// <summary>
@@ -201,7 +217,13 @@ namespace Coralite.Core.Systems.MTBStructure
 
                 Tile t = Framing.GetTileSafely(p);
                 if (info.checkTile)
-                    t.ClearTile();
+                {
+                    var data = TileObjectData.GetTileData(t);
+                    if (data == null)
+                        WorldGen.KillTile(p.X, p.Y, false, false, true);
+                    else
+                        t.ClearTile();
+                }
 
                 //检测墙壁
                 if (info.wallType > 0)

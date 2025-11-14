@@ -22,7 +22,7 @@ namespace Coralite.Content.Bosses.DigDigDig.EyeOfGlistent
             NPC.damage = 15;
             NPC.defense = 6;
             NPC.knockBackResist = 0.8f;
-            NPC.aiStyle = 5;
+            NPC.aiStyle = NPCAIStyleID.Flying;
             AIType = NPCID.ServantofCthulhu;
             NPC.friendly = false;
             NPC.noGravity = true;

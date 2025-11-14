@@ -116,12 +116,12 @@ namespace Coralite.Core.Systems.MagikeSystem.Spells
         /// <returns></returns>
         public bool CanActivated_SpecialCheck()
         {
-            SpellStructure spellStructure = GetSpellStructure();
+            //SpellStructure spellStructure = GetSpellStructure();
 
-            Point16 p = GetEntityCenter();
+            //Point16 p = GetEntityCenter();
 
-            //检测连接
-            if (!spellStructure.CheckSpell(p.ToPoint()))
+            ////检测连接
+            //if (!spellStructure.CheckSpell(p.ToPoint()))
                 return false;
 
             return true;
@@ -225,7 +225,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Spells
         private void Button_OnLeftClick(UIMouseEvent evt, UIElement listeningElement)
         {
             var structure = GetSpellStructure();
-            structure.CheckStructure(GetEntityCenter().ToPoint());
+            //structure.CheckStructure(GetEntityCenter().ToPoint());
         }
 
         #endregion

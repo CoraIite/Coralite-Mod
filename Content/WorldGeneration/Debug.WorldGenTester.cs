@@ -1,4 +1,5 @@
-﻿using Coralite.Core;
+﻿using Coralite.Content.Items.ThyphionSeries;
+using Coralite.Core;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -16,7 +17,7 @@ namespace Coralite.Content.WorldGeneration
         {
             Item.useTime = Item.useAnimation = 30;
             Item.useStyle = ItemUseStyleID.Swing;
-            //Item.shoot = 1;
+            Item.shoot = 1;
         }
 
         public override void UpdateAccessory(Player player, bool hideVisual)
@@ -28,7 +29,7 @@ namespace Coralite.Content.WorldGeneration
             //if (Main.myPlayer == player.whoAmI)
             //{
             //    float rot = (Main.MouseWorld - player.Center).ToRotation();
-            //    Projectile.NewProjectile(source, player.Center, Vector2.Zero, ModContent.ProjectileType<CrystalLaser>(), 10, 0, player.whoAmI, rot);
+            Projectile.NewProjectile(source, player.Center, Vector2.Zero, ModContent.ProjectileType<TurbulenceSpawnProj>(), 0, 0, player.whoAmI);
 
             //}
             return false;
@@ -36,9 +37,9 @@ namespace Coralite.Content.WorldGeneration
 
         public override bool CanUseItem(Player player)
         {
-            Main.hardMode = true;
-            Vector2 myVector = Main.MouseWorld;
-            Point p = myVector.ToTileCoordinates();
+            //Main.hardMode = true;
+            //Vector2 myVector = Main.MouseWorld;
+            //Point p = myVector.ToTileCoordinates();
 
             //CoraliteWorld.GenGenFairyPortal_AcutallyGen(p);
             //NPC.downedBoss1 = true;

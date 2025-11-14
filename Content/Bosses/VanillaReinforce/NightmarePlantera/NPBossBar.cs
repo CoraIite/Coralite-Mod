@@ -54,18 +54,18 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             tentacle.UpdateTentacle(920 / 180f, (i) => 2 * MathF.Sin(i / 6f * (0.75f + (0.5f * MathF.Sin(Main.GlobalTimeWrappedHourly)))));
 
             spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, default, Main.GameViewMatrix.ZoomMatrix);
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.AlphaBlend, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, default, Main.UIScaleMatrix);
 
             tentacle?.DrawTentacle_NoEndBegin_UI();
             //还原原版的绘制参数
             spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, default, Main.GameViewMatrix.ZoomMatrix);
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.NonPremultiplied, SamplerState.PointWrap, DepthStencilState.Default, RasterizerState.CullNone, default, Main.UIScaleMatrix);
 
-            Vector2 trueCenter = barCenter + new Vector2(0, 30);
+            Vector2 trueCenter = barCenter;
             spriteBatch.Draw(nameExtra.Value, trueCenter, null, mainColor, 0, nameExtra.Size() / 2, new Vector2(0.75f, 0.6f), 0, 0);
 
             spriteBatch.End();
-            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, null, null, null, Main.GameViewMatrix.ZoomMatrix);
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, Main.DefaultSamplerState, null, null, null, Main.UIScaleMatrix);
 
             bool showText = drawParams.ShowText;
             float life = drawParams.Life;
@@ -73,7 +73,7 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
             Point barSize = new(920, 20); //条条尺寸
 
-            Rectangle barPosition = Utils.CenteredRectangle(trueCenter, (barSize + new Point(4, 0)).ToVector2());
+            Rectangle barPosition = Utils.CenteredRectangle(trueCenter, new Vector2(1,1));
 
             if (BigProgressBarSystem.ShowText && showText)
             {

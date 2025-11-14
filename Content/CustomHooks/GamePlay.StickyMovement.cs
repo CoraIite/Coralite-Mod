@@ -188,7 +188,7 @@ namespace Coralite.Content.CustomHooks
                         vector2.Y = j * 16;
                         if (vector.X + Width > vector2.X - num5 && vector.X < vector2.X + 16f + num5 && vector.Y + Height > vector2.Y && vector.Y < vector2.Y + 16.01)
                         {
-                            if (tile.TileType == 51 && (double)(Math.Abs(Velocity.X) + Math.Abs(Velocity.Y)) > 0.7 && Main.rand.NextBool(30))
+                            if (tile.TileType == TileID.Cobweb && (double)(Math.Abs(Velocity.X) + Math.Abs(Velocity.Y)) > 0.7 && Main.rand.NextBool(30))
                             {
                                 Dust.NewDust(new Vector2(i * 16, j * 16), 16, 16, DustID.Web);
                             }

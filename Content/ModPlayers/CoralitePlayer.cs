@@ -7,6 +7,7 @@ using Coralite.Content.Items.Thunder;
 using Coralite.Content.Projectiles.Globals;
 using Coralite.Content.WorldGeneration;
 using Coralite.Core;
+using Coralite.Core.Systems.WorldValueSystem;
 using Coralite.Core.Systems.YujianSystem;
 using Coralite.Helpers;
 using InnoVault.PRT;
@@ -801,6 +802,14 @@ namespace Coralite.Content.ModPlayers
 
         }
 
+        public override void SyncPlayer(int toWho, int fromWho, bool newPlayer)
+        {
+            if (newPlayer)
+            {
+                WorldValueSystem.RequestForSync();
+            }
+        }
+
         #endregion
 
         #region IO
@@ -819,10 +828,12 @@ namespace Coralite.Content.ModPlayers
 
         public override void OnEnterWorld()
         {
-            if (CoraliteWorld.CoralCatWorld)
-                Player.QuickSpawnItem(Player.GetSource_FromThis(), ItemID.Meowmere);
+            //if (CoraliteWorld.CoralCatWorld)
+            //    Player.QuickSpawnItem(Player.GetSource_FromThis(), ItemID.Meowmere);
 
             Main.NewText(CoraliteSystem.OnEnterWorld.Value, Color.Coral);
+
+            WorldValueSystem.OnEnterWorld();
         }
     }
 }

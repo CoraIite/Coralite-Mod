@@ -1,4 +1,5 @@
 ﻿using Coralite.Core;
+using Coralite.Core.Network;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;

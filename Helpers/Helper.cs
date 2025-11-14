@@ -1,6 +1,9 @@
-﻿using Coralite.Core.Systems.FairyCatcherSystem;
+﻿using Coralite.Core.Loaders;
+using Coralite.Core.Systems.FairyCatcherSystem;
 using ReLogic.Utilities;
+using Stubble.Core.Classes;
 using System;
+using System.IO;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;

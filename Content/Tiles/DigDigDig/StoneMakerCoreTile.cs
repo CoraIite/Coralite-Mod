@@ -3,6 +3,7 @@ using Coralite.Core;
 using Coralite.Core.Systems.MTBStructure;
 using System.Linq;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ObjectData;
 
@@ -28,7 +29,7 @@ namespace Coralite.Content.Tiles.DigDigDig
 
         public override bool RightClick(int i, int j)
         {
-            CoraliteContent.GetMTBS<DigStoneMakerMTB>().CheckStructure(new Point(i, j));
+            CoraliteContent.GetMTBS<DigStoneMakerMTB>().CheckStructure(new Point16(i, j));
 
             return true;
         }

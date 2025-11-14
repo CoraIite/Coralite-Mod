@@ -408,7 +408,7 @@ namespace Coralite.Content.CustomHooks
                             if (!flag6 && (anchorBottom.type & AnchorType.PlatformNonHammered) == AnchorType.PlatformNonHammered && TileID.Sets.Platforms[tileSafely.TileType] && tileSafely.Slope == 0 && !tileSafely.IsHalfBlock)
                                 flag6 = tileData.isValidTileAnchor(tileSafely.TileType);
 
-                            if (!flag6 && (anchorBottom.type & AnchorType.PlanterBox) == AnchorType.PlanterBox && tileSafely.TileType == 380)
+                            if (!flag6 && (anchorBottom.type & AnchorType.PlanterBox) == AnchorType.PlanterBox && tileSafely.TileType == TileID.PlanterBox)
                                 flag6 = tileData.isValidTileAnchor(tileSafely.TileType);
 
                             if (!flag6 && (anchorBottom.type & AnchorType.SolidSide) == AnchorType.SolidSide && Main.tileSolid[tileSafely.TileType] && !Main.tileSolidTop[tileSafely.TileType])

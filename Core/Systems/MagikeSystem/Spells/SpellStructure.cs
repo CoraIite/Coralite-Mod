@@ -15,30 +15,10 @@ namespace Coralite.Core.Systems.MagikeSystem.Spells
 {
     public abstract class SpellStructure : Multiblock
     {
-        public override int[,] StructureTile
-        {
-            get
-            {
-                throw new NotImplementedException("对于法术多方块结构，请勿使用这个东西！");
-            }
-        }
-
-
         /// <summary>
         /// 法术的连接
         /// </summary>
         public List<(Point, Point)> SpellCheck { get; protected set; }
-
-        /// <summary>
-        /// 法术的物块类型
-        /// </summary>
-        public Dictionary<Point, ushort> SpellTiles { get; protected set; }
-
-        /// <summary>
-        /// 法术的物块类型，未激活前的
-        /// </summary>
-        public Dictionary<Point, ushort> SpellTilesOrigin { get; protected set; }
-
 
         /// <summary>
         /// 向法术中添加一个节点
@@ -47,15 +27,11 @@ namespace Coralite.Core.Systems.MagikeSystem.Spells
         /// <param name="target"></param>
         /// <param name="notActiveTile"></param>
         /// <param name="activeTile"></param>
-        public void AddSpell(Point origin, Point target, ushort notActiveTile, ushort activeTile)
+        public void AddSpell(Point origin, Point target, ushort activeTile)
         {
             SpellCheck ??= new List<(Point, Point)>();
-            SpellTiles ??= new();
-            SpellTilesOrigin ??= new();
 
             SpellCheck.Add((origin, target));
-            SpellTiles.TryAdd(origin, activeTile);
-            SpellTilesOrigin.TryAdd(origin, notActiveTile);
         }
 
         /// <summary>
@@ -64,12 +40,12 @@ namespace Coralite.Core.Systems.MagikeSystem.Spells
         /// <param name="notActiveTile"></param>
         /// <param name="activeTile"></param>
         /// <param name="shapeNode"></param>
-        public void AddSpellShape(ushort notActiveTile, ushort activeTile, params Point[] shapeNode)
+        public void AddSpellShape( ushort activeTile, params Point[] shapeNode)
         {
             for (int i = 0; i < shapeNode.Length - 1; i++)
-                AddSpell(shapeNode[i], shapeNode[i + 1], notActiveTile, activeTile);
+                AddSpell(shapeNode[i], shapeNode[i + 1], activeTile);
 
-            AddSpell(shapeNode[^1], shapeNode[0], notActiveTile, activeTile);
+            AddSpell(shapeNode[^1], shapeNode[0], activeTile);
         }
 
         /// <summary>
@@ -77,127 +53,127 @@ namespace Coralite.Core.Systems.MagikeSystem.Spells
         /// 如果有物块消失那么就干掉整个多物块结构
         /// </summary>
         /// <param name="center"></param>
-        public virtual bool CheckSpell(Point center)
-        {
-            foreach (var item in SpellCheck)
-            {
-                Point p = center + item.Item1;
-                Tile t = Framing.GetTileSafely(p);
+        //public virtual bool CheckSpell(Point center)
+        //{
+        //    foreach (var item in SpellCheck)
+        //    {
+        //        Point p = center + item.Item1;
+        //        Tile t = Framing.GetTileSafely(p);
 
-                //检测物块类型
-                if (t.TileType != SpellTiles[item.Item1])
-                {
-                    DestroySpell(center);
-                    return false;
-                }
+        //        //检测物块类型
+        //        if (t.TileType != SpellTiles[item.Item1])
+        //        {
+        //            DestroySpell(center);
+        //            return false;
+        //        }
 
-                //获取tp
-                if (!MagikeHelper.TryGetEntityWithTopLeft(new Point16(p), out var tp))
-                {
-                    DestroySpell(center);
-                    return false;
-                }
+        //        //获取tp
+        //        if (!MagikeHelper.TryGetEntityWithTopLeft(new Point16(p), out var tp))
+        //        {
+        //            DestroySpell(center);
+        //            return false;
+        //        }
 
-                //检测线性连接
-                if (!tp.TryGetComponent(MagikeComponentID.MagikeSender, out CheckOnlyLinerSender sender))
-                {
-                    DestroySpell(center);
-                    return false;
-                }
+        //        //检测线性连接
+        //        if (!tp.TryGetComponent(MagikeComponentID.MagikeSender, out CheckOnlyLinerSender sender))
+        //        {
+        //            DestroySpell(center);
+        //            return false;
+        //        }
 
-                if (!sender.Receivers.Contains(new Point8(item.Item2)))
-                    return false;
-            }
+        //        if (!sender.Receivers.Contains(new Point8(item.Item2)))
+        //            return false;
+        //    }
 
-            return true;
-        }
+        //    return true;
+        //}
 
         /// <summary>
         /// 破坏多方块结构，将特殊物块还原为正常物块
         /// </summary>
         /// <param name="center"></param>
-        public virtual void DestroySpell(Point center)
-        {
-            var structureTile = SpellTilesOrigin;
+        //public virtual void DestroySpell(Point16 center)
+        //{
+        //    var structureTile = SpellTilesOrigin;
 
-            foreach (var item in structureTile)
-            {
-                Point p = center + item.Key;
-                Tile tile = Framing.GetTileSafely(p);
-                if (!tile.HasTile)
-                    continue;
+        //    foreach (var item in structureTile)
+        //    {
+        //        Point p = center + item.Key;
+        //        Tile tile = Framing.GetTileSafely(p);
+        //        if (!tile.HasTile)
+        //            continue;
 
-                if (tile.TileType != SpellTiles[item.Key])
-                    continue;
+        //        if (tile.TileType != SpellTiles[item.Key])
+        //            continue;
 
-                WorldGen.KillTile(p.X, p.Y, noItem: true);
-                WorldGen.PlaceTile(p.X, p.Y, item.Value, true);
-            }
-        }
+        //        WorldGen.KillTile(p.X, p.Y, noItem: true);
+        //        WorldGen.PlaceTile(p.X, p.Y, item.Value, true);
+        //    }
+        //}
 
         #region 多方块结构激活部分
 
-        public override void CheckStructure(Point center)
-        {
-            foreach (var p in Main.projectile.Where(p => p.active && p.friendly && p.type == ModContent.ProjectileType<SpellStructurePreviewProj>() && p.ai[0] == Type))
-                p.Kill();
+        //public override void CheckStructure(Point16 center)
+        //{
+        //    foreach (var p in Main.projectile.Where(p => p.active && p.friendly && p.type == ModContent.ProjectileType<SpellStructurePreviewProj>() && p.ai[0] == Type))
+        //        p.Kill();
 
-            Projectile.NewProjectile(new EntitySource_TileUpdate(center.X, center.Y), center.ToWorldCoordinates(0, 0), Vector2.Zero
-                , ModContent.ProjectileType<SpellStructurePreviewProj>(), 0, 0, Main.myPlayer, Type, center.X, center.Y);
+        //    Projectile.NewProjectile(new EntitySource_TileUpdate(center.X, center.Y), center.ToWorldCoordinates(0, 0), Vector2.Zero
+        //        , ModContent.ProjectileType<SpellStructurePreviewProj>(), 0, 0, Main.myPlayer, Type, center.X, center.Y);
 
-            if (!CheckSpellStructure(center, out Point failPoint))
-            {
-                PopupText.NewText(new AdvancedPopupRequest()
-                {
-                    Color = Color.Red,
-                    Text = MultiblockSystem.FailText.Value,
-                    DurationInFrames = 60,
-                    Velocity = -Vector2.UnitY
-                }, center.ToWorldCoordinates() - (Vector2.UnitY * 32));
+        //    if (!CheckSpellStructure(center, out Point16 failPoint))
+        //    {
+        //        PopupText.NewText(new AdvancedPopupRequest()
+        //        {
+        //            Color = Color.Red,
+        //            Text = MultiblockSystem.FailText.Value,
+        //            DurationInFrames = 60,
+        //            Velocity = -Vector2.UnitY
+        //        }, center.ToWorldCoordinates() - (Vector2.UnitY * 32));
 
-                Fail(failPoint);
-                return;
-            }
+        //        Fail(failPoint);
+        //        return;
+        //    }
 
-            OnSuccess(center);
-        }
+        //    OnSuccess(center);
+        //}
 
-        public virtual bool CheckSpellStructure(Point center, out Point failPoint)
-        {
-            DestroySpell(center);
+        //public virtual bool CheckSpellStructure(Point16 center, out Point16 failPoint)
+        //{
+        //    DestroySpell(center);
 
-            var structureTile = SpellTilesOrigin;
+        //    var structureTile = SpellTilesOrigin;
 
-            foreach (var item in structureTile)
-            {
-                Point p = center + item.Key;
-                Tile t = Framing.GetTileSafely(p);
-                if (!t.HasTile || t.TileType != item.Value)
-                {
-                    failPoint = p;
-                    return false;
-                }
-            }
+        //    foreach (var item in structureTile)
+        //    {
+        //        Point16 p = center + item.Key;
+        //        Tile t = Framing.GetTileSafely(p);
+        //        if (!t.HasTile || t.TileType != item.Value)
+        //        {
+        //            failPoint = p;
+        //            return false;
+        //        }
+        //    }
 
-            failPoint = Point.Zero;
-            return true;
-        }
+        //    failPoint = Point.Zero;
+        //    return true;
+        //}
 
-        public override void OnSuccess(Point center)
-        {
-            foreach (var p in Main.projectile.Where(p => p.active && p.friendly && p.type == ModContent.ProjectileType<SpellStructurePreviewProj>() && p.ai[0] == Type))
-                p.Kill();
+        //public override void OnSuccess(Point center)
+        //{
+        //    foreach (var p in Main.projectile.Where(p => p.active && p.friendly && p.type == ModContent.ProjectileType<SpellStructurePreviewProj>() && p.ai[0] == Type))
+        //        p.Kill();
 
-            var structureTile = SpellTiles;
+        //    var structureTile = SpellTiles;
 
-            foreach (var item in structureTile)
-            {
-                Point p = center + item.Key;
+        //    foreach (var item in structureTile)
+        //    {
+        //        Point p = center + item.Key;
 
-                WorldGen.KillTile(p.X, p.Y, noItem: true);
-                WorldGen.PlaceTile(p.X, p.Y, item.Value, true);
-            }
-        }
+        //        WorldGen.KillTile(p.X, p.Y, noItem: true);
+        //        WorldGen.PlaceTile(p.X, p.Y, item.Value, true);
+        //    }
+        //}
 
         #endregion
     }
@@ -226,72 +202,72 @@ namespace Coralite.Core.Systems.MagikeSystem.Spells
             => false;
 
 
-        public override bool PreDraw(ref Color lightColor)
-        {
-            Dictionary<Point, ushort> spellTilesOrigin = (MultiblockLoader.GetMTBStructure((int)MTBID) as SpellStructure).SpellTilesOrigin;
+        //public override bool PreDraw(ref Color lightColor)
+        //{
+        //    Dictionary<Point, ushort> spellTilesOrigin = (MultiblockLoader.GetMTBStructure((int)MTBID) as SpellStructure).SpellTilesOrigin;
 
-            Point center = Center;
+        //    Point center = Center;
 
-            foreach (var item in spellTilesOrigin)
-            {
-                Point p = center + item.Key;
-                int type = item.Value;
+        //    foreach (var item in spellTilesOrigin)
+        //    {
+        //        Point p = center + item.Key;
+        //        int type = item.Value;
 
-                Tile tile = Framing.GetTileSafely(p);
-                if (tile.HasTile)
-                {
-                    if (tile.TileType != type)
-                    {
-                        Texture2D tex = Projectile.GetTexture();
-                        Vector2 pos = p.ToWorldCoordinates() - Main.screenPosition;
+        //        Tile tile = Framing.GetTileSafely(p);
+        //        if (tile.HasTile)
+        //        {
+        //            if (tile.TileType != type)
+        //            {
+        //                Texture2D tex = Projectile.GetTexture();
+        //                Vector2 pos = p.ToWorldCoordinates() - Main.screenPosition;
 
-                        Main.spriteBatch.Draw(tex, pos, null, Color.Red * 0.5f
-                            , 0, tex.Size() / 2, 0.5f, 0, 0);
+        //                Main.spriteBatch.Draw(tex, pos, null, Color.Red * 0.5f
+        //                    , 0, tex.Size() / 2, 0.5f, 0, 0);
 
-                        int itemType = TileLoader.GetItemDropFromTypeAndStyle(type);
+        //                int itemType = TileLoader.GetItemDropFromTypeAndStyle(type);
 
-                        Main.instance.LoadItem(itemType);
-                        Texture2D itemTex = TextureAssets.Item[itemType].Value;
+        //                Main.instance.LoadItem(itemType);
+        //                Texture2D itemTex = TextureAssets.Item[itemType].Value;
 
-                        float colorA = 0.5f;
-                        float scale = 0.9f;
-                        if (Helper.MouseScreenInRect(new Rectangle((int)pos.X - 8, (int)pos.Y - 8, 16, 16)))
-                        {
-                            colorA = 1f;
-                            scale = 1.2f;
+        //                float colorA = 0.5f;
+        //                float scale = 0.9f;
+        //                if (Helper.MouseScreenInRect(new Rectangle((int)pos.X - 8, (int)pos.Y - 8, 16, 16)))
+        //                {
+        //                    colorA = 1f;
+        //                    scale = 1.2f;
 
-                            Utils.DrawBorderString(Main.spriteBatch, ContentSamples.ItemsByType[itemType].Name, pos - new Vector2(0, 16)
-                                , Color.White, anchorx: 0.5f, anchory: 0.5f);
-                        }
+        //                    Utils.DrawBorderString(Main.spriteBatch, ContentSamples.ItemsByType[itemType].Name, pos - new Vector2(0, 16)
+        //                        , Color.White, anchorx: 0.5f, anchory: 0.5f);
+        //                }
 
-                        Main.spriteBatch.Draw(itemTex, pos, null, Color.White * colorA, 0, itemTex.Size() / 2, scale, 0, 0);
-                    }
-                }
-                else
-                {
-                    int itemType = TileLoader.GetItemDropFromTypeAndStyle(type);
+        //                Main.spriteBatch.Draw(itemTex, pos, null, Color.White * colorA, 0, itemTex.Size() / 2, scale, 0, 0);
+        //            }
+        //        }
+        //        else
+        //        {
+        //            int itemType = TileLoader.GetItemDropFromTypeAndStyle(type);
 
-                    Main.instance.LoadItem(itemType);
-                    Texture2D itemTex = TextureAssets.Item[itemType].Value;
+        //            Main.instance.LoadItem(itemType);
+        //            Texture2D itemTex = TextureAssets.Item[itemType].Value;
 
-                    Vector2 pos = p.ToWorldCoordinates() - Main.screenPosition;
-                    float colorA = 0.5f;
-                    float scale = 0.9f;
-                    if (Helper.MouseScreenInRect(new Rectangle((int)pos.X - 8, (int)pos.Y - 8, 16, 16)))
-                    {
-                        colorA = 1f;
-                        scale = 1.2f;
+        //            Vector2 pos = p.ToWorldCoordinates() - Main.screenPosition;
+        //            float colorA = 0.5f;
+        //            float scale = 0.9f;
+        //            if (Helper.MouseScreenInRect(new Rectangle((int)pos.X - 8, (int)pos.Y - 8, 16, 16)))
+        //            {
+        //                colorA = 1f;
+        //                scale = 1.2f;
 
-                        Utils.DrawBorderString(Main.spriteBatch, ContentSamples.ItemsByType[itemType].Name, pos - new Vector2(0, 16)
-                            , Color.White, anchorx: 0.5f, anchory: 0.5f);
-                    }
+        //                Utils.DrawBorderString(Main.spriteBatch, ContentSamples.ItemsByType[itemType].Name, pos - new Vector2(0, 16)
+        //                    , Color.White, anchorx: 0.5f, anchory: 0.5f);
+        //            }
 
-                    Main.spriteBatch.Draw(itemTex, pos, null, Color.White * colorA, 0, itemTex.Size() / 2, scale, 0, 0);
-                }
+        //            Main.spriteBatch.Draw(itemTex, pos, null, Color.White * colorA, 0, itemTex.Size() / 2, scale, 0, 0);
+        //        }
 
-            }
+        //    }
 
-            return false;
-        }
+        //    return false;
+        //}
     }
 }

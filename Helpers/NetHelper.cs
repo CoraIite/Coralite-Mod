@@ -4,7 +4,9 @@ using Coralite.Core.Systems.MagikeSystem.Components;
 using System;
 using System.IO;
 using System.Linq;
+using Terraria;
 using Terraria.DataStructures;
+using Terraria.ModLoader.IO;
 
 namespace Coralite.Helpers
 {
@@ -42,7 +44,7 @@ namespace Coralite.Helpers
         /// <param name="modPacket"></param>
         /// <param name="point16"></param>
         /// <param name="packType"></param>
-        public static void WriteMagikePack(this ModPacket modPacket, Point16 point16, MagikeNetPackType packType)
+        public static void WriteMagikePack(this BinaryWriter modPacket, Point16 point16, MagikeNetPackType packType)
         {
             modPacket.Write(point16.X);
             modPacket.Write(point16.Y);
@@ -54,7 +56,7 @@ namespace Coralite.Helpers
         /// </summary>
         /// <param name="modPacket"></param>
         /// <param name="pack"></param>
-        public static void WriteMagikePack(this ModPacket modPacket, MagikeNetPack pack)
+        public static void WriteMagikePack(this BinaryWriter modPacket, MagikeNetPack pack)
         {
             modPacket.Write(pack.Position.X);
             modPacket.Write(pack.Position.Y);
@@ -73,6 +75,64 @@ namespace Coralite.Helpers
             packType = (MagikeNetPackType)reader.ReadByte();
         }
 
+        /// <summary>
+        /// 写入bool数组
+        /// </summary>
+        /// <param name="pack"></param>
+        /// <param name="bools"></param>
+        public static void WriteBools(this BinaryWriter pack, bool[] bools)
+        {
+            int count = bools.Length;
+            int writeCount = 0;
+
+            pack.Write(count);
+
+            for (int i = 0; i < count / 8 + 1; i++)
+            {
+                BitsByte bt = new BitsByte();
+                for (int j = 0; j < 8; j++)
+                {
+                    bt[j] = bools[writeCount];//写入对应的值
+
+                    writeCount++;
+                    if (writeCount > count - 1)
+                        break;
+                }
+
+                pack.Write(bt);
+            }
+        }
+
+        /// <summary>
+        /// 读取bool数组
+        /// </summary>
+        /// <param name="reader"></param>
+        /// <param name="bools"></param>
+        public static void ReadBools(this BinaryReader reader, bool[] bools)
+        {
+            int count = reader.ReadInt32();
+
+            int k = 0;
+
+            for (int i = 0; i < count / 8 + 1; i++)
+            {
+                BitsByte b = reader.ReadBitsByte();
+
+                for (int j = 0; j < 8; j++)
+                {
+                    if (bools.Length - 1 < k)
+                    {
+                        "发生数组越界错误，请检查发包中的数组和接收的数组是不是一个东西！".Dump();
+                        return;
+                    }
+
+                    bools[k] = b[j];
+                    k++;
+                    if (k > count - 1)
+                        return;
+                }
+            }
+        }
 
 
 

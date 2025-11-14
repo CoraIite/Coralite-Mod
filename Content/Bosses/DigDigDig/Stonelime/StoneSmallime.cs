@@ -21,7 +21,7 @@ namespace Coralite.Content.Bosses.DigDigDig.Stonelime
 
         public override void SetDefaults()
         {
-            NPC.aiStyle = 1;
+            NPC.aiStyle = NPCAIStyleID.Slime;
             NPC.damage = 7;
             NPC.defense = 2;
             NPC.lifeMax = 25;

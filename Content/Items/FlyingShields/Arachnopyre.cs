@@ -75,7 +75,7 @@ namespace Coralite.Content.Items.FlyingShields
             Projectile.rotation = Projectile.velocity.ToRotation();
 
             Tile tile = Framing.GetTileSafely(Projectile.Center);
-            if (tile.WallType != 0)
+            if (tile.WallType != WallID.None)
             {
                 Timer -= 0.5f;
             }

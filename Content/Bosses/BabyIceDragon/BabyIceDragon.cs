@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.Items.Icicle;
 using Coralite.Content.Particles;
 using Coralite.Core;
+using Coralite.Core.Network;
 using Coralite.Core.Systems.BossSystems;
 using Coralite.Helpers;
 using InnoVault.PRT;

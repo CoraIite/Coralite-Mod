@@ -7,6 +7,7 @@ global using Particle = InnoVault.PRT.BasePRT;
 
 using Coralite.Compat.BossCheckList;
 using Coralite.Core;
+using Coralite.Core.Network;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.BossSystems;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;

@@ -3,6 +3,7 @@ using Coralite.Content.Items.MagikeSeries1;
 using Coralite.Content.ModPlayers;
 using Coralite.Content.UI.MagikeApparatusPanel;
 using Coralite.Core.Loaders;
+using Coralite.Core.Network;
 using Coralite.Core.Systems.CoraliteActorComponent;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.Components.Filters;

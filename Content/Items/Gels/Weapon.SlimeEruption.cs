@@ -81,7 +81,7 @@ namespace Coralite.Content.Items.Gels
         {
             Projectile.width = 14;
             Projectile.height = 14;
-            Projectile.aiStyle = 60;
+            Projectile.aiStyle = ProjAIStyleID.WaterJet;
             Projectile.alpha = 255;
             Projectile.penetrate = -1;
             Projectile.extraUpdates = 2;

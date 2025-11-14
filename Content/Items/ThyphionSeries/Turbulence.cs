@@ -1,4 +1,5 @@
-﻿using Coralite.Content.ModPlayers;
+﻿using Coralite.Content.Dusts;
+using Coralite.Content.ModPlayers;
 using Coralite.Content.Particles;
 using Coralite.Core;
 using Coralite.Core.Configs;
@@ -12,6 +13,8 @@ using Coralite.Helpers;
 using InnoVault.PRT;
 using InnoVault.Trails;
 using Microsoft.Xna.Framework.Graphics;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
@@ -860,7 +863,7 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public override bool RightClick(int i, int j)
         {
-            CoraliteContent.GetMTBS<TurbulenceMultiBlock>().CheckStructure(new Point(i, j + 1));
+            CoraliteContent.GetMTBS<TurbulenceMultiBlock>().CheckStructure(new Point16(i, j));
 
             return true;
         }
@@ -875,40 +878,218 @@ namespace Coralite.Content.Items.ThyphionSeries
 
     public class TurbulenceMultiBlock : PreviewMultiblock
     {
-        /// <summary>
-        /// 铅砖
-        /// </summary>
-        private int lb => TileID.LeadBrick;
-        /// <summary>
-        /// 蓝宝石块
-        /// </summary>
-        private int s => TileID.SapphireGemspark;
-        /// <summary>
-        /// 花岗岩
-        /// </summary>
-        private int g => TileID.GraniteBlock;
-        /// <summary>
-        /// 核心方块
-        /// </summary>
-        private int core => TileType<TurbulenceCoreTile>();
-
-        public override int[,] StructureTile =>
-            new int[5, 11]
-            {
-                {-1, -1, -1, g, -1, -1, -1, g, -1, -1, -1 },
-                {-1, -1, g ,lb, lb,core,lb,lb, g ,-1 ,-1  },
-                {-1, g ,lb ,-1,lb ,lb ,lb ,-1, lb, g ,-1  },
-                {g ,lb ,-1 ,-1,-1 ,-1 ,-1 ,-1,-1 ,lb ,g   },
-                {lb,-1 ,s  ,s  ,s ,s  ,s  ,s ,s  ,-1 ,lb  },
-            };
-
-        public override void OnSuccess(Point origin)
+        public override void SetStaticDefaults()
         {
+            int LeadBrick = TileID.LeadBrick;
+            int SapphireGemspark = TileID.SapphireGemspark;
+            int GraniteBlock = TileID.GraniteBlock;
+            int Core = TileType<TurbulenceCoreTile>();
+
+            //{-1, -1, -1, g, -1, -1, -1, g, -1, -1, -1 },
+            //{-1, -1, g ,lb, lb,core,lb,lb, g ,-1 ,-1  },
+            //{-1, g ,lb ,-1,lb ,lb ,lb ,-1, lb, g ,-1  },
+            //{g ,lb ,-1 ,-1,-1 ,-1 ,-1 ,-1,-1 ,lb ,g   },
+            //{lb,-1 ,s  ,s  ,s ,s  ,s  ,s ,s  ,-1 ,lb  },
+
+            AddTiles((-3, -5, LeadBrick), (-2, -5, GraniteBlock));
+            AddTiles((-2, -4, LeadBrick), (-1, -4, GraniteBlock));
+            AddTiles((-3, -3, SapphireGemspark), (-1, -3, LeadBrick), (0, -3, GraniteBlock));
+            AddTiles((-3, -2, SapphireGemspark), (0, -2, LeadBrick), (1, -2, GraniteBlock));
+            AddTiles((-3, -1, SapphireGemspark), (-1, -1, LeadBrick), (0, -1, LeadBrick));
+            AddTiles((-3, 0, SapphireGemspark), (-1, 0, LeadBrick), (0, 0, Core));
+            AddTiles((-3, 1, SapphireGemspark), (-1, 1, LeadBrick), (0, 1, LeadBrick));
+            AddTiles((-3, 2, SapphireGemspark), (0, 2, LeadBrick), (1, 2, GraniteBlock));
+            AddTiles((-3, 3, SapphireGemspark), (-1, 3, LeadBrick), (0, 3, GraniteBlock));
+            AddTiles((-2, 4, LeadBrick), (-1, 4, GraniteBlock));
+            AddTiles((-3, 5, LeadBrick), (-2, 5, GraniteBlock));
+        }
+
+        public override void OnSuccess(Point16 origin)
+         {
             base.OnSuccess(origin);
 
             KillAll(origin);
 
-            Item.NewItem(new EntitySource_TileBreak(origin.X, origin.Y), origin.ToWorldCoordinates(), ItemType<Turbulence>());
+            Projectile.NewProjectile(new EntitySource_TileBreak(origin.X, origin.Y)
+                , origin.ToWorldCoordinates(), Vector2.Zero, ProjectileType<TurbulenceSpawnProj>(), 0, 0, Main.myPlayer);
         }
     }
+
+    public class TurbulenceSpawnProj : ModProjectile
+    {
+        public override string Texture => AssetDirectory.ThyphionSeriesItems + "TurbulenceCore";
+
+        public ref float Timer =>ref Projectile.ai[0];
+
+        public override bool ShouldUpdatePosition() => false;
+
+        public override void AI()
+        {
+            Timer++;
+
+            Projectile.rotation += Timer * 0.003f;
+
+            Lighting.AddLight(Projectile.Center, new Color(104, 199, 221).ToVector3() * 0.5f);
+
+            if (Timer < 80 + 60)
+            {
+                if (Timer > 80)
+                    Projectile.scale = Helper.Lerp(Projectile.scale, 0, 0.05f);
+                else
+                    Projectile.scale += 0.01f;
+                Dust d = Dust.NewDustPerfect(Projectile.Center, DustID.AncientLight
+                    , Helper.NextVec2Dir(2, 8), 75, Scale: Main.rand.NextFloat(1, 2f));
+                d.noGravity = true;
+                if (Timer % 2 == 0)
+                {
+                    TurbulenceTwistParticle.Spawn(Projectile.Center, Helper.NextVec2Dir(8, 12)
+                        , Main.rand.NextFromList(new Color(108, 133, 161), new Color(104, 199, 221))
+                        , Main.rand.NextFloat(0.1f, 0.25f), trailCacheCount: 15);
+                }
+
+                if (Timer % 20 == 0)
+                {
+                    Helper.PlayPitched("Icicle/Wind" + Main.rand.Next(1, 3).ToString(), 0.4f, 0.8f, Projectile.Center);
+                }
+            }
+            else
+            {
+                for (int j = 0; j < 30; j++)
+                {
+                    Dust d = Dust.NewDustPerfect(Projectile.Center, DustID.AncientLight
+                        , Helper.NextVec2Dir(2,16), 75, Scale: Main.rand.NextFloat(1, 2.5f));
+                    d.noGravity = true;
+                }
+
+                Dust.NewDustPerfect(Projectile.Center, DustType<CircleExplode>(), Vector2.Zero
+                    , newColor: new Color(104, 199, 221,130) * 0.8f, Scale: 0.1f);
+
+                if (Projectile.IsOwnedByLocalPlayer())
+                {
+                    int index = Item.NewItem(Projectile.GetSource_FromThis()
+                        , Projectile.Center, ItemType<Turbulence>());
+
+                    if (Main.netMode == NetmodeID.MultiplayerClient)
+                        NetMessage.SendData(MessageID.SyncItem, -1, -1, null, index, 1f);
+                }
+
+                Helper.PlayPitched(CoraliteSoundID.Ding_Item4, Projectile.Center);
+                Projectile.Kill();
+            }
+        }
+
+        public override bool PreDraw(ref Color lightColor)
+        {
+            Projectile.QuickDraw(lightColor, 0);
+
+            return false;
+        }
+    }
+
+    public class TurbulenceTwistParticle : Particle
+    {
+        public override string Texture => AssetDirectory.OtherProjectiles + "HorizontalLight";
+
+        public Color targetColor;
+
+        public override void SetProperty()
+        {
+            PRTDrawMode = PRTDrawModeEnum.AdditiveBlend;
+            Rotation = Velocity.ToRotation();
+        }
+
+        public override void AI()
+        {
+            Opacity++;
+            Velocity = Velocity.RotatedBy(Velocity.Length()/6 / (Opacity + 2));
+            Rotation = Velocity.ToRotation();
+
+            if (Opacity > 13)
+            {
+                Velocity *= 0.93f;
+                Color = Color.Lerp(Color, targetColor, 0.1f);
+            }
+
+            if (Color.A < 2)
+                active = false;
+
+            //if (Opacity < oldPositions.Length)
+            //{
+            //    int length = oldPositions.Length;
+            //    for (int i = 0; i < length; i++)
+            //    {
+            //        oldPositions[i] = Vector2.Lerp(oldPositions[0], Position, i / (float)(length - 1));
+            //        oldRotations[i] = Helper.Lerp(oldRotations[0], Rotation, i / (float)(length - 1));
+            //    }
+            //}
+            //else
+            {
+                UpdatePositionCache(oldPositions.Length);
+                UpdateRotationCache(oldRotations.Length);
+            }
+        }
+
+        public static void Spawn(Vector2 center, Vector2 velocity, Color newcolor, float scale, Color targetColor = default, int trailCacheCount = 10)
+        {
+            if (VaultUtils.isServer)
+            {
+                return;
+            }
+            TurbulenceTwistParticle p = PRTLoader.NewParticle<TurbulenceTwistParticle>(center, velocity, newcolor, scale);
+            if (p != null)
+            {
+                p.targetColor = targetColor == default ? new Color(34, 34, 62,0) : targetColor;
+                p.InitializeCaches(trailCacheCount);
+            }
+        }
+
+        public override bool PreDraw(SpriteBatch spriteBatch)
+        {
+            Texture2D mainTex = TexValue;
+            float scale = Scale;
+            Color c = Color;
+
+            List<ColoredVertex> bars = new();
+            List<ColoredVertex> bar3 = new();
+            List<ColoredVertex> bar4 = new();
+
+            float height = mainTex.Height * scale;
+            int cacheCount = oldPositions.Length;
+
+            for (int i = 0; i < cacheCount; i++)
+            {
+                float factor = (float)i / cacheCount;
+                Vector2 Center = oldPositions[i];
+                Vector2 normal = (oldRotations[i] + 1.57f).ToRotationVector2();
+                Vector2 normal2 = (oldRotations[i] - 1.57f).ToRotationVector2();
+
+                Vector2 Top = Center - Main.screenPosition + (normal * height);
+                Vector2 Bottom = Center - Main.screenPosition - (normal * height);
+
+                Vector2 Top2 = Center - Main.screenPosition + (normal2 * height * 1.5f);
+                Vector2 Bottom2 = Center - Main.screenPosition - (normal2 * height * 1.5f);
+
+                var Color2 = Color;//Color.Lerp(color, Color.DarkBlue, factor);
+                bars.Add(new(Top, Color2, new Vector3(factor, 0, 1)));
+                bars.Add(new(Bottom, Color2, new Vector3(factor, 1, 1)));
+                Color2 = Color.White * (c.A / 255f);
+                Color2.A = (byte)(Color2.A * 0.3f);
+                bar3.Add(new(Bottom2, Color.Transparent, new Vector3(factor, 1, 1)));
+                bar3.Add(new(Center - Main.screenPosition, Color2, new Vector3(factor, 0.5f, 1)));
+                bar4.Add(new(Center - Main.screenPosition, Color2, new Vector3(factor, 0.5f, 1)));
+                bar4.Add(new(Top2, Color.Transparent, new Vector3(factor, 0, 1)));
+            }
+
+            spriteBatch.GraphicsDevice.BlendState = BlendState.Additive;
+            spriteBatch.GraphicsDevice.Textures[0] = mainTex;
+            spriteBatch.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars.ToArray(), 0, bars.Count - 2);
+            spriteBatch.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bars.ToArray(), 0, bars.Count - 2);
+            spriteBatch.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bar3.ToArray(), 0, bar3.Count - 2);
+            spriteBatch.GraphicsDevice.DrawUserPrimitives(PrimitiveType.TriangleStrip, bar4.ToArray(), 0, bar3.Count - 2);
+            spriteBatch.GraphicsDevice.BlendState = BlendState.AlphaBlend;
+
+            return false;
+        }
+    }
+
 }

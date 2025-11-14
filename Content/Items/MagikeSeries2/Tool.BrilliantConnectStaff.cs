@@ -5,6 +5,7 @@ using Coralite.Content.UI;
 using Coralite.Core;
 using Coralite.Core.Configs;
 using Coralite.Core.Loaders;
+using Coralite.Core.Network;
 using Coralite.Core.Prefabs.Projectiles;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.Components;

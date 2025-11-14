@@ -127,7 +127,7 @@ namespace Coralite.Content.Items.FlyingShields.Accessories
 
             Projectile.width = 20;
             Projectile.height = 20;
-            Projectile.aiStyle = 188;
+            Projectile.aiStyle = ProjAIStyleID.LightsBane;
             Projectile.friendly = true;
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;

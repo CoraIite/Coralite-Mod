@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Items.Magike;
 using Coralite.Core.Loaders;
+using Coralite.Core.Network;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
