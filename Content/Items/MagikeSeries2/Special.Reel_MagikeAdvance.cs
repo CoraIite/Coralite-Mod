@@ -22,7 +22,8 @@ namespace Coralite.Content.Items.MagikeSeries2
 
         public override bool CanUseItem(Player player)
         {
-            MagikeSystem.learnedMagikeAdvanced = true;
+            if (!VaultUtils.isClient)
+                ModContent.GetInstance<LearnedMagikeAdvanced>().SetAndSync(true);
             KnowledgeSystem.CheckForUnlock<MagikeS2Knowledge>(player.Top, Coralite.CrystallinePurple);
 
             return base.CanUseItem(player);

@@ -1,6 +1,5 @@
 ﻿using Coralite.Content.UI.MagikeApparatusPanel;
 using Coralite.Core;
-using Coralite.Core.Systems.CoraliteActorComponent;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.Particles;

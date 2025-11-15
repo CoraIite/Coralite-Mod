@@ -23,7 +23,7 @@ namespace Coralite.Content.Items.MagikeSeries1
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
-            if (!MagikeSystem.learnedMagikeBase)
+            if (!ModContent.GetInstance<LearnedMagikeBase>().Value)
                 tooltips.Add(new TooltipLine(Mod, "MoreDescription", this.GetLocalizedValue("MoreDescription")));
         }
 

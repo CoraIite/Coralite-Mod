@@ -348,7 +348,7 @@ namespace Coralite.Content.Items.Nightmare
                         Owner.lifeRegenTime = 0f;
                     }
 
-                    Owner.AddBuff(88, 360);
+                    Owner.AddBuff(BuffID.ChaosState, 360);
 
                     for (int i = 0; i < 6; i++)
                     {

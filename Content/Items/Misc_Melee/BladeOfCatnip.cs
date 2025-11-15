@@ -274,7 +274,7 @@ namespace Coralite.Content.Items.Misc_Melee
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (Main.rand.NextBool(4))
-                target.AddBuff(20, 420);
+                target.AddBuff(BuffID.Poisoned, 420);
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using Coralite.Core.Systems.CoraliteActorComponent;
-using Coralite.Core.Systems.MagikeSystem.TileEntities;
+﻿using Coralite.Core.Systems.MagikeSystem.TileEntities;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components.Filters
 {

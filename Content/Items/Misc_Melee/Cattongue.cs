@@ -169,7 +169,7 @@ namespace Coralite.Content.Items.Misc_Melee
             if (!Projectile.TryGetOwner(out Player p))
                 return;
 
-            target.AddBuff(69, 60 * Main.rand.Next(5, 10));
+            target.AddBuff(BuffID.Ichor, 60 * Main.rand.Next(5, 10));
 
             Vector2 vector = new((p.direction * 100) + Main.rand.Next(-25, 26), Main.rand.Next(-75, 76));
             vector.Normalize();

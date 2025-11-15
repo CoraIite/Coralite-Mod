@@ -1,7 +1,6 @@
 ﻿using Coralite.Content.UI.MagikeApparatusPanel;
 using Coralite.Core.Loaders;
 using Coralite.Core.Network;
-using Coralite.Core.Systems.CoraliteActorComponent;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
 using InnoVault.TileProcessors;

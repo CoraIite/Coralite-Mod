@@ -1,5 +1,4 @@
-﻿using Coralite.Core.Systems.CoraliteActorComponent;
-using Coralite.Core.Systems.MagikeSystem.Components.Producers;
+﻿using Coralite.Core.Systems.MagikeSystem.Components.Producers;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using System.Collections.Generic;
 using System.Linq;

@@ -189,7 +189,7 @@ namespace Coralite.Content.NPCs.Town
 
         public override bool CanTownNPCSpawn(int numTownNPCs)
         {
-            return MagikeSystem.learnedMagikeBase;
+            return ModContent.GetInstance<LearnedMagikeBase>().Value;
         }
 
         public override ITownNPCProfile TownNPCProfile()

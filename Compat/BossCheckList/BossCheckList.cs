@@ -129,7 +129,7 @@ namespace Coralite.Compat.BossCheckList
                     ["despawnMessage"] = Language.GetOrRegister($"Mods.Coralite.Compat.BossChecklist.SlimeEmperor.Despawn", () => "史莱姆皇帝回归了它的王国"),
                     ["spawnItems"] = ItemType<GelInvitation>(),
                     ["collectibles"] = SlimeEmperorCollection,
-                    ["availability"] = () => MagikeSystem.learnedMagikeBase
+                    ["availability"] = () => GetInstance<LearnedMagikeBase>()
                 });
 
         }
@@ -164,7 +164,7 @@ namespace Coralite.Compat.BossCheckList
                     ["spawnItems"] = ItemType<BloodJadeCore>(),
                     ["customPortrait"] = BloodianciePortrait.DrawPortrait,
                     ["collectibles"] = BloodiancieCollection,
-                    ["availability"] = () => MagikeSystem.learnedMagikeAdvanced
+                    ["availability"] = () => GetInstance<LearnedMagikeAdvanced>()
                 });
         }
 
@@ -229,7 +229,7 @@ namespace Coralite.Compat.BossCheckList
                     ["spawnItems"] = ItemType<Content.Items.Thunder.ZacurrentRod>(),
                     ["customPortrait"] = ZacurrentDragonPortrait.DrawPortrait,
                     ["collectibles"] = ThunderveinDragonCollection,
-                    ["availability"] = () => MagikeSystem.learnedMagikeAdvanced
+                    ["availability"] = () => GetInstance<LearnedMagikeAdvanced>()
                 });
         }
 
@@ -274,7 +274,7 @@ namespace Coralite.Compat.BossCheckList
                     ["despawnMessage"] = Language.GetOrRegister($"Mods.Coralite.Compat.BossChecklist.NightmarePlantera.Despawn", () => "梦境消散了"),
                     ["spawnItems"] = ItemType<NightmareHarp>(),
                     ["collectibles"] = NightmarePlanteraCollection,
-                    ["availability"] = () => MagikeSystem.learnedMagikeAdvanced
+                    ["availability"] = () => GetInstance<LearnedMagikeAdvanced>()
                 });
         }
 

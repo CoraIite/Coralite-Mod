@@ -34,7 +34,8 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
 
             if (!CoraliteContent.GetKKnowledge<MagikeS1Knowledge>().Unlock)
             {
-                MagikeSystem.learnedMagikeBase = true;
+                if (!VaultUtils.isClient)
+                    ModContent.GetInstance<LearnedMagikeBase>().SetAndSync(true);
                 CoraliteContent.GetKKnowledge<MagikeS1Knowledge>().UnlockKnowledge();
                 //TODO: 同步知识改变
 

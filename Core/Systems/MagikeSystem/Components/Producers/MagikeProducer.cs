@@ -1,5 +1,4 @@
-﻿using Coralite.Core.Systems.CoraliteActorComponent;
-using Coralite.Helpers;
+﻿using Coralite.Helpers;
 using System;
 using Terraria.ModLoader.IO;
 

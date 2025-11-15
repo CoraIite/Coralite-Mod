@@ -1,9 +1,10 @@
-﻿using Coralite.Core.Systems.MagikeSystem.TileEntities;
+﻿using Coralite.Core.Systems.CoraliteActorComponent;
+using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 using Terraria.ModLoader.IO;
 
-namespace Coralite.Core.Systems.CoraliteActorComponent
+namespace Coralite.Core.Systems.MagikeSystem
 {
     //并非完全的ECS系统
     public abstract class MagikeComponent : IComponent<MagikeTP>

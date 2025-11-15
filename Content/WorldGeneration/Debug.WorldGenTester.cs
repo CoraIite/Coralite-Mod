@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Items.ThyphionSeries;
 using Coralite.Core;
+using Coralite.Core.Systems.MagikeSystem;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -8,7 +9,7 @@ using Terraria.WorldBuilding;
 
 namespace Coralite.Content.WorldGeneration
 {
-#if DEBUG
+//#if DEBUG
     public class WorldGenTester : ModItem
     {
         public override string Texture => AssetDirectory.DefaultItem;
@@ -29,7 +30,7 @@ namespace Coralite.Content.WorldGeneration
             //if (Main.myPlayer == player.whoAmI)
             //{
             //    float rot = (Main.MouseWorld - player.Center).ToRotation();
-            Projectile.NewProjectile(source, player.Center, Vector2.Zero, ModContent.ProjectileType<TurbulenceSpawnProj>(), 0, 0, player.whoAmI);
+            //Projectile.NewProjectile(source, player.Center, Vector2.Zero, ModContent.ProjectileType<TurbulenceSpawnProj>(), 0, 0, player.whoAmI);
 
             //}
             return false;
@@ -37,6 +38,7 @@ namespace Coralite.Content.WorldGeneration
 
         public override bool CanUseItem(Player player)
         {
+            Main.NewText(ModContent.GetInstance<LearnedMagikeBase>().Value);
             //Main.hardMode = true;
             //Vector2 myVector = Main.MouseWorld;
             //Point p = myVector.ToTileCoordinates();
@@ -433,5 +435,5 @@ namespace Coralite.Content.WorldGeneration
             return UnitApply(origin, x, y, args);
         }
     }
-#endif
+//#endif
 }

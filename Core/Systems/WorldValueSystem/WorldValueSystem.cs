@@ -3,6 +3,7 @@ using Coralite.Core.Network;
 using Coralite.Helpers;
 using System.IO;
 using Terraria;
+using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.WorldValueSystem
 {
@@ -153,6 +154,29 @@ namespace Coralite.Core.Systems.WorldValueSystem
         {
             foreach (var flag in WorldValueLoader.flags)
                 flag.OnEnterWorld();
+        }
+
+        public override void SaveWorldData(TagCompound tag)
+        {
+            for (int i = 0; i < WorldValueLoader.flags.Count; i++)
+            {
+                WorldFlag flag = WorldValueLoader.flags[i];
+                bool value = WorldFlags[i];
+
+                if (value)
+                    tag.Add(flag.Name, true);
+            }
+        }
+
+        public override void LoadWorldData(TagCompound tag)
+        {
+            //如果因为某些加载顺序问题导致旧版本无法适配... ...我只能说也没办法了
+            //但是好消息是WorldValue是W开头的，应该在比较后面
+            for (int i = 0; i < WorldValueLoader.flags.Count; i++)
+            {
+                WorldFlag flag = WorldValueLoader.flags[i];
+                WorldFlags[i] = tag.ContainsKey(flag.Name);
+            }
         }
 
         //暂时不用

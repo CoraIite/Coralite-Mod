@@ -154,7 +154,7 @@ namespace Coralite.Content.Items.Misc_Melee
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
             if (!Main.rand.NextBool(10))
-                target.AddBuff(31, 120);
+                target.AddBuff(BuffID.Confused, 120);
 
             Player p = Main.player[Projectile.owner];
             int num3 = Main.rand.Next(1, 4);

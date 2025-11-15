@@ -21,7 +21,7 @@ namespace Coralite.Core.Systems.MagikeSystem
 
         private void RegisterMagikeCraft()
         {
-            List<IMagikeCraftable> magikeCraftables = VaultUtils.GetSubclassInstances<IMagikeCraftable>();
+            List<IMagikeCraftable> magikeCraftables = VaultUtils.GetDerivedInstances<IMagikeCraftable>();
             foreach (var mag in magikeCraftables)
             {
                 mag.AddMagikeCraftRecipe();

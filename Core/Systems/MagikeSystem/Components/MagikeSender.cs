@@ -1,5 +1,4 @@
-﻿using Coralite.Core.Systems.CoraliteActorComponent;
-using Coralite.Core.Systems.MagikeSystem.Particles;
+﻿using Coralite.Core.Systems.MagikeSystem.Particles;
 using Coralite.Helpers;
 using System;
 using System.IO;

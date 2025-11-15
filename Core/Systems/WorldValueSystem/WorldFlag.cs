@@ -28,8 +28,7 @@ namespace Coralite.Core.Systems.WorldValueSystem
         /// <summary>
         /// 获取值
         /// </summary>
-        /// <returns></returns>
-        public bool Get()
+        public bool Value
             => WorldValueSystem.WorldFlags[Type];
 
         /// <summary>
@@ -45,6 +44,16 @@ namespace Coralite.Core.Systems.WorldValueSystem
                 WorldValueSystem.SendWorldValue(-1, false);
             else if (VaultUtils.isClient)
                 WorldValueSystem.SendWorldValue(-1, true);
+        }
+
+        /// <summary>
+        /// 设置值，不带同步，一般用于保存读取
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public void Set(bool value)
+        {
+            WorldValueSystem.WorldFlags[Type] = value;
         }
 
         /// <summary>

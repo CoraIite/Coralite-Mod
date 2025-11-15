@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Coralite.Core.Systems.MagikeSystem;
+using System.Collections.Generic;
 using System.Collections.Specialized;
 
 namespace Coralite.Core.Systems.CoraliteActorComponent

@@ -198,7 +198,7 @@ namespace Coralite.Content.CustomHooks
                     }
                     else
                     {
-                        if (tile.TileType != 229 || tile.Slope != 0)
+                        if (tile.TileType != TileID.HoneyBlock || tile.Slope != 0)
                             continue;
 
                         int num6 = 1;

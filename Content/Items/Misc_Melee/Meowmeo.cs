@@ -253,7 +253,7 @@ namespace Coralite.Content.Items.Misc_Melee
         {
             Projectile.width = 16;
             Projectile.height = 16;
-            Projectile.aiStyle = 8;
+            Projectile.aiStyle = ProjAIStyleID.Bounce;
             AIType = ProjectileID.Meowmere;
             Projectile.friendly = true;
             Projectile.DamageType = DamageClass.Melee;

@@ -61,7 +61,7 @@ namespace Coralite.Content.Items.Thunder
         {
             Projectile.width = 12;
             Projectile.height = 12;
-            Projectile.aiStyle = 61;
+            Projectile.aiStyle = ProjAIStyleID.Bobber;
             Projectile.bobber = true;
             Projectile.penetrate = -1;
             Projectile.netImportant = true;

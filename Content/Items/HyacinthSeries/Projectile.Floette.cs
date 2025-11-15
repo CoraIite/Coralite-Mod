@@ -56,7 +56,7 @@ namespace Coralite.Content.Items.HyacinthSeries
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            target.AddBuff(20, Main.rand.Next(60 * 2, 60 * 4));
+            target.AddBuff(BuffID.Poisoned, Main.rand.Next(60 * 2, 60 * 4));
         }
     }
 }

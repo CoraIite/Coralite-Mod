@@ -29,9 +29,9 @@ namespace Coralite.Core.Systems.MagikeSystem
         }
 
         /// <summary> 是否学习过 书页：魔能基础 </summary>
-        public static bool learnedMagikeBase;
+        //public static bool learnedMagikeBase;
         /// <summary> 是否学习过卷轴：强化魔能提炼 </summary>
-        public static bool learnedMagikeAdvanced;
+        //public static bool learnedMagikeAdvanced;
 
         public override void PostAddRecipes()
         {
@@ -190,25 +190,28 @@ namespace Coralite.Core.Systems.MagikeSystem
         //额...每增加一个变量就要在这边多写一段，说实话显得很蠢，以后有机会需要修改掉
         public override void SaveWorldData(TagCompound tag)
         {
-            List<string> Knowledge = new();
-            if (learnedMagikeBase)
-                Knowledge.Add("learnedMagikeBase");
-            if (learnedMagikeAdvanced)
-                Knowledge.Add("learnedMagikeAdvanced");
+            //List<string> Knowledge = new();
+            //if (learnedMagikeBase)
+            //    Knowledge.Add("learnedMagikeBase");
+            //if (learnedMagikeAdvanced)
+            //    Knowledge.Add("learnedMagikeAdvanced");
 
             tag.Add("ConnectLineType", (int)CurrentConnectLineType);
 
             //SaveData_2_1(Knowledge);
             SaveUI(tag);
 
-            tag.Add("Knowledge", Knowledge);
+            //tag.Add("Knowledge", Knowledge);
         }
 
         public override void LoadWorldData(TagCompound tag)
         {
-            IList<string> list = tag.GetList<string>("Knowledge");
-            learnedMagikeBase = list.Contains("learnedMagikeBase");
-            learnedMagikeAdvanced = list.Contains("learnedMagikeAdvanced");
+            if (tag.ContainsKey("Knowledge"))
+            {
+                IList<string> list = tag.GetList<string>("Knowledge");
+                GetInstance<LearnedMagikeBase>().Set(list.Contains("learnedMagikeBase"));
+                GetInstance<LearnedMagikeAdvanced>().Set(list.Contains("learnedMagikeAdvanced"));
+            }
 
             CurrentConnectLineType = (ConnectLineType)tag.GetInt("ConnectLineType");
 

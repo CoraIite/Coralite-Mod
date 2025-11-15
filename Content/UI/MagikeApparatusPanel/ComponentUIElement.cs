@@ -1,5 +1,5 @@
 ﻿using Coralite.Core.Loaders;
-using Coralite.Core.Systems.CoraliteActorComponent;
+using Coralite.Core.Systems.MagikeSystem;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using Terraria.GameContent;
