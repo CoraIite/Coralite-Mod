@@ -1,4 +1,5 @@
 ﻿using Coralite.Core;
+using Coralite.Core.Systems.WorldValueSystem;
 using System;
 using Terraria;
 using Terraria.Audio;
@@ -10,10 +11,19 @@ namespace Coralite.Content.WorldGeneration
 {
     public partial class CoraliteWorld
     {
+        private static WorldFlag coralCatWorld;
         /// <summary>
         /// 珊瑚猫的世界！
         /// </summary>
-        public static bool CoralCatWorld { get; set; }
+        public static bool CoralCatWorld
+        {
+            get
+            {
+                coralCatWorld ??= ModContent.GetInstance<WorldValues.CoralCatWorld>();
+
+                return coralCatWorld.Value;
+            }
+        }
 
         public void CoralCatWorldGen(GenerationProgress progress, GameConfiguration configuration)
         {

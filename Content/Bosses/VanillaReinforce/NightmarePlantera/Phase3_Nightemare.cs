@@ -16,11 +16,13 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
     {
         public void Nightmare_Phase3()
         {
-            ((NightmareSky)SkyManager.Instance["NightmareSky"]).Timeleft = 100;
-
-            //设置三条拖尾，如果玩家通过某些奇葩手段跳过了二阶段的话在3阶段设置这个
-            rotateTentacles ??= new RotateTentacle[3]
+            if (!VaultUtils.isServer)
             {
+                ((NightmareSky)SkyManager.Instance["NightmareSky"]).Timeleft = 100;
+
+                //设置三条拖尾，如果玩家通过某些奇葩手段跳过了二阶段的话在3阶段设置这个
+                rotateTentacles ??= new RotateTentacle[3]
+                {
                 new(20, TentacleColor, TentacleWidth, tentacleTex, waterFlowTex)
                 {
                     pos = NPC.Center,
@@ -36,8 +38,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     pos = NPC.Center,
                     targetPos = NPC.Center
                 },
-            };
-            UpdateFrame_P3();
+                };
+                UpdateFrame_P3();
+            }
 
             switch ((int)State)
             {
@@ -122,8 +125,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     break;
                 case 0:
                     {
-                        Color c = ((NightmareSky)SkyManager.Instance["NightmareSky"]).color;
-                        ((NightmareSky)SkyManager.Instance["NightmareSky"]).color = Color.Lerp(c, nightmareRed, 0.02f);
+                        if (!VaultUtils.isServer)
+                        {
+                            Color c = ((NightmareSky)SkyManager.Instance["NightmareSky"]).color;
+                            ((NightmareSky)SkyManager.Instance["NightmareSky"]).color = Color.Lerp(c, nightmareRed, 0.02f);
+                        }
                         Phase3Fade(() => Target.Center + new Vector2(0, -250), () =>
                         {
                             canDrawWarp = true;

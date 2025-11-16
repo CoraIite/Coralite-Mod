@@ -409,7 +409,8 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
             Helper.PlayPitched("Music/Heart", 1f, 0f, NPC.Center);
             Music = 0;
 
-            ((NightmareSky)SkyManager.Instance["NightmareSky"]).color = nightPurple;
+            if (!VaultUtils.isServer)
+                ((NightmareSky)SkyManager.Instance["NightmareSky"]).color = nightPurple;
         }
 
         public override void AI()
@@ -436,11 +437,14 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         NPC.EncourageDespawn(10);
                         NPC.dontTakeDamage = true;  //脱战无敌
                         NPC.velocity.Y += 0.25f;
-                        ((NightmareSky)SkyManager.Instance["NightmareSky"]).Timeleft = 100;
-                        if (rotateTentacles != null)
+                        if (!VaultUtils.isServer)
                         {
-                            NormallySetTentacle();
-                            NormallyUpdateTentacle();
+                            ((NightmareSky)SkyManager.Instance["NightmareSky"]).Timeleft = 100;
+                            if (rotateTentacles != null)
+                            {
+                                NormallySetTentacle();
+                                NormallyUpdateTentacle();
+                            }
                         }
 
                         return;
@@ -478,8 +482,11 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     Rampage();
                     break;
                 case (int)AIPhases.SuddenDeath:
-                    ((NightmareSky)SkyManager.Instance["NightmareSky"]).Timeleft = 100;
-                    NormallySetTentacle();
+                    if (!VaultUtils.isServer)
+                    {
+                        ((NightmareSky)SkyManager.Instance["NightmareSky"]).Timeleft = 100;
+                        NormallySetTentacle();
+                    }
                     SuddenDeath();
                     NormallyUpdateTentacle();
                     break;

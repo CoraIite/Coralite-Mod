@@ -626,6 +626,9 @@ namespace Coralite.Content.Items.HyacinthSeries
 
         public override void AI()
         {
+            if (VaultUtils.isServer)
+                return;
+
             trail ??= new Trail(Main.instance.GraphicsDevice, 24, new ArrowheadTrailGenerator(4), factor => Helper.Lerp(4, 10, factor),
             factor =>
             {

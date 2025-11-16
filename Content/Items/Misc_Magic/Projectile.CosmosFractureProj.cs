@@ -45,6 +45,8 @@ namespace Coralite.Content.Items.Misc_Magic
             Projectile.ignoreWater = true;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 5;
+
+            Projectile.DamageType = DamageClass.Magic;
         }
 
         #region AI
@@ -408,6 +410,7 @@ namespace Coralite.Content.Items.Misc_Magic
             Projectile.netImportant = true;
             Projectile.tileCollide = false;
             Projectile.ignoreWater = true;
+            Projectile.DamageType = DamageClass.Magic;
         }
 
         #region AI

@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.UI;
 using Coralite.Content.WorldGeneration;
+using Coralite.Content.WorldGeneration.WorldValues;
 using Terraria;
 using Terraria.GameContent.UI.States;
 using Terraria.UI;
@@ -77,7 +78,7 @@ namespace Coralite.Content.CustomHooks
             orig.Invoke(processedSeed);
 
             CoraliteWorld.chaosWorld = false;
-            CoraliteWorld.CoralCatWorld = false;
+            ModContent.GetInstance<CoralCatWorld>().Set(false);
             CoraliteWorld.SuperCoralCatWorld = false;
             CoraliteWorld.DigDigDigWorld = false;
 
@@ -87,7 +88,7 @@ namespace Coralite.Content.CustomHooks
 
             if (seed == "coral cat" || seed == "coralcat")
             {
-                CoraliteWorld.CoralCatWorld = true;
+                ModContent.GetInstance<CoralCatWorld>().Set(true);
                 WorldGen.noTrapsWorldGen = true;
 
                 //if (Main.MenuUI.CurrentState is UIWorldCreation worldCreation)
@@ -98,7 +99,7 @@ namespace Coralite.Content.CustomHooks
             }
             if (seed == "super coral cat" || seed == "supercoralcat")
             {
-                CoraliteWorld.CoralCatWorld = true;
+                ModContent.GetInstance<CoralCatWorld>().Set(true);
                 CoraliteWorld.SuperCoralCatWorld = true;
 
                 WorldGen.noTrapsWorldGen = true;
@@ -124,7 +125,7 @@ namespace Coralite.Content.CustomHooks
         {
             orig.Invoke(self, out processedSeed);
 
-            if ((CoraliteWorld.CoralCatWorld || CoraliteWorld.DigDigDigWorld)
+            if ((ModContent.GetInstance<CoralCatWorld>().Value || CoraliteWorld.DigDigDigWorld)
                 && Main.MenuUI.CurrentState is UIWorldCreation worldCreation)
             {
                 processedSeed = Main.rand.Next(999999999).ToString();

@@ -28,28 +28,21 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
 
         public override bool CanUseItem(Player player)
         {
-            //MagikeSystem.learnedMagikeBase = false;
-            //CoraliteContent.GetKKnowledge(KeyKnowledgeID.MagikeS1).Unlock = false;
-            //return true;
+            //只有服务端才需要执行的同步世界变量
+            if (!VaultUtils.isClient && !ModContent.GetInstance<LearnedMagikeBase>().Value)
+                ModContent.GetInstance<LearnedMagikeBase>().SetAndSync(true);
 
-            if (!CoraliteContent.GetKKnowledge<MagikeS1Knowledge>().Unlock)
+            if (Main.myPlayer == player.whoAmI
+                /*&& !CoraliteContent.GetKKnowledge<MagikeS1Knowledge>().Unlock*/)
             {
-                if (!VaultUtils.isClient)
-                    ModContent.GetInstance<LearnedMagikeBase>().SetAndSync(true);
                 CoraliteContent.GetKKnowledge<MagikeS1Knowledge>().UnlockKnowledge();
-                //TODO: 同步知识改变
 
-                if (Main.myPlayer == player.whoAmI)
-                {
-                    KnowledgeSystem.SpawnKnowledgeUnlockText(player.Center, Coralite.MagicCrystalPink);
-                    Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, new Vector2(player.direction * 8, -4),
-                        ModContent.ProjectileType<Page_MagikeBaseProj>(), 1, 0, player.whoAmI);
-                }
-
-                return true;
+                KnowledgeSystem.SpawnKnowledgeUnlockText(player.Center, Coralite.MagicCrystalPink);
+                Projectile.NewProjectile(new EntitySource_ItemUse(player, Item), player.Center, new Vector2(player.direction * 8, -4),
+                    ModContent.ProjectileType<Page_MagikeBaseProj>(), 1, 0);
             }
 
-            return false;
+            return true;
         }
     }
 
@@ -95,21 +88,24 @@ namespace Coralite.Content.CoraliteNotes.MagikeChapter1
                 d.noGravity = true;
             }
 
-            if (Projectile.localAI[0] > 180)
-            {
+            if (Projectile.localAI[0] > 180&&Projectile.IsOwnedByLocalPlayer())
                 Projectile.Kill();
-                for (int i = 0; i < 16; i++)
-                {
-                    Dust dust = Dust.NewDustPerfect(Projectile.Center, DustID.CrystalSerpent_Pink, (i * MathHelper.TwoPi / 16).ToRotationVector2() * Main.rand.NextFloat(2, 3));
-                    dust.noGravity = true;
-                }
+        }
 
-                SoundEngine.PlaySound(CoraliteSoundID.ManaCrystal_Item29, Projectile.Center);
-                if (!NPC.AnyNPCs(ModContent.NPCType<CrystalRobot>()))
-                {
-                    NPC.NewNPC(Projectile.GetSource_FromAI(), (int)Projectile.Center.X, (int)Projectile.Center.Y, ModContent.NPCType<CrystalRobot>());
-                }
+        public override bool PreKill(int timeLeft)
+        {
+            for (int i = 0; i < 16; i++)
+            {
+                Dust dust = Dust.NewDustPerfect(Projectile.Center, DustID.CrystalSerpent_Pink, (i * MathHelper.TwoPi / 16).ToRotationVector2() * Main.rand.NextFloat(2, 3));
+                dust.noGravity = true;
             }
+
+            SoundEngine.PlaySound(CoraliteSoundID.ManaCrystal_Item29, Projectile.Center);
+
+            if (!VaultUtils.isClient && !NPC.AnyNPCs(ModContent.NPCType<CrystalRobot>()))
+                NPC.NewNPC(Projectile.GetSource_FromAI(), (int)Projectile.Center.X, (int)Projectile.Center.Y, ModContent.NPCType<CrystalRobot>());
+
+            return false;
         }
 
         public override bool PreDraw(ref Color lightColor)

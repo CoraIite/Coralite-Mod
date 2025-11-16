@@ -39,7 +39,7 @@ namespace Coralite.Core.Systems.WorldValueSystem
         /// </summary>
         internal static int waitForSyncTime;
 
-        
+
         //在此插入一段用于在夜晚开始时同步自己的内容
         public override void Load()
         {
@@ -68,7 +68,7 @@ namespace Coralite.Core.Systems.WorldValueSystem
         {
             if (waitForSync)
             {
-                if (waitForSyncTime>0)
+                if (waitForSyncTime > 0)
                 {
                     waitForSyncTime--;
                     if (waitForSyncTime < 1)//我包呢？再请求一次
@@ -97,7 +97,7 @@ namespace Coralite.Core.Systems.WorldValueSystem
         public static void ServerHandleWorldValueRequest(BinaryReader reader)
         {
             int toWho = reader.ReadInt32();
-            SendWorldValue(toWho,false);
+            SendWorldValue(toWho, false);
         }
 
         /// <summary>
@@ -111,22 +111,6 @@ namespace Coralite.Core.Systems.WorldValueSystem
             p.Write((byte)CoraliteNetWorkEnum.WorldValue);
             p.Write(clientToServer);
             p.WriteBools(WorldFlags);
-            int count = WorldValueLoader.FlagCount;
-            int writeCount = 0;
-            for (int i = 0; i < count / 8 + 1; i++)
-            {
-                BitsByte bt = new BitsByte();
-                for (int j = 0; j < 8; j++)
-                {
-                    bt[j] = WorldFlags[writeCount];//写入对应的值
-
-                    writeCount++;
-                    if (writeCount > count)
-                        break;
-                }
-
-                p.Write(bt);
-            }
 
             p.Send(toWho);
         }
@@ -156,12 +140,26 @@ namespace Coralite.Core.Systems.WorldValueSystem
                 flag.OnEnterWorld();
         }
 
+        //暂时不用
+        public override void NetSend(BinaryWriter writer)
+        {
+
+        }
+
+        public override void NetReceive(BinaryReader reader)
+        {
+
+        }
+    }
+
+    public class AAAAAWorldValueSaveLoad : ModSystem
+    {
         public override void SaveWorldData(TagCompound tag)
         {
             for (int i = 0; i < WorldValueLoader.flags.Count; i++)
             {
                 WorldFlag flag = WorldValueLoader.flags[i];
-                bool value = WorldFlags[i];
+                bool value = WorldValueSystem.WorldFlags[i];
 
                 if (value)
                     tag.Add(flag.Name, true);
@@ -171,23 +169,12 @@ namespace Coralite.Core.Systems.WorldValueSystem
         public override void LoadWorldData(TagCompound tag)
         {
             //如果因为某些加载顺序问题导致旧版本无法适配... ...我只能说也没办法了
-            //但是好消息是WorldValue是W开头的，应该在比较后面
+            //但是好消息是AAAAAWorldValueSaveLoad是A开头的，应该在比较前面
             for (int i = 0; i < WorldValueLoader.flags.Count; i++)
             {
                 WorldFlag flag = WorldValueLoader.flags[i];
-                WorldFlags[i] = tag.ContainsKey(flag.Name);
+                WorldValueSystem.WorldFlags[i] = tag.ContainsKey(flag.Name);
             }
-        }
-
-        //暂时不用
-        public override void NetSend(BinaryWriter writer)
-        {
-            
-        }
-
-        public override void NetReceive(BinaryReader reader)
-        {
-            
         }
     }
 }

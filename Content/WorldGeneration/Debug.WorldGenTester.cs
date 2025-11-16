@@ -36,9 +36,20 @@ namespace Coralite.Content.WorldGeneration
             return false;
         }
 
+        public override bool AltFunctionUse(Player player)
+        {
+            return true;
+        }
+
         public override bool CanUseItem(Player player)
         {
-            Main.NewText(ModContent.GetInstance<LearnedMagikeBase>().Value);
+            if (player.altFunctionUse == 2)
+            {
+                ModContent.GetInstance<LearnedMagikeBase>().SetAndSync(false);
+            }
+            else
+                Main.NewText(ModContent.GetInstance<LearnedMagikeBase>().Value);
+
             //Main.hardMode = true;
             //Vector2 myVector = Main.MouseWorld;
             //Point p = myVector.ToTileCoordinates();

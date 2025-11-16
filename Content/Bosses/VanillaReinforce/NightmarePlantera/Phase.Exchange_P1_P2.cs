@@ -167,17 +167,20 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                         if (nameScale < 16)
                             nameScale += 1f;
 
-                        if (Timer == 30)
+                        if (!VaultUtils.isServer)
                         {
-                            SkyManager.Instance.Activate("NightmareSky");
-
-                            if (!SkyManager.Instance["NightmareSky"].IsActive())//如果这个天空没激活
+                            if (Timer == 30)
+                            {
                                 SkyManager.Instance.Activate("NightmareSky");
-                            ((NightmareSky)SkyManager.Instance["NightmareSky"]).Timeleft = 100;
-                            ((NightmareSky)SkyManager.Instance["NightmareSky"]).color = lightPurple;
-                        }
 
-                        ((NightmareSky)SkyManager.Instance["NightmareSky"]).Timeleft = 100;
+                                if (!SkyManager.Instance["NightmareSky"].IsActive())//如果这个天空没激活
+                                    SkyManager.Instance.Activate("NightmareSky");
+                                ((NightmareSky)SkyManager.Instance["NightmareSky"]).Timeleft = 100;
+                                ((NightmareSky)SkyManager.Instance["NightmareSky"]).color = lightPurple;
+                            }
+
+                            ((NightmareSky)SkyManager.Instance["NightmareSky"]).Timeleft = 100;
+                        }
 
                         if (Timer < 120)
                             break;

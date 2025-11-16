@@ -120,7 +120,7 @@ namespace Coralite.Content.Items.Misc_Melee
                 .AddIngredient(ItemID.JungleSpores, 15)
                 .AddIngredient(ItemID.Vine, 3)
                 .AddTile(TileID.Anvils)
-                .AddCondition(craftCondition, () => CoraliteWorld.CoralCatWorld)
+                .AddCondition(CoraliteConditions.CoralCat)
                 .Register();
         }
 

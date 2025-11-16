@@ -38,7 +38,7 @@ namespace Coralite.Content.GlobalNPCs
 
         public override void SetDefaults(NPC entity)
         {
-            if (CoraliteWorld.CoralCatWorld)
+            if (!Main.gameMenu && CoraliteWorld.CoralCatWorld)
                 CoralCatWorldChange(entity);
         }
 

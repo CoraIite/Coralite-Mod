@@ -32,8 +32,13 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
 
         public sealed override void AI()
         {
-            if (Item.type == ModContent.ItemType<T>())
-                Projectile.timeLeft = 2;
+            if (Item.type != ModContent.ItemType<T>())
+            {
+                Projectile.Kill();
+                return;
+            }
+
+            Projectile.timeLeft = 2;
 
             if (init)
             {

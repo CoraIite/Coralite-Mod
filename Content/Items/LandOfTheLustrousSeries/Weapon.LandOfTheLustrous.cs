@@ -450,6 +450,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
         public int FlyTime;
         public float alpha;
 
+        public override bool CanFire => State == 1;
+
         public struct GemDrawData(Texture2D tex, Color highlightC, Color brightC, Color darkC)
         {
             public Texture2D tex = tex;
@@ -592,6 +594,8 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                             Projectile.tileCollide = true;
                             FlyTime = 0;
                             Timer = 0;
+                            if (Projectile.IsOwnedByLocalPlayer())
+                                Projectile.netUpdate = true;
                         }
                     }
                     break;
@@ -671,6 +675,9 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
                 case 3: break;
             }
 
+            if (VaultUtils.isServer)
+                return;
+
             Projectile.UpdateOldPosCache(addVelocity: false);
             Projectile.UpdateOldRotCache();
             if (trail != null)
@@ -718,6 +725,7 @@ namespace Coralite.Content.Items.LandOfTheLustrousSeries
             Timer = 25;
             Projectile.timeLeft = 25;
             Projectile.tileCollide = false;
+            Projectile.netUpdate = true;
         }
 
         public GemDrawData GetDrawData()

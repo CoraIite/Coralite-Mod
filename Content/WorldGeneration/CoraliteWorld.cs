@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Coralite.Content.WorldGeneration.WorldValues;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Terraria;
@@ -124,7 +125,7 @@ namespace Coralite.Content.WorldGeneration
                     tasks.Insert(FinalCleanup - 1, new PassLegacy("Coralite Shadow Castle", GenShadowCastle));
             }
 
-            if (CoralCatWorld)
+            if (ModContent.GetInstance<CoralCatWorld>().Value)
             {
                 int SettleLiquids = tasks.FindIndex(genpass => genpass.Name.Equals("Settle Liquids Again"));
 
@@ -168,8 +169,8 @@ namespace Coralite.Content.WorldGeneration
             tag.Add("shadowBallsFightAreaY", shadowBallsFightArea.Y);
             if (chaosWorld)
                 tag.Add("chaosWorld", chaosWorld);
-            if (CoralCatWorld)
-                tag.Add("coralCat", CoralCatWorld);
+            //if (CoralCatWorld)
+            //    tag.Add("coralCat", CoralCatWorld);
             if (SuperCoralCatWorld)
                 tag.Add("SuperCoralCat", SuperCoralCatWorld);
             if (DigDigDigWorld)
@@ -194,14 +195,13 @@ namespace Coralite.Content.WorldGeneration
                 tag.Get<int>("shadowBallsFightAreaY"), 74 * 16, 59 * 16);
 
             chaosWorld = false;
-            CoralCatWorld = false;
             SuperCoralCatWorld = false;
             DigDigDigWorld = false;
 
             if (tag.TryGet("chaosWorld", out bool b1))
                 chaosWorld = b1;
             if (tag.TryGet("coralCat", out bool b2))
-                CoralCatWorld = b2;
+                ModContent.GetInstance<CoralCatWorld>().Set(b2);
             if (tag.TryGet("SuperCoralCat", out bool b3))
                 SuperCoralCatWorld = b3;
             if (tag.TryGet("DigDigDigSaveKey", out bool b4))

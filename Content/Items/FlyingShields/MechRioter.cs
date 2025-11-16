@@ -72,9 +72,11 @@ namespace Coralite.Content.Items.FlyingShields
                     int index = Projectile.NewProjectileFromThis(Projectile.Center
                         , (target.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * 12,
                         ProjectileID.DeathLaser, Projectile.damage * 4, Projectile.knockBack, ai1: 1);
+                    Main.projectile[index].DamageType = DamageClass.Melee;
                     Main.projectile[index].hostile = false;
                     Main.projectile[index].friendly = true;
                     Main.projectile[index].penetrate = 1;
+                    Main.projectile[index].netUpdate = true;
                 }
             }
         }
@@ -144,10 +146,12 @@ namespace Coralite.Content.Items.FlyingShields
                 int index = Projectile.NewProjectileFromThis(Projectile.Center
                     , dir.RotateByRandom(-0.2f, 0.2f) * 12,
                     ProjectileID.DeathLaser, Projectile.damage, Projectile.knockBack, ai1: 1);
+                Main.projectile[index].DamageType = DamageClass.Melee;
                 Main.projectile[index].hostile = false;
                 Main.projectile[index].friendly = true;
                 Main.projectile[index].penetrate = 1;
                 Main.projectile[index].soundDelay = 10000;
+                Main.projectile[index].netUpdate = true;
             }
         }
 
@@ -282,9 +286,11 @@ namespace Coralite.Content.Items.FlyingShields
                                         int index = Projectile.NewProjectileFromThis(Projectile.Center + ((Projectile.rotation + (1.57f * i)).ToRotationVector2() * 12)
                                             , (target.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * 12,
                                             ProjectileID.EyeLaser, (int)(Projectile.damage * 0.8f), Projectile.knockBack, ai1: i + 1);
+                                        Main.projectile[index].DamageType = DamageClass.Melee;
                                         Main.projectile[index].hostile = false;
                                         Main.projectile[index].friendly = true;
                                         Main.projectile[index].penetrate = 1;
+                                        Main.projectile[index].netUpdate = true;
                                     }
                                 }
                                 if (Timer == 50)//射火球
@@ -293,7 +299,9 @@ namespace Coralite.Content.Items.FlyingShields
                                         , (target.Center - Projectile.Center).SafeNormalize(Vector2.Zero) * 12,
                                         ProjectileID.CursedFlameFriendly, Projectile.damage, Projectile.knockBack);
 
+                                    Main.projectile[index].DamageType = DamageClass.Melee;
                                     Main.projectile[index].penetrate = 1;
+                                    Main.projectile[index].netUpdate = true;
                                 }
                             }
 

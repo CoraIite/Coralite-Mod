@@ -35,11 +35,13 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
 
         public void Dream_Phase2()
         {
-            ((NightmareSky)SkyManager.Instance["NightmareSky"]).Timeleft = 100;
-
-            //设置三条拖尾
-            rotateTentacles ??= new RotateTentacle[3]
+            if (!VaultUtils.isServer)
             {
+                ((NightmareSky)SkyManager.Instance["NightmareSky"]).Timeleft = 100;
+
+                //设置三条拖尾
+                rotateTentacles ??= new RotateTentacle[3]
+                {
                 new(20, TentacleColor, TentacleWidth, tentacleTex, waterFlowTex)
                 {
                     pos = NPC.Center,
@@ -55,8 +57,9 @@ namespace Coralite.Content.Bosses.VanillaReinforce.NightmarePlantera
                     pos = NPC.Center,
                     targetPos = NPC.Center
                 },
-            };
-            UpdateFrameNormally();
+                };
+                UpdateFrameNormally();
+            }
 
             if (useDreamMove)
                 switch ((int)State)
