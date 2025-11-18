@@ -1,4 +1,6 @@
-﻿using Terraria;
+﻿using Coralite.Core.Systems.WorldValueSystem;
+using Terraria;
+using Terraria.ID;
 
 namespace Coralite.Core.Systems.BossSystems
 {
@@ -6,8 +8,15 @@ namespace Coralite.Core.Systems.BossSystems
     {
         public static void DownBabyIceDragon()
         {
-            downedBabyIceDragon = true;
+            DownedBabyIceDragon d = ModContent.GetInstance<DownedBabyIceDragon>();
+
             NPC.SetEventFlagCleared(ref NPC.downedBoss2, 14);
+            NetMessage.SendData(MessageID.WorldData);
+
+            if (!d.Value)
+                d.SetAndSync(true);
         }
     }
+
+    public class DownedBabyIceDragon : WorldFlag { }
 }

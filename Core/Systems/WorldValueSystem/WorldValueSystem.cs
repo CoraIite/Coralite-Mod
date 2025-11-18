@@ -140,6 +140,13 @@ namespace Coralite.Core.Systems.WorldValueSystem
                 flag.OnEnterWorld();
         }
 
+        public override void PostWorldGen()
+        {
+            foreach (var flag in WorldValueLoader.flags)
+                if (flag.NeedResetPostWoldGen)
+                    flag.Set(false);
+        }
+
         //暂时不用
         public override void NetSend(BinaryWriter writer)
         {

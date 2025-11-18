@@ -10,6 +10,12 @@ namespace Coralite.Core.Systems.WorldValueSystem
     {
         public int Type { get; internal set; }
 
+        /// <summary>
+        /// 为 <see langword="true"/> 的时候表示需要在世界生成是重置变量为默认值<br></br>
+        /// 默认 <see langword="true"/>
+        /// </summary>
+        public virtual bool NeedResetPostWoldGen { get => true; }
+
         protected sealed override void Register()
         {
             ModTypeLookup<WorldFlag>.Register(this);

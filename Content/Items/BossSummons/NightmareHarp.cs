@@ -63,28 +63,19 @@ namespace Coralite.Content.Items.BossSummons
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            if (Main.myPlayer == player.whoAmI)
+            if (ModContent.GetInstance<DownedNightmarePlantera>().Value && player.altFunctionUse == 2)
             {
-                if (DownedBossSystem.downedNightmarePlantera && player.altFunctionUse == 2)
-                {
-                    int npcType = ModContent.NPCType<NightmarePlantera>();
+                int npcType = ModContent.NPCType<NightmarePlantera>();
 
-                    if (Main.netMode != NetmodeID.MultiplayerClient)
-                        NPC.SpawnOnPlayer(player.whoAmI, npcType);
-                    else
-                        NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: player.whoAmI, number2: npcType);
+                if (Main.netMode != NetmodeID.MultiplayerClient)
+                    NPC.SpawnOnPlayer(player.whoAmI, npcType);
+                else
+                    NetMessage.SendData(MessageID.SpawnBossUseLicenseStartEvent, number: player.whoAmI, number2: npcType);
 
-                    return false;
-                }
-
-                //SoundStyle st = CoraliteSoundID.Harp_Item26;
-
-                ////st.Pitch = 0.5f;
-                //SoundEngine.PlaySound(st);
-
-
-                Projectile.NewProjectile(source, player.Center, Vector2.Zero, type, 1, 0, player.whoAmI);
+                return false;
             }
+
+            Projectile.NewProjectile(source, player.Center, Vector2.Zero, type, 1, 0, player.whoAmI);
             return false;
         }
 

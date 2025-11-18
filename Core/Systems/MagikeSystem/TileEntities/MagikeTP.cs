@@ -220,9 +220,13 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
                     {
                         continue;
                     }
+
                     string fullName = reader.ReadString();
-                    Type t = Type.GetType(fullName);
-                    MagikeComponent component = (MagikeComponent)Activator.CreateInstance(t);
+                    if (!GetMagikeComponentType(fullName, out Type t))
+                        continue;
+
+                    var component = (MagikeComponent)Activator.CreateInstance(t);
+
                     component.ReceiveData(reader, whoAmI);
                     AddComponentWithoutOnAdd(component);
                 }
@@ -259,21 +263,9 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
             int i = 0;
             while (tag.TryGet(SaveName + i.ToString(), out string fullName))
             {
-                Type t;
-                string modName = fullName.Split('.')[0];
-
-                if (modName == nameof(Coralite))  //本模组直接就获取类型
-                    t = Type.GetType(fullName);
-                else                              //其他模组从别的模组中获取
-                {
-                    ModLoader.TryGetMod(modName, out Mod mod);
-                    t = mod.Code.GetType(fullName);
-                }
-
-                if (t is null)
+                if (!GetMagikeComponentType(fullName, out Type t))
                 {
                     i++;
-                    $"未找到指定类型{fullName}！".Dump();
                     continue;
                 }
 
@@ -284,6 +276,28 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
 
                 AddComponentWithoutOnAdd(component);
             }
+        }
+
+        public static bool GetMagikeComponentType(string fullName, out Type t)
+        {
+            string modName = fullName.Split('.')[0];
+
+            if (modName == nameof(Coralite))  //本模组直接就获取类型
+                t = Type.GetType(fullName);
+            else                              //其他模组从别的模组中获取
+            {
+                ModLoader.TryGetMod(modName, out Mod mod);
+                t = mod.Code.GetType(fullName);
+            }
+
+            if (t is null)
+            {
+                $"未找到指定类型{fullName}！".Dump();
+                t = null;
+                return false;
+            }
+
+            return true;
         }
 
         #endregion

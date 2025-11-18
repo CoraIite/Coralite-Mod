@@ -345,6 +345,8 @@ namespace Coralite.Helpers
         /// <param name="topLeft"></param>
         public static void SpawnLozengeParticle_WithTopLeft(Point16 topLeft)
         {
+            if (VaultUtils.isServer)
+                return;
             GetMagikeAlternateData(topLeft.X, topLeft.Y, out TileObjectData data, out _);
             Point16 size = data == null ? new Point16(1) : new Point16(data.Width, data.Height);
 
@@ -966,7 +968,7 @@ namespace Coralite.Helpers
             return false;
         }
 
-        public static int IndexOfSelf(this MagikeComponent component)
-            => component.Entity.IndexOf(component);
+        public static byte IndexOfSelf(this MagikeComponent component)
+            => (byte)component.Entity.IndexOf(component);
     }
 }

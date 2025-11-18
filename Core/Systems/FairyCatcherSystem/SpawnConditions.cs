@@ -77,7 +77,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
         /// <summary> 击败赤玉灵 </summary>
         public static FairySpawnCondition DownedRediancie =
             new(() => CoraliteConditions.DownedRediancie.Description.Value
-                , attempt => DownedBossSystem.downedRediancie);
+                , attempt => ModContent.GetInstance<DownedRediancie>().Value);
 
         /// <summary> 击败克眼 </summary>
         public static FairySpawnCondition DownedEOC =

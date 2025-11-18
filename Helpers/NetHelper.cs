@@ -18,23 +18,23 @@ namespace Coralite.Helpers
         /// <param name="packType"></param>
         public static void AddToPackList(this MagikeComponent mp, MagikeNetPackType packType, Action<ModPacket> writeSpecial = null)
         {
-            if (VaultUtils.isServer)
+            if (!VaultUtils.isServer)
+                return;
+
+            //只有特定类型的才会移除旧的然后再添加新的以减少发送的内容
+            if (packType is not MagikeNetPackType.ItemContainer_IndexedItem)
             {
-                //只有特定类型的才会移除旧的然后再添加新的以减少发送的内容
-                if (packType is not MagikeNetPackType.ItemContainer_IndexedItem)
-                {
-                    var oldPack = MagikeSystem.MagikeNetPacks.FirstOrDefault(p => p.Position == mp.Entity.Position && p.PackType == packType, new MagikeNetPack());
-                    if (oldPack.Position != Point16.NegativeOne)
-                        MagikeSystem.MagikeNetPacks.Remove(oldPack);
-                }
-
-                var pack = new MagikeNetPack(mp.Entity.Position, packType);
-
-                if (writeSpecial != null)
-                    pack.WriteSpecialDatas = writeSpecial;
-
-                MagikeSystem.MagikeNetPacks.Add(pack);
+                var oldPack = MagikeSystem.MagikeNetPacks.FirstOrDefault(p => p.Position == mp.Entity.Position && p.PackType == packType, new MagikeNetPack());
+                if (oldPack.Position != Point16.NegativeOne)
+                    MagikeSystem.MagikeNetPacks.Remove(oldPack);
             }
+
+            var pack = new MagikeNetPack(mp.Entity.Position, packType);
+
+            if (writeSpecial != null)
+                pack.WriteSpecialDatas = writeSpecial;
+
+            MagikeSystem.MagikeNetPacks.Add(pack);
         }
 
         /// <summary>

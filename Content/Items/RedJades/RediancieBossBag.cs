@@ -42,7 +42,7 @@ namespace Coralite.Content.Items.RedJades
         public override void ModifyItemLoot(ItemLoot itemLoot)
         {
             itemLoot.Add(ItemDropRule.NotScalingWithLuck(ModContent.ItemType<RedJadePendant>()));
-            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<RedJade>(), 1, 26, 30));
+            itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<RedJade>(), 1, 32, 38));
             itemLoot.Add(ItemDropRule.CoinsBasedOnNPCValue(ModContent.NPCType<Rediancie>()));
         }
 

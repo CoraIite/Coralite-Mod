@@ -212,43 +212,43 @@ namespace Coralite
             {
                 "赤玉灵" or
                 "rediancie"
-                    => DownedBossSystem.downedRediancie,
+                    => ModContent.GetInstance<DownedRediancie>().Value,
                 "冰龙宝宝" or
                 "babyicedragon" or
                 "baby ice dragon"
-                    => DownedBossSystem.downedBabyIceDragon,
+                    => ModContent.GetInstance<DownedBabyIceDragon>().Value,
                 // "影子球" or "ShadowBalls" => DownedBossSystem.xxxx,
                 "荒雷龙" or
                 "thunderveindragon" or
                 "thundervein dragon"
-                    => DownedBossSystem.downedThunderveinDragon,
+                    => ModContent.GetInstance<DownedThunderveinDragon>().Value,
                 "史莱姆皇帝" or
                 "至高帝史莱姆王" or
                 "至高帝·史莱姆王" or
                 "至高帝" or
                 "slimeemperor" or
                 "slime emperor"
-                    => DownedBossSystem.downedSlimeEmperor,
+                    => ModContent.GetInstance<DownedSlimeEmperor>().Value,
                 "赤血玉灵" or
                 "血咒精赤玉灵" or
                 "血咒精·赤玉灵" or
                 "血咒精" or
                 "bloodiancie"
-                    => DownedBossSystem.downedBloodiancie,
+                    => ModContent.GetInstance<DownedBloodiancie>().Value,
                 "兹雷龙" or
                 "紫伏闪荒雷龙" or
                 "紫伏闪·荒雷龙" or
                 "紫伏闪" or
                 "zacurrentdragon" or
                 "zacurrent dragon"
-                    => DownedBossSystem.downedZacurrentDragon,
+                    => ModContent.GetInstance<DownedZacurrentDragon>().Value,
                 "梦魇之花" or
                 "梦界主世纪之花" or
                 "梦界主·世纪之花" or
                 "梦界主" or
                 "nightmareplantera" or
                 "nightmare plantera"
-                    => DownedBossSystem.downedNightmarePlantera,
+                    => ModContent.GetInstance<DownedNightmarePlantera>().Value,
                 _ => false,
             };
         }

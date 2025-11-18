@@ -13,14 +13,14 @@ namespace Coralite.Core.Systems.MagikeSystem
     {
         public static List<MagikeNetPack> MagikeNetPacks = new List<MagikeNetPack>();
 
-        internal const string GUID = "CoraliteMagikeUpdate";
+        internal const string GUID = "CORA-MUPD";
 
         private int SendTime;
 
         public override void PostUpdateEverything()
         {
             SendTime++;
-            if (SendTime < 60)//最多每秒发一次包
+            if (SendTime < 60 * 3)//最多每3秒发一次包
                 return;
 
             SendTime = 0;
@@ -73,7 +73,7 @@ namespace Coralite.Core.Systems.MagikeSystem
                         entity.GetMagikeContainer().ReceiveMagikeChange(reader);
                         break;
                     case MagikeNetPackType.TimerTriger_Timer:
-                        int index = reader.ReadInt32();
+                        int index = reader.ReadByte();
                         int timer = reader.ReadInt32();
 
                         if (entity.ComponentsCache.IndexInRange(index) && entity.ComponentsCache[index] is ITimerTriggerComponent timerComponent)//只有存在这个才会继续运行

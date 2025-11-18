@@ -55,10 +55,10 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
                         if (!VaultUtils.isServer)
                         {
+                            SoundEngine.PlaySound(CoraliteSoundID.IceMagic_Item28, NPC.Center);
                             PRTLoader.NewParticle(NPC.Center, Vector2.Zero, CoraliteContent.ParticleType<Sparkle_Big>(), Coralite.IcicleCyan, 0.8f);
                         }
 
-                        SoundEngine.PlaySound(CoraliteSoundID.IceMagic_Item28, NPC.Center);
                         NPC.netUpdate = true;
                     }
                     break;
@@ -101,15 +101,16 @@ namespace Coralite.Content.Bosses.BabyIceDragon
                         {
                             Vector2 position = NPC.BottomLeft;
                             position /= 16;
-                            for (int i = 0; i < 4; i++)
+                            int count = (NPC.width / 16) + 1;
+                            for (int i = 0; i < count; i++)
                             {
                                 for (int j = 0; j < 2; j++)
                                 {
                                     if (WorldGen.ActiveAndWalkableTile((int)position.X + i, (int)position.Y + j))    //砸地，生成冰刺弹幕
                                     {
                                         NPC.rotation = 0;
-                                        SpawnIceThorns();
                                         NPC.velocity *= 0;
+                                        SpawnIceThorns();
                                         HaveARest(30);
                                         return;
                                     }

@@ -307,7 +307,7 @@ namespace Coralite.Content.Items.Magike.Factorys
             [
                 //工作时间
                 this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.FactoryWorkTime) , parent),
-                this.NewTextBar(SendDelayText , parent),
+                this.NewTextBar(WorkDelayText , parent),
 
                 //生产物品
                 this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.LaserCollectorOutPut), parent),

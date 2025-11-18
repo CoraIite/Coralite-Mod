@@ -92,13 +92,13 @@ namespace Coralite.Core
 
 
             DownedRediancie = new Condition(this.GetLocalization(nameof(DownedRediancie))
-                , () => DownedBossSystem.downedRediancie);
+                , () => ModContent.GetInstance<DownedRediancie>().Value);
             DownedBabyIceDragon = new Condition(this.GetLocalization(nameof(DownedBabyIceDragon))
-                , () => DownedBossSystem.downedBabyIceDragon);
+                , () => ModContent.GetInstance<DownedBabyIceDragon>().Value);
             DownedThunderveinDragon = new Condition(this.GetLocalization(nameof(DownedThunderveinDragon))
-                , () => DownedBossSystem.downedThunderveinDragon);
+                , () => ModContent.GetInstance<DownedThunderveinDragon>().Value);
             DownedNightmarePlantera = new Condition(this.GetLocalization(nameof(DownedNightmarePlantera))
-                , () => DownedBossSystem.downedNightmarePlantera);
+                , () => ModContent.GetInstance<DownedNightmarePlantera>().Value);
 
 
             InMagicCrystalCave = new(this.GetLocalization(nameof(InMagicCrystalCave))

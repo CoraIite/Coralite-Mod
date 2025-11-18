@@ -409,7 +409,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             _relativePoses ??= new List<Point8>(MaxConnect);
 
             for (int i = 0; i < length; i++)
-                _relativePoses[i] = new Point8(reader.ReadByte(), reader.ReadByte());
+                _relativePoses.Add(new Point8(reader.ReadByte(), reader.ReadByte()));
         }
 
         #region 数据存储

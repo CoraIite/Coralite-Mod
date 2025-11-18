@@ -56,7 +56,7 @@ namespace Coralite.Compat.BossCheckList
                 Coralite.Instance,
                 "赤玉灵",
                 0.9f,
-                () => DownedBossSystem.downedRediancie,
+                () => GetInstance<DownedRediancie>().Value,
                 NPCType<Content.Bosses.Rediancie.Rediancie>(),
                 new Dictionary<string, object>()
                 {
@@ -86,7 +86,7 @@ namespace Coralite.Compat.BossCheckList
                 Coralite.Instance,
                 "冰龙宝宝",
                 3.1f,
-                () => DownedBossSystem.downedBabyIceDragon,
+                () => GetInstance<DownedBabyIceDragon>().Value,
                 NPCType<Content.Bosses.BabyIceDragon.BabyIceDragon>(),
                 new Dictionary<string, object>()
                 {
@@ -96,7 +96,6 @@ namespace Coralite.Compat.BossCheckList
                     ["customPortrait"] = BabyIceDragonPortrait.DrawPortrait,
                     ["collectibles"] = BabyIceDragonCollection
                 });
-
         }
 
         public static void AddSlimeEmperor(Mod bcl)
@@ -121,7 +120,7 @@ namespace Coralite.Compat.BossCheckList
                 Coralite.Instance,
                 "史莱姆皇帝",
                 3.2f,
-                () => DownedBossSystem.downedSlimeEmperor,
+                () => GetInstance<DownedSlimeEmperor>().Value,
                 NPCType<Content.Bosses.VanillaReinforce.SlimeEmperor.SlimeEmperor>(),
                 new Dictionary<string, object>()
                 {
@@ -129,7 +128,7 @@ namespace Coralite.Compat.BossCheckList
                     ["despawnMessage"] = Language.GetOrRegister($"Mods.Coralite.Compat.BossChecklist.SlimeEmperor.Despawn", () => "史莱姆皇帝回归了它的王国"),
                     ["spawnItems"] = ItemType<GelInvitation>(),
                     ["collectibles"] = SlimeEmperorCollection,
-                    ["availability"] = () => GetInstance<LearnedMagikeBase>()
+                    ["availability"] = () => GetInstance<LearnedMagikeBase>().Value
                 });
 
         }
@@ -155,7 +154,7 @@ namespace Coralite.Compat.BossCheckList
                 Coralite.Instance,
                 "赤血玉灵",
                 8.2f,
-                () => DownedBossSystem.downedBloodiancie,
+                () => GetInstance<DownedBloodiancie>().Value,
                 NPCType<Content.Bosses.ModReinforce.Bloodiancie.Bloodiancie>(),
                 new Dictionary<string, object>()
                 {
@@ -164,7 +163,7 @@ namespace Coralite.Compat.BossCheckList
                     ["spawnItems"] = ItemType<BloodJadeCore>(),
                     ["customPortrait"] = BloodianciePortrait.DrawPortrait,
                     ["collectibles"] = BloodiancieCollection,
-                    ["availability"] = () => GetInstance<LearnedMagikeAdvanced>()
+                    ["availability"] = () => GetInstance<LearnedMagikeAdvanced>().Value
                 });
         }
 
@@ -188,7 +187,7 @@ namespace Coralite.Compat.BossCheckList
                 Coralite.Instance,
                 "荒雷龙",
                 11.1f,
-                () => DownedBossSystem.downedThunderveinDragon,
+                () => GetInstance<DownedThunderveinDragon>().Value,
                 NPCType<Content.Bosses.ThunderveinDragon.ThunderveinDragon>(),
                 new Dictionary<string, object>()
                 {
@@ -220,7 +219,7 @@ namespace Coralite.Compat.BossCheckList
                 Coralite.Instance,
                 "兹雷龙",
                 15.1f,
-                () => DownedBossSystem.downedZacurrentDragon,
+                () => GetInstance<DownedZacurrentDragon>().Value,
                 NPCType<Content.Bosses.ModReinforce.PurpleVolt.ZacurrentDragon>(),
                 new Dictionary<string, object>()
                 {
@@ -229,7 +228,7 @@ namespace Coralite.Compat.BossCheckList
                     ["spawnItems"] = ItemType<Content.Items.Thunder.ZacurrentRod>(),
                     ["customPortrait"] = ZacurrentDragonPortrait.DrawPortrait,
                     ["collectibles"] = ThunderveinDragonCollection,
-                    ["availability"] = () => GetInstance<LearnedMagikeAdvanced>()
+                    ["availability"] = () => GetInstance<LearnedMagikeAdvanced>().Value
                 });
         }
 
@@ -266,7 +265,7 @@ namespace Coralite.Compat.BossCheckList
                 Coralite.Instance,
                 "梦魇之花",
                 18.1f,//18是月总
-                () => DownedBossSystem.downedNightmarePlantera,
+                () => GetInstance<DownedNightmarePlantera>().Value,
                 NPCType<Content.Bosses.VanillaReinforce.NightmarePlantera.NightmarePlantera>(),
                 new Dictionary<string, object>()
                 {
@@ -274,7 +273,7 @@ namespace Coralite.Compat.BossCheckList
                     ["despawnMessage"] = Language.GetOrRegister($"Mods.Coralite.Compat.BossChecklist.NightmarePlantera.Despawn", () => "梦境消散了"),
                     ["spawnItems"] = ItemType<NightmareHarp>(),
                     ["collectibles"] = NightmarePlanteraCollection,
-                    ["availability"] = () => GetInstance<LearnedMagikeAdvanced>()
+                    ["availability"] = () => GetInstance<LearnedMagikeAdvanced>().Value
                 });
         }
 

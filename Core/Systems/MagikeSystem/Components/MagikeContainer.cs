@@ -269,9 +269,6 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// </summary>
         public void SendMagike()
         {
-            if (!VaultUtils.isServer)
-                return;
-
             this.AddToPackList(MagikeNetPackType.MagikeContainer_MagikeChange, SendMagike_Handle);
         }
 

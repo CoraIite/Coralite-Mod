@@ -17,7 +17,7 @@ namespace Coralite.Content.Bosses.BabyIceDragon
 
         public override void PostUpdateTime()
         {
-            if (Main.netMode == NetmodeID.MultiplayerClient)
+            if (VaultUtils.isClient)
                 return;
 
             delay -= Main.desiredWorldEventsUpdateRate;

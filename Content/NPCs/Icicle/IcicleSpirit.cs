@@ -32,7 +32,7 @@ namespace Coralite.Content.NPCs.Icicle
         public override void SetDefaults()
         {
             NPC.width = NPC.height = 40;
-            NPC.lifeMax = 750;
+            NPC.lifeMax = 550;
             NPC.damage = 30;
             NPC.defense = 12;
             NPC.knockBackResist = 0.5f;
@@ -57,7 +57,7 @@ namespace Coralite.Content.NPCs.Icicle
 
         public override float SpawnChance(NPCSpawnInfo spawnInfo)
         {
-            if (spawnInfo.Player.ZoneSnow && spawnInfo.Player.ZoneRockLayerHeight && DownedBossSystem.downedBabyIceDragon)
+            if (spawnInfo.Player.ZoneSnow && spawnInfo.Player.ZoneRockLayerHeight)
                 return 0.1f;
             return 0f;
         }

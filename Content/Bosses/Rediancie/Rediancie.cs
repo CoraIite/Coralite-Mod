@@ -158,7 +158,7 @@ namespace Coralite.Content.Bosses.Rediancie
             npcLoot.Add(ItemDropRule.Common(ItemType<RediancieMask>(), 7));
 
             LeadingConditionRule notExpertRule = new(new Conditions.NotExpert());
-            notExpertRule.OnSuccess(ItemDropRule.Common(ItemType<RedJade>(), 1, 20, 24));
+            notExpertRule.OnSuccess(ItemDropRule.Common(ItemType<RedJade>(), 1, 28, 32));
             npcLoot.Add(notExpertRule);
         }
 
@@ -175,10 +175,9 @@ namespace Coralite.Content.Bosses.Rediancie
                 }
 
                 Gore.NewGoreDirect(NPC.GetSource_Death(), NPC.Center + Main.rand.NextVector2Circular(30, 40), new Vector2(0, -3).RotatedBy(Main.rand.NextFloat(-0.8f, 0.8f)), Mod.Find<ModGore>("Rediancie_Gore1").Type);
+                followers = null;
             }
 
-            followers.ForEach(fo => fo = null);
-            followers = null;
             DownedBossSystem.DownRediancie();
         }
 

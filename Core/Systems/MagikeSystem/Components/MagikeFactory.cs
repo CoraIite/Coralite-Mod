@@ -96,7 +96,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             Timer = WorkTime;
         }
 
-        public virtual string SendDelayText(MagikeFactory s)
+        public virtual string WorkDelayText(MagikeFactory s)
         {
             float timer = MathF.Round(s.Timer / 60f, 1);
             float delay = MathF.Round(s.WorkTime / 60f, 1);

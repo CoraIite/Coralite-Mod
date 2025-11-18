@@ -5,7 +5,6 @@ using Coralite.Content.Items.RedJades;
 using Coralite.Content.Items.Steel;
 using Coralite.Content.Items.Thunder;
 using Coralite.Content.Projectiles.Globals;
-using Coralite.Content.WorldGeneration;
 using Coralite.Core;
 using Coralite.Core.Systems.WorldValueSystem;
 using Coralite.Core.Systems.YujianSystem;

@@ -8,6 +8,7 @@ using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
@@ -832,6 +833,30 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         }
 
         #endregion
+
+        public override void SendData(ModPacket data)
+        {
+            base.SendData(data);
+            if (IsWorking)
+                data.Write(RequiredMagike);
+
+            data.Write(CostPercent);
+            data.Write(MinCost);
+            data.Write((byte)ItemSpawnMode);
+            data.Write((byte)AutoChoseMode);
+        }
+
+        public override void ReceiveData(BinaryReader reader, int whoAmI)
+        {
+            base.ReceiveData(reader, whoAmI);
+            if (IsWorking)
+                RequiredMagike= reader.ReadInt32();
+
+            CostPercent = reader.ReadSingle();
+            MinCost = reader.ReadInt32();
+            ItemSpawnMode = (ItemSpawnModes)reader.ReadByte();
+            AutoChoseMode = (AutoChoseModes)reader.ReadByte();
+        }
 
         public override void SaveData(string preName, TagCompound tag)
         {

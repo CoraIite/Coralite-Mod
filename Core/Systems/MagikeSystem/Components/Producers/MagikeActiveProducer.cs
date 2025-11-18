@@ -49,10 +49,11 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Producers
             if (ProductionDelayBase < 0 || !CheckTime())
                 return;
 
-            this.SendTimerComponentTime(this);
-
             if (!CanProduce())
                 return;
+
+            //为了防止仪器满了也tm一直在发包所以加了个限制，尽可能减少发包频率
+            this.SendTimerComponentTime(this);
 
             Produce();
         }
