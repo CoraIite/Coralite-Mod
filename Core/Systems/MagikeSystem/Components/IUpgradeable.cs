@@ -3,17 +3,22 @@
     public interface IUpgradeable
     {
         /// <summary>
-        /// 请自行判断传入的等级，返回<see langword="true"/>为能升级<br></br>
-        /// 
+        /// 执行初始化，需要在<see cref="InnoVault.TileProcessors.TileProcessor.Initialize"/>中调用
+        /// <br></br>否则没用！
+        /// </summary>
+        void InitializeLevel();
+
+        /// <summary>
+        /// 请自行判断传入的等级
         /// </summary>
         /// <param name="incomeLevel"></param>
         /// <returns></returns>
-        public abstract void Upgrade(MALevel incomeLevel);
+        void Upgrade(ushort incomeLevel);
 
         /// <summary>
         /// 能否升级
         /// </summary>
         /// <param name="incomeLevel"></param>
-        public abstract bool CanUpgrade(MALevel incomeLevel);
+        bool CanUpgrade(ushort incomeLevel);
     }
 }

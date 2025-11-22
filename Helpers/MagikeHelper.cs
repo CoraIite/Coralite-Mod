@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.UI.MagikeApparatusPanel;
 using Coralite.Core;
+using Coralite.Core.Loaders;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.Particles;
@@ -309,7 +310,7 @@ namespace Coralite.Helpers
         /// <param name="Entity"></param>
         /// <param name="incomeLevel"></param>
         /// <returns></returns>
-        public static bool CheckUpgrageable(this MagikeTP Entity, MALevel incomeLevel)
+        public static bool CheckUpgrageable(this MagikeTP Entity, ushort incomeLevel)
         {
             int tileType = Entity.TargetTileID;
 
@@ -638,53 +639,62 @@ namespace Coralite.Helpers
                 spriteBatch.Draw(itemTex, pos, new Rectangle?(rectangle2), i.GetColor(color), 0f, origin, itemScale, 0, 0f);
         }
 
-        public static int CalculateMagikeCost(MALevel level, int ProducerCount = 1, int workTime = 60)
-        {
-            float produceCountPerSecond = level switch
-            {
-                MALevel.MagicCrystal
-                or MALevel.Seashore => 0.25f,
+        /// <summary>
+        /// 根据魔能等级，透镜数，生产时间计算魔能消耗量
+        /// </summary>
+        /// <param name="levelType"></param>
+        /// <param name="ProducerCount"></param>
+        /// <param name="workTime"></param>
+        /// <returns></returns>
+        public static int CalculateMagikeCost(ushort levelType, int ProducerCount = 1, int workTime = 60)
+            => (int)(MagikeLoader.GetLevel(levelType).MagikeCostValue * ProducerCount * workTime);
+        
+        public static int CalculateMagikeCost<T>(int ProducerCount = 1, int workTime = 60)
+            where T : MagikeLevel
+            => (int)(CoraliteContent.GetMagikeLevel<T>().MagikeCostValue * ProducerCount * workTime);
 
-                MALevel.RedJade
-                or MALevel.Eiderdown => 0.5f,
+        //float produceCountPerSecond = level switch
+        //{
+        //    MALevel.MagicCrystal
+        //    or MALevel.Seashore => 0.25f,
 
-                MALevel.Glistent => 1f,
+        //    MALevel.RedJade
+        //    or MALevel.Eiderdown => 0.5f,
 
-                MALevel.Crimson
-                or MALevel.Corruption
-                or MALevel.Icicle
-                or MALevel.Emperor => 1.5f,
+        //    MALevel.Glistent => 1f,
 
-                MALevel.Shadow
-                or MALevel.Bone
-                or MALevel.Beeswax
-                or MALevel.Hellstone => 2f,
+        //    MALevel.Crimson
+        //    or MALevel.Corruption
+        //    or MALevel.Icicle
+        //    or MALevel.Emperor => 1.5f,
 
-                MALevel.Quicksand => 2.5f,
+        //    MALevel.Shadow
+        //    or MALevel.Bone
+        //    or MALevel.Beeswax
+        //    or MALevel.Hellstone => 2f,
 
-                MALevel.CrystallineMagike => 5.3f,
+        //    MALevel.Quicksand => 2.5f,
 
-                MALevel.Pelagic
-                or MALevel.Flight
-                or MALevel.Forbidden
-                or MALevel.Frost => 7.5f,
+        //    MALevel.CrystallineMagike => 5.3f,
 
-                MALevel.Hallow
-                or MALevel.BloodJade
-                or MALevel.EternalFlame => 10,
+        //    MALevel.Pelagic
+        //    or MALevel.Flight
+        //    or MALevel.Forbidden
+        //    or MALevel.Frost => 7.5f,
 
-                MALevel.Soul
-                or MALevel.Feather
-                or MALevel.Shroomite => 14,
+        //    MALevel.Hallow
+        //    or MALevel.BloodJade
+        //    or MALevel.EternalFlame => 10,
 
-                MALevel.HolyLight => 20,
+        //    MALevel.Soul
+        //    or MALevel.Feather
+        //    or MALevel.Shroomite => 14,
 
-                MALevel.SplendorMagicore => 50,
-                _ => 0,
-            };
+        //    MALevel.HolyLight => 20,
 
-            return (int)(produceCountPerSecond * ProducerCount * workTime);
-        }
+        //    MALevel.SplendorMagicore => 50,
+        //    _ => 0,
+        //};
 
         /// <summary>
         /// 根据左上角获得TP

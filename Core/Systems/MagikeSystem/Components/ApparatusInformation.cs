@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.UI;
 using Coralite.Content.UI.MagikeApparatusPanel;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System.IO;
@@ -17,7 +18,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// <summary>
         /// 当前仪器的等级，用于显示名字
         /// </summary>
-        public MALevel CurrentLevel { get; private set; }
+        public ushort CurrentLevel { get; private set; }
 
         /// <summary>
         /// 是否显示需要插入偏振滤镜
@@ -30,15 +31,20 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public override void Initialize()
         {
-            Upgrade(MALevel.None);
+            InitializeLevel();
         }
 
-        public virtual void Upgrade(MALevel incomeLevel)
+        public void InitializeLevel()
+        {
+            CurrentLevel = CoraliteContent.MagikeLevelType<NoneLevel>();
+        }
+
+        public virtual void Upgrade(ushort incomeLevel)
         {
             CurrentLevel = incomeLevel;
         }
 
-        public virtual bool CanUpgrade(MALevel incomeLevel)
+        public virtual bool CanUpgrade(ushort incomeLevel)
             => Entity.CheckUpgrageable(incomeLevel);
 
         #endregion
@@ -105,12 +111,12 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public override void SendData(ModPacket data)
         {
-            data.Write((byte)CurrentLevel);
+            data.Write(CurrentLevel);
         }
 
         public override void ReceiveData(BinaryReader reader, int whoAmI)
         {
-            CurrentLevel = (MALevel)reader.ReadByte();
+            CurrentLevel = (ushort)reader.ReadInt16();
         }
 
         #endregion
@@ -119,12 +125,59 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public override void SaveData(string preName, TagCompound tag)
         {
-            tag.Add(preName + nameof(CurrentLevel), (int)CurrentLevel);
+            tag.Add(preName + nameof(CurrentLevel), CoraliteContent.GetMagikeLevel(CurrentLevel).Name);
         }
 
         public override void LoadData(string preName, TagCompound tag)
         {
-            CurrentLevel = (MALevel)tag.GetInt(preName + nameof(CurrentLevel));
+            if (tag.TryGet(preName + nameof(CurrentLevel), out dynamic level))
+            {
+                if (level is byte b)
+                    CurrentLevel = OldVersionLoadLevel(b);
+                else
+                    CurrentLevel = (ushort)tag.GetShort(preName + nameof(CurrentLevel));
+            }
+        }
+
+        /// <summary>
+        /// TODO: 在久远的未来版本删除这个
+        /// </summary>
+        /// <param name="oldVersionLevel"></param>
+        /// <returns></returns>
+        private static ushort OldVersionLoadLevel(byte oldVersionLevel)
+        {
+            return oldVersionLevel switch
+            {
+                1 => CoraliteContent.MagikeLevelType<CrystalLevel>(),
+                2 => CoraliteContent.MagikeLevelType<GlistentLevel>(),
+                3 => CoraliteContent.MagikeLevelType<CrimsonLevel>(),
+                4 => CoraliteContent.MagikeLevelType<CorruptionLevel>(),
+                5 => CoraliteContent.MagikeLevelType<IcicleLevel>(),
+                6 => CoraliteContent.MagikeLevelType<ShadowLevel>(),
+                7 => CoraliteContent.MagikeLevelType<BrilliantLevel>(),
+                8 => CoraliteContent.MagikeLevelType<HallowLevel>(),
+                9 => CoraliteContent.MagikeLevelType<SoulLevel>(),
+                10 => CoraliteContent.MagikeLevelType<FeatherLevel>(),
+                11 => CoraliteContent.MagikeLevelType<HolyLightLevel>(),
+                12 => CoraliteContent.MagikeLevelType<SplendorLevel>(),
+                13 => CoraliteContent.MagikeLevelType<InfinityLevel>(),
+                14 => CoraliteContent.MagikeLevelType<SeashoreLevel>(),
+                15 => CoraliteContent.MagikeLevelType<EiderdownLevel>(),
+                16 => CoraliteContent.MagikeLevelType<RedJadeLevel>(),
+                17 => CoraliteContent.MagikeLevelType<EmperorLevel>(),
+                18 => CoraliteContent.MagikeLevelType<BeeswaxLevel>(),
+                19 => CoraliteContent.MagikeLevelType<HellstoneLevel>(),
+                20 => CoraliteContent.MagikeLevelType<BoneLevel>(),
+                21 => CoraliteContent.MagikeLevelType<QuicksandLevel>(),
+                22 => CoraliteContent.MagikeLevelType<PelagicLevel>(),
+                23 => CoraliteContent.MagikeLevelType<FlightLevel>(),
+                24 => CoraliteContent.MagikeLevelType<ForbiddenLevel>(),
+                25 => CoraliteContent.MagikeLevelType<FrostLevel>(),
+                26 => CoraliteContent.MagikeLevelType<BloodJadeLevel>(),
+                27 => CoraliteContent.MagikeLevelType<EternalFlameLevel>(),
+                28 => CoraliteContent.MagikeLevelType<ShroomiteLevel>(),
+                _ => CoraliteContent.MagikeLevelType<NoneLevel>()
+            };
         }
 
         #endregion

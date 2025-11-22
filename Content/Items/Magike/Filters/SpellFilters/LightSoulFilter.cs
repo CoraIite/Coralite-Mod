@@ -44,6 +44,6 @@ namespace Coralite.Content.Items.Magike.Filters.SpellFilters
         public override int GetCraftResultItemType() => ItemID.SoulofLight;
 
         public override SpellStructure GetSpellStructure()
-            => CoraliteContent.GetMTBS<LightSoulStruct>() as SpellStructure;
+            => CoraliteContent.GetMultiblock<LightSoulStruct>() as SpellStructure;
     }
 }

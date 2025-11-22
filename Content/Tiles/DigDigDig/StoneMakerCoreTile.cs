@@ -29,14 +29,14 @@ namespace Coralite.Content.Tiles.DigDigDig
 
         public override bool RightClick(int i, int j)
         {
-            CoraliteContent.GetMTBS<DigStoneMakerMTB>().CheckStructure(new Point16(i, j));
+            CoraliteContent.GetMultiblock<DigStoneMakerMTB>().CheckStructure(new Point16(i, j));
 
             return true;
         }
 
         public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
         {
-            int type = CoraliteContent.MTBSType<DigStoneMakerMTB>();
+            int type = CoraliteContent.MultiblockType<DigStoneMakerMTB>();
             foreach (var p in Main.projectile.Where(p => p.active && p.friendly && p.type == ModContent.ProjectileType<PreviewMultiblockPeoj>() && p.ai[0] == type))
                 p.Kill();
         }

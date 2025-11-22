@@ -863,14 +863,14 @@ namespace Coralite.Content.Items.ThyphionSeries
 
         public override bool RightClick(int i, int j)
         {
-            CoraliteContent.GetMTBS<TurbulenceMultiBlock>().CheckStructure(new Point16(i, j));
+            CoraliteContent.GetMultiblock<TurbulenceMultiBlock>().CheckStructure(new Point16(i, j));
 
             return true;
         }
 
         public override void KillTile(int i, int j, ref bool fail, ref bool effectOnly, ref bool noItem)
         {
-            int type = CoraliteContent.MTBSType<TurbulenceMultiBlock>();
+            int type = CoraliteContent.MultiblockType<TurbulenceMultiBlock>();
             foreach (var p in Main.projectile.Where(p => p.active && p.friendly && p.type == ProjectileType<PreviewMultiblockPeoj>() && p.ai[0] == type))
                 p.Kill();
         }

@@ -11,7 +11,6 @@ using System.IO;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.ModLoader.Core;
 using Terraria.ModLoader.IO;
 
 namespace Coralite.Core.Systems.MagikeSystem.TileEntities
@@ -20,7 +19,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
     {
         public const string SaveName = "Component";
 
-        internal static int playerInWorldTime;
+        //internal static int playerInWorldTime;
 
         internal const string GUID = "UO98-MK87";
 
