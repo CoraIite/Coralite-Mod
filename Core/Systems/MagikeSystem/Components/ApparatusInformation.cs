@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 using Terraria;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader.IO;
 using Terraria.UI;
 
@@ -36,7 +37,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public void InitializeLevel()
         {
-            CurrentLevel = CoraliteContent.MagikeLevelType<NoneLevel>();
+            CurrentLevel = CoraliteContent.MagikeLevelType<NoneLevel>();Language.GetTextValue
         }
 
         public virtual void Upgrade(ushort incomeLevel)
@@ -58,22 +59,24 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             UIElement title = new ComponentUIElementText<ApparatusInformation>(c =>
                  i.Name, this, parent, new Vector2(1.3f));
             parent.Append(title);
+            UIElement top = title;
 
             //当前等级
-            UIElement text = this.NewTextBar(c =>
+            if (ShowPolarizedTip)
             {
-                if (ShowPolarizedTip && c.CurrentLevel == MALevel.None)
-                    return MagikeSystem.GetUIText(MagikeSystem.UITextID.NeedPolarizedFilter);
-                else
+                UIElement text = this.NewTextBar(c =>
+                {
                     return MagikeSystem.GetUIText(MagikeSystem.UITextID.CurrentLevel) + MagikeSystem.GetMALevelText(c.CurrentLevel);
-            }, parent);
+                }, parent);
 
-            text.SetTopLeft(title.Height.Pixels + 8, 0);
-            parent.Append(text);
+                top = text;
+                text.SetTopLeft(title.Height.Pixels + 8, 0);
+                parent.Append(text);
+            }
 
             //物品格
             ShowOnlySlot slot = new ShowOnlySlot(this);
-            slot.SetTopLeft(text.Top.Pixels + text.Height.Pixels + 8, 0);
+            slot.SetTopLeft(top.Top.Pixels + top.Height.Pixels + 8, 0);
             parent.Append(slot);
 
             if (Entity.ExtendFilterCapacity > 0)

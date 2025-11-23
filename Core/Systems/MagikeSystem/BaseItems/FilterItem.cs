@@ -15,8 +15,6 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
 {
     public abstract class FilterItem : ModItem
     {
-        public abstract Color FilterColor { get; }
-
         /// <summary>
         /// 获取滤镜组件
         /// </summary>

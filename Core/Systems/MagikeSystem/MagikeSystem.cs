@@ -39,12 +39,15 @@ namespace Coralite.Core.Systems.MagikeSystem
             if (Main.dedServ)
                 return;
 
+            LoadMagikeLevelText();
             RegisterMagikeCraft();
-            LoadPolarizeFilter();
         }
 
         public override void Load()
         {
+            if (Main.dedServ)
+                return;
+
             LoadLocalization();
             LoadAssets();
         }

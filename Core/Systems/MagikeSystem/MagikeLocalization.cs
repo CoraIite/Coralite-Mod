@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Coralite.Core.Loaders;
+using System;
 using Terraria.Localization;
 
 namespace Coralite.Core.Systems.MagikeSystem
@@ -48,7 +49,6 @@ namespace Coralite.Core.Systems.MagikeSystem
             LoadUIText();
             LoadCraftText();
             LoadUIPanelText();
-            LoadMALevelText();
         }
 
         public void UnloadLocalization()
@@ -64,7 +64,7 @@ namespace Coralite.Core.Systems.MagikeSystem
             UIText = null;
             CraftText = null;
             UIPanelText = null;
-            MALevelText = null;
+            MagikeLevelText = null;
 
             RightClickToGetPermission = null;
         }
@@ -398,7 +398,6 @@ namespace Coralite.Core.Systems.MagikeSystem
             FastStack,
             ItemContainerName,
             GetOnlyItemContainerName,
-            NeedPolarizedFilter,
             CurrentLevel,
             CraftAltarBarMode,
             CraftAltarSlotMode,
@@ -456,20 +455,18 @@ namespace Coralite.Core.Systems.MagikeSystem
 
         #region 等级
 
-        public static LocalizedText[] MALevelText { get; private set; }
+        public static LocalizedText[] MagikeLevelText { get; private set; }
 
-        public void LoadMALevelText()
+        public void LoadMagikeLevelText()
         {
-            MALevelText = new LocalizedText[Enum.GetValues<MALevel>().Length];
+            MagikeLevelText = new LocalizedText[MagikeLoader.LevelCount];
 
-            for (int i = 0; i < MALevelText.Length; i++)
-            {
-                MALevelText[i] = this.GetLocalization(nameof(MALevelText) + "." + Enum.GetName((MALevel)i));
-            }
+            for (int i = 0; i < MagikeLevelText.Length; i++)
+                MagikeLevelText[i] = this.GetLocalization(nameof(MagikeLevelText) + "." + MagikeLoader.levels[i].LevelName);
         }
 
-        public static string GetMALevelText(MALevel id)
-            => MALevelText[(int)id].Value;
+        public static string GetMALevelText(ushort id)
+            => MagikeLevelText[id].Value;
 
         #endregion
 

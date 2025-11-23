@@ -1,5 +1,4 @@
-﻿using Coralite.Core.Systems.FairyCatcherSystem;
-using Coralite.Core.Systems.MagikeSystem;
+﻿using Coralite.Core.Systems.MagikeSystem;
 using System.Collections.Generic;
 
 namespace Coralite.Core.Loaders

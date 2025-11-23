@@ -8,6 +8,8 @@ namespace Coralite.Core.Systems.MagikeSystem
     /// </summary>
     public abstract class MagikeLevel : ModType
     {
+        public string LevelName => Name.Replace("Level", "");
+
         /// <summary>
         /// 内部ID
         /// </summary>
@@ -27,6 +29,11 @@ namespace Coralite.Core.Systems.MagikeSystem
         /// 在计算魔能合成表消耗的时候使用的值
         /// </summary>
         public abstract float MagikeCostValue { get; }
+
+        /// <summary>
+        /// 等级颜色
+        /// </summary>
+        public virtual Color LevelColor { get=>Color.White; }
 
         protected sealed override void Register()
         {
