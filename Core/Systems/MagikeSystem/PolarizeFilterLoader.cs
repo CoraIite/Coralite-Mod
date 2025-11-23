@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.Items.Magike;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components.Filters;
+using CoraliteAPI;
 using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;

@@ -36,11 +36,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             }
         }
 
-        /// <summary> 额外容量 </summary>
-        public int CapacityExtra { get; set; }
-
         /// <summary> 容量 </summary>
-        public int Capacity => CapacityBase + CapacityExtra;
+        public int Capacity => CapacityBase;
 
         private Item[] _items;
         public Item[] Items
@@ -82,7 +79,6 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             data.Write(CapacityBase);
 
             //$"SendData-CapacityExtra:{CapacityExtra}".LoggerDomp();
-            data.Write(CapacityExtra);
 
             //$"SendData-Items[].Length:{Items.Length}".LoggerDomp();
             data.Write(Items.Length);
@@ -108,7 +104,6 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             CapacityBase = reader.ReadInt32();
             //$"ReceiveData-CapacityBase:{CapacityBase}".LoggerDomp();
 
-            CapacityExtra = reader.ReadInt32();
             //$"ReceiveData-CapacityExtra:{CapacityExtra}".LoggerDomp();
 
             int length = reader.ReadInt32();
@@ -469,7 +464,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             UIElement title = this.AddTitle(MagikeSystem.UITextID.ItemContainerName, parent);
 
             UIElement text = this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.ItemMax)
-            + $"\n  ▶ {c.Capacity} ({c.CapacityBase} {(c.CapacityExtra < 0 ? "-" : "+")} {c.CapacityExtra})", parent);
+            + $"\n  ▶ {c.Capacity}", parent);
 
             text.SetTopLeft(title.Height.Pixels + 8, 0);
             parent.Append(text);
@@ -498,7 +493,6 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public override void SaveData(string preName, TagCompound tag)
         {
             tag.Add(preName + nameof(CapacityBase), CapacityBase);
-            tag.Add(preName + nameof(CapacityExtra), CapacityExtra);
 
             for (int i = 0; i < Items.Length; i++)
             {
@@ -512,7 +506,6 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public override void LoadData(string preName, TagCompound tag)
         {
             CapacityBase = tag.GetInt(preName + nameof(CapacityBase));
-            CapacityExtra = tag.GetInt(preName + nameof(CapacityExtra));
 
             _items = new Item[Capacity];
             for (int i = 0; i < Items.Length; i++)

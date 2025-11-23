@@ -22,5 +22,26 @@
         {
             return ID != MagikeFilter;
         }
+
+        /// <summary>
+        /// 获取ID魔能数据中的名称
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns></returns>
+        public static string GetName(int ID)
+        {
+            return ID switch
+            {
+                ApparatusInformation => "Information",
+                MagikeContainer => "Container",
+                MagikeSender => "Sender",
+                MagikeProducer => "Producer",
+                MagikeFactory => "Factory",
+                MagikeFilter => "Filter",
+                ItemContainer => "Item",
+                ItemGetOnlyContainer => "GetOnlyItem",
+                _ => "Special"
+            };
+        }
     }
 }
