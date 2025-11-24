@@ -24,41 +24,38 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
 {
     public abstract class BaseMagikeTile(int width, int height, Color mapColor, int dustType, int minPick = 0, bool topSoild = false) : ModTile
     {
-        public Dictionary<MALevel, ATex> ExtraAssets { get; private set; }
+        public Dictionary<ushort, ATex> ExtraAssets { get; private set; }
 
         public abstract int DropItemType { get; }
         public abstract CoraliteSetsSystem.MagikeTileType PlaceType { get; }
 
-        public override void Load()
+        public void LoadAssets()
         {
             ExtraAssets = [];
 
-            MALevel[] levels = GetAllLevels();
-            if (levels == null || levels.Length == 0)
+            List<ushort> levels = GetAllLevels();
+            if (levels == null || levels.Count == 0)
                 return;
 
             //加载等级贴图
-            for (int i = 0; i < levels.Length; i++)
+            for (int i = 0; i < levels.Count; i++)
                 QuickLoadAsset(levels[i]);
         }
 
-        public virtual void QuickLoadAsset(MALevel level)
+        public virtual void QuickLoadAsset(ushort level)
         {
-            if (level == MALevel.None)
-                return;
+            string name = CoraliteContent.GetMagikeLevel(level).LevelName;
+            name = Texture + "_" + name;
 
-            string name = Enum.GetName(level);
-            if (string.IsNullOrEmpty(name))
-                return;
-
-            ExtraAssets.Add(level, ModContent.Request<Texture2D>(Texture + "_" + name));
+            if (ModContent.HasAsset(name))
+                ExtraAssets.Add(level, ModContent.Request<Texture2D>(name));
         }
 
         /// <summary>
         /// 返回所有可以有的魔能等级
         /// </summary>
         /// <returns></returns>
-        public virtual MALevel[] GetAllLevels() => null;
+        public virtual List<ushort> GetAllLevels() => null;
 
         /// <summary>
         /// 获取可放置的物块类型
@@ -68,6 +65,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
         
         public override void SetStaticDefaults()
         {
+            LoadAssets();
+
             Main.tileFrameImportant[Type] = true;
             Main.tileLavaDeath[Type] = false;
             TileID.Sets.IgnoredInHouseScore[Type] = true;
@@ -79,7 +78,6 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
             TileObjectData.newTile.StyleHorizontal = false;
             TileObjectData.newTile.UsesCustomCanPlace = true;
             TileObjectData.newTile.Origin = new Point16(width / 2, height - 1);
-            //TileObjectData.newTile.StyleWrapLimit = 100;
             TileObjectData.newTile.CoordinateHeights = new int[height];
 
             CoraliteSetsSystem.MagikeTileTypes.Add(Type, PlaceType);
@@ -180,8 +178,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
 
             MinPick = minPick;
 
-            MALevel[] levels = GetAllLevels();
-            if (levels == null || levels.Length == 0)
+            List<ushort> levels = GetAllLevels();
+            if (levels == null || levels.Count == 0)
                 return;
 
             //加载等级字典
@@ -256,17 +254,17 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
         {
             if (TryGetEntity(i, j, out MagikeTP tp))
             {
-                if (!MagikeSystem.MagikeFrameToLevels.TryGetValue(Main.tile[i, j].TileType
-                    , out var keyValuePairs))//获取帧图-》等级的键值对
+                if (!MagikeSystem.MagikeApparatusLevels.TryGetValue(Main.tile[i, j].TileType
+                    , out var list))//获取帧图-》等级的键值对
                     return;
 
-                if (keyValuePairs.Count < 1)//对于只有一个等级的就不动它
+                if (list.Count < 2)//对于只有一个等级的就不动它
                     return;
 
-                if (keyValuePairs[0] != MALevel.None)//初始等级不是无的不动它                                         
+                if (list[0] != MagikeSystem.NoneLevelID)//初始等级不是无的不动它                                         
                     return;
 
-                MALevel level = keyValuePairs[1];
+                ushort level = list[1];
                 PolarizedFilter.ChangeTileFrame(level, tp);
                 foreach (var component in tp.ComponentsCache)
                 {
@@ -536,25 +534,29 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
             if (!TryGetEntityWithTopLeft(p, out MagikeTP entity))
                 return;
 
-            DrawExtra(spriteBatch, tileRect, offScreen, lightColor, rotation, entity);
+            PreDrawExtra(spriteBatch, tileRect, offScreen, lightColor, rotation, entity);
 
-            var level = MagikeSystem.FrameToLevel(tile.TileType, tile.TileFrameX / data.CoordinateFullWidth);
-            if (!level.HasValue)
+            var level = MagikeSystem.NoneLevelID;
+
+            if (entity.TryGetComponent(MagikeComponentID.ApparatusInformation, out ApparatusInformation info))
+                level = info.CurrentLevel;
+
+            if (level == MagikeSystem.NoneLevelID)
                 return;
 
             //获取初始绘制参数
-            if (!ExtraAssets.TryGetValue(level.Value, out ATex asset))
+            if (!ExtraAssets.TryGetValue(level, out ATex asset))
                 return;
 
             Texture2D texture = asset.Value;
 
-            DrawExtraTex(spriteBatch, texture, tileRect, offset, lightColor, rotation, entity, level.Value);
+            DrawExtraTex(spriteBatch, texture, tileRect, offset, lightColor, rotation, entity, level);
         }
 
         /// <summary>
         /// 额外绘制一层，这一层在绘制特定的贴图之前，没有额外贴图的话也会调用到
         /// </summary>
-        public virtual void DrawExtra(SpriteBatch spriteBatch, Rectangle tileRect, Vector2 offset, Color lightColor, float rotation, MagikeTP entity)
+        public virtual void PreDrawExtra(SpriteBatch spriteBatch, Rectangle tileRect, Vector2 offset, Color lightColor, float rotation, MagikeTP entity)
         {
 
         }
@@ -566,7 +568,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
         /// <param name="tileRect"></param>
         /// <param name="offset"></param>
         /// <param name="entity"></param>
-        public virtual void DrawExtraTex(SpriteBatch spriteBatch, Texture2D tex, Rectangle tileRect, Vector2 offset, Color lightColor, float rotation, MagikeTP entity, MALevel level)
+        public virtual void DrawExtraTex(SpriteBatch spriteBatch, Texture2D tex, Rectangle tileRect, Vector2 offset, Color lightColor, float rotation, MagikeTP entity, ushort level)
         {
 
         }

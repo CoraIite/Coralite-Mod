@@ -37,7 +37,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public void InitializeLevel()
         {
-            CurrentLevel = CoraliteContent.MagikeLevelType<NoneLevel>();Language.GetTextValue
+            CurrentLevel = CoraliteContent.MagikeLevelType<NoneLevel>();
         }
 
         public virtual void Upgrade(ushort incomeLevel)
@@ -97,7 +97,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             Text1.SetTopLeft(title.Top.Pixels + title.Height.Pixels + 8, 0);
             parent.Append(Text1);
 
-            FixedUIGrid grid = new FixedUIGrid();
+            FixedUIGrid grid = [];
             for (int i = 0; i < Entity.ExtendFilterCapacity; i++)
                 grid.Add(new FilterButton(i));
 

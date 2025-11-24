@@ -24,7 +24,5 @@ namespace Coralite.Core.Systems.MagikeSystem.Spells
         public abstract MagikeContainer GetStartContainer();
         public abstract SpellFactory GetStartFactory();
         public abstract GetOnlyItemContainer GetStartGetOnlyContainer();
-
-        public override ApparatusInformation AddInformation() => null;
     }
 }

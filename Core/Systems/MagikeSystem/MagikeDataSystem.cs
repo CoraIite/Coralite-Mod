@@ -1,5 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using Coralite.Core.Systems.MagikeSystem.Tiles;
+using Newtonsoft.Json.Linq;
+using ReLogic.Utilities;
+using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.IO;
+using System.Reflection;
+using Terraria.ModLoader.Core;
 
 namespace Coralite.Core.Systems.MagikeSystem
 {
@@ -12,5 +18,74 @@ namespace Coralite.Core.Systems.MagikeSystem
         internal static Dictionary<string, HybridDictionary> MagikeApparatusData { get; set; }
 
 
+        /// <summary>
+        /// 供你自动创建魔能数据
+        /// </summary>
+        /// <param name="mod"></param>
+        /// <param name="fullPath"></param>
+        public static void CheckMagikeData(Mod mod, string fullPath)
+        {
+            //检测是否存在键名
+            //读取JSON文件内容
+            using Stream stream = new FileStream(fullPath, FileMode.Open);
+            using StreamReader file = new StreamReader(stream);
+
+            string originString = file.ReadToEnd();
+            JObject obj = JObject.Parse(originString);
+
+            foreach (var type in AssemblyManager.GetLoadableTypes(mod.Code))
+            {
+                var att = type.GetAttribute<CoraliteAPI.UpgradeableComponentAttribute>();
+                
+                if (att == null)
+                    continue;
+
+                int tileType = att.getTileType();
+                ModTile mt = TileLoader.GetTile(tileType);
+
+                if (mt is not BaseMagikeTile magTile)
+                    continue;
+                if (!MagikeApparatusLevels.TryGetValue(tileType, out var levels))
+                    continue;
+
+                string tileName = magTile.Name.Replace("Tile", "");
+                if (!obj.ContainsKey(tileName))
+                    obj[tileName] = new JObject();
+
+                //物块的Obj
+                JObject tileObj = (JObject)obj[tileName];
+
+                PropertyInfo[] pInfos = type.GetProperties();
+
+                //写入所有所有属性
+                foreach (var pInfo in pInfos)
+                {
+                    var att2 = type.GetAttribute<CoraliteAPI.UpgradeablePropAttribute>();
+                    if (att == null)
+                        continue;
+
+                    //属性的Obj
+                    string propName = pInfo.Name;
+                    if (!tileObj.ContainsKey(propName))
+                        tileObj[propName] = new JObject();
+
+                    JObject propObj = (JObject)tileObj[propName];
+
+                    foreach (var level in levels)
+                    {
+                        MagikeLevel mLevel = CoraliteContent.GetMagikeLevel(level);
+                        string levelName = mLevel.Name;
+
+                        if (!propObj.ContainsKey(levelName))
+                            propObj.Add(new JProperty(levelName, 0));
+                    }
+                }
+            }
+
+            using StreamWriter writer = new StreamWriter(stream);
+            stream.Seek(0, SeekOrigin.Begin);
+            stream.SetLength(0);
+            writer.Write(obj.ToString());
+        }
     }
 }

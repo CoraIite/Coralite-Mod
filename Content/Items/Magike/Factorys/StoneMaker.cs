@@ -86,7 +86,7 @@ namespace Coralite.Content.Items.Magike.Factorys
 
         public override void QuickLoadAsset(MALevel level) { }
 
-        public override void DrawExtra(SpriteBatch spriteBatch, Rectangle tileRect, Vector2 offset, Color lightColor, float rotation, MagikeTP entity)
+        public override void PreDrawExtra(SpriteBatch spriteBatch, Rectangle tileRect, Vector2 offset, Color lightColor, float rotation, MagikeTP entity)
         {
             Vector2 selfCenter = tileRect.Center();
             Vector2 drawPos = selfCenter + offset;

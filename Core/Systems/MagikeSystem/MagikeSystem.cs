@@ -1,4 +1,5 @@
 ﻿using Coralite.Core.Loaders;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using Terraria;
@@ -18,6 +19,11 @@ namespace Coralite.Core.Systems.MagikeSystem
         public static ATex[] UIApparatusButton { get; private set; }
         public static ATex[] UIComponentButton { get; private set; }
 
+        /// <summary>
+        /// 无等级的ID
+        /// </summary>
+        public static ushort NoneLevelID{ get; private set; }
+
         public static ConnectLineType CurrentConnectLineType;
         public static ConnectUIAssetID CurrentMagikeUIType;
 
@@ -29,18 +35,16 @@ namespace Coralite.Core.Systems.MagikeSystem
             Instance = this;
         }
 
-        /// <summary> 是否学习过 书页：魔能基础 </summary>
-        //public static bool learnedMagikeBase;
-        /// <summary> 是否学习过卷轴：强化魔能提炼 </summary>
-        //public static bool learnedMagikeAdvanced;
-
         public override void PostAddRecipes()
         {
+            NoneLevelID = GetInstance<NoneLevel>().Type;
+
             if (Main.dedServ)
                 return;
 
             LoadMagikeLevelText();
             RegisterMagikeCraft();
+
         }
 
         public override void Load()
@@ -61,7 +65,6 @@ namespace Coralite.Core.Systems.MagikeSystem
 
             UnloadLocalization();
             UnloadAssets();
-            UnLoadPolarizeFilter();
 
             MagikeCraftRecipesDic = null;
             MagikeCraftRecipesFrozen = null;

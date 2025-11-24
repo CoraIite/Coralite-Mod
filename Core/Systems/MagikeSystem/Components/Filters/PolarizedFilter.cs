@@ -4,10 +4,10 @@ using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using Terraria;
 using Terraria.DataStructures;
+using Terraria.ID;
 using Terraria.ObjectData;
 using Terraria.UI;
 
@@ -38,7 +38,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Filters
                 return false;
             }
 
-            if (!keyValuePairs.ContainsKey(Level))
+            if (!keyValuePairs.Contains(Level))
             {
                 text = MagikeSystem.GetFilterText(MagikeSystem.FilterID.CantUpgrade);
                 return false;
@@ -90,19 +90,19 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Filters
 
         public override void OnRemove(MagikeTP entity)
         {
-            if (!MagikeSystem.MagikeFrameToLevels.TryGetValue(Entity.TargetTileID
+            if (!MagikeSystem.MagikeApparatusLevels.TryGetValue(Entity.TargetTileID
                 , out var keyValuePairs))//获取帧图-》等级的键值对
                 return;
 
-            MALevel level;
+            ushort level;
 
-            if (keyValuePairs.Count < 1)//对于只有一个等级的就不动它
+            if (keyValuePairs.Count < 2)//对于只有一个等级的就不动它
             {
                 level = keyValuePairs[0];
                 goto over;
             }
 
-            if (keyValuePairs[0] != MALevel.None)//初始等级不是无的不动它
+            if (keyValuePairs[0] != MagikeSystem.NoneLevelID)//初始等级不是无的不动它
             {
                 level = keyValuePairs[0];
                 goto over;
@@ -120,7 +120,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Filters
             SpawnItem(entity);
         }
 
-        public static void ChangeTileFrame(MALevel level, MagikeTP entity)
+        public static void ChangeTileFrame(ushort level, MagikeTP entity)
         {
             Point16 topLeft = entity.Position;
             Tile tile = Framing.GetTileSafely(topLeft);
@@ -130,7 +130,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Filters
 
             MagikeHelper.GetMagikeAlternateData(topLeft.X, topLeft.Y, out TileObjectData data, out _);
 
-            int frameX = MagikeSystem.MagikeApparatusLevels[tile.TileType][level] * data.CoordinateFullWidth;
+            int frameX = MagikeSystem.MagikeApparatusLevels[tile.TileType].IndexOf(level) * data.CoordinateFullWidth;
 
             for (int i = 0; i < data.Width; i++)
                 for (int j = 0; j < data.Height; j++)
@@ -138,6 +138,11 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Filters
                     Tile t = Framing.GetTileSafely(topLeft + new Point16(i, j));
 
                     t.TileFrameX = (short)(frameX + i * (data.CoordinateWidth + data.CoordinatePadding));
+                    if (VaultUtils.isClient)
+                    {
+                        //TODO: 搞清楚这个是什么
+                        //NetMessage.SendData(MessageID.TileFrameSection,)
+                    }
                 }
         }
 

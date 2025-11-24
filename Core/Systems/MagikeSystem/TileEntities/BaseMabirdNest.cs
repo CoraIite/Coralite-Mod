@@ -9,7 +9,7 @@ namespace Coralite.Core.Systems.MagikeSystem.TileEntities
 
         public override int MainComponentID => MagikeComponentID.ItemContainer;
 
-        public override ApparatusInformation AddInformation() => null;
+        public override ApparatusInformation AddInformation() => new ApparatusInformation_NoPolar();
 
         public override void InitializeBeginningComponent()
         {

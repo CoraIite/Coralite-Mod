@@ -5,7 +5,7 @@
         /// <summary>
         /// 这个晶簇的等级
         /// </summary>
-        MALevel Level { get; }
+        ushort Level { get; }
 
         /// <summary>
         /// 这个晶簇的物品类型
