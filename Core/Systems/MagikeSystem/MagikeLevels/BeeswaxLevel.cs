@@ -4,7 +4,7 @@ using Terraria;
 namespace Coralite.Core.Systems.MagikeSystem.MagikeLevels
 {
     /// <summary>
-    /// 赤玉
+    /// 蜂蜡
     /// </summary>
     public class BeeswaxLevel : MagikeLevel
     {
@@ -13,5 +13,12 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeLevels
         public override float MagikeCostValue => 2f;
 
         public override int PolarizedFilterItemType => ModContent.ItemType<BeeswaxPolarizedFilter>();
+
+        public static ushort ID { get; private set; }
+
+        public override void Load()
+        {
+            ID = Type;
+        }
     }
 }

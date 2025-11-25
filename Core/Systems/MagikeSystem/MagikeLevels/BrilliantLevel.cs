@@ -12,5 +12,12 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeLevels
         public override float MagikeCostValue => 5.3f;
 
         public override int PolarizedFilterItemType => ModContent.ItemType<CrystallineMagikePolarizedFilter>();
+
+        public static ushort ID { get; private set; }
+
+        public override void Load()
+        {
+            ID = Type;
+        }
     }
 }

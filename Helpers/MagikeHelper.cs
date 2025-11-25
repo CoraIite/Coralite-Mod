@@ -287,7 +287,7 @@ namespace Coralite.Helpers
         /// <returns></returns>
         public static bool TryGetMagikeApparatusLevel(Point16 topLeft, out ushort level)
         {
-            level = NoneLevel.NoneID;
+            level = NoneLevel.ID;
 
             if (TryGetEntityWithTopLeft(topLeft, out MagikeTP entity))
                 if (entity.TryGetComponent(MagikeComponentID.ApparatusInformation, out ApparatusInformation info))

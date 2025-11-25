@@ -48,29 +48,29 @@ namespace Coralite.Content.Items.Magike.Altars
         {
             return
             [
-                MALevel.None,
-                MALevel.MagicCrystal,
-                MALevel.Glistent,
-                MALevel.Shadow,
-                MALevel.CrystallineMagike,
-                MALevel.Hallow,
-                MALevel.HolyLight,
+                NoneLevel.ID,
+                CrystalLevel.ID,
+                GlistentLevel.ID,
+                ShadowLevel.ID,
+                BrilliantLevel.ID,
+                HallowLevel.ID,
+                HolyLightLevel.ID,
             ];
         }
 
         public override Vector2 GetFloatingOffset(float rotation, ushort level)
         {
-            if (level==CoraliteContent.MagikeLevelType<CrystalLevel>()
-                || level == CoraliteContent.MagikeLevelType<GlistentLevel>()
-                || level == CoraliteContent.MagikeLevelType<HallowLevel>())
+            if (level == CrystalLevel.ID
+                || level == GlistentLevel.ID
+                || level == HallowLevel.ID)
                 return rotation.ToRotationVector2() * 8;
 
-            if (level==CoraliteContent.MagikeLevelType<BrilliantLevel>()
-                || level == CoraliteContent.MagikeLevelType<ShadowLevel>()
-                || level == CoraliteContent.MagikeLevelType<HallowLevel>())
+            if (level == BrilliantLevel.ID
+                || level == ShadowLevel.ID
+                || level == HallowLevel.ID)
                 return rotation.ToRotationVector2() * 12;
 
-            if (level==CoraliteContent.MagikeLevelType<HolyLightLevel>())
+            if (level == HolyLightLevel.ID)
                 return rotation.ToRotationVector2() * 4;
 
             return Vector2.Zero;
@@ -78,17 +78,11 @@ namespace Coralite.Content.Items.Magike.Altars
 
         public override Vector2 GetRestOffset(float rotation, ushort level)
         {
-            return level switch
-            {
-                MALevel.MagicCrystal
-                or MALevel.Glistent
-                or MALevel.Shadow
-                or MALevel.CrystallineMagike
-                => Vector2.Zero,
-                MALevel.Hallow => -6 * rotation.ToRotationVector2(),
-                MALevel.HolyLight => -6 * rotation.ToRotationVector2(),
-                _ => Vector2.Zero
-            };
+            if (level == HallowLevel.ID
+                || level == HolyLightLevel.ID)
+                return rotation.ToRotationVector2() * -6;
+
+            return Vector2.Zero;
         }
     }
 
@@ -205,40 +199,45 @@ namespace Coralite.Content.Items.Magike.Altars
 
         public override void Upgrade(ushort incomeLevel)
         {
-            float second = incomeLevel switch
-            {
-                MALevel.MagicCrystal => 0.5f,
-                MALevel.Glistent => 0.45f,
-                MALevel.Shadow => 0.4f,
-                MALevel.CrystallineMagike => 0.35f,
-                MALevel.Hallow => 0.3f,
-                MALevel.HolyLight => 0.25f,
-                _ => -1,
-            };
+            string name = this.GetDataPreName();
+            WorkTimeBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(WorkTimeBase));
+            CostPercent = MagikeSystem.GetLevelDataFloat(incomeLevel, name + nameof(CostPercent));
+            MinCost = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(WorkTimeBase));
 
-            CostPercent = incomeLevel switch
-            {
-                MALevel.MagicCrystal => 0.05f,
-                MALevel.Glistent => 0.05f,
-                MALevel.Shadow => 0.07f,
-                MALevel.CrystallineMagike => 0.1f,
-                MALevel.Hallow => 0.1f,
-                MALevel.HolyLight => 0.13f,
-                _ => 0,
-            };
+            //float second = incomeLevel switch
+            //{
+            //    MALevel.MagicCrystal => 0.5f,
+            //    MALevel.Glistent => 0.45f,
+            //    MALevel.Shadow => 0.4f,
+            //    MALevel.CrystallineMagike => 0.35f,
+            //    MALevel.Hallow => 0.3f,
+            //    MALevel.HolyLight => 0.25f,
+            //    _ => -1,
+            //};
 
-            MinCost = incomeLevel switch
-            {
-                MALevel.MagicCrystal => 1,
-                MALevel.Glistent => 3,
-                MALevel.Shadow => 8,
-                MALevel.CrystallineMagike => 15,
-                MALevel.Hallow => 30,
-                MALevel.HolyLight => 50,
-                _ => 1,
-            };
+            //CostPercent = incomeLevel switch
+            //{
+            //    MALevel.MagicCrystal => 0.05f,
+            //    MALevel.Glistent => 0.05f,
+            //    MALevel.Shadow => 0.07f,
+            //    MALevel.CrystallineMagike => 0.1f,
+            //    MALevel.Hallow => 0.1f,
+            //    MALevel.HolyLight => 0.13f,
+            //    _ => 0,
+            //};
 
-            WorkTimeBase = (int)(second * 60);
+            //MinCost = incomeLevel switch
+            //{
+            //    MALevel.MagicCrystal => 1,
+            //    MALevel.Glistent => 3,
+            //    MALevel.Shadow => 8,
+            //    MALevel.CrystallineMagike => 15,
+            //    MALevel.Hallow => 30,
+            //    MALevel.HolyLight => 50,
+            //    _ => 1,
+            //};
+
+            //WorkTimeBase = (int)(second * 60);
         }
     }
 }

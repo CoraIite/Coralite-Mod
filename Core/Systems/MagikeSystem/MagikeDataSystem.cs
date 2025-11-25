@@ -93,7 +93,7 @@ namespace Coralite.Core.Systems.MagikeSystem
 
                     foreach (var level in levels)
                     {
-                        if (level == NoneLevel.NoneID)
+                        if (level == NoneLevel.ID)
                             continue;
 
                         MagikeLevel mLevel = CoraliteContent.GetMagikeLevel(level);
@@ -164,7 +164,7 @@ namespace Coralite.Core.Systems.MagikeSystem
 
                     foreach (var level in levels)
                     {
-                        if (level==NoneLevel.NoneID)
+                        if (level==NoneLevel.ID)
                             continue;
 
                         MagikeLevel mLevel = CoraliteContent.GetMagikeLevel(level);

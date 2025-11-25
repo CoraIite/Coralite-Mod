@@ -12,11 +12,11 @@
         /// <summary>
         /// 无等级的ID
         /// </summary>
-        public static ushort NoneID { get; private set; }
+        public static ushort ID { get; private set; }
 
         public override void Load()
         {
-            NoneID = ModContent.GetInstance<NoneLevel>().Type;
+            ID = Type;
         }
     }
 }

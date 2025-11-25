@@ -4,9 +4,9 @@ using Coralite.Content.Items.Materials;
 using Coralite.Content.Items.RedJades;
 using Coralite.Content.Items.Thunder;
 using Coralite.Content.Items.ThyphionSeries;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Terraria;
 using Terraria.ID;
-using static Coralite.Core.Systems.MagikeSystem.MALevel;
 using static Coralite.Helpers.MagikeHelper;
 
 namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
@@ -16,25 +16,25 @@ namespace Coralite.Core.Systems.MagikeSystem.MagikeCraft
         public void AddMagikeCraftRecipe()
         {
             #region 赤玉灵
-            MagikeRecipe.CreateCraftRecipe<RediancieBossBag, RedJade>(CalculateMagikeCost(MALevel.RedJade, 2, 120)
+            MagikeRecipe.CreateCraftRecipe<RediancieBossBag, RedJade>(CalculateMagikeCost<RedJadeLevel>( 2, 120)
                 , resultItemStack: 34)
-                .RegisterNewCraft<RediancieMask>(CalculateMagikeCost(MALevel.RedJade))
-                .RegisterNewCraft<RediancieTrophy>(CalculateMagikeCost(MALevel.RedJade, 2, 120))
-                .RegisterNewCraft<RedianciePet>(CalculateMagikeCost(MALevel.RedJade))
+                .RegisterNewCraft<RediancieMask>(CalculateMagikeCost<RedJadeLevel>())
+                .RegisterNewCraft<RediancieTrophy>(CalculateMagikeCost<RedJadeLevel>( 2, 120))
+                .RegisterNewCraft<RedianciePet>(CalculateMagikeCost<RedJadeLevel>())
                 .AddCondition(Condition.InMasterMode)
                 .Register();
             #endregion
 
             #region 史莱姆王
-            MagikeRecipe.CreateCraftRecipe(ItemID.KingSlimeBossBag, ItemID.SlimySaddle, CalculateMagikeCost(MALevel.RedJade, 5, 120))
-                .RegisterNewCraft(ItemID.NinjaHood, CalculateMagikeCost(MALevel.RedJade, 4, 120))
-                .RegisterNewCraft(ItemID.NinjaShirt, CalculateMagikeCost(MALevel.RedJade, 4, 120))
-                .RegisterNewCraft(ItemID.NinjaPants, CalculateMagikeCost(MALevel.RedJade, 4, 120))
-                .RegisterNewCraft(ItemID.SlimeHook, CalculateMagikeCost(MALevel.RedJade, 4, 120))
-                .RegisterNewCraft(ItemID.SlimeGun, CalculateMagikeCost(MALevel.RedJade))
-                .RegisterNewCraft(ItemID.KingSlimeMask, CalculateMagikeCost(MALevel.RedJade))
-                .RegisterNewCraft(ItemID.KingSlimeTrophy, CalculateMagikeCost(MALevel.RedJade))
-                .RegisterNewCraft(ItemID.KingSlimePetItem, CalculateMagikeCost(MALevel.RedJade))
+            MagikeRecipe.CreateCraftRecipe(ItemID.KingSlimeBossBag, ItemID.SlimySaddle, CalculateMagikeCost<RedJadeLevel>(, 5, 120))
+                .RegisterNewCraft(ItemID.NinjaHood, CalculateMagikeCost<RedJadeLevel>( 4, 120))
+                .RegisterNewCraft(ItemID.NinjaShirt, CalculateMagikeCost<RedJadeLevel>( 4, 120))
+                .RegisterNewCraft(ItemID.NinjaPants, CalculateMagikeCost<RedJadeLevel>( 4, 120))
+                .RegisterNewCraft(ItemID.SlimeHook, CalculateMagikeCost<RedJadeLevel>( 4, 120))
+                .RegisterNewCraft(ItemID.SlimeGun, CalculateMagikeCost<RedJadeLevel>())
+                .RegisterNewCraft(ItemID.KingSlimeMask, CalculateMagikeCost<RedJadeLevel>())
+                .RegisterNewCraft(ItemID.KingSlimeTrophy, CalculateMagikeCost<RedJadeLevel>())
+                .RegisterNewCraft(ItemID.KingSlimePetItem, CalculateMagikeCost<RedJadeLevel>())
                 .AddCondition(Condition.InMasterMode)
                 .Register();
             #endregion

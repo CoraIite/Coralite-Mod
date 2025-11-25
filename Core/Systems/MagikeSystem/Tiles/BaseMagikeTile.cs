@@ -263,7 +263,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
                 if (list.Count < 2)//对于只有一个等级的就不动它
                     return;
 
-                if (list[0] != NoneLevel.NoneID)//初始等级不是无的不动它                                         
+                if (list[0] != NoneLevel.ID)//初始等级不是无的不动它                                         
                     return;
 
                 ushort level = list[1];
@@ -538,12 +538,12 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
 
             PreDrawExtra(spriteBatch, tileRect, offScreen, lightColor, rotation, entity);
 
-            var level = NoneLevel.NoneID;
+            var level = NoneLevel.ID;
 
             if (entity.TryGetComponent(MagikeComponentID.ApparatusInformation, out ApparatusInformation info))
                 level = info.CurrentLevel;
 
-            if (level == NoneLevel.NoneID)
+            if (level == NoneLevel.ID)
                 return;
 
             //获取初始绘制参数

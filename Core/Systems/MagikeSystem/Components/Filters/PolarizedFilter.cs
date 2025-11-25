@@ -103,7 +103,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Filters
                 goto over;
             }
 
-            if (keyValuePairs[0] != NoneLevel.NoneID)//初始等级不是无的不动它
+            if (keyValuePairs[0] != NoneLevel.ID)//初始等级不是无的不动它
             {
                 level = keyValuePairs[0];
                 goto over;

@@ -144,7 +144,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                             GetMagikeAlternateData(pos1.X, pos1.Y, out _, out MagikeAlternateStyle alternate);
                             float rotation = alternate.GetAlternateRotation();
 
-                            ushort level = NoneLevel.NoneID;
+                            ushort level = NoneLevel.ID;
                             if (Entity.TryGetComponent(MagikeComponentID.ApparatusInformation, out ApparatusInformation info))
                                 level = info.CurrentLevel;
 
@@ -166,7 +166,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 GetMagikeAlternateData(pos.X, pos.Y, out _, out MagikeAlternateStyle alternate);
                 float rotation = alternate.GetAlternateRotation();
 
-                ushort level = NoneLevel.NoneID;
+                ushort level = NoneLevel.ID;
                 if (Entity.TryGetComponent(MagikeComponentID.ApparatusInformation, out ApparatusInformation info))
                     level = info.CurrentLevel;
 
@@ -787,7 +787,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
                 float rotation = alternate.GetAlternateRotation();
 
-                ushort level = NoneLevel.NoneID;
+                ushort level = NoneLevel.ID;
                 Color c = Coralite.MagicCrystalPink;
 
                 if (Entity.TryGetComponent(MagikeComponentID.ApparatusInformation, out ApparatusInformation info))
