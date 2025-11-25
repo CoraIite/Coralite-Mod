@@ -1,5 +1,6 @@
 ﻿using Coralite.Core.Systems.MagikeSystem.Particles;
 using Coralite.Helpers;
+using CoraliteAPI;
 using System;
 using System.IO;
 using Terraria;
@@ -14,6 +15,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public sealed override int ID => MagikeComponentID.MagikeSender;
 
         /// <summary> 基础单次发送量 </summary>
+        [UpgradeableProp]
         public int UnitDeliveryBase { get; protected set; }
         /// <summary> 额外单次发送量 </summary>
         public float UnitDeliveryBonus { get; set; } = 1f;
@@ -22,6 +24,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public int UnitDelivery { get => (int)(UnitDeliveryBase * UnitDeliveryBonus); }
 
         /// <summary> 基础发送时间 </summary>
+        [UpgradeableProp]
         public int SendDelayBase { get => DelayBase; protected set => DelayBase = value; }
         /// <summary> 发送时间减少量（效率增幅量） </summary>
         public float SendDelayBonus { get => DelayBonus; set => DelayBonus = value; }

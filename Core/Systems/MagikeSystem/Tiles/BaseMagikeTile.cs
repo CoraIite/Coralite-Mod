@@ -6,6 +6,7 @@ using Coralite.Core.Loaders;
 using Coralite.Core.Network;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.Components.Filters;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
@@ -62,10 +63,11 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
         /// </summary>
         /// <returns></returns>
         public virtual int[] GetAnchorValidTiles() => null;
-        
+
         public override void SetStaticDefaults()
         {
-            LoadAssets();
+            if (!VaultUtils.isServer)
+                LoadAssets();
 
             Main.tileFrameImportant[Type] = true;
             Main.tileLavaDeath[Type] = false;
@@ -261,7 +263,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
                 if (list.Count < 2)//对于只有一个等级的就不动它
                     return;
 
-                if (list[0] != MagikeSystem.NoneLevelID)//初始等级不是无的不动它                                         
+                if (list[0] != NoneLevel.NoneID)//初始等级不是无的不动它                                         
                     return;
 
                 ushort level = list[1];
@@ -536,12 +538,12 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
 
             PreDrawExtra(spriteBatch, tileRect, offScreen, lightColor, rotation, entity);
 
-            var level = MagikeSystem.NoneLevelID;
+            var level = NoneLevel.NoneID;
 
             if (entity.TryGetComponent(MagikeComponentID.ApparatusInformation, out ApparatusInformation info))
                 level = info.CurrentLevel;
 
-            if (level == MagikeSystem.NoneLevelID)
+            if (level == NoneLevel.NoneID)
                 return;
 
             //获取初始绘制参数

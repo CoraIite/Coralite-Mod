@@ -3,6 +3,7 @@ using Coralite.Core;
 using Coralite.Core.Loaders;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.Components;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Core.Systems.MagikeSystem.Particles;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using InnoVault.TileProcessors;
@@ -38,7 +39,7 @@ namespace Coralite.Helpers
             => entity.HasComponent(MagikeComponentID.MagikeContainer);
 
         /// <summary>
-        /// 尝试从<see cref="TileEntity"/>种获取<see cref="IEntity"/><br></br>
+        /// 尝试获取魔能物块实体
         /// 传入的点可以不是左上角
         /// </summary>
         /// <param name="i"></param>
@@ -284,24 +285,18 @@ namespace Coralite.Helpers
         /// <param name="topLeft"></param>
         /// <param name="level"></param>
         /// <returns></returns>
-        public static bool TryGetMagikeApparatusLevel(Point16 topLeft, out MALevel level)
+        public static bool TryGetMagikeApparatusLevel(Point16 topLeft, out ushort level)
         {
-            level = MALevel.None;
+            level = NoneLevel.NoneID;
 
-            Tile targetTile = Framing.GetTileSafely(topLeft);
-            GetMagikeAlternateData(topLeft.X, topLeft.Y, out TileObjectData alternateData, out _);
+            if (TryGetEntityWithTopLeft(topLeft, out MagikeTP entity))
+                if (entity.TryGetComponent(MagikeComponentID.ApparatusInformation, out ApparatusInformation info))
+                {
+                    level = info.CurrentLevel;
+                    return true;
+                }
 
-            if (alternateData == null)
-                return false;
-
-            //计算当前帧图
-            MALevel? chooseLevel = MagikeSystem.FrameToLevel(targetTile.TileType, targetTile.TileFrameX / alternateData.CoordinateFullWidth);
-
-            if (!chooseLevel.HasValue)
-                return false;
-
-            level = chooseLevel.Value;
-            return true;
+            return false;
         }
 
         /// <summary>
@@ -314,10 +309,10 @@ namespace Coralite.Helpers
         {
             int tileType = Entity.TargetTileID;
 
-            if (!MagikeSystem.MagikeApparatusLevels.TryGetValue(tileType, out var keyValuePairs))
+            if (!MagikeSystem.MagikeApparatusLevels.TryGetValue(tileType, out var levels))
                 return false;
 
-            if (!keyValuePairs.ContainsKey(incomeLevel))
+            if (!levels.Contains(incomeLevel))
                 return false;
 
             return true;
@@ -335,8 +330,8 @@ namespace Coralite.Helpers
                 GetMagikeAlternateData(pos.X, pos.Y, out TileObjectData data, out _);
                 Point16 size = data == null ? new Point16(1) : new Point16(data.Width, data.Height);
 
-                if (TryGetMagikeApparatusLevel(topLeft.Value, out MALevel level))
-                    MagikeLozengeParticle.Spawn(Helper.GetMagikeTileCenter(topLeft.Value), size, MagikeSystem.GetColor(level));
+                if (TryGetMagikeApparatusLevel(topLeft.Value, out ushort level))
+                    MagikeLozengeParticle.Spawn(Helper.GetMagikeTileCenter(topLeft.Value), size, CoraliteContent.GetMagikeLevel(level).LevelColor);
             }
         }
 
@@ -351,8 +346,8 @@ namespace Coralite.Helpers
             GetMagikeAlternateData(topLeft.X, topLeft.Y, out TileObjectData data, out _);
             Point16 size = data == null ? new Point16(1) : new Point16(data.Width, data.Height);
 
-            if (TryGetMagikeApparatusLevel(topLeft, out MALevel level))
-                MagikeLozengeParticle.Spawn(Helper.GetMagikeTileCenter(topLeft), size, MagikeSystem.GetColor(level));
+            if (TryGetMagikeApparatusLevel(topLeft, out ushort level))
+                MagikeLozengeParticle.Spawn(Helper.GetMagikeTileCenter(topLeft), size, CoraliteContent.GetMagikeLevel(level).LevelColor);
         }
 
         public static void DrawRectangleFrame(SpriteBatch spriteBatch, Point16 p1, Point16 p2, Color color)
@@ -483,10 +478,10 @@ namespace Coralite.Helpers
 
         public static void SpawnDustOnSend(Point16 selfPos, Point16 targetPos, int dustType = DustID.Teleporter)
         {
-            if (!TryGetMagikeApparatusLevel(selfPos, out MALevel level))
+            if (!TryGetMagikeApparatusLevel(selfPos, out ushort level))
                 return;
 
-            Color dustColor = MagikeSystem.GetColor(level);
+            Color dustColor = CoraliteContent.GetMagikeLevel(level).LevelColor;
             Vector2 selfCenter = Helper.GetTileCenter(selfPos);
             Vector2 targetCenter = Helper.GetTileCenter(targetPos);
 
@@ -980,5 +975,20 @@ namespace Coralite.Helpers
 
         public static byte IndexOfSelf(this MagikeComponent component)
             => (byte)component.Entity.IndexOf(component);
+
+
+        /// <summary>
+        /// 获取魔能仪器数据的名称
+        /// </summary>
+        /// <param name="component"></param>
+        /// <returns></returns>
+        public static string GetDataPreName(this MagikeComponent component)
+        {
+            int tileType=component.Entity.TargetTileID;
+            ModTile mt=TileLoader.GetTile(tileType);
+
+            return mt.Name.Replace("Tile","")+MagikeComponentID.GetName(component.ID);
+        }
+
     }
 }

@@ -33,7 +33,7 @@ namespace Coralite.Core.Systems.MagikeSystem
         /// <summary>
         /// 等级颜色
         /// </summary>
-        public virtual Color LevelColor { get=>Color.White; }
+        public virtual Color LevelColor { get => Color.White; }
 
         protected sealed override void Register()
         {

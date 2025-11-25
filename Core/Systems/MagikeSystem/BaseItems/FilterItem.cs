@@ -140,7 +140,10 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
                         filter.whoAmI = entity.ComponentsCache.Count;
 
                         //特效部分
-                        TileRenewalController.Spawn(currentTopLeft.Value, (Owner.HeldItem.ModItem as FilterItem).FilterColor);
+                        TileRenewalController.Spawn(currentTopLeft.Value
+                            , CoraliteContent.GetMagikeLevel(
+                                (Owner.HeldItem.ModItem as FilterItem).GetFilterComponent().Level)
+                            .LevelColor);
 
                         //消耗滤镜
                         Owner.HeldItem.stack--;
@@ -155,7 +158,7 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
                         //"PlaceFilter:插入失败".LoggerDomp();
                         PopupText.NewText(new AdvancedPopupRequest()
                         {
-                            Color = Coralite.MagicCrystalPink,
+                            Color = Coralite.RedJadeRed,
                             Text = text,
                             DurationInFrames = 60,
                             Velocity = -Vector2.UnitY
@@ -183,7 +186,9 @@ namespace Coralite.Core.Systems.MagikeSystem.BaseItems
 
         public override Color GetDrawColor()
         {
-            return (Item.ModItem as FilterItem).FilterColor;
+            return CoraliteContent.GetMagikeLevel(
+                       (Owner.HeldItem.ModItem as FilterItem).GetFilterComponent().Level)
+                   .LevelColor;
         }
     }
 }

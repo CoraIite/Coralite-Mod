@@ -1,4 +1,5 @@
 ﻿using Coralite.Helpers;
+using CoraliteAPI;
 using System;
 using Terraria.ModLoader.IO;
 
@@ -17,6 +18,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Producers
         public sealed override int ID => MagikeComponentID.MagikeProducer;
 
         /// <summary> 基础生产量 </summary>
+        [UpgradeableProp]
         public int ThroughputBase { get; protected set; }
         /// <summary> 额外生产量 </summary>
         public float ThroughputBonus { get; set; } = 1f;

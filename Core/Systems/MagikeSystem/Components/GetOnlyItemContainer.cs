@@ -19,7 +19,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             UIElement title = this.AddTitle(MagikeSystem.UITextID.GetOnlyItemContainerName, parent);
 
             UIElement text = this.NewTextBar(c => MagikeSystem.GetUIText(MagikeSystem.UITextID.ItemMax)
-            + $"\n  ▶ {c.Capacity} ({c.CapacityBase} {(c.CapacityExtra < 0 ? "-" : "+")} {c.CapacityExtra})", parent);
+            + $"\n  ▶ {c.Capacity}", parent);
 
             text.SetTopLeft(title.Height.Pixels + 8, 0);
             parent.Append(text);

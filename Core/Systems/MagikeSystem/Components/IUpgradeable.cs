@@ -21,4 +21,9 @@
         /// <param name="incomeLevel"></param>
         bool CanUpgrade(ushort incomeLevel);
     }
+
+    public interface IUpgradeLoadable
+    {
+        int TileType {  get; }
+    }
 }

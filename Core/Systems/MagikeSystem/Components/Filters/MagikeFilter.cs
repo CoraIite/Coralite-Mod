@@ -18,7 +18,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
     {
         public sealed override int ID => MagikeComponentID.MagikeFilter;
 
-        public abstract MALevel Level { get; }
+        public abstract ushort Level { get; }
 
         public int whoAmI = -1;
 

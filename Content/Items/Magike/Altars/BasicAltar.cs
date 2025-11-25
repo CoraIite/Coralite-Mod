@@ -4,9 +4,12 @@ using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Core.Systems.MagikeSystem.Tiles;
 using Coralite.Helpers;
+using CoraliteAPI;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
@@ -41,7 +44,7 @@ namespace Coralite.Content.Items.Magike.Altars
         public override string Texture => AssetDirectory.MagikeAltarTiles + Name;
         public override int DropItemType => ItemType<BasicAltar>();
 
-        public override MALevel[] GetAllLevels()
+        public override List<ushort> GetAllLevels()
         {
             return
             [
@@ -55,23 +58,25 @@ namespace Coralite.Content.Items.Magike.Altars
             ];
         }
 
-        public override Vector2 GetFloatingOffset(float rotation, MALevel level)
+        public override Vector2 GetFloatingOffset(float rotation, ushort level)
         {
-            return level switch
-            {
-                MALevel.MagicCrystal
-                or MALevel.Glistent
-                or MALevel.Hallow
-                => rotation.ToRotationVector2() * 8,
-                MALevel.CrystallineMagike
-                or MALevel.Shadow
-                => rotation.ToRotationVector2() * 12,
-                MALevel.HolyLight => rotation.ToRotationVector2() * 4,
-                _ => Vector2.Zero
-            };
+            if (level==CoraliteContent.MagikeLevelType<CrystalLevel>()
+                || level == CoraliteContent.MagikeLevelType<GlistentLevel>()
+                || level == CoraliteContent.MagikeLevelType<HallowLevel>())
+                return rotation.ToRotationVector2() * 8;
+
+            if (level==CoraliteContent.MagikeLevelType<BrilliantLevel>()
+                || level == CoraliteContent.MagikeLevelType<ShadowLevel>()
+                || level == CoraliteContent.MagikeLevelType<HallowLevel>())
+                return rotation.ToRotationVector2() * 12;
+
+            if (level==CoraliteContent.MagikeLevelType<HolyLightLevel>())
+                return rotation.ToRotationVector2() * 4;
+
+            return Vector2.Zero;
         }
 
-        public override Vector2 GetRestOffset(float rotation, MALevel level)
+        public override Vector2 GetRestOffset(float rotation, ushort level)
         {
             return level switch
             {
@@ -114,21 +119,29 @@ namespace Coralite.Content.Items.Magike.Altars
             => new BasicAltarSender();
     }
 
-    public class BasicAltarContainer : UpgradeableContainer
+    public class BasicAltarContainer : UpgradeableContainer<BasicAltarTile>
     {
-        public override void Upgrade(MALevel incomeLevel)
+        public override void InitializeLevel()
         {
-            MagikeMaxBase = incomeLevel switch
-            {
-                MALevel.MagicCrystal => MagikeHelper.CalculateMagikeCost(MALevel.MagicCrystal, 8, 60 * 2),
-                MALevel.Glistent => MagikeHelper.CalculateMagikeCost(MALevel.Glistent, 8, 60 * 2),
-                MALevel.Shadow => MagikeHelper.CalculateMagikeCost(MALevel.Shadow, 8, 60 * 2),
-                MALevel.CrystallineMagike => MagikeHelper.CalculateMagikeCost(MALevel.CrystallineMagike, 8, 60 * 2),
-                MALevel.Hallow => MagikeHelper.CalculateMagikeCost(MALevel.Hallow, 8, 60 * 2),
-                MALevel.HolyLight => MagikeHelper.CalculateMagikeCost(MALevel.HolyLight, 8, 60 * 2),
-                MALevel.SplendorMagicore => MagikeHelper.CalculateMagikeCost(MALevel.SplendorMagicore, 8, 60 * 2),
-                _ => 0,
-            };
+            MagikeMaxBase = 0;
+        }
+
+        public override void Upgrade(ushort incomeLevel)
+        {
+            string name = this.GetDataPreName();
+            MagikeMaxBase = MagikeSystem.GetLevelDataInt(incomeLevel, name + nameof(MagikeMaxBase));
+
+            //MagikeMaxBase = incomeLevel switch
+            //{
+            //    MALevel.MagicCrystal => MagikeHelper.CalculateMagikeCost(MALevel.MagicCrystal, 8, 60 * 2),
+            //    MALevel.Glistent => MagikeHelper.CalculateMagikeCost(MALevel.Glistent, 8, 60 * 2),
+            //    MALevel.Shadow => MagikeHelper.CalculateMagikeCost(MALevel.Shadow, 8, 60 * 2),
+            //    MALevel.CrystallineMagike => MagikeHelper.CalculateMagikeCost(MALevel.CrystallineMagike, 8, 60 * 2),
+            //    MALevel.Hallow => MagikeHelper.CalculateMagikeCost(MALevel.Hallow, 8, 60 * 2),
+            //    MALevel.HolyLight => MagikeHelper.CalculateMagikeCost(MALevel.HolyLight, 8, 60 * 2),
+            //    MALevel.SplendorMagicore => MagikeHelper.CalculateMagikeCost(MALevel.SplendorMagicore, 8, 60 * 2),
+            //    _ => 0,
+            //};
 
             LimitMagikeAmount();
 
@@ -183,7 +196,14 @@ namespace Coralite.Content.Items.Magike.Altars
 
     public class BasicAltarAltar : CraftAltar
     {
-        public override void Upgrade(MALevel incomeLevel)
+        public override void InitializeLevel()
+        {
+            WorkTimeBase = -1;
+            CostPercent = 0;
+            MinCost = 1;
+        }
+
+        public override void Upgrade(ushort incomeLevel)
         {
             float second = incomeLevel switch
             {

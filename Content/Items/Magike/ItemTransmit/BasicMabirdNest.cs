@@ -49,14 +49,9 @@ namespace Coralite.Content.Items.Magike.ItemTransmit
 
     public class BasicMabirdNestController : MabirdController
     {
-        public override MALevel DefaultLevel => MALevel.CrystallineMagike;
-
-        public override void Upgrade(MALevel incomeLevel)
+        public override void Initialize()
         {
-            CapacityBase = incomeLevel switch
-            {
-                _ => 6,
-            };
+            CapacityBase = 6;
         }
     }
 }

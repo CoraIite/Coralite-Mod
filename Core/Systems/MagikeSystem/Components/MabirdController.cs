@@ -19,7 +19,7 @@ using Terraria.UI;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components
 {
-    public abstract class MabirdController : ItemContainer, IUpgradeable
+    public abstract class MabirdController : ItemContainer
     {
         public override void Update()
         {
@@ -31,18 +31,6 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                     (item.ModItem as Mabird).UpdateMabird(Entity.Position, center);
             }
         }
-
-        public abstract MALevel DefaultLevel { get; }
-
-        public override void Initialize()
-        {
-            Upgrade(DefaultLevel);
-        }
-
-        public virtual void Upgrade(MALevel incomeLevel) { }
-
-        public virtual bool CanUpgrade(MALevel incomeLevel)
-            => Entity.CheckUpgrageable(incomeLevel);
 
         public override bool CanAddItem(int itemType, int stack)
         {

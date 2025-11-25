@@ -1,6 +1,10 @@
-﻿using Coralite.Core.Systems.MagikeSystem.Tiles;
+﻿using Coralite.Core.Systems.MagikeSystem.Components;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
+using Coralite.Core.Systems.MagikeSystem.Tiles;
+using CoraliteAPI;
 using Newtonsoft.Json.Linq;
 using ReLogic.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
@@ -15,32 +19,47 @@ namespace Coralite.Core.Systems.MagikeSystem
         /// 存储了各种可升级仪器的信息<br></br>
         /// 键名为：仪器名+组件名+变量名，获取到的字典使用等级名获取对应值
         /// </summary>
-        internal static Dictionary<string, HybridDictionary> MagikeApparatusData { get; set; }
+        internal static Dictionary<string, HybridDictionary> MagikeApparatusData { get; set; }=[];
 
+        public override void PostSetupContent()
+        {
+            const string DataName = "MagikeApparatusData.json";
+#if DEBUG
+            using Stream stream = new FileStream("D:/My Games/Terraria/tModLoader/ModSources/Coralite/" + DataName, FileMode.Open);
+            CheckMagikeData(Mod, "D:/My Games/Terraria/tModLoader/ModSources/Coralite/" + DataName);
+#else
+            using Stream stream = Coralite.Instance.GetFileStream(AssetDirectory.Datas + DataName, true);//读取文件
+#endif
+            LoadMagikeDatas(Mod, stream);
+
+            //加载其他模组的
+            foreach (Mod mod in ModLoader.Mods)
+            {
+                if (mod is ICoralite ic)
+                {
+                    using Stream stream2 = mod.GetFileStream(ic.DataPath + DataName, true);//读取文件
+                    LoadMagikeDatas(mod, stream);
+                }
+            }
+        }
 
         /// <summary>
-        /// 供你自动创建魔能数据
+        /// 根据属性自动加载
         /// </summary>
         /// <param name="mod"></param>
-        /// <param name="fullPath"></param>
-        public static void CheckMagikeData(Mod mod, string fullPath)
+        /// <param name="stream"></param>
+        private static void LoadMagikeDatas(Mod mod, Stream stream)
         {
-            //检测是否存在键名
-            //读取JSON文件内容
-            using Stream stream = new FileStream(fullPath, FileMode.Open);
             using StreamReader file = new StreamReader(stream);
-
             string originString = file.ReadToEnd();
             JObject obj = JObject.Parse(originString);
 
             foreach (var type in AssemblyManager.GetLoadableTypes(mod.Code))
             {
-                var att = type.GetAttribute<CoraliteAPI.UpgradeableComponentAttribute>();
-                
-                if (att == null)
-                    continue;
+                if (!type.IsSubclassOf(typeof(IUpgradeLoadable)))
+                    return;
 
-                int tileType = att.getTileType();
+                int tileType = (Activator.CreateInstance(type) as IUpgradeLoadable).TileType;
                 ModTile mt = TileLoader.GetTile(tileType);
 
                 if (mt is not BaseMagikeTile magTile)
@@ -60,7 +79,79 @@ namespace Coralite.Core.Systems.MagikeSystem
                 //写入所有所有属性
                 foreach (var pInfo in pInfos)
                 {
-                    var att2 = type.GetAttribute<CoraliteAPI.UpgradeablePropAttribute>();
+                    var att = type.GetAttribute<UpgradeablePropAttribute>();
+                    if (att == null)
+                        continue;
+
+                    //属性的Obj
+                    string propName = pInfo.Name;
+                    if (!tileObj.ContainsKey(propName))
+                        tileObj[propName] = new JObject();
+
+                    JObject propObj = (JObject)tileObj[propName];
+                    HybridDictionary dic = [];
+
+                    foreach (var level in levels)
+                    {
+                        if (level == NoneLevel.NoneID)
+                            continue;
+
+                        MagikeLevel mLevel = CoraliteContent.GetMagikeLevel(level);
+                        string levelName = mLevel.Name;
+
+                        //把东西加进去
+                        dic.Add(level, propObj[levelName].Value<string>());
+                    }
+
+                    MagikeApparatusData.Add(string.Concat(tileName
+                        , MagikeComponentID.GetName(((MagikeComponent)Activator.CreateInstance(type)).ID)
+                        , propName
+                        ), dic);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 供你自动创建魔能数据
+        /// </summary>
+        /// <param name="mod"></param>
+        /// <param name="fullPath"></param>
+        public static void CheckMagikeData(Mod mod, string fullPath)
+        {
+            //检测是否存在键名
+            //读取JSON文件内容
+            using Stream stream = new FileStream(fullPath, FileMode.Open);
+            using StreamReader file = new StreamReader(stream);
+
+            string originString = file.ReadToEnd();
+            JObject obj = JObject.Parse(originString);
+
+            foreach (var type in AssemblyManager.GetLoadableTypes(mod.Code))
+            {
+                if (!type.IsSubclassOf(typeof(IUpgradeLoadable)))
+                    return;
+
+                int tileType = (Activator.CreateInstance(type) as IUpgradeLoadable).TileType;
+                ModTile mt = TileLoader.GetTile(tileType);
+
+                if (mt is not BaseMagikeTile magTile)
+                    continue;
+                if (!MagikeApparatusLevels.TryGetValue(tileType, out var levels))
+                    continue;
+
+                string tileName = magTile.Name.Replace("Tile", "");
+                if (!obj.ContainsKey(tileName))
+                    obj[tileName] = new JObject();
+
+                //物块的Obj
+                JObject tileObj = (JObject)obj[tileName];
+
+                PropertyInfo[] pInfos = type.GetProperties();
+
+                //写入所有所有属性
+                foreach (var pInfo in pInfos)
+                {
+                    var att = type.GetAttribute<CoraliteAPI.UpgradeablePropAttribute>();
                     if (att == null)
                         continue;
 
@@ -73,6 +164,9 @@ namespace Coralite.Core.Systems.MagikeSystem
 
                     foreach (var level in levels)
                     {
+                        if (level==NoneLevel.NoneID)
+                            continue;
+
                         MagikeLevel mLevel = CoraliteContent.GetMagikeLevel(level);
                         string levelName = mLevel.Name;
 
@@ -87,5 +181,14 @@ namespace Coralite.Core.Systems.MagikeSystem
             stream.SetLength(0);
             writer.Write(obj.ToString());
         }
+
+        public static int GetLevelDataInt(ushort level, string name)
+            => (int)MagikeApparatusData[name][level];
+        public static float GetLevelDataFloat(ushort level, string name)
+            => (float)MagikeApparatusData[name][level];
+        public static byte GetLevelDataByte(ushort level, string name)
+            => (byte)MagikeApparatusData[name][level];
+        public static short GetLevelDataShort(ushort level, string name)
+            => (short)MagikeApparatusData[name][level];
     }
 }

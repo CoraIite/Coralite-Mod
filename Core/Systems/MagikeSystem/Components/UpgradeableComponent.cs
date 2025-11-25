@@ -3,133 +3,183 @@ using Coralite.Helpers;
 
 namespace Coralite.Core.Systems.MagikeSystem.Components
 {
-    public class UpgradeableLinerSender : MagikeLinerSender, IUpgradeable
+    public abstract class UpgradeableLinerSender<T> : MagikeLinerSender, IUpgradeable, IUpgradeLoadable
+        where T : ModTile
     {
+        public int TileType => ModContent.TileType<T>();
+
         public override void Initialize()
         {
-            Upgrade(MALevel.None);
+            InitializeLevel();
         }
 
-        public virtual void Upgrade(MALevel incomeLevel) { }
+        public virtual void Upgrade(ushort incomeLevel) { }
 
-        public virtual bool CanUpgrade(MALevel incomeLevel)
+        public virtual bool CanUpgrade(ushort incomeLevel)
             => Entity.CheckUpgrageable(incomeLevel);
+
+        public abstract void InitializeLevel();
     }
 
-    public class UpgradeableContainer : MagikeContainer, IUpgradeable
+    public abstract class UpgradeableContainer<T> : MagikeContainer, IUpgradeable, IUpgradeLoadable
+        where T : ModTile
     {
+        public int TileType => ModContent.TileType<T>();
+
         public override void Initialize()
         {
-            Upgrade(MALevel.None);
+            InitializeLevel();
         }
 
-        public virtual void Upgrade(MALevel incomeLevel) { }
+        public virtual void Upgrade(ushort incomeLevel) { }
 
-        public virtual bool CanUpgrade(MALevel incomeLevel)
+        public virtual bool CanUpgrade(ushort incomeLevel)
             => Entity.CheckUpgrageable(incomeLevel);
+
+        public abstract void InitializeLevel();
     }
 
-    public class UpgradeableActiveProducer : MagikeActiveProducer, IUpgradeable
+    public abstract class UpgradeableActiveProducer<T> : MagikeActiveProducer, IUpgradeable, IUpgradeLoadable
+        where T : ModTile
     {
+        public int TileType => ModContent.TileType<T>();
+
         public override void Initialize()
         {
-            Upgrade(MALevel.None);
+            InitializeLevel();
         }
 
-        public virtual void Upgrade(MALevel incomeLevel) { }
+        public virtual void Upgrade(ushort incomeLevel) { }
 
-        public virtual bool CanUpgrade(MALevel incomeLevel)
+        public virtual bool CanUpgrade(ushort incomeLevel)
             => Entity.CheckUpgrageable(incomeLevel);
+
+        public abstract void InitializeLevel();
     }
 
-    public class UpgradeableExtractProducer : MagikeExtractProducer, IUpgradeable
+    public abstract class UpgradeableExtractProducer<T> : MagikeExtractProducer, IUpgradeable, IUpgradeLoadable
+        where T : ModTile
     {
+        public int TileType => ModContent.TileType<T>();
+
         public override void Initialize()
         {
-            Upgrade(MALevel.None);
+            InitializeLevel();
         }
 
-        public virtual void Upgrade(MALevel incomeLevel) { }
+        public virtual void Upgrade(ushort incomeLevel) { }
 
-        public virtual bool CanUpgrade(MALevel incomeLevel)
+        public virtual bool CanUpgrade(ushort incomeLevel)
             => Entity.CheckUpgrageable(incomeLevel);
+
+        public abstract void InitializeLevel();
     }
 
-    public abstract class UpgradeableCostItemProducer : MagikeCostItemProducer, IUpgradeable
+    public abstract class UpgradeableCostItemProducer<T> : MagikeCostItemProducer, IUpgradeable, IUpgradeLoadable
+        where T : ModTile
     {
+        public int TileType => ModContent.TileType<T>();
+
         public override void Initialize()
         {
-            Upgrade(MALevel.None);
+            InitializeLevel();
         }
 
-        public virtual void Upgrade(MALevel incomeLevel) { }
+        public virtual void Upgrade(ushort incomeLevel) { }
 
-        public virtual bool CanUpgrade(MALevel incomeLevel)
+        public virtual bool CanUpgrade(ushort incomeLevel)
             => Entity.CheckUpgrageable(incomeLevel);
+
+        public abstract void InitializeLevel();
     }
 
-    public abstract class UpgradeableProducerByBiome : ProducerByBiome, IUpgradeable
+    public abstract class UpgradeableProducerByBiome<T> : ProducerByBiome, IUpgradeable, IUpgradeLoadable
+        where T : ModTile
     {
+        public int TileType => ModContent.TileType<T>();
+
         public override void Initialize()
         {
-            Upgrade(MALevel.None);
+            InitializeLevel();
         }
 
-        public virtual void Upgrade(MALevel incomeLevel) { }
+        public virtual void Upgrade(ushort incomeLevel) { }
 
-        public virtual bool CanUpgrade(MALevel incomeLevel)
+        public virtual bool CanUpgrade(ushort incomeLevel)
             => Entity.CheckUpgrageable(incomeLevel);
+
+        public abstract void InitializeLevel();
     }
 
-    public abstract class UpgradeableProducerByTime : ProducerByTime, IUpgradeable
+    public abstract class UpgradeableProducerByTime<T> : ProducerByTime, IUpgradeable, IUpgradeLoadable
+        where T : ModTile
     {
+        public int TileType => ModContent.TileType<T>();
+
         public override void Initialize()
         {
-            Upgrade(MALevel.None);
+            InitializeLevel();
         }
 
-        public virtual void Upgrade(MALevel incomeLevel) { }
+        public virtual void Upgrade(ushort incomeLevel) { }
 
-        public virtual bool CanUpgrade(MALevel incomeLevel)
+        public virtual bool CanUpgrade(ushort incomeLevel)
             => Entity.CheckUpgrageable(incomeLevel);
+
+        public abstract void InitializeLevel();
     }
 
-    public abstract class UpgradeableProducerByLiquid : ProducerByLiquid, IUpgradeable
+    public abstract class UpgradeableProducerByLiquid<T> : ProducerByLiquid, IUpgradeable, IUpgradeLoadable
+        where T : ModTile
     {
+        public int TileType => ModContent.TileType<T>();
+
         public override void Initialize()
         {
-            Upgrade(MALevel.None);
+            InitializeLevel();
         }
 
-        public virtual void Upgrade(MALevel incomeLevel) { }
+        public virtual void Upgrade(ushort incomeLevel) { }
 
-        public virtual bool CanUpgrade(MALevel incomeLevel)
+        public virtual bool CanUpgrade(ushort incomeLevel)
             => Entity.CheckUpgrageable(incomeLevel);
+
+        public abstract void InitializeLevel();
     }
 
-    public class UpgradeableItemContainer : ItemContainer, IUpgradeable
+    public abstract class UpgradeableItemContainer<T> : ItemContainer, IUpgradeable, IUpgradeLoadable
+        where T : ModTile
     {
+        public int TileType => ModContent.TileType<T>();
+
         public override void Initialize()
         {
-            Upgrade(MALevel.None);
+            InitializeLevel();
         }
 
-        public virtual void Upgrade(MALevel incomeLevel) { }
+        public virtual void Upgrade(ushort incomeLevel) { }
 
-        public virtual bool CanUpgrade(MALevel incomeLevel)
+        public virtual bool CanUpgrade(ushort incomeLevel)
             => Entity.CheckUpgrageable(incomeLevel);
+
+        public abstract void InitializeLevel();
     }
 
-    public class UpgradeableCharger : Charger, IUpgradeable
+    public abstract class UpgradeableCharger<T> : Charger, IUpgradeable, IUpgradeLoadable
+        where T : ModTile
     {
+        public int TileType => ModContent.TileType<T>();
+
         public override void Initialize()
         {
-            Upgrade(MALevel.None);
+            InitializeLevel();
         }
 
-        public virtual void Upgrade(MALevel incomeLevel) { }
+        public virtual void Upgrade(ushort incomeLevel) { }
 
-        public virtual bool CanUpgrade(MALevel incomeLevel)
+        public virtual bool CanUpgrade(ushort incomeLevel)
             => Entity.CheckUpgrageable(incomeLevel);
+
+        public abstract void InitializeLevel();
     }
 }

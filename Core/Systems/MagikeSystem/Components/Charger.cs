@@ -1,5 +1,6 @@
 ﻿using Coralite.Content.Dusts;
 using Coralite.Helpers;
+using CoraliteAPI;
 using InnoVault.PRT;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
@@ -28,6 +29,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// <summary>
         /// 单个物品每次能充能多少
         /// </summary>
+        [UpgradeableProp]
         public int MagikePerCharge { get; set; }
 
         public override bool CanActivated_SpecialCheck(out string text)
@@ -51,7 +53,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// <returns></returns>
         public List<MagikeItem> GetChargeItems()
         {
-            List<MagikeItem> items = new List<MagikeItem>();
+            List<MagikeItem> items = [];
 
             if (Entity.TryGetComponent(MagikeComponentID.ItemContainer, out ItemContainer container))
             {

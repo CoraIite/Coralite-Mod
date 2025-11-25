@@ -1,4 +1,5 @@
 ﻿using Coralite.Helpers;
+using CoraliteAPI;
 using System;
 using Terraria;
 using Terraria.DataStructures;
@@ -24,6 +25,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public float Rotation;
 
         /// <summary> 基础连接距离 </summary>
+        [UpgradeableProp]
         public int ConnectLengthBase { get => LengthBase; protected set => LengthBase = value; }
         /// <summary> 额外连接距离 </summary>
         public int ConnectLengthExtra { get; set; }

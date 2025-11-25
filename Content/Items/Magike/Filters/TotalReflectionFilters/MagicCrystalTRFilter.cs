@@ -1,9 +1,10 @@
 ﻿using Coralite.Content.Items.Magike.Filters.PolarizedFilters;
 using Coralite.Content.Raritys;
-using Coralite.Core.Systems.MagikeSystem;
+using Coralite.Core;
 using Coralite.Core.Systems.MagikeSystem.BaseItems;
 using Coralite.Core.Systems.MagikeSystem.Components;
 using Coralite.Core.Systems.MagikeSystem.Components.Filters;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Terraria;
 using Terraria.ID;
 
@@ -11,8 +12,6 @@ namespace Coralite.Content.Items.Magike.Filters.TotalReflectionFilters
 {
     public class MagicCrystalTRFilter : PackedFilterItem
     {
-        public override Color FilterColor => Coralite.MagicCrystalPink;
-
         public MagicCrystalTRFilter() : base(Item.sellPrice(0, 0, 50), ModContent.RarityType<MagicCrystalRarity>())
         {
         }
@@ -37,7 +36,7 @@ namespace Coralite.Content.Items.Magike.Filters.TotalReflectionFilters
 
     public class MagicCrystalTRFilterComponent : TotalReflectionFilter
     {
-        public override MALevel Level => MALevel.MagicCrystal;
+        public override ushort Level => CoraliteContent.MagikeLevelType<CrystalLevel>();
 
         public override int ItemType => ModContent.ItemType<MagicCrystalTRFilter>();
 

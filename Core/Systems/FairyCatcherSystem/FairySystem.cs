@@ -68,9 +68,9 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
             GetWallTypeToItemType = (Dictionary<int, int>)typeof(WallLoader).GetField("wallTypeToItemType"
                 , BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.GetField).GetValue(null);
 
-            fairySpawnConditions = new Dictionary<int, List<FairySpawnController>>();
-            fairySpawnConditions_InEncyclopedia = new Dictionary<int, FairySpawnController>();
-            fairyDatas = new Dictionary<int, FairyData>();
+            fairySpawnConditions = [];
+            fairySpawnConditions_InEncyclopedia = [];
+            fairyDatas = [];
             FairyCaught = new bool[FairyLoader.FairyCount];
 
             string path = AssetDirectory.Datas + "FairyData.json";
@@ -170,7 +170,7 @@ namespace Coralite.Core.Systems.FairyCatcherSystem
 
             //检测是否存在键名
             // 2. 读取JSON文件内容
-            using Stream stream = new FileStream("D:/My Games/Terraria/tModLoader/ModSources/Coralite/" + path, FileMode.Open);// Coralite.Instance.GetFileStream(path, true);//读取文件
+            using FileStream stream = new FileStream("D:/My Games/Terraria/tModLoader/ModSources/Coralite/" + path, FileMode.Open);// Coralite.Instance.GetFileStream(path, true);//读取文件
             using StreamReader file = new StreamReader(stream);
 
             string originString = file.ReadToEnd();

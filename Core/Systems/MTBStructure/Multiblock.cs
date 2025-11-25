@@ -17,7 +17,7 @@ namespace Coralite.Core.Systems.MTBStructure
         {
             ModTypeLookup<Multiblock>.Register(this);
 
-            MultiblockLoader.structures ??= new List<Multiblock>();
+            MultiblockLoader.structures ??= [];
             MultiblockLoader.structures.Add(this);
 
             Type = MultiblockLoader.ReserveMTBStructureID();
@@ -59,7 +59,7 @@ namespace Coralite.Core.Systems.MTBStructure
             public MultiBlockInfo(Point16 point, short wallType, bool noTileCheck)
             {
                 this.point = point;
-                checkTile = false;
+                checkTile = noTileCheck;
                 this.wallType = wallType;
             }
 
@@ -90,7 +90,7 @@ namespace Coralite.Core.Systems.MTBStructure
         /// <param name="tileType"></param>
         public void AddTile(Point16 pos,int tileType)
         {
-            Infos ??= new List<MultiBlockInfo>();
+            Infos ??= [];
 
             MultiBlockInfo oldInfo = Infos.Find(info => info.point == pos);
             if (oldInfo != null)
@@ -112,7 +112,7 @@ namespace Coralite.Core.Systems.MTBStructure
         /// <param name="tileType"></param>
         public void AddWallCheck(Point16 pos,int wallType)
         {
-            Infos ??= new List<MultiBlockInfo>();
+            Infos ??= [];
 
             MultiBlockInfo oldInfo = Infos.Find(info => info.point == pos);
             if (oldInfo != null)

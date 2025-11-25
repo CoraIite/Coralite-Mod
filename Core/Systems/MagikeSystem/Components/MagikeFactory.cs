@@ -1,4 +1,5 @@
 ﻿using Coralite.Helpers;
+using CoraliteAPI;
 using System;
 using System.IO;
 using Terraria.ModLoader.IO;
@@ -13,6 +14,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public bool IsWorking { get; set; }
 
         /// <summary> 基础工作时间 </summary>
+        [UpgradeableProp]
         public int WorkTimeBase { get => DelayBase; set => DelayBase = value; }
         /// <summary> 工作时间增幅 </summary>
         public float WorkTimeBonus { get => DelayBonus; set => DelayBonus = value; }

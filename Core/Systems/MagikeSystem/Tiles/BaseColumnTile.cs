@@ -11,7 +11,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
     {
         public override CoraliteSetsSystem.MagikeTileType PlaceType => CoraliteSetsSystem.MagikeTileType.None;
 
-        public override void DrawExtraTex(SpriteBatch spriteBatch, Texture2D tex, Rectangle tileRect, Vector2 offset, Color lightColor, float rotation, MagikeTP entity, MALevel level)
+        public override void DrawExtraTex(SpriteBatch spriteBatch, Texture2D tex, Rectangle tileRect, Vector2 offset, Color lightColor, float rotation, MagikeTP entity, ushort level)
         {
             Vector2 bottomLeft = tileRect.BottomLeft();
             Vector2 drawPos = bottomLeft + offset;

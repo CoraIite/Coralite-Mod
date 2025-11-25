@@ -1,4 +1,5 @@
 ﻿using Coralite.Content.UI.MagikeApparatusPanel;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
 using Microsoft.Xna.Framework.Graphics;
@@ -102,7 +103,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Filters
                 goto over;
             }
 
-            if (keyValuePairs[0] != MagikeSystem.NoneLevelID)//初始等级不是无的不动它
+            if (keyValuePairs[0] != NoneLevel.NoneID)//初始等级不是无的不动它
             {
                 level = keyValuePairs[0];
                 goto over;

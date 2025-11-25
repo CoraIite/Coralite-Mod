@@ -8,5 +8,15 @@
         public override bool Available => true;
 
         public override float MagikeCostValue => 0;
+
+        /// <summary>
+        /// 无等级的ID
+        /// </summary>
+        public static ushort NoneID { get; private set; }
+
+        public override void Load()
+        {
+            NoneID = ModContent.GetInstance<NoneLevel>().Type;
+        }
     }
 }

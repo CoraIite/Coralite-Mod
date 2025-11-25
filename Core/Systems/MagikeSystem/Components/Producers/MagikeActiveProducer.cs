@@ -1,4 +1,5 @@
 ﻿using Coralite.Helpers;
+using CoraliteAPI;
 using System;
 using System.IO;
 using Terraria.ModLoader.IO;
@@ -8,6 +9,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components.Producers
     public abstract class MagikeActiveProducer : MagikeProducer, ITimerTriggerComponent
     {
         /// <summary> 基础生产时间 </summary>
+        [UpgradeableProp]
         public int ProductionDelayBase { get => DelayBase; protected set => DelayBase = value; }
         /// <summary> 发送时间减少量（效率增幅量） </summary>
         public float ProductionDelayBonus { get => DelayBonus; set => DelayBonus = value; }

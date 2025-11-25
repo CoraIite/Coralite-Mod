@@ -10,7 +10,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
 
         public override CoraliteSetsSystem.MagikeTileType PlaceType => CoraliteSetsSystem.MagikeTileType.None;
 
-        public override void QuickLoadAsset(MALevel level) { }
+        public override void QuickLoadAsset(ushort level) { }
         public override void DrawEffects(int i, int j, SpriteBatch spriteBatch, ref TileDrawInfo drawData) { }
     }
 }

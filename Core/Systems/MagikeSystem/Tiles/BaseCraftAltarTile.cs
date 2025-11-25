@@ -17,7 +17,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
         /// </summary>
         /// <param name="alternate"></param>
         /// <returns></returns>
-        public virtual Vector2 GetFloatingOffset(float rotation, MALevel level)
+        public virtual Vector2 GetFloatingOffset(float rotation, ushort level)
         {
             return Vector2.Zero;
         }
@@ -27,12 +27,12 @@ namespace Coralite.Core.Systems.MagikeSystem.Tiles
         /// </summary>
         /// <param name="alternate"></param>
         /// <returns></returns>
-        public virtual Vector2 GetRestOffset(float rotation, MALevel level)
+        public virtual Vector2 GetRestOffset(float rotation, ushort level)
         {
             return Vector2.Zero;
         }
 
-        public override void DrawExtraTex(SpriteBatch spriteBatch, Texture2D tex, Rectangle tileRect, Vector2 offset, Color lightColor, float rotation, MagikeTP entity, MALevel level)
+        public override void DrawExtraTex(SpriteBatch spriteBatch, Texture2D tex, Rectangle tileRect, Vector2 offset, Color lightColor, float rotation, MagikeTP entity, ushort level)
         {
             if (!entity.TryGetComponent(MagikeComponentID.ItemContainer, out ItemContainer container))
                 return;

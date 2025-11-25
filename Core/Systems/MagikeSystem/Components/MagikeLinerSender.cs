@@ -2,6 +2,7 @@
 using Coralite.Content.UI.MagikeApparatusPanel;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Helpers;
+using CoraliteAPI;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
     public class MagikeLinerSender : MagikeSender, IUIShowable, IConnectLengthModify
     {
         /// <summary> 基础连接数量 </summary>
+        [UpgradeableProp]
         public byte MaxConnectBase { get; protected set; }
         /// <summary> 额外连接数量 </summary>
         public byte MaxConnectExtra { get; set; }
@@ -28,9 +30,10 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public int MaxConnect { get => MaxConnectBase + MaxConnectExtra; }
 
         /// <summary> 基础连接距离，单位：像素 </summary>
+        [UpgradeableProp]
         public int ConnectLengthBase { get => LengthBase; protected set => LengthBase = value; }
         /// <summary> 额外连接距离，单位：像素 </summary>
-        public int ConnectLengthExtra { get; set; }
+        public int ConnectLengthExtra { get => LengthExtra; protected set => LengthExtra = value; }
 
         /// <summary> 连接距离，单位：像素 </summary>
         public int ConnectLength { get => ConnectLengthBase + ConnectLengthExtra; }
@@ -479,8 +482,8 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
     public class ConnectButtonForComponent : UIElement
     {
-        private int _index;
-        private MagikeLinerSender _sender;
+        private readonly int _index;
+        private readonly MagikeLinerSender _sender;
 
         public ConnectButtonForComponent(int index, MagikeLinerSender sender)
         {

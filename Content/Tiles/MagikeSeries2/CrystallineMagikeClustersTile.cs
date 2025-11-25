@@ -1,7 +1,7 @@
 ﻿using Coralite.Content.Dusts;
 using Coralite.Content.Items.MagikeSeries2;
 using Coralite.Core;
-using Coralite.Core.Systems.MagikeSystem;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Core.Systems.MagikeSystem.Tiles;
 using Terraria;
 using Terraria.ID;
@@ -13,7 +13,7 @@ namespace Coralite.Content.Tiles.MagikeSeries2
     {
         public override string Texture => AssetDirectory.MagikeSeries2Tile + Name;
 
-        public MALevel Level => MALevel.CrystallineMagike;
+        public ushort Level => CoraliteContent.MagikeLevelType<BrilliantLevel>();
         public int ItemType => ModContent.ItemType<CrystallineMagike>();
         public int MagikeCost => 420;
 

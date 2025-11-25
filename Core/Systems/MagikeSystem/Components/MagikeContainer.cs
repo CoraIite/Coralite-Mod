@@ -1,6 +1,7 @@
 ﻿using Coralite.Content.UI.MagikeApparatusPanel;
 using Coralite.Core.Loaders;
 using Coralite.Helpers;
+using CoraliteAPI;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.IO;
@@ -33,6 +34,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         public int Magike { get; protected set; }
 
         /// <summary> 自身魔能基础容量，可以通过升级来变化 </summary>
+        [UpgradeableProp]
         public int MagikeMaxBase { get; protected set; }
         /// <summary> 额外魔能量，通过扩展膜附加的魔能容量 </summary>
         public float MagikeMaxBonus { get; set; } = 1f;
@@ -481,7 +483,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
             Color lineC = Color.White;
 
             if (container.Entity.TryGetComponent(MagikeComponentID.ApparatusInformation, out ApparatusInformation info))
-                lineC = MagikeSystem.GetColor(info.CurrentLevel);
+                lineC = CoraliteContent.GetMagikeLevel(info.CurrentLevel).LevelColor;
 
             //绘制中间那条线
             Texture2D lineTex = TextureAssets.FishingLine.Value;

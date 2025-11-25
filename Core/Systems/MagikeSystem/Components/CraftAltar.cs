@@ -2,9 +2,12 @@
 using Coralite.Content.UI;
 using Coralite.Content.UI.MagikeApparatusPanel;
 using Coralite.Core.Loaders;
+using Coralite.Core.Systems.MagikeSystem.MagikeLevels;
 using Coralite.Core.Systems.MagikeSystem.TileEntities;
 using Coralite.Core.Systems.MagikeSystem.Tiles;
 using Coralite.Helpers;
+using CoraliteAPI;
+using log4net.Core;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -44,6 +47,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         /// <summary>
         /// 消耗多少的百分比，根据等级提升
         /// </summary>
+        [UpgradeableProp]
         public float CostPercent { get; set; }
 
         public ItemSpawnModes ItemSpawnMode { get; set; }
@@ -82,12 +86,14 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
         public override void Initialize()
         {
-            Upgrade(MALevel.None);
+            InitializeLevel();
         }
 
-        public virtual void Upgrade(MALevel incomeLevel) { }
+        public abstract void InitializeLevel();
 
-        public virtual bool CanUpgrade(MALevel incomeLevel)
+        public virtual void Upgrade(ushort incomeLevel) { }
+
+        public virtual bool CanUpgrade(ushort incomeLevel)
             => Entity.CheckUpgrageable(incomeLevel);
 
         public override void Work()
@@ -135,11 +141,14 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
                         if (mt1 is BaseCraftAltarTile altartile1)
                         {
-                            GetMagikeAlternateData(pos1.X, pos1.Y, out TileObjectData data, out MagikeAlternateStyle alternate);
+                            GetMagikeAlternateData(pos1.X, pos1.Y, out _, out MagikeAlternateStyle alternate);
                             float rotation = alternate.GetAlternateRotation();
-                            var level = MagikeSystem.FrameToLevel(t1.TileType, t1.TileFrameX / data.CoordinateFullWidth);
 
-                            Vector2 position = Helper.GetMagikeTileCenter(pos1.X, pos1.Y) + altartile1.GetFloatingOffset(rotation, level.Value);
+                            ushort level = NoneLevel.NoneID;
+                            if (Entity.TryGetComponent(MagikeComponentID.ApparatusInformation, out ApparatusInformation info))
+                                level = info.CurrentLevel;
+
+                            Vector2 position = Helper.GetMagikeTileCenter(pos1.X, pos1.Y) + altartile1.GetFloatingOffset(rotation, level);
                             if (!VaultUtils.isClient)
                                 Item.NewItem(new EntitySource_TileUpdate(pos1.X, pos1.Y), position, ChosenResipe.ResultItem.type, ChosenResipe.ResultItem.stack);
                         }
@@ -154,11 +163,14 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
 
             if (mt is BaseCraftAltarTile altartile)
             {
-                GetMagikeAlternateData(pos.X, pos.Y, out TileObjectData data, out MagikeAlternateStyle alternate);
+                GetMagikeAlternateData(pos.X, pos.Y, out _, out MagikeAlternateStyle alternate);
                 float rotation = alternate.GetAlternateRotation();
-                var level = MagikeSystem.FrameToLevel(t.TileType, t.TileFrameX / data.CoordinateFullWidth);
 
-                Vector2 position = Helper.GetMagikeTileCenter(pos.X, pos.Y) + altartile.GetFloatingOffset(rotation, level.Value);
+                ushort level = NoneLevel.NoneID;
+                if (Entity.TryGetComponent(MagikeComponentID.ApparatusInformation, out ApparatusInformation info))
+                    level = info.CurrentLevel;
+
+                Vector2 position = Helper.GetMagikeTileCenter(pos.X, pos.Y) + altartile.GetFloatingOffset(rotation, level);
 
                 for (int i = 0; i < 20; i++)
                 {
@@ -774,12 +786,17 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 GetMagikeAlternateData(pos.X, pos.Y, out TileObjectData data, out MagikeAlternateStyle alternate);
 
                 float rotation = alternate.GetAlternateRotation();
-                var level = MagikeSystem.FrameToLevel(t.TileType, t.TileFrameX / data.CoordinateFullWidth);
 
-                if (!level.HasValue)
-                    return;
+                ushort level = NoneLevel.NoneID;
+                Color c = Coralite.MagicCrystalPink;
 
-                Vector2 position = Helper.GetMagikeTileCenter(pos.X, pos.Y) + altartile.GetFloatingOffset(rotation, level.Value);
+                if (Entity.TryGetComponent(MagikeComponentID.ApparatusInformation, out ApparatusInformation info))
+                {
+                    level = info.CurrentLevel;
+                    c = CoraliteContent.GetMagikeLevel(level).LevelColor;
+                }
+
+                Vector2 position = Helper.GetMagikeTileCenter(pos.X, pos.Y) + altartile.GetFloatingOffset(rotation, level);
                 Texture2D mainTex = CoraliteAssets.Halo.CircleSPA.Value;
                 float factor = Helper.BezierEase((float)RequiredMagike / ChosenResipe.magikeCost);
                 float Length = 12 + factor * 44;
@@ -798,9 +815,6 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
                 }
 
                 position -= Main.screenPosition;
-                Color c = Coralite.MagicCrystalPink;
-                if (Entity.TryGetComponent(MagikeComponentID.ApparatusInformation, out ApparatusInformation info))
-                    c = MagikeSystem.GetColor(info.CurrentLevel);
 
                 c *= (200f / 255f * alpha);
                 var origin = mainTex.Size() / 2;
@@ -1214,7 +1228,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
     public class CraftItemSpawnButton : UIElement
     {
         private float _scale = 1f;
-        private CraftAltar _altar;
+        private readonly CraftAltar _altar;
 
         public CraftItemSpawnButton(CraftAltar altar)
         {
@@ -1499,7 +1513,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
     /// </summary>
     public class CraftBar : UIElement
     {
-        private readonly UIGrid grid = new();
+        private readonly UIGrid grid = [];
 
         public CraftBar(MagikeRecipe recipe)
         {
@@ -1554,7 +1568,7 @@ namespace Coralite.Core.Systems.MagikeSystem.Components
         private readonly SlotType slotType;
 
         private bool canCraft;
-        private int index;
+        private readonly int index;
         private string FailText;
         private float _scale;
 

@@ -19,11 +19,6 @@ namespace Coralite.Core.Systems.MagikeSystem
         public static ATex[] UIApparatusButton { get; private set; }
         public static ATex[] UIComponentButton { get; private set; }
 
-        /// <summary>
-        /// 无等级的ID
-        /// </summary>
-        public static ushort NoneLevelID{ get; private set; }
-
         public static ConnectLineType CurrentConnectLineType;
         public static ConnectUIAssetID CurrentMagikeUIType;
 
@@ -37,14 +32,11 @@ namespace Coralite.Core.Systems.MagikeSystem
 
         public override void PostAddRecipes()
         {
-            NoneLevelID = GetInstance<NoneLevel>().Type;
-
             if (Main.dedServ)
                 return;
 
             LoadMagikeLevelText();
             RegisterMagikeCraft();
-
         }
 
         public override void Load()
